@@ -7,7 +7,7 @@
 package room303
 
 import (
-	commons "github.com/tcncloud/api-go/commons"
+	commons "github.com/tcncloud/api-go/api/commons"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"

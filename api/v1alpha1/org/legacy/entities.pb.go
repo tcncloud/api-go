@@ -7,10 +7,10 @@
 package legacy
 
 import (
+	commons "github.com/tcncloud/api-go/api/commons"
 	audit "github.com/tcncloud/api-go/api/commons/audit"
 	auth "github.com/tcncloud/api-go/api/commons/auth"
 	org "github.com/tcncloud/api-go/api/commons/org"
-	commons "github.com/tcncloud/api-go/commons"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	fieldmaskpb "google.golang.org/protobuf/types/known/fieldmaskpb"

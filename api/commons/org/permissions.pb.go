@@ -8,8 +8,8 @@ package org
 
 import (
 	perms "github.com/tcncloud/api-go/annotations/perms"
+	commons "github.com/tcncloud/api-go/api/commons"
 	auth "github.com/tcncloud/api-go/api/commons/auth"
-	commons "github.com/tcncloud/api-go/commons"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"

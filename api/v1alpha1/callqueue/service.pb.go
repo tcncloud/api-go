@@ -8,7 +8,7 @@ package callqueue
 
 import (
 	_ "github.com/tcncloud/api-go/annotations"
-	commons "github.com/tcncloud/api-go/commons"
+	commons "github.com/tcncloud/api-go/api/commons"
 	v0alpha "github.com/tcncloud/api-go/v0alpha"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
