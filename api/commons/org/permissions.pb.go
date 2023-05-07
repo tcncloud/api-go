@@ -7,7 +7,7 @@
 package org
 
 import (
-	annotations_perms "github.com/tcncloud/api-go/annotations.perms"
+	perms "github.com/tcncloud/api-go/annotations/perms"
 	auth "github.com/tcncloud/api-go/api/commons/auth"
 	commons "github.com/tcncloud/api-go/commons"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -220,7 +220,7 @@ type License struct {
 	unknownFields protoimpl.UnknownFields
 
 	// Application containing licenses.
-	App annotations_perms.Application `protobuf:"varint,1,opt,name=app,proto3,enum=annotations.perms.Application" json:"app,omitempty"`
+	App perms.Application `protobuf:"varint,1,opt,name=app,proto3,enum=annotations.perms.Application" json:"app,omitempty"`
 	// Individual cards for the application.
 	Cards []*License_Card `protobuf:"bytes,2,rep,name=cards,proto3" json:"cards,omitempty"`
 }
@@ -257,11 +257,11 @@ func (*License) Descriptor() ([]byte, []int) {
 	return file_api_commons_org_permissions_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *License) GetApp() annotations_perms.Application {
+func (x *License) GetApp() perms.Application {
 	if x != nil {
 		return x.App
 	}
-	return annotations_perms.Application(0)
+	return perms.Application(0)
 }
 
 func (x *License) GetCards() []*License_Card {
@@ -277,7 +277,7 @@ type License_Card struct {
 	unknownFields protoimpl.UnknownFields
 
 	// Card type.
-	Type annotations_perms.Card `protobuf:"varint,1,opt,name=type,proto3,enum=annotations.perms.Card" json:"type,omitempty"`
+	Type perms.Card `protobuf:"varint,1,opt,name=type,proto3,enum=annotations.perms.Card" json:"type,omitempty"`
 	// List of permissions and features.
 	Permissions []*License_Permission `protobuf:"bytes,2,rep,name=permissions,proto3" json:"permissions,omitempty"`
 }
@@ -314,11 +314,11 @@ func (*License_Card) Descriptor() ([]byte, []int) {
 	return file_api_commons_org_permissions_proto_rawDescGZIP(), []int{2, 0}
 }
 
-func (x *License_Card) GetType() annotations_perms.Card {
+func (x *License_Card) GetType() perms.Card {
 	if x != nil {
 		return x.Type
 	}
-	return annotations_perms.Card(0)
+	return perms.Card(0)
 }
 
 func (x *License_Card) GetPermissions() []*License_Permission {
@@ -480,15 +480,15 @@ func file_api_commons_org_permissions_proto_rawDescGZIP() []byte {
 
 var file_api_commons_org_permissions_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_api_commons_org_permissions_proto_goTypes = []interface{}{
-	(*PermissionGroup)(nil),            // 0: api.commons.org.PermissionGroup
-	(*P3PermissionGroup)(nil),          // 1: api.commons.org.P3PermissionGroup
-	(*License)(nil),                    // 2: api.commons.org.License
-	(*License_Card)(nil),               // 3: api.commons.org.License.Card
-	(*License_Permission)(nil),         // 4: api.commons.org.License.Permission
-	(auth.Permission)(0),               // 5: api.commons.auth.Permission
-	(commons.Permission)(0),            // 6: api.commons.Permission
-	(annotations_perms.Application)(0), // 7: annotations.perms.Application
-	(annotations_perms.Card)(0),        // 8: annotations.perms.Card
+	(*PermissionGroup)(nil),    // 0: api.commons.org.PermissionGroup
+	(*P3PermissionGroup)(nil),  // 1: api.commons.org.P3PermissionGroup
+	(*License)(nil),            // 2: api.commons.org.License
+	(*License_Card)(nil),       // 3: api.commons.org.License.Card
+	(*License_Permission)(nil), // 4: api.commons.org.License.Permission
+	(auth.Permission)(0),       // 5: api.commons.auth.Permission
+	(commons.Permission)(0),    // 6: api.commons.Permission
+	(perms.Application)(0),     // 7: annotations.perms.Application
+	(perms.Card)(0),            // 8: annotations.perms.Card
 }
 var file_api_commons_org_permissions_proto_depIdxs = []int32{
 	5, // 0: api.commons.org.PermissionGroup.permissions:type_name -> api.commons.auth.Permission

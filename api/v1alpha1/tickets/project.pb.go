@@ -7,7 +7,7 @@
 package tickets
 
 import (
-	api_commons_audit "github.com/tcncloud/api-go/api.commons.audit"
+	audit "github.com/tcncloud/api-go/api/commons/audit"
 	commons "github.com/tcncloud/api-go/commons"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -291,7 +291,7 @@ type ListTicketAuditLogRes struct {
 	unknownFields protoimpl.UnknownFields
 
 	// the retrieved audit events
-	Events []*api_commons_audit.AuditEvent `protobuf:"bytes,1,rep,name=events,proto3" json:"events,omitempty"`
+	Events []*audit.AuditEvent `protobuf:"bytes,1,rep,name=events,proto3" json:"events,omitempty"`
 }
 
 func (x *ListTicketAuditLogRes) Reset() {
@@ -326,7 +326,7 @@ func (*ListTicketAuditLogRes) Descriptor() ([]byte, []int) {
 	return file_api_v1alpha1_tickets_project_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *ListTicketAuditLogRes) GetEvents() []*api_commons_audit.AuditEvent {
+func (x *ListTicketAuditLogRes) GetEvents() []*audit.AuditEvent {
 	if x != nil {
 		return x.Events
 	}
@@ -394,14 +394,14 @@ func file_api_v1alpha1_tickets_project_proto_rawDescGZIP() []byte {
 
 var file_api_v1alpha1_tickets_project_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_api_v1alpha1_tickets_project_proto_goTypes = []interface{}{
-	(*EnableProjectReq)(nil),             // 0: api.v1alpha1.tickets.EnableProjectReq
-	(*EnableProjectRes)(nil),             // 1: api.v1alpha1.tickets.EnableProjectRes
-	(*ListEnabledProjectsReq)(nil),       // 2: api.v1alpha1.tickets.ListEnabledProjectsReq
-	(*ListEnabledProjectsRes)(nil),       // 3: api.v1alpha1.tickets.ListEnabledProjectsRes
-	(*ListTicketAuditLogReq)(nil),        // 4: api.v1alpha1.tickets.ListTicketAuditLogReq
-	(*ListTicketAuditLogRes)(nil),        // 5: api.v1alpha1.tickets.ListTicketAuditLogRes
-	(*commons.TicketProject)(nil),        // 6: api.commons.TicketProject
-	(*api_commons_audit.AuditEvent)(nil), // 7: api.commons.audit.AuditEvent
+	(*EnableProjectReq)(nil),       // 0: api.v1alpha1.tickets.EnableProjectReq
+	(*EnableProjectRes)(nil),       // 1: api.v1alpha1.tickets.EnableProjectRes
+	(*ListEnabledProjectsReq)(nil), // 2: api.v1alpha1.tickets.ListEnabledProjectsReq
+	(*ListEnabledProjectsRes)(nil), // 3: api.v1alpha1.tickets.ListEnabledProjectsRes
+	(*ListTicketAuditLogReq)(nil),  // 4: api.v1alpha1.tickets.ListTicketAuditLogReq
+	(*ListTicketAuditLogRes)(nil),  // 5: api.v1alpha1.tickets.ListTicketAuditLogRes
+	(*commons.TicketProject)(nil),  // 6: api.commons.TicketProject
+	(*audit.AuditEvent)(nil),       // 7: api.commons.audit.AuditEvent
 }
 var file_api_v1alpha1_tickets_project_proto_depIdxs = []int32{
 	6, // 0: api.v1alpha1.tickets.ListEnabledProjectsRes.projects:type_name -> api.commons.TicketProject

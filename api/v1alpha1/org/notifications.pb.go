@@ -7,7 +7,7 @@
 package org
 
 import (
-	api_commons_audit "github.com/tcncloud/api-go/api.commons.audit"
+	audit "github.com/tcncloud/api-go/api/commons/audit"
 	commons "github.com/tcncloud/api-go/commons"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -39,7 +39,7 @@ type UserSubscription struct {
 	// It receives an event on a event type and
 	// uses it to look up the targets for that event type.
 	// e.g. api.commons.audit.EventType_DUMMY_EVENT_DID_SOMETHING
-	EventType api_commons_audit.EventType `protobuf:"varint,2,opt,name=event_type,json=eventType,proto3,enum=api.commons.audit.EventType" json:"event_type,omitempty"`
+	EventType audit.EventType `protobuf:"varint,2,opt,name=event_type,json=eventType,proto3,enum=api.commons.audit.EventType" json:"event_type,omitempty"`
 	// Required.
 	UserId string `protobuf:"bytes,3,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	// Required.
@@ -94,11 +94,11 @@ func (x *UserSubscription) GetSubscriptionId() string {
 	return ""
 }
 
-func (x *UserSubscription) GetEventType() api_commons_audit.EventType {
+func (x *UserSubscription) GetEventType() audit.EventType {
 	if x != nil {
 		return x.EventType
 	}
-	return api_commons_audit.EventType(0)
+	return audit.EventType(0)
 }
 
 func (x *UserSubscription) GetUserId() string {
@@ -1159,7 +1159,7 @@ type ListOrgSubscriptionsRequest struct {
 	OrgId string `protobuf:"bytes,1,opt,name=org_id,json=orgId,proto3" json:"org_id,omitempty"`
 	// Optional.
 	// Used by matrix-notify to get settings in bulk for a particular event type.
-	EventType api_commons_audit.EventType `protobuf:"varint,2,opt,name=event_type,json=eventType,proto3,enum=api.commons.audit.EventType" json:"event_type,omitempty"`
+	EventType audit.EventType `protobuf:"varint,2,opt,name=event_type,json=eventType,proto3,enum=api.commons.audit.EventType" json:"event_type,omitempty"`
 }
 
 func (x *ListOrgSubscriptionsRequest) Reset() {
@@ -1201,11 +1201,11 @@ func (x *ListOrgSubscriptionsRequest) GetOrgId() string {
 	return ""
 }
 
-func (x *ListOrgSubscriptionsRequest) GetEventType() api_commons_audit.EventType {
+func (x *ListOrgSubscriptionsRequest) GetEventType() audit.EventType {
 	if x != nil {
 		return x.EventType
 	}
-	return api_commons_audit.EventType(0)
+	return audit.EventType(0)
 }
 
 // Response for listing subscriptions for multiple users.
@@ -1522,7 +1522,7 @@ var file_api_v1alpha1_org_notifications_proto_goTypes = []interface{}{
 	(*ListOrgSubscriptionsRequest)(nil),            // 21: api.v1alpha1.org.ListOrgSubscriptionsRequest
 	(*ListOrgSubscriptionsResponse)(nil),           // 22: api.v1alpha1.org.ListOrgSubscriptionsResponse
 	(*UserSubscription_Room303)(nil),               // 23: api.v1alpha1.org.UserSubscription.Room303
-	(api_commons_audit.EventType)(0),               // 24: api.commons.audit.EventType
+	(audit.EventType)(0),                           // 24: api.commons.audit.EventType
 	(*commons.FieldValueFilter)(nil),               // 25: api.commons.FieldValueFilter
 	(*fieldmaskpb.FieldMask)(nil),                  // 26: google.protobuf.FieldMask
 }
