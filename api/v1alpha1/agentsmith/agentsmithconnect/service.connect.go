@@ -8,7 +8,7 @@ import (
 	context "context"
 	errors "errors"
 	connect_go "github.com/bufbuild/connect-go"
-	agentsmith "github.com/tcncloud/api-go/v1alpha1/agentsmith"
+	agentsmith "github.com/tcncloud/api-go/api/v1alpha1/agentsmith"
 	http "net/http"
 	strings "strings"
 )

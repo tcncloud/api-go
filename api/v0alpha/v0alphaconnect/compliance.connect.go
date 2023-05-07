@@ -9,7 +9,7 @@ import (
 	context "context"
 	errors "errors"
 	connect_go "github.com/bufbuild/connect-go"
-	v0alpha "github.com/tcncloud/api-go/v0alpha"
+	v0alpha "github.com/tcncloud/api-go/api/v0alpha"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
 	http "net/http"
 	strings "strings"

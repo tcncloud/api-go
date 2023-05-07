@@ -22,7 +22,7 @@ import (
 	context "context"
 	errors "errors"
 	connect_go "github.com/bufbuild/connect-go"
-	wfm "github.com/tcncloud/api-go/v1alpha1/wfm"
+	wfm "github.com/tcncloud/api-go/api/v1alpha1/wfm"
 	http "net/http"
 	strings "strings"
 )

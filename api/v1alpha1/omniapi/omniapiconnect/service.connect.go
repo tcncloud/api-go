@@ -9,7 +9,7 @@ import (
 	errors "errors"
 	connect_go "github.com/bufbuild/connect-go"
 	commons "github.com/tcncloud/api-go/api/commons"
-	omniapi "github.com/tcncloud/api-go/v1alpha1/omniapi"
+	omniapi "github.com/tcncloud/api-go/api/v1alpha1/omniapi"
 	http "net/http"
 	strings "strings"
 )

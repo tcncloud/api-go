@@ -8,7 +8,7 @@ import (
 	context "context"
 	errors "errors"
 	connect_go "github.com/bufbuild/connect-go"
-	notifier "github.com/tcncloud/api-go/v1alpha1/vanalytics/notifier"
+	notifier "github.com/tcncloud/api-go/api/v1alpha1/vanalytics/notifier"
 	http "net/http"
 	strings "strings"
 )

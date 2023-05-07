@@ -22,7 +22,7 @@ import (
 	context "context"
 	errors "errors"
 	connect_go "github.com/bufbuild/connect-go"
-	legacy "github.com/tcncloud/api-go/v1alpha1/org/legacy"
+	legacy "github.com/tcncloud/api-go/api/v1alpha1/org/legacy"
 	http "net/http"
 	strings "strings"
 )

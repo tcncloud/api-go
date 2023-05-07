@@ -6,7 +6,7 @@ package acdconnect
 
 import (
 	connect_go "github.com/bufbuild/connect-go"
-	_ "github.com/tcncloud/api-go/v1alpha1/acd"
+	_ "github.com/tcncloud/api-go/api/v1alpha1/acd"
 	http "net/http"
 	strings "strings"
 )

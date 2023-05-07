@@ -8,7 +8,7 @@ package p3api
 
 import (
 	context "context"
-	v0alpha "github.com/tcncloud/api-go/v0alpha"
+	v0alpha "github.com/tcncloud/api-go/api/v0alpha"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"

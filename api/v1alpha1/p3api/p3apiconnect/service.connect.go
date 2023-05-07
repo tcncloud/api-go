@@ -8,8 +8,8 @@ import (
 	context "context"
 	errors "errors"
 	connect_go "github.com/bufbuild/connect-go"
-	v0alpha "github.com/tcncloud/api-go/v0alpha"
-	_ "github.com/tcncloud/api-go/v1alpha1/p3api"
+	v0alpha "github.com/tcncloud/api-go/api/v0alpha"
+	_ "github.com/tcncloud/api-go/api/v1alpha1/p3api"
 	http "net/http"
 	strings "strings"
 )

@@ -23,7 +23,7 @@ import (
 	errors "errors"
 	connect_go "github.com/bufbuild/connect-go"
 	commons "github.com/tcncloud/api-go/api/commons"
-	asm "github.com/tcncloud/api-go/v1alpha1/asm"
+	asm "github.com/tcncloud/api-go/api/v1alpha1/asm"
 	http "net/http"
 	strings "strings"
 )
