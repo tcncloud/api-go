@@ -69,6 +69,22 @@ const (
 	OmniApi_DeleteSignature_FullMethodName              = "/api.v0alpha.OmniApi/DeleteSignature"
 	OmniApi_ListSignatures_FullMethodName               = "/api.v0alpha.OmniApi/ListSignatures"
 	OmniApi_UpdateSignature_FullMethodName              = "/api.v0alpha.OmniApi/UpdateSignature"
+	OmniApi_CreateProject_FullMethodName                = "/api.v0alpha.OmniApi/CreateProject"
+	OmniApi_ListProjects_FullMethodName                 = "/api.v0alpha.OmniApi/ListProjects"
+	OmniApi_EditProjectById_FullMethodName              = "/api.v0alpha.OmniApi/EditProjectById"
+	OmniApi_CloseProjectById_FullMethodName             = "/api.v0alpha.OmniApi/CloseProjectById"
+	OmniApi_GetProjectById_FullMethodName               = "/api.v0alpha.OmniApi/GetProjectById"
+	OmniApi_CreateCannedMessage_FullMethodName          = "/api.v0alpha.OmniApi/CreateCannedMessage"
+	OmniApi_ListCannedMessages_FullMethodName           = "/api.v0alpha.OmniApi/ListCannedMessages"
+	OmniApi_UpdateCannedMessage_FullMethodName          = "/api.v0alpha.OmniApi/UpdateCannedMessage"
+	OmniApi_GetCannedMessageById_FullMethodName         = "/api.v0alpha.OmniApi/GetCannedMessageById"
+	OmniApi_DeleteCannedMessageById_FullMethodName      = "/api.v0alpha.OmniApi/DeleteCannedMessageById"
+	OmniApi_CreateCannedMessageGroup_FullMethodName     = "/api.v0alpha.OmniApi/CreateCannedMessageGroup"
+	OmniApi_ListCannedMessageGroups_FullMethodName      = "/api.v0alpha.OmniApi/ListCannedMessageGroups"
+	OmniApi_UpdateCannedMessageGroup_FullMethodName     = "/api.v0alpha.OmniApi/UpdateCannedMessageGroup"
+	OmniApi_DeleteCannedMessageGroup_FullMethodName     = "/api.v0alpha.OmniApi/DeleteCannedMessageGroup"
+	OmniApi_ListCannedMessagesByGroupId_FullMethodName  = "/api.v0alpha.OmniApi/ListCannedMessagesByGroupId"
+	OmniApi_GetCannedMessageGroupById_FullMethodName    = "/api.v0alpha.OmniApi/GetCannedMessageGroupById"
 )
 
 // OmniApiClient is the client API for OmniApi service.
@@ -270,6 +286,116 @@ type OmniApiClient interface {
 	//
 	//	OMNI_BOSS
 	UpdateSignature(ctx context.Context, in *UpdateSignatureReq, opts ...grpc.CallOption) (*UpdateSignatureRes, error)
+	// Create/Record project defined by CreateProjectReq message for a specified
+	// name, description and status.
+	// The method will return a Project message/entity that will
+	// contain the newly created project_id value for this client
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	CreateProject(ctx context.Context, in *CreateProjectReq, opts ...grpc.CallOption) (*CreateProjectRes, error)
+	// list projects for the current org
+	// The method will return a list of Project messages/entities
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	ListProjects(ctx context.Context, in *ListProjectsReq, opts ...grpc.CallOption) (*ListProjectsRes, error)
+	// Update project defined by EditProjectByIdReq message for a specified
+	// project id.
+	// The method will return a Project message/entity that will
+	// contain the updated details for the project_id
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	EditProjectById(ctx context.Context, in *EditProjectByIdReq, opts ...grpc.CallOption) (*EditProjectByIdRes, error)
+	// Closes project defined by CloseProjectByIdReq message for a specified
+	// project id.
+	// The method will stop all child campaigns and return a an empty response
+	// if successful
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	CloseProjectById(ctx context.Context, in *CloseProjectByIdReq, opts ...grpc.CallOption) (*CloseProjectByIdRes, error)
+	// Get project details defined by GetProjectByIdReq message for a specified
+	// project id.
+	// The method will return a GetProjectByIdRes message/entity that will
+	// contain all the project details for the project_id
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	GetProjectById(ctx context.Context, in *GetProjectByIdReq, opts ...grpc.CallOption) (*Project, error)
+	// Create/Record canned message defined by CreateCannedMessageReq message for a specified
+	// name, description and message_body.
+	// The method will return a CannedMessage message/entity that will
+	// contain the newly created canned message details for this client
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	CreateCannedMessage(ctx context.Context, in *CreateCannedMessageReq, opts ...grpc.CallOption) (*CannedMessage, error)
+	// list canned messages for the current org
+	// The method will return a list of canned messages/entities
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	ListCannedMessages(ctx context.Context, in *ListCannedMessagesReq, opts ...grpc.CallOption) (*ListCannedMessagesRes, error)
+	// Update canned message defined by UpdateCannedMessageReq message for a specified
+	// name, description and message_body.
+	// The method will return a CannedMessage message/entity that will
+	// contain the updated canned message details for this client
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	UpdateCannedMessage(ctx context.Context, in *UpdateCannedMessageReq, opts ...grpc.CallOption) (*CannedMessage, error)
+	// Get canned message details for the canned_message_id
+	// The method will return an canned message/entity
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	GetCannedMessageById(ctx context.Context, in *GetCannedMessageByIdReq, opts ...grpc.CallOption) (*CannedMessageWithGroup, error)
+	// Delete canned message details for the canned_message_id
+	// The method will delete an canned message/entity
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	DeleteCannedMessageById(ctx context.Context, in *DeleteCannedMessageByIdReq, opts ...grpc.CallOption) (*DeleteCannedMessageByIdRes, error)
+	// Create/Record canned message group defined by CreateCannedMessageGroup Req message for a specified
+	// name and description.
+	// The method will return a CannedMessageGroup message/entity that will
+	// contain the newly created canned message group details for this client
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	CreateCannedMessageGroup(ctx context.Context, in *CreateCannedMessageGroupReq, opts ...grpc.CallOption) (*CannedMessageGroup, error)
+	// list canned message groups for the current org
+	// The method will return a list of canned message groups/entities
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	ListCannedMessageGroups(ctx context.Context, in *ListCannedMessageGroupsReq, opts ...grpc.CallOption) (*ListCannedMessageGroupsRes, error)
+	// Update canned message group defined by UpdateCannedMessageGroupReq message for a specified
+	// name and description.
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	UpdateCannedMessageGroup(ctx context.Context, in *UpdateCannedMessageGroupReq, opts ...grpc.CallOption) (*UpdateCannedMessageGroupRes, error)
+	// Delete canned message group and all the related messages for the canned_message_group_id
+	// The method will delete an canned message group/entity
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	DeleteCannedMessageGroup(ctx context.Context, in *DeleteCannedMessageGroupReq, opts ...grpc.CallOption) (*DeleteCannedMessageGroupRes, error)
+	// list canned messages for the group
+	// The method will return a list of canned messages/entities
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	ListCannedMessagesByGroupId(ctx context.Context, in *ListCannedMessagesByGroupIdReq, opts ...grpc.CallOption) (*ListCannedMessagesByGroupIdRes, error)
+	// Get canned message group details for the canned_message_group_id
+	// The method will return an canned message group/entity
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	GetCannedMessageGroupById(ctx context.Context, in *GetCannedMessageGroupByIdReq, opts ...grpc.CallOption) (*CannedMessageGroup, error)
 }
 
 type omniApiClient struct {
@@ -767,6 +893,150 @@ func (c *omniApiClient) UpdateSignature(ctx context.Context, in *UpdateSignature
 	return out, nil
 }
 
+func (c *omniApiClient) CreateProject(ctx context.Context, in *CreateProjectReq, opts ...grpc.CallOption) (*CreateProjectRes, error) {
+	out := new(CreateProjectRes)
+	err := c.cc.Invoke(ctx, OmniApi_CreateProject_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *omniApiClient) ListProjects(ctx context.Context, in *ListProjectsReq, opts ...grpc.CallOption) (*ListProjectsRes, error) {
+	out := new(ListProjectsRes)
+	err := c.cc.Invoke(ctx, OmniApi_ListProjects_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *omniApiClient) EditProjectById(ctx context.Context, in *EditProjectByIdReq, opts ...grpc.CallOption) (*EditProjectByIdRes, error) {
+	out := new(EditProjectByIdRes)
+	err := c.cc.Invoke(ctx, OmniApi_EditProjectById_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *omniApiClient) CloseProjectById(ctx context.Context, in *CloseProjectByIdReq, opts ...grpc.CallOption) (*CloseProjectByIdRes, error) {
+	out := new(CloseProjectByIdRes)
+	err := c.cc.Invoke(ctx, OmniApi_CloseProjectById_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *omniApiClient) GetProjectById(ctx context.Context, in *GetProjectByIdReq, opts ...grpc.CallOption) (*Project, error) {
+	out := new(Project)
+	err := c.cc.Invoke(ctx, OmniApi_GetProjectById_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *omniApiClient) CreateCannedMessage(ctx context.Context, in *CreateCannedMessageReq, opts ...grpc.CallOption) (*CannedMessage, error) {
+	out := new(CannedMessage)
+	err := c.cc.Invoke(ctx, OmniApi_CreateCannedMessage_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *omniApiClient) ListCannedMessages(ctx context.Context, in *ListCannedMessagesReq, opts ...grpc.CallOption) (*ListCannedMessagesRes, error) {
+	out := new(ListCannedMessagesRes)
+	err := c.cc.Invoke(ctx, OmniApi_ListCannedMessages_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *omniApiClient) UpdateCannedMessage(ctx context.Context, in *UpdateCannedMessageReq, opts ...grpc.CallOption) (*CannedMessage, error) {
+	out := new(CannedMessage)
+	err := c.cc.Invoke(ctx, OmniApi_UpdateCannedMessage_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *omniApiClient) GetCannedMessageById(ctx context.Context, in *GetCannedMessageByIdReq, opts ...grpc.CallOption) (*CannedMessageWithGroup, error) {
+	out := new(CannedMessageWithGroup)
+	err := c.cc.Invoke(ctx, OmniApi_GetCannedMessageById_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *omniApiClient) DeleteCannedMessageById(ctx context.Context, in *DeleteCannedMessageByIdReq, opts ...grpc.CallOption) (*DeleteCannedMessageByIdRes, error) {
+	out := new(DeleteCannedMessageByIdRes)
+	err := c.cc.Invoke(ctx, OmniApi_DeleteCannedMessageById_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *omniApiClient) CreateCannedMessageGroup(ctx context.Context, in *CreateCannedMessageGroupReq, opts ...grpc.CallOption) (*CannedMessageGroup, error) {
+	out := new(CannedMessageGroup)
+	err := c.cc.Invoke(ctx, OmniApi_CreateCannedMessageGroup_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *omniApiClient) ListCannedMessageGroups(ctx context.Context, in *ListCannedMessageGroupsReq, opts ...grpc.CallOption) (*ListCannedMessageGroupsRes, error) {
+	out := new(ListCannedMessageGroupsRes)
+	err := c.cc.Invoke(ctx, OmniApi_ListCannedMessageGroups_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *omniApiClient) UpdateCannedMessageGroup(ctx context.Context, in *UpdateCannedMessageGroupReq, opts ...grpc.CallOption) (*UpdateCannedMessageGroupRes, error) {
+	out := new(UpdateCannedMessageGroupRes)
+	err := c.cc.Invoke(ctx, OmniApi_UpdateCannedMessageGroup_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *omniApiClient) DeleteCannedMessageGroup(ctx context.Context, in *DeleteCannedMessageGroupReq, opts ...grpc.CallOption) (*DeleteCannedMessageGroupRes, error) {
+	out := new(DeleteCannedMessageGroupRes)
+	err := c.cc.Invoke(ctx, OmniApi_DeleteCannedMessageGroup_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *omniApiClient) ListCannedMessagesByGroupId(ctx context.Context, in *ListCannedMessagesByGroupIdReq, opts ...grpc.CallOption) (*ListCannedMessagesByGroupIdRes, error) {
+	out := new(ListCannedMessagesByGroupIdRes)
+	err := c.cc.Invoke(ctx, OmniApi_ListCannedMessagesByGroupId_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *omniApiClient) GetCannedMessageGroupById(ctx context.Context, in *GetCannedMessageGroupByIdReq, opts ...grpc.CallOption) (*CannedMessageGroup, error) {
+	out := new(CannedMessageGroup)
+	err := c.cc.Invoke(ctx, OmniApi_GetCannedMessageGroupById_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OmniApiServer is the server API for OmniApi service.
 // All implementations must embed UnimplementedOmniApiServer
 // for forward compatibility
@@ -966,6 +1236,116 @@ type OmniApiServer interface {
 	//
 	//	OMNI_BOSS
 	UpdateSignature(context.Context, *UpdateSignatureReq) (*UpdateSignatureRes, error)
+	// Create/Record project defined by CreateProjectReq message for a specified
+	// name, description and status.
+	// The method will return a Project message/entity that will
+	// contain the newly created project_id value for this client
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	CreateProject(context.Context, *CreateProjectReq) (*CreateProjectRes, error)
+	// list projects for the current org
+	// The method will return a list of Project messages/entities
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	ListProjects(context.Context, *ListProjectsReq) (*ListProjectsRes, error)
+	// Update project defined by EditProjectByIdReq message for a specified
+	// project id.
+	// The method will return a Project message/entity that will
+	// contain the updated details for the project_id
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	EditProjectById(context.Context, *EditProjectByIdReq) (*EditProjectByIdRes, error)
+	// Closes project defined by CloseProjectByIdReq message for a specified
+	// project id.
+	// The method will stop all child campaigns and return a an empty response
+	// if successful
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	CloseProjectById(context.Context, *CloseProjectByIdReq) (*CloseProjectByIdRes, error)
+	// Get project details defined by GetProjectByIdReq message for a specified
+	// project id.
+	// The method will return a GetProjectByIdRes message/entity that will
+	// contain all the project details for the project_id
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	GetProjectById(context.Context, *GetProjectByIdReq) (*Project, error)
+	// Create/Record canned message defined by CreateCannedMessageReq message for a specified
+	// name, description and message_body.
+	// The method will return a CannedMessage message/entity that will
+	// contain the newly created canned message details for this client
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	CreateCannedMessage(context.Context, *CreateCannedMessageReq) (*CannedMessage, error)
+	// list canned messages for the current org
+	// The method will return a list of canned messages/entities
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	ListCannedMessages(context.Context, *ListCannedMessagesReq) (*ListCannedMessagesRes, error)
+	// Update canned message defined by UpdateCannedMessageReq message for a specified
+	// name, description and message_body.
+	// The method will return a CannedMessage message/entity that will
+	// contain the updated canned message details for this client
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	UpdateCannedMessage(context.Context, *UpdateCannedMessageReq) (*CannedMessage, error)
+	// Get canned message details for the canned_message_id
+	// The method will return an canned message/entity
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	GetCannedMessageById(context.Context, *GetCannedMessageByIdReq) (*CannedMessageWithGroup, error)
+	// Delete canned message details for the canned_message_id
+	// The method will delete an canned message/entity
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	DeleteCannedMessageById(context.Context, *DeleteCannedMessageByIdReq) (*DeleteCannedMessageByIdRes, error)
+	// Create/Record canned message group defined by CreateCannedMessageGroup Req message for a specified
+	// name and description.
+	// The method will return a CannedMessageGroup message/entity that will
+	// contain the newly created canned message group details for this client
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	CreateCannedMessageGroup(context.Context, *CreateCannedMessageGroupReq) (*CannedMessageGroup, error)
+	// list canned message groups for the current org
+	// The method will return a list of canned message groups/entities
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	ListCannedMessageGroups(context.Context, *ListCannedMessageGroupsReq) (*ListCannedMessageGroupsRes, error)
+	// Update canned message group defined by UpdateCannedMessageGroupReq message for a specified
+	// name and description.
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	UpdateCannedMessageGroup(context.Context, *UpdateCannedMessageGroupReq) (*UpdateCannedMessageGroupRes, error)
+	// Delete canned message group and all the related messages for the canned_message_group_id
+	// The method will delete an canned message group/entity
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	DeleteCannedMessageGroup(context.Context, *DeleteCannedMessageGroupReq) (*DeleteCannedMessageGroupRes, error)
+	// list canned messages for the group
+	// The method will return a list of canned messages/entities
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	ListCannedMessagesByGroupId(context.Context, *ListCannedMessagesByGroupIdReq) (*ListCannedMessagesByGroupIdRes, error)
+	// Get canned message group details for the canned_message_group_id
+	// The method will return an canned message group/entity
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	GetCannedMessageGroupById(context.Context, *GetCannedMessageGroupByIdReq) (*CannedMessageGroup, error)
 	mustEmbedUnimplementedOmniApiServer()
 }
 
@@ -1119,6 +1499,54 @@ func (UnimplementedOmniApiServer) ListSignatures(context.Context, *ListSignature
 }
 func (UnimplementedOmniApiServer) UpdateSignature(context.Context, *UpdateSignatureReq) (*UpdateSignatureRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateSignature not implemented")
+}
+func (UnimplementedOmniApiServer) CreateProject(context.Context, *CreateProjectReq) (*CreateProjectRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateProject not implemented")
+}
+func (UnimplementedOmniApiServer) ListProjects(context.Context, *ListProjectsReq) (*ListProjectsRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListProjects not implemented")
+}
+func (UnimplementedOmniApiServer) EditProjectById(context.Context, *EditProjectByIdReq) (*EditProjectByIdRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EditProjectById not implemented")
+}
+func (UnimplementedOmniApiServer) CloseProjectById(context.Context, *CloseProjectByIdReq) (*CloseProjectByIdRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CloseProjectById not implemented")
+}
+func (UnimplementedOmniApiServer) GetProjectById(context.Context, *GetProjectByIdReq) (*Project, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProjectById not implemented")
+}
+func (UnimplementedOmniApiServer) CreateCannedMessage(context.Context, *CreateCannedMessageReq) (*CannedMessage, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateCannedMessage not implemented")
+}
+func (UnimplementedOmniApiServer) ListCannedMessages(context.Context, *ListCannedMessagesReq) (*ListCannedMessagesRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListCannedMessages not implemented")
+}
+func (UnimplementedOmniApiServer) UpdateCannedMessage(context.Context, *UpdateCannedMessageReq) (*CannedMessage, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateCannedMessage not implemented")
+}
+func (UnimplementedOmniApiServer) GetCannedMessageById(context.Context, *GetCannedMessageByIdReq) (*CannedMessageWithGroup, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCannedMessageById not implemented")
+}
+func (UnimplementedOmniApiServer) DeleteCannedMessageById(context.Context, *DeleteCannedMessageByIdReq) (*DeleteCannedMessageByIdRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteCannedMessageById not implemented")
+}
+func (UnimplementedOmniApiServer) CreateCannedMessageGroup(context.Context, *CreateCannedMessageGroupReq) (*CannedMessageGroup, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateCannedMessageGroup not implemented")
+}
+func (UnimplementedOmniApiServer) ListCannedMessageGroups(context.Context, *ListCannedMessageGroupsReq) (*ListCannedMessageGroupsRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListCannedMessageGroups not implemented")
+}
+func (UnimplementedOmniApiServer) UpdateCannedMessageGroup(context.Context, *UpdateCannedMessageGroupReq) (*UpdateCannedMessageGroupRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateCannedMessageGroup not implemented")
+}
+func (UnimplementedOmniApiServer) DeleteCannedMessageGroup(context.Context, *DeleteCannedMessageGroupReq) (*DeleteCannedMessageGroupRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteCannedMessageGroup not implemented")
+}
+func (UnimplementedOmniApiServer) ListCannedMessagesByGroupId(context.Context, *ListCannedMessagesByGroupIdReq) (*ListCannedMessagesByGroupIdRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListCannedMessagesByGroupId not implemented")
+}
+func (UnimplementedOmniApiServer) GetCannedMessageGroupById(context.Context, *GetCannedMessageGroupByIdReq) (*CannedMessageGroup, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCannedMessageGroupById not implemented")
 }
 func (UnimplementedOmniApiServer) mustEmbedUnimplementedOmniApiServer() {}
 
@@ -2021,6 +2449,294 @@ func _OmniApi_UpdateSignature_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OmniApi_CreateProject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateProjectReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmniApiServer).CreateProject(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OmniApi_CreateProject_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmniApiServer).CreateProject(ctx, req.(*CreateProjectReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OmniApi_ListProjects_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListProjectsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmniApiServer).ListProjects(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OmniApi_ListProjects_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmniApiServer).ListProjects(ctx, req.(*ListProjectsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OmniApi_EditProjectById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EditProjectByIdReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmniApiServer).EditProjectById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OmniApi_EditProjectById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmniApiServer).EditProjectById(ctx, req.(*EditProjectByIdReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OmniApi_CloseProjectById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CloseProjectByIdReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmniApiServer).CloseProjectById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OmniApi_CloseProjectById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmniApiServer).CloseProjectById(ctx, req.(*CloseProjectByIdReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OmniApi_GetProjectById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetProjectByIdReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmniApiServer).GetProjectById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OmniApi_GetProjectById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmniApiServer).GetProjectById(ctx, req.(*GetProjectByIdReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OmniApi_CreateCannedMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateCannedMessageReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmniApiServer).CreateCannedMessage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OmniApi_CreateCannedMessage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmniApiServer).CreateCannedMessage(ctx, req.(*CreateCannedMessageReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OmniApi_ListCannedMessages_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListCannedMessagesReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmniApiServer).ListCannedMessages(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OmniApi_ListCannedMessages_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmniApiServer).ListCannedMessages(ctx, req.(*ListCannedMessagesReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OmniApi_UpdateCannedMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateCannedMessageReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmniApiServer).UpdateCannedMessage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OmniApi_UpdateCannedMessage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmniApiServer).UpdateCannedMessage(ctx, req.(*UpdateCannedMessageReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OmniApi_GetCannedMessageById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCannedMessageByIdReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmniApiServer).GetCannedMessageById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OmniApi_GetCannedMessageById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmniApiServer).GetCannedMessageById(ctx, req.(*GetCannedMessageByIdReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OmniApi_DeleteCannedMessageById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteCannedMessageByIdReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmniApiServer).DeleteCannedMessageById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OmniApi_DeleteCannedMessageById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmniApiServer).DeleteCannedMessageById(ctx, req.(*DeleteCannedMessageByIdReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OmniApi_CreateCannedMessageGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateCannedMessageGroupReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmniApiServer).CreateCannedMessageGroup(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OmniApi_CreateCannedMessageGroup_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmniApiServer).CreateCannedMessageGroup(ctx, req.(*CreateCannedMessageGroupReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OmniApi_ListCannedMessageGroups_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListCannedMessageGroupsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmniApiServer).ListCannedMessageGroups(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OmniApi_ListCannedMessageGroups_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmniApiServer).ListCannedMessageGroups(ctx, req.(*ListCannedMessageGroupsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OmniApi_UpdateCannedMessageGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateCannedMessageGroupReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmniApiServer).UpdateCannedMessageGroup(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OmniApi_UpdateCannedMessageGroup_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmniApiServer).UpdateCannedMessageGroup(ctx, req.(*UpdateCannedMessageGroupReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OmniApi_DeleteCannedMessageGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteCannedMessageGroupReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmniApiServer).DeleteCannedMessageGroup(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OmniApi_DeleteCannedMessageGroup_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmniApiServer).DeleteCannedMessageGroup(ctx, req.(*DeleteCannedMessageGroupReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OmniApi_ListCannedMessagesByGroupId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListCannedMessagesByGroupIdReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmniApiServer).ListCannedMessagesByGroupId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OmniApi_ListCannedMessagesByGroupId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmniApiServer).ListCannedMessagesByGroupId(ctx, req.(*ListCannedMessagesByGroupIdReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OmniApi_GetCannedMessageGroupById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCannedMessageGroupByIdReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmniApiServer).GetCannedMessageGroupById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OmniApi_GetCannedMessageGroupById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmniApiServer).GetCannedMessageGroupById(ctx, req.(*GetCannedMessageGroupByIdReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // OmniApi_ServiceDesc is the grpc.ServiceDesc for OmniApi service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -2215,6 +2931,70 @@ var OmniApi_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateSignature",
 			Handler:    _OmniApi_UpdateSignature_Handler,
+		},
+		{
+			MethodName: "CreateProject",
+			Handler:    _OmniApi_CreateProject_Handler,
+		},
+		{
+			MethodName: "ListProjects",
+			Handler:    _OmniApi_ListProjects_Handler,
+		},
+		{
+			MethodName: "EditProjectById",
+			Handler:    _OmniApi_EditProjectById_Handler,
+		},
+		{
+			MethodName: "CloseProjectById",
+			Handler:    _OmniApi_CloseProjectById_Handler,
+		},
+		{
+			MethodName: "GetProjectById",
+			Handler:    _OmniApi_GetProjectById_Handler,
+		},
+		{
+			MethodName: "CreateCannedMessage",
+			Handler:    _OmniApi_CreateCannedMessage_Handler,
+		},
+		{
+			MethodName: "ListCannedMessages",
+			Handler:    _OmniApi_ListCannedMessages_Handler,
+		},
+		{
+			MethodName: "UpdateCannedMessage",
+			Handler:    _OmniApi_UpdateCannedMessage_Handler,
+		},
+		{
+			MethodName: "GetCannedMessageById",
+			Handler:    _OmniApi_GetCannedMessageById_Handler,
+		},
+		{
+			MethodName: "DeleteCannedMessageById",
+			Handler:    _OmniApi_DeleteCannedMessageById_Handler,
+		},
+		{
+			MethodName: "CreateCannedMessageGroup",
+			Handler:    _OmniApi_CreateCannedMessageGroup_Handler,
+		},
+		{
+			MethodName: "ListCannedMessageGroups",
+			Handler:    _OmniApi_ListCannedMessageGroups_Handler,
+		},
+		{
+			MethodName: "UpdateCannedMessageGroup",
+			Handler:    _OmniApi_UpdateCannedMessageGroup_Handler,
+		},
+		{
+			MethodName: "DeleteCannedMessageGroup",
+			Handler:    _OmniApi_DeleteCannedMessageGroup_Handler,
+		},
+		{
+			MethodName: "ListCannedMessagesByGroupId",
+			Handler:    _OmniApi_ListCannedMessagesByGroupId_Handler,
+		},
+		{
+			MethodName: "GetCannedMessageGroupById",
+			Handler:    _OmniApi_GetCannedMessageGroupById_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

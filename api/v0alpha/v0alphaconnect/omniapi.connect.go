@@ -164,6 +164,50 @@ const (
 	OmniApiListSignaturesProcedure = "/api.v0alpha.OmniApi/ListSignatures"
 	// OmniApiUpdateSignatureProcedure is the fully-qualified name of the OmniApi's UpdateSignature RPC.
 	OmniApiUpdateSignatureProcedure = "/api.v0alpha.OmniApi/UpdateSignature"
+	// OmniApiCreateProjectProcedure is the fully-qualified name of the OmniApi's CreateProject RPC.
+	OmniApiCreateProjectProcedure = "/api.v0alpha.OmniApi/CreateProject"
+	// OmniApiListProjectsProcedure is the fully-qualified name of the OmniApi's ListProjects RPC.
+	OmniApiListProjectsProcedure = "/api.v0alpha.OmniApi/ListProjects"
+	// OmniApiEditProjectByIdProcedure is the fully-qualified name of the OmniApi's EditProjectById RPC.
+	OmniApiEditProjectByIdProcedure = "/api.v0alpha.OmniApi/EditProjectById"
+	// OmniApiCloseProjectByIdProcedure is the fully-qualified name of the OmniApi's CloseProjectById
+	// RPC.
+	OmniApiCloseProjectByIdProcedure = "/api.v0alpha.OmniApi/CloseProjectById"
+	// OmniApiGetProjectByIdProcedure is the fully-qualified name of the OmniApi's GetProjectById RPC.
+	OmniApiGetProjectByIdProcedure = "/api.v0alpha.OmniApi/GetProjectById"
+	// OmniApiCreateCannedMessageProcedure is the fully-qualified name of the OmniApi's
+	// CreateCannedMessage RPC.
+	OmniApiCreateCannedMessageProcedure = "/api.v0alpha.OmniApi/CreateCannedMessage"
+	// OmniApiListCannedMessagesProcedure is the fully-qualified name of the OmniApi's
+	// ListCannedMessages RPC.
+	OmniApiListCannedMessagesProcedure = "/api.v0alpha.OmniApi/ListCannedMessages"
+	// OmniApiUpdateCannedMessageProcedure is the fully-qualified name of the OmniApi's
+	// UpdateCannedMessage RPC.
+	OmniApiUpdateCannedMessageProcedure = "/api.v0alpha.OmniApi/UpdateCannedMessage"
+	// OmniApiGetCannedMessageByIdProcedure is the fully-qualified name of the OmniApi's
+	// GetCannedMessageById RPC.
+	OmniApiGetCannedMessageByIdProcedure = "/api.v0alpha.OmniApi/GetCannedMessageById"
+	// OmniApiDeleteCannedMessageByIdProcedure is the fully-qualified name of the OmniApi's
+	// DeleteCannedMessageById RPC.
+	OmniApiDeleteCannedMessageByIdProcedure = "/api.v0alpha.OmniApi/DeleteCannedMessageById"
+	// OmniApiCreateCannedMessageGroupProcedure is the fully-qualified name of the OmniApi's
+	// CreateCannedMessageGroup RPC.
+	OmniApiCreateCannedMessageGroupProcedure = "/api.v0alpha.OmniApi/CreateCannedMessageGroup"
+	// OmniApiListCannedMessageGroupsProcedure is the fully-qualified name of the OmniApi's
+	// ListCannedMessageGroups RPC.
+	OmniApiListCannedMessageGroupsProcedure = "/api.v0alpha.OmniApi/ListCannedMessageGroups"
+	// OmniApiUpdateCannedMessageGroupProcedure is the fully-qualified name of the OmniApi's
+	// UpdateCannedMessageGroup RPC.
+	OmniApiUpdateCannedMessageGroupProcedure = "/api.v0alpha.OmniApi/UpdateCannedMessageGroup"
+	// OmniApiDeleteCannedMessageGroupProcedure is the fully-qualified name of the OmniApi's
+	// DeleteCannedMessageGroup RPC.
+	OmniApiDeleteCannedMessageGroupProcedure = "/api.v0alpha.OmniApi/DeleteCannedMessageGroup"
+	// OmniApiListCannedMessagesByGroupIdProcedure is the fully-qualified name of the OmniApi's
+	// ListCannedMessagesByGroupId RPC.
+	OmniApiListCannedMessagesByGroupIdProcedure = "/api.v0alpha.OmniApi/ListCannedMessagesByGroupId"
+	// OmniApiGetCannedMessageGroupByIdProcedure is the fully-qualified name of the OmniApi's
+	// GetCannedMessageGroupById RPC.
+	OmniApiGetCannedMessageGroupByIdProcedure = "/api.v0alpha.OmniApi/GetCannedMessageGroupById"
 )
 
 // OmniApiClient is a client for the api.v0alpha.OmniApi service.
@@ -363,6 +407,116 @@ type OmniApiClient interface {
 	//
 	//	OMNI_BOSS
 	UpdateSignature(context.Context, *connect_go.Request[v0alpha.UpdateSignatureReq]) (*connect_go.Response[v0alpha.UpdateSignatureRes], error)
+	// Create/Record project defined by CreateProjectReq message for a specified
+	// name, description and status.
+	// The method will return a Project message/entity that will
+	// contain the newly created project_id value for this client
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	CreateProject(context.Context, *connect_go.Request[v0alpha.CreateProjectReq]) (*connect_go.Response[v0alpha.CreateProjectRes], error)
+	// list projects for the current org
+	// The method will return a list of Project messages/entities
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	ListProjects(context.Context, *connect_go.Request[v0alpha.ListProjectsReq]) (*connect_go.Response[v0alpha.ListProjectsRes], error)
+	// Update project defined by EditProjectByIdReq message for a specified
+	// project id.
+	// The method will return a Project message/entity that will
+	// contain the updated details for the project_id
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	EditProjectById(context.Context, *connect_go.Request[v0alpha.EditProjectByIdReq]) (*connect_go.Response[v0alpha.EditProjectByIdRes], error)
+	// Closes project defined by CloseProjectByIdReq message for a specified
+	// project id.
+	// The method will stop all child campaigns and return a an empty response
+	// if successful
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	CloseProjectById(context.Context, *connect_go.Request[v0alpha.CloseProjectByIdReq]) (*connect_go.Response[v0alpha.CloseProjectByIdRes], error)
+	// Get project details defined by GetProjectByIdReq message for a specified
+	// project id.
+	// The method will return a GetProjectByIdRes message/entity that will
+	// contain all the project details for the project_id
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	GetProjectById(context.Context, *connect_go.Request[v0alpha.GetProjectByIdReq]) (*connect_go.Response[v0alpha.Project], error)
+	// Create/Record canned message defined by CreateCannedMessageReq message for a specified
+	// name, description and message_body.
+	// The method will return a CannedMessage message/entity that will
+	// contain the newly created canned message details for this client
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	CreateCannedMessage(context.Context, *connect_go.Request[v0alpha.CreateCannedMessageReq]) (*connect_go.Response[v0alpha.CannedMessage], error)
+	// list canned messages for the current org
+	// The method will return a list of canned messages/entities
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	ListCannedMessages(context.Context, *connect_go.Request[v0alpha.ListCannedMessagesReq]) (*connect_go.Response[v0alpha.ListCannedMessagesRes], error)
+	// Update canned message defined by UpdateCannedMessageReq message for a specified
+	// name, description and message_body.
+	// The method will return a CannedMessage message/entity that will
+	// contain the updated canned message details for this client
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	UpdateCannedMessage(context.Context, *connect_go.Request[v0alpha.UpdateCannedMessageReq]) (*connect_go.Response[v0alpha.CannedMessage], error)
+	// Get canned message details for the canned_message_id
+	// The method will return an canned message/entity
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	GetCannedMessageById(context.Context, *connect_go.Request[v0alpha.GetCannedMessageByIdReq]) (*connect_go.Response[v0alpha.CannedMessageWithGroup], error)
+	// Delete canned message details for the canned_message_id
+	// The method will delete an canned message/entity
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	DeleteCannedMessageById(context.Context, *connect_go.Request[v0alpha.DeleteCannedMessageByIdReq]) (*connect_go.Response[v0alpha.DeleteCannedMessageByIdRes], error)
+	// Create/Record canned message group defined by CreateCannedMessageGroup Req message for a specified
+	// name and description.
+	// The method will return a CannedMessageGroup message/entity that will
+	// contain the newly created canned message group details for this client
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	CreateCannedMessageGroup(context.Context, *connect_go.Request[v0alpha.CreateCannedMessageGroupReq]) (*connect_go.Response[v0alpha.CannedMessageGroup], error)
+	// list canned message groups for the current org
+	// The method will return a list of canned message groups/entities
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	ListCannedMessageGroups(context.Context, *connect_go.Request[v0alpha.ListCannedMessageGroupsReq]) (*connect_go.Response[v0alpha.ListCannedMessageGroupsRes], error)
+	// Update canned message group defined by UpdateCannedMessageGroupReq message for a specified
+	// name and description.
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	UpdateCannedMessageGroup(context.Context, *connect_go.Request[v0alpha.UpdateCannedMessageGroupReq]) (*connect_go.Response[v0alpha.UpdateCannedMessageGroupRes], error)
+	// Delete canned message group and all the related messages for the canned_message_group_id
+	// The method will delete an canned message group/entity
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	DeleteCannedMessageGroup(context.Context, *connect_go.Request[v0alpha.DeleteCannedMessageGroupReq]) (*connect_go.Response[v0alpha.DeleteCannedMessageGroupRes], error)
+	// list canned messages for the group
+	// The method will return a list of canned messages/entities
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	ListCannedMessagesByGroupId(context.Context, *connect_go.Request[v0alpha.ListCannedMessagesByGroupIdReq]) (*connect_go.Response[v0alpha.ListCannedMessagesByGroupIdRes], error)
+	// Get canned message group details for the canned_message_group_id
+	// The method will return an canned message group/entity
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	GetCannedMessageGroupById(context.Context, *connect_go.Request[v0alpha.GetCannedMessageGroupByIdReq]) (*connect_go.Response[v0alpha.CannedMessageGroup], error)
 }
 
 // NewOmniApiClient constructs a client for the api.v0alpha.OmniApi service. By default, it uses the
@@ -620,6 +774,86 @@ func NewOmniApiClient(httpClient connect_go.HTTPClient, baseURL string, opts ...
 			baseURL+OmniApiUpdateSignatureProcedure,
 			opts...,
 		),
+		createProject: connect_go.NewClient[v0alpha.CreateProjectReq, v0alpha.CreateProjectRes](
+			httpClient,
+			baseURL+OmniApiCreateProjectProcedure,
+			opts...,
+		),
+		listProjects: connect_go.NewClient[v0alpha.ListProjectsReq, v0alpha.ListProjectsRes](
+			httpClient,
+			baseURL+OmniApiListProjectsProcedure,
+			opts...,
+		),
+		editProjectById: connect_go.NewClient[v0alpha.EditProjectByIdReq, v0alpha.EditProjectByIdRes](
+			httpClient,
+			baseURL+OmniApiEditProjectByIdProcedure,
+			opts...,
+		),
+		closeProjectById: connect_go.NewClient[v0alpha.CloseProjectByIdReq, v0alpha.CloseProjectByIdRes](
+			httpClient,
+			baseURL+OmniApiCloseProjectByIdProcedure,
+			opts...,
+		),
+		getProjectById: connect_go.NewClient[v0alpha.GetProjectByIdReq, v0alpha.Project](
+			httpClient,
+			baseURL+OmniApiGetProjectByIdProcedure,
+			opts...,
+		),
+		createCannedMessage: connect_go.NewClient[v0alpha.CreateCannedMessageReq, v0alpha.CannedMessage](
+			httpClient,
+			baseURL+OmniApiCreateCannedMessageProcedure,
+			opts...,
+		),
+		listCannedMessages: connect_go.NewClient[v0alpha.ListCannedMessagesReq, v0alpha.ListCannedMessagesRes](
+			httpClient,
+			baseURL+OmniApiListCannedMessagesProcedure,
+			opts...,
+		),
+		updateCannedMessage: connect_go.NewClient[v0alpha.UpdateCannedMessageReq, v0alpha.CannedMessage](
+			httpClient,
+			baseURL+OmniApiUpdateCannedMessageProcedure,
+			opts...,
+		),
+		getCannedMessageById: connect_go.NewClient[v0alpha.GetCannedMessageByIdReq, v0alpha.CannedMessageWithGroup](
+			httpClient,
+			baseURL+OmniApiGetCannedMessageByIdProcedure,
+			opts...,
+		),
+		deleteCannedMessageById: connect_go.NewClient[v0alpha.DeleteCannedMessageByIdReq, v0alpha.DeleteCannedMessageByIdRes](
+			httpClient,
+			baseURL+OmniApiDeleteCannedMessageByIdProcedure,
+			opts...,
+		),
+		createCannedMessageGroup: connect_go.NewClient[v0alpha.CreateCannedMessageGroupReq, v0alpha.CannedMessageGroup](
+			httpClient,
+			baseURL+OmniApiCreateCannedMessageGroupProcedure,
+			opts...,
+		),
+		listCannedMessageGroups: connect_go.NewClient[v0alpha.ListCannedMessageGroupsReq, v0alpha.ListCannedMessageGroupsRes](
+			httpClient,
+			baseURL+OmniApiListCannedMessageGroupsProcedure,
+			opts...,
+		),
+		updateCannedMessageGroup: connect_go.NewClient[v0alpha.UpdateCannedMessageGroupReq, v0alpha.UpdateCannedMessageGroupRes](
+			httpClient,
+			baseURL+OmniApiUpdateCannedMessageGroupProcedure,
+			opts...,
+		),
+		deleteCannedMessageGroup: connect_go.NewClient[v0alpha.DeleteCannedMessageGroupReq, v0alpha.DeleteCannedMessageGroupRes](
+			httpClient,
+			baseURL+OmniApiDeleteCannedMessageGroupProcedure,
+			opts...,
+		),
+		listCannedMessagesByGroupId: connect_go.NewClient[v0alpha.ListCannedMessagesByGroupIdReq, v0alpha.ListCannedMessagesByGroupIdRes](
+			httpClient,
+			baseURL+OmniApiListCannedMessagesByGroupIdProcedure,
+			opts...,
+		),
+		getCannedMessageGroupById: connect_go.NewClient[v0alpha.GetCannedMessageGroupByIdReq, v0alpha.CannedMessageGroup](
+			httpClient,
+			baseURL+OmniApiGetCannedMessageGroupByIdProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -674,6 +908,22 @@ type omniApiClient struct {
 	deleteSignature              *connect_go.Client[v0alpha.DeleteSignatureReq, v0alpha.DeleteSignatureRes]
 	listSignatures               *connect_go.Client[v0alpha.ListSignaturesReq, v0alpha.ListSignaturesRes]
 	updateSignature              *connect_go.Client[v0alpha.UpdateSignatureReq, v0alpha.UpdateSignatureRes]
+	createProject                *connect_go.Client[v0alpha.CreateProjectReq, v0alpha.CreateProjectRes]
+	listProjects                 *connect_go.Client[v0alpha.ListProjectsReq, v0alpha.ListProjectsRes]
+	editProjectById              *connect_go.Client[v0alpha.EditProjectByIdReq, v0alpha.EditProjectByIdRes]
+	closeProjectById             *connect_go.Client[v0alpha.CloseProjectByIdReq, v0alpha.CloseProjectByIdRes]
+	getProjectById               *connect_go.Client[v0alpha.GetProjectByIdReq, v0alpha.Project]
+	createCannedMessage          *connect_go.Client[v0alpha.CreateCannedMessageReq, v0alpha.CannedMessage]
+	listCannedMessages           *connect_go.Client[v0alpha.ListCannedMessagesReq, v0alpha.ListCannedMessagesRes]
+	updateCannedMessage          *connect_go.Client[v0alpha.UpdateCannedMessageReq, v0alpha.CannedMessage]
+	getCannedMessageById         *connect_go.Client[v0alpha.GetCannedMessageByIdReq, v0alpha.CannedMessageWithGroup]
+	deleteCannedMessageById      *connect_go.Client[v0alpha.DeleteCannedMessageByIdReq, v0alpha.DeleteCannedMessageByIdRes]
+	createCannedMessageGroup     *connect_go.Client[v0alpha.CreateCannedMessageGroupReq, v0alpha.CannedMessageGroup]
+	listCannedMessageGroups      *connect_go.Client[v0alpha.ListCannedMessageGroupsReq, v0alpha.ListCannedMessageGroupsRes]
+	updateCannedMessageGroup     *connect_go.Client[v0alpha.UpdateCannedMessageGroupReq, v0alpha.UpdateCannedMessageGroupRes]
+	deleteCannedMessageGroup     *connect_go.Client[v0alpha.DeleteCannedMessageGroupReq, v0alpha.DeleteCannedMessageGroupRes]
+	listCannedMessagesByGroupId  *connect_go.Client[v0alpha.ListCannedMessagesByGroupIdReq, v0alpha.ListCannedMessagesByGroupIdRes]
+	getCannedMessageGroupById    *connect_go.Client[v0alpha.GetCannedMessageGroupByIdReq, v0alpha.CannedMessageGroup]
 }
 
 // ArchiveCampaign calls api.v0alpha.OmniApi.ArchiveCampaign.
@@ -921,6 +1171,86 @@ func (c *omniApiClient) UpdateSignature(ctx context.Context, req *connect_go.Req
 	return c.updateSignature.CallUnary(ctx, req)
 }
 
+// CreateProject calls api.v0alpha.OmniApi.CreateProject.
+func (c *omniApiClient) CreateProject(ctx context.Context, req *connect_go.Request[v0alpha.CreateProjectReq]) (*connect_go.Response[v0alpha.CreateProjectRes], error) {
+	return c.createProject.CallUnary(ctx, req)
+}
+
+// ListProjects calls api.v0alpha.OmniApi.ListProjects.
+func (c *omniApiClient) ListProjects(ctx context.Context, req *connect_go.Request[v0alpha.ListProjectsReq]) (*connect_go.Response[v0alpha.ListProjectsRes], error) {
+	return c.listProjects.CallUnary(ctx, req)
+}
+
+// EditProjectById calls api.v0alpha.OmniApi.EditProjectById.
+func (c *omniApiClient) EditProjectById(ctx context.Context, req *connect_go.Request[v0alpha.EditProjectByIdReq]) (*connect_go.Response[v0alpha.EditProjectByIdRes], error) {
+	return c.editProjectById.CallUnary(ctx, req)
+}
+
+// CloseProjectById calls api.v0alpha.OmniApi.CloseProjectById.
+func (c *omniApiClient) CloseProjectById(ctx context.Context, req *connect_go.Request[v0alpha.CloseProjectByIdReq]) (*connect_go.Response[v0alpha.CloseProjectByIdRes], error) {
+	return c.closeProjectById.CallUnary(ctx, req)
+}
+
+// GetProjectById calls api.v0alpha.OmniApi.GetProjectById.
+func (c *omniApiClient) GetProjectById(ctx context.Context, req *connect_go.Request[v0alpha.GetProjectByIdReq]) (*connect_go.Response[v0alpha.Project], error) {
+	return c.getProjectById.CallUnary(ctx, req)
+}
+
+// CreateCannedMessage calls api.v0alpha.OmniApi.CreateCannedMessage.
+func (c *omniApiClient) CreateCannedMessage(ctx context.Context, req *connect_go.Request[v0alpha.CreateCannedMessageReq]) (*connect_go.Response[v0alpha.CannedMessage], error) {
+	return c.createCannedMessage.CallUnary(ctx, req)
+}
+
+// ListCannedMessages calls api.v0alpha.OmniApi.ListCannedMessages.
+func (c *omniApiClient) ListCannedMessages(ctx context.Context, req *connect_go.Request[v0alpha.ListCannedMessagesReq]) (*connect_go.Response[v0alpha.ListCannedMessagesRes], error) {
+	return c.listCannedMessages.CallUnary(ctx, req)
+}
+
+// UpdateCannedMessage calls api.v0alpha.OmniApi.UpdateCannedMessage.
+func (c *omniApiClient) UpdateCannedMessage(ctx context.Context, req *connect_go.Request[v0alpha.UpdateCannedMessageReq]) (*connect_go.Response[v0alpha.CannedMessage], error) {
+	return c.updateCannedMessage.CallUnary(ctx, req)
+}
+
+// GetCannedMessageById calls api.v0alpha.OmniApi.GetCannedMessageById.
+func (c *omniApiClient) GetCannedMessageById(ctx context.Context, req *connect_go.Request[v0alpha.GetCannedMessageByIdReq]) (*connect_go.Response[v0alpha.CannedMessageWithGroup], error) {
+	return c.getCannedMessageById.CallUnary(ctx, req)
+}
+
+// DeleteCannedMessageById calls api.v0alpha.OmniApi.DeleteCannedMessageById.
+func (c *omniApiClient) DeleteCannedMessageById(ctx context.Context, req *connect_go.Request[v0alpha.DeleteCannedMessageByIdReq]) (*connect_go.Response[v0alpha.DeleteCannedMessageByIdRes], error) {
+	return c.deleteCannedMessageById.CallUnary(ctx, req)
+}
+
+// CreateCannedMessageGroup calls api.v0alpha.OmniApi.CreateCannedMessageGroup.
+func (c *omniApiClient) CreateCannedMessageGroup(ctx context.Context, req *connect_go.Request[v0alpha.CreateCannedMessageGroupReq]) (*connect_go.Response[v0alpha.CannedMessageGroup], error) {
+	return c.createCannedMessageGroup.CallUnary(ctx, req)
+}
+
+// ListCannedMessageGroups calls api.v0alpha.OmniApi.ListCannedMessageGroups.
+func (c *omniApiClient) ListCannedMessageGroups(ctx context.Context, req *connect_go.Request[v0alpha.ListCannedMessageGroupsReq]) (*connect_go.Response[v0alpha.ListCannedMessageGroupsRes], error) {
+	return c.listCannedMessageGroups.CallUnary(ctx, req)
+}
+
+// UpdateCannedMessageGroup calls api.v0alpha.OmniApi.UpdateCannedMessageGroup.
+func (c *omniApiClient) UpdateCannedMessageGroup(ctx context.Context, req *connect_go.Request[v0alpha.UpdateCannedMessageGroupReq]) (*connect_go.Response[v0alpha.UpdateCannedMessageGroupRes], error) {
+	return c.updateCannedMessageGroup.CallUnary(ctx, req)
+}
+
+// DeleteCannedMessageGroup calls api.v0alpha.OmniApi.DeleteCannedMessageGroup.
+func (c *omniApiClient) DeleteCannedMessageGroup(ctx context.Context, req *connect_go.Request[v0alpha.DeleteCannedMessageGroupReq]) (*connect_go.Response[v0alpha.DeleteCannedMessageGroupRes], error) {
+	return c.deleteCannedMessageGroup.CallUnary(ctx, req)
+}
+
+// ListCannedMessagesByGroupId calls api.v0alpha.OmniApi.ListCannedMessagesByGroupId.
+func (c *omniApiClient) ListCannedMessagesByGroupId(ctx context.Context, req *connect_go.Request[v0alpha.ListCannedMessagesByGroupIdReq]) (*connect_go.Response[v0alpha.ListCannedMessagesByGroupIdRes], error) {
+	return c.listCannedMessagesByGroupId.CallUnary(ctx, req)
+}
+
+// GetCannedMessageGroupById calls api.v0alpha.OmniApi.GetCannedMessageGroupById.
+func (c *omniApiClient) GetCannedMessageGroupById(ctx context.Context, req *connect_go.Request[v0alpha.GetCannedMessageGroupByIdReq]) (*connect_go.Response[v0alpha.CannedMessageGroup], error) {
+	return c.getCannedMessageGroupById.CallUnary(ctx, req)
+}
+
 // OmniApiHandler is an implementation of the api.v0alpha.OmniApi service.
 type OmniApiHandler interface {
 	// archive a campaign
@@ -1118,6 +1448,116 @@ type OmniApiHandler interface {
 	//
 	//	OMNI_BOSS
 	UpdateSignature(context.Context, *connect_go.Request[v0alpha.UpdateSignatureReq]) (*connect_go.Response[v0alpha.UpdateSignatureRes], error)
+	// Create/Record project defined by CreateProjectReq message for a specified
+	// name, description and status.
+	// The method will return a Project message/entity that will
+	// contain the newly created project_id value for this client
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	CreateProject(context.Context, *connect_go.Request[v0alpha.CreateProjectReq]) (*connect_go.Response[v0alpha.CreateProjectRes], error)
+	// list projects for the current org
+	// The method will return a list of Project messages/entities
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	ListProjects(context.Context, *connect_go.Request[v0alpha.ListProjectsReq]) (*connect_go.Response[v0alpha.ListProjectsRes], error)
+	// Update project defined by EditProjectByIdReq message for a specified
+	// project id.
+	// The method will return a Project message/entity that will
+	// contain the updated details for the project_id
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	EditProjectById(context.Context, *connect_go.Request[v0alpha.EditProjectByIdReq]) (*connect_go.Response[v0alpha.EditProjectByIdRes], error)
+	// Closes project defined by CloseProjectByIdReq message for a specified
+	// project id.
+	// The method will stop all child campaigns and return a an empty response
+	// if successful
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	CloseProjectById(context.Context, *connect_go.Request[v0alpha.CloseProjectByIdReq]) (*connect_go.Response[v0alpha.CloseProjectByIdRes], error)
+	// Get project details defined by GetProjectByIdReq message for a specified
+	// project id.
+	// The method will return a GetProjectByIdRes message/entity that will
+	// contain all the project details for the project_id
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	GetProjectById(context.Context, *connect_go.Request[v0alpha.GetProjectByIdReq]) (*connect_go.Response[v0alpha.Project], error)
+	// Create/Record canned message defined by CreateCannedMessageReq message for a specified
+	// name, description and message_body.
+	// The method will return a CannedMessage message/entity that will
+	// contain the newly created canned message details for this client
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	CreateCannedMessage(context.Context, *connect_go.Request[v0alpha.CreateCannedMessageReq]) (*connect_go.Response[v0alpha.CannedMessage], error)
+	// list canned messages for the current org
+	// The method will return a list of canned messages/entities
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	ListCannedMessages(context.Context, *connect_go.Request[v0alpha.ListCannedMessagesReq]) (*connect_go.Response[v0alpha.ListCannedMessagesRes], error)
+	// Update canned message defined by UpdateCannedMessageReq message for a specified
+	// name, description and message_body.
+	// The method will return a CannedMessage message/entity that will
+	// contain the updated canned message details for this client
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	UpdateCannedMessage(context.Context, *connect_go.Request[v0alpha.UpdateCannedMessageReq]) (*connect_go.Response[v0alpha.CannedMessage], error)
+	// Get canned message details for the canned_message_id
+	// The method will return an canned message/entity
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	GetCannedMessageById(context.Context, *connect_go.Request[v0alpha.GetCannedMessageByIdReq]) (*connect_go.Response[v0alpha.CannedMessageWithGroup], error)
+	// Delete canned message details for the canned_message_id
+	// The method will delete an canned message/entity
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	DeleteCannedMessageById(context.Context, *connect_go.Request[v0alpha.DeleteCannedMessageByIdReq]) (*connect_go.Response[v0alpha.DeleteCannedMessageByIdRes], error)
+	// Create/Record canned message group defined by CreateCannedMessageGroup Req message for a specified
+	// name and description.
+	// The method will return a CannedMessageGroup message/entity that will
+	// contain the newly created canned message group details for this client
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	CreateCannedMessageGroup(context.Context, *connect_go.Request[v0alpha.CreateCannedMessageGroupReq]) (*connect_go.Response[v0alpha.CannedMessageGroup], error)
+	// list canned message groups for the current org
+	// The method will return a list of canned message groups/entities
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	ListCannedMessageGroups(context.Context, *connect_go.Request[v0alpha.ListCannedMessageGroupsReq]) (*connect_go.Response[v0alpha.ListCannedMessageGroupsRes], error)
+	// Update canned message group defined by UpdateCannedMessageGroupReq message for a specified
+	// name and description.
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	UpdateCannedMessageGroup(context.Context, *connect_go.Request[v0alpha.UpdateCannedMessageGroupReq]) (*connect_go.Response[v0alpha.UpdateCannedMessageGroupRes], error)
+	// Delete canned message group and all the related messages for the canned_message_group_id
+	// The method will delete an canned message group/entity
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	DeleteCannedMessageGroup(context.Context, *connect_go.Request[v0alpha.DeleteCannedMessageGroupReq]) (*connect_go.Response[v0alpha.DeleteCannedMessageGroupRes], error)
+	// list canned messages for the group
+	// The method will return a list of canned messages/entities
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	ListCannedMessagesByGroupId(context.Context, *connect_go.Request[v0alpha.ListCannedMessagesByGroupIdReq]) (*connect_go.Response[v0alpha.ListCannedMessagesByGroupIdRes], error)
+	// Get canned message group details for the canned_message_group_id
+	// The method will return an canned message group/entity
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	GetCannedMessageGroupById(context.Context, *connect_go.Request[v0alpha.GetCannedMessageGroupByIdReq]) (*connect_go.Response[v0alpha.CannedMessageGroup], error)
 }
 
 // NewOmniApiHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -1372,6 +1812,86 @@ func NewOmniApiHandler(svc OmniApiHandler, opts ...connect_go.HandlerOption) (st
 		svc.UpdateSignature,
 		opts...,
 	))
+	mux.Handle(OmniApiCreateProjectProcedure, connect_go.NewUnaryHandler(
+		OmniApiCreateProjectProcedure,
+		svc.CreateProject,
+		opts...,
+	))
+	mux.Handle(OmniApiListProjectsProcedure, connect_go.NewUnaryHandler(
+		OmniApiListProjectsProcedure,
+		svc.ListProjects,
+		opts...,
+	))
+	mux.Handle(OmniApiEditProjectByIdProcedure, connect_go.NewUnaryHandler(
+		OmniApiEditProjectByIdProcedure,
+		svc.EditProjectById,
+		opts...,
+	))
+	mux.Handle(OmniApiCloseProjectByIdProcedure, connect_go.NewUnaryHandler(
+		OmniApiCloseProjectByIdProcedure,
+		svc.CloseProjectById,
+		opts...,
+	))
+	mux.Handle(OmniApiGetProjectByIdProcedure, connect_go.NewUnaryHandler(
+		OmniApiGetProjectByIdProcedure,
+		svc.GetProjectById,
+		opts...,
+	))
+	mux.Handle(OmniApiCreateCannedMessageProcedure, connect_go.NewUnaryHandler(
+		OmniApiCreateCannedMessageProcedure,
+		svc.CreateCannedMessage,
+		opts...,
+	))
+	mux.Handle(OmniApiListCannedMessagesProcedure, connect_go.NewUnaryHandler(
+		OmniApiListCannedMessagesProcedure,
+		svc.ListCannedMessages,
+		opts...,
+	))
+	mux.Handle(OmniApiUpdateCannedMessageProcedure, connect_go.NewUnaryHandler(
+		OmniApiUpdateCannedMessageProcedure,
+		svc.UpdateCannedMessage,
+		opts...,
+	))
+	mux.Handle(OmniApiGetCannedMessageByIdProcedure, connect_go.NewUnaryHandler(
+		OmniApiGetCannedMessageByIdProcedure,
+		svc.GetCannedMessageById,
+		opts...,
+	))
+	mux.Handle(OmniApiDeleteCannedMessageByIdProcedure, connect_go.NewUnaryHandler(
+		OmniApiDeleteCannedMessageByIdProcedure,
+		svc.DeleteCannedMessageById,
+		opts...,
+	))
+	mux.Handle(OmniApiCreateCannedMessageGroupProcedure, connect_go.NewUnaryHandler(
+		OmniApiCreateCannedMessageGroupProcedure,
+		svc.CreateCannedMessageGroup,
+		opts...,
+	))
+	mux.Handle(OmniApiListCannedMessageGroupsProcedure, connect_go.NewUnaryHandler(
+		OmniApiListCannedMessageGroupsProcedure,
+		svc.ListCannedMessageGroups,
+		opts...,
+	))
+	mux.Handle(OmniApiUpdateCannedMessageGroupProcedure, connect_go.NewUnaryHandler(
+		OmniApiUpdateCannedMessageGroupProcedure,
+		svc.UpdateCannedMessageGroup,
+		opts...,
+	))
+	mux.Handle(OmniApiDeleteCannedMessageGroupProcedure, connect_go.NewUnaryHandler(
+		OmniApiDeleteCannedMessageGroupProcedure,
+		svc.DeleteCannedMessageGroup,
+		opts...,
+	))
+	mux.Handle(OmniApiListCannedMessagesByGroupIdProcedure, connect_go.NewUnaryHandler(
+		OmniApiListCannedMessagesByGroupIdProcedure,
+		svc.ListCannedMessagesByGroupId,
+		opts...,
+	))
+	mux.Handle(OmniApiGetCannedMessageGroupByIdProcedure, connect_go.NewUnaryHandler(
+		OmniApiGetCannedMessageGroupByIdProcedure,
+		svc.GetCannedMessageGroupById,
+		opts...,
+	))
 	return "/api.v0alpha.OmniApi/", mux
 }
 
@@ -1572,4 +2092,68 @@ func (UnimplementedOmniApiHandler) ListSignatures(context.Context, *connect_go.R
 
 func (UnimplementedOmniApiHandler) UpdateSignature(context.Context, *connect_go.Request[v0alpha.UpdateSignatureReq]) (*connect_go.Response[v0alpha.UpdateSignatureRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.UpdateSignature is not implemented"))
+}
+
+func (UnimplementedOmniApiHandler) CreateProject(context.Context, *connect_go.Request[v0alpha.CreateProjectReq]) (*connect_go.Response[v0alpha.CreateProjectRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.CreateProject is not implemented"))
+}
+
+func (UnimplementedOmniApiHandler) ListProjects(context.Context, *connect_go.Request[v0alpha.ListProjectsReq]) (*connect_go.Response[v0alpha.ListProjectsRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.ListProjects is not implemented"))
+}
+
+func (UnimplementedOmniApiHandler) EditProjectById(context.Context, *connect_go.Request[v0alpha.EditProjectByIdReq]) (*connect_go.Response[v0alpha.EditProjectByIdRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.EditProjectById is not implemented"))
+}
+
+func (UnimplementedOmniApiHandler) CloseProjectById(context.Context, *connect_go.Request[v0alpha.CloseProjectByIdReq]) (*connect_go.Response[v0alpha.CloseProjectByIdRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.CloseProjectById is not implemented"))
+}
+
+func (UnimplementedOmniApiHandler) GetProjectById(context.Context, *connect_go.Request[v0alpha.GetProjectByIdReq]) (*connect_go.Response[v0alpha.Project], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.GetProjectById is not implemented"))
+}
+
+func (UnimplementedOmniApiHandler) CreateCannedMessage(context.Context, *connect_go.Request[v0alpha.CreateCannedMessageReq]) (*connect_go.Response[v0alpha.CannedMessage], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.CreateCannedMessage is not implemented"))
+}
+
+func (UnimplementedOmniApiHandler) ListCannedMessages(context.Context, *connect_go.Request[v0alpha.ListCannedMessagesReq]) (*connect_go.Response[v0alpha.ListCannedMessagesRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.ListCannedMessages is not implemented"))
+}
+
+func (UnimplementedOmniApiHandler) UpdateCannedMessage(context.Context, *connect_go.Request[v0alpha.UpdateCannedMessageReq]) (*connect_go.Response[v0alpha.CannedMessage], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.UpdateCannedMessage is not implemented"))
+}
+
+func (UnimplementedOmniApiHandler) GetCannedMessageById(context.Context, *connect_go.Request[v0alpha.GetCannedMessageByIdReq]) (*connect_go.Response[v0alpha.CannedMessageWithGroup], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.GetCannedMessageById is not implemented"))
+}
+
+func (UnimplementedOmniApiHandler) DeleteCannedMessageById(context.Context, *connect_go.Request[v0alpha.DeleteCannedMessageByIdReq]) (*connect_go.Response[v0alpha.DeleteCannedMessageByIdRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.DeleteCannedMessageById is not implemented"))
+}
+
+func (UnimplementedOmniApiHandler) CreateCannedMessageGroup(context.Context, *connect_go.Request[v0alpha.CreateCannedMessageGroupReq]) (*connect_go.Response[v0alpha.CannedMessageGroup], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.CreateCannedMessageGroup is not implemented"))
+}
+
+func (UnimplementedOmniApiHandler) ListCannedMessageGroups(context.Context, *connect_go.Request[v0alpha.ListCannedMessageGroupsReq]) (*connect_go.Response[v0alpha.ListCannedMessageGroupsRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.ListCannedMessageGroups is not implemented"))
+}
+
+func (UnimplementedOmniApiHandler) UpdateCannedMessageGroup(context.Context, *connect_go.Request[v0alpha.UpdateCannedMessageGroupReq]) (*connect_go.Response[v0alpha.UpdateCannedMessageGroupRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.UpdateCannedMessageGroup is not implemented"))
+}
+
+func (UnimplementedOmniApiHandler) DeleteCannedMessageGroup(context.Context, *connect_go.Request[v0alpha.DeleteCannedMessageGroupReq]) (*connect_go.Response[v0alpha.DeleteCannedMessageGroupRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.DeleteCannedMessageGroup is not implemented"))
+}
+
+func (UnimplementedOmniApiHandler) ListCannedMessagesByGroupId(context.Context, *connect_go.Request[v0alpha.ListCannedMessagesByGroupIdReq]) (*connect_go.Response[v0alpha.ListCannedMessagesByGroupIdRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.ListCannedMessagesByGroupId is not implemented"))
+}
+
+func (UnimplementedOmniApiHandler) GetCannedMessageGroupById(context.Context, *connect_go.Request[v0alpha.GetCannedMessageGroupByIdReq]) (*connect_go.Response[v0alpha.CannedMessageGroup], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.GetCannedMessageGroupById is not implemented"))
 }

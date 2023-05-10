@@ -1119,6 +1119,159 @@ func (OmniConversationMetadataName) EnumDescriptor() ([]byte, []int) {
 	return file_api_commons_omnichannel_proto_rawDescGZIP(), []int{17}
 }
 
+type ProjectStatus int32
+
+const (
+	ProjectStatus_PROJECT_STATUS_UNKNOWN ProjectStatus = 0
+	ProjectStatus_PROJECT_STATUS_OPEN    ProjectStatus = 17000 //Project status is Open
+	ProjectStatus_PROJECT_STATUS_CLOSED  ProjectStatus = 17010 //Project status is Closed
+)
+
+// Enum value maps for ProjectStatus.
+var (
+	ProjectStatus_name = map[int32]string{
+		0:     "PROJECT_STATUS_UNKNOWN",
+		17000: "PROJECT_STATUS_OPEN",
+		17010: "PROJECT_STATUS_CLOSED",
+	}
+	ProjectStatus_value = map[string]int32{
+		"PROJECT_STATUS_UNKNOWN": 0,
+		"PROJECT_STATUS_OPEN":    17000,
+		"PROJECT_STATUS_CLOSED":  17010,
+	}
+)
+
+func (x ProjectStatus) Enum() *ProjectStatus {
+	p := new(ProjectStatus)
+	*p = x
+	return p
+}
+
+func (x ProjectStatus) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (ProjectStatus) Descriptor() protoreflect.EnumDescriptor {
+	return file_api_commons_omnichannel_proto_enumTypes[18].Descriptor()
+}
+
+func (ProjectStatus) Type() protoreflect.EnumType {
+	return &file_api_commons_omnichannel_proto_enumTypes[18]
+}
+
+func (x ProjectStatus) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use ProjectStatus.Descriptor instead.
+func (ProjectStatus) EnumDescriptor() ([]byte, []int) {
+	return file_api_commons_omnichannel_proto_rawDescGZIP(), []int{18}
+}
+
+type CampaignStatus int32
+
+const (
+	CampaignStatus_CAMPAIGN_STATUS_SCHEDULED    CampaignStatus = 0
+	CampaignStatus_CAMPAIGN_STATUS_RUNNING      CampaignStatus = 1
+	CampaignStatus_CAMPAIGN_STATUS_PAUSED       CampaignStatus = 2
+	CampaignStatus_CAMPAIGN_STATUS_COMPLETED    CampaignStatus = 3
+	CampaignStatus_CAMPAIGN_STATUS_CANCELED     CampaignStatus = 4
+	CampaignStatus_CAMPAIGN_STATUS_ERROR_PAUSED CampaignStatus = 5
+)
+
+// Enum value maps for CampaignStatus.
+var (
+	CampaignStatus_name = map[int32]string{
+		0: "CAMPAIGN_STATUS_SCHEDULED",
+		1: "CAMPAIGN_STATUS_RUNNING",
+		2: "CAMPAIGN_STATUS_PAUSED",
+		3: "CAMPAIGN_STATUS_COMPLETED",
+		4: "CAMPAIGN_STATUS_CANCELED",
+		5: "CAMPAIGN_STATUS_ERROR_PAUSED",
+	}
+	CampaignStatus_value = map[string]int32{
+		"CAMPAIGN_STATUS_SCHEDULED":    0,
+		"CAMPAIGN_STATUS_RUNNING":      1,
+		"CAMPAIGN_STATUS_PAUSED":       2,
+		"CAMPAIGN_STATUS_COMPLETED":    3,
+		"CAMPAIGN_STATUS_CANCELED":     4,
+		"CAMPAIGN_STATUS_ERROR_PAUSED": 5,
+	}
+)
+
+func (x CampaignStatus) Enum() *CampaignStatus {
+	p := new(CampaignStatus)
+	*p = x
+	return p
+}
+
+func (x CampaignStatus) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (CampaignStatus) Descriptor() protoreflect.EnumDescriptor {
+	return file_api_commons_omnichannel_proto_enumTypes[19].Descriptor()
+}
+
+func (CampaignStatus) Type() protoreflect.EnumType {
+	return &file_api_commons_omnichannel_proto_enumTypes[19]
+}
+
+func (x CampaignStatus) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use CampaignStatus.Descriptor instead.
+func (CampaignStatus) EnumDescriptor() ([]byte, []int) {
+	return file_api_commons_omnichannel_proto_rawDescGZIP(), []int{19}
+}
+
+type CampaignDirection int32
+
+const (
+	CampaignDirection_CAMPAIGN_DIRECTION_INBOUND  CampaignDirection = 0
+	CampaignDirection_CAMPAIGN_DIRECTION_OUTBOUND CampaignDirection = 1
+)
+
+// Enum value maps for CampaignDirection.
+var (
+	CampaignDirection_name = map[int32]string{
+		0: "CAMPAIGN_DIRECTION_INBOUND",
+		1: "CAMPAIGN_DIRECTION_OUTBOUND",
+	}
+	CampaignDirection_value = map[string]int32{
+		"CAMPAIGN_DIRECTION_INBOUND":  0,
+		"CAMPAIGN_DIRECTION_OUTBOUND": 1,
+	}
+)
+
+func (x CampaignDirection) Enum() *CampaignDirection {
+	p := new(CampaignDirection)
+	*p = x
+	return p
+}
+
+func (x CampaignDirection) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (CampaignDirection) Descriptor() protoreflect.EnumDescriptor {
+	return file_api_commons_omnichannel_proto_enumTypes[20].Descriptor()
+}
+
+func (CampaignDirection) Type() protoreflect.EnumType {
+	return &file_api_commons_omnichannel_proto_enumTypes[20]
+}
+
+func (x CampaignDirection) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use CampaignDirection.Descriptor instead.
+func (CampaignDirection) EnumDescriptor() ([]byte, []int) {
+	return file_api_commons_omnichannel_proto_rawDescGZIP(), []int{20}
+}
+
 // OmniCampaign -
 type OmniCampaign struct {
 	state         protoimpl.MessageState
@@ -7523,17 +7676,41 @@ var file_api_commons_omnichannel_proto_rawDesc = []byte{
 	0x50, 0x10, 0xc8, 0x01, 0x12, 0x2f, 0x0a, 0x2a, 0x4f, 0x4d, 0x4e, 0x49, 0x5f, 0x43, 0x4f, 0x4e,
 	0x56, 0x45, 0x52, 0x53, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x4d, 0x45, 0x54, 0x41, 0x44, 0x41,
 	0x54, 0x41, 0x5f, 0x4e, 0x41, 0x4d, 0x45, 0x5f, 0x54, 0x49, 0x4d, 0x45, 0x52, 0x5f, 0x49, 0x44,
-	0x4c, 0x45, 0x10, 0xac, 0x02, 0x42, 0x98, 0x01, 0x0a, 0x0f, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70,
-	0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x42, 0x10, 0x4f, 0x6d, 0x6e, 0x69, 0x63,
-	0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x26, 0x67,
-	0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f,
-	0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x63, 0x6f,
-	0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0xa2, 0x02, 0x03, 0x41, 0x43, 0x58, 0xaa, 0x02, 0x0b, 0x41, 0x70,
-	0x69, 0x2e, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0xca, 0x02, 0x0b, 0x41, 0x70, 0x69, 0x5c,
-	0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0xe2, 0x02, 0x17, 0x41, 0x70, 0x69, 0x5c, 0x43, 0x6f,
-	0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74,
-	0x61, 0xea, 0x02, 0x0c, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73,
-	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x4c, 0x45, 0x10, 0xac, 0x02, 0x2a, 0x63, 0x0a, 0x0d, 0x50, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74,
+	0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x1a, 0x0a, 0x16, 0x50, 0x52, 0x4f, 0x4a, 0x45, 0x43,
+	0x54, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x55, 0x4e, 0x4b, 0x4e, 0x4f, 0x57, 0x4e,
+	0x10, 0x00, 0x12, 0x19, 0x0a, 0x13, 0x50, 0x52, 0x4f, 0x4a, 0x45, 0x43, 0x54, 0x5f, 0x53, 0x54,
+	0x41, 0x54, 0x55, 0x53, 0x5f, 0x4f, 0x50, 0x45, 0x4e, 0x10, 0xe8, 0x84, 0x01, 0x12, 0x1b, 0x0a,
+	0x15, 0x50, 0x52, 0x4f, 0x4a, 0x45, 0x43, 0x54, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f,
+	0x43, 0x4c, 0x4f, 0x53, 0x45, 0x44, 0x10, 0xf2, 0x84, 0x01, 0x2a, 0xc7, 0x01, 0x0a, 0x0e, 0x43,
+	0x61, 0x6d, 0x70, 0x61, 0x69, 0x67, 0x6e, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x1d, 0x0a,
+	0x19, 0x43, 0x41, 0x4d, 0x50, 0x41, 0x49, 0x47, 0x4e, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53,
+	0x5f, 0x53, 0x43, 0x48, 0x45, 0x44, 0x55, 0x4c, 0x45, 0x44, 0x10, 0x00, 0x12, 0x1b, 0x0a, 0x17,
+	0x43, 0x41, 0x4d, 0x50, 0x41, 0x49, 0x47, 0x4e, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f,
+	0x52, 0x55, 0x4e, 0x4e, 0x49, 0x4e, 0x47, 0x10, 0x01, 0x12, 0x1a, 0x0a, 0x16, 0x43, 0x41, 0x4d,
+	0x50, 0x41, 0x49, 0x47, 0x4e, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x50, 0x41, 0x55,
+	0x53, 0x45, 0x44, 0x10, 0x02, 0x12, 0x1d, 0x0a, 0x19, 0x43, 0x41, 0x4d, 0x50, 0x41, 0x49, 0x47,
+	0x4e, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x43, 0x4f, 0x4d, 0x50, 0x4c, 0x45, 0x54,
+	0x45, 0x44, 0x10, 0x03, 0x12, 0x1c, 0x0a, 0x18, 0x43, 0x41, 0x4d, 0x50, 0x41, 0x49, 0x47, 0x4e,
+	0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x43, 0x41, 0x4e, 0x43, 0x45, 0x4c, 0x45, 0x44,
+	0x10, 0x04, 0x12, 0x20, 0x0a, 0x1c, 0x43, 0x41, 0x4d, 0x50, 0x41, 0x49, 0x47, 0x4e, 0x5f, 0x53,
+	0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x45, 0x52, 0x52, 0x4f, 0x52, 0x5f, 0x50, 0x41, 0x55, 0x53,
+	0x45, 0x44, 0x10, 0x05, 0x2a, 0x54, 0x0a, 0x11, 0x43, 0x61, 0x6d, 0x70, 0x61, 0x69, 0x67, 0x6e,
+	0x44, 0x69, 0x72, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x1e, 0x0a, 0x1a, 0x43, 0x41, 0x4d,
+	0x50, 0x41, 0x49, 0x47, 0x4e, 0x5f, 0x44, 0x49, 0x52, 0x45, 0x43, 0x54, 0x49, 0x4f, 0x4e, 0x5f,
+	0x49, 0x4e, 0x42, 0x4f, 0x55, 0x4e, 0x44, 0x10, 0x00, 0x12, 0x1f, 0x0a, 0x1b, 0x43, 0x41, 0x4d,
+	0x50, 0x41, 0x49, 0x47, 0x4e, 0x5f, 0x44, 0x49, 0x52, 0x45, 0x43, 0x54, 0x49, 0x4f, 0x4e, 0x5f,
+	0x4f, 0x55, 0x54, 0x42, 0x4f, 0x55, 0x4e, 0x44, 0x10, 0x01, 0x42, 0x98, 0x01, 0x0a, 0x0f, 0x63,
+	0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x42, 0x10,
+	0x4f, 0x6d, 0x6e, 0x69, 0x63, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x50, 0x72, 0x6f, 0x74, 0x6f,
+	0x50, 0x01, 0x5a, 0x26, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74,
+	0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61,
+	0x70, 0x69, 0x2f, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0xa2, 0x02, 0x03, 0x41, 0x43, 0x58,
+	0xaa, 0x02, 0x0b, 0x41, 0x70, 0x69, 0x2e, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0xca, 0x02,
+	0x0b, 0x41, 0x70, 0x69, 0x5c, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0xe2, 0x02, 0x17, 0x41,
+	0x70, 0x69, 0x5c, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65,
+	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x0c, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x43, 0x6f,
+	0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -7548,7 +7725,7 @@ func file_api_commons_omnichannel_proto_rawDescGZIP() []byte {
 	return file_api_commons_omnichannel_proto_rawDescData
 }
 
-var file_api_commons_omnichannel_proto_enumTypes = make([]protoimpl.EnumInfo, 18)
+var file_api_commons_omnichannel_proto_enumTypes = make([]protoimpl.EnumInfo, 21)
 var file_api_commons_omnichannel_proto_msgTypes = make([]protoimpl.MessageInfo, 57)
 var file_api_commons_omnichannel_proto_goTypes = []interface{}{
 	(SmsNumberType)(0),                                               // 0: api.commons.SmsNumberType
@@ -7569,246 +7746,249 @@ var file_api_commons_omnichannel_proto_goTypes = []interface{}{
 	(ConnectedInboxAuthenticationType)(0),                            // 15: api.commons.ConnectedInboxAuthenticationType
 	(ConversationStateChangeTimerName)(0),                            // 16: api.commons.ConversationStateChangeTimerName
 	(OmniConversationMetadataName)(0),                                // 17: api.commons.OmniConversationMetadataName
-	(*OmniCampaign)(nil),                                             // 18: api.commons.OmniCampaign
-	(*OmniCampaignModule)(nil),                                       // 19: api.commons.OmniCampaignModule
-	(*OmniCampaignModuleConfig)(nil),                                 // 20: api.commons.OmniCampaignModuleConfig
-	(*SmsNumber)(nil),                                                // 21: api.commons.SmsNumber
-	(*ConversationCustomerInformation)(nil),                          // 22: api.commons.ConversationCustomerInformation
-	(*SLATimeouts)(nil),                                              // 23: api.commons.SLATimeouts
-	(*ConversationCollectedData)(nil),                                // 24: api.commons.ConversationCollectedData
-	(*ConversationCollectedData_Item)(nil),                           // 25: api.commons.ConversationCollectedData_Item
-	(*OmniMessage)(nil),                                              // 26: api.commons.OmniMessage
-	(*CustomerChatWidgetMessage)(nil),                                // 27: api.commons.CustomerChatWidgetMessage
-	(*AgentChatWidgetMessage)(nil),                                   // 28: api.commons.AgentChatWidgetMessage
-	(*OmniMessagePayload)(nil),                                       // 29: api.commons.OmniMessagePayload
-	(*OmniTextMessage)(nil),                                          // 30: api.commons.OmniTextMessage
-	(*OmniOffLoadedTextMessage)(nil),                                 // 31: api.commons.OmniOffLoadedTextMessage
-	(*OmniTypingNotification)(nil),                                   // 32: api.commons.OmniTypingNotification
-	(*OmniAssignConversation)(nil),                                   // 33: api.commons.OmniAssignConversation
-	(*OmniReassignmentNotification)(nil),                             // 34: api.commons.OmniReassignmentNotification
-	(*OmniUnassignConversation)(nil),                                 // 35: api.commons.OmniUnassignConversation
-	(*OmniRequestAttachmentUploadURL)(nil),                           // 36: api.commons.OmniRequestAttachmentUploadURL
-	(*OmniAttachmentUploadURL)(nil),                                  // 37: api.commons.OmniAttachmentUploadURL
-	(*OmniAttachment)(nil),                                           // 38: api.commons.OmniAttachment
-	(*OmniStartWrapUp)(nil),                                          // 39: api.commons.OmniStartWrapUp
-	(*OmniFinishWrapUp)(nil),                                         // 40: api.commons.OmniFinishWrapUp
-	(*OmniSuspend)(nil),                                              // 41: api.commons.OmniSuspend
-	(*OmniCloseConversation)(nil),                                    // 42: api.commons.OmniCloseConversation
-	(*OmniQueueInformation)(nil),                                     // 43: api.commons.OmniQueueInformation
-	(*OmniRequestQueueInformation)(nil),                              // 44: api.commons.OmniRequestQueueInformation
-	(*OmniCannedMessage)(nil),                                        // 45: api.commons.OmniCannedMessage
-	(*OmniConversationUserInformation)(nil),                          // 46: api.commons.OmniConversationUserInformation
-	(*CustomerCollectedData)(nil),                                    // 47: api.commons.CustomerCollectedData
-	(*CustomerCollectedDataItem)(nil),                                // 48: api.commons.CustomerCollectedDataItem
-	(*OmniConversation)(nil),                                         // 49: api.commons.OmniConversation
-	(*OmniConversationAssignment)(nil),                               // 50: api.commons.OmniConversationAssignment
-	(*OmniConversationSkills)(nil),                                   // 51: api.commons.OmniConversationSkills
-	(*WeekdayTimeRange)(nil),                                         // 52: api.commons.WeekdayTimeRange
-	(*WeekdayTimeRangeEntry)(nil),                                    // 53: api.commons.WeekdayTimeRangeEntry
-	(*Disposition)(nil),                                              // 54: api.commons.Disposition
-	(*GetQueuesDetailsRes)(nil),                                      // 55: api.commons.GetQueuesDetailsRes
-	(*OmniCustomUnsubscribeLink)(nil),                                // 56: api.commons.OmniCustomUnsubscribeLink
-	(*ContactList)(nil),                                              // 57: api.commons.ContactList
-	(*ContactEntry)(nil),                                             // 58: api.commons.ContactEntry
-	(*OmniTask)(nil),                                                 // 59: api.commons.OmniTask
-	(*OmniTaskState)(nil),                                            // 60: api.commons.OmniTaskState
-	(*ComplianceRuleSet)(nil),                                        // 61: api.commons.ComplianceRuleSet
-	(*ComplianceRule)(nil),                                           // 62: api.commons.ComplianceRule
-	(*OmniDataField)(nil),                                            // 63: api.commons.OmniDataField
-	(*ConnectedInbox)(nil),                                           // 64: api.commons.ConnectedInbox
-	(*VerifiedEmail)(nil),                                            // 65: api.commons.VerifiedEmail
-	(*Signature)(nil),                                                // 66: api.commons.Signature
-	(*OmniCampaignModule_Details)(nil),                               // 67: api.commons.OmniCampaignModule.Details
-	(*OmniConversation_ConversationDetails)(nil),                     // 68: api.commons.OmniConversation.ConversationDetails
-	(*OmniConversationAssignment_ConversationAssignmentDetails)(nil), // 69: api.commons.OmniConversationAssignment.ConversationAssignmentDetails
-	nil,                                      // 70: api.commons.OmniConversationSkills.SkillsEntry
-	(*GetQueuesDetailsRes_QueueDetails)(nil), // 71: api.commons.GetQueuesDetailsRes.QueueDetails
-	(*ContactList_Metadata)(nil),             // 72: api.commons.ContactList.Metadata
-	(*OmniTask_Details)(nil),                 // 73: api.commons.OmniTask.Details
-	(*OmniTaskState_Entry)(nil),              // 74: api.commons.OmniTaskState.Entry
-	(*timestamppb.Timestamp)(nil),            // 75: google.protobuf.Timestamp
-	(*TimeZoneWrapper)(nil),                  // 76: api.commons.TimeZoneWrapper
-	(*wrapperspb.StringValue)(nil),           // 77: google.protobuf.StringValue
-	(*ChatColorProperties)(nil),              // 78: api.commons.ChatColorProperties
-	(*Int64Id)(nil),                          // 79: api.commons.Int64Id
-	(*ChatHeader)(nil),                       // 80: api.commons.ChatHeader
-	(*wrapperspb.Int64Value)(nil),            // 81: google.protobuf.Int64Value
-	(*wrapperspb.BoolValue)(nil),             // 82: google.protobuf.BoolValue
-	(Weekday_Enum)(0),                        // 83: api.commons.Weekday.Enum
-	(FieldType)(0),                           // 84: api.commons.FieldType
+	(ProjectStatus)(0),                                               // 18: api.commons.ProjectStatus
+	(CampaignStatus)(0),                                              // 19: api.commons.CampaignStatus
+	(CampaignDirection)(0),                                           // 20: api.commons.CampaignDirection
+	(*OmniCampaign)(nil),                                             // 21: api.commons.OmniCampaign
+	(*OmniCampaignModule)(nil),                                       // 22: api.commons.OmniCampaignModule
+	(*OmniCampaignModuleConfig)(nil),                                 // 23: api.commons.OmniCampaignModuleConfig
+	(*SmsNumber)(nil),                                                // 24: api.commons.SmsNumber
+	(*ConversationCustomerInformation)(nil),                          // 25: api.commons.ConversationCustomerInformation
+	(*SLATimeouts)(nil),                                              // 26: api.commons.SLATimeouts
+	(*ConversationCollectedData)(nil),                                // 27: api.commons.ConversationCollectedData
+	(*ConversationCollectedData_Item)(nil),                           // 28: api.commons.ConversationCollectedData_Item
+	(*OmniMessage)(nil),                                              // 29: api.commons.OmniMessage
+	(*CustomerChatWidgetMessage)(nil),                                // 30: api.commons.CustomerChatWidgetMessage
+	(*AgentChatWidgetMessage)(nil),                                   // 31: api.commons.AgentChatWidgetMessage
+	(*OmniMessagePayload)(nil),                                       // 32: api.commons.OmniMessagePayload
+	(*OmniTextMessage)(nil),                                          // 33: api.commons.OmniTextMessage
+	(*OmniOffLoadedTextMessage)(nil),                                 // 34: api.commons.OmniOffLoadedTextMessage
+	(*OmniTypingNotification)(nil),                                   // 35: api.commons.OmniTypingNotification
+	(*OmniAssignConversation)(nil),                                   // 36: api.commons.OmniAssignConversation
+	(*OmniReassignmentNotification)(nil),                             // 37: api.commons.OmniReassignmentNotification
+	(*OmniUnassignConversation)(nil),                                 // 38: api.commons.OmniUnassignConversation
+	(*OmniRequestAttachmentUploadURL)(nil),                           // 39: api.commons.OmniRequestAttachmentUploadURL
+	(*OmniAttachmentUploadURL)(nil),                                  // 40: api.commons.OmniAttachmentUploadURL
+	(*OmniAttachment)(nil),                                           // 41: api.commons.OmniAttachment
+	(*OmniStartWrapUp)(nil),                                          // 42: api.commons.OmniStartWrapUp
+	(*OmniFinishWrapUp)(nil),                                         // 43: api.commons.OmniFinishWrapUp
+	(*OmniSuspend)(nil),                                              // 44: api.commons.OmniSuspend
+	(*OmniCloseConversation)(nil),                                    // 45: api.commons.OmniCloseConversation
+	(*OmniQueueInformation)(nil),                                     // 46: api.commons.OmniQueueInformation
+	(*OmniRequestQueueInformation)(nil),                              // 47: api.commons.OmniRequestQueueInformation
+	(*OmniCannedMessage)(nil),                                        // 48: api.commons.OmniCannedMessage
+	(*OmniConversationUserInformation)(nil),                          // 49: api.commons.OmniConversationUserInformation
+	(*CustomerCollectedData)(nil),                                    // 50: api.commons.CustomerCollectedData
+	(*CustomerCollectedDataItem)(nil),                                // 51: api.commons.CustomerCollectedDataItem
+	(*OmniConversation)(nil),                                         // 52: api.commons.OmniConversation
+	(*OmniConversationAssignment)(nil),                               // 53: api.commons.OmniConversationAssignment
+	(*OmniConversationSkills)(nil),                                   // 54: api.commons.OmniConversationSkills
+	(*WeekdayTimeRange)(nil),                                         // 55: api.commons.WeekdayTimeRange
+	(*WeekdayTimeRangeEntry)(nil),                                    // 56: api.commons.WeekdayTimeRangeEntry
+	(*Disposition)(nil),                                              // 57: api.commons.Disposition
+	(*GetQueuesDetailsRes)(nil),                                      // 58: api.commons.GetQueuesDetailsRes
+	(*OmniCustomUnsubscribeLink)(nil),                                // 59: api.commons.OmniCustomUnsubscribeLink
+	(*ContactList)(nil),                                              // 60: api.commons.ContactList
+	(*ContactEntry)(nil),                                             // 61: api.commons.ContactEntry
+	(*OmniTask)(nil),                                                 // 62: api.commons.OmniTask
+	(*OmniTaskState)(nil),                                            // 63: api.commons.OmniTaskState
+	(*ComplianceRuleSet)(nil),                                        // 64: api.commons.ComplianceRuleSet
+	(*ComplianceRule)(nil),                                           // 65: api.commons.ComplianceRule
+	(*OmniDataField)(nil),                                            // 66: api.commons.OmniDataField
+	(*ConnectedInbox)(nil),                                           // 67: api.commons.ConnectedInbox
+	(*VerifiedEmail)(nil),                                            // 68: api.commons.VerifiedEmail
+	(*Signature)(nil),                                                // 69: api.commons.Signature
+	(*OmniCampaignModule_Details)(nil),                               // 70: api.commons.OmniCampaignModule.Details
+	(*OmniConversation_ConversationDetails)(nil),                     // 71: api.commons.OmniConversation.ConversationDetails
+	(*OmniConversationAssignment_ConversationAssignmentDetails)(nil), // 72: api.commons.OmniConversationAssignment.ConversationAssignmentDetails
+	nil,                                      // 73: api.commons.OmniConversationSkills.SkillsEntry
+	(*GetQueuesDetailsRes_QueueDetails)(nil), // 74: api.commons.GetQueuesDetailsRes.QueueDetails
+	(*ContactList_Metadata)(nil),             // 75: api.commons.ContactList.Metadata
+	(*OmniTask_Details)(nil),                 // 76: api.commons.OmniTask.Details
+	(*OmniTaskState_Entry)(nil),              // 77: api.commons.OmniTaskState.Entry
+	(*timestamppb.Timestamp)(nil),            // 78: google.protobuf.Timestamp
+	(*TimeZoneWrapper)(nil),                  // 79: api.commons.TimeZoneWrapper
+	(*wrapperspb.StringValue)(nil),           // 80: google.protobuf.StringValue
+	(*ChatColorProperties)(nil),              // 81: api.commons.ChatColorProperties
+	(*Int64Id)(nil),                          // 82: api.commons.Int64Id
+	(*ChatHeader)(nil),                       // 83: api.commons.ChatHeader
+	(*wrapperspb.Int64Value)(nil),            // 84: google.protobuf.Int64Value
+	(*wrapperspb.BoolValue)(nil),             // 85: google.protobuf.BoolValue
+	(Weekday_Enum)(0),                        // 86: api.commons.Weekday.Enum
+	(FieldType)(0),                           // 87: api.commons.FieldType
 }
 var file_api_commons_omnichannel_proto_depIdxs = []int32{
-	51,  // 0: api.commons.OmniCampaign.skills:type_name -> api.commons.OmniConversationSkills
-	75,  // 1: api.commons.OmniCampaign.start_date:type_name -> google.protobuf.Timestamp
+	54,  // 0: api.commons.OmniCampaign.skills:type_name -> api.commons.OmniConversationSkills
+	78,  // 1: api.commons.OmniCampaign.start_date:type_name -> google.protobuf.Timestamp
 	5,   // 2: api.commons.OmniCampaign.status:type_name -> api.commons.OmniCampaignStatus
 	3,   // 3: api.commons.OmniCampaign.channel_type:type_name -> api.commons.ChannelType
-	75,  // 4: api.commons.OmniCampaign.date_created:type_name -> google.protobuf.Timestamp
-	75,  // 5: api.commons.OmniCampaign.date_modified:type_name -> google.protobuf.Timestamp
-	19,  // 6: api.commons.OmniCampaign.modules:type_name -> api.commons.OmniCampaignModule
-	76,  // 7: api.commons.OmniCampaign.time_zone:type_name -> api.commons.TimeZoneWrapper
+	78,  // 4: api.commons.OmniCampaign.date_created:type_name -> google.protobuf.Timestamp
+	78,  // 5: api.commons.OmniCampaign.date_modified:type_name -> google.protobuf.Timestamp
+	22,  // 6: api.commons.OmniCampaign.modules:type_name -> api.commons.OmniCampaignModule
+	79,  // 7: api.commons.OmniCampaign.time_zone:type_name -> api.commons.TimeZoneWrapper
 	2,   // 8: api.commons.OmniCampaignModule.module_type:type_name -> api.commons.OmniCampaignModuleType
 	6,   // 9: api.commons.OmniCampaignModule.status:type_name -> api.commons.OmniCampaignModuleStatus
-	20,  // 10: api.commons.OmniCampaignModule.config:type_name -> api.commons.OmniCampaignModuleConfig
-	75,  // 11: api.commons.OmniCampaignModule.date_created:type_name -> google.protobuf.Timestamp
-	75,  // 12: api.commons.OmniCampaignModule.date_modified:type_name -> google.protobuf.Timestamp
-	75,  // 13: api.commons.OmniCampaignModule.scheduled_stop_date:type_name -> google.protobuf.Timestamp
-	75,  // 14: api.commons.OmniCampaignModule.actual_stop_date:type_name -> google.protobuf.Timestamp
-	52,  // 15: api.commons.OmniCampaignModule.hours_of_operation:type_name -> api.commons.WeekdayTimeRange
-	67,  // 16: api.commons.OmniCampaignModule.details:type_name -> api.commons.OmniCampaignModule.Details
-	38,  // 17: api.commons.OmniCampaignModule.attachments:type_name -> api.commons.OmniAttachment
-	77,  // 18: api.commons.OmniCampaignModuleConfig.api_key_primary:type_name -> google.protobuf.StringValue
-	77,  // 19: api.commons.OmniCampaignModuleConfig.api_key_secondary:type_name -> google.protobuf.StringValue
-	78,  // 20: api.commons.OmniCampaignModuleConfig.color_properties:type_name -> api.commons.ChatColorProperties
-	79,  // 21: api.commons.OmniCampaignModuleConfig.connected_inbox_sid:type_name -> api.commons.Int64Id
-	54,  // 22: api.commons.OmniCampaignModuleConfig.dispositions:type_name -> api.commons.Disposition
-	77,  // 23: api.commons.OmniCampaignModuleConfig.email:type_name -> google.protobuf.StringValue
-	77,  // 24: api.commons.OmniCampaignModuleConfig.message_body:type_name -> google.protobuf.StringValue
-	77,  // 25: api.commons.OmniCampaignModuleConfig.email_subject:type_name -> google.protobuf.StringValue
-	21,  // 26: api.commons.OmniCampaignModuleConfig.sms_number:type_name -> api.commons.SmsNumber
-	80,  // 27: api.commons.OmniCampaignModuleConfig.header:type_name -> api.commons.ChatHeader
-	23,  // 28: api.commons.OmniCampaignModuleConfig.sla_timeouts:type_name -> api.commons.SLATimeouts
-	81,  // 29: api.commons.OmniCampaignModuleConfig.sends_per_hour:type_name -> google.protobuf.Int64Value
-	79,  // 30: api.commons.OmniCampaignModuleConfig.unsubscribe_link_sid:type_name -> api.commons.Int64Id
-	79,  // 31: api.commons.OmniCampaignModuleConfig.verified_email_sid:type_name -> api.commons.Int64Id
-	82,  // 32: api.commons.OmniCampaignModuleConfig.stop_on_task_deplete:type_name -> google.protobuf.BoolValue
-	38,  // 33: api.commons.OmniCampaignModuleConfig.attachments:type_name -> api.commons.OmniAttachment
-	77,  // 34: api.commons.OmniCampaignModuleConfig.compliance_rule_set_id:type_name -> google.protobuf.StringValue
+	23,  // 10: api.commons.OmniCampaignModule.config:type_name -> api.commons.OmniCampaignModuleConfig
+	78,  // 11: api.commons.OmniCampaignModule.date_created:type_name -> google.protobuf.Timestamp
+	78,  // 12: api.commons.OmniCampaignModule.date_modified:type_name -> google.protobuf.Timestamp
+	78,  // 13: api.commons.OmniCampaignModule.scheduled_stop_date:type_name -> google.protobuf.Timestamp
+	78,  // 14: api.commons.OmniCampaignModule.actual_stop_date:type_name -> google.protobuf.Timestamp
+	55,  // 15: api.commons.OmniCampaignModule.hours_of_operation:type_name -> api.commons.WeekdayTimeRange
+	70,  // 16: api.commons.OmniCampaignModule.details:type_name -> api.commons.OmniCampaignModule.Details
+	41,  // 17: api.commons.OmniCampaignModule.attachments:type_name -> api.commons.OmniAttachment
+	80,  // 18: api.commons.OmniCampaignModuleConfig.api_key_primary:type_name -> google.protobuf.StringValue
+	80,  // 19: api.commons.OmniCampaignModuleConfig.api_key_secondary:type_name -> google.protobuf.StringValue
+	81,  // 20: api.commons.OmniCampaignModuleConfig.color_properties:type_name -> api.commons.ChatColorProperties
+	82,  // 21: api.commons.OmniCampaignModuleConfig.connected_inbox_sid:type_name -> api.commons.Int64Id
+	57,  // 22: api.commons.OmniCampaignModuleConfig.dispositions:type_name -> api.commons.Disposition
+	80,  // 23: api.commons.OmniCampaignModuleConfig.email:type_name -> google.protobuf.StringValue
+	80,  // 24: api.commons.OmniCampaignModuleConfig.message_body:type_name -> google.protobuf.StringValue
+	80,  // 25: api.commons.OmniCampaignModuleConfig.email_subject:type_name -> google.protobuf.StringValue
+	24,  // 26: api.commons.OmniCampaignModuleConfig.sms_number:type_name -> api.commons.SmsNumber
+	83,  // 27: api.commons.OmniCampaignModuleConfig.header:type_name -> api.commons.ChatHeader
+	26,  // 28: api.commons.OmniCampaignModuleConfig.sla_timeouts:type_name -> api.commons.SLATimeouts
+	84,  // 29: api.commons.OmniCampaignModuleConfig.sends_per_hour:type_name -> google.protobuf.Int64Value
+	82,  // 30: api.commons.OmniCampaignModuleConfig.unsubscribe_link_sid:type_name -> api.commons.Int64Id
+	82,  // 31: api.commons.OmniCampaignModuleConfig.verified_email_sid:type_name -> api.commons.Int64Id
+	85,  // 32: api.commons.OmniCampaignModuleConfig.stop_on_task_deplete:type_name -> google.protobuf.BoolValue
+	41,  // 33: api.commons.OmniCampaignModuleConfig.attachments:type_name -> api.commons.OmniAttachment
+	80,  // 34: api.commons.OmniCampaignModuleConfig.compliance_rule_set_id:type_name -> google.protobuf.StringValue
 	0,   // 35: api.commons.SmsNumber.type:type_name -> api.commons.SmsNumberType
 	1,   // 36: api.commons.SmsNumber.provider:type_name -> api.commons.SmsNumberProvider
-	25,  // 37: api.commons.ConversationCollectedData.items:type_name -> api.commons.ConversationCollectedData_Item
-	75,  // 38: api.commons.ConversationCollectedData_Item.collection_time:type_name -> google.protobuf.Timestamp
-	77,  // 39: api.commons.ConversationCollectedData_Item.user_id:type_name -> google.protobuf.StringValue
-	77,  // 40: api.commons.OmniMessage.user_id:type_name -> google.protobuf.StringValue
+	28,  // 37: api.commons.ConversationCollectedData.items:type_name -> api.commons.ConversationCollectedData_Item
+	78,  // 38: api.commons.ConversationCollectedData_Item.collection_time:type_name -> google.protobuf.Timestamp
+	80,  // 39: api.commons.ConversationCollectedData_Item.user_id:type_name -> google.protobuf.StringValue
+	80,  // 40: api.commons.OmniMessage.user_id:type_name -> google.protobuf.StringValue
 	3,   // 41: api.commons.OmniMessage.channel_type:type_name -> api.commons.ChannelType
-	77,  // 42: api.commons.OmniMessage.reference_id:type_name -> google.protobuf.StringValue
-	29,  // 43: api.commons.OmniMessage.payload:type_name -> api.commons.OmniMessagePayload
-	79,  // 44: api.commons.OmniMessage.conversation_sid:type_name -> api.commons.Int64Id
+	80,  // 42: api.commons.OmniMessage.reference_id:type_name -> google.protobuf.StringValue
+	32,  // 43: api.commons.OmniMessage.payload:type_name -> api.commons.OmniMessagePayload
+	82,  // 44: api.commons.OmniMessage.conversation_sid:type_name -> api.commons.Int64Id
 	11,  // 45: api.commons.OmniMessage.status:type_name -> api.commons.OmniMessageStatus
-	75,  // 46: api.commons.OmniMessage.date_created:type_name -> google.protobuf.Timestamp
-	75,  // 47: api.commons.OmniMessage.date_modified:type_name -> google.protobuf.Timestamp
-	77,  // 48: api.commons.OmniMessage.subject:type_name -> google.protobuf.StringValue
+	78,  // 46: api.commons.OmniMessage.date_created:type_name -> google.protobuf.Timestamp
+	78,  // 47: api.commons.OmniMessage.date_modified:type_name -> google.protobuf.Timestamp
+	80,  // 48: api.commons.OmniMessage.subject:type_name -> google.protobuf.StringValue
 	14,  // 49: api.commons.OmniMessage.sender_type:type_name -> api.commons.OmniSenderType
-	77,  // 50: api.commons.OmniMessage.status_message:type_name -> google.protobuf.StringValue
-	29,  // 51: api.commons.CustomerChatWidgetMessage.payload:type_name -> api.commons.OmniMessagePayload
-	75,  // 52: api.commons.CustomerChatWidgetMessage.date_created:type_name -> google.protobuf.Timestamp
-	22,  // 53: api.commons.CustomerChatWidgetMessage.customer_information:type_name -> api.commons.ConversationCustomerInformation
-	29,  // 54: api.commons.AgentChatWidgetMessage.payload:type_name -> api.commons.OmniMessagePayload
-	75,  // 55: api.commons.AgentChatWidgetMessage.date_created:type_name -> google.protobuf.Timestamp
-	46,  // 56: api.commons.AgentChatWidgetMessage.user_information:type_name -> api.commons.OmniConversationUserInformation
+	80,  // 50: api.commons.OmniMessage.status_message:type_name -> google.protobuf.StringValue
+	32,  // 51: api.commons.CustomerChatWidgetMessage.payload:type_name -> api.commons.OmniMessagePayload
+	78,  // 52: api.commons.CustomerChatWidgetMessage.date_created:type_name -> google.protobuf.Timestamp
+	25,  // 53: api.commons.CustomerChatWidgetMessage.customer_information:type_name -> api.commons.ConversationCustomerInformation
+	32,  // 54: api.commons.AgentChatWidgetMessage.payload:type_name -> api.commons.OmniMessagePayload
+	78,  // 55: api.commons.AgentChatWidgetMessage.date_created:type_name -> google.protobuf.Timestamp
+	49,  // 56: api.commons.AgentChatWidgetMessage.user_information:type_name -> api.commons.OmniConversationUserInformation
 	14,  // 57: api.commons.AgentChatWidgetMessage.sender_type:type_name -> api.commons.OmniSenderType
-	30,  // 58: api.commons.OmniMessagePayload.text_message:type_name -> api.commons.OmniTextMessage
-	32,  // 59: api.commons.OmniMessagePayload.typing_notification:type_name -> api.commons.OmniTypingNotification
-	34,  // 60: api.commons.OmniMessagePayload.reassignment:type_name -> api.commons.OmniReassignmentNotification
-	36,  // 61: api.commons.OmniMessagePayload.request_attachment_upload_url:type_name -> api.commons.OmniRequestAttachmentUploadURL
-	37,  // 62: api.commons.OmniMessagePayload.attachment_upload_url:type_name -> api.commons.OmniAttachmentUploadURL
-	38,  // 63: api.commons.OmniMessagePayload.attachment:type_name -> api.commons.OmniAttachment
-	42,  // 64: api.commons.OmniMessagePayload.close_conversation:type_name -> api.commons.OmniCloseConversation
-	33,  // 65: api.commons.OmniMessagePayload.assign_conversation:type_name -> api.commons.OmniAssignConversation
-	35,  // 66: api.commons.OmniMessagePayload.unassign_conversation:type_name -> api.commons.OmniUnassignConversation
-	40,  // 67: api.commons.OmniMessagePayload.finish_wrap_up:type_name -> api.commons.OmniFinishWrapUp
-	41,  // 68: api.commons.OmniMessagePayload.suspend:type_name -> api.commons.OmniSuspend
-	39,  // 69: api.commons.OmniMessagePayload.start_wrap_up:type_name -> api.commons.OmniStartWrapUp
-	43,  // 70: api.commons.OmniMessagePayload.queue_information:type_name -> api.commons.OmniQueueInformation
-	44,  // 71: api.commons.OmniMessagePayload.request_queue_information:type_name -> api.commons.OmniRequestQueueInformation
-	31,  // 72: api.commons.OmniMessagePayload.off_loaded_text_message:type_name -> api.commons.OmniOffLoadedTextMessage
-	45,  // 73: api.commons.OmniMessagePayload.canned_message:type_name -> api.commons.OmniCannedMessage
-	38,  // 74: api.commons.OmniTextMessage.attachments:type_name -> api.commons.OmniAttachment
-	81,  // 75: api.commons.OmniTextMessage.primary_asm_session_sid:type_name -> google.protobuf.Int64Value
-	38,  // 76: api.commons.OmniOffLoadedTextMessage.attachments:type_name -> api.commons.OmniAttachment
-	81,  // 77: api.commons.OmniReassignmentNotification.new_user_asm_session_sid:type_name -> google.protobuf.Int64Value
-	77,  // 78: api.commons.OmniUnassignConversation.user_id:type_name -> google.protobuf.StringValue
-	81,  // 79: api.commons.OmniUnassignConversation.primary_asm_session_sid:type_name -> google.protobuf.Int64Value
-	77,  // 80: api.commons.OmniAttachment.temp_id:type_name -> google.protobuf.StringValue
-	75,  // 81: api.commons.OmniAttachment.date_created:type_name -> google.protobuf.Timestamp
-	75,  // 82: api.commons.OmniAttachment.date_modified:type_name -> google.protobuf.Timestamp
-	77,  // 83: api.commons.OmniAttachment.content_id:type_name -> google.protobuf.StringValue
-	77,  // 84: api.commons.OmniAttachment.width:type_name -> google.protobuf.StringValue
-	77,  // 85: api.commons.OmniAttachment.height:type_name -> google.protobuf.StringValue
-	81,  // 86: api.commons.OmniStartWrapUp.primary_asm_session_sid:type_name -> google.protobuf.Int64Value
-	81,  // 87: api.commons.OmniFinishWrapUp.primary_asm_session_sid:type_name -> google.protobuf.Int64Value
-	81,  // 88: api.commons.OmniSuspend.primary_asm_session_sid:type_name -> google.protobuf.Int64Value
-	81,  // 89: api.commons.OmniCloseConversation.primary_asm_session_sid:type_name -> google.protobuf.Int64Value
-	48,  // 90: api.commons.CustomerCollectedData.items:type_name -> api.commons.CustomerCollectedDataItem
+	33,  // 58: api.commons.OmniMessagePayload.text_message:type_name -> api.commons.OmniTextMessage
+	35,  // 59: api.commons.OmniMessagePayload.typing_notification:type_name -> api.commons.OmniTypingNotification
+	37,  // 60: api.commons.OmniMessagePayload.reassignment:type_name -> api.commons.OmniReassignmentNotification
+	39,  // 61: api.commons.OmniMessagePayload.request_attachment_upload_url:type_name -> api.commons.OmniRequestAttachmentUploadURL
+	40,  // 62: api.commons.OmniMessagePayload.attachment_upload_url:type_name -> api.commons.OmniAttachmentUploadURL
+	41,  // 63: api.commons.OmniMessagePayload.attachment:type_name -> api.commons.OmniAttachment
+	45,  // 64: api.commons.OmniMessagePayload.close_conversation:type_name -> api.commons.OmniCloseConversation
+	36,  // 65: api.commons.OmniMessagePayload.assign_conversation:type_name -> api.commons.OmniAssignConversation
+	38,  // 66: api.commons.OmniMessagePayload.unassign_conversation:type_name -> api.commons.OmniUnassignConversation
+	43,  // 67: api.commons.OmniMessagePayload.finish_wrap_up:type_name -> api.commons.OmniFinishWrapUp
+	44,  // 68: api.commons.OmniMessagePayload.suspend:type_name -> api.commons.OmniSuspend
+	42,  // 69: api.commons.OmniMessagePayload.start_wrap_up:type_name -> api.commons.OmniStartWrapUp
+	46,  // 70: api.commons.OmniMessagePayload.queue_information:type_name -> api.commons.OmniQueueInformation
+	47,  // 71: api.commons.OmniMessagePayload.request_queue_information:type_name -> api.commons.OmniRequestQueueInformation
+	34,  // 72: api.commons.OmniMessagePayload.off_loaded_text_message:type_name -> api.commons.OmniOffLoadedTextMessage
+	48,  // 73: api.commons.OmniMessagePayload.canned_message:type_name -> api.commons.OmniCannedMessage
+	41,  // 74: api.commons.OmniTextMessage.attachments:type_name -> api.commons.OmniAttachment
+	84,  // 75: api.commons.OmniTextMessage.primary_asm_session_sid:type_name -> google.protobuf.Int64Value
+	41,  // 76: api.commons.OmniOffLoadedTextMessage.attachments:type_name -> api.commons.OmniAttachment
+	84,  // 77: api.commons.OmniReassignmentNotification.new_user_asm_session_sid:type_name -> google.protobuf.Int64Value
+	80,  // 78: api.commons.OmniUnassignConversation.user_id:type_name -> google.protobuf.StringValue
+	84,  // 79: api.commons.OmniUnassignConversation.primary_asm_session_sid:type_name -> google.protobuf.Int64Value
+	80,  // 80: api.commons.OmniAttachment.temp_id:type_name -> google.protobuf.StringValue
+	78,  // 81: api.commons.OmniAttachment.date_created:type_name -> google.protobuf.Timestamp
+	78,  // 82: api.commons.OmniAttachment.date_modified:type_name -> google.protobuf.Timestamp
+	80,  // 83: api.commons.OmniAttachment.content_id:type_name -> google.protobuf.StringValue
+	80,  // 84: api.commons.OmniAttachment.width:type_name -> google.protobuf.StringValue
+	80,  // 85: api.commons.OmniAttachment.height:type_name -> google.protobuf.StringValue
+	84,  // 86: api.commons.OmniStartWrapUp.primary_asm_session_sid:type_name -> google.protobuf.Int64Value
+	84,  // 87: api.commons.OmniFinishWrapUp.primary_asm_session_sid:type_name -> google.protobuf.Int64Value
+	84,  // 88: api.commons.OmniSuspend.primary_asm_session_sid:type_name -> google.protobuf.Int64Value
+	84,  // 89: api.commons.OmniCloseConversation.primary_asm_session_sid:type_name -> google.protobuf.Int64Value
+	51,  // 90: api.commons.CustomerCollectedData.items:type_name -> api.commons.CustomerCollectedDataItem
 	3,   // 91: api.commons.OmniConversation.channel_type:type_name -> api.commons.ChannelType
-	51,  // 92: api.commons.OmniConversation.skills:type_name -> api.commons.OmniConversationSkills
-	75,  // 93: api.commons.OmniConversation.date_created:type_name -> google.protobuf.Timestamp
-	75,  // 94: api.commons.OmniConversation.date_modified:type_name -> google.protobuf.Timestamp
+	54,  // 92: api.commons.OmniConversation.skills:type_name -> api.commons.OmniConversationSkills
+	78,  // 93: api.commons.OmniConversation.date_created:type_name -> google.protobuf.Timestamp
+	78,  // 94: api.commons.OmniConversation.date_modified:type_name -> google.protobuf.Timestamp
 	7,   // 95: api.commons.OmniConversation.status:type_name -> api.commons.ConversationStatus
-	77,  // 96: api.commons.OmniConversation.customer_email_address:type_name -> google.protobuf.StringValue
-	77,  // 97: api.commons.OmniConversation.customer_phone_number:type_name -> google.protobuf.StringValue
-	77,  // 98: api.commons.OmniConversation.customer_name:type_name -> google.protobuf.StringValue
-	77,  // 99: api.commons.OmniConversation.reference_id:type_name -> google.protobuf.StringValue
-	75,  // 100: api.commons.OmniConversation.last_message_time:type_name -> google.protobuf.Timestamp
-	24,  // 101: api.commons.OmniConversation.conversation_collected_data:type_name -> api.commons.ConversationCollectedData
-	23,  // 102: api.commons.OmniConversation.sla_timeouts:type_name -> api.commons.SLATimeouts
-	50,  // 103: api.commons.OmniConversation.conversation_assignments:type_name -> api.commons.OmniConversationAssignment
-	68,  // 104: api.commons.OmniConversation.metadata:type_name -> api.commons.OmniConversation.ConversationDetails
-	75,  // 105: api.commons.OmniConversation.end_time:type_name -> google.protobuf.Timestamp
-	75,  // 106: api.commons.OmniConversation.last_message_group_time:type_name -> google.protobuf.Timestamp
+	80,  // 96: api.commons.OmniConversation.customer_email_address:type_name -> google.protobuf.StringValue
+	80,  // 97: api.commons.OmniConversation.customer_phone_number:type_name -> google.protobuf.StringValue
+	80,  // 98: api.commons.OmniConversation.customer_name:type_name -> google.protobuf.StringValue
+	80,  // 99: api.commons.OmniConversation.reference_id:type_name -> google.protobuf.StringValue
+	78,  // 100: api.commons.OmniConversation.last_message_time:type_name -> google.protobuf.Timestamp
+	27,  // 101: api.commons.OmniConversation.conversation_collected_data:type_name -> api.commons.ConversationCollectedData
+	26,  // 102: api.commons.OmniConversation.sla_timeouts:type_name -> api.commons.SLATimeouts
+	53,  // 103: api.commons.OmniConversation.conversation_assignments:type_name -> api.commons.OmniConversationAssignment
+	71,  // 104: api.commons.OmniConversation.metadata:type_name -> api.commons.OmniConversation.ConversationDetails
+	78,  // 105: api.commons.OmniConversation.end_time:type_name -> google.protobuf.Timestamp
+	78,  // 106: api.commons.OmniConversation.last_message_group_time:type_name -> google.protobuf.Timestamp
 	14,  // 107: api.commons.OmniConversation.last_message_group_type:type_name -> api.commons.OmniSenderType
 	12,  // 108: api.commons.OmniConversation.result:type_name -> api.commons.OmniConversationResult
-	75,  // 109: api.commons.OmniConversation.last_state_changed_time:type_name -> google.protobuf.Timestamp
+	78,  // 109: api.commons.OmniConversation.last_state_changed_time:type_name -> google.protobuf.Timestamp
 	10,  // 110: api.commons.OmniConversationAssignment.assignment_type:type_name -> api.commons.AgentConversationAssignmentType
-	75,  // 111: api.commons.OmniConversationAssignment.date_created:type_name -> google.protobuf.Timestamp
-	75,  // 112: api.commons.OmniConversationAssignment.date_modified:type_name -> google.protobuf.Timestamp
-	69,  // 113: api.commons.OmniConversationAssignment.metadata:type_name -> api.commons.OmniConversationAssignment.ConversationAssignmentDetails
-	70,  // 114: api.commons.OmniConversationSkills.skills:type_name -> api.commons.OmniConversationSkills.SkillsEntry
-	53,  // 115: api.commons.WeekdayTimeRange.entries:type_name -> api.commons.WeekdayTimeRangeEntry
-	83,  // 116: api.commons.WeekdayTimeRangeEntry.start_day:type_name -> api.commons.Weekday.Enum
-	83,  // 117: api.commons.WeekdayTimeRangeEntry.end_day:type_name -> api.commons.Weekday.Enum
-	75,  // 118: api.commons.Disposition.date_created:type_name -> google.protobuf.Timestamp
-	75,  // 119: api.commons.Disposition.date_modified:type_name -> google.protobuf.Timestamp
-	71,  // 120: api.commons.GetQueuesDetailsRes.queue_details:type_name -> api.commons.GetQueuesDetailsRes.QueueDetails
-	75,  // 121: api.commons.OmniCustomUnsubscribeLink.date_created:type_name -> google.protobuf.Timestamp
-	75,  // 122: api.commons.OmniCustomUnsubscribeLink.date_modified:type_name -> google.protobuf.Timestamp
-	75,  // 123: api.commons.OmniCustomUnsubscribeLink.date_validated:type_name -> google.protobuf.Timestamp
-	79,  // 124: api.commons.ContactList.project_sid:type_name -> api.commons.Int64Id
-	75,  // 125: api.commons.ContactList.date_created:type_name -> google.protobuf.Timestamp
-	75,  // 126: api.commons.ContactList.date_modified:type_name -> google.protobuf.Timestamp
-	58,  // 127: api.commons.ContactList.contact_entries:type_name -> api.commons.ContactEntry
-	72,  // 128: api.commons.ContactList.metadata:type_name -> api.commons.ContactList.Metadata
-	75,  // 129: api.commons.ContactEntry.date_created:type_name -> google.protobuf.Timestamp
-	75,  // 130: api.commons.ContactEntry.date_modified:type_name -> google.protobuf.Timestamp
-	63,  // 131: api.commons.ContactEntry.data_fields:type_name -> api.commons.OmniDataField
+	78,  // 111: api.commons.OmniConversationAssignment.date_created:type_name -> google.protobuf.Timestamp
+	78,  // 112: api.commons.OmniConversationAssignment.date_modified:type_name -> google.protobuf.Timestamp
+	72,  // 113: api.commons.OmniConversationAssignment.metadata:type_name -> api.commons.OmniConversationAssignment.ConversationAssignmentDetails
+	73,  // 114: api.commons.OmniConversationSkills.skills:type_name -> api.commons.OmniConversationSkills.SkillsEntry
+	56,  // 115: api.commons.WeekdayTimeRange.entries:type_name -> api.commons.WeekdayTimeRangeEntry
+	86,  // 116: api.commons.WeekdayTimeRangeEntry.start_day:type_name -> api.commons.Weekday.Enum
+	86,  // 117: api.commons.WeekdayTimeRangeEntry.end_day:type_name -> api.commons.Weekday.Enum
+	78,  // 118: api.commons.Disposition.date_created:type_name -> google.protobuf.Timestamp
+	78,  // 119: api.commons.Disposition.date_modified:type_name -> google.protobuf.Timestamp
+	74,  // 120: api.commons.GetQueuesDetailsRes.queue_details:type_name -> api.commons.GetQueuesDetailsRes.QueueDetails
+	78,  // 121: api.commons.OmniCustomUnsubscribeLink.date_created:type_name -> google.protobuf.Timestamp
+	78,  // 122: api.commons.OmniCustomUnsubscribeLink.date_modified:type_name -> google.protobuf.Timestamp
+	78,  // 123: api.commons.OmniCustomUnsubscribeLink.date_validated:type_name -> google.protobuf.Timestamp
+	82,  // 124: api.commons.ContactList.project_sid:type_name -> api.commons.Int64Id
+	78,  // 125: api.commons.ContactList.date_created:type_name -> google.protobuf.Timestamp
+	78,  // 126: api.commons.ContactList.date_modified:type_name -> google.protobuf.Timestamp
+	61,  // 127: api.commons.ContactList.contact_entries:type_name -> api.commons.ContactEntry
+	75,  // 128: api.commons.ContactList.metadata:type_name -> api.commons.ContactList.Metadata
+	78,  // 129: api.commons.ContactEntry.date_created:type_name -> google.protobuf.Timestamp
+	78,  // 130: api.commons.ContactEntry.date_modified:type_name -> google.protobuf.Timestamp
+	66,  // 131: api.commons.ContactEntry.data_fields:type_name -> api.commons.OmniDataField
 	13,  // 132: api.commons.OmniTask.status:type_name -> api.commons.OmniTaskStatus
-	75,  // 133: api.commons.OmniTask.date_created:type_name -> google.protobuf.Timestamp
-	75,  // 134: api.commons.OmniTask.date_modified:type_name -> google.protobuf.Timestamp
-	79,  // 135: api.commons.OmniTask.contact_entry_sid:type_name -> api.commons.Int64Id
-	60,  // 136: api.commons.OmniTask.state:type_name -> api.commons.OmniTaskState
-	63,  // 137: api.commons.OmniTask.data_fields:type_name -> api.commons.OmniDataField
-	73,  // 138: api.commons.OmniTask.details:type_name -> api.commons.OmniTask.Details
-	77,  // 139: api.commons.OmniTask.status_message:type_name -> google.protobuf.StringValue
-	75,  // 140: api.commons.OmniTask.scheduled_time:type_name -> google.protobuf.Timestamp
-	74,  // 141: api.commons.OmniTaskState.destinations:type_name -> api.commons.OmniTaskState.Entry
-	74,  // 142: api.commons.OmniTaskState.sources:type_name -> api.commons.OmniTaskState.Entry
-	61,  // 143: api.commons.OmniTaskState.rule_set:type_name -> api.commons.ComplianceRuleSet
-	62,  // 144: api.commons.ComplianceRuleSet.rules:type_name -> api.commons.ComplianceRule
-	84,  // 145: api.commons.OmniDataField.type:type_name -> api.commons.FieldType
-	75,  // 146: api.commons.ConnectedInbox.last_scheduled_time:type_name -> google.protobuf.Timestamp
-	75,  // 147: api.commons.ConnectedInbox.last_checked:type_name -> google.protobuf.Timestamp
-	77,  // 148: api.commons.ConnectedInbox.last_error:type_name -> google.protobuf.StringValue
-	75,  // 149: api.commons.ConnectedInbox.standby_error_time:type_name -> google.protobuf.Timestamp
-	75,  // 150: api.commons.ConnectedInbox.last_updated:type_name -> google.protobuf.Timestamp
-	77,  // 151: api.commons.ConnectedInbox.google_xoauth2_refresh_token:type_name -> google.protobuf.StringValue
-	77,  // 152: api.commons.ConnectedInbox.google_xoauth2_access_token:type_name -> google.protobuf.StringValue
-	75,  // 153: api.commons.ConnectedInbox.google_xoauth2_access_token_expiration:type_name -> google.protobuf.Timestamp
+	78,  // 133: api.commons.OmniTask.date_created:type_name -> google.protobuf.Timestamp
+	78,  // 134: api.commons.OmniTask.date_modified:type_name -> google.protobuf.Timestamp
+	82,  // 135: api.commons.OmniTask.contact_entry_sid:type_name -> api.commons.Int64Id
+	63,  // 136: api.commons.OmniTask.state:type_name -> api.commons.OmniTaskState
+	66,  // 137: api.commons.OmniTask.data_fields:type_name -> api.commons.OmniDataField
+	76,  // 138: api.commons.OmniTask.details:type_name -> api.commons.OmniTask.Details
+	80,  // 139: api.commons.OmniTask.status_message:type_name -> google.protobuf.StringValue
+	78,  // 140: api.commons.OmniTask.scheduled_time:type_name -> google.protobuf.Timestamp
+	77,  // 141: api.commons.OmniTaskState.destinations:type_name -> api.commons.OmniTaskState.Entry
+	77,  // 142: api.commons.OmniTaskState.sources:type_name -> api.commons.OmniTaskState.Entry
+	64,  // 143: api.commons.OmniTaskState.rule_set:type_name -> api.commons.ComplianceRuleSet
+	65,  // 144: api.commons.ComplianceRuleSet.rules:type_name -> api.commons.ComplianceRule
+	87,  // 145: api.commons.OmniDataField.type:type_name -> api.commons.FieldType
+	78,  // 146: api.commons.ConnectedInbox.last_scheduled_time:type_name -> google.protobuf.Timestamp
+	78,  // 147: api.commons.ConnectedInbox.last_checked:type_name -> google.protobuf.Timestamp
+	80,  // 148: api.commons.ConnectedInbox.last_error:type_name -> google.protobuf.StringValue
+	78,  // 149: api.commons.ConnectedInbox.standby_error_time:type_name -> google.protobuf.Timestamp
+	78,  // 150: api.commons.ConnectedInbox.last_updated:type_name -> google.protobuf.Timestamp
+	80,  // 151: api.commons.ConnectedInbox.google_xoauth2_refresh_token:type_name -> google.protobuf.StringValue
+	80,  // 152: api.commons.ConnectedInbox.google_xoauth2_access_token:type_name -> google.protobuf.StringValue
+	78,  // 153: api.commons.ConnectedInbox.google_xoauth2_access_token_expiration:type_name -> google.protobuf.Timestamp
 	15,  // 154: api.commons.ConnectedInbox.authentication_type:type_name -> api.commons.ConnectedInboxAuthenticationType
-	77,  // 155: api.commons.VerifiedEmail.verification_key:type_name -> google.protobuf.StringValue
-	75,  // 156: api.commons.VerifiedEmail.created_on:type_name -> google.protobuf.Timestamp
-	75,  // 157: api.commons.VerifiedEmail.verified_on:type_name -> google.protobuf.Timestamp
-	77,  // 158: api.commons.VerifiedEmail.description:type_name -> google.protobuf.StringValue
-	75,  // 159: api.commons.Signature.date_created:type_name -> google.protobuf.Timestamp
-	75,  // 160: api.commons.Signature.date_modified:type_name -> google.protobuf.Timestamp
-	75,  // 161: api.commons.Signature.deleted_on:type_name -> google.protobuf.Timestamp
-	81,  // 162: api.commons.OmniCampaignModule.Details.total_task_count:type_name -> google.protobuf.Int64Value
-	81,  // 163: api.commons.OmniCampaignModule.Details.completed_task_count:type_name -> google.protobuf.Int64Value
-	77,  // 164: api.commons.OmniCampaignModule.Details.connected_inbox_address:type_name -> google.protobuf.StringValue
-	77,  // 165: api.commons.OmniCampaignModule.Details.verified_email_address:type_name -> google.protobuf.StringValue
-	81,  // 166: api.commons.OmniCampaignModule.Details.pending_task_count:type_name -> google.protobuf.Int64Value
-	81,  // 167: api.commons.OmniCampaignModule.Details.failed_task_count:type_name -> google.protobuf.Int64Value
+	80,  // 155: api.commons.VerifiedEmail.verification_key:type_name -> google.protobuf.StringValue
+	78,  // 156: api.commons.VerifiedEmail.created_on:type_name -> google.protobuf.Timestamp
+	78,  // 157: api.commons.VerifiedEmail.verified_on:type_name -> google.protobuf.Timestamp
+	80,  // 158: api.commons.VerifiedEmail.description:type_name -> google.protobuf.StringValue
+	78,  // 159: api.commons.Signature.date_created:type_name -> google.protobuf.Timestamp
+	78,  // 160: api.commons.Signature.date_modified:type_name -> google.protobuf.Timestamp
+	78,  // 161: api.commons.Signature.deleted_on:type_name -> google.protobuf.Timestamp
+	84,  // 162: api.commons.OmniCampaignModule.Details.total_task_count:type_name -> google.protobuf.Int64Value
+	84,  // 163: api.commons.OmniCampaignModule.Details.completed_task_count:type_name -> google.protobuf.Int64Value
+	80,  // 164: api.commons.OmniCampaignModule.Details.connected_inbox_address:type_name -> google.protobuf.StringValue
+	80,  // 165: api.commons.OmniCampaignModule.Details.verified_email_address:type_name -> google.protobuf.StringValue
+	84,  // 166: api.commons.OmniCampaignModule.Details.pending_task_count:type_name -> google.protobuf.Int64Value
+	84,  // 167: api.commons.OmniCampaignModule.Details.failed_task_count:type_name -> google.protobuf.Int64Value
 	3,   // 168: api.commons.GetQueuesDetailsRes.QueueDetails.channel_type:type_name -> api.commons.ChannelType
-	77,  // 169: api.commons.OmniTask.Details.contact_list_name:type_name -> google.protobuf.StringValue
-	75,  // 170: api.commons.OmniTaskState.Entry.last_used:type_name -> google.protobuf.Timestamp
+	80,  // 169: api.commons.OmniTask.Details.contact_list_name:type_name -> google.protobuf.StringValue
+	78,  // 170: api.commons.OmniTaskState.Entry.last_used:type_name -> google.protobuf.Timestamp
 	171, // [171:171] is the sub-list for method output_type
 	171, // [171:171] is the sub-list for method input_type
 	171, // [171:171] is the sub-list for extension type_name
@@ -8523,7 +8703,7 @@ func file_api_commons_omnichannel_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_commons_omnichannel_proto_rawDesc,
-			NumEnums:      18,
+			NumEnums:      21,
 			NumMessages:   57,
 			NumExtensions: 0,
 			NumServices:   0,
