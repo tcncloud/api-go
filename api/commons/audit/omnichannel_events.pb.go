@@ -3141,6 +3141,64 @@ func (x *OmnichannelSystemMessageUnitsEvent) GetMessageUnits() int32 {
 	return 0
 }
 
+// OmniChannelAgentMessageSentEvent -
+type OmnichannelPaymentLinkSentEvent struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// the message sent
+	Message *commons.OmniMessage `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	// the payment link
+	Link string `protobuf:"bytes,2,opt,name=link,proto3" json:"link,omitempty"`
+}
+
+func (x *OmnichannelPaymentLinkSentEvent) Reset() {
+	*x = OmnichannelPaymentLinkSentEvent{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_commons_audit_omnichannel_events_proto_msgTypes[43]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OmnichannelPaymentLinkSentEvent) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OmnichannelPaymentLinkSentEvent) ProtoMessage() {}
+
+func (x *OmnichannelPaymentLinkSentEvent) ProtoReflect() protoreflect.Message {
+	mi := &file_api_commons_audit_omnichannel_events_proto_msgTypes[43]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OmnichannelPaymentLinkSentEvent.ProtoReflect.Descriptor instead.
+func (*OmnichannelPaymentLinkSentEvent) Descriptor() ([]byte, []int) {
+	return file_api_commons_audit_omnichannel_events_proto_rawDescGZIP(), []int{43}
+}
+
+func (x *OmnichannelPaymentLinkSentEvent) GetMessage() *commons.OmniMessage {
+	if x != nil {
+		return x.Message
+	}
+	return nil
+}
+
+func (x *OmnichannelPaymentLinkSentEvent) GetLink() string {
+	if x != nil {
+		return x.Link
+	}
+	return ""
+}
+
 var File_api_commons_audit_omnichannel_events_proto protoreflect.FileDescriptor
 
 var file_api_commons_audit_omnichannel_events_proto_rawDesc = []byte{
@@ -3725,19 +3783,26 @@ var file_api_commons_audit_omnichannel_events_proto_rawDesc = []byte{
 	0x67, 0x65, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x12, 0x23, 0x0a, 0x0d, 0x6d,
 	0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x5f, 0x75, 0x6e, 0x69, 0x74, 0x73, 0x18, 0x02, 0x20, 0x01,
 	0x28, 0x05, 0x52, 0x0c, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x55, 0x6e, 0x69, 0x74, 0x73,
-	0x42, 0xc3, 0x01, 0x0a, 0x15, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d,
-	0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x61, 0x75, 0x64, 0x69, 0x74, 0x42, 0x16, 0x4f, 0x6d, 0x6e, 0x69,
-	0x63, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x73, 0x50, 0x72, 0x6f,
-	0x74, 0x6f, 0x50, 0x01, 0x5a, 0x2c, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d,
-	0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f,
-	0x2f, 0x61, 0x70, 0x69, 0x2f, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2f, 0x61, 0x75, 0x64,
-	0x69, 0x74, 0xa2, 0x02, 0x03, 0x41, 0x43, 0x41, 0xaa, 0x02, 0x11, 0x41, 0x70, 0x69, 0x2e, 0x43,
-	0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x41, 0x75, 0x64, 0x69, 0x74, 0xca, 0x02, 0x11, 0x41,
-	0x70, 0x69, 0x5c, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x5c, 0x41, 0x75, 0x64, 0x69, 0x74,
-	0xe2, 0x02, 0x1d, 0x41, 0x70, 0x69, 0x5c, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x5c, 0x41,
-	0x75, 0x64, 0x69, 0x74, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
-	0xea, 0x02, 0x13, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x3a,
-	0x3a, 0x41, 0x75, 0x64, 0x69, 0x74, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x22, 0x69, 0x0a, 0x1f, 0x4f, 0x6d, 0x6e, 0x69, 0x63, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x50,
+	0x61, 0x79, 0x6d, 0x65, 0x6e, 0x74, 0x4c, 0x69, 0x6e, 0x6b, 0x53, 0x65, 0x6e, 0x74, 0x45, 0x76,
+	0x65, 0x6e, 0x74, 0x12, 0x32, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f,
+	0x6e, 0x73, 0x2e, 0x4f, 0x6d, 0x6e, 0x69, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x52, 0x07,
+	0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x6c, 0x69, 0x6e, 0x6b, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6c, 0x69, 0x6e, 0x6b, 0x42, 0xc3, 0x01, 0x0a, 0x15,
+	0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e,
+	0x61, 0x75, 0x64, 0x69, 0x74, 0x42, 0x16, 0x4f, 0x6d, 0x6e, 0x69, 0x63, 0x68, 0x61, 0x6e, 0x6e,
+	0x65, 0x6c, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x73, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a,
+	0x2c, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63,
+	0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f,
+	0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2f, 0x61, 0x75, 0x64, 0x69, 0x74, 0xa2, 0x02, 0x03,
+	0x41, 0x43, 0x41, 0xaa, 0x02, 0x11, 0x41, 0x70, 0x69, 0x2e, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e,
+	0x73, 0x2e, 0x41, 0x75, 0x64, 0x69, 0x74, 0xca, 0x02, 0x11, 0x41, 0x70, 0x69, 0x5c, 0x43, 0x6f,
+	0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x5c, 0x41, 0x75, 0x64, 0x69, 0x74, 0xe2, 0x02, 0x1d, 0x41, 0x70,
+	0x69, 0x5c, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x5c, 0x41, 0x75, 0x64, 0x69, 0x74, 0x5c,
+	0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x13, 0x41, 0x70,
+	0x69, 0x3a, 0x3a, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x3a, 0x3a, 0x41, 0x75, 0x64, 0x69,
+	0x74, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -3752,7 +3817,7 @@ func file_api_commons_audit_omnichannel_events_proto_rawDescGZIP() []byte {
 	return file_api_commons_audit_omnichannel_events_proto_rawDescData
 }
 
-var file_api_commons_audit_omnichannel_events_proto_msgTypes = make([]protoimpl.MessageInfo, 43)
+var file_api_commons_audit_omnichannel_events_proto_msgTypes = make([]protoimpl.MessageInfo, 44)
 var file_api_commons_audit_omnichannel_events_proto_goTypes = []interface{}{
 	(*OmnichannelCreateProjectEvent)(nil),                // 0: api.commons.audit.OmnichannelCreateProjectEvent
 	(*OmnichannelCreateCampaignEvent)(nil),               // 1: api.commons.audit.OmnichannelCreateCampaignEvent
@@ -3797,101 +3862,103 @@ var file_api_commons_audit_omnichannel_events_proto_goTypes = []interface{}{
 	(*OmnichannelManagerMessageUnitsEvent)(nil),          // 40: api.commons.audit.OmnichannelManagerMessageUnitsEvent
 	(*OmnichannelCustomerMessageUnitsEvent)(nil),         // 41: api.commons.audit.OmnichannelCustomerMessageUnitsEvent
 	(*OmnichannelSystemMessageUnitsEvent)(nil),           // 42: api.commons.audit.OmnichannelSystemMessageUnitsEvent
-	(commons.ChannelType)(0),                             // 43: api.commons.ChannelType
-	(commons.CampaignDirection)(0),                       // 44: api.commons.CampaignDirection
-	(*commons.OmniCampaign)(nil),                         // 45: api.commons.OmniCampaign
-	(*commons.OmniConversation)(nil),                     // 46: api.commons.OmniConversation
-	(*commons.OmniMessage)(nil),                          // 47: api.commons.OmniMessage
-	(*wrapperspb.Int64Value)(nil),                        // 48: google.protobuf.Int64Value
-	(*commons.ConversationCollectedData)(nil),            // 49: api.commons.ConversationCollectedData
-	(*commons.OmniTask)(nil),                             // 50: api.commons.OmniTask
-	(*commons.ConnectedInbox)(nil),                       // 51: api.commons.ConnectedInbox
+	(*OmnichannelPaymentLinkSentEvent)(nil),              // 43: api.commons.audit.OmnichannelPaymentLinkSentEvent
+	(commons.ChannelType)(0),                             // 44: api.commons.ChannelType
+	(commons.CampaignDirection)(0),                       // 45: api.commons.CampaignDirection
+	(*commons.OmniCampaign)(nil),                         // 46: api.commons.OmniCampaign
+	(*commons.OmniConversation)(nil),                     // 47: api.commons.OmniConversation
+	(*commons.OmniMessage)(nil),                          // 48: api.commons.OmniMessage
+	(*wrapperspb.Int64Value)(nil),                        // 49: google.protobuf.Int64Value
+	(*commons.ConversationCollectedData)(nil),            // 50: api.commons.ConversationCollectedData
+	(*commons.OmniTask)(nil),                             // 51: api.commons.OmniTask
+	(*commons.ConnectedInbox)(nil),                       // 52: api.commons.ConnectedInbox
 }
 var file_api_commons_audit_omnichannel_events_proto_depIdxs = []int32{
-	43, // 0: api.commons.audit.OmnichannelCreateCampaignEvent.channel_type:type_name -> api.commons.ChannelType
-	44, // 1: api.commons.audit.OmnichannelCreateCampaignEvent.campaign_direction:type_name -> api.commons.CampaignDirection
-	45, // 2: api.commons.audit.OmnichannelCreateCampaignEvent.omni_campaign:type_name -> api.commons.OmniCampaign
-	43, // 3: api.commons.audit.OmnichannelT10Event.channel_type:type_name -> api.commons.ChannelType
-	46, // 4: api.commons.audit.OmnichannelT10Event.conversation:type_name -> api.commons.OmniConversation
-	47, // 5: api.commons.audit.OmnichannelT10Event.message:type_name -> api.commons.OmniMessage
-	43, // 6: api.commons.audit.OmnichannelAgentAssignConversationEvent.channel_type:type_name -> api.commons.ChannelType
-	46, // 7: api.commons.audit.OmnichannelAgentAssignConversationEvent.conversation:type_name -> api.commons.OmniConversation
-	47, // 8: api.commons.audit.OmnichannelAgentAssignConversationEvent.message:type_name -> api.commons.OmniMessage
-	43, // 9: api.commons.audit.OmnichannelAgentUnassignConversationEvent.channel_type:type_name -> api.commons.ChannelType
-	46, // 10: api.commons.audit.OmnichannelAgentUnassignConversationEvent.conversation:type_name -> api.commons.OmniConversation
-	47, // 11: api.commons.audit.OmnichannelAgentUnassignConversationEvent.message:type_name -> api.commons.OmniMessage
-	43, // 12: api.commons.audit.OmnichannelAgentReassignConversationEvent.channel_type:type_name -> api.commons.ChannelType
-	46, // 13: api.commons.audit.OmnichannelAgentReassignConversationEvent.conversation:type_name -> api.commons.OmniConversation
-	47, // 14: api.commons.audit.OmnichannelAgentReassignConversationEvent.message:type_name -> api.commons.OmniMessage
-	48, // 15: api.commons.audit.OmnichannelAgentReassignConversationEvent.new_user_asm_session_sid:type_name -> google.protobuf.Int64Value
-	47, // 16: api.commons.audit.OmnichannelCustomerTextMessageEvent.message:type_name -> api.commons.OmniMessage
-	46, // 17: api.commons.audit.OmnichannelCustomerTextMessageEvent.conversation:type_name -> api.commons.OmniConversation
-	47, // 18: api.commons.audit.OmnichannelAgentTextMessageEvent.message:type_name -> api.commons.OmniMessage
-	46, // 19: api.commons.audit.OmnichannelAgentTextMessageEvent.conversation:type_name -> api.commons.OmniConversation
-	47, // 20: api.commons.audit.OmnichannelManagerTextMessageEvent.message:type_name -> api.commons.OmniMessage
-	46, // 21: api.commons.audit.OmnichannelManagerTextMessageEvent.conversation:type_name -> api.commons.OmniConversation
-	43, // 22: api.commons.audit.OmnichannelFinishWrapUpEvent.channel_type:type_name -> api.commons.ChannelType
-	46, // 23: api.commons.audit.OmnichannelFinishWrapUpEvent.conversation:type_name -> api.commons.OmniConversation
-	47, // 24: api.commons.audit.OmnichannelFinishWrapUpEvent.message:type_name -> api.commons.OmniMessage
-	48, // 25: api.commons.audit.OmnichannelFinishWrapUpEvent.asm_session_sid:type_name -> google.protobuf.Int64Value
-	43, // 26: api.commons.audit.OmnichannelBeginWrapUpEvent.channel_type:type_name -> api.commons.ChannelType
-	46, // 27: api.commons.audit.OmnichannelBeginWrapUpEvent.conversation:type_name -> api.commons.OmniConversation
-	47, // 28: api.commons.audit.OmnichannelBeginWrapUpEvent.message:type_name -> api.commons.OmniMessage
-	43, // 29: api.commons.audit.OmnichannelT11Event.channel_type:type_name -> api.commons.ChannelType
-	46, // 30: api.commons.audit.OmnichannelT11Event.conversation:type_name -> api.commons.OmniConversation
-	43, // 31: api.commons.audit.OmnichannelCreateConversationEvent.channel_type:type_name -> api.commons.ChannelType
-	46, // 32: api.commons.audit.OmnichannelCreateConversationEvent.conversation:type_name -> api.commons.OmniConversation
-	47, // 33: api.commons.audit.OmnichannelCreateConversationEvent.message:type_name -> api.commons.OmniMessage
-	47, // 34: api.commons.audit.OmnichannelAgentSuspendEvent.message:type_name -> api.commons.OmniMessage
-	46, // 35: api.commons.audit.OmnichannelAgentSuspendEvent.conversation:type_name -> api.commons.OmniConversation
-	48, // 36: api.commons.audit.OmnichannelAgentSuspendEvent.asm_session_sid:type_name -> google.protobuf.Int64Value
-	47, // 37: api.commons.audit.OmnichannelCloseConversationEvent.message:type_name -> api.commons.OmniMessage
-	46, // 38: api.commons.audit.OmnichannelCloseConversationEvent.conversation:type_name -> api.commons.OmniConversation
-	43, // 39: api.commons.audit.OmnichannelUpdateCampaignEvent.channel_type:type_name -> api.commons.ChannelType
-	45, // 40: api.commons.audit.OmnichannelUpdateCampaignEvent.omni_campaign:type_name -> api.commons.OmniCampaign
-	43, // 41: api.commons.audit.OmnichannelSetConversationCollectedDataEvent.channel_type:type_name -> api.commons.ChannelType
-	44, // 42: api.commons.audit.OmnichannelSetConversationCollectedDataEvent.campaign_direction:type_name -> api.commons.CampaignDirection
-	49, // 43: api.commons.audit.OmnichannelSetConversationCollectedDataEvent.collected_data:type_name -> api.commons.ConversationCollectedData
-	43, // 44: api.commons.audit.OmnichannelCompleteCampaignEvent.channel_type:type_name -> api.commons.ChannelType
-	45, // 45: api.commons.audit.OmnichannelCompleteCampaignEvent.omni_campaign:type_name -> api.commons.OmniCampaign
-	43, // 46: api.commons.audit.OmnichannelArchiveCampaignEvent.channel_type:type_name -> api.commons.ChannelType
-	45, // 47: api.commons.audit.OmnichannelArchiveCampaignEvent.omni_campaign:type_name -> api.commons.OmniCampaign
-	43, // 48: api.commons.audit.OmnichannelStartCampaignEvent.channel_type:type_name -> api.commons.ChannelType
-	45, // 49: api.commons.audit.OmnichannelStartCampaignEvent.omni_campaign:type_name -> api.commons.OmniCampaign
-	43, // 50: api.commons.audit.OmnichannelPauseCampaignEvent.channel_type:type_name -> api.commons.ChannelType
-	45, // 51: api.commons.audit.OmnichannelPauseCampaignEvent.omni_campaign:type_name -> api.commons.OmniCampaign
-	43, // 52: api.commons.audit.OmnichannelResumeCampaignEvent.channel_type:type_name -> api.commons.ChannelType
-	45, // 53: api.commons.audit.OmnichannelResumeCampaignEvent.omni_campaign:type_name -> api.commons.OmniCampaign
-	45, // 54: api.commons.audit.OmnichannelScheduleModuleEvent.omni_campaign:type_name -> api.commons.OmniCampaign
-	45, // 55: api.commons.audit.OmnichannelStartModuleEvent.omni_campaign:type_name -> api.commons.OmniCampaign
-	45, // 56: api.commons.audit.OmnichannelPauseModuleEvent.omni_campaign:type_name -> api.commons.OmniCampaign
-	45, // 57: api.commons.audit.OmnichannelResumeModuleEvent.omni_campaign:type_name -> api.commons.OmniCampaign
-	45, // 58: api.commons.audit.OmnichannelErrorModuleEvent.omni_campaign:type_name -> api.commons.OmniCampaign
-	45, // 59: api.commons.audit.OmnichannelSuccessModuleEvent.omni_campaign:type_name -> api.commons.OmniCampaign
-	45, // 60: api.commons.audit.OmnichannelFailModuleEvent.omni_campaign:type_name -> api.commons.OmniCampaign
-	45, // 61: api.commons.audit.OmnichannelCompleteModuleEvent.omni_campaign:type_name -> api.commons.OmniCampaign
-	45, // 62: api.commons.audit.OmnichannelArchiveModuleEvent.omni_campaign:type_name -> api.commons.OmniCampaign
-	45, // 63: api.commons.audit.OmnichannelUpdateModuleEvent.omni_campaign:type_name -> api.commons.OmniCampaign
-	45, // 64: api.commons.audit.OmnichannelSmsMessageSentModuleEvent.omni_campaign:type_name -> api.commons.OmniCampaign
-	47, // 65: api.commons.audit.OmnichannelSmsMessageSentModuleEvent.message:type_name -> api.commons.OmniMessage
-	43, // 66: api.commons.audit.OmnichannelModuleInitialReplyEvent.channel_type:type_name -> api.commons.ChannelType
-	47, // 67: api.commons.audit.OmnichannelModuleInitialReplyEvent.message:type_name -> api.commons.OmniMessage
-	45, // 68: api.commons.audit.OmnichannelModuleInitialReplyEvent.campaign:type_name -> api.commons.OmniCampaign
-	45, // 69: api.commons.audit.OmnichannelTaskMessageSentEvent.campaign:type_name -> api.commons.OmniCampaign
-	47, // 70: api.commons.audit.OmnichannelTaskMessageSentEvent.message:type_name -> api.commons.OmniMessage
-	50, // 71: api.commons.audit.OmnichannelTaskMessageSentEvent.task:type_name -> api.commons.OmniTask
-	45, // 72: api.commons.audit.OmnichannelConnectedInboxPollEvent.omni_campaign:type_name -> api.commons.OmniCampaign
-	51, // 73: api.commons.audit.OmnichannelConnectedInboxPollEvent.connected_inbox:type_name -> api.commons.ConnectedInbox
-	51, // 74: api.commons.audit.OmnichannelConnectedInboxCreatedEvent.connected_inbox:type_name -> api.commons.ConnectedInbox
-	47, // 75: api.commons.audit.OmnichannelAgentMessageUnitsEvent.message:type_name -> api.commons.OmniMessage
-	47, // 76: api.commons.audit.OmnichannelManagerMessageUnitsEvent.message:type_name -> api.commons.OmniMessage
-	47, // 77: api.commons.audit.OmnichannelCustomerMessageUnitsEvent.message:type_name -> api.commons.OmniMessage
-	47, // 78: api.commons.audit.OmnichannelSystemMessageUnitsEvent.message:type_name -> api.commons.OmniMessage
-	79, // [79:79] is the sub-list for method output_type
-	79, // [79:79] is the sub-list for method input_type
-	79, // [79:79] is the sub-list for extension type_name
-	79, // [79:79] is the sub-list for extension extendee
-	0,  // [0:79] is the sub-list for field type_name
+	44, // 0: api.commons.audit.OmnichannelCreateCampaignEvent.channel_type:type_name -> api.commons.ChannelType
+	45, // 1: api.commons.audit.OmnichannelCreateCampaignEvent.campaign_direction:type_name -> api.commons.CampaignDirection
+	46, // 2: api.commons.audit.OmnichannelCreateCampaignEvent.omni_campaign:type_name -> api.commons.OmniCampaign
+	44, // 3: api.commons.audit.OmnichannelT10Event.channel_type:type_name -> api.commons.ChannelType
+	47, // 4: api.commons.audit.OmnichannelT10Event.conversation:type_name -> api.commons.OmniConversation
+	48, // 5: api.commons.audit.OmnichannelT10Event.message:type_name -> api.commons.OmniMessage
+	44, // 6: api.commons.audit.OmnichannelAgentAssignConversationEvent.channel_type:type_name -> api.commons.ChannelType
+	47, // 7: api.commons.audit.OmnichannelAgentAssignConversationEvent.conversation:type_name -> api.commons.OmniConversation
+	48, // 8: api.commons.audit.OmnichannelAgentAssignConversationEvent.message:type_name -> api.commons.OmniMessage
+	44, // 9: api.commons.audit.OmnichannelAgentUnassignConversationEvent.channel_type:type_name -> api.commons.ChannelType
+	47, // 10: api.commons.audit.OmnichannelAgentUnassignConversationEvent.conversation:type_name -> api.commons.OmniConversation
+	48, // 11: api.commons.audit.OmnichannelAgentUnassignConversationEvent.message:type_name -> api.commons.OmniMessage
+	44, // 12: api.commons.audit.OmnichannelAgentReassignConversationEvent.channel_type:type_name -> api.commons.ChannelType
+	47, // 13: api.commons.audit.OmnichannelAgentReassignConversationEvent.conversation:type_name -> api.commons.OmniConversation
+	48, // 14: api.commons.audit.OmnichannelAgentReassignConversationEvent.message:type_name -> api.commons.OmniMessage
+	49, // 15: api.commons.audit.OmnichannelAgentReassignConversationEvent.new_user_asm_session_sid:type_name -> google.protobuf.Int64Value
+	48, // 16: api.commons.audit.OmnichannelCustomerTextMessageEvent.message:type_name -> api.commons.OmniMessage
+	47, // 17: api.commons.audit.OmnichannelCustomerTextMessageEvent.conversation:type_name -> api.commons.OmniConversation
+	48, // 18: api.commons.audit.OmnichannelAgentTextMessageEvent.message:type_name -> api.commons.OmniMessage
+	47, // 19: api.commons.audit.OmnichannelAgentTextMessageEvent.conversation:type_name -> api.commons.OmniConversation
+	48, // 20: api.commons.audit.OmnichannelManagerTextMessageEvent.message:type_name -> api.commons.OmniMessage
+	47, // 21: api.commons.audit.OmnichannelManagerTextMessageEvent.conversation:type_name -> api.commons.OmniConversation
+	44, // 22: api.commons.audit.OmnichannelFinishWrapUpEvent.channel_type:type_name -> api.commons.ChannelType
+	47, // 23: api.commons.audit.OmnichannelFinishWrapUpEvent.conversation:type_name -> api.commons.OmniConversation
+	48, // 24: api.commons.audit.OmnichannelFinishWrapUpEvent.message:type_name -> api.commons.OmniMessage
+	49, // 25: api.commons.audit.OmnichannelFinishWrapUpEvent.asm_session_sid:type_name -> google.protobuf.Int64Value
+	44, // 26: api.commons.audit.OmnichannelBeginWrapUpEvent.channel_type:type_name -> api.commons.ChannelType
+	47, // 27: api.commons.audit.OmnichannelBeginWrapUpEvent.conversation:type_name -> api.commons.OmniConversation
+	48, // 28: api.commons.audit.OmnichannelBeginWrapUpEvent.message:type_name -> api.commons.OmniMessage
+	44, // 29: api.commons.audit.OmnichannelT11Event.channel_type:type_name -> api.commons.ChannelType
+	47, // 30: api.commons.audit.OmnichannelT11Event.conversation:type_name -> api.commons.OmniConversation
+	44, // 31: api.commons.audit.OmnichannelCreateConversationEvent.channel_type:type_name -> api.commons.ChannelType
+	47, // 32: api.commons.audit.OmnichannelCreateConversationEvent.conversation:type_name -> api.commons.OmniConversation
+	48, // 33: api.commons.audit.OmnichannelCreateConversationEvent.message:type_name -> api.commons.OmniMessage
+	48, // 34: api.commons.audit.OmnichannelAgentSuspendEvent.message:type_name -> api.commons.OmniMessage
+	47, // 35: api.commons.audit.OmnichannelAgentSuspendEvent.conversation:type_name -> api.commons.OmniConversation
+	49, // 36: api.commons.audit.OmnichannelAgentSuspendEvent.asm_session_sid:type_name -> google.protobuf.Int64Value
+	48, // 37: api.commons.audit.OmnichannelCloseConversationEvent.message:type_name -> api.commons.OmniMessage
+	47, // 38: api.commons.audit.OmnichannelCloseConversationEvent.conversation:type_name -> api.commons.OmniConversation
+	44, // 39: api.commons.audit.OmnichannelUpdateCampaignEvent.channel_type:type_name -> api.commons.ChannelType
+	46, // 40: api.commons.audit.OmnichannelUpdateCampaignEvent.omni_campaign:type_name -> api.commons.OmniCampaign
+	44, // 41: api.commons.audit.OmnichannelSetConversationCollectedDataEvent.channel_type:type_name -> api.commons.ChannelType
+	45, // 42: api.commons.audit.OmnichannelSetConversationCollectedDataEvent.campaign_direction:type_name -> api.commons.CampaignDirection
+	50, // 43: api.commons.audit.OmnichannelSetConversationCollectedDataEvent.collected_data:type_name -> api.commons.ConversationCollectedData
+	44, // 44: api.commons.audit.OmnichannelCompleteCampaignEvent.channel_type:type_name -> api.commons.ChannelType
+	46, // 45: api.commons.audit.OmnichannelCompleteCampaignEvent.omni_campaign:type_name -> api.commons.OmniCampaign
+	44, // 46: api.commons.audit.OmnichannelArchiveCampaignEvent.channel_type:type_name -> api.commons.ChannelType
+	46, // 47: api.commons.audit.OmnichannelArchiveCampaignEvent.omni_campaign:type_name -> api.commons.OmniCampaign
+	44, // 48: api.commons.audit.OmnichannelStartCampaignEvent.channel_type:type_name -> api.commons.ChannelType
+	46, // 49: api.commons.audit.OmnichannelStartCampaignEvent.omni_campaign:type_name -> api.commons.OmniCampaign
+	44, // 50: api.commons.audit.OmnichannelPauseCampaignEvent.channel_type:type_name -> api.commons.ChannelType
+	46, // 51: api.commons.audit.OmnichannelPauseCampaignEvent.omni_campaign:type_name -> api.commons.OmniCampaign
+	44, // 52: api.commons.audit.OmnichannelResumeCampaignEvent.channel_type:type_name -> api.commons.ChannelType
+	46, // 53: api.commons.audit.OmnichannelResumeCampaignEvent.omni_campaign:type_name -> api.commons.OmniCampaign
+	46, // 54: api.commons.audit.OmnichannelScheduleModuleEvent.omni_campaign:type_name -> api.commons.OmniCampaign
+	46, // 55: api.commons.audit.OmnichannelStartModuleEvent.omni_campaign:type_name -> api.commons.OmniCampaign
+	46, // 56: api.commons.audit.OmnichannelPauseModuleEvent.omni_campaign:type_name -> api.commons.OmniCampaign
+	46, // 57: api.commons.audit.OmnichannelResumeModuleEvent.omni_campaign:type_name -> api.commons.OmniCampaign
+	46, // 58: api.commons.audit.OmnichannelErrorModuleEvent.omni_campaign:type_name -> api.commons.OmniCampaign
+	46, // 59: api.commons.audit.OmnichannelSuccessModuleEvent.omni_campaign:type_name -> api.commons.OmniCampaign
+	46, // 60: api.commons.audit.OmnichannelFailModuleEvent.omni_campaign:type_name -> api.commons.OmniCampaign
+	46, // 61: api.commons.audit.OmnichannelCompleteModuleEvent.omni_campaign:type_name -> api.commons.OmniCampaign
+	46, // 62: api.commons.audit.OmnichannelArchiveModuleEvent.omni_campaign:type_name -> api.commons.OmniCampaign
+	46, // 63: api.commons.audit.OmnichannelUpdateModuleEvent.omni_campaign:type_name -> api.commons.OmniCampaign
+	46, // 64: api.commons.audit.OmnichannelSmsMessageSentModuleEvent.omni_campaign:type_name -> api.commons.OmniCampaign
+	48, // 65: api.commons.audit.OmnichannelSmsMessageSentModuleEvent.message:type_name -> api.commons.OmniMessage
+	44, // 66: api.commons.audit.OmnichannelModuleInitialReplyEvent.channel_type:type_name -> api.commons.ChannelType
+	48, // 67: api.commons.audit.OmnichannelModuleInitialReplyEvent.message:type_name -> api.commons.OmniMessage
+	46, // 68: api.commons.audit.OmnichannelModuleInitialReplyEvent.campaign:type_name -> api.commons.OmniCampaign
+	46, // 69: api.commons.audit.OmnichannelTaskMessageSentEvent.campaign:type_name -> api.commons.OmniCampaign
+	48, // 70: api.commons.audit.OmnichannelTaskMessageSentEvent.message:type_name -> api.commons.OmniMessage
+	51, // 71: api.commons.audit.OmnichannelTaskMessageSentEvent.task:type_name -> api.commons.OmniTask
+	46, // 72: api.commons.audit.OmnichannelConnectedInboxPollEvent.omni_campaign:type_name -> api.commons.OmniCampaign
+	52, // 73: api.commons.audit.OmnichannelConnectedInboxPollEvent.connected_inbox:type_name -> api.commons.ConnectedInbox
+	52, // 74: api.commons.audit.OmnichannelConnectedInboxCreatedEvent.connected_inbox:type_name -> api.commons.ConnectedInbox
+	48, // 75: api.commons.audit.OmnichannelAgentMessageUnitsEvent.message:type_name -> api.commons.OmniMessage
+	48, // 76: api.commons.audit.OmnichannelManagerMessageUnitsEvent.message:type_name -> api.commons.OmniMessage
+	48, // 77: api.commons.audit.OmnichannelCustomerMessageUnitsEvent.message:type_name -> api.commons.OmniMessage
+	48, // 78: api.commons.audit.OmnichannelSystemMessageUnitsEvent.message:type_name -> api.commons.OmniMessage
+	48, // 79: api.commons.audit.OmnichannelPaymentLinkSentEvent.message:type_name -> api.commons.OmniMessage
+	80, // [80:80] is the sub-list for method output_type
+	80, // [80:80] is the sub-list for method input_type
+	80, // [80:80] is the sub-list for extension type_name
+	80, // [80:80] is the sub-list for extension extendee
+	0,  // [0:80] is the sub-list for field type_name
 }
 
 func init() { file_api_commons_audit_omnichannel_events_proto_init() }
@@ -4416,6 +4483,18 @@ func file_api_commons_audit_omnichannel_events_proto_init() {
 				return nil
 			}
 		}
+		file_api_commons_audit_omnichannel_events_proto_msgTypes[43].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OmnichannelPaymentLinkSentEvent); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -4423,7 +4502,7 @@ func file_api_commons_audit_omnichannel_events_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_commons_audit_omnichannel_events_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   43,
+			NumMessages:   44,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
