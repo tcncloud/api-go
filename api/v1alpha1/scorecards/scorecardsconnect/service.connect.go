@@ -118,9 +118,6 @@ const (
 	// ScorecardsScoreEvaluationProcedure is the fully-qualified name of the Scorecards's
 	// ScoreEvaluation RPC.
 	ScorecardsScoreEvaluationProcedure = "/api.v1alpha1.scorecards.Scorecards/ScoreEvaluation"
-	// ScorecardsUpdateEvaluationProcedure is the fully-qualified name of the Scorecards's
-	// UpdateEvaluation RPC.
-	ScorecardsUpdateEvaluationProcedure = "/api.v1alpha1.scorecards.Scorecards/UpdateEvaluation"
 	// ScorecardsGetEvaluationProcedure is the fully-qualified name of the Scorecards's GetEvaluation
 	// RPC.
 	ScorecardsGetEvaluationProcedure = "/api.v1alpha1.scorecards.Scorecards/GetEvaluation"
@@ -224,8 +221,6 @@ type ScorecardsClient interface {
 	DeleteEvaluation(context.Context, *connect_go.Request[scorecards.DeleteEvaluationRequest]) (*connect_go.Response[scorecards.DeleteEvaluationResponse], error)
 	// GetEvaluation gets an evaluation
 	ScoreEvaluation(context.Context, *connect_go.Request[scorecards.ScoreEvaluationRequest]) (*connect_go.Response[scorecards.ScoreEvaluationResponse], error)
-	// UpdateEvaluation updates an evaluation
-	UpdateEvaluation(context.Context, *connect_go.Request[scorecards.UpdateEvaluationRequest]) (*connect_go.Response[scorecards.UpdateEvaluationResponse], error)
 	// GetEvaluation gets an evaluation
 	GetEvaluation(context.Context, *connect_go.Request[scorecards.GetEvaluationRequest]) (*connect_go.Response[scorecards.GetEvaluationResponse], error)
 	// ListEvaluations gets a list of evaluations
@@ -416,11 +411,6 @@ func NewScorecardsClient(httpClient connect_go.HTTPClient, baseURL string, opts 
 			baseURL+ScorecardsScoreEvaluationProcedure,
 			opts...,
 		),
-		updateEvaluation: connect_go.NewClient[scorecards.UpdateEvaluationRequest, scorecards.UpdateEvaluationResponse](
-			httpClient,
-			baseURL+ScorecardsUpdateEvaluationProcedure,
-			opts...,
-		),
 		getEvaluation: connect_go.NewClient[scorecards.GetEvaluationRequest, scorecards.GetEvaluationResponse](
 			httpClient,
 			baseURL+ScorecardsGetEvaluationProcedure,
@@ -521,7 +511,6 @@ type scorecardsClient struct {
 	createEvaluation         *connect_go.Client[scorecards.CreateEvaluationRequest, scorecards.CreateEvaluationResponse]
 	deleteEvaluation         *connect_go.Client[scorecards.DeleteEvaluationRequest, scorecards.DeleteEvaluationResponse]
 	scoreEvaluation          *connect_go.Client[scorecards.ScoreEvaluationRequest, scorecards.ScoreEvaluationResponse]
-	updateEvaluation         *connect_go.Client[scorecards.UpdateEvaluationRequest, scorecards.UpdateEvaluationResponse]
 	getEvaluation            *connect_go.Client[scorecards.GetEvaluationRequest, scorecards.GetEvaluationResponse]
 	listEvaluations          *connect_go.Client[scorecards.ListEvaluationsRequest, scorecards.ListEvaluationsResponse]
 	createEvaluationQuestion *connect_go.Client[scorecards.CreateEvaluationQuestionRequest, scorecards.CreateEvaluationQuestionResponse]
@@ -687,11 +676,6 @@ func (c *scorecardsClient) ScoreEvaluation(ctx context.Context, req *connect_go.
 	return c.scoreEvaluation.CallUnary(ctx, req)
 }
 
-// UpdateEvaluation calls api.v1alpha1.scorecards.Scorecards.UpdateEvaluation.
-func (c *scorecardsClient) UpdateEvaluation(ctx context.Context, req *connect_go.Request[scorecards.UpdateEvaluationRequest]) (*connect_go.Response[scorecards.UpdateEvaluationResponse], error) {
-	return c.updateEvaluation.CallUnary(ctx, req)
-}
-
 // GetEvaluation calls api.v1alpha1.scorecards.Scorecards.GetEvaluation.
 func (c *scorecardsClient) GetEvaluation(ctx context.Context, req *connect_go.Request[scorecards.GetEvaluationRequest]) (*connect_go.Response[scorecards.GetEvaluationResponse], error) {
 	return c.getEvaluation.CallUnary(ctx, req)
@@ -821,8 +805,6 @@ type ScorecardsHandler interface {
 	DeleteEvaluation(context.Context, *connect_go.Request[scorecards.DeleteEvaluationRequest]) (*connect_go.Response[scorecards.DeleteEvaluationResponse], error)
 	// GetEvaluation gets an evaluation
 	ScoreEvaluation(context.Context, *connect_go.Request[scorecards.ScoreEvaluationRequest]) (*connect_go.Response[scorecards.ScoreEvaluationResponse], error)
-	// UpdateEvaluation updates an evaluation
-	UpdateEvaluation(context.Context, *connect_go.Request[scorecards.UpdateEvaluationRequest]) (*connect_go.Response[scorecards.UpdateEvaluationResponse], error)
 	// GetEvaluation gets an evaluation
 	GetEvaluation(context.Context, *connect_go.Request[scorecards.GetEvaluationRequest]) (*connect_go.Response[scorecards.GetEvaluationResponse], error)
 	// ListEvaluations gets a list of evaluations
@@ -1008,11 +990,6 @@ func NewScorecardsHandler(svc ScorecardsHandler, opts ...connect_go.HandlerOptio
 	mux.Handle(ScorecardsScoreEvaluationProcedure, connect_go.NewUnaryHandler(
 		ScorecardsScoreEvaluationProcedure,
 		svc.ScoreEvaluation,
-		opts...,
-	))
-	mux.Handle(ScorecardsUpdateEvaluationProcedure, connect_go.NewUnaryHandler(
-		ScorecardsUpdateEvaluationProcedure,
-		svc.UpdateEvaluation,
 		opts...,
 	))
 	mux.Handle(ScorecardsGetEvaluationProcedure, connect_go.NewUnaryHandler(
@@ -1204,10 +1181,6 @@ func (UnimplementedScorecardsHandler) DeleteEvaluation(context.Context, *connect
 
 func (UnimplementedScorecardsHandler) ScoreEvaluation(context.Context, *connect_go.Request[scorecards.ScoreEvaluationRequest]) (*connect_go.Response[scorecards.ScoreEvaluationResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.scorecards.Scorecards.ScoreEvaluation is not implemented"))
-}
-
-func (UnimplementedScorecardsHandler) UpdateEvaluation(context.Context, *connect_go.Request[scorecards.UpdateEvaluationRequest]) (*connect_go.Response[scorecards.UpdateEvaluationResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.scorecards.Scorecards.UpdateEvaluation is not implemented"))
 }
 
 func (UnimplementedScorecardsHandler) GetEvaluation(context.Context, *connect_go.Request[scorecards.GetEvaluationRequest]) (*connect_go.Response[scorecards.GetEvaluationResponse], error) {
