@@ -49,6 +49,7 @@ const (
 	Scorecards_CreateEvaluation_FullMethodName         = "/api.v1alpha1.scorecards.Scorecards/CreateEvaluation"
 	Scorecards_DeleteEvaluation_FullMethodName         = "/api.v1alpha1.scorecards.Scorecards/DeleteEvaluation"
 	Scorecards_ScoreEvaluation_FullMethodName          = "/api.v1alpha1.scorecards.Scorecards/ScoreEvaluation"
+	Scorecards_UpdateEvaluation_FullMethodName         = "/api.v1alpha1.scorecards.Scorecards/UpdateEvaluation"
 	Scorecards_GetEvaluation_FullMethodName            = "/api.v1alpha1.scorecards.Scorecards/GetEvaluation"
 	Scorecards_ListEvaluations_FullMethodName          = "/api.v1alpha1.scorecards.Scorecards/ListEvaluations"
 	Scorecards_CreateEvaluationQuestion_FullMethodName = "/api.v1alpha1.scorecards.Scorecards/CreateEvaluationQuestion"
@@ -128,6 +129,8 @@ type ScorecardsClient interface {
 	DeleteEvaluation(ctx context.Context, in *DeleteEvaluationRequest, opts ...grpc.CallOption) (*DeleteEvaluationResponse, error)
 	// GetEvaluation gets an evaluation
 	ScoreEvaluation(ctx context.Context, in *ScoreEvaluationRequest, opts ...grpc.CallOption) (*ScoreEvaluationResponse, error)
+	// UpdateEvaluation updates an evaluation
+	UpdateEvaluation(ctx context.Context, in *UpdateEvaluationRequest, opts ...grpc.CallOption) (*UpdateEvaluationResponse, error)
 	// GetEvaluation gets an evaluation
 	GetEvaluation(ctx context.Context, in *GetEvaluationRequest, opts ...grpc.CallOption) (*GetEvaluationResponse, error)
 	// ListEvaluations gets a list of evaluations
@@ -435,6 +438,15 @@ func (c *scorecardsClient) ScoreEvaluation(ctx context.Context, in *ScoreEvaluat
 	return out, nil
 }
 
+func (c *scorecardsClient) UpdateEvaluation(ctx context.Context, in *UpdateEvaluationRequest, opts ...grpc.CallOption) (*UpdateEvaluationResponse, error) {
+	out := new(UpdateEvaluationResponse)
+	err := c.cc.Invoke(ctx, Scorecards_UpdateEvaluation_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *scorecardsClient) GetEvaluation(ctx context.Context, in *GetEvaluationRequest, opts ...grpc.CallOption) (*GetEvaluationResponse, error) {
 	out := new(GetEvaluationResponse)
 	err := c.cc.Invoke(ctx, Scorecards_GetEvaluation_FullMethodName, in, out, opts...)
@@ -617,6 +629,8 @@ type ScorecardsServer interface {
 	DeleteEvaluation(context.Context, *DeleteEvaluationRequest) (*DeleteEvaluationResponse, error)
 	// GetEvaluation gets an evaluation
 	ScoreEvaluation(context.Context, *ScoreEvaluationRequest) (*ScoreEvaluationResponse, error)
+	// UpdateEvaluation updates an evaluation
+	UpdateEvaluation(context.Context, *UpdateEvaluationRequest) (*UpdateEvaluationResponse, error)
 	// GetEvaluation gets an evaluation
 	GetEvaluation(context.Context, *GetEvaluationRequest) (*GetEvaluationResponse, error)
 	// ListEvaluations gets a list of evaluations
@@ -740,6 +754,9 @@ func (UnimplementedScorecardsServer) DeleteEvaluation(context.Context, *DeleteEv
 }
 func (UnimplementedScorecardsServer) ScoreEvaluation(context.Context, *ScoreEvaluationRequest) (*ScoreEvaluationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ScoreEvaluation not implemented")
+}
+func (UnimplementedScorecardsServer) UpdateEvaluation(context.Context, *UpdateEvaluationRequest) (*UpdateEvaluationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateEvaluation not implemented")
 }
 func (UnimplementedScorecardsServer) GetEvaluation(context.Context, *GetEvaluationRequest) (*GetEvaluationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetEvaluation not implemented")
@@ -1333,6 +1350,24 @@ func _Scorecards_ScoreEvaluation_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Scorecards_UpdateEvaluation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateEvaluationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ScorecardsServer).UpdateEvaluation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Scorecards_UpdateEvaluation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ScorecardsServer).UpdateEvaluation(ctx, req.(*UpdateEvaluationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Scorecards_GetEvaluation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetEvaluationRequest)
 	if err := dec(in); err != nil {
@@ -1693,6 +1728,10 @@ var Scorecards_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ScoreEvaluation",
 			Handler:    _Scorecards_ScoreEvaluation_Handler,
+		},
+		{
+			MethodName: "UpdateEvaluation",
+			Handler:    _Scorecards_UpdateEvaluation_Handler,
 		},
 		{
 			MethodName: "GetEvaluation",
