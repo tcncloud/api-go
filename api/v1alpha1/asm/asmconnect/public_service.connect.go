@@ -85,7 +85,7 @@ type AsmClient interface {
 	// only the asm session sid filter is allowed
 	StreamAgentState(context.Context, *connect_go.Request[asm.StreamAgentStateReq]) (*connect_go.ServerStreamForClient[commons.StreamAgentStateRes], error)
 	// Streams back statuses for the desired filter
-	ManagerStreamAgentState(context.Context, *connect_go.Request[asm.ManagerStreamAgentStateReq]) (*connect_go.ServerStreamForClient[commons.AgentState], error)
+	ManagerStreamAgentState(context.Context, *connect_go.Request[asm.ManagerStreamAgentStateReq]) (*connect_go.ServerStreamForClient[commons.ManagerStreamAgentStateRes], error)
 	PushEvents(context.Context, *connect_go.Request[asm.PushEventsReq]) (*connect_go.Response[asm.PushEventsRes], error)
 	// Creates an agent session and enables the voice channel
 	CreateSession(context.Context, *connect_go.Request[asm.CreateSessionReq]) (*connect_go.Response[asm.CreateSessionRes], error)
@@ -123,7 +123,7 @@ func NewAsmClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+AsmStreamAgentStateProcedure,
 			opts...,
 		),
-		managerStreamAgentState: connect_go.NewClient[asm.ManagerStreamAgentStateReq, commons.AgentState](
+		managerStreamAgentState: connect_go.NewClient[asm.ManagerStreamAgentStateReq, commons.ManagerStreamAgentStateRes](
 			httpClient,
 			baseURL+AsmManagerStreamAgentStateProcedure,
 			opts...,
@@ -189,7 +189,7 @@ func NewAsmClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 // asmClient implements AsmClient.
 type asmClient struct {
 	streamAgentState             *connect_go.Client[asm.StreamAgentStateReq, commons.StreamAgentStateRes]
-	managerStreamAgentState      *connect_go.Client[asm.ManagerStreamAgentStateReq, commons.AgentState]
+	managerStreamAgentState      *connect_go.Client[asm.ManagerStreamAgentStateReq, commons.ManagerStreamAgentStateRes]
 	pushEvents                   *connect_go.Client[asm.PushEventsReq, asm.PushEventsRes]
 	createSession                *connect_go.Client[asm.CreateSessionReq, asm.CreateSessionRes]
 	endSession                   *connect_go.Client[asm.EndSessionReq, asm.EndSessionRes]
@@ -209,7 +209,7 @@ func (c *asmClient) StreamAgentState(ctx context.Context, req *connect_go.Reques
 }
 
 // ManagerStreamAgentState calls api.v1alpha1.asm.Asm.ManagerStreamAgentState.
-func (c *asmClient) ManagerStreamAgentState(ctx context.Context, req *connect_go.Request[asm.ManagerStreamAgentStateReq]) (*connect_go.ServerStreamForClient[commons.AgentState], error) {
+func (c *asmClient) ManagerStreamAgentState(ctx context.Context, req *connect_go.Request[asm.ManagerStreamAgentStateReq]) (*connect_go.ServerStreamForClient[commons.ManagerStreamAgentStateRes], error) {
 	return c.managerStreamAgentState.CallServerStream(ctx, req)
 }
 
@@ -274,7 +274,7 @@ type AsmHandler interface {
 	// only the asm session sid filter is allowed
 	StreamAgentState(context.Context, *connect_go.Request[asm.StreamAgentStateReq], *connect_go.ServerStream[commons.StreamAgentStateRes]) error
 	// Streams back statuses for the desired filter
-	ManagerStreamAgentState(context.Context, *connect_go.Request[asm.ManagerStreamAgentStateReq], *connect_go.ServerStream[commons.AgentState]) error
+	ManagerStreamAgentState(context.Context, *connect_go.Request[asm.ManagerStreamAgentStateReq], *connect_go.ServerStream[commons.ManagerStreamAgentStateRes]) error
 	PushEvents(context.Context, *connect_go.Request[asm.PushEventsReq]) (*connect_go.Response[asm.PushEventsRes], error)
 	// Creates an agent session and enables the voice channel
 	CreateSession(context.Context, *connect_go.Request[asm.CreateSessionReq]) (*connect_go.Response[asm.CreateSessionRes], error)
@@ -379,7 +379,7 @@ func (UnimplementedAsmHandler) StreamAgentState(context.Context, *connect_go.Req
 	return connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.asm.Asm.StreamAgentState is not implemented"))
 }
 
-func (UnimplementedAsmHandler) ManagerStreamAgentState(context.Context, *connect_go.Request[asm.ManagerStreamAgentStateReq], *connect_go.ServerStream[commons.AgentState]) error {
+func (UnimplementedAsmHandler) ManagerStreamAgentState(context.Context, *connect_go.Request[asm.ManagerStreamAgentStateReq], *connect_go.ServerStream[commons.ManagerStreamAgentStateRes]) error {
 	return connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.asm.Asm.ManagerStreamAgentState is not implemented"))
 }
 

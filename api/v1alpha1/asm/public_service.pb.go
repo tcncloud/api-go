@@ -52,7 +52,7 @@ var file_api_v1alpha1_asm_public_service_proto_rawDesc = []byte{
 	0x1e, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x61, 0x73,
 	0x6d, 0x2f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a,
 	0x1c, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x61, 0x6e, 0x6e, 0x6f,
-	0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x32, 0xe4, 0x0f,
+	0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x32, 0xf4, 0x0f,
 	0x0a, 0x03, 0x41, 0x73, 0x6d, 0x12, 0x9a, 0x01, 0x0a, 0x10, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d,
 	0x41, 0x67, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x12, 0x25, 0x2e, 0x61, 0x70, 0x69,
 	0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x61, 0x73, 0x6d, 0x2e, 0x53, 0x74,
@@ -63,13 +63,14 @@ var file_api_v1alpha1_asm_public_service_proto_rawDesc = []byte{
 	0xd3, 0xe4, 0x93, 0x02, 0x2b, 0x3a, 0x01, 0x2a, 0x22, 0x26, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76,
 	0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x61, 0x73, 0x6d, 0x2f, 0x61, 0x73, 0x6d, 0x2f,
 	0x73, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x73, 0x74, 0x61, 0x74, 0x65,
-	0x30, 0x01, 0x12, 0xa6, 0x01, 0x0a, 0x17, 0x4d, 0x61, 0x6e, 0x61, 0x67, 0x65, 0x72, 0x53, 0x74,
+	0x30, 0x01, 0x12, 0xb6, 0x01, 0x0a, 0x17, 0x4d, 0x61, 0x6e, 0x61, 0x67, 0x65, 0x72, 0x53, 0x74,
 	0x72, 0x65, 0x61, 0x6d, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x12, 0x2c,
 	0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x61, 0x73,
 	0x6d, 0x2e, 0x4d, 0x61, 0x6e, 0x61, 0x67, 0x65, 0x72, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x41,
-	0x67, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x65, 0x71, 0x1a, 0x17, 0x2e, 0x61,
-	0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x41, 0x67, 0x65, 0x6e, 0x74,
-	0x53, 0x74, 0x61, 0x74, 0x65, 0x22, 0x42, 0xba, 0xb8, 0x91, 0x02, 0x05, 0x0a, 0x03, 0x08, 0x90,
+	0x67, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x65, 0x71, 0x1a, 0x27, 0x2e, 0x61,
+	0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x4d, 0x61, 0x6e, 0x61, 0x67,
+	0x65, 0x72, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x61,
+	0x74, 0x65, 0x52, 0x65, 0x73, 0x22, 0x42, 0xba, 0xb8, 0x91, 0x02, 0x05, 0x0a, 0x03, 0x08, 0x90,
 	0x03, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x32, 0x3a, 0x01, 0x2a, 0x22, 0x2d, 0x2f, 0x61, 0x70, 0x69,
 	0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x61, 0x73, 0x6d, 0x2f, 0x61, 0x73,
 	0x6d, 0x2f, 0x6d, 0x61, 0x6e, 0x61, 0x67, 0x65, 0x72, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x61,
@@ -195,32 +196,32 @@ var file_api_v1alpha1_asm_public_service_proto_rawDesc = []byte{
 }
 
 var file_api_v1alpha1_asm_public_service_proto_goTypes = []interface{}{
-	(*StreamAgentStateReq)(nil),             // 0: api.v1alpha1.asm.StreamAgentStateReq
-	(*ManagerStreamAgentStateReq)(nil),      // 1: api.v1alpha1.asm.ManagerStreamAgentStateReq
-	(*PushEventsReq)(nil),                   // 2: api.v1alpha1.asm.PushEventsReq
-	(*CreateSessionReq)(nil),                // 3: api.v1alpha1.asm.CreateSessionReq
-	(*EndSessionReq)(nil),                   // 4: api.v1alpha1.asm.EndSessionReq
-	(*GetCurrentSessionReq)(nil),            // 5: api.v1alpha1.asm.GetCurrentSessionReq
-	(*EnableVoiceReq)(nil),                  // 6: api.v1alpha1.asm.EnableVoiceReq
-	(*DisableVoiceReq)(nil),                 // 7: api.v1alpha1.asm.DisableVoiceReq
-	(*ListConversationsReq)(nil),            // 8: api.v1alpha1.asm.ListConversationsReq
-	(*AssignNewConversationReq)(nil),        // 9: api.v1alpha1.asm.AssignNewConversationReq
-	(*ListAgentsReq)(nil),                   // 10: api.v1alpha1.asm.ListAgentsReq
-	(*SetConversationCollectedDataReq)(nil), // 11: api.v1alpha1.asm.SetConversationCollectedDataReq
-	(*GetQueuesDetailsReq)(nil),             // 12: api.v1alpha1.asm.GetQueuesDetailsReq
-	(*commons.StreamAgentStateRes)(nil),     // 13: api.commons.StreamAgentStateRes
-	(*commons.AgentState)(nil),              // 14: api.commons.AgentState
-	(*PushEventsRes)(nil),                   // 15: api.v1alpha1.asm.PushEventsRes
-	(*CreateSessionRes)(nil),                // 16: api.v1alpha1.asm.CreateSessionRes
-	(*EndSessionRes)(nil),                   // 17: api.v1alpha1.asm.EndSessionRes
-	(*AsmSession)(nil),                      // 18: api.v1alpha1.asm.AsmSession
-	(*EnableVoiceRes)(nil),                  // 19: api.v1alpha1.asm.EnableVoiceRes
-	(*DisableVoiceRes)(nil),                 // 20: api.v1alpha1.asm.DisableVoiceRes
-	(*ListConversationsRes)(nil),            // 21: api.v1alpha1.asm.ListConversationsRes
-	(*AssignNewConversationRes)(nil),        // 22: api.v1alpha1.asm.AssignNewConversationRes
-	(*ListAgentsRes)(nil),                   // 23: api.v1alpha1.asm.ListAgentsRes
-	(*SetConversationCollectedDataRes)(nil), // 24: api.v1alpha1.asm.SetConversationCollectedDataRes
-	(*commons.GetQueuesDetailsRes)(nil),     // 25: api.commons.GetQueuesDetailsRes
+	(*StreamAgentStateReq)(nil),                // 0: api.v1alpha1.asm.StreamAgentStateReq
+	(*ManagerStreamAgentStateReq)(nil),         // 1: api.v1alpha1.asm.ManagerStreamAgentStateReq
+	(*PushEventsReq)(nil),                      // 2: api.v1alpha1.asm.PushEventsReq
+	(*CreateSessionReq)(nil),                   // 3: api.v1alpha1.asm.CreateSessionReq
+	(*EndSessionReq)(nil),                      // 4: api.v1alpha1.asm.EndSessionReq
+	(*GetCurrentSessionReq)(nil),               // 5: api.v1alpha1.asm.GetCurrentSessionReq
+	(*EnableVoiceReq)(nil),                     // 6: api.v1alpha1.asm.EnableVoiceReq
+	(*DisableVoiceReq)(nil),                    // 7: api.v1alpha1.asm.DisableVoiceReq
+	(*ListConversationsReq)(nil),               // 8: api.v1alpha1.asm.ListConversationsReq
+	(*AssignNewConversationReq)(nil),           // 9: api.v1alpha1.asm.AssignNewConversationReq
+	(*ListAgentsReq)(nil),                      // 10: api.v1alpha1.asm.ListAgentsReq
+	(*SetConversationCollectedDataReq)(nil),    // 11: api.v1alpha1.asm.SetConversationCollectedDataReq
+	(*GetQueuesDetailsReq)(nil),                // 12: api.v1alpha1.asm.GetQueuesDetailsReq
+	(*commons.StreamAgentStateRes)(nil),        // 13: api.commons.StreamAgentStateRes
+	(*commons.ManagerStreamAgentStateRes)(nil), // 14: api.commons.ManagerStreamAgentStateRes
+	(*PushEventsRes)(nil),                      // 15: api.v1alpha1.asm.PushEventsRes
+	(*CreateSessionRes)(nil),                   // 16: api.v1alpha1.asm.CreateSessionRes
+	(*EndSessionRes)(nil),                      // 17: api.v1alpha1.asm.EndSessionRes
+	(*AsmSession)(nil),                         // 18: api.v1alpha1.asm.AsmSession
+	(*EnableVoiceRes)(nil),                     // 19: api.v1alpha1.asm.EnableVoiceRes
+	(*DisableVoiceRes)(nil),                    // 20: api.v1alpha1.asm.DisableVoiceRes
+	(*ListConversationsRes)(nil),               // 21: api.v1alpha1.asm.ListConversationsRes
+	(*AssignNewConversationRes)(nil),           // 22: api.v1alpha1.asm.AssignNewConversationRes
+	(*ListAgentsRes)(nil),                      // 23: api.v1alpha1.asm.ListAgentsRes
+	(*SetConversationCollectedDataRes)(nil),    // 24: api.v1alpha1.asm.SetConversationCollectedDataRes
+	(*commons.GetQueuesDetailsRes)(nil),        // 25: api.commons.GetQueuesDetailsRes
 }
 var file_api_v1alpha1_asm_public_service_proto_depIdxs = []int32{
 	0,  // 0: api.v1alpha1.asm.Asm.StreamAgentState:input_type -> api.v1alpha1.asm.StreamAgentStateReq
@@ -237,7 +238,7 @@ var file_api_v1alpha1_asm_public_service_proto_depIdxs = []int32{
 	11, // 11: api.v1alpha1.asm.Asm.SetConversationCollectedData:input_type -> api.v1alpha1.asm.SetConversationCollectedDataReq
 	12, // 12: api.v1alpha1.asm.Asm.GetQueuesDetails:input_type -> api.v1alpha1.asm.GetQueuesDetailsReq
 	13, // 13: api.v1alpha1.asm.Asm.StreamAgentState:output_type -> api.commons.StreamAgentStateRes
-	14, // 14: api.v1alpha1.asm.Asm.ManagerStreamAgentState:output_type -> api.commons.AgentState
+	14, // 14: api.v1alpha1.asm.Asm.ManagerStreamAgentState:output_type -> api.commons.ManagerStreamAgentStateRes
 	15, // 15: api.v1alpha1.asm.Asm.PushEvents:output_type -> api.v1alpha1.asm.PushEventsRes
 	16, // 16: api.v1alpha1.asm.Asm.CreateSession:output_type -> api.v1alpha1.asm.CreateSessionRes
 	17, // 17: api.v1alpha1.asm.Asm.EndSession:output_type -> api.v1alpha1.asm.EndSessionRes
