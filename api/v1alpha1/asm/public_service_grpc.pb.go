@@ -136,7 +136,7 @@ func (c *asmClient) ManagerStreamAgentState(ctx context.Context, in *ManagerStre
 }
 
 type Asm_ManagerStreamAgentStateClient interface {
-	Recv() (*commons.ManagerStreamAgentStateRes, error)
+	Recv() (*commons.AgentState, error)
 	grpc.ClientStream
 }
 
@@ -144,8 +144,8 @@ type asmManagerStreamAgentStateClient struct {
 	grpc.ClientStream
 }
 
-func (x *asmManagerStreamAgentStateClient) Recv() (*commons.ManagerStreamAgentStateRes, error) {
-	m := new(commons.ManagerStreamAgentStateRes)
+func (x *asmManagerStreamAgentStateClient) Recv() (*commons.AgentState, error) {
+	m := new(commons.AgentState)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
@@ -369,7 +369,7 @@ func _Asm_ManagerStreamAgentState_Handler(srv interface{}, stream grpc.ServerStr
 }
 
 type Asm_ManagerStreamAgentStateServer interface {
-	Send(*commons.ManagerStreamAgentStateRes) error
+	Send(*commons.AgentState) error
 	grpc.ServerStream
 }
 
@@ -377,7 +377,7 @@ type asmManagerStreamAgentStateServer struct {
 	grpc.ServerStream
 }
 
-func (x *asmManagerStreamAgentStateServer) Send(m *commons.ManagerStreamAgentStateRes) error {
+func (x *asmManagerStreamAgentStateServer) Send(m *commons.AgentState) error {
 	return x.ServerStream.SendMsg(m)
 }
 
