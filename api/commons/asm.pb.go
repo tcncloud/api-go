@@ -488,6 +488,87 @@ func (*StreamAgentStateRes_CallQueueAdd) isStreamAgentStateRes_AgentState() {}
 
 func (*StreamAgentStateRes_CallQueueRemove) isStreamAgentStateRes_AgentState() {}
 
+type ManagerStreamAgentStateRes struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Types that are assignable to ManagerAgentState:
+	//
+	//	*ManagerStreamAgentStateRes_State
+	//	*ManagerStreamAgentStateRes_HeartBeat
+	ManagerAgentState isManagerStreamAgentStateRes_ManagerAgentState `protobuf_oneof:"manager_agent_state"`
+}
+
+func (x *ManagerStreamAgentStateRes) Reset() {
+	*x = ManagerStreamAgentStateRes{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_commons_asm_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ManagerStreamAgentStateRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ManagerStreamAgentStateRes) ProtoMessage() {}
+
+func (x *ManagerStreamAgentStateRes) ProtoReflect() protoreflect.Message {
+	mi := &file_api_commons_asm_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ManagerStreamAgentStateRes.ProtoReflect.Descriptor instead.
+func (*ManagerStreamAgentStateRes) Descriptor() ([]byte, []int) {
+	return file_api_commons_asm_proto_rawDescGZIP(), []int{2}
+}
+
+func (m *ManagerStreamAgentStateRes) GetManagerAgentState() isManagerStreamAgentStateRes_ManagerAgentState {
+	if m != nil {
+		return m.ManagerAgentState
+	}
+	return nil
+}
+
+func (x *ManagerStreamAgentStateRes) GetState() *AgentState {
+	if x, ok := x.GetManagerAgentState().(*ManagerStreamAgentStateRes_State); ok {
+		return x.State
+	}
+	return nil
+}
+
+func (x *ManagerStreamAgentStateRes) GetHeartBeat() *KeepAlive {
+	if x, ok := x.GetManagerAgentState().(*ManagerStreamAgentStateRes_HeartBeat); ok {
+		return x.HeartBeat
+	}
+	return nil
+}
+
+type isManagerStreamAgentStateRes_ManagerAgentState interface {
+	isManagerStreamAgentStateRes_ManagerAgentState()
+}
+
+type ManagerStreamAgentStateRes_State struct {
+	State *AgentState `protobuf:"bytes,1,opt,name=state,proto3,oneof"`
+}
+
+type ManagerStreamAgentStateRes_HeartBeat struct {
+	HeartBeat *KeepAlive `protobuf:"bytes,2,opt,name=heart_beat,json=heartBeat,proto3,oneof"`
+}
+
+func (*ManagerStreamAgentStateRes_State) isManagerStreamAgentStateRes_ManagerAgentState() {}
+
+func (*ManagerStreamAgentStateRes_HeartBeat) isManagerStreamAgentStateRes_ManagerAgentState() {}
+
 type KeepAlive struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -497,7 +578,7 @@ type KeepAlive struct {
 func (x *KeepAlive) Reset() {
 	*x = KeepAlive{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_asm_proto_msgTypes[2]
+		mi := &file_api_commons_asm_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -510,7 +591,7 @@ func (x *KeepAlive) String() string {
 func (*KeepAlive) ProtoMessage() {}
 
 func (x *KeepAlive) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_asm_proto_msgTypes[2]
+	mi := &file_api_commons_asm_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -523,7 +604,7 @@ func (x *KeepAlive) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use KeepAlive.ProtoReflect.Descriptor instead.
 func (*KeepAlive) Descriptor() ([]byte, []int) {
-	return file_api_commons_asm_proto_rawDescGZIP(), []int{2}
+	return file_api_commons_asm_proto_rawDescGZIP(), []int{3}
 }
 
 type QueueCallAdd struct {
@@ -552,7 +633,7 @@ type QueueCallAdd struct {
 func (x *QueueCallAdd) Reset() {
 	*x = QueueCallAdd{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_asm_proto_msgTypes[3]
+		mi := &file_api_commons_asm_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -565,7 +646,7 @@ func (x *QueueCallAdd) String() string {
 func (*QueueCallAdd) ProtoMessage() {}
 
 func (x *QueueCallAdd) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_asm_proto_msgTypes[3]
+	mi := &file_api_commons_asm_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -578,7 +659,7 @@ func (x *QueueCallAdd) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QueueCallAdd.ProtoReflect.Descriptor instead.
 func (*QueueCallAdd) Descriptor() ([]byte, []int) {
-	return file_api_commons_asm_proto_rawDescGZIP(), []int{3}
+	return file_api_commons_asm_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *QueueCallAdd) GetPhoneNumber() string {
@@ -648,7 +729,7 @@ type QueueCallRemove struct {
 func (x *QueueCallRemove) Reset() {
 	*x = QueueCallRemove{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_asm_proto_msgTypes[4]
+		mi := &file_api_commons_asm_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -661,7 +742,7 @@ func (x *QueueCallRemove) String() string {
 func (*QueueCallRemove) ProtoMessage() {}
 
 func (x *QueueCallRemove) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_asm_proto_msgTypes[4]
+	mi := &file_api_commons_asm_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -674,7 +755,7 @@ func (x *QueueCallRemove) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QueueCallRemove.ProtoReflect.Descriptor instead.
 func (*QueueCallRemove) Descriptor() ([]byte, []int) {
-	return file_api_commons_asm_proto_rawDescGZIP(), []int{4}
+	return file_api_commons_asm_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *QueueCallRemove) GetCallerSid() *CallerSid {
@@ -701,7 +782,7 @@ type DashboardAgentInfo_DashboardAgentResponseEvent struct {
 func (x *DashboardAgentInfo_DashboardAgentResponseEvent) Reset() {
 	*x = DashboardAgentInfo_DashboardAgentResponseEvent{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_asm_proto_msgTypes[5]
+		mi := &file_api_commons_asm_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -714,7 +795,7 @@ func (x *DashboardAgentInfo_DashboardAgentResponseEvent) String() string {
 func (*DashboardAgentInfo_DashboardAgentResponseEvent) ProtoMessage() {}
 
 func (x *DashboardAgentInfo_DashboardAgentResponseEvent) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_asm_proto_msgTypes[5]
+	mi := &file_api_commons_asm_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -874,7 +955,17 @@ var file_api_commons_asm_proto_rawDesc = []byte{
 	0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x51, 0x75, 0x65, 0x75,
 	0x65, 0x43, 0x61, 0x6c, 0x6c, 0x52, 0x65, 0x6d, 0x6f, 0x76, 0x65, 0x48, 0x00, 0x52, 0x0f, 0x63,
 	0x61, 0x6c, 0x6c, 0x51, 0x75, 0x65, 0x75, 0x65, 0x52, 0x65, 0x6d, 0x6f, 0x76, 0x65, 0x42, 0x0d,
-	0x0a, 0x0b, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x5f, 0x73, 0x74, 0x61, 0x74, 0x65, 0x22, 0x0b, 0x0a,
+	0x0a, 0x0b, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x5f, 0x73, 0x74, 0x61, 0x74, 0x65, 0x22, 0x9d, 0x01,
+	0x0a, 0x1a, 0x4d, 0x61, 0x6e, 0x61, 0x67, 0x65, 0x72, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x41,
+	0x67, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x65, 0x73, 0x12, 0x2f, 0x0a, 0x05,
+	0x73, 0x74, 0x61, 0x74, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x17, 0x2e, 0x61, 0x70,
+	0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x53,
+	0x74, 0x61, 0x74, 0x65, 0x48, 0x00, 0x52, 0x05, 0x73, 0x74, 0x61, 0x74, 0x65, 0x12, 0x37, 0x0a,
+	0x0a, 0x68, 0x65, 0x61, 0x72, 0x74, 0x5f, 0x62, 0x65, 0x61, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x0b, 0x32, 0x16, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e,
+	0x4b, 0x65, 0x65, 0x70, 0x41, 0x6c, 0x69, 0x76, 0x65, 0x48, 0x00, 0x52, 0x09, 0x68, 0x65, 0x61,
+	0x72, 0x74, 0x42, 0x65, 0x61, 0x74, 0x42, 0x15, 0x0a, 0x13, 0x6d, 0x61, 0x6e, 0x61, 0x67, 0x65,
+	0x72, 0x5f, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x5f, 0x73, 0x74, 0x61, 0x74, 0x65, 0x22, 0x0b, 0x0a,
 	0x09, 0x4b, 0x65, 0x65, 0x70, 0x41, 0x6c, 0x69, 0x76, 0x65, 0x22, 0x97, 0x03, 0x0a, 0x0c, 0x51,
 	0x75, 0x65, 0x75, 0x65, 0x43, 0x61, 0x6c, 0x6c, 0x41, 0x64, 0x64, 0x12, 0x21, 0x0a, 0x0c, 0x70,
 	0x68, 0x6f, 0x6e, 0x65, 0x5f, 0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28,
@@ -939,47 +1030,50 @@ func file_api_commons_asm_proto_rawDescGZIP() []byte {
 }
 
 var file_api_commons_asm_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_api_commons_asm_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
+var file_api_commons_asm_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_api_commons_asm_proto_goTypes = []interface{}{
-	(AsmSubsessionType)(0),      // 0: api.commons.AsmSubsessionType
-	(StatusState)(0),            // 1: api.commons.StatusState
-	(*DashboardAgentInfo)(nil),  // 2: api.commons.DashboardAgentInfo
-	(*StreamAgentStateRes)(nil), // 3: api.commons.StreamAgentStateRes
-	(*KeepAlive)(nil),           // 4: api.commons.KeepAlive
-	(*QueueCallAdd)(nil),        // 5: api.commons.QueueCallAdd
-	(*QueueCallRemove)(nil),     // 6: api.commons.QueueCallRemove
-	(*DashboardAgentInfo_DashboardAgentResponseEvent)(nil), // 7: api.commons.DashboardAgentInfo.DashboardAgentResponseEvent
-	nil,                           // 8: api.commons.DashboardAgentInfo.SkillsEntry
-	(*timestamppb.Timestamp)(nil), // 9: google.protobuf.Timestamp
-	(*wrapperspb.Int64Value)(nil), // 10: google.protobuf.Int64Value
-	(*AgentState)(nil),            // 11: api.commons.AgentState
-	(QueuedNotificationType)(0),   // 12: api.commons.QueuedNotificationType
-	(*CallerSid)(nil),             // 13: api.commons.CallerSid
+	(AsmSubsessionType)(0),                                 // 0: api.commons.AsmSubsessionType
+	(StatusState)(0),                                       // 1: api.commons.StatusState
+	(*DashboardAgentInfo)(nil),                             // 2: api.commons.DashboardAgentInfo
+	(*StreamAgentStateRes)(nil),                            // 3: api.commons.StreamAgentStateRes
+	(*ManagerStreamAgentStateRes)(nil),                     // 4: api.commons.ManagerStreamAgentStateRes
+	(*KeepAlive)(nil),                                      // 5: api.commons.KeepAlive
+	(*QueueCallAdd)(nil),                                   // 6: api.commons.QueueCallAdd
+	(*QueueCallRemove)(nil),                                // 7: api.commons.QueueCallRemove
+	(*DashboardAgentInfo_DashboardAgentResponseEvent)(nil), // 8: api.commons.DashboardAgentInfo.DashboardAgentResponseEvent
+	nil,                           // 9: api.commons.DashboardAgentInfo.SkillsEntry
+	(*timestamppb.Timestamp)(nil), // 10: google.protobuf.Timestamp
+	(*wrapperspb.Int64Value)(nil), // 11: google.protobuf.Int64Value
+	(*AgentState)(nil),            // 12: api.commons.AgentState
+	(QueuedNotificationType)(0),   // 13: api.commons.QueuedNotificationType
+	(*CallerSid)(nil),             // 14: api.commons.CallerSid
 }
 var file_api_commons_asm_proto_depIdxs = []int32{
-	9,  // 0: api.commons.DashboardAgentInfo.created:type_name -> google.protobuf.Timestamp
-	9,  // 1: api.commons.DashboardAgentInfo.last_updated:type_name -> google.protobuf.Timestamp
+	10, // 0: api.commons.DashboardAgentInfo.created:type_name -> google.protobuf.Timestamp
+	10, // 1: api.commons.DashboardAgentInfo.last_updated:type_name -> google.protobuf.Timestamp
 	1,  // 2: api.commons.DashboardAgentInfo.agent_status:type_name -> api.commons.StatusState
-	9,  // 3: api.commons.DashboardAgentInfo.login_time:type_name -> google.protobuf.Timestamp
-	9,  // 4: api.commons.DashboardAgentInfo.last_event_time:type_name -> google.protobuf.Timestamp
-	7,  // 5: api.commons.DashboardAgentInfo.events:type_name -> api.commons.DashboardAgentInfo.DashboardAgentResponseEvent
-	8,  // 6: api.commons.DashboardAgentInfo.skills:type_name -> api.commons.DashboardAgentInfo.SkillsEntry
-	10, // 7: api.commons.DashboardAgentInfo.asm_session_sid:type_name -> google.protobuf.Int64Value
-	11, // 8: api.commons.StreamAgentStateRes.state:type_name -> api.commons.AgentState
-	4,  // 9: api.commons.StreamAgentStateRes.heart_beat:type_name -> api.commons.KeepAlive
-	5,  // 10: api.commons.StreamAgentStateRes.call_queue_add:type_name -> api.commons.QueueCallAdd
-	6,  // 11: api.commons.StreamAgentStateRes.call_queue_remove:type_name -> api.commons.QueueCallRemove
-	9,  // 12: api.commons.QueueCallAdd.start_date:type_name -> google.protobuf.Timestamp
-	9,  // 13: api.commons.QueueCallAdd.hold_date:type_name -> google.protobuf.Timestamp
-	12, // 14: api.commons.QueueCallAdd.queued_notification_type:type_name -> api.commons.QueuedNotificationType
-	13, // 15: api.commons.QueueCallAdd.caller_sid:type_name -> api.commons.CallerSid
-	13, // 16: api.commons.QueueCallRemove.caller_sid:type_name -> api.commons.CallerSid
-	9,  // 17: api.commons.DashboardAgentInfo.DashboardAgentResponseEvent.time:type_name -> google.protobuf.Timestamp
-	18, // [18:18] is the sub-list for method output_type
-	18, // [18:18] is the sub-list for method input_type
-	18, // [18:18] is the sub-list for extension type_name
-	18, // [18:18] is the sub-list for extension extendee
-	0,  // [0:18] is the sub-list for field type_name
+	10, // 3: api.commons.DashboardAgentInfo.login_time:type_name -> google.protobuf.Timestamp
+	10, // 4: api.commons.DashboardAgentInfo.last_event_time:type_name -> google.protobuf.Timestamp
+	8,  // 5: api.commons.DashboardAgentInfo.events:type_name -> api.commons.DashboardAgentInfo.DashboardAgentResponseEvent
+	9,  // 6: api.commons.DashboardAgentInfo.skills:type_name -> api.commons.DashboardAgentInfo.SkillsEntry
+	11, // 7: api.commons.DashboardAgentInfo.asm_session_sid:type_name -> google.protobuf.Int64Value
+	12, // 8: api.commons.StreamAgentStateRes.state:type_name -> api.commons.AgentState
+	5,  // 9: api.commons.StreamAgentStateRes.heart_beat:type_name -> api.commons.KeepAlive
+	6,  // 10: api.commons.StreamAgentStateRes.call_queue_add:type_name -> api.commons.QueueCallAdd
+	7,  // 11: api.commons.StreamAgentStateRes.call_queue_remove:type_name -> api.commons.QueueCallRemove
+	12, // 12: api.commons.ManagerStreamAgentStateRes.state:type_name -> api.commons.AgentState
+	5,  // 13: api.commons.ManagerStreamAgentStateRes.heart_beat:type_name -> api.commons.KeepAlive
+	10, // 14: api.commons.QueueCallAdd.start_date:type_name -> google.protobuf.Timestamp
+	10, // 15: api.commons.QueueCallAdd.hold_date:type_name -> google.protobuf.Timestamp
+	13, // 16: api.commons.QueueCallAdd.queued_notification_type:type_name -> api.commons.QueuedNotificationType
+	14, // 17: api.commons.QueueCallAdd.caller_sid:type_name -> api.commons.CallerSid
+	14, // 18: api.commons.QueueCallRemove.caller_sid:type_name -> api.commons.CallerSid
+	10, // 19: api.commons.DashboardAgentInfo.DashboardAgentResponseEvent.time:type_name -> google.protobuf.Timestamp
+	20, // [20:20] is the sub-list for method output_type
+	20, // [20:20] is the sub-list for method input_type
+	20, // [20:20] is the sub-list for extension type_name
+	20, // [20:20] is the sub-list for extension extendee
+	0,  // [0:20] is the sub-list for field type_name
 }
 
 func init() { file_api_commons_asm_proto_init() }
@@ -1014,7 +1108,7 @@ func file_api_commons_asm_proto_init() {
 			}
 		}
 		file_api_commons_asm_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*KeepAlive); i {
+			switch v := v.(*ManagerStreamAgentStateRes); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1026,7 +1120,7 @@ func file_api_commons_asm_proto_init() {
 			}
 		}
 		file_api_commons_asm_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*QueueCallAdd); i {
+			switch v := v.(*KeepAlive); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1038,7 +1132,7 @@ func file_api_commons_asm_proto_init() {
 			}
 		}
 		file_api_commons_asm_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*QueueCallRemove); i {
+			switch v := v.(*QueueCallAdd); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1050,6 +1144,18 @@ func file_api_commons_asm_proto_init() {
 			}
 		}
 		file_api_commons_asm_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*QueueCallRemove); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_commons_asm_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DashboardAgentInfo_DashboardAgentResponseEvent); i {
 			case 0:
 				return &v.state
@@ -1068,13 +1174,17 @@ func file_api_commons_asm_proto_init() {
 		(*StreamAgentStateRes_CallQueueAdd)(nil),
 		(*StreamAgentStateRes_CallQueueRemove)(nil),
 	}
+	file_api_commons_asm_proto_msgTypes[2].OneofWrappers = []interface{}{
+		(*ManagerStreamAgentStateRes_State)(nil),
+		(*ManagerStreamAgentStateRes_HeartBeat)(nil),
+	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_commons_asm_proto_rawDesc,
 			NumEnums:      2,
-			NumMessages:   7,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
