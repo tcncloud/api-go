@@ -68,20 +68,26 @@ type AnaClient interface {
 	// sets the length of analytics history the client can view
 	SetWeeks(ctx context.Context, in *SetWeeksReq, opts ...grpc.CallOption) (*SetWeeksRes, error)
 	// set default time filter for given ana account
+	// org.Permission_EDIT_CLIENT_PREFERENCES
 	SetDefaultTimeFilter(ctx context.Context, in *SetDefaultTimeFilterReq, opts ...grpc.CallOption) (*SetDefaultTimeFilterRes, error)
 	// sets the dashboard that is shown by default for neo
+	// org.Permission_EDIT_CLIENT_PREFERENCES
 	SetDefaultDashboard(ctx context.Context, in *SetDefaultDashboardReq, opts ...grpc.CallOption) (*SetDefaultDashboardRes, error)
 	// gets account details for the client
+	// org.Permission_VIEW_REPORTS
 	GetAccount(ctx context.Context, in *GetAccountReq, opts ...grpc.CallOption) (*AnaAccount, error)
 	// gets account details using the org_id provided
 	GetSpecifiedAccount(ctx context.Context, in *GetSpecifiedAccountReq, opts ...grpc.CallOption) (*AnaAccount, error)
 	// Gets an authorized url for the clients BI analytics page
 	GetAuthorizedAnalyticsLink(ctx context.Context, in *GetAuthorizedAnalyticsLinkReq, opts ...grpc.CallOption) (*GetAuthorizedAnalyticsLinkRes, error)
 	// creates and returns a url to download billing for the month provided or the previous month if none is provided
+	// org.Permission_VIEW_BILLING
 	GenerateMonthlyBilling(ctx context.Context, in *GenerateMonthlyBillingReq, opts ...grpc.CallOption) (*GenerateMonthlyBillingRes, error)
 	// gets the ana_account timezone for the client
+	// org.Permission_VIEW_REPORTS
 	GetTimeZone(ctx context.Context, in *GetTimeZoneReq, opts ...grpc.CallOption) (*TimeZone, error)
 	// updates the timezone for the account
+	// org.Permission_VIEW_REPORTS
 	SetTimeZone(ctx context.Context, in *SetTimeZoneReq, opts ...grpc.CallOption) (*SetTimeZoneRes, error)
 	// copies the reports (dashboards legacy and visualizations legacy)
 	// corresponding with the ids provided
@@ -92,12 +98,16 @@ type AnaClient interface {
 	// pro, and which of those features contribute to making the client pro
 	GetBillingSummary(ctx context.Context, in *GetBillingSummaryReq, opts ...grpc.CallOption) (*BillingSummary, error)
 	// enable custom report usage for the client
+	// org.Permission_EDIT_CLIENT_PREFERENCES
 	EnableCustomReports(ctx context.Context, in *SetCustomReportsEnabledReq, opts ...grpc.CallOption) (*SetCustomReportsEnabledRes, error)
 	// disable custom report usage for the client
+	// org.Permission_EDIT_CLIENT_PREFERENCES
 	DisableCustomReports(ctx context.Context, in *SetCustomReportsEnabledReq, opts ...grpc.CallOption) (*SetCustomReportsEnabledRes, error)
 	// allow the client to be adopted by another account
+	// org.Permission_EDIT_CLIENT_PREFERENCES
 	MakeAdoptable(ctx context.Context, in *MakeAdoptableReq, opts ...grpc.CallOption) (*MakeAdoptableRes, error)
 	// disallow other accounts from adopting the client
+	// org.Permission_EDIT_CLIENT_PREFERENCES
 	MakeUnadoptable(ctx context.Context, in *MakeAdoptableReq, opts ...grpc.CallOption) (*MakeAdoptableRes, error)
 	// allow the parent to view the data of the adoptable child
 	AdoptAnaAccount(ctx context.Context, in *SetAnaAccountRelationReq, opts ...grpc.CallOption) (*SetAnaAccountRelationRes, error)
@@ -446,20 +456,26 @@ type AnaServer interface {
 	// sets the length of analytics history the client can view
 	SetWeeks(context.Context, *SetWeeksReq) (*SetWeeksRes, error)
 	// set default time filter for given ana account
+	// org.Permission_EDIT_CLIENT_PREFERENCES
 	SetDefaultTimeFilter(context.Context, *SetDefaultTimeFilterReq) (*SetDefaultTimeFilterRes, error)
 	// sets the dashboard that is shown by default for neo
+	// org.Permission_EDIT_CLIENT_PREFERENCES
 	SetDefaultDashboard(context.Context, *SetDefaultDashboardReq) (*SetDefaultDashboardRes, error)
 	// gets account details for the client
+	// org.Permission_VIEW_REPORTS
 	GetAccount(context.Context, *GetAccountReq) (*AnaAccount, error)
 	// gets account details using the org_id provided
 	GetSpecifiedAccount(context.Context, *GetSpecifiedAccountReq) (*AnaAccount, error)
 	// Gets an authorized url for the clients BI analytics page
 	GetAuthorizedAnalyticsLink(context.Context, *GetAuthorizedAnalyticsLinkReq) (*GetAuthorizedAnalyticsLinkRes, error)
 	// creates and returns a url to download billing for the month provided or the previous month if none is provided
+	// org.Permission_VIEW_BILLING
 	GenerateMonthlyBilling(context.Context, *GenerateMonthlyBillingReq) (*GenerateMonthlyBillingRes, error)
 	// gets the ana_account timezone for the client
+	// org.Permission_VIEW_REPORTS
 	GetTimeZone(context.Context, *GetTimeZoneReq) (*TimeZone, error)
 	// updates the timezone for the account
+	// org.Permission_VIEW_REPORTS
 	SetTimeZone(context.Context, *SetTimeZoneReq) (*SetTimeZoneRes, error)
 	// copies the reports (dashboards legacy and visualizations legacy)
 	// corresponding with the ids provided
@@ -470,12 +486,16 @@ type AnaServer interface {
 	// pro, and which of those features contribute to making the client pro
 	GetBillingSummary(context.Context, *GetBillingSummaryReq) (*BillingSummary, error)
 	// enable custom report usage for the client
+	// org.Permission_EDIT_CLIENT_PREFERENCES
 	EnableCustomReports(context.Context, *SetCustomReportsEnabledReq) (*SetCustomReportsEnabledRes, error)
 	// disable custom report usage for the client
+	// org.Permission_EDIT_CLIENT_PREFERENCES
 	DisableCustomReports(context.Context, *SetCustomReportsEnabledReq) (*SetCustomReportsEnabledRes, error)
 	// allow the client to be adopted by another account
+	// org.Permission_EDIT_CLIENT_PREFERENCES
 	MakeAdoptable(context.Context, *MakeAdoptableReq) (*MakeAdoptableRes, error)
 	// disallow other accounts from adopting the client
+	// org.Permission_EDIT_CLIENT_PREFERENCES
 	MakeUnadoptable(context.Context, *MakeAdoptableReq) (*MakeAdoptableRes, error)
 	// allow the parent to view the data of the adoptable child
 	AdoptAnaAccount(context.Context, *SetAnaAccountRelationReq) (*SetAnaAccountRelationRes, error)
