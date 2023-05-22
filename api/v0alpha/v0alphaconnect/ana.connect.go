@@ -124,20 +124,26 @@ type AnaClient interface {
 	// sets the length of analytics history the client can view
 	SetWeeks(context.Context, *connect_go.Request[v0alpha.SetWeeksReq]) (*connect_go.Response[v0alpha.SetWeeksRes], error)
 	// set default time filter for given ana account
+	// org.Permission_EDIT_CLIENT_PREFERENCES
 	SetDefaultTimeFilter(context.Context, *connect_go.Request[v0alpha.SetDefaultTimeFilterReq]) (*connect_go.Response[v0alpha.SetDefaultTimeFilterRes], error)
 	// sets the dashboard that is shown by default for neo
+	// org.Permission_EDIT_CLIENT_PREFERENCES
 	SetDefaultDashboard(context.Context, *connect_go.Request[v0alpha.SetDefaultDashboardReq]) (*connect_go.Response[v0alpha.SetDefaultDashboardRes], error)
 	// gets account details for the client
+	// org.Permission_VIEW_REPORTS
 	GetAccount(context.Context, *connect_go.Request[v0alpha.GetAccountReq]) (*connect_go.Response[v0alpha.AnaAccount], error)
 	// gets account details using the org_id provided
 	GetSpecifiedAccount(context.Context, *connect_go.Request[v0alpha.GetSpecifiedAccountReq]) (*connect_go.Response[v0alpha.AnaAccount], error)
 	// Gets an authorized url for the clients BI analytics page
 	GetAuthorizedAnalyticsLink(context.Context, *connect_go.Request[v0alpha.GetAuthorizedAnalyticsLinkReq]) (*connect_go.Response[v0alpha.GetAuthorizedAnalyticsLinkRes], error)
 	// creates and returns a url to download billing for the month provided or the previous month if none is provided
+	// org.Permission_VIEW_BILLING
 	GenerateMonthlyBilling(context.Context, *connect_go.Request[v0alpha.GenerateMonthlyBillingReq]) (*connect_go.Response[v0alpha.GenerateMonthlyBillingRes], error)
 	// gets the ana_account timezone for the client
+	// org.Permission_VIEW_REPORTS
 	GetTimeZone(context.Context, *connect_go.Request[v0alpha.GetTimeZoneReq]) (*connect_go.Response[v0alpha.TimeZone], error)
 	// updates the timezone for the account
+	// org.Permission_VIEW_REPORTS
 	SetTimeZone(context.Context, *connect_go.Request[v0alpha.SetTimeZoneReq]) (*connect_go.Response[v0alpha.SetTimeZoneRes], error)
 	// copies the reports (dashboards legacy and visualizations legacy)
 	// corresponding with the ids provided
@@ -148,12 +154,16 @@ type AnaClient interface {
 	// pro, and which of those features contribute to making the client pro
 	GetBillingSummary(context.Context, *connect_go.Request[v0alpha.GetBillingSummaryReq]) (*connect_go.Response[v0alpha.BillingSummary], error)
 	// enable custom report usage for the client
+	// org.Permission_EDIT_CLIENT_PREFERENCES
 	EnableCustomReports(context.Context, *connect_go.Request[v0alpha.SetCustomReportsEnabledReq]) (*connect_go.Response[v0alpha.SetCustomReportsEnabledRes], error)
 	// disable custom report usage for the client
+	// org.Permission_EDIT_CLIENT_PREFERENCES
 	DisableCustomReports(context.Context, *connect_go.Request[v0alpha.SetCustomReportsEnabledReq]) (*connect_go.Response[v0alpha.SetCustomReportsEnabledRes], error)
 	// allow the client to be adopted by another account
+	// org.Permission_EDIT_CLIENT_PREFERENCES
 	MakeAdoptable(context.Context, *connect_go.Request[v0alpha.MakeAdoptableReq]) (*connect_go.Response[v0alpha.MakeAdoptableRes], error)
 	// disallow other accounts from adopting the client
+	// org.Permission_EDIT_CLIENT_PREFERENCES
 	MakeUnadoptable(context.Context, *connect_go.Request[v0alpha.MakeAdoptableReq]) (*connect_go.Response[v0alpha.MakeAdoptableRes], error)
 	// allow the parent to view the data of the adoptable child
 	AdoptAnaAccount(context.Context, *connect_go.Request[v0alpha.SetAnaAccountRelationReq]) (*connect_go.Response[v0alpha.SetAnaAccountRelationRes], error)
@@ -571,20 +581,26 @@ type AnaHandler interface {
 	// sets the length of analytics history the client can view
 	SetWeeks(context.Context, *connect_go.Request[v0alpha.SetWeeksReq]) (*connect_go.Response[v0alpha.SetWeeksRes], error)
 	// set default time filter for given ana account
+	// org.Permission_EDIT_CLIENT_PREFERENCES
 	SetDefaultTimeFilter(context.Context, *connect_go.Request[v0alpha.SetDefaultTimeFilterReq]) (*connect_go.Response[v0alpha.SetDefaultTimeFilterRes], error)
 	// sets the dashboard that is shown by default for neo
+	// org.Permission_EDIT_CLIENT_PREFERENCES
 	SetDefaultDashboard(context.Context, *connect_go.Request[v0alpha.SetDefaultDashboardReq]) (*connect_go.Response[v0alpha.SetDefaultDashboardRes], error)
 	// gets account details for the client
+	// org.Permission_VIEW_REPORTS
 	GetAccount(context.Context, *connect_go.Request[v0alpha.GetAccountReq]) (*connect_go.Response[v0alpha.AnaAccount], error)
 	// gets account details using the org_id provided
 	GetSpecifiedAccount(context.Context, *connect_go.Request[v0alpha.GetSpecifiedAccountReq]) (*connect_go.Response[v0alpha.AnaAccount], error)
 	// Gets an authorized url for the clients BI analytics page
 	GetAuthorizedAnalyticsLink(context.Context, *connect_go.Request[v0alpha.GetAuthorizedAnalyticsLinkReq]) (*connect_go.Response[v0alpha.GetAuthorizedAnalyticsLinkRes], error)
 	// creates and returns a url to download billing for the month provided or the previous month if none is provided
+	// org.Permission_VIEW_BILLING
 	GenerateMonthlyBilling(context.Context, *connect_go.Request[v0alpha.GenerateMonthlyBillingReq]) (*connect_go.Response[v0alpha.GenerateMonthlyBillingRes], error)
 	// gets the ana_account timezone for the client
+	// org.Permission_VIEW_REPORTS
 	GetTimeZone(context.Context, *connect_go.Request[v0alpha.GetTimeZoneReq]) (*connect_go.Response[v0alpha.TimeZone], error)
 	// updates the timezone for the account
+	// org.Permission_VIEW_REPORTS
 	SetTimeZone(context.Context, *connect_go.Request[v0alpha.SetTimeZoneReq]) (*connect_go.Response[v0alpha.SetTimeZoneRes], error)
 	// copies the reports (dashboards legacy and visualizations legacy)
 	// corresponding with the ids provided
@@ -595,12 +611,16 @@ type AnaHandler interface {
 	// pro, and which of those features contribute to making the client pro
 	GetBillingSummary(context.Context, *connect_go.Request[v0alpha.GetBillingSummaryReq]) (*connect_go.Response[v0alpha.BillingSummary], error)
 	// enable custom report usage for the client
+	// org.Permission_EDIT_CLIENT_PREFERENCES
 	EnableCustomReports(context.Context, *connect_go.Request[v0alpha.SetCustomReportsEnabledReq]) (*connect_go.Response[v0alpha.SetCustomReportsEnabledRes], error)
 	// disable custom report usage for the client
+	// org.Permission_EDIT_CLIENT_PREFERENCES
 	DisableCustomReports(context.Context, *connect_go.Request[v0alpha.SetCustomReportsEnabledReq]) (*connect_go.Response[v0alpha.SetCustomReportsEnabledRes], error)
 	// allow the client to be adopted by another account
+	// org.Permission_EDIT_CLIENT_PREFERENCES
 	MakeAdoptable(context.Context, *connect_go.Request[v0alpha.MakeAdoptableReq]) (*connect_go.Response[v0alpha.MakeAdoptableRes], error)
 	// disallow other accounts from adopting the client
+	// org.Permission_EDIT_CLIENT_PREFERENCES
 	MakeUnadoptable(context.Context, *connect_go.Request[v0alpha.MakeAdoptableReq]) (*connect_go.Response[v0alpha.MakeAdoptableRes], error)
 	// allow the parent to view the data of the adoptable child
 	AdoptAnaAccount(context.Context, *connect_go.Request[v0alpha.SetAnaAccountRelationReq]) (*connect_go.Response[v0alpha.SetAnaAccountRelationRes], error)
