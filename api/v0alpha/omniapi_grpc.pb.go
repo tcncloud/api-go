@@ -23,18 +23,12 @@ const (
 	OmniApi_ArchiveCampaign_FullMethodName              = "/api.v0alpha.OmniApi/ArchiveCampaign"
 	OmniApi_CreateCampaign_FullMethodName               = "/api.v0alpha.OmniApi/CreateCampaign"
 	OmniApi_GetCampaignById_FullMethodName              = "/api.v0alpha.OmniApi/GetCampaignById"
-	OmniApi_ListCampaigns_FullMethodName                = "/api.v0alpha.OmniApi/ListCampaigns"
 	OmniApi_PauseCampaign_FullMethodName                = "/api.v0alpha.OmniApi/PauseCampaign"
 	OmniApi_ResumeCampaign_FullMethodName               = "/api.v0alpha.OmniApi/ResumeCampaign"
 	OmniApi_UpdateCampaign_FullMethodName               = "/api.v0alpha.OmniApi/UpdateCampaign"
 	OmniApi_UpdateCampaignPacingSpeed_FullMethodName    = "/api.v0alpha.OmniApi/UpdateCampaignPacingSpeed"
-	OmniApi_GetOffLoadedTextMessage_FullMethodName      = "/api.v0alpha.OmniApi/GetOffLoadedTextMessage"
-	OmniApi_ManagerListMessages_FullMethodName          = "/api.v0alpha.OmniApi/ManagerListMessages"
-	OmniApi_ListMessages_FullMethodName                 = "/api.v0alpha.OmniApi/ListMessages"
 	OmniApi_SendOmniMessage_FullMethodName              = "/api.v0alpha.OmniApi/SendOmniMessage"
 	OmniApi_ManagerSendOmniMessage_FullMethodName       = "/api.v0alpha.OmniApi/ManagerSendOmniMessage"
-	OmniApi_ManagerListConversations_FullMethodName     = "/api.v0alpha.OmniApi/ManagerListConversations"
-	OmniApi_SuggestResponse_FullMethodName              = "/api.v0alpha.OmniApi/SuggestResponse"
 	OmniApi_CreateDisposition_FullMethodName            = "/api.v0alpha.OmniApi/CreateDisposition"
 	OmniApi_DeleteDisposition_FullMethodName            = "/api.v0alpha.OmniApi/DeleteDisposition"
 	OmniApi_ListDispositions_FullMethodName             = "/api.v0alpha.OmniApi/ListDispositions"
@@ -43,6 +37,10 @@ const (
 	OmniApi_CreateCustomUnsubscribeLink_FullMethodName  = "/api.v0alpha.OmniApi/CreateCustomUnsubscribeLink"
 	OmniApi_UpdateCustomUnsubscribeLink_FullMethodName  = "/api.v0alpha.OmniApi/UpdateCustomUnsubscribeLink"
 	OmniApi_DeleteCustomUnsubscribeLink_FullMethodName  = "/api.v0alpha.OmniApi/DeleteCustomUnsubscribeLink"
+	OmniApi_ListCampaigns_FullMethodName                = "/api.v0alpha.OmniApi/ListCampaigns"
+	OmniApi_ManagerListMessages_FullMethodName          = "/api.v0alpha.OmniApi/ManagerListMessages"
+	OmniApi_ListMessages_FullMethodName                 = "/api.v0alpha.OmniApi/ListMessages"
+	OmniApi_ManagerListConversations_FullMethodName     = "/api.v0alpha.OmniApi/ManagerListConversations"
 	OmniApi_ListContactLists_FullMethodName             = "/api.v0alpha.OmniApi/ListContactLists"
 	OmniApi_GetAvailableHeaders_FullMethodName          = "/api.v0alpha.OmniApi/GetAvailableHeaders"
 	OmniApi_GetTask_FullMethodName                      = "/api.v0alpha.OmniApi/GetTask"
@@ -55,13 +53,13 @@ const (
 	OmniApi_TestConnectedInbox_FullMethodName           = "/api.v0alpha.OmniApi/TestConnectedInbox"
 	OmniApi_UpdateConnectedInbox_FullMethodName         = "/api.v0alpha.OmniApi/UpdateConnectedInbox"
 	OmniApi_CreateVerifiedEmail_FullMethodName          = "/api.v0alpha.OmniApi/CreateVerifiedEmail"
-	OmniApi_SendEmailNotification_FullMethodName        = "/api.v0alpha.OmniApi/SendEmailNotification"
 	OmniApi_DeleteVerifiedEmail_FullMethodName          = "/api.v0alpha.OmniApi/DeleteVerifiedEmail"
 	OmniApi_GetVerifiedEmailBySid_FullMethodName        = "/api.v0alpha.OmniApi/GetVerifiedEmailBySid"
 	OmniApi_ListVerifiedEmails_FullMethodName           = "/api.v0alpha.OmniApi/ListVerifiedEmails"
 	OmniApi_ResendVerifiedEmail_FullMethodName          = "/api.v0alpha.OmniApi/ResendVerifiedEmail"
 	OmniApi_UpdateVerifiedEmail_FullMethodName          = "/api.v0alpha.OmniApi/UpdateVerifiedEmail"
 	OmniApi_GetPendingGoogleXOAuth2Data_FullMethodName  = "/api.v0alpha.OmniApi/GetPendingGoogleXOAuth2Data"
+	OmniApi_SendEmailNotification_FullMethodName        = "/api.v0alpha.OmniApi/SendEmailNotification"
 	OmniApi_SendFeedbackEmail_FullMethodName            = "/api.v0alpha.OmniApi/SendFeedbackEmail"
 	OmniApi_GetOmniAttachment_FullMethodName            = "/api.v0alpha.OmniApi/GetOmniAttachment"
 	OmniApi_CreateTasks_FullMethodName                  = "/api.v0alpha.OmniApi/CreateTasks"
@@ -69,6 +67,7 @@ const (
 	OmniApi_DeleteSignature_FullMethodName              = "/api.v0alpha.OmniApi/DeleteSignature"
 	OmniApi_ListSignatures_FullMethodName               = "/api.v0alpha.OmniApi/ListSignatures"
 	OmniApi_UpdateSignature_FullMethodName              = "/api.v0alpha.OmniApi/UpdateSignature"
+	OmniApi_SuggestResponse_FullMethodName              = "/api.v0alpha.OmniApi/SuggestResponse"
 	OmniApi_CreateProject_FullMethodName                = "/api.v0alpha.OmniApi/CreateProject"
 	OmniApi_ListProjects_FullMethodName                 = "/api.v0alpha.OmniApi/ListProjects"
 	OmniApi_EditProjectById_FullMethodName              = "/api.v0alpha.OmniApi/EditProjectById"
@@ -102,10 +101,6 @@ type OmniApiClient interface {
 	CreateCampaign(ctx context.Context, in *CreateCampaignReq, opts ...grpc.CallOption) (*commons.OmniCampaign, error)
 	// Get campaign defined by GetChatCampaignById.
 	GetCampaignById(ctx context.Context, in *GetCampaignByIdReq, opts ...grpc.CallOption) (*commons.OmniCampaign, error)
-	// List campaigns defined by ListCampaignsReq.
-	// The method will return a ListCampaignsReq entity that will contain
-	// all the campaigns within the specified filter.
-	ListCampaigns(ctx context.Context, in *ListCampaignsReq, opts ...grpc.CallOption) (*ListCampaignsRes, error)
 	// pause a campaign
 	PauseCampaign(ctx context.Context, in *PauseCampaignReq, opts ...grpc.CallOption) (*PauseCampaignRes, error)
 	// resume a campaign
@@ -117,26 +112,10 @@ type OmniApiClient interface {
 	UpdateCampaign(ctx context.Context, in *UpdateCampaignReq, opts ...grpc.CallOption) (*UpdateCampaignRes, error)
 	// update campaign pacing - speed up/slow down a campaign
 	UpdateCampaignPacingSpeed(ctx context.Context, in *UpdateCampaignPacingSpeedReq, opts ...grpc.CallOption) (*UpdateCampaignPacingSpeedRes, error)
-	// Get the text message for an off-loaded text message payload. Used
-	// only for managers/agents/users. It is not for customers.
-	GetOffLoadedTextMessage(ctx context.Context, in *GetOffLoadedTextMessageReq, opts ...grpc.CallOption) (*GetOffLoadedTextMessageRes, error)
-	// Get a stream of new conversation message for a given conversation. Used
-	// only for managers. It is not for customers.
-	ManagerListMessages(ctx context.Context, in *ManagerListMessagesReq, opts ...grpc.CallOption) (OmniApi_ManagerListMessagesClient, error)
-	// Get a stream of conversation message for a given conversation. Used
-	// only for agents/users. It is not for customers.
-	ListMessages(ctx context.Context, in *ListMessagesReq, opts ...grpc.CallOption) (OmniApi_ListMessagesClient, error)
 	// Send a chat message
 	SendOmniMessage(ctx context.Context, in *SendOmniMessageReq, opts ...grpc.CallOption) (*commons.Empty, error)
 	// Send a chat message
 	ManagerSendOmniMessage(ctx context.Context, in *SendOmniMessageReq, opts ...grpc.CallOption) (*commons.Empty, error)
-	// lists all conversation and assigned users for a given date range.
-	// Required permissions:
-	//
-	//	OMNI_BOSS
-	ManagerListConversations(ctx context.Context, in *ListConversationsReq, opts ...grpc.CallOption) (*ListConversationsRes, error)
-	// Experimental API
-	SuggestResponse(ctx context.Context, in *SuggestResponseReq, opts ...grpc.CallOption) (*SuggestResponseRes, error)
 	// Create a disposition
 	CreateDisposition(ctx context.Context, in *CreateDispositionReq, opts ...grpc.CallOption) (*CreateDispositionRes, error)
 	// DeleteDisposition - delete an existing disposition
@@ -153,6 +132,21 @@ type OmniApiClient interface {
 	UpdateCustomUnsubscribeLink(ctx context.Context, in *UpdateCustomUnsubscribeLinkReq, opts ...grpc.CallOption) (*UpdateCustomUnsubscribeLinkRes, error)
 	// DeleteCustomUnsubscribeLink - deletes custom unsubscribe link details
 	DeleteCustomUnsubscribeLink(ctx context.Context, in *DeleteCustomUnsubscribeLinkReq, opts ...grpc.CallOption) (*commons.Empty, error)
+	// List campaigns defined by ListCampaignsReq.
+	// The method will return a ListCampaignsReq entity that will contain
+	// all the campaigns within the specified filter.
+	ListCampaigns(ctx context.Context, in *ListCampaignsReq, opts ...grpc.CallOption) (*ListCampaignsRes, error)
+	// Get a stream of new conversation message for a given conversation. Used
+	// only for managers. It is not for customers.
+	ManagerListMessages(ctx context.Context, in *ManagerListMessagesReq, opts ...grpc.CallOption) (OmniApi_ManagerListMessagesClient, error)
+	// Get a stream of conversation message for a given conversation. Used
+	// only for agents/users. It is not for customers.
+	ListMessages(ctx context.Context, in *ListMessagesReq, opts ...grpc.CallOption) (OmniApi_ListMessagesClient, error)
+	// lists all conversation and assigned users for a given date range.
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	ManagerListConversations(ctx context.Context, in *ListConversationsReq, opts ...grpc.CallOption) (*ListConversationsRes, error)
 	// ListContactLists - retrieves all the contact lists
 	ListContactLists(ctx context.Context, in *ListContactListsReq, opts ...grpc.CallOption) (*ListContactListsRes, error)
 	// GetAvailableHeaders - retrieves all the available headers that could be present on a contact list
@@ -213,14 +207,6 @@ type OmniApiClient interface {
 	//
 	//	OMNI_BOSS
 	CreateVerifiedEmail(ctx context.Context, in *commons.VerifiedEmail, opts ...grpc.CallOption) (*CreateVerifiedEmailRes, error)
-	// Send email notification defined by SendEmailNotificationReq message for the specified
-	// subject, message and array of to email addresses.
-	// The method will return a stream of SendEmailNotificationRes messages
-	// containing result true/false after notified by email for the client_sid.
-	// Required permissions:
-	//
-	//	OMNI_BOSS
-	SendEmailNotification(ctx context.Context, in *SendEmailNotificationReq, opts ...grpc.CallOption) (*SendEmailNotificationRes, error)
 	// Delete verify email record based on verified email id defined by
 	// DeleteVerifiedEmailReq for the specified client.
 	// This method will return a DeleteVerifiedEmailRes message/entity.
@@ -257,6 +243,14 @@ type OmniApiClient interface {
 	//
 	//	OMNI_BOSS
 	GetPendingGoogleXOAuth2Data(ctx context.Context, in *GetPendingGoogleXOAuth2DataReq, opts ...grpc.CallOption) (*GetPendingGoogleXOAuth2DataRes, error)
+	// Send email notification defined by SendEmailNotificationReq message for the specified
+	// subject, message and array of to email addresses.
+	// The method will return a stream of SendEmailNotificationRes messages
+	// containing result true/false after notified by email for the client_sid.
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	SendEmailNotification(ctx context.Context, in *SendEmailNotificationReq, opts ...grpc.CallOption) (*SendEmailNotificationRes, error)
 	// Send an email to our feedback system. The users email will be populated as the from address to open an email thread with our support.
 	SendFeedbackEmail(ctx context.Context, in *SendFeedbackEmailReq, opts ...grpc.CallOption) (*SendFeedbackEmailRes, error)
 	// GetOmniAttachment - retrieves the omni attachment details based on the request
@@ -286,6 +280,8 @@ type OmniApiClient interface {
 	//
 	//	OMNI_BOSS
 	UpdateSignature(ctx context.Context, in *UpdateSignatureReq, opts ...grpc.CallOption) (*UpdateSignatureRes, error)
+	// SuggestResponse
+	SuggestResponse(ctx context.Context, in *SuggestResponseReq, opts ...grpc.CallOption) (*SuggestResponseRes, error)
 	// Create/Record project defined by CreateProjectReq message for a specified
 	// name, description and status.
 	// The method will return a Project message/entity that will
@@ -433,15 +429,6 @@ func (c *omniApiClient) GetCampaignById(ctx context.Context, in *GetCampaignById
 	return out, nil
 }
 
-func (c *omniApiClient) ListCampaigns(ctx context.Context, in *ListCampaignsReq, opts ...grpc.CallOption) (*ListCampaignsRes, error) {
-	out := new(ListCampaignsRes)
-	err := c.cc.Invoke(ctx, OmniApi_ListCampaigns_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *omniApiClient) PauseCampaign(ctx context.Context, in *PauseCampaignReq, opts ...grpc.CallOption) (*PauseCampaignRes, error) {
 	out := new(PauseCampaignRes)
 	err := c.cc.Invoke(ctx, OmniApi_PauseCampaign_FullMethodName, in, out, opts...)
@@ -478,79 +465,6 @@ func (c *omniApiClient) UpdateCampaignPacingSpeed(ctx context.Context, in *Updat
 	return out, nil
 }
 
-func (c *omniApiClient) GetOffLoadedTextMessage(ctx context.Context, in *GetOffLoadedTextMessageReq, opts ...grpc.CallOption) (*GetOffLoadedTextMessageRes, error) {
-	out := new(GetOffLoadedTextMessageRes)
-	err := c.cc.Invoke(ctx, OmniApi_GetOffLoadedTextMessage_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *omniApiClient) ManagerListMessages(ctx context.Context, in *ManagerListMessagesReq, opts ...grpc.CallOption) (OmniApi_ManagerListMessagesClient, error) {
-	stream, err := c.cc.NewStream(ctx, &OmniApi_ServiceDesc.Streams[0], OmniApi_ManagerListMessages_FullMethodName, opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &omniApiManagerListMessagesClient{stream}
-	if err := x.ClientStream.SendMsg(in); err != nil {
-		return nil, err
-	}
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	return x, nil
-}
-
-type OmniApi_ManagerListMessagesClient interface {
-	Recv() (*commons.OmniMessage, error)
-	grpc.ClientStream
-}
-
-type omniApiManagerListMessagesClient struct {
-	grpc.ClientStream
-}
-
-func (x *omniApiManagerListMessagesClient) Recv() (*commons.OmniMessage, error) {
-	m := new(commons.OmniMessage)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
-func (c *omniApiClient) ListMessages(ctx context.Context, in *ListMessagesReq, opts ...grpc.CallOption) (OmniApi_ListMessagesClient, error) {
-	stream, err := c.cc.NewStream(ctx, &OmniApi_ServiceDesc.Streams[1], OmniApi_ListMessages_FullMethodName, opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &omniApiListMessagesClient{stream}
-	if err := x.ClientStream.SendMsg(in); err != nil {
-		return nil, err
-	}
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	return x, nil
-}
-
-type OmniApi_ListMessagesClient interface {
-	Recv() (*commons.OmniMessage, error)
-	grpc.ClientStream
-}
-
-type omniApiListMessagesClient struct {
-	grpc.ClientStream
-}
-
-func (x *omniApiListMessagesClient) Recv() (*commons.OmniMessage, error) {
-	m := new(commons.OmniMessage)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
 func (c *omniApiClient) SendOmniMessage(ctx context.Context, in *SendOmniMessageReq, opts ...grpc.CallOption) (*commons.Empty, error) {
 	out := new(commons.Empty)
 	err := c.cc.Invoke(ctx, OmniApi_SendOmniMessage_FullMethodName, in, out, opts...)
@@ -563,24 +477,6 @@ func (c *omniApiClient) SendOmniMessage(ctx context.Context, in *SendOmniMessage
 func (c *omniApiClient) ManagerSendOmniMessage(ctx context.Context, in *SendOmniMessageReq, opts ...grpc.CallOption) (*commons.Empty, error) {
 	out := new(commons.Empty)
 	err := c.cc.Invoke(ctx, OmniApi_ManagerSendOmniMessage_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *omniApiClient) ManagerListConversations(ctx context.Context, in *ListConversationsReq, opts ...grpc.CallOption) (*ListConversationsRes, error) {
-	out := new(ListConversationsRes)
-	err := c.cc.Invoke(ctx, OmniApi_ManagerListConversations_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *omniApiClient) SuggestResponse(ctx context.Context, in *SuggestResponseReq, opts ...grpc.CallOption) (*SuggestResponseRes, error) {
-	out := new(SuggestResponseRes)
-	err := c.cc.Invoke(ctx, OmniApi_SuggestResponse_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -653,6 +549,88 @@ func (c *omniApiClient) UpdateCustomUnsubscribeLink(ctx context.Context, in *Upd
 func (c *omniApiClient) DeleteCustomUnsubscribeLink(ctx context.Context, in *DeleteCustomUnsubscribeLinkReq, opts ...grpc.CallOption) (*commons.Empty, error) {
 	out := new(commons.Empty)
 	err := c.cc.Invoke(ctx, OmniApi_DeleteCustomUnsubscribeLink_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *omniApiClient) ListCampaigns(ctx context.Context, in *ListCampaignsReq, opts ...grpc.CallOption) (*ListCampaignsRes, error) {
+	out := new(ListCampaignsRes)
+	err := c.cc.Invoke(ctx, OmniApi_ListCampaigns_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *omniApiClient) ManagerListMessages(ctx context.Context, in *ManagerListMessagesReq, opts ...grpc.CallOption) (OmniApi_ManagerListMessagesClient, error) {
+	stream, err := c.cc.NewStream(ctx, &OmniApi_ServiceDesc.Streams[0], OmniApi_ManagerListMessages_FullMethodName, opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &omniApiManagerListMessagesClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type OmniApi_ManagerListMessagesClient interface {
+	Recv() (*commons.OmniMessage, error)
+	grpc.ClientStream
+}
+
+type omniApiManagerListMessagesClient struct {
+	grpc.ClientStream
+}
+
+func (x *omniApiManagerListMessagesClient) Recv() (*commons.OmniMessage, error) {
+	m := new(commons.OmniMessage)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *omniApiClient) ListMessages(ctx context.Context, in *ListMessagesReq, opts ...grpc.CallOption) (OmniApi_ListMessagesClient, error) {
+	stream, err := c.cc.NewStream(ctx, &OmniApi_ServiceDesc.Streams[1], OmniApi_ListMessages_FullMethodName, opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &omniApiListMessagesClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type OmniApi_ListMessagesClient interface {
+	Recv() (*commons.OmniMessage, error)
+	grpc.ClientStream
+}
+
+type omniApiListMessagesClient struct {
+	grpc.ClientStream
+}
+
+func (x *omniApiListMessagesClient) Recv() (*commons.OmniMessage, error) {
+	m := new(commons.OmniMessage)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *omniApiClient) ManagerListConversations(ctx context.Context, in *ListConversationsReq, opts ...grpc.CallOption) (*ListConversationsRes, error) {
+	out := new(ListConversationsRes)
+	err := c.cc.Invoke(ctx, OmniApi_ManagerListConversations_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -767,15 +745,6 @@ func (c *omniApiClient) CreateVerifiedEmail(ctx context.Context, in *commons.Ver
 	return out, nil
 }
 
-func (c *omniApiClient) SendEmailNotification(ctx context.Context, in *SendEmailNotificationReq, opts ...grpc.CallOption) (*SendEmailNotificationRes, error) {
-	out := new(SendEmailNotificationRes)
-	err := c.cc.Invoke(ctx, OmniApi_SendEmailNotification_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *omniApiClient) DeleteVerifiedEmail(ctx context.Context, in *DeleteVerifiedEmailReq, opts ...grpc.CallOption) (*commons.Empty, error) {
 	out := new(commons.Empty)
 	err := c.cc.Invoke(ctx, OmniApi_DeleteVerifiedEmail_FullMethodName, in, out, opts...)
@@ -824,6 +793,15 @@ func (c *omniApiClient) UpdateVerifiedEmail(ctx context.Context, in *UpdateVerif
 func (c *omniApiClient) GetPendingGoogleXOAuth2Data(ctx context.Context, in *GetPendingGoogleXOAuth2DataReq, opts ...grpc.CallOption) (*GetPendingGoogleXOAuth2DataRes, error) {
 	out := new(GetPendingGoogleXOAuth2DataRes)
 	err := c.cc.Invoke(ctx, OmniApi_GetPendingGoogleXOAuth2Data_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *omniApiClient) SendEmailNotification(ctx context.Context, in *SendEmailNotificationReq, opts ...grpc.CallOption) (*SendEmailNotificationRes, error) {
+	out := new(SendEmailNotificationRes)
+	err := c.cc.Invoke(ctx, OmniApi_SendEmailNotification_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -887,6 +865,15 @@ func (c *omniApiClient) ListSignatures(ctx context.Context, in *ListSignaturesRe
 func (c *omniApiClient) UpdateSignature(ctx context.Context, in *UpdateSignatureReq, opts ...grpc.CallOption) (*UpdateSignatureRes, error) {
 	out := new(UpdateSignatureRes)
 	err := c.cc.Invoke(ctx, OmniApi_UpdateSignature_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *omniApiClient) SuggestResponse(ctx context.Context, in *SuggestResponseReq, opts ...grpc.CallOption) (*SuggestResponseRes, error) {
+	out := new(SuggestResponseRes)
+	err := c.cc.Invoke(ctx, OmniApi_SuggestResponse_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1052,10 +1039,6 @@ type OmniApiServer interface {
 	CreateCampaign(context.Context, *CreateCampaignReq) (*commons.OmniCampaign, error)
 	// Get campaign defined by GetChatCampaignById.
 	GetCampaignById(context.Context, *GetCampaignByIdReq) (*commons.OmniCampaign, error)
-	// List campaigns defined by ListCampaignsReq.
-	// The method will return a ListCampaignsReq entity that will contain
-	// all the campaigns within the specified filter.
-	ListCampaigns(context.Context, *ListCampaignsReq) (*ListCampaignsRes, error)
 	// pause a campaign
 	PauseCampaign(context.Context, *PauseCampaignReq) (*PauseCampaignRes, error)
 	// resume a campaign
@@ -1067,26 +1050,10 @@ type OmniApiServer interface {
 	UpdateCampaign(context.Context, *UpdateCampaignReq) (*UpdateCampaignRes, error)
 	// update campaign pacing - speed up/slow down a campaign
 	UpdateCampaignPacingSpeed(context.Context, *UpdateCampaignPacingSpeedReq) (*UpdateCampaignPacingSpeedRes, error)
-	// Get the text message for an off-loaded text message payload. Used
-	// only for managers/agents/users. It is not for customers.
-	GetOffLoadedTextMessage(context.Context, *GetOffLoadedTextMessageReq) (*GetOffLoadedTextMessageRes, error)
-	// Get a stream of new conversation message for a given conversation. Used
-	// only for managers. It is not for customers.
-	ManagerListMessages(*ManagerListMessagesReq, OmniApi_ManagerListMessagesServer) error
-	// Get a stream of conversation message for a given conversation. Used
-	// only for agents/users. It is not for customers.
-	ListMessages(*ListMessagesReq, OmniApi_ListMessagesServer) error
 	// Send a chat message
 	SendOmniMessage(context.Context, *SendOmniMessageReq) (*commons.Empty, error)
 	// Send a chat message
 	ManagerSendOmniMessage(context.Context, *SendOmniMessageReq) (*commons.Empty, error)
-	// lists all conversation and assigned users for a given date range.
-	// Required permissions:
-	//
-	//	OMNI_BOSS
-	ManagerListConversations(context.Context, *ListConversationsReq) (*ListConversationsRes, error)
-	// Experimental API
-	SuggestResponse(context.Context, *SuggestResponseReq) (*SuggestResponseRes, error)
 	// Create a disposition
 	CreateDisposition(context.Context, *CreateDispositionReq) (*CreateDispositionRes, error)
 	// DeleteDisposition - delete an existing disposition
@@ -1103,6 +1070,21 @@ type OmniApiServer interface {
 	UpdateCustomUnsubscribeLink(context.Context, *UpdateCustomUnsubscribeLinkReq) (*UpdateCustomUnsubscribeLinkRes, error)
 	// DeleteCustomUnsubscribeLink - deletes custom unsubscribe link details
 	DeleteCustomUnsubscribeLink(context.Context, *DeleteCustomUnsubscribeLinkReq) (*commons.Empty, error)
+	// List campaigns defined by ListCampaignsReq.
+	// The method will return a ListCampaignsReq entity that will contain
+	// all the campaigns within the specified filter.
+	ListCampaigns(context.Context, *ListCampaignsReq) (*ListCampaignsRes, error)
+	// Get a stream of new conversation message for a given conversation. Used
+	// only for managers. It is not for customers.
+	ManagerListMessages(*ManagerListMessagesReq, OmniApi_ManagerListMessagesServer) error
+	// Get a stream of conversation message for a given conversation. Used
+	// only for agents/users. It is not for customers.
+	ListMessages(*ListMessagesReq, OmniApi_ListMessagesServer) error
+	// lists all conversation and assigned users for a given date range.
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	ManagerListConversations(context.Context, *ListConversationsReq) (*ListConversationsRes, error)
 	// ListContactLists - retrieves all the contact lists
 	ListContactLists(context.Context, *ListContactListsReq) (*ListContactListsRes, error)
 	// GetAvailableHeaders - retrieves all the available headers that could be present on a contact list
@@ -1163,14 +1145,6 @@ type OmniApiServer interface {
 	//
 	//	OMNI_BOSS
 	CreateVerifiedEmail(context.Context, *commons.VerifiedEmail) (*CreateVerifiedEmailRes, error)
-	// Send email notification defined by SendEmailNotificationReq message for the specified
-	// subject, message and array of to email addresses.
-	// The method will return a stream of SendEmailNotificationRes messages
-	// containing result true/false after notified by email for the client_sid.
-	// Required permissions:
-	//
-	//	OMNI_BOSS
-	SendEmailNotification(context.Context, *SendEmailNotificationReq) (*SendEmailNotificationRes, error)
 	// Delete verify email record based on verified email id defined by
 	// DeleteVerifiedEmailReq for the specified client.
 	// This method will return a DeleteVerifiedEmailRes message/entity.
@@ -1207,6 +1181,14 @@ type OmniApiServer interface {
 	//
 	//	OMNI_BOSS
 	GetPendingGoogleXOAuth2Data(context.Context, *GetPendingGoogleXOAuth2DataReq) (*GetPendingGoogleXOAuth2DataRes, error)
+	// Send email notification defined by SendEmailNotificationReq message for the specified
+	// subject, message and array of to email addresses.
+	// The method will return a stream of SendEmailNotificationRes messages
+	// containing result true/false after notified by email for the client_sid.
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	SendEmailNotification(context.Context, *SendEmailNotificationReq) (*SendEmailNotificationRes, error)
 	// Send an email to our feedback system. The users email will be populated as the from address to open an email thread with our support.
 	SendFeedbackEmail(context.Context, *SendFeedbackEmailReq) (*SendFeedbackEmailRes, error)
 	// GetOmniAttachment - retrieves the omni attachment details based on the request
@@ -1236,6 +1218,8 @@ type OmniApiServer interface {
 	//
 	//	OMNI_BOSS
 	UpdateSignature(context.Context, *UpdateSignatureReq) (*UpdateSignatureRes, error)
+	// SuggestResponse
+	SuggestResponse(context.Context, *SuggestResponseReq) (*SuggestResponseRes, error)
 	// Create/Record project defined by CreateProjectReq message for a specified
 	// name, description and status.
 	// The method will return a Project message/entity that will
@@ -1362,9 +1346,6 @@ func (UnimplementedOmniApiServer) CreateCampaign(context.Context, *CreateCampaig
 func (UnimplementedOmniApiServer) GetCampaignById(context.Context, *GetCampaignByIdReq) (*commons.OmniCampaign, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCampaignById not implemented")
 }
-func (UnimplementedOmniApiServer) ListCampaigns(context.Context, *ListCampaignsReq) (*ListCampaignsRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListCampaigns not implemented")
-}
 func (UnimplementedOmniApiServer) PauseCampaign(context.Context, *PauseCampaignReq) (*PauseCampaignRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PauseCampaign not implemented")
 }
@@ -1377,26 +1358,11 @@ func (UnimplementedOmniApiServer) UpdateCampaign(context.Context, *UpdateCampaig
 func (UnimplementedOmniApiServer) UpdateCampaignPacingSpeed(context.Context, *UpdateCampaignPacingSpeedReq) (*UpdateCampaignPacingSpeedRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateCampaignPacingSpeed not implemented")
 }
-func (UnimplementedOmniApiServer) GetOffLoadedTextMessage(context.Context, *GetOffLoadedTextMessageReq) (*GetOffLoadedTextMessageRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetOffLoadedTextMessage not implemented")
-}
-func (UnimplementedOmniApiServer) ManagerListMessages(*ManagerListMessagesReq, OmniApi_ManagerListMessagesServer) error {
-	return status.Errorf(codes.Unimplemented, "method ManagerListMessages not implemented")
-}
-func (UnimplementedOmniApiServer) ListMessages(*ListMessagesReq, OmniApi_ListMessagesServer) error {
-	return status.Errorf(codes.Unimplemented, "method ListMessages not implemented")
-}
 func (UnimplementedOmniApiServer) SendOmniMessage(context.Context, *SendOmniMessageReq) (*commons.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendOmniMessage not implemented")
 }
 func (UnimplementedOmniApiServer) ManagerSendOmniMessage(context.Context, *SendOmniMessageReq) (*commons.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ManagerSendOmniMessage not implemented")
-}
-func (UnimplementedOmniApiServer) ManagerListConversations(context.Context, *ListConversationsReq) (*ListConversationsRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ManagerListConversations not implemented")
-}
-func (UnimplementedOmniApiServer) SuggestResponse(context.Context, *SuggestResponseReq) (*SuggestResponseRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SuggestResponse not implemented")
 }
 func (UnimplementedOmniApiServer) CreateDisposition(context.Context, *CreateDispositionReq) (*CreateDispositionRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateDisposition not implemented")
@@ -1421,6 +1387,18 @@ func (UnimplementedOmniApiServer) UpdateCustomUnsubscribeLink(context.Context, *
 }
 func (UnimplementedOmniApiServer) DeleteCustomUnsubscribeLink(context.Context, *DeleteCustomUnsubscribeLinkReq) (*commons.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteCustomUnsubscribeLink not implemented")
+}
+func (UnimplementedOmniApiServer) ListCampaigns(context.Context, *ListCampaignsReq) (*ListCampaignsRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListCampaigns not implemented")
+}
+func (UnimplementedOmniApiServer) ManagerListMessages(*ManagerListMessagesReq, OmniApi_ManagerListMessagesServer) error {
+	return status.Errorf(codes.Unimplemented, "method ManagerListMessages not implemented")
+}
+func (UnimplementedOmniApiServer) ListMessages(*ListMessagesReq, OmniApi_ListMessagesServer) error {
+	return status.Errorf(codes.Unimplemented, "method ListMessages not implemented")
+}
+func (UnimplementedOmniApiServer) ManagerListConversations(context.Context, *ListConversationsReq) (*ListConversationsRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ManagerListConversations not implemented")
 }
 func (UnimplementedOmniApiServer) ListContactLists(context.Context, *ListContactListsReq) (*ListContactListsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListContactLists not implemented")
@@ -1458,9 +1436,6 @@ func (UnimplementedOmniApiServer) UpdateConnectedInbox(context.Context, *UpdateC
 func (UnimplementedOmniApiServer) CreateVerifiedEmail(context.Context, *commons.VerifiedEmail) (*CreateVerifiedEmailRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateVerifiedEmail not implemented")
 }
-func (UnimplementedOmniApiServer) SendEmailNotification(context.Context, *SendEmailNotificationReq) (*SendEmailNotificationRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SendEmailNotification not implemented")
-}
 func (UnimplementedOmniApiServer) DeleteVerifiedEmail(context.Context, *DeleteVerifiedEmailReq) (*commons.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteVerifiedEmail not implemented")
 }
@@ -1478,6 +1453,9 @@ func (UnimplementedOmniApiServer) UpdateVerifiedEmail(context.Context, *UpdateVe
 }
 func (UnimplementedOmniApiServer) GetPendingGoogleXOAuth2Data(context.Context, *GetPendingGoogleXOAuth2DataReq) (*GetPendingGoogleXOAuth2DataRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPendingGoogleXOAuth2Data not implemented")
+}
+func (UnimplementedOmniApiServer) SendEmailNotification(context.Context, *SendEmailNotificationReq) (*SendEmailNotificationRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendEmailNotification not implemented")
 }
 func (UnimplementedOmniApiServer) SendFeedbackEmail(context.Context, *SendFeedbackEmailReq) (*SendFeedbackEmailRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendFeedbackEmail not implemented")
@@ -1499,6 +1477,9 @@ func (UnimplementedOmniApiServer) ListSignatures(context.Context, *ListSignature
 }
 func (UnimplementedOmniApiServer) UpdateSignature(context.Context, *UpdateSignatureReq) (*UpdateSignatureRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateSignature not implemented")
+}
+func (UnimplementedOmniApiServer) SuggestResponse(context.Context, *SuggestResponseReq) (*SuggestResponseRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SuggestResponse not implemented")
 }
 func (UnimplementedOmniApiServer) CreateProject(context.Context, *CreateProjectReq) (*CreateProjectRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateProject not implemented")
@@ -1615,24 +1596,6 @@ func _OmniApi_GetCampaignById_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _OmniApi_ListCampaigns_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListCampaignsReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(OmniApiServer).ListCampaigns(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: OmniApi_ListCampaigns_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OmniApiServer).ListCampaigns(ctx, req.(*ListCampaignsReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _OmniApi_PauseCampaign_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(PauseCampaignReq)
 	if err := dec(in); err != nil {
@@ -1705,66 +1668,6 @@ func _OmniApi_UpdateCampaignPacingSpeed_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
-func _OmniApi_GetOffLoadedTextMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetOffLoadedTextMessageReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(OmniApiServer).GetOffLoadedTextMessage(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: OmniApi_GetOffLoadedTextMessage_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OmniApiServer).GetOffLoadedTextMessage(ctx, req.(*GetOffLoadedTextMessageReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _OmniApi_ManagerListMessages_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(ManagerListMessagesReq)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
-	}
-	return srv.(OmniApiServer).ManagerListMessages(m, &omniApiManagerListMessagesServer{stream})
-}
-
-type OmniApi_ManagerListMessagesServer interface {
-	Send(*commons.OmniMessage) error
-	grpc.ServerStream
-}
-
-type omniApiManagerListMessagesServer struct {
-	grpc.ServerStream
-}
-
-func (x *omniApiManagerListMessagesServer) Send(m *commons.OmniMessage) error {
-	return x.ServerStream.SendMsg(m)
-}
-
-func _OmniApi_ListMessages_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(ListMessagesReq)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
-	}
-	return srv.(OmniApiServer).ListMessages(m, &omniApiListMessagesServer{stream})
-}
-
-type OmniApi_ListMessagesServer interface {
-	Send(*commons.OmniMessage) error
-	grpc.ServerStream
-}
-
-type omniApiListMessagesServer struct {
-	grpc.ServerStream
-}
-
-func (x *omniApiListMessagesServer) Send(m *commons.OmniMessage) error {
-	return x.ServerStream.SendMsg(m)
-}
-
 func _OmniApi_SendOmniMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SendOmniMessageReq)
 	if err := dec(in); err != nil {
@@ -1797,42 +1700,6 @@ func _OmniApi_ManagerSendOmniMessage_Handler(srv interface{}, ctx context.Contex
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OmniApiServer).ManagerSendOmniMessage(ctx, req.(*SendOmniMessageReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _OmniApi_ManagerListConversations_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListConversationsReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(OmniApiServer).ManagerListConversations(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: OmniApi_ManagerListConversations_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OmniApiServer).ManagerListConversations(ctx, req.(*ListConversationsReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _OmniApi_SuggestResponse_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SuggestResponseReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(OmniApiServer).SuggestResponse(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: OmniApi_SuggestResponse_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OmniApiServer).SuggestResponse(ctx, req.(*SuggestResponseReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1977,6 +1844,84 @@ func _OmniApi_DeleteCustomUnsubscribeLink_Handler(srv interface{}, ctx context.C
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OmniApiServer).DeleteCustomUnsubscribeLink(ctx, req.(*DeleteCustomUnsubscribeLinkReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OmniApi_ListCampaigns_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListCampaignsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmniApiServer).ListCampaigns(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OmniApi_ListCampaigns_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmniApiServer).ListCampaigns(ctx, req.(*ListCampaignsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OmniApi_ManagerListMessages_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(ManagerListMessagesReq)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(OmniApiServer).ManagerListMessages(m, &omniApiManagerListMessagesServer{stream})
+}
+
+type OmniApi_ManagerListMessagesServer interface {
+	Send(*commons.OmniMessage) error
+	grpc.ServerStream
+}
+
+type omniApiManagerListMessagesServer struct {
+	grpc.ServerStream
+}
+
+func (x *omniApiManagerListMessagesServer) Send(m *commons.OmniMessage) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func _OmniApi_ListMessages_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(ListMessagesReq)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(OmniApiServer).ListMessages(m, &omniApiListMessagesServer{stream})
+}
+
+type OmniApi_ListMessagesServer interface {
+	Send(*commons.OmniMessage) error
+	grpc.ServerStream
+}
+
+type omniApiListMessagesServer struct {
+	grpc.ServerStream
+}
+
+func (x *omniApiListMessagesServer) Send(m *commons.OmniMessage) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func _OmniApi_ManagerListConversations_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListConversationsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmniApiServer).ManagerListConversations(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OmniApi_ManagerListConversations_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmniApiServer).ManagerListConversations(ctx, req.(*ListConversationsReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -2197,24 +2142,6 @@ func _OmniApi_CreateVerifiedEmail_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _OmniApi_SendEmailNotification_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SendEmailNotificationReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(OmniApiServer).SendEmailNotification(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: OmniApi_SendEmailNotification_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OmniApiServer).SendEmailNotification(ctx, req.(*SendEmailNotificationReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _OmniApi_DeleteVerifiedEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteVerifiedEmailReq)
 	if err := dec(in); err != nil {
@@ -2319,6 +2246,24 @@ func _OmniApi_GetPendingGoogleXOAuth2Data_Handler(srv interface{}, ctx context.C
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OmniApiServer).GetPendingGoogleXOAuth2Data(ctx, req.(*GetPendingGoogleXOAuth2DataReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OmniApi_SendEmailNotification_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SendEmailNotificationReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmniApiServer).SendEmailNotification(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OmniApi_SendEmailNotification_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmniApiServer).SendEmailNotification(ctx, req.(*SendEmailNotificationReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -2445,6 +2390,24 @@ func _OmniApi_UpdateSignature_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OmniApiServer).UpdateSignature(ctx, req.(*UpdateSignatureReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OmniApi_SuggestResponse_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SuggestResponseReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmniApiServer).SuggestResponse(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OmniApi_SuggestResponse_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmniApiServer).SuggestResponse(ctx, req.(*SuggestResponseReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -2757,10 +2720,6 @@ var OmniApi_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _OmniApi_GetCampaignById_Handler,
 		},
 		{
-			MethodName: "ListCampaigns",
-			Handler:    _OmniApi_ListCampaigns_Handler,
-		},
-		{
 			MethodName: "PauseCampaign",
 			Handler:    _OmniApi_PauseCampaign_Handler,
 		},
@@ -2777,24 +2736,12 @@ var OmniApi_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _OmniApi_UpdateCampaignPacingSpeed_Handler,
 		},
 		{
-			MethodName: "GetOffLoadedTextMessage",
-			Handler:    _OmniApi_GetOffLoadedTextMessage_Handler,
-		},
-		{
 			MethodName: "SendOmniMessage",
 			Handler:    _OmniApi_SendOmniMessage_Handler,
 		},
 		{
 			MethodName: "ManagerSendOmniMessage",
 			Handler:    _OmniApi_ManagerSendOmniMessage_Handler,
-		},
-		{
-			MethodName: "ManagerListConversations",
-			Handler:    _OmniApi_ManagerListConversations_Handler,
-		},
-		{
-			MethodName: "SuggestResponse",
-			Handler:    _OmniApi_SuggestResponse_Handler,
 		},
 		{
 			MethodName: "CreateDisposition",
@@ -2827,6 +2774,14 @@ var OmniApi_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteCustomUnsubscribeLink",
 			Handler:    _OmniApi_DeleteCustomUnsubscribeLink_Handler,
+		},
+		{
+			MethodName: "ListCampaigns",
+			Handler:    _OmniApi_ListCampaigns_Handler,
+		},
+		{
+			MethodName: "ManagerListConversations",
+			Handler:    _OmniApi_ManagerListConversations_Handler,
 		},
 		{
 			MethodName: "ListContactLists",
@@ -2877,10 +2832,6 @@ var OmniApi_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _OmniApi_CreateVerifiedEmail_Handler,
 		},
 		{
-			MethodName: "SendEmailNotification",
-			Handler:    _OmniApi_SendEmailNotification_Handler,
-		},
-		{
 			MethodName: "DeleteVerifiedEmail",
 			Handler:    _OmniApi_DeleteVerifiedEmail_Handler,
 		},
@@ -2903,6 +2854,10 @@ var OmniApi_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetPendingGoogleXOAuth2Data",
 			Handler:    _OmniApi_GetPendingGoogleXOAuth2Data_Handler,
+		},
+		{
+			MethodName: "SendEmailNotification",
+			Handler:    _OmniApi_SendEmailNotification_Handler,
 		},
 		{
 			MethodName: "SendFeedbackEmail",
@@ -2931,6 +2886,10 @@ var OmniApi_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateSignature",
 			Handler:    _OmniApi_UpdateSignature_Handler,
+		},
+		{
+			MethodName: "SuggestResponse",
+			Handler:    _OmniApi_SuggestResponse_Handler,
 		},
 		{
 			MethodName: "CreateProject",
