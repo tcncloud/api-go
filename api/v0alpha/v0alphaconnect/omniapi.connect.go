@@ -40,8 +40,6 @@ const (
 	OmniApiCreateCampaignProcedure = "/api.v0alpha.OmniApi/CreateCampaign"
 	// OmniApiGetCampaignByIdProcedure is the fully-qualified name of the OmniApi's GetCampaignById RPC.
 	OmniApiGetCampaignByIdProcedure = "/api.v0alpha.OmniApi/GetCampaignById"
-	// OmniApiListCampaignsProcedure is the fully-qualified name of the OmniApi's ListCampaigns RPC.
-	OmniApiListCampaignsProcedure = "/api.v0alpha.OmniApi/ListCampaigns"
 	// OmniApiPauseCampaignProcedure is the fully-qualified name of the OmniApi's PauseCampaign RPC.
 	OmniApiPauseCampaignProcedure = "/api.v0alpha.OmniApi/PauseCampaign"
 	// OmniApiResumeCampaignProcedure is the fully-qualified name of the OmniApi's ResumeCampaign RPC.
@@ -51,24 +49,11 @@ const (
 	// OmniApiUpdateCampaignPacingSpeedProcedure is the fully-qualified name of the OmniApi's
 	// UpdateCampaignPacingSpeed RPC.
 	OmniApiUpdateCampaignPacingSpeedProcedure = "/api.v0alpha.OmniApi/UpdateCampaignPacingSpeed"
-	// OmniApiGetOffLoadedTextMessageProcedure is the fully-qualified name of the OmniApi's
-	// GetOffLoadedTextMessage RPC.
-	OmniApiGetOffLoadedTextMessageProcedure = "/api.v0alpha.OmniApi/GetOffLoadedTextMessage"
-	// OmniApiManagerListMessagesProcedure is the fully-qualified name of the OmniApi's
-	// ManagerListMessages RPC.
-	OmniApiManagerListMessagesProcedure = "/api.v0alpha.OmniApi/ManagerListMessages"
-	// OmniApiListMessagesProcedure is the fully-qualified name of the OmniApi's ListMessages RPC.
-	OmniApiListMessagesProcedure = "/api.v0alpha.OmniApi/ListMessages"
 	// OmniApiSendOmniMessageProcedure is the fully-qualified name of the OmniApi's SendOmniMessage RPC.
 	OmniApiSendOmniMessageProcedure = "/api.v0alpha.OmniApi/SendOmniMessage"
 	// OmniApiManagerSendOmniMessageProcedure is the fully-qualified name of the OmniApi's
 	// ManagerSendOmniMessage RPC.
 	OmniApiManagerSendOmniMessageProcedure = "/api.v0alpha.OmniApi/ManagerSendOmniMessage"
-	// OmniApiManagerListConversationsProcedure is the fully-qualified name of the OmniApi's
-	// ManagerListConversations RPC.
-	OmniApiManagerListConversationsProcedure = "/api.v0alpha.OmniApi/ManagerListConversations"
-	// OmniApiSuggestResponseProcedure is the fully-qualified name of the OmniApi's SuggestResponse RPC.
-	OmniApiSuggestResponseProcedure = "/api.v0alpha.OmniApi/SuggestResponse"
 	// OmniApiCreateDispositionProcedure is the fully-qualified name of the OmniApi's CreateDisposition
 	// RPC.
 	OmniApiCreateDispositionProcedure = "/api.v0alpha.OmniApi/CreateDisposition"
@@ -93,6 +78,16 @@ const (
 	// OmniApiDeleteCustomUnsubscribeLinkProcedure is the fully-qualified name of the OmniApi's
 	// DeleteCustomUnsubscribeLink RPC.
 	OmniApiDeleteCustomUnsubscribeLinkProcedure = "/api.v0alpha.OmniApi/DeleteCustomUnsubscribeLink"
+	// OmniApiListCampaignsProcedure is the fully-qualified name of the OmniApi's ListCampaigns RPC.
+	OmniApiListCampaignsProcedure = "/api.v0alpha.OmniApi/ListCampaigns"
+	// OmniApiManagerListMessagesProcedure is the fully-qualified name of the OmniApi's
+	// ManagerListMessages RPC.
+	OmniApiManagerListMessagesProcedure = "/api.v0alpha.OmniApi/ManagerListMessages"
+	// OmniApiListMessagesProcedure is the fully-qualified name of the OmniApi's ListMessages RPC.
+	OmniApiListMessagesProcedure = "/api.v0alpha.OmniApi/ListMessages"
+	// OmniApiManagerListConversationsProcedure is the fully-qualified name of the OmniApi's
+	// ManagerListConversations RPC.
+	OmniApiManagerListConversationsProcedure = "/api.v0alpha.OmniApi/ManagerListConversations"
 	// OmniApiListContactListsProcedure is the fully-qualified name of the OmniApi's ListContactLists
 	// RPC.
 	OmniApiListContactListsProcedure = "/api.v0alpha.OmniApi/ListContactLists"
@@ -127,9 +122,6 @@ const (
 	// OmniApiCreateVerifiedEmailProcedure is the fully-qualified name of the OmniApi's
 	// CreateVerifiedEmail RPC.
 	OmniApiCreateVerifiedEmailProcedure = "/api.v0alpha.OmniApi/CreateVerifiedEmail"
-	// OmniApiSendEmailNotificationProcedure is the fully-qualified name of the OmniApi's
-	// SendEmailNotification RPC.
-	OmniApiSendEmailNotificationProcedure = "/api.v0alpha.OmniApi/SendEmailNotification"
 	// OmniApiDeleteVerifiedEmailProcedure is the fully-qualified name of the OmniApi's
 	// DeleteVerifiedEmail RPC.
 	OmniApiDeleteVerifiedEmailProcedure = "/api.v0alpha.OmniApi/DeleteVerifiedEmail"
@@ -148,6 +140,9 @@ const (
 	// OmniApiGetPendingGoogleXOAuth2DataProcedure is the fully-qualified name of the OmniApi's
 	// GetPendingGoogleXOAuth2Data RPC.
 	OmniApiGetPendingGoogleXOAuth2DataProcedure = "/api.v0alpha.OmniApi/GetPendingGoogleXOAuth2Data"
+	// OmniApiSendEmailNotificationProcedure is the fully-qualified name of the OmniApi's
+	// SendEmailNotification RPC.
+	OmniApiSendEmailNotificationProcedure = "/api.v0alpha.OmniApi/SendEmailNotification"
 	// OmniApiSendFeedbackEmailProcedure is the fully-qualified name of the OmniApi's SendFeedbackEmail
 	// RPC.
 	OmniApiSendFeedbackEmailProcedure = "/api.v0alpha.OmniApi/SendFeedbackEmail"
@@ -164,6 +159,8 @@ const (
 	OmniApiListSignaturesProcedure = "/api.v0alpha.OmniApi/ListSignatures"
 	// OmniApiUpdateSignatureProcedure is the fully-qualified name of the OmniApi's UpdateSignature RPC.
 	OmniApiUpdateSignatureProcedure = "/api.v0alpha.OmniApi/UpdateSignature"
+	// OmniApiSuggestResponseProcedure is the fully-qualified name of the OmniApi's SuggestResponse RPC.
+	OmniApiSuggestResponseProcedure = "/api.v0alpha.OmniApi/SuggestResponse"
 	// OmniApiCreateProjectProcedure is the fully-qualified name of the OmniApi's CreateProject RPC.
 	OmniApiCreateProjectProcedure = "/api.v0alpha.OmniApi/CreateProject"
 	// OmniApiListProjectsProcedure is the fully-qualified name of the OmniApi's ListProjects RPC.
@@ -223,10 +220,6 @@ type OmniApiClient interface {
 	CreateCampaign(context.Context, *connect_go.Request[v0alpha.CreateCampaignReq]) (*connect_go.Response[commons.OmniCampaign], error)
 	// Get campaign defined by GetChatCampaignById.
 	GetCampaignById(context.Context, *connect_go.Request[v0alpha.GetCampaignByIdReq]) (*connect_go.Response[commons.OmniCampaign], error)
-	// List campaigns defined by ListCampaignsReq.
-	// The method will return a ListCampaignsReq entity that will contain
-	// all the campaigns within the specified filter.
-	ListCampaigns(context.Context, *connect_go.Request[v0alpha.ListCampaignsReq]) (*connect_go.Response[v0alpha.ListCampaignsRes], error)
 	// pause a campaign
 	PauseCampaign(context.Context, *connect_go.Request[v0alpha.PauseCampaignReq]) (*connect_go.Response[v0alpha.PauseCampaignRes], error)
 	// resume a campaign
@@ -238,26 +231,10 @@ type OmniApiClient interface {
 	UpdateCampaign(context.Context, *connect_go.Request[v0alpha.UpdateCampaignReq]) (*connect_go.Response[v0alpha.UpdateCampaignRes], error)
 	// update campaign pacing - speed up/slow down a campaign
 	UpdateCampaignPacingSpeed(context.Context, *connect_go.Request[v0alpha.UpdateCampaignPacingSpeedReq]) (*connect_go.Response[v0alpha.UpdateCampaignPacingSpeedRes], error)
-	// Get the text message for an off-loaded text message payload. Used
-	// only for managers/agents/users. It is not for customers.
-	GetOffLoadedTextMessage(context.Context, *connect_go.Request[v0alpha.GetOffLoadedTextMessageReq]) (*connect_go.Response[v0alpha.GetOffLoadedTextMessageRes], error)
-	// Get a stream of new conversation message for a given conversation. Used
-	// only for managers. It is not for customers.
-	ManagerListMessages(context.Context, *connect_go.Request[v0alpha.ManagerListMessagesReq]) (*connect_go.ServerStreamForClient[commons.OmniMessage], error)
-	// Get a stream of conversation message for a given conversation. Used
-	// only for agents/users. It is not for customers.
-	ListMessages(context.Context, *connect_go.Request[v0alpha.ListMessagesReq]) (*connect_go.ServerStreamForClient[commons.OmniMessage], error)
 	// Send a chat message
 	SendOmniMessage(context.Context, *connect_go.Request[v0alpha.SendOmniMessageReq]) (*connect_go.Response[commons.Empty], error)
 	// Send a chat message
 	ManagerSendOmniMessage(context.Context, *connect_go.Request[v0alpha.SendOmniMessageReq]) (*connect_go.Response[commons.Empty], error)
-	// lists all conversation and assigned users for a given date range.
-	// Required permissions:
-	//
-	//	OMNI_BOSS
-	ManagerListConversations(context.Context, *connect_go.Request[v0alpha.ListConversationsReq]) (*connect_go.Response[v0alpha.ListConversationsRes], error)
-	// Experimental API
-	SuggestResponse(context.Context, *connect_go.Request[v0alpha.SuggestResponseReq]) (*connect_go.Response[v0alpha.SuggestResponseRes], error)
 	// Create a disposition
 	CreateDisposition(context.Context, *connect_go.Request[v0alpha.CreateDispositionReq]) (*connect_go.Response[v0alpha.CreateDispositionRes], error)
 	// DeleteDisposition - delete an existing disposition
@@ -274,6 +251,21 @@ type OmniApiClient interface {
 	UpdateCustomUnsubscribeLink(context.Context, *connect_go.Request[v0alpha.UpdateCustomUnsubscribeLinkReq]) (*connect_go.Response[v0alpha.UpdateCustomUnsubscribeLinkRes], error)
 	// DeleteCustomUnsubscribeLink - deletes custom unsubscribe link details
 	DeleteCustomUnsubscribeLink(context.Context, *connect_go.Request[v0alpha.DeleteCustomUnsubscribeLinkReq]) (*connect_go.Response[commons.Empty], error)
+	// List campaigns defined by ListCampaignsReq.
+	// The method will return a ListCampaignsReq entity that will contain
+	// all the campaigns within the specified filter.
+	ListCampaigns(context.Context, *connect_go.Request[v0alpha.ListCampaignsReq]) (*connect_go.Response[v0alpha.ListCampaignsRes], error)
+	// Get a stream of new conversation message for a given conversation. Used
+	// only for managers. It is not for customers.
+	ManagerListMessages(context.Context, *connect_go.Request[v0alpha.ManagerListMessagesReq]) (*connect_go.ServerStreamForClient[commons.OmniMessage], error)
+	// Get a stream of conversation message for a given conversation. Used
+	// only for agents/users. It is not for customers.
+	ListMessages(context.Context, *connect_go.Request[v0alpha.ListMessagesReq]) (*connect_go.ServerStreamForClient[commons.OmniMessage], error)
+	// lists all conversation and assigned users for a given date range.
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	ManagerListConversations(context.Context, *connect_go.Request[v0alpha.ListConversationsReq]) (*connect_go.Response[v0alpha.ListConversationsRes], error)
 	// ListContactLists - retrieves all the contact lists
 	ListContactLists(context.Context, *connect_go.Request[v0alpha.ListContactListsReq]) (*connect_go.Response[v0alpha.ListContactListsRes], error)
 	// GetAvailableHeaders - retrieves all the available headers that could be present on a contact list
@@ -334,14 +326,6 @@ type OmniApiClient interface {
 	//
 	//	OMNI_BOSS
 	CreateVerifiedEmail(context.Context, *connect_go.Request[commons.VerifiedEmail]) (*connect_go.Response[v0alpha.CreateVerifiedEmailRes], error)
-	// Send email notification defined by SendEmailNotificationReq message for the specified
-	// subject, message and array of to email addresses.
-	// The method will return a stream of SendEmailNotificationRes messages
-	// containing result true/false after notified by email for the client_sid.
-	// Required permissions:
-	//
-	//	OMNI_BOSS
-	SendEmailNotification(context.Context, *connect_go.Request[v0alpha.SendEmailNotificationReq]) (*connect_go.Response[v0alpha.SendEmailNotificationRes], error)
 	// Delete verify email record based on verified email id defined by
 	// DeleteVerifiedEmailReq for the specified client.
 	// This method will return a DeleteVerifiedEmailRes message/entity.
@@ -378,6 +362,14 @@ type OmniApiClient interface {
 	//
 	//	OMNI_BOSS
 	GetPendingGoogleXOAuth2Data(context.Context, *connect_go.Request[v0alpha.GetPendingGoogleXOAuth2DataReq]) (*connect_go.Response[v0alpha.GetPendingGoogleXOAuth2DataRes], error)
+	// Send email notification defined by SendEmailNotificationReq message for the specified
+	// subject, message and array of to email addresses.
+	// The method will return a stream of SendEmailNotificationRes messages
+	// containing result true/false after notified by email for the client_sid.
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	SendEmailNotification(context.Context, *connect_go.Request[v0alpha.SendEmailNotificationReq]) (*connect_go.Response[v0alpha.SendEmailNotificationRes], error)
 	// Send an email to our feedback system. The users email will be populated as the from address to open an email thread with our support.
 	SendFeedbackEmail(context.Context, *connect_go.Request[v0alpha.SendFeedbackEmailReq]) (*connect_go.Response[v0alpha.SendFeedbackEmailRes], error)
 	// GetOmniAttachment - retrieves the omni attachment details based on the request
@@ -407,6 +399,8 @@ type OmniApiClient interface {
 	//
 	//	OMNI_BOSS
 	UpdateSignature(context.Context, *connect_go.Request[v0alpha.UpdateSignatureReq]) (*connect_go.Response[v0alpha.UpdateSignatureRes], error)
+	// SuggestResponse
+	SuggestResponse(context.Context, *connect_go.Request[v0alpha.SuggestResponseReq]) (*connect_go.Response[v0alpha.SuggestResponseRes], error)
 	// Create/Record project defined by CreateProjectReq message for a specified
 	// name, description and status.
 	// The method will return a Project message/entity that will
@@ -544,11 +538,6 @@ func NewOmniApiClient(httpClient connect_go.HTTPClient, baseURL string, opts ...
 			baseURL+OmniApiGetCampaignByIdProcedure,
 			opts...,
 		),
-		listCampaigns: connect_go.NewClient[v0alpha.ListCampaignsReq, v0alpha.ListCampaignsRes](
-			httpClient,
-			baseURL+OmniApiListCampaignsProcedure,
-			opts...,
-		),
 		pauseCampaign: connect_go.NewClient[v0alpha.PauseCampaignReq, v0alpha.PauseCampaignRes](
 			httpClient,
 			baseURL+OmniApiPauseCampaignProcedure,
@@ -569,21 +558,6 @@ func NewOmniApiClient(httpClient connect_go.HTTPClient, baseURL string, opts ...
 			baseURL+OmniApiUpdateCampaignPacingSpeedProcedure,
 			opts...,
 		),
-		getOffLoadedTextMessage: connect_go.NewClient[v0alpha.GetOffLoadedTextMessageReq, v0alpha.GetOffLoadedTextMessageRes](
-			httpClient,
-			baseURL+OmniApiGetOffLoadedTextMessageProcedure,
-			opts...,
-		),
-		managerListMessages: connect_go.NewClient[v0alpha.ManagerListMessagesReq, commons.OmniMessage](
-			httpClient,
-			baseURL+OmniApiManagerListMessagesProcedure,
-			opts...,
-		),
-		listMessages: connect_go.NewClient[v0alpha.ListMessagesReq, commons.OmniMessage](
-			httpClient,
-			baseURL+OmniApiListMessagesProcedure,
-			opts...,
-		),
 		sendOmniMessage: connect_go.NewClient[v0alpha.SendOmniMessageReq, commons.Empty](
 			httpClient,
 			baseURL+OmniApiSendOmniMessageProcedure,
@@ -592,16 +566,6 @@ func NewOmniApiClient(httpClient connect_go.HTTPClient, baseURL string, opts ...
 		managerSendOmniMessage: connect_go.NewClient[v0alpha.SendOmniMessageReq, commons.Empty](
 			httpClient,
 			baseURL+OmniApiManagerSendOmniMessageProcedure,
-			opts...,
-		),
-		managerListConversations: connect_go.NewClient[v0alpha.ListConversationsReq, v0alpha.ListConversationsRes](
-			httpClient,
-			baseURL+OmniApiManagerListConversationsProcedure,
-			opts...,
-		),
-		suggestResponse: connect_go.NewClient[v0alpha.SuggestResponseReq, v0alpha.SuggestResponseRes](
-			httpClient,
-			baseURL+OmniApiSuggestResponseProcedure,
 			opts...,
 		),
 		createDisposition: connect_go.NewClient[v0alpha.CreateDispositionReq, v0alpha.CreateDispositionRes](
@@ -642,6 +606,26 @@ func NewOmniApiClient(httpClient connect_go.HTTPClient, baseURL string, opts ...
 		deleteCustomUnsubscribeLink: connect_go.NewClient[v0alpha.DeleteCustomUnsubscribeLinkReq, commons.Empty](
 			httpClient,
 			baseURL+OmniApiDeleteCustomUnsubscribeLinkProcedure,
+			opts...,
+		),
+		listCampaigns: connect_go.NewClient[v0alpha.ListCampaignsReq, v0alpha.ListCampaignsRes](
+			httpClient,
+			baseURL+OmniApiListCampaignsProcedure,
+			opts...,
+		),
+		managerListMessages: connect_go.NewClient[v0alpha.ManagerListMessagesReq, commons.OmniMessage](
+			httpClient,
+			baseURL+OmniApiManagerListMessagesProcedure,
+			opts...,
+		),
+		listMessages: connect_go.NewClient[v0alpha.ListMessagesReq, commons.OmniMessage](
+			httpClient,
+			baseURL+OmniApiListMessagesProcedure,
+			opts...,
+		),
+		managerListConversations: connect_go.NewClient[v0alpha.ListConversationsReq, v0alpha.ListConversationsRes](
+			httpClient,
+			baseURL+OmniApiManagerListConversationsProcedure,
 			opts...,
 		),
 		listContactLists: connect_go.NewClient[v0alpha.ListContactListsReq, v0alpha.ListContactListsRes](
@@ -704,11 +688,6 @@ func NewOmniApiClient(httpClient connect_go.HTTPClient, baseURL string, opts ...
 			baseURL+OmniApiCreateVerifiedEmailProcedure,
 			opts...,
 		),
-		sendEmailNotification: connect_go.NewClient[v0alpha.SendEmailNotificationReq, v0alpha.SendEmailNotificationRes](
-			httpClient,
-			baseURL+OmniApiSendEmailNotificationProcedure,
-			opts...,
-		),
 		deleteVerifiedEmail: connect_go.NewClient[v0alpha.DeleteVerifiedEmailReq, commons.Empty](
 			httpClient,
 			baseURL+OmniApiDeleteVerifiedEmailProcedure,
@@ -737,6 +716,11 @@ func NewOmniApiClient(httpClient connect_go.HTTPClient, baseURL string, opts ...
 		getPendingGoogleXOAuth2Data: connect_go.NewClient[v0alpha.GetPendingGoogleXOAuth2DataReq, v0alpha.GetPendingGoogleXOAuth2DataRes](
 			httpClient,
 			baseURL+OmniApiGetPendingGoogleXOAuth2DataProcedure,
+			opts...,
+		),
+		sendEmailNotification: connect_go.NewClient[v0alpha.SendEmailNotificationReq, v0alpha.SendEmailNotificationRes](
+			httpClient,
+			baseURL+OmniApiSendEmailNotificationProcedure,
 			opts...,
 		),
 		sendFeedbackEmail: connect_go.NewClient[v0alpha.SendFeedbackEmailReq, v0alpha.SendFeedbackEmailRes](
@@ -772,6 +756,11 @@ func NewOmniApiClient(httpClient connect_go.HTTPClient, baseURL string, opts ...
 		updateSignature: connect_go.NewClient[v0alpha.UpdateSignatureReq, v0alpha.UpdateSignatureRes](
 			httpClient,
 			baseURL+OmniApiUpdateSignatureProcedure,
+			opts...,
+		),
+		suggestResponse: connect_go.NewClient[v0alpha.SuggestResponseReq, v0alpha.SuggestResponseRes](
+			httpClient,
+			baseURL+OmniApiSuggestResponseProcedure,
 			opts...,
 		),
 		createProject: connect_go.NewClient[v0alpha.CreateProjectReq, v0alpha.CreateProjectRes](
@@ -862,18 +851,12 @@ type omniApiClient struct {
 	archiveCampaign              *connect_go.Client[v0alpha.ArchiveCampaignReq, v0alpha.ArchiveCampaignRes]
 	createCampaign               *connect_go.Client[v0alpha.CreateCampaignReq, commons.OmniCampaign]
 	getCampaignById              *connect_go.Client[v0alpha.GetCampaignByIdReq, commons.OmniCampaign]
-	listCampaigns                *connect_go.Client[v0alpha.ListCampaignsReq, v0alpha.ListCampaignsRes]
 	pauseCampaign                *connect_go.Client[v0alpha.PauseCampaignReq, v0alpha.PauseCampaignRes]
 	resumeCampaign               *connect_go.Client[v0alpha.ResumeCampaignReq, v0alpha.ResumeCampaignRes]
 	updateCampaign               *connect_go.Client[v0alpha.UpdateCampaignReq, v0alpha.UpdateCampaignRes]
 	updateCampaignPacingSpeed    *connect_go.Client[v0alpha.UpdateCampaignPacingSpeedReq, v0alpha.UpdateCampaignPacingSpeedRes]
-	getOffLoadedTextMessage      *connect_go.Client[v0alpha.GetOffLoadedTextMessageReq, v0alpha.GetOffLoadedTextMessageRes]
-	managerListMessages          *connect_go.Client[v0alpha.ManagerListMessagesReq, commons.OmniMessage]
-	listMessages                 *connect_go.Client[v0alpha.ListMessagesReq, commons.OmniMessage]
 	sendOmniMessage              *connect_go.Client[v0alpha.SendOmniMessageReq, commons.Empty]
 	managerSendOmniMessage       *connect_go.Client[v0alpha.SendOmniMessageReq, commons.Empty]
-	managerListConversations     *connect_go.Client[v0alpha.ListConversationsReq, v0alpha.ListConversationsRes]
-	suggestResponse              *connect_go.Client[v0alpha.SuggestResponseReq, v0alpha.SuggestResponseRes]
 	createDisposition            *connect_go.Client[v0alpha.CreateDispositionReq, v0alpha.CreateDispositionRes]
 	deleteDisposition            *connect_go.Client[v0alpha.DeleteDispositionReq, commons.Empty]
 	listDispositions             *connect_go.Client[v0alpha.ListDispositionsReq, v0alpha.ListDispositionsRes]
@@ -882,6 +865,10 @@ type omniApiClient struct {
 	createCustomUnsubscribeLink  *connect_go.Client[commons.OmniCustomUnsubscribeLink, v0alpha.CreateCustomUnsubscribeLinkRes]
 	updateCustomUnsubscribeLink  *connect_go.Client[v0alpha.UpdateCustomUnsubscribeLinkReq, v0alpha.UpdateCustomUnsubscribeLinkRes]
 	deleteCustomUnsubscribeLink  *connect_go.Client[v0alpha.DeleteCustomUnsubscribeLinkReq, commons.Empty]
+	listCampaigns                *connect_go.Client[v0alpha.ListCampaignsReq, v0alpha.ListCampaignsRes]
+	managerListMessages          *connect_go.Client[v0alpha.ManagerListMessagesReq, commons.OmniMessage]
+	listMessages                 *connect_go.Client[v0alpha.ListMessagesReq, commons.OmniMessage]
+	managerListConversations     *connect_go.Client[v0alpha.ListConversationsReq, v0alpha.ListConversationsRes]
 	listContactLists             *connect_go.Client[v0alpha.ListContactListsReq, v0alpha.ListContactListsRes]
 	getAvailableHeaders          *connect_go.Client[v0alpha.GetAvailableHeadersReq, v0alpha.GetAvailableHeadersRes]
 	getTask                      *connect_go.Client[v0alpha.GetTaskReq, commons.OmniTask]
@@ -894,13 +881,13 @@ type omniApiClient struct {
 	testConnectedInbox           *connect_go.Client[commons.ConnectedInbox, v0alpha.TestConnectedInboxRes]
 	updateConnectedInbox         *connect_go.Client[v0alpha.UpdateConnectedInboxReq, commons.Empty]
 	createVerifiedEmail          *connect_go.Client[commons.VerifiedEmail, v0alpha.CreateVerifiedEmailRes]
-	sendEmailNotification        *connect_go.Client[v0alpha.SendEmailNotificationReq, v0alpha.SendEmailNotificationRes]
 	deleteVerifiedEmail          *connect_go.Client[v0alpha.DeleteVerifiedEmailReq, commons.Empty]
 	getVerifiedEmailBySid        *connect_go.Client[v0alpha.GetVerifiedEmailBySidReq, commons.VerifiedEmail]
 	listVerifiedEmails           *connect_go.Client[v0alpha.ListVerifiedEmailsReq, v0alpha.ListVerifiedEmailsRes]
 	resendVerifiedEmail          *connect_go.Client[v0alpha.ResendVerifiedEmailReq, v0alpha.ResendVerifiedEmailRes]
 	updateVerifiedEmail          *connect_go.Client[v0alpha.UpdateVerifiedEmailReq, commons.Empty]
 	getPendingGoogleXOAuth2Data  *connect_go.Client[v0alpha.GetPendingGoogleXOAuth2DataReq, v0alpha.GetPendingGoogleXOAuth2DataRes]
+	sendEmailNotification        *connect_go.Client[v0alpha.SendEmailNotificationReq, v0alpha.SendEmailNotificationRes]
 	sendFeedbackEmail            *connect_go.Client[v0alpha.SendFeedbackEmailReq, v0alpha.SendFeedbackEmailRes]
 	getOmniAttachment            *connect_go.Client[v0alpha.GetOmniAttachmentReq, commons.OmniAttachment]
 	createTasks                  *connect_go.Client[v0alpha.CreateTasksReq, v0alpha.CreateTasksRes]
@@ -908,6 +895,7 @@ type omniApiClient struct {
 	deleteSignature              *connect_go.Client[v0alpha.DeleteSignatureReq, v0alpha.DeleteSignatureRes]
 	listSignatures               *connect_go.Client[v0alpha.ListSignaturesReq, v0alpha.ListSignaturesRes]
 	updateSignature              *connect_go.Client[v0alpha.UpdateSignatureReq, v0alpha.UpdateSignatureRes]
+	suggestResponse              *connect_go.Client[v0alpha.SuggestResponseReq, v0alpha.SuggestResponseRes]
 	createProject                *connect_go.Client[v0alpha.CreateProjectReq, v0alpha.CreateProjectRes]
 	listProjects                 *connect_go.Client[v0alpha.ListProjectsReq, v0alpha.ListProjectsRes]
 	editProjectById              *connect_go.Client[v0alpha.EditProjectByIdReq, v0alpha.EditProjectByIdRes]
@@ -941,11 +929,6 @@ func (c *omniApiClient) GetCampaignById(ctx context.Context, req *connect_go.Req
 	return c.getCampaignById.CallUnary(ctx, req)
 }
 
-// ListCampaigns calls api.v0alpha.OmniApi.ListCampaigns.
-func (c *omniApiClient) ListCampaigns(ctx context.Context, req *connect_go.Request[v0alpha.ListCampaignsReq]) (*connect_go.Response[v0alpha.ListCampaignsRes], error) {
-	return c.listCampaigns.CallUnary(ctx, req)
-}
-
 // PauseCampaign calls api.v0alpha.OmniApi.PauseCampaign.
 func (c *omniApiClient) PauseCampaign(ctx context.Context, req *connect_go.Request[v0alpha.PauseCampaignReq]) (*connect_go.Response[v0alpha.PauseCampaignRes], error) {
 	return c.pauseCampaign.CallUnary(ctx, req)
@@ -966,21 +949,6 @@ func (c *omniApiClient) UpdateCampaignPacingSpeed(ctx context.Context, req *conn
 	return c.updateCampaignPacingSpeed.CallUnary(ctx, req)
 }
 
-// GetOffLoadedTextMessage calls api.v0alpha.OmniApi.GetOffLoadedTextMessage.
-func (c *omniApiClient) GetOffLoadedTextMessage(ctx context.Context, req *connect_go.Request[v0alpha.GetOffLoadedTextMessageReq]) (*connect_go.Response[v0alpha.GetOffLoadedTextMessageRes], error) {
-	return c.getOffLoadedTextMessage.CallUnary(ctx, req)
-}
-
-// ManagerListMessages calls api.v0alpha.OmniApi.ManagerListMessages.
-func (c *omniApiClient) ManagerListMessages(ctx context.Context, req *connect_go.Request[v0alpha.ManagerListMessagesReq]) (*connect_go.ServerStreamForClient[commons.OmniMessage], error) {
-	return c.managerListMessages.CallServerStream(ctx, req)
-}
-
-// ListMessages calls api.v0alpha.OmniApi.ListMessages.
-func (c *omniApiClient) ListMessages(ctx context.Context, req *connect_go.Request[v0alpha.ListMessagesReq]) (*connect_go.ServerStreamForClient[commons.OmniMessage], error) {
-	return c.listMessages.CallServerStream(ctx, req)
-}
-
 // SendOmniMessage calls api.v0alpha.OmniApi.SendOmniMessage.
 func (c *omniApiClient) SendOmniMessage(ctx context.Context, req *connect_go.Request[v0alpha.SendOmniMessageReq]) (*connect_go.Response[commons.Empty], error) {
 	return c.sendOmniMessage.CallUnary(ctx, req)
@@ -989,16 +957,6 @@ func (c *omniApiClient) SendOmniMessage(ctx context.Context, req *connect_go.Req
 // ManagerSendOmniMessage calls api.v0alpha.OmniApi.ManagerSendOmniMessage.
 func (c *omniApiClient) ManagerSendOmniMessage(ctx context.Context, req *connect_go.Request[v0alpha.SendOmniMessageReq]) (*connect_go.Response[commons.Empty], error) {
 	return c.managerSendOmniMessage.CallUnary(ctx, req)
-}
-
-// ManagerListConversations calls api.v0alpha.OmniApi.ManagerListConversations.
-func (c *omniApiClient) ManagerListConversations(ctx context.Context, req *connect_go.Request[v0alpha.ListConversationsReq]) (*connect_go.Response[v0alpha.ListConversationsRes], error) {
-	return c.managerListConversations.CallUnary(ctx, req)
-}
-
-// SuggestResponse calls api.v0alpha.OmniApi.SuggestResponse.
-func (c *omniApiClient) SuggestResponse(ctx context.Context, req *connect_go.Request[v0alpha.SuggestResponseReq]) (*connect_go.Response[v0alpha.SuggestResponseRes], error) {
-	return c.suggestResponse.CallUnary(ctx, req)
 }
 
 // CreateDisposition calls api.v0alpha.OmniApi.CreateDisposition.
@@ -1039,6 +997,26 @@ func (c *omniApiClient) UpdateCustomUnsubscribeLink(ctx context.Context, req *co
 // DeleteCustomUnsubscribeLink calls api.v0alpha.OmniApi.DeleteCustomUnsubscribeLink.
 func (c *omniApiClient) DeleteCustomUnsubscribeLink(ctx context.Context, req *connect_go.Request[v0alpha.DeleteCustomUnsubscribeLinkReq]) (*connect_go.Response[commons.Empty], error) {
 	return c.deleteCustomUnsubscribeLink.CallUnary(ctx, req)
+}
+
+// ListCampaigns calls api.v0alpha.OmniApi.ListCampaigns.
+func (c *omniApiClient) ListCampaigns(ctx context.Context, req *connect_go.Request[v0alpha.ListCampaignsReq]) (*connect_go.Response[v0alpha.ListCampaignsRes], error) {
+	return c.listCampaigns.CallUnary(ctx, req)
+}
+
+// ManagerListMessages calls api.v0alpha.OmniApi.ManagerListMessages.
+func (c *omniApiClient) ManagerListMessages(ctx context.Context, req *connect_go.Request[v0alpha.ManagerListMessagesReq]) (*connect_go.ServerStreamForClient[commons.OmniMessage], error) {
+	return c.managerListMessages.CallServerStream(ctx, req)
+}
+
+// ListMessages calls api.v0alpha.OmniApi.ListMessages.
+func (c *omniApiClient) ListMessages(ctx context.Context, req *connect_go.Request[v0alpha.ListMessagesReq]) (*connect_go.ServerStreamForClient[commons.OmniMessage], error) {
+	return c.listMessages.CallServerStream(ctx, req)
+}
+
+// ManagerListConversations calls api.v0alpha.OmniApi.ManagerListConversations.
+func (c *omniApiClient) ManagerListConversations(ctx context.Context, req *connect_go.Request[v0alpha.ListConversationsReq]) (*connect_go.Response[v0alpha.ListConversationsRes], error) {
+	return c.managerListConversations.CallUnary(ctx, req)
 }
 
 // ListContactLists calls api.v0alpha.OmniApi.ListContactLists.
@@ -1101,11 +1079,6 @@ func (c *omniApiClient) CreateVerifiedEmail(ctx context.Context, req *connect_go
 	return c.createVerifiedEmail.CallUnary(ctx, req)
 }
 
-// SendEmailNotification calls api.v0alpha.OmniApi.SendEmailNotification.
-func (c *omniApiClient) SendEmailNotification(ctx context.Context, req *connect_go.Request[v0alpha.SendEmailNotificationReq]) (*connect_go.Response[v0alpha.SendEmailNotificationRes], error) {
-	return c.sendEmailNotification.CallUnary(ctx, req)
-}
-
 // DeleteVerifiedEmail calls api.v0alpha.OmniApi.DeleteVerifiedEmail.
 func (c *omniApiClient) DeleteVerifiedEmail(ctx context.Context, req *connect_go.Request[v0alpha.DeleteVerifiedEmailReq]) (*connect_go.Response[commons.Empty], error) {
 	return c.deleteVerifiedEmail.CallUnary(ctx, req)
@@ -1134,6 +1107,11 @@ func (c *omniApiClient) UpdateVerifiedEmail(ctx context.Context, req *connect_go
 // GetPendingGoogleXOAuth2Data calls api.v0alpha.OmniApi.GetPendingGoogleXOAuth2Data.
 func (c *omniApiClient) GetPendingGoogleXOAuth2Data(ctx context.Context, req *connect_go.Request[v0alpha.GetPendingGoogleXOAuth2DataReq]) (*connect_go.Response[v0alpha.GetPendingGoogleXOAuth2DataRes], error) {
 	return c.getPendingGoogleXOAuth2Data.CallUnary(ctx, req)
+}
+
+// SendEmailNotification calls api.v0alpha.OmniApi.SendEmailNotification.
+func (c *omniApiClient) SendEmailNotification(ctx context.Context, req *connect_go.Request[v0alpha.SendEmailNotificationReq]) (*connect_go.Response[v0alpha.SendEmailNotificationRes], error) {
+	return c.sendEmailNotification.CallUnary(ctx, req)
 }
 
 // SendFeedbackEmail calls api.v0alpha.OmniApi.SendFeedbackEmail.
@@ -1169,6 +1147,11 @@ func (c *omniApiClient) ListSignatures(ctx context.Context, req *connect_go.Requ
 // UpdateSignature calls api.v0alpha.OmniApi.UpdateSignature.
 func (c *omniApiClient) UpdateSignature(ctx context.Context, req *connect_go.Request[v0alpha.UpdateSignatureReq]) (*connect_go.Response[v0alpha.UpdateSignatureRes], error) {
 	return c.updateSignature.CallUnary(ctx, req)
+}
+
+// SuggestResponse calls api.v0alpha.OmniApi.SuggestResponse.
+func (c *omniApiClient) SuggestResponse(ctx context.Context, req *connect_go.Request[v0alpha.SuggestResponseReq]) (*connect_go.Response[v0alpha.SuggestResponseRes], error) {
+	return c.suggestResponse.CallUnary(ctx, req)
 }
 
 // CreateProject calls api.v0alpha.OmniApi.CreateProject.
@@ -1264,10 +1247,6 @@ type OmniApiHandler interface {
 	CreateCampaign(context.Context, *connect_go.Request[v0alpha.CreateCampaignReq]) (*connect_go.Response[commons.OmniCampaign], error)
 	// Get campaign defined by GetChatCampaignById.
 	GetCampaignById(context.Context, *connect_go.Request[v0alpha.GetCampaignByIdReq]) (*connect_go.Response[commons.OmniCampaign], error)
-	// List campaigns defined by ListCampaignsReq.
-	// The method will return a ListCampaignsReq entity that will contain
-	// all the campaigns within the specified filter.
-	ListCampaigns(context.Context, *connect_go.Request[v0alpha.ListCampaignsReq]) (*connect_go.Response[v0alpha.ListCampaignsRes], error)
 	// pause a campaign
 	PauseCampaign(context.Context, *connect_go.Request[v0alpha.PauseCampaignReq]) (*connect_go.Response[v0alpha.PauseCampaignRes], error)
 	// resume a campaign
@@ -1279,26 +1258,10 @@ type OmniApiHandler interface {
 	UpdateCampaign(context.Context, *connect_go.Request[v0alpha.UpdateCampaignReq]) (*connect_go.Response[v0alpha.UpdateCampaignRes], error)
 	// update campaign pacing - speed up/slow down a campaign
 	UpdateCampaignPacingSpeed(context.Context, *connect_go.Request[v0alpha.UpdateCampaignPacingSpeedReq]) (*connect_go.Response[v0alpha.UpdateCampaignPacingSpeedRes], error)
-	// Get the text message for an off-loaded text message payload. Used
-	// only for managers/agents/users. It is not for customers.
-	GetOffLoadedTextMessage(context.Context, *connect_go.Request[v0alpha.GetOffLoadedTextMessageReq]) (*connect_go.Response[v0alpha.GetOffLoadedTextMessageRes], error)
-	// Get a stream of new conversation message for a given conversation. Used
-	// only for managers. It is not for customers.
-	ManagerListMessages(context.Context, *connect_go.Request[v0alpha.ManagerListMessagesReq], *connect_go.ServerStream[commons.OmniMessage]) error
-	// Get a stream of conversation message for a given conversation. Used
-	// only for agents/users. It is not for customers.
-	ListMessages(context.Context, *connect_go.Request[v0alpha.ListMessagesReq], *connect_go.ServerStream[commons.OmniMessage]) error
 	// Send a chat message
 	SendOmniMessage(context.Context, *connect_go.Request[v0alpha.SendOmniMessageReq]) (*connect_go.Response[commons.Empty], error)
 	// Send a chat message
 	ManagerSendOmniMessage(context.Context, *connect_go.Request[v0alpha.SendOmniMessageReq]) (*connect_go.Response[commons.Empty], error)
-	// lists all conversation and assigned users for a given date range.
-	// Required permissions:
-	//
-	//	OMNI_BOSS
-	ManagerListConversations(context.Context, *connect_go.Request[v0alpha.ListConversationsReq]) (*connect_go.Response[v0alpha.ListConversationsRes], error)
-	// Experimental API
-	SuggestResponse(context.Context, *connect_go.Request[v0alpha.SuggestResponseReq]) (*connect_go.Response[v0alpha.SuggestResponseRes], error)
 	// Create a disposition
 	CreateDisposition(context.Context, *connect_go.Request[v0alpha.CreateDispositionReq]) (*connect_go.Response[v0alpha.CreateDispositionRes], error)
 	// DeleteDisposition - delete an existing disposition
@@ -1315,6 +1278,21 @@ type OmniApiHandler interface {
 	UpdateCustomUnsubscribeLink(context.Context, *connect_go.Request[v0alpha.UpdateCustomUnsubscribeLinkReq]) (*connect_go.Response[v0alpha.UpdateCustomUnsubscribeLinkRes], error)
 	// DeleteCustomUnsubscribeLink - deletes custom unsubscribe link details
 	DeleteCustomUnsubscribeLink(context.Context, *connect_go.Request[v0alpha.DeleteCustomUnsubscribeLinkReq]) (*connect_go.Response[commons.Empty], error)
+	// List campaigns defined by ListCampaignsReq.
+	// The method will return a ListCampaignsReq entity that will contain
+	// all the campaigns within the specified filter.
+	ListCampaigns(context.Context, *connect_go.Request[v0alpha.ListCampaignsReq]) (*connect_go.Response[v0alpha.ListCampaignsRes], error)
+	// Get a stream of new conversation message for a given conversation. Used
+	// only for managers. It is not for customers.
+	ManagerListMessages(context.Context, *connect_go.Request[v0alpha.ManagerListMessagesReq], *connect_go.ServerStream[commons.OmniMessage]) error
+	// Get a stream of conversation message for a given conversation. Used
+	// only for agents/users. It is not for customers.
+	ListMessages(context.Context, *connect_go.Request[v0alpha.ListMessagesReq], *connect_go.ServerStream[commons.OmniMessage]) error
+	// lists all conversation and assigned users for a given date range.
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	ManagerListConversations(context.Context, *connect_go.Request[v0alpha.ListConversationsReq]) (*connect_go.Response[v0alpha.ListConversationsRes], error)
 	// ListContactLists - retrieves all the contact lists
 	ListContactLists(context.Context, *connect_go.Request[v0alpha.ListContactListsReq]) (*connect_go.Response[v0alpha.ListContactListsRes], error)
 	// GetAvailableHeaders - retrieves all the available headers that could be present on a contact list
@@ -1375,14 +1353,6 @@ type OmniApiHandler interface {
 	//
 	//	OMNI_BOSS
 	CreateVerifiedEmail(context.Context, *connect_go.Request[commons.VerifiedEmail]) (*connect_go.Response[v0alpha.CreateVerifiedEmailRes], error)
-	// Send email notification defined by SendEmailNotificationReq message for the specified
-	// subject, message and array of to email addresses.
-	// The method will return a stream of SendEmailNotificationRes messages
-	// containing result true/false after notified by email for the client_sid.
-	// Required permissions:
-	//
-	//	OMNI_BOSS
-	SendEmailNotification(context.Context, *connect_go.Request[v0alpha.SendEmailNotificationReq]) (*connect_go.Response[v0alpha.SendEmailNotificationRes], error)
 	// Delete verify email record based on verified email id defined by
 	// DeleteVerifiedEmailReq for the specified client.
 	// This method will return a DeleteVerifiedEmailRes message/entity.
@@ -1419,6 +1389,14 @@ type OmniApiHandler interface {
 	//
 	//	OMNI_BOSS
 	GetPendingGoogleXOAuth2Data(context.Context, *connect_go.Request[v0alpha.GetPendingGoogleXOAuth2DataReq]) (*connect_go.Response[v0alpha.GetPendingGoogleXOAuth2DataRes], error)
+	// Send email notification defined by SendEmailNotificationReq message for the specified
+	// subject, message and array of to email addresses.
+	// The method will return a stream of SendEmailNotificationRes messages
+	// containing result true/false after notified by email for the client_sid.
+	// Required permissions:
+	//
+	//	OMNI_BOSS
+	SendEmailNotification(context.Context, *connect_go.Request[v0alpha.SendEmailNotificationReq]) (*connect_go.Response[v0alpha.SendEmailNotificationRes], error)
 	// Send an email to our feedback system. The users email will be populated as the from address to open an email thread with our support.
 	SendFeedbackEmail(context.Context, *connect_go.Request[v0alpha.SendFeedbackEmailReq]) (*connect_go.Response[v0alpha.SendFeedbackEmailRes], error)
 	// GetOmniAttachment - retrieves the omni attachment details based on the request
@@ -1448,6 +1426,8 @@ type OmniApiHandler interface {
 	//
 	//	OMNI_BOSS
 	UpdateSignature(context.Context, *connect_go.Request[v0alpha.UpdateSignatureReq]) (*connect_go.Response[v0alpha.UpdateSignatureRes], error)
+	// SuggestResponse
+	SuggestResponse(context.Context, *connect_go.Request[v0alpha.SuggestResponseReq]) (*connect_go.Response[v0alpha.SuggestResponseRes], error)
 	// Create/Record project defined by CreateProjectReq message for a specified
 	// name, description and status.
 	// The method will return a Project message/entity that will
@@ -1582,11 +1562,6 @@ func NewOmniApiHandler(svc OmniApiHandler, opts ...connect_go.HandlerOption) (st
 		svc.GetCampaignById,
 		opts...,
 	))
-	mux.Handle(OmniApiListCampaignsProcedure, connect_go.NewUnaryHandler(
-		OmniApiListCampaignsProcedure,
-		svc.ListCampaigns,
-		opts...,
-	))
 	mux.Handle(OmniApiPauseCampaignProcedure, connect_go.NewUnaryHandler(
 		OmniApiPauseCampaignProcedure,
 		svc.PauseCampaign,
@@ -1607,21 +1582,6 @@ func NewOmniApiHandler(svc OmniApiHandler, opts ...connect_go.HandlerOption) (st
 		svc.UpdateCampaignPacingSpeed,
 		opts...,
 	))
-	mux.Handle(OmniApiGetOffLoadedTextMessageProcedure, connect_go.NewUnaryHandler(
-		OmniApiGetOffLoadedTextMessageProcedure,
-		svc.GetOffLoadedTextMessage,
-		opts...,
-	))
-	mux.Handle(OmniApiManagerListMessagesProcedure, connect_go.NewServerStreamHandler(
-		OmniApiManagerListMessagesProcedure,
-		svc.ManagerListMessages,
-		opts...,
-	))
-	mux.Handle(OmniApiListMessagesProcedure, connect_go.NewServerStreamHandler(
-		OmniApiListMessagesProcedure,
-		svc.ListMessages,
-		opts...,
-	))
 	mux.Handle(OmniApiSendOmniMessageProcedure, connect_go.NewUnaryHandler(
 		OmniApiSendOmniMessageProcedure,
 		svc.SendOmniMessage,
@@ -1630,16 +1590,6 @@ func NewOmniApiHandler(svc OmniApiHandler, opts ...connect_go.HandlerOption) (st
 	mux.Handle(OmniApiManagerSendOmniMessageProcedure, connect_go.NewUnaryHandler(
 		OmniApiManagerSendOmniMessageProcedure,
 		svc.ManagerSendOmniMessage,
-		opts...,
-	))
-	mux.Handle(OmniApiManagerListConversationsProcedure, connect_go.NewUnaryHandler(
-		OmniApiManagerListConversationsProcedure,
-		svc.ManagerListConversations,
-		opts...,
-	))
-	mux.Handle(OmniApiSuggestResponseProcedure, connect_go.NewUnaryHandler(
-		OmniApiSuggestResponseProcedure,
-		svc.SuggestResponse,
 		opts...,
 	))
 	mux.Handle(OmniApiCreateDispositionProcedure, connect_go.NewUnaryHandler(
@@ -1680,6 +1630,26 @@ func NewOmniApiHandler(svc OmniApiHandler, opts ...connect_go.HandlerOption) (st
 	mux.Handle(OmniApiDeleteCustomUnsubscribeLinkProcedure, connect_go.NewUnaryHandler(
 		OmniApiDeleteCustomUnsubscribeLinkProcedure,
 		svc.DeleteCustomUnsubscribeLink,
+		opts...,
+	))
+	mux.Handle(OmniApiListCampaignsProcedure, connect_go.NewUnaryHandler(
+		OmniApiListCampaignsProcedure,
+		svc.ListCampaigns,
+		opts...,
+	))
+	mux.Handle(OmniApiManagerListMessagesProcedure, connect_go.NewServerStreamHandler(
+		OmniApiManagerListMessagesProcedure,
+		svc.ManagerListMessages,
+		opts...,
+	))
+	mux.Handle(OmniApiListMessagesProcedure, connect_go.NewServerStreamHandler(
+		OmniApiListMessagesProcedure,
+		svc.ListMessages,
+		opts...,
+	))
+	mux.Handle(OmniApiManagerListConversationsProcedure, connect_go.NewUnaryHandler(
+		OmniApiManagerListConversationsProcedure,
+		svc.ManagerListConversations,
 		opts...,
 	))
 	mux.Handle(OmniApiListContactListsProcedure, connect_go.NewUnaryHandler(
@@ -1742,11 +1712,6 @@ func NewOmniApiHandler(svc OmniApiHandler, opts ...connect_go.HandlerOption) (st
 		svc.CreateVerifiedEmail,
 		opts...,
 	))
-	mux.Handle(OmniApiSendEmailNotificationProcedure, connect_go.NewUnaryHandler(
-		OmniApiSendEmailNotificationProcedure,
-		svc.SendEmailNotification,
-		opts...,
-	))
 	mux.Handle(OmniApiDeleteVerifiedEmailProcedure, connect_go.NewUnaryHandler(
 		OmniApiDeleteVerifiedEmailProcedure,
 		svc.DeleteVerifiedEmail,
@@ -1775,6 +1740,11 @@ func NewOmniApiHandler(svc OmniApiHandler, opts ...connect_go.HandlerOption) (st
 	mux.Handle(OmniApiGetPendingGoogleXOAuth2DataProcedure, connect_go.NewUnaryHandler(
 		OmniApiGetPendingGoogleXOAuth2DataProcedure,
 		svc.GetPendingGoogleXOAuth2Data,
+		opts...,
+	))
+	mux.Handle(OmniApiSendEmailNotificationProcedure, connect_go.NewUnaryHandler(
+		OmniApiSendEmailNotificationProcedure,
+		svc.SendEmailNotification,
 		opts...,
 	))
 	mux.Handle(OmniApiSendFeedbackEmailProcedure, connect_go.NewUnaryHandler(
@@ -1810,6 +1780,11 @@ func NewOmniApiHandler(svc OmniApiHandler, opts ...connect_go.HandlerOption) (st
 	mux.Handle(OmniApiUpdateSignatureProcedure, connect_go.NewUnaryHandler(
 		OmniApiUpdateSignatureProcedure,
 		svc.UpdateSignature,
+		opts...,
+	))
+	mux.Handle(OmniApiSuggestResponseProcedure, connect_go.NewUnaryHandler(
+		OmniApiSuggestResponseProcedure,
+		svc.SuggestResponse,
 		opts...,
 	))
 	mux.Handle(OmniApiCreateProjectProcedure, connect_go.NewUnaryHandler(
@@ -1910,10 +1885,6 @@ func (UnimplementedOmniApiHandler) GetCampaignById(context.Context, *connect_go.
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.GetCampaignById is not implemented"))
 }
 
-func (UnimplementedOmniApiHandler) ListCampaigns(context.Context, *connect_go.Request[v0alpha.ListCampaignsReq]) (*connect_go.Response[v0alpha.ListCampaignsRes], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.ListCampaigns is not implemented"))
-}
-
 func (UnimplementedOmniApiHandler) PauseCampaign(context.Context, *connect_go.Request[v0alpha.PauseCampaignReq]) (*connect_go.Response[v0alpha.PauseCampaignRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.PauseCampaign is not implemented"))
 }
@@ -1930,32 +1901,12 @@ func (UnimplementedOmniApiHandler) UpdateCampaignPacingSpeed(context.Context, *c
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.UpdateCampaignPacingSpeed is not implemented"))
 }
 
-func (UnimplementedOmniApiHandler) GetOffLoadedTextMessage(context.Context, *connect_go.Request[v0alpha.GetOffLoadedTextMessageReq]) (*connect_go.Response[v0alpha.GetOffLoadedTextMessageRes], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.GetOffLoadedTextMessage is not implemented"))
-}
-
-func (UnimplementedOmniApiHandler) ManagerListMessages(context.Context, *connect_go.Request[v0alpha.ManagerListMessagesReq], *connect_go.ServerStream[commons.OmniMessage]) error {
-	return connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.ManagerListMessages is not implemented"))
-}
-
-func (UnimplementedOmniApiHandler) ListMessages(context.Context, *connect_go.Request[v0alpha.ListMessagesReq], *connect_go.ServerStream[commons.OmniMessage]) error {
-	return connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.ListMessages is not implemented"))
-}
-
 func (UnimplementedOmniApiHandler) SendOmniMessage(context.Context, *connect_go.Request[v0alpha.SendOmniMessageReq]) (*connect_go.Response[commons.Empty], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.SendOmniMessage is not implemented"))
 }
 
 func (UnimplementedOmniApiHandler) ManagerSendOmniMessage(context.Context, *connect_go.Request[v0alpha.SendOmniMessageReq]) (*connect_go.Response[commons.Empty], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.ManagerSendOmniMessage is not implemented"))
-}
-
-func (UnimplementedOmniApiHandler) ManagerListConversations(context.Context, *connect_go.Request[v0alpha.ListConversationsReq]) (*connect_go.Response[v0alpha.ListConversationsRes], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.ManagerListConversations is not implemented"))
-}
-
-func (UnimplementedOmniApiHandler) SuggestResponse(context.Context, *connect_go.Request[v0alpha.SuggestResponseReq]) (*connect_go.Response[v0alpha.SuggestResponseRes], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.SuggestResponse is not implemented"))
 }
 
 func (UnimplementedOmniApiHandler) CreateDisposition(context.Context, *connect_go.Request[v0alpha.CreateDispositionReq]) (*connect_go.Response[v0alpha.CreateDispositionRes], error) {
@@ -1988,6 +1939,22 @@ func (UnimplementedOmniApiHandler) UpdateCustomUnsubscribeLink(context.Context, 
 
 func (UnimplementedOmniApiHandler) DeleteCustomUnsubscribeLink(context.Context, *connect_go.Request[v0alpha.DeleteCustomUnsubscribeLinkReq]) (*connect_go.Response[commons.Empty], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.DeleteCustomUnsubscribeLink is not implemented"))
+}
+
+func (UnimplementedOmniApiHandler) ListCampaigns(context.Context, *connect_go.Request[v0alpha.ListCampaignsReq]) (*connect_go.Response[v0alpha.ListCampaignsRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.ListCampaigns is not implemented"))
+}
+
+func (UnimplementedOmniApiHandler) ManagerListMessages(context.Context, *connect_go.Request[v0alpha.ManagerListMessagesReq], *connect_go.ServerStream[commons.OmniMessage]) error {
+	return connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.ManagerListMessages is not implemented"))
+}
+
+func (UnimplementedOmniApiHandler) ListMessages(context.Context, *connect_go.Request[v0alpha.ListMessagesReq], *connect_go.ServerStream[commons.OmniMessage]) error {
+	return connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.ListMessages is not implemented"))
+}
+
+func (UnimplementedOmniApiHandler) ManagerListConversations(context.Context, *connect_go.Request[v0alpha.ListConversationsReq]) (*connect_go.Response[v0alpha.ListConversationsRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.ManagerListConversations is not implemented"))
 }
 
 func (UnimplementedOmniApiHandler) ListContactLists(context.Context, *connect_go.Request[v0alpha.ListContactListsReq]) (*connect_go.Response[v0alpha.ListContactListsRes], error) {
@@ -2038,10 +2005,6 @@ func (UnimplementedOmniApiHandler) CreateVerifiedEmail(context.Context, *connect
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.CreateVerifiedEmail is not implemented"))
 }
 
-func (UnimplementedOmniApiHandler) SendEmailNotification(context.Context, *connect_go.Request[v0alpha.SendEmailNotificationReq]) (*connect_go.Response[v0alpha.SendEmailNotificationRes], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.SendEmailNotification is not implemented"))
-}
-
 func (UnimplementedOmniApiHandler) DeleteVerifiedEmail(context.Context, *connect_go.Request[v0alpha.DeleteVerifiedEmailReq]) (*connect_go.Response[commons.Empty], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.DeleteVerifiedEmail is not implemented"))
 }
@@ -2064,6 +2027,10 @@ func (UnimplementedOmniApiHandler) UpdateVerifiedEmail(context.Context, *connect
 
 func (UnimplementedOmniApiHandler) GetPendingGoogleXOAuth2Data(context.Context, *connect_go.Request[v0alpha.GetPendingGoogleXOAuth2DataReq]) (*connect_go.Response[v0alpha.GetPendingGoogleXOAuth2DataRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.GetPendingGoogleXOAuth2Data is not implemented"))
+}
+
+func (UnimplementedOmniApiHandler) SendEmailNotification(context.Context, *connect_go.Request[v0alpha.SendEmailNotificationReq]) (*connect_go.Response[v0alpha.SendEmailNotificationRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.SendEmailNotification is not implemented"))
 }
 
 func (UnimplementedOmniApiHandler) SendFeedbackEmail(context.Context, *connect_go.Request[v0alpha.SendFeedbackEmailReq]) (*connect_go.Response[v0alpha.SendFeedbackEmailRes], error) {
@@ -2092,6 +2059,10 @@ func (UnimplementedOmniApiHandler) ListSignatures(context.Context, *connect_go.R
 
 func (UnimplementedOmniApiHandler) UpdateSignature(context.Context, *connect_go.Request[v0alpha.UpdateSignatureReq]) (*connect_go.Response[v0alpha.UpdateSignatureRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.UpdateSignature is not implemented"))
+}
+
+func (UnimplementedOmniApiHandler) SuggestResponse(context.Context, *connect_go.Request[v0alpha.SuggestResponseReq]) (*connect_go.Response[v0alpha.SuggestResponseRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.SuggestResponse is not implemented"))
 }
 
 func (UnimplementedOmniApiHandler) CreateProject(context.Context, *connect_go.Request[v0alpha.CreateProjectReq]) (*connect_go.Response[v0alpha.CreateProjectRes], error) {
