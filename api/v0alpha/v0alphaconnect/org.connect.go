@@ -120,21 +120,21 @@ const (
 	OrgCreateDelegatedUserProcedure = "/api.v0alpha.Org/CreateDelegatedUser"
 	// OrgUpdateUserPasswordProcedure is the fully-qualified name of the Org's UpdateUserPassword RPC.
 	OrgUpdateUserPasswordProcedure = "/api.v0alpha.Org/UpdateUserPassword"
-	// OrgUpdateUserPasswordByUserIdProcedure is the fully-qualified name of the Org's
-	// UpdateUserPasswordByUserId RPC.
-	OrgUpdateUserPasswordByUserIdProcedure = "/api.v0alpha.Org/UpdateUserPasswordByUserId"
+	// OrgUpdateMyUserPasswordProcedure is the fully-qualified name of the Org's UpdateMyUserPassword
+	// RPC.
+	OrgUpdateMyUserPasswordProcedure = "/api.v0alpha.Org/UpdateMyUserPassword"
 	// OrgUpdateUserPasswordByOrgIdProcedure is the fully-qualified name of the Org's
 	// UpdateUserPasswordByOrgId RPC.
 	OrgUpdateUserPasswordByOrgIdProcedure = "/api.v0alpha.Org/UpdateUserPasswordByOrgId"
 	// OrgResetUserRequirePasswordResetProcedure is the fully-qualified name of the Org's
 	// ResetUserRequirePasswordReset RPC.
 	OrgResetUserRequirePasswordResetProcedure = "/api.v0alpha.Org/ResetUserRequirePasswordReset"
-	// OrgGetMyUserPasswordResetLinkProcedure is the fully-qualified name of the Org's
-	// GetMyUserPasswordResetLink RPC.
-	OrgGetMyUserPasswordResetLinkProcedure = "/api.v0alpha.Org/GetMyUserPasswordResetLink"
 	// OrgGetUserPasswordResetLinkProcedure is the fully-qualified name of the Org's
 	// GetUserPasswordResetLink RPC.
 	OrgGetUserPasswordResetLinkProcedure = "/api.v0alpha.Org/GetUserPasswordResetLink"
+	// OrgGetMyUserPasswordResetLinkProcedure is the fully-qualified name of the Org's
+	// GetMyUserPasswordResetLink RPC.
+	OrgGetMyUserPasswordResetLinkProcedure = "/api.v0alpha.Org/GetMyUserPasswordResetLink"
 	// OrgGetUserPasswordResetLinkByOrgIdProcedure is the fully-qualified name of the Org's
 	// GetUserPasswordResetLinkByOrgId RPC.
 	OrgGetUserPasswordResetLinkByOrgIdProcedure = "/api.v0alpha.Org/GetUserPasswordResetLinkByOrgId"
@@ -674,14 +674,14 @@ type OrgClient interface {
 	CreateUserByOrgId(context.Context, *connect_go.Request[v0alpha.CreateUserByOrgIdRequest]) (*connect_go.Response[v0alpha.CreateUserByOrgIdResponse], error)
 	// Creates a delegated user. This should only be called by an auth0 action.
 	CreateDelegatedUser(context.Context, *connect_go.Request[v0alpha.CreateDelegatedUserRequest]) (*connect_go.Response[v0alpha.CreateDelegatedUserResponse], error)
-	// UpdateUserPassword updates the current user's password to the
-	// password given on the request message.
-	// Required Permissions: USER_EDIT_PASSWORD (Update your own password)
-	UpdateUserPassword(context.Context, *connect_go.Request[v0alpha.UpdateUserPasswordRequest]) (*connect_go.Response[v0alpha.UpdateUserPasswordResponse], error)
 	// UpdateUserPassword updates a user's password (in the same org as the current user)
 	// to the password given on the request message.
 	// Required Permissions: USER_EDIT (Update another user's password in the same org)
-	UpdateUserPasswordByUserId(context.Context, *connect_go.Request[v0alpha.UpdateUserPasswordByUserIdRequest]) (*connect_go.Response[v0alpha.UpdateUserPasswordByUserIdResponse], error)
+	UpdateUserPassword(context.Context, *connect_go.Request[v0alpha.UpdateUserPasswordRequest]) (*connect_go.Response[v0alpha.UpdateUserPasswordResponse], error)
+	// UpdateMyUserPassword updates the current user's password to the
+	// password given on the request message.
+	// Required Permissions: USER_EDIT_PASSWORD (Update your own password)
+	UpdateMyUserPassword(context.Context, *connect_go.Request[v0alpha.UpdateMyUserPasswordRequest]) (*connect_go.Response[v0alpha.UpdateMyUserPasswordResponse], error)
 	// UpdateUserPasswordByOrgId updates a specific user's password
 	// from a specific org to the password given on the request message.
 	// Required Permissions: CUSTOMER_SUPPORT (Update a user's password from an org)
@@ -689,15 +689,15 @@ type OrgClient interface {
 	// updates the users PasswordResetRequired field to false.
 	// this should only be called by an auth0 action.
 	ResetUserRequirePasswordReset(context.Context, *connect_go.Request[v0alpha.ResetUserRequirePasswordResetRequest]) (*connect_go.Response[v0alpha.ResetUserRequirePasswordResetResponse], error)
-	// GetMyUserPasswordResetLink generate a password reset link for the current user.
-	// Required Permissions: USER_EDIT_PASSWORD
-	GetMyUserPasswordResetLink(context.Context, *connect_go.Request[v0alpha.GetMyUserPasswordResetLinkRequest]) (*connect_go.Response[v0alpha.GetMyUserPasswordResetLinkResponse], error)
 	// GetUserPasswordResetLink generates a password reset link for a user
 	// in the same org as the current user.
 	// Required Permissions: USER_EDIT
 	//
 	//	USER_EDIT if user_id given on the request.
 	GetUserPasswordResetLink(context.Context, *connect_go.Request[v0alpha.GetUserPasswordResetLinkRequest]) (*connect_go.Response[v0alpha.GetUserPasswordResetLinkResponse], error)
+	// GetMyUserPasswordResetLink generate a password reset link for the current user.
+	// Required Permissions: USER_EDIT_PASSWORD
+	GetMyUserPasswordResetLink(context.Context, *connect_go.Request[v0alpha.GetMyUserPasswordResetLinkRequest]) (*connect_go.Response[v0alpha.GetMyUserPasswordResetLinkResponse], error)
 	// GetUserPasswordResetLinkByOrgId generates a password reset link
 	// for a specific user in a specific org.
 	// Required Permissions: CUSTOMER_SUPPORT
@@ -1561,9 +1561,9 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgUpdateUserPasswordProcedure,
 			opts...,
 		),
-		updateUserPasswordByUserId: connect_go.NewClient[v0alpha.UpdateUserPasswordByUserIdRequest, v0alpha.UpdateUserPasswordByUserIdResponse](
+		updateMyUserPassword: connect_go.NewClient[v0alpha.UpdateMyUserPasswordRequest, v0alpha.UpdateMyUserPasswordResponse](
 			httpClient,
-			baseURL+OrgUpdateUserPasswordByUserIdProcedure,
+			baseURL+OrgUpdateMyUserPasswordProcedure,
 			opts...,
 		),
 		updateUserPasswordByOrgId: connect_go.NewClient[v0alpha.UpdateUserPasswordByOrgIdRequest, v0alpha.UpdateUserPasswordByOrgIdResponse](
@@ -1576,14 +1576,14 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgResetUserRequirePasswordResetProcedure,
 			opts...,
 		),
-		getMyUserPasswordResetLink: connect_go.NewClient[v0alpha.GetMyUserPasswordResetLinkRequest, v0alpha.GetMyUserPasswordResetLinkResponse](
-			httpClient,
-			baseURL+OrgGetMyUserPasswordResetLinkProcedure,
-			opts...,
-		),
 		getUserPasswordResetLink: connect_go.NewClient[v0alpha.GetUserPasswordResetLinkRequest, v0alpha.GetUserPasswordResetLinkResponse](
 			httpClient,
 			baseURL+OrgGetUserPasswordResetLinkProcedure,
+			opts...,
+		),
+		getMyUserPasswordResetLink: connect_go.NewClient[v0alpha.GetMyUserPasswordResetLinkRequest, v0alpha.GetMyUserPasswordResetLinkResponse](
+			httpClient,
+			baseURL+OrgGetMyUserPasswordResetLinkProcedure,
 			opts...,
 		),
 		getUserPasswordResetLinkByOrgId: connect_go.NewClient[v0alpha.GetUserPasswordResetLinkByOrgIdRequest, v0alpha.GetUserPasswordResetLinkByOrgIdResponse](
@@ -2421,11 +2421,11 @@ type orgClient struct {
 	createUserByOrgId                             *connect_go.Client[v0alpha.CreateUserByOrgIdRequest, v0alpha.CreateUserByOrgIdResponse]
 	createDelegatedUser                           *connect_go.Client[v0alpha.CreateDelegatedUserRequest, v0alpha.CreateDelegatedUserResponse]
 	updateUserPassword                            *connect_go.Client[v0alpha.UpdateUserPasswordRequest, v0alpha.UpdateUserPasswordResponse]
-	updateUserPasswordByUserId                    *connect_go.Client[v0alpha.UpdateUserPasswordByUserIdRequest, v0alpha.UpdateUserPasswordByUserIdResponse]
+	updateMyUserPassword                          *connect_go.Client[v0alpha.UpdateMyUserPasswordRequest, v0alpha.UpdateMyUserPasswordResponse]
 	updateUserPasswordByOrgId                     *connect_go.Client[v0alpha.UpdateUserPasswordByOrgIdRequest, v0alpha.UpdateUserPasswordByOrgIdResponse]
 	resetUserRequirePasswordReset                 *connect_go.Client[v0alpha.ResetUserRequirePasswordResetRequest, v0alpha.ResetUserRequirePasswordResetResponse]
-	getMyUserPasswordResetLink                    *connect_go.Client[v0alpha.GetMyUserPasswordResetLinkRequest, v0alpha.GetMyUserPasswordResetLinkResponse]
 	getUserPasswordResetLink                      *connect_go.Client[v0alpha.GetUserPasswordResetLinkRequest, v0alpha.GetUserPasswordResetLinkResponse]
+	getMyUserPasswordResetLink                    *connect_go.Client[v0alpha.GetMyUserPasswordResetLinkRequest, v0alpha.GetMyUserPasswordResetLinkResponse]
 	getUserPasswordResetLinkByOrgId               *connect_go.Client[v0alpha.GetUserPasswordResetLinkByOrgIdRequest, v0alpha.GetUserPasswordResetLinkByOrgIdResponse]
 	getUserEmailVerified                          *connect_go.Client[v0alpha.GetUserEmailVerifiedRequest, v0alpha.GetUserEmailVerifiedResponse]
 	getUserEmailVerifiedByOrgId                   *connect_go.Client[v0alpha.GetUserEmailVerifiedByOrgIdRequest, v0alpha.GetUserEmailVerifiedByOrgIdResponse]
@@ -2762,9 +2762,9 @@ func (c *orgClient) UpdateUserPassword(ctx context.Context, req *connect_go.Requ
 	return c.updateUserPassword.CallUnary(ctx, req)
 }
 
-// UpdateUserPasswordByUserId calls api.v0alpha.Org.UpdateUserPasswordByUserId.
-func (c *orgClient) UpdateUserPasswordByUserId(ctx context.Context, req *connect_go.Request[v0alpha.UpdateUserPasswordByUserIdRequest]) (*connect_go.Response[v0alpha.UpdateUserPasswordByUserIdResponse], error) {
-	return c.updateUserPasswordByUserId.CallUnary(ctx, req)
+// UpdateMyUserPassword calls api.v0alpha.Org.UpdateMyUserPassword.
+func (c *orgClient) UpdateMyUserPassword(ctx context.Context, req *connect_go.Request[v0alpha.UpdateMyUserPasswordRequest]) (*connect_go.Response[v0alpha.UpdateMyUserPasswordResponse], error) {
+	return c.updateMyUserPassword.CallUnary(ctx, req)
 }
 
 // UpdateUserPasswordByOrgId calls api.v0alpha.Org.UpdateUserPasswordByOrgId.
@@ -2777,14 +2777,14 @@ func (c *orgClient) ResetUserRequirePasswordReset(ctx context.Context, req *conn
 	return c.resetUserRequirePasswordReset.CallUnary(ctx, req)
 }
 
-// GetMyUserPasswordResetLink calls api.v0alpha.Org.GetMyUserPasswordResetLink.
-func (c *orgClient) GetMyUserPasswordResetLink(ctx context.Context, req *connect_go.Request[v0alpha.GetMyUserPasswordResetLinkRequest]) (*connect_go.Response[v0alpha.GetMyUserPasswordResetLinkResponse], error) {
-	return c.getMyUserPasswordResetLink.CallUnary(ctx, req)
-}
-
 // GetUserPasswordResetLink calls api.v0alpha.Org.GetUserPasswordResetLink.
 func (c *orgClient) GetUserPasswordResetLink(ctx context.Context, req *connect_go.Request[v0alpha.GetUserPasswordResetLinkRequest]) (*connect_go.Response[v0alpha.GetUserPasswordResetLinkResponse], error) {
 	return c.getUserPasswordResetLink.CallUnary(ctx, req)
+}
+
+// GetMyUserPasswordResetLink calls api.v0alpha.Org.GetMyUserPasswordResetLink.
+func (c *orgClient) GetMyUserPasswordResetLink(ctx context.Context, req *connect_go.Request[v0alpha.GetMyUserPasswordResetLinkRequest]) (*connect_go.Response[v0alpha.GetMyUserPasswordResetLinkResponse], error) {
+	return c.getMyUserPasswordResetLink.CallUnary(ctx, req)
 }
 
 // GetUserPasswordResetLinkByOrgId calls api.v0alpha.Org.GetUserPasswordResetLinkByOrgId.
@@ -3677,14 +3677,14 @@ type OrgHandler interface {
 	CreateUserByOrgId(context.Context, *connect_go.Request[v0alpha.CreateUserByOrgIdRequest]) (*connect_go.Response[v0alpha.CreateUserByOrgIdResponse], error)
 	// Creates a delegated user. This should only be called by an auth0 action.
 	CreateDelegatedUser(context.Context, *connect_go.Request[v0alpha.CreateDelegatedUserRequest]) (*connect_go.Response[v0alpha.CreateDelegatedUserResponse], error)
-	// UpdateUserPassword updates the current user's password to the
-	// password given on the request message.
-	// Required Permissions: USER_EDIT_PASSWORD (Update your own password)
-	UpdateUserPassword(context.Context, *connect_go.Request[v0alpha.UpdateUserPasswordRequest]) (*connect_go.Response[v0alpha.UpdateUserPasswordResponse], error)
 	// UpdateUserPassword updates a user's password (in the same org as the current user)
 	// to the password given on the request message.
 	// Required Permissions: USER_EDIT (Update another user's password in the same org)
-	UpdateUserPasswordByUserId(context.Context, *connect_go.Request[v0alpha.UpdateUserPasswordByUserIdRequest]) (*connect_go.Response[v0alpha.UpdateUserPasswordByUserIdResponse], error)
+	UpdateUserPassword(context.Context, *connect_go.Request[v0alpha.UpdateUserPasswordRequest]) (*connect_go.Response[v0alpha.UpdateUserPasswordResponse], error)
+	// UpdateMyUserPassword updates the current user's password to the
+	// password given on the request message.
+	// Required Permissions: USER_EDIT_PASSWORD (Update your own password)
+	UpdateMyUserPassword(context.Context, *connect_go.Request[v0alpha.UpdateMyUserPasswordRequest]) (*connect_go.Response[v0alpha.UpdateMyUserPasswordResponse], error)
 	// UpdateUserPasswordByOrgId updates a specific user's password
 	// from a specific org to the password given on the request message.
 	// Required Permissions: CUSTOMER_SUPPORT (Update a user's password from an org)
@@ -3692,15 +3692,15 @@ type OrgHandler interface {
 	// updates the users PasswordResetRequired field to false.
 	// this should only be called by an auth0 action.
 	ResetUserRequirePasswordReset(context.Context, *connect_go.Request[v0alpha.ResetUserRequirePasswordResetRequest]) (*connect_go.Response[v0alpha.ResetUserRequirePasswordResetResponse], error)
-	// GetMyUserPasswordResetLink generate a password reset link for the current user.
-	// Required Permissions: USER_EDIT_PASSWORD
-	GetMyUserPasswordResetLink(context.Context, *connect_go.Request[v0alpha.GetMyUserPasswordResetLinkRequest]) (*connect_go.Response[v0alpha.GetMyUserPasswordResetLinkResponse], error)
 	// GetUserPasswordResetLink generates a password reset link for a user
 	// in the same org as the current user.
 	// Required Permissions: USER_EDIT
 	//
 	//	USER_EDIT if user_id given on the request.
 	GetUserPasswordResetLink(context.Context, *connect_go.Request[v0alpha.GetUserPasswordResetLinkRequest]) (*connect_go.Response[v0alpha.GetUserPasswordResetLinkResponse], error)
+	// GetMyUserPasswordResetLink generate a password reset link for the current user.
+	// Required Permissions: USER_EDIT_PASSWORD
+	GetMyUserPasswordResetLink(context.Context, *connect_go.Request[v0alpha.GetMyUserPasswordResetLinkRequest]) (*connect_go.Response[v0alpha.GetMyUserPasswordResetLinkResponse], error)
 	// GetUserPasswordResetLinkByOrgId generates a password reset link
 	// for a specific user in a specific org.
 	// Required Permissions: CUSTOMER_SUPPORT
@@ -4561,9 +4561,9 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.UpdateUserPassword,
 		opts...,
 	))
-	mux.Handle(OrgUpdateUserPasswordByUserIdProcedure, connect_go.NewUnaryHandler(
-		OrgUpdateUserPasswordByUserIdProcedure,
-		svc.UpdateUserPasswordByUserId,
+	mux.Handle(OrgUpdateMyUserPasswordProcedure, connect_go.NewUnaryHandler(
+		OrgUpdateMyUserPasswordProcedure,
+		svc.UpdateMyUserPassword,
 		opts...,
 	))
 	mux.Handle(OrgUpdateUserPasswordByOrgIdProcedure, connect_go.NewUnaryHandler(
@@ -4576,14 +4576,14 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.ResetUserRequirePasswordReset,
 		opts...,
 	))
-	mux.Handle(OrgGetMyUserPasswordResetLinkProcedure, connect_go.NewUnaryHandler(
-		OrgGetMyUserPasswordResetLinkProcedure,
-		svc.GetMyUserPasswordResetLink,
-		opts...,
-	))
 	mux.Handle(OrgGetUserPasswordResetLinkProcedure, connect_go.NewUnaryHandler(
 		OrgGetUserPasswordResetLinkProcedure,
 		svc.GetUserPasswordResetLink,
+		opts...,
+	))
+	mux.Handle(OrgGetMyUserPasswordResetLinkProcedure, connect_go.NewUnaryHandler(
+		OrgGetMyUserPasswordResetLinkProcedure,
+		svc.GetMyUserPasswordResetLink,
 		opts...,
 	))
 	mux.Handle(OrgGetUserPasswordResetLinkByOrgIdProcedure, connect_go.NewUnaryHandler(
@@ -5527,8 +5527,8 @@ func (UnimplementedOrgHandler) UpdateUserPassword(context.Context, *connect_go.R
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Org.UpdateUserPassword is not implemented"))
 }
 
-func (UnimplementedOrgHandler) UpdateUserPasswordByUserId(context.Context, *connect_go.Request[v0alpha.UpdateUserPasswordByUserIdRequest]) (*connect_go.Response[v0alpha.UpdateUserPasswordByUserIdResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Org.UpdateUserPasswordByUserId is not implemented"))
+func (UnimplementedOrgHandler) UpdateMyUserPassword(context.Context, *connect_go.Request[v0alpha.UpdateMyUserPasswordRequest]) (*connect_go.Response[v0alpha.UpdateMyUserPasswordResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Org.UpdateMyUserPassword is not implemented"))
 }
 
 func (UnimplementedOrgHandler) UpdateUserPasswordByOrgId(context.Context, *connect_go.Request[v0alpha.UpdateUserPasswordByOrgIdRequest]) (*connect_go.Response[v0alpha.UpdateUserPasswordByOrgIdResponse], error) {
@@ -5539,12 +5539,12 @@ func (UnimplementedOrgHandler) ResetUserRequirePasswordReset(context.Context, *c
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Org.ResetUserRequirePasswordReset is not implemented"))
 }
 
-func (UnimplementedOrgHandler) GetMyUserPasswordResetLink(context.Context, *connect_go.Request[v0alpha.GetMyUserPasswordResetLinkRequest]) (*connect_go.Response[v0alpha.GetMyUserPasswordResetLinkResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Org.GetMyUserPasswordResetLink is not implemented"))
-}
-
 func (UnimplementedOrgHandler) GetUserPasswordResetLink(context.Context, *connect_go.Request[v0alpha.GetUserPasswordResetLinkRequest]) (*connect_go.Response[v0alpha.GetUserPasswordResetLinkResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Org.GetUserPasswordResetLink is not implemented"))
+}
+
+func (UnimplementedOrgHandler) GetMyUserPasswordResetLink(context.Context, *connect_go.Request[v0alpha.GetMyUserPasswordResetLinkRequest]) (*connect_go.Response[v0alpha.GetMyUserPasswordResetLinkResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Org.GetMyUserPasswordResetLink is not implemented"))
 }
 
 func (UnimplementedOrgHandler) GetUserPasswordResetLinkByOrgId(context.Context, *connect_go.Request[v0alpha.GetUserPasswordResetLinkByOrgIdRequest]) (*connect_go.Response[v0alpha.GetUserPasswordResetLinkByOrgIdResponse], error) {

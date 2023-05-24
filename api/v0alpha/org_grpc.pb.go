@@ -54,11 +54,11 @@ const (
 	Org_CreateUserByOrgId_FullMethodName                             = "/api.v0alpha.Org/CreateUserByOrgId"
 	Org_CreateDelegatedUser_FullMethodName                           = "/api.v0alpha.Org/CreateDelegatedUser"
 	Org_UpdateUserPassword_FullMethodName                            = "/api.v0alpha.Org/UpdateUserPassword"
-	Org_UpdateUserPasswordByUserId_FullMethodName                    = "/api.v0alpha.Org/UpdateUserPasswordByUserId"
+	Org_UpdateMyUserPassword_FullMethodName                          = "/api.v0alpha.Org/UpdateMyUserPassword"
 	Org_UpdateUserPasswordByOrgId_FullMethodName                     = "/api.v0alpha.Org/UpdateUserPasswordByOrgId"
 	Org_ResetUserRequirePasswordReset_FullMethodName                 = "/api.v0alpha.Org/ResetUserRequirePasswordReset"
-	Org_GetMyUserPasswordResetLink_FullMethodName                    = "/api.v0alpha.Org/GetMyUserPasswordResetLink"
 	Org_GetUserPasswordResetLink_FullMethodName                      = "/api.v0alpha.Org/GetUserPasswordResetLink"
+	Org_GetMyUserPasswordResetLink_FullMethodName                    = "/api.v0alpha.Org/GetMyUserPasswordResetLink"
 	Org_GetUserPasswordResetLinkByOrgId_FullMethodName               = "/api.v0alpha.Org/GetUserPasswordResetLinkByOrgId"
 	Org_GetUserEmailVerified_FullMethodName                          = "/api.v0alpha.Org/GetUserEmailVerified"
 	Org_GetUserEmailVerifiedByOrgId_FullMethodName                   = "/api.v0alpha.Org/GetUserEmailVerifiedByOrgId"
@@ -312,14 +312,14 @@ type OrgClient interface {
 	CreateUserByOrgId(ctx context.Context, in *CreateUserByOrgIdRequest, opts ...grpc.CallOption) (*CreateUserByOrgIdResponse, error)
 	// Creates a delegated user. This should only be called by an auth0 action.
 	CreateDelegatedUser(ctx context.Context, in *CreateDelegatedUserRequest, opts ...grpc.CallOption) (*CreateDelegatedUserResponse, error)
-	// UpdateUserPassword updates the current user's password to the
-	// password given on the request message.
-	// Required Permissions: USER_EDIT_PASSWORD (Update your own password)
-	UpdateUserPassword(ctx context.Context, in *UpdateUserPasswordRequest, opts ...grpc.CallOption) (*UpdateUserPasswordResponse, error)
 	// UpdateUserPassword updates a user's password (in the same org as the current user)
 	// to the password given on the request message.
 	// Required Permissions: USER_EDIT (Update another user's password in the same org)
-	UpdateUserPasswordByUserId(ctx context.Context, in *UpdateUserPasswordByUserIdRequest, opts ...grpc.CallOption) (*UpdateUserPasswordByUserIdResponse, error)
+	UpdateUserPassword(ctx context.Context, in *UpdateUserPasswordRequest, opts ...grpc.CallOption) (*UpdateUserPasswordResponse, error)
+	// UpdateMyUserPassword updates the current user's password to the
+	// password given on the request message.
+	// Required Permissions: USER_EDIT_PASSWORD (Update your own password)
+	UpdateMyUserPassword(ctx context.Context, in *UpdateMyUserPasswordRequest, opts ...grpc.CallOption) (*UpdateMyUserPasswordResponse, error)
 	// UpdateUserPasswordByOrgId updates a specific user's password
 	// from a specific org to the password given on the request message.
 	// Required Permissions: CUSTOMER_SUPPORT (Update a user's password from an org)
@@ -327,15 +327,15 @@ type OrgClient interface {
 	// updates the users PasswordResetRequired field to false.
 	// this should only be called by an auth0 action.
 	ResetUserRequirePasswordReset(ctx context.Context, in *ResetUserRequirePasswordResetRequest, opts ...grpc.CallOption) (*ResetUserRequirePasswordResetResponse, error)
-	// GetMyUserPasswordResetLink generate a password reset link for the current user.
-	// Required Permissions: USER_EDIT_PASSWORD
-	GetMyUserPasswordResetLink(ctx context.Context, in *GetMyUserPasswordResetLinkRequest, opts ...grpc.CallOption) (*GetMyUserPasswordResetLinkResponse, error)
 	// GetUserPasswordResetLink generates a password reset link for a user
 	// in the same org as the current user.
 	// Required Permissions: USER_EDIT
 	//
 	//	USER_EDIT if user_id given on the request.
 	GetUserPasswordResetLink(ctx context.Context, in *GetUserPasswordResetLinkRequest, opts ...grpc.CallOption) (*GetUserPasswordResetLinkResponse, error)
+	// GetMyUserPasswordResetLink generate a password reset link for the current user.
+	// Required Permissions: USER_EDIT_PASSWORD
+	GetMyUserPasswordResetLink(ctx context.Context, in *GetMyUserPasswordResetLinkRequest, opts ...grpc.CallOption) (*GetMyUserPasswordResetLinkResponse, error)
 	// GetUserPasswordResetLinkByOrgId generates a password reset link
 	// for a specific user in a specific org.
 	// Required Permissions: CUSTOMER_SUPPORT
@@ -1383,9 +1383,9 @@ func (c *orgClient) UpdateUserPassword(ctx context.Context, in *UpdateUserPasswo
 	return out, nil
 }
 
-func (c *orgClient) UpdateUserPasswordByUserId(ctx context.Context, in *UpdateUserPasswordByUserIdRequest, opts ...grpc.CallOption) (*UpdateUserPasswordByUserIdResponse, error) {
-	out := new(UpdateUserPasswordByUserIdResponse)
-	err := c.cc.Invoke(ctx, Org_UpdateUserPasswordByUserId_FullMethodName, in, out, opts...)
+func (c *orgClient) UpdateMyUserPassword(ctx context.Context, in *UpdateMyUserPasswordRequest, opts ...grpc.CallOption) (*UpdateMyUserPasswordResponse, error) {
+	out := new(UpdateMyUserPasswordResponse)
+	err := c.cc.Invoke(ctx, Org_UpdateMyUserPassword_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1410,18 +1410,18 @@ func (c *orgClient) ResetUserRequirePasswordReset(ctx context.Context, in *Reset
 	return out, nil
 }
 
-func (c *orgClient) GetMyUserPasswordResetLink(ctx context.Context, in *GetMyUserPasswordResetLinkRequest, opts ...grpc.CallOption) (*GetMyUserPasswordResetLinkResponse, error) {
-	out := new(GetMyUserPasswordResetLinkResponse)
-	err := c.cc.Invoke(ctx, Org_GetMyUserPasswordResetLink_FullMethodName, in, out, opts...)
+func (c *orgClient) GetUserPasswordResetLink(ctx context.Context, in *GetUserPasswordResetLinkRequest, opts ...grpc.CallOption) (*GetUserPasswordResetLinkResponse, error) {
+	out := new(GetUserPasswordResetLinkResponse)
+	err := c.cc.Invoke(ctx, Org_GetUserPasswordResetLink_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *orgClient) GetUserPasswordResetLink(ctx context.Context, in *GetUserPasswordResetLinkRequest, opts ...grpc.CallOption) (*GetUserPasswordResetLinkResponse, error) {
-	out := new(GetUserPasswordResetLinkResponse)
-	err := c.cc.Invoke(ctx, Org_GetUserPasswordResetLink_FullMethodName, in, out, opts...)
+func (c *orgClient) GetMyUserPasswordResetLink(ctx context.Context, in *GetMyUserPasswordResetLinkRequest, opts ...grpc.CallOption) (*GetMyUserPasswordResetLinkResponse, error) {
+	out := new(GetMyUserPasswordResetLinkResponse)
+	err := c.cc.Invoke(ctx, Org_GetMyUserPasswordResetLink_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -2951,14 +2951,14 @@ type OrgServer interface {
 	CreateUserByOrgId(context.Context, *CreateUserByOrgIdRequest) (*CreateUserByOrgIdResponse, error)
 	// Creates a delegated user. This should only be called by an auth0 action.
 	CreateDelegatedUser(context.Context, *CreateDelegatedUserRequest) (*CreateDelegatedUserResponse, error)
-	// UpdateUserPassword updates the current user's password to the
-	// password given on the request message.
-	// Required Permissions: USER_EDIT_PASSWORD (Update your own password)
-	UpdateUserPassword(context.Context, *UpdateUserPasswordRequest) (*UpdateUserPasswordResponse, error)
 	// UpdateUserPassword updates a user's password (in the same org as the current user)
 	// to the password given on the request message.
 	// Required Permissions: USER_EDIT (Update another user's password in the same org)
-	UpdateUserPasswordByUserId(context.Context, *UpdateUserPasswordByUserIdRequest) (*UpdateUserPasswordByUserIdResponse, error)
+	UpdateUserPassword(context.Context, *UpdateUserPasswordRequest) (*UpdateUserPasswordResponse, error)
+	// UpdateMyUserPassword updates the current user's password to the
+	// password given on the request message.
+	// Required Permissions: USER_EDIT_PASSWORD (Update your own password)
+	UpdateMyUserPassword(context.Context, *UpdateMyUserPasswordRequest) (*UpdateMyUserPasswordResponse, error)
 	// UpdateUserPasswordByOrgId updates a specific user's password
 	// from a specific org to the password given on the request message.
 	// Required Permissions: CUSTOMER_SUPPORT (Update a user's password from an org)
@@ -2966,15 +2966,15 @@ type OrgServer interface {
 	// updates the users PasswordResetRequired field to false.
 	// this should only be called by an auth0 action.
 	ResetUserRequirePasswordReset(context.Context, *ResetUserRequirePasswordResetRequest) (*ResetUserRequirePasswordResetResponse, error)
-	// GetMyUserPasswordResetLink generate a password reset link for the current user.
-	// Required Permissions: USER_EDIT_PASSWORD
-	GetMyUserPasswordResetLink(context.Context, *GetMyUserPasswordResetLinkRequest) (*GetMyUserPasswordResetLinkResponse, error)
 	// GetUserPasswordResetLink generates a password reset link for a user
 	// in the same org as the current user.
 	// Required Permissions: USER_EDIT
 	//
 	//	USER_EDIT if user_id given on the request.
 	GetUserPasswordResetLink(context.Context, *GetUserPasswordResetLinkRequest) (*GetUserPasswordResetLinkResponse, error)
+	// GetMyUserPasswordResetLink generate a password reset link for the current user.
+	// Required Permissions: USER_EDIT_PASSWORD
+	GetMyUserPasswordResetLink(context.Context, *GetMyUserPasswordResetLinkRequest) (*GetMyUserPasswordResetLinkResponse, error)
 	// GetUserPasswordResetLinkByOrgId generates a password reset link
 	// for a specific user in a specific org.
 	// Required Permissions: CUSTOMER_SUPPORT
@@ -3763,8 +3763,8 @@ func (UnimplementedOrgServer) CreateDelegatedUser(context.Context, *CreateDelega
 func (UnimplementedOrgServer) UpdateUserPassword(context.Context, *UpdateUserPasswordRequest) (*UpdateUserPasswordResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserPassword not implemented")
 }
-func (UnimplementedOrgServer) UpdateUserPasswordByUserId(context.Context, *UpdateUserPasswordByUserIdRequest) (*UpdateUserPasswordByUserIdResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserPasswordByUserId not implemented")
+func (UnimplementedOrgServer) UpdateMyUserPassword(context.Context, *UpdateMyUserPasswordRequest) (*UpdateMyUserPasswordResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateMyUserPassword not implemented")
 }
 func (UnimplementedOrgServer) UpdateUserPasswordByOrgId(context.Context, *UpdateUserPasswordByOrgIdRequest) (*UpdateUserPasswordByOrgIdResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserPasswordByOrgId not implemented")
@@ -3772,11 +3772,11 @@ func (UnimplementedOrgServer) UpdateUserPasswordByOrgId(context.Context, *Update
 func (UnimplementedOrgServer) ResetUserRequirePasswordReset(context.Context, *ResetUserRequirePasswordResetRequest) (*ResetUserRequirePasswordResetResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ResetUserRequirePasswordReset not implemented")
 }
-func (UnimplementedOrgServer) GetMyUserPasswordResetLink(context.Context, *GetMyUserPasswordResetLinkRequest) (*GetMyUserPasswordResetLinkResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetMyUserPasswordResetLink not implemented")
-}
 func (UnimplementedOrgServer) GetUserPasswordResetLink(context.Context, *GetUserPasswordResetLinkRequest) (*GetUserPasswordResetLinkResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserPasswordResetLink not implemented")
+}
+func (UnimplementedOrgServer) GetMyUserPasswordResetLink(context.Context, *GetMyUserPasswordResetLinkRequest) (*GetMyUserPasswordResetLinkResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMyUserPasswordResetLink not implemented")
 }
 func (UnimplementedOrgServer) GetUserPasswordResetLinkByOrgId(context.Context, *GetUserPasswordResetLinkByOrgIdRequest) (*GetUserPasswordResetLinkByOrgIdResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserPasswordResetLinkByOrgId not implemented")
@@ -4904,20 +4904,20 @@ func _Org_UpdateUserPassword_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Org_UpdateUserPasswordByUserId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateUserPasswordByUserIdRequest)
+func _Org_UpdateMyUserPassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateMyUserPasswordRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(OrgServer).UpdateUserPasswordByUserId(ctx, in)
+		return srv.(OrgServer).UpdateMyUserPassword(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Org_UpdateUserPasswordByUserId_FullMethodName,
+		FullMethod: Org_UpdateMyUserPassword_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrgServer).UpdateUserPasswordByUserId(ctx, req.(*UpdateUserPasswordByUserIdRequest))
+		return srv.(OrgServer).UpdateMyUserPassword(ctx, req.(*UpdateMyUserPasswordRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -4958,24 +4958,6 @@ func _Org_ResetUserRequirePasswordReset_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Org_GetMyUserPasswordResetLink_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetMyUserPasswordResetLinkRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(OrgServer).GetMyUserPasswordResetLink(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Org_GetMyUserPasswordResetLink_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrgServer).GetMyUserPasswordResetLink(ctx, req.(*GetMyUserPasswordResetLinkRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _Org_GetUserPasswordResetLink_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetUserPasswordResetLinkRequest)
 	if err := dec(in); err != nil {
@@ -4990,6 +4972,24 @@ func _Org_GetUserPasswordResetLink_Handler(srv interface{}, ctx context.Context,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrgServer).GetUserPasswordResetLink(ctx, req.(*GetUserPasswordResetLinkRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_GetMyUserPasswordResetLink_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetMyUserPasswordResetLinkRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).GetMyUserPasswordResetLink(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_GetMyUserPasswordResetLink_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).GetMyUserPasswordResetLink(ctx, req.(*GetMyUserPasswordResetLinkRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -7996,8 +7996,8 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Org_UpdateUserPassword_Handler,
 		},
 		{
-			MethodName: "UpdateUserPasswordByUserId",
-			Handler:    _Org_UpdateUserPasswordByUserId_Handler,
+			MethodName: "UpdateMyUserPassword",
+			Handler:    _Org_UpdateMyUserPassword_Handler,
 		},
 		{
 			MethodName: "UpdateUserPasswordByOrgId",
@@ -8008,12 +8008,12 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Org_ResetUserRequirePasswordReset_Handler,
 		},
 		{
-			MethodName: "GetMyUserPasswordResetLink",
-			Handler:    _Org_GetMyUserPasswordResetLink_Handler,
-		},
-		{
 			MethodName: "GetUserPasswordResetLink",
 			Handler:    _Org_GetUserPasswordResetLink_Handler,
+		},
+		{
+			MethodName: "GetMyUserPasswordResetLink",
+			Handler:    _Org_GetMyUserPasswordResetLink_Handler,
 		},
 		{
 			MethodName: "GetUserPasswordResetLinkByOrgId",
