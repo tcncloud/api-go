@@ -553,6 +553,9 @@ const (
 	OrgGetUserSubscriptionProcedure = "/api.v0alpha.Org/GetUserSubscription"
 	// OrgAddUserSubscriptionProcedure is the fully-qualified name of the Org's AddUserSubscription RPC.
 	OrgAddUserSubscriptionProcedure = "/api.v0alpha.Org/AddUserSubscription"
+	// OrgAddMyUserSubscriptionProcedure is the fully-qualified name of the Org's AddMyUserSubscription
+	// RPC.
+	OrgAddMyUserSubscriptionProcedure = "/api.v0alpha.Org/AddMyUserSubscription"
 	// OrgRemoveUserSubscriptionProcedure is the fully-qualified name of the Org's
 	// RemoveUserSubscription RPC.
 	OrgRemoveUserSubscriptionProcedure = "/api.v0alpha.Org/RemoveUserSubscription"
@@ -1317,6 +1320,8 @@ type OrgClient interface {
 	GetUserSubscription(context.Context, *connect_go.Request[v0alpha.GetUserSubscriptionRequest]) (*connect_go.Response[v0alpha.GetUserSubscriptionResponse], error)
 	// Adds a user subscription to user's list of subscriptions
 	AddUserSubscription(context.Context, *connect_go.Request[v0alpha.AddUserSubscriptionRequest]) (*connect_go.Response[v0alpha.AddUserSubscriptionResponse], error)
+	// Adds a user subscription to user's list of subscriptions
+	AddMyUserSubscription(context.Context, *connect_go.Request[v0alpha.AddMyUserSubscriptionRequest]) (*connect_go.Response[v0alpha.AddMyUserSubscriptionResponse], error)
 	// Removes a user subscription from a specified user's list of subscriptions
 	RemoveUserSubscription(context.Context, *connect_go.Request[v0alpha.RemoveUserSubscriptionRequest]) (*connect_go.Response[v0alpha.RemoveUserSubscriptionResponse], error)
 	// Removes a user subscription from a user's list of subscriptions
@@ -2332,6 +2337,11 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgAddUserSubscriptionProcedure,
 			opts...,
 		),
+		addMyUserSubscription: connect_go.NewClient[v0alpha.AddMyUserSubscriptionRequest, v0alpha.AddMyUserSubscriptionResponse](
+			httpClient,
+			baseURL+OrgAddMyUserSubscriptionProcedure,
+			opts...,
+		),
 		removeUserSubscription: connect_go.NewClient[v0alpha.RemoveUserSubscriptionRequest, v0alpha.RemoveUserSubscriptionResponse](
 			httpClient,
 			baseURL+OrgRemoveUserSubscriptionProcedure,
@@ -2576,6 +2586,7 @@ type orgClient struct {
 	deleteAuthConnection                          *connect_go.Client[v0alpha.DeleteAuthConnectionRequest, v0alpha.DeleteAuthConnectionResponse]
 	getUserSubscription                           *connect_go.Client[v0alpha.GetUserSubscriptionRequest, v0alpha.GetUserSubscriptionResponse]
 	addUserSubscription                           *connect_go.Client[v0alpha.AddUserSubscriptionRequest, v0alpha.AddUserSubscriptionResponse]
+	addMyUserSubscription                         *connect_go.Client[v0alpha.AddMyUserSubscriptionRequest, v0alpha.AddMyUserSubscriptionResponse]
 	removeUserSubscription                        *connect_go.Client[v0alpha.RemoveUserSubscriptionRequest, v0alpha.RemoveUserSubscriptionResponse]
 	removeMyUserSubscription                      *connect_go.Client[v0alpha.RemoveMyUserSubscriptionRequest, v0alpha.RemoveMyUserSubscriptionResponse]
 	updateUserSubscription                        *connect_go.Client[v0alpha.UpdateUserSubscriptionRequest, v0alpha.UpdateUserSubscriptionResponse]
@@ -3538,6 +3549,11 @@ func (c *orgClient) AddUserSubscription(ctx context.Context, req *connect_go.Req
 	return c.addUserSubscription.CallUnary(ctx, req)
 }
 
+// AddMyUserSubscription calls api.v0alpha.Org.AddMyUserSubscription.
+func (c *orgClient) AddMyUserSubscription(ctx context.Context, req *connect_go.Request[v0alpha.AddMyUserSubscriptionRequest]) (*connect_go.Response[v0alpha.AddMyUserSubscriptionResponse], error) {
+	return c.addMyUserSubscription.CallUnary(ctx, req)
+}
+
 // RemoveUserSubscription calls api.v0alpha.Org.RemoveUserSubscription.
 func (c *orgClient) RemoveUserSubscription(ctx context.Context, req *connect_go.Request[v0alpha.RemoveUserSubscriptionRequest]) (*connect_go.Response[v0alpha.RemoveUserSubscriptionResponse], error) {
 	return c.removeUserSubscription.CallUnary(ctx, req)
@@ -4320,6 +4336,8 @@ type OrgHandler interface {
 	GetUserSubscription(context.Context, *connect_go.Request[v0alpha.GetUserSubscriptionRequest]) (*connect_go.Response[v0alpha.GetUserSubscriptionResponse], error)
 	// Adds a user subscription to user's list of subscriptions
 	AddUserSubscription(context.Context, *connect_go.Request[v0alpha.AddUserSubscriptionRequest]) (*connect_go.Response[v0alpha.AddUserSubscriptionResponse], error)
+	// Adds a user subscription to user's list of subscriptions
+	AddMyUserSubscription(context.Context, *connect_go.Request[v0alpha.AddMyUserSubscriptionRequest]) (*connect_go.Response[v0alpha.AddMyUserSubscriptionResponse], error)
 	// Removes a user subscription from a specified user's list of subscriptions
 	RemoveUserSubscription(context.Context, *connect_go.Request[v0alpha.RemoveUserSubscriptionRequest]) (*connect_go.Response[v0alpha.RemoveUserSubscriptionResponse], error)
 	// Removes a user subscription from a user's list of subscriptions
@@ -5332,6 +5350,11 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.AddUserSubscription,
 		opts...,
 	))
+	mux.Handle(OrgAddMyUserSubscriptionProcedure, connect_go.NewUnaryHandler(
+		OrgAddMyUserSubscriptionProcedure,
+		svc.AddMyUserSubscription,
+		opts...,
+	))
 	mux.Handle(OrgRemoveUserSubscriptionProcedure, connect_go.NewUnaryHandler(
 		OrgRemoveUserSubscriptionProcedure,
 		svc.RemoveUserSubscription,
@@ -6142,6 +6165,10 @@ func (UnimplementedOrgHandler) GetUserSubscription(context.Context, *connect_go.
 
 func (UnimplementedOrgHandler) AddUserSubscription(context.Context, *connect_go.Request[v0alpha.AddUserSubscriptionRequest]) (*connect_go.Response[v0alpha.AddUserSubscriptionResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Org.AddUserSubscription is not implemented"))
+}
+
+func (UnimplementedOrgHandler) AddMyUserSubscription(context.Context, *connect_go.Request[v0alpha.AddMyUserSubscriptionRequest]) (*connect_go.Response[v0alpha.AddMyUserSubscriptionResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Org.AddMyUserSubscription is not implemented"))
 }
 
 func (UnimplementedOrgHandler) RemoveUserSubscription(context.Context, *connect_go.Request[v0alpha.RemoveUserSubscriptionRequest]) (*connect_go.Response[v0alpha.RemoveUserSubscriptionResponse], error) {

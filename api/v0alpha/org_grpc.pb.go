@@ -208,6 +208,7 @@ const (
 	Org_DeleteAuthConnection_FullMethodName                          = "/api.v0alpha.Org/DeleteAuthConnection"
 	Org_GetUserSubscription_FullMethodName                           = "/api.v0alpha.Org/GetUserSubscription"
 	Org_AddUserSubscription_FullMethodName                           = "/api.v0alpha.Org/AddUserSubscription"
+	Org_AddMyUserSubscription_FullMethodName                         = "/api.v0alpha.Org/AddMyUserSubscription"
 	Org_RemoveUserSubscription_FullMethodName                        = "/api.v0alpha.Org/RemoveUserSubscription"
 	Org_RemoveMyUserSubscription_FullMethodName                      = "/api.v0alpha.Org/RemoveMyUserSubscription"
 	Org_UpdateUserSubscription_FullMethodName                        = "/api.v0alpha.Org/UpdateUserSubscription"
@@ -954,6 +955,8 @@ type OrgClient interface {
 	GetUserSubscription(ctx context.Context, in *GetUserSubscriptionRequest, opts ...grpc.CallOption) (*GetUserSubscriptionResponse, error)
 	// Adds a user subscription to user's list of subscriptions
 	AddUserSubscription(ctx context.Context, in *AddUserSubscriptionRequest, opts ...grpc.CallOption) (*AddUserSubscriptionResponse, error)
+	// Adds a user subscription to user's list of subscriptions
+	AddMyUserSubscription(ctx context.Context, in *AddMyUserSubscriptionRequest, opts ...grpc.CallOption) (*AddMyUserSubscriptionResponse, error)
 	// Removes a user subscription from a specified user's list of subscriptions
 	RemoveUserSubscription(ctx context.Context, in *RemoveUserSubscriptionRequest, opts ...grpc.CallOption) (*RemoveUserSubscriptionResponse, error)
 	// Removes a user subscription from a user's list of subscriptions
@@ -2769,6 +2772,15 @@ func (c *orgClient) AddUserSubscription(ctx context.Context, in *AddUserSubscrip
 	return out, nil
 }
 
+func (c *orgClient) AddMyUserSubscription(ctx context.Context, in *AddMyUserSubscriptionRequest, opts ...grpc.CallOption) (*AddMyUserSubscriptionResponse, error) {
+	out := new(AddMyUserSubscriptionResponse)
+	err := c.cc.Invoke(ctx, Org_AddMyUserSubscription_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *orgClient) RemoveUserSubscription(ctx context.Context, in *RemoveUserSubscriptionRequest, opts ...grpc.CallOption) (*RemoveUserSubscriptionResponse, error) {
 	out := new(RemoveUserSubscriptionResponse)
 	err := c.cc.Invoke(ctx, Org_RemoveUserSubscription_FullMethodName, in, out, opts...)
@@ -3593,6 +3605,8 @@ type OrgServer interface {
 	GetUserSubscription(context.Context, *GetUserSubscriptionRequest) (*GetUserSubscriptionResponse, error)
 	// Adds a user subscription to user's list of subscriptions
 	AddUserSubscription(context.Context, *AddUserSubscriptionRequest) (*AddUserSubscriptionResponse, error)
+	// Adds a user subscription to user's list of subscriptions
+	AddMyUserSubscription(context.Context, *AddMyUserSubscriptionRequest) (*AddMyUserSubscriptionResponse, error)
 	// Removes a user subscription from a specified user's list of subscriptions
 	RemoveUserSubscription(context.Context, *RemoveUserSubscriptionRequest) (*RemoveUserSubscriptionResponse, error)
 	// Removes a user subscription from a user's list of subscriptions
@@ -4224,6 +4238,9 @@ func (UnimplementedOrgServer) GetUserSubscription(context.Context, *GetUserSubsc
 }
 func (UnimplementedOrgServer) AddUserSubscription(context.Context, *AddUserSubscriptionRequest) (*AddUserSubscriptionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddUserSubscription not implemented")
+}
+func (UnimplementedOrgServer) AddMyUserSubscription(context.Context, *AddMyUserSubscriptionRequest) (*AddMyUserSubscriptionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddMyUserSubscription not implemented")
 }
 func (UnimplementedOrgServer) RemoveUserSubscription(context.Context, *RemoveUserSubscriptionRequest) (*RemoveUserSubscriptionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RemoveUserSubscription not implemented")
@@ -7676,6 +7693,24 @@ func _Org_AddUserSubscription_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Org_AddMyUserSubscription_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddMyUserSubscriptionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).AddMyUserSubscription(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_AddMyUserSubscription_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).AddMyUserSubscription(ctx, req.(*AddMyUserSubscriptionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Org_RemoveUserSubscription_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(RemoveUserSubscriptionRequest)
 	if err := dec(in); err != nil {
@@ -8610,6 +8645,10 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AddUserSubscription",
 			Handler:    _Org_AddUserSubscription_Handler,
+		},
+		{
+			MethodName: "AddMyUserSubscription",
+			Handler:    _Org_AddMyUserSubscription_Handler,
 		},
 		{
 			MethodName: "RemoveUserSubscription",
