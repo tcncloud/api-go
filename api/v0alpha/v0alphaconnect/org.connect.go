@@ -938,9 +938,9 @@ type OrgClient interface {
 	GetAgentQuickViewPreferences(context.Context, *connect_go.Request[v0alpha.GetAgentQuickViewPreferencesRequest]) (*connect_go.Response[v0alpha.GetAgentQuickViewPreferencesResponse], error)
 	// GetVoiceAnalyticsPreferences returns the all preferences for voice analytics
 	GetVoiceAnalyticsPreferences(context.Context, *connect_go.Request[v0alpha.GetVoiceAnalyticsPreferencesRequest]) (*connect_go.Response[v0alpha.GetVoiceAnalyticsPreferencesResponse], error)
-	// GetVoiceAnalyticsPreferences updates the all preferences except for enabled for voice analytics
+	// UpdateVoiceAnalyticsPreferences updates the all preferences except for enabled for voice analytics
 	UpdateVoiceAnalyticsPreferences(context.Context, *connect_go.Request[v0alpha.UpdateVoiceAnalyticsPreferencesRequest]) (*connect_go.Response[v0alpha.UpdateVoiceAnalyticsPreferencesResponse], error)
-	// GetVoiceAnalyticsPreferencesEnabled updates the enabled prefernece for voice analytics
+	// UpdateVoiceAnalyticsPreferencesEnabled updates the enabled prefernece for voice analytics
 	UpdateVoiceAnalyticsPreferencesEnabled(context.Context, *connect_go.Request[v0alpha.UpdateVoiceAnalyticsPreferencesEnabledRequest]) (*connect_go.Response[v0alpha.UpdateVoiceAnalyticsPreferencesEnabledResponse], error)
 	// GetScorecardsPreferences returns the all preferences for scorecards
 	GetScorecardsPreferences(context.Context, *connect_go.Request[v0alpha.GetScorecardsPreferencesRequest]) (*connect_go.Response[v0alpha.GetScorecardsPreferencesResponse], error)
@@ -3954,9 +3954,9 @@ type OrgHandler interface {
 	GetAgentQuickViewPreferences(context.Context, *connect_go.Request[v0alpha.GetAgentQuickViewPreferencesRequest]) (*connect_go.Response[v0alpha.GetAgentQuickViewPreferencesResponse], error)
 	// GetVoiceAnalyticsPreferences returns the all preferences for voice analytics
 	GetVoiceAnalyticsPreferences(context.Context, *connect_go.Request[v0alpha.GetVoiceAnalyticsPreferencesRequest]) (*connect_go.Response[v0alpha.GetVoiceAnalyticsPreferencesResponse], error)
-	// GetVoiceAnalyticsPreferences updates the all preferences except for enabled for voice analytics
+	// UpdateVoiceAnalyticsPreferences updates the all preferences except for enabled for voice analytics
 	UpdateVoiceAnalyticsPreferences(context.Context, *connect_go.Request[v0alpha.UpdateVoiceAnalyticsPreferencesRequest]) (*connect_go.Response[v0alpha.UpdateVoiceAnalyticsPreferencesResponse], error)
-	// GetVoiceAnalyticsPreferencesEnabled updates the enabled prefernece for voice analytics
+	// UpdateVoiceAnalyticsPreferencesEnabled updates the enabled prefernece for voice analytics
 	UpdateVoiceAnalyticsPreferencesEnabled(context.Context, *connect_go.Request[v0alpha.UpdateVoiceAnalyticsPreferencesEnabledRequest]) (*connect_go.Response[v0alpha.UpdateVoiceAnalyticsPreferencesEnabledResponse], error)
 	// GetScorecardsPreferences returns the all preferences for scorecards
 	GetScorecardsPreferences(context.Context, *connect_go.Request[v0alpha.GetScorecardsPreferencesRequest]) (*connect_go.Response[v0alpha.GetScorecardsPreferencesResponse], error)

@@ -573,9 +573,9 @@ type OrgClient interface {
 	GetAgentQuickViewPreferences(ctx context.Context, in *GetAgentQuickViewPreferencesRequest, opts ...grpc.CallOption) (*GetAgentQuickViewPreferencesResponse, error)
 	// GetVoiceAnalyticsPreferences returns the all preferences for voice analytics
 	GetVoiceAnalyticsPreferences(ctx context.Context, in *GetVoiceAnalyticsPreferencesRequest, opts ...grpc.CallOption) (*GetVoiceAnalyticsPreferencesResponse, error)
-	// GetVoiceAnalyticsPreferences updates the all preferences except for enabled for voice analytics
+	// UpdateVoiceAnalyticsPreferences updates the all preferences except for enabled for voice analytics
 	UpdateVoiceAnalyticsPreferences(ctx context.Context, in *UpdateVoiceAnalyticsPreferencesRequest, opts ...grpc.CallOption) (*UpdateVoiceAnalyticsPreferencesResponse, error)
-	// GetVoiceAnalyticsPreferencesEnabled updates the enabled prefernece for voice analytics
+	// UpdateVoiceAnalyticsPreferencesEnabled updates the enabled prefernece for voice analytics
 	UpdateVoiceAnalyticsPreferencesEnabled(ctx context.Context, in *UpdateVoiceAnalyticsPreferencesEnabledRequest, opts ...grpc.CallOption) (*UpdateVoiceAnalyticsPreferencesEnabledResponse, error)
 	// GetScorecardsPreferences returns the all preferences for scorecards
 	GetScorecardsPreferences(ctx context.Context, in *GetScorecardsPreferencesRequest, opts ...grpc.CallOption) (*GetScorecardsPreferencesResponse, error)
@@ -3223,9 +3223,9 @@ type OrgServer interface {
 	GetAgentQuickViewPreferences(context.Context, *GetAgentQuickViewPreferencesRequest) (*GetAgentQuickViewPreferencesResponse, error)
 	// GetVoiceAnalyticsPreferences returns the all preferences for voice analytics
 	GetVoiceAnalyticsPreferences(context.Context, *GetVoiceAnalyticsPreferencesRequest) (*GetVoiceAnalyticsPreferencesResponse, error)
-	// GetVoiceAnalyticsPreferences updates the all preferences except for enabled for voice analytics
+	// UpdateVoiceAnalyticsPreferences updates the all preferences except for enabled for voice analytics
 	UpdateVoiceAnalyticsPreferences(context.Context, *UpdateVoiceAnalyticsPreferencesRequest) (*UpdateVoiceAnalyticsPreferencesResponse, error)
-	// GetVoiceAnalyticsPreferencesEnabled updates the enabled prefernece for voice analytics
+	// UpdateVoiceAnalyticsPreferencesEnabled updates the enabled prefernece for voice analytics
 	UpdateVoiceAnalyticsPreferencesEnabled(context.Context, *UpdateVoiceAnalyticsPreferencesEnabledRequest) (*UpdateVoiceAnalyticsPreferencesEnabledResponse, error)
 	// GetScorecardsPreferences returns the all preferences for scorecards
 	GetScorecardsPreferences(context.Context, *GetScorecardsPreferencesRequest) (*GetScorecardsPreferencesResponse, error)
