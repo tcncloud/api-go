@@ -47,18 +47,18 @@ const (
 	Org_ListAgentProfileGroups_FullMethodName                        = "/api.v0alpha.Org/ListAgentProfileGroups"
 	Org_DeleteAgentProfileGroup_FullMethodName                       = "/api.v0alpha.Org/DeleteAgentProfileGroup"
 	Org_AssignAgentProfileGroups_FullMethodName                      = "/api.v0alpha.Org/AssignAgentProfileGroups"
+	Org_UpdateUser_FullMethodName                                    = "/api.v0alpha.Org/UpdateUser"
 	Org_UpdateMyUser_FullMethodName                                  = "/api.v0alpha.Org/UpdateMyUser"
-	Org_UpdateUserByUserId_FullMethodName                            = "/api.v0alpha.Org/UpdateUserByUserId"
 	Org_UpdateUserByCallerId_FullMethodName                          = "/api.v0alpha.Org/UpdateUserByCallerId"
 	Org_CreateUser_FullMethodName                                    = "/api.v0alpha.Org/CreateUser"
 	Org_CreateUserByOrgId_FullMethodName                             = "/api.v0alpha.Org/CreateUserByOrgId"
 	Org_CreateDelegatedUser_FullMethodName                           = "/api.v0alpha.Org/CreateDelegatedUser"
-	Org_UpdateMyUserPassword_FullMethodName                          = "/api.v0alpha.Org/UpdateMyUserPassword"
+	Org_UpdateUserPassword_FullMethodName                            = "/api.v0alpha.Org/UpdateUserPassword"
 	Org_UpdateUserPasswordByUserId_FullMethodName                    = "/api.v0alpha.Org/UpdateUserPasswordByUserId"
 	Org_UpdateUserPasswordByOrgId_FullMethodName                     = "/api.v0alpha.Org/UpdateUserPasswordByOrgId"
 	Org_ResetUserRequirePasswordReset_FullMethodName                 = "/api.v0alpha.Org/ResetUserRequirePasswordReset"
 	Org_GetMyUserPasswordResetLink_FullMethodName                    = "/api.v0alpha.Org/GetMyUserPasswordResetLink"
-	Org_GetUserPasswordResetLinkByUserId_FullMethodName              = "/api.v0alpha.Org/GetUserPasswordResetLinkByUserId"
+	Org_GetUserPasswordResetLink_FullMethodName                      = "/api.v0alpha.Org/GetUserPasswordResetLink"
 	Org_GetUserPasswordResetLinkByOrgId_FullMethodName               = "/api.v0alpha.Org/GetUserPasswordResetLinkByOrgId"
 	Org_GetUserEmailVerified_FullMethodName                          = "/api.v0alpha.Org/GetUserEmailVerified"
 	Org_GetUserEmailVerifiedByOrgId_FullMethodName                   = "/api.v0alpha.Org/GetUserEmailVerifiedByOrgId"
@@ -66,7 +66,7 @@ const (
 	Org_SendUserVerificationEmail_FullMethodName                     = "/api.v0alpha.Org/SendUserVerificationEmail"
 	Org_ManualUserEmailVerificationByOrgId_FullMethodName            = "/api.v0alpha.Org/ManualUserEmailVerificationByOrgId"
 	Org_ManualUserEmailVerification_FullMethodName                   = "/api.v0alpha.Org/ManualUserEmailVerification"
-	Org_GetMyTempUserToken_FullMethodName                            = "/api.v0alpha.Org/GetMyTempUserToken"
+	Org_GetTempUserToken_FullMethodName                              = "/api.v0alpha.Org/GetTempUserToken"
 	Org_GetTempUserTokenByUserId_FullMethodName                      = "/api.v0alpha.Org/GetTempUserTokenByUserId"
 	Org_GetCountriesList_FullMethodName                              = "/api.v0alpha.Org/GetCountriesList"
 	Org_GetAdminClientPreferences_FullMethodName                     = "/api.v0alpha.Org/GetAdminClientPreferences"
@@ -208,7 +208,6 @@ const (
 	Org_DeleteAuthConnection_FullMethodName                          = "/api.v0alpha.Org/DeleteAuthConnection"
 	Org_GetUserSubscription_FullMethodName                           = "/api.v0alpha.Org/GetUserSubscription"
 	Org_AddUserSubscription_FullMethodName                           = "/api.v0alpha.Org/AddUserSubscription"
-	Org_AddMyUserSubscription_FullMethodName                         = "/api.v0alpha.Org/AddMyUserSubscription"
 	Org_RemoveUserSubscription_FullMethodName                        = "/api.v0alpha.Org/RemoveUserSubscription"
 	Org_RemoveMyUserSubscription_FullMethodName                      = "/api.v0alpha.Org/RemoveMyUserSubscription"
 	Org_UpdateUserSubscription_FullMethodName                        = "/api.v0alpha.Org/UpdateUserSubscription"
@@ -291,15 +290,15 @@ type OrgClient interface {
 	// Required Permissions:
 	// ORG_EDIT
 	AssignAgentProfileGroups(ctx context.Context, in *AssignAgentProfileGroupsRequest, opts ...grpc.CallOption) (*AssignAgentProfileGroupsResponse, error)
+	// UpdateUser updates a user as defined by the UpdateUserRequest.
+	// Required Permissions: USER_EDIT (default)
+	UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*UpdateUserResponse, error)
 	// UpdateMyUser updates the currently logged in user as defined by the UpdateMyUserRequest.
 	// Required Permissions: USER_EDIT_OPTIONS
 	// Only some of the fields on the request message can be updated
 	// for the currently logged in user: time_zone, linkback_numbers,
 	// caller_ids, and default_app.
 	UpdateMyUser(ctx context.Context, in *UpdateMyUserRequest, opts ...grpc.CallOption) (*UpdateMyUserResponse, error)
-	// UpdateUserByUserId updates a user as defined by the UpdateUserByUserIdRequest.
-	// Required Permissions: USER_EDIT
-	UpdateUserByUserId(ctx context.Context, in *UpdateUserByUserIdRequest, opts ...grpc.CallOption) (*UpdateUserByUserIdResponse, error)
 	// UpdateUserByCallerId updates a user's caller id as defined by the UpdateUserByCallerIdRequest.
 	// Required Permissions: USER_EDIT_AGENT_CALLER_ID
 	UpdateUserByCallerId(ctx context.Context, in *UpdateUserByCallerIdRequest, opts ...grpc.CallOption) (*UpdateUserByCallerIdResponse, error)
@@ -313,10 +312,10 @@ type OrgClient interface {
 	CreateUserByOrgId(ctx context.Context, in *CreateUserByOrgIdRequest, opts ...grpc.CallOption) (*CreateUserByOrgIdResponse, error)
 	// Creates a delegated user. This should only be called by an auth0 action.
 	CreateDelegatedUser(ctx context.Context, in *CreateDelegatedUserRequest, opts ...grpc.CallOption) (*CreateDelegatedUserResponse, error)
-	// UpdateMyUserPassword updates the current user's password to the
+	// UpdateUserPassword updates the current user's password to the
 	// password given on the request message.
 	// Required Permissions: USER_EDIT_PASSWORD (Update your own password)
-	UpdateMyUserPassword(ctx context.Context, in *UpdateMyUserPasswordRequest, opts ...grpc.CallOption) (*UpdateMyUserPasswordResponse, error)
+	UpdateUserPassword(ctx context.Context, in *UpdateUserPasswordRequest, opts ...grpc.CallOption) (*UpdateUserPasswordResponse, error)
 	// UpdateUserPassword updates a user's password (in the same org as the current user)
 	// to the password given on the request message.
 	// Required Permissions: USER_EDIT (Update another user's password in the same org)
@@ -331,12 +330,12 @@ type OrgClient interface {
 	// GetMyUserPasswordResetLink generate a password reset link for the current user.
 	// Required Permissions: USER_EDIT_PASSWORD
 	GetMyUserPasswordResetLink(ctx context.Context, in *GetMyUserPasswordResetLinkRequest, opts ...grpc.CallOption) (*GetMyUserPasswordResetLinkResponse, error)
-	// GetUserPasswordResetLinkByUserId generates a password reset link for a user
+	// GetUserPasswordResetLink generates a password reset link for a user
 	// in the same org as the current user.
 	// Required Permissions: USER_EDIT
 	//
 	//	USER_EDIT if user_id given on the request.
-	GetUserPasswordResetLinkByUserId(ctx context.Context, in *GetUserPasswordResetLinkByUserIdRequest, opts ...grpc.CallOption) (*GetUserPasswordResetLinkByUserIdResponse, error)
+	GetUserPasswordResetLink(ctx context.Context, in *GetUserPasswordResetLinkRequest, opts ...grpc.CallOption) (*GetUserPasswordResetLinkResponse, error)
 	// GetUserPasswordResetLinkByOrgId generates a password reset link
 	// for a specific user in a specific org.
 	// Required Permissions: CUSTOMER_SUPPORT
@@ -356,10 +355,10 @@ type OrgClient interface {
 	ManualUserEmailVerificationByOrgId(ctx context.Context, in *ManualUserEmailVerificationByOrgIdRequest, opts ...grpc.CallOption) (*ManualUserEmailVerificationByOrgIdResponse, error)
 	// Sets the given user's to verified without needing to send a verification email.
 	ManualUserEmailVerification(ctx context.Context, in *ManualUserEmailVerificationRequest, opts ...grpc.CallOption) (*ManualUserEmailVerificationResponse, error)
-	// GetMyTempUserToken authenticates impersonation and generates token
+	// GetTempUserToken authenticates impersonation and generates token
 	// to be used for the current user.
 	// Required Permissions: None, anyone authorized can use this
-	GetMyTempUserToken(ctx context.Context, in *GetMyTempUserTokenReq, opts ...grpc.CallOption) (*GetMyTempUserTokenRes, error)
+	GetTempUserToken(ctx context.Context, in *GetTempUserTokenReq, opts ...grpc.CallOption) (*GetTempUserTokenRes, error)
 	// GetTempUserTokenByUserId authenticates impersonation and generates token
 	// to be used for the user with the given user_id.
 	// Required Permissions: CUSTOMER_SUPPORT
@@ -955,8 +954,6 @@ type OrgClient interface {
 	GetUserSubscription(ctx context.Context, in *GetUserSubscriptionRequest, opts ...grpc.CallOption) (*GetUserSubscriptionResponse, error)
 	// Adds a user subscription to user's list of subscriptions
 	AddUserSubscription(ctx context.Context, in *AddUserSubscriptionRequest, opts ...grpc.CallOption) (*AddUserSubscriptionResponse, error)
-	// Adds a user subscription to user's list of subscriptions
-	AddMyUserSubscription(ctx context.Context, in *AddMyUserSubscriptionRequest, opts ...grpc.CallOption) (*AddMyUserSubscriptionResponse, error)
 	// Removes a user subscription from a specified user's list of subscriptions
 	RemoveUserSubscription(ctx context.Context, in *RemoveUserSubscriptionRequest, opts ...grpc.CallOption) (*RemoveUserSubscriptionResponse, error)
 	// Removes a user subscription from a user's list of subscriptions
@@ -1323,18 +1320,18 @@ func (c *orgClient) AssignAgentProfileGroups(ctx context.Context, in *AssignAgen
 	return out, nil
 }
 
-func (c *orgClient) UpdateMyUser(ctx context.Context, in *UpdateMyUserRequest, opts ...grpc.CallOption) (*UpdateMyUserResponse, error) {
-	out := new(UpdateMyUserResponse)
-	err := c.cc.Invoke(ctx, Org_UpdateMyUser_FullMethodName, in, out, opts...)
+func (c *orgClient) UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*UpdateUserResponse, error) {
+	out := new(UpdateUserResponse)
+	err := c.cc.Invoke(ctx, Org_UpdateUser_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *orgClient) UpdateUserByUserId(ctx context.Context, in *UpdateUserByUserIdRequest, opts ...grpc.CallOption) (*UpdateUserByUserIdResponse, error) {
-	out := new(UpdateUserByUserIdResponse)
-	err := c.cc.Invoke(ctx, Org_UpdateUserByUserId_FullMethodName, in, out, opts...)
+func (c *orgClient) UpdateMyUser(ctx context.Context, in *UpdateMyUserRequest, opts ...grpc.CallOption) (*UpdateMyUserResponse, error) {
+	out := new(UpdateMyUserResponse)
+	err := c.cc.Invoke(ctx, Org_UpdateMyUser_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1377,9 +1374,9 @@ func (c *orgClient) CreateDelegatedUser(ctx context.Context, in *CreateDelegated
 	return out, nil
 }
 
-func (c *orgClient) UpdateMyUserPassword(ctx context.Context, in *UpdateMyUserPasswordRequest, opts ...grpc.CallOption) (*UpdateMyUserPasswordResponse, error) {
-	out := new(UpdateMyUserPasswordResponse)
-	err := c.cc.Invoke(ctx, Org_UpdateMyUserPassword_FullMethodName, in, out, opts...)
+func (c *orgClient) UpdateUserPassword(ctx context.Context, in *UpdateUserPasswordRequest, opts ...grpc.CallOption) (*UpdateUserPasswordResponse, error) {
+	out := new(UpdateUserPasswordResponse)
+	err := c.cc.Invoke(ctx, Org_UpdateUserPassword_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1422,9 +1419,9 @@ func (c *orgClient) GetMyUserPasswordResetLink(ctx context.Context, in *GetMyUse
 	return out, nil
 }
 
-func (c *orgClient) GetUserPasswordResetLinkByUserId(ctx context.Context, in *GetUserPasswordResetLinkByUserIdRequest, opts ...grpc.CallOption) (*GetUserPasswordResetLinkByUserIdResponse, error) {
-	out := new(GetUserPasswordResetLinkByUserIdResponse)
-	err := c.cc.Invoke(ctx, Org_GetUserPasswordResetLinkByUserId_FullMethodName, in, out, opts...)
+func (c *orgClient) GetUserPasswordResetLink(ctx context.Context, in *GetUserPasswordResetLinkRequest, opts ...grpc.CallOption) (*GetUserPasswordResetLinkResponse, error) {
+	out := new(GetUserPasswordResetLinkResponse)
+	err := c.cc.Invoke(ctx, Org_GetUserPasswordResetLink_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1494,9 +1491,9 @@ func (c *orgClient) ManualUserEmailVerification(ctx context.Context, in *ManualU
 	return out, nil
 }
 
-func (c *orgClient) GetMyTempUserToken(ctx context.Context, in *GetMyTempUserTokenReq, opts ...grpc.CallOption) (*GetMyTempUserTokenRes, error) {
-	out := new(GetMyTempUserTokenRes)
-	err := c.cc.Invoke(ctx, Org_GetMyTempUserToken_FullMethodName, in, out, opts...)
+func (c *orgClient) GetTempUserToken(ctx context.Context, in *GetTempUserTokenReq, opts ...grpc.CallOption) (*GetTempUserTokenRes, error) {
+	out := new(GetTempUserTokenRes)
+	err := c.cc.Invoke(ctx, Org_GetTempUserToken_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -2772,15 +2769,6 @@ func (c *orgClient) AddUserSubscription(ctx context.Context, in *AddUserSubscrip
 	return out, nil
 }
 
-func (c *orgClient) AddMyUserSubscription(ctx context.Context, in *AddMyUserSubscriptionRequest, opts ...grpc.CallOption) (*AddMyUserSubscriptionResponse, error) {
-	out := new(AddMyUserSubscriptionResponse)
-	err := c.cc.Invoke(ctx, Org_AddMyUserSubscription_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *orgClient) RemoveUserSubscription(ctx context.Context, in *RemoveUserSubscriptionRequest, opts ...grpc.CallOption) (*RemoveUserSubscriptionResponse, error) {
 	out := new(RemoveUserSubscriptionResponse)
 	err := c.cc.Invoke(ctx, Org_RemoveUserSubscription_FullMethodName, in, out, opts...)
@@ -2941,15 +2929,15 @@ type OrgServer interface {
 	// Required Permissions:
 	// ORG_EDIT
 	AssignAgentProfileGroups(context.Context, *AssignAgentProfileGroupsRequest) (*AssignAgentProfileGroupsResponse, error)
+	// UpdateUser updates a user as defined by the UpdateUserRequest.
+	// Required Permissions: USER_EDIT (default)
+	UpdateUser(context.Context, *UpdateUserRequest) (*UpdateUserResponse, error)
 	// UpdateMyUser updates the currently logged in user as defined by the UpdateMyUserRequest.
 	// Required Permissions: USER_EDIT_OPTIONS
 	// Only some of the fields on the request message can be updated
 	// for the currently logged in user: time_zone, linkback_numbers,
 	// caller_ids, and default_app.
 	UpdateMyUser(context.Context, *UpdateMyUserRequest) (*UpdateMyUserResponse, error)
-	// UpdateUserByUserId updates a user as defined by the UpdateUserByUserIdRequest.
-	// Required Permissions: USER_EDIT
-	UpdateUserByUserId(context.Context, *UpdateUserByUserIdRequest) (*UpdateUserByUserIdResponse, error)
 	// UpdateUserByCallerId updates a user's caller id as defined by the UpdateUserByCallerIdRequest.
 	// Required Permissions: USER_EDIT_AGENT_CALLER_ID
 	UpdateUserByCallerId(context.Context, *UpdateUserByCallerIdRequest) (*UpdateUserByCallerIdResponse, error)
@@ -2963,10 +2951,10 @@ type OrgServer interface {
 	CreateUserByOrgId(context.Context, *CreateUserByOrgIdRequest) (*CreateUserByOrgIdResponse, error)
 	// Creates a delegated user. This should only be called by an auth0 action.
 	CreateDelegatedUser(context.Context, *CreateDelegatedUserRequest) (*CreateDelegatedUserResponse, error)
-	// UpdateMyUserPassword updates the current user's password to the
+	// UpdateUserPassword updates the current user's password to the
 	// password given on the request message.
 	// Required Permissions: USER_EDIT_PASSWORD (Update your own password)
-	UpdateMyUserPassword(context.Context, *UpdateMyUserPasswordRequest) (*UpdateMyUserPasswordResponse, error)
+	UpdateUserPassword(context.Context, *UpdateUserPasswordRequest) (*UpdateUserPasswordResponse, error)
 	// UpdateUserPassword updates a user's password (in the same org as the current user)
 	// to the password given on the request message.
 	// Required Permissions: USER_EDIT (Update another user's password in the same org)
@@ -2981,12 +2969,12 @@ type OrgServer interface {
 	// GetMyUserPasswordResetLink generate a password reset link for the current user.
 	// Required Permissions: USER_EDIT_PASSWORD
 	GetMyUserPasswordResetLink(context.Context, *GetMyUserPasswordResetLinkRequest) (*GetMyUserPasswordResetLinkResponse, error)
-	// GetUserPasswordResetLinkByUserId generates a password reset link for a user
+	// GetUserPasswordResetLink generates a password reset link for a user
 	// in the same org as the current user.
 	// Required Permissions: USER_EDIT
 	//
 	//	USER_EDIT if user_id given on the request.
-	GetUserPasswordResetLinkByUserId(context.Context, *GetUserPasswordResetLinkByUserIdRequest) (*GetUserPasswordResetLinkByUserIdResponse, error)
+	GetUserPasswordResetLink(context.Context, *GetUserPasswordResetLinkRequest) (*GetUserPasswordResetLinkResponse, error)
 	// GetUserPasswordResetLinkByOrgId generates a password reset link
 	// for a specific user in a specific org.
 	// Required Permissions: CUSTOMER_SUPPORT
@@ -3006,10 +2994,10 @@ type OrgServer interface {
 	ManualUserEmailVerificationByOrgId(context.Context, *ManualUserEmailVerificationByOrgIdRequest) (*ManualUserEmailVerificationByOrgIdResponse, error)
 	// Sets the given user's to verified without needing to send a verification email.
 	ManualUserEmailVerification(context.Context, *ManualUserEmailVerificationRequest) (*ManualUserEmailVerificationResponse, error)
-	// GetMyTempUserToken authenticates impersonation and generates token
+	// GetTempUserToken authenticates impersonation and generates token
 	// to be used for the current user.
 	// Required Permissions: None, anyone authorized can use this
-	GetMyTempUserToken(context.Context, *GetMyTempUserTokenReq) (*GetMyTempUserTokenRes, error)
+	GetTempUserToken(context.Context, *GetTempUserTokenReq) (*GetTempUserTokenRes, error)
 	// GetTempUserTokenByUserId authenticates impersonation and generates token
 	// to be used for the user with the given user_id.
 	// Required Permissions: CUSTOMER_SUPPORT
@@ -3605,8 +3593,6 @@ type OrgServer interface {
 	GetUserSubscription(context.Context, *GetUserSubscriptionRequest) (*GetUserSubscriptionResponse, error)
 	// Adds a user subscription to user's list of subscriptions
 	AddUserSubscription(context.Context, *AddUserSubscriptionRequest) (*AddUserSubscriptionResponse, error)
-	// Adds a user subscription to user's list of subscriptions
-	AddMyUserSubscription(context.Context, *AddMyUserSubscriptionRequest) (*AddMyUserSubscriptionResponse, error)
 	// Removes a user subscription from a specified user's list of subscriptions
 	RemoveUserSubscription(context.Context, *RemoveUserSubscriptionRequest) (*RemoveUserSubscriptionResponse, error)
 	// Removes a user subscription from a user's list of subscriptions
@@ -3756,11 +3742,11 @@ func (UnimplementedOrgServer) DeleteAgentProfileGroup(context.Context, *DeleteAg
 func (UnimplementedOrgServer) AssignAgentProfileGroups(context.Context, *AssignAgentProfileGroupsRequest) (*AssignAgentProfileGroupsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AssignAgentProfileGroups not implemented")
 }
+func (UnimplementedOrgServer) UpdateUser(context.Context, *UpdateUserRequest) (*UpdateUserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateUser not implemented")
+}
 func (UnimplementedOrgServer) UpdateMyUser(context.Context, *UpdateMyUserRequest) (*UpdateMyUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateMyUser not implemented")
-}
-func (UnimplementedOrgServer) UpdateUserByUserId(context.Context, *UpdateUserByUserIdRequest) (*UpdateUserByUserIdResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserByUserId not implemented")
 }
 func (UnimplementedOrgServer) UpdateUserByCallerId(context.Context, *UpdateUserByCallerIdRequest) (*UpdateUserByCallerIdResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserByCallerId not implemented")
@@ -3774,8 +3760,8 @@ func (UnimplementedOrgServer) CreateUserByOrgId(context.Context, *CreateUserByOr
 func (UnimplementedOrgServer) CreateDelegatedUser(context.Context, *CreateDelegatedUserRequest) (*CreateDelegatedUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateDelegatedUser not implemented")
 }
-func (UnimplementedOrgServer) UpdateMyUserPassword(context.Context, *UpdateMyUserPasswordRequest) (*UpdateMyUserPasswordResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateMyUserPassword not implemented")
+func (UnimplementedOrgServer) UpdateUserPassword(context.Context, *UpdateUserPasswordRequest) (*UpdateUserPasswordResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserPassword not implemented")
 }
 func (UnimplementedOrgServer) UpdateUserPasswordByUserId(context.Context, *UpdateUserPasswordByUserIdRequest) (*UpdateUserPasswordByUserIdResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserPasswordByUserId not implemented")
@@ -3789,8 +3775,8 @@ func (UnimplementedOrgServer) ResetUserRequirePasswordReset(context.Context, *Re
 func (UnimplementedOrgServer) GetMyUserPasswordResetLink(context.Context, *GetMyUserPasswordResetLinkRequest) (*GetMyUserPasswordResetLinkResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMyUserPasswordResetLink not implemented")
 }
-func (UnimplementedOrgServer) GetUserPasswordResetLinkByUserId(context.Context, *GetUserPasswordResetLinkByUserIdRequest) (*GetUserPasswordResetLinkByUserIdResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetUserPasswordResetLinkByUserId not implemented")
+func (UnimplementedOrgServer) GetUserPasswordResetLink(context.Context, *GetUserPasswordResetLinkRequest) (*GetUserPasswordResetLinkResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserPasswordResetLink not implemented")
 }
 func (UnimplementedOrgServer) GetUserPasswordResetLinkByOrgId(context.Context, *GetUserPasswordResetLinkByOrgIdRequest) (*GetUserPasswordResetLinkByOrgIdResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserPasswordResetLinkByOrgId not implemented")
@@ -3813,8 +3799,8 @@ func (UnimplementedOrgServer) ManualUserEmailVerificationByOrgId(context.Context
 func (UnimplementedOrgServer) ManualUserEmailVerification(context.Context, *ManualUserEmailVerificationRequest) (*ManualUserEmailVerificationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ManualUserEmailVerification not implemented")
 }
-func (UnimplementedOrgServer) GetMyTempUserToken(context.Context, *GetMyTempUserTokenReq) (*GetMyTempUserTokenRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetMyTempUserToken not implemented")
+func (UnimplementedOrgServer) GetTempUserToken(context.Context, *GetTempUserTokenReq) (*GetTempUserTokenRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTempUserToken not implemented")
 }
 func (UnimplementedOrgServer) GetTempUserTokenByUserId(context.Context, *GetTempUserTokenByUserIdReq) (*GetTempUserTokenByUserIdRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTempUserTokenByUserId not implemented")
@@ -4238,9 +4224,6 @@ func (UnimplementedOrgServer) GetUserSubscription(context.Context, *GetUserSubsc
 }
 func (UnimplementedOrgServer) AddUserSubscription(context.Context, *AddUserSubscriptionRequest) (*AddUserSubscriptionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddUserSubscription not implemented")
-}
-func (UnimplementedOrgServer) AddMyUserSubscription(context.Context, *AddMyUserSubscriptionRequest) (*AddMyUserSubscriptionResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AddMyUserSubscription not implemented")
 }
 func (UnimplementedOrgServer) RemoveUserSubscription(context.Context, *RemoveUserSubscriptionRequest) (*RemoveUserSubscriptionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RemoveUserSubscription not implemented")
@@ -4795,6 +4778,24 @@ func _Org_AssignAgentProfileGroups_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Org_UpdateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).UpdateUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_UpdateUser_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).UpdateUser(ctx, req.(*UpdateUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Org_UpdateMyUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateMyUserRequest)
 	if err := dec(in); err != nil {
@@ -4809,24 +4810,6 @@ func _Org_UpdateMyUser_Handler(srv interface{}, ctx context.Context, dec func(in
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrgServer).UpdateMyUser(ctx, req.(*UpdateMyUserRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Org_UpdateUserByUserId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateUserByUserIdRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(OrgServer).UpdateUserByUserId(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Org_UpdateUserByUserId_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrgServer).UpdateUserByUserId(ctx, req.(*UpdateUserByUserIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -4903,20 +4886,20 @@ func _Org_CreateDelegatedUser_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Org_UpdateMyUserPassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateMyUserPasswordRequest)
+func _Org_UpdateUserPassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateUserPasswordRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(OrgServer).UpdateMyUserPassword(ctx, in)
+		return srv.(OrgServer).UpdateUserPassword(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Org_UpdateMyUserPassword_FullMethodName,
+		FullMethod: Org_UpdateUserPassword_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrgServer).UpdateMyUserPassword(ctx, req.(*UpdateMyUserPasswordRequest))
+		return srv.(OrgServer).UpdateUserPassword(ctx, req.(*UpdateUserPasswordRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -4993,20 +4976,20 @@ func _Org_GetMyUserPasswordResetLink_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Org_GetUserPasswordResetLinkByUserId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetUserPasswordResetLinkByUserIdRequest)
+func _Org_GetUserPasswordResetLink_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserPasswordResetLinkRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(OrgServer).GetUserPasswordResetLinkByUserId(ctx, in)
+		return srv.(OrgServer).GetUserPasswordResetLink(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Org_GetUserPasswordResetLinkByUserId_FullMethodName,
+		FullMethod: Org_GetUserPasswordResetLink_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrgServer).GetUserPasswordResetLinkByUserId(ctx, req.(*GetUserPasswordResetLinkByUserIdRequest))
+		return srv.(OrgServer).GetUserPasswordResetLink(ctx, req.(*GetUserPasswordResetLinkRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -5137,20 +5120,20 @@ func _Org_ManualUserEmailVerification_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Org_GetMyTempUserToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetMyTempUserTokenReq)
+func _Org_GetTempUserToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTempUserTokenReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(OrgServer).GetMyTempUserToken(ctx, in)
+		return srv.(OrgServer).GetTempUserToken(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Org_GetMyTempUserToken_FullMethodName,
+		FullMethod: Org_GetTempUserToken_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrgServer).GetMyTempUserToken(ctx, req.(*GetMyTempUserTokenReq))
+		return srv.(OrgServer).GetTempUserToken(ctx, req.(*GetTempUserTokenReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -7693,24 +7676,6 @@ func _Org_AddUserSubscription_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Org_AddMyUserSubscription_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AddMyUserSubscriptionRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(OrgServer).AddMyUserSubscription(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Org_AddMyUserSubscription_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrgServer).AddMyUserSubscription(ctx, req.(*AddMyUserSubscriptionRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _Org_RemoveUserSubscription_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(RemoveUserSubscriptionRequest)
 	if err := dec(in); err != nil {
@@ -8003,12 +7968,12 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Org_AssignAgentProfileGroups_Handler,
 		},
 		{
-			MethodName: "UpdateMyUser",
-			Handler:    _Org_UpdateMyUser_Handler,
+			MethodName: "UpdateUser",
+			Handler:    _Org_UpdateUser_Handler,
 		},
 		{
-			MethodName: "UpdateUserByUserId",
-			Handler:    _Org_UpdateUserByUserId_Handler,
+			MethodName: "UpdateMyUser",
+			Handler:    _Org_UpdateMyUser_Handler,
 		},
 		{
 			MethodName: "UpdateUserByCallerId",
@@ -8027,8 +7992,8 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Org_CreateDelegatedUser_Handler,
 		},
 		{
-			MethodName: "UpdateMyUserPassword",
-			Handler:    _Org_UpdateMyUserPassword_Handler,
+			MethodName: "UpdateUserPassword",
+			Handler:    _Org_UpdateUserPassword_Handler,
 		},
 		{
 			MethodName: "UpdateUserPasswordByUserId",
@@ -8047,8 +8012,8 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Org_GetMyUserPasswordResetLink_Handler,
 		},
 		{
-			MethodName: "GetUserPasswordResetLinkByUserId",
-			Handler:    _Org_GetUserPasswordResetLinkByUserId_Handler,
+			MethodName: "GetUserPasswordResetLink",
+			Handler:    _Org_GetUserPasswordResetLink_Handler,
 		},
 		{
 			MethodName: "GetUserPasswordResetLinkByOrgId",
@@ -8079,8 +8044,8 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Org_ManualUserEmailVerification_Handler,
 		},
 		{
-			MethodName: "GetMyTempUserToken",
-			Handler:    _Org_GetMyTempUserToken_Handler,
+			MethodName: "GetTempUserToken",
+			Handler:    _Org_GetTempUserToken_Handler,
 		},
 		{
 			MethodName: "GetTempUserTokenByUserId",
@@ -8645,10 +8610,6 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AddUserSubscription",
 			Handler:    _Org_AddUserSubscription_Handler,
-		},
-		{
-			MethodName: "AddMyUserSubscription",
-			Handler:    _Org_AddMyUserSubscription_Handler,
 		},
 		{
 			MethodName: "RemoveUserSubscription",

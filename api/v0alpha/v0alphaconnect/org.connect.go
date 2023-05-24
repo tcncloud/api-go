@@ -105,10 +105,10 @@ const (
 	// OrgAssignAgentProfileGroupsProcedure is the fully-qualified name of the Org's
 	// AssignAgentProfileGroups RPC.
 	OrgAssignAgentProfileGroupsProcedure = "/api.v0alpha.Org/AssignAgentProfileGroups"
+	// OrgUpdateUserProcedure is the fully-qualified name of the Org's UpdateUser RPC.
+	OrgUpdateUserProcedure = "/api.v0alpha.Org/UpdateUser"
 	// OrgUpdateMyUserProcedure is the fully-qualified name of the Org's UpdateMyUser RPC.
 	OrgUpdateMyUserProcedure = "/api.v0alpha.Org/UpdateMyUser"
-	// OrgUpdateUserByUserIdProcedure is the fully-qualified name of the Org's UpdateUserByUserId RPC.
-	OrgUpdateUserByUserIdProcedure = "/api.v0alpha.Org/UpdateUserByUserId"
 	// OrgUpdateUserByCallerIdProcedure is the fully-qualified name of the Org's UpdateUserByCallerId
 	// RPC.
 	OrgUpdateUserByCallerIdProcedure = "/api.v0alpha.Org/UpdateUserByCallerId"
@@ -118,9 +118,8 @@ const (
 	OrgCreateUserByOrgIdProcedure = "/api.v0alpha.Org/CreateUserByOrgId"
 	// OrgCreateDelegatedUserProcedure is the fully-qualified name of the Org's CreateDelegatedUser RPC.
 	OrgCreateDelegatedUserProcedure = "/api.v0alpha.Org/CreateDelegatedUser"
-	// OrgUpdateMyUserPasswordProcedure is the fully-qualified name of the Org's UpdateMyUserPassword
-	// RPC.
-	OrgUpdateMyUserPasswordProcedure = "/api.v0alpha.Org/UpdateMyUserPassword"
+	// OrgUpdateUserPasswordProcedure is the fully-qualified name of the Org's UpdateUserPassword RPC.
+	OrgUpdateUserPasswordProcedure = "/api.v0alpha.Org/UpdateUserPassword"
 	// OrgUpdateUserPasswordByUserIdProcedure is the fully-qualified name of the Org's
 	// UpdateUserPasswordByUserId RPC.
 	OrgUpdateUserPasswordByUserIdProcedure = "/api.v0alpha.Org/UpdateUserPasswordByUserId"
@@ -133,9 +132,9 @@ const (
 	// OrgGetMyUserPasswordResetLinkProcedure is the fully-qualified name of the Org's
 	// GetMyUserPasswordResetLink RPC.
 	OrgGetMyUserPasswordResetLinkProcedure = "/api.v0alpha.Org/GetMyUserPasswordResetLink"
-	// OrgGetUserPasswordResetLinkByUserIdProcedure is the fully-qualified name of the Org's
-	// GetUserPasswordResetLinkByUserId RPC.
-	OrgGetUserPasswordResetLinkByUserIdProcedure = "/api.v0alpha.Org/GetUserPasswordResetLinkByUserId"
+	// OrgGetUserPasswordResetLinkProcedure is the fully-qualified name of the Org's
+	// GetUserPasswordResetLink RPC.
+	OrgGetUserPasswordResetLinkProcedure = "/api.v0alpha.Org/GetUserPasswordResetLink"
 	// OrgGetUserPasswordResetLinkByOrgIdProcedure is the fully-qualified name of the Org's
 	// GetUserPasswordResetLinkByOrgId RPC.
 	OrgGetUserPasswordResetLinkByOrgIdProcedure = "/api.v0alpha.Org/GetUserPasswordResetLinkByOrgId"
@@ -157,8 +156,8 @@ const (
 	// OrgManualUserEmailVerificationProcedure is the fully-qualified name of the Org's
 	// ManualUserEmailVerification RPC.
 	OrgManualUserEmailVerificationProcedure = "/api.v0alpha.Org/ManualUserEmailVerification"
-	// OrgGetMyTempUserTokenProcedure is the fully-qualified name of the Org's GetMyTempUserToken RPC.
-	OrgGetMyTempUserTokenProcedure = "/api.v0alpha.Org/GetMyTempUserToken"
+	// OrgGetTempUserTokenProcedure is the fully-qualified name of the Org's GetTempUserToken RPC.
+	OrgGetTempUserTokenProcedure = "/api.v0alpha.Org/GetTempUserToken"
 	// OrgGetTempUserTokenByUserIdProcedure is the fully-qualified name of the Org's
 	// GetTempUserTokenByUserId RPC.
 	OrgGetTempUserTokenByUserIdProcedure = "/api.v0alpha.Org/GetTempUserTokenByUserId"
@@ -553,9 +552,6 @@ const (
 	OrgGetUserSubscriptionProcedure = "/api.v0alpha.Org/GetUserSubscription"
 	// OrgAddUserSubscriptionProcedure is the fully-qualified name of the Org's AddUserSubscription RPC.
 	OrgAddUserSubscriptionProcedure = "/api.v0alpha.Org/AddUserSubscription"
-	// OrgAddMyUserSubscriptionProcedure is the fully-qualified name of the Org's AddMyUserSubscription
-	// RPC.
-	OrgAddMyUserSubscriptionProcedure = "/api.v0alpha.Org/AddMyUserSubscription"
 	// OrgRemoveUserSubscriptionProcedure is the fully-qualified name of the Org's
 	// RemoveUserSubscription RPC.
 	OrgRemoveUserSubscriptionProcedure = "/api.v0alpha.Org/RemoveUserSubscription"
@@ -656,15 +652,15 @@ type OrgClient interface {
 	// Required Permissions:
 	// ORG_EDIT
 	AssignAgentProfileGroups(context.Context, *connect_go.Request[v0alpha.AssignAgentProfileGroupsRequest]) (*connect_go.Response[v0alpha.AssignAgentProfileGroupsResponse], error)
+	// UpdateUser updates a user as defined by the UpdateUserRequest.
+	// Required Permissions: USER_EDIT (default)
+	UpdateUser(context.Context, *connect_go.Request[v0alpha.UpdateUserRequest]) (*connect_go.Response[v0alpha.UpdateUserResponse], error)
 	// UpdateMyUser updates the currently logged in user as defined by the UpdateMyUserRequest.
 	// Required Permissions: USER_EDIT_OPTIONS
 	// Only some of the fields on the request message can be updated
 	// for the currently logged in user: time_zone, linkback_numbers,
 	// caller_ids, and default_app.
 	UpdateMyUser(context.Context, *connect_go.Request[v0alpha.UpdateMyUserRequest]) (*connect_go.Response[v0alpha.UpdateMyUserResponse], error)
-	// UpdateUserByUserId updates a user as defined by the UpdateUserByUserIdRequest.
-	// Required Permissions: USER_EDIT
-	UpdateUserByUserId(context.Context, *connect_go.Request[v0alpha.UpdateUserByUserIdRequest]) (*connect_go.Response[v0alpha.UpdateUserByUserIdResponse], error)
 	// UpdateUserByCallerId updates a user's caller id as defined by the UpdateUserByCallerIdRequest.
 	// Required Permissions: USER_EDIT_AGENT_CALLER_ID
 	UpdateUserByCallerId(context.Context, *connect_go.Request[v0alpha.UpdateUserByCallerIdRequest]) (*connect_go.Response[v0alpha.UpdateUserByCallerIdResponse], error)
@@ -678,10 +674,10 @@ type OrgClient interface {
 	CreateUserByOrgId(context.Context, *connect_go.Request[v0alpha.CreateUserByOrgIdRequest]) (*connect_go.Response[v0alpha.CreateUserByOrgIdResponse], error)
 	// Creates a delegated user. This should only be called by an auth0 action.
 	CreateDelegatedUser(context.Context, *connect_go.Request[v0alpha.CreateDelegatedUserRequest]) (*connect_go.Response[v0alpha.CreateDelegatedUserResponse], error)
-	// UpdateMyUserPassword updates the current user's password to the
+	// UpdateUserPassword updates the current user's password to the
 	// password given on the request message.
 	// Required Permissions: USER_EDIT_PASSWORD (Update your own password)
-	UpdateMyUserPassword(context.Context, *connect_go.Request[v0alpha.UpdateMyUserPasswordRequest]) (*connect_go.Response[v0alpha.UpdateMyUserPasswordResponse], error)
+	UpdateUserPassword(context.Context, *connect_go.Request[v0alpha.UpdateUserPasswordRequest]) (*connect_go.Response[v0alpha.UpdateUserPasswordResponse], error)
 	// UpdateUserPassword updates a user's password (in the same org as the current user)
 	// to the password given on the request message.
 	// Required Permissions: USER_EDIT (Update another user's password in the same org)
@@ -696,12 +692,12 @@ type OrgClient interface {
 	// GetMyUserPasswordResetLink generate a password reset link for the current user.
 	// Required Permissions: USER_EDIT_PASSWORD
 	GetMyUserPasswordResetLink(context.Context, *connect_go.Request[v0alpha.GetMyUserPasswordResetLinkRequest]) (*connect_go.Response[v0alpha.GetMyUserPasswordResetLinkResponse], error)
-	// GetUserPasswordResetLinkByUserId generates a password reset link for a user
+	// GetUserPasswordResetLink generates a password reset link for a user
 	// in the same org as the current user.
 	// Required Permissions: USER_EDIT
 	//
 	//	USER_EDIT if user_id given on the request.
-	GetUserPasswordResetLinkByUserId(context.Context, *connect_go.Request[v0alpha.GetUserPasswordResetLinkByUserIdRequest]) (*connect_go.Response[v0alpha.GetUserPasswordResetLinkByUserIdResponse], error)
+	GetUserPasswordResetLink(context.Context, *connect_go.Request[v0alpha.GetUserPasswordResetLinkRequest]) (*connect_go.Response[v0alpha.GetUserPasswordResetLinkResponse], error)
 	// GetUserPasswordResetLinkByOrgId generates a password reset link
 	// for a specific user in a specific org.
 	// Required Permissions: CUSTOMER_SUPPORT
@@ -721,10 +717,10 @@ type OrgClient interface {
 	ManualUserEmailVerificationByOrgId(context.Context, *connect_go.Request[v0alpha.ManualUserEmailVerificationByOrgIdRequest]) (*connect_go.Response[v0alpha.ManualUserEmailVerificationByOrgIdResponse], error)
 	// Sets the given user's to verified without needing to send a verification email.
 	ManualUserEmailVerification(context.Context, *connect_go.Request[v0alpha.ManualUserEmailVerificationRequest]) (*connect_go.Response[v0alpha.ManualUserEmailVerificationResponse], error)
-	// GetMyTempUserToken authenticates impersonation and generates token
+	// GetTempUserToken authenticates impersonation and generates token
 	// to be used for the current user.
 	// Required Permissions: None, anyone authorized can use this
-	GetMyTempUserToken(context.Context, *connect_go.Request[v0alpha.GetMyTempUserTokenReq]) (*connect_go.Response[v0alpha.GetMyTempUserTokenRes], error)
+	GetTempUserToken(context.Context, *connect_go.Request[v0alpha.GetTempUserTokenReq]) (*connect_go.Response[v0alpha.GetTempUserTokenRes], error)
 	// GetTempUserTokenByUserId authenticates impersonation and generates token
 	// to be used for the user with the given user_id.
 	// Required Permissions: CUSTOMER_SUPPORT
@@ -1320,8 +1316,6 @@ type OrgClient interface {
 	GetUserSubscription(context.Context, *connect_go.Request[v0alpha.GetUserSubscriptionRequest]) (*connect_go.Response[v0alpha.GetUserSubscriptionResponse], error)
 	// Adds a user subscription to user's list of subscriptions
 	AddUserSubscription(context.Context, *connect_go.Request[v0alpha.AddUserSubscriptionRequest]) (*connect_go.Response[v0alpha.AddUserSubscriptionResponse], error)
-	// Adds a user subscription to user's list of subscriptions
-	AddMyUserSubscription(context.Context, *connect_go.Request[v0alpha.AddMyUserSubscriptionRequest]) (*connect_go.Response[v0alpha.AddMyUserSubscriptionResponse], error)
 	// Removes a user subscription from a specified user's list of subscriptions
 	RemoveUserSubscription(context.Context, *connect_go.Request[v0alpha.RemoveUserSubscriptionRequest]) (*connect_go.Response[v0alpha.RemoveUserSubscriptionResponse], error)
 	// Removes a user subscription from a user's list of subscriptions
@@ -1532,14 +1526,14 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgAssignAgentProfileGroupsProcedure,
 			opts...,
 		),
+		updateUser: connect_go.NewClient[v0alpha.UpdateUserRequest, v0alpha.UpdateUserResponse](
+			httpClient,
+			baseURL+OrgUpdateUserProcedure,
+			opts...,
+		),
 		updateMyUser: connect_go.NewClient[v0alpha.UpdateMyUserRequest, v0alpha.UpdateMyUserResponse](
 			httpClient,
 			baseURL+OrgUpdateMyUserProcedure,
-			opts...,
-		),
-		updateUserByUserId: connect_go.NewClient[v0alpha.UpdateUserByUserIdRequest, v0alpha.UpdateUserByUserIdResponse](
-			httpClient,
-			baseURL+OrgUpdateUserByUserIdProcedure,
 			opts...,
 		),
 		updateUserByCallerId: connect_go.NewClient[v0alpha.UpdateUserByCallerIdRequest, v0alpha.UpdateUserByCallerIdResponse](
@@ -1562,9 +1556,9 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgCreateDelegatedUserProcedure,
 			opts...,
 		),
-		updateMyUserPassword: connect_go.NewClient[v0alpha.UpdateMyUserPasswordRequest, v0alpha.UpdateMyUserPasswordResponse](
+		updateUserPassword: connect_go.NewClient[v0alpha.UpdateUserPasswordRequest, v0alpha.UpdateUserPasswordResponse](
 			httpClient,
-			baseURL+OrgUpdateMyUserPasswordProcedure,
+			baseURL+OrgUpdateUserPasswordProcedure,
 			opts...,
 		),
 		updateUserPasswordByUserId: connect_go.NewClient[v0alpha.UpdateUserPasswordByUserIdRequest, v0alpha.UpdateUserPasswordByUserIdResponse](
@@ -1587,9 +1581,9 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgGetMyUserPasswordResetLinkProcedure,
 			opts...,
 		),
-		getUserPasswordResetLinkByUserId: connect_go.NewClient[v0alpha.GetUserPasswordResetLinkByUserIdRequest, v0alpha.GetUserPasswordResetLinkByUserIdResponse](
+		getUserPasswordResetLink: connect_go.NewClient[v0alpha.GetUserPasswordResetLinkRequest, v0alpha.GetUserPasswordResetLinkResponse](
 			httpClient,
-			baseURL+OrgGetUserPasswordResetLinkByUserIdProcedure,
+			baseURL+OrgGetUserPasswordResetLinkProcedure,
 			opts...,
 		),
 		getUserPasswordResetLinkByOrgId: connect_go.NewClient[v0alpha.GetUserPasswordResetLinkByOrgIdRequest, v0alpha.GetUserPasswordResetLinkByOrgIdResponse](
@@ -1627,9 +1621,9 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgManualUserEmailVerificationProcedure,
 			opts...,
 		),
-		getMyTempUserToken: connect_go.NewClient[v0alpha.GetMyTempUserTokenReq, v0alpha.GetMyTempUserTokenRes](
+		getTempUserToken: connect_go.NewClient[v0alpha.GetTempUserTokenReq, v0alpha.GetTempUserTokenRes](
 			httpClient,
-			baseURL+OrgGetMyTempUserTokenProcedure,
+			baseURL+OrgGetTempUserTokenProcedure,
 			opts...,
 		),
 		getTempUserTokenByUserId: connect_go.NewClient[v0alpha.GetTempUserTokenByUserIdReq, v0alpha.GetTempUserTokenByUserIdRes](
@@ -2337,11 +2331,6 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgAddUserSubscriptionProcedure,
 			opts...,
 		),
-		addMyUserSubscription: connect_go.NewClient[v0alpha.AddMyUserSubscriptionRequest, v0alpha.AddMyUserSubscriptionResponse](
-			httpClient,
-			baseURL+OrgAddMyUserSubscriptionProcedure,
-			opts...,
-		),
 		removeUserSubscription: connect_go.NewClient[v0alpha.RemoveUserSubscriptionRequest, v0alpha.RemoveUserSubscriptionResponse](
 			httpClient,
 			baseURL+OrgRemoveUserSubscriptionProcedure,
@@ -2425,18 +2414,18 @@ type orgClient struct {
 	listAgentProfileGroups                        *connect_go.Client[v0alpha.ListAgentProfileGroupsRequest, v0alpha.ListAgentProfileGroupsResponse]
 	deleteAgentProfileGroup                       *connect_go.Client[v0alpha.DeleteAgentProfileGroupRequest, v0alpha.DeleteAgentProfileGroupResponse]
 	assignAgentProfileGroups                      *connect_go.Client[v0alpha.AssignAgentProfileGroupsRequest, v0alpha.AssignAgentProfileGroupsResponse]
+	updateUser                                    *connect_go.Client[v0alpha.UpdateUserRequest, v0alpha.UpdateUserResponse]
 	updateMyUser                                  *connect_go.Client[v0alpha.UpdateMyUserRequest, v0alpha.UpdateMyUserResponse]
-	updateUserByUserId                            *connect_go.Client[v0alpha.UpdateUserByUserIdRequest, v0alpha.UpdateUserByUserIdResponse]
 	updateUserByCallerId                          *connect_go.Client[v0alpha.UpdateUserByCallerIdRequest, v0alpha.UpdateUserByCallerIdResponse]
 	createUser                                    *connect_go.Client[v0alpha.CreateUserRequest, v0alpha.CreateUserResponse]
 	createUserByOrgId                             *connect_go.Client[v0alpha.CreateUserByOrgIdRequest, v0alpha.CreateUserByOrgIdResponse]
 	createDelegatedUser                           *connect_go.Client[v0alpha.CreateDelegatedUserRequest, v0alpha.CreateDelegatedUserResponse]
-	updateMyUserPassword                          *connect_go.Client[v0alpha.UpdateMyUserPasswordRequest, v0alpha.UpdateMyUserPasswordResponse]
+	updateUserPassword                            *connect_go.Client[v0alpha.UpdateUserPasswordRequest, v0alpha.UpdateUserPasswordResponse]
 	updateUserPasswordByUserId                    *connect_go.Client[v0alpha.UpdateUserPasswordByUserIdRequest, v0alpha.UpdateUserPasswordByUserIdResponse]
 	updateUserPasswordByOrgId                     *connect_go.Client[v0alpha.UpdateUserPasswordByOrgIdRequest, v0alpha.UpdateUserPasswordByOrgIdResponse]
 	resetUserRequirePasswordReset                 *connect_go.Client[v0alpha.ResetUserRequirePasswordResetRequest, v0alpha.ResetUserRequirePasswordResetResponse]
 	getMyUserPasswordResetLink                    *connect_go.Client[v0alpha.GetMyUserPasswordResetLinkRequest, v0alpha.GetMyUserPasswordResetLinkResponse]
-	getUserPasswordResetLinkByUserId              *connect_go.Client[v0alpha.GetUserPasswordResetLinkByUserIdRequest, v0alpha.GetUserPasswordResetLinkByUserIdResponse]
+	getUserPasswordResetLink                      *connect_go.Client[v0alpha.GetUserPasswordResetLinkRequest, v0alpha.GetUserPasswordResetLinkResponse]
 	getUserPasswordResetLinkByOrgId               *connect_go.Client[v0alpha.GetUserPasswordResetLinkByOrgIdRequest, v0alpha.GetUserPasswordResetLinkByOrgIdResponse]
 	getUserEmailVerified                          *connect_go.Client[v0alpha.GetUserEmailVerifiedRequest, v0alpha.GetUserEmailVerifiedResponse]
 	getUserEmailVerifiedByOrgId                   *connect_go.Client[v0alpha.GetUserEmailVerifiedByOrgIdRequest, v0alpha.GetUserEmailVerifiedByOrgIdResponse]
@@ -2444,7 +2433,7 @@ type orgClient struct {
 	sendUserVerificationEmail                     *connect_go.Client[v0alpha.SendUserVerificationEmailRequest, v0alpha.SendUserVerificationEmailResponse]
 	manualUserEmailVerificationByOrgId            *connect_go.Client[v0alpha.ManualUserEmailVerificationByOrgIdRequest, v0alpha.ManualUserEmailVerificationByOrgIdResponse]
 	manualUserEmailVerification                   *connect_go.Client[v0alpha.ManualUserEmailVerificationRequest, v0alpha.ManualUserEmailVerificationResponse]
-	getMyTempUserToken                            *connect_go.Client[v0alpha.GetMyTempUserTokenReq, v0alpha.GetMyTempUserTokenRes]
+	getTempUserToken                              *connect_go.Client[v0alpha.GetTempUserTokenReq, v0alpha.GetTempUserTokenRes]
 	getTempUserTokenByUserId                      *connect_go.Client[v0alpha.GetTempUserTokenByUserIdReq, v0alpha.GetTempUserTokenByUserIdRes]
 	getCountriesList                              *connect_go.Client[v0alpha.GetCountriesListRequest, v0alpha.GetCountriesListResponse]
 	getAdminClientPreferences                     *connect_go.Client[v0alpha.GetAdminClientPreferencesRequest, v0alpha.GetAdminClientPreferencesResponse]
@@ -2586,7 +2575,6 @@ type orgClient struct {
 	deleteAuthConnection                          *connect_go.Client[v0alpha.DeleteAuthConnectionRequest, v0alpha.DeleteAuthConnectionResponse]
 	getUserSubscription                           *connect_go.Client[v0alpha.GetUserSubscriptionRequest, v0alpha.GetUserSubscriptionResponse]
 	addUserSubscription                           *connect_go.Client[v0alpha.AddUserSubscriptionRequest, v0alpha.AddUserSubscriptionResponse]
-	addMyUserSubscription                         *connect_go.Client[v0alpha.AddMyUserSubscriptionRequest, v0alpha.AddMyUserSubscriptionResponse]
 	removeUserSubscription                        *connect_go.Client[v0alpha.RemoveUserSubscriptionRequest, v0alpha.RemoveUserSubscriptionResponse]
 	removeMyUserSubscription                      *connect_go.Client[v0alpha.RemoveMyUserSubscriptionRequest, v0alpha.RemoveMyUserSubscriptionResponse]
 	updateUserSubscription                        *connect_go.Client[v0alpha.UpdateUserSubscriptionRequest, v0alpha.UpdateUserSubscriptionResponse]
@@ -2739,14 +2727,14 @@ func (c *orgClient) AssignAgentProfileGroups(ctx context.Context, req *connect_g
 	return c.assignAgentProfileGroups.CallUnary(ctx, req)
 }
 
+// UpdateUser calls api.v0alpha.Org.UpdateUser.
+func (c *orgClient) UpdateUser(ctx context.Context, req *connect_go.Request[v0alpha.UpdateUserRequest]) (*connect_go.Response[v0alpha.UpdateUserResponse], error) {
+	return c.updateUser.CallUnary(ctx, req)
+}
+
 // UpdateMyUser calls api.v0alpha.Org.UpdateMyUser.
 func (c *orgClient) UpdateMyUser(ctx context.Context, req *connect_go.Request[v0alpha.UpdateMyUserRequest]) (*connect_go.Response[v0alpha.UpdateMyUserResponse], error) {
 	return c.updateMyUser.CallUnary(ctx, req)
-}
-
-// UpdateUserByUserId calls api.v0alpha.Org.UpdateUserByUserId.
-func (c *orgClient) UpdateUserByUserId(ctx context.Context, req *connect_go.Request[v0alpha.UpdateUserByUserIdRequest]) (*connect_go.Response[v0alpha.UpdateUserByUserIdResponse], error) {
-	return c.updateUserByUserId.CallUnary(ctx, req)
 }
 
 // UpdateUserByCallerId calls api.v0alpha.Org.UpdateUserByCallerId.
@@ -2769,9 +2757,9 @@ func (c *orgClient) CreateDelegatedUser(ctx context.Context, req *connect_go.Req
 	return c.createDelegatedUser.CallUnary(ctx, req)
 }
 
-// UpdateMyUserPassword calls api.v0alpha.Org.UpdateMyUserPassword.
-func (c *orgClient) UpdateMyUserPassword(ctx context.Context, req *connect_go.Request[v0alpha.UpdateMyUserPasswordRequest]) (*connect_go.Response[v0alpha.UpdateMyUserPasswordResponse], error) {
-	return c.updateMyUserPassword.CallUnary(ctx, req)
+// UpdateUserPassword calls api.v0alpha.Org.UpdateUserPassword.
+func (c *orgClient) UpdateUserPassword(ctx context.Context, req *connect_go.Request[v0alpha.UpdateUserPasswordRequest]) (*connect_go.Response[v0alpha.UpdateUserPasswordResponse], error) {
+	return c.updateUserPassword.CallUnary(ctx, req)
 }
 
 // UpdateUserPasswordByUserId calls api.v0alpha.Org.UpdateUserPasswordByUserId.
@@ -2794,9 +2782,9 @@ func (c *orgClient) GetMyUserPasswordResetLink(ctx context.Context, req *connect
 	return c.getMyUserPasswordResetLink.CallUnary(ctx, req)
 }
 
-// GetUserPasswordResetLinkByUserId calls api.v0alpha.Org.GetUserPasswordResetLinkByUserId.
-func (c *orgClient) GetUserPasswordResetLinkByUserId(ctx context.Context, req *connect_go.Request[v0alpha.GetUserPasswordResetLinkByUserIdRequest]) (*connect_go.Response[v0alpha.GetUserPasswordResetLinkByUserIdResponse], error) {
-	return c.getUserPasswordResetLinkByUserId.CallUnary(ctx, req)
+// GetUserPasswordResetLink calls api.v0alpha.Org.GetUserPasswordResetLink.
+func (c *orgClient) GetUserPasswordResetLink(ctx context.Context, req *connect_go.Request[v0alpha.GetUserPasswordResetLinkRequest]) (*connect_go.Response[v0alpha.GetUserPasswordResetLinkResponse], error) {
+	return c.getUserPasswordResetLink.CallUnary(ctx, req)
 }
 
 // GetUserPasswordResetLinkByOrgId calls api.v0alpha.Org.GetUserPasswordResetLinkByOrgId.
@@ -2834,9 +2822,9 @@ func (c *orgClient) ManualUserEmailVerification(ctx context.Context, req *connec
 	return c.manualUserEmailVerification.CallUnary(ctx, req)
 }
 
-// GetMyTempUserToken calls api.v0alpha.Org.GetMyTempUserToken.
-func (c *orgClient) GetMyTempUserToken(ctx context.Context, req *connect_go.Request[v0alpha.GetMyTempUserTokenReq]) (*connect_go.Response[v0alpha.GetMyTempUserTokenRes], error) {
-	return c.getMyTempUserToken.CallUnary(ctx, req)
+// GetTempUserToken calls api.v0alpha.Org.GetTempUserToken.
+func (c *orgClient) GetTempUserToken(ctx context.Context, req *connect_go.Request[v0alpha.GetTempUserTokenReq]) (*connect_go.Response[v0alpha.GetTempUserTokenRes], error) {
+	return c.getTempUserToken.CallUnary(ctx, req)
 }
 
 // GetTempUserTokenByUserId calls api.v0alpha.Org.GetTempUserTokenByUserId.
@@ -3549,11 +3537,6 @@ func (c *orgClient) AddUserSubscription(ctx context.Context, req *connect_go.Req
 	return c.addUserSubscription.CallUnary(ctx, req)
 }
 
-// AddMyUserSubscription calls api.v0alpha.Org.AddMyUserSubscription.
-func (c *orgClient) AddMyUserSubscription(ctx context.Context, req *connect_go.Request[v0alpha.AddMyUserSubscriptionRequest]) (*connect_go.Response[v0alpha.AddMyUserSubscriptionResponse], error) {
-	return c.addMyUserSubscription.CallUnary(ctx, req)
-}
-
 // RemoveUserSubscription calls api.v0alpha.Org.RemoveUserSubscription.
 func (c *orgClient) RemoveUserSubscription(ctx context.Context, req *connect_go.Request[v0alpha.RemoveUserSubscriptionRequest]) (*connect_go.Response[v0alpha.RemoveUserSubscriptionResponse], error) {
 	return c.removeUserSubscription.CallUnary(ctx, req)
@@ -3672,15 +3655,15 @@ type OrgHandler interface {
 	// Required Permissions:
 	// ORG_EDIT
 	AssignAgentProfileGroups(context.Context, *connect_go.Request[v0alpha.AssignAgentProfileGroupsRequest]) (*connect_go.Response[v0alpha.AssignAgentProfileGroupsResponse], error)
+	// UpdateUser updates a user as defined by the UpdateUserRequest.
+	// Required Permissions: USER_EDIT (default)
+	UpdateUser(context.Context, *connect_go.Request[v0alpha.UpdateUserRequest]) (*connect_go.Response[v0alpha.UpdateUserResponse], error)
 	// UpdateMyUser updates the currently logged in user as defined by the UpdateMyUserRequest.
 	// Required Permissions: USER_EDIT_OPTIONS
 	// Only some of the fields on the request message can be updated
 	// for the currently logged in user: time_zone, linkback_numbers,
 	// caller_ids, and default_app.
 	UpdateMyUser(context.Context, *connect_go.Request[v0alpha.UpdateMyUserRequest]) (*connect_go.Response[v0alpha.UpdateMyUserResponse], error)
-	// UpdateUserByUserId updates a user as defined by the UpdateUserByUserIdRequest.
-	// Required Permissions: USER_EDIT
-	UpdateUserByUserId(context.Context, *connect_go.Request[v0alpha.UpdateUserByUserIdRequest]) (*connect_go.Response[v0alpha.UpdateUserByUserIdResponse], error)
 	// UpdateUserByCallerId updates a user's caller id as defined by the UpdateUserByCallerIdRequest.
 	// Required Permissions: USER_EDIT_AGENT_CALLER_ID
 	UpdateUserByCallerId(context.Context, *connect_go.Request[v0alpha.UpdateUserByCallerIdRequest]) (*connect_go.Response[v0alpha.UpdateUserByCallerIdResponse], error)
@@ -3694,10 +3677,10 @@ type OrgHandler interface {
 	CreateUserByOrgId(context.Context, *connect_go.Request[v0alpha.CreateUserByOrgIdRequest]) (*connect_go.Response[v0alpha.CreateUserByOrgIdResponse], error)
 	// Creates a delegated user. This should only be called by an auth0 action.
 	CreateDelegatedUser(context.Context, *connect_go.Request[v0alpha.CreateDelegatedUserRequest]) (*connect_go.Response[v0alpha.CreateDelegatedUserResponse], error)
-	// UpdateMyUserPassword updates the current user's password to the
+	// UpdateUserPassword updates the current user's password to the
 	// password given on the request message.
 	// Required Permissions: USER_EDIT_PASSWORD (Update your own password)
-	UpdateMyUserPassword(context.Context, *connect_go.Request[v0alpha.UpdateMyUserPasswordRequest]) (*connect_go.Response[v0alpha.UpdateMyUserPasswordResponse], error)
+	UpdateUserPassword(context.Context, *connect_go.Request[v0alpha.UpdateUserPasswordRequest]) (*connect_go.Response[v0alpha.UpdateUserPasswordResponse], error)
 	// UpdateUserPassword updates a user's password (in the same org as the current user)
 	// to the password given on the request message.
 	// Required Permissions: USER_EDIT (Update another user's password in the same org)
@@ -3712,12 +3695,12 @@ type OrgHandler interface {
 	// GetMyUserPasswordResetLink generate a password reset link for the current user.
 	// Required Permissions: USER_EDIT_PASSWORD
 	GetMyUserPasswordResetLink(context.Context, *connect_go.Request[v0alpha.GetMyUserPasswordResetLinkRequest]) (*connect_go.Response[v0alpha.GetMyUserPasswordResetLinkResponse], error)
-	// GetUserPasswordResetLinkByUserId generates a password reset link for a user
+	// GetUserPasswordResetLink generates a password reset link for a user
 	// in the same org as the current user.
 	// Required Permissions: USER_EDIT
 	//
 	//	USER_EDIT if user_id given on the request.
-	GetUserPasswordResetLinkByUserId(context.Context, *connect_go.Request[v0alpha.GetUserPasswordResetLinkByUserIdRequest]) (*connect_go.Response[v0alpha.GetUserPasswordResetLinkByUserIdResponse], error)
+	GetUserPasswordResetLink(context.Context, *connect_go.Request[v0alpha.GetUserPasswordResetLinkRequest]) (*connect_go.Response[v0alpha.GetUserPasswordResetLinkResponse], error)
 	// GetUserPasswordResetLinkByOrgId generates a password reset link
 	// for a specific user in a specific org.
 	// Required Permissions: CUSTOMER_SUPPORT
@@ -3737,10 +3720,10 @@ type OrgHandler interface {
 	ManualUserEmailVerificationByOrgId(context.Context, *connect_go.Request[v0alpha.ManualUserEmailVerificationByOrgIdRequest]) (*connect_go.Response[v0alpha.ManualUserEmailVerificationByOrgIdResponse], error)
 	// Sets the given user's to verified without needing to send a verification email.
 	ManualUserEmailVerification(context.Context, *connect_go.Request[v0alpha.ManualUserEmailVerificationRequest]) (*connect_go.Response[v0alpha.ManualUserEmailVerificationResponse], error)
-	// GetMyTempUserToken authenticates impersonation and generates token
+	// GetTempUserToken authenticates impersonation and generates token
 	// to be used for the current user.
 	// Required Permissions: None, anyone authorized can use this
-	GetMyTempUserToken(context.Context, *connect_go.Request[v0alpha.GetMyTempUserTokenReq]) (*connect_go.Response[v0alpha.GetMyTempUserTokenRes], error)
+	GetTempUserToken(context.Context, *connect_go.Request[v0alpha.GetTempUserTokenReq]) (*connect_go.Response[v0alpha.GetTempUserTokenRes], error)
 	// GetTempUserTokenByUserId authenticates impersonation and generates token
 	// to be used for the user with the given user_id.
 	// Required Permissions: CUSTOMER_SUPPORT
@@ -4336,8 +4319,6 @@ type OrgHandler interface {
 	GetUserSubscription(context.Context, *connect_go.Request[v0alpha.GetUserSubscriptionRequest]) (*connect_go.Response[v0alpha.GetUserSubscriptionResponse], error)
 	// Adds a user subscription to user's list of subscriptions
 	AddUserSubscription(context.Context, *connect_go.Request[v0alpha.AddUserSubscriptionRequest]) (*connect_go.Response[v0alpha.AddUserSubscriptionResponse], error)
-	// Adds a user subscription to user's list of subscriptions
-	AddMyUserSubscription(context.Context, *connect_go.Request[v0alpha.AddMyUserSubscriptionRequest]) (*connect_go.Response[v0alpha.AddMyUserSubscriptionResponse], error)
 	// Removes a user subscription from a specified user's list of subscriptions
 	RemoveUserSubscription(context.Context, *connect_go.Request[v0alpha.RemoveUserSubscriptionRequest]) (*connect_go.Response[v0alpha.RemoveUserSubscriptionResponse], error)
 	// Removes a user subscription from a user's list of subscriptions
@@ -4545,14 +4526,14 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.AssignAgentProfileGroups,
 		opts...,
 	))
+	mux.Handle(OrgUpdateUserProcedure, connect_go.NewUnaryHandler(
+		OrgUpdateUserProcedure,
+		svc.UpdateUser,
+		opts...,
+	))
 	mux.Handle(OrgUpdateMyUserProcedure, connect_go.NewUnaryHandler(
 		OrgUpdateMyUserProcedure,
 		svc.UpdateMyUser,
-		opts...,
-	))
-	mux.Handle(OrgUpdateUserByUserIdProcedure, connect_go.NewUnaryHandler(
-		OrgUpdateUserByUserIdProcedure,
-		svc.UpdateUserByUserId,
 		opts...,
 	))
 	mux.Handle(OrgUpdateUserByCallerIdProcedure, connect_go.NewUnaryHandler(
@@ -4575,9 +4556,9 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.CreateDelegatedUser,
 		opts...,
 	))
-	mux.Handle(OrgUpdateMyUserPasswordProcedure, connect_go.NewUnaryHandler(
-		OrgUpdateMyUserPasswordProcedure,
-		svc.UpdateMyUserPassword,
+	mux.Handle(OrgUpdateUserPasswordProcedure, connect_go.NewUnaryHandler(
+		OrgUpdateUserPasswordProcedure,
+		svc.UpdateUserPassword,
 		opts...,
 	))
 	mux.Handle(OrgUpdateUserPasswordByUserIdProcedure, connect_go.NewUnaryHandler(
@@ -4600,9 +4581,9 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.GetMyUserPasswordResetLink,
 		opts...,
 	))
-	mux.Handle(OrgGetUserPasswordResetLinkByUserIdProcedure, connect_go.NewUnaryHandler(
-		OrgGetUserPasswordResetLinkByUserIdProcedure,
-		svc.GetUserPasswordResetLinkByUserId,
+	mux.Handle(OrgGetUserPasswordResetLinkProcedure, connect_go.NewUnaryHandler(
+		OrgGetUserPasswordResetLinkProcedure,
+		svc.GetUserPasswordResetLink,
 		opts...,
 	))
 	mux.Handle(OrgGetUserPasswordResetLinkByOrgIdProcedure, connect_go.NewUnaryHandler(
@@ -4640,9 +4621,9 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.ManualUserEmailVerification,
 		opts...,
 	))
-	mux.Handle(OrgGetMyTempUserTokenProcedure, connect_go.NewUnaryHandler(
-		OrgGetMyTempUserTokenProcedure,
-		svc.GetMyTempUserToken,
+	mux.Handle(OrgGetTempUserTokenProcedure, connect_go.NewUnaryHandler(
+		OrgGetTempUserTokenProcedure,
+		svc.GetTempUserToken,
 		opts...,
 	))
 	mux.Handle(OrgGetTempUserTokenByUserIdProcedure, connect_go.NewUnaryHandler(
@@ -5350,11 +5331,6 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.AddUserSubscription,
 		opts...,
 	))
-	mux.Handle(OrgAddMyUserSubscriptionProcedure, connect_go.NewUnaryHandler(
-		OrgAddMyUserSubscriptionProcedure,
-		svc.AddMyUserSubscription,
-		opts...,
-	))
 	mux.Handle(OrgRemoveUserSubscriptionProcedure, connect_go.NewUnaryHandler(
 		OrgRemoveUserSubscriptionProcedure,
 		svc.RemoveUserSubscription,
@@ -5523,12 +5499,12 @@ func (UnimplementedOrgHandler) AssignAgentProfileGroups(context.Context, *connec
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Org.AssignAgentProfileGroups is not implemented"))
 }
 
-func (UnimplementedOrgHandler) UpdateMyUser(context.Context, *connect_go.Request[v0alpha.UpdateMyUserRequest]) (*connect_go.Response[v0alpha.UpdateMyUserResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Org.UpdateMyUser is not implemented"))
+func (UnimplementedOrgHandler) UpdateUser(context.Context, *connect_go.Request[v0alpha.UpdateUserRequest]) (*connect_go.Response[v0alpha.UpdateUserResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Org.UpdateUser is not implemented"))
 }
 
-func (UnimplementedOrgHandler) UpdateUserByUserId(context.Context, *connect_go.Request[v0alpha.UpdateUserByUserIdRequest]) (*connect_go.Response[v0alpha.UpdateUserByUserIdResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Org.UpdateUserByUserId is not implemented"))
+func (UnimplementedOrgHandler) UpdateMyUser(context.Context, *connect_go.Request[v0alpha.UpdateMyUserRequest]) (*connect_go.Response[v0alpha.UpdateMyUserResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Org.UpdateMyUser is not implemented"))
 }
 
 func (UnimplementedOrgHandler) UpdateUserByCallerId(context.Context, *connect_go.Request[v0alpha.UpdateUserByCallerIdRequest]) (*connect_go.Response[v0alpha.UpdateUserByCallerIdResponse], error) {
@@ -5547,8 +5523,8 @@ func (UnimplementedOrgHandler) CreateDelegatedUser(context.Context, *connect_go.
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Org.CreateDelegatedUser is not implemented"))
 }
 
-func (UnimplementedOrgHandler) UpdateMyUserPassword(context.Context, *connect_go.Request[v0alpha.UpdateMyUserPasswordRequest]) (*connect_go.Response[v0alpha.UpdateMyUserPasswordResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Org.UpdateMyUserPassword is not implemented"))
+func (UnimplementedOrgHandler) UpdateUserPassword(context.Context, *connect_go.Request[v0alpha.UpdateUserPasswordRequest]) (*connect_go.Response[v0alpha.UpdateUserPasswordResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Org.UpdateUserPassword is not implemented"))
 }
 
 func (UnimplementedOrgHandler) UpdateUserPasswordByUserId(context.Context, *connect_go.Request[v0alpha.UpdateUserPasswordByUserIdRequest]) (*connect_go.Response[v0alpha.UpdateUserPasswordByUserIdResponse], error) {
@@ -5567,8 +5543,8 @@ func (UnimplementedOrgHandler) GetMyUserPasswordResetLink(context.Context, *conn
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Org.GetMyUserPasswordResetLink is not implemented"))
 }
 
-func (UnimplementedOrgHandler) GetUserPasswordResetLinkByUserId(context.Context, *connect_go.Request[v0alpha.GetUserPasswordResetLinkByUserIdRequest]) (*connect_go.Response[v0alpha.GetUserPasswordResetLinkByUserIdResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Org.GetUserPasswordResetLinkByUserId is not implemented"))
+func (UnimplementedOrgHandler) GetUserPasswordResetLink(context.Context, *connect_go.Request[v0alpha.GetUserPasswordResetLinkRequest]) (*connect_go.Response[v0alpha.GetUserPasswordResetLinkResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Org.GetUserPasswordResetLink is not implemented"))
 }
 
 func (UnimplementedOrgHandler) GetUserPasswordResetLinkByOrgId(context.Context, *connect_go.Request[v0alpha.GetUserPasswordResetLinkByOrgIdRequest]) (*connect_go.Response[v0alpha.GetUserPasswordResetLinkByOrgIdResponse], error) {
@@ -5599,8 +5575,8 @@ func (UnimplementedOrgHandler) ManualUserEmailVerification(context.Context, *con
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Org.ManualUserEmailVerification is not implemented"))
 }
 
-func (UnimplementedOrgHandler) GetMyTempUserToken(context.Context, *connect_go.Request[v0alpha.GetMyTempUserTokenReq]) (*connect_go.Response[v0alpha.GetMyTempUserTokenRes], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Org.GetMyTempUserToken is not implemented"))
+func (UnimplementedOrgHandler) GetTempUserToken(context.Context, *connect_go.Request[v0alpha.GetTempUserTokenReq]) (*connect_go.Response[v0alpha.GetTempUserTokenRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Org.GetTempUserToken is not implemented"))
 }
 
 func (UnimplementedOrgHandler) GetTempUserTokenByUserId(context.Context, *connect_go.Request[v0alpha.GetTempUserTokenByUserIdReq]) (*connect_go.Response[v0alpha.GetTempUserTokenByUserIdRes], error) {
@@ -6165,10 +6141,6 @@ func (UnimplementedOrgHandler) GetUserSubscription(context.Context, *connect_go.
 
 func (UnimplementedOrgHandler) AddUserSubscription(context.Context, *connect_go.Request[v0alpha.AddUserSubscriptionRequest]) (*connect_go.Response[v0alpha.AddUserSubscriptionResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Org.AddUserSubscription is not implemented"))
-}
-
-func (UnimplementedOrgHandler) AddMyUserSubscription(context.Context, *connect_go.Request[v0alpha.AddMyUserSubscriptionRequest]) (*connect_go.Response[v0alpha.AddMyUserSubscriptionResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Org.AddMyUserSubscription is not implemented"))
 }
 
 func (UnimplementedOrgHandler) RemoveUserSubscription(context.Context, *connect_go.Request[v0alpha.RemoveUserSubscriptionRequest]) (*connect_go.Response[v0alpha.RemoveUserSubscriptionResponse], error) {
