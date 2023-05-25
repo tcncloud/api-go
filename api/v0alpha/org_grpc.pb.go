@@ -574,7 +574,7 @@ type OrgClient interface {
 	GetVoiceAnalyticsPreferences(ctx context.Context, in *GetVoiceAnalyticsPreferencesRequest, opts ...grpc.CallOption) (*GetVoiceAnalyticsPreferencesResponse, error)
 	// UpdateVoiceAnalyticsPreferences updates the all preferences except for enabled for voice analytics
 	UpdateVoiceAnalyticsPreferences(ctx context.Context, in *UpdateVoiceAnalyticsPreferencesRequest, opts ...grpc.CallOption) (*UpdateVoiceAnalyticsPreferencesResponse, error)
-	// UpdateVoiceAnalyticsPreferencesEnabled updates the enabled prefernece for voice analytics
+	// UpdateVoiceAnalyticsPreferencesEnabled updates the enabled preferences for voice analytics
 	UpdateVoiceAnalyticsPreferencesEnabled(ctx context.Context, in *UpdateVoiceAnalyticsPreferencesEnabledRequest, opts ...grpc.CallOption) (*UpdateVoiceAnalyticsPreferencesEnabledResponse, error)
 	// GetScorecardsPreferences returns the all preferences for scorecards
 	GetScorecardsPreferences(ctx context.Context, in *GetScorecardsPreferencesRequest, opts ...grpc.CallOption) (*GetScorecardsPreferencesResponse, error)
@@ -3213,7 +3213,7 @@ type OrgServer interface {
 	GetVoiceAnalyticsPreferences(context.Context, *GetVoiceAnalyticsPreferencesRequest) (*GetVoiceAnalyticsPreferencesResponse, error)
 	// UpdateVoiceAnalyticsPreferences updates the all preferences except for enabled for voice analytics
 	UpdateVoiceAnalyticsPreferences(context.Context, *UpdateVoiceAnalyticsPreferencesRequest) (*UpdateVoiceAnalyticsPreferencesResponse, error)
-	// UpdateVoiceAnalyticsPreferencesEnabled updates the enabled prefernece for voice analytics
+	// UpdateVoiceAnalyticsPreferencesEnabled updates the enabled preferences for voice analytics
 	UpdateVoiceAnalyticsPreferencesEnabled(context.Context, *UpdateVoiceAnalyticsPreferencesEnabledRequest) (*UpdateVoiceAnalyticsPreferencesEnabledResponse, error)
 	// GetScorecardsPreferences returns the all preferences for scorecards
 	GetScorecardsPreferences(context.Context, *GetScorecardsPreferencesRequest) (*GetScorecardsPreferencesResponse, error)
