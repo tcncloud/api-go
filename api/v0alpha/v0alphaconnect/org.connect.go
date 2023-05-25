@@ -109,9 +109,8 @@ const (
 	OrgUpdateUserProcedure = "/api.v0alpha.Org/UpdateUser"
 	// OrgUpdateMyUserProcedure is the fully-qualified name of the Org's UpdateMyUser RPC.
 	OrgUpdateMyUserProcedure = "/api.v0alpha.Org/UpdateMyUser"
-	// OrgUpdateUserByCallerIdProcedure is the fully-qualified name of the Org's UpdateUserByCallerId
-	// RPC.
-	OrgUpdateUserByCallerIdProcedure = "/api.v0alpha.Org/UpdateUserByCallerId"
+	// OrgUpdateUserCallerIdProcedure is the fully-qualified name of the Org's UpdateUserCallerId RPC.
+	OrgUpdateUserCallerIdProcedure = "/api.v0alpha.Org/UpdateUserCallerId"
 	// OrgCreateUserProcedure is the fully-qualified name of the Org's CreateUser RPC.
 	OrgCreateUserProcedure = "/api.v0alpha.Org/CreateUser"
 	// OrgCreateUserByOrgIdProcedure is the fully-qualified name of the Org's CreateUserByOrgId RPC.
@@ -661,9 +660,9 @@ type OrgClient interface {
 	// for the currently logged in user: time_zone, linkback_numbers,
 	// caller_ids, and default_app.
 	UpdateMyUser(context.Context, *connect_go.Request[v0alpha.UpdateMyUserRequest]) (*connect_go.Response[v0alpha.UpdateMyUserResponse], error)
-	// UpdateUserByCallerId updates a user's caller id as defined by the UpdateUserByCallerIdRequest.
+	// UpdateUserCallerId updates a user's caller id as defined by the UpdateUserCallerIdRequest.
 	// Required Permissions: USER_EDIT_AGENT_CALLER_ID
-	UpdateUserByCallerId(context.Context, *connect_go.Request[v0alpha.UpdateUserByCallerIdRequest]) (*connect_go.Response[v0alpha.UpdateUserByCallerIdResponse], error)
+	UpdateUserCallerId(context.Context, *connect_go.Request[v0alpha.UpdateUserCallerIdRequest]) (*connect_go.Response[v0alpha.UpdateUserCallerIdResponse], error)
 	// CreateUser creates a new user as defined by the CreateUserRequest
 	// request message.
 	// Required Permissions: USER_CREATE
@@ -1536,9 +1535,9 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgUpdateMyUserProcedure,
 			opts...,
 		),
-		updateUserByCallerId: connect_go.NewClient[v0alpha.UpdateUserByCallerIdRequest, v0alpha.UpdateUserByCallerIdResponse](
+		updateUserCallerId: connect_go.NewClient[v0alpha.UpdateUserCallerIdRequest, v0alpha.UpdateUserCallerIdResponse](
 			httpClient,
-			baseURL+OrgUpdateUserByCallerIdProcedure,
+			baseURL+OrgUpdateUserCallerIdProcedure,
 			opts...,
 		),
 		createUser: connect_go.NewClient[v0alpha.CreateUserRequest, v0alpha.CreateUserResponse](
@@ -2416,7 +2415,7 @@ type orgClient struct {
 	assignAgentProfileGroups                      *connect_go.Client[v0alpha.AssignAgentProfileGroupsRequest, v0alpha.AssignAgentProfileGroupsResponse]
 	updateUser                                    *connect_go.Client[v0alpha.UpdateUserRequest, v0alpha.UpdateUserResponse]
 	updateMyUser                                  *connect_go.Client[v0alpha.UpdateMyUserRequest, v0alpha.UpdateMyUserResponse]
-	updateUserByCallerId                          *connect_go.Client[v0alpha.UpdateUserByCallerIdRequest, v0alpha.UpdateUserByCallerIdResponse]
+	updateUserCallerId                            *connect_go.Client[v0alpha.UpdateUserCallerIdRequest, v0alpha.UpdateUserCallerIdResponse]
 	createUser                                    *connect_go.Client[v0alpha.CreateUserRequest, v0alpha.CreateUserResponse]
 	createUserByOrgId                             *connect_go.Client[v0alpha.CreateUserByOrgIdRequest, v0alpha.CreateUserByOrgIdResponse]
 	createDelegatedUser                           *connect_go.Client[v0alpha.CreateDelegatedUserRequest, v0alpha.CreateDelegatedUserResponse]
@@ -2737,9 +2736,9 @@ func (c *orgClient) UpdateMyUser(ctx context.Context, req *connect_go.Request[v0
 	return c.updateMyUser.CallUnary(ctx, req)
 }
 
-// UpdateUserByCallerId calls api.v0alpha.Org.UpdateUserByCallerId.
-func (c *orgClient) UpdateUserByCallerId(ctx context.Context, req *connect_go.Request[v0alpha.UpdateUserByCallerIdRequest]) (*connect_go.Response[v0alpha.UpdateUserByCallerIdResponse], error) {
-	return c.updateUserByCallerId.CallUnary(ctx, req)
+// UpdateUserCallerId calls api.v0alpha.Org.UpdateUserCallerId.
+func (c *orgClient) UpdateUserCallerId(ctx context.Context, req *connect_go.Request[v0alpha.UpdateUserCallerIdRequest]) (*connect_go.Response[v0alpha.UpdateUserCallerIdResponse], error) {
+	return c.updateUserCallerId.CallUnary(ctx, req)
 }
 
 // CreateUser calls api.v0alpha.Org.CreateUser.
@@ -3664,9 +3663,9 @@ type OrgHandler interface {
 	// for the currently logged in user: time_zone, linkback_numbers,
 	// caller_ids, and default_app.
 	UpdateMyUser(context.Context, *connect_go.Request[v0alpha.UpdateMyUserRequest]) (*connect_go.Response[v0alpha.UpdateMyUserResponse], error)
-	// UpdateUserByCallerId updates a user's caller id as defined by the UpdateUserByCallerIdRequest.
+	// UpdateUserCallerId updates a user's caller id as defined by the UpdateUserCallerIdRequest.
 	// Required Permissions: USER_EDIT_AGENT_CALLER_ID
-	UpdateUserByCallerId(context.Context, *connect_go.Request[v0alpha.UpdateUserByCallerIdRequest]) (*connect_go.Response[v0alpha.UpdateUserByCallerIdResponse], error)
+	UpdateUserCallerId(context.Context, *connect_go.Request[v0alpha.UpdateUserCallerIdRequest]) (*connect_go.Response[v0alpha.UpdateUserCallerIdResponse], error)
 	// CreateUser creates a new user as defined by the CreateUserRequest
 	// request message.
 	// Required Permissions: USER_CREATE
@@ -4536,9 +4535,9 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.UpdateMyUser,
 		opts...,
 	))
-	mux.Handle(OrgUpdateUserByCallerIdProcedure, connect_go.NewUnaryHandler(
-		OrgUpdateUserByCallerIdProcedure,
-		svc.UpdateUserByCallerId,
+	mux.Handle(OrgUpdateUserCallerIdProcedure, connect_go.NewUnaryHandler(
+		OrgUpdateUserCallerIdProcedure,
+		svc.UpdateUserCallerId,
 		opts...,
 	))
 	mux.Handle(OrgCreateUserProcedure, connect_go.NewUnaryHandler(
@@ -5507,8 +5506,8 @@ func (UnimplementedOrgHandler) UpdateMyUser(context.Context, *connect_go.Request
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Org.UpdateMyUser is not implemented"))
 }
 
-func (UnimplementedOrgHandler) UpdateUserByCallerId(context.Context, *connect_go.Request[v0alpha.UpdateUserByCallerIdRequest]) (*connect_go.Response[v0alpha.UpdateUserByCallerIdResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Org.UpdateUserByCallerId is not implemented"))
+func (UnimplementedOrgHandler) UpdateUserCallerId(context.Context, *connect_go.Request[v0alpha.UpdateUserCallerIdRequest]) (*connect_go.Response[v0alpha.UpdateUserCallerIdResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Org.UpdateUserCallerId is not implemented"))
 }
 
 func (UnimplementedOrgHandler) CreateUser(context.Context, *connect_go.Request[v0alpha.CreateUserRequest]) (*connect_go.Response[v0alpha.CreateUserResponse], error) {

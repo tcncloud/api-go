@@ -49,7 +49,7 @@ const (
 	Org_AssignAgentProfileGroups_FullMethodName                      = "/api.v0alpha.Org/AssignAgentProfileGroups"
 	Org_UpdateUser_FullMethodName                                    = "/api.v0alpha.Org/UpdateUser"
 	Org_UpdateMyUser_FullMethodName                                  = "/api.v0alpha.Org/UpdateMyUser"
-	Org_UpdateUserByCallerId_FullMethodName                          = "/api.v0alpha.Org/UpdateUserByCallerId"
+	Org_UpdateUserCallerId_FullMethodName                            = "/api.v0alpha.Org/UpdateUserCallerId"
 	Org_CreateUser_FullMethodName                                    = "/api.v0alpha.Org/CreateUser"
 	Org_CreateUserByOrgId_FullMethodName                             = "/api.v0alpha.Org/CreateUserByOrgId"
 	Org_CreateDelegatedUser_FullMethodName                           = "/api.v0alpha.Org/CreateDelegatedUser"
@@ -299,9 +299,9 @@ type OrgClient interface {
 	// for the currently logged in user: time_zone, linkback_numbers,
 	// caller_ids, and default_app.
 	UpdateMyUser(ctx context.Context, in *UpdateMyUserRequest, opts ...grpc.CallOption) (*UpdateMyUserResponse, error)
-	// UpdateUserByCallerId updates a user's caller id as defined by the UpdateUserByCallerIdRequest.
+	// UpdateUserCallerId updates a user's caller id as defined by the UpdateUserCallerIdRequest.
 	// Required Permissions: USER_EDIT_AGENT_CALLER_ID
-	UpdateUserByCallerId(ctx context.Context, in *UpdateUserByCallerIdRequest, opts ...grpc.CallOption) (*UpdateUserByCallerIdResponse, error)
+	UpdateUserCallerId(ctx context.Context, in *UpdateUserCallerIdRequest, opts ...grpc.CallOption) (*UpdateUserCallerIdResponse, error)
 	// CreateUser creates a new user as defined by the CreateUserRequest
 	// request message.
 	// Required Permissions: USER_CREATE
@@ -1338,9 +1338,9 @@ func (c *orgClient) UpdateMyUser(ctx context.Context, in *UpdateMyUserRequest, o
 	return out, nil
 }
 
-func (c *orgClient) UpdateUserByCallerId(ctx context.Context, in *UpdateUserByCallerIdRequest, opts ...grpc.CallOption) (*UpdateUserByCallerIdResponse, error) {
-	out := new(UpdateUserByCallerIdResponse)
-	err := c.cc.Invoke(ctx, Org_UpdateUserByCallerId_FullMethodName, in, out, opts...)
+func (c *orgClient) UpdateUserCallerId(ctx context.Context, in *UpdateUserCallerIdRequest, opts ...grpc.CallOption) (*UpdateUserCallerIdResponse, error) {
+	out := new(UpdateUserCallerIdResponse)
+	err := c.cc.Invoke(ctx, Org_UpdateUserCallerId_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -2938,9 +2938,9 @@ type OrgServer interface {
 	// for the currently logged in user: time_zone, linkback_numbers,
 	// caller_ids, and default_app.
 	UpdateMyUser(context.Context, *UpdateMyUserRequest) (*UpdateMyUserResponse, error)
-	// UpdateUserByCallerId updates a user's caller id as defined by the UpdateUserByCallerIdRequest.
+	// UpdateUserCallerId updates a user's caller id as defined by the UpdateUserCallerIdRequest.
 	// Required Permissions: USER_EDIT_AGENT_CALLER_ID
-	UpdateUserByCallerId(context.Context, *UpdateUserByCallerIdRequest) (*UpdateUserByCallerIdResponse, error)
+	UpdateUserCallerId(context.Context, *UpdateUserCallerIdRequest) (*UpdateUserCallerIdResponse, error)
 	// CreateUser creates a new user as defined by the CreateUserRequest
 	// request message.
 	// Required Permissions: USER_CREATE
@@ -3748,8 +3748,8 @@ func (UnimplementedOrgServer) UpdateUser(context.Context, *UpdateUserRequest) (*
 func (UnimplementedOrgServer) UpdateMyUser(context.Context, *UpdateMyUserRequest) (*UpdateMyUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateMyUser not implemented")
 }
-func (UnimplementedOrgServer) UpdateUserByCallerId(context.Context, *UpdateUserByCallerIdRequest) (*UpdateUserByCallerIdResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserByCallerId not implemented")
+func (UnimplementedOrgServer) UpdateUserCallerId(context.Context, *UpdateUserCallerIdRequest) (*UpdateUserCallerIdResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserCallerId not implemented")
 }
 func (UnimplementedOrgServer) CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateUser not implemented")
@@ -4814,20 +4814,20 @@ func _Org_UpdateMyUser_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Org_UpdateUserByCallerId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateUserByCallerIdRequest)
+func _Org_UpdateUserCallerId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateUserCallerIdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(OrgServer).UpdateUserByCallerId(ctx, in)
+		return srv.(OrgServer).UpdateUserCallerId(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Org_UpdateUserByCallerId_FullMethodName,
+		FullMethod: Org_UpdateUserCallerId_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrgServer).UpdateUserByCallerId(ctx, req.(*UpdateUserByCallerIdRequest))
+		return srv.(OrgServer).UpdateUserCallerId(ctx, req.(*UpdateUserCallerIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -7976,8 +7976,8 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Org_UpdateMyUser_Handler,
 		},
 		{
-			MethodName: "UpdateUserByCallerId",
-			Handler:    _Org_UpdateUserByCallerId_Handler,
+			MethodName: "UpdateUserCallerId",
+			Handler:    _Org_UpdateUserCallerId_Handler,
 		},
 		{
 			MethodName: "CreateUser",
