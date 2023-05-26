@@ -181,6 +181,7 @@ const (
 	Org_ListAgentResponseGroups_FullMethodName                       = "/api.v0alpha.Org/ListAgentResponseGroups"
 	Org_ListLastTemplateElements_FullMethodName                      = "/api.v0alpha.Org/ListLastTemplateElements"
 	Org_ListQueueConfigs_FullMethodName                              = "/api.v0alpha.Org/ListQueueConfigs"
+	Org_ListQueueConfigsByOrgId_FullMethodName                       = "/api.v0alpha.Org/ListQueueConfigsByOrgId"
 	Org_DeleteQueueConfig_FullMethodName                             = "/api.v0alpha.Org/DeleteQueueConfig"
 	Org_GetQueueConfig_FullMethodName                                = "/api.v0alpha.Org/GetQueueConfig"
 	Org_CreateQueueConfig_FullMethodName                             = "/api.v0alpha.Org/CreateQueueConfig"
@@ -207,11 +208,15 @@ const (
 	Org_UpdateAuthConnectionSettings_FullMethodName                  = "/api.v0alpha.Org/UpdateAuthConnectionSettings"
 	Org_DeleteAuthConnection_FullMethodName                          = "/api.v0alpha.Org/DeleteAuthConnection"
 	Org_GetUserSubscription_FullMethodName                           = "/api.v0alpha.Org/GetUserSubscription"
+	Org_GetMyUserSubscription_FullMethodName                         = "/api.v0alpha.Org/GetMyUserSubscription"
 	Org_AddUserSubscription_FullMethodName                           = "/api.v0alpha.Org/AddUserSubscription"
+	Org_AddMyUserSubscription_FullMethodName                         = "/api.v0alpha.Org/AddMyUserSubscription"
 	Org_RemoveUserSubscription_FullMethodName                        = "/api.v0alpha.Org/RemoveUserSubscription"
 	Org_RemoveMyUserSubscription_FullMethodName                      = "/api.v0alpha.Org/RemoveMyUserSubscription"
 	Org_UpdateUserSubscription_FullMethodName                        = "/api.v0alpha.Org/UpdateUserSubscription"
+	Org_UpdateMyUserSubscription_FullMethodName                      = "/api.v0alpha.Org/UpdateMyUserSubscription"
 	Org_ListUserSubscriptions_FullMethodName                         = "/api.v0alpha.Org/ListUserSubscriptions"
+	Org_ListMyUserSubscriptions_FullMethodName                       = "/api.v0alpha.Org/ListMyUserSubscriptions"
 	Org_ListOrgSubscriptions_FullMethodName                          = "/api.v0alpha.Org/ListOrgSubscriptions"
 	Org_GetSystemEnvironmentDetails_FullMethodName                   = "/api.v0alpha.Org/GetSystemEnvironmentDetails"
 	Org_ListAgentStatisticsTemplates_FullMethodName                  = "/api.v0alpha.Org/ListAgentStatisticsTemplates"
@@ -757,15 +762,15 @@ type OrgClient interface {
 	//   - grpc.NotFound: There is no entry matching the requested client_sid.
 	ListLastTemplateElements(ctx context.Context, in *ListLastTemplateElementsRequest, opts ...grpc.CallOption) (*ListLastTemplateElementsResponse, error)
 	// Lists the names of the custom queue configs.
-	// Required Permissions:
-	//
-	//	ORG_VIEW (If @org_id is empty)
-	//	CUSTOMER_SUPPORT (If @org_id is NOT empty)
-	//
 	// Errors:
 	//   - grpc.Internal: An error occurred while getting the config names.
 	//   - grpc.NotFound: The given @org_id was not found (if @org_id is NOT empty).
 	ListQueueConfigs(ctx context.Context, in *ListQueueConfigsReq, opts ...grpc.CallOption) (*ListQueueConfigsRes, error)
+	// Lists the names of the custom queue configs.
+	// Errors:
+	//   - grpc.Internal: An error occurred while getting the config names.
+	//   - grpc.NotFound: The given @org_id was not found (if @org_id is NOT empty).
+	ListQueueConfigsByOrgId(ctx context.Context, in *ListQueueConfigsByOrgIdReq, opts ...grpc.CallOption) (*ListQueueConfigsByOrgIdRes, error)
 	// Deletes a queue config with the given @client_sid and @config_name.
 	// Required Permissions:
 	//
@@ -947,29 +952,25 @@ type OrgClient interface {
 	// DeleteAuthConnection removes the current orgs auth settings.
 	DeleteAuthConnection(ctx context.Context, in *DeleteAuthConnectionRequest, opts ...grpc.CallOption) (*DeleteAuthConnectionResponse, error)
 	// Gets a user subscription by id
-	// Required Permissions:
-	//
-	//	ORG_VIEW if user id IS provided
-	//	none if user id NOT provided
 	GetUserSubscription(ctx context.Context, in *GetUserSubscriptionRequest, opts ...grpc.CallOption) (*GetUserSubscriptionResponse, error)
+	// Gets a user subscription by id
+	GetMyUserSubscription(ctx context.Context, in *GetMyUserSubscriptionRequest, opts ...grpc.CallOption) (*GetMyUserSubscriptionResponse, error)
 	// Adds a user subscription to user's list of subscriptions
 	AddUserSubscription(ctx context.Context, in *AddUserSubscriptionRequest, opts ...grpc.CallOption) (*AddUserSubscriptionResponse, error)
+	// Adds a user subscription to user's list of subscriptions
+	AddMyUserSubscription(ctx context.Context, in *AddMyUserSubscriptionRequest, opts ...grpc.CallOption) (*AddMyUserSubscriptionResponse, error)
 	// Removes a user subscription from a specified user's list of subscriptions
 	RemoveUserSubscription(ctx context.Context, in *RemoveUserSubscriptionRequest, opts ...grpc.CallOption) (*RemoveUserSubscriptionResponse, error)
 	// Removes a user subscription from a user's list of subscriptions
 	RemoveMyUserSubscription(ctx context.Context, in *RemoveMyUserSubscriptionRequest, opts ...grpc.CallOption) (*RemoveMyUserSubscriptionResponse, error)
 	// Updates a user subscription
-	// Required Permissions:
-	//
-	//	USER_EDIT if user id IS provided
-	//	EDIT_USER_OPTIONS if user id NOT provided
 	UpdateUserSubscription(ctx context.Context, in *UpdateUserSubscriptionRequest, opts ...grpc.CallOption) (*UpdateUserSubscriptionResponse, error)
+	// Updates a user subscription
+	UpdateMyUserSubscription(ctx context.Context, in *UpdateMyUserSubscriptionRequest, opts ...grpc.CallOption) (*UpdateMyUserSubscriptionResponse, error)
 	// Lists all of a users subscriptions
-	// Required Permissions:
-	//
-	//	ORG_VIEW if user id IS provided
-	//	none if user id NOT provided
 	ListUserSubscriptions(ctx context.Context, in *ListUserSubscriptionsRequest, opts ...grpc.CallOption) (*ListUserSubscriptionsResponse, error)
+	// Lists all of a users subscriptions
+	ListMyUserSubscriptions(ctx context.Context, in *ListMyUserSubscriptionsRequest, opts ...grpc.CallOption) (*ListMyUserSubscriptionsResponse, error)
 	// Lists multiple users subscriptions by org. Optionally filters by event type.
 	// Required Permissions:
 	//
@@ -2526,6 +2527,15 @@ func (c *orgClient) ListQueueConfigs(ctx context.Context, in *ListQueueConfigsRe
 	return out, nil
 }
 
+func (c *orgClient) ListQueueConfigsByOrgId(ctx context.Context, in *ListQueueConfigsByOrgIdReq, opts ...grpc.CallOption) (*ListQueueConfigsByOrgIdRes, error) {
+	out := new(ListQueueConfigsByOrgIdRes)
+	err := c.cc.Invoke(ctx, Org_ListQueueConfigsByOrgId_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *orgClient) DeleteQueueConfig(ctx context.Context, in *DeleteQueueConfigReq, opts ...grpc.CallOption) (*DeleteQueueConfigRes, error) {
 	out := new(DeleteQueueConfigRes)
 	err := c.cc.Invoke(ctx, Org_DeleteQueueConfig_FullMethodName, in, out, opts...)
@@ -2760,9 +2770,27 @@ func (c *orgClient) GetUserSubscription(ctx context.Context, in *GetUserSubscrip
 	return out, nil
 }
 
+func (c *orgClient) GetMyUserSubscription(ctx context.Context, in *GetMyUserSubscriptionRequest, opts ...grpc.CallOption) (*GetMyUserSubscriptionResponse, error) {
+	out := new(GetMyUserSubscriptionResponse)
+	err := c.cc.Invoke(ctx, Org_GetMyUserSubscription_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *orgClient) AddUserSubscription(ctx context.Context, in *AddUserSubscriptionRequest, opts ...grpc.CallOption) (*AddUserSubscriptionResponse, error) {
 	out := new(AddUserSubscriptionResponse)
 	err := c.cc.Invoke(ctx, Org_AddUserSubscription_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) AddMyUserSubscription(ctx context.Context, in *AddMyUserSubscriptionRequest, opts ...grpc.CallOption) (*AddMyUserSubscriptionResponse, error) {
+	out := new(AddMyUserSubscriptionResponse)
+	err := c.cc.Invoke(ctx, Org_AddMyUserSubscription_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -2796,9 +2824,27 @@ func (c *orgClient) UpdateUserSubscription(ctx context.Context, in *UpdateUserSu
 	return out, nil
 }
 
+func (c *orgClient) UpdateMyUserSubscription(ctx context.Context, in *UpdateMyUserSubscriptionRequest, opts ...grpc.CallOption) (*UpdateMyUserSubscriptionResponse, error) {
+	out := new(UpdateMyUserSubscriptionResponse)
+	err := c.cc.Invoke(ctx, Org_UpdateMyUserSubscription_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *orgClient) ListUserSubscriptions(ctx context.Context, in *ListUserSubscriptionsRequest, opts ...grpc.CallOption) (*ListUserSubscriptionsResponse, error) {
 	out := new(ListUserSubscriptionsResponse)
 	err := c.cc.Invoke(ctx, Org_ListUserSubscriptions_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) ListMyUserSubscriptions(ctx context.Context, in *ListMyUserSubscriptionsRequest, opts ...grpc.CallOption) (*ListMyUserSubscriptionsResponse, error) {
+	out := new(ListMyUserSubscriptionsResponse)
+	err := c.cc.Invoke(ctx, Org_ListMyUserSubscriptions_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -3396,15 +3442,15 @@ type OrgServer interface {
 	//   - grpc.NotFound: There is no entry matching the requested client_sid.
 	ListLastTemplateElements(context.Context, *ListLastTemplateElementsRequest) (*ListLastTemplateElementsResponse, error)
 	// Lists the names of the custom queue configs.
-	// Required Permissions:
-	//
-	//	ORG_VIEW (If @org_id is empty)
-	//	CUSTOMER_SUPPORT (If @org_id is NOT empty)
-	//
 	// Errors:
 	//   - grpc.Internal: An error occurred while getting the config names.
 	//   - grpc.NotFound: The given @org_id was not found (if @org_id is NOT empty).
 	ListQueueConfigs(context.Context, *ListQueueConfigsReq) (*ListQueueConfigsRes, error)
+	// Lists the names of the custom queue configs.
+	// Errors:
+	//   - grpc.Internal: An error occurred while getting the config names.
+	//   - grpc.NotFound: The given @org_id was not found (if @org_id is NOT empty).
+	ListQueueConfigsByOrgId(context.Context, *ListQueueConfigsByOrgIdReq) (*ListQueueConfigsByOrgIdRes, error)
 	// Deletes a queue config with the given @client_sid and @config_name.
 	// Required Permissions:
 	//
@@ -3586,29 +3632,25 @@ type OrgServer interface {
 	// DeleteAuthConnection removes the current orgs auth settings.
 	DeleteAuthConnection(context.Context, *DeleteAuthConnectionRequest) (*DeleteAuthConnectionResponse, error)
 	// Gets a user subscription by id
-	// Required Permissions:
-	//
-	//	ORG_VIEW if user id IS provided
-	//	none if user id NOT provided
 	GetUserSubscription(context.Context, *GetUserSubscriptionRequest) (*GetUserSubscriptionResponse, error)
+	// Gets a user subscription by id
+	GetMyUserSubscription(context.Context, *GetMyUserSubscriptionRequest) (*GetMyUserSubscriptionResponse, error)
 	// Adds a user subscription to user's list of subscriptions
 	AddUserSubscription(context.Context, *AddUserSubscriptionRequest) (*AddUserSubscriptionResponse, error)
+	// Adds a user subscription to user's list of subscriptions
+	AddMyUserSubscription(context.Context, *AddMyUserSubscriptionRequest) (*AddMyUserSubscriptionResponse, error)
 	// Removes a user subscription from a specified user's list of subscriptions
 	RemoveUserSubscription(context.Context, *RemoveUserSubscriptionRequest) (*RemoveUserSubscriptionResponse, error)
 	// Removes a user subscription from a user's list of subscriptions
 	RemoveMyUserSubscription(context.Context, *RemoveMyUserSubscriptionRequest) (*RemoveMyUserSubscriptionResponse, error)
 	// Updates a user subscription
-	// Required Permissions:
-	//
-	//	USER_EDIT if user id IS provided
-	//	EDIT_USER_OPTIONS if user id NOT provided
 	UpdateUserSubscription(context.Context, *UpdateUserSubscriptionRequest) (*UpdateUserSubscriptionResponse, error)
+	// Updates a user subscription
+	UpdateMyUserSubscription(context.Context, *UpdateMyUserSubscriptionRequest) (*UpdateMyUserSubscriptionResponse, error)
 	// Lists all of a users subscriptions
-	// Required Permissions:
-	//
-	//	ORG_VIEW if user id IS provided
-	//	none if user id NOT provided
 	ListUserSubscriptions(context.Context, *ListUserSubscriptionsRequest) (*ListUserSubscriptionsResponse, error)
+	// Lists all of a users subscriptions
+	ListMyUserSubscriptions(context.Context, *ListMyUserSubscriptionsRequest) (*ListMyUserSubscriptionsResponse, error)
 	// Lists multiple users subscriptions by org. Optionally filters by event type.
 	// Required Permissions:
 	//
@@ -4144,6 +4186,9 @@ func (UnimplementedOrgServer) ListLastTemplateElements(context.Context, *ListLas
 func (UnimplementedOrgServer) ListQueueConfigs(context.Context, *ListQueueConfigsReq) (*ListQueueConfigsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListQueueConfigs not implemented")
 }
+func (UnimplementedOrgServer) ListQueueConfigsByOrgId(context.Context, *ListQueueConfigsByOrgIdReq) (*ListQueueConfigsByOrgIdRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListQueueConfigsByOrgId not implemented")
+}
 func (UnimplementedOrgServer) DeleteQueueConfig(context.Context, *DeleteQueueConfigReq) (*DeleteQueueConfigRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteQueueConfig not implemented")
 }
@@ -4222,8 +4267,14 @@ func (UnimplementedOrgServer) DeleteAuthConnection(context.Context, *DeleteAuthC
 func (UnimplementedOrgServer) GetUserSubscription(context.Context, *GetUserSubscriptionRequest) (*GetUserSubscriptionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserSubscription not implemented")
 }
+func (UnimplementedOrgServer) GetMyUserSubscription(context.Context, *GetMyUserSubscriptionRequest) (*GetMyUserSubscriptionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMyUserSubscription not implemented")
+}
 func (UnimplementedOrgServer) AddUserSubscription(context.Context, *AddUserSubscriptionRequest) (*AddUserSubscriptionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddUserSubscription not implemented")
+}
+func (UnimplementedOrgServer) AddMyUserSubscription(context.Context, *AddMyUserSubscriptionRequest) (*AddMyUserSubscriptionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddMyUserSubscription not implemented")
 }
 func (UnimplementedOrgServer) RemoveUserSubscription(context.Context, *RemoveUserSubscriptionRequest) (*RemoveUserSubscriptionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RemoveUserSubscription not implemented")
@@ -4234,8 +4285,14 @@ func (UnimplementedOrgServer) RemoveMyUserSubscription(context.Context, *RemoveM
 func (UnimplementedOrgServer) UpdateUserSubscription(context.Context, *UpdateUserSubscriptionRequest) (*UpdateUserSubscriptionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserSubscription not implemented")
 }
+func (UnimplementedOrgServer) UpdateMyUserSubscription(context.Context, *UpdateMyUserSubscriptionRequest) (*UpdateMyUserSubscriptionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateMyUserSubscription not implemented")
+}
 func (UnimplementedOrgServer) ListUserSubscriptions(context.Context, *ListUserSubscriptionsRequest) (*ListUserSubscriptionsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListUserSubscriptions not implemented")
+}
+func (UnimplementedOrgServer) ListMyUserSubscriptions(context.Context, *ListMyUserSubscriptionsRequest) (*ListMyUserSubscriptionsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListMyUserSubscriptions not implemented")
 }
 func (UnimplementedOrgServer) ListOrgSubscriptions(context.Context, *ListOrgSubscriptionsRequest) (*ListOrgSubscriptionsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListOrgSubscriptions not implemented")
@@ -7190,6 +7247,24 @@ func _Org_ListQueueConfigs_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Org_ListQueueConfigsByOrgId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListQueueConfigsByOrgIdReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).ListQueueConfigsByOrgId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_ListQueueConfigsByOrgId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).ListQueueConfigsByOrgId(ctx, req.(*ListQueueConfigsByOrgIdReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Org_DeleteQueueConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteQueueConfigReq)
 	if err := dec(in); err != nil {
@@ -7658,6 +7733,24 @@ func _Org_GetUserSubscription_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Org_GetMyUserSubscription_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetMyUserSubscriptionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).GetMyUserSubscription(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_GetMyUserSubscription_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).GetMyUserSubscription(ctx, req.(*GetMyUserSubscriptionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Org_AddUserSubscription_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AddUserSubscriptionRequest)
 	if err := dec(in); err != nil {
@@ -7672,6 +7765,24 @@ func _Org_AddUserSubscription_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrgServer).AddUserSubscription(ctx, req.(*AddUserSubscriptionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_AddMyUserSubscription_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddMyUserSubscriptionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).AddMyUserSubscription(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_AddMyUserSubscription_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).AddMyUserSubscription(ctx, req.(*AddMyUserSubscriptionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -7730,6 +7841,24 @@ func _Org_UpdateUserSubscription_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Org_UpdateMyUserSubscription_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateMyUserSubscriptionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).UpdateMyUserSubscription(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_UpdateMyUserSubscription_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).UpdateMyUserSubscription(ctx, req.(*UpdateMyUserSubscriptionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Org_ListUserSubscriptions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListUserSubscriptionsRequest)
 	if err := dec(in); err != nil {
@@ -7744,6 +7873,24 @@ func _Org_ListUserSubscriptions_Handler(srv interface{}, ctx context.Context, de
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrgServer).ListUserSubscriptions(ctx, req.(*ListUserSubscriptionsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_ListMyUserSubscriptions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListMyUserSubscriptionsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).ListMyUserSubscriptions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_ListMyUserSubscriptions_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).ListMyUserSubscriptions(ctx, req.(*ListMyUserSubscriptionsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -8504,6 +8651,10 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Org_ListQueueConfigs_Handler,
 		},
 		{
+			MethodName: "ListQueueConfigsByOrgId",
+			Handler:    _Org_ListQueueConfigsByOrgId_Handler,
+		},
+		{
 			MethodName: "DeleteQueueConfig",
 			Handler:    _Org_DeleteQueueConfig_Handler,
 		},
@@ -8608,8 +8759,16 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Org_GetUserSubscription_Handler,
 		},
 		{
+			MethodName: "GetMyUserSubscription",
+			Handler:    _Org_GetMyUserSubscription_Handler,
+		},
+		{
 			MethodName: "AddUserSubscription",
 			Handler:    _Org_AddUserSubscription_Handler,
+		},
+		{
+			MethodName: "AddMyUserSubscription",
+			Handler:    _Org_AddMyUserSubscription_Handler,
 		},
 		{
 			MethodName: "RemoveUserSubscription",
@@ -8624,8 +8783,16 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Org_UpdateUserSubscription_Handler,
 		},
 		{
+			MethodName: "UpdateMyUserSubscription",
+			Handler:    _Org_UpdateMyUserSubscription_Handler,
+		},
+		{
 			MethodName: "ListUserSubscriptions",
 			Handler:    _Org_ListUserSubscriptions_Handler,
+		},
+		{
+			MethodName: "ListMyUserSubscriptions",
+			Handler:    _Org_ListMyUserSubscriptions_Handler,
 		},
 		{
 			MethodName: "ListOrgSubscriptions",

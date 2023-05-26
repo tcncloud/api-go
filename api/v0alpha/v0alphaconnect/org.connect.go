@@ -488,6 +488,9 @@ const (
 	OrgListLastTemplateElementsProcedure = "/api.v0alpha.Org/ListLastTemplateElements"
 	// OrgListQueueConfigsProcedure is the fully-qualified name of the Org's ListQueueConfigs RPC.
 	OrgListQueueConfigsProcedure = "/api.v0alpha.Org/ListQueueConfigs"
+	// OrgListQueueConfigsByOrgIdProcedure is the fully-qualified name of the Org's
+	// ListQueueConfigsByOrgId RPC.
+	OrgListQueueConfigsByOrgIdProcedure = "/api.v0alpha.Org/ListQueueConfigsByOrgId"
 	// OrgDeleteQueueConfigProcedure is the fully-qualified name of the Org's DeleteQueueConfig RPC.
 	OrgDeleteQueueConfigProcedure = "/api.v0alpha.Org/DeleteQueueConfig"
 	// OrgGetQueueConfigProcedure is the fully-qualified name of the Org's GetQueueConfig RPC.
@@ -549,8 +552,14 @@ const (
 	OrgDeleteAuthConnectionProcedure = "/api.v0alpha.Org/DeleteAuthConnection"
 	// OrgGetUserSubscriptionProcedure is the fully-qualified name of the Org's GetUserSubscription RPC.
 	OrgGetUserSubscriptionProcedure = "/api.v0alpha.Org/GetUserSubscription"
+	// OrgGetMyUserSubscriptionProcedure is the fully-qualified name of the Org's GetMyUserSubscription
+	// RPC.
+	OrgGetMyUserSubscriptionProcedure = "/api.v0alpha.Org/GetMyUserSubscription"
 	// OrgAddUserSubscriptionProcedure is the fully-qualified name of the Org's AddUserSubscription RPC.
 	OrgAddUserSubscriptionProcedure = "/api.v0alpha.Org/AddUserSubscription"
+	// OrgAddMyUserSubscriptionProcedure is the fully-qualified name of the Org's AddMyUserSubscription
+	// RPC.
+	OrgAddMyUserSubscriptionProcedure = "/api.v0alpha.Org/AddMyUserSubscription"
 	// OrgRemoveUserSubscriptionProcedure is the fully-qualified name of the Org's
 	// RemoveUserSubscription RPC.
 	OrgRemoveUserSubscriptionProcedure = "/api.v0alpha.Org/RemoveUserSubscription"
@@ -560,9 +569,15 @@ const (
 	// OrgUpdateUserSubscriptionProcedure is the fully-qualified name of the Org's
 	// UpdateUserSubscription RPC.
 	OrgUpdateUserSubscriptionProcedure = "/api.v0alpha.Org/UpdateUserSubscription"
+	// OrgUpdateMyUserSubscriptionProcedure is the fully-qualified name of the Org's
+	// UpdateMyUserSubscription RPC.
+	OrgUpdateMyUserSubscriptionProcedure = "/api.v0alpha.Org/UpdateMyUserSubscription"
 	// OrgListUserSubscriptionsProcedure is the fully-qualified name of the Org's ListUserSubscriptions
 	// RPC.
 	OrgListUserSubscriptionsProcedure = "/api.v0alpha.Org/ListUserSubscriptions"
+	// OrgListMyUserSubscriptionsProcedure is the fully-qualified name of the Org's
+	// ListMyUserSubscriptions RPC.
+	OrgListMyUserSubscriptionsProcedure = "/api.v0alpha.Org/ListMyUserSubscriptions"
 	// OrgListOrgSubscriptionsProcedure is the fully-qualified name of the Org's ListOrgSubscriptions
 	// RPC.
 	OrgListOrgSubscriptionsProcedure = "/api.v0alpha.Org/ListOrgSubscriptions"
@@ -1118,15 +1133,15 @@ type OrgClient interface {
 	//   - grpc.NotFound: There is no entry matching the requested client_sid.
 	ListLastTemplateElements(context.Context, *connect_go.Request[v0alpha.ListLastTemplateElementsRequest]) (*connect_go.Response[v0alpha.ListLastTemplateElementsResponse], error)
 	// Lists the names of the custom queue configs.
-	// Required Permissions:
-	//
-	//	ORG_VIEW (If @org_id is empty)
-	//	CUSTOMER_SUPPORT (If @org_id is NOT empty)
-	//
 	// Errors:
 	//   - grpc.Internal: An error occurred while getting the config names.
 	//   - grpc.NotFound: The given @org_id was not found (if @org_id is NOT empty).
 	ListQueueConfigs(context.Context, *connect_go.Request[v0alpha.ListQueueConfigsReq]) (*connect_go.Response[v0alpha.ListQueueConfigsRes], error)
+	// Lists the names of the custom queue configs.
+	// Errors:
+	//   - grpc.Internal: An error occurred while getting the config names.
+	//   - grpc.NotFound: The given @org_id was not found (if @org_id is NOT empty).
+	ListQueueConfigsByOrgId(context.Context, *connect_go.Request[v0alpha.ListQueueConfigsByOrgIdReq]) (*connect_go.Response[v0alpha.ListQueueConfigsByOrgIdRes], error)
 	// Deletes a queue config with the given @client_sid and @config_name.
 	// Required Permissions:
 	//
@@ -1308,29 +1323,25 @@ type OrgClient interface {
 	// DeleteAuthConnection removes the current orgs auth settings.
 	DeleteAuthConnection(context.Context, *connect_go.Request[v0alpha.DeleteAuthConnectionRequest]) (*connect_go.Response[v0alpha.DeleteAuthConnectionResponse], error)
 	// Gets a user subscription by id
-	// Required Permissions:
-	//
-	//	ORG_VIEW if user id IS provided
-	//	none if user id NOT provided
 	GetUserSubscription(context.Context, *connect_go.Request[v0alpha.GetUserSubscriptionRequest]) (*connect_go.Response[v0alpha.GetUserSubscriptionResponse], error)
+	// Gets a user subscription by id
+	GetMyUserSubscription(context.Context, *connect_go.Request[v0alpha.GetMyUserSubscriptionRequest]) (*connect_go.Response[v0alpha.GetMyUserSubscriptionResponse], error)
 	// Adds a user subscription to user's list of subscriptions
 	AddUserSubscription(context.Context, *connect_go.Request[v0alpha.AddUserSubscriptionRequest]) (*connect_go.Response[v0alpha.AddUserSubscriptionResponse], error)
+	// Adds a user subscription to user's list of subscriptions
+	AddMyUserSubscription(context.Context, *connect_go.Request[v0alpha.AddMyUserSubscriptionRequest]) (*connect_go.Response[v0alpha.AddMyUserSubscriptionResponse], error)
 	// Removes a user subscription from a specified user's list of subscriptions
 	RemoveUserSubscription(context.Context, *connect_go.Request[v0alpha.RemoveUserSubscriptionRequest]) (*connect_go.Response[v0alpha.RemoveUserSubscriptionResponse], error)
 	// Removes a user subscription from a user's list of subscriptions
 	RemoveMyUserSubscription(context.Context, *connect_go.Request[v0alpha.RemoveMyUserSubscriptionRequest]) (*connect_go.Response[v0alpha.RemoveMyUserSubscriptionResponse], error)
 	// Updates a user subscription
-	// Required Permissions:
-	//
-	//	USER_EDIT if user id IS provided
-	//	EDIT_USER_OPTIONS if user id NOT provided
 	UpdateUserSubscription(context.Context, *connect_go.Request[v0alpha.UpdateUserSubscriptionRequest]) (*connect_go.Response[v0alpha.UpdateUserSubscriptionResponse], error)
+	// Updates a user subscription
+	UpdateMyUserSubscription(context.Context, *connect_go.Request[v0alpha.UpdateMyUserSubscriptionRequest]) (*connect_go.Response[v0alpha.UpdateMyUserSubscriptionResponse], error)
 	// Lists all of a users subscriptions
-	// Required Permissions:
-	//
-	//	ORG_VIEW if user id IS provided
-	//	none if user id NOT provided
 	ListUserSubscriptions(context.Context, *connect_go.Request[v0alpha.ListUserSubscriptionsRequest]) (*connect_go.Response[v0alpha.ListUserSubscriptionsResponse], error)
+	// Lists all of a users subscriptions
+	ListMyUserSubscriptions(context.Context, *connect_go.Request[v0alpha.ListMyUserSubscriptionsRequest]) (*connect_go.Response[v0alpha.ListMyUserSubscriptionsResponse], error)
 	// Lists multiple users subscriptions by org. Optionally filters by event type.
 	// Required Permissions:
 	//
@@ -2195,6 +2206,11 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgListQueueConfigsProcedure,
 			opts...,
 		),
+		listQueueConfigsByOrgId: connect_go.NewClient[v0alpha.ListQueueConfigsByOrgIdReq, v0alpha.ListQueueConfigsByOrgIdRes](
+			httpClient,
+			baseURL+OrgListQueueConfigsByOrgIdProcedure,
+			opts...,
+		),
 		deleteQueueConfig: connect_go.NewClient[v0alpha.DeleteQueueConfigReq, v0alpha.DeleteQueueConfigRes](
 			httpClient,
 			baseURL+OrgDeleteQueueConfigProcedure,
@@ -2325,9 +2341,19 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgGetUserSubscriptionProcedure,
 			opts...,
 		),
+		getMyUserSubscription: connect_go.NewClient[v0alpha.GetMyUserSubscriptionRequest, v0alpha.GetMyUserSubscriptionResponse](
+			httpClient,
+			baseURL+OrgGetMyUserSubscriptionProcedure,
+			opts...,
+		),
 		addUserSubscription: connect_go.NewClient[v0alpha.AddUserSubscriptionRequest, v0alpha.AddUserSubscriptionResponse](
 			httpClient,
 			baseURL+OrgAddUserSubscriptionProcedure,
+			opts...,
+		),
+		addMyUserSubscription: connect_go.NewClient[v0alpha.AddMyUserSubscriptionRequest, v0alpha.AddMyUserSubscriptionResponse](
+			httpClient,
+			baseURL+OrgAddMyUserSubscriptionProcedure,
 			opts...,
 		),
 		removeUserSubscription: connect_go.NewClient[v0alpha.RemoveUserSubscriptionRequest, v0alpha.RemoveUserSubscriptionResponse](
@@ -2345,9 +2371,19 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgUpdateUserSubscriptionProcedure,
 			opts...,
 		),
+		updateMyUserSubscription: connect_go.NewClient[v0alpha.UpdateMyUserSubscriptionRequest, v0alpha.UpdateMyUserSubscriptionResponse](
+			httpClient,
+			baseURL+OrgUpdateMyUserSubscriptionProcedure,
+			opts...,
+		),
 		listUserSubscriptions: connect_go.NewClient[v0alpha.ListUserSubscriptionsRequest, v0alpha.ListUserSubscriptionsResponse](
 			httpClient,
 			baseURL+OrgListUserSubscriptionsProcedure,
+			opts...,
+		),
+		listMyUserSubscriptions: connect_go.NewClient[v0alpha.ListMyUserSubscriptionsRequest, v0alpha.ListMyUserSubscriptionsResponse](
+			httpClient,
+			baseURL+OrgListMyUserSubscriptionsProcedure,
 			opts...,
 		),
 		listOrgSubscriptions: connect_go.NewClient[v0alpha.ListOrgSubscriptionsRequest, v0alpha.ListOrgSubscriptionsResponse](
@@ -2547,6 +2583,7 @@ type orgClient struct {
 	listAgentResponseGroups                       *connect_go.Client[v0alpha.ListAgentResponseGroupsRequest, v0alpha.ListAgentResponseGroupsResponse]
 	listLastTemplateElements                      *connect_go.Client[v0alpha.ListLastTemplateElementsRequest, v0alpha.ListLastTemplateElementsResponse]
 	listQueueConfigs                              *connect_go.Client[v0alpha.ListQueueConfigsReq, v0alpha.ListQueueConfigsRes]
+	listQueueConfigsByOrgId                       *connect_go.Client[v0alpha.ListQueueConfigsByOrgIdReq, v0alpha.ListQueueConfigsByOrgIdRes]
 	deleteQueueConfig                             *connect_go.Client[v0alpha.DeleteQueueConfigReq, v0alpha.DeleteQueueConfigRes]
 	getQueueConfig                                *connect_go.Client[v0alpha.GetQueueConfigReq, v0alpha.GetQueueConfigRes]
 	createQueueConfig                             *connect_go.Client[v0alpha.CreateQueueConfigReq, v0alpha.CreateQueueConfigRes]
@@ -2573,11 +2610,15 @@ type orgClient struct {
 	updateAuthConnectionSettings                  *connect_go.Client[v0alpha.UpdateAuthConnectionSettingsRequest, v0alpha.UpdateAuthConnectionSettingsResponse]
 	deleteAuthConnection                          *connect_go.Client[v0alpha.DeleteAuthConnectionRequest, v0alpha.DeleteAuthConnectionResponse]
 	getUserSubscription                           *connect_go.Client[v0alpha.GetUserSubscriptionRequest, v0alpha.GetUserSubscriptionResponse]
+	getMyUserSubscription                         *connect_go.Client[v0alpha.GetMyUserSubscriptionRequest, v0alpha.GetMyUserSubscriptionResponse]
 	addUserSubscription                           *connect_go.Client[v0alpha.AddUserSubscriptionRequest, v0alpha.AddUserSubscriptionResponse]
+	addMyUserSubscription                         *connect_go.Client[v0alpha.AddMyUserSubscriptionRequest, v0alpha.AddMyUserSubscriptionResponse]
 	removeUserSubscription                        *connect_go.Client[v0alpha.RemoveUserSubscriptionRequest, v0alpha.RemoveUserSubscriptionResponse]
 	removeMyUserSubscription                      *connect_go.Client[v0alpha.RemoveMyUserSubscriptionRequest, v0alpha.RemoveMyUserSubscriptionResponse]
 	updateUserSubscription                        *connect_go.Client[v0alpha.UpdateUserSubscriptionRequest, v0alpha.UpdateUserSubscriptionResponse]
+	updateMyUserSubscription                      *connect_go.Client[v0alpha.UpdateMyUserSubscriptionRequest, v0alpha.UpdateMyUserSubscriptionResponse]
 	listUserSubscriptions                         *connect_go.Client[v0alpha.ListUserSubscriptionsRequest, v0alpha.ListUserSubscriptionsResponse]
+	listMyUserSubscriptions                       *connect_go.Client[v0alpha.ListMyUserSubscriptionsRequest, v0alpha.ListMyUserSubscriptionsResponse]
 	listOrgSubscriptions                          *connect_go.Client[v0alpha.ListOrgSubscriptionsRequest, v0alpha.ListOrgSubscriptionsResponse]
 	getSystemEnvironmentDetails                   *connect_go.Client[v0alpha.GetSystemEnvironmentDetailsRequest, v0alpha.GetSystemEnvironmentDetailsResponse]
 	listAgentStatisticsTemplates                  *connect_go.Client[v0alpha.ListAgentStatisticsTemplatesRequest, v0alpha.ListAgentStatisticsTemplatesResponse]
@@ -3401,6 +3442,11 @@ func (c *orgClient) ListQueueConfigs(ctx context.Context, req *connect_go.Reques
 	return c.listQueueConfigs.CallUnary(ctx, req)
 }
 
+// ListQueueConfigsByOrgId calls api.v0alpha.Org.ListQueueConfigsByOrgId.
+func (c *orgClient) ListQueueConfigsByOrgId(ctx context.Context, req *connect_go.Request[v0alpha.ListQueueConfigsByOrgIdReq]) (*connect_go.Response[v0alpha.ListQueueConfigsByOrgIdRes], error) {
+	return c.listQueueConfigsByOrgId.CallUnary(ctx, req)
+}
+
 // DeleteQueueConfig calls api.v0alpha.Org.DeleteQueueConfig.
 func (c *orgClient) DeleteQueueConfig(ctx context.Context, req *connect_go.Request[v0alpha.DeleteQueueConfigReq]) (*connect_go.Response[v0alpha.DeleteQueueConfigRes], error) {
 	return c.deleteQueueConfig.CallUnary(ctx, req)
@@ -3531,9 +3577,19 @@ func (c *orgClient) GetUserSubscription(ctx context.Context, req *connect_go.Req
 	return c.getUserSubscription.CallUnary(ctx, req)
 }
 
+// GetMyUserSubscription calls api.v0alpha.Org.GetMyUserSubscription.
+func (c *orgClient) GetMyUserSubscription(ctx context.Context, req *connect_go.Request[v0alpha.GetMyUserSubscriptionRequest]) (*connect_go.Response[v0alpha.GetMyUserSubscriptionResponse], error) {
+	return c.getMyUserSubscription.CallUnary(ctx, req)
+}
+
 // AddUserSubscription calls api.v0alpha.Org.AddUserSubscription.
 func (c *orgClient) AddUserSubscription(ctx context.Context, req *connect_go.Request[v0alpha.AddUserSubscriptionRequest]) (*connect_go.Response[v0alpha.AddUserSubscriptionResponse], error) {
 	return c.addUserSubscription.CallUnary(ctx, req)
+}
+
+// AddMyUserSubscription calls api.v0alpha.Org.AddMyUserSubscription.
+func (c *orgClient) AddMyUserSubscription(ctx context.Context, req *connect_go.Request[v0alpha.AddMyUserSubscriptionRequest]) (*connect_go.Response[v0alpha.AddMyUserSubscriptionResponse], error) {
+	return c.addMyUserSubscription.CallUnary(ctx, req)
 }
 
 // RemoveUserSubscription calls api.v0alpha.Org.RemoveUserSubscription.
@@ -3551,9 +3607,19 @@ func (c *orgClient) UpdateUserSubscription(ctx context.Context, req *connect_go.
 	return c.updateUserSubscription.CallUnary(ctx, req)
 }
 
+// UpdateMyUserSubscription calls api.v0alpha.Org.UpdateMyUserSubscription.
+func (c *orgClient) UpdateMyUserSubscription(ctx context.Context, req *connect_go.Request[v0alpha.UpdateMyUserSubscriptionRequest]) (*connect_go.Response[v0alpha.UpdateMyUserSubscriptionResponse], error) {
+	return c.updateMyUserSubscription.CallUnary(ctx, req)
+}
+
 // ListUserSubscriptions calls api.v0alpha.Org.ListUserSubscriptions.
 func (c *orgClient) ListUserSubscriptions(ctx context.Context, req *connect_go.Request[v0alpha.ListUserSubscriptionsRequest]) (*connect_go.Response[v0alpha.ListUserSubscriptionsResponse], error) {
 	return c.listUserSubscriptions.CallUnary(ctx, req)
+}
+
+// ListMyUserSubscriptions calls api.v0alpha.Org.ListMyUserSubscriptions.
+func (c *orgClient) ListMyUserSubscriptions(ctx context.Context, req *connect_go.Request[v0alpha.ListMyUserSubscriptionsRequest]) (*connect_go.Response[v0alpha.ListMyUserSubscriptionsResponse], error) {
+	return c.listMyUserSubscriptions.CallUnary(ctx, req)
 }
 
 // ListOrgSubscriptions calls api.v0alpha.Org.ListOrgSubscriptions.
@@ -4121,15 +4187,15 @@ type OrgHandler interface {
 	//   - grpc.NotFound: There is no entry matching the requested client_sid.
 	ListLastTemplateElements(context.Context, *connect_go.Request[v0alpha.ListLastTemplateElementsRequest]) (*connect_go.Response[v0alpha.ListLastTemplateElementsResponse], error)
 	// Lists the names of the custom queue configs.
-	// Required Permissions:
-	//
-	//	ORG_VIEW (If @org_id is empty)
-	//	CUSTOMER_SUPPORT (If @org_id is NOT empty)
-	//
 	// Errors:
 	//   - grpc.Internal: An error occurred while getting the config names.
 	//   - grpc.NotFound: The given @org_id was not found (if @org_id is NOT empty).
 	ListQueueConfigs(context.Context, *connect_go.Request[v0alpha.ListQueueConfigsReq]) (*connect_go.Response[v0alpha.ListQueueConfigsRes], error)
+	// Lists the names of the custom queue configs.
+	// Errors:
+	//   - grpc.Internal: An error occurred while getting the config names.
+	//   - grpc.NotFound: The given @org_id was not found (if @org_id is NOT empty).
+	ListQueueConfigsByOrgId(context.Context, *connect_go.Request[v0alpha.ListQueueConfigsByOrgIdReq]) (*connect_go.Response[v0alpha.ListQueueConfigsByOrgIdRes], error)
 	// Deletes a queue config with the given @client_sid and @config_name.
 	// Required Permissions:
 	//
@@ -4311,29 +4377,25 @@ type OrgHandler interface {
 	// DeleteAuthConnection removes the current orgs auth settings.
 	DeleteAuthConnection(context.Context, *connect_go.Request[v0alpha.DeleteAuthConnectionRequest]) (*connect_go.Response[v0alpha.DeleteAuthConnectionResponse], error)
 	// Gets a user subscription by id
-	// Required Permissions:
-	//
-	//	ORG_VIEW if user id IS provided
-	//	none if user id NOT provided
 	GetUserSubscription(context.Context, *connect_go.Request[v0alpha.GetUserSubscriptionRequest]) (*connect_go.Response[v0alpha.GetUserSubscriptionResponse], error)
+	// Gets a user subscription by id
+	GetMyUserSubscription(context.Context, *connect_go.Request[v0alpha.GetMyUserSubscriptionRequest]) (*connect_go.Response[v0alpha.GetMyUserSubscriptionResponse], error)
 	// Adds a user subscription to user's list of subscriptions
 	AddUserSubscription(context.Context, *connect_go.Request[v0alpha.AddUserSubscriptionRequest]) (*connect_go.Response[v0alpha.AddUserSubscriptionResponse], error)
+	// Adds a user subscription to user's list of subscriptions
+	AddMyUserSubscription(context.Context, *connect_go.Request[v0alpha.AddMyUserSubscriptionRequest]) (*connect_go.Response[v0alpha.AddMyUserSubscriptionResponse], error)
 	// Removes a user subscription from a specified user's list of subscriptions
 	RemoveUserSubscription(context.Context, *connect_go.Request[v0alpha.RemoveUserSubscriptionRequest]) (*connect_go.Response[v0alpha.RemoveUserSubscriptionResponse], error)
 	// Removes a user subscription from a user's list of subscriptions
 	RemoveMyUserSubscription(context.Context, *connect_go.Request[v0alpha.RemoveMyUserSubscriptionRequest]) (*connect_go.Response[v0alpha.RemoveMyUserSubscriptionResponse], error)
 	// Updates a user subscription
-	// Required Permissions:
-	//
-	//	USER_EDIT if user id IS provided
-	//	EDIT_USER_OPTIONS if user id NOT provided
 	UpdateUserSubscription(context.Context, *connect_go.Request[v0alpha.UpdateUserSubscriptionRequest]) (*connect_go.Response[v0alpha.UpdateUserSubscriptionResponse], error)
+	// Updates a user subscription
+	UpdateMyUserSubscription(context.Context, *connect_go.Request[v0alpha.UpdateMyUserSubscriptionRequest]) (*connect_go.Response[v0alpha.UpdateMyUserSubscriptionResponse], error)
 	// Lists all of a users subscriptions
-	// Required Permissions:
-	//
-	//	ORG_VIEW if user id IS provided
-	//	none if user id NOT provided
 	ListUserSubscriptions(context.Context, *connect_go.Request[v0alpha.ListUserSubscriptionsRequest]) (*connect_go.Response[v0alpha.ListUserSubscriptionsResponse], error)
+	// Lists all of a users subscriptions
+	ListMyUserSubscriptions(context.Context, *connect_go.Request[v0alpha.ListMyUserSubscriptionsRequest]) (*connect_go.Response[v0alpha.ListMyUserSubscriptionsResponse], error)
 	// Lists multiple users subscriptions by org. Optionally filters by event type.
 	// Required Permissions:
 	//
@@ -5195,6 +5257,11 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.ListQueueConfigs,
 		opts...,
 	))
+	mux.Handle(OrgListQueueConfigsByOrgIdProcedure, connect_go.NewUnaryHandler(
+		OrgListQueueConfigsByOrgIdProcedure,
+		svc.ListQueueConfigsByOrgId,
+		opts...,
+	))
 	mux.Handle(OrgDeleteQueueConfigProcedure, connect_go.NewUnaryHandler(
 		OrgDeleteQueueConfigProcedure,
 		svc.DeleteQueueConfig,
@@ -5325,9 +5392,19 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.GetUserSubscription,
 		opts...,
 	))
+	mux.Handle(OrgGetMyUserSubscriptionProcedure, connect_go.NewUnaryHandler(
+		OrgGetMyUserSubscriptionProcedure,
+		svc.GetMyUserSubscription,
+		opts...,
+	))
 	mux.Handle(OrgAddUserSubscriptionProcedure, connect_go.NewUnaryHandler(
 		OrgAddUserSubscriptionProcedure,
 		svc.AddUserSubscription,
+		opts...,
+	))
+	mux.Handle(OrgAddMyUserSubscriptionProcedure, connect_go.NewUnaryHandler(
+		OrgAddMyUserSubscriptionProcedure,
+		svc.AddMyUserSubscription,
 		opts...,
 	))
 	mux.Handle(OrgRemoveUserSubscriptionProcedure, connect_go.NewUnaryHandler(
@@ -5345,9 +5422,19 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.UpdateUserSubscription,
 		opts...,
 	))
+	mux.Handle(OrgUpdateMyUserSubscriptionProcedure, connect_go.NewUnaryHandler(
+		OrgUpdateMyUserSubscriptionProcedure,
+		svc.UpdateMyUserSubscription,
+		opts...,
+	))
 	mux.Handle(OrgListUserSubscriptionsProcedure, connect_go.NewUnaryHandler(
 		OrgListUserSubscriptionsProcedure,
 		svc.ListUserSubscriptions,
+		opts...,
+	))
+	mux.Handle(OrgListMyUserSubscriptionsProcedure, connect_go.NewUnaryHandler(
+		OrgListMyUserSubscriptionsProcedure,
+		svc.ListMyUserSubscriptions,
 		opts...,
 	))
 	mux.Handle(OrgListOrgSubscriptionsProcedure, connect_go.NewUnaryHandler(
@@ -6034,6 +6121,10 @@ func (UnimplementedOrgHandler) ListQueueConfigs(context.Context, *connect_go.Req
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Org.ListQueueConfigs is not implemented"))
 }
 
+func (UnimplementedOrgHandler) ListQueueConfigsByOrgId(context.Context, *connect_go.Request[v0alpha.ListQueueConfigsByOrgIdReq]) (*connect_go.Response[v0alpha.ListQueueConfigsByOrgIdRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Org.ListQueueConfigsByOrgId is not implemented"))
+}
+
 func (UnimplementedOrgHandler) DeleteQueueConfig(context.Context, *connect_go.Request[v0alpha.DeleteQueueConfigReq]) (*connect_go.Response[v0alpha.DeleteQueueConfigRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Org.DeleteQueueConfig is not implemented"))
 }
@@ -6138,8 +6229,16 @@ func (UnimplementedOrgHandler) GetUserSubscription(context.Context, *connect_go.
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Org.GetUserSubscription is not implemented"))
 }
 
+func (UnimplementedOrgHandler) GetMyUserSubscription(context.Context, *connect_go.Request[v0alpha.GetMyUserSubscriptionRequest]) (*connect_go.Response[v0alpha.GetMyUserSubscriptionResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Org.GetMyUserSubscription is not implemented"))
+}
+
 func (UnimplementedOrgHandler) AddUserSubscription(context.Context, *connect_go.Request[v0alpha.AddUserSubscriptionRequest]) (*connect_go.Response[v0alpha.AddUserSubscriptionResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Org.AddUserSubscription is not implemented"))
+}
+
+func (UnimplementedOrgHandler) AddMyUserSubscription(context.Context, *connect_go.Request[v0alpha.AddMyUserSubscriptionRequest]) (*connect_go.Response[v0alpha.AddMyUserSubscriptionResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Org.AddMyUserSubscription is not implemented"))
 }
 
 func (UnimplementedOrgHandler) RemoveUserSubscription(context.Context, *connect_go.Request[v0alpha.RemoveUserSubscriptionRequest]) (*connect_go.Response[v0alpha.RemoveUserSubscriptionResponse], error) {
@@ -6154,8 +6253,16 @@ func (UnimplementedOrgHandler) UpdateUserSubscription(context.Context, *connect_
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Org.UpdateUserSubscription is not implemented"))
 }
 
+func (UnimplementedOrgHandler) UpdateMyUserSubscription(context.Context, *connect_go.Request[v0alpha.UpdateMyUserSubscriptionRequest]) (*connect_go.Response[v0alpha.UpdateMyUserSubscriptionResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Org.UpdateMyUserSubscription is not implemented"))
+}
+
 func (UnimplementedOrgHandler) ListUserSubscriptions(context.Context, *connect_go.Request[v0alpha.ListUserSubscriptionsRequest]) (*connect_go.Response[v0alpha.ListUserSubscriptionsResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Org.ListUserSubscriptions is not implemented"))
+}
+
+func (UnimplementedOrgHandler) ListMyUserSubscriptions(context.Context, *connect_go.Request[v0alpha.ListMyUserSubscriptionsRequest]) (*connect_go.Response[v0alpha.ListMyUserSubscriptionsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Org.ListMyUserSubscriptions is not implemented"))
 }
 
 func (UnimplementedOrgHandler) ListOrgSubscriptions(context.Context, *connect_go.Request[v0alpha.ListOrgSubscriptionsRequest]) (*connect_go.Response[v0alpha.ListOrgSubscriptionsResponse], error) {
