@@ -1133,21 +1133,11 @@ type OrgClient interface {
 	//   - grpc.NotFound: There is no entry matching the requested client_sid.
 	ListLastTemplateElements(context.Context, *connect_go.Request[v0alpha.ListLastTemplateElementsRequest]) (*connect_go.Response[v0alpha.ListLastTemplateElementsResponse], error)
 	// Lists the names of the custom queue configs.
-	// Required Permissions:
-	//
-	//	ORG_VIEW (If @org_id is empty)
-	//	CUSTOMER_SUPPORT (If @org_id is NOT empty)
-	//
 	// Errors:
 	//   - grpc.Internal: An error occurred while getting the config names.
 	//   - grpc.NotFound: The given @org_id was not found (if @org_id is NOT empty).
 	ListQueueConfigs(context.Context, *connect_go.Request[v0alpha.ListQueueConfigsReq]) (*connect_go.Response[v0alpha.ListQueueConfigsRes], error)
 	// Lists the names of the custom queue configs.
-	// Required Permissions:
-	//
-	//	ORG_VIEW (If @org_id is empty)
-	//	CUSTOMER_SUPPORT (If @org_id is NOT empty)
-	//
 	// Errors:
 	//   - grpc.Internal: An error occurred while getting the config names.
 	//   - grpc.NotFound: The given @org_id was not found (if @org_id is NOT empty).
@@ -4197,21 +4187,11 @@ type OrgHandler interface {
 	//   - grpc.NotFound: There is no entry matching the requested client_sid.
 	ListLastTemplateElements(context.Context, *connect_go.Request[v0alpha.ListLastTemplateElementsRequest]) (*connect_go.Response[v0alpha.ListLastTemplateElementsResponse], error)
 	// Lists the names of the custom queue configs.
-	// Required Permissions:
-	//
-	//	ORG_VIEW (If @org_id is empty)
-	//	CUSTOMER_SUPPORT (If @org_id is NOT empty)
-	//
 	// Errors:
 	//   - grpc.Internal: An error occurred while getting the config names.
 	//   - grpc.NotFound: The given @org_id was not found (if @org_id is NOT empty).
 	ListQueueConfigs(context.Context, *connect_go.Request[v0alpha.ListQueueConfigsReq]) (*connect_go.Response[v0alpha.ListQueueConfigsRes], error)
 	// Lists the names of the custom queue configs.
-	// Required Permissions:
-	//
-	//	ORG_VIEW (If @org_id is empty)
-	//	CUSTOMER_SUPPORT (If @org_id is NOT empty)
-	//
 	// Errors:
 	//   - grpc.Internal: An error occurred while getting the config names.
 	//   - grpc.NotFound: The given @org_id was not found (if @org_id is NOT empty).

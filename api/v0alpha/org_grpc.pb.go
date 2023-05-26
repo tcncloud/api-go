@@ -762,21 +762,11 @@ type OrgClient interface {
 	//   - grpc.NotFound: There is no entry matching the requested client_sid.
 	ListLastTemplateElements(ctx context.Context, in *ListLastTemplateElementsRequest, opts ...grpc.CallOption) (*ListLastTemplateElementsResponse, error)
 	// Lists the names of the custom queue configs.
-	// Required Permissions:
-	//
-	//	ORG_VIEW (If @org_id is empty)
-	//	CUSTOMER_SUPPORT (If @org_id is NOT empty)
-	//
 	// Errors:
 	//   - grpc.Internal: An error occurred while getting the config names.
 	//   - grpc.NotFound: The given @org_id was not found (if @org_id is NOT empty).
 	ListQueueConfigs(ctx context.Context, in *ListQueueConfigsReq, opts ...grpc.CallOption) (*ListQueueConfigsRes, error)
 	// Lists the names of the custom queue configs.
-	// Required Permissions:
-	//
-	//	ORG_VIEW (If @org_id is empty)
-	//	CUSTOMER_SUPPORT (If @org_id is NOT empty)
-	//
 	// Errors:
 	//   - grpc.Internal: An error occurred while getting the config names.
 	//   - grpc.NotFound: The given @org_id was not found (if @org_id is NOT empty).
@@ -3452,21 +3442,11 @@ type OrgServer interface {
 	//   - grpc.NotFound: There is no entry matching the requested client_sid.
 	ListLastTemplateElements(context.Context, *ListLastTemplateElementsRequest) (*ListLastTemplateElementsResponse, error)
 	// Lists the names of the custom queue configs.
-	// Required Permissions:
-	//
-	//	ORG_VIEW (If @org_id is empty)
-	//	CUSTOMER_SUPPORT (If @org_id is NOT empty)
-	//
 	// Errors:
 	//   - grpc.Internal: An error occurred while getting the config names.
 	//   - grpc.NotFound: The given @org_id was not found (if @org_id is NOT empty).
 	ListQueueConfigs(context.Context, *ListQueueConfigsReq) (*ListQueueConfigsRes, error)
 	// Lists the names of the custom queue configs.
-	// Required Permissions:
-	//
-	//	ORG_VIEW (If @org_id is empty)
-	//	CUSTOMER_SUPPORT (If @org_id is NOT empty)
-	//
 	// Errors:
 	//   - grpc.Internal: An error occurred while getting the config names.
 	//   - grpc.NotFound: The given @org_id was not found (if @org_id is NOT empty).
