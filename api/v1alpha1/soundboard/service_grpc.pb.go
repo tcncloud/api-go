@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             (unknown)
-// source: api/v1alpha1/org/soundboard/service.proto
+// source: api/v1alpha1/soundboard/service.proto
 
 package soundboard
 
@@ -301,5 +301,5 @@ var Soundboard_ServiceDesc = grpc.ServiceDesc{
 			ServerStreams: true,
 		},
 	},
-	Metadata: "api/v1alpha1/org/soundboard/service.proto",
+	Metadata: "api/v1alpha1/soundboard/service.proto",
 }
