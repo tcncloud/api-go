@@ -126,6 +126,7 @@ const (
 	WFM_GetPublishedScheduleRequiredCalls_FullMethodName             = "/api.v1alpha1.wfm.WFM/GetPublishedScheduleRequiredCalls"
 	WFM_GetDraftScheduleRequiredCalls_FullMethodName                 = "/api.v1alpha1.wfm.WFM/GetDraftScheduleRequiredCalls"
 	WFM_CreateDraftSchedule_FullMethodName                           = "/api.v1alpha1.wfm.WFM/CreateDraftSchedule"
+	WFM_UpdateDraftSchedule_FullMethodName                           = "/api.v1alpha1.wfm.WFM/UpdateDraftSchedule"
 	WFM_BuildDraftSchedule_FullMethodName                            = "/api.v1alpha1.wfm.WFM/BuildDraftSchedule"
 	WFM_PublishDraftSchedule_FullMethodName                          = "/api.v1alpha1.wfm.WFM/PublishDraftSchedule"
 	WFM_GetDraftSchedule_FullMethodName                              = "/api.v1alpha1.wfm.WFM/GetDraftSchedule"
@@ -1231,6 +1232,16 @@ type WFMClient interface {
 	//   - grpc.Invalid: the @name, @description or @scheduling_range are invalid.
 	//   - grpc.Internal: error occurs when creating the draft schedule.
 	CreateDraftSchedule(ctx context.Context, in *CreateDraftScheduleReq, opts ...grpc.CallOption) (*CreateDraftScheduleRes, error)
+	// Updates the @name, @description, and @datetime_range of the given @draft_schedule_sid for the org sending the request.
+	// The @name, @description, and @datetime_range fields must all be set with their desired values.
+	// If @delete_shifts_not_in_range if true, then any instances outside of the @datetime_range will be permenantly deleted with no recovery option.
+	// If @delete_shifts_not_in_range is false, instances outside of the new @datetime_range will be retained, for use if the datetime range is expanded to cover the instances in the future.
+	// If @copy_shifts_into_new_range time is true, then new the portion of an expanded @datetime_range which has no instances will copy the instances from the published schedule. If false, no instances will be created for an expanded @scheduling_range.
+	// If @get_updated_shifts is true, then the returned draft schedule will also contain the shift instances and segments in the given @datetime_range.
+	// Errors:
+	//   - grpc.Invalid: the @name, @description or @datetime_range are invalid.
+	//   - grpc.Internal: error occurs when updating the schedule or its instances.
+	UpdateDraftSchedule(ctx context.Context, in *UpdateDraftScheduleReq, opts ...grpc.CallOption) (*UpdateDraftScheduleRes, error)
 	// Builds a draft schedule for the given @node_selector in @schedule_scenario_sid over @schedule_scenario_scheduling_range for @draft_schedule_sid and the org making the request.
 	// The @schedule_scenario_scheduling_range field is optional. If not set, the draft schedule will be obtained with it's default range from it's start to end time.
 	// @include parameters are used when retrieving the resulting draft schedule, and work in the same way as for GetDraftSchedule.
@@ -2332,6 +2343,15 @@ func (c *wFMClient) GetDraftScheduleRequiredCalls(ctx context.Context, in *GetDr
 func (c *wFMClient) CreateDraftSchedule(ctx context.Context, in *CreateDraftScheduleReq, opts ...grpc.CallOption) (*CreateDraftScheduleRes, error) {
 	out := new(CreateDraftScheduleRes)
 	err := c.cc.Invoke(ctx, WFM_CreateDraftSchedule_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) UpdateDraftSchedule(ctx context.Context, in *UpdateDraftScheduleReq, opts ...grpc.CallOption) (*UpdateDraftScheduleRes, error) {
+	out := new(UpdateDraftScheduleRes)
+	err := c.cc.Invoke(ctx, WFM_UpdateDraftSchedule_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -3553,6 +3573,16 @@ type WFMServer interface {
 	//   - grpc.Invalid: the @name, @description or @scheduling_range are invalid.
 	//   - grpc.Internal: error occurs when creating the draft schedule.
 	CreateDraftSchedule(context.Context, *CreateDraftScheduleReq) (*CreateDraftScheduleRes, error)
+	// Updates the @name, @description, and @datetime_range of the given @draft_schedule_sid for the org sending the request.
+	// The @name, @description, and @datetime_range fields must all be set with their desired values.
+	// If @delete_shifts_not_in_range if true, then any instances outside of the @datetime_range will be permenantly deleted with no recovery option.
+	// If @delete_shifts_not_in_range is false, instances outside of the new @datetime_range will be retained, for use if the datetime range is expanded to cover the instances in the future.
+	// If @copy_shifts_into_new_range time is true, then new the portion of an expanded @datetime_range which has no instances will copy the instances from the published schedule. If false, no instances will be created for an expanded @scheduling_range.
+	// If @get_updated_shifts is true, then the returned draft schedule will also contain the shift instances and segments in the given @datetime_range.
+	// Errors:
+	//   - grpc.Invalid: the @name, @description or @datetime_range are invalid.
+	//   - grpc.Internal: error occurs when updating the schedule or its instances.
+	UpdateDraftSchedule(context.Context, *UpdateDraftScheduleReq) (*UpdateDraftScheduleRes, error)
 	// Builds a draft schedule for the given @node_selector in @schedule_scenario_sid over @schedule_scenario_scheduling_range for @draft_schedule_sid and the org making the request.
 	// The @schedule_scenario_scheduling_range field is optional. If not set, the draft schedule will be obtained with it's default range from it's start to end time.
 	// @include parameters are used when retrieving the resulting draft schedule, and work in the same way as for GetDraftSchedule.
@@ -3983,6 +4013,9 @@ func (UnimplementedWFMServer) GetDraftScheduleRequiredCalls(context.Context, *Ge
 }
 func (UnimplementedWFMServer) CreateDraftSchedule(context.Context, *CreateDraftScheduleReq) (*CreateDraftScheduleRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateDraftSchedule not implemented")
+}
+func (UnimplementedWFMServer) UpdateDraftSchedule(context.Context, *UpdateDraftScheduleReq) (*UpdateDraftScheduleRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateDraftSchedule not implemented")
 }
 func (UnimplementedWFMServer) BuildDraftSchedule(context.Context, *BuildDraftScheduleReq) (*BuildDraftScheduleRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BuildDraftSchedule not implemented")
@@ -5728,6 +5761,24 @@ func _WFM_CreateDraftSchedule_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_UpdateDraftSchedule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateDraftScheduleReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).UpdateDraftSchedule(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_UpdateDraftSchedule_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).UpdateDraftSchedule(ctx, req.(*UpdateDraftScheduleReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WFM_BuildDraftSchedule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(BuildDraftScheduleReq)
 	if err := dec(in); err != nil {
@@ -6338,6 +6389,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateDraftSchedule",
 			Handler:    _WFM_CreateDraftSchedule_Handler,
+		},
+		{
+			MethodName: "UpdateDraftSchedule",
+			Handler:    _WFM_UpdateDraftSchedule_Handler,
 		},
 		{
 			MethodName: "BuildDraftSchedule",
