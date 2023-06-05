@@ -1481,6 +1481,8 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when removing the draft schedule.
 	DeleteDraftSchedule(context.Context, *connect_go.Request[wfm.DeleteDraftScheduleReq]) (*connect_go.Response[wfm.DeleteDraftScheduleRes], error)
 	// Creates a shift instance for the org sending the request with the provided parameters.
+	// If @wfm_agent_sids is empty, then the shift instance will be created for a newly created unassigned agent.
+	// A shift instance will be created for each wfm agent sid provided.
 	// Required permissions:
 	// NONE
 	// Errors:
@@ -3920,6 +3922,8 @@ type WFMHandler interface {
 	//   - grpc.Internal: error occurs when removing the draft schedule.
 	DeleteDraftSchedule(context.Context, *connect_go.Request[wfm.DeleteDraftScheduleReq]) (*connect_go.Response[wfm.DeleteDraftScheduleRes], error)
 	// Creates a shift instance for the org sending the request with the provided parameters.
+	// If @wfm_agent_sids is empty, then the shift instance will be created for a newly created unassigned agent.
+	// A shift instance will be created for each wfm agent sid provided.
 	// Required permissions:
 	// NONE
 	// Errors:
