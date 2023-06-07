@@ -550,7 +550,7 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when calculating the averages from the training data.
 	CalculateTrainingDataAveragesForSkillProfile(ctx context.Context, in *CalculateTrainingDataAveragesForSkillProfileReq, opts ...grpc.CallOption) (*CalculateTrainingDataAveragesForSkillProfileRes, error)
 	// Calculates the averages for call characteristics using the historical data of the given @skill_profile_sids and org sending the request.
-	// If no @skill_profile_sids are given, it will calculate the averages for all skill profiles for the given @org_id.
+	// If no @skill_profile_sids are given, it will calculate the averages for all skill profiles for the org sending the request.
 	// Averages will be weighted by the number of calls that each historical data interval has.
 	// Once the averages are calculated, they will be updated in the db for those skill profiles.
 	//
@@ -1024,7 +1024,7 @@ type WFMClient interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @agent_availability_pattern_sid or @org_id have invalid values.
+	//   - grpc.Invalid: the @agent_availability_pattern_sid has an invalid value.
 	//   - grpc.NotFound: the @agent_availability_pattern with the given sid doesn't exist.
 	//   - grpc.Internal: error occurs when removing the agent availability pattern.
 	DeleteAgentAvailabilityPattern(ctx context.Context, in *DeleteAgentAvailabilityPatternReq, opts ...grpc.CallOption) (*DeleteAgentAvailabilityPatternRes, error)
@@ -1149,7 +1149,7 @@ type WFMClient interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @org_id, @entity_type, or @belongs_to_entity have invalid values.
+	//   - grpc.Invalid: the @entity_type, or @belongs_to_entity have invalid values.
 	//   - grpc.Internal: error occurs when getting the config entities.
 	ListConfigEntities(ctx context.Context, in *ListConfigEntitiesReq, opts ...grpc.CallOption) (*ListConfigEntitiesRes, error)
 	// Deletes shift instances with the corresponding @shift_instance_sids for the org sending the request.
@@ -2874,7 +2874,7 @@ type WFMServer interface {
 	//   - grpc.Internal: error occurs when calculating the averages from the training data.
 	CalculateTrainingDataAveragesForSkillProfile(context.Context, *CalculateTrainingDataAveragesForSkillProfileReq) (*CalculateTrainingDataAveragesForSkillProfileRes, error)
 	// Calculates the averages for call characteristics using the historical data of the given @skill_profile_sids and org sending the request.
-	// If no @skill_profile_sids are given, it will calculate the averages for all skill profiles for the given @org_id.
+	// If no @skill_profile_sids are given, it will calculate the averages for all skill profiles for the org sending the request.
 	// Averages will be weighted by the number of calls that each historical data interval has.
 	// Once the averages are calculated, they will be updated in the db for those skill profiles.
 	//
@@ -3348,7 +3348,7 @@ type WFMServer interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @agent_availability_pattern_sid or @org_id have invalid values.
+	//   - grpc.Invalid: the @agent_availability_pattern_sid has an invalid value.
 	//   - grpc.NotFound: the @agent_availability_pattern with the given sid doesn't exist.
 	//   - grpc.Internal: error occurs when removing the agent availability pattern.
 	DeleteAgentAvailabilityPattern(context.Context, *DeleteAgentAvailabilityPatternReq) (*DeleteAgentAvailabilityPatternRes, error)
@@ -3473,7 +3473,7 @@ type WFMServer interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @org_id, @entity_type, or @belongs_to_entity have invalid values.
+	//   - grpc.Invalid: the @entity_type, or @belongs_to_entity have invalid values.
 	//   - grpc.Internal: error occurs when getting the config entities.
 	ListConfigEntities(context.Context, *ListConfigEntitiesReq) (*ListConfigEntitiesRes, error)
 	// Deletes shift instances with the corresponding @shift_instance_sids for the org sending the request.

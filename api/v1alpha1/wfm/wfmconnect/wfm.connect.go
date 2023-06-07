@@ -742,7 +742,7 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when calculating the averages from the training data.
 	CalculateTrainingDataAveragesForSkillProfile(context.Context, *connect_go.Request[wfm.CalculateTrainingDataAveragesForSkillProfileReq]) (*connect_go.Response[wfm.CalculateTrainingDataAveragesForSkillProfileRes], error)
 	// Calculates the averages for call characteristics using the historical data of the given @skill_profile_sids and org sending the request.
-	// If no @skill_profile_sids are given, it will calculate the averages for all skill profiles for the given @org_id.
+	// If no @skill_profile_sids are given, it will calculate the averages for all skill profiles for the org sending the request.
 	// Averages will be weighted by the number of calls that each historical data interval has.
 	// Once the averages are calculated, they will be updated in the db for those skill profiles.
 	//
@@ -1216,7 +1216,7 @@ type WFMClient interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @agent_availability_pattern_sid or @org_id have invalid values.
+	//   - grpc.Invalid: the @agent_availability_pattern_sid has an invalid value.
 	//   - grpc.NotFound: the @agent_availability_pattern with the given sid doesn't exist.
 	//   - grpc.Internal: error occurs when removing the agent availability pattern.
 	DeleteAgentAvailabilityPattern(context.Context, *connect_go.Request[wfm.DeleteAgentAvailabilityPatternReq]) (*connect_go.Response[wfm.DeleteAgentAvailabilityPatternRes], error)
@@ -1341,7 +1341,7 @@ type WFMClient interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @org_id, @entity_type, or @belongs_to_entity have invalid values.
+	//   - grpc.Invalid: the @entity_type, or @belongs_to_entity have invalid values.
 	//   - grpc.Internal: error occurs when getting the config entities.
 	ListConfigEntities(context.Context, *connect_go.Request[wfm.ListConfigEntitiesReq]) (*connect_go.Response[wfm.ListConfigEntitiesRes], error)
 	// Deletes shift instances with the corresponding @shift_instance_sids for the org sending the request.
@@ -3183,7 +3183,7 @@ type WFMHandler interface {
 	//   - grpc.Internal: error occurs when calculating the averages from the training data.
 	CalculateTrainingDataAveragesForSkillProfile(context.Context, *connect_go.Request[wfm.CalculateTrainingDataAveragesForSkillProfileReq]) (*connect_go.Response[wfm.CalculateTrainingDataAveragesForSkillProfileRes], error)
 	// Calculates the averages for call characteristics using the historical data of the given @skill_profile_sids and org sending the request.
-	// If no @skill_profile_sids are given, it will calculate the averages for all skill profiles for the given @org_id.
+	// If no @skill_profile_sids are given, it will calculate the averages for all skill profiles for the org sending the request.
 	// Averages will be weighted by the number of calls that each historical data interval has.
 	// Once the averages are calculated, they will be updated in the db for those skill profiles.
 	//
@@ -3657,7 +3657,7 @@ type WFMHandler interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @agent_availability_pattern_sid or @org_id have invalid values.
+	//   - grpc.Invalid: the @agent_availability_pattern_sid has an invalid value.
 	//   - grpc.NotFound: the @agent_availability_pattern with the given sid doesn't exist.
 	//   - grpc.Internal: error occurs when removing the agent availability pattern.
 	DeleteAgentAvailabilityPattern(context.Context, *connect_go.Request[wfm.DeleteAgentAvailabilityPatternReq]) (*connect_go.Response[wfm.DeleteAgentAvailabilityPatternRes], error)
@@ -3782,7 +3782,7 @@ type WFMHandler interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @org_id, @entity_type, or @belongs_to_entity have invalid values.
+	//   - grpc.Invalid: the @entity_type, or @belongs_to_entity have invalid values.
 	//   - grpc.Internal: error occurs when getting the config entities.
 	ListConfigEntities(context.Context, *connect_go.Request[wfm.ListConfigEntitiesReq]) (*connect_go.Response[wfm.ListConfigEntitiesRes], error)
 	// Deletes shift instances with the corresponding @shift_instance_sids for the org sending the request.
