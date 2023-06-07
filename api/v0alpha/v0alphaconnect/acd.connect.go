@@ -47,9 +47,6 @@ const (
 // reflection-formatted method names, remove the leading slash and convert the remaining slash to a
 // period.
 const (
-	// AcdAgentGetStatusStreamProcedure is the fully-qualified name of the Acd's AgentGetStatusStream
-	// RPC.
-	AcdAgentGetStatusStreamProcedure = "/api.v0alpha.Acd/AgentGetStatusStream"
 	// AcdAgentGetStatusProcedure is the fully-qualified name of the Acd's AgentGetStatus RPC.
 	AcdAgentGetStatusProcedure = "/api.v0alpha.Acd/AgentGetStatus"
 	// AcdAgentGetConnectedPartyProcedure is the fully-qualified name of the Acd's
@@ -176,7 +173,6 @@ const (
 
 // AcdClient is a client for the api.v0alpha.Acd service.
 type AcdClient interface {
-	AgentGetStatusStream(context.Context, *connect_go.Request[v0alpha.AgentGetStatusRequest]) (*connect_go.ServerStreamForClient[v0alpha.AgentGetStatusReply], error)
 	AgentGetStatus(context.Context, *connect_go.Request[v0alpha.AgentGetStatusRequest]) (*connect_go.Response[v0alpha.AgentGetStatusReply], error)
 	AgentGetConnectedParty(context.Context, *connect_go.Request[v0alpha.AgentGetConnectedPartyRequest]) (*connect_go.Response[v0alpha.AgentGetConnectedPartyReply], error)
 	AgentIntercom(context.Context, *connect_go.Request[v0alpha.AgentIntercomRequest]) (*connect_go.Response[v0alpha.AgentIntercomReply], error)
@@ -250,11 +246,6 @@ type AcdClient interface {
 func NewAcdClient(httpClient connect_go.HTTPClient, baseURL string, opts ...connect_go.ClientOption) AcdClient {
 	baseURL = strings.TrimRight(baseURL, "/")
 	return &acdClient{
-		agentGetStatusStream: connect_go.NewClient[v0alpha.AgentGetStatusRequest, v0alpha.AgentGetStatusReply](
-			httpClient,
-			baseURL+AcdAgentGetStatusStreamProcedure,
-			opts...,
-		),
 		agentGetStatus: connect_go.NewClient[v0alpha.AgentGetStatusRequest, v0alpha.AgentGetStatusReply](
 			httpClient,
 			baseURL+AcdAgentGetStatusProcedure,
@@ -510,7 +501,6 @@ func NewAcdClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 
 // acdClient implements AcdClient.
 type acdClient struct {
-	agentGetStatusStream                  *connect_go.Client[v0alpha.AgentGetStatusRequest, v0alpha.AgentGetStatusReply]
 	agentGetStatus                        *connect_go.Client[v0alpha.AgentGetStatusRequest, v0alpha.AgentGetStatusReply]
 	agentGetConnectedParty                *connect_go.Client[v0alpha.AgentGetConnectedPartyRequest, v0alpha.AgentGetConnectedPartyReply]
 	agentIntercom                         *connect_go.Client[v0alpha.AgentIntercomRequest, v0alpha.AgentIntercomReply]
@@ -561,11 +551,6 @@ type acdClient struct {
 	playDTMF                              *connect_go.Client[v0alpha.PlayDTMFRequest, v0alpha.PlayDTMFReply]
 	agentMute                             *connect_go.Client[v0alpha.AgentMuteRequest, v0alpha.AgentMuteReply]
 	agentUnmute                           *connect_go.Client[v0alpha.AgentUnmuteRequest, v0alpha.AgentUnmuteReply]
-}
-
-// AgentGetStatusStream calls api.v0alpha.Acd.AgentGetStatusStream.
-func (c *acdClient) AgentGetStatusStream(ctx context.Context, req *connect_go.Request[v0alpha.AgentGetStatusRequest]) (*connect_go.ServerStreamForClient[v0alpha.AgentGetStatusReply], error) {
-	return c.agentGetStatusStream.CallServerStream(ctx, req)
 }
 
 // AgentGetStatus calls api.v0alpha.Acd.AgentGetStatus.
@@ -821,7 +806,6 @@ func (c *acdClient) AgentUnmute(ctx context.Context, req *connect_go.Request[v0a
 
 // AcdHandler is an implementation of the api.v0alpha.Acd service.
 type AcdHandler interface {
-	AgentGetStatusStream(context.Context, *connect_go.Request[v0alpha.AgentGetStatusRequest], *connect_go.ServerStream[v0alpha.AgentGetStatusReply]) error
 	AgentGetStatus(context.Context, *connect_go.Request[v0alpha.AgentGetStatusRequest]) (*connect_go.Response[v0alpha.AgentGetStatusReply], error)
 	AgentGetConnectedParty(context.Context, *connect_go.Request[v0alpha.AgentGetConnectedPartyRequest]) (*connect_go.Response[v0alpha.AgentGetConnectedPartyReply], error)
 	AgentIntercom(context.Context, *connect_go.Request[v0alpha.AgentIntercomRequest]) (*connect_go.Response[v0alpha.AgentIntercomReply], error)
@@ -892,11 +876,6 @@ type AcdHandler interface {
 // and JSON codecs. They also support gzip compression.
 func NewAcdHandler(svc AcdHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
 	mux := http.NewServeMux()
-	mux.Handle(AcdAgentGetStatusStreamProcedure, connect_go.NewServerStreamHandler(
-		AcdAgentGetStatusStreamProcedure,
-		svc.AgentGetStatusStream,
-		opts...,
-	))
 	mux.Handle(AcdAgentGetStatusProcedure, connect_go.NewUnaryHandler(
 		AcdAgentGetStatusProcedure,
 		svc.AgentGetStatus,
@@ -1152,10 +1131,6 @@ func NewAcdHandler(svc AcdHandler, opts ...connect_go.HandlerOption) (string, ht
 
 // UnimplementedAcdHandler returns CodeUnimplemented from all methods.
 type UnimplementedAcdHandler struct{}
-
-func (UnimplementedAcdHandler) AgentGetStatusStream(context.Context, *connect_go.Request[v0alpha.AgentGetStatusRequest], *connect_go.ServerStream[v0alpha.AgentGetStatusReply]) error {
-	return connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Acd.AgentGetStatusStream is not implemented"))
-}
 
 func (UnimplementedAcdHandler) AgentGetStatus(context.Context, *connect_go.Request[v0alpha.AgentGetStatusRequest]) (*connect_go.Response[v0alpha.AgentGetStatusReply], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Acd.AgentGetStatus is not implemented"))
