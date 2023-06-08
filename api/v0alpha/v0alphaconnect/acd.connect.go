@@ -55,6 +55,9 @@ const (
 	// AcdAgentGetConnectedPartyProcedure is the fully-qualified name of the Acd's
 	// AgentGetConnectedParty RPC.
 	AcdAgentGetConnectedPartyProcedure = "/api.v0alpha.Acd/AgentGetConnectedParty"
+	// AcdManagerAgentGetConnectedPartyProcedure is the fully-qualified name of the Acd's
+	// ManagerAgentGetConnectedParty RPC.
+	AcdManagerAgentGetConnectedPartyProcedure = "/api.v0alpha.Acd/ManagerAgentGetConnectedParty"
 	// AcdAgentIntercomProcedure is the fully-qualified name of the Acd's AgentIntercom RPC.
 	AcdAgentIntercomProcedure = "/api.v0alpha.Acd/AgentIntercom"
 	// AcdAgentIntercomAcceptProcedure is the fully-qualified name of the Acd's AgentIntercomAccept RPC.
@@ -179,6 +182,7 @@ type AcdClient interface {
 	AgentGetStatusStream(context.Context, *connect_go.Request[v0alpha.AgentGetStatusRequest]) (*connect_go.ServerStreamForClient[v0alpha.AgentGetStatusReply], error)
 	AgentGetStatus(context.Context, *connect_go.Request[v0alpha.AgentGetStatusRequest]) (*connect_go.Response[v0alpha.AgentGetStatusReply], error)
 	AgentGetConnectedParty(context.Context, *connect_go.Request[v0alpha.AgentGetConnectedPartyRequest]) (*connect_go.Response[v0alpha.AgentGetConnectedPartyReply], error)
+	ManagerAgentGetConnectedParty(context.Context, *connect_go.Request[v0alpha.ManagerAgentGetConnectedPartyRequest]) (*connect_go.Response[v0alpha.ManagerAgentGetConnectedPartyReply], error)
 	AgentIntercom(context.Context, *connect_go.Request[v0alpha.AgentIntercomRequest]) (*connect_go.Response[v0alpha.AgentIntercomReply], error)
 	AgentIntercomAccept(context.Context, *connect_go.Request[v0alpha.AgentIntercomAcceptRequest]) (*connect_go.Response[v0alpha.AgentIntercomAcceptReply], error)
 	AgentIntercomReject(context.Context, *connect_go.Request[v0alpha.AgentIntercomRejectRequest]) (*connect_go.Response[v0alpha.AgentIntercomRejectReply], error)
@@ -263,6 +267,11 @@ func NewAcdClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 		agentGetConnectedParty: connect_go.NewClient[v0alpha.AgentGetConnectedPartyRequest, v0alpha.AgentGetConnectedPartyReply](
 			httpClient,
 			baseURL+AcdAgentGetConnectedPartyProcedure,
+			opts...,
+		),
+		managerAgentGetConnectedParty: connect_go.NewClient[v0alpha.ManagerAgentGetConnectedPartyRequest, v0alpha.ManagerAgentGetConnectedPartyReply](
+			httpClient,
+			baseURL+AcdManagerAgentGetConnectedPartyProcedure,
 			opts...,
 		),
 		agentIntercom: connect_go.NewClient[v0alpha.AgentIntercomRequest, v0alpha.AgentIntercomReply](
@@ -513,6 +522,7 @@ type acdClient struct {
 	agentGetStatusStream                  *connect_go.Client[v0alpha.AgentGetStatusRequest, v0alpha.AgentGetStatusReply]
 	agentGetStatus                        *connect_go.Client[v0alpha.AgentGetStatusRequest, v0alpha.AgentGetStatusReply]
 	agentGetConnectedParty                *connect_go.Client[v0alpha.AgentGetConnectedPartyRequest, v0alpha.AgentGetConnectedPartyReply]
+	managerAgentGetConnectedParty         *connect_go.Client[v0alpha.ManagerAgentGetConnectedPartyRequest, v0alpha.ManagerAgentGetConnectedPartyReply]
 	agentIntercom                         *connect_go.Client[v0alpha.AgentIntercomRequest, v0alpha.AgentIntercomReply]
 	agentIntercomAccept                   *connect_go.Client[v0alpha.AgentIntercomAcceptRequest, v0alpha.AgentIntercomAcceptReply]
 	agentIntercomReject                   *connect_go.Client[v0alpha.AgentIntercomRejectRequest, v0alpha.AgentIntercomRejectReply]
@@ -576,6 +586,11 @@ func (c *acdClient) AgentGetStatus(ctx context.Context, req *connect_go.Request[
 // AgentGetConnectedParty calls api.v0alpha.Acd.AgentGetConnectedParty.
 func (c *acdClient) AgentGetConnectedParty(ctx context.Context, req *connect_go.Request[v0alpha.AgentGetConnectedPartyRequest]) (*connect_go.Response[v0alpha.AgentGetConnectedPartyReply], error) {
 	return c.agentGetConnectedParty.CallUnary(ctx, req)
+}
+
+// ManagerAgentGetConnectedParty calls api.v0alpha.Acd.ManagerAgentGetConnectedParty.
+func (c *acdClient) ManagerAgentGetConnectedParty(ctx context.Context, req *connect_go.Request[v0alpha.ManagerAgentGetConnectedPartyRequest]) (*connect_go.Response[v0alpha.ManagerAgentGetConnectedPartyReply], error) {
+	return c.managerAgentGetConnectedParty.CallUnary(ctx, req)
 }
 
 // AgentIntercom calls api.v0alpha.Acd.AgentIntercom.
@@ -824,6 +839,7 @@ type AcdHandler interface {
 	AgentGetStatusStream(context.Context, *connect_go.Request[v0alpha.AgentGetStatusRequest], *connect_go.ServerStream[v0alpha.AgentGetStatusReply]) error
 	AgentGetStatus(context.Context, *connect_go.Request[v0alpha.AgentGetStatusRequest]) (*connect_go.Response[v0alpha.AgentGetStatusReply], error)
 	AgentGetConnectedParty(context.Context, *connect_go.Request[v0alpha.AgentGetConnectedPartyRequest]) (*connect_go.Response[v0alpha.AgentGetConnectedPartyReply], error)
+	ManagerAgentGetConnectedParty(context.Context, *connect_go.Request[v0alpha.ManagerAgentGetConnectedPartyRequest]) (*connect_go.Response[v0alpha.ManagerAgentGetConnectedPartyReply], error)
 	AgentIntercom(context.Context, *connect_go.Request[v0alpha.AgentIntercomRequest]) (*connect_go.Response[v0alpha.AgentIntercomReply], error)
 	AgentIntercomAccept(context.Context, *connect_go.Request[v0alpha.AgentIntercomAcceptRequest]) (*connect_go.Response[v0alpha.AgentIntercomAcceptReply], error)
 	AgentIntercomReject(context.Context, *connect_go.Request[v0alpha.AgentIntercomRejectRequest]) (*connect_go.Response[v0alpha.AgentIntercomRejectReply], error)
@@ -905,6 +921,11 @@ func NewAcdHandler(svc AcdHandler, opts ...connect_go.HandlerOption) (string, ht
 	mux.Handle(AcdAgentGetConnectedPartyProcedure, connect_go.NewUnaryHandler(
 		AcdAgentGetConnectedPartyProcedure,
 		svc.AgentGetConnectedParty,
+		opts...,
+	))
+	mux.Handle(AcdManagerAgentGetConnectedPartyProcedure, connect_go.NewUnaryHandler(
+		AcdManagerAgentGetConnectedPartyProcedure,
+		svc.ManagerAgentGetConnectedParty,
 		opts...,
 	))
 	mux.Handle(AcdAgentIntercomProcedure, connect_go.NewUnaryHandler(
@@ -1163,6 +1184,10 @@ func (UnimplementedAcdHandler) AgentGetStatus(context.Context, *connect_go.Reque
 
 func (UnimplementedAcdHandler) AgentGetConnectedParty(context.Context, *connect_go.Request[v0alpha.AgentGetConnectedPartyRequest]) (*connect_go.Response[v0alpha.AgentGetConnectedPartyReply], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Acd.AgentGetConnectedParty is not implemented"))
+}
+
+func (UnimplementedAcdHandler) ManagerAgentGetConnectedParty(context.Context, *connect_go.Request[v0alpha.ManagerAgentGetConnectedPartyRequest]) (*connect_go.Response[v0alpha.ManagerAgentGetConnectedPartyReply], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Acd.ManagerAgentGetConnectedParty is not implemented"))
 }
 
 func (UnimplementedAcdHandler) AgentIntercom(context.Context, *connect_go.Request[v0alpha.AgentIntercomRequest]) (*connect_go.Response[v0alpha.AgentIntercomReply], error) {
