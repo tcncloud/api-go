@@ -301,6 +301,8 @@ const (
 	WFMGetDraftScheduleRequiredCallsProcedure = "/api.v1alpha1.wfm.WFM/GetDraftScheduleRequiredCalls"
 	// WFMCreateDraftScheduleProcedure is the fully-qualified name of the WFM's CreateDraftSchedule RPC.
 	WFMCreateDraftScheduleProcedure = "/api.v1alpha1.wfm.WFM/CreateDraftSchedule"
+	// WFMUpdateDraftScheduleProcedure is the fully-qualified name of the WFM's UpdateDraftSchedule RPC.
+	WFMUpdateDraftScheduleProcedure = "/api.v1alpha1.wfm.WFM/UpdateDraftSchedule"
 	// WFMBuildDraftScheduleProcedure is the fully-qualified name of the WFM's BuildDraftSchedule RPC.
 	WFMBuildDraftScheduleProcedure = "/api.v1alpha1.wfm.WFM/BuildDraftSchedule"
 	// WFMPublishDraftScheduleProcedure is the fully-qualified name of the WFM's PublishDraftSchedule
@@ -1423,6 +1425,16 @@ type WFMClient interface {
 	//   - grpc.Invalid: the @name, @description or @scheduling_range are invalid.
 	//   - grpc.Internal: error occurs when creating the draft schedule.
 	CreateDraftSchedule(context.Context, *connect_go.Request[wfm.CreateDraftScheduleReq]) (*connect_go.Response[wfm.CreateDraftScheduleRes], error)
+	// Updates the @name, @description, and @datetime_range of the given @draft_schedule_sid for the org sending the request.
+	// The @name, @description, and @datetime_range fields must all be set with their desired values.
+	// If @delete_shifts_not_in_range if true, then any instances outside of the @datetime_range will be permenantly deleted with no recovery option.
+	// If @delete_shifts_not_in_range is false, instances outside of the new @datetime_range will be retained, for use if the datetime range is expanded to cover the instances in the future.
+	// If @copy_shifts_into_new_range time is true, then new the portion of an expanded @datetime_range which has no instances will copy the instances from the published schedule. If false, no instances will be created for an expanded @scheduling_range.
+	// If @get_updated_shifts is true, then the returned draft schedule will also contain the shift instances and segments in the given @datetime_range.
+	// Errors:
+	//   - grpc.Invalid: the @name, @description or @datetime_range are invalid.
+	//   - grpc.Internal: error occurs when updating the schedule or its instances.
+	UpdateDraftSchedule(context.Context, *connect_go.Request[wfm.UpdateDraftScheduleReq]) (*connect_go.Response[wfm.UpdateDraftScheduleRes], error)
 	// Builds a draft schedule for the given @node_selector in @schedule_scenario_sid over @schedule_scenario_scheduling_range for @draft_schedule_sid and the org making the request.
 	// The @schedule_scenario_scheduling_range field is optional. If not set, the draft schedule will be obtained with it's default range from it's start to end time.
 	// @include parameters are used when retrieving the resulting draft schedule, and work in the same way as for GetDraftSchedule.
@@ -2045,6 +2057,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMCreateDraftScheduleProcedure,
 			opts...,
 		),
+		updateDraftSchedule: connect_go.NewClient[wfm.UpdateDraftScheduleReq, wfm.UpdateDraftScheduleRes](
+			httpClient,
+			baseURL+WFMUpdateDraftScheduleProcedure,
+			opts...,
+		),
 		buildDraftSchedule: connect_go.NewClient[wfm.BuildDraftScheduleReq, wfm.BuildDraftScheduleRes](
 			httpClient,
 			baseURL+WFMBuildDraftScheduleProcedure,
@@ -2213,6 +2230,7 @@ type wFMClient struct {
 	getPublishedScheduleRequiredCalls             *connect_go.Client[wfm.GetPublishedScheduleRequiredCallsReq, wfm.GetPublishedScheduleRequiredCallsRes]
 	getDraftScheduleRequiredCalls                 *connect_go.Client[wfm.GetDraftScheduleRequiredCallsReq, wfm.GetDraftScheduleRequiredCallsRes]
 	createDraftSchedule                           *connect_go.Client[wfm.CreateDraftScheduleReq, wfm.CreateDraftScheduleRes]
+	updateDraftSchedule                           *connect_go.Client[wfm.UpdateDraftScheduleReq, wfm.UpdateDraftScheduleRes]
 	buildDraftSchedule                            *connect_go.Client[wfm.BuildDraftScheduleReq, wfm.BuildDraftScheduleRes]
 	publishDraftSchedule                          *connect_go.Client[wfm.PublishDraftScheduleReq, wfm.PublishDraftScheduleRes]
 	getDraftSchedule                              *connect_go.Client[wfm.GetDraftScheduleReq, wfm.GetDraftScheduleRes]
@@ -2702,6 +2720,11 @@ func (c *wFMClient) GetDraftScheduleRequiredCalls(ctx context.Context, req *conn
 // CreateDraftSchedule calls api.v1alpha1.wfm.WFM.CreateDraftSchedule.
 func (c *wFMClient) CreateDraftSchedule(ctx context.Context, req *connect_go.Request[wfm.CreateDraftScheduleReq]) (*connect_go.Response[wfm.CreateDraftScheduleRes], error) {
 	return c.createDraftSchedule.CallUnary(ctx, req)
+}
+
+// UpdateDraftSchedule calls api.v1alpha1.wfm.WFM.UpdateDraftSchedule.
+func (c *wFMClient) UpdateDraftSchedule(ctx context.Context, req *connect_go.Request[wfm.UpdateDraftScheduleReq]) (*connect_go.Response[wfm.UpdateDraftScheduleRes], error) {
+	return c.updateDraftSchedule.CallUnary(ctx, req)
 }
 
 // BuildDraftSchedule calls api.v1alpha1.wfm.WFM.BuildDraftSchedule.
@@ -3862,6 +3885,16 @@ type WFMHandler interface {
 	//   - grpc.Invalid: the @name, @description or @scheduling_range are invalid.
 	//   - grpc.Internal: error occurs when creating the draft schedule.
 	CreateDraftSchedule(context.Context, *connect_go.Request[wfm.CreateDraftScheduleReq]) (*connect_go.Response[wfm.CreateDraftScheduleRes], error)
+	// Updates the @name, @description, and @datetime_range of the given @draft_schedule_sid for the org sending the request.
+	// The @name, @description, and @datetime_range fields must all be set with their desired values.
+	// If @delete_shifts_not_in_range if true, then any instances outside of the @datetime_range will be permenantly deleted with no recovery option.
+	// If @delete_shifts_not_in_range is false, instances outside of the new @datetime_range will be retained, for use if the datetime range is expanded to cover the instances in the future.
+	// If @copy_shifts_into_new_range time is true, then new the portion of an expanded @datetime_range which has no instances will copy the instances from the published schedule. If false, no instances will be created for an expanded @scheduling_range.
+	// If @get_updated_shifts is true, then the returned draft schedule will also contain the shift instances and segments in the given @datetime_range.
+	// Errors:
+	//   - grpc.Invalid: the @name, @description or @datetime_range are invalid.
+	//   - grpc.Internal: error occurs when updating the schedule or its instances.
+	UpdateDraftSchedule(context.Context, *connect_go.Request[wfm.UpdateDraftScheduleReq]) (*connect_go.Response[wfm.UpdateDraftScheduleRes], error)
 	// Builds a draft schedule for the given @node_selector in @schedule_scenario_sid over @schedule_scenario_scheduling_range for @draft_schedule_sid and the org making the request.
 	// The @schedule_scenario_scheduling_range field is optional. If not set, the draft schedule will be obtained with it's default range from it's start to end time.
 	// @include parameters are used when retrieving the resulting draft schedule, and work in the same way as for GetDraftSchedule.
@@ -4481,6 +4514,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.CreateDraftSchedule,
 		opts...,
 	))
+	mux.Handle(WFMUpdateDraftScheduleProcedure, connect_go.NewUnaryHandler(
+		WFMUpdateDraftScheduleProcedure,
+		svc.UpdateDraftSchedule,
+		opts...,
+	))
 	mux.Handle(WFMBuildDraftScheduleProcedure, connect_go.NewUnaryHandler(
 		WFMBuildDraftScheduleProcedure,
 		svc.BuildDraftSchedule,
@@ -4927,6 +4965,10 @@ func (UnimplementedWFMHandler) GetDraftScheduleRequiredCalls(context.Context, *c
 
 func (UnimplementedWFMHandler) CreateDraftSchedule(context.Context, *connect_go.Request[wfm.CreateDraftScheduleReq]) (*connect_go.Response[wfm.CreateDraftScheduleRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.CreateDraftSchedule is not implemented"))
+}
+
+func (UnimplementedWFMHandler) UpdateDraftSchedule(context.Context, *connect_go.Request[wfm.UpdateDraftScheduleReq]) (*connect_go.Response[wfm.UpdateDraftScheduleRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.UpdateDraftSchedule is not implemented"))
 }
 
 func (UnimplementedWFMHandler) BuildDraftSchedule(context.Context, *connect_go.Request[wfm.BuildDraftScheduleReq]) (*connect_go.Response[wfm.BuildDraftScheduleRes], error) {
