@@ -66,6 +66,8 @@ const (
 	LearnUploadDynamicScreenshotProcedure = "/api.v0alpha.Learn/UploadDynamicScreenshot"
 	// LearnStandaloneProcedure is the fully-qualified name of the Learn's Standalone RPC.
 	LearnStandaloneProcedure = "/api.v0alpha.Learn/Standalone"
+	// LearnDeleteStandaloneProcedure is the fully-qualified name of the Learn's DeleteStandalone RPC.
+	LearnDeleteStandaloneProcedure = "/api.v0alpha.Learn/DeleteStandalone"
 )
 
 // LearnClient is a client for the api.v0alpha.Learn service.
@@ -84,6 +86,8 @@ type LearnClient interface {
 	UploadDynamicScreenshot(context.Context, *connect_go.Request[v0alpha.UploadDynamicScreenshotReq]) (*connect_go.Response[v0alpha.UploadDynamicScreenshotRes], error)
 	// get standalone articles from learning pages
 	Standalone(context.Context, *connect_go.Request[v0alpha.StandaloneReq]) (*connect_go.Response[v0alpha.StandaloneRes], error)
+	// delete standalone articles from learning pages
+	DeleteStandalone(context.Context, *connect_go.Request[v0alpha.DeleteStandaloneReq]) (*connect_go.Response[v0alpha.DeleteStandaloneRes], error)
 }
 
 // NewLearnClient constructs a client for the api.v0alpha.Learn service. By default, it uses the
@@ -141,6 +145,11 @@ func NewLearnClient(httpClient connect_go.HTTPClient, baseURL string, opts ...co
 			baseURL+LearnStandaloneProcedure,
 			opts...,
 		),
+		deleteStandalone: connect_go.NewClient[v0alpha.DeleteStandaloneReq, v0alpha.DeleteStandaloneRes](
+			httpClient,
+			baseURL+LearnDeleteStandaloneProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -155,6 +164,7 @@ type learnClient struct {
 	searchContent           *connect_go.Client[v0alpha.SearchContentReq, v0alpha.SearchRes]
 	uploadDynamicScreenshot *connect_go.Client[v0alpha.UploadDynamicScreenshotReq, v0alpha.UploadDynamicScreenshotRes]
 	standalone              *connect_go.Client[v0alpha.StandaloneReq, v0alpha.StandaloneRes]
+	deleteStandalone        *connect_go.Client[v0alpha.DeleteStandaloneReq, v0alpha.DeleteStandaloneRes]
 }
 
 // Exist calls api.v0alpha.Learn.Exist.
@@ -202,6 +212,11 @@ func (c *learnClient) Standalone(ctx context.Context, req *connect_go.Request[v0
 	return c.standalone.CallUnary(ctx, req)
 }
 
+// DeleteStandalone calls api.v0alpha.Learn.DeleteStandalone.
+func (c *learnClient) DeleteStandalone(ctx context.Context, req *connect_go.Request[v0alpha.DeleteStandaloneReq]) (*connect_go.Response[v0alpha.DeleteStandaloneRes], error) {
+	return c.deleteStandalone.CallUnary(ctx, req)
+}
+
 // LearnHandler is an implementation of the api.v0alpha.Learn service.
 type LearnHandler interface {
 	Exist(context.Context, *connect_go.Request[v0alpha.ExistReq]) (*connect_go.Response[v0alpha.ExistRes], error)
@@ -218,6 +233,8 @@ type LearnHandler interface {
 	UploadDynamicScreenshot(context.Context, *connect_go.Request[v0alpha.UploadDynamicScreenshotReq]) (*connect_go.Response[v0alpha.UploadDynamicScreenshotRes], error)
 	// get standalone articles from learning pages
 	Standalone(context.Context, *connect_go.Request[v0alpha.StandaloneReq]) (*connect_go.Response[v0alpha.StandaloneRes], error)
+	// delete standalone articles from learning pages
+	DeleteStandalone(context.Context, *connect_go.Request[v0alpha.DeleteStandaloneReq]) (*connect_go.Response[v0alpha.DeleteStandaloneRes], error)
 }
 
 // NewLearnHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -272,6 +289,11 @@ func NewLearnHandler(svc LearnHandler, opts ...connect_go.HandlerOption) (string
 		svc.Standalone,
 		opts...,
 	))
+	mux.Handle(LearnDeleteStandaloneProcedure, connect_go.NewUnaryHandler(
+		LearnDeleteStandaloneProcedure,
+		svc.DeleteStandalone,
+		opts...,
+	))
 	return "/api.v0alpha.Learn/", mux
 }
 
@@ -312,4 +334,8 @@ func (UnimplementedLearnHandler) UploadDynamicScreenshot(context.Context, *conne
 
 func (UnimplementedLearnHandler) Standalone(context.Context, *connect_go.Request[v0alpha.StandaloneReq]) (*connect_go.Response[v0alpha.StandaloneRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.Standalone is not implemented"))
+}
+
+func (UnimplementedLearnHandler) DeleteStandalone(context.Context, *connect_go.Request[v0alpha.DeleteStandaloneReq]) (*connect_go.Response[v0alpha.DeleteStandaloneRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.DeleteStandalone is not implemented"))
 }

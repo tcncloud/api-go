@@ -42,6 +42,7 @@ const (
 	Learn_SearchContent_FullMethodName           = "/api.v0alpha.Learn/SearchContent"
 	Learn_UploadDynamicScreenshot_FullMethodName = "/api.v0alpha.Learn/UploadDynamicScreenshot"
 	Learn_Standalone_FullMethodName              = "/api.v0alpha.Learn/Standalone"
+	Learn_DeleteStandalone_FullMethodName        = "/api.v0alpha.Learn/DeleteStandalone"
 )
 
 // LearnClient is the client API for Learn service.
@@ -62,6 +63,8 @@ type LearnClient interface {
 	UploadDynamicScreenshot(ctx context.Context, in *UploadDynamicScreenshotReq, opts ...grpc.CallOption) (*UploadDynamicScreenshotRes, error)
 	// get standalone articles from learning pages
 	Standalone(ctx context.Context, in *StandaloneReq, opts ...grpc.CallOption) (*StandaloneRes, error)
+	// delete standalone articles from learning pages
+	DeleteStandalone(ctx context.Context, in *DeleteStandaloneReq, opts ...grpc.CallOption) (*DeleteStandaloneRes, error)
 }
 
 type learnClient struct {
@@ -153,6 +156,15 @@ func (c *learnClient) Standalone(ctx context.Context, in *StandaloneReq, opts ..
 	return out, nil
 }
 
+func (c *learnClient) DeleteStandalone(ctx context.Context, in *DeleteStandaloneReq, opts ...grpc.CallOption) (*DeleteStandaloneRes, error) {
+	out := new(DeleteStandaloneRes)
+	err := c.cc.Invoke(ctx, Learn_DeleteStandalone_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LearnServer is the server API for Learn service.
 // All implementations must embed UnimplementedLearnServer
 // for forward compatibility
@@ -171,6 +183,8 @@ type LearnServer interface {
 	UploadDynamicScreenshot(context.Context, *UploadDynamicScreenshotReq) (*UploadDynamicScreenshotRes, error)
 	// get standalone articles from learning pages
 	Standalone(context.Context, *StandaloneReq) (*StandaloneRes, error)
+	// delete standalone articles from learning pages
+	DeleteStandalone(context.Context, *DeleteStandaloneReq) (*DeleteStandaloneRes, error)
 	mustEmbedUnimplementedLearnServer()
 }
 
@@ -204,6 +218,9 @@ func (UnimplementedLearnServer) UploadDynamicScreenshot(context.Context, *Upload
 }
 func (UnimplementedLearnServer) Standalone(context.Context, *StandaloneReq) (*StandaloneRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Standalone not implemented")
+}
+func (UnimplementedLearnServer) DeleteStandalone(context.Context, *DeleteStandaloneReq) (*DeleteStandaloneRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteStandalone not implemented")
 }
 func (UnimplementedLearnServer) mustEmbedUnimplementedLearnServer() {}
 
@@ -380,6 +397,24 @@ func _Learn_Standalone_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Learn_DeleteStandalone_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteStandaloneReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LearnServer).DeleteStandalone(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Learn_DeleteStandalone_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LearnServer).DeleteStandalone(ctx, req.(*DeleteStandaloneReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Learn_ServiceDesc is the grpc.ServiceDesc for Learn service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -422,6 +457,10 @@ var Learn_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Standalone",
 			Handler:    _Learn_Standalone_Handler,
+		},
+		{
+			MethodName: "DeleteStandalone",
+			Handler:    _Learn_DeleteStandalone_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
