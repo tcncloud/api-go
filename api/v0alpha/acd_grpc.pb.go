@@ -36,6 +36,7 @@ const (
 	Acd_AgentGetStatusStream_FullMethodName                  = "/api.v0alpha.Acd/AgentGetStatusStream"
 	Acd_AgentGetStatus_FullMethodName                        = "/api.v0alpha.Acd/AgentGetStatus"
 	Acd_AgentGetConnectedParty_FullMethodName                = "/api.v0alpha.Acd/AgentGetConnectedParty"
+	Acd_ManagerAgentGetConnectedParty_FullMethodName         = "/api.v0alpha.Acd/ManagerAgentGetConnectedParty"
 	Acd_AgentIntercom_FullMethodName                         = "/api.v0alpha.Acd/AgentIntercom"
 	Acd_AgentIntercomAccept_FullMethodName                   = "/api.v0alpha.Acd/AgentIntercomAccept"
 	Acd_AgentIntercomReject_FullMethodName                   = "/api.v0alpha.Acd/AgentIntercomReject"
@@ -93,6 +94,7 @@ type AcdClient interface {
 	AgentGetStatusStream(ctx context.Context, in *AgentGetStatusRequest, opts ...grpc.CallOption) (Acd_AgentGetStatusStreamClient, error)
 	AgentGetStatus(ctx context.Context, in *AgentGetStatusRequest, opts ...grpc.CallOption) (*AgentGetStatusReply, error)
 	AgentGetConnectedParty(ctx context.Context, in *AgentGetConnectedPartyRequest, opts ...grpc.CallOption) (*AgentGetConnectedPartyReply, error)
+	ManagerAgentGetConnectedParty(ctx context.Context, in *ManagerAgentGetConnectedPartyRequest, opts ...grpc.CallOption) (*ManagerAgentGetConnectedPartyReply, error)
 	AgentIntercom(ctx context.Context, in *AgentIntercomRequest, opts ...grpc.CallOption) (*AgentIntercomReply, error)
 	AgentIntercomAccept(ctx context.Context, in *AgentIntercomAcceptRequest, opts ...grpc.CallOption) (*AgentIntercomAcceptReply, error)
 	AgentIntercomReject(ctx context.Context, in *AgentIntercomRejectRequest, opts ...grpc.CallOption) (*AgentIntercomRejectReply, error)
@@ -206,6 +208,15 @@ func (c *acdClient) AgentGetStatus(ctx context.Context, in *AgentGetStatusReques
 func (c *acdClient) AgentGetConnectedParty(ctx context.Context, in *AgentGetConnectedPartyRequest, opts ...grpc.CallOption) (*AgentGetConnectedPartyReply, error) {
 	out := new(AgentGetConnectedPartyReply)
 	err := c.cc.Invoke(ctx, Acd_AgentGetConnectedParty_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *acdClient) ManagerAgentGetConnectedParty(ctx context.Context, in *ManagerAgentGetConnectedPartyRequest, opts ...grpc.CallOption) (*ManagerAgentGetConnectedPartyReply, error) {
+	out := new(ManagerAgentGetConnectedPartyReply)
+	err := c.cc.Invoke(ctx, Acd_ManagerAgentGetConnectedParty_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -651,6 +662,7 @@ type AcdServer interface {
 	AgentGetStatusStream(*AgentGetStatusRequest, Acd_AgentGetStatusStreamServer) error
 	AgentGetStatus(context.Context, *AgentGetStatusRequest) (*AgentGetStatusReply, error)
 	AgentGetConnectedParty(context.Context, *AgentGetConnectedPartyRequest) (*AgentGetConnectedPartyReply, error)
+	ManagerAgentGetConnectedParty(context.Context, *ManagerAgentGetConnectedPartyRequest) (*ManagerAgentGetConnectedPartyReply, error)
 	AgentIntercom(context.Context, *AgentIntercomRequest) (*AgentIntercomReply, error)
 	AgentIntercomAccept(context.Context, *AgentIntercomAcceptRequest) (*AgentIntercomAcceptReply, error)
 	AgentIntercomReject(context.Context, *AgentIntercomRejectRequest) (*AgentIntercomRejectReply, error)
@@ -725,6 +737,9 @@ func (UnimplementedAcdServer) AgentGetStatus(context.Context, *AgentGetStatusReq
 }
 func (UnimplementedAcdServer) AgentGetConnectedParty(context.Context, *AgentGetConnectedPartyRequest) (*AgentGetConnectedPartyReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AgentGetConnectedParty not implemented")
+}
+func (UnimplementedAcdServer) ManagerAgentGetConnectedParty(context.Context, *ManagerAgentGetConnectedPartyRequest) (*ManagerAgentGetConnectedPartyReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ManagerAgentGetConnectedParty not implemented")
 }
 func (UnimplementedAcdServer) AgentIntercom(context.Context, *AgentIntercomRequest) (*AgentIntercomReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AgentIntercom not implemented")
@@ -936,6 +951,24 @@ func _Acd_AgentGetConnectedParty_Handler(srv interface{}, ctx context.Context, d
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AcdServer).AgentGetConnectedParty(ctx, req.(*AgentGetConnectedPartyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Acd_ManagerAgentGetConnectedParty_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ManagerAgentGetConnectedPartyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AcdServer).ManagerAgentGetConnectedParty(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Acd_ManagerAgentGetConnectedParty_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AcdServer).ManagerAgentGetConnectedParty(ctx, req.(*ManagerAgentGetConnectedPartyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1818,6 +1851,10 @@ var Acd_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AgentGetConnectedParty",
 			Handler:    _Acd_AgentGetConnectedParty_Handler,
+		},
+		{
+			MethodName: "ManagerAgentGetConnectedParty",
+			Handler:    _Acd_ManagerAgentGetConnectedParty_Handler,
 		},
 		{
 			MethodName: "AgentIntercom",
