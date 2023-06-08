@@ -33,6 +33,7 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
+	Acd_AgentGetStatusStream_FullMethodName                  = "/api.v0alpha.Acd/AgentGetStatusStream"
 	Acd_AgentGetStatus_FullMethodName                        = "/api.v0alpha.Acd/AgentGetStatus"
 	Acd_AgentGetConnectedParty_FullMethodName                = "/api.v0alpha.Acd/AgentGetConnectedParty"
 	Acd_AgentIntercom_FullMethodName                         = "/api.v0alpha.Acd/AgentIntercom"
@@ -89,6 +90,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AcdClient interface {
+	AgentGetStatusStream(ctx context.Context, in *AgentGetStatusRequest, opts ...grpc.CallOption) (Acd_AgentGetStatusStreamClient, error)
 	AgentGetStatus(ctx context.Context, in *AgentGetStatusRequest, opts ...grpc.CallOption) (*AgentGetStatusReply, error)
 	AgentGetConnectedParty(ctx context.Context, in *AgentGetConnectedPartyRequest, opts ...grpc.CallOption) (*AgentGetConnectedPartyReply, error)
 	AgentIntercom(ctx context.Context, in *AgentIntercomRequest, opts ...grpc.CallOption) (*AgentIntercomReply, error)
@@ -158,6 +160,38 @@ type acdClient struct {
 
 func NewAcdClient(cc grpc.ClientConnInterface) AcdClient {
 	return &acdClient{cc}
+}
+
+func (c *acdClient) AgentGetStatusStream(ctx context.Context, in *AgentGetStatusRequest, opts ...grpc.CallOption) (Acd_AgentGetStatusStreamClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Acd_ServiceDesc.Streams[0], Acd_AgentGetStatusStream_FullMethodName, opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &acdAgentGetStatusStreamClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type Acd_AgentGetStatusStreamClient interface {
+	Recv() (*AgentGetStatusReply, error)
+	grpc.ClientStream
+}
+
+type acdAgentGetStatusStreamClient struct {
+	grpc.ClientStream
+}
+
+func (x *acdAgentGetStatusStreamClient) Recv() (*AgentGetStatusReply, error) {
+	m := new(AgentGetStatusReply)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
 }
 
 func (c *acdClient) AgentGetStatus(ctx context.Context, in *AgentGetStatusRequest, opts ...grpc.CallOption) (*AgentGetStatusReply, error) {
@@ -614,6 +648,7 @@ func (c *acdClient) AgentUnmute(ctx context.Context, in *AgentUnmuteRequest, opt
 // All implementations must embed UnimplementedAcdServer
 // for forward compatibility
 type AcdServer interface {
+	AgentGetStatusStream(*AgentGetStatusRequest, Acd_AgentGetStatusStreamServer) error
 	AgentGetStatus(context.Context, *AgentGetStatusRequest) (*AgentGetStatusReply, error)
 	AgentGetConnectedParty(context.Context, *AgentGetConnectedPartyRequest) (*AgentGetConnectedPartyReply, error)
 	AgentIntercom(context.Context, *AgentIntercomRequest) (*AgentIntercomReply, error)
@@ -682,6 +717,9 @@ type AcdServer interface {
 type UnimplementedAcdServer struct {
 }
 
+func (UnimplementedAcdServer) AgentGetStatusStream(*AgentGetStatusRequest, Acd_AgentGetStatusStreamServer) error {
+	return status.Errorf(codes.Unimplemented, "method AgentGetStatusStream not implemented")
+}
 func (UnimplementedAcdServer) AgentGetStatus(context.Context, *AgentGetStatusRequest) (*AgentGetStatusReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AgentGetStatus not implemented")
 }
@@ -843,6 +881,27 @@ type UnsafeAcdServer interface {
 
 func RegisterAcdServer(s grpc.ServiceRegistrar, srv AcdServer) {
 	s.RegisterService(&Acd_ServiceDesc, srv)
+}
+
+func _Acd_AgentGetStatusStream_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(AgentGetStatusRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(AcdServer).AgentGetStatusStream(m, &acdAgentGetStatusStreamServer{stream})
+}
+
+type Acd_AgentGetStatusStreamServer interface {
+	Send(*AgentGetStatusReply) error
+	grpc.ServerStream
+}
+
+type acdAgentGetStatusStreamServer struct {
+	grpc.ServerStream
+}
+
+func (x *acdAgentGetStatusStreamServer) Send(m *AgentGetStatusReply) error {
+	return x.ServerStream.SendMsg(m)
 }
 
 func _Acd_AgentGetStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -1953,6 +2012,12 @@ var Acd_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Acd_AgentUnmute_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "AgentGetStatusStream",
+			Handler:       _Acd_AgentGetStatusStream_Handler,
+			ServerStreams: true,
+		},
+	},
 	Metadata: "api/v0alpha/acd.proto",
 }
