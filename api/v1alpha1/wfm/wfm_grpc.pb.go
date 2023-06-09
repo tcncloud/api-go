@@ -1140,7 +1140,7 @@ type WFMClient interface {
 	//	-grpc.NotFound: the scenario with the given @schedule_scenario_sid doesn't exist.
 	//	-grpc.Internal: error occurs when updating the scenario.
 	UpdateScheduleScenario(ctx context.Context, in *UpdateScheduleScenarioReq, opts ...grpc.CallOption) (*UpdateScheduleScenarioRes, error)
-	// Gets config entities that match the org sending the request and given @entity_type and that belong to the @belongs_to_entity parameter.
+	// Gets config entities that match the org sending the request and given @entity_type and that belong to the @belongs_to_entity and @schedule_scenario_sid parameters.
 	// If @include_member_lists is set to true the member lists of the entities retrieved will be included.
 	// Any nodes in the returned set of entities will have inherited nonskill associations applied to the node's member_nonskill_activity fields.
 	// Prior to listing the entities it will Resync TCN Agents and skill proficiencies.
@@ -3462,7 +3462,7 @@ type WFMServer interface {
 	//	-grpc.NotFound: the scenario with the given @schedule_scenario_sid doesn't exist.
 	//	-grpc.Internal: error occurs when updating the scenario.
 	UpdateScheduleScenario(context.Context, *UpdateScheduleScenarioReq) (*UpdateScheduleScenarioRes, error)
-	// Gets config entities that match the org sending the request and given @entity_type and that belong to the @belongs_to_entity parameter.
+	// Gets config entities that match the org sending the request and given @entity_type and that belong to the @belongs_to_entity and @schedule_scenario_sid parameters.
 	// If @include_member_lists is set to true the member lists of the entities retrieved will be included.
 	// Any nodes in the returned set of entities will have inherited nonskill associations applied to the node's member_nonskill_activity fields.
 	// Prior to listing the entities it will Resync TCN Agents and skill proficiencies.
