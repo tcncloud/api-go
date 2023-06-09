@@ -34,6 +34,7 @@ const (
 	Tickets_ListSLACondition_FullMethodName    = "/api.v1alpha1.tickets.Tickets/ListSLACondition"
 	Tickets_ReplyComment_FullMethodName        = "/api.v1alpha1.tickets.Tickets/ReplyComment"
 	Tickets_ListTicketAuditLog_FullMethodName  = "/api.v1alpha1.tickets.Tickets/ListTicketAuditLog"
+	Tickets_AssignSelf_FullMethodName          = "/api.v1alpha1.tickets.Tickets/AssignSelf"
 )
 
 // TicketsClient is the client API for Tickets service.
@@ -70,6 +71,8 @@ type TicketsClient interface {
 	ReplyComment(ctx context.Context, in *ReplyCommentReq, opts ...grpc.CallOption) (*ReplyCommentRes, error)
 	// Public method to List audit log for Ticketing system
 	ListTicketAuditLog(ctx context.Context, in *ListTicketAuditLogReq, opts ...grpc.CallOption) (*ListTicketAuditLogRes, error)
+	// Public method to assign a ticket
+	AssignSelf(ctx context.Context, in *CreateSelfAssignReq, opts ...grpc.CallOption) (*CreateSelfAssignRes, error)
 }
 
 type ticketsClient struct {
@@ -215,6 +218,15 @@ func (c *ticketsClient) ListTicketAuditLog(ctx context.Context, in *ListTicketAu
 	return out, nil
 }
 
+func (c *ticketsClient) AssignSelf(ctx context.Context, in *CreateSelfAssignReq, opts ...grpc.CallOption) (*CreateSelfAssignRes, error) {
+	out := new(CreateSelfAssignRes)
+	err := c.cc.Invoke(ctx, Tickets_AssignSelf_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TicketsServer is the server API for Tickets service.
 // All implementations must embed UnimplementedTicketsServer
 // for forward compatibility
@@ -249,6 +261,8 @@ type TicketsServer interface {
 	ReplyComment(context.Context, *ReplyCommentReq) (*ReplyCommentRes, error)
 	// Public method to List audit log for Ticketing system
 	ListTicketAuditLog(context.Context, *ListTicketAuditLogReq) (*ListTicketAuditLogRes, error)
+	// Public method to assign a ticket
+	AssignSelf(context.Context, *CreateSelfAssignReq) (*CreateSelfAssignRes, error)
 	mustEmbedUnimplementedTicketsServer()
 }
 
@@ -300,6 +314,9 @@ func (UnimplementedTicketsServer) ReplyComment(context.Context, *ReplyCommentReq
 }
 func (UnimplementedTicketsServer) ListTicketAuditLog(context.Context, *ListTicketAuditLogReq) (*ListTicketAuditLogRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListTicketAuditLog not implemented")
+}
+func (UnimplementedTicketsServer) AssignSelf(context.Context, *CreateSelfAssignReq) (*CreateSelfAssignRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AssignSelf not implemented")
 }
 func (UnimplementedTicketsServer) mustEmbedUnimplementedTicketsServer() {}
 
@@ -584,6 +601,24 @@ func _Tickets_ListTicketAuditLog_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Tickets_AssignSelf_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateSelfAssignReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TicketsServer).AssignSelf(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Tickets_AssignSelf_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TicketsServer).AssignSelf(ctx, req.(*CreateSelfAssignReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Tickets_ServiceDesc is the grpc.ServiceDesc for Tickets service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -650,6 +685,10 @@ var Tickets_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListTicketAuditLog",
 			Handler:    _Tickets_ListTicketAuditLog_Handler,
+		},
+		{
+			MethodName: "AssignSelf",
+			Handler:    _Tickets_AssignSelf_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -66,6 +66,8 @@ const (
 	// TicketsListTicketAuditLogProcedure is the fully-qualified name of the Tickets's
 	// ListTicketAuditLog RPC.
 	TicketsListTicketAuditLogProcedure = "/api.v1alpha1.tickets.Tickets/ListTicketAuditLog"
+	// TicketsAssignSelfProcedure is the fully-qualified name of the Tickets's AssignSelf RPC.
+	TicketsAssignSelfProcedure = "/api.v1alpha1.tickets.Tickets/AssignSelf"
 )
 
 // TicketsClient is a client for the api.v1alpha1.tickets.Tickets service.
@@ -100,6 +102,8 @@ type TicketsClient interface {
 	ReplyComment(context.Context, *connect_go.Request[tickets.ReplyCommentReq]) (*connect_go.Response[tickets.ReplyCommentRes], error)
 	// Public method to List audit log for Ticketing system
 	ListTicketAuditLog(context.Context, *connect_go.Request[tickets.ListTicketAuditLogReq]) (*connect_go.Response[tickets.ListTicketAuditLogRes], error)
+	// Public method to assign a ticket
+	AssignSelf(context.Context, *connect_go.Request[tickets.CreateSelfAssignReq]) (*connect_go.Response[tickets.CreateSelfAssignRes], error)
 }
 
 // NewTicketsClient constructs a client for the api.v1alpha1.tickets.Tickets service. By default, it
@@ -187,6 +191,11 @@ func NewTicketsClient(httpClient connect_go.HTTPClient, baseURL string, opts ...
 			baseURL+TicketsListTicketAuditLogProcedure,
 			opts...,
 		),
+		assignSelf: connect_go.NewClient[tickets.CreateSelfAssignReq, tickets.CreateSelfAssignRes](
+			httpClient,
+			baseURL+TicketsAssignSelfProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -207,6 +216,7 @@ type ticketsClient struct {
 	listSLACondition    *connect_go.Client[tickets.ListSlaConditionReq, tickets.ListSlaConditionRes]
 	replyComment        *connect_go.Client[tickets.ReplyCommentReq, tickets.ReplyCommentRes]
 	listTicketAuditLog  *connect_go.Client[tickets.ListTicketAuditLogReq, tickets.ListTicketAuditLogRes]
+	assignSelf          *connect_go.Client[tickets.CreateSelfAssignReq, tickets.CreateSelfAssignRes]
 }
 
 // CreateTicket calls api.v1alpha1.tickets.Tickets.CreateTicket.
@@ -284,6 +294,11 @@ func (c *ticketsClient) ListTicketAuditLog(ctx context.Context, req *connect_go.
 	return c.listTicketAuditLog.CallUnary(ctx, req)
 }
 
+// AssignSelf calls api.v1alpha1.tickets.Tickets.AssignSelf.
+func (c *ticketsClient) AssignSelf(ctx context.Context, req *connect_go.Request[tickets.CreateSelfAssignReq]) (*connect_go.Response[tickets.CreateSelfAssignRes], error) {
+	return c.assignSelf.CallUnary(ctx, req)
+}
+
 // TicketsHandler is an implementation of the api.v1alpha1.tickets.Tickets service.
 type TicketsHandler interface {
 	// Public Method to create a ticket.
@@ -316,6 +331,8 @@ type TicketsHandler interface {
 	ReplyComment(context.Context, *connect_go.Request[tickets.ReplyCommentReq]) (*connect_go.Response[tickets.ReplyCommentRes], error)
 	// Public method to List audit log for Ticketing system
 	ListTicketAuditLog(context.Context, *connect_go.Request[tickets.ListTicketAuditLogReq]) (*connect_go.Response[tickets.ListTicketAuditLogRes], error)
+	// Public method to assign a ticket
+	AssignSelf(context.Context, *connect_go.Request[tickets.CreateSelfAssignReq]) (*connect_go.Response[tickets.CreateSelfAssignRes], error)
 }
 
 // NewTicketsHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -400,6 +417,11 @@ func NewTicketsHandler(svc TicketsHandler, opts ...connect_go.HandlerOption) (st
 		svc.ListTicketAuditLog,
 		opts...,
 	))
+	mux.Handle(TicketsAssignSelfProcedure, connect_go.NewUnaryHandler(
+		TicketsAssignSelfProcedure,
+		svc.AssignSelf,
+		opts...,
+	))
 	return "/api.v1alpha1.tickets.Tickets/", mux
 }
 
@@ -464,4 +486,8 @@ func (UnimplementedTicketsHandler) ReplyComment(context.Context, *connect_go.Req
 
 func (UnimplementedTicketsHandler) ListTicketAuditLog(context.Context, *connect_go.Request[tickets.ListTicketAuditLogReq]) (*connect_go.Response[tickets.ListTicketAuditLogRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.tickets.Tickets.ListTicketAuditLog is not implemented"))
+}
+
+func (UnimplementedTicketsHandler) AssignSelf(context.Context, *connect_go.Request[tickets.CreateSelfAssignReq]) (*connect_go.Response[tickets.CreateSelfAssignRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.tickets.Tickets.AssignSelf is not implemented"))
 }
