@@ -51,39 +51,47 @@ const (
 	LearnExistProcedure = "/api.v0alpha.Learn/Exist"
 	// LearnContentProcedure is the fully-qualified name of the Learn's Content RPC.
 	LearnContentProcedure = "/api.v0alpha.Learn/Content"
+	// LearnExportManyProcedure is the fully-qualified name of the Learn's ExportMany RPC.
+	LearnExportManyProcedure = "/api.v0alpha.Learn/ExportMany"
+	// LearnSearchContentProcedure is the fully-qualified name of the Learn's SearchContent RPC.
+	LearnSearchContentProcedure = "/api.v0alpha.Learn/SearchContent"
+	// LearnStandaloneProcedure is the fully-qualified name of the Learn's Standalone RPC.
+	LearnStandaloneProcedure = "/api.v0alpha.Learn/Standalone"
 	// LearnContentEditorDataProcedure is the fully-qualified name of the Learn's ContentEditorData RPC.
 	LearnContentEditorDataProcedure = "/api.v0alpha.Learn/ContentEditorData"
 	// LearnUpdateProcedure is the fully-qualified name of the Learn's Update RPC.
 	LearnUpdateProcedure = "/api.v0alpha.Learn/Update"
-	// LearnExportManyProcedure is the fully-qualified name of the Learn's ExportMany RPC.
-	LearnExportManyProcedure = "/api.v0alpha.Learn/ExportMany"
 	// LearnStoreStaticImageProcedure is the fully-qualified name of the Learn's StoreStaticImage RPC.
 	LearnStoreStaticImageProcedure = "/api.v0alpha.Learn/StoreStaticImage"
-	// LearnSearchContentProcedure is the fully-qualified name of the Learn's SearchContent RPC.
-	LearnSearchContentProcedure = "/api.v0alpha.Learn/SearchContent"
 	// LearnUploadDynamicScreenshotProcedure is the fully-qualified name of the Learn's
 	// UploadDynamicScreenshot RPC.
 	LearnUploadDynamicScreenshotProcedure = "/api.v0alpha.Learn/UploadDynamicScreenshot"
-	// LearnStandaloneProcedure is the fully-qualified name of the Learn's Standalone RPC.
-	LearnStandaloneProcedure = "/api.v0alpha.Learn/Standalone"
+	// LearnDeleteStandaloneProcedure is the fully-qualified name of the Learn's DeleteStandalone RPC.
+	LearnDeleteStandaloneProcedure = "/api.v0alpha.Learn/DeleteStandalone"
 )
 
 // LearnClient is a client for the api.v0alpha.Learn service.
 type LearnClient interface {
+	// check if learning page already exists
 	Exist(context.Context, *connect_go.Request[v0alpha.ExistReq]) (*connect_go.Response[v0alpha.ExistRes], error)
+	// retreive content from learning pages
 	Content(context.Context, *connect_go.Request[v0alpha.ContentReq]) (*connect_go.Response[v0alpha.ContentRes], error)
-	ContentEditorData(context.Context, *connect_go.Request[v0alpha.ContentEditorDataReq]) (*connect_go.Response[v0alpha.ContentEditorDataRes], error)
-	Update(context.Context, *connect_go.Request[v0alpha.UpdateReq]) (*connect_go.Response[v0alpha.UpdateRes], error)
 	// exports multiple pages of the learning center markdown as PDF
 	ExportMany(context.Context, *connect_go.Request[v0alpha.ExportManyReq]) (*connect_go.Response[v0alpha.ExportRes], error)
-	// upload url for static images
-	StoreStaticImage(context.Context, *connect_go.Request[v0alpha.StoreStaticImageReq]) (*connect_go.Response[v0alpha.StoreStaticImageRes], error)
 	// search content in learning pages
 	SearchContent(context.Context, *connect_go.Request[v0alpha.SearchContentReq]) (*connect_go.Response[v0alpha.SearchRes], error)
-	// upload dynamic learning image screenshot
-	UploadDynamicScreenshot(context.Context, *connect_go.Request[v0alpha.UploadDynamicScreenshotReq]) (*connect_go.Response[v0alpha.UploadDynamicScreenshotRes], error)
 	// get standalone articles from learning pages
 	Standalone(context.Context, *connect_go.Request[v0alpha.StandaloneReq]) (*connect_go.Response[v0alpha.StandaloneRes], error)
+	// retrieve user who edited the content last
+	ContentEditorData(context.Context, *connect_go.Request[v0alpha.ContentEditorDataReq]) (*connect_go.Response[v0alpha.ContentEditorDataRes], error)
+	// update contents for learning pages
+	Update(context.Context, *connect_go.Request[v0alpha.UpdateReq]) (*connect_go.Response[v0alpha.UpdateRes], error)
+	// upload url for static images
+	StoreStaticImage(context.Context, *connect_go.Request[v0alpha.StoreStaticImageReq]) (*connect_go.Response[v0alpha.StoreStaticImageRes], error)
+	// upload dynamic learning image screenshot
+	UploadDynamicScreenshot(context.Context, *connect_go.Request[v0alpha.UploadDynamicScreenshotReq]) (*connect_go.Response[v0alpha.UploadDynamicScreenshotRes], error)
+	// delete standalone articles from learning pages
+	DeleteStandalone(context.Context, *connect_go.Request[v0alpha.DeleteStandaloneReq]) (*connect_go.Response[v0alpha.DeleteStandaloneRes], error)
 }
 
 // NewLearnClient constructs a client for the api.v0alpha.Learn service. By default, it uses the
@@ -106,6 +114,21 @@ func NewLearnClient(httpClient connect_go.HTTPClient, baseURL string, opts ...co
 			baseURL+LearnContentProcedure,
 			opts...,
 		),
+		exportMany: connect_go.NewClient[v0alpha.ExportManyReq, v0alpha.ExportRes](
+			httpClient,
+			baseURL+LearnExportManyProcedure,
+			opts...,
+		),
+		searchContent: connect_go.NewClient[v0alpha.SearchContentReq, v0alpha.SearchRes](
+			httpClient,
+			baseURL+LearnSearchContentProcedure,
+			opts...,
+		),
+		standalone: connect_go.NewClient[v0alpha.StandaloneReq, v0alpha.StandaloneRes](
+			httpClient,
+			baseURL+LearnStandaloneProcedure,
+			opts...,
+		),
 		contentEditorData: connect_go.NewClient[v0alpha.ContentEditorDataReq, v0alpha.ContentEditorDataRes](
 			httpClient,
 			baseURL+LearnContentEditorDataProcedure,
@@ -116,19 +139,9 @@ func NewLearnClient(httpClient connect_go.HTTPClient, baseURL string, opts ...co
 			baseURL+LearnUpdateProcedure,
 			opts...,
 		),
-		exportMany: connect_go.NewClient[v0alpha.ExportManyReq, v0alpha.ExportRes](
-			httpClient,
-			baseURL+LearnExportManyProcedure,
-			opts...,
-		),
 		storeStaticImage: connect_go.NewClient[v0alpha.StoreStaticImageReq, v0alpha.StoreStaticImageRes](
 			httpClient,
 			baseURL+LearnStoreStaticImageProcedure,
-			opts...,
-		),
-		searchContent: connect_go.NewClient[v0alpha.SearchContentReq, v0alpha.SearchRes](
-			httpClient,
-			baseURL+LearnSearchContentProcedure,
 			opts...,
 		),
 		uploadDynamicScreenshot: connect_go.NewClient[v0alpha.UploadDynamicScreenshotReq, v0alpha.UploadDynamicScreenshotRes](
@@ -136,9 +149,9 @@ func NewLearnClient(httpClient connect_go.HTTPClient, baseURL string, opts ...co
 			baseURL+LearnUploadDynamicScreenshotProcedure,
 			opts...,
 		),
-		standalone: connect_go.NewClient[v0alpha.StandaloneReq, v0alpha.StandaloneRes](
+		deleteStandalone: connect_go.NewClient[v0alpha.DeleteStandaloneReq, v0alpha.DeleteStandaloneRes](
 			httpClient,
-			baseURL+LearnStandaloneProcedure,
+			baseURL+LearnDeleteStandaloneProcedure,
 			opts...,
 		),
 	}
@@ -148,13 +161,14 @@ func NewLearnClient(httpClient connect_go.HTTPClient, baseURL string, opts ...co
 type learnClient struct {
 	exist                   *connect_go.Client[v0alpha.ExistReq, v0alpha.ExistRes]
 	content                 *connect_go.Client[v0alpha.ContentReq, v0alpha.ContentRes]
+	exportMany              *connect_go.Client[v0alpha.ExportManyReq, v0alpha.ExportRes]
+	searchContent           *connect_go.Client[v0alpha.SearchContentReq, v0alpha.SearchRes]
+	standalone              *connect_go.Client[v0alpha.StandaloneReq, v0alpha.StandaloneRes]
 	contentEditorData       *connect_go.Client[v0alpha.ContentEditorDataReq, v0alpha.ContentEditorDataRes]
 	update                  *connect_go.Client[v0alpha.UpdateReq, v0alpha.UpdateRes]
-	exportMany              *connect_go.Client[v0alpha.ExportManyReq, v0alpha.ExportRes]
 	storeStaticImage        *connect_go.Client[v0alpha.StoreStaticImageReq, v0alpha.StoreStaticImageRes]
-	searchContent           *connect_go.Client[v0alpha.SearchContentReq, v0alpha.SearchRes]
 	uploadDynamicScreenshot *connect_go.Client[v0alpha.UploadDynamicScreenshotReq, v0alpha.UploadDynamicScreenshotRes]
-	standalone              *connect_go.Client[v0alpha.StandaloneReq, v0alpha.StandaloneRes]
+	deleteStandalone        *connect_go.Client[v0alpha.DeleteStandaloneReq, v0alpha.DeleteStandaloneRes]
 }
 
 // Exist calls api.v0alpha.Learn.Exist.
@@ -167,6 +181,21 @@ func (c *learnClient) Content(ctx context.Context, req *connect_go.Request[v0alp
 	return c.content.CallUnary(ctx, req)
 }
 
+// ExportMany calls api.v0alpha.Learn.ExportMany.
+func (c *learnClient) ExportMany(ctx context.Context, req *connect_go.Request[v0alpha.ExportManyReq]) (*connect_go.Response[v0alpha.ExportRes], error) {
+	return c.exportMany.CallUnary(ctx, req)
+}
+
+// SearchContent calls api.v0alpha.Learn.SearchContent.
+func (c *learnClient) SearchContent(ctx context.Context, req *connect_go.Request[v0alpha.SearchContentReq]) (*connect_go.Response[v0alpha.SearchRes], error) {
+	return c.searchContent.CallUnary(ctx, req)
+}
+
+// Standalone calls api.v0alpha.Learn.Standalone.
+func (c *learnClient) Standalone(ctx context.Context, req *connect_go.Request[v0alpha.StandaloneReq]) (*connect_go.Response[v0alpha.StandaloneRes], error) {
+	return c.standalone.CallUnary(ctx, req)
+}
+
 // ContentEditorData calls api.v0alpha.Learn.ContentEditorData.
 func (c *learnClient) ContentEditorData(ctx context.Context, req *connect_go.Request[v0alpha.ContentEditorDataReq]) (*connect_go.Response[v0alpha.ContentEditorDataRes], error) {
 	return c.contentEditorData.CallUnary(ctx, req)
@@ -177,19 +206,9 @@ func (c *learnClient) Update(ctx context.Context, req *connect_go.Request[v0alph
 	return c.update.CallUnary(ctx, req)
 }
 
-// ExportMany calls api.v0alpha.Learn.ExportMany.
-func (c *learnClient) ExportMany(ctx context.Context, req *connect_go.Request[v0alpha.ExportManyReq]) (*connect_go.Response[v0alpha.ExportRes], error) {
-	return c.exportMany.CallUnary(ctx, req)
-}
-
 // StoreStaticImage calls api.v0alpha.Learn.StoreStaticImage.
 func (c *learnClient) StoreStaticImage(ctx context.Context, req *connect_go.Request[v0alpha.StoreStaticImageReq]) (*connect_go.Response[v0alpha.StoreStaticImageRes], error) {
 	return c.storeStaticImage.CallUnary(ctx, req)
-}
-
-// SearchContent calls api.v0alpha.Learn.SearchContent.
-func (c *learnClient) SearchContent(ctx context.Context, req *connect_go.Request[v0alpha.SearchContentReq]) (*connect_go.Response[v0alpha.SearchRes], error) {
-	return c.searchContent.CallUnary(ctx, req)
 }
 
 // UploadDynamicScreenshot calls api.v0alpha.Learn.UploadDynamicScreenshot.
@@ -197,27 +216,33 @@ func (c *learnClient) UploadDynamicScreenshot(ctx context.Context, req *connect_
 	return c.uploadDynamicScreenshot.CallUnary(ctx, req)
 }
 
-// Standalone calls api.v0alpha.Learn.Standalone.
-func (c *learnClient) Standalone(ctx context.Context, req *connect_go.Request[v0alpha.StandaloneReq]) (*connect_go.Response[v0alpha.StandaloneRes], error) {
-	return c.standalone.CallUnary(ctx, req)
+// DeleteStandalone calls api.v0alpha.Learn.DeleteStandalone.
+func (c *learnClient) DeleteStandalone(ctx context.Context, req *connect_go.Request[v0alpha.DeleteStandaloneReq]) (*connect_go.Response[v0alpha.DeleteStandaloneRes], error) {
+	return c.deleteStandalone.CallUnary(ctx, req)
 }
 
 // LearnHandler is an implementation of the api.v0alpha.Learn service.
 type LearnHandler interface {
+	// check if learning page already exists
 	Exist(context.Context, *connect_go.Request[v0alpha.ExistReq]) (*connect_go.Response[v0alpha.ExistRes], error)
+	// retreive content from learning pages
 	Content(context.Context, *connect_go.Request[v0alpha.ContentReq]) (*connect_go.Response[v0alpha.ContentRes], error)
-	ContentEditorData(context.Context, *connect_go.Request[v0alpha.ContentEditorDataReq]) (*connect_go.Response[v0alpha.ContentEditorDataRes], error)
-	Update(context.Context, *connect_go.Request[v0alpha.UpdateReq]) (*connect_go.Response[v0alpha.UpdateRes], error)
 	// exports multiple pages of the learning center markdown as PDF
 	ExportMany(context.Context, *connect_go.Request[v0alpha.ExportManyReq]) (*connect_go.Response[v0alpha.ExportRes], error)
-	// upload url for static images
-	StoreStaticImage(context.Context, *connect_go.Request[v0alpha.StoreStaticImageReq]) (*connect_go.Response[v0alpha.StoreStaticImageRes], error)
 	// search content in learning pages
 	SearchContent(context.Context, *connect_go.Request[v0alpha.SearchContentReq]) (*connect_go.Response[v0alpha.SearchRes], error)
-	// upload dynamic learning image screenshot
-	UploadDynamicScreenshot(context.Context, *connect_go.Request[v0alpha.UploadDynamicScreenshotReq]) (*connect_go.Response[v0alpha.UploadDynamicScreenshotRes], error)
 	// get standalone articles from learning pages
 	Standalone(context.Context, *connect_go.Request[v0alpha.StandaloneReq]) (*connect_go.Response[v0alpha.StandaloneRes], error)
+	// retrieve user who edited the content last
+	ContentEditorData(context.Context, *connect_go.Request[v0alpha.ContentEditorDataReq]) (*connect_go.Response[v0alpha.ContentEditorDataRes], error)
+	// update contents for learning pages
+	Update(context.Context, *connect_go.Request[v0alpha.UpdateReq]) (*connect_go.Response[v0alpha.UpdateRes], error)
+	// upload url for static images
+	StoreStaticImage(context.Context, *connect_go.Request[v0alpha.StoreStaticImageReq]) (*connect_go.Response[v0alpha.StoreStaticImageRes], error)
+	// upload dynamic learning image screenshot
+	UploadDynamicScreenshot(context.Context, *connect_go.Request[v0alpha.UploadDynamicScreenshotReq]) (*connect_go.Response[v0alpha.UploadDynamicScreenshotRes], error)
+	// delete standalone articles from learning pages
+	DeleteStandalone(context.Context, *connect_go.Request[v0alpha.DeleteStandaloneReq]) (*connect_go.Response[v0alpha.DeleteStandaloneRes], error)
 }
 
 // NewLearnHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -237,6 +262,21 @@ func NewLearnHandler(svc LearnHandler, opts ...connect_go.HandlerOption) (string
 		svc.Content,
 		opts...,
 	))
+	mux.Handle(LearnExportManyProcedure, connect_go.NewUnaryHandler(
+		LearnExportManyProcedure,
+		svc.ExportMany,
+		opts...,
+	))
+	mux.Handle(LearnSearchContentProcedure, connect_go.NewUnaryHandler(
+		LearnSearchContentProcedure,
+		svc.SearchContent,
+		opts...,
+	))
+	mux.Handle(LearnStandaloneProcedure, connect_go.NewUnaryHandler(
+		LearnStandaloneProcedure,
+		svc.Standalone,
+		opts...,
+	))
 	mux.Handle(LearnContentEditorDataProcedure, connect_go.NewUnaryHandler(
 		LearnContentEditorDataProcedure,
 		svc.ContentEditorData,
@@ -247,19 +287,9 @@ func NewLearnHandler(svc LearnHandler, opts ...connect_go.HandlerOption) (string
 		svc.Update,
 		opts...,
 	))
-	mux.Handle(LearnExportManyProcedure, connect_go.NewUnaryHandler(
-		LearnExportManyProcedure,
-		svc.ExportMany,
-		opts...,
-	))
 	mux.Handle(LearnStoreStaticImageProcedure, connect_go.NewUnaryHandler(
 		LearnStoreStaticImageProcedure,
 		svc.StoreStaticImage,
-		opts...,
-	))
-	mux.Handle(LearnSearchContentProcedure, connect_go.NewUnaryHandler(
-		LearnSearchContentProcedure,
-		svc.SearchContent,
 		opts...,
 	))
 	mux.Handle(LearnUploadDynamicScreenshotProcedure, connect_go.NewUnaryHandler(
@@ -267,9 +297,9 @@ func NewLearnHandler(svc LearnHandler, opts ...connect_go.HandlerOption) (string
 		svc.UploadDynamicScreenshot,
 		opts...,
 	))
-	mux.Handle(LearnStandaloneProcedure, connect_go.NewUnaryHandler(
-		LearnStandaloneProcedure,
-		svc.Standalone,
+	mux.Handle(LearnDeleteStandaloneProcedure, connect_go.NewUnaryHandler(
+		LearnDeleteStandaloneProcedure,
+		svc.DeleteStandalone,
 		opts...,
 	))
 	return "/api.v0alpha.Learn/", mux
@@ -286,6 +316,18 @@ func (UnimplementedLearnHandler) Content(context.Context, *connect_go.Request[v0
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.Content is not implemented"))
 }
 
+func (UnimplementedLearnHandler) ExportMany(context.Context, *connect_go.Request[v0alpha.ExportManyReq]) (*connect_go.Response[v0alpha.ExportRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.ExportMany is not implemented"))
+}
+
+func (UnimplementedLearnHandler) SearchContent(context.Context, *connect_go.Request[v0alpha.SearchContentReq]) (*connect_go.Response[v0alpha.SearchRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.SearchContent is not implemented"))
+}
+
+func (UnimplementedLearnHandler) Standalone(context.Context, *connect_go.Request[v0alpha.StandaloneReq]) (*connect_go.Response[v0alpha.StandaloneRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.Standalone is not implemented"))
+}
+
 func (UnimplementedLearnHandler) ContentEditorData(context.Context, *connect_go.Request[v0alpha.ContentEditorDataReq]) (*connect_go.Response[v0alpha.ContentEditorDataRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.ContentEditorData is not implemented"))
 }
@@ -294,22 +336,14 @@ func (UnimplementedLearnHandler) Update(context.Context, *connect_go.Request[v0a
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.Update is not implemented"))
 }
 
-func (UnimplementedLearnHandler) ExportMany(context.Context, *connect_go.Request[v0alpha.ExportManyReq]) (*connect_go.Response[v0alpha.ExportRes], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.ExportMany is not implemented"))
-}
-
 func (UnimplementedLearnHandler) StoreStaticImage(context.Context, *connect_go.Request[v0alpha.StoreStaticImageReq]) (*connect_go.Response[v0alpha.StoreStaticImageRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.StoreStaticImage is not implemented"))
-}
-
-func (UnimplementedLearnHandler) SearchContent(context.Context, *connect_go.Request[v0alpha.SearchContentReq]) (*connect_go.Response[v0alpha.SearchRes], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.SearchContent is not implemented"))
 }
 
 func (UnimplementedLearnHandler) UploadDynamicScreenshot(context.Context, *connect_go.Request[v0alpha.UploadDynamicScreenshotReq]) (*connect_go.Response[v0alpha.UploadDynamicScreenshotRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.UploadDynamicScreenshot is not implemented"))
 }
 
-func (UnimplementedLearnHandler) Standalone(context.Context, *connect_go.Request[v0alpha.StandaloneReq]) (*connect_go.Response[v0alpha.StandaloneRes], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.Standalone is not implemented"))
+func (UnimplementedLearnHandler) DeleteStandalone(context.Context, *connect_go.Request[v0alpha.DeleteStandaloneReq]) (*connect_go.Response[v0alpha.DeleteStandaloneRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.DeleteStandalone is not implemented"))
 }
