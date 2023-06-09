@@ -50,6 +50,9 @@ const (
 	VmdsUpdateVoicemailFlagReadProcedure = "/api.v0alpha.Vmds/UpdateVoicemailFlagRead"
 	// VmdsDownloadMessageProcedure is the fully-qualified name of the Vmds's DownloadMessage RPC.
 	VmdsDownloadMessageProcedure = "/api.v0alpha.Vmds/DownloadMessage"
+	// VmdsDownloadSpecifiedMessagesProcedure is the fully-qualified name of the Vmds's
+	// DownloadSpecifiedMessages RPC.
+	VmdsDownloadSpecifiedMessagesProcedure = "/api.v0alpha.Vmds/DownloadSpecifiedMessages"
 	// VmdsDownloadMessagesProcedure is the fully-qualified name of the Vmds's DownloadMessages RPC.
 	VmdsDownloadMessagesProcedure = "/api.v0alpha.Vmds/DownloadMessages"
 	// VmdsDownloadGreetingForExtensionProcedure is the fully-qualified name of the Vmds's
@@ -80,6 +83,7 @@ type VmdsClient interface {
 	UpdateUploadName(context.Context, *connect_go.Request[v0alpha.UpdateUploadNameReq]) (*connect_go.Response[v0alpha.UpdateUploadNameRes], error)
 	UpdateVoicemailFlagRead(context.Context, *connect_go.Request[v0alpha.UpdateVoicemailFlagReadReq]) (*connect_go.Response[v0alpha.UpdateVoicemailFlagReadRes], error)
 	DownloadMessage(context.Context, *connect_go.Request[v0alpha.DownloadMessageReq]) (*connect_go.Response[v0alpha.DownloadMessageRes], error)
+	DownloadSpecifiedMessages(context.Context, *connect_go.Request[v0alpha.DownloadSpecifiedMessagesReq]) (*connect_go.Response[v0alpha.DownloadSpecifiedMessagesRes], error)
 	DownloadMessages(context.Context, *connect_go.Request[v0alpha.DownloadMessagesReq]) (*connect_go.Response[v0alpha.DownloadMessagesRes], error)
 	DownloadGreetingForExtension(context.Context, *connect_go.Request[v0alpha.DownloadGreetingForExtensionReq]) (*connect_go.Response[v0alpha.DownloadGreetingForExtensionRes], error)
 	DownloadGreeting(context.Context, *connect_go.Request[v0alpha.DownloadGreetingReq]) (*connect_go.Response[v0alpha.DownloadGreetingRes], error)
@@ -134,6 +138,11 @@ func NewVmdsClient(httpClient connect_go.HTTPClient, baseURL string, opts ...con
 			baseURL+VmdsDownloadMessageProcedure,
 			opts...,
 		),
+		downloadSpecifiedMessages: connect_go.NewClient[v0alpha.DownloadSpecifiedMessagesReq, v0alpha.DownloadSpecifiedMessagesRes](
+			httpClient,
+			baseURL+VmdsDownloadSpecifiedMessagesProcedure,
+			opts...,
+		),
 		downloadMessages: connect_go.NewClient[v0alpha.DownloadMessagesReq, v0alpha.DownloadMessagesRes](
 			httpClient,
 			baseURL+VmdsDownloadMessagesProcedure,
@@ -181,6 +190,7 @@ type vmdsClient struct {
 	updateUploadName             *connect_go.Client[v0alpha.UpdateUploadNameReq, v0alpha.UpdateUploadNameRes]
 	updateVoicemailFlagRead      *connect_go.Client[v0alpha.UpdateVoicemailFlagReadReq, v0alpha.UpdateVoicemailFlagReadRes]
 	downloadMessage              *connect_go.Client[v0alpha.DownloadMessageReq, v0alpha.DownloadMessageRes]
+	downloadSpecifiedMessages    *connect_go.Client[v0alpha.DownloadSpecifiedMessagesReq, v0alpha.DownloadSpecifiedMessagesRes]
 	downloadMessages             *connect_go.Client[v0alpha.DownloadMessagesReq, v0alpha.DownloadMessagesRes]
 	downloadGreetingForExtension *connect_go.Client[v0alpha.DownloadGreetingForExtensionReq, v0alpha.DownloadGreetingForExtensionRes]
 	downloadGreeting             *connect_go.Client[v0alpha.DownloadGreetingReq, v0alpha.DownloadGreetingRes]
@@ -223,6 +233,11 @@ func (c *vmdsClient) UpdateVoicemailFlagRead(ctx context.Context, req *connect_g
 // DownloadMessage calls api.v0alpha.Vmds.DownloadMessage.
 func (c *vmdsClient) DownloadMessage(ctx context.Context, req *connect_go.Request[v0alpha.DownloadMessageReq]) (*connect_go.Response[v0alpha.DownloadMessageRes], error) {
 	return c.downloadMessage.CallUnary(ctx, req)
+}
+
+// DownloadSpecifiedMessages calls api.v0alpha.Vmds.DownloadSpecifiedMessages.
+func (c *vmdsClient) DownloadSpecifiedMessages(ctx context.Context, req *connect_go.Request[v0alpha.DownloadSpecifiedMessagesReq]) (*connect_go.Response[v0alpha.DownloadSpecifiedMessagesRes], error) {
+	return c.downloadSpecifiedMessages.CallUnary(ctx, req)
 }
 
 // DownloadMessages calls api.v0alpha.Vmds.DownloadMessages.
@@ -269,6 +284,7 @@ type VmdsHandler interface {
 	UpdateUploadName(context.Context, *connect_go.Request[v0alpha.UpdateUploadNameReq]) (*connect_go.Response[v0alpha.UpdateUploadNameRes], error)
 	UpdateVoicemailFlagRead(context.Context, *connect_go.Request[v0alpha.UpdateVoicemailFlagReadReq]) (*connect_go.Response[v0alpha.UpdateVoicemailFlagReadRes], error)
 	DownloadMessage(context.Context, *connect_go.Request[v0alpha.DownloadMessageReq]) (*connect_go.Response[v0alpha.DownloadMessageRes], error)
+	DownloadSpecifiedMessages(context.Context, *connect_go.Request[v0alpha.DownloadSpecifiedMessagesReq]) (*connect_go.Response[v0alpha.DownloadSpecifiedMessagesRes], error)
 	DownloadMessages(context.Context, *connect_go.Request[v0alpha.DownloadMessagesReq]) (*connect_go.Response[v0alpha.DownloadMessagesRes], error)
 	DownloadGreetingForExtension(context.Context, *connect_go.Request[v0alpha.DownloadGreetingForExtensionReq]) (*connect_go.Response[v0alpha.DownloadGreetingForExtensionRes], error)
 	DownloadGreeting(context.Context, *connect_go.Request[v0alpha.DownloadGreetingReq]) (*connect_go.Response[v0alpha.DownloadGreetingRes], error)
@@ -318,6 +334,11 @@ func NewVmdsHandler(svc VmdsHandler, opts ...connect_go.HandlerOption) (string, 
 	mux.Handle(VmdsDownloadMessageProcedure, connect_go.NewUnaryHandler(
 		VmdsDownloadMessageProcedure,
 		svc.DownloadMessage,
+		opts...,
+	))
+	mux.Handle(VmdsDownloadSpecifiedMessagesProcedure, connect_go.NewUnaryHandler(
+		VmdsDownloadSpecifiedMessagesProcedure,
+		svc.DownloadSpecifiedMessages,
 		opts...,
 	))
 	mux.Handle(VmdsDownloadMessagesProcedure, connect_go.NewUnaryHandler(
@@ -387,6 +408,10 @@ func (UnimplementedVmdsHandler) UpdateVoicemailFlagRead(context.Context, *connec
 
 func (UnimplementedVmdsHandler) DownloadMessage(context.Context, *connect_go.Request[v0alpha.DownloadMessageReq]) (*connect_go.Response[v0alpha.DownloadMessageRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Vmds.DownloadMessage is not implemented"))
+}
+
+func (UnimplementedVmdsHandler) DownloadSpecifiedMessages(context.Context, *connect_go.Request[v0alpha.DownloadSpecifiedMessagesReq]) (*connect_go.Response[v0alpha.DownloadSpecifiedMessagesRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Vmds.DownloadSpecifiedMessages is not implemented"))
 }
 
 func (UnimplementedVmdsHandler) DownloadMessages(context.Context, *connect_go.Request[v0alpha.DownloadMessagesReq]) (*connect_go.Response[v0alpha.DownloadMessagesRes], error) {
