@@ -19,21 +19,15 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Billing_CreateBillingPlan_FullMethodName    = "/api.v1alpha1.billing.Billing/CreateBillingPlan"
-	Billing_GetBillingPlan_FullMethodName       = "/api.v1alpha1.billing.Billing/GetBillingPlan"
-	Billing_UpdateBillingPlan_FullMethodName    = "/api.v1alpha1.billing.Billing/UpdateBillingPlan"
-	Billing_DeleteBillingDetails_FullMethodName = "/api.v1alpha1.billing.Billing/DeleteBillingDetails"
-	Billing_GetInvoice_FullMethodName           = "/api.v1alpha1.billing.Billing/GetInvoice"
+	Billing_GetBillingPlan_FullMethodName    = "/api.v1alpha1.billing.Billing/GetBillingPlan"
+	Billing_UpdateBillingPlan_FullMethodName = "/api.v1alpha1.billing.Billing/UpdateBillingPlan"
+	Billing_GetInvoice_FullMethodName        = "/api.v1alpha1.billing.Billing/GetInvoice"
 )
 
 // BillingClient is the client API for Billing service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type BillingClient interface {
-	// CreateBillingPlan - saves the provided billing plan, and returns the saved
-	// plan. However, in an organization's Billing Plan there can only ever be
-	// one billing detail with a specific config type and event type.
-	CreateBillingPlan(ctx context.Context, in *CreateBillingPlanReq, opts ...grpc.CallOption) (*CreateBillingPlanRes, error)
 	// GetBillingPlan - returns the billing plan for the provided organization.
 	GetBillingPlan(ctx context.Context, in *GetBillingPlanReq, opts ...grpc.CallOption) (*GetBillingPlanRes, error)
 	// UpdateBillingPlan - updates the provided billing plan and it's details.
@@ -44,9 +38,6 @@ type BillingClient interface {
 	// more than one billing detail with a config type and event type, the request
 	// is malformed and will result in potentially unexpected behavior.
 	UpdateBillingPlan(ctx context.Context, in *UpdateBillingPlanReq, opts ...grpc.CallOption) (*UpdateBillingPlanRes, error)
-	// DeleteBillingDetails - deletes the provided billing details. If the billing
-	// details do not exist, this won't do anything.
-	DeleteBillingDetails(ctx context.Context, in *DeleteBillingDetailsReq, opts ...grpc.CallOption) (*DeleteBillingDetailsRes, error)
 	// GetInvoice - returns the invoice for the organization. If a date is
 	// provided, this will return the invoice for the organization that
 	// corresponds to the billing cycle that contains the provided date. If
@@ -61,15 +52,6 @@ type billingClient struct {
 
 func NewBillingClient(cc grpc.ClientConnInterface) BillingClient {
 	return &billingClient{cc}
-}
-
-func (c *billingClient) CreateBillingPlan(ctx context.Context, in *CreateBillingPlanReq, opts ...grpc.CallOption) (*CreateBillingPlanRes, error) {
-	out := new(CreateBillingPlanRes)
-	err := c.cc.Invoke(ctx, Billing_CreateBillingPlan_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *billingClient) GetBillingPlan(ctx context.Context, in *GetBillingPlanReq, opts ...grpc.CallOption) (*GetBillingPlanRes, error) {
@@ -90,15 +72,6 @@ func (c *billingClient) UpdateBillingPlan(ctx context.Context, in *UpdateBilling
 	return out, nil
 }
 
-func (c *billingClient) DeleteBillingDetails(ctx context.Context, in *DeleteBillingDetailsReq, opts ...grpc.CallOption) (*DeleteBillingDetailsRes, error) {
-	out := new(DeleteBillingDetailsRes)
-	err := c.cc.Invoke(ctx, Billing_DeleteBillingDetails_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *billingClient) GetInvoice(ctx context.Context, in *GetInvoiceReq, opts ...grpc.CallOption) (*GetInvoiceRes, error) {
 	out := new(GetInvoiceRes)
 	err := c.cc.Invoke(ctx, Billing_GetInvoice_FullMethodName, in, out, opts...)
@@ -112,10 +85,6 @@ func (c *billingClient) GetInvoice(ctx context.Context, in *GetInvoiceReq, opts 
 // All implementations must embed UnimplementedBillingServer
 // for forward compatibility
 type BillingServer interface {
-	// CreateBillingPlan - saves the provided billing plan, and returns the saved
-	// plan. However, in an organization's Billing Plan there can only ever be
-	// one billing detail with a specific config type and event type.
-	CreateBillingPlan(context.Context, *CreateBillingPlanReq) (*CreateBillingPlanRes, error)
 	// GetBillingPlan - returns the billing plan for the provided organization.
 	GetBillingPlan(context.Context, *GetBillingPlanReq) (*GetBillingPlanRes, error)
 	// UpdateBillingPlan - updates the provided billing plan and it's details.
@@ -126,9 +95,6 @@ type BillingServer interface {
 	// more than one billing detail with a config type and event type, the request
 	// is malformed and will result in potentially unexpected behavior.
 	UpdateBillingPlan(context.Context, *UpdateBillingPlanReq) (*UpdateBillingPlanRes, error)
-	// DeleteBillingDetails - deletes the provided billing details. If the billing
-	// details do not exist, this won't do anything.
-	DeleteBillingDetails(context.Context, *DeleteBillingDetailsReq) (*DeleteBillingDetailsRes, error)
 	// GetInvoice - returns the invoice for the organization. If a date is
 	// provided, this will return the invoice for the organization that
 	// corresponds to the billing cycle that contains the provided date. If
@@ -142,17 +108,11 @@ type BillingServer interface {
 type UnimplementedBillingServer struct {
 }
 
-func (UnimplementedBillingServer) CreateBillingPlan(context.Context, *CreateBillingPlanReq) (*CreateBillingPlanRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateBillingPlan not implemented")
-}
 func (UnimplementedBillingServer) GetBillingPlan(context.Context, *GetBillingPlanReq) (*GetBillingPlanRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBillingPlan not implemented")
 }
 func (UnimplementedBillingServer) UpdateBillingPlan(context.Context, *UpdateBillingPlanReq) (*UpdateBillingPlanRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateBillingPlan not implemented")
-}
-func (UnimplementedBillingServer) DeleteBillingDetails(context.Context, *DeleteBillingDetailsReq) (*DeleteBillingDetailsRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteBillingDetails not implemented")
 }
 func (UnimplementedBillingServer) GetInvoice(context.Context, *GetInvoiceReq) (*GetInvoiceRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetInvoice not implemented")
@@ -168,24 +128,6 @@ type UnsafeBillingServer interface {
 
 func RegisterBillingServer(s grpc.ServiceRegistrar, srv BillingServer) {
 	s.RegisterService(&Billing_ServiceDesc, srv)
-}
-
-func _Billing_CreateBillingPlan_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateBillingPlanReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BillingServer).CreateBillingPlan(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Billing_CreateBillingPlan_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BillingServer).CreateBillingPlan(ctx, req.(*CreateBillingPlanReq))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _Billing_GetBillingPlan_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -224,24 +166,6 @@ func _Billing_UpdateBillingPlan_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Billing_DeleteBillingDetails_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteBillingDetailsReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BillingServer).DeleteBillingDetails(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Billing_DeleteBillingDetails_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BillingServer).DeleteBillingDetails(ctx, req.(*DeleteBillingDetailsReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _Billing_GetInvoice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetInvoiceReq)
 	if err := dec(in); err != nil {
@@ -268,20 +192,12 @@ var Billing_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*BillingServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "CreateBillingPlan",
-			Handler:    _Billing_CreateBillingPlan_Handler,
-		},
-		{
 			MethodName: "GetBillingPlan",
 			Handler:    _Billing_GetBillingPlan_Handler,
 		},
 		{
 			MethodName: "UpdateBillingPlan",
 			Handler:    _Billing_UpdateBillingPlan_Handler,
-		},
-		{
-			MethodName: "DeleteBillingDetails",
-			Handler:    _Billing_DeleteBillingDetails_Handler,
 		},
 		{
 			MethodName: "GetInvoice",

@@ -33,27 +33,17 @@ const (
 // reflection-formatted method names, remove the leading slash and convert the remaining slash to a
 // period.
 const (
-	// BillingCreateBillingPlanProcedure is the fully-qualified name of the Billing's CreateBillingPlan
-	// RPC.
-	BillingCreateBillingPlanProcedure = "/api.v1alpha1.billing.Billing/CreateBillingPlan"
 	// BillingGetBillingPlanProcedure is the fully-qualified name of the Billing's GetBillingPlan RPC.
 	BillingGetBillingPlanProcedure = "/api.v1alpha1.billing.Billing/GetBillingPlan"
 	// BillingUpdateBillingPlanProcedure is the fully-qualified name of the Billing's UpdateBillingPlan
 	// RPC.
 	BillingUpdateBillingPlanProcedure = "/api.v1alpha1.billing.Billing/UpdateBillingPlan"
-	// BillingDeleteBillingDetailsProcedure is the fully-qualified name of the Billing's
-	// DeleteBillingDetails RPC.
-	BillingDeleteBillingDetailsProcedure = "/api.v1alpha1.billing.Billing/DeleteBillingDetails"
 	// BillingGetInvoiceProcedure is the fully-qualified name of the Billing's GetInvoice RPC.
 	BillingGetInvoiceProcedure = "/api.v1alpha1.billing.Billing/GetInvoice"
 )
 
 // BillingClient is a client for the api.v1alpha1.billing.Billing service.
 type BillingClient interface {
-	// CreateBillingPlan - saves the provided billing plan, and returns the saved
-	// plan. However, in an organization's Billing Plan there can only ever be
-	// one billing detail with a specific config type and event type.
-	CreateBillingPlan(context.Context, *connect_go.Request[billing.CreateBillingPlanReq]) (*connect_go.Response[billing.CreateBillingPlanRes], error)
 	// GetBillingPlan - returns the billing plan for the provided organization.
 	GetBillingPlan(context.Context, *connect_go.Request[billing.GetBillingPlanReq]) (*connect_go.Response[billing.GetBillingPlanRes], error)
 	// UpdateBillingPlan - updates the provided billing plan and it's details.
@@ -64,9 +54,6 @@ type BillingClient interface {
 	// more than one billing detail with a config type and event type, the request
 	// is malformed and will result in potentially unexpected behavior.
 	UpdateBillingPlan(context.Context, *connect_go.Request[billing.UpdateBillingPlanReq]) (*connect_go.Response[billing.UpdateBillingPlanRes], error)
-	// DeleteBillingDetails - deletes the provided billing details. If the billing
-	// details do not exist, this won't do anything.
-	DeleteBillingDetails(context.Context, *connect_go.Request[billing.DeleteBillingDetailsReq]) (*connect_go.Response[billing.DeleteBillingDetailsRes], error)
 	// GetInvoice - returns the invoice for the organization. If a date is
 	// provided, this will return the invoice for the organization that
 	// corresponds to the billing cycle that contains the provided date. If
@@ -85,11 +72,6 @@ type BillingClient interface {
 func NewBillingClient(httpClient connect_go.HTTPClient, baseURL string, opts ...connect_go.ClientOption) BillingClient {
 	baseURL = strings.TrimRight(baseURL, "/")
 	return &billingClient{
-		createBillingPlan: connect_go.NewClient[billing.CreateBillingPlanReq, billing.CreateBillingPlanRes](
-			httpClient,
-			baseURL+BillingCreateBillingPlanProcedure,
-			opts...,
-		),
 		getBillingPlan: connect_go.NewClient[billing.GetBillingPlanReq, billing.GetBillingPlanRes](
 			httpClient,
 			baseURL+BillingGetBillingPlanProcedure,
@@ -98,11 +80,6 @@ func NewBillingClient(httpClient connect_go.HTTPClient, baseURL string, opts ...
 		updateBillingPlan: connect_go.NewClient[billing.UpdateBillingPlanReq, billing.UpdateBillingPlanRes](
 			httpClient,
 			baseURL+BillingUpdateBillingPlanProcedure,
-			opts...,
-		),
-		deleteBillingDetails: connect_go.NewClient[billing.DeleteBillingDetailsReq, billing.DeleteBillingDetailsRes](
-			httpClient,
-			baseURL+BillingDeleteBillingDetailsProcedure,
 			opts...,
 		),
 		getInvoice: connect_go.NewClient[billing.GetInvoiceReq, billing.GetInvoiceRes](
@@ -115,16 +92,9 @@ func NewBillingClient(httpClient connect_go.HTTPClient, baseURL string, opts ...
 
 // billingClient implements BillingClient.
 type billingClient struct {
-	createBillingPlan    *connect_go.Client[billing.CreateBillingPlanReq, billing.CreateBillingPlanRes]
-	getBillingPlan       *connect_go.Client[billing.GetBillingPlanReq, billing.GetBillingPlanRes]
-	updateBillingPlan    *connect_go.Client[billing.UpdateBillingPlanReq, billing.UpdateBillingPlanRes]
-	deleteBillingDetails *connect_go.Client[billing.DeleteBillingDetailsReq, billing.DeleteBillingDetailsRes]
-	getInvoice           *connect_go.Client[billing.GetInvoiceReq, billing.GetInvoiceRes]
-}
-
-// CreateBillingPlan calls api.v1alpha1.billing.Billing.CreateBillingPlan.
-func (c *billingClient) CreateBillingPlan(ctx context.Context, req *connect_go.Request[billing.CreateBillingPlanReq]) (*connect_go.Response[billing.CreateBillingPlanRes], error) {
-	return c.createBillingPlan.CallUnary(ctx, req)
+	getBillingPlan    *connect_go.Client[billing.GetBillingPlanReq, billing.GetBillingPlanRes]
+	updateBillingPlan *connect_go.Client[billing.UpdateBillingPlanReq, billing.UpdateBillingPlanRes]
+	getInvoice        *connect_go.Client[billing.GetInvoiceReq, billing.GetInvoiceRes]
 }
 
 // GetBillingPlan calls api.v1alpha1.billing.Billing.GetBillingPlan.
@@ -137,11 +107,6 @@ func (c *billingClient) UpdateBillingPlan(ctx context.Context, req *connect_go.R
 	return c.updateBillingPlan.CallUnary(ctx, req)
 }
 
-// DeleteBillingDetails calls api.v1alpha1.billing.Billing.DeleteBillingDetails.
-func (c *billingClient) DeleteBillingDetails(ctx context.Context, req *connect_go.Request[billing.DeleteBillingDetailsReq]) (*connect_go.Response[billing.DeleteBillingDetailsRes], error) {
-	return c.deleteBillingDetails.CallUnary(ctx, req)
-}
-
 // GetInvoice calls api.v1alpha1.billing.Billing.GetInvoice.
 func (c *billingClient) GetInvoice(ctx context.Context, req *connect_go.Request[billing.GetInvoiceReq]) (*connect_go.Response[billing.GetInvoiceRes], error) {
 	return c.getInvoice.CallUnary(ctx, req)
@@ -149,10 +114,6 @@ func (c *billingClient) GetInvoice(ctx context.Context, req *connect_go.Request[
 
 // BillingHandler is an implementation of the api.v1alpha1.billing.Billing service.
 type BillingHandler interface {
-	// CreateBillingPlan - saves the provided billing plan, and returns the saved
-	// plan. However, in an organization's Billing Plan there can only ever be
-	// one billing detail with a specific config type and event type.
-	CreateBillingPlan(context.Context, *connect_go.Request[billing.CreateBillingPlanReq]) (*connect_go.Response[billing.CreateBillingPlanRes], error)
 	// GetBillingPlan - returns the billing plan for the provided organization.
 	GetBillingPlan(context.Context, *connect_go.Request[billing.GetBillingPlanReq]) (*connect_go.Response[billing.GetBillingPlanRes], error)
 	// UpdateBillingPlan - updates the provided billing plan and it's details.
@@ -163,9 +124,6 @@ type BillingHandler interface {
 	// more than one billing detail with a config type and event type, the request
 	// is malformed and will result in potentially unexpected behavior.
 	UpdateBillingPlan(context.Context, *connect_go.Request[billing.UpdateBillingPlanReq]) (*connect_go.Response[billing.UpdateBillingPlanRes], error)
-	// DeleteBillingDetails - deletes the provided billing details. If the billing
-	// details do not exist, this won't do anything.
-	DeleteBillingDetails(context.Context, *connect_go.Request[billing.DeleteBillingDetailsReq]) (*connect_go.Response[billing.DeleteBillingDetailsRes], error)
 	// GetInvoice - returns the invoice for the organization. If a date is
 	// provided, this will return the invoice for the organization that
 	// corresponds to the billing cycle that contains the provided date. If
@@ -181,11 +139,6 @@ type BillingHandler interface {
 // and JSON codecs. They also support gzip compression.
 func NewBillingHandler(svc BillingHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
 	mux := http.NewServeMux()
-	mux.Handle(BillingCreateBillingPlanProcedure, connect_go.NewUnaryHandler(
-		BillingCreateBillingPlanProcedure,
-		svc.CreateBillingPlan,
-		opts...,
-	))
 	mux.Handle(BillingGetBillingPlanProcedure, connect_go.NewUnaryHandler(
 		BillingGetBillingPlanProcedure,
 		svc.GetBillingPlan,
@@ -194,11 +147,6 @@ func NewBillingHandler(svc BillingHandler, opts ...connect_go.HandlerOption) (st
 	mux.Handle(BillingUpdateBillingPlanProcedure, connect_go.NewUnaryHandler(
 		BillingUpdateBillingPlanProcedure,
 		svc.UpdateBillingPlan,
-		opts...,
-	))
-	mux.Handle(BillingDeleteBillingDetailsProcedure, connect_go.NewUnaryHandler(
-		BillingDeleteBillingDetailsProcedure,
-		svc.DeleteBillingDetails,
 		opts...,
 	))
 	mux.Handle(BillingGetInvoiceProcedure, connect_go.NewUnaryHandler(
@@ -212,20 +160,12 @@ func NewBillingHandler(svc BillingHandler, opts ...connect_go.HandlerOption) (st
 // UnimplementedBillingHandler returns CodeUnimplemented from all methods.
 type UnimplementedBillingHandler struct{}
 
-func (UnimplementedBillingHandler) CreateBillingPlan(context.Context, *connect_go.Request[billing.CreateBillingPlanReq]) (*connect_go.Response[billing.CreateBillingPlanRes], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.billing.Billing.CreateBillingPlan is not implemented"))
-}
-
 func (UnimplementedBillingHandler) GetBillingPlan(context.Context, *connect_go.Request[billing.GetBillingPlanReq]) (*connect_go.Response[billing.GetBillingPlanRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.billing.Billing.GetBillingPlan is not implemented"))
 }
 
 func (UnimplementedBillingHandler) UpdateBillingPlan(context.Context, *connect_go.Request[billing.UpdateBillingPlanReq]) (*connect_go.Response[billing.UpdateBillingPlanRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.billing.Billing.UpdateBillingPlan is not implemented"))
-}
-
-func (UnimplementedBillingHandler) DeleteBillingDetails(context.Context, *connect_go.Request[billing.DeleteBillingDetailsReq]) (*connect_go.Response[billing.DeleteBillingDetailsRes], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.billing.Billing.DeleteBillingDetails is not implemented"))
 }
 
 func (UnimplementedBillingHandler) GetInvoice(context.Context, *connect_go.Request[billing.GetInvoiceReq]) (*connect_go.Response[billing.GetInvoiceRes], error) {
