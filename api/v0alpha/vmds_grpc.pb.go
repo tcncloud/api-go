@@ -26,7 +26,6 @@ const (
 	Vmds_UpdateUploadName_FullMethodName             = "/api.v0alpha.Vmds/UpdateUploadName"
 	Vmds_UpdateVoicemailFlagRead_FullMethodName      = "/api.v0alpha.Vmds/UpdateVoicemailFlagRead"
 	Vmds_DownloadMessage_FullMethodName              = "/api.v0alpha.Vmds/DownloadMessage"
-	Vmds_DownloadSpecifiedMessages_FullMethodName    = "/api.v0alpha.Vmds/DownloadSpecifiedMessages"
 	Vmds_DownloadMessages_FullMethodName             = "/api.v0alpha.Vmds/DownloadMessages"
 	Vmds_DownloadGreetingForExtension_FullMethodName = "/api.v0alpha.Vmds/DownloadGreetingForExtension"
 	Vmds_DownloadGreeting_FullMethodName             = "/api.v0alpha.Vmds/DownloadGreeting"
@@ -47,7 +46,6 @@ type VmdsClient interface {
 	UpdateUploadName(ctx context.Context, in *UpdateUploadNameReq, opts ...grpc.CallOption) (*UpdateUploadNameRes, error)
 	UpdateVoicemailFlagRead(ctx context.Context, in *UpdateVoicemailFlagReadReq, opts ...grpc.CallOption) (*UpdateVoicemailFlagReadRes, error)
 	DownloadMessage(ctx context.Context, in *DownloadMessageReq, opts ...grpc.CallOption) (*DownloadMessageRes, error)
-	DownloadSpecifiedMessages(ctx context.Context, in *DownloadSpecifiedMessagesReq, opts ...grpc.CallOption) (*DownloadSpecifiedMessagesRes, error)
 	DownloadMessages(ctx context.Context, in *DownloadMessagesReq, opts ...grpc.CallOption) (*DownloadMessagesRes, error)
 	DownloadGreetingForExtension(ctx context.Context, in *DownloadGreetingForExtensionReq, opts ...grpc.CallOption) (*DownloadGreetingForExtensionRes, error)
 	DownloadGreeting(ctx context.Context, in *DownloadGreetingReq, opts ...grpc.CallOption) (*DownloadGreetingRes, error)
@@ -151,15 +149,6 @@ func (c *vmdsClient) DownloadMessage(ctx context.Context, in *DownloadMessageReq
 	return out, nil
 }
 
-func (c *vmdsClient) DownloadSpecifiedMessages(ctx context.Context, in *DownloadSpecifiedMessagesReq, opts ...grpc.CallOption) (*DownloadSpecifiedMessagesRes, error) {
-	out := new(DownloadSpecifiedMessagesRes)
-	err := c.cc.Invoke(ctx, Vmds_DownloadSpecifiedMessages_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *vmdsClient) DownloadMessages(ctx context.Context, in *DownloadMessagesReq, opts ...grpc.CallOption) (*DownloadMessagesRes, error) {
 	out := new(DownloadMessagesRes)
 	err := c.cc.Invoke(ctx, Vmds_DownloadMessages_FullMethodName, in, out, opts...)
@@ -234,7 +223,6 @@ type VmdsServer interface {
 	UpdateUploadName(context.Context, *UpdateUploadNameReq) (*UpdateUploadNameRes, error)
 	UpdateVoicemailFlagRead(context.Context, *UpdateVoicemailFlagReadReq) (*UpdateVoicemailFlagReadRes, error)
 	DownloadMessage(context.Context, *DownloadMessageReq) (*DownloadMessageRes, error)
-	DownloadSpecifiedMessages(context.Context, *DownloadSpecifiedMessagesReq) (*DownloadSpecifiedMessagesRes, error)
 	DownloadMessages(context.Context, *DownloadMessagesReq) (*DownloadMessagesRes, error)
 	DownloadGreetingForExtension(context.Context, *DownloadGreetingForExtensionReq) (*DownloadGreetingForExtensionRes, error)
 	DownloadGreeting(context.Context, *DownloadGreetingReq) (*DownloadGreetingRes, error)
@@ -269,9 +257,6 @@ func (UnimplementedVmdsServer) UpdateVoicemailFlagRead(context.Context, *UpdateV
 }
 func (UnimplementedVmdsServer) DownloadMessage(context.Context, *DownloadMessageReq) (*DownloadMessageRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DownloadMessage not implemented")
-}
-func (UnimplementedVmdsServer) DownloadSpecifiedMessages(context.Context, *DownloadSpecifiedMessagesReq) (*DownloadSpecifiedMessagesRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DownloadSpecifiedMessages not implemented")
 }
 func (UnimplementedVmdsServer) DownloadMessages(context.Context, *DownloadMessagesReq) (*DownloadMessagesRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DownloadMessages not implemented")
@@ -436,24 +421,6 @@ func _Vmds_DownloadMessage_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Vmds_DownloadSpecifiedMessages_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DownloadSpecifiedMessagesReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(VmdsServer).DownloadSpecifiedMessages(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Vmds_DownloadSpecifiedMessages_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(VmdsServer).DownloadSpecifiedMessages(ctx, req.(*DownloadSpecifiedMessagesReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _Vmds_DownloadMessages_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DownloadMessagesReq)
 	if err := dec(in); err != nil {
@@ -610,10 +577,6 @@ var Vmds_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DownloadMessage",
 			Handler:    _Vmds_DownloadMessage_Handler,
-		},
-		{
-			MethodName: "DownloadSpecifiedMessages",
-			Handler:    _Vmds_DownloadSpecifiedMessages_Handler,
 		},
 		{
 			MethodName: "DownloadMessages",
