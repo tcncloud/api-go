@@ -40,6 +40,7 @@ const (
 	Room303API_ListAllRooms_FullMethodName          = "/api.v1alpha1.room303.Room303API/ListAllRooms"
 	Room303API_ListRoomsForMember_FullMethodName    = "/api.v1alpha1.room303.Room303API/ListRoomsForMember"
 	Room303API_ArchiveRoom_FullMethodName           = "/api.v1alpha1.room303.Room303API/ArchiveRoom"
+	Room303API_ListUsersByOrgId_FullMethodName      = "/api.v1alpha1.room303.Room303API/ListUsersByOrgId"
 )
 
 // Room303APIClient is the client API for Room303API service.
@@ -76,6 +77,7 @@ type Room303APIClient interface {
 	ListAllRooms(ctx context.Context, in *ListAllRoomsRequest, opts ...grpc.CallOption) (*ListRoomsResponse, error)
 	ListRoomsForMember(ctx context.Context, in *ListRoomsForMemberRequest, opts ...grpc.CallOption) (*ListRoomsResponse, error)
 	ArchiveRoom(ctx context.Context, in *ArchiveRoomRequest, opts ...grpc.CallOption) (*commons.Room, error)
+	ListUsersByOrgId(ctx context.Context, in *ListUsersByOrgIdRequest, opts ...grpc.CallOption) (Room303API_ListUsersByOrgIdClient, error)
 }
 
 type room303APIClient struct {
@@ -289,6 +291,38 @@ func (c *room303APIClient) ArchiveRoom(ctx context.Context, in *ArchiveRoomReque
 	return out, nil
 }
 
+func (c *room303APIClient) ListUsersByOrgId(ctx context.Context, in *ListUsersByOrgIdRequest, opts ...grpc.CallOption) (Room303API_ListUsersByOrgIdClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Room303API_ServiceDesc.Streams[1], Room303API_ListUsersByOrgId_FullMethodName, opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &room303APIListUsersByOrgIdClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type Room303API_ListUsersByOrgIdClient interface {
+	Recv() (*ListUsersByOrgIdResponse, error)
+	grpc.ClientStream
+}
+
+type room303APIListUsersByOrgIdClient struct {
+	grpc.ClientStream
+}
+
+func (x *room303APIListUsersByOrgIdClient) Recv() (*ListUsersByOrgIdResponse, error) {
+	m := new(ListUsersByOrgIdResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // Room303APIServer is the server API for Room303API service.
 // All implementations must embed UnimplementedRoom303APIServer
 // for forward compatibility
@@ -323,6 +357,7 @@ type Room303APIServer interface {
 	ListAllRooms(context.Context, *ListAllRoomsRequest) (*ListRoomsResponse, error)
 	ListRoomsForMember(context.Context, *ListRoomsForMemberRequest) (*ListRoomsResponse, error)
 	ArchiveRoom(context.Context, *ArchiveRoomRequest) (*commons.Room, error)
+	ListUsersByOrgId(*ListUsersByOrgIdRequest, Room303API_ListUsersByOrgIdServer) error
 	mustEmbedUnimplementedRoom303APIServer()
 }
 
@@ -389,6 +424,9 @@ func (UnimplementedRoom303APIServer) ListRoomsForMember(context.Context, *ListRo
 }
 func (UnimplementedRoom303APIServer) ArchiveRoom(context.Context, *ArchiveRoomRequest) (*commons.Room, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ArchiveRoom not implemented")
+}
+func (UnimplementedRoom303APIServer) ListUsersByOrgId(*ListUsersByOrgIdRequest, Room303API_ListUsersByOrgIdServer) error {
+	return status.Errorf(codes.Unimplemented, "method ListUsersByOrgId not implemented")
 }
 func (UnimplementedRoom303APIServer) mustEmbedUnimplementedRoom303APIServer() {}
 
@@ -766,6 +804,27 @@ func _Room303API_ArchiveRoom_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Room303API_ListUsersByOrgId_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(ListUsersByOrgIdRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(Room303APIServer).ListUsersByOrgId(m, &room303APIListUsersByOrgIdServer{stream})
+}
+
+type Room303API_ListUsersByOrgIdServer interface {
+	Send(*ListUsersByOrgIdResponse) error
+	grpc.ServerStream
+}
+
+type room303APIListUsersByOrgIdServer struct {
+	grpc.ServerStream
+}
+
+func (x *room303APIListUsersByOrgIdServer) Send(m *ListUsersByOrgIdResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
 // Room303API_ServiceDesc is the grpc.ServiceDesc for Room303API service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -854,6 +913,11 @@ var Room303API_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "StreamMessageUpdates",
 			Handler:       _Room303API_StreamMessageUpdates_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "ListUsersByOrgId",
+			Handler:       _Room303API_ListUsersByOrgId_Handler,
 			ServerStreams: true,
 		},
 	},

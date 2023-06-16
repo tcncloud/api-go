@@ -35,33 +35,40 @@ const _ = grpc.SupportPackageIsVersion7
 const (
 	Learn_Exist_FullMethodName                   = "/api.v0alpha.Learn/Exist"
 	Learn_Content_FullMethodName                 = "/api.v0alpha.Learn/Content"
+	Learn_ExportMany_FullMethodName              = "/api.v0alpha.Learn/ExportMany"
+	Learn_SearchContent_FullMethodName           = "/api.v0alpha.Learn/SearchContent"
+	Learn_Standalone_FullMethodName              = "/api.v0alpha.Learn/Standalone"
 	Learn_ContentEditorData_FullMethodName       = "/api.v0alpha.Learn/ContentEditorData"
 	Learn_Update_FullMethodName                  = "/api.v0alpha.Learn/Update"
-	Learn_ExportMany_FullMethodName              = "/api.v0alpha.Learn/ExportMany"
 	Learn_StoreStaticImage_FullMethodName        = "/api.v0alpha.Learn/StoreStaticImage"
-	Learn_SearchContent_FullMethodName           = "/api.v0alpha.Learn/SearchContent"
 	Learn_UploadDynamicScreenshot_FullMethodName = "/api.v0alpha.Learn/UploadDynamicScreenshot"
-	Learn_Standalone_FullMethodName              = "/api.v0alpha.Learn/Standalone"
+	Learn_DeleteStandalone_FullMethodName        = "/api.v0alpha.Learn/DeleteStandalone"
 )
 
 // LearnClient is the client API for Learn service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type LearnClient interface {
+	// check if learning page already exists
 	Exist(ctx context.Context, in *ExistReq, opts ...grpc.CallOption) (*ExistRes, error)
+	// retreive content from learning pages
 	Content(ctx context.Context, in *ContentReq, opts ...grpc.CallOption) (*ContentRes, error)
-	ContentEditorData(ctx context.Context, in *ContentEditorDataReq, opts ...grpc.CallOption) (*ContentEditorDataRes, error)
-	Update(ctx context.Context, in *UpdateReq, opts ...grpc.CallOption) (*UpdateRes, error)
 	// exports multiple pages of the learning center markdown as PDF
 	ExportMany(ctx context.Context, in *ExportManyReq, opts ...grpc.CallOption) (*ExportRes, error)
-	// upload url for static images
-	StoreStaticImage(ctx context.Context, in *StoreStaticImageReq, opts ...grpc.CallOption) (*StoreStaticImageRes, error)
 	// search content in learning pages
 	SearchContent(ctx context.Context, in *SearchContentReq, opts ...grpc.CallOption) (*SearchRes, error)
-	// upload dynamic learning image screenshot
-	UploadDynamicScreenshot(ctx context.Context, in *UploadDynamicScreenshotReq, opts ...grpc.CallOption) (*UploadDynamicScreenshotRes, error)
 	// get standalone articles from learning pages
 	Standalone(ctx context.Context, in *StandaloneReq, opts ...grpc.CallOption) (*StandaloneRes, error)
+	// retrieve user who edited the content last
+	ContentEditorData(ctx context.Context, in *ContentEditorDataReq, opts ...grpc.CallOption) (*ContentEditorDataRes, error)
+	// update contents for learning pages
+	Update(ctx context.Context, in *UpdateReq, opts ...grpc.CallOption) (*UpdateRes, error)
+	// upload url for static images
+	StoreStaticImage(ctx context.Context, in *StoreStaticImageReq, opts ...grpc.CallOption) (*StoreStaticImageRes, error)
+	// upload dynamic learning image screenshot
+	UploadDynamicScreenshot(ctx context.Context, in *UploadDynamicScreenshotReq, opts ...grpc.CallOption) (*UploadDynamicScreenshotRes, error)
+	// delete standalone articles from learning pages
+	DeleteStandalone(ctx context.Context, in *DeleteStandaloneReq, opts ...grpc.CallOption) (*DeleteStandaloneRes, error)
 }
 
 type learnClient struct {
@@ -90,6 +97,33 @@ func (c *learnClient) Content(ctx context.Context, in *ContentReq, opts ...grpc.
 	return out, nil
 }
 
+func (c *learnClient) ExportMany(ctx context.Context, in *ExportManyReq, opts ...grpc.CallOption) (*ExportRes, error) {
+	out := new(ExportRes)
+	err := c.cc.Invoke(ctx, Learn_ExportMany_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *learnClient) SearchContent(ctx context.Context, in *SearchContentReq, opts ...grpc.CallOption) (*SearchRes, error) {
+	out := new(SearchRes)
+	err := c.cc.Invoke(ctx, Learn_SearchContent_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *learnClient) Standalone(ctx context.Context, in *StandaloneReq, opts ...grpc.CallOption) (*StandaloneRes, error) {
+	out := new(StandaloneRes)
+	err := c.cc.Invoke(ctx, Learn_Standalone_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *learnClient) ContentEditorData(ctx context.Context, in *ContentEditorDataReq, opts ...grpc.CallOption) (*ContentEditorDataRes, error) {
 	out := new(ContentEditorDataRes)
 	err := c.cc.Invoke(ctx, Learn_ContentEditorData_FullMethodName, in, out, opts...)
@@ -108,27 +142,9 @@ func (c *learnClient) Update(ctx context.Context, in *UpdateReq, opts ...grpc.Ca
 	return out, nil
 }
 
-func (c *learnClient) ExportMany(ctx context.Context, in *ExportManyReq, opts ...grpc.CallOption) (*ExportRes, error) {
-	out := new(ExportRes)
-	err := c.cc.Invoke(ctx, Learn_ExportMany_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *learnClient) StoreStaticImage(ctx context.Context, in *StoreStaticImageReq, opts ...grpc.CallOption) (*StoreStaticImageRes, error) {
 	out := new(StoreStaticImageRes)
 	err := c.cc.Invoke(ctx, Learn_StoreStaticImage_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *learnClient) SearchContent(ctx context.Context, in *SearchContentReq, opts ...grpc.CallOption) (*SearchRes, error) {
-	out := new(SearchRes)
-	err := c.cc.Invoke(ctx, Learn_SearchContent_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -144,9 +160,9 @@ func (c *learnClient) UploadDynamicScreenshot(ctx context.Context, in *UploadDyn
 	return out, nil
 }
 
-func (c *learnClient) Standalone(ctx context.Context, in *StandaloneReq, opts ...grpc.CallOption) (*StandaloneRes, error) {
-	out := new(StandaloneRes)
-	err := c.cc.Invoke(ctx, Learn_Standalone_FullMethodName, in, out, opts...)
+func (c *learnClient) DeleteStandalone(ctx context.Context, in *DeleteStandaloneReq, opts ...grpc.CallOption) (*DeleteStandaloneRes, error) {
+	out := new(DeleteStandaloneRes)
+	err := c.cc.Invoke(ctx, Learn_DeleteStandalone_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -157,20 +173,26 @@ func (c *learnClient) Standalone(ctx context.Context, in *StandaloneReq, opts ..
 // All implementations must embed UnimplementedLearnServer
 // for forward compatibility
 type LearnServer interface {
+	// check if learning page already exists
 	Exist(context.Context, *ExistReq) (*ExistRes, error)
+	// retreive content from learning pages
 	Content(context.Context, *ContentReq) (*ContentRes, error)
-	ContentEditorData(context.Context, *ContentEditorDataReq) (*ContentEditorDataRes, error)
-	Update(context.Context, *UpdateReq) (*UpdateRes, error)
 	// exports multiple pages of the learning center markdown as PDF
 	ExportMany(context.Context, *ExportManyReq) (*ExportRes, error)
-	// upload url for static images
-	StoreStaticImage(context.Context, *StoreStaticImageReq) (*StoreStaticImageRes, error)
 	// search content in learning pages
 	SearchContent(context.Context, *SearchContentReq) (*SearchRes, error)
-	// upload dynamic learning image screenshot
-	UploadDynamicScreenshot(context.Context, *UploadDynamicScreenshotReq) (*UploadDynamicScreenshotRes, error)
 	// get standalone articles from learning pages
 	Standalone(context.Context, *StandaloneReq) (*StandaloneRes, error)
+	// retrieve user who edited the content last
+	ContentEditorData(context.Context, *ContentEditorDataReq) (*ContentEditorDataRes, error)
+	// update contents for learning pages
+	Update(context.Context, *UpdateReq) (*UpdateRes, error)
+	// upload url for static images
+	StoreStaticImage(context.Context, *StoreStaticImageReq) (*StoreStaticImageRes, error)
+	// upload dynamic learning image screenshot
+	UploadDynamicScreenshot(context.Context, *UploadDynamicScreenshotReq) (*UploadDynamicScreenshotRes, error)
+	// delete standalone articles from learning pages
+	DeleteStandalone(context.Context, *DeleteStandaloneReq) (*DeleteStandaloneRes, error)
 	mustEmbedUnimplementedLearnServer()
 }
 
@@ -184,26 +206,29 @@ func (UnimplementedLearnServer) Exist(context.Context, *ExistReq) (*ExistRes, er
 func (UnimplementedLearnServer) Content(context.Context, *ContentReq) (*ContentRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Content not implemented")
 }
+func (UnimplementedLearnServer) ExportMany(context.Context, *ExportManyReq) (*ExportRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ExportMany not implemented")
+}
+func (UnimplementedLearnServer) SearchContent(context.Context, *SearchContentReq) (*SearchRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SearchContent not implemented")
+}
+func (UnimplementedLearnServer) Standalone(context.Context, *StandaloneReq) (*StandaloneRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Standalone not implemented")
+}
 func (UnimplementedLearnServer) ContentEditorData(context.Context, *ContentEditorDataReq) (*ContentEditorDataRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ContentEditorData not implemented")
 }
 func (UnimplementedLearnServer) Update(context.Context, *UpdateReq) (*UpdateRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
 }
-func (UnimplementedLearnServer) ExportMany(context.Context, *ExportManyReq) (*ExportRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ExportMany not implemented")
-}
 func (UnimplementedLearnServer) StoreStaticImage(context.Context, *StoreStaticImageReq) (*StoreStaticImageRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StoreStaticImage not implemented")
-}
-func (UnimplementedLearnServer) SearchContent(context.Context, *SearchContentReq) (*SearchRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SearchContent not implemented")
 }
 func (UnimplementedLearnServer) UploadDynamicScreenshot(context.Context, *UploadDynamicScreenshotReq) (*UploadDynamicScreenshotRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UploadDynamicScreenshot not implemented")
 }
-func (UnimplementedLearnServer) Standalone(context.Context, *StandaloneReq) (*StandaloneRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Standalone not implemented")
+func (UnimplementedLearnServer) DeleteStandalone(context.Context, *DeleteStandaloneReq) (*DeleteStandaloneRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteStandalone not implemented")
 }
 func (UnimplementedLearnServer) mustEmbedUnimplementedLearnServer() {}
 
@@ -254,6 +279,60 @@ func _Learn_Content_Handler(srv interface{}, ctx context.Context, dec func(inter
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Learn_ExportMany_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExportManyReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LearnServer).ExportMany(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Learn_ExportMany_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LearnServer).ExportMany(ctx, req.(*ExportManyReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Learn_SearchContent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SearchContentReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LearnServer).SearchContent(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Learn_SearchContent_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LearnServer).SearchContent(ctx, req.(*SearchContentReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Learn_Standalone_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StandaloneReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LearnServer).Standalone(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Learn_Standalone_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LearnServer).Standalone(ctx, req.(*StandaloneReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Learn_ContentEditorData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ContentEditorDataReq)
 	if err := dec(in); err != nil {
@@ -290,24 +369,6 @@ func _Learn_Update_Handler(srv interface{}, ctx context.Context, dec func(interf
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Learn_ExportMany_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ExportManyReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LearnServer).ExportMany(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Learn_ExportMany_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LearnServer).ExportMany(ctx, req.(*ExportManyReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _Learn_StoreStaticImage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(StoreStaticImageReq)
 	if err := dec(in); err != nil {
@@ -322,24 +383,6 @@ func _Learn_StoreStaticImage_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(LearnServer).StoreStaticImage(ctx, req.(*StoreStaticImageReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Learn_SearchContent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SearchContentReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LearnServer).SearchContent(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Learn_SearchContent_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LearnServer).SearchContent(ctx, req.(*SearchContentReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -362,20 +405,20 @@ func _Learn_UploadDynamicScreenshot_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Learn_Standalone_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(StandaloneReq)
+func _Learn_DeleteStandalone_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteStandaloneReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LearnServer).Standalone(ctx, in)
+		return srv.(LearnServer).DeleteStandalone(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Learn_Standalone_FullMethodName,
+		FullMethod: Learn_DeleteStandalone_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LearnServer).Standalone(ctx, req.(*StandaloneReq))
+		return srv.(LearnServer).DeleteStandalone(ctx, req.(*DeleteStandaloneReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -396,6 +439,18 @@ var Learn_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Learn_Content_Handler,
 		},
 		{
+			MethodName: "ExportMany",
+			Handler:    _Learn_ExportMany_Handler,
+		},
+		{
+			MethodName: "SearchContent",
+			Handler:    _Learn_SearchContent_Handler,
+		},
+		{
+			MethodName: "Standalone",
+			Handler:    _Learn_Standalone_Handler,
+		},
+		{
 			MethodName: "ContentEditorData",
 			Handler:    _Learn_ContentEditorData_Handler,
 		},
@@ -404,24 +459,16 @@ var Learn_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Learn_Update_Handler,
 		},
 		{
-			MethodName: "ExportMany",
-			Handler:    _Learn_ExportMany_Handler,
-		},
-		{
 			MethodName: "StoreStaticImage",
 			Handler:    _Learn_StoreStaticImage_Handler,
-		},
-		{
-			MethodName: "SearchContent",
-			Handler:    _Learn_SearchContent_Handler,
 		},
 		{
 			MethodName: "UploadDynamicScreenshot",
 			Handler:    _Learn_UploadDynamicScreenshot_Handler,
 		},
 		{
-			MethodName: "Standalone",
-			Handler:    _Learn_Standalone_Handler,
+			MethodName: "DeleteStandalone",
+			Handler:    _Learn_DeleteStandalone_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
