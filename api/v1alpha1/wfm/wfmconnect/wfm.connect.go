@@ -1500,6 +1500,7 @@ type WFMClient interface {
 	// Errors:
 	//   - grpc.Invalid: one or more fields in the request have invalid values.
 	//   - grpc.Internal: error occurs when creating the shift instance.
+	//   - grpc.NotFound: the @draft_schedule_sid, @shift_template_sid, or @wfm_agent_sids do not exist for the org sending the request.
 	CreateShiftInstance(context.Context, *connect_go.Request[wfm.CreateShiftInstanceReq]) (*connect_go.Response[wfm.CreateShiftInstanceRes], error)
 	// Swaps a list of shift instances to have a different @wfm_agent_sid.
 	// Required permissions:
@@ -3962,6 +3963,7 @@ type WFMHandler interface {
 	// Errors:
 	//   - grpc.Invalid: one or more fields in the request have invalid values.
 	//   - grpc.Internal: error occurs when creating the shift instance.
+	//   - grpc.NotFound: the @draft_schedule_sid, @shift_template_sid, or @wfm_agent_sids do not exist for the org sending the request.
 	CreateShiftInstance(context.Context, *connect_go.Request[wfm.CreateShiftInstanceReq]) (*connect_go.Response[wfm.CreateShiftInstanceRes], error)
 	// Swaps a list of shift instances to have a different @wfm_agent_sid.
 	// Required permissions:
