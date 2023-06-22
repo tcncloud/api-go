@@ -428,6 +428,21 @@ const (
 	// OrgRevokeUsersP3PermissionGroupProcedure is the fully-qualified name of the Org's
 	// RevokeUsersP3PermissionGroup RPC.
 	OrgRevokeUsersP3PermissionGroupProcedure = "/api.v1alpha1.org.Org/RevokeUsersP3PermissionGroup"
+	// OrgCreateAuthConnectionProcedure is the fully-qualified name of the Org's CreateAuthConnection
+	// RPC.
+	OrgCreateAuthConnectionProcedure = "/api.v1alpha1.org.Org/CreateAuthConnection"
+	// OrgGetAuthConnectionSettingsProcedure is the fully-qualified name of the Org's
+	// GetAuthConnectionSettings RPC.
+	OrgGetAuthConnectionSettingsProcedure = "/api.v1alpha1.org.Org/GetAuthConnectionSettings"
+	// OrgDeleteAuthConnectionProcedure is the fully-qualified name of the Org's DeleteAuthConnection
+	// RPC.
+	OrgDeleteAuthConnectionProcedure = "/api.v1alpha1.org.Org/DeleteAuthConnection"
+	// OrgUpdateAuthConnectionSecretProcedure is the fully-qualified name of the Org's
+	// UpdateAuthConnectionSecret RPC.
+	OrgUpdateAuthConnectionSecretProcedure = "/api.v1alpha1.org.Org/UpdateAuthConnectionSecret"
+	// OrgUpdateAuthConnectionGroupsProcedure is the fully-qualified name of the Org's
+	// UpdateAuthConnectionGroups RPC.
+	OrgUpdateAuthConnectionGroupsProcedure = "/api.v1alpha1.org.Org/UpdateAuthConnectionGroups"
 )
 
 // OrgClient is a client for the api.v1alpha1.org.Org service.
@@ -776,6 +791,16 @@ type OrgClient interface {
 	// RevokeUsersP3PermissionGroup revokes a p3 permission group
 	// from a list of users.
 	RevokeUsersP3PermissionGroup(context.Context, *connect_go.Request[org.RevokeUsersP3PermissionGroupRequest]) (*connect_go.Response[org.RevokeUsersP3PermissionGroupResponse], error)
+	// CreateAuthConnection creates a new auth0 connection.
+	CreateAuthConnection(context.Context, *connect_go.Request[org.CreateAuthConnectionRequest]) (*connect_go.Response[org.CreateAuthConnectionResponse], error)
+	// GetAuthConnectionSettings gets auth0 connection settings.
+	GetAuthConnectionSettings(context.Context, *connect_go.Request[org.GetAuthConnectionSettingsRequest]) (*connect_go.Response[org.GetAuthConnectionSettingsResponse], error)
+	// DeleteAuthConnection removes the current orgs auth settings.
+	DeleteAuthConnection(context.Context, *connect_go.Request[org.DeleteAuthConnectionRequest]) (*connect_go.Response[org.DeleteAuthConnectionResponse], error)
+	// UpdateAuthConnectionSecret updates a connections secret.
+	UpdateAuthConnectionSecret(context.Context, *connect_go.Request[org.UpdateAuthConnectionSecretRequest]) (*connect_go.Response[org.UpdateAuthConnectionSecretResponse], error)
+	// UpdateAuthConnectionGroups updates a connections groups.
+	UpdateAuthConnectionGroups(context.Context, *connect_go.Request[org.UpdateAuthConnectionGroupsRequest]) (*connect_go.Response[org.UpdateAuthConnectionGroupsResponse], error)
 }
 
 // NewOrgClient constructs a client for the api.v1alpha1.org.Org service. By default, it uses the
@@ -1533,6 +1558,31 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgRevokeUsersP3PermissionGroupProcedure,
 			opts...,
 		),
+		createAuthConnection: connect_go.NewClient[org.CreateAuthConnectionRequest, org.CreateAuthConnectionResponse](
+			httpClient,
+			baseURL+OrgCreateAuthConnectionProcedure,
+			opts...,
+		),
+		getAuthConnectionSettings: connect_go.NewClient[org.GetAuthConnectionSettingsRequest, org.GetAuthConnectionSettingsResponse](
+			httpClient,
+			baseURL+OrgGetAuthConnectionSettingsProcedure,
+			opts...,
+		),
+		deleteAuthConnection: connect_go.NewClient[org.DeleteAuthConnectionRequest, org.DeleteAuthConnectionResponse](
+			httpClient,
+			baseURL+OrgDeleteAuthConnectionProcedure,
+			opts...,
+		),
+		updateAuthConnectionSecret: connect_go.NewClient[org.UpdateAuthConnectionSecretRequest, org.UpdateAuthConnectionSecretResponse](
+			httpClient,
+			baseURL+OrgUpdateAuthConnectionSecretProcedure,
+			opts...,
+		),
+		updateAuthConnectionGroups: connect_go.NewClient[org.UpdateAuthConnectionGroupsRequest, org.UpdateAuthConnectionGroupsResponse](
+			httpClient,
+			baseURL+OrgUpdateAuthConnectionGroupsProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -1687,6 +1737,11 @@ type orgClient struct {
 	deleteP3PermissionGroup                 *connect_go.Client[org.DeleteP3PermissionGroupRequest, org.DeleteP3PermissionGroupResponse]
 	assignUsersP3PermissionGroup            *connect_go.Client[org.AssignUsersP3PermissionGroupRequest, org.AssignUsersP3PermissionGroupResponse]
 	revokeUsersP3PermissionGroup            *connect_go.Client[org.RevokeUsersP3PermissionGroupRequest, org.RevokeUsersP3PermissionGroupResponse]
+	createAuthConnection                    *connect_go.Client[org.CreateAuthConnectionRequest, org.CreateAuthConnectionResponse]
+	getAuthConnectionSettings               *connect_go.Client[org.GetAuthConnectionSettingsRequest, org.GetAuthConnectionSettingsResponse]
+	deleteAuthConnection                    *connect_go.Client[org.DeleteAuthConnectionRequest, org.DeleteAuthConnectionResponse]
+	updateAuthConnectionSecret              *connect_go.Client[org.UpdateAuthConnectionSecretRequest, org.UpdateAuthConnectionSecretResponse]
+	updateAuthConnectionGroups              *connect_go.Client[org.UpdateAuthConnectionGroupsRequest, org.UpdateAuthConnectionGroupsResponse]
 }
 
 // CreateOrganization calls api.v1alpha1.org.Org.CreateOrganization.
@@ -2438,6 +2493,31 @@ func (c *orgClient) RevokeUsersP3PermissionGroup(ctx context.Context, req *conne
 	return c.revokeUsersP3PermissionGroup.CallUnary(ctx, req)
 }
 
+// CreateAuthConnection calls api.v1alpha1.org.Org.CreateAuthConnection.
+func (c *orgClient) CreateAuthConnection(ctx context.Context, req *connect_go.Request[org.CreateAuthConnectionRequest]) (*connect_go.Response[org.CreateAuthConnectionResponse], error) {
+	return c.createAuthConnection.CallUnary(ctx, req)
+}
+
+// GetAuthConnectionSettings calls api.v1alpha1.org.Org.GetAuthConnectionSettings.
+func (c *orgClient) GetAuthConnectionSettings(ctx context.Context, req *connect_go.Request[org.GetAuthConnectionSettingsRequest]) (*connect_go.Response[org.GetAuthConnectionSettingsResponse], error) {
+	return c.getAuthConnectionSettings.CallUnary(ctx, req)
+}
+
+// DeleteAuthConnection calls api.v1alpha1.org.Org.DeleteAuthConnection.
+func (c *orgClient) DeleteAuthConnection(ctx context.Context, req *connect_go.Request[org.DeleteAuthConnectionRequest]) (*connect_go.Response[org.DeleteAuthConnectionResponse], error) {
+	return c.deleteAuthConnection.CallUnary(ctx, req)
+}
+
+// UpdateAuthConnectionSecret calls api.v1alpha1.org.Org.UpdateAuthConnectionSecret.
+func (c *orgClient) UpdateAuthConnectionSecret(ctx context.Context, req *connect_go.Request[org.UpdateAuthConnectionSecretRequest]) (*connect_go.Response[org.UpdateAuthConnectionSecretResponse], error) {
+	return c.updateAuthConnectionSecret.CallUnary(ctx, req)
+}
+
+// UpdateAuthConnectionGroups calls api.v1alpha1.org.Org.UpdateAuthConnectionGroups.
+func (c *orgClient) UpdateAuthConnectionGroups(ctx context.Context, req *connect_go.Request[org.UpdateAuthConnectionGroupsRequest]) (*connect_go.Response[org.UpdateAuthConnectionGroupsResponse], error) {
+	return c.updateAuthConnectionGroups.CallUnary(ctx, req)
+}
+
 // OrgHandler is an implementation of the api.v1alpha1.org.Org service.
 type OrgHandler interface {
 	// CreateOrganization creates a new organization entity and enables it for the
@@ -2784,6 +2864,16 @@ type OrgHandler interface {
 	// RevokeUsersP3PermissionGroup revokes a p3 permission group
 	// from a list of users.
 	RevokeUsersP3PermissionGroup(context.Context, *connect_go.Request[org.RevokeUsersP3PermissionGroupRequest]) (*connect_go.Response[org.RevokeUsersP3PermissionGroupResponse], error)
+	// CreateAuthConnection creates a new auth0 connection.
+	CreateAuthConnection(context.Context, *connect_go.Request[org.CreateAuthConnectionRequest]) (*connect_go.Response[org.CreateAuthConnectionResponse], error)
+	// GetAuthConnectionSettings gets auth0 connection settings.
+	GetAuthConnectionSettings(context.Context, *connect_go.Request[org.GetAuthConnectionSettingsRequest]) (*connect_go.Response[org.GetAuthConnectionSettingsResponse], error)
+	// DeleteAuthConnection removes the current orgs auth settings.
+	DeleteAuthConnection(context.Context, *connect_go.Request[org.DeleteAuthConnectionRequest]) (*connect_go.Response[org.DeleteAuthConnectionResponse], error)
+	// UpdateAuthConnectionSecret updates a connections secret.
+	UpdateAuthConnectionSecret(context.Context, *connect_go.Request[org.UpdateAuthConnectionSecretRequest]) (*connect_go.Response[org.UpdateAuthConnectionSecretResponse], error)
+	// UpdateAuthConnectionGroups updates a connections groups.
+	UpdateAuthConnectionGroups(context.Context, *connect_go.Request[org.UpdateAuthConnectionGroupsRequest]) (*connect_go.Response[org.UpdateAuthConnectionGroupsResponse], error)
 }
 
 // NewOrgHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -3538,6 +3628,31 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.RevokeUsersP3PermissionGroup,
 		opts...,
 	))
+	mux.Handle(OrgCreateAuthConnectionProcedure, connect_go.NewUnaryHandler(
+		OrgCreateAuthConnectionProcedure,
+		svc.CreateAuthConnection,
+		opts...,
+	))
+	mux.Handle(OrgGetAuthConnectionSettingsProcedure, connect_go.NewUnaryHandler(
+		OrgGetAuthConnectionSettingsProcedure,
+		svc.GetAuthConnectionSettings,
+		opts...,
+	))
+	mux.Handle(OrgDeleteAuthConnectionProcedure, connect_go.NewUnaryHandler(
+		OrgDeleteAuthConnectionProcedure,
+		svc.DeleteAuthConnection,
+		opts...,
+	))
+	mux.Handle(OrgUpdateAuthConnectionSecretProcedure, connect_go.NewUnaryHandler(
+		OrgUpdateAuthConnectionSecretProcedure,
+		svc.UpdateAuthConnectionSecret,
+		opts...,
+	))
+	mux.Handle(OrgUpdateAuthConnectionGroupsProcedure, connect_go.NewUnaryHandler(
+		OrgUpdateAuthConnectionGroupsProcedure,
+		svc.UpdateAuthConnectionGroups,
+		opts...,
+	))
 	return "/api.v1alpha1.org.Org/", mux
 }
 
@@ -4138,4 +4253,24 @@ func (UnimplementedOrgHandler) AssignUsersP3PermissionGroup(context.Context, *co
 
 func (UnimplementedOrgHandler) RevokeUsersP3PermissionGroup(context.Context, *connect_go.Request[org.RevokeUsersP3PermissionGroupRequest]) (*connect_go.Response[org.RevokeUsersP3PermissionGroupResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.RevokeUsersP3PermissionGroup is not implemented"))
+}
+
+func (UnimplementedOrgHandler) CreateAuthConnection(context.Context, *connect_go.Request[org.CreateAuthConnectionRequest]) (*connect_go.Response[org.CreateAuthConnectionResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.CreateAuthConnection is not implemented"))
+}
+
+func (UnimplementedOrgHandler) GetAuthConnectionSettings(context.Context, *connect_go.Request[org.GetAuthConnectionSettingsRequest]) (*connect_go.Response[org.GetAuthConnectionSettingsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.GetAuthConnectionSettings is not implemented"))
+}
+
+func (UnimplementedOrgHandler) DeleteAuthConnection(context.Context, *connect_go.Request[org.DeleteAuthConnectionRequest]) (*connect_go.Response[org.DeleteAuthConnectionResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.DeleteAuthConnection is not implemented"))
+}
+
+func (UnimplementedOrgHandler) UpdateAuthConnectionSecret(context.Context, *connect_go.Request[org.UpdateAuthConnectionSecretRequest]) (*connect_go.Response[org.UpdateAuthConnectionSecretResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.UpdateAuthConnectionSecret is not implemented"))
+}
+
+func (UnimplementedOrgHandler) UpdateAuthConnectionGroups(context.Context, *connect_go.Request[org.UpdateAuthConnectionGroupsRequest]) (*connect_go.Response[org.UpdateAuthConnectionGroupsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.UpdateAuthConnectionGroups is not implemented"))
 }

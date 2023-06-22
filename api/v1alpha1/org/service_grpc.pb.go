@@ -168,6 +168,11 @@ const (
 	Org_DeleteP3PermissionGroup_FullMethodName                 = "/api.v1alpha1.org.Org/DeleteP3PermissionGroup"
 	Org_AssignUsersP3PermissionGroup_FullMethodName            = "/api.v1alpha1.org.Org/AssignUsersP3PermissionGroup"
 	Org_RevokeUsersP3PermissionGroup_FullMethodName            = "/api.v1alpha1.org.Org/RevokeUsersP3PermissionGroup"
+	Org_CreateAuthConnection_FullMethodName                    = "/api.v1alpha1.org.Org/CreateAuthConnection"
+	Org_GetAuthConnectionSettings_FullMethodName               = "/api.v1alpha1.org.Org/GetAuthConnectionSettings"
+	Org_DeleteAuthConnection_FullMethodName                    = "/api.v1alpha1.org.Org/DeleteAuthConnection"
+	Org_UpdateAuthConnectionSecret_FullMethodName              = "/api.v1alpha1.org.Org/UpdateAuthConnectionSecret"
+	Org_UpdateAuthConnectionGroups_FullMethodName              = "/api.v1alpha1.org.Org/UpdateAuthConnectionGroups"
 )
 
 // OrgClient is the client API for Org service.
@@ -518,6 +523,16 @@ type OrgClient interface {
 	// RevokeUsersP3PermissionGroup revokes a p3 permission group
 	// from a list of users.
 	RevokeUsersP3PermissionGroup(ctx context.Context, in *RevokeUsersP3PermissionGroupRequest, opts ...grpc.CallOption) (*RevokeUsersP3PermissionGroupResponse, error)
+	// CreateAuthConnection creates a new auth0 connection.
+	CreateAuthConnection(ctx context.Context, in *CreateAuthConnectionRequest, opts ...grpc.CallOption) (*CreateAuthConnectionResponse, error)
+	// GetAuthConnectionSettings gets auth0 connection settings.
+	GetAuthConnectionSettings(ctx context.Context, in *GetAuthConnectionSettingsRequest, opts ...grpc.CallOption) (*GetAuthConnectionSettingsResponse, error)
+	// DeleteAuthConnection removes the current orgs auth settings.
+	DeleteAuthConnection(ctx context.Context, in *DeleteAuthConnectionRequest, opts ...grpc.CallOption) (*DeleteAuthConnectionResponse, error)
+	// UpdateAuthConnectionSecret updates a connections secret.
+	UpdateAuthConnectionSecret(ctx context.Context, in *UpdateAuthConnectionSecretRequest, opts ...grpc.CallOption) (*UpdateAuthConnectionSecretResponse, error)
+	// UpdateAuthConnectionGroups updates a connections groups.
+	UpdateAuthConnectionGroups(ctx context.Context, in *UpdateAuthConnectionGroupsRequest, opts ...grpc.CallOption) (*UpdateAuthConnectionGroupsResponse, error)
 }
 
 type orgClient struct {
@@ -2053,6 +2068,51 @@ func (c *orgClient) RevokeUsersP3PermissionGroup(ctx context.Context, in *Revoke
 	return out, nil
 }
 
+func (c *orgClient) CreateAuthConnection(ctx context.Context, in *CreateAuthConnectionRequest, opts ...grpc.CallOption) (*CreateAuthConnectionResponse, error) {
+	out := new(CreateAuthConnectionResponse)
+	err := c.cc.Invoke(ctx, Org_CreateAuthConnection_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) GetAuthConnectionSettings(ctx context.Context, in *GetAuthConnectionSettingsRequest, opts ...grpc.CallOption) (*GetAuthConnectionSettingsResponse, error) {
+	out := new(GetAuthConnectionSettingsResponse)
+	err := c.cc.Invoke(ctx, Org_GetAuthConnectionSettings_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) DeleteAuthConnection(ctx context.Context, in *DeleteAuthConnectionRequest, opts ...grpc.CallOption) (*DeleteAuthConnectionResponse, error) {
+	out := new(DeleteAuthConnectionResponse)
+	err := c.cc.Invoke(ctx, Org_DeleteAuthConnection_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) UpdateAuthConnectionSecret(ctx context.Context, in *UpdateAuthConnectionSecretRequest, opts ...grpc.CallOption) (*UpdateAuthConnectionSecretResponse, error) {
+	out := new(UpdateAuthConnectionSecretResponse)
+	err := c.cc.Invoke(ctx, Org_UpdateAuthConnectionSecret_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) UpdateAuthConnectionGroups(ctx context.Context, in *UpdateAuthConnectionGroupsRequest, opts ...grpc.CallOption) (*UpdateAuthConnectionGroupsResponse, error) {
+	out := new(UpdateAuthConnectionGroupsResponse)
+	err := c.cc.Invoke(ctx, Org_UpdateAuthConnectionGroups_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OrgServer is the server API for Org service.
 // All implementations must embed UnimplementedOrgServer
 // for forward compatibility
@@ -2401,6 +2461,16 @@ type OrgServer interface {
 	// RevokeUsersP3PermissionGroup revokes a p3 permission group
 	// from a list of users.
 	RevokeUsersP3PermissionGroup(context.Context, *RevokeUsersP3PermissionGroupRequest) (*RevokeUsersP3PermissionGroupResponse, error)
+	// CreateAuthConnection creates a new auth0 connection.
+	CreateAuthConnection(context.Context, *CreateAuthConnectionRequest) (*CreateAuthConnectionResponse, error)
+	// GetAuthConnectionSettings gets auth0 connection settings.
+	GetAuthConnectionSettings(context.Context, *GetAuthConnectionSettingsRequest) (*GetAuthConnectionSettingsResponse, error)
+	// DeleteAuthConnection removes the current orgs auth settings.
+	DeleteAuthConnection(context.Context, *DeleteAuthConnectionRequest) (*DeleteAuthConnectionResponse, error)
+	// UpdateAuthConnectionSecret updates a connections secret.
+	UpdateAuthConnectionSecret(context.Context, *UpdateAuthConnectionSecretRequest) (*UpdateAuthConnectionSecretResponse, error)
+	// UpdateAuthConnectionGroups updates a connections groups.
+	UpdateAuthConnectionGroups(context.Context, *UpdateAuthConnectionGroupsRequest) (*UpdateAuthConnectionGroupsResponse, error)
 	mustEmbedUnimplementedOrgServer()
 }
 
@@ -2854,6 +2924,21 @@ func (UnimplementedOrgServer) AssignUsersP3PermissionGroup(context.Context, *Ass
 }
 func (UnimplementedOrgServer) RevokeUsersP3PermissionGroup(context.Context, *RevokeUsersP3PermissionGroupRequest) (*RevokeUsersP3PermissionGroupResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RevokeUsersP3PermissionGroup not implemented")
+}
+func (UnimplementedOrgServer) CreateAuthConnection(context.Context, *CreateAuthConnectionRequest) (*CreateAuthConnectionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateAuthConnection not implemented")
+}
+func (UnimplementedOrgServer) GetAuthConnectionSettings(context.Context, *GetAuthConnectionSettingsRequest) (*GetAuthConnectionSettingsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAuthConnectionSettings not implemented")
+}
+func (UnimplementedOrgServer) DeleteAuthConnection(context.Context, *DeleteAuthConnectionRequest) (*DeleteAuthConnectionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteAuthConnection not implemented")
+}
+func (UnimplementedOrgServer) UpdateAuthConnectionSecret(context.Context, *UpdateAuthConnectionSecretRequest) (*UpdateAuthConnectionSecretResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateAuthConnectionSecret not implemented")
+}
+func (UnimplementedOrgServer) UpdateAuthConnectionGroups(context.Context, *UpdateAuthConnectionGroupsRequest) (*UpdateAuthConnectionGroupsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateAuthConnectionGroups not implemented")
 }
 func (UnimplementedOrgServer) mustEmbedUnimplementedOrgServer() {}
 
@@ -5574,6 +5659,96 @@ func _Org_RevokeUsersP3PermissionGroup_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Org_CreateAuthConnection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateAuthConnectionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).CreateAuthConnection(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_CreateAuthConnection_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).CreateAuthConnection(ctx, req.(*CreateAuthConnectionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_GetAuthConnectionSettings_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAuthConnectionSettingsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).GetAuthConnectionSettings(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_GetAuthConnectionSettings_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).GetAuthConnectionSettings(ctx, req.(*GetAuthConnectionSettingsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_DeleteAuthConnection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteAuthConnectionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).DeleteAuthConnection(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_DeleteAuthConnection_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).DeleteAuthConnection(ctx, req.(*DeleteAuthConnectionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_UpdateAuthConnectionSecret_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateAuthConnectionSecretRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).UpdateAuthConnectionSecret(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_UpdateAuthConnectionSecret_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).UpdateAuthConnectionSecret(ctx, req.(*UpdateAuthConnectionSecretRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_UpdateAuthConnectionGroups_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateAuthConnectionGroupsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).UpdateAuthConnectionGroups(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_UpdateAuthConnectionGroups_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).UpdateAuthConnectionGroups(ctx, req.(*UpdateAuthConnectionGroupsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Org_ServiceDesc is the grpc.ServiceDesc for Org service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -6144,6 +6319,26 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RevokeUsersP3PermissionGroup",
 			Handler:    _Org_RevokeUsersP3PermissionGroup_Handler,
+		},
+		{
+			MethodName: "CreateAuthConnection",
+			Handler:    _Org_CreateAuthConnection_Handler,
+		},
+		{
+			MethodName: "GetAuthConnectionSettings",
+			Handler:    _Org_GetAuthConnectionSettings_Handler,
+		},
+		{
+			MethodName: "DeleteAuthConnection",
+			Handler:    _Org_DeleteAuthConnection_Handler,
+		},
+		{
+			MethodName: "UpdateAuthConnectionSecret",
+			Handler:    _Org_UpdateAuthConnectionSecret_Handler,
+		},
+		{
+			MethodName: "UpdateAuthConnectionGroups",
+			Handler:    _Org_UpdateAuthConnectionGroups_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
