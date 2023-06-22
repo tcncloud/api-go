@@ -844,7 +844,7 @@ type WFMClient interface {
 	//   - grpc.NotFound: the @wfm_agent_sids or @agent_group_sid don't exist for the org or given @schedule_scenario_sid.
 	//   - grpc.Internal: error occurs when creating the association.
 	CreateWFMAgentMemberships(ctx context.Context, in *CreateWFMAgentMembershipsReq, opts ...grpc.CallOption) (*CreateWFMAgentMembershipsRes, error)
-	// Deletes a membership association for each of the given @wfm_agent_sids with the given @agent_group_sid.
+	// Deletes a membership association for each of the given @wfm_agent_sids with the given @agent_group_sid for the org sending the request.
 	// Required permissions:
 	//
 	//	NONE
@@ -3203,7 +3203,7 @@ type WFMServer interface {
 	//   - grpc.NotFound: the @wfm_agent_sids or @agent_group_sid don't exist for the org or given @schedule_scenario_sid.
 	//   - grpc.Internal: error occurs when creating the association.
 	CreateWFMAgentMemberships(context.Context, *CreateWFMAgentMembershipsReq) (*CreateWFMAgentMembershipsRes, error)
-	// Deletes a membership association for each of the given @wfm_agent_sids with the given @agent_group_sid.
+	// Deletes a membership association for each of the given @wfm_agent_sids with the given @agent_group_sid for the org sending the request.
 	// Required permissions:
 	//
 	//	NONE
