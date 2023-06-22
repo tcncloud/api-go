@@ -43,13 +43,13 @@ const (
 type TicketsClient interface {
 	// Public Method to create a ticket.
 	CreateTicket(ctx context.Context, in *CreateTicketReq, opts ...grpc.CallOption) (*CreateTicketRes, error)
-	// Public Method to create a ticket.
+	// Public Method to edit a ticket.
 	EditTicket(ctx context.Context, in *EditTicketReq, opts ...grpc.CallOption) (*EditTicketRes, error)
 	// Public method to list tickets
 	ListTickets(ctx context.Context, in *ListTicketsReq, opts ...grpc.CallOption) (*ListTicketsRes, error)
 	// Public method to assign ticket
 	AssignTicket(ctx context.Context, in *AssignTicketReq, opts ...grpc.CallOption) (*AssignTicketRes, error)
-	// Closes the ticket
+	// Public Method to Close a ticket
 	CloseTicket(ctx context.Context, in *CloseTicketReq, opts ...grpc.CallOption) (*CloseTicketRes, error)
 	// Public method to view ticket
 	ViewTicket(ctx context.Context, in *ViewTicketReq, opts ...grpc.CallOption) (*ViewTicketRes, error)
@@ -233,13 +233,13 @@ func (c *ticketsClient) AssignSelf(ctx context.Context, in *CreateSelfAssignReq,
 type TicketsServer interface {
 	// Public Method to create a ticket.
 	CreateTicket(context.Context, *CreateTicketReq) (*CreateTicketRes, error)
-	// Public Method to create a ticket.
+	// Public Method to edit a ticket.
 	EditTicket(context.Context, *EditTicketReq) (*EditTicketRes, error)
 	// Public method to list tickets
 	ListTickets(context.Context, *ListTicketsReq) (*ListTicketsRes, error)
 	// Public method to assign ticket
 	AssignTicket(context.Context, *AssignTicketReq) (*AssignTicketRes, error)
-	// Closes the ticket
+	// Public Method to Close a ticket
 	CloseTicket(context.Context, *CloseTicketReq) (*CloseTicketRes, error)
 	// Public method to view ticket
 	ViewTicket(context.Context, *ViewTicketReq) (*ViewTicketRes, error)
