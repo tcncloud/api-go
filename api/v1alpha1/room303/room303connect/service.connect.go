@@ -124,6 +124,7 @@ type Room303APIClient interface {
 	ListAllRooms(context.Context, *connect_go.Request[room303.ListAllRoomsRequest]) (*connect_go.Response[room303.ListRoomsResponse], error)
 	ListRoomsForMember(context.Context, *connect_go.Request[room303.ListRoomsForMemberRequest]) (*connect_go.Response[room303.ListRoomsResponse], error)
 	ArchiveRoom(context.Context, *connect_go.Request[room303.ArchiveRoomRequest]) (*connect_go.Response[commons.Room], error)
+	// ListUsersNames returns a list of users with names and ids
 	ListUsersNames(context.Context, *connect_go.Request[room303.ListUsersNamesRequest]) (*connect_go.ServerStreamForClient[room303.ListUsersNamesResponse], error)
 }
 
@@ -407,6 +408,7 @@ type Room303APIHandler interface {
 	ListAllRooms(context.Context, *connect_go.Request[room303.ListAllRoomsRequest]) (*connect_go.Response[room303.ListRoomsResponse], error)
 	ListRoomsForMember(context.Context, *connect_go.Request[room303.ListRoomsForMemberRequest]) (*connect_go.Response[room303.ListRoomsResponse], error)
 	ArchiveRoom(context.Context, *connect_go.Request[room303.ArchiveRoomRequest]) (*connect_go.Response[commons.Room], error)
+	// ListUsersNames returns a list of users with names and ids
 	ListUsersNames(context.Context, *connect_go.Request[room303.ListUsersNamesRequest], *connect_go.ServerStream[room303.ListUsersNamesResponse]) error
 }
 

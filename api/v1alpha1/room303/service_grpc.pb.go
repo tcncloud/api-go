@@ -77,6 +77,7 @@ type Room303APIClient interface {
 	ListAllRooms(ctx context.Context, in *ListAllRoomsRequest, opts ...grpc.CallOption) (*ListRoomsResponse, error)
 	ListRoomsForMember(ctx context.Context, in *ListRoomsForMemberRequest, opts ...grpc.CallOption) (*ListRoomsResponse, error)
 	ArchiveRoom(ctx context.Context, in *ArchiveRoomRequest, opts ...grpc.CallOption) (*commons.Room, error)
+	// ListUsersNames returns a list of users with names and ids
 	ListUsersNames(ctx context.Context, in *ListUsersNamesRequest, opts ...grpc.CallOption) (Room303API_ListUsersNamesClient, error)
 }
 
@@ -357,6 +358,7 @@ type Room303APIServer interface {
 	ListAllRooms(context.Context, *ListAllRoomsRequest) (*ListRoomsResponse, error)
 	ListRoomsForMember(context.Context, *ListRoomsForMemberRequest) (*ListRoomsResponse, error)
 	ArchiveRoom(context.Context, *ArchiveRoomRequest) (*commons.Room, error)
+	// ListUsersNames returns a list of users with names and ids
 	ListUsersNames(*ListUsersNamesRequest, Room303API_ListUsersNamesServer) error
 	mustEmbedUnimplementedRoom303APIServer()
 }
