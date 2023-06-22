@@ -74,13 +74,13 @@ const (
 type TicketsClient interface {
 	// Public Method to create a ticket.
 	CreateTicket(context.Context, *connect_go.Request[tickets.CreateTicketReq]) (*connect_go.Response[tickets.CreateTicketRes], error)
-	// Public Method to create a ticket.
+	// Public Method to edit a ticket.
 	EditTicket(context.Context, *connect_go.Request[tickets.EditTicketReq]) (*connect_go.Response[tickets.EditTicketRes], error)
 	// Public method to list tickets
 	ListTickets(context.Context, *connect_go.Request[tickets.ListTicketsReq]) (*connect_go.Response[tickets.ListTicketsRes], error)
 	// Public method to assign ticket
 	AssignTicket(context.Context, *connect_go.Request[tickets.AssignTicketReq]) (*connect_go.Response[tickets.AssignTicketRes], error)
-	// Closes the ticket
+	// Public Method to Close a ticket
 	CloseTicket(context.Context, *connect_go.Request[tickets.CloseTicketReq]) (*connect_go.Response[tickets.CloseTicketRes], error)
 	// Public method to view ticket
 	ViewTicket(context.Context, *connect_go.Request[tickets.ViewTicketReq]) (*connect_go.Response[tickets.ViewTicketRes], error)
@@ -303,13 +303,13 @@ func (c *ticketsClient) AssignSelf(ctx context.Context, req *connect_go.Request[
 type TicketsHandler interface {
 	// Public Method to create a ticket.
 	CreateTicket(context.Context, *connect_go.Request[tickets.CreateTicketReq]) (*connect_go.Response[tickets.CreateTicketRes], error)
-	// Public Method to create a ticket.
+	// Public Method to edit a ticket.
 	EditTicket(context.Context, *connect_go.Request[tickets.EditTicketReq]) (*connect_go.Response[tickets.EditTicketRes], error)
 	// Public method to list tickets
 	ListTickets(context.Context, *connect_go.Request[tickets.ListTicketsReq]) (*connect_go.Response[tickets.ListTicketsRes], error)
 	// Public method to assign ticket
 	AssignTicket(context.Context, *connect_go.Request[tickets.AssignTicketReq]) (*connect_go.Response[tickets.AssignTicketRes], error)
-	// Closes the ticket
+	// Public Method to Close a ticket
 	CloseTicket(context.Context, *connect_go.Request[tickets.CloseTicketReq]) (*connect_go.Response[tickets.CloseTicketRes], error)
 	// Public method to view ticket
 	ViewTicket(context.Context, *connect_go.Request[tickets.ViewTicketReq]) (*connect_go.Response[tickets.ViewTicketRes], error)
