@@ -895,6 +895,7 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when updating the shift template.
 	UpdateShiftTemplate(ctx context.Context, in *UpdateShiftTemplateReq, opts ...grpc.CallOption) (*UpdateShiftTemplateRes, error)
 	// Lists the shift templates matching the specified @shift_template_sids for the org sending the request.
+	// If @include_placement_rules is set to true, the @shift_templates will be returned with their member placement rules.
 	// Required permissions:
 	//
 	//	NONE
@@ -3236,6 +3237,7 @@ type WFMServer interface {
 	//   - grpc.Internal: error occurs when updating the shift template.
 	UpdateShiftTemplate(context.Context, *UpdateShiftTemplateReq) (*UpdateShiftTemplateRes, error)
 	// Lists the shift templates matching the specified @shift_template_sids for the org sending the request.
+	// If @include_placement_rules is set to true, the @shift_templates will be returned with their member placement rules.
 	// Required permissions:
 	//
 	//	NONE
