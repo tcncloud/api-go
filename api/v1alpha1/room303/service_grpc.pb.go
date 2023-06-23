@@ -40,7 +40,7 @@ const (
 	Room303API_ListAllRooms_FullMethodName          = "/api.v1alpha1.room303.Room303API/ListAllRooms"
 	Room303API_ListRoomsForMember_FullMethodName    = "/api.v1alpha1.room303.Room303API/ListRoomsForMember"
 	Room303API_ArchiveRoom_FullMethodName           = "/api.v1alpha1.room303.Room303API/ArchiveRoom"
-	Room303API_ListUsersNames_FullMethodName        = "/api.v1alpha1.room303.Room303API/ListUsersNames"
+	Room303API_ListUsersByOrgId_FullMethodName      = "/api.v1alpha1.room303.Room303API/ListUsersByOrgId"
 )
 
 // Room303APIClient is the client API for Room303API service.
@@ -77,8 +77,7 @@ type Room303APIClient interface {
 	ListAllRooms(ctx context.Context, in *ListAllRoomsRequest, opts ...grpc.CallOption) (*ListRoomsResponse, error)
 	ListRoomsForMember(ctx context.Context, in *ListRoomsForMemberRequest, opts ...grpc.CallOption) (*ListRoomsResponse, error)
 	ArchiveRoom(ctx context.Context, in *ArchiveRoomRequest, opts ...grpc.CallOption) (*commons.Room, error)
-	// ListUsersNames returns a list of users with names and ids
-	ListUsersNames(ctx context.Context, in *ListUsersNamesRequest, opts ...grpc.CallOption) (Room303API_ListUsersNamesClient, error)
+	ListUsersByOrgId(ctx context.Context, in *ListUsersByOrgIdRequest, opts ...grpc.CallOption) (Room303API_ListUsersByOrgIdClient, error)
 }
 
 type room303APIClient struct {
@@ -292,12 +291,12 @@ func (c *room303APIClient) ArchiveRoom(ctx context.Context, in *ArchiveRoomReque
 	return out, nil
 }
 
-func (c *room303APIClient) ListUsersNames(ctx context.Context, in *ListUsersNamesRequest, opts ...grpc.CallOption) (Room303API_ListUsersNamesClient, error) {
-	stream, err := c.cc.NewStream(ctx, &Room303API_ServiceDesc.Streams[1], Room303API_ListUsersNames_FullMethodName, opts...)
+func (c *room303APIClient) ListUsersByOrgId(ctx context.Context, in *ListUsersByOrgIdRequest, opts ...grpc.CallOption) (Room303API_ListUsersByOrgIdClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Room303API_ServiceDesc.Streams[1], Room303API_ListUsersByOrgId_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &room303APIListUsersNamesClient{stream}
+	x := &room303APIListUsersByOrgIdClient{stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -307,17 +306,17 @@ func (c *room303APIClient) ListUsersNames(ctx context.Context, in *ListUsersName
 	return x, nil
 }
 
-type Room303API_ListUsersNamesClient interface {
-	Recv() (*ListUsersNamesResponse, error)
+type Room303API_ListUsersByOrgIdClient interface {
+	Recv() (*ListUsersByOrgIdResponse, error)
 	grpc.ClientStream
 }
 
-type room303APIListUsersNamesClient struct {
+type room303APIListUsersByOrgIdClient struct {
 	grpc.ClientStream
 }
 
-func (x *room303APIListUsersNamesClient) Recv() (*ListUsersNamesResponse, error) {
-	m := new(ListUsersNamesResponse)
+func (x *room303APIListUsersByOrgIdClient) Recv() (*ListUsersByOrgIdResponse, error) {
+	m := new(ListUsersByOrgIdResponse)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
@@ -358,8 +357,7 @@ type Room303APIServer interface {
 	ListAllRooms(context.Context, *ListAllRoomsRequest) (*ListRoomsResponse, error)
 	ListRoomsForMember(context.Context, *ListRoomsForMemberRequest) (*ListRoomsResponse, error)
 	ArchiveRoom(context.Context, *ArchiveRoomRequest) (*commons.Room, error)
-	// ListUsersNames returns a list of users with names and ids
-	ListUsersNames(*ListUsersNamesRequest, Room303API_ListUsersNamesServer) error
+	ListUsersByOrgId(*ListUsersByOrgIdRequest, Room303API_ListUsersByOrgIdServer) error
 	mustEmbedUnimplementedRoom303APIServer()
 }
 
@@ -427,8 +425,8 @@ func (UnimplementedRoom303APIServer) ListRoomsForMember(context.Context, *ListRo
 func (UnimplementedRoom303APIServer) ArchiveRoom(context.Context, *ArchiveRoomRequest) (*commons.Room, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ArchiveRoom not implemented")
 }
-func (UnimplementedRoom303APIServer) ListUsersNames(*ListUsersNamesRequest, Room303API_ListUsersNamesServer) error {
-	return status.Errorf(codes.Unimplemented, "method ListUsersNames not implemented")
+func (UnimplementedRoom303APIServer) ListUsersByOrgId(*ListUsersByOrgIdRequest, Room303API_ListUsersByOrgIdServer) error {
+	return status.Errorf(codes.Unimplemented, "method ListUsersByOrgId not implemented")
 }
 func (UnimplementedRoom303APIServer) mustEmbedUnimplementedRoom303APIServer() {}
 
@@ -806,24 +804,24 @@ func _Room303API_ArchiveRoom_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Room303API_ListUsersNames_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(ListUsersNamesRequest)
+func _Room303API_ListUsersByOrgId_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(ListUsersByOrgIdRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(Room303APIServer).ListUsersNames(m, &room303APIListUsersNamesServer{stream})
+	return srv.(Room303APIServer).ListUsersByOrgId(m, &room303APIListUsersByOrgIdServer{stream})
 }
 
-type Room303API_ListUsersNamesServer interface {
-	Send(*ListUsersNamesResponse) error
+type Room303API_ListUsersByOrgIdServer interface {
+	Send(*ListUsersByOrgIdResponse) error
 	grpc.ServerStream
 }
 
-type room303APIListUsersNamesServer struct {
+type room303APIListUsersByOrgIdServer struct {
 	grpc.ServerStream
 }
 
-func (x *room303APIListUsersNamesServer) Send(m *ListUsersNamesResponse) error {
+func (x *room303APIListUsersByOrgIdServer) Send(m *ListUsersByOrgIdResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
@@ -918,8 +916,8 @@ var Room303API_ServiceDesc = grpc.ServiceDesc{
 			ServerStreams: true,
 		},
 		{
-			StreamName:    "ListUsersNames",
-			Handler:       _Room303API_ListUsersNames_Handler,
+			StreamName:    "ListUsersByOrgId",
+			Handler:       _Room303API_ListUsersByOrgId_Handler,
 			ServerStreams: true,
 		},
 	},
