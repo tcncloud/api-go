@@ -87,9 +87,9 @@ const (
 	Room303APIListRoomsForMemberProcedure = "/api.v1alpha1.room303.Room303API/ListRoomsForMember"
 	// Room303APIArchiveRoomProcedure is the fully-qualified name of the Room303API's ArchiveRoom RPC.
 	Room303APIArchiveRoomProcedure = "/api.v1alpha1.room303.Room303API/ArchiveRoom"
-	// Room303APIListUsersByOrgIdProcedure is the fully-qualified name of the Room303API's
-	// ListUsersByOrgId RPC.
-	Room303APIListUsersByOrgIdProcedure = "/api.v1alpha1.room303.Room303API/ListUsersByOrgId"
+	// Room303APIListUsersNamesProcedure is the fully-qualified name of the Room303API's ListUsersNames
+	// RPC.
+	Room303APIListUsersNamesProcedure = "/api.v1alpha1.room303.Room303API/ListUsersNames"
 )
 
 // Room303APIClient is a client for the api.v1alpha1.room303.Room303API service.
@@ -124,7 +124,8 @@ type Room303APIClient interface {
 	ListAllRooms(context.Context, *connect_go.Request[room303.ListAllRoomsRequest]) (*connect_go.Response[room303.ListRoomsResponse], error)
 	ListRoomsForMember(context.Context, *connect_go.Request[room303.ListRoomsForMemberRequest]) (*connect_go.Response[room303.ListRoomsResponse], error)
 	ArchiveRoom(context.Context, *connect_go.Request[room303.ArchiveRoomRequest]) (*connect_go.Response[commons.Room], error)
-	ListUsersByOrgId(context.Context, *connect_go.Request[room303.ListUsersByOrgIdRequest]) (*connect_go.ServerStreamForClient[room303.ListUsersByOrgIdResponse], error)
+	// ListUsersNames returns a list of users with names and ids
+	ListUsersNames(context.Context, *connect_go.Request[room303.ListUsersNamesRequest]) (*connect_go.ServerStreamForClient[room303.ListUsersNamesResponse], error)
 }
 
 // NewRoom303APIClient constructs a client for the api.v1alpha1.room303.Room303API service. By
@@ -237,9 +238,9 @@ func NewRoom303APIClient(httpClient connect_go.HTTPClient, baseURL string, opts 
 			baseURL+Room303APIArchiveRoomProcedure,
 			opts...,
 		),
-		listUsersByOrgId: connect_go.NewClient[room303.ListUsersByOrgIdRequest, room303.ListUsersByOrgIdResponse](
+		listUsersNames: connect_go.NewClient[room303.ListUsersNamesRequest, room303.ListUsersNamesResponse](
 			httpClient,
-			baseURL+Room303APIListUsersByOrgIdProcedure,
+			baseURL+Room303APIListUsersNamesProcedure,
 			opts...,
 		),
 	}
@@ -267,7 +268,7 @@ type room303APIClient struct {
 	listAllRooms          *connect_go.Client[room303.ListAllRoomsRequest, room303.ListRoomsResponse]
 	listRoomsForMember    *connect_go.Client[room303.ListRoomsForMemberRequest, room303.ListRoomsResponse]
 	archiveRoom           *connect_go.Client[room303.ArchiveRoomRequest, commons.Room]
-	listUsersByOrgId      *connect_go.Client[room303.ListUsersByOrgIdRequest, room303.ListUsersByOrgIdResponse]
+	listUsersNames        *connect_go.Client[room303.ListUsersNamesRequest, room303.ListUsersNamesResponse]
 }
 
 // AddRoomMember calls api.v1alpha1.room303.Room303API.AddRoomMember.
@@ -370,9 +371,9 @@ func (c *room303APIClient) ArchiveRoom(ctx context.Context, req *connect_go.Requ
 	return c.archiveRoom.CallUnary(ctx, req)
 }
 
-// ListUsersByOrgId calls api.v1alpha1.room303.Room303API.ListUsersByOrgId.
-func (c *room303APIClient) ListUsersByOrgId(ctx context.Context, req *connect_go.Request[room303.ListUsersByOrgIdRequest]) (*connect_go.ServerStreamForClient[room303.ListUsersByOrgIdResponse], error) {
-	return c.listUsersByOrgId.CallServerStream(ctx, req)
+// ListUsersNames calls api.v1alpha1.room303.Room303API.ListUsersNames.
+func (c *room303APIClient) ListUsersNames(ctx context.Context, req *connect_go.Request[room303.ListUsersNamesRequest]) (*connect_go.ServerStreamForClient[room303.ListUsersNamesResponse], error) {
+	return c.listUsersNames.CallServerStream(ctx, req)
 }
 
 // Room303APIHandler is an implementation of the api.v1alpha1.room303.Room303API service.
@@ -407,7 +408,8 @@ type Room303APIHandler interface {
 	ListAllRooms(context.Context, *connect_go.Request[room303.ListAllRoomsRequest]) (*connect_go.Response[room303.ListRoomsResponse], error)
 	ListRoomsForMember(context.Context, *connect_go.Request[room303.ListRoomsForMemberRequest]) (*connect_go.Response[room303.ListRoomsResponse], error)
 	ArchiveRoom(context.Context, *connect_go.Request[room303.ArchiveRoomRequest]) (*connect_go.Response[commons.Room], error)
-	ListUsersByOrgId(context.Context, *connect_go.Request[room303.ListUsersByOrgIdRequest], *connect_go.ServerStream[room303.ListUsersByOrgIdResponse]) error
+	// ListUsersNames returns a list of users with names and ids
+	ListUsersNames(context.Context, *connect_go.Request[room303.ListUsersNamesRequest], *connect_go.ServerStream[room303.ListUsersNamesResponse]) error
 }
 
 // NewRoom303APIHandler builds an HTTP handler from the service implementation. It returns the path
@@ -517,9 +519,9 @@ func NewRoom303APIHandler(svc Room303APIHandler, opts ...connect_go.HandlerOptio
 		svc.ArchiveRoom,
 		opts...,
 	))
-	mux.Handle(Room303APIListUsersByOrgIdProcedure, connect_go.NewServerStreamHandler(
-		Room303APIListUsersByOrgIdProcedure,
-		svc.ListUsersByOrgId,
+	mux.Handle(Room303APIListUsersNamesProcedure, connect_go.NewServerStreamHandler(
+		Room303APIListUsersNamesProcedure,
+		svc.ListUsersNames,
 		opts...,
 	))
 	return "/api.v1alpha1.room303.Room303API/", mux
@@ -608,6 +610,6 @@ func (UnimplementedRoom303APIHandler) ArchiveRoom(context.Context, *connect_go.R
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.room303.Room303API.ArchiveRoom is not implemented"))
 }
 
-func (UnimplementedRoom303APIHandler) ListUsersByOrgId(context.Context, *connect_go.Request[room303.ListUsersByOrgIdRequest], *connect_go.ServerStream[room303.ListUsersByOrgIdResponse]) error {
-	return connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.room303.Room303API.ListUsersByOrgId is not implemented"))
+func (UnimplementedRoom303APIHandler) ListUsersNames(context.Context, *connect_go.Request[room303.ListUsersNamesRequest], *connect_go.ServerStream[room303.ListUsersNamesResponse]) error {
+	return connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.room303.Room303API.ListUsersNames is not implemented"))
 }
