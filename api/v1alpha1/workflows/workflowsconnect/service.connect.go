@@ -43,9 +43,9 @@ const (
 	// WorkflowsDefinitionsServiceGetFlowDefinitionProcedure is the fully-qualified name of the
 	// WorkflowsDefinitionsService's GetFlowDefinition RPC.
 	WorkflowsDefinitionsServiceGetFlowDefinitionProcedure = "/api.v1alpha1.workflows.WorkflowsDefinitionsService/GetFlowDefinition"
-	// WorkflowsDefinitionsServiceDeleteFlowDefinitionProcedure is the fully-qualified name of the
-	// WorkflowsDefinitionsService's DeleteFlowDefinition RPC.
-	WorkflowsDefinitionsServiceDeleteFlowDefinitionProcedure = "/api.v1alpha1.workflows.WorkflowsDefinitionsService/DeleteFlowDefinition"
+	// WorkflowsDefinitionsServiceDeleteFlowDefinitionByIdProcedure is the fully-qualified name of the
+	// WorkflowsDefinitionsService's DeleteFlowDefinitionById RPC.
+	WorkflowsDefinitionsServiceDeleteFlowDefinitionByIdProcedure = "/api.v1alpha1.workflows.WorkflowsDefinitionsService/DeleteFlowDefinitionById"
 )
 
 // WorkflowsDefinitionsServiceClient is a client for the
@@ -58,7 +58,7 @@ type WorkflowsDefinitionsServiceClient interface {
 	// GetFlowDefinition gets a flow definition
 	GetFlowDefinition(context.Context, *connect_go.Request[workflows.GetFlowDefinitionRequest]) (*connect_go.Response[workflows.GetFlowDefinitionResponse], error)
 	// DeleteFlowDefinition deletes a flow definition
-	DeleteFlowDefinition(context.Context, *connect_go.Request[workflows.DeleteFlowDefinitionRequest]) (*connect_go.Response[workflows.DeleteFlowDefinitionResponse], error)
+	DeleteFlowDefinitionById(context.Context, *connect_go.Request[workflows.DeleteFlowDefinitionByIdRequest]) (*connect_go.Response[workflows.DeleteFlowDefinitionByIdResponse], error)
 }
 
 // NewWorkflowsDefinitionsServiceClient constructs a client for the
@@ -87,9 +87,9 @@ func NewWorkflowsDefinitionsServiceClient(httpClient connect_go.HTTPClient, base
 			baseURL+WorkflowsDefinitionsServiceGetFlowDefinitionProcedure,
 			opts...,
 		),
-		deleteFlowDefinition: connect_go.NewClient[workflows.DeleteFlowDefinitionRequest, workflows.DeleteFlowDefinitionResponse](
+		deleteFlowDefinitionById: connect_go.NewClient[workflows.DeleteFlowDefinitionByIdRequest, workflows.DeleteFlowDefinitionByIdResponse](
 			httpClient,
-			baseURL+WorkflowsDefinitionsServiceDeleteFlowDefinitionProcedure,
+			baseURL+WorkflowsDefinitionsServiceDeleteFlowDefinitionByIdProcedure,
 			opts...,
 		),
 	}
@@ -97,10 +97,10 @@ func NewWorkflowsDefinitionsServiceClient(httpClient connect_go.HTTPClient, base
 
 // workflowsDefinitionsServiceClient implements WorkflowsDefinitionsServiceClient.
 type workflowsDefinitionsServiceClient struct {
-	listFlowDefinitions  *connect_go.Client[workflows.ListFlowDefinitionsRequest, workflows.ListFlowDefinitionsResponse]
-	saveFlowDefinition   *connect_go.Client[workflows.SaveFlowDefinitionRequest, workflows.SaveFlowDefinitionResponse]
-	getFlowDefinition    *connect_go.Client[workflows.GetFlowDefinitionRequest, workflows.GetFlowDefinitionResponse]
-	deleteFlowDefinition *connect_go.Client[workflows.DeleteFlowDefinitionRequest, workflows.DeleteFlowDefinitionResponse]
+	listFlowDefinitions      *connect_go.Client[workflows.ListFlowDefinitionsRequest, workflows.ListFlowDefinitionsResponse]
+	saveFlowDefinition       *connect_go.Client[workflows.SaveFlowDefinitionRequest, workflows.SaveFlowDefinitionResponse]
+	getFlowDefinition        *connect_go.Client[workflows.GetFlowDefinitionRequest, workflows.GetFlowDefinitionResponse]
+	deleteFlowDefinitionById *connect_go.Client[workflows.DeleteFlowDefinitionByIdRequest, workflows.DeleteFlowDefinitionByIdResponse]
 }
 
 // ListFlowDefinitions calls api.v1alpha1.workflows.WorkflowsDefinitionsService.ListFlowDefinitions.
@@ -118,10 +118,10 @@ func (c *workflowsDefinitionsServiceClient) GetFlowDefinition(ctx context.Contex
 	return c.getFlowDefinition.CallUnary(ctx, req)
 }
 
-// DeleteFlowDefinition calls
-// api.v1alpha1.workflows.WorkflowsDefinitionsService.DeleteFlowDefinition.
-func (c *workflowsDefinitionsServiceClient) DeleteFlowDefinition(ctx context.Context, req *connect_go.Request[workflows.DeleteFlowDefinitionRequest]) (*connect_go.Response[workflows.DeleteFlowDefinitionResponse], error) {
-	return c.deleteFlowDefinition.CallUnary(ctx, req)
+// DeleteFlowDefinitionById calls
+// api.v1alpha1.workflows.WorkflowsDefinitionsService.DeleteFlowDefinitionById.
+func (c *workflowsDefinitionsServiceClient) DeleteFlowDefinitionById(ctx context.Context, req *connect_go.Request[workflows.DeleteFlowDefinitionByIdRequest]) (*connect_go.Response[workflows.DeleteFlowDefinitionByIdResponse], error) {
+	return c.deleteFlowDefinitionById.CallUnary(ctx, req)
 }
 
 // WorkflowsDefinitionsServiceHandler is an implementation of the
@@ -134,7 +134,7 @@ type WorkflowsDefinitionsServiceHandler interface {
 	// GetFlowDefinition gets a flow definition
 	GetFlowDefinition(context.Context, *connect_go.Request[workflows.GetFlowDefinitionRequest]) (*connect_go.Response[workflows.GetFlowDefinitionResponse], error)
 	// DeleteFlowDefinition deletes a flow definition
-	DeleteFlowDefinition(context.Context, *connect_go.Request[workflows.DeleteFlowDefinitionRequest]) (*connect_go.Response[workflows.DeleteFlowDefinitionResponse], error)
+	DeleteFlowDefinitionById(context.Context, *connect_go.Request[workflows.DeleteFlowDefinitionByIdRequest]) (*connect_go.Response[workflows.DeleteFlowDefinitionByIdResponse], error)
 }
 
 // NewWorkflowsDefinitionsServiceHandler builds an HTTP handler from the service implementation. It
@@ -159,9 +159,9 @@ func NewWorkflowsDefinitionsServiceHandler(svc WorkflowsDefinitionsServiceHandle
 		svc.GetFlowDefinition,
 		opts...,
 	))
-	mux.Handle(WorkflowsDefinitionsServiceDeleteFlowDefinitionProcedure, connect_go.NewUnaryHandler(
-		WorkflowsDefinitionsServiceDeleteFlowDefinitionProcedure,
-		svc.DeleteFlowDefinition,
+	mux.Handle(WorkflowsDefinitionsServiceDeleteFlowDefinitionByIdProcedure, connect_go.NewUnaryHandler(
+		WorkflowsDefinitionsServiceDeleteFlowDefinitionByIdProcedure,
+		svc.DeleteFlowDefinitionById,
 		opts...,
 	))
 	return "/api.v1alpha1.workflows.WorkflowsDefinitionsService/", mux
@@ -182,6 +182,6 @@ func (UnimplementedWorkflowsDefinitionsServiceHandler) GetFlowDefinition(context
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.workflows.WorkflowsDefinitionsService.GetFlowDefinition is not implemented"))
 }
 
-func (UnimplementedWorkflowsDefinitionsServiceHandler) DeleteFlowDefinition(context.Context, *connect_go.Request[workflows.DeleteFlowDefinitionRequest]) (*connect_go.Response[workflows.DeleteFlowDefinitionResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.workflows.WorkflowsDefinitionsService.DeleteFlowDefinition is not implemented"))
+func (UnimplementedWorkflowsDefinitionsServiceHandler) DeleteFlowDefinitionById(context.Context, *connect_go.Request[workflows.DeleteFlowDefinitionByIdRequest]) (*connect_go.Response[workflows.DeleteFlowDefinitionByIdResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.workflows.WorkflowsDefinitionsService.DeleteFlowDefinitionById is not implemented"))
 }
