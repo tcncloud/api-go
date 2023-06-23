@@ -24,6 +24,8 @@ const (
 	// WorkflowsDefinitionsServiceName is the fully-qualified name of the WorkflowsDefinitionsService
 	// service.
 	WorkflowsDefinitionsServiceName = "api.v1alpha1.workflows.WorkflowsDefinitionsService"
+	// WorkflowsStateServiceName is the fully-qualified name of the WorkflowsStateService service.
+	WorkflowsStateServiceName = "api.v1alpha1.workflows.WorkflowsStateService"
 )
 
 // These constants are the fully-qualified names of the RPCs defined in this package. They're
@@ -46,6 +48,12 @@ const (
 	// WorkflowsDefinitionsServiceDeleteFlowDefinitionByIdProcedure is the fully-qualified name of the
 	// WorkflowsDefinitionsService's DeleteFlowDefinitionById RPC.
 	WorkflowsDefinitionsServiceDeleteFlowDefinitionByIdProcedure = "/api.v1alpha1.workflows.WorkflowsDefinitionsService/DeleteFlowDefinitionById"
+	// WorkflowsStateServiceGetFlowStateProcedure is the fully-qualified name of the
+	// WorkflowsStateService's GetFlowState RPC.
+	WorkflowsStateServiceGetFlowStateProcedure = "/api.v1alpha1.workflows.WorkflowsStateService/GetFlowState"
+	// WorkflowsStateServiceSaveFlowStateProcedure is the fully-qualified name of the
+	// WorkflowsStateService's SaveFlowState RPC.
+	WorkflowsStateServiceSaveFlowStateProcedure = "/api.v1alpha1.workflows.WorkflowsStateService/SaveFlowState"
 )
 
 // WorkflowsDefinitionsServiceClient is a client for the
@@ -184,4 +192,93 @@ func (UnimplementedWorkflowsDefinitionsServiceHandler) GetFlowDefinition(context
 
 func (UnimplementedWorkflowsDefinitionsServiceHandler) DeleteFlowDefinitionById(context.Context, *connect_go.Request[workflows.DeleteFlowDefinitionByIdRequest]) (*connect_go.Response[workflows.DeleteFlowDefinitionByIdResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.workflows.WorkflowsDefinitionsService.DeleteFlowDefinitionById is not implemented"))
+}
+
+// WorkflowsStateServiceClient is a client for the api.v1alpha1.workflows.WorkflowsStateService
+// service.
+type WorkflowsStateServiceClient interface {
+	// GetFlowState lists flow state
+	GetFlowState(context.Context, *connect_go.Request[workflows.GetFlowStateRequest]) (*connect_go.Response[workflows.GetFlowStateResponse], error)
+	// SaveFlowState saves flow state
+	SaveFlowState(context.Context, *connect_go.Request[workflows.SaveFlowStateRequest]) (*connect_go.Response[workflows.SaveFlowStateResponse], error)
+}
+
+// NewWorkflowsStateServiceClient constructs a client for the
+// api.v1alpha1.workflows.WorkflowsStateService service. By default, it uses the Connect protocol
+// with the binary Protobuf Codec, asks for gzipped responses, and sends uncompressed requests. To
+// use the gRPC or gRPC-Web protocols, supply the connect.WithGRPC() or connect.WithGRPCWeb()
+// options.
+//
+// The URL supplied here should be the base URL for the Connect or gRPC server (for example,
+// http://api.acme.com or https://acme.com/grpc).
+func NewWorkflowsStateServiceClient(httpClient connect_go.HTTPClient, baseURL string, opts ...connect_go.ClientOption) WorkflowsStateServiceClient {
+	baseURL = strings.TrimRight(baseURL, "/")
+	return &workflowsStateServiceClient{
+		getFlowState: connect_go.NewClient[workflows.GetFlowStateRequest, workflows.GetFlowStateResponse](
+			httpClient,
+			baseURL+WorkflowsStateServiceGetFlowStateProcedure,
+			opts...,
+		),
+		saveFlowState: connect_go.NewClient[workflows.SaveFlowStateRequest, workflows.SaveFlowStateResponse](
+			httpClient,
+			baseURL+WorkflowsStateServiceSaveFlowStateProcedure,
+			opts...,
+		),
+	}
+}
+
+// workflowsStateServiceClient implements WorkflowsStateServiceClient.
+type workflowsStateServiceClient struct {
+	getFlowState  *connect_go.Client[workflows.GetFlowStateRequest, workflows.GetFlowStateResponse]
+	saveFlowState *connect_go.Client[workflows.SaveFlowStateRequest, workflows.SaveFlowStateResponse]
+}
+
+// GetFlowState calls api.v1alpha1.workflows.WorkflowsStateService.GetFlowState.
+func (c *workflowsStateServiceClient) GetFlowState(ctx context.Context, req *connect_go.Request[workflows.GetFlowStateRequest]) (*connect_go.Response[workflows.GetFlowStateResponse], error) {
+	return c.getFlowState.CallUnary(ctx, req)
+}
+
+// SaveFlowState calls api.v1alpha1.workflows.WorkflowsStateService.SaveFlowState.
+func (c *workflowsStateServiceClient) SaveFlowState(ctx context.Context, req *connect_go.Request[workflows.SaveFlowStateRequest]) (*connect_go.Response[workflows.SaveFlowStateResponse], error) {
+	return c.saveFlowState.CallUnary(ctx, req)
+}
+
+// WorkflowsStateServiceHandler is an implementation of the
+// api.v1alpha1.workflows.WorkflowsStateService service.
+type WorkflowsStateServiceHandler interface {
+	// GetFlowState lists flow state
+	GetFlowState(context.Context, *connect_go.Request[workflows.GetFlowStateRequest]) (*connect_go.Response[workflows.GetFlowStateResponse], error)
+	// SaveFlowState saves flow state
+	SaveFlowState(context.Context, *connect_go.Request[workflows.SaveFlowStateRequest]) (*connect_go.Response[workflows.SaveFlowStateResponse], error)
+}
+
+// NewWorkflowsStateServiceHandler builds an HTTP handler from the service implementation. It
+// returns the path on which to mount the handler and the handler itself.
+//
+// By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
+// and JSON codecs. They also support gzip compression.
+func NewWorkflowsStateServiceHandler(svc WorkflowsStateServiceHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
+	mux := http.NewServeMux()
+	mux.Handle(WorkflowsStateServiceGetFlowStateProcedure, connect_go.NewUnaryHandler(
+		WorkflowsStateServiceGetFlowStateProcedure,
+		svc.GetFlowState,
+		opts...,
+	))
+	mux.Handle(WorkflowsStateServiceSaveFlowStateProcedure, connect_go.NewUnaryHandler(
+		WorkflowsStateServiceSaveFlowStateProcedure,
+		svc.SaveFlowState,
+		opts...,
+	))
+	return "/api.v1alpha1.workflows.WorkflowsStateService/", mux
+}
+
+// UnimplementedWorkflowsStateServiceHandler returns CodeUnimplemented from all methods.
+type UnimplementedWorkflowsStateServiceHandler struct{}
+
+func (UnimplementedWorkflowsStateServiceHandler) GetFlowState(context.Context, *connect_go.Request[workflows.GetFlowStateRequest]) (*connect_go.Response[workflows.GetFlowStateResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.workflows.WorkflowsStateService.GetFlowState is not implemented"))
+}
+
+func (UnimplementedWorkflowsStateServiceHandler) SaveFlowState(context.Context, *connect_go.Request[workflows.SaveFlowStateRequest]) (*connect_go.Response[workflows.SaveFlowStateResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.workflows.WorkflowsStateService.SaveFlowState is not implemented"))
 }
