@@ -19,17 +19,17 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	AuthConnection_CreateAuthConnection_FullMethodName       = "/api.v1alpha1.org.authconnection.AuthConnection/CreateAuthConnection"
-	AuthConnection_GetAuthConnectionSettings_FullMethodName  = "/api.v1alpha1.org.authconnection.AuthConnection/GetAuthConnectionSettings"
-	AuthConnection_DeleteAuthConnection_FullMethodName       = "/api.v1alpha1.org.authconnection.AuthConnection/DeleteAuthConnection"
-	AuthConnection_UpdateAuthConnectionSecret_FullMethodName = "/api.v1alpha1.org.authconnection.AuthConnection/UpdateAuthConnectionSecret"
-	AuthConnection_UpdateAuthConnectionGroups_FullMethodName = "/api.v1alpha1.org.authconnection.AuthConnection/UpdateAuthConnectionGroups"
+	AuthConnectionService_CreateAuthConnection_FullMethodName       = "/api.v1alpha1.org.authconnection.AuthConnectionService/CreateAuthConnection"
+	AuthConnectionService_GetAuthConnectionSettings_FullMethodName  = "/api.v1alpha1.org.authconnection.AuthConnectionService/GetAuthConnectionSettings"
+	AuthConnectionService_DeleteAuthConnection_FullMethodName       = "/api.v1alpha1.org.authconnection.AuthConnectionService/DeleteAuthConnection"
+	AuthConnectionService_UpdateAuthConnectionSecret_FullMethodName = "/api.v1alpha1.org.authconnection.AuthConnectionService/UpdateAuthConnectionSecret"
+	AuthConnectionService_UpdateAuthConnectionGroups_FullMethodName = "/api.v1alpha1.org.authconnection.AuthConnectionService/UpdateAuthConnectionGroups"
 )
 
-// AuthConnectionClient is the client API for AuthConnection service.
+// AuthConnectionServiceClient is the client API for AuthConnectionService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type AuthConnectionClient interface {
+type AuthConnectionServiceClient interface {
 	// CreateAuthConnection creates a new auth0 connection.
 	CreateAuthConnection(ctx context.Context, in *CreateAuthConnectionRequest, opts ...grpc.CallOption) (*CreateAuthConnectionResponse, error)
 	// GetAuthConnectionSettings gets auth0 connection settings.
@@ -42,63 +42,63 @@ type AuthConnectionClient interface {
 	UpdateAuthConnectionGroups(ctx context.Context, in *UpdateAuthConnectionGroupsRequest, opts ...grpc.CallOption) (*UpdateAuthConnectionGroupsResponse, error)
 }
 
-type authConnectionClient struct {
+type authConnectionServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewAuthConnectionClient(cc grpc.ClientConnInterface) AuthConnectionClient {
-	return &authConnectionClient{cc}
+func NewAuthConnectionServiceClient(cc grpc.ClientConnInterface) AuthConnectionServiceClient {
+	return &authConnectionServiceClient{cc}
 }
 
-func (c *authConnectionClient) CreateAuthConnection(ctx context.Context, in *CreateAuthConnectionRequest, opts ...grpc.CallOption) (*CreateAuthConnectionResponse, error) {
+func (c *authConnectionServiceClient) CreateAuthConnection(ctx context.Context, in *CreateAuthConnectionRequest, opts ...grpc.CallOption) (*CreateAuthConnectionResponse, error) {
 	out := new(CreateAuthConnectionResponse)
-	err := c.cc.Invoke(ctx, AuthConnection_CreateAuthConnection_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, AuthConnectionService_CreateAuthConnection_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *authConnectionClient) GetAuthConnectionSettings(ctx context.Context, in *GetAuthConnectionSettingsRequest, opts ...grpc.CallOption) (*GetAuthConnectionSettingsResponse, error) {
+func (c *authConnectionServiceClient) GetAuthConnectionSettings(ctx context.Context, in *GetAuthConnectionSettingsRequest, opts ...grpc.CallOption) (*GetAuthConnectionSettingsResponse, error) {
 	out := new(GetAuthConnectionSettingsResponse)
-	err := c.cc.Invoke(ctx, AuthConnection_GetAuthConnectionSettings_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, AuthConnectionService_GetAuthConnectionSettings_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *authConnectionClient) DeleteAuthConnection(ctx context.Context, in *DeleteAuthConnectionRequest, opts ...grpc.CallOption) (*DeleteAuthConnectionResponse, error) {
+func (c *authConnectionServiceClient) DeleteAuthConnection(ctx context.Context, in *DeleteAuthConnectionRequest, opts ...grpc.CallOption) (*DeleteAuthConnectionResponse, error) {
 	out := new(DeleteAuthConnectionResponse)
-	err := c.cc.Invoke(ctx, AuthConnection_DeleteAuthConnection_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, AuthConnectionService_DeleteAuthConnection_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *authConnectionClient) UpdateAuthConnectionSecret(ctx context.Context, in *UpdateAuthConnectionSecretRequest, opts ...grpc.CallOption) (*UpdateAuthConnectionSecretResponse, error) {
+func (c *authConnectionServiceClient) UpdateAuthConnectionSecret(ctx context.Context, in *UpdateAuthConnectionSecretRequest, opts ...grpc.CallOption) (*UpdateAuthConnectionSecretResponse, error) {
 	out := new(UpdateAuthConnectionSecretResponse)
-	err := c.cc.Invoke(ctx, AuthConnection_UpdateAuthConnectionSecret_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, AuthConnectionService_UpdateAuthConnectionSecret_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *authConnectionClient) UpdateAuthConnectionGroups(ctx context.Context, in *UpdateAuthConnectionGroupsRequest, opts ...grpc.CallOption) (*UpdateAuthConnectionGroupsResponse, error) {
+func (c *authConnectionServiceClient) UpdateAuthConnectionGroups(ctx context.Context, in *UpdateAuthConnectionGroupsRequest, opts ...grpc.CallOption) (*UpdateAuthConnectionGroupsResponse, error) {
 	out := new(UpdateAuthConnectionGroupsResponse)
-	err := c.cc.Invoke(ctx, AuthConnection_UpdateAuthConnectionGroups_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, AuthConnectionService_UpdateAuthConnectionGroups_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// AuthConnectionServer is the server API for AuthConnection service.
-// All implementations must embed UnimplementedAuthConnectionServer
+// AuthConnectionServiceServer is the server API for AuthConnectionService service.
+// All implementations must embed UnimplementedAuthConnectionServiceServer
 // for forward compatibility
-type AuthConnectionServer interface {
+type AuthConnectionServiceServer interface {
 	// CreateAuthConnection creates a new auth0 connection.
 	CreateAuthConnection(context.Context, *CreateAuthConnectionRequest) (*CreateAuthConnectionResponse, error)
 	// GetAuthConnectionSettings gets auth0 connection settings.
@@ -109,157 +109,157 @@ type AuthConnectionServer interface {
 	UpdateAuthConnectionSecret(context.Context, *UpdateAuthConnectionSecretRequest) (*UpdateAuthConnectionSecretResponse, error)
 	// UpdateAuthConnectionGroups updates a connections groups.
 	UpdateAuthConnectionGroups(context.Context, *UpdateAuthConnectionGroupsRequest) (*UpdateAuthConnectionGroupsResponse, error)
-	mustEmbedUnimplementedAuthConnectionServer()
+	mustEmbedUnimplementedAuthConnectionServiceServer()
 }
 
-// UnimplementedAuthConnectionServer must be embedded to have forward compatible implementations.
-type UnimplementedAuthConnectionServer struct {
+// UnimplementedAuthConnectionServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedAuthConnectionServiceServer struct {
 }
 
-func (UnimplementedAuthConnectionServer) CreateAuthConnection(context.Context, *CreateAuthConnectionRequest) (*CreateAuthConnectionResponse, error) {
+func (UnimplementedAuthConnectionServiceServer) CreateAuthConnection(context.Context, *CreateAuthConnectionRequest) (*CreateAuthConnectionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateAuthConnection not implemented")
 }
-func (UnimplementedAuthConnectionServer) GetAuthConnectionSettings(context.Context, *GetAuthConnectionSettingsRequest) (*GetAuthConnectionSettingsResponse, error) {
+func (UnimplementedAuthConnectionServiceServer) GetAuthConnectionSettings(context.Context, *GetAuthConnectionSettingsRequest) (*GetAuthConnectionSettingsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAuthConnectionSettings not implemented")
 }
-func (UnimplementedAuthConnectionServer) DeleteAuthConnection(context.Context, *DeleteAuthConnectionRequest) (*DeleteAuthConnectionResponse, error) {
+func (UnimplementedAuthConnectionServiceServer) DeleteAuthConnection(context.Context, *DeleteAuthConnectionRequest) (*DeleteAuthConnectionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteAuthConnection not implemented")
 }
-func (UnimplementedAuthConnectionServer) UpdateAuthConnectionSecret(context.Context, *UpdateAuthConnectionSecretRequest) (*UpdateAuthConnectionSecretResponse, error) {
+func (UnimplementedAuthConnectionServiceServer) UpdateAuthConnectionSecret(context.Context, *UpdateAuthConnectionSecretRequest) (*UpdateAuthConnectionSecretResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateAuthConnectionSecret not implemented")
 }
-func (UnimplementedAuthConnectionServer) UpdateAuthConnectionGroups(context.Context, *UpdateAuthConnectionGroupsRequest) (*UpdateAuthConnectionGroupsResponse, error) {
+func (UnimplementedAuthConnectionServiceServer) UpdateAuthConnectionGroups(context.Context, *UpdateAuthConnectionGroupsRequest) (*UpdateAuthConnectionGroupsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateAuthConnectionGroups not implemented")
 }
-func (UnimplementedAuthConnectionServer) mustEmbedUnimplementedAuthConnectionServer() {}
+func (UnimplementedAuthConnectionServiceServer) mustEmbedUnimplementedAuthConnectionServiceServer() {}
 
-// UnsafeAuthConnectionServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to AuthConnectionServer will
+// UnsafeAuthConnectionServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to AuthConnectionServiceServer will
 // result in compilation errors.
-type UnsafeAuthConnectionServer interface {
-	mustEmbedUnimplementedAuthConnectionServer()
+type UnsafeAuthConnectionServiceServer interface {
+	mustEmbedUnimplementedAuthConnectionServiceServer()
 }
 
-func RegisterAuthConnectionServer(s grpc.ServiceRegistrar, srv AuthConnectionServer) {
-	s.RegisterService(&AuthConnection_ServiceDesc, srv)
+func RegisterAuthConnectionServiceServer(s grpc.ServiceRegistrar, srv AuthConnectionServiceServer) {
+	s.RegisterService(&AuthConnectionService_ServiceDesc, srv)
 }
 
-func _AuthConnection_CreateAuthConnection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _AuthConnectionService_CreateAuthConnection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateAuthConnectionRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthConnectionServer).CreateAuthConnection(ctx, in)
+		return srv.(AuthConnectionServiceServer).CreateAuthConnection(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AuthConnection_CreateAuthConnection_FullMethodName,
+		FullMethod: AuthConnectionService_CreateAuthConnection_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthConnectionServer).CreateAuthConnection(ctx, req.(*CreateAuthConnectionRequest))
+		return srv.(AuthConnectionServiceServer).CreateAuthConnection(ctx, req.(*CreateAuthConnectionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AuthConnection_GetAuthConnectionSettings_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _AuthConnectionService_GetAuthConnectionSettings_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetAuthConnectionSettingsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthConnectionServer).GetAuthConnectionSettings(ctx, in)
+		return srv.(AuthConnectionServiceServer).GetAuthConnectionSettings(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AuthConnection_GetAuthConnectionSettings_FullMethodName,
+		FullMethod: AuthConnectionService_GetAuthConnectionSettings_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthConnectionServer).GetAuthConnectionSettings(ctx, req.(*GetAuthConnectionSettingsRequest))
+		return srv.(AuthConnectionServiceServer).GetAuthConnectionSettings(ctx, req.(*GetAuthConnectionSettingsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AuthConnection_DeleteAuthConnection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _AuthConnectionService_DeleteAuthConnection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteAuthConnectionRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthConnectionServer).DeleteAuthConnection(ctx, in)
+		return srv.(AuthConnectionServiceServer).DeleteAuthConnection(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AuthConnection_DeleteAuthConnection_FullMethodName,
+		FullMethod: AuthConnectionService_DeleteAuthConnection_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthConnectionServer).DeleteAuthConnection(ctx, req.(*DeleteAuthConnectionRequest))
+		return srv.(AuthConnectionServiceServer).DeleteAuthConnection(ctx, req.(*DeleteAuthConnectionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AuthConnection_UpdateAuthConnectionSecret_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _AuthConnectionService_UpdateAuthConnectionSecret_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateAuthConnectionSecretRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthConnectionServer).UpdateAuthConnectionSecret(ctx, in)
+		return srv.(AuthConnectionServiceServer).UpdateAuthConnectionSecret(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AuthConnection_UpdateAuthConnectionSecret_FullMethodName,
+		FullMethod: AuthConnectionService_UpdateAuthConnectionSecret_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthConnectionServer).UpdateAuthConnectionSecret(ctx, req.(*UpdateAuthConnectionSecretRequest))
+		return srv.(AuthConnectionServiceServer).UpdateAuthConnectionSecret(ctx, req.(*UpdateAuthConnectionSecretRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AuthConnection_UpdateAuthConnectionGroups_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _AuthConnectionService_UpdateAuthConnectionGroups_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateAuthConnectionGroupsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthConnectionServer).UpdateAuthConnectionGroups(ctx, in)
+		return srv.(AuthConnectionServiceServer).UpdateAuthConnectionGroups(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AuthConnection_UpdateAuthConnectionGroups_FullMethodName,
+		FullMethod: AuthConnectionService_UpdateAuthConnectionGroups_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthConnectionServer).UpdateAuthConnectionGroups(ctx, req.(*UpdateAuthConnectionGroupsRequest))
+		return srv.(AuthConnectionServiceServer).UpdateAuthConnectionGroups(ctx, req.(*UpdateAuthConnectionGroupsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// AuthConnection_ServiceDesc is the grpc.ServiceDesc for AuthConnection service.
+// AuthConnectionService_ServiceDesc is the grpc.ServiceDesc for AuthConnectionService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var AuthConnection_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "api.v1alpha1.org.authconnection.AuthConnection",
-	HandlerType: (*AuthConnectionServer)(nil),
+var AuthConnectionService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "api.v1alpha1.org.authconnection.AuthConnectionService",
+	HandlerType: (*AuthConnectionServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "CreateAuthConnection",
-			Handler:    _AuthConnection_CreateAuthConnection_Handler,
+			Handler:    _AuthConnectionService_CreateAuthConnection_Handler,
 		},
 		{
 			MethodName: "GetAuthConnectionSettings",
-			Handler:    _AuthConnection_GetAuthConnectionSettings_Handler,
+			Handler:    _AuthConnectionService_GetAuthConnectionSettings_Handler,
 		},
 		{
 			MethodName: "DeleteAuthConnection",
-			Handler:    _AuthConnection_DeleteAuthConnection_Handler,
+			Handler:    _AuthConnectionService_DeleteAuthConnection_Handler,
 		},
 		{
 			MethodName: "UpdateAuthConnectionSecret",
-			Handler:    _AuthConnection_UpdateAuthConnectionSecret_Handler,
+			Handler:    _AuthConnectionService_UpdateAuthConnectionSecret_Handler,
 		},
 		{
 			MethodName: "UpdateAuthConnectionGroups",
-			Handler:    _AuthConnection_UpdateAuthConnectionGroups_Handler,
+			Handler:    _AuthConnectionService_UpdateAuthConnectionGroups_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
