@@ -83,13 +83,19 @@ type CfgHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewCfgHandler(svc CfgHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	mux := http.NewServeMux()
-	mux.Handle(CfgGetWebAgentConfigProcedure, connect_go.NewUnaryHandler(
+	cfgGetWebAgentConfigHandler := connect_go.NewUnaryHandler(
 		CfgGetWebAgentConfigProcedure,
 		svc.GetWebAgentConfig,
 		opts...,
-	))
-	return "/api.v1alpha1.cfg.Cfg/", mux
+	)
+	return "/api.v1alpha1.cfg.Cfg/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case CfgGetWebAgentConfigProcedure:
+			cfgGetWebAgentConfigHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
 }
 
 // UnimplementedCfgHandler returns CodeUnimplemented from all methods.

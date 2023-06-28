@@ -341,88 +341,124 @@ type TicketsHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewTicketsHandler(svc TicketsHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	mux := http.NewServeMux()
-	mux.Handle(TicketsCreateTicketProcedure, connect_go.NewUnaryHandler(
+	ticketsCreateTicketHandler := connect_go.NewUnaryHandler(
 		TicketsCreateTicketProcedure,
 		svc.CreateTicket,
 		opts...,
-	))
-	mux.Handle(TicketsEditTicketProcedure, connect_go.NewUnaryHandler(
+	)
+	ticketsEditTicketHandler := connect_go.NewUnaryHandler(
 		TicketsEditTicketProcedure,
 		svc.EditTicket,
 		opts...,
-	))
-	mux.Handle(TicketsListTicketsProcedure, connect_go.NewUnaryHandler(
+	)
+	ticketsListTicketsHandler := connect_go.NewUnaryHandler(
 		TicketsListTicketsProcedure,
 		svc.ListTickets,
 		opts...,
-	))
-	mux.Handle(TicketsAssignTicketProcedure, connect_go.NewUnaryHandler(
+	)
+	ticketsAssignTicketHandler := connect_go.NewUnaryHandler(
 		TicketsAssignTicketProcedure,
 		svc.AssignTicket,
 		opts...,
-	))
-	mux.Handle(TicketsCloseTicketProcedure, connect_go.NewUnaryHandler(
+	)
+	ticketsCloseTicketHandler := connect_go.NewUnaryHandler(
 		TicketsCloseTicketProcedure,
 		svc.CloseTicket,
 		opts...,
-	))
-	mux.Handle(TicketsViewTicketProcedure, connect_go.NewUnaryHandler(
+	)
+	ticketsViewTicketHandler := connect_go.NewUnaryHandler(
 		TicketsViewTicketProcedure,
 		svc.ViewTicket,
 		opts...,
-	))
-	mux.Handle(TicketsCreateCommentProcedure, connect_go.NewUnaryHandler(
+	)
+	ticketsCreateCommentHandler := connect_go.NewUnaryHandler(
 		TicketsCreateCommentProcedure,
 		svc.CreateComment,
 		opts...,
-	))
-	mux.Handle(TicketsEnableProjectProcedure, connect_go.NewUnaryHandler(
+	)
+	ticketsEnableProjectHandler := connect_go.NewUnaryHandler(
 		TicketsEnableProjectProcedure,
 		svc.EnableProject,
 		opts...,
-	))
-	mux.Handle(TicketsListEnabledProjectsProcedure, connect_go.NewUnaryHandler(
+	)
+	ticketsListEnabledProjectsHandler := connect_go.NewUnaryHandler(
 		TicketsListEnabledProjectsProcedure,
 		svc.ListEnabledProjects,
 		opts...,
-	))
-	mux.Handle(TicketsCreateSLAProcedure, connect_go.NewUnaryHandler(
+	)
+	ticketsCreateSLAHandler := connect_go.NewUnaryHandler(
 		TicketsCreateSLAProcedure,
 		svc.CreateSLA,
 		opts...,
-	))
-	mux.Handle(TicketsListSLAProcedure, connect_go.NewUnaryHandler(
+	)
+	ticketsListSLAHandler := connect_go.NewUnaryHandler(
 		TicketsListSLAProcedure,
 		svc.ListSLA,
 		opts...,
-	))
-	mux.Handle(TicketsUpdateSLAProcedure, connect_go.NewUnaryHandler(
+	)
+	ticketsUpdateSLAHandler := connect_go.NewUnaryHandler(
 		TicketsUpdateSLAProcedure,
 		svc.UpdateSLA,
 		opts...,
-	))
-	mux.Handle(TicketsListSLAConditionProcedure, connect_go.NewUnaryHandler(
+	)
+	ticketsListSLAConditionHandler := connect_go.NewUnaryHandler(
 		TicketsListSLAConditionProcedure,
 		svc.ListSLACondition,
 		opts...,
-	))
-	mux.Handle(TicketsReplyCommentProcedure, connect_go.NewUnaryHandler(
+	)
+	ticketsReplyCommentHandler := connect_go.NewUnaryHandler(
 		TicketsReplyCommentProcedure,
 		svc.ReplyComment,
 		opts...,
-	))
-	mux.Handle(TicketsListTicketAuditLogProcedure, connect_go.NewUnaryHandler(
+	)
+	ticketsListTicketAuditLogHandler := connect_go.NewUnaryHandler(
 		TicketsListTicketAuditLogProcedure,
 		svc.ListTicketAuditLog,
 		opts...,
-	))
-	mux.Handle(TicketsAssignSelfProcedure, connect_go.NewUnaryHandler(
+	)
+	ticketsAssignSelfHandler := connect_go.NewUnaryHandler(
 		TicketsAssignSelfProcedure,
 		svc.AssignSelf,
 		opts...,
-	))
-	return "/api.v1alpha1.tickets.Tickets/", mux
+	)
+	return "/api.v1alpha1.tickets.Tickets/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case TicketsCreateTicketProcedure:
+			ticketsCreateTicketHandler.ServeHTTP(w, r)
+		case TicketsEditTicketProcedure:
+			ticketsEditTicketHandler.ServeHTTP(w, r)
+		case TicketsListTicketsProcedure:
+			ticketsListTicketsHandler.ServeHTTP(w, r)
+		case TicketsAssignTicketProcedure:
+			ticketsAssignTicketHandler.ServeHTTP(w, r)
+		case TicketsCloseTicketProcedure:
+			ticketsCloseTicketHandler.ServeHTTP(w, r)
+		case TicketsViewTicketProcedure:
+			ticketsViewTicketHandler.ServeHTTP(w, r)
+		case TicketsCreateCommentProcedure:
+			ticketsCreateCommentHandler.ServeHTTP(w, r)
+		case TicketsEnableProjectProcedure:
+			ticketsEnableProjectHandler.ServeHTTP(w, r)
+		case TicketsListEnabledProjectsProcedure:
+			ticketsListEnabledProjectsHandler.ServeHTTP(w, r)
+		case TicketsCreateSLAProcedure:
+			ticketsCreateSLAHandler.ServeHTTP(w, r)
+		case TicketsListSLAProcedure:
+			ticketsListSLAHandler.ServeHTTP(w, r)
+		case TicketsUpdateSLAProcedure:
+			ticketsUpdateSLAHandler.ServeHTTP(w, r)
+		case TicketsListSLAConditionProcedure:
+			ticketsListSLAConditionHandler.ServeHTTP(w, r)
+		case TicketsReplyCommentProcedure:
+			ticketsReplyCommentHandler.ServeHTTP(w, r)
+		case TicketsListTicketAuditLogProcedure:
+			ticketsListTicketAuditLogHandler.ServeHTTP(w, r)
+		case TicketsAssignSelfProcedure:
+			ticketsAssignSelfHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
 }
 
 // UnimplementedTicketsHandler returns CodeUnimplemented from all methods.
