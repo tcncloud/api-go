@@ -81,13 +81,19 @@ type FTSHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewFTSHandler(svc FTSHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	mux := http.NewServeMux()
-	mux.Handle(FTSGetUploadFileUrlProcedure, connect_go.NewUnaryHandler(
+	fTSGetUploadFileUrlHandler := connect_go.NewUnaryHandler(
 		FTSGetUploadFileUrlProcedure,
 		svc.GetUploadFileUrl,
 		opts...,
-	))
-	return "/api.v0alpha.FTS/", mux
+	)
+	return "/api.v0alpha.FTS/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case FTSGetUploadFileUrlProcedure:
+			fTSGetUploadFileUrlHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
 }
 
 // UnimplementedFTSHandler returns CodeUnimplemented from all methods.

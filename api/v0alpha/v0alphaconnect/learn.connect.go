@@ -251,58 +251,82 @@ type LearnHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewLearnHandler(svc LearnHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	mux := http.NewServeMux()
-	mux.Handle(LearnExistProcedure, connect_go.NewUnaryHandler(
+	learnExistHandler := connect_go.NewUnaryHandler(
 		LearnExistProcedure,
 		svc.Exist,
 		opts...,
-	))
-	mux.Handle(LearnContentProcedure, connect_go.NewUnaryHandler(
+	)
+	learnContentHandler := connect_go.NewUnaryHandler(
 		LearnContentProcedure,
 		svc.Content,
 		opts...,
-	))
-	mux.Handle(LearnExportManyProcedure, connect_go.NewUnaryHandler(
+	)
+	learnExportManyHandler := connect_go.NewUnaryHandler(
 		LearnExportManyProcedure,
 		svc.ExportMany,
 		opts...,
-	))
-	mux.Handle(LearnSearchContentProcedure, connect_go.NewUnaryHandler(
+	)
+	learnSearchContentHandler := connect_go.NewUnaryHandler(
 		LearnSearchContentProcedure,
 		svc.SearchContent,
 		opts...,
-	))
-	mux.Handle(LearnStandaloneProcedure, connect_go.NewUnaryHandler(
+	)
+	learnStandaloneHandler := connect_go.NewUnaryHandler(
 		LearnStandaloneProcedure,
 		svc.Standalone,
 		opts...,
-	))
-	mux.Handle(LearnContentEditorDataProcedure, connect_go.NewUnaryHandler(
+	)
+	learnContentEditorDataHandler := connect_go.NewUnaryHandler(
 		LearnContentEditorDataProcedure,
 		svc.ContentEditorData,
 		opts...,
-	))
-	mux.Handle(LearnUpdateProcedure, connect_go.NewUnaryHandler(
+	)
+	learnUpdateHandler := connect_go.NewUnaryHandler(
 		LearnUpdateProcedure,
 		svc.Update,
 		opts...,
-	))
-	mux.Handle(LearnStoreStaticImageProcedure, connect_go.NewUnaryHandler(
+	)
+	learnStoreStaticImageHandler := connect_go.NewUnaryHandler(
 		LearnStoreStaticImageProcedure,
 		svc.StoreStaticImage,
 		opts...,
-	))
-	mux.Handle(LearnUploadDynamicScreenshotProcedure, connect_go.NewUnaryHandler(
+	)
+	learnUploadDynamicScreenshotHandler := connect_go.NewUnaryHandler(
 		LearnUploadDynamicScreenshotProcedure,
 		svc.UploadDynamicScreenshot,
 		opts...,
-	))
-	mux.Handle(LearnDeleteStandaloneProcedure, connect_go.NewUnaryHandler(
+	)
+	learnDeleteStandaloneHandler := connect_go.NewUnaryHandler(
 		LearnDeleteStandaloneProcedure,
 		svc.DeleteStandalone,
 		opts...,
-	))
-	return "/api.v0alpha.Learn/", mux
+	)
+	return "/api.v0alpha.Learn/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case LearnExistProcedure:
+			learnExistHandler.ServeHTTP(w, r)
+		case LearnContentProcedure:
+			learnContentHandler.ServeHTTP(w, r)
+		case LearnExportManyProcedure:
+			learnExportManyHandler.ServeHTTP(w, r)
+		case LearnSearchContentProcedure:
+			learnSearchContentHandler.ServeHTTP(w, r)
+		case LearnStandaloneProcedure:
+			learnStandaloneHandler.ServeHTTP(w, r)
+		case LearnContentEditorDataProcedure:
+			learnContentEditorDataHandler.ServeHTTP(w, r)
+		case LearnUpdateProcedure:
+			learnUpdateHandler.ServeHTTP(w, r)
+		case LearnStoreStaticImageProcedure:
+			learnStoreStaticImageHandler.ServeHTTP(w, r)
+		case LearnUploadDynamicScreenshotProcedure:
+			learnUploadDynamicScreenshotHandler.ServeHTTP(w, r)
+		case LearnDeleteStandaloneProcedure:
+			learnDeleteStandaloneHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
 }
 
 // UnimplementedLearnHandler returns CodeUnimplemented from all methods.

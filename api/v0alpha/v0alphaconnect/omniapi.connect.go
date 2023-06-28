@@ -1546,328 +1546,460 @@ type OmniApiHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewOmniApiHandler(svc OmniApiHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	mux := http.NewServeMux()
-	mux.Handle(OmniApiArchiveCampaignProcedure, connect_go.NewUnaryHandler(
+	omniApiArchiveCampaignHandler := connect_go.NewUnaryHandler(
 		OmniApiArchiveCampaignProcedure,
 		svc.ArchiveCampaign,
 		opts...,
-	))
-	mux.Handle(OmniApiCreateCampaignProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiCreateCampaignHandler := connect_go.NewUnaryHandler(
 		OmniApiCreateCampaignProcedure,
 		svc.CreateCampaign,
 		opts...,
-	))
-	mux.Handle(OmniApiGetCampaignByIdProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiGetCampaignByIdHandler := connect_go.NewUnaryHandler(
 		OmniApiGetCampaignByIdProcedure,
 		svc.GetCampaignById,
 		opts...,
-	))
-	mux.Handle(OmniApiPauseCampaignProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiPauseCampaignHandler := connect_go.NewUnaryHandler(
 		OmniApiPauseCampaignProcedure,
 		svc.PauseCampaign,
 		opts...,
-	))
-	mux.Handle(OmniApiResumeCampaignProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiResumeCampaignHandler := connect_go.NewUnaryHandler(
 		OmniApiResumeCampaignProcedure,
 		svc.ResumeCampaign,
 		opts...,
-	))
-	mux.Handle(OmniApiUpdateCampaignProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiUpdateCampaignHandler := connect_go.NewUnaryHandler(
 		OmniApiUpdateCampaignProcedure,
 		svc.UpdateCampaign,
 		opts...,
-	))
-	mux.Handle(OmniApiUpdateCampaignPacingSpeedProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiUpdateCampaignPacingSpeedHandler := connect_go.NewUnaryHandler(
 		OmniApiUpdateCampaignPacingSpeedProcedure,
 		svc.UpdateCampaignPacingSpeed,
 		opts...,
-	))
-	mux.Handle(OmniApiSendOmniMessageProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiSendOmniMessageHandler := connect_go.NewUnaryHandler(
 		OmniApiSendOmniMessageProcedure,
 		svc.SendOmniMessage,
 		opts...,
-	))
-	mux.Handle(OmniApiManagerSendOmniMessageProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiManagerSendOmniMessageHandler := connect_go.NewUnaryHandler(
 		OmniApiManagerSendOmniMessageProcedure,
 		svc.ManagerSendOmniMessage,
 		opts...,
-	))
-	mux.Handle(OmniApiCreateDispositionProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiCreateDispositionHandler := connect_go.NewUnaryHandler(
 		OmniApiCreateDispositionProcedure,
 		svc.CreateDisposition,
 		opts...,
-	))
-	mux.Handle(OmniApiDeleteDispositionProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiDeleteDispositionHandler := connect_go.NewUnaryHandler(
 		OmniApiDeleteDispositionProcedure,
 		svc.DeleteDisposition,
 		opts...,
-	))
-	mux.Handle(OmniApiListDispositionsProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiListDispositionsHandler := connect_go.NewUnaryHandler(
 		OmniApiListDispositionsProcedure,
 		svc.ListDispositions,
 		opts...,
-	))
-	mux.Handle(OmniApiUpdateDispositionProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiUpdateDispositionHandler := connect_go.NewUnaryHandler(
 		OmniApiUpdateDispositionProcedure,
 		svc.UpdateDisposition,
 		opts...,
-	))
-	mux.Handle(OmniApiListCustomUnsubscribeLinksProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiListCustomUnsubscribeLinksHandler := connect_go.NewUnaryHandler(
 		OmniApiListCustomUnsubscribeLinksProcedure,
 		svc.ListCustomUnsubscribeLinks,
 		opts...,
-	))
-	mux.Handle(OmniApiCreateCustomUnsubscribeLinkProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiCreateCustomUnsubscribeLinkHandler := connect_go.NewUnaryHandler(
 		OmniApiCreateCustomUnsubscribeLinkProcedure,
 		svc.CreateCustomUnsubscribeLink,
 		opts...,
-	))
-	mux.Handle(OmniApiUpdateCustomUnsubscribeLinkProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiUpdateCustomUnsubscribeLinkHandler := connect_go.NewUnaryHandler(
 		OmniApiUpdateCustomUnsubscribeLinkProcedure,
 		svc.UpdateCustomUnsubscribeLink,
 		opts...,
-	))
-	mux.Handle(OmniApiDeleteCustomUnsubscribeLinkProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiDeleteCustomUnsubscribeLinkHandler := connect_go.NewUnaryHandler(
 		OmniApiDeleteCustomUnsubscribeLinkProcedure,
 		svc.DeleteCustomUnsubscribeLink,
 		opts...,
-	))
-	mux.Handle(OmniApiListCampaignsProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiListCampaignsHandler := connect_go.NewUnaryHandler(
 		OmniApiListCampaignsProcedure,
 		svc.ListCampaigns,
 		opts...,
-	))
-	mux.Handle(OmniApiManagerListMessagesProcedure, connect_go.NewServerStreamHandler(
+	)
+	omniApiManagerListMessagesHandler := connect_go.NewServerStreamHandler(
 		OmniApiManagerListMessagesProcedure,
 		svc.ManagerListMessages,
 		opts...,
-	))
-	mux.Handle(OmniApiListMessagesProcedure, connect_go.NewServerStreamHandler(
+	)
+	omniApiListMessagesHandler := connect_go.NewServerStreamHandler(
 		OmniApiListMessagesProcedure,
 		svc.ListMessages,
 		opts...,
-	))
-	mux.Handle(OmniApiManagerListConversationsProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiManagerListConversationsHandler := connect_go.NewUnaryHandler(
 		OmniApiManagerListConversationsProcedure,
 		svc.ManagerListConversations,
 		opts...,
-	))
-	mux.Handle(OmniApiListContactListsProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiListContactListsHandler := connect_go.NewUnaryHandler(
 		OmniApiListContactListsProcedure,
 		svc.ListContactLists,
 		opts...,
-	))
-	mux.Handle(OmniApiGetAvailableHeadersProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiGetAvailableHeadersHandler := connect_go.NewUnaryHandler(
 		OmniApiGetAvailableHeadersProcedure,
 		svc.GetAvailableHeaders,
 		opts...,
-	))
-	mux.Handle(OmniApiGetTaskProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiGetTaskHandler := connect_go.NewUnaryHandler(
 		OmniApiGetTaskProcedure,
 		svc.GetTask,
 		opts...,
-	))
-	mux.Handle(OmniApiListTasksProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiListTasksHandler := connect_go.NewUnaryHandler(
 		OmniApiListTasksProcedure,
 		svc.ListTasks,
 		opts...,
-	))
-	mux.Handle(OmniApiCreateConnectedInboxProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiCreateConnectedInboxHandler := connect_go.NewUnaryHandler(
 		OmniApiCreateConnectedInboxProcedure,
 		svc.CreateConnectedInbox,
 		opts...,
-	))
-	mux.Handle(OmniApiDeleteConnectedInboxBySidProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiDeleteConnectedInboxBySidHandler := connect_go.NewUnaryHandler(
 		OmniApiDeleteConnectedInboxBySidProcedure,
 		svc.DeleteConnectedInboxBySid,
 		opts...,
-	))
-	mux.Handle(OmniApiGetConnectedInboxBySidProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiGetConnectedInboxBySidHandler := connect_go.NewUnaryHandler(
 		OmniApiGetConnectedInboxBySidProcedure,
 		svc.GetConnectedInboxBySid,
 		opts...,
-	))
-	mux.Handle(OmniApiPerformSendgridAccountChecksProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiPerformSendgridAccountChecksHandler := connect_go.NewUnaryHandler(
 		OmniApiPerformSendgridAccountChecksProcedure,
 		svc.PerformSendgridAccountChecks,
 		opts...,
-	))
-	mux.Handle(OmniApiListConnectedInboxesProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiListConnectedInboxesHandler := connect_go.NewUnaryHandler(
 		OmniApiListConnectedInboxesProcedure,
 		svc.ListConnectedInboxes,
 		opts...,
-	))
-	mux.Handle(OmniApiTestConnectedInboxProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiTestConnectedInboxHandler := connect_go.NewUnaryHandler(
 		OmniApiTestConnectedInboxProcedure,
 		svc.TestConnectedInbox,
 		opts...,
-	))
-	mux.Handle(OmniApiUpdateConnectedInboxProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiUpdateConnectedInboxHandler := connect_go.NewUnaryHandler(
 		OmniApiUpdateConnectedInboxProcedure,
 		svc.UpdateConnectedInbox,
 		opts...,
-	))
-	mux.Handle(OmniApiCreateVerifiedEmailProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiCreateVerifiedEmailHandler := connect_go.NewUnaryHandler(
 		OmniApiCreateVerifiedEmailProcedure,
 		svc.CreateVerifiedEmail,
 		opts...,
-	))
-	mux.Handle(OmniApiDeleteVerifiedEmailProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiDeleteVerifiedEmailHandler := connect_go.NewUnaryHandler(
 		OmniApiDeleteVerifiedEmailProcedure,
 		svc.DeleteVerifiedEmail,
 		opts...,
-	))
-	mux.Handle(OmniApiGetVerifiedEmailBySidProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiGetVerifiedEmailBySidHandler := connect_go.NewUnaryHandler(
 		OmniApiGetVerifiedEmailBySidProcedure,
 		svc.GetVerifiedEmailBySid,
 		opts...,
-	))
-	mux.Handle(OmniApiListVerifiedEmailsProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiListVerifiedEmailsHandler := connect_go.NewUnaryHandler(
 		OmniApiListVerifiedEmailsProcedure,
 		svc.ListVerifiedEmails,
 		opts...,
-	))
-	mux.Handle(OmniApiResendVerifiedEmailProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiResendVerifiedEmailHandler := connect_go.NewUnaryHandler(
 		OmniApiResendVerifiedEmailProcedure,
 		svc.ResendVerifiedEmail,
 		opts...,
-	))
-	mux.Handle(OmniApiUpdateVerifiedEmailProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiUpdateVerifiedEmailHandler := connect_go.NewUnaryHandler(
 		OmniApiUpdateVerifiedEmailProcedure,
 		svc.UpdateVerifiedEmail,
 		opts...,
-	))
-	mux.Handle(OmniApiGetPendingGoogleXOAuth2DataProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiGetPendingGoogleXOAuth2DataHandler := connect_go.NewUnaryHandler(
 		OmniApiGetPendingGoogleXOAuth2DataProcedure,
 		svc.GetPendingGoogleXOAuth2Data,
 		opts...,
-	))
-	mux.Handle(OmniApiSendEmailNotificationProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiSendEmailNotificationHandler := connect_go.NewUnaryHandler(
 		OmniApiSendEmailNotificationProcedure,
 		svc.SendEmailNotification,
 		opts...,
-	))
-	mux.Handle(OmniApiSendFeedbackEmailProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiSendFeedbackEmailHandler := connect_go.NewUnaryHandler(
 		OmniApiSendFeedbackEmailProcedure,
 		svc.SendFeedbackEmail,
 		opts...,
-	))
-	mux.Handle(OmniApiGetOmniAttachmentProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiGetOmniAttachmentHandler := connect_go.NewUnaryHandler(
 		OmniApiGetOmniAttachmentProcedure,
 		svc.GetOmniAttachment,
 		opts...,
-	))
-	mux.Handle(OmniApiCreateTasksProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiCreateTasksHandler := connect_go.NewUnaryHandler(
 		OmniApiCreateTasksProcedure,
 		svc.CreateTasks,
 		opts...,
-	))
-	mux.Handle(OmniApiCreateSignatureProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiCreateSignatureHandler := connect_go.NewUnaryHandler(
 		OmniApiCreateSignatureProcedure,
 		svc.CreateSignature,
 		opts...,
-	))
-	mux.Handle(OmniApiDeleteSignatureProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiDeleteSignatureHandler := connect_go.NewUnaryHandler(
 		OmniApiDeleteSignatureProcedure,
 		svc.DeleteSignature,
 		opts...,
-	))
-	mux.Handle(OmniApiListSignaturesProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiListSignaturesHandler := connect_go.NewUnaryHandler(
 		OmniApiListSignaturesProcedure,
 		svc.ListSignatures,
 		opts...,
-	))
-	mux.Handle(OmniApiUpdateSignatureProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiUpdateSignatureHandler := connect_go.NewUnaryHandler(
 		OmniApiUpdateSignatureProcedure,
 		svc.UpdateSignature,
 		opts...,
-	))
-	mux.Handle(OmniApiSuggestResponseProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiSuggestResponseHandler := connect_go.NewUnaryHandler(
 		OmniApiSuggestResponseProcedure,
 		svc.SuggestResponse,
 		opts...,
-	))
-	mux.Handle(OmniApiCreateProjectProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiCreateProjectHandler := connect_go.NewUnaryHandler(
 		OmniApiCreateProjectProcedure,
 		svc.CreateProject,
 		opts...,
-	))
-	mux.Handle(OmniApiListProjectsProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiListProjectsHandler := connect_go.NewUnaryHandler(
 		OmniApiListProjectsProcedure,
 		svc.ListProjects,
 		opts...,
-	))
-	mux.Handle(OmniApiEditProjectByIdProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiEditProjectByIdHandler := connect_go.NewUnaryHandler(
 		OmniApiEditProjectByIdProcedure,
 		svc.EditProjectById,
 		opts...,
-	))
-	mux.Handle(OmniApiCloseProjectByIdProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiCloseProjectByIdHandler := connect_go.NewUnaryHandler(
 		OmniApiCloseProjectByIdProcedure,
 		svc.CloseProjectById,
 		opts...,
-	))
-	mux.Handle(OmniApiGetProjectByIdProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiGetProjectByIdHandler := connect_go.NewUnaryHandler(
 		OmniApiGetProjectByIdProcedure,
 		svc.GetProjectById,
 		opts...,
-	))
-	mux.Handle(OmniApiCreateCannedMessageProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiCreateCannedMessageHandler := connect_go.NewUnaryHandler(
 		OmniApiCreateCannedMessageProcedure,
 		svc.CreateCannedMessage,
 		opts...,
-	))
-	mux.Handle(OmniApiListCannedMessagesProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiListCannedMessagesHandler := connect_go.NewUnaryHandler(
 		OmniApiListCannedMessagesProcedure,
 		svc.ListCannedMessages,
 		opts...,
-	))
-	mux.Handle(OmniApiUpdateCannedMessageProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiUpdateCannedMessageHandler := connect_go.NewUnaryHandler(
 		OmniApiUpdateCannedMessageProcedure,
 		svc.UpdateCannedMessage,
 		opts...,
-	))
-	mux.Handle(OmniApiGetCannedMessageByIdProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiGetCannedMessageByIdHandler := connect_go.NewUnaryHandler(
 		OmniApiGetCannedMessageByIdProcedure,
 		svc.GetCannedMessageById,
 		opts...,
-	))
-	mux.Handle(OmniApiDeleteCannedMessageByIdProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiDeleteCannedMessageByIdHandler := connect_go.NewUnaryHandler(
 		OmniApiDeleteCannedMessageByIdProcedure,
 		svc.DeleteCannedMessageById,
 		opts...,
-	))
-	mux.Handle(OmniApiCreateCannedMessageGroupProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiCreateCannedMessageGroupHandler := connect_go.NewUnaryHandler(
 		OmniApiCreateCannedMessageGroupProcedure,
 		svc.CreateCannedMessageGroup,
 		opts...,
-	))
-	mux.Handle(OmniApiListCannedMessageGroupsProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiListCannedMessageGroupsHandler := connect_go.NewUnaryHandler(
 		OmniApiListCannedMessageGroupsProcedure,
 		svc.ListCannedMessageGroups,
 		opts...,
-	))
-	mux.Handle(OmniApiUpdateCannedMessageGroupProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiUpdateCannedMessageGroupHandler := connect_go.NewUnaryHandler(
 		OmniApiUpdateCannedMessageGroupProcedure,
 		svc.UpdateCannedMessageGroup,
 		opts...,
-	))
-	mux.Handle(OmniApiDeleteCannedMessageGroupProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiDeleteCannedMessageGroupHandler := connect_go.NewUnaryHandler(
 		OmniApiDeleteCannedMessageGroupProcedure,
 		svc.DeleteCannedMessageGroup,
 		opts...,
-	))
-	mux.Handle(OmniApiListCannedMessagesByGroupIdProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiListCannedMessagesByGroupIdHandler := connect_go.NewUnaryHandler(
 		OmniApiListCannedMessagesByGroupIdProcedure,
 		svc.ListCannedMessagesByGroupId,
 		opts...,
-	))
-	mux.Handle(OmniApiGetCannedMessageGroupByIdProcedure, connect_go.NewUnaryHandler(
+	)
+	omniApiGetCannedMessageGroupByIdHandler := connect_go.NewUnaryHandler(
 		OmniApiGetCannedMessageGroupByIdProcedure,
 		svc.GetCannedMessageGroupById,
 		opts...,
-	))
-	return "/api.v0alpha.OmniApi/", mux
+	)
+	return "/api.v0alpha.OmniApi/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case OmniApiArchiveCampaignProcedure:
+			omniApiArchiveCampaignHandler.ServeHTTP(w, r)
+		case OmniApiCreateCampaignProcedure:
+			omniApiCreateCampaignHandler.ServeHTTP(w, r)
+		case OmniApiGetCampaignByIdProcedure:
+			omniApiGetCampaignByIdHandler.ServeHTTP(w, r)
+		case OmniApiPauseCampaignProcedure:
+			omniApiPauseCampaignHandler.ServeHTTP(w, r)
+		case OmniApiResumeCampaignProcedure:
+			omniApiResumeCampaignHandler.ServeHTTP(w, r)
+		case OmniApiUpdateCampaignProcedure:
+			omniApiUpdateCampaignHandler.ServeHTTP(w, r)
+		case OmniApiUpdateCampaignPacingSpeedProcedure:
+			omniApiUpdateCampaignPacingSpeedHandler.ServeHTTP(w, r)
+		case OmniApiSendOmniMessageProcedure:
+			omniApiSendOmniMessageHandler.ServeHTTP(w, r)
+		case OmniApiManagerSendOmniMessageProcedure:
+			omniApiManagerSendOmniMessageHandler.ServeHTTP(w, r)
+		case OmniApiCreateDispositionProcedure:
+			omniApiCreateDispositionHandler.ServeHTTP(w, r)
+		case OmniApiDeleteDispositionProcedure:
+			omniApiDeleteDispositionHandler.ServeHTTP(w, r)
+		case OmniApiListDispositionsProcedure:
+			omniApiListDispositionsHandler.ServeHTTP(w, r)
+		case OmniApiUpdateDispositionProcedure:
+			omniApiUpdateDispositionHandler.ServeHTTP(w, r)
+		case OmniApiListCustomUnsubscribeLinksProcedure:
+			omniApiListCustomUnsubscribeLinksHandler.ServeHTTP(w, r)
+		case OmniApiCreateCustomUnsubscribeLinkProcedure:
+			omniApiCreateCustomUnsubscribeLinkHandler.ServeHTTP(w, r)
+		case OmniApiUpdateCustomUnsubscribeLinkProcedure:
+			omniApiUpdateCustomUnsubscribeLinkHandler.ServeHTTP(w, r)
+		case OmniApiDeleteCustomUnsubscribeLinkProcedure:
+			omniApiDeleteCustomUnsubscribeLinkHandler.ServeHTTP(w, r)
+		case OmniApiListCampaignsProcedure:
+			omniApiListCampaignsHandler.ServeHTTP(w, r)
+		case OmniApiManagerListMessagesProcedure:
+			omniApiManagerListMessagesHandler.ServeHTTP(w, r)
+		case OmniApiListMessagesProcedure:
+			omniApiListMessagesHandler.ServeHTTP(w, r)
+		case OmniApiManagerListConversationsProcedure:
+			omniApiManagerListConversationsHandler.ServeHTTP(w, r)
+		case OmniApiListContactListsProcedure:
+			omniApiListContactListsHandler.ServeHTTP(w, r)
+		case OmniApiGetAvailableHeadersProcedure:
+			omniApiGetAvailableHeadersHandler.ServeHTTP(w, r)
+		case OmniApiGetTaskProcedure:
+			omniApiGetTaskHandler.ServeHTTP(w, r)
+		case OmniApiListTasksProcedure:
+			omniApiListTasksHandler.ServeHTTP(w, r)
+		case OmniApiCreateConnectedInboxProcedure:
+			omniApiCreateConnectedInboxHandler.ServeHTTP(w, r)
+		case OmniApiDeleteConnectedInboxBySidProcedure:
+			omniApiDeleteConnectedInboxBySidHandler.ServeHTTP(w, r)
+		case OmniApiGetConnectedInboxBySidProcedure:
+			omniApiGetConnectedInboxBySidHandler.ServeHTTP(w, r)
+		case OmniApiPerformSendgridAccountChecksProcedure:
+			omniApiPerformSendgridAccountChecksHandler.ServeHTTP(w, r)
+		case OmniApiListConnectedInboxesProcedure:
+			omniApiListConnectedInboxesHandler.ServeHTTP(w, r)
+		case OmniApiTestConnectedInboxProcedure:
+			omniApiTestConnectedInboxHandler.ServeHTTP(w, r)
+		case OmniApiUpdateConnectedInboxProcedure:
+			omniApiUpdateConnectedInboxHandler.ServeHTTP(w, r)
+		case OmniApiCreateVerifiedEmailProcedure:
+			omniApiCreateVerifiedEmailHandler.ServeHTTP(w, r)
+		case OmniApiDeleteVerifiedEmailProcedure:
+			omniApiDeleteVerifiedEmailHandler.ServeHTTP(w, r)
+		case OmniApiGetVerifiedEmailBySidProcedure:
+			omniApiGetVerifiedEmailBySidHandler.ServeHTTP(w, r)
+		case OmniApiListVerifiedEmailsProcedure:
+			omniApiListVerifiedEmailsHandler.ServeHTTP(w, r)
+		case OmniApiResendVerifiedEmailProcedure:
+			omniApiResendVerifiedEmailHandler.ServeHTTP(w, r)
+		case OmniApiUpdateVerifiedEmailProcedure:
+			omniApiUpdateVerifiedEmailHandler.ServeHTTP(w, r)
+		case OmniApiGetPendingGoogleXOAuth2DataProcedure:
+			omniApiGetPendingGoogleXOAuth2DataHandler.ServeHTTP(w, r)
+		case OmniApiSendEmailNotificationProcedure:
+			omniApiSendEmailNotificationHandler.ServeHTTP(w, r)
+		case OmniApiSendFeedbackEmailProcedure:
+			omniApiSendFeedbackEmailHandler.ServeHTTP(w, r)
+		case OmniApiGetOmniAttachmentProcedure:
+			omniApiGetOmniAttachmentHandler.ServeHTTP(w, r)
+		case OmniApiCreateTasksProcedure:
+			omniApiCreateTasksHandler.ServeHTTP(w, r)
+		case OmniApiCreateSignatureProcedure:
+			omniApiCreateSignatureHandler.ServeHTTP(w, r)
+		case OmniApiDeleteSignatureProcedure:
+			omniApiDeleteSignatureHandler.ServeHTTP(w, r)
+		case OmniApiListSignaturesProcedure:
+			omniApiListSignaturesHandler.ServeHTTP(w, r)
+		case OmniApiUpdateSignatureProcedure:
+			omniApiUpdateSignatureHandler.ServeHTTP(w, r)
+		case OmniApiSuggestResponseProcedure:
+			omniApiSuggestResponseHandler.ServeHTTP(w, r)
+		case OmniApiCreateProjectProcedure:
+			omniApiCreateProjectHandler.ServeHTTP(w, r)
+		case OmniApiListProjectsProcedure:
+			omniApiListProjectsHandler.ServeHTTP(w, r)
+		case OmniApiEditProjectByIdProcedure:
+			omniApiEditProjectByIdHandler.ServeHTTP(w, r)
+		case OmniApiCloseProjectByIdProcedure:
+			omniApiCloseProjectByIdHandler.ServeHTTP(w, r)
+		case OmniApiGetProjectByIdProcedure:
+			omniApiGetProjectByIdHandler.ServeHTTP(w, r)
+		case OmniApiCreateCannedMessageProcedure:
+			omniApiCreateCannedMessageHandler.ServeHTTP(w, r)
+		case OmniApiListCannedMessagesProcedure:
+			omniApiListCannedMessagesHandler.ServeHTTP(w, r)
+		case OmniApiUpdateCannedMessageProcedure:
+			omniApiUpdateCannedMessageHandler.ServeHTTP(w, r)
+		case OmniApiGetCannedMessageByIdProcedure:
+			omniApiGetCannedMessageByIdHandler.ServeHTTP(w, r)
+		case OmniApiDeleteCannedMessageByIdProcedure:
+			omniApiDeleteCannedMessageByIdHandler.ServeHTTP(w, r)
+		case OmniApiCreateCannedMessageGroupProcedure:
+			omniApiCreateCannedMessageGroupHandler.ServeHTTP(w, r)
+		case OmniApiListCannedMessageGroupsProcedure:
+			omniApiListCannedMessageGroupsHandler.ServeHTTP(w, r)
+		case OmniApiUpdateCannedMessageGroupProcedure:
+			omniApiUpdateCannedMessageGroupHandler.ServeHTTP(w, r)
+		case OmniApiDeleteCannedMessageGroupProcedure:
+			omniApiDeleteCannedMessageGroupHandler.ServeHTTP(w, r)
+		case OmniApiListCannedMessagesByGroupIdProcedure:
+			omniApiListCannedMessagesByGroupIdHandler.ServeHTTP(w, r)
+		case OmniApiGetCannedMessageGroupByIdProcedure:
+			omniApiGetCannedMessageGroupByIdHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
 }
 
 // UnimplementedOmniApiHandler returns CodeUnimplemented from all methods.

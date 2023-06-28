@@ -568,148 +568,208 @@ type VanalyticsHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewVanalyticsHandler(svc VanalyticsHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	mux := http.NewServeMux()
-	mux.Handle(VanalyticsAuditProcedure, connect_go.NewUnaryHandler(
+	vanalyticsAuditHandler := connect_go.NewUnaryHandler(
 		VanalyticsAuditProcedure,
 		svc.Audit,
 		opts...,
-	))
-	mux.Handle(VanalyticsGetRecordingUrlProcedure, connect_go.NewUnaryHandler(
+	)
+	vanalyticsGetRecordingUrlHandler := connect_go.NewUnaryHandler(
 		VanalyticsGetRecordingUrlProcedure,
 		svc.GetRecordingUrl,
 		opts...,
-	))
-	mux.Handle(VanalyticsListBillingSpanProcedure, connect_go.NewUnaryHandler(
+	)
+	vanalyticsListBillingSpanHandler := connect_go.NewUnaryHandler(
 		VanalyticsListBillingSpanProcedure,
 		svc.ListBillingSpan,
 		opts...,
-	))
-	mux.Handle(VanalyticsSearchProcedure, connect_go.NewUnaryHandler(
+	)
+	vanalyticsSearchHandler := connect_go.NewUnaryHandler(
 		VanalyticsSearchProcedure,
 		svc.Search,
 		opts...,
-	))
-	mux.Handle(VanalyticsListTranscriptGroupNamesProcedure, connect_go.NewUnaryHandler(
+	)
+	vanalyticsListTranscriptGroupNamesHandler := connect_go.NewUnaryHandler(
 		VanalyticsListTranscriptGroupNamesProcedure,
 		svc.ListTranscriptGroupNames,
 		opts...,
-	))
-	mux.Handle(VanalyticsBulkDeleteTranscriptsProcedure, connect_go.NewUnaryHandler(
+	)
+	vanalyticsBulkDeleteTranscriptsHandler := connect_go.NewUnaryHandler(
 		VanalyticsBulkDeleteTranscriptsProcedure,
 		svc.BulkDeleteTranscripts,
 		opts...,
-	))
-	mux.Handle(VanalyticsBulkRestoreTranscriptsProcedure, connect_go.NewUnaryHandler(
+	)
+	vanalyticsBulkRestoreTranscriptsHandler := connect_go.NewUnaryHandler(
 		VanalyticsBulkRestoreTranscriptsProcedure,
 		svc.BulkRestoreTranscripts,
 		opts...,
-	))
-	mux.Handle(VanalyticsListAgentResponseValuesProcedure, connect_go.NewUnaryHandler(
+	)
+	vanalyticsListAgentResponseValuesHandler := connect_go.NewUnaryHandler(
 		VanalyticsListAgentResponseValuesProcedure,
 		svc.ListAgentResponseValues,
 		opts...,
-	))
-	mux.Handle(VanalyticsCreateFilterProcedure, connect_go.NewUnaryHandler(
+	)
+	vanalyticsCreateFilterHandler := connect_go.NewUnaryHandler(
 		VanalyticsCreateFilterProcedure,
 		svc.CreateFilter,
 		opts...,
-	))
-	mux.Handle(VanalyticsListFiltersProcedure, connect_go.NewUnaryHandler(
+	)
+	vanalyticsListFiltersHandler := connect_go.NewUnaryHandler(
 		VanalyticsListFiltersProcedure,
 		svc.ListFilters,
 		opts...,
-	))
-	mux.Handle(VanalyticsUpdateFilterProcedure, connect_go.NewUnaryHandler(
+	)
+	vanalyticsUpdateFilterHandler := connect_go.NewUnaryHandler(
 		VanalyticsUpdateFilterProcedure,
 		svc.UpdateFilter,
 		opts...,
-	))
-	mux.Handle(VanalyticsDeleteFilterProcedure, connect_go.NewUnaryHandler(
+	)
+	vanalyticsDeleteFilterHandler := connect_go.NewUnaryHandler(
 		VanalyticsDeleteFilterProcedure,
 		svc.DeleteFilter,
 		opts...,
-	))
-	mux.Handle(VanalyticsGetFilterProcedure, connect_go.NewUnaryHandler(
+	)
+	vanalyticsGetFilterHandler := connect_go.NewUnaryHandler(
 		VanalyticsGetFilterProcedure,
 		svc.GetFilter,
 		opts...,
-	))
-	mux.Handle(VanalyticsGetFlagProcedure, connect_go.NewUnaryHandler(
+	)
+	vanalyticsGetFlagHandler := connect_go.NewUnaryHandler(
 		VanalyticsGetFlagProcedure,
 		svc.GetFlag,
 		opts...,
-	))
-	mux.Handle(VanalyticsCreateFlagProcedure, connect_go.NewUnaryHandler(
+	)
+	vanalyticsCreateFlagHandler := connect_go.NewUnaryHandler(
 		VanalyticsCreateFlagProcedure,
 		svc.CreateFlag,
 		opts...,
-	))
-	mux.Handle(VanalyticsListFlagsProcedure, connect_go.NewUnaryHandler(
+	)
+	vanalyticsListFlagsHandler := connect_go.NewUnaryHandler(
 		VanalyticsListFlagsProcedure,
 		svc.ListFlags,
 		opts...,
-	))
-	mux.Handle(VanalyticsUpdateFlagProcedure, connect_go.NewUnaryHandler(
+	)
+	vanalyticsUpdateFlagHandler := connect_go.NewUnaryHandler(
 		VanalyticsUpdateFlagProcedure,
 		svc.UpdateFlag,
 		opts...,
-	))
-	mux.Handle(VanalyticsDeleteFlagProcedure, connect_go.NewUnaryHandler(
+	)
+	vanalyticsDeleteFlagHandler := connect_go.NewUnaryHandler(
 		VanalyticsDeleteFlagProcedure,
 		svc.DeleteFlag,
 		opts...,
-	))
-	mux.Handle(VanalyticsCreateFlagReviewProcedure, connect_go.NewUnaryHandler(
+	)
+	vanalyticsCreateFlagReviewHandler := connect_go.NewUnaryHandler(
 		VanalyticsCreateFlagReviewProcedure,
 		svc.CreateFlagReview,
 		opts...,
-	))
-	mux.Handle(VanalyticsBulkCreateFlagReviewProcedure, connect_go.NewUnaryHandler(
+	)
+	vanalyticsBulkCreateFlagReviewHandler := connect_go.NewUnaryHandler(
 		VanalyticsBulkCreateFlagReviewProcedure,
 		svc.BulkCreateFlagReview,
 		opts...,
-	))
-	mux.Handle(VanalyticsListFlagReviewsProcedure, connect_go.NewUnaryHandler(
+	)
+	vanalyticsListFlagReviewsHandler := connect_go.NewUnaryHandler(
 		VanalyticsListFlagReviewsProcedure,
 		svc.ListFlagReviews,
 		opts...,
-	))
-	mux.Handle(VanalyticsCreateFlagTranscriptProcedure, connect_go.NewUnaryHandler(
+	)
+	vanalyticsCreateFlagTranscriptHandler := connect_go.NewUnaryHandler(
 		VanalyticsCreateFlagTranscriptProcedure,
 		svc.CreateFlagTranscript,
 		opts...,
-	))
-	mux.Handle(VanalyticsSearchFlagTranscriptsProcedure, connect_go.NewUnaryHandler(
+	)
+	vanalyticsSearchFlagTranscriptsHandler := connect_go.NewUnaryHandler(
 		VanalyticsSearchFlagTranscriptsProcedure,
 		svc.SearchFlagTranscripts,
 		opts...,
-	))
-	mux.Handle(VanalyticsCreateFlagFilterProcedure, connect_go.NewUnaryHandler(
+	)
+	vanalyticsCreateFlagFilterHandler := connect_go.NewUnaryHandler(
 		VanalyticsCreateFlagFilterProcedure,
 		svc.CreateFlagFilter,
 		opts...,
-	))
-	mux.Handle(VanalyticsListFlagFiltersProcedure, connect_go.NewUnaryHandler(
+	)
+	vanalyticsListFlagFiltersHandler := connect_go.NewUnaryHandler(
 		VanalyticsListFlagFiltersProcedure,
 		svc.ListFlagFilters,
 		opts...,
-	))
-	mux.Handle(VanalyticsDeleteFlagFilterProcedure, connect_go.NewUnaryHandler(
+	)
+	vanalyticsDeleteFlagFilterHandler := connect_go.NewUnaryHandler(
 		VanalyticsDeleteFlagFilterProcedure,
 		svc.DeleteFlagFilter,
 		opts...,
-	))
-	mux.Handle(VanalyticsListFlagSnapshotsProcedure, connect_go.NewUnaryHandler(
+	)
+	vanalyticsListFlagSnapshotsHandler := connect_go.NewUnaryHandler(
 		VanalyticsListFlagSnapshotsProcedure,
 		svc.ListFlagSnapshots,
 		opts...,
-	))
-	mux.Handle(VanalyticsListFlagTranscriptFiltersProcedure, connect_go.NewUnaryHandler(
+	)
+	vanalyticsListFlagTranscriptFiltersHandler := connect_go.NewUnaryHandler(
 		VanalyticsListFlagTranscriptFiltersProcedure,
 		svc.ListFlagTranscriptFilters,
 		opts...,
-	))
-	return "/api.v1alpha1.vanalytics.Vanalytics/", mux
+	)
+	return "/api.v1alpha1.vanalytics.Vanalytics/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case VanalyticsAuditProcedure:
+			vanalyticsAuditHandler.ServeHTTP(w, r)
+		case VanalyticsGetRecordingUrlProcedure:
+			vanalyticsGetRecordingUrlHandler.ServeHTTP(w, r)
+		case VanalyticsListBillingSpanProcedure:
+			vanalyticsListBillingSpanHandler.ServeHTTP(w, r)
+		case VanalyticsSearchProcedure:
+			vanalyticsSearchHandler.ServeHTTP(w, r)
+		case VanalyticsListTranscriptGroupNamesProcedure:
+			vanalyticsListTranscriptGroupNamesHandler.ServeHTTP(w, r)
+		case VanalyticsBulkDeleteTranscriptsProcedure:
+			vanalyticsBulkDeleteTranscriptsHandler.ServeHTTP(w, r)
+		case VanalyticsBulkRestoreTranscriptsProcedure:
+			vanalyticsBulkRestoreTranscriptsHandler.ServeHTTP(w, r)
+		case VanalyticsListAgentResponseValuesProcedure:
+			vanalyticsListAgentResponseValuesHandler.ServeHTTP(w, r)
+		case VanalyticsCreateFilterProcedure:
+			vanalyticsCreateFilterHandler.ServeHTTP(w, r)
+		case VanalyticsListFiltersProcedure:
+			vanalyticsListFiltersHandler.ServeHTTP(w, r)
+		case VanalyticsUpdateFilterProcedure:
+			vanalyticsUpdateFilterHandler.ServeHTTP(w, r)
+		case VanalyticsDeleteFilterProcedure:
+			vanalyticsDeleteFilterHandler.ServeHTTP(w, r)
+		case VanalyticsGetFilterProcedure:
+			vanalyticsGetFilterHandler.ServeHTTP(w, r)
+		case VanalyticsGetFlagProcedure:
+			vanalyticsGetFlagHandler.ServeHTTP(w, r)
+		case VanalyticsCreateFlagProcedure:
+			vanalyticsCreateFlagHandler.ServeHTTP(w, r)
+		case VanalyticsListFlagsProcedure:
+			vanalyticsListFlagsHandler.ServeHTTP(w, r)
+		case VanalyticsUpdateFlagProcedure:
+			vanalyticsUpdateFlagHandler.ServeHTTP(w, r)
+		case VanalyticsDeleteFlagProcedure:
+			vanalyticsDeleteFlagHandler.ServeHTTP(w, r)
+		case VanalyticsCreateFlagReviewProcedure:
+			vanalyticsCreateFlagReviewHandler.ServeHTTP(w, r)
+		case VanalyticsBulkCreateFlagReviewProcedure:
+			vanalyticsBulkCreateFlagReviewHandler.ServeHTTP(w, r)
+		case VanalyticsListFlagReviewsProcedure:
+			vanalyticsListFlagReviewsHandler.ServeHTTP(w, r)
+		case VanalyticsCreateFlagTranscriptProcedure:
+			vanalyticsCreateFlagTranscriptHandler.ServeHTTP(w, r)
+		case VanalyticsSearchFlagTranscriptsProcedure:
+			vanalyticsSearchFlagTranscriptsHandler.ServeHTTP(w, r)
+		case VanalyticsCreateFlagFilterProcedure:
+			vanalyticsCreateFlagFilterHandler.ServeHTTP(w, r)
+		case VanalyticsListFlagFiltersProcedure:
+			vanalyticsListFlagFiltersHandler.ServeHTTP(w, r)
+		case VanalyticsDeleteFlagFilterProcedure:
+			vanalyticsDeleteFlagFilterHandler.ServeHTTP(w, r)
+		case VanalyticsListFlagSnapshotsProcedure:
+			vanalyticsListFlagSnapshotsHandler.ServeHTTP(w, r)
+		case VanalyticsListFlagTranscriptFiltersProcedure:
+			vanalyticsListFlagTranscriptFiltersHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
 }
 
 // UnimplementedVanalyticsHandler returns CodeUnimplemented from all methods.

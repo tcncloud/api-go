@@ -98,13 +98,19 @@ type OrgLegacyHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewOrgLegacyHandler(svc OrgLegacyHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	mux := http.NewServeMux()
-	mux.Handle(OrgLegacyRegisterOrganizationProcedure, connect_go.NewUnaryHandler(
+	orgLegacyRegisterOrganizationHandler := connect_go.NewUnaryHandler(
 		OrgLegacyRegisterOrganizationProcedure,
 		svc.RegisterOrganization,
 		opts...,
-	))
-	return "/api.v1alpha1.org.legacy.OrgLegacy/", mux
+	)
+	return "/api.v1alpha1.org.legacy.OrgLegacy/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case OrgLegacyRegisterOrganizationProcedure:
+			orgLegacyRegisterOrganizationHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
 }
 
 // UnimplementedOrgLegacyHandler returns CodeUnimplemented from all methods.

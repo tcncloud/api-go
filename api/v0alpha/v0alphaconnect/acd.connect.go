@@ -907,268 +907,376 @@ type AcdHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewAcdHandler(svc AcdHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	mux := http.NewServeMux()
-	mux.Handle(AcdAgentGetStatusStreamProcedure, connect_go.NewServerStreamHandler(
+	acdAgentGetStatusStreamHandler := connect_go.NewServerStreamHandler(
 		AcdAgentGetStatusStreamProcedure,
 		svc.AgentGetStatusStream,
 		opts...,
-	))
-	mux.Handle(AcdAgentGetStatusProcedure, connect_go.NewUnaryHandler(
+	)
+	acdAgentGetStatusHandler := connect_go.NewUnaryHandler(
 		AcdAgentGetStatusProcedure,
 		svc.AgentGetStatus,
 		opts...,
-	))
-	mux.Handle(AcdAgentGetConnectedPartyProcedure, connect_go.NewUnaryHandler(
+	)
+	acdAgentGetConnectedPartyHandler := connect_go.NewUnaryHandler(
 		AcdAgentGetConnectedPartyProcedure,
 		svc.AgentGetConnectedParty,
 		opts...,
-	))
-	mux.Handle(AcdManagerAgentGetConnectedPartyProcedure, connect_go.NewUnaryHandler(
+	)
+	acdManagerAgentGetConnectedPartyHandler := connect_go.NewUnaryHandler(
 		AcdManagerAgentGetConnectedPartyProcedure,
 		svc.ManagerAgentGetConnectedParty,
 		opts...,
-	))
-	mux.Handle(AcdAgentIntercomProcedure, connect_go.NewUnaryHandler(
+	)
+	acdAgentIntercomHandler := connect_go.NewUnaryHandler(
 		AcdAgentIntercomProcedure,
 		svc.AgentIntercom,
 		opts...,
-	))
-	mux.Handle(AcdAgentIntercomAcceptProcedure, connect_go.NewUnaryHandler(
+	)
+	acdAgentIntercomAcceptHandler := connect_go.NewUnaryHandler(
 		AcdAgentIntercomAcceptProcedure,
 		svc.AgentIntercomAccept,
 		opts...,
-	))
-	mux.Handle(AcdAgentIntercomRejectProcedure, connect_go.NewUnaryHandler(
+	)
+	acdAgentIntercomRejectHandler := connect_go.NewUnaryHandler(
 		AcdAgentIntercomRejectProcedure,
 		svc.AgentIntercomReject,
 		opts...,
-	))
-	mux.Handle(AcdAgentIntercomCancelProcedure, connect_go.NewUnaryHandler(
+	)
+	acdAgentIntercomCancelHandler := connect_go.NewUnaryHandler(
 		AcdAgentIntercomCancelProcedure,
 		svc.AgentIntercomCancel,
 		opts...,
-	))
-	mux.Handle(AcdDialManualPrepareProcedure, connect_go.NewUnaryHandler(
+	)
+	acdDialManualPrepareHandler := connect_go.NewUnaryHandler(
 		AcdDialManualPrepareProcedure,
 		svc.DialManualPrepare,
 		opts...,
-	))
-	mux.Handle(AcdDialManualCancelProcedure, connect_go.NewUnaryHandler(
+	)
+	acdDialManualCancelHandler := connect_go.NewUnaryHandler(
 		AcdDialManualCancelProcedure,
 		svc.DialManualCancel,
 		opts...,
-	))
-	mux.Handle(AcdDialPreviewPrepareProcedure, connect_go.NewUnaryHandler(
+	)
+	acdDialPreviewPrepareHandler := connect_go.NewUnaryHandler(
 		AcdDialPreviewPrepareProcedure,
 		svc.DialPreviewPrepare,
 		opts...,
-	))
-	mux.Handle(AcdAgentPauseProcedure, connect_go.NewUnaryHandler(
+	)
+	acdAgentPauseHandler := connect_go.NewUnaryHandler(
 		AcdAgentPauseProcedure,
 		svc.AgentPause,
 		opts...,
-	))
-	mux.Handle(AcdAgentSetReadyProcedure, connect_go.NewUnaryHandler(
+	)
+	acdAgentSetReadyHandler := connect_go.NewUnaryHandler(
 		AcdAgentSetReadyProcedure,
 		svc.AgentSetReady,
 		opts...,
-	))
-	mux.Handle(AcdAgentGUIBusyProcedure, connect_go.NewUnaryHandler(
+	)
+	acdAgentGUIBusyHandler := connect_go.NewUnaryHandler(
 		AcdAgentGUIBusyProcedure,
 		svc.AgentGUIBusy,
 		opts...,
-	))
-	mux.Handle(AcdReportAgentSessionEventProcedure, connect_go.NewUnaryHandler(
+	)
+	acdReportAgentSessionEventHandler := connect_go.NewUnaryHandler(
 		AcdReportAgentSessionEventProcedure,
 		svc.ReportAgentSessionEvent,
 		opts...,
-	))
-	mux.Handle(AcdCallerRequeueProcedure, connect_go.NewUnaryHandler(
+	)
+	acdCallerRequeueHandler := connect_go.NewUnaryHandler(
 		AcdCallerRequeueProcedure,
 		svc.CallerRequeue,
 		opts...,
-	))
-	mux.Handle(AcdAgentDisconnectProcedure, connect_go.NewUnaryHandler(
+	)
+	acdAgentDisconnectHandler := connect_go.NewUnaryHandler(
 		AcdAgentDisconnectProcedure,
 		svc.AgentDisconnect,
 		opts...,
-	))
-	mux.Handle(AcdTransferWarmToOutboundCancelProcedure, connect_go.NewUnaryHandler(
+	)
+	acdTransferWarmToOutboundCancelHandler := connect_go.NewUnaryHandler(
 		AcdTransferWarmToOutboundCancelProcedure,
 		svc.TransferWarmToOutboundCancel,
 		opts...,
-	))
-	mux.Handle(AcdTransferWarmToAgentCancelProcedure, connect_go.NewUnaryHandler(
+	)
+	acdTransferWarmToAgentCancelHandler := connect_go.NewUnaryHandler(
 		AcdTransferWarmToAgentCancelProcedure,
 		svc.TransferWarmToAgentCancel,
 		opts...,
-	))
-	mux.Handle(AcdTransferWarmToOutboundApproveProcedure, connect_go.NewUnaryHandler(
+	)
+	acdTransferWarmToOutboundApproveHandler := connect_go.NewUnaryHandler(
 		AcdTransferWarmToOutboundApproveProcedure,
 		svc.TransferWarmToOutboundApprove,
 		opts...,
-	))
-	mux.Handle(AcdTransferWarmToAgentApproveProcedure, connect_go.NewUnaryHandler(
+	)
+	acdTransferWarmToAgentApproveHandler := connect_go.NewUnaryHandler(
 		AcdTransferWarmToAgentApproveProcedure,
 		svc.TransferWarmToAgentApprove,
 		opts...,
-	))
-	mux.Handle(AcdCallerSendToVoicemailProcedure, connect_go.NewUnaryHandler(
+	)
+	acdCallerSendToVoicemailHandler := connect_go.NewUnaryHandler(
 		AcdCallerSendToVoicemailProcedure,
 		svc.CallerSendToVoicemail,
 		opts...,
-	))
-	mux.Handle(AcdAgentInviteTransferCallerToConferenceProcedure, connect_go.NewUnaryHandler(
+	)
+	acdAgentInviteTransferCallerToConferenceHandler := connect_go.NewUnaryHandler(
 		AcdAgentInviteTransferCallerToConferenceProcedure,
 		svc.AgentInviteTransferCallerToConference,
 		opts...,
-	))
-	mux.Handle(AcdAgentMonitorCallsProcedure, connect_go.NewUnaryHandler(
+	)
+	acdAgentMonitorCallsHandler := connect_go.NewUnaryHandler(
 		AcdAgentMonitorCallsProcedure,
 		svc.AgentMonitorCalls,
 		opts...,
-	))
-	mux.Handle(AcdTransferColdToOutboundProcedure, connect_go.NewUnaryHandler(
+	)
+	acdTransferColdToOutboundHandler := connect_go.NewUnaryHandler(
 		AcdTransferColdToOutboundProcedure,
 		svc.TransferColdToOutbound,
 		opts...,
-	))
-	mux.Handle(AcdTransferColdToAgentProcedure, connect_go.NewUnaryHandler(
+	)
+	acdTransferColdToAgentHandler := connect_go.NewUnaryHandler(
 		AcdTransferColdToAgentProcedure,
 		svc.TransferColdToAgent,
 		opts...,
-	))
-	mux.Handle(AcdTransferWarmToOutboundStartProcedure, connect_go.NewUnaryHandler(
+	)
+	acdTransferWarmToOutboundStartHandler := connect_go.NewUnaryHandler(
 		AcdTransferWarmToOutboundStartProcedure,
 		svc.TransferWarmToOutboundStart,
 		opts...,
-	))
-	mux.Handle(AcdCreateWarmOutboundTransferMemberProcedure, connect_go.NewUnaryHandler(
+	)
+	acdCreateWarmOutboundTransferMemberHandler := connect_go.NewUnaryHandler(
 		AcdCreateWarmOutboundTransferMemberProcedure,
 		svc.CreateWarmOutboundTransferMember,
 		opts...,
-	))
-	mux.Handle(AcdRemoveTransferMemberProcedure, connect_go.NewUnaryHandler(
+	)
+	acdRemoveTransferMemberHandler := connect_go.NewUnaryHandler(
 		AcdRemoveTransferMemberProcedure,
 		svc.RemoveTransferMember,
 		opts...,
-	))
-	mux.Handle(AcdTransferWarmToAgentStartProcedure, connect_go.NewUnaryHandler(
+	)
+	acdTransferWarmToAgentStartHandler := connect_go.NewUnaryHandler(
 		AcdTransferWarmToAgentStartProcedure,
 		svc.TransferWarmToAgentStart,
 		opts...,
-	))
-	mux.Handle(AcdAgentGetCallFromHoldProcedure, connect_go.NewUnaryHandler(
+	)
+	acdAgentGetCallFromHoldHandler := connect_go.NewUnaryHandler(
 		AcdAgentGetCallFromHoldProcedure,
 		svc.AgentGetCallFromHold,
 		opts...,
-	))
-	mux.Handle(AcdAgentGetSpecificCallFromHoldProcedure, connect_go.NewUnaryHandler(
+	)
+	acdAgentGetSpecificCallFromHoldHandler := connect_go.NewUnaryHandler(
 		AcdAgentGetSpecificCallFromHoldProcedure,
 		svc.AgentGetSpecificCallFromHold,
 		opts...,
-	))
-	mux.Handle(AcdACDGetAllAgentsStatusesProcedure, connect_go.NewUnaryHandler(
+	)
+	acdACDGetAllAgentsStatusesHandler := connect_go.NewUnaryHandler(
 		AcdACDGetAllAgentsStatusesProcedure,
 		svc.ACDGetAllAgentsStatuses,
 		opts...,
-	))
-	mux.Handle(AcdAgentPutCallOnHoldProcedure, connect_go.NewUnaryHandler(
+	)
+	acdAgentPutCallOnHoldHandler := connect_go.NewUnaryHandler(
 		AcdAgentPutCallOnHoldProcedure,
 		svc.AgentPutCallOnHold,
 		opts...,
-	))
-	mux.Handle(AcdAgentReceiveMessageProcedure, connect_go.NewUnaryHandler(
+	)
+	acdAgentReceiveMessageHandler := connect_go.NewUnaryHandler(
 		AcdAgentReceiveMessageProcedure,
 		svc.AgentReceiveMessage,
 		opts...,
-	))
-	mux.Handle(AcdAgentPBXApproveCallProcedure, connect_go.NewUnaryHandler(
+	)
+	acdAgentPBXApproveCallHandler := connect_go.NewUnaryHandler(
 		AcdAgentPBXApproveCallProcedure,
 		svc.AgentPBXApproveCall,
 		opts...,
-	))
-	mux.Handle(AcdAgentPBXRejectCallProcedure, connect_go.NewUnaryHandler(
+	)
+	acdAgentPBXRejectCallHandler := connect_go.NewUnaryHandler(
 		AcdAgentPBXRejectCallProcedure,
 		svc.AgentPBXRejectCall,
 		opts...,
-	))
-	mux.Handle(AcdGetCallerLostPeerProcedure, connect_go.NewUnaryHandler(
+	)
+	acdGetCallerLostPeerHandler := connect_go.NewUnaryHandler(
 		AcdGetCallerLostPeerProcedure,
 		svc.GetCallerLostPeer,
 		opts...,
-	))
-	mux.Handle(AcdCallerGetRawEventProcedure, connect_go.NewUnaryHandler(
+	)
+	acdCallerGetRawEventHandler := connect_go.NewUnaryHandler(
 		AcdCallerGetRawEventProcedure,
 		svc.CallerGetRawEvent,
 		opts...,
-	))
-	mux.Handle(AcdPeerAgentWithCallerProcedure, connect_go.NewUnaryHandler(
+	)
+	acdPeerAgentWithCallerHandler := connect_go.NewUnaryHandler(
 		AcdPeerAgentWithCallerProcedure,
 		svc.PeerAgentWithCaller,
 		opts...,
-	))
-	mux.Handle(AcdHoldTransferMemberProcedure, connect_go.NewUnaryHandler(
+	)
+	acdHoldTransferMemberHandler := connect_go.NewUnaryHandler(
 		AcdHoldTransferMemberProcedure,
 		svc.HoldTransferMember,
 		opts...,
-	))
-	mux.Handle(AcdUnholdTransferMemberProcedure, connect_go.NewUnaryHandler(
+	)
+	acdUnholdTransferMemberHandler := connect_go.NewUnaryHandler(
 		AcdUnholdTransferMemberProcedure,
 		svc.UnholdTransferMember,
 		opts...,
-	))
-	mux.Handle(AcdGetAgentCallCountsProcedure, connect_go.NewUnaryHandler(
+	)
+	acdGetAgentCallCountsHandler := connect_go.NewUnaryHandler(
 		AcdGetAgentCallCountsProcedure,
 		svc.GetAgentCallCounts,
 		opts...,
-	))
-	mux.Handle(AcdWarmCallerTransferStartProcedure, connect_go.NewUnaryHandler(
+	)
+	acdWarmCallerTransferStartHandler := connect_go.NewUnaryHandler(
 		AcdWarmCallerTransferStartProcedure,
 		svc.WarmCallerTransferStart,
 		opts...,
-	))
-	mux.Handle(AcdWarmCallerTransferCancelProcedure, connect_go.NewUnaryHandler(
+	)
+	acdWarmCallerTransferCancelHandler := connect_go.NewUnaryHandler(
 		AcdWarmCallerTransferCancelProcedure,
 		svc.WarmCallerTransferCancel,
 		opts...,
-	))
-	mux.Handle(AcdWarmCallerTransferApproveProcedure, connect_go.NewUnaryHandler(
+	)
+	acdWarmCallerTransferApproveHandler := connect_go.NewUnaryHandler(
 		AcdWarmCallerTransferApproveProcedure,
 		svc.WarmCallerTransferApprove,
 		opts...,
-	))
-	mux.Handle(AcdPlaySoundboardEntityProcedure, connect_go.NewUnaryHandler(
+	)
+	acdPlaySoundboardEntityHandler := connect_go.NewUnaryHandler(
 		AcdPlaySoundboardEntityProcedure,
 		svc.PlaySoundboardEntity,
 		opts...,
-	))
-	mux.Handle(AcdStopSoundboardEntityProcedure, connect_go.NewUnaryHandler(
+	)
+	acdStopSoundboardEntityHandler := connect_go.NewUnaryHandler(
 		AcdStopSoundboardEntityProcedure,
 		svc.StopSoundboardEntity,
 		opts...,
-	))
-	mux.Handle(AcdUpdateAgentSkillsProcedure, connect_go.NewUnaryHandler(
+	)
+	acdUpdateAgentSkillsHandler := connect_go.NewUnaryHandler(
 		AcdUpdateAgentSkillsProcedure,
 		svc.UpdateAgentSkills,
 		opts...,
-	))
-	mux.Handle(AcdPlayDTMFProcedure, connect_go.NewUnaryHandler(
+	)
+	acdPlayDTMFHandler := connect_go.NewUnaryHandler(
 		AcdPlayDTMFProcedure,
 		svc.PlayDTMF,
 		opts...,
-	))
-	mux.Handle(AcdAgentMuteProcedure, connect_go.NewUnaryHandler(
+	)
+	acdAgentMuteHandler := connect_go.NewUnaryHandler(
 		AcdAgentMuteProcedure,
 		svc.AgentMute,
 		opts...,
-	))
-	mux.Handle(AcdAgentUnmuteProcedure, connect_go.NewUnaryHandler(
+	)
+	acdAgentUnmuteHandler := connect_go.NewUnaryHandler(
 		AcdAgentUnmuteProcedure,
 		svc.AgentUnmute,
 		opts...,
-	))
-	return "/api.v0alpha.Acd/", mux
+	)
+	return "/api.v0alpha.Acd/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case AcdAgentGetStatusStreamProcedure:
+			acdAgentGetStatusStreamHandler.ServeHTTP(w, r)
+		case AcdAgentGetStatusProcedure:
+			acdAgentGetStatusHandler.ServeHTTP(w, r)
+		case AcdAgentGetConnectedPartyProcedure:
+			acdAgentGetConnectedPartyHandler.ServeHTTP(w, r)
+		case AcdManagerAgentGetConnectedPartyProcedure:
+			acdManagerAgentGetConnectedPartyHandler.ServeHTTP(w, r)
+		case AcdAgentIntercomProcedure:
+			acdAgentIntercomHandler.ServeHTTP(w, r)
+		case AcdAgentIntercomAcceptProcedure:
+			acdAgentIntercomAcceptHandler.ServeHTTP(w, r)
+		case AcdAgentIntercomRejectProcedure:
+			acdAgentIntercomRejectHandler.ServeHTTP(w, r)
+		case AcdAgentIntercomCancelProcedure:
+			acdAgentIntercomCancelHandler.ServeHTTP(w, r)
+		case AcdDialManualPrepareProcedure:
+			acdDialManualPrepareHandler.ServeHTTP(w, r)
+		case AcdDialManualCancelProcedure:
+			acdDialManualCancelHandler.ServeHTTP(w, r)
+		case AcdDialPreviewPrepareProcedure:
+			acdDialPreviewPrepareHandler.ServeHTTP(w, r)
+		case AcdAgentPauseProcedure:
+			acdAgentPauseHandler.ServeHTTP(w, r)
+		case AcdAgentSetReadyProcedure:
+			acdAgentSetReadyHandler.ServeHTTP(w, r)
+		case AcdAgentGUIBusyProcedure:
+			acdAgentGUIBusyHandler.ServeHTTP(w, r)
+		case AcdReportAgentSessionEventProcedure:
+			acdReportAgentSessionEventHandler.ServeHTTP(w, r)
+		case AcdCallerRequeueProcedure:
+			acdCallerRequeueHandler.ServeHTTP(w, r)
+		case AcdAgentDisconnectProcedure:
+			acdAgentDisconnectHandler.ServeHTTP(w, r)
+		case AcdTransferWarmToOutboundCancelProcedure:
+			acdTransferWarmToOutboundCancelHandler.ServeHTTP(w, r)
+		case AcdTransferWarmToAgentCancelProcedure:
+			acdTransferWarmToAgentCancelHandler.ServeHTTP(w, r)
+		case AcdTransferWarmToOutboundApproveProcedure:
+			acdTransferWarmToOutboundApproveHandler.ServeHTTP(w, r)
+		case AcdTransferWarmToAgentApproveProcedure:
+			acdTransferWarmToAgentApproveHandler.ServeHTTP(w, r)
+		case AcdCallerSendToVoicemailProcedure:
+			acdCallerSendToVoicemailHandler.ServeHTTP(w, r)
+		case AcdAgentInviteTransferCallerToConferenceProcedure:
+			acdAgentInviteTransferCallerToConferenceHandler.ServeHTTP(w, r)
+		case AcdAgentMonitorCallsProcedure:
+			acdAgentMonitorCallsHandler.ServeHTTP(w, r)
+		case AcdTransferColdToOutboundProcedure:
+			acdTransferColdToOutboundHandler.ServeHTTP(w, r)
+		case AcdTransferColdToAgentProcedure:
+			acdTransferColdToAgentHandler.ServeHTTP(w, r)
+		case AcdTransferWarmToOutboundStartProcedure:
+			acdTransferWarmToOutboundStartHandler.ServeHTTP(w, r)
+		case AcdCreateWarmOutboundTransferMemberProcedure:
+			acdCreateWarmOutboundTransferMemberHandler.ServeHTTP(w, r)
+		case AcdRemoveTransferMemberProcedure:
+			acdRemoveTransferMemberHandler.ServeHTTP(w, r)
+		case AcdTransferWarmToAgentStartProcedure:
+			acdTransferWarmToAgentStartHandler.ServeHTTP(w, r)
+		case AcdAgentGetCallFromHoldProcedure:
+			acdAgentGetCallFromHoldHandler.ServeHTTP(w, r)
+		case AcdAgentGetSpecificCallFromHoldProcedure:
+			acdAgentGetSpecificCallFromHoldHandler.ServeHTTP(w, r)
+		case AcdACDGetAllAgentsStatusesProcedure:
+			acdACDGetAllAgentsStatusesHandler.ServeHTTP(w, r)
+		case AcdAgentPutCallOnHoldProcedure:
+			acdAgentPutCallOnHoldHandler.ServeHTTP(w, r)
+		case AcdAgentReceiveMessageProcedure:
+			acdAgentReceiveMessageHandler.ServeHTTP(w, r)
+		case AcdAgentPBXApproveCallProcedure:
+			acdAgentPBXApproveCallHandler.ServeHTTP(w, r)
+		case AcdAgentPBXRejectCallProcedure:
+			acdAgentPBXRejectCallHandler.ServeHTTP(w, r)
+		case AcdGetCallerLostPeerProcedure:
+			acdGetCallerLostPeerHandler.ServeHTTP(w, r)
+		case AcdCallerGetRawEventProcedure:
+			acdCallerGetRawEventHandler.ServeHTTP(w, r)
+		case AcdPeerAgentWithCallerProcedure:
+			acdPeerAgentWithCallerHandler.ServeHTTP(w, r)
+		case AcdHoldTransferMemberProcedure:
+			acdHoldTransferMemberHandler.ServeHTTP(w, r)
+		case AcdUnholdTransferMemberProcedure:
+			acdUnholdTransferMemberHandler.ServeHTTP(w, r)
+		case AcdGetAgentCallCountsProcedure:
+			acdGetAgentCallCountsHandler.ServeHTTP(w, r)
+		case AcdWarmCallerTransferStartProcedure:
+			acdWarmCallerTransferStartHandler.ServeHTTP(w, r)
+		case AcdWarmCallerTransferCancelProcedure:
+			acdWarmCallerTransferCancelHandler.ServeHTTP(w, r)
+		case AcdWarmCallerTransferApproveProcedure:
+			acdWarmCallerTransferApproveHandler.ServeHTTP(w, r)
+		case AcdPlaySoundboardEntityProcedure:
+			acdPlaySoundboardEntityHandler.ServeHTTP(w, r)
+		case AcdStopSoundboardEntityProcedure:
+			acdStopSoundboardEntityHandler.ServeHTTP(w, r)
+		case AcdUpdateAgentSkillsProcedure:
+			acdUpdateAgentSkillsHandler.ServeHTTP(w, r)
+		case AcdPlayDTMFProcedure:
+			acdPlayDTMFHandler.ServeHTTP(w, r)
+		case AcdAgentMuteProcedure:
+			acdAgentMuteHandler.ServeHTTP(w, r)
+		case AcdAgentUnmuteProcedure:
+			acdAgentUnmuteHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
 }
 
 // UnimplementedAcdHandler returns CodeUnimplemented from all methods.
