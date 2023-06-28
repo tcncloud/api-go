@@ -21,9 +21,9 @@ import (
 const _ = connect_go.IsAtLeastVersion0_1_0
 
 const (
-	// WorkflowsDefinitionsServiceName is the fully-qualified name of the WorkflowsDefinitionsService
+	// WorkflowsDefinitionServiceName is the fully-qualified name of the WorkflowsDefinitionService
 	// service.
-	WorkflowsDefinitionsServiceName = "api.commons.workflows.WorkflowsDefinitionsService"
+	WorkflowsDefinitionServiceName = "api.commons.workflows.WorkflowsDefinitionService"
 	// WorkflowsStateServiceName is the fully-qualified name of the WorkflowsStateService service.
 	WorkflowsStateServiceName = "api.commons.workflows.WorkflowsStateService"
 )
@@ -36,12 +36,12 @@ const (
 // reflection-formatted method names, remove the leading slash and convert the remaining slash to a
 // period.
 const (
-	// WorkflowsDefinitionsServiceSaveFlowDefinitionProcedure is the fully-qualified name of the
-	// WorkflowsDefinitionsService's SaveFlowDefinition RPC.
-	WorkflowsDefinitionsServiceSaveFlowDefinitionProcedure = "/api.commons.workflows.WorkflowsDefinitionsService/SaveFlowDefinition"
-	// WorkflowsDefinitionsServiceGetFlowDefinitionProcedure is the fully-qualified name of the
-	// WorkflowsDefinitionsService's GetFlowDefinition RPC.
-	WorkflowsDefinitionsServiceGetFlowDefinitionProcedure = "/api.commons.workflows.WorkflowsDefinitionsService/GetFlowDefinition"
+	// WorkflowsDefinitionServiceSaveFlowDefinitionProcedure is the fully-qualified name of the
+	// WorkflowsDefinitionService's SaveFlowDefinition RPC.
+	WorkflowsDefinitionServiceSaveFlowDefinitionProcedure = "/api.commons.workflows.WorkflowsDefinitionService/SaveFlowDefinition"
+	// WorkflowsDefinitionServiceGetFlowDefinitionProcedure is the fully-qualified name of the
+	// WorkflowsDefinitionService's GetFlowDefinition RPC.
+	WorkflowsDefinitionServiceGetFlowDefinitionProcedure = "/api.commons.workflows.WorkflowsDefinitionService/GetFlowDefinition"
 	// WorkflowsStateServiceSaveFlowStateProcedure is the fully-qualified name of the
 	// WorkflowsStateService's SaveFlowState RPC.
 	WorkflowsStateServiceSaveFlowStateProcedure = "/api.commons.workflows.WorkflowsStateService/SaveFlowState"
@@ -50,89 +50,89 @@ const (
 	WorkflowsStateServiceGetFlowStateProcedure = "/api.commons.workflows.WorkflowsStateService/GetFlowState"
 )
 
-// WorkflowsDefinitionsServiceClient is a client for the
-// api.commons.workflows.WorkflowsDefinitionsService service.
-type WorkflowsDefinitionsServiceClient interface {
+// WorkflowsDefinitionServiceClient is a client for the
+// api.commons.workflows.WorkflowsDefinitionService service.
+type WorkflowsDefinitionServiceClient interface {
 	SaveFlowDefinition(context.Context, *connect_go.Request[workflows.SaveFlowDefinitionRequest]) (*connect_go.Response[workflows.SaveFlowDefinitionResponse], error)
 	GetFlowDefinition(context.Context, *connect_go.Request[workflows.GetFlowDefinitionRequest]) (*connect_go.Response[workflows.GetFlowDefinitionResponse], error)
 }
 
-// NewWorkflowsDefinitionsServiceClient constructs a client for the
-// api.commons.workflows.WorkflowsDefinitionsService service. By default, it uses the Connect
+// NewWorkflowsDefinitionServiceClient constructs a client for the
+// api.commons.workflows.WorkflowsDefinitionService service. By default, it uses the Connect
 // protocol with the binary Protobuf Codec, asks for gzipped responses, and sends uncompressed
 // requests. To use the gRPC or gRPC-Web protocols, supply the connect.WithGRPC() or
 // connect.WithGRPCWeb() options.
 //
 // The URL supplied here should be the base URL for the Connect or gRPC server (for example,
 // http://api.acme.com or https://acme.com/grpc).
-func NewWorkflowsDefinitionsServiceClient(httpClient connect_go.HTTPClient, baseURL string, opts ...connect_go.ClientOption) WorkflowsDefinitionsServiceClient {
+func NewWorkflowsDefinitionServiceClient(httpClient connect_go.HTTPClient, baseURL string, opts ...connect_go.ClientOption) WorkflowsDefinitionServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
-	return &workflowsDefinitionsServiceClient{
+	return &workflowsDefinitionServiceClient{
 		saveFlowDefinition: connect_go.NewClient[workflows.SaveFlowDefinitionRequest, workflows.SaveFlowDefinitionResponse](
 			httpClient,
-			baseURL+WorkflowsDefinitionsServiceSaveFlowDefinitionProcedure,
+			baseURL+WorkflowsDefinitionServiceSaveFlowDefinitionProcedure,
 			opts...,
 		),
 		getFlowDefinition: connect_go.NewClient[workflows.GetFlowDefinitionRequest, workflows.GetFlowDefinitionResponse](
 			httpClient,
-			baseURL+WorkflowsDefinitionsServiceGetFlowDefinitionProcedure,
+			baseURL+WorkflowsDefinitionServiceGetFlowDefinitionProcedure,
 			opts...,
 		),
 	}
 }
 
-// workflowsDefinitionsServiceClient implements WorkflowsDefinitionsServiceClient.
-type workflowsDefinitionsServiceClient struct {
+// workflowsDefinitionServiceClient implements WorkflowsDefinitionServiceClient.
+type workflowsDefinitionServiceClient struct {
 	saveFlowDefinition *connect_go.Client[workflows.SaveFlowDefinitionRequest, workflows.SaveFlowDefinitionResponse]
 	getFlowDefinition  *connect_go.Client[workflows.GetFlowDefinitionRequest, workflows.GetFlowDefinitionResponse]
 }
 
-// SaveFlowDefinition calls api.commons.workflows.WorkflowsDefinitionsService.SaveFlowDefinition.
-func (c *workflowsDefinitionsServiceClient) SaveFlowDefinition(ctx context.Context, req *connect_go.Request[workflows.SaveFlowDefinitionRequest]) (*connect_go.Response[workflows.SaveFlowDefinitionResponse], error) {
+// SaveFlowDefinition calls api.commons.workflows.WorkflowsDefinitionService.SaveFlowDefinition.
+func (c *workflowsDefinitionServiceClient) SaveFlowDefinition(ctx context.Context, req *connect_go.Request[workflows.SaveFlowDefinitionRequest]) (*connect_go.Response[workflows.SaveFlowDefinitionResponse], error) {
 	return c.saveFlowDefinition.CallUnary(ctx, req)
 }
 
-// GetFlowDefinition calls api.commons.workflows.WorkflowsDefinitionsService.GetFlowDefinition.
-func (c *workflowsDefinitionsServiceClient) GetFlowDefinition(ctx context.Context, req *connect_go.Request[workflows.GetFlowDefinitionRequest]) (*connect_go.Response[workflows.GetFlowDefinitionResponse], error) {
+// GetFlowDefinition calls api.commons.workflows.WorkflowsDefinitionService.GetFlowDefinition.
+func (c *workflowsDefinitionServiceClient) GetFlowDefinition(ctx context.Context, req *connect_go.Request[workflows.GetFlowDefinitionRequest]) (*connect_go.Response[workflows.GetFlowDefinitionResponse], error) {
 	return c.getFlowDefinition.CallUnary(ctx, req)
 }
 
-// WorkflowsDefinitionsServiceHandler is an implementation of the
-// api.commons.workflows.WorkflowsDefinitionsService service.
-type WorkflowsDefinitionsServiceHandler interface {
+// WorkflowsDefinitionServiceHandler is an implementation of the
+// api.commons.workflows.WorkflowsDefinitionService service.
+type WorkflowsDefinitionServiceHandler interface {
 	SaveFlowDefinition(context.Context, *connect_go.Request[workflows.SaveFlowDefinitionRequest]) (*connect_go.Response[workflows.SaveFlowDefinitionResponse], error)
 	GetFlowDefinition(context.Context, *connect_go.Request[workflows.GetFlowDefinitionRequest]) (*connect_go.Response[workflows.GetFlowDefinitionResponse], error)
 }
 
-// NewWorkflowsDefinitionsServiceHandler builds an HTTP handler from the service implementation. It
+// NewWorkflowsDefinitionServiceHandler builds an HTTP handler from the service implementation. It
 // returns the path on which to mount the handler and the handler itself.
 //
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
-func NewWorkflowsDefinitionsServiceHandler(svc WorkflowsDefinitionsServiceHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
+func NewWorkflowsDefinitionServiceHandler(svc WorkflowsDefinitionServiceHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
 	mux := http.NewServeMux()
-	mux.Handle(WorkflowsDefinitionsServiceSaveFlowDefinitionProcedure, connect_go.NewUnaryHandler(
-		WorkflowsDefinitionsServiceSaveFlowDefinitionProcedure,
+	mux.Handle(WorkflowsDefinitionServiceSaveFlowDefinitionProcedure, connect_go.NewUnaryHandler(
+		WorkflowsDefinitionServiceSaveFlowDefinitionProcedure,
 		svc.SaveFlowDefinition,
 		opts...,
 	))
-	mux.Handle(WorkflowsDefinitionsServiceGetFlowDefinitionProcedure, connect_go.NewUnaryHandler(
-		WorkflowsDefinitionsServiceGetFlowDefinitionProcedure,
+	mux.Handle(WorkflowsDefinitionServiceGetFlowDefinitionProcedure, connect_go.NewUnaryHandler(
+		WorkflowsDefinitionServiceGetFlowDefinitionProcedure,
 		svc.GetFlowDefinition,
 		opts...,
 	))
-	return "/api.commons.workflows.WorkflowsDefinitionsService/", mux
+	return "/api.commons.workflows.WorkflowsDefinitionService/", mux
 }
 
-// UnimplementedWorkflowsDefinitionsServiceHandler returns CodeUnimplemented from all methods.
-type UnimplementedWorkflowsDefinitionsServiceHandler struct{}
+// UnimplementedWorkflowsDefinitionServiceHandler returns CodeUnimplemented from all methods.
+type UnimplementedWorkflowsDefinitionServiceHandler struct{}
 
-func (UnimplementedWorkflowsDefinitionsServiceHandler) SaveFlowDefinition(context.Context, *connect_go.Request[workflows.SaveFlowDefinitionRequest]) (*connect_go.Response[workflows.SaveFlowDefinitionResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.commons.workflows.WorkflowsDefinitionsService.SaveFlowDefinition is not implemented"))
+func (UnimplementedWorkflowsDefinitionServiceHandler) SaveFlowDefinition(context.Context, *connect_go.Request[workflows.SaveFlowDefinitionRequest]) (*connect_go.Response[workflows.SaveFlowDefinitionResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.commons.workflows.WorkflowsDefinitionService.SaveFlowDefinition is not implemented"))
 }
 
-func (UnimplementedWorkflowsDefinitionsServiceHandler) GetFlowDefinition(context.Context, *connect_go.Request[workflows.GetFlowDefinitionRequest]) (*connect_go.Response[workflows.GetFlowDefinitionResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.commons.workflows.WorkflowsDefinitionsService.GetFlowDefinition is not implemented"))
+func (UnimplementedWorkflowsDefinitionServiceHandler) GetFlowDefinition(context.Context, *connect_go.Request[workflows.GetFlowDefinitionRequest]) (*connect_go.Response[workflows.GetFlowDefinitionResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.commons.workflows.WorkflowsDefinitionService.GetFlowDefinition is not implemented"))
 }
 
 // WorkflowsStateServiceClient is a client for the api.commons.workflows.WorkflowsStateService
