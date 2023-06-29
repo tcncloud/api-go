@@ -36,7 +36,7 @@ type WorkflowsDefinitionServiceClient interface {
 	// GetFlowDefinition gets a flow definition
 	GetFlowDefinition(ctx context.Context, in *GetFlowDefinitionRequest, opts ...grpc.CallOption) (*GetFlowDefinitionResponse, error)
 	// DeleteFlowDefinition deletes a flow definition
-	DeleteFlowDefinitionById(ctx context.Context, in *DeleteFlowDefinitionByIdRequest, opts ...grpc.CallOption) (*DeleteFlowDefinitionByIdResponse, error)
+	DeleteFlowDefinitionById(ctx context.Context, in *DeleteFlowDefinitionRequest, opts ...grpc.CallOption) (*DeleteFlowDefinitionResponse, error)
 }
 
 type workflowsDefinitionServiceClient struct {
@@ -74,8 +74,8 @@ func (c *workflowsDefinitionServiceClient) GetFlowDefinition(ctx context.Context
 	return out, nil
 }
 
-func (c *workflowsDefinitionServiceClient) DeleteFlowDefinitionById(ctx context.Context, in *DeleteFlowDefinitionByIdRequest, opts ...grpc.CallOption) (*DeleteFlowDefinitionByIdResponse, error) {
-	out := new(DeleteFlowDefinitionByIdResponse)
+func (c *workflowsDefinitionServiceClient) DeleteFlowDefinitionById(ctx context.Context, in *DeleteFlowDefinitionRequest, opts ...grpc.CallOption) (*DeleteFlowDefinitionResponse, error) {
+	out := new(DeleteFlowDefinitionResponse)
 	err := c.cc.Invoke(ctx, WorkflowsDefinitionService_DeleteFlowDefinitionById_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -94,7 +94,7 @@ type WorkflowsDefinitionServiceServer interface {
 	// GetFlowDefinition gets a flow definition
 	GetFlowDefinition(context.Context, *GetFlowDefinitionRequest) (*GetFlowDefinitionResponse, error)
 	// DeleteFlowDefinition deletes a flow definition
-	DeleteFlowDefinitionById(context.Context, *DeleteFlowDefinitionByIdRequest) (*DeleteFlowDefinitionByIdResponse, error)
+	DeleteFlowDefinitionById(context.Context, *DeleteFlowDefinitionRequest) (*DeleteFlowDefinitionResponse, error)
 	mustEmbedUnimplementedWorkflowsDefinitionServiceServer()
 }
 
@@ -111,7 +111,7 @@ func (UnimplementedWorkflowsDefinitionServiceServer) SaveFlowDefinition(context.
 func (UnimplementedWorkflowsDefinitionServiceServer) GetFlowDefinition(context.Context, *GetFlowDefinitionRequest) (*GetFlowDefinitionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetFlowDefinition not implemented")
 }
-func (UnimplementedWorkflowsDefinitionServiceServer) DeleteFlowDefinitionById(context.Context, *DeleteFlowDefinitionByIdRequest) (*DeleteFlowDefinitionByIdResponse, error) {
+func (UnimplementedWorkflowsDefinitionServiceServer) DeleteFlowDefinitionById(context.Context, *DeleteFlowDefinitionRequest) (*DeleteFlowDefinitionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteFlowDefinitionById not implemented")
 }
 func (UnimplementedWorkflowsDefinitionServiceServer) mustEmbedUnimplementedWorkflowsDefinitionServiceServer() {
@@ -183,7 +183,7 @@ func _WorkflowsDefinitionService_GetFlowDefinition_Handler(srv interface{}, ctx 
 }
 
 func _WorkflowsDefinitionService_DeleteFlowDefinitionById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteFlowDefinitionByIdRequest)
+	in := new(DeleteFlowDefinitionRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -195,7 +195,7 @@ func _WorkflowsDefinitionService_DeleteFlowDefinitionById_Handler(srv interface{
 		FullMethod: WorkflowsDefinitionService_DeleteFlowDefinitionById_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WorkflowsDefinitionServiceServer).DeleteFlowDefinitionById(ctx, req.(*DeleteFlowDefinitionByIdRequest))
+		return srv.(WorkflowsDefinitionServiceServer).DeleteFlowDefinitionById(ctx, req.(*DeleteFlowDefinitionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
