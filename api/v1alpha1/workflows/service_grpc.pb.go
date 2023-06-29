@@ -19,10 +19,10 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	WorkflowsDefinitionService_ListFlowDefinitions_FullMethodName      = "/api.v1alpha1.workflows.WorkflowsDefinitionService/ListFlowDefinitions"
-	WorkflowsDefinitionService_SaveFlowDefinition_FullMethodName       = "/api.v1alpha1.workflows.WorkflowsDefinitionService/SaveFlowDefinition"
-	WorkflowsDefinitionService_GetFlowDefinition_FullMethodName        = "/api.v1alpha1.workflows.WorkflowsDefinitionService/GetFlowDefinition"
-	WorkflowsDefinitionService_DeleteFlowDefinitionById_FullMethodName = "/api.v1alpha1.workflows.WorkflowsDefinitionService/DeleteFlowDefinitionById"
+	WorkflowsDefinitionService_ListFlowDefinitions_FullMethodName  = "/api.v1alpha1.workflows.WorkflowsDefinitionService/ListFlowDefinitions"
+	WorkflowsDefinitionService_SaveFlowDefinition_FullMethodName   = "/api.v1alpha1.workflows.WorkflowsDefinitionService/SaveFlowDefinition"
+	WorkflowsDefinitionService_GetFlowDefinition_FullMethodName    = "/api.v1alpha1.workflows.WorkflowsDefinitionService/GetFlowDefinition"
+	WorkflowsDefinitionService_DeleteFlowDefinition_FullMethodName = "/api.v1alpha1.workflows.WorkflowsDefinitionService/DeleteFlowDefinition"
 )
 
 // WorkflowsDefinitionServiceClient is the client API for WorkflowsDefinitionService service.
@@ -36,7 +36,7 @@ type WorkflowsDefinitionServiceClient interface {
 	// GetFlowDefinition gets a flow definition
 	GetFlowDefinition(ctx context.Context, in *GetFlowDefinitionRequest, opts ...grpc.CallOption) (*GetFlowDefinitionResponse, error)
 	// DeleteFlowDefinition deletes a flow definition
-	DeleteFlowDefinitionById(ctx context.Context, in *DeleteFlowDefinitionRequest, opts ...grpc.CallOption) (*DeleteFlowDefinitionResponse, error)
+	DeleteFlowDefinition(ctx context.Context, in *DeleteFlowDefinitionRequest, opts ...grpc.CallOption) (*DeleteFlowDefinitionResponse, error)
 }
 
 type workflowsDefinitionServiceClient struct {
@@ -74,9 +74,9 @@ func (c *workflowsDefinitionServiceClient) GetFlowDefinition(ctx context.Context
 	return out, nil
 }
 
-func (c *workflowsDefinitionServiceClient) DeleteFlowDefinitionById(ctx context.Context, in *DeleteFlowDefinitionRequest, opts ...grpc.CallOption) (*DeleteFlowDefinitionResponse, error) {
+func (c *workflowsDefinitionServiceClient) DeleteFlowDefinition(ctx context.Context, in *DeleteFlowDefinitionRequest, opts ...grpc.CallOption) (*DeleteFlowDefinitionResponse, error) {
 	out := new(DeleteFlowDefinitionResponse)
-	err := c.cc.Invoke(ctx, WorkflowsDefinitionService_DeleteFlowDefinitionById_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, WorkflowsDefinitionService_DeleteFlowDefinition_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -94,7 +94,7 @@ type WorkflowsDefinitionServiceServer interface {
 	// GetFlowDefinition gets a flow definition
 	GetFlowDefinition(context.Context, *GetFlowDefinitionRequest) (*GetFlowDefinitionResponse, error)
 	// DeleteFlowDefinition deletes a flow definition
-	DeleteFlowDefinitionById(context.Context, *DeleteFlowDefinitionRequest) (*DeleteFlowDefinitionResponse, error)
+	DeleteFlowDefinition(context.Context, *DeleteFlowDefinitionRequest) (*DeleteFlowDefinitionResponse, error)
 	mustEmbedUnimplementedWorkflowsDefinitionServiceServer()
 }
 
@@ -111,8 +111,8 @@ func (UnimplementedWorkflowsDefinitionServiceServer) SaveFlowDefinition(context.
 func (UnimplementedWorkflowsDefinitionServiceServer) GetFlowDefinition(context.Context, *GetFlowDefinitionRequest) (*GetFlowDefinitionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetFlowDefinition not implemented")
 }
-func (UnimplementedWorkflowsDefinitionServiceServer) DeleteFlowDefinitionById(context.Context, *DeleteFlowDefinitionRequest) (*DeleteFlowDefinitionResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteFlowDefinitionById not implemented")
+func (UnimplementedWorkflowsDefinitionServiceServer) DeleteFlowDefinition(context.Context, *DeleteFlowDefinitionRequest) (*DeleteFlowDefinitionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteFlowDefinition not implemented")
 }
 func (UnimplementedWorkflowsDefinitionServiceServer) mustEmbedUnimplementedWorkflowsDefinitionServiceServer() {
 }
@@ -182,20 +182,20 @@ func _WorkflowsDefinitionService_GetFlowDefinition_Handler(srv interface{}, ctx 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _WorkflowsDefinitionService_DeleteFlowDefinitionById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _WorkflowsDefinitionService_DeleteFlowDefinition_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteFlowDefinitionRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(WorkflowsDefinitionServiceServer).DeleteFlowDefinitionById(ctx, in)
+		return srv.(WorkflowsDefinitionServiceServer).DeleteFlowDefinition(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: WorkflowsDefinitionService_DeleteFlowDefinitionById_FullMethodName,
+		FullMethod: WorkflowsDefinitionService_DeleteFlowDefinition_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WorkflowsDefinitionServiceServer).DeleteFlowDefinitionById(ctx, req.(*DeleteFlowDefinitionRequest))
+		return srv.(WorkflowsDefinitionServiceServer).DeleteFlowDefinition(ctx, req.(*DeleteFlowDefinitionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -220,8 +220,8 @@ var WorkflowsDefinitionService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _WorkflowsDefinitionService_GetFlowDefinition_Handler,
 		},
 		{
-			MethodName: "DeleteFlowDefinitionById",
-			Handler:    _WorkflowsDefinitionService_DeleteFlowDefinitionById_Handler,
+			MethodName: "DeleteFlowDefinition",
+			Handler:    _WorkflowsDefinitionService_DeleteFlowDefinition_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
