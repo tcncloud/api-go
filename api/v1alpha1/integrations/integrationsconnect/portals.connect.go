@@ -447,123 +447,173 @@ type PortalManagerApiHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewPortalManagerApiHandler(svc PortalManagerApiHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	mux := http.NewServeMux()
-	mux.Handle(PortalManagerApiUpsertPortalConfigProcedure, connect_go.NewUnaryHandler(
+	portalManagerApiUpsertPortalConfigHandler := connect_go.NewUnaryHandler(
 		PortalManagerApiUpsertPortalConfigProcedure,
 		svc.UpsertPortalConfig,
 		opts...,
-	))
-	mux.Handle(PortalManagerApiListPortalConfigsProcedure, connect_go.NewUnaryHandler(
+	)
+	portalManagerApiListPortalConfigsHandler := connect_go.NewUnaryHandler(
 		PortalManagerApiListPortalConfigsProcedure,
 		svc.ListPortalConfigs,
 		opts...,
-	))
-	mux.Handle(PortalManagerApiGetPortalConfigProcedure, connect_go.NewUnaryHandler(
+	)
+	portalManagerApiGetPortalConfigHandler := connect_go.NewUnaryHandler(
 		PortalManagerApiGetPortalConfigProcedure,
 		svc.GetPortalConfig,
 		opts...,
-	))
-	mux.Handle(PortalManagerApiDeletePortalConfigProcedure, connect_go.NewUnaryHandler(
+	)
+	portalManagerApiDeletePortalConfigHandler := connect_go.NewUnaryHandler(
 		PortalManagerApiDeletePortalConfigProcedure,
 		svc.DeletePortalConfig,
 		opts...,
-	))
-	mux.Handle(PortalManagerApiUpdatePortalConfigLogoProcedure, connect_go.NewUnaryHandler(
+	)
+	portalManagerApiUpdatePortalConfigLogoHandler := connect_go.NewUnaryHandler(
 		PortalManagerApiUpdatePortalConfigLogoProcedure,
 		svc.UpdatePortalConfigLogo,
 		opts...,
-	))
-	mux.Handle(PortalManagerApiGetPortalConfigLogoProcedure, connect_go.NewUnaryHandler(
+	)
+	portalManagerApiGetPortalConfigLogoHandler := connect_go.NewUnaryHandler(
 		PortalManagerApiGetPortalConfigLogoProcedure,
 		svc.GetPortalConfigLogo,
 		opts...,
-	))
-	mux.Handle(PortalManagerApiListPortalLinksProcedure, connect_go.NewUnaryHandler(
+	)
+	portalManagerApiListPortalLinksHandler := connect_go.NewUnaryHandler(
 		PortalManagerApiListPortalLinksProcedure,
 		svc.ListPortalLinks,
 		opts...,
-	))
-	mux.Handle(PortalManagerApiGetPortalLinkProcedure, connect_go.NewUnaryHandler(
+	)
+	portalManagerApiGetPortalLinkHandler := connect_go.NewUnaryHandler(
 		PortalManagerApiGetPortalLinkProcedure,
 		svc.GetPortalLink,
 		opts...,
-	))
-	mux.Handle(PortalManagerApiDeletePortalLinkProcedure, connect_go.NewUnaryHandler(
+	)
+	portalManagerApiDeletePortalLinkHandler := connect_go.NewUnaryHandler(
 		PortalManagerApiDeletePortalLinkProcedure,
 		svc.DeletePortalLink,
 		opts...,
-	))
-	mux.Handle(PortalManagerApiCreatePortalLinksProcedure, connect_go.NewUnaryHandler(
+	)
+	portalManagerApiCreatePortalLinksHandler := connect_go.NewUnaryHandler(
 		PortalManagerApiCreatePortalLinksProcedure,
 		svc.CreatePortalLinks,
 		opts...,
-	))
-	mux.Handle(PortalManagerApiUpsertPortalProcedure, connect_go.NewUnaryHandler(
+	)
+	portalManagerApiUpsertPortalHandler := connect_go.NewUnaryHandler(
 		PortalManagerApiUpsertPortalProcedure,
 		svc.UpsertPortal,
 		opts...,
-	))
-	mux.Handle(PortalManagerApiGetPortalProcedure, connect_go.NewUnaryHandler(
+	)
+	portalManagerApiGetPortalHandler := connect_go.NewUnaryHandler(
 		PortalManagerApiGetPortalProcedure,
 		svc.GetPortal,
 		opts...,
-	))
-	mux.Handle(PortalManagerApiDeletePortalProcedure, connect_go.NewUnaryHandler(
+	)
+	portalManagerApiDeletePortalHandler := connect_go.NewUnaryHandler(
 		PortalManagerApiDeletePortalProcedure,
 		svc.DeletePortal,
 		opts...,
-	))
-	mux.Handle(PortalManagerApiListPortalsProcedure, connect_go.NewUnaryHandler(
+	)
+	portalManagerApiListPortalsHandler := connect_go.NewUnaryHandler(
 		PortalManagerApiListPortalsProcedure,
 		svc.ListPortals,
 		opts...,
-	))
-	mux.Handle(PortalManagerApiListDetailedPortalsProcedure, connect_go.NewUnaryHandler(
+	)
+	portalManagerApiListDetailedPortalsHandler := connect_go.NewUnaryHandler(
 		PortalManagerApiListDetailedPortalsProcedure,
 		svc.ListDetailedPortals,
 		opts...,
-	))
-	mux.Handle(PortalManagerApiGetDetailedPortalProcedure, connect_go.NewUnaryHandler(
+	)
+	portalManagerApiGetDetailedPortalHandler := connect_go.NewUnaryHandler(
 		PortalManagerApiGetDetailedPortalProcedure,
 		svc.GetDetailedPortal,
 		opts...,
-	))
-	mux.Handle(PortalManagerApiUpsertPluginInstanceProcedure, connect_go.NewUnaryHandler(
+	)
+	portalManagerApiUpsertPluginInstanceHandler := connect_go.NewUnaryHandler(
 		PortalManagerApiUpsertPluginInstanceProcedure,
 		svc.UpsertPluginInstance,
 		opts...,
-	))
-	mux.Handle(PortalManagerApiGetPluginInstanceProcedure, connect_go.NewUnaryHandler(
+	)
+	portalManagerApiGetPluginInstanceHandler := connect_go.NewUnaryHandler(
 		PortalManagerApiGetPluginInstanceProcedure,
 		svc.GetPluginInstance,
 		opts...,
-	))
-	mux.Handle(PortalManagerApiDeletePluginInstanceProcedure, connect_go.NewUnaryHandler(
+	)
+	portalManagerApiDeletePluginInstanceHandler := connect_go.NewUnaryHandler(
 		PortalManagerApiDeletePluginInstanceProcedure,
 		svc.DeletePluginInstance,
 		opts...,
-	))
-	mux.Handle(PortalManagerApiListPluginInstanceProcedure, connect_go.NewUnaryHandler(
+	)
+	portalManagerApiListPluginInstanceHandler := connect_go.NewUnaryHandler(
 		PortalManagerApiListPluginInstanceProcedure,
 		svc.ListPluginInstance,
 		opts...,
-	))
-	mux.Handle(PortalManagerApiListFlowFieldNamesProcedure, connect_go.NewUnaryHandler(
+	)
+	portalManagerApiListFlowFieldNamesHandler := connect_go.NewUnaryHandler(
 		PortalManagerApiListFlowFieldNamesProcedure,
 		svc.ListFlowFieldNames,
 		opts...,
-	))
-	mux.Handle(PortalManagerApiListAvailableVerificationFieldsProcedure, connect_go.NewUnaryHandler(
+	)
+	portalManagerApiListAvailableVerificationFieldsHandler := connect_go.NewUnaryHandler(
 		PortalManagerApiListAvailableVerificationFieldsProcedure,
 		svc.ListAvailableVerificationFields,
 		opts...,
-	))
-	mux.Handle(PortalManagerApiListAvailablePaymentFieldsProcedure, connect_go.NewUnaryHandler(
+	)
+	portalManagerApiListAvailablePaymentFieldsHandler := connect_go.NewUnaryHandler(
 		PortalManagerApiListAvailablePaymentFieldsProcedure,
 		svc.ListAvailablePaymentFields,
 		opts...,
-	))
-	return "/api.v1alpha1.integrations.PortalManagerApi/", mux
+	)
+	return "/api.v1alpha1.integrations.PortalManagerApi/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case PortalManagerApiUpsertPortalConfigProcedure:
+			portalManagerApiUpsertPortalConfigHandler.ServeHTTP(w, r)
+		case PortalManagerApiListPortalConfigsProcedure:
+			portalManagerApiListPortalConfigsHandler.ServeHTTP(w, r)
+		case PortalManagerApiGetPortalConfigProcedure:
+			portalManagerApiGetPortalConfigHandler.ServeHTTP(w, r)
+		case PortalManagerApiDeletePortalConfigProcedure:
+			portalManagerApiDeletePortalConfigHandler.ServeHTTP(w, r)
+		case PortalManagerApiUpdatePortalConfigLogoProcedure:
+			portalManagerApiUpdatePortalConfigLogoHandler.ServeHTTP(w, r)
+		case PortalManagerApiGetPortalConfigLogoProcedure:
+			portalManagerApiGetPortalConfigLogoHandler.ServeHTTP(w, r)
+		case PortalManagerApiListPortalLinksProcedure:
+			portalManagerApiListPortalLinksHandler.ServeHTTP(w, r)
+		case PortalManagerApiGetPortalLinkProcedure:
+			portalManagerApiGetPortalLinkHandler.ServeHTTP(w, r)
+		case PortalManagerApiDeletePortalLinkProcedure:
+			portalManagerApiDeletePortalLinkHandler.ServeHTTP(w, r)
+		case PortalManagerApiCreatePortalLinksProcedure:
+			portalManagerApiCreatePortalLinksHandler.ServeHTTP(w, r)
+		case PortalManagerApiUpsertPortalProcedure:
+			portalManagerApiUpsertPortalHandler.ServeHTTP(w, r)
+		case PortalManagerApiGetPortalProcedure:
+			portalManagerApiGetPortalHandler.ServeHTTP(w, r)
+		case PortalManagerApiDeletePortalProcedure:
+			portalManagerApiDeletePortalHandler.ServeHTTP(w, r)
+		case PortalManagerApiListPortalsProcedure:
+			portalManagerApiListPortalsHandler.ServeHTTP(w, r)
+		case PortalManagerApiListDetailedPortalsProcedure:
+			portalManagerApiListDetailedPortalsHandler.ServeHTTP(w, r)
+		case PortalManagerApiGetDetailedPortalProcedure:
+			portalManagerApiGetDetailedPortalHandler.ServeHTTP(w, r)
+		case PortalManagerApiUpsertPluginInstanceProcedure:
+			portalManagerApiUpsertPluginInstanceHandler.ServeHTTP(w, r)
+		case PortalManagerApiGetPluginInstanceProcedure:
+			portalManagerApiGetPluginInstanceHandler.ServeHTTP(w, r)
+		case PortalManagerApiDeletePluginInstanceProcedure:
+			portalManagerApiDeletePluginInstanceHandler.ServeHTTP(w, r)
+		case PortalManagerApiListPluginInstanceProcedure:
+			portalManagerApiListPluginInstanceHandler.ServeHTTP(w, r)
+		case PortalManagerApiListFlowFieldNamesProcedure:
+			portalManagerApiListFlowFieldNamesHandler.ServeHTTP(w, r)
+		case PortalManagerApiListAvailableVerificationFieldsProcedure:
+			portalManagerApiListAvailableVerificationFieldsHandler.ServeHTTP(w, r)
+		case PortalManagerApiListAvailablePaymentFieldsProcedure:
+			portalManagerApiListAvailablePaymentFieldsHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
 }
 
 // UnimplementedPortalManagerApiHandler returns CodeUnimplemented from all methods.

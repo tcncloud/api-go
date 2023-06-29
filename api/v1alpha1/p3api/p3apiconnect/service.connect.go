@@ -2132,488 +2132,684 @@ type P3ApiHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewP3ApiHandler(svc P3ApiHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	mux := http.NewServeMux()
-	mux.Handle(P3ApiGetAgentHuntGroupProcedure, connect_go.NewUnaryHandler(
+	p3ApiGetAgentHuntGroupHandler := connect_go.NewUnaryHandler(
 		P3ApiGetAgentHuntGroupProcedure,
 		svc.GetAgentHuntGroup,
 		opts...,
-	))
-	mux.Handle(P3ApiGetAgentSessionProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiGetAgentSessionHandler := connect_go.NewUnaryHandler(
 		P3ApiGetAgentSessionProcedure,
 		svc.GetAgentSession,
 		opts...,
-	))
-	mux.Handle(P3ApiGetAgentSkillsProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiGetAgentSkillsHandler := connect_go.NewUnaryHandler(
 		P3ApiGetAgentSkillsProcedure,
 		svc.GetAgentSkills,
 		opts...,
-	))
-	mux.Handle(P3ApiCreateAgentSkillProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiCreateAgentSkillHandler := connect_go.NewUnaryHandler(
 		P3ApiCreateAgentSkillProcedure,
 		svc.CreateAgentSkill,
 		opts...,
-	))
-	mux.Handle(P3ApiUpdateAgentSkillProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiUpdateAgentSkillHandler := connect_go.NewUnaryHandler(
 		P3ApiUpdateAgentSkillProcedure,
 		svc.UpdateAgentSkill,
 		opts...,
-	))
-	mux.Handle(P3ApiDeleteAgentSkillProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiDeleteAgentSkillHandler := connect_go.NewUnaryHandler(
 		P3ApiDeleteAgentSkillProcedure,
 		svc.DeleteAgentSkill,
 		opts...,
-	))
-	mux.Handle(P3ApiListSkillsForCurrentAgentProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiListSkillsForCurrentAgentHandler := connect_go.NewUnaryHandler(
 		P3ApiListSkillsForCurrentAgentProcedure,
 		svc.ListSkillsForCurrentAgent,
 		opts...,
-	))
-	mux.Handle(P3ApiListSkillsProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiListSkillsHandler := connect_go.NewUnaryHandler(
 		P3ApiListSkillsProcedure,
 		svc.ListSkills,
 		opts...,
-	))
-	mux.Handle(P3ApiUpdateAgentSkillsProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiUpdateAgentSkillsHandler := connect_go.NewUnaryHandler(
 		P3ApiUpdateAgentSkillsProcedure,
 		svc.UpdateAgentSkills,
 		opts...,
-	))
-	mux.Handle(P3ApiGetCurrentAgentProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiGetCurrentAgentHandler := connect_go.NewUnaryHandler(
 		P3ApiGetCurrentAgentProcedure,
 		svc.GetCurrentAgent,
 		opts...,
-	))
-	mux.Handle(P3ApiGetClientInfoDataProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiGetClientInfoDataHandler := connect_go.NewUnaryHandler(
 		P3ApiGetClientInfoDataProcedure,
 		svc.GetClientInfoData,
 		opts...,
-	))
-	mux.Handle(P3ApiGetClientInfoDisplayTemplateProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiGetClientInfoDisplayTemplateHandler := connect_go.NewUnaryHandler(
 		P3ApiGetClientInfoDisplayTemplateProcedure,
 		svc.GetClientInfoDisplayTemplate,
 		opts...,
-	))
-	mux.Handle(P3ApiListAgentStatisticsDataProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiListAgentStatisticsDataHandler := connect_go.NewUnaryHandler(
 		P3ApiListAgentStatisticsDataProcedure,
 		svc.ListAgentStatisticsData,
 		opts...,
-	))
-	mux.Handle(P3ApiListPBXExtensionsProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiListPBXExtensionsHandler := connect_go.NewUnaryHandler(
 		P3ApiListPBXExtensionsProcedure,
 		svc.ListPBXExtensions,
 		opts...,
-	))
-	mux.Handle(P3ApiListAgentExtensionsProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiListAgentExtensionsHandler := connect_go.NewUnaryHandler(
 		P3ApiListAgentExtensionsProcedure,
 		svc.ListAgentExtensions,
 		opts...,
-	))
-	mux.Handle(P3ApiListHuntGroupExtensionsProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiListHuntGroupExtensionsHandler := connect_go.NewUnaryHandler(
 		P3ApiListHuntGroupExtensionsProcedure,
 		svc.ListHuntGroupExtensions,
 		opts...,
-	))
-	mux.Handle(P3ApiCreateExtensionProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiCreateExtensionHandler := connect_go.NewUnaryHandler(
 		P3ApiCreateExtensionProcedure,
 		svc.CreateExtension,
 		opts...,
-	))
-	mux.Handle(P3ApiDeleteExtensionProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiDeleteExtensionHandler := connect_go.NewUnaryHandler(
 		P3ApiDeleteExtensionProcedure,
 		svc.DeleteExtension,
 		opts...,
-	))
-	mux.Handle(P3ApiUpdateExtensionProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiUpdateExtensionHandler := connect_go.NewUnaryHandler(
 		P3ApiUpdateExtensionProcedure,
 		svc.UpdateExtension,
 		opts...,
-	))
-	mux.Handle(P3ApiUpdatePBXExtensionProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiUpdatePBXExtensionHandler := connect_go.NewUnaryHandler(
 		P3ApiUpdatePBXExtensionProcedure,
 		svc.UpdatePBXExtension,
 		opts...,
-	))
-	mux.Handle(P3ApiCreateDNCLNumbersProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiCreateDNCLNumbersHandler := connect_go.NewUnaryHandler(
 		P3ApiCreateDNCLNumbersProcedure,
 		svc.CreateDNCLNumbers,
 		opts...,
-	))
-	mux.Handle(P3ApiGetScriptOrResponsesProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiGetScriptOrResponsesHandler := connect_go.NewUnaryHandler(
 		P3ApiGetScriptOrResponsesProcedure,
 		svc.GetScriptOrResponses,
 		opts...,
-	))
-	mux.Handle(P3ApiGetHuntGroupAgentSettingsProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiGetHuntGroupAgentSettingsHandler := connect_go.NewUnaryHandler(
 		P3ApiGetHuntGroupAgentSettingsProcedure,
 		svc.GetHuntGroupAgentSettings,
 		opts...,
-	))
-	mux.Handle(P3ApiListHuntGroupWebLinksProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiListHuntGroupWebLinksHandler := connect_go.NewUnaryHandler(
 		P3ApiListHuntGroupWebLinksProcedure,
 		svc.ListHuntGroupWebLinks,
 		opts...,
-	))
-	mux.Handle(P3ApiGetHuntGroupPauseCodesProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiGetHuntGroupPauseCodesHandler := connect_go.NewUnaryHandler(
 		P3ApiGetHuntGroupPauseCodesProcedure,
 		svc.GetHuntGroupPauseCodes,
 		opts...,
-	))
-	mux.Handle(P3ApiListAgentCallHistoryProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiListAgentCallHistoryHandler := connect_go.NewUnaryHandler(
 		P3ApiListAgentCallHistoryProcedure,
 		svc.ListAgentCallHistory,
 		opts...,
-	))
-	mux.Handle(P3ApiListClientPhoneBookEntriesProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiListClientPhoneBookEntriesHandler := connect_go.NewUnaryHandler(
 		P3ApiListClientPhoneBookEntriesProcedure,
 		svc.ListClientPhoneBookEntries,
 		opts...,
-	))
-	mux.Handle(P3ApiListHuntGroupPhoneBookEntriesProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiListHuntGroupPhoneBookEntriesHandler := connect_go.NewUnaryHandler(
 		P3ApiListHuntGroupPhoneBookEntriesProcedure,
 		svc.ListHuntGroupPhoneBookEntries,
 		opts...,
-	))
-	mux.Handle(P3ApiCreatePhoneBookEntryProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiCreatePhoneBookEntryHandler := connect_go.NewUnaryHandler(
 		P3ApiCreatePhoneBookEntryProcedure,
 		svc.CreatePhoneBookEntry,
 		opts...,
-	))
-	mux.Handle(P3ApiUpdatePhoneBookEntryProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiUpdatePhoneBookEntryHandler := connect_go.NewUnaryHandler(
 		P3ApiUpdatePhoneBookEntryProcedure,
 		svc.UpdatePhoneBookEntry,
 		opts...,
-	))
-	mux.Handle(P3ApiDeletePhoneBookEntryProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiDeletePhoneBookEntryHandler := connect_go.NewUnaryHandler(
 		P3ApiDeletePhoneBookEntryProcedure,
 		svc.DeletePhoneBookEntry,
 		opts...,
-	))
-	mux.Handle(P3ApiListPhoneBooksProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiListPhoneBooksHandler := connect_go.NewUnaryHandler(
 		P3ApiListPhoneBooksProcedure,
 		svc.ListPhoneBooks,
 		opts...,
-	))
-	mux.Handle(P3ApiListAgentTriggersProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiListAgentTriggersHandler := connect_go.NewUnaryHandler(
 		P3ApiListAgentTriggersProcedure,
 		svc.ListAgentTriggers,
 		opts...,
-	))
-	mux.Handle(P3ApiGetCampaignCompletionStatusProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiGetCampaignCompletionStatusHandler := connect_go.NewUnaryHandler(
 		P3ApiGetCampaignCompletionStatusProcedure,
 		svc.GetCampaignCompletionStatus,
 		opts...,
-	))
-	mux.Handle(P3ApiGetLostPeerInfoProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiGetLostPeerInfoHandler := connect_go.NewUnaryHandler(
 		P3ApiGetLostPeerInfoProcedure,
 		svc.GetLostPeerInfo,
 		opts...,
-	))
-	mux.Handle(P3ApiGetDispositionKeysProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiGetDispositionKeysHandler := connect_go.NewUnaryHandler(
 		P3ApiGetDispositionKeysProcedure,
 		svc.GetDispositionKeys,
 		opts...,
-	))
-	mux.Handle(P3ApiGetReadyAgentsProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiGetReadyAgentsHandler := connect_go.NewUnaryHandler(
 		P3ApiGetReadyAgentsProcedure,
 		svc.GetReadyAgents,
 		opts...,
-	))
-	mux.Handle(P3ApiListAgentQueueAndOnHoldCallDataProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiListAgentQueueAndOnHoldCallDataHandler := connect_go.NewUnaryHandler(
 		P3ApiListAgentQueueAndOnHoldCallDataProcedure,
 		svc.ListAgentQueueAndOnHoldCallData,
 		opts...,
-	))
-	mux.Handle(P3ApiSaveAgentCallResponsesProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiSaveAgentCallResponsesHandler := connect_go.NewUnaryHandler(
 		P3ApiSaveAgentCallResponsesProcedure,
 		svc.SaveAgentCallResponses,
 		opts...,
-	))
-	mux.Handle(P3ApiListAgentTransferOptionsProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiListAgentTransferOptionsHandler := connect_go.NewUnaryHandler(
 		P3ApiListAgentTransferOptionsProcedure,
 		svc.ListAgentTransferOptions,
 		opts...,
-	))
-	mux.Handle(P3ApiUpdateAgentCallResponseValueProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiUpdateAgentCallResponseValueHandler := connect_go.NewUnaryHandler(
 		P3ApiUpdateAgentCallResponseValueProcedure,
 		svc.UpdateAgentCallResponseValue,
 		opts...,
-	))
-	mux.Handle(P3ApiGetIntercomPeerInfoProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiGetIntercomPeerInfoHandler := connect_go.NewUnaryHandler(
 		P3ApiGetIntercomPeerInfoProcedure,
 		svc.GetIntercomPeerInfo,
 		opts...,
-	))
-	mux.Handle(P3ApiListOrgResponseEvaluatorsProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiListOrgResponseEvaluatorsHandler := connect_go.NewUnaryHandler(
 		P3ApiListOrgResponseEvaluatorsProcedure,
 		svc.ListOrgResponseEvaluators,
 		opts...,
-	))
-	mux.Handle(P3ApiGetQueueConfigurationOptionsArrayProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiGetQueueConfigurationOptionsArrayHandler := connect_go.NewUnaryHandler(
 		P3ApiGetQueueConfigurationOptionsArrayProcedure,
 		svc.GetQueueConfigurationOptionsArray,
 		opts...,
-	))
-	mux.Handle(P3ApiGetConditionalDNCLRulesProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiGetConditionalDNCLRulesHandler := connect_go.NewUnaryHandler(
 		P3ApiGetConditionalDNCLRulesProcedure,
 		svc.GetConditionalDNCLRules,
 		opts...,
-	))
-	mux.Handle(P3ApiManualDialStartProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiManualDialStartHandler := connect_go.NewUnaryHandler(
 		P3ApiManualDialStartProcedure,
 		svc.ManualDialStart,
 		opts...,
-	))
-	mux.Handle(P3ApiGetExtendedCallHistoriesProcedure, connect_go.NewServerStreamHandler(
+	)
+	p3ApiGetExtendedCallHistoriesHandler := connect_go.NewServerStreamHandler(
 		P3ApiGetExtendedCallHistoriesProcedure,
 		svc.GetExtendedCallHistories,
 		opts...,
-	))
-	mux.Handle(P3ApiListWhiteListPhoneBooksProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiListWhiteListPhoneBooksHandler := connect_go.NewUnaryHandler(
 		P3ApiListWhiteListPhoneBooksProcedure,
 		svc.ListWhiteListPhoneBooks,
 		opts...,
-	))
-	mux.Handle(P3ApiDownloadCallRecordingProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiDownloadCallRecordingHandler := connect_go.NewUnaryHandler(
 		P3ApiDownloadCallRecordingProcedure,
 		svc.DownloadCallRecording,
 		opts...,
-	))
-	mux.Handle(P3ApiDownloadCallRecordingsProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiDownloadCallRecordingsHandler := connect_go.NewUnaryHandler(
 		P3ApiDownloadCallRecordingsProcedure,
 		svc.DownloadCallRecordings,
 		opts...,
-	))
-	mux.Handle(P3ApiPlacePreviewDialCallProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiPlacePreviewDialCallHandler := connect_go.NewUnaryHandler(
 		P3ApiPlacePreviewDialCallProcedure,
 		svc.PlacePreviewDialCall,
 		opts...,
-	))
-	mux.Handle(P3ApiCancelPreviewDialCallProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiCancelPreviewDialCallHandler := connect_go.NewUnaryHandler(
 		P3ApiCancelPreviewDialCallProcedure,
 		svc.CancelPreviewDialCall,
 		opts...,
-	))
-	mux.Handle(P3ApiUpdateTaskStatusProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiUpdateTaskStatusHandler := connect_go.NewUnaryHandler(
 		P3ApiUpdateTaskStatusProcedure,
 		svc.UpdateTaskStatus,
 		opts...,
-	))
-	mux.Handle(P3ApiListCallbackRoutingAgentsProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiListCallbackRoutingAgentsHandler := connect_go.NewUnaryHandler(
 		P3ApiListCallbackRoutingAgentsProcedure,
 		svc.ListCallbackRoutingAgents,
 		opts...,
-	))
-	mux.Handle(P3ApiListCallbackRoutingSkillsProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiListCallbackRoutingSkillsHandler := connect_go.NewUnaryHandler(
 		P3ApiListCallbackRoutingSkillsProcedure,
 		svc.ListCallbackRoutingSkills,
 		opts...,
-	))
-	mux.Handle(P3ApiHandleRecordingDelayProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiHandleRecordingDelayHandler := connect_go.NewUnaryHandler(
 		P3ApiHandleRecordingDelayProcedure,
 		svc.HandleRecordingDelay,
 		opts...,
-	))
-	mux.Handle(P3ApiUpdateAgentAssignedHuntGroupProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiUpdateAgentAssignedHuntGroupHandler := connect_go.NewUnaryHandler(
 		P3ApiUpdateAgentAssignedHuntGroupProcedure,
 		svc.UpdateAgentAssignedHuntGroup,
 		opts...,
-	))
-	mux.Handle(P3ApiGetCallDataProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiGetCallDataHandler := connect_go.NewUnaryHandler(
 		P3ApiGetCallDataProcedure,
 		svc.GetCallData,
 		opts...,
-	))
-	mux.Handle(P3ApiListHuntGroupsProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiListHuntGroupsHandler := connect_go.NewUnaryHandler(
 		P3ApiListHuntGroupsProcedure,
 		svc.ListHuntGroups,
 		opts...,
-	))
-	mux.Handle(P3ApiListReassignmentHuntGroupsProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiListReassignmentHuntGroupsHandler := connect_go.NewUnaryHandler(
 		P3ApiListReassignmentHuntGroupsProcedure,
 		svc.ListReassignmentHuntGroups,
 		opts...,
-	))
-	mux.Handle(P3ApiGetOrgAgentSettingsProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiGetOrgAgentSettingsHandler := connect_go.NewUnaryHandler(
 		P3ApiGetOrgAgentSettingsProcedure,
 		svc.GetOrgAgentSettings,
 		opts...,
-	))
-	mux.Handle(P3ApiListCallerIdsFromBucketProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiListCallerIdsFromBucketHandler := connect_go.NewUnaryHandler(
 		P3ApiListCallerIdsFromBucketProcedure,
 		svc.ListCallerIdsFromBucket,
 		opts...,
-	))
-	mux.Handle(P3ApiSaveLastCallResponseProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiSaveLastCallResponseHandler := connect_go.NewUnaryHandler(
 		P3ApiSaveLastCallResponseProcedure,
 		svc.SaveLastCallResponse,
 		opts...,
-	))
-	mux.Handle(P3ApiListAgentCallLogsByCallSidAndTypeProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiListAgentCallLogsByCallSidAndTypeHandler := connect_go.NewUnaryHandler(
 		P3ApiListAgentCallLogsByCallSidAndTypeProcedure,
 		svc.ListAgentCallLogsByCallSidAndType,
 		opts...,
-	))
-	mux.Handle(P3ApiListAgentCallResponseValuesProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiListAgentCallResponseValuesHandler := connect_go.NewUnaryHandler(
 		P3ApiListAgentCallResponseValuesProcedure,
 		svc.ListAgentCallResponseValues,
 		opts...,
-	))
-	mux.Handle(P3ApiGetContactSchemaByContactGroupProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiGetContactSchemaByContactGroupHandler := connect_go.NewUnaryHandler(
 		P3ApiGetContactSchemaByContactGroupProcedure,
 		svc.GetContactSchemaByContactGroup,
 		opts...,
-	))
-	mux.Handle(P3ApiListContactGroupDetailsByClientSidProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiListContactGroupDetailsByClientSidHandler := connect_go.NewUnaryHandler(
 		P3ApiListContactGroupDetailsByClientSidProcedure,
 		svc.ListContactGroupDetailsByClientSid,
 		opts...,
-	))
-	mux.Handle(P3ApiGetContactGroupDetailsProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiGetContactGroupDetailsHandler := connect_go.NewUnaryHandler(
 		P3ApiGetContactGroupDetailsProcedure,
 		svc.GetContactGroupDetails,
 		opts...,
-	))
-	mux.Handle(P3ApiGetContactGroupSizeProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiGetContactGroupSizeHandler := connect_go.NewUnaryHandler(
 		P3ApiGetContactGroupSizeProcedure,
 		svc.GetContactGroupSize,
 		opts...,
-	))
-	mux.Handle(P3ApiCreateContactFieldDescriptionProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiCreateContactFieldDescriptionHandler := connect_go.NewUnaryHandler(
 		P3ApiCreateContactFieldDescriptionProcedure,
 		svc.CreateContactFieldDescription,
 		opts...,
-	))
-	mux.Handle(P3ApiDeleteContactFieldDescriptionProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiDeleteContactFieldDescriptionHandler := connect_go.NewUnaryHandler(
 		P3ApiDeleteContactFieldDescriptionProcedure,
 		svc.DeleteContactFieldDescription,
 		opts...,
-	))
-	mux.Handle(P3ApiListContactFieldDescriptionsProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiListContactFieldDescriptionsHandler := connect_go.NewUnaryHandler(
 		P3ApiListContactFieldDescriptionsProcedure,
 		svc.ListContactFieldDescriptions,
 		opts...,
-	))
-	mux.Handle(P3ApiListContactFieldDescriptionsByCGSidProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiListContactFieldDescriptionsByCGSidHandler := connect_go.NewUnaryHandler(
 		P3ApiListContactFieldDescriptionsByCGSidProcedure,
 		svc.ListContactFieldDescriptionsByCGSid,
 		opts...,
-	))
-	mux.Handle(P3ApiListContactImportTemplatesProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiListContactImportTemplatesHandler := connect_go.NewUnaryHandler(
 		P3ApiListContactImportTemplatesProcedure,
 		svc.ListContactImportTemplates,
 		opts...,
-	))
-	mux.Handle(P3ApiUpdatePreviewRecordToFinishedProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiUpdatePreviewRecordToFinishedHandler := connect_go.NewUnaryHandler(
 		P3ApiUpdatePreviewRecordToFinishedProcedure,
 		svc.UpdatePreviewRecordToFinished,
 		opts...,
-	))
-	mux.Handle(P3ApiUpdateAgentHuntGroupProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiUpdateAgentHuntGroupHandler := connect_go.NewUnaryHandler(
 		P3ApiUpdateAgentHuntGroupProcedure,
 		svc.UpdateAgentHuntGroup,
 		opts...,
-	))
-	mux.Handle(P3ApiMultiAgentHuntGroupAssignmentProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiMultiAgentHuntGroupAssignmentHandler := connect_go.NewUnaryHandler(
 		P3ApiMultiAgentHuntGroupAssignmentProcedure,
 		svc.MultiAgentHuntGroupAssignment,
 		opts...,
-	))
-	mux.Handle(P3ApiGetAgentProfileProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiGetAgentProfileHandler := connect_go.NewUnaryHandler(
 		P3ApiGetAgentProfileProcedure,
 		svc.GetAgentProfile,
 		opts...,
-	))
-	mux.Handle(P3ApiRecalculateBillingProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiRecalculateBillingHandler := connect_go.NewUnaryHandler(
 		P3ApiRecalculateBillingProcedure,
 		svc.RecalculateBilling,
 		opts...,
-	))
-	mux.Handle(P3ApiListOutboundBroadcastTemplateDataProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiListOutboundBroadcastTemplateDataHandler := connect_go.NewUnaryHandler(
 		P3ApiListOutboundBroadcastTemplateDataProcedure,
 		svc.ListOutboundBroadcastTemplateData,
 		opts...,
-	))
-	mux.Handle(P3ApiMultiAgentSkillAssignmentProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiMultiAgentSkillAssignmentHandler := connect_go.NewUnaryHandler(
 		P3ApiMultiAgentSkillAssignmentProcedure,
 		svc.MultiAgentSkillAssignment,
 		opts...,
-	))
-	mux.Handle(P3ApiMultiAgentSkillUnassignmentProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiMultiAgentSkillUnassignmentHandler := connect_go.NewUnaryHandler(
 		P3ApiMultiAgentSkillUnassignmentProcedure,
 		svc.MultiAgentSkillUnassignment,
 		opts...,
-	))
-	mux.Handle(P3ApiListMAMAgentHuntGroupsByClientSidProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiListMAMAgentHuntGroupsByClientSidHandler := connect_go.NewUnaryHandler(
 		P3ApiListMAMAgentHuntGroupsByClientSidProcedure,
 		svc.ListMAMAgentHuntGroupsByClientSid,
 		opts...,
-	))
-	mux.Handle(P3ApiListTtsVoicesProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiListTtsVoicesHandler := connect_go.NewUnaryHandler(
 		P3ApiListTtsVoicesProcedure,
 		svc.ListTtsVoices,
 		opts...,
-	))
-	mux.Handle(P3ApiCreateTtsVoiceProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiCreateTtsVoiceHandler := connect_go.NewUnaryHandler(
 		P3ApiCreateTtsVoiceProcedure,
 		svc.CreateTtsVoice,
 		opts...,
-	))
-	mux.Handle(P3ApiDeleteTtsVoiceProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiDeleteTtsVoiceHandler := connect_go.NewUnaryHandler(
 		P3ApiDeleteTtsVoiceProcedure,
 		svc.DeleteTtsVoice,
 		opts...,
-	))
-	mux.Handle(P3ApiListCustomDataKeysProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiListCustomDataKeysHandler := connect_go.NewUnaryHandler(
 		P3ApiListCustomDataKeysProcedure,
 		svc.ListCustomDataKeys,
 		opts...,
-	))
-	mux.Handle(P3ApiCreateCustomDataKeyProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiCreateCustomDataKeyHandler := connect_go.NewUnaryHandler(
 		P3ApiCreateCustomDataKeyProcedure,
 		svc.CreateCustomDataKey,
 		opts...,
-	))
-	mux.Handle(P3ApiDeleteCustomDataKeyProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiDeleteCustomDataKeyHandler := connect_go.NewUnaryHandler(
 		P3ApiDeleteCustomDataKeyProcedure,
 		svc.DeleteCustomDataKey,
 		opts...,
-	))
-	mux.Handle(P3ApiUpdateCustomDataKeyProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiUpdateCustomDataKeyHandler := connect_go.NewUnaryHandler(
 		P3ApiUpdateCustomDataKeyProcedure,
 		svc.UpdateCustomDataKey,
 		opts...,
-	))
-	mux.Handle(P3ApiGetActivityLogHistoriesProcedure, connect_go.NewServerStreamHandler(
+	)
+	p3ApiGetActivityLogHistoriesHandler := connect_go.NewServerStreamHandler(
 		P3ApiGetActivityLogHistoriesProcedure,
 		svc.GetActivityLogHistories,
 		opts...,
-	))
-	mux.Handle(P3ApiListTableTemplatePropertiesProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiListTableTemplatePropertiesHandler := connect_go.NewUnaryHandler(
 		P3ApiListTableTemplatePropertiesProcedure,
 		svc.ListTableTemplateProperties,
 		opts...,
-	))
-	mux.Handle(P3ApiListAgentSkillsFiltersProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiListAgentSkillsFiltersHandler := connect_go.NewUnaryHandler(
 		P3ApiListAgentSkillsFiltersProcedure,
 		svc.ListAgentSkillsFilters,
 		opts...,
-	))
-	mux.Handle(P3ApiListScheduleRulesProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiListScheduleRulesHandler := connect_go.NewUnaryHandler(
 		P3ApiListScheduleRulesProcedure,
 		svc.ListScheduleRules,
 		opts...,
-	))
-	mux.Handle(P3ApiListCustomReportFiltersProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiListCustomReportFiltersHandler := connect_go.NewUnaryHandler(
 		P3ApiListCustomReportFiltersProcedure,
 		svc.ListCustomReportFilters,
 		opts...,
-	))
-	mux.Handle(P3ApiListSmsNumbersProcedure, connect_go.NewUnaryHandler(
+	)
+	p3ApiListSmsNumbersHandler := connect_go.NewUnaryHandler(
 		P3ApiListSmsNumbersProcedure,
 		svc.ListSmsNumbers,
 		opts...,
-	))
-	return "/api.v1alpha1.p3api.P3Api/", mux
+	)
+	return "/api.v1alpha1.p3api.P3Api/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case P3ApiGetAgentHuntGroupProcedure:
+			p3ApiGetAgentHuntGroupHandler.ServeHTTP(w, r)
+		case P3ApiGetAgentSessionProcedure:
+			p3ApiGetAgentSessionHandler.ServeHTTP(w, r)
+		case P3ApiGetAgentSkillsProcedure:
+			p3ApiGetAgentSkillsHandler.ServeHTTP(w, r)
+		case P3ApiCreateAgentSkillProcedure:
+			p3ApiCreateAgentSkillHandler.ServeHTTP(w, r)
+		case P3ApiUpdateAgentSkillProcedure:
+			p3ApiUpdateAgentSkillHandler.ServeHTTP(w, r)
+		case P3ApiDeleteAgentSkillProcedure:
+			p3ApiDeleteAgentSkillHandler.ServeHTTP(w, r)
+		case P3ApiListSkillsForCurrentAgentProcedure:
+			p3ApiListSkillsForCurrentAgentHandler.ServeHTTP(w, r)
+		case P3ApiListSkillsProcedure:
+			p3ApiListSkillsHandler.ServeHTTP(w, r)
+		case P3ApiUpdateAgentSkillsProcedure:
+			p3ApiUpdateAgentSkillsHandler.ServeHTTP(w, r)
+		case P3ApiGetCurrentAgentProcedure:
+			p3ApiGetCurrentAgentHandler.ServeHTTP(w, r)
+		case P3ApiGetClientInfoDataProcedure:
+			p3ApiGetClientInfoDataHandler.ServeHTTP(w, r)
+		case P3ApiGetClientInfoDisplayTemplateProcedure:
+			p3ApiGetClientInfoDisplayTemplateHandler.ServeHTTP(w, r)
+		case P3ApiListAgentStatisticsDataProcedure:
+			p3ApiListAgentStatisticsDataHandler.ServeHTTP(w, r)
+		case P3ApiListPBXExtensionsProcedure:
+			p3ApiListPBXExtensionsHandler.ServeHTTP(w, r)
+		case P3ApiListAgentExtensionsProcedure:
+			p3ApiListAgentExtensionsHandler.ServeHTTP(w, r)
+		case P3ApiListHuntGroupExtensionsProcedure:
+			p3ApiListHuntGroupExtensionsHandler.ServeHTTP(w, r)
+		case P3ApiCreateExtensionProcedure:
+			p3ApiCreateExtensionHandler.ServeHTTP(w, r)
+		case P3ApiDeleteExtensionProcedure:
+			p3ApiDeleteExtensionHandler.ServeHTTP(w, r)
+		case P3ApiUpdateExtensionProcedure:
+			p3ApiUpdateExtensionHandler.ServeHTTP(w, r)
+		case P3ApiUpdatePBXExtensionProcedure:
+			p3ApiUpdatePBXExtensionHandler.ServeHTTP(w, r)
+		case P3ApiCreateDNCLNumbersProcedure:
+			p3ApiCreateDNCLNumbersHandler.ServeHTTP(w, r)
+		case P3ApiGetScriptOrResponsesProcedure:
+			p3ApiGetScriptOrResponsesHandler.ServeHTTP(w, r)
+		case P3ApiGetHuntGroupAgentSettingsProcedure:
+			p3ApiGetHuntGroupAgentSettingsHandler.ServeHTTP(w, r)
+		case P3ApiListHuntGroupWebLinksProcedure:
+			p3ApiListHuntGroupWebLinksHandler.ServeHTTP(w, r)
+		case P3ApiGetHuntGroupPauseCodesProcedure:
+			p3ApiGetHuntGroupPauseCodesHandler.ServeHTTP(w, r)
+		case P3ApiListAgentCallHistoryProcedure:
+			p3ApiListAgentCallHistoryHandler.ServeHTTP(w, r)
+		case P3ApiListClientPhoneBookEntriesProcedure:
+			p3ApiListClientPhoneBookEntriesHandler.ServeHTTP(w, r)
+		case P3ApiListHuntGroupPhoneBookEntriesProcedure:
+			p3ApiListHuntGroupPhoneBookEntriesHandler.ServeHTTP(w, r)
+		case P3ApiCreatePhoneBookEntryProcedure:
+			p3ApiCreatePhoneBookEntryHandler.ServeHTTP(w, r)
+		case P3ApiUpdatePhoneBookEntryProcedure:
+			p3ApiUpdatePhoneBookEntryHandler.ServeHTTP(w, r)
+		case P3ApiDeletePhoneBookEntryProcedure:
+			p3ApiDeletePhoneBookEntryHandler.ServeHTTP(w, r)
+		case P3ApiListPhoneBooksProcedure:
+			p3ApiListPhoneBooksHandler.ServeHTTP(w, r)
+		case P3ApiListAgentTriggersProcedure:
+			p3ApiListAgentTriggersHandler.ServeHTTP(w, r)
+		case P3ApiGetCampaignCompletionStatusProcedure:
+			p3ApiGetCampaignCompletionStatusHandler.ServeHTTP(w, r)
+		case P3ApiGetLostPeerInfoProcedure:
+			p3ApiGetLostPeerInfoHandler.ServeHTTP(w, r)
+		case P3ApiGetDispositionKeysProcedure:
+			p3ApiGetDispositionKeysHandler.ServeHTTP(w, r)
+		case P3ApiGetReadyAgentsProcedure:
+			p3ApiGetReadyAgentsHandler.ServeHTTP(w, r)
+		case P3ApiListAgentQueueAndOnHoldCallDataProcedure:
+			p3ApiListAgentQueueAndOnHoldCallDataHandler.ServeHTTP(w, r)
+		case P3ApiSaveAgentCallResponsesProcedure:
+			p3ApiSaveAgentCallResponsesHandler.ServeHTTP(w, r)
+		case P3ApiListAgentTransferOptionsProcedure:
+			p3ApiListAgentTransferOptionsHandler.ServeHTTP(w, r)
+		case P3ApiUpdateAgentCallResponseValueProcedure:
+			p3ApiUpdateAgentCallResponseValueHandler.ServeHTTP(w, r)
+		case P3ApiGetIntercomPeerInfoProcedure:
+			p3ApiGetIntercomPeerInfoHandler.ServeHTTP(w, r)
+		case P3ApiListOrgResponseEvaluatorsProcedure:
+			p3ApiListOrgResponseEvaluatorsHandler.ServeHTTP(w, r)
+		case P3ApiGetQueueConfigurationOptionsArrayProcedure:
+			p3ApiGetQueueConfigurationOptionsArrayHandler.ServeHTTP(w, r)
+		case P3ApiGetConditionalDNCLRulesProcedure:
+			p3ApiGetConditionalDNCLRulesHandler.ServeHTTP(w, r)
+		case P3ApiManualDialStartProcedure:
+			p3ApiManualDialStartHandler.ServeHTTP(w, r)
+		case P3ApiGetExtendedCallHistoriesProcedure:
+			p3ApiGetExtendedCallHistoriesHandler.ServeHTTP(w, r)
+		case P3ApiListWhiteListPhoneBooksProcedure:
+			p3ApiListWhiteListPhoneBooksHandler.ServeHTTP(w, r)
+		case P3ApiDownloadCallRecordingProcedure:
+			p3ApiDownloadCallRecordingHandler.ServeHTTP(w, r)
+		case P3ApiDownloadCallRecordingsProcedure:
+			p3ApiDownloadCallRecordingsHandler.ServeHTTP(w, r)
+		case P3ApiPlacePreviewDialCallProcedure:
+			p3ApiPlacePreviewDialCallHandler.ServeHTTP(w, r)
+		case P3ApiCancelPreviewDialCallProcedure:
+			p3ApiCancelPreviewDialCallHandler.ServeHTTP(w, r)
+		case P3ApiUpdateTaskStatusProcedure:
+			p3ApiUpdateTaskStatusHandler.ServeHTTP(w, r)
+		case P3ApiListCallbackRoutingAgentsProcedure:
+			p3ApiListCallbackRoutingAgentsHandler.ServeHTTP(w, r)
+		case P3ApiListCallbackRoutingSkillsProcedure:
+			p3ApiListCallbackRoutingSkillsHandler.ServeHTTP(w, r)
+		case P3ApiHandleRecordingDelayProcedure:
+			p3ApiHandleRecordingDelayHandler.ServeHTTP(w, r)
+		case P3ApiUpdateAgentAssignedHuntGroupProcedure:
+			p3ApiUpdateAgentAssignedHuntGroupHandler.ServeHTTP(w, r)
+		case P3ApiGetCallDataProcedure:
+			p3ApiGetCallDataHandler.ServeHTTP(w, r)
+		case P3ApiListHuntGroupsProcedure:
+			p3ApiListHuntGroupsHandler.ServeHTTP(w, r)
+		case P3ApiListReassignmentHuntGroupsProcedure:
+			p3ApiListReassignmentHuntGroupsHandler.ServeHTTP(w, r)
+		case P3ApiGetOrgAgentSettingsProcedure:
+			p3ApiGetOrgAgentSettingsHandler.ServeHTTP(w, r)
+		case P3ApiListCallerIdsFromBucketProcedure:
+			p3ApiListCallerIdsFromBucketHandler.ServeHTTP(w, r)
+		case P3ApiSaveLastCallResponseProcedure:
+			p3ApiSaveLastCallResponseHandler.ServeHTTP(w, r)
+		case P3ApiListAgentCallLogsByCallSidAndTypeProcedure:
+			p3ApiListAgentCallLogsByCallSidAndTypeHandler.ServeHTTP(w, r)
+		case P3ApiListAgentCallResponseValuesProcedure:
+			p3ApiListAgentCallResponseValuesHandler.ServeHTTP(w, r)
+		case P3ApiGetContactSchemaByContactGroupProcedure:
+			p3ApiGetContactSchemaByContactGroupHandler.ServeHTTP(w, r)
+		case P3ApiListContactGroupDetailsByClientSidProcedure:
+			p3ApiListContactGroupDetailsByClientSidHandler.ServeHTTP(w, r)
+		case P3ApiGetContactGroupDetailsProcedure:
+			p3ApiGetContactGroupDetailsHandler.ServeHTTP(w, r)
+		case P3ApiGetContactGroupSizeProcedure:
+			p3ApiGetContactGroupSizeHandler.ServeHTTP(w, r)
+		case P3ApiCreateContactFieldDescriptionProcedure:
+			p3ApiCreateContactFieldDescriptionHandler.ServeHTTP(w, r)
+		case P3ApiDeleteContactFieldDescriptionProcedure:
+			p3ApiDeleteContactFieldDescriptionHandler.ServeHTTP(w, r)
+		case P3ApiListContactFieldDescriptionsProcedure:
+			p3ApiListContactFieldDescriptionsHandler.ServeHTTP(w, r)
+		case P3ApiListContactFieldDescriptionsByCGSidProcedure:
+			p3ApiListContactFieldDescriptionsByCGSidHandler.ServeHTTP(w, r)
+		case P3ApiListContactImportTemplatesProcedure:
+			p3ApiListContactImportTemplatesHandler.ServeHTTP(w, r)
+		case P3ApiUpdatePreviewRecordToFinishedProcedure:
+			p3ApiUpdatePreviewRecordToFinishedHandler.ServeHTTP(w, r)
+		case P3ApiUpdateAgentHuntGroupProcedure:
+			p3ApiUpdateAgentHuntGroupHandler.ServeHTTP(w, r)
+		case P3ApiMultiAgentHuntGroupAssignmentProcedure:
+			p3ApiMultiAgentHuntGroupAssignmentHandler.ServeHTTP(w, r)
+		case P3ApiGetAgentProfileProcedure:
+			p3ApiGetAgentProfileHandler.ServeHTTP(w, r)
+		case P3ApiRecalculateBillingProcedure:
+			p3ApiRecalculateBillingHandler.ServeHTTP(w, r)
+		case P3ApiListOutboundBroadcastTemplateDataProcedure:
+			p3ApiListOutboundBroadcastTemplateDataHandler.ServeHTTP(w, r)
+		case P3ApiMultiAgentSkillAssignmentProcedure:
+			p3ApiMultiAgentSkillAssignmentHandler.ServeHTTP(w, r)
+		case P3ApiMultiAgentSkillUnassignmentProcedure:
+			p3ApiMultiAgentSkillUnassignmentHandler.ServeHTTP(w, r)
+		case P3ApiListMAMAgentHuntGroupsByClientSidProcedure:
+			p3ApiListMAMAgentHuntGroupsByClientSidHandler.ServeHTTP(w, r)
+		case P3ApiListTtsVoicesProcedure:
+			p3ApiListTtsVoicesHandler.ServeHTTP(w, r)
+		case P3ApiCreateTtsVoiceProcedure:
+			p3ApiCreateTtsVoiceHandler.ServeHTTP(w, r)
+		case P3ApiDeleteTtsVoiceProcedure:
+			p3ApiDeleteTtsVoiceHandler.ServeHTTP(w, r)
+		case P3ApiListCustomDataKeysProcedure:
+			p3ApiListCustomDataKeysHandler.ServeHTTP(w, r)
+		case P3ApiCreateCustomDataKeyProcedure:
+			p3ApiCreateCustomDataKeyHandler.ServeHTTP(w, r)
+		case P3ApiDeleteCustomDataKeyProcedure:
+			p3ApiDeleteCustomDataKeyHandler.ServeHTTP(w, r)
+		case P3ApiUpdateCustomDataKeyProcedure:
+			p3ApiUpdateCustomDataKeyHandler.ServeHTTP(w, r)
+		case P3ApiGetActivityLogHistoriesProcedure:
+			p3ApiGetActivityLogHistoriesHandler.ServeHTTP(w, r)
+		case P3ApiListTableTemplatePropertiesProcedure:
+			p3ApiListTableTemplatePropertiesHandler.ServeHTTP(w, r)
+		case P3ApiListAgentSkillsFiltersProcedure:
+			p3ApiListAgentSkillsFiltersHandler.ServeHTTP(w, r)
+		case P3ApiListScheduleRulesProcedure:
+			p3ApiListScheduleRulesHandler.ServeHTTP(w, r)
+		case P3ApiListCustomReportFiltersProcedure:
+			p3ApiListCustomReportFiltersHandler.ServeHTTP(w, r)
+		case P3ApiListSmsNumbersProcedure:
+			p3ApiListSmsNumbersHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
 }
 
 // UnimplementedP3ApiHandler returns CodeUnimplemented from all methods.

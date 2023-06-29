@@ -290,78 +290,110 @@ type DeliveryApiHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewDeliveryApiHandler(svc DeliveryApiHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	mux := http.NewServeMux()
-	mux.Handle(DeliveryApiCreateTransferConfigProcedure, connect_go.NewUnaryHandler(
+	deliveryApiCreateTransferConfigHandler := connect_go.NewUnaryHandler(
 		DeliveryApiCreateTransferConfigProcedure,
 		svc.CreateTransferConfig,
 		opts...,
-	))
-	mux.Handle(DeliveryApiListTransferConfigsProcedure, connect_go.NewUnaryHandler(
+	)
+	deliveryApiListTransferConfigsHandler := connect_go.NewUnaryHandler(
 		DeliveryApiListTransferConfigsProcedure,
 		svc.ListTransferConfigs,
 		opts...,
-	))
-	mux.Handle(DeliveryApiListTransferConfigsByCredentialIDProcedure, connect_go.NewUnaryHandler(
+	)
+	deliveryApiListTransferConfigsByCredentialIDHandler := connect_go.NewUnaryHandler(
 		DeliveryApiListTransferConfigsByCredentialIDProcedure,
 		svc.ListTransferConfigsByCredentialID,
 		opts...,
-	))
-	mux.Handle(DeliveryApiUpdateTransferConfigProcedure, connect_go.NewUnaryHandler(
+	)
+	deliveryApiUpdateTransferConfigHandler := connect_go.NewUnaryHandler(
 		DeliveryApiUpdateTransferConfigProcedure,
 		svc.UpdateTransferConfig,
 		opts...,
-	))
-	mux.Handle(DeliveryApiDeleteTransferConfigProcedure, connect_go.NewUnaryHandler(
+	)
+	deliveryApiDeleteTransferConfigHandler := connect_go.NewUnaryHandler(
 		DeliveryApiDeleteTransferConfigProcedure,
 		svc.DeleteTransferConfig,
 		opts...,
-	))
-	mux.Handle(DeliveryApiGetTransferConfigProcedure, connect_go.NewUnaryHandler(
+	)
+	deliveryApiGetTransferConfigHandler := connect_go.NewUnaryHandler(
 		DeliveryApiGetTransferConfigProcedure,
 		svc.GetTransferConfig,
 		opts...,
-	))
-	mux.Handle(DeliveryApiGetTransferConfigByNameProcedure, connect_go.NewUnaryHandler(
+	)
+	deliveryApiGetTransferConfigByNameHandler := connect_go.NewUnaryHandler(
 		DeliveryApiGetTransferConfigByNameProcedure,
 		svc.GetTransferConfigByName,
 		opts...,
-	))
-	mux.Handle(DeliveryApiListHistoryProcedure, connect_go.NewUnaryHandler(
+	)
+	deliveryApiListHistoryHandler := connect_go.NewUnaryHandler(
 		DeliveryApiListHistoryProcedure,
 		svc.ListHistory,
 		opts...,
-	))
-	mux.Handle(DeliveryApiListHistoryByTransferConfigProcedure, connect_go.NewUnaryHandler(
+	)
+	deliveryApiListHistoryByTransferConfigHandler := connect_go.NewUnaryHandler(
 		DeliveryApiListHistoryByTransferConfigProcedure,
 		svc.ListHistoryByTransferConfig,
 		opts...,
-	))
-	mux.Handle(DeliveryApiListCredentialsProcedure, connect_go.NewUnaryHandler(
+	)
+	deliveryApiListCredentialsHandler := connect_go.NewUnaryHandler(
 		DeliveryApiListCredentialsProcedure,
 		svc.ListCredentials,
 		opts...,
-	))
-	mux.Handle(DeliveryApiGetCredentialProcedure, connect_go.NewUnaryHandler(
+	)
+	deliveryApiGetCredentialHandler := connect_go.NewUnaryHandler(
 		DeliveryApiGetCredentialProcedure,
 		svc.GetCredential,
 		opts...,
-	))
-	mux.Handle(DeliveryApiCreateCredentialProcedure, connect_go.NewUnaryHandler(
+	)
+	deliveryApiCreateCredentialHandler := connect_go.NewUnaryHandler(
 		DeliveryApiCreateCredentialProcedure,
 		svc.CreateCredential,
 		opts...,
-	))
-	mux.Handle(DeliveryApiDeleteCredentialProcedure, connect_go.NewUnaryHandler(
+	)
+	deliveryApiDeleteCredentialHandler := connect_go.NewUnaryHandler(
 		DeliveryApiDeleteCredentialProcedure,
 		svc.DeleteCredential,
 		opts...,
-	))
-	mux.Handle(DeliveryApiUpdateCredentialProcedure, connect_go.NewUnaryHandler(
+	)
+	deliveryApiUpdateCredentialHandler := connect_go.NewUnaryHandler(
 		DeliveryApiUpdateCredentialProcedure,
 		svc.UpdateCredential,
 		opts...,
-	))
-	return "/api.v1alpha1.delivery.DeliveryApi/", mux
+	)
+	return "/api.v1alpha1.delivery.DeliveryApi/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case DeliveryApiCreateTransferConfigProcedure:
+			deliveryApiCreateTransferConfigHandler.ServeHTTP(w, r)
+		case DeliveryApiListTransferConfigsProcedure:
+			deliveryApiListTransferConfigsHandler.ServeHTTP(w, r)
+		case DeliveryApiListTransferConfigsByCredentialIDProcedure:
+			deliveryApiListTransferConfigsByCredentialIDHandler.ServeHTTP(w, r)
+		case DeliveryApiUpdateTransferConfigProcedure:
+			deliveryApiUpdateTransferConfigHandler.ServeHTTP(w, r)
+		case DeliveryApiDeleteTransferConfigProcedure:
+			deliveryApiDeleteTransferConfigHandler.ServeHTTP(w, r)
+		case DeliveryApiGetTransferConfigProcedure:
+			deliveryApiGetTransferConfigHandler.ServeHTTP(w, r)
+		case DeliveryApiGetTransferConfigByNameProcedure:
+			deliveryApiGetTransferConfigByNameHandler.ServeHTTP(w, r)
+		case DeliveryApiListHistoryProcedure:
+			deliveryApiListHistoryHandler.ServeHTTP(w, r)
+		case DeliveryApiListHistoryByTransferConfigProcedure:
+			deliveryApiListHistoryByTransferConfigHandler.ServeHTTP(w, r)
+		case DeliveryApiListCredentialsProcedure:
+			deliveryApiListCredentialsHandler.ServeHTTP(w, r)
+		case DeliveryApiGetCredentialProcedure:
+			deliveryApiGetCredentialHandler.ServeHTTP(w, r)
+		case DeliveryApiCreateCredentialProcedure:
+			deliveryApiCreateCredentialHandler.ServeHTTP(w, r)
+		case DeliveryApiDeleteCredentialProcedure:
+			deliveryApiDeleteCredentialHandler.ServeHTTP(w, r)
+		case DeliveryApiUpdateCredentialProcedure:
+			deliveryApiUpdateCredentialHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
 }
 
 // UnimplementedDeliveryApiHandler returns CodeUnimplemented from all methods.

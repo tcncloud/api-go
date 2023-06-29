@@ -4446,1028 +4446,1440 @@ type OrgHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	mux := http.NewServeMux()
-	mux.Handle(OrgRegisterOrganizationProcedure, connect_go.NewUnaryHandler(
+	orgRegisterOrganizationHandler := connect_go.NewUnaryHandler(
 		OrgRegisterOrganizationProcedure,
 		svc.RegisterOrganization,
 		opts...,
-	))
-	mux.Handle(OrgConvertOrgToManualProcedure, connect_go.NewUnaryHandler(
+	)
+	orgConvertOrgToManualHandler := connect_go.NewUnaryHandler(
 		OrgConvertOrgToManualProcedure,
 		svc.ConvertOrgToManual,
 		opts...,
-	))
-	mux.Handle(OrgUpdateOrganizationProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateOrganizationHandler := connect_go.NewUnaryHandler(
 		OrgUpdateOrganizationProcedure,
 		svc.UpdateOrganization,
 		opts...,
-	))
-	mux.Handle(OrgArchiveOrganizationProcedure, connect_go.NewUnaryHandler(
+	)
+	orgArchiveOrganizationHandler := connect_go.NewUnaryHandler(
 		OrgArchiveOrganizationProcedure,
 		svc.ArchiveOrganization,
 		opts...,
-	))
-	mux.Handle(OrgUnArchiveOrganizationProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUnArchiveOrganizationHandler := connect_go.NewUnaryHandler(
 		OrgUnArchiveOrganizationProcedure,
 		svc.UnArchiveOrganization,
 		opts...,
-	))
-	mux.Handle(OrgListArchivedOrganizationsProcedure, connect_go.NewUnaryHandler(
+	)
+	orgListArchivedOrganizationsHandler := connect_go.NewUnaryHandler(
 		OrgListArchivedOrganizationsProcedure,
 		svc.ListArchivedOrganizations,
 		opts...,
-	))
-	mux.Handle(OrgGetOrganizationProfileProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetOrganizationProfileHandler := connect_go.NewUnaryHandler(
 		OrgGetOrganizationProfileProcedure,
 		svc.GetOrganizationProfile,
 		opts...,
-	))
-	mux.Handle(OrgGetOrganizationProfileByIdProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetOrganizationProfileByIdHandler := connect_go.NewUnaryHandler(
 		OrgGetOrganizationProfileByIdProcedure,
 		svc.GetOrganizationProfileById,
 		opts...,
-	))
-	mux.Handle(OrgListOrganizationDescriptionsProcedure, connect_go.NewUnaryHandler(
+	)
+	orgListOrganizationDescriptionsHandler := connect_go.NewUnaryHandler(
 		OrgListOrganizationDescriptionsProcedure,
 		svc.ListOrganizationDescriptions,
 		opts...,
-	))
-	mux.Handle(OrgListRegionalOrganizationsProcedure, connect_go.NewUnaryHandler(
+	)
+	orgListRegionalOrganizationsHandler := connect_go.NewUnaryHandler(
 		OrgListRegionalOrganizationsProcedure,
 		svc.ListRegionalOrganizations,
 		opts...,
-	))
-	mux.Handle(OrgUpdateP3OwningOrgProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateP3OwningOrgHandler := connect_go.NewUnaryHandler(
 		OrgUpdateP3OwningOrgProcedure,
 		svc.UpdateP3OwningOrg,
 		opts...,
-	))
-	mux.Handle(OrgGetP3OwningOrgProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetP3OwningOrgHandler := connect_go.NewUnaryHandler(
 		OrgGetP3OwningOrgProcedure,
 		svc.GetP3OwningOrg,
 		opts...,
-	))
-	mux.Handle(OrgListOrganizationUserDescriptionsProcedure, connect_go.NewUnaryHandler(
+	)
+	orgListOrganizationUserDescriptionsHandler := connect_go.NewUnaryHandler(
 		OrgListOrganizationUserDescriptionsProcedure,
 		svc.ListOrganizationUserDescriptions,
 		opts...,
-	))
-	mux.Handle(OrgAdminListUserDescriptionsProcedure, connect_go.NewServerStreamHandler(
+	)
+	orgAdminListUserDescriptionsHandler := connect_go.NewServerStreamHandler(
 		OrgAdminListUserDescriptionsProcedure,
 		svc.AdminListUserDescriptions,
 		opts...,
-	))
-	mux.Handle(OrgListUserDescriptionsProcedure, connect_go.NewServerStreamHandler(
+	)
+	orgListUserDescriptionsHandler := connect_go.NewServerStreamHandler(
 		OrgListUserDescriptionsProcedure,
 		svc.ListUserDescriptions,
 		opts...,
-	))
-	mux.Handle(OrgGetUserDirectoryProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetUserDirectoryHandler := connect_go.NewUnaryHandler(
 		OrgGetUserDirectoryProcedure,
 		svc.GetUserDirectory,
 		opts...,
-	))
-	mux.Handle(OrgGetRegionsProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetRegionsHandler := connect_go.NewUnaryHandler(
 		OrgGetRegionsProcedure,
 		svc.GetRegions,
 		opts...,
-	))
-	mux.Handle(OrgGetMyUserDetailsProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetMyUserDetailsHandler := connect_go.NewUnaryHandler(
 		OrgGetMyUserDetailsProcedure,
 		svc.GetMyUserDetails,
 		opts...,
-	))
-	mux.Handle(OrgGetUserDetailsProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetUserDetailsHandler := connect_go.NewUnaryHandler(
 		OrgGetUserDetailsProcedure,
 		svc.GetUserDetails,
 		opts...,
-	))
-	mux.Handle(OrgAdminGetUserDetailsProcedure, connect_go.NewUnaryHandler(
+	)
+	orgAdminGetUserDetailsHandler := connect_go.NewUnaryHandler(
 		OrgAdminGetUserDetailsProcedure,
 		svc.AdminGetUserDetails,
 		opts...,
-	))
-	mux.Handle(OrgGetAgentUsersProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetAgentUsersHandler := connect_go.NewUnaryHandler(
 		OrgGetAgentUsersProcedure,
 		svc.GetAgentUsers,
 		opts...,
-	))
-	mux.Handle(OrgGetAgentSettingsProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetAgentSettingsHandler := connect_go.NewUnaryHandler(
 		OrgGetAgentSettingsProcedure,
 		svc.GetAgentSettings,
 		opts...,
-	))
-	mux.Handle(OrgGetAgentProfileGroupProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetAgentProfileGroupHandler := connect_go.NewUnaryHandler(
 		OrgGetAgentProfileGroupProcedure,
 		svc.GetAgentProfileGroup,
 		opts...,
-	))
-	mux.Handle(OrgUpdateAgentProfileGroupProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateAgentProfileGroupHandler := connect_go.NewUnaryHandler(
 		OrgUpdateAgentProfileGroupProcedure,
 		svc.UpdateAgentProfileGroup,
 		opts...,
-	))
-	mux.Handle(OrgCreateAgentProfileGroupProcedure, connect_go.NewUnaryHandler(
+	)
+	orgCreateAgentProfileGroupHandler := connect_go.NewUnaryHandler(
 		OrgCreateAgentProfileGroupProcedure,
 		svc.CreateAgentProfileGroup,
 		opts...,
-	))
-	mux.Handle(OrgListAgentProfileGroupsProcedure, connect_go.NewUnaryHandler(
+	)
+	orgListAgentProfileGroupsHandler := connect_go.NewUnaryHandler(
 		OrgListAgentProfileGroupsProcedure,
 		svc.ListAgentProfileGroups,
 		opts...,
-	))
-	mux.Handle(OrgDeleteAgentProfileGroupProcedure, connect_go.NewUnaryHandler(
+	)
+	orgDeleteAgentProfileGroupHandler := connect_go.NewUnaryHandler(
 		OrgDeleteAgentProfileGroupProcedure,
 		svc.DeleteAgentProfileGroup,
 		opts...,
-	))
-	mux.Handle(OrgAssignAgentProfileGroupsProcedure, connect_go.NewUnaryHandler(
+	)
+	orgAssignAgentProfileGroupsHandler := connect_go.NewUnaryHandler(
 		OrgAssignAgentProfileGroupsProcedure,
 		svc.AssignAgentProfileGroups,
 		opts...,
-	))
-	mux.Handle(OrgUpdateUserProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateUserHandler := connect_go.NewUnaryHandler(
 		OrgUpdateUserProcedure,
 		svc.UpdateUser,
 		opts...,
-	))
-	mux.Handle(OrgUpdateMyUserProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateMyUserHandler := connect_go.NewUnaryHandler(
 		OrgUpdateMyUserProcedure,
 		svc.UpdateMyUser,
 		opts...,
-	))
-	mux.Handle(OrgUpdateUserCallerIdProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateUserCallerIdHandler := connect_go.NewUnaryHandler(
 		OrgUpdateUserCallerIdProcedure,
 		svc.UpdateUserCallerId,
 		opts...,
-	))
-	mux.Handle(OrgCreateUserProcedure, connect_go.NewUnaryHandler(
+	)
+	orgCreateUserHandler := connect_go.NewUnaryHandler(
 		OrgCreateUserProcedure,
 		svc.CreateUser,
 		opts...,
-	))
-	mux.Handle(OrgCreateUserByOrgIdProcedure, connect_go.NewUnaryHandler(
+	)
+	orgCreateUserByOrgIdHandler := connect_go.NewUnaryHandler(
 		OrgCreateUserByOrgIdProcedure,
 		svc.CreateUserByOrgId,
 		opts...,
-	))
-	mux.Handle(OrgCreateDelegatedUserProcedure, connect_go.NewUnaryHandler(
+	)
+	orgCreateDelegatedUserHandler := connect_go.NewUnaryHandler(
 		OrgCreateDelegatedUserProcedure,
 		svc.CreateDelegatedUser,
 		opts...,
-	))
-	mux.Handle(OrgUpdateUserPasswordProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateUserPasswordHandler := connect_go.NewUnaryHandler(
 		OrgUpdateUserPasswordProcedure,
 		svc.UpdateUserPassword,
 		opts...,
-	))
-	mux.Handle(OrgUpdateMyUserPasswordProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateMyUserPasswordHandler := connect_go.NewUnaryHandler(
 		OrgUpdateMyUserPasswordProcedure,
 		svc.UpdateMyUserPassword,
 		opts...,
-	))
-	mux.Handle(OrgUpdateUserPasswordByOrgIdProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateUserPasswordByOrgIdHandler := connect_go.NewUnaryHandler(
 		OrgUpdateUserPasswordByOrgIdProcedure,
 		svc.UpdateUserPasswordByOrgId,
 		opts...,
-	))
-	mux.Handle(OrgResetUserRequirePasswordResetProcedure, connect_go.NewUnaryHandler(
+	)
+	orgResetUserRequirePasswordResetHandler := connect_go.NewUnaryHandler(
 		OrgResetUserRequirePasswordResetProcedure,
 		svc.ResetUserRequirePasswordReset,
 		opts...,
-	))
-	mux.Handle(OrgGetUserPasswordResetLinkProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetUserPasswordResetLinkHandler := connect_go.NewUnaryHandler(
 		OrgGetUserPasswordResetLinkProcedure,
 		svc.GetUserPasswordResetLink,
 		opts...,
-	))
-	mux.Handle(OrgGetMyUserPasswordResetLinkProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetMyUserPasswordResetLinkHandler := connect_go.NewUnaryHandler(
 		OrgGetMyUserPasswordResetLinkProcedure,
 		svc.GetMyUserPasswordResetLink,
 		opts...,
-	))
-	mux.Handle(OrgGetUserPasswordResetLinkByOrgIdProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetUserPasswordResetLinkByOrgIdHandler := connect_go.NewUnaryHandler(
 		OrgGetUserPasswordResetLinkByOrgIdProcedure,
 		svc.GetUserPasswordResetLinkByOrgId,
 		opts...,
-	))
-	mux.Handle(OrgGetUserEmailVerifiedProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetUserEmailVerifiedHandler := connect_go.NewUnaryHandler(
 		OrgGetUserEmailVerifiedProcedure,
 		svc.GetUserEmailVerified,
 		opts...,
-	))
-	mux.Handle(OrgGetUserEmailVerifiedByOrgIdProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetUserEmailVerifiedByOrgIdHandler := connect_go.NewUnaryHandler(
 		OrgGetUserEmailVerifiedByOrgIdProcedure,
 		svc.GetUserEmailVerifiedByOrgId,
 		opts...,
-	))
-	mux.Handle(OrgSendUserVerificationEmailByOrgIdProcedure, connect_go.NewUnaryHandler(
+	)
+	orgSendUserVerificationEmailByOrgIdHandler := connect_go.NewUnaryHandler(
 		OrgSendUserVerificationEmailByOrgIdProcedure,
 		svc.SendUserVerificationEmailByOrgId,
 		opts...,
-	))
-	mux.Handle(OrgSendUserVerificationEmailProcedure, connect_go.NewUnaryHandler(
+	)
+	orgSendUserVerificationEmailHandler := connect_go.NewUnaryHandler(
 		OrgSendUserVerificationEmailProcedure,
 		svc.SendUserVerificationEmail,
 		opts...,
-	))
-	mux.Handle(OrgManualUserEmailVerificationByOrgIdProcedure, connect_go.NewUnaryHandler(
+	)
+	orgManualUserEmailVerificationByOrgIdHandler := connect_go.NewUnaryHandler(
 		OrgManualUserEmailVerificationByOrgIdProcedure,
 		svc.ManualUserEmailVerificationByOrgId,
 		opts...,
-	))
-	mux.Handle(OrgManualUserEmailVerificationProcedure, connect_go.NewUnaryHandler(
+	)
+	orgManualUserEmailVerificationHandler := connect_go.NewUnaryHandler(
 		OrgManualUserEmailVerificationProcedure,
 		svc.ManualUserEmailVerification,
 		opts...,
-	))
-	mux.Handle(OrgGetTempUserTokenProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetTempUserTokenHandler := connect_go.NewUnaryHandler(
 		OrgGetTempUserTokenProcedure,
 		svc.GetTempUserToken,
 		opts...,
-	))
-	mux.Handle(OrgGetTempUserTokenByUserIdProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetTempUserTokenByUserIdHandler := connect_go.NewUnaryHandler(
 		OrgGetTempUserTokenByUserIdProcedure,
 		svc.GetTempUserTokenByUserId,
 		opts...,
-	))
-	mux.Handle(OrgGetCountriesListProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetCountriesListHandler := connect_go.NewUnaryHandler(
 		OrgGetCountriesListProcedure,
 		svc.GetCountriesList,
 		opts...,
-	))
-	mux.Handle(OrgGetAdminClientPreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetAdminClientPreferencesHandler := connect_go.NewUnaryHandler(
 		OrgGetAdminClientPreferencesProcedure,
 		svc.GetAdminClientPreferences,
 		opts...,
-	))
-	mux.Handle(OrgUpdateAdminClientPreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateAdminClientPreferencesHandler := connect_go.NewUnaryHandler(
 		OrgUpdateAdminClientPreferencesProcedure,
 		svc.UpdateAdminClientPreferences,
 		opts...,
-	))
-	mux.Handle(OrgGetPermissionsProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetPermissionsHandler := connect_go.NewUnaryHandler(
 		OrgGetPermissionsProcedure,
 		svc.GetPermissions,
 		opts...,
-	))
-	mux.Handle(OrgRevokeAccountOwnerPermissionFromUserProcedure, connect_go.NewUnaryHandler(
+	)
+	orgRevokeAccountOwnerPermissionFromUserHandler := connect_go.NewUnaryHandler(
 		OrgRevokeAccountOwnerPermissionFromUserProcedure,
 		svc.RevokeAccountOwnerPermissionFromUser,
 		opts...,
-	))
-	mux.Handle(OrgUpdateUserDisabledProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateUserDisabledHandler := connect_go.NewUnaryHandler(
 		OrgUpdateUserDisabledProcedure,
 		svc.UpdateUserDisabled,
 		opts...,
-	))
-	mux.Handle(OrgUpdateUserDisabledByOrgIdProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateUserDisabledByOrgIdHandler := connect_go.NewUnaryHandler(
 		OrgUpdateUserDisabledByOrgIdProcedure,
 		svc.UpdateUserDisabledByOrgId,
 		opts...,
-	))
-	mux.Handle(OrgUpdateBulkUsersDisabledProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateBulkUsersDisabledHandler := connect_go.NewUnaryHandler(
 		OrgUpdateBulkUsersDisabledProcedure,
 		svc.UpdateBulkUsersDisabled,
 		opts...,
-	))
-	mux.Handle(OrgGetOrgBillingSettingsByOrgIdProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetOrgBillingSettingsByOrgIdHandler := connect_go.NewUnaryHandler(
 		OrgGetOrgBillingSettingsByOrgIdProcedure,
 		svc.GetOrgBillingSettingsByOrgId,
 		opts...,
-	))
-	mux.Handle(OrgGetOrgBillingSettingsProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetOrgBillingSettingsHandler := connect_go.NewUnaryHandler(
 		OrgGetOrgBillingSettingsProcedure,
 		svc.GetOrgBillingSettings,
 		opts...,
-	))
-	mux.Handle(OrgSetOrgBillingSettingsProcedure, connect_go.NewUnaryHandler(
+	)
+	orgSetOrgBillingSettingsHandler := connect_go.NewUnaryHandler(
 		OrgSetOrgBillingSettingsProcedure,
 		svc.SetOrgBillingSettings,
 		opts...,
-	))
-	mux.Handle(OrgAddOrgBillingOverrideProcedure, connect_go.NewUnaryHandler(
+	)
+	orgAddOrgBillingOverrideHandler := connect_go.NewUnaryHandler(
 		OrgAddOrgBillingOverrideProcedure,
 		svc.AddOrgBillingOverride,
 		opts...,
-	))
-	mux.Handle(OrgRemoveOrgBillingOverrideProcedure, connect_go.NewUnaryHandler(
+	)
+	orgRemoveOrgBillingOverrideHandler := connect_go.NewUnaryHandler(
 		OrgRemoveOrgBillingOverrideProcedure,
 		svc.RemoveOrgBillingOverride,
 		opts...,
-	))
-	mux.Handle(OrgGetSystemDefaultBillingRatesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetSystemDefaultBillingRatesHandler := connect_go.NewUnaryHandler(
 		OrgGetSystemDefaultBillingRatesProcedure,
 		svc.GetSystemDefaultBillingRates,
 		opts...,
-	))
-	mux.Handle(OrgListPermissionGroupsByOrgIdProcedure, connect_go.NewUnaryHandler(
+	)
+	orgListPermissionGroupsByOrgIdHandler := connect_go.NewUnaryHandler(
 		OrgListPermissionGroupsByOrgIdProcedure,
 		svc.ListPermissionGroupsByOrgId,
 		opts...,
-	))
-	mux.Handle(OrgListPermissionGroupsProcedure, connect_go.NewUnaryHandler(
+	)
+	orgListPermissionGroupsHandler := connect_go.NewUnaryHandler(
 		OrgListPermissionGroupsProcedure,
 		svc.ListPermissionGroups,
 		opts...,
-	))
-	mux.Handle(OrgCreatePermissionGroupProcedure, connect_go.NewUnaryHandler(
+	)
+	orgCreatePermissionGroupHandler := connect_go.NewUnaryHandler(
 		OrgCreatePermissionGroupProcedure,
 		svc.CreatePermissionGroup,
 		opts...,
-	))
-	mux.Handle(OrgUpdatePermissionGroupProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdatePermissionGroupHandler := connect_go.NewUnaryHandler(
 		OrgUpdatePermissionGroupProcedure,
 		svc.UpdatePermissionGroup,
 		opts...,
-	))
-	mux.Handle(OrgDeletePermissionGroupProcedure, connect_go.NewUnaryHandler(
+	)
+	orgDeletePermissionGroupHandler := connect_go.NewUnaryHandler(
 		OrgDeletePermissionGroupProcedure,
 		svc.DeletePermissionGroup,
 		opts...,
-	))
-	mux.Handle(OrgAssignUserToAccountOwnerPermissionGroupProcedure, connect_go.NewUnaryHandler(
+	)
+	orgAssignUserToAccountOwnerPermissionGroupHandler := connect_go.NewUnaryHandler(
 		OrgAssignUserToAccountOwnerPermissionGroupProcedure,
 		svc.AssignUserToAccountOwnerPermissionGroup,
 		opts...,
-	))
-	mux.Handle(OrgAssignUserPermissionGroupProcedure, connect_go.NewUnaryHandler(
+	)
+	orgAssignUserPermissionGroupHandler := connect_go.NewUnaryHandler(
 		OrgAssignUserPermissionGroupProcedure,
 		svc.AssignUserPermissionGroup,
 		opts...,
-	))
-	mux.Handle(OrgAssignUsersPermissionGroupProcedure, connect_go.NewUnaryHandler(
+	)
+	orgAssignUsersPermissionGroupHandler := connect_go.NewUnaryHandler(
 		OrgAssignUsersPermissionGroupProcedure,
 		svc.AssignUsersPermissionGroup,
 		opts...,
-	))
-	mux.Handle(OrgUpdateUserNeoPermissionGroupsProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateUserNeoPermissionGroupsHandler := connect_go.NewUnaryHandler(
 		OrgUpdateUserNeoPermissionGroupsProcedure,
 		svc.UpdateUserNeoPermissionGroups,
 		opts...,
-	))
-	mux.Handle(OrgRevokeUserPermissionGroupProcedure, connect_go.NewUnaryHandler(
+	)
+	orgRevokeUserPermissionGroupHandler := connect_go.NewUnaryHandler(
 		OrgRevokeUserPermissionGroupProcedure,
 		svc.RevokeUserPermissionGroup,
 		opts...,
-	))
-	mux.Handle(OrgRevokeUsersPermissionGroupProcedure, connect_go.NewUnaryHandler(
+	)
+	orgRevokeUsersPermissionGroupHandler := connect_go.NewUnaryHandler(
 		OrgRevokeUsersPermissionGroupProcedure,
 		svc.RevokeUsersPermissionGroup,
 		opts...,
-	))
-	mux.Handle(OrgInitDefaultPermissionGroupsProcedure, connect_go.NewUnaryHandler(
+	)
+	orgInitDefaultPermissionGroupsHandler := connect_go.NewUnaryHandler(
 		OrgInitDefaultPermissionGroupsProcedure,
 		svc.InitDefaultPermissionGroups,
 		opts...,
-	))
-	mux.Handle(OrgAddPermissionToAccountOwnerPermissionGroupProcedure, connect_go.NewUnaryHandler(
+	)
+	orgAddPermissionToAccountOwnerPermissionGroupHandler := connect_go.NewUnaryHandler(
 		OrgAddPermissionToAccountOwnerPermissionGroupProcedure,
 		svc.AddPermissionToAccountOwnerPermissionGroup,
 		opts...,
-	))
-	mux.Handle(OrgRevokePermissionToAccountOwnerPermissionGroupProcedure, connect_go.NewUnaryHandler(
+	)
+	orgRevokePermissionToAccountOwnerPermissionGroupHandler := connect_go.NewUnaryHandler(
 		OrgRevokePermissionToAccountOwnerPermissionGroupProcedure,
 		svc.RevokePermissionToAccountOwnerPermissionGroup,
 		opts...,
-	))
-	mux.Handle(OrgAddPermissionToOrgDefaultGroupProcedure, connect_go.NewUnaryHandler(
+	)
+	orgAddPermissionToOrgDefaultGroupHandler := connect_go.NewUnaryHandler(
 		OrgAddPermissionToOrgDefaultGroupProcedure,
 		svc.AddPermissionToOrgDefaultGroup,
 		opts...,
-	))
-	mux.Handle(OrgRemovePermissionFromOrgDefaultGroupProcedure, connect_go.NewUnaryHandler(
+	)
+	orgRemovePermissionFromOrgDefaultGroupHandler := connect_go.NewUnaryHandler(
 		OrgRemovePermissionFromOrgDefaultGroupProcedure,
 		svc.RemovePermissionFromOrgDefaultGroup,
 		opts...,
-	))
-	mux.Handle(OrgGetOrgDefaultSuperUserGroupProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetOrgDefaultSuperUserGroupHandler := connect_go.NewUnaryHandler(
 		OrgGetOrgDefaultSuperUserGroupProcedure,
 		svc.GetOrgDefaultSuperUserGroup,
 		opts...,
-	))
-	mux.Handle(OrgListP3PermissionGroupsByOrgIdProcedure, connect_go.NewUnaryHandler(
+	)
+	orgListP3PermissionGroupsByOrgIdHandler := connect_go.NewUnaryHandler(
 		OrgListP3PermissionGroupsByOrgIdProcedure,
 		svc.ListP3PermissionGroupsByOrgId,
 		opts...,
-	))
-	mux.Handle(OrgListP3PermissionGroupsProcedure, connect_go.NewUnaryHandler(
+	)
+	orgListP3PermissionGroupsHandler := connect_go.NewUnaryHandler(
 		OrgListP3PermissionGroupsProcedure,
 		svc.ListP3PermissionGroups,
 		opts...,
-	))
-	mux.Handle(OrgAddUserRegionProcedure, connect_go.NewUnaryHandler(
+	)
+	orgAddUserRegionHandler := connect_go.NewUnaryHandler(
 		OrgAddUserRegionProcedure,
 		svc.AddUserRegion,
 		opts...,
-	))
-	mux.Handle(OrgRemoveUserRegionProcedure, connect_go.NewUnaryHandler(
+	)
+	orgRemoveUserRegionHandler := connect_go.NewUnaryHandler(
 		OrgRemoveUserRegionProcedure,
 		svc.RemoveUserRegion,
 		opts...,
-	))
-	mux.Handle(OrgCreateP3PermissionGroupProcedure, connect_go.NewUnaryHandler(
+	)
+	orgCreateP3PermissionGroupHandler := connect_go.NewUnaryHandler(
 		OrgCreateP3PermissionGroupProcedure,
 		svc.CreateP3PermissionGroup,
 		opts...,
-	))
-	mux.Handle(OrgUpdateP3PermissionGroupByOrgIdProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateP3PermissionGroupByOrgIdHandler := connect_go.NewUnaryHandler(
 		OrgUpdateP3PermissionGroupByOrgIdProcedure,
 		svc.UpdateP3PermissionGroupByOrgId,
 		opts...,
-	))
-	mux.Handle(OrgUpdateP3PermissionGroupProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateP3PermissionGroupHandler := connect_go.NewUnaryHandler(
 		OrgUpdateP3PermissionGroupProcedure,
 		svc.UpdateP3PermissionGroup,
 		opts...,
-	))
-	mux.Handle(OrgDeleteP3PermissionGroupProcedure, connect_go.NewUnaryHandler(
+	)
+	orgDeleteP3PermissionGroupHandler := connect_go.NewUnaryHandler(
 		OrgDeleteP3PermissionGroupProcedure,
 		svc.DeleteP3PermissionGroup,
 		opts...,
-	))
-	mux.Handle(OrgAssignUsersP3PermissionGroupProcedure, connect_go.NewUnaryHandler(
+	)
+	orgAssignUsersP3PermissionGroupHandler := connect_go.NewUnaryHandler(
 		OrgAssignUsersP3PermissionGroupProcedure,
 		svc.AssignUsersP3PermissionGroup,
 		opts...,
-	))
-	mux.Handle(OrgAddLoginToUserProcedure, connect_go.NewUnaryHandler(
+	)
+	orgAddLoginToUserHandler := connect_go.NewUnaryHandler(
 		OrgAddLoginToUserProcedure,
 		svc.AddLoginToUser,
 		opts...,
-	))
-	mux.Handle(OrgRevokeUsersP3PermissionGroupProcedure, connect_go.NewUnaryHandler(
+	)
+	orgRevokeUsersP3PermissionGroupHandler := connect_go.NewUnaryHandler(
 		OrgRevokeUsersP3PermissionGroupProcedure,
 		svc.RevokeUsersP3PermissionGroup,
 		opts...,
-	))
-	mux.Handle(OrgGetContactPreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetContactPreferencesHandler := connect_go.NewUnaryHandler(
 		OrgGetContactPreferencesProcedure,
 		svc.GetContactPreferences,
 		opts...,
-	))
-	mux.Handle(OrgUpdateContactPreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateContactPreferencesHandler := connect_go.NewUnaryHandler(
 		OrgUpdateContactPreferencesProcedure,
 		svc.UpdateContactPreferences,
 		opts...,
-	))
-	mux.Handle(OrgGetCompliancePreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetCompliancePreferencesHandler := connect_go.NewUnaryHandler(
 		OrgGetCompliancePreferencesProcedure,
 		svc.GetCompliancePreferences,
 		opts...,
-	))
-	mux.Handle(OrgUpdateCompliancePreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateCompliancePreferencesHandler := connect_go.NewUnaryHandler(
 		OrgUpdateCompliancePreferencesProcedure,
 		svc.UpdateCompliancePreferences,
 		opts...,
-	))
-	mux.Handle(OrgGetAgentPreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetAgentPreferencesHandler := connect_go.NewUnaryHandler(
 		OrgGetAgentPreferencesProcedure,
 		svc.GetAgentPreferences,
 		opts...,
-	))
-	mux.Handle(OrgUpdateAgentPreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateAgentPreferencesHandler := connect_go.NewUnaryHandler(
 		OrgUpdateAgentPreferencesProcedure,
 		svc.UpdateAgentPreferences,
 		opts...,
-	))
-	mux.Handle(OrgGetOrganizationPreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetOrganizationPreferencesHandler := connect_go.NewUnaryHandler(
 		OrgGetOrganizationPreferencesProcedure,
 		svc.GetOrganizationPreferences,
 		opts...,
-	))
-	mux.Handle(OrgUpdateOrganizationPreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateOrganizationPreferencesHandler := connect_go.NewUnaryHandler(
 		OrgUpdateOrganizationPreferencesProcedure,
 		svc.UpdateOrganizationPreferences,
 		opts...,
-	))
-	mux.Handle(OrgGetSchedulePreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetSchedulePreferencesHandler := connect_go.NewUnaryHandler(
 		OrgGetSchedulePreferencesProcedure,
 		svc.GetSchedulePreferences,
 		opts...,
-	))
-	mux.Handle(OrgUpdateSchedulePreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateSchedulePreferencesHandler := connect_go.NewUnaryHandler(
 		OrgUpdateSchedulePreferencesProcedure,
 		svc.UpdateSchedulePreferences,
 		opts...,
-	))
-	mux.Handle(OrgGetBusinessPreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetBusinessPreferencesHandler := connect_go.NewUnaryHandler(
 		OrgGetBusinessPreferencesProcedure,
 		svc.GetBusinessPreferences,
 		opts...,
-	))
-	mux.Handle(OrgUpdateBusinessPreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateBusinessPreferencesHandler := connect_go.NewUnaryHandler(
 		OrgUpdateBusinessPreferencesProcedure,
 		svc.UpdateBusinessPreferences,
 		opts...,
-	))
-	mux.Handle(OrgGetEndOfDayPreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetEndOfDayPreferencesHandler := connect_go.NewUnaryHandler(
 		OrgGetEndOfDayPreferencesProcedure,
 		svc.GetEndOfDayPreferences,
 		opts...,
-	))
-	mux.Handle(OrgUpdateEndOfDayPreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateEndOfDayPreferencesHandler := connect_go.NewUnaryHandler(
 		OrgUpdateEndOfDayPreferencesProcedure,
 		svc.UpdateEndOfDayPreferences,
 		opts...,
-	))
-	mux.Handle(OrgGetReportFilterPreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetReportFilterPreferencesHandler := connect_go.NewUnaryHandler(
 		OrgGetReportFilterPreferencesProcedure,
 		svc.GetReportFilterPreferences,
 		opts...,
-	))
-	mux.Handle(OrgUpdateReportFilterPreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateReportFilterPreferencesHandler := connect_go.NewUnaryHandler(
 		OrgUpdateReportFilterPreferencesProcedure,
 		svc.UpdateReportFilterPreferences,
 		opts...,
-	))
-	mux.Handle(OrgGetPhonePreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetPhonePreferencesHandler := connect_go.NewUnaryHandler(
 		OrgGetPhonePreferencesProcedure,
 		svc.GetPhonePreferences,
 		opts...,
-	))
-	mux.Handle(OrgUpdatePhonePreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdatePhonePreferencesHandler := connect_go.NewUnaryHandler(
 		OrgUpdatePhonePreferencesProcedure,
 		svc.UpdatePhonePreferences,
 		opts...,
-	))
-	mux.Handle(OrgGetDashboardGeneralPreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetDashboardGeneralPreferencesHandler := connect_go.NewUnaryHandler(
 		OrgGetDashboardGeneralPreferencesProcedure,
 		svc.GetDashboardGeneralPreferences,
 		opts...,
-	))
-	mux.Handle(OrgUpdateDashboardGeneralPreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateDashboardGeneralPreferencesHandler := connect_go.NewUnaryHandler(
 		OrgUpdateDashboardGeneralPreferencesProcedure,
 		svc.UpdateDashboardGeneralPreferences,
 		opts...,
-	))
-	mux.Handle(OrgGetWebhookPreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetWebhookPreferencesHandler := connect_go.NewUnaryHandler(
 		OrgGetWebhookPreferencesProcedure,
 		svc.GetWebhookPreferences,
 		opts...,
-	))
-	mux.Handle(OrgUpdateWebhookPreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateWebhookPreferencesHandler := connect_go.NewUnaryHandler(
 		OrgUpdateWebhookPreferencesProcedure,
 		svc.UpdateWebhookPreferences,
 		opts...,
-	))
-	mux.Handle(OrgGetBroadcastPreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetBroadcastPreferencesHandler := connect_go.NewUnaryHandler(
 		OrgGetBroadcastPreferencesProcedure,
 		svc.GetBroadcastPreferences,
 		opts...,
-	))
-	mux.Handle(OrgUpdateBroadcastPreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateBroadcastPreferencesHandler := connect_go.NewUnaryHandler(
 		OrgUpdateBroadcastPreferencesProcedure,
 		svc.UpdateBroadcastPreferences,
 		opts...,
-	))
-	mux.Handle(OrgGetAuthenticationPreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetAuthenticationPreferencesHandler := connect_go.NewUnaryHandler(
 		OrgGetAuthenticationPreferencesProcedure,
 		svc.GetAuthenticationPreferences,
 		opts...,
-	))
-	mux.Handle(OrgUpdateAuthenticationPreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateAuthenticationPreferencesHandler := connect_go.NewUnaryHandler(
 		OrgUpdateAuthenticationPreferencesProcedure,
 		svc.UpdateAuthenticationPreferences,
 		opts...,
-	))
-	mux.Handle(OrgGetRecordingPreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetRecordingPreferencesHandler := connect_go.NewUnaryHandler(
 		OrgGetRecordingPreferencesProcedure,
 		svc.GetRecordingPreferences,
 		opts...,
-	))
-	mux.Handle(OrgUpdateRecordingPreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateRecordingPreferencesHandler := connect_go.NewUnaryHandler(
 		OrgUpdateRecordingPreferencesProcedure,
 		svc.UpdateRecordingPreferences,
 		opts...,
-	))
-	mux.Handle(OrgGetDashboardQueuePreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetDashboardQueuePreferencesHandler := connect_go.NewUnaryHandler(
 		OrgGetDashboardQueuePreferencesProcedure,
 		svc.GetDashboardQueuePreferences,
 		opts...,
-	))
-	mux.Handle(OrgUpdateDashboardQueuePreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateDashboardQueuePreferencesHandler := connect_go.NewUnaryHandler(
 		OrgUpdateDashboardQueuePreferencesProcedure,
 		svc.UpdateDashboardQueuePreferences,
 		opts...,
-	))
-	mux.Handle(OrgGetAgentQuickViewPreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetAgentQuickViewPreferencesHandler := connect_go.NewUnaryHandler(
 		OrgGetAgentQuickViewPreferencesProcedure,
 		svc.GetAgentQuickViewPreferences,
 		opts...,
-	))
-	mux.Handle(OrgGetVoiceAnalyticsPreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetVoiceAnalyticsPreferencesHandler := connect_go.NewUnaryHandler(
 		OrgGetVoiceAnalyticsPreferencesProcedure,
 		svc.GetVoiceAnalyticsPreferences,
 		opts...,
-	))
-	mux.Handle(OrgUpdateVoiceAnalyticsPreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateVoiceAnalyticsPreferencesHandler := connect_go.NewUnaryHandler(
 		OrgUpdateVoiceAnalyticsPreferencesProcedure,
 		svc.UpdateVoiceAnalyticsPreferences,
 		opts...,
-	))
-	mux.Handle(OrgUpdateVoiceAnalyticsPreferencesEnabledProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateVoiceAnalyticsPreferencesEnabledHandler := connect_go.NewUnaryHandler(
 		OrgUpdateVoiceAnalyticsPreferencesEnabledProcedure,
 		svc.UpdateVoiceAnalyticsPreferencesEnabled,
 		opts...,
-	))
-	mux.Handle(OrgGetScorecardsPreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetScorecardsPreferencesHandler := connect_go.NewUnaryHandler(
 		OrgGetScorecardsPreferencesProcedure,
 		svc.GetScorecardsPreferences,
 		opts...,
-	))
-	mux.Handle(OrgUpdateScorecardsPreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateScorecardsPreferencesHandler := connect_go.NewUnaryHandler(
 		OrgUpdateScorecardsPreferencesProcedure,
 		svc.UpdateScorecardsPreferences,
 		opts...,
-	))
-	mux.Handle(OrgGetEmailSmsPreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetEmailSmsPreferencesHandler := connect_go.NewUnaryHandler(
 		OrgGetEmailSmsPreferencesProcedure,
 		svc.GetEmailSmsPreferences,
 		opts...,
-	))
-	mux.Handle(OrgUpdateEmailSmsPreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateEmailSmsPreferencesHandler := connect_go.NewUnaryHandler(
 		OrgUpdateEmailSmsPreferencesProcedure,
 		svc.UpdateEmailSmsPreferences,
 		opts...,
-	))
-	mux.Handle(OrgEditAgentQuickViewPreferencesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgEditAgentQuickViewPreferencesHandler := connect_go.NewUnaryHandler(
 		OrgEditAgentQuickViewPreferencesProcedure,
 		svc.EditAgentQuickViewPreferences,
 		opts...,
-	))
-	mux.Handle(OrgEditBackofficeThemePreferenceProcedure, connect_go.NewUnaryHandler(
+	)
+	orgEditBackofficeThemePreferenceHandler := connect_go.NewUnaryHandler(
 		OrgEditBackofficeThemePreferenceProcedure,
 		svc.EditBackofficeThemePreference,
 		opts...,
-	))
-	mux.Handle(OrgGetBackofficeThemePreferenceProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetBackofficeThemePreferenceHandler := connect_go.NewUnaryHandler(
 		OrgGetBackofficeThemePreferenceProcedure,
 		svc.GetBackofficeThemePreference,
 		opts...,
-	))
-	mux.Handle(OrgAcceptLinkbackRecordingTermsProcedure, connect_go.NewUnaryHandler(
+	)
+	orgAcceptLinkbackRecordingTermsHandler := connect_go.NewUnaryHandler(
 		OrgAcceptLinkbackRecordingTermsProcedure,
 		svc.AcceptLinkbackRecordingTerms,
 		opts...,
-	))
-	mux.Handle(OrgLinkbackUpdateBroadcastTemplatesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgLinkbackUpdateBroadcastTemplatesHandler := connect_go.NewUnaryHandler(
 		OrgLinkbackUpdateBroadcastTemplatesProcedure,
 		svc.LinkbackUpdateBroadcastTemplates,
 		opts...,
-	))
-	mux.Handle(OrgRecordEmailUnsubscribeAcknowledgementProcedure, connect_go.NewUnaryHandler(
+	)
+	orgRecordEmailUnsubscribeAcknowledgementHandler := connect_go.NewUnaryHandler(
 		OrgRecordEmailUnsubscribeAcknowledgementProcedure,
 		svc.RecordEmailUnsubscribeAcknowledgement,
 		opts...,
-	))
-	mux.Handle(OrgClearEmailUnsubscribeAcknowledgementProcedure, connect_go.NewUnaryHandler(
+	)
+	orgClearEmailUnsubscribeAcknowledgementHandler := connect_go.NewUnaryHandler(
 		OrgClearEmailUnsubscribeAcknowledgementProcedure,
 		svc.ClearEmailUnsubscribeAcknowledgement,
 		opts...,
-	))
-	mux.Handle(OrgCreateWebLinkTemplateProcedure, connect_go.NewUnaryHandler(
+	)
+	orgCreateWebLinkTemplateHandler := connect_go.NewUnaryHandler(
 		OrgCreateWebLinkTemplateProcedure,
 		svc.CreateWebLinkTemplate,
 		opts...,
-	))
-	mux.Handle(OrgListWebLinkTemplatesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgListWebLinkTemplatesHandler := connect_go.NewUnaryHandler(
 		OrgListWebLinkTemplatesProcedure,
 		svc.ListWebLinkTemplates,
 		opts...,
-	))
-	mux.Handle(OrgGetWebLinkTemplateProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetWebLinkTemplateHandler := connect_go.NewUnaryHandler(
 		OrgGetWebLinkTemplateProcedure,
 		svc.GetWebLinkTemplate,
 		opts...,
-	))
-	mux.Handle(OrgUpdateWebLinkTemplateProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateWebLinkTemplateHandler := connect_go.NewUnaryHandler(
 		OrgUpdateWebLinkTemplateProcedure,
 		svc.UpdateWebLinkTemplate,
 		opts...,
-	))
-	mux.Handle(OrgDeleteWebLinkTemplateProcedure, connect_go.NewUnaryHandler(
+	)
+	orgDeleteWebLinkTemplateHandler := connect_go.NewUnaryHandler(
 		OrgDeleteWebLinkTemplateProcedure,
 		svc.DeleteWebLinkTemplate,
 		opts...,
-	))
-	mux.Handle(OrgCreateAgentTriggerTemplateProcedure, connect_go.NewUnaryHandler(
+	)
+	orgCreateAgentTriggerTemplateHandler := connect_go.NewUnaryHandler(
 		OrgCreateAgentTriggerTemplateProcedure,
 		svc.CreateAgentTriggerTemplate,
 		opts...,
-	))
-	mux.Handle(OrgListAgentTriggerTemplatesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgListAgentTriggerTemplatesHandler := connect_go.NewUnaryHandler(
 		OrgListAgentTriggerTemplatesProcedure,
 		svc.ListAgentTriggerTemplates,
 		opts...,
-	))
-	mux.Handle(OrgGetAgentTriggerTemplateProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetAgentTriggerTemplateHandler := connect_go.NewUnaryHandler(
 		OrgGetAgentTriggerTemplateProcedure,
 		svc.GetAgentTriggerTemplate,
 		opts...,
-	))
-	mux.Handle(OrgUpdateAgentTriggerTemplateProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateAgentTriggerTemplateHandler := connect_go.NewUnaryHandler(
 		OrgUpdateAgentTriggerTemplateProcedure,
 		svc.UpdateAgentTriggerTemplate,
 		opts...,
-	))
-	mux.Handle(OrgDeleteAgentTriggerTemplateProcedure, connect_go.NewUnaryHandler(
+	)
+	orgDeleteAgentTriggerTemplateHandler := connect_go.NewUnaryHandler(
 		OrgDeleteAgentTriggerTemplateProcedure,
 		svc.DeleteAgentTriggerTemplate,
 		opts...,
-	))
-	mux.Handle(OrgCreateClientInfoDisplayTemplateProcedure, connect_go.NewUnaryHandler(
+	)
+	orgCreateClientInfoDisplayTemplateHandler := connect_go.NewUnaryHandler(
 		OrgCreateClientInfoDisplayTemplateProcedure,
 		svc.CreateClientInfoDisplayTemplate,
 		opts...,
-	))
-	mux.Handle(OrgListClientInfoDisplayTemplatesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgListClientInfoDisplayTemplatesHandler := connect_go.NewUnaryHandler(
 		OrgListClientInfoDisplayTemplatesProcedure,
 		svc.ListClientInfoDisplayTemplates,
 		opts...,
-	))
-	mux.Handle(OrgUpdateClientInfoDisplayTemplateProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateClientInfoDisplayTemplateHandler := connect_go.NewUnaryHandler(
 		OrgUpdateClientInfoDisplayTemplateProcedure,
 		svc.UpdateClientInfoDisplayTemplate,
 		opts...,
-	))
-	mux.Handle(OrgDeleteClientInfoDisplayTemplateProcedure, connect_go.NewUnaryHandler(
+	)
+	orgDeleteClientInfoDisplayTemplateHandler := connect_go.NewUnaryHandler(
 		OrgDeleteClientInfoDisplayTemplateProcedure,
 		svc.DeleteClientInfoDisplayTemplate,
 		opts...,
-	))
-	mux.Handle(OrgGetClientInfoDisplayTemplateProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetClientInfoDisplayTemplateHandler := connect_go.NewUnaryHandler(
 		OrgGetClientInfoDisplayTemplateProcedure,
 		svc.GetClientInfoDisplayTemplate,
 		opts...,
-	))
-	mux.Handle(OrgListAgentPauseCodesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgListAgentPauseCodesHandler := connect_go.NewUnaryHandler(
 		OrgListAgentPauseCodesProcedure,
 		svc.ListAgentPauseCodes,
 		opts...,
-	))
-	mux.Handle(OrgCreateAgentPauseCodeProcedure, connect_go.NewUnaryHandler(
+	)
+	orgCreateAgentPauseCodeHandler := connect_go.NewUnaryHandler(
 		OrgCreateAgentPauseCodeProcedure,
 		svc.CreateAgentPauseCode,
 		opts...,
-	))
-	mux.Handle(OrgUpdateAgentPauseCodeProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateAgentPauseCodeHandler := connect_go.NewUnaryHandler(
 		OrgUpdateAgentPauseCodeProcedure,
 		svc.UpdateAgentPauseCode,
 		opts...,
-	))
-	mux.Handle(OrgDeleteAgentPauseCodeProcedure, connect_go.NewUnaryHandler(
+	)
+	orgDeleteAgentPauseCodeHandler := connect_go.NewUnaryHandler(
 		OrgDeleteAgentPauseCodeProcedure,
 		svc.DeleteAgentPauseCode,
 		opts...,
-	))
-	mux.Handle(OrgListCustomReportFiltersProcedure, connect_go.NewUnaryHandler(
+	)
+	orgListCustomReportFiltersHandler := connect_go.NewUnaryHandler(
 		OrgListCustomReportFiltersProcedure,
 		svc.ListCustomReportFilters,
 		opts...,
-	))
-	mux.Handle(OrgCreateCustomReportFilterProcedure, connect_go.NewUnaryHandler(
+	)
+	orgCreateCustomReportFilterHandler := connect_go.NewUnaryHandler(
 		OrgCreateCustomReportFilterProcedure,
 		svc.CreateCustomReportFilter,
 		opts...,
-	))
-	mux.Handle(OrgUpdateCustomReportFilterProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateCustomReportFilterHandler := connect_go.NewUnaryHandler(
 		OrgUpdateCustomReportFilterProcedure,
 		svc.UpdateCustomReportFilter,
 		opts...,
-	))
-	mux.Handle(OrgDeleteCustomReportFilterProcedure, connect_go.NewUnaryHandler(
+	)
+	orgDeleteCustomReportFilterHandler := connect_go.NewUnaryHandler(
 		OrgDeleteCustomReportFilterProcedure,
 		svc.DeleteCustomReportFilter,
 		opts...,
-	))
-	mux.Handle(OrgListAgentResponseGroupsProcedure, connect_go.NewUnaryHandler(
+	)
+	orgListAgentResponseGroupsHandler := connect_go.NewUnaryHandler(
 		OrgListAgentResponseGroupsProcedure,
 		svc.ListAgentResponseGroups,
 		opts...,
-	))
-	mux.Handle(OrgListLastTemplateElementsProcedure, connect_go.NewUnaryHandler(
+	)
+	orgListLastTemplateElementsHandler := connect_go.NewUnaryHandler(
 		OrgListLastTemplateElementsProcedure,
 		svc.ListLastTemplateElements,
 		opts...,
-	))
-	mux.Handle(OrgListQueueConfigsProcedure, connect_go.NewUnaryHandler(
+	)
+	orgListQueueConfigsHandler := connect_go.NewUnaryHandler(
 		OrgListQueueConfigsProcedure,
 		svc.ListQueueConfigs,
 		opts...,
-	))
-	mux.Handle(OrgListQueueConfigsByOrgIdProcedure, connect_go.NewUnaryHandler(
+	)
+	orgListQueueConfigsByOrgIdHandler := connect_go.NewUnaryHandler(
 		OrgListQueueConfigsByOrgIdProcedure,
 		svc.ListQueueConfigsByOrgId,
 		opts...,
-	))
-	mux.Handle(OrgDeleteQueueConfigProcedure, connect_go.NewUnaryHandler(
+	)
+	orgDeleteQueueConfigHandler := connect_go.NewUnaryHandler(
 		OrgDeleteQueueConfigProcedure,
 		svc.DeleteQueueConfig,
 		opts...,
-	))
-	mux.Handle(OrgGetQueueConfigProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetQueueConfigHandler := connect_go.NewUnaryHandler(
 		OrgGetQueueConfigProcedure,
 		svc.GetQueueConfig,
 		opts...,
-	))
-	mux.Handle(OrgCreateQueueConfigProcedure, connect_go.NewUnaryHandler(
+	)
+	orgCreateQueueConfigHandler := connect_go.NewUnaryHandler(
 		OrgCreateQueueConfigProcedure,
 		svc.CreateQueueConfig,
 		opts...,
-	))
-	mux.Handle(OrgUpdateQueueConfigProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateQueueConfigHandler := connect_go.NewUnaryHandler(
 		OrgUpdateQueueConfigProcedure,
 		svc.UpdateQueueConfig,
 		opts...,
-	))
-	mux.Handle(OrgCopyQueueConfigProcedure, connect_go.NewUnaryHandler(
+	)
+	orgCopyQueueConfigHandler := connect_go.NewUnaryHandler(
 		OrgCopyQueueConfigProcedure,
 		svc.CopyQueueConfig,
 		opts...,
-	))
-	mux.Handle(OrgGetAllQueueConfigSoundsProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetAllQueueConfigSoundsHandler := connect_go.NewUnaryHandler(
 		OrgGetAllQueueConfigSoundsProcedure,
 		svc.GetAllQueueConfigSounds,
 		opts...,
-	))
-	mux.Handle(OrgGetQueueConfigSoundProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetQueueConfigSoundHandler := connect_go.NewUnaryHandler(
 		OrgGetQueueConfigSoundProcedure,
 		svc.GetQueueConfigSound,
 		opts...,
-	))
-	mux.Handle(OrgSetQueueConfigSoundProcedure, connect_go.NewUnaryHandler(
+	)
+	orgSetQueueConfigSoundHandler := connect_go.NewUnaryHandler(
 		OrgSetQueueConfigSoundProcedure,
 		svc.SetQueueConfigSound,
 		opts...,
-	))
-	mux.Handle(OrgSetAllQueueConfigSoundsFromSourceProcedure, connect_go.NewUnaryHandler(
+	)
+	orgSetAllQueueConfigSoundsFromSourceHandler := connect_go.NewUnaryHandler(
 		OrgSetAllQueueConfigSoundsFromSourceProcedure,
 		svc.SetAllQueueConfigSoundsFromSource,
 		opts...,
-	))
-	mux.Handle(OrgGetUserBlockedProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetUserBlockedHandler := connect_go.NewUnaryHandler(
 		OrgGetUserBlockedProcedure,
 		svc.GetUserBlocked,
 		opts...,
-	))
-	mux.Handle(OrgUnblockUserProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUnblockUserHandler := connect_go.NewUnaryHandler(
 		OrgUnblockUserProcedure,
 		svc.UnblockUser,
 		opts...,
-	))
-	mux.Handle(OrgListP3UnMigratedUsersProcedure, connect_go.NewUnaryHandler(
+	)
+	orgListP3UnMigratedUsersHandler := connect_go.NewUnaryHandler(
 		OrgListP3UnMigratedUsersProcedure,
 		svc.ListP3UnMigratedUsers,
 		opts...,
-	))
-	mux.Handle(OrgMigrateP3UserProcedure, connect_go.NewUnaryHandler(
+	)
+	orgMigrateP3UserHandler := connect_go.NewUnaryHandler(
 		OrgMigrateP3UserProcedure,
 		svc.MigrateP3User,
 		opts...,
-	))
-	mux.Handle(OrgUpdateP3UserNameProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateP3UserNameHandler := connect_go.NewUnaryHandler(
 		OrgUpdateP3UserNameProcedure,
 		svc.UpdateP3UserName,
 		opts...,
-	))
-	mux.Handle(OrgListOwnedUsersProcedure, connect_go.NewUnaryHandler(
+	)
+	orgListOwnedUsersHandler := connect_go.NewUnaryHandler(
 		OrgListOwnedUsersProcedure,
 		svc.ListOwnedUsers,
 		opts...,
-	))
-	mux.Handle(OrgListOwnedOrgsByOrgIdProcedure, connect_go.NewUnaryHandler(
+	)
+	orgListOwnedOrgsByOrgIdHandler := connect_go.NewUnaryHandler(
 		OrgListOwnedOrgsByOrgIdProcedure,
 		svc.ListOwnedOrgsByOrgId,
 		opts...,
-	))
-	mux.Handle(OrgListOwnedOrgsProcedure, connect_go.NewUnaryHandler(
+	)
+	orgListOwnedOrgsHandler := connect_go.NewUnaryHandler(
 		OrgListOwnedOrgsProcedure,
 		svc.ListOwnedOrgs,
 		opts...,
-	))
-	mux.Handle(OrgRemoveLoginStrikesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgRemoveLoginStrikesHandler := connect_go.NewUnaryHandler(
 		OrgRemoveLoginStrikesProcedure,
 		svc.RemoveLoginStrikes,
 		opts...,
-	))
-	mux.Handle(OrgRemoveUserLoginStrikesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgRemoveUserLoginStrikesHandler := connect_go.NewUnaryHandler(
 		OrgRemoveUserLoginStrikesProcedure,
 		svc.RemoveUserLoginStrikes,
 		opts...,
-	))
-	mux.Handle(OrgListLoginHistoryProcedure, connect_go.NewUnaryHandler(
+	)
+	orgListLoginHistoryHandler := connect_go.NewUnaryHandler(
 		OrgListLoginHistoryProcedure,
 		svc.ListLoginHistory,
 		opts...,
-	))
-	mux.Handle(OrgUpdateP3UserSidsProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateP3UserSidsHandler := connect_go.NewUnaryHandler(
 		OrgUpdateP3UserSidsProcedure,
 		svc.UpdateP3UserSids,
 		opts...,
-	))
-	mux.Handle(OrgCreateAuthConnectionProcedure, connect_go.NewUnaryHandler(
+	)
+	orgCreateAuthConnectionHandler := connect_go.NewUnaryHandler(
 		OrgCreateAuthConnectionProcedure,
 		svc.CreateAuthConnection,
 		opts...,
-	))
-	mux.Handle(OrgGetAuthConnectionSettingsProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetAuthConnectionSettingsHandler := connect_go.NewUnaryHandler(
 		OrgGetAuthConnectionSettingsProcedure,
 		svc.GetAuthConnectionSettings,
 		opts...,
-	))
-	mux.Handle(OrgUpdateAuthConnectionSettingsProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateAuthConnectionSettingsHandler := connect_go.NewUnaryHandler(
 		OrgUpdateAuthConnectionSettingsProcedure,
 		svc.UpdateAuthConnectionSettings,
 		opts...,
-	))
-	mux.Handle(OrgDeleteAuthConnectionProcedure, connect_go.NewUnaryHandler(
+	)
+	orgDeleteAuthConnectionHandler := connect_go.NewUnaryHandler(
 		OrgDeleteAuthConnectionProcedure,
 		svc.DeleteAuthConnection,
 		opts...,
-	))
-	mux.Handle(OrgGetUserSubscriptionProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetUserSubscriptionHandler := connect_go.NewUnaryHandler(
 		OrgGetUserSubscriptionProcedure,
 		svc.GetUserSubscription,
 		opts...,
-	))
-	mux.Handle(OrgGetMyUserSubscriptionProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetMyUserSubscriptionHandler := connect_go.NewUnaryHandler(
 		OrgGetMyUserSubscriptionProcedure,
 		svc.GetMyUserSubscription,
 		opts...,
-	))
-	mux.Handle(OrgAddUserSubscriptionProcedure, connect_go.NewUnaryHandler(
+	)
+	orgAddUserSubscriptionHandler := connect_go.NewUnaryHandler(
 		OrgAddUserSubscriptionProcedure,
 		svc.AddUserSubscription,
 		opts...,
-	))
-	mux.Handle(OrgAddMyUserSubscriptionProcedure, connect_go.NewUnaryHandler(
+	)
+	orgAddMyUserSubscriptionHandler := connect_go.NewUnaryHandler(
 		OrgAddMyUserSubscriptionProcedure,
 		svc.AddMyUserSubscription,
 		opts...,
-	))
-	mux.Handle(OrgRemoveUserSubscriptionProcedure, connect_go.NewUnaryHandler(
+	)
+	orgRemoveUserSubscriptionHandler := connect_go.NewUnaryHandler(
 		OrgRemoveUserSubscriptionProcedure,
 		svc.RemoveUserSubscription,
 		opts...,
-	))
-	mux.Handle(OrgRemoveMyUserSubscriptionProcedure, connect_go.NewUnaryHandler(
+	)
+	orgRemoveMyUserSubscriptionHandler := connect_go.NewUnaryHandler(
 		OrgRemoveMyUserSubscriptionProcedure,
 		svc.RemoveMyUserSubscription,
 		opts...,
-	))
-	mux.Handle(OrgUpdateUserSubscriptionProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateUserSubscriptionHandler := connect_go.NewUnaryHandler(
 		OrgUpdateUserSubscriptionProcedure,
 		svc.UpdateUserSubscription,
 		opts...,
-	))
-	mux.Handle(OrgUpdateMyUserSubscriptionProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateMyUserSubscriptionHandler := connect_go.NewUnaryHandler(
 		OrgUpdateMyUserSubscriptionProcedure,
 		svc.UpdateMyUserSubscription,
 		opts...,
-	))
-	mux.Handle(OrgListUserSubscriptionsProcedure, connect_go.NewUnaryHandler(
+	)
+	orgListUserSubscriptionsHandler := connect_go.NewUnaryHandler(
 		OrgListUserSubscriptionsProcedure,
 		svc.ListUserSubscriptions,
 		opts...,
-	))
-	mux.Handle(OrgListMyUserSubscriptionsProcedure, connect_go.NewUnaryHandler(
+	)
+	orgListMyUserSubscriptionsHandler := connect_go.NewUnaryHandler(
 		OrgListMyUserSubscriptionsProcedure,
 		svc.ListMyUserSubscriptions,
 		opts...,
-	))
-	mux.Handle(OrgListOrgSubscriptionsProcedure, connect_go.NewUnaryHandler(
+	)
+	orgListOrgSubscriptionsHandler := connect_go.NewUnaryHandler(
 		OrgListOrgSubscriptionsProcedure,
 		svc.ListOrgSubscriptions,
 		opts...,
-	))
-	mux.Handle(OrgGetSystemEnvironmentDetailsProcedure, connect_go.NewUnaryHandler(
+	)
+	orgGetSystemEnvironmentDetailsHandler := connect_go.NewUnaryHandler(
 		OrgGetSystemEnvironmentDetailsProcedure,
 		svc.GetSystemEnvironmentDetails,
 		opts...,
-	))
-	mux.Handle(OrgListAgentStatisticsTemplatesProcedure, connect_go.NewUnaryHandler(
+	)
+	orgListAgentStatisticsTemplatesHandler := connect_go.NewUnaryHandler(
 		OrgListAgentStatisticsTemplatesProcedure,
 		svc.ListAgentStatisticsTemplates,
 		opts...,
-	))
-	mux.Handle(OrgCreateAgentStatisticsTemplateProcedure, connect_go.NewUnaryHandler(
+	)
+	orgCreateAgentStatisticsTemplateHandler := connect_go.NewUnaryHandler(
 		OrgCreateAgentStatisticsTemplateProcedure,
 		svc.CreateAgentStatisticsTemplate,
 		opts...,
-	))
-	mux.Handle(OrgUpdateAgentStatisticsTemplateProcedure, connect_go.NewUnaryHandler(
+	)
+	orgUpdateAgentStatisticsTemplateHandler := connect_go.NewUnaryHandler(
 		OrgUpdateAgentStatisticsTemplateProcedure,
 		svc.UpdateAgentStatisticsTemplate,
 		opts...,
-	))
-	mux.Handle(OrgDeleteAgentStatisticsTemplateProcedure, connect_go.NewUnaryHandler(
+	)
+	orgDeleteAgentStatisticsTemplateHandler := connect_go.NewUnaryHandler(
 		OrgDeleteAgentStatisticsTemplateProcedure,
 		svc.DeleteAgentStatisticsTemplate,
 		opts...,
-	))
-	return "/api.v0alpha.Org/", mux
+	)
+	return "/api.v0alpha.Org/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case OrgRegisterOrganizationProcedure:
+			orgRegisterOrganizationHandler.ServeHTTP(w, r)
+		case OrgConvertOrgToManualProcedure:
+			orgConvertOrgToManualHandler.ServeHTTP(w, r)
+		case OrgUpdateOrganizationProcedure:
+			orgUpdateOrganizationHandler.ServeHTTP(w, r)
+		case OrgArchiveOrganizationProcedure:
+			orgArchiveOrganizationHandler.ServeHTTP(w, r)
+		case OrgUnArchiveOrganizationProcedure:
+			orgUnArchiveOrganizationHandler.ServeHTTP(w, r)
+		case OrgListArchivedOrganizationsProcedure:
+			orgListArchivedOrganizationsHandler.ServeHTTP(w, r)
+		case OrgGetOrganizationProfileProcedure:
+			orgGetOrganizationProfileHandler.ServeHTTP(w, r)
+		case OrgGetOrganizationProfileByIdProcedure:
+			orgGetOrganizationProfileByIdHandler.ServeHTTP(w, r)
+		case OrgListOrganizationDescriptionsProcedure:
+			orgListOrganizationDescriptionsHandler.ServeHTTP(w, r)
+		case OrgListRegionalOrganizationsProcedure:
+			orgListRegionalOrganizationsHandler.ServeHTTP(w, r)
+		case OrgUpdateP3OwningOrgProcedure:
+			orgUpdateP3OwningOrgHandler.ServeHTTP(w, r)
+		case OrgGetP3OwningOrgProcedure:
+			orgGetP3OwningOrgHandler.ServeHTTP(w, r)
+		case OrgListOrganizationUserDescriptionsProcedure:
+			orgListOrganizationUserDescriptionsHandler.ServeHTTP(w, r)
+		case OrgAdminListUserDescriptionsProcedure:
+			orgAdminListUserDescriptionsHandler.ServeHTTP(w, r)
+		case OrgListUserDescriptionsProcedure:
+			orgListUserDescriptionsHandler.ServeHTTP(w, r)
+		case OrgGetUserDirectoryProcedure:
+			orgGetUserDirectoryHandler.ServeHTTP(w, r)
+		case OrgGetRegionsProcedure:
+			orgGetRegionsHandler.ServeHTTP(w, r)
+		case OrgGetMyUserDetailsProcedure:
+			orgGetMyUserDetailsHandler.ServeHTTP(w, r)
+		case OrgGetUserDetailsProcedure:
+			orgGetUserDetailsHandler.ServeHTTP(w, r)
+		case OrgAdminGetUserDetailsProcedure:
+			orgAdminGetUserDetailsHandler.ServeHTTP(w, r)
+		case OrgGetAgentUsersProcedure:
+			orgGetAgentUsersHandler.ServeHTTP(w, r)
+		case OrgGetAgentSettingsProcedure:
+			orgGetAgentSettingsHandler.ServeHTTP(w, r)
+		case OrgGetAgentProfileGroupProcedure:
+			orgGetAgentProfileGroupHandler.ServeHTTP(w, r)
+		case OrgUpdateAgentProfileGroupProcedure:
+			orgUpdateAgentProfileGroupHandler.ServeHTTP(w, r)
+		case OrgCreateAgentProfileGroupProcedure:
+			orgCreateAgentProfileGroupHandler.ServeHTTP(w, r)
+		case OrgListAgentProfileGroupsProcedure:
+			orgListAgentProfileGroupsHandler.ServeHTTP(w, r)
+		case OrgDeleteAgentProfileGroupProcedure:
+			orgDeleteAgentProfileGroupHandler.ServeHTTP(w, r)
+		case OrgAssignAgentProfileGroupsProcedure:
+			orgAssignAgentProfileGroupsHandler.ServeHTTP(w, r)
+		case OrgUpdateUserProcedure:
+			orgUpdateUserHandler.ServeHTTP(w, r)
+		case OrgUpdateMyUserProcedure:
+			orgUpdateMyUserHandler.ServeHTTP(w, r)
+		case OrgUpdateUserCallerIdProcedure:
+			orgUpdateUserCallerIdHandler.ServeHTTP(w, r)
+		case OrgCreateUserProcedure:
+			orgCreateUserHandler.ServeHTTP(w, r)
+		case OrgCreateUserByOrgIdProcedure:
+			orgCreateUserByOrgIdHandler.ServeHTTP(w, r)
+		case OrgCreateDelegatedUserProcedure:
+			orgCreateDelegatedUserHandler.ServeHTTP(w, r)
+		case OrgUpdateUserPasswordProcedure:
+			orgUpdateUserPasswordHandler.ServeHTTP(w, r)
+		case OrgUpdateMyUserPasswordProcedure:
+			orgUpdateMyUserPasswordHandler.ServeHTTP(w, r)
+		case OrgUpdateUserPasswordByOrgIdProcedure:
+			orgUpdateUserPasswordByOrgIdHandler.ServeHTTP(w, r)
+		case OrgResetUserRequirePasswordResetProcedure:
+			orgResetUserRequirePasswordResetHandler.ServeHTTP(w, r)
+		case OrgGetUserPasswordResetLinkProcedure:
+			orgGetUserPasswordResetLinkHandler.ServeHTTP(w, r)
+		case OrgGetMyUserPasswordResetLinkProcedure:
+			orgGetMyUserPasswordResetLinkHandler.ServeHTTP(w, r)
+		case OrgGetUserPasswordResetLinkByOrgIdProcedure:
+			orgGetUserPasswordResetLinkByOrgIdHandler.ServeHTTP(w, r)
+		case OrgGetUserEmailVerifiedProcedure:
+			orgGetUserEmailVerifiedHandler.ServeHTTP(w, r)
+		case OrgGetUserEmailVerifiedByOrgIdProcedure:
+			orgGetUserEmailVerifiedByOrgIdHandler.ServeHTTP(w, r)
+		case OrgSendUserVerificationEmailByOrgIdProcedure:
+			orgSendUserVerificationEmailByOrgIdHandler.ServeHTTP(w, r)
+		case OrgSendUserVerificationEmailProcedure:
+			orgSendUserVerificationEmailHandler.ServeHTTP(w, r)
+		case OrgManualUserEmailVerificationByOrgIdProcedure:
+			orgManualUserEmailVerificationByOrgIdHandler.ServeHTTP(w, r)
+		case OrgManualUserEmailVerificationProcedure:
+			orgManualUserEmailVerificationHandler.ServeHTTP(w, r)
+		case OrgGetTempUserTokenProcedure:
+			orgGetTempUserTokenHandler.ServeHTTP(w, r)
+		case OrgGetTempUserTokenByUserIdProcedure:
+			orgGetTempUserTokenByUserIdHandler.ServeHTTP(w, r)
+		case OrgGetCountriesListProcedure:
+			orgGetCountriesListHandler.ServeHTTP(w, r)
+		case OrgGetAdminClientPreferencesProcedure:
+			orgGetAdminClientPreferencesHandler.ServeHTTP(w, r)
+		case OrgUpdateAdminClientPreferencesProcedure:
+			orgUpdateAdminClientPreferencesHandler.ServeHTTP(w, r)
+		case OrgGetPermissionsProcedure:
+			orgGetPermissionsHandler.ServeHTTP(w, r)
+		case OrgRevokeAccountOwnerPermissionFromUserProcedure:
+			orgRevokeAccountOwnerPermissionFromUserHandler.ServeHTTP(w, r)
+		case OrgUpdateUserDisabledProcedure:
+			orgUpdateUserDisabledHandler.ServeHTTP(w, r)
+		case OrgUpdateUserDisabledByOrgIdProcedure:
+			orgUpdateUserDisabledByOrgIdHandler.ServeHTTP(w, r)
+		case OrgUpdateBulkUsersDisabledProcedure:
+			orgUpdateBulkUsersDisabledHandler.ServeHTTP(w, r)
+		case OrgGetOrgBillingSettingsByOrgIdProcedure:
+			orgGetOrgBillingSettingsByOrgIdHandler.ServeHTTP(w, r)
+		case OrgGetOrgBillingSettingsProcedure:
+			orgGetOrgBillingSettingsHandler.ServeHTTP(w, r)
+		case OrgSetOrgBillingSettingsProcedure:
+			orgSetOrgBillingSettingsHandler.ServeHTTP(w, r)
+		case OrgAddOrgBillingOverrideProcedure:
+			orgAddOrgBillingOverrideHandler.ServeHTTP(w, r)
+		case OrgRemoveOrgBillingOverrideProcedure:
+			orgRemoveOrgBillingOverrideHandler.ServeHTTP(w, r)
+		case OrgGetSystemDefaultBillingRatesProcedure:
+			orgGetSystemDefaultBillingRatesHandler.ServeHTTP(w, r)
+		case OrgListPermissionGroupsByOrgIdProcedure:
+			orgListPermissionGroupsByOrgIdHandler.ServeHTTP(w, r)
+		case OrgListPermissionGroupsProcedure:
+			orgListPermissionGroupsHandler.ServeHTTP(w, r)
+		case OrgCreatePermissionGroupProcedure:
+			orgCreatePermissionGroupHandler.ServeHTTP(w, r)
+		case OrgUpdatePermissionGroupProcedure:
+			orgUpdatePermissionGroupHandler.ServeHTTP(w, r)
+		case OrgDeletePermissionGroupProcedure:
+			orgDeletePermissionGroupHandler.ServeHTTP(w, r)
+		case OrgAssignUserToAccountOwnerPermissionGroupProcedure:
+			orgAssignUserToAccountOwnerPermissionGroupHandler.ServeHTTP(w, r)
+		case OrgAssignUserPermissionGroupProcedure:
+			orgAssignUserPermissionGroupHandler.ServeHTTP(w, r)
+		case OrgAssignUsersPermissionGroupProcedure:
+			orgAssignUsersPermissionGroupHandler.ServeHTTP(w, r)
+		case OrgUpdateUserNeoPermissionGroupsProcedure:
+			orgUpdateUserNeoPermissionGroupsHandler.ServeHTTP(w, r)
+		case OrgRevokeUserPermissionGroupProcedure:
+			orgRevokeUserPermissionGroupHandler.ServeHTTP(w, r)
+		case OrgRevokeUsersPermissionGroupProcedure:
+			orgRevokeUsersPermissionGroupHandler.ServeHTTP(w, r)
+		case OrgInitDefaultPermissionGroupsProcedure:
+			orgInitDefaultPermissionGroupsHandler.ServeHTTP(w, r)
+		case OrgAddPermissionToAccountOwnerPermissionGroupProcedure:
+			orgAddPermissionToAccountOwnerPermissionGroupHandler.ServeHTTP(w, r)
+		case OrgRevokePermissionToAccountOwnerPermissionGroupProcedure:
+			orgRevokePermissionToAccountOwnerPermissionGroupHandler.ServeHTTP(w, r)
+		case OrgAddPermissionToOrgDefaultGroupProcedure:
+			orgAddPermissionToOrgDefaultGroupHandler.ServeHTTP(w, r)
+		case OrgRemovePermissionFromOrgDefaultGroupProcedure:
+			orgRemovePermissionFromOrgDefaultGroupHandler.ServeHTTP(w, r)
+		case OrgGetOrgDefaultSuperUserGroupProcedure:
+			orgGetOrgDefaultSuperUserGroupHandler.ServeHTTP(w, r)
+		case OrgListP3PermissionGroupsByOrgIdProcedure:
+			orgListP3PermissionGroupsByOrgIdHandler.ServeHTTP(w, r)
+		case OrgListP3PermissionGroupsProcedure:
+			orgListP3PermissionGroupsHandler.ServeHTTP(w, r)
+		case OrgAddUserRegionProcedure:
+			orgAddUserRegionHandler.ServeHTTP(w, r)
+		case OrgRemoveUserRegionProcedure:
+			orgRemoveUserRegionHandler.ServeHTTP(w, r)
+		case OrgCreateP3PermissionGroupProcedure:
+			orgCreateP3PermissionGroupHandler.ServeHTTP(w, r)
+		case OrgUpdateP3PermissionGroupByOrgIdProcedure:
+			orgUpdateP3PermissionGroupByOrgIdHandler.ServeHTTP(w, r)
+		case OrgUpdateP3PermissionGroupProcedure:
+			orgUpdateP3PermissionGroupHandler.ServeHTTP(w, r)
+		case OrgDeleteP3PermissionGroupProcedure:
+			orgDeleteP3PermissionGroupHandler.ServeHTTP(w, r)
+		case OrgAssignUsersP3PermissionGroupProcedure:
+			orgAssignUsersP3PermissionGroupHandler.ServeHTTP(w, r)
+		case OrgAddLoginToUserProcedure:
+			orgAddLoginToUserHandler.ServeHTTP(w, r)
+		case OrgRevokeUsersP3PermissionGroupProcedure:
+			orgRevokeUsersP3PermissionGroupHandler.ServeHTTP(w, r)
+		case OrgGetContactPreferencesProcedure:
+			orgGetContactPreferencesHandler.ServeHTTP(w, r)
+		case OrgUpdateContactPreferencesProcedure:
+			orgUpdateContactPreferencesHandler.ServeHTTP(w, r)
+		case OrgGetCompliancePreferencesProcedure:
+			orgGetCompliancePreferencesHandler.ServeHTTP(w, r)
+		case OrgUpdateCompliancePreferencesProcedure:
+			orgUpdateCompliancePreferencesHandler.ServeHTTP(w, r)
+		case OrgGetAgentPreferencesProcedure:
+			orgGetAgentPreferencesHandler.ServeHTTP(w, r)
+		case OrgUpdateAgentPreferencesProcedure:
+			orgUpdateAgentPreferencesHandler.ServeHTTP(w, r)
+		case OrgGetOrganizationPreferencesProcedure:
+			orgGetOrganizationPreferencesHandler.ServeHTTP(w, r)
+		case OrgUpdateOrganizationPreferencesProcedure:
+			orgUpdateOrganizationPreferencesHandler.ServeHTTP(w, r)
+		case OrgGetSchedulePreferencesProcedure:
+			orgGetSchedulePreferencesHandler.ServeHTTP(w, r)
+		case OrgUpdateSchedulePreferencesProcedure:
+			orgUpdateSchedulePreferencesHandler.ServeHTTP(w, r)
+		case OrgGetBusinessPreferencesProcedure:
+			orgGetBusinessPreferencesHandler.ServeHTTP(w, r)
+		case OrgUpdateBusinessPreferencesProcedure:
+			orgUpdateBusinessPreferencesHandler.ServeHTTP(w, r)
+		case OrgGetEndOfDayPreferencesProcedure:
+			orgGetEndOfDayPreferencesHandler.ServeHTTP(w, r)
+		case OrgUpdateEndOfDayPreferencesProcedure:
+			orgUpdateEndOfDayPreferencesHandler.ServeHTTP(w, r)
+		case OrgGetReportFilterPreferencesProcedure:
+			orgGetReportFilterPreferencesHandler.ServeHTTP(w, r)
+		case OrgUpdateReportFilterPreferencesProcedure:
+			orgUpdateReportFilterPreferencesHandler.ServeHTTP(w, r)
+		case OrgGetPhonePreferencesProcedure:
+			orgGetPhonePreferencesHandler.ServeHTTP(w, r)
+		case OrgUpdatePhonePreferencesProcedure:
+			orgUpdatePhonePreferencesHandler.ServeHTTP(w, r)
+		case OrgGetDashboardGeneralPreferencesProcedure:
+			orgGetDashboardGeneralPreferencesHandler.ServeHTTP(w, r)
+		case OrgUpdateDashboardGeneralPreferencesProcedure:
+			orgUpdateDashboardGeneralPreferencesHandler.ServeHTTP(w, r)
+		case OrgGetWebhookPreferencesProcedure:
+			orgGetWebhookPreferencesHandler.ServeHTTP(w, r)
+		case OrgUpdateWebhookPreferencesProcedure:
+			orgUpdateWebhookPreferencesHandler.ServeHTTP(w, r)
+		case OrgGetBroadcastPreferencesProcedure:
+			orgGetBroadcastPreferencesHandler.ServeHTTP(w, r)
+		case OrgUpdateBroadcastPreferencesProcedure:
+			orgUpdateBroadcastPreferencesHandler.ServeHTTP(w, r)
+		case OrgGetAuthenticationPreferencesProcedure:
+			orgGetAuthenticationPreferencesHandler.ServeHTTP(w, r)
+		case OrgUpdateAuthenticationPreferencesProcedure:
+			orgUpdateAuthenticationPreferencesHandler.ServeHTTP(w, r)
+		case OrgGetRecordingPreferencesProcedure:
+			orgGetRecordingPreferencesHandler.ServeHTTP(w, r)
+		case OrgUpdateRecordingPreferencesProcedure:
+			orgUpdateRecordingPreferencesHandler.ServeHTTP(w, r)
+		case OrgGetDashboardQueuePreferencesProcedure:
+			orgGetDashboardQueuePreferencesHandler.ServeHTTP(w, r)
+		case OrgUpdateDashboardQueuePreferencesProcedure:
+			orgUpdateDashboardQueuePreferencesHandler.ServeHTTP(w, r)
+		case OrgGetAgentQuickViewPreferencesProcedure:
+			orgGetAgentQuickViewPreferencesHandler.ServeHTTP(w, r)
+		case OrgGetVoiceAnalyticsPreferencesProcedure:
+			orgGetVoiceAnalyticsPreferencesHandler.ServeHTTP(w, r)
+		case OrgUpdateVoiceAnalyticsPreferencesProcedure:
+			orgUpdateVoiceAnalyticsPreferencesHandler.ServeHTTP(w, r)
+		case OrgUpdateVoiceAnalyticsPreferencesEnabledProcedure:
+			orgUpdateVoiceAnalyticsPreferencesEnabledHandler.ServeHTTP(w, r)
+		case OrgGetScorecardsPreferencesProcedure:
+			orgGetScorecardsPreferencesHandler.ServeHTTP(w, r)
+		case OrgUpdateScorecardsPreferencesProcedure:
+			orgUpdateScorecardsPreferencesHandler.ServeHTTP(w, r)
+		case OrgGetEmailSmsPreferencesProcedure:
+			orgGetEmailSmsPreferencesHandler.ServeHTTP(w, r)
+		case OrgUpdateEmailSmsPreferencesProcedure:
+			orgUpdateEmailSmsPreferencesHandler.ServeHTTP(w, r)
+		case OrgEditAgentQuickViewPreferencesProcedure:
+			orgEditAgentQuickViewPreferencesHandler.ServeHTTP(w, r)
+		case OrgEditBackofficeThemePreferenceProcedure:
+			orgEditBackofficeThemePreferenceHandler.ServeHTTP(w, r)
+		case OrgGetBackofficeThemePreferenceProcedure:
+			orgGetBackofficeThemePreferenceHandler.ServeHTTP(w, r)
+		case OrgAcceptLinkbackRecordingTermsProcedure:
+			orgAcceptLinkbackRecordingTermsHandler.ServeHTTP(w, r)
+		case OrgLinkbackUpdateBroadcastTemplatesProcedure:
+			orgLinkbackUpdateBroadcastTemplatesHandler.ServeHTTP(w, r)
+		case OrgRecordEmailUnsubscribeAcknowledgementProcedure:
+			orgRecordEmailUnsubscribeAcknowledgementHandler.ServeHTTP(w, r)
+		case OrgClearEmailUnsubscribeAcknowledgementProcedure:
+			orgClearEmailUnsubscribeAcknowledgementHandler.ServeHTTP(w, r)
+		case OrgCreateWebLinkTemplateProcedure:
+			orgCreateWebLinkTemplateHandler.ServeHTTP(w, r)
+		case OrgListWebLinkTemplatesProcedure:
+			orgListWebLinkTemplatesHandler.ServeHTTP(w, r)
+		case OrgGetWebLinkTemplateProcedure:
+			orgGetWebLinkTemplateHandler.ServeHTTP(w, r)
+		case OrgUpdateWebLinkTemplateProcedure:
+			orgUpdateWebLinkTemplateHandler.ServeHTTP(w, r)
+		case OrgDeleteWebLinkTemplateProcedure:
+			orgDeleteWebLinkTemplateHandler.ServeHTTP(w, r)
+		case OrgCreateAgentTriggerTemplateProcedure:
+			orgCreateAgentTriggerTemplateHandler.ServeHTTP(w, r)
+		case OrgListAgentTriggerTemplatesProcedure:
+			orgListAgentTriggerTemplatesHandler.ServeHTTP(w, r)
+		case OrgGetAgentTriggerTemplateProcedure:
+			orgGetAgentTriggerTemplateHandler.ServeHTTP(w, r)
+		case OrgUpdateAgentTriggerTemplateProcedure:
+			orgUpdateAgentTriggerTemplateHandler.ServeHTTP(w, r)
+		case OrgDeleteAgentTriggerTemplateProcedure:
+			orgDeleteAgentTriggerTemplateHandler.ServeHTTP(w, r)
+		case OrgCreateClientInfoDisplayTemplateProcedure:
+			orgCreateClientInfoDisplayTemplateHandler.ServeHTTP(w, r)
+		case OrgListClientInfoDisplayTemplatesProcedure:
+			orgListClientInfoDisplayTemplatesHandler.ServeHTTP(w, r)
+		case OrgUpdateClientInfoDisplayTemplateProcedure:
+			orgUpdateClientInfoDisplayTemplateHandler.ServeHTTP(w, r)
+		case OrgDeleteClientInfoDisplayTemplateProcedure:
+			orgDeleteClientInfoDisplayTemplateHandler.ServeHTTP(w, r)
+		case OrgGetClientInfoDisplayTemplateProcedure:
+			orgGetClientInfoDisplayTemplateHandler.ServeHTTP(w, r)
+		case OrgListAgentPauseCodesProcedure:
+			orgListAgentPauseCodesHandler.ServeHTTP(w, r)
+		case OrgCreateAgentPauseCodeProcedure:
+			orgCreateAgentPauseCodeHandler.ServeHTTP(w, r)
+		case OrgUpdateAgentPauseCodeProcedure:
+			orgUpdateAgentPauseCodeHandler.ServeHTTP(w, r)
+		case OrgDeleteAgentPauseCodeProcedure:
+			orgDeleteAgentPauseCodeHandler.ServeHTTP(w, r)
+		case OrgListCustomReportFiltersProcedure:
+			orgListCustomReportFiltersHandler.ServeHTTP(w, r)
+		case OrgCreateCustomReportFilterProcedure:
+			orgCreateCustomReportFilterHandler.ServeHTTP(w, r)
+		case OrgUpdateCustomReportFilterProcedure:
+			orgUpdateCustomReportFilterHandler.ServeHTTP(w, r)
+		case OrgDeleteCustomReportFilterProcedure:
+			orgDeleteCustomReportFilterHandler.ServeHTTP(w, r)
+		case OrgListAgentResponseGroupsProcedure:
+			orgListAgentResponseGroupsHandler.ServeHTTP(w, r)
+		case OrgListLastTemplateElementsProcedure:
+			orgListLastTemplateElementsHandler.ServeHTTP(w, r)
+		case OrgListQueueConfigsProcedure:
+			orgListQueueConfigsHandler.ServeHTTP(w, r)
+		case OrgListQueueConfigsByOrgIdProcedure:
+			orgListQueueConfigsByOrgIdHandler.ServeHTTP(w, r)
+		case OrgDeleteQueueConfigProcedure:
+			orgDeleteQueueConfigHandler.ServeHTTP(w, r)
+		case OrgGetQueueConfigProcedure:
+			orgGetQueueConfigHandler.ServeHTTP(w, r)
+		case OrgCreateQueueConfigProcedure:
+			orgCreateQueueConfigHandler.ServeHTTP(w, r)
+		case OrgUpdateQueueConfigProcedure:
+			orgUpdateQueueConfigHandler.ServeHTTP(w, r)
+		case OrgCopyQueueConfigProcedure:
+			orgCopyQueueConfigHandler.ServeHTTP(w, r)
+		case OrgGetAllQueueConfigSoundsProcedure:
+			orgGetAllQueueConfigSoundsHandler.ServeHTTP(w, r)
+		case OrgGetQueueConfigSoundProcedure:
+			orgGetQueueConfigSoundHandler.ServeHTTP(w, r)
+		case OrgSetQueueConfigSoundProcedure:
+			orgSetQueueConfigSoundHandler.ServeHTTP(w, r)
+		case OrgSetAllQueueConfigSoundsFromSourceProcedure:
+			orgSetAllQueueConfigSoundsFromSourceHandler.ServeHTTP(w, r)
+		case OrgGetUserBlockedProcedure:
+			orgGetUserBlockedHandler.ServeHTTP(w, r)
+		case OrgUnblockUserProcedure:
+			orgUnblockUserHandler.ServeHTTP(w, r)
+		case OrgListP3UnMigratedUsersProcedure:
+			orgListP3UnMigratedUsersHandler.ServeHTTP(w, r)
+		case OrgMigrateP3UserProcedure:
+			orgMigrateP3UserHandler.ServeHTTP(w, r)
+		case OrgUpdateP3UserNameProcedure:
+			orgUpdateP3UserNameHandler.ServeHTTP(w, r)
+		case OrgListOwnedUsersProcedure:
+			orgListOwnedUsersHandler.ServeHTTP(w, r)
+		case OrgListOwnedOrgsByOrgIdProcedure:
+			orgListOwnedOrgsByOrgIdHandler.ServeHTTP(w, r)
+		case OrgListOwnedOrgsProcedure:
+			orgListOwnedOrgsHandler.ServeHTTP(w, r)
+		case OrgRemoveLoginStrikesProcedure:
+			orgRemoveLoginStrikesHandler.ServeHTTP(w, r)
+		case OrgRemoveUserLoginStrikesProcedure:
+			orgRemoveUserLoginStrikesHandler.ServeHTTP(w, r)
+		case OrgListLoginHistoryProcedure:
+			orgListLoginHistoryHandler.ServeHTTP(w, r)
+		case OrgUpdateP3UserSidsProcedure:
+			orgUpdateP3UserSidsHandler.ServeHTTP(w, r)
+		case OrgCreateAuthConnectionProcedure:
+			orgCreateAuthConnectionHandler.ServeHTTP(w, r)
+		case OrgGetAuthConnectionSettingsProcedure:
+			orgGetAuthConnectionSettingsHandler.ServeHTTP(w, r)
+		case OrgUpdateAuthConnectionSettingsProcedure:
+			orgUpdateAuthConnectionSettingsHandler.ServeHTTP(w, r)
+		case OrgDeleteAuthConnectionProcedure:
+			orgDeleteAuthConnectionHandler.ServeHTTP(w, r)
+		case OrgGetUserSubscriptionProcedure:
+			orgGetUserSubscriptionHandler.ServeHTTP(w, r)
+		case OrgGetMyUserSubscriptionProcedure:
+			orgGetMyUserSubscriptionHandler.ServeHTTP(w, r)
+		case OrgAddUserSubscriptionProcedure:
+			orgAddUserSubscriptionHandler.ServeHTTP(w, r)
+		case OrgAddMyUserSubscriptionProcedure:
+			orgAddMyUserSubscriptionHandler.ServeHTTP(w, r)
+		case OrgRemoveUserSubscriptionProcedure:
+			orgRemoveUserSubscriptionHandler.ServeHTTP(w, r)
+		case OrgRemoveMyUserSubscriptionProcedure:
+			orgRemoveMyUserSubscriptionHandler.ServeHTTP(w, r)
+		case OrgUpdateUserSubscriptionProcedure:
+			orgUpdateUserSubscriptionHandler.ServeHTTP(w, r)
+		case OrgUpdateMyUserSubscriptionProcedure:
+			orgUpdateMyUserSubscriptionHandler.ServeHTTP(w, r)
+		case OrgListUserSubscriptionsProcedure:
+			orgListUserSubscriptionsHandler.ServeHTTP(w, r)
+		case OrgListMyUserSubscriptionsProcedure:
+			orgListMyUserSubscriptionsHandler.ServeHTTP(w, r)
+		case OrgListOrgSubscriptionsProcedure:
+			orgListOrgSubscriptionsHandler.ServeHTTP(w, r)
+		case OrgGetSystemEnvironmentDetailsProcedure:
+			orgGetSystemEnvironmentDetailsHandler.ServeHTTP(w, r)
+		case OrgListAgentStatisticsTemplatesProcedure:
+			orgListAgentStatisticsTemplatesHandler.ServeHTTP(w, r)
+		case OrgCreateAgentStatisticsTemplateProcedure:
+			orgCreateAgentStatisticsTemplateHandler.ServeHTTP(w, r)
+		case OrgUpdateAgentStatisticsTemplateProcedure:
+			orgUpdateAgentStatisticsTemplateHandler.ServeHTTP(w, r)
+		case OrgDeleteAgentStatisticsTemplateProcedure:
+			orgDeleteAgentStatisticsTemplateHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
 }
 
 // UnimplementedOrgHandler returns CodeUnimplemented from all methods.

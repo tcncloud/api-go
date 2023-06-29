@@ -261,63 +261,89 @@ type DashboardsHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewDashboardsHandler(svc DashboardsHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	mux := http.NewServeMux()
-	mux.Handle(DashboardsCreateDashboardProcedure, connect_go.NewUnaryHandler(
+	dashboardsCreateDashboardHandler := connect_go.NewUnaryHandler(
 		DashboardsCreateDashboardProcedure,
 		svc.CreateDashboard,
 		opts...,
-	))
-	mux.Handle(DashboardsGetDashboardProcedure, connect_go.NewUnaryHandler(
+	)
+	dashboardsGetDashboardHandler := connect_go.NewUnaryHandler(
 		DashboardsGetDashboardProcedure,
 		svc.GetDashboard,
 		opts...,
-	))
-	mux.Handle(DashboardsGetDefaultDashboardProcedure, connect_go.NewUnaryHandler(
+	)
+	dashboardsGetDefaultDashboardHandler := connect_go.NewUnaryHandler(
 		DashboardsGetDefaultDashboardProcedure,
 		svc.GetDefaultDashboard,
 		opts...,
-	))
-	mux.Handle(DashboardsListDashboardsProcedure, connect_go.NewUnaryHandler(
+	)
+	dashboardsListDashboardsHandler := connect_go.NewUnaryHandler(
 		DashboardsListDashboardsProcedure,
 		svc.ListDashboards,
 		opts...,
-	))
-	mux.Handle(DashboardsListProductTypesProcedure, connect_go.NewUnaryHandler(
+	)
+	dashboardsListProductTypesHandler := connect_go.NewUnaryHandler(
 		DashboardsListProductTypesProcedure,
 		svc.ListProductTypes,
 		opts...,
-	))
-	mux.Handle(DashboardsDeleteDashboardProcedure, connect_go.NewUnaryHandler(
+	)
+	dashboardsDeleteDashboardHandler := connect_go.NewUnaryHandler(
 		DashboardsDeleteDashboardProcedure,
 		svc.DeleteDashboard,
 		opts...,
-	))
-	mux.Handle(DashboardsSetDefaultDashboardProcedure, connect_go.NewUnaryHandler(
+	)
+	dashboardsSetDefaultDashboardHandler := connect_go.NewUnaryHandler(
 		DashboardsSetDefaultDashboardProcedure,
 		svc.SetDefaultDashboard,
 		opts...,
-	))
-	mux.Handle(DashboardsUpdateDashboardProcedure, connect_go.NewUnaryHandler(
+	)
+	dashboardsUpdateDashboardHandler := connect_go.NewUnaryHandler(
 		DashboardsUpdateDashboardProcedure,
 		svc.UpdateDashboard,
 		opts...,
-	))
-	mux.Handle(DashboardsUpdateDashboardTitleAndDescriptionProcedure, connect_go.NewUnaryHandler(
+	)
+	dashboardsUpdateDashboardTitleAndDescriptionHandler := connect_go.NewUnaryHandler(
 		DashboardsUpdateDashboardTitleAndDescriptionProcedure,
 		svc.UpdateDashboardTitleAndDescription,
 		opts...,
-	))
-	mux.Handle(DashboardsUpdateDashboardViewProcedure, connect_go.NewUnaryHandler(
+	)
+	dashboardsUpdateDashboardViewHandler := connect_go.NewUnaryHandler(
 		DashboardsUpdateDashboardViewProcedure,
 		svc.UpdateDashboardView,
 		opts...,
-	))
-	mux.Handle(DashboardsUpdateDashboardLayoutProcedure, connect_go.NewUnaryHandler(
+	)
+	dashboardsUpdateDashboardLayoutHandler := connect_go.NewUnaryHandler(
 		DashboardsUpdateDashboardLayoutProcedure,
 		svc.UpdateDashboardLayout,
 		opts...,
-	))
-	return "/api.v0alpha.Dashboards/", mux
+	)
+	return "/api.v0alpha.Dashboards/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case DashboardsCreateDashboardProcedure:
+			dashboardsCreateDashboardHandler.ServeHTTP(w, r)
+		case DashboardsGetDashboardProcedure:
+			dashboardsGetDashboardHandler.ServeHTTP(w, r)
+		case DashboardsGetDefaultDashboardProcedure:
+			dashboardsGetDefaultDashboardHandler.ServeHTTP(w, r)
+		case DashboardsListDashboardsProcedure:
+			dashboardsListDashboardsHandler.ServeHTTP(w, r)
+		case DashboardsListProductTypesProcedure:
+			dashboardsListProductTypesHandler.ServeHTTP(w, r)
+		case DashboardsDeleteDashboardProcedure:
+			dashboardsDeleteDashboardHandler.ServeHTTP(w, r)
+		case DashboardsSetDefaultDashboardProcedure:
+			dashboardsSetDefaultDashboardHandler.ServeHTTP(w, r)
+		case DashboardsUpdateDashboardProcedure:
+			dashboardsUpdateDashboardHandler.ServeHTTP(w, r)
+		case DashboardsUpdateDashboardTitleAndDescriptionProcedure:
+			dashboardsUpdateDashboardTitleAndDescriptionHandler.ServeHTTP(w, r)
+		case DashboardsUpdateDashboardViewProcedure:
+			dashboardsUpdateDashboardViewHandler.ServeHTTP(w, r)
+		case DashboardsUpdateDashboardLayoutProcedure:
+			dashboardsUpdateDashboardLayoutHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
 }
 
 // UnimplementedDashboardsHandler returns CodeUnimplemented from all methods.

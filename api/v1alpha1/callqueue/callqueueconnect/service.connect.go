@@ -351,83 +351,117 @@ type CallQueueHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewCallQueueHandler(svc CallQueueHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	mux := http.NewServeMux()
-	mux.Handle(CallQueueDequeuePreviewRecordOrCallProcedure, connect_go.NewUnaryHandler(
+	callQueueDequeuePreviewRecordOrCallHandler := connect_go.NewUnaryHandler(
 		CallQueueDequeuePreviewRecordOrCallProcedure,
 		svc.DequeuePreviewRecordOrCall,
 		opts...,
-	))
-	mux.Handle(CallQueueEnqueuePreviewRecordProcedure, connect_go.NewUnaryHandler(
+	)
+	callQueueEnqueuePreviewRecordHandler := connect_go.NewUnaryHandler(
 		CallQueueEnqueuePreviewRecordProcedure,
 		svc.EnqueuePreviewRecord,
 		opts...,
-	))
-	mux.Handle(CallQueueDequeueScrubbedCallForPreviewRecordProcedure, connect_go.NewUnaryHandler(
+	)
+	callQueueDequeueScrubbedCallForPreviewRecordHandler := connect_go.NewUnaryHandler(
 		CallQueueDequeueScrubbedCallForPreviewRecordProcedure,
 		svc.DequeueScrubbedCallForPreviewRecord,
 		opts...,
-	))
-	mux.Handle(CallQueueClearPreviewRecordReturnQueueProcedure, connect_go.NewUnaryHandler(
+	)
+	callQueueClearPreviewRecordReturnQueueHandler := connect_go.NewUnaryHandler(
 		CallQueueClearPreviewRecordReturnQueueProcedure,
 		svc.ClearPreviewRecordReturnQueue,
 		opts...,
-	))
-	mux.Handle(CallQueueEnqueuePreviewDialCallProcedure, connect_go.NewUnaryHandler(
+	)
+	callQueueEnqueuePreviewDialCallHandler := connect_go.NewUnaryHandler(
 		CallQueueEnqueuePreviewDialCallProcedure,
 		svc.EnqueuePreviewDialCall,
 		opts...,
-	))
-	mux.Handle(CallQueueClearManualDialQueueProcedure, connect_go.NewUnaryHandler(
+	)
+	callQueueClearManualDialQueueHandler := connect_go.NewUnaryHandler(
 		CallQueueClearManualDialQueueProcedure,
 		svc.ClearManualDialQueue,
 		opts...,
-	))
-	mux.Handle(CallQueueProcessManualDialCallProcedure, connect_go.NewUnaryHandler(
+	)
+	callQueueProcessManualDialCallHandler := connect_go.NewUnaryHandler(
 		CallQueueProcessManualDialCallProcedure,
 		svc.ProcessManualDialCall,
 		opts...,
-	))
-	mux.Handle(CallQueueDequeueCallForManualApprovalProcedure, connect_go.NewUnaryHandler(
+	)
+	callQueueDequeueCallForManualApprovalHandler := connect_go.NewUnaryHandler(
 		CallQueueDequeueCallForManualApprovalProcedure,
 		svc.DequeueCallForManualApproval,
 		opts...,
-	))
-	mux.Handle(CallQueueEnqueueManuallyApprovedCallProcedure, connect_go.NewUnaryHandler(
+	)
+	callQueueEnqueueManuallyApprovedCallHandler := connect_go.NewUnaryHandler(
 		CallQueueEnqueueManuallyApprovedCallProcedure,
 		svc.EnqueueManuallyApprovedCall,
 		opts...,
-	))
-	mux.Handle(CallQueueEnqueueManuallyRejectedCallProcedure, connect_go.NewUnaryHandler(
+	)
+	callQueueEnqueueManuallyRejectedCallHandler := connect_go.NewUnaryHandler(
 		CallQueueEnqueueManuallyRejectedCallProcedure,
 		svc.EnqueueManuallyRejectedCall,
 		opts...,
-	))
-	mux.Handle(CallQueueRequeueManuallyApprovedCallProcedure, connect_go.NewUnaryHandler(
+	)
+	callQueueRequeueManuallyApprovedCallHandler := connect_go.NewUnaryHandler(
 		CallQueueRequeueManuallyApprovedCallProcedure,
 		svc.RequeueManuallyApprovedCall,
 		opts...,
-	))
-	mux.Handle(CallQueueEnqueueManuallyApprovedSmsProcedure, connect_go.NewUnaryHandler(
+	)
+	callQueueEnqueueManuallyApprovedSmsHandler := connect_go.NewUnaryHandler(
 		CallQueueEnqueueManuallyApprovedSmsProcedure,
 		svc.EnqueueManuallyApprovedSms,
 		opts...,
-	))
-	mux.Handle(CallQueueEnqueueManuallyRejectedSmsProcedure, connect_go.NewUnaryHandler(
+	)
+	callQueueEnqueueManuallyRejectedSmsHandler := connect_go.NewUnaryHandler(
 		CallQueueEnqueueManuallyRejectedSmsProcedure,
 		svc.EnqueueManuallyRejectedSms,
 		opts...,
-	))
-	mux.Handle(CallQueueRequeueManuallyApprovedSmsProcedure, connect_go.NewUnaryHandler(
+	)
+	callQueueRequeueManuallyApprovedSmsHandler := connect_go.NewUnaryHandler(
 		CallQueueRequeueManuallyApprovedSmsProcedure,
 		svc.RequeueManuallyApprovedSms,
 		opts...,
-	))
-	mux.Handle(CallQueueDequeueSmsMamForManualApprovalProcedure, connect_go.NewUnaryHandler(
+	)
+	callQueueDequeueSmsMamForManualApprovalHandler := connect_go.NewUnaryHandler(
 		CallQueueDequeueSmsMamForManualApprovalProcedure,
 		svc.DequeueSmsMamForManualApproval,
 		opts...,
-	))
-	return "/api.v1alpha1.callqueue.CallQueue/", mux
+	)
+	return "/api.v1alpha1.callqueue.CallQueue/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case CallQueueDequeuePreviewRecordOrCallProcedure:
+			callQueueDequeuePreviewRecordOrCallHandler.ServeHTTP(w, r)
+		case CallQueueEnqueuePreviewRecordProcedure:
+			callQueueEnqueuePreviewRecordHandler.ServeHTTP(w, r)
+		case CallQueueDequeueScrubbedCallForPreviewRecordProcedure:
+			callQueueDequeueScrubbedCallForPreviewRecordHandler.ServeHTTP(w, r)
+		case CallQueueClearPreviewRecordReturnQueueProcedure:
+			callQueueClearPreviewRecordReturnQueueHandler.ServeHTTP(w, r)
+		case CallQueueEnqueuePreviewDialCallProcedure:
+			callQueueEnqueuePreviewDialCallHandler.ServeHTTP(w, r)
+		case CallQueueClearManualDialQueueProcedure:
+			callQueueClearManualDialQueueHandler.ServeHTTP(w, r)
+		case CallQueueProcessManualDialCallProcedure:
+			callQueueProcessManualDialCallHandler.ServeHTTP(w, r)
+		case CallQueueDequeueCallForManualApprovalProcedure:
+			callQueueDequeueCallForManualApprovalHandler.ServeHTTP(w, r)
+		case CallQueueEnqueueManuallyApprovedCallProcedure:
+			callQueueEnqueueManuallyApprovedCallHandler.ServeHTTP(w, r)
+		case CallQueueEnqueueManuallyRejectedCallProcedure:
+			callQueueEnqueueManuallyRejectedCallHandler.ServeHTTP(w, r)
+		case CallQueueRequeueManuallyApprovedCallProcedure:
+			callQueueRequeueManuallyApprovedCallHandler.ServeHTTP(w, r)
+		case CallQueueEnqueueManuallyApprovedSmsProcedure:
+			callQueueEnqueueManuallyApprovedSmsHandler.ServeHTTP(w, r)
+		case CallQueueEnqueueManuallyRejectedSmsProcedure:
+			callQueueEnqueueManuallyRejectedSmsHandler.ServeHTTP(w, r)
+		case CallQueueRequeueManuallyApprovedSmsProcedure:
+			callQueueRequeueManuallyApprovedSmsHandler.ServeHTTP(w, r)
+		case CallQueueDequeueSmsMamForManualApprovalProcedure:
+			callQueueDequeueSmsMamForManualApprovalHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
 }
 
 // UnimplementedCallQueueHandler returns CodeUnimplemented from all methods.

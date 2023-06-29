@@ -1625,303 +1625,425 @@ type SmsApiHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewSmsApiHandler(svc SmsApiHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	mux := http.NewServeMux()
-	mux.Handle(SmsApiListSmsTemplatesProcedure, connect_go.NewUnaryHandler(
+	smsApiListSmsTemplatesHandler := connect_go.NewUnaryHandler(
 		SmsApiListSmsTemplatesProcedure,
 		svc.ListSmsTemplates,
 		opts...,
-	))
-	mux.Handle(SmsApiCreateSmsTemplateProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiCreateSmsTemplateHandler := connect_go.NewUnaryHandler(
 		SmsApiCreateSmsTemplateProcedure,
 		svc.CreateSmsTemplate,
 		opts...,
-	))
-	mux.Handle(SmsApiUpdateSmsTemplateProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiUpdateSmsTemplateHandler := connect_go.NewUnaryHandler(
 		SmsApiUpdateSmsTemplateProcedure,
 		svc.UpdateSmsTemplate,
 		opts...,
-	))
-	mux.Handle(SmsApiDeleteSmsTemplateProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiDeleteSmsTemplateHandler := connect_go.NewUnaryHandler(
 		SmsApiDeleteSmsTemplateProcedure,
 		svc.DeleteSmsTemplate,
 		opts...,
-	))
-	mux.Handle(SmsApiGetSmsTemplateBySidProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiGetSmsTemplateBySidHandler := connect_go.NewUnaryHandler(
 		SmsApiGetSmsTemplateBySidProcedure,
 		svc.GetSmsTemplateBySid,
 		opts...,
-	))
-	mux.Handle(SmsApiListSmsIntentTemplatesProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiListSmsIntentTemplatesHandler := connect_go.NewUnaryHandler(
 		SmsApiListSmsIntentTemplatesProcedure,
 		svc.ListSmsIntentTemplates,
 		opts...,
-	))
-	mux.Handle(SmsApiCreateSmsIntentTemplateProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiCreateSmsIntentTemplateHandler := connect_go.NewUnaryHandler(
 		SmsApiCreateSmsIntentTemplateProcedure,
 		svc.CreateSmsIntentTemplate,
 		opts...,
-	))
-	mux.Handle(SmsApiUpdateSmsIntentTemplateProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiUpdateSmsIntentTemplateHandler := connect_go.NewUnaryHandler(
 		SmsApiUpdateSmsIntentTemplateProcedure,
 		svc.UpdateSmsIntentTemplate,
 		opts...,
-	))
-	mux.Handle(SmsApiDeleteSmsIntentTemplateProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiDeleteSmsIntentTemplateHandler := connect_go.NewUnaryHandler(
 		SmsApiDeleteSmsIntentTemplateProcedure,
 		svc.DeleteSmsIntentTemplate,
 		opts...,
-	))
-	mux.Handle(SmsApiGetSmsIntentTemplateBySidProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiGetSmsIntentTemplateBySidHandler := connect_go.NewUnaryHandler(
 		SmsApiGetSmsIntentTemplateBySidProcedure,
 		svc.GetSmsIntentTemplateBySid,
 		opts...,
-	))
-	mux.Handle(SmsApiListSmsSourceNumbersProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiListSmsSourceNumbersHandler := connect_go.NewUnaryHandler(
 		SmsApiListSmsSourceNumbersProcedure,
 		svc.ListSmsSourceNumbers,
 		opts...,
-	))
-	mux.Handle(SmsApiCreateSmsSourceNumberProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiCreateSmsSourceNumberHandler := connect_go.NewUnaryHandler(
 		SmsApiCreateSmsSourceNumberProcedure,
 		svc.CreateSmsSourceNumber,
 		opts...,
-	))
-	mux.Handle(SmsApiUpdateSmsSourceNumberProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiUpdateSmsSourceNumberHandler := connect_go.NewUnaryHandler(
 		SmsApiUpdateSmsSourceNumberProcedure,
 		svc.UpdateSmsSourceNumber,
 		opts...,
-	))
-	mux.Handle(SmsApiDeleteSmsSourceNumberProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiDeleteSmsSourceNumberHandler := connect_go.NewUnaryHandler(
 		SmsApiDeleteSmsSourceNumberProcedure,
 		svc.DeleteSmsSourceNumber,
 		opts...,
-	))
-	mux.Handle(SmsApiGetSmsSourceNumberBySidProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiGetSmsSourceNumberBySidHandler := connect_go.NewUnaryHandler(
 		SmsApiGetSmsSourceNumberBySidProcedure,
 		svc.GetSmsSourceNumberBySid,
 		opts...,
-	))
-	mux.Handle(SmsApiSendSmsNotificationProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiSendSmsNotificationHandler := connect_go.NewUnaryHandler(
 		SmsApiSendSmsNotificationProcedure,
 		svc.SendSmsNotification,
 		opts...,
-	))
-	mux.Handle(SmsApiListSmsGroupByFiltersProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiListSmsGroupByFiltersHandler := connect_go.NewUnaryHandler(
 		SmsApiListSmsGroupByFiltersProcedure,
 		svc.ListSmsGroupByFilters,
 		opts...,
-	))
-	mux.Handle(SmsApiListSmsGroupsByGroupSidsProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiListSmsGroupsByGroupSidsHandler := connect_go.NewUnaryHandler(
 		SmsApiListSmsGroupsByGroupSidsProcedure,
 		svc.ListSmsGroupsByGroupSids,
 		opts...,
-	))
-	mux.Handle(SmsApiListSmsTasksByGroupSidsProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiListSmsTasksByGroupSidsHandler := connect_go.NewUnaryHandler(
 		SmsApiListSmsTasksByGroupSidsProcedure,
 		svc.ListSmsTasksByGroupSids,
 		opts...,
-	))
-	mux.Handle(SmsApiListSmsGroupByFiltersForAuditProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiListSmsGroupByFiltersForAuditHandler := connect_go.NewUnaryHandler(
 		SmsApiListSmsGroupByFiltersForAuditProcedure,
 		svc.ListSmsGroupByFiltersForAudit,
 		opts...,
-	))
-	mux.Handle(SmsApiListSmsGroupsByGroupSidsForAuditProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiListSmsGroupsByGroupSidsForAuditHandler := connect_go.NewUnaryHandler(
 		SmsApiListSmsGroupsByGroupSidsForAuditProcedure,
 		svc.ListSmsGroupsByGroupSidsForAudit,
 		opts...,
-	))
-	mux.Handle(SmsApiListSmsTasksByGroupSidsForAuditProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiListSmsTasksByGroupSidsForAuditHandler := connect_go.NewUnaryHandler(
 		SmsApiListSmsTasksByGroupSidsForAuditProcedure,
 		svc.ListSmsTasksByGroupSidsForAudit,
 		opts...,
-	))
-	mux.Handle(SmsApiListSmsTasksWithDetailedStatusProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiListSmsTasksWithDetailedStatusHandler := connect_go.NewUnaryHandler(
 		SmsApiListSmsTasksWithDetailedStatusProcedure,
 		svc.ListSmsTasksWithDetailedStatus,
 		opts...,
-	))
-	mux.Handle(SmsApiUpdateSmsGroupStatusProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiUpdateSmsGroupStatusHandler := connect_go.NewUnaryHandler(
 		SmsApiUpdateSmsGroupStatusProcedure,
 		svc.UpdateSmsGroupStatus,
 		opts...,
-	))
-	mux.Handle(SmsApiUpdateSmsGroupSendsPerMinuteProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiUpdateSmsGroupSendsPerMinuteHandler := connect_go.NewUnaryHandler(
 		SmsApiUpdateSmsGroupSendsPerMinuteProcedure,
 		svc.UpdateSmsGroupSendsPerMinute,
 		opts...,
-	))
-	mux.Handle(SmsApiUpdateSmsGroupScheduleTimesProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiUpdateSmsGroupScheduleTimesHandler := connect_go.NewUnaryHandler(
 		SmsApiUpdateSmsGroupScheduleTimesProcedure,
 		svc.UpdateSmsGroupScheduleTimes,
 		opts...,
-	))
-	mux.Handle(SmsApiScheduleSmsProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiScheduleSmsHandler := connect_go.NewUnaryHandler(
 		SmsApiScheduleSmsProcedure,
 		svc.ScheduleSms,
 		opts...,
-	))
-	mux.Handle(SmsApiResendUnconnectedSmsProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiResendUnconnectedSmsHandler := connect_go.NewUnaryHandler(
 		SmsApiResendUnconnectedSmsProcedure,
 		svc.ResendUnconnectedSms,
 		opts...,
-	))
-	mux.Handle(SmsApiSmsActivitySearchProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiSmsActivitySearchHandler := connect_go.NewUnaryHandler(
 		SmsApiSmsActivitySearchProcedure,
 		svc.SmsActivitySearch,
 		opts...,
-	))
-	mux.Handle(SmsApiCreateInboundSmsTemplateProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiCreateInboundSmsTemplateHandler := connect_go.NewUnaryHandler(
 		SmsApiCreateInboundSmsTemplateProcedure,
 		svc.CreateInboundSmsTemplate,
 		opts...,
-	))
-	mux.Handle(SmsApiUpdateInboundSmsTemplateProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiUpdateInboundSmsTemplateHandler := connect_go.NewUnaryHandler(
 		SmsApiUpdateInboundSmsTemplateProcedure,
 		svc.UpdateInboundSmsTemplate,
 		opts...,
-	))
-	mux.Handle(SmsApiDeleteInboundSmsTemplateProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiDeleteInboundSmsTemplateHandler := connect_go.NewUnaryHandler(
 		SmsApiDeleteInboundSmsTemplateProcedure,
 		svc.DeleteInboundSmsTemplate,
 		opts...,
-	))
-	mux.Handle(SmsApiListInboundSmsTemplatesProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiListInboundSmsTemplatesHandler := connect_go.NewUnaryHandler(
 		SmsApiListInboundSmsTemplatesProcedure,
 		svc.ListInboundSmsTemplates,
 		opts...,
-	))
-	mux.Handle(SmsApiGetInboundSmsTemplateByIdProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiGetInboundSmsTemplateByIdHandler := connect_go.NewUnaryHandler(
 		SmsApiGetInboundSmsTemplateByIdProcedure,
 		svc.GetInboundSmsTemplateById,
 		opts...,
-	))
-	mux.Handle(SmsApiCreateInboundSmsGroupProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiCreateInboundSmsGroupHandler := connect_go.NewUnaryHandler(
 		SmsApiCreateInboundSmsGroupProcedure,
 		svc.CreateInboundSmsGroup,
 		opts...,
-	))
-	mux.Handle(SmsApiUpdateInboundSmsGroupProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiUpdateInboundSmsGroupHandler := connect_go.NewUnaryHandler(
 		SmsApiUpdateInboundSmsGroupProcedure,
 		svc.UpdateInboundSmsGroup,
 		opts...,
-	))
-	mux.Handle(SmsApiDeleteInboundSmsGroupProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiDeleteInboundSmsGroupHandler := connect_go.NewUnaryHandler(
 		SmsApiDeleteInboundSmsGroupProcedure,
 		svc.DeleteInboundSmsGroup,
 		opts...,
-	))
-	mux.Handle(SmsApiListInboundSmsGroupsProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiListInboundSmsGroupsHandler := connect_go.NewUnaryHandler(
 		SmsApiListInboundSmsGroupsProcedure,
 		svc.ListInboundSmsGroups,
 		opts...,
-	))
-	mux.Handle(SmsApiListActiveInboundSmsGroupsProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiListActiveInboundSmsGroupsHandler := connect_go.NewUnaryHandler(
 		SmsApiListActiveInboundSmsGroupsProcedure,
 		svc.ListActiveInboundSmsGroups,
 		opts...,
-	))
-	mux.Handle(SmsApiListInboundSmsGroupByFiltersProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiListInboundSmsGroupByFiltersHandler := connect_go.NewUnaryHandler(
 		SmsApiListInboundSmsGroupByFiltersProcedure,
 		svc.ListInboundSmsGroupByFilters,
 		opts...,
-	))
-	mux.Handle(SmsApiGetInboundSmsGroupByIdProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiGetInboundSmsGroupByIdHandler := connect_go.NewUnaryHandler(
 		SmsApiGetInboundSmsGroupByIdProcedure,
 		svc.GetInboundSmsGroupById,
 		opts...,
-	))
-	mux.Handle(SmsApiListInboundSmsGroupsByGroupIdsProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiListInboundSmsGroupsByGroupIdsHandler := connect_go.NewUnaryHandler(
 		SmsApiListInboundSmsGroupsByGroupIdsProcedure,
 		svc.ListInboundSmsGroupsByGroupIds,
 		opts...,
-	))
-	mux.Handle(SmsApiStopInboundSmsGroupProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiStopInboundSmsGroupHandler := connect_go.NewUnaryHandler(
 		SmsApiStopInboundSmsGroupProcedure,
 		svc.StopInboundSmsGroup,
 		opts...,
-	))
-	mux.Handle(SmsApiScheduleInboundSmsProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiScheduleInboundSmsHandler := connect_go.NewUnaryHandler(
 		SmsApiScheduleInboundSmsProcedure,
 		svc.ScheduleInboundSms,
 		opts...,
-	))
-	mux.Handle(SmsApiCreateSmsConversationProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiCreateSmsConversationHandler := connect_go.NewUnaryHandler(
 		SmsApiCreateSmsConversationProcedure,
 		svc.CreateSmsConversation,
 		opts...,
-	))
-	mux.Handle(SmsApiUpdateSmsConversationProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiUpdateSmsConversationHandler := connect_go.NewUnaryHandler(
 		SmsApiUpdateSmsConversationProcedure,
 		svc.UpdateSmsConversation,
 		opts...,
-	))
-	mux.Handle(SmsApiDeleteSmsConversationProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiDeleteSmsConversationHandler := connect_go.NewUnaryHandler(
 		SmsApiDeleteSmsConversationProcedure,
 		svc.DeleteSmsConversation,
 		opts...,
-	))
-	mux.Handle(SmsApiListSmsConversationsProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiListSmsConversationsHandler := connect_go.NewUnaryHandler(
 		SmsApiListSmsConversationsProcedure,
 		svc.ListSmsConversations,
 		opts...,
-	))
-	mux.Handle(SmsApiGetSmsConversationByIdProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiGetSmsConversationByIdHandler := connect_go.NewUnaryHandler(
 		SmsApiGetSmsConversationByIdProcedure,
 		svc.GetSmsConversationById,
 		opts...,
-	))
-	mux.Handle(SmsApiGetSmsMessageProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiGetSmsMessageHandler := connect_go.NewUnaryHandler(
 		SmsApiGetSmsMessageProcedure,
 		svc.GetSmsMessage,
 		opts...,
-	))
-	mux.Handle(SmsApiCreateSmsConversationAuditProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiCreateSmsConversationAuditHandler := connect_go.NewUnaryHandler(
 		SmsApiCreateSmsConversationAuditProcedure,
 		svc.CreateSmsConversationAudit,
 		opts...,
-	))
-	mux.Handle(SmsApiListSmsConversationAuditsProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiListSmsConversationAuditsHandler := connect_go.NewUnaryHandler(
 		SmsApiListSmsConversationAuditsProcedure,
 		svc.ListSmsConversationAudits,
 		opts...,
-	))
-	mux.Handle(SmsApiGetSmsConversationAuditByIdProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiGetSmsConversationAuditByIdHandler := connect_go.NewUnaryHandler(
 		SmsApiGetSmsConversationAuditByIdProcedure,
 		svc.GetSmsConversationAuditById,
 		opts...,
-	))
-	mux.Handle(SmsApiCreateSmsConversationAssignedAgentProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiCreateSmsConversationAssignedAgentHandler := connect_go.NewUnaryHandler(
 		SmsApiCreateSmsConversationAssignedAgentProcedure,
 		svc.CreateSmsConversationAssignedAgent,
 		opts...,
-	))
-	mux.Handle(SmsApiListSmsConversationAssignedAgentsProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiListSmsConversationAssignedAgentsHandler := connect_go.NewUnaryHandler(
 		SmsApiListSmsConversationAssignedAgentsProcedure,
 		svc.ListSmsConversationAssignedAgents,
 		opts...,
-	))
-	mux.Handle(SmsApiGetSmsConversationAssignedAgentByIdProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiGetSmsConversationAssignedAgentByIdHandler := connect_go.NewUnaryHandler(
 		SmsApiGetSmsConversationAssignedAgentByIdProcedure,
 		svc.GetSmsConversationAssignedAgentById,
 		opts...,
-	))
-	mux.Handle(SmsApiListInboundSmsTasksByGroupIdsProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiListInboundSmsTasksByGroupIdsHandler := connect_go.NewUnaryHandler(
 		SmsApiListInboundSmsTasksByGroupIdsProcedure,
 		svc.ListInboundSmsTasksByGroupIds,
 		opts...,
-	))
-	mux.Handle(SmsApiStopAllOutboundSmsGroupsProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiStopAllOutboundSmsGroupsHandler := connect_go.NewUnaryHandler(
 		SmsApiStopAllOutboundSmsGroupsProcedure,
 		svc.StopAllOutboundSmsGroups,
 		opts...,
-	))
-	mux.Handle(SmsApiStopAllInboundSmsGroupsProcedure, connect_go.NewUnaryHandler(
+	)
+	smsApiStopAllInboundSmsGroupsHandler := connect_go.NewUnaryHandler(
 		SmsApiStopAllInboundSmsGroupsProcedure,
 		svc.StopAllInboundSmsGroups,
 		opts...,
-	))
-	return "/api.v0alpha.SmsApi/", mux
+	)
+	return "/api.v0alpha.SmsApi/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case SmsApiListSmsTemplatesProcedure:
+			smsApiListSmsTemplatesHandler.ServeHTTP(w, r)
+		case SmsApiCreateSmsTemplateProcedure:
+			smsApiCreateSmsTemplateHandler.ServeHTTP(w, r)
+		case SmsApiUpdateSmsTemplateProcedure:
+			smsApiUpdateSmsTemplateHandler.ServeHTTP(w, r)
+		case SmsApiDeleteSmsTemplateProcedure:
+			smsApiDeleteSmsTemplateHandler.ServeHTTP(w, r)
+		case SmsApiGetSmsTemplateBySidProcedure:
+			smsApiGetSmsTemplateBySidHandler.ServeHTTP(w, r)
+		case SmsApiListSmsIntentTemplatesProcedure:
+			smsApiListSmsIntentTemplatesHandler.ServeHTTP(w, r)
+		case SmsApiCreateSmsIntentTemplateProcedure:
+			smsApiCreateSmsIntentTemplateHandler.ServeHTTP(w, r)
+		case SmsApiUpdateSmsIntentTemplateProcedure:
+			smsApiUpdateSmsIntentTemplateHandler.ServeHTTP(w, r)
+		case SmsApiDeleteSmsIntentTemplateProcedure:
+			smsApiDeleteSmsIntentTemplateHandler.ServeHTTP(w, r)
+		case SmsApiGetSmsIntentTemplateBySidProcedure:
+			smsApiGetSmsIntentTemplateBySidHandler.ServeHTTP(w, r)
+		case SmsApiListSmsSourceNumbersProcedure:
+			smsApiListSmsSourceNumbersHandler.ServeHTTP(w, r)
+		case SmsApiCreateSmsSourceNumberProcedure:
+			smsApiCreateSmsSourceNumberHandler.ServeHTTP(w, r)
+		case SmsApiUpdateSmsSourceNumberProcedure:
+			smsApiUpdateSmsSourceNumberHandler.ServeHTTP(w, r)
+		case SmsApiDeleteSmsSourceNumberProcedure:
+			smsApiDeleteSmsSourceNumberHandler.ServeHTTP(w, r)
+		case SmsApiGetSmsSourceNumberBySidProcedure:
+			smsApiGetSmsSourceNumberBySidHandler.ServeHTTP(w, r)
+		case SmsApiSendSmsNotificationProcedure:
+			smsApiSendSmsNotificationHandler.ServeHTTP(w, r)
+		case SmsApiListSmsGroupByFiltersProcedure:
+			smsApiListSmsGroupByFiltersHandler.ServeHTTP(w, r)
+		case SmsApiListSmsGroupsByGroupSidsProcedure:
+			smsApiListSmsGroupsByGroupSidsHandler.ServeHTTP(w, r)
+		case SmsApiListSmsTasksByGroupSidsProcedure:
+			smsApiListSmsTasksByGroupSidsHandler.ServeHTTP(w, r)
+		case SmsApiListSmsGroupByFiltersForAuditProcedure:
+			smsApiListSmsGroupByFiltersForAuditHandler.ServeHTTP(w, r)
+		case SmsApiListSmsGroupsByGroupSidsForAuditProcedure:
+			smsApiListSmsGroupsByGroupSidsForAuditHandler.ServeHTTP(w, r)
+		case SmsApiListSmsTasksByGroupSidsForAuditProcedure:
+			smsApiListSmsTasksByGroupSidsForAuditHandler.ServeHTTP(w, r)
+		case SmsApiListSmsTasksWithDetailedStatusProcedure:
+			smsApiListSmsTasksWithDetailedStatusHandler.ServeHTTP(w, r)
+		case SmsApiUpdateSmsGroupStatusProcedure:
+			smsApiUpdateSmsGroupStatusHandler.ServeHTTP(w, r)
+		case SmsApiUpdateSmsGroupSendsPerMinuteProcedure:
+			smsApiUpdateSmsGroupSendsPerMinuteHandler.ServeHTTP(w, r)
+		case SmsApiUpdateSmsGroupScheduleTimesProcedure:
+			smsApiUpdateSmsGroupScheduleTimesHandler.ServeHTTP(w, r)
+		case SmsApiScheduleSmsProcedure:
+			smsApiScheduleSmsHandler.ServeHTTP(w, r)
+		case SmsApiResendUnconnectedSmsProcedure:
+			smsApiResendUnconnectedSmsHandler.ServeHTTP(w, r)
+		case SmsApiSmsActivitySearchProcedure:
+			smsApiSmsActivitySearchHandler.ServeHTTP(w, r)
+		case SmsApiCreateInboundSmsTemplateProcedure:
+			smsApiCreateInboundSmsTemplateHandler.ServeHTTP(w, r)
+		case SmsApiUpdateInboundSmsTemplateProcedure:
+			smsApiUpdateInboundSmsTemplateHandler.ServeHTTP(w, r)
+		case SmsApiDeleteInboundSmsTemplateProcedure:
+			smsApiDeleteInboundSmsTemplateHandler.ServeHTTP(w, r)
+		case SmsApiListInboundSmsTemplatesProcedure:
+			smsApiListInboundSmsTemplatesHandler.ServeHTTP(w, r)
+		case SmsApiGetInboundSmsTemplateByIdProcedure:
+			smsApiGetInboundSmsTemplateByIdHandler.ServeHTTP(w, r)
+		case SmsApiCreateInboundSmsGroupProcedure:
+			smsApiCreateInboundSmsGroupHandler.ServeHTTP(w, r)
+		case SmsApiUpdateInboundSmsGroupProcedure:
+			smsApiUpdateInboundSmsGroupHandler.ServeHTTP(w, r)
+		case SmsApiDeleteInboundSmsGroupProcedure:
+			smsApiDeleteInboundSmsGroupHandler.ServeHTTP(w, r)
+		case SmsApiListInboundSmsGroupsProcedure:
+			smsApiListInboundSmsGroupsHandler.ServeHTTP(w, r)
+		case SmsApiListActiveInboundSmsGroupsProcedure:
+			smsApiListActiveInboundSmsGroupsHandler.ServeHTTP(w, r)
+		case SmsApiListInboundSmsGroupByFiltersProcedure:
+			smsApiListInboundSmsGroupByFiltersHandler.ServeHTTP(w, r)
+		case SmsApiGetInboundSmsGroupByIdProcedure:
+			smsApiGetInboundSmsGroupByIdHandler.ServeHTTP(w, r)
+		case SmsApiListInboundSmsGroupsByGroupIdsProcedure:
+			smsApiListInboundSmsGroupsByGroupIdsHandler.ServeHTTP(w, r)
+		case SmsApiStopInboundSmsGroupProcedure:
+			smsApiStopInboundSmsGroupHandler.ServeHTTP(w, r)
+		case SmsApiScheduleInboundSmsProcedure:
+			smsApiScheduleInboundSmsHandler.ServeHTTP(w, r)
+		case SmsApiCreateSmsConversationProcedure:
+			smsApiCreateSmsConversationHandler.ServeHTTP(w, r)
+		case SmsApiUpdateSmsConversationProcedure:
+			smsApiUpdateSmsConversationHandler.ServeHTTP(w, r)
+		case SmsApiDeleteSmsConversationProcedure:
+			smsApiDeleteSmsConversationHandler.ServeHTTP(w, r)
+		case SmsApiListSmsConversationsProcedure:
+			smsApiListSmsConversationsHandler.ServeHTTP(w, r)
+		case SmsApiGetSmsConversationByIdProcedure:
+			smsApiGetSmsConversationByIdHandler.ServeHTTP(w, r)
+		case SmsApiGetSmsMessageProcedure:
+			smsApiGetSmsMessageHandler.ServeHTTP(w, r)
+		case SmsApiCreateSmsConversationAuditProcedure:
+			smsApiCreateSmsConversationAuditHandler.ServeHTTP(w, r)
+		case SmsApiListSmsConversationAuditsProcedure:
+			smsApiListSmsConversationAuditsHandler.ServeHTTP(w, r)
+		case SmsApiGetSmsConversationAuditByIdProcedure:
+			smsApiGetSmsConversationAuditByIdHandler.ServeHTTP(w, r)
+		case SmsApiCreateSmsConversationAssignedAgentProcedure:
+			smsApiCreateSmsConversationAssignedAgentHandler.ServeHTTP(w, r)
+		case SmsApiListSmsConversationAssignedAgentsProcedure:
+			smsApiListSmsConversationAssignedAgentsHandler.ServeHTTP(w, r)
+		case SmsApiGetSmsConversationAssignedAgentByIdProcedure:
+			smsApiGetSmsConversationAssignedAgentByIdHandler.ServeHTTP(w, r)
+		case SmsApiListInboundSmsTasksByGroupIdsProcedure:
+			smsApiListInboundSmsTasksByGroupIdsHandler.ServeHTTP(w, r)
+		case SmsApiStopAllOutboundSmsGroupsProcedure:
+			smsApiStopAllOutboundSmsGroupsHandler.ServeHTTP(w, r)
+		case SmsApiStopAllInboundSmsGroupsProcedure:
+			smsApiStopAllInboundSmsGroupsHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
 }
 
 // UnimplementedSmsApiHandler returns CodeUnimplemented from all methods.

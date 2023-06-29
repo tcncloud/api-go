@@ -672,163 +672,229 @@ type AnaHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewAnaHandler(svc AnaHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	mux := http.NewServeMux()
-	mux.Handle(AnaGetSpecifiedVisualizationsProcedure, connect_go.NewUnaryHandler(
+	anaGetSpecifiedVisualizationsHandler := connect_go.NewUnaryHandler(
 		AnaGetSpecifiedVisualizationsProcedure,
 		svc.GetSpecifiedVisualizations,
 		opts...,
-	))
-	mux.Handle(AnaRegisterAccountProcedure, connect_go.NewUnaryHandler(
+	)
+	anaRegisterAccountHandler := connect_go.NewUnaryHandler(
 		AnaRegisterAccountProcedure,
 		svc.RegisterAccount,
 		opts...,
-	))
-	mux.Handle(AnaSetWeeksProcedure, connect_go.NewUnaryHandler(
+	)
+	anaSetWeeksHandler := connect_go.NewUnaryHandler(
 		AnaSetWeeksProcedure,
 		svc.SetWeeks,
 		opts...,
-	))
-	mux.Handle(AnaSetDefaultTimeFilterProcedure, connect_go.NewUnaryHandler(
+	)
+	anaSetDefaultTimeFilterHandler := connect_go.NewUnaryHandler(
 		AnaSetDefaultTimeFilterProcedure,
 		svc.SetDefaultTimeFilter,
 		opts...,
-	))
-	mux.Handle(AnaSetDefaultDashboardProcedure, connect_go.NewUnaryHandler(
+	)
+	anaSetDefaultDashboardHandler := connect_go.NewUnaryHandler(
 		AnaSetDefaultDashboardProcedure,
 		svc.SetDefaultDashboard,
 		opts...,
-	))
-	mux.Handle(AnaGetAccountProcedure, connect_go.NewUnaryHandler(
+	)
+	anaGetAccountHandler := connect_go.NewUnaryHandler(
 		AnaGetAccountProcedure,
 		svc.GetAccount,
 		opts...,
-	))
-	mux.Handle(AnaGetSpecifiedAccountProcedure, connect_go.NewUnaryHandler(
+	)
+	anaGetSpecifiedAccountHandler := connect_go.NewUnaryHandler(
 		AnaGetSpecifiedAccountProcedure,
 		svc.GetSpecifiedAccount,
 		opts...,
-	))
-	mux.Handle(AnaGetAuthorizedAnalyticsLinkProcedure, connect_go.NewUnaryHandler(
+	)
+	anaGetAuthorizedAnalyticsLinkHandler := connect_go.NewUnaryHandler(
 		AnaGetAuthorizedAnalyticsLinkProcedure,
 		svc.GetAuthorizedAnalyticsLink,
 		opts...,
-	))
-	mux.Handle(AnaGenerateMonthlyBillingProcedure, connect_go.NewUnaryHandler(
+	)
+	anaGenerateMonthlyBillingHandler := connect_go.NewUnaryHandler(
 		AnaGenerateMonthlyBillingProcedure,
 		svc.GenerateMonthlyBilling,
 		opts...,
-	))
-	mux.Handle(AnaGetTimeZoneProcedure, connect_go.NewUnaryHandler(
+	)
+	anaGetTimeZoneHandler := connect_go.NewUnaryHandler(
 		AnaGetTimeZoneProcedure,
 		svc.GetTimeZone,
 		opts...,
-	))
-	mux.Handle(AnaSetTimeZoneProcedure, connect_go.NewUnaryHandler(
+	)
+	anaSetTimeZoneHandler := connect_go.NewUnaryHandler(
 		AnaSetTimeZoneProcedure,
 		svc.SetTimeZone,
 		opts...,
-	))
-	mux.Handle(AnaCopyDashVizProcedure, connect_go.NewUnaryHandler(
+	)
+	anaCopyDashVizHandler := connect_go.NewUnaryHandler(
 		AnaCopyDashVizProcedure,
 		svc.CopyDashViz,
 		opts...,
-	))
-	mux.Handle(AnaGetSpecifiedBillingSummaryProcedure, connect_go.NewUnaryHandler(
+	)
+	anaGetSpecifiedBillingSummaryHandler := connect_go.NewUnaryHandler(
 		AnaGetSpecifiedBillingSummaryProcedure,
 		svc.GetSpecifiedBillingSummary,
 		opts...,
-	))
-	mux.Handle(AnaGetBillingSummaryProcedure, connect_go.NewUnaryHandler(
+	)
+	anaGetBillingSummaryHandler := connect_go.NewUnaryHandler(
 		AnaGetBillingSummaryProcedure,
 		svc.GetBillingSummary,
 		opts...,
-	))
-	mux.Handle(AnaEnableCustomReportsProcedure, connect_go.NewUnaryHandler(
+	)
+	anaEnableCustomReportsHandler := connect_go.NewUnaryHandler(
 		AnaEnableCustomReportsProcedure,
 		svc.EnableCustomReports,
 		opts...,
-	))
-	mux.Handle(AnaDisableCustomReportsProcedure, connect_go.NewUnaryHandler(
+	)
+	anaDisableCustomReportsHandler := connect_go.NewUnaryHandler(
 		AnaDisableCustomReportsProcedure,
 		svc.DisableCustomReports,
 		opts...,
-	))
-	mux.Handle(AnaMakeAdoptableProcedure, connect_go.NewUnaryHandler(
+	)
+	anaMakeAdoptableHandler := connect_go.NewUnaryHandler(
 		AnaMakeAdoptableProcedure,
 		svc.MakeAdoptable,
 		opts...,
-	))
-	mux.Handle(AnaMakeUnadoptableProcedure, connect_go.NewUnaryHandler(
+	)
+	anaMakeUnadoptableHandler := connect_go.NewUnaryHandler(
 		AnaMakeUnadoptableProcedure,
 		svc.MakeUnadoptable,
 		opts...,
-	))
-	mux.Handle(AnaAdoptAnaAccountProcedure, connect_go.NewUnaryHandler(
+	)
+	anaAdoptAnaAccountHandler := connect_go.NewUnaryHandler(
 		AnaAdoptAnaAccountProcedure,
 		svc.AdoptAnaAccount,
 		opts...,
-	))
-	mux.Handle(AnaDisownAnaAccountProcedure, connect_go.NewUnaryHandler(
+	)
+	anaDisownAnaAccountHandler := connect_go.NewUnaryHandler(
 		AnaDisownAnaAccountProcedure,
 		svc.DisownAnaAccount,
 		opts...,
-	))
-	mux.Handle(AnaGetAccessibleClientsProcedure, connect_go.NewUnaryHandler(
+	)
+	anaGetAccessibleClientsHandler := connect_go.NewUnaryHandler(
 		AnaGetAccessibleClientsProcedure,
 		svc.GetAccessibleClients,
 		opts...,
-	))
-	mux.Handle(AnaGetFamilyProcedure, connect_go.NewUnaryHandler(
+	)
+	anaGetFamilyHandler := connect_go.NewUnaryHandler(
 		AnaGetFamilyProcedure,
 		svc.GetFamily,
 		opts...,
-	))
-	mux.Handle(AnaGetAllowedDataVisibilityProcedure, connect_go.NewUnaryHandler(
+	)
+	anaGetAllowedDataVisibilityHandler := connect_go.NewUnaryHandler(
 		AnaGetAllowedDataVisibilityProcedure,
 		svc.GetAllowedDataVisibility,
 		opts...,
-	))
-	mux.Handle(AnaGetCurrentDataVisibilityProcedure, connect_go.NewUnaryHandler(
+	)
+	anaGetCurrentDataVisibilityHandler := connect_go.NewUnaryHandler(
 		AnaGetCurrentDataVisibilityProcedure,
 		svc.GetCurrentDataVisibility,
 		opts...,
-	))
-	mux.Handle(AnaGetIndicesVisibilityProcedure, connect_go.NewUnaryHandler(
+	)
+	anaGetIndicesVisibilityHandler := connect_go.NewUnaryHandler(
 		AnaGetIndicesVisibilityProcedure,
 		svc.GetIndicesVisibility,
 		opts...,
-	))
-	mux.Handle(AnaGetAuditableDataVisibilityProcedure, connect_go.NewUnaryHandler(
+	)
+	anaGetAuditableDataVisibilityHandler := connect_go.NewUnaryHandler(
 		AnaGetAuditableDataVisibilityProcedure,
 		svc.GetAuditableDataVisibility,
 		opts...,
-	))
-	mux.Handle(AnaGetOrganizationNamesProcedure, connect_go.NewUnaryHandler(
+	)
+	anaGetOrganizationNamesHandler := connect_go.NewUnaryHandler(
 		AnaGetOrganizationNamesProcedure,
 		svc.GetOrganizationNames,
 		opts...,
-	))
-	mux.Handle(AnaGenerateVizDataByIdProcedure, connect_go.NewUnaryHandler(
+	)
+	anaGenerateVizDataByIdHandler := connect_go.NewUnaryHandler(
 		AnaGenerateVizDataByIdProcedure,
 		svc.GenerateVizDataById,
 		opts...,
-	))
-	mux.Handle(AnaGetClientStatusProcedure, connect_go.NewUnaryHandler(
+	)
+	anaGetClientStatusHandler := connect_go.NewUnaryHandler(
 		AnaGetClientStatusProcedure,
 		svc.GetClientStatus,
 		opts...,
-	))
-	mux.Handle(AnaReloadClientDataProcedure, connect_go.NewUnaryHandler(
+	)
+	anaReloadClientDataHandler := connect_go.NewUnaryHandler(
 		AnaReloadClientDataProcedure,
 		svc.ReloadClientData,
 		opts...,
-	))
-	mux.Handle(AnaListVisualizationsLegacyProcedure, connect_go.NewUnaryHandler(
+	)
+	anaListVisualizationsLegacyHandler := connect_go.NewUnaryHandler(
 		AnaListVisualizationsLegacyProcedure,
 		svc.ListVisualizationsLegacy,
 		opts...,
-	))
-	return "/api.v0alpha.Ana/", mux
+	)
+	return "/api.v0alpha.Ana/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case AnaGetSpecifiedVisualizationsProcedure:
+			anaGetSpecifiedVisualizationsHandler.ServeHTTP(w, r)
+		case AnaRegisterAccountProcedure:
+			anaRegisterAccountHandler.ServeHTTP(w, r)
+		case AnaSetWeeksProcedure:
+			anaSetWeeksHandler.ServeHTTP(w, r)
+		case AnaSetDefaultTimeFilterProcedure:
+			anaSetDefaultTimeFilterHandler.ServeHTTP(w, r)
+		case AnaSetDefaultDashboardProcedure:
+			anaSetDefaultDashboardHandler.ServeHTTP(w, r)
+		case AnaGetAccountProcedure:
+			anaGetAccountHandler.ServeHTTP(w, r)
+		case AnaGetSpecifiedAccountProcedure:
+			anaGetSpecifiedAccountHandler.ServeHTTP(w, r)
+		case AnaGetAuthorizedAnalyticsLinkProcedure:
+			anaGetAuthorizedAnalyticsLinkHandler.ServeHTTP(w, r)
+		case AnaGenerateMonthlyBillingProcedure:
+			anaGenerateMonthlyBillingHandler.ServeHTTP(w, r)
+		case AnaGetTimeZoneProcedure:
+			anaGetTimeZoneHandler.ServeHTTP(w, r)
+		case AnaSetTimeZoneProcedure:
+			anaSetTimeZoneHandler.ServeHTTP(w, r)
+		case AnaCopyDashVizProcedure:
+			anaCopyDashVizHandler.ServeHTTP(w, r)
+		case AnaGetSpecifiedBillingSummaryProcedure:
+			anaGetSpecifiedBillingSummaryHandler.ServeHTTP(w, r)
+		case AnaGetBillingSummaryProcedure:
+			anaGetBillingSummaryHandler.ServeHTTP(w, r)
+		case AnaEnableCustomReportsProcedure:
+			anaEnableCustomReportsHandler.ServeHTTP(w, r)
+		case AnaDisableCustomReportsProcedure:
+			anaDisableCustomReportsHandler.ServeHTTP(w, r)
+		case AnaMakeAdoptableProcedure:
+			anaMakeAdoptableHandler.ServeHTTP(w, r)
+		case AnaMakeUnadoptableProcedure:
+			anaMakeUnadoptableHandler.ServeHTTP(w, r)
+		case AnaAdoptAnaAccountProcedure:
+			anaAdoptAnaAccountHandler.ServeHTTP(w, r)
+		case AnaDisownAnaAccountProcedure:
+			anaDisownAnaAccountHandler.ServeHTTP(w, r)
+		case AnaGetAccessibleClientsProcedure:
+			anaGetAccessibleClientsHandler.ServeHTTP(w, r)
+		case AnaGetFamilyProcedure:
+			anaGetFamilyHandler.ServeHTTP(w, r)
+		case AnaGetAllowedDataVisibilityProcedure:
+			anaGetAllowedDataVisibilityHandler.ServeHTTP(w, r)
+		case AnaGetCurrentDataVisibilityProcedure:
+			anaGetCurrentDataVisibilityHandler.ServeHTTP(w, r)
+		case AnaGetIndicesVisibilityProcedure:
+			anaGetIndicesVisibilityHandler.ServeHTTP(w, r)
+		case AnaGetAuditableDataVisibilityProcedure:
+			anaGetAuditableDataVisibilityHandler.ServeHTTP(w, r)
+		case AnaGetOrganizationNamesProcedure:
+			anaGetOrganizationNamesHandler.ServeHTTP(w, r)
+		case AnaGenerateVizDataByIdProcedure:
+			anaGenerateVizDataByIdHandler.ServeHTTP(w, r)
+		case AnaGetClientStatusProcedure:
+			anaGetClientStatusHandler.ServeHTTP(w, r)
+		case AnaReloadClientDataProcedure:
+			anaReloadClientDataHandler.ServeHTTP(w, r)
+		case AnaListVisualizationsLegacyProcedure:
+			anaListVisualizationsLegacyHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
 }
 
 // UnimplementedAnaHandler returns CodeUnimplemented from all methods.

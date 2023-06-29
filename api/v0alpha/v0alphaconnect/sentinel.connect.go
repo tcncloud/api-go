@@ -97,13 +97,19 @@ type SentinelHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewSentinelHandler(svc SentinelHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	mux := http.NewServeMux()
-	mux.Handle(SentinelSendEventsProcedure, connect_go.NewUnaryHandler(
+	sentinelSendEventsHandler := connect_go.NewUnaryHandler(
 		SentinelSendEventsProcedure,
 		svc.SendEvents,
 		opts...,
-	))
-	return "/api.v0alpha.Sentinel/", mux
+	)
+	return "/api.v0alpha.Sentinel/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case SentinelSendEventsProcedure:
+			sentinelSendEventsHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
 }
 
 // UnimplementedSentinelHandler returns CodeUnimplemented from all methods.

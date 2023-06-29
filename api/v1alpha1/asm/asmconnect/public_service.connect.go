@@ -303,73 +303,103 @@ type AsmHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewAsmHandler(svc AsmHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	mux := http.NewServeMux()
-	mux.Handle(AsmStreamAgentStateProcedure, connect_go.NewServerStreamHandler(
+	asmStreamAgentStateHandler := connect_go.NewServerStreamHandler(
 		AsmStreamAgentStateProcedure,
 		svc.StreamAgentState,
 		opts...,
-	))
-	mux.Handle(AsmManagerStreamAgentStateProcedure, connect_go.NewServerStreamHandler(
+	)
+	asmManagerStreamAgentStateHandler := connect_go.NewServerStreamHandler(
 		AsmManagerStreamAgentStateProcedure,
 		svc.ManagerStreamAgentState,
 		opts...,
-	))
-	mux.Handle(AsmPushEventsProcedure, connect_go.NewUnaryHandler(
+	)
+	asmPushEventsHandler := connect_go.NewUnaryHandler(
 		AsmPushEventsProcedure,
 		svc.PushEvents,
 		opts...,
-	))
-	mux.Handle(AsmCreateSessionProcedure, connect_go.NewUnaryHandler(
+	)
+	asmCreateSessionHandler := connect_go.NewUnaryHandler(
 		AsmCreateSessionProcedure,
 		svc.CreateSession,
 		opts...,
-	))
-	mux.Handle(AsmEndSessionProcedure, connect_go.NewUnaryHandler(
+	)
+	asmEndSessionHandler := connect_go.NewUnaryHandler(
 		AsmEndSessionProcedure,
 		svc.EndSession,
 		opts...,
-	))
-	mux.Handle(AsmGetCurrentSessionProcedure, connect_go.NewUnaryHandler(
+	)
+	asmGetCurrentSessionHandler := connect_go.NewUnaryHandler(
 		AsmGetCurrentSessionProcedure,
 		svc.GetCurrentSession,
 		opts...,
-	))
-	mux.Handle(AsmEnableVoiceProcedure, connect_go.NewUnaryHandler(
+	)
+	asmEnableVoiceHandler := connect_go.NewUnaryHandler(
 		AsmEnableVoiceProcedure,
 		svc.EnableVoice,
 		opts...,
-	))
-	mux.Handle(AsmDisableVoiceProcedure, connect_go.NewUnaryHandler(
+	)
+	asmDisableVoiceHandler := connect_go.NewUnaryHandler(
 		AsmDisableVoiceProcedure,
 		svc.DisableVoice,
 		opts...,
-	))
-	mux.Handle(AsmListConversationsProcedure, connect_go.NewUnaryHandler(
+	)
+	asmListConversationsHandler := connect_go.NewUnaryHandler(
 		AsmListConversationsProcedure,
 		svc.ListConversations,
 		opts...,
-	))
-	mux.Handle(AsmAssignNewConversationProcedure, connect_go.NewUnaryHandler(
+	)
+	asmAssignNewConversationHandler := connect_go.NewUnaryHandler(
 		AsmAssignNewConversationProcedure,
 		svc.AssignNewConversation,
 		opts...,
-	))
-	mux.Handle(AsmListAgentsProcedure, connect_go.NewUnaryHandler(
+	)
+	asmListAgentsHandler := connect_go.NewUnaryHandler(
 		AsmListAgentsProcedure,
 		svc.ListAgents,
 		opts...,
-	))
-	mux.Handle(AsmSetConversationCollectedDataProcedure, connect_go.NewUnaryHandler(
+	)
+	asmSetConversationCollectedDataHandler := connect_go.NewUnaryHandler(
 		AsmSetConversationCollectedDataProcedure,
 		svc.SetConversationCollectedData,
 		opts...,
-	))
-	mux.Handle(AsmGetQueuesDetailsProcedure, connect_go.NewUnaryHandler(
+	)
+	asmGetQueuesDetailsHandler := connect_go.NewUnaryHandler(
 		AsmGetQueuesDetailsProcedure,
 		svc.GetQueuesDetails,
 		opts...,
-	))
-	return "/api.v1alpha1.asm.Asm/", mux
+	)
+	return "/api.v1alpha1.asm.Asm/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case AsmStreamAgentStateProcedure:
+			asmStreamAgentStateHandler.ServeHTTP(w, r)
+		case AsmManagerStreamAgentStateProcedure:
+			asmManagerStreamAgentStateHandler.ServeHTTP(w, r)
+		case AsmPushEventsProcedure:
+			asmPushEventsHandler.ServeHTTP(w, r)
+		case AsmCreateSessionProcedure:
+			asmCreateSessionHandler.ServeHTTP(w, r)
+		case AsmEndSessionProcedure:
+			asmEndSessionHandler.ServeHTTP(w, r)
+		case AsmGetCurrentSessionProcedure:
+			asmGetCurrentSessionHandler.ServeHTTP(w, r)
+		case AsmEnableVoiceProcedure:
+			asmEnableVoiceHandler.ServeHTTP(w, r)
+		case AsmDisableVoiceProcedure:
+			asmDisableVoiceHandler.ServeHTTP(w, r)
+		case AsmListConversationsProcedure:
+			asmListConversationsHandler.ServeHTTP(w, r)
+		case AsmAssignNewConversationProcedure:
+			asmAssignNewConversationHandler.ServeHTTP(w, r)
+		case AsmListAgentsProcedure:
+			asmListAgentsHandler.ServeHTTP(w, r)
+		case AsmSetConversationCollectedDataProcedure:
+			asmSetConversationCollectedDataHandler.ServeHTTP(w, r)
+		case AsmGetQueuesDetailsProcedure:
+			asmGetQueuesDetailsHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
 }
 
 // UnimplementedAsmHandler returns CodeUnimplemented from all methods.

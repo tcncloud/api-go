@@ -83,13 +83,19 @@ type NotifierHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewNotifierHandler(svc NotifierHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	mux := http.NewServeMux()
-	mux.Handle(NotifierGetNotifyProcedure, connect_go.NewUnaryHandler(
+	notifierGetNotifyHandler := connect_go.NewUnaryHandler(
 		NotifierGetNotifyProcedure,
 		svc.GetNotify,
 		opts...,
-	))
-	return "/api.v1alpha1.vanalytics.notifier.Notifier/", mux
+	)
+	return "/api.v1alpha1.vanalytics.notifier.Notifier/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case NotifierGetNotifyProcedure:
+			notifierGetNotifyHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
 }
 
 // UnimplementedNotifierHandler returns CodeUnimplemented from all methods.

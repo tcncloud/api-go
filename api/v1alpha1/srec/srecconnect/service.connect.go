@@ -120,23 +120,33 @@ type SrecHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewSrecHandler(svc SrecHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	mux := http.NewServeMux()
-	mux.Handle(SrecListScreenRecordingsProcedure, connect_go.NewUnaryHandler(
+	srecListScreenRecordingsHandler := connect_go.NewUnaryHandler(
 		SrecListScreenRecordingsProcedure,
 		svc.ListScreenRecordings,
 		opts...,
-	))
-	mux.Handle(SrecGetScreenRecordingURLProcedure, connect_go.NewUnaryHandler(
+	)
+	srecGetScreenRecordingURLHandler := connect_go.NewUnaryHandler(
 		SrecGetScreenRecordingURLProcedure,
 		svc.GetScreenRecordingURL,
 		opts...,
-	))
-	mux.Handle(SrecDeleteScreenRecordingProcedure, connect_go.NewUnaryHandler(
+	)
+	srecDeleteScreenRecordingHandler := connect_go.NewUnaryHandler(
 		SrecDeleteScreenRecordingProcedure,
 		svc.DeleteScreenRecording,
 		opts...,
-	))
-	return "/api.v1alpha1.srec.Srec/", mux
+	)
+	return "/api.v1alpha1.srec.Srec/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case SrecListScreenRecordingsProcedure:
+			srecListScreenRecordingsHandler.ServeHTTP(w, r)
+		case SrecGetScreenRecordingURLProcedure:
+			srecGetScreenRecordingURLHandler.ServeHTTP(w, r)
+		case SrecDeleteScreenRecordingProcedure:
+			srecDeleteScreenRecordingHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
 }
 
 // UnimplementedSrecHandler returns CodeUnimplemented from all methods.

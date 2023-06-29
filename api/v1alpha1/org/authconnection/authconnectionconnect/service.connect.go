@@ -164,33 +164,47 @@ type AuthConnectionServiceHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewAuthConnectionServiceHandler(svc AuthConnectionServiceHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	mux := http.NewServeMux()
-	mux.Handle(AuthConnectionServiceCreateAuthConnectionProcedure, connect_go.NewUnaryHandler(
+	authConnectionServiceCreateAuthConnectionHandler := connect_go.NewUnaryHandler(
 		AuthConnectionServiceCreateAuthConnectionProcedure,
 		svc.CreateAuthConnection,
 		opts...,
-	))
-	mux.Handle(AuthConnectionServiceGetAuthConnectionSettingsProcedure, connect_go.NewUnaryHandler(
+	)
+	authConnectionServiceGetAuthConnectionSettingsHandler := connect_go.NewUnaryHandler(
 		AuthConnectionServiceGetAuthConnectionSettingsProcedure,
 		svc.GetAuthConnectionSettings,
 		opts...,
-	))
-	mux.Handle(AuthConnectionServiceDeleteAuthConnectionProcedure, connect_go.NewUnaryHandler(
+	)
+	authConnectionServiceDeleteAuthConnectionHandler := connect_go.NewUnaryHandler(
 		AuthConnectionServiceDeleteAuthConnectionProcedure,
 		svc.DeleteAuthConnection,
 		opts...,
-	))
-	mux.Handle(AuthConnectionServiceUpdateAuthConnectionSecretProcedure, connect_go.NewUnaryHandler(
+	)
+	authConnectionServiceUpdateAuthConnectionSecretHandler := connect_go.NewUnaryHandler(
 		AuthConnectionServiceUpdateAuthConnectionSecretProcedure,
 		svc.UpdateAuthConnectionSecret,
 		opts...,
-	))
-	mux.Handle(AuthConnectionServiceUpdateAuthConnectionGroupsProcedure, connect_go.NewUnaryHandler(
+	)
+	authConnectionServiceUpdateAuthConnectionGroupsHandler := connect_go.NewUnaryHandler(
 		AuthConnectionServiceUpdateAuthConnectionGroupsProcedure,
 		svc.UpdateAuthConnectionGroups,
 		opts...,
-	))
-	return "/api.v1alpha1.org.authconnection.AuthConnectionService/", mux
+	)
+	return "/api.v1alpha1.org.authconnection.AuthConnectionService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case AuthConnectionServiceCreateAuthConnectionProcedure:
+			authConnectionServiceCreateAuthConnectionHandler.ServeHTTP(w, r)
+		case AuthConnectionServiceGetAuthConnectionSettingsProcedure:
+			authConnectionServiceGetAuthConnectionSettingsHandler.ServeHTTP(w, r)
+		case AuthConnectionServiceDeleteAuthConnectionProcedure:
+			authConnectionServiceDeleteAuthConnectionHandler.ServeHTTP(w, r)
+		case AuthConnectionServiceUpdateAuthConnectionSecretProcedure:
+			authConnectionServiceUpdateAuthConnectionSecretHandler.ServeHTTP(w, r)
+		case AuthConnectionServiceUpdateAuthConnectionGroupsProcedure:
+			authConnectionServiceUpdateAuthConnectionGroupsHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
 }
 
 // UnimplementedAuthConnectionServiceHandler returns CodeUnimplemented from all methods.

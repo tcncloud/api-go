@@ -254,58 +254,82 @@ type CBSHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewCBSHandler(svc CBSHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	mux := http.NewServeMux()
-	mux.Handle(CBSCreateServiceIdProcedure, connect_go.NewUnaryHandler(
+	cBSCreateServiceIdHandler := connect_go.NewUnaryHandler(
 		CBSCreateServiceIdProcedure,
 		svc.CreateServiceId,
 		opts...,
-	))
-	mux.Handle(CBSCreateCallbackWithDetailsProcedure, connect_go.NewUnaryHandler(
+	)
+	cBSCreateCallbackWithDetailsHandler := connect_go.NewUnaryHandler(
 		CBSCreateCallbackWithDetailsProcedure,
 		svc.CreateCallbackWithDetails,
 		opts...,
-	))
-	mux.Handle(CBSUpdateScheduledCallbackToReadyProcedure, connect_go.NewUnaryHandler(
+	)
+	cBSUpdateScheduledCallbackToReadyHandler := connect_go.NewUnaryHandler(
 		CBSUpdateScheduledCallbackToReadyProcedure,
 		svc.UpdateScheduledCallbackToReady,
 		opts...,
-	))
-	mux.Handle(CBSUpdateScheduledCallbackToCanceledProcedure, connect_go.NewUnaryHandler(
+	)
+	cBSUpdateScheduledCallbackToCanceledHandler := connect_go.NewUnaryHandler(
 		CBSUpdateScheduledCallbackToCanceledProcedure,
 		svc.UpdateScheduledCallbackToCanceled,
 		opts...,
-	))
-	mux.Handle(CBSGetNextScheduledCallbackWithDetailsProcedure, connect_go.NewUnaryHandler(
+	)
+	cBSGetNextScheduledCallbackWithDetailsHandler := connect_go.NewUnaryHandler(
 		CBSGetNextScheduledCallbackWithDetailsProcedure,
 		svc.GetNextScheduledCallbackWithDetails,
 		opts...,
-	))
-	mux.Handle(CBSUpdateScheduledCallbackToClosedProcedure, connect_go.NewUnaryHandler(
+	)
+	cBSUpdateScheduledCallbackToClosedHandler := connect_go.NewUnaryHandler(
 		CBSUpdateScheduledCallbackToClosedProcedure,
 		svc.UpdateScheduledCallbackToClosed,
 		opts...,
-	))
-	mux.Handle(CBSUpdateScheduledCallbackProcedure, connect_go.NewUnaryHandler(
+	)
+	cBSUpdateScheduledCallbackHandler := connect_go.NewUnaryHandler(
 		CBSUpdateScheduledCallbackProcedure,
 		svc.UpdateScheduledCallback,
 		opts...,
-	))
-	mux.Handle(CBSGetScheduledCallbackWithDetailsProcedure, connect_go.NewUnaryHandler(
+	)
+	cBSGetScheduledCallbackWithDetailsHandler := connect_go.NewUnaryHandler(
 		CBSGetScheduledCallbackWithDetailsProcedure,
 		svc.GetScheduledCallbackWithDetails,
 		opts...,
-	))
-	mux.Handle(CBSListScheduledCallbacksWithDetailsProcedure, connect_go.NewServerStreamHandler(
+	)
+	cBSListScheduledCallbacksWithDetailsHandler := connect_go.NewServerStreamHandler(
 		CBSListScheduledCallbacksWithDetailsProcedure,
 		svc.ListScheduledCallbacksWithDetails,
 		opts...,
-	))
-	mux.Handle(CBSListScheduledCallbacksWithDetailsBySkillsProcedure, connect_go.NewUnaryHandler(
+	)
+	cBSListScheduledCallbacksWithDetailsBySkillsHandler := connect_go.NewUnaryHandler(
 		CBSListScheduledCallbacksWithDetailsBySkillsProcedure,
 		svc.ListScheduledCallbacksWithDetailsBySkills,
 		opts...,
-	))
-	return "/api.v0alpha.CBS/", mux
+	)
+	return "/api.v0alpha.CBS/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case CBSCreateServiceIdProcedure:
+			cBSCreateServiceIdHandler.ServeHTTP(w, r)
+		case CBSCreateCallbackWithDetailsProcedure:
+			cBSCreateCallbackWithDetailsHandler.ServeHTTP(w, r)
+		case CBSUpdateScheduledCallbackToReadyProcedure:
+			cBSUpdateScheduledCallbackToReadyHandler.ServeHTTP(w, r)
+		case CBSUpdateScheduledCallbackToCanceledProcedure:
+			cBSUpdateScheduledCallbackToCanceledHandler.ServeHTTP(w, r)
+		case CBSGetNextScheduledCallbackWithDetailsProcedure:
+			cBSGetNextScheduledCallbackWithDetailsHandler.ServeHTTP(w, r)
+		case CBSUpdateScheduledCallbackToClosedProcedure:
+			cBSUpdateScheduledCallbackToClosedHandler.ServeHTTP(w, r)
+		case CBSUpdateScheduledCallbackProcedure:
+			cBSUpdateScheduledCallbackHandler.ServeHTTP(w, r)
+		case CBSGetScheduledCallbackWithDetailsProcedure:
+			cBSGetScheduledCallbackWithDetailsHandler.ServeHTTP(w, r)
+		case CBSListScheduledCallbacksWithDetailsProcedure:
+			cBSListScheduledCallbacksWithDetailsHandler.ServeHTTP(w, r)
+		case CBSListScheduledCallbacksWithDetailsBySkillsProcedure:
+			cBSListScheduledCallbacksWithDetailsBySkillsHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
 }
 
 // UnimplementedCBSHandler returns CodeUnimplemented from all methods.

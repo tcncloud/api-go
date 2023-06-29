@@ -136,28 +136,40 @@ type SdsHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewSdsHandler(svc SdsHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	mux := http.NewServeMux()
-	mux.Handle(SdsGetAgentResponseDataProcedure, connect_go.NewUnaryHandler(
+	sdsGetAgentResponseDataHandler := connect_go.NewUnaryHandler(
 		SdsGetAgentResponseDataProcedure,
 		svc.GetAgentResponseData,
 		opts...,
-	))
-	mux.Handle(SdsGetCallProcedure, connect_go.NewUnaryHandler(
+	)
+	sdsGetCallHandler := connect_go.NewUnaryHandler(
 		SdsGetCallProcedure,
 		svc.GetCall,
 		opts...,
-	))
-	mux.Handle(SdsUpdateAgentResponseDataProcedure, connect_go.NewUnaryHandler(
+	)
+	sdsUpdateAgentResponseDataHandler := connect_go.NewUnaryHandler(
 		SdsUpdateAgentResponseDataProcedure,
 		svc.UpdateAgentResponseData,
 		opts...,
-	))
-	mux.Handle(SdsUpdateVoicemailBoxProcedure, connect_go.NewUnaryHandler(
+	)
+	sdsUpdateVoicemailBoxHandler := connect_go.NewUnaryHandler(
 		SdsUpdateVoicemailBoxProcedure,
 		svc.UpdateVoicemailBox,
 		opts...,
-	))
-	return "/api.v0alpha.Sds/", mux
+	)
+	return "/api.v0alpha.Sds/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case SdsGetAgentResponseDataProcedure:
+			sdsGetAgentResponseDataHandler.ServeHTTP(w, r)
+		case SdsGetCallProcedure:
+			sdsGetCallHandler.ServeHTTP(w, r)
+		case SdsUpdateAgentResponseDataProcedure:
+			sdsUpdateAgentResponseDataHandler.ServeHTTP(w, r)
+		case SdsUpdateVoicemailBoxProcedure:
+			sdsUpdateVoicemailBoxHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
 }
 
 // UnimplementedSdsHandler returns CodeUnimplemented from all methods.

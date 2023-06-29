@@ -166,33 +166,47 @@ type SoundboardHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewSoundboardHandler(svc SoundboardHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	mux := http.NewServeMux()
-	mux.Handle(SoundboardGetSoundboardFileProcedure, connect_go.NewServerStreamHandler(
+	soundboardGetSoundboardFileHandler := connect_go.NewServerStreamHandler(
 		SoundboardGetSoundboardFileProcedure,
 		svc.GetSoundboardFile,
 		opts...,
-	))
-	mux.Handle(SoundboardCreateSoundboardProcedure, connect_go.NewUnaryHandler(
+	)
+	soundboardCreateSoundboardHandler := connect_go.NewUnaryHandler(
 		SoundboardCreateSoundboardProcedure,
 		svc.CreateSoundboard,
 		opts...,
-	))
-	mux.Handle(SoundboardListSoundboardsProcedure, connect_go.NewUnaryHandler(
+	)
+	soundboardListSoundboardsHandler := connect_go.NewUnaryHandler(
 		SoundboardListSoundboardsProcedure,
 		svc.ListSoundboards,
 		opts...,
-	))
-	mux.Handle(SoundboardUpdateSoundboardProcedure, connect_go.NewUnaryHandler(
+	)
+	soundboardUpdateSoundboardHandler := connect_go.NewUnaryHandler(
 		SoundboardUpdateSoundboardProcedure,
 		svc.UpdateSoundboard,
 		opts...,
-	))
-	mux.Handle(SoundboardDeleteSoundboardProcedure, connect_go.NewUnaryHandler(
+	)
+	soundboardDeleteSoundboardHandler := connect_go.NewUnaryHandler(
 		SoundboardDeleteSoundboardProcedure,
 		svc.DeleteSoundboard,
 		opts...,
-	))
-	return "/api.v1alpha1.soundboard.Soundboard/", mux
+	)
+	return "/api.v1alpha1.soundboard.Soundboard/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case SoundboardGetSoundboardFileProcedure:
+			soundboardGetSoundboardFileHandler.ServeHTTP(w, r)
+		case SoundboardCreateSoundboardProcedure:
+			soundboardCreateSoundboardHandler.ServeHTTP(w, r)
+		case SoundboardListSoundboardsProcedure:
+			soundboardListSoundboardsHandler.ServeHTTP(w, r)
+		case SoundboardUpdateSoundboardProcedure:
+			soundboardUpdateSoundboardHandler.ServeHTTP(w, r)
+		case SoundboardDeleteSoundboardProcedure:
+			soundboardDeleteSoundboardHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
 }
 
 // UnimplementedSoundboardHandler returns CodeUnimplemented from all methods.

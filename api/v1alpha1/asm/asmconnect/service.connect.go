@@ -255,58 +255,82 @@ type AsmApiHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewAsmApiHandler(svc AsmApiHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	mux := http.NewServeMux()
-	mux.Handle(AsmApiCreateSessionProcedure, connect_go.NewUnaryHandler(
+	asmApiCreateSessionHandler := connect_go.NewUnaryHandler(
 		AsmApiCreateSessionProcedure,
 		svc.CreateSession,
 		opts...,
-	))
-	mux.Handle(AsmApiGetStatusProcedure, connect_go.NewUnaryHandler(
+	)
+	asmApiGetStatusHandler := connect_go.NewUnaryHandler(
 		AsmApiGetStatusProcedure,
 		svc.GetStatus,
 		opts...,
-	))
-	mux.Handle(AsmApiEndSessionProcedure, connect_go.NewUnaryHandler(
+	)
+	asmApiEndSessionHandler := connect_go.NewUnaryHandler(
 		AsmApiEndSessionProcedure,
 		svc.EndSession,
 		opts...,
-	))
-	mux.Handle(AsmApiGetCurrentSessionProcedure, connect_go.NewUnaryHandler(
+	)
+	asmApiGetCurrentSessionHandler := connect_go.NewUnaryHandler(
 		AsmApiGetCurrentSessionProcedure,
 		svc.GetCurrentSession,
 		opts...,
-	))
-	mux.Handle(AsmApiSwitchSubsessionProcedure, connect_go.NewUnaryHandler(
+	)
+	asmApiSwitchSubsessionHandler := connect_go.NewUnaryHandler(
 		AsmApiSwitchSubsessionProcedure,
 		svc.SwitchSubsession,
 		opts...,
-	))
-	mux.Handle(AsmApiListConversationsProcedure, connect_go.NewUnaryHandler(
+	)
+	asmApiListConversationsHandler := connect_go.NewUnaryHandler(
 		AsmApiListConversationsProcedure,
 		svc.ListConversations,
 		opts...,
-	))
-	mux.Handle(AsmApiAssignNewConversationProcedure, connect_go.NewUnaryHandler(
+	)
+	asmApiAssignNewConversationHandler := connect_go.NewUnaryHandler(
 		AsmApiAssignNewConversationProcedure,
 		svc.AssignNewConversation,
 		opts...,
-	))
-	mux.Handle(AsmApiListAgentsProcedure, connect_go.NewUnaryHandler(
+	)
+	asmApiListAgentsHandler := connect_go.NewUnaryHandler(
 		AsmApiListAgentsProcedure,
 		svc.ListAgents,
 		opts...,
-	))
-	mux.Handle(AsmApiSetConversationCollectedDataProcedure, connect_go.NewUnaryHandler(
+	)
+	asmApiSetConversationCollectedDataHandler := connect_go.NewUnaryHandler(
 		AsmApiSetConversationCollectedDataProcedure,
 		svc.SetConversationCollectedData,
 		opts...,
-	))
-	mux.Handle(AsmApiGetQueuesDetailsProcedure, connect_go.NewUnaryHandler(
+	)
+	asmApiGetQueuesDetailsHandler := connect_go.NewUnaryHandler(
 		AsmApiGetQueuesDetailsProcedure,
 		svc.GetQueuesDetails,
 		opts...,
-	))
-	return "/api.v1alpha1.asm.AsmApi/", mux
+	)
+	return "/api.v1alpha1.asm.AsmApi/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case AsmApiCreateSessionProcedure:
+			asmApiCreateSessionHandler.ServeHTTP(w, r)
+		case AsmApiGetStatusProcedure:
+			asmApiGetStatusHandler.ServeHTTP(w, r)
+		case AsmApiEndSessionProcedure:
+			asmApiEndSessionHandler.ServeHTTP(w, r)
+		case AsmApiGetCurrentSessionProcedure:
+			asmApiGetCurrentSessionHandler.ServeHTTP(w, r)
+		case AsmApiSwitchSubsessionProcedure:
+			asmApiSwitchSubsessionHandler.ServeHTTP(w, r)
+		case AsmApiListConversationsProcedure:
+			asmApiListConversationsHandler.ServeHTTP(w, r)
+		case AsmApiAssignNewConversationProcedure:
+			asmApiAssignNewConversationHandler.ServeHTTP(w, r)
+		case AsmApiListAgentsProcedure:
+			asmApiListAgentsHandler.ServeHTTP(w, r)
+		case AsmApiSetConversationCollectedDataProcedure:
+			asmApiSetConversationCollectedDataHandler.ServeHTTP(w, r)
+		case AsmApiGetQueuesDetailsProcedure:
+			asmApiGetQueuesDetailsHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
 }
 
 // UnimplementedAsmApiHandler returns CodeUnimplemented from all methods.
