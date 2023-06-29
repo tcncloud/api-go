@@ -6449,6 +6449,7 @@ func (x *GetCannedMessageGroupByIdReq) GetCannedMessageGroupId() string {
 	return ""
 }
 
+// request to list user skills
 type ListUserSkillsReq struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -6501,6 +6502,7 @@ func (x *ListUserSkillsReq) GetTypeFilters() []commons.SkillType_Enum {
 	return nil
 }
 
+// respose to list users skills
 type ListUserSkillsRes struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -6548,14 +6550,19 @@ func (x *ListUserSkillsRes) GetSkills() []*OmniSkill {
 	return nil
 }
 
+// skill details
 type OmniSkill struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Region      string                 `protobuf:"bytes,1,opt,name=region,proto3" json:"region,omitempty"`
-	P3Id        string                 `protobuf:"bytes,2,opt,name=p3_id,json=p3Id,proto3" json:"p3_id,omitempty"`
-	Name        string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	// region
+	Region string `protobuf:"bytes,1,opt,name=region,proto3" json:"region,omitempty"`
+	// p3 id
+	P3Id string `protobuf:"bytes,2,opt,name=p3_id,json=p3Id,proto3" json:"p3_id,omitempty"`
+	// skill name
+	Name string `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	// skill description
 	Description string                 `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
 	Type        commons.SkillType_Enum `protobuf:"varint,5,opt,name=type,proto3,enum=api.commons.SkillType_Enum" json:"type,omitempty"`
 }
