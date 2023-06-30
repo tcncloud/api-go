@@ -84,6 +84,7 @@ const (
 	OmniApi_DeleteCannedMessageGroup_FullMethodName     = "/api.v0alpha.OmniApi/DeleteCannedMessageGroup"
 	OmniApi_ListCannedMessagesByGroupId_FullMethodName  = "/api.v0alpha.OmniApi/ListCannedMessagesByGroupId"
 	OmniApi_GetCannedMessageGroupById_FullMethodName    = "/api.v0alpha.OmniApi/GetCannedMessageGroupById"
+	OmniApi_ListUserSkills_FullMethodName               = "/api.v0alpha.OmniApi/ListUserSkills"
 )
 
 // OmniApiClient is the client API for OmniApi service.
@@ -392,6 +393,10 @@ type OmniApiClient interface {
 	//
 	//	OMNI_BOSS
 	GetCannedMessageGroupById(ctx context.Context, in *GetCannedMessageGroupByIdReq, opts ...grpc.CallOption) (*CannedMessageGroup, error)
+	// Returns a list of skills filtered by types given on
+	// the request message field type_filter. Leaving the type_filter
+	// field empty will return all types of skills.
+	ListUserSkills(ctx context.Context, in *ListUserSkillsReq, opts ...grpc.CallOption) (*ListUserSkillsRes, error)
 }
 
 type omniApiClient struct {
@@ -1024,6 +1029,15 @@ func (c *omniApiClient) GetCannedMessageGroupById(ctx context.Context, in *GetCa
 	return out, nil
 }
 
+func (c *omniApiClient) ListUserSkills(ctx context.Context, in *ListUserSkillsReq, opts ...grpc.CallOption) (*ListUserSkillsRes, error) {
+	out := new(ListUserSkillsRes)
+	err := c.cc.Invoke(ctx, OmniApi_ListUserSkills_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OmniApiServer is the server API for OmniApi service.
 // All implementations must embed UnimplementedOmniApiServer
 // for forward compatibility
@@ -1330,6 +1344,10 @@ type OmniApiServer interface {
 	//
 	//	OMNI_BOSS
 	GetCannedMessageGroupById(context.Context, *GetCannedMessageGroupByIdReq) (*CannedMessageGroup, error)
+	// Returns a list of skills filtered by types given on
+	// the request message field type_filter. Leaving the type_filter
+	// field empty will return all types of skills.
+	ListUserSkills(context.Context, *ListUserSkillsReq) (*ListUserSkillsRes, error)
 	mustEmbedUnimplementedOmniApiServer()
 }
 
@@ -1528,6 +1546,9 @@ func (UnimplementedOmniApiServer) ListCannedMessagesByGroupId(context.Context, *
 }
 func (UnimplementedOmniApiServer) GetCannedMessageGroupById(context.Context, *GetCannedMessageGroupByIdReq) (*CannedMessageGroup, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCannedMessageGroupById not implemented")
+}
+func (UnimplementedOmniApiServer) ListUserSkills(context.Context, *ListUserSkillsReq) (*ListUserSkillsRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListUserSkills not implemented")
 }
 func (UnimplementedOmniApiServer) mustEmbedUnimplementedOmniApiServer() {}
 
@@ -2700,6 +2721,24 @@ func _OmniApi_GetCannedMessageGroupById_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OmniApi_ListUserSkills_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListUserSkillsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmniApiServer).ListUserSkills(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OmniApi_ListUserSkills_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmniApiServer).ListUserSkills(ctx, req.(*ListUserSkillsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // OmniApi_ServiceDesc is the grpc.ServiceDesc for OmniApi service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -2954,6 +2993,10 @@ var OmniApi_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetCannedMessageGroupById",
 			Handler:    _OmniApi_GetCannedMessageGroupById_Handler,
+		},
+		{
+			MethodName: "ListUserSkills",
+			Handler:    _OmniApi_ListUserSkills_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
