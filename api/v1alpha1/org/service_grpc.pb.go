@@ -168,6 +168,7 @@ const (
 	Org_DeleteP3PermissionGroup_FullMethodName                 = "/api.v1alpha1.org.Org/DeleteP3PermissionGroup"
 	Org_AssignUsersP3PermissionGroup_FullMethodName            = "/api.v1alpha1.org.Org/AssignUsersP3PermissionGroup"
 	Org_RevokeUsersP3PermissionGroup_FullMethodName            = "/api.v1alpha1.org.Org/RevokeUsersP3PermissionGroup"
+	Org_ListOrgSkills_FullMethodName                           = "/api.v1alpha1.org.Org/ListOrgSkills"
 )
 
 // OrgClient is the client API for Org service.
@@ -518,6 +519,10 @@ type OrgClient interface {
 	// RevokeUsersP3PermissionGroup revokes a p3 permission group
 	// from a list of users.
 	RevokeUsersP3PermissionGroup(ctx context.Context, in *RevokeUsersP3PermissionGroupRequest, opts ...grpc.CallOption) (*RevokeUsersP3PermissionGroupResponse, error)
+	// Returns a list of skills filtered by types given on
+	// the request message field type_filter. Leaving the type_filter
+	// field empty will return all types of skills.
+	ListOrgSkills(ctx context.Context, in *ListOrgSkillsReq, opts ...grpc.CallOption) (*ListOrgSkillsRes, error)
 }
 
 type orgClient struct {
@@ -2053,6 +2058,15 @@ func (c *orgClient) RevokeUsersP3PermissionGroup(ctx context.Context, in *Revoke
 	return out, nil
 }
 
+func (c *orgClient) ListOrgSkills(ctx context.Context, in *ListOrgSkillsReq, opts ...grpc.CallOption) (*ListOrgSkillsRes, error) {
+	out := new(ListOrgSkillsRes)
+	err := c.cc.Invoke(ctx, Org_ListOrgSkills_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OrgServer is the server API for Org service.
 // All implementations must embed UnimplementedOrgServer
 // for forward compatibility
@@ -2401,6 +2415,10 @@ type OrgServer interface {
 	// RevokeUsersP3PermissionGroup revokes a p3 permission group
 	// from a list of users.
 	RevokeUsersP3PermissionGroup(context.Context, *RevokeUsersP3PermissionGroupRequest) (*RevokeUsersP3PermissionGroupResponse, error)
+	// Returns a list of skills filtered by types given on
+	// the request message field type_filter. Leaving the type_filter
+	// field empty will return all types of skills.
+	ListOrgSkills(context.Context, *ListOrgSkillsReq) (*ListOrgSkillsRes, error)
 	mustEmbedUnimplementedOrgServer()
 }
 
@@ -2854,6 +2872,9 @@ func (UnimplementedOrgServer) AssignUsersP3PermissionGroup(context.Context, *Ass
 }
 func (UnimplementedOrgServer) RevokeUsersP3PermissionGroup(context.Context, *RevokeUsersP3PermissionGroupRequest) (*RevokeUsersP3PermissionGroupResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RevokeUsersP3PermissionGroup not implemented")
+}
+func (UnimplementedOrgServer) ListOrgSkills(context.Context, *ListOrgSkillsReq) (*ListOrgSkillsRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListOrgSkills not implemented")
 }
 func (UnimplementedOrgServer) mustEmbedUnimplementedOrgServer() {}
 
@@ -5574,6 +5595,24 @@ func _Org_RevokeUsersP3PermissionGroup_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Org_ListOrgSkills_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListOrgSkillsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).ListOrgSkills(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_ListOrgSkills_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).ListOrgSkills(ctx, req.(*ListOrgSkillsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Org_ServiceDesc is the grpc.ServiceDesc for Org service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -6144,6 +6183,10 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RevokeUsersP3PermissionGroup",
 			Handler:    _Org_RevokeUsersP3PermissionGroup_Handler,
+		},
+		{
+			MethodName: "ListOrgSkills",
+			Handler:    _Org_ListOrgSkills_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
