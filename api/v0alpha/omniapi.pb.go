@@ -6508,7 +6508,7 @@ type ListUserSkillsRes struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Skills []*OmniSkill `protobuf:"bytes,1,rep,name=skills,proto3" json:"skills,omitempty"`
+	Skills []*UserSkill `protobuf:"bytes,1,rep,name=skills,proto3" json:"skills,omitempty"`
 }
 
 func (x *ListUserSkillsRes) Reset() {
@@ -6543,15 +6543,15 @@ func (*ListUserSkillsRes) Descriptor() ([]byte, []int) {
 	return file_api_v0alpha_omniapi_proto_rawDescGZIP(), []int{110}
 }
 
-func (x *ListUserSkillsRes) GetSkills() []*OmniSkill {
+func (x *ListUserSkillsRes) GetSkills() []*UserSkill {
 	if x != nil {
 		return x.Skills
 	}
 	return nil
 }
 
-// skill details
-type OmniSkill struct {
+// user skill details
+type UserSkill struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -6567,8 +6567,8 @@ type OmniSkill struct {
 	Type        commons.SkillType_Enum `protobuf:"varint,5,opt,name=type,proto3,enum=api.commons.SkillType_Enum" json:"type,omitempty"`
 }
 
-func (x *OmniSkill) Reset() {
-	*x = OmniSkill{}
+func (x *UserSkill) Reset() {
+	*x = UserSkill{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_api_v0alpha_omniapi_proto_msgTypes[111]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -6576,13 +6576,13 @@ func (x *OmniSkill) Reset() {
 	}
 }
 
-func (x *OmniSkill) String() string {
+func (x *UserSkill) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*OmniSkill) ProtoMessage() {}
+func (*UserSkill) ProtoMessage() {}
 
-func (x *OmniSkill) ProtoReflect() protoreflect.Message {
+func (x *UserSkill) ProtoReflect() protoreflect.Message {
 	mi := &file_api_v0alpha_omniapi_proto_msgTypes[111]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -6594,40 +6594,40 @@ func (x *OmniSkill) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use OmniSkill.ProtoReflect.Descriptor instead.
-func (*OmniSkill) Descriptor() ([]byte, []int) {
+// Deprecated: Use UserSkill.ProtoReflect.Descriptor instead.
+func (*UserSkill) Descriptor() ([]byte, []int) {
 	return file_api_v0alpha_omniapi_proto_rawDescGZIP(), []int{111}
 }
 
-func (x *OmniSkill) GetRegion() string {
+func (x *UserSkill) GetRegion() string {
 	if x != nil {
 		return x.Region
 	}
 	return ""
 }
 
-func (x *OmniSkill) GetP3Id() string {
+func (x *UserSkill) GetP3Id() string {
 	if x != nil {
 		return x.P3Id
 	}
 	return ""
 }
 
-func (x *OmniSkill) GetName() string {
+func (x *UserSkill) GetName() string {
 	if x != nil {
 		return x.Name
 	}
 	return ""
 }
 
-func (x *OmniSkill) GetDescription() string {
+func (x *UserSkill) GetDescription() string {
 	if x != nil {
 		return x.Description
 	}
 	return ""
 }
 
-func (x *OmniSkill) GetType() commons.SkillType_Enum {
+func (x *UserSkill) GetType() commons.SkillType_Enum {
 	if x != nil {
 		return x.Type
 	}
@@ -8591,9 +8591,9 @@ var file_api_v0alpha_omniapi_proto_rawDesc = []byte{
 	0x79, 0x70, 0x65, 0x46, 0x69, 0x6c, 0x74, 0x65, 0x72, 0x73, 0x22, 0x43, 0x0a, 0x11, 0x4c, 0x69,
 	0x73, 0x74, 0x55, 0x73, 0x65, 0x72, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x73, 0x52, 0x65, 0x73, 0x12,
 	0x2e, 0x0a, 0x06, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32,
-	0x16, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x30, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x2e, 0x4f, 0x6d,
-	0x6e, 0x69, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x52, 0x06, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x73, 0x22,
-	0x9f, 0x01, 0x0a, 0x09, 0x4f, 0x6d, 0x6e, 0x69, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x12, 0x16, 0x0a,
+	0x16, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x30, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x2e, 0x55, 0x73,
+	0x65, 0x72, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x52, 0x06, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x73, 0x22,
+	0x9f, 0x01, 0x0a, 0x09, 0x55, 0x73, 0x65, 0x72, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x12, 0x16, 0x0a,
 	0x06, 0x72, 0x65, 0x67, 0x69, 0x6f, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x72,
 	0x65, 0x67, 0x69, 0x6f, 0x6e, 0x12, 0x13, 0x0a, 0x05, 0x70, 0x33, 0x5f, 0x69, 0x64, 0x18, 0x02,
 	0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x70, 0x33, 0x49, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61,
@@ -9369,7 +9369,7 @@ var file_api_v0alpha_omniapi_proto_goTypes = []interface{}{
 	(*GetCannedMessageGroupByIdReq)(nil),               // 108: api.v0alpha.GetCannedMessageGroupByIdReq
 	(*ListUserSkillsReq)(nil),                          // 109: api.v0alpha.ListUserSkillsReq
 	(*ListUserSkillsRes)(nil),                          // 110: api.v0alpha.ListUserSkillsRes
-	(*OmniSkill)(nil),                                  // 111: api.v0alpha.OmniSkill
+	(*UserSkill)(nil),                                  // 111: api.v0alpha.UserSkill
 	(*CreateCampaignReq_CampaignModule)(nil),           // 112: api.v0alpha.CreateCampaignReq.CampaignModule
 	(*ListCampaignsReq_ByConnectedInbox)(nil),          // 113: api.v0alpha.ListCampaignsReq.ByConnectedInbox
 	(*ListCampaignsReq_ByIds)(nil),                     // 114: api.v0alpha.ListCampaignsReq.ByIds
@@ -9499,8 +9499,8 @@ var file_api_v0alpha_omniapi_proto_depIdxs = []int32{
 	98,  // 84: api.v0alpha.ListCannedMessageGroupsRes.canned_message_groups:type_name -> api.v0alpha.CannedMessageGroup
 	99,  // 85: api.v0alpha.ListCannedMessagesByGroupIdRes.canned_messages_with_group:type_name -> api.v0alpha.CannedMessageWithGroup
 	149, // 86: api.v0alpha.ListUserSkillsReq.type_filters:type_name -> api.commons.SkillType.Enum
-	111, // 87: api.v0alpha.ListUserSkillsRes.skills:type_name -> api.v0alpha.OmniSkill
-	149, // 88: api.v0alpha.OmniSkill.type:type_name -> api.commons.SkillType.Enum
+	111, // 87: api.v0alpha.ListUserSkillsRes.skills:type_name -> api.v0alpha.UserSkill
+	149, // 88: api.v0alpha.UserSkill.type:type_name -> api.commons.SkillType.Enum
 	133, // 89: api.v0alpha.CreateCampaignReq.CampaignModule.module:type_name -> api.commons.OmniCampaignModule
 	3,   // 90: api.v0alpha.CreateCampaignReq.CampaignModule.omni_contact_list:type_name -> api.v0alpha.ContactListsDataSource
 	134, // 91: api.v0alpha.ListCampaignsReq.ByTime.search_from:type_name -> google.protobuf.Timestamp
@@ -10986,7 +10986,7 @@ func file_api_v0alpha_omniapi_proto_init() {
 			}
 		}
 		file_api_v0alpha_omniapi_proto_msgTypes[111].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*OmniSkill); i {
+			switch v := v.(*UserSkill); i {
 			case 0:
 				return &v.state
 			case 1:
