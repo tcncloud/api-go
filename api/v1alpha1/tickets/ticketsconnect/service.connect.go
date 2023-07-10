@@ -68,6 +68,8 @@ const (
 	TicketsListTicketAuditLogProcedure = "/api.v1alpha1.tickets.Tickets/ListTicketAuditLog"
 	// TicketsAssignSelfProcedure is the fully-qualified name of the Tickets's AssignSelf RPC.
 	TicketsAssignSelfProcedure = "/api.v1alpha1.tickets.Tickets/AssignSelf"
+	// TicketsEditMaskTicketProcedure is the fully-qualified name of the Tickets's EditMaskTicket RPC.
+	TicketsEditMaskTicketProcedure = "/api.v1alpha1.tickets.Tickets/EditMaskTicket"
 )
 
 // TicketsClient is a client for the api.v1alpha1.tickets.Tickets service.
@@ -104,6 +106,9 @@ type TicketsClient interface {
 	ListTicketAuditLog(context.Context, *connect_go.Request[tickets.ListTicketAuditLogReq]) (*connect_go.Response[tickets.ListTicketAuditLogRes], error)
 	// Public method to assign a ticket
 	AssignSelf(context.Context, *connect_go.Request[tickets.CreateSelfAssignReq]) (*connect_go.Response[tickets.CreateSelfAssignRes], error)
+	// Public Method to edit a ticket.
+	// EditTicket would be deprecated
+	EditMaskTicket(context.Context, *connect_go.Request[tickets.EditMaskTicketReq]) (*connect_go.Response[tickets.EditMaskTicketRes], error)
 }
 
 // NewTicketsClient constructs a client for the api.v1alpha1.tickets.Tickets service. By default, it
@@ -196,6 +201,11 @@ func NewTicketsClient(httpClient connect_go.HTTPClient, baseURL string, opts ...
 			baseURL+TicketsAssignSelfProcedure,
 			opts...,
 		),
+		editMaskTicket: connect_go.NewClient[tickets.EditMaskTicketReq, tickets.EditMaskTicketRes](
+			httpClient,
+			baseURL+TicketsEditMaskTicketProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -217,6 +227,7 @@ type ticketsClient struct {
 	replyComment        *connect_go.Client[tickets.ReplyCommentReq, tickets.ReplyCommentRes]
 	listTicketAuditLog  *connect_go.Client[tickets.ListTicketAuditLogReq, tickets.ListTicketAuditLogRes]
 	assignSelf          *connect_go.Client[tickets.CreateSelfAssignReq, tickets.CreateSelfAssignRes]
+	editMaskTicket      *connect_go.Client[tickets.EditMaskTicketReq, tickets.EditMaskTicketRes]
 }
 
 // CreateTicket calls api.v1alpha1.tickets.Tickets.CreateTicket.
@@ -299,6 +310,11 @@ func (c *ticketsClient) AssignSelf(ctx context.Context, req *connect_go.Request[
 	return c.assignSelf.CallUnary(ctx, req)
 }
 
+// EditMaskTicket calls api.v1alpha1.tickets.Tickets.EditMaskTicket.
+func (c *ticketsClient) EditMaskTicket(ctx context.Context, req *connect_go.Request[tickets.EditMaskTicketReq]) (*connect_go.Response[tickets.EditMaskTicketRes], error) {
+	return c.editMaskTicket.CallUnary(ctx, req)
+}
+
 // TicketsHandler is an implementation of the api.v1alpha1.tickets.Tickets service.
 type TicketsHandler interface {
 	// Public Method to create a ticket.
@@ -333,6 +349,9 @@ type TicketsHandler interface {
 	ListTicketAuditLog(context.Context, *connect_go.Request[tickets.ListTicketAuditLogReq]) (*connect_go.Response[tickets.ListTicketAuditLogRes], error)
 	// Public method to assign a ticket
 	AssignSelf(context.Context, *connect_go.Request[tickets.CreateSelfAssignReq]) (*connect_go.Response[tickets.CreateSelfAssignRes], error)
+	// Public Method to edit a ticket.
+	// EditTicket would be deprecated
+	EditMaskTicket(context.Context, *connect_go.Request[tickets.EditMaskTicketReq]) (*connect_go.Response[tickets.EditMaskTicketRes], error)
 }
 
 // NewTicketsHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -421,6 +440,11 @@ func NewTicketsHandler(svc TicketsHandler, opts ...connect_go.HandlerOption) (st
 		svc.AssignSelf,
 		opts...,
 	)
+	ticketsEditMaskTicketHandler := connect_go.NewUnaryHandler(
+		TicketsEditMaskTicketProcedure,
+		svc.EditMaskTicket,
+		opts...,
+	)
 	return "/api.v1alpha1.tickets.Tickets/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case TicketsCreateTicketProcedure:
@@ -455,6 +479,8 @@ func NewTicketsHandler(svc TicketsHandler, opts ...connect_go.HandlerOption) (st
 			ticketsListTicketAuditLogHandler.ServeHTTP(w, r)
 		case TicketsAssignSelfProcedure:
 			ticketsAssignSelfHandler.ServeHTTP(w, r)
+		case TicketsEditMaskTicketProcedure:
+			ticketsEditMaskTicketHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -526,4 +552,8 @@ func (UnimplementedTicketsHandler) ListTicketAuditLog(context.Context, *connect_
 
 func (UnimplementedTicketsHandler) AssignSelf(context.Context, *connect_go.Request[tickets.CreateSelfAssignReq]) (*connect_go.Response[tickets.CreateSelfAssignRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.tickets.Tickets.AssignSelf is not implemented"))
+}
+
+func (UnimplementedTicketsHandler) EditMaskTicket(context.Context, *connect_go.Request[tickets.EditMaskTicketReq]) (*connect_go.Response[tickets.EditMaskTicketRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.tickets.Tickets.EditMaskTicket is not implemented"))
 }
