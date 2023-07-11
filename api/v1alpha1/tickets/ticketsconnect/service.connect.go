@@ -70,6 +70,9 @@ const (
 	TicketsAssignSelfProcedure = "/api.v1alpha1.tickets.Tickets/AssignSelf"
 	// TicketsEditMaskTicketProcedure is the fully-qualified name of the Tickets's EditMaskTicket RPC.
 	TicketsEditMaskTicketProcedure = "/api.v1alpha1.tickets.Tickets/EditMaskTicket"
+	// TicketsListAllocatedTicketsProcedure is the fully-qualified name of the Tickets's
+	// ListAllocatedTickets RPC.
+	TicketsListAllocatedTicketsProcedure = "/api.v1alpha1.tickets.Tickets/ListAllocatedTickets"
 )
 
 // TicketsClient is a client for the api.v1alpha1.tickets.Tickets service.
@@ -109,6 +112,7 @@ type TicketsClient interface {
 	// Public Method to edit a ticket.
 	// EditTicket would be deprecated
 	EditMaskTicket(context.Context, *connect_go.Request[tickets.EditMaskTicketReq]) (*connect_go.Response[tickets.EditMaskTicketRes], error)
+	ListAllocatedTickets(context.Context, *connect_go.Request[tickets.ListAllocatedTicketReq]) (*connect_go.Response[tickets.ListAllocatedTicketRes], error)
 }
 
 // NewTicketsClient constructs a client for the api.v1alpha1.tickets.Tickets service. By default, it
@@ -206,28 +210,34 @@ func NewTicketsClient(httpClient connect_go.HTTPClient, baseURL string, opts ...
 			baseURL+TicketsEditMaskTicketProcedure,
 			opts...,
 		),
+		listAllocatedTickets: connect_go.NewClient[tickets.ListAllocatedTicketReq, tickets.ListAllocatedTicketRes](
+			httpClient,
+			baseURL+TicketsListAllocatedTicketsProcedure,
+			opts...,
+		),
 	}
 }
 
 // ticketsClient implements TicketsClient.
 type ticketsClient struct {
-	createTicket        *connect_go.Client[tickets.CreateTicketReq, tickets.CreateTicketRes]
-	editTicket          *connect_go.Client[tickets.EditTicketReq, tickets.EditTicketRes]
-	listTickets         *connect_go.Client[tickets.ListTicketsReq, tickets.ListTicketsRes]
-	assignTicket        *connect_go.Client[tickets.AssignTicketReq, tickets.AssignTicketRes]
-	closeTicket         *connect_go.Client[tickets.CloseTicketReq, tickets.CloseTicketRes]
-	viewTicket          *connect_go.Client[tickets.ViewTicketReq, tickets.ViewTicketRes]
-	createComment       *connect_go.Client[tickets.CreateCommentReq, tickets.CreateCommentRes]
-	enableProject       *connect_go.Client[tickets.EnableProjectReq, tickets.EnableProjectRes]
-	listEnabledProjects *connect_go.Client[tickets.ListEnabledProjectsReq, tickets.ListEnabledProjectsRes]
-	createSLA           *connect_go.Client[tickets.CreateSlaReq, tickets.CreateSlaRes]
-	listSLA             *connect_go.Client[tickets.ListSlaReq, tickets.ListSlaRes]
-	updateSLA           *connect_go.Client[tickets.UpdateSlaReq, tickets.UpdateSlaRes]
-	listSLACondition    *connect_go.Client[tickets.ListSlaConditionReq, tickets.ListSlaConditionRes]
-	replyComment        *connect_go.Client[tickets.ReplyCommentReq, tickets.ReplyCommentRes]
-	listTicketAuditLog  *connect_go.Client[tickets.ListTicketAuditLogReq, tickets.ListTicketAuditLogRes]
-	assignSelf          *connect_go.Client[tickets.CreateSelfAssignReq, tickets.CreateSelfAssignRes]
-	editMaskTicket      *connect_go.Client[tickets.EditMaskTicketReq, tickets.EditMaskTicketRes]
+	createTicket         *connect_go.Client[tickets.CreateTicketReq, tickets.CreateTicketRes]
+	editTicket           *connect_go.Client[tickets.EditTicketReq, tickets.EditTicketRes]
+	listTickets          *connect_go.Client[tickets.ListTicketsReq, tickets.ListTicketsRes]
+	assignTicket         *connect_go.Client[tickets.AssignTicketReq, tickets.AssignTicketRes]
+	closeTicket          *connect_go.Client[tickets.CloseTicketReq, tickets.CloseTicketRes]
+	viewTicket           *connect_go.Client[tickets.ViewTicketReq, tickets.ViewTicketRes]
+	createComment        *connect_go.Client[tickets.CreateCommentReq, tickets.CreateCommentRes]
+	enableProject        *connect_go.Client[tickets.EnableProjectReq, tickets.EnableProjectRes]
+	listEnabledProjects  *connect_go.Client[tickets.ListEnabledProjectsReq, tickets.ListEnabledProjectsRes]
+	createSLA            *connect_go.Client[tickets.CreateSlaReq, tickets.CreateSlaRes]
+	listSLA              *connect_go.Client[tickets.ListSlaReq, tickets.ListSlaRes]
+	updateSLA            *connect_go.Client[tickets.UpdateSlaReq, tickets.UpdateSlaRes]
+	listSLACondition     *connect_go.Client[tickets.ListSlaConditionReq, tickets.ListSlaConditionRes]
+	replyComment         *connect_go.Client[tickets.ReplyCommentReq, tickets.ReplyCommentRes]
+	listTicketAuditLog   *connect_go.Client[tickets.ListTicketAuditLogReq, tickets.ListTicketAuditLogRes]
+	assignSelf           *connect_go.Client[tickets.CreateSelfAssignReq, tickets.CreateSelfAssignRes]
+	editMaskTicket       *connect_go.Client[tickets.EditMaskTicketReq, tickets.EditMaskTicketRes]
+	listAllocatedTickets *connect_go.Client[tickets.ListAllocatedTicketReq, tickets.ListAllocatedTicketRes]
 }
 
 // CreateTicket calls api.v1alpha1.tickets.Tickets.CreateTicket.
@@ -315,6 +325,11 @@ func (c *ticketsClient) EditMaskTicket(ctx context.Context, req *connect_go.Requ
 	return c.editMaskTicket.CallUnary(ctx, req)
 }
 
+// ListAllocatedTickets calls api.v1alpha1.tickets.Tickets.ListAllocatedTickets.
+func (c *ticketsClient) ListAllocatedTickets(ctx context.Context, req *connect_go.Request[tickets.ListAllocatedTicketReq]) (*connect_go.Response[tickets.ListAllocatedTicketRes], error) {
+	return c.listAllocatedTickets.CallUnary(ctx, req)
+}
+
 // TicketsHandler is an implementation of the api.v1alpha1.tickets.Tickets service.
 type TicketsHandler interface {
 	// Public Method to create a ticket.
@@ -352,6 +367,7 @@ type TicketsHandler interface {
 	// Public Method to edit a ticket.
 	// EditTicket would be deprecated
 	EditMaskTicket(context.Context, *connect_go.Request[tickets.EditMaskTicketReq]) (*connect_go.Response[tickets.EditMaskTicketRes], error)
+	ListAllocatedTickets(context.Context, *connect_go.Request[tickets.ListAllocatedTicketReq]) (*connect_go.Response[tickets.ListAllocatedTicketRes], error)
 }
 
 // NewTicketsHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -445,6 +461,11 @@ func NewTicketsHandler(svc TicketsHandler, opts ...connect_go.HandlerOption) (st
 		svc.EditMaskTicket,
 		opts...,
 	)
+	ticketsListAllocatedTicketsHandler := connect_go.NewUnaryHandler(
+		TicketsListAllocatedTicketsProcedure,
+		svc.ListAllocatedTickets,
+		opts...,
+	)
 	return "/api.v1alpha1.tickets.Tickets/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case TicketsCreateTicketProcedure:
@@ -481,6 +502,8 @@ func NewTicketsHandler(svc TicketsHandler, opts ...connect_go.HandlerOption) (st
 			ticketsAssignSelfHandler.ServeHTTP(w, r)
 		case TicketsEditMaskTicketProcedure:
 			ticketsEditMaskTicketHandler.ServeHTTP(w, r)
+		case TicketsListAllocatedTicketsProcedure:
+			ticketsListAllocatedTicketsHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -556,4 +579,8 @@ func (UnimplementedTicketsHandler) AssignSelf(context.Context, *connect_go.Reque
 
 func (UnimplementedTicketsHandler) EditMaskTicket(context.Context, *connect_go.Request[tickets.EditMaskTicketReq]) (*connect_go.Response[tickets.EditMaskTicketRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.tickets.Tickets.EditMaskTicket is not implemented"))
+}
+
+func (UnimplementedTicketsHandler) ListAllocatedTickets(context.Context, *connect_go.Request[tickets.ListAllocatedTicketReq]) (*connect_go.Response[tickets.ListAllocatedTicketRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.tickets.Tickets.ListAllocatedTickets is not implemented"))
 }
