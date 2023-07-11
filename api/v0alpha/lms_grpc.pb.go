@@ -32,6 +32,8 @@ const (
 	LMS_UpdateField_FullMethodName                    = "/api.v0alpha.LMS/UpdateField"
 	LMS_DeleteField_FullMethodName                    = "/api.v0alpha.LMS/DeleteField"
 	LMS_ListAvailableFieldsByElementId_FullMethodName = "/api.v0alpha.LMS/ListAvailableFieldsByElementId"
+	LMS_ListFieldsForElement_FullMethodName           = "/api.v0alpha.LMS/ListFieldsForElement"
+	LMS_ListAutocompleteFields_FullMethodName         = "/api.v0alpha.LMS/ListAutocompleteFields"
 	LMS_ListCampaignLinks_FullMethodName              = "/api.v0alpha.LMS/ListCampaignLinks"
 	LMS_PeekList_FullMethodName                       = "/api.v0alpha.LMS/PeekList"
 	LMS_GetHistory_FullMethodName                     = "/api.v0alpha.LMS/GetHistory"
@@ -88,6 +90,8 @@ type LMSClient interface {
 	UpdateField(ctx context.Context, in *UpdateFieldReq, opts ...grpc.CallOption) (*Field, error)
 	DeleteField(ctx context.Context, in *Field, opts ...grpc.CallOption) (*Field, error)
 	ListAvailableFieldsByElementId(ctx context.Context, in *ListAvailableFieldsByElementIdReq, opts ...grpc.CallOption) (*ProcessFields, error)
+	ListFieldsForElement(ctx context.Context, in *ListFieldsForElementReq, opts ...grpc.CallOption) (*ListFieldsForElementRes, error)
+	ListAutocompleteFields(ctx context.Context, in *ListAutocompleteFieldsReq, opts ...grpc.CallOption) (*ListAutocompleteFieldsRes, error)
 	// list campaign links and descriptions
 	ListCampaignLinks(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ListCampaignLinksRes, error)
 	PeekList(ctx context.Context, in *PeekListReq, opts ...grpc.CallOption) (*PeekListRes, error)
@@ -281,6 +285,24 @@ func (c *lMSClient) DeleteField(ctx context.Context, in *Field, opts ...grpc.Cal
 func (c *lMSClient) ListAvailableFieldsByElementId(ctx context.Context, in *ListAvailableFieldsByElementIdReq, opts ...grpc.CallOption) (*ProcessFields, error) {
 	out := new(ProcessFields)
 	err := c.cc.Invoke(ctx, LMS_ListAvailableFieldsByElementId_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *lMSClient) ListFieldsForElement(ctx context.Context, in *ListFieldsForElementReq, opts ...grpc.CallOption) (*ListFieldsForElementRes, error) {
+	out := new(ListFieldsForElementRes)
+	err := c.cc.Invoke(ctx, LMS_ListFieldsForElement_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *lMSClient) ListAutocompleteFields(ctx context.Context, in *ListAutocompleteFieldsReq, opts ...grpc.CallOption) (*ListAutocompleteFieldsRes, error) {
+	out := new(ListAutocompleteFieldsRes)
+	err := c.cc.Invoke(ctx, LMS_ListAutocompleteFields_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -737,6 +759,8 @@ type LMSServer interface {
 	UpdateField(context.Context, *UpdateFieldReq) (*Field, error)
 	DeleteField(context.Context, *Field) (*Field, error)
 	ListAvailableFieldsByElementId(context.Context, *ListAvailableFieldsByElementIdReq) (*ProcessFields, error)
+	ListFieldsForElement(context.Context, *ListFieldsForElementReq) (*ListFieldsForElementRes, error)
+	ListAutocompleteFields(context.Context, *ListAutocompleteFieldsReq) (*ListAutocompleteFieldsRes, error)
 	// list campaign links and descriptions
 	ListCampaignLinks(context.Context, *emptypb.Empty) (*ListCampaignLinksRes, error)
 	PeekList(context.Context, *PeekListReq) (*PeekListRes, error)
@@ -837,6 +861,12 @@ func (UnimplementedLMSServer) DeleteField(context.Context, *Field) (*Field, erro
 }
 func (UnimplementedLMSServer) ListAvailableFieldsByElementId(context.Context, *ListAvailableFieldsByElementIdReq) (*ProcessFields, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAvailableFieldsByElementId not implemented")
+}
+func (UnimplementedLMSServer) ListFieldsForElement(context.Context, *ListFieldsForElementReq) (*ListFieldsForElementRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListFieldsForElement not implemented")
+}
+func (UnimplementedLMSServer) ListAutocompleteFields(context.Context, *ListAutocompleteFieldsReq) (*ListAutocompleteFieldsRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListAutocompleteFields not implemented")
 }
 func (UnimplementedLMSServer) ListCampaignLinks(context.Context, *emptypb.Empty) (*ListCampaignLinksRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListCampaignLinks not implemented")
@@ -1180,6 +1210,42 @@ func _LMS_ListAvailableFieldsByElementId_Handler(srv interface{}, ctx context.Co
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(LMSServer).ListAvailableFieldsByElementId(ctx, req.(*ListAvailableFieldsByElementIdReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LMS_ListFieldsForElement_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListFieldsForElementReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LMSServer).ListFieldsForElement(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LMS_ListFieldsForElement_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LMSServer).ListFieldsForElement(ctx, req.(*ListFieldsForElementReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LMS_ListAutocompleteFields_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListAutocompleteFieldsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LMSServer).ListAutocompleteFields(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LMS_ListAutocompleteFields_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LMSServer).ListAutocompleteFields(ctx, req.(*ListAutocompleteFieldsReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1930,6 +1996,14 @@ var LMS_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListAvailableFieldsByElementId",
 			Handler:    _LMS_ListAvailableFieldsByElementId_Handler,
+		},
+		{
+			MethodName: "ListFieldsForElement",
+			Handler:    _LMS_ListFieldsForElement_Handler,
+		},
+		{
+			MethodName: "ListAutocompleteFields",
+			Handler:    _LMS_ListAutocompleteFields_Handler,
 		},
 		{
 			MethodName: "ListCampaignLinks",
