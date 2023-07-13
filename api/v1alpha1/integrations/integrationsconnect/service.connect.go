@@ -504,128 +504,180 @@ type IntegrationsHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewIntegrationsHandler(svc IntegrationsHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	mux := http.NewServeMux()
-	mux.Handle(IntegrationsProcessProcedure, connect_go.NewUnaryHandler(
+	integrationsProcessHandler := connect_go.NewUnaryHandler(
 		IntegrationsProcessProcedure,
 		svc.Process,
 		opts...,
-	))
-	mux.Handle(IntegrationsGetIntegrationTransactionProcedure, connect_go.NewUnaryHandler(
+	)
+	integrationsGetIntegrationTransactionHandler := connect_go.NewUnaryHandler(
 		IntegrationsGetIntegrationTransactionProcedure,
 		svc.GetIntegrationTransaction,
 		opts...,
-	))
-	mux.Handle(IntegrationsGetIntegrationTransactionReportProcedure, connect_go.NewUnaryHandler(
+	)
+	integrationsGetIntegrationTransactionReportHandler := connect_go.NewUnaryHandler(
 		IntegrationsGetIntegrationTransactionReportProcedure,
 		svc.GetIntegrationTransactionReport,
 		opts...,
-	))
-	mux.Handle(IntegrationsGetIntegrationTransactionReportDataProcedure, connect_go.NewUnaryHandler(
+	)
+	integrationsGetIntegrationTransactionReportDataHandler := connect_go.NewUnaryHandler(
 		IntegrationsGetIntegrationTransactionReportDataProcedure,
 		svc.GetIntegrationTransactionReportData,
 		opts...,
-	))
-	mux.Handle(IntegrationsGetAggregatedMetadataProcedure, connect_go.NewUnaryHandler(
+	)
+	integrationsGetAggregatedMetadataHandler := connect_go.NewUnaryHandler(
 		IntegrationsGetAggregatedMetadataProcedure,
 		svc.GetAggregatedMetadata,
 		opts...,
-	))
-	mux.Handle(IntegrationsGetPortalLinksByDateRangeProcedure, connect_go.NewUnaryHandler(
+	)
+	integrationsGetPortalLinksByDateRangeHandler := connect_go.NewUnaryHandler(
 		IntegrationsGetPortalLinksByDateRangeProcedure,
 		svc.GetPortalLinksByDateRange,
 		opts...,
-	))
-	mux.Handle(IntegrationsCreateIntegrationConfigProcedure, connect_go.NewUnaryHandler(
+	)
+	integrationsCreateIntegrationConfigHandler := connect_go.NewUnaryHandler(
 		IntegrationsCreateIntegrationConfigProcedure,
 		svc.CreateIntegrationConfig,
 		opts...,
-	))
-	mux.Handle(IntegrationsGetIntegrationConfigProcedure, connect_go.NewUnaryHandler(
+	)
+	integrationsGetIntegrationConfigHandler := connect_go.NewUnaryHandler(
 		IntegrationsGetIntegrationConfigProcedure,
 		svc.GetIntegrationConfig,
 		opts...,
-	))
-	mux.Handle(IntegrationsUpdateIntegrationConfigProcedure, connect_go.NewUnaryHandler(
+	)
+	integrationsUpdateIntegrationConfigHandler := connect_go.NewUnaryHandler(
 		IntegrationsUpdateIntegrationConfigProcedure,
 		svc.UpdateIntegrationConfig,
 		opts...,
-	))
-	mux.Handle(IntegrationsDeleteIntegrationConfigProcedure, connect_go.NewUnaryHandler(
+	)
+	integrationsDeleteIntegrationConfigHandler := connect_go.NewUnaryHandler(
 		IntegrationsDeleteIntegrationConfigProcedure,
 		svc.DeleteIntegrationConfig,
 		opts...,
-	))
-	mux.Handle(IntegrationsListIntegrationsProcedure, connect_go.NewUnaryHandler(
+	)
+	integrationsListIntegrationsHandler := connect_go.NewUnaryHandler(
 		IntegrationsListIntegrationsProcedure,
 		svc.ListIntegrations,
 		opts...,
-	))
-	mux.Handle(IntegrationsListIntegrationConfigNamesProcedure, connect_go.NewUnaryHandler(
+	)
+	integrationsListIntegrationConfigNamesHandler := connect_go.NewUnaryHandler(
 		IntegrationsListIntegrationConfigNamesProcedure,
 		svc.ListIntegrationConfigNames,
 		opts...,
-	))
-	mux.Handle(IntegrationsListJourneyConfigsProcedure, connect_go.NewUnaryHandler(
+	)
+	integrationsListJourneyConfigsHandler := connect_go.NewUnaryHandler(
 		IntegrationsListJourneyConfigsProcedure,
 		svc.ListJourneyConfigs,
 		opts...,
-	))
-	mux.Handle(IntegrationsListNonJourneyConfigsProcedure, connect_go.NewUnaryHandler(
+	)
+	integrationsListNonJourneyConfigsHandler := connect_go.NewUnaryHandler(
 		IntegrationsListNonJourneyConfigsProcedure,
 		svc.ListNonJourneyConfigs,
 		opts...,
-	))
-	mux.Handle(IntegrationsCreatePortalConfigProcedure, connect_go.NewUnaryHandler(
+	)
+	integrationsCreatePortalConfigHandler := connect_go.NewUnaryHandler(
 		IntegrationsCreatePortalConfigProcedure,
 		svc.CreatePortalConfig,
 		opts...,
-	))
-	mux.Handle(IntegrationsListPortalConfigsProcedure, connect_go.NewUnaryHandler(
+	)
+	integrationsListPortalConfigsHandler := connect_go.NewUnaryHandler(
 		IntegrationsListPortalConfigsProcedure,
 		svc.ListPortalConfigs,
 		opts...,
-	))
-	mux.Handle(IntegrationsUpdatePortalConfigProcedure, connect_go.NewUnaryHandler(
+	)
+	integrationsUpdatePortalConfigHandler := connect_go.NewUnaryHandler(
 		IntegrationsUpdatePortalConfigProcedure,
 		svc.UpdatePortalConfig,
 		opts...,
-	))
-	mux.Handle(IntegrationsGetPortalConfigProcedure, connect_go.NewUnaryHandler(
+	)
+	integrationsGetPortalConfigHandler := connect_go.NewUnaryHandler(
 		IntegrationsGetPortalConfigProcedure,
 		svc.GetPortalConfig,
 		opts...,
-	))
-	mux.Handle(IntegrationsDeletePortalConfigProcedure, connect_go.NewUnaryHandler(
+	)
+	integrationsDeletePortalConfigHandler := connect_go.NewUnaryHandler(
 		IntegrationsDeletePortalConfigProcedure,
 		svc.DeletePortalConfig,
 		opts...,
-	))
-	mux.Handle(IntegrationsUpdatePortalLogoProcedure, connect_go.NewUnaryHandler(
+	)
+	integrationsUpdatePortalLogoHandler := connect_go.NewUnaryHandler(
 		IntegrationsUpdatePortalLogoProcedure,
 		svc.UpdatePortalLogo,
 		opts...,
-	))
-	mux.Handle(IntegrationsGetPortalLogoProcedure, connect_go.NewUnaryHandler(
+	)
+	integrationsGetPortalLogoHandler := connect_go.NewUnaryHandler(
 		IntegrationsGetPortalLogoProcedure,
 		svc.GetPortalLogo,
 		opts...,
-	))
-	mux.Handle(IntegrationsCreatePaymentPortalLinksProcedure, connect_go.NewUnaryHandler(
+	)
+	integrationsCreatePaymentPortalLinksHandler := connect_go.NewUnaryHandler(
 		IntegrationsCreatePaymentPortalLinksProcedure,
 		svc.CreatePaymentPortalLinks,
 		opts...,
-	))
-	mux.Handle(IntegrationsSummaryProcedure, connect_go.NewUnaryHandler(
+	)
+	integrationsSummaryHandler := connect_go.NewUnaryHandler(
 		IntegrationsSummaryProcedure,
 		svc.Summary,
 		opts...,
-	))
-	mux.Handle(IntegrationsListIntegrationTemplatesByConfigProcedure, connect_go.NewUnaryHandler(
+	)
+	integrationsListIntegrationTemplatesByConfigHandler := connect_go.NewUnaryHandler(
 		IntegrationsListIntegrationTemplatesByConfigProcedure,
 		svc.ListIntegrationTemplatesByConfig,
 		opts...,
-	))
-	return "/api.v1alpha1.integrations.Integrations/", mux
+	)
+	return "/api.v1alpha1.integrations.Integrations/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case IntegrationsProcessProcedure:
+			integrationsProcessHandler.ServeHTTP(w, r)
+		case IntegrationsGetIntegrationTransactionProcedure:
+			integrationsGetIntegrationTransactionHandler.ServeHTTP(w, r)
+		case IntegrationsGetIntegrationTransactionReportProcedure:
+			integrationsGetIntegrationTransactionReportHandler.ServeHTTP(w, r)
+		case IntegrationsGetIntegrationTransactionReportDataProcedure:
+			integrationsGetIntegrationTransactionReportDataHandler.ServeHTTP(w, r)
+		case IntegrationsGetAggregatedMetadataProcedure:
+			integrationsGetAggregatedMetadataHandler.ServeHTTP(w, r)
+		case IntegrationsGetPortalLinksByDateRangeProcedure:
+			integrationsGetPortalLinksByDateRangeHandler.ServeHTTP(w, r)
+		case IntegrationsCreateIntegrationConfigProcedure:
+			integrationsCreateIntegrationConfigHandler.ServeHTTP(w, r)
+		case IntegrationsGetIntegrationConfigProcedure:
+			integrationsGetIntegrationConfigHandler.ServeHTTP(w, r)
+		case IntegrationsUpdateIntegrationConfigProcedure:
+			integrationsUpdateIntegrationConfigHandler.ServeHTTP(w, r)
+		case IntegrationsDeleteIntegrationConfigProcedure:
+			integrationsDeleteIntegrationConfigHandler.ServeHTTP(w, r)
+		case IntegrationsListIntegrationsProcedure:
+			integrationsListIntegrationsHandler.ServeHTTP(w, r)
+		case IntegrationsListIntegrationConfigNamesProcedure:
+			integrationsListIntegrationConfigNamesHandler.ServeHTTP(w, r)
+		case IntegrationsListJourneyConfigsProcedure:
+			integrationsListJourneyConfigsHandler.ServeHTTP(w, r)
+		case IntegrationsListNonJourneyConfigsProcedure:
+			integrationsListNonJourneyConfigsHandler.ServeHTTP(w, r)
+		case IntegrationsCreatePortalConfigProcedure:
+			integrationsCreatePortalConfigHandler.ServeHTTP(w, r)
+		case IntegrationsListPortalConfigsProcedure:
+			integrationsListPortalConfigsHandler.ServeHTTP(w, r)
+		case IntegrationsUpdatePortalConfigProcedure:
+			integrationsUpdatePortalConfigHandler.ServeHTTP(w, r)
+		case IntegrationsGetPortalConfigProcedure:
+			integrationsGetPortalConfigHandler.ServeHTTP(w, r)
+		case IntegrationsDeletePortalConfigProcedure:
+			integrationsDeletePortalConfigHandler.ServeHTTP(w, r)
+		case IntegrationsUpdatePortalLogoProcedure:
+			integrationsUpdatePortalLogoHandler.ServeHTTP(w, r)
+		case IntegrationsGetPortalLogoProcedure:
+			integrationsGetPortalLogoHandler.ServeHTTP(w, r)
+		case IntegrationsCreatePaymentPortalLinksProcedure:
+			integrationsCreatePaymentPortalLinksHandler.ServeHTTP(w, r)
+		case IntegrationsSummaryProcedure:
+			integrationsSummaryHandler.ServeHTTP(w, r)
+		case IntegrationsListIntegrationTemplatesByConfigProcedure:
+			integrationsListIntegrationTemplatesByConfigHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
 }
 
 // UnimplementedIntegrationsHandler returns CodeUnimplemented from all methods.

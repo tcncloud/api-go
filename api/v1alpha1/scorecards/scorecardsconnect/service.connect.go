@@ -859,228 +859,320 @@ type ScorecardsHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewScorecardsHandler(svc ScorecardsHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	mux := http.NewServeMux()
-	mux.Handle(ScorecardsCreateScorecardProcedure, connect_go.NewUnaryHandler(
+	scorecardsCreateScorecardHandler := connect_go.NewUnaryHandler(
 		ScorecardsCreateScorecardProcedure,
 		svc.CreateScorecard,
 		opts...,
-	))
-	mux.Handle(ScorecardsListScorecardsProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsListScorecardsHandler := connect_go.NewUnaryHandler(
 		ScorecardsListScorecardsProcedure,
 		svc.ListScorecards,
 		opts...,
-	))
-	mux.Handle(ScorecardsUpdateScorecardProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsUpdateScorecardHandler := connect_go.NewUnaryHandler(
 		ScorecardsUpdateScorecardProcedure,
 		svc.UpdateScorecard,
 		opts...,
-	))
-	mux.Handle(ScorecardsDeleteScorecardProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsDeleteScorecardHandler := connect_go.NewUnaryHandler(
 		ScorecardsDeleteScorecardProcedure,
 		svc.DeleteScorecard,
 		opts...,
-	))
-	mux.Handle(ScorecardsGetScorecardProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsGetScorecardHandler := connect_go.NewUnaryHandler(
 		ScorecardsGetScorecardProcedure,
 		svc.GetScorecard,
 		opts...,
-	))
-	mux.Handle(ScorecardsCreateQuestionProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsCreateQuestionHandler := connect_go.NewUnaryHandler(
 		ScorecardsCreateQuestionProcedure,
 		svc.CreateQuestion,
 		opts...,
-	))
-	mux.Handle(ScorecardsListQuestionsProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsListQuestionsHandler := connect_go.NewUnaryHandler(
 		ScorecardsListQuestionsProcedure,
 		svc.ListQuestions,
 		opts...,
-	))
-	mux.Handle(ScorecardsUpdateQuestionProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsUpdateQuestionHandler := connect_go.NewUnaryHandler(
 		ScorecardsUpdateQuestionProcedure,
 		svc.UpdateQuestion,
 		opts...,
-	))
-	mux.Handle(ScorecardsDeleteQuestionProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsDeleteQuestionHandler := connect_go.NewUnaryHandler(
 		ScorecardsDeleteQuestionProcedure,
 		svc.DeleteQuestion,
 		opts...,
-	))
-	mux.Handle(ScorecardsGetQuestionProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsGetQuestionHandler := connect_go.NewUnaryHandler(
 		ScorecardsGetQuestionProcedure,
 		svc.GetQuestion,
 		opts...,
-	))
-	mux.Handle(ScorecardsBulkCreateQuestionsProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsBulkCreateQuestionsHandler := connect_go.NewUnaryHandler(
 		ScorecardsBulkCreateQuestionsProcedure,
 		svc.BulkCreateQuestions,
 		opts...,
-	))
-	mux.Handle(ScorecardsCreateCategoryProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsCreateCategoryHandler := connect_go.NewUnaryHandler(
 		ScorecardsCreateCategoryProcedure,
 		svc.CreateCategory,
 		opts...,
-	))
-	mux.Handle(ScorecardsListCategoriesProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsListCategoriesHandler := connect_go.NewUnaryHandler(
 		ScorecardsListCategoriesProcedure,
 		svc.ListCategories,
 		opts...,
-	))
-	mux.Handle(ScorecardsUpdateCategoryProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsUpdateCategoryHandler := connect_go.NewUnaryHandler(
 		ScorecardsUpdateCategoryProcedure,
 		svc.UpdateCategory,
 		opts...,
-	))
-	mux.Handle(ScorecardsDeleteCategoryProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsDeleteCategoryHandler := connect_go.NewUnaryHandler(
 		ScorecardsDeleteCategoryProcedure,
 		svc.DeleteCategory,
 		opts...,
-	))
-	mux.Handle(ScorecardsGetCategoryProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsGetCategoryHandler := connect_go.NewUnaryHandler(
 		ScorecardsGetCategoryProcedure,
 		svc.GetCategory,
 		opts...,
-	))
-	mux.Handle(ScorecardsCreateScorecardQuestionProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsCreateScorecardQuestionHandler := connect_go.NewUnaryHandler(
 		ScorecardsCreateScorecardQuestionProcedure,
 		svc.CreateScorecardQuestion,
 		opts...,
-	))
-	mux.Handle(ScorecardsUpdateScorecardQuestionProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsUpdateScorecardQuestionHandler := connect_go.NewUnaryHandler(
 		ScorecardsUpdateScorecardQuestionProcedure,
 		svc.UpdateScorecardQuestion,
 		opts...,
-	))
-	mux.Handle(ScorecardsDeleteScorecardQuestionProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsDeleteScorecardQuestionHandler := connect_go.NewUnaryHandler(
 		ScorecardsDeleteScorecardQuestionProcedure,
 		svc.DeleteScorecardQuestion,
 		opts...,
-	))
-	mux.Handle(ScorecardsGetScorecardQuestionProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsGetScorecardQuestionHandler := connect_go.NewUnaryHandler(
 		ScorecardsGetScorecardQuestionProcedure,
 		svc.GetScorecardQuestion,
 		opts...,
-	))
-	mux.Handle(ScorecardsCreateSectionProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsCreateSectionHandler := connect_go.NewUnaryHandler(
 		ScorecardsCreateSectionProcedure,
 		svc.CreateSection,
 		opts...,
-	))
-	mux.Handle(ScorecardsListSectionsProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsListSectionsHandler := connect_go.NewUnaryHandler(
 		ScorecardsListSectionsProcedure,
 		svc.ListSections,
 		opts...,
-	))
-	mux.Handle(ScorecardsUpdateSectionProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsUpdateSectionHandler := connect_go.NewUnaryHandler(
 		ScorecardsUpdateSectionProcedure,
 		svc.UpdateSection,
 		opts...,
-	))
-	mux.Handle(ScorecardsGetSectionProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsGetSectionHandler := connect_go.NewUnaryHandler(
 		ScorecardsGetSectionProcedure,
 		svc.GetSection,
 		opts...,
-	))
-	mux.Handle(ScorecardsDeleteSectionProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsDeleteSectionHandler := connect_go.NewUnaryHandler(
 		ScorecardsDeleteSectionProcedure,
 		svc.DeleteSection,
 		opts...,
-	))
-	mux.Handle(ScorecardsCreateQuestionCategoryProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsCreateQuestionCategoryHandler := connect_go.NewUnaryHandler(
 		ScorecardsCreateQuestionCategoryProcedure,
 		svc.CreateQuestionCategory,
 		opts...,
-	))
-	mux.Handle(ScorecardsDeleteQuestionCategoryProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsDeleteQuestionCategoryHandler := connect_go.NewUnaryHandler(
 		ScorecardsDeleteQuestionCategoryProcedure,
 		svc.DeleteQuestionCategory,
 		opts...,
-	))
-	mux.Handle(ScorecardsCreateEvaluationProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsCreateEvaluationHandler := connect_go.NewUnaryHandler(
 		ScorecardsCreateEvaluationProcedure,
 		svc.CreateEvaluation,
 		opts...,
-	))
-	mux.Handle(ScorecardsDeleteEvaluationProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsDeleteEvaluationHandler := connect_go.NewUnaryHandler(
 		ScorecardsDeleteEvaluationProcedure,
 		svc.DeleteEvaluation,
 		opts...,
-	))
-	mux.Handle(ScorecardsScoreEvaluationProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsScoreEvaluationHandler := connect_go.NewUnaryHandler(
 		ScorecardsScoreEvaluationProcedure,
 		svc.ScoreEvaluation,
 		opts...,
-	))
-	mux.Handle(ScorecardsUpdateEvaluationProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsUpdateEvaluationHandler := connect_go.NewUnaryHandler(
 		ScorecardsUpdateEvaluationProcedure,
 		svc.UpdateEvaluation,
 		opts...,
-	))
-	mux.Handle(ScorecardsGetEvaluationProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsGetEvaluationHandler := connect_go.NewUnaryHandler(
 		ScorecardsGetEvaluationProcedure,
 		svc.GetEvaluation,
 		opts...,
-	))
-	mux.Handle(ScorecardsListEvaluationsProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsListEvaluationsHandler := connect_go.NewUnaryHandler(
 		ScorecardsListEvaluationsProcedure,
 		svc.ListEvaluations,
 		opts...,
-	))
-	mux.Handle(ScorecardsCreateEvaluationQuestionProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsCreateEvaluationQuestionHandler := connect_go.NewUnaryHandler(
 		ScorecardsCreateEvaluationQuestionProcedure,
 		svc.CreateEvaluationQuestion,
 		opts...,
-	))
-	mux.Handle(ScorecardsUpdateEvaluationQuestionProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsUpdateEvaluationQuestionHandler := connect_go.NewUnaryHandler(
 		ScorecardsUpdateEvaluationQuestionProcedure,
 		svc.UpdateEvaluationQuestion,
 		opts...,
-	))
-	mux.Handle(ScorecardsDeleteEvaluationQuestionProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsDeleteEvaluationQuestionHandler := connect_go.NewUnaryHandler(
 		ScorecardsDeleteEvaluationQuestionProcedure,
 		svc.DeleteEvaluationQuestion,
 		opts...,
-	))
-	mux.Handle(ScorecardsSampleCallsByCategoryProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsSampleCallsByCategoryHandler := connect_go.NewUnaryHandler(
 		ScorecardsSampleCallsByCategoryProcedure,
 		svc.SampleCallsByCategory,
 		opts...,
-	))
-	mux.Handle(ScorecardsCreateAutoQuestionProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsCreateAutoQuestionHandler := connect_go.NewUnaryHandler(
 		ScorecardsCreateAutoQuestionProcedure,
 		svc.CreateAutoQuestion,
 		opts...,
-	))
-	mux.Handle(ScorecardsUpdateAutoQuestionProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsUpdateAutoQuestionHandler := connect_go.NewUnaryHandler(
 		ScorecardsUpdateAutoQuestionProcedure,
 		svc.UpdateAutoQuestion,
 		opts...,
-	))
-	mux.Handle(ScorecardsDeleteAutoQuestionProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsDeleteAutoQuestionHandler := connect_go.NewUnaryHandler(
 		ScorecardsDeleteAutoQuestionProcedure,
 		svc.DeleteAutoQuestion,
 		opts...,
-	))
-	mux.Handle(ScorecardsGetAutoQuestionProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsGetAutoQuestionHandler := connect_go.NewUnaryHandler(
 		ScorecardsGetAutoQuestionProcedure,
 		svc.GetAutoQuestion,
 		opts...,
-	))
-	mux.Handle(ScorecardsGetAutoEvaluationProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsGetAutoEvaluationHandler := connect_go.NewUnaryHandler(
 		ScorecardsGetAutoEvaluationProcedure,
 		svc.GetAutoEvaluation,
 		opts...,
-	))
-	mux.Handle(ScorecardsListAutoEvaluationsProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsListAutoEvaluationsHandler := connect_go.NewUnaryHandler(
 		ScorecardsListAutoEvaluationsProcedure,
 		svc.ListAutoEvaluations,
 		opts...,
-	))
-	mux.Handle(ScorecardsDeleteAutoEvaluationProcedure, connect_go.NewUnaryHandler(
+	)
+	scorecardsDeleteAutoEvaluationHandler := connect_go.NewUnaryHandler(
 		ScorecardsDeleteAutoEvaluationProcedure,
 		svc.DeleteAutoEvaluation,
 		opts...,
-	))
-	return "/api.v1alpha1.scorecards.Scorecards/", mux
+	)
+	return "/api.v1alpha1.scorecards.Scorecards/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case ScorecardsCreateScorecardProcedure:
+			scorecardsCreateScorecardHandler.ServeHTTP(w, r)
+		case ScorecardsListScorecardsProcedure:
+			scorecardsListScorecardsHandler.ServeHTTP(w, r)
+		case ScorecardsUpdateScorecardProcedure:
+			scorecardsUpdateScorecardHandler.ServeHTTP(w, r)
+		case ScorecardsDeleteScorecardProcedure:
+			scorecardsDeleteScorecardHandler.ServeHTTP(w, r)
+		case ScorecardsGetScorecardProcedure:
+			scorecardsGetScorecardHandler.ServeHTTP(w, r)
+		case ScorecardsCreateQuestionProcedure:
+			scorecardsCreateQuestionHandler.ServeHTTP(w, r)
+		case ScorecardsListQuestionsProcedure:
+			scorecardsListQuestionsHandler.ServeHTTP(w, r)
+		case ScorecardsUpdateQuestionProcedure:
+			scorecardsUpdateQuestionHandler.ServeHTTP(w, r)
+		case ScorecardsDeleteQuestionProcedure:
+			scorecardsDeleteQuestionHandler.ServeHTTP(w, r)
+		case ScorecardsGetQuestionProcedure:
+			scorecardsGetQuestionHandler.ServeHTTP(w, r)
+		case ScorecardsBulkCreateQuestionsProcedure:
+			scorecardsBulkCreateQuestionsHandler.ServeHTTP(w, r)
+		case ScorecardsCreateCategoryProcedure:
+			scorecardsCreateCategoryHandler.ServeHTTP(w, r)
+		case ScorecardsListCategoriesProcedure:
+			scorecardsListCategoriesHandler.ServeHTTP(w, r)
+		case ScorecardsUpdateCategoryProcedure:
+			scorecardsUpdateCategoryHandler.ServeHTTP(w, r)
+		case ScorecardsDeleteCategoryProcedure:
+			scorecardsDeleteCategoryHandler.ServeHTTP(w, r)
+		case ScorecardsGetCategoryProcedure:
+			scorecardsGetCategoryHandler.ServeHTTP(w, r)
+		case ScorecardsCreateScorecardQuestionProcedure:
+			scorecardsCreateScorecardQuestionHandler.ServeHTTP(w, r)
+		case ScorecardsUpdateScorecardQuestionProcedure:
+			scorecardsUpdateScorecardQuestionHandler.ServeHTTP(w, r)
+		case ScorecardsDeleteScorecardQuestionProcedure:
+			scorecardsDeleteScorecardQuestionHandler.ServeHTTP(w, r)
+		case ScorecardsGetScorecardQuestionProcedure:
+			scorecardsGetScorecardQuestionHandler.ServeHTTP(w, r)
+		case ScorecardsCreateSectionProcedure:
+			scorecardsCreateSectionHandler.ServeHTTP(w, r)
+		case ScorecardsListSectionsProcedure:
+			scorecardsListSectionsHandler.ServeHTTP(w, r)
+		case ScorecardsUpdateSectionProcedure:
+			scorecardsUpdateSectionHandler.ServeHTTP(w, r)
+		case ScorecardsGetSectionProcedure:
+			scorecardsGetSectionHandler.ServeHTTP(w, r)
+		case ScorecardsDeleteSectionProcedure:
+			scorecardsDeleteSectionHandler.ServeHTTP(w, r)
+		case ScorecardsCreateQuestionCategoryProcedure:
+			scorecardsCreateQuestionCategoryHandler.ServeHTTP(w, r)
+		case ScorecardsDeleteQuestionCategoryProcedure:
+			scorecardsDeleteQuestionCategoryHandler.ServeHTTP(w, r)
+		case ScorecardsCreateEvaluationProcedure:
+			scorecardsCreateEvaluationHandler.ServeHTTP(w, r)
+		case ScorecardsDeleteEvaluationProcedure:
+			scorecardsDeleteEvaluationHandler.ServeHTTP(w, r)
+		case ScorecardsScoreEvaluationProcedure:
+			scorecardsScoreEvaluationHandler.ServeHTTP(w, r)
+		case ScorecardsUpdateEvaluationProcedure:
+			scorecardsUpdateEvaluationHandler.ServeHTTP(w, r)
+		case ScorecardsGetEvaluationProcedure:
+			scorecardsGetEvaluationHandler.ServeHTTP(w, r)
+		case ScorecardsListEvaluationsProcedure:
+			scorecardsListEvaluationsHandler.ServeHTTP(w, r)
+		case ScorecardsCreateEvaluationQuestionProcedure:
+			scorecardsCreateEvaluationQuestionHandler.ServeHTTP(w, r)
+		case ScorecardsUpdateEvaluationQuestionProcedure:
+			scorecardsUpdateEvaluationQuestionHandler.ServeHTTP(w, r)
+		case ScorecardsDeleteEvaluationQuestionProcedure:
+			scorecardsDeleteEvaluationQuestionHandler.ServeHTTP(w, r)
+		case ScorecardsSampleCallsByCategoryProcedure:
+			scorecardsSampleCallsByCategoryHandler.ServeHTTP(w, r)
+		case ScorecardsCreateAutoQuestionProcedure:
+			scorecardsCreateAutoQuestionHandler.ServeHTTP(w, r)
+		case ScorecardsUpdateAutoQuestionProcedure:
+			scorecardsUpdateAutoQuestionHandler.ServeHTTP(w, r)
+		case ScorecardsDeleteAutoQuestionProcedure:
+			scorecardsDeleteAutoQuestionHandler.ServeHTTP(w, r)
+		case ScorecardsGetAutoQuestionProcedure:
+			scorecardsGetAutoQuestionHandler.ServeHTTP(w, r)
+		case ScorecardsGetAutoEvaluationProcedure:
+			scorecardsGetAutoEvaluationHandler.ServeHTTP(w, r)
+		case ScorecardsListAutoEvaluationsProcedure:
+			scorecardsListAutoEvaluationsHandler.ServeHTTP(w, r)
+		case ScorecardsDeleteAutoEvaluationProcedure:
+			scorecardsDeleteAutoEvaluationHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
 }
 
 // UnimplementedScorecardsHandler returns CodeUnimplemented from all methods.

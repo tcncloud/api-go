@@ -874,258 +874,362 @@ type LMSHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewLMSHandler(svc LMSHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	mux := http.NewServeMux()
-	mux.Handle(LMSGetPublicKeyProcedure, connect_go.NewUnaryHandler(
+	lMSGetPublicKeyHandler := connect_go.NewUnaryHandler(
 		LMSGetPublicKeyProcedure,
 		svc.GetPublicKey,
 		opts...,
-	))
-	mux.Handle(LMSCreateFileTemplateProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSCreateFileTemplateHandler := connect_go.NewUnaryHandler(
 		LMSCreateFileTemplateProcedure,
 		svc.CreateFileTemplate,
 		opts...,
-	))
-	mux.Handle(LMSListFileTemplatesProcedure, connect_go.NewServerStreamHandler(
+	)
+	lMSListFileTemplatesHandler := connect_go.NewServerStreamHandler(
 		LMSListFileTemplatesProcedure,
 		svc.ListFileTemplates,
 		opts...,
-	))
-	mux.Handle(LMSUpdateFileTemplateProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSUpdateFileTemplateHandler := connect_go.NewUnaryHandler(
 		LMSUpdateFileTemplateProcedure,
 		svc.UpdateFileTemplate,
 		opts...,
-	))
-	mux.Handle(LMSDeleteFileTemplateProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSDeleteFileTemplateHandler := connect_go.NewUnaryHandler(
 		LMSDeleteFileTemplateProcedure,
 		svc.DeleteFileTemplate,
 		opts...,
-	))
-	mux.Handle(LMSGetFileTemplateProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSGetFileTemplateHandler := connect_go.NewUnaryHandler(
 		LMSGetFileTemplateProcedure,
 		svc.GetFileTemplate,
 		opts...,
-	))
-	mux.Handle(LMSCreateFieldProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSCreateFieldHandler := connect_go.NewUnaryHandler(
 		LMSCreateFieldProcedure,
 		svc.CreateField,
 		opts...,
-	))
-	mux.Handle(LMSListFieldsProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSListFieldsHandler := connect_go.NewUnaryHandler(
 		LMSListFieldsProcedure,
 		svc.ListFields,
 		opts...,
-	))
-	mux.Handle(LMSGetFieldProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSGetFieldHandler := connect_go.NewUnaryHandler(
 		LMSGetFieldProcedure,
 		svc.GetField,
 		opts...,
-	))
-	mux.Handle(LMSUpdateFieldProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSUpdateFieldHandler := connect_go.NewUnaryHandler(
 		LMSUpdateFieldProcedure,
 		svc.UpdateField,
 		opts...,
-	))
-	mux.Handle(LMSDeleteFieldProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSDeleteFieldHandler := connect_go.NewUnaryHandler(
 		LMSDeleteFieldProcedure,
 		svc.DeleteField,
 		opts...,
-	))
-	mux.Handle(LMSListAvailableFieldsByElementIdProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSListAvailableFieldsByElementIdHandler := connect_go.NewUnaryHandler(
 		LMSListAvailableFieldsByElementIdProcedure,
 		svc.ListAvailableFieldsByElementId,
 		opts...,
-	))
-	mux.Handle(LMSListCampaignLinksProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSListCampaignLinksHandler := connect_go.NewUnaryHandler(
 		LMSListCampaignLinksProcedure,
 		svc.ListCampaignLinks,
 		opts...,
-	))
-	mux.Handle(LMSPeekListProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSPeekListHandler := connect_go.NewUnaryHandler(
 		LMSPeekListProcedure,
 		svc.PeekList,
 		opts...,
-	))
-	mux.Handle(LMSGetHistoryProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSGetHistoryHandler := connect_go.NewUnaryHandler(
 		LMSGetHistoryProcedure,
 		svc.GetHistory,
 		opts...,
-	))
-	mux.Handle(LMSCreateElementProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSCreateElementHandler := connect_go.NewUnaryHandler(
 		LMSCreateElementProcedure,
 		svc.CreateElement,
 		opts...,
-	))
-	mux.Handle(LMSListElementsProcedure, connect_go.NewServerStreamHandler(
+	)
+	lMSListElementsHandler := connect_go.NewServerStreamHandler(
 		LMSListElementsProcedure,
 		svc.ListElements,
 		opts...,
-	))
-	mux.Handle(LMSUpdateElementProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSUpdateElementHandler := connect_go.NewUnaryHandler(
 		LMSUpdateElementProcedure,
 		svc.UpdateElement,
 		opts...,
-	))
-	mux.Handle(LMSDeleteElementProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSDeleteElementHandler := connect_go.NewUnaryHandler(
 		LMSDeleteElementProcedure,
 		svc.DeleteElement,
 		opts...,
-	))
-	mux.Handle(LMSCopyPipelineUpstreamProcedure, connect_go.NewServerStreamHandler(
+	)
+	lMSCopyPipelineUpstreamHandler := connect_go.NewServerStreamHandler(
 		LMSCopyPipelineUpstreamProcedure,
 		svc.CopyPipelineUpstream,
 		opts...,
-	))
-	mux.Handle(LMSCopyPipelineDownstreamProcedure, connect_go.NewServerStreamHandler(
+	)
+	lMSCopyPipelineDownstreamHandler := connect_go.NewServerStreamHandler(
 		LMSCopyPipelineDownstreamProcedure,
 		svc.CopyPipelineDownstream,
 		opts...,
-	))
-	mux.Handle(LMSProcessElementProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSProcessElementHandler := connect_go.NewUnaryHandler(
 		LMSProcessElementProcedure,
 		svc.ProcessElement,
 		opts...,
-	))
-	mux.Handle(LMSGetAvailableFieldsProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSGetAvailableFieldsHandler := connect_go.NewUnaryHandler(
 		LMSGetAvailableFieldsProcedure,
 		svc.GetAvailableFields,
 		opts...,
-	))
-	mux.Handle(LMSListNewEventsProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSListNewEventsHandler := connect_go.NewUnaryHandler(
 		LMSListNewEventsProcedure,
 		svc.ListNewEvents,
 		opts...,
-	))
-	mux.Handle(LMSViewQueueProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSViewQueueHandler := connect_go.NewUnaryHandler(
 		LMSViewQueueProcedure,
 		svc.ViewQueue,
 		opts...,
-	))
-	mux.Handle(LMSAutocompleteProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSAutocompleteHandler := connect_go.NewUnaryHandler(
 		LMSAutocompleteProcedure,
 		svc.Autocomplete,
 		opts...,
-	))
-	mux.Handle(LMSGetComplianceScrubListsProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSGetComplianceScrubListsHandler := connect_go.NewUnaryHandler(
 		LMSGetComplianceScrubListsProcedure,
 		svc.GetComplianceScrubLists,
 		opts...,
-	))
-	mux.Handle(LMSFindFieldUsagesProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSFindFieldUsagesHandler := connect_go.NewUnaryHandler(
 		LMSFindFieldUsagesProcedure,
 		svc.FindFieldUsages,
 		opts...,
-	))
-	mux.Handle(LMSFindInvalidElementsProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSFindInvalidElementsHandler := connect_go.NewUnaryHandler(
 		LMSFindInvalidElementsProcedure,
 		svc.FindInvalidElements,
 		opts...,
-	))
-	mux.Handle(LMSCreateCollectionProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSCreateCollectionHandler := connect_go.NewUnaryHandler(
 		LMSCreateCollectionProcedure,
 		svc.CreateCollection,
 		opts...,
-	))
-	mux.Handle(LMSGetCollectionProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSGetCollectionHandler := connect_go.NewUnaryHandler(
 		LMSGetCollectionProcedure,
 		svc.GetCollection,
 		opts...,
-	))
-	mux.Handle(LMSUpdateCollectionProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSUpdateCollectionHandler := connect_go.NewUnaryHandler(
 		LMSUpdateCollectionProcedure,
 		svc.UpdateCollection,
 		opts...,
-	))
-	mux.Handle(LMSDeleteCollectionProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSDeleteCollectionHandler := connect_go.NewUnaryHandler(
 		LMSDeleteCollectionProcedure,
 		svc.DeleteCollection,
 		opts...,
-	))
-	mux.Handle(LMSListCollectionsProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSListCollectionsHandler := connect_go.NewUnaryHandler(
 		LMSListCollectionsProcedure,
 		svc.ListCollections,
 		opts...,
-	))
-	mux.Handle(LMSResetCollectionProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSResetCollectionHandler := connect_go.NewUnaryHandler(
 		LMSResetCollectionProcedure,
 		svc.ResetCollection,
 		opts...,
-	))
-	mux.Handle(LMSAddCollectionEntryProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSAddCollectionEntryHandler := connect_go.NewUnaryHandler(
 		LMSAddCollectionEntryProcedure,
 		svc.AddCollectionEntry,
 		opts...,
-	))
-	mux.Handle(LMSDeleteCollectionEntryProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSDeleteCollectionEntryHandler := connect_go.NewUnaryHandler(
 		LMSDeleteCollectionEntryProcedure,
 		svc.DeleteCollectionEntry,
 		opts...,
-	))
-	mux.Handle(LMSUpdateCollectionEntryProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSUpdateCollectionEntryHandler := connect_go.NewUnaryHandler(
 		LMSUpdateCollectionEntryProcedure,
 		svc.UpdateCollectionEntry,
 		opts...,
-	))
-	mux.Handle(LMSStreamCollectionProcedure, connect_go.NewServerStreamHandler(
+	)
+	lMSStreamCollectionHandler := connect_go.NewServerStreamHandler(
 		LMSStreamCollectionProcedure,
 		svc.StreamCollection,
 		opts...,
-	))
-	mux.Handle(LMSSearchCollectionsPaginatedProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSSearchCollectionsPaginatedHandler := connect_go.NewUnaryHandler(
 		LMSSearchCollectionsPaginatedProcedure,
 		svc.SearchCollectionsPaginated,
 		opts...,
-	))
-	mux.Handle(LMSGetCollectionEntriesProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSGetCollectionEntriesHandler := connect_go.NewUnaryHandler(
 		LMSGetCollectionEntriesProcedure,
 		svc.GetCollectionEntries,
 		opts...,
-	))
-	mux.Handle(LMSCreateCjsSearchDefinitionProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSCreateCjsSearchDefinitionHandler := connect_go.NewUnaryHandler(
 		LMSCreateCjsSearchDefinitionProcedure,
 		svc.CreateCjsSearchDefinition,
 		opts...,
-	))
-	mux.Handle(LMSGetCjsSearchDefinitionProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSGetCjsSearchDefinitionHandler := connect_go.NewUnaryHandler(
 		LMSGetCjsSearchDefinitionProcedure,
 		svc.GetCjsSearchDefinition,
 		opts...,
-	))
-	mux.Handle(LMSUpdateCjsSearchDefinitionProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSUpdateCjsSearchDefinitionHandler := connect_go.NewUnaryHandler(
 		LMSUpdateCjsSearchDefinitionProcedure,
 		svc.UpdateCjsSearchDefinition,
 		opts...,
-	))
-	mux.Handle(LMSDeleteCjsSearchDefinitionProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSDeleteCjsSearchDefinitionHandler := connect_go.NewUnaryHandler(
 		LMSDeleteCjsSearchDefinitionProcedure,
 		svc.DeleteCjsSearchDefinition,
 		opts...,
-	))
-	mux.Handle(LMSListCjsSearchDefinitionsProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSListCjsSearchDefinitionsHandler := connect_go.NewUnaryHandler(
 		LMSListCjsSearchDefinitionsProcedure,
 		svc.ListCjsSearchDefinitions,
 		opts...,
-	))
-	mux.Handle(LMSExecuteCjsSearchDefinitionProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSExecuteCjsSearchDefinitionHandler := connect_go.NewUnaryHandler(
 		LMSExecuteCjsSearchDefinitionProcedure,
 		svc.ExecuteCjsSearchDefinition,
 		opts...,
-	))
-	mux.Handle(LMSGetCjsSecureSearchCriteriaProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSGetCjsSecureSearchCriteriaHandler := connect_go.NewUnaryHandler(
 		LMSGetCjsSecureSearchCriteriaProcedure,
 		svc.GetCjsSecureSearchCriteria,
 		opts...,
-	))
-	mux.Handle(LMSCreateCjsSecureSearchCriteriaProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSCreateCjsSecureSearchCriteriaHandler := connect_go.NewUnaryHandler(
 		LMSCreateCjsSecureSearchCriteriaProcedure,
 		svc.CreateCjsSecureSearchCriteria,
 		opts...,
-	))
-	mux.Handle(LMSUpdateCjsSecureSearchCriteriaProcedure, connect_go.NewUnaryHandler(
+	)
+	lMSUpdateCjsSecureSearchCriteriaHandler := connect_go.NewUnaryHandler(
 		LMSUpdateCjsSecureSearchCriteriaProcedure,
 		svc.UpdateCjsSecureSearchCriteria,
 		opts...,
-	))
-	return "/api.v0alpha.LMS/", mux
+	)
+	return "/api.v0alpha.LMS/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case LMSGetPublicKeyProcedure:
+			lMSGetPublicKeyHandler.ServeHTTP(w, r)
+		case LMSCreateFileTemplateProcedure:
+			lMSCreateFileTemplateHandler.ServeHTTP(w, r)
+		case LMSListFileTemplatesProcedure:
+			lMSListFileTemplatesHandler.ServeHTTP(w, r)
+		case LMSUpdateFileTemplateProcedure:
+			lMSUpdateFileTemplateHandler.ServeHTTP(w, r)
+		case LMSDeleteFileTemplateProcedure:
+			lMSDeleteFileTemplateHandler.ServeHTTP(w, r)
+		case LMSGetFileTemplateProcedure:
+			lMSGetFileTemplateHandler.ServeHTTP(w, r)
+		case LMSCreateFieldProcedure:
+			lMSCreateFieldHandler.ServeHTTP(w, r)
+		case LMSListFieldsProcedure:
+			lMSListFieldsHandler.ServeHTTP(w, r)
+		case LMSGetFieldProcedure:
+			lMSGetFieldHandler.ServeHTTP(w, r)
+		case LMSUpdateFieldProcedure:
+			lMSUpdateFieldHandler.ServeHTTP(w, r)
+		case LMSDeleteFieldProcedure:
+			lMSDeleteFieldHandler.ServeHTTP(w, r)
+		case LMSListAvailableFieldsByElementIdProcedure:
+			lMSListAvailableFieldsByElementIdHandler.ServeHTTP(w, r)
+		case LMSListCampaignLinksProcedure:
+			lMSListCampaignLinksHandler.ServeHTTP(w, r)
+		case LMSPeekListProcedure:
+			lMSPeekListHandler.ServeHTTP(w, r)
+		case LMSGetHistoryProcedure:
+			lMSGetHistoryHandler.ServeHTTP(w, r)
+		case LMSCreateElementProcedure:
+			lMSCreateElementHandler.ServeHTTP(w, r)
+		case LMSListElementsProcedure:
+			lMSListElementsHandler.ServeHTTP(w, r)
+		case LMSUpdateElementProcedure:
+			lMSUpdateElementHandler.ServeHTTP(w, r)
+		case LMSDeleteElementProcedure:
+			lMSDeleteElementHandler.ServeHTTP(w, r)
+		case LMSCopyPipelineUpstreamProcedure:
+			lMSCopyPipelineUpstreamHandler.ServeHTTP(w, r)
+		case LMSCopyPipelineDownstreamProcedure:
+			lMSCopyPipelineDownstreamHandler.ServeHTTP(w, r)
+		case LMSProcessElementProcedure:
+			lMSProcessElementHandler.ServeHTTP(w, r)
+		case LMSGetAvailableFieldsProcedure:
+			lMSGetAvailableFieldsHandler.ServeHTTP(w, r)
+		case LMSListNewEventsProcedure:
+			lMSListNewEventsHandler.ServeHTTP(w, r)
+		case LMSViewQueueProcedure:
+			lMSViewQueueHandler.ServeHTTP(w, r)
+		case LMSAutocompleteProcedure:
+			lMSAutocompleteHandler.ServeHTTP(w, r)
+		case LMSGetComplianceScrubListsProcedure:
+			lMSGetComplianceScrubListsHandler.ServeHTTP(w, r)
+		case LMSFindFieldUsagesProcedure:
+			lMSFindFieldUsagesHandler.ServeHTTP(w, r)
+		case LMSFindInvalidElementsProcedure:
+			lMSFindInvalidElementsHandler.ServeHTTP(w, r)
+		case LMSCreateCollectionProcedure:
+			lMSCreateCollectionHandler.ServeHTTP(w, r)
+		case LMSGetCollectionProcedure:
+			lMSGetCollectionHandler.ServeHTTP(w, r)
+		case LMSUpdateCollectionProcedure:
+			lMSUpdateCollectionHandler.ServeHTTP(w, r)
+		case LMSDeleteCollectionProcedure:
+			lMSDeleteCollectionHandler.ServeHTTP(w, r)
+		case LMSListCollectionsProcedure:
+			lMSListCollectionsHandler.ServeHTTP(w, r)
+		case LMSResetCollectionProcedure:
+			lMSResetCollectionHandler.ServeHTTP(w, r)
+		case LMSAddCollectionEntryProcedure:
+			lMSAddCollectionEntryHandler.ServeHTTP(w, r)
+		case LMSDeleteCollectionEntryProcedure:
+			lMSDeleteCollectionEntryHandler.ServeHTTP(w, r)
+		case LMSUpdateCollectionEntryProcedure:
+			lMSUpdateCollectionEntryHandler.ServeHTTP(w, r)
+		case LMSStreamCollectionProcedure:
+			lMSStreamCollectionHandler.ServeHTTP(w, r)
+		case LMSSearchCollectionsPaginatedProcedure:
+			lMSSearchCollectionsPaginatedHandler.ServeHTTP(w, r)
+		case LMSGetCollectionEntriesProcedure:
+			lMSGetCollectionEntriesHandler.ServeHTTP(w, r)
+		case LMSCreateCjsSearchDefinitionProcedure:
+			lMSCreateCjsSearchDefinitionHandler.ServeHTTP(w, r)
+		case LMSGetCjsSearchDefinitionProcedure:
+			lMSGetCjsSearchDefinitionHandler.ServeHTTP(w, r)
+		case LMSUpdateCjsSearchDefinitionProcedure:
+			lMSUpdateCjsSearchDefinitionHandler.ServeHTTP(w, r)
+		case LMSDeleteCjsSearchDefinitionProcedure:
+			lMSDeleteCjsSearchDefinitionHandler.ServeHTTP(w, r)
+		case LMSListCjsSearchDefinitionsProcedure:
+			lMSListCjsSearchDefinitionsHandler.ServeHTTP(w, r)
+		case LMSExecuteCjsSearchDefinitionProcedure:
+			lMSExecuteCjsSearchDefinitionHandler.ServeHTTP(w, r)
+		case LMSGetCjsSecureSearchCriteriaProcedure:
+			lMSGetCjsSecureSearchCriteriaHandler.ServeHTTP(w, r)
+		case LMSCreateCjsSecureSearchCriteriaProcedure:
+			lMSCreateCjsSecureSearchCriteriaHandler.ServeHTTP(w, r)
+		case LMSUpdateCjsSecureSearchCriteriaProcedure:
+			lMSUpdateCjsSecureSearchCriteriaHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
 }
 
 // UnimplementedLMSHandler returns CodeUnimplemented from all methods.

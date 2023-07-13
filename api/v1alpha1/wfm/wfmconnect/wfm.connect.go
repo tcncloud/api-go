@@ -217,6 +217,9 @@ const (
 	// WFMDeleteWFMAgentMembershipsProcedure is the fully-qualified name of the WFM's
 	// DeleteWFMAgentMemberships RPC.
 	WFMDeleteWFMAgentMembershipsProcedure = "/api.v1alpha1.wfm.WFM/DeleteWFMAgentMemberships"
+	// WFMDeleteWFMAgentsMembershipsProcedure is the fully-qualified name of the WFM's
+	// DeleteWFMAgentsMemberships RPC.
+	WFMDeleteWFMAgentsMembershipsProcedure = "/api.v1alpha1.wfm.WFM/DeleteWFMAgentsMemberships"
 	// WFMBuildAgentDiagnosticsProcedure is the fully-qualified name of the WFM's BuildAgentDiagnostics
 	// RPC.
 	WFMBuildAgentDiagnosticsProcedure = "/api.v1alpha1.wfm.WFM/BuildAgentDiagnostics"
@@ -1036,7 +1039,7 @@ type WFMClient interface {
 	//   - grpc.NotFound: the @wfm_agent_sids or @agent_group_sid don't exist for the org or given @schedule_scenario_sid.
 	//   - grpc.Internal: error occurs when creating the association.
 	CreateWFMAgentMemberships(context.Context, *connect_go.Request[wfm.CreateWFMAgentMembershipsReq]) (*connect_go.Response[wfm.CreateWFMAgentMembershipsRes], error)
-	// Deletes a membership association for each of the given @wfm_agent_sids with the given @agent_group_sid.
+	// Deletes a membership association for each of the given @wfm_agent_sids with the given @agent_group_sid for the org sending the request.
 	// Required permissions:
 	//
 	//	NONE
@@ -1046,6 +1049,15 @@ type WFMClient interface {
 	//   - grpc.NotFound: any of the given memberships to delete do not exist.
 	//   - grpc.Internal: error occurs when deleting the association.
 	DeleteWFMAgentMemberships(context.Context, *connect_go.Request[wfm.DeleteWFMAgentMembershipsReq]) (*connect_go.Response[wfm.DeleteWFMAgentMembershipsRes], error)
+	// Deletes all membership associations for the given @wfm_agent_sids with the given @agent_group_sids.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @wfm_agent_sids, or @agent_group_sids are invalid.
+	//   - grpc.Internal: error occurs when deleting the associations.
+	DeleteWFMAgentsMemberships(context.Context, *connect_go.Request[wfm.DeleteWFMAgentsMembershipsReq]) (*connect_go.Response[wfm.DeleteWFMAgentsMembershipsRes], error)
 	// Builds and returns the diagnostics for the wfm agent associated with the given @wfm_agent_sid or @agent_group_sid for the org sending the request.
 	// Response will only contain:
 	//
@@ -1088,6 +1100,7 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when updating the shift template.
 	UpdateShiftTemplate(context.Context, *connect_go.Request[wfm.UpdateShiftTemplateReq]) (*connect_go.Response[wfm.UpdateShiftTemplateRes], error)
 	// Lists the shift templates matching the specified @shift_template_sids for the org sending the request.
+	// If @include_placement_rules is set to true, the @shift_templates will be returned with their member placement rules.
 	// Required permissions:
 	//
 	//	NONE
@@ -1457,7 +1470,8 @@ type WFMClient interface {
 	// Gets the draft schedule with @draft_schedule_sid for the corresponding @datetime_range for the org sending the request.
 	// The @datetime_range field is optional. If not set, the draft schedule will be obtained with it's default range from it's start to end time.
 	// if @include_shift_instances is true, the shift instances associated within @datetime_range for the draft schedule will be returned in the draft schedules shift_instances field.
-	// if @node_selector is set then only instances belonging to the origin of @node_selector and its children node will be returned, otherwise all matching shift instances will be included
+	// if @node_selector is set then only instances belonging to the origin of @node_selector and its children node will be returned, otherwise all matching shift instances will be included.
+	// @node_selector must be for a node that belongs to the same schedule scenario as @draft_schedule_sid.
 	// if @include_shift_template is true, any returned shift instances will have their orginating shift template returned in their origin_shift_template field.
 	// if @include_shift_segments is true, any returned shift instances will have their shift_segments field set, otherwise the field will be left nil.
 	// if @include_scheduling_activity is true, any returned shift segments will have their scheduling_activity field set, otherwise the field will be left nil.
@@ -1905,6 +1919,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMDeleteWFMAgentMembershipsProcedure,
 			opts...,
 		),
+		deleteWFMAgentsMemberships: connect_go.NewClient[wfm.DeleteWFMAgentsMembershipsReq, wfm.DeleteWFMAgentsMembershipsRes](
+			httpClient,
+			baseURL+WFMDeleteWFMAgentsMembershipsProcedure,
+			opts...,
+		),
 		buildAgentDiagnostics: connect_go.NewClient[wfm.BuildAgentDiagnosticsReq, wfm.BuildAgentDiagnosticsRes](
 			httpClient,
 			baseURL+WFMBuildAgentDiagnosticsProcedure,
@@ -2202,6 +2221,7 @@ type wFMClient struct {
 	listWFMAgentsAssociatedWithAgentGroup         *connect_go.Client[wfm.ListWFMAgentsAssociatedWithAgentGroupReq, wfm.ListWFMAgentsAssociatedWithAgentGroupRes]
 	createWFMAgentMemberships                     *connect_go.Client[wfm.CreateWFMAgentMembershipsReq, wfm.CreateWFMAgentMembershipsRes]
 	deleteWFMAgentMemberships                     *connect_go.Client[wfm.DeleteWFMAgentMembershipsReq, wfm.DeleteWFMAgentMembershipsRes]
+	deleteWFMAgentsMemberships                    *connect_go.Client[wfm.DeleteWFMAgentsMembershipsReq, wfm.DeleteWFMAgentsMembershipsRes]
 	buildAgentDiagnostics                         *connect_go.Client[wfm.BuildAgentDiagnosticsReq, wfm.BuildAgentDiagnosticsRes]
 	createShiftTemplate                           *connect_go.Client[wfm.CreateShiftTemplateReq, wfm.CreateShiftTemplateRes]
 	updateShiftTemplate                           *connect_go.Client[wfm.UpdateShiftTemplateReq, wfm.UpdateShiftTemplateRes]
@@ -2568,6 +2588,11 @@ func (c *wFMClient) CreateWFMAgentMemberships(ctx context.Context, req *connect_
 // DeleteWFMAgentMemberships calls api.v1alpha1.wfm.WFM.DeleteWFMAgentMemberships.
 func (c *wFMClient) DeleteWFMAgentMemberships(ctx context.Context, req *connect_go.Request[wfm.DeleteWFMAgentMembershipsReq]) (*connect_go.Response[wfm.DeleteWFMAgentMembershipsRes], error) {
 	return c.deleteWFMAgentMemberships.CallUnary(ctx, req)
+}
+
+// DeleteWFMAgentsMemberships calls api.v1alpha1.wfm.WFM.DeleteWFMAgentsMemberships.
+func (c *wFMClient) DeleteWFMAgentsMemberships(ctx context.Context, req *connect_go.Request[wfm.DeleteWFMAgentsMembershipsReq]) (*connect_go.Response[wfm.DeleteWFMAgentsMembershipsRes], error) {
+	return c.deleteWFMAgentsMemberships.CallUnary(ctx, req)
 }
 
 // BuildAgentDiagnostics calls api.v1alpha1.wfm.WFM.BuildAgentDiagnostics.
@@ -3499,7 +3524,7 @@ type WFMHandler interface {
 	//   - grpc.NotFound: the @wfm_agent_sids or @agent_group_sid don't exist for the org or given @schedule_scenario_sid.
 	//   - grpc.Internal: error occurs when creating the association.
 	CreateWFMAgentMemberships(context.Context, *connect_go.Request[wfm.CreateWFMAgentMembershipsReq]) (*connect_go.Response[wfm.CreateWFMAgentMembershipsRes], error)
-	// Deletes a membership association for each of the given @wfm_agent_sids with the given @agent_group_sid.
+	// Deletes a membership association for each of the given @wfm_agent_sids with the given @agent_group_sid for the org sending the request.
 	// Required permissions:
 	//
 	//	NONE
@@ -3509,6 +3534,15 @@ type WFMHandler interface {
 	//   - grpc.NotFound: any of the given memberships to delete do not exist.
 	//   - grpc.Internal: error occurs when deleting the association.
 	DeleteWFMAgentMemberships(context.Context, *connect_go.Request[wfm.DeleteWFMAgentMembershipsReq]) (*connect_go.Response[wfm.DeleteWFMAgentMembershipsRes], error)
+	// Deletes all membership associations for the given @wfm_agent_sids with the given @agent_group_sids.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @wfm_agent_sids, or @agent_group_sids are invalid.
+	//   - grpc.Internal: error occurs when deleting the associations.
+	DeleteWFMAgentsMemberships(context.Context, *connect_go.Request[wfm.DeleteWFMAgentsMembershipsReq]) (*connect_go.Response[wfm.DeleteWFMAgentsMembershipsRes], error)
 	// Builds and returns the diagnostics for the wfm agent associated with the given @wfm_agent_sid or @agent_group_sid for the org sending the request.
 	// Response will only contain:
 	//
@@ -3551,6 +3585,7 @@ type WFMHandler interface {
 	//   - grpc.Internal: error occurs when updating the shift template.
 	UpdateShiftTemplate(context.Context, *connect_go.Request[wfm.UpdateShiftTemplateReq]) (*connect_go.Response[wfm.UpdateShiftTemplateRes], error)
 	// Lists the shift templates matching the specified @shift_template_sids for the org sending the request.
+	// If @include_placement_rules is set to true, the @shift_templates will be returned with their member placement rules.
 	// Required permissions:
 	//
 	//	NONE
@@ -3920,7 +3955,8 @@ type WFMHandler interface {
 	// Gets the draft schedule with @draft_schedule_sid for the corresponding @datetime_range for the org sending the request.
 	// The @datetime_range field is optional. If not set, the draft schedule will be obtained with it's default range from it's start to end time.
 	// if @include_shift_instances is true, the shift instances associated within @datetime_range for the draft schedule will be returned in the draft schedules shift_instances field.
-	// if @node_selector is set then only instances belonging to the origin of @node_selector and its children node will be returned, otherwise all matching shift instances will be included
+	// if @node_selector is set then only instances belonging to the origin of @node_selector and its children node will be returned, otherwise all matching shift instances will be included.
+	// @node_selector must be for a node that belongs to the same schedule scenario as @draft_schedule_sid.
 	// if @include_shift_template is true, any returned shift instances will have their orginating shift template returned in their origin_shift_template field.
 	// if @include_shift_segments is true, any returned shift instances will have their shift_segments field set, otherwise the field will be left nil.
 	// if @include_scheduling_activity is true, any returned shift segments will have their scheduling_activity field set, otherwise the field will be left nil.
@@ -4054,548 +4090,775 @@ type WFMHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	mux := http.NewServeMux()
-	mux.Handle(WFMListSkillProfilesProcedure, connect_go.NewUnaryHandler(
+	wFMListSkillProfilesHandler := connect_go.NewUnaryHandler(
 		WFMListSkillProfilesProcedure,
 		svc.ListSkillProfiles,
 		opts...,
-	))
-	mux.Handle(WFMUpdateSkillProfileProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMUpdateSkillProfileHandler := connect_go.NewUnaryHandler(
 		WFMUpdateSkillProfileProcedure,
 		svc.UpdateSkillProfile,
 		opts...,
-	))
-	mux.Handle(WFMUpdateSkillProfileProficienciesProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMUpdateSkillProfileProficienciesHandler := connect_go.NewUnaryHandler(
 		WFMUpdateSkillProfileProficienciesProcedure,
 		svc.UpdateSkillProfileProficiencies,
 		opts...,
-	))
-	mux.Handle(WFMGetSkillProfileProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMGetSkillProfileHandler := connect_go.NewUnaryHandler(
 		WFMGetSkillProfileProcedure,
 		svc.GetSkillProfile,
 		opts...,
-	))
-	mux.Handle(WFMResyncSkillProfilesProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMResyncSkillProfilesHandler := connect_go.NewUnaryHandler(
 		WFMResyncSkillProfilesProcedure,
 		svc.ResyncSkillProfiles,
 		opts...,
-	))
-	mux.Handle(WFMGetLastSkillProfileResyncDateProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMGetLastSkillProfileResyncDateHandler := connect_go.NewUnaryHandler(
 		WFMGetLastSkillProfileResyncDateProcedure,
 		svc.GetLastSkillProfileResyncDate,
 		opts...,
-	))
-	mux.Handle(WFMUpsertForecastingParametersProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMUpsertForecastingParametersHandler := connect_go.NewUnaryHandler(
 		WFMUpsertForecastingParametersProcedure,
 		svc.UpsertForecastingParameters,
 		opts...,
-	))
-	mux.Handle(WFMGetForecastingParametersProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMGetForecastingParametersHandler := connect_go.NewUnaryHandler(
 		WFMGetForecastingParametersProcedure,
 		svc.GetForecastingParameters,
 		opts...,
-	))
-	mux.Handle(WFMListHistoricalDataProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMListHistoricalDataHandler := connect_go.NewUnaryHandler(
 		WFMListHistoricalDataProcedure,
 		svc.ListHistoricalData,
 		opts...,
-	))
-	mux.Handle(WFMUpsertHistoricalDataDeltaProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMUpsertHistoricalDataDeltaHandler := connect_go.NewUnaryHandler(
 		WFMUpsertHistoricalDataDeltaProcedure,
 		svc.UpsertHistoricalDataDelta,
 		opts...,
-	))
-	mux.Handle(WFMUpsertHistoricalDataDeltasProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMUpsertHistoricalDataDeltasHandler := connect_go.NewUnaryHandler(
 		WFMUpsertHistoricalDataDeltasProcedure,
 		svc.UpsertHistoricalDataDeltas,
 		opts...,
-	))
-	mux.Handle(WFMListSkillsProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMListSkillsHandler := connect_go.NewUnaryHandler(
 		WFMListSkillsProcedure,
 		svc.ListSkills,
 		opts...,
-	))
-	mux.Handle(WFMBuildCallProfileTemplateForSkillProfileProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMBuildCallProfileTemplateForSkillProfileHandler := connect_go.NewUnaryHandler(
 		WFMBuildCallProfileTemplateForSkillProfileProcedure,
 		svc.BuildCallProfileTemplateForSkillProfile,
 		opts...,
-	))
-	mux.Handle(WFMCreateInactiveSkillProfileMappingProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMCreateInactiveSkillProfileMappingHandler := connect_go.NewUnaryHandler(
 		WFMCreateInactiveSkillProfileMappingProcedure,
 		svc.CreateInactiveSkillProfileMapping,
 		opts...,
-	))
-	mux.Handle(WFMGetAvailableRegressionForecasterModelTypesProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMGetAvailableRegressionForecasterModelTypesHandler := connect_go.NewUnaryHandler(
 		WFMGetAvailableRegressionForecasterModelTypesProcedure,
 		svc.GetAvailableRegressionForecasterModelTypes,
 		opts...,
-	))
-	mux.Handle(WFMDisconnectInactiveSkillProfileMappingProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMDisconnectInactiveSkillProfileMappingHandler := connect_go.NewUnaryHandler(
 		WFMDisconnectInactiveSkillProfileMappingProcedure,
 		svc.DisconnectInactiveSkillProfileMapping,
 		opts...,
-	))
-	mux.Handle(WFMDeleteHistoricalDataDeltasProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMDeleteHistoricalDataDeltasHandler := connect_go.NewUnaryHandler(
 		WFMDeleteHistoricalDataDeltasProcedure,
 		svc.DeleteHistoricalDataDeltas,
 		opts...,
-	))
-	mux.Handle(WFMListTopSkillProfilesProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMListTopSkillProfilesHandler := connect_go.NewUnaryHandler(
 		WFMListTopSkillProfilesProcedure,
 		svc.ListTopSkillProfiles,
 		opts...,
-	))
-	mux.Handle(WFMGetSkillProfilesCountProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMGetSkillProfilesCountHandler := connect_go.NewUnaryHandler(
 		WFMGetSkillProfilesCountProcedure,
 		svc.GetSkillProfilesCount,
 		opts...,
-	))
-	mux.Handle(WFMBuildProfileForecastByIntervalProcedure, connect_go.NewServerStreamHandler(
+	)
+	wFMBuildProfileForecastByIntervalHandler := connect_go.NewServerStreamHandler(
 		WFMBuildProfileForecastByIntervalProcedure,
 		svc.BuildProfileForecastByInterval,
 		opts...,
-	))
-	mux.Handle(WFMBuildProfileForecastByIntervalWithStatsProcedure, connect_go.NewServerStreamHandler(
+	)
+	wFMBuildProfileForecastByIntervalWithStatsHandler := connect_go.NewServerStreamHandler(
 		WFMBuildProfileForecastByIntervalWithStatsProcedure,
 		svc.BuildProfileForecastByIntervalWithStats,
 		opts...,
-	))
-	mux.Handle(WFMUpsertProfileForecastProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMUpsertProfileForecastHandler := connect_go.NewUnaryHandler(
 		WFMUpsertProfileForecastProcedure,
 		svc.UpsertProfileForecast,
 		opts...,
-	))
-	mux.Handle(WFMCreateCallProfileTemplateProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMCreateCallProfileTemplateHandler := connect_go.NewUnaryHandler(
 		WFMCreateCallProfileTemplateProcedure,
 		svc.CreateCallProfileTemplate,
 		opts...,
-	))
-	mux.Handle(WFMDeleteCallProfileTemplateProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMDeleteCallProfileTemplateHandler := connect_go.NewUnaryHandler(
 		WFMDeleteCallProfileTemplateProcedure,
 		svc.DeleteCallProfileTemplate,
 		opts...,
-	))
-	mux.Handle(WFMCreateRegressionTemplateProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMCreateRegressionTemplateHandler := connect_go.NewUnaryHandler(
 		WFMCreateRegressionTemplateProcedure,
 		svc.CreateRegressionTemplate,
 		opts...,
-	))
-	mux.Handle(WFMDeleteRegressionTemplateProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMDeleteRegressionTemplateHandler := connect_go.NewUnaryHandler(
 		WFMDeleteRegressionTemplateProcedure,
 		svc.DeleteRegressionTemplate,
 		opts...,
-	))
-	mux.Handle(WFMListRegressionTemplatesProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMListRegressionTemplatesHandler := connect_go.NewUnaryHandler(
 		WFMListRegressionTemplatesProcedure,
 		svc.ListRegressionTemplates,
 		opts...,
-	))
-	mux.Handle(WFMListForecastIntervalsForSkillProfileProcedure, connect_go.NewServerStreamHandler(
+	)
+	wFMListForecastIntervalsForSkillProfileHandler := connect_go.NewServerStreamHandler(
 		WFMListForecastIntervalsForSkillProfileProcedure,
 		svc.ListForecastIntervalsForSkillProfile,
 		opts...,
-	))
-	mux.Handle(WFMBuildRegressionForecastByIntervalProcedure, connect_go.NewServerStreamHandler(
+	)
+	wFMBuildRegressionForecastByIntervalHandler := connect_go.NewServerStreamHandler(
 		WFMBuildRegressionForecastByIntervalProcedure,
 		svc.BuildRegressionForecastByInterval,
 		opts...,
-	))
-	mux.Handle(WFMBuildRegressionForecastByIntervalWithStatsProcedure, connect_go.NewServerStreamHandler(
+	)
+	wFMBuildRegressionForecastByIntervalWithStatsHandler := connect_go.NewServerStreamHandler(
 		WFMBuildRegressionForecastByIntervalWithStatsProcedure,
 		svc.BuildRegressionForecastByIntervalWithStats,
 		opts...,
-	))
-	mux.Handle(WFMListCallProfileTemplatesProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMListCallProfileTemplatesHandler := connect_go.NewUnaryHandler(
 		WFMListCallProfileTemplatesProcedure,
 		svc.ListCallProfileTemplates,
 		opts...,
-	))
-	mux.Handle(WFMUpsertRegressionForecastProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMUpsertRegressionForecastHandler := connect_go.NewUnaryHandler(
 		WFMUpsertRegressionForecastProcedure,
 		svc.UpsertRegressionForecast,
 		opts...,
-	))
-	mux.Handle(WFMUpsertForecastDataDeltaProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMUpsertForecastDataDeltaHandler := connect_go.NewUnaryHandler(
 		WFMUpsertForecastDataDeltaProcedure,
 		svc.UpsertForecastDataDelta,
 		opts...,
-	))
-	mux.Handle(WFMUpsertForecastDataDeltasProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMUpsertForecastDataDeltasHandler := connect_go.NewUnaryHandler(
 		WFMUpsertForecastDataDeltasProcedure,
 		svc.UpsertForecastDataDeltas,
 		opts...,
-	))
-	mux.Handle(WFMDeleteForecastIntervalsProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMDeleteForecastIntervalsHandler := connect_go.NewUnaryHandler(
 		WFMDeleteForecastIntervalsProcedure,
 		svc.DeleteForecastIntervals,
 		opts...,
-	))
-	mux.Handle(WFMListHistoricalDataForAllSkillProfilesProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMListHistoricalDataForAllSkillProfilesHandler := connect_go.NewUnaryHandler(
 		WFMListHistoricalDataForAllSkillProfilesProcedure,
 		svc.ListHistoricalDataForAllSkillProfiles,
 		opts...,
-	))
-	mux.Handle(WFMBuildDOWAndMOYProfilesProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMBuildDOWAndMOYProfilesHandler := connect_go.NewUnaryHandler(
 		WFMBuildDOWAndMOYProfilesProcedure,
 		svc.BuildDOWAndMOYProfiles,
 		opts...,
-	))
-	mux.Handle(WFMCalculateTrainingDataAveragesForSkillProfileProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMCalculateTrainingDataAveragesForSkillProfileHandler := connect_go.NewUnaryHandler(
 		WFMCalculateTrainingDataAveragesForSkillProfileProcedure,
 		svc.CalculateTrainingDataAveragesForSkillProfile,
 		opts...,
-	))
-	mux.Handle(WFMUpdateSkillProfileAveragesUsingHistoricalDataProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMUpdateSkillProfileAveragesUsingHistoricalDataHandler := connect_go.NewUnaryHandler(
 		WFMUpdateSkillProfileAveragesUsingHistoricalDataProcedure,
 		svc.UpdateSkillProfileAveragesUsingHistoricalData,
 		opts...,
-	))
-	mux.Handle(WFMUpdateCallCenterNodeProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMUpdateCallCenterNodeHandler := connect_go.NewUnaryHandler(
 		WFMUpdateCallCenterNodeProcedure,
 		svc.UpdateCallCenterNode,
 		opts...,
-	))
-	mux.Handle(WFMCreateClientNodeProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMCreateClientNodeHandler := connect_go.NewUnaryHandler(
 		WFMCreateClientNodeProcedure,
 		svc.CreateClientNode,
 		opts...,
-	))
-	mux.Handle(WFMUpdateClientNodeProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMUpdateClientNodeHandler := connect_go.NewUnaryHandler(
 		WFMUpdateClientNodeProcedure,
 		svc.UpdateClientNode,
 		opts...,
-	))
-	mux.Handle(WFMCreateLocationNodeProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMCreateLocationNodeHandler := connect_go.NewUnaryHandler(
 		WFMCreateLocationNodeProcedure,
 		svc.CreateLocationNode,
 		opts...,
-	))
-	mux.Handle(WFMUpdateLocationNodeProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMUpdateLocationNodeHandler := connect_go.NewUnaryHandler(
 		WFMUpdateLocationNodeProcedure,
 		svc.UpdateLocationNode,
 		opts...,
-	))
-	mux.Handle(WFMCreateProgramNodeProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMCreateProgramNodeHandler := connect_go.NewUnaryHandler(
 		WFMCreateProgramNodeProcedure,
 		svc.CreateProgramNode,
 		opts...,
-	))
-	mux.Handle(WFMUpdateProgramNodeProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMUpdateProgramNodeHandler := connect_go.NewUnaryHandler(
 		WFMUpdateProgramNodeProcedure,
 		svc.UpdateProgramNode,
 		opts...,
-	))
-	mux.Handle(WFMCreateConstraintRuleProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMCreateConstraintRuleHandler := connect_go.NewUnaryHandler(
 		WFMCreateConstraintRuleProcedure,
 		svc.CreateConstraintRule,
 		opts...,
-	))
-	mux.Handle(WFMUpdateConstraintRuleProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMUpdateConstraintRuleHandler := connect_go.NewUnaryHandler(
 		WFMUpdateConstraintRuleProcedure,
 		svc.UpdateConstraintRule,
 		opts...,
-	))
-	mux.Handle(WFMDeleteConstraintRuleProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMDeleteConstraintRuleHandler := connect_go.NewUnaryHandler(
 		WFMDeleteConstraintRuleProcedure,
 		svc.DeleteConstraintRule,
 		opts...,
-	))
-	mux.Handle(WFMCreateNonSkillActivityProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMCreateNonSkillActivityHandler := connect_go.NewUnaryHandler(
 		WFMCreateNonSkillActivityProcedure,
 		svc.CreateNonSkillActivity,
 		opts...,
-	))
-	mux.Handle(WFMUpdateNonSkillActivityProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMUpdateNonSkillActivityHandler := connect_go.NewUnaryHandler(
 		WFMUpdateNonSkillActivityProcedure,
 		svc.UpdateNonSkillActivity,
 		opts...,
-	))
-	mux.Handle(WFMListNonSkillActivityAssociationsProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMListNonSkillActivityAssociationsHandler := connect_go.NewUnaryHandler(
 		WFMListNonSkillActivityAssociationsProcedure,
 		svc.ListNonSkillActivityAssociations,
 		opts...,
-	))
-	mux.Handle(WFMListCandidateSchedulingActivitiesProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMListCandidateSchedulingActivitiesHandler := connect_go.NewUnaryHandler(
 		WFMListCandidateSchedulingActivitiesProcedure,
 		svc.ListCandidateSchedulingActivities,
 		opts...,
-	))
-	mux.Handle(WFMCreateAgentGroupProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMCreateAgentGroupHandler := connect_go.NewUnaryHandler(
 		WFMCreateAgentGroupProcedure,
 		svc.CreateAgentGroup,
 		opts...,
-	))
-	mux.Handle(WFMUpdateAgentGroupProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMUpdateAgentGroupHandler := connect_go.NewUnaryHandler(
 		WFMUpdateAgentGroupProcedure,
 		svc.UpdateAgentGroup,
 		opts...,
-	))
-	mux.Handle(WFMUpdateWFMAgentProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMUpdateWFMAgentHandler := connect_go.NewUnaryHandler(
 		WFMUpdateWFMAgentProcedure,
 		svc.UpdateWFMAgent,
 		opts...,
-	))
-	mux.Handle(WFMListAllWFMAgentsProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMListAllWFMAgentsHandler := connect_go.NewUnaryHandler(
 		WFMListAllWFMAgentsProcedure,
 		svc.ListAllWFMAgents,
 		opts...,
-	))
-	mux.Handle(WFMListCandidateWFMAgentsProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMListCandidateWFMAgentsHandler := connect_go.NewUnaryHandler(
 		WFMListCandidateWFMAgentsProcedure,
 		svc.ListCandidateWFMAgents,
 		opts...,
-	))
-	mux.Handle(WFMListUngroupedWFMAgentsProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMListUngroupedWFMAgentsHandler := connect_go.NewUnaryHandler(
 		WFMListUngroupedWFMAgentsProcedure,
 		svc.ListUngroupedWFMAgents,
 		opts...,
-	))
-	mux.Handle(WFMListWFMAgentsAssociatedWithAgentGroupProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMListWFMAgentsAssociatedWithAgentGroupHandler := connect_go.NewUnaryHandler(
 		WFMListWFMAgentsAssociatedWithAgentGroupProcedure,
 		svc.ListWFMAgentsAssociatedWithAgentGroup,
 		opts...,
-	))
-	mux.Handle(WFMCreateWFMAgentMembershipsProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMCreateWFMAgentMembershipsHandler := connect_go.NewUnaryHandler(
 		WFMCreateWFMAgentMembershipsProcedure,
 		svc.CreateWFMAgentMemberships,
 		opts...,
-	))
-	mux.Handle(WFMDeleteWFMAgentMembershipsProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMDeleteWFMAgentMembershipsHandler := connect_go.NewUnaryHandler(
 		WFMDeleteWFMAgentMembershipsProcedure,
 		svc.DeleteWFMAgentMemberships,
 		opts...,
-	))
-	mux.Handle(WFMBuildAgentDiagnosticsProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMDeleteWFMAgentsMembershipsHandler := connect_go.NewUnaryHandler(
+		WFMDeleteWFMAgentsMembershipsProcedure,
+		svc.DeleteWFMAgentsMemberships,
+		opts...,
+	)
+	wFMBuildAgentDiagnosticsHandler := connect_go.NewUnaryHandler(
 		WFMBuildAgentDiagnosticsProcedure,
 		svc.BuildAgentDiagnostics,
 		opts...,
-	))
-	mux.Handle(WFMCreateShiftTemplateProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMCreateShiftTemplateHandler := connect_go.NewUnaryHandler(
 		WFMCreateShiftTemplateProcedure,
 		svc.CreateShiftTemplate,
 		opts...,
-	))
-	mux.Handle(WFMUpdateShiftTemplateProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMUpdateShiftTemplateHandler := connect_go.NewUnaryHandler(
 		WFMUpdateShiftTemplateProcedure,
 		svc.UpdateShiftTemplate,
 		opts...,
-	))
-	mux.Handle(WFMListShiftTemplatesBySidsProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMListShiftTemplatesBySidsHandler := connect_go.NewUnaryHandler(
 		WFMListShiftTemplatesBySidsProcedure,
 		svc.ListShiftTemplatesBySids,
 		opts...,
-	))
-	mux.Handle(WFMBuildShiftTemplateDiagnosticsProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMBuildShiftTemplateDiagnosticsHandler := connect_go.NewUnaryHandler(
 		WFMBuildShiftTemplateDiagnosticsProcedure,
 		svc.BuildShiftTemplateDiagnostics,
 		opts...,
-	))
-	mux.Handle(WFMCreatePlacementRuleProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMCreatePlacementRuleHandler := connect_go.NewUnaryHandler(
 		WFMCreatePlacementRuleProcedure,
 		svc.CreatePlacementRule,
 		opts...,
-	))
-	mux.Handle(WFMUpdatePlacementRuleProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMUpdatePlacementRuleHandler := connect_go.NewUnaryHandler(
 		WFMUpdatePlacementRuleProcedure,
 		svc.UpdatePlacementRule,
 		opts...,
-	))
-	mux.Handle(WFMDeletePlacementRuleProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMDeletePlacementRuleHandler := connect_go.NewUnaryHandler(
 		WFMDeletePlacementRuleProcedure,
 		svc.DeletePlacementRule,
 		opts...,
-	))
-	mux.Handle(WFMCreateOpenTimesPatternProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMCreateOpenTimesPatternHandler := connect_go.NewUnaryHandler(
 		WFMCreateOpenTimesPatternProcedure,
 		svc.CreateOpenTimesPattern,
 		opts...,
-	))
-	mux.Handle(WFMUpdateOpenTimesPatternProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMUpdateOpenTimesPatternHandler := connect_go.NewUnaryHandler(
 		WFMUpdateOpenTimesPatternProcedure,
 		svc.UpdateOpenTimesPattern,
 		opts...,
-	))
-	mux.Handle(WFMDeleteOpenTimesPatternProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMDeleteOpenTimesPatternHandler := connect_go.NewUnaryHandler(
 		WFMDeleteOpenTimesPatternProcedure,
 		svc.DeleteOpenTimesPattern,
 		opts...,
-	))
-	mux.Handle(WFMGetOpenTimesBitmapsProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMGetOpenTimesBitmapsHandler := connect_go.NewUnaryHandler(
 		WFMGetOpenTimesBitmapsProcedure,
 		svc.GetOpenTimesBitmaps,
 		opts...,
-	))
-	mux.Handle(WFMCreateAgentAvailabilityPatternProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMCreateAgentAvailabilityPatternHandler := connect_go.NewUnaryHandler(
 		WFMCreateAgentAvailabilityPatternProcedure,
 		svc.CreateAgentAvailabilityPattern,
 		opts...,
-	))
-	mux.Handle(WFMUpdateAgentAvailabilityPatternProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMUpdateAgentAvailabilityPatternHandler := connect_go.NewUnaryHandler(
 		WFMUpdateAgentAvailabilityPatternProcedure,
 		svc.UpdateAgentAvailabilityPattern,
 		opts...,
-	))
-	mux.Handle(WFMDeleteAgentAvailabilityPatternProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMDeleteAgentAvailabilityPatternHandler := connect_go.NewUnaryHandler(
 		WFMDeleteAgentAvailabilityPatternProcedure,
 		svc.DeleteAgentAvailabilityPattern,
 		opts...,
-	))
-	mux.Handle(WFMGetAvailabilityBitmapsProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMGetAvailabilityBitmapsHandler := connect_go.NewUnaryHandler(
 		WFMGetAvailabilityBitmapsProcedure,
 		svc.GetAvailabilityBitmaps,
 		opts...,
-	))
-	mux.Handle(WFMUpsertNonSkillActivityAssociationProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMUpsertNonSkillActivityAssociationHandler := connect_go.NewUnaryHandler(
 		WFMUpsertNonSkillActivityAssociationProcedure,
 		svc.UpsertNonSkillActivityAssociation,
 		opts...,
-	))
-	mux.Handle(WFMCreateSkillProficienciesProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMCreateSkillProficienciesHandler := connect_go.NewUnaryHandler(
 		WFMCreateSkillProficienciesProcedure,
 		svc.CreateSkillProficiencies,
 		opts...,
-	))
-	mux.Handle(WFMUpdateSkillProficienciesProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMUpdateSkillProficienciesHandler := connect_go.NewUnaryHandler(
 		WFMUpdateSkillProficienciesProcedure,
 		svc.UpdateSkillProficiencies,
 		opts...,
-	))
-	mux.Handle(WFMDeleteSkillProficiencyProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMDeleteSkillProficiencyHandler := connect_go.NewUnaryHandler(
 		WFMDeleteSkillProficiencyProcedure,
 		svc.DeleteSkillProficiency,
 		opts...,
-	))
-	mux.Handle(WFMCopyScenarioProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMCopyScenarioHandler := connect_go.NewUnaryHandler(
 		WFMCopyScenarioProcedure,
 		svc.CopyScenario,
 		opts...,
-	))
-	mux.Handle(WFMCreateScheduleScenarioWithNodesProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMCreateScheduleScenarioWithNodesHandler := connect_go.NewUnaryHandler(
 		WFMCreateScheduleScenarioWithNodesProcedure,
 		svc.CreateScheduleScenarioWithNodes,
 		opts...,
-	))
-	mux.Handle(WFMUpdateScheduleScenarioProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMUpdateScheduleScenarioHandler := connect_go.NewUnaryHandler(
 		WFMUpdateScheduleScenarioProcedure,
 		svc.UpdateScheduleScenario,
 		opts...,
-	))
-	mux.Handle(WFMListConfigEntitiesProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMListConfigEntitiesHandler := connect_go.NewUnaryHandler(
 		WFMListConfigEntitiesProcedure,
 		svc.ListConfigEntities,
 		opts...,
-	))
-	mux.Handle(WFMDeleteShiftInstancesProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMDeleteShiftInstancesHandler := connect_go.NewUnaryHandler(
 		WFMDeleteShiftInstancesProcedure,
 		svc.DeleteShiftInstances,
 		opts...,
-	))
-	mux.Handle(WFMBuildNodeDiagnosticsProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMBuildNodeDiagnosticsHandler := connect_go.NewUnaryHandler(
 		WFMBuildNodeDiagnosticsProcedure,
 		svc.BuildNodeDiagnostics,
 		opts...,
-	))
-	mux.Handle(WFMBuildGlobalDiagnosticsProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMBuildGlobalDiagnosticsHandler := connect_go.NewUnaryHandler(
 		WFMBuildGlobalDiagnosticsProcedure,
 		svc.BuildGlobalDiagnostics,
 		opts...,
-	))
-	mux.Handle(WFMGetPublishedScheduleProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMGetPublishedScheduleHandler := connect_go.NewUnaryHandler(
 		WFMGetPublishedScheduleProcedure,
 		svc.GetPublishedSchedule,
 		opts...,
-	))
-	mux.Handle(WFMGetPublishedScheduleRequiredCallsProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMGetPublishedScheduleRequiredCallsHandler := connect_go.NewUnaryHandler(
 		WFMGetPublishedScheduleRequiredCallsProcedure,
 		svc.GetPublishedScheduleRequiredCalls,
 		opts...,
-	))
-	mux.Handle(WFMGetDraftScheduleRequiredCallsProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMGetDraftScheduleRequiredCallsHandler := connect_go.NewUnaryHandler(
 		WFMGetDraftScheduleRequiredCallsProcedure,
 		svc.GetDraftScheduleRequiredCalls,
 		opts...,
-	))
-	mux.Handle(WFMCreateDraftScheduleProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMCreateDraftScheduleHandler := connect_go.NewUnaryHandler(
 		WFMCreateDraftScheduleProcedure,
 		svc.CreateDraftSchedule,
 		opts...,
-	))
-	mux.Handle(WFMUpdateDraftScheduleProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMUpdateDraftScheduleHandler := connect_go.NewUnaryHandler(
 		WFMUpdateDraftScheduleProcedure,
 		svc.UpdateDraftSchedule,
 		opts...,
-	))
-	mux.Handle(WFMBuildDraftScheduleProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMBuildDraftScheduleHandler := connect_go.NewUnaryHandler(
 		WFMBuildDraftScheduleProcedure,
 		svc.BuildDraftSchedule,
 		opts...,
-	))
-	mux.Handle(WFMPublishDraftScheduleProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMPublishDraftScheduleHandler := connect_go.NewUnaryHandler(
 		WFMPublishDraftScheduleProcedure,
 		svc.PublishDraftSchedule,
 		opts...,
-	))
-	mux.Handle(WFMGetDraftScheduleProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMGetDraftScheduleHandler := connect_go.NewUnaryHandler(
 		WFMGetDraftScheduleProcedure,
 		svc.GetDraftSchedule,
 		opts...,
-	))
-	mux.Handle(WFMListDraftSchedulesProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMListDraftSchedulesHandler := connect_go.NewUnaryHandler(
 		WFMListDraftSchedulesProcedure,
 		svc.ListDraftSchedules,
 		opts...,
-	))
-	mux.Handle(WFMDeleteDraftScheduleProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMDeleteDraftScheduleHandler := connect_go.NewUnaryHandler(
 		WFMDeleteDraftScheduleProcedure,
 		svc.DeleteDraftSchedule,
 		opts...,
-	))
-	mux.Handle(WFMCreateShiftInstanceProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMCreateShiftInstanceHandler := connect_go.NewUnaryHandler(
 		WFMCreateShiftInstanceProcedure,
 		svc.CreateShiftInstance,
 		opts...,
-	))
-	mux.Handle(WFMSwapShiftInstancesProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMSwapShiftInstancesHandler := connect_go.NewUnaryHandler(
 		WFMSwapShiftInstancesProcedure,
 		svc.SwapShiftInstances,
 		opts...,
-	))
-	mux.Handle(WFMUpdateShiftInstanceProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMUpdateShiftInstanceHandler := connect_go.NewUnaryHandler(
 		WFMUpdateShiftInstanceProcedure,
 		svc.UpdateShiftInstance,
 		opts...,
-	))
-	mux.Handle(WFMListShiftSegmentsByShiftInstanceSidsProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMListShiftSegmentsByShiftInstanceSidsHandler := connect_go.NewUnaryHandler(
 		WFMListShiftSegmentsByShiftInstanceSidsProcedure,
 		svc.ListShiftSegmentsByShiftInstanceSids,
 		opts...,
-	))
-	mux.Handle(WFMSetSchedulingTargetProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMSetSchedulingTargetHandler := connect_go.NewUnaryHandler(
 		WFMSetSchedulingTargetProcedure,
 		svc.SetSchedulingTarget,
 		opts...,
-	))
-	mux.Handle(WFMGetSchedulingTargetProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMGetSchedulingTargetHandler := connect_go.NewUnaryHandler(
 		WFMGetSchedulingTargetProcedure,
 		svc.GetSchedulingTarget,
 		opts...,
-	))
-	mux.Handle(WFMDeleteSchedulingTargetProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMDeleteSchedulingTargetHandler := connect_go.NewUnaryHandler(
 		WFMDeleteSchedulingTargetProcedure,
 		svc.DeleteSchedulingTarget,
 		opts...,
-	))
-	mux.Handle(WFMGetPerformanceMetricsProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMGetPerformanceMetricsHandler := connect_go.NewUnaryHandler(
 		WFMGetPerformanceMetricsProcedure,
 		svc.GetPerformanceMetrics,
 		opts...,
-	))
-	mux.Handle(WFMListRequiredCallsIntervalsProcedure, connect_go.NewUnaryHandler(
+	)
+	wFMListRequiredCallsIntervalsHandler := connect_go.NewUnaryHandler(
 		WFMListRequiredCallsIntervalsProcedure,
 		svc.ListRequiredCallsIntervals,
 		opts...,
-	))
-	return "/api.v1alpha1.wfm.WFM/", mux
+	)
+	return "/api.v1alpha1.wfm.WFM/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case WFMListSkillProfilesProcedure:
+			wFMListSkillProfilesHandler.ServeHTTP(w, r)
+		case WFMUpdateSkillProfileProcedure:
+			wFMUpdateSkillProfileHandler.ServeHTTP(w, r)
+		case WFMUpdateSkillProfileProficienciesProcedure:
+			wFMUpdateSkillProfileProficienciesHandler.ServeHTTP(w, r)
+		case WFMGetSkillProfileProcedure:
+			wFMGetSkillProfileHandler.ServeHTTP(w, r)
+		case WFMResyncSkillProfilesProcedure:
+			wFMResyncSkillProfilesHandler.ServeHTTP(w, r)
+		case WFMGetLastSkillProfileResyncDateProcedure:
+			wFMGetLastSkillProfileResyncDateHandler.ServeHTTP(w, r)
+		case WFMUpsertForecastingParametersProcedure:
+			wFMUpsertForecastingParametersHandler.ServeHTTP(w, r)
+		case WFMGetForecastingParametersProcedure:
+			wFMGetForecastingParametersHandler.ServeHTTP(w, r)
+		case WFMListHistoricalDataProcedure:
+			wFMListHistoricalDataHandler.ServeHTTP(w, r)
+		case WFMUpsertHistoricalDataDeltaProcedure:
+			wFMUpsertHistoricalDataDeltaHandler.ServeHTTP(w, r)
+		case WFMUpsertHistoricalDataDeltasProcedure:
+			wFMUpsertHistoricalDataDeltasHandler.ServeHTTP(w, r)
+		case WFMListSkillsProcedure:
+			wFMListSkillsHandler.ServeHTTP(w, r)
+		case WFMBuildCallProfileTemplateForSkillProfileProcedure:
+			wFMBuildCallProfileTemplateForSkillProfileHandler.ServeHTTP(w, r)
+		case WFMCreateInactiveSkillProfileMappingProcedure:
+			wFMCreateInactiveSkillProfileMappingHandler.ServeHTTP(w, r)
+		case WFMGetAvailableRegressionForecasterModelTypesProcedure:
+			wFMGetAvailableRegressionForecasterModelTypesHandler.ServeHTTP(w, r)
+		case WFMDisconnectInactiveSkillProfileMappingProcedure:
+			wFMDisconnectInactiveSkillProfileMappingHandler.ServeHTTP(w, r)
+		case WFMDeleteHistoricalDataDeltasProcedure:
+			wFMDeleteHistoricalDataDeltasHandler.ServeHTTP(w, r)
+		case WFMListTopSkillProfilesProcedure:
+			wFMListTopSkillProfilesHandler.ServeHTTP(w, r)
+		case WFMGetSkillProfilesCountProcedure:
+			wFMGetSkillProfilesCountHandler.ServeHTTP(w, r)
+		case WFMBuildProfileForecastByIntervalProcedure:
+			wFMBuildProfileForecastByIntervalHandler.ServeHTTP(w, r)
+		case WFMBuildProfileForecastByIntervalWithStatsProcedure:
+			wFMBuildProfileForecastByIntervalWithStatsHandler.ServeHTTP(w, r)
+		case WFMUpsertProfileForecastProcedure:
+			wFMUpsertProfileForecastHandler.ServeHTTP(w, r)
+		case WFMCreateCallProfileTemplateProcedure:
+			wFMCreateCallProfileTemplateHandler.ServeHTTP(w, r)
+		case WFMDeleteCallProfileTemplateProcedure:
+			wFMDeleteCallProfileTemplateHandler.ServeHTTP(w, r)
+		case WFMCreateRegressionTemplateProcedure:
+			wFMCreateRegressionTemplateHandler.ServeHTTP(w, r)
+		case WFMDeleteRegressionTemplateProcedure:
+			wFMDeleteRegressionTemplateHandler.ServeHTTP(w, r)
+		case WFMListRegressionTemplatesProcedure:
+			wFMListRegressionTemplatesHandler.ServeHTTP(w, r)
+		case WFMListForecastIntervalsForSkillProfileProcedure:
+			wFMListForecastIntervalsForSkillProfileHandler.ServeHTTP(w, r)
+		case WFMBuildRegressionForecastByIntervalProcedure:
+			wFMBuildRegressionForecastByIntervalHandler.ServeHTTP(w, r)
+		case WFMBuildRegressionForecastByIntervalWithStatsProcedure:
+			wFMBuildRegressionForecastByIntervalWithStatsHandler.ServeHTTP(w, r)
+		case WFMListCallProfileTemplatesProcedure:
+			wFMListCallProfileTemplatesHandler.ServeHTTP(w, r)
+		case WFMUpsertRegressionForecastProcedure:
+			wFMUpsertRegressionForecastHandler.ServeHTTP(w, r)
+		case WFMUpsertForecastDataDeltaProcedure:
+			wFMUpsertForecastDataDeltaHandler.ServeHTTP(w, r)
+		case WFMUpsertForecastDataDeltasProcedure:
+			wFMUpsertForecastDataDeltasHandler.ServeHTTP(w, r)
+		case WFMDeleteForecastIntervalsProcedure:
+			wFMDeleteForecastIntervalsHandler.ServeHTTP(w, r)
+		case WFMListHistoricalDataForAllSkillProfilesProcedure:
+			wFMListHistoricalDataForAllSkillProfilesHandler.ServeHTTP(w, r)
+		case WFMBuildDOWAndMOYProfilesProcedure:
+			wFMBuildDOWAndMOYProfilesHandler.ServeHTTP(w, r)
+		case WFMCalculateTrainingDataAveragesForSkillProfileProcedure:
+			wFMCalculateTrainingDataAveragesForSkillProfileHandler.ServeHTTP(w, r)
+		case WFMUpdateSkillProfileAveragesUsingHistoricalDataProcedure:
+			wFMUpdateSkillProfileAveragesUsingHistoricalDataHandler.ServeHTTP(w, r)
+		case WFMUpdateCallCenterNodeProcedure:
+			wFMUpdateCallCenterNodeHandler.ServeHTTP(w, r)
+		case WFMCreateClientNodeProcedure:
+			wFMCreateClientNodeHandler.ServeHTTP(w, r)
+		case WFMUpdateClientNodeProcedure:
+			wFMUpdateClientNodeHandler.ServeHTTP(w, r)
+		case WFMCreateLocationNodeProcedure:
+			wFMCreateLocationNodeHandler.ServeHTTP(w, r)
+		case WFMUpdateLocationNodeProcedure:
+			wFMUpdateLocationNodeHandler.ServeHTTP(w, r)
+		case WFMCreateProgramNodeProcedure:
+			wFMCreateProgramNodeHandler.ServeHTTP(w, r)
+		case WFMUpdateProgramNodeProcedure:
+			wFMUpdateProgramNodeHandler.ServeHTTP(w, r)
+		case WFMCreateConstraintRuleProcedure:
+			wFMCreateConstraintRuleHandler.ServeHTTP(w, r)
+		case WFMUpdateConstraintRuleProcedure:
+			wFMUpdateConstraintRuleHandler.ServeHTTP(w, r)
+		case WFMDeleteConstraintRuleProcedure:
+			wFMDeleteConstraintRuleHandler.ServeHTTP(w, r)
+		case WFMCreateNonSkillActivityProcedure:
+			wFMCreateNonSkillActivityHandler.ServeHTTP(w, r)
+		case WFMUpdateNonSkillActivityProcedure:
+			wFMUpdateNonSkillActivityHandler.ServeHTTP(w, r)
+		case WFMListNonSkillActivityAssociationsProcedure:
+			wFMListNonSkillActivityAssociationsHandler.ServeHTTP(w, r)
+		case WFMListCandidateSchedulingActivitiesProcedure:
+			wFMListCandidateSchedulingActivitiesHandler.ServeHTTP(w, r)
+		case WFMCreateAgentGroupProcedure:
+			wFMCreateAgentGroupHandler.ServeHTTP(w, r)
+		case WFMUpdateAgentGroupProcedure:
+			wFMUpdateAgentGroupHandler.ServeHTTP(w, r)
+		case WFMUpdateWFMAgentProcedure:
+			wFMUpdateWFMAgentHandler.ServeHTTP(w, r)
+		case WFMListAllWFMAgentsProcedure:
+			wFMListAllWFMAgentsHandler.ServeHTTP(w, r)
+		case WFMListCandidateWFMAgentsProcedure:
+			wFMListCandidateWFMAgentsHandler.ServeHTTP(w, r)
+		case WFMListUngroupedWFMAgentsProcedure:
+			wFMListUngroupedWFMAgentsHandler.ServeHTTP(w, r)
+		case WFMListWFMAgentsAssociatedWithAgentGroupProcedure:
+			wFMListWFMAgentsAssociatedWithAgentGroupHandler.ServeHTTP(w, r)
+		case WFMCreateWFMAgentMembershipsProcedure:
+			wFMCreateWFMAgentMembershipsHandler.ServeHTTP(w, r)
+		case WFMDeleteWFMAgentMembershipsProcedure:
+			wFMDeleteWFMAgentMembershipsHandler.ServeHTTP(w, r)
+		case WFMDeleteWFMAgentsMembershipsProcedure:
+			wFMDeleteWFMAgentsMembershipsHandler.ServeHTTP(w, r)
+		case WFMBuildAgentDiagnosticsProcedure:
+			wFMBuildAgentDiagnosticsHandler.ServeHTTP(w, r)
+		case WFMCreateShiftTemplateProcedure:
+			wFMCreateShiftTemplateHandler.ServeHTTP(w, r)
+		case WFMUpdateShiftTemplateProcedure:
+			wFMUpdateShiftTemplateHandler.ServeHTTP(w, r)
+		case WFMListShiftTemplatesBySidsProcedure:
+			wFMListShiftTemplatesBySidsHandler.ServeHTTP(w, r)
+		case WFMBuildShiftTemplateDiagnosticsProcedure:
+			wFMBuildShiftTemplateDiagnosticsHandler.ServeHTTP(w, r)
+		case WFMCreatePlacementRuleProcedure:
+			wFMCreatePlacementRuleHandler.ServeHTTP(w, r)
+		case WFMUpdatePlacementRuleProcedure:
+			wFMUpdatePlacementRuleHandler.ServeHTTP(w, r)
+		case WFMDeletePlacementRuleProcedure:
+			wFMDeletePlacementRuleHandler.ServeHTTP(w, r)
+		case WFMCreateOpenTimesPatternProcedure:
+			wFMCreateOpenTimesPatternHandler.ServeHTTP(w, r)
+		case WFMUpdateOpenTimesPatternProcedure:
+			wFMUpdateOpenTimesPatternHandler.ServeHTTP(w, r)
+		case WFMDeleteOpenTimesPatternProcedure:
+			wFMDeleteOpenTimesPatternHandler.ServeHTTP(w, r)
+		case WFMGetOpenTimesBitmapsProcedure:
+			wFMGetOpenTimesBitmapsHandler.ServeHTTP(w, r)
+		case WFMCreateAgentAvailabilityPatternProcedure:
+			wFMCreateAgentAvailabilityPatternHandler.ServeHTTP(w, r)
+		case WFMUpdateAgentAvailabilityPatternProcedure:
+			wFMUpdateAgentAvailabilityPatternHandler.ServeHTTP(w, r)
+		case WFMDeleteAgentAvailabilityPatternProcedure:
+			wFMDeleteAgentAvailabilityPatternHandler.ServeHTTP(w, r)
+		case WFMGetAvailabilityBitmapsProcedure:
+			wFMGetAvailabilityBitmapsHandler.ServeHTTP(w, r)
+		case WFMUpsertNonSkillActivityAssociationProcedure:
+			wFMUpsertNonSkillActivityAssociationHandler.ServeHTTP(w, r)
+		case WFMCreateSkillProficienciesProcedure:
+			wFMCreateSkillProficienciesHandler.ServeHTTP(w, r)
+		case WFMUpdateSkillProficienciesProcedure:
+			wFMUpdateSkillProficienciesHandler.ServeHTTP(w, r)
+		case WFMDeleteSkillProficiencyProcedure:
+			wFMDeleteSkillProficiencyHandler.ServeHTTP(w, r)
+		case WFMCopyScenarioProcedure:
+			wFMCopyScenarioHandler.ServeHTTP(w, r)
+		case WFMCreateScheduleScenarioWithNodesProcedure:
+			wFMCreateScheduleScenarioWithNodesHandler.ServeHTTP(w, r)
+		case WFMUpdateScheduleScenarioProcedure:
+			wFMUpdateScheduleScenarioHandler.ServeHTTP(w, r)
+		case WFMListConfigEntitiesProcedure:
+			wFMListConfigEntitiesHandler.ServeHTTP(w, r)
+		case WFMDeleteShiftInstancesProcedure:
+			wFMDeleteShiftInstancesHandler.ServeHTTP(w, r)
+		case WFMBuildNodeDiagnosticsProcedure:
+			wFMBuildNodeDiagnosticsHandler.ServeHTTP(w, r)
+		case WFMBuildGlobalDiagnosticsProcedure:
+			wFMBuildGlobalDiagnosticsHandler.ServeHTTP(w, r)
+		case WFMGetPublishedScheduleProcedure:
+			wFMGetPublishedScheduleHandler.ServeHTTP(w, r)
+		case WFMGetPublishedScheduleRequiredCallsProcedure:
+			wFMGetPublishedScheduleRequiredCallsHandler.ServeHTTP(w, r)
+		case WFMGetDraftScheduleRequiredCallsProcedure:
+			wFMGetDraftScheduleRequiredCallsHandler.ServeHTTP(w, r)
+		case WFMCreateDraftScheduleProcedure:
+			wFMCreateDraftScheduleHandler.ServeHTTP(w, r)
+		case WFMUpdateDraftScheduleProcedure:
+			wFMUpdateDraftScheduleHandler.ServeHTTP(w, r)
+		case WFMBuildDraftScheduleProcedure:
+			wFMBuildDraftScheduleHandler.ServeHTTP(w, r)
+		case WFMPublishDraftScheduleProcedure:
+			wFMPublishDraftScheduleHandler.ServeHTTP(w, r)
+		case WFMGetDraftScheduleProcedure:
+			wFMGetDraftScheduleHandler.ServeHTTP(w, r)
+		case WFMListDraftSchedulesProcedure:
+			wFMListDraftSchedulesHandler.ServeHTTP(w, r)
+		case WFMDeleteDraftScheduleProcedure:
+			wFMDeleteDraftScheduleHandler.ServeHTTP(w, r)
+		case WFMCreateShiftInstanceProcedure:
+			wFMCreateShiftInstanceHandler.ServeHTTP(w, r)
+		case WFMSwapShiftInstancesProcedure:
+			wFMSwapShiftInstancesHandler.ServeHTTP(w, r)
+		case WFMUpdateShiftInstanceProcedure:
+			wFMUpdateShiftInstanceHandler.ServeHTTP(w, r)
+		case WFMListShiftSegmentsByShiftInstanceSidsProcedure:
+			wFMListShiftSegmentsByShiftInstanceSidsHandler.ServeHTTP(w, r)
+		case WFMSetSchedulingTargetProcedure:
+			wFMSetSchedulingTargetHandler.ServeHTTP(w, r)
+		case WFMGetSchedulingTargetProcedure:
+			wFMGetSchedulingTargetHandler.ServeHTTP(w, r)
+		case WFMDeleteSchedulingTargetProcedure:
+			wFMDeleteSchedulingTargetHandler.ServeHTTP(w, r)
+		case WFMGetPerformanceMetricsProcedure:
+			wFMGetPerformanceMetricsHandler.ServeHTTP(w, r)
+		case WFMListRequiredCallsIntervalsProcedure:
+			wFMListRequiredCallsIntervalsHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
 }
 
 // UnimplementedWFMHandler returns CodeUnimplemented from all methods.
@@ -4847,6 +5110,10 @@ func (UnimplementedWFMHandler) CreateWFMAgentMemberships(context.Context, *conne
 
 func (UnimplementedWFMHandler) DeleteWFMAgentMemberships(context.Context, *connect_go.Request[wfm.DeleteWFMAgentMembershipsReq]) (*connect_go.Response[wfm.DeleteWFMAgentMembershipsRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.DeleteWFMAgentMemberships is not implemented"))
+}
+
+func (UnimplementedWFMHandler) DeleteWFMAgentsMemberships(context.Context, *connect_go.Request[wfm.DeleteWFMAgentsMembershipsReq]) (*connect_go.Response[wfm.DeleteWFMAgentsMembershipsRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.DeleteWFMAgentsMemberships is not implemented"))
 }
 
 func (UnimplementedWFMHandler) BuildAgentDiagnostics(context.Context, *connect_go.Request[wfm.BuildAgentDiagnosticsReq]) (*connect_go.Response[wfm.BuildAgentDiagnosticsRes], error) {

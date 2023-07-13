@@ -87,9 +87,9 @@ const (
 	Room303APIListRoomsForMemberProcedure = "/api.v1alpha1.room303.Room303API/ListRoomsForMember"
 	// Room303APIArchiveRoomProcedure is the fully-qualified name of the Room303API's ArchiveRoom RPC.
 	Room303APIArchiveRoomProcedure = "/api.v1alpha1.room303.Room303API/ArchiveRoom"
-	// Room303APIListUsersByOrgIdProcedure is the fully-qualified name of the Room303API's
-	// ListUsersByOrgId RPC.
-	Room303APIListUsersByOrgIdProcedure = "/api.v1alpha1.room303.Room303API/ListUsersByOrgId"
+	// Room303APIListUsersNamesProcedure is the fully-qualified name of the Room303API's ListUsersNames
+	// RPC.
+	Room303APIListUsersNamesProcedure = "/api.v1alpha1.room303.Room303API/ListUsersNames"
 )
 
 // Room303APIClient is a client for the api.v1alpha1.room303.Room303API service.
@@ -124,7 +124,8 @@ type Room303APIClient interface {
 	ListAllRooms(context.Context, *connect_go.Request[room303.ListAllRoomsRequest]) (*connect_go.Response[room303.ListRoomsResponse], error)
 	ListRoomsForMember(context.Context, *connect_go.Request[room303.ListRoomsForMemberRequest]) (*connect_go.Response[room303.ListRoomsResponse], error)
 	ArchiveRoom(context.Context, *connect_go.Request[room303.ArchiveRoomRequest]) (*connect_go.Response[commons.Room], error)
-	ListUsersByOrgId(context.Context, *connect_go.Request[room303.ListUsersByOrgIdRequest]) (*connect_go.ServerStreamForClient[room303.ListUsersByOrgIdResponse], error)
+	// ListUsersNames returns a list of users with names and ids
+	ListUsersNames(context.Context, *connect_go.Request[room303.ListUsersNamesRequest]) (*connect_go.ServerStreamForClient[room303.ListUsersNamesResponse], error)
 }
 
 // NewRoom303APIClient constructs a client for the api.v1alpha1.room303.Room303API service. By
@@ -237,9 +238,9 @@ func NewRoom303APIClient(httpClient connect_go.HTTPClient, baseURL string, opts 
 			baseURL+Room303APIArchiveRoomProcedure,
 			opts...,
 		),
-		listUsersByOrgId: connect_go.NewClient[room303.ListUsersByOrgIdRequest, room303.ListUsersByOrgIdResponse](
+		listUsersNames: connect_go.NewClient[room303.ListUsersNamesRequest, room303.ListUsersNamesResponse](
 			httpClient,
-			baseURL+Room303APIListUsersByOrgIdProcedure,
+			baseURL+Room303APIListUsersNamesProcedure,
 			opts...,
 		),
 	}
@@ -267,7 +268,7 @@ type room303APIClient struct {
 	listAllRooms          *connect_go.Client[room303.ListAllRoomsRequest, room303.ListRoomsResponse]
 	listRoomsForMember    *connect_go.Client[room303.ListRoomsForMemberRequest, room303.ListRoomsResponse]
 	archiveRoom           *connect_go.Client[room303.ArchiveRoomRequest, commons.Room]
-	listUsersByOrgId      *connect_go.Client[room303.ListUsersByOrgIdRequest, room303.ListUsersByOrgIdResponse]
+	listUsersNames        *connect_go.Client[room303.ListUsersNamesRequest, room303.ListUsersNamesResponse]
 }
 
 // AddRoomMember calls api.v1alpha1.room303.Room303API.AddRoomMember.
@@ -370,9 +371,9 @@ func (c *room303APIClient) ArchiveRoom(ctx context.Context, req *connect_go.Requ
 	return c.archiveRoom.CallUnary(ctx, req)
 }
 
-// ListUsersByOrgId calls api.v1alpha1.room303.Room303API.ListUsersByOrgId.
-func (c *room303APIClient) ListUsersByOrgId(ctx context.Context, req *connect_go.Request[room303.ListUsersByOrgIdRequest]) (*connect_go.ServerStreamForClient[room303.ListUsersByOrgIdResponse], error) {
-	return c.listUsersByOrgId.CallServerStream(ctx, req)
+// ListUsersNames calls api.v1alpha1.room303.Room303API.ListUsersNames.
+func (c *room303APIClient) ListUsersNames(ctx context.Context, req *connect_go.Request[room303.ListUsersNamesRequest]) (*connect_go.ServerStreamForClient[room303.ListUsersNamesResponse], error) {
+	return c.listUsersNames.CallServerStream(ctx, req)
 }
 
 // Room303APIHandler is an implementation of the api.v1alpha1.room303.Room303API service.
@@ -407,7 +408,8 @@ type Room303APIHandler interface {
 	ListAllRooms(context.Context, *connect_go.Request[room303.ListAllRoomsRequest]) (*connect_go.Response[room303.ListRoomsResponse], error)
 	ListRoomsForMember(context.Context, *connect_go.Request[room303.ListRoomsForMemberRequest]) (*connect_go.Response[room303.ListRoomsResponse], error)
 	ArchiveRoom(context.Context, *connect_go.Request[room303.ArchiveRoomRequest]) (*connect_go.Response[commons.Room], error)
-	ListUsersByOrgId(context.Context, *connect_go.Request[room303.ListUsersByOrgIdRequest], *connect_go.ServerStream[room303.ListUsersByOrgIdResponse]) error
+	// ListUsersNames returns a list of users with names and ids
+	ListUsersNames(context.Context, *connect_go.Request[room303.ListUsersNamesRequest], *connect_go.ServerStream[room303.ListUsersNamesResponse]) error
 }
 
 // NewRoom303APIHandler builds an HTTP handler from the service implementation. It returns the path
@@ -416,113 +418,159 @@ type Room303APIHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewRoom303APIHandler(svc Room303APIHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	mux := http.NewServeMux()
-	mux.Handle(Room303APIAddRoomMemberProcedure, connect_go.NewUnaryHandler(
+	room303APIAddRoomMemberHandler := connect_go.NewUnaryHandler(
 		Room303APIAddRoomMemberProcedure,
 		svc.AddRoomMember,
 		opts...,
-	))
-	mux.Handle(Room303APIRemoveRoomMemberProcedure, connect_go.NewUnaryHandler(
+	)
+	room303APIRemoveRoomMemberHandler := connect_go.NewUnaryHandler(
 		Room303APIRemoveRoomMemberProcedure,
 		svc.RemoveRoomMember,
 		opts...,
-	))
-	mux.Handle(Room303APIListRoomMembersProcedure, connect_go.NewUnaryHandler(
+	)
+	room303APIListRoomMembersHandler := connect_go.NewUnaryHandler(
 		Room303APIListRoomMembersProcedure,
 		svc.ListRoomMembers,
 		opts...,
-	))
-	mux.Handle(Room303APISetAdminForRoomMemberProcedure, connect_go.NewUnaryHandler(
+	)
+	room303APISetAdminForRoomMemberHandler := connect_go.NewUnaryHandler(
 		Room303APISetAdminForRoomMemberProcedure,
 		svc.SetAdminForRoomMember,
 		opts...,
-	))
-	mux.Handle(Room303APIJoinRoomProcedure, connect_go.NewUnaryHandler(
+	)
+	room303APIJoinRoomHandler := connect_go.NewUnaryHandler(
 		Room303APIJoinRoomProcedure,
 		svc.JoinRoom,
 		opts...,
-	))
-	mux.Handle(Room303APIGetRoomMemberProcedure, connect_go.NewUnaryHandler(
+	)
+	room303APIGetRoomMemberHandler := connect_go.NewUnaryHandler(
 		Room303APIGetRoomMemberProcedure,
 		svc.GetRoomMember,
 		opts...,
-	))
-	mux.Handle(Room303APICreateMessageProcedure, connect_go.NewUnaryHandler(
+	)
+	room303APICreateMessageHandler := connect_go.NewUnaryHandler(
 		Room303APICreateMessageProcedure,
 		svc.CreateMessage,
 		opts...,
-	))
-	mux.Handle(Room303APIEditMessageProcedure, connect_go.NewUnaryHandler(
+	)
+	room303APIEditMessageHandler := connect_go.NewUnaryHandler(
 		Room303APIEditMessageProcedure,
 		svc.EditMessage,
 		opts...,
-	))
-	mux.Handle(Room303APIDeleteMessageProcedure, connect_go.NewUnaryHandler(
+	)
+	room303APIDeleteMessageHandler := connect_go.NewUnaryHandler(
 		Room303APIDeleteMessageProcedure,
 		svc.DeleteMessage,
 		opts...,
-	))
-	mux.Handle(Room303APIGetMessagesProcedure, connect_go.NewUnaryHandler(
+	)
+	room303APIGetMessagesHandler := connect_go.NewUnaryHandler(
 		Room303APIGetMessagesProcedure,
 		svc.GetMessages,
 		opts...,
-	))
-	mux.Handle(Room303APIStreamMessageUpdatesProcedure, connect_go.NewServerStreamHandler(
+	)
+	room303APIStreamMessageUpdatesHandler := connect_go.NewServerStreamHandler(
 		Room303APIStreamMessageUpdatesProcedure,
 		svc.StreamMessageUpdates,
 		opts...,
-	))
-	mux.Handle(Room303APIGetUnreadStatsProcedure, connect_go.NewUnaryHandler(
+	)
+	room303APIGetUnreadStatsHandler := connect_go.NewUnaryHandler(
 		Room303APIGetUnreadStatsProcedure,
 		svc.GetUnreadStats,
 		opts...,
-	))
-	mux.Handle(Room303APIMarkMessageReadProcedure, connect_go.NewUnaryHandler(
+	)
+	room303APIMarkMessageReadHandler := connect_go.NewUnaryHandler(
 		Room303APIMarkMessageReadProcedure,
 		svc.MarkMessageRead,
 		opts...,
-	))
-	mux.Handle(Room303APIMarkAllMessagesReadProcedure, connect_go.NewUnaryHandler(
+	)
+	room303APIMarkAllMessagesReadHandler := connect_go.NewUnaryHandler(
 		Room303APIMarkAllMessagesReadProcedure,
 		svc.MarkAllMessagesRead,
 		opts...,
-	))
-	mux.Handle(Room303APIBulkMarkMessageReadProcedure, connect_go.NewUnaryHandler(
+	)
+	room303APIBulkMarkMessageReadHandler := connect_go.NewUnaryHandler(
 		Room303APIBulkMarkMessageReadProcedure,
 		svc.BulkMarkMessageRead,
 		opts...,
-	))
-	mux.Handle(Room303APICreateRoomProcedure, connect_go.NewUnaryHandler(
+	)
+	room303APICreateRoomHandler := connect_go.NewUnaryHandler(
 		Room303APICreateRoomProcedure,
 		svc.CreateRoom,
 		opts...,
-	))
-	mux.Handle(Room303APIGetRoomProcedure, connect_go.NewUnaryHandler(
+	)
+	room303APIGetRoomHandler := connect_go.NewUnaryHandler(
 		Room303APIGetRoomProcedure,
 		svc.GetRoom,
 		opts...,
-	))
-	mux.Handle(Room303APIListAllRoomsProcedure, connect_go.NewUnaryHandler(
+	)
+	room303APIListAllRoomsHandler := connect_go.NewUnaryHandler(
 		Room303APIListAllRoomsProcedure,
 		svc.ListAllRooms,
 		opts...,
-	))
-	mux.Handle(Room303APIListRoomsForMemberProcedure, connect_go.NewUnaryHandler(
+	)
+	room303APIListRoomsForMemberHandler := connect_go.NewUnaryHandler(
 		Room303APIListRoomsForMemberProcedure,
 		svc.ListRoomsForMember,
 		opts...,
-	))
-	mux.Handle(Room303APIArchiveRoomProcedure, connect_go.NewUnaryHandler(
+	)
+	room303APIArchiveRoomHandler := connect_go.NewUnaryHandler(
 		Room303APIArchiveRoomProcedure,
 		svc.ArchiveRoom,
 		opts...,
-	))
-	mux.Handle(Room303APIListUsersByOrgIdProcedure, connect_go.NewServerStreamHandler(
-		Room303APIListUsersByOrgIdProcedure,
-		svc.ListUsersByOrgId,
+	)
+	room303APIListUsersNamesHandler := connect_go.NewServerStreamHandler(
+		Room303APIListUsersNamesProcedure,
+		svc.ListUsersNames,
 		opts...,
-	))
-	return "/api.v1alpha1.room303.Room303API/", mux
+	)
+	return "/api.v1alpha1.room303.Room303API/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case Room303APIAddRoomMemberProcedure:
+			room303APIAddRoomMemberHandler.ServeHTTP(w, r)
+		case Room303APIRemoveRoomMemberProcedure:
+			room303APIRemoveRoomMemberHandler.ServeHTTP(w, r)
+		case Room303APIListRoomMembersProcedure:
+			room303APIListRoomMembersHandler.ServeHTTP(w, r)
+		case Room303APISetAdminForRoomMemberProcedure:
+			room303APISetAdminForRoomMemberHandler.ServeHTTP(w, r)
+		case Room303APIJoinRoomProcedure:
+			room303APIJoinRoomHandler.ServeHTTP(w, r)
+		case Room303APIGetRoomMemberProcedure:
+			room303APIGetRoomMemberHandler.ServeHTTP(w, r)
+		case Room303APICreateMessageProcedure:
+			room303APICreateMessageHandler.ServeHTTP(w, r)
+		case Room303APIEditMessageProcedure:
+			room303APIEditMessageHandler.ServeHTTP(w, r)
+		case Room303APIDeleteMessageProcedure:
+			room303APIDeleteMessageHandler.ServeHTTP(w, r)
+		case Room303APIGetMessagesProcedure:
+			room303APIGetMessagesHandler.ServeHTTP(w, r)
+		case Room303APIStreamMessageUpdatesProcedure:
+			room303APIStreamMessageUpdatesHandler.ServeHTTP(w, r)
+		case Room303APIGetUnreadStatsProcedure:
+			room303APIGetUnreadStatsHandler.ServeHTTP(w, r)
+		case Room303APIMarkMessageReadProcedure:
+			room303APIMarkMessageReadHandler.ServeHTTP(w, r)
+		case Room303APIMarkAllMessagesReadProcedure:
+			room303APIMarkAllMessagesReadHandler.ServeHTTP(w, r)
+		case Room303APIBulkMarkMessageReadProcedure:
+			room303APIBulkMarkMessageReadHandler.ServeHTTP(w, r)
+		case Room303APICreateRoomProcedure:
+			room303APICreateRoomHandler.ServeHTTP(w, r)
+		case Room303APIGetRoomProcedure:
+			room303APIGetRoomHandler.ServeHTTP(w, r)
+		case Room303APIListAllRoomsProcedure:
+			room303APIListAllRoomsHandler.ServeHTTP(w, r)
+		case Room303APIListRoomsForMemberProcedure:
+			room303APIListRoomsForMemberHandler.ServeHTTP(w, r)
+		case Room303APIArchiveRoomProcedure:
+			room303APIArchiveRoomHandler.ServeHTTP(w, r)
+		case Room303APIListUsersNamesProcedure:
+			room303APIListUsersNamesHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
 }
 
 // UnimplementedRoom303APIHandler returns CodeUnimplemented from all methods.
@@ -608,6 +656,6 @@ func (UnimplementedRoom303APIHandler) ArchiveRoom(context.Context, *connect_go.R
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.room303.Room303API.ArchiveRoom is not implemented"))
 }
 
-func (UnimplementedRoom303APIHandler) ListUsersByOrgId(context.Context, *connect_go.Request[room303.ListUsersByOrgIdRequest], *connect_go.ServerStream[room303.ListUsersByOrgIdResponse]) error {
-	return connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.room303.Room303API.ListUsersByOrgId is not implemented"))
+func (UnimplementedRoom303APIHandler) ListUsersNames(context.Context, *connect_go.Request[room303.ListUsersNamesRequest], *connect_go.ServerStream[room303.ListUsersNamesResponse]) error {
+	return connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.room303.Room303API.ListUsersNames is not implemented"))
 }

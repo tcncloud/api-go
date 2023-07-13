@@ -138,23 +138,33 @@ type BillingHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewBillingHandler(svc BillingHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	mux := http.NewServeMux()
-	mux.Handle(BillingGetBillingPlanProcedure, connect_go.NewUnaryHandler(
+	billingGetBillingPlanHandler := connect_go.NewUnaryHandler(
 		BillingGetBillingPlanProcedure,
 		svc.GetBillingPlan,
 		opts...,
-	))
-	mux.Handle(BillingUpdateBillingPlanProcedure, connect_go.NewUnaryHandler(
+	)
+	billingUpdateBillingPlanHandler := connect_go.NewUnaryHandler(
 		BillingUpdateBillingPlanProcedure,
 		svc.UpdateBillingPlan,
 		opts...,
-	))
-	mux.Handle(BillingGetInvoiceProcedure, connect_go.NewUnaryHandler(
+	)
+	billingGetInvoiceHandler := connect_go.NewUnaryHandler(
 		BillingGetInvoiceProcedure,
 		svc.GetInvoice,
 		opts...,
-	))
-	return "/api.v1alpha1.billing.Billing/", mux
+	)
+	return "/api.v1alpha1.billing.Billing/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case BillingGetBillingPlanProcedure:
+			billingGetBillingPlanHandler.ServeHTTP(w, r)
+		case BillingUpdateBillingPlanProcedure:
+			billingUpdateBillingPlanHandler.ServeHTTP(w, r)
+		case BillingGetInvoiceProcedure:
+			billingGetInvoiceHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
 }
 
 // UnimplementedBillingHandler returns CodeUnimplemented from all methods.

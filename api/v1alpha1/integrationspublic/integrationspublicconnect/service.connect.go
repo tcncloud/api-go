@@ -165,38 +165,54 @@ type IntegrationsPublicHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewIntegrationsPublicHandler(svc IntegrationsPublicHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	mux := http.NewServeMux()
-	mux.Handle(IntegrationsPublicGetLinkDataProcedure, connect_go.NewUnaryHandler(
+	integrationsPublicGetLinkDataHandler := connect_go.NewUnaryHandler(
 		IntegrationsPublicGetLinkDataProcedure,
 		svc.GetLinkData,
 		opts...,
-	))
-	mux.Handle(IntegrationsPublicSubmitVerificationProcedure, connect_go.NewUnaryHandler(
+	)
+	integrationsPublicSubmitVerificationHandler := connect_go.NewUnaryHandler(
 		IntegrationsPublicSubmitVerificationProcedure,
 		svc.SubmitVerification,
 		opts...,
-	))
-	mux.Handle(IntegrationsPublicSessionKeepAliveProcedure, connect_go.NewUnaryHandler(
+	)
+	integrationsPublicSessionKeepAliveHandler := connect_go.NewUnaryHandler(
 		IntegrationsPublicSessionKeepAliveProcedure,
 		svc.SessionKeepAlive,
 		opts...,
-	))
-	mux.Handle(IntegrationsPublicGetInvoiceProcedure, connect_go.NewUnaryHandler(
+	)
+	integrationsPublicGetInvoiceHandler := connect_go.NewUnaryHandler(
 		IntegrationsPublicGetInvoiceProcedure,
 		svc.GetInvoice,
 		opts...,
-	))
-	mux.Handle(IntegrationsPublicSubmitPaymentProcedure, connect_go.NewUnaryHandler(
+	)
+	integrationsPublicSubmitPaymentHandler := connect_go.NewUnaryHandler(
 		IntegrationsPublicSubmitPaymentProcedure,
 		svc.SubmitPayment,
 		opts...,
-	))
-	mux.Handle(IntegrationsPublicGetReceiptProcedure, connect_go.NewUnaryHandler(
+	)
+	integrationsPublicGetReceiptHandler := connect_go.NewUnaryHandler(
 		IntegrationsPublicGetReceiptProcedure,
 		svc.GetReceipt,
 		opts...,
-	))
-	return "/api.v1alpha1.integrationspublic.IntegrationsPublic/", mux
+	)
+	return "/api.v1alpha1.integrationspublic.IntegrationsPublic/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case IntegrationsPublicGetLinkDataProcedure:
+			integrationsPublicGetLinkDataHandler.ServeHTTP(w, r)
+		case IntegrationsPublicSubmitVerificationProcedure:
+			integrationsPublicSubmitVerificationHandler.ServeHTTP(w, r)
+		case IntegrationsPublicSessionKeepAliveProcedure:
+			integrationsPublicSessionKeepAliveHandler.ServeHTTP(w, r)
+		case IntegrationsPublicGetInvoiceProcedure:
+			integrationsPublicGetInvoiceHandler.ServeHTTP(w, r)
+		case IntegrationsPublicSubmitPaymentProcedure:
+			integrationsPublicSubmitPaymentHandler.ServeHTTP(w, r)
+		case IntegrationsPublicGetReceiptProcedure:
+			integrationsPublicGetReceiptHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
 }
 
 // UnimplementedIntegrationsPublicHandler returns CodeUnimplemented from all methods.

@@ -284,78 +284,110 @@ type VmdsHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewVmdsHandler(svc VmdsHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	mux := http.NewServeMux()
-	mux.Handle(VmdsGetVoicemailMetadataProcedure, connect_go.NewServerStreamHandler(
+	vmdsGetVoicemailMetadataHandler := connect_go.NewServerStreamHandler(
 		VmdsGetVoicemailMetadataProcedure,
 		svc.GetVoicemailMetadata,
 		opts...,
-	))
-	mux.Handle(VmdsGetVoicemailMessageCountProcedure, connect_go.NewUnaryHandler(
+	)
+	vmdsGetVoicemailMessageCountHandler := connect_go.NewUnaryHandler(
 		VmdsGetVoicemailMessageCountProcedure,
 		svc.GetVoicemailMessageCount,
 		opts...,
-	))
-	mux.Handle(VmdsDeleteVoicemailProcedure, connect_go.NewUnaryHandler(
+	)
+	vmdsDeleteVoicemailHandler := connect_go.NewUnaryHandler(
 		VmdsDeleteVoicemailProcedure,
 		svc.DeleteVoicemail,
 		opts...,
-	))
-	mux.Handle(VmdsDeleteGreetingProcedure, connect_go.NewUnaryHandler(
+	)
+	vmdsDeleteGreetingHandler := connect_go.NewUnaryHandler(
 		VmdsDeleteGreetingProcedure,
 		svc.DeleteGreeting,
 		opts...,
-	))
-	mux.Handle(VmdsUpdateUploadNameProcedure, connect_go.NewUnaryHandler(
+	)
+	vmdsUpdateUploadNameHandler := connect_go.NewUnaryHandler(
 		VmdsUpdateUploadNameProcedure,
 		svc.UpdateUploadName,
 		opts...,
-	))
-	mux.Handle(VmdsUpdateVoicemailFlagReadProcedure, connect_go.NewUnaryHandler(
+	)
+	vmdsUpdateVoicemailFlagReadHandler := connect_go.NewUnaryHandler(
 		VmdsUpdateVoicemailFlagReadProcedure,
 		svc.UpdateVoicemailFlagRead,
 		opts...,
-	))
-	mux.Handle(VmdsDownloadMessageProcedure, connect_go.NewUnaryHandler(
+	)
+	vmdsDownloadMessageHandler := connect_go.NewUnaryHandler(
 		VmdsDownloadMessageProcedure,
 		svc.DownloadMessage,
 		opts...,
-	))
-	mux.Handle(VmdsDownloadMessagesProcedure, connect_go.NewUnaryHandler(
+	)
+	vmdsDownloadMessagesHandler := connect_go.NewUnaryHandler(
 		VmdsDownloadMessagesProcedure,
 		svc.DownloadMessages,
 		opts...,
-	))
-	mux.Handle(VmdsDownloadGreetingForExtensionProcedure, connect_go.NewUnaryHandler(
+	)
+	vmdsDownloadGreetingForExtensionHandler := connect_go.NewUnaryHandler(
 		VmdsDownloadGreetingForExtensionProcedure,
 		svc.DownloadGreetingForExtension,
 		opts...,
-	))
-	mux.Handle(VmdsDownloadGreetingProcedure, connect_go.NewUnaryHandler(
+	)
+	vmdsDownloadGreetingHandler := connect_go.NewUnaryHandler(
 		VmdsDownloadGreetingProcedure,
 		svc.DownloadGreeting,
 		opts...,
-	))
-	mux.Handle(VmdsGetUploadGreetingUrlProcedure, connect_go.NewUnaryHandler(
+	)
+	vmdsGetUploadGreetingUrlHandler := connect_go.NewUnaryHandler(
 		VmdsGetUploadGreetingUrlProcedure,
 		svc.GetUploadGreetingUrl,
 		opts...,
-	))
-	mux.Handle(VmdsProcessGreetingUploadProcedure, connect_go.NewUnaryHandler(
+	)
+	vmdsProcessGreetingUploadHandler := connect_go.NewUnaryHandler(
 		VmdsProcessGreetingUploadProcedure,
 		svc.ProcessGreetingUpload,
 		opts...,
-	))
-	mux.Handle(VmdsUpdateGreetingForExtensionProcedure, connect_go.NewUnaryHandler(
+	)
+	vmdsUpdateGreetingForExtensionHandler := connect_go.NewUnaryHandler(
 		VmdsUpdateGreetingForExtensionProcedure,
 		svc.UpdateGreetingForExtension,
 		opts...,
-	))
-	mux.Handle(VmdsListAvailableGreetingsProcedure, connect_go.NewUnaryHandler(
+	)
+	vmdsListAvailableGreetingsHandler := connect_go.NewUnaryHandler(
 		VmdsListAvailableGreetingsProcedure,
 		svc.ListAvailableGreetings,
 		opts...,
-	))
-	return "/api.v0alpha.Vmds/", mux
+	)
+	return "/api.v0alpha.Vmds/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case VmdsGetVoicemailMetadataProcedure:
+			vmdsGetVoicemailMetadataHandler.ServeHTTP(w, r)
+		case VmdsGetVoicemailMessageCountProcedure:
+			vmdsGetVoicemailMessageCountHandler.ServeHTTP(w, r)
+		case VmdsDeleteVoicemailProcedure:
+			vmdsDeleteVoicemailHandler.ServeHTTP(w, r)
+		case VmdsDeleteGreetingProcedure:
+			vmdsDeleteGreetingHandler.ServeHTTP(w, r)
+		case VmdsUpdateUploadNameProcedure:
+			vmdsUpdateUploadNameHandler.ServeHTTP(w, r)
+		case VmdsUpdateVoicemailFlagReadProcedure:
+			vmdsUpdateVoicemailFlagReadHandler.ServeHTTP(w, r)
+		case VmdsDownloadMessageProcedure:
+			vmdsDownloadMessageHandler.ServeHTTP(w, r)
+		case VmdsDownloadMessagesProcedure:
+			vmdsDownloadMessagesHandler.ServeHTTP(w, r)
+		case VmdsDownloadGreetingForExtensionProcedure:
+			vmdsDownloadGreetingForExtensionHandler.ServeHTTP(w, r)
+		case VmdsDownloadGreetingProcedure:
+			vmdsDownloadGreetingHandler.ServeHTTP(w, r)
+		case VmdsGetUploadGreetingUrlProcedure:
+			vmdsGetUploadGreetingUrlHandler.ServeHTTP(w, r)
+		case VmdsProcessGreetingUploadProcedure:
+			vmdsProcessGreetingUploadHandler.ServeHTTP(w, r)
+		case VmdsUpdateGreetingForExtensionProcedure:
+			vmdsUpdateGreetingForExtensionHandler.ServeHTTP(w, r)
+		case VmdsListAvailableGreetingsProcedure:
+			vmdsListAvailableGreetingsHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
 }
 
 // UnimplementedVmdsHandler returns CodeUnimplemented from all methods.

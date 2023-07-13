@@ -239,58 +239,82 @@ type InsightsHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewInsightsHandler(svc InsightsHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	mux := http.NewServeMux()
-	mux.Handle(InsightsCreateInsightProcedure, connect_go.NewUnaryHandler(
+	insightsCreateInsightHandler := connect_go.NewUnaryHandler(
 		InsightsCreateInsightProcedure,
 		svc.CreateInsight,
 		opts...,
-	))
-	mux.Handle(InsightsListInsightsProcedure, connect_go.NewUnaryHandler(
+	)
+	insightsListInsightsHandler := connect_go.NewUnaryHandler(
 		InsightsListInsightsProcedure,
 		svc.ListInsights,
 		opts...,
-	))
-	mux.Handle(InsightsUpdateInsightProcedure, connect_go.NewUnaryHandler(
+	)
+	insightsUpdateInsightHandler := connect_go.NewUnaryHandler(
 		InsightsUpdateInsightProcedure,
 		svc.UpdateInsight,
 		opts...,
-	))
-	mux.Handle(InsightsDeleteInsightProcedure, connect_go.NewUnaryHandler(
+	)
+	insightsDeleteInsightHandler := connect_go.NewUnaryHandler(
 		InsightsDeleteInsightProcedure,
 		svc.DeleteInsight,
 		opts...,
-	))
-	mux.Handle(InsightsGetInsightProcedure, connect_go.NewUnaryHandler(
+	)
+	insightsGetInsightHandler := connect_go.NewUnaryHandler(
 		InsightsGetInsightProcedure,
 		svc.GetInsight,
 		opts...,
-	))
-	mux.Handle(InsightsCreateCommonsInsightProcedure, connect_go.NewUnaryHandler(
+	)
+	insightsCreateCommonsInsightHandler := connect_go.NewUnaryHandler(
 		InsightsCreateCommonsInsightProcedure,
 		svc.CreateCommonsInsight,
 		opts...,
-	))
-	mux.Handle(InsightsUpdateCommonsInsightProcedure, connect_go.NewUnaryHandler(
+	)
+	insightsUpdateCommonsInsightHandler := connect_go.NewUnaryHandler(
 		InsightsUpdateCommonsInsightProcedure,
 		svc.UpdateCommonsInsight,
 		opts...,
-	))
-	mux.Handle(InsightsDeleteCommonsInsightProcedure, connect_go.NewUnaryHandler(
+	)
+	insightsDeleteCommonsInsightHandler := connect_go.NewUnaryHandler(
 		InsightsDeleteCommonsInsightProcedure,
 		svc.DeleteCommonsInsight,
 		opts...,
-	))
-	mux.Handle(InsightsGetVfsSchemaProcedure, connect_go.NewUnaryHandler(
+	)
+	insightsGetVfsSchemaHandler := connect_go.NewUnaryHandler(
 		InsightsGetVfsSchemaProcedure,
 		svc.GetVfsSchema,
 		opts...,
-	))
-	mux.Handle(InsightsListVfsesProcedure, connect_go.NewUnaryHandler(
+	)
+	insightsListVfsesHandler := connect_go.NewUnaryHandler(
 		InsightsListVfsesProcedure,
 		svc.ListVfses,
 		opts...,
-	))
-	return "/api.v1alpha1.insights.Insights/", mux
+	)
+	return "/api.v1alpha1.insights.Insights/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case InsightsCreateInsightProcedure:
+			insightsCreateInsightHandler.ServeHTTP(w, r)
+		case InsightsListInsightsProcedure:
+			insightsListInsightsHandler.ServeHTTP(w, r)
+		case InsightsUpdateInsightProcedure:
+			insightsUpdateInsightHandler.ServeHTTP(w, r)
+		case InsightsDeleteInsightProcedure:
+			insightsDeleteInsightHandler.ServeHTTP(w, r)
+		case InsightsGetInsightProcedure:
+			insightsGetInsightHandler.ServeHTTP(w, r)
+		case InsightsCreateCommonsInsightProcedure:
+			insightsCreateCommonsInsightHandler.ServeHTTP(w, r)
+		case InsightsUpdateCommonsInsightProcedure:
+			insightsUpdateCommonsInsightHandler.ServeHTTP(w, r)
+		case InsightsDeleteCommonsInsightProcedure:
+			insightsDeleteCommonsInsightHandler.ServeHTTP(w, r)
+		case InsightsGetVfsSchemaProcedure:
+			insightsGetVfsSchemaHandler.ServeHTTP(w, r)
+		case InsightsListVfsesProcedure:
+			insightsListVfsesHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
 }
 
 // UnimplementedInsightsHandler returns CodeUnimplemented from all methods.

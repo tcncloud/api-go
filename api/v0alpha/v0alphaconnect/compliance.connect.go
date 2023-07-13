@@ -1410,318 +1410,446 @@ type ComplianceHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewComplianceHandler(svc ComplianceHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	mux := http.NewServeMux()
-	mux.Handle(ComplianceRuleAutoCompleteProcedure, connect_go.NewUnaryHandler(
+	complianceRuleAutoCompleteHandler := connect_go.NewUnaryHandler(
 		ComplianceRuleAutoCompleteProcedure,
 		svc.RuleAutoComplete,
 		opts...,
-	))
-	mux.Handle(ComplianceCheckRuleSetProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceCheckRuleSetHandler := connect_go.NewUnaryHandler(
 		ComplianceCheckRuleSetProcedure,
 		svc.CheckRuleSet,
 		opts...,
-	))
-	mux.Handle(ComplianceAssignRuleSetProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceAssignRuleSetHandler := connect_go.NewUnaryHandler(
 		ComplianceAssignRuleSetProcedure,
 		svc.AssignRuleSet,
 		opts...,
-	))
-	mux.Handle(ComplianceListRuleSetsProcedure, connect_go.NewServerStreamHandler(
+	)
+	complianceListRuleSetsHandler := connect_go.NewServerStreamHandler(
 		ComplianceListRuleSetsProcedure,
 		svc.ListRuleSets,
 		opts...,
-	))
-	mux.Handle(ComplianceGetRuleSetProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceGetRuleSetHandler := connect_go.NewUnaryHandler(
 		ComplianceGetRuleSetProcedure,
 		svc.GetRuleSet,
 		opts...,
-	))
-	mux.Handle(ComplianceGetRuleSetByNameProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceGetRuleSetByNameHandler := connect_go.NewUnaryHandler(
 		ComplianceGetRuleSetByNameProcedure,
 		svc.GetRuleSetByName,
 		opts...,
-	))
-	mux.Handle(ComplianceCreateRuleSetProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceCreateRuleSetHandler := connect_go.NewUnaryHandler(
 		ComplianceCreateRuleSetProcedure,
 		svc.CreateRuleSet,
 		opts...,
-	))
-	mux.Handle(ComplianceRenameRuleSetProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceRenameRuleSetHandler := connect_go.NewUnaryHandler(
 		ComplianceRenameRuleSetProcedure,
 		svc.RenameRuleSet,
 		opts...,
-	))
-	mux.Handle(ComplianceEnableRuleSetProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceEnableRuleSetHandler := connect_go.NewUnaryHandler(
 		ComplianceEnableRuleSetProcedure,
 		svc.EnableRuleSet,
 		opts...,
-	))
-	mux.Handle(ComplianceDisableRuleSetProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceDisableRuleSetHandler := connect_go.NewUnaryHandler(
 		ComplianceDisableRuleSetProcedure,
 		svc.DisableRuleSet,
 		opts...,
-	))
-	mux.Handle(ComplianceCreateScrubListProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceCreateScrubListHandler := connect_go.NewUnaryHandler(
 		ComplianceCreateScrubListProcedure,
 		svc.CreateScrubList,
 		opts...,
-	))
-	mux.Handle(ComplianceAddScrubListEntriesProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceAddScrubListEntriesHandler := connect_go.NewUnaryHandler(
 		ComplianceAddScrubListEntriesProcedure,
 		svc.AddScrubListEntries,
 		opts...,
-	))
-	mux.Handle(ComplianceUpdateScrubEntryProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceUpdateScrubEntryHandler := connect_go.NewUnaryHandler(
 		ComplianceUpdateScrubEntryProcedure,
 		svc.UpdateScrubEntry,
 		opts...,
-	))
-	mux.Handle(ComplianceDeleteScrubListEntriesProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceDeleteScrubListEntriesHandler := connect_go.NewUnaryHandler(
 		ComplianceDeleteScrubListEntriesProcedure,
 		svc.DeleteScrubListEntries,
 		opts...,
-	))
-	mux.Handle(ComplianceGetScrubListProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceGetScrubListHandler := connect_go.NewUnaryHandler(
 		ComplianceGetScrubListProcedure,
 		svc.GetScrubList,
 		opts...,
-	))
-	mux.Handle(ComplianceDeleteScrubListProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceDeleteScrubListHandler := connect_go.NewUnaryHandler(
 		ComplianceDeleteScrubListProcedure,
 		svc.DeleteScrubList,
 		opts...,
-	))
-	mux.Handle(ComplianceGetDefaultRulesProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceGetDefaultRulesHandler := connect_go.NewUnaryHandler(
 		ComplianceGetDefaultRulesProcedure,
 		svc.GetDefaultRules,
 		opts...,
-	))
-	mux.Handle(ComplianceGetScrubListsProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceGetScrubListsHandler := connect_go.NewUnaryHandler(
 		ComplianceGetScrubListsProcedure,
 		svc.GetScrubLists,
 		opts...,
-	))
-	mux.Handle(ComplianceSearchScrubListProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceSearchScrubListHandler := connect_go.NewUnaryHandler(
 		ComplianceSearchScrubListProcedure,
 		svc.SearchScrubList,
 		opts...,
-	))
-	mux.Handle(ComplianceGetScrubListUploadUrlProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceGetScrubListUploadUrlHandler := connect_go.NewUnaryHandler(
 		ComplianceGetScrubListUploadUrlProcedure,
 		svc.GetScrubListUploadUrl,
 		opts...,
-	))
-	mux.Handle(ComplianceProcessScrubListUploadProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceProcessScrubListUploadHandler := connect_go.NewUnaryHandler(
 		ComplianceProcessScrubListUploadProcedure,
 		svc.ProcessScrubListUpload,
 		opts...,
-	))
-	mux.Handle(ComplianceProcessScrubListDeleteUploadProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceProcessScrubListDeleteUploadHandler := connect_go.NewUnaryHandler(
 		ComplianceProcessScrubListDeleteUploadProcedure,
 		svc.ProcessScrubListDeleteUpload,
 		opts...,
-	))
-	mux.Handle(ComplianceExportScrubListProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceExportScrubListHandler := connect_go.NewUnaryHandler(
 		ComplianceExportScrubListProcedure,
 		svc.ExportScrubList,
 		opts...,
-	))
-	mux.Handle(CompliancePurgeScrubListProcedure, connect_go.NewUnaryHandler(
+	)
+	compliancePurgeScrubListHandler := connect_go.NewUnaryHandler(
 		CompliancePurgeScrubListProcedure,
 		svc.PurgeScrubList,
 		opts...,
-	))
-	mux.Handle(ComplianceCreateScenarioProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceCreateScenarioHandler := connect_go.NewUnaryHandler(
 		ComplianceCreateScenarioProcedure,
 		svc.CreateScenario,
 		opts...,
-	))
-	mux.Handle(ComplianceGetScenarioProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceGetScenarioHandler := connect_go.NewUnaryHandler(
 		ComplianceGetScenarioProcedure,
 		svc.GetScenario,
 		opts...,
-	))
-	mux.Handle(ComplianceUpdateScenarioProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceUpdateScenarioHandler := connect_go.NewUnaryHandler(
 		ComplianceUpdateScenarioProcedure,
 		svc.UpdateScenario,
 		opts...,
-	))
-	mux.Handle(ComplianceDeleteScenarioProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceDeleteScenarioHandler := connect_go.NewUnaryHandler(
 		ComplianceDeleteScenarioProcedure,
 		svc.DeleteScenario,
 		opts...,
-	))
-	mux.Handle(ComplianceRunAssignedScenariosProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceRunAssignedScenariosHandler := connect_go.NewUnaryHandler(
 		ComplianceRunAssignedScenariosProcedure,
 		svc.RunAssignedScenarios,
 		opts...,
-	))
-	mux.Handle(ComplianceListAllScenariosProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceListAllScenariosHandler := connect_go.NewUnaryHandler(
 		ComplianceListAllScenariosProcedure,
 		svc.ListAllScenarios,
 		opts...,
-	))
-	mux.Handle(ComplianceListUnassignedScenariosProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceListUnassignedScenariosHandler := connect_go.NewUnaryHandler(
 		ComplianceListUnassignedScenariosProcedure,
 		svc.ListUnassignedScenarios,
 		opts...,
-	))
-	mux.Handle(ComplianceListAssignedRuleSetsProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceListAssignedRuleSetsHandler := connect_go.NewUnaryHandler(
 		ComplianceListAssignedRuleSetsProcedure,
 		svc.ListAssignedRuleSets,
 		opts...,
-	))
-	mux.Handle(ComplianceListAssignedScenariosProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceListAssignedScenariosHandler := connect_go.NewUnaryHandler(
 		ComplianceListAssignedScenariosProcedure,
 		svc.ListAssignedScenarios,
 		opts...,
-	))
-	mux.Handle(ComplianceAssignScenarioProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceAssignScenarioHandler := connect_go.NewUnaryHandler(
 		ComplianceAssignScenarioProcedure,
 		svc.AssignScenario,
 		opts...,
-	))
-	mux.Handle(ComplianceUnassignScenarioProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceUnassignScenarioHandler := connect_go.NewUnaryHandler(
 		ComplianceUnassignScenarioProcedure,
 		svc.UnassignScenario,
 		opts...,
-	))
-	mux.Handle(ComplianceEnableScenarioProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceEnableScenarioHandler := connect_go.NewUnaryHandler(
 		ComplianceEnableScenarioProcedure,
 		svc.EnableScenario,
 		opts...,
-	))
-	mux.Handle(ComplianceDisableScenarioProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceDisableScenarioHandler := connect_go.NewUnaryHandler(
 		ComplianceDisableScenarioProcedure,
 		svc.DisableScenario,
 		opts...,
-	))
-	mux.Handle(ComplianceGetFieldNamesProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceGetFieldNamesHandler := connect_go.NewUnaryHandler(
 		ComplianceGetFieldNamesProcedure,
 		svc.GetFieldNames,
 		opts...,
-	))
-	mux.Handle(ComplianceGetResultDescriptionsProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceGetResultDescriptionsHandler := connect_go.NewUnaryHandler(
 		ComplianceGetResultDescriptionsProcedure,
 		svc.GetResultDescriptions,
 		opts...,
-	))
-	mux.Handle(ComplianceCreateConsentProfileProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceCreateConsentProfileHandler := connect_go.NewUnaryHandler(
 		ComplianceCreateConsentProfileProcedure,
 		svc.CreateConsentProfile,
 		opts...,
-	))
-	mux.Handle(ComplianceCreateConsentProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceCreateConsentHandler := connect_go.NewUnaryHandler(
 		ComplianceCreateConsentProcedure,
 		svc.CreateConsent,
 		opts...,
-	))
-	mux.Handle(ComplianceGetConsentProfileProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceGetConsentProfileHandler := connect_go.NewUnaryHandler(
 		ComplianceGetConsentProfileProcedure,
 		svc.GetConsentProfile,
 		opts...,
-	))
-	mux.Handle(ComplianceGetConsentProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceGetConsentHandler := connect_go.NewUnaryHandler(
 		ComplianceGetConsentProcedure,
 		svc.GetConsent,
 		opts...,
-	))
-	mux.Handle(ComplianceGetConsentByProfileAndContentProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceGetConsentByProfileAndContentHandler := connect_go.NewUnaryHandler(
 		ComplianceGetConsentByProfileAndContentProcedure,
 		svc.GetConsentByProfileAndContent,
 		opts...,
-	))
-	mux.Handle(ComplianceGetConsentByContentProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceGetConsentByContentHandler := connect_go.NewUnaryHandler(
 		ComplianceGetConsentByContentProcedure,
 		svc.GetConsentByContent,
 		opts...,
-	))
-	mux.Handle(ComplianceSearchConsentByContentProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceSearchConsentByContentHandler := connect_go.NewUnaryHandler(
 		ComplianceSearchConsentByContentProcedure,
 		svc.SearchConsentByContent,
 		opts...,
-	))
-	mux.Handle(ComplianceUpdateConsentProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceUpdateConsentHandler := connect_go.NewUnaryHandler(
 		ComplianceUpdateConsentProcedure,
 		svc.UpdateConsent,
 		opts...,
-	))
-	mux.Handle(ComplianceExpireConsentProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceExpireConsentHandler := connect_go.NewUnaryHandler(
 		ComplianceExpireConsentProcedure,
 		svc.ExpireConsent,
 		opts...,
-	))
-	mux.Handle(ComplianceRevokeConsentProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceRevokeConsentHandler := connect_go.NewUnaryHandler(
 		ComplianceRevokeConsentProcedure,
 		svc.RevokeConsent,
 		opts...,
-	))
-	mux.Handle(ComplianceDeleteConsentProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceDeleteConsentHandler := connect_go.NewUnaryHandler(
 		ComplianceDeleteConsentProcedure,
 		svc.DeleteConsent,
 		opts...,
-	))
-	mux.Handle(ComplianceProcessConsentListDeleteUploadProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceProcessConsentListDeleteUploadHandler := connect_go.NewUnaryHandler(
 		ComplianceProcessConsentListDeleteUploadProcedure,
 		svc.ProcessConsentListDeleteUpload,
 		opts...,
-	))
-	mux.Handle(ComplianceEnableConsentProfileProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceEnableConsentProfileHandler := connect_go.NewUnaryHandler(
 		ComplianceEnableConsentProfileProcedure,
 		svc.EnableConsentProfile,
 		opts...,
-	))
-	mux.Handle(ComplianceDisableConsentProfileProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceDisableConsentProfileHandler := connect_go.NewUnaryHandler(
 		ComplianceDisableConsentProfileProcedure,
 		svc.DisableConsentProfile,
 		opts...,
-	))
-	mux.Handle(ComplianceListConsentProfilesProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceListConsentProfilesHandler := connect_go.NewUnaryHandler(
 		ComplianceListConsentProfilesProcedure,
 		svc.ListConsentProfiles,
 		opts...,
-	))
-	mux.Handle(ComplianceGetConsentUploadUrlProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceGetConsentUploadUrlHandler := connect_go.NewUnaryHandler(
 		ComplianceGetConsentUploadUrlProcedure,
 		svc.GetConsentUploadUrl,
 		opts...,
-	))
-	mux.Handle(ComplianceProcessConsentUploadProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceProcessConsentUploadHandler := connect_go.NewUnaryHandler(
 		ComplianceProcessConsentUploadProcedure,
 		svc.ProcessConsentUpload,
 		opts...,
-	))
-	mux.Handle(ComplianceListConsentTopicsProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceListConsentTopicsHandler := connect_go.NewUnaryHandler(
 		ComplianceListConsentTopicsProcedure,
 		svc.ListConsentTopics,
 		opts...,
-	))
-	mux.Handle(ComplianceGetConsentTopicProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceGetConsentTopicHandler := connect_go.NewUnaryHandler(
 		ComplianceGetConsentTopicProcedure,
 		svc.GetConsentTopic,
 		opts...,
-	))
-	mux.Handle(ComplianceCreateConsentTopicProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceCreateConsentTopicHandler := connect_go.NewUnaryHandler(
 		ComplianceCreateConsentTopicProcedure,
 		svc.CreateConsentTopic,
 		opts...,
-	))
-	mux.Handle(ComplianceDeleteConsentTopicProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceDeleteConsentTopicHandler := connect_go.NewUnaryHandler(
 		ComplianceDeleteConsentTopicProcedure,
 		svc.DeleteConsentTopic,
 		opts...,
-	))
-	mux.Handle(ComplianceUpdateConsentTopicProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceUpdateConsentTopicHandler := connect_go.NewUnaryHandler(
 		ComplianceUpdateConsentTopicProcedure,
 		svc.UpdateConsentTopic,
 		opts...,
-	))
-	mux.Handle(ComplianceProcessOutboundCallProcedure, connect_go.NewUnaryHandler(
+	)
+	complianceProcessOutboundCallHandler := connect_go.NewUnaryHandler(
 		ComplianceProcessOutboundCallProcedure,
 		svc.ProcessOutboundCall,
 		opts...,
-	))
-	return "/api.v0alpha.Compliance/", mux
+	)
+	return "/api.v0alpha.Compliance/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case ComplianceRuleAutoCompleteProcedure:
+			complianceRuleAutoCompleteHandler.ServeHTTP(w, r)
+		case ComplianceCheckRuleSetProcedure:
+			complianceCheckRuleSetHandler.ServeHTTP(w, r)
+		case ComplianceAssignRuleSetProcedure:
+			complianceAssignRuleSetHandler.ServeHTTP(w, r)
+		case ComplianceListRuleSetsProcedure:
+			complianceListRuleSetsHandler.ServeHTTP(w, r)
+		case ComplianceGetRuleSetProcedure:
+			complianceGetRuleSetHandler.ServeHTTP(w, r)
+		case ComplianceGetRuleSetByNameProcedure:
+			complianceGetRuleSetByNameHandler.ServeHTTP(w, r)
+		case ComplianceCreateRuleSetProcedure:
+			complianceCreateRuleSetHandler.ServeHTTP(w, r)
+		case ComplianceRenameRuleSetProcedure:
+			complianceRenameRuleSetHandler.ServeHTTP(w, r)
+		case ComplianceEnableRuleSetProcedure:
+			complianceEnableRuleSetHandler.ServeHTTP(w, r)
+		case ComplianceDisableRuleSetProcedure:
+			complianceDisableRuleSetHandler.ServeHTTP(w, r)
+		case ComplianceCreateScrubListProcedure:
+			complianceCreateScrubListHandler.ServeHTTP(w, r)
+		case ComplianceAddScrubListEntriesProcedure:
+			complianceAddScrubListEntriesHandler.ServeHTTP(w, r)
+		case ComplianceUpdateScrubEntryProcedure:
+			complianceUpdateScrubEntryHandler.ServeHTTP(w, r)
+		case ComplianceDeleteScrubListEntriesProcedure:
+			complianceDeleteScrubListEntriesHandler.ServeHTTP(w, r)
+		case ComplianceGetScrubListProcedure:
+			complianceGetScrubListHandler.ServeHTTP(w, r)
+		case ComplianceDeleteScrubListProcedure:
+			complianceDeleteScrubListHandler.ServeHTTP(w, r)
+		case ComplianceGetDefaultRulesProcedure:
+			complianceGetDefaultRulesHandler.ServeHTTP(w, r)
+		case ComplianceGetScrubListsProcedure:
+			complianceGetScrubListsHandler.ServeHTTP(w, r)
+		case ComplianceSearchScrubListProcedure:
+			complianceSearchScrubListHandler.ServeHTTP(w, r)
+		case ComplianceGetScrubListUploadUrlProcedure:
+			complianceGetScrubListUploadUrlHandler.ServeHTTP(w, r)
+		case ComplianceProcessScrubListUploadProcedure:
+			complianceProcessScrubListUploadHandler.ServeHTTP(w, r)
+		case ComplianceProcessScrubListDeleteUploadProcedure:
+			complianceProcessScrubListDeleteUploadHandler.ServeHTTP(w, r)
+		case ComplianceExportScrubListProcedure:
+			complianceExportScrubListHandler.ServeHTTP(w, r)
+		case CompliancePurgeScrubListProcedure:
+			compliancePurgeScrubListHandler.ServeHTTP(w, r)
+		case ComplianceCreateScenarioProcedure:
+			complianceCreateScenarioHandler.ServeHTTP(w, r)
+		case ComplianceGetScenarioProcedure:
+			complianceGetScenarioHandler.ServeHTTP(w, r)
+		case ComplianceUpdateScenarioProcedure:
+			complianceUpdateScenarioHandler.ServeHTTP(w, r)
+		case ComplianceDeleteScenarioProcedure:
+			complianceDeleteScenarioHandler.ServeHTTP(w, r)
+		case ComplianceRunAssignedScenariosProcedure:
+			complianceRunAssignedScenariosHandler.ServeHTTP(w, r)
+		case ComplianceListAllScenariosProcedure:
+			complianceListAllScenariosHandler.ServeHTTP(w, r)
+		case ComplianceListUnassignedScenariosProcedure:
+			complianceListUnassignedScenariosHandler.ServeHTTP(w, r)
+		case ComplianceListAssignedRuleSetsProcedure:
+			complianceListAssignedRuleSetsHandler.ServeHTTP(w, r)
+		case ComplianceListAssignedScenariosProcedure:
+			complianceListAssignedScenariosHandler.ServeHTTP(w, r)
+		case ComplianceAssignScenarioProcedure:
+			complianceAssignScenarioHandler.ServeHTTP(w, r)
+		case ComplianceUnassignScenarioProcedure:
+			complianceUnassignScenarioHandler.ServeHTTP(w, r)
+		case ComplianceEnableScenarioProcedure:
+			complianceEnableScenarioHandler.ServeHTTP(w, r)
+		case ComplianceDisableScenarioProcedure:
+			complianceDisableScenarioHandler.ServeHTTP(w, r)
+		case ComplianceGetFieldNamesProcedure:
+			complianceGetFieldNamesHandler.ServeHTTP(w, r)
+		case ComplianceGetResultDescriptionsProcedure:
+			complianceGetResultDescriptionsHandler.ServeHTTP(w, r)
+		case ComplianceCreateConsentProfileProcedure:
+			complianceCreateConsentProfileHandler.ServeHTTP(w, r)
+		case ComplianceCreateConsentProcedure:
+			complianceCreateConsentHandler.ServeHTTP(w, r)
+		case ComplianceGetConsentProfileProcedure:
+			complianceGetConsentProfileHandler.ServeHTTP(w, r)
+		case ComplianceGetConsentProcedure:
+			complianceGetConsentHandler.ServeHTTP(w, r)
+		case ComplianceGetConsentByProfileAndContentProcedure:
+			complianceGetConsentByProfileAndContentHandler.ServeHTTP(w, r)
+		case ComplianceGetConsentByContentProcedure:
+			complianceGetConsentByContentHandler.ServeHTTP(w, r)
+		case ComplianceSearchConsentByContentProcedure:
+			complianceSearchConsentByContentHandler.ServeHTTP(w, r)
+		case ComplianceUpdateConsentProcedure:
+			complianceUpdateConsentHandler.ServeHTTP(w, r)
+		case ComplianceExpireConsentProcedure:
+			complianceExpireConsentHandler.ServeHTTP(w, r)
+		case ComplianceRevokeConsentProcedure:
+			complianceRevokeConsentHandler.ServeHTTP(w, r)
+		case ComplianceDeleteConsentProcedure:
+			complianceDeleteConsentHandler.ServeHTTP(w, r)
+		case ComplianceProcessConsentListDeleteUploadProcedure:
+			complianceProcessConsentListDeleteUploadHandler.ServeHTTP(w, r)
+		case ComplianceEnableConsentProfileProcedure:
+			complianceEnableConsentProfileHandler.ServeHTTP(w, r)
+		case ComplianceDisableConsentProfileProcedure:
+			complianceDisableConsentProfileHandler.ServeHTTP(w, r)
+		case ComplianceListConsentProfilesProcedure:
+			complianceListConsentProfilesHandler.ServeHTTP(w, r)
+		case ComplianceGetConsentUploadUrlProcedure:
+			complianceGetConsentUploadUrlHandler.ServeHTTP(w, r)
+		case ComplianceProcessConsentUploadProcedure:
+			complianceProcessConsentUploadHandler.ServeHTTP(w, r)
+		case ComplianceListConsentTopicsProcedure:
+			complianceListConsentTopicsHandler.ServeHTTP(w, r)
+		case ComplianceGetConsentTopicProcedure:
+			complianceGetConsentTopicHandler.ServeHTTP(w, r)
+		case ComplianceCreateConsentTopicProcedure:
+			complianceCreateConsentTopicHandler.ServeHTTP(w, r)
+		case ComplianceDeleteConsentTopicProcedure:
+			complianceDeleteConsentTopicHandler.ServeHTTP(w, r)
+		case ComplianceUpdateConsentTopicProcedure:
+			complianceUpdateConsentTopicHandler.ServeHTTP(w, r)
+		case ComplianceProcessOutboundCallProcedure:
+			complianceProcessOutboundCallHandler.ServeHTTP(w, r)
+		default:
+			http.NotFound(w, r)
+		}
+	})
 }
 
 // UnimplementedComplianceHandler returns CodeUnimplemented from all methods.
