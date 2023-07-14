@@ -19,22 +19,24 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Tickets_CreateTicket_FullMethodName        = "/api.v1alpha1.tickets.Tickets/CreateTicket"
-	Tickets_EditTicket_FullMethodName          = "/api.v1alpha1.tickets.Tickets/EditTicket"
-	Tickets_ListTickets_FullMethodName         = "/api.v1alpha1.tickets.Tickets/ListTickets"
-	Tickets_AssignTicket_FullMethodName        = "/api.v1alpha1.tickets.Tickets/AssignTicket"
-	Tickets_CloseTicket_FullMethodName         = "/api.v1alpha1.tickets.Tickets/CloseTicket"
-	Tickets_ViewTicket_FullMethodName          = "/api.v1alpha1.tickets.Tickets/ViewTicket"
-	Tickets_CreateComment_FullMethodName       = "/api.v1alpha1.tickets.Tickets/CreateComment"
-	Tickets_EnableProject_FullMethodName       = "/api.v1alpha1.tickets.Tickets/EnableProject"
-	Tickets_ListEnabledProjects_FullMethodName = "/api.v1alpha1.tickets.Tickets/ListEnabledProjects"
-	Tickets_CreateSLA_FullMethodName           = "/api.v1alpha1.tickets.Tickets/CreateSLA"
-	Tickets_ListSLA_FullMethodName             = "/api.v1alpha1.tickets.Tickets/ListSLA"
-	Tickets_UpdateSLA_FullMethodName           = "/api.v1alpha1.tickets.Tickets/UpdateSLA"
-	Tickets_ListSLACondition_FullMethodName    = "/api.v1alpha1.tickets.Tickets/ListSLACondition"
-	Tickets_ReplyComment_FullMethodName        = "/api.v1alpha1.tickets.Tickets/ReplyComment"
-	Tickets_ListTicketAuditLog_FullMethodName  = "/api.v1alpha1.tickets.Tickets/ListTicketAuditLog"
-	Tickets_AssignSelf_FullMethodName          = "/api.v1alpha1.tickets.Tickets/AssignSelf"
+	Tickets_CreateTicket_FullMethodName         = "/api.v1alpha1.tickets.Tickets/CreateTicket"
+	Tickets_EditTicket_FullMethodName           = "/api.v1alpha1.tickets.Tickets/EditTicket"
+	Tickets_ListTickets_FullMethodName          = "/api.v1alpha1.tickets.Tickets/ListTickets"
+	Tickets_AssignTicket_FullMethodName         = "/api.v1alpha1.tickets.Tickets/AssignTicket"
+	Tickets_CloseTicket_FullMethodName          = "/api.v1alpha1.tickets.Tickets/CloseTicket"
+	Tickets_ViewTicket_FullMethodName           = "/api.v1alpha1.tickets.Tickets/ViewTicket"
+	Tickets_CreateComment_FullMethodName        = "/api.v1alpha1.tickets.Tickets/CreateComment"
+	Tickets_EnableProject_FullMethodName        = "/api.v1alpha1.tickets.Tickets/EnableProject"
+	Tickets_ListEnabledProjects_FullMethodName  = "/api.v1alpha1.tickets.Tickets/ListEnabledProjects"
+	Tickets_CreateSLA_FullMethodName            = "/api.v1alpha1.tickets.Tickets/CreateSLA"
+	Tickets_ListSLA_FullMethodName              = "/api.v1alpha1.tickets.Tickets/ListSLA"
+	Tickets_UpdateSLA_FullMethodName            = "/api.v1alpha1.tickets.Tickets/UpdateSLA"
+	Tickets_ListSLACondition_FullMethodName     = "/api.v1alpha1.tickets.Tickets/ListSLACondition"
+	Tickets_ReplyComment_FullMethodName         = "/api.v1alpha1.tickets.Tickets/ReplyComment"
+	Tickets_ListTicketAuditLog_FullMethodName   = "/api.v1alpha1.tickets.Tickets/ListTicketAuditLog"
+	Tickets_AssignSelf_FullMethodName           = "/api.v1alpha1.tickets.Tickets/AssignSelf"
+	Tickets_EditMaskTicket_FullMethodName       = "/api.v1alpha1.tickets.Tickets/EditMaskTicket"
+	Tickets_ListAllocatedTickets_FullMethodName = "/api.v1alpha1.tickets.Tickets/ListAllocatedTickets"
 )
 
 // TicketsClient is the client API for Tickets service.
@@ -73,6 +75,10 @@ type TicketsClient interface {
 	ListTicketAuditLog(ctx context.Context, in *ListTicketAuditLogReq, opts ...grpc.CallOption) (*ListTicketAuditLogRes, error)
 	// Public method to assign a ticket
 	AssignSelf(ctx context.Context, in *CreateSelfAssignReq, opts ...grpc.CallOption) (*CreateSelfAssignRes, error)
+	// Public Method to edit a ticket.
+	// EditTicket would be deprecated
+	EditMaskTicket(ctx context.Context, in *EditMaskTicketReq, opts ...grpc.CallOption) (*EditMaskTicketRes, error)
+	ListAllocatedTickets(ctx context.Context, in *ListAllocatedTicketReq, opts ...grpc.CallOption) (*ListAllocatedTicketRes, error)
 }
 
 type ticketsClient struct {
@@ -227,6 +233,24 @@ func (c *ticketsClient) AssignSelf(ctx context.Context, in *CreateSelfAssignReq,
 	return out, nil
 }
 
+func (c *ticketsClient) EditMaskTicket(ctx context.Context, in *EditMaskTicketReq, opts ...grpc.CallOption) (*EditMaskTicketRes, error) {
+	out := new(EditMaskTicketRes)
+	err := c.cc.Invoke(ctx, Tickets_EditMaskTicket_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *ticketsClient) ListAllocatedTickets(ctx context.Context, in *ListAllocatedTicketReq, opts ...grpc.CallOption) (*ListAllocatedTicketRes, error) {
+	out := new(ListAllocatedTicketRes)
+	err := c.cc.Invoke(ctx, Tickets_ListAllocatedTickets_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TicketsServer is the server API for Tickets service.
 // All implementations must embed UnimplementedTicketsServer
 // for forward compatibility
@@ -263,6 +287,10 @@ type TicketsServer interface {
 	ListTicketAuditLog(context.Context, *ListTicketAuditLogReq) (*ListTicketAuditLogRes, error)
 	// Public method to assign a ticket
 	AssignSelf(context.Context, *CreateSelfAssignReq) (*CreateSelfAssignRes, error)
+	// Public Method to edit a ticket.
+	// EditTicket would be deprecated
+	EditMaskTicket(context.Context, *EditMaskTicketReq) (*EditMaskTicketRes, error)
+	ListAllocatedTickets(context.Context, *ListAllocatedTicketReq) (*ListAllocatedTicketRes, error)
 	mustEmbedUnimplementedTicketsServer()
 }
 
@@ -317,6 +345,12 @@ func (UnimplementedTicketsServer) ListTicketAuditLog(context.Context, *ListTicke
 }
 func (UnimplementedTicketsServer) AssignSelf(context.Context, *CreateSelfAssignReq) (*CreateSelfAssignRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AssignSelf not implemented")
+}
+func (UnimplementedTicketsServer) EditMaskTicket(context.Context, *EditMaskTicketReq) (*EditMaskTicketRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EditMaskTicket not implemented")
+}
+func (UnimplementedTicketsServer) ListAllocatedTickets(context.Context, *ListAllocatedTicketReq) (*ListAllocatedTicketRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListAllocatedTickets not implemented")
 }
 func (UnimplementedTicketsServer) mustEmbedUnimplementedTicketsServer() {}
 
@@ -619,6 +653,42 @@ func _Tickets_AssignSelf_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Tickets_EditMaskTicket_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EditMaskTicketReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TicketsServer).EditMaskTicket(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Tickets_EditMaskTicket_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TicketsServer).EditMaskTicket(ctx, req.(*EditMaskTicketReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Tickets_ListAllocatedTickets_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListAllocatedTicketReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TicketsServer).ListAllocatedTickets(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Tickets_ListAllocatedTickets_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TicketsServer).ListAllocatedTickets(ctx, req.(*ListAllocatedTicketReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Tickets_ServiceDesc is the grpc.ServiceDesc for Tickets service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -689,6 +759,14 @@ var Tickets_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AssignSelf",
 			Handler:    _Tickets_AssignSelf_Handler,
+		},
+		{
+			MethodName: "EditMaskTicket",
+			Handler:    _Tickets_EditMaskTicket_Handler,
+		},
+		{
+			MethodName: "ListAllocatedTickets",
+			Handler:    _Tickets_ListAllocatedTickets_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
