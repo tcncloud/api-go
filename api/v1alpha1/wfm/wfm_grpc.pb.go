@@ -134,6 +134,7 @@ const (
 	WFM_ListDraftSchedules_FullMethodName                            = "/api.v1alpha1.wfm.WFM/ListDraftSchedules"
 	WFM_DeleteDraftSchedule_FullMethodName                           = "/api.v1alpha1.wfm.WFM/DeleteDraftSchedule"
 	WFM_CreateShiftInstance_FullMethodName                           = "/api.v1alpha1.wfm.WFM/CreateShiftInstance"
+	WFM_CreateShiftInstanceV2_FullMethodName                         = "/api.v1alpha1.wfm.WFM/CreateShiftInstanceV2"
 	WFM_SwapShiftInstances_FullMethodName                            = "/api.v1alpha1.wfm.WFM/SwapShiftInstances"
 	WFM_UpdateShiftInstance_FullMethodName                           = "/api.v1alpha1.wfm.WFM/UpdateShiftInstance"
 	WFM_ListShiftSegmentsByShiftInstanceSids_FullMethodName          = "/api.v1alpha1.wfm.WFM/ListShiftSegmentsByShiftInstanceSids"
@@ -1312,6 +1313,14 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when removing the draft schedule.
 	DeleteDraftSchedule(ctx context.Context, in *DeleteDraftScheduleReq, opts ...grpc.CallOption) (*DeleteDraftScheduleRes, error)
 	// Creates a shift instance for the org sending the request with the provided parameters.
+	// This method is not implemented. Do not use.
+	// Required permissions:
+	// NONE
+	// Errors:
+	//   - grpc.Invalid: one or more fields in the request have invalid values.
+	//   - grpc.Internal: error occurs when creating the shift instance.
+	CreateShiftInstance(ctx context.Context, in *CreateShiftInstanceReq, opts ...grpc.CallOption) (*CreateShiftInstanceRes, error)
+	// Creates a shift instance for the org sending the request with the provided parameters.
 	// If @wfm_agent_sids is empty, then the shift instance will be created for a newly created unassigned agent.
 	// A shift instance will be created for each wfm agent sid provided.
 	// Required permissions:
@@ -1320,7 +1329,7 @@ type WFMClient interface {
 	//   - grpc.Invalid: one or more fields in the request have invalid values.
 	//   - grpc.Internal: error occurs when creating the shift instance.
 	//   - grpc.NotFound: the @draft_schedule_sid, @shift_template_sid, or @wfm_agent_sids do not exist for the org sending the request.
-	CreateShiftInstance(ctx context.Context, in *CreateShiftInstanceReq, opts ...grpc.CallOption) (*CreateShiftInstanceRes, error)
+	CreateShiftInstanceV2(ctx context.Context, in *CreateShiftInstanceV2Req, opts ...grpc.CallOption) (*CreateShiftInstanceV2Res, error)
 	// Swaps a list of shift instances to have a different @wfm_agent_sid.
 	// Required permissions:
 	// NONE
@@ -2430,6 +2439,15 @@ func (c *wFMClient) DeleteDraftSchedule(ctx context.Context, in *DeleteDraftSche
 func (c *wFMClient) CreateShiftInstance(ctx context.Context, in *CreateShiftInstanceReq, opts ...grpc.CallOption) (*CreateShiftInstanceRes, error) {
 	out := new(CreateShiftInstanceRes)
 	err := c.cc.Invoke(ctx, WFM_CreateShiftInstance_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) CreateShiftInstanceV2(ctx context.Context, in *CreateShiftInstanceV2Req, opts ...grpc.CallOption) (*CreateShiftInstanceV2Res, error) {
+	out := new(CreateShiftInstanceV2Res)
+	err := c.cc.Invoke(ctx, WFM_CreateShiftInstanceV2_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -3676,6 +3694,14 @@ type WFMServer interface {
 	//   - grpc.Internal: error occurs when removing the draft schedule.
 	DeleteDraftSchedule(context.Context, *DeleteDraftScheduleReq) (*DeleteDraftScheduleRes, error)
 	// Creates a shift instance for the org sending the request with the provided parameters.
+	// This method is not implemented. Do not use.
+	// Required permissions:
+	// NONE
+	// Errors:
+	//   - grpc.Invalid: one or more fields in the request have invalid values.
+	//   - grpc.Internal: error occurs when creating the shift instance.
+	CreateShiftInstance(context.Context, *CreateShiftInstanceReq) (*CreateShiftInstanceRes, error)
+	// Creates a shift instance for the org sending the request with the provided parameters.
 	// If @wfm_agent_sids is empty, then the shift instance will be created for a newly created unassigned agent.
 	// A shift instance will be created for each wfm agent sid provided.
 	// Required permissions:
@@ -3684,7 +3710,7 @@ type WFMServer interface {
 	//   - grpc.Invalid: one or more fields in the request have invalid values.
 	//   - grpc.Internal: error occurs when creating the shift instance.
 	//   - grpc.NotFound: the @draft_schedule_sid, @shift_template_sid, or @wfm_agent_sids do not exist for the org sending the request.
-	CreateShiftInstance(context.Context, *CreateShiftInstanceReq) (*CreateShiftInstanceRes, error)
+	CreateShiftInstanceV2(context.Context, *CreateShiftInstanceV2Req) (*CreateShiftInstanceV2Res, error)
 	// Swaps a list of shift instances to have a different @wfm_agent_sid.
 	// Required permissions:
 	// NONE
@@ -4075,6 +4101,9 @@ func (UnimplementedWFMServer) DeleteDraftSchedule(context.Context, *DeleteDraftS
 }
 func (UnimplementedWFMServer) CreateShiftInstance(context.Context, *CreateShiftInstanceReq) (*CreateShiftInstanceRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateShiftInstance not implemented")
+}
+func (UnimplementedWFMServer) CreateShiftInstanceV2(context.Context, *CreateShiftInstanceV2Req) (*CreateShiftInstanceV2Res, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateShiftInstanceV2 not implemented")
 }
 func (UnimplementedWFMServer) SwapShiftInstances(context.Context, *SwapShiftInstancesReq) (*SwapShiftInstancesRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SwapShiftInstances not implemented")
@@ -5946,6 +5975,24 @@ func _WFM_CreateShiftInstance_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_CreateShiftInstanceV2_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateShiftInstanceV2Req)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).CreateShiftInstanceV2(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_CreateShiftInstanceV2_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).CreateShiftInstanceV2(ctx, req.(*CreateShiftInstanceV2Req))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WFM_SwapShiftInstances_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SwapShiftInstancesReq)
 	if err := dec(in); err != nil {
@@ -6480,6 +6527,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateShiftInstance",
 			Handler:    _WFM_CreateShiftInstance_Handler,
+		},
+		{
+			MethodName: "CreateShiftInstanceV2",
+			Handler:    _WFM_CreateShiftInstanceV2_Handler,
 		},
 		{
 			MethodName: "SwapShiftInstances",
