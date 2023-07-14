@@ -1334,7 +1334,7 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when creating the new scenario, or any of the node entities.
 	CreateScheduleScenarioWithNodes(context.Context, *connect_go.Request[wfm.CreateScheduleScenarioWithNodesReq]) (*connect_go.Response[wfm.CreateScheduleScenarioWithNodesRes], error)
 	// Updates a schedule scenario corresponding to the given @schedule_scenario_sid and org sending the request with the provided parameters.
-	// Only the @name and @description fields may be updated, and must be filled in with current value if updating the field is not desired.
+	// Only the @name, @description and @datetime_set_to_inactive fields may be updated, and must be filled in with current value if updating the field is not desired.
 	// The @schedule_scenario_sid must be the original for the schedule scenario since it cannot be updated.
 	// All other fields will be ignored since they cannot be updated.
 	// Required permissions:
@@ -1470,7 +1470,8 @@ type WFMClient interface {
 	// Gets the draft schedule with @draft_schedule_sid for the corresponding @datetime_range for the org sending the request.
 	// The @datetime_range field is optional. If not set, the draft schedule will be obtained with it's default range from it's start to end time.
 	// if @include_shift_instances is true, the shift instances associated within @datetime_range for the draft schedule will be returned in the draft schedules shift_instances field.
-	// if @node_selector is set then only instances belonging to the origin of @node_selector and its children node will be returned, otherwise all matching shift instances will be included
+	// if @node_selector is set then only instances belonging to the origin of @node_selector and its children node will be returned, otherwise all matching shift instances will be included.
+	// @node_selector must be for a node that belongs to the same schedule scenario as @draft_schedule_sid.
 	// if @include_shift_template is true, any returned shift instances will have their orginating shift template returned in their origin_shift_template field.
 	// if @include_shift_segments is true, any returned shift instances will have their shift_segments field set, otherwise the field will be left nil.
 	// if @include_scheduling_activity is true, any returned shift segments will have their scheduling_activity field set, otherwise the field will be left nil.
@@ -3815,7 +3816,7 @@ type WFMHandler interface {
 	//   - grpc.Internal: error occurs when creating the new scenario, or any of the node entities.
 	CreateScheduleScenarioWithNodes(context.Context, *connect_go.Request[wfm.CreateScheduleScenarioWithNodesReq]) (*connect_go.Response[wfm.CreateScheduleScenarioWithNodesRes], error)
 	// Updates a schedule scenario corresponding to the given @schedule_scenario_sid and org sending the request with the provided parameters.
-	// Only the @name and @description fields may be updated, and must be filled in with current value if updating the field is not desired.
+	// Only the @name, @description and @datetime_set_to_inactive fields may be updated, and must be filled in with current value if updating the field is not desired.
 	// The @schedule_scenario_sid must be the original for the schedule scenario since it cannot be updated.
 	// All other fields will be ignored since they cannot be updated.
 	// Required permissions:
@@ -3951,7 +3952,8 @@ type WFMHandler interface {
 	// Gets the draft schedule with @draft_schedule_sid for the corresponding @datetime_range for the org sending the request.
 	// The @datetime_range field is optional. If not set, the draft schedule will be obtained with it's default range from it's start to end time.
 	// if @include_shift_instances is true, the shift instances associated within @datetime_range for the draft schedule will be returned in the draft schedules shift_instances field.
-	// if @node_selector is set then only instances belonging to the origin of @node_selector and its children node will be returned, otherwise all matching shift instances will be included
+	// if @node_selector is set then only instances belonging to the origin of @node_selector and its children node will be returned, otherwise all matching shift instances will be included.
+	// @node_selector must be for a node that belongs to the same schedule scenario as @draft_schedule_sid.
 	// if @include_shift_template is true, any returned shift instances will have their orginating shift template returned in their origin_shift_template field.
 	// if @include_shift_segments is true, any returned shift instances will have their shift_segments field set, otherwise the field will be left nil.
 	// if @include_scheduling_activity is true, any returned shift segments will have their scheduling_activity field set, otherwise the field will be left nil.
