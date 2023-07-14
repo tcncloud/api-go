@@ -134,6 +134,7 @@ const (
 	WFM_ListDraftSchedules_FullMethodName                            = "/api.v1alpha1.wfm.WFM/ListDraftSchedules"
 	WFM_DeleteDraftSchedule_FullMethodName                           = "/api.v1alpha1.wfm.WFM/DeleteDraftSchedule"
 	WFM_CreateShiftInstance_FullMethodName                           = "/api.v1alpha1.wfm.WFM/CreateShiftInstance"
+	WFM_CreateShiftInstanceV2_FullMethodName                         = "/api.v1alpha1.wfm.WFM/CreateShiftInstanceV2"
 	WFM_SwapShiftInstances_FullMethodName                            = "/api.v1alpha1.wfm.WFM/SwapShiftInstances"
 	WFM_UpdateShiftInstance_FullMethodName                           = "/api.v1alpha1.wfm.WFM/UpdateShiftInstance"
 	WFM_ListShiftSegmentsByShiftInstanceSids_FullMethodName          = "/api.v1alpha1.wfm.WFM/ListShiftSegmentsByShiftInstanceSids"
@@ -552,7 +553,7 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when calculating the averages from the training data.
 	CalculateTrainingDataAveragesForSkillProfile(ctx context.Context, in *CalculateTrainingDataAveragesForSkillProfileReq, opts ...grpc.CallOption) (*CalculateTrainingDataAveragesForSkillProfileRes, error)
 	// Calculates the averages for call characteristics using the historical data of the given @skill_profile_sids and org sending the request.
-	// If no @skill_profile_sids are given, it will calculate the averages for all skill profiles for the given @org_id.
+	// If no @skill_profile_sids are given, it will calculate the averages for all skill profiles for the org sending the request.
 	// Averages will be weighted by the number of calls that each historical data interval has.
 	// Once the averages are calculated, they will be updated in the db for those skill profiles.
 	//
@@ -1036,7 +1037,7 @@ type WFMClient interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @agent_availability_pattern_sid or @org_id have invalid values.
+	//   - grpc.Invalid: the @agent_availability_pattern_sid has an invalid value.
 	//   - grpc.NotFound: the @agent_availability_pattern with the given sid doesn't exist.
 	//   - grpc.Internal: error occurs when removing the agent availability pattern.
 	DeleteAgentAvailabilityPattern(ctx context.Context, in *DeleteAgentAvailabilityPatternReq, opts ...grpc.CallOption) (*DeleteAgentAvailabilityPatternRes, error)
@@ -1161,7 +1162,7 @@ type WFMClient interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @org_id, @entity_type, or @belongs_to_entity have invalid values.
+	//   - grpc.Invalid: the @entity_type, or @belongs_to_entity have invalid values.
 	//   - grpc.Internal: error occurs when getting the config entities.
 	ListConfigEntities(ctx context.Context, in *ListConfigEntitiesReq, opts ...grpc.CallOption) (*ListConfigEntitiesRes, error)
 	// Deletes shift instances with the corresponding @shift_instance_sids for the org sending the request.
@@ -1312,12 +1313,23 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when removing the draft schedule.
 	DeleteDraftSchedule(ctx context.Context, in *DeleteDraftScheduleReq, opts ...grpc.CallOption) (*DeleteDraftScheduleRes, error)
 	// Creates a shift instance for the org sending the request with the provided parameters.
+	// This method is not implemented. Do not use.
 	// Required permissions:
 	// NONE
 	// Errors:
 	//   - grpc.Invalid: one or more fields in the request have invalid values.
 	//   - grpc.Internal: error occurs when creating the shift instance.
 	CreateShiftInstance(ctx context.Context, in *CreateShiftInstanceReq, opts ...grpc.CallOption) (*CreateShiftInstanceRes, error)
+	// Creates a shift instance for the org sending the request with the provided parameters.
+	// If @wfm_agent_sids is empty, then the shift instance will be created for a newly created unassigned agent.
+	// A shift instance will be created for each wfm agent sid provided.
+	// Required permissions:
+	// NONE
+	// Errors:
+	//   - grpc.Invalid: one or more fields in the request have invalid values.
+	//   - grpc.Internal: error occurs when creating the shift instance.
+	//   - grpc.NotFound: the @draft_schedule_sid, @shift_template_sid, or @wfm_agent_sids do not exist for the org sending the request.
+	CreateShiftInstanceV2(ctx context.Context, in *CreateShiftInstanceV2Req, opts ...grpc.CallOption) (*CreateShiftInstanceV2Res, error)
 	// Swaps a list of shift instances to have a different @wfm_agent_sid.
 	// Required permissions:
 	// NONE
@@ -2433,6 +2445,15 @@ func (c *wFMClient) CreateShiftInstance(ctx context.Context, in *CreateShiftInst
 	return out, nil
 }
 
+func (c *wFMClient) CreateShiftInstanceV2(ctx context.Context, in *CreateShiftInstanceV2Req, opts ...grpc.CallOption) (*CreateShiftInstanceV2Res, error) {
+	out := new(CreateShiftInstanceV2Res)
+	err := c.cc.Invoke(ctx, WFM_CreateShiftInstanceV2_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) SwapShiftInstances(ctx context.Context, in *SwapShiftInstancesReq, opts ...grpc.CallOption) (*SwapShiftInstancesRes, error) {
 	out := new(SwapShiftInstancesRes)
 	err := c.cc.Invoke(ctx, WFM_SwapShiftInstances_FullMethodName, in, out, opts...)
@@ -2913,7 +2934,7 @@ type WFMServer interface {
 	//   - grpc.Internal: error occurs when calculating the averages from the training data.
 	CalculateTrainingDataAveragesForSkillProfile(context.Context, *CalculateTrainingDataAveragesForSkillProfileReq) (*CalculateTrainingDataAveragesForSkillProfileRes, error)
 	// Calculates the averages for call characteristics using the historical data of the given @skill_profile_sids and org sending the request.
-	// If no @skill_profile_sids are given, it will calculate the averages for all skill profiles for the given @org_id.
+	// If no @skill_profile_sids are given, it will calculate the averages for all skill profiles for the org sending the request.
 	// Averages will be weighted by the number of calls that each historical data interval has.
 	// Once the averages are calculated, they will be updated in the db for those skill profiles.
 	//
@@ -3397,7 +3418,7 @@ type WFMServer interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @agent_availability_pattern_sid or @org_id have invalid values.
+	//   - grpc.Invalid: the @agent_availability_pattern_sid has an invalid value.
 	//   - grpc.NotFound: the @agent_availability_pattern with the given sid doesn't exist.
 	//   - grpc.Internal: error occurs when removing the agent availability pattern.
 	DeleteAgentAvailabilityPattern(context.Context, *DeleteAgentAvailabilityPatternReq) (*DeleteAgentAvailabilityPatternRes, error)
@@ -3522,7 +3543,7 @@ type WFMServer interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @org_id, @entity_type, or @belongs_to_entity have invalid values.
+	//   - grpc.Invalid: the @entity_type, or @belongs_to_entity have invalid values.
 	//   - grpc.Internal: error occurs when getting the config entities.
 	ListConfigEntities(context.Context, *ListConfigEntitiesReq) (*ListConfigEntitiesRes, error)
 	// Deletes shift instances with the corresponding @shift_instance_sids for the org sending the request.
@@ -3673,12 +3694,23 @@ type WFMServer interface {
 	//   - grpc.Internal: error occurs when removing the draft schedule.
 	DeleteDraftSchedule(context.Context, *DeleteDraftScheduleReq) (*DeleteDraftScheduleRes, error)
 	// Creates a shift instance for the org sending the request with the provided parameters.
+	// This method is not implemented. Do not use.
 	// Required permissions:
 	// NONE
 	// Errors:
 	//   - grpc.Invalid: one or more fields in the request have invalid values.
 	//   - grpc.Internal: error occurs when creating the shift instance.
 	CreateShiftInstance(context.Context, *CreateShiftInstanceReq) (*CreateShiftInstanceRes, error)
+	// Creates a shift instance for the org sending the request with the provided parameters.
+	// If @wfm_agent_sids is empty, then the shift instance will be created for a newly created unassigned agent.
+	// A shift instance will be created for each wfm agent sid provided.
+	// Required permissions:
+	// NONE
+	// Errors:
+	//   - grpc.Invalid: one or more fields in the request have invalid values.
+	//   - grpc.Internal: error occurs when creating the shift instance.
+	//   - grpc.NotFound: the @draft_schedule_sid, @shift_template_sid, or @wfm_agent_sids do not exist for the org sending the request.
+	CreateShiftInstanceV2(context.Context, *CreateShiftInstanceV2Req) (*CreateShiftInstanceV2Res, error)
 	// Swaps a list of shift instances to have a different @wfm_agent_sid.
 	// Required permissions:
 	// NONE
@@ -4069,6 +4101,9 @@ func (UnimplementedWFMServer) DeleteDraftSchedule(context.Context, *DeleteDraftS
 }
 func (UnimplementedWFMServer) CreateShiftInstance(context.Context, *CreateShiftInstanceReq) (*CreateShiftInstanceRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateShiftInstance not implemented")
+}
+func (UnimplementedWFMServer) CreateShiftInstanceV2(context.Context, *CreateShiftInstanceV2Req) (*CreateShiftInstanceV2Res, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateShiftInstanceV2 not implemented")
 }
 func (UnimplementedWFMServer) SwapShiftInstances(context.Context, *SwapShiftInstancesReq) (*SwapShiftInstancesRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SwapShiftInstances not implemented")
@@ -5940,6 +5975,24 @@ func _WFM_CreateShiftInstance_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_CreateShiftInstanceV2_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateShiftInstanceV2Req)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).CreateShiftInstanceV2(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_CreateShiftInstanceV2_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).CreateShiftInstanceV2(ctx, req.(*CreateShiftInstanceV2Req))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WFM_SwapShiftInstances_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SwapShiftInstancesReq)
 	if err := dec(in); err != nil {
@@ -6474,6 +6527,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateShiftInstance",
 			Handler:    _WFM_CreateShiftInstance_Handler,
+		},
+		{
+			MethodName: "CreateShiftInstanceV2",
+			Handler:    _WFM_CreateShiftInstanceV2_Handler,
 		},
 		{
 			MethodName: "SwapShiftInstances",
