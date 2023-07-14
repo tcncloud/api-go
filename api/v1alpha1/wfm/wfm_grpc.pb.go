@@ -1139,7 +1139,7 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when creating the new scenario, or any of the node entities.
 	CreateScheduleScenarioWithNodes(ctx context.Context, in *CreateScheduleScenarioWithNodesReq, opts ...grpc.CallOption) (*CreateScheduleScenarioWithNodesRes, error)
 	// Updates a schedule scenario corresponding to the given @schedule_scenario_sid and org sending the request with the provided parameters.
-	// Only the @name and @description fields may be updated, and must be filled in with current value if updating the field is not desired.
+	// Only the @name, @description and @datetime_set_to_inactive fields may be updated, and must be filled in with current value if updating the field is not desired.
 	// The @schedule_scenario_sid must be the original for the schedule scenario since it cannot be updated.
 	// All other fields will be ignored since they cannot be updated.
 	// Required permissions:
@@ -3500,7 +3500,7 @@ type WFMServer interface {
 	//   - grpc.Internal: error occurs when creating the new scenario, or any of the node entities.
 	CreateScheduleScenarioWithNodes(context.Context, *CreateScheduleScenarioWithNodesReq) (*CreateScheduleScenarioWithNodesRes, error)
 	// Updates a schedule scenario corresponding to the given @schedule_scenario_sid and org sending the request with the provided parameters.
-	// Only the @name and @description fields may be updated, and must be filled in with current value if updating the field is not desired.
+	// Only the @name, @description and @datetime_set_to_inactive fields may be updated, and must be filled in with current value if updating the field is not desired.
 	// The @schedule_scenario_sid must be the original for the schedule scenario since it cannot be updated.
 	// All other fields will be ignored since they cannot be updated.
 	// Required permissions:
