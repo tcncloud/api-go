@@ -140,7 +140,7 @@ const (
 	Permission_PERMISSION_INTEGRATIONS_PAYMENT Permission = 1301
 	// Enables access to integrations journey menu options.
 	Permission_PERMISSION_INTEGRATIONS_JOURNEY Permission = 1302
-	// Enables Agents to view portals.option
+	// Enables Agents to view portals.
 	Permission_PERMISSION_INTEGRATIONS_PORTALS_VIEW Permission = 1303
 	// Enables access to WFM app
 	Permission_PERMISSION_WFM Permission = 1500
