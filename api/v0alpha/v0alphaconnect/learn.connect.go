@@ -68,6 +68,10 @@ const (
 	LearnUploadDynamicScreenshotProcedure = "/api.v0alpha.Learn/UploadDynamicScreenshot"
 	// LearnDeleteStandaloneProcedure is the fully-qualified name of the Learn's DeleteStandalone RPC.
 	LearnDeleteStandaloneProcedure = "/api.v0alpha.Learn/DeleteStandalone"
+	// LearnSnippetProcedure is the fully-qualified name of the Learn's Snippet RPC.
+	LearnSnippetProcedure = "/api.v0alpha.Learn/Snippet"
+	// LearnDeleteLearnPagesProcedure is the fully-qualified name of the Learn's DeleteLearnPages RPC.
+	LearnDeleteLearnPagesProcedure = "/api.v0alpha.Learn/DeleteLearnPages"
 )
 
 // LearnClient is a client for the api.v0alpha.Learn service.
@@ -92,6 +96,11 @@ type LearnClient interface {
 	UploadDynamicScreenshot(context.Context, *connect_go.Request[v0alpha.UploadDynamicScreenshotReq]) (*connect_go.Response[v0alpha.UploadDynamicScreenshotRes], error)
 	// delete standalone articles from learning pages
 	DeleteStandalone(context.Context, *connect_go.Request[v0alpha.DeleteStandaloneReq]) (*connect_go.Response[v0alpha.DeleteStandaloneRes], error)
+	// get snippet content from learning pages
+	// we allow all the logged in agents/admins to view snippet content
+	Snippet(context.Context, *connect_go.Request[v0alpha.SnippetReq]) (*connect_go.Response[v0alpha.SnippetRes], error)
+	// delete learning pages
+	DeleteLearnPages(context.Context, *connect_go.Request[v0alpha.DeleteLearnPagesReq]) (*connect_go.Response[v0alpha.DeleteLearnPagesRes], error)
 }
 
 // NewLearnClient constructs a client for the api.v0alpha.Learn service. By default, it uses the
@@ -154,6 +163,16 @@ func NewLearnClient(httpClient connect_go.HTTPClient, baseURL string, opts ...co
 			baseURL+LearnDeleteStandaloneProcedure,
 			opts...,
 		),
+		snippet: connect_go.NewClient[v0alpha.SnippetReq, v0alpha.SnippetRes](
+			httpClient,
+			baseURL+LearnSnippetProcedure,
+			opts...,
+		),
+		deleteLearnPages: connect_go.NewClient[v0alpha.DeleteLearnPagesReq, v0alpha.DeleteLearnPagesRes](
+			httpClient,
+			baseURL+LearnDeleteLearnPagesProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -169,6 +188,8 @@ type learnClient struct {
 	storeStaticImage        *connect_go.Client[v0alpha.StoreStaticImageReq, v0alpha.StoreStaticImageRes]
 	uploadDynamicScreenshot *connect_go.Client[v0alpha.UploadDynamicScreenshotReq, v0alpha.UploadDynamicScreenshotRes]
 	deleteStandalone        *connect_go.Client[v0alpha.DeleteStandaloneReq, v0alpha.DeleteStandaloneRes]
+	snippet                 *connect_go.Client[v0alpha.SnippetReq, v0alpha.SnippetRes]
+	deleteLearnPages        *connect_go.Client[v0alpha.DeleteLearnPagesReq, v0alpha.DeleteLearnPagesRes]
 }
 
 // Exist calls api.v0alpha.Learn.Exist.
@@ -221,6 +242,16 @@ func (c *learnClient) DeleteStandalone(ctx context.Context, req *connect_go.Requ
 	return c.deleteStandalone.CallUnary(ctx, req)
 }
 
+// Snippet calls api.v0alpha.Learn.Snippet.
+func (c *learnClient) Snippet(ctx context.Context, req *connect_go.Request[v0alpha.SnippetReq]) (*connect_go.Response[v0alpha.SnippetRes], error) {
+	return c.snippet.CallUnary(ctx, req)
+}
+
+// DeleteLearnPages calls api.v0alpha.Learn.DeleteLearnPages.
+func (c *learnClient) DeleteLearnPages(ctx context.Context, req *connect_go.Request[v0alpha.DeleteLearnPagesReq]) (*connect_go.Response[v0alpha.DeleteLearnPagesRes], error) {
+	return c.deleteLearnPages.CallUnary(ctx, req)
+}
+
 // LearnHandler is an implementation of the api.v0alpha.Learn service.
 type LearnHandler interface {
 	// check if learning page already exists
@@ -243,6 +274,11 @@ type LearnHandler interface {
 	UploadDynamicScreenshot(context.Context, *connect_go.Request[v0alpha.UploadDynamicScreenshotReq]) (*connect_go.Response[v0alpha.UploadDynamicScreenshotRes], error)
 	// delete standalone articles from learning pages
 	DeleteStandalone(context.Context, *connect_go.Request[v0alpha.DeleteStandaloneReq]) (*connect_go.Response[v0alpha.DeleteStandaloneRes], error)
+	// get snippet content from learning pages
+	// we allow all the logged in agents/admins to view snippet content
+	Snippet(context.Context, *connect_go.Request[v0alpha.SnippetReq]) (*connect_go.Response[v0alpha.SnippetRes], error)
+	// delete learning pages
+	DeleteLearnPages(context.Context, *connect_go.Request[v0alpha.DeleteLearnPagesReq]) (*connect_go.Response[v0alpha.DeleteLearnPagesRes], error)
 }
 
 // NewLearnHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -301,6 +337,16 @@ func NewLearnHandler(svc LearnHandler, opts ...connect_go.HandlerOption) (string
 		svc.DeleteStandalone,
 		opts...,
 	)
+	learnSnippetHandler := connect_go.NewUnaryHandler(
+		LearnSnippetProcedure,
+		svc.Snippet,
+		opts...,
+	)
+	learnDeleteLearnPagesHandler := connect_go.NewUnaryHandler(
+		LearnDeleteLearnPagesProcedure,
+		svc.DeleteLearnPages,
+		opts...,
+	)
 	return "/api.v0alpha.Learn/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case LearnExistProcedure:
@@ -323,6 +369,10 @@ func NewLearnHandler(svc LearnHandler, opts ...connect_go.HandlerOption) (string
 			learnUploadDynamicScreenshotHandler.ServeHTTP(w, r)
 		case LearnDeleteStandaloneProcedure:
 			learnDeleteStandaloneHandler.ServeHTTP(w, r)
+		case LearnSnippetProcedure:
+			learnSnippetHandler.ServeHTTP(w, r)
+		case LearnDeleteLearnPagesProcedure:
+			learnDeleteLearnPagesHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -370,4 +420,12 @@ func (UnimplementedLearnHandler) UploadDynamicScreenshot(context.Context, *conne
 
 func (UnimplementedLearnHandler) DeleteStandalone(context.Context, *connect_go.Request[v0alpha.DeleteStandaloneReq]) (*connect_go.Response[v0alpha.DeleteStandaloneRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.DeleteStandalone is not implemented"))
+}
+
+func (UnimplementedLearnHandler) Snippet(context.Context, *connect_go.Request[v0alpha.SnippetReq]) (*connect_go.Response[v0alpha.SnippetRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.Snippet is not implemented"))
+}
+
+func (UnimplementedLearnHandler) DeleteLearnPages(context.Context, *connect_go.Request[v0alpha.DeleteLearnPagesReq]) (*connect_go.Response[v0alpha.DeleteLearnPagesRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.DeleteLearnPages is not implemented"))
 }
