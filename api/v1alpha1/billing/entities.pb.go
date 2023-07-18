@@ -292,7 +292,8 @@ type GetInvoiceReq struct {
 	InvoiceDate *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=invoice_date,json=invoiceDate,proto3" json:"invoice_date,omitempty"`
 	// Required. the identifier of the organization to update the plan for
 	OrgId string `protobuf:"bytes,2,opt,name=org_id,json=orgId,proto3" json:"org_id,omitempty"`
-	// the invoice for the organization. Optional field that will use the proto format as the default
+	// Optional. the invoice for the organization. If not specified,
+	// will use the proto format as the default
 	Format InvoiceFormat `protobuf:"varint,3,opt,name=format,proto3,enum=api.v1alpha1.billing.InvoiceFormat" json:"format,omitempty"`
 }
 
