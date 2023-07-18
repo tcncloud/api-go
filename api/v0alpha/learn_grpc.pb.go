@@ -71,7 +71,8 @@ type LearnClient interface {
 	UploadDynamicScreenshot(ctx context.Context, in *UploadDynamicScreenshotReq, opts ...grpc.CallOption) (*UploadDynamicScreenshotRes, error)
 	// delete standalone articles from learning pages
 	DeleteStandalone(ctx context.Context, in *DeleteStandaloneReq, opts ...grpc.CallOption) (*DeleteStandaloneRes, error)
-	// get snippet from learning pages
+	// get snippet content from learning pages
+	// we allow all the logged in agents/admins to view snippet content
 	Snippet(ctx context.Context, in *SnippetReq, opts ...grpc.CallOption) (*SnippetRes, error)
 	// delete learning pages
 	DeleteLearnPages(ctx context.Context, in *DeleteLearnPagesReq, opts ...grpc.CallOption) (*DeleteLearnPagesRes, error)
@@ -217,7 +218,8 @@ type LearnServer interface {
 	UploadDynamicScreenshot(context.Context, *UploadDynamicScreenshotReq) (*UploadDynamicScreenshotRes, error)
 	// delete standalone articles from learning pages
 	DeleteStandalone(context.Context, *DeleteStandaloneReq) (*DeleteStandaloneRes, error)
-	// get snippet from learning pages
+	// get snippet content from learning pages
+	// we allow all the logged in agents/admins to view snippet content
 	Snippet(context.Context, *SnippetReq) (*SnippetRes, error)
 	// delete learning pages
 	DeleteLearnPages(context.Context, *DeleteLearnPagesReq) (*DeleteLearnPagesRes, error)

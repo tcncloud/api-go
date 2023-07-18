@@ -96,7 +96,8 @@ type LearnClient interface {
 	UploadDynamicScreenshot(context.Context, *connect_go.Request[v0alpha.UploadDynamicScreenshotReq]) (*connect_go.Response[v0alpha.UploadDynamicScreenshotRes], error)
 	// delete standalone articles from learning pages
 	DeleteStandalone(context.Context, *connect_go.Request[v0alpha.DeleteStandaloneReq]) (*connect_go.Response[v0alpha.DeleteStandaloneRes], error)
-	// get snippet from learning pages
+	// get snippet content from learning pages
+	// we allow all the logged in agents/admins to view snippet content
 	Snippet(context.Context, *connect_go.Request[v0alpha.SnippetReq]) (*connect_go.Response[v0alpha.SnippetRes], error)
 	// delete learning pages
 	DeleteLearnPages(context.Context, *connect_go.Request[v0alpha.DeleteLearnPagesReq]) (*connect_go.Response[v0alpha.DeleteLearnPagesRes], error)
@@ -273,7 +274,8 @@ type LearnHandler interface {
 	UploadDynamicScreenshot(context.Context, *connect_go.Request[v0alpha.UploadDynamicScreenshotReq]) (*connect_go.Response[v0alpha.UploadDynamicScreenshotRes], error)
 	// delete standalone articles from learning pages
 	DeleteStandalone(context.Context, *connect_go.Request[v0alpha.DeleteStandaloneReq]) (*connect_go.Response[v0alpha.DeleteStandaloneRes], error)
-	// get snippet from learning pages
+	// get snippet content from learning pages
+	// we allow all the logged in agents/admins to view snippet content
 	Snippet(context.Context, *connect_go.Request[v0alpha.SnippetReq]) (*connect_go.Response[v0alpha.SnippetRes], error)
 	// delete learning pages
 	DeleteLearnPages(context.Context, *connect_go.Request[v0alpha.DeleteLearnPagesReq]) (*connect_go.Response[v0alpha.DeleteLearnPagesRes], error)
