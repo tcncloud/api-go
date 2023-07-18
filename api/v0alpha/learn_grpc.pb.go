@@ -43,6 +43,8 @@ const (
 	Learn_StoreStaticImage_FullMethodName        = "/api.v0alpha.Learn/StoreStaticImage"
 	Learn_UploadDynamicScreenshot_FullMethodName = "/api.v0alpha.Learn/UploadDynamicScreenshot"
 	Learn_DeleteStandalone_FullMethodName        = "/api.v0alpha.Learn/DeleteStandalone"
+	Learn_Snippet_FullMethodName                 = "/api.v0alpha.Learn/Snippet"
+	Learn_DeleteLearnPages_FullMethodName        = "/api.v0alpha.Learn/DeleteLearnPages"
 )
 
 // LearnClient is the client API for Learn service.
@@ -69,6 +71,11 @@ type LearnClient interface {
 	UploadDynamicScreenshot(ctx context.Context, in *UploadDynamicScreenshotReq, opts ...grpc.CallOption) (*UploadDynamicScreenshotRes, error)
 	// delete standalone articles from learning pages
 	DeleteStandalone(ctx context.Context, in *DeleteStandaloneReq, opts ...grpc.CallOption) (*DeleteStandaloneRes, error)
+	// get snippet content from learning pages
+	// we allow all the logged in agents/admins to view snippet content
+	Snippet(ctx context.Context, in *SnippetReq, opts ...grpc.CallOption) (*SnippetRes, error)
+	// delete learning pages
+	DeleteLearnPages(ctx context.Context, in *DeleteLearnPagesReq, opts ...grpc.CallOption) (*DeleteLearnPagesRes, error)
 }
 
 type learnClient struct {
@@ -169,6 +176,24 @@ func (c *learnClient) DeleteStandalone(ctx context.Context, in *DeleteStandalone
 	return out, nil
 }
 
+func (c *learnClient) Snippet(ctx context.Context, in *SnippetReq, opts ...grpc.CallOption) (*SnippetRes, error) {
+	out := new(SnippetRes)
+	err := c.cc.Invoke(ctx, Learn_Snippet_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *learnClient) DeleteLearnPages(ctx context.Context, in *DeleteLearnPagesReq, opts ...grpc.CallOption) (*DeleteLearnPagesRes, error) {
+	out := new(DeleteLearnPagesRes)
+	err := c.cc.Invoke(ctx, Learn_DeleteLearnPages_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LearnServer is the server API for Learn service.
 // All implementations must embed UnimplementedLearnServer
 // for forward compatibility
@@ -193,6 +218,11 @@ type LearnServer interface {
 	UploadDynamicScreenshot(context.Context, *UploadDynamicScreenshotReq) (*UploadDynamicScreenshotRes, error)
 	// delete standalone articles from learning pages
 	DeleteStandalone(context.Context, *DeleteStandaloneReq) (*DeleteStandaloneRes, error)
+	// get snippet content from learning pages
+	// we allow all the logged in agents/admins to view snippet content
+	Snippet(context.Context, *SnippetReq) (*SnippetRes, error)
+	// delete learning pages
+	DeleteLearnPages(context.Context, *DeleteLearnPagesReq) (*DeleteLearnPagesRes, error)
 	mustEmbedUnimplementedLearnServer()
 }
 
@@ -229,6 +259,12 @@ func (UnimplementedLearnServer) UploadDynamicScreenshot(context.Context, *Upload
 }
 func (UnimplementedLearnServer) DeleteStandalone(context.Context, *DeleteStandaloneReq) (*DeleteStandaloneRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteStandalone not implemented")
+}
+func (UnimplementedLearnServer) Snippet(context.Context, *SnippetReq) (*SnippetRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Snippet not implemented")
+}
+func (UnimplementedLearnServer) DeleteLearnPages(context.Context, *DeleteLearnPagesReq) (*DeleteLearnPagesRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteLearnPages not implemented")
 }
 func (UnimplementedLearnServer) mustEmbedUnimplementedLearnServer() {}
 
@@ -423,6 +459,42 @@ func _Learn_DeleteStandalone_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Learn_Snippet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SnippetReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LearnServer).Snippet(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Learn_Snippet_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LearnServer).Snippet(ctx, req.(*SnippetReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Learn_DeleteLearnPages_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteLearnPagesReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LearnServer).DeleteLearnPages(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Learn_DeleteLearnPages_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LearnServer).DeleteLearnPages(ctx, req.(*DeleteLearnPagesReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Learn_ServiceDesc is the grpc.ServiceDesc for Learn service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -469,6 +541,14 @@ var Learn_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteStandalone",
 			Handler:    _Learn_DeleteStandalone_Handler,
+		},
+		{
+			MethodName: "Snippet",
+			Handler:    _Learn_Snippet_Handler,
+		},
+		{
+			MethodName: "DeleteLearnPages",
+			Handler:    _Learn_DeleteLearnPages_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

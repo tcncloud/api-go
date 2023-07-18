@@ -63,7 +63,7 @@ type BillingClient interface {
 	// no date is provided, this will return the invoice as it currently
 	// stands for the current billing cycle.
 	GetInvoice(context.Context, *connect_go.Request[billing.GetInvoiceReq]) (*connect_go.Response[billing.GetInvoiceRes], error)
-	ExportGeneratedInvoice(context.Context, *connect_go.Request[billing.ExportGeneratedInvoicesReq]) (*connect_go.Response[billing.ExportGeneratedInvoicesRes], error)
+	ExportGeneratedInvoice(context.Context, *connect_go.Request[billing.ExportGeneratedInvoiceReq]) (*connect_go.Response[billing.ExportGeneratedInvoiceRes], error)
 }
 
 // NewBillingClient constructs a client for the api.v1alpha1.billing.Billing service. By default, it
@@ -91,7 +91,7 @@ func NewBillingClient(httpClient connect_go.HTTPClient, baseURL string, opts ...
 			baseURL+BillingGetInvoiceProcedure,
 			opts...,
 		),
-		exportGeneratedInvoice: connect_go.NewClient[billing.ExportGeneratedInvoicesReq, billing.ExportGeneratedInvoicesRes](
+		exportGeneratedInvoice: connect_go.NewClient[billing.ExportGeneratedInvoiceReq, billing.ExportGeneratedInvoiceRes](
 			httpClient,
 			baseURL+BillingExportGeneratedInvoiceProcedure,
 			opts...,
@@ -104,7 +104,7 @@ type billingClient struct {
 	getBillingPlan         *connect_go.Client[billing.GetBillingPlanReq, billing.GetBillingPlanRes]
 	updateBillingPlan      *connect_go.Client[billing.UpdateBillingPlanReq, billing.UpdateBillingPlanRes]
 	getInvoice             *connect_go.Client[billing.GetInvoiceReq, billing.GetInvoiceRes]
-	exportGeneratedInvoice *connect_go.Client[billing.ExportGeneratedInvoicesReq, billing.ExportGeneratedInvoicesRes]
+	exportGeneratedInvoice *connect_go.Client[billing.ExportGeneratedInvoiceReq, billing.ExportGeneratedInvoiceRes]
 }
 
 // GetBillingPlan calls api.v1alpha1.billing.Billing.GetBillingPlan.
@@ -123,7 +123,7 @@ func (c *billingClient) GetInvoice(ctx context.Context, req *connect_go.Request[
 }
 
 // ExportGeneratedInvoice calls api.v1alpha1.billing.Billing.ExportGeneratedInvoice.
-func (c *billingClient) ExportGeneratedInvoice(ctx context.Context, req *connect_go.Request[billing.ExportGeneratedInvoicesReq]) (*connect_go.Response[billing.ExportGeneratedInvoicesRes], error) {
+func (c *billingClient) ExportGeneratedInvoice(ctx context.Context, req *connect_go.Request[billing.ExportGeneratedInvoiceReq]) (*connect_go.Response[billing.ExportGeneratedInvoiceRes], error) {
 	return c.exportGeneratedInvoice.CallUnary(ctx, req)
 }
 
@@ -145,7 +145,7 @@ type BillingHandler interface {
 	// no date is provided, this will return the invoice as it currently
 	// stands for the current billing cycle.
 	GetInvoice(context.Context, *connect_go.Request[billing.GetInvoiceReq]) (*connect_go.Response[billing.GetInvoiceRes], error)
-	ExportGeneratedInvoice(context.Context, *connect_go.Request[billing.ExportGeneratedInvoicesReq]) (*connect_go.Response[billing.ExportGeneratedInvoicesRes], error)
+	ExportGeneratedInvoice(context.Context, *connect_go.Request[billing.ExportGeneratedInvoiceReq]) (*connect_go.Response[billing.ExportGeneratedInvoiceRes], error)
 }
 
 // NewBillingHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -205,6 +205,6 @@ func (UnimplementedBillingHandler) GetInvoice(context.Context, *connect_go.Reque
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.billing.Billing.GetInvoice is not implemented"))
 }
 
-func (UnimplementedBillingHandler) ExportGeneratedInvoice(context.Context, *connect_go.Request[billing.ExportGeneratedInvoicesReq]) (*connect_go.Response[billing.ExportGeneratedInvoicesRes], error) {
+func (UnimplementedBillingHandler) ExportGeneratedInvoice(context.Context, *connect_go.Request[billing.ExportGeneratedInvoiceReq]) (*connect_go.Response[billing.ExportGeneratedInvoiceRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.billing.Billing.ExportGeneratedInvoice is not implemented"))
 }

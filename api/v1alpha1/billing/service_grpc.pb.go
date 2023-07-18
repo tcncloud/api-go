@@ -45,7 +45,7 @@ type BillingClient interface {
 	// no date is provided, this will return the invoice as it currently
 	// stands for the current billing cycle.
 	GetInvoice(ctx context.Context, in *GetInvoiceReq, opts ...grpc.CallOption) (*GetInvoiceRes, error)
-	ExportGeneratedInvoice(ctx context.Context, in *ExportGeneratedInvoicesReq, opts ...grpc.CallOption) (*ExportGeneratedInvoicesRes, error)
+	ExportGeneratedInvoice(ctx context.Context, in *ExportGeneratedInvoiceReq, opts ...grpc.CallOption) (*ExportGeneratedInvoiceRes, error)
 }
 
 type billingClient struct {
@@ -83,8 +83,8 @@ func (c *billingClient) GetInvoice(ctx context.Context, in *GetInvoiceReq, opts 
 	return out, nil
 }
 
-func (c *billingClient) ExportGeneratedInvoice(ctx context.Context, in *ExportGeneratedInvoicesReq, opts ...grpc.CallOption) (*ExportGeneratedInvoicesRes, error) {
-	out := new(ExportGeneratedInvoicesRes)
+func (c *billingClient) ExportGeneratedInvoice(ctx context.Context, in *ExportGeneratedInvoiceReq, opts ...grpc.CallOption) (*ExportGeneratedInvoiceRes, error) {
+	out := new(ExportGeneratedInvoiceRes)
 	err := c.cc.Invoke(ctx, Billing_ExportGeneratedInvoice_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -112,7 +112,7 @@ type BillingServer interface {
 	// no date is provided, this will return the invoice as it currently
 	// stands for the current billing cycle.
 	GetInvoice(context.Context, *GetInvoiceReq) (*GetInvoiceRes, error)
-	ExportGeneratedInvoice(context.Context, *ExportGeneratedInvoicesReq) (*ExportGeneratedInvoicesRes, error)
+	ExportGeneratedInvoice(context.Context, *ExportGeneratedInvoiceReq) (*ExportGeneratedInvoiceRes, error)
 	mustEmbedUnimplementedBillingServer()
 }
 
@@ -129,7 +129,7 @@ func (UnimplementedBillingServer) UpdateBillingPlan(context.Context, *UpdateBill
 func (UnimplementedBillingServer) GetInvoice(context.Context, *GetInvoiceReq) (*GetInvoiceRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetInvoice not implemented")
 }
-func (UnimplementedBillingServer) ExportGeneratedInvoice(context.Context, *ExportGeneratedInvoicesReq) (*ExportGeneratedInvoicesRes, error) {
+func (UnimplementedBillingServer) ExportGeneratedInvoice(context.Context, *ExportGeneratedInvoiceReq) (*ExportGeneratedInvoiceRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ExportGeneratedInvoice not implemented")
 }
 func (UnimplementedBillingServer) mustEmbedUnimplementedBillingServer() {}
@@ -200,7 +200,7 @@ func _Billing_GetInvoice_Handler(srv interface{}, ctx context.Context, dec func(
 }
 
 func _Billing_ExportGeneratedInvoice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ExportGeneratedInvoicesReq)
+	in := new(ExportGeneratedInvoiceReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -212,7 +212,7 @@ func _Billing_ExportGeneratedInvoice_Handler(srv interface{}, ctx context.Contex
 		FullMethod: Billing_ExportGeneratedInvoice_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BillingServer).ExportGeneratedInvoice(ctx, req.(*ExportGeneratedInvoicesReq))
+		return srv.(BillingServer).ExportGeneratedInvoice(ctx, req.(*ExportGeneratedInvoiceReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
