@@ -37,6 +37,8 @@ const (
 	Tickets_AssignSelf_FullMethodName           = "/api.v1alpha1.tickets.Tickets/AssignSelf"
 	Tickets_EditMaskTicket_FullMethodName       = "/api.v1alpha1.tickets.Tickets/EditMaskTicket"
 	Tickets_ListAllocatedTickets_FullMethodName = "/api.v1alpha1.tickets.Tickets/ListAllocatedTickets"
+	Tickets_ListSkills_FullMethodName           = "/api.v1alpha1.tickets.Tickets/ListSkills"
+	Tickets_ListUsers_FullMethodName            = "/api.v1alpha1.tickets.Tickets/ListUsers"
 )
 
 // TicketsClient is the client API for Tickets service.
@@ -79,6 +81,10 @@ type TicketsClient interface {
 	// EditTicket would be deprecated
 	EditMaskTicket(ctx context.Context, in *EditMaskTicketReq, opts ...grpc.CallOption) (*EditMaskTicketRes, error)
 	ListAllocatedTickets(ctx context.Context, in *ListAllocatedTicketReq, opts ...grpc.CallOption) (*ListAllocatedTicketRes, error)
+	// public method to fetch list of skills for a tickets user
+	ListSkills(ctx context.Context, in *ListSkillsReq, opts ...grpc.CallOption) (*ListSkillsRes, error)
+	// public method to fetch list of users for a tickets user
+	ListUsers(ctx context.Context, in *ListUsersReq, opts ...grpc.CallOption) (*ListUsersRes, error)
 }
 
 type ticketsClient struct {
@@ -251,6 +257,24 @@ func (c *ticketsClient) ListAllocatedTickets(ctx context.Context, in *ListAlloca
 	return out, nil
 }
 
+func (c *ticketsClient) ListSkills(ctx context.Context, in *ListSkillsReq, opts ...grpc.CallOption) (*ListSkillsRes, error) {
+	out := new(ListSkillsRes)
+	err := c.cc.Invoke(ctx, Tickets_ListSkills_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *ticketsClient) ListUsers(ctx context.Context, in *ListUsersReq, opts ...grpc.CallOption) (*ListUsersRes, error) {
+	out := new(ListUsersRes)
+	err := c.cc.Invoke(ctx, Tickets_ListUsers_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TicketsServer is the server API for Tickets service.
 // All implementations must embed UnimplementedTicketsServer
 // for forward compatibility
@@ -291,6 +315,10 @@ type TicketsServer interface {
 	// EditTicket would be deprecated
 	EditMaskTicket(context.Context, *EditMaskTicketReq) (*EditMaskTicketRes, error)
 	ListAllocatedTickets(context.Context, *ListAllocatedTicketReq) (*ListAllocatedTicketRes, error)
+	// public method to fetch list of skills for a tickets user
+	ListSkills(context.Context, *ListSkillsReq) (*ListSkillsRes, error)
+	// public method to fetch list of users for a tickets user
+	ListUsers(context.Context, *ListUsersReq) (*ListUsersRes, error)
 	mustEmbedUnimplementedTicketsServer()
 }
 
@@ -351,6 +379,12 @@ func (UnimplementedTicketsServer) EditMaskTicket(context.Context, *EditMaskTicke
 }
 func (UnimplementedTicketsServer) ListAllocatedTickets(context.Context, *ListAllocatedTicketReq) (*ListAllocatedTicketRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAllocatedTickets not implemented")
+}
+func (UnimplementedTicketsServer) ListSkills(context.Context, *ListSkillsReq) (*ListSkillsRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListSkills not implemented")
+}
+func (UnimplementedTicketsServer) ListUsers(context.Context, *ListUsersReq) (*ListUsersRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListUsers not implemented")
 }
 func (UnimplementedTicketsServer) mustEmbedUnimplementedTicketsServer() {}
 
@@ -689,6 +723,42 @@ func _Tickets_ListAllocatedTickets_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Tickets_ListSkills_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListSkillsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TicketsServer).ListSkills(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Tickets_ListSkills_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TicketsServer).ListSkills(ctx, req.(*ListSkillsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Tickets_ListUsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListUsersReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TicketsServer).ListUsers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Tickets_ListUsers_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TicketsServer).ListUsers(ctx, req.(*ListUsersReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Tickets_ServiceDesc is the grpc.ServiceDesc for Tickets service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -767,6 +837,14 @@ var Tickets_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListAllocatedTickets",
 			Handler:    _Tickets_ListAllocatedTickets_Handler,
+		},
+		{
+			MethodName: "ListSkills",
+			Handler:    _Tickets_ListSkills_Handler,
+		},
+		{
+			MethodName: "ListUsers",
+			Handler:    _Tickets_ListUsers_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
