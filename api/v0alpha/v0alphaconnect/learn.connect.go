@@ -55,6 +55,8 @@ const (
 	LearnExportManyProcedure = "/api.v0alpha.Learn/ExportMany"
 	// LearnSearchContentProcedure is the fully-qualified name of the Learn's SearchContent RPC.
 	LearnSearchContentProcedure = "/api.v0alpha.Learn/SearchContent"
+	// LearnListSearchResultsProcedure is the fully-qualified name of the Learn's ListSearchResults RPC.
+	LearnListSearchResultsProcedure = "/api.v0alpha.Learn/ListSearchResults"
 	// LearnStandaloneProcedure is the fully-qualified name of the Learn's Standalone RPC.
 	LearnStandaloneProcedure = "/api.v0alpha.Learn/Standalone"
 	// LearnContentEditorDataProcedure is the fully-qualified name of the Learn's ContentEditorData RPC.
@@ -83,7 +85,11 @@ type LearnClient interface {
 	// exports multiple pages of the learning center markdown as PDF
 	ExportMany(context.Context, *connect_go.Request[v0alpha.ExportManyReq]) (*connect_go.Response[v0alpha.ExportRes], error)
 	// search content in learning pages
+	// we allow all the logged in agents/admins to view search content
 	SearchContent(context.Context, *connect_go.Request[v0alpha.SearchContentReq]) (*connect_go.Response[v0alpha.SearchRes], error)
+	// stream search content results in learning pages
+	// we allow all the logged in agents/admins to view search content
+	ListSearchResults(context.Context, *connect_go.Request[v0alpha.SearchContentReq]) (*connect_go.ServerStreamForClient[v0alpha.SearchRes], error)
 	// get standalone articles from learning pages
 	Standalone(context.Context, *connect_go.Request[v0alpha.StandaloneReq]) (*connect_go.Response[v0alpha.StandaloneRes], error)
 	// retrieve user who edited the content last
@@ -131,6 +137,11 @@ func NewLearnClient(httpClient connect_go.HTTPClient, baseURL string, opts ...co
 		searchContent: connect_go.NewClient[v0alpha.SearchContentReq, v0alpha.SearchRes](
 			httpClient,
 			baseURL+LearnSearchContentProcedure,
+			opts...,
+		),
+		listSearchResults: connect_go.NewClient[v0alpha.SearchContentReq, v0alpha.SearchRes](
+			httpClient,
+			baseURL+LearnListSearchResultsProcedure,
 			opts...,
 		),
 		standalone: connect_go.NewClient[v0alpha.StandaloneReq, v0alpha.StandaloneRes](
@@ -182,6 +193,7 @@ type learnClient struct {
 	content                 *connect_go.Client[v0alpha.ContentReq, v0alpha.ContentRes]
 	exportMany              *connect_go.Client[v0alpha.ExportManyReq, v0alpha.ExportRes]
 	searchContent           *connect_go.Client[v0alpha.SearchContentReq, v0alpha.SearchRes]
+	listSearchResults       *connect_go.Client[v0alpha.SearchContentReq, v0alpha.SearchRes]
 	standalone              *connect_go.Client[v0alpha.StandaloneReq, v0alpha.StandaloneRes]
 	contentEditorData       *connect_go.Client[v0alpha.ContentEditorDataReq, v0alpha.ContentEditorDataRes]
 	update                  *connect_go.Client[v0alpha.UpdateReq, v0alpha.UpdateRes]
@@ -210,6 +222,11 @@ func (c *learnClient) ExportMany(ctx context.Context, req *connect_go.Request[v0
 // SearchContent calls api.v0alpha.Learn.SearchContent.
 func (c *learnClient) SearchContent(ctx context.Context, req *connect_go.Request[v0alpha.SearchContentReq]) (*connect_go.Response[v0alpha.SearchRes], error) {
 	return c.searchContent.CallUnary(ctx, req)
+}
+
+// ListSearchResults calls api.v0alpha.Learn.ListSearchResults.
+func (c *learnClient) ListSearchResults(ctx context.Context, req *connect_go.Request[v0alpha.SearchContentReq]) (*connect_go.ServerStreamForClient[v0alpha.SearchRes], error) {
+	return c.listSearchResults.CallServerStream(ctx, req)
 }
 
 // Standalone calls api.v0alpha.Learn.Standalone.
@@ -261,7 +278,11 @@ type LearnHandler interface {
 	// exports multiple pages of the learning center markdown as PDF
 	ExportMany(context.Context, *connect_go.Request[v0alpha.ExportManyReq]) (*connect_go.Response[v0alpha.ExportRes], error)
 	// search content in learning pages
+	// we allow all the logged in agents/admins to view search content
 	SearchContent(context.Context, *connect_go.Request[v0alpha.SearchContentReq]) (*connect_go.Response[v0alpha.SearchRes], error)
+	// stream search content results in learning pages
+	// we allow all the logged in agents/admins to view search content
+	ListSearchResults(context.Context, *connect_go.Request[v0alpha.SearchContentReq], *connect_go.ServerStream[v0alpha.SearchRes]) error
 	// get standalone articles from learning pages
 	Standalone(context.Context, *connect_go.Request[v0alpha.StandaloneReq]) (*connect_go.Response[v0alpha.StandaloneRes], error)
 	// retrieve user who edited the content last
@@ -305,6 +326,11 @@ func NewLearnHandler(svc LearnHandler, opts ...connect_go.HandlerOption) (string
 	learnSearchContentHandler := connect_go.NewUnaryHandler(
 		LearnSearchContentProcedure,
 		svc.SearchContent,
+		opts...,
+	)
+	learnListSearchResultsHandler := connect_go.NewServerStreamHandler(
+		LearnListSearchResultsProcedure,
+		svc.ListSearchResults,
 		opts...,
 	)
 	learnStandaloneHandler := connect_go.NewUnaryHandler(
@@ -357,6 +383,8 @@ func NewLearnHandler(svc LearnHandler, opts ...connect_go.HandlerOption) (string
 			learnExportManyHandler.ServeHTTP(w, r)
 		case LearnSearchContentProcedure:
 			learnSearchContentHandler.ServeHTTP(w, r)
+		case LearnListSearchResultsProcedure:
+			learnListSearchResultsHandler.ServeHTTP(w, r)
 		case LearnStandaloneProcedure:
 			learnStandaloneHandler.ServeHTTP(w, r)
 		case LearnContentEditorDataProcedure:
@@ -396,6 +424,10 @@ func (UnimplementedLearnHandler) ExportMany(context.Context, *connect_go.Request
 
 func (UnimplementedLearnHandler) SearchContent(context.Context, *connect_go.Request[v0alpha.SearchContentReq]) (*connect_go.Response[v0alpha.SearchRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.SearchContent is not implemented"))
+}
+
+func (UnimplementedLearnHandler) ListSearchResults(context.Context, *connect_go.Request[v0alpha.SearchContentReq], *connect_go.ServerStream[v0alpha.SearchRes]) error {
+	return connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.ListSearchResults is not implemented"))
 }
 
 func (UnimplementedLearnHandler) Standalone(context.Context, *connect_go.Request[v0alpha.StandaloneReq]) (*connect_go.Response[v0alpha.StandaloneRes], error) {
