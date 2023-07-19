@@ -58,7 +58,8 @@ type LearnClient interface {
 	// exports multiple pages of the learning center markdown as PDF
 	ExportMany(ctx context.Context, in *ExportManyReq, opts ...grpc.CallOption) (*ExportRes, error)
 	// search content in learning pages
-	SearchContent(ctx context.Context, in *SearchContentReq, opts ...grpc.CallOption) (*SearchRes, error)
+	// we allow all the logged in agents/admins to view snippet content
+	SearchContent(ctx context.Context, in *SearchContentReq, opts ...grpc.CallOption) (Learn_SearchContentClient, error)
 	// get standalone articles from learning pages
 	Standalone(ctx context.Context, in *StandaloneReq, opts ...grpc.CallOption) (*StandaloneRes, error)
 	// retrieve user who edited the content last
@@ -113,13 +114,36 @@ func (c *learnClient) ExportMany(ctx context.Context, in *ExportManyReq, opts ..
 	return out, nil
 }
 
-func (c *learnClient) SearchContent(ctx context.Context, in *SearchContentReq, opts ...grpc.CallOption) (*SearchRes, error) {
-	out := new(SearchRes)
-	err := c.cc.Invoke(ctx, Learn_SearchContent_FullMethodName, in, out, opts...)
+func (c *learnClient) SearchContent(ctx context.Context, in *SearchContentReq, opts ...grpc.CallOption) (Learn_SearchContentClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Learn_ServiceDesc.Streams[0], Learn_SearchContent_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
-	return out, nil
+	x := &learnSearchContentClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type Learn_SearchContentClient interface {
+	Recv() (*SearchRes, error)
+	grpc.ClientStream
+}
+
+type learnSearchContentClient struct {
+	grpc.ClientStream
+}
+
+func (x *learnSearchContentClient) Recv() (*SearchRes, error) {
+	m := new(SearchRes)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
 }
 
 func (c *learnClient) Standalone(ctx context.Context, in *StandaloneReq, opts ...grpc.CallOption) (*StandaloneRes, error) {
@@ -205,7 +229,8 @@ type LearnServer interface {
 	// exports multiple pages of the learning center markdown as PDF
 	ExportMany(context.Context, *ExportManyReq) (*ExportRes, error)
 	// search content in learning pages
-	SearchContent(context.Context, *SearchContentReq) (*SearchRes, error)
+	// we allow all the logged in agents/admins to view snippet content
+	SearchContent(*SearchContentReq, Learn_SearchContentServer) error
 	// get standalone articles from learning pages
 	Standalone(context.Context, *StandaloneReq) (*StandaloneRes, error)
 	// retrieve user who edited the content last
@@ -239,8 +264,8 @@ func (UnimplementedLearnServer) Content(context.Context, *ContentReq) (*ContentR
 func (UnimplementedLearnServer) ExportMany(context.Context, *ExportManyReq) (*ExportRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ExportMany not implemented")
 }
-func (UnimplementedLearnServer) SearchContent(context.Context, *SearchContentReq) (*SearchRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SearchContent not implemented")
+func (UnimplementedLearnServer) SearchContent(*SearchContentReq, Learn_SearchContentServer) error {
+	return status.Errorf(codes.Unimplemented, "method SearchContent not implemented")
 }
 func (UnimplementedLearnServer) Standalone(context.Context, *StandaloneReq) (*StandaloneRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Standalone not implemented")
@@ -333,22 +358,25 @@ func _Learn_ExportMany_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Learn_SearchContent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SearchContentReq)
-	if err := dec(in); err != nil {
-		return nil, err
+func _Learn_SearchContent_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(SearchContentReq)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
 	}
-	if interceptor == nil {
-		return srv.(LearnServer).SearchContent(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Learn_SearchContent_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LearnServer).SearchContent(ctx, req.(*SearchContentReq))
-	}
-	return interceptor(ctx, in, info, handler)
+	return srv.(LearnServer).SearchContent(m, &learnSearchContentServer{stream})
+}
+
+type Learn_SearchContentServer interface {
+	Send(*SearchRes) error
+	grpc.ServerStream
+}
+
+type learnSearchContentServer struct {
+	grpc.ServerStream
+}
+
+func (x *learnSearchContentServer) Send(m *SearchRes) error {
+	return x.ServerStream.SendMsg(m)
 }
 
 func _Learn_Standalone_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -515,10 +543,6 @@ var Learn_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Learn_ExportMany_Handler,
 		},
 		{
-			MethodName: "SearchContent",
-			Handler:    _Learn_SearchContent_Handler,
-		},
-		{
 			MethodName: "Standalone",
 			Handler:    _Learn_Standalone_Handler,
 		},
@@ -551,6 +575,12 @@ var Learn_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Learn_DeleteLearnPages_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "SearchContent",
+			Handler:       _Learn_SearchContent_Handler,
+			ServerStreams: true,
+		},
+	},
 	Metadata: "api/v0alpha/learn.proto",
 }

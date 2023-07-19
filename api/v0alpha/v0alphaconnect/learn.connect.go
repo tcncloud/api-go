@@ -83,7 +83,8 @@ type LearnClient interface {
 	// exports multiple pages of the learning center markdown as PDF
 	ExportMany(context.Context, *connect_go.Request[v0alpha.ExportManyReq]) (*connect_go.Response[v0alpha.ExportRes], error)
 	// search content in learning pages
-	SearchContent(context.Context, *connect_go.Request[v0alpha.SearchContentReq]) (*connect_go.Response[v0alpha.SearchRes], error)
+	// we allow all the logged in agents/admins to view snippet content
+	SearchContent(context.Context, *connect_go.Request[v0alpha.SearchContentReq]) (*connect_go.ServerStreamForClient[v0alpha.SearchRes], error)
 	// get standalone articles from learning pages
 	Standalone(context.Context, *connect_go.Request[v0alpha.StandaloneReq]) (*connect_go.Response[v0alpha.StandaloneRes], error)
 	// retrieve user who edited the content last
@@ -208,8 +209,8 @@ func (c *learnClient) ExportMany(ctx context.Context, req *connect_go.Request[v0
 }
 
 // SearchContent calls api.v0alpha.Learn.SearchContent.
-func (c *learnClient) SearchContent(ctx context.Context, req *connect_go.Request[v0alpha.SearchContentReq]) (*connect_go.Response[v0alpha.SearchRes], error) {
-	return c.searchContent.CallUnary(ctx, req)
+func (c *learnClient) SearchContent(ctx context.Context, req *connect_go.Request[v0alpha.SearchContentReq]) (*connect_go.ServerStreamForClient[v0alpha.SearchRes], error) {
+	return c.searchContent.CallServerStream(ctx, req)
 }
 
 // Standalone calls api.v0alpha.Learn.Standalone.
@@ -261,7 +262,8 @@ type LearnHandler interface {
 	// exports multiple pages of the learning center markdown as PDF
 	ExportMany(context.Context, *connect_go.Request[v0alpha.ExportManyReq]) (*connect_go.Response[v0alpha.ExportRes], error)
 	// search content in learning pages
-	SearchContent(context.Context, *connect_go.Request[v0alpha.SearchContentReq]) (*connect_go.Response[v0alpha.SearchRes], error)
+	// we allow all the logged in agents/admins to view snippet content
+	SearchContent(context.Context, *connect_go.Request[v0alpha.SearchContentReq], *connect_go.ServerStream[v0alpha.SearchRes]) error
 	// get standalone articles from learning pages
 	Standalone(context.Context, *connect_go.Request[v0alpha.StandaloneReq]) (*connect_go.Response[v0alpha.StandaloneRes], error)
 	// retrieve user who edited the content last
@@ -302,7 +304,7 @@ func NewLearnHandler(svc LearnHandler, opts ...connect_go.HandlerOption) (string
 		svc.ExportMany,
 		opts...,
 	)
-	learnSearchContentHandler := connect_go.NewUnaryHandler(
+	learnSearchContentHandler := connect_go.NewServerStreamHandler(
 		LearnSearchContentProcedure,
 		svc.SearchContent,
 		opts...,
@@ -394,8 +396,8 @@ func (UnimplementedLearnHandler) ExportMany(context.Context, *connect_go.Request
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.ExportMany is not implemented"))
 }
 
-func (UnimplementedLearnHandler) SearchContent(context.Context, *connect_go.Request[v0alpha.SearchContentReq]) (*connect_go.Response[v0alpha.SearchRes], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.SearchContent is not implemented"))
+func (UnimplementedLearnHandler) SearchContent(context.Context, *connect_go.Request[v0alpha.SearchContentReq], *connect_go.ServerStream[v0alpha.SearchRes]) error {
+	return connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.SearchContent is not implemented"))
 }
 
 func (UnimplementedLearnHandler) Standalone(context.Context, *connect_go.Request[v0alpha.StandaloneReq]) (*connect_go.Response[v0alpha.StandaloneRes], error) {
