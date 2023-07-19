@@ -26,7 +26,7 @@ type OmniBotNodeTestStart struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Optional. Startup data to be used by the test.
+	// deprecated
 	Data string `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`
 }
 
@@ -75,7 +75,7 @@ type OmniBotNodeTestStep struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Required. Data to be used by the test.
+	// deprecated
 	Data string `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`
 }
 
@@ -124,7 +124,7 @@ type OmniBotNodeTestEnd struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Optional. Error message if the test failed.
+	// deprecated
 	Error string `protobuf:"bytes,1,opt,name=error,proto3" json:"error,omitempty"`
 }
 
