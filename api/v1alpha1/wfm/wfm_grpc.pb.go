@@ -137,6 +137,7 @@ const (
 	WFM_CreateShiftInstanceV2_FullMethodName                         = "/api.v1alpha1.wfm.WFM/CreateShiftInstanceV2"
 	WFM_SwapShiftInstances_FullMethodName                            = "/api.v1alpha1.wfm.WFM/SwapShiftInstances"
 	WFM_UpdateShiftInstance_FullMethodName                           = "/api.v1alpha1.wfm.WFM/UpdateShiftInstance"
+	WFM_UpdateShiftInstanceV2_FullMethodName                         = "/api.v1alpha1.wfm.WFM/UpdateShiftInstanceV2"
 	WFM_ListShiftSegmentsByShiftInstanceSids_FullMethodName          = "/api.v1alpha1.wfm.WFM/ListShiftSegmentsByShiftInstanceSids"
 	WFM_SetSchedulingTarget_FullMethodName                           = "/api.v1alpha1.wfm.WFM/SetSchedulingTarget"
 	WFM_GetSchedulingTarget_FullMethodName                           = "/api.v1alpha1.wfm.WFM/GetSchedulingTarget"
@@ -1338,12 +1339,20 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when swapping the shift instances.
 	SwapShiftInstances(ctx context.Context, in *SwapShiftInstancesReq, opts ...grpc.CallOption) (*SwapShiftInstancesRes, error)
 	// Updates a shift instance for the org sending the request with the provided parameters.
+	// This method is not implemented. Do not use.
 	// Required permissions:
 	// NONE
 	// Errors:
 	//   - grpc.Invalid: one or more fields in the request have invalid values.
 	//   - grpc.Internal: error occurs when updating the shift instance.
 	UpdateShiftInstance(ctx context.Context, in *UpdateShiftInstanceReq, opts ...grpc.CallOption) (*UpdateShiftInstanceRes, error)
+	// Updates a shift instance for the org sending the request with the provided parameters.
+	// Required permissions:
+	// NONE
+	// Errors:
+	//   - grpc.Invalid: one or more fields in the request have invalid values.
+	//   - grpc.Internal: error occurs when updating the shift instance.
+	UpdateShiftInstanceV2(ctx context.Context, in *UpdateShiftInstanceV2Req, opts ...grpc.CallOption) (*UpdateShiftInstanceV2Res, error)
 	// Lists shift segments for the specified shift instances for the org sending the request.
 	// If @include_scheduling_activity is set to true then the related scheduling activity for the shift segment will be returned in the scheduling activity field.
 	// If @include_activity is set to true then the related non skill activity for the scheduling activity will be returned in the scheduling activities member non skill activity field.
@@ -2466,6 +2475,15 @@ func (c *wFMClient) SwapShiftInstances(ctx context.Context, in *SwapShiftInstanc
 func (c *wFMClient) UpdateShiftInstance(ctx context.Context, in *UpdateShiftInstanceReq, opts ...grpc.CallOption) (*UpdateShiftInstanceRes, error) {
 	out := new(UpdateShiftInstanceRes)
 	err := c.cc.Invoke(ctx, WFM_UpdateShiftInstance_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) UpdateShiftInstanceV2(ctx context.Context, in *UpdateShiftInstanceV2Req, opts ...grpc.CallOption) (*UpdateShiftInstanceV2Res, error) {
+	out := new(UpdateShiftInstanceV2Res)
+	err := c.cc.Invoke(ctx, WFM_UpdateShiftInstanceV2_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -3719,12 +3737,20 @@ type WFMServer interface {
 	//   - grpc.Internal: error occurs when swapping the shift instances.
 	SwapShiftInstances(context.Context, *SwapShiftInstancesReq) (*SwapShiftInstancesRes, error)
 	// Updates a shift instance for the org sending the request with the provided parameters.
+	// This method is not implemented. Do not use.
 	// Required permissions:
 	// NONE
 	// Errors:
 	//   - grpc.Invalid: one or more fields in the request have invalid values.
 	//   - grpc.Internal: error occurs when updating the shift instance.
 	UpdateShiftInstance(context.Context, *UpdateShiftInstanceReq) (*UpdateShiftInstanceRes, error)
+	// Updates a shift instance for the org sending the request with the provided parameters.
+	// Required permissions:
+	// NONE
+	// Errors:
+	//   - grpc.Invalid: one or more fields in the request have invalid values.
+	//   - grpc.Internal: error occurs when updating the shift instance.
+	UpdateShiftInstanceV2(context.Context, *UpdateShiftInstanceV2Req) (*UpdateShiftInstanceV2Res, error)
 	// Lists shift segments for the specified shift instances for the org sending the request.
 	// If @include_scheduling_activity is set to true then the related scheduling activity for the shift segment will be returned in the scheduling activity field.
 	// If @include_activity is set to true then the related non skill activity for the scheduling activity will be returned in the scheduling activities member non skill activity field.
@@ -4110,6 +4136,9 @@ func (UnimplementedWFMServer) SwapShiftInstances(context.Context, *SwapShiftInst
 }
 func (UnimplementedWFMServer) UpdateShiftInstance(context.Context, *UpdateShiftInstanceReq) (*UpdateShiftInstanceRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateShiftInstance not implemented")
+}
+func (UnimplementedWFMServer) UpdateShiftInstanceV2(context.Context, *UpdateShiftInstanceV2Req) (*UpdateShiftInstanceV2Res, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateShiftInstanceV2 not implemented")
 }
 func (UnimplementedWFMServer) ListShiftSegmentsByShiftInstanceSids(context.Context, *ListShiftSegmentsByShiftInstanceSidsReq) (*ListShiftSegmentsByShiftInstanceSidsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListShiftSegmentsByShiftInstanceSids not implemented")
@@ -6029,6 +6058,24 @@ func _WFM_UpdateShiftInstance_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_UpdateShiftInstanceV2_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateShiftInstanceV2Req)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).UpdateShiftInstanceV2(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_UpdateShiftInstanceV2_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).UpdateShiftInstanceV2(ctx, req.(*UpdateShiftInstanceV2Req))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WFM_ListShiftSegmentsByShiftInstanceSids_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListShiftSegmentsByShiftInstanceSidsReq)
 	if err := dec(in); err != nil {
@@ -6539,6 +6586,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateShiftInstance",
 			Handler:    _WFM_UpdateShiftInstance_Handler,
+		},
+		{
+			MethodName: "UpdateShiftInstanceV2",
+			Handler:    _WFM_UpdateShiftInstanceV2_Handler,
 		},
 		{
 			MethodName: "ListShiftSegmentsByShiftInstanceSids",
