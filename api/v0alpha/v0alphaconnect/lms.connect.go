@@ -75,6 +75,8 @@ const (
 	LMSCreateElementProcedure = "/api.v0alpha.LMS/CreateElement"
 	// LMSListElementsProcedure is the fully-qualified name of the LMS's ListElements RPC.
 	LMSListElementsProcedure = "/api.v0alpha.LMS/ListElements"
+	// LMSGetElementProcedure is the fully-qualified name of the LMS's GetElement RPC.
+	LMSGetElementProcedure = "/api.v0alpha.LMS/GetElement"
 	// LMSUpdateElementProcedure is the fully-qualified name of the LMS's UpdateElement RPC.
 	LMSUpdateElementProcedure = "/api.v0alpha.LMS/UpdateElement"
 	// LMSDeleteElementProcedure is the fully-qualified name of the LMS's DeleteElement RPC.
@@ -181,6 +183,7 @@ type LMSClient interface {
 	GetHistory(context.Context, *connect_go.Request[v0alpha.GetHistoryReq]) (*connect_go.Response[v0alpha.GetHistoryRes], error)
 	CreateElement(context.Context, *connect_go.Request[v0alpha.Element]) (*connect_go.Response[v0alpha.Element], error)
 	ListElements(context.Context, *connect_go.Request[v0alpha.ListElementsReq]) (*connect_go.ServerStreamForClient[v0alpha.Element], error)
+	GetElement(context.Context, *connect_go.Request[v0alpha.ElementPK]) (*connect_go.Response[v0alpha.Element], error)
 	UpdateElement(context.Context, *connect_go.Request[v0alpha.Element]) (*connect_go.Response[v0alpha.Element], error)
 	DeleteElement(context.Context, *connect_go.Request[v0alpha.Element]) (*connect_go.Response[v0alpha.Element], error)
 	// CopyPipelineUpstream copies an Element and all of its' parents
@@ -338,6 +341,11 @@ func NewLMSClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 		listElements: connect_go.NewClient[v0alpha.ListElementsReq, v0alpha.Element](
 			httpClient,
 			baseURL+LMSListElementsProcedure,
+			opts...,
+		),
+		getElement: connect_go.NewClient[v0alpha.ElementPK, v0alpha.Element](
+			httpClient,
+			baseURL+LMSGetElementProcedure,
 			opts...,
 		),
 		updateElement: connect_go.NewClient[v0alpha.Element, v0alpha.Element](
@@ -529,6 +537,7 @@ type lMSClient struct {
 	getHistory                     *connect_go.Client[v0alpha.GetHistoryReq, v0alpha.GetHistoryRes]
 	createElement                  *connect_go.Client[v0alpha.Element, v0alpha.Element]
 	listElements                   *connect_go.Client[v0alpha.ListElementsReq, v0alpha.Element]
+	getElement                     *connect_go.Client[v0alpha.ElementPK, v0alpha.Element]
 	updateElement                  *connect_go.Client[v0alpha.Element, v0alpha.Element]
 	deleteElement                  *connect_go.Client[v0alpha.Element, v0alpha.Element]
 	copyPipelineUpstream           *connect_go.Client[v0alpha.Element, v0alpha.Element]
@@ -657,6 +666,11 @@ func (c *lMSClient) CreateElement(ctx context.Context, req *connect_go.Request[v
 // ListElements calls api.v0alpha.LMS.ListElements.
 func (c *lMSClient) ListElements(ctx context.Context, req *connect_go.Request[v0alpha.ListElementsReq]) (*connect_go.ServerStreamForClient[v0alpha.Element], error) {
 	return c.listElements.CallServerStream(ctx, req)
+}
+
+// GetElement calls api.v0alpha.LMS.GetElement.
+func (c *lMSClient) GetElement(ctx context.Context, req *connect_go.Request[v0alpha.ElementPK]) (*connect_go.Response[v0alpha.Element], error) {
+	return c.getElement.CallUnary(ctx, req)
 }
 
 // UpdateElement calls api.v0alpha.LMS.UpdateElement.
@@ -846,6 +860,7 @@ type LMSHandler interface {
 	GetHistory(context.Context, *connect_go.Request[v0alpha.GetHistoryReq]) (*connect_go.Response[v0alpha.GetHistoryRes], error)
 	CreateElement(context.Context, *connect_go.Request[v0alpha.Element]) (*connect_go.Response[v0alpha.Element], error)
 	ListElements(context.Context, *connect_go.Request[v0alpha.ListElementsReq], *connect_go.ServerStream[v0alpha.Element]) error
+	GetElement(context.Context, *connect_go.Request[v0alpha.ElementPK]) (*connect_go.Response[v0alpha.Element], error)
 	UpdateElement(context.Context, *connect_go.Request[v0alpha.Element]) (*connect_go.Response[v0alpha.Element], error)
 	DeleteElement(context.Context, *connect_go.Request[v0alpha.Element]) (*connect_go.Response[v0alpha.Element], error)
 	// CopyPipelineUpstream copies an Element and all of its' parents
@@ -999,6 +1014,11 @@ func NewLMSHandler(svc LMSHandler, opts ...connect_go.HandlerOption) (string, ht
 	lMSListElementsHandler := connect_go.NewServerStreamHandler(
 		LMSListElementsProcedure,
 		svc.ListElements,
+		opts...,
+	)
+	lMSGetElementHandler := connect_go.NewUnaryHandler(
+		LMSGetElementProcedure,
+		svc.GetElement,
 		opts...,
 	)
 	lMSUpdateElementHandler := connect_go.NewUnaryHandler(
@@ -1206,6 +1226,8 @@ func NewLMSHandler(svc LMSHandler, opts ...connect_go.HandlerOption) (string, ht
 			lMSCreateElementHandler.ServeHTTP(w, r)
 		case LMSListElementsProcedure:
 			lMSListElementsHandler.ServeHTTP(w, r)
+		case LMSGetElementProcedure:
+			lMSGetElementHandler.ServeHTTP(w, r)
 		case LMSUpdateElementProcedure:
 			lMSUpdateElementHandler.ServeHTTP(w, r)
 		case LMSDeleteElementProcedure:
@@ -1355,6 +1377,10 @@ func (UnimplementedLMSHandler) CreateElement(context.Context, *connect_go.Reques
 
 func (UnimplementedLMSHandler) ListElements(context.Context, *connect_go.Request[v0alpha.ListElementsReq], *connect_go.ServerStream[v0alpha.Element]) error {
 	return connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.LMS.ListElements is not implemented"))
+}
+
+func (UnimplementedLMSHandler) GetElement(context.Context, *connect_go.Request[v0alpha.ElementPK]) (*connect_go.Response[v0alpha.Element], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.LMS.GetElement is not implemented"))
 }
 
 func (UnimplementedLMSHandler) UpdateElement(context.Context, *connect_go.Request[v0alpha.Element]) (*connect_go.Response[v0alpha.Element], error) {

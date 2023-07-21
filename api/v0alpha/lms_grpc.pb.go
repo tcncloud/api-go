@@ -39,6 +39,7 @@ const (
 	LMS_GetHistory_FullMethodName                     = "/api.v0alpha.LMS/GetHistory"
 	LMS_CreateElement_FullMethodName                  = "/api.v0alpha.LMS/CreateElement"
 	LMS_ListElements_FullMethodName                   = "/api.v0alpha.LMS/ListElements"
+	LMS_GetElement_FullMethodName                     = "/api.v0alpha.LMS/GetElement"
 	LMS_UpdateElement_FullMethodName                  = "/api.v0alpha.LMS/UpdateElement"
 	LMS_DeleteElement_FullMethodName                  = "/api.v0alpha.LMS/DeleteElement"
 	LMS_CopyPipelineUpstream_FullMethodName           = "/api.v0alpha.LMS/CopyPipelineUpstream"
@@ -98,6 +99,7 @@ type LMSClient interface {
 	GetHistory(ctx context.Context, in *GetHistoryReq, opts ...grpc.CallOption) (*GetHistoryRes, error)
 	CreateElement(ctx context.Context, in *Element, opts ...grpc.CallOption) (*Element, error)
 	ListElements(ctx context.Context, in *ListElementsReq, opts ...grpc.CallOption) (LMS_ListElementsClient, error)
+	GetElement(ctx context.Context, in *ElementPK, opts ...grpc.CallOption) (*Element, error)
 	UpdateElement(ctx context.Context, in *Element, opts ...grpc.CallOption) (*Element, error)
 	DeleteElement(ctx context.Context, in *Element, opts ...grpc.CallOption) (*Element, error)
 	// CopyPipelineUpstream copies an Element and all of its' parents
@@ -375,6 +377,15 @@ func (x *lMSListElementsClient) Recv() (*Element, error) {
 		return nil, err
 	}
 	return m, nil
+}
+
+func (c *lMSClient) GetElement(ctx context.Context, in *ElementPK, opts ...grpc.CallOption) (*Element, error) {
+	out := new(Element)
+	err := c.cc.Invoke(ctx, LMS_GetElement_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *lMSClient) UpdateElement(ctx context.Context, in *Element, opts ...grpc.CallOption) (*Element, error) {
@@ -767,6 +778,7 @@ type LMSServer interface {
 	GetHistory(context.Context, *GetHistoryReq) (*GetHistoryRes, error)
 	CreateElement(context.Context, *Element) (*Element, error)
 	ListElements(*ListElementsReq, LMS_ListElementsServer) error
+	GetElement(context.Context, *ElementPK) (*Element, error)
 	UpdateElement(context.Context, *Element) (*Element, error)
 	DeleteElement(context.Context, *Element) (*Element, error)
 	// CopyPipelineUpstream copies an Element and all of its' parents
@@ -882,6 +894,9 @@ func (UnimplementedLMSServer) CreateElement(context.Context, *Element) (*Element
 }
 func (UnimplementedLMSServer) ListElements(*ListElementsReq, LMS_ListElementsServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListElements not implemented")
+}
+func (UnimplementedLMSServer) GetElement(context.Context, *ElementPK) (*Element, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetElement not implemented")
 }
 func (UnimplementedLMSServer) UpdateElement(context.Context, *Element) (*Element, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateElement not implemented")
@@ -1341,6 +1356,24 @@ type lMSListElementsServer struct {
 
 func (x *lMSListElementsServer) Send(m *Element) error {
 	return x.ServerStream.SendMsg(m)
+}
+
+func _LMS_GetElement_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ElementPK)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LMSServer).GetElement(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LMS_GetElement_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LMSServer).GetElement(ctx, req.(*ElementPK))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _LMS_UpdateElement_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -2020,6 +2053,10 @@ var LMS_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateElement",
 			Handler:    _LMS_CreateElement_Handler,
+		},
+		{
+			MethodName: "GetElement",
+			Handler:    _LMS_GetElement_Handler,
 		},
 		{
 			MethodName: "UpdateElement",
