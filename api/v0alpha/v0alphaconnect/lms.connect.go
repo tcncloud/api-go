@@ -59,6 +59,12 @@ const (
 	// LMSListAvailableFieldsByElementIdProcedure is the fully-qualified name of the LMS's
 	// ListAvailableFieldsByElementId RPC.
 	LMSListAvailableFieldsByElementIdProcedure = "/api.v0alpha.LMS/ListAvailableFieldsByElementId"
+	// LMSListFieldsForElementProcedure is the fully-qualified name of the LMS's ListFieldsForElement
+	// RPC.
+	LMSListFieldsForElementProcedure = "/api.v0alpha.LMS/ListFieldsForElement"
+	// LMSListAutocompleteFieldsProcedure is the fully-qualified name of the LMS's
+	// ListAutocompleteFields RPC.
+	LMSListAutocompleteFieldsProcedure = "/api.v0alpha.LMS/ListAutocompleteFields"
 	// LMSListCampaignLinksProcedure is the fully-qualified name of the LMS's ListCampaignLinks RPC.
 	LMSListCampaignLinksProcedure = "/api.v0alpha.LMS/ListCampaignLinks"
 	// LMSPeekListProcedure is the fully-qualified name of the LMS's PeekList RPC.
@@ -69,6 +75,8 @@ const (
 	LMSCreateElementProcedure = "/api.v0alpha.LMS/CreateElement"
 	// LMSListElementsProcedure is the fully-qualified name of the LMS's ListElements RPC.
 	LMSListElementsProcedure = "/api.v0alpha.LMS/ListElements"
+	// LMSGetElementProcedure is the fully-qualified name of the LMS's GetElement RPC.
+	LMSGetElementProcedure = "/api.v0alpha.LMS/GetElement"
 	// LMSUpdateElementProcedure is the fully-qualified name of the LMS's UpdateElement RPC.
 	LMSUpdateElementProcedure = "/api.v0alpha.LMS/UpdateElement"
 	// LMSDeleteElementProcedure is the fully-qualified name of the LMS's DeleteElement RPC.
@@ -167,12 +175,15 @@ type LMSClient interface {
 	UpdateField(context.Context, *connect_go.Request[v0alpha.UpdateFieldReq]) (*connect_go.Response[v0alpha.Field], error)
 	DeleteField(context.Context, *connect_go.Request[v0alpha.Field]) (*connect_go.Response[v0alpha.Field], error)
 	ListAvailableFieldsByElementId(context.Context, *connect_go.Request[v0alpha.ListAvailableFieldsByElementIdReq]) (*connect_go.Response[v0alpha.ProcessFields], error)
+	ListFieldsForElement(context.Context, *connect_go.Request[v0alpha.ListFieldsForElementReq]) (*connect_go.Response[v0alpha.ListFieldsForElementRes], error)
+	ListAutocompleteFields(context.Context, *connect_go.Request[v0alpha.ListAutocompleteFieldsReq]) (*connect_go.Response[v0alpha.ListAutocompleteFieldsRes], error)
 	// list campaign links and descriptions
 	ListCampaignLinks(context.Context, *connect_go.Request[emptypb.Empty]) (*connect_go.Response[v0alpha.ListCampaignLinksRes], error)
 	PeekList(context.Context, *connect_go.Request[v0alpha.PeekListReq]) (*connect_go.Response[v0alpha.PeekListRes], error)
 	GetHistory(context.Context, *connect_go.Request[v0alpha.GetHistoryReq]) (*connect_go.Response[v0alpha.GetHistoryRes], error)
 	CreateElement(context.Context, *connect_go.Request[v0alpha.Element]) (*connect_go.Response[v0alpha.Element], error)
 	ListElements(context.Context, *connect_go.Request[v0alpha.ListElementsReq]) (*connect_go.ServerStreamForClient[v0alpha.Element], error)
+	GetElement(context.Context, *connect_go.Request[v0alpha.ElementPK]) (*connect_go.Response[v0alpha.Element], error)
 	UpdateElement(context.Context, *connect_go.Request[v0alpha.Element]) (*connect_go.Response[v0alpha.Element], error)
 	DeleteElement(context.Context, *connect_go.Request[v0alpha.Element]) (*connect_go.Response[v0alpha.Element], error)
 	// CopyPipelineUpstream copies an Element and all of its' parents
@@ -297,6 +308,16 @@ func NewLMSClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+LMSListAvailableFieldsByElementIdProcedure,
 			opts...,
 		),
+		listFieldsForElement: connect_go.NewClient[v0alpha.ListFieldsForElementReq, v0alpha.ListFieldsForElementRes](
+			httpClient,
+			baseURL+LMSListFieldsForElementProcedure,
+			opts...,
+		),
+		listAutocompleteFields: connect_go.NewClient[v0alpha.ListAutocompleteFieldsReq, v0alpha.ListAutocompleteFieldsRes](
+			httpClient,
+			baseURL+LMSListAutocompleteFieldsProcedure,
+			opts...,
+		),
 		listCampaignLinks: connect_go.NewClient[emptypb.Empty, v0alpha.ListCampaignLinksRes](
 			httpClient,
 			baseURL+LMSListCampaignLinksProcedure,
@@ -320,6 +341,11 @@ func NewLMSClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 		listElements: connect_go.NewClient[v0alpha.ListElementsReq, v0alpha.Element](
 			httpClient,
 			baseURL+LMSListElementsProcedure,
+			opts...,
+		),
+		getElement: connect_go.NewClient[v0alpha.ElementPK, v0alpha.Element](
+			httpClient,
+			baseURL+LMSGetElementProcedure,
 			opts...,
 		),
 		updateElement: connect_go.NewClient[v0alpha.Element, v0alpha.Element](
@@ -504,11 +530,14 @@ type lMSClient struct {
 	updateField                    *connect_go.Client[v0alpha.UpdateFieldReq, v0alpha.Field]
 	deleteField                    *connect_go.Client[v0alpha.Field, v0alpha.Field]
 	listAvailableFieldsByElementId *connect_go.Client[v0alpha.ListAvailableFieldsByElementIdReq, v0alpha.ProcessFields]
+	listFieldsForElement           *connect_go.Client[v0alpha.ListFieldsForElementReq, v0alpha.ListFieldsForElementRes]
+	listAutocompleteFields         *connect_go.Client[v0alpha.ListAutocompleteFieldsReq, v0alpha.ListAutocompleteFieldsRes]
 	listCampaignLinks              *connect_go.Client[emptypb.Empty, v0alpha.ListCampaignLinksRes]
 	peekList                       *connect_go.Client[v0alpha.PeekListReq, v0alpha.PeekListRes]
 	getHistory                     *connect_go.Client[v0alpha.GetHistoryReq, v0alpha.GetHistoryRes]
 	createElement                  *connect_go.Client[v0alpha.Element, v0alpha.Element]
 	listElements                   *connect_go.Client[v0alpha.ListElementsReq, v0alpha.Element]
+	getElement                     *connect_go.Client[v0alpha.ElementPK, v0alpha.Element]
 	updateElement                  *connect_go.Client[v0alpha.Element, v0alpha.Element]
 	deleteElement                  *connect_go.Client[v0alpha.Element, v0alpha.Element]
 	copyPipelineUpstream           *connect_go.Client[v0alpha.Element, v0alpha.Element]
@@ -604,6 +633,16 @@ func (c *lMSClient) ListAvailableFieldsByElementId(ctx context.Context, req *con
 	return c.listAvailableFieldsByElementId.CallUnary(ctx, req)
 }
 
+// ListFieldsForElement calls api.v0alpha.LMS.ListFieldsForElement.
+func (c *lMSClient) ListFieldsForElement(ctx context.Context, req *connect_go.Request[v0alpha.ListFieldsForElementReq]) (*connect_go.Response[v0alpha.ListFieldsForElementRes], error) {
+	return c.listFieldsForElement.CallUnary(ctx, req)
+}
+
+// ListAutocompleteFields calls api.v0alpha.LMS.ListAutocompleteFields.
+func (c *lMSClient) ListAutocompleteFields(ctx context.Context, req *connect_go.Request[v0alpha.ListAutocompleteFieldsReq]) (*connect_go.Response[v0alpha.ListAutocompleteFieldsRes], error) {
+	return c.listAutocompleteFields.CallUnary(ctx, req)
+}
+
 // ListCampaignLinks calls api.v0alpha.LMS.ListCampaignLinks.
 func (c *lMSClient) ListCampaignLinks(ctx context.Context, req *connect_go.Request[emptypb.Empty]) (*connect_go.Response[v0alpha.ListCampaignLinksRes], error) {
 	return c.listCampaignLinks.CallUnary(ctx, req)
@@ -627,6 +666,11 @@ func (c *lMSClient) CreateElement(ctx context.Context, req *connect_go.Request[v
 // ListElements calls api.v0alpha.LMS.ListElements.
 func (c *lMSClient) ListElements(ctx context.Context, req *connect_go.Request[v0alpha.ListElementsReq]) (*connect_go.ServerStreamForClient[v0alpha.Element], error) {
 	return c.listElements.CallServerStream(ctx, req)
+}
+
+// GetElement calls api.v0alpha.LMS.GetElement.
+func (c *lMSClient) GetElement(ctx context.Context, req *connect_go.Request[v0alpha.ElementPK]) (*connect_go.Response[v0alpha.Element], error) {
+	return c.getElement.CallUnary(ctx, req)
 }
 
 // UpdateElement calls api.v0alpha.LMS.UpdateElement.
@@ -808,12 +852,15 @@ type LMSHandler interface {
 	UpdateField(context.Context, *connect_go.Request[v0alpha.UpdateFieldReq]) (*connect_go.Response[v0alpha.Field], error)
 	DeleteField(context.Context, *connect_go.Request[v0alpha.Field]) (*connect_go.Response[v0alpha.Field], error)
 	ListAvailableFieldsByElementId(context.Context, *connect_go.Request[v0alpha.ListAvailableFieldsByElementIdReq]) (*connect_go.Response[v0alpha.ProcessFields], error)
+	ListFieldsForElement(context.Context, *connect_go.Request[v0alpha.ListFieldsForElementReq]) (*connect_go.Response[v0alpha.ListFieldsForElementRes], error)
+	ListAutocompleteFields(context.Context, *connect_go.Request[v0alpha.ListAutocompleteFieldsReq]) (*connect_go.Response[v0alpha.ListAutocompleteFieldsRes], error)
 	// list campaign links and descriptions
 	ListCampaignLinks(context.Context, *connect_go.Request[emptypb.Empty]) (*connect_go.Response[v0alpha.ListCampaignLinksRes], error)
 	PeekList(context.Context, *connect_go.Request[v0alpha.PeekListReq]) (*connect_go.Response[v0alpha.PeekListRes], error)
 	GetHistory(context.Context, *connect_go.Request[v0alpha.GetHistoryReq]) (*connect_go.Response[v0alpha.GetHistoryRes], error)
 	CreateElement(context.Context, *connect_go.Request[v0alpha.Element]) (*connect_go.Response[v0alpha.Element], error)
 	ListElements(context.Context, *connect_go.Request[v0alpha.ListElementsReq], *connect_go.ServerStream[v0alpha.Element]) error
+	GetElement(context.Context, *connect_go.Request[v0alpha.ElementPK]) (*connect_go.Response[v0alpha.Element], error)
 	UpdateElement(context.Context, *connect_go.Request[v0alpha.Element]) (*connect_go.Response[v0alpha.Element], error)
 	DeleteElement(context.Context, *connect_go.Request[v0alpha.Element]) (*connect_go.Response[v0alpha.Element], error)
 	// CopyPipelineUpstream copies an Element and all of its' parents
@@ -934,6 +981,16 @@ func NewLMSHandler(svc LMSHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.ListAvailableFieldsByElementId,
 		opts...,
 	)
+	lMSListFieldsForElementHandler := connect_go.NewUnaryHandler(
+		LMSListFieldsForElementProcedure,
+		svc.ListFieldsForElement,
+		opts...,
+	)
+	lMSListAutocompleteFieldsHandler := connect_go.NewUnaryHandler(
+		LMSListAutocompleteFieldsProcedure,
+		svc.ListAutocompleteFields,
+		opts...,
+	)
 	lMSListCampaignLinksHandler := connect_go.NewUnaryHandler(
 		LMSListCampaignLinksProcedure,
 		svc.ListCampaignLinks,
@@ -957,6 +1014,11 @@ func NewLMSHandler(svc LMSHandler, opts ...connect_go.HandlerOption) (string, ht
 	lMSListElementsHandler := connect_go.NewServerStreamHandler(
 		LMSListElementsProcedure,
 		svc.ListElements,
+		opts...,
+	)
+	lMSGetElementHandler := connect_go.NewUnaryHandler(
+		LMSGetElementProcedure,
+		svc.GetElement,
 		opts...,
 	)
 	lMSUpdateElementHandler := connect_go.NewUnaryHandler(
@@ -1150,6 +1212,10 @@ func NewLMSHandler(svc LMSHandler, opts ...connect_go.HandlerOption) (string, ht
 			lMSDeleteFieldHandler.ServeHTTP(w, r)
 		case LMSListAvailableFieldsByElementIdProcedure:
 			lMSListAvailableFieldsByElementIdHandler.ServeHTTP(w, r)
+		case LMSListFieldsForElementProcedure:
+			lMSListFieldsForElementHandler.ServeHTTP(w, r)
+		case LMSListAutocompleteFieldsProcedure:
+			lMSListAutocompleteFieldsHandler.ServeHTTP(w, r)
 		case LMSListCampaignLinksProcedure:
 			lMSListCampaignLinksHandler.ServeHTTP(w, r)
 		case LMSPeekListProcedure:
@@ -1160,6 +1226,8 @@ func NewLMSHandler(svc LMSHandler, opts ...connect_go.HandlerOption) (string, ht
 			lMSCreateElementHandler.ServeHTTP(w, r)
 		case LMSListElementsProcedure:
 			lMSListElementsHandler.ServeHTTP(w, r)
+		case LMSGetElementProcedure:
+			lMSGetElementHandler.ServeHTTP(w, r)
 		case LMSUpdateElementProcedure:
 			lMSUpdateElementHandler.ServeHTTP(w, r)
 		case LMSDeleteElementProcedure:
@@ -1283,6 +1351,14 @@ func (UnimplementedLMSHandler) ListAvailableFieldsByElementId(context.Context, *
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.LMS.ListAvailableFieldsByElementId is not implemented"))
 }
 
+func (UnimplementedLMSHandler) ListFieldsForElement(context.Context, *connect_go.Request[v0alpha.ListFieldsForElementReq]) (*connect_go.Response[v0alpha.ListFieldsForElementRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.LMS.ListFieldsForElement is not implemented"))
+}
+
+func (UnimplementedLMSHandler) ListAutocompleteFields(context.Context, *connect_go.Request[v0alpha.ListAutocompleteFieldsReq]) (*connect_go.Response[v0alpha.ListAutocompleteFieldsRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.LMS.ListAutocompleteFields is not implemented"))
+}
+
 func (UnimplementedLMSHandler) ListCampaignLinks(context.Context, *connect_go.Request[emptypb.Empty]) (*connect_go.Response[v0alpha.ListCampaignLinksRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.LMS.ListCampaignLinks is not implemented"))
 }
@@ -1301,6 +1377,10 @@ func (UnimplementedLMSHandler) CreateElement(context.Context, *connect_go.Reques
 
 func (UnimplementedLMSHandler) ListElements(context.Context, *connect_go.Request[v0alpha.ListElementsReq], *connect_go.ServerStream[v0alpha.Element]) error {
 	return connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.LMS.ListElements is not implemented"))
+}
+
+func (UnimplementedLMSHandler) GetElement(context.Context, *connect_go.Request[v0alpha.ElementPK]) (*connect_go.Response[v0alpha.Element], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.LMS.GetElement is not implemented"))
 }
 
 func (UnimplementedLMSHandler) UpdateElement(context.Context, *connect_go.Request[v0alpha.Element]) (*connect_go.Response[v0alpha.Element], error) {
