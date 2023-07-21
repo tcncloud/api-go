@@ -380,6 +380,8 @@ type GetInvoiceRes struct {
 	//	*GetInvoiceRes_Proto
 	//	*GetInvoiceRes_CsvUrl
 	Format isGetInvoiceRes_Format `protobuf_oneof:"format"`
+	// the invoice in the format requested
+	//
 	// Types that are assignable to InvoiceData:
 	//
 	//	*GetInvoiceRes_InvoiceProto
@@ -611,6 +613,8 @@ type ExportGeneratedInvoiceRes struct {
 	//	*ExportGeneratedInvoiceRes_Proto
 	//	*ExportGeneratedInvoiceRes_CsvUrl
 	Format isExportGeneratedInvoiceRes_Format `protobuf_oneof:"format"`
+	// the invoice in the format requested
+	//
 	// Types that are assignable to InvoiceData:
 	//
 	//	*ExportGeneratedInvoiceRes_InvoiceProto
