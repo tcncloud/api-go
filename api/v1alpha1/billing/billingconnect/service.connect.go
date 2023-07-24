@@ -63,7 +63,7 @@ type BillingClient interface {
 	// the provided date. If no date is provided, this will return the
 	// invoice as it currently stands for the current billing cycle.
 	GetInvoice(context.Context, *connect_go.Request[billing.GetInvoiceReq]) (*connect_go.Response[billing.GetInvoiceRes], error)
-	// GetInvoice - returns the invoice for the organization.
+	// ExportGeneratedInvoice - returns the invoice for the organization.
 	// If a date is provided, this will return the invoice for the
 	// organization that corresponds to the billing cycle that contains
 	// the provided date. If no date is provided, this will return the
@@ -153,7 +153,7 @@ type BillingHandler interface {
 	// the provided date. If no date is provided, this will return the
 	// invoice as it currently stands for the current billing cycle.
 	GetInvoice(context.Context, *connect_go.Request[billing.GetInvoiceReq]) (*connect_go.Response[billing.GetInvoiceRes], error)
-	// GetInvoice - returns the invoice for the organization.
+	// ExportGeneratedInvoice - returns the invoice for the organization.
 	// If a date is provided, this will return the invoice for the
 	// organization that corresponds to the billing cycle that contains
 	// the provided date. If no date is provided, this will return the
