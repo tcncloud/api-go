@@ -19,10 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Billing_GetBillingPlan_FullMethodName         = "/api.v1alpha1.billing.Billing/GetBillingPlan"
-	Billing_UpdateBillingPlan_FullMethodName      = "/api.v1alpha1.billing.Billing/UpdateBillingPlan"
-	Billing_GetInvoice_FullMethodName             = "/api.v1alpha1.billing.Billing/GetInvoice"
-	Billing_ExportGeneratedInvoice_FullMethodName = "/api.v1alpha1.billing.Billing/ExportGeneratedInvoice"
+	Billing_GetBillingPlan_FullMethodName    = "/api.v1alpha1.billing.Billing/GetBillingPlan"
+	Billing_UpdateBillingPlan_FullMethodName = "/api.v1alpha1.billing.Billing/UpdateBillingPlan"
+	Billing_GetInvoice_FullMethodName        = "/api.v1alpha1.billing.Billing/GetInvoice"
 )
 
 // BillingClient is the client API for Billing service.
@@ -45,7 +44,6 @@ type BillingClient interface {
 	// no date is provided, this will return the invoice as it currently
 	// stands for the current billing cycle.
 	GetInvoice(ctx context.Context, in *GetInvoiceReq, opts ...grpc.CallOption) (*GetInvoiceRes, error)
-	ExportGeneratedInvoice(ctx context.Context, in *ExportGeneratedInvoiceReq, opts ...grpc.CallOption) (*ExportGeneratedInvoiceRes, error)
 }
 
 type billingClient struct {
@@ -83,15 +81,6 @@ func (c *billingClient) GetInvoice(ctx context.Context, in *GetInvoiceReq, opts 
 	return out, nil
 }
 
-func (c *billingClient) ExportGeneratedInvoice(ctx context.Context, in *ExportGeneratedInvoiceReq, opts ...grpc.CallOption) (*ExportGeneratedInvoiceRes, error) {
-	out := new(ExportGeneratedInvoiceRes)
-	err := c.cc.Invoke(ctx, Billing_ExportGeneratedInvoice_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // BillingServer is the server API for Billing service.
 // All implementations must embed UnimplementedBillingServer
 // for forward compatibility
@@ -112,7 +101,6 @@ type BillingServer interface {
 	// no date is provided, this will return the invoice as it currently
 	// stands for the current billing cycle.
 	GetInvoice(context.Context, *GetInvoiceReq) (*GetInvoiceRes, error)
-	ExportGeneratedInvoice(context.Context, *ExportGeneratedInvoiceReq) (*ExportGeneratedInvoiceRes, error)
 	mustEmbedUnimplementedBillingServer()
 }
 
@@ -128,9 +116,6 @@ func (UnimplementedBillingServer) UpdateBillingPlan(context.Context, *UpdateBill
 }
 func (UnimplementedBillingServer) GetInvoice(context.Context, *GetInvoiceReq) (*GetInvoiceRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetInvoice not implemented")
-}
-func (UnimplementedBillingServer) ExportGeneratedInvoice(context.Context, *ExportGeneratedInvoiceReq) (*ExportGeneratedInvoiceRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ExportGeneratedInvoice not implemented")
 }
 func (UnimplementedBillingServer) mustEmbedUnimplementedBillingServer() {}
 
@@ -199,24 +184,6 @@ func _Billing_GetInvoice_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Billing_ExportGeneratedInvoice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ExportGeneratedInvoiceReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BillingServer).ExportGeneratedInvoice(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Billing_ExportGeneratedInvoice_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BillingServer).ExportGeneratedInvoice(ctx, req.(*ExportGeneratedInvoiceReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // Billing_ServiceDesc is the grpc.ServiceDesc for Billing service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -235,10 +202,6 @@ var Billing_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetInvoice",
 			Handler:    _Billing_GetInvoice_Handler,
-		},
-		{
-			MethodName: "ExportGeneratedInvoice",
-			Handler:    _Billing_ExportGeneratedInvoice_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
