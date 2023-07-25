@@ -1332,14 +1332,15 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when creating the shift instance.
 	//   - grpc.NotFound: the @draft_schedule_sid, @shift_template_sid, or @wfm_agent_sids do not exist for the org sending the request.
 	CreateShiftInstanceV2(ctx context.Context, in *CreateShiftInstanceV2Req, opts ...grpc.CallOption) (*CreateShiftInstanceV2Res, error)
-	// Swaps a list of shift instances to have a different @wfm_agent_sid.
+	// Swaps shift instances with the given @shift_instance_sids that belong to @wfm_agent_sid1 to belong to @wfm_agent_sid2 (and viceversa).
 	// Returns the swapped @shift_instances after they are succesfully updated.
-	// If there are other shifts for the given @wfm_agent_sids with an overlap conflict, a diagnostic will be returned instead.
+	// If there are other shifts for the given @wfm_agent_sids with an overlap conflict, diagnostics will be returned instead.
+	// All @shift_instance_sids must belong to the same schedule, and be from a draft schedule.
 	// Required permissions:
 	// NONE
 	// Errors:
 	//   - grpc.Invalid: one or more fields in the request have invalid values.
-	//   - grpc.NotFound: wfm_agent_sid_1, wfm_agent_sid_2, or shift_instance_sids do not exist for the org sending the request.
+	//   - grpc.NotFound: wfm_agent_sid_1, wfm_agent_sid_2, or shift_instance_sids do not exist for org_id.
 	//   - grpc.Internal: error occurs when swapping the shift instances.
 	SwapShiftInstances(ctx context.Context, in *SwapShiftInstancesReq, opts ...grpc.CallOption) (*SwapShiftInstancesRes, error)
 	// Updates a shift instance for the org sending the request with the provided parameters.
@@ -3751,14 +3752,15 @@ type WFMServer interface {
 	//   - grpc.Internal: error occurs when creating the shift instance.
 	//   - grpc.NotFound: the @draft_schedule_sid, @shift_template_sid, or @wfm_agent_sids do not exist for the org sending the request.
 	CreateShiftInstanceV2(context.Context, *CreateShiftInstanceV2Req) (*CreateShiftInstanceV2Res, error)
-	// Swaps a list of shift instances to have a different @wfm_agent_sid.
+	// Swaps shift instances with the given @shift_instance_sids that belong to @wfm_agent_sid1 to belong to @wfm_agent_sid2 (and viceversa).
 	// Returns the swapped @shift_instances after they are succesfully updated.
-	// If there are other shifts for the given @wfm_agent_sids with an overlap conflict, a diagnostic will be returned instead.
+	// If there are other shifts for the given @wfm_agent_sids with an overlap conflict, diagnostics will be returned instead.
+	// All @shift_instance_sids must belong to the same schedule, and be from a draft schedule.
 	// Required permissions:
 	// NONE
 	// Errors:
 	//   - grpc.Invalid: one or more fields in the request have invalid values.
-	//   - grpc.NotFound: wfm_agent_sid_1, wfm_agent_sid_2, or shift_instance_sids do not exist for the org sending the request.
+	//   - grpc.NotFound: wfm_agent_sid_1, wfm_agent_sid_2, or shift_instance_sids do not exist for org_id.
 	//   - grpc.Internal: error occurs when swapping the shift instances.
 	SwapShiftInstances(context.Context, *SwapShiftInstancesReq) (*SwapShiftInstancesRes, error)
 	// Updates a shift instance for the org sending the request with the provided parameters.

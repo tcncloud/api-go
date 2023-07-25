@@ -15584,9 +15584,9 @@ type SwapShiftInstancesReq struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// ID of the wfm agent sid that the shift instances had.
+	// ID of the wfm agent that will swap instances with @wfm_agent_sid2.
 	WfmAgentSid1 int64 `protobuf:"varint,1,opt,name=wfm_agent_sid1,json=wfmAgentSid1,proto3" json:"wfm_agent_sid1,omitempty"`
-	// ID of the wfm agent sid that the shift instances will have.
+	// ID of the wfm agent that will swap instances with @wfm_agent_sid1.
 	WfmAgentSid2 int64 `protobuf:"varint,2,opt,name=wfm_agent_sid2,json=wfmAgentSid2,proto3" json:"wfm_agent_sid2,omitempty"`
 	// IDs of the shift instances that will be swapped.
 	ShiftInstanceSids []int64 `protobuf:"varint,3,rep,packed,name=shift_instance_sids,json=shiftInstanceSids,proto3" json:"shift_instance_sids,omitempty"`
