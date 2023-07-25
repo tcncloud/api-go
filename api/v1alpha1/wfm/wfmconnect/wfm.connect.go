@@ -326,6 +326,9 @@ const (
 	WFMSwapShiftInstancesProcedure = "/api.v1alpha1.wfm.WFM/SwapShiftInstances"
 	// WFMUpdateShiftInstanceProcedure is the fully-qualified name of the WFM's UpdateShiftInstance RPC.
 	WFMUpdateShiftInstanceProcedure = "/api.v1alpha1.wfm.WFM/UpdateShiftInstance"
+	// WFMUpdateShiftInstanceV2Procedure is the fully-qualified name of the WFM's UpdateShiftInstanceV2
+	// RPC.
+	WFMUpdateShiftInstanceV2Procedure = "/api.v1alpha1.wfm.WFM/UpdateShiftInstanceV2"
 	// WFMListShiftSegmentsByShiftInstanceSidsProcedure is the fully-qualified name of the WFM's
 	// ListShiftSegmentsByShiftInstanceSids RPC.
 	WFMListShiftSegmentsByShiftInstanceSidsProcedure = "/api.v1alpha1.wfm.WFM/ListShiftSegmentsByShiftInstanceSids"
@@ -1535,12 +1538,20 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when swapping the shift instances.
 	SwapShiftInstances(context.Context, *connect_go.Request[wfm.SwapShiftInstancesReq]) (*connect_go.Response[wfm.SwapShiftInstancesRes], error)
 	// Updates a shift instance for the org sending the request with the provided parameters.
+	// This method is not implemented. Do not use.
 	// Required permissions:
 	// NONE
 	// Errors:
 	//   - grpc.Invalid: one or more fields in the request have invalid values.
 	//   - grpc.Internal: error occurs when updating the shift instance.
 	UpdateShiftInstance(context.Context, *connect_go.Request[wfm.UpdateShiftInstanceReq]) (*connect_go.Response[wfm.UpdateShiftInstanceRes], error)
+	// Updates a shift instance for the org sending the request with the provided parameters.
+	// Required permissions:
+	// NONE
+	// Errors:
+	//   - grpc.Invalid: one or more fields in the request have invalid values.
+	//   - grpc.Internal: error occurs when updating the shift instance.
+	UpdateShiftInstanceV2(context.Context, *connect_go.Request[wfm.UpdateShiftInstanceV2Req]) (*connect_go.Response[wfm.UpdateShiftInstanceV2Res], error)
 	// Lists shift segments for the specified shift instances for the org sending the request.
 	// If @include_scheduling_activity is set to true then the related scheduling activity for the shift segment will be returned in the scheduling activity field.
 	// If @include_activity is set to true then the related non skill activity for the scheduling activity will be returned in the scheduling activities member non skill activity field.
@@ -2140,6 +2151,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMUpdateShiftInstanceProcedure,
 			opts...,
 		),
+		updateShiftInstanceV2: connect_go.NewClient[wfm.UpdateShiftInstanceV2Req, wfm.UpdateShiftInstanceV2Res](
+			httpClient,
+			baseURL+WFMUpdateShiftInstanceV2Procedure,
+			opts...,
+		),
 		listShiftSegmentsByShiftInstanceSids: connect_go.NewClient[wfm.ListShiftSegmentsByShiftInstanceSidsReq, wfm.ListShiftSegmentsByShiftInstanceSidsRes](
 			httpClient,
 			baseURL+WFMListShiftSegmentsByShiftInstanceSidsProcedure,
@@ -2279,6 +2295,7 @@ type wFMClient struct {
 	createShiftInstanceV2                         *connect_go.Client[wfm.CreateShiftInstanceV2Req, wfm.CreateShiftInstanceV2Res]
 	swapShiftInstances                            *connect_go.Client[wfm.SwapShiftInstancesReq, wfm.SwapShiftInstancesRes]
 	updateShiftInstance                           *connect_go.Client[wfm.UpdateShiftInstanceReq, wfm.UpdateShiftInstanceRes]
+	updateShiftInstanceV2                         *connect_go.Client[wfm.UpdateShiftInstanceV2Req, wfm.UpdateShiftInstanceV2Res]
 	listShiftSegmentsByShiftInstanceSids          *connect_go.Client[wfm.ListShiftSegmentsByShiftInstanceSidsReq, wfm.ListShiftSegmentsByShiftInstanceSidsRes]
 	setSchedulingTarget                           *connect_go.Client[wfm.SetSchedulingTargetReq, wfm.SetSchedulingTargetRes]
 	getSchedulingTarget                           *connect_go.Client[wfm.GetSchedulingTargetReq, wfm.GetSchedulingTargetRes]
@@ -2815,6 +2832,11 @@ func (c *wFMClient) SwapShiftInstances(ctx context.Context, req *connect_go.Requ
 // UpdateShiftInstance calls api.v1alpha1.wfm.WFM.UpdateShiftInstance.
 func (c *wFMClient) UpdateShiftInstance(ctx context.Context, req *connect_go.Request[wfm.UpdateShiftInstanceReq]) (*connect_go.Response[wfm.UpdateShiftInstanceRes], error) {
 	return c.updateShiftInstance.CallUnary(ctx, req)
+}
+
+// UpdateShiftInstanceV2 calls api.v1alpha1.wfm.WFM.UpdateShiftInstanceV2.
+func (c *wFMClient) UpdateShiftInstanceV2(ctx context.Context, req *connect_go.Request[wfm.UpdateShiftInstanceV2Req]) (*connect_go.Response[wfm.UpdateShiftInstanceV2Res], error) {
+	return c.updateShiftInstanceV2.CallUnary(ctx, req)
 }
 
 // ListShiftSegmentsByShiftInstanceSids calls
@@ -4039,12 +4061,20 @@ type WFMHandler interface {
 	//   - grpc.Internal: error occurs when swapping the shift instances.
 	SwapShiftInstances(context.Context, *connect_go.Request[wfm.SwapShiftInstancesReq]) (*connect_go.Response[wfm.SwapShiftInstancesRes], error)
 	// Updates a shift instance for the org sending the request with the provided parameters.
+	// This method is not implemented. Do not use.
 	// Required permissions:
 	// NONE
 	// Errors:
 	//   - grpc.Invalid: one or more fields in the request have invalid values.
 	//   - grpc.Internal: error occurs when updating the shift instance.
 	UpdateShiftInstance(context.Context, *connect_go.Request[wfm.UpdateShiftInstanceReq]) (*connect_go.Response[wfm.UpdateShiftInstanceRes], error)
+	// Updates a shift instance for the org sending the request with the provided parameters.
+	// Required permissions:
+	// NONE
+	// Errors:
+	//   - grpc.Invalid: one or more fields in the request have invalid values.
+	//   - grpc.Internal: error occurs when updating the shift instance.
+	UpdateShiftInstanceV2(context.Context, *connect_go.Request[wfm.UpdateShiftInstanceV2Req]) (*connect_go.Response[wfm.UpdateShiftInstanceV2Res], error)
 	// Lists shift segments for the specified shift instances for the org sending the request.
 	// If @include_scheduling_activity is set to true then the related scheduling activity for the shift segment will be returned in the scheduling activity field.
 	// If @include_activity is set to true then the related non skill activity for the scheduling activity will be returned in the scheduling activities member non skill activity field.
@@ -4640,6 +4670,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.UpdateShiftInstance,
 		opts...,
 	)
+	wFMUpdateShiftInstanceV2Handler := connect_go.NewUnaryHandler(
+		WFMUpdateShiftInstanceV2Procedure,
+		svc.UpdateShiftInstanceV2,
+		opts...,
+	)
 	wFMListShiftSegmentsByShiftInstanceSidsHandler := connect_go.NewUnaryHandler(
 		WFMListShiftSegmentsByShiftInstanceSidsProcedure,
 		svc.ListShiftSegmentsByShiftInstanceSids,
@@ -4880,6 +4915,8 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMSwapShiftInstancesHandler.ServeHTTP(w, r)
 		case WFMUpdateShiftInstanceProcedure:
 			wFMUpdateShiftInstanceHandler.ServeHTTP(w, r)
+		case WFMUpdateShiftInstanceV2Procedure:
+			wFMUpdateShiftInstanceV2Handler.ServeHTTP(w, r)
 		case WFMListShiftSegmentsByShiftInstanceSidsProcedure:
 			wFMListShiftSegmentsByShiftInstanceSidsHandler.ServeHTTP(w, r)
 		case WFMSetSchedulingTargetProcedure:
@@ -5315,6 +5352,10 @@ func (UnimplementedWFMHandler) SwapShiftInstances(context.Context, *connect_go.R
 
 func (UnimplementedWFMHandler) UpdateShiftInstance(context.Context, *connect_go.Request[wfm.UpdateShiftInstanceReq]) (*connect_go.Response[wfm.UpdateShiftInstanceRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.UpdateShiftInstance is not implemented"))
+}
+
+func (UnimplementedWFMHandler) UpdateShiftInstanceV2(context.Context, *connect_go.Request[wfm.UpdateShiftInstanceV2Req]) (*connect_go.Response[wfm.UpdateShiftInstanceV2Res], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.UpdateShiftInstanceV2 is not implemented"))
 }
 
 func (UnimplementedWFMHandler) ListShiftSegmentsByShiftInstanceSids(context.Context, *connect_go.Request[wfm.ListShiftSegmentsByShiftInstanceSidsReq]) (*connect_go.Response[wfm.ListShiftSegmentsByShiftInstanceSidsRes], error) {

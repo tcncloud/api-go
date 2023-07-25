@@ -37,12 +37,15 @@ const (
 	Learn_Content_FullMethodName                 = "/api.v0alpha.Learn/Content"
 	Learn_ExportMany_FullMethodName              = "/api.v0alpha.Learn/ExportMany"
 	Learn_SearchContent_FullMethodName           = "/api.v0alpha.Learn/SearchContent"
+	Learn_ListSearchResults_FullMethodName       = "/api.v0alpha.Learn/ListSearchResults"
 	Learn_Standalone_FullMethodName              = "/api.v0alpha.Learn/Standalone"
 	Learn_ContentEditorData_FullMethodName       = "/api.v0alpha.Learn/ContentEditorData"
 	Learn_Update_FullMethodName                  = "/api.v0alpha.Learn/Update"
 	Learn_StoreStaticImage_FullMethodName        = "/api.v0alpha.Learn/StoreStaticImage"
 	Learn_UploadDynamicScreenshot_FullMethodName = "/api.v0alpha.Learn/UploadDynamicScreenshot"
 	Learn_DeleteStandalone_FullMethodName        = "/api.v0alpha.Learn/DeleteStandalone"
+	Learn_Snippet_FullMethodName                 = "/api.v0alpha.Learn/Snippet"
+	Learn_DeleteLearnPages_FullMethodName        = "/api.v0alpha.Learn/DeleteLearnPages"
 )
 
 // LearnClient is the client API for Learn service.
@@ -56,7 +59,11 @@ type LearnClient interface {
 	// exports multiple pages of the learning center markdown as PDF
 	ExportMany(ctx context.Context, in *ExportManyReq, opts ...grpc.CallOption) (*ExportRes, error)
 	// search content in learning pages
+	// we allow all the logged in agents/admins to view search content
 	SearchContent(ctx context.Context, in *SearchContentReq, opts ...grpc.CallOption) (*SearchRes, error)
+	// stream search content results in learning pages
+	// we allow all the logged in agents/admins to view search content
+	ListSearchResults(ctx context.Context, in *SearchContentReq, opts ...grpc.CallOption) (Learn_ListSearchResultsClient, error)
 	// get standalone articles from learning pages
 	Standalone(ctx context.Context, in *StandaloneReq, opts ...grpc.CallOption) (*StandaloneRes, error)
 	// retrieve user who edited the content last
@@ -69,6 +76,11 @@ type LearnClient interface {
 	UploadDynamicScreenshot(ctx context.Context, in *UploadDynamicScreenshotReq, opts ...grpc.CallOption) (*UploadDynamicScreenshotRes, error)
 	// delete standalone articles from learning pages
 	DeleteStandalone(ctx context.Context, in *DeleteStandaloneReq, opts ...grpc.CallOption) (*DeleteStandaloneRes, error)
+	// get snippet content from learning pages
+	// we allow all the logged in agents/admins to view snippet content
+	Snippet(ctx context.Context, in *SnippetReq, opts ...grpc.CallOption) (*SnippetRes, error)
+	// delete learning pages
+	DeleteLearnPages(ctx context.Context, in *DeleteLearnPagesReq, opts ...grpc.CallOption) (*DeleteLearnPagesRes, error)
 }
 
 type learnClient struct {
@@ -113,6 +125,38 @@ func (c *learnClient) SearchContent(ctx context.Context, in *SearchContentReq, o
 		return nil, err
 	}
 	return out, nil
+}
+
+func (c *learnClient) ListSearchResults(ctx context.Context, in *SearchContentReq, opts ...grpc.CallOption) (Learn_ListSearchResultsClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Learn_ServiceDesc.Streams[0], Learn_ListSearchResults_FullMethodName, opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &learnListSearchResultsClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type Learn_ListSearchResultsClient interface {
+	Recv() (*SearchRes, error)
+	grpc.ClientStream
+}
+
+type learnListSearchResultsClient struct {
+	grpc.ClientStream
+}
+
+func (x *learnListSearchResultsClient) Recv() (*SearchRes, error) {
+	m := new(SearchRes)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
 }
 
 func (c *learnClient) Standalone(ctx context.Context, in *StandaloneReq, opts ...grpc.CallOption) (*StandaloneRes, error) {
@@ -169,6 +213,24 @@ func (c *learnClient) DeleteStandalone(ctx context.Context, in *DeleteStandalone
 	return out, nil
 }
 
+func (c *learnClient) Snippet(ctx context.Context, in *SnippetReq, opts ...grpc.CallOption) (*SnippetRes, error) {
+	out := new(SnippetRes)
+	err := c.cc.Invoke(ctx, Learn_Snippet_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *learnClient) DeleteLearnPages(ctx context.Context, in *DeleteLearnPagesReq, opts ...grpc.CallOption) (*DeleteLearnPagesRes, error) {
+	out := new(DeleteLearnPagesRes)
+	err := c.cc.Invoke(ctx, Learn_DeleteLearnPages_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LearnServer is the server API for Learn service.
 // All implementations must embed UnimplementedLearnServer
 // for forward compatibility
@@ -180,7 +242,11 @@ type LearnServer interface {
 	// exports multiple pages of the learning center markdown as PDF
 	ExportMany(context.Context, *ExportManyReq) (*ExportRes, error)
 	// search content in learning pages
+	// we allow all the logged in agents/admins to view search content
 	SearchContent(context.Context, *SearchContentReq) (*SearchRes, error)
+	// stream search content results in learning pages
+	// we allow all the logged in agents/admins to view search content
+	ListSearchResults(*SearchContentReq, Learn_ListSearchResultsServer) error
 	// get standalone articles from learning pages
 	Standalone(context.Context, *StandaloneReq) (*StandaloneRes, error)
 	// retrieve user who edited the content last
@@ -193,6 +259,11 @@ type LearnServer interface {
 	UploadDynamicScreenshot(context.Context, *UploadDynamicScreenshotReq) (*UploadDynamicScreenshotRes, error)
 	// delete standalone articles from learning pages
 	DeleteStandalone(context.Context, *DeleteStandaloneReq) (*DeleteStandaloneRes, error)
+	// get snippet content from learning pages
+	// we allow all the logged in agents/admins to view snippet content
+	Snippet(context.Context, *SnippetReq) (*SnippetRes, error)
+	// delete learning pages
+	DeleteLearnPages(context.Context, *DeleteLearnPagesReq) (*DeleteLearnPagesRes, error)
 	mustEmbedUnimplementedLearnServer()
 }
 
@@ -212,6 +283,9 @@ func (UnimplementedLearnServer) ExportMany(context.Context, *ExportManyReq) (*Ex
 func (UnimplementedLearnServer) SearchContent(context.Context, *SearchContentReq) (*SearchRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SearchContent not implemented")
 }
+func (UnimplementedLearnServer) ListSearchResults(*SearchContentReq, Learn_ListSearchResultsServer) error {
+	return status.Errorf(codes.Unimplemented, "method ListSearchResults not implemented")
+}
 func (UnimplementedLearnServer) Standalone(context.Context, *StandaloneReq) (*StandaloneRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Standalone not implemented")
 }
@@ -229,6 +303,12 @@ func (UnimplementedLearnServer) UploadDynamicScreenshot(context.Context, *Upload
 }
 func (UnimplementedLearnServer) DeleteStandalone(context.Context, *DeleteStandaloneReq) (*DeleteStandaloneRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteStandalone not implemented")
+}
+func (UnimplementedLearnServer) Snippet(context.Context, *SnippetReq) (*SnippetRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Snippet not implemented")
+}
+func (UnimplementedLearnServer) DeleteLearnPages(context.Context, *DeleteLearnPagesReq) (*DeleteLearnPagesRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteLearnPages not implemented")
 }
 func (UnimplementedLearnServer) mustEmbedUnimplementedLearnServer() {}
 
@@ -313,6 +393,27 @@ func _Learn_SearchContent_Handler(srv interface{}, ctx context.Context, dec func
 		return srv.(LearnServer).SearchContent(ctx, req.(*SearchContentReq))
 	}
 	return interceptor(ctx, in, info, handler)
+}
+
+func _Learn_ListSearchResults_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(SearchContentReq)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(LearnServer).ListSearchResults(m, &learnListSearchResultsServer{stream})
+}
+
+type Learn_ListSearchResultsServer interface {
+	Send(*SearchRes) error
+	grpc.ServerStream
+}
+
+type learnListSearchResultsServer struct {
+	grpc.ServerStream
+}
+
+func (x *learnListSearchResultsServer) Send(m *SearchRes) error {
+	return x.ServerStream.SendMsg(m)
 }
 
 func _Learn_Standalone_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -423,6 +524,42 @@ func _Learn_DeleteStandalone_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Learn_Snippet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SnippetReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LearnServer).Snippet(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Learn_Snippet_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LearnServer).Snippet(ctx, req.(*SnippetReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Learn_DeleteLearnPages_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteLearnPagesReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LearnServer).DeleteLearnPages(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Learn_DeleteLearnPages_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LearnServer).DeleteLearnPages(ctx, req.(*DeleteLearnPagesReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Learn_ServiceDesc is the grpc.ServiceDesc for Learn service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -470,7 +607,21 @@ var Learn_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "DeleteStandalone",
 			Handler:    _Learn_DeleteStandalone_Handler,
 		},
+		{
+			MethodName: "Snippet",
+			Handler:    _Learn_Snippet_Handler,
+		},
+		{
+			MethodName: "DeleteLearnPages",
+			Handler:    _Learn_DeleteLearnPages_Handler,
+		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "ListSearchResults",
+			Handler:       _Learn_ListSearchResults_Handler,
+			ServerStreams: true,
+		},
+	},
 	Metadata: "api/v0alpha/learn.proto",
 }
