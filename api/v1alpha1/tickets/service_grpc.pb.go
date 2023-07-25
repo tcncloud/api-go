@@ -82,9 +82,9 @@ type TicketsClient interface {
 	EditMaskTicket(ctx context.Context, in *EditMaskTicketReq, opts ...grpc.CallOption) (*EditMaskTicketRes, error)
 	ListAllocatedTickets(ctx context.Context, in *ListAllocatedTicketReq, opts ...grpc.CallOption) (*ListAllocatedTicketRes, error)
 	// public method to fetch list of skills for a tickets user
-	ListSkills(ctx context.Context, in *ListSkillsReq, opts ...grpc.CallOption) (*ListSkillsRes, error)
+	ListSkills(ctx context.Context, in *ListSkillsRequest, opts ...grpc.CallOption) (*ListSkillsResponse, error)
 	// public method to fetch list of users for a tickets user
-	ListUsers(ctx context.Context, in *ListUsersReq, opts ...grpc.CallOption) (*ListUsersRes, error)
+	ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (*ListUsersResponse, error)
 }
 
 type ticketsClient struct {
@@ -257,8 +257,8 @@ func (c *ticketsClient) ListAllocatedTickets(ctx context.Context, in *ListAlloca
 	return out, nil
 }
 
-func (c *ticketsClient) ListSkills(ctx context.Context, in *ListSkillsReq, opts ...grpc.CallOption) (*ListSkillsRes, error) {
-	out := new(ListSkillsRes)
+func (c *ticketsClient) ListSkills(ctx context.Context, in *ListSkillsRequest, opts ...grpc.CallOption) (*ListSkillsResponse, error) {
+	out := new(ListSkillsResponse)
 	err := c.cc.Invoke(ctx, Tickets_ListSkills_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -266,8 +266,8 @@ func (c *ticketsClient) ListSkills(ctx context.Context, in *ListSkillsReq, opts 
 	return out, nil
 }
 
-func (c *ticketsClient) ListUsers(ctx context.Context, in *ListUsersReq, opts ...grpc.CallOption) (*ListUsersRes, error) {
-	out := new(ListUsersRes)
+func (c *ticketsClient) ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (*ListUsersResponse, error) {
+	out := new(ListUsersResponse)
 	err := c.cc.Invoke(ctx, Tickets_ListUsers_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -316,9 +316,9 @@ type TicketsServer interface {
 	EditMaskTicket(context.Context, *EditMaskTicketReq) (*EditMaskTicketRes, error)
 	ListAllocatedTickets(context.Context, *ListAllocatedTicketReq) (*ListAllocatedTicketRes, error)
 	// public method to fetch list of skills for a tickets user
-	ListSkills(context.Context, *ListSkillsReq) (*ListSkillsRes, error)
+	ListSkills(context.Context, *ListSkillsRequest) (*ListSkillsResponse, error)
 	// public method to fetch list of users for a tickets user
-	ListUsers(context.Context, *ListUsersReq) (*ListUsersRes, error)
+	ListUsers(context.Context, *ListUsersRequest) (*ListUsersResponse, error)
 	mustEmbedUnimplementedTicketsServer()
 }
 
@@ -380,10 +380,10 @@ func (UnimplementedTicketsServer) EditMaskTicket(context.Context, *EditMaskTicke
 func (UnimplementedTicketsServer) ListAllocatedTickets(context.Context, *ListAllocatedTicketReq) (*ListAllocatedTicketRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAllocatedTickets not implemented")
 }
-func (UnimplementedTicketsServer) ListSkills(context.Context, *ListSkillsReq) (*ListSkillsRes, error) {
+func (UnimplementedTicketsServer) ListSkills(context.Context, *ListSkillsRequest) (*ListSkillsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListSkills not implemented")
 }
-func (UnimplementedTicketsServer) ListUsers(context.Context, *ListUsersReq) (*ListUsersRes, error) {
+func (UnimplementedTicketsServer) ListUsers(context.Context, *ListUsersRequest) (*ListUsersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListUsers not implemented")
 }
 func (UnimplementedTicketsServer) mustEmbedUnimplementedTicketsServer() {}
@@ -724,7 +724,7 @@ func _Tickets_ListAllocatedTickets_Handler(srv interface{}, ctx context.Context,
 }
 
 func _Tickets_ListSkills_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListSkillsReq)
+	in := new(ListSkillsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -736,13 +736,13 @@ func _Tickets_ListSkills_Handler(srv interface{}, ctx context.Context, dec func(
 		FullMethod: Tickets_ListSkills_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TicketsServer).ListSkills(ctx, req.(*ListSkillsReq))
+		return srv.(TicketsServer).ListSkills(ctx, req.(*ListSkillsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Tickets_ListUsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListUsersReq)
+	in := new(ListUsersRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -754,7 +754,7 @@ func _Tickets_ListUsers_Handler(srv interface{}, ctx context.Context, dec func(i
 		FullMethod: Tickets_ListUsers_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TicketsServer).ListUsers(ctx, req.(*ListUsersReq))
+		return srv.(TicketsServer).ListUsers(ctx, req.(*ListUsersRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
