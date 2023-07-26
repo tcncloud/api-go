@@ -17521,7 +17521,7 @@ var file_api_v0alpha_lms_proto_rawDesc = []byte{
 	0x0a, 0x07, 0x44, 0x45, 0x46, 0x41, 0x55, 0x4c, 0x54, 0x10, 0x00, 0x12, 0x0e, 0x0a, 0x0a, 0x54,
 	0x49, 0x4d, 0x45, 0x5f, 0x57, 0x45, 0x45, 0x4b, 0x53, 0x10, 0x01, 0x12, 0x0d, 0x0a, 0x09, 0x54,
 	0x49, 0x4d, 0x45, 0x5f, 0x44, 0x41, 0x59, 0x53, 0x10, 0x02, 0x12, 0x0e, 0x0a, 0x0a, 0x54, 0x49,
-	0x4d, 0x45, 0x5f, 0x48, 0x4f, 0x55, 0x52, 0x53, 0x10, 0x03, 0x32, 0xb9, 0x3a, 0x0a, 0x03, 0x4c,
+	0x4d, 0x45, 0x5f, 0x48, 0x4f, 0x55, 0x52, 0x53, 0x10, 0x03, 0x32, 0xdf, 0x3b, 0x0a, 0x03, 0x4c,
 	0x4d, 0x53, 0x12, 0x76, 0x0a, 0x0c, 0x47, 0x65, 0x74, 0x50, 0x75, 0x62, 0x6c, 0x69, 0x63, 0x4b,
 	0x65, 0x79, 0x12, 0x1c, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x30, 0x61, 0x6c, 0x70, 0x68, 0x61,
 	0x2e, 0x47, 0x65, 0x74, 0x50, 0x75, 0x62, 0x6c, 0x69, 0x63, 0x4b, 0x65, 0x79, 0x52, 0x65, 0x71,
@@ -17989,17 +17989,27 @@ var file_api_v0alpha_lms_proto_rawDesc = []byte{
 	0x70, 0x69, 0x2f, 0x76, 0x30, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x2f, 0x6c, 0x6d, 0x73, 0x2f, 0x63,
 	0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x2f, 0x75, 0x70, 0x64, 0x61, 0x74,
 	0x65, 0x73, 0x65, 0x63, 0x75, 0x72, 0x65, 0x73, 0x65, 0x61, 0x72, 0x63, 0x68, 0x64, 0x63, 0x72,
-	0x69, 0x74, 0x65, 0x72, 0x69, 0x61, 0x42, 0x90, 0x01, 0x0a, 0x0f, 0x63, 0x6f, 0x6d, 0x2e, 0x61,
-	0x70, 0x69, 0x2e, 0x76, 0x30, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x42, 0x08, 0x4c, 0x6d, 0x73, 0x50,
-	0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x26, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63,
-	0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d,
-	0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x30, 0x61, 0x6c, 0x70, 0x68, 0x61, 0xa2, 0x02,
-	0x03, 0x41, 0x56, 0x58, 0xaa, 0x02, 0x0b, 0x41, 0x70, 0x69, 0x2e, 0x56, 0x30, 0x61, 0x6c, 0x70,
-	0x68, 0x61, 0xca, 0x02, 0x0b, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x30, 0x61, 0x6c, 0x70, 0x68, 0x61,
-	0xe2, 0x02, 0x17, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x30, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x5c, 0x47,
-	0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x0c, 0x41, 0x70, 0x69,
-	0x3a, 0x3a, 0x56, 0x30, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x33,
+	0x69, 0x74, 0x65, 0x72, 0x69, 0x61, 0x12, 0xa3, 0x01, 0x0a, 0x20, 0x47, 0x65, 0x74, 0x51, 0x75,
+	0x65, 0x75, 0x65, 0x64, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x73, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73,
+	0x42, 0x79, 0x45, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x49, 0x64, 0x12, 0x16, 0x2e, 0x61, 0x70,
+	0x69, 0x2e, 0x76, 0x30, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x2e, 0x45, 0x6c, 0x65, 0x6d, 0x65, 0x6e,
+	0x74, 0x50, 0x4b, 0x1a, 0x13, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x30, 0x61, 0x6c, 0x70, 0x68,
+	0x61, 0x2e, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x73, 0x22, 0x52, 0xba, 0xb8, 0x91, 0x02, 0x05, 0x0a,
+	0x03, 0x08, 0xe8, 0x07, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x42, 0x3a, 0x01, 0x2a, 0x22, 0x3d, 0x2f,
+	0x61, 0x70, 0x69, 0x2f, 0x76, 0x30, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x2f, 0x6c, 0x6d, 0x73, 0x2f,
+	0x63, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x2f, 0x67, 0x65, 0x74, 0x71,
+	0x75, 0x65, 0x75, 0x65, 0x64, 0x65, 0x76, 0x65, 0x6e, 0x74, 0x73, 0x73, 0x74, 0x61, 0x74, 0x75,
+	0x73, 0x62, 0x79, 0x65, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x69, 0x64, 0x42, 0x90, 0x01, 0x0a,
+	0x0f, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x30, 0x61, 0x6c, 0x70, 0x68, 0x61,
+	0x42, 0x08, 0x4c, 0x6d, 0x73, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x26, 0x67, 0x69,
+	0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75,
+	0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x30, 0x61,
+	0x6c, 0x70, 0x68, 0x61, 0xa2, 0x02, 0x03, 0x41, 0x56, 0x58, 0xaa, 0x02, 0x0b, 0x41, 0x70, 0x69,
+	0x2e, 0x56, 0x30, 0x61, 0x6c, 0x70, 0x68, 0x61, 0xca, 0x02, 0x0b, 0x41, 0x70, 0x69, 0x5c, 0x56,
+	0x30, 0x61, 0x6c, 0x70, 0x68, 0x61, 0xe2, 0x02, 0x17, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x30, 0x61,
+	0x6c, 0x70, 0x68, 0x61, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
+	0xea, 0x02, 0x0c, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x56, 0x30, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x62,
+	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -18579,61 +18589,63 @@ var file_api_v0alpha_lms_proto_depIdxs = []int32{
 	152, // 326: api.v0alpha.LMS.GetCjsSecureSearchCriteria:input_type -> api.v0alpha.GetCjsSecureSearchCriteriaReq
 	151, // 327: api.v0alpha.LMS.CreateCjsSecureSearchCriteria:input_type -> api.v0alpha.CjsSecureSearchCriteria
 	151, // 328: api.v0alpha.LMS.UpdateCjsSecureSearchCriteria:input_type -> api.v0alpha.CjsSecureSearchCriteria
-	2,   // 329: api.v0alpha.LMS.GetPublicKey:output_type -> api.v0alpha.PublicKey
-	43,  // 330: api.v0alpha.LMS.CreateFileTemplate:output_type -> api.v0alpha.FileTemplate
-	43,  // 331: api.v0alpha.LMS.ListFileTemplates:output_type -> api.v0alpha.FileTemplate
-	43,  // 332: api.v0alpha.LMS.UpdateFileTemplate:output_type -> api.v0alpha.FileTemplate
-	43,  // 333: api.v0alpha.LMS.DeleteFileTemplate:output_type -> api.v0alpha.FileTemplate
-	43,  // 334: api.v0alpha.LMS.GetFileTemplate:output_type -> api.v0alpha.FileTemplate
-	30,  // 335: api.v0alpha.LMS.CreateField:output_type -> api.v0alpha.Field
-	33,  // 336: api.v0alpha.LMS.ListFields:output_type -> api.v0alpha.Fields
-	30,  // 337: api.v0alpha.LMS.GetField:output_type -> api.v0alpha.Field
-	30,  // 338: api.v0alpha.LMS.UpdateField:output_type -> api.v0alpha.Field
-	30,  // 339: api.v0alpha.LMS.DeleteField:output_type -> api.v0alpha.Field
-	28,  // 340: api.v0alpha.LMS.ListAvailableFieldsByElementId:output_type -> api.v0alpha.ProcessFields
-	15,  // 341: api.v0alpha.LMS.ListFieldsForElement:output_type -> api.v0alpha.ListFieldsForElementRes
-	17,  // 342: api.v0alpha.LMS.ListAutocompleteFields:output_type -> api.v0alpha.ListAutocompleteFieldsRes
-	137, // 343: api.v0alpha.LMS.ListCampaignLinks:output_type -> api.v0alpha.ListCampaignLinksRes
-	21,  // 344: api.v0alpha.LMS.PeekList:output_type -> api.v0alpha.PeekListRes
-	23,  // 345: api.v0alpha.LMS.GetHistory:output_type -> api.v0alpha.GetHistoryRes
-	19,  // 346: api.v0alpha.LMS.CreateElement:output_type -> api.v0alpha.Element
-	19,  // 347: api.v0alpha.LMS.ListElements:output_type -> api.v0alpha.Element
-	19,  // 348: api.v0alpha.LMS.GetElement:output_type -> api.v0alpha.Element
-	19,  // 349: api.v0alpha.LMS.UpdateElement:output_type -> api.v0alpha.Element
-	19,  // 350: api.v0alpha.LMS.DeleteElement:output_type -> api.v0alpha.Element
-	19,  // 351: api.v0alpha.LMS.CopyPipelineUpstream:output_type -> api.v0alpha.Element
-	19,  // 352: api.v0alpha.LMS.CopyPipelineDownstream:output_type -> api.v0alpha.Element
-	230, // 353: api.v0alpha.LMS.ProcessElement:output_type -> google.protobuf.Empty
-	28,  // 354: api.v0alpha.LMS.GetAvailableFields:output_type -> api.v0alpha.ProcessFields
-	117, // 355: api.v0alpha.LMS.ListNewEvents:output_type -> api.v0alpha.Events
-	117, // 356: api.v0alpha.LMS.ViewQueue:output_type -> api.v0alpha.Events
-	115, // 357: api.v0alpha.LMS.Autocomplete:output_type -> api.v0alpha.ParseRes
-	11,  // 358: api.v0alpha.LMS.GetComplianceScrubLists:output_type -> api.v0alpha.GetComplianceScrubListsRes
-	5,   // 359: api.v0alpha.LMS.FindFieldUsages:output_type -> api.v0alpha.FindFieldUsagesRes
-	9,   // 360: api.v0alpha.LMS.FindInvalidElements:output_type -> api.v0alpha.FindInvalidElementsRes
-	119, // 361: api.v0alpha.LMS.CreateCollection:output_type -> api.v0alpha.CollectionMetadata
-	119, // 362: api.v0alpha.LMS.GetCollection:output_type -> api.v0alpha.CollectionMetadata
-	230, // 363: api.v0alpha.LMS.UpdateCollection:output_type -> google.protobuf.Empty
-	230, // 364: api.v0alpha.LMS.DeleteCollection:output_type -> google.protobuf.Empty
-	130, // 365: api.v0alpha.LMS.ListCollections:output_type -> api.v0alpha.ListCollectionsRes
-	230, // 366: api.v0alpha.LMS.ResetCollection:output_type -> google.protobuf.Empty
-	120, // 367: api.v0alpha.LMS.AddCollectionEntry:output_type -> api.v0alpha.CollectionEntry
-	230, // 368: api.v0alpha.LMS.DeleteCollectionEntry:output_type -> google.protobuf.Empty
-	120, // 369: api.v0alpha.LMS.UpdateCollectionEntry:output_type -> api.v0alpha.CollectionEntry
-	120, // 370: api.v0alpha.LMS.StreamCollection:output_type -> api.v0alpha.CollectionEntry
-	133, // 371: api.v0alpha.LMS.SearchCollectionsPaginated:output_type -> api.v0alpha.PaginatedSearchRes
-	135, // 372: api.v0alpha.LMS.GetCollectionEntries:output_type -> api.v0alpha.GetCollectionEntriesRes
-	141, // 373: api.v0alpha.LMS.CreateCjsSearchDefinition:output_type -> api.v0alpha.CjsSearchDefinition
-	141, // 374: api.v0alpha.LMS.GetCjsSearchDefinition:output_type -> api.v0alpha.CjsSearchDefinition
-	230, // 375: api.v0alpha.LMS.UpdateCjsSearchDefinition:output_type -> google.protobuf.Empty
-	230, // 376: api.v0alpha.LMS.DeleteCjsSearchDefinition:output_type -> google.protobuf.Empty
-	145, // 377: api.v0alpha.LMS.ListCjsSearchDefinitions:output_type -> api.v0alpha.ListCjsSearchDefinitionsRes
-	147, // 378: api.v0alpha.LMS.ExecuteCjsSearchDefinition:output_type -> api.v0alpha.ExecuteCjsSearchDefinitionRes
-	151, // 379: api.v0alpha.LMS.GetCjsSecureSearchCriteria:output_type -> api.v0alpha.CjsSecureSearchCriteria
-	151, // 380: api.v0alpha.LMS.CreateCjsSecureSearchCriteria:output_type -> api.v0alpha.CjsSecureSearchCriteria
-	230, // 381: api.v0alpha.LMS.UpdateCjsSecureSearchCriteria:output_type -> google.protobuf.Empty
-	329, // [329:382] is the sub-list for method output_type
-	276, // [276:329] is the sub-list for method input_type
+	18,  // 329: api.v0alpha.LMS.GetQueuedEventsStatusByElementId:input_type -> api.v0alpha.ElementPK
+	2,   // 330: api.v0alpha.LMS.GetPublicKey:output_type -> api.v0alpha.PublicKey
+	43,  // 331: api.v0alpha.LMS.CreateFileTemplate:output_type -> api.v0alpha.FileTemplate
+	43,  // 332: api.v0alpha.LMS.ListFileTemplates:output_type -> api.v0alpha.FileTemplate
+	43,  // 333: api.v0alpha.LMS.UpdateFileTemplate:output_type -> api.v0alpha.FileTemplate
+	43,  // 334: api.v0alpha.LMS.DeleteFileTemplate:output_type -> api.v0alpha.FileTemplate
+	43,  // 335: api.v0alpha.LMS.GetFileTemplate:output_type -> api.v0alpha.FileTemplate
+	30,  // 336: api.v0alpha.LMS.CreateField:output_type -> api.v0alpha.Field
+	33,  // 337: api.v0alpha.LMS.ListFields:output_type -> api.v0alpha.Fields
+	30,  // 338: api.v0alpha.LMS.GetField:output_type -> api.v0alpha.Field
+	30,  // 339: api.v0alpha.LMS.UpdateField:output_type -> api.v0alpha.Field
+	30,  // 340: api.v0alpha.LMS.DeleteField:output_type -> api.v0alpha.Field
+	28,  // 341: api.v0alpha.LMS.ListAvailableFieldsByElementId:output_type -> api.v0alpha.ProcessFields
+	15,  // 342: api.v0alpha.LMS.ListFieldsForElement:output_type -> api.v0alpha.ListFieldsForElementRes
+	17,  // 343: api.v0alpha.LMS.ListAutocompleteFields:output_type -> api.v0alpha.ListAutocompleteFieldsRes
+	137, // 344: api.v0alpha.LMS.ListCampaignLinks:output_type -> api.v0alpha.ListCampaignLinksRes
+	21,  // 345: api.v0alpha.LMS.PeekList:output_type -> api.v0alpha.PeekListRes
+	23,  // 346: api.v0alpha.LMS.GetHistory:output_type -> api.v0alpha.GetHistoryRes
+	19,  // 347: api.v0alpha.LMS.CreateElement:output_type -> api.v0alpha.Element
+	19,  // 348: api.v0alpha.LMS.ListElements:output_type -> api.v0alpha.Element
+	19,  // 349: api.v0alpha.LMS.GetElement:output_type -> api.v0alpha.Element
+	19,  // 350: api.v0alpha.LMS.UpdateElement:output_type -> api.v0alpha.Element
+	19,  // 351: api.v0alpha.LMS.DeleteElement:output_type -> api.v0alpha.Element
+	19,  // 352: api.v0alpha.LMS.CopyPipelineUpstream:output_type -> api.v0alpha.Element
+	19,  // 353: api.v0alpha.LMS.CopyPipelineDownstream:output_type -> api.v0alpha.Element
+	230, // 354: api.v0alpha.LMS.ProcessElement:output_type -> google.protobuf.Empty
+	28,  // 355: api.v0alpha.LMS.GetAvailableFields:output_type -> api.v0alpha.ProcessFields
+	117, // 356: api.v0alpha.LMS.ListNewEvents:output_type -> api.v0alpha.Events
+	117, // 357: api.v0alpha.LMS.ViewQueue:output_type -> api.v0alpha.Events
+	115, // 358: api.v0alpha.LMS.Autocomplete:output_type -> api.v0alpha.ParseRes
+	11,  // 359: api.v0alpha.LMS.GetComplianceScrubLists:output_type -> api.v0alpha.GetComplianceScrubListsRes
+	5,   // 360: api.v0alpha.LMS.FindFieldUsages:output_type -> api.v0alpha.FindFieldUsagesRes
+	9,   // 361: api.v0alpha.LMS.FindInvalidElements:output_type -> api.v0alpha.FindInvalidElementsRes
+	119, // 362: api.v0alpha.LMS.CreateCollection:output_type -> api.v0alpha.CollectionMetadata
+	119, // 363: api.v0alpha.LMS.GetCollection:output_type -> api.v0alpha.CollectionMetadata
+	230, // 364: api.v0alpha.LMS.UpdateCollection:output_type -> google.protobuf.Empty
+	230, // 365: api.v0alpha.LMS.DeleteCollection:output_type -> google.protobuf.Empty
+	130, // 366: api.v0alpha.LMS.ListCollections:output_type -> api.v0alpha.ListCollectionsRes
+	230, // 367: api.v0alpha.LMS.ResetCollection:output_type -> google.protobuf.Empty
+	120, // 368: api.v0alpha.LMS.AddCollectionEntry:output_type -> api.v0alpha.CollectionEntry
+	230, // 369: api.v0alpha.LMS.DeleteCollectionEntry:output_type -> google.protobuf.Empty
+	120, // 370: api.v0alpha.LMS.UpdateCollectionEntry:output_type -> api.v0alpha.CollectionEntry
+	120, // 371: api.v0alpha.LMS.StreamCollection:output_type -> api.v0alpha.CollectionEntry
+	133, // 372: api.v0alpha.LMS.SearchCollectionsPaginated:output_type -> api.v0alpha.PaginatedSearchRes
+	135, // 373: api.v0alpha.LMS.GetCollectionEntries:output_type -> api.v0alpha.GetCollectionEntriesRes
+	141, // 374: api.v0alpha.LMS.CreateCjsSearchDefinition:output_type -> api.v0alpha.CjsSearchDefinition
+	141, // 375: api.v0alpha.LMS.GetCjsSearchDefinition:output_type -> api.v0alpha.CjsSearchDefinition
+	230, // 376: api.v0alpha.LMS.UpdateCjsSearchDefinition:output_type -> google.protobuf.Empty
+	230, // 377: api.v0alpha.LMS.DeleteCjsSearchDefinition:output_type -> google.protobuf.Empty
+	145, // 378: api.v0alpha.LMS.ListCjsSearchDefinitions:output_type -> api.v0alpha.ListCjsSearchDefinitionsRes
+	147, // 379: api.v0alpha.LMS.ExecuteCjsSearchDefinition:output_type -> api.v0alpha.ExecuteCjsSearchDefinitionRes
+	151, // 380: api.v0alpha.LMS.GetCjsSecureSearchCriteria:output_type -> api.v0alpha.CjsSecureSearchCriteria
+	151, // 381: api.v0alpha.LMS.CreateCjsSecureSearchCriteria:output_type -> api.v0alpha.CjsSecureSearchCriteria
+	230, // 382: api.v0alpha.LMS.UpdateCjsSecureSearchCriteria:output_type -> google.protobuf.Empty
+	117, // 383: api.v0alpha.LMS.GetQueuedEventsStatusByElementId:output_type -> api.v0alpha.Events
+	330, // [330:384] is the sub-list for method output_type
+	276, // [276:330] is the sub-list for method input_type
 	276, // [276:276] is the sub-list for extension type_name
 	276, // [276:276] is the sub-list for extension extendee
 	0,   // [0:276] is the sub-list for field type_name

@@ -20,59 +20,60 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	LMS_GetPublicKey_FullMethodName                   = "/api.v0alpha.LMS/GetPublicKey"
-	LMS_CreateFileTemplate_FullMethodName             = "/api.v0alpha.LMS/CreateFileTemplate"
-	LMS_ListFileTemplates_FullMethodName              = "/api.v0alpha.LMS/ListFileTemplates"
-	LMS_UpdateFileTemplate_FullMethodName             = "/api.v0alpha.LMS/UpdateFileTemplate"
-	LMS_DeleteFileTemplate_FullMethodName             = "/api.v0alpha.LMS/DeleteFileTemplate"
-	LMS_GetFileTemplate_FullMethodName                = "/api.v0alpha.LMS/GetFileTemplate"
-	LMS_CreateField_FullMethodName                    = "/api.v0alpha.LMS/CreateField"
-	LMS_ListFields_FullMethodName                     = "/api.v0alpha.LMS/ListFields"
-	LMS_GetField_FullMethodName                       = "/api.v0alpha.LMS/GetField"
-	LMS_UpdateField_FullMethodName                    = "/api.v0alpha.LMS/UpdateField"
-	LMS_DeleteField_FullMethodName                    = "/api.v0alpha.LMS/DeleteField"
-	LMS_ListAvailableFieldsByElementId_FullMethodName = "/api.v0alpha.LMS/ListAvailableFieldsByElementId"
-	LMS_ListFieldsForElement_FullMethodName           = "/api.v0alpha.LMS/ListFieldsForElement"
-	LMS_ListAutocompleteFields_FullMethodName         = "/api.v0alpha.LMS/ListAutocompleteFields"
-	LMS_ListCampaignLinks_FullMethodName              = "/api.v0alpha.LMS/ListCampaignLinks"
-	LMS_PeekList_FullMethodName                       = "/api.v0alpha.LMS/PeekList"
-	LMS_GetHistory_FullMethodName                     = "/api.v0alpha.LMS/GetHistory"
-	LMS_CreateElement_FullMethodName                  = "/api.v0alpha.LMS/CreateElement"
-	LMS_ListElements_FullMethodName                   = "/api.v0alpha.LMS/ListElements"
-	LMS_GetElement_FullMethodName                     = "/api.v0alpha.LMS/GetElement"
-	LMS_UpdateElement_FullMethodName                  = "/api.v0alpha.LMS/UpdateElement"
-	LMS_DeleteElement_FullMethodName                  = "/api.v0alpha.LMS/DeleteElement"
-	LMS_CopyPipelineUpstream_FullMethodName           = "/api.v0alpha.LMS/CopyPipelineUpstream"
-	LMS_CopyPipelineDownstream_FullMethodName         = "/api.v0alpha.LMS/CopyPipelineDownstream"
-	LMS_ProcessElement_FullMethodName                 = "/api.v0alpha.LMS/ProcessElement"
-	LMS_GetAvailableFields_FullMethodName             = "/api.v0alpha.LMS/GetAvailableFields"
-	LMS_ListNewEvents_FullMethodName                  = "/api.v0alpha.LMS/ListNewEvents"
-	LMS_ViewQueue_FullMethodName                      = "/api.v0alpha.LMS/ViewQueue"
-	LMS_Autocomplete_FullMethodName                   = "/api.v0alpha.LMS/Autocomplete"
-	LMS_GetComplianceScrubLists_FullMethodName        = "/api.v0alpha.LMS/GetComplianceScrubLists"
-	LMS_FindFieldUsages_FullMethodName                = "/api.v0alpha.LMS/FindFieldUsages"
-	LMS_FindInvalidElements_FullMethodName            = "/api.v0alpha.LMS/FindInvalidElements"
-	LMS_CreateCollection_FullMethodName               = "/api.v0alpha.LMS/CreateCollection"
-	LMS_GetCollection_FullMethodName                  = "/api.v0alpha.LMS/GetCollection"
-	LMS_UpdateCollection_FullMethodName               = "/api.v0alpha.LMS/UpdateCollection"
-	LMS_DeleteCollection_FullMethodName               = "/api.v0alpha.LMS/DeleteCollection"
-	LMS_ListCollections_FullMethodName                = "/api.v0alpha.LMS/ListCollections"
-	LMS_ResetCollection_FullMethodName                = "/api.v0alpha.LMS/ResetCollection"
-	LMS_AddCollectionEntry_FullMethodName             = "/api.v0alpha.LMS/AddCollectionEntry"
-	LMS_DeleteCollectionEntry_FullMethodName          = "/api.v0alpha.LMS/DeleteCollectionEntry"
-	LMS_UpdateCollectionEntry_FullMethodName          = "/api.v0alpha.LMS/UpdateCollectionEntry"
-	LMS_StreamCollection_FullMethodName               = "/api.v0alpha.LMS/StreamCollection"
-	LMS_SearchCollectionsPaginated_FullMethodName     = "/api.v0alpha.LMS/SearchCollectionsPaginated"
-	LMS_GetCollectionEntries_FullMethodName           = "/api.v0alpha.LMS/GetCollectionEntries"
-	LMS_CreateCjsSearchDefinition_FullMethodName      = "/api.v0alpha.LMS/CreateCjsSearchDefinition"
-	LMS_GetCjsSearchDefinition_FullMethodName         = "/api.v0alpha.LMS/GetCjsSearchDefinition"
-	LMS_UpdateCjsSearchDefinition_FullMethodName      = "/api.v0alpha.LMS/UpdateCjsSearchDefinition"
-	LMS_DeleteCjsSearchDefinition_FullMethodName      = "/api.v0alpha.LMS/DeleteCjsSearchDefinition"
-	LMS_ListCjsSearchDefinitions_FullMethodName       = "/api.v0alpha.LMS/ListCjsSearchDefinitions"
-	LMS_ExecuteCjsSearchDefinition_FullMethodName     = "/api.v0alpha.LMS/ExecuteCjsSearchDefinition"
-	LMS_GetCjsSecureSearchCriteria_FullMethodName     = "/api.v0alpha.LMS/GetCjsSecureSearchCriteria"
-	LMS_CreateCjsSecureSearchCriteria_FullMethodName  = "/api.v0alpha.LMS/CreateCjsSecureSearchCriteria"
-	LMS_UpdateCjsSecureSearchCriteria_FullMethodName  = "/api.v0alpha.LMS/UpdateCjsSecureSearchCriteria"
+	LMS_GetPublicKey_FullMethodName                     = "/api.v0alpha.LMS/GetPublicKey"
+	LMS_CreateFileTemplate_FullMethodName               = "/api.v0alpha.LMS/CreateFileTemplate"
+	LMS_ListFileTemplates_FullMethodName                = "/api.v0alpha.LMS/ListFileTemplates"
+	LMS_UpdateFileTemplate_FullMethodName               = "/api.v0alpha.LMS/UpdateFileTemplate"
+	LMS_DeleteFileTemplate_FullMethodName               = "/api.v0alpha.LMS/DeleteFileTemplate"
+	LMS_GetFileTemplate_FullMethodName                  = "/api.v0alpha.LMS/GetFileTemplate"
+	LMS_CreateField_FullMethodName                      = "/api.v0alpha.LMS/CreateField"
+	LMS_ListFields_FullMethodName                       = "/api.v0alpha.LMS/ListFields"
+	LMS_GetField_FullMethodName                         = "/api.v0alpha.LMS/GetField"
+	LMS_UpdateField_FullMethodName                      = "/api.v0alpha.LMS/UpdateField"
+	LMS_DeleteField_FullMethodName                      = "/api.v0alpha.LMS/DeleteField"
+	LMS_ListAvailableFieldsByElementId_FullMethodName   = "/api.v0alpha.LMS/ListAvailableFieldsByElementId"
+	LMS_ListFieldsForElement_FullMethodName             = "/api.v0alpha.LMS/ListFieldsForElement"
+	LMS_ListAutocompleteFields_FullMethodName           = "/api.v0alpha.LMS/ListAutocompleteFields"
+	LMS_ListCampaignLinks_FullMethodName                = "/api.v0alpha.LMS/ListCampaignLinks"
+	LMS_PeekList_FullMethodName                         = "/api.v0alpha.LMS/PeekList"
+	LMS_GetHistory_FullMethodName                       = "/api.v0alpha.LMS/GetHistory"
+	LMS_CreateElement_FullMethodName                    = "/api.v0alpha.LMS/CreateElement"
+	LMS_ListElements_FullMethodName                     = "/api.v0alpha.LMS/ListElements"
+	LMS_GetElement_FullMethodName                       = "/api.v0alpha.LMS/GetElement"
+	LMS_UpdateElement_FullMethodName                    = "/api.v0alpha.LMS/UpdateElement"
+	LMS_DeleteElement_FullMethodName                    = "/api.v0alpha.LMS/DeleteElement"
+	LMS_CopyPipelineUpstream_FullMethodName             = "/api.v0alpha.LMS/CopyPipelineUpstream"
+	LMS_CopyPipelineDownstream_FullMethodName           = "/api.v0alpha.LMS/CopyPipelineDownstream"
+	LMS_ProcessElement_FullMethodName                   = "/api.v0alpha.LMS/ProcessElement"
+	LMS_GetAvailableFields_FullMethodName               = "/api.v0alpha.LMS/GetAvailableFields"
+	LMS_ListNewEvents_FullMethodName                    = "/api.v0alpha.LMS/ListNewEvents"
+	LMS_ViewQueue_FullMethodName                        = "/api.v0alpha.LMS/ViewQueue"
+	LMS_Autocomplete_FullMethodName                     = "/api.v0alpha.LMS/Autocomplete"
+	LMS_GetComplianceScrubLists_FullMethodName          = "/api.v0alpha.LMS/GetComplianceScrubLists"
+	LMS_FindFieldUsages_FullMethodName                  = "/api.v0alpha.LMS/FindFieldUsages"
+	LMS_FindInvalidElements_FullMethodName              = "/api.v0alpha.LMS/FindInvalidElements"
+	LMS_CreateCollection_FullMethodName                 = "/api.v0alpha.LMS/CreateCollection"
+	LMS_GetCollection_FullMethodName                    = "/api.v0alpha.LMS/GetCollection"
+	LMS_UpdateCollection_FullMethodName                 = "/api.v0alpha.LMS/UpdateCollection"
+	LMS_DeleteCollection_FullMethodName                 = "/api.v0alpha.LMS/DeleteCollection"
+	LMS_ListCollections_FullMethodName                  = "/api.v0alpha.LMS/ListCollections"
+	LMS_ResetCollection_FullMethodName                  = "/api.v0alpha.LMS/ResetCollection"
+	LMS_AddCollectionEntry_FullMethodName               = "/api.v0alpha.LMS/AddCollectionEntry"
+	LMS_DeleteCollectionEntry_FullMethodName            = "/api.v0alpha.LMS/DeleteCollectionEntry"
+	LMS_UpdateCollectionEntry_FullMethodName            = "/api.v0alpha.LMS/UpdateCollectionEntry"
+	LMS_StreamCollection_FullMethodName                 = "/api.v0alpha.LMS/StreamCollection"
+	LMS_SearchCollectionsPaginated_FullMethodName       = "/api.v0alpha.LMS/SearchCollectionsPaginated"
+	LMS_GetCollectionEntries_FullMethodName             = "/api.v0alpha.LMS/GetCollectionEntries"
+	LMS_CreateCjsSearchDefinition_FullMethodName        = "/api.v0alpha.LMS/CreateCjsSearchDefinition"
+	LMS_GetCjsSearchDefinition_FullMethodName           = "/api.v0alpha.LMS/GetCjsSearchDefinition"
+	LMS_UpdateCjsSearchDefinition_FullMethodName        = "/api.v0alpha.LMS/UpdateCjsSearchDefinition"
+	LMS_DeleteCjsSearchDefinition_FullMethodName        = "/api.v0alpha.LMS/DeleteCjsSearchDefinition"
+	LMS_ListCjsSearchDefinitions_FullMethodName         = "/api.v0alpha.LMS/ListCjsSearchDefinitions"
+	LMS_ExecuteCjsSearchDefinition_FullMethodName       = "/api.v0alpha.LMS/ExecuteCjsSearchDefinition"
+	LMS_GetCjsSecureSearchCriteria_FullMethodName       = "/api.v0alpha.LMS/GetCjsSecureSearchCriteria"
+	LMS_CreateCjsSecureSearchCriteria_FullMethodName    = "/api.v0alpha.LMS/CreateCjsSecureSearchCriteria"
+	LMS_UpdateCjsSecureSearchCriteria_FullMethodName    = "/api.v0alpha.LMS/UpdateCjsSecureSearchCriteria"
+	LMS_GetQueuedEventsStatusByElementId_FullMethodName = "/api.v0alpha.LMS/GetQueuedEventsStatusByElementId"
 )
 
 // LMSClient is the client API for LMS service.
@@ -152,6 +153,7 @@ type LMSClient interface {
 	CreateCjsSecureSearchCriteria(ctx context.Context, in *CjsSecureSearchCriteria, opts ...grpc.CallOption) (*CjsSecureSearchCriteria, error)
 	// UpdateCjsSecureSearchCriteria updates the secure search criteria
 	UpdateCjsSecureSearchCriteria(ctx context.Context, in *CjsSecureSearchCriteria, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	GetQueuedEventsStatusByElementId(ctx context.Context, in *ElementPK, opts ...grpc.CallOption) (*Events, error)
 }
 
 type lMSClient struct {
@@ -754,6 +756,15 @@ func (c *lMSClient) UpdateCjsSecureSearchCriteria(ctx context.Context, in *CjsSe
 	return out, nil
 }
 
+func (c *lMSClient) GetQueuedEventsStatusByElementId(ctx context.Context, in *ElementPK, opts ...grpc.CallOption) (*Events, error) {
+	out := new(Events)
+	err := c.cc.Invoke(ctx, LMS_GetQueuedEventsStatusByElementId_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LMSServer is the server API for LMS service.
 // All implementations must embed UnimplementedLMSServer
 // for forward compatibility
@@ -831,6 +842,7 @@ type LMSServer interface {
 	CreateCjsSecureSearchCriteria(context.Context, *CjsSecureSearchCriteria) (*CjsSecureSearchCriteria, error)
 	// UpdateCjsSecureSearchCriteria updates the secure search criteria
 	UpdateCjsSecureSearchCriteria(context.Context, *CjsSecureSearchCriteria) (*emptypb.Empty, error)
+	GetQueuedEventsStatusByElementId(context.Context, *ElementPK) (*Events, error)
 	mustEmbedUnimplementedLMSServer()
 }
 
@@ -996,6 +1008,9 @@ func (UnimplementedLMSServer) CreateCjsSecureSearchCriteria(context.Context, *Cj
 }
 func (UnimplementedLMSServer) UpdateCjsSecureSearchCriteria(context.Context, *CjsSecureSearchCriteria) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateCjsSecureSearchCriteria not implemented")
+}
+func (UnimplementedLMSServer) GetQueuedEventsStatusByElementId(context.Context, *ElementPK) (*Events, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetQueuedEventsStatusByElementId not implemented")
 }
 func (UnimplementedLMSServer) mustEmbedUnimplementedLMSServer() {}
 
@@ -1979,6 +1994,24 @@ func _LMS_UpdateCjsSecureSearchCriteria_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LMS_GetQueuedEventsStatusByElementId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ElementPK)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LMSServer).GetQueuedEventsStatusByElementId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LMS_GetQueuedEventsStatusByElementId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LMSServer).GetQueuedEventsStatusByElementId(ctx, req.(*ElementPK))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // LMS_ServiceDesc is the grpc.ServiceDesc for LMS service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -2177,6 +2210,10 @@ var LMS_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateCjsSecureSearchCriteria",
 			Handler:    _LMS_UpdateCjsSecureSearchCriteria_Handler,
+		},
+		{
+			MethodName: "GetQueuedEventsStatusByElementId",
+			Handler:    _LMS_GetQueuedEventsStatusByElementId_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
