@@ -39,6 +39,9 @@ const (
 	// AuthConnectionServiceGetAuthConnectionSettingsProcedure is the fully-qualified name of the
 	// AuthConnectionService's GetAuthConnectionSettings RPC.
 	AuthConnectionServiceGetAuthConnectionSettingsProcedure = "/api.v1alpha1.org.authconnection.AuthConnectionService/GetAuthConnectionSettings"
+	// AuthConnectionServiceGetAuthConnectionProcedure is the fully-qualified name of the
+	// AuthConnectionService's GetAuthConnection RPC.
+	AuthConnectionServiceGetAuthConnectionProcedure = "/api.v1alpha1.org.authconnection.AuthConnectionService/GetAuthConnection"
 	// AuthConnectionServiceDeleteAuthConnectionProcedure is the fully-qualified name of the
 	// AuthConnectionService's DeleteAuthConnection RPC.
 	AuthConnectionServiceDeleteAuthConnectionProcedure = "/api.v1alpha1.org.authconnection.AuthConnectionService/DeleteAuthConnection"
@@ -55,8 +58,11 @@ const (
 type AuthConnectionServiceClient interface {
 	// CreateAuthConnection creates a new auth0 connection.
 	CreateAuthConnection(context.Context, *connect_go.Request[authconnection.CreateAuthConnectionRequest]) (*connect_go.Response[authconnection.CreateAuthConnectionResponse], error)
-	// GetAuthConnectionSettings gets auth0 connection settings.
+	// GetAuthConnectionSettings gets auth connection settings.
+	// DEPRECATED: use GetAuthConnection
 	GetAuthConnectionSettings(context.Context, *connect_go.Request[authconnection.GetAuthConnectionSettingsRequest]) (*connect_go.Response[authconnection.GetAuthConnectionSettingsResponse], error)
+	// GetAuthConnection gets an existing auth connection.
+	GetAuthConnection(context.Context, *connect_go.Request[authconnection.GetAuthConnectionRequest]) (*connect_go.Response[authconnection.GetAuthConnectionResponse], error)
 	// DeleteAuthConnection removes the current orgs auth settings.
 	DeleteAuthConnection(context.Context, *connect_go.Request[authconnection.DeleteAuthConnectionRequest]) (*connect_go.Response[authconnection.DeleteAuthConnectionResponse], error)
 	// UpdateAuthConnectionSecret updates a connections secret.
@@ -86,6 +92,11 @@ func NewAuthConnectionServiceClient(httpClient connect_go.HTTPClient, baseURL st
 			baseURL+AuthConnectionServiceGetAuthConnectionSettingsProcedure,
 			opts...,
 		),
+		getAuthConnection: connect_go.NewClient[authconnection.GetAuthConnectionRequest, authconnection.GetAuthConnectionResponse](
+			httpClient,
+			baseURL+AuthConnectionServiceGetAuthConnectionProcedure,
+			opts...,
+		),
 		deleteAuthConnection: connect_go.NewClient[authconnection.DeleteAuthConnectionRequest, authconnection.DeleteAuthConnectionResponse](
 			httpClient,
 			baseURL+AuthConnectionServiceDeleteAuthConnectionProcedure,
@@ -108,6 +119,7 @@ func NewAuthConnectionServiceClient(httpClient connect_go.HTTPClient, baseURL st
 type authConnectionServiceClient struct {
 	createAuthConnection       *connect_go.Client[authconnection.CreateAuthConnectionRequest, authconnection.CreateAuthConnectionResponse]
 	getAuthConnectionSettings  *connect_go.Client[authconnection.GetAuthConnectionSettingsRequest, authconnection.GetAuthConnectionSettingsResponse]
+	getAuthConnection          *connect_go.Client[authconnection.GetAuthConnectionRequest, authconnection.GetAuthConnectionResponse]
 	deleteAuthConnection       *connect_go.Client[authconnection.DeleteAuthConnectionRequest, authconnection.DeleteAuthConnectionResponse]
 	updateAuthConnectionSecret *connect_go.Client[authconnection.UpdateAuthConnectionSecretRequest, authconnection.UpdateAuthConnectionSecretResponse]
 	updateAuthConnectionGroups *connect_go.Client[authconnection.UpdateAuthConnectionGroupsRequest, authconnection.UpdateAuthConnectionGroupsResponse]
@@ -123,6 +135,11 @@ func (c *authConnectionServiceClient) CreateAuthConnection(ctx context.Context, 
 // api.v1alpha1.org.authconnection.AuthConnectionService.GetAuthConnectionSettings.
 func (c *authConnectionServiceClient) GetAuthConnectionSettings(ctx context.Context, req *connect_go.Request[authconnection.GetAuthConnectionSettingsRequest]) (*connect_go.Response[authconnection.GetAuthConnectionSettingsResponse], error) {
 	return c.getAuthConnectionSettings.CallUnary(ctx, req)
+}
+
+// GetAuthConnection calls api.v1alpha1.org.authconnection.AuthConnectionService.GetAuthConnection.
+func (c *authConnectionServiceClient) GetAuthConnection(ctx context.Context, req *connect_go.Request[authconnection.GetAuthConnectionRequest]) (*connect_go.Response[authconnection.GetAuthConnectionResponse], error) {
+	return c.getAuthConnection.CallUnary(ctx, req)
 }
 
 // DeleteAuthConnection calls
@@ -148,8 +165,11 @@ func (c *authConnectionServiceClient) UpdateAuthConnectionGroups(ctx context.Con
 type AuthConnectionServiceHandler interface {
 	// CreateAuthConnection creates a new auth0 connection.
 	CreateAuthConnection(context.Context, *connect_go.Request[authconnection.CreateAuthConnectionRequest]) (*connect_go.Response[authconnection.CreateAuthConnectionResponse], error)
-	// GetAuthConnectionSettings gets auth0 connection settings.
+	// GetAuthConnectionSettings gets auth connection settings.
+	// DEPRECATED: use GetAuthConnection
 	GetAuthConnectionSettings(context.Context, *connect_go.Request[authconnection.GetAuthConnectionSettingsRequest]) (*connect_go.Response[authconnection.GetAuthConnectionSettingsResponse], error)
+	// GetAuthConnection gets an existing auth connection.
+	GetAuthConnection(context.Context, *connect_go.Request[authconnection.GetAuthConnectionRequest]) (*connect_go.Response[authconnection.GetAuthConnectionResponse], error)
 	// DeleteAuthConnection removes the current orgs auth settings.
 	DeleteAuthConnection(context.Context, *connect_go.Request[authconnection.DeleteAuthConnectionRequest]) (*connect_go.Response[authconnection.DeleteAuthConnectionResponse], error)
 	// UpdateAuthConnectionSecret updates a connections secret.
@@ -174,6 +194,11 @@ func NewAuthConnectionServiceHandler(svc AuthConnectionServiceHandler, opts ...c
 		svc.GetAuthConnectionSettings,
 		opts...,
 	)
+	authConnectionServiceGetAuthConnectionHandler := connect_go.NewUnaryHandler(
+		AuthConnectionServiceGetAuthConnectionProcedure,
+		svc.GetAuthConnection,
+		opts...,
+	)
 	authConnectionServiceDeleteAuthConnectionHandler := connect_go.NewUnaryHandler(
 		AuthConnectionServiceDeleteAuthConnectionProcedure,
 		svc.DeleteAuthConnection,
@@ -195,6 +220,8 @@ func NewAuthConnectionServiceHandler(svc AuthConnectionServiceHandler, opts ...c
 			authConnectionServiceCreateAuthConnectionHandler.ServeHTTP(w, r)
 		case AuthConnectionServiceGetAuthConnectionSettingsProcedure:
 			authConnectionServiceGetAuthConnectionSettingsHandler.ServeHTTP(w, r)
+		case AuthConnectionServiceGetAuthConnectionProcedure:
+			authConnectionServiceGetAuthConnectionHandler.ServeHTTP(w, r)
 		case AuthConnectionServiceDeleteAuthConnectionProcedure:
 			authConnectionServiceDeleteAuthConnectionHandler.ServeHTTP(w, r)
 		case AuthConnectionServiceUpdateAuthConnectionSecretProcedure:
@@ -216,6 +243,10 @@ func (UnimplementedAuthConnectionServiceHandler) CreateAuthConnection(context.Co
 
 func (UnimplementedAuthConnectionServiceHandler) GetAuthConnectionSettings(context.Context, *connect_go.Request[authconnection.GetAuthConnectionSettingsRequest]) (*connect_go.Response[authconnection.GetAuthConnectionSettingsResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.authconnection.AuthConnectionService.GetAuthConnectionSettings is not implemented"))
+}
+
+func (UnimplementedAuthConnectionServiceHandler) GetAuthConnection(context.Context, *connect_go.Request[authconnection.GetAuthConnectionRequest]) (*connect_go.Response[authconnection.GetAuthConnectionResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.authconnection.AuthConnectionService.GetAuthConnection is not implemented"))
 }
 
 func (UnimplementedAuthConnectionServiceHandler) DeleteAuthConnection(context.Context, *connect_go.Request[authconnection.DeleteAuthConnectionRequest]) (*connect_go.Response[authconnection.DeleteAuthConnectionResponse], error) {
