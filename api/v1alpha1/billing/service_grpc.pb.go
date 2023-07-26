@@ -39,12 +39,20 @@ type BillingClient interface {
 	// more than one billing detail with a config type and event type, the request
 	// is malformed and will result in potentially unexpected behavior.
 	UpdateBillingPlan(ctx context.Context, in *UpdateBillingPlanReq, opts ...grpc.CallOption) (*UpdateBillingPlanRes, error)
-	// GetInvoice - returns the invoice for the organization. If a date is
-	// provided, this will return the invoice for the organization that
-	// corresponds to the billing cycle that contains the provided date. If
-	// no date is provided, this will return the invoice as it currently
-	// stands for the current billing cycle.
+	// GetInvoice - returns the invoice for the organization.
+	// If a date is provided, this will return the invoice for the
+	// organization that corresponds to the billing cycle that contains
+	// the provided date. If no date is provided, this will return the
+	// invoice as it currently stands for the current billing cycle.
 	GetInvoice(ctx context.Context, in *GetInvoiceReq, opts ...grpc.CallOption) (*GetInvoiceRes, error)
+	// ExportGeneratedInvoice - returns the invoice for the organization.
+	// If a date is provided, this will return the invoice for the
+	// organization that corresponds to the billing cycle that contains
+	// the provided date. If no date is provided, this will return the
+	// invoice, as it has been last generated, for the current billing cycle.
+	// This differs from GetInvoice in that it returns the invoice as
+	// it was last generated. It will not take into account new billing
+	// events since the last generation.
 	ExportGeneratedInvoice(ctx context.Context, in *ExportGeneratedInvoiceReq, opts ...grpc.CallOption) (*ExportGeneratedInvoiceRes, error)
 }
 
@@ -106,12 +114,20 @@ type BillingServer interface {
 	// more than one billing detail with a config type and event type, the request
 	// is malformed and will result in potentially unexpected behavior.
 	UpdateBillingPlan(context.Context, *UpdateBillingPlanReq) (*UpdateBillingPlanRes, error)
-	// GetInvoice - returns the invoice for the organization. If a date is
-	// provided, this will return the invoice for the organization that
-	// corresponds to the billing cycle that contains the provided date. If
-	// no date is provided, this will return the invoice as it currently
-	// stands for the current billing cycle.
+	// GetInvoice - returns the invoice for the organization.
+	// If a date is provided, this will return the invoice for the
+	// organization that corresponds to the billing cycle that contains
+	// the provided date. If no date is provided, this will return the
+	// invoice as it currently stands for the current billing cycle.
 	GetInvoice(context.Context, *GetInvoiceReq) (*GetInvoiceRes, error)
+	// ExportGeneratedInvoice - returns the invoice for the organization.
+	// If a date is provided, this will return the invoice for the
+	// organization that corresponds to the billing cycle that contains
+	// the provided date. If no date is provided, this will return the
+	// invoice, as it has been last generated, for the current billing cycle.
+	// This differs from GetInvoice in that it returns the invoice as
+	// it was last generated. It will not take into account new billing
+	// events since the last generation.
 	ExportGeneratedInvoice(context.Context, *ExportGeneratedInvoiceReq) (*ExportGeneratedInvoiceRes, error)
 	mustEmbedUnimplementedBillingServer()
 }
