@@ -91,6 +91,7 @@ type LearnClient interface {
 	// we allow all the logged in agents/admins to view search content
 	ListSearchResults(context.Context, *connect_go.Request[v0alpha.SearchContentReq]) (*connect_go.ServerStreamForClient[v0alpha.SearchRes], error)
 	// get standalone articles from learning pages
+	// we allow all the logged in agents/admins to view standalone articles
 	Standalone(context.Context, *connect_go.Request[v0alpha.StandaloneReq]) (*connect_go.Response[v0alpha.StandaloneRes], error)
 	// retrieve user who edited the content last
 	ContentEditorData(context.Context, *connect_go.Request[v0alpha.ContentEditorDataReq]) (*connect_go.Response[v0alpha.ContentEditorDataRes], error)
@@ -284,6 +285,7 @@ type LearnHandler interface {
 	// we allow all the logged in agents/admins to view search content
 	ListSearchResults(context.Context, *connect_go.Request[v0alpha.SearchContentReq], *connect_go.ServerStream[v0alpha.SearchRes]) error
 	// get standalone articles from learning pages
+	// we allow all the logged in agents/admins to view standalone articles
 	Standalone(context.Context, *connect_go.Request[v0alpha.StandaloneReq]) (*connect_go.Response[v0alpha.StandaloneRes], error)
 	// retrieve user who edited the content last
 	ContentEditorData(context.Context, *connect_go.Request[v0alpha.ContentEditorDataReq]) (*connect_go.Response[v0alpha.ContentEditorDataRes], error)
