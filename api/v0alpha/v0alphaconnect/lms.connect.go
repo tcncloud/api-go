@@ -159,6 +159,9 @@ const (
 	// LMSUpdateCjsSecureSearchCriteriaProcedure is the fully-qualified name of the LMS's
 	// UpdateCjsSecureSearchCriteria RPC.
 	LMSUpdateCjsSecureSearchCriteriaProcedure = "/api.v0alpha.LMS/UpdateCjsSecureSearchCriteria"
+	// LMSGetQueuedEventsStatusByElementIdProcedure is the fully-qualified name of the LMS's
+	// GetQueuedEventsStatusByElementId RPC.
+	LMSGetQueuedEventsStatusByElementIdProcedure = "/api.v0alpha.LMS/GetQueuedEventsStatusByElementId"
 )
 
 // LMSClient is a client for the api.v0alpha.LMS service.
@@ -236,6 +239,7 @@ type LMSClient interface {
 	CreateCjsSecureSearchCriteria(context.Context, *connect_go.Request[v0alpha.CjsSecureSearchCriteria]) (*connect_go.Response[v0alpha.CjsSecureSearchCriteria], error)
 	// UpdateCjsSecureSearchCriteria updates the secure search criteria
 	UpdateCjsSecureSearchCriteria(context.Context, *connect_go.Request[v0alpha.CjsSecureSearchCriteria]) (*connect_go.Response[emptypb.Empty], error)
+	GetQueuedEventsStatusByElementId(context.Context, *connect_go.Request[v0alpha.ElementPK]) (*connect_go.Response[v0alpha.Events], error)
 }
 
 // NewLMSClient constructs a client for the api.v0alpha.LMS service. By default, it uses the Connect
@@ -513,64 +517,70 @@ func NewLMSClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+LMSUpdateCjsSecureSearchCriteriaProcedure,
 			opts...,
 		),
+		getQueuedEventsStatusByElementId: connect_go.NewClient[v0alpha.ElementPK, v0alpha.Events](
+			httpClient,
+			baseURL+LMSGetQueuedEventsStatusByElementIdProcedure,
+			opts...,
+		),
 	}
 }
 
 // lMSClient implements LMSClient.
 type lMSClient struct {
-	getPublicKey                   *connect_go.Client[v0alpha.GetPublicKeyReq, v0alpha.PublicKey]
-	createFileTemplate             *connect_go.Client[v0alpha.FileTemplate, v0alpha.FileTemplate]
-	listFileTemplates              *connect_go.Client[v0alpha.GetFileTemplatesReq, v0alpha.FileTemplate]
-	updateFileTemplate             *connect_go.Client[v0alpha.FileTemplate, v0alpha.FileTemplate]
-	deleteFileTemplate             *connect_go.Client[v0alpha.FileTemplate, v0alpha.FileTemplate]
-	getFileTemplate                *connect_go.Client[v0alpha.FileTemplate, v0alpha.FileTemplate]
-	createField                    *connect_go.Client[v0alpha.Field, v0alpha.Field]
-	listFields                     *connect_go.Client[v0alpha.ListFieldsReq, v0alpha.Fields]
-	getField                       *connect_go.Client[v0alpha.Field, v0alpha.Field]
-	updateField                    *connect_go.Client[v0alpha.UpdateFieldReq, v0alpha.Field]
-	deleteField                    *connect_go.Client[v0alpha.Field, v0alpha.Field]
-	listAvailableFieldsByElementId *connect_go.Client[v0alpha.ListAvailableFieldsByElementIdReq, v0alpha.ProcessFields]
-	listFieldsForElement           *connect_go.Client[v0alpha.ListFieldsForElementReq, v0alpha.ListFieldsForElementRes]
-	listAutocompleteFields         *connect_go.Client[v0alpha.ListAutocompleteFieldsReq, v0alpha.ListAutocompleteFieldsRes]
-	listCampaignLinks              *connect_go.Client[emptypb.Empty, v0alpha.ListCampaignLinksRes]
-	peekList                       *connect_go.Client[v0alpha.PeekListReq, v0alpha.PeekListRes]
-	getHistory                     *connect_go.Client[v0alpha.GetHistoryReq, v0alpha.GetHistoryRes]
-	createElement                  *connect_go.Client[v0alpha.Element, v0alpha.Element]
-	listElements                   *connect_go.Client[v0alpha.ListElementsReq, v0alpha.Element]
-	getElement                     *connect_go.Client[v0alpha.ElementPK, v0alpha.Element]
-	updateElement                  *connect_go.Client[v0alpha.Element, v0alpha.Element]
-	deleteElement                  *connect_go.Client[v0alpha.Element, v0alpha.Element]
-	copyPipelineUpstream           *connect_go.Client[v0alpha.Element, v0alpha.Element]
-	copyPipelineDownstream         *connect_go.Client[v0alpha.Element, v0alpha.Element]
-	processElement                 *connect_go.Client[v0alpha.ProcessElementReq, emptypb.Empty]
-	getAvailableFields             *connect_go.Client[emptypb.Empty, v0alpha.ProcessFields]
-	listNewEvents                  *connect_go.Client[emptypb.Empty, v0alpha.Events]
-	viewQueue                      *connect_go.Client[v0alpha.ViewQueueReq, v0alpha.Events]
-	autocomplete                   *connect_go.Client[v0alpha.ParseReq, v0alpha.ParseRes]
-	getComplianceScrubLists        *connect_go.Client[v0alpha.GetComplianceScrubListsReq, v0alpha.GetComplianceScrubListsRes]
-	findFieldUsages                *connect_go.Client[v0alpha.FindFieldUsagesReq, v0alpha.FindFieldUsagesRes]
-	findInvalidElements            *connect_go.Client[v0alpha.FindInvalidElementsReq, v0alpha.FindInvalidElementsRes]
-	createCollection               *connect_go.Client[v0alpha.CollectionMetadata, v0alpha.CollectionMetadata]
-	getCollection                  *connect_go.Client[v0alpha.GetCollectionReq, v0alpha.CollectionMetadata]
-	updateCollection               *connect_go.Client[v0alpha.CollectionMetadata, emptypb.Empty]
-	deleteCollection               *connect_go.Client[v0alpha.DeleteCollectionReq, emptypb.Empty]
-	listCollections                *connect_go.Client[v0alpha.ListCollectionsReq, v0alpha.ListCollectionsRes]
-	resetCollection                *connect_go.Client[v0alpha.ResetCollectionReq, emptypb.Empty]
-	addCollectionEntry             *connect_go.Client[v0alpha.CollectionEntry, v0alpha.CollectionEntry]
-	deleteCollectionEntry          *connect_go.Client[v0alpha.DeleteCollectionEntryReq, emptypb.Empty]
-	updateCollectionEntry          *connect_go.Client[v0alpha.CollectionEntry, v0alpha.CollectionEntry]
-	streamCollection               *connect_go.Client[v0alpha.StreamCollectionReq, v0alpha.CollectionEntry]
-	searchCollectionsPaginated     *connect_go.Client[v0alpha.SearchCollectionsPaginatedReq, v0alpha.PaginatedSearchRes]
-	getCollectionEntries           *connect_go.Client[v0alpha.GetCollectionEntriesReq, v0alpha.GetCollectionEntriesRes]
-	createCjsSearchDefinition      *connect_go.Client[v0alpha.CjsSearchDefinition, v0alpha.CjsSearchDefinition]
-	getCjsSearchDefinition         *connect_go.Client[v0alpha.GetCjsSearchDefinitionReq, v0alpha.CjsSearchDefinition]
-	updateCjsSearchDefinition      *connect_go.Client[v0alpha.CjsSearchDefinition, emptypb.Empty]
-	deleteCjsSearchDefinition      *connect_go.Client[v0alpha.DeleteCjsSearchDefinitionReq, emptypb.Empty]
-	listCjsSearchDefinitions       *connect_go.Client[v0alpha.ListCjsSearchDefinitionsReq, v0alpha.ListCjsSearchDefinitionsRes]
-	executeCjsSearchDefinition     *connect_go.Client[v0alpha.ExecuteCjsSearchDefinitionReq, v0alpha.ExecuteCjsSearchDefinitionRes]
-	getCjsSecureSearchCriteria     *connect_go.Client[v0alpha.GetCjsSecureSearchCriteriaReq, v0alpha.CjsSecureSearchCriteria]
-	createCjsSecureSearchCriteria  *connect_go.Client[v0alpha.CjsSecureSearchCriteria, v0alpha.CjsSecureSearchCriteria]
-	updateCjsSecureSearchCriteria  *connect_go.Client[v0alpha.CjsSecureSearchCriteria, emptypb.Empty]
+	getPublicKey                     *connect_go.Client[v0alpha.GetPublicKeyReq, v0alpha.PublicKey]
+	createFileTemplate               *connect_go.Client[v0alpha.FileTemplate, v0alpha.FileTemplate]
+	listFileTemplates                *connect_go.Client[v0alpha.GetFileTemplatesReq, v0alpha.FileTemplate]
+	updateFileTemplate               *connect_go.Client[v0alpha.FileTemplate, v0alpha.FileTemplate]
+	deleteFileTemplate               *connect_go.Client[v0alpha.FileTemplate, v0alpha.FileTemplate]
+	getFileTemplate                  *connect_go.Client[v0alpha.FileTemplate, v0alpha.FileTemplate]
+	createField                      *connect_go.Client[v0alpha.Field, v0alpha.Field]
+	listFields                       *connect_go.Client[v0alpha.ListFieldsReq, v0alpha.Fields]
+	getField                         *connect_go.Client[v0alpha.Field, v0alpha.Field]
+	updateField                      *connect_go.Client[v0alpha.UpdateFieldReq, v0alpha.Field]
+	deleteField                      *connect_go.Client[v0alpha.Field, v0alpha.Field]
+	listAvailableFieldsByElementId   *connect_go.Client[v0alpha.ListAvailableFieldsByElementIdReq, v0alpha.ProcessFields]
+	listFieldsForElement             *connect_go.Client[v0alpha.ListFieldsForElementReq, v0alpha.ListFieldsForElementRes]
+	listAutocompleteFields           *connect_go.Client[v0alpha.ListAutocompleteFieldsReq, v0alpha.ListAutocompleteFieldsRes]
+	listCampaignLinks                *connect_go.Client[emptypb.Empty, v0alpha.ListCampaignLinksRes]
+	peekList                         *connect_go.Client[v0alpha.PeekListReq, v0alpha.PeekListRes]
+	getHistory                       *connect_go.Client[v0alpha.GetHistoryReq, v0alpha.GetHistoryRes]
+	createElement                    *connect_go.Client[v0alpha.Element, v0alpha.Element]
+	listElements                     *connect_go.Client[v0alpha.ListElementsReq, v0alpha.Element]
+	getElement                       *connect_go.Client[v0alpha.ElementPK, v0alpha.Element]
+	updateElement                    *connect_go.Client[v0alpha.Element, v0alpha.Element]
+	deleteElement                    *connect_go.Client[v0alpha.Element, v0alpha.Element]
+	copyPipelineUpstream             *connect_go.Client[v0alpha.Element, v0alpha.Element]
+	copyPipelineDownstream           *connect_go.Client[v0alpha.Element, v0alpha.Element]
+	processElement                   *connect_go.Client[v0alpha.ProcessElementReq, emptypb.Empty]
+	getAvailableFields               *connect_go.Client[emptypb.Empty, v0alpha.ProcessFields]
+	listNewEvents                    *connect_go.Client[emptypb.Empty, v0alpha.Events]
+	viewQueue                        *connect_go.Client[v0alpha.ViewQueueReq, v0alpha.Events]
+	autocomplete                     *connect_go.Client[v0alpha.ParseReq, v0alpha.ParseRes]
+	getComplianceScrubLists          *connect_go.Client[v0alpha.GetComplianceScrubListsReq, v0alpha.GetComplianceScrubListsRes]
+	findFieldUsages                  *connect_go.Client[v0alpha.FindFieldUsagesReq, v0alpha.FindFieldUsagesRes]
+	findInvalidElements              *connect_go.Client[v0alpha.FindInvalidElementsReq, v0alpha.FindInvalidElementsRes]
+	createCollection                 *connect_go.Client[v0alpha.CollectionMetadata, v0alpha.CollectionMetadata]
+	getCollection                    *connect_go.Client[v0alpha.GetCollectionReq, v0alpha.CollectionMetadata]
+	updateCollection                 *connect_go.Client[v0alpha.CollectionMetadata, emptypb.Empty]
+	deleteCollection                 *connect_go.Client[v0alpha.DeleteCollectionReq, emptypb.Empty]
+	listCollections                  *connect_go.Client[v0alpha.ListCollectionsReq, v0alpha.ListCollectionsRes]
+	resetCollection                  *connect_go.Client[v0alpha.ResetCollectionReq, emptypb.Empty]
+	addCollectionEntry               *connect_go.Client[v0alpha.CollectionEntry, v0alpha.CollectionEntry]
+	deleteCollectionEntry            *connect_go.Client[v0alpha.DeleteCollectionEntryReq, emptypb.Empty]
+	updateCollectionEntry            *connect_go.Client[v0alpha.CollectionEntry, v0alpha.CollectionEntry]
+	streamCollection                 *connect_go.Client[v0alpha.StreamCollectionReq, v0alpha.CollectionEntry]
+	searchCollectionsPaginated       *connect_go.Client[v0alpha.SearchCollectionsPaginatedReq, v0alpha.PaginatedSearchRes]
+	getCollectionEntries             *connect_go.Client[v0alpha.GetCollectionEntriesReq, v0alpha.GetCollectionEntriesRes]
+	createCjsSearchDefinition        *connect_go.Client[v0alpha.CjsSearchDefinition, v0alpha.CjsSearchDefinition]
+	getCjsSearchDefinition           *connect_go.Client[v0alpha.GetCjsSearchDefinitionReq, v0alpha.CjsSearchDefinition]
+	updateCjsSearchDefinition        *connect_go.Client[v0alpha.CjsSearchDefinition, emptypb.Empty]
+	deleteCjsSearchDefinition        *connect_go.Client[v0alpha.DeleteCjsSearchDefinitionReq, emptypb.Empty]
+	listCjsSearchDefinitions         *connect_go.Client[v0alpha.ListCjsSearchDefinitionsReq, v0alpha.ListCjsSearchDefinitionsRes]
+	executeCjsSearchDefinition       *connect_go.Client[v0alpha.ExecuteCjsSearchDefinitionReq, v0alpha.ExecuteCjsSearchDefinitionRes]
+	getCjsSecureSearchCriteria       *connect_go.Client[v0alpha.GetCjsSecureSearchCriteriaReq, v0alpha.CjsSecureSearchCriteria]
+	createCjsSecureSearchCriteria    *connect_go.Client[v0alpha.CjsSecureSearchCriteria, v0alpha.CjsSecureSearchCriteria]
+	updateCjsSecureSearchCriteria    *connect_go.Client[v0alpha.CjsSecureSearchCriteria, emptypb.Empty]
+	getQueuedEventsStatusByElementId *connect_go.Client[v0alpha.ElementPK, v0alpha.Events]
 }
 
 // GetPublicKey calls api.v0alpha.LMS.GetPublicKey.
@@ -838,6 +848,11 @@ func (c *lMSClient) UpdateCjsSecureSearchCriteria(ctx context.Context, req *conn
 	return c.updateCjsSecureSearchCriteria.CallUnary(ctx, req)
 }
 
+// GetQueuedEventsStatusByElementId calls api.v0alpha.LMS.GetQueuedEventsStatusByElementId.
+func (c *lMSClient) GetQueuedEventsStatusByElementId(ctx context.Context, req *connect_go.Request[v0alpha.ElementPK]) (*connect_go.Response[v0alpha.Events], error) {
+	return c.getQueuedEventsStatusByElementId.CallUnary(ctx, req)
+}
+
 // LMSHandler is an implementation of the api.v0alpha.LMS service.
 type LMSHandler interface {
 	GetPublicKey(context.Context, *connect_go.Request[v0alpha.GetPublicKeyReq]) (*connect_go.Response[v0alpha.PublicKey], error)
@@ -913,6 +928,7 @@ type LMSHandler interface {
 	CreateCjsSecureSearchCriteria(context.Context, *connect_go.Request[v0alpha.CjsSecureSearchCriteria]) (*connect_go.Response[v0alpha.CjsSecureSearchCriteria], error)
 	// UpdateCjsSecureSearchCriteria updates the secure search criteria
 	UpdateCjsSecureSearchCriteria(context.Context, *connect_go.Request[v0alpha.CjsSecureSearchCriteria]) (*connect_go.Response[emptypb.Empty], error)
+	GetQueuedEventsStatusByElementId(context.Context, *connect_go.Request[v0alpha.ElementPK]) (*connect_go.Response[v0alpha.Events], error)
 }
 
 // NewLMSHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -1186,6 +1202,11 @@ func NewLMSHandler(svc LMSHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.UpdateCjsSecureSearchCriteria,
 		opts...,
 	)
+	lMSGetQueuedEventsStatusByElementIdHandler := connect_go.NewUnaryHandler(
+		LMSGetQueuedEventsStatusByElementIdProcedure,
+		svc.GetQueuedEventsStatusByElementId,
+		opts...,
+	)
 	return "/api.v0alpha.LMS/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case LMSGetPublicKeyProcedure:
@@ -1294,6 +1315,8 @@ func NewLMSHandler(svc LMSHandler, opts ...connect_go.HandlerOption) (string, ht
 			lMSCreateCjsSecureSearchCriteriaHandler.ServeHTTP(w, r)
 		case LMSUpdateCjsSecureSearchCriteriaProcedure:
 			lMSUpdateCjsSecureSearchCriteriaHandler.ServeHTTP(w, r)
+		case LMSGetQueuedEventsStatusByElementIdProcedure:
+			lMSGetQueuedEventsStatusByElementIdHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -1513,4 +1536,8 @@ func (UnimplementedLMSHandler) CreateCjsSecureSearchCriteria(context.Context, *c
 
 func (UnimplementedLMSHandler) UpdateCjsSecureSearchCriteria(context.Context, *connect_go.Request[v0alpha.CjsSecureSearchCriteria]) (*connect_go.Response[emptypb.Empty], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.LMS.UpdateCjsSecureSearchCriteria is not implemented"))
+}
+
+func (UnimplementedLMSHandler) GetQueuedEventsStatusByElementId(context.Context, *connect_go.Request[v0alpha.ElementPK]) (*connect_go.Response[v0alpha.Events], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.LMS.GetQueuedEventsStatusByElementId is not implemented"))
 }
