@@ -19,16 +19,16 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Workflows_ListFlowDefinitions_FullMethodName  = "/api.v1alpha1.workflows.Workflows/ListFlowDefinitions"
-	Workflows_SaveFlowDefinition_FullMethodName   = "/api.v1alpha1.workflows.Workflows/SaveFlowDefinition"
-	Workflows_GetFlowDefinition_FullMethodName    = "/api.v1alpha1.workflows.Workflows/GetFlowDefinition"
-	Workflows_DeleteFlowDefinition_FullMethodName = "/api.v1alpha1.workflows.Workflows/DeleteFlowDefinition"
+	WorkflowsService_ListFlowDefinitions_FullMethodName  = "/api.v1alpha1.workflows.WorkflowsService/ListFlowDefinitions"
+	WorkflowsService_SaveFlowDefinition_FullMethodName   = "/api.v1alpha1.workflows.WorkflowsService/SaveFlowDefinition"
+	WorkflowsService_GetFlowDefinition_FullMethodName    = "/api.v1alpha1.workflows.WorkflowsService/GetFlowDefinition"
+	WorkflowsService_DeleteFlowDefinition_FullMethodName = "/api.v1alpha1.workflows.WorkflowsService/DeleteFlowDefinition"
 )
 
-// WorkflowsClient is the client API for Workflows service.
+// WorkflowsServiceClient is the client API for WorkflowsService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type WorkflowsClient interface {
+type WorkflowsServiceClient interface {
 	// ListFlowDefinitions lists flow definitions
 	ListFlowDefinitions(ctx context.Context, in *ListFlowDefinitionsRequest, opts ...grpc.CallOption) (*ListFlowDefinitionsResponse, error)
 	// SaveFlowDefinition creates or updates a flow definition
@@ -39,54 +39,54 @@ type WorkflowsClient interface {
 	DeleteFlowDefinition(ctx context.Context, in *DeleteFlowDefinitionRequest, opts ...grpc.CallOption) (*DeleteFlowDefinitionResponse, error)
 }
 
-type workflowsClient struct {
+type workflowsServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewWorkflowsClient(cc grpc.ClientConnInterface) WorkflowsClient {
-	return &workflowsClient{cc}
+func NewWorkflowsServiceClient(cc grpc.ClientConnInterface) WorkflowsServiceClient {
+	return &workflowsServiceClient{cc}
 }
 
-func (c *workflowsClient) ListFlowDefinitions(ctx context.Context, in *ListFlowDefinitionsRequest, opts ...grpc.CallOption) (*ListFlowDefinitionsResponse, error) {
+func (c *workflowsServiceClient) ListFlowDefinitions(ctx context.Context, in *ListFlowDefinitionsRequest, opts ...grpc.CallOption) (*ListFlowDefinitionsResponse, error) {
 	out := new(ListFlowDefinitionsResponse)
-	err := c.cc.Invoke(ctx, Workflows_ListFlowDefinitions_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, WorkflowsService_ListFlowDefinitions_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *workflowsClient) SaveFlowDefinition(ctx context.Context, in *SaveFlowDefinitionRequest, opts ...grpc.CallOption) (*SaveFlowDefinitionResponse, error) {
+func (c *workflowsServiceClient) SaveFlowDefinition(ctx context.Context, in *SaveFlowDefinitionRequest, opts ...grpc.CallOption) (*SaveFlowDefinitionResponse, error) {
 	out := new(SaveFlowDefinitionResponse)
-	err := c.cc.Invoke(ctx, Workflows_SaveFlowDefinition_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, WorkflowsService_SaveFlowDefinition_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *workflowsClient) GetFlowDefinition(ctx context.Context, in *GetFlowDefinitionRequest, opts ...grpc.CallOption) (*GetFlowDefinitionResponse, error) {
+func (c *workflowsServiceClient) GetFlowDefinition(ctx context.Context, in *GetFlowDefinitionRequest, opts ...grpc.CallOption) (*GetFlowDefinitionResponse, error) {
 	out := new(GetFlowDefinitionResponse)
-	err := c.cc.Invoke(ctx, Workflows_GetFlowDefinition_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, WorkflowsService_GetFlowDefinition_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *workflowsClient) DeleteFlowDefinition(ctx context.Context, in *DeleteFlowDefinitionRequest, opts ...grpc.CallOption) (*DeleteFlowDefinitionResponse, error) {
+func (c *workflowsServiceClient) DeleteFlowDefinition(ctx context.Context, in *DeleteFlowDefinitionRequest, opts ...grpc.CallOption) (*DeleteFlowDefinitionResponse, error) {
 	out := new(DeleteFlowDefinitionResponse)
-	err := c.cc.Invoke(ctx, Workflows_DeleteFlowDefinition_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, WorkflowsService_DeleteFlowDefinition_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// WorkflowsServer is the server API for Workflows service.
-// All implementations must embed UnimplementedWorkflowsServer
+// WorkflowsServiceServer is the server API for WorkflowsService service.
+// All implementations must embed UnimplementedWorkflowsServiceServer
 // for forward compatibility
-type WorkflowsServer interface {
+type WorkflowsServiceServer interface {
 	// ListFlowDefinitions lists flow definitions
 	ListFlowDefinitions(context.Context, *ListFlowDefinitionsRequest) (*ListFlowDefinitionsResponse, error)
 	// SaveFlowDefinition creates or updates a flow definition
@@ -95,132 +95,132 @@ type WorkflowsServer interface {
 	GetFlowDefinition(context.Context, *GetFlowDefinitionRequest) (*GetFlowDefinitionResponse, error)
 	// DeleteFlowDefinition deletes a flow definition
 	DeleteFlowDefinition(context.Context, *DeleteFlowDefinitionRequest) (*DeleteFlowDefinitionResponse, error)
-	mustEmbedUnimplementedWorkflowsServer()
+	mustEmbedUnimplementedWorkflowsServiceServer()
 }
 
-// UnimplementedWorkflowsServer must be embedded to have forward compatible implementations.
-type UnimplementedWorkflowsServer struct {
+// UnimplementedWorkflowsServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedWorkflowsServiceServer struct {
 }
 
-func (UnimplementedWorkflowsServer) ListFlowDefinitions(context.Context, *ListFlowDefinitionsRequest) (*ListFlowDefinitionsResponse, error) {
+func (UnimplementedWorkflowsServiceServer) ListFlowDefinitions(context.Context, *ListFlowDefinitionsRequest) (*ListFlowDefinitionsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListFlowDefinitions not implemented")
 }
-func (UnimplementedWorkflowsServer) SaveFlowDefinition(context.Context, *SaveFlowDefinitionRequest) (*SaveFlowDefinitionResponse, error) {
+func (UnimplementedWorkflowsServiceServer) SaveFlowDefinition(context.Context, *SaveFlowDefinitionRequest) (*SaveFlowDefinitionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SaveFlowDefinition not implemented")
 }
-func (UnimplementedWorkflowsServer) GetFlowDefinition(context.Context, *GetFlowDefinitionRequest) (*GetFlowDefinitionResponse, error) {
+func (UnimplementedWorkflowsServiceServer) GetFlowDefinition(context.Context, *GetFlowDefinitionRequest) (*GetFlowDefinitionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetFlowDefinition not implemented")
 }
-func (UnimplementedWorkflowsServer) DeleteFlowDefinition(context.Context, *DeleteFlowDefinitionRequest) (*DeleteFlowDefinitionResponse, error) {
+func (UnimplementedWorkflowsServiceServer) DeleteFlowDefinition(context.Context, *DeleteFlowDefinitionRequest) (*DeleteFlowDefinitionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteFlowDefinition not implemented")
 }
-func (UnimplementedWorkflowsServer) mustEmbedUnimplementedWorkflowsServer() {}
+func (UnimplementedWorkflowsServiceServer) mustEmbedUnimplementedWorkflowsServiceServer() {}
 
-// UnsafeWorkflowsServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to WorkflowsServer will
+// UnsafeWorkflowsServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to WorkflowsServiceServer will
 // result in compilation errors.
-type UnsafeWorkflowsServer interface {
-	mustEmbedUnimplementedWorkflowsServer()
+type UnsafeWorkflowsServiceServer interface {
+	mustEmbedUnimplementedWorkflowsServiceServer()
 }
 
-func RegisterWorkflowsServer(s grpc.ServiceRegistrar, srv WorkflowsServer) {
-	s.RegisterService(&Workflows_ServiceDesc, srv)
+func RegisterWorkflowsServiceServer(s grpc.ServiceRegistrar, srv WorkflowsServiceServer) {
+	s.RegisterService(&WorkflowsService_ServiceDesc, srv)
 }
 
-func _Workflows_ListFlowDefinitions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _WorkflowsService_ListFlowDefinitions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListFlowDefinitionsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(WorkflowsServer).ListFlowDefinitions(ctx, in)
+		return srv.(WorkflowsServiceServer).ListFlowDefinitions(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Workflows_ListFlowDefinitions_FullMethodName,
+		FullMethod: WorkflowsService_ListFlowDefinitions_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WorkflowsServer).ListFlowDefinitions(ctx, req.(*ListFlowDefinitionsRequest))
+		return srv.(WorkflowsServiceServer).ListFlowDefinitions(ctx, req.(*ListFlowDefinitionsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Workflows_SaveFlowDefinition_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _WorkflowsService_SaveFlowDefinition_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SaveFlowDefinitionRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(WorkflowsServer).SaveFlowDefinition(ctx, in)
+		return srv.(WorkflowsServiceServer).SaveFlowDefinition(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Workflows_SaveFlowDefinition_FullMethodName,
+		FullMethod: WorkflowsService_SaveFlowDefinition_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WorkflowsServer).SaveFlowDefinition(ctx, req.(*SaveFlowDefinitionRequest))
+		return srv.(WorkflowsServiceServer).SaveFlowDefinition(ctx, req.(*SaveFlowDefinitionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Workflows_GetFlowDefinition_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _WorkflowsService_GetFlowDefinition_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetFlowDefinitionRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(WorkflowsServer).GetFlowDefinition(ctx, in)
+		return srv.(WorkflowsServiceServer).GetFlowDefinition(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Workflows_GetFlowDefinition_FullMethodName,
+		FullMethod: WorkflowsService_GetFlowDefinition_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WorkflowsServer).GetFlowDefinition(ctx, req.(*GetFlowDefinitionRequest))
+		return srv.(WorkflowsServiceServer).GetFlowDefinition(ctx, req.(*GetFlowDefinitionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Workflows_DeleteFlowDefinition_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _WorkflowsService_DeleteFlowDefinition_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteFlowDefinitionRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(WorkflowsServer).DeleteFlowDefinition(ctx, in)
+		return srv.(WorkflowsServiceServer).DeleteFlowDefinition(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Workflows_DeleteFlowDefinition_FullMethodName,
+		FullMethod: WorkflowsService_DeleteFlowDefinition_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WorkflowsServer).DeleteFlowDefinition(ctx, req.(*DeleteFlowDefinitionRequest))
+		return srv.(WorkflowsServiceServer).DeleteFlowDefinition(ctx, req.(*DeleteFlowDefinitionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Workflows_ServiceDesc is the grpc.ServiceDesc for Workflows service.
+// WorkflowsService_ServiceDesc is the grpc.ServiceDesc for WorkflowsService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Workflows_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "api.v1alpha1.workflows.Workflows",
-	HandlerType: (*WorkflowsServer)(nil),
+var WorkflowsService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "api.v1alpha1.workflows.WorkflowsService",
+	HandlerType: (*WorkflowsServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "ListFlowDefinitions",
-			Handler:    _Workflows_ListFlowDefinitions_Handler,
+			Handler:    _WorkflowsService_ListFlowDefinitions_Handler,
 		},
 		{
 			MethodName: "SaveFlowDefinition",
-			Handler:    _Workflows_SaveFlowDefinition_Handler,
+			Handler:    _WorkflowsService_SaveFlowDefinition_Handler,
 		},
 		{
 			MethodName: "GetFlowDefinition",
-			Handler:    _Workflows_GetFlowDefinition_Handler,
+			Handler:    _WorkflowsService_GetFlowDefinition_Handler,
 		},
 		{
 			MethodName: "DeleteFlowDefinition",
-			Handler:    _Workflows_DeleteFlowDefinition_Handler,
+			Handler:    _WorkflowsService_DeleteFlowDefinition_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
