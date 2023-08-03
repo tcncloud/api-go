@@ -138,6 +138,7 @@ const (
 	WFM_SwapShiftInstances_FullMethodName                            = "/api.v1alpha1.wfm.WFM/SwapShiftInstances"
 	WFM_UpdateShiftInstance_FullMethodName                           = "/api.v1alpha1.wfm.WFM/UpdateShiftInstance"
 	WFM_UpdateShiftInstanceV2_FullMethodName                         = "/api.v1alpha1.wfm.WFM/UpdateShiftInstanceV2"
+	WFM_CopyShiftInstancesToSchedule_FullMethodName                  = "/api.v1alpha1.wfm.WFM/CopyShiftInstancesToSchedule"
 	WFM_ListShiftInstanceSidsForAgent_FullMethodName                 = "/api.v1alpha1.wfm.WFM/ListShiftInstanceSidsForAgent"
 	WFM_ListShiftSegmentsByShiftInstanceSids_FullMethodName          = "/api.v1alpha1.wfm.WFM/ListShiftSegmentsByShiftInstanceSids"
 	WFM_SetSchedulingTarget_FullMethodName                           = "/api.v1alpha1.wfm.WFM/SetSchedulingTarget"
@@ -1358,6 +1359,19 @@ type WFMClient interface {
 	//   - grpc.Invalid: one or more fields in the request have invalid values.
 	//   - grpc.Internal: error occurs when updating the shift instance.
 	UpdateShiftInstanceV2(ctx context.Context, in *UpdateShiftInstanceV2Req, opts ...grpc.CallOption) (*UpdateShiftInstanceV2Res, error)
+	// Copies the given @shift_instance_sids to @destination_schedule for the org sending the request.
+	// If there are any overlap conflicts on @destination_schedule and @overlap_as_warning is set to false,
+	//
+	//	then @shift_instance_sids will not be copied, and a list of diagnostics detailing the overlaps will be returned.
+	//
+	// If @overlap_as_warning is set to true, overlap conflicts will not prevent the shifts from being copied, and the overlap diagnostics will be returned after as warning messages instead.
+	// Required permissions:
+	// NONE
+	// Errors:
+	//   - grpc.Invalid: one or more fields in the request have invalid values.
+	//   - grpc.NotFound: the @shift_instance_sids or @destination_schedule does not exist for the org sending the request.
+	//   - grpc.Internal: error occurs when copying the shift instances.
+	CopyShiftInstancesToSchedule(ctx context.Context, in *CopyShiftInstancesToScheduleReq, opts ...grpc.CallOption) (*CopyShiftInstancesToScheduleRes, error)
 	// Lists the shift_instance_sids for the Shift Instances associated with @wfm_agent_sid over the given @datetime_range and @schedule_selector.
 	// Required permissions:
 	//
@@ -2498,6 +2512,15 @@ func (c *wFMClient) UpdateShiftInstance(ctx context.Context, in *UpdateShiftInst
 func (c *wFMClient) UpdateShiftInstanceV2(ctx context.Context, in *UpdateShiftInstanceV2Req, opts ...grpc.CallOption) (*UpdateShiftInstanceV2Res, error) {
 	out := new(UpdateShiftInstanceV2Res)
 	err := c.cc.Invoke(ctx, WFM_UpdateShiftInstanceV2_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) CopyShiftInstancesToSchedule(ctx context.Context, in *CopyShiftInstancesToScheduleReq, opts ...grpc.CallOption) (*CopyShiftInstancesToScheduleRes, error) {
+	out := new(CopyShiftInstancesToScheduleRes)
+	err := c.cc.Invoke(ctx, WFM_CopyShiftInstancesToSchedule_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -3778,6 +3801,19 @@ type WFMServer interface {
 	//   - grpc.Invalid: one or more fields in the request have invalid values.
 	//   - grpc.Internal: error occurs when updating the shift instance.
 	UpdateShiftInstanceV2(context.Context, *UpdateShiftInstanceV2Req) (*UpdateShiftInstanceV2Res, error)
+	// Copies the given @shift_instance_sids to @destination_schedule for the org sending the request.
+	// If there are any overlap conflicts on @destination_schedule and @overlap_as_warning is set to false,
+	//
+	//	then @shift_instance_sids will not be copied, and a list of diagnostics detailing the overlaps will be returned.
+	//
+	// If @overlap_as_warning is set to true, overlap conflicts will not prevent the shifts from being copied, and the overlap diagnostics will be returned after as warning messages instead.
+	// Required permissions:
+	// NONE
+	// Errors:
+	//   - grpc.Invalid: one or more fields in the request have invalid values.
+	//   - grpc.NotFound: the @shift_instance_sids or @destination_schedule does not exist for the org sending the request.
+	//   - grpc.Internal: error occurs when copying the shift instances.
+	CopyShiftInstancesToSchedule(context.Context, *CopyShiftInstancesToScheduleReq) (*CopyShiftInstancesToScheduleRes, error)
 	// Lists the shift_instance_sids for the Shift Instances associated with @wfm_agent_sid over the given @datetime_range and @schedule_selector.
 	// Required permissions:
 	//
@@ -4175,6 +4211,9 @@ func (UnimplementedWFMServer) UpdateShiftInstance(context.Context, *UpdateShiftI
 }
 func (UnimplementedWFMServer) UpdateShiftInstanceV2(context.Context, *UpdateShiftInstanceV2Req) (*UpdateShiftInstanceV2Res, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateShiftInstanceV2 not implemented")
+}
+func (UnimplementedWFMServer) CopyShiftInstancesToSchedule(context.Context, *CopyShiftInstancesToScheduleReq) (*CopyShiftInstancesToScheduleRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CopyShiftInstancesToSchedule not implemented")
 }
 func (UnimplementedWFMServer) ListShiftInstanceSidsForAgent(context.Context, *ListShiftInstanceSidsForAgentReq) (*ListShiftInstanceSidsForAgentRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListShiftInstanceSidsForAgent not implemented")
@@ -6115,6 +6154,24 @@ func _WFM_UpdateShiftInstanceV2_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_CopyShiftInstancesToSchedule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CopyShiftInstancesToScheduleReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).CopyShiftInstancesToSchedule(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_CopyShiftInstancesToSchedule_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).CopyShiftInstancesToSchedule(ctx, req.(*CopyShiftInstancesToScheduleReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WFM_ListShiftInstanceSidsForAgent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListShiftInstanceSidsForAgentReq)
 	if err := dec(in); err != nil {
@@ -6647,6 +6704,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateShiftInstanceV2",
 			Handler:    _WFM_UpdateShiftInstanceV2_Handler,
+		},
+		{
+			MethodName: "CopyShiftInstancesToSchedule",
+			Handler:    _WFM_CopyShiftInstancesToSchedule_Handler,
 		},
 		{
 			MethodName: "ListShiftInstanceSidsForAgent",
