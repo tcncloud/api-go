@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion7
 const (
 	AuthConnectionService_CreateAuthConnection_FullMethodName       = "/api.v1alpha1.org.authconnection.AuthConnectionService/CreateAuthConnection"
 	AuthConnectionService_GetAuthConnectionSettings_FullMethodName  = "/api.v1alpha1.org.authconnection.AuthConnectionService/GetAuthConnectionSettings"
+	AuthConnectionService_GetAuthConnection_FullMethodName          = "/api.v1alpha1.org.authconnection.AuthConnectionService/GetAuthConnection"
 	AuthConnectionService_DeleteAuthConnection_FullMethodName       = "/api.v1alpha1.org.authconnection.AuthConnectionService/DeleteAuthConnection"
 	AuthConnectionService_UpdateAuthConnectionSecret_FullMethodName = "/api.v1alpha1.org.authconnection.AuthConnectionService/UpdateAuthConnectionSecret"
 	AuthConnectionService_UpdateAuthConnectionGroups_FullMethodName = "/api.v1alpha1.org.authconnection.AuthConnectionService/UpdateAuthConnectionGroups"
@@ -32,8 +33,11 @@ const (
 type AuthConnectionServiceClient interface {
 	// CreateAuthConnection creates a new auth0 connection.
 	CreateAuthConnection(ctx context.Context, in *CreateAuthConnectionRequest, opts ...grpc.CallOption) (*CreateAuthConnectionResponse, error)
-	// GetAuthConnectionSettings gets auth0 connection settings.
+	// GetAuthConnectionSettings gets auth connection settings.
+	// DEPRECATED: use GetAuthConnection
 	GetAuthConnectionSettings(ctx context.Context, in *GetAuthConnectionSettingsRequest, opts ...grpc.CallOption) (*GetAuthConnectionSettingsResponse, error)
+	// GetAuthConnection gets an existing auth connection.
+	GetAuthConnection(ctx context.Context, in *GetAuthConnectionRequest, opts ...grpc.CallOption) (*GetAuthConnectionResponse, error)
 	// DeleteAuthConnection removes the current orgs auth settings.
 	DeleteAuthConnection(ctx context.Context, in *DeleteAuthConnectionRequest, opts ...grpc.CallOption) (*DeleteAuthConnectionResponse, error)
 	// UpdateAuthConnectionSecret updates a connections secret.
@@ -62,6 +66,15 @@ func (c *authConnectionServiceClient) CreateAuthConnection(ctx context.Context, 
 func (c *authConnectionServiceClient) GetAuthConnectionSettings(ctx context.Context, in *GetAuthConnectionSettingsRequest, opts ...grpc.CallOption) (*GetAuthConnectionSettingsResponse, error) {
 	out := new(GetAuthConnectionSettingsResponse)
 	err := c.cc.Invoke(ctx, AuthConnectionService_GetAuthConnectionSettings_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authConnectionServiceClient) GetAuthConnection(ctx context.Context, in *GetAuthConnectionRequest, opts ...grpc.CallOption) (*GetAuthConnectionResponse, error) {
+	out := new(GetAuthConnectionResponse)
+	err := c.cc.Invoke(ctx, AuthConnectionService_GetAuthConnection_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -101,8 +114,11 @@ func (c *authConnectionServiceClient) UpdateAuthConnectionGroups(ctx context.Con
 type AuthConnectionServiceServer interface {
 	// CreateAuthConnection creates a new auth0 connection.
 	CreateAuthConnection(context.Context, *CreateAuthConnectionRequest) (*CreateAuthConnectionResponse, error)
-	// GetAuthConnectionSettings gets auth0 connection settings.
+	// GetAuthConnectionSettings gets auth connection settings.
+	// DEPRECATED: use GetAuthConnection
 	GetAuthConnectionSettings(context.Context, *GetAuthConnectionSettingsRequest) (*GetAuthConnectionSettingsResponse, error)
+	// GetAuthConnection gets an existing auth connection.
+	GetAuthConnection(context.Context, *GetAuthConnectionRequest) (*GetAuthConnectionResponse, error)
 	// DeleteAuthConnection removes the current orgs auth settings.
 	DeleteAuthConnection(context.Context, *DeleteAuthConnectionRequest) (*DeleteAuthConnectionResponse, error)
 	// UpdateAuthConnectionSecret updates a connections secret.
@@ -121,6 +137,9 @@ func (UnimplementedAuthConnectionServiceServer) CreateAuthConnection(context.Con
 }
 func (UnimplementedAuthConnectionServiceServer) GetAuthConnectionSettings(context.Context, *GetAuthConnectionSettingsRequest) (*GetAuthConnectionSettingsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAuthConnectionSettings not implemented")
+}
+func (UnimplementedAuthConnectionServiceServer) GetAuthConnection(context.Context, *GetAuthConnectionRequest) (*GetAuthConnectionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAuthConnection not implemented")
 }
 func (UnimplementedAuthConnectionServiceServer) DeleteAuthConnection(context.Context, *DeleteAuthConnectionRequest) (*DeleteAuthConnectionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteAuthConnection not implemented")
@@ -176,6 +195,24 @@ func _AuthConnectionService_GetAuthConnectionSettings_Handler(srv interface{}, c
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AuthConnectionServiceServer).GetAuthConnectionSettings(ctx, req.(*GetAuthConnectionSettingsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthConnectionService_GetAuthConnection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAuthConnectionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthConnectionServiceServer).GetAuthConnection(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthConnectionService_GetAuthConnection_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthConnectionServiceServer).GetAuthConnection(ctx, req.(*GetAuthConnectionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -248,6 +285,10 @@ var AuthConnectionService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAuthConnectionSettings",
 			Handler:    _AuthConnectionService_GetAuthConnectionSettings_Handler,
+		},
+		{
+			MethodName: "GetAuthConnection",
+			Handler:    _AuthConnectionService_GetAuthConnection_Handler,
 		},
 		{
 			MethodName: "DeleteAuthConnection",

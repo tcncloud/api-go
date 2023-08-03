@@ -65,6 +65,7 @@ type LearnClient interface {
 	// we allow all the logged in agents/admins to view search content
 	ListSearchResults(ctx context.Context, in *SearchContentReq, opts ...grpc.CallOption) (Learn_ListSearchResultsClient, error)
 	// get standalone articles from learning pages
+	// we allow all the logged in agents/admins to view standalone articles
 	Standalone(ctx context.Context, in *StandaloneReq, opts ...grpc.CallOption) (*StandaloneRes, error)
 	// retrieve user who edited the content last
 	ContentEditorData(ctx context.Context, in *ContentEditorDataReq, opts ...grpc.CallOption) (*ContentEditorDataRes, error)
@@ -248,6 +249,7 @@ type LearnServer interface {
 	// we allow all the logged in agents/admins to view search content
 	ListSearchResults(*SearchContentReq, Learn_ListSearchResultsServer) error
 	// get standalone articles from learning pages
+	// we allow all the logged in agents/admins to view standalone articles
 	Standalone(context.Context, *StandaloneReq) (*StandaloneRes, error)
 	// retrieve user who edited the content last
 	ContentEditorData(context.Context, *ContentEditorDataReq) (*ContentEditorDataRes, error)
