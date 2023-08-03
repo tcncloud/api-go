@@ -63,6 +63,7 @@ const (
 	Scorecards_GetAutoEvaluation_FullMethodName        = "/api.v1alpha1.scorecards.Scorecards/GetAutoEvaluation"
 	Scorecards_ListAutoEvaluations_FullMethodName      = "/api.v1alpha1.scorecards.Scorecards/ListAutoEvaluations"
 	Scorecards_DeleteAutoEvaluation_FullMethodName     = "/api.v1alpha1.scorecards.Scorecards/DeleteAutoEvaluation"
+	Scorecards_PreviewEvaluationScore_FullMethodName   = "/api.v1alpha1.scorecards.Scorecards/PreviewEvaluationScore"
 )
 
 // ScorecardsClient is the client API for Scorecards service.
@@ -158,6 +159,8 @@ type ScorecardsClient interface {
 	ListAutoEvaluations(ctx context.Context, in *ListAutoEvaluationsRequest, opts ...grpc.CallOption) (*ListAutoEvaluationsResponse, error)
 	// DeleteAutoEvaluation deletes an auto evaluations
 	DeleteAutoEvaluation(ctx context.Context, in *DeleteAutoEvaluationRequest, opts ...grpc.CallOption) (*DeleteAutoEvaluationResponse, error)
+	// PreviewEvaluationScore previews the score for an evaluation
+	PreviewEvaluationScore(ctx context.Context, in *PreviewEvaluationScoreRequest, opts ...grpc.CallOption) (*PreviewEvaluationScoreResponse, error)
 }
 
 type scorecardsClient struct {
@@ -565,6 +568,15 @@ func (c *scorecardsClient) DeleteAutoEvaluation(ctx context.Context, in *DeleteA
 	return out, nil
 }
 
+func (c *scorecardsClient) PreviewEvaluationScore(ctx context.Context, in *PreviewEvaluationScoreRequest, opts ...grpc.CallOption) (*PreviewEvaluationScoreResponse, error) {
+	out := new(PreviewEvaluationScoreResponse)
+	err := c.cc.Invoke(ctx, Scorecards_PreviewEvaluationScore_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ScorecardsServer is the server API for Scorecards service.
 // All implementations must embed UnimplementedScorecardsServer
 // for forward compatibility
@@ -658,6 +670,8 @@ type ScorecardsServer interface {
 	ListAutoEvaluations(context.Context, *ListAutoEvaluationsRequest) (*ListAutoEvaluationsResponse, error)
 	// DeleteAutoEvaluation deletes an auto evaluations
 	DeleteAutoEvaluation(context.Context, *DeleteAutoEvaluationRequest) (*DeleteAutoEvaluationResponse, error)
+	// PreviewEvaluationScore previews the score for an evaluation
+	PreviewEvaluationScore(context.Context, *PreviewEvaluationScoreRequest) (*PreviewEvaluationScoreResponse, error)
 	mustEmbedUnimplementedScorecardsServer()
 }
 
@@ -796,6 +810,9 @@ func (UnimplementedScorecardsServer) ListAutoEvaluations(context.Context, *ListA
 }
 func (UnimplementedScorecardsServer) DeleteAutoEvaluation(context.Context, *DeleteAutoEvaluationRequest) (*DeleteAutoEvaluationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteAutoEvaluation not implemented")
+}
+func (UnimplementedScorecardsServer) PreviewEvaluationScore(context.Context, *PreviewEvaluationScoreRequest) (*PreviewEvaluationScoreResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PreviewEvaluationScore not implemented")
 }
 func (UnimplementedScorecardsServer) mustEmbedUnimplementedScorecardsServer() {}
 
@@ -1602,6 +1619,24 @@ func _Scorecards_DeleteAutoEvaluation_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Scorecards_PreviewEvaluationScore_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PreviewEvaluationScoreRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ScorecardsServer).PreviewEvaluationScore(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Scorecards_PreviewEvaluationScore_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ScorecardsServer).PreviewEvaluationScore(ctx, req.(*PreviewEvaluationScoreRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Scorecards_ServiceDesc is the grpc.ServiceDesc for Scorecards service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1784,6 +1819,10 @@ var Scorecards_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteAutoEvaluation",
 			Handler:    _Scorecards_DeleteAutoEvaluation_Handler,
+		},
+		{
+			MethodName: "PreviewEvaluationScore",
+			Handler:    _Scorecards_PreviewEvaluationScore_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
