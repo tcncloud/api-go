@@ -304,7 +304,7 @@ const (
 	Permission_DELETE_INTEGRATION_MESSAGES             Permission = 289
 	Permission_EDIT_INTEGRATION_MESSAGES               Permission = 290
 	Permission_EXECUTE_INTEGRATION_MESSAGES            Permission = 291
-	Permission_SCHEDULE_RESEND_CAMPAIGN                Permission = 292
+	Permission_SCHEDULE_RESEND_CAMPAIGN                Permission = 292 // Control whether a user can resend a campaign.
 	// migration permissions
 	Permission_APP_AGENT      Permission = 2000
 	Permission_APP_BACKOFFICE Permission = 2001
