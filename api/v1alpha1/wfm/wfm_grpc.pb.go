@@ -1001,9 +1001,9 @@ type WFMClient interface {
 	DeleteOpenTimesPattern(ctx context.Context, in *DeleteOpenTimesPatternReq, opts ...grpc.CallOption) (*DeleteOpenTimesPatternRes, error)
 	// Gets the inherited, own, and resulting bitmaps for the open times patterns of @node_to_check for @schedule_scenario_sid and the org sending the request.
 	// The @schedule_scenario_sid must match the scenario of the @node_to_check.
-	// If @bitmap_type is COMPLETE the default bitmaps for the open times patterns, used during scheduling, will be returned.
-	// If @bitmap_type is ONLY_WEEKMAPS the bitmaps will be generated only using the weekmap data from the open times patterns.
-	// If @bitmap_type is ONLY_CALENDAR_ITEMS the bitmaps will be generated only using the calendar item data from the open times patterns.
+	// If @bitmap_type is COMPLETE, the default bitmaps for the open times patterns, used during scheduling, will be returned.
+	// If @bitmap_type is ONLY_WEEKMAPS, the bitmaps will be generated only using the weekmap data from the open times patterns.
+	// If @bitmap_type is ONLY_CALENDAR_ITEMS, the bitmaps will be generated only using the calendar item data from the open times patterns.
 	// The bitmaps will be generated for the span of @datetime_range.
 	// Required permissions:
 	//
@@ -1052,9 +1052,9 @@ type WFMClient interface {
 	// @entities_to_check must have the entity_type field set with a wfm agent, agent group or a type of node.
 	// If an availability bitmap is requested for an agent group, the bitmaps for all of it's member agents will be returned instead.
 	// The bitmaps will be generated for the span of @datetime_range.
-	// If @bitmap_type is COMPLETE the default bitmaps for the availability patterns, used during scheduling, will be returned.
-	// If @bitmap_type is ONLY_WEEKMAPS the bitmaps will be generated only using the weekmap data from the availability patterns.
-	// If @bitmap_type is ONLY_CALENDAR_ITEMS the bitmaps will be generated only using the calendar item data from the availability patterns.
+	// If @bitmap_type is COMPLETE, the default bitmaps for the availability patterns, used during scheduling, will be returned.
+	// If @bitmap_type is ONLY_WEEKMAPS, the bitmaps will be generated only using the weekmap data from the availability patterns.
+	// If @bitmap_type is ONLY_CALENDAR_ITEMS, the bitmaps will be generated only using the calendar item data from the availability patterns.
 	// Required permissions:
 	//
 	//	NONE
@@ -3449,9 +3449,9 @@ type WFMServer interface {
 	DeleteOpenTimesPattern(context.Context, *DeleteOpenTimesPatternReq) (*DeleteOpenTimesPatternRes, error)
 	// Gets the inherited, own, and resulting bitmaps for the open times patterns of @node_to_check for @schedule_scenario_sid and the org sending the request.
 	// The @schedule_scenario_sid must match the scenario of the @node_to_check.
-	// If @bitmap_type is COMPLETE the default bitmaps for the open times patterns, used during scheduling, will be returned.
-	// If @bitmap_type is ONLY_WEEKMAPS the bitmaps will be generated only using the weekmap data from the open times patterns.
-	// If @bitmap_type is ONLY_CALENDAR_ITEMS the bitmaps will be generated only using the calendar item data from the open times patterns.
+	// If @bitmap_type is COMPLETE, the default bitmaps for the open times patterns, used during scheduling, will be returned.
+	// If @bitmap_type is ONLY_WEEKMAPS, the bitmaps will be generated only using the weekmap data from the open times patterns.
+	// If @bitmap_type is ONLY_CALENDAR_ITEMS, the bitmaps will be generated only using the calendar item data from the open times patterns.
 	// The bitmaps will be generated for the span of @datetime_range.
 	// Required permissions:
 	//
@@ -3500,9 +3500,9 @@ type WFMServer interface {
 	// @entities_to_check must have the entity_type field set with a wfm agent, agent group or a type of node.
 	// If an availability bitmap is requested for an agent group, the bitmaps for all of it's member agents will be returned instead.
 	// The bitmaps will be generated for the span of @datetime_range.
-	// If @bitmap_type is COMPLETE the default bitmaps for the availability patterns, used during scheduling, will be returned.
-	// If @bitmap_type is ONLY_WEEKMAPS the bitmaps will be generated only using the weekmap data from the availability patterns.
-	// If @bitmap_type is ONLY_CALENDAR_ITEMS the bitmaps will be generated only using the calendar item data from the availability patterns.
+	// If @bitmap_type is COMPLETE, the default bitmaps for the availability patterns, used during scheduling, will be returned.
+	// If @bitmap_type is ONLY_WEEKMAPS, the bitmaps will be generated only using the weekmap data from the availability patterns.
+	// If @bitmap_type is ONLY_CALENDAR_ITEMS, the bitmaps will be generated only using the calendar item data from the availability patterns.
 	// Required permissions:
 	//
 	//	NONE
