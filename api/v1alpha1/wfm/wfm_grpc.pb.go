@@ -138,6 +138,7 @@ const (
 	WFM_SwapShiftInstances_FullMethodName                            = "/api.v1alpha1.wfm.WFM/SwapShiftInstances"
 	WFM_UpdateShiftInstance_FullMethodName                           = "/api.v1alpha1.wfm.WFM/UpdateShiftInstance"
 	WFM_UpdateShiftInstanceV2_FullMethodName                         = "/api.v1alpha1.wfm.WFM/UpdateShiftInstanceV2"
+	WFM_CopyShiftInstancesToSchedule_FullMethodName                  = "/api.v1alpha1.wfm.WFM/CopyShiftInstancesToSchedule"
 	WFM_ListShiftInstanceSidsForAgent_FullMethodName                 = "/api.v1alpha1.wfm.WFM/ListShiftInstanceSidsForAgent"
 	WFM_ListShiftSegmentsByShiftInstanceSids_FullMethodName          = "/api.v1alpha1.wfm.WFM/ListShiftSegmentsByShiftInstanceSids"
 	WFM_SetSchedulingTarget_FullMethodName                           = "/api.v1alpha1.wfm.WFM/SetSchedulingTarget"
@@ -1000,6 +1001,9 @@ type WFMClient interface {
 	DeleteOpenTimesPattern(ctx context.Context, in *DeleteOpenTimesPatternReq, opts ...grpc.CallOption) (*DeleteOpenTimesPatternRes, error)
 	// Gets the inherited, own, and resulting bitmaps for the open times patterns of @node_to_check for @schedule_scenario_sid and the org sending the request.
 	// The @schedule_scenario_sid must match the scenario of the @node_to_check.
+	// If @bitmap_type is COMPLETE, the bitmaps will be generated using all relevant pattern data.
+	// If @bitmap_type is ONLY_WEEKMAPS, the bitmaps will be generated using only the weekmap data from the open times patterns.
+	// If @bitmap_type is ONLY_CALENDAR_ITEMS, the bitmaps will be generated using only the calendar item data from the open times patterns.
 	// The bitmaps will be generated for the span of @datetime_range.
 	// Required permissions:
 	//
@@ -1048,6 +1052,9 @@ type WFMClient interface {
 	// @entities_to_check must have the entity_type field set with a wfm agent, agent group or a type of node.
 	// If an availability bitmap is requested for an agent group, the bitmaps for all of it's member agents will be returned instead.
 	// The bitmaps will be generated for the span of @datetime_range.
+	// If @bitmap_type is COMPLETE, the bitmaps will be generated using all relevant pattern data.
+	// If @bitmap_type is ONLY_WEEKMAPS, the bitmaps will be generated using only the weekmap data from the availability patterns.
+	// If @bitmap_type is ONLY_CALENDAR_ITEMS, the bitmaps will be generated using only the calendar item data from the availability patterns.
 	// Required permissions:
 	//
 	//	NONE
@@ -1358,6 +1365,19 @@ type WFMClient interface {
 	//   - grpc.Invalid: one or more fields in the request have invalid values.
 	//   - grpc.Internal: error occurs when updating the shift instance.
 	UpdateShiftInstanceV2(ctx context.Context, in *UpdateShiftInstanceV2Req, opts ...grpc.CallOption) (*UpdateShiftInstanceV2Res, error)
+	// Copies the given @shift_instance_sids to @destination_schedule for the org sending the request.
+	// If there are any overlap conflicts on @destination_schedule and @overlap_as_warning is set to false,
+	//
+	//	then @shift_instance_sids will not be copied, and a list of diagnostics detailing the overlaps will be returned.
+	//
+	// If @overlap_as_warning is set to true, overlap conflicts will not prevent the shifts from being copied, and the overlap diagnostics will be returned after as warning messages instead.
+	// Required permissions:
+	// NONE
+	// Errors:
+	//   - grpc.Invalid: one or more fields in the request have invalid values.
+	//   - grpc.NotFound: the @shift_instance_sids or @destination_schedule does not exist for the org sending the request.
+	//   - grpc.Internal: error occurs when copying the shift instances.
+	CopyShiftInstancesToSchedule(ctx context.Context, in *CopyShiftInstancesToScheduleReq, opts ...grpc.CallOption) (*CopyShiftInstancesToScheduleRes, error)
 	// Lists the shift_instance_sids for the Shift Instances associated with @wfm_agent_sid over the given @datetime_range and @schedule_selector.
 	// Required permissions:
 	//
@@ -2504,6 +2524,15 @@ func (c *wFMClient) UpdateShiftInstanceV2(ctx context.Context, in *UpdateShiftIn
 	return out, nil
 }
 
+func (c *wFMClient) CopyShiftInstancesToSchedule(ctx context.Context, in *CopyShiftInstancesToScheduleReq, opts ...grpc.CallOption) (*CopyShiftInstancesToScheduleRes, error) {
+	out := new(CopyShiftInstancesToScheduleRes)
+	err := c.cc.Invoke(ctx, WFM_CopyShiftInstancesToSchedule_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) ListShiftInstanceSidsForAgent(ctx context.Context, in *ListShiftInstanceSidsForAgentReq, opts ...grpc.CallOption) (*ListShiftInstanceSidsForAgentRes, error) {
 	out := new(ListShiftInstanceSidsForAgentRes)
 	err := c.cc.Invoke(ctx, WFM_ListShiftInstanceSidsForAgent_FullMethodName, in, out, opts...)
@@ -3420,6 +3449,9 @@ type WFMServer interface {
 	DeleteOpenTimesPattern(context.Context, *DeleteOpenTimesPatternReq) (*DeleteOpenTimesPatternRes, error)
 	// Gets the inherited, own, and resulting bitmaps for the open times patterns of @node_to_check for @schedule_scenario_sid and the org sending the request.
 	// The @schedule_scenario_sid must match the scenario of the @node_to_check.
+	// If @bitmap_type is COMPLETE, the bitmaps will be generated using all relevant pattern data.
+	// If @bitmap_type is ONLY_WEEKMAPS, the bitmaps will be generated using only the weekmap data from the open times patterns.
+	// If @bitmap_type is ONLY_CALENDAR_ITEMS, the bitmaps will be generated using only the calendar item data from the open times patterns.
 	// The bitmaps will be generated for the span of @datetime_range.
 	// Required permissions:
 	//
@@ -3468,6 +3500,9 @@ type WFMServer interface {
 	// @entities_to_check must have the entity_type field set with a wfm agent, agent group or a type of node.
 	// If an availability bitmap is requested for an agent group, the bitmaps for all of it's member agents will be returned instead.
 	// The bitmaps will be generated for the span of @datetime_range.
+	// If @bitmap_type is COMPLETE, the bitmaps will be generated using all relevant pattern data.
+	// If @bitmap_type is ONLY_WEEKMAPS, the bitmaps will be generated using only the weekmap data from the availability patterns.
+	// If @bitmap_type is ONLY_CALENDAR_ITEMS, the bitmaps will be generated using only the calendar item data from the availability patterns.
 	// Required permissions:
 	//
 	//	NONE
@@ -3778,6 +3813,19 @@ type WFMServer interface {
 	//   - grpc.Invalid: one or more fields in the request have invalid values.
 	//   - grpc.Internal: error occurs when updating the shift instance.
 	UpdateShiftInstanceV2(context.Context, *UpdateShiftInstanceV2Req) (*UpdateShiftInstanceV2Res, error)
+	// Copies the given @shift_instance_sids to @destination_schedule for the org sending the request.
+	// If there are any overlap conflicts on @destination_schedule and @overlap_as_warning is set to false,
+	//
+	//	then @shift_instance_sids will not be copied, and a list of diagnostics detailing the overlaps will be returned.
+	//
+	// If @overlap_as_warning is set to true, overlap conflicts will not prevent the shifts from being copied, and the overlap diagnostics will be returned after as warning messages instead.
+	// Required permissions:
+	// NONE
+	// Errors:
+	//   - grpc.Invalid: one or more fields in the request have invalid values.
+	//   - grpc.NotFound: the @shift_instance_sids or @destination_schedule does not exist for the org sending the request.
+	//   - grpc.Internal: error occurs when copying the shift instances.
+	CopyShiftInstancesToSchedule(context.Context, *CopyShiftInstancesToScheduleReq) (*CopyShiftInstancesToScheduleRes, error)
 	// Lists the shift_instance_sids for the Shift Instances associated with @wfm_agent_sid over the given @datetime_range and @schedule_selector.
 	// Required permissions:
 	//
@@ -4175,6 +4223,9 @@ func (UnimplementedWFMServer) UpdateShiftInstance(context.Context, *UpdateShiftI
 }
 func (UnimplementedWFMServer) UpdateShiftInstanceV2(context.Context, *UpdateShiftInstanceV2Req) (*UpdateShiftInstanceV2Res, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateShiftInstanceV2 not implemented")
+}
+func (UnimplementedWFMServer) CopyShiftInstancesToSchedule(context.Context, *CopyShiftInstancesToScheduleReq) (*CopyShiftInstancesToScheduleRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CopyShiftInstancesToSchedule not implemented")
 }
 func (UnimplementedWFMServer) ListShiftInstanceSidsForAgent(context.Context, *ListShiftInstanceSidsForAgentReq) (*ListShiftInstanceSidsForAgentRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListShiftInstanceSidsForAgent not implemented")
@@ -6115,6 +6166,24 @@ func _WFM_UpdateShiftInstanceV2_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_CopyShiftInstancesToSchedule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CopyShiftInstancesToScheduleReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).CopyShiftInstancesToSchedule(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_CopyShiftInstancesToSchedule_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).CopyShiftInstancesToSchedule(ctx, req.(*CopyShiftInstancesToScheduleReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WFM_ListShiftInstanceSidsForAgent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListShiftInstanceSidsForAgentReq)
 	if err := dec(in); err != nil {
@@ -6647,6 +6716,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateShiftInstanceV2",
 			Handler:    _WFM_UpdateShiftInstanceV2_Handler,
+		},
+		{
+			MethodName: "CopyShiftInstancesToSchedule",
+			Handler:    _WFM_CopyShiftInstancesToSchedule_Handler,
 		},
 		{
 			MethodName: "ListShiftInstanceSidsForAgent",
