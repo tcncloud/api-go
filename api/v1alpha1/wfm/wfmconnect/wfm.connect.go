@@ -329,6 +329,9 @@ const (
 	// WFMUpdateShiftInstanceV2Procedure is the fully-qualified name of the WFM's UpdateShiftInstanceV2
 	// RPC.
 	WFMUpdateShiftInstanceV2Procedure = "/api.v1alpha1.wfm.WFM/UpdateShiftInstanceV2"
+	// WFMCopyShiftInstancesToScheduleProcedure is the fully-qualified name of the WFM's
+	// CopyShiftInstancesToSchedule RPC.
+	WFMCopyShiftInstancesToScheduleProcedure = "/api.v1alpha1.wfm.WFM/CopyShiftInstancesToSchedule"
 	// WFMListShiftInstanceSidsForAgentProcedure is the fully-qualified name of the WFM's
 	// ListShiftInstanceSidsForAgent RPC.
 	WFMListShiftInstanceSidsForAgentProcedure = "/api.v1alpha1.wfm.WFM/ListShiftInstanceSidsForAgent"
@@ -1559,6 +1562,19 @@ type WFMClient interface {
 	//   - grpc.Invalid: one or more fields in the request have invalid values.
 	//   - grpc.Internal: error occurs when updating the shift instance.
 	UpdateShiftInstanceV2(context.Context, *connect_go.Request[wfm.UpdateShiftInstanceV2Req]) (*connect_go.Response[wfm.UpdateShiftInstanceV2Res], error)
+	// Copies the given @shift_instance_sids to @destination_schedule for the org sending the request.
+	// If there are any overlap conflicts on @destination_schedule and @overlap_as_warning is set to false,
+	//
+	//	then @shift_instance_sids will not be copied, and a list of diagnostics detailing the overlaps will be returned.
+	//
+	// If @overlap_as_warning is set to true, overlap conflicts will not prevent the shifts from being copied, and the overlap diagnostics will be returned after as warning messages instead.
+	// Required permissions:
+	// NONE
+	// Errors:
+	//   - grpc.Invalid: one or more fields in the request have invalid values.
+	//   - grpc.NotFound: the @shift_instance_sids or @destination_schedule does not exist for the org sending the request.
+	//   - grpc.Internal: error occurs when copying the shift instances.
+	CopyShiftInstancesToSchedule(context.Context, *connect_go.Request[wfm.CopyShiftInstancesToScheduleReq]) (*connect_go.Response[wfm.CopyShiftInstancesToScheduleRes], error)
 	// Lists the shift_instance_sids for the Shift Instances associated with @wfm_agent_sid over the given @datetime_range and @schedule_selector.
 	// Required permissions:
 	//
@@ -2172,6 +2188,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMUpdateShiftInstanceV2Procedure,
 			opts...,
 		),
+		copyShiftInstancesToSchedule: connect_go.NewClient[wfm.CopyShiftInstancesToScheduleReq, wfm.CopyShiftInstancesToScheduleRes](
+			httpClient,
+			baseURL+WFMCopyShiftInstancesToScheduleProcedure,
+			opts...,
+		),
 		listShiftInstanceSidsForAgent: connect_go.NewClient[wfm.ListShiftInstanceSidsForAgentReq, wfm.ListShiftInstanceSidsForAgentRes](
 			httpClient,
 			baseURL+WFMListShiftInstanceSidsForAgentProcedure,
@@ -2317,6 +2338,7 @@ type wFMClient struct {
 	swapShiftInstances                            *connect_go.Client[wfm.SwapShiftInstancesReq, wfm.SwapShiftInstancesRes]
 	updateShiftInstance                           *connect_go.Client[wfm.UpdateShiftInstanceReq, wfm.UpdateShiftInstanceRes]
 	updateShiftInstanceV2                         *connect_go.Client[wfm.UpdateShiftInstanceV2Req, wfm.UpdateShiftInstanceV2Res]
+	copyShiftInstancesToSchedule                  *connect_go.Client[wfm.CopyShiftInstancesToScheduleReq, wfm.CopyShiftInstancesToScheduleRes]
 	listShiftInstanceSidsForAgent                 *connect_go.Client[wfm.ListShiftInstanceSidsForAgentReq, wfm.ListShiftInstanceSidsForAgentRes]
 	listShiftSegmentsByShiftInstanceSids          *connect_go.Client[wfm.ListShiftSegmentsByShiftInstanceSidsReq, wfm.ListShiftSegmentsByShiftInstanceSidsRes]
 	setSchedulingTarget                           *connect_go.Client[wfm.SetSchedulingTargetReq, wfm.SetSchedulingTargetRes]
@@ -2859,6 +2881,11 @@ func (c *wFMClient) UpdateShiftInstance(ctx context.Context, req *connect_go.Req
 // UpdateShiftInstanceV2 calls api.v1alpha1.wfm.WFM.UpdateShiftInstanceV2.
 func (c *wFMClient) UpdateShiftInstanceV2(ctx context.Context, req *connect_go.Request[wfm.UpdateShiftInstanceV2Req]) (*connect_go.Response[wfm.UpdateShiftInstanceV2Res], error) {
 	return c.updateShiftInstanceV2.CallUnary(ctx, req)
+}
+
+// CopyShiftInstancesToSchedule calls api.v1alpha1.wfm.WFM.CopyShiftInstancesToSchedule.
+func (c *wFMClient) CopyShiftInstancesToSchedule(ctx context.Context, req *connect_go.Request[wfm.CopyShiftInstancesToScheduleReq]) (*connect_go.Response[wfm.CopyShiftInstancesToScheduleRes], error) {
+	return c.copyShiftInstancesToSchedule.CallUnary(ctx, req)
 }
 
 // ListShiftInstanceSidsForAgent calls api.v1alpha1.wfm.WFM.ListShiftInstanceSidsForAgent.
@@ -4106,6 +4133,19 @@ type WFMHandler interface {
 	//   - grpc.Invalid: one or more fields in the request have invalid values.
 	//   - grpc.Internal: error occurs when updating the shift instance.
 	UpdateShiftInstanceV2(context.Context, *connect_go.Request[wfm.UpdateShiftInstanceV2Req]) (*connect_go.Response[wfm.UpdateShiftInstanceV2Res], error)
+	// Copies the given @shift_instance_sids to @destination_schedule for the org sending the request.
+	// If there are any overlap conflicts on @destination_schedule and @overlap_as_warning is set to false,
+	//
+	//	then @shift_instance_sids will not be copied, and a list of diagnostics detailing the overlaps will be returned.
+	//
+	// If @overlap_as_warning is set to true, overlap conflicts will not prevent the shifts from being copied, and the overlap diagnostics will be returned after as warning messages instead.
+	// Required permissions:
+	// NONE
+	// Errors:
+	//   - grpc.Invalid: one or more fields in the request have invalid values.
+	//   - grpc.NotFound: the @shift_instance_sids or @destination_schedule does not exist for the org sending the request.
+	//   - grpc.Internal: error occurs when copying the shift instances.
+	CopyShiftInstancesToSchedule(context.Context, *connect_go.Request[wfm.CopyShiftInstancesToScheduleReq]) (*connect_go.Response[wfm.CopyShiftInstancesToScheduleRes], error)
 	// Lists the shift_instance_sids for the Shift Instances associated with @wfm_agent_sid over the given @datetime_range and @schedule_selector.
 	// Required permissions:
 	//
@@ -4715,6 +4755,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.UpdateShiftInstanceV2,
 		opts...,
 	)
+	wFMCopyShiftInstancesToScheduleHandler := connect_go.NewUnaryHandler(
+		WFMCopyShiftInstancesToScheduleProcedure,
+		svc.CopyShiftInstancesToSchedule,
+		opts...,
+	)
 	wFMListShiftInstanceSidsForAgentHandler := connect_go.NewUnaryHandler(
 		WFMListShiftInstanceSidsForAgentProcedure,
 		svc.ListShiftInstanceSidsForAgent,
@@ -4962,6 +5007,8 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMUpdateShiftInstanceHandler.ServeHTTP(w, r)
 		case WFMUpdateShiftInstanceV2Procedure:
 			wFMUpdateShiftInstanceV2Handler.ServeHTTP(w, r)
+		case WFMCopyShiftInstancesToScheduleProcedure:
+			wFMCopyShiftInstancesToScheduleHandler.ServeHTTP(w, r)
 		case WFMListShiftInstanceSidsForAgentProcedure:
 			wFMListShiftInstanceSidsForAgentHandler.ServeHTTP(w, r)
 		case WFMListShiftSegmentsByShiftInstanceSidsProcedure:
@@ -5403,6 +5450,10 @@ func (UnimplementedWFMHandler) UpdateShiftInstance(context.Context, *connect_go.
 
 func (UnimplementedWFMHandler) UpdateShiftInstanceV2(context.Context, *connect_go.Request[wfm.UpdateShiftInstanceV2Req]) (*connect_go.Response[wfm.UpdateShiftInstanceV2Res], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.UpdateShiftInstanceV2 is not implemented"))
+}
+
+func (UnimplementedWFMHandler) CopyShiftInstancesToSchedule(context.Context, *connect_go.Request[wfm.CopyShiftInstancesToScheduleReq]) (*connect_go.Response[wfm.CopyShiftInstancesToScheduleRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.CopyShiftInstancesToSchedule is not implemented"))
 }
 
 func (UnimplementedWFMHandler) ListShiftInstanceSidsForAgent(context.Context, *connect_go.Request[wfm.ListShiftInstanceSidsForAgentReq]) (*connect_go.Response[wfm.ListShiftInstanceSidsForAgentRes], error) {
