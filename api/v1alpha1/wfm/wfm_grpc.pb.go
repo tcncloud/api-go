@@ -1322,7 +1322,7 @@ type WFMClient interface {
 	//   - grpc.NotFound: the draft schedule with the given @draft_schedule_sid doesn't exist.
 	//   - grpc.Internal: error occurs when removing the draft schedule.
 	DeleteDraftSchedule(ctx context.Context, in *DeleteDraftScheduleReq, opts ...grpc.CallOption) (*DeleteDraftScheduleRes, error)
-	// Copies the shifts from @source_schedule_selector to @destination_schedule_selector, constrained by the given parameters for @org_id.
+	// Copies the shifts from @source_schedule_selector to @destination_schedule_selector, constrained by the given parameters for the org sending the request.
 	// If @datetime_range is set, all shifts within the datetime range will be copied.
 	// If @datetime_range is not set, all shifts in the @source_schedule_selector within the schedule range of the @destination_schedule_selector will be copied. However if one of them is a published schedule, it will use the schedule range of the draft schedule.
 	// If @start_datetimes_only is set to false, then shifts are considered to be within the @datetime range if any portion of them is within the range.
@@ -1336,7 +1336,7 @@ type WFMClient interface {
 	// Errors:
 	//
 	//	-grpc.Invalid: one or more fields in the request have invalid values.
-	//	-grpc.NotFound: the @source_schedule_selector or @destination_schedule_selector don't exist for @org_id.
+	//	-grpc.NotFound: the @source_schedule_selector or @destination_schedule_selector don't exist for the org sending the request.
 	//	-grpc.Internal: error occurs when creating the copied shift instances.
 	CopyScheduleToSchedule(ctx context.Context, in *CopyScheduleToScheduleReq, opts ...grpc.CallOption) (*CopyScheduleToScheduleRes, error)
 	// Creates a shift instance for the org sending the request with the provided parameters.
@@ -3796,7 +3796,7 @@ type WFMServer interface {
 	//   - grpc.NotFound: the draft schedule with the given @draft_schedule_sid doesn't exist.
 	//   - grpc.Internal: error occurs when removing the draft schedule.
 	DeleteDraftSchedule(context.Context, *DeleteDraftScheduleReq) (*DeleteDraftScheduleRes, error)
-	// Copies the shifts from @source_schedule_selector to @destination_schedule_selector, constrained by the given parameters for @org_id.
+	// Copies the shifts from @source_schedule_selector to @destination_schedule_selector, constrained by the given parameters for the org sending the request.
 	// If @datetime_range is set, all shifts within the datetime range will be copied.
 	// If @datetime_range is not set, all shifts in the @source_schedule_selector within the schedule range of the @destination_schedule_selector will be copied. However if one of them is a published schedule, it will use the schedule range of the draft schedule.
 	// If @start_datetimes_only is set to false, then shifts are considered to be within the @datetime range if any portion of them is within the range.
@@ -3810,7 +3810,7 @@ type WFMServer interface {
 	// Errors:
 	//
 	//	-grpc.Invalid: one or more fields in the request have invalid values.
-	//	-grpc.NotFound: the @source_schedule_selector or @destination_schedule_selector don't exist for @org_id.
+	//	-grpc.NotFound: the @source_schedule_selector or @destination_schedule_selector don't exist for the org sending the request.
 	//	-grpc.Internal: error occurs when creating the copied shift instances.
 	CopyScheduleToSchedule(context.Context, *CopyScheduleToScheduleReq) (*CopyScheduleToScheduleRes, error)
 	// Creates a shift instance for the org sending the request with the provided parameters.
