@@ -9761,6 +9761,9 @@ type ReshapeAction struct {
 	//	*ReshapeAction_RemoveField_
 	//	*ReshapeAction_AddNewField_
 	//	*ReshapeAction_ChangeCurrencyType_
+	//	*ReshapeAction_Divide_
+	//	*ReshapeAction_Multiply_
+	//	*ReshapeAction_Modulo_
 	//	*ReshapeAction_Merge_
 	//	*ReshapeAction_SetFieldValue_
 	//	*ReshapeAction_AddNewFieldFromField_
@@ -9902,6 +9905,27 @@ func (x *ReshapeAction) GetChangeCurrencyType() *ReshapeAction_ChangeCurrencyTyp
 	return nil
 }
 
+func (x *ReshapeAction) GetDivide() *ReshapeAction_Divide {
+	if x, ok := x.GetAction().(*ReshapeAction_Divide_); ok {
+		return x.Divide
+	}
+	return nil
+}
+
+func (x *ReshapeAction) GetMultiply() *ReshapeAction_Multiply {
+	if x, ok := x.GetAction().(*ReshapeAction_Multiply_); ok {
+		return x.Multiply
+	}
+	return nil
+}
+
+func (x *ReshapeAction) GetModulo() *ReshapeAction_Modulo {
+	if x, ok := x.GetAction().(*ReshapeAction_Modulo_); ok {
+		return x.Modulo
+	}
+	return nil
+}
+
 func (x *ReshapeAction) GetMerge() *ReshapeAction_Merge {
 	if x, ok := x.GetAction().(*ReshapeAction_Merge_); ok {
 		return x.Merge
@@ -9995,6 +10019,18 @@ type ReshapeAction_ChangeCurrencyType_ struct {
 	ChangeCurrencyType *ReshapeAction_ChangeCurrencyType `protobuf:"bytes,31,opt,name=change_currency_type,json=changeCurrencyType,proto3,oneof"`
 }
 
+type ReshapeAction_Divide_ struct {
+	Divide *ReshapeAction_Divide `protobuf:"bytes,32,opt,name=divide,proto3,oneof"`
+}
+
+type ReshapeAction_Multiply_ struct {
+	Multiply *ReshapeAction_Multiply `protobuf:"bytes,33,opt,name=multiply,proto3,oneof"`
+}
+
+type ReshapeAction_Modulo_ struct {
+	Modulo *ReshapeAction_Modulo `protobuf:"bytes,34,opt,name=modulo,proto3,oneof"`
+}
+
 type ReshapeAction_Merge_ struct {
 	Merge *ReshapeAction_Merge `protobuf:"bytes,40,opt,name=merge,proto3,oneof"`
 }
@@ -10042,6 +10078,12 @@ func (*ReshapeAction_RemoveField_) isReshapeAction_Action() {}
 func (*ReshapeAction_AddNewField_) isReshapeAction_Action() {}
 
 func (*ReshapeAction_ChangeCurrencyType_) isReshapeAction_Action() {}
+
+func (*ReshapeAction_Divide_) isReshapeAction_Action() {}
+
+func (*ReshapeAction_Multiply_) isReshapeAction_Action() {}
+
+func (*ReshapeAction_Modulo_) isReshapeAction_Action() {}
 
 func (*ReshapeAction_Merge_) isReshapeAction_Action() {}
 
@@ -14410,6 +14452,180 @@ func (x *ReshapeAction_Convert) GetDefaultValue() *RecordFieldProto {
 	return nil
 }
 
+// Represents a message for division operation.
+type ReshapeAction_Divide struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The default value to be used if no other value is provided.
+	DefaultValue float64 `protobuf:"fixed64,1,opt,name=default_value,json=defaultValue,proto3" json:"default_value,omitempty"`
+	// The divisor to be used for the division operation.
+	Divisor float64 `protobuf:"fixed64,2,opt,name=divisor,proto3" json:"divisor,omitempty"`
+}
+
+func (x *ReshapeAction_Divide) Reset() {
+	*x = ReshapeAction_Divide{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v0alpha_lms_proto_msgTypes[185]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ReshapeAction_Divide) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ReshapeAction_Divide) ProtoMessage() {}
+
+func (x *ReshapeAction_Divide) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v0alpha_lms_proto_msgTypes[185]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ReshapeAction_Divide.ProtoReflect.Descriptor instead.
+func (*ReshapeAction_Divide) Descriptor() ([]byte, []int) {
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{111, 7}
+}
+
+func (x *ReshapeAction_Divide) GetDefaultValue() float64 {
+	if x != nil {
+		return x.DefaultValue
+	}
+	return 0
+}
+
+func (x *ReshapeAction_Divide) GetDivisor() float64 {
+	if x != nil {
+		return x.Divisor
+	}
+	return 0
+}
+
+// Represents a message for multiplication operation.
+type ReshapeAction_Multiply struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The default value to be used if no other value is provided.
+	DefaultValue float64 `protobuf:"fixed64,1,opt,name=default_value,json=defaultValue,proto3" json:"default_value,omitempty"`
+	// The multiplier to be used for the multiplication operation.
+	Multiplier float64 `protobuf:"fixed64,2,opt,name=multiplier,proto3" json:"multiplier,omitempty"`
+}
+
+func (x *ReshapeAction_Multiply) Reset() {
+	*x = ReshapeAction_Multiply{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v0alpha_lms_proto_msgTypes[186]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ReshapeAction_Multiply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ReshapeAction_Multiply) ProtoMessage() {}
+
+func (x *ReshapeAction_Multiply) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v0alpha_lms_proto_msgTypes[186]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ReshapeAction_Multiply.ProtoReflect.Descriptor instead.
+func (*ReshapeAction_Multiply) Descriptor() ([]byte, []int) {
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{111, 8}
+}
+
+func (x *ReshapeAction_Multiply) GetDefaultValue() float64 {
+	if x != nil {
+		return x.DefaultValue
+	}
+	return 0
+}
+
+func (x *ReshapeAction_Multiply) GetMultiplier() float64 {
+	if x != nil {
+		return x.Multiplier
+	}
+	return 0
+}
+
+// Represents a message for modulo operation.
+type ReshapeAction_Modulo struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The default value to be used if no other value is provided.
+	DefaultValue int32 `protobuf:"varint,1,opt,name=default_value,json=defaultValue,proto3" json:"default_value,omitempty"`
+	// The modulus to be used for the modulo operation.
+	Modulus int32 `protobuf:"varint,2,opt,name=modulus,proto3" json:"modulus,omitempty"`
+}
+
+func (x *ReshapeAction_Modulo) Reset() {
+	*x = ReshapeAction_Modulo{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v0alpha_lms_proto_msgTypes[187]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ReshapeAction_Modulo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ReshapeAction_Modulo) ProtoMessage() {}
+
+func (x *ReshapeAction_Modulo) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v0alpha_lms_proto_msgTypes[187]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ReshapeAction_Modulo.ProtoReflect.Descriptor instead.
+func (*ReshapeAction_Modulo) Descriptor() ([]byte, []int) {
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{111, 9}
+}
+
+func (x *ReshapeAction_Modulo) GetDefaultValue() int32 {
+	if x != nil {
+		return x.DefaultValue
+	}
+	return 0
+}
+
+func (x *ReshapeAction_Modulo) GetModulus() int32 {
+	if x != nil {
+		return x.Modulus
+	}
+	return 0
+}
+
 // will remove "field" from the record
 type ReshapeAction_RemoveField struct {
 	state         protoimpl.MessageState
@@ -14420,7 +14636,7 @@ type ReshapeAction_RemoveField struct {
 func (x *ReshapeAction_RemoveField) Reset() {
 	*x = ReshapeAction_RemoveField{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v0alpha_lms_proto_msgTypes[185]
+		mi := &file_api_v0alpha_lms_proto_msgTypes[188]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -14433,7 +14649,7 @@ func (x *ReshapeAction_RemoveField) String() string {
 func (*ReshapeAction_RemoveField) ProtoMessage() {}
 
 func (x *ReshapeAction_RemoveField) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[185]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[188]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14446,7 +14662,7 @@ func (x *ReshapeAction_RemoveField) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_RemoveField.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_RemoveField) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{111, 7}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{111, 10}
 }
 
 // will add "field" to the record with default starting value
@@ -14462,7 +14678,7 @@ type ReshapeAction_AddNewField struct {
 func (x *ReshapeAction_AddNewField) Reset() {
 	*x = ReshapeAction_AddNewField{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v0alpha_lms_proto_msgTypes[186]
+		mi := &file_api_v0alpha_lms_proto_msgTypes[189]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -14475,7 +14691,7 @@ func (x *ReshapeAction_AddNewField) String() string {
 func (*ReshapeAction_AddNewField) ProtoMessage() {}
 
 func (x *ReshapeAction_AddNewField) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[186]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[189]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14488,7 +14704,7 @@ func (x *ReshapeAction_AddNewField) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_AddNewField.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_AddNewField) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{111, 8}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{111, 11}
 }
 
 func (x *ReshapeAction_AddNewField) GetStartingValue() *RecordFieldProto {
@@ -14511,7 +14727,7 @@ type ReshapeAction_AddNewFieldFromField struct {
 func (x *ReshapeAction_AddNewFieldFromField) Reset() {
 	*x = ReshapeAction_AddNewFieldFromField{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v0alpha_lms_proto_msgTypes[187]
+		mi := &file_api_v0alpha_lms_proto_msgTypes[190]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -14524,7 +14740,7 @@ func (x *ReshapeAction_AddNewFieldFromField) String() string {
 func (*ReshapeAction_AddNewFieldFromField) ProtoMessage() {}
 
 func (x *ReshapeAction_AddNewFieldFromField) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[187]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[190]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14537,7 +14753,7 @@ func (x *ReshapeAction_AddNewFieldFromField) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use ReshapeAction_AddNewFieldFromField.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_AddNewFieldFromField) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{111, 9}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{111, 12}
 }
 
 func (x *ReshapeAction_AddNewFieldFromField) GetName() string {
@@ -14564,7 +14780,7 @@ type ReshapeAction_ChangeCurrencyType struct {
 func (x *ReshapeAction_ChangeCurrencyType) Reset() {
 	*x = ReshapeAction_ChangeCurrencyType{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v0alpha_lms_proto_msgTypes[188]
+		mi := &file_api_v0alpha_lms_proto_msgTypes[191]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -14577,7 +14793,7 @@ func (x *ReshapeAction_ChangeCurrencyType) String() string {
 func (*ReshapeAction_ChangeCurrencyType) ProtoMessage() {}
 
 func (x *ReshapeAction_ChangeCurrencyType) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[188]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[191]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14590,7 +14806,7 @@ func (x *ReshapeAction_ChangeCurrencyType) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_ChangeCurrencyType.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_ChangeCurrencyType) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{111, 10}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{111, 13}
 }
 
 // will set field with the value
@@ -14605,7 +14821,7 @@ type ReshapeAction_SetFieldValue struct {
 func (x *ReshapeAction_SetFieldValue) Reset() {
 	*x = ReshapeAction_SetFieldValue{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v0alpha_lms_proto_msgTypes[189]
+		mi := &file_api_v0alpha_lms_proto_msgTypes[192]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -14618,7 +14834,7 @@ func (x *ReshapeAction_SetFieldValue) String() string {
 func (*ReshapeAction_SetFieldValue) ProtoMessage() {}
 
 func (x *ReshapeAction_SetFieldValue) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[189]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[192]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14631,7 +14847,7 @@ func (x *ReshapeAction_SetFieldValue) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_SetFieldValue.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_SetFieldValue) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{111, 11}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{111, 14}
 }
 
 func (x *ReshapeAction_SetFieldValue) GetValue() *RecordFieldProto {
@@ -14654,7 +14870,7 @@ type ReshapeAction_SetFieldFromField struct {
 func (x *ReshapeAction_SetFieldFromField) Reset() {
 	*x = ReshapeAction_SetFieldFromField{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v0alpha_lms_proto_msgTypes[190]
+		mi := &file_api_v0alpha_lms_proto_msgTypes[193]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -14667,7 +14883,7 @@ func (x *ReshapeAction_SetFieldFromField) String() string {
 func (*ReshapeAction_SetFieldFromField) ProtoMessage() {}
 
 func (x *ReshapeAction_SetFieldFromField) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[190]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[193]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14680,7 +14896,7 @@ func (x *ReshapeAction_SetFieldFromField) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_SetFieldFromField.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_SetFieldFromField) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{111, 12}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{111, 15}
 }
 
 func (x *ReshapeAction_SetFieldFromField) GetName() string {
@@ -14710,7 +14926,7 @@ type ReshapeAction_Merge struct {
 func (x *ReshapeAction_Merge) Reset() {
 	*x = ReshapeAction_Merge{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v0alpha_lms_proto_msgTypes[191]
+		mi := &file_api_v0alpha_lms_proto_msgTypes[194]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -14723,7 +14939,7 @@ func (x *ReshapeAction_Merge) String() string {
 func (*ReshapeAction_Merge) ProtoMessage() {}
 
 func (x *ReshapeAction_Merge) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[191]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[194]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14736,7 +14952,7 @@ func (x *ReshapeAction_Merge) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_Merge.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_Merge) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{111, 13}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{111, 16}
 }
 
 func (x *ReshapeAction_Merge) GetData() []*ReshapeAction_Merge_FieldOrVal {
@@ -14764,7 +14980,7 @@ type ReshapeAction_Pad struct {
 func (x *ReshapeAction_Pad) Reset() {
 	*x = ReshapeAction_Pad{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v0alpha_lms_proto_msgTypes[192]
+		mi := &file_api_v0alpha_lms_proto_msgTypes[195]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -14777,7 +14993,7 @@ func (x *ReshapeAction_Pad) String() string {
 func (*ReshapeAction_Pad) ProtoMessage() {}
 
 func (x *ReshapeAction_Pad) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[192]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[195]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14790,7 +15006,7 @@ func (x *ReshapeAction_Pad) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_Pad.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_Pad) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{111, 14}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{111, 17}
 }
 
 func (x *ReshapeAction_Pad) GetChar() string {
@@ -14834,7 +15050,7 @@ type ReshapeAction_Trim struct {
 func (x *ReshapeAction_Trim) Reset() {
 	*x = ReshapeAction_Trim{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v0alpha_lms_proto_msgTypes[193]
+		mi := &file_api_v0alpha_lms_proto_msgTypes[196]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -14847,7 +15063,7 @@ func (x *ReshapeAction_Trim) String() string {
 func (*ReshapeAction_Trim) ProtoMessage() {}
 
 func (x *ReshapeAction_Trim) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[193]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[196]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14860,7 +15076,7 @@ func (x *ReshapeAction_Trim) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_Trim.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_Trim) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{111, 15}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{111, 18}
 }
 
 func (m *ReshapeAction_Trim) GetOpt() isReshapeAction_Trim_Opt {
@@ -14945,7 +15161,7 @@ type ReshapeAction_Extract struct {
 func (x *ReshapeAction_Extract) Reset() {
 	*x = ReshapeAction_Extract{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v0alpha_lms_proto_msgTypes[194]
+		mi := &file_api_v0alpha_lms_proto_msgTypes[197]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -14958,7 +15174,7 @@ func (x *ReshapeAction_Extract) String() string {
 func (*ReshapeAction_Extract) ProtoMessage() {}
 
 func (x *ReshapeAction_Extract) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[194]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[197]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14971,7 +15187,7 @@ func (x *ReshapeAction_Extract) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_Extract.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_Extract) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{111, 16}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{111, 19}
 }
 
 func (x *ReshapeAction_Extract) GetParts() []*ReshapeAction_Extract_Slice {
@@ -14996,7 +15212,7 @@ type ReshapeAction_Merge_FieldOrVal struct {
 func (x *ReshapeAction_Merge_FieldOrVal) Reset() {
 	*x = ReshapeAction_Merge_FieldOrVal{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v0alpha_lms_proto_msgTypes[195]
+		mi := &file_api_v0alpha_lms_proto_msgTypes[198]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -15009,7 +15225,7 @@ func (x *ReshapeAction_Merge_FieldOrVal) String() string {
 func (*ReshapeAction_Merge_FieldOrVal) ProtoMessage() {}
 
 func (x *ReshapeAction_Merge_FieldOrVal) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[195]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[198]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15022,7 +15238,7 @@ func (x *ReshapeAction_Merge_FieldOrVal) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_Merge_FieldOrVal.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_Merge_FieldOrVal) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{111, 13, 0}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{111, 16, 0}
 }
 
 func (m *ReshapeAction_Merge_FieldOrVal) GetVal() isReshapeAction_Merge_FieldOrVal_Val {
@@ -15078,7 +15294,7 @@ type ReshapeAction_Extract_Index struct {
 func (x *ReshapeAction_Extract_Index) Reset() {
 	*x = ReshapeAction_Extract_Index{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v0alpha_lms_proto_msgTypes[196]
+		mi := &file_api_v0alpha_lms_proto_msgTypes[199]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -15091,7 +15307,7 @@ func (x *ReshapeAction_Extract_Index) String() string {
 func (*ReshapeAction_Extract_Index) ProtoMessage() {}
 
 func (x *ReshapeAction_Extract_Index) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[196]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[199]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15104,7 +15320,7 @@ func (x *ReshapeAction_Extract_Index) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_Extract_Index.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_Extract_Index) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{111, 16, 0}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{111, 19, 0}
 }
 
 func (m *ReshapeAction_Extract_Index) GetVal() isReshapeAction_Extract_Index_Val {
@@ -15169,7 +15385,7 @@ type ReshapeAction_Extract_Slice struct {
 func (x *ReshapeAction_Extract_Slice) Reset() {
 	*x = ReshapeAction_Extract_Slice{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v0alpha_lms_proto_msgTypes[197]
+		mi := &file_api_v0alpha_lms_proto_msgTypes[200]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -15182,7 +15398,7 @@ func (x *ReshapeAction_Extract_Slice) String() string {
 func (*ReshapeAction_Extract_Slice) ProtoMessage() {}
 
 func (x *ReshapeAction_Extract_Slice) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[197]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[200]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15195,7 +15411,7 @@ func (x *ReshapeAction_Extract_Slice) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_Extract_Slice.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_Extract_Slice) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{111, 16, 1}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{111, 19, 1}
 }
 
 func (x *ReshapeAction_Extract_Slice) GetStartIsExclusive() bool {
@@ -16886,7 +17102,7 @@ var file_api_v0alpha_lms_proto_rawDesc = []byte{
 	0x73, 0x73, 0x12, 0x34, 0x0a, 0x07, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x18, 0x01, 0x20,
 	0x03, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x30, 0x61, 0x6c, 0x70, 0x68,
 	0x61, 0x2e, 0x52, 0x65, 0x73, 0x68, 0x61, 0x70, 0x65, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52,
-	0x07, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x22, 0x89, 0x18, 0x0a, 0x0d, 0x52, 0x65, 0x73,
+	0x07, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x22, 0xa9, 0x1b, 0x0a, 0x0d, 0x52, 0x65, 0x73,
 	0x68, 0x61, 0x70, 0x65, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x14, 0x0a, 0x05, 0x66, 0x69,
 	0x65, 0x6c, 0x64, 0x18, 0x13, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x66, 0x69, 0x65, 0x6c, 0x64,
 	0x12, 0x40, 0x0a, 0x0d, 0x6d, 0x61, 0x74, 0x63, 0x68, 0x69, 0x6e, 0x67, 0x5f, 0x74, 0x79, 0x70,
@@ -16943,71 +17159,97 @@ var file_api_v0alpha_lms_proto_rawDesc = []byte{
 	0x73, 0x68, 0x61, 0x70, 0x65, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x43, 0x68, 0x61, 0x6e,
 	0x67, 0x65, 0x43, 0x75, 0x72, 0x72, 0x65, 0x6e, 0x63, 0x79, 0x54, 0x79, 0x70, 0x65, 0x48, 0x00,
 	0x52, 0x12, 0x63, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x43, 0x75, 0x72, 0x72, 0x65, 0x6e, 0x63, 0x79,
-	0x54, 0x79, 0x70, 0x65, 0x12, 0x38, 0x0a, 0x05, 0x6d, 0x65, 0x72, 0x67, 0x65, 0x18, 0x28, 0x20,
-	0x01, 0x28, 0x0b, 0x32, 0x20, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x30, 0x61, 0x6c, 0x70, 0x68,
-	0x61, 0x2e, 0x52, 0x65, 0x73, 0x68, 0x61, 0x70, 0x65, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x2e,
-	0x4d, 0x65, 0x72, 0x67, 0x65, 0x48, 0x00, 0x52, 0x05, 0x6d, 0x65, 0x72, 0x67, 0x65, 0x12, 0x52,
-	0x0a, 0x0f, 0x73, 0x65, 0x74, 0x5f, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x5f, 0x76, 0x61, 0x6c, 0x75,
-	0x65, 0x18, 0x29, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x28, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x30,
-	0x61, 0x6c, 0x70, 0x68, 0x61, 0x2e, 0x52, 0x65, 0x73, 0x68, 0x61, 0x70, 0x65, 0x41, 0x63, 0x74,
-	0x69, 0x6f, 0x6e, 0x2e, 0x53, 0x65, 0x74, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x56, 0x61, 0x6c, 0x75,
-	0x65, 0x48, 0x00, 0x52, 0x0d, 0x73, 0x65, 0x74, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x56, 0x61, 0x6c,
-	0x75, 0x65, 0x12, 0x69, 0x0a, 0x18, 0x61, 0x64, 0x64, 0x5f, 0x6e, 0x65, 0x77, 0x5f, 0x66, 0x69,
-	0x65, 0x6c, 0x64, 0x5f, 0x66, 0x72, 0x6f, 0x6d, 0x5f, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x18, 0x2d,
-	0x20, 0x01, 0x28, 0x0b, 0x32, 0x2f, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x30, 0x61, 0x6c, 0x70,
+	0x54, 0x79, 0x70, 0x65, 0x12, 0x3b, 0x0a, 0x06, 0x64, 0x69, 0x76, 0x69, 0x64, 0x65, 0x18, 0x20,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x21, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x30, 0x61, 0x6c, 0x70,
 	0x68, 0x61, 0x2e, 0x52, 0x65, 0x73, 0x68, 0x61, 0x70, 0x65, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e,
-	0x2e, 0x41, 0x64, 0x64, 0x4e, 0x65, 0x77, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x46, 0x72, 0x6f, 0x6d,
-	0x46, 0x69, 0x65, 0x6c, 0x64, 0x48, 0x00, 0x52, 0x14, 0x61, 0x64, 0x64, 0x4e, 0x65, 0x77, 0x46,
-	0x69, 0x65, 0x6c, 0x64, 0x46, 0x72, 0x6f, 0x6d, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x12, 0x5f, 0x0a,
-	0x14, 0x73, 0x65, 0x74, 0x5f, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x5f, 0x66, 0x72, 0x6f, 0x6d, 0x5f,
-	0x66, 0x69, 0x65, 0x6c, 0x64, 0x18, 0x2e, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2c, 0x2e, 0x61, 0x70,
-	0x69, 0x2e, 0x76, 0x30, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x2e, 0x52, 0x65, 0x73, 0x68, 0x61, 0x70,
-	0x65, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x53, 0x65, 0x74, 0x46, 0x69, 0x65, 0x6c, 0x64,
-	0x46, 0x72, 0x6f, 0x6d, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x48, 0x00, 0x52, 0x11, 0x73, 0x65, 0x74,
-	0x46, 0x69, 0x65, 0x6c, 0x64, 0x46, 0x72, 0x6f, 0x6d, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x12, 0x32,
-	0x0a, 0x03, 0x70, 0x61, 0x64, 0x18, 0x34, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1e, 0x2e, 0x61, 0x70,
-	0x69, 0x2e, 0x76, 0x30, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x2e, 0x52, 0x65, 0x73, 0x68, 0x61, 0x70,
-	0x65, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x50, 0x61, 0x64, 0x48, 0x00, 0x52, 0x03, 0x70,
-	0x61, 0x64, 0x12, 0x35, 0x0a, 0x04, 0x74, 0x72, 0x69, 0x6d, 0x18, 0x35, 0x20, 0x01, 0x28, 0x0b,
-	0x32, 0x1f, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x30, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x2e, 0x52,
-	0x65, 0x73, 0x68, 0x61, 0x70, 0x65, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x54, 0x72, 0x69,
-	0x6d, 0x48, 0x00, 0x52, 0x04, 0x74, 0x72, 0x69, 0x6d, 0x12, 0x3e, 0x0a, 0x07, 0x65, 0x78, 0x74,
-	0x72, 0x61, 0x63, 0x74, 0x18, 0x36, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x22, 0x2e, 0x61, 0x70, 0x69,
-	0x2e, 0x76, 0x30, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x2e, 0x52, 0x65, 0x73, 0x68, 0x61, 0x70, 0x65,
-	0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x45, 0x78, 0x74, 0x72, 0x61, 0x63, 0x74, 0x48, 0x00,
-	0x52, 0x07, 0x65, 0x78, 0x74, 0x72, 0x61, 0x63, 0x74, 0x1a, 0x23, 0x0a, 0x06, 0x52, 0x65, 0x6e,
-	0x61, 0x6d, 0x65, 0x12, 0x19, 0x0a, 0x08, 0x6e, 0x65, 0x77, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18,
-	0x0a, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6e, 0x65, 0x77, 0x4e, 0x61, 0x6d, 0x65, 0x1a, 0x20,
-	0x0a, 0x08, 0x41, 0x64, 0x64, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61,
+	0x2e, 0x44, 0x69, 0x76, 0x69, 0x64, 0x65, 0x48, 0x00, 0x52, 0x06, 0x64, 0x69, 0x76, 0x69, 0x64,
+	0x65, 0x12, 0x41, 0x0a, 0x08, 0x6d, 0x75, 0x6c, 0x74, 0x69, 0x70, 0x6c, 0x79, 0x18, 0x21, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x23, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x30, 0x61, 0x6c, 0x70, 0x68,
+	0x61, 0x2e, 0x52, 0x65, 0x73, 0x68, 0x61, 0x70, 0x65, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x2e,
+	0x4d, 0x75, 0x6c, 0x74, 0x69, 0x70, 0x6c, 0x79, 0x48, 0x00, 0x52, 0x08, 0x6d, 0x75, 0x6c, 0x74,
+	0x69, 0x70, 0x6c, 0x79, 0x12, 0x3b, 0x0a, 0x06, 0x6d, 0x6f, 0x64, 0x75, 0x6c, 0x6f, 0x18, 0x22,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x21, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x30, 0x61, 0x6c, 0x70,
+	0x68, 0x61, 0x2e, 0x52, 0x65, 0x73, 0x68, 0x61, 0x70, 0x65, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e,
+	0x2e, 0x4d, 0x6f, 0x64, 0x75, 0x6c, 0x6f, 0x48, 0x00, 0x52, 0x06, 0x6d, 0x6f, 0x64, 0x75, 0x6c,
+	0x6f, 0x12, 0x38, 0x0a, 0x05, 0x6d, 0x65, 0x72, 0x67, 0x65, 0x18, 0x28, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x20, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x30, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x2e, 0x52,
+	0x65, 0x73, 0x68, 0x61, 0x70, 0x65, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x4d, 0x65, 0x72,
+	0x67, 0x65, 0x48, 0x00, 0x52, 0x05, 0x6d, 0x65, 0x72, 0x67, 0x65, 0x12, 0x52, 0x0a, 0x0f, 0x73,
+	0x65, 0x74, 0x5f, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x5f, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x29,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x28, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x30, 0x61, 0x6c, 0x70,
+	0x68, 0x61, 0x2e, 0x52, 0x65, 0x73, 0x68, 0x61, 0x70, 0x65, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e,
+	0x2e, 0x53, 0x65, 0x74, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x48, 0x00,
+	0x52, 0x0d, 0x73, 0x65, 0x74, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x12,
+	0x69, 0x0a, 0x18, 0x61, 0x64, 0x64, 0x5f, 0x6e, 0x65, 0x77, 0x5f, 0x66, 0x69, 0x65, 0x6c, 0x64,
+	0x5f, 0x66, 0x72, 0x6f, 0x6d, 0x5f, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x18, 0x2d, 0x20, 0x01, 0x28,
+	0x0b, 0x32, 0x2f, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x30, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x2e,
+	0x52, 0x65, 0x73, 0x68, 0x61, 0x70, 0x65, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x41, 0x64,
+	0x64, 0x4e, 0x65, 0x77, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x46, 0x72, 0x6f, 0x6d, 0x46, 0x69, 0x65,
+	0x6c, 0x64, 0x48, 0x00, 0x52, 0x14, 0x61, 0x64, 0x64, 0x4e, 0x65, 0x77, 0x46, 0x69, 0x65, 0x6c,
+	0x64, 0x46, 0x72, 0x6f, 0x6d, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x12, 0x5f, 0x0a, 0x14, 0x73, 0x65,
+	0x74, 0x5f, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x5f, 0x66, 0x72, 0x6f, 0x6d, 0x5f, 0x66, 0x69, 0x65,
+	0x6c, 0x64, 0x18, 0x2e, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2c, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76,
+	0x30, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x2e, 0x52, 0x65, 0x73, 0x68, 0x61, 0x70, 0x65, 0x41, 0x63,
+	0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x53, 0x65, 0x74, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x46, 0x72, 0x6f,
+	0x6d, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x48, 0x00, 0x52, 0x11, 0x73, 0x65, 0x74, 0x46, 0x69, 0x65,
+	0x6c, 0x64, 0x46, 0x72, 0x6f, 0x6d, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x12, 0x32, 0x0a, 0x03, 0x70,
+	0x61, 0x64, 0x18, 0x34, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1e, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76,
+	0x30, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x2e, 0x52, 0x65, 0x73, 0x68, 0x61, 0x70, 0x65, 0x41, 0x63,
+	0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x50, 0x61, 0x64, 0x48, 0x00, 0x52, 0x03, 0x70, 0x61, 0x64, 0x12,
+	0x35, 0x0a, 0x04, 0x74, 0x72, 0x69, 0x6d, 0x18, 0x35, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1f, 0x2e,
+	0x61, 0x70, 0x69, 0x2e, 0x76, 0x30, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x2e, 0x52, 0x65, 0x73, 0x68,
+	0x61, 0x70, 0x65, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x54, 0x72, 0x69, 0x6d, 0x48, 0x00,
+	0x52, 0x04, 0x74, 0x72, 0x69, 0x6d, 0x12, 0x3e, 0x0a, 0x07, 0x65, 0x78, 0x74, 0x72, 0x61, 0x63,
+	0x74, 0x18, 0x36, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x22, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x30,
+	0x61, 0x6c, 0x70, 0x68, 0x61, 0x2e, 0x52, 0x65, 0x73, 0x68, 0x61, 0x70, 0x65, 0x41, 0x63, 0x74,
+	0x69, 0x6f, 0x6e, 0x2e, 0x45, 0x78, 0x74, 0x72, 0x61, 0x63, 0x74, 0x48, 0x00, 0x52, 0x07, 0x65,
+	0x78, 0x74, 0x72, 0x61, 0x63, 0x74, 0x1a, 0x23, 0x0a, 0x06, 0x52, 0x65, 0x6e, 0x61, 0x6d, 0x65,
+	0x12, 0x19, 0x0a, 0x08, 0x6e, 0x65, 0x77, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x0a, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x07, 0x6e, 0x65, 0x77, 0x4e, 0x61, 0x6d, 0x65, 0x1a, 0x20, 0x0a, 0x08, 0x41,
+	0x64, 0x64, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65,
+	0x18, 0x0b, 0x20, 0x01, 0x28, 0x01, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x1a, 0x44, 0x0a,
+	0x07, 0x41, 0x64, 0x64, 0x44, 0x61, 0x74, 0x65, 0x12, 0x39, 0x0a, 0x08, 0x64, 0x61, 0x74, 0x65,
+	0x74, 0x69, 0x6d, 0x65, 0x18, 0x2d, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1d, 0x2e, 0x61, 0x70, 0x69,
+	0x2e, 0x76, 0x30, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x2e, 0x44, 0x61, 0x74, 0x65, 0x54, 0x69, 0x6d,
+	0x65, 0x4d, 0x6f, 0x64, 0x69, 0x66, 0x69, 0x65, 0x72, 0x52, 0x08, 0x64, 0x61, 0x74, 0x65, 0x74,
+	0x69, 0x6d, 0x65, 0x1a, 0x44, 0x0a, 0x08, 0x41, 0x64, 0x64, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x12,
+	0x38, 0x0a, 0x0b, 0x6f, 0x74, 0x68, 0x65, 0x72, 0x5f, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x18, 0x0c,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x17, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x30, 0x61, 0x6c, 0x70,
+	0x68, 0x61, 0x2e, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x49, 0x6e, 0x64, 0x65, 0x78, 0x52, 0x0a, 0x6f,
+	0x74, 0x68, 0x65, 0x72, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x1a, 0x25, 0x0a, 0x0d, 0x53, 0x75, 0x62,
+	0x74, 0x72, 0x61, 0x63, 0x74, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61,
 	0x6c, 0x75, 0x65, 0x18, 0x0b, 0x20, 0x01, 0x28, 0x01, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65,
-	0x1a, 0x44, 0x0a, 0x07, 0x41, 0x64, 0x64, 0x44, 0x61, 0x74, 0x65, 0x12, 0x39, 0x0a, 0x08, 0x64,
-	0x61, 0x74, 0x65, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x2d, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1d, 0x2e,
-	0x61, 0x70, 0x69, 0x2e, 0x76, 0x30, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x2e, 0x44, 0x61, 0x74, 0x65,
-	0x54, 0x69, 0x6d, 0x65, 0x4d, 0x6f, 0x64, 0x69, 0x66, 0x69, 0x65, 0x72, 0x52, 0x08, 0x64, 0x61,
-	0x74, 0x65, 0x74, 0x69, 0x6d, 0x65, 0x1a, 0x44, 0x0a, 0x08, 0x41, 0x64, 0x64, 0x46, 0x69, 0x65,
-	0x6c, 0x64, 0x12, 0x38, 0x0a, 0x0b, 0x6f, 0x74, 0x68, 0x65, 0x72, 0x5f, 0x66, 0x69, 0x65, 0x6c,
-	0x64, 0x18, 0x0c, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x17, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x30,
-	0x61, 0x6c, 0x70, 0x68, 0x61, 0x2e, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x49, 0x6e, 0x64, 0x65, 0x78,
-	0x52, 0x0a, 0x6f, 0x74, 0x68, 0x65, 0x72, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x1a, 0x25, 0x0a, 0x0d,
-	0x53, 0x75, 0x62, 0x74, 0x72, 0x61, 0x63, 0x74, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x12, 0x14, 0x0a,
-	0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x0b, 0x20, 0x01, 0x28, 0x01, 0x52, 0x05, 0x76, 0x61,
-	0x6c, 0x75, 0x65, 0x1a, 0x49, 0x0a, 0x0d, 0x53, 0x75, 0x62, 0x74, 0x72, 0x61, 0x63, 0x74, 0x46,
-	0x69, 0x65, 0x6c, 0x64, 0x12, 0x38, 0x0a, 0x0b, 0x6f, 0x74, 0x68, 0x65, 0x72, 0x5f, 0x66, 0x69,
-	0x65, 0x6c, 0x64, 0x18, 0x0c, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x17, 0x2e, 0x61, 0x70, 0x69, 0x2e,
-	0x76, 0x30, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x2e, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x49, 0x6e, 0x64,
-	0x65, 0x78, 0x52, 0x0a, 0x6f, 0x74, 0x68, 0x65, 0x72, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x1a, 0xb5,
-	0x01, 0x0a, 0x07, 0x43, 0x6f, 0x6e, 0x76, 0x65, 0x72, 0x74, 0x12, 0x35, 0x0a, 0x07, 0x6e, 0x65,
-	0x77, 0x54, 0x79, 0x70, 0x65, 0x18, 0x11, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x17, 0x2e, 0x61, 0x70,
-	0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64,
-	0x54, 0x79, 0x70, 0x65, 0x42, 0x02, 0x18, 0x01, 0x52, 0x07, 0x6e, 0x65, 0x77, 0x54, 0x79, 0x70,
-	0x65, 0x12, 0x2f, 0x0a, 0x09, 0x6e, 0x65, 0x77, 0x5f, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x18, 0x12,
-	0x20, 0x01, 0x28, 0x0b, 0x32, 0x12, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x30, 0x61, 0x6c, 0x70,
-	0x68, 0x61, 0x2e, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x52, 0x08, 0x6e, 0x65, 0x77, 0x46, 0x69, 0x65,
-	0x6c, 0x64, 0x12, 0x42, 0x0a, 0x0d, 0x64, 0x65, 0x66, 0x61, 0x75, 0x6c, 0x74, 0x5f, 0x76, 0x61,
-	0x6c, 0x75, 0x65, 0x18, 0x13, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1d, 0x2e, 0x61, 0x70, 0x69, 0x2e,
-	0x76, 0x30, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x2e, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x46, 0x69,
-	0x65, 0x6c, 0x64, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x52, 0x0c, 0x64, 0x65, 0x66, 0x61, 0x75, 0x6c,
-	0x74, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x1a, 0x0d, 0x0a, 0x0b, 0x52, 0x65, 0x6d, 0x6f, 0x76, 0x65,
+	0x1a, 0x49, 0x0a, 0x0d, 0x53, 0x75, 0x62, 0x74, 0x72, 0x61, 0x63, 0x74, 0x46, 0x69, 0x65, 0x6c,
+	0x64, 0x12, 0x38, 0x0a, 0x0b, 0x6f, 0x74, 0x68, 0x65, 0x72, 0x5f, 0x66, 0x69, 0x65, 0x6c, 0x64,
+	0x18, 0x0c, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x17, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x30, 0x61,
+	0x6c, 0x70, 0x68, 0x61, 0x2e, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x49, 0x6e, 0x64, 0x65, 0x78, 0x52,
+	0x0a, 0x6f, 0x74, 0x68, 0x65, 0x72, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x1a, 0xb5, 0x01, 0x0a, 0x07,
+	0x43, 0x6f, 0x6e, 0x76, 0x65, 0x72, 0x74, 0x12, 0x35, 0x0a, 0x07, 0x6e, 0x65, 0x77, 0x54, 0x79,
+	0x70, 0x65, 0x18, 0x11, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x17, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63,
+	0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x54, 0x79, 0x70,
+	0x65, 0x42, 0x02, 0x18, 0x01, 0x52, 0x07, 0x6e, 0x65, 0x77, 0x54, 0x79, 0x70, 0x65, 0x12, 0x2f,
+	0x0a, 0x09, 0x6e, 0x65, 0x77, 0x5f, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x18, 0x12, 0x20, 0x01, 0x28,
+	0x0b, 0x32, 0x12, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x30, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x2e,
+	0x46, 0x69, 0x65, 0x6c, 0x64, 0x52, 0x08, 0x6e, 0x65, 0x77, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x12,
+	0x42, 0x0a, 0x0d, 0x64, 0x65, 0x66, 0x61, 0x75, 0x6c, 0x74, 0x5f, 0x76, 0x61, 0x6c, 0x75, 0x65,
+	0x18, 0x13, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x30, 0x61,
+	0x6c, 0x70, 0x68, 0x61, 0x2e, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x46, 0x69, 0x65, 0x6c, 0x64,
+	0x50, 0x72, 0x6f, 0x74, 0x6f, 0x52, 0x0c, 0x64, 0x65, 0x66, 0x61, 0x75, 0x6c, 0x74, 0x56, 0x61,
+	0x6c, 0x75, 0x65, 0x1a, 0x47, 0x0a, 0x06, 0x44, 0x69, 0x76, 0x69, 0x64, 0x65, 0x12, 0x23, 0x0a,
+	0x0d, 0x64, 0x65, 0x66, 0x61, 0x75, 0x6c, 0x74, 0x5f, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x01, 0x52, 0x0c, 0x64, 0x65, 0x66, 0x61, 0x75, 0x6c, 0x74, 0x56, 0x61, 0x6c,
+	0x75, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x64, 0x69, 0x76, 0x69, 0x73, 0x6f, 0x72, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x01, 0x52, 0x07, 0x64, 0x69, 0x76, 0x69, 0x73, 0x6f, 0x72, 0x1a, 0x4f, 0x0a, 0x08,
+	0x4d, 0x75, 0x6c, 0x74, 0x69, 0x70, 0x6c, 0x79, 0x12, 0x23, 0x0a, 0x0d, 0x64, 0x65, 0x66, 0x61,
+	0x75, 0x6c, 0x74, 0x5f, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x01, 0x52,
+	0x0c, 0x64, 0x65, 0x66, 0x61, 0x75, 0x6c, 0x74, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x12, 0x1e, 0x0a,
+	0x0a, 0x6d, 0x75, 0x6c, 0x74, 0x69, 0x70, 0x6c, 0x69, 0x65, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x01, 0x52, 0x0a, 0x6d, 0x75, 0x6c, 0x74, 0x69, 0x70, 0x6c, 0x69, 0x65, 0x72, 0x1a, 0x47, 0x0a,
+	0x06, 0x4d, 0x6f, 0x64, 0x75, 0x6c, 0x6f, 0x12, 0x23, 0x0a, 0x0d, 0x64, 0x65, 0x66, 0x61, 0x75,
+	0x6c, 0x74, 0x5f, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0c,
+	0x64, 0x65, 0x66, 0x61, 0x75, 0x6c, 0x74, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x12, 0x18, 0x0a, 0x07,
+	0x6d, 0x6f, 0x64, 0x75, 0x6c, 0x75, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x07, 0x6d,
+	0x6f, 0x64, 0x75, 0x6c, 0x75, 0x73, 0x1a, 0x0d, 0x0a, 0x0b, 0x52, 0x65, 0x6d, 0x6f, 0x76, 0x65,
 	0x46, 0x69, 0x65, 0x6c, 0x64, 0x1a, 0x53, 0x0a, 0x0b, 0x41, 0x64, 0x64, 0x4e, 0x65, 0x77, 0x46,
 	0x69, 0x65, 0x6c, 0x64, 0x12, 0x44, 0x0a, 0x0e, 0x73, 0x74, 0x61, 0x72, 0x74, 0x69, 0x6e, 0x67,
 	0x5f, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x12, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1d, 0x2e, 0x61,
@@ -18062,7 +18304,7 @@ func file_api_v0alpha_lms_proto_rawDescGZIP() []byte {
 }
 
 var file_api_v0alpha_lms_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_api_v0alpha_lms_proto_msgTypes = make([]protoimpl.MessageInfo, 198)
+var file_api_v0alpha_lms_proto_msgTypes = make([]protoimpl.MessageInfo, 201)
 var file_api_v0alpha_lms_proto_goTypes = []interface{}{
 	(TimeUnit)(0),                                 // 0: api.v0alpha.TimeUnit
 	(*GetPublicKeyReq)(nil),                       // 1: api.v0alpha.GetPublicKeyReq
@@ -18250,51 +18492,54 @@ var file_api_v0alpha_lms_proto_goTypes = []interface{}{
 	(*ReshapeAction_SubtractValue)(nil),        // 183: api.v0alpha.ReshapeAction.SubtractValue
 	(*ReshapeAction_SubtractField)(nil),        // 184: api.v0alpha.ReshapeAction.SubtractField
 	(*ReshapeAction_Convert)(nil),              // 185: api.v0alpha.ReshapeAction.Convert
-	(*ReshapeAction_RemoveField)(nil),          // 186: api.v0alpha.ReshapeAction.RemoveField
-	(*ReshapeAction_AddNewField)(nil),          // 187: api.v0alpha.ReshapeAction.AddNewField
-	(*ReshapeAction_AddNewFieldFromField)(nil), // 188: api.v0alpha.ReshapeAction.AddNewFieldFromField
-	(*ReshapeAction_ChangeCurrencyType)(nil),   // 189: api.v0alpha.ReshapeAction.ChangeCurrencyType
-	(*ReshapeAction_SetFieldValue)(nil),        // 190: api.v0alpha.ReshapeAction.SetFieldValue
-	(*ReshapeAction_SetFieldFromField)(nil),    // 191: api.v0alpha.ReshapeAction.SetFieldFromField
-	(*ReshapeAction_Merge)(nil),                // 192: api.v0alpha.ReshapeAction.Merge
-	(*ReshapeAction_Pad)(nil),                  // 193: api.v0alpha.ReshapeAction.Pad
-	(*ReshapeAction_Trim)(nil),                 // 194: api.v0alpha.ReshapeAction.Trim
-	(*ReshapeAction_Extract)(nil),              // 195: api.v0alpha.ReshapeAction.Extract
-	(*ReshapeAction_Merge_FieldOrVal)(nil),     // 196: api.v0alpha.ReshapeAction.Merge.FieldOrVal
-	(*ReshapeAction_Extract_Index)(nil),        // 197: api.v0alpha.ReshapeAction.Extract.Index
-	(*ReshapeAction_Extract_Slice)(nil),        // 198: api.v0alpha.ReshapeAction.Extract.Slice
-	(commons.PipelineElementStatusType)(0),     // 199: api.commons.PipelineElementStatusType
-	(*timestamppb.Timestamp)(nil),              // 200: google.protobuf.Timestamp
-	(*wrapperspb.StringValue)(nil),             // 201: google.protobuf.StringValue
-	(commons.FieldType)(0),                     // 202: api.commons.FieldType
-	(commons.DateTimePrecision)(0),             // 203: api.commons.DateTimePrecision
-	(commons.FileFormat)(0),                    // 204: api.commons.FileFormat
-	(*commons.CommType)(nil),                   // 205: api.commons.CommType
-	(commons.RunType)(0),                       // 206: api.commons.RunType
-	(commons.ConsentActionType)(0),             // 207: api.commons.ConsentActionType
-	(commons.ContentType)(0),                   // 208: api.commons.ContentType
-	(commons.Channel)(0),                       // 209: api.commons.Channel
-	(*durationpb.Duration)(nil),                // 210: google.protobuf.Duration
-	(commons.HttpVerb)(0),                      // 211: api.commons.HttpVerb
-	(*commons.PaginationTerminator)(nil),       // 212: api.commons.PaginationTerminator
-	(*commons.FilePattern)(nil),                // 213: api.commons.FilePattern
-	(commons.EnrichmentType)(0),                // 214: api.commons.EnrichmentType
-	(commons.PrimarySource)(0),                 // 215: api.commons.PrimarySource
-	(commons.DedupKeyPolicy)(0),                // 216: api.commons.DedupKeyPolicy
-	(commons.ExportType)(0),                    // 217: api.commons.ExportType
-	(commons.ChainOperator)(0),                 // 218: api.commons.ChainOperator
-	(commons.DuplicatePolicyType)(0),           // 219: api.commons.DuplicatePolicyType
-	(commons.AbsentPolicyType)(0),              // 220: api.commons.AbsentPolicyType
-	(*commons.ConstructedFilename)(nil),        // 221: api.commons.ConstructedFilename
-	(commons.DialOrderType)(0),                 // 222: api.commons.DialOrderType
-	(commons.ComplianceListType)(0),            // 223: api.commons.ComplianceListType
-	(commons.DeDupActions)(0),                  // 224: api.commons.DeDupActions
-	(commons.SortOrder)(0),                     // 225: api.commons.SortOrder
-	(commons.RecordType)(0),                    // 226: api.commons.RecordType
-	(*commons.StringArraySql)(nil),             // 227: api.commons.StringArraySql
-	(*wrapperspb.Int64Value)(nil),              // 228: google.protobuf.Int64Value
-	(commons.CompareOperator)(0),               // 229: api.commons.CompareOperator
-	(*emptypb.Empty)(nil),                      // 230: google.protobuf.Empty
+	(*ReshapeAction_Divide)(nil),               // 186: api.v0alpha.ReshapeAction.Divide
+	(*ReshapeAction_Multiply)(nil),             // 187: api.v0alpha.ReshapeAction.Multiply
+	(*ReshapeAction_Modulo)(nil),               // 188: api.v0alpha.ReshapeAction.Modulo
+	(*ReshapeAction_RemoveField)(nil),          // 189: api.v0alpha.ReshapeAction.RemoveField
+	(*ReshapeAction_AddNewField)(nil),          // 190: api.v0alpha.ReshapeAction.AddNewField
+	(*ReshapeAction_AddNewFieldFromField)(nil), // 191: api.v0alpha.ReshapeAction.AddNewFieldFromField
+	(*ReshapeAction_ChangeCurrencyType)(nil),   // 192: api.v0alpha.ReshapeAction.ChangeCurrencyType
+	(*ReshapeAction_SetFieldValue)(nil),        // 193: api.v0alpha.ReshapeAction.SetFieldValue
+	(*ReshapeAction_SetFieldFromField)(nil),    // 194: api.v0alpha.ReshapeAction.SetFieldFromField
+	(*ReshapeAction_Merge)(nil),                // 195: api.v0alpha.ReshapeAction.Merge
+	(*ReshapeAction_Pad)(nil),                  // 196: api.v0alpha.ReshapeAction.Pad
+	(*ReshapeAction_Trim)(nil),                 // 197: api.v0alpha.ReshapeAction.Trim
+	(*ReshapeAction_Extract)(nil),              // 198: api.v0alpha.ReshapeAction.Extract
+	(*ReshapeAction_Merge_FieldOrVal)(nil),     // 199: api.v0alpha.ReshapeAction.Merge.FieldOrVal
+	(*ReshapeAction_Extract_Index)(nil),        // 200: api.v0alpha.ReshapeAction.Extract.Index
+	(*ReshapeAction_Extract_Slice)(nil),        // 201: api.v0alpha.ReshapeAction.Extract.Slice
+	(commons.PipelineElementStatusType)(0),     // 202: api.commons.PipelineElementStatusType
+	(*timestamppb.Timestamp)(nil),              // 203: google.protobuf.Timestamp
+	(*wrapperspb.StringValue)(nil),             // 204: google.protobuf.StringValue
+	(commons.FieldType)(0),                     // 205: api.commons.FieldType
+	(commons.DateTimePrecision)(0),             // 206: api.commons.DateTimePrecision
+	(commons.FileFormat)(0),                    // 207: api.commons.FileFormat
+	(*commons.CommType)(nil),                   // 208: api.commons.CommType
+	(commons.RunType)(0),                       // 209: api.commons.RunType
+	(commons.ConsentActionType)(0),             // 210: api.commons.ConsentActionType
+	(commons.ContentType)(0),                   // 211: api.commons.ContentType
+	(commons.Channel)(0),                       // 212: api.commons.Channel
+	(*durationpb.Duration)(nil),                // 213: google.protobuf.Duration
+	(commons.HttpVerb)(0),                      // 214: api.commons.HttpVerb
+	(*commons.PaginationTerminator)(nil),       // 215: api.commons.PaginationTerminator
+	(*commons.FilePattern)(nil),                // 216: api.commons.FilePattern
+	(commons.EnrichmentType)(0),                // 217: api.commons.EnrichmentType
+	(commons.PrimarySource)(0),                 // 218: api.commons.PrimarySource
+	(commons.DedupKeyPolicy)(0),                // 219: api.commons.DedupKeyPolicy
+	(commons.ExportType)(0),                    // 220: api.commons.ExportType
+	(commons.ChainOperator)(0),                 // 221: api.commons.ChainOperator
+	(commons.DuplicatePolicyType)(0),           // 222: api.commons.DuplicatePolicyType
+	(commons.AbsentPolicyType)(0),              // 223: api.commons.AbsentPolicyType
+	(*commons.ConstructedFilename)(nil),        // 224: api.commons.ConstructedFilename
+	(commons.DialOrderType)(0),                 // 225: api.commons.DialOrderType
+	(commons.ComplianceListType)(0),            // 226: api.commons.ComplianceListType
+	(commons.DeDupActions)(0),                  // 227: api.commons.DeDupActions
+	(commons.SortOrder)(0),                     // 228: api.commons.SortOrder
+	(commons.RecordType)(0),                    // 229: api.commons.RecordType
+	(*commons.StringArraySql)(nil),             // 230: api.commons.StringArraySql
+	(*wrapperspb.Int64Value)(nil),              // 231: google.protobuf.Int64Value
+	(commons.CompareOperator)(0),               // 232: api.commons.CompareOperator
+	(*emptypb.Empty)(nil),                      // 233: google.protobuf.Empty
 }
 var file_api_v0alpha_lms_proto_depIdxs = []int32{
 	4,   // 0: api.v0alpha.FindFieldUsagesRes.file_templates:type_name -> api.v0alpha.NameAndId
@@ -18307,38 +18552,38 @@ var file_api_v0alpha_lms_proto_depIdxs = []int32{
 	30,  // 7: api.v0alpha.ListFieldsForElementRes.fields:type_name -> api.v0alpha.Field
 	30,  // 8: api.v0alpha.ListAutocompleteFieldsRes.fields:type_name -> api.v0alpha.Field
 	48,  // 9: api.v0alpha.Element.transform:type_name -> api.v0alpha.Process
-	199, // 10: api.v0alpha.Element.last_status:type_name -> api.commons.PipelineElementStatusType
-	200, // 11: api.v0alpha.Element.created_date:type_name -> google.protobuf.Timestamp
-	200, // 12: api.v0alpha.Element.last_edited:type_name -> google.protobuf.Timestamp
+	202, // 10: api.v0alpha.Element.last_status:type_name -> api.commons.PipelineElementStatusType
+	203, // 11: api.v0alpha.Element.created_date:type_name -> google.protobuf.Timestamp
+	203, // 12: api.v0alpha.Element.last_edited:type_name -> google.protobuf.Timestamp
 	48,  // 13: api.v0alpha.PeekListReq.process:type_name -> api.v0alpha.Process
 	26,  // 14: api.v0alpha.PeekListRes.records:type_name -> api.v0alpha.RecordProto
 	113, // 15: api.v0alpha.PeekListRes.metrics:type_name -> api.v0alpha.ListMetrics
 	25,  // 16: api.v0alpha.GetHistoryRes.commits:type_name -> api.v0alpha.HistoryAndCount
 	48,  // 17: api.v0alpha.History.process:type_name -> api.v0alpha.Process
-	201, // 18: api.v0alpha.History.reason:type_name -> google.protobuf.StringValue
-	200, // 19: api.v0alpha.History.upload_ts:type_name -> google.protobuf.Timestamp
-	200, // 20: api.v0alpha.History.started_ts:type_name -> google.protobuf.Timestamp
-	200, // 21: api.v0alpha.History.finished_ts:type_name -> google.protobuf.Timestamp
+	204, // 18: api.v0alpha.History.reason:type_name -> google.protobuf.StringValue
+	203, // 19: api.v0alpha.History.upload_ts:type_name -> google.protobuf.Timestamp
+	203, // 20: api.v0alpha.History.started_ts:type_name -> google.protobuf.Timestamp
+	203, // 21: api.v0alpha.History.finished_ts:type_name -> google.protobuf.Timestamp
 	113, // 22: api.v0alpha.History.metrics:type_name -> api.v0alpha.ListMetrics
 	113, // 23: api.v0alpha.History.discard_metrics:type_name -> api.v0alpha.ListMetrics
 	48,  // 24: api.v0alpha.HistoryAndCount.process:type_name -> api.v0alpha.Process
-	201, // 25: api.v0alpha.HistoryAndCount.reason:type_name -> google.protobuf.StringValue
-	200, // 26: api.v0alpha.HistoryAndCount.upload_ts:type_name -> google.protobuf.Timestamp
-	200, // 27: api.v0alpha.HistoryAndCount.started_ts:type_name -> google.protobuf.Timestamp
-	200, // 28: api.v0alpha.HistoryAndCount.finished_ts:type_name -> google.protobuf.Timestamp
+	204, // 25: api.v0alpha.HistoryAndCount.reason:type_name -> google.protobuf.StringValue
+	203, // 26: api.v0alpha.HistoryAndCount.upload_ts:type_name -> google.protobuf.Timestamp
+	203, // 27: api.v0alpha.HistoryAndCount.started_ts:type_name -> google.protobuf.Timestamp
+	203, // 28: api.v0alpha.HistoryAndCount.finished_ts:type_name -> google.protobuf.Timestamp
 	113, // 29: api.v0alpha.HistoryAndCount.metrics:type_name -> api.v0alpha.ListMetrics
 	113, // 30: api.v0alpha.HistoryAndCount.discard_metrics:type_name -> api.v0alpha.ListMetrics
 	36,  // 31: api.v0alpha.RecordProto.fields:type_name -> api.v0alpha.RecordFieldProto
 	26,  // 32: api.v0alpha.RecordProtoPair.old:type_name -> api.v0alpha.RecordProto
 	26,  // 33: api.v0alpha.RecordProtoPair.new:type_name -> api.v0alpha.RecordProto
 	164, // 34: api.v0alpha.ProcessFields.fields:type_name -> api.v0alpha.ProcessFields.Field
-	202, // 35: api.v0alpha.Field.type:type_name -> api.commons.FieldType
-	200, // 36: api.v0alpha.Field.date_modified:type_name -> google.protobuf.Timestamp
+	205, // 35: api.v0alpha.Field.type:type_name -> api.commons.FieldType
+	203, // 36: api.v0alpha.Field.date_modified:type_name -> google.protobuf.Timestamp
 	32,  // 37: api.v0alpha.Field.metadata:type_name -> api.v0alpha.FieldMetadata
-	202, // 38: api.v0alpha.UpdateFieldReq.type:type_name -> api.commons.FieldType
-	200, // 39: api.v0alpha.UpdateFieldReq.date_modified:type_name -> google.protobuf.Timestamp
+	205, // 38: api.v0alpha.UpdateFieldReq.type:type_name -> api.commons.FieldType
+	203, // 39: api.v0alpha.UpdateFieldReq.date_modified:type_name -> google.protobuf.Timestamp
 	32,  // 40: api.v0alpha.UpdateFieldReq.metadata:type_name -> api.v0alpha.FieldMetadata
-	203, // 41: api.v0alpha.FieldMetadata.precision:type_name -> api.commons.DateTimePrecision
+	206, // 41: api.v0alpha.FieldMetadata.precision:type_name -> api.commons.DateTimePrecision
 	30,  // 42: api.v0alpha.Fields.fields:type_name -> api.v0alpha.Field
 	100, // 43: api.v0alpha.FieldIndex.datetime:type_name -> api.v0alpha.DateTimeModifier
 	97,  // 44: api.v0alpha.RecordFieldProto.phone:type_name -> api.v0alpha.Phone
@@ -18352,11 +18597,11 @@ var file_api_v0alpha_lms_proto_depIdxs = []int32{
 	102, // 52: api.v0alpha.RecordFieldProto.enriched_phone:type_name -> api.v0alpha.EnrichedPhone
 	103, // 53: api.v0alpha.RecordFieldProto.enriched_zip:type_name -> api.v0alpha.EnrichedZip
 	26,  // 54: api.v0alpha.RepeatedRecords.records:type_name -> api.v0alpha.RecordProto
-	202, // 55: api.v0alpha.FileTemplateField.type:type_name -> api.commons.FieldType
+	205, // 55: api.v0alpha.FileTemplateField.type:type_name -> api.commons.FieldType
 	40,  // 56: api.v0alpha.FileTemplateFields.fields:type_name -> api.v0alpha.FileTemplateField
-	202, // 57: api.v0alpha.FieldTypes.values:type_name -> api.commons.FieldType
+	205, // 57: api.v0alpha.FieldTypes.values:type_name -> api.commons.FieldType
 	110, // 58: api.v0alpha.FileTemplate.file_format_params:type_name -> api.v0alpha.FileFormatParams
-	204, // 59: api.v0alpha.FileTemplate.file_format:type_name -> api.commons.FileFormat
+	207, // 59: api.v0alpha.FileTemplate.file_format:type_name -> api.commons.FileFormat
 	30,  // 60: api.v0alpha.FileTemplate.fields:type_name -> api.v0alpha.Field
 	69,  // 61: api.v0alpha.Process.append:type_name -> api.v0alpha.AppendProcess
 	93,  // 62: api.v0alpha.Process.sort:type_name -> api.v0alpha.SortCriteria
@@ -18392,20 +18637,20 @@ var file_api_v0alpha_lms_proto_depIdxs = []int32{
 	61,  // 92: api.v0alpha.Process.omni_exchange_process:type_name -> api.v0alpha.OmniExchangeProcess
 	62,  // 93: api.v0alpha.Process.web_exchange_process:type_name -> api.v0alpha.WebExchangeProcess
 	154, // 94: api.v0alpha.Process.split:type_name -> api.v0alpha.SplitCriteria
-	205, // 95: api.v0alpha.ComplianceProcessor.comm_type:type_name -> api.commons.CommType
+	208, // 95: api.v0alpha.ComplianceProcessor.comm_type:type_name -> api.commons.CommType
 	165, // 96: api.v0alpha.ComplianceProcessor.call_metadata:type_name -> api.v0alpha.ComplianceProcessor.CallMetadataEntry
-	206, // 97: api.v0alpha.ConsentExportProcess.run_type:type_name -> api.commons.RunType
-	207, // 98: api.v0alpha.ConsentExportProcess.action:type_name -> api.commons.ConsentActionType
-	208, // 99: api.v0alpha.ConsentExportProcess.content_type_val:type_name -> api.commons.ContentType
-	209, // 100: api.v0alpha.ConsentExportProcess.channel_type_val:type_name -> api.commons.Channel
-	200, // 101: api.v0alpha.ConsentExportProcess.expiration_date:type_name -> google.protobuf.Timestamp
-	210, // 102: api.v0alpha.ConsentExportProcess.expiration_after_duration:type_name -> google.protobuf.Duration
+	209, // 97: api.v0alpha.ConsentExportProcess.run_type:type_name -> api.commons.RunType
+	210, // 98: api.v0alpha.ConsentExportProcess.action:type_name -> api.commons.ConsentActionType
+	211, // 99: api.v0alpha.ConsentExportProcess.content_type_val:type_name -> api.commons.ContentType
+	212, // 100: api.v0alpha.ConsentExportProcess.channel_type_val:type_name -> api.commons.Channel
+	203, // 101: api.v0alpha.ConsentExportProcess.expiration_date:type_name -> google.protobuf.Timestamp
+	213, // 102: api.v0alpha.ConsentExportProcess.expiration_after_duration:type_name -> google.protobuf.Duration
 	166, // 103: api.v0alpha.PaymentLinkEnrichment.key_map:type_name -> api.v0alpha.PaymentLinkEnrichment.KeyMapEntry
 	167, // 104: api.v0alpha.PortalLinkEnrichment.key_map:type_name -> api.v0alpha.PortalLinkEnrichment.KeyMapEntry
 	55,  // 105: api.v0alpha.PortalLinkEnrichment.expiration:type_name -> api.v0alpha.Expiration
 	0,   // 106: api.v0alpha.Expiration.units:type_name -> api.v0alpha.TimeUnit
 	168, // 107: api.v0alpha.HttpReq.headers:type_name -> api.v0alpha.HttpReq.HeadersEntry
-	211, // 108: api.v0alpha.HttpReq.method:type_name -> api.commons.HttpVerb
+	214, // 108: api.v0alpha.HttpReq.method:type_name -> api.commons.HttpVerb
 	169, // 109: api.v0alpha.HttpReq.named_response_values:type_name -> api.v0alpha.HttpReq.NamedResponseValuesEntry
 	58,  // 110: api.v0alpha.WebEntrypointProcess.http_requests:type_name -> api.v0alpha.HttpReq
 	43,  // 111: api.v0alpha.WebEntrypointProcess.file_template:type_name -> api.v0alpha.FileTemplate
@@ -18413,63 +18658,63 @@ var file_api_v0alpha_lms_proto_depIdxs = []int32{
 	63,  // 113: api.v0alpha.BulkWebEntrypointProcess.paginated_request:type_name -> api.v0alpha.PaginatedHttpRequest
 	58,  // 114: api.v0alpha.WebExchangeProcess.http_requests:type_name -> api.v0alpha.HttpReq
 	58,  // 115: api.v0alpha.PaginatedHttpRequest.iteration_request:type_name -> api.v0alpha.HttpReq
-	212, // 116: api.v0alpha.PaginatedHttpRequest.end_for_any:type_name -> api.commons.PaginationTerminator
-	212, // 117: api.v0alpha.PaginatedHttpRequest.end_for_all:type_name -> api.commons.PaginationTerminator
-	212, // 118: api.v0alpha.PaginatedHttpRequest.request_not_ready:type_name -> api.commons.PaginationTerminator
-	213, // 119: api.v0alpha.SftpImport.file_pattern:type_name -> api.commons.FilePattern
+	215, // 116: api.v0alpha.PaginatedHttpRequest.end_for_any:type_name -> api.commons.PaginationTerminator
+	215, // 117: api.v0alpha.PaginatedHttpRequest.end_for_all:type_name -> api.commons.PaginationTerminator
+	215, // 118: api.v0alpha.PaginatedHttpRequest.request_not_ready:type_name -> api.commons.PaginationTerminator
+	216, // 119: api.v0alpha.SftpImport.file_pattern:type_name -> api.commons.FilePattern
 	89,  // 120: api.v0alpha.CjsExportProcess.header:type_name -> api.v0alpha.ExportHeader
-	206, // 121: api.v0alpha.CjsExportProcess.run_type:type_name -> api.commons.RunType
-	214, // 122: api.v0alpha.CjsEnrichmentProcess.enrich_type:type_name -> api.commons.EnrichmentType
-	215, // 123: api.v0alpha.CjsEnrichmentProcess.primary_source:type_name -> api.commons.PrimarySource
-	216, // 124: api.v0alpha.CjsEnrichmentProcess.dedup_key_policy:type_name -> api.commons.DedupKeyPolicy
+	209, // 121: api.v0alpha.CjsExportProcess.run_type:type_name -> api.commons.RunType
+	217, // 122: api.v0alpha.CjsEnrichmentProcess.enrich_type:type_name -> api.commons.EnrichmentType
+	218, // 123: api.v0alpha.CjsEnrichmentProcess.primary_source:type_name -> api.commons.PrimarySource
+	219, // 124: api.v0alpha.CjsEnrichmentProcess.dedup_key_policy:type_name -> api.commons.DedupKeyPolicy
 	170, // 125: api.v0alpha.LookupProcess.compl:type_name -> api.v0alpha.LookupProcess.ComplProcess
 	171, // 126: api.v0alpha.LookupProcess.list:type_name -> api.v0alpha.LookupProcess.ListLookup
 	172, // 127: api.v0alpha.LookupProcess.url:type_name -> api.v0alpha.LookupProcess.UrlLookup
-	217, // 128: api.v0alpha.CFSExportConfig.type:type_name -> api.commons.ExportType
+	220, // 128: api.v0alpha.CFSExportConfig.type:type_name -> api.commons.ExportType
 	89,  // 129: api.v0alpha.CFSExportReqHeader.export_header:type_name -> api.v0alpha.ExportHeader
 	72,  // 130: api.v0alpha.CFSExportReqHeader.configs:type_name -> api.v0alpha.CFSExportConfig
 	89,  // 131: api.v0alpha.CFSExportProcess.export_header:type_name -> api.v0alpha.ExportHeader
 	72,  // 132: api.v0alpha.CFSExportProcess.configs:type_name -> api.v0alpha.CFSExportConfig
 	76,  // 133: api.v0alpha.FilterProcess.operations:type_name -> api.v0alpha.FilterOperation
 	77,  // 134: api.v0alpha.FilterOperation.checks:type_name -> api.v0alpha.FilterCheck
-	218, // 135: api.v0alpha.FilterOperation.operator:type_name -> api.commons.ChainOperator
+	221, // 135: api.v0alpha.FilterOperation.operator:type_name -> api.commons.ChainOperator
 	174, // 136: api.v0alpha.FilterCheck.val_comp:type_name -> api.v0alpha.FilterCheck.ValueComparison
 	175, // 137: api.v0alpha.FilterCheck.type_comp:type_name -> api.v0alpha.FilterCheck.TypeComparison
 	176, // 138: api.v0alpha.FilterCheck.list_comp:type_name -> api.v0alpha.FilterCheck.ListComparison
 	89,  // 139: api.v0alpha.P3ExportProcess.header:type_name -> api.v0alpha.ExportHeader
-	219, // 140: api.v0alpha.P3ExportProcess.dupe_policy:type_name -> api.commons.DuplicatePolicyType
-	220, // 141: api.v0alpha.P3ExportProcess.absent_policy:type_name -> api.commons.AbsentPolicyType
-	206, // 142: api.v0alpha.P3ExportProcess.run_type:type_name -> api.commons.RunType
-	213, // 143: api.v0alpha.P3ExportProcess.file_pattern:type_name -> api.commons.FilePattern
-	221, // 144: api.v0alpha.P3ExportProcess.filename:type_name -> api.commons.ConstructedFilename
-	200, // 145: api.v0alpha.P3ExportProcess.start_time:type_name -> google.protobuf.Timestamp
-	200, // 146: api.v0alpha.P3ExportProcess.end_time:type_name -> google.protobuf.Timestamp
-	222, // 147: api.v0alpha.P3ExportProcess.dial_order:type_name -> api.commons.DialOrderType
-	204, // 148: api.v0alpha.P3ExportProcess.file_format:type_name -> api.commons.FileFormat
-	206, // 149: api.v0alpha.ComplianceExportProcess.run_type:type_name -> api.commons.RunType
-	223, // 150: api.v0alpha.ComplianceExportProcess.compliance_list_type:type_name -> api.commons.ComplianceListType
+	222, // 140: api.v0alpha.P3ExportProcess.dupe_policy:type_name -> api.commons.DuplicatePolicyType
+	223, // 141: api.v0alpha.P3ExportProcess.absent_policy:type_name -> api.commons.AbsentPolicyType
+	209, // 142: api.v0alpha.P3ExportProcess.run_type:type_name -> api.commons.RunType
+	216, // 143: api.v0alpha.P3ExportProcess.file_pattern:type_name -> api.commons.FilePattern
+	224, // 144: api.v0alpha.P3ExportProcess.filename:type_name -> api.commons.ConstructedFilename
+	203, // 145: api.v0alpha.P3ExportProcess.start_time:type_name -> google.protobuf.Timestamp
+	203, // 146: api.v0alpha.P3ExportProcess.end_time:type_name -> google.protobuf.Timestamp
+	225, // 147: api.v0alpha.P3ExportProcess.dial_order:type_name -> api.commons.DialOrderType
+	207, // 148: api.v0alpha.P3ExportProcess.file_format:type_name -> api.commons.FileFormat
+	209, // 149: api.v0alpha.ComplianceExportProcess.run_type:type_name -> api.commons.RunType
+	226, // 150: api.v0alpha.ComplianceExportProcess.compliance_list_type:type_name -> api.commons.ComplianceListType
 	85,  // 151: api.v0alpha.FrequencyProcess.dispositions:type_name -> api.v0alpha.DispositionPair
 	84,  // 152: api.v0alpha.FrequencyProcess.disposition_sets:type_name -> api.v0alpha.DispositionSet
 	85,  // 153: api.v0alpha.DispositionSet.dispositions:type_name -> api.v0alpha.DispositionPair
-	204, // 154: api.v0alpha.SftpExportProcess.fileformat:type_name -> api.commons.FileFormat
-	213, // 155: api.v0alpha.SftpExportProcess.file_pattern:type_name -> api.commons.FilePattern
-	206, // 156: api.v0alpha.SftpExportProcess.run_type:type_name -> api.commons.RunType
+	207, // 154: api.v0alpha.SftpExportProcess.fileformat:type_name -> api.commons.FileFormat
+	216, // 155: api.v0alpha.SftpExportProcess.file_pattern:type_name -> api.commons.FilePattern
+	209, // 156: api.v0alpha.SftpExportProcess.run_type:type_name -> api.commons.RunType
 	89,  // 157: api.v0alpha.SftpExportProcess.header:type_name -> api.v0alpha.ExportHeader
-	221, // 158: api.v0alpha.SftpExportProcess.filename:type_name -> api.commons.ConstructedFilename
+	224, // 158: api.v0alpha.SftpExportProcess.filename:type_name -> api.commons.ConstructedFilename
 	87,  // 159: api.v0alpha.WfmExportProcess.multi:type_name -> api.v0alpha.WfmMultiSkill
 	93,  // 160: api.v0alpha.SortReq.criteria:type_name -> api.v0alpha.SortCriteria
 	26,  // 161: api.v0alpha.SortReq.record:type_name -> api.v0alpha.RecordProto
 	73,  // 162: api.v0alpha.CFSExportReq.header:type_name -> api.v0alpha.CFSExportReqHeader
 	26,  // 163: api.v0alpha.CFSExportReq.record:type_name -> api.v0alpha.RecordProto
-	224, // 164: api.v0alpha.DeDupCriteria.action:type_name -> api.commons.DeDupActions
+	227, // 164: api.v0alpha.DeDupCriteria.action:type_name -> api.commons.DeDupActions
 	34,  // 165: api.v0alpha.DeDupCriteria.fields:type_name -> api.v0alpha.FieldIndex
-	225, // 166: api.v0alpha.SortCriteria.ordering:type_name -> api.commons.SortOrder
+	228, // 166: api.v0alpha.SortCriteria.ordering:type_name -> api.commons.SortOrder
 	34,  // 167: api.v0alpha.SortCriteria.field_order:type_name -> api.v0alpha.FieldIndex
 	178, // 168: api.v0alpha.RecordFieldMap.fields:type_name -> api.v0alpha.RecordFieldMap.FieldsEntry
-	203, // 169: api.v0alpha.DateTime.precision:type_name -> api.commons.DateTimePrecision
+	206, // 169: api.v0alpha.DateTime.precision:type_name -> api.commons.DateTimePrecision
 	100, // 170: api.v0alpha.DateTime.modifier:type_name -> api.v0alpha.DateTimeModifier
 	112, // 171: api.v0alpha.ReshapeProcess.actions:type_name -> api.v0alpha.ReshapeAction
-	226, // 172: api.v0alpha.ReshapeAction.matching_type:type_name -> api.commons.RecordType
+	229, // 172: api.v0alpha.ReshapeAction.matching_type:type_name -> api.commons.RecordType
 	77,  // 173: api.v0alpha.ReshapeAction.predicate:type_name -> api.v0alpha.FilterCheck
 	179, // 174: api.v0alpha.ReshapeAction.rename:type_name -> api.v0alpha.ReshapeAction.Rename
 	180, // 175: api.v0alpha.ReshapeAction.add_value:type_name -> api.v0alpha.ReshapeAction.AddValue
@@ -18478,216 +18723,219 @@ var file_api_v0alpha_lms_proto_depIdxs = []int32{
 	183, // 178: api.v0alpha.ReshapeAction.subtract_value:type_name -> api.v0alpha.ReshapeAction.SubtractValue
 	184, // 179: api.v0alpha.ReshapeAction.subtract_field:type_name -> api.v0alpha.ReshapeAction.SubtractField
 	185, // 180: api.v0alpha.ReshapeAction.convert:type_name -> api.v0alpha.ReshapeAction.Convert
-	186, // 181: api.v0alpha.ReshapeAction.remove_field:type_name -> api.v0alpha.ReshapeAction.RemoveField
-	187, // 182: api.v0alpha.ReshapeAction.add_new_field:type_name -> api.v0alpha.ReshapeAction.AddNewField
-	189, // 183: api.v0alpha.ReshapeAction.change_currency_type:type_name -> api.v0alpha.ReshapeAction.ChangeCurrencyType
-	192, // 184: api.v0alpha.ReshapeAction.merge:type_name -> api.v0alpha.ReshapeAction.Merge
-	190, // 185: api.v0alpha.ReshapeAction.set_field_value:type_name -> api.v0alpha.ReshapeAction.SetFieldValue
-	188, // 186: api.v0alpha.ReshapeAction.add_new_field_from_field:type_name -> api.v0alpha.ReshapeAction.AddNewFieldFromField
-	191, // 187: api.v0alpha.ReshapeAction.set_field_from_field:type_name -> api.v0alpha.ReshapeAction.SetFieldFromField
-	193, // 188: api.v0alpha.ReshapeAction.pad:type_name -> api.v0alpha.ReshapeAction.Pad
-	194, // 189: api.v0alpha.ReshapeAction.trim:type_name -> api.v0alpha.ReshapeAction.Trim
-	195, // 190: api.v0alpha.ReshapeAction.extract:type_name -> api.v0alpha.ReshapeAction.Extract
-	226, // 191: api.v0alpha.ListMetrics.field_types:type_name -> api.commons.RecordType
-	202, // 192: api.v0alpha.ListMetrics.ftypes:type_name -> api.commons.FieldType
-	206, // 193: api.v0alpha.ListMetrics.run_type:type_name -> api.commons.RunType
-	48,  // 194: api.v0alpha.ParseRes.process:type_name -> api.v0alpha.Process
-	201, // 195: api.v0alpha.Event.parent_id:type_name -> google.protobuf.StringValue
-	227, // 196: api.v0alpha.Event.input_ids:type_name -> api.commons.StringArraySql
-	48,  // 197: api.v0alpha.Event.process:type_name -> api.v0alpha.Process
-	200, // 198: api.v0alpha.Event.upload_ts:type_name -> google.protobuf.Timestamp
-	200, // 199: api.v0alpha.Event.started_ts:type_name -> google.protobuf.Timestamp
-	200, // 200: api.v0alpha.Event.finished_ts:type_name -> google.protobuf.Timestamp
-	200, // 201: api.v0alpha.Event.backoff_till:type_name -> google.protobuf.Timestamp
-	228, // 202: api.v0alpha.Event.latest_history:type_name -> google.protobuf.Int64Value
-	116, // 203: api.v0alpha.Events.events:type_name -> api.v0alpha.Event
-	200, // 204: api.v0alpha.ViewQueueReq.newer_than:type_name -> google.protobuf.Timestamp
-	200, // 205: api.v0alpha.ViewQueueReq.no_newer_than:type_name -> google.protobuf.Timestamp
-	123, // 206: api.v0alpha.CollectionMetadata.fields:type_name -> api.v0alpha.CollectionFieldMetadata
-	200, // 207: api.v0alpha.CollectionMetadata.created_on:type_name -> google.protobuf.Timestamp
-	200, // 208: api.v0alpha.CollectionMetadata.last_queried:type_name -> google.protobuf.Timestamp
-	200, // 209: api.v0alpha.CollectionMetadata.last_updated:type_name -> google.protobuf.Timestamp
-	200, // 210: api.v0alpha.CollectionMetadata.last_searched:type_name -> google.protobuf.Timestamp
-	124, // 211: api.v0alpha.CollectionEntry.fields:type_name -> api.v0alpha.CollectionField
-	200, // 212: api.v0alpha.CollectionEntry.last_updated:type_name -> google.protobuf.Timestamp
-	124, // 213: api.v0alpha.MatchReq.fields:type_name -> api.v0alpha.CollectionField
-	120, // 214: api.v0alpha.MatchRes.entries:type_name -> api.v0alpha.CollectionEntry
-	202, // 215: api.v0alpha.CollectionFieldMetadata.field_type:type_name -> api.commons.FieldType
-	119, // 216: api.v0alpha.ListCollectionsRes.collections:type_name -> api.v0alpha.CollectionMetadata
-	132, // 217: api.v0alpha.SearchCollectionsPaginatedReq.search:type_name -> api.v0alpha.Search
-	120, // 218: api.v0alpha.PaginatedSearchRes.entries:type_name -> api.v0alpha.CollectionEntry
-	119, // 219: api.v0alpha.GetCollectionEntriesRes.metadata:type_name -> api.v0alpha.CollectionMetadata
-	120, // 220: api.v0alpha.GetCollectionEntriesRes.entries:type_name -> api.v0alpha.CollectionEntry
-	138, // 221: api.v0alpha.ListCampaignLinksRes.Links:type_name -> api.v0alpha.Link
-	202, // 222: api.v0alpha.CjsSearchField.field_type:type_name -> api.commons.FieldType
-	200, // 223: api.v0alpha.CjsSearchDefinitionMetadata.created_date:type_name -> google.protobuf.Timestamp
-	200, // 224: api.v0alpha.CjsSearchDefinitionMetadata.last_edited:type_name -> google.protobuf.Timestamp
-	140, // 225: api.v0alpha.CjsSearchDefinition.metadata:type_name -> api.v0alpha.CjsSearchDefinitionMetadata
-	139, // 226: api.v0alpha.CjsSearchDefinition.search_fields:type_name -> api.v0alpha.CjsSearchField
-	139, // 227: api.v0alpha.CjsSearchDefinition.whitelisted_return_fields:type_name -> api.v0alpha.CjsSearchField
-	139, // 228: api.v0alpha.CjsSearchDefinition.blacklisted_return_fields:type_name -> api.v0alpha.CjsSearchField
-	139, // 229: api.v0alpha.CjsSearchDefinition.unique_identifiers:type_name -> api.v0alpha.CjsSearchField
-	140, // 230: api.v0alpha.ListCjsSearchDefinitionsRes.definitions:type_name -> api.v0alpha.CjsSearchDefinitionMetadata
-	149, // 231: api.v0alpha.ExecuteCjsSearchDefinitionReq.search_fields:type_name -> api.v0alpha.CjsExecuteSearchField
-	148, // 232: api.v0alpha.ExecuteCjsSearchDefinitionRes.collection_entries:type_name -> api.v0alpha.CollectionEntries
-	119, // 233: api.v0alpha.CollectionEntries.metadata:type_name -> api.v0alpha.CollectionMetadata
-	120, // 234: api.v0alpha.CollectionEntries.entries:type_name -> api.v0alpha.CollectionEntry
-	202, // 235: api.v0alpha.CjsExecuteSearchField.field_type:type_name -> api.commons.FieldType
-	200, // 236: api.v0alpha.CjsSecureSearchCriteriaMetadata.created_on:type_name -> google.protobuf.Timestamp
-	200, // 237: api.v0alpha.CjsSecureSearchCriteriaMetadata.last_updated:type_name -> google.protobuf.Timestamp
-	150, // 238: api.v0alpha.CjsSecureSearchCriteria.metadata:type_name -> api.v0alpha.CjsSecureSearchCriteriaMetadata
-	153, // 239: api.v0alpha.CjsSecureSearchCriteria.fields:type_name -> api.v0alpha.CjsSecureSearchCriteriaField
-	202, // 240: api.v0alpha.CjsSecureSearchCriteriaField.field_type:type_name -> api.commons.FieldType
-	157, // 241: api.v0alpha.SplitCriteria.unique:type_name -> api.v0alpha.SplitByUnique
-	158, // 242: api.v0alpha.SplitCriteria.max_size:type_name -> api.v0alpha.SplitByMaxSize
-	159, // 243: api.v0alpha.SplitCriteria.equal_parts:type_name -> api.v0alpha.SplitByEqualParts
-	34,  // 244: api.v0alpha.UniquePair.split_on_fields:type_name -> api.v0alpha.FieldIndex
-	155, // 245: api.v0alpha.SplitByNamedUnique.named_fields:type_name -> api.v0alpha.UniquePair
-	34,  // 246: api.v0alpha.SplitByUnique.split_on_fields:type_name -> api.v0alpha.FieldIndex
-	226, // 247: api.v0alpha.ProcessFields.NestedField.field_type:type_name -> api.commons.RecordType
-	226, // 248: api.v0alpha.ProcessFields.Field.field_type:type_name -> api.commons.RecordType
-	163, // 249: api.v0alpha.ProcessFields.Field.nested:type_name -> api.v0alpha.ProcessFields.NestedField
-	43,  // 250: api.v0alpha.LookupProcess.UrlLookup.file_template:type_name -> api.v0alpha.FileTemplate
-	34,  // 251: api.v0alpha.FilterCheck.Value.field_name:type_name -> api.v0alpha.FieldIndex
-	101, // 252: api.v0alpha.FilterCheck.Value.date_time:type_name -> api.v0alpha.DateTime
-	34,  // 253: api.v0alpha.FilterCheck.ValueComparison.field_name:type_name -> api.v0alpha.FieldIndex
-	229, // 254: api.v0alpha.FilterCheck.ValueComparison.op:type_name -> api.commons.CompareOperator
-	173, // 255: api.v0alpha.FilterCheck.ValueComparison.value:type_name -> api.v0alpha.FilterCheck.Value
-	34,  // 256: api.v0alpha.FilterCheck.TypeComparison.field_name:type_name -> api.v0alpha.FieldIndex
-	226, // 257: api.v0alpha.FilterCheck.TypeComparison.matches_field_type:type_name -> api.commons.RecordType
-	34,  // 258: api.v0alpha.FilterCheck.ListComparison.field_name:type_name -> api.v0alpha.FieldIndex
-	177, // 259: api.v0alpha.FilterCheck.ListComparison.data:type_name -> api.v0alpha.FilterCheck.ListComparison.FieldOrVal
-	34,  // 260: api.v0alpha.FilterCheck.ListComparison.FieldOrVal.field:type_name -> api.v0alpha.FieldIndex
-	173, // 261: api.v0alpha.FilterCheck.ListComparison.FieldOrVal.value:type_name -> api.v0alpha.FilterCheck.Value
-	36,  // 262: api.v0alpha.RecordFieldMap.FieldsEntry.value:type_name -> api.v0alpha.RecordFieldProto
-	100, // 263: api.v0alpha.ReshapeAction.AddDate.datetime:type_name -> api.v0alpha.DateTimeModifier
-	34,  // 264: api.v0alpha.ReshapeAction.AddField.other_field:type_name -> api.v0alpha.FieldIndex
-	34,  // 265: api.v0alpha.ReshapeAction.SubtractField.other_field:type_name -> api.v0alpha.FieldIndex
-	226, // 266: api.v0alpha.ReshapeAction.Convert.newType:type_name -> api.commons.RecordType
-	30,  // 267: api.v0alpha.ReshapeAction.Convert.new_field:type_name -> api.v0alpha.Field
-	36,  // 268: api.v0alpha.ReshapeAction.Convert.default_value:type_name -> api.v0alpha.RecordFieldProto
-	36,  // 269: api.v0alpha.ReshapeAction.AddNewField.starting_value:type_name -> api.v0alpha.RecordFieldProto
-	34,  // 270: api.v0alpha.ReshapeAction.AddNewFieldFromField.other_field:type_name -> api.v0alpha.FieldIndex
-	36,  // 271: api.v0alpha.ReshapeAction.SetFieldValue.value:type_name -> api.v0alpha.RecordFieldProto
-	34,  // 272: api.v0alpha.ReshapeAction.SetFieldFromField.other_field:type_name -> api.v0alpha.FieldIndex
-	196, // 273: api.v0alpha.ReshapeAction.Merge.data:type_name -> api.v0alpha.ReshapeAction.Merge.FieldOrVal
-	198, // 274: api.v0alpha.ReshapeAction.Extract.parts:type_name -> api.v0alpha.ReshapeAction.Extract.Slice
-	34,  // 275: api.v0alpha.ReshapeAction.Merge.FieldOrVal.field:type_name -> api.v0alpha.FieldIndex
-	197, // 276: api.v0alpha.ReshapeAction.Extract.Slice.start_index:type_name -> api.v0alpha.ReshapeAction.Extract.Index
-	197, // 277: api.v0alpha.ReshapeAction.Extract.Slice.end_index:type_name -> api.v0alpha.ReshapeAction.Extract.Index
-	1,   // 278: api.v0alpha.LMS.GetPublicKey:input_type -> api.v0alpha.GetPublicKeyReq
-	43,  // 279: api.v0alpha.LMS.CreateFileTemplate:input_type -> api.v0alpha.FileTemplate
-	39,  // 280: api.v0alpha.LMS.ListFileTemplates:input_type -> api.v0alpha.GetFileTemplatesReq
-	43,  // 281: api.v0alpha.LMS.UpdateFileTemplate:input_type -> api.v0alpha.FileTemplate
-	43,  // 282: api.v0alpha.LMS.DeleteFileTemplate:input_type -> api.v0alpha.FileTemplate
-	43,  // 283: api.v0alpha.LMS.GetFileTemplate:input_type -> api.v0alpha.FileTemplate
-	30,  // 284: api.v0alpha.LMS.CreateField:input_type -> api.v0alpha.Field
-	35,  // 285: api.v0alpha.LMS.ListFields:input_type -> api.v0alpha.ListFieldsReq
-	30,  // 286: api.v0alpha.LMS.GetField:input_type -> api.v0alpha.Field
-	31,  // 287: api.v0alpha.LMS.UpdateField:input_type -> api.v0alpha.UpdateFieldReq
-	30,  // 288: api.v0alpha.LMS.DeleteField:input_type -> api.v0alpha.Field
-	13,  // 289: api.v0alpha.LMS.ListAvailableFieldsByElementId:input_type -> api.v0alpha.ListAvailableFieldsByElementIdReq
-	14,  // 290: api.v0alpha.LMS.ListFieldsForElement:input_type -> api.v0alpha.ListFieldsForElementReq
-	16,  // 291: api.v0alpha.LMS.ListAutocompleteFields:input_type -> api.v0alpha.ListAutocompleteFieldsReq
-	230, // 292: api.v0alpha.LMS.ListCampaignLinks:input_type -> google.protobuf.Empty
-	20,  // 293: api.v0alpha.LMS.PeekList:input_type -> api.v0alpha.PeekListReq
-	22,  // 294: api.v0alpha.LMS.GetHistory:input_type -> api.v0alpha.GetHistoryReq
-	19,  // 295: api.v0alpha.LMS.CreateElement:input_type -> api.v0alpha.Element
-	38,  // 296: api.v0alpha.LMS.ListElements:input_type -> api.v0alpha.ListElementsReq
-	18,  // 297: api.v0alpha.LMS.GetElement:input_type -> api.v0alpha.ElementPK
-	19,  // 298: api.v0alpha.LMS.UpdateElement:input_type -> api.v0alpha.Element
-	19,  // 299: api.v0alpha.LMS.DeleteElement:input_type -> api.v0alpha.Element
-	19,  // 300: api.v0alpha.LMS.CopyPipelineUpstream:input_type -> api.v0alpha.Element
-	19,  // 301: api.v0alpha.LMS.CopyPipelineDownstream:input_type -> api.v0alpha.Element
-	12,  // 302: api.v0alpha.LMS.ProcessElement:input_type -> api.v0alpha.ProcessElementReq
-	230, // 303: api.v0alpha.LMS.GetAvailableFields:input_type -> google.protobuf.Empty
-	230, // 304: api.v0alpha.LMS.ListNewEvents:input_type -> google.protobuf.Empty
-	118, // 305: api.v0alpha.LMS.ViewQueue:input_type -> api.v0alpha.ViewQueueReq
-	114, // 306: api.v0alpha.LMS.Autocomplete:input_type -> api.v0alpha.ParseReq
-	10,  // 307: api.v0alpha.LMS.GetComplianceScrubLists:input_type -> api.v0alpha.GetComplianceScrubListsReq
-	3,   // 308: api.v0alpha.LMS.FindFieldUsages:input_type -> api.v0alpha.FindFieldUsagesReq
-	8,   // 309: api.v0alpha.LMS.FindInvalidElements:input_type -> api.v0alpha.FindInvalidElementsReq
-	119, // 310: api.v0alpha.LMS.CreateCollection:input_type -> api.v0alpha.CollectionMetadata
-	125, // 311: api.v0alpha.LMS.GetCollection:input_type -> api.v0alpha.GetCollectionReq
-	119, // 312: api.v0alpha.LMS.UpdateCollection:input_type -> api.v0alpha.CollectionMetadata
-	127, // 313: api.v0alpha.LMS.DeleteCollection:input_type -> api.v0alpha.DeleteCollectionReq
-	129, // 314: api.v0alpha.LMS.ListCollections:input_type -> api.v0alpha.ListCollectionsReq
-	128, // 315: api.v0alpha.LMS.ResetCollection:input_type -> api.v0alpha.ResetCollectionReq
-	120, // 316: api.v0alpha.LMS.AddCollectionEntry:input_type -> api.v0alpha.CollectionEntry
-	136, // 317: api.v0alpha.LMS.DeleteCollectionEntry:input_type -> api.v0alpha.DeleteCollectionEntryReq
-	120, // 318: api.v0alpha.LMS.UpdateCollectionEntry:input_type -> api.v0alpha.CollectionEntry
-	126, // 319: api.v0alpha.LMS.StreamCollection:input_type -> api.v0alpha.StreamCollectionReq
-	131, // 320: api.v0alpha.LMS.SearchCollectionsPaginated:input_type -> api.v0alpha.SearchCollectionsPaginatedReq
-	134, // 321: api.v0alpha.LMS.GetCollectionEntries:input_type -> api.v0alpha.GetCollectionEntriesReq
-	141, // 322: api.v0alpha.LMS.CreateCjsSearchDefinition:input_type -> api.v0alpha.CjsSearchDefinition
-	142, // 323: api.v0alpha.LMS.GetCjsSearchDefinition:input_type -> api.v0alpha.GetCjsSearchDefinitionReq
-	141, // 324: api.v0alpha.LMS.UpdateCjsSearchDefinition:input_type -> api.v0alpha.CjsSearchDefinition
-	143, // 325: api.v0alpha.LMS.DeleteCjsSearchDefinition:input_type -> api.v0alpha.DeleteCjsSearchDefinitionReq
-	144, // 326: api.v0alpha.LMS.ListCjsSearchDefinitions:input_type -> api.v0alpha.ListCjsSearchDefinitionsReq
-	146, // 327: api.v0alpha.LMS.ExecuteCjsSearchDefinition:input_type -> api.v0alpha.ExecuteCjsSearchDefinitionReq
-	152, // 328: api.v0alpha.LMS.GetCjsSecureSearchCriteria:input_type -> api.v0alpha.GetCjsSecureSearchCriteriaReq
-	151, // 329: api.v0alpha.LMS.CreateCjsSecureSearchCriteria:input_type -> api.v0alpha.CjsSecureSearchCriteria
-	151, // 330: api.v0alpha.LMS.UpdateCjsSecureSearchCriteria:input_type -> api.v0alpha.CjsSecureSearchCriteria
-	18,  // 331: api.v0alpha.LMS.GetQueuedEventsStatusByElementId:input_type -> api.v0alpha.ElementPK
-	2,   // 332: api.v0alpha.LMS.GetPublicKey:output_type -> api.v0alpha.PublicKey
-	43,  // 333: api.v0alpha.LMS.CreateFileTemplate:output_type -> api.v0alpha.FileTemplate
-	43,  // 334: api.v0alpha.LMS.ListFileTemplates:output_type -> api.v0alpha.FileTemplate
-	43,  // 335: api.v0alpha.LMS.UpdateFileTemplate:output_type -> api.v0alpha.FileTemplate
-	43,  // 336: api.v0alpha.LMS.DeleteFileTemplate:output_type -> api.v0alpha.FileTemplate
-	43,  // 337: api.v0alpha.LMS.GetFileTemplate:output_type -> api.v0alpha.FileTemplate
-	30,  // 338: api.v0alpha.LMS.CreateField:output_type -> api.v0alpha.Field
-	33,  // 339: api.v0alpha.LMS.ListFields:output_type -> api.v0alpha.Fields
-	30,  // 340: api.v0alpha.LMS.GetField:output_type -> api.v0alpha.Field
-	30,  // 341: api.v0alpha.LMS.UpdateField:output_type -> api.v0alpha.Field
-	30,  // 342: api.v0alpha.LMS.DeleteField:output_type -> api.v0alpha.Field
-	28,  // 343: api.v0alpha.LMS.ListAvailableFieldsByElementId:output_type -> api.v0alpha.ProcessFields
-	15,  // 344: api.v0alpha.LMS.ListFieldsForElement:output_type -> api.v0alpha.ListFieldsForElementRes
-	17,  // 345: api.v0alpha.LMS.ListAutocompleteFields:output_type -> api.v0alpha.ListAutocompleteFieldsRes
-	137, // 346: api.v0alpha.LMS.ListCampaignLinks:output_type -> api.v0alpha.ListCampaignLinksRes
-	21,  // 347: api.v0alpha.LMS.PeekList:output_type -> api.v0alpha.PeekListRes
-	23,  // 348: api.v0alpha.LMS.GetHistory:output_type -> api.v0alpha.GetHistoryRes
-	19,  // 349: api.v0alpha.LMS.CreateElement:output_type -> api.v0alpha.Element
-	19,  // 350: api.v0alpha.LMS.ListElements:output_type -> api.v0alpha.Element
-	19,  // 351: api.v0alpha.LMS.GetElement:output_type -> api.v0alpha.Element
-	19,  // 352: api.v0alpha.LMS.UpdateElement:output_type -> api.v0alpha.Element
-	19,  // 353: api.v0alpha.LMS.DeleteElement:output_type -> api.v0alpha.Element
-	19,  // 354: api.v0alpha.LMS.CopyPipelineUpstream:output_type -> api.v0alpha.Element
-	19,  // 355: api.v0alpha.LMS.CopyPipelineDownstream:output_type -> api.v0alpha.Element
-	230, // 356: api.v0alpha.LMS.ProcessElement:output_type -> google.protobuf.Empty
-	28,  // 357: api.v0alpha.LMS.GetAvailableFields:output_type -> api.v0alpha.ProcessFields
-	117, // 358: api.v0alpha.LMS.ListNewEvents:output_type -> api.v0alpha.Events
-	117, // 359: api.v0alpha.LMS.ViewQueue:output_type -> api.v0alpha.Events
-	115, // 360: api.v0alpha.LMS.Autocomplete:output_type -> api.v0alpha.ParseRes
-	11,  // 361: api.v0alpha.LMS.GetComplianceScrubLists:output_type -> api.v0alpha.GetComplianceScrubListsRes
-	5,   // 362: api.v0alpha.LMS.FindFieldUsages:output_type -> api.v0alpha.FindFieldUsagesRes
-	9,   // 363: api.v0alpha.LMS.FindInvalidElements:output_type -> api.v0alpha.FindInvalidElementsRes
-	119, // 364: api.v0alpha.LMS.CreateCollection:output_type -> api.v0alpha.CollectionMetadata
-	119, // 365: api.v0alpha.LMS.GetCollection:output_type -> api.v0alpha.CollectionMetadata
-	230, // 366: api.v0alpha.LMS.UpdateCollection:output_type -> google.protobuf.Empty
-	230, // 367: api.v0alpha.LMS.DeleteCollection:output_type -> google.protobuf.Empty
-	130, // 368: api.v0alpha.LMS.ListCollections:output_type -> api.v0alpha.ListCollectionsRes
-	230, // 369: api.v0alpha.LMS.ResetCollection:output_type -> google.protobuf.Empty
-	120, // 370: api.v0alpha.LMS.AddCollectionEntry:output_type -> api.v0alpha.CollectionEntry
-	230, // 371: api.v0alpha.LMS.DeleteCollectionEntry:output_type -> google.protobuf.Empty
-	120, // 372: api.v0alpha.LMS.UpdateCollectionEntry:output_type -> api.v0alpha.CollectionEntry
-	120, // 373: api.v0alpha.LMS.StreamCollection:output_type -> api.v0alpha.CollectionEntry
-	133, // 374: api.v0alpha.LMS.SearchCollectionsPaginated:output_type -> api.v0alpha.PaginatedSearchRes
-	135, // 375: api.v0alpha.LMS.GetCollectionEntries:output_type -> api.v0alpha.GetCollectionEntriesRes
-	141, // 376: api.v0alpha.LMS.CreateCjsSearchDefinition:output_type -> api.v0alpha.CjsSearchDefinition
-	141, // 377: api.v0alpha.LMS.GetCjsSearchDefinition:output_type -> api.v0alpha.CjsSearchDefinition
-	230, // 378: api.v0alpha.LMS.UpdateCjsSearchDefinition:output_type -> google.protobuf.Empty
-	230, // 379: api.v0alpha.LMS.DeleteCjsSearchDefinition:output_type -> google.protobuf.Empty
-	145, // 380: api.v0alpha.LMS.ListCjsSearchDefinitions:output_type -> api.v0alpha.ListCjsSearchDefinitionsRes
-	147, // 381: api.v0alpha.LMS.ExecuteCjsSearchDefinition:output_type -> api.v0alpha.ExecuteCjsSearchDefinitionRes
-	151, // 382: api.v0alpha.LMS.GetCjsSecureSearchCriteria:output_type -> api.v0alpha.CjsSecureSearchCriteria
-	151, // 383: api.v0alpha.LMS.CreateCjsSecureSearchCriteria:output_type -> api.v0alpha.CjsSecureSearchCriteria
-	230, // 384: api.v0alpha.LMS.UpdateCjsSecureSearchCriteria:output_type -> google.protobuf.Empty
-	117, // 385: api.v0alpha.LMS.GetQueuedEventsStatusByElementId:output_type -> api.v0alpha.Events
-	332, // [332:386] is the sub-list for method output_type
-	278, // [278:332] is the sub-list for method input_type
-	278, // [278:278] is the sub-list for extension type_name
-	278, // [278:278] is the sub-list for extension extendee
-	0,   // [0:278] is the sub-list for field type_name
+	189, // 181: api.v0alpha.ReshapeAction.remove_field:type_name -> api.v0alpha.ReshapeAction.RemoveField
+	190, // 182: api.v0alpha.ReshapeAction.add_new_field:type_name -> api.v0alpha.ReshapeAction.AddNewField
+	192, // 183: api.v0alpha.ReshapeAction.change_currency_type:type_name -> api.v0alpha.ReshapeAction.ChangeCurrencyType
+	186, // 184: api.v0alpha.ReshapeAction.divide:type_name -> api.v0alpha.ReshapeAction.Divide
+	187, // 185: api.v0alpha.ReshapeAction.multiply:type_name -> api.v0alpha.ReshapeAction.Multiply
+	188, // 186: api.v0alpha.ReshapeAction.modulo:type_name -> api.v0alpha.ReshapeAction.Modulo
+	195, // 187: api.v0alpha.ReshapeAction.merge:type_name -> api.v0alpha.ReshapeAction.Merge
+	193, // 188: api.v0alpha.ReshapeAction.set_field_value:type_name -> api.v0alpha.ReshapeAction.SetFieldValue
+	191, // 189: api.v0alpha.ReshapeAction.add_new_field_from_field:type_name -> api.v0alpha.ReshapeAction.AddNewFieldFromField
+	194, // 190: api.v0alpha.ReshapeAction.set_field_from_field:type_name -> api.v0alpha.ReshapeAction.SetFieldFromField
+	196, // 191: api.v0alpha.ReshapeAction.pad:type_name -> api.v0alpha.ReshapeAction.Pad
+	197, // 192: api.v0alpha.ReshapeAction.trim:type_name -> api.v0alpha.ReshapeAction.Trim
+	198, // 193: api.v0alpha.ReshapeAction.extract:type_name -> api.v0alpha.ReshapeAction.Extract
+	229, // 194: api.v0alpha.ListMetrics.field_types:type_name -> api.commons.RecordType
+	205, // 195: api.v0alpha.ListMetrics.ftypes:type_name -> api.commons.FieldType
+	209, // 196: api.v0alpha.ListMetrics.run_type:type_name -> api.commons.RunType
+	48,  // 197: api.v0alpha.ParseRes.process:type_name -> api.v0alpha.Process
+	204, // 198: api.v0alpha.Event.parent_id:type_name -> google.protobuf.StringValue
+	230, // 199: api.v0alpha.Event.input_ids:type_name -> api.commons.StringArraySql
+	48,  // 200: api.v0alpha.Event.process:type_name -> api.v0alpha.Process
+	203, // 201: api.v0alpha.Event.upload_ts:type_name -> google.protobuf.Timestamp
+	203, // 202: api.v0alpha.Event.started_ts:type_name -> google.protobuf.Timestamp
+	203, // 203: api.v0alpha.Event.finished_ts:type_name -> google.protobuf.Timestamp
+	203, // 204: api.v0alpha.Event.backoff_till:type_name -> google.protobuf.Timestamp
+	231, // 205: api.v0alpha.Event.latest_history:type_name -> google.protobuf.Int64Value
+	116, // 206: api.v0alpha.Events.events:type_name -> api.v0alpha.Event
+	203, // 207: api.v0alpha.ViewQueueReq.newer_than:type_name -> google.protobuf.Timestamp
+	203, // 208: api.v0alpha.ViewQueueReq.no_newer_than:type_name -> google.protobuf.Timestamp
+	123, // 209: api.v0alpha.CollectionMetadata.fields:type_name -> api.v0alpha.CollectionFieldMetadata
+	203, // 210: api.v0alpha.CollectionMetadata.created_on:type_name -> google.protobuf.Timestamp
+	203, // 211: api.v0alpha.CollectionMetadata.last_queried:type_name -> google.protobuf.Timestamp
+	203, // 212: api.v0alpha.CollectionMetadata.last_updated:type_name -> google.protobuf.Timestamp
+	203, // 213: api.v0alpha.CollectionMetadata.last_searched:type_name -> google.protobuf.Timestamp
+	124, // 214: api.v0alpha.CollectionEntry.fields:type_name -> api.v0alpha.CollectionField
+	203, // 215: api.v0alpha.CollectionEntry.last_updated:type_name -> google.protobuf.Timestamp
+	124, // 216: api.v0alpha.MatchReq.fields:type_name -> api.v0alpha.CollectionField
+	120, // 217: api.v0alpha.MatchRes.entries:type_name -> api.v0alpha.CollectionEntry
+	205, // 218: api.v0alpha.CollectionFieldMetadata.field_type:type_name -> api.commons.FieldType
+	119, // 219: api.v0alpha.ListCollectionsRes.collections:type_name -> api.v0alpha.CollectionMetadata
+	132, // 220: api.v0alpha.SearchCollectionsPaginatedReq.search:type_name -> api.v0alpha.Search
+	120, // 221: api.v0alpha.PaginatedSearchRes.entries:type_name -> api.v0alpha.CollectionEntry
+	119, // 222: api.v0alpha.GetCollectionEntriesRes.metadata:type_name -> api.v0alpha.CollectionMetadata
+	120, // 223: api.v0alpha.GetCollectionEntriesRes.entries:type_name -> api.v0alpha.CollectionEntry
+	138, // 224: api.v0alpha.ListCampaignLinksRes.Links:type_name -> api.v0alpha.Link
+	205, // 225: api.v0alpha.CjsSearchField.field_type:type_name -> api.commons.FieldType
+	203, // 226: api.v0alpha.CjsSearchDefinitionMetadata.created_date:type_name -> google.protobuf.Timestamp
+	203, // 227: api.v0alpha.CjsSearchDefinitionMetadata.last_edited:type_name -> google.protobuf.Timestamp
+	140, // 228: api.v0alpha.CjsSearchDefinition.metadata:type_name -> api.v0alpha.CjsSearchDefinitionMetadata
+	139, // 229: api.v0alpha.CjsSearchDefinition.search_fields:type_name -> api.v0alpha.CjsSearchField
+	139, // 230: api.v0alpha.CjsSearchDefinition.whitelisted_return_fields:type_name -> api.v0alpha.CjsSearchField
+	139, // 231: api.v0alpha.CjsSearchDefinition.blacklisted_return_fields:type_name -> api.v0alpha.CjsSearchField
+	139, // 232: api.v0alpha.CjsSearchDefinition.unique_identifiers:type_name -> api.v0alpha.CjsSearchField
+	140, // 233: api.v0alpha.ListCjsSearchDefinitionsRes.definitions:type_name -> api.v0alpha.CjsSearchDefinitionMetadata
+	149, // 234: api.v0alpha.ExecuteCjsSearchDefinitionReq.search_fields:type_name -> api.v0alpha.CjsExecuteSearchField
+	148, // 235: api.v0alpha.ExecuteCjsSearchDefinitionRes.collection_entries:type_name -> api.v0alpha.CollectionEntries
+	119, // 236: api.v0alpha.CollectionEntries.metadata:type_name -> api.v0alpha.CollectionMetadata
+	120, // 237: api.v0alpha.CollectionEntries.entries:type_name -> api.v0alpha.CollectionEntry
+	205, // 238: api.v0alpha.CjsExecuteSearchField.field_type:type_name -> api.commons.FieldType
+	203, // 239: api.v0alpha.CjsSecureSearchCriteriaMetadata.created_on:type_name -> google.protobuf.Timestamp
+	203, // 240: api.v0alpha.CjsSecureSearchCriteriaMetadata.last_updated:type_name -> google.protobuf.Timestamp
+	150, // 241: api.v0alpha.CjsSecureSearchCriteria.metadata:type_name -> api.v0alpha.CjsSecureSearchCriteriaMetadata
+	153, // 242: api.v0alpha.CjsSecureSearchCriteria.fields:type_name -> api.v0alpha.CjsSecureSearchCriteriaField
+	205, // 243: api.v0alpha.CjsSecureSearchCriteriaField.field_type:type_name -> api.commons.FieldType
+	157, // 244: api.v0alpha.SplitCriteria.unique:type_name -> api.v0alpha.SplitByUnique
+	158, // 245: api.v0alpha.SplitCriteria.max_size:type_name -> api.v0alpha.SplitByMaxSize
+	159, // 246: api.v0alpha.SplitCriteria.equal_parts:type_name -> api.v0alpha.SplitByEqualParts
+	34,  // 247: api.v0alpha.UniquePair.split_on_fields:type_name -> api.v0alpha.FieldIndex
+	155, // 248: api.v0alpha.SplitByNamedUnique.named_fields:type_name -> api.v0alpha.UniquePair
+	34,  // 249: api.v0alpha.SplitByUnique.split_on_fields:type_name -> api.v0alpha.FieldIndex
+	229, // 250: api.v0alpha.ProcessFields.NestedField.field_type:type_name -> api.commons.RecordType
+	229, // 251: api.v0alpha.ProcessFields.Field.field_type:type_name -> api.commons.RecordType
+	163, // 252: api.v0alpha.ProcessFields.Field.nested:type_name -> api.v0alpha.ProcessFields.NestedField
+	43,  // 253: api.v0alpha.LookupProcess.UrlLookup.file_template:type_name -> api.v0alpha.FileTemplate
+	34,  // 254: api.v0alpha.FilterCheck.Value.field_name:type_name -> api.v0alpha.FieldIndex
+	101, // 255: api.v0alpha.FilterCheck.Value.date_time:type_name -> api.v0alpha.DateTime
+	34,  // 256: api.v0alpha.FilterCheck.ValueComparison.field_name:type_name -> api.v0alpha.FieldIndex
+	232, // 257: api.v0alpha.FilterCheck.ValueComparison.op:type_name -> api.commons.CompareOperator
+	173, // 258: api.v0alpha.FilterCheck.ValueComparison.value:type_name -> api.v0alpha.FilterCheck.Value
+	34,  // 259: api.v0alpha.FilterCheck.TypeComparison.field_name:type_name -> api.v0alpha.FieldIndex
+	229, // 260: api.v0alpha.FilterCheck.TypeComparison.matches_field_type:type_name -> api.commons.RecordType
+	34,  // 261: api.v0alpha.FilterCheck.ListComparison.field_name:type_name -> api.v0alpha.FieldIndex
+	177, // 262: api.v0alpha.FilterCheck.ListComparison.data:type_name -> api.v0alpha.FilterCheck.ListComparison.FieldOrVal
+	34,  // 263: api.v0alpha.FilterCheck.ListComparison.FieldOrVal.field:type_name -> api.v0alpha.FieldIndex
+	173, // 264: api.v0alpha.FilterCheck.ListComparison.FieldOrVal.value:type_name -> api.v0alpha.FilterCheck.Value
+	36,  // 265: api.v0alpha.RecordFieldMap.FieldsEntry.value:type_name -> api.v0alpha.RecordFieldProto
+	100, // 266: api.v0alpha.ReshapeAction.AddDate.datetime:type_name -> api.v0alpha.DateTimeModifier
+	34,  // 267: api.v0alpha.ReshapeAction.AddField.other_field:type_name -> api.v0alpha.FieldIndex
+	34,  // 268: api.v0alpha.ReshapeAction.SubtractField.other_field:type_name -> api.v0alpha.FieldIndex
+	229, // 269: api.v0alpha.ReshapeAction.Convert.newType:type_name -> api.commons.RecordType
+	30,  // 270: api.v0alpha.ReshapeAction.Convert.new_field:type_name -> api.v0alpha.Field
+	36,  // 271: api.v0alpha.ReshapeAction.Convert.default_value:type_name -> api.v0alpha.RecordFieldProto
+	36,  // 272: api.v0alpha.ReshapeAction.AddNewField.starting_value:type_name -> api.v0alpha.RecordFieldProto
+	34,  // 273: api.v0alpha.ReshapeAction.AddNewFieldFromField.other_field:type_name -> api.v0alpha.FieldIndex
+	36,  // 274: api.v0alpha.ReshapeAction.SetFieldValue.value:type_name -> api.v0alpha.RecordFieldProto
+	34,  // 275: api.v0alpha.ReshapeAction.SetFieldFromField.other_field:type_name -> api.v0alpha.FieldIndex
+	199, // 276: api.v0alpha.ReshapeAction.Merge.data:type_name -> api.v0alpha.ReshapeAction.Merge.FieldOrVal
+	201, // 277: api.v0alpha.ReshapeAction.Extract.parts:type_name -> api.v0alpha.ReshapeAction.Extract.Slice
+	34,  // 278: api.v0alpha.ReshapeAction.Merge.FieldOrVal.field:type_name -> api.v0alpha.FieldIndex
+	200, // 279: api.v0alpha.ReshapeAction.Extract.Slice.start_index:type_name -> api.v0alpha.ReshapeAction.Extract.Index
+	200, // 280: api.v0alpha.ReshapeAction.Extract.Slice.end_index:type_name -> api.v0alpha.ReshapeAction.Extract.Index
+	1,   // 281: api.v0alpha.LMS.GetPublicKey:input_type -> api.v0alpha.GetPublicKeyReq
+	43,  // 282: api.v0alpha.LMS.CreateFileTemplate:input_type -> api.v0alpha.FileTemplate
+	39,  // 283: api.v0alpha.LMS.ListFileTemplates:input_type -> api.v0alpha.GetFileTemplatesReq
+	43,  // 284: api.v0alpha.LMS.UpdateFileTemplate:input_type -> api.v0alpha.FileTemplate
+	43,  // 285: api.v0alpha.LMS.DeleteFileTemplate:input_type -> api.v0alpha.FileTemplate
+	43,  // 286: api.v0alpha.LMS.GetFileTemplate:input_type -> api.v0alpha.FileTemplate
+	30,  // 287: api.v0alpha.LMS.CreateField:input_type -> api.v0alpha.Field
+	35,  // 288: api.v0alpha.LMS.ListFields:input_type -> api.v0alpha.ListFieldsReq
+	30,  // 289: api.v0alpha.LMS.GetField:input_type -> api.v0alpha.Field
+	31,  // 290: api.v0alpha.LMS.UpdateField:input_type -> api.v0alpha.UpdateFieldReq
+	30,  // 291: api.v0alpha.LMS.DeleteField:input_type -> api.v0alpha.Field
+	13,  // 292: api.v0alpha.LMS.ListAvailableFieldsByElementId:input_type -> api.v0alpha.ListAvailableFieldsByElementIdReq
+	14,  // 293: api.v0alpha.LMS.ListFieldsForElement:input_type -> api.v0alpha.ListFieldsForElementReq
+	16,  // 294: api.v0alpha.LMS.ListAutocompleteFields:input_type -> api.v0alpha.ListAutocompleteFieldsReq
+	233, // 295: api.v0alpha.LMS.ListCampaignLinks:input_type -> google.protobuf.Empty
+	20,  // 296: api.v0alpha.LMS.PeekList:input_type -> api.v0alpha.PeekListReq
+	22,  // 297: api.v0alpha.LMS.GetHistory:input_type -> api.v0alpha.GetHistoryReq
+	19,  // 298: api.v0alpha.LMS.CreateElement:input_type -> api.v0alpha.Element
+	38,  // 299: api.v0alpha.LMS.ListElements:input_type -> api.v0alpha.ListElementsReq
+	18,  // 300: api.v0alpha.LMS.GetElement:input_type -> api.v0alpha.ElementPK
+	19,  // 301: api.v0alpha.LMS.UpdateElement:input_type -> api.v0alpha.Element
+	19,  // 302: api.v0alpha.LMS.DeleteElement:input_type -> api.v0alpha.Element
+	19,  // 303: api.v0alpha.LMS.CopyPipelineUpstream:input_type -> api.v0alpha.Element
+	19,  // 304: api.v0alpha.LMS.CopyPipelineDownstream:input_type -> api.v0alpha.Element
+	12,  // 305: api.v0alpha.LMS.ProcessElement:input_type -> api.v0alpha.ProcessElementReq
+	233, // 306: api.v0alpha.LMS.GetAvailableFields:input_type -> google.protobuf.Empty
+	233, // 307: api.v0alpha.LMS.ListNewEvents:input_type -> google.protobuf.Empty
+	118, // 308: api.v0alpha.LMS.ViewQueue:input_type -> api.v0alpha.ViewQueueReq
+	114, // 309: api.v0alpha.LMS.Autocomplete:input_type -> api.v0alpha.ParseReq
+	10,  // 310: api.v0alpha.LMS.GetComplianceScrubLists:input_type -> api.v0alpha.GetComplianceScrubListsReq
+	3,   // 311: api.v0alpha.LMS.FindFieldUsages:input_type -> api.v0alpha.FindFieldUsagesReq
+	8,   // 312: api.v0alpha.LMS.FindInvalidElements:input_type -> api.v0alpha.FindInvalidElementsReq
+	119, // 313: api.v0alpha.LMS.CreateCollection:input_type -> api.v0alpha.CollectionMetadata
+	125, // 314: api.v0alpha.LMS.GetCollection:input_type -> api.v0alpha.GetCollectionReq
+	119, // 315: api.v0alpha.LMS.UpdateCollection:input_type -> api.v0alpha.CollectionMetadata
+	127, // 316: api.v0alpha.LMS.DeleteCollection:input_type -> api.v0alpha.DeleteCollectionReq
+	129, // 317: api.v0alpha.LMS.ListCollections:input_type -> api.v0alpha.ListCollectionsReq
+	128, // 318: api.v0alpha.LMS.ResetCollection:input_type -> api.v0alpha.ResetCollectionReq
+	120, // 319: api.v0alpha.LMS.AddCollectionEntry:input_type -> api.v0alpha.CollectionEntry
+	136, // 320: api.v0alpha.LMS.DeleteCollectionEntry:input_type -> api.v0alpha.DeleteCollectionEntryReq
+	120, // 321: api.v0alpha.LMS.UpdateCollectionEntry:input_type -> api.v0alpha.CollectionEntry
+	126, // 322: api.v0alpha.LMS.StreamCollection:input_type -> api.v0alpha.StreamCollectionReq
+	131, // 323: api.v0alpha.LMS.SearchCollectionsPaginated:input_type -> api.v0alpha.SearchCollectionsPaginatedReq
+	134, // 324: api.v0alpha.LMS.GetCollectionEntries:input_type -> api.v0alpha.GetCollectionEntriesReq
+	141, // 325: api.v0alpha.LMS.CreateCjsSearchDefinition:input_type -> api.v0alpha.CjsSearchDefinition
+	142, // 326: api.v0alpha.LMS.GetCjsSearchDefinition:input_type -> api.v0alpha.GetCjsSearchDefinitionReq
+	141, // 327: api.v0alpha.LMS.UpdateCjsSearchDefinition:input_type -> api.v0alpha.CjsSearchDefinition
+	143, // 328: api.v0alpha.LMS.DeleteCjsSearchDefinition:input_type -> api.v0alpha.DeleteCjsSearchDefinitionReq
+	144, // 329: api.v0alpha.LMS.ListCjsSearchDefinitions:input_type -> api.v0alpha.ListCjsSearchDefinitionsReq
+	146, // 330: api.v0alpha.LMS.ExecuteCjsSearchDefinition:input_type -> api.v0alpha.ExecuteCjsSearchDefinitionReq
+	152, // 331: api.v0alpha.LMS.GetCjsSecureSearchCriteria:input_type -> api.v0alpha.GetCjsSecureSearchCriteriaReq
+	151, // 332: api.v0alpha.LMS.CreateCjsSecureSearchCriteria:input_type -> api.v0alpha.CjsSecureSearchCriteria
+	151, // 333: api.v0alpha.LMS.UpdateCjsSecureSearchCriteria:input_type -> api.v0alpha.CjsSecureSearchCriteria
+	18,  // 334: api.v0alpha.LMS.GetQueuedEventsStatusByElementId:input_type -> api.v0alpha.ElementPK
+	2,   // 335: api.v0alpha.LMS.GetPublicKey:output_type -> api.v0alpha.PublicKey
+	43,  // 336: api.v0alpha.LMS.CreateFileTemplate:output_type -> api.v0alpha.FileTemplate
+	43,  // 337: api.v0alpha.LMS.ListFileTemplates:output_type -> api.v0alpha.FileTemplate
+	43,  // 338: api.v0alpha.LMS.UpdateFileTemplate:output_type -> api.v0alpha.FileTemplate
+	43,  // 339: api.v0alpha.LMS.DeleteFileTemplate:output_type -> api.v0alpha.FileTemplate
+	43,  // 340: api.v0alpha.LMS.GetFileTemplate:output_type -> api.v0alpha.FileTemplate
+	30,  // 341: api.v0alpha.LMS.CreateField:output_type -> api.v0alpha.Field
+	33,  // 342: api.v0alpha.LMS.ListFields:output_type -> api.v0alpha.Fields
+	30,  // 343: api.v0alpha.LMS.GetField:output_type -> api.v0alpha.Field
+	30,  // 344: api.v0alpha.LMS.UpdateField:output_type -> api.v0alpha.Field
+	30,  // 345: api.v0alpha.LMS.DeleteField:output_type -> api.v0alpha.Field
+	28,  // 346: api.v0alpha.LMS.ListAvailableFieldsByElementId:output_type -> api.v0alpha.ProcessFields
+	15,  // 347: api.v0alpha.LMS.ListFieldsForElement:output_type -> api.v0alpha.ListFieldsForElementRes
+	17,  // 348: api.v0alpha.LMS.ListAutocompleteFields:output_type -> api.v0alpha.ListAutocompleteFieldsRes
+	137, // 349: api.v0alpha.LMS.ListCampaignLinks:output_type -> api.v0alpha.ListCampaignLinksRes
+	21,  // 350: api.v0alpha.LMS.PeekList:output_type -> api.v0alpha.PeekListRes
+	23,  // 351: api.v0alpha.LMS.GetHistory:output_type -> api.v0alpha.GetHistoryRes
+	19,  // 352: api.v0alpha.LMS.CreateElement:output_type -> api.v0alpha.Element
+	19,  // 353: api.v0alpha.LMS.ListElements:output_type -> api.v0alpha.Element
+	19,  // 354: api.v0alpha.LMS.GetElement:output_type -> api.v0alpha.Element
+	19,  // 355: api.v0alpha.LMS.UpdateElement:output_type -> api.v0alpha.Element
+	19,  // 356: api.v0alpha.LMS.DeleteElement:output_type -> api.v0alpha.Element
+	19,  // 357: api.v0alpha.LMS.CopyPipelineUpstream:output_type -> api.v0alpha.Element
+	19,  // 358: api.v0alpha.LMS.CopyPipelineDownstream:output_type -> api.v0alpha.Element
+	233, // 359: api.v0alpha.LMS.ProcessElement:output_type -> google.protobuf.Empty
+	28,  // 360: api.v0alpha.LMS.GetAvailableFields:output_type -> api.v0alpha.ProcessFields
+	117, // 361: api.v0alpha.LMS.ListNewEvents:output_type -> api.v0alpha.Events
+	117, // 362: api.v0alpha.LMS.ViewQueue:output_type -> api.v0alpha.Events
+	115, // 363: api.v0alpha.LMS.Autocomplete:output_type -> api.v0alpha.ParseRes
+	11,  // 364: api.v0alpha.LMS.GetComplianceScrubLists:output_type -> api.v0alpha.GetComplianceScrubListsRes
+	5,   // 365: api.v0alpha.LMS.FindFieldUsages:output_type -> api.v0alpha.FindFieldUsagesRes
+	9,   // 366: api.v0alpha.LMS.FindInvalidElements:output_type -> api.v0alpha.FindInvalidElementsRes
+	119, // 367: api.v0alpha.LMS.CreateCollection:output_type -> api.v0alpha.CollectionMetadata
+	119, // 368: api.v0alpha.LMS.GetCollection:output_type -> api.v0alpha.CollectionMetadata
+	233, // 369: api.v0alpha.LMS.UpdateCollection:output_type -> google.protobuf.Empty
+	233, // 370: api.v0alpha.LMS.DeleteCollection:output_type -> google.protobuf.Empty
+	130, // 371: api.v0alpha.LMS.ListCollections:output_type -> api.v0alpha.ListCollectionsRes
+	233, // 372: api.v0alpha.LMS.ResetCollection:output_type -> google.protobuf.Empty
+	120, // 373: api.v0alpha.LMS.AddCollectionEntry:output_type -> api.v0alpha.CollectionEntry
+	233, // 374: api.v0alpha.LMS.DeleteCollectionEntry:output_type -> google.protobuf.Empty
+	120, // 375: api.v0alpha.LMS.UpdateCollectionEntry:output_type -> api.v0alpha.CollectionEntry
+	120, // 376: api.v0alpha.LMS.StreamCollection:output_type -> api.v0alpha.CollectionEntry
+	133, // 377: api.v0alpha.LMS.SearchCollectionsPaginated:output_type -> api.v0alpha.PaginatedSearchRes
+	135, // 378: api.v0alpha.LMS.GetCollectionEntries:output_type -> api.v0alpha.GetCollectionEntriesRes
+	141, // 379: api.v0alpha.LMS.CreateCjsSearchDefinition:output_type -> api.v0alpha.CjsSearchDefinition
+	141, // 380: api.v0alpha.LMS.GetCjsSearchDefinition:output_type -> api.v0alpha.CjsSearchDefinition
+	233, // 381: api.v0alpha.LMS.UpdateCjsSearchDefinition:output_type -> google.protobuf.Empty
+	233, // 382: api.v0alpha.LMS.DeleteCjsSearchDefinition:output_type -> google.protobuf.Empty
+	145, // 383: api.v0alpha.LMS.ListCjsSearchDefinitions:output_type -> api.v0alpha.ListCjsSearchDefinitionsRes
+	147, // 384: api.v0alpha.LMS.ExecuteCjsSearchDefinition:output_type -> api.v0alpha.ExecuteCjsSearchDefinitionRes
+	151, // 385: api.v0alpha.LMS.GetCjsSecureSearchCriteria:output_type -> api.v0alpha.CjsSecureSearchCriteria
+	151, // 386: api.v0alpha.LMS.CreateCjsSecureSearchCriteria:output_type -> api.v0alpha.CjsSecureSearchCriteria
+	233, // 387: api.v0alpha.LMS.UpdateCjsSecureSearchCriteria:output_type -> google.protobuf.Empty
+	117, // 388: api.v0alpha.LMS.GetQueuedEventsStatusByElementId:output_type -> api.v0alpha.Events
+	335, // [335:389] is the sub-list for method output_type
+	281, // [281:335] is the sub-list for method input_type
+	281, // [281:281] is the sub-list for extension type_name
+	281, // [281:281] is the sub-list for extension extendee
+	0,   // [0:281] is the sub-list for field type_name
 }
 
 func init() { file_api_v0alpha_lms_proto_init() }
@@ -20845,7 +21093,7 @@ func file_api_v0alpha_lms_proto_init() {
 			}
 		}
 		file_api_v0alpha_lms_proto_msgTypes[185].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ReshapeAction_RemoveField); i {
+			switch v := v.(*ReshapeAction_Divide); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20857,7 +21105,7 @@ func file_api_v0alpha_lms_proto_init() {
 			}
 		}
 		file_api_v0alpha_lms_proto_msgTypes[186].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ReshapeAction_AddNewField); i {
+			switch v := v.(*ReshapeAction_Multiply); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20869,7 +21117,7 @@ func file_api_v0alpha_lms_proto_init() {
 			}
 		}
 		file_api_v0alpha_lms_proto_msgTypes[187].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ReshapeAction_AddNewFieldFromField); i {
+			switch v := v.(*ReshapeAction_Modulo); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20881,7 +21129,7 @@ func file_api_v0alpha_lms_proto_init() {
 			}
 		}
 		file_api_v0alpha_lms_proto_msgTypes[188].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ReshapeAction_ChangeCurrencyType); i {
+			switch v := v.(*ReshapeAction_RemoveField); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20893,7 +21141,7 @@ func file_api_v0alpha_lms_proto_init() {
 			}
 		}
 		file_api_v0alpha_lms_proto_msgTypes[189].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ReshapeAction_SetFieldValue); i {
+			switch v := v.(*ReshapeAction_AddNewField); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20905,7 +21153,7 @@ func file_api_v0alpha_lms_proto_init() {
 			}
 		}
 		file_api_v0alpha_lms_proto_msgTypes[190].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ReshapeAction_SetFieldFromField); i {
+			switch v := v.(*ReshapeAction_AddNewFieldFromField); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20917,7 +21165,7 @@ func file_api_v0alpha_lms_proto_init() {
 			}
 		}
 		file_api_v0alpha_lms_proto_msgTypes[191].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ReshapeAction_Merge); i {
+			switch v := v.(*ReshapeAction_ChangeCurrencyType); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20929,7 +21177,7 @@ func file_api_v0alpha_lms_proto_init() {
 			}
 		}
 		file_api_v0alpha_lms_proto_msgTypes[192].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ReshapeAction_Pad); i {
+			switch v := v.(*ReshapeAction_SetFieldValue); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20941,7 +21189,7 @@ func file_api_v0alpha_lms_proto_init() {
 			}
 		}
 		file_api_v0alpha_lms_proto_msgTypes[193].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ReshapeAction_Trim); i {
+			switch v := v.(*ReshapeAction_SetFieldFromField); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20953,7 +21201,7 @@ func file_api_v0alpha_lms_proto_init() {
 			}
 		}
 		file_api_v0alpha_lms_proto_msgTypes[194].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ReshapeAction_Extract); i {
+			switch v := v.(*ReshapeAction_Merge); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20965,7 +21213,7 @@ func file_api_v0alpha_lms_proto_init() {
 			}
 		}
 		file_api_v0alpha_lms_proto_msgTypes[195].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ReshapeAction_Merge_FieldOrVal); i {
+			switch v := v.(*ReshapeAction_Pad); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20977,7 +21225,7 @@ func file_api_v0alpha_lms_proto_init() {
 			}
 		}
 		file_api_v0alpha_lms_proto_msgTypes[196].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ReshapeAction_Extract_Index); i {
+			switch v := v.(*ReshapeAction_Trim); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -20989,6 +21237,42 @@ func file_api_v0alpha_lms_proto_init() {
 			}
 		}
 		file_api_v0alpha_lms_proto_msgTypes[197].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ReshapeAction_Extract); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v0alpha_lms_proto_msgTypes[198].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ReshapeAction_Merge_FieldOrVal); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v0alpha_lms_proto_msgTypes[199].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ReshapeAction_Extract_Index); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v0alpha_lms_proto_msgTypes[200].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ReshapeAction_Extract_Slice); i {
 			case 0:
 				return &v.state
@@ -21102,6 +21386,9 @@ func file_api_v0alpha_lms_proto_init() {
 		(*ReshapeAction_RemoveField_)(nil),
 		(*ReshapeAction_AddNewField_)(nil),
 		(*ReshapeAction_ChangeCurrencyType_)(nil),
+		(*ReshapeAction_Divide_)(nil),
+		(*ReshapeAction_Multiply_)(nil),
+		(*ReshapeAction_Modulo_)(nil),
 		(*ReshapeAction_Merge_)(nil),
 		(*ReshapeAction_SetFieldValue_)(nil),
 		(*ReshapeAction_AddNewFieldFromField_)(nil),
@@ -21130,16 +21417,16 @@ func file_api_v0alpha_lms_proto_init() {
 		(*FilterCheck_ListComparison_FieldOrVal_Field)(nil),
 		(*FilterCheck_ListComparison_FieldOrVal_Value)(nil),
 	}
-	file_api_v0alpha_lms_proto_msgTypes[193].OneofWrappers = []interface{}{
+	file_api_v0alpha_lms_proto_msgTypes[196].OneofWrappers = []interface{}{
 		(*ReshapeAction_Trim_Amount)(nil),
 		(*ReshapeAction_Trim_Data)(nil),
 		(*ReshapeAction_Trim_Marker)(nil),
 	}
-	file_api_v0alpha_lms_proto_msgTypes[195].OneofWrappers = []interface{}{
+	file_api_v0alpha_lms_proto_msgTypes[198].OneofWrappers = []interface{}{
 		(*ReshapeAction_Merge_FieldOrVal_Field)(nil),
 		(*ReshapeAction_Merge_FieldOrVal_Value)(nil),
 	}
-	file_api_v0alpha_lms_proto_msgTypes[196].OneofWrappers = []interface{}{
+	file_api_v0alpha_lms_proto_msgTypes[199].OneofWrappers = []interface{}{
 		(*ReshapeAction_Extract_Index_Position)(nil),
 		(*ReshapeAction_Extract_Index_Match)(nil),
 	}
@@ -21149,7 +21436,7 @@ func file_api_v0alpha_lms_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_v0alpha_lms_proto_rawDesc,
 			NumEnums:      1,
-			NumMessages:   198,
+			NumMessages:   201,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
