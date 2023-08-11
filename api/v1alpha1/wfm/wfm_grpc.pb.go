@@ -133,6 +133,7 @@ const (
 	WFM_GetDraftSchedule_FullMethodName                              = "/api.v1alpha1.wfm.WFM/GetDraftSchedule"
 	WFM_ListDraftSchedules_FullMethodName                            = "/api.v1alpha1.wfm.WFM/ListDraftSchedules"
 	WFM_DeleteDraftSchedule_FullMethodName                           = "/api.v1alpha1.wfm.WFM/DeleteDraftSchedule"
+	WFM_CopyScheduleToSchedule_FullMethodName                        = "/api.v1alpha1.wfm.WFM/CopyScheduleToSchedule"
 	WFM_CreateShiftInstance_FullMethodName                           = "/api.v1alpha1.wfm.WFM/CreateShiftInstance"
 	WFM_CreateShiftInstanceV2_FullMethodName                         = "/api.v1alpha1.wfm.WFM/CreateShiftInstanceV2"
 	WFM_SwapShiftInstances_FullMethodName                            = "/api.v1alpha1.wfm.WFM/SwapShiftInstances"
@@ -1001,6 +1002,9 @@ type WFMClient interface {
 	DeleteOpenTimesPattern(ctx context.Context, in *DeleteOpenTimesPatternReq, opts ...grpc.CallOption) (*DeleteOpenTimesPatternRes, error)
 	// Gets the inherited, own, and resulting bitmaps for the open times patterns of @node_to_check for @schedule_scenario_sid and the org sending the request.
 	// The @schedule_scenario_sid must match the scenario of the @node_to_check.
+	// If @bitmap_type is COMPLETE, the bitmaps will be generated using all relevant pattern data.
+	// If @bitmap_type is ONLY_WEEKMAPS, the bitmaps will be generated using only the weekmap data from the open times patterns.
+	// If @bitmap_type is ONLY_CALENDAR_ITEMS, the bitmaps will be generated using only the calendar item data from the open times patterns.
 	// The bitmaps will be generated for the span of @datetime_range.
 	// Required permissions:
 	//
@@ -1049,6 +1053,9 @@ type WFMClient interface {
 	// @entities_to_check must have the entity_type field set with a wfm agent, agent group or a type of node.
 	// If an availability bitmap is requested for an agent group, the bitmaps for all of it's member agents will be returned instead.
 	// The bitmaps will be generated for the span of @datetime_range.
+	// If @bitmap_type is COMPLETE, the bitmaps will be generated using all relevant pattern data.
+	// If @bitmap_type is ONLY_WEEKMAPS, the bitmaps will be generated using only the weekmap data from the availability patterns.
+	// If @bitmap_type is ONLY_CALENDAR_ITEMS, the bitmaps will be generated using only the calendar item data from the availability patterns.
 	// Required permissions:
 	//
 	//	NONE
@@ -1315,6 +1322,23 @@ type WFMClient interface {
 	//   - grpc.NotFound: the draft schedule with the given @draft_schedule_sid doesn't exist.
 	//   - grpc.Internal: error occurs when removing the draft schedule.
 	DeleteDraftSchedule(ctx context.Context, in *DeleteDraftScheduleReq, opts ...grpc.CallOption) (*DeleteDraftScheduleRes, error)
+	// Copies the shifts from @source_schedule_selector to @destination_schedule_selector, constrained by the given parameters for the org sending the request.
+	// If @datetime_range is set, all shifts within the datetime range will be copied.
+	// If @datetime_range is not set, all shifts in the @source_schedule_selector within the schedule range of the @destination_schedule_selector will be copied. However if one of them is a published schedule, it will use the schedule range of the draft schedule.
+	// If @start_datetimes_only is set to false, then shifts are considered to be within the @datetime range if any portion of them is within the range.
+	// If @start_datetimes_only is set to true, then only shifts with start times within the @datetime range will be copied.
+	// If @overlap_as_warning is set to false, any overlapping shifts for a given agent will return a diagnostic error, and prevent any shifts from being copied.
+	// If @overlap_as_warning is set to true, the shifts will be copied regardless of overlap conflicts, and any conflicts will cause a diagnostic warning to be returned after.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//
+	//	-grpc.Invalid: one or more fields in the request have invalid values.
+	//	-grpc.NotFound: the @source_schedule_selector or @destination_schedule_selector don't exist for the org sending the request.
+	//	-grpc.Internal: error occurs when creating the copied shift instances.
+	CopyScheduleToSchedule(ctx context.Context, in *CopyScheduleToScheduleReq, opts ...grpc.CallOption) (*CopyScheduleToScheduleRes, error)
 	// Creates a shift instance for the org sending the request with the provided parameters.
 	// This method is not implemented. Do not use.
 	// Required permissions:
@@ -2473,6 +2497,15 @@ func (c *wFMClient) DeleteDraftSchedule(ctx context.Context, in *DeleteDraftSche
 	return out, nil
 }
 
+func (c *wFMClient) CopyScheduleToSchedule(ctx context.Context, in *CopyScheduleToScheduleReq, opts ...grpc.CallOption) (*CopyScheduleToScheduleRes, error) {
+	out := new(CopyScheduleToScheduleRes)
+	err := c.cc.Invoke(ctx, WFM_CopyScheduleToSchedule_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) CreateShiftInstance(ctx context.Context, in *CreateShiftInstanceReq, opts ...grpc.CallOption) (*CreateShiftInstanceRes, error) {
 	out := new(CreateShiftInstanceRes)
 	err := c.cc.Invoke(ctx, WFM_CreateShiftInstance_FullMethodName, in, out, opts...)
@@ -3443,6 +3476,9 @@ type WFMServer interface {
 	DeleteOpenTimesPattern(context.Context, *DeleteOpenTimesPatternReq) (*DeleteOpenTimesPatternRes, error)
 	// Gets the inherited, own, and resulting bitmaps for the open times patterns of @node_to_check for @schedule_scenario_sid and the org sending the request.
 	// The @schedule_scenario_sid must match the scenario of the @node_to_check.
+	// If @bitmap_type is COMPLETE, the bitmaps will be generated using all relevant pattern data.
+	// If @bitmap_type is ONLY_WEEKMAPS, the bitmaps will be generated using only the weekmap data from the open times patterns.
+	// If @bitmap_type is ONLY_CALENDAR_ITEMS, the bitmaps will be generated using only the calendar item data from the open times patterns.
 	// The bitmaps will be generated for the span of @datetime_range.
 	// Required permissions:
 	//
@@ -3491,6 +3527,9 @@ type WFMServer interface {
 	// @entities_to_check must have the entity_type field set with a wfm agent, agent group or a type of node.
 	// If an availability bitmap is requested for an agent group, the bitmaps for all of it's member agents will be returned instead.
 	// The bitmaps will be generated for the span of @datetime_range.
+	// If @bitmap_type is COMPLETE, the bitmaps will be generated using all relevant pattern data.
+	// If @bitmap_type is ONLY_WEEKMAPS, the bitmaps will be generated using only the weekmap data from the availability patterns.
+	// If @bitmap_type is ONLY_CALENDAR_ITEMS, the bitmaps will be generated using only the calendar item data from the availability patterns.
 	// Required permissions:
 	//
 	//	NONE
@@ -3757,6 +3796,23 @@ type WFMServer interface {
 	//   - grpc.NotFound: the draft schedule with the given @draft_schedule_sid doesn't exist.
 	//   - grpc.Internal: error occurs when removing the draft schedule.
 	DeleteDraftSchedule(context.Context, *DeleteDraftScheduleReq) (*DeleteDraftScheduleRes, error)
+	// Copies the shifts from @source_schedule_selector to @destination_schedule_selector, constrained by the given parameters for the org sending the request.
+	// If @datetime_range is set, all shifts within the datetime range will be copied.
+	// If @datetime_range is not set, all shifts in the @source_schedule_selector within the schedule range of the @destination_schedule_selector will be copied. However if one of them is a published schedule, it will use the schedule range of the draft schedule.
+	// If @start_datetimes_only is set to false, then shifts are considered to be within the @datetime range if any portion of them is within the range.
+	// If @start_datetimes_only is set to true, then only shifts with start times within the @datetime range will be copied.
+	// If @overlap_as_warning is set to false, any overlapping shifts for a given agent will return a diagnostic error, and prevent any shifts from being copied.
+	// If @overlap_as_warning is set to true, the shifts will be copied regardless of overlap conflicts, and any conflicts will cause a diagnostic warning to be returned after.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//
+	//	-grpc.Invalid: one or more fields in the request have invalid values.
+	//	-grpc.NotFound: the @source_schedule_selector or @destination_schedule_selector don't exist for the org sending the request.
+	//	-grpc.Internal: error occurs when creating the copied shift instances.
+	CopyScheduleToSchedule(context.Context, *CopyScheduleToScheduleReq) (*CopyScheduleToScheduleRes, error)
 	// Creates a shift instance for the org sending the request with the provided parameters.
 	// This method is not implemented. Do not use.
 	// Required permissions:
@@ -4196,6 +4252,9 @@ func (UnimplementedWFMServer) ListDraftSchedules(context.Context, *ListDraftSche
 }
 func (UnimplementedWFMServer) DeleteDraftSchedule(context.Context, *DeleteDraftScheduleReq) (*DeleteDraftScheduleRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteDraftSchedule not implemented")
+}
+func (UnimplementedWFMServer) CopyScheduleToSchedule(context.Context, *CopyScheduleToScheduleReq) (*CopyScheduleToScheduleRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CopyScheduleToSchedule not implemented")
 }
 func (UnimplementedWFMServer) CreateShiftInstance(context.Context, *CreateShiftInstanceReq) (*CreateShiftInstanceRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateShiftInstance not implemented")
@@ -6064,6 +6123,24 @@ func _WFM_DeleteDraftSchedule_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_CopyScheduleToSchedule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CopyScheduleToScheduleReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).CopyScheduleToSchedule(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_CopyScheduleToSchedule_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).CopyScheduleToSchedule(ctx, req.(*CopyScheduleToScheduleReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WFM_CreateShiftInstance_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateShiftInstanceReq)
 	if err := dec(in); err != nil {
@@ -6684,6 +6761,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteDraftSchedule",
 			Handler:    _WFM_DeleteDraftSchedule_Handler,
+		},
+		{
+			MethodName: "CopyScheduleToSchedule",
+			Handler:    _WFM_CopyScheduleToSchedule_Handler,
 		},
 		{
 			MethodName: "CreateShiftInstance",
