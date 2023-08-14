@@ -7,7 +7,10 @@
 package idp
 
 import (
+	context "context"
 	grpc "google.golang.org/grpc"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -15,53 +18,292 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-const ()
+const (
+	IdentityProviderService_CreateAuthConnection_FullMethodName       = "/api.v1alpha1.idp.IdentityProviderService/CreateAuthConnection"
+	IdentityProviderService_GetAuthConnectionSettings_FullMethodName  = "/api.v1alpha1.idp.IdentityProviderService/GetAuthConnectionSettings"
+	IdentityProviderService_GetAuthConnection_FullMethodName          = "/api.v1alpha1.idp.IdentityProviderService/GetAuthConnection"
+	IdentityProviderService_DeleteAuthConnection_FullMethodName       = "/api.v1alpha1.idp.IdentityProviderService/DeleteAuthConnection"
+	IdentityProviderService_UpdateAuthConnectionSecret_FullMethodName = "/api.v1alpha1.idp.IdentityProviderService/UpdateAuthConnectionSecret"
+	IdentityProviderService_UpdateAuthConnectionGroups_FullMethodName = "/api.v1alpha1.idp.IdentityProviderService/UpdateAuthConnectionGroups"
+)
 
-// IdentityProviderClient is the client API for IdentityProvider service.
+// IdentityProviderServiceClient is the client API for IdentityProviderService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type IdentityProviderClient interface {
+type IdentityProviderServiceClient interface {
+	// CreateAuthConnection creates a new auth0 connection.
+	CreateAuthConnection(ctx context.Context, in *CreateAuthConnectionRequest, opts ...grpc.CallOption) (*CreateAuthConnectionResponse, error)
+	// GetAuthConnectionSettings gets auth connection settings.
+	// DEPRECATED: use GetAuthConnection
+	GetAuthConnectionSettings(ctx context.Context, in *GetAuthConnectionSettingsRequest, opts ...grpc.CallOption) (*GetAuthConnectionSettingsResponse, error)
+	// GetAuthConnection gets an existing auth connection.
+	GetAuthConnection(ctx context.Context, in *GetAuthConnectionRequest, opts ...grpc.CallOption) (*GetAuthConnectionResponse, error)
+	// DeleteAuthConnection removes the current orgs auth settings.
+	DeleteAuthConnection(ctx context.Context, in *DeleteAuthConnectionRequest, opts ...grpc.CallOption) (*DeleteAuthConnectionResponse, error)
+	// UpdateAuthConnectionSecret updates a connections secret.
+	UpdateAuthConnectionSecret(ctx context.Context, in *UpdateAuthConnectionSecretRequest, opts ...grpc.CallOption) (*UpdateAuthConnectionSecretResponse, error)
+	// UpdateAuthConnectionGroups updates a connections groups.
+	UpdateAuthConnectionGroups(ctx context.Context, in *UpdateAuthConnectionGroupsRequest, opts ...grpc.CallOption) (*UpdateAuthConnectionGroupsResponse, error)
 }
 
-type identityProviderClient struct {
+type identityProviderServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewIdentityProviderClient(cc grpc.ClientConnInterface) IdentityProviderClient {
-	return &identityProviderClient{cc}
+func NewIdentityProviderServiceClient(cc grpc.ClientConnInterface) IdentityProviderServiceClient {
+	return &identityProviderServiceClient{cc}
 }
 
-// IdentityProviderServer is the server API for IdentityProvider service.
-// All implementations must embed UnimplementedIdentityProviderServer
+func (c *identityProviderServiceClient) CreateAuthConnection(ctx context.Context, in *CreateAuthConnectionRequest, opts ...grpc.CallOption) (*CreateAuthConnectionResponse, error) {
+	out := new(CreateAuthConnectionResponse)
+	err := c.cc.Invoke(ctx, IdentityProviderService_CreateAuthConnection_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *identityProviderServiceClient) GetAuthConnectionSettings(ctx context.Context, in *GetAuthConnectionSettingsRequest, opts ...grpc.CallOption) (*GetAuthConnectionSettingsResponse, error) {
+	out := new(GetAuthConnectionSettingsResponse)
+	err := c.cc.Invoke(ctx, IdentityProviderService_GetAuthConnectionSettings_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *identityProviderServiceClient) GetAuthConnection(ctx context.Context, in *GetAuthConnectionRequest, opts ...grpc.CallOption) (*GetAuthConnectionResponse, error) {
+	out := new(GetAuthConnectionResponse)
+	err := c.cc.Invoke(ctx, IdentityProviderService_GetAuthConnection_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *identityProviderServiceClient) DeleteAuthConnection(ctx context.Context, in *DeleteAuthConnectionRequest, opts ...grpc.CallOption) (*DeleteAuthConnectionResponse, error) {
+	out := new(DeleteAuthConnectionResponse)
+	err := c.cc.Invoke(ctx, IdentityProviderService_DeleteAuthConnection_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *identityProviderServiceClient) UpdateAuthConnectionSecret(ctx context.Context, in *UpdateAuthConnectionSecretRequest, opts ...grpc.CallOption) (*UpdateAuthConnectionSecretResponse, error) {
+	out := new(UpdateAuthConnectionSecretResponse)
+	err := c.cc.Invoke(ctx, IdentityProviderService_UpdateAuthConnectionSecret_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *identityProviderServiceClient) UpdateAuthConnectionGroups(ctx context.Context, in *UpdateAuthConnectionGroupsRequest, opts ...grpc.CallOption) (*UpdateAuthConnectionGroupsResponse, error) {
+	out := new(UpdateAuthConnectionGroupsResponse)
+	err := c.cc.Invoke(ctx, IdentityProviderService_UpdateAuthConnectionGroups_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// IdentityProviderServiceServer is the server API for IdentityProviderService service.
+// All implementations must embed UnimplementedIdentityProviderServiceServer
 // for forward compatibility
-type IdentityProviderServer interface {
-	mustEmbedUnimplementedIdentityProviderServer()
+type IdentityProviderServiceServer interface {
+	// CreateAuthConnection creates a new auth0 connection.
+	CreateAuthConnection(context.Context, *CreateAuthConnectionRequest) (*CreateAuthConnectionResponse, error)
+	// GetAuthConnectionSettings gets auth connection settings.
+	// DEPRECATED: use GetAuthConnection
+	GetAuthConnectionSettings(context.Context, *GetAuthConnectionSettingsRequest) (*GetAuthConnectionSettingsResponse, error)
+	// GetAuthConnection gets an existing auth connection.
+	GetAuthConnection(context.Context, *GetAuthConnectionRequest) (*GetAuthConnectionResponse, error)
+	// DeleteAuthConnection removes the current orgs auth settings.
+	DeleteAuthConnection(context.Context, *DeleteAuthConnectionRequest) (*DeleteAuthConnectionResponse, error)
+	// UpdateAuthConnectionSecret updates a connections secret.
+	UpdateAuthConnectionSecret(context.Context, *UpdateAuthConnectionSecretRequest) (*UpdateAuthConnectionSecretResponse, error)
+	// UpdateAuthConnectionGroups updates a connections groups.
+	UpdateAuthConnectionGroups(context.Context, *UpdateAuthConnectionGroupsRequest) (*UpdateAuthConnectionGroupsResponse, error)
+	mustEmbedUnimplementedIdentityProviderServiceServer()
 }
 
-// UnimplementedIdentityProviderServer must be embedded to have forward compatible implementations.
-type UnimplementedIdentityProviderServer struct {
+// UnimplementedIdentityProviderServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedIdentityProviderServiceServer struct {
 }
 
-func (UnimplementedIdentityProviderServer) mustEmbedUnimplementedIdentityProviderServer() {}
+func (UnimplementedIdentityProviderServiceServer) CreateAuthConnection(context.Context, *CreateAuthConnectionRequest) (*CreateAuthConnectionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateAuthConnection not implemented")
+}
+func (UnimplementedIdentityProviderServiceServer) GetAuthConnectionSettings(context.Context, *GetAuthConnectionSettingsRequest) (*GetAuthConnectionSettingsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAuthConnectionSettings not implemented")
+}
+func (UnimplementedIdentityProviderServiceServer) GetAuthConnection(context.Context, *GetAuthConnectionRequest) (*GetAuthConnectionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAuthConnection not implemented")
+}
+func (UnimplementedIdentityProviderServiceServer) DeleteAuthConnection(context.Context, *DeleteAuthConnectionRequest) (*DeleteAuthConnectionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteAuthConnection not implemented")
+}
+func (UnimplementedIdentityProviderServiceServer) UpdateAuthConnectionSecret(context.Context, *UpdateAuthConnectionSecretRequest) (*UpdateAuthConnectionSecretResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateAuthConnectionSecret not implemented")
+}
+func (UnimplementedIdentityProviderServiceServer) UpdateAuthConnectionGroups(context.Context, *UpdateAuthConnectionGroupsRequest) (*UpdateAuthConnectionGroupsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateAuthConnectionGroups not implemented")
+}
+func (UnimplementedIdentityProviderServiceServer) mustEmbedUnimplementedIdentityProviderServiceServer() {
+}
 
-// UnsafeIdentityProviderServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to IdentityProviderServer will
+// UnsafeIdentityProviderServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to IdentityProviderServiceServer will
 // result in compilation errors.
-type UnsafeIdentityProviderServer interface {
-	mustEmbedUnimplementedIdentityProviderServer()
+type UnsafeIdentityProviderServiceServer interface {
+	mustEmbedUnimplementedIdentityProviderServiceServer()
 }
 
-func RegisterIdentityProviderServer(s grpc.ServiceRegistrar, srv IdentityProviderServer) {
-	s.RegisterService(&IdentityProvider_ServiceDesc, srv)
+func RegisterIdentityProviderServiceServer(s grpc.ServiceRegistrar, srv IdentityProviderServiceServer) {
+	s.RegisterService(&IdentityProviderService_ServiceDesc, srv)
 }
 
-// IdentityProvider_ServiceDesc is the grpc.ServiceDesc for IdentityProvider service.
+func _IdentityProviderService_CreateAuthConnection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateAuthConnectionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IdentityProviderServiceServer).CreateAuthConnection(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IdentityProviderService_CreateAuthConnection_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IdentityProviderServiceServer).CreateAuthConnection(ctx, req.(*CreateAuthConnectionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IdentityProviderService_GetAuthConnectionSettings_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAuthConnectionSettingsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IdentityProviderServiceServer).GetAuthConnectionSettings(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IdentityProviderService_GetAuthConnectionSettings_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IdentityProviderServiceServer).GetAuthConnectionSettings(ctx, req.(*GetAuthConnectionSettingsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IdentityProviderService_GetAuthConnection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAuthConnectionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IdentityProviderServiceServer).GetAuthConnection(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IdentityProviderService_GetAuthConnection_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IdentityProviderServiceServer).GetAuthConnection(ctx, req.(*GetAuthConnectionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IdentityProviderService_DeleteAuthConnection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteAuthConnectionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IdentityProviderServiceServer).DeleteAuthConnection(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IdentityProviderService_DeleteAuthConnection_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IdentityProviderServiceServer).DeleteAuthConnection(ctx, req.(*DeleteAuthConnectionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IdentityProviderService_UpdateAuthConnectionSecret_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateAuthConnectionSecretRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IdentityProviderServiceServer).UpdateAuthConnectionSecret(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IdentityProviderService_UpdateAuthConnectionSecret_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IdentityProviderServiceServer).UpdateAuthConnectionSecret(ctx, req.(*UpdateAuthConnectionSecretRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IdentityProviderService_UpdateAuthConnectionGroups_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateAuthConnectionGroupsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IdentityProviderServiceServer).UpdateAuthConnectionGroups(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IdentityProviderService_UpdateAuthConnectionGroups_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IdentityProviderServiceServer).UpdateAuthConnectionGroups(ctx, req.(*UpdateAuthConnectionGroupsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// IdentityProviderService_ServiceDesc is the grpc.ServiceDesc for IdentityProviderService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var IdentityProvider_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "api.v1alpha1.idp.IdentityProvider",
-	HandlerType: (*IdentityProviderServer)(nil),
-	Methods:     []grpc.MethodDesc{},
-	Streams:     []grpc.StreamDesc{},
-	Metadata:    "api/v1alpha1/idp/service.proto",
+var IdentityProviderService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "api.v1alpha1.idp.IdentityProviderService",
+	HandlerType: (*IdentityProviderServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "CreateAuthConnection",
+			Handler:    _IdentityProviderService_CreateAuthConnection_Handler,
+		},
+		{
+			MethodName: "GetAuthConnectionSettings",
+			Handler:    _IdentityProviderService_GetAuthConnectionSettings_Handler,
+		},
+		{
+			MethodName: "GetAuthConnection",
+			Handler:    _IdentityProviderService_GetAuthConnection_Handler,
+		},
+		{
+			MethodName: "DeleteAuthConnection",
+			Handler:    _IdentityProviderService_DeleteAuthConnection_Handler,
+		},
+		{
+			MethodName: "UpdateAuthConnectionSecret",
+			Handler:    _IdentityProviderService_UpdateAuthConnectionSecret_Handler,
+		},
+		{
+			MethodName: "UpdateAuthConnectionGroups",
+			Handler:    _IdentityProviderService_UpdateAuthConnectionGroups_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "api/v1alpha1/idp/service.proto",
 }

@@ -5,8 +5,10 @@
 package idpconnect
 
 import (
+	context "context"
+	errors "errors"
 	connect_go "github.com/bufbuild/connect-go"
-	_ "github.com/tcncloud/api-go/api/v1alpha1/idp"
+	idp "github.com/tcncloud/api-go/api/v1alpha1/idp"
 	http "net/http"
 	strings "strings"
 )
@@ -19,47 +21,239 @@ import (
 const _ = connect_go.IsAtLeastVersion0_1_0
 
 const (
-	// IdentityProviderName is the fully-qualified name of the IdentityProvider service.
-	IdentityProviderName = "api.v1alpha1.idp.IdentityProvider"
+	// IdentityProviderServiceName is the fully-qualified name of the IdentityProviderService service.
+	IdentityProviderServiceName = "api.v1alpha1.idp.IdentityProviderService"
 )
 
-// IdentityProviderClient is a client for the api.v1alpha1.idp.IdentityProvider service.
-type IdentityProviderClient interface {
+// These constants are the fully-qualified names of the RPCs defined in this package. They're
+// exposed at runtime as Spec.Procedure and as the final two segments of the HTTP route.
+//
+// Note that these are different from the fully-qualified method names used by
+// google.golang.org/protobuf/reflect/protoreflect. To convert from these constants to
+// reflection-formatted method names, remove the leading slash and convert the remaining slash to a
+// period.
+const (
+	// IdentityProviderServiceCreateAuthConnectionProcedure is the fully-qualified name of the
+	// IdentityProviderService's CreateAuthConnection RPC.
+	IdentityProviderServiceCreateAuthConnectionProcedure = "/api.v1alpha1.idp.IdentityProviderService/CreateAuthConnection"
+	// IdentityProviderServiceGetAuthConnectionSettingsProcedure is the fully-qualified name of the
+	// IdentityProviderService's GetAuthConnectionSettings RPC.
+	IdentityProviderServiceGetAuthConnectionSettingsProcedure = "/api.v1alpha1.idp.IdentityProviderService/GetAuthConnectionSettings"
+	// IdentityProviderServiceGetAuthConnectionProcedure is the fully-qualified name of the
+	// IdentityProviderService's GetAuthConnection RPC.
+	IdentityProviderServiceGetAuthConnectionProcedure = "/api.v1alpha1.idp.IdentityProviderService/GetAuthConnection"
+	// IdentityProviderServiceDeleteAuthConnectionProcedure is the fully-qualified name of the
+	// IdentityProviderService's DeleteAuthConnection RPC.
+	IdentityProviderServiceDeleteAuthConnectionProcedure = "/api.v1alpha1.idp.IdentityProviderService/DeleteAuthConnection"
+	// IdentityProviderServiceUpdateAuthConnectionSecretProcedure is the fully-qualified name of the
+	// IdentityProviderService's UpdateAuthConnectionSecret RPC.
+	IdentityProviderServiceUpdateAuthConnectionSecretProcedure = "/api.v1alpha1.idp.IdentityProviderService/UpdateAuthConnectionSecret"
+	// IdentityProviderServiceUpdateAuthConnectionGroupsProcedure is the fully-qualified name of the
+	// IdentityProviderService's UpdateAuthConnectionGroups RPC.
+	IdentityProviderServiceUpdateAuthConnectionGroupsProcedure = "/api.v1alpha1.idp.IdentityProviderService/UpdateAuthConnectionGroups"
+)
+
+// IdentityProviderServiceClient is a client for the api.v1alpha1.idp.IdentityProviderService
+// service.
+type IdentityProviderServiceClient interface {
+	// CreateAuthConnection creates a new auth0 connection.
+	CreateAuthConnection(context.Context, *connect_go.Request[idp.CreateAuthConnectionRequest]) (*connect_go.Response[idp.CreateAuthConnectionResponse], error)
+	// GetAuthConnectionSettings gets auth connection settings.
+	// DEPRECATED: use GetAuthConnection
+	GetAuthConnectionSettings(context.Context, *connect_go.Request[idp.GetAuthConnectionSettingsRequest]) (*connect_go.Response[idp.GetAuthConnectionSettingsResponse], error)
+	// GetAuthConnection gets an existing auth connection.
+	GetAuthConnection(context.Context, *connect_go.Request[idp.GetAuthConnectionRequest]) (*connect_go.Response[idp.GetAuthConnectionResponse], error)
+	// DeleteAuthConnection removes the current orgs auth settings.
+	DeleteAuthConnection(context.Context, *connect_go.Request[idp.DeleteAuthConnectionRequest]) (*connect_go.Response[idp.DeleteAuthConnectionResponse], error)
+	// UpdateAuthConnectionSecret updates a connections secret.
+	UpdateAuthConnectionSecret(context.Context, *connect_go.Request[idp.UpdateAuthConnectionSecretRequest]) (*connect_go.Response[idp.UpdateAuthConnectionSecretResponse], error)
+	// UpdateAuthConnectionGroups updates a connections groups.
+	UpdateAuthConnectionGroups(context.Context, *connect_go.Request[idp.UpdateAuthConnectionGroupsRequest]) (*connect_go.Response[idp.UpdateAuthConnectionGroupsResponse], error)
 }
 
-// NewIdentityProviderClient constructs a client for the api.v1alpha1.idp.IdentityProvider service.
-// By default, it uses the Connect protocol with the binary Protobuf Codec, asks for gzipped
-// responses, and sends uncompressed requests. To use the gRPC or gRPC-Web protocols, supply the
-// connect.WithGRPC() or connect.WithGRPCWeb() options.
+// NewIdentityProviderServiceClient constructs a client for the
+// api.v1alpha1.idp.IdentityProviderService service. By default, it uses the Connect protocol with
+// the binary Protobuf Codec, asks for gzipped responses, and sends uncompressed requests. To use
+// the gRPC or gRPC-Web protocols, supply the connect.WithGRPC() or connect.WithGRPCWeb() options.
 //
 // The URL supplied here should be the base URL for the Connect or gRPC server (for example,
 // http://api.acme.com or https://acme.com/grpc).
-func NewIdentityProviderClient(httpClient connect_go.HTTPClient, baseURL string, opts ...connect_go.ClientOption) IdentityProviderClient {
+func NewIdentityProviderServiceClient(httpClient connect_go.HTTPClient, baseURL string, opts ...connect_go.ClientOption) IdentityProviderServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
-	return &identityProviderClient{}
+	return &identityProviderServiceClient{
+		createAuthConnection: connect_go.NewClient[idp.CreateAuthConnectionRequest, idp.CreateAuthConnectionResponse](
+			httpClient,
+			baseURL+IdentityProviderServiceCreateAuthConnectionProcedure,
+			opts...,
+		),
+		getAuthConnectionSettings: connect_go.NewClient[idp.GetAuthConnectionSettingsRequest, idp.GetAuthConnectionSettingsResponse](
+			httpClient,
+			baseURL+IdentityProviderServiceGetAuthConnectionSettingsProcedure,
+			opts...,
+		),
+		getAuthConnection: connect_go.NewClient[idp.GetAuthConnectionRequest, idp.GetAuthConnectionResponse](
+			httpClient,
+			baseURL+IdentityProviderServiceGetAuthConnectionProcedure,
+			opts...,
+		),
+		deleteAuthConnection: connect_go.NewClient[idp.DeleteAuthConnectionRequest, idp.DeleteAuthConnectionResponse](
+			httpClient,
+			baseURL+IdentityProviderServiceDeleteAuthConnectionProcedure,
+			opts...,
+		),
+		updateAuthConnectionSecret: connect_go.NewClient[idp.UpdateAuthConnectionSecretRequest, idp.UpdateAuthConnectionSecretResponse](
+			httpClient,
+			baseURL+IdentityProviderServiceUpdateAuthConnectionSecretProcedure,
+			opts...,
+		),
+		updateAuthConnectionGroups: connect_go.NewClient[idp.UpdateAuthConnectionGroupsRequest, idp.UpdateAuthConnectionGroupsResponse](
+			httpClient,
+			baseURL+IdentityProviderServiceUpdateAuthConnectionGroupsProcedure,
+			opts...,
+		),
+	}
 }
 
-// identityProviderClient implements IdentityProviderClient.
-type identityProviderClient struct {
+// identityProviderServiceClient implements IdentityProviderServiceClient.
+type identityProviderServiceClient struct {
+	createAuthConnection       *connect_go.Client[idp.CreateAuthConnectionRequest, idp.CreateAuthConnectionResponse]
+	getAuthConnectionSettings  *connect_go.Client[idp.GetAuthConnectionSettingsRequest, idp.GetAuthConnectionSettingsResponse]
+	getAuthConnection          *connect_go.Client[idp.GetAuthConnectionRequest, idp.GetAuthConnectionResponse]
+	deleteAuthConnection       *connect_go.Client[idp.DeleteAuthConnectionRequest, idp.DeleteAuthConnectionResponse]
+	updateAuthConnectionSecret *connect_go.Client[idp.UpdateAuthConnectionSecretRequest, idp.UpdateAuthConnectionSecretResponse]
+	updateAuthConnectionGroups *connect_go.Client[idp.UpdateAuthConnectionGroupsRequest, idp.UpdateAuthConnectionGroupsResponse]
 }
 
-// IdentityProviderHandler is an implementation of the api.v1alpha1.idp.IdentityProvider service.
-type IdentityProviderHandler interface {
+// CreateAuthConnection calls api.v1alpha1.idp.IdentityProviderService.CreateAuthConnection.
+func (c *identityProviderServiceClient) CreateAuthConnection(ctx context.Context, req *connect_go.Request[idp.CreateAuthConnectionRequest]) (*connect_go.Response[idp.CreateAuthConnectionResponse], error) {
+	return c.createAuthConnection.CallUnary(ctx, req)
 }
 
-// NewIdentityProviderHandler builds an HTTP handler from the service implementation. It returns the
-// path on which to mount the handler and the handler itself.
+// GetAuthConnectionSettings calls
+// api.v1alpha1.idp.IdentityProviderService.GetAuthConnectionSettings.
+func (c *identityProviderServiceClient) GetAuthConnectionSettings(ctx context.Context, req *connect_go.Request[idp.GetAuthConnectionSettingsRequest]) (*connect_go.Response[idp.GetAuthConnectionSettingsResponse], error) {
+	return c.getAuthConnectionSettings.CallUnary(ctx, req)
+}
+
+// GetAuthConnection calls api.v1alpha1.idp.IdentityProviderService.GetAuthConnection.
+func (c *identityProviderServiceClient) GetAuthConnection(ctx context.Context, req *connect_go.Request[idp.GetAuthConnectionRequest]) (*connect_go.Response[idp.GetAuthConnectionResponse], error) {
+	return c.getAuthConnection.CallUnary(ctx, req)
+}
+
+// DeleteAuthConnection calls api.v1alpha1.idp.IdentityProviderService.DeleteAuthConnection.
+func (c *identityProviderServiceClient) DeleteAuthConnection(ctx context.Context, req *connect_go.Request[idp.DeleteAuthConnectionRequest]) (*connect_go.Response[idp.DeleteAuthConnectionResponse], error) {
+	return c.deleteAuthConnection.CallUnary(ctx, req)
+}
+
+// UpdateAuthConnectionSecret calls
+// api.v1alpha1.idp.IdentityProviderService.UpdateAuthConnectionSecret.
+func (c *identityProviderServiceClient) UpdateAuthConnectionSecret(ctx context.Context, req *connect_go.Request[idp.UpdateAuthConnectionSecretRequest]) (*connect_go.Response[idp.UpdateAuthConnectionSecretResponse], error) {
+	return c.updateAuthConnectionSecret.CallUnary(ctx, req)
+}
+
+// UpdateAuthConnectionGroups calls
+// api.v1alpha1.idp.IdentityProviderService.UpdateAuthConnectionGroups.
+func (c *identityProviderServiceClient) UpdateAuthConnectionGroups(ctx context.Context, req *connect_go.Request[idp.UpdateAuthConnectionGroupsRequest]) (*connect_go.Response[idp.UpdateAuthConnectionGroupsResponse], error) {
+	return c.updateAuthConnectionGroups.CallUnary(ctx, req)
+}
+
+// IdentityProviderServiceHandler is an implementation of the
+// api.v1alpha1.idp.IdentityProviderService service.
+type IdentityProviderServiceHandler interface {
+	// CreateAuthConnection creates a new auth0 connection.
+	CreateAuthConnection(context.Context, *connect_go.Request[idp.CreateAuthConnectionRequest]) (*connect_go.Response[idp.CreateAuthConnectionResponse], error)
+	// GetAuthConnectionSettings gets auth connection settings.
+	// DEPRECATED: use GetAuthConnection
+	GetAuthConnectionSettings(context.Context, *connect_go.Request[idp.GetAuthConnectionSettingsRequest]) (*connect_go.Response[idp.GetAuthConnectionSettingsResponse], error)
+	// GetAuthConnection gets an existing auth connection.
+	GetAuthConnection(context.Context, *connect_go.Request[idp.GetAuthConnectionRequest]) (*connect_go.Response[idp.GetAuthConnectionResponse], error)
+	// DeleteAuthConnection removes the current orgs auth settings.
+	DeleteAuthConnection(context.Context, *connect_go.Request[idp.DeleteAuthConnectionRequest]) (*connect_go.Response[idp.DeleteAuthConnectionResponse], error)
+	// UpdateAuthConnectionSecret updates a connections secret.
+	UpdateAuthConnectionSecret(context.Context, *connect_go.Request[idp.UpdateAuthConnectionSecretRequest]) (*connect_go.Response[idp.UpdateAuthConnectionSecretResponse], error)
+	// UpdateAuthConnectionGroups updates a connections groups.
+	UpdateAuthConnectionGroups(context.Context, *connect_go.Request[idp.UpdateAuthConnectionGroupsRequest]) (*connect_go.Response[idp.UpdateAuthConnectionGroupsResponse], error)
+}
+
+// NewIdentityProviderServiceHandler builds an HTTP handler from the service implementation. It
+// returns the path on which to mount the handler and the handler itself.
 //
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
-func NewIdentityProviderHandler(svc IdentityProviderHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	return "/api.v1alpha1.idp.IdentityProvider/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+func NewIdentityProviderServiceHandler(svc IdentityProviderServiceHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
+	identityProviderServiceCreateAuthConnectionHandler := connect_go.NewUnaryHandler(
+		IdentityProviderServiceCreateAuthConnectionProcedure,
+		svc.CreateAuthConnection,
+		opts...,
+	)
+	identityProviderServiceGetAuthConnectionSettingsHandler := connect_go.NewUnaryHandler(
+		IdentityProviderServiceGetAuthConnectionSettingsProcedure,
+		svc.GetAuthConnectionSettings,
+		opts...,
+	)
+	identityProviderServiceGetAuthConnectionHandler := connect_go.NewUnaryHandler(
+		IdentityProviderServiceGetAuthConnectionProcedure,
+		svc.GetAuthConnection,
+		opts...,
+	)
+	identityProviderServiceDeleteAuthConnectionHandler := connect_go.NewUnaryHandler(
+		IdentityProviderServiceDeleteAuthConnectionProcedure,
+		svc.DeleteAuthConnection,
+		opts...,
+	)
+	identityProviderServiceUpdateAuthConnectionSecretHandler := connect_go.NewUnaryHandler(
+		IdentityProviderServiceUpdateAuthConnectionSecretProcedure,
+		svc.UpdateAuthConnectionSecret,
+		opts...,
+	)
+	identityProviderServiceUpdateAuthConnectionGroupsHandler := connect_go.NewUnaryHandler(
+		IdentityProviderServiceUpdateAuthConnectionGroupsProcedure,
+		svc.UpdateAuthConnectionGroups,
+		opts...,
+	)
+	return "/api.v1alpha1.idp.IdentityProviderService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
+		case IdentityProviderServiceCreateAuthConnectionProcedure:
+			identityProviderServiceCreateAuthConnectionHandler.ServeHTTP(w, r)
+		case IdentityProviderServiceGetAuthConnectionSettingsProcedure:
+			identityProviderServiceGetAuthConnectionSettingsHandler.ServeHTTP(w, r)
+		case IdentityProviderServiceGetAuthConnectionProcedure:
+			identityProviderServiceGetAuthConnectionHandler.ServeHTTP(w, r)
+		case IdentityProviderServiceDeleteAuthConnectionProcedure:
+			identityProviderServiceDeleteAuthConnectionHandler.ServeHTTP(w, r)
+		case IdentityProviderServiceUpdateAuthConnectionSecretProcedure:
+			identityProviderServiceUpdateAuthConnectionSecretHandler.ServeHTTP(w, r)
+		case IdentityProviderServiceUpdateAuthConnectionGroupsProcedure:
+			identityProviderServiceUpdateAuthConnectionGroupsHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
 	})
 }
 
-// UnimplementedIdentityProviderHandler returns CodeUnimplemented from all methods.
-type UnimplementedIdentityProviderHandler struct{}
+// UnimplementedIdentityProviderServiceHandler returns CodeUnimplemented from all methods.
+type UnimplementedIdentityProviderServiceHandler struct{}
+
+func (UnimplementedIdentityProviderServiceHandler) CreateAuthConnection(context.Context, *connect_go.Request[idp.CreateAuthConnectionRequest]) (*connect_go.Response[idp.CreateAuthConnectionResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.idp.IdentityProviderService.CreateAuthConnection is not implemented"))
+}
+
+func (UnimplementedIdentityProviderServiceHandler) GetAuthConnectionSettings(context.Context, *connect_go.Request[idp.GetAuthConnectionSettingsRequest]) (*connect_go.Response[idp.GetAuthConnectionSettingsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.idp.IdentityProviderService.GetAuthConnectionSettings is not implemented"))
+}
+
+func (UnimplementedIdentityProviderServiceHandler) GetAuthConnection(context.Context, *connect_go.Request[idp.GetAuthConnectionRequest]) (*connect_go.Response[idp.GetAuthConnectionResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.idp.IdentityProviderService.GetAuthConnection is not implemented"))
+}
+
+func (UnimplementedIdentityProviderServiceHandler) DeleteAuthConnection(context.Context, *connect_go.Request[idp.DeleteAuthConnectionRequest]) (*connect_go.Response[idp.DeleteAuthConnectionResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.idp.IdentityProviderService.DeleteAuthConnection is not implemented"))
+}
+
+func (UnimplementedIdentityProviderServiceHandler) UpdateAuthConnectionSecret(context.Context, *connect_go.Request[idp.UpdateAuthConnectionSecretRequest]) (*connect_go.Response[idp.UpdateAuthConnectionSecretResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.idp.IdentityProviderService.UpdateAuthConnectionSecret is not implemented"))
+}
+
+func (UnimplementedIdentityProviderServiceHandler) UpdateAuthConnectionGroups(context.Context, *connect_go.Request[idp.UpdateAuthConnectionGroupsRequest]) (*connect_go.Response[idp.UpdateAuthConnectionGroupsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.idp.IdentityProviderService.UpdateAuthConnectionGroups is not implemented"))
+}
