@@ -20,13 +20,17 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// OmniNodePrompt is the PoC all-in-one version to send a message (optionally displaying options) and store the user input
 type OmniNodePrompt struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Prompt  string   `protobuf:"bytes,1,opt,name=prompt,proto3" json:"prompt,omitempty"`
-	StoreTo string   `protobuf:"bytes,2,opt,name=store_to,json=storeTo,proto3" json:"store_to,omitempty"`
+	// the base message to send
+	Prompt string `protobuf:"bytes,1,opt,name=prompt,proto3" json:"prompt,omitempty"`
+	// the name (key in payload) under which to store the user input
+	StoreTo string `protobuf:"bytes,2,opt,name=store_to,json=storeTo,proto3" json:"store_to,omitempty"`
+	// a list of options to display along with the prompt
 	Options []string `protobuf:"bytes,3,rep,name=options,proto3" json:"options,omitempty"`
 }
 
@@ -83,13 +87,16 @@ func (x *OmniNodePrompt) GetOptions() []string {
 	return nil
 }
 
+// OmniNodeOptions will store a list of options under a given subkey in the payload.options
 type OmniNodeOptions struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	OptionsId string   `protobuf:"bytes,1,opt,name=options_id,json=optionsId,proto3" json:"options_id,omitempty"`
-	Options   []string `protobuf:"bytes,2,rep,name=options,proto3" json:"options,omitempty"`
+	// the name (key in payload.options) under which to store the options
+	OptionsId string `protobuf:"bytes,1,opt,name=options_id,json=optionsId,proto3" json:"options_id,omitempty"`
+	// the list of options to store
+	Options []string `protobuf:"bytes,2,rep,name=options,proto3" json:"options,omitempty"`
 }
 
 func (x *OmniNodeOptions) Reset() {
@@ -138,12 +145,15 @@ func (x *OmniNodeOptions) GetOptions() []string {
 	return nil
 }
 
+// OmniNodeSendMessage will send a message, optionally displaying options
 type OmniNodeSendMessage struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Prompt  string `protobuf:"bytes,1,opt,name=prompt,proto3" json:"prompt,omitempty"`
+	// the base message to send
+	Prompt string `protobuf:"bytes,1,opt,name=prompt,proto3" json:"prompt,omitempty"`
+	// (Optional) an options ID previously stored via OmniNodeOptions (references an OmniNodeOptions.options_id)
 	Options string `protobuf:"bytes,2,opt,name=options,proto3" json:"options,omitempty"`
 }
 
@@ -193,11 +203,13 @@ func (x *OmniNodeSendMessage) GetOptions() string {
 	return ""
 }
 
+// OmniNodeStore will store the text value of an incoming message under a given key in the payload
 type OmniNodeStore struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// the name (key in payload) under which to store the input (e.g. "input_text")
 	StoreTo string `protobuf:"bytes,1,opt,name=store_to,json=storeTo,proto3" json:"store_to,omitempty"`
 }
 
@@ -240,13 +252,18 @@ func (x *OmniNodeStore) GetStoreTo() string {
 	return ""
 }
 
+// OmniNodeDecision compares the input against previously stored options (via OmniNodeOptions)
 type OmniNodeDecision struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// an options ID previously stored via OmniNodeOptions (references an OmniNodeOptions.options_id)
 	Options string `protobuf:"bytes,1,opt,name=options,proto3" json:"options,omitempty"`
-	Input   string `protobuf:"bytes,2,opt,name=input,proto3" json:"input,omitempty"`
+	// the input stored in the payload, to extract from json
+	//
+	//	e.g. "{{input_text}}" a previously stored key from OmniNodeStore
+	Input string `protobuf:"bytes,2,opt,name=input,proto3" json:"input,omitempty"`
 }
 
 func (x *OmniNodeDecision) Reset() {
@@ -295,11 +312,13 @@ func (x *OmniNodeDecision) GetInput() string {
 	return ""
 }
 
+// OmniNodeSetSkill adds the given string as a skill on the coversation
 type OmniNodeSetSkill struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// the skill to add to the conversation
 	Skill string `protobuf:"bytes,1,opt,name=skill,proto3" json:"skill,omitempty"`
 }
 
@@ -342,6 +361,7 @@ func (x *OmniNodeSetSkill) GetSkill() string {
 	return ""
 }
 
+// OmniNodeToAgent removes the conversation from the flow (updates the status)
 type OmniNodeToAgent struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -380,11 +400,13 @@ func (*OmniNodeToAgent) Descriptor() ([]byte, []int) {
 	return file_api_commons_workflows_omni_proto_rawDescGZIP(), []int{6}
 }
 
+// OmniNodeError will send an error message to the user and log an error
 type OmniNodeError struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// the error message to send/log
 	Error string `protobuf:"bytes,1,opt,name=error,proto3" json:"error,omitempty"`
 }
 
