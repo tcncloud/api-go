@@ -697,7 +697,8 @@ type DiagnosticCode int32
 const (
 	// DiagnosticCodeGeneral integer value for a diagnostic coded as 'general' type.
 	// The code type used when no other code is appropriate.
-	// cannot be described by a code. The consumer must interpret the text message for further details
+	// GENERAL means that this diagnostic message cannot be described by a code.
+	// The consumer must interpret the text message for further details.
 	DiagnosticCode_GENERAL DiagnosticCode = 0
 	// DiagnosticCodeOk integer value for a diagnostic coded as 'ok' type.
 	// The diagnostic is reporting no errors found.
@@ -705,37 +706,47 @@ const (
 	// DiagnosticCodeNoSkillsInDictionary integer value for a diagnostic coded as 'no skills in dictionary' type.
 	// The diagnostic is reporting no skills in the dictionary.
 	DiagnosticCode_NO_SKILLS_IN_DICTIONARY DiagnosticCode = 2
-	// DiagnosticCodeAgentHasNoSkillProficiencies integer value for a diagnostic coded as 'agent has no skill proficiencies' type.
+	// DiagnosticCodeAgentHasNoSkillProficiencies integer value for a diagnostic coded as
+	// 'agent has no skill proficiencies' type.
 	// The diagnostic is reporting a wfm agent with no skill proficiencies.
 	DiagnosticCode_AGENT_HAS_NO_SKILL_PROFICIENCIES DiagnosticCode = 3
 	// DiagnosticCodeAgentHasNoSkills integer value for a diagnostic coded as 'agent has no skills' type.
 	// The diagnostic is reporting an agent with no skills.
 	DiagnosticCode_AGENT_HAS_NO_SKILLS DiagnosticCode = 4
-	// DiagnosticCodeNoSchedulingActivitiesForConstraintRules integer value for a diagnostic coded as 'no scheduling activity for constraint rules' type.
+	// DiagnosticCodeNoSchedulingActivitiesForConstraintRules integer value for a diagnostic coded as
+	// 'no scheduling activity for constraint rules' type.
 	// The diagnostic is reporting the constraint rules don't have a scheduling activity.
 	DiagnosticCode_NO_SCHEDULING_ACTIVITIES_FOR_CONSTRAINT_RULES DiagnosticCode = 5
-	// DiagnosticCodeSchedulingActivityForConstraintRuleNotFound integer value for a diagnostic coded as 'scheduling activity for constraint rule not found' type.
+	// DiagnosticCodeSchedulingActivityForConstraintRuleNotFound integer value for a diagnostic coded as
+	// 'scheduling activity for constraint rule not found' type.
 	// The diagnostic is reporting a constraint rule pointing to a scheduling activity that cannot be found.
 	DiagnosticCode_SCHEDULING_ACTIVITY_FOR_CONSTRAINT_RULE_NOT_FOUND DiagnosticCode = 6
-	// DiagnosticCodeShiftTemplateCannotBeNone integer value for a diagnostic coded as 'shift template cannot be none' type.
+	// DiagnosticCodeShiftTemplateCannotBeNone integer value for a diagnostic coded as
+	// 'shift template cannot be none' type.
 	// The diagnostic is reporting a NONE value for a shift template
 	DiagnosticCode_SHIFT_TEMPLATE_CANNOT_BE_NONE DiagnosticCode = 7
-	// DiagnosticCodeShiftTemplateHasNoPlacementRules integer value for a diagnostic coded as 'shift template has no placement rules' type.
+	// DiagnosticCodeShiftTemplateHasNoPlacementRules integer value for a diagnostic coded as
+	// 'shift template has no placement rules' type.
 	// The diagnostic is reporting a shift template with no member placement rules.
 	DiagnosticCode_SHIFT_TEMPLATE_HAS_NO_PLACEMENT_RULES DiagnosticCode = 8
-	// DiagnosticCodeNoOncallInShiftTemplatePlacementRules integer value for a diagnostic coded as 'no on-call in shift template placement rules' type.
+	// DiagnosticCodeNoOncallInShiftTemplatePlacementRules integer value for a diagnostic coded as
+	// 'no on-call in shift template placement rules' type.
 	// The diagnostic is reporting a shift template whose placement rules do not include an on-call placement.
 	DiagnosticCode_NO_ONCALL_IN_SHIFT_TEMPLATE_PLACEMENT_RULES DiagnosticCode = 9
-	// DiagnosticCodeMinGtMaxDurationInShiftTemplatePlacementRules integer value for a diagnostic coded as 'min greater than max in shift template placement rules' type.
-	// The diagnostic is reporting the min duration for a shift templates placement rule being greater than the max duration.
+	// DiagnosticCodeMinGtMaxDurationInShiftTemplatePlacementRules integer value for a diagnostic coded as
+	// 'min greater than max in shift template placement rules' type.
+	// The diagnostic is reporting the min duration for a shift templates placement rule is greater than max duration.
 	DiagnosticCode_MIN_GT_MAX_DURATION_IN_SHIFT_TEMPLATE_PLACEMENT_RULES DiagnosticCode = 10
-	// DiagnosticCodeMinGtMaxAgentsInShiftTemplate integer value for a diagnostic coded as 'min greater than max agents in shift template' type.
+	// DiagnosticCodeMinGtMaxAgentsInShiftTemplate integer value for a diagnostic coded as
+	// 'min greater than max agents in shift template' type.
 	// The diagnostic is reporting a shift template with a min_agents value greater than it's max_agents value.
 	DiagnosticCode_MIN_GT_MAX_AGENTS_IN_SHIFT_TEMPLATE DiagnosticCode = 11
-	// DiagnosticCodeNoPlacementRulesForShiftTemplate integer value for a diagnostic coded as 'no placement rules for shift template' type.
+	// DiagnosticCodeNoPlacementRulesForShiftTemplate integer value for a diagnostic coded as
+	// 'no placement rules for shift template' type.
 	// The diagnostic is reporting no placement rules as members of the shift template.
 	DiagnosticCode_NO_PLACEMENT_RULES_FOR_SHIFT_TEMPLATE DiagnosticCode = 12
-	// DiagnosticCodeActivitiesShorterThanShift integer value for a diagnostic coded as 'activities shorter than shift' type.
+	// DiagnosticCodeActivitiesShorterThanShift integer value for a diagnostic coded as
+	// 'activities shorter than shift' type.
 	// The diagnostic is reporting that the activities are too short for the shift.
 	DiagnosticCode_ACTIVITIES_SHORTER_THAN_SHIFT DiagnosticCode = 13
 	// DiagnosticCodeNotEnoughAgentsForShift integer value for a diagnostic coded as 'not enough agents for shift' type.
@@ -744,7 +755,8 @@ const (
 	// DiagnosticCodeProgramHasNoAgentGroups integer value for a diagnostic coded as 'program has no agent groups' type.
 	// The diagnostic is reporting that a program node has no member agent groups.
 	DiagnosticCode_PROGRAM_HAS_NO_AGENT_GROUPS DiagnosticCode = 15
-	// DiagnosticCodeProgramHasNoShiftTemplates integer value for a diagnostic coded as 'program has no shift templates' type.
+	// DiagnosticCodeProgramHasNoShiftTemplates integer value for a diagnostic coded as
+	// 'program has no shift templates' type.
 	// The diagnostic is reporting that a program node has no member shift templates.
 	DiagnosticCode_PROGRAM_HAS_NO_SHIFT_TEMPLATES DiagnosticCode = 16
 	// DiagnosticCodeLocationHasNoPrograms integer value for a diagnostic coded as 'location has no programs' type.
@@ -756,71 +768,99 @@ const (
 	// DiagnosticCodeCallCenterHasNoClients integer value for a diagnostic coded as 'call center has no clients' type.
 	// The diagnostic is reporting that a call center node has no member client nodes
 	DiagnosticCode_CALL_CENTER_HAS_NO_CLIENTS DiagnosticCode = 19
-	// DiagnosticCodeProgramHasInvalidParentLocation integer value for a diagnostic coded as 'program has invalid parent location' type.
+	// DiagnosticCodeProgramHasInvalidParentLocation integer value for a diagnostic coded as
+	// 'program has invalid parent location' type.
 	// The diagnostic is reporting that a program node has an invalid parent location node.
 	DiagnosticCode_PROGRAM_HAS_INVALID_PARENT_LOCATION DiagnosticCode = 20
-	// DiagnosticCodeLocationHasInvalidParentClient integer value for a diagnostic coded as 'location has invalid parent client' type.
+	// DiagnosticCodeLocationHasInvalidParentClient integer value for a diagnostic coded as
+	// 'location has invalid parent client' type.
 	// The diagnostic is reporting that a location node has an invalid parent client node.
 	DiagnosticCode_LOCATION_HAS_INVALID_PARENT_CLIENT DiagnosticCode = 21
-	// DiagnosticCodeClientHasInvalidParentCallCenter integer value for a diagnostic coded as 'client has invalid parent call center' type.
+	// DiagnosticCodeClientHasInvalidParentCallCenter integer value for a diagnostic coded as
+	// 'client has invalid parent call center' type.
 	// The diagnostic is reporting that a client node has an invalid parent call center.
 	DiagnosticCode_CLIENT_HAS_INVALID_PARENT_CALL_CENTER DiagnosticCode = 22
-	// DiagnosticCodeAgentGroupHasInvalidParentNode integer value for a diagnostic coded as 'agent group has invalid parent node' type.
+	// DiagnosticCodeAgentGroupHasInvalidParentNode integer value for a diagnostic coded as
+	// 'agent group has invalid parent node' type.
 	// The diagnostic is reporting that an agent group has an invalid parent node.
 	DiagnosticCode_AGENT_GROUP_HAS_INVALID_PARENT_NODE DiagnosticCode = 23
-	// DiagnosticCodeShiftTemplateHasInvalidParentProgram integer value for a diagnostic coded as 'shift template has invalid parent program' type.
+	// DiagnosticCodeShiftTemplateHasInvalidParentProgram integer value for a diagnostic coded as
+	// 'shift template has invalid parent program' type.
 	// The diagnostic is reporting an invalid parent program for a shift template.
 	DiagnosticCode_SHIFT_TEMPLATE_HAS_INVALID_PARENT_PROGRAM DiagnosticCode = 24
-	// DiagnosticCodeNoSkillProficiencyForMinSkillProficiencyConstraintRule integer value for a diagnostic coded as 'skill proficiency for constraint rule not found' type.
+	// DiagnosticCodeNoSkillProficiencyForMinSkillProficiencyConstraintRule integer value for a diagnostic coded as
+	// 'skill proficiency for constraint rule not found' type.
 	// The diagnostic is reporting a constraint rule pointing to a missing skill proficiency.
 	DiagnosticCode_NO_SKILL_PROFICIENCY_FOR_MIN_SKILL_PROFICIENCY_CONSTRAINT_RULE DiagnosticCode = 25
-	// DiagnosticCodeTooManyAgentsWithLockedShiftsForMinAgents integer value for a diagnostic coded as 'too many agent with locked shifts' type.
+	// DiagnosticCodeTooManyAgentsWithLockedShiftsForMinAgents integer value for a diagnostic coded as
+	// 'too many agent with locked shifts' type.
 	DiagnosticCode_TOO_MANY_AGENTS_WITH_LOCKED_SHIFTS_FOR_MIN_AGENTS DiagnosticCode = 26
-	// DiagnosticCodeAgentDoesNotBelongToAnAgentGroup integer value for a diagnostic coded as 'agent does not belong to an agent group' type.
+	// DiagnosticCodeAgentDoesNotBelongToAnAgentGroup integer value for a diagnostic coded as
+	// 'agent does not belong to an agent group' type.
 	DiagnosticCode_AGENT_DOES_NOT_BELONG_TO_AN_AGENT_GROUP DiagnosticCode = 27
-	// DiagnosticCodeInvalidConstraintValUnits integer value for a diagnostic coded as 'Invalid constraint val units' type.
+	// DiagnosticCodeInvalidConstraintValUnits integer value for a diagnostic coded as
+	// 'Invalid constraint val units' type.
 	DiagnosticCode_INVALID_CONSTRAINT_VAL_UNITS DiagnosticCode = 28
 	// DiagnosticCodeConstraintGeneralFailure integer value for a diagnostic coded as 'Constraint general failure' type.
 	DiagnosticCode_CONSTRAINT_GENERAL_FAILURE DiagnosticCode = 29
-	// DiagnosticCodeCandidateShiftCollisionDetected integer value for a diagnostic coded as 'Candidate shift collision detected' type.
+	// DiagnosticCodeCandidateShiftCollisionDetected integer value for a diagnostic coded as
+	// 'Candidate shift collision detected' type.
 	DiagnosticCode_CANDIDATE_SHIFT_COLLISION_DETECTED DiagnosticCode = 30
-	// DiagnosticCodeCandidateShiftAgentNotAvailable integer value for a diagnostic coded as 'Candidate shift agent not available' type.
+	// DiagnosticCodeCandidateShiftAgentNotAvailable integer value for a diagnostic coded as
+	// 'Candidate shift agent not available' type.
 	DiagnosticCode_CANDIDATE_SHIFT_AGENT_NOT_AVAILABLE DiagnosticCode = 31
 	// DiagnosticCodeCandidateClosed integer value for a diagnostic coded as 'Candidate closed' type.
 	DiagnosticCode_CANDIDATE_CLOSED DiagnosticCode = 32
-	// DiagnosticCodeConstraintActivityNotFound integer value for a diagnostic coded as 'Constraint activity not found' type.
+	// DiagnosticCodeConstraintActivityNotFound integer value for a diagnostic coded as
+	// 'Constraint activity not found' type.
 	DiagnosticCode_CONSTRAINT_ACTIVITY_NOT_FOUND DiagnosticCode = 33
-	// DiagnosticCodeConstraintAgentDoesNotHaveProficiency integer value for a diagnostic coded as 'Constraint agent does not have proficiency' type.
+	// DiagnosticCodeConstraintAgentDoesNotHaveProficiency integer value for a diagnostic coded as
+	// 'Constraint agent does not have proficiency' type.
 	DiagnosticCode_CONSTRAINT_AGENT_DOES_NOT_HAVE_PROFICIENCY DiagnosticCode = 34
-	// DiagnosticCodeConstraintAgentProficiencyTooLow integer value for a diagnostic coded as 'Constraint agent proficiency too low' type.
+	// DiagnosticCodeConstraintAgentProficiencyTooLow integer value for a diagnostic coded as
+	// 'Constraint agent proficiency too low' type.
 	DiagnosticCode_CONSTRAINT_AGENT_PROFICIENCY_TOO_LOW DiagnosticCode = 35
-	// DiagnosticCodeConstraintMaxTotalOnFailure integer value for a diagnostic coded as 'Constraint max total on failure' type.
+	// DiagnosticCodeConstraintMaxTotalOnFailure integer value for a diagnostic coded as
+	// 'Constraint max total on failure' type.
 	DiagnosticCode_CONSTRAINT_MAX_TOTAL_ON_FAILURE DiagnosticCode = 36
-	// DiagnosticCodeConstraintMinTotalOnFailure integer value for a diagnostic coded as 'Constraint min total on failure' type.
+	// DiagnosticCodeConstraintMinTotalOnFailure integer value for a diagnostic coded as
+	// 'Constraint min total on failure' type.
 	DiagnosticCode_CONSTRAINT_MIN_TOTAL_ON_FAILURE DiagnosticCode = 37
-	// DiagnosticCodeConstraintMaxTotalOffFailure integer value for a diagnostic coded as 'Constraint max total off failure' type.
+	// DiagnosticCodeConstraintMaxTotalOffFailure integer value for a diagnostic coded as
+	// 'Constraint max total off failure' type.
 	DiagnosticCode_CONSTRAINT_MAX_TOTAL_OFF_FAILURE DiagnosticCode = 38
-	// DiagnosticCodeConstraintMinTotalOffFailure integer value for a diagnostic coded as 'Constraint min total off failure' type.
+	// DiagnosticCodeConstraintMinTotalOffFailure integer value for a diagnostic coded as
+	// 'Constraint min total off failure' type.
 	DiagnosticCode_CONSTRAINT_MIN_TOTAL_OFF_FAILURE DiagnosticCode = 39
-	// DiagnosticCodeConstraintMaxConsecOnFailure integer value for a diagnostic coded as 'Constraint max consec on failure' type.
+	// DiagnosticCodeConstraintMaxConsecOnFailure integer value for a diagnostic coded as
+	// 'Constraint max consec on failure' type.
 	DiagnosticCode_CONSTRAINT_MAX_CONSEC_ON_FAILURE DiagnosticCode = 40
-	// DiagnosticCodeConstraintMinConsecOnFailure integer value for a diagnostic coded as 'Constraint min consec on failure' type.
+	// DiagnosticCodeConstraintMinConsecOnFailure integer value for a diagnostic coded as
+	// 'Constraint min consec on failure' type.
 	DiagnosticCode_CONSTRAINT_MIN_CONSEC_ON_FAILURE DiagnosticCode = 41
-	// DiagnosticCodeConstraintMaxConsecOffFailure integer value for a diagnostic coded as 'Constraint max consec off failure' type.
+	// DiagnosticCodeConstraintMaxConsecOffFailure integer value for a diagnostic coded as
+	// 'Constraint max consec off failure' type.
 	DiagnosticCode_CONSTRAINT_MAX_CONSEC_OFF_FAILURE DiagnosticCode = 42
-	// DiagnosticCodeConstraintMinConsecOffFailure integer value for a diagnostic coded as 'Constraint min consec off failure' type.
+	// DiagnosticCodeConstraintMinConsecOffFailure integer value for a diagnostic coded as
+	// 'Constraint min consec off failure' type.
 	DiagnosticCode_CONSTRAINT_MIN_CONSEC_OFF_FAILURE DiagnosticCode = 43
-	// DiagnosticCodeConstraintCannotHaveDayWeekMonthYearShiftPerShift integer value for a diagnostic coded as 'Constraint cannot have day week month year shift per shift' type.
+	// DiagnosticCodeConstraintCannotHaveDayWeekMonthYearShiftPerShift integer value for a diagnostic coded as
+	// 'Constraint cannot have day week month year shift per shift' type.
 	DiagnosticCode_CONSTRAINT_CANNOT_HAVE_DAY_WEEK_MONTH_YEAR_SHIFT__PER_SHIFT DiagnosticCode = 44
-	// DiagnosticCodeConstraintCannotHaveDayWeekMonthYearPerMinutesHours integer value for a diagnostic coded as 'Constraint cannot have day week month year per minutes hours' type.
+	// DiagnosticCodeConstraintCannotHaveDayWeekMonthYearPerMinutesHours integer value for a diagnostic coded as
+	// 'Constraint cannot have day week month year per minutes hours' type.
 	DiagnosticCode_CONSTRAINT_CANNOT_HAVE_DAY_WEEK_MONTH_YEAR__PER_MINUTES_HOURS DiagnosticCode = 45
-	// DiagnosticCodeConstraintConsecutiveShiftsRuleNotAllowed integer value for a diagnostic coded as 'Constraint consecutive shifts rule not allowed' type.
+	// DiagnosticCodeConstraintConsecutiveShiftsRuleNotAllowed integer value for a diagnostic coded as
+	// 'Constraint consecutive shifts rule not allowed' type.
 	DiagnosticCode_CONSTRAINT_CONSECUTIVE_SHIFTS_RULE_NOT_ALLOWED DiagnosticCode = 46
-	// DiagnosticCodeConstraintWithLargerPeriodPerSmallPeriodNotAllowed integer value for a diagnostic coded as 'Constraint with larger period per small period not allowed' type.
+	// DiagnosticCodeConstraintWithLargerPeriodPerSmallPeriodNotAllowed integer value for a diagnostic coded as
+	// 'Constraint with larger period per small period not allowed' type.
 	DiagnosticCode_CONSTRAINT_WITH_LARGER_PERIOD_PER_SMALL_PERIOD_NOT_ALLOWED DiagnosticCode = 47
-	// DiagnosticCodeConstraintMinMaxOffTimeForShiftsNotAllowed integer value for a diagnostic coded as 'Constraint min max off time for shifts not allowed' type.
+	// DiagnosticCodeConstraintMinMaxOffTimeForShiftsNotAllowed integer value for a diagnostic coded as
+	// 'Constraint min max off time for shifts not allowed' type.
 	DiagnosticCode_CONSTRAINT_MIN_MAX_OFF_TIME_FOR_SHIFTS_NOT_ALLOWED DiagnosticCode = 48
-	// DiagnosticCodeConstraintCannotHaveConsecutiveTimePerMultipleShifts integer value for a diagnostic coded as 'Constraint cannot have consecutive time per multiple shifts' type.
+	// DiagnosticCodeConstraintCannotHaveConsecutiveTimePerMultipleShifts integer value for a diagnostic coded as
+	// 'Constraint cannot have consecutive time per multiple shifts' type.
 	DiagnosticCode_CONSTRAINT_CANNOT_HAVE_CONSECUTIVE_TIME_PER_MULTIPLE_SHIFTS DiagnosticCode = 49
 )
 
