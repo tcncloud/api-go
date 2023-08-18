@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             (unknown)
-// source: api/services/pbx/v1/service.proto
+// source: services/pbx/v1/service.proto
 
 package pbxv1
 
@@ -19,13 +19,13 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	PBXService_QueryPbxUsers_FullMethodName         = "/api.services.pbx.v1.PBXService/QueryPbxUsers"
-	PBXService_QueryRingGroups_FullMethodName       = "/api.services.pbx.v1.PBXService/QueryRingGroups"
-	PBXService_UpdatePbxUser_FullMethodName         = "/api.services.pbx.v1.PBXService/UpdatePbxUser"
-	PBXService_UpdateRingGroup_FullMethodName       = "/api.services.pbx.v1.PBXService/UpdateRingGroup"
-	PBXService_CreateRingGroup_FullMethodName       = "/api.services.pbx.v1.PBXService/CreateRingGroup"
-	PBXService_DeleteRingGroup_FullMethodName       = "/api.services.pbx.v1.PBXService/DeleteRingGroup"
-	PBXService_AssignRandomExtension_FullMethodName = "/api.services.pbx.v1.PBXService/AssignRandomExtension"
+	PBXService_QueryPbxUsers_FullMethodName         = "/services.pbx.v1.PBXService/QueryPbxUsers"
+	PBXService_QueryRingGroups_FullMethodName       = "/services.pbx.v1.PBXService/QueryRingGroups"
+	PBXService_UpdatePbxUser_FullMethodName         = "/services.pbx.v1.PBXService/UpdatePbxUser"
+	PBXService_UpdateRingGroup_FullMethodName       = "/services.pbx.v1.PBXService/UpdateRingGroup"
+	PBXService_CreateRingGroup_FullMethodName       = "/services.pbx.v1.PBXService/CreateRingGroup"
+	PBXService_DeleteRingGroup_FullMethodName       = "/services.pbx.v1.PBXService/DeleteRingGroup"
+	PBXService_AssignRandomExtension_FullMethodName = "/services.pbx.v1.PBXService/AssignRandomExtension"
 )
 
 // PBXServiceClient is the client API for PBXService service.
@@ -438,7 +438,7 @@ func _PBXService_AssignRandomExtension_Handler(srv interface{}, ctx context.Cont
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var PBXService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "api.services.pbx.v1.PBXService",
+	ServiceName: "services.pbx.v1.PBXService",
 	HandlerType: (*PBXServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -471,5 +471,5 @@ var PBXService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "api/services/pbx/v1/service.proto",
+	Metadata: "services/pbx/v1/service.proto",
 }
