@@ -130,9 +130,11 @@ const (
 	WFM_UpdateDraftSchedule_FullMethodName                           = "/api.v1alpha1.wfm.WFM/UpdateDraftSchedule"
 	WFM_BuildDraftSchedule_FullMethodName                            = "/api.v1alpha1.wfm.WFM/BuildDraftSchedule"
 	WFM_PublishDraftSchedule_FullMethodName                          = "/api.v1alpha1.wfm.WFM/PublishDraftSchedule"
+	WFM_ResetDraftSchedule_FullMethodName                            = "/api.v1alpha1.wfm.WFM/ResetDraftSchedule"
 	WFM_GetDraftSchedule_FullMethodName                              = "/api.v1alpha1.wfm.WFM/GetDraftSchedule"
 	WFM_ListDraftSchedules_FullMethodName                            = "/api.v1alpha1.wfm.WFM/ListDraftSchedules"
 	WFM_DeleteDraftSchedule_FullMethodName                           = "/api.v1alpha1.wfm.WFM/DeleteDraftSchedule"
+	WFM_CopyScheduleToSchedule_FullMethodName                        = "/api.v1alpha1.wfm.WFM/CopyScheduleToSchedule"
 	WFM_CreateShiftInstance_FullMethodName                           = "/api.v1alpha1.wfm.WFM/CreateShiftInstance"
 	WFM_CreateShiftInstanceV2_FullMethodName                         = "/api.v1alpha1.wfm.WFM/CreateShiftInstanceV2"
 	WFM_SwapShiftInstances_FullMethodName                            = "/api.v1alpha1.wfm.WFM/SwapShiftInstances"
@@ -1282,6 +1284,22 @@ type WFMClient interface {
 	//   - grpc.NotFound: @draft_schedule_sid doesn't exist.
 	//   - grpc.Internal: error occurs when publishing the draft schedule.
 	PublishDraftSchedule(ctx context.Context, in *PublishDraftScheduleReq, opts ...grpc.CallOption) (*PublishDraftScheduleRes, error)
+	// Resets the shifts on the @draft_schedule_sid for the org sending the request.
+	// Shifts overlapping the @datetime_range will be deleted, then that @datetime_range will be populated with shifts from the published schedule.
+	// If no @datetime_range is provided, all shifts will be removed from the @draft_schedule_sid, and published shifts will be copied across the draft's datetime range.
+	// If @unlocked_only is set to true, only unlocked shifts will be deleted, and the locked shift instances will remain.
+	//
+	//	The published schedule will still be copied, so any newly overlapping shifts will result in an overlap warning.
+	//
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @datetime_range or @draft_schedule_sid are invalid for the org sending the request.
+	//   - grpc.NotFound: the @draft_schedule_sid doesn't exist.
+	//   - grpc.Internal: error occurs when resetting the schedule.
+	ResetDraftSchedule(ctx context.Context, in *ResetDraftScheduleReq, opts ...grpc.CallOption) (*ResetDraftScheduleRes, error)
 	// Gets the draft schedule with @draft_schedule_sid for the corresponding @datetime_range for the org sending the request.
 	// The @datetime_range field is optional. If not set, the draft schedule will be obtained with it's default range from it's start to end time.
 	// if @include_shift_instances is true, the shift instances associated within @datetime_range for the draft schedule will be returned in the draft schedules shift_instances field.
@@ -1321,6 +1339,23 @@ type WFMClient interface {
 	//   - grpc.NotFound: the draft schedule with the given @draft_schedule_sid doesn't exist.
 	//   - grpc.Internal: error occurs when removing the draft schedule.
 	DeleteDraftSchedule(ctx context.Context, in *DeleteDraftScheduleReq, opts ...grpc.CallOption) (*DeleteDraftScheduleRes, error)
+	// Copies the shifts from @source_schedule_selector to @destination_schedule_selector, constrained by the given parameters for the org sending the request.
+	// If @datetime_range is set, all shifts within the datetime range will be copied.
+	// If @datetime_range is not set, all shifts in the @source_schedule_selector within the schedule range of the @destination_schedule_selector will be copied. However if one of them is a published schedule, it will use the schedule range of the draft schedule.
+	// If @start_datetimes_only is set to false, then shifts are considered to be within the @datetime range if any portion of them is within the range.
+	// If @start_datetimes_only is set to true, then only shifts with start times within the @datetime range will be copied.
+	// If @overlap_as_warning is set to false, any overlapping shifts for a given agent will return a diagnostic error, and prevent any shifts from being copied.
+	// If @overlap_as_warning is set to true, the shifts will be copied regardless of overlap conflicts, and any conflicts will cause a diagnostic warning to be returned after.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//
+	//	-grpc.Invalid: one or more fields in the request have invalid values.
+	//	-grpc.NotFound: the @source_schedule_selector or @destination_schedule_selector don't exist for the org sending the request.
+	//	-grpc.Internal: error occurs when creating the copied shift instances.
+	CopyScheduleToSchedule(ctx context.Context, in *CopyScheduleToScheduleReq, opts ...grpc.CallOption) (*CopyScheduleToScheduleRes, error)
 	// Creates a shift instance for the org sending the request with the provided parameters.
 	// This method is not implemented. Do not use.
 	// Required permissions:
@@ -2452,6 +2487,15 @@ func (c *wFMClient) PublishDraftSchedule(ctx context.Context, in *PublishDraftSc
 	return out, nil
 }
 
+func (c *wFMClient) ResetDraftSchedule(ctx context.Context, in *ResetDraftScheduleReq, opts ...grpc.CallOption) (*ResetDraftScheduleRes, error) {
+	out := new(ResetDraftScheduleRes)
+	err := c.cc.Invoke(ctx, WFM_ResetDraftSchedule_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) GetDraftSchedule(ctx context.Context, in *GetDraftScheduleReq, opts ...grpc.CallOption) (*GetDraftScheduleRes, error) {
 	out := new(GetDraftScheduleRes)
 	err := c.cc.Invoke(ctx, WFM_GetDraftSchedule_FullMethodName, in, out, opts...)
@@ -2473,6 +2517,15 @@ func (c *wFMClient) ListDraftSchedules(ctx context.Context, in *ListDraftSchedul
 func (c *wFMClient) DeleteDraftSchedule(ctx context.Context, in *DeleteDraftScheduleReq, opts ...grpc.CallOption) (*DeleteDraftScheduleRes, error) {
 	out := new(DeleteDraftScheduleRes)
 	err := c.cc.Invoke(ctx, WFM_DeleteDraftSchedule_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) CopyScheduleToSchedule(ctx context.Context, in *CopyScheduleToScheduleReq, opts ...grpc.CallOption) (*CopyScheduleToScheduleRes, error) {
+	out := new(CopyScheduleToScheduleRes)
+	err := c.cc.Invoke(ctx, WFM_CopyScheduleToSchedule_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -3730,6 +3783,22 @@ type WFMServer interface {
 	//   - grpc.NotFound: @draft_schedule_sid doesn't exist.
 	//   - grpc.Internal: error occurs when publishing the draft schedule.
 	PublishDraftSchedule(context.Context, *PublishDraftScheduleReq) (*PublishDraftScheduleRes, error)
+	// Resets the shifts on the @draft_schedule_sid for the org sending the request.
+	// Shifts overlapping the @datetime_range will be deleted, then that @datetime_range will be populated with shifts from the published schedule.
+	// If no @datetime_range is provided, all shifts will be removed from the @draft_schedule_sid, and published shifts will be copied across the draft's datetime range.
+	// If @unlocked_only is set to true, only unlocked shifts will be deleted, and the locked shift instances will remain.
+	//
+	//	The published schedule will still be copied, so any newly overlapping shifts will result in an overlap warning.
+	//
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @datetime_range or @draft_schedule_sid are invalid for the org sending the request.
+	//   - grpc.NotFound: the @draft_schedule_sid doesn't exist.
+	//   - grpc.Internal: error occurs when resetting the schedule.
+	ResetDraftSchedule(context.Context, *ResetDraftScheduleReq) (*ResetDraftScheduleRes, error)
 	// Gets the draft schedule with @draft_schedule_sid for the corresponding @datetime_range for the org sending the request.
 	// The @datetime_range field is optional. If not set, the draft schedule will be obtained with it's default range from it's start to end time.
 	// if @include_shift_instances is true, the shift instances associated within @datetime_range for the draft schedule will be returned in the draft schedules shift_instances field.
@@ -3769,6 +3838,23 @@ type WFMServer interface {
 	//   - grpc.NotFound: the draft schedule with the given @draft_schedule_sid doesn't exist.
 	//   - grpc.Internal: error occurs when removing the draft schedule.
 	DeleteDraftSchedule(context.Context, *DeleteDraftScheduleReq) (*DeleteDraftScheduleRes, error)
+	// Copies the shifts from @source_schedule_selector to @destination_schedule_selector, constrained by the given parameters for the org sending the request.
+	// If @datetime_range is set, all shifts within the datetime range will be copied.
+	// If @datetime_range is not set, all shifts in the @source_schedule_selector within the schedule range of the @destination_schedule_selector will be copied. However if one of them is a published schedule, it will use the schedule range of the draft schedule.
+	// If @start_datetimes_only is set to false, then shifts are considered to be within the @datetime range if any portion of them is within the range.
+	// If @start_datetimes_only is set to true, then only shifts with start times within the @datetime range will be copied.
+	// If @overlap_as_warning is set to false, any overlapping shifts for a given agent will return a diagnostic error, and prevent any shifts from being copied.
+	// If @overlap_as_warning is set to true, the shifts will be copied regardless of overlap conflicts, and any conflicts will cause a diagnostic warning to be returned after.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//
+	//	-grpc.Invalid: one or more fields in the request have invalid values.
+	//	-grpc.NotFound: the @source_schedule_selector or @destination_schedule_selector don't exist for the org sending the request.
+	//	-grpc.Internal: error occurs when creating the copied shift instances.
+	CopyScheduleToSchedule(context.Context, *CopyScheduleToScheduleReq) (*CopyScheduleToScheduleRes, error)
 	// Creates a shift instance for the org sending the request with the provided parameters.
 	// This method is not implemented. Do not use.
 	// Required permissions:
@@ -4200,6 +4286,9 @@ func (UnimplementedWFMServer) BuildDraftSchedule(context.Context, *BuildDraftSch
 func (UnimplementedWFMServer) PublishDraftSchedule(context.Context, *PublishDraftScheduleReq) (*PublishDraftScheduleRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PublishDraftSchedule not implemented")
 }
+func (UnimplementedWFMServer) ResetDraftSchedule(context.Context, *ResetDraftScheduleReq) (*ResetDraftScheduleRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ResetDraftSchedule not implemented")
+}
 func (UnimplementedWFMServer) GetDraftSchedule(context.Context, *GetDraftScheduleReq) (*GetDraftScheduleRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetDraftSchedule not implemented")
 }
@@ -4208,6 +4297,9 @@ func (UnimplementedWFMServer) ListDraftSchedules(context.Context, *ListDraftSche
 }
 func (UnimplementedWFMServer) DeleteDraftSchedule(context.Context, *DeleteDraftScheduleReq) (*DeleteDraftScheduleRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteDraftSchedule not implemented")
+}
+func (UnimplementedWFMServer) CopyScheduleToSchedule(context.Context, *CopyScheduleToScheduleReq) (*CopyScheduleToScheduleRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CopyScheduleToSchedule not implemented")
 }
 func (UnimplementedWFMServer) CreateShiftInstance(context.Context, *CreateShiftInstanceReq) (*CreateShiftInstanceRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateShiftInstance not implemented")
@@ -6022,6 +6114,24 @@ func _WFM_PublishDraftSchedule_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_ResetDraftSchedule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ResetDraftScheduleReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).ResetDraftSchedule(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_ResetDraftSchedule_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).ResetDraftSchedule(ctx, req.(*ResetDraftScheduleReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WFM_GetDraftSchedule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetDraftScheduleReq)
 	if err := dec(in); err != nil {
@@ -6072,6 +6182,24 @@ func _WFM_DeleteDraftSchedule_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WFMServer).DeleteDraftSchedule(ctx, req.(*DeleteDraftScheduleReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_CopyScheduleToSchedule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CopyScheduleToScheduleReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).CopyScheduleToSchedule(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_CopyScheduleToSchedule_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).CopyScheduleToSchedule(ctx, req.(*CopyScheduleToScheduleReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -6686,6 +6814,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _WFM_PublishDraftSchedule_Handler,
 		},
 		{
+			MethodName: "ResetDraftSchedule",
+			Handler:    _WFM_ResetDraftSchedule_Handler,
+		},
+		{
 			MethodName: "GetDraftSchedule",
 			Handler:    _WFM_GetDraftSchedule_Handler,
 		},
@@ -6696,6 +6828,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteDraftSchedule",
 			Handler:    _WFM_DeleteDraftSchedule_Handler,
+		},
+		{
+			MethodName: "CopyScheduleToSchedule",
+			Handler:    _WFM_CopyScheduleToSchedule_Handler,
 		},
 		{
 			MethodName: "CreateShiftInstance",

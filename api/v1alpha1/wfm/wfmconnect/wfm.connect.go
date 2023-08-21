@@ -311,12 +311,17 @@ const (
 	// WFMPublishDraftScheduleProcedure is the fully-qualified name of the WFM's PublishDraftSchedule
 	// RPC.
 	WFMPublishDraftScheduleProcedure = "/api.v1alpha1.wfm.WFM/PublishDraftSchedule"
+	// WFMResetDraftScheduleProcedure is the fully-qualified name of the WFM's ResetDraftSchedule RPC.
+	WFMResetDraftScheduleProcedure = "/api.v1alpha1.wfm.WFM/ResetDraftSchedule"
 	// WFMGetDraftScheduleProcedure is the fully-qualified name of the WFM's GetDraftSchedule RPC.
 	WFMGetDraftScheduleProcedure = "/api.v1alpha1.wfm.WFM/GetDraftSchedule"
 	// WFMListDraftSchedulesProcedure is the fully-qualified name of the WFM's ListDraftSchedules RPC.
 	WFMListDraftSchedulesProcedure = "/api.v1alpha1.wfm.WFM/ListDraftSchedules"
 	// WFMDeleteDraftScheduleProcedure is the fully-qualified name of the WFM's DeleteDraftSchedule RPC.
 	WFMDeleteDraftScheduleProcedure = "/api.v1alpha1.wfm.WFM/DeleteDraftSchedule"
+	// WFMCopyScheduleToScheduleProcedure is the fully-qualified name of the WFM's
+	// CopyScheduleToSchedule RPC.
+	WFMCopyScheduleToScheduleProcedure = "/api.v1alpha1.wfm.WFM/CopyScheduleToSchedule"
 	// WFMCreateShiftInstanceProcedure is the fully-qualified name of the WFM's CreateShiftInstance RPC.
 	WFMCreateShiftInstanceProcedure = "/api.v1alpha1.wfm.WFM/CreateShiftInstance"
 	// WFMCreateShiftInstanceV2Procedure is the fully-qualified name of the WFM's CreateShiftInstanceV2
@@ -1485,6 +1490,22 @@ type WFMClient interface {
 	//   - grpc.NotFound: @draft_schedule_sid doesn't exist.
 	//   - grpc.Internal: error occurs when publishing the draft schedule.
 	PublishDraftSchedule(context.Context, *connect_go.Request[wfm.PublishDraftScheduleReq]) (*connect_go.Response[wfm.PublishDraftScheduleRes], error)
+	// Resets the shifts on the @draft_schedule_sid for the org sending the request.
+	// Shifts overlapping the @datetime_range will be deleted, then that @datetime_range will be populated with shifts from the published schedule.
+	// If no @datetime_range is provided, all shifts will be removed from the @draft_schedule_sid, and published shifts will be copied across the draft's datetime range.
+	// If @unlocked_only is set to true, only unlocked shifts will be deleted, and the locked shift instances will remain.
+	//
+	//	The published schedule will still be copied, so any newly overlapping shifts will result in an overlap warning.
+	//
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @datetime_range or @draft_schedule_sid are invalid for the org sending the request.
+	//   - grpc.NotFound: the @draft_schedule_sid doesn't exist.
+	//   - grpc.Internal: error occurs when resetting the schedule.
+	ResetDraftSchedule(context.Context, *connect_go.Request[wfm.ResetDraftScheduleReq]) (*connect_go.Response[wfm.ResetDraftScheduleRes], error)
 	// Gets the draft schedule with @draft_schedule_sid for the corresponding @datetime_range for the org sending the request.
 	// The @datetime_range field is optional. If not set, the draft schedule will be obtained with it's default range from it's start to end time.
 	// if @include_shift_instances is true, the shift instances associated within @datetime_range for the draft schedule will be returned in the draft schedules shift_instances field.
@@ -1524,6 +1545,23 @@ type WFMClient interface {
 	//   - grpc.NotFound: the draft schedule with the given @draft_schedule_sid doesn't exist.
 	//   - grpc.Internal: error occurs when removing the draft schedule.
 	DeleteDraftSchedule(context.Context, *connect_go.Request[wfm.DeleteDraftScheduleReq]) (*connect_go.Response[wfm.DeleteDraftScheduleRes], error)
+	// Copies the shifts from @source_schedule_selector to @destination_schedule_selector, constrained by the given parameters for the org sending the request.
+	// If @datetime_range is set, all shifts within the datetime range will be copied.
+	// If @datetime_range is not set, all shifts in the @source_schedule_selector within the schedule range of the @destination_schedule_selector will be copied. However if one of them is a published schedule, it will use the schedule range of the draft schedule.
+	// If @start_datetimes_only is set to false, then shifts are considered to be within the @datetime range if any portion of them is within the range.
+	// If @start_datetimes_only is set to true, then only shifts with start times within the @datetime range will be copied.
+	// If @overlap_as_warning is set to false, any overlapping shifts for a given agent will return a diagnostic error, and prevent any shifts from being copied.
+	// If @overlap_as_warning is set to true, the shifts will be copied regardless of overlap conflicts, and any conflicts will cause a diagnostic warning to be returned after.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//
+	//	-grpc.Invalid: one or more fields in the request have invalid values.
+	//	-grpc.NotFound: the @source_schedule_selector or @destination_schedule_selector don't exist for the org sending the request.
+	//	-grpc.Internal: error occurs when creating the copied shift instances.
+	CopyScheduleToSchedule(context.Context, *connect_go.Request[wfm.CopyScheduleToScheduleReq]) (*connect_go.Response[wfm.CopyScheduleToScheduleRes], error)
 	// Creates a shift instance for the org sending the request with the provided parameters.
 	// This method is not implemented. Do not use.
 	// Required permissions:
@@ -2154,6 +2192,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMPublishDraftScheduleProcedure,
 			opts...,
 		),
+		resetDraftSchedule: connect_go.NewClient[wfm.ResetDraftScheduleReq, wfm.ResetDraftScheduleRes](
+			httpClient,
+			baseURL+WFMResetDraftScheduleProcedure,
+			opts...,
+		),
 		getDraftSchedule: connect_go.NewClient[wfm.GetDraftScheduleReq, wfm.GetDraftScheduleRes](
 			httpClient,
 			baseURL+WFMGetDraftScheduleProcedure,
@@ -2167,6 +2210,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 		deleteDraftSchedule: connect_go.NewClient[wfm.DeleteDraftScheduleReq, wfm.DeleteDraftScheduleRes](
 			httpClient,
 			baseURL+WFMDeleteDraftScheduleProcedure,
+			opts...,
+		),
+		copyScheduleToSchedule: connect_go.NewClient[wfm.CopyScheduleToScheduleReq, wfm.CopyScheduleToScheduleRes](
+			httpClient,
+			baseURL+WFMCopyScheduleToScheduleProcedure,
 			opts...,
 		),
 		createShiftInstance: connect_go.NewClient[wfm.CreateShiftInstanceReq, wfm.CreateShiftInstanceRes](
@@ -2336,9 +2384,11 @@ type wFMClient struct {
 	updateDraftSchedule                           *connect_go.Client[wfm.UpdateDraftScheduleReq, wfm.UpdateDraftScheduleRes]
 	buildDraftSchedule                            *connect_go.Client[wfm.BuildDraftScheduleReq, wfm.BuildDraftScheduleRes]
 	publishDraftSchedule                          *connect_go.Client[wfm.PublishDraftScheduleReq, wfm.PublishDraftScheduleRes]
+	resetDraftSchedule                            *connect_go.Client[wfm.ResetDraftScheduleReq, wfm.ResetDraftScheduleRes]
 	getDraftSchedule                              *connect_go.Client[wfm.GetDraftScheduleReq, wfm.GetDraftScheduleRes]
 	listDraftSchedules                            *connect_go.Client[wfm.ListDraftSchedulesReq, wfm.ListDraftSchedulesRes]
 	deleteDraftSchedule                           *connect_go.Client[wfm.DeleteDraftScheduleReq, wfm.DeleteDraftScheduleRes]
+	copyScheduleToSchedule                        *connect_go.Client[wfm.CopyScheduleToScheduleReq, wfm.CopyScheduleToScheduleRes]
 	createShiftInstance                           *connect_go.Client[wfm.CreateShiftInstanceReq, wfm.CreateShiftInstanceRes]
 	createShiftInstanceV2                         *connect_go.Client[wfm.CreateShiftInstanceV2Req, wfm.CreateShiftInstanceV2Res]
 	swapShiftInstances                            *connect_go.Client[wfm.SwapShiftInstancesReq, wfm.SwapShiftInstancesRes]
@@ -2849,6 +2899,11 @@ func (c *wFMClient) PublishDraftSchedule(ctx context.Context, req *connect_go.Re
 	return c.publishDraftSchedule.CallUnary(ctx, req)
 }
 
+// ResetDraftSchedule calls api.v1alpha1.wfm.WFM.ResetDraftSchedule.
+func (c *wFMClient) ResetDraftSchedule(ctx context.Context, req *connect_go.Request[wfm.ResetDraftScheduleReq]) (*connect_go.Response[wfm.ResetDraftScheduleRes], error) {
+	return c.resetDraftSchedule.CallUnary(ctx, req)
+}
+
 // GetDraftSchedule calls api.v1alpha1.wfm.WFM.GetDraftSchedule.
 func (c *wFMClient) GetDraftSchedule(ctx context.Context, req *connect_go.Request[wfm.GetDraftScheduleReq]) (*connect_go.Response[wfm.GetDraftScheduleRes], error) {
 	return c.getDraftSchedule.CallUnary(ctx, req)
@@ -2862,6 +2917,11 @@ func (c *wFMClient) ListDraftSchedules(ctx context.Context, req *connect_go.Requ
 // DeleteDraftSchedule calls api.v1alpha1.wfm.WFM.DeleteDraftSchedule.
 func (c *wFMClient) DeleteDraftSchedule(ctx context.Context, req *connect_go.Request[wfm.DeleteDraftScheduleReq]) (*connect_go.Response[wfm.DeleteDraftScheduleRes], error) {
 	return c.deleteDraftSchedule.CallUnary(ctx, req)
+}
+
+// CopyScheduleToSchedule calls api.v1alpha1.wfm.WFM.CopyScheduleToSchedule.
+func (c *wFMClient) CopyScheduleToSchedule(ctx context.Context, req *connect_go.Request[wfm.CopyScheduleToScheduleReq]) (*connect_go.Response[wfm.CopyScheduleToScheduleRes], error) {
+	return c.copyScheduleToSchedule.CallUnary(ctx, req)
 }
 
 // CreateShiftInstance calls api.v1alpha1.wfm.WFM.CreateShiftInstance.
@@ -4062,6 +4122,22 @@ type WFMHandler interface {
 	//   - grpc.NotFound: @draft_schedule_sid doesn't exist.
 	//   - grpc.Internal: error occurs when publishing the draft schedule.
 	PublishDraftSchedule(context.Context, *connect_go.Request[wfm.PublishDraftScheduleReq]) (*connect_go.Response[wfm.PublishDraftScheduleRes], error)
+	// Resets the shifts on the @draft_schedule_sid for the org sending the request.
+	// Shifts overlapping the @datetime_range will be deleted, then that @datetime_range will be populated with shifts from the published schedule.
+	// If no @datetime_range is provided, all shifts will be removed from the @draft_schedule_sid, and published shifts will be copied across the draft's datetime range.
+	// If @unlocked_only is set to true, only unlocked shifts will be deleted, and the locked shift instances will remain.
+	//
+	//	The published schedule will still be copied, so any newly overlapping shifts will result in an overlap warning.
+	//
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @datetime_range or @draft_schedule_sid are invalid for the org sending the request.
+	//   - grpc.NotFound: the @draft_schedule_sid doesn't exist.
+	//   - grpc.Internal: error occurs when resetting the schedule.
+	ResetDraftSchedule(context.Context, *connect_go.Request[wfm.ResetDraftScheduleReq]) (*connect_go.Response[wfm.ResetDraftScheduleRes], error)
 	// Gets the draft schedule with @draft_schedule_sid for the corresponding @datetime_range for the org sending the request.
 	// The @datetime_range field is optional. If not set, the draft schedule will be obtained with it's default range from it's start to end time.
 	// if @include_shift_instances is true, the shift instances associated within @datetime_range for the draft schedule will be returned in the draft schedules shift_instances field.
@@ -4101,6 +4177,23 @@ type WFMHandler interface {
 	//   - grpc.NotFound: the draft schedule with the given @draft_schedule_sid doesn't exist.
 	//   - grpc.Internal: error occurs when removing the draft schedule.
 	DeleteDraftSchedule(context.Context, *connect_go.Request[wfm.DeleteDraftScheduleReq]) (*connect_go.Response[wfm.DeleteDraftScheduleRes], error)
+	// Copies the shifts from @source_schedule_selector to @destination_schedule_selector, constrained by the given parameters for the org sending the request.
+	// If @datetime_range is set, all shifts within the datetime range will be copied.
+	// If @datetime_range is not set, all shifts in the @source_schedule_selector within the schedule range of the @destination_schedule_selector will be copied. However if one of them is a published schedule, it will use the schedule range of the draft schedule.
+	// If @start_datetimes_only is set to false, then shifts are considered to be within the @datetime range if any portion of them is within the range.
+	// If @start_datetimes_only is set to true, then only shifts with start times within the @datetime range will be copied.
+	// If @overlap_as_warning is set to false, any overlapping shifts for a given agent will return a diagnostic error, and prevent any shifts from being copied.
+	// If @overlap_as_warning is set to true, the shifts will be copied regardless of overlap conflicts, and any conflicts will cause a diagnostic warning to be returned after.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//
+	//	-grpc.Invalid: one or more fields in the request have invalid values.
+	//	-grpc.NotFound: the @source_schedule_selector or @destination_schedule_selector don't exist for the org sending the request.
+	//	-grpc.Internal: error occurs when creating the copied shift instances.
+	CopyScheduleToSchedule(context.Context, *connect_go.Request[wfm.CopyScheduleToScheduleReq]) (*connect_go.Response[wfm.CopyScheduleToScheduleRes], error)
 	// Creates a shift instance for the org sending the request with the provided parameters.
 	// This method is not implemented. Do not use.
 	// Required permissions:
@@ -4727,6 +4820,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.PublishDraftSchedule,
 		opts...,
 	)
+	wFMResetDraftScheduleHandler := connect_go.NewUnaryHandler(
+		WFMResetDraftScheduleProcedure,
+		svc.ResetDraftSchedule,
+		opts...,
+	)
 	wFMGetDraftScheduleHandler := connect_go.NewUnaryHandler(
 		WFMGetDraftScheduleProcedure,
 		svc.GetDraftSchedule,
@@ -4740,6 +4838,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 	wFMDeleteDraftScheduleHandler := connect_go.NewUnaryHandler(
 		WFMDeleteDraftScheduleProcedure,
 		svc.DeleteDraftSchedule,
+		opts...,
+	)
+	wFMCopyScheduleToScheduleHandler := connect_go.NewUnaryHandler(
+		WFMCopyScheduleToScheduleProcedure,
+		svc.CopyScheduleToSchedule,
 		opts...,
 	)
 	wFMCreateShiftInstanceHandler := connect_go.NewUnaryHandler(
@@ -5003,12 +5106,16 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMBuildDraftScheduleHandler.ServeHTTP(w, r)
 		case WFMPublishDraftScheduleProcedure:
 			wFMPublishDraftScheduleHandler.ServeHTTP(w, r)
+		case WFMResetDraftScheduleProcedure:
+			wFMResetDraftScheduleHandler.ServeHTTP(w, r)
 		case WFMGetDraftScheduleProcedure:
 			wFMGetDraftScheduleHandler.ServeHTTP(w, r)
 		case WFMListDraftSchedulesProcedure:
 			wFMListDraftSchedulesHandler.ServeHTTP(w, r)
 		case WFMDeleteDraftScheduleProcedure:
 			wFMDeleteDraftScheduleHandler.ServeHTTP(w, r)
+		case WFMCopyScheduleToScheduleProcedure:
+			wFMCopyScheduleToScheduleHandler.ServeHTTP(w, r)
 		case WFMCreateShiftInstanceProcedure:
 			wFMCreateShiftInstanceHandler.ServeHTTP(w, r)
 		case WFMCreateShiftInstanceV2Procedure:
@@ -5432,6 +5539,10 @@ func (UnimplementedWFMHandler) PublishDraftSchedule(context.Context, *connect_go
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.PublishDraftSchedule is not implemented"))
 }
 
+func (UnimplementedWFMHandler) ResetDraftSchedule(context.Context, *connect_go.Request[wfm.ResetDraftScheduleReq]) (*connect_go.Response[wfm.ResetDraftScheduleRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ResetDraftSchedule is not implemented"))
+}
+
 func (UnimplementedWFMHandler) GetDraftSchedule(context.Context, *connect_go.Request[wfm.GetDraftScheduleReq]) (*connect_go.Response[wfm.GetDraftScheduleRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.GetDraftSchedule is not implemented"))
 }
@@ -5442,6 +5553,10 @@ func (UnimplementedWFMHandler) ListDraftSchedules(context.Context, *connect_go.R
 
 func (UnimplementedWFMHandler) DeleteDraftSchedule(context.Context, *connect_go.Request[wfm.DeleteDraftScheduleReq]) (*connect_go.Response[wfm.DeleteDraftScheduleRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.DeleteDraftSchedule is not implemented"))
+}
+
+func (UnimplementedWFMHandler) CopyScheduleToSchedule(context.Context, *connect_go.Request[wfm.CopyScheduleToScheduleReq]) (*connect_go.Response[wfm.CopyScheduleToScheduleRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.CopyScheduleToSchedule is not implemented"))
 }
 
 func (UnimplementedWFMHandler) CreateShiftInstance(context.Context, *connect_go.Request[wfm.CreateShiftInstanceReq]) (*connect_go.Response[wfm.CreateShiftInstanceRes], error) {
