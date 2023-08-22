@@ -134,6 +134,7 @@ const (
 	WFM_GetDraftSchedule_FullMethodName                              = "/api.v1alpha1.wfm.WFM/GetDraftSchedule"
 	WFM_ListDraftSchedules_FullMethodName                            = "/api.v1alpha1.wfm.WFM/ListDraftSchedules"
 	WFM_DeleteDraftSchedule_FullMethodName                           = "/api.v1alpha1.wfm.WFM/DeleteDraftSchedule"
+	WFM_ListShiftInstancesBySid_FullMethodName                       = "/api.v1alpha1.wfm.WFM/ListShiftInstancesBySid"
 	WFM_CopyScheduleToSchedule_FullMethodName                        = "/api.v1alpha1.wfm.WFM/CopyScheduleToSchedule"
 	WFM_CreateShiftInstance_FullMethodName                           = "/api.v1alpha1.wfm.WFM/CreateShiftInstance"
 	WFM_CreateShiftInstanceV2_FullMethodName                         = "/api.v1alpha1.wfm.WFM/CreateShiftInstanceV2"
@@ -1339,6 +1340,17 @@ type WFMClient interface {
 	//   - grpc.NotFound: the draft schedule with the given @draft_schedule_sid doesn't exist.
 	//   - grpc.Internal: error occurs when removing the draft schedule.
 	DeleteDraftSchedule(ctx context.Context, in *DeleteDraftScheduleReq, opts ...grpc.CallOption) (*DeleteDraftScheduleRes, error)
+	// Lists the shift instances with the corresponding @shift_instance_sids for the org sending the request.
+	// If @include_shift_segments is set to true, the returned shifts will have their shift segments returned as well.
+	// If @include_shift_segments is set to false, the shift instances will be returned without their shift segments.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @org_id or @shift_instance_sids in the request are invalid.
+	//   - grpc.Internal: error occurs when listing the shift instances or their shift segments.
+	ListShiftInstancesBySid(ctx context.Context, in *ListShiftInstancesBySidReq, opts ...grpc.CallOption) (*ListShiftInstancesBySidRes, error)
 	// Copies the shifts from @source_schedule_selector to @destination_schedule_selector, constrained by the given parameters for the org sending the request.
 	// If @datetime_range is set, all shifts within the datetime range will be copied.
 	// If @datetime_range is not set, all shifts in the @source_schedule_selector within the schedule range of the @destination_schedule_selector will be copied. However if one of them is a published schedule, it will use the schedule range of the draft schedule.
@@ -2517,6 +2529,15 @@ func (c *wFMClient) ListDraftSchedules(ctx context.Context, in *ListDraftSchedul
 func (c *wFMClient) DeleteDraftSchedule(ctx context.Context, in *DeleteDraftScheduleReq, opts ...grpc.CallOption) (*DeleteDraftScheduleRes, error) {
 	out := new(DeleteDraftScheduleRes)
 	err := c.cc.Invoke(ctx, WFM_DeleteDraftSchedule_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) ListShiftInstancesBySid(ctx context.Context, in *ListShiftInstancesBySidReq, opts ...grpc.CallOption) (*ListShiftInstancesBySidRes, error) {
+	out := new(ListShiftInstancesBySidRes)
+	err := c.cc.Invoke(ctx, WFM_ListShiftInstancesBySid_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -3838,6 +3859,17 @@ type WFMServer interface {
 	//   - grpc.NotFound: the draft schedule with the given @draft_schedule_sid doesn't exist.
 	//   - grpc.Internal: error occurs when removing the draft schedule.
 	DeleteDraftSchedule(context.Context, *DeleteDraftScheduleReq) (*DeleteDraftScheduleRes, error)
+	// Lists the shift instances with the corresponding @shift_instance_sids for the org sending the request.
+	// If @include_shift_segments is set to true, the returned shifts will have their shift segments returned as well.
+	// If @include_shift_segments is set to false, the shift instances will be returned without their shift segments.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @org_id or @shift_instance_sids in the request are invalid.
+	//   - grpc.Internal: error occurs when listing the shift instances or their shift segments.
+	ListShiftInstancesBySid(context.Context, *ListShiftInstancesBySidReq) (*ListShiftInstancesBySidRes, error)
 	// Copies the shifts from @source_schedule_selector to @destination_schedule_selector, constrained by the given parameters for the org sending the request.
 	// If @datetime_range is set, all shifts within the datetime range will be copied.
 	// If @datetime_range is not set, all shifts in the @source_schedule_selector within the schedule range of the @destination_schedule_selector will be copied. However if one of them is a published schedule, it will use the schedule range of the draft schedule.
@@ -4297,6 +4329,9 @@ func (UnimplementedWFMServer) ListDraftSchedules(context.Context, *ListDraftSche
 }
 func (UnimplementedWFMServer) DeleteDraftSchedule(context.Context, *DeleteDraftScheduleReq) (*DeleteDraftScheduleRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteDraftSchedule not implemented")
+}
+func (UnimplementedWFMServer) ListShiftInstancesBySid(context.Context, *ListShiftInstancesBySidReq) (*ListShiftInstancesBySidRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListShiftInstancesBySid not implemented")
 }
 func (UnimplementedWFMServer) CopyScheduleToSchedule(context.Context, *CopyScheduleToScheduleReq) (*CopyScheduleToScheduleRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CopyScheduleToSchedule not implemented")
@@ -6186,6 +6221,24 @@ func _WFM_DeleteDraftSchedule_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_ListShiftInstancesBySid_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListShiftInstancesBySidReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).ListShiftInstancesBySid(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_ListShiftInstancesBySid_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).ListShiftInstancesBySid(ctx, req.(*ListShiftInstancesBySidReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WFM_CopyScheduleToSchedule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CopyScheduleToScheduleReq)
 	if err := dec(in); err != nil {
@@ -6828,6 +6881,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteDraftSchedule",
 			Handler:    _WFM_DeleteDraftSchedule_Handler,
+		},
+		{
+			MethodName: "ListShiftInstancesBySid",
+			Handler:    _WFM_ListShiftInstancesBySid_Handler,
 		},
 		{
 			MethodName: "CopyScheduleToSchedule",
