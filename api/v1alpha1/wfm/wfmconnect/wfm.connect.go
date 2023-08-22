@@ -1549,8 +1549,12 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when removing the draft schedule.
 	DeleteDraftSchedule(context.Context, *connect_go.Request[wfm.DeleteDraftScheduleReq]) (*connect_go.Response[wfm.DeleteDraftScheduleRes], error)
 	// Lists the shift instances with the corresponding @shift_instance_sids for the org sending the request.
-	// If @include_shift_segments is set to true, the returned shifts will have their shift segments returned as well.
-	// If @include_shift_segments is set to false, the shift instances will be returned without their shift segments.
+	// If @include_shift_template is set to true then the related shift template for the shift instances will be returned in the shift template field.
+	// If @include_shift_segments is set to true then the related shift segments for the shift instances will be returned in the shift segments field.
+	// If @include_scheduling_activity is set to true then the related scheduling activity for the shift segment will be returned in the scheduling activity field.
+	// @include_shift_segments must be true to take effect.
+	// If @include_activity is set to true then the related non skill activity for the scheduling activity will be returned in the scheduling
+	// activities member non skill activity field. @include_scheduling_activity must be true to take effect.
 	// Required permissions:
 	//
 	//	NONE
@@ -4203,8 +4207,12 @@ type WFMHandler interface {
 	//   - grpc.Internal: error occurs when removing the draft schedule.
 	DeleteDraftSchedule(context.Context, *connect_go.Request[wfm.DeleteDraftScheduleReq]) (*connect_go.Response[wfm.DeleteDraftScheduleRes], error)
 	// Lists the shift instances with the corresponding @shift_instance_sids for the org sending the request.
-	// If @include_shift_segments is set to true, the returned shifts will have their shift segments returned as well.
-	// If @include_shift_segments is set to false, the shift instances will be returned without their shift segments.
+	// If @include_shift_template is set to true then the related shift template for the shift instances will be returned in the shift template field.
+	// If @include_shift_segments is set to true then the related shift segments for the shift instances will be returned in the shift segments field.
+	// If @include_scheduling_activity is set to true then the related scheduling activity for the shift segment will be returned in the scheduling activity field.
+	// @include_shift_segments must be true to take effect.
+	// If @include_activity is set to true then the related non skill activity for the scheduling activity will be returned in the scheduling
+	// activities member non skill activity field. @include_scheduling_activity must be true to take effect.
 	// Required permissions:
 	//
 	//	NONE
