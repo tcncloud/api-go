@@ -159,7 +159,7 @@ type ScorecardsClient interface {
 	// ListAutoEvaluations gets a list of auto evaluations
 	ListAutoEvaluations(ctx context.Context, in *ListAutoEvaluationsRequest, opts ...grpc.CallOption) (*ListAutoEvaluationsResponse, error)
 	// StreamAutoEvaluations streams a list of auto evaluations
-	StreamAutoEvaluations(ctx context.Context, in *StreamAutoEvaluationsRequest, opts ...grpc.CallOption) (*StreamAutoEvaluationsResponse, error)
+	StreamAutoEvaluations(ctx context.Context, in *StreamAutoEvaluationsRequest, opts ...grpc.CallOption) (Scorecards_StreamAutoEvaluationsClient, error)
 	// DeleteAutoEvaluation deletes an auto evaluations
 	DeleteAutoEvaluation(ctx context.Context, in *DeleteAutoEvaluationRequest, opts ...grpc.CallOption) (*DeleteAutoEvaluationResponse, error)
 	// PreviewEvaluationScore previews the score for an evaluation
@@ -562,13 +562,36 @@ func (c *scorecardsClient) ListAutoEvaluations(ctx context.Context, in *ListAuto
 	return out, nil
 }
 
-func (c *scorecardsClient) StreamAutoEvaluations(ctx context.Context, in *StreamAutoEvaluationsRequest, opts ...grpc.CallOption) (*StreamAutoEvaluationsResponse, error) {
-	out := new(StreamAutoEvaluationsResponse)
-	err := c.cc.Invoke(ctx, Scorecards_StreamAutoEvaluations_FullMethodName, in, out, opts...)
+func (c *scorecardsClient) StreamAutoEvaluations(ctx context.Context, in *StreamAutoEvaluationsRequest, opts ...grpc.CallOption) (Scorecards_StreamAutoEvaluationsClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Scorecards_ServiceDesc.Streams[0], Scorecards_StreamAutoEvaluations_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
-	return out, nil
+	x := &scorecardsStreamAutoEvaluationsClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type Scorecards_StreamAutoEvaluationsClient interface {
+	Recv() (*StreamAutoEvaluationsResponse, error)
+	grpc.ClientStream
+}
+
+type scorecardsStreamAutoEvaluationsClient struct {
+	grpc.ClientStream
+}
+
+func (x *scorecardsStreamAutoEvaluationsClient) Recv() (*StreamAutoEvaluationsResponse, error) {
+	m := new(StreamAutoEvaluationsResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
 }
 
 func (c *scorecardsClient) DeleteAutoEvaluation(ctx context.Context, in *DeleteAutoEvaluationRequest, opts ...grpc.CallOption) (*DeleteAutoEvaluationResponse, error) {
@@ -681,7 +704,7 @@ type ScorecardsServer interface {
 	// ListAutoEvaluations gets a list of auto evaluations
 	ListAutoEvaluations(context.Context, *ListAutoEvaluationsRequest) (*ListAutoEvaluationsResponse, error)
 	// StreamAutoEvaluations streams a list of auto evaluations
-	StreamAutoEvaluations(context.Context, *StreamAutoEvaluationsRequest) (*StreamAutoEvaluationsResponse, error)
+	StreamAutoEvaluations(*StreamAutoEvaluationsRequest, Scorecards_StreamAutoEvaluationsServer) error
 	// DeleteAutoEvaluation deletes an auto evaluations
 	DeleteAutoEvaluation(context.Context, *DeleteAutoEvaluationRequest) (*DeleteAutoEvaluationResponse, error)
 	// PreviewEvaluationScore previews the score for an evaluation
@@ -822,8 +845,8 @@ func (UnimplementedScorecardsServer) GetAutoEvaluation(context.Context, *GetAuto
 func (UnimplementedScorecardsServer) ListAutoEvaluations(context.Context, *ListAutoEvaluationsRequest) (*ListAutoEvaluationsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAutoEvaluations not implemented")
 }
-func (UnimplementedScorecardsServer) StreamAutoEvaluations(context.Context, *StreamAutoEvaluationsRequest) (*StreamAutoEvaluationsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method StreamAutoEvaluations not implemented")
+func (UnimplementedScorecardsServer) StreamAutoEvaluations(*StreamAutoEvaluationsRequest, Scorecards_StreamAutoEvaluationsServer) error {
+	return status.Errorf(codes.Unimplemented, "method StreamAutoEvaluations not implemented")
 }
 func (UnimplementedScorecardsServer) DeleteAutoEvaluation(context.Context, *DeleteAutoEvaluationRequest) (*DeleteAutoEvaluationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteAutoEvaluation not implemented")
@@ -1618,22 +1641,25 @@ func _Scorecards_ListAutoEvaluations_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Scorecards_StreamAutoEvaluations_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(StreamAutoEvaluationsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
+func _Scorecards_StreamAutoEvaluations_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(StreamAutoEvaluationsRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
 	}
-	if interceptor == nil {
-		return srv.(ScorecardsServer).StreamAutoEvaluations(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Scorecards_StreamAutoEvaluations_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ScorecardsServer).StreamAutoEvaluations(ctx, req.(*StreamAutoEvaluationsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	return srv.(ScorecardsServer).StreamAutoEvaluations(m, &scorecardsStreamAutoEvaluationsServer{stream})
+}
+
+type Scorecards_StreamAutoEvaluationsServer interface {
+	Send(*StreamAutoEvaluationsResponse) error
+	grpc.ServerStream
+}
+
+type scorecardsStreamAutoEvaluationsServer struct {
+	grpc.ServerStream
+}
+
+func (x *scorecardsStreamAutoEvaluationsServer) Send(m *StreamAutoEvaluationsResponse) error {
+	return x.ServerStream.SendMsg(m)
 }
 
 func _Scorecards_DeleteAutoEvaluation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -1852,10 +1878,6 @@ var Scorecards_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Scorecards_ListAutoEvaluations_Handler,
 		},
 		{
-			MethodName: "StreamAutoEvaluations",
-			Handler:    _Scorecards_StreamAutoEvaluations_Handler,
-		},
-		{
 			MethodName: "DeleteAutoEvaluation",
 			Handler:    _Scorecards_DeleteAutoEvaluation_Handler,
 		},
@@ -1864,6 +1886,12 @@ var Scorecards_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Scorecards_PreviewEvaluationScore_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "StreamAutoEvaluations",
+			Handler:       _Scorecards_StreamAutoEvaluations_Handler,
+			ServerStreams: true,
+		},
+	},
 	Metadata: "api/v1alpha1/scorecards/service.proto",
 }

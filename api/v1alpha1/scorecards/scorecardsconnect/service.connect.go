@@ -259,7 +259,7 @@ type ScorecardsClient interface {
 	// ListAutoEvaluations gets a list of auto evaluations
 	ListAutoEvaluations(context.Context, *connect_go.Request[scorecards.ListAutoEvaluationsRequest]) (*connect_go.Response[scorecards.ListAutoEvaluationsResponse], error)
 	// StreamAutoEvaluations streams a list of auto evaluations
-	StreamAutoEvaluations(context.Context, *connect_go.Request[scorecards.StreamAutoEvaluationsRequest]) (*connect_go.Response[scorecards.StreamAutoEvaluationsResponse], error)
+	StreamAutoEvaluations(context.Context, *connect_go.Request[scorecards.StreamAutoEvaluationsRequest]) (*connect_go.ServerStreamForClient[scorecards.StreamAutoEvaluationsResponse], error)
 	// DeleteAutoEvaluation deletes an auto evaluations
 	DeleteAutoEvaluation(context.Context, *connect_go.Request[scorecards.DeleteAutoEvaluationRequest]) (*connect_go.Response[scorecards.DeleteAutoEvaluationResponse], error)
 	// PreviewEvaluationScore previews the score for an evaluation
@@ -777,8 +777,8 @@ func (c *scorecardsClient) ListAutoEvaluations(ctx context.Context, req *connect
 }
 
 // StreamAutoEvaluations calls api.v1alpha1.scorecards.Scorecards.StreamAutoEvaluations.
-func (c *scorecardsClient) StreamAutoEvaluations(ctx context.Context, req *connect_go.Request[scorecards.StreamAutoEvaluationsRequest]) (*connect_go.Response[scorecards.StreamAutoEvaluationsResponse], error) {
-	return c.streamAutoEvaluations.CallUnary(ctx, req)
+func (c *scorecardsClient) StreamAutoEvaluations(ctx context.Context, req *connect_go.Request[scorecards.StreamAutoEvaluationsRequest]) (*connect_go.ServerStreamForClient[scorecards.StreamAutoEvaluationsResponse], error) {
+	return c.streamAutoEvaluations.CallServerStream(ctx, req)
 }
 
 // DeleteAutoEvaluation calls api.v1alpha1.scorecards.Scorecards.DeleteAutoEvaluation.
@@ -882,7 +882,7 @@ type ScorecardsHandler interface {
 	// ListAutoEvaluations gets a list of auto evaluations
 	ListAutoEvaluations(context.Context, *connect_go.Request[scorecards.ListAutoEvaluationsRequest]) (*connect_go.Response[scorecards.ListAutoEvaluationsResponse], error)
 	// StreamAutoEvaluations streams a list of auto evaluations
-	StreamAutoEvaluations(context.Context, *connect_go.Request[scorecards.StreamAutoEvaluationsRequest]) (*connect_go.Response[scorecards.StreamAutoEvaluationsResponse], error)
+	StreamAutoEvaluations(context.Context, *connect_go.Request[scorecards.StreamAutoEvaluationsRequest], *connect_go.ServerStream[scorecards.StreamAutoEvaluationsResponse]) error
 	// DeleteAutoEvaluation deletes an auto evaluations
 	DeleteAutoEvaluation(context.Context, *connect_go.Request[scorecards.DeleteAutoEvaluationRequest]) (*connect_go.Response[scorecards.DeleteAutoEvaluationResponse], error)
 	// PreviewEvaluationScore previews the score for an evaluation
@@ -1110,7 +1110,7 @@ func NewScorecardsHandler(svc ScorecardsHandler, opts ...connect_go.HandlerOptio
 		svc.ListAutoEvaluations,
 		opts...,
 	)
-	scorecardsStreamAutoEvaluationsHandler := connect_go.NewUnaryHandler(
+	scorecardsStreamAutoEvaluationsHandler := connect_go.NewServerStreamHandler(
 		ScorecardsStreamAutoEvaluationsProcedure,
 		svc.StreamAutoEvaluations,
 		opts...,
@@ -1400,8 +1400,8 @@ func (UnimplementedScorecardsHandler) ListAutoEvaluations(context.Context, *conn
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.scorecards.Scorecards.ListAutoEvaluations is not implemented"))
 }
 
-func (UnimplementedScorecardsHandler) StreamAutoEvaluations(context.Context, *connect_go.Request[scorecards.StreamAutoEvaluationsRequest]) (*connect_go.Response[scorecards.StreamAutoEvaluationsResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.scorecards.Scorecards.StreamAutoEvaluations is not implemented"))
+func (UnimplementedScorecardsHandler) StreamAutoEvaluations(context.Context, *connect_go.Request[scorecards.StreamAutoEvaluationsRequest], *connect_go.ServerStream[scorecards.StreamAutoEvaluationsResponse]) error {
+	return connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.scorecards.Scorecards.StreamAutoEvaluations is not implemented"))
 }
 
 func (UnimplementedScorecardsHandler) DeleteAutoEvaluation(context.Context, *connect_go.Request[scorecards.DeleteAutoEvaluationRequest]) (*connect_go.Response[scorecards.DeleteAutoEvaluationResponse], error) {
