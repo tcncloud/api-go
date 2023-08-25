@@ -120,9 +120,10 @@ type CreateTicketReq struct {
 	// Status - Ticket status : 1 open, 2 doing, 3 close etc
 	Status int64 `protobuf:"varint,11,opt,name=status,proto3" json:"status,omitempty"`
 	// A list of sla assotiated with a ticket
-	TicketSla   []*commons.Sla `protobuf:"bytes,12,rep,name=ticket_sla,json=ticketSla,proto3" json:"ticket_sla,omitempty"`
-	AssignSelf  bool           `protobuf:"varint,13,opt,name=assign_self,json=assignSelf,proto3" json:"assign_self,omitempty"`
-	AssignOther string         `protobuf:"bytes,14,opt,name=assign_other,json=assignOther,proto3" json:"assign_other,omitempty"`
+	TicketSla    []*commons.Sla          `protobuf:"bytes,12,rep,name=ticket_sla,json=ticketSla,proto3" json:"ticket_sla,omitempty"`
+	AssignSelf   bool                    `protobuf:"varint,13,opt,name=assign_self,json=assignSelf,proto3" json:"assign_self,omitempty"`
+	AssignOther  string                  `protobuf:"bytes,14,opt,name=assign_other,json=assignOther,proto3" json:"assign_other,omitempty"`
+	TicketAction []*commons.TicketAction `protobuf:"bytes,15,rep,name=ticket_action,json=ticketAction,proto3" json:"ticket_action,omitempty"`
 }
 
 func (x *CreateTicketReq) Reset() {
@@ -225,6 +226,13 @@ func (x *CreateTicketReq) GetAssignOther() string {
 		return x.AssignOther
 	}
 	return ""
+}
+
+func (x *CreateTicketReq) GetTicketAction() []*commons.TicketAction {
+	if x != nil {
+		return x.TicketAction
+	}
+	return nil
 }
 
 // CreateTicketRes - Response from CreateTicket BE API
@@ -774,8 +782,8 @@ type AssignTicketReq struct {
 	unknownFields protoimpl.UnknownFields
 
 	TicketSid    int64  `protobuf:"varint,1,opt,name=ticket_sid,json=ticketSid,proto3" json:"ticket_sid,omitempty"`
-	AssigneeList string `protobuf:"bytes,2,opt,name=assignee_list,json=assigneeList,proto3" json:"assignee_list,omitempty"` // type:json - send 0 or null for un-assigning a ticket
-	AssignedId   string `protobuf:"bytes,3,opt,name=assigned_id,json=assignedId,proto3" json:"assigned_id,omitempty"`       // uuid
+	AssigneeList string `protobuf:"bytes,2,opt,name=assignee_list,json=assigneeList,proto3" json:"assignee_list,omitempty"`
+	AssignedId   string `protobuf:"bytes,3,opt,name=assigned_id,json=assignedId,proto3" json:"assigned_id,omitempty"`
 }
 
 func (x *AssignTicketReq) Reset() {
@@ -839,7 +847,7 @@ type AssignTicketRes struct {
 
 	TicketSid    int64  `protobuf:"varint,1,opt,name=ticket_sid,json=ticketSid,proto3" json:"ticket_sid,omitempty"`
 	AssigneeList string `protobuf:"bytes,2,opt,name=assignee_list,json=assigneeList,proto3" json:"assignee_list,omitempty"`
-	AssignedId   string `protobuf:"bytes,3,opt,name=assigned_id,json=assignedId,proto3" json:"assigned_id,omitempty"` // uuid
+	AssignedId   string `protobuf:"bytes,3,opt,name=assigned_id,json=assignedId,proto3" json:"assigned_id,omitempty"`
 }
 
 func (x *AssignTicketRes) Reset() {
@@ -2146,6 +2154,304 @@ func (x *User) GetLastName() string {
 	return ""
 }
 
+type CreateTicketActionRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	TicketAction *commons.TicketAction `protobuf:"bytes,1,opt,name=ticket_action,json=ticketAction,proto3" json:"ticket_action,omitempty"`
+}
+
+func (x *CreateTicketActionRequest) Reset() {
+	*x = CreateTicketActionRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_tickets_ticket_proto_msgTypes[40]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CreateTicketActionRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateTicketActionRequest) ProtoMessage() {}
+
+func (x *CreateTicketActionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_tickets_ticket_proto_msgTypes[40]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateTicketActionRequest.ProtoReflect.Descriptor instead.
+func (*CreateTicketActionRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_tickets_ticket_proto_rawDescGZIP(), []int{40}
+}
+
+func (x *CreateTicketActionRequest) GetTicketAction() *commons.TicketAction {
+	if x != nil {
+		return x.TicketAction
+	}
+	return nil
+}
+
+type CreateTicketActionResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	TicketAction *commons.TicketAction `protobuf:"bytes,1,opt,name=ticket_action,json=ticketAction,proto3" json:"ticket_action,omitempty"`
+}
+
+func (x *CreateTicketActionResponse) Reset() {
+	*x = CreateTicketActionResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_tickets_ticket_proto_msgTypes[41]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CreateTicketActionResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateTicketActionResponse) ProtoMessage() {}
+
+func (x *CreateTicketActionResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_tickets_ticket_proto_msgTypes[41]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateTicketActionResponse.ProtoReflect.Descriptor instead.
+func (*CreateTicketActionResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_tickets_ticket_proto_rawDescGZIP(), []int{41}
+}
+
+func (x *CreateTicketActionResponse) GetTicketAction() *commons.TicketAction {
+	if x != nil {
+		return x.TicketAction
+	}
+	return nil
+}
+
+type CloseTicketActionRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	TicketActionId int64  `protobuf:"varint,1,opt,name=ticket_action_id,json=ticketActionId,proto3" json:"ticket_action_id,omitempty"`
+	TicketId       int64  `protobuf:"varint,2,opt,name=ticket_id,json=ticketId,proto3" json:"ticket_id,omitempty"`
+	Comment        string `protobuf:"bytes,3,opt,name=comment,proto3" json:"comment,omitempty"`
+}
+
+func (x *CloseTicketActionRequest) Reset() {
+	*x = CloseTicketActionRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_tickets_ticket_proto_msgTypes[42]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CloseTicketActionRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CloseTicketActionRequest) ProtoMessage() {}
+
+func (x *CloseTicketActionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_tickets_ticket_proto_msgTypes[42]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CloseTicketActionRequest.ProtoReflect.Descriptor instead.
+func (*CloseTicketActionRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_tickets_ticket_proto_rawDescGZIP(), []int{42}
+}
+
+func (x *CloseTicketActionRequest) GetTicketActionId() int64 {
+	if x != nil {
+		return x.TicketActionId
+	}
+	return 0
+}
+
+func (x *CloseTicketActionRequest) GetTicketId() int64 {
+	if x != nil {
+		return x.TicketId
+	}
+	return 0
+}
+
+func (x *CloseTicketActionRequest) GetComment() string {
+	if x != nil {
+		return x.Comment
+	}
+	return ""
+}
+
+type CloseTicketActionResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	IsClosed bool `protobuf:"varint,1,opt,name=is_closed,json=isClosed,proto3" json:"is_closed,omitempty"`
+}
+
+func (x *CloseTicketActionResponse) Reset() {
+	*x = CloseTicketActionResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_tickets_ticket_proto_msgTypes[43]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CloseTicketActionResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CloseTicketActionResponse) ProtoMessage() {}
+
+func (x *CloseTicketActionResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_tickets_ticket_proto_msgTypes[43]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CloseTicketActionResponse.ProtoReflect.Descriptor instead.
+func (*CloseTicketActionResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_tickets_ticket_proto_rawDescGZIP(), []int{43}
+}
+
+func (x *CloseTicketActionResponse) GetIsClosed() bool {
+	if x != nil {
+		return x.IsClosed
+	}
+	return false
+}
+
+type AssignTicketActionRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	TicketActionId int64 `protobuf:"varint,1,opt,name=ticket_action_id,json=ticketActionId,proto3" json:"ticket_action_id,omitempty"`
+}
+
+func (x *AssignTicketActionRequest) Reset() {
+	*x = AssignTicketActionRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_tickets_ticket_proto_msgTypes[44]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AssignTicketActionRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AssignTicketActionRequest) ProtoMessage() {}
+
+func (x *AssignTicketActionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_tickets_ticket_proto_msgTypes[44]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AssignTicketActionRequest.ProtoReflect.Descriptor instead.
+func (*AssignTicketActionRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_tickets_ticket_proto_rawDescGZIP(), []int{44}
+}
+
+func (x *AssignTicketActionRequest) GetTicketActionId() int64 {
+	if x != nil {
+		return x.TicketActionId
+	}
+	return 0
+}
+
+type AssignTicketActionResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	IsAssigned bool `protobuf:"varint,1,opt,name=is_assigned,json=isAssigned,proto3" json:"is_assigned,omitempty"`
+}
+
+func (x *AssignTicketActionResponse) Reset() {
+	*x = AssignTicketActionResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_tickets_ticket_proto_msgTypes[45]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AssignTicketActionResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AssignTicketActionResponse) ProtoMessage() {}
+
+func (x *AssignTicketActionResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_tickets_ticket_proto_msgTypes[45]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AssignTicketActionResponse.ProtoReflect.Descriptor instead.
+func (*AssignTicketActionResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_tickets_ticket_proto_rawDescGZIP(), []int{45}
+}
+
+func (x *AssignTicketActionResponse) GetIsAssigned() bool {
+	if x != nil {
+		return x.IsAssigned
+	}
+	return false
+}
+
 var File_api_v1alpha1_tickets_ticket_proto protoreflect.FileDescriptor
 
 var file_api_v1alpha1_tickets_ticket_proto_rawDesc = []byte{
@@ -2159,7 +2465,7 @@ var file_api_v1alpha1_tickets_ticket_proto_rawDesc = []byte{
 	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1f, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x70,
 	0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d,
 	0x70, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x09, 0x0a, 0x07, 0x50, 0x69, 0x6e, 0x67, 0x52,
-	0x65, 0x71, 0x22, 0x09, 0x0a, 0x07, 0x50, 0x69, 0x6e, 0x67, 0x52, 0x65, 0x73, 0x22, 0x9f, 0x03,
+	0x65, 0x71, 0x22, 0x09, 0x0a, 0x07, 0x50, 0x69, 0x6e, 0x67, 0x52, 0x65, 0x73, 0x22, 0xdf, 0x03,
 	0x0a, 0x0f, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x52, 0x65,
 	0x71, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x69, 0x74, 0x6c, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
 	0x52, 0x05, 0x74, 0x69, 0x74, 0x6c, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x64, 0x65, 0x73, 0x63, 0x72,
@@ -2185,7 +2491,11 @@ var file_api_v1alpha1_tickets_ticket_proto_rawDesc = []byte{
 	0x73, 0x73, 0x69, 0x67, 0x6e, 0x5f, 0x73, 0x65, 0x6c, 0x66, 0x18, 0x0d, 0x20, 0x01, 0x28, 0x08,
 	0x52, 0x0a, 0x61, 0x73, 0x73, 0x69, 0x67, 0x6e, 0x53, 0x65, 0x6c, 0x66, 0x12, 0x21, 0x0a, 0x0c,
 	0x61, 0x73, 0x73, 0x69, 0x67, 0x6e, 0x5f, 0x6f, 0x74, 0x68, 0x65, 0x72, 0x18, 0x0e, 0x20, 0x01,
-	0x28, 0x09, 0x52, 0x0b, 0x61, 0x73, 0x73, 0x69, 0x67, 0x6e, 0x4f, 0x74, 0x68, 0x65, 0x72, 0x22,
+	0x28, 0x09, 0x52, 0x0b, 0x61, 0x73, 0x73, 0x69, 0x67, 0x6e, 0x4f, 0x74, 0x68, 0x65, 0x72, 0x12,
+	0x3e, 0x0a, 0x0d, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x5f, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e,
+	0x18, 0x0f, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d,
+	0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x41, 0x63, 0x74, 0x69, 0x6f,
+	0x6e, 0x52, 0x0c, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x22,
 	0x3e, 0x0a, 0x0f, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x52,
 	0x65, 0x73, 0x12, 0x2b, 0x0a, 0x06, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x18, 0x01, 0x20, 0x01,
 	0x28, 0x0b, 0x32, 0x13, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73,
@@ -2359,21 +2669,53 @@ var file_api_v1alpha1_tickets_ticket_proto_rawDesc = []byte{
 	0x49, 0x64, 0x12, 0x1d, 0x0a, 0x0a, 0x66, 0x69, 0x72, 0x73, 0x74, 0x5f, 0x6e, 0x61, 0x6d, 0x65,
 	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x66, 0x69, 0x72, 0x73, 0x74, 0x4e, 0x61, 0x6d,
 	0x65, 0x12, 0x1b, 0x0a, 0x09, 0x6c, 0x61, 0x73, 0x74, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x03,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x6c, 0x61, 0x73, 0x74, 0x4e, 0x61, 0x6d, 0x65, 0x42, 0xca,
-	0x01, 0x0a, 0x18, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70,
-	0x68, 0x61, 0x31, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x42, 0x0b, 0x54, 0x69, 0x63,
-	0x6b, 0x65, 0x74, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x2f, 0x67, 0x69, 0x74, 0x68,
-	0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f,
-	0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70,
-	0x68, 0x61, 0x31, 0x2f, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0xa2, 0x02, 0x03, 0x41, 0x56,
-	0x54, 0xaa, 0x02, 0x14, 0x41, 0x70, 0x69, 0x2e, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31,
-	0x2e, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0xca, 0x02, 0x14, 0x41, 0x70, 0x69, 0x5c, 0x56,
-	0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0xe2,
-	0x02, 0x20, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x54,
-	0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61,
-	0x74, 0x61, 0xea, 0x02, 0x16, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68,
-	0x61, 0x31, 0x3a, 0x3a, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x33,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x6c, 0x61, 0x73, 0x74, 0x4e, 0x61, 0x6d, 0x65, 0x22, 0x5b,
+	0x0a, 0x19, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x41, 0x63,
+	0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x3e, 0x0a, 0x0d, 0x74,
+	0x69, 0x63, 0x6b, 0x65, 0x74, 0x5f, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x19, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73,
+	0x2e, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x0c, 0x74,
+	0x69, 0x63, 0x6b, 0x65, 0x74, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0x5c, 0x0a, 0x1a, 0x43,
+	0x72, 0x65, 0x61, 0x74, 0x65, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x41, 0x63, 0x74, 0x69, 0x6f,
+	0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x3e, 0x0a, 0x0d, 0x74, 0x69, 0x63,
+	0x6b, 0x65, 0x74, 0x5f, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x19, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x54,
+	0x69, 0x63, 0x6b, 0x65, 0x74, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x0c, 0x74, 0x69, 0x63,
+	0x6b, 0x65, 0x74, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0x83, 0x01, 0x0a, 0x18, 0x43, 0x6c,
+	0x6f, 0x73, 0x65, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x2c, 0x0a, 0x10, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74,
+	0x5f, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03,
+	0x42, 0x02, 0x30, 0x01, 0x52, 0x0e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x41, 0x63, 0x74, 0x69,
+	0x6f, 0x6e, 0x49, 0x64, 0x12, 0x1f, 0x0a, 0x09, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x5f, 0x69,
+	0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x42, 0x02, 0x30, 0x01, 0x52, 0x08, 0x74, 0x69, 0x63,
+	0x6b, 0x65, 0x74, 0x49, 0x64, 0x12, 0x18, 0x0a, 0x07, 0x63, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x63, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x22,
+	0x38, 0x0a, 0x19, 0x43, 0x6c, 0x6f, 0x73, 0x65, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x41, 0x63,
+	0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x1b, 0x0a, 0x09,
+	0x69, 0x73, 0x5f, 0x63, 0x6c, 0x6f, 0x73, 0x65, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52,
+	0x08, 0x69, 0x73, 0x43, 0x6c, 0x6f, 0x73, 0x65, 0x64, 0x22, 0x49, 0x0a, 0x19, 0x41, 0x73, 0x73,
+	0x69, 0x67, 0x6e, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x2c, 0x0a, 0x10, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74,
+	0x5f, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03,
+	0x42, 0x02, 0x30, 0x01, 0x52, 0x0e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x41, 0x63, 0x74, 0x69,
+	0x6f, 0x6e, 0x49, 0x64, 0x22, 0x3d, 0x0a, 0x1a, 0x41, 0x73, 0x73, 0x69, 0x67, 0x6e, 0x54, 0x69,
+	0x63, 0x6b, 0x65, 0x74, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x12, 0x1f, 0x0a, 0x0b, 0x69, 0x73, 0x5f, 0x61, 0x73, 0x73, 0x69, 0x67, 0x6e, 0x65,
+	0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0a, 0x69, 0x73, 0x41, 0x73, 0x73, 0x69, 0x67,
+	0x6e, 0x65, 0x64, 0x42, 0xca, 0x01, 0x0a, 0x18, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e,
+	0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73,
+	0x42, 0x0b, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a,
+	0x2f, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63,
+	0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f,
+	0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73,
+	0xa2, 0x02, 0x03, 0x41, 0x56, 0x54, 0xaa, 0x02, 0x14, 0x41, 0x70, 0x69, 0x2e, 0x56, 0x31, 0x61,
+	0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0xca, 0x02, 0x14,
+	0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x54, 0x69, 0x63,
+	0x6b, 0x65, 0x74, 0x73, 0xe2, 0x02, 0x20, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70,
+	0x68, 0x61, 0x31, 0x5c, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d,
+	0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x16, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x56,
+	0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x3a, 0x3a, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73,
+	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -2388,7 +2730,7 @@ func file_api_v1alpha1_tickets_ticket_proto_rawDescGZIP() []byte {
 	return file_api_v1alpha1_tickets_ticket_proto_rawDescData
 }
 
-var file_api_v1alpha1_tickets_ticket_proto_msgTypes = make([]protoimpl.MessageInfo, 40)
+var file_api_v1alpha1_tickets_ticket_proto_msgTypes = make([]protoimpl.MessageInfo, 46)
 var file_api_v1alpha1_tickets_ticket_proto_goTypes = []interface{}{
 	(*PingReq)(nil),                           // 0: api.v1alpha1.tickets.PingReq
 	(*PingRes)(nil),                           // 1: api.v1alpha1.tickets.PingRes
@@ -2430,46 +2772,56 @@ var file_api_v1alpha1_tickets_ticket_proto_goTypes = []interface{}{
 	(*ListUsersRequest)(nil),                  // 37: api.v1alpha1.tickets.ListUsersRequest
 	(*ListUsersResponse)(nil),                 // 38: api.v1alpha1.tickets.ListUsersResponse
 	(*User)(nil),                              // 39: api.v1alpha1.tickets.User
-	(*timestamppb.Timestamp)(nil),             // 40: google.protobuf.Timestamp
-	(*commons.Metadata)(nil),                  // 41: api.commons.Metadata
-	(*commons.Skills)(nil),                    // 42: api.commons.Skills
-	(*commons.Sla)(nil),                       // 43: api.commons.Sla
-	(*commons.Ticket)(nil),                    // 44: api.commons.Ticket
-	(*commons.EditAttribute)(nil),             // 45: api.commons.EditAttribute
-	(*fieldmaskpb.FieldMask)(nil),             // 46: google.protobuf.FieldMask
-	(*commons.Comment)(nil),                   // 47: api.commons.Comment
-	(*commons.ReplyComment)(nil),              // 48: api.commons.ReplyComment
-	(*commons.TicketSla)(nil),                 // 49: api.commons.TicketSla
-	(*commons.SlaConditions)(nil),             // 50: api.commons.SlaConditions
-	(*commons.ConfirmReplyComment)(nil),       // 51: api.commons.ConfirmReplyComment
+	(*CreateTicketActionRequest)(nil),         // 40: api.v1alpha1.tickets.CreateTicketActionRequest
+	(*CreateTicketActionResponse)(nil),        // 41: api.v1alpha1.tickets.CreateTicketActionResponse
+	(*CloseTicketActionRequest)(nil),          // 42: api.v1alpha1.tickets.CloseTicketActionRequest
+	(*CloseTicketActionResponse)(nil),         // 43: api.v1alpha1.tickets.CloseTicketActionResponse
+	(*AssignTicketActionRequest)(nil),         // 44: api.v1alpha1.tickets.AssignTicketActionRequest
+	(*AssignTicketActionResponse)(nil),        // 45: api.v1alpha1.tickets.AssignTicketActionResponse
+	(*timestamppb.Timestamp)(nil),             // 46: google.protobuf.Timestamp
+	(*commons.Metadata)(nil),                  // 47: api.commons.Metadata
+	(*commons.Skills)(nil),                    // 48: api.commons.Skills
+	(*commons.Sla)(nil),                       // 49: api.commons.Sla
+	(*commons.TicketAction)(nil),              // 50: api.commons.TicketAction
+	(*commons.Ticket)(nil),                    // 51: api.commons.Ticket
+	(*commons.EditAttribute)(nil),             // 52: api.commons.EditAttribute
+	(*fieldmaskpb.FieldMask)(nil),             // 53: google.protobuf.FieldMask
+	(*commons.Comment)(nil),                   // 54: api.commons.Comment
+	(*commons.ReplyComment)(nil),              // 55: api.commons.ReplyComment
+	(*commons.TicketSla)(nil),                 // 56: api.commons.TicketSla
+	(*commons.SlaConditions)(nil),             // 57: api.commons.SlaConditions
+	(*commons.ConfirmReplyComment)(nil),       // 58: api.commons.ConfirmReplyComment
 }
 var file_api_v1alpha1_tickets_ticket_proto_depIdxs = []int32{
-	40, // 0: api.v1alpha1.tickets.CreateTicketReq.due_date:type_name -> google.protobuf.Timestamp
-	41, // 1: api.v1alpha1.tickets.CreateTicketReq.metadata:type_name -> api.commons.Metadata
-	42, // 2: api.v1alpha1.tickets.CreateTicketReq.ticket_skills:type_name -> api.commons.Skills
-	43, // 3: api.v1alpha1.tickets.CreateTicketReq.ticket_sla:type_name -> api.commons.Sla
-	44, // 4: api.v1alpha1.tickets.CreateTicketRes.ticket:type_name -> api.commons.Ticket
-	45, // 5: api.v1alpha1.tickets.EditTicketReq.edit_value:type_name -> api.commons.EditAttribute
-	44, // 6: api.v1alpha1.tickets.EditMaskTicketReq.edit_value:type_name -> api.commons.Ticket
-	46, // 7: api.v1alpha1.tickets.EditMaskTicketReq.edited_fields_mask:type_name -> google.protobuf.FieldMask
-	44, // 8: api.v1alpha1.tickets.ListAvailableAgentTicketsResponse.ticket:type_name -> api.commons.Ticket
-	44, // 9: api.v1alpha1.tickets.ListTicketsRes.tickets:type_name -> api.commons.Ticket
-	44, // 10: api.v1alpha1.tickets.ViewTicketRes.ticket:type_name -> api.commons.Ticket
-	47, // 11: api.v1alpha1.tickets.ViewTicketRes.comments:type_name -> api.commons.Comment
-	48, // 12: api.v1alpha1.tickets.ViewTicketRes.reply_comment:type_name -> api.commons.ReplyComment
-	47, // 13: api.v1alpha1.tickets.CreateCommentRes.comment:type_name -> api.commons.Comment
-	49, // 14: api.v1alpha1.tickets.CreateSlaRes.sla:type_name -> api.commons.TicketSla
-	49, // 15: api.v1alpha1.tickets.ListSlaRes.ticketsSla:type_name -> api.commons.TicketSla
-	49, // 16: api.v1alpha1.tickets.UpdateSlaRes.ticketsSla:type_name -> api.commons.TicketSla
-	50, // 17: api.v1alpha1.tickets.ListSlaConditionRes.slaCondition:type_name -> api.commons.SlaConditions
-	51, // 18: api.v1alpha1.tickets.ReplyCommentRes.is_created:type_name -> api.commons.ConfirmReplyComment
-	36, // 19: api.v1alpha1.tickets.ListSkillsResponse.skills:type_name -> api.v1alpha1.tickets.Skill
-	39, // 20: api.v1alpha1.tickets.ListUsersResponse.users:type_name -> api.v1alpha1.tickets.User
-	21, // [21:21] is the sub-list for method output_type
-	21, // [21:21] is the sub-list for method input_type
-	21, // [21:21] is the sub-list for extension type_name
-	21, // [21:21] is the sub-list for extension extendee
-	0,  // [0:21] is the sub-list for field type_name
+	46, // 0: api.v1alpha1.tickets.CreateTicketReq.due_date:type_name -> google.protobuf.Timestamp
+	47, // 1: api.v1alpha1.tickets.CreateTicketReq.metadata:type_name -> api.commons.Metadata
+	48, // 2: api.v1alpha1.tickets.CreateTicketReq.ticket_skills:type_name -> api.commons.Skills
+	49, // 3: api.v1alpha1.tickets.CreateTicketReq.ticket_sla:type_name -> api.commons.Sla
+	50, // 4: api.v1alpha1.tickets.CreateTicketReq.ticket_action:type_name -> api.commons.TicketAction
+	51, // 5: api.v1alpha1.tickets.CreateTicketRes.ticket:type_name -> api.commons.Ticket
+	52, // 6: api.v1alpha1.tickets.EditTicketReq.edit_value:type_name -> api.commons.EditAttribute
+	51, // 7: api.v1alpha1.tickets.EditMaskTicketReq.edit_value:type_name -> api.commons.Ticket
+	53, // 8: api.v1alpha1.tickets.EditMaskTicketReq.edited_fields_mask:type_name -> google.protobuf.FieldMask
+	51, // 9: api.v1alpha1.tickets.ListAvailableAgentTicketsResponse.ticket:type_name -> api.commons.Ticket
+	51, // 10: api.v1alpha1.tickets.ListTicketsRes.tickets:type_name -> api.commons.Ticket
+	51, // 11: api.v1alpha1.tickets.ViewTicketRes.ticket:type_name -> api.commons.Ticket
+	54, // 12: api.v1alpha1.tickets.ViewTicketRes.comments:type_name -> api.commons.Comment
+	55, // 13: api.v1alpha1.tickets.ViewTicketRes.reply_comment:type_name -> api.commons.ReplyComment
+	54, // 14: api.v1alpha1.tickets.CreateCommentRes.comment:type_name -> api.commons.Comment
+	56, // 15: api.v1alpha1.tickets.CreateSlaRes.sla:type_name -> api.commons.TicketSla
+	56, // 16: api.v1alpha1.tickets.ListSlaRes.ticketsSla:type_name -> api.commons.TicketSla
+	56, // 17: api.v1alpha1.tickets.UpdateSlaRes.ticketsSla:type_name -> api.commons.TicketSla
+	57, // 18: api.v1alpha1.tickets.ListSlaConditionRes.slaCondition:type_name -> api.commons.SlaConditions
+	58, // 19: api.v1alpha1.tickets.ReplyCommentRes.is_created:type_name -> api.commons.ConfirmReplyComment
+	36, // 20: api.v1alpha1.tickets.ListSkillsResponse.skills:type_name -> api.v1alpha1.tickets.Skill
+	39, // 21: api.v1alpha1.tickets.ListUsersResponse.users:type_name -> api.v1alpha1.tickets.User
+	50, // 22: api.v1alpha1.tickets.CreateTicketActionRequest.ticket_action:type_name -> api.commons.TicketAction
+	50, // 23: api.v1alpha1.tickets.CreateTicketActionResponse.ticket_action:type_name -> api.commons.TicketAction
+	24, // [24:24] is the sub-list for method output_type
+	24, // [24:24] is the sub-list for method input_type
+	24, // [24:24] is the sub-list for extension type_name
+	24, // [24:24] is the sub-list for extension extendee
+	0,  // [0:24] is the sub-list for field type_name
 }
 
 func init() { file_api_v1alpha1_tickets_ticket_proto_init() }
@@ -2958,6 +3310,78 @@ func file_api_v1alpha1_tickets_ticket_proto_init() {
 				return nil
 			}
 		}
+		file_api_v1alpha1_tickets_ticket_proto_msgTypes[40].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*CreateTicketActionRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_tickets_ticket_proto_msgTypes[41].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*CreateTicketActionResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_tickets_ticket_proto_msgTypes[42].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*CloseTicketActionRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_tickets_ticket_proto_msgTypes[43].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*CloseTicketActionResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_tickets_ticket_proto_msgTypes[44].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AssignTicketActionRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_tickets_ticket_proto_msgTypes[45].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AssignTicketActionResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -2965,7 +3389,7 @@ func file_api_v1alpha1_tickets_ticket_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_v1alpha1_tickets_ticket_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   40,
+			NumMessages:   46,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
