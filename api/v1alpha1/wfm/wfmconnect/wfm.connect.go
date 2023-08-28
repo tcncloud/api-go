@@ -188,6 +188,9 @@ const (
 	// WFMUpdateNonSkillActivityProcedure is the fully-qualified name of the WFM's
 	// UpdateNonSkillActivity RPC.
 	WFMUpdateNonSkillActivityProcedure = "/api.v1alpha1.wfm.WFM/UpdateNonSkillActivity"
+	// WFMListNonSkillActivitiesProcedure is the fully-qualified name of the WFM's
+	// ListNonSkillActivities RPC.
+	WFMListNonSkillActivitiesProcedure = "/api.v1alpha1.wfm.WFM/ListNonSkillActivities"
 	// WFMListNonSkillActivityAssociationsProcedure is the fully-qualified name of the WFM's
 	// ListNonSkillActivityAssociations RPC.
 	WFMListNonSkillActivityAssociationsProcedure = "/api.v1alpha1.wfm.WFM/ListNonSkillActivityAssociations"
@@ -319,6 +322,9 @@ const (
 	WFMListDraftSchedulesProcedure = "/api.v1alpha1.wfm.WFM/ListDraftSchedules"
 	// WFMDeleteDraftScheduleProcedure is the fully-qualified name of the WFM's DeleteDraftSchedule RPC.
 	WFMDeleteDraftScheduleProcedure = "/api.v1alpha1.wfm.WFM/DeleteDraftSchedule"
+	// WFMListShiftInstancesBySidProcedure is the fully-qualified name of the WFM's
+	// ListShiftInstancesBySid RPC.
+	WFMListShiftInstancesBySidProcedure = "/api.v1alpha1.wfm.WFM/ListShiftInstancesBySid"
 	// WFMCopyScheduleToScheduleProcedure is the fully-qualified name of the WFM's
 	// CopyScheduleToSchedule RPC.
 	WFMCopyScheduleToScheduleProcedure = "/api.v1alpha1.wfm.WFM/CopyScheduleToSchedule"
@@ -938,6 +944,14 @@ type WFMClient interface {
 	//   - grpc.NotFound: non skill activity for the given @non_skill_activity_sid doesn't exist.
 	//   - grpc.Internal: error occurs when updating the non skill activity.
 	UpdateNonSkillActivity(context.Context, *connect_go.Request[wfm.UpdateNonSkillActivityReq]) (*connect_go.Response[wfm.UpdateNonSkillActivityRes], error)
+	// Lists the non skill activities that belong to the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:.
+	//   - grpc.Internal: error occurs when listing the activites.
+	ListNonSkillActivities(context.Context, *connect_go.Request[wfm.ListNonSkillActivitiesReq]) (*connect_go.Response[wfm.ListNonSkillActivitiesRes], error)
 	// Lists the IDs of non skill activities that belong to the org sending the request which have the given @relationship_type with the @associated_entity.
 	// Required permissions:
 	//
@@ -1545,6 +1559,21 @@ type WFMClient interface {
 	//   - grpc.NotFound: the draft schedule with the given @draft_schedule_sid doesn't exist.
 	//   - grpc.Internal: error occurs when removing the draft schedule.
 	DeleteDraftSchedule(context.Context, *connect_go.Request[wfm.DeleteDraftScheduleReq]) (*connect_go.Response[wfm.DeleteDraftScheduleRes], error)
+	// Lists the shift instances with the corresponding @shift_instance_sids for the org sending the request.
+	// If @include_shift_template is set to true then the related shift template for the shift instances will be returned in the shift template field.
+	// If @include_shift_segments is set to true then the related shift segments for the shift instances will be returned in the shift segments field.
+	// If @include_scheduling_activity is set to true then the related scheduling activity for the shift segment will be returned in the scheduling activity field.
+	// @include_shift_segments must be true to take effect.
+	// If @include_activity is set to true then the related non skill activity for the scheduling activity will be returned in the scheduling
+	// activities member non skill activity field. @include_scheduling_activity must be true to take effect.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @org_id or @shift_instance_sids in the request are invalid.
+	//   - grpc.Internal: error occurs when listing the shift instances or their shift segments.
+	ListShiftInstancesBySid(context.Context, *connect_go.Request[wfm.ListShiftInstancesBySidReq]) (*connect_go.Response[wfm.ListShiftInstancesBySidRes], error)
 	// Copies the shifts from @source_schedule_selector to @destination_schedule_selector, constrained by the given parameters for the org sending the request.
 	// If @datetime_range is set, all shifts within the datetime range will be copied.
 	// If @datetime_range is not set, all shifts in the @source_schedule_selector within the schedule range of the @destination_schedule_selector will be copied. However if one of them is a published schedule, it will use the schedule range of the draft schedule.
@@ -1962,6 +1991,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMUpdateNonSkillActivityProcedure,
 			opts...,
 		),
+		listNonSkillActivities: connect_go.NewClient[wfm.ListNonSkillActivitiesReq, wfm.ListNonSkillActivitiesRes](
+			httpClient,
+			baseURL+WFMListNonSkillActivitiesProcedure,
+			opts...,
+		),
 		listNonSkillActivityAssociations: connect_go.NewClient[wfm.ListNonSkillActivityAssociationsReq, wfm.ListNonSkillActivityAssociationsRes](
 			httpClient,
 			baseURL+WFMListNonSkillActivityAssociationsProcedure,
@@ -2212,6 +2246,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMDeleteDraftScheduleProcedure,
 			opts...,
 		),
+		listShiftInstancesBySid: connect_go.NewClient[wfm.ListShiftInstancesBySidReq, wfm.ListShiftInstancesBySidRes](
+			httpClient,
+			baseURL+WFMListShiftInstancesBySidProcedure,
+			opts...,
+		),
 		copyScheduleToSchedule: connect_go.NewClient[wfm.CopyScheduleToScheduleReq, wfm.CopyScheduleToScheduleRes](
 			httpClient,
 			baseURL+WFMCopyScheduleToScheduleProcedure,
@@ -2338,6 +2377,7 @@ type wFMClient struct {
 	deleteConstraintRule                          *connect_go.Client[wfm.DeleteConstraintRuleReq, wfm.DeleteConstraintRuleRes]
 	createNonSkillActivity                        *connect_go.Client[wfm.CreateNonSkillActivityReq, wfm.CreateNonSkillActivityRes]
 	updateNonSkillActivity                        *connect_go.Client[wfm.UpdateNonSkillActivityReq, wfm.UpdateNonSkillActivityRes]
+	listNonSkillActivities                        *connect_go.Client[wfm.ListNonSkillActivitiesReq, wfm.ListNonSkillActivitiesRes]
 	listNonSkillActivityAssociations              *connect_go.Client[wfm.ListNonSkillActivityAssociationsReq, wfm.ListNonSkillActivityAssociationsRes]
 	listCandidateSchedulingActivities             *connect_go.Client[wfm.ListCandidateSchedulingActivitiesReq, wfm.ListCandidateSchedulingActivitiesRes]
 	createAgentGroup                              *connect_go.Client[wfm.CreateAgentGroupReq, wfm.CreateAgentGroupRes]
@@ -2388,6 +2428,7 @@ type wFMClient struct {
 	getDraftSchedule                              *connect_go.Client[wfm.GetDraftScheduleReq, wfm.GetDraftScheduleRes]
 	listDraftSchedules                            *connect_go.Client[wfm.ListDraftSchedulesReq, wfm.ListDraftSchedulesRes]
 	deleteDraftSchedule                           *connect_go.Client[wfm.DeleteDraftScheduleReq, wfm.DeleteDraftScheduleRes]
+	listShiftInstancesBySid                       *connect_go.Client[wfm.ListShiftInstancesBySidReq, wfm.ListShiftInstancesBySidRes]
 	copyScheduleToSchedule                        *connect_go.Client[wfm.CopyScheduleToScheduleReq, wfm.CopyScheduleToScheduleRes]
 	createShiftInstance                           *connect_go.Client[wfm.CreateShiftInstanceReq, wfm.CreateShiftInstanceRes]
 	createShiftInstanceV2                         *connect_go.Client[wfm.CreateShiftInstanceV2Req, wfm.CreateShiftInstanceV2Res]
@@ -2668,6 +2709,11 @@ func (c *wFMClient) UpdateNonSkillActivity(ctx context.Context, req *connect_go.
 	return c.updateNonSkillActivity.CallUnary(ctx, req)
 }
 
+// ListNonSkillActivities calls api.v1alpha1.wfm.WFM.ListNonSkillActivities.
+func (c *wFMClient) ListNonSkillActivities(ctx context.Context, req *connect_go.Request[wfm.ListNonSkillActivitiesReq]) (*connect_go.Response[wfm.ListNonSkillActivitiesRes], error) {
+	return c.listNonSkillActivities.CallUnary(ctx, req)
+}
+
 // ListNonSkillActivityAssociations calls api.v1alpha1.wfm.WFM.ListNonSkillActivityAssociations.
 func (c *wFMClient) ListNonSkillActivityAssociations(ctx context.Context, req *connect_go.Request[wfm.ListNonSkillActivityAssociationsReq]) (*connect_go.Response[wfm.ListNonSkillActivityAssociationsRes], error) {
 	return c.listNonSkillActivityAssociations.CallUnary(ctx, req)
@@ -2917,6 +2963,11 @@ func (c *wFMClient) ListDraftSchedules(ctx context.Context, req *connect_go.Requ
 // DeleteDraftSchedule calls api.v1alpha1.wfm.WFM.DeleteDraftSchedule.
 func (c *wFMClient) DeleteDraftSchedule(ctx context.Context, req *connect_go.Request[wfm.DeleteDraftScheduleReq]) (*connect_go.Response[wfm.DeleteDraftScheduleRes], error) {
 	return c.deleteDraftSchedule.CallUnary(ctx, req)
+}
+
+// ListShiftInstancesBySid calls api.v1alpha1.wfm.WFM.ListShiftInstancesBySid.
+func (c *wFMClient) ListShiftInstancesBySid(ctx context.Context, req *connect_go.Request[wfm.ListShiftInstancesBySidReq]) (*connect_go.Response[wfm.ListShiftInstancesBySidRes], error) {
+	return c.listShiftInstancesBySid.CallUnary(ctx, req)
 }
 
 // CopyScheduleToSchedule calls api.v1alpha1.wfm.WFM.CopyScheduleToSchedule.
@@ -3570,6 +3621,14 @@ type WFMHandler interface {
 	//   - grpc.NotFound: non skill activity for the given @non_skill_activity_sid doesn't exist.
 	//   - grpc.Internal: error occurs when updating the non skill activity.
 	UpdateNonSkillActivity(context.Context, *connect_go.Request[wfm.UpdateNonSkillActivityReq]) (*connect_go.Response[wfm.UpdateNonSkillActivityRes], error)
+	// Lists the non skill activities that belong to the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:.
+	//   - grpc.Internal: error occurs when listing the activites.
+	ListNonSkillActivities(context.Context, *connect_go.Request[wfm.ListNonSkillActivitiesReq]) (*connect_go.Response[wfm.ListNonSkillActivitiesRes], error)
 	// Lists the IDs of non skill activities that belong to the org sending the request which have the given @relationship_type with the @associated_entity.
 	// Required permissions:
 	//
@@ -4177,6 +4236,21 @@ type WFMHandler interface {
 	//   - grpc.NotFound: the draft schedule with the given @draft_schedule_sid doesn't exist.
 	//   - grpc.Internal: error occurs when removing the draft schedule.
 	DeleteDraftSchedule(context.Context, *connect_go.Request[wfm.DeleteDraftScheduleReq]) (*connect_go.Response[wfm.DeleteDraftScheduleRes], error)
+	// Lists the shift instances with the corresponding @shift_instance_sids for the org sending the request.
+	// If @include_shift_template is set to true then the related shift template for the shift instances will be returned in the shift template field.
+	// If @include_shift_segments is set to true then the related shift segments for the shift instances will be returned in the shift segments field.
+	// If @include_scheduling_activity is set to true then the related scheduling activity for the shift segment will be returned in the scheduling activity field.
+	// @include_shift_segments must be true to take effect.
+	// If @include_activity is set to true then the related non skill activity for the scheduling activity will be returned in the scheduling
+	// activities member non skill activity field. @include_scheduling_activity must be true to take effect.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @org_id or @shift_instance_sids in the request are invalid.
+	//   - grpc.Internal: error occurs when listing the shift instances or their shift segments.
+	ListShiftInstancesBySid(context.Context, *connect_go.Request[wfm.ListShiftInstancesBySidReq]) (*connect_go.Response[wfm.ListShiftInstancesBySidRes], error)
 	// Copies the shifts from @source_schedule_selector to @destination_schedule_selector, constrained by the given parameters for the org sending the request.
 	// If @datetime_range is set, all shifts within the datetime range will be copied.
 	// If @datetime_range is not set, all shifts in the @source_schedule_selector within the schedule range of the @destination_schedule_selector will be copied. However if one of them is a published schedule, it will use the schedule range of the draft schedule.
@@ -4590,6 +4664,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.UpdateNonSkillActivity,
 		opts...,
 	)
+	wFMListNonSkillActivitiesHandler := connect_go.NewUnaryHandler(
+		WFMListNonSkillActivitiesProcedure,
+		svc.ListNonSkillActivities,
+		opts...,
+	)
 	wFMListNonSkillActivityAssociationsHandler := connect_go.NewUnaryHandler(
 		WFMListNonSkillActivityAssociationsProcedure,
 		svc.ListNonSkillActivityAssociations,
@@ -4840,6 +4919,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.DeleteDraftSchedule,
 		opts...,
 	)
+	wFMListShiftInstancesBySidHandler := connect_go.NewUnaryHandler(
+		WFMListShiftInstancesBySidProcedure,
+		svc.ListShiftInstancesBySid,
+		opts...,
+	)
 	wFMCopyScheduleToScheduleHandler := connect_go.NewUnaryHandler(
 		WFMCopyScheduleToScheduleProcedure,
 		svc.CopyScheduleToSchedule,
@@ -5014,6 +5098,8 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMCreateNonSkillActivityHandler.ServeHTTP(w, r)
 		case WFMUpdateNonSkillActivityProcedure:
 			wFMUpdateNonSkillActivityHandler.ServeHTTP(w, r)
+		case WFMListNonSkillActivitiesProcedure:
+			wFMListNonSkillActivitiesHandler.ServeHTTP(w, r)
 		case WFMListNonSkillActivityAssociationsProcedure:
 			wFMListNonSkillActivityAssociationsHandler.ServeHTTP(w, r)
 		case WFMListCandidateSchedulingActivitiesProcedure:
@@ -5114,6 +5200,8 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMListDraftSchedulesHandler.ServeHTTP(w, r)
 		case WFMDeleteDraftScheduleProcedure:
 			wFMDeleteDraftScheduleHandler.ServeHTTP(w, r)
+		case WFMListShiftInstancesBySidProcedure:
+			wFMListShiftInstancesBySidHandler.ServeHTTP(w, r)
 		case WFMCopyScheduleToScheduleProcedure:
 			wFMCopyScheduleToScheduleHandler.ServeHTTP(w, r)
 		case WFMCreateShiftInstanceProcedure:
@@ -5355,6 +5443,10 @@ func (UnimplementedWFMHandler) UpdateNonSkillActivity(context.Context, *connect_
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.UpdateNonSkillActivity is not implemented"))
 }
 
+func (UnimplementedWFMHandler) ListNonSkillActivities(context.Context, *connect_go.Request[wfm.ListNonSkillActivitiesReq]) (*connect_go.Response[wfm.ListNonSkillActivitiesRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListNonSkillActivities is not implemented"))
+}
+
 func (UnimplementedWFMHandler) ListNonSkillActivityAssociations(context.Context, *connect_go.Request[wfm.ListNonSkillActivityAssociationsReq]) (*connect_go.Response[wfm.ListNonSkillActivityAssociationsRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListNonSkillActivityAssociations is not implemented"))
 }
@@ -5553,6 +5645,10 @@ func (UnimplementedWFMHandler) ListDraftSchedules(context.Context, *connect_go.R
 
 func (UnimplementedWFMHandler) DeleteDraftSchedule(context.Context, *connect_go.Request[wfm.DeleteDraftScheduleReq]) (*connect_go.Response[wfm.DeleteDraftScheduleRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.DeleteDraftSchedule is not implemented"))
+}
+
+func (UnimplementedWFMHandler) ListShiftInstancesBySid(context.Context, *connect_go.Request[wfm.ListShiftInstancesBySidReq]) (*connect_go.Response[wfm.ListShiftInstancesBySidRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListShiftInstancesBySid is not implemented"))
 }
 
 func (UnimplementedWFMHandler) CopyScheduleToSchedule(context.Context, *connect_go.Request[wfm.CopyScheduleToScheduleReq]) (*connect_go.Response[wfm.CopyScheduleToScheduleRes], error) {
