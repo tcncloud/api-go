@@ -84,6 +84,7 @@ const (
 	WFM_DeleteConstraintRule_FullMethodName                          = "/api.v1alpha1.wfm.WFM/DeleteConstraintRule"
 	WFM_CreateNonSkillActivity_FullMethodName                        = "/api.v1alpha1.wfm.WFM/CreateNonSkillActivity"
 	WFM_UpdateNonSkillActivity_FullMethodName                        = "/api.v1alpha1.wfm.WFM/UpdateNonSkillActivity"
+	WFM_ListNonSkillActivities_FullMethodName                        = "/api.v1alpha1.wfm.WFM/ListNonSkillActivities"
 	WFM_ListNonSkillActivityAssociations_FullMethodName              = "/api.v1alpha1.wfm.WFM/ListNonSkillActivityAssociations"
 	WFM_ListCandidateSchedulingActivities_FullMethodName             = "/api.v1alpha1.wfm.WFM/ListCandidateSchedulingActivities"
 	WFM_CreateAgentGroup_FullMethodName                              = "/api.v1alpha1.wfm.WFM/CreateAgentGroup"
@@ -733,6 +734,14 @@ type WFMClient interface {
 	//   - grpc.NotFound: non skill activity for the given @non_skill_activity_sid doesn't exist.
 	//   - grpc.Internal: error occurs when updating the non skill activity.
 	UpdateNonSkillActivity(ctx context.Context, in *UpdateNonSkillActivityReq, opts ...grpc.CallOption) (*UpdateNonSkillActivityRes, error)
+	// Lists the non skill activities that belong to the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:.
+	//   - grpc.Internal: error occurs when listing the activites.
+	ListNonSkillActivities(ctx context.Context, in *ListNonSkillActivitiesReq, opts ...grpc.CallOption) (*ListNonSkillActivitiesRes, error)
 	// Lists the IDs of non skill activities that belong to the org sending the request which have the given @relationship_type with the @associated_entity.
 	// Required permissions:
 	//
@@ -2089,6 +2098,15 @@ func (c *wFMClient) UpdateNonSkillActivity(ctx context.Context, in *UpdateNonSki
 	return out, nil
 }
 
+func (c *wFMClient) ListNonSkillActivities(ctx context.Context, in *ListNonSkillActivitiesReq, opts ...grpc.CallOption) (*ListNonSkillActivitiesRes, error) {
+	out := new(ListNonSkillActivitiesRes)
+	err := c.cc.Invoke(ctx, WFM_ListNonSkillActivities_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) ListNonSkillActivityAssociations(ctx context.Context, in *ListNonSkillActivityAssociationsReq, opts ...grpc.CallOption) (*ListNonSkillActivityAssociationsRes, error) {
 	out := new(ListNonSkillActivityAssociationsRes)
 	err := c.cc.Invoke(ctx, WFM_ListNonSkillActivityAssociations_FullMethodName, in, out, opts...)
@@ -3256,6 +3274,14 @@ type WFMServer interface {
 	//   - grpc.NotFound: non skill activity for the given @non_skill_activity_sid doesn't exist.
 	//   - grpc.Internal: error occurs when updating the non skill activity.
 	UpdateNonSkillActivity(context.Context, *UpdateNonSkillActivityReq) (*UpdateNonSkillActivityRes, error)
+	// Lists the non skill activities that belong to the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:.
+	//   - grpc.Internal: error occurs when listing the activites.
+	ListNonSkillActivities(context.Context, *ListNonSkillActivitiesReq) (*ListNonSkillActivitiesRes, error)
 	// Lists the IDs of non skill activities that belong to the org sending the request which have the given @relationship_type with the @associated_entity.
 	// Required permissions:
 	//
@@ -4187,6 +4213,9 @@ func (UnimplementedWFMServer) CreateNonSkillActivity(context.Context, *CreateNon
 }
 func (UnimplementedWFMServer) UpdateNonSkillActivity(context.Context, *UpdateNonSkillActivityReq) (*UpdateNonSkillActivityRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateNonSkillActivity not implemented")
+}
+func (UnimplementedWFMServer) ListNonSkillActivities(context.Context, *ListNonSkillActivitiesReq) (*ListNonSkillActivitiesRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListNonSkillActivities not implemented")
 }
 func (UnimplementedWFMServer) ListNonSkillActivityAssociations(context.Context, *ListNonSkillActivityAssociationsReq) (*ListNonSkillActivityAssociationsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListNonSkillActivityAssociations not implemented")
@@ -5325,6 +5354,24 @@ func _WFM_UpdateNonSkillActivity_Handler(srv interface{}, ctx context.Context, d
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WFMServer).UpdateNonSkillActivity(ctx, req.(*UpdateNonSkillActivityReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_ListNonSkillActivities_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListNonSkillActivitiesReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).ListNonSkillActivities(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_ListNonSkillActivities_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).ListNonSkillActivities(ctx, req.(*ListNonSkillActivitiesReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -6689,6 +6736,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateNonSkillActivity",
 			Handler:    _WFM_UpdateNonSkillActivity_Handler,
+		},
+		{
+			MethodName: "ListNonSkillActivities",
+			Handler:    _WFM_ListNonSkillActivities_Handler,
 		},
 		{
 			MethodName: "ListNonSkillActivityAssociations",

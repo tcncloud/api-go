@@ -188,6 +188,9 @@ const (
 	// WFMUpdateNonSkillActivityProcedure is the fully-qualified name of the WFM's
 	// UpdateNonSkillActivity RPC.
 	WFMUpdateNonSkillActivityProcedure = "/api.v1alpha1.wfm.WFM/UpdateNonSkillActivity"
+	// WFMListNonSkillActivitiesProcedure is the fully-qualified name of the WFM's
+	// ListNonSkillActivities RPC.
+	WFMListNonSkillActivitiesProcedure = "/api.v1alpha1.wfm.WFM/ListNonSkillActivities"
 	// WFMListNonSkillActivityAssociationsProcedure is the fully-qualified name of the WFM's
 	// ListNonSkillActivityAssociations RPC.
 	WFMListNonSkillActivityAssociationsProcedure = "/api.v1alpha1.wfm.WFM/ListNonSkillActivityAssociations"
@@ -941,6 +944,14 @@ type WFMClient interface {
 	//   - grpc.NotFound: non skill activity for the given @non_skill_activity_sid doesn't exist.
 	//   - grpc.Internal: error occurs when updating the non skill activity.
 	UpdateNonSkillActivity(context.Context, *connect_go.Request[wfm.UpdateNonSkillActivityReq]) (*connect_go.Response[wfm.UpdateNonSkillActivityRes], error)
+	// Lists the non skill activities that belong to the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:.
+	//   - grpc.Internal: error occurs when listing the activites.
+	ListNonSkillActivities(context.Context, *connect_go.Request[wfm.ListNonSkillActivitiesReq]) (*connect_go.Response[wfm.ListNonSkillActivitiesRes], error)
 	// Lists the IDs of non skill activities that belong to the org sending the request which have the given @relationship_type with the @associated_entity.
 	// Required permissions:
 	//
@@ -1980,6 +1991,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMUpdateNonSkillActivityProcedure,
 			opts...,
 		),
+		listNonSkillActivities: connect_go.NewClient[wfm.ListNonSkillActivitiesReq, wfm.ListNonSkillActivitiesRes](
+			httpClient,
+			baseURL+WFMListNonSkillActivitiesProcedure,
+			opts...,
+		),
 		listNonSkillActivityAssociations: connect_go.NewClient[wfm.ListNonSkillActivityAssociationsReq, wfm.ListNonSkillActivityAssociationsRes](
 			httpClient,
 			baseURL+WFMListNonSkillActivityAssociationsProcedure,
@@ -2361,6 +2377,7 @@ type wFMClient struct {
 	deleteConstraintRule                          *connect_go.Client[wfm.DeleteConstraintRuleReq, wfm.DeleteConstraintRuleRes]
 	createNonSkillActivity                        *connect_go.Client[wfm.CreateNonSkillActivityReq, wfm.CreateNonSkillActivityRes]
 	updateNonSkillActivity                        *connect_go.Client[wfm.UpdateNonSkillActivityReq, wfm.UpdateNonSkillActivityRes]
+	listNonSkillActivities                        *connect_go.Client[wfm.ListNonSkillActivitiesReq, wfm.ListNonSkillActivitiesRes]
 	listNonSkillActivityAssociations              *connect_go.Client[wfm.ListNonSkillActivityAssociationsReq, wfm.ListNonSkillActivityAssociationsRes]
 	listCandidateSchedulingActivities             *connect_go.Client[wfm.ListCandidateSchedulingActivitiesReq, wfm.ListCandidateSchedulingActivitiesRes]
 	createAgentGroup                              *connect_go.Client[wfm.CreateAgentGroupReq, wfm.CreateAgentGroupRes]
@@ -2690,6 +2707,11 @@ func (c *wFMClient) CreateNonSkillActivity(ctx context.Context, req *connect_go.
 // UpdateNonSkillActivity calls api.v1alpha1.wfm.WFM.UpdateNonSkillActivity.
 func (c *wFMClient) UpdateNonSkillActivity(ctx context.Context, req *connect_go.Request[wfm.UpdateNonSkillActivityReq]) (*connect_go.Response[wfm.UpdateNonSkillActivityRes], error) {
 	return c.updateNonSkillActivity.CallUnary(ctx, req)
+}
+
+// ListNonSkillActivities calls api.v1alpha1.wfm.WFM.ListNonSkillActivities.
+func (c *wFMClient) ListNonSkillActivities(ctx context.Context, req *connect_go.Request[wfm.ListNonSkillActivitiesReq]) (*connect_go.Response[wfm.ListNonSkillActivitiesRes], error) {
+	return c.listNonSkillActivities.CallUnary(ctx, req)
 }
 
 // ListNonSkillActivityAssociations calls api.v1alpha1.wfm.WFM.ListNonSkillActivityAssociations.
@@ -3599,6 +3621,14 @@ type WFMHandler interface {
 	//   - grpc.NotFound: non skill activity for the given @non_skill_activity_sid doesn't exist.
 	//   - grpc.Internal: error occurs when updating the non skill activity.
 	UpdateNonSkillActivity(context.Context, *connect_go.Request[wfm.UpdateNonSkillActivityReq]) (*connect_go.Response[wfm.UpdateNonSkillActivityRes], error)
+	// Lists the non skill activities that belong to the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:.
+	//   - grpc.Internal: error occurs when listing the activites.
+	ListNonSkillActivities(context.Context, *connect_go.Request[wfm.ListNonSkillActivitiesReq]) (*connect_go.Response[wfm.ListNonSkillActivitiesRes], error)
 	// Lists the IDs of non skill activities that belong to the org sending the request which have the given @relationship_type with the @associated_entity.
 	// Required permissions:
 	//
@@ -4634,6 +4664,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.UpdateNonSkillActivity,
 		opts...,
 	)
+	wFMListNonSkillActivitiesHandler := connect_go.NewUnaryHandler(
+		WFMListNonSkillActivitiesProcedure,
+		svc.ListNonSkillActivities,
+		opts...,
+	)
 	wFMListNonSkillActivityAssociationsHandler := connect_go.NewUnaryHandler(
 		WFMListNonSkillActivityAssociationsProcedure,
 		svc.ListNonSkillActivityAssociations,
@@ -5063,6 +5098,8 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMCreateNonSkillActivityHandler.ServeHTTP(w, r)
 		case WFMUpdateNonSkillActivityProcedure:
 			wFMUpdateNonSkillActivityHandler.ServeHTTP(w, r)
+		case WFMListNonSkillActivitiesProcedure:
+			wFMListNonSkillActivitiesHandler.ServeHTTP(w, r)
 		case WFMListNonSkillActivityAssociationsProcedure:
 			wFMListNonSkillActivityAssociationsHandler.ServeHTTP(w, r)
 		case WFMListCandidateSchedulingActivitiesProcedure:
@@ -5404,6 +5441,10 @@ func (UnimplementedWFMHandler) CreateNonSkillActivity(context.Context, *connect_
 
 func (UnimplementedWFMHandler) UpdateNonSkillActivity(context.Context, *connect_go.Request[wfm.UpdateNonSkillActivityReq]) (*connect_go.Response[wfm.UpdateNonSkillActivityRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.UpdateNonSkillActivity is not implemented"))
+}
+
+func (UnimplementedWFMHandler) ListNonSkillActivities(context.Context, *connect_go.Request[wfm.ListNonSkillActivitiesReq]) (*connect_go.Response[wfm.ListNonSkillActivitiesRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListNonSkillActivities is not implemented"))
 }
 
 func (UnimplementedWFMHandler) ListNonSkillActivityAssociations(context.Context, *connect_go.Request[wfm.ListNonSkillActivityAssociationsReq]) (*connect_go.Response[wfm.ListNonSkillActivityAssociationsRes], error) {
