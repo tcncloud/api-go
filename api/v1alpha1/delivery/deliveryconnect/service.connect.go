@@ -36,6 +36,12 @@ const (
 	// DeliveryApiCreateTransferConfigProcedure is the fully-qualified name of the DeliveryApi's
 	// CreateTransferConfig RPC.
 	DeliveryApiCreateTransferConfigProcedure = "/api.v1alpha1.delivery.DeliveryApi/CreateTransferConfig"
+	// DeliveryApiCreateDeliveryDefinitionProcedure is the fully-qualified name of the DeliveryApi's
+	// CreateDeliveryDefinition RPC.
+	DeliveryApiCreateDeliveryDefinitionProcedure = "/api.v1alpha1.delivery.DeliveryApi/CreateDeliveryDefinition"
+	// DeliveryApiCreateEncryptionProcedure is the fully-qualified name of the DeliveryApi's
+	// CreateEncryption RPC.
+	DeliveryApiCreateEncryptionProcedure = "/api.v1alpha1.delivery.DeliveryApi/CreateEncryption"
 	// DeliveryApiListTransferConfigsProcedure is the fully-qualified name of the DeliveryApi's
 	// ListTransferConfigs RPC.
 	DeliveryApiListTransferConfigsProcedure = "/api.v1alpha1.delivery.DeliveryApi/ListTransferConfigs"
@@ -79,6 +85,8 @@ const (
 // DeliveryApiClient is a client for the api.v1alpha1.delivery.DeliveryApi service.
 type DeliveryApiClient interface {
 	CreateTransferConfig(context.Context, *connect_go.Request[delivery.CreateTransferConfigReq]) (*connect_go.Response[delivery.CreateTransferConfigRes], error)
+	CreateDeliveryDefinition(context.Context, *connect_go.Request[delivery.CreateDeliveryDefinitionReq]) (*connect_go.Response[delivery.CreateDeliveryDefinitionRes], error)
+	CreateEncryption(context.Context, *connect_go.Request[delivery.CreateEncryptionReq]) (*connect_go.Response[delivery.CreateEncryptionRes], error)
 	ListTransferConfigs(context.Context, *connect_go.Request[delivery.ListTransferConfigsReq]) (*connect_go.Response[delivery.ListTransferConfigsRes], error)
 	ListTransferConfigsByCredentialID(context.Context, *connect_go.Request[delivery.ListTransferConfigsByCredentialIDReq]) (*connect_go.Response[delivery.ListTransferConfigsByCredentialIDRes], error)
 	UpdateTransferConfig(context.Context, *connect_go.Request[delivery.UpdateTransferConfigReq]) (*connect_go.Response[delivery.UpdateTransferConfigRes], error)
@@ -107,6 +115,16 @@ func NewDeliveryApiClient(httpClient connect_go.HTTPClient, baseURL string, opts
 		createTransferConfig: connect_go.NewClient[delivery.CreateTransferConfigReq, delivery.CreateTransferConfigRes](
 			httpClient,
 			baseURL+DeliveryApiCreateTransferConfigProcedure,
+			opts...,
+		),
+		createDeliveryDefinition: connect_go.NewClient[delivery.CreateDeliveryDefinitionReq, delivery.CreateDeliveryDefinitionRes](
+			httpClient,
+			baseURL+DeliveryApiCreateDeliveryDefinitionProcedure,
+			opts...,
+		),
+		createEncryption: connect_go.NewClient[delivery.CreateEncryptionReq, delivery.CreateEncryptionRes](
+			httpClient,
+			baseURL+DeliveryApiCreateEncryptionProcedure,
 			opts...,
 		),
 		listTransferConfigs: connect_go.NewClient[delivery.ListTransferConfigsReq, delivery.ListTransferConfigsRes](
@@ -180,6 +198,8 @@ func NewDeliveryApiClient(httpClient connect_go.HTTPClient, baseURL string, opts
 // deliveryApiClient implements DeliveryApiClient.
 type deliveryApiClient struct {
 	createTransferConfig              *connect_go.Client[delivery.CreateTransferConfigReq, delivery.CreateTransferConfigRes]
+	createDeliveryDefinition          *connect_go.Client[delivery.CreateDeliveryDefinitionReq, delivery.CreateDeliveryDefinitionRes]
+	createEncryption                  *connect_go.Client[delivery.CreateEncryptionReq, delivery.CreateEncryptionRes]
 	listTransferConfigs               *connect_go.Client[delivery.ListTransferConfigsReq, delivery.ListTransferConfigsRes]
 	listTransferConfigsByCredentialID *connect_go.Client[delivery.ListTransferConfigsByCredentialIDReq, delivery.ListTransferConfigsByCredentialIDRes]
 	updateTransferConfig              *connect_go.Client[delivery.UpdateTransferConfigReq, delivery.UpdateTransferConfigRes]
@@ -198,6 +218,16 @@ type deliveryApiClient struct {
 // CreateTransferConfig calls api.v1alpha1.delivery.DeliveryApi.CreateTransferConfig.
 func (c *deliveryApiClient) CreateTransferConfig(ctx context.Context, req *connect_go.Request[delivery.CreateTransferConfigReq]) (*connect_go.Response[delivery.CreateTransferConfigRes], error) {
 	return c.createTransferConfig.CallUnary(ctx, req)
+}
+
+// CreateDeliveryDefinition calls api.v1alpha1.delivery.DeliveryApi.CreateDeliveryDefinition.
+func (c *deliveryApiClient) CreateDeliveryDefinition(ctx context.Context, req *connect_go.Request[delivery.CreateDeliveryDefinitionReq]) (*connect_go.Response[delivery.CreateDeliveryDefinitionRes], error) {
+	return c.createDeliveryDefinition.CallUnary(ctx, req)
+}
+
+// CreateEncryption calls api.v1alpha1.delivery.DeliveryApi.CreateEncryption.
+func (c *deliveryApiClient) CreateEncryption(ctx context.Context, req *connect_go.Request[delivery.CreateEncryptionReq]) (*connect_go.Response[delivery.CreateEncryptionRes], error) {
+	return c.createEncryption.CallUnary(ctx, req)
 }
 
 // ListTransferConfigs calls api.v1alpha1.delivery.DeliveryApi.ListTransferConfigs.
@@ -269,6 +299,8 @@ func (c *deliveryApiClient) UpdateCredential(ctx context.Context, req *connect_g
 // DeliveryApiHandler is an implementation of the api.v1alpha1.delivery.DeliveryApi service.
 type DeliveryApiHandler interface {
 	CreateTransferConfig(context.Context, *connect_go.Request[delivery.CreateTransferConfigReq]) (*connect_go.Response[delivery.CreateTransferConfigRes], error)
+	CreateDeliveryDefinition(context.Context, *connect_go.Request[delivery.CreateDeliveryDefinitionReq]) (*connect_go.Response[delivery.CreateDeliveryDefinitionRes], error)
+	CreateEncryption(context.Context, *connect_go.Request[delivery.CreateEncryptionReq]) (*connect_go.Response[delivery.CreateEncryptionRes], error)
 	ListTransferConfigs(context.Context, *connect_go.Request[delivery.ListTransferConfigsReq]) (*connect_go.Response[delivery.ListTransferConfigsRes], error)
 	ListTransferConfigsByCredentialID(context.Context, *connect_go.Request[delivery.ListTransferConfigsByCredentialIDReq]) (*connect_go.Response[delivery.ListTransferConfigsByCredentialIDRes], error)
 	UpdateTransferConfig(context.Context, *connect_go.Request[delivery.UpdateTransferConfigReq]) (*connect_go.Response[delivery.UpdateTransferConfigRes], error)
@@ -293,6 +325,16 @@ func NewDeliveryApiHandler(svc DeliveryApiHandler, opts ...connect_go.HandlerOpt
 	deliveryApiCreateTransferConfigHandler := connect_go.NewUnaryHandler(
 		DeliveryApiCreateTransferConfigProcedure,
 		svc.CreateTransferConfig,
+		opts...,
+	)
+	deliveryApiCreateDeliveryDefinitionHandler := connect_go.NewUnaryHandler(
+		DeliveryApiCreateDeliveryDefinitionProcedure,
+		svc.CreateDeliveryDefinition,
+		opts...,
+	)
+	deliveryApiCreateEncryptionHandler := connect_go.NewUnaryHandler(
+		DeliveryApiCreateEncryptionProcedure,
+		svc.CreateEncryption,
 		opts...,
 	)
 	deliveryApiListTransferConfigsHandler := connect_go.NewUnaryHandler(
@@ -364,6 +406,10 @@ func NewDeliveryApiHandler(svc DeliveryApiHandler, opts ...connect_go.HandlerOpt
 		switch r.URL.Path {
 		case DeliveryApiCreateTransferConfigProcedure:
 			deliveryApiCreateTransferConfigHandler.ServeHTTP(w, r)
+		case DeliveryApiCreateDeliveryDefinitionProcedure:
+			deliveryApiCreateDeliveryDefinitionHandler.ServeHTTP(w, r)
+		case DeliveryApiCreateEncryptionProcedure:
+			deliveryApiCreateEncryptionHandler.ServeHTTP(w, r)
 		case DeliveryApiListTransferConfigsProcedure:
 			deliveryApiListTransferConfigsHandler.ServeHTTP(w, r)
 		case DeliveryApiListTransferConfigsByCredentialIDProcedure:
@@ -401,6 +447,14 @@ type UnimplementedDeliveryApiHandler struct{}
 
 func (UnimplementedDeliveryApiHandler) CreateTransferConfig(context.Context, *connect_go.Request[delivery.CreateTransferConfigReq]) (*connect_go.Response[delivery.CreateTransferConfigRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.delivery.DeliveryApi.CreateTransferConfig is not implemented"))
+}
+
+func (UnimplementedDeliveryApiHandler) CreateDeliveryDefinition(context.Context, *connect_go.Request[delivery.CreateDeliveryDefinitionReq]) (*connect_go.Response[delivery.CreateDeliveryDefinitionRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.delivery.DeliveryApi.CreateDeliveryDefinition is not implemented"))
+}
+
+func (UnimplementedDeliveryApiHandler) CreateEncryption(context.Context, *connect_go.Request[delivery.CreateEncryptionReq]) (*connect_go.Response[delivery.CreateEncryptionRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.delivery.DeliveryApi.CreateEncryption is not implemented"))
 }
 
 func (UnimplementedDeliveryApiHandler) ListTransferConfigs(context.Context, *connect_go.Request[delivery.ListTransferConfigsReq]) (*connect_go.Response[delivery.ListTransferConfigsRes], error) {
