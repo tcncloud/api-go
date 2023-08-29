@@ -189,16 +189,17 @@ func (DetailConfigType) EnumDescriptor() ([]byte, []int) {
 	return file_api_commons_billing_detail_proto_rawDescGZIP(), []int{0}
 }
 
-// BillingPlan - a collection of billing plans
-type BillingPlan struct {
+// Plan - a collection of details belongind to a single organization.
+type Plan struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// all the details that make up this billing plan, where each
+	// detail defines how to configure a particular rating module.
+	Details []*Detail `protobuf:"bytes,1,rep,name=details,proto3" json:"details,omitempty"`
 	// the organization identifier
-	OrgId string `protobuf:"bytes,1,opt,name=org_id,json=orgId,proto3" json:"org_id,omitempty"`
-	// the billing plans
-	Plans []*Plan `protobuf:"bytes,2,rep,name=plans,proto3" json:"plans,omitempty"`
+	OrgId string `protobuf:"bytes,2,opt,name=org_id,json=orgId,proto3" json:"org_id,omitempty"`
 	// billing plan identifier
 	BillingPlanId string `protobuf:"bytes,3,opt,name=billing_plan_id,json=billingPlanId,proto3" json:"billing_plan_id,omitempty"`
 	// time the billing plan was created
@@ -211,102 +212,10 @@ type BillingPlan struct {
 	EndTime *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`
 }
 
-func (x *BillingPlan) Reset() {
-	*x = BillingPlan{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_billing_detail_proto_msgTypes[0]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *BillingPlan) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*BillingPlan) ProtoMessage() {}
-
-func (x *BillingPlan) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_billing_detail_proto_msgTypes[0]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use BillingPlan.ProtoReflect.Descriptor instead.
-func (*BillingPlan) Descriptor() ([]byte, []int) {
-	return file_api_commons_billing_detail_proto_rawDescGZIP(), []int{0}
-}
-
-func (x *BillingPlan) GetOrgId() string {
-	if x != nil {
-		return x.OrgId
-	}
-	return ""
-}
-
-func (x *BillingPlan) GetPlans() []*Plan {
-	if x != nil {
-		return x.Plans
-	}
-	return nil
-}
-
-func (x *BillingPlan) GetBillingPlanId() string {
-	if x != nil {
-		return x.BillingPlanId
-	}
-	return ""
-}
-
-func (x *BillingPlan) GetCreateTime() *timestamppb.Timestamp {
-	if x != nil {
-		return x.CreateTime
-	}
-	return nil
-}
-
-func (x *BillingPlan) GetUpdateTime() *timestamppb.Timestamp {
-	if x != nil {
-		return x.UpdateTime
-	}
-	return nil
-}
-
-func (x *BillingPlan) GetStartTime() *timestamppb.Timestamp {
-	if x != nil {
-		return x.StartTime
-	}
-	return nil
-}
-
-func (x *BillingPlan) GetEndTime() *timestamppb.Timestamp {
-	if x != nil {
-		return x.EndTime
-	}
-	return nil
-}
-
-// Plan - a collection of details belongind to a single organization.
-type Plan struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	// all the details that make up this billing plan, where each
-	// detail defines how to configure a particular rating module.
-	Details []*Detail `protobuf:"bytes,1,rep,name=details,proto3" json:"details,omitempty"`
-}
-
 func (x *Plan) Reset() {
 	*x = Plan{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_billing_detail_proto_msgTypes[1]
+		mi := &file_api_commons_billing_detail_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -319,7 +228,7 @@ func (x *Plan) String() string {
 func (*Plan) ProtoMessage() {}
 
 func (x *Plan) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_billing_detail_proto_msgTypes[1]
+	mi := &file_api_commons_billing_detail_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -332,12 +241,54 @@ func (x *Plan) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Plan.ProtoReflect.Descriptor instead.
 func (*Plan) Descriptor() ([]byte, []int) {
-	return file_api_commons_billing_detail_proto_rawDescGZIP(), []int{1}
+	return file_api_commons_billing_detail_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *Plan) GetDetails() []*Detail {
 	if x != nil {
 		return x.Details
+	}
+	return nil
+}
+
+func (x *Plan) GetOrgId() string {
+	if x != nil {
+		return x.OrgId
+	}
+	return ""
+}
+
+func (x *Plan) GetBillingPlanId() string {
+	if x != nil {
+		return x.BillingPlanId
+	}
+	return ""
+}
+
+func (x *Plan) GetCreateTime() *timestamppb.Timestamp {
+	if x != nil {
+		return x.CreateTime
+	}
+	return nil
+}
+
+func (x *Plan) GetUpdateTime() *timestamppb.Timestamp {
+	if x != nil {
+		return x.UpdateTime
+	}
+	return nil
+}
+
+func (x *Plan) GetStartTime() *timestamppb.Timestamp {
+	if x != nil {
+		return x.StartTime
+	}
+	return nil
+}
+
+func (x *Plan) GetEndTime() *timestamppb.Timestamp {
+	if x != nil {
+		return x.EndTime
 	}
 	return nil
 }
@@ -369,7 +320,7 @@ type Detail struct {
 func (x *Detail) Reset() {
 	*x = Detail{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_billing_detail_proto_msgTypes[2]
+		mi := &file_api_commons_billing_detail_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -382,7 +333,7 @@ func (x *Detail) String() string {
 func (*Detail) ProtoMessage() {}
 
 func (x *Detail) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_billing_detail_proto_msgTypes[2]
+	mi := &file_api_commons_billing_detail_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -395,7 +346,7 @@ func (x *Detail) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Detail.ProtoReflect.Descriptor instead.
 func (*Detail) Descriptor() ([]byte, []int) {
-	return file_api_commons_billing_detail_proto_rawDescGZIP(), []int{2}
+	return file_api_commons_billing_detail_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *Detail) GetBillingDetailSid() int64 {
@@ -508,7 +459,7 @@ type DetailConfig struct {
 func (x *DetailConfig) Reset() {
 	*x = DetailConfig{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_billing_detail_proto_msgTypes[3]
+		mi := &file_api_commons_billing_detail_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -521,7 +472,7 @@ func (x *DetailConfig) String() string {
 func (*DetailConfig) ProtoMessage() {}
 
 func (x *DetailConfig) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_billing_detail_proto_msgTypes[3]
+	mi := &file_api_commons_billing_detail_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -534,7 +485,7 @@ func (x *DetailConfig) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DetailConfig.ProtoReflect.Descriptor instead.
 func (*DetailConfig) Descriptor() ([]byte, []int) {
-	return file_api_commons_billing_detail_proto_rawDescGZIP(), []int{3}
+	return file_api_commons_billing_detail_proto_rawDescGZIP(), []int{2}
 }
 
 func (m *DetailConfig) GetConfig() isDetailConfig_Config {
@@ -1070,34 +1021,30 @@ var file_api_commons_billing_detail_proto_rawDesc = []byte{
 	0x67, 0x2f, 0x6d, 0x6f, 0x64, 0x75, 0x6c, 0x65, 0x73, 0x2f, 0x6d, 0x6f, 0x64, 0x75, 0x6c, 0x65,
 	0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1f, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f,
 	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61,
-	0x6d, 0x70, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0xe9, 0x02, 0x0a, 0x0b, 0x42, 0x69, 0x6c,
-	0x6c, 0x69, 0x6e, 0x67, 0x50, 0x6c, 0x61, 0x6e, 0x12, 0x15, 0x0a, 0x06, 0x6f, 0x72, 0x67, 0x5f,
-	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x6f, 0x72, 0x67, 0x49, 0x64, 0x12,
-	0x2f, 0x0a, 0x05, 0x70, 0x6c, 0x61, 0x6e, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x19,
-	0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x62, 0x69, 0x6c,
-	0x6c, 0x69, 0x6e, 0x67, 0x2e, 0x50, 0x6c, 0x61, 0x6e, 0x52, 0x05, 0x70, 0x6c, 0x61, 0x6e, 0x73,
-	0x12, 0x26, 0x0a, 0x0f, 0x62, 0x69, 0x6c, 0x6c, 0x69, 0x6e, 0x67, 0x5f, 0x70, 0x6c, 0x61, 0x6e,
-	0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x62, 0x69, 0x6c, 0x6c, 0x69,
-	0x6e, 0x67, 0x50, 0x6c, 0x61, 0x6e, 0x49, 0x64, 0x12, 0x3b, 0x0a, 0x0b, 0x63, 0x72, 0x65, 0x61,
-	0x74, 0x65, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e,
-	0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e,
-	0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x0a, 0x63, 0x72, 0x65, 0x61, 0x74,
-	0x65, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x3b, 0x0a, 0x0b, 0x75, 0x70, 0x64, 0x61, 0x74, 0x65, 0x5f,
-	0x74, 0x69, 0x6d, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f,
-	0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d,
-	0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x0a, 0x75, 0x70, 0x64, 0x61, 0x74, 0x65, 0x54, 0x69,
-	0x6d, 0x65, 0x12, 0x39, 0x0a, 0x0a, 0x73, 0x74, 0x61, 0x72, 0x74, 0x5f, 0x74, 0x69, 0x6d, 0x65,
-	0x18, 0x06, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e,
-	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61,
-	0x6d, 0x70, 0x52, 0x09, 0x73, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x35, 0x0a,
-	0x08, 0x65, 0x6e, 0x64, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x07, 0x20, 0x01, 0x28, 0x0b, 0x32,
-	0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75,
-	0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x07, 0x65, 0x6e, 0x64,
-	0x54, 0x69, 0x6d, 0x65, 0x22, 0x3d, 0x0a, 0x04, 0x50, 0x6c, 0x61, 0x6e, 0x12, 0x35, 0x0a, 0x07,
-	0x64, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1b, 0x2e,
-	0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x62, 0x69, 0x6c, 0x6c,
-	0x69, 0x6e, 0x67, 0x2e, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x52, 0x07, 0x64, 0x65, 0x74, 0x61,
-	0x69, 0x6c, 0x73, 0x22, 0xd9, 0x03, 0x0a, 0x06, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x12, 0x2c,
+	0x6d, 0x70, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0xe8, 0x02, 0x0a, 0x04, 0x50, 0x6c, 0x61,
+	0x6e, 0x12, 0x35, 0x0a, 0x07, 0x64, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x18, 0x01, 0x20, 0x03,
+	0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73,
+	0x2e, 0x62, 0x69, 0x6c, 0x6c, 0x69, 0x6e, 0x67, 0x2e, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x52,
+	0x07, 0x64, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x12, 0x15, 0x0a, 0x06, 0x6f, 0x72, 0x67, 0x5f,
+	0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x6f, 0x72, 0x67, 0x49, 0x64, 0x12,
+	0x26, 0x0a, 0x0f, 0x62, 0x69, 0x6c, 0x6c, 0x69, 0x6e, 0x67, 0x5f, 0x70, 0x6c, 0x61, 0x6e, 0x5f,
+	0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x62, 0x69, 0x6c, 0x6c, 0x69, 0x6e,
+	0x67, 0x50, 0x6c, 0x61, 0x6e, 0x49, 0x64, 0x12, 0x3b, 0x0a, 0x0b, 0x63, 0x72, 0x65, 0x61, 0x74,
+	0x65, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67,
+	0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54,
+	0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x0a, 0x63, 0x72, 0x65, 0x61, 0x74, 0x65,
+	0x54, 0x69, 0x6d, 0x65, 0x12, 0x3b, 0x0a, 0x0b, 0x75, 0x70, 0x64, 0x61, 0x74, 0x65, 0x5f, 0x74,
+	0x69, 0x6d, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67,
+	0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65,
+	0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x0a, 0x75, 0x70, 0x64, 0x61, 0x74, 0x65, 0x54, 0x69, 0x6d,
+	0x65, 0x12, 0x39, 0x0a, 0x0a, 0x73, 0x74, 0x61, 0x72, 0x74, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x18,
+	0x06, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d,
+	0x70, 0x52, 0x09, 0x73, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x35, 0x0a, 0x08,
+	0x65, 0x6e, 0x64, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x07, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a,
+	0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66,
+	0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x07, 0x65, 0x6e, 0x64, 0x54,
+	0x69, 0x6d, 0x65, 0x22, 0xd9, 0x03, 0x0a, 0x06, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x12, 0x2c,
 	0x0a, 0x12, 0x62, 0x69, 0x6c, 0x6c, 0x69, 0x6e, 0x67, 0x5f, 0x64, 0x65, 0x74, 0x61, 0x69, 0x6c,
 	0x5f, 0x73, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x10, 0x62, 0x69, 0x6c, 0x6c,
 	0x69, 0x6e, 0x67, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x53, 0x69, 0x64, 0x12, 0x3b, 0x0a, 0x0a,
@@ -1582,75 +1529,73 @@ func file_api_commons_billing_detail_proto_rawDescGZIP() []byte {
 }
 
 var file_api_commons_billing_detail_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_api_commons_billing_detail_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_api_commons_billing_detail_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_api_commons_billing_detail_proto_goTypes = []interface{}{
 	(DetailConfigType)(0),             // 0: api.commons.billing.DetailConfigType
-	(*BillingPlan)(nil),               // 1: api.commons.billing.BillingPlan
-	(*Plan)(nil),                      // 2: api.commons.billing.Plan
-	(*Detail)(nil),                    // 3: api.commons.billing.Detail
-	(*DetailConfig)(nil),              // 4: api.commons.billing.DetailConfig
-	(*timestamppb.Timestamp)(nil),     // 5: google.protobuf.Timestamp
-	(audit.EventType)(0),              // 6: api.commons.audit.EventType
-	(*modules.BasicConfig)(nil),       // 7: api.commons.billing.modules.BasicConfig
-	(*modules.BasicAmountConfig)(nil), // 8: api.commons.billing.modules.BasicAmountConfig
+	(*Plan)(nil),                      // 1: api.commons.billing.Plan
+	(*Detail)(nil),                    // 2: api.commons.billing.Detail
+	(*DetailConfig)(nil),              // 3: api.commons.billing.DetailConfig
+	(*timestamppb.Timestamp)(nil),     // 4: google.protobuf.Timestamp
+	(audit.EventType)(0),              // 5: api.commons.audit.EventType
+	(*modules.BasicConfig)(nil),       // 6: api.commons.billing.modules.BasicConfig
+	(*modules.BasicAmountConfig)(nil), // 7: api.commons.billing.modules.BasicAmountConfig
 }
 var file_api_commons_billing_detail_proto_depIdxs = []int32{
-	2,  // 0: api.commons.billing.BillingPlan.plans:type_name -> api.commons.billing.Plan
-	5,  // 1: api.commons.billing.BillingPlan.create_time:type_name -> google.protobuf.Timestamp
-	5,  // 2: api.commons.billing.BillingPlan.update_time:type_name -> google.protobuf.Timestamp
-	5,  // 3: api.commons.billing.BillingPlan.start_time:type_name -> google.protobuf.Timestamp
-	5,  // 4: api.commons.billing.BillingPlan.end_time:type_name -> google.protobuf.Timestamp
-	3,  // 5: api.commons.billing.Plan.details:type_name -> api.commons.billing.Detail
-	6,  // 6: api.commons.billing.Detail.event_type:type_name -> api.commons.audit.EventType
-	0,  // 7: api.commons.billing.Detail.config_type:type_name -> api.commons.billing.DetailConfigType
-	4,  // 8: api.commons.billing.Detail.config:type_name -> api.commons.billing.DetailConfig
-	5,  // 9: api.commons.billing.Detail.date_created:type_name -> google.protobuf.Timestamp
-	5,  // 10: api.commons.billing.Detail.date_modified:type_name -> google.protobuf.Timestamp
-	5,  // 11: api.commons.billing.Detail.deleted_on:type_name -> google.protobuf.Timestamp
-	7,  // 12: api.commons.billing.DetailConfig.agent_seats_config:type_name -> api.commons.billing.modules.BasicConfig
-	7,  // 13: api.commons.billing.DetailConfig.agent_text_message_chat_config:type_name -> api.commons.billing.modules.BasicConfig
-	7,  // 14: api.commons.billing.DetailConfig.agent_text_message_email_message_config:type_name -> api.commons.billing.modules.BasicConfig
-	8,  // 15: api.commons.billing.DetailConfig.agent_text_message_email_size_config:type_name -> api.commons.billing.modules.BasicAmountConfig
-	7,  // 16: api.commons.billing.DetailConfig.agent_text_message_sms_config:type_name -> api.commons.billing.modules.BasicConfig
-	7,  // 17: api.commons.billing.DetailConfig.task_message_sent_email_message_config:type_name -> api.commons.billing.modules.BasicConfig
-	8,  // 18: api.commons.billing.DetailConfig.task_message_sent_email_size_config:type_name -> api.commons.billing.modules.BasicAmountConfig
-	7,  // 19: api.commons.billing.DetailConfig.task_message_sent_sms_config:type_name -> api.commons.billing.modules.BasicConfig
-	7,  // 20: api.commons.billing.DetailConfig.connected_inbox_poll_config:type_name -> api.commons.billing.modules.BasicConfig
-	7,  // 21: api.commons.billing.DetailConfig.manager_text_message_chat_config:type_name -> api.commons.billing.modules.BasicConfig
-	7,  // 22: api.commons.billing.DetailConfig.manager_text_message_email_message_config:type_name -> api.commons.billing.modules.BasicConfig
-	8,  // 23: api.commons.billing.DetailConfig.manager_text_message_email_size_config:type_name -> api.commons.billing.modules.BasicAmountConfig
-	7,  // 24: api.commons.billing.DetailConfig.manager_text_message_sms_config:type_name -> api.commons.billing.modules.BasicConfig
-	7,  // 25: api.commons.billing.DetailConfig.customer_text_message_chat_config:type_name -> api.commons.billing.modules.BasicConfig
-	7,  // 26: api.commons.billing.DetailConfig.customer_text_message_email_message_config:type_name -> api.commons.billing.modules.BasicConfig
-	8,  // 27: api.commons.billing.DetailConfig.customer_text_message_email_size_config:type_name -> api.commons.billing.modules.BasicAmountConfig
-	7,  // 28: api.commons.billing.DetailConfig.customer_text_message_sms_config:type_name -> api.commons.billing.modules.BasicConfig
-	8,  // 29: api.commons.billing.DetailConfig.agent_text_message_chat_size_config:type_name -> api.commons.billing.modules.BasicAmountConfig
-	8,  // 30: api.commons.billing.DetailConfig.manager_text_message_chat_size_config:type_name -> api.commons.billing.modules.BasicAmountConfig
-	8,  // 31: api.commons.billing.DetailConfig.customer_text_message_chat_size_config:type_name -> api.commons.billing.modules.BasicAmountConfig
-	7,  // 32: api.commons.billing.DetailConfig.connected_inbox_created_config:type_name -> api.commons.billing.modules.BasicConfig
-	8,  // 33: api.commons.billing.DetailConfig.agent_text_message_sms_size_config:type_name -> api.commons.billing.modules.BasicAmountConfig
-	8,  // 34: api.commons.billing.DetailConfig.manager_text_message_sms_size_config:type_name -> api.commons.billing.modules.BasicAmountConfig
-	8,  // 35: api.commons.billing.DetailConfig.customer_text_message_sms_size_config:type_name -> api.commons.billing.modules.BasicAmountConfig
-	8,  // 36: api.commons.billing.DetailConfig.task_message_sent_sms_size_config:type_name -> api.commons.billing.modules.BasicAmountConfig
-	7,  // 37: api.commons.billing.DetailConfig.agent_chat_message_units_config:type_name -> api.commons.billing.modules.BasicConfig
-	7,  // 38: api.commons.billing.DetailConfig.agent_email_message_units_config:type_name -> api.commons.billing.modules.BasicConfig
-	7,  // 39: api.commons.billing.DetailConfig.agent_sms_message_units_config:type_name -> api.commons.billing.modules.BasicConfig
-	7,  // 40: api.commons.billing.DetailConfig.manager_chat_message_units_config:type_name -> api.commons.billing.modules.BasicConfig
-	7,  // 41: api.commons.billing.DetailConfig.manager_email_message_units_config:type_name -> api.commons.billing.modules.BasicConfig
-	7,  // 42: api.commons.billing.DetailConfig.manager_sms_message_units_config:type_name -> api.commons.billing.modules.BasicConfig
-	7,  // 43: api.commons.billing.DetailConfig.customer_chat_message_units_config:type_name -> api.commons.billing.modules.BasicConfig
-	7,  // 44: api.commons.billing.DetailConfig.customer_email_message_units_config:type_name -> api.commons.billing.modules.BasicConfig
-	7,  // 45: api.commons.billing.DetailConfig.customer_sms_message_units_config:type_name -> api.commons.billing.modules.BasicConfig
-	7,  // 46: api.commons.billing.DetailConfig.system_chat_message_units_config:type_name -> api.commons.billing.modules.BasicConfig
-	7,  // 47: api.commons.billing.DetailConfig.system_email_message_units_config:type_name -> api.commons.billing.modules.BasicConfig
-	7,  // 48: api.commons.billing.DetailConfig.system_sms_message_units_config:type_name -> api.commons.billing.modules.BasicConfig
-	7,  // 49: api.commons.billing.DetailConfig.compliance_rnd_query_config:type_name -> api.commons.billing.modules.BasicConfig
-	7,  // 50: api.commons.billing.DetailConfig.compliance_rnd_query_cached_config:type_name -> api.commons.billing.modules.BasicConfig
-	51, // [51:51] is the sub-list for method output_type
-	51, // [51:51] is the sub-list for method input_type
-	51, // [51:51] is the sub-list for extension type_name
-	51, // [51:51] is the sub-list for extension extendee
-	0,  // [0:51] is the sub-list for field type_name
+	2,  // 0: api.commons.billing.Plan.details:type_name -> api.commons.billing.Detail
+	4,  // 1: api.commons.billing.Plan.create_time:type_name -> google.protobuf.Timestamp
+	4,  // 2: api.commons.billing.Plan.update_time:type_name -> google.protobuf.Timestamp
+	4,  // 3: api.commons.billing.Plan.start_time:type_name -> google.protobuf.Timestamp
+	4,  // 4: api.commons.billing.Plan.end_time:type_name -> google.protobuf.Timestamp
+	5,  // 5: api.commons.billing.Detail.event_type:type_name -> api.commons.audit.EventType
+	0,  // 6: api.commons.billing.Detail.config_type:type_name -> api.commons.billing.DetailConfigType
+	3,  // 7: api.commons.billing.Detail.config:type_name -> api.commons.billing.DetailConfig
+	4,  // 8: api.commons.billing.Detail.date_created:type_name -> google.protobuf.Timestamp
+	4,  // 9: api.commons.billing.Detail.date_modified:type_name -> google.protobuf.Timestamp
+	4,  // 10: api.commons.billing.Detail.deleted_on:type_name -> google.protobuf.Timestamp
+	6,  // 11: api.commons.billing.DetailConfig.agent_seats_config:type_name -> api.commons.billing.modules.BasicConfig
+	6,  // 12: api.commons.billing.DetailConfig.agent_text_message_chat_config:type_name -> api.commons.billing.modules.BasicConfig
+	6,  // 13: api.commons.billing.DetailConfig.agent_text_message_email_message_config:type_name -> api.commons.billing.modules.BasicConfig
+	7,  // 14: api.commons.billing.DetailConfig.agent_text_message_email_size_config:type_name -> api.commons.billing.modules.BasicAmountConfig
+	6,  // 15: api.commons.billing.DetailConfig.agent_text_message_sms_config:type_name -> api.commons.billing.modules.BasicConfig
+	6,  // 16: api.commons.billing.DetailConfig.task_message_sent_email_message_config:type_name -> api.commons.billing.modules.BasicConfig
+	7,  // 17: api.commons.billing.DetailConfig.task_message_sent_email_size_config:type_name -> api.commons.billing.modules.BasicAmountConfig
+	6,  // 18: api.commons.billing.DetailConfig.task_message_sent_sms_config:type_name -> api.commons.billing.modules.BasicConfig
+	6,  // 19: api.commons.billing.DetailConfig.connected_inbox_poll_config:type_name -> api.commons.billing.modules.BasicConfig
+	6,  // 20: api.commons.billing.DetailConfig.manager_text_message_chat_config:type_name -> api.commons.billing.modules.BasicConfig
+	6,  // 21: api.commons.billing.DetailConfig.manager_text_message_email_message_config:type_name -> api.commons.billing.modules.BasicConfig
+	7,  // 22: api.commons.billing.DetailConfig.manager_text_message_email_size_config:type_name -> api.commons.billing.modules.BasicAmountConfig
+	6,  // 23: api.commons.billing.DetailConfig.manager_text_message_sms_config:type_name -> api.commons.billing.modules.BasicConfig
+	6,  // 24: api.commons.billing.DetailConfig.customer_text_message_chat_config:type_name -> api.commons.billing.modules.BasicConfig
+	6,  // 25: api.commons.billing.DetailConfig.customer_text_message_email_message_config:type_name -> api.commons.billing.modules.BasicConfig
+	7,  // 26: api.commons.billing.DetailConfig.customer_text_message_email_size_config:type_name -> api.commons.billing.modules.BasicAmountConfig
+	6,  // 27: api.commons.billing.DetailConfig.customer_text_message_sms_config:type_name -> api.commons.billing.modules.BasicConfig
+	7,  // 28: api.commons.billing.DetailConfig.agent_text_message_chat_size_config:type_name -> api.commons.billing.modules.BasicAmountConfig
+	7,  // 29: api.commons.billing.DetailConfig.manager_text_message_chat_size_config:type_name -> api.commons.billing.modules.BasicAmountConfig
+	7,  // 30: api.commons.billing.DetailConfig.customer_text_message_chat_size_config:type_name -> api.commons.billing.modules.BasicAmountConfig
+	6,  // 31: api.commons.billing.DetailConfig.connected_inbox_created_config:type_name -> api.commons.billing.modules.BasicConfig
+	7,  // 32: api.commons.billing.DetailConfig.agent_text_message_sms_size_config:type_name -> api.commons.billing.modules.BasicAmountConfig
+	7,  // 33: api.commons.billing.DetailConfig.manager_text_message_sms_size_config:type_name -> api.commons.billing.modules.BasicAmountConfig
+	7,  // 34: api.commons.billing.DetailConfig.customer_text_message_sms_size_config:type_name -> api.commons.billing.modules.BasicAmountConfig
+	7,  // 35: api.commons.billing.DetailConfig.task_message_sent_sms_size_config:type_name -> api.commons.billing.modules.BasicAmountConfig
+	6,  // 36: api.commons.billing.DetailConfig.agent_chat_message_units_config:type_name -> api.commons.billing.modules.BasicConfig
+	6,  // 37: api.commons.billing.DetailConfig.agent_email_message_units_config:type_name -> api.commons.billing.modules.BasicConfig
+	6,  // 38: api.commons.billing.DetailConfig.agent_sms_message_units_config:type_name -> api.commons.billing.modules.BasicConfig
+	6,  // 39: api.commons.billing.DetailConfig.manager_chat_message_units_config:type_name -> api.commons.billing.modules.BasicConfig
+	6,  // 40: api.commons.billing.DetailConfig.manager_email_message_units_config:type_name -> api.commons.billing.modules.BasicConfig
+	6,  // 41: api.commons.billing.DetailConfig.manager_sms_message_units_config:type_name -> api.commons.billing.modules.BasicConfig
+	6,  // 42: api.commons.billing.DetailConfig.customer_chat_message_units_config:type_name -> api.commons.billing.modules.BasicConfig
+	6,  // 43: api.commons.billing.DetailConfig.customer_email_message_units_config:type_name -> api.commons.billing.modules.BasicConfig
+	6,  // 44: api.commons.billing.DetailConfig.customer_sms_message_units_config:type_name -> api.commons.billing.modules.BasicConfig
+	6,  // 45: api.commons.billing.DetailConfig.system_chat_message_units_config:type_name -> api.commons.billing.modules.BasicConfig
+	6,  // 46: api.commons.billing.DetailConfig.system_email_message_units_config:type_name -> api.commons.billing.modules.BasicConfig
+	6,  // 47: api.commons.billing.DetailConfig.system_sms_message_units_config:type_name -> api.commons.billing.modules.BasicConfig
+	6,  // 48: api.commons.billing.DetailConfig.compliance_rnd_query_config:type_name -> api.commons.billing.modules.BasicConfig
+	6,  // 49: api.commons.billing.DetailConfig.compliance_rnd_query_cached_config:type_name -> api.commons.billing.modules.BasicConfig
+	50, // [50:50] is the sub-list for method output_type
+	50, // [50:50] is the sub-list for method input_type
+	50, // [50:50] is the sub-list for extension type_name
+	50, // [50:50] is the sub-list for extension extendee
+	0,  // [0:50] is the sub-list for field type_name
 }
 
 func init() { file_api_commons_billing_detail_proto_init() }
@@ -1660,18 +1605,6 @@ func file_api_commons_billing_detail_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_api_commons_billing_detail_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*BillingPlan); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_api_commons_billing_detail_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Plan); i {
 			case 0:
 				return &v.state
@@ -1683,7 +1616,7 @@ func file_api_commons_billing_detail_proto_init() {
 				return nil
 			}
 		}
-		file_api_commons_billing_detail_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+		file_api_commons_billing_detail_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Detail); i {
 			case 0:
 				return &v.state
@@ -1695,7 +1628,7 @@ func file_api_commons_billing_detail_proto_init() {
 				return nil
 			}
 		}
-		file_api_commons_billing_detail_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+		file_api_commons_billing_detail_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DetailConfig); i {
 			case 0:
 				return &v.state
@@ -1708,7 +1641,7 @@ func file_api_commons_billing_detail_proto_init() {
 			}
 		}
 	}
-	file_api_commons_billing_detail_proto_msgTypes[3].OneofWrappers = []interface{}{
+	file_api_commons_billing_detail_proto_msgTypes[2].OneofWrappers = []interface{}{
 		(*DetailConfig_AgentSeatsConfig)(nil),
 		(*DetailConfig_AgentTextMessageChatConfig)(nil),
 		(*DetailConfig_AgentTextMessageEmailMessageConfig)(nil),
@@ -1755,7 +1688,7 @@ func file_api_commons_billing_detail_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_commons_billing_detail_proto_rawDesc,
 			NumEnums:      1,
-			NumMessages:   4,
+			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
