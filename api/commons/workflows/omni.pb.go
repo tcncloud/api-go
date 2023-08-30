@@ -20,13 +20,17 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// OmniNodePrompt is the PoC all-in-one version to send a message (optionally displaying options) and store the user input
 type OmniNodePrompt struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Prompt  string   `protobuf:"bytes,1,opt,name=prompt,proto3" json:"prompt,omitempty"`
-	StoreTo string   `protobuf:"bytes,2,opt,name=store_to,json=storeTo,proto3" json:"store_to,omitempty"`
+	// the base message to send
+	Prompt string `protobuf:"bytes,1,opt,name=prompt,proto3" json:"prompt,omitempty"`
+	// the name (key in payload) under which to store the user input
+	StoreTo string `protobuf:"bytes,2,opt,name=store_to,json=storeTo,proto3" json:"store_to,omitempty"`
+	// a list of options to display along with the prompt
 	Options []string `protobuf:"bytes,3,rep,name=options,proto3" json:"options,omitempty"`
 }
 
@@ -83,18 +87,189 @@ func (x *OmniNodePrompt) GetOptions() []string {
 	return nil
 }
 
+// OmniNodeSendMessage will send a message, displaying options if provided
+type OmniNodeSendMessage struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// the base message to send
+	Prompt string `protobuf:"bytes,1,opt,name=prompt,proto3" json:"prompt,omitempty"`
+	// the list of options to select from as the correct response
+	Options []string `protobuf:"bytes,2,rep,name=options,proto3" json:"options,omitempty"`
+}
+
+func (x *OmniNodeSendMessage) Reset() {
+	*x = OmniNodeSendMessage{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_commons_workflows_omni_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OmniNodeSendMessage) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OmniNodeSendMessage) ProtoMessage() {}
+
+func (x *OmniNodeSendMessage) ProtoReflect() protoreflect.Message {
+	mi := &file_api_commons_workflows_omni_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OmniNodeSendMessage.ProtoReflect.Descriptor instead.
+func (*OmniNodeSendMessage) Descriptor() ([]byte, []int) {
+	return file_api_commons_workflows_omni_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *OmniNodeSendMessage) GetPrompt() string {
+	if x != nil {
+		return x.Prompt
+	}
+	return ""
+}
+
+func (x *OmniNodeSendMessage) GetOptions() []string {
+	if x != nil {
+		return x.Options
+	}
+	return nil
+}
+
+// OmniNodeUserInput will store the text value of an incoming message under a given key in the payload
+type OmniNodeUserInput struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// the name (key in payload) under which to store the input (e.g. "input_text")
+	StoreId string `protobuf:"bytes,1,opt,name=store_id,json=storeId,proto3" json:"store_id,omitempty"`
+}
+
+func (x *OmniNodeUserInput) Reset() {
+	*x = OmniNodeUserInput{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_commons_workflows_omni_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OmniNodeUserInput) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OmniNodeUserInput) ProtoMessage() {}
+
+func (x *OmniNodeUserInput) ProtoReflect() protoreflect.Message {
+	mi := &file_api_commons_workflows_omni_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OmniNodeUserInput.ProtoReflect.Descriptor instead.
+func (*OmniNodeUserInput) Descriptor() ([]byte, []int) {
+	return file_api_commons_workflows_omni_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *OmniNodeUserInput) GetStoreId() string {
+	if x != nil {
+		return x.StoreId
+	}
+	return ""
+}
+
+// OmniNodeBranching compares the input against a list of options
+type OmniNodeBranching struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// key of data stored in the payload to compare against the options (likely references an OmniNodeUserInput.store_id)
+	StoreId string `protobuf:"bytes,1,opt,name=store_id,json=storeId,proto3" json:"store_id,omitempty"`
+	// the list of options to use for branching
+	Options []string `protobuf:"bytes,2,rep,name=options,proto3" json:"options,omitempty"`
+}
+
+func (x *OmniNodeBranching) Reset() {
+	*x = OmniNodeBranching{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_commons_workflows_omni_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OmniNodeBranching) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OmniNodeBranching) ProtoMessage() {}
+
+func (x *OmniNodeBranching) ProtoReflect() protoreflect.Message {
+	mi := &file_api_commons_workflows_omni_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OmniNodeBranching.ProtoReflect.Descriptor instead.
+func (*OmniNodeBranching) Descriptor() ([]byte, []int) {
+	return file_api_commons_workflows_omni_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *OmniNodeBranching) GetStoreId() string {
+	if x != nil {
+		return x.StoreId
+	}
+	return ""
+}
+
+func (x *OmniNodeBranching) GetOptions() []string {
+	if x != nil {
+		return x.Options
+	}
+	return nil
+}
+
+// OmniNodeSetSkill adds the given string as a skill on the coversation
 type OmniNodeSetSkill struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// a single skill to add to the conversation (deprecated)
+	//
+	// Deprecated: Marked as deprecated in api/commons/workflows/omni.proto.
 	Skill string `protobuf:"bytes,1,opt,name=skill,proto3" json:"skill,omitempty"`
+	// list of skills to add to the conversation
+	Skills []string `protobuf:"bytes,2,rep,name=skills,proto3" json:"skills,omitempty"`
 }
 
 func (x *OmniNodeSetSkill) Reset() {
 	*x = OmniNodeSetSkill{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_workflows_omni_proto_msgTypes[1]
+		mi := &file_api_commons_workflows_omni_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -107,7 +282,7 @@ func (x *OmniNodeSetSkill) String() string {
 func (*OmniNodeSetSkill) ProtoMessage() {}
 
 func (x *OmniNodeSetSkill) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_workflows_omni_proto_msgTypes[1]
+	mi := &file_api_commons_workflows_omni_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -120,9 +295,10 @@ func (x *OmniNodeSetSkill) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OmniNodeSetSkill.ProtoReflect.Descriptor instead.
 func (*OmniNodeSetSkill) Descriptor() ([]byte, []int) {
-	return file_api_commons_workflows_omni_proto_rawDescGZIP(), []int{1}
+	return file_api_commons_workflows_omni_proto_rawDescGZIP(), []int{4}
 }
 
+// Deprecated: Marked as deprecated in api/commons/workflows/omni.proto.
 func (x *OmniNodeSetSkill) GetSkill() string {
 	if x != nil {
 		return x.Skill
@@ -130,6 +306,14 @@ func (x *OmniNodeSetSkill) GetSkill() string {
 	return ""
 }
 
+func (x *OmniNodeSetSkill) GetSkills() []string {
+	if x != nil {
+		return x.Skills
+	}
+	return nil
+}
+
+// OmniNodeToAgent removes the conversation from the flow (updates the status)
 type OmniNodeToAgent struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -139,7 +323,7 @@ type OmniNodeToAgent struct {
 func (x *OmniNodeToAgent) Reset() {
 	*x = OmniNodeToAgent{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_workflows_omni_proto_msgTypes[2]
+		mi := &file_api_commons_workflows_omni_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -152,7 +336,7 @@ func (x *OmniNodeToAgent) String() string {
 func (*OmniNodeToAgent) ProtoMessage() {}
 
 func (x *OmniNodeToAgent) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_workflows_omni_proto_msgTypes[2]
+	mi := &file_api_commons_workflows_omni_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -165,21 +349,62 @@ func (x *OmniNodeToAgent) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OmniNodeToAgent.ProtoReflect.Descriptor instead.
 func (*OmniNodeToAgent) Descriptor() ([]byte, []int) {
-	return file_api_commons_workflows_omni_proto_rawDescGZIP(), []int{2}
+	return file_api_commons_workflows_omni_proto_rawDescGZIP(), []int{5}
 }
 
+// OmniNodeToMatcher removes the conversation from the flow (updates the status)
+type OmniNodeToMatcher struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *OmniNodeToMatcher) Reset() {
+	*x = OmniNodeToMatcher{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_commons_workflows_omni_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OmniNodeToMatcher) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OmniNodeToMatcher) ProtoMessage() {}
+
+func (x *OmniNodeToMatcher) ProtoReflect() protoreflect.Message {
+	mi := &file_api_commons_workflows_omni_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OmniNodeToMatcher.ProtoReflect.Descriptor instead.
+func (*OmniNodeToMatcher) Descriptor() ([]byte, []int) {
+	return file_api_commons_workflows_omni_proto_rawDescGZIP(), []int{6}
+}
+
+// OmniNodeError will send an error message to the user and log an error
 type OmniNodeError struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// the error message to send/log
 	Error string `protobuf:"bytes,1,opt,name=error,proto3" json:"error,omitempty"`
 }
 
 func (x *OmniNodeError) Reset() {
 	*x = OmniNodeError{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_workflows_omni_proto_msgTypes[3]
+		mi := &file_api_commons_workflows_omni_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -192,7 +417,7 @@ func (x *OmniNodeError) String() string {
 func (*OmniNodeError) ProtoMessage() {}
 
 func (x *OmniNodeError) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_workflows_omni_proto_msgTypes[3]
+	mi := &file_api_commons_workflows_omni_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -205,7 +430,7 @@ func (x *OmniNodeError) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OmniNodeError.ProtoReflect.Descriptor instead.
 func (*OmniNodeError) Descriptor() ([]byte, []int) {
-	return file_api_commons_workflows_omni_proto_rawDescGZIP(), []int{3}
+	return file_api_commons_workflows_omni_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *OmniNodeError) GetError() string {
@@ -227,27 +452,42 @@ var file_api_commons_workflows_omni_proto_rawDesc = []byte{
 	0x6d, 0x70, 0x74, 0x12, 0x19, 0x0a, 0x08, 0x73, 0x74, 0x6f, 0x72, 0x65, 0x5f, 0x74, 0x6f, 0x18,
 	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x73, 0x74, 0x6f, 0x72, 0x65, 0x54, 0x6f, 0x12, 0x18,
 	0x0a, 0x07, 0x6f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x18, 0x03, 0x20, 0x03, 0x28, 0x09, 0x52,
-	0x07, 0x6f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x22, 0x28, 0x0a, 0x10, 0x4f, 0x6d, 0x6e, 0x69,
-	0x4e, 0x6f, 0x64, 0x65, 0x53, 0x65, 0x74, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x12, 0x14, 0x0a, 0x05,
-	0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x73, 0x6b, 0x69,
-	0x6c, 0x6c, 0x22, 0x11, 0x0a, 0x0f, 0x4f, 0x6d, 0x6e, 0x69, 0x4e, 0x6f, 0x64, 0x65, 0x54, 0x6f,
-	0x41, 0x67, 0x65, 0x6e, 0x74, 0x22, 0x25, 0x0a, 0x0d, 0x4f, 0x6d, 0x6e, 0x69, 0x4e, 0x6f, 0x64,
-	0x65, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x12, 0x14, 0x0a, 0x05, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x42, 0xce, 0x01, 0x0a,
-	0x19, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73,
-	0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x73, 0x42, 0x09, 0x4f, 0x6d, 0x6e, 0x69,
-	0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x30, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e,
-	0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69,
-	0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2f,
-	0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x73, 0xa2, 0x02, 0x03, 0x41, 0x43, 0x57, 0xaa,
-	0x02, 0x15, 0x41, 0x70, 0x69, 0x2e, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x57, 0x6f,
-	0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x73, 0xca, 0x02, 0x15, 0x41, 0x70, 0x69, 0x5c, 0x43, 0x6f,
-	0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x5c, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x73, 0xe2,
-	0x02, 0x21, 0x41, 0x70, 0x69, 0x5c, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x5c, 0x57, 0x6f,
-	0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64,
-	0x61, 0x74, 0x61, 0xea, 0x02, 0x17, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x43, 0x6f, 0x6d, 0x6d, 0x6f,
-	0x6e, 0x73, 0x3a, 0x3a, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x73, 0x62, 0x06, 0x70,
-	0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x07, 0x6f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x22, 0x47, 0x0a, 0x13, 0x4f, 0x6d, 0x6e, 0x69,
+	0x4e, 0x6f, 0x64, 0x65, 0x53, 0x65, 0x6e, 0x64, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x12,
+	0x16, 0x0a, 0x06, 0x70, 0x72, 0x6f, 0x6d, 0x70, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x06, 0x70, 0x72, 0x6f, 0x6d, 0x70, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x6f, 0x70, 0x74, 0x69, 0x6f,
+	0x6e, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x09, 0x52, 0x07, 0x6f, 0x70, 0x74, 0x69, 0x6f, 0x6e,
+	0x73, 0x22, 0x2e, 0x0a, 0x11, 0x4f, 0x6d, 0x6e, 0x69, 0x4e, 0x6f, 0x64, 0x65, 0x55, 0x73, 0x65,
+	0x72, 0x49, 0x6e, 0x70, 0x75, 0x74, 0x12, 0x19, 0x0a, 0x08, 0x73, 0x74, 0x6f, 0x72, 0x65, 0x5f,
+	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x73, 0x74, 0x6f, 0x72, 0x65, 0x49,
+	0x64, 0x22, 0x48, 0x0a, 0x11, 0x4f, 0x6d, 0x6e, 0x69, 0x4e, 0x6f, 0x64, 0x65, 0x42, 0x72, 0x61,
+	0x6e, 0x63, 0x68, 0x69, 0x6e, 0x67, 0x12, 0x19, 0x0a, 0x08, 0x73, 0x74, 0x6f, 0x72, 0x65, 0x5f,
+	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x73, 0x74, 0x6f, 0x72, 0x65, 0x49,
+	0x64, 0x12, 0x18, 0x0a, 0x07, 0x6f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x18, 0x02, 0x20, 0x03,
+	0x28, 0x09, 0x52, 0x07, 0x6f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x22, 0x44, 0x0a, 0x10, 0x4f,
+	0x6d, 0x6e, 0x69, 0x4e, 0x6f, 0x64, 0x65, 0x53, 0x65, 0x74, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x12,
+	0x18, 0x0a, 0x05, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42, 0x02,
+	0x18, 0x01, 0x52, 0x05, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x12, 0x16, 0x0a, 0x06, 0x73, 0x6b, 0x69,
+	0x6c, 0x6c, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x09, 0x52, 0x06, 0x73, 0x6b, 0x69, 0x6c, 0x6c,
+	0x73, 0x22, 0x11, 0x0a, 0x0f, 0x4f, 0x6d, 0x6e, 0x69, 0x4e, 0x6f, 0x64, 0x65, 0x54, 0x6f, 0x41,
+	0x67, 0x65, 0x6e, 0x74, 0x22, 0x13, 0x0a, 0x11, 0x4f, 0x6d, 0x6e, 0x69, 0x4e, 0x6f, 0x64, 0x65,
+	0x54, 0x6f, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x65, 0x72, 0x22, 0x25, 0x0a, 0x0d, 0x4f, 0x6d, 0x6e,
+	0x69, 0x4e, 0x6f, 0x64, 0x65, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x12, 0x14, 0x0a, 0x05, 0x65, 0x72,
+	0x72, 0x6f, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x65, 0x72, 0x72, 0x6f, 0x72,
+	0x42, 0xce, 0x01, 0x0a, 0x19, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d,
+	0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x73, 0x42, 0x09,
+	0x4f, 0x6d, 0x6e, 0x69, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x30, 0x67, 0x69, 0x74,
+	0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64,
+	0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x63, 0x6f, 0x6d, 0x6d,
+	0x6f, 0x6e, 0x73, 0x2f, 0x77, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x73, 0xa2, 0x02, 0x03,
+	0x41, 0x43, 0x57, 0xaa, 0x02, 0x15, 0x41, 0x70, 0x69, 0x2e, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e,
+	0x73, 0x2e, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x73, 0xca, 0x02, 0x15, 0x41, 0x70,
+	0x69, 0x5c, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x5c, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c,
+	0x6f, 0x77, 0x73, 0xe2, 0x02, 0x21, 0x41, 0x70, 0x69, 0x5c, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e,
+	0x73, 0x5c, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d,
+	0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x17, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x43,
+	0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x3a, 0x3a, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77,
+	0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -262,12 +502,16 @@ func file_api_commons_workflows_omni_proto_rawDescGZIP() []byte {
 	return file_api_commons_workflows_omni_proto_rawDescData
 }
 
-var file_api_commons_workflows_omni_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_api_commons_workflows_omni_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_api_commons_workflows_omni_proto_goTypes = []interface{}{
-	(*OmniNodePrompt)(nil),   // 0: api.commons.workflows.OmniNodePrompt
-	(*OmniNodeSetSkill)(nil), // 1: api.commons.workflows.OmniNodeSetSkill
-	(*OmniNodeToAgent)(nil),  // 2: api.commons.workflows.OmniNodeToAgent
-	(*OmniNodeError)(nil),    // 3: api.commons.workflows.OmniNodeError
+	(*OmniNodePrompt)(nil),      // 0: api.commons.workflows.OmniNodePrompt
+	(*OmniNodeSendMessage)(nil), // 1: api.commons.workflows.OmniNodeSendMessage
+	(*OmniNodeUserInput)(nil),   // 2: api.commons.workflows.OmniNodeUserInput
+	(*OmniNodeBranching)(nil),   // 3: api.commons.workflows.OmniNodeBranching
+	(*OmniNodeSetSkill)(nil),    // 4: api.commons.workflows.OmniNodeSetSkill
+	(*OmniNodeToAgent)(nil),     // 5: api.commons.workflows.OmniNodeToAgent
+	(*OmniNodeToMatcher)(nil),   // 6: api.commons.workflows.OmniNodeToMatcher
+	(*OmniNodeError)(nil),       // 7: api.commons.workflows.OmniNodeError
 }
 var file_api_commons_workflows_omni_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
@@ -296,7 +540,7 @@ func file_api_commons_workflows_omni_proto_init() {
 			}
 		}
 		file_api_commons_workflows_omni_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*OmniNodeSetSkill); i {
+			switch v := v.(*OmniNodeSendMessage); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -308,7 +552,7 @@ func file_api_commons_workflows_omni_proto_init() {
 			}
 		}
 		file_api_commons_workflows_omni_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*OmniNodeToAgent); i {
+			switch v := v.(*OmniNodeUserInput); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -320,6 +564,54 @@ func file_api_commons_workflows_omni_proto_init() {
 			}
 		}
 		file_api_commons_workflows_omni_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OmniNodeBranching); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_commons_workflows_omni_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OmniNodeSetSkill); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_commons_workflows_omni_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OmniNodeToAgent); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_commons_workflows_omni_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OmniNodeToMatcher); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_commons_workflows_omni_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*OmniNodeError); i {
 			case 0:
 				return &v.state
@@ -338,7 +630,7 @@ func file_api_commons_workflows_omni_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_commons_workflows_omni_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
