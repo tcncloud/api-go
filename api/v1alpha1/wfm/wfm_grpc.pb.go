@@ -94,6 +94,7 @@ const (
 	WFM_ListCandidateWFMAgents_FullMethodName                        = "/api.v1alpha1.wfm.WFM/ListCandidateWFMAgents"
 	WFM_ListUngroupedWFMAgents_FullMethodName                        = "/api.v1alpha1.wfm.WFM/ListUngroupedWFMAgents"
 	WFM_ListWFMAgentsAssociatedWithAgentGroup_FullMethodName         = "/api.v1alpha1.wfm.WFM/ListWFMAgentsAssociatedWithAgentGroup"
+	WFM_GetWFMAgentSid_FullMethodName                                = "/api.v1alpha1.wfm.WFM/GetWFMAgentSid"
 	WFM_CreateWFMAgentMemberships_FullMethodName                     = "/api.v1alpha1.wfm.WFM/CreateWFMAgentMemberships"
 	WFM_DeleteWFMAgentMemberships_FullMethodName                     = "/api.v1alpha1.wfm.WFM/DeleteWFMAgentMemberships"
 	WFM_DeleteWFMAgentsMemberships_FullMethodName                    = "/api.v1alpha1.wfm.WFM/DeleteWFMAgentsMemberships"
@@ -850,6 +851,16 @@ type WFMClient interface {
 	//   - grpc.Invalid: the @agent_group_sid is invalid.
 	//   - grpc.Internal: error occurs when listing the wfm agents.
 	ListWFMAgentsAssociatedWithAgentGroup(ctx context.Context, in *ListWFMAgentsAssociatedWithAgentGroupReq, opts ...grpc.CallOption) (*ListWFMAgentsAssociatedWithAgentGroupRes, error)
+	// Gets the @wfm_agent_sid for the agent corresponding to the given @tcn_agent_sid for the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @tcn_agent_sid is invalid.
+	//   - grpc.NotFound: WFM agent with the given @tcn_agent_sid doesn't exist for the org sending the request.
+	//   - grpc.Internal: error occurs when getting @wfm_agent_sid.
+	GetWFMAgentSid(ctx context.Context, in *GetWFMAgentSidReq, opts ...grpc.CallOption) (*GetWFMAgentSidRes, error)
 	// Creates a membership association for each of the given @wfm_agent_sids with the given @agent_group_sid.
 	// The @schedule_scenario_sid must match the scenario of the agent group and wfm agents.
 	// Required permissions:
@@ -2209,6 +2220,15 @@ func (c *wFMClient) ListWFMAgentsAssociatedWithAgentGroup(ctx context.Context, i
 	return out, nil
 }
 
+func (c *wFMClient) GetWFMAgentSid(ctx context.Context, in *GetWFMAgentSidReq, opts ...grpc.CallOption) (*GetWFMAgentSidRes, error) {
+	out := new(GetWFMAgentSidRes)
+	err := c.cc.Invoke(ctx, WFM_GetWFMAgentSid_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) CreateWFMAgentMemberships(ctx context.Context, in *CreateWFMAgentMembershipsReq, opts ...grpc.CallOption) (*CreateWFMAgentMembershipsRes, error) {
 	out := new(CreateWFMAgentMembershipsRes)
 	err := c.cc.Invoke(ctx, WFM_CreateWFMAgentMemberships_FullMethodName, in, out, opts...)
@@ -3419,6 +3439,16 @@ type WFMServer interface {
 	//   - grpc.Invalid: the @agent_group_sid is invalid.
 	//   - grpc.Internal: error occurs when listing the wfm agents.
 	ListWFMAgentsAssociatedWithAgentGroup(context.Context, *ListWFMAgentsAssociatedWithAgentGroupReq) (*ListWFMAgentsAssociatedWithAgentGroupRes, error)
+	// Gets the @wfm_agent_sid for the agent corresponding to the given @tcn_agent_sid for the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @tcn_agent_sid is invalid.
+	//   - grpc.NotFound: WFM agent with the given @tcn_agent_sid doesn't exist for the org sending the request.
+	//   - grpc.Internal: error occurs when getting @wfm_agent_sid.
+	GetWFMAgentSid(context.Context, *GetWFMAgentSidReq) (*GetWFMAgentSidRes, error)
 	// Creates a membership association for each of the given @wfm_agent_sids with the given @agent_group_sid.
 	// The @schedule_scenario_sid must match the scenario of the agent group and wfm agents.
 	// Required permissions:
@@ -4293,6 +4323,9 @@ func (UnimplementedWFMServer) ListUngroupedWFMAgents(context.Context, *ListUngro
 }
 func (UnimplementedWFMServer) ListWFMAgentsAssociatedWithAgentGroup(context.Context, *ListWFMAgentsAssociatedWithAgentGroupReq) (*ListWFMAgentsAssociatedWithAgentGroupRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListWFMAgentsAssociatedWithAgentGroup not implemented")
+}
+func (UnimplementedWFMServer) GetWFMAgentSid(context.Context, *GetWFMAgentSidReq) (*GetWFMAgentSidRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetWFMAgentSid not implemented")
 }
 func (UnimplementedWFMServer) CreateWFMAgentMemberships(context.Context, *CreateWFMAgentMembershipsReq) (*CreateWFMAgentMembershipsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateWFMAgentMemberships not implemented")
@@ -5591,6 +5624,24 @@ func _WFM_ListWFMAgentsAssociatedWithAgentGroup_Handler(srv interface{}, ctx con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_GetWFMAgentSid_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetWFMAgentSidReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).GetWFMAgentSid(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_GetWFMAgentSid_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).GetWFMAgentSid(ctx, req.(*GetWFMAgentSidReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WFM_CreateWFMAgentMemberships_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateWFMAgentMembershipsReq)
 	if err := dec(in); err != nil {
@@ -6847,6 +6898,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListWFMAgentsAssociatedWithAgentGroup",
 			Handler:    _WFM_ListWFMAgentsAssociatedWithAgentGroup_Handler,
+		},
+		{
+			MethodName: "GetWFMAgentSid",
+			Handler:    _WFM_GetWFMAgentSid_Handler,
 		},
 		{
 			MethodName: "CreateWFMAgentMemberships",
