@@ -84,6 +84,7 @@ const (
 	WFM_DeleteConstraintRule_FullMethodName                          = "/api.v1alpha1.wfm.WFM/DeleteConstraintRule"
 	WFM_CreateNonSkillActivity_FullMethodName                        = "/api.v1alpha1.wfm.WFM/CreateNonSkillActivity"
 	WFM_UpdateNonSkillActivity_FullMethodName                        = "/api.v1alpha1.wfm.WFM/UpdateNonSkillActivity"
+	WFM_ListNonSkillActivities_FullMethodName                        = "/api.v1alpha1.wfm.WFM/ListNonSkillActivities"
 	WFM_ListNonSkillActivityAssociations_FullMethodName              = "/api.v1alpha1.wfm.WFM/ListNonSkillActivityAssociations"
 	WFM_ListCandidateSchedulingActivities_FullMethodName             = "/api.v1alpha1.wfm.WFM/ListCandidateSchedulingActivities"
 	WFM_CreateAgentGroup_FullMethodName                              = "/api.v1alpha1.wfm.WFM/CreateAgentGroup"
@@ -133,7 +134,9 @@ const (
 	WFM_ResetDraftSchedule_FullMethodName                            = "/api.v1alpha1.wfm.WFM/ResetDraftSchedule"
 	WFM_GetDraftSchedule_FullMethodName                              = "/api.v1alpha1.wfm.WFM/GetDraftSchedule"
 	WFM_ListDraftSchedules_FullMethodName                            = "/api.v1alpha1.wfm.WFM/ListDraftSchedules"
+	WFM_ClearSchedule_FullMethodName                                 = "/api.v1alpha1.wfm.WFM/ClearSchedule"
 	WFM_DeleteDraftSchedule_FullMethodName                           = "/api.v1alpha1.wfm.WFM/DeleteDraftSchedule"
+	WFM_ListShiftInstancesBySid_FullMethodName                       = "/api.v1alpha1.wfm.WFM/ListShiftInstancesBySid"
 	WFM_CopyScheduleToSchedule_FullMethodName                        = "/api.v1alpha1.wfm.WFM/CopyScheduleToSchedule"
 	WFM_CreateShiftInstance_FullMethodName                           = "/api.v1alpha1.wfm.WFM/CreateShiftInstance"
 	WFM_CreateShiftInstanceV2_FullMethodName                         = "/api.v1alpha1.wfm.WFM/CreateShiftInstanceV2"
@@ -732,6 +735,14 @@ type WFMClient interface {
 	//   - grpc.NotFound: non skill activity for the given @non_skill_activity_sid doesn't exist.
 	//   - grpc.Internal: error occurs when updating the non skill activity.
 	UpdateNonSkillActivity(ctx context.Context, in *UpdateNonSkillActivityReq, opts ...grpc.CallOption) (*UpdateNonSkillActivityRes, error)
+	// Lists the non skill activities that belong to the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:.
+	//   - grpc.Internal: error occurs when listing the activites.
+	ListNonSkillActivities(ctx context.Context, in *ListNonSkillActivitiesReq, opts ...grpc.CallOption) (*ListNonSkillActivitiesRes, error)
 	// Lists the IDs of non skill activities that belong to the org sending the request which have the given @relationship_type with the @associated_entity.
 	// Required permissions:
 	//
@@ -1328,6 +1339,26 @@ type WFMClient interface {
 	//   - grpc.Invalid: the @datetime_range is invalid.
 	//   - grpc.Internal: error occurs when listing the draft schedules.
 	ListDraftSchedules(ctx context.Context, in *ListDraftSchedulesReq, opts ...grpc.CallOption) (*ListDraftSchedulesRes, error)
+	// Clears shift instances from the @schedule_selector for the org sending the request.
+	// If @node_selector is set, only shifts related to the given @node_selector will be cleared.
+	// If @node_selector is not set, all shifts on the @schedule_selector may be cleared, regardless of the shift template they are associated with.
+	// If @datetime_range is set, only the shifts overlapping the @datetime_range will be cleared.
+	// If @datetime_range is not set, all shifts on the schedule will be considered in range to be deleted and @invert_datetime_range and @start_datetimes_only must be set to false.
+	// If @invert_datetime_range is set to true, the shifts overlapping the range before and after the provided @datetime_range will be deleted.
+	// If @invert_datetime_range is set to false, the provided @datetime_range will be used.
+	// If @start_datetimes_only is set to true, deletes the shifts that start within the @datetime range, or start before or after @datetime_range if @invert_datetime_range is true.
+	// If @start_datetimes_only is set to false, deletes the shifts that overlap with the @datetime range, or overlap the range before or after @datetime_range if @invert_datetime_range is true.
+	// If @delete_locked is set to true, both locked and unlocked shifts will be cleared.
+	// If @delete_locked is set to false, only shifts with @is_locked set to false may be cleared.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @node_selector, @schedule_selector, or @datetime_range in the request are invalid.
+	//   - grpc.NotFound: the draft schedule with the given @schedule_selector doesn't exist.
+	//   - grpc.Internal: error occurs when removing the shifts from the schedule.
+	ClearSchedule(ctx context.Context, in *ClearScheduleReq, opts ...grpc.CallOption) (*ClearScheduleRes, error)
 	// Deletes a draft schedule with the corresponding @draft_schedule_sid for the org sending the request.
 	// It also deletes all of its shift instances and segments.
 	// Required permissions:
@@ -1339,6 +1370,21 @@ type WFMClient interface {
 	//   - grpc.NotFound: the draft schedule with the given @draft_schedule_sid doesn't exist.
 	//   - grpc.Internal: error occurs when removing the draft schedule.
 	DeleteDraftSchedule(ctx context.Context, in *DeleteDraftScheduleReq, opts ...grpc.CallOption) (*DeleteDraftScheduleRes, error)
+	// Lists the shift instances with the corresponding @shift_instance_sids for the org sending the request.
+	// If @include_shift_template is set to true then the related shift template for the shift instances will be returned in the shift template field.
+	// If @include_shift_segments is set to true then the related shift segments for the shift instances will be returned in the shift segments field.
+	// If @include_scheduling_activity is set to true then the related scheduling activity for the shift segment will be returned in the scheduling activity field.
+	// @include_shift_segments must be true to take effect.
+	// If @include_activity is set to true then the related non skill activity for the scheduling activity will be returned in the scheduling
+	// activities member non skill activity field. @include_scheduling_activity must be true to take effect.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @org_id or @shift_instance_sids in the request are invalid.
+	//   - grpc.Internal: error occurs when listing the shift instances or their shift segments.
+	ListShiftInstancesBySid(ctx context.Context, in *ListShiftInstancesBySidReq, opts ...grpc.CallOption) (*ListShiftInstancesBySidRes, error)
 	// Copies the shifts from @source_schedule_selector to @destination_schedule_selector, constrained by the given parameters for the org sending the request.
 	// If @datetime_range is set, all shifts within the datetime range will be copied.
 	// If @datetime_range is not set, all shifts in the @source_schedule_selector within the schedule range of the @destination_schedule_selector will be copied. However if one of them is a published schedule, it will use the schedule range of the draft schedule.
@@ -1382,7 +1428,7 @@ type WFMClient interface {
 	// NONE
 	// Errors:
 	//   - grpc.Invalid: one or more fields in the request have invalid values.
-	//   - grpc.NotFound: wfm_agent_sid_1, wfm_agent_sid_2, or shift_instance_sids do not exist for org_id.
+	//   - grpc.NotFound: wfm_agent_sid_1, wfm_agent_sid_2, or shift_instance_sids do not exist for the org sending the request.
 	//   - grpc.Internal: error occurs when swapping the shift instances.
 	SwapShiftInstances(ctx context.Context, in *SwapShiftInstancesReq, opts ...grpc.CallOption) (*SwapShiftInstancesRes, error)
 	// Updates a shift instance for the org sending the request with the provided parameters.
@@ -2073,6 +2119,15 @@ func (c *wFMClient) UpdateNonSkillActivity(ctx context.Context, in *UpdateNonSki
 	return out, nil
 }
 
+func (c *wFMClient) ListNonSkillActivities(ctx context.Context, in *ListNonSkillActivitiesReq, opts ...grpc.CallOption) (*ListNonSkillActivitiesRes, error) {
+	out := new(ListNonSkillActivitiesRes)
+	err := c.cc.Invoke(ctx, WFM_ListNonSkillActivities_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) ListNonSkillActivityAssociations(ctx context.Context, in *ListNonSkillActivityAssociationsReq, opts ...grpc.CallOption) (*ListNonSkillActivityAssociationsRes, error) {
 	out := new(ListNonSkillActivityAssociationsRes)
 	err := c.cc.Invoke(ctx, WFM_ListNonSkillActivityAssociations_FullMethodName, in, out, opts...)
@@ -2514,9 +2569,27 @@ func (c *wFMClient) ListDraftSchedules(ctx context.Context, in *ListDraftSchedul
 	return out, nil
 }
 
+func (c *wFMClient) ClearSchedule(ctx context.Context, in *ClearScheduleReq, opts ...grpc.CallOption) (*ClearScheduleRes, error) {
+	out := new(ClearScheduleRes)
+	err := c.cc.Invoke(ctx, WFM_ClearSchedule_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) DeleteDraftSchedule(ctx context.Context, in *DeleteDraftScheduleReq, opts ...grpc.CallOption) (*DeleteDraftScheduleRes, error) {
 	out := new(DeleteDraftScheduleRes)
 	err := c.cc.Invoke(ctx, WFM_DeleteDraftSchedule_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) ListShiftInstancesBySid(ctx context.Context, in *ListShiftInstancesBySidReq, opts ...grpc.CallOption) (*ListShiftInstancesBySidRes, error) {
+	out := new(ListShiftInstancesBySidRes)
+	err := c.cc.Invoke(ctx, WFM_ListShiftInstancesBySid_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -3231,6 +3304,14 @@ type WFMServer interface {
 	//   - grpc.NotFound: non skill activity for the given @non_skill_activity_sid doesn't exist.
 	//   - grpc.Internal: error occurs when updating the non skill activity.
 	UpdateNonSkillActivity(context.Context, *UpdateNonSkillActivityReq) (*UpdateNonSkillActivityRes, error)
+	// Lists the non skill activities that belong to the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:.
+	//   - grpc.Internal: error occurs when listing the activites.
+	ListNonSkillActivities(context.Context, *ListNonSkillActivitiesReq) (*ListNonSkillActivitiesRes, error)
 	// Lists the IDs of non skill activities that belong to the org sending the request which have the given @relationship_type with the @associated_entity.
 	// Required permissions:
 	//
@@ -3827,6 +3908,26 @@ type WFMServer interface {
 	//   - grpc.Invalid: the @datetime_range is invalid.
 	//   - grpc.Internal: error occurs when listing the draft schedules.
 	ListDraftSchedules(context.Context, *ListDraftSchedulesReq) (*ListDraftSchedulesRes, error)
+	// Clears shift instances from the @schedule_selector for the org sending the request.
+	// If @node_selector is set, only shifts related to the given @node_selector will be cleared.
+	// If @node_selector is not set, all shifts on the @schedule_selector may be cleared, regardless of the shift template they are associated with.
+	// If @datetime_range is set, only the shifts overlapping the @datetime_range will be cleared.
+	// If @datetime_range is not set, all shifts on the schedule will be considered in range to be deleted and @invert_datetime_range and @start_datetimes_only must be set to false.
+	// If @invert_datetime_range is set to true, the shifts overlapping the range before and after the provided @datetime_range will be deleted.
+	// If @invert_datetime_range is set to false, the provided @datetime_range will be used.
+	// If @start_datetimes_only is set to true, deletes the shifts that start within the @datetime range, or start before or after @datetime_range if @invert_datetime_range is true.
+	// If @start_datetimes_only is set to false, deletes the shifts that overlap with the @datetime range, or overlap the range before or after @datetime_range if @invert_datetime_range is true.
+	// If @delete_locked is set to true, both locked and unlocked shifts will be cleared.
+	// If @delete_locked is set to false, only shifts with @is_locked set to false may be cleared.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @node_selector, @schedule_selector, or @datetime_range in the request are invalid.
+	//   - grpc.NotFound: the draft schedule with the given @schedule_selector doesn't exist.
+	//   - grpc.Internal: error occurs when removing the shifts from the schedule.
+	ClearSchedule(context.Context, *ClearScheduleReq) (*ClearScheduleRes, error)
 	// Deletes a draft schedule with the corresponding @draft_schedule_sid for the org sending the request.
 	// It also deletes all of its shift instances and segments.
 	// Required permissions:
@@ -3838,6 +3939,21 @@ type WFMServer interface {
 	//   - grpc.NotFound: the draft schedule with the given @draft_schedule_sid doesn't exist.
 	//   - grpc.Internal: error occurs when removing the draft schedule.
 	DeleteDraftSchedule(context.Context, *DeleteDraftScheduleReq) (*DeleteDraftScheduleRes, error)
+	// Lists the shift instances with the corresponding @shift_instance_sids for the org sending the request.
+	// If @include_shift_template is set to true then the related shift template for the shift instances will be returned in the shift template field.
+	// If @include_shift_segments is set to true then the related shift segments for the shift instances will be returned in the shift segments field.
+	// If @include_scheduling_activity is set to true then the related scheduling activity for the shift segment will be returned in the scheduling activity field.
+	// @include_shift_segments must be true to take effect.
+	// If @include_activity is set to true then the related non skill activity for the scheduling activity will be returned in the scheduling
+	// activities member non skill activity field. @include_scheduling_activity must be true to take effect.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @org_id or @shift_instance_sids in the request are invalid.
+	//   - grpc.Internal: error occurs when listing the shift instances or their shift segments.
+	ListShiftInstancesBySid(context.Context, *ListShiftInstancesBySidReq) (*ListShiftInstancesBySidRes, error)
 	// Copies the shifts from @source_schedule_selector to @destination_schedule_selector, constrained by the given parameters for the org sending the request.
 	// If @datetime_range is set, all shifts within the datetime range will be copied.
 	// If @datetime_range is not set, all shifts in the @source_schedule_selector within the schedule range of the @destination_schedule_selector will be copied. However if one of them is a published schedule, it will use the schedule range of the draft schedule.
@@ -3881,7 +3997,7 @@ type WFMServer interface {
 	// NONE
 	// Errors:
 	//   - grpc.Invalid: one or more fields in the request have invalid values.
-	//   - grpc.NotFound: wfm_agent_sid_1, wfm_agent_sid_2, or shift_instance_sids do not exist for org_id.
+	//   - grpc.NotFound: wfm_agent_sid_1, wfm_agent_sid_2, or shift_instance_sids do not exist for the org sending the request.
 	//   - grpc.Internal: error occurs when swapping the shift instances.
 	SwapShiftInstances(context.Context, *SwapShiftInstancesReq) (*SwapShiftInstancesRes, error)
 	// Updates a shift instance for the org sending the request with the provided parameters.
@@ -4148,6 +4264,9 @@ func (UnimplementedWFMServer) CreateNonSkillActivity(context.Context, *CreateNon
 func (UnimplementedWFMServer) UpdateNonSkillActivity(context.Context, *UpdateNonSkillActivityReq) (*UpdateNonSkillActivityRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateNonSkillActivity not implemented")
 }
+func (UnimplementedWFMServer) ListNonSkillActivities(context.Context, *ListNonSkillActivitiesReq) (*ListNonSkillActivitiesRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListNonSkillActivities not implemented")
+}
 func (UnimplementedWFMServer) ListNonSkillActivityAssociations(context.Context, *ListNonSkillActivityAssociationsReq) (*ListNonSkillActivityAssociationsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListNonSkillActivityAssociations not implemented")
 }
@@ -4295,8 +4414,14 @@ func (UnimplementedWFMServer) GetDraftSchedule(context.Context, *GetDraftSchedul
 func (UnimplementedWFMServer) ListDraftSchedules(context.Context, *ListDraftSchedulesReq) (*ListDraftSchedulesRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListDraftSchedules not implemented")
 }
+func (UnimplementedWFMServer) ClearSchedule(context.Context, *ClearScheduleReq) (*ClearScheduleRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ClearSchedule not implemented")
+}
 func (UnimplementedWFMServer) DeleteDraftSchedule(context.Context, *DeleteDraftScheduleReq) (*DeleteDraftScheduleRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteDraftSchedule not implemented")
+}
+func (UnimplementedWFMServer) ListShiftInstancesBySid(context.Context, *ListShiftInstancesBySidReq) (*ListShiftInstancesBySidRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListShiftInstancesBySid not implemented")
 }
 func (UnimplementedWFMServer) CopyScheduleToSchedule(context.Context, *CopyScheduleToScheduleReq) (*CopyScheduleToScheduleRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CopyScheduleToSchedule not implemented")
@@ -5286,6 +5411,24 @@ func _WFM_UpdateNonSkillActivity_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_ListNonSkillActivities_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListNonSkillActivitiesReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).ListNonSkillActivities(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_ListNonSkillActivities_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).ListNonSkillActivities(ctx, req.(*ListNonSkillActivitiesReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WFM_ListNonSkillActivityAssociations_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListNonSkillActivityAssociationsReq)
 	if err := dec(in); err != nil {
@@ -6168,6 +6311,24 @@ func _WFM_ListDraftSchedules_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_ClearSchedule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ClearScheduleReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).ClearSchedule(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_ClearSchedule_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).ClearSchedule(ctx, req.(*ClearScheduleReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WFM_DeleteDraftSchedule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteDraftScheduleReq)
 	if err := dec(in); err != nil {
@@ -6182,6 +6343,24 @@ func _WFM_DeleteDraftSchedule_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WFMServer).DeleteDraftSchedule(ctx, req.(*DeleteDraftScheduleReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_ListShiftInstancesBySid_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListShiftInstancesBySidReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).ListShiftInstancesBySid(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_ListShiftInstancesBySid_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).ListShiftInstancesBySid(ctx, req.(*ListShiftInstancesBySidReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -6630,6 +6809,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _WFM_UpdateNonSkillActivity_Handler,
 		},
 		{
+			MethodName: "ListNonSkillActivities",
+			Handler:    _WFM_ListNonSkillActivities_Handler,
+		},
+		{
 			MethodName: "ListNonSkillActivityAssociations",
 			Handler:    _WFM_ListNonSkillActivityAssociations_Handler,
 		},
@@ -6826,8 +7009,16 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _WFM_ListDraftSchedules_Handler,
 		},
 		{
+			MethodName: "ClearSchedule",
+			Handler:    _WFM_ClearSchedule_Handler,
+		},
+		{
 			MethodName: "DeleteDraftSchedule",
 			Handler:    _WFM_DeleteDraftSchedule_Handler,
+		},
+		{
+			MethodName: "ListShiftInstancesBySid",
+			Handler:    _WFM_ListShiftInstancesBySid_Handler,
 		},
 		{
 			MethodName: "CopyScheduleToSchedule",
