@@ -65,6 +65,9 @@ const (
 	// IntegrationsListIntegrationsProcedure is the fully-qualified name of the Integrations's
 	// ListIntegrations RPC.
 	IntegrationsListIntegrationsProcedure = "/api.v1alpha1.integrations.Integrations/ListIntegrations"
+	// IntegrationsListIntegrationsForOrgProcedure is the fully-qualified name of the Integrations's
+	// ListIntegrationsForOrg RPC.
+	IntegrationsListIntegrationsForOrgProcedure = "/api.v1alpha1.integrations.Integrations/ListIntegrationsForOrg"
 	// IntegrationsListIntegrationConfigNamesProcedure is the fully-qualified name of the Integrations's
 	// ListIntegrationConfigNames RPC.
 	IntegrationsListIntegrationConfigNamesProcedure = "/api.v1alpha1.integrations.Integrations/ListIntegrationConfigNames"
@@ -127,6 +130,7 @@ type IntegrationsClient interface {
 	DeleteIntegrationConfig(context.Context, *connect_go.Request[integrations.DeleteIntegrationConfigReq]) (*connect_go.Response[integrations.Empty], error)
 	// list all supported integrations
 	ListIntegrations(context.Context, *connect_go.Request[integrations.Empty]) (*connect_go.Response[integrations.IntegrationInfos], error)
+	ListIntegrationsForOrg(context.Context, *connect_go.Request[integrations.ListIntegrationsForOrgReq]) (*connect_go.Response[integrations.IntegrationInfos], error)
 	// lists all the names of the configs for an org's integration type
 	ListIntegrationConfigNames(context.Context, *connect_go.Request[integrations.ListIntegrationConfigNamesReq]) (*connect_go.Response[integrations.ListIntegrationConfigNamesRes], error)
 	ListJourneyConfigs(context.Context, *connect_go.Request[integrations.ListJourneyConfigsReq]) (*connect_go.Response[integrations.IntegrationConfigs], error)
@@ -224,6 +228,11 @@ func NewIntegrationsClient(httpClient connect_go.HTTPClient, baseURL string, opt
 			baseURL+IntegrationsListIntegrationsProcedure,
 			opts...,
 		),
+		listIntegrationsForOrg: connect_go.NewClient[integrations.ListIntegrationsForOrgReq, integrations.IntegrationInfos](
+			httpClient,
+			baseURL+IntegrationsListIntegrationsForOrgProcedure,
+			opts...,
+		),
 		listIntegrationConfigNames: connect_go.NewClient[integrations.ListIntegrationConfigNamesReq, integrations.ListIntegrationConfigNamesRes](
 			httpClient,
 			baseURL+IntegrationsListIntegrationConfigNamesProcedure,
@@ -305,6 +314,7 @@ type integrationsClient struct {
 	updateIntegrationConfig             *connect_go.Client[integrations.UpdateIntegrationConfigReq, integrations.Empty]
 	deleteIntegrationConfig             *connect_go.Client[integrations.DeleteIntegrationConfigReq, integrations.Empty]
 	listIntegrations                    *connect_go.Client[integrations.Empty, integrations.IntegrationInfos]
+	listIntegrationsForOrg              *connect_go.Client[integrations.ListIntegrationsForOrgReq, integrations.IntegrationInfos]
 	listIntegrationConfigNames          *connect_go.Client[integrations.ListIntegrationConfigNamesReq, integrations.ListIntegrationConfigNamesRes]
 	listJourneyConfigs                  *connect_go.Client[integrations.ListJourneyConfigsReq, integrations.IntegrationConfigs]
 	listNonJourneyConfigs               *connect_go.Client[integrations.ListNonJourneyConfigsReq, integrations.IntegrationConfigs]
@@ -375,6 +385,11 @@ func (c *integrationsClient) DeleteIntegrationConfig(ctx context.Context, req *c
 // ListIntegrations calls api.v1alpha1.integrations.Integrations.ListIntegrations.
 func (c *integrationsClient) ListIntegrations(ctx context.Context, req *connect_go.Request[integrations.Empty]) (*connect_go.Response[integrations.IntegrationInfos], error) {
 	return c.listIntegrations.CallUnary(ctx, req)
+}
+
+// ListIntegrationsForOrg calls api.v1alpha1.integrations.Integrations.ListIntegrationsForOrg.
+func (c *integrationsClient) ListIntegrationsForOrg(ctx context.Context, req *connect_go.Request[integrations.ListIntegrationsForOrgReq]) (*connect_go.Response[integrations.IntegrationInfos], error) {
+	return c.listIntegrationsForOrg.CallUnary(ctx, req)
 }
 
 // ListIntegrationConfigNames calls
@@ -466,6 +481,7 @@ type IntegrationsHandler interface {
 	DeleteIntegrationConfig(context.Context, *connect_go.Request[integrations.DeleteIntegrationConfigReq]) (*connect_go.Response[integrations.Empty], error)
 	// list all supported integrations
 	ListIntegrations(context.Context, *connect_go.Request[integrations.Empty]) (*connect_go.Response[integrations.IntegrationInfos], error)
+	ListIntegrationsForOrg(context.Context, *connect_go.Request[integrations.ListIntegrationsForOrgReq]) (*connect_go.Response[integrations.IntegrationInfos], error)
 	// lists all the names of the configs for an org's integration type
 	ListIntegrationConfigNames(context.Context, *connect_go.Request[integrations.ListIntegrationConfigNamesReq]) (*connect_go.Response[integrations.ListIntegrationConfigNamesRes], error)
 	ListJourneyConfigs(context.Context, *connect_go.Request[integrations.ListJourneyConfigsReq]) (*connect_go.Response[integrations.IntegrationConfigs], error)
@@ -559,6 +575,11 @@ func NewIntegrationsHandler(svc IntegrationsHandler, opts ...connect_go.HandlerO
 		svc.ListIntegrations,
 		opts...,
 	)
+	integrationsListIntegrationsForOrgHandler := connect_go.NewUnaryHandler(
+		IntegrationsListIntegrationsForOrgProcedure,
+		svc.ListIntegrationsForOrg,
+		opts...,
+	)
 	integrationsListIntegrationConfigNamesHandler := connect_go.NewUnaryHandler(
 		IntegrationsListIntegrationConfigNamesProcedure,
 		svc.ListIntegrationConfigNames,
@@ -648,6 +669,8 @@ func NewIntegrationsHandler(svc IntegrationsHandler, opts ...connect_go.HandlerO
 			integrationsDeleteIntegrationConfigHandler.ServeHTTP(w, r)
 		case IntegrationsListIntegrationsProcedure:
 			integrationsListIntegrationsHandler.ServeHTTP(w, r)
+		case IntegrationsListIntegrationsForOrgProcedure:
+			integrationsListIntegrationsForOrgHandler.ServeHTTP(w, r)
 		case IntegrationsListIntegrationConfigNamesProcedure:
 			integrationsListIntegrationConfigNamesHandler.ServeHTTP(w, r)
 		case IntegrationsListJourneyConfigsProcedure:
@@ -725,6 +748,10 @@ func (UnimplementedIntegrationsHandler) DeleteIntegrationConfig(context.Context,
 
 func (UnimplementedIntegrationsHandler) ListIntegrations(context.Context, *connect_go.Request[integrations.Empty]) (*connect_go.Response[integrations.IntegrationInfos], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.integrations.Integrations.ListIntegrations is not implemented"))
+}
+
+func (UnimplementedIntegrationsHandler) ListIntegrationsForOrg(context.Context, *connect_go.Request[integrations.ListIntegrationsForOrgReq]) (*connect_go.Response[integrations.IntegrationInfos], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.integrations.Integrations.ListIntegrationsForOrg is not implemented"))
 }
 
 func (UnimplementedIntegrationsHandler) ListIntegrationConfigNames(context.Context, *connect_go.Request[integrations.ListIntegrationConfigNamesReq]) (*connect_go.Response[integrations.ListIntegrationConfigNamesRes], error) {

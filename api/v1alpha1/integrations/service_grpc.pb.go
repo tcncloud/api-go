@@ -30,6 +30,7 @@ const (
 	Integrations_UpdateIntegrationConfig_FullMethodName             = "/api.v1alpha1.integrations.Integrations/UpdateIntegrationConfig"
 	Integrations_DeleteIntegrationConfig_FullMethodName             = "/api.v1alpha1.integrations.Integrations/DeleteIntegrationConfig"
 	Integrations_ListIntegrations_FullMethodName                    = "/api.v1alpha1.integrations.Integrations/ListIntegrations"
+	Integrations_ListIntegrationsForOrg_FullMethodName              = "/api.v1alpha1.integrations.Integrations/ListIntegrationsForOrg"
 	Integrations_ListIntegrationConfigNames_FullMethodName          = "/api.v1alpha1.integrations.Integrations/ListIntegrationConfigNames"
 	Integrations_ListJourneyConfigs_FullMethodName                  = "/api.v1alpha1.integrations.Integrations/ListJourneyConfigs"
 	Integrations_ListNonJourneyConfigs_FullMethodName               = "/api.v1alpha1.integrations.Integrations/ListNonJourneyConfigs"
@@ -69,6 +70,7 @@ type IntegrationsClient interface {
 	DeleteIntegrationConfig(ctx context.Context, in *DeleteIntegrationConfigReq, opts ...grpc.CallOption) (*Empty, error)
 	// list all supported integrations
 	ListIntegrations(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*IntegrationInfos, error)
+	ListIntegrationsForOrg(ctx context.Context, in *ListIntegrationsForOrgReq, opts ...grpc.CallOption) (*IntegrationInfos, error)
 	// lists all the names of the configs for an org's integration type
 	ListIntegrationConfigNames(ctx context.Context, in *ListIntegrationConfigNamesReq, opts ...grpc.CallOption) (*ListIntegrationConfigNamesRes, error)
 	ListJourneyConfigs(ctx context.Context, in *ListJourneyConfigsReq, opts ...grpc.CallOption) (*IntegrationConfigs, error)
@@ -202,6 +204,15 @@ func (c *integrationsClient) DeleteIntegrationConfig(ctx context.Context, in *De
 func (c *integrationsClient) ListIntegrations(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*IntegrationInfos, error) {
 	out := new(IntegrationInfos)
 	err := c.cc.Invoke(ctx, Integrations_ListIntegrations_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *integrationsClient) ListIntegrationsForOrg(ctx context.Context, in *ListIntegrationsForOrgReq, opts ...grpc.CallOption) (*IntegrationInfos, error) {
+	out := new(IntegrationInfos)
+	err := c.cc.Invoke(ctx, Integrations_ListIntegrationsForOrg_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -349,6 +360,7 @@ type IntegrationsServer interface {
 	DeleteIntegrationConfig(context.Context, *DeleteIntegrationConfigReq) (*Empty, error)
 	// list all supported integrations
 	ListIntegrations(context.Context, *Empty) (*IntegrationInfos, error)
+	ListIntegrationsForOrg(context.Context, *ListIntegrationsForOrgReq) (*IntegrationInfos, error)
 	// lists all the names of the configs for an org's integration type
 	ListIntegrationConfigNames(context.Context, *ListIntegrationConfigNamesReq) (*ListIntegrationConfigNamesRes, error)
 	ListJourneyConfigs(context.Context, *ListJourneyConfigsReq) (*IntegrationConfigs, error)
@@ -418,6 +430,9 @@ func (UnimplementedIntegrationsServer) DeleteIntegrationConfig(context.Context, 
 }
 func (UnimplementedIntegrationsServer) ListIntegrations(context.Context, *Empty) (*IntegrationInfos, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListIntegrations not implemented")
+}
+func (UnimplementedIntegrationsServer) ListIntegrationsForOrg(context.Context, *ListIntegrationsForOrgReq) (*IntegrationInfos, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListIntegrationsForOrg not implemented")
 }
 func (UnimplementedIntegrationsServer) ListIntegrationConfigNames(context.Context, *ListIntegrationConfigNamesReq) (*ListIntegrationConfigNamesRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListIntegrationConfigNames not implemented")
@@ -665,6 +680,24 @@ func _Integrations_ListIntegrations_Handler(srv interface{}, ctx context.Context
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(IntegrationsServer).ListIntegrations(ctx, req.(*Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Integrations_ListIntegrationsForOrg_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListIntegrationsForOrgReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IntegrationsServer).ListIntegrationsForOrg(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Integrations_ListIntegrationsForOrg_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IntegrationsServer).ListIntegrationsForOrg(ctx, req.(*ListIntegrationsForOrgReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -953,6 +986,10 @@ var Integrations_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListIntegrations",
 			Handler:    _Integrations_ListIntegrations_Handler,
+		},
+		{
+			MethodName: "ListIntegrationsForOrg",
+			Handler:    _Integrations_ListIntegrationsForOrg_Handler,
 		},
 		{
 			MethodName: "ListIntegrationConfigNames",
