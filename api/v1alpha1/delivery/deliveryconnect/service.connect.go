@@ -54,6 +54,9 @@ const (
 	// DeliveryApiDeleteTransferConfigProcedure is the fully-qualified name of the DeliveryApi's
 	// DeleteTransferConfig RPC.
 	DeliveryApiDeleteTransferConfigProcedure = "/api.v1alpha1.delivery.DeliveryApi/DeleteTransferConfig"
+	// DeliveryApiGetDeliveryDefinitionByNameProcedure is the fully-qualified name of the DeliveryApi's
+	// GetDeliveryDefinitionByName RPC.
+	DeliveryApiGetDeliveryDefinitionByNameProcedure = "/api.v1alpha1.delivery.DeliveryApi/GetDeliveryDefinitionByName"
 	// DeliveryApiGetTransferConfigProcedure is the fully-qualified name of the DeliveryApi's
 	// GetTransferConfig RPC.
 	DeliveryApiGetTransferConfigProcedure = "/api.v1alpha1.delivery.DeliveryApi/GetTransferConfig"
@@ -91,6 +94,7 @@ type DeliveryApiClient interface {
 	ListTransferConfigsByCredentialID(context.Context, *connect_go.Request[delivery.ListTransferConfigsByCredentialIDReq]) (*connect_go.Response[delivery.ListTransferConfigsByCredentialIDRes], error)
 	UpdateTransferConfig(context.Context, *connect_go.Request[delivery.UpdateTransferConfigReq]) (*connect_go.Response[delivery.UpdateTransferConfigRes], error)
 	DeleteTransferConfig(context.Context, *connect_go.Request[delivery.DeleteTransferConfigReq]) (*connect_go.Response[delivery.DeleteTransferConfigRes], error)
+	GetDeliveryDefinitionByName(context.Context, *connect_go.Request[delivery.GetDeliveryDefinitionByNameReq]) (*connect_go.Response[delivery.GetDeliveryDefinitionByNameRes], error)
 	GetTransferConfig(context.Context, *connect_go.Request[delivery.GetTransferConfigReq]) (*connect_go.Response[delivery.GetTransferConfigRes], error)
 	GetTransferConfigByName(context.Context, *connect_go.Request[delivery.GetTransferConfigByNameReq]) (*connect_go.Response[delivery.GetTransferConfigByNameRes], error)
 	ListHistory(context.Context, *connect_go.Request[delivery.ListHistoryReq]) (*connect_go.Response[delivery.ListHistoryRes], error)
@@ -145,6 +149,11 @@ func NewDeliveryApiClient(httpClient connect_go.HTTPClient, baseURL string, opts
 		deleteTransferConfig: connect_go.NewClient[delivery.DeleteTransferConfigReq, delivery.DeleteTransferConfigRes](
 			httpClient,
 			baseURL+DeliveryApiDeleteTransferConfigProcedure,
+			opts...,
+		),
+		getDeliveryDefinitionByName: connect_go.NewClient[delivery.GetDeliveryDefinitionByNameReq, delivery.GetDeliveryDefinitionByNameRes](
+			httpClient,
+			baseURL+DeliveryApiGetDeliveryDefinitionByNameProcedure,
 			opts...,
 		),
 		getTransferConfig: connect_go.NewClient[delivery.GetTransferConfigReq, delivery.GetTransferConfigRes](
@@ -204,6 +213,7 @@ type deliveryApiClient struct {
 	listTransferConfigsByCredentialID *connect_go.Client[delivery.ListTransferConfigsByCredentialIDReq, delivery.ListTransferConfigsByCredentialIDRes]
 	updateTransferConfig              *connect_go.Client[delivery.UpdateTransferConfigReq, delivery.UpdateTransferConfigRes]
 	deleteTransferConfig              *connect_go.Client[delivery.DeleteTransferConfigReq, delivery.DeleteTransferConfigRes]
+	getDeliveryDefinitionByName       *connect_go.Client[delivery.GetDeliveryDefinitionByNameReq, delivery.GetDeliveryDefinitionByNameRes]
 	getTransferConfig                 *connect_go.Client[delivery.GetTransferConfigReq, delivery.GetTransferConfigRes]
 	getTransferConfigByName           *connect_go.Client[delivery.GetTransferConfigByNameReq, delivery.GetTransferConfigByNameRes]
 	listHistory                       *connect_go.Client[delivery.ListHistoryReq, delivery.ListHistoryRes]
@@ -249,6 +259,11 @@ func (c *deliveryApiClient) UpdateTransferConfig(ctx context.Context, req *conne
 // DeleteTransferConfig calls api.v1alpha1.delivery.DeliveryApi.DeleteTransferConfig.
 func (c *deliveryApiClient) DeleteTransferConfig(ctx context.Context, req *connect_go.Request[delivery.DeleteTransferConfigReq]) (*connect_go.Response[delivery.DeleteTransferConfigRes], error) {
 	return c.deleteTransferConfig.CallUnary(ctx, req)
+}
+
+// GetDeliveryDefinitionByName calls api.v1alpha1.delivery.DeliveryApi.GetDeliveryDefinitionByName.
+func (c *deliveryApiClient) GetDeliveryDefinitionByName(ctx context.Context, req *connect_go.Request[delivery.GetDeliveryDefinitionByNameReq]) (*connect_go.Response[delivery.GetDeliveryDefinitionByNameRes], error) {
+	return c.getDeliveryDefinitionByName.CallUnary(ctx, req)
 }
 
 // GetTransferConfig calls api.v1alpha1.delivery.DeliveryApi.GetTransferConfig.
@@ -305,6 +320,7 @@ type DeliveryApiHandler interface {
 	ListTransferConfigsByCredentialID(context.Context, *connect_go.Request[delivery.ListTransferConfigsByCredentialIDReq]) (*connect_go.Response[delivery.ListTransferConfigsByCredentialIDRes], error)
 	UpdateTransferConfig(context.Context, *connect_go.Request[delivery.UpdateTransferConfigReq]) (*connect_go.Response[delivery.UpdateTransferConfigRes], error)
 	DeleteTransferConfig(context.Context, *connect_go.Request[delivery.DeleteTransferConfigReq]) (*connect_go.Response[delivery.DeleteTransferConfigRes], error)
+	GetDeliveryDefinitionByName(context.Context, *connect_go.Request[delivery.GetDeliveryDefinitionByNameReq]) (*connect_go.Response[delivery.GetDeliveryDefinitionByNameRes], error)
 	GetTransferConfig(context.Context, *connect_go.Request[delivery.GetTransferConfigReq]) (*connect_go.Response[delivery.GetTransferConfigRes], error)
 	GetTransferConfigByName(context.Context, *connect_go.Request[delivery.GetTransferConfigByNameReq]) (*connect_go.Response[delivery.GetTransferConfigByNameRes], error)
 	ListHistory(context.Context, *connect_go.Request[delivery.ListHistoryReq]) (*connect_go.Response[delivery.ListHistoryRes], error)
@@ -355,6 +371,11 @@ func NewDeliveryApiHandler(svc DeliveryApiHandler, opts ...connect_go.HandlerOpt
 	deliveryApiDeleteTransferConfigHandler := connect_go.NewUnaryHandler(
 		DeliveryApiDeleteTransferConfigProcedure,
 		svc.DeleteTransferConfig,
+		opts...,
+	)
+	deliveryApiGetDeliveryDefinitionByNameHandler := connect_go.NewUnaryHandler(
+		DeliveryApiGetDeliveryDefinitionByNameProcedure,
+		svc.GetDeliveryDefinitionByName,
 		opts...,
 	)
 	deliveryApiGetTransferConfigHandler := connect_go.NewUnaryHandler(
@@ -418,6 +439,8 @@ func NewDeliveryApiHandler(svc DeliveryApiHandler, opts ...connect_go.HandlerOpt
 			deliveryApiUpdateTransferConfigHandler.ServeHTTP(w, r)
 		case DeliveryApiDeleteTransferConfigProcedure:
 			deliveryApiDeleteTransferConfigHandler.ServeHTTP(w, r)
+		case DeliveryApiGetDeliveryDefinitionByNameProcedure:
+			deliveryApiGetDeliveryDefinitionByNameHandler.ServeHTTP(w, r)
 		case DeliveryApiGetTransferConfigProcedure:
 			deliveryApiGetTransferConfigHandler.ServeHTTP(w, r)
 		case DeliveryApiGetTransferConfigByNameProcedure:
@@ -471,6 +494,10 @@ func (UnimplementedDeliveryApiHandler) UpdateTransferConfig(context.Context, *co
 
 func (UnimplementedDeliveryApiHandler) DeleteTransferConfig(context.Context, *connect_go.Request[delivery.DeleteTransferConfigReq]) (*connect_go.Response[delivery.DeleteTransferConfigRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.delivery.DeliveryApi.DeleteTransferConfig is not implemented"))
+}
+
+func (UnimplementedDeliveryApiHandler) GetDeliveryDefinitionByName(context.Context, *connect_go.Request[delivery.GetDeliveryDefinitionByNameReq]) (*connect_go.Response[delivery.GetDeliveryDefinitionByNameRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.delivery.DeliveryApi.GetDeliveryDefinitionByName is not implemented"))
 }
 
 func (UnimplementedDeliveryApiHandler) GetTransferConfig(context.Context, *connect_go.Request[delivery.GetTransferConfigReq]) (*connect_go.Response[delivery.GetTransferConfigRes], error) {

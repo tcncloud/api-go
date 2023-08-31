@@ -26,6 +26,7 @@ const (
 	DeliveryApi_ListTransferConfigsByCredentialID_FullMethodName = "/api.v1alpha1.delivery.DeliveryApi/ListTransferConfigsByCredentialID"
 	DeliveryApi_UpdateTransferConfig_FullMethodName              = "/api.v1alpha1.delivery.DeliveryApi/UpdateTransferConfig"
 	DeliveryApi_DeleteTransferConfig_FullMethodName              = "/api.v1alpha1.delivery.DeliveryApi/DeleteTransferConfig"
+	DeliveryApi_GetDeliveryDefinitionByName_FullMethodName       = "/api.v1alpha1.delivery.DeliveryApi/GetDeliveryDefinitionByName"
 	DeliveryApi_GetTransferConfig_FullMethodName                 = "/api.v1alpha1.delivery.DeliveryApi/GetTransferConfig"
 	DeliveryApi_GetTransferConfigByName_FullMethodName           = "/api.v1alpha1.delivery.DeliveryApi/GetTransferConfigByName"
 	DeliveryApi_ListHistory_FullMethodName                       = "/api.v1alpha1.delivery.DeliveryApi/ListHistory"
@@ -48,6 +49,7 @@ type DeliveryApiClient interface {
 	ListTransferConfigsByCredentialID(ctx context.Context, in *ListTransferConfigsByCredentialIDReq, opts ...grpc.CallOption) (*ListTransferConfigsByCredentialIDRes, error)
 	UpdateTransferConfig(ctx context.Context, in *UpdateTransferConfigReq, opts ...grpc.CallOption) (*UpdateTransferConfigRes, error)
 	DeleteTransferConfig(ctx context.Context, in *DeleteTransferConfigReq, opts ...grpc.CallOption) (*DeleteTransferConfigRes, error)
+	GetDeliveryDefinitionByName(ctx context.Context, in *GetDeliveryDefinitionByNameReq, opts ...grpc.CallOption) (*GetDeliveryDefinitionByNameRes, error)
 	GetTransferConfig(ctx context.Context, in *GetTransferConfigReq, opts ...grpc.CallOption) (*GetTransferConfigRes, error)
 	GetTransferConfigByName(ctx context.Context, in *GetTransferConfigByNameReq, opts ...grpc.CallOption) (*GetTransferConfigByNameRes, error)
 	ListHistory(ctx context.Context, in *ListHistoryReq, opts ...grpc.CallOption) (*ListHistoryRes, error)
@@ -124,6 +126,15 @@ func (c *deliveryApiClient) UpdateTransferConfig(ctx context.Context, in *Update
 func (c *deliveryApiClient) DeleteTransferConfig(ctx context.Context, in *DeleteTransferConfigReq, opts ...grpc.CallOption) (*DeleteTransferConfigRes, error) {
 	out := new(DeleteTransferConfigRes)
 	err := c.cc.Invoke(ctx, DeliveryApi_DeleteTransferConfig_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *deliveryApiClient) GetDeliveryDefinitionByName(ctx context.Context, in *GetDeliveryDefinitionByNameReq, opts ...grpc.CallOption) (*GetDeliveryDefinitionByNameRes, error) {
+	out := new(GetDeliveryDefinitionByNameRes)
+	err := c.cc.Invoke(ctx, DeliveryApi_GetDeliveryDefinitionByName_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -222,6 +233,7 @@ type DeliveryApiServer interface {
 	ListTransferConfigsByCredentialID(context.Context, *ListTransferConfigsByCredentialIDReq) (*ListTransferConfigsByCredentialIDRes, error)
 	UpdateTransferConfig(context.Context, *UpdateTransferConfigReq) (*UpdateTransferConfigRes, error)
 	DeleteTransferConfig(context.Context, *DeleteTransferConfigReq) (*DeleteTransferConfigRes, error)
+	GetDeliveryDefinitionByName(context.Context, *GetDeliveryDefinitionByNameReq) (*GetDeliveryDefinitionByNameRes, error)
 	GetTransferConfig(context.Context, *GetTransferConfigReq) (*GetTransferConfigRes, error)
 	GetTransferConfigByName(context.Context, *GetTransferConfigByNameReq) (*GetTransferConfigByNameRes, error)
 	ListHistory(context.Context, *ListHistoryReq) (*ListHistoryRes, error)
@@ -258,6 +270,9 @@ func (UnimplementedDeliveryApiServer) UpdateTransferConfig(context.Context, *Upd
 }
 func (UnimplementedDeliveryApiServer) DeleteTransferConfig(context.Context, *DeleteTransferConfigReq) (*DeleteTransferConfigRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteTransferConfig not implemented")
+}
+func (UnimplementedDeliveryApiServer) GetDeliveryDefinitionByName(context.Context, *GetDeliveryDefinitionByNameReq) (*GetDeliveryDefinitionByNameRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDeliveryDefinitionByName not implemented")
 }
 func (UnimplementedDeliveryApiServer) GetTransferConfig(context.Context, *GetTransferConfigReq) (*GetTransferConfigRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTransferConfig not implemented")
@@ -421,6 +436,24 @@ func _DeliveryApi_DeleteTransferConfig_Handler(srv interface{}, ctx context.Cont
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeliveryApiServer).DeleteTransferConfig(ctx, req.(*DeleteTransferConfigReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _DeliveryApi_GetDeliveryDefinitionByName_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetDeliveryDefinitionByNameReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeliveryApiServer).GetDeliveryDefinitionByName(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DeliveryApi_GetDeliveryDefinitionByName_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeliveryApiServer).GetDeliveryDefinitionByName(ctx, req.(*GetDeliveryDefinitionByNameReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -621,6 +654,10 @@ var DeliveryApi_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteTransferConfig",
 			Handler:    _DeliveryApi_DeleteTransferConfig_Handler,
+		},
+		{
+			MethodName: "GetDeliveryDefinitionByName",
+			Handler:    _DeliveryApi_GetDeliveryDefinitionByName_Handler,
 		},
 		{
 			MethodName: "GetTransferConfig",
