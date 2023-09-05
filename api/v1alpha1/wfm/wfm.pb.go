@@ -3624,6 +3624,7 @@ type BuildRegressionForecastByIntervalReq struct {
 	// Template to use to generate the regression forecast
 	RegressionTemplate *RegressionTemplate `protobuf:"bytes,5,opt,name=regression_template,json=regressionTemplate,proto3" json:"regression_template,omitempty"`
 	// IDs of the skill profiles to generate the forecasts,
+	// if no IDs are sent, it will forecast for all active skill profiles.
 	SkillProfileSidsToForecast []int64 `protobuf:"varint,6,rep,packed,name=skill_profile_sids_to_forecast,json=skillProfileSidsToForecast,proto3" json:"skill_profile_sids_to_forecast,omitempty"`
 }
 
@@ -3719,6 +3720,7 @@ type BuildRegressionForecastByIntervalWithStatsReq struct {
 	// Template to use to generate the regression forecast
 	RegressionTemplate *RegressionTemplate `protobuf:"bytes,5,opt,name=regression_template,json=regressionTemplate,proto3" json:"regression_template,omitempty"`
 	// IDs of the skill profiles to generate the forecasts,
+	// if no IDs are sent, it will forecast for all active skill profiles.
 	SkillProfileSidsToForecast []int64 `protobuf:"varint,6,rep,packed,name=skill_profile_sids_to_forecast,json=skillProfileSidsToForecast,proto3" json:"skill_profile_sids_to_forecast,omitempty"`
 }
 
