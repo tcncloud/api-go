@@ -206,10 +206,12 @@ type RateDefinition struct {
 	MatchingRule MatchingRule `protobuf:"varint,5,opt,name=matching_rule,json=matchingRule,proto3,enum=data.billing.v1alpha1.MatchingRule" json:"matching_rule,omitempty"`
 	// the configuration for this definition
 	Config *RateDefinitionConfig `protobuf:"bytes,6,opt,name=config,proto3" json:"config,omitempty"`
+	// the matching config for this definition
+	MatchingConfig *MatchingConfig `protobuf:"bytes,7,opt,name=matching_config,json=matchingConfig,proto3" json:"matching_config,omitempty"`
 	// the time the rate definition was created
-	CreateTime *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
+	CreateTime *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
 	// the time the rate definition was last updated
-	UpdateTime *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
+	UpdateTime *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
 }
 
 func (x *RateDefinition) Reset() {
@@ -282,6 +284,13 @@ func (x *RateDefinition) GetMatchingRule() MatchingRule {
 func (x *RateDefinition) GetConfig() *RateDefinitionConfig {
 	if x != nil {
 		return x.Config
+	}
+	return nil
+}
+
+func (x *RateDefinition) GetMatchingConfig() *MatchingConfig {
+	if x != nil {
+		return x.MatchingConfig
 	}
 	return nil
 }
@@ -917,7 +926,7 @@ var file_data_billing_v1alpha1_rates_proto_rawDesc = []byte{
 	0x69, 0x6e, 0x67, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x6d, 0x6f, 0x64,
 	0x75, 0x6c, 0x65, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1f, 0x67, 0x6f, 0x6f, 0x67,
 	0x6c, 0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x74, 0x69, 0x6d, 0x65,
-	0x73, 0x74, 0x61, 0x6d, 0x70, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0xfe, 0x03, 0x0a, 0x0e,
+	0x73, 0x74, 0x61, 0x6d, 0x70, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0xce, 0x04, 0x0a, 0x0e,
 	0x52, 0x61, 0x74, 0x65, 0x44, 0x65, 0x66, 0x69, 0x6e, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x2c,
 	0x0a, 0x12, 0x72, 0x61, 0x74, 0x65, 0x5f, 0x64, 0x65, 0x66, 0x69, 0x6e, 0x69, 0x74, 0x69, 0x6f,
 	0x6e, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x10, 0x72, 0x61, 0x74, 0x65,
@@ -942,11 +951,16 @@ var file_data_billing_v1alpha1_rates_proto_rawDesc = []byte{
 	0x64, 0x61, 0x74, 0x61, 0x2e, 0x62, 0x69, 0x6c, 0x6c, 0x69, 0x6e, 0x67, 0x2e, 0x76, 0x31, 0x61,
 	0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x52, 0x61, 0x74, 0x65, 0x44, 0x65, 0x66, 0x69, 0x6e, 0x69,
 	0x74, 0x69, 0x6f, 0x6e, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52, 0x06, 0x63, 0x6f, 0x6e, 0x66,
+	0x69, 0x67, 0x12, 0x4e, 0x0a, 0x0f, 0x6d, 0x61, 0x74, 0x63, 0x68, 0x69, 0x6e, 0x67, 0x5f, 0x63,
+	0x6f, 0x6e, 0x66, 0x69, 0x67, 0x18, 0x07, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x25, 0x2e, 0x64, 0x61,
+	0x74, 0x61, 0x2e, 0x62, 0x69, 0x6c, 0x6c, 0x69, 0x6e, 0x67, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70,
+	0x68, 0x61, 0x31, 0x2e, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x69, 0x6e, 0x67, 0x43, 0x6f, 0x6e, 0x66,
+	0x69, 0x67, 0x52, 0x0e, 0x6d, 0x61, 0x74, 0x63, 0x68, 0x69, 0x6e, 0x67, 0x43, 0x6f, 0x6e, 0x66,
 	0x69, 0x67, 0x12, 0x3b, 0x0a, 0x0b, 0x63, 0x72, 0x65, 0x61, 0x74, 0x65, 0x5f, 0x74, 0x69, 0x6d,
-	0x65, 0x18, 0x07, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65,
+	0x65, 0x18, 0x08, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65,
 	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74,
 	0x61, 0x6d, 0x70, 0x52, 0x0a, 0x63, 0x72, 0x65, 0x61, 0x74, 0x65, 0x54, 0x69, 0x6d, 0x65, 0x12,
-	0x3b, 0x0a, 0x0b, 0x75, 0x70, 0x64, 0x61, 0x74, 0x65, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x08,
+	0x3b, 0x0a, 0x0b, 0x75, 0x70, 0x64, 0x61, 0x74, 0x65, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x09,
 	0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72,
 	0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70,
 	0x52, 0x0a, 0x75, 0x70, 0x64, 0x61, 0x74, 0x65, 0x54, 0x69, 0x6d, 0x65, 0x22, 0x8a, 0x23, 0x0a,
@@ -1422,61 +1436,63 @@ var file_data_billing_v1alpha1_rates_proto_goTypes = []interface{}{
 	(*RateDefinitionConfig)(nil),  // 2: data.billing.v1alpha1.RateDefinitionConfig
 	(audit.EventType)(0),          // 3: api.commons.audit.EventType
 	(MatchingRule)(0),             // 4: data.billing.v1alpha1.MatchingRule
-	(*timestamppb.Timestamp)(nil), // 5: google.protobuf.Timestamp
-	(*BasicConfig)(nil),           // 6: data.billing.v1alpha1.BasicConfig
-	(*BasicAmountConfig)(nil),     // 7: data.billing.v1alpha1.BasicAmountConfig
+	(*MatchingConfig)(nil),        // 5: data.billing.v1alpha1.MatchingConfig
+	(*timestamppb.Timestamp)(nil), // 6: google.protobuf.Timestamp
+	(*BasicConfig)(nil),           // 7: data.billing.v1alpha1.BasicConfig
+	(*BasicAmountConfig)(nil),     // 8: data.billing.v1alpha1.BasicAmountConfig
 }
 var file_data_billing_v1alpha1_rates_proto_depIdxs = []int32{
 	3,  // 0: data.billing.v1alpha1.RateDefinition.event_type:type_name -> api.commons.audit.EventType
 	0,  // 1: data.billing.v1alpha1.RateDefinition.config_type:type_name -> data.billing.v1alpha1.RateDefinitionConfigType
 	4,  // 2: data.billing.v1alpha1.RateDefinition.matching_rule:type_name -> data.billing.v1alpha1.MatchingRule
 	2,  // 3: data.billing.v1alpha1.RateDefinition.config:type_name -> data.billing.v1alpha1.RateDefinitionConfig
-	5,  // 4: data.billing.v1alpha1.RateDefinition.create_time:type_name -> google.protobuf.Timestamp
-	5,  // 5: data.billing.v1alpha1.RateDefinition.update_time:type_name -> google.protobuf.Timestamp
-	6,  // 6: data.billing.v1alpha1.RateDefinitionConfig.agent_seats_config:type_name -> data.billing.v1alpha1.BasicConfig
-	6,  // 7: data.billing.v1alpha1.RateDefinitionConfig.agent_text_message_chat_config:type_name -> data.billing.v1alpha1.BasicConfig
-	6,  // 8: data.billing.v1alpha1.RateDefinitionConfig.agent_text_message_email_message_config:type_name -> data.billing.v1alpha1.BasicConfig
-	7,  // 9: data.billing.v1alpha1.RateDefinitionConfig.agent_text_message_email_size_config:type_name -> data.billing.v1alpha1.BasicAmountConfig
-	6,  // 10: data.billing.v1alpha1.RateDefinitionConfig.agent_text_message_sms_config:type_name -> data.billing.v1alpha1.BasicConfig
-	6,  // 11: data.billing.v1alpha1.RateDefinitionConfig.task_message_sent_email_message_config:type_name -> data.billing.v1alpha1.BasicConfig
-	7,  // 12: data.billing.v1alpha1.RateDefinitionConfig.task_message_sent_email_size_config:type_name -> data.billing.v1alpha1.BasicAmountConfig
-	6,  // 13: data.billing.v1alpha1.RateDefinitionConfig.task_message_sent_sms_config:type_name -> data.billing.v1alpha1.BasicConfig
-	6,  // 14: data.billing.v1alpha1.RateDefinitionConfig.connected_inbox_poll_config:type_name -> data.billing.v1alpha1.BasicConfig
-	6,  // 15: data.billing.v1alpha1.RateDefinitionConfig.manager_text_message_chat_config:type_name -> data.billing.v1alpha1.BasicConfig
-	6,  // 16: data.billing.v1alpha1.RateDefinitionConfig.manager_text_message_email_message_config:type_name -> data.billing.v1alpha1.BasicConfig
-	7,  // 17: data.billing.v1alpha1.RateDefinitionConfig.manager_text_message_email_size_config:type_name -> data.billing.v1alpha1.BasicAmountConfig
-	6,  // 18: data.billing.v1alpha1.RateDefinitionConfig.manager_text_message_sms_config:type_name -> data.billing.v1alpha1.BasicConfig
-	6,  // 19: data.billing.v1alpha1.RateDefinitionConfig.customer_text_message_chat_config:type_name -> data.billing.v1alpha1.BasicConfig
-	6,  // 20: data.billing.v1alpha1.RateDefinitionConfig.customer_text_message_email_message_config:type_name -> data.billing.v1alpha1.BasicConfig
-	7,  // 21: data.billing.v1alpha1.RateDefinitionConfig.customer_text_message_email_size_config:type_name -> data.billing.v1alpha1.BasicAmountConfig
-	6,  // 22: data.billing.v1alpha1.RateDefinitionConfig.customer_text_message_sms_config:type_name -> data.billing.v1alpha1.BasicConfig
-	7,  // 23: data.billing.v1alpha1.RateDefinitionConfig.agent_text_message_chat_size_config:type_name -> data.billing.v1alpha1.BasicAmountConfig
-	7,  // 24: data.billing.v1alpha1.RateDefinitionConfig.manager_text_message_chat_size_config:type_name -> data.billing.v1alpha1.BasicAmountConfig
-	7,  // 25: data.billing.v1alpha1.RateDefinitionConfig.customer_text_message_chat_size_config:type_name -> data.billing.v1alpha1.BasicAmountConfig
-	6,  // 26: data.billing.v1alpha1.RateDefinitionConfig.connected_inbox_created_config:type_name -> data.billing.v1alpha1.BasicConfig
-	7,  // 27: data.billing.v1alpha1.RateDefinitionConfig.agent_text_message_sms_size_config:type_name -> data.billing.v1alpha1.BasicAmountConfig
-	7,  // 28: data.billing.v1alpha1.RateDefinitionConfig.manager_text_message_sms_size_config:type_name -> data.billing.v1alpha1.BasicAmountConfig
-	7,  // 29: data.billing.v1alpha1.RateDefinitionConfig.customer_text_message_sms_size_config:type_name -> data.billing.v1alpha1.BasicAmountConfig
-	7,  // 30: data.billing.v1alpha1.RateDefinitionConfig.task_message_sent_sms_size_config:type_name -> data.billing.v1alpha1.BasicAmountConfig
-	6,  // 31: data.billing.v1alpha1.RateDefinitionConfig.agent_chat_message_units_config:type_name -> data.billing.v1alpha1.BasicConfig
-	6,  // 32: data.billing.v1alpha1.RateDefinitionConfig.agent_email_message_units_config:type_name -> data.billing.v1alpha1.BasicConfig
-	6,  // 33: data.billing.v1alpha1.RateDefinitionConfig.agent_sms_message_units_config:type_name -> data.billing.v1alpha1.BasicConfig
-	6,  // 34: data.billing.v1alpha1.RateDefinitionConfig.manager_chat_message_units_config:type_name -> data.billing.v1alpha1.BasicConfig
-	6,  // 35: data.billing.v1alpha1.RateDefinitionConfig.manager_email_message_units_config:type_name -> data.billing.v1alpha1.BasicConfig
-	6,  // 36: data.billing.v1alpha1.RateDefinitionConfig.manager_sms_message_units_config:type_name -> data.billing.v1alpha1.BasicConfig
-	6,  // 37: data.billing.v1alpha1.RateDefinitionConfig.customer_chat_message_units_config:type_name -> data.billing.v1alpha1.BasicConfig
-	6,  // 38: data.billing.v1alpha1.RateDefinitionConfig.customer_email_message_units_config:type_name -> data.billing.v1alpha1.BasicConfig
-	6,  // 39: data.billing.v1alpha1.RateDefinitionConfig.customer_sms_message_units_config:type_name -> data.billing.v1alpha1.BasicConfig
-	6,  // 40: data.billing.v1alpha1.RateDefinitionConfig.system_chat_message_units_config:type_name -> data.billing.v1alpha1.BasicConfig
-	6,  // 41: data.billing.v1alpha1.RateDefinitionConfig.system_email_message_units_config:type_name -> data.billing.v1alpha1.BasicConfig
-	6,  // 42: data.billing.v1alpha1.RateDefinitionConfig.system_sms_message_units_config:type_name -> data.billing.v1alpha1.BasicConfig
-	6,  // 43: data.billing.v1alpha1.RateDefinitionConfig.compliance_rnd_query_config:type_name -> data.billing.v1alpha1.BasicConfig
-	6,  // 44: data.billing.v1alpha1.RateDefinitionConfig.compliance_rnd_query_cached_config:type_name -> data.billing.v1alpha1.BasicConfig
-	45, // [45:45] is the sub-list for method output_type
-	45, // [45:45] is the sub-list for method input_type
-	45, // [45:45] is the sub-list for extension type_name
-	45, // [45:45] is the sub-list for extension extendee
-	0,  // [0:45] is the sub-list for field type_name
+	5,  // 4: data.billing.v1alpha1.RateDefinition.matching_config:type_name -> data.billing.v1alpha1.MatchingConfig
+	6,  // 5: data.billing.v1alpha1.RateDefinition.create_time:type_name -> google.protobuf.Timestamp
+	6,  // 6: data.billing.v1alpha1.RateDefinition.update_time:type_name -> google.protobuf.Timestamp
+	7,  // 7: data.billing.v1alpha1.RateDefinitionConfig.agent_seats_config:type_name -> data.billing.v1alpha1.BasicConfig
+	7,  // 8: data.billing.v1alpha1.RateDefinitionConfig.agent_text_message_chat_config:type_name -> data.billing.v1alpha1.BasicConfig
+	7,  // 9: data.billing.v1alpha1.RateDefinitionConfig.agent_text_message_email_message_config:type_name -> data.billing.v1alpha1.BasicConfig
+	8,  // 10: data.billing.v1alpha1.RateDefinitionConfig.agent_text_message_email_size_config:type_name -> data.billing.v1alpha1.BasicAmountConfig
+	7,  // 11: data.billing.v1alpha1.RateDefinitionConfig.agent_text_message_sms_config:type_name -> data.billing.v1alpha1.BasicConfig
+	7,  // 12: data.billing.v1alpha1.RateDefinitionConfig.task_message_sent_email_message_config:type_name -> data.billing.v1alpha1.BasicConfig
+	8,  // 13: data.billing.v1alpha1.RateDefinitionConfig.task_message_sent_email_size_config:type_name -> data.billing.v1alpha1.BasicAmountConfig
+	7,  // 14: data.billing.v1alpha1.RateDefinitionConfig.task_message_sent_sms_config:type_name -> data.billing.v1alpha1.BasicConfig
+	7,  // 15: data.billing.v1alpha1.RateDefinitionConfig.connected_inbox_poll_config:type_name -> data.billing.v1alpha1.BasicConfig
+	7,  // 16: data.billing.v1alpha1.RateDefinitionConfig.manager_text_message_chat_config:type_name -> data.billing.v1alpha1.BasicConfig
+	7,  // 17: data.billing.v1alpha1.RateDefinitionConfig.manager_text_message_email_message_config:type_name -> data.billing.v1alpha1.BasicConfig
+	8,  // 18: data.billing.v1alpha1.RateDefinitionConfig.manager_text_message_email_size_config:type_name -> data.billing.v1alpha1.BasicAmountConfig
+	7,  // 19: data.billing.v1alpha1.RateDefinitionConfig.manager_text_message_sms_config:type_name -> data.billing.v1alpha1.BasicConfig
+	7,  // 20: data.billing.v1alpha1.RateDefinitionConfig.customer_text_message_chat_config:type_name -> data.billing.v1alpha1.BasicConfig
+	7,  // 21: data.billing.v1alpha1.RateDefinitionConfig.customer_text_message_email_message_config:type_name -> data.billing.v1alpha1.BasicConfig
+	8,  // 22: data.billing.v1alpha1.RateDefinitionConfig.customer_text_message_email_size_config:type_name -> data.billing.v1alpha1.BasicAmountConfig
+	7,  // 23: data.billing.v1alpha1.RateDefinitionConfig.customer_text_message_sms_config:type_name -> data.billing.v1alpha1.BasicConfig
+	8,  // 24: data.billing.v1alpha1.RateDefinitionConfig.agent_text_message_chat_size_config:type_name -> data.billing.v1alpha1.BasicAmountConfig
+	8,  // 25: data.billing.v1alpha1.RateDefinitionConfig.manager_text_message_chat_size_config:type_name -> data.billing.v1alpha1.BasicAmountConfig
+	8,  // 26: data.billing.v1alpha1.RateDefinitionConfig.customer_text_message_chat_size_config:type_name -> data.billing.v1alpha1.BasicAmountConfig
+	7,  // 27: data.billing.v1alpha1.RateDefinitionConfig.connected_inbox_created_config:type_name -> data.billing.v1alpha1.BasicConfig
+	8,  // 28: data.billing.v1alpha1.RateDefinitionConfig.agent_text_message_sms_size_config:type_name -> data.billing.v1alpha1.BasicAmountConfig
+	8,  // 29: data.billing.v1alpha1.RateDefinitionConfig.manager_text_message_sms_size_config:type_name -> data.billing.v1alpha1.BasicAmountConfig
+	8,  // 30: data.billing.v1alpha1.RateDefinitionConfig.customer_text_message_sms_size_config:type_name -> data.billing.v1alpha1.BasicAmountConfig
+	8,  // 31: data.billing.v1alpha1.RateDefinitionConfig.task_message_sent_sms_size_config:type_name -> data.billing.v1alpha1.BasicAmountConfig
+	7,  // 32: data.billing.v1alpha1.RateDefinitionConfig.agent_chat_message_units_config:type_name -> data.billing.v1alpha1.BasicConfig
+	7,  // 33: data.billing.v1alpha1.RateDefinitionConfig.agent_email_message_units_config:type_name -> data.billing.v1alpha1.BasicConfig
+	7,  // 34: data.billing.v1alpha1.RateDefinitionConfig.agent_sms_message_units_config:type_name -> data.billing.v1alpha1.BasicConfig
+	7,  // 35: data.billing.v1alpha1.RateDefinitionConfig.manager_chat_message_units_config:type_name -> data.billing.v1alpha1.BasicConfig
+	7,  // 36: data.billing.v1alpha1.RateDefinitionConfig.manager_email_message_units_config:type_name -> data.billing.v1alpha1.BasicConfig
+	7,  // 37: data.billing.v1alpha1.RateDefinitionConfig.manager_sms_message_units_config:type_name -> data.billing.v1alpha1.BasicConfig
+	7,  // 38: data.billing.v1alpha1.RateDefinitionConfig.customer_chat_message_units_config:type_name -> data.billing.v1alpha1.BasicConfig
+	7,  // 39: data.billing.v1alpha1.RateDefinitionConfig.customer_email_message_units_config:type_name -> data.billing.v1alpha1.BasicConfig
+	7,  // 40: data.billing.v1alpha1.RateDefinitionConfig.customer_sms_message_units_config:type_name -> data.billing.v1alpha1.BasicConfig
+	7,  // 41: data.billing.v1alpha1.RateDefinitionConfig.system_chat_message_units_config:type_name -> data.billing.v1alpha1.BasicConfig
+	7,  // 42: data.billing.v1alpha1.RateDefinitionConfig.system_email_message_units_config:type_name -> data.billing.v1alpha1.BasicConfig
+	7,  // 43: data.billing.v1alpha1.RateDefinitionConfig.system_sms_message_units_config:type_name -> data.billing.v1alpha1.BasicConfig
+	7,  // 44: data.billing.v1alpha1.RateDefinitionConfig.compliance_rnd_query_config:type_name -> data.billing.v1alpha1.BasicConfig
+	7,  // 45: data.billing.v1alpha1.RateDefinitionConfig.compliance_rnd_query_cached_config:type_name -> data.billing.v1alpha1.BasicConfig
+	46, // [46:46] is the sub-list for method output_type
+	46, // [46:46] is the sub-list for method input_type
+	46, // [46:46] is the sub-list for extension type_name
+	46, // [46:46] is the sub-list for extension extendee
+	0,  // [0:46] is the sub-list for field type_name
 }
 
 func init() { file_data_billing_v1alpha1_rates_proto_init() }
