@@ -446,19 +446,18 @@ type WFMClient interface {
 	// Errors:
 	//   - grpc.Internal: error occurs when getting the parameters.
 	GetForecastingParameters(context.Context, *connect_go.Request[wfm.GetForecastingParametersReq]) (*connect_go.Response[wfm.GetForecastingParametersRes], error)
-	// Gets the historical data for the org sending the request and the given @skill_profile_sid.
+	// Gets the historical data for the org sending the request and the given @skill_profile_category.
 	// It will look through the client's call history and generate the historical data by using their configured forecasting parameters (historical data period and interval width).
 	// The duration of each interval will be the interval width of the org's forecasting parameters.
-	// It also applies any deltas that the client has stored for the given @SkillProfileSid.
+	// It also applies any deltas that the client has stored for the given @skill_profile_category, if the category is a group it will use the deltas of the skill profiles part of that group.
 	// If the client has no historical data, only the deltas will be applied to the returned intervals, all other intervals will have nil averages.
-	// If any inactive skill profiles are mapped to the given @skill_profile_sid, the call history and deltas of those skill profiles will be included for the historical data calculation.
 	// Required permissions:
 	//
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @skill_profile_sid in the request is invalid.
-	//   - grpc.NotFound: the @skill_profile_sid given is not found for the org.
+	//   - grpc.Invalid: the @skill_profile_category in the request is invalid.
+	//   - grpc.NotFound: the @skill_profile_category given is not found for the org.
 	//   - grpc.Internal: error occurs when getting the historical data.
 	ListHistoricalData(context.Context, *connect_go.Request[wfm.ListHistoricalDataReq]) (*connect_go.Response[wfm.ListHistoricalDataRes], error)
 	// Tries to create an entry for the given @delta for the org sending the request.
@@ -3152,19 +3151,18 @@ type WFMHandler interface {
 	// Errors:
 	//   - grpc.Internal: error occurs when getting the parameters.
 	GetForecastingParameters(context.Context, *connect_go.Request[wfm.GetForecastingParametersReq]) (*connect_go.Response[wfm.GetForecastingParametersRes], error)
-	// Gets the historical data for the org sending the request and the given @skill_profile_sid.
+	// Gets the historical data for the org sending the request and the given @skill_profile_category.
 	// It will look through the client's call history and generate the historical data by using their configured forecasting parameters (historical data period and interval width).
 	// The duration of each interval will be the interval width of the org's forecasting parameters.
-	// It also applies any deltas that the client has stored for the given @SkillProfileSid.
+	// It also applies any deltas that the client has stored for the given @skill_profile_category, if the category is a group it will use the deltas of the skill profiles part of that group.
 	// If the client has no historical data, only the deltas will be applied to the returned intervals, all other intervals will have nil averages.
-	// If any inactive skill profiles are mapped to the given @skill_profile_sid, the call history and deltas of those skill profiles will be included for the historical data calculation.
 	// Required permissions:
 	//
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @skill_profile_sid in the request is invalid.
-	//   - grpc.NotFound: the @skill_profile_sid given is not found for the org.
+	//   - grpc.Invalid: the @skill_profile_category in the request is invalid.
+	//   - grpc.NotFound: the @skill_profile_category given is not found for the org.
 	//   - grpc.Internal: error occurs when getting the historical data.
 	ListHistoricalData(context.Context, *connect_go.Request[wfm.ListHistoricalDataReq]) (*connect_go.Response[wfm.ListHistoricalDataRes], error)
 	// Tries to create an entry for the given @delta for the org sending the request.
