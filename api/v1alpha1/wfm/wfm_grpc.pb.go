@@ -296,6 +296,7 @@ type WFMClient interface {
 	//   - grpc.NotFound: the @skill_profile_sid given is not found for the org.
 	//   - grpc.Internal: error occurs when building the call profile template.
 	BuildCallProfileTemplateForSkillProfile(ctx context.Context, in *BuildCallProfileTemplateForSkillProfileReq, opts ...grpc.CallOption) (*BuildCallProfileTemplateForSkillProfileRes, error)
+	// Deprecated: Do not use.
 	// Builds and returns a call profile template for the org sending the request and the given @skill_profile_category.
 	// The template will be generated using the training data for said skill profile category using the @training_data_range and @averages_calculation_range_in_months
 	// from the client's saved forecasting parameters.
@@ -1676,6 +1677,7 @@ func (c *wFMClient) BuildCallProfileTemplateForSkillProfile(ctx context.Context,
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *wFMClient) BuildCallProfileTemplate(ctx context.Context, in *BuildCallProfileTemplateReq, opts ...grpc.CallOption) (*BuildCallProfileTemplateRes, error) {
 	out := new(BuildCallProfileTemplateRes)
 	err := c.cc.Invoke(ctx, WFM_BuildCallProfileTemplate_FullMethodName, in, out, opts...)
@@ -2887,6 +2889,7 @@ type WFMServer interface {
 	//   - grpc.NotFound: the @skill_profile_sid given is not found for the org.
 	//   - grpc.Internal: error occurs when building the call profile template.
 	BuildCallProfileTemplateForSkillProfile(context.Context, *BuildCallProfileTemplateForSkillProfileReq) (*BuildCallProfileTemplateForSkillProfileRes, error)
+	// Deprecated: Do not use.
 	// Builds and returns a call profile template for the org sending the request and the given @skill_profile_category.
 	// The template will be generated using the training data for said skill profile category using the @training_data_range and @averages_calculation_range_in_months
 	// from the client's saved forecasting parameters.

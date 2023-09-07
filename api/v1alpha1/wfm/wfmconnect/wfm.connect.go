@@ -523,6 +523,8 @@ type WFMClient interface {
 	//   - grpc.Invalid: the @skill_profile_category in the request is invalid.
 	//   - grpc.NotFound: the @skill_profile_category given is not found for the org.
 	//   - grpc.Internal: error occurs when building the call profile template.
+	//
+	// Deprecated: do not use.
 	BuildCallProfileTemplate(context.Context, *connect_go.Request[wfm.BuildCallProfileTemplateReq]) (*connect_go.Response[wfm.BuildCallProfileTemplateRes], error)
 	// Creates a mapping entry for the @inactive_skill_profile_sid to the @active_skill_profile_sid for the org sending the request.
 	// Required permissions:
@@ -2562,6 +2564,8 @@ func (c *wFMClient) BuildCallProfileTemplateForSkillProfile(ctx context.Context,
 }
 
 // BuildCallProfileTemplate calls api.v1alpha1.wfm.WFM.BuildCallProfileTemplate.
+//
+// Deprecated: do not use.
 func (c *wFMClient) BuildCallProfileTemplate(ctx context.Context, req *connect_go.Request[wfm.BuildCallProfileTemplateReq]) (*connect_go.Response[wfm.BuildCallProfileTemplateRes], error) {
 	return c.buildCallProfileTemplate.CallUnary(ctx, req)
 }
@@ -3255,6 +3259,8 @@ type WFMHandler interface {
 	//   - grpc.Invalid: the @skill_profile_category in the request is invalid.
 	//   - grpc.NotFound: the @skill_profile_category given is not found for the org.
 	//   - grpc.Internal: error occurs when building the call profile template.
+	//
+	// Deprecated: do not use.
 	BuildCallProfileTemplate(context.Context, *connect_go.Request[wfm.BuildCallProfileTemplateReq]) (*connect_go.Response[wfm.BuildCallProfileTemplateRes], error)
 	// Creates a mapping entry for the @inactive_skill_profile_sid to the @active_skill_profile_sid for the org sending the request.
 	// Required permissions:
