@@ -536,6 +536,482 @@ func (x *NewsArticleDetails) GetLastEdited() *timestamppb.Timestamp {
 	return nil
 }
 
+// published news article details
+type PublishedNewsArticleDetails struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// the unique published news article identifier
+	PublishedNewArticleSid int64 `protobuf:"varint,1,opt,name=published_new_article_sid,json=publishedNewArticleSid,proto3" json:"published_new_article_sid,omitempty"`
+	// news article details
+	NewsArticleDetails *NewsArticleDetails `protobuf:"bytes,2,opt,name=news_article_details,json=newsArticleDetails,proto3" json:"news_article_details,omitempty"`
+	// news article published date
+	DatePublished *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=date_published,json=datePublished,proto3" json:"date_published,omitempty"`
+	// this flag determines if we show to user or not
+	DisplayToUser bool `protobuf:"varint,4,opt,name=display_to_user,json=displayToUser,proto3" json:"display_to_user,omitempty"`
+}
+
+func (x *PublishedNewsArticleDetails) Reset() {
+	*x = PublishedNewsArticleDetails{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[9]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *PublishedNewsArticleDetails) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PublishedNewsArticleDetails) ProtoMessage() {}
+
+func (x *PublishedNewsArticleDetails) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[9]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PublishedNewsArticleDetails.ProtoReflect.Descriptor instead.
+func (*PublishedNewsArticleDetails) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_newsroom_entities_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *PublishedNewsArticleDetails) GetPublishedNewArticleSid() int64 {
+	if x != nil {
+		return x.PublishedNewArticleSid
+	}
+	return 0
+}
+
+func (x *PublishedNewsArticleDetails) GetNewsArticleDetails() *NewsArticleDetails {
+	if x != nil {
+		return x.NewsArticleDetails
+	}
+	return nil
+}
+
+func (x *PublishedNewsArticleDetails) GetDatePublished() *timestamppb.Timestamp {
+	if x != nil {
+		return x.DatePublished
+	}
+	return nil
+}
+
+func (x *PublishedNewsArticleDetails) GetDisplayToUser() bool {
+	if x != nil {
+		return x.DisplayToUser
+	}
+	return false
+}
+
+// Request to create published news article
+type CreatePublishedNewsArticleRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// news article identifier
+	NewArticleSid int64 `protobuf:"varint,1,opt,name=new_article_sid,json=newArticleSid,proto3" json:"new_article_sid,omitempty"`
+	// determines if we show to user
+	DisplayToUser bool `protobuf:"varint,2,opt,name=display_to_user,json=displayToUser,proto3" json:"display_to_user,omitempty"`
+}
+
+func (x *CreatePublishedNewsArticleRequest) Reset() {
+	*x = CreatePublishedNewsArticleRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[10]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CreatePublishedNewsArticleRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreatePublishedNewsArticleRequest) ProtoMessage() {}
+
+func (x *CreatePublishedNewsArticleRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[10]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreatePublishedNewsArticleRequest.ProtoReflect.Descriptor instead.
+func (*CreatePublishedNewsArticleRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_newsroom_entities_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *CreatePublishedNewsArticleRequest) GetNewArticleSid() int64 {
+	if x != nil {
+		return x.NewArticleSid
+	}
+	return 0
+}
+
+func (x *CreatePublishedNewsArticleRequest) GetDisplayToUser() bool {
+	if x != nil {
+		return x.DisplayToUser
+	}
+	return false
+}
+
+// Response to create published news article
+type CreatePublishedNewsArticleResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// news article details
+	PublishedArticleDetails *PublishedNewsArticleDetails `protobuf:"bytes,1,opt,name=published_article_details,json=publishedArticleDetails,proto3" json:"published_article_details,omitempty"`
+}
+
+func (x *CreatePublishedNewsArticleResponse) Reset() {
+	*x = CreatePublishedNewsArticleResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[11]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CreatePublishedNewsArticleResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreatePublishedNewsArticleResponse) ProtoMessage() {}
+
+func (x *CreatePublishedNewsArticleResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[11]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreatePublishedNewsArticleResponse.ProtoReflect.Descriptor instead.
+func (*CreatePublishedNewsArticleResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_newsroom_entities_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *CreatePublishedNewsArticleResponse) GetPublishedArticleDetails() *PublishedNewsArticleDetails {
+	if x != nil {
+		return x.PublishedArticleDetails
+	}
+	return nil
+}
+
+// Request to list of published news articles
+type ListPublishedNewsArticlesRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *ListPublishedNewsArticlesRequest) Reset() {
+	*x = ListPublishedNewsArticlesRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[12]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ListPublishedNewsArticlesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListPublishedNewsArticlesRequest) ProtoMessage() {}
+
+func (x *ListPublishedNewsArticlesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[12]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListPublishedNewsArticlesRequest.ProtoReflect.Descriptor instead.
+func (*ListPublishedNewsArticlesRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_newsroom_entities_proto_rawDescGZIP(), []int{12}
+}
+
+// Response to list of published news articles
+type ListPublishedNewsArticlesResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// published article details
+	PublishedArticleDetails []*PublishedNewsArticleDetails `protobuf:"bytes,1,rep,name=published_article_details,json=publishedArticleDetails,proto3" json:"published_article_details,omitempty"`
+}
+
+func (x *ListPublishedNewsArticlesResponse) Reset() {
+	*x = ListPublishedNewsArticlesResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[13]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ListPublishedNewsArticlesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListPublishedNewsArticlesResponse) ProtoMessage() {}
+
+func (x *ListPublishedNewsArticlesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[13]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListPublishedNewsArticlesResponse.ProtoReflect.Descriptor instead.
+func (*ListPublishedNewsArticlesResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_newsroom_entities_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *ListPublishedNewsArticlesResponse) GetPublishedArticleDetails() []*PublishedNewsArticleDetails {
+	if x != nil {
+		return x.PublishedArticleDetails
+	}
+	return nil
+}
+
+// Request to get published news article by id
+type GetPublishedNewsArticleByIdRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// the unique news article identifier
+	NewArticleSid int64 `protobuf:"varint,1,opt,name=new_article_sid,json=newArticleSid,proto3" json:"new_article_sid,omitempty"`
+}
+
+func (x *GetPublishedNewsArticleByIdRequest) Reset() {
+	*x = GetPublishedNewsArticleByIdRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[14]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetPublishedNewsArticleByIdRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetPublishedNewsArticleByIdRequest) ProtoMessage() {}
+
+func (x *GetPublishedNewsArticleByIdRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[14]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetPublishedNewsArticleByIdRequest.ProtoReflect.Descriptor instead.
+func (*GetPublishedNewsArticleByIdRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_newsroom_entities_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *GetPublishedNewsArticleByIdRequest) GetNewArticleSid() int64 {
+	if x != nil {
+		return x.NewArticleSid
+	}
+	return 0
+}
+
+// Response to get published news article
+type GetPublishedNewsArticleByIdResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// published news article details
+	PublishedArticleDetails *PublishedNewsArticleDetails `protobuf:"bytes,1,opt,name=published_article_details,json=publishedArticleDetails,proto3" json:"published_article_details,omitempty"`
+}
+
+func (x *GetPublishedNewsArticleByIdResponse) Reset() {
+	*x = GetPublishedNewsArticleByIdResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[15]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetPublishedNewsArticleByIdResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetPublishedNewsArticleByIdResponse) ProtoMessage() {}
+
+func (x *GetPublishedNewsArticleByIdResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[15]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetPublishedNewsArticleByIdResponse.ProtoReflect.Descriptor instead.
+func (*GetPublishedNewsArticleByIdResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_newsroom_entities_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *GetPublishedNewsArticleByIdResponse) GetPublishedArticleDetails() *PublishedNewsArticleDetails {
+	if x != nil {
+		return x.PublishedArticleDetails
+	}
+	return nil
+}
+
+// Request to update published news article
+type UpdatePublishedNewsArticleRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// the published news article fields specified to be updated
+	PublishedArticleDetails *PublishedNewsArticleDetails `protobuf:"bytes,1,opt,name=published_article_details,json=publishedArticleDetails,proto3" json:"published_article_details,omitempty"`
+	// list of fields Requested to be updated
+	FieldMask *fieldmaskpb.FieldMask `protobuf:"bytes,100,opt,name=field_mask,json=fieldMask,proto3" json:"field_mask,omitempty"`
+}
+
+func (x *UpdatePublishedNewsArticleRequest) Reset() {
+	*x = UpdatePublishedNewsArticleRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[16]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UpdatePublishedNewsArticleRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdatePublishedNewsArticleRequest) ProtoMessage() {}
+
+func (x *UpdatePublishedNewsArticleRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[16]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdatePublishedNewsArticleRequest.ProtoReflect.Descriptor instead.
+func (*UpdatePublishedNewsArticleRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_newsroom_entities_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *UpdatePublishedNewsArticleRequest) GetPublishedArticleDetails() *PublishedNewsArticleDetails {
+	if x != nil {
+		return x.PublishedArticleDetails
+	}
+	return nil
+}
+
+func (x *UpdatePublishedNewsArticleRequest) GetFieldMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.FieldMask
+	}
+	return nil
+}
+
+// Response to update published news article
+type UpdatePublishedNewsArticleResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// latest published news article
+	PublishedArticleDetails *PublishedNewsArticleDetails `protobuf:"bytes,1,opt,name=published_article_details,json=publishedArticleDetails,proto3" json:"published_article_details,omitempty"`
+}
+
+func (x *UpdatePublishedNewsArticleResponse) Reset() {
+	*x = UpdatePublishedNewsArticleResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[17]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UpdatePublishedNewsArticleResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdatePublishedNewsArticleResponse) ProtoMessage() {}
+
+func (x *UpdatePublishedNewsArticleResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[17]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdatePublishedNewsArticleResponse.ProtoReflect.Descriptor instead.
+func (*UpdatePublishedNewsArticleResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_newsroom_entities_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *UpdatePublishedNewsArticleResponse) GetPublishedArticleDetails() *PublishedNewsArticleDetails {
+	if x != nil {
+		return x.PublishedArticleDetails
+	}
+	return nil
+}
+
 var File_api_v1alpha1_newsroom_entities_proto protoreflect.FileDescriptor
 
 var file_api_v1alpha1_newsroom_entities_proto_rawDesc = []byte{
@@ -624,20 +1100,104 @@ var file_api_v1alpha1_newsroom_entities_proto_rawDesc = []byte{
 	0x64, 0x69, 0x74, 0x65, 0x64, 0x18, 0x06, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f,
 	0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69,
 	0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x0a, 0x6c, 0x61, 0x73, 0x74, 0x45, 0x64, 0x69,
-	0x74, 0x65, 0x64, 0x42, 0xd2, 0x01, 0x0a, 0x19, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e,
+	0x74, 0x65, 0x64, 0x22, 0xa4, 0x02, 0x0a, 0x1b, 0x50, 0x75, 0x62, 0x6c, 0x69, 0x73, 0x68, 0x65,
+	0x64, 0x4e, 0x65, 0x77, 0x73, 0x41, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x44, 0x65, 0x74, 0x61,
+	0x69, 0x6c, 0x73, 0x12, 0x3d, 0x0a, 0x19, 0x70, 0x75, 0x62, 0x6c, 0x69, 0x73, 0x68, 0x65, 0x64,
+	0x5f, 0x6e, 0x65, 0x77, 0x5f, 0x61, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x5f, 0x73, 0x69, 0x64,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x42, 0x02, 0x30, 0x01, 0x52, 0x16, 0x70, 0x75, 0x62, 0x6c,
+	0x69, 0x73, 0x68, 0x65, 0x64, 0x4e, 0x65, 0x77, 0x41, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x53,
+	0x69, 0x64, 0x12, 0x5b, 0x0a, 0x14, 0x6e, 0x65, 0x77, 0x73, 0x5f, 0x61, 0x72, 0x74, 0x69, 0x63,
+	0x6c, 0x65, 0x5f, 0x64, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x29, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e,
+	0x6e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f, 0x6d, 0x2e, 0x4e, 0x65, 0x77, 0x73, 0x41, 0x72, 0x74,
+	0x69, 0x63, 0x6c, 0x65, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x52, 0x12, 0x6e, 0x65, 0x77,
+	0x73, 0x41, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x12,
+	0x41, 0x0a, 0x0e, 0x64, 0x61, 0x74, 0x65, 0x5f, 0x70, 0x75, 0x62, 0x6c, 0x69, 0x73, 0x68, 0x65,
+	0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65,
+	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74,
+	0x61, 0x6d, 0x70, 0x52, 0x0d, 0x64, 0x61, 0x74, 0x65, 0x50, 0x75, 0x62, 0x6c, 0x69, 0x73, 0x68,
+	0x65, 0x64, 0x12, 0x26, 0x0a, 0x0f, 0x64, 0x69, 0x73, 0x70, 0x6c, 0x61, 0x79, 0x5f, 0x74, 0x6f,
+	0x5f, 0x75, 0x73, 0x65, 0x72, 0x18, 0x04, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0d, 0x64, 0x69, 0x73,
+	0x70, 0x6c, 0x61, 0x79, 0x54, 0x6f, 0x55, 0x73, 0x65, 0x72, 0x22, 0x73, 0x0a, 0x21, 0x43, 0x72,
+	0x65, 0x61, 0x74, 0x65, 0x50, 0x75, 0x62, 0x6c, 0x69, 0x73, 0x68, 0x65, 0x64, 0x4e, 0x65, 0x77,
+	0x73, 0x41, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12,
+	0x26, 0x0a, 0x0f, 0x6e, 0x65, 0x77, 0x5f, 0x61, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x5f, 0x73,
+	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0d, 0x6e, 0x65, 0x77, 0x41, 0x72, 0x74,
+	0x69, 0x63, 0x6c, 0x65, 0x53, 0x69, 0x64, 0x12, 0x26, 0x0a, 0x0f, 0x64, 0x69, 0x73, 0x70, 0x6c,
+	0x61, 0x79, 0x5f, 0x74, 0x6f, 0x5f, 0x75, 0x73, 0x65, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x08,
+	0x52, 0x0d, 0x64, 0x69, 0x73, 0x70, 0x6c, 0x61, 0x79, 0x54, 0x6f, 0x55, 0x73, 0x65, 0x72, 0x22,
+	0x94, 0x01, 0x0a, 0x22, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x50, 0x75, 0x62, 0x6c, 0x69, 0x73,
+	0x68, 0x65, 0x64, 0x4e, 0x65, 0x77, 0x73, 0x41, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x6e, 0x0a, 0x19, 0x70, 0x75, 0x62, 0x6c, 0x69, 0x73,
+	0x68, 0x65, 0x64, 0x5f, 0x61, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x5f, 0x64, 0x65, 0x74, 0x61,
+	0x69, 0x6c, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x32, 0x2e, 0x61, 0x70, 0x69, 0x2e,
 	0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x6e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f,
-	0x6d, 0x42, 0x0d, 0x45, 0x6e, 0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x50, 0x72, 0x6f, 0x74, 0x6f,
-	0x50, 0x01, 0x5a, 0x30, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74,
-	0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61,
-	0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x6e, 0x65, 0x77, 0x73,
-	0x72, 0x6f, 0x6f, 0x6d, 0xa2, 0x02, 0x03, 0x41, 0x56, 0x4e, 0xaa, 0x02, 0x15, 0x41, 0x70, 0x69,
-	0x2e, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x4e, 0x65, 0x77, 0x73, 0x72, 0x6f,
-	0x6f, 0x6d, 0xca, 0x02, 0x15, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61,
-	0x31, 0x5c, 0x4e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f, 0x6d, 0xe2, 0x02, 0x21, 0x41, 0x70, 0x69,
-	0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x4e, 0x65, 0x77, 0x73, 0x72, 0x6f,
-	0x6f, 0x6d, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02,
-	0x17, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x3a, 0x3a,
-	0x4e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f, 0x6d, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x6d, 0x2e, 0x50, 0x75, 0x62, 0x6c, 0x69, 0x73, 0x68, 0x65, 0x64, 0x4e, 0x65, 0x77, 0x73, 0x41,
+	0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x52, 0x17, 0x70,
+	0x75, 0x62, 0x6c, 0x69, 0x73, 0x68, 0x65, 0x64, 0x41, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x44,
+	0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x22, 0x22, 0x0a, 0x20, 0x4c, 0x69, 0x73, 0x74, 0x50, 0x75,
+	0x62, 0x6c, 0x69, 0x73, 0x68, 0x65, 0x64, 0x4e, 0x65, 0x77, 0x73, 0x41, 0x72, 0x74, 0x69, 0x63,
+	0x6c, 0x65, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x22, 0x93, 0x01, 0x0a, 0x21, 0x4c,
+	0x69, 0x73, 0x74, 0x50, 0x75, 0x62, 0x6c, 0x69, 0x73, 0x68, 0x65, 0x64, 0x4e, 0x65, 0x77, 0x73,
+	0x41, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x12, 0x6e, 0x0a, 0x19, 0x70, 0x75, 0x62, 0x6c, 0x69, 0x73, 0x68, 0x65, 0x64, 0x5f, 0x61, 0x72,
+	0x74, 0x69, 0x63, 0x6c, 0x65, 0x5f, 0x64, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x18, 0x01, 0x20,
+	0x03, 0x28, 0x0b, 0x32, 0x32, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68,
+	0x61, 0x31, 0x2e, 0x6e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f, 0x6d, 0x2e, 0x50, 0x75, 0x62, 0x6c,
+	0x69, 0x73, 0x68, 0x65, 0x64, 0x4e, 0x65, 0x77, 0x73, 0x41, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65,
+	0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x52, 0x17, 0x70, 0x75, 0x62, 0x6c, 0x69, 0x73, 0x68,
+	0x65, 0x64, 0x41, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73,
+	0x22, 0x50, 0x0a, 0x22, 0x47, 0x65, 0x74, 0x50, 0x75, 0x62, 0x6c, 0x69, 0x73, 0x68, 0x65, 0x64,
+	0x4e, 0x65, 0x77, 0x73, 0x41, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x42, 0x79, 0x49, 0x64, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x2a, 0x0a, 0x0f, 0x6e, 0x65, 0x77, 0x5f, 0x61, 0x72,
+	0x74, 0x69, 0x63, 0x6c, 0x65, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x42,
+	0x02, 0x30, 0x01, 0x52, 0x0d, 0x6e, 0x65, 0x77, 0x41, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x53,
+	0x69, 0x64, 0x22, 0x95, 0x01, 0x0a, 0x23, 0x47, 0x65, 0x74, 0x50, 0x75, 0x62, 0x6c, 0x69, 0x73,
+	0x68, 0x65, 0x64, 0x4e, 0x65, 0x77, 0x73, 0x41, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x42, 0x79,
+	0x49, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x6e, 0x0a, 0x19, 0x70, 0x75,
+	0x62, 0x6c, 0x69, 0x73, 0x68, 0x65, 0x64, 0x5f, 0x61, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x5f,
+	0x64, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x32, 0x2e,
+	0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x6e, 0x65, 0x77,
+	0x73, 0x72, 0x6f, 0x6f, 0x6d, 0x2e, 0x50, 0x75, 0x62, 0x6c, 0x69, 0x73, 0x68, 0x65, 0x64, 0x4e,
+	0x65, 0x77, 0x73, 0x41, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c,
+	0x73, 0x52, 0x17, 0x70, 0x75, 0x62, 0x6c, 0x69, 0x73, 0x68, 0x65, 0x64, 0x41, 0x72, 0x74, 0x69,
+	0x63, 0x6c, 0x65, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x22, 0xce, 0x01, 0x0a, 0x21, 0x55,
+	0x70, 0x64, 0x61, 0x74, 0x65, 0x50, 0x75, 0x62, 0x6c, 0x69, 0x73, 0x68, 0x65, 0x64, 0x4e, 0x65,
+	0x77, 0x73, 0x41, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x12, 0x6e, 0x0a, 0x19, 0x70, 0x75, 0x62, 0x6c, 0x69, 0x73, 0x68, 0x65, 0x64, 0x5f, 0x61, 0x72,
+	0x74, 0x69, 0x63, 0x6c, 0x65, 0x5f, 0x64, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x32, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68,
+	0x61, 0x31, 0x2e, 0x6e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f, 0x6d, 0x2e, 0x50, 0x75, 0x62, 0x6c,
+	0x69, 0x73, 0x68, 0x65, 0x64, 0x4e, 0x65, 0x77, 0x73, 0x41, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65,
+	0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x52, 0x17, 0x70, 0x75, 0x62, 0x6c, 0x69, 0x73, 0x68,
+	0x65, 0x64, 0x41, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73,
+	0x12, 0x39, 0x0a, 0x0a, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x5f, 0x6d, 0x61, 0x73, 0x6b, 0x18, 0x64,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72,
+	0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x4d, 0x61, 0x73, 0x6b,
+	0x52, 0x09, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x4d, 0x61, 0x73, 0x6b, 0x22, 0x94, 0x01, 0x0a, 0x22,
+	0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x50, 0x75, 0x62, 0x6c, 0x69, 0x73, 0x68, 0x65, 0x64, 0x4e,
+	0x65, 0x77, 0x73, 0x41, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x12, 0x6e, 0x0a, 0x19, 0x70, 0x75, 0x62, 0x6c, 0x69, 0x73, 0x68, 0x65, 0x64, 0x5f,
+	0x61, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x5f, 0x64, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x32, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c,
+	0x70, 0x68, 0x61, 0x31, 0x2e, 0x6e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f, 0x6d, 0x2e, 0x50, 0x75,
+	0x62, 0x6c, 0x69, 0x73, 0x68, 0x65, 0x64, 0x4e, 0x65, 0x77, 0x73, 0x41, 0x72, 0x74, 0x69, 0x63,
+	0x6c, 0x65, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x52, 0x17, 0x70, 0x75, 0x62, 0x6c, 0x69,
+	0x73, 0x68, 0x65, 0x64, 0x41, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x44, 0x65, 0x74, 0x61, 0x69,
+	0x6c, 0x73, 0x42, 0xd2, 0x01, 0x0a, 0x19, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76,
+	0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x6e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f, 0x6d,
+	0x42, 0x0d, 0x45, 0x6e, 0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50,
+	0x01, 0x5a, 0x30, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63,
+	0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70,
+	0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x6e, 0x65, 0x77, 0x73, 0x72,
+	0x6f, 0x6f, 0x6d, 0xa2, 0x02, 0x03, 0x41, 0x56, 0x4e, 0xaa, 0x02, 0x15, 0x41, 0x70, 0x69, 0x2e,
+	0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x4e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f,
+	0x6d, 0xca, 0x02, 0x15, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31,
+	0x5c, 0x4e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f, 0x6d, 0xe2, 0x02, 0x21, 0x41, 0x70, 0x69, 0x5c,
+	0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x4e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f,
+	0x6d, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x17,
+	0x41, 0x70, 0x69, 0x3a, 0x3a, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x3a, 0x3a, 0x4e,
+	0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f, 0x6d, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -652,38 +1212,55 @@ func file_api_v1alpha1_newsroom_entities_proto_rawDescGZIP() []byte {
 	return file_api_v1alpha1_newsroom_entities_proto_rawDescData
 }
 
-var file_api_v1alpha1_newsroom_entities_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
+var file_api_v1alpha1_newsroom_entities_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
 var file_api_v1alpha1_newsroom_entities_proto_goTypes = []interface{}{
-	(*CreateNewsArticleRequest)(nil),   // 0: api.v1alpha1.newsroom.CreateNewsArticleRequest
-	(*CreateNewsArticleResponse)(nil),  // 1: api.v1alpha1.newsroom.CreateNewsArticleResponse
-	(*ListNewsArticlesRequest)(nil),    // 2: api.v1alpha1.newsroom.ListNewsArticlesRequest
-	(*ListNewsArticlesResponse)(nil),   // 3: api.v1alpha1.newsroom.ListNewsArticlesResponse
-	(*GetNewsArticleByIdRequest)(nil),  // 4: api.v1alpha1.newsroom.GetNewsArticleByIdRequest
-	(*GetNewsArticleByIdResponse)(nil), // 5: api.v1alpha1.newsroom.GetNewsArticleByIdResponse
-	(*UpdateNewsArticleRequest)(nil),   // 6: api.v1alpha1.newsroom.UpdateNewsArticleRequest
-	(*UpdateNewsArticleResponse)(nil),  // 7: api.v1alpha1.newsroom.UpdateNewsArticleResponse
-	(*NewsArticleDetails)(nil),         // 8: api.v1alpha1.newsroom.NewsArticleDetails
-	(commons.ArticleStatus)(0),         // 9: api.commons.ArticleStatus
-	(*fieldmaskpb.FieldMask)(nil),      // 10: google.protobuf.FieldMask
-	(*timestamppb.Timestamp)(nil),      // 11: google.protobuf.Timestamp
+	(*CreateNewsArticleRequest)(nil),            // 0: api.v1alpha1.newsroom.CreateNewsArticleRequest
+	(*CreateNewsArticleResponse)(nil),           // 1: api.v1alpha1.newsroom.CreateNewsArticleResponse
+	(*ListNewsArticlesRequest)(nil),             // 2: api.v1alpha1.newsroom.ListNewsArticlesRequest
+	(*ListNewsArticlesResponse)(nil),            // 3: api.v1alpha1.newsroom.ListNewsArticlesResponse
+	(*GetNewsArticleByIdRequest)(nil),           // 4: api.v1alpha1.newsroom.GetNewsArticleByIdRequest
+	(*GetNewsArticleByIdResponse)(nil),          // 5: api.v1alpha1.newsroom.GetNewsArticleByIdResponse
+	(*UpdateNewsArticleRequest)(nil),            // 6: api.v1alpha1.newsroom.UpdateNewsArticleRequest
+	(*UpdateNewsArticleResponse)(nil),           // 7: api.v1alpha1.newsroom.UpdateNewsArticleResponse
+	(*NewsArticleDetails)(nil),                  // 8: api.v1alpha1.newsroom.NewsArticleDetails
+	(*PublishedNewsArticleDetails)(nil),         // 9: api.v1alpha1.newsroom.PublishedNewsArticleDetails
+	(*CreatePublishedNewsArticleRequest)(nil),   // 10: api.v1alpha1.newsroom.CreatePublishedNewsArticleRequest
+	(*CreatePublishedNewsArticleResponse)(nil),  // 11: api.v1alpha1.newsroom.CreatePublishedNewsArticleResponse
+	(*ListPublishedNewsArticlesRequest)(nil),    // 12: api.v1alpha1.newsroom.ListPublishedNewsArticlesRequest
+	(*ListPublishedNewsArticlesResponse)(nil),   // 13: api.v1alpha1.newsroom.ListPublishedNewsArticlesResponse
+	(*GetPublishedNewsArticleByIdRequest)(nil),  // 14: api.v1alpha1.newsroom.GetPublishedNewsArticleByIdRequest
+	(*GetPublishedNewsArticleByIdResponse)(nil), // 15: api.v1alpha1.newsroom.GetPublishedNewsArticleByIdResponse
+	(*UpdatePublishedNewsArticleRequest)(nil),   // 16: api.v1alpha1.newsroom.UpdatePublishedNewsArticleRequest
+	(*UpdatePublishedNewsArticleResponse)(nil),  // 17: api.v1alpha1.newsroom.UpdatePublishedNewsArticleResponse
+	(commons.ArticleStatus)(0),                  // 18: api.commons.ArticleStatus
+	(*fieldmaskpb.FieldMask)(nil),               // 19: google.protobuf.FieldMask
+	(*timestamppb.Timestamp)(nil),               // 20: google.protobuf.Timestamp
 }
 var file_api_v1alpha1_newsroom_entities_proto_depIdxs = []int32{
 	8,  // 0: api.v1alpha1.newsroom.CreateNewsArticleResponse.article_details:type_name -> api.v1alpha1.newsroom.NewsArticleDetails
-	9,  // 1: api.v1alpha1.newsroom.ListNewsArticlesRequest.statuses:type_name -> api.commons.ArticleStatus
-	10, // 2: api.v1alpha1.newsroom.ListNewsArticlesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	18, // 1: api.v1alpha1.newsroom.ListNewsArticlesRequest.statuses:type_name -> api.commons.ArticleStatus
+	19, // 2: api.v1alpha1.newsroom.ListNewsArticlesRequest.field_mask:type_name -> google.protobuf.FieldMask
 	8,  // 3: api.v1alpha1.newsroom.ListNewsArticlesResponse.article_details:type_name -> api.v1alpha1.newsroom.NewsArticleDetails
 	8,  // 4: api.v1alpha1.newsroom.GetNewsArticleByIdResponse.article_details:type_name -> api.v1alpha1.newsroom.NewsArticleDetails
 	8,  // 5: api.v1alpha1.newsroom.UpdateNewsArticleRequest.article_details:type_name -> api.v1alpha1.newsroom.NewsArticleDetails
-	10, // 6: api.v1alpha1.newsroom.UpdateNewsArticleRequest.field_mask:type_name -> google.protobuf.FieldMask
+	19, // 6: api.v1alpha1.newsroom.UpdateNewsArticleRequest.field_mask:type_name -> google.protobuf.FieldMask
 	8,  // 7: api.v1alpha1.newsroom.UpdateNewsArticleResponse.article_details:type_name -> api.v1alpha1.newsroom.NewsArticleDetails
-	9,  // 8: api.v1alpha1.newsroom.NewsArticleDetails.status:type_name -> api.commons.ArticleStatus
-	11, // 9: api.v1alpha1.newsroom.NewsArticleDetails.date_created:type_name -> google.protobuf.Timestamp
-	11, // 10: api.v1alpha1.newsroom.NewsArticleDetails.last_edited:type_name -> google.protobuf.Timestamp
-	11, // [11:11] is the sub-list for method output_type
-	11, // [11:11] is the sub-list for method input_type
-	11, // [11:11] is the sub-list for extension type_name
-	11, // [11:11] is the sub-list for extension extendee
-	0,  // [0:11] is the sub-list for field type_name
+	18, // 8: api.v1alpha1.newsroom.NewsArticleDetails.status:type_name -> api.commons.ArticleStatus
+	20, // 9: api.v1alpha1.newsroom.NewsArticleDetails.date_created:type_name -> google.protobuf.Timestamp
+	20, // 10: api.v1alpha1.newsroom.NewsArticleDetails.last_edited:type_name -> google.protobuf.Timestamp
+	8,  // 11: api.v1alpha1.newsroom.PublishedNewsArticleDetails.news_article_details:type_name -> api.v1alpha1.newsroom.NewsArticleDetails
+	20, // 12: api.v1alpha1.newsroom.PublishedNewsArticleDetails.date_published:type_name -> google.protobuf.Timestamp
+	9,  // 13: api.v1alpha1.newsroom.CreatePublishedNewsArticleResponse.published_article_details:type_name -> api.v1alpha1.newsroom.PublishedNewsArticleDetails
+	9,  // 14: api.v1alpha1.newsroom.ListPublishedNewsArticlesResponse.published_article_details:type_name -> api.v1alpha1.newsroom.PublishedNewsArticleDetails
+	9,  // 15: api.v1alpha1.newsroom.GetPublishedNewsArticleByIdResponse.published_article_details:type_name -> api.v1alpha1.newsroom.PublishedNewsArticleDetails
+	9,  // 16: api.v1alpha1.newsroom.UpdatePublishedNewsArticleRequest.published_article_details:type_name -> api.v1alpha1.newsroom.PublishedNewsArticleDetails
+	19, // 17: api.v1alpha1.newsroom.UpdatePublishedNewsArticleRequest.field_mask:type_name -> google.protobuf.FieldMask
+	9,  // 18: api.v1alpha1.newsroom.UpdatePublishedNewsArticleResponse.published_article_details:type_name -> api.v1alpha1.newsroom.PublishedNewsArticleDetails
+	19, // [19:19] is the sub-list for method output_type
+	19, // [19:19] is the sub-list for method input_type
+	19, // [19:19] is the sub-list for extension type_name
+	19, // [19:19] is the sub-list for extension extendee
+	0,  // [0:19] is the sub-list for field type_name
 }
 
 func init() { file_api_v1alpha1_newsroom_entities_proto_init() }
@@ -800,6 +1377,114 @@ func file_api_v1alpha1_newsroom_entities_proto_init() {
 				return nil
 			}
 		}
+		file_api_v1alpha1_newsroom_entities_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*PublishedNewsArticleDetails); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_newsroom_entities_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*CreatePublishedNewsArticleRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_newsroom_entities_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*CreatePublishedNewsArticleResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_newsroom_entities_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListPublishedNewsArticlesRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_newsroom_entities_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListPublishedNewsArticlesResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_newsroom_entities_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetPublishedNewsArticleByIdRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_newsroom_entities_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetPublishedNewsArticleByIdResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_newsroom_entities_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UpdatePublishedNewsArticleRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_newsroom_entities_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UpdatePublishedNewsArticleResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -807,7 +1492,7 @@ func file_api_v1alpha1_newsroom_entities_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_v1alpha1_newsroom_entities_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   9,
+			NumMessages:   18,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

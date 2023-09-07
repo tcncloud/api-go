@@ -19,10 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	NewsroomAPI_CreateNewsArticle_FullMethodName  = "/api.v1alpha1.newsroom.NewsroomAPI/CreateNewsArticle"
-	NewsroomAPI_ListNewsArticles_FullMethodName   = "/api.v1alpha1.newsroom.NewsroomAPI/ListNewsArticles"
-	NewsroomAPI_GetNewsArticleById_FullMethodName = "/api.v1alpha1.newsroom.NewsroomAPI/GetNewsArticleById"
-	NewsroomAPI_UpdateNewsArticle_FullMethodName  = "/api.v1alpha1.newsroom.NewsroomAPI/UpdateNewsArticle"
+	NewsroomAPI_CreateNewsArticle_FullMethodName           = "/api.v1alpha1.newsroom.NewsroomAPI/CreateNewsArticle"
+	NewsroomAPI_ListNewsArticles_FullMethodName            = "/api.v1alpha1.newsroom.NewsroomAPI/ListNewsArticles"
+	NewsroomAPI_GetNewsArticleById_FullMethodName          = "/api.v1alpha1.newsroom.NewsroomAPI/GetNewsArticleById"
+	NewsroomAPI_UpdateNewsArticle_FullMethodName           = "/api.v1alpha1.newsroom.NewsroomAPI/UpdateNewsArticle"
+	NewsroomAPI_CreatePublishedNewsArticle_FullMethodName  = "/api.v1alpha1.newsroom.NewsroomAPI/CreatePublishedNewsArticle"
+	NewsroomAPI_ListPublishedNewsArticles_FullMethodName   = "/api.v1alpha1.newsroom.NewsroomAPI/ListPublishedNewsArticles"
+	NewsroomAPI_GetPublishedNewsArticleById_FullMethodName = "/api.v1alpha1.newsroom.NewsroomAPI/GetPublishedNewsArticleById"
+	NewsroomAPI_UpdatePublishedNewsArticle_FullMethodName  = "/api.v1alpha1.newsroom.NewsroomAPI/UpdatePublishedNewsArticle"
 )
 
 // NewsroomAPIClient is the client API for NewsroomAPI service.
@@ -37,6 +41,14 @@ type NewsroomAPIClient interface {
 	GetNewsArticleById(ctx context.Context, in *GetNewsArticleByIdRequest, opts ...grpc.CallOption) (*GetNewsArticleByIdResponse, error)
 	// update news article
 	UpdateNewsArticle(ctx context.Context, in *UpdateNewsArticleRequest, opts ...grpc.CallOption) (*UpdateNewsArticleResponse, error)
+	// create published news article
+	CreatePublishedNewsArticle(ctx context.Context, in *CreatePublishedNewsArticleRequest, opts ...grpc.CallOption) (*CreatePublishedNewsArticleResponse, error)
+	// list published news articles
+	ListPublishedNewsArticles(ctx context.Context, in *ListPublishedNewsArticlesRequest, opts ...grpc.CallOption) (*ListPublishedNewsArticlesResponse, error)
+	// get published news article details by the id
+	GetPublishedNewsArticleById(ctx context.Context, in *GetPublishedNewsArticleByIdRequest, opts ...grpc.CallOption) (*GetPublishedNewsArticleByIdResponse, error)
+	// update published news article
+	UpdatePublishedNewsArticle(ctx context.Context, in *UpdatePublishedNewsArticleRequest, opts ...grpc.CallOption) (*UpdatePublishedNewsArticleResponse, error)
 }
 
 type newsroomAPIClient struct {
@@ -83,6 +95,42 @@ func (c *newsroomAPIClient) UpdateNewsArticle(ctx context.Context, in *UpdateNew
 	return out, nil
 }
 
+func (c *newsroomAPIClient) CreatePublishedNewsArticle(ctx context.Context, in *CreatePublishedNewsArticleRequest, opts ...grpc.CallOption) (*CreatePublishedNewsArticleResponse, error) {
+	out := new(CreatePublishedNewsArticleResponse)
+	err := c.cc.Invoke(ctx, NewsroomAPI_CreatePublishedNewsArticle_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *newsroomAPIClient) ListPublishedNewsArticles(ctx context.Context, in *ListPublishedNewsArticlesRequest, opts ...grpc.CallOption) (*ListPublishedNewsArticlesResponse, error) {
+	out := new(ListPublishedNewsArticlesResponse)
+	err := c.cc.Invoke(ctx, NewsroomAPI_ListPublishedNewsArticles_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *newsroomAPIClient) GetPublishedNewsArticleById(ctx context.Context, in *GetPublishedNewsArticleByIdRequest, opts ...grpc.CallOption) (*GetPublishedNewsArticleByIdResponse, error) {
+	out := new(GetPublishedNewsArticleByIdResponse)
+	err := c.cc.Invoke(ctx, NewsroomAPI_GetPublishedNewsArticleById_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *newsroomAPIClient) UpdatePublishedNewsArticle(ctx context.Context, in *UpdatePublishedNewsArticleRequest, opts ...grpc.CallOption) (*UpdatePublishedNewsArticleResponse, error) {
+	out := new(UpdatePublishedNewsArticleResponse)
+	err := c.cc.Invoke(ctx, NewsroomAPI_UpdatePublishedNewsArticle_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // NewsroomAPIServer is the server API for NewsroomAPI service.
 // All implementations must embed UnimplementedNewsroomAPIServer
 // for forward compatibility
@@ -95,6 +143,14 @@ type NewsroomAPIServer interface {
 	GetNewsArticleById(context.Context, *GetNewsArticleByIdRequest) (*GetNewsArticleByIdResponse, error)
 	// update news article
 	UpdateNewsArticle(context.Context, *UpdateNewsArticleRequest) (*UpdateNewsArticleResponse, error)
+	// create published news article
+	CreatePublishedNewsArticle(context.Context, *CreatePublishedNewsArticleRequest) (*CreatePublishedNewsArticleResponse, error)
+	// list published news articles
+	ListPublishedNewsArticles(context.Context, *ListPublishedNewsArticlesRequest) (*ListPublishedNewsArticlesResponse, error)
+	// get published news article details by the id
+	GetPublishedNewsArticleById(context.Context, *GetPublishedNewsArticleByIdRequest) (*GetPublishedNewsArticleByIdResponse, error)
+	// update published news article
+	UpdatePublishedNewsArticle(context.Context, *UpdatePublishedNewsArticleRequest) (*UpdatePublishedNewsArticleResponse, error)
 	mustEmbedUnimplementedNewsroomAPIServer()
 }
 
@@ -113,6 +169,18 @@ func (UnimplementedNewsroomAPIServer) GetNewsArticleById(context.Context, *GetNe
 }
 func (UnimplementedNewsroomAPIServer) UpdateNewsArticle(context.Context, *UpdateNewsArticleRequest) (*UpdateNewsArticleResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateNewsArticle not implemented")
+}
+func (UnimplementedNewsroomAPIServer) CreatePublishedNewsArticle(context.Context, *CreatePublishedNewsArticleRequest) (*CreatePublishedNewsArticleResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreatePublishedNewsArticle not implemented")
+}
+func (UnimplementedNewsroomAPIServer) ListPublishedNewsArticles(context.Context, *ListPublishedNewsArticlesRequest) (*ListPublishedNewsArticlesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListPublishedNewsArticles not implemented")
+}
+func (UnimplementedNewsroomAPIServer) GetPublishedNewsArticleById(context.Context, *GetPublishedNewsArticleByIdRequest) (*GetPublishedNewsArticleByIdResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPublishedNewsArticleById not implemented")
+}
+func (UnimplementedNewsroomAPIServer) UpdatePublishedNewsArticle(context.Context, *UpdatePublishedNewsArticleRequest) (*UpdatePublishedNewsArticleResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdatePublishedNewsArticle not implemented")
 }
 func (UnimplementedNewsroomAPIServer) mustEmbedUnimplementedNewsroomAPIServer() {}
 
@@ -199,6 +267,78 @@ func _NewsroomAPI_UpdateNewsArticle_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _NewsroomAPI_CreatePublishedNewsArticle_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreatePublishedNewsArticleRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NewsroomAPIServer).CreatePublishedNewsArticle(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NewsroomAPI_CreatePublishedNewsArticle_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NewsroomAPIServer).CreatePublishedNewsArticle(ctx, req.(*CreatePublishedNewsArticleRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _NewsroomAPI_ListPublishedNewsArticles_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListPublishedNewsArticlesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NewsroomAPIServer).ListPublishedNewsArticles(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NewsroomAPI_ListPublishedNewsArticles_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NewsroomAPIServer).ListPublishedNewsArticles(ctx, req.(*ListPublishedNewsArticlesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _NewsroomAPI_GetPublishedNewsArticleById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPublishedNewsArticleByIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NewsroomAPIServer).GetPublishedNewsArticleById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NewsroomAPI_GetPublishedNewsArticleById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NewsroomAPIServer).GetPublishedNewsArticleById(ctx, req.(*GetPublishedNewsArticleByIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _NewsroomAPI_UpdatePublishedNewsArticle_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdatePublishedNewsArticleRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NewsroomAPIServer).UpdatePublishedNewsArticle(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NewsroomAPI_UpdatePublishedNewsArticle_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NewsroomAPIServer).UpdatePublishedNewsArticle(ctx, req.(*UpdatePublishedNewsArticleRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // NewsroomAPI_ServiceDesc is the grpc.ServiceDesc for NewsroomAPI service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -221,6 +361,22 @@ var NewsroomAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateNewsArticle",
 			Handler:    _NewsroomAPI_UpdateNewsArticle_Handler,
+		},
+		{
+			MethodName: "CreatePublishedNewsArticle",
+			Handler:    _NewsroomAPI_CreatePublishedNewsArticle_Handler,
+		},
+		{
+			MethodName: "ListPublishedNewsArticles",
+			Handler:    _NewsroomAPI_ListPublishedNewsArticles_Handler,
+		},
+		{
+			MethodName: "GetPublishedNewsArticleById",
+			Handler:    _NewsroomAPI_GetPublishedNewsArticleById_Handler,
+		},
+		{
+			MethodName: "UpdatePublishedNewsArticle",
+			Handler:    _NewsroomAPI_UpdatePublishedNewsArticle_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

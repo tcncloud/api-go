@@ -45,6 +45,18 @@ const (
 	// NewsroomAPIUpdateNewsArticleProcedure is the fully-qualified name of the NewsroomAPI's
 	// UpdateNewsArticle RPC.
 	NewsroomAPIUpdateNewsArticleProcedure = "/api.v1alpha1.newsroom.NewsroomAPI/UpdateNewsArticle"
+	// NewsroomAPICreatePublishedNewsArticleProcedure is the fully-qualified name of the NewsroomAPI's
+	// CreatePublishedNewsArticle RPC.
+	NewsroomAPICreatePublishedNewsArticleProcedure = "/api.v1alpha1.newsroom.NewsroomAPI/CreatePublishedNewsArticle"
+	// NewsroomAPIListPublishedNewsArticlesProcedure is the fully-qualified name of the NewsroomAPI's
+	// ListPublishedNewsArticles RPC.
+	NewsroomAPIListPublishedNewsArticlesProcedure = "/api.v1alpha1.newsroom.NewsroomAPI/ListPublishedNewsArticles"
+	// NewsroomAPIGetPublishedNewsArticleByIdProcedure is the fully-qualified name of the NewsroomAPI's
+	// GetPublishedNewsArticleById RPC.
+	NewsroomAPIGetPublishedNewsArticleByIdProcedure = "/api.v1alpha1.newsroom.NewsroomAPI/GetPublishedNewsArticleById"
+	// NewsroomAPIUpdatePublishedNewsArticleProcedure is the fully-qualified name of the NewsroomAPI's
+	// UpdatePublishedNewsArticle RPC.
+	NewsroomAPIUpdatePublishedNewsArticleProcedure = "/api.v1alpha1.newsroom.NewsroomAPI/UpdatePublishedNewsArticle"
 )
 
 // NewsroomAPIClient is a client for the api.v1alpha1.newsroom.NewsroomAPI service.
@@ -57,6 +69,14 @@ type NewsroomAPIClient interface {
 	GetNewsArticleById(context.Context, *connect_go.Request[newsroom.GetNewsArticleByIdRequest]) (*connect_go.Response[newsroom.GetNewsArticleByIdResponse], error)
 	// update news article
 	UpdateNewsArticle(context.Context, *connect_go.Request[newsroom.UpdateNewsArticleRequest]) (*connect_go.Response[newsroom.UpdateNewsArticleResponse], error)
+	// create published news article
+	CreatePublishedNewsArticle(context.Context, *connect_go.Request[newsroom.CreatePublishedNewsArticleRequest]) (*connect_go.Response[newsroom.CreatePublishedNewsArticleResponse], error)
+	// list published news articles
+	ListPublishedNewsArticles(context.Context, *connect_go.Request[newsroom.ListPublishedNewsArticlesRequest]) (*connect_go.Response[newsroom.ListPublishedNewsArticlesResponse], error)
+	// get published news article details by the id
+	GetPublishedNewsArticleById(context.Context, *connect_go.Request[newsroom.GetPublishedNewsArticleByIdRequest]) (*connect_go.Response[newsroom.GetPublishedNewsArticleByIdResponse], error)
+	// update published news article
+	UpdatePublishedNewsArticle(context.Context, *connect_go.Request[newsroom.UpdatePublishedNewsArticleRequest]) (*connect_go.Response[newsroom.UpdatePublishedNewsArticleResponse], error)
 }
 
 // NewNewsroomAPIClient constructs a client for the api.v1alpha1.newsroom.NewsroomAPI service. By
@@ -89,15 +109,39 @@ func NewNewsroomAPIClient(httpClient connect_go.HTTPClient, baseURL string, opts
 			baseURL+NewsroomAPIUpdateNewsArticleProcedure,
 			opts...,
 		),
+		createPublishedNewsArticle: connect_go.NewClient[newsroom.CreatePublishedNewsArticleRequest, newsroom.CreatePublishedNewsArticleResponse](
+			httpClient,
+			baseURL+NewsroomAPICreatePublishedNewsArticleProcedure,
+			opts...,
+		),
+		listPublishedNewsArticles: connect_go.NewClient[newsroom.ListPublishedNewsArticlesRequest, newsroom.ListPublishedNewsArticlesResponse](
+			httpClient,
+			baseURL+NewsroomAPIListPublishedNewsArticlesProcedure,
+			opts...,
+		),
+		getPublishedNewsArticleById: connect_go.NewClient[newsroom.GetPublishedNewsArticleByIdRequest, newsroom.GetPublishedNewsArticleByIdResponse](
+			httpClient,
+			baseURL+NewsroomAPIGetPublishedNewsArticleByIdProcedure,
+			opts...,
+		),
+		updatePublishedNewsArticle: connect_go.NewClient[newsroom.UpdatePublishedNewsArticleRequest, newsroom.UpdatePublishedNewsArticleResponse](
+			httpClient,
+			baseURL+NewsroomAPIUpdatePublishedNewsArticleProcedure,
+			opts...,
+		),
 	}
 }
 
 // newsroomAPIClient implements NewsroomAPIClient.
 type newsroomAPIClient struct {
-	createNewsArticle  *connect_go.Client[newsroom.CreateNewsArticleRequest, newsroom.CreateNewsArticleResponse]
-	listNewsArticles   *connect_go.Client[newsroom.ListNewsArticlesRequest, newsroom.ListNewsArticlesResponse]
-	getNewsArticleById *connect_go.Client[newsroom.GetNewsArticleByIdRequest, newsroom.GetNewsArticleByIdResponse]
-	updateNewsArticle  *connect_go.Client[newsroom.UpdateNewsArticleRequest, newsroom.UpdateNewsArticleResponse]
+	createNewsArticle           *connect_go.Client[newsroom.CreateNewsArticleRequest, newsroom.CreateNewsArticleResponse]
+	listNewsArticles            *connect_go.Client[newsroom.ListNewsArticlesRequest, newsroom.ListNewsArticlesResponse]
+	getNewsArticleById          *connect_go.Client[newsroom.GetNewsArticleByIdRequest, newsroom.GetNewsArticleByIdResponse]
+	updateNewsArticle           *connect_go.Client[newsroom.UpdateNewsArticleRequest, newsroom.UpdateNewsArticleResponse]
+	createPublishedNewsArticle  *connect_go.Client[newsroom.CreatePublishedNewsArticleRequest, newsroom.CreatePublishedNewsArticleResponse]
+	listPublishedNewsArticles   *connect_go.Client[newsroom.ListPublishedNewsArticlesRequest, newsroom.ListPublishedNewsArticlesResponse]
+	getPublishedNewsArticleById *connect_go.Client[newsroom.GetPublishedNewsArticleByIdRequest, newsroom.GetPublishedNewsArticleByIdResponse]
+	updatePublishedNewsArticle  *connect_go.Client[newsroom.UpdatePublishedNewsArticleRequest, newsroom.UpdatePublishedNewsArticleResponse]
 }
 
 // CreateNewsArticle calls api.v1alpha1.newsroom.NewsroomAPI.CreateNewsArticle.
@@ -120,6 +164,26 @@ func (c *newsroomAPIClient) UpdateNewsArticle(ctx context.Context, req *connect_
 	return c.updateNewsArticle.CallUnary(ctx, req)
 }
 
+// CreatePublishedNewsArticle calls api.v1alpha1.newsroom.NewsroomAPI.CreatePublishedNewsArticle.
+func (c *newsroomAPIClient) CreatePublishedNewsArticle(ctx context.Context, req *connect_go.Request[newsroom.CreatePublishedNewsArticleRequest]) (*connect_go.Response[newsroom.CreatePublishedNewsArticleResponse], error) {
+	return c.createPublishedNewsArticle.CallUnary(ctx, req)
+}
+
+// ListPublishedNewsArticles calls api.v1alpha1.newsroom.NewsroomAPI.ListPublishedNewsArticles.
+func (c *newsroomAPIClient) ListPublishedNewsArticles(ctx context.Context, req *connect_go.Request[newsroom.ListPublishedNewsArticlesRequest]) (*connect_go.Response[newsroom.ListPublishedNewsArticlesResponse], error) {
+	return c.listPublishedNewsArticles.CallUnary(ctx, req)
+}
+
+// GetPublishedNewsArticleById calls api.v1alpha1.newsroom.NewsroomAPI.GetPublishedNewsArticleById.
+func (c *newsroomAPIClient) GetPublishedNewsArticleById(ctx context.Context, req *connect_go.Request[newsroom.GetPublishedNewsArticleByIdRequest]) (*connect_go.Response[newsroom.GetPublishedNewsArticleByIdResponse], error) {
+	return c.getPublishedNewsArticleById.CallUnary(ctx, req)
+}
+
+// UpdatePublishedNewsArticle calls api.v1alpha1.newsroom.NewsroomAPI.UpdatePublishedNewsArticle.
+func (c *newsroomAPIClient) UpdatePublishedNewsArticle(ctx context.Context, req *connect_go.Request[newsroom.UpdatePublishedNewsArticleRequest]) (*connect_go.Response[newsroom.UpdatePublishedNewsArticleResponse], error) {
+	return c.updatePublishedNewsArticle.CallUnary(ctx, req)
+}
+
 // NewsroomAPIHandler is an implementation of the api.v1alpha1.newsroom.NewsroomAPI service.
 type NewsroomAPIHandler interface {
 	// create news article
@@ -130,6 +194,14 @@ type NewsroomAPIHandler interface {
 	GetNewsArticleById(context.Context, *connect_go.Request[newsroom.GetNewsArticleByIdRequest]) (*connect_go.Response[newsroom.GetNewsArticleByIdResponse], error)
 	// update news article
 	UpdateNewsArticle(context.Context, *connect_go.Request[newsroom.UpdateNewsArticleRequest]) (*connect_go.Response[newsroom.UpdateNewsArticleResponse], error)
+	// create published news article
+	CreatePublishedNewsArticle(context.Context, *connect_go.Request[newsroom.CreatePublishedNewsArticleRequest]) (*connect_go.Response[newsroom.CreatePublishedNewsArticleResponse], error)
+	// list published news articles
+	ListPublishedNewsArticles(context.Context, *connect_go.Request[newsroom.ListPublishedNewsArticlesRequest]) (*connect_go.Response[newsroom.ListPublishedNewsArticlesResponse], error)
+	// get published news article details by the id
+	GetPublishedNewsArticleById(context.Context, *connect_go.Request[newsroom.GetPublishedNewsArticleByIdRequest]) (*connect_go.Response[newsroom.GetPublishedNewsArticleByIdResponse], error)
+	// update published news article
+	UpdatePublishedNewsArticle(context.Context, *connect_go.Request[newsroom.UpdatePublishedNewsArticleRequest]) (*connect_go.Response[newsroom.UpdatePublishedNewsArticleResponse], error)
 }
 
 // NewNewsroomAPIHandler builds an HTTP handler from the service implementation. It returns the path
@@ -158,6 +230,26 @@ func NewNewsroomAPIHandler(svc NewsroomAPIHandler, opts ...connect_go.HandlerOpt
 		svc.UpdateNewsArticle,
 		opts...,
 	)
+	newsroomAPICreatePublishedNewsArticleHandler := connect_go.NewUnaryHandler(
+		NewsroomAPICreatePublishedNewsArticleProcedure,
+		svc.CreatePublishedNewsArticle,
+		opts...,
+	)
+	newsroomAPIListPublishedNewsArticlesHandler := connect_go.NewUnaryHandler(
+		NewsroomAPIListPublishedNewsArticlesProcedure,
+		svc.ListPublishedNewsArticles,
+		opts...,
+	)
+	newsroomAPIGetPublishedNewsArticleByIdHandler := connect_go.NewUnaryHandler(
+		NewsroomAPIGetPublishedNewsArticleByIdProcedure,
+		svc.GetPublishedNewsArticleById,
+		opts...,
+	)
+	newsroomAPIUpdatePublishedNewsArticleHandler := connect_go.NewUnaryHandler(
+		NewsroomAPIUpdatePublishedNewsArticleProcedure,
+		svc.UpdatePublishedNewsArticle,
+		opts...,
+	)
 	return "/api.v1alpha1.newsroom.NewsroomAPI/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case NewsroomAPICreateNewsArticleProcedure:
@@ -168,6 +260,14 @@ func NewNewsroomAPIHandler(svc NewsroomAPIHandler, opts ...connect_go.HandlerOpt
 			newsroomAPIGetNewsArticleByIdHandler.ServeHTTP(w, r)
 		case NewsroomAPIUpdateNewsArticleProcedure:
 			newsroomAPIUpdateNewsArticleHandler.ServeHTTP(w, r)
+		case NewsroomAPICreatePublishedNewsArticleProcedure:
+			newsroomAPICreatePublishedNewsArticleHandler.ServeHTTP(w, r)
+		case NewsroomAPIListPublishedNewsArticlesProcedure:
+			newsroomAPIListPublishedNewsArticlesHandler.ServeHTTP(w, r)
+		case NewsroomAPIGetPublishedNewsArticleByIdProcedure:
+			newsroomAPIGetPublishedNewsArticleByIdHandler.ServeHTTP(w, r)
+		case NewsroomAPIUpdatePublishedNewsArticleProcedure:
+			newsroomAPIUpdatePublishedNewsArticleHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -191,4 +291,20 @@ func (UnimplementedNewsroomAPIHandler) GetNewsArticleById(context.Context, *conn
 
 func (UnimplementedNewsroomAPIHandler) UpdateNewsArticle(context.Context, *connect_go.Request[newsroom.UpdateNewsArticleRequest]) (*connect_go.Response[newsroom.UpdateNewsArticleResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.newsroom.NewsroomAPI.UpdateNewsArticle is not implemented"))
+}
+
+func (UnimplementedNewsroomAPIHandler) CreatePublishedNewsArticle(context.Context, *connect_go.Request[newsroom.CreatePublishedNewsArticleRequest]) (*connect_go.Response[newsroom.CreatePublishedNewsArticleResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.newsroom.NewsroomAPI.CreatePublishedNewsArticle is not implemented"))
+}
+
+func (UnimplementedNewsroomAPIHandler) ListPublishedNewsArticles(context.Context, *connect_go.Request[newsroom.ListPublishedNewsArticlesRequest]) (*connect_go.Response[newsroom.ListPublishedNewsArticlesResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.newsroom.NewsroomAPI.ListPublishedNewsArticles is not implemented"))
+}
+
+func (UnimplementedNewsroomAPIHandler) GetPublishedNewsArticleById(context.Context, *connect_go.Request[newsroom.GetPublishedNewsArticleByIdRequest]) (*connect_go.Response[newsroom.GetPublishedNewsArticleByIdResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.newsroom.NewsroomAPI.GetPublishedNewsArticleById is not implemented"))
+}
+
+func (UnimplementedNewsroomAPIHandler) UpdatePublishedNewsArticle(context.Context, *connect_go.Request[newsroom.UpdatePublishedNewsArticleRequest]) (*connect_go.Response[newsroom.UpdatePublishedNewsArticleResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.newsroom.NewsroomAPI.UpdatePublishedNewsArticle is not implemented"))
 }
