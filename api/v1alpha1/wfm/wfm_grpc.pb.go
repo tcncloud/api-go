@@ -383,7 +383,7 @@ type WFMClient interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @skill_profile_sid or @call_profile_template in the request is invalid.
+	//   - grpc.Invalid: the @skill_profile_category or @call_profile_template in the request is invalid.
 	//   - grpc.Internal: error occurs during the building of the profile forecast.
 	BuildProfileForecastByInterval(ctx context.Context, in *BuildProfileForecastByIntervalReq, opts ...grpc.CallOption) (WFM_BuildProfileForecastByIntervalClient, error)
 	// Builds a profile forecast using the provided @call_profile_template.
@@ -2976,7 +2976,7 @@ type WFMServer interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @skill_profile_sid or @call_profile_template in the request is invalid.
+	//   - grpc.Invalid: the @skill_profile_category or @call_profile_template in the request is invalid.
 	//   - grpc.Internal: error occurs during the building of the profile forecast.
 	BuildProfileForecastByInterval(*BuildProfileForecastByIntervalReq, WFM_BuildProfileForecastByIntervalServer) error
 	// Builds a profile forecast using the provided @call_profile_template.
