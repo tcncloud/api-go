@@ -46,6 +46,7 @@ const (
 	WFM_UpsertHistoricalDataDeltas_FullMethodName                    = "/api.v1alpha1.wfm.WFM/UpsertHistoricalDataDeltas"
 	WFM_ListSkills_FullMethodName                                    = "/api.v1alpha1.wfm.WFM/ListSkills"
 	WFM_BuildCallProfileTemplateForSkillProfile_FullMethodName       = "/api.v1alpha1.wfm.WFM/BuildCallProfileTemplateForSkillProfile"
+	WFM_BuildCallProfileTemplate_FullMethodName                      = "/api.v1alpha1.wfm.WFM/BuildCallProfileTemplate"
 	WFM_CreateInactiveSkillProfileMapping_FullMethodName             = "/api.v1alpha1.wfm.WFM/CreateInactiveSkillProfileMapping"
 	WFM_GetAvailableRegressionForecasterModelTypes_FullMethodName    = "/api.v1alpha1.wfm.WFM/GetAvailableRegressionForecasterModelTypes"
 	WFM_DisconnectInactiveSkillProfileMapping_FullMethodName         = "/api.v1alpha1.wfm.WFM/DisconnectInactiveSkillProfileMapping"
@@ -285,6 +286,7 @@ type WFMClient interface {
 	// The @total_calls in the returned template be summed from the (@training_data_start_datetime - @averages_calculation_range_in_months) to @training_data_end_datetime,
 	// or from @training_data_start_datetime to @training_data_end_datetime if @averages_calculation_range_in_months is 0.
 	// The fixed averages fields in the call profile template, will be set to the averages that the skill profile has.
+	// DEPRECATED as of Sep/7/2023 - Use BuildCallProfileTemplate instead.
 	// Required permissions:
 	//
 	//	NONE
@@ -294,6 +296,21 @@ type WFMClient interface {
 	//   - grpc.NotFound: the @skill_profile_sid given is not found for the org.
 	//   - grpc.Internal: error occurs when building the call profile template.
 	BuildCallProfileTemplateForSkillProfile(ctx context.Context, in *BuildCallProfileTemplateForSkillProfileReq, opts ...grpc.CallOption) (*BuildCallProfileTemplateForSkillProfileRes, error)
+	// Builds and returns a call profile template for the org sending the request and the given @skill_profile_category.
+	// The template will be generated using the training data for said skill profile category using the @training_data_range and @averages_calculation_range_in_months
+	// from the client's saved forecasting parameters.
+	// The @total_calls in the returned template be summed from the (@training_data_start_datetime - @averages_calculation_range_in_months) to @training_data_end_datetime,
+	// or from @training_data_start_datetime to @training_data_end_datetime if @averages_calculation_range_in_months is 0.
+	// The fixed averages fields in the call profile template, will be set to the averages that the skill profile category has.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @skill_profile_category in the request is invalid.
+	//   - grpc.NotFound: the @skill_profile_category given is not found for the org.
+	//   - grpc.Internal: error occurs when building the call profile template.
+	BuildCallProfileTemplate(ctx context.Context, in *BuildCallProfileTemplateReq, opts ...grpc.CallOption) (*BuildCallProfileTemplateRes, error)
 	// Creates a mapping entry for the @inactive_skill_profile_sid to the @active_skill_profile_sid for the org sending the request.
 	// Required permissions:
 	//
@@ -1659,6 +1676,15 @@ func (c *wFMClient) BuildCallProfileTemplateForSkillProfile(ctx context.Context,
 	return out, nil
 }
 
+func (c *wFMClient) BuildCallProfileTemplate(ctx context.Context, in *BuildCallProfileTemplateReq, opts ...grpc.CallOption) (*BuildCallProfileTemplateRes, error) {
+	out := new(BuildCallProfileTemplateRes)
+	err := c.cc.Invoke(ctx, WFM_BuildCallProfileTemplate_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) CreateInactiveSkillProfileMapping(ctx context.Context, in *CreateInactiveSkillProfileMappingReq, opts ...grpc.CallOption) (*CreateInactiveSkillProfileMappingRes, error) {
 	out := new(CreateInactiveSkillProfileMappingRes)
 	err := c.cc.Invoke(ctx, WFM_CreateInactiveSkillProfileMapping_FullMethodName, in, out, opts...)
@@ -2851,6 +2877,7 @@ type WFMServer interface {
 	// The @total_calls in the returned template be summed from the (@training_data_start_datetime - @averages_calculation_range_in_months) to @training_data_end_datetime,
 	// or from @training_data_start_datetime to @training_data_end_datetime if @averages_calculation_range_in_months is 0.
 	// The fixed averages fields in the call profile template, will be set to the averages that the skill profile has.
+	// DEPRECATED as of Sep/7/2023 - Use BuildCallProfileTemplate instead.
 	// Required permissions:
 	//
 	//	NONE
@@ -2860,6 +2887,21 @@ type WFMServer interface {
 	//   - grpc.NotFound: the @skill_profile_sid given is not found for the org.
 	//   - grpc.Internal: error occurs when building the call profile template.
 	BuildCallProfileTemplateForSkillProfile(context.Context, *BuildCallProfileTemplateForSkillProfileReq) (*BuildCallProfileTemplateForSkillProfileRes, error)
+	// Builds and returns a call profile template for the org sending the request and the given @skill_profile_category.
+	// The template will be generated using the training data for said skill profile category using the @training_data_range and @averages_calculation_range_in_months
+	// from the client's saved forecasting parameters.
+	// The @total_calls in the returned template be summed from the (@training_data_start_datetime - @averages_calculation_range_in_months) to @training_data_end_datetime,
+	// or from @training_data_start_datetime to @training_data_end_datetime if @averages_calculation_range_in_months is 0.
+	// The fixed averages fields in the call profile template, will be set to the averages that the skill profile category has.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @skill_profile_category in the request is invalid.
+	//   - grpc.NotFound: the @skill_profile_category given is not found for the org.
+	//   - grpc.Internal: error occurs when building the call profile template.
+	BuildCallProfileTemplate(context.Context, *BuildCallProfileTemplateReq) (*BuildCallProfileTemplateRes, error)
 	// Creates a mapping entry for the @inactive_skill_profile_sid to the @active_skill_profile_sid for the org sending the request.
 	// Required permissions:
 	//
@@ -4144,6 +4186,9 @@ func (UnimplementedWFMServer) ListSkills(context.Context, *ListSkillsReq) (*List
 func (UnimplementedWFMServer) BuildCallProfileTemplateForSkillProfile(context.Context, *BuildCallProfileTemplateForSkillProfileReq) (*BuildCallProfileTemplateForSkillProfileRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BuildCallProfileTemplateForSkillProfile not implemented")
 }
+func (UnimplementedWFMServer) BuildCallProfileTemplate(context.Context, *BuildCallProfileTemplateReq) (*BuildCallProfileTemplateRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BuildCallProfileTemplate not implemented")
+}
 func (UnimplementedWFMServer) CreateInactiveSkillProfileMapping(context.Context, *CreateInactiveSkillProfileMappingReq) (*CreateInactiveSkillProfileMappingRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateInactiveSkillProfileMapping not implemented")
 }
@@ -4702,6 +4747,24 @@ func _WFM_BuildCallProfileTemplateForSkillProfile_Handler(srv interface{}, ctx c
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WFMServer).BuildCallProfileTemplateForSkillProfile(ctx, req.(*BuildCallProfileTemplateForSkillProfileReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_BuildCallProfileTemplate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BuildCallProfileTemplateReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).BuildCallProfileTemplate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_BuildCallProfileTemplate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).BuildCallProfileTemplate(ctx, req.(*BuildCallProfileTemplateReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -6669,6 +6732,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "BuildCallProfileTemplateForSkillProfile",
 			Handler:    _WFM_BuildCallProfileTemplateForSkillProfile_Handler,
+		},
+		{
+			MethodName: "BuildCallProfileTemplate",
+			Handler:    _WFM_BuildCallProfileTemplate_Handler,
 		},
 		{
 			MethodName: "CreateInactiveSkillProfileMapping",

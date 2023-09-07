@@ -80,6 +80,9 @@ const (
 	// WFMBuildCallProfileTemplateForSkillProfileProcedure is the fully-qualified name of the WFM's
 	// BuildCallProfileTemplateForSkillProfile RPC.
 	WFMBuildCallProfileTemplateForSkillProfileProcedure = "/api.v1alpha1.wfm.WFM/BuildCallProfileTemplateForSkillProfile"
+	// WFMBuildCallProfileTemplateProcedure is the fully-qualified name of the WFM's
+	// BuildCallProfileTemplate RPC.
+	WFMBuildCallProfileTemplateProcedure = "/api.v1alpha1.wfm.WFM/BuildCallProfileTemplate"
 	// WFMCreateInactiveSkillProfileMappingProcedure is the fully-qualified name of the WFM's
 	// CreateInactiveSkillProfileMapping RPC.
 	WFMCreateInactiveSkillProfileMappingProcedure = "/api.v1alpha1.wfm.WFM/CreateInactiveSkillProfileMapping"
@@ -496,6 +499,7 @@ type WFMClient interface {
 	// The @total_calls in the returned template be summed from the (@training_data_start_datetime - @averages_calculation_range_in_months) to @training_data_end_datetime,
 	// or from @training_data_start_datetime to @training_data_end_datetime if @averages_calculation_range_in_months is 0.
 	// The fixed averages fields in the call profile template, will be set to the averages that the skill profile has.
+	// DEPRECATED as of Sep/7/2023 - Use BuildCallProfileTemplate instead.
 	// Required permissions:
 	//
 	//	NONE
@@ -505,6 +509,21 @@ type WFMClient interface {
 	//   - grpc.NotFound: the @skill_profile_sid given is not found for the org.
 	//   - grpc.Internal: error occurs when building the call profile template.
 	BuildCallProfileTemplateForSkillProfile(context.Context, *connect_go.Request[wfm.BuildCallProfileTemplateForSkillProfileReq]) (*connect_go.Response[wfm.BuildCallProfileTemplateForSkillProfileRes], error)
+	// Builds and returns a call profile template for the org sending the request and the given @skill_profile_category.
+	// The template will be generated using the training data for said skill profile category using the @training_data_range and @averages_calculation_range_in_months
+	// from the client's saved forecasting parameters.
+	// The @total_calls in the returned template be summed from the (@training_data_start_datetime - @averages_calculation_range_in_months) to @training_data_end_datetime,
+	// or from @training_data_start_datetime to @training_data_end_datetime if @averages_calculation_range_in_months is 0.
+	// The fixed averages fields in the call profile template, will be set to the averages that the skill profile category has.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @skill_profile_category in the request is invalid.
+	//   - grpc.NotFound: the @skill_profile_category given is not found for the org.
+	//   - grpc.Internal: error occurs when building the call profile template.
+	BuildCallProfileTemplate(context.Context, *connect_go.Request[wfm.BuildCallProfileTemplateReq]) (*connect_go.Response[wfm.BuildCallProfileTemplateRes], error)
 	// Creates a mapping entry for the @inactive_skill_profile_sid to the @active_skill_profile_sid for the org sending the request.
 	// Required permissions:
 	//
@@ -1820,6 +1839,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMBuildCallProfileTemplateForSkillProfileProcedure,
 			opts...,
 		),
+		buildCallProfileTemplate: connect_go.NewClient[wfm.BuildCallProfileTemplateReq, wfm.BuildCallProfileTemplateRes](
+			httpClient,
+			baseURL+WFMBuildCallProfileTemplateProcedure,
+			opts...,
+		),
 		createInactiveSkillProfileMapping: connect_go.NewClient[wfm.CreateInactiveSkillProfileMappingReq, wfm.CreateInactiveSkillProfileMappingRes](
 			httpClient,
 			baseURL+WFMCreateInactiveSkillProfileMappingProcedure,
@@ -2363,6 +2387,7 @@ type wFMClient struct {
 	upsertHistoricalDataDeltas                    *connect_go.Client[wfm.UpsertHistoricalDataDeltasReq, wfm.UpsertHistoricalDataDeltasRes]
 	listSkills                                    *connect_go.Client[wfm.ListSkillsReq, wfm.ListSkillsRes]
 	buildCallProfileTemplateForSkillProfile       *connect_go.Client[wfm.BuildCallProfileTemplateForSkillProfileReq, wfm.BuildCallProfileTemplateForSkillProfileRes]
+	buildCallProfileTemplate                      *connect_go.Client[wfm.BuildCallProfileTemplateReq, wfm.BuildCallProfileTemplateRes]
 	createInactiveSkillProfileMapping             *connect_go.Client[wfm.CreateInactiveSkillProfileMappingReq, wfm.CreateInactiveSkillProfileMappingRes]
 	getAvailableRegressionForecasterModelTypes    *connect_go.Client[wfm.GetAvailableRegressionForecasterModelTypesReq, wfm.GetAvailableRegressionForecasterModelTypesRes]
 	disconnectInactiveSkillProfileMapping         *connect_go.Client[wfm.DisconnectInactiveSkillProfileMappingReq, wfm.DisconnectInactiveSkillProfileMappingRes]
@@ -2534,6 +2559,11 @@ func (c *wFMClient) ListSkills(ctx context.Context, req *connect_go.Request[wfm.
 // api.v1alpha1.wfm.WFM.BuildCallProfileTemplateForSkillProfile.
 func (c *wFMClient) BuildCallProfileTemplateForSkillProfile(ctx context.Context, req *connect_go.Request[wfm.BuildCallProfileTemplateForSkillProfileReq]) (*connect_go.Response[wfm.BuildCallProfileTemplateForSkillProfileRes], error) {
 	return c.buildCallProfileTemplateForSkillProfile.CallUnary(ctx, req)
+}
+
+// BuildCallProfileTemplate calls api.v1alpha1.wfm.WFM.BuildCallProfileTemplate.
+func (c *wFMClient) BuildCallProfileTemplate(ctx context.Context, req *connect_go.Request[wfm.BuildCallProfileTemplateReq]) (*connect_go.Response[wfm.BuildCallProfileTemplateRes], error) {
+	return c.buildCallProfileTemplate.CallUnary(ctx, req)
 }
 
 // CreateInactiveSkillProfileMapping calls api.v1alpha1.wfm.WFM.CreateInactiveSkillProfileMapping.
@@ -3201,6 +3231,7 @@ type WFMHandler interface {
 	// The @total_calls in the returned template be summed from the (@training_data_start_datetime - @averages_calculation_range_in_months) to @training_data_end_datetime,
 	// or from @training_data_start_datetime to @training_data_end_datetime if @averages_calculation_range_in_months is 0.
 	// The fixed averages fields in the call profile template, will be set to the averages that the skill profile has.
+	// DEPRECATED as of Sep/7/2023 - Use BuildCallProfileTemplate instead.
 	// Required permissions:
 	//
 	//	NONE
@@ -3210,6 +3241,21 @@ type WFMHandler interface {
 	//   - grpc.NotFound: the @skill_profile_sid given is not found for the org.
 	//   - grpc.Internal: error occurs when building the call profile template.
 	BuildCallProfileTemplateForSkillProfile(context.Context, *connect_go.Request[wfm.BuildCallProfileTemplateForSkillProfileReq]) (*connect_go.Response[wfm.BuildCallProfileTemplateForSkillProfileRes], error)
+	// Builds and returns a call profile template for the org sending the request and the given @skill_profile_category.
+	// The template will be generated using the training data for said skill profile category using the @training_data_range and @averages_calculation_range_in_months
+	// from the client's saved forecasting parameters.
+	// The @total_calls in the returned template be summed from the (@training_data_start_datetime - @averages_calculation_range_in_months) to @training_data_end_datetime,
+	// or from @training_data_start_datetime to @training_data_end_datetime if @averages_calculation_range_in_months is 0.
+	// The fixed averages fields in the call profile template, will be set to the averages that the skill profile category has.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @skill_profile_category in the request is invalid.
+	//   - grpc.NotFound: the @skill_profile_category given is not found for the org.
+	//   - grpc.Internal: error occurs when building the call profile template.
+	BuildCallProfileTemplate(context.Context, *connect_go.Request[wfm.BuildCallProfileTemplateReq]) (*connect_go.Response[wfm.BuildCallProfileTemplateRes], error)
 	// Creates a mapping entry for the @inactive_skill_profile_sid to the @active_skill_profile_sid for the org sending the request.
 	// Required permissions:
 	//
@@ -4521,6 +4567,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.BuildCallProfileTemplateForSkillProfile,
 		opts...,
 	)
+	wFMBuildCallProfileTemplateHandler := connect_go.NewUnaryHandler(
+		WFMBuildCallProfileTemplateProcedure,
+		svc.BuildCallProfileTemplate,
+		opts...,
+	)
 	wFMCreateInactiveSkillProfileMappingHandler := connect_go.NewUnaryHandler(
 		WFMCreateInactiveSkillProfileMappingProcedure,
 		svc.CreateInactiveSkillProfileMapping,
@@ -5074,6 +5125,8 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMListSkillsHandler.ServeHTTP(w, r)
 		case WFMBuildCallProfileTemplateForSkillProfileProcedure:
 			wFMBuildCallProfileTemplateForSkillProfileHandler.ServeHTTP(w, r)
+		case WFMBuildCallProfileTemplateProcedure:
+			wFMBuildCallProfileTemplateHandler.ServeHTTP(w, r)
 		case WFMCreateInactiveSkillProfileMappingProcedure:
 			wFMCreateInactiveSkillProfileMappingHandler.ServeHTTP(w, r)
 		case WFMGetAvailableRegressionForecasterModelTypesProcedure:
@@ -5343,6 +5396,10 @@ func (UnimplementedWFMHandler) ListSkills(context.Context, *connect_go.Request[w
 
 func (UnimplementedWFMHandler) BuildCallProfileTemplateForSkillProfile(context.Context, *connect_go.Request[wfm.BuildCallProfileTemplateForSkillProfileReq]) (*connect_go.Response[wfm.BuildCallProfileTemplateForSkillProfileRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.BuildCallProfileTemplateForSkillProfile is not implemented"))
+}
+
+func (UnimplementedWFMHandler) BuildCallProfileTemplate(context.Context, *connect_go.Request[wfm.BuildCallProfileTemplateReq]) (*connect_go.Response[wfm.BuildCallProfileTemplateRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.BuildCallProfileTemplate is not implemented"))
 }
 
 func (UnimplementedWFMHandler) CreateInactiveSkillProfileMapping(context.Context, *connect_go.Request[wfm.CreateInactiveSkillProfileMappingReq]) (*connect_go.Response[wfm.CreateInactiveSkillProfileMappingRes], error) {
