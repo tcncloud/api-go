@@ -1174,7 +1174,7 @@ type HistoricalDataInterval struct {
 	// time that this interval starts at.
 	StartDatetime *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=start_datetime,json=startDatetime,proto3" json:"start_datetime,omitempty"`
 	// ID of the skill profile that this interval belongs to.
-	// Deprecated: use skill_profile_category instead.
+	// Deprecated as of Sep/8/2023: use skill_profile_category instead.
 	//
 	// Deprecated: Marked as deprecated in api/v1alpha1/wfm/wfm.proto.
 	SkillProfileSid int64 `protobuf:"varint,2,opt,name=skill_profile_sid,json=skillProfileSid,proto3" json:"skill_profile_sid,omitempty"`
@@ -1363,7 +1363,7 @@ type ListHistoricalDataReq struct {
 	unknownFields protoimpl.UnknownFields
 
 	// ID of the skill profile used to examine matching calls in the client's historical data.
-	// Deprecated: use skill_profile_category instead.
+	// Deprecated as of Sep/8/2023: use skill_profile_category instead.
 	//
 	// Deprecated: Marked as deprecated in api/v1alpha1/wfm/wfm.proto.
 	SkillProfileSid int64 `protobuf:"varint,1,opt,name=skill_profile_sid,json=skillProfileSid,proto3" json:"skill_profile_sid,omitempty"`
@@ -2664,7 +2664,7 @@ type BuildProfileForecastByIntervalReq struct {
 	// Otherwise, it will do a regular profile forecast and only the fixed averages fields @call_profile_template will be ignored.
 	FixedAveragesForecast bool `protobuf:"varint,2,opt,name=fixed_averages_forecast,json=fixedAveragesForecast,proto3" json:"fixed_averages_forecast,omitempty"`
 	// ID of the skill profile that the forecast will belong to.
-	// Deprecated: use skill_profile_category instead.
+	// Deprecated as of Sep/8/2023: use skill_profile_category instead.
 	//
 	// Deprecated: Marked as deprecated in api/v1alpha1/wfm/wfm.proto.
 	SkillProfileSid int64 `protobuf:"varint,3,opt,name=skill_profile_sid,json=skillProfileSid,proto3" json:"skill_profile_sid,omitempty"`
@@ -2742,7 +2742,7 @@ type CallDataByInterval struct {
 	// Start time of the interval.
 	StartDatetime *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=start_datetime,json=startDatetime,proto3" json:"start_datetime,omitempty"`
 	// ID of the skill profile to forecast for (not set in profile forecasts).
-	// Deprecated: use skill_profile_category instead.
+	// Deprecated as of Sep/8/2023: use skill_profile_category instead.
 	//
 	// Deprecated: Marked as deprecated in api/v1alpha1/wfm/wfm.proto.
 	SkillProfileSid int64 `protobuf:"varint,2,opt,name=skill_profile_sid,json=skillProfileSid,proto3" json:"skill_profile_sid,omitempty"`
@@ -2899,7 +2899,7 @@ type BuildProfileForecastByIntervalWithStatsReq struct {
 	// Otherwise, it will do a regular profile forecast and only the fixed averages fields @call_profile_template will be ignored.
 	FixedAveragesForecast bool `protobuf:"varint,2,opt,name=fixed_averages_forecast,json=fixedAveragesForecast,proto3" json:"fixed_averages_forecast,omitempty"`
 	// ID of the skill profile that the forecast will belong to.
-	// Deprecated: use skill_profile_category instead.
+	// Deprecated as of Sep/8/2023: use skill_profile_category instead.
 	//
 	// Deprecated: Marked as deprecated in api/v1alpha1/wfm/wfm.proto.
 	SkillProfileSid int64 `protobuf:"varint,3,opt,name=skill_profile_sid,json=skillProfileSid,proto3" json:"skill_profile_sid,omitempty"`
@@ -3062,7 +3062,7 @@ type UpsertProfileForecastReq struct {
 	unknownFields protoimpl.UnknownFields
 
 	// ID of the skill profile that the forecast will belong to.
-	// Deprecated: use skill_profile_category instead.
+	// Deprecated as of Sep/8/2023: use skill_profile_category instead.
 	//
 	// Deprecated: Marked as deprecated in api/v1alpha1/wfm/wfm.proto.
 	SkillProfileSid int64 `protobuf:"varint,1,opt,name=skill_profile_sid,json=skillProfileSid,proto3" json:"skill_profile_sid,omitempty"`
