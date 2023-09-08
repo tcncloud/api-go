@@ -590,7 +590,7 @@ type WFMClient interface {
 	// Builds a profile forecast using the provided @call_profile_template.
 	// The forecaster will produce intervals from the following range using the client's saved forecasting parameters:
 	// (@training_data_range_end_datetime - @forecast_test_range_in_weeks) to @forecast_range_end_datetime.
-	// The @total_calls in the @call_profile_template will be scaled using the same ranges as BuildCallProfileTemplateForSkillProfile.
+	// The @total_calls in the @call_profile_template will be scaled using the same ranges as BuildCallProfileTemplate.
 	// The @fixed_averages_forecast field indicates whether or not to do a fixed averages forecast.
 	// Required permissions:
 	//
@@ -603,15 +603,15 @@ type WFMClient interface {
 	// Builds a profile forecast using the provided @call_profile_template.
 	// The forecaster will produce intervals from the following range using the client's saved forecasting parameters:
 	// (@training_data_range_end_datetime - @forecast_test_range_in_weeks) to @forecast_range_end_datetime.
-	// The @total_calls in the @call_profile_template will be scaled using the same ranges as BuildCallProfileTemplateForSkillProfile.
+	// The @total_calls in the @call_profile_template will be scaled using the same ranges as BuildCallProfileTemplate.
 	// The @fixed_averages_forecast field indicates whether or not to do a fixed averages forecast.
-	// It also returns the statistics of the produced forecast by using the test data of the given @skill_profile_sid.
+	// It also returns the statistics of the produced forecast by using the test data of the given @skill_profile_category.
 	// Required permissions:
 	//
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @skill_profile_sid or @call_profile_template in the request is invalid.
+	//   - grpc.Invalid: the @skill_profile_category or @call_profile_template in the request is invalid.
 	//   - grpc.Internal: error occurs during the building of the profile forecast.
 	BuildProfileForecastByIntervalWithStats(context.Context, *connect_go.Request[wfm.BuildProfileForecastByIntervalWithStatsReq]) (*connect_go.ServerStreamForClient[wfm.BuildProfileForecastByIntervalWithStatsRes], error)
 	// Builds a profile forecast for the given @skill_profile_sid and org sending the request using the given @call_profile_template.
@@ -3326,7 +3326,7 @@ type WFMHandler interface {
 	// Builds a profile forecast using the provided @call_profile_template.
 	// The forecaster will produce intervals from the following range using the client's saved forecasting parameters:
 	// (@training_data_range_end_datetime - @forecast_test_range_in_weeks) to @forecast_range_end_datetime.
-	// The @total_calls in the @call_profile_template will be scaled using the same ranges as BuildCallProfileTemplateForSkillProfile.
+	// The @total_calls in the @call_profile_template will be scaled using the same ranges as BuildCallProfileTemplate.
 	// The @fixed_averages_forecast field indicates whether or not to do a fixed averages forecast.
 	// Required permissions:
 	//
@@ -3339,15 +3339,15 @@ type WFMHandler interface {
 	// Builds a profile forecast using the provided @call_profile_template.
 	// The forecaster will produce intervals from the following range using the client's saved forecasting parameters:
 	// (@training_data_range_end_datetime - @forecast_test_range_in_weeks) to @forecast_range_end_datetime.
-	// The @total_calls in the @call_profile_template will be scaled using the same ranges as BuildCallProfileTemplateForSkillProfile.
+	// The @total_calls in the @call_profile_template will be scaled using the same ranges as BuildCallProfileTemplate.
 	// The @fixed_averages_forecast field indicates whether or not to do a fixed averages forecast.
-	// It also returns the statistics of the produced forecast by using the test data of the given @skill_profile_sid.
+	// It also returns the statistics of the produced forecast by using the test data of the given @skill_profile_category.
 	// Required permissions:
 	//
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @skill_profile_sid or @call_profile_template in the request is invalid.
+	//   - grpc.Invalid: the @skill_profile_category or @call_profile_template in the request is invalid.
 	//   - grpc.Internal: error occurs during the building of the profile forecast.
 	BuildProfileForecastByIntervalWithStats(context.Context, *connect_go.Request[wfm.BuildProfileForecastByIntervalWithStatsReq], *connect_go.ServerStream[wfm.BuildProfileForecastByIntervalWithStatsRes]) error
 	// Builds a profile forecast for the given @skill_profile_sid and org sending the request using the given @call_profile_template.
