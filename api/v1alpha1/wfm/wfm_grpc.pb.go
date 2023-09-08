@@ -809,6 +809,7 @@ type WFMClient interface {
 	// if @include_skill_proficiencies is true then agents returned will include their skill proficiencies.
 	// if @include_agent_groups is true then the @agent_groups_by_agent response field will be set with a list of agent groups correlating to each agents index in the @wfm_agents field.
 	// if @include_agent_groups is set to true, the @agent_group_schedule_scenario_sid field must be set, so that the agent groups for the correct scenario are returned.
+	// if @include_agent_groups is set to true, and @agent_group_schedule_scenario_sid is not set, the agent groups will not be filtered by schedule scenario.
 	// if @include_agent_groups is set to false, the @agent_group_schedule_scenario_sid will be ignored.
 	// @agent_group_schedule_scenario_sid does not effect which @wfm_agents are returned.
 	// WFM agents with no associated agent_groups will have an empty slice in agent_groups_by_agent at their correlated index.
@@ -3379,6 +3380,7 @@ type WFMServer interface {
 	// if @include_skill_proficiencies is true then agents returned will include their skill proficiencies.
 	// if @include_agent_groups is true then the @agent_groups_by_agent response field will be set with a list of agent groups correlating to each agents index in the @wfm_agents field.
 	// if @include_agent_groups is set to true, the @agent_group_schedule_scenario_sid field must be set, so that the agent groups for the correct scenario are returned.
+	// if @include_agent_groups is set to true, and @agent_group_schedule_scenario_sid is not set, the agent groups will not be filtered by schedule scenario.
 	// if @include_agent_groups is set to false, the @agent_group_schedule_scenario_sid will be ignored.
 	// @agent_group_schedule_scenario_sid does not effect which @wfm_agents are returned.
 	// WFM agents with no associated agent_groups will have an empty slice in agent_groups_by_agent at their correlated index.

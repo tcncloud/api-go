@@ -8284,6 +8284,7 @@ type ListAllWFMAgentsReq struct {
 	// Indicates if the resulting WFM agents should include the groups that they are members of.
 	IncludeAgentGroups bool `protobuf:"varint,3,opt,name=include_agent_groups,json=includeAgentGroups,proto3" json:"include_agent_groups,omitempty"`
 	// Indicates the schedule scenario that returned @agent_groups belong to.
+	// If set to zero, the agent groups will not be filtered by schedule scenario.
 	// Does not effect which @wfm_agents are returned.
 	AgentGroupScheduleScenarioSid int64 `protobuf:"varint,4,opt,name=agent_group_schedule_scenario_sid,json=agentGroupScheduleScenarioSid,proto3" json:"agent_group_schedule_scenario_sid,omitempty"`
 }
