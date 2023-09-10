@@ -8618,7 +8618,7 @@ type ListWFMAgentSidsReq struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// ID's of the agents to get the related wfm_agent_sid for.
+	// IDs of the agents to get the related wfm_agent_sid for.
 	TcnAgentSids []int64 `protobuf:"varint,1,rep,packed,name=tcn_agent_sids,json=tcnAgentSids,proto3" json:"tcn_agent_sids,omitempty"`
 }
 

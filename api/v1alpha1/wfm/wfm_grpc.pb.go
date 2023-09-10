@@ -841,7 +841,7 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when getting the wfm agents.
 	ListUngroupedWFMAgents(ctx context.Context, in *ListUngroupedWFMAgentsReq, opts ...grpc.CallOption) (*ListUngroupedWFMAgentsRes, error)
 	// Gets the wfm_agent_sids with the given @tcn_agent_sids for the org sending the request.
-	// Returns a Key:Pair map from the tcn_agent_sid to it's wfm_agent_sid.
+	// Returns a map where Key: tcn_agent_sid - Value: wfm_agent_sid.
 	// If the wfm_agent_sid is not found for any @tcn_agent_sids, they will not have an entry in the returned @sids.
 	// Required permissions:
 	//
@@ -3428,7 +3428,7 @@ type WFMServer interface {
 	//   - grpc.Internal: error occurs when getting the wfm agents.
 	ListUngroupedWFMAgents(context.Context, *ListUngroupedWFMAgentsReq) (*ListUngroupedWFMAgentsRes, error)
 	// Gets the wfm_agent_sids with the given @tcn_agent_sids for the org sending the request.
-	// Returns a Key:Pair map from the tcn_agent_sid to it's wfm_agent_sid.
+	// Returns a map where Key: tcn_agent_sid - Value: wfm_agent_sid.
 	// If the wfm_agent_sid is not found for any @tcn_agent_sids, they will not have an entry in the returned @sids.
 	// Required permissions:
 	//
