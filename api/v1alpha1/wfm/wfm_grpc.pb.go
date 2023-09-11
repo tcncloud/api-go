@@ -80,6 +80,7 @@ const (
 	WFM_UpdateLocationNode_FullMethodName                            = "/api.v1alpha1.wfm.WFM/UpdateLocationNode"
 	WFM_CreateProgramNode_FullMethodName                             = "/api.v1alpha1.wfm.WFM/CreateProgramNode"
 	WFM_UpdateProgramNode_FullMethodName                             = "/api.v1alpha1.wfm.WFM/UpdateProgramNode"
+	WFM_ListProgramNodesBySid_FullMethodName                         = "/api.v1alpha1.wfm.WFM/ListProgramNodesBySid"
 	WFM_CreateConstraintRule_FullMethodName                          = "/api.v1alpha1.wfm.WFM/CreateConstraintRule"
 	WFM_UpdateConstraintRule_FullMethodName                          = "/api.v1alpha1.wfm.WFM/UpdateConstraintRule"
 	WFM_DeleteConstraintRule_FullMethodName                          = "/api.v1alpha1.wfm.WFM/DeleteConstraintRule"
@@ -683,6 +684,15 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when updating the program node.
 	//   - grpc.NotFound: entry to be updated doesn't exist, or the given parent @location_node_sid belongs to a different scenario than the program node to update.
 	UpdateProgramNode(ctx context.Context, in *UpdateProgramNodeReq, opts ...grpc.CallOption) (*UpdateProgramNodeRes, error)
+	// Lists the program nodes with the given @program_node_sids for the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the given @program_node_sids are invalid.
+	//   - grpc.Internal: error occurs when listing the program nodes.
+	ListProgramNodesBySid(ctx context.Context, in *ListProgramNodesBySidReq, opts ...grpc.CallOption) (*ListProgramNodesBySidRes, error)
 	// Creates the given @constraint_rule for the org sending the request.
 	// The @constraint_rule_sid and @skill_proficiency_sid (if one was created) of the new entities will be returned in the response.
 	// The @schedule_scenario_sid must match the scenario of the @parent_entity.
@@ -2099,6 +2109,15 @@ func (c *wFMClient) UpdateProgramNode(ctx context.Context, in *UpdateProgramNode
 	return out, nil
 }
 
+func (c *wFMClient) ListProgramNodesBySid(ctx context.Context, in *ListProgramNodesBySidReq, opts ...grpc.CallOption) (*ListProgramNodesBySidRes, error) {
+	out := new(ListProgramNodesBySidRes)
+	err := c.cc.Invoke(ctx, WFM_ListProgramNodesBySid_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) CreateConstraintRule(ctx context.Context, in *CreateConstraintRuleReq, opts ...grpc.CallOption) (*CreateConstraintRuleRes, error) {
 	out := new(CreateConstraintRuleRes)
 	err := c.cc.Invoke(ctx, WFM_CreateConstraintRule_FullMethodName, in, out, opts...)
@@ -3276,6 +3295,15 @@ type WFMServer interface {
 	//   - grpc.Internal: error occurs when updating the program node.
 	//   - grpc.NotFound: entry to be updated doesn't exist, or the given parent @location_node_sid belongs to a different scenario than the program node to update.
 	UpdateProgramNode(context.Context, *UpdateProgramNodeReq) (*UpdateProgramNodeRes, error)
+	// Lists the program nodes with the given @program_node_sids for the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the given @program_node_sids are invalid.
+	//   - grpc.Internal: error occurs when listing the program nodes.
+	ListProgramNodesBySid(context.Context, *ListProgramNodesBySidReq) (*ListProgramNodesBySidRes, error)
 	// Creates the given @constraint_rule for the org sending the request.
 	// The @constraint_rule_sid and @skill_proficiency_sid (if one was created) of the new entities will be returned in the response.
 	// The @schedule_scenario_sid must match the scenario of the @parent_entity.
@@ -4290,6 +4318,9 @@ func (UnimplementedWFMServer) CreateProgramNode(context.Context, *CreateProgramN
 }
 func (UnimplementedWFMServer) UpdateProgramNode(context.Context, *UpdateProgramNodeReq) (*UpdateProgramNodeRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateProgramNode not implemented")
+}
+func (UnimplementedWFMServer) ListProgramNodesBySid(context.Context, *ListProgramNodesBySidReq) (*ListProgramNodesBySidRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListProgramNodesBySid not implemented")
 }
 func (UnimplementedWFMServer) CreateConstraintRule(context.Context, *CreateConstraintRuleReq) (*CreateConstraintRuleRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateConstraintRule not implemented")
@@ -5377,6 +5408,24 @@ func _WFM_UpdateProgramNode_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WFMServer).UpdateProgramNode(ctx, req.(*UpdateProgramNodeReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_ListProgramNodesBySid_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListProgramNodesBySidReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).ListProgramNodesBySid(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_ListProgramNodesBySid_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).ListProgramNodesBySid(ctx, req.(*ListProgramNodesBySidReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -6851,6 +6900,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateProgramNode",
 			Handler:    _WFM_UpdateProgramNode_Handler,
+		},
+		{
+			MethodName: "ListProgramNodesBySid",
+			Handler:    _WFM_ListProgramNodesBySid_Handler,
 		},
 		{
 			MethodName: "CreateConstraintRule",

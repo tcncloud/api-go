@@ -176,6 +176,9 @@ const (
 	WFMCreateProgramNodeProcedure = "/api.v1alpha1.wfm.WFM/CreateProgramNode"
 	// WFMUpdateProgramNodeProcedure is the fully-qualified name of the WFM's UpdateProgramNode RPC.
 	WFMUpdateProgramNodeProcedure = "/api.v1alpha1.wfm.WFM/UpdateProgramNode"
+	// WFMListProgramNodesBySidProcedure is the fully-qualified name of the WFM's ListProgramNodesBySid
+	// RPC.
+	WFMListProgramNodesBySidProcedure = "/api.v1alpha1.wfm.WFM/ListProgramNodesBySid"
 	// WFMCreateConstraintRuleProcedure is the fully-qualified name of the WFM's CreateConstraintRule
 	// RPC.
 	WFMCreateConstraintRuleProcedure = "/api.v1alpha1.wfm.WFM/CreateConstraintRule"
@@ -897,6 +900,15 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when updating the program node.
 	//   - grpc.NotFound: entry to be updated doesn't exist, or the given parent @location_node_sid belongs to a different scenario than the program node to update.
 	UpdateProgramNode(context.Context, *connect_go.Request[wfm.UpdateProgramNodeReq]) (*connect_go.Response[wfm.UpdateProgramNodeRes], error)
+	// Lists the program nodes with the given @program_node_sids for the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the given @program_node_sids are invalid.
+	//   - grpc.Internal: error occurs when listing the program nodes.
+	ListProgramNodesBySid(context.Context, *connect_go.Request[wfm.ListProgramNodesBySidReq]) (*connect_go.Response[wfm.ListProgramNodesBySidRes], error)
 	// Creates the given @constraint_rule for the org sending the request.
 	// The @constraint_rule_sid and @skill_proficiency_sid (if one was created) of the new entities will be returned in the response.
 	// The @schedule_scenario_sid must match the scenario of the @parent_entity.
@@ -2011,6 +2023,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMUpdateProgramNodeProcedure,
 			opts...,
 		),
+		listProgramNodesBySid: connect_go.NewClient[wfm.ListProgramNodesBySidReq, wfm.ListProgramNodesBySidRes](
+			httpClient,
+			baseURL+WFMListProgramNodesBySidProcedure,
+			opts...,
+		),
 		createConstraintRule: connect_go.NewClient[wfm.CreateConstraintRuleReq, wfm.CreateConstraintRuleRes](
 			httpClient,
 			baseURL+WFMCreateConstraintRuleProcedure,
@@ -2423,6 +2440,7 @@ type wFMClient struct {
 	updateLocationNode                            *connect_go.Client[wfm.UpdateLocationNodeReq, wfm.UpdateLocationNodeRes]
 	createProgramNode                             *connect_go.Client[wfm.CreateProgramNodeReq, wfm.CreateProgramNodeRes]
 	updateProgramNode                             *connect_go.Client[wfm.UpdateProgramNodeReq, wfm.UpdateProgramNodeRes]
+	listProgramNodesBySid                         *connect_go.Client[wfm.ListProgramNodesBySidReq, wfm.ListProgramNodesBySidRes]
 	createConstraintRule                          *connect_go.Client[wfm.CreateConstraintRuleReq, wfm.CreateConstraintRuleRes]
 	updateConstraintRule                          *connect_go.Client[wfm.UpdateConstraintRuleReq, wfm.UpdateConstraintRuleRes]
 	deleteConstraintRule                          *connect_go.Client[wfm.DeleteConstraintRuleReq, wfm.DeleteConstraintRuleRes]
@@ -2741,6 +2759,11 @@ func (c *wFMClient) CreateProgramNode(ctx context.Context, req *connect_go.Reque
 // UpdateProgramNode calls api.v1alpha1.wfm.WFM.UpdateProgramNode.
 func (c *wFMClient) UpdateProgramNode(ctx context.Context, req *connect_go.Request[wfm.UpdateProgramNodeReq]) (*connect_go.Response[wfm.UpdateProgramNodeRes], error) {
 	return c.updateProgramNode.CallUnary(ctx, req)
+}
+
+// ListProgramNodesBySid calls api.v1alpha1.wfm.WFM.ListProgramNodesBySid.
+func (c *wFMClient) ListProgramNodesBySid(ctx context.Context, req *connect_go.Request[wfm.ListProgramNodesBySidReq]) (*connect_go.Response[wfm.ListProgramNodesBySidRes], error) {
+	return c.listProgramNodesBySid.CallUnary(ctx, req)
 }
 
 // CreateConstraintRule calls api.v1alpha1.wfm.WFM.CreateConstraintRule.
@@ -3633,6 +3656,15 @@ type WFMHandler interface {
 	//   - grpc.Internal: error occurs when updating the program node.
 	//   - grpc.NotFound: entry to be updated doesn't exist, or the given parent @location_node_sid belongs to a different scenario than the program node to update.
 	UpdateProgramNode(context.Context, *connect_go.Request[wfm.UpdateProgramNodeReq]) (*connect_go.Response[wfm.UpdateProgramNodeRes], error)
+	// Lists the program nodes with the given @program_node_sids for the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the given @program_node_sids are invalid.
+	//   - grpc.Internal: error occurs when listing the program nodes.
+	ListProgramNodesBySid(context.Context, *connect_go.Request[wfm.ListProgramNodesBySidReq]) (*connect_go.Response[wfm.ListProgramNodesBySidRes], error)
 	// Creates the given @constraint_rule for the org sending the request.
 	// The @constraint_rule_sid and @skill_proficiency_sid (if one was created) of the new entities will be returned in the response.
 	// The @schedule_scenario_sid must match the scenario of the @parent_entity.
@@ -4743,6 +4775,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.UpdateProgramNode,
 		opts...,
 	)
+	wFMListProgramNodesBySidHandler := connect_go.NewUnaryHandler(
+		WFMListProgramNodesBySidProcedure,
+		svc.ListProgramNodesBySid,
+		opts...,
+	)
 	wFMCreateConstraintRuleHandler := connect_go.NewUnaryHandler(
 		WFMCreateConstraintRuleProcedure,
 		svc.CreateConstraintRule,
@@ -5199,6 +5236,8 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMCreateProgramNodeHandler.ServeHTTP(w, r)
 		case WFMUpdateProgramNodeProcedure:
 			wFMUpdateProgramNodeHandler.ServeHTTP(w, r)
+		case WFMListProgramNodesBySidProcedure:
+			wFMListProgramNodesBySidHandler.ServeHTTP(w, r)
 		case WFMCreateConstraintRuleProcedure:
 			wFMCreateConstraintRuleHandler.ServeHTTP(w, r)
 		case WFMUpdateConstraintRuleProcedure:
@@ -5538,6 +5577,10 @@ func (UnimplementedWFMHandler) CreateProgramNode(context.Context, *connect_go.Re
 
 func (UnimplementedWFMHandler) UpdateProgramNode(context.Context, *connect_go.Request[wfm.UpdateProgramNodeReq]) (*connect_go.Response[wfm.UpdateProgramNodeRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.UpdateProgramNode is not implemented"))
+}
+
+func (UnimplementedWFMHandler) ListProgramNodesBySid(context.Context, *connect_go.Request[wfm.ListProgramNodesBySidReq]) (*connect_go.Response[wfm.ListProgramNodesBySidRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListProgramNodesBySid is not implemented"))
 }
 
 func (UnimplementedWFMHandler) CreateConstraintRule(context.Context, *connect_go.Request[wfm.CreateConstraintRuleReq]) (*connect_go.Response[wfm.CreateConstraintRuleRes], error) {
