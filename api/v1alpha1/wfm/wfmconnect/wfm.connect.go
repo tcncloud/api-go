@@ -80,6 +80,9 @@ const (
 	// WFMBuildCallProfileTemplateForSkillProfileProcedure is the fully-qualified name of the WFM's
 	// BuildCallProfileTemplateForSkillProfile RPC.
 	WFMBuildCallProfileTemplateForSkillProfileProcedure = "/api.v1alpha1.wfm.WFM/BuildCallProfileTemplateForSkillProfile"
+	// WFMBuildCallProfileTemplateProcedure is the fully-qualified name of the WFM's
+	// BuildCallProfileTemplate RPC.
+	WFMBuildCallProfileTemplateProcedure = "/api.v1alpha1.wfm.WFM/BuildCallProfileTemplate"
 	// WFMCreateInactiveSkillProfileMappingProcedure is the fully-qualified name of the WFM's
 	// CreateInactiveSkillProfileMapping RPC.
 	WFMCreateInactiveSkillProfileMappingProcedure = "/api.v1alpha1.wfm.WFM/CreateInactiveSkillProfileMapping"
@@ -173,6 +176,9 @@ const (
 	WFMCreateProgramNodeProcedure = "/api.v1alpha1.wfm.WFM/CreateProgramNode"
 	// WFMUpdateProgramNodeProcedure is the fully-qualified name of the WFM's UpdateProgramNode RPC.
 	WFMUpdateProgramNodeProcedure = "/api.v1alpha1.wfm.WFM/UpdateProgramNode"
+	// WFMListProgramNodesBySidProcedure is the fully-qualified name of the WFM's ListProgramNodesBySid
+	// RPC.
+	WFMListProgramNodesBySidProcedure = "/api.v1alpha1.wfm.WFM/ListProgramNodesBySid"
 	// WFMCreateConstraintRuleProcedure is the fully-qualified name of the WFM's CreateConstraintRule
 	// RPC.
 	WFMCreateConstraintRuleProcedure = "/api.v1alpha1.wfm.WFM/CreateConstraintRule"
@@ -446,19 +452,18 @@ type WFMClient interface {
 	// Errors:
 	//   - grpc.Internal: error occurs when getting the parameters.
 	GetForecastingParameters(context.Context, *connect_go.Request[wfm.GetForecastingParametersReq]) (*connect_go.Response[wfm.GetForecastingParametersRes], error)
-	// Gets the historical data for the org sending the request and the given @skill_profile_sid.
+	// Gets the historical data for the org sending the request and the given @skill_profile_category.
 	// It will look through the client's call history and generate the historical data by using their configured forecasting parameters (historical data period and interval width).
 	// The duration of each interval will be the interval width of the org's forecasting parameters.
-	// It also applies any deltas that the client has stored for the given @SkillProfileSid.
+	// It also applies any deltas that the client has stored for the given @skill_profile_category, if the category is a group it will use the deltas of the skill profiles part of that group.
 	// If the client has no historical data, only the deltas will be applied to the returned intervals, all other intervals will have nil averages.
-	// If any inactive skill profiles are mapped to the given @skill_profile_sid, the call history and deltas of those skill profiles will be included for the historical data calculation.
 	// Required permissions:
 	//
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @skill_profile_sid in the request is invalid.
-	//   - grpc.NotFound: the @skill_profile_sid given is not found for the org.
+	//   - grpc.Invalid: the @skill_profile_category in the request is invalid.
+	//   - grpc.NotFound: the @skill_profile_category given is not found for the org.
 	//   - grpc.Internal: error occurs when getting the historical data.
 	ListHistoricalData(context.Context, *connect_go.Request[wfm.ListHistoricalDataReq]) (*connect_go.Response[wfm.ListHistoricalDataRes], error)
 	// Tries to create an entry for the given @delta for the org sending the request.
@@ -497,6 +502,7 @@ type WFMClient interface {
 	// The @total_calls in the returned template be summed from the (@training_data_start_datetime - @averages_calculation_range_in_months) to @training_data_end_datetime,
 	// or from @training_data_start_datetime to @training_data_end_datetime if @averages_calculation_range_in_months is 0.
 	// The fixed averages fields in the call profile template, will be set to the averages that the skill profile has.
+	// DEPRECATED as of Sep/7/2023 - Use BuildCallProfileTemplate instead.
 	// Required permissions:
 	//
 	//	NONE
@@ -505,7 +511,24 @@ type WFMClient interface {
 	//   - grpc.Invalid: the @skill_profile_sid in the request is invalid.
 	//   - grpc.NotFound: the @skill_profile_sid given is not found for the org.
 	//   - grpc.Internal: error occurs when building the call profile template.
+	//
+	// Deprecated: do not use.
 	BuildCallProfileTemplateForSkillProfile(context.Context, *connect_go.Request[wfm.BuildCallProfileTemplateForSkillProfileReq]) (*connect_go.Response[wfm.BuildCallProfileTemplateForSkillProfileRes], error)
+	// Builds and returns a call profile template for the org sending the request and the given @skill_profile_category.
+	// The template will be generated using the training data for said skill profile category using the @training_data_range and @averages_calculation_range_in_months
+	// from the client's saved forecasting parameters.
+	// The @total_calls in the returned template be summed from the (@training_data_start_datetime - @averages_calculation_range_in_months) to @training_data_end_datetime,
+	// or from @training_data_start_datetime to @training_data_end_datetime if @averages_calculation_range_in_months is 0.
+	// The fixed averages fields in the call profile template, will be set to the averages that the skill profile category has.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @skill_profile_category in the request is invalid.
+	//   - grpc.NotFound: the @skill_profile_category given is not found for the org.
+	//   - grpc.Internal: error occurs when building the call profile template.
+	BuildCallProfileTemplate(context.Context, *connect_go.Request[wfm.BuildCallProfileTemplateReq]) (*connect_go.Response[wfm.BuildCallProfileTemplateRes], error)
 	// Creates a mapping entry for the @inactive_skill_profile_sid to the @active_skill_profile_sid for the org sending the request.
 	// Required permissions:
 	//
@@ -570,28 +593,28 @@ type WFMClient interface {
 	// Builds a profile forecast using the provided @call_profile_template.
 	// The forecaster will produce intervals from the following range using the client's saved forecasting parameters:
 	// (@training_data_range_end_datetime - @forecast_test_range_in_weeks) to @forecast_range_end_datetime.
-	// The @total_calls in the @call_profile_template will be scaled using the same ranges as BuildCallProfileTemplateForSkillProfile.
+	// The @total_calls in the @call_profile_template will be scaled using the same ranges as BuildCallProfileTemplate.
 	// The @fixed_averages_forecast field indicates whether or not to do a fixed averages forecast.
 	// Required permissions:
 	//
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @skill_profile_sid or @call_profile_template in the request is invalid.
+	//   - grpc.Invalid: the @skill_profile_category or @call_profile_template in the request is invalid.
 	//   - grpc.Internal: error occurs during the building of the profile forecast.
 	BuildProfileForecastByInterval(context.Context, *connect_go.Request[wfm.BuildProfileForecastByIntervalReq]) (*connect_go.ServerStreamForClient[wfm.CallDataByInterval], error)
 	// Builds a profile forecast using the provided @call_profile_template.
 	// The forecaster will produce intervals from the following range using the client's saved forecasting parameters:
 	// (@training_data_range_end_datetime - @forecast_test_range_in_weeks) to @forecast_range_end_datetime.
-	// The @total_calls in the @call_profile_template will be scaled using the same ranges as BuildCallProfileTemplateForSkillProfile.
+	// The @total_calls in the @call_profile_template will be scaled using the same ranges as BuildCallProfileTemplate.
 	// The @fixed_averages_forecast field indicates whether or not to do a fixed averages forecast.
-	// It also returns the statistics of the produced forecast by using the test data of the given @skill_profile_sid.
+	// It also returns the statistics of the produced forecast by using the test data of the given @skill_profile_category.
 	// Required permissions:
 	//
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @skill_profile_sid or @call_profile_template in the request is invalid.
+	//   - grpc.Invalid: the @skill_profile_category or @call_profile_template in the request is invalid.
 	//   - grpc.Internal: error occurs during the building of the profile forecast.
 	BuildProfileForecastByIntervalWithStats(context.Context, *connect_go.Request[wfm.BuildProfileForecastByIntervalWithStatsReq]) (*connect_go.ServerStreamForClient[wfm.BuildProfileForecastByIntervalWithStatsRes], error)
 	// Builds a profile forecast for the given @skill_profile_sid and org sending the request using the given @call_profile_template.
@@ -877,6 +900,15 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when updating the program node.
 	//   - grpc.NotFound: entry to be updated doesn't exist, or the given parent @location_node_sid belongs to a different scenario than the program node to update.
 	UpdateProgramNode(context.Context, *connect_go.Request[wfm.UpdateProgramNodeReq]) (*connect_go.Response[wfm.UpdateProgramNodeRes], error)
+	// Lists the program nodes with the given @program_node_sids for the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the given @program_node_sids are invalid.
+	//   - grpc.Internal: error occurs when listing the program nodes.
+	ListProgramNodesBySid(context.Context, *connect_go.Request[wfm.ListProgramNodesBySidReq]) (*connect_go.Response[wfm.ListProgramNodesBySidRes], error)
 	// Creates the given @constraint_rule for the org sending the request.
 	// The @constraint_rule_sid and @skill_proficiency_sid (if one was created) of the new entities will be returned in the response.
 	// The @schedule_scenario_sid must match the scenario of the @parent_entity.
@@ -1825,6 +1857,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMBuildCallProfileTemplateForSkillProfileProcedure,
 			opts...,
 		),
+		buildCallProfileTemplate: connect_go.NewClient[wfm.BuildCallProfileTemplateReq, wfm.BuildCallProfileTemplateRes](
+			httpClient,
+			baseURL+WFMBuildCallProfileTemplateProcedure,
+			opts...,
+		),
 		createInactiveSkillProfileMapping: connect_go.NewClient[wfm.CreateInactiveSkillProfileMappingReq, wfm.CreateInactiveSkillProfileMappingRes](
 			httpClient,
 			baseURL+WFMCreateInactiveSkillProfileMappingProcedure,
@@ -1988,6 +2025,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 		updateProgramNode: connect_go.NewClient[wfm.UpdateProgramNodeReq, wfm.UpdateProgramNodeRes](
 			httpClient,
 			baseURL+WFMUpdateProgramNodeProcedure,
+			opts...,
+		),
+		listProgramNodesBySid: connect_go.NewClient[wfm.ListProgramNodesBySidReq, wfm.ListProgramNodesBySidRes](
+			httpClient,
+			baseURL+WFMListProgramNodesBySidProcedure,
 			opts...,
 		),
 		createConstraintRule: connect_go.NewClient[wfm.CreateConstraintRuleReq, wfm.CreateConstraintRuleRes](
@@ -2368,6 +2410,7 @@ type wFMClient struct {
 	upsertHistoricalDataDeltas                    *connect_go.Client[wfm.UpsertHistoricalDataDeltasReq, wfm.UpsertHistoricalDataDeltasRes]
 	listSkills                                    *connect_go.Client[wfm.ListSkillsReq, wfm.ListSkillsRes]
 	buildCallProfileTemplateForSkillProfile       *connect_go.Client[wfm.BuildCallProfileTemplateForSkillProfileReq, wfm.BuildCallProfileTemplateForSkillProfileRes]
+	buildCallProfileTemplate                      *connect_go.Client[wfm.BuildCallProfileTemplateReq, wfm.BuildCallProfileTemplateRes]
 	createInactiveSkillProfileMapping             *connect_go.Client[wfm.CreateInactiveSkillProfileMappingReq, wfm.CreateInactiveSkillProfileMappingRes]
 	getAvailableRegressionForecasterModelTypes    *connect_go.Client[wfm.GetAvailableRegressionForecasterModelTypesReq, wfm.GetAvailableRegressionForecasterModelTypesRes]
 	disconnectInactiveSkillProfileMapping         *connect_go.Client[wfm.DisconnectInactiveSkillProfileMappingReq, wfm.DisconnectInactiveSkillProfileMappingRes]
@@ -2401,6 +2444,7 @@ type wFMClient struct {
 	updateLocationNode                            *connect_go.Client[wfm.UpdateLocationNodeReq, wfm.UpdateLocationNodeRes]
 	createProgramNode                             *connect_go.Client[wfm.CreateProgramNodeReq, wfm.CreateProgramNodeRes]
 	updateProgramNode                             *connect_go.Client[wfm.UpdateProgramNodeReq, wfm.UpdateProgramNodeRes]
+	listProgramNodesBySid                         *connect_go.Client[wfm.ListProgramNodesBySidReq, wfm.ListProgramNodesBySidRes]
 	createConstraintRule                          *connect_go.Client[wfm.CreateConstraintRuleReq, wfm.CreateConstraintRuleRes]
 	updateConstraintRule                          *connect_go.Client[wfm.UpdateConstraintRuleReq, wfm.UpdateConstraintRuleRes]
 	deleteConstraintRule                          *connect_go.Client[wfm.DeleteConstraintRuleReq, wfm.DeleteConstraintRuleRes]
@@ -2537,8 +2581,15 @@ func (c *wFMClient) ListSkills(ctx context.Context, req *connect_go.Request[wfm.
 
 // BuildCallProfileTemplateForSkillProfile calls
 // api.v1alpha1.wfm.WFM.BuildCallProfileTemplateForSkillProfile.
+//
+// Deprecated: do not use.
 func (c *wFMClient) BuildCallProfileTemplateForSkillProfile(ctx context.Context, req *connect_go.Request[wfm.BuildCallProfileTemplateForSkillProfileReq]) (*connect_go.Response[wfm.BuildCallProfileTemplateForSkillProfileRes], error) {
 	return c.buildCallProfileTemplateForSkillProfile.CallUnary(ctx, req)
+}
+
+// BuildCallProfileTemplate calls api.v1alpha1.wfm.WFM.BuildCallProfileTemplate.
+func (c *wFMClient) BuildCallProfileTemplate(ctx context.Context, req *connect_go.Request[wfm.BuildCallProfileTemplateReq]) (*connect_go.Response[wfm.BuildCallProfileTemplateRes], error) {
+	return c.buildCallProfileTemplate.CallUnary(ctx, req)
 }
 
 // CreateInactiveSkillProfileMapping calls api.v1alpha1.wfm.WFM.CreateInactiveSkillProfileMapping.
@@ -2712,6 +2763,11 @@ func (c *wFMClient) CreateProgramNode(ctx context.Context, req *connect_go.Reque
 // UpdateProgramNode calls api.v1alpha1.wfm.WFM.UpdateProgramNode.
 func (c *wFMClient) UpdateProgramNode(ctx context.Context, req *connect_go.Request[wfm.UpdateProgramNodeReq]) (*connect_go.Response[wfm.UpdateProgramNodeRes], error) {
 	return c.updateProgramNode.CallUnary(ctx, req)
+}
+
+// ListProgramNodesBySid calls api.v1alpha1.wfm.WFM.ListProgramNodesBySid.
+func (c *wFMClient) ListProgramNodesBySid(ctx context.Context, req *connect_go.Request[wfm.ListProgramNodesBySidReq]) (*connect_go.Response[wfm.ListProgramNodesBySidRes], error) {
+	return c.listProgramNodesBySid.CallUnary(ctx, req)
 }
 
 // CreateConstraintRule calls api.v1alpha1.wfm.WFM.CreateConstraintRule.
@@ -3156,19 +3212,18 @@ type WFMHandler interface {
 	// Errors:
 	//   - grpc.Internal: error occurs when getting the parameters.
 	GetForecastingParameters(context.Context, *connect_go.Request[wfm.GetForecastingParametersReq]) (*connect_go.Response[wfm.GetForecastingParametersRes], error)
-	// Gets the historical data for the org sending the request and the given @skill_profile_sid.
+	// Gets the historical data for the org sending the request and the given @skill_profile_category.
 	// It will look through the client's call history and generate the historical data by using their configured forecasting parameters (historical data period and interval width).
 	// The duration of each interval will be the interval width of the org's forecasting parameters.
-	// It also applies any deltas that the client has stored for the given @SkillProfileSid.
+	// It also applies any deltas that the client has stored for the given @skill_profile_category, if the category is a group it will use the deltas of the skill profiles part of that group.
 	// If the client has no historical data, only the deltas will be applied to the returned intervals, all other intervals will have nil averages.
-	// If any inactive skill profiles are mapped to the given @skill_profile_sid, the call history and deltas of those skill profiles will be included for the historical data calculation.
 	// Required permissions:
 	//
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @skill_profile_sid in the request is invalid.
-	//   - grpc.NotFound: the @skill_profile_sid given is not found for the org.
+	//   - grpc.Invalid: the @skill_profile_category in the request is invalid.
+	//   - grpc.NotFound: the @skill_profile_category given is not found for the org.
 	//   - grpc.Internal: error occurs when getting the historical data.
 	ListHistoricalData(context.Context, *connect_go.Request[wfm.ListHistoricalDataReq]) (*connect_go.Response[wfm.ListHistoricalDataRes], error)
 	// Tries to create an entry for the given @delta for the org sending the request.
@@ -3207,6 +3262,7 @@ type WFMHandler interface {
 	// The @total_calls in the returned template be summed from the (@training_data_start_datetime - @averages_calculation_range_in_months) to @training_data_end_datetime,
 	// or from @training_data_start_datetime to @training_data_end_datetime if @averages_calculation_range_in_months is 0.
 	// The fixed averages fields in the call profile template, will be set to the averages that the skill profile has.
+	// DEPRECATED as of Sep/7/2023 - Use BuildCallProfileTemplate instead.
 	// Required permissions:
 	//
 	//	NONE
@@ -3215,7 +3271,24 @@ type WFMHandler interface {
 	//   - grpc.Invalid: the @skill_profile_sid in the request is invalid.
 	//   - grpc.NotFound: the @skill_profile_sid given is not found for the org.
 	//   - grpc.Internal: error occurs when building the call profile template.
+	//
+	// Deprecated: do not use.
 	BuildCallProfileTemplateForSkillProfile(context.Context, *connect_go.Request[wfm.BuildCallProfileTemplateForSkillProfileReq]) (*connect_go.Response[wfm.BuildCallProfileTemplateForSkillProfileRes], error)
+	// Builds and returns a call profile template for the org sending the request and the given @skill_profile_category.
+	// The template will be generated using the training data for said skill profile category using the @training_data_range and @averages_calculation_range_in_months
+	// from the client's saved forecasting parameters.
+	// The @total_calls in the returned template be summed from the (@training_data_start_datetime - @averages_calculation_range_in_months) to @training_data_end_datetime,
+	// or from @training_data_start_datetime to @training_data_end_datetime if @averages_calculation_range_in_months is 0.
+	// The fixed averages fields in the call profile template, will be set to the averages that the skill profile category has.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @skill_profile_category in the request is invalid.
+	//   - grpc.NotFound: the @skill_profile_category given is not found for the org.
+	//   - grpc.Internal: error occurs when building the call profile template.
+	BuildCallProfileTemplate(context.Context, *connect_go.Request[wfm.BuildCallProfileTemplateReq]) (*connect_go.Response[wfm.BuildCallProfileTemplateRes], error)
 	// Creates a mapping entry for the @inactive_skill_profile_sid to the @active_skill_profile_sid for the org sending the request.
 	// Required permissions:
 	//
@@ -3280,28 +3353,28 @@ type WFMHandler interface {
 	// Builds a profile forecast using the provided @call_profile_template.
 	// The forecaster will produce intervals from the following range using the client's saved forecasting parameters:
 	// (@training_data_range_end_datetime - @forecast_test_range_in_weeks) to @forecast_range_end_datetime.
-	// The @total_calls in the @call_profile_template will be scaled using the same ranges as BuildCallProfileTemplateForSkillProfile.
+	// The @total_calls in the @call_profile_template will be scaled using the same ranges as BuildCallProfileTemplate.
 	// The @fixed_averages_forecast field indicates whether or not to do a fixed averages forecast.
 	// Required permissions:
 	//
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @skill_profile_sid or @call_profile_template in the request is invalid.
+	//   - grpc.Invalid: the @skill_profile_category or @call_profile_template in the request is invalid.
 	//   - grpc.Internal: error occurs during the building of the profile forecast.
 	BuildProfileForecastByInterval(context.Context, *connect_go.Request[wfm.BuildProfileForecastByIntervalReq], *connect_go.ServerStream[wfm.CallDataByInterval]) error
 	// Builds a profile forecast using the provided @call_profile_template.
 	// The forecaster will produce intervals from the following range using the client's saved forecasting parameters:
 	// (@training_data_range_end_datetime - @forecast_test_range_in_weeks) to @forecast_range_end_datetime.
-	// The @total_calls in the @call_profile_template will be scaled using the same ranges as BuildCallProfileTemplateForSkillProfile.
+	// The @total_calls in the @call_profile_template will be scaled using the same ranges as BuildCallProfileTemplate.
 	// The @fixed_averages_forecast field indicates whether or not to do a fixed averages forecast.
-	// It also returns the statistics of the produced forecast by using the test data of the given @skill_profile_sid.
+	// It also returns the statistics of the produced forecast by using the test data of the given @skill_profile_category.
 	// Required permissions:
 	//
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @skill_profile_sid or @call_profile_template in the request is invalid.
+	//   - grpc.Invalid: the @skill_profile_category or @call_profile_template in the request is invalid.
 	//   - grpc.Internal: error occurs during the building of the profile forecast.
 	BuildProfileForecastByIntervalWithStats(context.Context, *connect_go.Request[wfm.BuildProfileForecastByIntervalWithStatsReq], *connect_go.ServerStream[wfm.BuildProfileForecastByIntervalWithStatsRes]) error
 	// Builds a profile forecast for the given @skill_profile_sid and org sending the request using the given @call_profile_template.
@@ -3587,6 +3660,15 @@ type WFMHandler interface {
 	//   - grpc.Internal: error occurs when updating the program node.
 	//   - grpc.NotFound: entry to be updated doesn't exist, or the given parent @location_node_sid belongs to a different scenario than the program node to update.
 	UpdateProgramNode(context.Context, *connect_go.Request[wfm.UpdateProgramNodeReq]) (*connect_go.Response[wfm.UpdateProgramNodeRes], error)
+	// Lists the program nodes with the given @program_node_sids for the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the given @program_node_sids are invalid.
+	//   - grpc.Internal: error occurs when listing the program nodes.
+	ListProgramNodesBySid(context.Context, *connect_go.Request[wfm.ListProgramNodesBySidReq]) (*connect_go.Response[wfm.ListProgramNodesBySidRes], error)
 	// Creates the given @constraint_rule for the org sending the request.
 	// The @constraint_rule_sid and @skill_proficiency_sid (if one was created) of the new entities will be returned in the response.
 	// The @schedule_scenario_sid must match the scenario of the @parent_entity.
@@ -4531,6 +4613,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.BuildCallProfileTemplateForSkillProfile,
 		opts...,
 	)
+	wFMBuildCallProfileTemplateHandler := connect_go.NewUnaryHandler(
+		WFMBuildCallProfileTemplateProcedure,
+		svc.BuildCallProfileTemplate,
+		opts...,
+	)
 	wFMCreateInactiveSkillProfileMappingHandler := connect_go.NewUnaryHandler(
 		WFMCreateInactiveSkillProfileMappingProcedure,
 		svc.CreateInactiveSkillProfileMapping,
@@ -4694,6 +4781,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 	wFMUpdateProgramNodeHandler := connect_go.NewUnaryHandler(
 		WFMUpdateProgramNodeProcedure,
 		svc.UpdateProgramNode,
+		opts...,
+	)
+	wFMListProgramNodesBySidHandler := connect_go.NewUnaryHandler(
+		WFMListProgramNodesBySidProcedure,
+		svc.ListProgramNodesBySid,
 		opts...,
 	)
 	wFMCreateConstraintRuleHandler := connect_go.NewUnaryHandler(
@@ -5084,6 +5176,8 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMListSkillsHandler.ServeHTTP(w, r)
 		case WFMBuildCallProfileTemplateForSkillProfileProcedure:
 			wFMBuildCallProfileTemplateForSkillProfileHandler.ServeHTTP(w, r)
+		case WFMBuildCallProfileTemplateProcedure:
+			wFMBuildCallProfileTemplateHandler.ServeHTTP(w, r)
 		case WFMCreateInactiveSkillProfileMappingProcedure:
 			wFMCreateInactiveSkillProfileMappingHandler.ServeHTTP(w, r)
 		case WFMGetAvailableRegressionForecasterModelTypesProcedure:
@@ -5150,6 +5244,8 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMCreateProgramNodeHandler.ServeHTTP(w, r)
 		case WFMUpdateProgramNodeProcedure:
 			wFMUpdateProgramNodeHandler.ServeHTTP(w, r)
+		case WFMListProgramNodesBySidProcedure:
+			wFMListProgramNodesBySidHandler.ServeHTTP(w, r)
 		case WFMCreateConstraintRuleProcedure:
 			wFMCreateConstraintRuleHandler.ServeHTTP(w, r)
 		case WFMUpdateConstraintRuleProcedure:
@@ -5355,6 +5451,10 @@ func (UnimplementedWFMHandler) BuildCallProfileTemplateForSkillProfile(context.C
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.BuildCallProfileTemplateForSkillProfile is not implemented"))
 }
 
+func (UnimplementedWFMHandler) BuildCallProfileTemplate(context.Context, *connect_go.Request[wfm.BuildCallProfileTemplateReq]) (*connect_go.Response[wfm.BuildCallProfileTemplateRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.BuildCallProfileTemplate is not implemented"))
+}
+
 func (UnimplementedWFMHandler) CreateInactiveSkillProfileMapping(context.Context, *connect_go.Request[wfm.CreateInactiveSkillProfileMappingReq]) (*connect_go.Response[wfm.CreateInactiveSkillProfileMappingRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.CreateInactiveSkillProfileMapping is not implemented"))
 }
@@ -5485,6 +5585,10 @@ func (UnimplementedWFMHandler) CreateProgramNode(context.Context, *connect_go.Re
 
 func (UnimplementedWFMHandler) UpdateProgramNode(context.Context, *connect_go.Request[wfm.UpdateProgramNodeReq]) (*connect_go.Response[wfm.UpdateProgramNodeRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.UpdateProgramNode is not implemented"))
+}
+
+func (UnimplementedWFMHandler) ListProgramNodesBySid(context.Context, *connect_go.Request[wfm.ListProgramNodesBySidReq]) (*connect_go.Response[wfm.ListProgramNodesBySidRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListProgramNodesBySid is not implemented"))
 }
 
 func (UnimplementedWFMHandler) CreateConstraintRule(context.Context, *connect_go.Request[wfm.CreateConstraintRuleReq]) (*connect_go.Response[wfm.CreateConstraintRuleRes], error) {
