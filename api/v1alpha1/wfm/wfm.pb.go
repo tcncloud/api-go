@@ -8667,7 +8667,8 @@ type ListWFMAgentSidsRes struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Key:Value pairings of a tcn_agent_sid and their wfm_agent_sid respectively.
+	// Map of WFM agents found.
+	// Key: tcn_agent_sid - Value: wfm_agent_sid.
 	Sids map[int64]int64 `protobuf:"bytes,1,rep,name=sids,proto3" json:"sids,omitempty" protobuf_key:"varint,1,opt,name=key,proto3" protobuf_val:"varint,2,opt,name=value,proto3"`
 }
 
