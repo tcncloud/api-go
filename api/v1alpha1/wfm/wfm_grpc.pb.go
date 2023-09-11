@@ -95,6 +95,7 @@ const (
 	WFM_ListAllWFMAgents_FullMethodName                              = "/api.v1alpha1.wfm.WFM/ListAllWFMAgents"
 	WFM_ListCandidateWFMAgents_FullMethodName                        = "/api.v1alpha1.wfm.WFM/ListCandidateWFMAgents"
 	WFM_ListUngroupedWFMAgents_FullMethodName                        = "/api.v1alpha1.wfm.WFM/ListUngroupedWFMAgents"
+	WFM_ListWFMAgentSids_FullMethodName                              = "/api.v1alpha1.wfm.WFM/ListWFMAgentSids"
 	WFM_ListWFMAgentsAssociatedWithAgentGroup_FullMethodName         = "/api.v1alpha1.wfm.WFM/ListWFMAgentsAssociatedWithAgentGroup"
 	WFM_CreateWFMAgentMemberships_FullMethodName                     = "/api.v1alpha1.wfm.WFM/CreateWFMAgentMemberships"
 	WFM_DeleteWFMAgentMemberships_FullMethodName                     = "/api.v1alpha1.wfm.WFM/DeleteWFMAgentMemberships"
@@ -866,6 +867,17 @@ type WFMClient interface {
 	//   - grpc.Invalid: @created_after_datetime has an invalid value.
 	//   - grpc.Internal: error occurs when getting the wfm agents.
 	ListUngroupedWFMAgents(ctx context.Context, in *ListUngroupedWFMAgentsReq, opts ...grpc.CallOption) (*ListUngroupedWFMAgentsRes, error)
+	// Gets the wfm_agent_sids with the given @tcn_agent_sids for the org sending the request.
+	// Returns a map where Key: tcn_agent_sid - Value: wfm_agent_sid.
+	// If the wfm_agent_sid is not found for any @tcn_agent_sids, they will not have an entry in the returned @sids.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @tcn_agent_sids are invalid.
+	//   - grpc.Internal: error occours while listing the wfm_agent_sids.
+	ListWFMAgentSids(ctx context.Context, in *ListWFMAgentSidsReq, opts ...grpc.CallOption) (*ListWFMAgentSidsRes, error)
 	// Lists the IDs of wfm agents that belong to the org sending the request which are associated with the given @agent_group_sid.
 	// Required permissions:
 	//
@@ -2244,6 +2256,15 @@ func (c *wFMClient) ListUngroupedWFMAgents(ctx context.Context, in *ListUngroupe
 	return out, nil
 }
 
+func (c *wFMClient) ListWFMAgentSids(ctx context.Context, in *ListWFMAgentSidsReq, opts ...grpc.CallOption) (*ListWFMAgentSidsRes, error) {
+	out := new(ListWFMAgentSidsRes)
+	err := c.cc.Invoke(ctx, WFM_ListWFMAgentSids_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) ListWFMAgentsAssociatedWithAgentGroup(ctx context.Context, in *ListWFMAgentsAssociatedWithAgentGroupReq, opts ...grpc.CallOption) (*ListWFMAgentsAssociatedWithAgentGroupRes, error) {
 	out := new(ListWFMAgentsAssociatedWithAgentGroupRes)
 	err := c.cc.Invoke(ctx, WFM_ListWFMAgentsAssociatedWithAgentGroup_FullMethodName, in, out, opts...)
@@ -3477,6 +3498,17 @@ type WFMServer interface {
 	//   - grpc.Invalid: @created_after_datetime has an invalid value.
 	//   - grpc.Internal: error occurs when getting the wfm agents.
 	ListUngroupedWFMAgents(context.Context, *ListUngroupedWFMAgentsReq) (*ListUngroupedWFMAgentsRes, error)
+	// Gets the wfm_agent_sids with the given @tcn_agent_sids for the org sending the request.
+	// Returns a map where Key: tcn_agent_sid - Value: wfm_agent_sid.
+	// If the wfm_agent_sid is not found for any @tcn_agent_sids, they will not have an entry in the returned @sids.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @tcn_agent_sids are invalid.
+	//   - grpc.Internal: error occours while listing the wfm_agent_sids.
+	ListWFMAgentSids(context.Context, *ListWFMAgentSidsReq) (*ListWFMAgentSidsRes, error)
 	// Lists the IDs of wfm agents that belong to the org sending the request which are associated with the given @agent_group_sid.
 	// Required permissions:
 	//
@@ -4363,6 +4395,9 @@ func (UnimplementedWFMServer) ListCandidateWFMAgents(context.Context, *ListCandi
 }
 func (UnimplementedWFMServer) ListUngroupedWFMAgents(context.Context, *ListUngroupedWFMAgentsReq) (*ListUngroupedWFMAgentsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListUngroupedWFMAgents not implemented")
+}
+func (UnimplementedWFMServer) ListWFMAgentSids(context.Context, *ListWFMAgentSidsReq) (*ListWFMAgentSidsRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListWFMAgentSids not implemented")
 }
 func (UnimplementedWFMServer) ListWFMAgentsAssociatedWithAgentGroup(context.Context, *ListWFMAgentsAssociatedWithAgentGroupReq) (*ListWFMAgentsAssociatedWithAgentGroupRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListWFMAgentsAssociatedWithAgentGroup not implemented")
@@ -5682,6 +5717,24 @@ func _WFM_ListUngroupedWFMAgents_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_ListWFMAgentSids_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListWFMAgentSidsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).ListWFMAgentSids(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_ListWFMAgentSids_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).ListWFMAgentSids(ctx, req.(*ListWFMAgentSidsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WFM_ListWFMAgentsAssociatedWithAgentGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListWFMAgentsAssociatedWithAgentGroupReq)
 	if err := dec(in); err != nil {
@@ -6960,6 +7013,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListUngroupedWFMAgents",
 			Handler:    _WFM_ListUngroupedWFMAgents_Handler,
+		},
+		{
+			MethodName: "ListWFMAgentSids",
+			Handler:    _WFM_ListWFMAgentSids_Handler,
 		},
 		{
 			MethodName: "ListWFMAgentsAssociatedWithAgentGroup",

@@ -217,6 +217,8 @@ const (
 	// WFMListUngroupedWFMAgentsProcedure is the fully-qualified name of the WFM's
 	// ListUngroupedWFMAgents RPC.
 	WFMListUngroupedWFMAgentsProcedure = "/api.v1alpha1.wfm.WFM/ListUngroupedWFMAgents"
+	// WFMListWFMAgentSidsProcedure is the fully-qualified name of the WFM's ListWFMAgentSids RPC.
+	WFMListWFMAgentSidsProcedure = "/api.v1alpha1.wfm.WFM/ListWFMAgentSids"
 	// WFMListWFMAgentsAssociatedWithAgentGroupProcedure is the fully-qualified name of the WFM's
 	// ListWFMAgentsAssociatedWithAgentGroup RPC.
 	WFMListWFMAgentsAssociatedWithAgentGroupProcedure = "/api.v1alpha1.wfm.WFM/ListWFMAgentsAssociatedWithAgentGroup"
@@ -1082,6 +1084,17 @@ type WFMClient interface {
 	//   - grpc.Invalid: @created_after_datetime has an invalid value.
 	//   - grpc.Internal: error occurs when getting the wfm agents.
 	ListUngroupedWFMAgents(context.Context, *connect_go.Request[wfm.ListUngroupedWFMAgentsReq]) (*connect_go.Response[wfm.ListUngroupedWFMAgentsRes], error)
+	// Gets the wfm_agent_sids with the given @tcn_agent_sids for the org sending the request.
+	// Returns a map where Key: tcn_agent_sid - Value: wfm_agent_sid.
+	// If the wfm_agent_sid is not found for any @tcn_agent_sids, they will not have an entry in the returned @sids.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @tcn_agent_sids are invalid.
+	//   - grpc.Internal: error occours while listing the wfm_agent_sids.
+	ListWFMAgentSids(context.Context, *connect_go.Request[wfm.ListWFMAgentSidsReq]) (*connect_go.Response[wfm.ListWFMAgentSidsRes], error)
 	// Lists the IDs of wfm agents that belong to the org sending the request which are associated with the given @agent_group_sid.
 	// Required permissions:
 	//
@@ -2098,6 +2111,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMListUngroupedWFMAgentsProcedure,
 			opts...,
 		),
+		listWFMAgentSids: connect_go.NewClient[wfm.ListWFMAgentSidsReq, wfm.ListWFMAgentSidsRes](
+			httpClient,
+			baseURL+WFMListWFMAgentSidsProcedure,
+			opts...,
+		),
 		listWFMAgentsAssociatedWithAgentGroup: connect_go.NewClient[wfm.ListWFMAgentsAssociatedWithAgentGroupReq, wfm.ListWFMAgentsAssociatedWithAgentGroupRes](
 			httpClient,
 			baseURL+WFMListWFMAgentsAssociatedWithAgentGroupProcedure,
@@ -2455,6 +2473,7 @@ type wFMClient struct {
 	listAllWFMAgents                              *connect_go.Client[wfm.ListAllWFMAgentsReq, wfm.ListAllWFMAgentsRes]
 	listCandidateWFMAgents                        *connect_go.Client[wfm.ListCandidateWFMAgentsReq, wfm.ListCandidateWFMAgentsRes]
 	listUngroupedWFMAgents                        *connect_go.Client[wfm.ListUngroupedWFMAgentsReq, wfm.ListUngroupedWFMAgentsRes]
+	listWFMAgentSids                              *connect_go.Client[wfm.ListWFMAgentSidsReq, wfm.ListWFMAgentSidsRes]
 	listWFMAgentsAssociatedWithAgentGroup         *connect_go.Client[wfm.ListWFMAgentsAssociatedWithAgentGroupReq, wfm.ListWFMAgentsAssociatedWithAgentGroupRes]
 	createWFMAgentMemberships                     *connect_go.Client[wfm.CreateWFMAgentMembershipsReq, wfm.CreateWFMAgentMembershipsRes]
 	deleteWFMAgentMemberships                     *connect_go.Client[wfm.DeleteWFMAgentMembershipsReq, wfm.DeleteWFMAgentMembershipsRes]
@@ -2834,6 +2853,11 @@ func (c *wFMClient) ListCandidateWFMAgents(ctx context.Context, req *connect_go.
 // ListUngroupedWFMAgents calls api.v1alpha1.wfm.WFM.ListUngroupedWFMAgents.
 func (c *wFMClient) ListUngroupedWFMAgents(ctx context.Context, req *connect_go.Request[wfm.ListUngroupedWFMAgentsReq]) (*connect_go.Response[wfm.ListUngroupedWFMAgentsRes], error) {
 	return c.listUngroupedWFMAgents.CallUnary(ctx, req)
+}
+
+// ListWFMAgentSids calls api.v1alpha1.wfm.WFM.ListWFMAgentSids.
+func (c *wFMClient) ListWFMAgentSids(ctx context.Context, req *connect_go.Request[wfm.ListWFMAgentSidsReq]) (*connect_go.Response[wfm.ListWFMAgentSidsRes], error) {
+	return c.listWFMAgentSids.CallUnary(ctx, req)
 }
 
 // ListWFMAgentsAssociatedWithAgentGroup calls
@@ -3838,6 +3862,17 @@ type WFMHandler interface {
 	//   - grpc.Invalid: @created_after_datetime has an invalid value.
 	//   - grpc.Internal: error occurs when getting the wfm agents.
 	ListUngroupedWFMAgents(context.Context, *connect_go.Request[wfm.ListUngroupedWFMAgentsReq]) (*connect_go.Response[wfm.ListUngroupedWFMAgentsRes], error)
+	// Gets the wfm_agent_sids with the given @tcn_agent_sids for the org sending the request.
+	// Returns a map where Key: tcn_agent_sid - Value: wfm_agent_sid.
+	// If the wfm_agent_sid is not found for any @tcn_agent_sids, they will not have an entry in the returned @sids.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @tcn_agent_sids are invalid.
+	//   - grpc.Internal: error occours while listing the wfm_agent_sids.
+	ListWFMAgentSids(context.Context, *connect_go.Request[wfm.ListWFMAgentSidsReq]) (*connect_go.Response[wfm.ListWFMAgentSidsRes], error)
 	// Lists the IDs of wfm agents that belong to the org sending the request which are associated with the given @agent_group_sid.
 	// Required permissions:
 	//
@@ -4850,6 +4885,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.ListUngroupedWFMAgents,
 		opts...,
 	)
+	wFMListWFMAgentSidsHandler := connect_go.NewUnaryHandler(
+		WFMListWFMAgentSidsProcedure,
+		svc.ListWFMAgentSids,
+		opts...,
+	)
 	wFMListWFMAgentsAssociatedWithAgentGroupHandler := connect_go.NewUnaryHandler(
 		WFMListWFMAgentsAssociatedWithAgentGroupProcedure,
 		svc.ListWFMAgentsAssociatedWithAgentGroup,
@@ -5266,6 +5306,8 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMListCandidateWFMAgentsHandler.ServeHTTP(w, r)
 		case WFMListUngroupedWFMAgentsProcedure:
 			wFMListUngroupedWFMAgentsHandler.ServeHTTP(w, r)
+		case WFMListWFMAgentSidsProcedure:
+			wFMListWFMAgentSidsHandler.ServeHTTP(w, r)
 		case WFMListWFMAgentsAssociatedWithAgentGroupProcedure:
 			wFMListWFMAgentsAssociatedWithAgentGroupHandler.ServeHTTP(w, r)
 		case WFMCreateWFMAgentMembershipsProcedure:
@@ -5637,6 +5679,10 @@ func (UnimplementedWFMHandler) ListCandidateWFMAgents(context.Context, *connect_
 
 func (UnimplementedWFMHandler) ListUngroupedWFMAgents(context.Context, *connect_go.Request[wfm.ListUngroupedWFMAgentsReq]) (*connect_go.Response[wfm.ListUngroupedWFMAgentsRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListUngroupedWFMAgents is not implemented"))
+}
+
+func (UnimplementedWFMHandler) ListWFMAgentSids(context.Context, *connect_go.Request[wfm.ListWFMAgentSidsReq]) (*connect_go.Response[wfm.ListWFMAgentSidsRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListWFMAgentSids is not implemented"))
 }
 
 func (UnimplementedWFMHandler) ListWFMAgentsAssociatedWithAgentGroup(context.Context, *connect_go.Request[wfm.ListWFMAgentsAssociatedWithAgentGroupReq]) (*connect_go.Response[wfm.ListWFMAgentsAssociatedWithAgentGroupRes], error) {
