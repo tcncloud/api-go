@@ -8612,7 +8612,7 @@ func (x *ListUngroupedWFMAgentsRes) GetWfmAgents() []*WFMAgent {
 	return nil
 }
 
-// Request message for teh ListWFMAgentSids RPC
+// Request message for the ListWFMAgentSids RPC
 type ListWFMAgentSidsReq struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
