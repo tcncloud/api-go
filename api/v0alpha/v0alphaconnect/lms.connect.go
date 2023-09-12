@@ -89,6 +89,10 @@ const (
 	LMSCopyPipelineDownstreamProcedure = "/api.v0alpha.LMS/CopyPipelineDownstream"
 	// LMSProcessElementProcedure is the fully-qualified name of the LMS's ProcessElement RPC.
 	LMSProcessElementProcedure = "/api.v0alpha.LMS/ProcessElement"
+	// LMSProcessListProcedure is the fully-qualified name of the LMS's ProcessList RPC.
+	LMSProcessListProcedure = "/api.v0alpha.LMS/ProcessList"
+	// LMSStreamListProcedure is the fully-qualified name of the LMS's StreamList RPC.
+	LMSStreamListProcedure = "/api.v0alpha.LMS/StreamList"
 	// LMSGetAvailableFieldsProcedure is the fully-qualified name of the LMS's GetAvailableFields RPC.
 	LMSGetAvailableFieldsProcedure = "/api.v0alpha.LMS/GetAvailableFields"
 	// LMSListNewEventsProcedure is the fully-qualified name of the LMS's ListNewEvents RPC.
@@ -194,6 +198,8 @@ type LMSClient interface {
 	// CopyPipelineDownstream copies an Element and all of its' children
 	CopyPipelineDownstream(context.Context, *connect_go.Request[v0alpha.Element]) (*connect_go.ServerStreamForClient[v0alpha.Element], error)
 	ProcessElement(context.Context, *connect_go.Request[v0alpha.ProcessElementReq]) (*connect_go.Response[emptypb.Empty], error)
+	ProcessList(context.Context, *connect_go.Request[v0alpha.ProcessListRequest]) (*connect_go.Response[v0alpha.ProcessListResponse], error)
+	StreamList(context.Context) *connect_go.ClientStreamForClient[v0alpha.StreamListRequest, v0alpha.StreamListResponse]
 	GetAvailableFields(context.Context, *connect_go.Request[emptypb.Empty]) (*connect_go.Response[v0alpha.ProcessFields], error)
 	// returns queue events for the last 30 minutes
 	ListNewEvents(context.Context, *connect_go.Request[emptypb.Empty]) (*connect_go.Response[v0alpha.Events], error)
@@ -377,6 +383,16 @@ func NewLMSClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+LMSProcessElementProcedure,
 			opts...,
 		),
+		processList: connect_go.NewClient[v0alpha.ProcessListRequest, v0alpha.ProcessListResponse](
+			httpClient,
+			baseURL+LMSProcessListProcedure,
+			opts...,
+		),
+		streamList: connect_go.NewClient[v0alpha.StreamListRequest, v0alpha.StreamListResponse](
+			httpClient,
+			baseURL+LMSStreamListProcedure,
+			opts...,
+		),
 		getAvailableFields: connect_go.NewClient[emptypb.Empty, v0alpha.ProcessFields](
 			httpClient,
 			baseURL+LMSGetAvailableFieldsProcedure,
@@ -552,6 +568,8 @@ type lMSClient struct {
 	copyPipelineUpstream             *connect_go.Client[v0alpha.Element, v0alpha.Element]
 	copyPipelineDownstream           *connect_go.Client[v0alpha.Element, v0alpha.Element]
 	processElement                   *connect_go.Client[v0alpha.ProcessElementReq, emptypb.Empty]
+	processList                      *connect_go.Client[v0alpha.ProcessListRequest, v0alpha.ProcessListResponse]
+	streamList                       *connect_go.Client[v0alpha.StreamListRequest, v0alpha.StreamListResponse]
 	getAvailableFields               *connect_go.Client[emptypb.Empty, v0alpha.ProcessFields]
 	listNewEvents                    *connect_go.Client[emptypb.Empty, v0alpha.Events]
 	viewQueue                        *connect_go.Client[v0alpha.ViewQueueReq, v0alpha.Events]
@@ -706,6 +724,16 @@ func (c *lMSClient) CopyPipelineDownstream(ctx context.Context, req *connect_go.
 // ProcessElement calls api.v0alpha.LMS.ProcessElement.
 func (c *lMSClient) ProcessElement(ctx context.Context, req *connect_go.Request[v0alpha.ProcessElementReq]) (*connect_go.Response[emptypb.Empty], error) {
 	return c.processElement.CallUnary(ctx, req)
+}
+
+// ProcessList calls api.v0alpha.LMS.ProcessList.
+func (c *lMSClient) ProcessList(ctx context.Context, req *connect_go.Request[v0alpha.ProcessListRequest]) (*connect_go.Response[v0alpha.ProcessListResponse], error) {
+	return c.processList.CallUnary(ctx, req)
+}
+
+// StreamList calls api.v0alpha.LMS.StreamList.
+func (c *lMSClient) StreamList(ctx context.Context) *connect_go.ClientStreamForClient[v0alpha.StreamListRequest, v0alpha.StreamListResponse] {
+	return c.streamList.CallClientStream(ctx)
 }
 
 // GetAvailableFields calls api.v0alpha.LMS.GetAvailableFields.
@@ -883,6 +911,8 @@ type LMSHandler interface {
 	// CopyPipelineDownstream copies an Element and all of its' children
 	CopyPipelineDownstream(context.Context, *connect_go.Request[v0alpha.Element], *connect_go.ServerStream[v0alpha.Element]) error
 	ProcessElement(context.Context, *connect_go.Request[v0alpha.ProcessElementReq]) (*connect_go.Response[emptypb.Empty], error)
+	ProcessList(context.Context, *connect_go.Request[v0alpha.ProcessListRequest]) (*connect_go.Response[v0alpha.ProcessListResponse], error)
+	StreamList(context.Context, *connect_go.ClientStream[v0alpha.StreamListRequest]) (*connect_go.Response[v0alpha.StreamListResponse], error)
 	GetAvailableFields(context.Context, *connect_go.Request[emptypb.Empty]) (*connect_go.Response[v0alpha.ProcessFields], error)
 	// returns queue events for the last 30 minutes
 	ListNewEvents(context.Context, *connect_go.Request[emptypb.Empty]) (*connect_go.Response[v0alpha.Events], error)
@@ -1060,6 +1090,16 @@ func NewLMSHandler(svc LMSHandler, opts ...connect_go.HandlerOption) (string, ht
 	lMSProcessElementHandler := connect_go.NewUnaryHandler(
 		LMSProcessElementProcedure,
 		svc.ProcessElement,
+		opts...,
+	)
+	lMSProcessListHandler := connect_go.NewUnaryHandler(
+		LMSProcessListProcedure,
+		svc.ProcessList,
+		opts...,
+	)
+	lMSStreamListHandler := connect_go.NewClientStreamHandler(
+		LMSStreamListProcedure,
+		svc.StreamList,
 		opts...,
 	)
 	lMSGetAvailableFieldsHandler := connect_go.NewUnaryHandler(
@@ -1259,6 +1299,10 @@ func NewLMSHandler(svc LMSHandler, opts ...connect_go.HandlerOption) (string, ht
 			lMSCopyPipelineDownstreamHandler.ServeHTTP(w, r)
 		case LMSProcessElementProcedure:
 			lMSProcessElementHandler.ServeHTTP(w, r)
+		case LMSProcessListProcedure:
+			lMSProcessListHandler.ServeHTTP(w, r)
+		case LMSStreamListProcedure:
+			lMSStreamListHandler.ServeHTTP(w, r)
 		case LMSGetAvailableFieldsProcedure:
 			lMSGetAvailableFieldsHandler.ServeHTTP(w, r)
 		case LMSListNewEventsProcedure:
@@ -1424,6 +1468,14 @@ func (UnimplementedLMSHandler) CopyPipelineDownstream(context.Context, *connect_
 
 func (UnimplementedLMSHandler) ProcessElement(context.Context, *connect_go.Request[v0alpha.ProcessElementReq]) (*connect_go.Response[emptypb.Empty], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.LMS.ProcessElement is not implemented"))
+}
+
+func (UnimplementedLMSHandler) ProcessList(context.Context, *connect_go.Request[v0alpha.ProcessListRequest]) (*connect_go.Response[v0alpha.ProcessListResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.LMS.ProcessList is not implemented"))
+}
+
+func (UnimplementedLMSHandler) StreamList(context.Context, *connect_go.ClientStream[v0alpha.StreamListRequest]) (*connect_go.Response[v0alpha.StreamListResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.LMS.StreamList is not implemented"))
 }
 
 func (UnimplementedLMSHandler) GetAvailableFields(context.Context, *connect_go.Request[emptypb.Empty]) (*connect_go.Response[v0alpha.ProcessFields], error) {
