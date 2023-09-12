@@ -45,6 +45,8 @@ const (
 	LMS_CopyPipelineUpstream_FullMethodName             = "/api.v0alpha.LMS/CopyPipelineUpstream"
 	LMS_CopyPipelineDownstream_FullMethodName           = "/api.v0alpha.LMS/CopyPipelineDownstream"
 	LMS_ProcessElement_FullMethodName                   = "/api.v0alpha.LMS/ProcessElement"
+	LMS_ProcessList_FullMethodName                      = "/api.v0alpha.LMS/ProcessList"
+	LMS_StreamList_FullMethodName                       = "/api.v0alpha.LMS/StreamList"
 	LMS_GetAvailableFields_FullMethodName               = "/api.v0alpha.LMS/GetAvailableFields"
 	LMS_ListNewEvents_FullMethodName                    = "/api.v0alpha.LMS/ListNewEvents"
 	LMS_ViewQueue_FullMethodName                        = "/api.v0alpha.LMS/ViewQueue"
@@ -108,6 +110,8 @@ type LMSClient interface {
 	// CopyPipelineDownstream copies an Element and all of its' children
 	CopyPipelineDownstream(ctx context.Context, in *Element, opts ...grpc.CallOption) (LMS_CopyPipelineDownstreamClient, error)
 	ProcessElement(ctx context.Context, in *ProcessElementReq, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	ProcessList(ctx context.Context, in *ProcessListRequest, opts ...grpc.CallOption) (*ProcessListResponse, error)
+	StreamList(ctx context.Context, opts ...grpc.CallOption) (LMS_StreamListClient, error)
 	GetAvailableFields(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ProcessFields, error)
 	// returns queue events for the last 30 minutes
 	ListNewEvents(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*Events, error)
@@ -481,6 +485,49 @@ func (c *lMSClient) ProcessElement(ctx context.Context, in *ProcessElementReq, o
 	return out, nil
 }
 
+func (c *lMSClient) ProcessList(ctx context.Context, in *ProcessListRequest, opts ...grpc.CallOption) (*ProcessListResponse, error) {
+	out := new(ProcessListResponse)
+	err := c.cc.Invoke(ctx, LMS_ProcessList_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *lMSClient) StreamList(ctx context.Context, opts ...grpc.CallOption) (LMS_StreamListClient, error) {
+	stream, err := c.cc.NewStream(ctx, &LMS_ServiceDesc.Streams[4], LMS_StreamList_FullMethodName, opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &lMSStreamListClient{stream}
+	return x, nil
+}
+
+type LMS_StreamListClient interface {
+	Send(*StreamListRequest) error
+	CloseAndRecv() (*StreamListResponse, error)
+	grpc.ClientStream
+}
+
+type lMSStreamListClient struct {
+	grpc.ClientStream
+}
+
+func (x *lMSStreamListClient) Send(m *StreamListRequest) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *lMSStreamListClient) CloseAndRecv() (*StreamListResponse, error) {
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	m := new(StreamListResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 func (c *lMSClient) GetAvailableFields(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ProcessFields, error) {
 	out := new(ProcessFields)
 	err := c.cc.Invoke(ctx, LMS_GetAvailableFields_FullMethodName, in, out, opts...)
@@ -626,7 +673,7 @@ func (c *lMSClient) UpdateCollectionEntry(ctx context.Context, in *CollectionEnt
 }
 
 func (c *lMSClient) StreamCollection(ctx context.Context, in *StreamCollectionReq, opts ...grpc.CallOption) (LMS_StreamCollectionClient, error) {
-	stream, err := c.cc.NewStream(ctx, &LMS_ServiceDesc.Streams[4], LMS_StreamCollection_FullMethodName, opts...)
+	stream, err := c.cc.NewStream(ctx, &LMS_ServiceDesc.Streams[5], LMS_StreamCollection_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -797,6 +844,8 @@ type LMSServer interface {
 	// CopyPipelineDownstream copies an Element and all of its' children
 	CopyPipelineDownstream(*Element, LMS_CopyPipelineDownstreamServer) error
 	ProcessElement(context.Context, *ProcessElementReq) (*emptypb.Empty, error)
+	ProcessList(context.Context, *ProcessListRequest) (*ProcessListResponse, error)
+	StreamList(LMS_StreamListServer) error
 	GetAvailableFields(context.Context, *emptypb.Empty) (*ProcessFields, error)
 	// returns queue events for the last 30 minutes
 	ListNewEvents(context.Context, *emptypb.Empty) (*Events, error)
@@ -924,6 +973,12 @@ func (UnimplementedLMSServer) CopyPipelineDownstream(*Element, LMS_CopyPipelineD
 }
 func (UnimplementedLMSServer) ProcessElement(context.Context, *ProcessElementReq) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ProcessElement not implemented")
+}
+func (UnimplementedLMSServer) ProcessList(context.Context, *ProcessListRequest) (*ProcessListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ProcessList not implemented")
+}
+func (UnimplementedLMSServer) StreamList(LMS_StreamListServer) error {
+	return status.Errorf(codes.Unimplemented, "method StreamList not implemented")
 }
 func (UnimplementedLMSServer) GetAvailableFields(context.Context, *emptypb.Empty) (*ProcessFields, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAvailableFields not implemented")
@@ -1485,6 +1540,50 @@ func _LMS_ProcessElement_Handler(srv interface{}, ctx context.Context, dec func(
 		return srv.(LMSServer).ProcessElement(ctx, req.(*ProcessElementReq))
 	}
 	return interceptor(ctx, in, info, handler)
+}
+
+func _LMS_ProcessList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProcessListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LMSServer).ProcessList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LMS_ProcessList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LMSServer).ProcessList(ctx, req.(*ProcessListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LMS_StreamList_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(LMSServer).StreamList(&lMSStreamListServer{stream})
+}
+
+type LMS_StreamListServer interface {
+	SendAndClose(*StreamListResponse) error
+	Recv() (*StreamListRequest, error)
+	grpc.ServerStream
+}
+
+type lMSStreamListServer struct {
+	grpc.ServerStream
+}
+
+func (x *lMSStreamListServer) SendAndClose(m *StreamListResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *lMSStreamListServer) Recv() (*StreamListRequest, error) {
+	m := new(StreamListRequest)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
 }
 
 func _LMS_GetAvailableFields_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -2104,6 +2203,10 @@ var LMS_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _LMS_ProcessElement_Handler,
 		},
 		{
+			MethodName: "ProcessList",
+			Handler:    _LMS_ProcessList_Handler,
+		},
+		{
 			MethodName: "GetAvailableFields",
 			Handler:    _LMS_GetAvailableFields_Handler,
 		},
@@ -2236,6 +2339,11 @@ var LMS_ServiceDesc = grpc.ServiceDesc{
 			StreamName:    "CopyPipelineDownstream",
 			Handler:       _LMS_CopyPipelineDownstream_Handler,
 			ServerStreams: true,
+		},
+		{
+			StreamName:    "StreamList",
+			Handler:       _LMS_StreamList_Handler,
+			ClientStreams: true,
 		},
 		{
 			StreamName:    "StreamCollection",
