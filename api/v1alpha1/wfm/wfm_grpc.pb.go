@@ -471,7 +471,7 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when getting the forecast data intervals.
 	ListForecastIntervalsForSkillProfile(ctx context.Context, in *ListForecastIntervalsForSkillProfileReq, opts ...grpc.CallOption) (WFM_ListForecastIntervalsForSkillProfileClient, error)
 	// Generates a regression forecast using the provided @regression_template.
-	// It will generate forecast intervals for the skill profiles sids in @skill_profile_sids_to_forecast.
+	// It will generate forecast intervals for the @skill_profile_category given.
 	// It will use the client's saved forecasting test range as the start datetime and the forecast range as the end datetime of the forecasted data.
 	// It will use the client's saved interval width to divide the resulting forecast intervals.
 	// Required permissions:
@@ -479,17 +479,17 @@ type WFMClient interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: no @skill_profile_sids_to_forecast are given or the @regression_template in the request is invalid.
+	//   - grpc.Invalid: no @skill_profile_category is given or the @regression_template in the request is invalid.
 	//   - grpc.Internal: error occurs during the building of the regression forecast.
 	BuildRegressionForecastByInterval(ctx context.Context, in *BuildRegressionForecastByIntervalReq, opts ...grpc.CallOption) (WFM_BuildRegressionForecastByIntervalClient, error)
 	// Generates a regression forecast and calculates forecast statistics using the provided @regression_template.
-	// It will generate forecast intervals for the skill profiles sids in @skill_profile_sids_to_forecast.
+	// It will generate forecast intervals for the @skill_profile_category given.
 	// It will use the client's saved forecasting test range as the start datetime and the forecast range as the end datetime of the forecasted data.
 	// It will use the client's saved interval width to divide the resulting forecast intervals.
 	// The first message received will be the forecast statistics while all subsequent ones will be the forecast intervals.
 	//
 	// Errors:
-	//   - grpc.Invalid: no @skill_profile_sids_to_forecast are given or the @regression_template in the request is invalid.
+	//   - grpc.Invalid: no @skill_profile_category is given or the @regression_template in the request is invalid.
 	//   - grpc.Internal: error occurs either during the when building the forecast or calculating the stats.
 	BuildRegressionForecastByIntervalWithStats(ctx context.Context, in *BuildRegressionForecastByIntervalWithStatsReq, opts ...grpc.CallOption) (WFM_BuildRegressionForecastByIntervalWithStatsClient, error)
 	// Gets the call profile templates that the org sending the request has.
@@ -501,7 +501,7 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when getting the templates.
 	ListCallProfileTemplates(ctx context.Context, in *ListCallProfileTemplatesReq, opts ...grpc.CallOption) (*ListCallProfileTemplatesRes, error)
 	// Builds a regression forecast for the org using the given @regression_template and saves the resulting intervals in the db.
-	// It will generate forecast intervals for the skill profiles sids in @save_forecasts_for_skill_profile_sids,
+	// It will generate forecast intervals for the @skill_profile_category given.
 	// if the list is empty or has no valid skill profile sids, it will generate and save forecasts for all active skill profiles.
 	// If any intervals produced already exist in the db, they will be replaced with the ones produced.
 	// Required permissions:
@@ -509,7 +509,7 @@ type WFMClient interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @regression_template in the request is invalid.
+	//   - grpc.Invalid: no @skill_profile_category is given or the @regression_template in the request is invalid.
 	//   - grpc.Internal: error occurs when upserting the regression forecast.
 	UpsertRegressionForecast(ctx context.Context, in *UpsertRegressionForecastReq, opts ...grpc.CallOption) (*UpsertRegressionForecastRes, error)
 	// Tries to create an entry for the given @delta for the org sending the request.
@@ -3106,7 +3106,7 @@ type WFMServer interface {
 	//   - grpc.Internal: error occurs when getting the forecast data intervals.
 	ListForecastIntervalsForSkillProfile(*ListForecastIntervalsForSkillProfileReq, WFM_ListForecastIntervalsForSkillProfileServer) error
 	// Generates a regression forecast using the provided @regression_template.
-	// It will generate forecast intervals for the skill profiles sids in @skill_profile_sids_to_forecast.
+	// It will generate forecast intervals for the @skill_profile_category given.
 	// It will use the client's saved forecasting test range as the start datetime and the forecast range as the end datetime of the forecasted data.
 	// It will use the client's saved interval width to divide the resulting forecast intervals.
 	// Required permissions:
@@ -3114,17 +3114,17 @@ type WFMServer interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: no @skill_profile_sids_to_forecast are given or the @regression_template in the request is invalid.
+	//   - grpc.Invalid: no @skill_profile_category is given or the @regression_template in the request is invalid.
 	//   - grpc.Internal: error occurs during the building of the regression forecast.
 	BuildRegressionForecastByInterval(*BuildRegressionForecastByIntervalReq, WFM_BuildRegressionForecastByIntervalServer) error
 	// Generates a regression forecast and calculates forecast statistics using the provided @regression_template.
-	// It will generate forecast intervals for the skill profiles sids in @skill_profile_sids_to_forecast.
+	// It will generate forecast intervals for the @skill_profile_category given.
 	// It will use the client's saved forecasting test range as the start datetime and the forecast range as the end datetime of the forecasted data.
 	// It will use the client's saved interval width to divide the resulting forecast intervals.
 	// The first message received will be the forecast statistics while all subsequent ones will be the forecast intervals.
 	//
 	// Errors:
-	//   - grpc.Invalid: no @skill_profile_sids_to_forecast are given or the @regression_template in the request is invalid.
+	//   - grpc.Invalid: no @skill_profile_category is given or the @regression_template in the request is invalid.
 	//   - grpc.Internal: error occurs either during the when building the forecast or calculating the stats.
 	BuildRegressionForecastByIntervalWithStats(*BuildRegressionForecastByIntervalWithStatsReq, WFM_BuildRegressionForecastByIntervalWithStatsServer) error
 	// Gets the call profile templates that the org sending the request has.
@@ -3136,7 +3136,7 @@ type WFMServer interface {
 	//   - grpc.Internal: error occurs when getting the templates.
 	ListCallProfileTemplates(context.Context, *ListCallProfileTemplatesReq) (*ListCallProfileTemplatesRes, error)
 	// Builds a regression forecast for the org using the given @regression_template and saves the resulting intervals in the db.
-	// It will generate forecast intervals for the skill profiles sids in @save_forecasts_for_skill_profile_sids,
+	// It will generate forecast intervals for the @skill_profile_category given.
 	// if the list is empty or has no valid skill profile sids, it will generate and save forecasts for all active skill profiles.
 	// If any intervals produced already exist in the db, they will be replaced with the ones produced.
 	// Required permissions:
@@ -3144,7 +3144,7 @@ type WFMServer interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @regression_template in the request is invalid.
+	//   - grpc.Invalid: no @skill_profile_category is given or the @regression_template in the request is invalid.
 	//   - grpc.Internal: error occurs when upserting the regression forecast.
 	UpsertRegressionForecast(context.Context, *UpsertRegressionForecastReq) (*UpsertRegressionForecastRes, error)
 	// Tries to create an entry for the given @delta for the org sending the request.
