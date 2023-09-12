@@ -66,6 +66,24 @@ const (
 	// DashboardsUpdateDashboardLayoutProcedure is the fully-qualified name of the Dashboards's
 	// UpdateDashboardLayout RPC.
 	DashboardsUpdateDashboardLayoutProcedure = "/api.v0alpha.Dashboards/UpdateDashboardLayout"
+	// DashboardsCreateStandardDashboardProcedure is the fully-qualified name of the Dashboards's
+	// CreateStandardDashboard RPC.
+	DashboardsCreateStandardDashboardProcedure = "/api.v0alpha.Dashboards/CreateStandardDashboard"
+	// DashboardsUpdateStandardDashboardProcedure is the fully-qualified name of the Dashboards's
+	// UpdateStandardDashboard RPC.
+	DashboardsUpdateStandardDashboardProcedure = "/api.v0alpha.Dashboards/UpdateStandardDashboard"
+	// DashboardsUpdateStandardDashboardTitleAndDescriptionProcedure is the fully-qualified name of the
+	// Dashboards's UpdateStandardDashboardTitleAndDescription RPC.
+	DashboardsUpdateStandardDashboardTitleAndDescriptionProcedure = "/api.v0alpha.Dashboards/UpdateStandardDashboardTitleAndDescription"
+	// DashboardsUpdateStandardDashboardViewProcedure is the fully-qualified name of the Dashboards's
+	// UpdateStandardDashboardView RPC.
+	DashboardsUpdateStandardDashboardViewProcedure = "/api.v0alpha.Dashboards/UpdateStandardDashboardView"
+	// DashboardsUpdateStandardDashboardLayoutProcedure is the fully-qualified name of the Dashboards's
+	// UpdateStandardDashboardLayout RPC.
+	DashboardsUpdateStandardDashboardLayoutProcedure = "/api.v0alpha.Dashboards/UpdateStandardDashboardLayout"
+	// DashboardsDeleteStandardDashboardProcedure is the fully-qualified name of the Dashboards's
+	// DeleteStandardDashboard RPC.
+	DashboardsDeleteStandardDashboardProcedure = "/api.v0alpha.Dashboards/DeleteStandardDashboard"
 )
 
 // DashboardsClient is a client for the api.v0alpha.Dashboards service.
@@ -90,6 +108,18 @@ type DashboardsClient interface {
 	UpdateDashboardView(context.Context, *connect_go.Request[v0alpha.UpdateDashboardViewRequest]) (*connect_go.Response[emptypb.Empty], error)
 	// UpdateDashboardLayout replaces a dashboards layout with a given layout
 	UpdateDashboardLayout(context.Context, *connect_go.Request[v0alpha.UpdateDashboardLayoutRequest]) (*connect_go.Response[emptypb.Empty], error)
+	// CreateStandardDashboard creates a TCN standard dashboard
+	CreateStandardDashboard(context.Context, *connect_go.Request[v0alpha.CreateStandardDashboardRequest]) (*connect_go.Response[v0alpha.CreateStandardDashboardResponse], error)
+	// UpdateStandardDashboard updates a TCN standard dashboard
+	UpdateStandardDashboard(context.Context, *connect_go.Request[v0alpha.UpdateStandardDashboardRequest]) (*connect_go.Response[emptypb.Empty], error)
+	// UpdateStandardDashboardTitleAndDescription updates a TCN standard dashboard title and description
+	UpdateStandardDashboardTitleAndDescription(context.Context, *connect_go.Request[v0alpha.UpdateStandardDashboardTitleAndDescriptionRequest]) (*connect_go.Response[emptypb.Empty], error)
+	// UpdateStandardDashboardView updates a TCN standard dashboard view
+	UpdateStandardDashboardView(context.Context, *connect_go.Request[v0alpha.UpdateStandardDashboardViewRequest]) (*connect_go.Response[emptypb.Empty], error)
+	// UpdateStandardDashboardLayout updates a TCN standard dashboard layout
+	UpdateStandardDashboardLayout(context.Context, *connect_go.Request[v0alpha.UpdateStandardDashboardLayoutRequest]) (*connect_go.Response[emptypb.Empty], error)
+	// DeleteStandardDashboard deletes a TCN standard dashboard
+	DeleteStandardDashboard(context.Context, *connect_go.Request[v0alpha.DeleteStandardDashboardRequest]) (*connect_go.Response[emptypb.Empty], error)
 }
 
 // NewDashboardsClient constructs a client for the api.v0alpha.Dashboards service. By default, it
@@ -157,22 +187,58 @@ func NewDashboardsClient(httpClient connect_go.HTTPClient, baseURL string, opts 
 			baseURL+DashboardsUpdateDashboardLayoutProcedure,
 			opts...,
 		),
+		createStandardDashboard: connect_go.NewClient[v0alpha.CreateStandardDashboardRequest, v0alpha.CreateStandardDashboardResponse](
+			httpClient,
+			baseURL+DashboardsCreateStandardDashboardProcedure,
+			opts...,
+		),
+		updateStandardDashboard: connect_go.NewClient[v0alpha.UpdateStandardDashboardRequest, emptypb.Empty](
+			httpClient,
+			baseURL+DashboardsUpdateStandardDashboardProcedure,
+			opts...,
+		),
+		updateStandardDashboardTitleAndDescription: connect_go.NewClient[v0alpha.UpdateStandardDashboardTitleAndDescriptionRequest, emptypb.Empty](
+			httpClient,
+			baseURL+DashboardsUpdateStandardDashboardTitleAndDescriptionProcedure,
+			opts...,
+		),
+		updateStandardDashboardView: connect_go.NewClient[v0alpha.UpdateStandardDashboardViewRequest, emptypb.Empty](
+			httpClient,
+			baseURL+DashboardsUpdateStandardDashboardViewProcedure,
+			opts...,
+		),
+		updateStandardDashboardLayout: connect_go.NewClient[v0alpha.UpdateStandardDashboardLayoutRequest, emptypb.Empty](
+			httpClient,
+			baseURL+DashboardsUpdateStandardDashboardLayoutProcedure,
+			opts...,
+		),
+		deleteStandardDashboard: connect_go.NewClient[v0alpha.DeleteStandardDashboardRequest, emptypb.Empty](
+			httpClient,
+			baseURL+DashboardsDeleteStandardDashboardProcedure,
+			opts...,
+		),
 	}
 }
 
 // dashboardsClient implements DashboardsClient.
 type dashboardsClient struct {
-	createDashboard                    *connect_go.Client[v0alpha.CreateDashboardRequest, v0alpha.CreateDashboardResponse]
-	getDashboard                       *connect_go.Client[v0alpha.GetDashboardRequest, v0alpha.Dashboard]
-	getDefaultDashboard                *connect_go.Client[v0alpha.GetDefaultDashboardRequest, v0alpha.Dashboard]
-	listDashboards                     *connect_go.Client[v0alpha.ListDashboardsRequest, v0alpha.ListDashboardsResponse]
-	listProductTypes                   *connect_go.Client[v0alpha.ListProductTypesRequest, v0alpha.ListProductTypesResult]
-	deleteDashboard                    *connect_go.Client[v0alpha.DeleteDashboardRequest, emptypb.Empty]
-	setDefaultDashboard                *connect_go.Client[v0alpha.SetDefaultDashboardRequest, emptypb.Empty]
-	updateDashboard                    *connect_go.Client[v0alpha.UpdateDashboardRequest, emptypb.Empty]
-	updateDashboardTitleAndDescription *connect_go.Client[v0alpha.UpdateDashboardTitleAndDescriptionRequest, emptypb.Empty]
-	updateDashboardView                *connect_go.Client[v0alpha.UpdateDashboardViewRequest, emptypb.Empty]
-	updateDashboardLayout              *connect_go.Client[v0alpha.UpdateDashboardLayoutRequest, emptypb.Empty]
+	createDashboard                            *connect_go.Client[v0alpha.CreateDashboardRequest, v0alpha.CreateDashboardResponse]
+	getDashboard                               *connect_go.Client[v0alpha.GetDashboardRequest, v0alpha.Dashboard]
+	getDefaultDashboard                        *connect_go.Client[v0alpha.GetDefaultDashboardRequest, v0alpha.Dashboard]
+	listDashboards                             *connect_go.Client[v0alpha.ListDashboardsRequest, v0alpha.ListDashboardsResponse]
+	listProductTypes                           *connect_go.Client[v0alpha.ListProductTypesRequest, v0alpha.ListProductTypesResult]
+	deleteDashboard                            *connect_go.Client[v0alpha.DeleteDashboardRequest, emptypb.Empty]
+	setDefaultDashboard                        *connect_go.Client[v0alpha.SetDefaultDashboardRequest, emptypb.Empty]
+	updateDashboard                            *connect_go.Client[v0alpha.UpdateDashboardRequest, emptypb.Empty]
+	updateDashboardTitleAndDescription         *connect_go.Client[v0alpha.UpdateDashboardTitleAndDescriptionRequest, emptypb.Empty]
+	updateDashboardView                        *connect_go.Client[v0alpha.UpdateDashboardViewRequest, emptypb.Empty]
+	updateDashboardLayout                      *connect_go.Client[v0alpha.UpdateDashboardLayoutRequest, emptypb.Empty]
+	createStandardDashboard                    *connect_go.Client[v0alpha.CreateStandardDashboardRequest, v0alpha.CreateStandardDashboardResponse]
+	updateStandardDashboard                    *connect_go.Client[v0alpha.UpdateStandardDashboardRequest, emptypb.Empty]
+	updateStandardDashboardTitleAndDescription *connect_go.Client[v0alpha.UpdateStandardDashboardTitleAndDescriptionRequest, emptypb.Empty]
+	updateStandardDashboardView                *connect_go.Client[v0alpha.UpdateStandardDashboardViewRequest, emptypb.Empty]
+	updateStandardDashboardLayout              *connect_go.Client[v0alpha.UpdateStandardDashboardLayoutRequest, emptypb.Empty]
+	deleteStandardDashboard                    *connect_go.Client[v0alpha.DeleteStandardDashboardRequest, emptypb.Empty]
 }
 
 // CreateDashboard calls api.v0alpha.Dashboards.CreateDashboard.
@@ -231,6 +297,37 @@ func (c *dashboardsClient) UpdateDashboardLayout(ctx context.Context, req *conne
 	return c.updateDashboardLayout.CallUnary(ctx, req)
 }
 
+// CreateStandardDashboard calls api.v0alpha.Dashboards.CreateStandardDashboard.
+func (c *dashboardsClient) CreateStandardDashboard(ctx context.Context, req *connect_go.Request[v0alpha.CreateStandardDashboardRequest]) (*connect_go.Response[v0alpha.CreateStandardDashboardResponse], error) {
+	return c.createStandardDashboard.CallUnary(ctx, req)
+}
+
+// UpdateStandardDashboard calls api.v0alpha.Dashboards.UpdateStandardDashboard.
+func (c *dashboardsClient) UpdateStandardDashboard(ctx context.Context, req *connect_go.Request[v0alpha.UpdateStandardDashboardRequest]) (*connect_go.Response[emptypb.Empty], error) {
+	return c.updateStandardDashboard.CallUnary(ctx, req)
+}
+
+// UpdateStandardDashboardTitleAndDescription calls
+// api.v0alpha.Dashboards.UpdateStandardDashboardTitleAndDescription.
+func (c *dashboardsClient) UpdateStandardDashboardTitleAndDescription(ctx context.Context, req *connect_go.Request[v0alpha.UpdateStandardDashboardTitleAndDescriptionRequest]) (*connect_go.Response[emptypb.Empty], error) {
+	return c.updateStandardDashboardTitleAndDescription.CallUnary(ctx, req)
+}
+
+// UpdateStandardDashboardView calls api.v0alpha.Dashboards.UpdateStandardDashboardView.
+func (c *dashboardsClient) UpdateStandardDashboardView(ctx context.Context, req *connect_go.Request[v0alpha.UpdateStandardDashboardViewRequest]) (*connect_go.Response[emptypb.Empty], error) {
+	return c.updateStandardDashboardView.CallUnary(ctx, req)
+}
+
+// UpdateStandardDashboardLayout calls api.v0alpha.Dashboards.UpdateStandardDashboardLayout.
+func (c *dashboardsClient) UpdateStandardDashboardLayout(ctx context.Context, req *connect_go.Request[v0alpha.UpdateStandardDashboardLayoutRequest]) (*connect_go.Response[emptypb.Empty], error) {
+	return c.updateStandardDashboardLayout.CallUnary(ctx, req)
+}
+
+// DeleteStandardDashboard calls api.v0alpha.Dashboards.DeleteStandardDashboard.
+func (c *dashboardsClient) DeleteStandardDashboard(ctx context.Context, req *connect_go.Request[v0alpha.DeleteStandardDashboardRequest]) (*connect_go.Response[emptypb.Empty], error) {
+	return c.deleteStandardDashboard.CallUnary(ctx, req)
+}
+
 // DashboardsHandler is an implementation of the api.v0alpha.Dashboards service.
 type DashboardsHandler interface {
 	// CreateDashboard creates a dashboard and associated panels
@@ -253,6 +350,18 @@ type DashboardsHandler interface {
 	UpdateDashboardView(context.Context, *connect_go.Request[v0alpha.UpdateDashboardViewRequest]) (*connect_go.Response[emptypb.Empty], error)
 	// UpdateDashboardLayout replaces a dashboards layout with a given layout
 	UpdateDashboardLayout(context.Context, *connect_go.Request[v0alpha.UpdateDashboardLayoutRequest]) (*connect_go.Response[emptypb.Empty], error)
+	// CreateStandardDashboard creates a TCN standard dashboard
+	CreateStandardDashboard(context.Context, *connect_go.Request[v0alpha.CreateStandardDashboardRequest]) (*connect_go.Response[v0alpha.CreateStandardDashboardResponse], error)
+	// UpdateStandardDashboard updates a TCN standard dashboard
+	UpdateStandardDashboard(context.Context, *connect_go.Request[v0alpha.UpdateStandardDashboardRequest]) (*connect_go.Response[emptypb.Empty], error)
+	// UpdateStandardDashboardTitleAndDescription updates a TCN standard dashboard title and description
+	UpdateStandardDashboardTitleAndDescription(context.Context, *connect_go.Request[v0alpha.UpdateStandardDashboardTitleAndDescriptionRequest]) (*connect_go.Response[emptypb.Empty], error)
+	// UpdateStandardDashboardView updates a TCN standard dashboard view
+	UpdateStandardDashboardView(context.Context, *connect_go.Request[v0alpha.UpdateStandardDashboardViewRequest]) (*connect_go.Response[emptypb.Empty], error)
+	// UpdateStandardDashboardLayout updates a TCN standard dashboard layout
+	UpdateStandardDashboardLayout(context.Context, *connect_go.Request[v0alpha.UpdateStandardDashboardLayoutRequest]) (*connect_go.Response[emptypb.Empty], error)
+	// DeleteStandardDashboard deletes a TCN standard dashboard
+	DeleteStandardDashboard(context.Context, *connect_go.Request[v0alpha.DeleteStandardDashboardRequest]) (*connect_go.Response[emptypb.Empty], error)
 }
 
 // NewDashboardsHandler builds an HTTP handler from the service implementation. It returns the path
@@ -316,6 +425,36 @@ func NewDashboardsHandler(svc DashboardsHandler, opts ...connect_go.HandlerOptio
 		svc.UpdateDashboardLayout,
 		opts...,
 	)
+	dashboardsCreateStandardDashboardHandler := connect_go.NewUnaryHandler(
+		DashboardsCreateStandardDashboardProcedure,
+		svc.CreateStandardDashboard,
+		opts...,
+	)
+	dashboardsUpdateStandardDashboardHandler := connect_go.NewUnaryHandler(
+		DashboardsUpdateStandardDashboardProcedure,
+		svc.UpdateStandardDashboard,
+		opts...,
+	)
+	dashboardsUpdateStandardDashboardTitleAndDescriptionHandler := connect_go.NewUnaryHandler(
+		DashboardsUpdateStandardDashboardTitleAndDescriptionProcedure,
+		svc.UpdateStandardDashboardTitleAndDescription,
+		opts...,
+	)
+	dashboardsUpdateStandardDashboardViewHandler := connect_go.NewUnaryHandler(
+		DashboardsUpdateStandardDashboardViewProcedure,
+		svc.UpdateStandardDashboardView,
+		opts...,
+	)
+	dashboardsUpdateStandardDashboardLayoutHandler := connect_go.NewUnaryHandler(
+		DashboardsUpdateStandardDashboardLayoutProcedure,
+		svc.UpdateStandardDashboardLayout,
+		opts...,
+	)
+	dashboardsDeleteStandardDashboardHandler := connect_go.NewUnaryHandler(
+		DashboardsDeleteStandardDashboardProcedure,
+		svc.DeleteStandardDashboard,
+		opts...,
+	)
 	return "/api.v0alpha.Dashboards/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case DashboardsCreateDashboardProcedure:
@@ -340,6 +479,18 @@ func NewDashboardsHandler(svc DashboardsHandler, opts ...connect_go.HandlerOptio
 			dashboardsUpdateDashboardViewHandler.ServeHTTP(w, r)
 		case DashboardsUpdateDashboardLayoutProcedure:
 			dashboardsUpdateDashboardLayoutHandler.ServeHTTP(w, r)
+		case DashboardsCreateStandardDashboardProcedure:
+			dashboardsCreateStandardDashboardHandler.ServeHTTP(w, r)
+		case DashboardsUpdateStandardDashboardProcedure:
+			dashboardsUpdateStandardDashboardHandler.ServeHTTP(w, r)
+		case DashboardsUpdateStandardDashboardTitleAndDescriptionProcedure:
+			dashboardsUpdateStandardDashboardTitleAndDescriptionHandler.ServeHTTP(w, r)
+		case DashboardsUpdateStandardDashboardViewProcedure:
+			dashboardsUpdateStandardDashboardViewHandler.ServeHTTP(w, r)
+		case DashboardsUpdateStandardDashboardLayoutProcedure:
+			dashboardsUpdateStandardDashboardLayoutHandler.ServeHTTP(w, r)
+		case DashboardsDeleteStandardDashboardProcedure:
+			dashboardsDeleteStandardDashboardHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -391,4 +542,28 @@ func (UnimplementedDashboardsHandler) UpdateDashboardView(context.Context, *conn
 
 func (UnimplementedDashboardsHandler) UpdateDashboardLayout(context.Context, *connect_go.Request[v0alpha.UpdateDashboardLayoutRequest]) (*connect_go.Response[emptypb.Empty], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Dashboards.UpdateDashboardLayout is not implemented"))
+}
+
+func (UnimplementedDashboardsHandler) CreateStandardDashboard(context.Context, *connect_go.Request[v0alpha.CreateStandardDashboardRequest]) (*connect_go.Response[v0alpha.CreateStandardDashboardResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Dashboards.CreateStandardDashboard is not implemented"))
+}
+
+func (UnimplementedDashboardsHandler) UpdateStandardDashboard(context.Context, *connect_go.Request[v0alpha.UpdateStandardDashboardRequest]) (*connect_go.Response[emptypb.Empty], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Dashboards.UpdateStandardDashboard is not implemented"))
+}
+
+func (UnimplementedDashboardsHandler) UpdateStandardDashboardTitleAndDescription(context.Context, *connect_go.Request[v0alpha.UpdateStandardDashboardTitleAndDescriptionRequest]) (*connect_go.Response[emptypb.Empty], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Dashboards.UpdateStandardDashboardTitleAndDescription is not implemented"))
+}
+
+func (UnimplementedDashboardsHandler) UpdateStandardDashboardView(context.Context, *connect_go.Request[v0alpha.UpdateStandardDashboardViewRequest]) (*connect_go.Response[emptypb.Empty], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Dashboards.UpdateStandardDashboardView is not implemented"))
+}
+
+func (UnimplementedDashboardsHandler) UpdateStandardDashboardLayout(context.Context, *connect_go.Request[v0alpha.UpdateStandardDashboardLayoutRequest]) (*connect_go.Response[emptypb.Empty], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Dashboards.UpdateStandardDashboardLayout is not implemented"))
+}
+
+func (UnimplementedDashboardsHandler) DeleteStandardDashboard(context.Context, *connect_go.Request[v0alpha.DeleteStandardDashboardRequest]) (*connect_go.Response[emptypb.Empty], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Dashboards.DeleteStandardDashboard is not implemented"))
 }

@@ -20,17 +20,23 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Dashboards_CreateDashboard_FullMethodName                    = "/api.v0alpha.Dashboards/CreateDashboard"
-	Dashboards_GetDashboard_FullMethodName                       = "/api.v0alpha.Dashboards/GetDashboard"
-	Dashboards_GetDefaultDashboard_FullMethodName                = "/api.v0alpha.Dashboards/GetDefaultDashboard"
-	Dashboards_ListDashboards_FullMethodName                     = "/api.v0alpha.Dashboards/ListDashboards"
-	Dashboards_ListProductTypes_FullMethodName                   = "/api.v0alpha.Dashboards/ListProductTypes"
-	Dashboards_DeleteDashboard_FullMethodName                    = "/api.v0alpha.Dashboards/DeleteDashboard"
-	Dashboards_SetDefaultDashboard_FullMethodName                = "/api.v0alpha.Dashboards/SetDefaultDashboard"
-	Dashboards_UpdateDashboard_FullMethodName                    = "/api.v0alpha.Dashboards/UpdateDashboard"
-	Dashboards_UpdateDashboardTitleAndDescription_FullMethodName = "/api.v0alpha.Dashboards/UpdateDashboardTitleAndDescription"
-	Dashboards_UpdateDashboardView_FullMethodName                = "/api.v0alpha.Dashboards/UpdateDashboardView"
-	Dashboards_UpdateDashboardLayout_FullMethodName              = "/api.v0alpha.Dashboards/UpdateDashboardLayout"
+	Dashboards_CreateDashboard_FullMethodName                            = "/api.v0alpha.Dashboards/CreateDashboard"
+	Dashboards_GetDashboard_FullMethodName                               = "/api.v0alpha.Dashboards/GetDashboard"
+	Dashboards_GetDefaultDashboard_FullMethodName                        = "/api.v0alpha.Dashboards/GetDefaultDashboard"
+	Dashboards_ListDashboards_FullMethodName                             = "/api.v0alpha.Dashboards/ListDashboards"
+	Dashboards_ListProductTypes_FullMethodName                           = "/api.v0alpha.Dashboards/ListProductTypes"
+	Dashboards_DeleteDashboard_FullMethodName                            = "/api.v0alpha.Dashboards/DeleteDashboard"
+	Dashboards_SetDefaultDashboard_FullMethodName                        = "/api.v0alpha.Dashboards/SetDefaultDashboard"
+	Dashboards_UpdateDashboard_FullMethodName                            = "/api.v0alpha.Dashboards/UpdateDashboard"
+	Dashboards_UpdateDashboardTitleAndDescription_FullMethodName         = "/api.v0alpha.Dashboards/UpdateDashboardTitleAndDescription"
+	Dashboards_UpdateDashboardView_FullMethodName                        = "/api.v0alpha.Dashboards/UpdateDashboardView"
+	Dashboards_UpdateDashboardLayout_FullMethodName                      = "/api.v0alpha.Dashboards/UpdateDashboardLayout"
+	Dashboards_CreateStandardDashboard_FullMethodName                    = "/api.v0alpha.Dashboards/CreateStandardDashboard"
+	Dashboards_UpdateStandardDashboard_FullMethodName                    = "/api.v0alpha.Dashboards/UpdateStandardDashboard"
+	Dashboards_UpdateStandardDashboardTitleAndDescription_FullMethodName = "/api.v0alpha.Dashboards/UpdateStandardDashboardTitleAndDescription"
+	Dashboards_UpdateStandardDashboardView_FullMethodName                = "/api.v0alpha.Dashboards/UpdateStandardDashboardView"
+	Dashboards_UpdateStandardDashboardLayout_FullMethodName              = "/api.v0alpha.Dashboards/UpdateStandardDashboardLayout"
+	Dashboards_DeleteStandardDashboard_FullMethodName                    = "/api.v0alpha.Dashboards/DeleteStandardDashboard"
 )
 
 // DashboardsClient is the client API for Dashboards service.
@@ -57,6 +63,18 @@ type DashboardsClient interface {
 	UpdateDashboardView(ctx context.Context, in *UpdateDashboardViewRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// UpdateDashboardLayout replaces a dashboards layout with a given layout
 	UpdateDashboardLayout(ctx context.Context, in *UpdateDashboardLayoutRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// CreateStandardDashboard creates a TCN standard dashboard
+	CreateStandardDashboard(ctx context.Context, in *CreateStandardDashboardRequest, opts ...grpc.CallOption) (*CreateStandardDashboardResponse, error)
+	// UpdateStandardDashboard updates a TCN standard dashboard
+	UpdateStandardDashboard(ctx context.Context, in *UpdateStandardDashboardRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// UpdateStandardDashboardTitleAndDescription updates a TCN standard dashboard title and description
+	UpdateStandardDashboardTitleAndDescription(ctx context.Context, in *UpdateStandardDashboardTitleAndDescriptionRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// UpdateStandardDashboardView updates a TCN standard dashboard view
+	UpdateStandardDashboardView(ctx context.Context, in *UpdateStandardDashboardViewRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// UpdateStandardDashboardLayout updates a TCN standard dashboard layout
+	UpdateStandardDashboardLayout(ctx context.Context, in *UpdateStandardDashboardLayoutRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// DeleteStandardDashboard deletes a TCN standard dashboard
+	DeleteStandardDashboard(ctx context.Context, in *DeleteStandardDashboardRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type dashboardsClient struct {
@@ -166,6 +184,60 @@ func (c *dashboardsClient) UpdateDashboardLayout(ctx context.Context, in *Update
 	return out, nil
 }
 
+func (c *dashboardsClient) CreateStandardDashboard(ctx context.Context, in *CreateStandardDashboardRequest, opts ...grpc.CallOption) (*CreateStandardDashboardResponse, error) {
+	out := new(CreateStandardDashboardResponse)
+	err := c.cc.Invoke(ctx, Dashboards_CreateStandardDashboard_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *dashboardsClient) UpdateStandardDashboard(ctx context.Context, in *UpdateStandardDashboardRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, Dashboards_UpdateStandardDashboard_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *dashboardsClient) UpdateStandardDashboardTitleAndDescription(ctx context.Context, in *UpdateStandardDashboardTitleAndDescriptionRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, Dashboards_UpdateStandardDashboardTitleAndDescription_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *dashboardsClient) UpdateStandardDashboardView(ctx context.Context, in *UpdateStandardDashboardViewRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, Dashboards_UpdateStandardDashboardView_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *dashboardsClient) UpdateStandardDashboardLayout(ctx context.Context, in *UpdateStandardDashboardLayoutRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, Dashboards_UpdateStandardDashboardLayout_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *dashboardsClient) DeleteStandardDashboard(ctx context.Context, in *DeleteStandardDashboardRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, Dashboards_DeleteStandardDashboard_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DashboardsServer is the server API for Dashboards service.
 // All implementations must embed UnimplementedDashboardsServer
 // for forward compatibility
@@ -190,6 +262,18 @@ type DashboardsServer interface {
 	UpdateDashboardView(context.Context, *UpdateDashboardViewRequest) (*emptypb.Empty, error)
 	// UpdateDashboardLayout replaces a dashboards layout with a given layout
 	UpdateDashboardLayout(context.Context, *UpdateDashboardLayoutRequest) (*emptypb.Empty, error)
+	// CreateStandardDashboard creates a TCN standard dashboard
+	CreateStandardDashboard(context.Context, *CreateStandardDashboardRequest) (*CreateStandardDashboardResponse, error)
+	// UpdateStandardDashboard updates a TCN standard dashboard
+	UpdateStandardDashboard(context.Context, *UpdateStandardDashboardRequest) (*emptypb.Empty, error)
+	// UpdateStandardDashboardTitleAndDescription updates a TCN standard dashboard title and description
+	UpdateStandardDashboardTitleAndDescription(context.Context, *UpdateStandardDashboardTitleAndDescriptionRequest) (*emptypb.Empty, error)
+	// UpdateStandardDashboardView updates a TCN standard dashboard view
+	UpdateStandardDashboardView(context.Context, *UpdateStandardDashboardViewRequest) (*emptypb.Empty, error)
+	// UpdateStandardDashboardLayout updates a TCN standard dashboard layout
+	UpdateStandardDashboardLayout(context.Context, *UpdateStandardDashboardLayoutRequest) (*emptypb.Empty, error)
+	// DeleteStandardDashboard deletes a TCN standard dashboard
+	DeleteStandardDashboard(context.Context, *DeleteStandardDashboardRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedDashboardsServer()
 }
 
@@ -229,6 +313,24 @@ func (UnimplementedDashboardsServer) UpdateDashboardView(context.Context, *Updat
 }
 func (UnimplementedDashboardsServer) UpdateDashboardLayout(context.Context, *UpdateDashboardLayoutRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateDashboardLayout not implemented")
+}
+func (UnimplementedDashboardsServer) CreateStandardDashboard(context.Context, *CreateStandardDashboardRequest) (*CreateStandardDashboardResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateStandardDashboard not implemented")
+}
+func (UnimplementedDashboardsServer) UpdateStandardDashboard(context.Context, *UpdateStandardDashboardRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateStandardDashboard not implemented")
+}
+func (UnimplementedDashboardsServer) UpdateStandardDashboardTitleAndDescription(context.Context, *UpdateStandardDashboardTitleAndDescriptionRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateStandardDashboardTitleAndDescription not implemented")
+}
+func (UnimplementedDashboardsServer) UpdateStandardDashboardView(context.Context, *UpdateStandardDashboardViewRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateStandardDashboardView not implemented")
+}
+func (UnimplementedDashboardsServer) UpdateStandardDashboardLayout(context.Context, *UpdateStandardDashboardLayoutRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateStandardDashboardLayout not implemented")
+}
+func (UnimplementedDashboardsServer) DeleteStandardDashboard(context.Context, *DeleteStandardDashboardRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteStandardDashboard not implemented")
 }
 func (UnimplementedDashboardsServer) mustEmbedUnimplementedDashboardsServer() {}
 
@@ -441,6 +543,114 @@ func _Dashboards_UpdateDashboardLayout_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Dashboards_CreateStandardDashboard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateStandardDashboardRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DashboardsServer).CreateStandardDashboard(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Dashboards_CreateStandardDashboard_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DashboardsServer).CreateStandardDashboard(ctx, req.(*CreateStandardDashboardRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Dashboards_UpdateStandardDashboard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateStandardDashboardRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DashboardsServer).UpdateStandardDashboard(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Dashboards_UpdateStandardDashboard_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DashboardsServer).UpdateStandardDashboard(ctx, req.(*UpdateStandardDashboardRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Dashboards_UpdateStandardDashboardTitleAndDescription_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateStandardDashboardTitleAndDescriptionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DashboardsServer).UpdateStandardDashboardTitleAndDescription(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Dashboards_UpdateStandardDashboardTitleAndDescription_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DashboardsServer).UpdateStandardDashboardTitleAndDescription(ctx, req.(*UpdateStandardDashboardTitleAndDescriptionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Dashboards_UpdateStandardDashboardView_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateStandardDashboardViewRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DashboardsServer).UpdateStandardDashboardView(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Dashboards_UpdateStandardDashboardView_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DashboardsServer).UpdateStandardDashboardView(ctx, req.(*UpdateStandardDashboardViewRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Dashboards_UpdateStandardDashboardLayout_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateStandardDashboardLayoutRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DashboardsServer).UpdateStandardDashboardLayout(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Dashboards_UpdateStandardDashboardLayout_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DashboardsServer).UpdateStandardDashboardLayout(ctx, req.(*UpdateStandardDashboardLayoutRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Dashboards_DeleteStandardDashboard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteStandardDashboardRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DashboardsServer).DeleteStandardDashboard(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Dashboards_DeleteStandardDashboard_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DashboardsServer).DeleteStandardDashboard(ctx, req.(*DeleteStandardDashboardRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Dashboards_ServiceDesc is the grpc.ServiceDesc for Dashboards service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -491,6 +701,30 @@ var Dashboards_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateDashboardLayout",
 			Handler:    _Dashboards_UpdateDashboardLayout_Handler,
+		},
+		{
+			MethodName: "CreateStandardDashboard",
+			Handler:    _Dashboards_CreateStandardDashboard_Handler,
+		},
+		{
+			MethodName: "UpdateStandardDashboard",
+			Handler:    _Dashboards_UpdateStandardDashboard_Handler,
+		},
+		{
+			MethodName: "UpdateStandardDashboardTitleAndDescription",
+			Handler:    _Dashboards_UpdateStandardDashboardTitleAndDescription_Handler,
+		},
+		{
+			MethodName: "UpdateStandardDashboardView",
+			Handler:    _Dashboards_UpdateStandardDashboardView_Handler,
+		},
+		{
+			MethodName: "UpdateStandardDashboardLayout",
+			Handler:    _Dashboards_UpdateStandardDashboardLayout_Handler,
+		},
+		{
+			MethodName: "DeleteStandardDashboard",
+			Handler:    _Dashboards_DeleteStandardDashboard_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
