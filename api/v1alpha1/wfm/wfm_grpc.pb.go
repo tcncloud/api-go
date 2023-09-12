@@ -80,6 +80,7 @@ const (
 	WFM_UpdateLocationNode_FullMethodName                            = "/api.v1alpha1.wfm.WFM/UpdateLocationNode"
 	WFM_CreateProgramNode_FullMethodName                             = "/api.v1alpha1.wfm.WFM/CreateProgramNode"
 	WFM_UpdateProgramNode_FullMethodName                             = "/api.v1alpha1.wfm.WFM/UpdateProgramNode"
+	WFM_ListProgramNodesBySid_FullMethodName                         = "/api.v1alpha1.wfm.WFM/ListProgramNodesBySid"
 	WFM_CreateConstraintRule_FullMethodName                          = "/api.v1alpha1.wfm.WFM/CreateConstraintRule"
 	WFM_UpdateConstraintRule_FullMethodName                          = "/api.v1alpha1.wfm.WFM/UpdateConstraintRule"
 	WFM_DeleteConstraintRule_FullMethodName                          = "/api.v1alpha1.wfm.WFM/DeleteConstraintRule"
@@ -94,6 +95,7 @@ const (
 	WFM_ListAllWFMAgents_FullMethodName                              = "/api.v1alpha1.wfm.WFM/ListAllWFMAgents"
 	WFM_ListCandidateWFMAgents_FullMethodName                        = "/api.v1alpha1.wfm.WFM/ListCandidateWFMAgents"
 	WFM_ListUngroupedWFMAgents_FullMethodName                        = "/api.v1alpha1.wfm.WFM/ListUngroupedWFMAgents"
+	WFM_ListWFMAgentSids_FullMethodName                              = "/api.v1alpha1.wfm.WFM/ListWFMAgentSids"
 	WFM_ListWFMAgentsAssociatedWithAgentGroup_FullMethodName         = "/api.v1alpha1.wfm.WFM/ListWFMAgentsAssociatedWithAgentGroup"
 	WFM_CreateWFMAgentMemberships_FullMethodName                     = "/api.v1alpha1.wfm.WFM/CreateWFMAgentMemberships"
 	WFM_DeleteWFMAgentMemberships_FullMethodName                     = "/api.v1alpha1.wfm.WFM/DeleteWFMAgentMemberships"
@@ -683,6 +685,15 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when updating the program node.
 	//   - grpc.NotFound: entry to be updated doesn't exist, or the given parent @location_node_sid belongs to a different scenario than the program node to update.
 	UpdateProgramNode(ctx context.Context, in *UpdateProgramNodeReq, opts ...grpc.CallOption) (*UpdateProgramNodeRes, error)
+	// Lists the program nodes with the given @program_node_sids for the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the given @program_node_sids are invalid.
+	//   - grpc.Internal: error occurs when listing the program nodes.
+	ListProgramNodesBySid(ctx context.Context, in *ListProgramNodesBySidReq, opts ...grpc.CallOption) (*ListProgramNodesBySidRes, error)
 	// Creates the given @constraint_rule for the org sending the request.
 	// The @constraint_rule_sid and @skill_proficiency_sid (if one was created) of the new entities will be returned in the response.
 	// The @schedule_scenario_sid must match the scenario of the @parent_entity.
@@ -825,6 +836,10 @@ type WFMClient interface {
 	// if @include_inactive is true then inactive agents will also be included, otherwise only active agents will be returned.
 	// if @include_skill_proficiencies is true then agents returned will include their skill proficiencies.
 	// if @include_agent_groups is true then the @agent_groups_by_agent response field will be set with a list of agent groups correlating to each agents index in the @wfm_agents field.
+	// if @include_agent_groups is set to true, the @agent_group_schedule_scenario_sid field must be set, so that the agent groups for the correct scenario are returned.
+	// if @include_agent_groups is set to true, and @agent_group_schedule_scenario_sid is not set, the agent groups will not be filtered by schedule scenario.
+	// if @include_agent_groups is set to false, the @agent_group_schedule_scenario_sid will be ignored.
+	// @agent_group_schedule_scenario_sid does not effect which @wfm_agents are returned.
 	// WFM agents with no associated agent_groups will have an empty slice in agent_groups_by_agent at their correlated index.
 	// Required Permissions:
 	//
@@ -856,6 +871,17 @@ type WFMClient interface {
 	//   - grpc.Invalid: @created_after_datetime has an invalid value.
 	//   - grpc.Internal: error occurs when getting the wfm agents.
 	ListUngroupedWFMAgents(ctx context.Context, in *ListUngroupedWFMAgentsReq, opts ...grpc.CallOption) (*ListUngroupedWFMAgentsRes, error)
+	// Gets the wfm_agent_sids with the given @tcn_agent_sids for the org sending the request.
+	// Returns a map where Key: tcn_agent_sid - Value: wfm_agent_sid.
+	// If the wfm_agent_sid is not found for any @tcn_agent_sids, they will not have an entry in the returned @sids.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @tcn_agent_sids are invalid.
+	//   - grpc.Internal: error occours while listing the wfm_agent_sids.
+	ListWFMAgentSids(ctx context.Context, in *ListWFMAgentSidsReq, opts ...grpc.CallOption) (*ListWFMAgentSidsRes, error)
 	// Lists the IDs of wfm agents that belong to the org sending the request which are associated with the given @agent_group_sid.
 	// Required permissions:
 	//
@@ -2099,6 +2125,15 @@ func (c *wFMClient) UpdateProgramNode(ctx context.Context, in *UpdateProgramNode
 	return out, nil
 }
 
+func (c *wFMClient) ListProgramNodesBySid(ctx context.Context, in *ListProgramNodesBySidReq, opts ...grpc.CallOption) (*ListProgramNodesBySidRes, error) {
+	out := new(ListProgramNodesBySidRes)
+	err := c.cc.Invoke(ctx, WFM_ListProgramNodesBySid_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) CreateConstraintRule(ctx context.Context, in *CreateConstraintRuleReq, opts ...grpc.CallOption) (*CreateConstraintRuleRes, error) {
 	out := new(CreateConstraintRuleRes)
 	err := c.cc.Invoke(ctx, WFM_CreateConstraintRule_FullMethodName, in, out, opts...)
@@ -2219,6 +2254,15 @@ func (c *wFMClient) ListCandidateWFMAgents(ctx context.Context, in *ListCandidat
 func (c *wFMClient) ListUngroupedWFMAgents(ctx context.Context, in *ListUngroupedWFMAgentsReq, opts ...grpc.CallOption) (*ListUngroupedWFMAgentsRes, error) {
 	out := new(ListUngroupedWFMAgentsRes)
 	err := c.cc.Invoke(ctx, WFM_ListUngroupedWFMAgents_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) ListWFMAgentSids(ctx context.Context, in *ListWFMAgentSidsReq, opts ...grpc.CallOption) (*ListWFMAgentSidsRes, error) {
+	out := new(ListWFMAgentSidsRes)
+	err := c.cc.Invoke(ctx, WFM_ListWFMAgentSids_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -3276,6 +3320,15 @@ type WFMServer interface {
 	//   - grpc.Internal: error occurs when updating the program node.
 	//   - grpc.NotFound: entry to be updated doesn't exist, or the given parent @location_node_sid belongs to a different scenario than the program node to update.
 	UpdateProgramNode(context.Context, *UpdateProgramNodeReq) (*UpdateProgramNodeRes, error)
+	// Lists the program nodes with the given @program_node_sids for the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the given @program_node_sids are invalid.
+	//   - grpc.Internal: error occurs when listing the program nodes.
+	ListProgramNodesBySid(context.Context, *ListProgramNodesBySidReq) (*ListProgramNodesBySidRes, error)
 	// Creates the given @constraint_rule for the org sending the request.
 	// The @constraint_rule_sid and @skill_proficiency_sid (if one was created) of the new entities will be returned in the response.
 	// The @schedule_scenario_sid must match the scenario of the @parent_entity.
@@ -3418,6 +3471,10 @@ type WFMServer interface {
 	// if @include_inactive is true then inactive agents will also be included, otherwise only active agents will be returned.
 	// if @include_skill_proficiencies is true then agents returned will include their skill proficiencies.
 	// if @include_agent_groups is true then the @agent_groups_by_agent response field will be set with a list of agent groups correlating to each agents index in the @wfm_agents field.
+	// if @include_agent_groups is set to true, the @agent_group_schedule_scenario_sid field must be set, so that the agent groups for the correct scenario are returned.
+	// if @include_agent_groups is set to true, and @agent_group_schedule_scenario_sid is not set, the agent groups will not be filtered by schedule scenario.
+	// if @include_agent_groups is set to false, the @agent_group_schedule_scenario_sid will be ignored.
+	// @agent_group_schedule_scenario_sid does not effect which @wfm_agents are returned.
 	// WFM agents with no associated agent_groups will have an empty slice in agent_groups_by_agent at their correlated index.
 	// Required Permissions:
 	//
@@ -3449,6 +3506,17 @@ type WFMServer interface {
 	//   - grpc.Invalid: @created_after_datetime has an invalid value.
 	//   - grpc.Internal: error occurs when getting the wfm agents.
 	ListUngroupedWFMAgents(context.Context, *ListUngroupedWFMAgentsReq) (*ListUngroupedWFMAgentsRes, error)
+	// Gets the wfm_agent_sids with the given @tcn_agent_sids for the org sending the request.
+	// Returns a map where Key: tcn_agent_sid - Value: wfm_agent_sid.
+	// If the wfm_agent_sid is not found for any @tcn_agent_sids, they will not have an entry in the returned @sids.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @tcn_agent_sids are invalid.
+	//   - grpc.Internal: error occours while listing the wfm_agent_sids.
+	ListWFMAgentSids(context.Context, *ListWFMAgentSidsReq) (*ListWFMAgentSidsRes, error)
 	// Lists the IDs of wfm agents that belong to the org sending the request which are associated with the given @agent_group_sid.
 	// Required permissions:
 	//
@@ -4291,6 +4359,9 @@ func (UnimplementedWFMServer) CreateProgramNode(context.Context, *CreateProgramN
 func (UnimplementedWFMServer) UpdateProgramNode(context.Context, *UpdateProgramNodeReq) (*UpdateProgramNodeRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateProgramNode not implemented")
 }
+func (UnimplementedWFMServer) ListProgramNodesBySid(context.Context, *ListProgramNodesBySidReq) (*ListProgramNodesBySidRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListProgramNodesBySid not implemented")
+}
 func (UnimplementedWFMServer) CreateConstraintRule(context.Context, *CreateConstraintRuleReq) (*CreateConstraintRuleRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateConstraintRule not implemented")
 }
@@ -4332,6 +4403,9 @@ func (UnimplementedWFMServer) ListCandidateWFMAgents(context.Context, *ListCandi
 }
 func (UnimplementedWFMServer) ListUngroupedWFMAgents(context.Context, *ListUngroupedWFMAgentsReq) (*ListUngroupedWFMAgentsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListUngroupedWFMAgents not implemented")
+}
+func (UnimplementedWFMServer) ListWFMAgentSids(context.Context, *ListWFMAgentSidsReq) (*ListWFMAgentSidsRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListWFMAgentSids not implemented")
 }
 func (UnimplementedWFMServer) ListWFMAgentsAssociatedWithAgentGroup(context.Context, *ListWFMAgentsAssociatedWithAgentGroupReq) (*ListWFMAgentsAssociatedWithAgentGroupRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListWFMAgentsAssociatedWithAgentGroup not implemented")
@@ -5381,6 +5455,24 @@ func _WFM_UpdateProgramNode_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_ListProgramNodesBySid_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListProgramNodesBySidReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).ListProgramNodesBySid(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_ListProgramNodesBySid_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).ListProgramNodesBySid(ctx, req.(*ListProgramNodesBySidReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WFM_CreateConstraintRule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateConstraintRuleReq)
 	if err := dec(in); err != nil {
@@ -5629,6 +5721,24 @@ func _WFM_ListUngroupedWFMAgents_Handler(srv interface{}, ctx context.Context, d
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WFMServer).ListUngroupedWFMAgents(ctx, req.(*ListUngroupedWFMAgentsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_ListWFMAgentSids_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListWFMAgentSidsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).ListWFMAgentSids(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_ListWFMAgentSids_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).ListWFMAgentSids(ctx, req.(*ListWFMAgentSidsReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -6853,6 +6963,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _WFM_UpdateProgramNode_Handler,
 		},
 		{
+			MethodName: "ListProgramNodesBySid",
+			Handler:    _WFM_ListProgramNodesBySid_Handler,
+		},
+		{
 			MethodName: "CreateConstraintRule",
 			Handler:    _WFM_CreateConstraintRule_Handler,
 		},
@@ -6907,6 +7021,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListUngroupedWFMAgents",
 			Handler:    _WFM_ListUngroupedWFMAgents_Handler,
+		},
+		{
+			MethodName: "ListWFMAgentSids",
+			Handler:    _WFM_ListWFMAgentSids_Handler,
 		},
 		{
 			MethodName: "ListWFMAgentsAssociatedWithAgentGroup",
