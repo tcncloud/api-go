@@ -765,7 +765,7 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when upserting the forecast data deltas.
 	UpsertForecastDataDeltas(context.Context, *connect_go.Request[wfm.UpsertForecastDataDeltasReq]) (*connect_go.Response[wfm.UpsertForecastDataDeltasRes], error)
 	// Deletes forecast data intervals/deltas based on the parameters provided.
-	// If @delete_param is type skill_profile_sid, then the intervals/deltas to be deleted will be
+	// If @delete_param is type skill_profile_category, then the intervals/deltas to be deleted will be
 	// associated with that id. If @delete_param is type interval_sids, then the intervals/deltas to be
 	// deleted will be contained in the list @interval_sids. The @delete_type field determines which
 	// table(s) in the database the intervals/deltas will be deleted from.
@@ -3572,7 +3572,7 @@ type WFMHandler interface {
 	//   - grpc.Internal: error occurs when upserting the forecast data deltas.
 	UpsertForecastDataDeltas(context.Context, *connect_go.Request[wfm.UpsertForecastDataDeltasReq]) (*connect_go.Response[wfm.UpsertForecastDataDeltasRes], error)
 	// Deletes forecast data intervals/deltas based on the parameters provided.
-	// If @delete_param is type skill_profile_sid, then the intervals/deltas to be deleted will be
+	// If @delete_param is type skill_profile_category, then the intervals/deltas to be deleted will be
 	// associated with that id. If @delete_param is type interval_sids, then the intervals/deltas to be
 	// deleted will be contained in the list @interval_sids. The @delete_type field determines which
 	// table(s) in the database the intervals/deltas will be deleted from.
