@@ -26,6 +26,7 @@ const (
 	NewsroomAPI_CreatePublishedArticle_FullMethodName  = "/api.v1alpha1.newsroom.NewsroomAPI/CreatePublishedArticle"
 	NewsroomAPI_ListPublishedArticles_FullMethodName   = "/api.v1alpha1.newsroom.NewsroomAPI/ListPublishedArticles"
 	NewsroomAPI_GetPublishedArticleById_FullMethodName = "/api.v1alpha1.newsroom.NewsroomAPI/GetPublishedArticleById"
+	NewsroomAPI_UserActivity_FullMethodName            = "/api.v1alpha1.newsroom.NewsroomAPI/UserActivity"
 )
 
 // NewsroomAPIClient is the client API for NewsroomAPI service.
@@ -46,6 +47,8 @@ type NewsroomAPIClient interface {
 	ListPublishedArticles(ctx context.Context, in *ListPublishedArticlesRequest, opts ...grpc.CallOption) (*ListPublishedArticlesResponse, error)
 	// get published article details by the id
 	GetPublishedArticleById(ctx context.Context, in *GetPublishedArticleByIdRequest, opts ...grpc.CallOption) (*GetPublishedArticleByIdResponse, error)
+	// user activity updates
+	UserActivity(ctx context.Context, in *UserActivityRequest, opts ...grpc.CallOption) (*UserActivityResponse, error)
 }
 
 type newsroomAPIClient struct {
@@ -119,6 +122,15 @@ func (c *newsroomAPIClient) GetPublishedArticleById(ctx context.Context, in *Get
 	return out, nil
 }
 
+func (c *newsroomAPIClient) UserActivity(ctx context.Context, in *UserActivityRequest, opts ...grpc.CallOption) (*UserActivityResponse, error) {
+	out := new(UserActivityResponse)
+	err := c.cc.Invoke(ctx, NewsroomAPI_UserActivity_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // NewsroomAPIServer is the server API for NewsroomAPI service.
 // All implementations must embed UnimplementedNewsroomAPIServer
 // for forward compatibility
@@ -137,6 +149,8 @@ type NewsroomAPIServer interface {
 	ListPublishedArticles(context.Context, *ListPublishedArticlesRequest) (*ListPublishedArticlesResponse, error)
 	// get published article details by the id
 	GetPublishedArticleById(context.Context, *GetPublishedArticleByIdRequest) (*GetPublishedArticleByIdResponse, error)
+	// user activity updates
+	UserActivity(context.Context, *UserActivityRequest) (*UserActivityResponse, error)
 	mustEmbedUnimplementedNewsroomAPIServer()
 }
 
@@ -164,6 +178,9 @@ func (UnimplementedNewsroomAPIServer) ListPublishedArticles(context.Context, *Li
 }
 func (UnimplementedNewsroomAPIServer) GetPublishedArticleById(context.Context, *GetPublishedArticleByIdRequest) (*GetPublishedArticleByIdResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPublishedArticleById not implemented")
+}
+func (UnimplementedNewsroomAPIServer) UserActivity(context.Context, *UserActivityRequest) (*UserActivityResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UserActivity not implemented")
 }
 func (UnimplementedNewsroomAPIServer) mustEmbedUnimplementedNewsroomAPIServer() {}
 
@@ -304,6 +321,24 @@ func _NewsroomAPI_GetPublishedArticleById_Handler(srv interface{}, ctx context.C
 	return interceptor(ctx, in, info, handler)
 }
 
+func _NewsroomAPI_UserActivity_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserActivityRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NewsroomAPIServer).UserActivity(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NewsroomAPI_UserActivity_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NewsroomAPIServer).UserActivity(ctx, req.(*UserActivityRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // NewsroomAPI_ServiceDesc is the grpc.ServiceDesc for NewsroomAPI service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -338,6 +373,10 @@ var NewsroomAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetPublishedArticleById",
 			Handler:    _NewsroomAPI_GetPublishedArticleById_Handler,
+		},
+		{
+			MethodName: "UserActivity",
+			Handler:    _NewsroomAPI_UserActivity_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
