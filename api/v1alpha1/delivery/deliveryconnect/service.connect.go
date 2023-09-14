@@ -98,6 +98,18 @@ const (
 	// DeliveryApiCreateEncryptionProcedure is the fully-qualified name of the DeliveryApi's
 	// CreateEncryption RPC.
 	DeliveryApiCreateEncryptionProcedure = "/api.v1alpha1.delivery.DeliveryApi/CreateEncryption"
+	// DeliveryApiDeleteEncryptionProcedure is the fully-qualified name of the DeliveryApi's
+	// DeleteEncryption RPC.
+	DeliveryApiDeleteEncryptionProcedure = "/api.v1alpha1.delivery.DeliveryApi/DeleteEncryption"
+	// DeliveryApiGetEncryptionProcedure is the fully-qualified name of the DeliveryApi's GetEncryption
+	// RPC.
+	DeliveryApiGetEncryptionProcedure = "/api.v1alpha1.delivery.DeliveryApi/GetEncryption"
+	// DeliveryApiListEncryptionsProcedure is the fully-qualified name of the DeliveryApi's
+	// ListEncryptions RPC.
+	DeliveryApiListEncryptionsProcedure = "/api.v1alpha1.delivery.DeliveryApi/ListEncryptions"
+	// DeliveryApiUpdateEncryptionProcedure is the fully-qualified name of the DeliveryApi's
+	// UpdateEncryption RPC.
+	DeliveryApiUpdateEncryptionProcedure = "/api.v1alpha1.delivery.DeliveryApi/UpdateEncryption"
 )
 
 // DeliveryApiClient is a client for the api.v1alpha1.delivery.DeliveryApi service.
@@ -124,6 +136,10 @@ type DeliveryApiClient interface {
 	ListDeliveryDefinitionsByCredentialID(context.Context, *connect_go.Request[delivery.ListDeliveryDefinitionsByCredentialIDReq]) (*connect_go.Response[delivery.ListDeliveryDefinitionsByCredentialIDRes], error)
 	UpdateDeliveryDefinition(context.Context, *connect_go.Request[delivery.UpdateDeliveryDefinitionReq]) (*connect_go.Response[delivery.UpdateDeliveryDefinitionRes], error)
 	CreateEncryption(context.Context, *connect_go.Request[delivery.CreateEncryptionReq]) (*connect_go.Response[delivery.CreateEncryptionRes], error)
+	DeleteEncryption(context.Context, *connect_go.Request[delivery.DeleteEncryptionReq]) (*connect_go.Response[delivery.DeleteEncryptionRes], error)
+	GetEncryption(context.Context, *connect_go.Request[delivery.GetEncryptionReq]) (*connect_go.Response[delivery.GetEncryptionRes], error)
+	ListEncryptions(context.Context, *connect_go.Request[delivery.ListEncryptionsReq]) (*connect_go.Response[delivery.ListEncryptionsRes], error)
+	UpdateEncryption(context.Context, *connect_go.Request[delivery.UpdateEncryptionReq]) (*connect_go.Response[delivery.UpdateEncryptionRes], error)
 }
 
 // NewDeliveryApiClient constructs a client for the api.v1alpha1.delivery.DeliveryApi service. By
@@ -246,6 +262,26 @@ func NewDeliveryApiClient(httpClient connect_go.HTTPClient, baseURL string, opts
 			baseURL+DeliveryApiCreateEncryptionProcedure,
 			opts...,
 		),
+		deleteEncryption: connect_go.NewClient[delivery.DeleteEncryptionReq, delivery.DeleteEncryptionRes](
+			httpClient,
+			baseURL+DeliveryApiDeleteEncryptionProcedure,
+			opts...,
+		),
+		getEncryption: connect_go.NewClient[delivery.GetEncryptionReq, delivery.GetEncryptionRes](
+			httpClient,
+			baseURL+DeliveryApiGetEncryptionProcedure,
+			opts...,
+		),
+		listEncryptions: connect_go.NewClient[delivery.ListEncryptionsReq, delivery.ListEncryptionsRes](
+			httpClient,
+			baseURL+DeliveryApiListEncryptionsProcedure,
+			opts...,
+		),
+		updateEncryption: connect_go.NewClient[delivery.UpdateEncryptionReq, delivery.UpdateEncryptionRes](
+			httpClient,
+			baseURL+DeliveryApiUpdateEncryptionProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -273,6 +309,10 @@ type deliveryApiClient struct {
 	listDeliveryDefinitionsByCredentialID *connect_go.Client[delivery.ListDeliveryDefinitionsByCredentialIDReq, delivery.ListDeliveryDefinitionsByCredentialIDRes]
 	updateDeliveryDefinition              *connect_go.Client[delivery.UpdateDeliveryDefinitionReq, delivery.UpdateDeliveryDefinitionRes]
 	createEncryption                      *connect_go.Client[delivery.CreateEncryptionReq, delivery.CreateEncryptionRes]
+	deleteEncryption                      *connect_go.Client[delivery.DeleteEncryptionReq, delivery.DeleteEncryptionRes]
+	getEncryption                         *connect_go.Client[delivery.GetEncryptionReq, delivery.GetEncryptionRes]
+	listEncryptions                       *connect_go.Client[delivery.ListEncryptionsReq, delivery.ListEncryptionsRes]
+	updateEncryption                      *connect_go.Client[delivery.UpdateEncryptionReq, delivery.UpdateEncryptionRes]
 }
 
 // CreateTransferConfig calls api.v1alpha1.delivery.DeliveryApi.CreateTransferConfig.
@@ -387,6 +427,26 @@ func (c *deliveryApiClient) CreateEncryption(ctx context.Context, req *connect_g
 	return c.createEncryption.CallUnary(ctx, req)
 }
 
+// DeleteEncryption calls api.v1alpha1.delivery.DeliveryApi.DeleteEncryption.
+func (c *deliveryApiClient) DeleteEncryption(ctx context.Context, req *connect_go.Request[delivery.DeleteEncryptionReq]) (*connect_go.Response[delivery.DeleteEncryptionRes], error) {
+	return c.deleteEncryption.CallUnary(ctx, req)
+}
+
+// GetEncryption calls api.v1alpha1.delivery.DeliveryApi.GetEncryption.
+func (c *deliveryApiClient) GetEncryption(ctx context.Context, req *connect_go.Request[delivery.GetEncryptionReq]) (*connect_go.Response[delivery.GetEncryptionRes], error) {
+	return c.getEncryption.CallUnary(ctx, req)
+}
+
+// ListEncryptions calls api.v1alpha1.delivery.DeliveryApi.ListEncryptions.
+func (c *deliveryApiClient) ListEncryptions(ctx context.Context, req *connect_go.Request[delivery.ListEncryptionsReq]) (*connect_go.Response[delivery.ListEncryptionsRes], error) {
+	return c.listEncryptions.CallUnary(ctx, req)
+}
+
+// UpdateEncryption calls api.v1alpha1.delivery.DeliveryApi.UpdateEncryption.
+func (c *deliveryApiClient) UpdateEncryption(ctx context.Context, req *connect_go.Request[delivery.UpdateEncryptionReq]) (*connect_go.Response[delivery.UpdateEncryptionRes], error) {
+	return c.updateEncryption.CallUnary(ctx, req)
+}
+
 // DeliveryApiHandler is an implementation of the api.v1alpha1.delivery.DeliveryApi service.
 type DeliveryApiHandler interface {
 	CreateTransferConfig(context.Context, *connect_go.Request[delivery.CreateTransferConfigReq]) (*connect_go.Response[delivery.CreateTransferConfigRes], error)
@@ -411,6 +471,10 @@ type DeliveryApiHandler interface {
 	ListDeliveryDefinitionsByCredentialID(context.Context, *connect_go.Request[delivery.ListDeliveryDefinitionsByCredentialIDReq]) (*connect_go.Response[delivery.ListDeliveryDefinitionsByCredentialIDRes], error)
 	UpdateDeliveryDefinition(context.Context, *connect_go.Request[delivery.UpdateDeliveryDefinitionReq]) (*connect_go.Response[delivery.UpdateDeliveryDefinitionRes], error)
 	CreateEncryption(context.Context, *connect_go.Request[delivery.CreateEncryptionReq]) (*connect_go.Response[delivery.CreateEncryptionRes], error)
+	DeleteEncryption(context.Context, *connect_go.Request[delivery.DeleteEncryptionReq]) (*connect_go.Response[delivery.DeleteEncryptionRes], error)
+	GetEncryption(context.Context, *connect_go.Request[delivery.GetEncryptionReq]) (*connect_go.Response[delivery.GetEncryptionRes], error)
+	ListEncryptions(context.Context, *connect_go.Request[delivery.ListEncryptionsReq]) (*connect_go.Response[delivery.ListEncryptionsRes], error)
+	UpdateEncryption(context.Context, *connect_go.Request[delivery.UpdateEncryptionReq]) (*connect_go.Response[delivery.UpdateEncryptionRes], error)
 }
 
 // NewDeliveryApiHandler builds an HTTP handler from the service implementation. It returns the path
@@ -529,6 +593,26 @@ func NewDeliveryApiHandler(svc DeliveryApiHandler, opts ...connect_go.HandlerOpt
 		svc.CreateEncryption,
 		opts...,
 	)
+	deliveryApiDeleteEncryptionHandler := connect_go.NewUnaryHandler(
+		DeliveryApiDeleteEncryptionProcedure,
+		svc.DeleteEncryption,
+		opts...,
+	)
+	deliveryApiGetEncryptionHandler := connect_go.NewUnaryHandler(
+		DeliveryApiGetEncryptionProcedure,
+		svc.GetEncryption,
+		opts...,
+	)
+	deliveryApiListEncryptionsHandler := connect_go.NewUnaryHandler(
+		DeliveryApiListEncryptionsProcedure,
+		svc.ListEncryptions,
+		opts...,
+	)
+	deliveryApiUpdateEncryptionHandler := connect_go.NewUnaryHandler(
+		DeliveryApiUpdateEncryptionProcedure,
+		svc.UpdateEncryption,
+		opts...,
+	)
 	return "/api.v1alpha1.delivery.DeliveryApi/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case DeliveryApiCreateTransferConfigProcedure:
@@ -575,6 +659,14 @@ func NewDeliveryApiHandler(svc DeliveryApiHandler, opts ...connect_go.HandlerOpt
 			deliveryApiUpdateDeliveryDefinitionHandler.ServeHTTP(w, r)
 		case DeliveryApiCreateEncryptionProcedure:
 			deliveryApiCreateEncryptionHandler.ServeHTTP(w, r)
+		case DeliveryApiDeleteEncryptionProcedure:
+			deliveryApiDeleteEncryptionHandler.ServeHTTP(w, r)
+		case DeliveryApiGetEncryptionProcedure:
+			deliveryApiGetEncryptionHandler.ServeHTTP(w, r)
+		case DeliveryApiListEncryptionsProcedure:
+			deliveryApiListEncryptionsHandler.ServeHTTP(w, r)
+		case DeliveryApiUpdateEncryptionProcedure:
+			deliveryApiUpdateEncryptionHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -670,4 +762,20 @@ func (UnimplementedDeliveryApiHandler) UpdateDeliveryDefinition(context.Context,
 
 func (UnimplementedDeliveryApiHandler) CreateEncryption(context.Context, *connect_go.Request[delivery.CreateEncryptionReq]) (*connect_go.Response[delivery.CreateEncryptionRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.delivery.DeliveryApi.CreateEncryption is not implemented"))
+}
+
+func (UnimplementedDeliveryApiHandler) DeleteEncryption(context.Context, *connect_go.Request[delivery.DeleteEncryptionReq]) (*connect_go.Response[delivery.DeleteEncryptionRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.delivery.DeliveryApi.DeleteEncryption is not implemented"))
+}
+
+func (UnimplementedDeliveryApiHandler) GetEncryption(context.Context, *connect_go.Request[delivery.GetEncryptionReq]) (*connect_go.Response[delivery.GetEncryptionRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.delivery.DeliveryApi.GetEncryption is not implemented"))
+}
+
+func (UnimplementedDeliveryApiHandler) ListEncryptions(context.Context, *connect_go.Request[delivery.ListEncryptionsReq]) (*connect_go.Response[delivery.ListEncryptionsRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.delivery.DeliveryApi.ListEncryptions is not implemented"))
+}
+
+func (UnimplementedDeliveryApiHandler) UpdateEncryption(context.Context, *connect_go.Request[delivery.UpdateEncryptionReq]) (*connect_go.Response[delivery.UpdateEncryptionRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.delivery.DeliveryApi.UpdateEncryption is not implemented"))
 }

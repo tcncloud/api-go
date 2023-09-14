@@ -41,6 +41,10 @@ const (
 	DeliveryApi_ListDeliveryDefinitionsByCredentialID_FullMethodName = "/api.v1alpha1.delivery.DeliveryApi/ListDeliveryDefinitionsByCredentialID"
 	DeliveryApi_UpdateDeliveryDefinition_FullMethodName              = "/api.v1alpha1.delivery.DeliveryApi/UpdateDeliveryDefinition"
 	DeliveryApi_CreateEncryption_FullMethodName                      = "/api.v1alpha1.delivery.DeliveryApi/CreateEncryption"
+	DeliveryApi_DeleteEncryption_FullMethodName                      = "/api.v1alpha1.delivery.DeliveryApi/DeleteEncryption"
+	DeliveryApi_GetEncryption_FullMethodName                         = "/api.v1alpha1.delivery.DeliveryApi/GetEncryption"
+	DeliveryApi_ListEncryptions_FullMethodName                       = "/api.v1alpha1.delivery.DeliveryApi/ListEncryptions"
+	DeliveryApi_UpdateEncryption_FullMethodName                      = "/api.v1alpha1.delivery.DeliveryApi/UpdateEncryption"
 )
 
 // DeliveryApiClient is the client API for DeliveryApi service.
@@ -69,6 +73,10 @@ type DeliveryApiClient interface {
 	ListDeliveryDefinitionsByCredentialID(ctx context.Context, in *ListDeliveryDefinitionsByCredentialIDReq, opts ...grpc.CallOption) (*ListDeliveryDefinitionsByCredentialIDRes, error)
 	UpdateDeliveryDefinition(ctx context.Context, in *UpdateDeliveryDefinitionReq, opts ...grpc.CallOption) (*UpdateDeliveryDefinitionRes, error)
 	CreateEncryption(ctx context.Context, in *CreateEncryptionReq, opts ...grpc.CallOption) (*CreateEncryptionRes, error)
+	DeleteEncryption(ctx context.Context, in *DeleteEncryptionReq, opts ...grpc.CallOption) (*DeleteEncryptionRes, error)
+	GetEncryption(ctx context.Context, in *GetEncryptionReq, opts ...grpc.CallOption) (*GetEncryptionRes, error)
+	ListEncryptions(ctx context.Context, in *ListEncryptionsReq, opts ...grpc.CallOption) (*ListEncryptionsRes, error)
+	UpdateEncryption(ctx context.Context, in *UpdateEncryptionReq, opts ...grpc.CallOption) (*UpdateEncryptionRes, error)
 }
 
 type deliveryApiClient struct {
@@ -277,6 +285,42 @@ func (c *deliveryApiClient) CreateEncryption(ctx context.Context, in *CreateEncr
 	return out, nil
 }
 
+func (c *deliveryApiClient) DeleteEncryption(ctx context.Context, in *DeleteEncryptionReq, opts ...grpc.CallOption) (*DeleteEncryptionRes, error) {
+	out := new(DeleteEncryptionRes)
+	err := c.cc.Invoke(ctx, DeliveryApi_DeleteEncryption_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *deliveryApiClient) GetEncryption(ctx context.Context, in *GetEncryptionReq, opts ...grpc.CallOption) (*GetEncryptionRes, error) {
+	out := new(GetEncryptionRes)
+	err := c.cc.Invoke(ctx, DeliveryApi_GetEncryption_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *deliveryApiClient) ListEncryptions(ctx context.Context, in *ListEncryptionsReq, opts ...grpc.CallOption) (*ListEncryptionsRes, error) {
+	out := new(ListEncryptionsRes)
+	err := c.cc.Invoke(ctx, DeliveryApi_ListEncryptions_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *deliveryApiClient) UpdateEncryption(ctx context.Context, in *UpdateEncryptionReq, opts ...grpc.CallOption) (*UpdateEncryptionRes, error) {
+	out := new(UpdateEncryptionRes)
+	err := c.cc.Invoke(ctx, DeliveryApi_UpdateEncryption_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DeliveryApiServer is the server API for DeliveryApi service.
 // All implementations must embed UnimplementedDeliveryApiServer
 // for forward compatibility
@@ -303,6 +347,10 @@ type DeliveryApiServer interface {
 	ListDeliveryDefinitionsByCredentialID(context.Context, *ListDeliveryDefinitionsByCredentialIDReq) (*ListDeliveryDefinitionsByCredentialIDRes, error)
 	UpdateDeliveryDefinition(context.Context, *UpdateDeliveryDefinitionReq) (*UpdateDeliveryDefinitionRes, error)
 	CreateEncryption(context.Context, *CreateEncryptionReq) (*CreateEncryptionRes, error)
+	DeleteEncryption(context.Context, *DeleteEncryptionReq) (*DeleteEncryptionRes, error)
+	GetEncryption(context.Context, *GetEncryptionReq) (*GetEncryptionRes, error)
+	ListEncryptions(context.Context, *ListEncryptionsReq) (*ListEncryptionsRes, error)
+	UpdateEncryption(context.Context, *UpdateEncryptionReq) (*UpdateEncryptionRes, error)
 	mustEmbedUnimplementedDeliveryApiServer()
 }
 
@@ -375,6 +423,18 @@ func (UnimplementedDeliveryApiServer) UpdateDeliveryDefinition(context.Context, 
 }
 func (UnimplementedDeliveryApiServer) CreateEncryption(context.Context, *CreateEncryptionReq) (*CreateEncryptionRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateEncryption not implemented")
+}
+func (UnimplementedDeliveryApiServer) DeleteEncryption(context.Context, *DeleteEncryptionReq) (*DeleteEncryptionRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteEncryption not implemented")
+}
+func (UnimplementedDeliveryApiServer) GetEncryption(context.Context, *GetEncryptionReq) (*GetEncryptionRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetEncryption not implemented")
+}
+func (UnimplementedDeliveryApiServer) ListEncryptions(context.Context, *ListEncryptionsReq) (*ListEncryptionsRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListEncryptions not implemented")
+}
+func (UnimplementedDeliveryApiServer) UpdateEncryption(context.Context, *UpdateEncryptionReq) (*UpdateEncryptionRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateEncryption not implemented")
 }
 func (UnimplementedDeliveryApiServer) mustEmbedUnimplementedDeliveryApiServer() {}
 
@@ -785,6 +845,78 @@ func _DeliveryApi_CreateEncryption_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DeliveryApi_DeleteEncryption_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteEncryptionReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeliveryApiServer).DeleteEncryption(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DeliveryApi_DeleteEncryption_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeliveryApiServer).DeleteEncryption(ctx, req.(*DeleteEncryptionReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _DeliveryApi_GetEncryption_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetEncryptionReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeliveryApiServer).GetEncryption(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DeliveryApi_GetEncryption_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeliveryApiServer).GetEncryption(ctx, req.(*GetEncryptionReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _DeliveryApi_ListEncryptions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListEncryptionsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeliveryApiServer).ListEncryptions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DeliveryApi_ListEncryptions_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeliveryApiServer).ListEncryptions(ctx, req.(*ListEncryptionsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _DeliveryApi_UpdateEncryption_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateEncryptionReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeliveryApiServer).UpdateEncryption(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DeliveryApi_UpdateEncryption_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeliveryApiServer).UpdateEncryption(ctx, req.(*UpdateEncryptionReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // DeliveryApi_ServiceDesc is the grpc.ServiceDesc for DeliveryApi service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -879,6 +1011,22 @@ var DeliveryApi_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateEncryption",
 			Handler:    _DeliveryApi_CreateEncryption_Handler,
+		},
+		{
+			MethodName: "DeleteEncryption",
+			Handler:    _DeliveryApi_DeleteEncryption_Handler,
+		},
+		{
+			MethodName: "GetEncryption",
+			Handler:    _DeliveryApi_GetEncryption_Handler,
+		},
+		{
+			MethodName: "ListEncryptions",
+			Handler:    _DeliveryApi_ListEncryptions_Handler,
+		},
+		{
+			MethodName: "UpdateEncryption",
+			Handler:    _DeliveryApi_UpdateEncryption_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
