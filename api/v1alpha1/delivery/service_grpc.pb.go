@@ -20,8 +20,6 @@ const _ = grpc.SupportPackageIsVersion7
 
 const (
 	DeliveryApi_CreateTransferConfig_FullMethodName              = "/api.v1alpha1.delivery.DeliveryApi/CreateTransferConfig"
-	DeliveryApi_CreateDeliveryDefinition_FullMethodName          = "/api.v1alpha1.delivery.DeliveryApi/CreateDeliveryDefinition"
-	DeliveryApi_CreateEncryption_FullMethodName                  = "/api.v1alpha1.delivery.DeliveryApi/CreateEncryption"
 	DeliveryApi_ListTransferConfigs_FullMethodName               = "/api.v1alpha1.delivery.DeliveryApi/ListTransferConfigs"
 	DeliveryApi_ListTransferConfigsByCredentialID_FullMethodName = "/api.v1alpha1.delivery.DeliveryApi/ListTransferConfigsByCredentialID"
 	DeliveryApi_UpdateTransferConfig_FullMethodName              = "/api.v1alpha1.delivery.DeliveryApi/UpdateTransferConfig"
@@ -36,6 +34,8 @@ const (
 	DeliveryApi_CreateCredential_FullMethodName                  = "/api.v1alpha1.delivery.DeliveryApi/CreateCredential"
 	DeliveryApi_DeleteCredential_FullMethodName                  = "/api.v1alpha1.delivery.DeliveryApi/DeleteCredential"
 	DeliveryApi_UpdateCredential_FullMethodName                  = "/api.v1alpha1.delivery.DeliveryApi/UpdateCredential"
+	DeliveryApi_CreateDeliveryDefinition_FullMethodName          = "/api.v1alpha1.delivery.DeliveryApi/CreateDeliveryDefinition"
+	DeliveryApi_CreateEncryption_FullMethodName                  = "/api.v1alpha1.delivery.DeliveryApi/CreateEncryption"
 )
 
 // DeliveryApiClient is the client API for DeliveryApi service.
@@ -43,8 +43,6 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DeliveryApiClient interface {
 	CreateTransferConfig(ctx context.Context, in *CreateTransferConfigReq, opts ...grpc.CallOption) (*CreateTransferConfigRes, error)
-	CreateDeliveryDefinition(ctx context.Context, in *CreateDeliveryDefinitionReq, opts ...grpc.CallOption) (*CreateDeliveryDefinitionRes, error)
-	CreateEncryption(ctx context.Context, in *CreateEncryptionReq, opts ...grpc.CallOption) (*CreateEncryptionRes, error)
 	ListTransferConfigs(ctx context.Context, in *ListTransferConfigsReq, opts ...grpc.CallOption) (*ListTransferConfigsRes, error)
 	ListTransferConfigsByCredentialID(ctx context.Context, in *ListTransferConfigsByCredentialIDReq, opts ...grpc.CallOption) (*ListTransferConfigsByCredentialIDRes, error)
 	UpdateTransferConfig(ctx context.Context, in *UpdateTransferConfigReq, opts ...grpc.CallOption) (*UpdateTransferConfigRes, error)
@@ -59,6 +57,8 @@ type DeliveryApiClient interface {
 	CreateCredential(ctx context.Context, in *CreateCredentialReq, opts ...grpc.CallOption) (*CreateCredentialRes, error)
 	DeleteCredential(ctx context.Context, in *DeleteCredentialReq, opts ...grpc.CallOption) (*DeleteCredentialRes, error)
 	UpdateCredential(ctx context.Context, in *UpdateCredentialReq, opts ...grpc.CallOption) (*UpdateCredentialRes, error)
+	CreateDeliveryDefinition(ctx context.Context, in *CreateDeliveryDefinitionReq, opts ...grpc.CallOption) (*CreateDeliveryDefinitionRes, error)
+	CreateEncryption(ctx context.Context, in *CreateEncryptionReq, opts ...grpc.CallOption) (*CreateEncryptionRes, error)
 }
 
 type deliveryApiClient struct {
@@ -72,24 +72,6 @@ func NewDeliveryApiClient(cc grpc.ClientConnInterface) DeliveryApiClient {
 func (c *deliveryApiClient) CreateTransferConfig(ctx context.Context, in *CreateTransferConfigReq, opts ...grpc.CallOption) (*CreateTransferConfigRes, error) {
 	out := new(CreateTransferConfigRes)
 	err := c.cc.Invoke(ctx, DeliveryApi_CreateTransferConfig_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *deliveryApiClient) CreateDeliveryDefinition(ctx context.Context, in *CreateDeliveryDefinitionReq, opts ...grpc.CallOption) (*CreateDeliveryDefinitionRes, error) {
-	out := new(CreateDeliveryDefinitionRes)
-	err := c.cc.Invoke(ctx, DeliveryApi_CreateDeliveryDefinition_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *deliveryApiClient) CreateEncryption(ctx context.Context, in *CreateEncryptionReq, opts ...grpc.CallOption) (*CreateEncryptionRes, error) {
-	out := new(CreateEncryptionRes)
-	err := c.cc.Invoke(ctx, DeliveryApi_CreateEncryption_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -222,13 +204,29 @@ func (c *deliveryApiClient) UpdateCredential(ctx context.Context, in *UpdateCred
 	return out, nil
 }
 
+func (c *deliveryApiClient) CreateDeliveryDefinition(ctx context.Context, in *CreateDeliveryDefinitionReq, opts ...grpc.CallOption) (*CreateDeliveryDefinitionRes, error) {
+	out := new(CreateDeliveryDefinitionRes)
+	err := c.cc.Invoke(ctx, DeliveryApi_CreateDeliveryDefinition_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *deliveryApiClient) CreateEncryption(ctx context.Context, in *CreateEncryptionReq, opts ...grpc.CallOption) (*CreateEncryptionRes, error) {
+	out := new(CreateEncryptionRes)
+	err := c.cc.Invoke(ctx, DeliveryApi_CreateEncryption_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DeliveryApiServer is the server API for DeliveryApi service.
 // All implementations must embed UnimplementedDeliveryApiServer
 // for forward compatibility
 type DeliveryApiServer interface {
 	CreateTransferConfig(context.Context, *CreateTransferConfigReq) (*CreateTransferConfigRes, error)
-	CreateDeliveryDefinition(context.Context, *CreateDeliveryDefinitionReq) (*CreateDeliveryDefinitionRes, error)
-	CreateEncryption(context.Context, *CreateEncryptionReq) (*CreateEncryptionRes, error)
 	ListTransferConfigs(context.Context, *ListTransferConfigsReq) (*ListTransferConfigsRes, error)
 	ListTransferConfigsByCredentialID(context.Context, *ListTransferConfigsByCredentialIDReq) (*ListTransferConfigsByCredentialIDRes, error)
 	UpdateTransferConfig(context.Context, *UpdateTransferConfigReq) (*UpdateTransferConfigRes, error)
@@ -243,6 +241,8 @@ type DeliveryApiServer interface {
 	CreateCredential(context.Context, *CreateCredentialReq) (*CreateCredentialRes, error)
 	DeleteCredential(context.Context, *DeleteCredentialReq) (*DeleteCredentialRes, error)
 	UpdateCredential(context.Context, *UpdateCredentialReq) (*UpdateCredentialRes, error)
+	CreateDeliveryDefinition(context.Context, *CreateDeliveryDefinitionReq) (*CreateDeliveryDefinitionRes, error)
+	CreateEncryption(context.Context, *CreateEncryptionReq) (*CreateEncryptionRes, error)
 	mustEmbedUnimplementedDeliveryApiServer()
 }
 
@@ -252,12 +252,6 @@ type UnimplementedDeliveryApiServer struct {
 
 func (UnimplementedDeliveryApiServer) CreateTransferConfig(context.Context, *CreateTransferConfigReq) (*CreateTransferConfigRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateTransferConfig not implemented")
-}
-func (UnimplementedDeliveryApiServer) CreateDeliveryDefinition(context.Context, *CreateDeliveryDefinitionReq) (*CreateDeliveryDefinitionRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateDeliveryDefinition not implemented")
-}
-func (UnimplementedDeliveryApiServer) CreateEncryption(context.Context, *CreateEncryptionReq) (*CreateEncryptionRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateEncryption not implemented")
 }
 func (UnimplementedDeliveryApiServer) ListTransferConfigs(context.Context, *ListTransferConfigsReq) (*ListTransferConfigsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListTransferConfigs not implemented")
@@ -301,6 +295,12 @@ func (UnimplementedDeliveryApiServer) DeleteCredential(context.Context, *DeleteC
 func (UnimplementedDeliveryApiServer) UpdateCredential(context.Context, *UpdateCredentialReq) (*UpdateCredentialRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateCredential not implemented")
 }
+func (UnimplementedDeliveryApiServer) CreateDeliveryDefinition(context.Context, *CreateDeliveryDefinitionReq) (*CreateDeliveryDefinitionRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateDeliveryDefinition not implemented")
+}
+func (UnimplementedDeliveryApiServer) CreateEncryption(context.Context, *CreateEncryptionReq) (*CreateEncryptionRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateEncryption not implemented")
+}
 func (UnimplementedDeliveryApiServer) mustEmbedUnimplementedDeliveryApiServer() {}
 
 // UnsafeDeliveryApiServer may be embedded to opt out of forward compatibility for this service.
@@ -328,42 +328,6 @@ func _DeliveryApi_CreateTransferConfig_Handler(srv interface{}, ctx context.Cont
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeliveryApiServer).CreateTransferConfig(ctx, req.(*CreateTransferConfigReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _DeliveryApi_CreateDeliveryDefinition_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateDeliveryDefinitionReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(DeliveryApiServer).CreateDeliveryDefinition(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: DeliveryApi_CreateDeliveryDefinition_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DeliveryApiServer).CreateDeliveryDefinition(ctx, req.(*CreateDeliveryDefinitionReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _DeliveryApi_CreateEncryption_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateEncryptionReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(DeliveryApiServer).CreateEncryption(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: DeliveryApi_CreateEncryption_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DeliveryApiServer).CreateEncryption(ctx, req.(*CreateEncryptionReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -620,6 +584,42 @@ func _DeliveryApi_UpdateCredential_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DeliveryApi_CreateDeliveryDefinition_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateDeliveryDefinitionReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeliveryApiServer).CreateDeliveryDefinition(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DeliveryApi_CreateDeliveryDefinition_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeliveryApiServer).CreateDeliveryDefinition(ctx, req.(*CreateDeliveryDefinitionReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _DeliveryApi_CreateEncryption_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateEncryptionReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeliveryApiServer).CreateEncryption(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DeliveryApi_CreateEncryption_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeliveryApiServer).CreateEncryption(ctx, req.(*CreateEncryptionReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // DeliveryApi_ServiceDesc is the grpc.ServiceDesc for DeliveryApi service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -630,14 +630,6 @@ var DeliveryApi_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateTransferConfig",
 			Handler:    _DeliveryApi_CreateTransferConfig_Handler,
-		},
-		{
-			MethodName: "CreateDeliveryDefinition",
-			Handler:    _DeliveryApi_CreateDeliveryDefinition_Handler,
-		},
-		{
-			MethodName: "CreateEncryption",
-			Handler:    _DeliveryApi_CreateEncryption_Handler,
 		},
 		{
 			MethodName: "ListTransferConfigs",
@@ -694,6 +686,14 @@ var DeliveryApi_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateCredential",
 			Handler:    _DeliveryApi_UpdateCredential_Handler,
+		},
+		{
+			MethodName: "CreateDeliveryDefinition",
+			Handler:    _DeliveryApi_CreateDeliveryDefinition_Handler,
+		},
+		{
+			MethodName: "CreateEncryption",
+			Handler:    _DeliveryApi_CreateEncryption_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
