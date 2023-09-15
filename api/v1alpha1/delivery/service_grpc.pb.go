@@ -19,22 +19,32 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	DeliveryApi_CreateTransferConfig_FullMethodName              = "/api.v1alpha1.delivery.DeliveryApi/CreateTransferConfig"
-	DeliveryApi_CreateDeliveryDefinition_FullMethodName          = "/api.v1alpha1.delivery.DeliveryApi/CreateDeliveryDefinition"
-	DeliveryApi_CreateEncryption_FullMethodName                  = "/api.v1alpha1.delivery.DeliveryApi/CreateEncryption"
-	DeliveryApi_ListTransferConfigs_FullMethodName               = "/api.v1alpha1.delivery.DeliveryApi/ListTransferConfigs"
-	DeliveryApi_ListTransferConfigsByCredentialID_FullMethodName = "/api.v1alpha1.delivery.DeliveryApi/ListTransferConfigsByCredentialID"
-	DeliveryApi_UpdateTransferConfig_FullMethodName              = "/api.v1alpha1.delivery.DeliveryApi/UpdateTransferConfig"
-	DeliveryApi_DeleteTransferConfig_FullMethodName              = "/api.v1alpha1.delivery.DeliveryApi/DeleteTransferConfig"
-	DeliveryApi_GetTransferConfig_FullMethodName                 = "/api.v1alpha1.delivery.DeliveryApi/GetTransferConfig"
-	DeliveryApi_GetTransferConfigByName_FullMethodName           = "/api.v1alpha1.delivery.DeliveryApi/GetTransferConfigByName"
-	DeliveryApi_ListHistory_FullMethodName                       = "/api.v1alpha1.delivery.DeliveryApi/ListHistory"
-	DeliveryApi_ListHistoryByTransferConfig_FullMethodName       = "/api.v1alpha1.delivery.DeliveryApi/ListHistoryByTransferConfig"
-	DeliveryApi_ListCredentials_FullMethodName                   = "/api.v1alpha1.delivery.DeliveryApi/ListCredentials"
-	DeliveryApi_GetCredential_FullMethodName                     = "/api.v1alpha1.delivery.DeliveryApi/GetCredential"
-	DeliveryApi_CreateCredential_FullMethodName                  = "/api.v1alpha1.delivery.DeliveryApi/CreateCredential"
-	DeliveryApi_DeleteCredential_FullMethodName                  = "/api.v1alpha1.delivery.DeliveryApi/DeleteCredential"
-	DeliveryApi_UpdateCredential_FullMethodName                  = "/api.v1alpha1.delivery.DeliveryApi/UpdateCredential"
+	DeliveryApi_CreateTransferConfig_FullMethodName                  = "/api.v1alpha1.delivery.DeliveryApi/CreateTransferConfig"
+	DeliveryApi_ListTransferConfigs_FullMethodName                   = "/api.v1alpha1.delivery.DeliveryApi/ListTransferConfigs"
+	DeliveryApi_ListTransferConfigsByCredentialID_FullMethodName     = "/api.v1alpha1.delivery.DeliveryApi/ListTransferConfigsByCredentialID"
+	DeliveryApi_UpdateTransferConfig_FullMethodName                  = "/api.v1alpha1.delivery.DeliveryApi/UpdateTransferConfig"
+	DeliveryApi_DeleteTransferConfig_FullMethodName                  = "/api.v1alpha1.delivery.DeliveryApi/DeleteTransferConfig"
+	DeliveryApi_GetTransferConfig_FullMethodName                     = "/api.v1alpha1.delivery.DeliveryApi/GetTransferConfig"
+	DeliveryApi_GetTransferConfigByName_FullMethodName               = "/api.v1alpha1.delivery.DeliveryApi/GetTransferConfigByName"
+	DeliveryApi_ListHistory_FullMethodName                           = "/api.v1alpha1.delivery.DeliveryApi/ListHistory"
+	DeliveryApi_ListHistoryByTransferConfig_FullMethodName           = "/api.v1alpha1.delivery.DeliveryApi/ListHistoryByTransferConfig"
+	DeliveryApi_ListCredentials_FullMethodName                       = "/api.v1alpha1.delivery.DeliveryApi/ListCredentials"
+	DeliveryApi_GetCredential_FullMethodName                         = "/api.v1alpha1.delivery.DeliveryApi/GetCredential"
+	DeliveryApi_CreateCredential_FullMethodName                      = "/api.v1alpha1.delivery.DeliveryApi/CreateCredential"
+	DeliveryApi_DeleteCredential_FullMethodName                      = "/api.v1alpha1.delivery.DeliveryApi/DeleteCredential"
+	DeliveryApi_UpdateCredential_FullMethodName                      = "/api.v1alpha1.delivery.DeliveryApi/UpdateCredential"
+	DeliveryApi_CreateDeliveryDefinition_FullMethodName              = "/api.v1alpha1.delivery.DeliveryApi/CreateDeliveryDefinition"
+	DeliveryApi_DeleteDeliveryDefinition_FullMethodName              = "/api.v1alpha1.delivery.DeliveryApi/DeleteDeliveryDefinition"
+	DeliveryApi_GetDeliveryDefinition_FullMethodName                 = "/api.v1alpha1.delivery.DeliveryApi/GetDeliveryDefinition"
+	DeliveryApi_GetDeliveryDefinitionByName_FullMethodName           = "/api.v1alpha1.delivery.DeliveryApi/GetDeliveryDefinitionByName"
+	DeliveryApi_ListDeliveryDefinitions_FullMethodName               = "/api.v1alpha1.delivery.DeliveryApi/ListDeliveryDefinitions"
+	DeliveryApi_ListDeliveryDefinitionsByCredentialID_FullMethodName = "/api.v1alpha1.delivery.DeliveryApi/ListDeliveryDefinitionsByCredentialID"
+	DeliveryApi_UpdateDeliveryDefinition_FullMethodName              = "/api.v1alpha1.delivery.DeliveryApi/UpdateDeliveryDefinition"
+	DeliveryApi_CreateEncryption_FullMethodName                      = "/api.v1alpha1.delivery.DeliveryApi/CreateEncryption"
+	DeliveryApi_DeleteEncryption_FullMethodName                      = "/api.v1alpha1.delivery.DeliveryApi/DeleteEncryption"
+	DeliveryApi_GetEncryption_FullMethodName                         = "/api.v1alpha1.delivery.DeliveryApi/GetEncryption"
+	DeliveryApi_ListEncryptions_FullMethodName                       = "/api.v1alpha1.delivery.DeliveryApi/ListEncryptions"
+	DeliveryApi_UpdateEncryption_FullMethodName                      = "/api.v1alpha1.delivery.DeliveryApi/UpdateEncryption"
 )
 
 // DeliveryApiClient is the client API for DeliveryApi service.
@@ -42,8 +52,6 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DeliveryApiClient interface {
 	CreateTransferConfig(ctx context.Context, in *CreateTransferConfigReq, opts ...grpc.CallOption) (*CreateTransferConfigRes, error)
-	CreateDeliveryDefinition(ctx context.Context, in *CreateDeliveryDefinitionReq, opts ...grpc.CallOption) (*CreateDeliveryDefinitionRes, error)
-	CreateEncryption(ctx context.Context, in *CreateEncryptionReq, opts ...grpc.CallOption) (*CreateEncryptionRes, error)
 	ListTransferConfigs(ctx context.Context, in *ListTransferConfigsReq, opts ...grpc.CallOption) (*ListTransferConfigsRes, error)
 	ListTransferConfigsByCredentialID(ctx context.Context, in *ListTransferConfigsByCredentialIDReq, opts ...grpc.CallOption) (*ListTransferConfigsByCredentialIDRes, error)
 	UpdateTransferConfig(ctx context.Context, in *UpdateTransferConfigReq, opts ...grpc.CallOption) (*UpdateTransferConfigRes, error)
@@ -57,6 +65,18 @@ type DeliveryApiClient interface {
 	CreateCredential(ctx context.Context, in *CreateCredentialReq, opts ...grpc.CallOption) (*CreateCredentialRes, error)
 	DeleteCredential(ctx context.Context, in *DeleteCredentialReq, opts ...grpc.CallOption) (*DeleteCredentialRes, error)
 	UpdateCredential(ctx context.Context, in *UpdateCredentialReq, opts ...grpc.CallOption) (*UpdateCredentialRes, error)
+	CreateDeliveryDefinition(ctx context.Context, in *CreateDeliveryDefinitionReq, opts ...grpc.CallOption) (*CreateDeliveryDefinitionRes, error)
+	DeleteDeliveryDefinition(ctx context.Context, in *DeleteDeliveryDefinitionReq, opts ...grpc.CallOption) (*DeleteDeliveryDefinitionRes, error)
+	GetDeliveryDefinition(ctx context.Context, in *GetDeliveryDefinitionReq, opts ...grpc.CallOption) (*GetDeliveryDefinitionRes, error)
+	GetDeliveryDefinitionByName(ctx context.Context, in *GetDeliveryDefinitionByNameReq, opts ...grpc.CallOption) (*GetDeliveryDefinitionByNameRes, error)
+	ListDeliveryDefinitions(ctx context.Context, in *ListDeliveryDefinitionsReq, opts ...grpc.CallOption) (*ListDeliveryDefinitionsRes, error)
+	ListDeliveryDefinitionsByCredentialID(ctx context.Context, in *ListDeliveryDefinitionsByCredentialIDReq, opts ...grpc.CallOption) (*ListDeliveryDefinitionsByCredentialIDRes, error)
+	UpdateDeliveryDefinition(ctx context.Context, in *UpdateDeliveryDefinitionReq, opts ...grpc.CallOption) (*UpdateDeliveryDefinitionRes, error)
+	CreateEncryption(ctx context.Context, in *CreateEncryptionReq, opts ...grpc.CallOption) (*CreateEncryptionRes, error)
+	DeleteEncryption(ctx context.Context, in *DeleteEncryptionReq, opts ...grpc.CallOption) (*DeleteEncryptionRes, error)
+	GetEncryption(ctx context.Context, in *GetEncryptionReq, opts ...grpc.CallOption) (*GetEncryptionRes, error)
+	ListEncryptions(ctx context.Context, in *ListEncryptionsReq, opts ...grpc.CallOption) (*ListEncryptionsRes, error)
+	UpdateEncryption(ctx context.Context, in *UpdateEncryptionReq, opts ...grpc.CallOption) (*UpdateEncryptionRes, error)
 }
 
 type deliveryApiClient struct {
@@ -70,24 +90,6 @@ func NewDeliveryApiClient(cc grpc.ClientConnInterface) DeliveryApiClient {
 func (c *deliveryApiClient) CreateTransferConfig(ctx context.Context, in *CreateTransferConfigReq, opts ...grpc.CallOption) (*CreateTransferConfigRes, error) {
 	out := new(CreateTransferConfigRes)
 	err := c.cc.Invoke(ctx, DeliveryApi_CreateTransferConfig_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *deliveryApiClient) CreateDeliveryDefinition(ctx context.Context, in *CreateDeliveryDefinitionReq, opts ...grpc.CallOption) (*CreateDeliveryDefinitionRes, error) {
-	out := new(CreateDeliveryDefinitionRes)
-	err := c.cc.Invoke(ctx, DeliveryApi_CreateDeliveryDefinition_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *deliveryApiClient) CreateEncryption(ctx context.Context, in *CreateEncryptionReq, opts ...grpc.CallOption) (*CreateEncryptionRes, error) {
-	out := new(CreateEncryptionRes)
-	err := c.cc.Invoke(ctx, DeliveryApi_CreateEncryption_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -211,13 +213,119 @@ func (c *deliveryApiClient) UpdateCredential(ctx context.Context, in *UpdateCred
 	return out, nil
 }
 
+func (c *deliveryApiClient) CreateDeliveryDefinition(ctx context.Context, in *CreateDeliveryDefinitionReq, opts ...grpc.CallOption) (*CreateDeliveryDefinitionRes, error) {
+	out := new(CreateDeliveryDefinitionRes)
+	err := c.cc.Invoke(ctx, DeliveryApi_CreateDeliveryDefinition_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *deliveryApiClient) DeleteDeliveryDefinition(ctx context.Context, in *DeleteDeliveryDefinitionReq, opts ...grpc.CallOption) (*DeleteDeliveryDefinitionRes, error) {
+	out := new(DeleteDeliveryDefinitionRes)
+	err := c.cc.Invoke(ctx, DeliveryApi_DeleteDeliveryDefinition_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *deliveryApiClient) GetDeliveryDefinition(ctx context.Context, in *GetDeliveryDefinitionReq, opts ...grpc.CallOption) (*GetDeliveryDefinitionRes, error) {
+	out := new(GetDeliveryDefinitionRes)
+	err := c.cc.Invoke(ctx, DeliveryApi_GetDeliveryDefinition_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *deliveryApiClient) GetDeliveryDefinitionByName(ctx context.Context, in *GetDeliveryDefinitionByNameReq, opts ...grpc.CallOption) (*GetDeliveryDefinitionByNameRes, error) {
+	out := new(GetDeliveryDefinitionByNameRes)
+	err := c.cc.Invoke(ctx, DeliveryApi_GetDeliveryDefinitionByName_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *deliveryApiClient) ListDeliveryDefinitions(ctx context.Context, in *ListDeliveryDefinitionsReq, opts ...grpc.CallOption) (*ListDeliveryDefinitionsRes, error) {
+	out := new(ListDeliveryDefinitionsRes)
+	err := c.cc.Invoke(ctx, DeliveryApi_ListDeliveryDefinitions_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *deliveryApiClient) ListDeliveryDefinitionsByCredentialID(ctx context.Context, in *ListDeliveryDefinitionsByCredentialIDReq, opts ...grpc.CallOption) (*ListDeliveryDefinitionsByCredentialIDRes, error) {
+	out := new(ListDeliveryDefinitionsByCredentialIDRes)
+	err := c.cc.Invoke(ctx, DeliveryApi_ListDeliveryDefinitionsByCredentialID_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *deliveryApiClient) UpdateDeliveryDefinition(ctx context.Context, in *UpdateDeliveryDefinitionReq, opts ...grpc.CallOption) (*UpdateDeliveryDefinitionRes, error) {
+	out := new(UpdateDeliveryDefinitionRes)
+	err := c.cc.Invoke(ctx, DeliveryApi_UpdateDeliveryDefinition_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *deliveryApiClient) CreateEncryption(ctx context.Context, in *CreateEncryptionReq, opts ...grpc.CallOption) (*CreateEncryptionRes, error) {
+	out := new(CreateEncryptionRes)
+	err := c.cc.Invoke(ctx, DeliveryApi_CreateEncryption_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *deliveryApiClient) DeleteEncryption(ctx context.Context, in *DeleteEncryptionReq, opts ...grpc.CallOption) (*DeleteEncryptionRes, error) {
+	out := new(DeleteEncryptionRes)
+	err := c.cc.Invoke(ctx, DeliveryApi_DeleteEncryption_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *deliveryApiClient) GetEncryption(ctx context.Context, in *GetEncryptionReq, opts ...grpc.CallOption) (*GetEncryptionRes, error) {
+	out := new(GetEncryptionRes)
+	err := c.cc.Invoke(ctx, DeliveryApi_GetEncryption_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *deliveryApiClient) ListEncryptions(ctx context.Context, in *ListEncryptionsReq, opts ...grpc.CallOption) (*ListEncryptionsRes, error) {
+	out := new(ListEncryptionsRes)
+	err := c.cc.Invoke(ctx, DeliveryApi_ListEncryptions_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *deliveryApiClient) UpdateEncryption(ctx context.Context, in *UpdateEncryptionReq, opts ...grpc.CallOption) (*UpdateEncryptionRes, error) {
+	out := new(UpdateEncryptionRes)
+	err := c.cc.Invoke(ctx, DeliveryApi_UpdateEncryption_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DeliveryApiServer is the server API for DeliveryApi service.
 // All implementations must embed UnimplementedDeliveryApiServer
 // for forward compatibility
 type DeliveryApiServer interface {
 	CreateTransferConfig(context.Context, *CreateTransferConfigReq) (*CreateTransferConfigRes, error)
-	CreateDeliveryDefinition(context.Context, *CreateDeliveryDefinitionReq) (*CreateDeliveryDefinitionRes, error)
-	CreateEncryption(context.Context, *CreateEncryptionReq) (*CreateEncryptionRes, error)
 	ListTransferConfigs(context.Context, *ListTransferConfigsReq) (*ListTransferConfigsRes, error)
 	ListTransferConfigsByCredentialID(context.Context, *ListTransferConfigsByCredentialIDReq) (*ListTransferConfigsByCredentialIDRes, error)
 	UpdateTransferConfig(context.Context, *UpdateTransferConfigReq) (*UpdateTransferConfigRes, error)
@@ -231,6 +339,18 @@ type DeliveryApiServer interface {
 	CreateCredential(context.Context, *CreateCredentialReq) (*CreateCredentialRes, error)
 	DeleteCredential(context.Context, *DeleteCredentialReq) (*DeleteCredentialRes, error)
 	UpdateCredential(context.Context, *UpdateCredentialReq) (*UpdateCredentialRes, error)
+	CreateDeliveryDefinition(context.Context, *CreateDeliveryDefinitionReq) (*CreateDeliveryDefinitionRes, error)
+	DeleteDeliveryDefinition(context.Context, *DeleteDeliveryDefinitionReq) (*DeleteDeliveryDefinitionRes, error)
+	GetDeliveryDefinition(context.Context, *GetDeliveryDefinitionReq) (*GetDeliveryDefinitionRes, error)
+	GetDeliveryDefinitionByName(context.Context, *GetDeliveryDefinitionByNameReq) (*GetDeliveryDefinitionByNameRes, error)
+	ListDeliveryDefinitions(context.Context, *ListDeliveryDefinitionsReq) (*ListDeliveryDefinitionsRes, error)
+	ListDeliveryDefinitionsByCredentialID(context.Context, *ListDeliveryDefinitionsByCredentialIDReq) (*ListDeliveryDefinitionsByCredentialIDRes, error)
+	UpdateDeliveryDefinition(context.Context, *UpdateDeliveryDefinitionReq) (*UpdateDeliveryDefinitionRes, error)
+	CreateEncryption(context.Context, *CreateEncryptionReq) (*CreateEncryptionRes, error)
+	DeleteEncryption(context.Context, *DeleteEncryptionReq) (*DeleteEncryptionRes, error)
+	GetEncryption(context.Context, *GetEncryptionReq) (*GetEncryptionRes, error)
+	ListEncryptions(context.Context, *ListEncryptionsReq) (*ListEncryptionsRes, error)
+	UpdateEncryption(context.Context, *UpdateEncryptionReq) (*UpdateEncryptionRes, error)
 	mustEmbedUnimplementedDeliveryApiServer()
 }
 
@@ -240,12 +360,6 @@ type UnimplementedDeliveryApiServer struct {
 
 func (UnimplementedDeliveryApiServer) CreateTransferConfig(context.Context, *CreateTransferConfigReq) (*CreateTransferConfigRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateTransferConfig not implemented")
-}
-func (UnimplementedDeliveryApiServer) CreateDeliveryDefinition(context.Context, *CreateDeliveryDefinitionReq) (*CreateDeliveryDefinitionRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateDeliveryDefinition not implemented")
-}
-func (UnimplementedDeliveryApiServer) CreateEncryption(context.Context, *CreateEncryptionReq) (*CreateEncryptionRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateEncryption not implemented")
 }
 func (UnimplementedDeliveryApiServer) ListTransferConfigs(context.Context, *ListTransferConfigsReq) (*ListTransferConfigsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListTransferConfigs not implemented")
@@ -286,6 +400,42 @@ func (UnimplementedDeliveryApiServer) DeleteCredential(context.Context, *DeleteC
 func (UnimplementedDeliveryApiServer) UpdateCredential(context.Context, *UpdateCredentialReq) (*UpdateCredentialRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateCredential not implemented")
 }
+func (UnimplementedDeliveryApiServer) CreateDeliveryDefinition(context.Context, *CreateDeliveryDefinitionReq) (*CreateDeliveryDefinitionRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateDeliveryDefinition not implemented")
+}
+func (UnimplementedDeliveryApiServer) DeleteDeliveryDefinition(context.Context, *DeleteDeliveryDefinitionReq) (*DeleteDeliveryDefinitionRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteDeliveryDefinition not implemented")
+}
+func (UnimplementedDeliveryApiServer) GetDeliveryDefinition(context.Context, *GetDeliveryDefinitionReq) (*GetDeliveryDefinitionRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDeliveryDefinition not implemented")
+}
+func (UnimplementedDeliveryApiServer) GetDeliveryDefinitionByName(context.Context, *GetDeliveryDefinitionByNameReq) (*GetDeliveryDefinitionByNameRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDeliveryDefinitionByName not implemented")
+}
+func (UnimplementedDeliveryApiServer) ListDeliveryDefinitions(context.Context, *ListDeliveryDefinitionsReq) (*ListDeliveryDefinitionsRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListDeliveryDefinitions not implemented")
+}
+func (UnimplementedDeliveryApiServer) ListDeliveryDefinitionsByCredentialID(context.Context, *ListDeliveryDefinitionsByCredentialIDReq) (*ListDeliveryDefinitionsByCredentialIDRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListDeliveryDefinitionsByCredentialID not implemented")
+}
+func (UnimplementedDeliveryApiServer) UpdateDeliveryDefinition(context.Context, *UpdateDeliveryDefinitionReq) (*UpdateDeliveryDefinitionRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateDeliveryDefinition not implemented")
+}
+func (UnimplementedDeliveryApiServer) CreateEncryption(context.Context, *CreateEncryptionReq) (*CreateEncryptionRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateEncryption not implemented")
+}
+func (UnimplementedDeliveryApiServer) DeleteEncryption(context.Context, *DeleteEncryptionReq) (*DeleteEncryptionRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteEncryption not implemented")
+}
+func (UnimplementedDeliveryApiServer) GetEncryption(context.Context, *GetEncryptionReq) (*GetEncryptionRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetEncryption not implemented")
+}
+func (UnimplementedDeliveryApiServer) ListEncryptions(context.Context, *ListEncryptionsReq) (*ListEncryptionsRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListEncryptions not implemented")
+}
+func (UnimplementedDeliveryApiServer) UpdateEncryption(context.Context, *UpdateEncryptionReq) (*UpdateEncryptionRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateEncryption not implemented")
+}
 func (UnimplementedDeliveryApiServer) mustEmbedUnimplementedDeliveryApiServer() {}
 
 // UnsafeDeliveryApiServer may be embedded to opt out of forward compatibility for this service.
@@ -313,42 +463,6 @@ func _DeliveryApi_CreateTransferConfig_Handler(srv interface{}, ctx context.Cont
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DeliveryApiServer).CreateTransferConfig(ctx, req.(*CreateTransferConfigReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _DeliveryApi_CreateDeliveryDefinition_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateDeliveryDefinitionReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(DeliveryApiServer).CreateDeliveryDefinition(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: DeliveryApi_CreateDeliveryDefinition_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DeliveryApiServer).CreateDeliveryDefinition(ctx, req.(*CreateDeliveryDefinitionReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _DeliveryApi_CreateEncryption_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateEncryptionReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(DeliveryApiServer).CreateEncryption(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: DeliveryApi_CreateEncryption_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DeliveryApiServer).CreateEncryption(ctx, req.(*CreateEncryptionReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -587,6 +701,222 @@ func _DeliveryApi_UpdateCredential_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DeliveryApi_CreateDeliveryDefinition_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateDeliveryDefinitionReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeliveryApiServer).CreateDeliveryDefinition(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DeliveryApi_CreateDeliveryDefinition_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeliveryApiServer).CreateDeliveryDefinition(ctx, req.(*CreateDeliveryDefinitionReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _DeliveryApi_DeleteDeliveryDefinition_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteDeliveryDefinitionReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeliveryApiServer).DeleteDeliveryDefinition(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DeliveryApi_DeleteDeliveryDefinition_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeliveryApiServer).DeleteDeliveryDefinition(ctx, req.(*DeleteDeliveryDefinitionReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _DeliveryApi_GetDeliveryDefinition_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetDeliveryDefinitionReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeliveryApiServer).GetDeliveryDefinition(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DeliveryApi_GetDeliveryDefinition_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeliveryApiServer).GetDeliveryDefinition(ctx, req.(*GetDeliveryDefinitionReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _DeliveryApi_GetDeliveryDefinitionByName_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetDeliveryDefinitionByNameReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeliveryApiServer).GetDeliveryDefinitionByName(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DeliveryApi_GetDeliveryDefinitionByName_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeliveryApiServer).GetDeliveryDefinitionByName(ctx, req.(*GetDeliveryDefinitionByNameReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _DeliveryApi_ListDeliveryDefinitions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListDeliveryDefinitionsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeliveryApiServer).ListDeliveryDefinitions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DeliveryApi_ListDeliveryDefinitions_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeliveryApiServer).ListDeliveryDefinitions(ctx, req.(*ListDeliveryDefinitionsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _DeliveryApi_ListDeliveryDefinitionsByCredentialID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListDeliveryDefinitionsByCredentialIDReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeliveryApiServer).ListDeliveryDefinitionsByCredentialID(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DeliveryApi_ListDeliveryDefinitionsByCredentialID_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeliveryApiServer).ListDeliveryDefinitionsByCredentialID(ctx, req.(*ListDeliveryDefinitionsByCredentialIDReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _DeliveryApi_UpdateDeliveryDefinition_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateDeliveryDefinitionReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeliveryApiServer).UpdateDeliveryDefinition(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DeliveryApi_UpdateDeliveryDefinition_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeliveryApiServer).UpdateDeliveryDefinition(ctx, req.(*UpdateDeliveryDefinitionReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _DeliveryApi_CreateEncryption_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateEncryptionReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeliveryApiServer).CreateEncryption(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DeliveryApi_CreateEncryption_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeliveryApiServer).CreateEncryption(ctx, req.(*CreateEncryptionReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _DeliveryApi_DeleteEncryption_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteEncryptionReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeliveryApiServer).DeleteEncryption(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DeliveryApi_DeleteEncryption_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeliveryApiServer).DeleteEncryption(ctx, req.(*DeleteEncryptionReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _DeliveryApi_GetEncryption_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetEncryptionReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeliveryApiServer).GetEncryption(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DeliveryApi_GetEncryption_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeliveryApiServer).GetEncryption(ctx, req.(*GetEncryptionReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _DeliveryApi_ListEncryptions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListEncryptionsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeliveryApiServer).ListEncryptions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DeliveryApi_ListEncryptions_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeliveryApiServer).ListEncryptions(ctx, req.(*ListEncryptionsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _DeliveryApi_UpdateEncryption_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateEncryptionReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeliveryApiServer).UpdateEncryption(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DeliveryApi_UpdateEncryption_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeliveryApiServer).UpdateEncryption(ctx, req.(*UpdateEncryptionReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // DeliveryApi_ServiceDesc is the grpc.ServiceDesc for DeliveryApi service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -597,14 +927,6 @@ var DeliveryApi_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateTransferConfig",
 			Handler:    _DeliveryApi_CreateTransferConfig_Handler,
-		},
-		{
-			MethodName: "CreateDeliveryDefinition",
-			Handler:    _DeliveryApi_CreateDeliveryDefinition_Handler,
-		},
-		{
-			MethodName: "CreateEncryption",
-			Handler:    _DeliveryApi_CreateEncryption_Handler,
 		},
 		{
 			MethodName: "ListTransferConfigs",
@@ -657,6 +979,54 @@ var DeliveryApi_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateCredential",
 			Handler:    _DeliveryApi_UpdateCredential_Handler,
+		},
+		{
+			MethodName: "CreateDeliveryDefinition",
+			Handler:    _DeliveryApi_CreateDeliveryDefinition_Handler,
+		},
+		{
+			MethodName: "DeleteDeliveryDefinition",
+			Handler:    _DeliveryApi_DeleteDeliveryDefinition_Handler,
+		},
+		{
+			MethodName: "GetDeliveryDefinition",
+			Handler:    _DeliveryApi_GetDeliveryDefinition_Handler,
+		},
+		{
+			MethodName: "GetDeliveryDefinitionByName",
+			Handler:    _DeliveryApi_GetDeliveryDefinitionByName_Handler,
+		},
+		{
+			MethodName: "ListDeliveryDefinitions",
+			Handler:    _DeliveryApi_ListDeliveryDefinitions_Handler,
+		},
+		{
+			MethodName: "ListDeliveryDefinitionsByCredentialID",
+			Handler:    _DeliveryApi_ListDeliveryDefinitionsByCredentialID_Handler,
+		},
+		{
+			MethodName: "UpdateDeliveryDefinition",
+			Handler:    _DeliveryApi_UpdateDeliveryDefinition_Handler,
+		},
+		{
+			MethodName: "CreateEncryption",
+			Handler:    _DeliveryApi_CreateEncryption_Handler,
+		},
+		{
+			MethodName: "DeleteEncryption",
+			Handler:    _DeliveryApi_DeleteEncryption_Handler,
+		},
+		{
+			MethodName: "GetEncryption",
+			Handler:    _DeliveryApi_GetEncryption_Handler,
+		},
+		{
+			MethodName: "ListEncryptions",
+			Handler:    _DeliveryApi_ListEncryptions_Handler,
+		},
+		{
+			MethodName: "UpdateEncryption",
+			Handler:    _DeliveryApi_UpdateEncryption_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
