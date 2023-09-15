@@ -54,6 +54,12 @@ const (
 	// NewsroomAPIGetPublishedArticleByIdProcedure is the fully-qualified name of the NewsroomAPI's
 	// GetPublishedArticleById RPC.
 	NewsroomAPIGetPublishedArticleByIdProcedure = "/api.v1alpha1.newsroom.NewsroomAPI/GetPublishedArticleById"
+	// NewsroomAPIUserActivityProcedure is the fully-qualified name of the NewsroomAPI's UserActivity
+	// RPC.
+	NewsroomAPIUserActivityProcedure = "/api.v1alpha1.newsroom.NewsroomAPI/UserActivity"
+	// NewsroomAPIGetNewsForUserProcedure is the fully-qualified name of the NewsroomAPI's
+	// GetNewsForUser RPC.
+	NewsroomAPIGetNewsForUserProcedure = "/api.v1alpha1.newsroom.NewsroomAPI/GetNewsForUser"
 )
 
 // NewsroomAPIClient is a client for the api.v1alpha1.newsroom.NewsroomAPI service.
@@ -72,6 +78,10 @@ type NewsroomAPIClient interface {
 	ListPublishedArticles(context.Context, *connect_go.Request[newsroom.ListPublishedArticlesRequest]) (*connect_go.Response[newsroom.ListPublishedArticlesResponse], error)
 	// get published article details by the id
 	GetPublishedArticleById(context.Context, *connect_go.Request[newsroom.GetPublishedArticleByIdRequest]) (*connect_go.Response[newsroom.GetPublishedArticleByIdResponse], error)
+	// user activity updates
+	UserActivity(context.Context, *connect_go.Request[newsroom.UserActivityRequest]) (*connect_go.Response[newsroom.UserActivityResponse], error)
+	// fetch the unseen articles for the user
+	GetNewsForUser(context.Context, *connect_go.Request[newsroom.GetNewsForUserRequest]) (*connect_go.Response[newsroom.GetNewsForUserResponse], error)
 }
 
 // NewNewsroomAPIClient constructs a client for the api.v1alpha1.newsroom.NewsroomAPI service. By
@@ -119,6 +129,16 @@ func NewNewsroomAPIClient(httpClient connect_go.HTTPClient, baseURL string, opts
 			baseURL+NewsroomAPIGetPublishedArticleByIdProcedure,
 			opts...,
 		),
+		userActivity: connect_go.NewClient[newsroom.UserActivityRequest, newsroom.UserActivityResponse](
+			httpClient,
+			baseURL+NewsroomAPIUserActivityProcedure,
+			opts...,
+		),
+		getNewsForUser: connect_go.NewClient[newsroom.GetNewsForUserRequest, newsroom.GetNewsForUserResponse](
+			httpClient,
+			baseURL+NewsroomAPIGetNewsForUserProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -131,6 +151,8 @@ type newsroomAPIClient struct {
 	createPublishedArticle  *connect_go.Client[newsroom.CreatePublishedArticleRequest, newsroom.CreatePublishedArticleResponse]
 	listPublishedArticles   *connect_go.Client[newsroom.ListPublishedArticlesRequest, newsroom.ListPublishedArticlesResponse]
 	getPublishedArticleById *connect_go.Client[newsroom.GetPublishedArticleByIdRequest, newsroom.GetPublishedArticleByIdResponse]
+	userActivity            *connect_go.Client[newsroom.UserActivityRequest, newsroom.UserActivityResponse]
+	getNewsForUser          *connect_go.Client[newsroom.GetNewsForUserRequest, newsroom.GetNewsForUserResponse]
 }
 
 // CreateNewsArticle calls api.v1alpha1.newsroom.NewsroomAPI.CreateNewsArticle.
@@ -168,6 +190,16 @@ func (c *newsroomAPIClient) GetPublishedArticleById(ctx context.Context, req *co
 	return c.getPublishedArticleById.CallUnary(ctx, req)
 }
 
+// UserActivity calls api.v1alpha1.newsroom.NewsroomAPI.UserActivity.
+func (c *newsroomAPIClient) UserActivity(ctx context.Context, req *connect_go.Request[newsroom.UserActivityRequest]) (*connect_go.Response[newsroom.UserActivityResponse], error) {
+	return c.userActivity.CallUnary(ctx, req)
+}
+
+// GetNewsForUser calls api.v1alpha1.newsroom.NewsroomAPI.GetNewsForUser.
+func (c *newsroomAPIClient) GetNewsForUser(ctx context.Context, req *connect_go.Request[newsroom.GetNewsForUserRequest]) (*connect_go.Response[newsroom.GetNewsForUserResponse], error) {
+	return c.getNewsForUser.CallUnary(ctx, req)
+}
+
 // NewsroomAPIHandler is an implementation of the api.v1alpha1.newsroom.NewsroomAPI service.
 type NewsroomAPIHandler interface {
 	// create news article
@@ -184,6 +216,10 @@ type NewsroomAPIHandler interface {
 	ListPublishedArticles(context.Context, *connect_go.Request[newsroom.ListPublishedArticlesRequest]) (*connect_go.Response[newsroom.ListPublishedArticlesResponse], error)
 	// get published article details by the id
 	GetPublishedArticleById(context.Context, *connect_go.Request[newsroom.GetPublishedArticleByIdRequest]) (*connect_go.Response[newsroom.GetPublishedArticleByIdResponse], error)
+	// user activity updates
+	UserActivity(context.Context, *connect_go.Request[newsroom.UserActivityRequest]) (*connect_go.Response[newsroom.UserActivityResponse], error)
+	// fetch the unseen articles for the user
+	GetNewsForUser(context.Context, *connect_go.Request[newsroom.GetNewsForUserRequest]) (*connect_go.Response[newsroom.GetNewsForUserResponse], error)
 }
 
 // NewNewsroomAPIHandler builds an HTTP handler from the service implementation. It returns the path
@@ -227,6 +263,16 @@ func NewNewsroomAPIHandler(svc NewsroomAPIHandler, opts ...connect_go.HandlerOpt
 		svc.GetPublishedArticleById,
 		opts...,
 	)
+	newsroomAPIUserActivityHandler := connect_go.NewUnaryHandler(
+		NewsroomAPIUserActivityProcedure,
+		svc.UserActivity,
+		opts...,
+	)
+	newsroomAPIGetNewsForUserHandler := connect_go.NewUnaryHandler(
+		NewsroomAPIGetNewsForUserProcedure,
+		svc.GetNewsForUser,
+		opts...,
+	)
 	return "/api.v1alpha1.newsroom.NewsroomAPI/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case NewsroomAPICreateNewsArticleProcedure:
@@ -243,6 +289,10 @@ func NewNewsroomAPIHandler(svc NewsroomAPIHandler, opts ...connect_go.HandlerOpt
 			newsroomAPIListPublishedArticlesHandler.ServeHTTP(w, r)
 		case NewsroomAPIGetPublishedArticleByIdProcedure:
 			newsroomAPIGetPublishedArticleByIdHandler.ServeHTTP(w, r)
+		case NewsroomAPIUserActivityProcedure:
+			newsroomAPIUserActivityHandler.ServeHTTP(w, r)
+		case NewsroomAPIGetNewsForUserProcedure:
+			newsroomAPIGetNewsForUserHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -278,4 +328,12 @@ func (UnimplementedNewsroomAPIHandler) ListPublishedArticles(context.Context, *c
 
 func (UnimplementedNewsroomAPIHandler) GetPublishedArticleById(context.Context, *connect_go.Request[newsroom.GetPublishedArticleByIdRequest]) (*connect_go.Response[newsroom.GetPublishedArticleByIdResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.newsroom.NewsroomAPI.GetPublishedArticleById is not implemented"))
+}
+
+func (UnimplementedNewsroomAPIHandler) UserActivity(context.Context, *connect_go.Request[newsroom.UserActivityRequest]) (*connect_go.Response[newsroom.UserActivityResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.newsroom.NewsroomAPI.UserActivity is not implemented"))
+}
+
+func (UnimplementedNewsroomAPIHandler) GetNewsForUser(context.Context, *connect_go.Request[newsroom.GetNewsForUserRequest]) (*connect_go.Response[newsroom.GetNewsForUserResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.newsroom.NewsroomAPI.GetNewsForUser is not implemented"))
 }
