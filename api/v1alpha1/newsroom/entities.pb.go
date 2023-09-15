@@ -399,7 +399,7 @@ type UpdateNewsArticleResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// latest news article
+	// updated news article
 	ArticleDetails *NewsArticleDetails `protobuf:"bytes,1,opt,name=article_details,json=articleDetails,proto3" json:"article_details,omitempty"`
 }
 
