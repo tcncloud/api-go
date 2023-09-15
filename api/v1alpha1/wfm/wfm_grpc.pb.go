@@ -62,7 +62,6 @@ const (
 	WFM_DeleteRegressionTemplate_FullMethodName                      = "/api.v1alpha1.wfm.WFM/DeleteRegressionTemplate"
 	WFM_ListRegressionTemplates_FullMethodName                       = "/api.v1alpha1.wfm.WFM/ListRegressionTemplates"
 	WFM_ListForecastIntervalsForSkillProfile_FullMethodName          = "/api.v1alpha1.wfm.WFM/ListForecastIntervalsForSkillProfile"
-	WFM_ListForecastIntervals_FullMethodName                         = "/api.v1alpha1.wfm.WFM/ListForecastIntervals"
 	WFM_BuildRegressionForecastByInterval_FullMethodName             = "/api.v1alpha1.wfm.WFM/BuildRegressionForecastByInterval"
 	WFM_BuildRegressionForecastByIntervalWithStats_FullMethodName    = "/api.v1alpha1.wfm.WFM/BuildRegressionForecastByIntervalWithStats"
 	WFM_ListCallProfileTemplates_FullMethodName                      = "/api.v1alpha1.wfm.WFM/ListCallProfileTemplates"
@@ -462,9 +461,7 @@ type WFMClient interface {
 	// Errors:
 	//   - grpc.Internal: error occurs when getting the regression templates.
 	ListRegressionTemplates(ctx context.Context, in *ListRegressionTemplatesReq, opts ...grpc.CallOption) (*ListRegressionTemplatesRes, error)
-	// Deprecated: Do not use.
 	// Gets the forecast data intervals for the given @skill_profile_sid.
-	// DEPRECATED as of Sep/13/2023 - Use ListForecastIntervals instead.
 	// Required permissions:
 	//
 	//	NONE
@@ -473,15 +470,6 @@ type WFMClient interface {
 	//   - grpc.Invalid: the @skill_profile_sid in the request is invalid.
 	//   - grpc.Internal: error occurs when getting the forecast data intervals.
 	ListForecastIntervalsForSkillProfile(ctx context.Context, in *ListForecastIntervalsForSkillProfileReq, opts ...grpc.CallOption) (WFM_ListForecastIntervalsForSkillProfileClient, error)
-	// Gets the forecast data intervals for the given @skill_profile_category.
-	// Required permissions:
-	//
-	//	NONE
-	//
-	// Errors:
-	//   - grpc.Invalid: the @skill_profile_category in the request is invalid.
-	//   - grpc.Internal: error occurs when getting the forecast data intervals.
-	ListForecastIntervals(ctx context.Context, in *ListForecastIntervalsReq, opts ...grpc.CallOption) (WFM_ListForecastIntervalsClient, error)
 	// Generates a regression forecast using the provided @regression_template.
 	// It will generate forecast intervals for the skill profiles sids in @skill_profile_sids_to_forecast.
 	// It will use the client's saved forecasting test range as the start datetime and the forecast range as the end datetime of the forecasted data.
@@ -545,7 +533,7 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when upserting the forecast data deltas.
 	UpsertForecastDataDeltas(ctx context.Context, in *UpsertForecastDataDeltasReq, opts ...grpc.CallOption) (*UpsertForecastDataDeltasRes, error)
 	// Deletes forecast data intervals/deltas based on the parameters provided.
-	// If @delete_param is type skill_profile_category, then the intervals/deltas to be deleted will be
+	// If @delete_param is type skill_profile_sid, then the intervals/deltas to be deleted will be
 	// associated with that id. If @delete_param is type interval_sids, then the intervals/deltas to be
 	// deleted will be contained in the list @interval_sids. The @delete_type field determines which
 	// table(s) in the database the intervals/deltas will be deleted from.
@@ -1897,7 +1885,6 @@ func (c *wFMClient) ListRegressionTemplates(ctx context.Context, in *ListRegress
 	return out, nil
 }
 
-// Deprecated: Do not use.
 func (c *wFMClient) ListForecastIntervalsForSkillProfile(ctx context.Context, in *ListForecastIntervalsForSkillProfileReq, opts ...grpc.CallOption) (WFM_ListForecastIntervalsForSkillProfileClient, error) {
 	stream, err := c.cc.NewStream(ctx, &WFM_ServiceDesc.Streams[2], WFM_ListForecastIntervalsForSkillProfile_FullMethodName, opts...)
 	if err != nil {
@@ -1930,40 +1917,8 @@ func (x *wFMListForecastIntervalsForSkillProfileClient) Recv() (*CallDataByInter
 	return m, nil
 }
 
-func (c *wFMClient) ListForecastIntervals(ctx context.Context, in *ListForecastIntervalsReq, opts ...grpc.CallOption) (WFM_ListForecastIntervalsClient, error) {
-	stream, err := c.cc.NewStream(ctx, &WFM_ServiceDesc.Streams[3], WFM_ListForecastIntervals_FullMethodName, opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &wFMListForecastIntervalsClient{stream}
-	if err := x.ClientStream.SendMsg(in); err != nil {
-		return nil, err
-	}
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	return x, nil
-}
-
-type WFM_ListForecastIntervalsClient interface {
-	Recv() (*CallDataByInterval, error)
-	grpc.ClientStream
-}
-
-type wFMListForecastIntervalsClient struct {
-	grpc.ClientStream
-}
-
-func (x *wFMListForecastIntervalsClient) Recv() (*CallDataByInterval, error) {
-	m := new(CallDataByInterval)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
 func (c *wFMClient) BuildRegressionForecastByInterval(ctx context.Context, in *BuildRegressionForecastByIntervalReq, opts ...grpc.CallOption) (WFM_BuildRegressionForecastByIntervalClient, error) {
-	stream, err := c.cc.NewStream(ctx, &WFM_ServiceDesc.Streams[4], WFM_BuildRegressionForecastByInterval_FullMethodName, opts...)
+	stream, err := c.cc.NewStream(ctx, &WFM_ServiceDesc.Streams[3], WFM_BuildRegressionForecastByInterval_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1995,7 +1950,7 @@ func (x *wFMBuildRegressionForecastByIntervalClient) Recv() (*CallDataByInterval
 }
 
 func (c *wFMClient) BuildRegressionForecastByIntervalWithStats(ctx context.Context, in *BuildRegressionForecastByIntervalWithStatsReq, opts ...grpc.CallOption) (WFM_BuildRegressionForecastByIntervalWithStatsClient, error) {
-	stream, err := c.cc.NewStream(ctx, &WFM_ServiceDesc.Streams[5], WFM_BuildRegressionForecastByIntervalWithStats_FullMethodName, opts...)
+	stream, err := c.cc.NewStream(ctx, &WFM_ServiceDesc.Streams[4], WFM_BuildRegressionForecastByIntervalWithStats_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -3141,9 +3096,7 @@ type WFMServer interface {
 	// Errors:
 	//   - grpc.Internal: error occurs when getting the regression templates.
 	ListRegressionTemplates(context.Context, *ListRegressionTemplatesReq) (*ListRegressionTemplatesRes, error)
-	// Deprecated: Do not use.
 	// Gets the forecast data intervals for the given @skill_profile_sid.
-	// DEPRECATED as of Sep/13/2023 - Use ListForecastIntervals instead.
 	// Required permissions:
 	//
 	//	NONE
@@ -3152,15 +3105,6 @@ type WFMServer interface {
 	//   - grpc.Invalid: the @skill_profile_sid in the request is invalid.
 	//   - grpc.Internal: error occurs when getting the forecast data intervals.
 	ListForecastIntervalsForSkillProfile(*ListForecastIntervalsForSkillProfileReq, WFM_ListForecastIntervalsForSkillProfileServer) error
-	// Gets the forecast data intervals for the given @skill_profile_category.
-	// Required permissions:
-	//
-	//	NONE
-	//
-	// Errors:
-	//   - grpc.Invalid: the @skill_profile_category in the request is invalid.
-	//   - grpc.Internal: error occurs when getting the forecast data intervals.
-	ListForecastIntervals(*ListForecastIntervalsReq, WFM_ListForecastIntervalsServer) error
 	// Generates a regression forecast using the provided @regression_template.
 	// It will generate forecast intervals for the skill profiles sids in @skill_profile_sids_to_forecast.
 	// It will use the client's saved forecasting test range as the start datetime and the forecast range as the end datetime of the forecasted data.
@@ -3224,7 +3168,7 @@ type WFMServer interface {
 	//   - grpc.Internal: error occurs when upserting the forecast data deltas.
 	UpsertForecastDataDeltas(context.Context, *UpsertForecastDataDeltasReq) (*UpsertForecastDataDeltasRes, error)
 	// Deletes forecast data intervals/deltas based on the parameters provided.
-	// If @delete_param is type skill_profile_category, then the intervals/deltas to be deleted will be
+	// If @delete_param is type skill_profile_sid, then the intervals/deltas to be deleted will be
 	// associated with that id. If @delete_param is type interval_sids, then the intervals/deltas to be
 	// deleted will be contained in the list @interval_sids. The @delete_type field determines which
 	// table(s) in the database the intervals/deltas will be deleted from.
@@ -4361,9 +4305,6 @@ func (UnimplementedWFMServer) ListRegressionTemplates(context.Context, *ListRegr
 func (UnimplementedWFMServer) ListForecastIntervalsForSkillProfile(*ListForecastIntervalsForSkillProfileReq, WFM_ListForecastIntervalsForSkillProfileServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListForecastIntervalsForSkillProfile not implemented")
 }
-func (UnimplementedWFMServer) ListForecastIntervals(*ListForecastIntervalsReq, WFM_ListForecastIntervalsServer) error {
-	return status.Errorf(codes.Unimplemented, "method ListForecastIntervals not implemented")
-}
 func (UnimplementedWFMServer) BuildRegressionForecastByInterval(*BuildRegressionForecastByIntervalReq, WFM_BuildRegressionForecastByIntervalServer) error {
 	return status.Errorf(codes.Unimplemented, "method BuildRegressionForecastByInterval not implemented")
 }
@@ -5181,27 +5122,6 @@ type wFMListForecastIntervalsForSkillProfileServer struct {
 }
 
 func (x *wFMListForecastIntervalsForSkillProfileServer) Send(m *CallDataByInterval) error {
-	return x.ServerStream.SendMsg(m)
-}
-
-func _WFM_ListForecastIntervals_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(ListForecastIntervalsReq)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
-	}
-	return srv.(WFMServer).ListForecastIntervals(m, &wFMListForecastIntervalsServer{stream})
-}
-
-type WFM_ListForecastIntervalsServer interface {
-	Send(*CallDataByInterval) error
-	grpc.ServerStream
-}
-
-type wFMListForecastIntervalsServer struct {
-	grpc.ServerStream
-}
-
-func (x *wFMListForecastIntervalsServer) Send(m *CallDataByInterval) error {
 	return x.ServerStream.SendMsg(m)
 }
 
@@ -7353,11 +7273,6 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "ListForecastIntervalsForSkillProfile",
 			Handler:       _WFM_ListForecastIntervalsForSkillProfile_Handler,
-			ServerStreams: true,
-		},
-		{
-			StreamName:    "ListForecastIntervals",
-			Handler:       _WFM_ListForecastIntervals_Handler,
 			ServerStreams: true,
 		},
 		{
