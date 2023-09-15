@@ -93,9 +93,11 @@ type BillingServiceClient interface {
 	ListBillingPlans(context.Context, *connect_go.Request[v1alpha1.ListBillingPlansRequest]) (*connect_go.ServerStreamForClient[v1alpha1.ListBillingPlansResponse], error)
 	// ListInvoices returns the specified list of invoices.
 	ListInvoices(context.Context, *connect_go.Request[v1alpha1.ListInvoicesRequest]) (*connect_go.ServerStreamForClient[v1alpha1.ListInvoicesResponse], error)
-	// UpdateBillingPlan updates the specified billing plan.
+	// UpdateBillingPlan updates the specified billing plan. This is expected to provide
+	// all the rate definitions for the billing plan if updating rates.
 	UpdateBillingPlan(context.Context, *connect_go.Request[v1alpha1.UpdateBillingPlanRequest]) (*connect_go.Response[v1alpha1.UpdateBillingPlanResponse], error)
-	// UpdateDefaultBillingPlan updates the default billing plan.
+	// UpdateDefaultBillingPlan updates the default billing plan. This is expected to provide
+	// all the rate definitions for the billing plan.
 	UpdateDefaultBillingPlan(context.Context, *connect_go.Request[v1alpha1.UpdateDefaultBillingPlanRequest]) (*connect_go.Response[v1alpha1.UpdateDefaultBillingPlanResponse], error)
 	// UpdateInvoice updates the specified invoice.
 	UpdateInvoice(context.Context, *connect_go.Request[v1alpha1.UpdateInvoiceRequest]) (*connect_go.Response[v1alpha1.UpdateInvoiceResponse], error)
@@ -273,9 +275,11 @@ type BillingServiceHandler interface {
 	ListBillingPlans(context.Context, *connect_go.Request[v1alpha1.ListBillingPlansRequest], *connect_go.ServerStream[v1alpha1.ListBillingPlansResponse]) error
 	// ListInvoices returns the specified list of invoices.
 	ListInvoices(context.Context, *connect_go.Request[v1alpha1.ListInvoicesRequest], *connect_go.ServerStream[v1alpha1.ListInvoicesResponse]) error
-	// UpdateBillingPlan updates the specified billing plan.
+	// UpdateBillingPlan updates the specified billing plan. This is expected to provide
+	// all the rate definitions for the billing plan if updating rates.
 	UpdateBillingPlan(context.Context, *connect_go.Request[v1alpha1.UpdateBillingPlanRequest]) (*connect_go.Response[v1alpha1.UpdateBillingPlanResponse], error)
-	// UpdateDefaultBillingPlan updates the default billing plan.
+	// UpdateDefaultBillingPlan updates the default billing plan. This is expected to provide
+	// all the rate definitions for the billing plan.
 	UpdateDefaultBillingPlan(context.Context, *connect_go.Request[v1alpha1.UpdateDefaultBillingPlanRequest]) (*connect_go.Response[v1alpha1.UpdateDefaultBillingPlanResponse], error)
 	// UpdateInvoice updates the specified invoice.
 	UpdateInvoice(context.Context, *connect_go.Request[v1alpha1.UpdateInvoiceRequest]) (*connect_go.Response[v1alpha1.UpdateInvoiceResponse], error)

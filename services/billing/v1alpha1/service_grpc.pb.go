@@ -57,9 +57,11 @@ type BillingServiceClient interface {
 	ListBillingPlans(ctx context.Context, in *ListBillingPlansRequest, opts ...grpc.CallOption) (BillingService_ListBillingPlansClient, error)
 	// ListInvoices returns the specified list of invoices.
 	ListInvoices(ctx context.Context, in *ListInvoicesRequest, opts ...grpc.CallOption) (BillingService_ListInvoicesClient, error)
-	// UpdateBillingPlan updates the specified billing plan.
+	// UpdateBillingPlan updates the specified billing plan. This is expected to provide
+	// all the rate definitions for the billing plan if updating rates.
 	UpdateBillingPlan(ctx context.Context, in *UpdateBillingPlanRequest, opts ...grpc.CallOption) (*UpdateBillingPlanResponse, error)
-	// UpdateDefaultBillingPlan updates the default billing plan.
+	// UpdateDefaultBillingPlan updates the default billing plan. This is expected to provide
+	// all the rate definitions for the billing plan.
 	UpdateDefaultBillingPlan(ctx context.Context, in *UpdateDefaultBillingPlanRequest, opts ...grpc.CallOption) (*UpdateDefaultBillingPlanResponse, error)
 	// UpdateInvoice updates the specified invoice.
 	UpdateInvoice(ctx context.Context, in *UpdateInvoiceRequest, opts ...grpc.CallOption) (*UpdateInvoiceResponse, error)
@@ -251,9 +253,11 @@ type BillingServiceServer interface {
 	ListBillingPlans(*ListBillingPlansRequest, BillingService_ListBillingPlansServer) error
 	// ListInvoices returns the specified list of invoices.
 	ListInvoices(*ListInvoicesRequest, BillingService_ListInvoicesServer) error
-	// UpdateBillingPlan updates the specified billing plan.
+	// UpdateBillingPlan updates the specified billing plan. This is expected to provide
+	// all the rate definitions for the billing plan if updating rates.
 	UpdateBillingPlan(context.Context, *UpdateBillingPlanRequest) (*UpdateBillingPlanResponse, error)
-	// UpdateDefaultBillingPlan updates the default billing plan.
+	// UpdateDefaultBillingPlan updates the default billing plan. This is expected to provide
+	// all the rate definitions for the billing plan.
 	UpdateDefaultBillingPlan(context.Context, *UpdateDefaultBillingPlanRequest) (*UpdateDefaultBillingPlanResponse, error)
 	// UpdateInvoice updates the specified invoice.
 	UpdateInvoice(context.Context, *UpdateInvoiceRequest) (*UpdateInvoiceResponse, error)
