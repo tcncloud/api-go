@@ -1039,6 +1039,7 @@ type UserActivityResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// user activity details
 	UserActivity *UserActivity `protobuf:"bytes,1,opt,name=user_activity,json=userActivity,proto3" json:"user_activity,omitempty"`
 }
 
