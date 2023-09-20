@@ -5044,7 +5044,7 @@ type OmniTask struct {
 	StatusMessage *wrapperspb.StringValue `protobuf:"bytes,12,opt,name=status_message,json=statusMessage,proto3" json:"status_message,omitempty"`
 	// scheduled time for task
 	ScheduledTime *timestamppb.Timestamp `protobuf:"bytes,13,opt,name=scheduled_time,json=scheduledTime,proto3" json:"scheduled_time,omitempty"`
-	// holds extra details about a task should be processed
+	// holds extra details about how a task should be processed
 	TaskConfig *OmniTaskConfig `protobuf:"bytes,15,opt,name=task_config,json=taskConfig,proto3" json:"task_config,omitempty"`
 }
 
