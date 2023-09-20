@@ -50,6 +50,7 @@ const (
 	WFM_CreateInactiveSkillProfileMapping_FullMethodName             = "/api.v1alpha1.wfm.WFM/CreateInactiveSkillProfileMapping"
 	WFM_GetAvailableRegressionForecasterModelTypes_FullMethodName    = "/api.v1alpha1.wfm.WFM/GetAvailableRegressionForecasterModelTypes"
 	WFM_DisconnectInactiveSkillProfileMapping_FullMethodName         = "/api.v1alpha1.wfm.WFM/DisconnectInactiveSkillProfileMapping"
+	WFM_CreateSkillProfileGroup_FullMethodName                       = "/api.v1alpha1.wfm.WFM/CreateSkillProfileGroup"
 	WFM_DeleteHistoricalDataDeltas_FullMethodName                    = "/api.v1alpha1.wfm.WFM/DeleteHistoricalDataDeltas"
 	WFM_ListTopSkillProfiles_FullMethodName                          = "/api.v1alpha1.wfm.WFM/ListTopSkillProfiles"
 	WFM_GetSkillProfilesCount_FullMethodName                         = "/api.v1alpha1.wfm.WFM/GetSkillProfilesCount"
@@ -346,6 +347,16 @@ type WFMClient interface {
 	//   - grpc.Internal: the current mapping for the given @inactive_skill_profile_sid is already disconnected,
 	//     the given @inactive_skill_profile_sid is of an active skill profile.
 	DisconnectInactiveSkillProfileMapping(ctx context.Context, in *DisconnectInactiveSkillProfileMappingReq, opts ...grpc.CallOption) (*DisconnectInactiveSkillProfileMappingRes, error)
+	// Creates the given @skill_profile_group.
+	// @skill_profile_group_sids will be ignored since associations cannot be created by this method.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @skill_profile_group in the request is invalid.
+	//   - grpc.Internal: error occurs creating the skill profile group.
+	CreateSkillProfileGroup(ctx context.Context, in *CreateSkillProfileGroupReq, opts ...grpc.CallOption) (*CreateSkillProfileGroupRes, error)
 	// Deletes deltas whose dates match the given @start_datetimes for the given @skill_profile_sid.
 	// If no @start_datetimes are given, it will delete all the deltas that the given @skill_profile_sid has.
 	// Required permissions:
@@ -1752,6 +1763,15 @@ func (c *wFMClient) DisconnectInactiveSkillProfileMapping(ctx context.Context, i
 	return out, nil
 }
 
+func (c *wFMClient) CreateSkillProfileGroup(ctx context.Context, in *CreateSkillProfileGroupReq, opts ...grpc.CallOption) (*CreateSkillProfileGroupRes, error) {
+	out := new(CreateSkillProfileGroupRes)
+	err := c.cc.Invoke(ctx, WFM_CreateSkillProfileGroup_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) DeleteHistoricalDataDeltas(ctx context.Context, in *DeleteHistoricalDataDeltasReq, opts ...grpc.CallOption) (*DeleteHistoricalDataDeltasRes, error) {
 	out := new(DeleteHistoricalDataDeltasRes)
 	err := c.cc.Invoke(ctx, WFM_DeleteHistoricalDataDeltas_FullMethodName, in, out, opts...)
@@ -3025,6 +3045,16 @@ type WFMServer interface {
 	//   - grpc.Internal: the current mapping for the given @inactive_skill_profile_sid is already disconnected,
 	//     the given @inactive_skill_profile_sid is of an active skill profile.
 	DisconnectInactiveSkillProfileMapping(context.Context, *DisconnectInactiveSkillProfileMappingReq) (*DisconnectInactiveSkillProfileMappingRes, error)
+	// Creates the given @skill_profile_group.
+	// @skill_profile_group_sids will be ignored since associations cannot be created by this method.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @skill_profile_group in the request is invalid.
+	//   - grpc.Internal: error occurs creating the skill profile group.
+	CreateSkillProfileGroup(context.Context, *CreateSkillProfileGroupReq) (*CreateSkillProfileGroupRes, error)
 	// Deletes deltas whose dates match the given @start_datetimes for the given @skill_profile_sid.
 	// If no @start_datetimes are given, it will delete all the deltas that the given @skill_profile_sid has.
 	// Required permissions:
@@ -4325,6 +4355,9 @@ func (UnimplementedWFMServer) GetAvailableRegressionForecasterModelTypes(context
 func (UnimplementedWFMServer) DisconnectInactiveSkillProfileMapping(context.Context, *DisconnectInactiveSkillProfileMappingReq) (*DisconnectInactiveSkillProfileMappingRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DisconnectInactiveSkillProfileMapping not implemented")
 }
+func (UnimplementedWFMServer) CreateSkillProfileGroup(context.Context, *CreateSkillProfileGroupReq) (*CreateSkillProfileGroupRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateSkillProfileGroup not implemented")
+}
 func (UnimplementedWFMServer) DeleteHistoricalDataDeltas(context.Context, *DeleteHistoricalDataDeltasReq) (*DeleteHistoricalDataDeltasRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteHistoricalDataDeltas not implemented")
 }
@@ -4955,6 +4988,24 @@ func _WFM_DisconnectInactiveSkillProfileMapping_Handler(srv interface{}, ctx con
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WFMServer).DisconnectInactiveSkillProfileMapping(ctx, req.(*DisconnectInactiveSkillProfileMappingReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_CreateSkillProfileGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateSkillProfileGroupReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).CreateSkillProfileGroup(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_CreateSkillProfileGroup_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).CreateSkillProfileGroup(ctx, req.(*CreateSkillProfileGroupReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -6941,6 +6992,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DisconnectInactiveSkillProfileMapping",
 			Handler:    _WFM_DisconnectInactiveSkillProfileMapping_Handler,
+		},
+		{
+			MethodName: "CreateSkillProfileGroup",
+			Handler:    _WFM_CreateSkillProfileGroup_Handler,
 		},
 		{
 			MethodName: "DeleteHistoricalDataDeltas",
