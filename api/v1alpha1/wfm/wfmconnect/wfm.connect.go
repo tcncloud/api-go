@@ -95,6 +95,9 @@ const (
 	// WFMCreateSkillProfileGroupProcedure is the fully-qualified name of the WFM's
 	// CreateSkillProfileGroup RPC.
 	WFMCreateSkillProfileGroupProcedure = "/api.v1alpha1.wfm.WFM/CreateSkillProfileGroup"
+	// WFMUpdateSkillProfileGroupProcedure is the fully-qualified name of the WFM's
+	// UpdateSkillProfileGroup RPC.
+	WFMUpdateSkillProfileGroupProcedure = "/api.v1alpha1.wfm.WFM/UpdateSkillProfileGroup"
 	// WFMDeleteHistoricalDataDeltasProcedure is the fully-qualified name of the WFM's
 	// DeleteHistoricalDataDeltas RPC.
 	WFMDeleteHistoricalDataDeltasProcedure = "/api.v1alpha1.wfm.WFM/DeleteHistoricalDataDeltas"
@@ -578,6 +581,17 @@ type WFMClient interface {
 	//   - grpc.Invalid: the @skill_profile_group in the request is invalid.
 	//   - grpc.Internal: error occurs creating the skill profile group.
 	CreateSkillProfileGroup(context.Context, *connect_go.Request[wfm.CreateSkillProfileGroupReq]) (*connect_go.Response[wfm.CreateSkillProfileGroupRes], error)
+	// Updates the given @skill_profile_group that has the @skill_profile_group_sid for the org sending the request.
+	// @skill_profile_group_sids will be ignored since associations cannot be created by this method.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @skill_profile_group in the request is invalid.
+	//   - grpc.NotFound: the skill profile group to update doesn't exist.
+	//   - grpc.Internal: error occurs updating the skill profile group.
+	UpdateSkillProfileGroup(context.Context, *connect_go.Request[wfm.UpdateSkillProfileGroupReq]) (*connect_go.Response[wfm.UpdateSkillProfileGroupRes], error)
 	// Deletes deltas whose dates match the given @start_datetimes for the given @skill_profile_sid.
 	// If no @start_datetimes are given, it will delete all the deltas that the given @skill_profile_sid has.
 	// Required permissions:
@@ -1923,6 +1937,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMCreateSkillProfileGroupProcedure,
 			opts...,
 		),
+		updateSkillProfileGroup: connect_go.NewClient[wfm.UpdateSkillProfileGroupReq, wfm.UpdateSkillProfileGroupRes](
+			httpClient,
+			baseURL+WFMUpdateSkillProfileGroupProcedure,
+			opts...,
+		),
 		deleteHistoricalDataDeltas: connect_go.NewClient[wfm.DeleteHistoricalDataDeltasReq, wfm.DeleteHistoricalDataDeltasRes](
 			httpClient,
 			baseURL+WFMDeleteHistoricalDataDeltasProcedure,
@@ -2471,6 +2490,7 @@ type wFMClient struct {
 	getAvailableRegressionForecasterModelTypes    *connect_go.Client[wfm.GetAvailableRegressionForecasterModelTypesReq, wfm.GetAvailableRegressionForecasterModelTypesRes]
 	disconnectInactiveSkillProfileMapping         *connect_go.Client[wfm.DisconnectInactiveSkillProfileMappingReq, wfm.DisconnectInactiveSkillProfileMappingRes]
 	createSkillProfileGroup                       *connect_go.Client[wfm.CreateSkillProfileGroupReq, wfm.CreateSkillProfileGroupRes]
+	updateSkillProfileGroup                       *connect_go.Client[wfm.UpdateSkillProfileGroupReq, wfm.UpdateSkillProfileGroupRes]
 	deleteHistoricalDataDeltas                    *connect_go.Client[wfm.DeleteHistoricalDataDeltasReq, wfm.DeleteHistoricalDataDeltasRes]
 	listTopSkillProfiles                          *connect_go.Client[wfm.ListTopSkillProfilesReq, wfm.ListTopSkillProfilesRes]
 	getSkillProfilesCount                         *connect_go.Client[wfm.GetSkillProfilesCountReq, wfm.GetSkillProfilesCountRes]
@@ -2671,6 +2691,11 @@ func (c *wFMClient) DisconnectInactiveSkillProfileMapping(ctx context.Context, r
 // CreateSkillProfileGroup calls api.v1alpha1.wfm.WFM.CreateSkillProfileGroup.
 func (c *wFMClient) CreateSkillProfileGroup(ctx context.Context, req *connect_go.Request[wfm.CreateSkillProfileGroupReq]) (*connect_go.Response[wfm.CreateSkillProfileGroupRes], error) {
 	return c.createSkillProfileGroup.CallUnary(ctx, req)
+}
+
+// UpdateSkillProfileGroup calls api.v1alpha1.wfm.WFM.UpdateSkillProfileGroup.
+func (c *wFMClient) UpdateSkillProfileGroup(ctx context.Context, req *connect_go.Request[wfm.UpdateSkillProfileGroupReq]) (*connect_go.Response[wfm.UpdateSkillProfileGroupRes], error) {
+	return c.updateSkillProfileGroup.CallUnary(ctx, req)
 }
 
 // DeleteHistoricalDataDeltas calls api.v1alpha1.wfm.WFM.DeleteHistoricalDataDeltas.
@@ -3406,6 +3431,17 @@ type WFMHandler interface {
 	//   - grpc.Invalid: the @skill_profile_group in the request is invalid.
 	//   - grpc.Internal: error occurs creating the skill profile group.
 	CreateSkillProfileGroup(context.Context, *connect_go.Request[wfm.CreateSkillProfileGroupReq]) (*connect_go.Response[wfm.CreateSkillProfileGroupRes], error)
+	// Updates the given @skill_profile_group that has the @skill_profile_group_sid for the org sending the request.
+	// @skill_profile_group_sids will be ignored since associations cannot be created by this method.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @skill_profile_group in the request is invalid.
+	//   - grpc.NotFound: the skill profile group to update doesn't exist.
+	//   - grpc.Internal: error occurs updating the skill profile group.
+	UpdateSkillProfileGroup(context.Context, *connect_go.Request[wfm.UpdateSkillProfileGroupReq]) (*connect_go.Response[wfm.UpdateSkillProfileGroupRes], error)
 	// Deletes deltas whose dates match the given @start_datetimes for the given @skill_profile_sid.
 	// If no @start_datetimes are given, it will delete all the deltas that the given @skill_profile_sid has.
 	// Required permissions:
@@ -4747,6 +4783,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.CreateSkillProfileGroup,
 		opts...,
 	)
+	wFMUpdateSkillProfileGroupHandler := connect_go.NewUnaryHandler(
+		WFMUpdateSkillProfileGroupProcedure,
+		svc.UpdateSkillProfileGroup,
+		opts...,
+	)
 	wFMDeleteHistoricalDataDeltasHandler := connect_go.NewUnaryHandler(
 		WFMDeleteHistoricalDataDeltasProcedure,
 		svc.DeleteHistoricalDataDeltas,
@@ -5310,6 +5351,8 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMDisconnectInactiveSkillProfileMappingHandler.ServeHTTP(w, r)
 		case WFMCreateSkillProfileGroupProcedure:
 			wFMCreateSkillProfileGroupHandler.ServeHTTP(w, r)
+		case WFMUpdateSkillProfileGroupProcedure:
+			wFMUpdateSkillProfileGroupHandler.ServeHTTP(w, r)
 		case WFMDeleteHistoricalDataDeltasProcedure:
 			wFMDeleteHistoricalDataDeltasHandler.ServeHTTP(w, r)
 		case WFMListTopSkillProfilesProcedure:
@@ -5599,6 +5642,10 @@ func (UnimplementedWFMHandler) DisconnectInactiveSkillProfileMapping(context.Con
 
 func (UnimplementedWFMHandler) CreateSkillProfileGroup(context.Context, *connect_go.Request[wfm.CreateSkillProfileGroupReq]) (*connect_go.Response[wfm.CreateSkillProfileGroupRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.CreateSkillProfileGroup is not implemented"))
+}
+
+func (UnimplementedWFMHandler) UpdateSkillProfileGroup(context.Context, *connect_go.Request[wfm.UpdateSkillProfileGroupReq]) (*connect_go.Response[wfm.UpdateSkillProfileGroupRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.UpdateSkillProfileGroup is not implemented"))
 }
 
 func (UnimplementedWFMHandler) DeleteHistoricalDataDeltas(context.Context, *connect_go.Request[wfm.DeleteHistoricalDataDeltasReq]) (*connect_go.Response[wfm.DeleteHistoricalDataDeltasRes], error) {
