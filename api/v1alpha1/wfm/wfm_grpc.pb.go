@@ -359,7 +359,7 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs creating the skill profile group.
 	CreateSkillProfileGroup(ctx context.Context, in *CreateSkillProfileGroupReq, opts ...grpc.CallOption) (*CreateSkillProfileGroupRes, error)
 	// Updates the given @skill_profile_group that has the @skill_profile_group_sid for the org sending the request.
-	// @skill_profile_group_sids will be ignored since associations cannot be created by this method.
+	// @skill_profile_group_sids will be ignored since associations cannot be updated by this method.
 	// Required permissions:
 	//
 	//	NONE
@@ -3077,7 +3077,7 @@ type WFMServer interface {
 	//   - grpc.Internal: error occurs creating the skill profile group.
 	CreateSkillProfileGroup(context.Context, *CreateSkillProfileGroupReq) (*CreateSkillProfileGroupRes, error)
 	// Updates the given @skill_profile_group that has the @skill_profile_group_sid for the org sending the request.
-	// @skill_profile_group_sids will be ignored since associations cannot be created by this method.
+	// @skill_profile_group_sids will be ignored since associations cannot be updated by this method.
 	// Required permissions:
 	//
 	//	NONE
