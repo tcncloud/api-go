@@ -153,6 +153,8 @@ const (
 	WFM_SetSchedulingTarget_FullMethodName                           = "/api.v1alpha1.wfm.WFM/SetSchedulingTarget"
 	WFM_GetSchedulingTarget_FullMethodName                           = "/api.v1alpha1.wfm.WFM/GetSchedulingTarget"
 	WFM_DeleteSchedulingTarget_FullMethodName                        = "/api.v1alpha1.wfm.WFM/DeleteSchedulingTarget"
+	WFM_GetDefaultSchedulingTarget_FullMethodName                    = "/api.v1alpha1.wfm.WFM/GetDefaultSchedulingTarget"
+	WFM_SetDefaultSchedulingTarget_FullMethodName                    = "/api.v1alpha1.wfm.WFM/SetDefaultSchedulingTarget"
 	WFM_GetPerformanceMetrics_FullMethodName                         = "/api.v1alpha1.wfm.WFM/GetPerformanceMetrics"
 	WFM_ListRequiredCallsIntervals_FullMethodName                    = "/api.v1alpha1.wfm.WFM/ListRequiredCallsIntervals"
 )
@@ -1435,7 +1437,7 @@ type WFMClient interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @org_id or @shift_instance_sids in the request are invalid.
+	//   - grpc.Invalid: the @shift_instance_sids in the request are invalid.
 	//   - grpc.Internal: error occurs when listing the shift instances or their shift segments.
 	ListShiftInstancesBySid(ctx context.Context, in *ListShiftInstancesBySidReq, opts ...grpc.CallOption) (*ListShiftInstancesBySidRes, error)
 	// Copies the shifts from @source_schedule_selector to @destination_schedule_selector, constrained by the given parameters for the org sending the request.
@@ -1566,6 +1568,15 @@ type WFMClient interface {
 	//	-grpc.NotFound: the scheduling target for the given @node_selector doesn't exist for the org making the request.
 	//	-grpc.Internal: error occurs when removing the scheduling target.
 	DeleteSchedulingTarget(ctx context.Context, in *DeleteSchedulingTargetReq, opts ...grpc.CallOption) (*DeleteSchedulingTargetRes, error)
+	// Gets the scheduling-target values for the org making the request.
+	// Errors:
+	//   - grpc.Internal: error occours when getting the scheduling-target values.
+	GetDefaultSchedulingTarget(ctx context.Context, in *GetDefaultSchedulingTargetReq, opts ...grpc.CallOption) (*GetDefaultSchedulingTargetRes, error)
+	// Sets the scheduling-target values for the org making the request.
+	// Errors:
+	//   - grpc.Invalid: any of the given values are invalid.
+	//   - grpc.Internal: error occours when setting the scheduling-target values.
+	SetDefaultSchedulingTarget(ctx context.Context, in *SetDefaultSchedulingTargetReq, opts ...grpc.CallOption) (*SetDefaultSchedulingTargetRes, error)
 	// Gets the performance metrics across @datetime_range for shift instances in @schedule_selector associated with @node_selector for the org making the request.
 	// Performance metrics will be generated for each of the given @metric_params.
 	// The @interval_width_in_minutes must be a multiple of 5.
@@ -2812,6 +2823,24 @@ func (c *wFMClient) GetSchedulingTarget(ctx context.Context, in *GetSchedulingTa
 func (c *wFMClient) DeleteSchedulingTarget(ctx context.Context, in *DeleteSchedulingTargetReq, opts ...grpc.CallOption) (*DeleteSchedulingTargetRes, error) {
 	out := new(DeleteSchedulingTargetRes)
 	err := c.cc.Invoke(ctx, WFM_DeleteSchedulingTarget_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) GetDefaultSchedulingTarget(ctx context.Context, in *GetDefaultSchedulingTargetReq, opts ...grpc.CallOption) (*GetDefaultSchedulingTargetRes, error) {
+	out := new(GetDefaultSchedulingTargetRes)
+	err := c.cc.Invoke(ctx, WFM_GetDefaultSchedulingTarget_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) SetDefaultSchedulingTarget(ctx context.Context, in *SetDefaultSchedulingTargetReq, opts ...grpc.CallOption) (*SetDefaultSchedulingTargetRes, error) {
+	out := new(SetDefaultSchedulingTargetRes)
+	err := c.cc.Invoke(ctx, WFM_SetDefaultSchedulingTarget_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4114,7 +4143,7 @@ type WFMServer interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @org_id or @shift_instance_sids in the request are invalid.
+	//   - grpc.Invalid: the @shift_instance_sids in the request are invalid.
 	//   - grpc.Internal: error occurs when listing the shift instances or their shift segments.
 	ListShiftInstancesBySid(context.Context, *ListShiftInstancesBySidReq) (*ListShiftInstancesBySidRes, error)
 	// Copies the shifts from @source_schedule_selector to @destination_schedule_selector, constrained by the given parameters for the org sending the request.
@@ -4245,6 +4274,15 @@ type WFMServer interface {
 	//	-grpc.NotFound: the scheduling target for the given @node_selector doesn't exist for the org making the request.
 	//	-grpc.Internal: error occurs when removing the scheduling target.
 	DeleteSchedulingTarget(context.Context, *DeleteSchedulingTargetReq) (*DeleteSchedulingTargetRes, error)
+	// Gets the scheduling-target values for the org making the request.
+	// Errors:
+	//   - grpc.Internal: error occours when getting the scheduling-target values.
+	GetDefaultSchedulingTarget(context.Context, *GetDefaultSchedulingTargetReq) (*GetDefaultSchedulingTargetRes, error)
+	// Sets the scheduling-target values for the org making the request.
+	// Errors:
+	//   - grpc.Invalid: any of the given values are invalid.
+	//   - grpc.Internal: error occours when setting the scheduling-target values.
+	SetDefaultSchedulingTarget(context.Context, *SetDefaultSchedulingTargetReq) (*SetDefaultSchedulingTargetRes, error)
 	// Gets the performance metrics across @datetime_range for shift instances in @schedule_selector associated with @node_selector for the org making the request.
 	// Performance metrics will be generated for each of the given @metric_params.
 	// The @interval_width_in_minutes must be a multiple of 5.
@@ -4633,6 +4671,12 @@ func (UnimplementedWFMServer) GetSchedulingTarget(context.Context, *GetSchedulin
 }
 func (UnimplementedWFMServer) DeleteSchedulingTarget(context.Context, *DeleteSchedulingTargetReq) (*DeleteSchedulingTargetRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteSchedulingTarget not implemented")
+}
+func (UnimplementedWFMServer) GetDefaultSchedulingTarget(context.Context, *GetDefaultSchedulingTargetReq) (*GetDefaultSchedulingTargetRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDefaultSchedulingTarget not implemented")
+}
+func (UnimplementedWFMServer) SetDefaultSchedulingTarget(context.Context, *SetDefaultSchedulingTargetReq) (*SetDefaultSchedulingTargetRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetDefaultSchedulingTarget not implemented")
 }
 func (UnimplementedWFMServer) GetPerformanceMetrics(context.Context, *GetPerformanceMetricsReq) (*GetPerformanceMetricsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPerformanceMetrics not implemented")
@@ -6831,6 +6875,42 @@ func _WFM_DeleteSchedulingTarget_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_GetDefaultSchedulingTarget_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetDefaultSchedulingTargetReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).GetDefaultSchedulingTarget(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_GetDefaultSchedulingTarget_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).GetDefaultSchedulingTarget(ctx, req.(*GetDefaultSchedulingTargetReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_SetDefaultSchedulingTarget_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetDefaultSchedulingTargetReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).SetDefaultSchedulingTarget(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_SetDefaultSchedulingTarget_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).SetDefaultSchedulingTarget(ctx, req.(*SetDefaultSchedulingTargetReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WFM_GetPerformanceMetrics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetPerformanceMetricsReq)
 	if err := dec(in); err != nil {
@@ -7329,6 +7409,14 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteSchedulingTarget",
 			Handler:    _WFM_DeleteSchedulingTarget_Handler,
+		},
+		{
+			MethodName: "GetDefaultSchedulingTarget",
+			Handler:    _WFM_GetDefaultSchedulingTarget_Handler,
+		},
+		{
+			MethodName: "SetDefaultSchedulingTarget",
+			Handler:    _WFM_SetDefaultSchedulingTarget_Handler,
 		},
 		{
 			MethodName: "GetPerformanceMetrics",
