@@ -29,6 +29,7 @@ const (
 	Insights_DeleteCommonsInsight_FullMethodName = "/api.v1alpha1.insights.Insights/DeleteCommonsInsight"
 	Insights_GetVfsSchema_FullMethodName         = "/api.v1alpha1.insights.Insights/GetVfsSchema"
 	Insights_ListVfses_FullMethodName            = "/api.v1alpha1.insights.Insights/ListVfses"
+	Insights_PublishInsight_FullMethodName       = "/api.v1alpha1.insights.Insights/PublishInsight"
 )
 
 // InsightsClient is the client API for Insights service.
@@ -45,16 +46,18 @@ type InsightsClient interface {
 	DeleteInsight(ctx context.Context, in *DeleteInsightRequest, opts ...grpc.CallOption) (*DeleteInsightResponse, error)
 	// GetInsight gets a insight by id
 	GetInsight(ctx context.Context, in *GetInsightRequest, opts ...grpc.CallOption) (*GetInsightResponse, error)
-	// CreateCommonsInsight creates a common library insight
+	// CreateCommonsInsight is deprecated.
 	CreateCommonsInsight(ctx context.Context, in *CreateInsightRequest, opts ...grpc.CallOption) (*CreateInsightResponse, error)
-	// UpdateCommonsInsight updates a common library insight
+	// UpdateCommonsInsight is deprecated.
 	UpdateCommonsInsight(ctx context.Context, in *UpdateInsightRequest, opts ...grpc.CallOption) (*UpdateInsightResponse, error)
-	// DeleteCommonsInsight deletes a common library insight
+	// DeleteCommonsInsight is deprecated.
 	DeleteCommonsInsight(ctx context.Context, in *DeleteInsightRequest, opts ...grpc.CallOption) (*DeleteInsightResponse, error)
 	// GetVfsSchema gets schema for a vfs
 	GetVfsSchema(ctx context.Context, in *GetVfsSchemaRequest, opts ...grpc.CallOption) (*GetVfsSchemaResponse, error)
 	// ListVfses lists exported vfs aliases
 	ListVfses(ctx context.Context, in *ListVfsesRequest, opts ...grpc.CallOption) (*ListVfsesResponse, error)
+	// PublishInsight publishes an insight
+	PublishInsight(ctx context.Context, in *PublishInsightRequest, opts ...grpc.CallOption) (*PublishInsightResponse, error)
 }
 
 type insightsClient struct {
@@ -155,6 +158,15 @@ func (c *insightsClient) ListVfses(ctx context.Context, in *ListVfsesRequest, op
 	return out, nil
 }
 
+func (c *insightsClient) PublishInsight(ctx context.Context, in *PublishInsightRequest, opts ...grpc.CallOption) (*PublishInsightResponse, error) {
+	out := new(PublishInsightResponse)
+	err := c.cc.Invoke(ctx, Insights_PublishInsight_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // InsightsServer is the server API for Insights service.
 // All implementations must embed UnimplementedInsightsServer
 // for forward compatibility
@@ -169,16 +181,18 @@ type InsightsServer interface {
 	DeleteInsight(context.Context, *DeleteInsightRequest) (*DeleteInsightResponse, error)
 	// GetInsight gets a insight by id
 	GetInsight(context.Context, *GetInsightRequest) (*GetInsightResponse, error)
-	// CreateCommonsInsight creates a common library insight
+	// CreateCommonsInsight is deprecated.
 	CreateCommonsInsight(context.Context, *CreateInsightRequest) (*CreateInsightResponse, error)
-	// UpdateCommonsInsight updates a common library insight
+	// UpdateCommonsInsight is deprecated.
 	UpdateCommonsInsight(context.Context, *UpdateInsightRequest) (*UpdateInsightResponse, error)
-	// DeleteCommonsInsight deletes a common library insight
+	// DeleteCommonsInsight is deprecated.
 	DeleteCommonsInsight(context.Context, *DeleteInsightRequest) (*DeleteInsightResponse, error)
 	// GetVfsSchema gets schema for a vfs
 	GetVfsSchema(context.Context, *GetVfsSchemaRequest) (*GetVfsSchemaResponse, error)
 	// ListVfses lists exported vfs aliases
 	ListVfses(context.Context, *ListVfsesRequest) (*ListVfsesResponse, error)
+	// PublishInsight publishes an insight
+	PublishInsight(context.Context, *PublishInsightRequest) (*PublishInsightResponse, error)
 	mustEmbedUnimplementedInsightsServer()
 }
 
@@ -215,6 +229,9 @@ func (UnimplementedInsightsServer) GetVfsSchema(context.Context, *GetVfsSchemaRe
 }
 func (UnimplementedInsightsServer) ListVfses(context.Context, *ListVfsesRequest) (*ListVfsesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListVfses not implemented")
+}
+func (UnimplementedInsightsServer) PublishInsight(context.Context, *PublishInsightRequest) (*PublishInsightResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PublishInsight not implemented")
 }
 func (UnimplementedInsightsServer) mustEmbedUnimplementedInsightsServer() {}
 
@@ -409,6 +426,24 @@ func _Insights_ListVfses_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Insights_PublishInsight_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PublishInsightRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InsightsServer).PublishInsight(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Insights_PublishInsight_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InsightsServer).PublishInsight(ctx, req.(*PublishInsightRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Insights_ServiceDesc is the grpc.ServiceDesc for Insights service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -455,6 +490,10 @@ var Insights_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListVfses",
 			Handler:    _Insights_ListVfses_Handler,
+		},
+		{
+			MethodName: "PublishInsight",
+			Handler:    _Insights_PublishInsight_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
