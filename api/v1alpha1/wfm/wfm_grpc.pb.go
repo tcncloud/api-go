@@ -52,6 +52,7 @@ const (
 	WFM_DisconnectInactiveSkillProfileMapping_FullMethodName         = "/api.v1alpha1.wfm.WFM/DisconnectInactiveSkillProfileMapping"
 	WFM_CreateSkillProfileGroup_FullMethodName                       = "/api.v1alpha1.wfm.WFM/CreateSkillProfileGroup"
 	WFM_UpdateSkillProfileGroup_FullMethodName                       = "/api.v1alpha1.wfm.WFM/UpdateSkillProfileGroup"
+	WFM_ListSkillProfileGroups_FullMethodName                        = "/api.v1alpha1.wfm.WFM/ListSkillProfileGroups"
 	WFM_DeleteHistoricalDataDeltas_FullMethodName                    = "/api.v1alpha1.wfm.WFM/DeleteHistoricalDataDeltas"
 	WFM_ListTopSkillProfiles_FullMethodName                          = "/api.v1alpha1.wfm.WFM/ListTopSkillProfiles"
 	WFM_GetSkillProfilesCount_FullMethodName                         = "/api.v1alpha1.wfm.WFM/GetSkillProfilesCount"
@@ -369,6 +370,16 @@ type WFMClient interface {
 	//   - grpc.NotFound: the skill profile group to update doesn't exist.
 	//   - grpc.Internal: error occurs updating the skill profile group.
 	UpdateSkillProfileGroup(ctx context.Context, in *UpdateSkillProfileGroupReq, opts ...grpc.CallOption) (*UpdateSkillProfileGroupRes, error)
+	// Gets the skill profile groups that have the @skill_profile_group_sids for the org sending the request.
+	// If @skill_profile_group_sids is empty it will get all the skill profile groups for the org.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @skill_profile_group_sids in the request is invalid.
+	//   - grpc.Internal: error occurs getting the skill profile groups.
+	ListSkillProfileGroups(ctx context.Context, in *ListSkillProfileGroupsReq, opts ...grpc.CallOption) (*ListSkillProfileGroupsRes, error)
 	// Deletes deltas whose dates match the given @start_datetimes for the given @skill_profile_sid.
 	// If no @start_datetimes are given, it will delete all the deltas that the given @skill_profile_sid has.
 	// Required permissions:
@@ -1793,6 +1804,15 @@ func (c *wFMClient) UpdateSkillProfileGroup(ctx context.Context, in *UpdateSkill
 	return out, nil
 }
 
+func (c *wFMClient) ListSkillProfileGroups(ctx context.Context, in *ListSkillProfileGroupsReq, opts ...grpc.CallOption) (*ListSkillProfileGroupsRes, error) {
+	out := new(ListSkillProfileGroupsRes)
+	err := c.cc.Invoke(ctx, WFM_ListSkillProfileGroups_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) DeleteHistoricalDataDeltas(ctx context.Context, in *DeleteHistoricalDataDeltasReq, opts ...grpc.CallOption) (*DeleteHistoricalDataDeltasRes, error) {
 	out := new(DeleteHistoricalDataDeltasRes)
 	err := c.cc.Invoke(ctx, WFM_DeleteHistoricalDataDeltas_FullMethodName, in, out, opts...)
@@ -3087,6 +3107,16 @@ type WFMServer interface {
 	//   - grpc.NotFound: the skill profile group to update doesn't exist.
 	//   - grpc.Internal: error occurs updating the skill profile group.
 	UpdateSkillProfileGroup(context.Context, *UpdateSkillProfileGroupReq) (*UpdateSkillProfileGroupRes, error)
+	// Gets the skill profile groups that have the @skill_profile_group_sids for the org sending the request.
+	// If @skill_profile_group_sids is empty it will get all the skill profile groups for the org.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @skill_profile_group_sids in the request is invalid.
+	//   - grpc.Internal: error occurs getting the skill profile groups.
+	ListSkillProfileGroups(context.Context, *ListSkillProfileGroupsReq) (*ListSkillProfileGroupsRes, error)
 	// Deletes deltas whose dates match the given @start_datetimes for the given @skill_profile_sid.
 	// If no @start_datetimes are given, it will delete all the deltas that the given @skill_profile_sid has.
 	// Required permissions:
@@ -4393,6 +4423,9 @@ func (UnimplementedWFMServer) CreateSkillProfileGroup(context.Context, *CreateSk
 func (UnimplementedWFMServer) UpdateSkillProfileGroup(context.Context, *UpdateSkillProfileGroupReq) (*UpdateSkillProfileGroupRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateSkillProfileGroup not implemented")
 }
+func (UnimplementedWFMServer) ListSkillProfileGroups(context.Context, *ListSkillProfileGroupsReq) (*ListSkillProfileGroupsRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListSkillProfileGroups not implemented")
+}
 func (UnimplementedWFMServer) DeleteHistoricalDataDeltas(context.Context, *DeleteHistoricalDataDeltasReq) (*DeleteHistoricalDataDeltasRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteHistoricalDataDeltas not implemented")
 }
@@ -5059,6 +5092,24 @@ func _WFM_UpdateSkillProfileGroup_Handler(srv interface{}, ctx context.Context, 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WFMServer).UpdateSkillProfileGroup(ctx, req.(*UpdateSkillProfileGroupReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_ListSkillProfileGroups_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListSkillProfileGroupsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).ListSkillProfileGroups(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_ListSkillProfileGroups_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).ListSkillProfileGroups(ctx, req.(*ListSkillProfileGroupsReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -7053,6 +7104,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateSkillProfileGroup",
 			Handler:    _WFM_UpdateSkillProfileGroup_Handler,
+		},
+		{
+			MethodName: "ListSkillProfileGroups",
+			Handler:    _WFM_ListSkillProfileGroups_Handler,
 		},
 		{
 			MethodName: "DeleteHistoricalDataDeltas",
