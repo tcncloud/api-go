@@ -56,6 +56,8 @@ const (
 	InsightsGetVfsSchemaProcedure = "/api.v1alpha1.insights.Insights/GetVfsSchema"
 	// InsightsListVfsesProcedure is the fully-qualified name of the Insights's ListVfses RPC.
 	InsightsListVfsesProcedure = "/api.v1alpha1.insights.Insights/ListVfses"
+	// InsightsPublishInsightProcedure is the fully-qualified name of the Insights's PublishInsight RPC.
+	InsightsPublishInsightProcedure = "/api.v1alpha1.insights.Insights/PublishInsight"
 )
 
 // InsightsClient is a client for the api.v1alpha1.insights.Insights service.
@@ -70,16 +72,18 @@ type InsightsClient interface {
 	DeleteInsight(context.Context, *connect_go.Request[insights.DeleteInsightRequest]) (*connect_go.Response[insights.DeleteInsightResponse], error)
 	// GetInsight gets a insight by id
 	GetInsight(context.Context, *connect_go.Request[insights.GetInsightRequest]) (*connect_go.Response[insights.GetInsightResponse], error)
-	// CreateCommonsInsight creates a common library insight
+	// CreateCommonsInsight is deprecated.
 	CreateCommonsInsight(context.Context, *connect_go.Request[insights.CreateInsightRequest]) (*connect_go.Response[insights.CreateInsightResponse], error)
-	// UpdateCommonsInsight updates a common library insight
+	// UpdateCommonsInsight is deprecated.
 	UpdateCommonsInsight(context.Context, *connect_go.Request[insights.UpdateInsightRequest]) (*connect_go.Response[insights.UpdateInsightResponse], error)
-	// DeleteCommonsInsight deletes a common library insight
+	// DeleteCommonsInsight is deprecated.
 	DeleteCommonsInsight(context.Context, *connect_go.Request[insights.DeleteInsightRequest]) (*connect_go.Response[insights.DeleteInsightResponse], error)
 	// GetVfsSchema gets schema for a vfs
 	GetVfsSchema(context.Context, *connect_go.Request[insights.GetVfsSchemaRequest]) (*connect_go.Response[insights.GetVfsSchemaResponse], error)
 	// ListVfses lists exported vfs aliases
 	ListVfses(context.Context, *connect_go.Request[insights.ListVfsesRequest]) (*connect_go.Response[insights.ListVfsesResponse], error)
+	// PublishInsight publishes an insight
+	PublishInsight(context.Context, *connect_go.Request[insights.PublishInsightRequest]) (*connect_go.Response[insights.PublishInsightResponse], error)
 }
 
 // NewInsightsClient constructs a client for the api.v1alpha1.insights.Insights service. By default,
@@ -142,6 +146,11 @@ func NewInsightsClient(httpClient connect_go.HTTPClient, baseURL string, opts ..
 			baseURL+InsightsListVfsesProcedure,
 			opts...,
 		),
+		publishInsight: connect_go.NewClient[insights.PublishInsightRequest, insights.PublishInsightResponse](
+			httpClient,
+			baseURL+InsightsPublishInsightProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -157,6 +166,7 @@ type insightsClient struct {
 	deleteCommonsInsight *connect_go.Client[insights.DeleteInsightRequest, insights.DeleteInsightResponse]
 	getVfsSchema         *connect_go.Client[insights.GetVfsSchemaRequest, insights.GetVfsSchemaResponse]
 	listVfses            *connect_go.Client[insights.ListVfsesRequest, insights.ListVfsesResponse]
+	publishInsight       *connect_go.Client[insights.PublishInsightRequest, insights.PublishInsightResponse]
 }
 
 // CreateInsight calls api.v1alpha1.insights.Insights.CreateInsight.
@@ -209,6 +219,11 @@ func (c *insightsClient) ListVfses(ctx context.Context, req *connect_go.Request[
 	return c.listVfses.CallUnary(ctx, req)
 }
 
+// PublishInsight calls api.v1alpha1.insights.Insights.PublishInsight.
+func (c *insightsClient) PublishInsight(ctx context.Context, req *connect_go.Request[insights.PublishInsightRequest]) (*connect_go.Response[insights.PublishInsightResponse], error) {
+	return c.publishInsight.CallUnary(ctx, req)
+}
+
 // InsightsHandler is an implementation of the api.v1alpha1.insights.Insights service.
 type InsightsHandler interface {
 	// CreateInsight creates a new insight
@@ -221,16 +236,18 @@ type InsightsHandler interface {
 	DeleteInsight(context.Context, *connect_go.Request[insights.DeleteInsightRequest]) (*connect_go.Response[insights.DeleteInsightResponse], error)
 	// GetInsight gets a insight by id
 	GetInsight(context.Context, *connect_go.Request[insights.GetInsightRequest]) (*connect_go.Response[insights.GetInsightResponse], error)
-	// CreateCommonsInsight creates a common library insight
+	// CreateCommonsInsight is deprecated.
 	CreateCommonsInsight(context.Context, *connect_go.Request[insights.CreateInsightRequest]) (*connect_go.Response[insights.CreateInsightResponse], error)
-	// UpdateCommonsInsight updates a common library insight
+	// UpdateCommonsInsight is deprecated.
 	UpdateCommonsInsight(context.Context, *connect_go.Request[insights.UpdateInsightRequest]) (*connect_go.Response[insights.UpdateInsightResponse], error)
-	// DeleteCommonsInsight deletes a common library insight
+	// DeleteCommonsInsight is deprecated.
 	DeleteCommonsInsight(context.Context, *connect_go.Request[insights.DeleteInsightRequest]) (*connect_go.Response[insights.DeleteInsightResponse], error)
 	// GetVfsSchema gets schema for a vfs
 	GetVfsSchema(context.Context, *connect_go.Request[insights.GetVfsSchemaRequest]) (*connect_go.Response[insights.GetVfsSchemaResponse], error)
 	// ListVfses lists exported vfs aliases
 	ListVfses(context.Context, *connect_go.Request[insights.ListVfsesRequest]) (*connect_go.Response[insights.ListVfsesResponse], error)
+	// PublishInsight publishes an insight
+	PublishInsight(context.Context, *connect_go.Request[insights.PublishInsightRequest]) (*connect_go.Response[insights.PublishInsightResponse], error)
 }
 
 // NewInsightsHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -289,6 +306,11 @@ func NewInsightsHandler(svc InsightsHandler, opts ...connect_go.HandlerOption) (
 		svc.ListVfses,
 		opts...,
 	)
+	insightsPublishInsightHandler := connect_go.NewUnaryHandler(
+		InsightsPublishInsightProcedure,
+		svc.PublishInsight,
+		opts...,
+	)
 	return "/api.v1alpha1.insights.Insights/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case InsightsCreateInsightProcedure:
@@ -311,6 +333,8 @@ func NewInsightsHandler(svc InsightsHandler, opts ...connect_go.HandlerOption) (
 			insightsGetVfsSchemaHandler.ServeHTTP(w, r)
 		case InsightsListVfsesProcedure:
 			insightsListVfsesHandler.ServeHTTP(w, r)
+		case InsightsPublishInsightProcedure:
+			insightsPublishInsightHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -358,4 +382,8 @@ func (UnimplementedInsightsHandler) GetVfsSchema(context.Context, *connect_go.Re
 
 func (UnimplementedInsightsHandler) ListVfses(context.Context, *connect_go.Request[insights.ListVfsesRequest]) (*connect_go.Response[insights.ListVfsesResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.insights.Insights.ListVfses is not implemented"))
+}
+
+func (UnimplementedInsightsHandler) PublishInsight(context.Context, *connect_go.Request[insights.PublishInsightRequest]) (*connect_go.Response[insights.PublishInsightResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.insights.Insights.PublishInsight is not implemented"))
 }

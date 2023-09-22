@@ -31,6 +31,7 @@ const (
 	Dashboards_UpdateDashboardTitleAndDescription_FullMethodName = "/api.v0alpha.Dashboards/UpdateDashboardTitleAndDescription"
 	Dashboards_UpdateDashboardView_FullMethodName                = "/api.v0alpha.Dashboards/UpdateDashboardView"
 	Dashboards_UpdateDashboardLayout_FullMethodName              = "/api.v0alpha.Dashboards/UpdateDashboardLayout"
+	Dashboards_PublishDashboard_FullMethodName                   = "/api.v0alpha.Dashboards/PublishDashboard"
 )
 
 // DashboardsClient is the client API for Dashboards service.
@@ -57,6 +58,8 @@ type DashboardsClient interface {
 	UpdateDashboardView(ctx context.Context, in *UpdateDashboardViewRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// UpdateDashboardLayout replaces a dashboards layout with a given layout
 	UpdateDashboardLayout(ctx context.Context, in *UpdateDashboardLayoutRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// PublishDashboard publishes a dashboard
+	PublishDashboard(ctx context.Context, in *PublishDashboardRequest, opts ...grpc.CallOption) (*PublishDashboardResponse, error)
 }
 
 type dashboardsClient struct {
@@ -166,6 +169,15 @@ func (c *dashboardsClient) UpdateDashboardLayout(ctx context.Context, in *Update
 	return out, nil
 }
 
+func (c *dashboardsClient) PublishDashboard(ctx context.Context, in *PublishDashboardRequest, opts ...grpc.CallOption) (*PublishDashboardResponse, error) {
+	out := new(PublishDashboardResponse)
+	err := c.cc.Invoke(ctx, Dashboards_PublishDashboard_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DashboardsServer is the server API for Dashboards service.
 // All implementations must embed UnimplementedDashboardsServer
 // for forward compatibility
@@ -190,6 +202,8 @@ type DashboardsServer interface {
 	UpdateDashboardView(context.Context, *UpdateDashboardViewRequest) (*emptypb.Empty, error)
 	// UpdateDashboardLayout replaces a dashboards layout with a given layout
 	UpdateDashboardLayout(context.Context, *UpdateDashboardLayoutRequest) (*emptypb.Empty, error)
+	// PublishDashboard publishes a dashboard
+	PublishDashboard(context.Context, *PublishDashboardRequest) (*PublishDashboardResponse, error)
 	mustEmbedUnimplementedDashboardsServer()
 }
 
@@ -229,6 +243,9 @@ func (UnimplementedDashboardsServer) UpdateDashboardView(context.Context, *Updat
 }
 func (UnimplementedDashboardsServer) UpdateDashboardLayout(context.Context, *UpdateDashboardLayoutRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateDashboardLayout not implemented")
+}
+func (UnimplementedDashboardsServer) PublishDashboard(context.Context, *PublishDashboardRequest) (*PublishDashboardResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PublishDashboard not implemented")
 }
 func (UnimplementedDashboardsServer) mustEmbedUnimplementedDashboardsServer() {}
 
@@ -441,6 +458,24 @@ func _Dashboards_UpdateDashboardLayout_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Dashboards_PublishDashboard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PublishDashboardRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DashboardsServer).PublishDashboard(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Dashboards_PublishDashboard_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DashboardsServer).PublishDashboard(ctx, req.(*PublishDashboardRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Dashboards_ServiceDesc is the grpc.ServiceDesc for Dashboards service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -491,6 +526,10 @@ var Dashboards_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateDashboardLayout",
 			Handler:    _Dashboards_UpdateDashboardLayout_Handler,
+		},
+		{
+			MethodName: "PublishDashboard",
+			Handler:    _Dashboards_PublishDashboard_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
