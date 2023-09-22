@@ -19,11 +19,12 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	AgentTrainingService_CreateLearningOpportunity_FullMethodName = "/api.v1alpha1.agenttraining.AgentTrainingService/CreateLearningOpportunity"
-	AgentTrainingService_ListLearningOpportunities_FullMethodName = "/api.v1alpha1.agenttraining.AgentTrainingService/ListLearningOpportunities"
-	AgentTrainingService_UpdateLearningOpportunity_FullMethodName = "/api.v1alpha1.agenttraining.AgentTrainingService/UpdateLearningOpportunity"
-	AgentTrainingService_DeleteLearningOpportunity_FullMethodName = "/api.v1alpha1.agenttraining.AgentTrainingService/DeleteLearningOpportunity"
-	AgentTrainingService_GetLearningOpportunity_FullMethodName    = "/api.v1alpha1.agenttraining.AgentTrainingService/GetLearningOpportunity"
+	AgentTrainingService_CreateLearningOpportunity_FullMethodName      = "/api.v1alpha1.agenttraining.AgentTrainingService/CreateLearningOpportunity"
+	AgentTrainingService_ListLearningOpportunities_FullMethodName      = "/api.v1alpha1.agenttraining.AgentTrainingService/ListLearningOpportunities"
+	AgentTrainingService_ListAgentLearningOpportunities_FullMethodName = "/api.v1alpha1.agenttraining.AgentTrainingService/ListAgentLearningOpportunities"
+	AgentTrainingService_UpdateLearningOpportunity_FullMethodName      = "/api.v1alpha1.agenttraining.AgentTrainingService/UpdateLearningOpportunity"
+	AgentTrainingService_DeleteLearningOpportunity_FullMethodName      = "/api.v1alpha1.agenttraining.AgentTrainingService/DeleteLearningOpportunity"
+	AgentTrainingService_GetLearningOpportunity_FullMethodName         = "/api.v1alpha1.agenttraining.AgentTrainingService/GetLearningOpportunity"
 )
 
 // AgentTrainingServiceClient is the client API for AgentTrainingService service.
@@ -34,6 +35,8 @@ type AgentTrainingServiceClient interface {
 	CreateLearningOpportunity(ctx context.Context, in *CreateLearningOpportunityRequest, opts ...grpc.CallOption) (*CreateLearningOpportunityResponse, error)
 	// ListLearningOpportunities lists learning opportunities.
 	ListLearningOpportunities(ctx context.Context, in *ListLearningOpportunitiesRequest, opts ...grpc.CallOption) (*ListLearningOpportunitiesResponse, error)
+	// ListAgentLearningOpportunities lists learning opportunities by agent.
+	ListAgentLearningOpportunities(ctx context.Context, in *ListAgentLearningOpportunitiesRequest, opts ...grpc.CallOption) (*ListAgentLearningOpportunitiesResponse, error)
 	// UpdateLearningOpportunity updates a learning opportunity.
 	UpdateLearningOpportunity(ctx context.Context, in *UpdateLearningOpportunityRequest, opts ...grpc.CallOption) (*UpdateLearningOpportunityResponse, error)
 	// DeleteLearningOpportunity deletes a learning opportunity.
@@ -62,6 +65,15 @@ func (c *agentTrainingServiceClient) CreateLearningOpportunity(ctx context.Conte
 func (c *agentTrainingServiceClient) ListLearningOpportunities(ctx context.Context, in *ListLearningOpportunitiesRequest, opts ...grpc.CallOption) (*ListLearningOpportunitiesResponse, error) {
 	out := new(ListLearningOpportunitiesResponse)
 	err := c.cc.Invoke(ctx, AgentTrainingService_ListLearningOpportunities_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *agentTrainingServiceClient) ListAgentLearningOpportunities(ctx context.Context, in *ListAgentLearningOpportunitiesRequest, opts ...grpc.CallOption) (*ListAgentLearningOpportunitiesResponse, error) {
+	out := new(ListAgentLearningOpportunitiesResponse)
+	err := c.cc.Invoke(ctx, AgentTrainingService_ListAgentLearningOpportunities_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,6 +115,8 @@ type AgentTrainingServiceServer interface {
 	CreateLearningOpportunity(context.Context, *CreateLearningOpportunityRequest) (*CreateLearningOpportunityResponse, error)
 	// ListLearningOpportunities lists learning opportunities.
 	ListLearningOpportunities(context.Context, *ListLearningOpportunitiesRequest) (*ListLearningOpportunitiesResponse, error)
+	// ListAgentLearningOpportunities lists learning opportunities by agent.
+	ListAgentLearningOpportunities(context.Context, *ListAgentLearningOpportunitiesRequest) (*ListAgentLearningOpportunitiesResponse, error)
 	// UpdateLearningOpportunity updates a learning opportunity.
 	UpdateLearningOpportunity(context.Context, *UpdateLearningOpportunityRequest) (*UpdateLearningOpportunityResponse, error)
 	// DeleteLearningOpportunity deletes a learning opportunity.
@@ -121,6 +135,9 @@ func (UnimplementedAgentTrainingServiceServer) CreateLearningOpportunity(context
 }
 func (UnimplementedAgentTrainingServiceServer) ListLearningOpportunities(context.Context, *ListLearningOpportunitiesRequest) (*ListLearningOpportunitiesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListLearningOpportunities not implemented")
+}
+func (UnimplementedAgentTrainingServiceServer) ListAgentLearningOpportunities(context.Context, *ListAgentLearningOpportunitiesRequest) (*ListAgentLearningOpportunitiesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListAgentLearningOpportunities not implemented")
 }
 func (UnimplementedAgentTrainingServiceServer) UpdateLearningOpportunity(context.Context, *UpdateLearningOpportunityRequest) (*UpdateLearningOpportunityResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateLearningOpportunity not implemented")
@@ -176,6 +193,24 @@ func _AgentTrainingService_ListLearningOpportunities_Handler(srv interface{}, ct
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AgentTrainingServiceServer).ListLearningOpportunities(ctx, req.(*ListLearningOpportunitiesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AgentTrainingService_ListAgentLearningOpportunities_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListAgentLearningOpportunitiesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AgentTrainingServiceServer).ListAgentLearningOpportunities(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AgentTrainingService_ListAgentLearningOpportunities_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AgentTrainingServiceServer).ListAgentLearningOpportunities(ctx, req.(*ListAgentLearningOpportunitiesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -248,6 +283,10 @@ var AgentTrainingService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListLearningOpportunities",
 			Handler:    _AgentTrainingService_ListLearningOpportunities_Handler,
+		},
+		{
+			MethodName: "ListAgentLearningOpportunities",
+			Handler:    _AgentTrainingService_ListAgentLearningOpportunities_Handler,
 		},
 		{
 			MethodName: "UpdateLearningOpportunity",
