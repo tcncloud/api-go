@@ -369,6 +369,12 @@ const (
 	// WFMDeleteSchedulingTargetProcedure is the fully-qualified name of the WFM's
 	// DeleteSchedulingTarget RPC.
 	WFMDeleteSchedulingTargetProcedure = "/api.v1alpha1.wfm.WFM/DeleteSchedulingTarget"
+	// WFMGetDefaultSchedulingTargetProcedure is the fully-qualified name of the WFM's
+	// GetDefaultSchedulingTarget RPC.
+	WFMGetDefaultSchedulingTargetProcedure = "/api.v1alpha1.wfm.WFM/GetDefaultSchedulingTarget"
+	// WFMSetDefaultSchedulingTargetProcedure is the fully-qualified name of the WFM's
+	// SetDefaultSchedulingTarget RPC.
+	WFMSetDefaultSchedulingTargetProcedure = "/api.v1alpha1.wfm.WFM/SetDefaultSchedulingTarget"
 	// WFMGetPerformanceMetricsProcedure is the fully-qualified name of the WFM's GetPerformanceMetrics
 	// RPC.
 	WFMGetPerformanceMetricsProcedure = "/api.v1alpha1.wfm.WFM/GetPerformanceMetrics"
@@ -1655,7 +1661,7 @@ type WFMClient interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @org_id or @shift_instance_sids in the request are invalid.
+	//   - grpc.Invalid: the @shift_instance_sids in the request are invalid.
 	//   - grpc.Internal: error occurs when listing the shift instances or their shift segments.
 	ListShiftInstancesBySid(context.Context, *connect_go.Request[wfm.ListShiftInstancesBySidReq]) (*connect_go.Response[wfm.ListShiftInstancesBySidRes], error)
 	// Copies the shifts from @source_schedule_selector to @destination_schedule_selector, constrained by the given parameters for the org sending the request.
@@ -1786,6 +1792,15 @@ type WFMClient interface {
 	//	-grpc.NotFound: the scheduling target for the given @node_selector doesn't exist for the org making the request.
 	//	-grpc.Internal: error occurs when removing the scheduling target.
 	DeleteSchedulingTarget(context.Context, *connect_go.Request[wfm.DeleteSchedulingTargetReq]) (*connect_go.Response[wfm.DeleteSchedulingTargetRes], error)
+	// Gets the scheduling-target values for the org making the request.
+	// Errors:
+	//   - grpc.Internal: error occours when getting the scheduling-target values.
+	GetDefaultSchedulingTarget(context.Context, *connect_go.Request[wfm.GetDefaultSchedulingTargetReq]) (*connect_go.Response[wfm.GetDefaultSchedulingTargetRes], error)
+	// Sets the scheduling-target values for the org making the request.
+	// Errors:
+	//   - grpc.Invalid: any of the given values are invalid.
+	//   - grpc.Internal: error occours when setting the scheduling-target values.
+	SetDefaultSchedulingTarget(context.Context, *connect_go.Request[wfm.SetDefaultSchedulingTargetReq]) (*connect_go.Response[wfm.SetDefaultSchedulingTargetRes], error)
 	// Gets the performance metrics across @datetime_range for shift instances in @schedule_selector associated with @node_selector for the org making the request.
 	// Performance metrics will be generated for each of the given @metric_params.
 	// The @interval_width_in_minutes must be a multiple of 5.
@@ -2420,6 +2435,16 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMDeleteSchedulingTargetProcedure,
 			opts...,
 		),
+		getDefaultSchedulingTarget: connect_go.NewClient[wfm.GetDefaultSchedulingTargetReq, wfm.GetDefaultSchedulingTargetRes](
+			httpClient,
+			baseURL+WFMGetDefaultSchedulingTargetProcedure,
+			opts...,
+		),
+		setDefaultSchedulingTarget: connect_go.NewClient[wfm.SetDefaultSchedulingTargetReq, wfm.SetDefaultSchedulingTargetRes](
+			httpClient,
+			baseURL+WFMSetDefaultSchedulingTargetProcedure,
+			opts...,
+		),
 		getPerformanceMetrics: connect_go.NewClient[wfm.GetPerformanceMetricsReq, wfm.GetPerformanceMetricsRes](
 			httpClient,
 			baseURL+WFMGetPerformanceMetricsProcedure,
@@ -2555,6 +2580,8 @@ type wFMClient struct {
 	setSchedulingTarget                           *connect_go.Client[wfm.SetSchedulingTargetReq, wfm.SetSchedulingTargetRes]
 	getSchedulingTarget                           *connect_go.Client[wfm.GetSchedulingTargetReq, wfm.GetSchedulingTargetRes]
 	deleteSchedulingTarget                        *connect_go.Client[wfm.DeleteSchedulingTargetReq, wfm.DeleteSchedulingTargetRes]
+	getDefaultSchedulingTarget                    *connect_go.Client[wfm.GetDefaultSchedulingTargetReq, wfm.GetDefaultSchedulingTargetRes]
+	setDefaultSchedulingTarget                    *connect_go.Client[wfm.SetDefaultSchedulingTargetReq, wfm.SetDefaultSchedulingTargetRes]
 	getPerformanceMetrics                         *connect_go.Client[wfm.GetPerformanceMetricsReq, wfm.GetPerformanceMetricsRes]
 	listRequiredCallsIntervals                    *connect_go.Client[wfm.ListRequiredCallsIntervalsReq, wfm.ListRequiredCallsIntervalsRes]
 }
@@ -3172,6 +3199,16 @@ func (c *wFMClient) GetSchedulingTarget(ctx context.Context, req *connect_go.Req
 // DeleteSchedulingTarget calls api.v1alpha1.wfm.WFM.DeleteSchedulingTarget.
 func (c *wFMClient) DeleteSchedulingTarget(ctx context.Context, req *connect_go.Request[wfm.DeleteSchedulingTargetReq]) (*connect_go.Response[wfm.DeleteSchedulingTargetRes], error) {
 	return c.deleteSchedulingTarget.CallUnary(ctx, req)
+}
+
+// GetDefaultSchedulingTarget calls api.v1alpha1.wfm.WFM.GetDefaultSchedulingTarget.
+func (c *wFMClient) GetDefaultSchedulingTarget(ctx context.Context, req *connect_go.Request[wfm.GetDefaultSchedulingTargetReq]) (*connect_go.Response[wfm.GetDefaultSchedulingTargetRes], error) {
+	return c.getDefaultSchedulingTarget.CallUnary(ctx, req)
+}
+
+// SetDefaultSchedulingTarget calls api.v1alpha1.wfm.WFM.SetDefaultSchedulingTarget.
+func (c *wFMClient) SetDefaultSchedulingTarget(ctx context.Context, req *connect_go.Request[wfm.SetDefaultSchedulingTargetReq]) (*connect_go.Response[wfm.SetDefaultSchedulingTargetRes], error) {
+	return c.setDefaultSchedulingTarget.CallUnary(ctx, req)
 }
 
 // GetPerformanceMetrics calls api.v1alpha1.wfm.WFM.GetPerformanceMetrics.
@@ -4462,7 +4499,7 @@ type WFMHandler interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @org_id or @shift_instance_sids in the request are invalid.
+	//   - grpc.Invalid: the @shift_instance_sids in the request are invalid.
 	//   - grpc.Internal: error occurs when listing the shift instances or their shift segments.
 	ListShiftInstancesBySid(context.Context, *connect_go.Request[wfm.ListShiftInstancesBySidReq]) (*connect_go.Response[wfm.ListShiftInstancesBySidRes], error)
 	// Copies the shifts from @source_schedule_selector to @destination_schedule_selector, constrained by the given parameters for the org sending the request.
@@ -4593,6 +4630,15 @@ type WFMHandler interface {
 	//	-grpc.NotFound: the scheduling target for the given @node_selector doesn't exist for the org making the request.
 	//	-grpc.Internal: error occurs when removing the scheduling target.
 	DeleteSchedulingTarget(context.Context, *connect_go.Request[wfm.DeleteSchedulingTargetReq]) (*connect_go.Response[wfm.DeleteSchedulingTargetRes], error)
+	// Gets the scheduling-target values for the org making the request.
+	// Errors:
+	//   - grpc.Internal: error occours when getting the scheduling-target values.
+	GetDefaultSchedulingTarget(context.Context, *connect_go.Request[wfm.GetDefaultSchedulingTargetReq]) (*connect_go.Response[wfm.GetDefaultSchedulingTargetRes], error)
+	// Sets the scheduling-target values for the org making the request.
+	// Errors:
+	//   - grpc.Invalid: any of the given values are invalid.
+	//   - grpc.Internal: error occours when setting the scheduling-target values.
+	SetDefaultSchedulingTarget(context.Context, *connect_go.Request[wfm.SetDefaultSchedulingTargetReq]) (*connect_go.Response[wfm.SetDefaultSchedulingTargetRes], error)
 	// Gets the performance metrics across @datetime_range for shift instances in @schedule_selector associated with @node_selector for the org making the request.
 	// Performance metrics will be generated for each of the given @metric_params.
 	// The @interval_width_in_minutes must be a multiple of 5.
@@ -5223,6 +5269,16 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.DeleteSchedulingTarget,
 		opts...,
 	)
+	wFMGetDefaultSchedulingTargetHandler := connect_go.NewUnaryHandler(
+		WFMGetDefaultSchedulingTargetProcedure,
+		svc.GetDefaultSchedulingTarget,
+		opts...,
+	)
+	wFMSetDefaultSchedulingTargetHandler := connect_go.NewUnaryHandler(
+		WFMSetDefaultSchedulingTargetProcedure,
+		svc.SetDefaultSchedulingTarget,
+		opts...,
+	)
 	wFMGetPerformanceMetricsHandler := connect_go.NewUnaryHandler(
 		WFMGetPerformanceMetricsProcedure,
 		svc.GetPerformanceMetrics,
@@ -5475,6 +5531,10 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMGetSchedulingTargetHandler.ServeHTTP(w, r)
 		case WFMDeleteSchedulingTargetProcedure:
 			wFMDeleteSchedulingTargetHandler.ServeHTTP(w, r)
+		case WFMGetDefaultSchedulingTargetProcedure:
+			wFMGetDefaultSchedulingTargetHandler.ServeHTTP(w, r)
+		case WFMSetDefaultSchedulingTargetProcedure:
+			wFMSetDefaultSchedulingTargetHandler.ServeHTTP(w, r)
 		case WFMGetPerformanceMetricsProcedure:
 			wFMGetPerformanceMetricsHandler.ServeHTTP(w, r)
 		case WFMListRequiredCallsIntervalsProcedure:
@@ -5966,6 +6026,14 @@ func (UnimplementedWFMHandler) GetSchedulingTarget(context.Context, *connect_go.
 
 func (UnimplementedWFMHandler) DeleteSchedulingTarget(context.Context, *connect_go.Request[wfm.DeleteSchedulingTargetReq]) (*connect_go.Response[wfm.DeleteSchedulingTargetRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.DeleteSchedulingTarget is not implemented"))
+}
+
+func (UnimplementedWFMHandler) GetDefaultSchedulingTarget(context.Context, *connect_go.Request[wfm.GetDefaultSchedulingTargetReq]) (*connect_go.Response[wfm.GetDefaultSchedulingTargetRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.GetDefaultSchedulingTarget is not implemented"))
+}
+
+func (UnimplementedWFMHandler) SetDefaultSchedulingTarget(context.Context, *connect_go.Request[wfm.SetDefaultSchedulingTargetReq]) (*connect_go.Response[wfm.SetDefaultSchedulingTargetRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.SetDefaultSchedulingTarget is not implemented"))
 }
 
 func (UnimplementedWFMHandler) GetPerformanceMetrics(context.Context, *connect_go.Request[wfm.GetPerformanceMetricsReq]) (*connect_go.Response[wfm.GetPerformanceMetricsRes], error) {
