@@ -28,6 +28,7 @@ const (
 	NewsroomAPI_GetPublishedArticleById_FullMethodName = "/api.v1alpha1.newsroom.NewsroomAPI/GetPublishedArticleById"
 	NewsroomAPI_UserActivity_FullMethodName            = "/api.v1alpha1.newsroom.NewsroomAPI/UserActivity"
 	NewsroomAPI_GetNewsForUser_FullMethodName          = "/api.v1alpha1.newsroom.NewsroomAPI/GetNewsForUser"
+	NewsroomAPI_StoreNewsroomImage_FullMethodName      = "/api.v1alpha1.newsroom.NewsroomAPI/StoreNewsroomImage"
 )
 
 // NewsroomAPIClient is the client API for NewsroomAPI service.
@@ -52,6 +53,8 @@ type NewsroomAPIClient interface {
 	UserActivity(ctx context.Context, in *UserActivityRequest, opts ...grpc.CallOption) (*UserActivityResponse, error)
 	// fetch the unseen articles for the user
 	GetNewsForUser(ctx context.Context, in *GetNewsForUserRequest, opts ...grpc.CallOption) (*GetNewsForUserResponse, error)
+	// upload newsroom images
+	StoreNewsroomImage(ctx context.Context, in *StoreNewsroomImageRequest, opts ...grpc.CallOption) (*StoreNewsroomImageResponse, error)
 }
 
 type newsroomAPIClient struct {
@@ -143,6 +146,15 @@ func (c *newsroomAPIClient) GetNewsForUser(ctx context.Context, in *GetNewsForUs
 	return out, nil
 }
 
+func (c *newsroomAPIClient) StoreNewsroomImage(ctx context.Context, in *StoreNewsroomImageRequest, opts ...grpc.CallOption) (*StoreNewsroomImageResponse, error) {
+	out := new(StoreNewsroomImageResponse)
+	err := c.cc.Invoke(ctx, NewsroomAPI_StoreNewsroomImage_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // NewsroomAPIServer is the server API for NewsroomAPI service.
 // All implementations must embed UnimplementedNewsroomAPIServer
 // for forward compatibility
@@ -165,6 +177,8 @@ type NewsroomAPIServer interface {
 	UserActivity(context.Context, *UserActivityRequest) (*UserActivityResponse, error)
 	// fetch the unseen articles for the user
 	GetNewsForUser(context.Context, *GetNewsForUserRequest) (*GetNewsForUserResponse, error)
+	// upload newsroom images
+	StoreNewsroomImage(context.Context, *StoreNewsroomImageRequest) (*StoreNewsroomImageResponse, error)
 	mustEmbedUnimplementedNewsroomAPIServer()
 }
 
@@ -198,6 +212,9 @@ func (UnimplementedNewsroomAPIServer) UserActivity(context.Context, *UserActivit
 }
 func (UnimplementedNewsroomAPIServer) GetNewsForUser(context.Context, *GetNewsForUserRequest) (*GetNewsForUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetNewsForUser not implemented")
+}
+func (UnimplementedNewsroomAPIServer) StoreNewsroomImage(context.Context, *StoreNewsroomImageRequest) (*StoreNewsroomImageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StoreNewsroomImage not implemented")
 }
 func (UnimplementedNewsroomAPIServer) mustEmbedUnimplementedNewsroomAPIServer() {}
 
@@ -374,6 +391,24 @@ func _NewsroomAPI_GetNewsForUser_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _NewsroomAPI_StoreNewsroomImage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StoreNewsroomImageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NewsroomAPIServer).StoreNewsroomImage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NewsroomAPI_StoreNewsroomImage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NewsroomAPIServer).StoreNewsroomImage(ctx, req.(*StoreNewsroomImageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // NewsroomAPI_ServiceDesc is the grpc.ServiceDesc for NewsroomAPI service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -416,6 +451,10 @@ var NewsroomAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetNewsForUser",
 			Handler:    _NewsroomAPI_GetNewsForUser_Handler,
+		},
+		{
+			MethodName: "StoreNewsroomImage",
+			Handler:    _NewsroomAPI_StoreNewsroomImage_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
