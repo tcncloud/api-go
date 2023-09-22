@@ -26,7 +26,7 @@ type TicketEvent struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Editticket  *commons.EditTicket `protobuf:"bytes,1,opt,name=editticket,proto3" json:"editticket,omitempty"` // update ticket
+	Editticket  *commons.EditTicket `protobuf:"bytes,1,opt,name=editticket,proto3" json:"editticket,omitempty"`
 	CreatedById string              `protobuf:"bytes,2,opt,name=created_by_id,json=createdById,proto3" json:"created_by_id,omitempty"`
 }
 
