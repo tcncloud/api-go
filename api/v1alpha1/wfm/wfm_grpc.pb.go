@@ -50,6 +50,10 @@ const (
 	WFM_CreateInactiveSkillProfileMapping_FullMethodName             = "/api.v1alpha1.wfm.WFM/CreateInactiveSkillProfileMapping"
 	WFM_GetAvailableRegressionForecasterModelTypes_FullMethodName    = "/api.v1alpha1.wfm.WFM/GetAvailableRegressionForecasterModelTypes"
 	WFM_DisconnectInactiveSkillProfileMapping_FullMethodName         = "/api.v1alpha1.wfm.WFM/DisconnectInactiveSkillProfileMapping"
+	WFM_CreateSkillProfileGroup_FullMethodName                       = "/api.v1alpha1.wfm.WFM/CreateSkillProfileGroup"
+	WFM_UpdateSkillProfileGroup_FullMethodName                       = "/api.v1alpha1.wfm.WFM/UpdateSkillProfileGroup"
+	WFM_ListSkillProfileGroups_FullMethodName                        = "/api.v1alpha1.wfm.WFM/ListSkillProfileGroups"
+	WFM_UpdateSkillProfileGroupAssociations_FullMethodName           = "/api.v1alpha1.wfm.WFM/UpdateSkillProfileGroupAssociations"
 	WFM_DeleteHistoricalDataDeltas_FullMethodName                    = "/api.v1alpha1.wfm.WFM/DeleteHistoricalDataDeltas"
 	WFM_ListTopSkillProfiles_FullMethodName                          = "/api.v1alpha1.wfm.WFM/ListTopSkillProfiles"
 	WFM_GetSkillProfilesCount_FullMethodName                         = "/api.v1alpha1.wfm.WFM/GetSkillProfilesCount"
@@ -153,20 +157,31 @@ const (
 	WFM_SetSchedulingTarget_FullMethodName                           = "/api.v1alpha1.wfm.WFM/SetSchedulingTarget"
 	WFM_GetSchedulingTarget_FullMethodName                           = "/api.v1alpha1.wfm.WFM/GetSchedulingTarget"
 	WFM_DeleteSchedulingTarget_FullMethodName                        = "/api.v1alpha1.wfm.WFM/DeleteSchedulingTarget"
+	WFM_GetDefaultSchedulingTarget_FullMethodName                    = "/api.v1alpha1.wfm.WFM/GetDefaultSchedulingTarget"
+	WFM_SetDefaultSchedulingTarget_FullMethodName                    = "/api.v1alpha1.wfm.WFM/SetDefaultSchedulingTarget"
 	WFM_GetPerformanceMetrics_FullMethodName                         = "/api.v1alpha1.wfm.WFM/GetPerformanceMetrics"
 	WFM_ListRequiredCallsIntervals_FullMethodName                    = "/api.v1alpha1.wfm.WFM/ListRequiredCallsIntervals"
 	WFM_CreateTourPattern_FullMethodName                             = "/api.v1alpha1.wfm.WFM/CreateTourPattern"
 	WFM_GetTourPattern_FullMethodName                                = "/api.v1alpha1.wfm.WFM/GetTourPattern"
+	WFM_DeleteTourPattern_FullMethodName                             = "/api.v1alpha1.wfm.WFM/DeleteTourPattern"
 	WFM_CreateTourWeekPattern_FullMethodName                         = "/api.v1alpha1.wfm.WFM/CreateTourWeekPattern"
 	WFM_ListTourWeekPatterns_FullMethodName                          = "/api.v1alpha1.wfm.WFM/ListTourWeekPatterns"
+	WFM_DeleteTourWeekPatterns_FullMethodName                        = "/api.v1alpha1.wfm.WFM/DeleteTourWeekPatterns"
 	WFM_CreateTourShiftInstanceConfig_FullMethodName                 = "/api.v1alpha1.wfm.WFM/CreateTourShiftInstanceConfig"
+	WFM_UpdateTourShiftInstanceConfig_FullMethodName                 = "/api.v1alpha1.wfm.WFM/UpdateTourShiftInstanceConfig"
 	WFM_ListTourShiftInstanceConfigs_FullMethodName                  = "/api.v1alpha1.wfm.WFM/ListTourShiftInstanceConfigs"
+	WFM_DeleteTourShiftInstanceConfigs_FullMethodName                = "/api.v1alpha1.wfm.WFM/DeleteTourShiftInstanceConfigs"
 	WFM_CreateTourShiftSegmentConfig_FullMethodName                  = "/api.v1alpha1.wfm.WFM/CreateTourShiftSegmentConfig"
+	WFM_UpdateTourShiftSegmentConfig_FullMethodName                  = "/api.v1alpha1.wfm.WFM/UpdateTourShiftSegmentConfig"
 	WFM_ListTourShiftSegmentConfigs_FullMethodName                   = "/api.v1alpha1.wfm.WFM/ListTourShiftSegmentConfigs"
+	WFM_DeleteTourShiftSegmentConfigs_FullMethodName                 = "/api.v1alpha1.wfm.WFM/DeleteTourShiftSegmentConfigs"
 	WFM_CreateTourAgentCollection_FullMethodName                     = "/api.v1alpha1.wfm.WFM/CreateTourAgentCollection"
+	WFM_UpdateTourAgentCollection_FullMethodName                     = "/api.v1alpha1.wfm.WFM/UpdateTourAgentCollection"
 	WFM_ListTourAgentCollections_FullMethodName                      = "/api.v1alpha1.wfm.WFM/ListTourAgentCollections"
+	WFM_DeleteTourAgentCollections_FullMethodName                    = "/api.v1alpha1.wfm.WFM/DeleteTourAgentCollections"
 	WFM_CreateTourAgentCollectionWFMAgents_FullMethodName            = "/api.v1alpha1.wfm.WFM/CreateTourAgentCollectionWFMAgents"
 	WFM_ListTourAgentCollectionWFMAgents_FullMethodName              = "/api.v1alpha1.wfm.WFM/ListTourAgentCollectionWFMAgents"
+	WFM_DeleteTourAgentCollectionWFMAgents_FullMethodName            = "/api.v1alpha1.wfm.WFM/DeleteTourAgentCollectionWFMAgents"
 )
 
 // WFMClient is the client API for WFM service.
@@ -358,6 +373,48 @@ type WFMClient interface {
 	//   - grpc.Internal: the current mapping for the given @inactive_skill_profile_sid is already disconnected,
 	//     the given @inactive_skill_profile_sid is of an active skill profile.
 	DisconnectInactiveSkillProfileMapping(ctx context.Context, in *DisconnectInactiveSkillProfileMappingReq, opts ...grpc.CallOption) (*DisconnectInactiveSkillProfileMappingRes, error)
+	// Creates the given @skill_profile_group.
+	// @skill_profile_group_sids will be ignored since associations cannot be created by this method.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @skill_profile_group in the request is invalid.
+	//   - grpc.Internal: error occurs creating the skill profile group.
+	CreateSkillProfileGroup(ctx context.Context, in *CreateSkillProfileGroupReq, opts ...grpc.CallOption) (*CreateSkillProfileGroupRes, error)
+	// Updates the given @skill_profile_group that has the @skill_profile_group_sid for the org sending the request.
+	// @skill_profile_group_sids will be ignored since associations cannot be updated by this method.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @skill_profile_group in the request is invalid.
+	//   - grpc.NotFound: the skill profile group to update doesn't exist.
+	//   - grpc.Internal: error occurs updating the skill profile group.
+	UpdateSkillProfileGroup(ctx context.Context, in *UpdateSkillProfileGroupReq, opts ...grpc.CallOption) (*UpdateSkillProfileGroupRes, error)
+	// Gets the skill profile groups that have the @skill_profile_group_sids for the org sending the request.
+	// If @skill_profile_group_sids is empty it will get all the skill profile groups for the org.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @skill_profile_group_sids in the request is invalid.
+	//   - grpc.Internal: error occurs getting the skill profile groups.
+	ListSkillProfileGroups(ctx context.Context, in *ListSkillProfileGroupsReq, opts ...grpc.CallOption) (*ListSkillProfileGroupsRes, error)
+	// Updates associations of the given @skill_profile_group_sid for the org sending the request.
+	// It will create the associations with the @skill_profile_sids_to_associate, and remove the associations with the @skill_profile_sids_to_disassociate.
+	// Only one of the skill_profile_sids fields needs to be set, but both can be set on the same request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the values in the request are invalid.
+	//   - grpc.Internal: error occurs updating the skill profile group associations.
+	UpdateSkillProfileGroupAssociations(ctx context.Context, in *UpdateSkillProfileGroupAssociationsReq, opts ...grpc.CallOption) (*UpdateSkillProfileGroupAssociationsRes, error)
 	// Deletes deltas whose dates match the given @start_datetimes for the given @skill_profile_sid.
 	// If no @start_datetimes are given, it will delete all the deltas that the given @skill_profile_sid has.
 	// Required permissions:
@@ -1578,6 +1635,15 @@ type WFMClient interface {
 	//	-grpc.NotFound: the scheduling target for the given @node_selector doesn't exist for the org making the request.
 	//	-grpc.Internal: error occurs when removing the scheduling target.
 	DeleteSchedulingTarget(ctx context.Context, in *DeleteSchedulingTargetReq, opts ...grpc.CallOption) (*DeleteSchedulingTargetRes, error)
+	// Gets the scheduling-target values for the org making the request.
+	// Errors:
+	//   - grpc.Internal: error occours when getting the scheduling-target values.
+	GetDefaultSchedulingTarget(ctx context.Context, in *GetDefaultSchedulingTargetReq, opts ...grpc.CallOption) (*GetDefaultSchedulingTargetRes, error)
+	// Sets the scheduling-target values for the org making the request.
+	// Errors:
+	//   - grpc.Invalid: any of the given values are invalid.
+	//   - grpc.Internal: error occours when setting the scheduling-target values.
+	SetDefaultSchedulingTarget(ctx context.Context, in *SetDefaultSchedulingTargetReq, opts ...grpc.CallOption) (*SetDefaultSchedulingTargetRes, error)
 	// Gets the performance metrics across @datetime_range for shift instances in @schedule_selector associated with @node_selector for the org making the request.
 	// Performance metrics will be generated for each of the given @metric_params.
 	// The @interval_width_in_minutes must be a multiple of 5.
@@ -1620,6 +1686,16 @@ type WFMClient interface {
 	//   - grpc.NotFound: the requested tour pattern does not exist.
 	//   - grpc.Internal: error occurs when getting the data.
 	GetTourPattern(ctx context.Context, in *GetTourPatternReq, opts ...grpc.CallOption) (*GetTourPatternRes, error)
+	// Deletes the tour pattern belonging to @tour_pattern_sid and the org sending the request.
+	// Any member Tour Week Patterns or Agent Collections will be deleted as well.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when deleting the data or it's children.
+	DeleteTourPattern(ctx context.Context, in *DeleteTourPatternReq, opts ...grpc.CallOption) (*DeleteTourPatternRes, error)
 	// Creates a tour week pattern for @tour_pattern_sid for the org sending the request, returning @tour_week_pattern_sid.
 	// The newly created tour week pattern will be placed at the end of the existing sequence of tour week patterns for @tour_pattern_sid.
 	// Required permissions:
@@ -1639,6 +1715,17 @@ type WFMClient interface {
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when getting the tour week patterns.
 	ListTourWeekPatterns(ctx context.Context, in *ListTourWeekPatternsReq, opts ...grpc.CallOption) (*ListTourWeekPatternsRes, error)
+	// Deletes the tour week patterns with the given @tour_week_pattern_sids for the org sending the request.
+	// Any Tour Week Instance or Segment Configs using @tour_week_pattern_sids will be deleted.
+	// Request will error if any @tour_week_pattern_sids are in use by a Tour Agent Collection.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid or a @tour_week_pattern_sid is in use by a Tour Agent Collection.
+	//   - grpc.Internal: error occurs when deleting the tour week patterns or configs.
+	DeleteTourWeekPatterns(ctx context.Context, in *DeleteTourWeekPatternsReq, opts ...grpc.CallOption) (*DeleteTourWeekPatternsRes, error)
 	// Creates the @tour_shift_instance_config for the org sending the request, returning @tour_shift_instance_config_sid.
 	// The given @tour_shift_instance_config will not be created if it will overlap another tour shift instance config belonging to @tour_week_pattern_sid.
 	// The @member_tour_shift_segment_configs field will be ignored, and will not be created if passed through this endpoint.
@@ -1650,6 +1737,17 @@ type WFMClient interface {
 	//   - grpc.Invalid: the request data is invalid or a preexisting tour shift instance config would overlap @tour_shift_instance_config.
 	//   - grpc.Internal: error occurs when creating the data.
 	CreateTourShiftInstanceConfig(ctx context.Context, in *CreateTourShiftInstanceConfigReq, opts ...grpc.CallOption) (*CreateTourShiftInstanceConfigRes, error)
+	// Updates the @tour_shift_instance_config for the org sending the request, returning @tour_shift_instance_config_sid.
+	// The given @tour_shift_instance_config will not be created if it will overlap another tour shift instance config belonging to @tour_week_pattern_sid.
+	// The @member_tour_shift_segment_configs field will be ignored, and will not be updated if passed through this endpoint.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid or a preexisting tour shift instance config would overlap @tour_shift_instance_config.
+	//   - grpc.Internal: error occurs when updating the data.
+	UpdateTourShiftInstanceConfig(ctx context.Context, in *UpdateTourShiftInstanceConfigReq, opts ...grpc.CallOption) (*UpdateTourShiftInstanceConfigRes, error)
 	// Lists the tour shift instance configs belonging to @tour_week_pattern_sids for the org sending the request.
 	// Required permissions:
 	//
@@ -1659,6 +1757,15 @@ type WFMClient interface {
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when getting the tour shift instance configs.
 	ListTourShiftInstanceConfigs(ctx context.Context, in *ListTourShiftInstanceConfigsReq, opts ...grpc.CallOption) (*ListTourShiftInstanceConfigsRes, error)
+	// Deletes the tour shift instance configs matching @tour_shift_instance_config_sids for the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when getting the tour shift instance configs.
+	DeleteTourShiftInstanceConfigs(ctx context.Context, in *DeleteTourShiftInstanceConfigsReq, opts ...grpc.CallOption) (*DeleteTourShiftInstanceConfigsRes, error)
 	// Creates the given @tour_shift_segment_config for the org sending the request, returning @tour_shift_segment_config_sid.
 	// Required permissions:
 	//
@@ -1668,6 +1775,16 @@ type WFMClient interface {
 	//   - grpc.Invalid: the request data is invalid or the @tour_shift_instance_config_sid does not exist for the org sending the request.
 	//   - grpc.Internal: error occurs when creating the entity.
 	CreateTourShiftSegmentConfig(ctx context.Context, in *CreateTourShiftSegmentConfigReq, opts ...grpc.CallOption) (*CreateTourShiftSegmentConfigRes, error)
+	// Updates the given @tour_shift_segment_config matching @tour_shift_segment_config_sid and the org sending the request.
+	// If the updated Tour Shify Segment Config overlaps another segment or does not fit within the parent Tour Shift Instance Config the update will fail.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid, the @tour_shift_instance_config_sid does not exist for the org sending the request, or the resulting update would result in a conflict.
+	//   - grpc.Internal: error occurs when updating the entity.
+	UpdateTourShiftSegmentConfig(ctx context.Context, in *UpdateTourShiftSegmentConfigReq, opts ...grpc.CallOption) (*UpdateTourShiftSegmentConfigRes, error)
 	// Lists the tour shift segment configs belonging to @tour_shift_instance_config_sids for the org sending the request.
 	// Required permissions:
 	//
@@ -1677,6 +1794,15 @@ type WFMClient interface {
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when getting the tour shift segment configs.
 	ListTourShiftSegmentConfigs(ctx context.Context, in *ListTourShiftSegmentConfigsReq, opts ...grpc.CallOption) (*ListTourShiftSegmentConfigsRes, error)
+	// Deletes the tour shift segment configs associated with the given @tour_shift_segment_config_sids for the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when deleting the tour shift segment configs.
+	DeleteTourShiftSegmentConfigs(ctx context.Context, in *DeleteTourShiftSegmentConfigsReq, opts ...grpc.CallOption) (*DeleteTourShiftSegmentConfigsRes, error)
 	// Creates the given @tour_agent_collection for the org sending the request and return the @tour_agent_collection_sid.
 	// The @wfm_agent_sids will be ignored and will not be created through this endpoint.
 	// Required permissions:
@@ -1688,6 +1814,17 @@ type WFMClient interface {
 	//     or the given @tour_pattern_sid does not exist for the org sending the request.
 	//   - grpc.Internal: error occurs when creating the entity.
 	CreateTourAgentCollection(ctx context.Context, in *CreateTourAgentCollectionReq, opts ...grpc.CallOption) (*CreateTourAgentCollectionRes, error)
+	// Updates the given @tour_agent_collection matching the @tour_agent_collection_sid for the org sending the request.
+	// The @wfm_agent_sids will be ignored and will not be updated through this endpoint.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid, the first_week_pattern_number for @tour_pattern_sid is already in use by another tour agent collection,
+	//     or the given @tour_pattern_sid does not exist for the org sending the request.
+	//   - grpc.Internal: error occurs when updating the entity.
+	UpdateTourAgentCollection(ctx context.Context, in *UpdateTourAgentCollectionReq, opts ...grpc.CallOption) (*UpdateTourAgentCollectionRes, error)
 	// Lists the tour agent collections belonging to @tour_pattern_sid for the org sending the request.
 	// Required permissions:
 	//
@@ -1697,6 +1834,16 @@ type WFMClient interface {
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when getting the tour agent collections.
 	ListTourAgentCollections(ctx context.Context, in *ListTourAgentCollectionsReq, opts ...grpc.CallOption) (*ListTourAgentCollectionsRes, error)
+	// Deletes the tour agent collections belonging matching @tour_agent_collection_sids for the org sending the request.
+	// Any existing associations with WFM Agent Sids will be deleted as well.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when deleting the tour agent collections.
+	DeleteTourAgentCollections(ctx context.Context, in *DeleteTourAgentCollectionsReq, opts ...grpc.CallOption) (*DeleteTourAgentCollectionsRes, error)
 	// Creates an assocation between the @tour_agent_collection_sid and the @wfm_agent_sids for the org sending the request.
 	// If there is already an association between any of the @wfm_agent_sids and the tour pattern that @tour_agent_collection_sid belongs to, the method will fail and no associations will be created.
 	// Required permissions:
@@ -1718,6 +1865,16 @@ type WFMClient interface {
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when getting the tour agent collections.
 	ListTourAgentCollectionWFMAgents(ctx context.Context, in *ListTourAgentCollectionWFMAgentsReq, opts ...grpc.CallOption) (*ListTourAgentCollectionWFMAgentsRes, error)
+	// Deletes association between the @wfm_agent_sids and @tour_agent_collection_sid for the org sending the request.
+	// If no @wfm_agent_sids are provided, all existing @wfm_agent_sids for the given @tour_agent_collection_sid will be deleted.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid or there are no wfm agent associations to delete for @tour_agent_collection_sid .
+	//   - grpc.Internal: error occurs when getting the tour agent collections.
+	DeleteTourAgentCollectionWFMAgents(ctx context.Context, in *DeleteTourAgentCollectionWFMAgentsReq, opts ...grpc.CallOption) (*DeleteTourAgentCollectionWFMAgentsRes, error)
 }
 
 type wFMClient struct {
@@ -1876,6 +2033,42 @@ func (c *wFMClient) GetAvailableRegressionForecasterModelTypes(ctx context.Conte
 func (c *wFMClient) DisconnectInactiveSkillProfileMapping(ctx context.Context, in *DisconnectInactiveSkillProfileMappingReq, opts ...grpc.CallOption) (*DisconnectInactiveSkillProfileMappingRes, error) {
 	out := new(DisconnectInactiveSkillProfileMappingRes)
 	err := c.cc.Invoke(ctx, WFM_DisconnectInactiveSkillProfileMapping_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) CreateSkillProfileGroup(ctx context.Context, in *CreateSkillProfileGroupReq, opts ...grpc.CallOption) (*CreateSkillProfileGroupRes, error) {
+	out := new(CreateSkillProfileGroupRes)
+	err := c.cc.Invoke(ctx, WFM_CreateSkillProfileGroup_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) UpdateSkillProfileGroup(ctx context.Context, in *UpdateSkillProfileGroupReq, opts ...grpc.CallOption) (*UpdateSkillProfileGroupRes, error) {
+	out := new(UpdateSkillProfileGroupRes)
+	err := c.cc.Invoke(ctx, WFM_UpdateSkillProfileGroup_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) ListSkillProfileGroups(ctx context.Context, in *ListSkillProfileGroupsReq, opts ...grpc.CallOption) (*ListSkillProfileGroupsRes, error) {
+	out := new(ListSkillProfileGroupsRes)
+	err := c.cc.Invoke(ctx, WFM_ListSkillProfileGroups_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) UpdateSkillProfileGroupAssociations(ctx context.Context, in *UpdateSkillProfileGroupAssociationsReq, opts ...grpc.CallOption) (*UpdateSkillProfileGroupAssociationsRes, error) {
+	out := new(UpdateSkillProfileGroupAssociationsRes)
+	err := c.cc.Invoke(ctx, WFM_UpdateSkillProfileGroupAssociations_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -2948,6 +3141,24 @@ func (c *wFMClient) DeleteSchedulingTarget(ctx context.Context, in *DeleteSchedu
 	return out, nil
 }
 
+func (c *wFMClient) GetDefaultSchedulingTarget(ctx context.Context, in *GetDefaultSchedulingTargetReq, opts ...grpc.CallOption) (*GetDefaultSchedulingTargetRes, error) {
+	out := new(GetDefaultSchedulingTargetRes)
+	err := c.cc.Invoke(ctx, WFM_GetDefaultSchedulingTarget_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) SetDefaultSchedulingTarget(ctx context.Context, in *SetDefaultSchedulingTargetReq, opts ...grpc.CallOption) (*SetDefaultSchedulingTargetRes, error) {
+	out := new(SetDefaultSchedulingTargetRes)
+	err := c.cc.Invoke(ctx, WFM_SetDefaultSchedulingTarget_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) GetPerformanceMetrics(ctx context.Context, in *GetPerformanceMetricsReq, opts ...grpc.CallOption) (*GetPerformanceMetricsRes, error) {
 	out := new(GetPerformanceMetricsRes)
 	err := c.cc.Invoke(ctx, WFM_GetPerformanceMetrics_FullMethodName, in, out, opts...)
@@ -2984,6 +3195,15 @@ func (c *wFMClient) GetTourPattern(ctx context.Context, in *GetTourPatternReq, o
 	return out, nil
 }
 
+func (c *wFMClient) DeleteTourPattern(ctx context.Context, in *DeleteTourPatternReq, opts ...grpc.CallOption) (*DeleteTourPatternRes, error) {
+	out := new(DeleteTourPatternRes)
+	err := c.cc.Invoke(ctx, WFM_DeleteTourPattern_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) CreateTourWeekPattern(ctx context.Context, in *CreateTourWeekPatternReq, opts ...grpc.CallOption) (*CreateTourWeekPatternRes, error) {
 	out := new(CreateTourWeekPatternRes)
 	err := c.cc.Invoke(ctx, WFM_CreateTourWeekPattern_FullMethodName, in, out, opts...)
@@ -3002,9 +3222,27 @@ func (c *wFMClient) ListTourWeekPatterns(ctx context.Context, in *ListTourWeekPa
 	return out, nil
 }
 
+func (c *wFMClient) DeleteTourWeekPatterns(ctx context.Context, in *DeleteTourWeekPatternsReq, opts ...grpc.CallOption) (*DeleteTourWeekPatternsRes, error) {
+	out := new(DeleteTourWeekPatternsRes)
+	err := c.cc.Invoke(ctx, WFM_DeleteTourWeekPatterns_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) CreateTourShiftInstanceConfig(ctx context.Context, in *CreateTourShiftInstanceConfigReq, opts ...grpc.CallOption) (*CreateTourShiftInstanceConfigRes, error) {
 	out := new(CreateTourShiftInstanceConfigRes)
 	err := c.cc.Invoke(ctx, WFM_CreateTourShiftInstanceConfig_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) UpdateTourShiftInstanceConfig(ctx context.Context, in *UpdateTourShiftInstanceConfigReq, opts ...grpc.CallOption) (*UpdateTourShiftInstanceConfigRes, error) {
+	out := new(UpdateTourShiftInstanceConfigRes)
+	err := c.cc.Invoke(ctx, WFM_UpdateTourShiftInstanceConfig_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -3020,9 +3258,27 @@ func (c *wFMClient) ListTourShiftInstanceConfigs(ctx context.Context, in *ListTo
 	return out, nil
 }
 
+func (c *wFMClient) DeleteTourShiftInstanceConfigs(ctx context.Context, in *DeleteTourShiftInstanceConfigsReq, opts ...grpc.CallOption) (*DeleteTourShiftInstanceConfigsRes, error) {
+	out := new(DeleteTourShiftInstanceConfigsRes)
+	err := c.cc.Invoke(ctx, WFM_DeleteTourShiftInstanceConfigs_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) CreateTourShiftSegmentConfig(ctx context.Context, in *CreateTourShiftSegmentConfigReq, opts ...grpc.CallOption) (*CreateTourShiftSegmentConfigRes, error) {
 	out := new(CreateTourShiftSegmentConfigRes)
 	err := c.cc.Invoke(ctx, WFM_CreateTourShiftSegmentConfig_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) UpdateTourShiftSegmentConfig(ctx context.Context, in *UpdateTourShiftSegmentConfigReq, opts ...grpc.CallOption) (*UpdateTourShiftSegmentConfigRes, error) {
+	out := new(UpdateTourShiftSegmentConfigRes)
+	err := c.cc.Invoke(ctx, WFM_UpdateTourShiftSegmentConfig_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -3038,6 +3294,15 @@ func (c *wFMClient) ListTourShiftSegmentConfigs(ctx context.Context, in *ListTou
 	return out, nil
 }
 
+func (c *wFMClient) DeleteTourShiftSegmentConfigs(ctx context.Context, in *DeleteTourShiftSegmentConfigsReq, opts ...grpc.CallOption) (*DeleteTourShiftSegmentConfigsRes, error) {
+	out := new(DeleteTourShiftSegmentConfigsRes)
+	err := c.cc.Invoke(ctx, WFM_DeleteTourShiftSegmentConfigs_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) CreateTourAgentCollection(ctx context.Context, in *CreateTourAgentCollectionReq, opts ...grpc.CallOption) (*CreateTourAgentCollectionRes, error) {
 	out := new(CreateTourAgentCollectionRes)
 	err := c.cc.Invoke(ctx, WFM_CreateTourAgentCollection_FullMethodName, in, out, opts...)
@@ -3047,9 +3312,27 @@ func (c *wFMClient) CreateTourAgentCollection(ctx context.Context, in *CreateTou
 	return out, nil
 }
 
+func (c *wFMClient) UpdateTourAgentCollection(ctx context.Context, in *UpdateTourAgentCollectionReq, opts ...grpc.CallOption) (*UpdateTourAgentCollectionRes, error) {
+	out := new(UpdateTourAgentCollectionRes)
+	err := c.cc.Invoke(ctx, WFM_UpdateTourAgentCollection_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) ListTourAgentCollections(ctx context.Context, in *ListTourAgentCollectionsReq, opts ...grpc.CallOption) (*ListTourAgentCollectionsRes, error) {
 	out := new(ListTourAgentCollectionsRes)
 	err := c.cc.Invoke(ctx, WFM_ListTourAgentCollections_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) DeleteTourAgentCollections(ctx context.Context, in *DeleteTourAgentCollectionsReq, opts ...grpc.CallOption) (*DeleteTourAgentCollectionsRes, error) {
+	out := new(DeleteTourAgentCollectionsRes)
+	err := c.cc.Invoke(ctx, WFM_DeleteTourAgentCollections_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -3068,6 +3351,15 @@ func (c *wFMClient) CreateTourAgentCollectionWFMAgents(ctx context.Context, in *
 func (c *wFMClient) ListTourAgentCollectionWFMAgents(ctx context.Context, in *ListTourAgentCollectionWFMAgentsReq, opts ...grpc.CallOption) (*ListTourAgentCollectionWFMAgentsRes, error) {
 	out := new(ListTourAgentCollectionWFMAgentsRes)
 	err := c.cc.Invoke(ctx, WFM_ListTourAgentCollectionWFMAgents_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) DeleteTourAgentCollectionWFMAgents(ctx context.Context, in *DeleteTourAgentCollectionWFMAgentsReq, opts ...grpc.CallOption) (*DeleteTourAgentCollectionWFMAgentsRes, error) {
+	out := new(DeleteTourAgentCollectionWFMAgentsRes)
+	err := c.cc.Invoke(ctx, WFM_DeleteTourAgentCollectionWFMAgents_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -3263,6 +3555,48 @@ type WFMServer interface {
 	//   - grpc.Internal: the current mapping for the given @inactive_skill_profile_sid is already disconnected,
 	//     the given @inactive_skill_profile_sid is of an active skill profile.
 	DisconnectInactiveSkillProfileMapping(context.Context, *DisconnectInactiveSkillProfileMappingReq) (*DisconnectInactiveSkillProfileMappingRes, error)
+	// Creates the given @skill_profile_group.
+	// @skill_profile_group_sids will be ignored since associations cannot be created by this method.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @skill_profile_group in the request is invalid.
+	//   - grpc.Internal: error occurs creating the skill profile group.
+	CreateSkillProfileGroup(context.Context, *CreateSkillProfileGroupReq) (*CreateSkillProfileGroupRes, error)
+	// Updates the given @skill_profile_group that has the @skill_profile_group_sid for the org sending the request.
+	// @skill_profile_group_sids will be ignored since associations cannot be updated by this method.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @skill_profile_group in the request is invalid.
+	//   - grpc.NotFound: the skill profile group to update doesn't exist.
+	//   - grpc.Internal: error occurs updating the skill profile group.
+	UpdateSkillProfileGroup(context.Context, *UpdateSkillProfileGroupReq) (*UpdateSkillProfileGroupRes, error)
+	// Gets the skill profile groups that have the @skill_profile_group_sids for the org sending the request.
+	// If @skill_profile_group_sids is empty it will get all the skill profile groups for the org.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @skill_profile_group_sids in the request is invalid.
+	//   - grpc.Internal: error occurs getting the skill profile groups.
+	ListSkillProfileGroups(context.Context, *ListSkillProfileGroupsReq) (*ListSkillProfileGroupsRes, error)
+	// Updates associations of the given @skill_profile_group_sid for the org sending the request.
+	// It will create the associations with the @skill_profile_sids_to_associate, and remove the associations with the @skill_profile_sids_to_disassociate.
+	// Only one of the skill_profile_sids fields needs to be set, but both can be set on the same request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the values in the request are invalid.
+	//   - grpc.Internal: error occurs updating the skill profile group associations.
+	UpdateSkillProfileGroupAssociations(context.Context, *UpdateSkillProfileGroupAssociationsReq) (*UpdateSkillProfileGroupAssociationsRes, error)
 	// Deletes deltas whose dates match the given @start_datetimes for the given @skill_profile_sid.
 	// If no @start_datetimes are given, it will delete all the deltas that the given @skill_profile_sid has.
 	// Required permissions:
@@ -4483,6 +4817,15 @@ type WFMServer interface {
 	//	-grpc.NotFound: the scheduling target for the given @node_selector doesn't exist for the org making the request.
 	//	-grpc.Internal: error occurs when removing the scheduling target.
 	DeleteSchedulingTarget(context.Context, *DeleteSchedulingTargetReq) (*DeleteSchedulingTargetRes, error)
+	// Gets the scheduling-target values for the org making the request.
+	// Errors:
+	//   - grpc.Internal: error occours when getting the scheduling-target values.
+	GetDefaultSchedulingTarget(context.Context, *GetDefaultSchedulingTargetReq) (*GetDefaultSchedulingTargetRes, error)
+	// Sets the scheduling-target values for the org making the request.
+	// Errors:
+	//   - grpc.Invalid: any of the given values are invalid.
+	//   - grpc.Internal: error occours when setting the scheduling-target values.
+	SetDefaultSchedulingTarget(context.Context, *SetDefaultSchedulingTargetReq) (*SetDefaultSchedulingTargetRes, error)
 	// Gets the performance metrics across @datetime_range for shift instances in @schedule_selector associated with @node_selector for the org making the request.
 	// Performance metrics will be generated for each of the given @metric_params.
 	// The @interval_width_in_minutes must be a multiple of 5.
@@ -4525,6 +4868,16 @@ type WFMServer interface {
 	//   - grpc.NotFound: the requested tour pattern does not exist.
 	//   - grpc.Internal: error occurs when getting the data.
 	GetTourPattern(context.Context, *GetTourPatternReq) (*GetTourPatternRes, error)
+	// Deletes the tour pattern belonging to @tour_pattern_sid and the org sending the request.
+	// Any member Tour Week Patterns or Agent Collections will be deleted as well.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when deleting the data or it's children.
+	DeleteTourPattern(context.Context, *DeleteTourPatternReq) (*DeleteTourPatternRes, error)
 	// Creates a tour week pattern for @tour_pattern_sid for the org sending the request, returning @tour_week_pattern_sid.
 	// The newly created tour week pattern will be placed at the end of the existing sequence of tour week patterns for @tour_pattern_sid.
 	// Required permissions:
@@ -4544,6 +4897,17 @@ type WFMServer interface {
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when getting the tour week patterns.
 	ListTourWeekPatterns(context.Context, *ListTourWeekPatternsReq) (*ListTourWeekPatternsRes, error)
+	// Deletes the tour week patterns with the given @tour_week_pattern_sids for the org sending the request.
+	// Any Tour Week Instance or Segment Configs using @tour_week_pattern_sids will be deleted.
+	// Request will error if any @tour_week_pattern_sids are in use by a Tour Agent Collection.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid or a @tour_week_pattern_sid is in use by a Tour Agent Collection.
+	//   - grpc.Internal: error occurs when deleting the tour week patterns or configs.
+	DeleteTourWeekPatterns(context.Context, *DeleteTourWeekPatternsReq) (*DeleteTourWeekPatternsRes, error)
 	// Creates the @tour_shift_instance_config for the org sending the request, returning @tour_shift_instance_config_sid.
 	// The given @tour_shift_instance_config will not be created if it will overlap another tour shift instance config belonging to @tour_week_pattern_sid.
 	// The @member_tour_shift_segment_configs field will be ignored, and will not be created if passed through this endpoint.
@@ -4555,6 +4919,17 @@ type WFMServer interface {
 	//   - grpc.Invalid: the request data is invalid or a preexisting tour shift instance config would overlap @tour_shift_instance_config.
 	//   - grpc.Internal: error occurs when creating the data.
 	CreateTourShiftInstanceConfig(context.Context, *CreateTourShiftInstanceConfigReq) (*CreateTourShiftInstanceConfigRes, error)
+	// Updates the @tour_shift_instance_config for the org sending the request, returning @tour_shift_instance_config_sid.
+	// The given @tour_shift_instance_config will not be created if it will overlap another tour shift instance config belonging to @tour_week_pattern_sid.
+	// The @member_tour_shift_segment_configs field will be ignored, and will not be updated if passed through this endpoint.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid or a preexisting tour shift instance config would overlap @tour_shift_instance_config.
+	//   - grpc.Internal: error occurs when updating the data.
+	UpdateTourShiftInstanceConfig(context.Context, *UpdateTourShiftInstanceConfigReq) (*UpdateTourShiftInstanceConfigRes, error)
 	// Lists the tour shift instance configs belonging to @tour_week_pattern_sids for the org sending the request.
 	// Required permissions:
 	//
@@ -4564,6 +4939,15 @@ type WFMServer interface {
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when getting the tour shift instance configs.
 	ListTourShiftInstanceConfigs(context.Context, *ListTourShiftInstanceConfigsReq) (*ListTourShiftInstanceConfigsRes, error)
+	// Deletes the tour shift instance configs matching @tour_shift_instance_config_sids for the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when getting the tour shift instance configs.
+	DeleteTourShiftInstanceConfigs(context.Context, *DeleteTourShiftInstanceConfigsReq) (*DeleteTourShiftInstanceConfigsRes, error)
 	// Creates the given @tour_shift_segment_config for the org sending the request, returning @tour_shift_segment_config_sid.
 	// Required permissions:
 	//
@@ -4573,6 +4957,16 @@ type WFMServer interface {
 	//   - grpc.Invalid: the request data is invalid or the @tour_shift_instance_config_sid does not exist for the org sending the request.
 	//   - grpc.Internal: error occurs when creating the entity.
 	CreateTourShiftSegmentConfig(context.Context, *CreateTourShiftSegmentConfigReq) (*CreateTourShiftSegmentConfigRes, error)
+	// Updates the given @tour_shift_segment_config matching @tour_shift_segment_config_sid and the org sending the request.
+	// If the updated Tour Shify Segment Config overlaps another segment or does not fit within the parent Tour Shift Instance Config the update will fail.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid, the @tour_shift_instance_config_sid does not exist for the org sending the request, or the resulting update would result in a conflict.
+	//   - grpc.Internal: error occurs when updating the entity.
+	UpdateTourShiftSegmentConfig(context.Context, *UpdateTourShiftSegmentConfigReq) (*UpdateTourShiftSegmentConfigRes, error)
 	// Lists the tour shift segment configs belonging to @tour_shift_instance_config_sids for the org sending the request.
 	// Required permissions:
 	//
@@ -4582,6 +4976,15 @@ type WFMServer interface {
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when getting the tour shift segment configs.
 	ListTourShiftSegmentConfigs(context.Context, *ListTourShiftSegmentConfigsReq) (*ListTourShiftSegmentConfigsRes, error)
+	// Deletes the tour shift segment configs associated with the given @tour_shift_segment_config_sids for the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when deleting the tour shift segment configs.
+	DeleteTourShiftSegmentConfigs(context.Context, *DeleteTourShiftSegmentConfigsReq) (*DeleteTourShiftSegmentConfigsRes, error)
 	// Creates the given @tour_agent_collection for the org sending the request and return the @tour_agent_collection_sid.
 	// The @wfm_agent_sids will be ignored and will not be created through this endpoint.
 	// Required permissions:
@@ -4593,6 +4996,17 @@ type WFMServer interface {
 	//     or the given @tour_pattern_sid does not exist for the org sending the request.
 	//   - grpc.Internal: error occurs when creating the entity.
 	CreateTourAgentCollection(context.Context, *CreateTourAgentCollectionReq) (*CreateTourAgentCollectionRes, error)
+	// Updates the given @tour_agent_collection matching the @tour_agent_collection_sid for the org sending the request.
+	// The @wfm_agent_sids will be ignored and will not be updated through this endpoint.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid, the first_week_pattern_number for @tour_pattern_sid is already in use by another tour agent collection,
+	//     or the given @tour_pattern_sid does not exist for the org sending the request.
+	//   - grpc.Internal: error occurs when updating the entity.
+	UpdateTourAgentCollection(context.Context, *UpdateTourAgentCollectionReq) (*UpdateTourAgentCollectionRes, error)
 	// Lists the tour agent collections belonging to @tour_pattern_sid for the org sending the request.
 	// Required permissions:
 	//
@@ -4602,6 +5016,16 @@ type WFMServer interface {
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when getting the tour agent collections.
 	ListTourAgentCollections(context.Context, *ListTourAgentCollectionsReq) (*ListTourAgentCollectionsRes, error)
+	// Deletes the tour agent collections belonging matching @tour_agent_collection_sids for the org sending the request.
+	// Any existing associations with WFM Agent Sids will be deleted as well.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when deleting the tour agent collections.
+	DeleteTourAgentCollections(context.Context, *DeleteTourAgentCollectionsReq) (*DeleteTourAgentCollectionsRes, error)
 	// Creates an assocation between the @tour_agent_collection_sid and the @wfm_agent_sids for the org sending the request.
 	// If there is already an association between any of the @wfm_agent_sids and the tour pattern that @tour_agent_collection_sid belongs to, the method will fail and no associations will be created.
 	// Required permissions:
@@ -4623,6 +5047,16 @@ type WFMServer interface {
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when getting the tour agent collections.
 	ListTourAgentCollectionWFMAgents(context.Context, *ListTourAgentCollectionWFMAgentsReq) (*ListTourAgentCollectionWFMAgentsRes, error)
+	// Deletes association between the @wfm_agent_sids and @tour_agent_collection_sid for the org sending the request.
+	// If no @wfm_agent_sids are provided, all existing @wfm_agent_sids for the given @tour_agent_collection_sid will be deleted.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid or there are no wfm agent associations to delete for @tour_agent_collection_sid .
+	//   - grpc.Internal: error occurs when getting the tour agent collections.
+	DeleteTourAgentCollectionWFMAgents(context.Context, *DeleteTourAgentCollectionWFMAgentsReq) (*DeleteTourAgentCollectionWFMAgentsRes, error)
 	mustEmbedUnimplementedWFMServer()
 }
 
@@ -4680,6 +5114,18 @@ func (UnimplementedWFMServer) GetAvailableRegressionForecasterModelTypes(context
 }
 func (UnimplementedWFMServer) DisconnectInactiveSkillProfileMapping(context.Context, *DisconnectInactiveSkillProfileMappingReq) (*DisconnectInactiveSkillProfileMappingRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DisconnectInactiveSkillProfileMapping not implemented")
+}
+func (UnimplementedWFMServer) CreateSkillProfileGroup(context.Context, *CreateSkillProfileGroupReq) (*CreateSkillProfileGroupRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateSkillProfileGroup not implemented")
+}
+func (UnimplementedWFMServer) UpdateSkillProfileGroup(context.Context, *UpdateSkillProfileGroupReq) (*UpdateSkillProfileGroupRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateSkillProfileGroup not implemented")
+}
+func (UnimplementedWFMServer) ListSkillProfileGroups(context.Context, *ListSkillProfileGroupsReq) (*ListSkillProfileGroupsRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListSkillProfileGroups not implemented")
+}
+func (UnimplementedWFMServer) UpdateSkillProfileGroupAssociations(context.Context, *UpdateSkillProfileGroupAssociationsReq) (*UpdateSkillProfileGroupAssociationsRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateSkillProfileGroupAssociations not implemented")
 }
 func (UnimplementedWFMServer) DeleteHistoricalDataDeltas(context.Context, *DeleteHistoricalDataDeltasReq) (*DeleteHistoricalDataDeltasRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteHistoricalDataDeltas not implemented")
@@ -4990,6 +5436,12 @@ func (UnimplementedWFMServer) GetSchedulingTarget(context.Context, *GetSchedulin
 func (UnimplementedWFMServer) DeleteSchedulingTarget(context.Context, *DeleteSchedulingTargetReq) (*DeleteSchedulingTargetRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteSchedulingTarget not implemented")
 }
+func (UnimplementedWFMServer) GetDefaultSchedulingTarget(context.Context, *GetDefaultSchedulingTargetReq) (*GetDefaultSchedulingTargetRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDefaultSchedulingTarget not implemented")
+}
+func (UnimplementedWFMServer) SetDefaultSchedulingTarget(context.Context, *SetDefaultSchedulingTargetReq) (*SetDefaultSchedulingTargetRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetDefaultSchedulingTarget not implemented")
+}
 func (UnimplementedWFMServer) GetPerformanceMetrics(context.Context, *GetPerformanceMetricsReq) (*GetPerformanceMetricsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPerformanceMetrics not implemented")
 }
@@ -5002,35 +5454,62 @@ func (UnimplementedWFMServer) CreateTourPattern(context.Context, *CreateTourPatt
 func (UnimplementedWFMServer) GetTourPattern(context.Context, *GetTourPatternReq) (*GetTourPatternRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTourPattern not implemented")
 }
+func (UnimplementedWFMServer) DeleteTourPattern(context.Context, *DeleteTourPatternReq) (*DeleteTourPatternRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteTourPattern not implemented")
+}
 func (UnimplementedWFMServer) CreateTourWeekPattern(context.Context, *CreateTourWeekPatternReq) (*CreateTourWeekPatternRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateTourWeekPattern not implemented")
 }
 func (UnimplementedWFMServer) ListTourWeekPatterns(context.Context, *ListTourWeekPatternsReq) (*ListTourWeekPatternsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListTourWeekPatterns not implemented")
 }
+func (UnimplementedWFMServer) DeleteTourWeekPatterns(context.Context, *DeleteTourWeekPatternsReq) (*DeleteTourWeekPatternsRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteTourWeekPatterns not implemented")
+}
 func (UnimplementedWFMServer) CreateTourShiftInstanceConfig(context.Context, *CreateTourShiftInstanceConfigReq) (*CreateTourShiftInstanceConfigRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateTourShiftInstanceConfig not implemented")
+}
+func (UnimplementedWFMServer) UpdateTourShiftInstanceConfig(context.Context, *UpdateTourShiftInstanceConfigReq) (*UpdateTourShiftInstanceConfigRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateTourShiftInstanceConfig not implemented")
 }
 func (UnimplementedWFMServer) ListTourShiftInstanceConfigs(context.Context, *ListTourShiftInstanceConfigsReq) (*ListTourShiftInstanceConfigsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListTourShiftInstanceConfigs not implemented")
 }
+func (UnimplementedWFMServer) DeleteTourShiftInstanceConfigs(context.Context, *DeleteTourShiftInstanceConfigsReq) (*DeleteTourShiftInstanceConfigsRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteTourShiftInstanceConfigs not implemented")
+}
 func (UnimplementedWFMServer) CreateTourShiftSegmentConfig(context.Context, *CreateTourShiftSegmentConfigReq) (*CreateTourShiftSegmentConfigRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateTourShiftSegmentConfig not implemented")
+}
+func (UnimplementedWFMServer) UpdateTourShiftSegmentConfig(context.Context, *UpdateTourShiftSegmentConfigReq) (*UpdateTourShiftSegmentConfigRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateTourShiftSegmentConfig not implemented")
 }
 func (UnimplementedWFMServer) ListTourShiftSegmentConfigs(context.Context, *ListTourShiftSegmentConfigsReq) (*ListTourShiftSegmentConfigsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListTourShiftSegmentConfigs not implemented")
 }
+func (UnimplementedWFMServer) DeleteTourShiftSegmentConfigs(context.Context, *DeleteTourShiftSegmentConfigsReq) (*DeleteTourShiftSegmentConfigsRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteTourShiftSegmentConfigs not implemented")
+}
 func (UnimplementedWFMServer) CreateTourAgentCollection(context.Context, *CreateTourAgentCollectionReq) (*CreateTourAgentCollectionRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateTourAgentCollection not implemented")
 }
+func (UnimplementedWFMServer) UpdateTourAgentCollection(context.Context, *UpdateTourAgentCollectionReq) (*UpdateTourAgentCollectionRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateTourAgentCollection not implemented")
+}
 func (UnimplementedWFMServer) ListTourAgentCollections(context.Context, *ListTourAgentCollectionsReq) (*ListTourAgentCollectionsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListTourAgentCollections not implemented")
+}
+func (UnimplementedWFMServer) DeleteTourAgentCollections(context.Context, *DeleteTourAgentCollectionsReq) (*DeleteTourAgentCollectionsRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteTourAgentCollections not implemented")
 }
 func (UnimplementedWFMServer) CreateTourAgentCollectionWFMAgents(context.Context, *CreateTourAgentCollectionWFMAgentsReq) (*CreateTourAgentCollectionWFMAgentsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateTourAgentCollectionWFMAgents not implemented")
 }
 func (UnimplementedWFMServer) ListTourAgentCollectionWFMAgents(context.Context, *ListTourAgentCollectionWFMAgentsReq) (*ListTourAgentCollectionWFMAgentsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListTourAgentCollectionWFMAgents not implemented")
+}
+func (UnimplementedWFMServer) DeleteTourAgentCollectionWFMAgents(context.Context, *DeleteTourAgentCollectionWFMAgentsReq) (*DeleteTourAgentCollectionWFMAgentsRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteTourAgentCollectionWFMAgents not implemented")
 }
 func (UnimplementedWFMServer) mustEmbedUnimplementedWFMServer() {}
 
@@ -5347,6 +5826,78 @@ func _WFM_DisconnectInactiveSkillProfileMapping_Handler(srv interface{}, ctx con
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WFMServer).DisconnectInactiveSkillProfileMapping(ctx, req.(*DisconnectInactiveSkillProfileMappingReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_CreateSkillProfileGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateSkillProfileGroupReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).CreateSkillProfileGroup(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_CreateSkillProfileGroup_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).CreateSkillProfileGroup(ctx, req.(*CreateSkillProfileGroupReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_UpdateSkillProfileGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateSkillProfileGroupReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).UpdateSkillProfileGroup(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_UpdateSkillProfileGroup_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).UpdateSkillProfileGroup(ctx, req.(*UpdateSkillProfileGroupReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_ListSkillProfileGroups_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListSkillProfileGroupsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).ListSkillProfileGroups(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_ListSkillProfileGroups_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).ListSkillProfileGroups(ctx, req.(*ListSkillProfileGroupsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_UpdateSkillProfileGroupAssociations_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateSkillProfileGroupAssociationsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).UpdateSkillProfileGroupAssociations(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_UpdateSkillProfileGroupAssociations_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).UpdateSkillProfileGroupAssociations(ctx, req.(*UpdateSkillProfileGroupAssociationsReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -7223,6 +7774,42 @@ func _WFM_DeleteSchedulingTarget_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_GetDefaultSchedulingTarget_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetDefaultSchedulingTargetReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).GetDefaultSchedulingTarget(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_GetDefaultSchedulingTarget_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).GetDefaultSchedulingTarget(ctx, req.(*GetDefaultSchedulingTargetReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_SetDefaultSchedulingTarget_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetDefaultSchedulingTargetReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).SetDefaultSchedulingTarget(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_SetDefaultSchedulingTarget_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).SetDefaultSchedulingTarget(ctx, req.(*SetDefaultSchedulingTargetReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WFM_GetPerformanceMetrics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetPerformanceMetricsReq)
 	if err := dec(in); err != nil {
@@ -7295,6 +7882,24 @@ func _WFM_GetTourPattern_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_DeleteTourPattern_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteTourPatternReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).DeleteTourPattern(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_DeleteTourPattern_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).DeleteTourPattern(ctx, req.(*DeleteTourPatternReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WFM_CreateTourWeekPattern_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateTourWeekPatternReq)
 	if err := dec(in); err != nil {
@@ -7331,6 +7936,24 @@ func _WFM_ListTourWeekPatterns_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_DeleteTourWeekPatterns_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteTourWeekPatternsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).DeleteTourWeekPatterns(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_DeleteTourWeekPatterns_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).DeleteTourWeekPatterns(ctx, req.(*DeleteTourWeekPatternsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WFM_CreateTourShiftInstanceConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateTourShiftInstanceConfigReq)
 	if err := dec(in); err != nil {
@@ -7345,6 +7968,24 @@ func _WFM_CreateTourShiftInstanceConfig_Handler(srv interface{}, ctx context.Con
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WFMServer).CreateTourShiftInstanceConfig(ctx, req.(*CreateTourShiftInstanceConfigReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_UpdateTourShiftInstanceConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateTourShiftInstanceConfigReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).UpdateTourShiftInstanceConfig(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_UpdateTourShiftInstanceConfig_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).UpdateTourShiftInstanceConfig(ctx, req.(*UpdateTourShiftInstanceConfigReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -7367,6 +8008,24 @@ func _WFM_ListTourShiftInstanceConfigs_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_DeleteTourShiftInstanceConfigs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteTourShiftInstanceConfigsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).DeleteTourShiftInstanceConfigs(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_DeleteTourShiftInstanceConfigs_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).DeleteTourShiftInstanceConfigs(ctx, req.(*DeleteTourShiftInstanceConfigsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WFM_CreateTourShiftSegmentConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateTourShiftSegmentConfigReq)
 	if err := dec(in); err != nil {
@@ -7381,6 +8040,24 @@ func _WFM_CreateTourShiftSegmentConfig_Handler(srv interface{}, ctx context.Cont
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WFMServer).CreateTourShiftSegmentConfig(ctx, req.(*CreateTourShiftSegmentConfigReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_UpdateTourShiftSegmentConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateTourShiftSegmentConfigReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).UpdateTourShiftSegmentConfig(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_UpdateTourShiftSegmentConfig_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).UpdateTourShiftSegmentConfig(ctx, req.(*UpdateTourShiftSegmentConfigReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -7403,6 +8080,24 @@ func _WFM_ListTourShiftSegmentConfigs_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_DeleteTourShiftSegmentConfigs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteTourShiftSegmentConfigsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).DeleteTourShiftSegmentConfigs(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_DeleteTourShiftSegmentConfigs_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).DeleteTourShiftSegmentConfigs(ctx, req.(*DeleteTourShiftSegmentConfigsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WFM_CreateTourAgentCollection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateTourAgentCollectionReq)
 	if err := dec(in); err != nil {
@@ -7421,6 +8116,24 @@ func _WFM_CreateTourAgentCollection_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_UpdateTourAgentCollection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateTourAgentCollectionReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).UpdateTourAgentCollection(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_UpdateTourAgentCollection_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).UpdateTourAgentCollection(ctx, req.(*UpdateTourAgentCollectionReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WFM_ListTourAgentCollections_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListTourAgentCollectionsReq)
 	if err := dec(in); err != nil {
@@ -7435,6 +8148,24 @@ func _WFM_ListTourAgentCollections_Handler(srv interface{}, ctx context.Context,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WFMServer).ListTourAgentCollections(ctx, req.(*ListTourAgentCollectionsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_DeleteTourAgentCollections_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteTourAgentCollectionsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).DeleteTourAgentCollections(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_DeleteTourAgentCollections_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).DeleteTourAgentCollections(ctx, req.(*DeleteTourAgentCollectionsReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -7471,6 +8202,24 @@ func _WFM_ListTourAgentCollectionWFMAgents_Handler(srv interface{}, ctx context.
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WFMServer).ListTourAgentCollectionWFMAgents(ctx, req.(*ListTourAgentCollectionWFMAgentsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_DeleteTourAgentCollectionWFMAgents_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteTourAgentCollectionWFMAgentsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).DeleteTourAgentCollectionWFMAgents(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_DeleteTourAgentCollectionWFMAgents_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).DeleteTourAgentCollectionWFMAgents(ctx, req.(*DeleteTourAgentCollectionWFMAgentsReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -7549,6 +8298,22 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DisconnectInactiveSkillProfileMapping",
 			Handler:    _WFM_DisconnectInactiveSkillProfileMapping_Handler,
+		},
+		{
+			MethodName: "CreateSkillProfileGroup",
+			Handler:    _WFM_CreateSkillProfileGroup_Handler,
+		},
+		{
+			MethodName: "UpdateSkillProfileGroup",
+			Handler:    _WFM_UpdateSkillProfileGroup_Handler,
+		},
+		{
+			MethodName: "ListSkillProfileGroups",
+			Handler:    _WFM_ListSkillProfileGroups_Handler,
+		},
+		{
+			MethodName: "UpdateSkillProfileGroupAssociations",
+			Handler:    _WFM_UpdateSkillProfileGroupAssociations_Handler,
 		},
 		{
 			MethodName: "DeleteHistoricalDataDeltas",
@@ -7939,6 +8704,14 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _WFM_DeleteSchedulingTarget_Handler,
 		},
 		{
+			MethodName: "GetDefaultSchedulingTarget",
+			Handler:    _WFM_GetDefaultSchedulingTarget_Handler,
+		},
+		{
+			MethodName: "SetDefaultSchedulingTarget",
+			Handler:    _WFM_SetDefaultSchedulingTarget_Handler,
+		},
+		{
 			MethodName: "GetPerformanceMetrics",
 			Handler:    _WFM_GetPerformanceMetrics_Handler,
 		},
@@ -7955,6 +8728,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _WFM_GetTourPattern_Handler,
 		},
 		{
+			MethodName: "DeleteTourPattern",
+			Handler:    _WFM_DeleteTourPattern_Handler,
+		},
+		{
 			MethodName: "CreateTourWeekPattern",
 			Handler:    _WFM_CreateTourWeekPattern_Handler,
 		},
@@ -7963,28 +8740,56 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _WFM_ListTourWeekPatterns_Handler,
 		},
 		{
+			MethodName: "DeleteTourWeekPatterns",
+			Handler:    _WFM_DeleteTourWeekPatterns_Handler,
+		},
+		{
 			MethodName: "CreateTourShiftInstanceConfig",
 			Handler:    _WFM_CreateTourShiftInstanceConfig_Handler,
+		},
+		{
+			MethodName: "UpdateTourShiftInstanceConfig",
+			Handler:    _WFM_UpdateTourShiftInstanceConfig_Handler,
 		},
 		{
 			MethodName: "ListTourShiftInstanceConfigs",
 			Handler:    _WFM_ListTourShiftInstanceConfigs_Handler,
 		},
 		{
+			MethodName: "DeleteTourShiftInstanceConfigs",
+			Handler:    _WFM_DeleteTourShiftInstanceConfigs_Handler,
+		},
+		{
 			MethodName: "CreateTourShiftSegmentConfig",
 			Handler:    _WFM_CreateTourShiftSegmentConfig_Handler,
+		},
+		{
+			MethodName: "UpdateTourShiftSegmentConfig",
+			Handler:    _WFM_UpdateTourShiftSegmentConfig_Handler,
 		},
 		{
 			MethodName: "ListTourShiftSegmentConfigs",
 			Handler:    _WFM_ListTourShiftSegmentConfigs_Handler,
 		},
 		{
+			MethodName: "DeleteTourShiftSegmentConfigs",
+			Handler:    _WFM_DeleteTourShiftSegmentConfigs_Handler,
+		},
+		{
 			MethodName: "CreateTourAgentCollection",
 			Handler:    _WFM_CreateTourAgentCollection_Handler,
 		},
 		{
+			MethodName: "UpdateTourAgentCollection",
+			Handler:    _WFM_UpdateTourAgentCollection_Handler,
+		},
+		{
 			MethodName: "ListTourAgentCollections",
 			Handler:    _WFM_ListTourAgentCollections_Handler,
+		},
+		{
+			MethodName: "DeleteTourAgentCollections",
+			Handler:    _WFM_DeleteTourAgentCollections_Handler,
 		},
 		{
 			MethodName: "CreateTourAgentCollectionWFMAgents",
@@ -7993,6 +8798,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListTourAgentCollectionWFMAgents",
 			Handler:    _WFM_ListTourAgentCollectionWFMAgents_Handler,
+		},
+		{
+			MethodName: "DeleteTourAgentCollectionWFMAgents",
+			Handler:    _WFM_DeleteTourAgentCollectionWFMAgents_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
