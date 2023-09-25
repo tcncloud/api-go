@@ -24,8 +24,8 @@ const (
 type LearningOpportunityStatus int32
 
 const (
-	LearningOpportunityStatus_STATUS_OPEN      LearningOpportunityStatus = 0
-	LearningOpportunityStatus_STATUS_COMPLETED LearningOpportunityStatus = 1
+	LearningOpportunityStatus_STATUS_OPEN      LearningOpportunityStatus = 0 // Default status - Ready to be completed by the agent.
+	LearningOpportunityStatus_STATUS_COMPLETED LearningOpportunityStatus = 1 // Agent has completed the learning opportunity.
 )
 
 // Enum value maps for LearningOpportunityStatus.
