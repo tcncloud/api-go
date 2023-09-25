@@ -46,9 +46,14 @@ const (
 	WFM_UpsertHistoricalDataDeltas_FullMethodName                    = "/api.v1alpha1.wfm.WFM/UpsertHistoricalDataDeltas"
 	WFM_ListSkills_FullMethodName                                    = "/api.v1alpha1.wfm.WFM/ListSkills"
 	WFM_BuildCallProfileTemplateForSkillProfile_FullMethodName       = "/api.v1alpha1.wfm.WFM/BuildCallProfileTemplateForSkillProfile"
+	WFM_BuildCallProfileTemplate_FullMethodName                      = "/api.v1alpha1.wfm.WFM/BuildCallProfileTemplate"
 	WFM_CreateInactiveSkillProfileMapping_FullMethodName             = "/api.v1alpha1.wfm.WFM/CreateInactiveSkillProfileMapping"
 	WFM_GetAvailableRegressionForecasterModelTypes_FullMethodName    = "/api.v1alpha1.wfm.WFM/GetAvailableRegressionForecasterModelTypes"
 	WFM_DisconnectInactiveSkillProfileMapping_FullMethodName         = "/api.v1alpha1.wfm.WFM/DisconnectInactiveSkillProfileMapping"
+	WFM_CreateSkillProfileGroup_FullMethodName                       = "/api.v1alpha1.wfm.WFM/CreateSkillProfileGroup"
+	WFM_UpdateSkillProfileGroup_FullMethodName                       = "/api.v1alpha1.wfm.WFM/UpdateSkillProfileGroup"
+	WFM_ListSkillProfileGroups_FullMethodName                        = "/api.v1alpha1.wfm.WFM/ListSkillProfileGroups"
+	WFM_UpdateSkillProfileGroupAssociations_FullMethodName           = "/api.v1alpha1.wfm.WFM/UpdateSkillProfileGroupAssociations"
 	WFM_DeleteHistoricalDataDeltas_FullMethodName                    = "/api.v1alpha1.wfm.WFM/DeleteHistoricalDataDeltas"
 	WFM_ListTopSkillProfiles_FullMethodName                          = "/api.v1alpha1.wfm.WFM/ListTopSkillProfiles"
 	WFM_GetSkillProfilesCount_FullMethodName                         = "/api.v1alpha1.wfm.WFM/GetSkillProfilesCount"
@@ -61,6 +66,7 @@ const (
 	WFM_DeleteRegressionTemplate_FullMethodName                      = "/api.v1alpha1.wfm.WFM/DeleteRegressionTemplate"
 	WFM_ListRegressionTemplates_FullMethodName                       = "/api.v1alpha1.wfm.WFM/ListRegressionTemplates"
 	WFM_ListForecastIntervalsForSkillProfile_FullMethodName          = "/api.v1alpha1.wfm.WFM/ListForecastIntervalsForSkillProfile"
+	WFM_ListForecastIntervals_FullMethodName                         = "/api.v1alpha1.wfm.WFM/ListForecastIntervals"
 	WFM_BuildRegressionForecastByInterval_FullMethodName             = "/api.v1alpha1.wfm.WFM/BuildRegressionForecastByInterval"
 	WFM_BuildRegressionForecastByIntervalWithStats_FullMethodName    = "/api.v1alpha1.wfm.WFM/BuildRegressionForecastByIntervalWithStats"
 	WFM_ListCallProfileTemplates_FullMethodName                      = "/api.v1alpha1.wfm.WFM/ListCallProfileTemplates"
@@ -79,11 +85,13 @@ const (
 	WFM_UpdateLocationNode_FullMethodName                            = "/api.v1alpha1.wfm.WFM/UpdateLocationNode"
 	WFM_CreateProgramNode_FullMethodName                             = "/api.v1alpha1.wfm.WFM/CreateProgramNode"
 	WFM_UpdateProgramNode_FullMethodName                             = "/api.v1alpha1.wfm.WFM/UpdateProgramNode"
+	WFM_ListProgramNodesBySid_FullMethodName                         = "/api.v1alpha1.wfm.WFM/ListProgramNodesBySid"
 	WFM_CreateConstraintRule_FullMethodName                          = "/api.v1alpha1.wfm.WFM/CreateConstraintRule"
 	WFM_UpdateConstraintRule_FullMethodName                          = "/api.v1alpha1.wfm.WFM/UpdateConstraintRule"
 	WFM_DeleteConstraintRule_FullMethodName                          = "/api.v1alpha1.wfm.WFM/DeleteConstraintRule"
 	WFM_CreateNonSkillActivity_FullMethodName                        = "/api.v1alpha1.wfm.WFM/CreateNonSkillActivity"
 	WFM_UpdateNonSkillActivity_FullMethodName                        = "/api.v1alpha1.wfm.WFM/UpdateNonSkillActivity"
+	WFM_ListNonSkillActivities_FullMethodName                        = "/api.v1alpha1.wfm.WFM/ListNonSkillActivities"
 	WFM_ListNonSkillActivityAssociations_FullMethodName              = "/api.v1alpha1.wfm.WFM/ListNonSkillActivityAssociations"
 	WFM_ListCandidateSchedulingActivities_FullMethodName             = "/api.v1alpha1.wfm.WFM/ListCandidateSchedulingActivities"
 	WFM_CreateAgentGroup_FullMethodName                              = "/api.v1alpha1.wfm.WFM/CreateAgentGroup"
@@ -92,6 +100,7 @@ const (
 	WFM_ListAllWFMAgents_FullMethodName                              = "/api.v1alpha1.wfm.WFM/ListAllWFMAgents"
 	WFM_ListCandidateWFMAgents_FullMethodName                        = "/api.v1alpha1.wfm.WFM/ListCandidateWFMAgents"
 	WFM_ListUngroupedWFMAgents_FullMethodName                        = "/api.v1alpha1.wfm.WFM/ListUngroupedWFMAgents"
+	WFM_ListWFMAgentSids_FullMethodName                              = "/api.v1alpha1.wfm.WFM/ListWFMAgentSids"
 	WFM_ListWFMAgentsAssociatedWithAgentGroup_FullMethodName         = "/api.v1alpha1.wfm.WFM/ListWFMAgentsAssociatedWithAgentGroup"
 	WFM_CreateWFMAgentMemberships_FullMethodName                     = "/api.v1alpha1.wfm.WFM/CreateWFMAgentMemberships"
 	WFM_DeleteWFMAgentMemberships_FullMethodName                     = "/api.v1alpha1.wfm.WFM/DeleteWFMAgentMemberships"
@@ -133,7 +142,9 @@ const (
 	WFM_ResetDraftSchedule_FullMethodName                            = "/api.v1alpha1.wfm.WFM/ResetDraftSchedule"
 	WFM_GetDraftSchedule_FullMethodName                              = "/api.v1alpha1.wfm.WFM/GetDraftSchedule"
 	WFM_ListDraftSchedules_FullMethodName                            = "/api.v1alpha1.wfm.WFM/ListDraftSchedules"
+	WFM_ClearSchedule_FullMethodName                                 = "/api.v1alpha1.wfm.WFM/ClearSchedule"
 	WFM_DeleteDraftSchedule_FullMethodName                           = "/api.v1alpha1.wfm.WFM/DeleteDraftSchedule"
+	WFM_ListShiftInstancesBySid_FullMethodName                       = "/api.v1alpha1.wfm.WFM/ListShiftInstancesBySid"
 	WFM_CopyScheduleToSchedule_FullMethodName                        = "/api.v1alpha1.wfm.WFM/CopyScheduleToSchedule"
 	WFM_CreateShiftInstance_FullMethodName                           = "/api.v1alpha1.wfm.WFM/CreateShiftInstance"
 	WFM_CreateShiftInstanceV2_FullMethodName                         = "/api.v1alpha1.wfm.WFM/CreateShiftInstanceV2"
@@ -146,6 +157,8 @@ const (
 	WFM_SetSchedulingTarget_FullMethodName                           = "/api.v1alpha1.wfm.WFM/SetSchedulingTarget"
 	WFM_GetSchedulingTarget_FullMethodName                           = "/api.v1alpha1.wfm.WFM/GetSchedulingTarget"
 	WFM_DeleteSchedulingTarget_FullMethodName                        = "/api.v1alpha1.wfm.WFM/DeleteSchedulingTarget"
+	WFM_GetDefaultSchedulingTarget_FullMethodName                    = "/api.v1alpha1.wfm.WFM/GetDefaultSchedulingTarget"
+	WFM_SetDefaultSchedulingTarget_FullMethodName                    = "/api.v1alpha1.wfm.WFM/SetDefaultSchedulingTarget"
 	WFM_GetPerformanceMetrics_FullMethodName                         = "/api.v1alpha1.wfm.WFM/GetPerformanceMetrics"
 	WFM_ListRequiredCallsIntervals_FullMethodName                    = "/api.v1alpha1.wfm.WFM/ListRequiredCallsIntervals"
 )
@@ -232,19 +245,18 @@ type WFMClient interface {
 	// Errors:
 	//   - grpc.Internal: error occurs when getting the parameters.
 	GetForecastingParameters(ctx context.Context, in *GetForecastingParametersReq, opts ...grpc.CallOption) (*GetForecastingParametersRes, error)
-	// Gets the historical data for the org sending the request and the given @skill_profile_sid.
+	// Gets the historical data for the org sending the request and the given @skill_profile_category.
 	// It will look through the client's call history and generate the historical data by using their configured forecasting parameters (historical data period and interval width).
 	// The duration of each interval will be the interval width of the org's forecasting parameters.
-	// It also applies any deltas that the client has stored for the given @SkillProfileSid.
+	// It also applies any deltas that the client has stored for the given @skill_profile_category, if the category is a group it will use the deltas of the skill profiles part of that group.
 	// If the client has no historical data, only the deltas will be applied to the returned intervals, all other intervals will have nil averages.
-	// If any inactive skill profiles are mapped to the given @skill_profile_sid, the call history and deltas of those skill profiles will be included for the historical data calculation.
 	// Required permissions:
 	//
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @skill_profile_sid in the request is invalid.
-	//   - grpc.NotFound: the @skill_profile_sid given is not found for the org.
+	//   - grpc.Invalid: the @skill_profile_category in the request is invalid.
+	//   - grpc.NotFound: the @skill_profile_category given is not found for the org.
 	//   - grpc.Internal: error occurs when getting the historical data.
 	ListHistoricalData(ctx context.Context, in *ListHistoricalDataReq, opts ...grpc.CallOption) (*ListHistoricalDataRes, error)
 	// Tries to create an entry for the given @delta for the org sending the request.
@@ -277,12 +289,14 @@ type WFMClient interface {
 	// Errors:
 	//   - grpc.Internal: error occurs when getting the skills.
 	ListSkills(ctx context.Context, in *ListSkillsReq, opts ...grpc.CallOption) (*ListSkillsRes, error)
+	// Deprecated: Do not use.
 	// Builds and returns a call profile template for the org sending the request and the given @skill_profile_sid.
 	// The template will be generated using the training data for said skill profile using the @training_data_range and @averages_calculation_range_in_months
 	// from the client's saved forecasting parameters.
 	// The @total_calls in the returned template be summed from the (@training_data_start_datetime - @averages_calculation_range_in_months) to @training_data_end_datetime,
 	// or from @training_data_start_datetime to @training_data_end_datetime if @averages_calculation_range_in_months is 0.
 	// The fixed averages fields in the call profile template, will be set to the averages that the skill profile has.
+	// DEPRECATED as of Sep/7/2023 - Use BuildCallProfileTemplate instead.
 	// Required permissions:
 	//
 	//	NONE
@@ -292,6 +306,21 @@ type WFMClient interface {
 	//   - grpc.NotFound: the @skill_profile_sid given is not found for the org.
 	//   - grpc.Internal: error occurs when building the call profile template.
 	BuildCallProfileTemplateForSkillProfile(ctx context.Context, in *BuildCallProfileTemplateForSkillProfileReq, opts ...grpc.CallOption) (*BuildCallProfileTemplateForSkillProfileRes, error)
+	// Builds and returns a call profile template for the org sending the request and the given @skill_profile_category.
+	// The template will be generated using the training data for said skill profile category using the @training_data_range and @averages_calculation_range_in_months
+	// from the client's saved forecasting parameters.
+	// The @total_calls in the returned template be summed from the (@training_data_start_datetime - @averages_calculation_range_in_months) to @training_data_end_datetime,
+	// or from @training_data_start_datetime to @training_data_end_datetime if @averages_calculation_range_in_months is 0.
+	// The fixed averages fields in the call profile template, will be set to the averages that the skill profile category has.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @skill_profile_category in the request is invalid.
+	//   - grpc.NotFound: the @skill_profile_category given is not found for the org.
+	//   - grpc.Internal: error occurs when building the call profile template.
+	BuildCallProfileTemplate(ctx context.Context, in *BuildCallProfileTemplateReq, opts ...grpc.CallOption) (*BuildCallProfileTemplateRes, error)
 	// Creates a mapping entry for the @inactive_skill_profile_sid to the @active_skill_profile_sid for the org sending the request.
 	// Required permissions:
 	//
@@ -323,6 +352,48 @@ type WFMClient interface {
 	//   - grpc.Internal: the current mapping for the given @inactive_skill_profile_sid is already disconnected,
 	//     the given @inactive_skill_profile_sid is of an active skill profile.
 	DisconnectInactiveSkillProfileMapping(ctx context.Context, in *DisconnectInactiveSkillProfileMappingReq, opts ...grpc.CallOption) (*DisconnectInactiveSkillProfileMappingRes, error)
+	// Creates the given @skill_profile_group.
+	// @skill_profile_group_sids will be ignored since associations cannot be created by this method.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @skill_profile_group in the request is invalid.
+	//   - grpc.Internal: error occurs creating the skill profile group.
+	CreateSkillProfileGroup(ctx context.Context, in *CreateSkillProfileGroupReq, opts ...grpc.CallOption) (*CreateSkillProfileGroupRes, error)
+	// Updates the given @skill_profile_group that has the @skill_profile_group_sid for the org sending the request.
+	// @skill_profile_group_sids will be ignored since associations cannot be updated by this method.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @skill_profile_group in the request is invalid.
+	//   - grpc.NotFound: the skill profile group to update doesn't exist.
+	//   - grpc.Internal: error occurs updating the skill profile group.
+	UpdateSkillProfileGroup(ctx context.Context, in *UpdateSkillProfileGroupReq, opts ...grpc.CallOption) (*UpdateSkillProfileGroupRes, error)
+	// Gets the skill profile groups that have the @skill_profile_group_sids for the org sending the request.
+	// If @skill_profile_group_sids is empty it will get all the skill profile groups for the org.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @skill_profile_group_sids in the request is invalid.
+	//   - grpc.Internal: error occurs getting the skill profile groups.
+	ListSkillProfileGroups(ctx context.Context, in *ListSkillProfileGroupsReq, opts ...grpc.CallOption) (*ListSkillProfileGroupsRes, error)
+	// Updates associations of the given @skill_profile_group_sid for the org sending the request.
+	// It will create the associations with the @skill_profile_sids_to_associate, and remove the associations with the @skill_profile_sids_to_disassociate.
+	// Only one of the skill_profile_sids fields needs to be set, but both can be set on the same request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the values in the request are invalid.
+	//   - grpc.Internal: error occurs updating the skill profile group associations.
+	UpdateSkillProfileGroupAssociations(ctx context.Context, in *UpdateSkillProfileGroupAssociationsReq, opts ...grpc.CallOption) (*UpdateSkillProfileGroupAssociationsRes, error)
 	// Deletes deltas whose dates match the given @start_datetimes for the given @skill_profile_sid.
 	// If no @start_datetimes are given, it will delete all the deltas that the given @skill_profile_sid has.
 	// Required permissions:
@@ -356,28 +427,28 @@ type WFMClient interface {
 	// Builds a profile forecast using the provided @call_profile_template.
 	// The forecaster will produce intervals from the following range using the client's saved forecasting parameters:
 	// (@training_data_range_end_datetime - @forecast_test_range_in_weeks) to @forecast_range_end_datetime.
-	// The @total_calls in the @call_profile_template will be scaled using the same ranges as BuildCallProfileTemplateForSkillProfile.
+	// The @total_calls in the @call_profile_template will be scaled using the same ranges as BuildCallProfileTemplate.
 	// The @fixed_averages_forecast field indicates whether or not to do a fixed averages forecast.
 	// Required permissions:
 	//
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @skill_profile_sid or @call_profile_template in the request is invalid.
+	//   - grpc.Invalid: the @skill_profile_category or @call_profile_template in the request is invalid.
 	//   - grpc.Internal: error occurs during the building of the profile forecast.
 	BuildProfileForecastByInterval(ctx context.Context, in *BuildProfileForecastByIntervalReq, opts ...grpc.CallOption) (WFM_BuildProfileForecastByIntervalClient, error)
 	// Builds a profile forecast using the provided @call_profile_template.
 	// The forecaster will produce intervals from the following range using the client's saved forecasting parameters:
 	// (@training_data_range_end_datetime - @forecast_test_range_in_weeks) to @forecast_range_end_datetime.
-	// The @total_calls in the @call_profile_template will be scaled using the same ranges as BuildCallProfileTemplateForSkillProfile.
+	// The @total_calls in the @call_profile_template will be scaled using the same ranges as BuildCallProfileTemplate.
 	// The @fixed_averages_forecast field indicates whether or not to do a fixed averages forecast.
-	// It also returns the statistics of the produced forecast by using the test data of the given @skill_profile_sid.
+	// It also returns the statistics of the produced forecast by using the test data of the given @skill_profile_category.
 	// Required permissions:
 	//
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @skill_profile_sid or @call_profile_template in the request is invalid.
+	//   - grpc.Invalid: the @skill_profile_category or @call_profile_template in the request is invalid.
 	//   - grpc.Internal: error occurs during the building of the profile forecast.
 	BuildProfileForecastByIntervalWithStats(ctx context.Context, in *BuildProfileForecastByIntervalWithStatsReq, opts ...grpc.CallOption) (WFM_BuildProfileForecastByIntervalWithStatsClient, error)
 	// Builds a profile forecast for the given @skill_profile_sid and org sending the request using the given @call_profile_template.
@@ -439,7 +510,9 @@ type WFMClient interface {
 	// Errors:
 	//   - grpc.Internal: error occurs when getting the regression templates.
 	ListRegressionTemplates(ctx context.Context, in *ListRegressionTemplatesReq, opts ...grpc.CallOption) (*ListRegressionTemplatesRes, error)
+	// Deprecated: Do not use.
 	// Gets the forecast data intervals for the given @skill_profile_sid.
+	// DEPRECATED as of Sep/13/2023 - Use ListForecastIntervals instead.
 	// Required permissions:
 	//
 	//	NONE
@@ -448,9 +521,17 @@ type WFMClient interface {
 	//   - grpc.Invalid: the @skill_profile_sid in the request is invalid.
 	//   - grpc.Internal: error occurs when getting the forecast data intervals.
 	ListForecastIntervalsForSkillProfile(ctx context.Context, in *ListForecastIntervalsForSkillProfileReq, opts ...grpc.CallOption) (WFM_ListForecastIntervalsForSkillProfileClient, error)
+	// Gets the forecast data intervals for the given @skill_profile_category.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @skill_profile_category in the request is invalid.
+	//   - grpc.Internal: error occurs when getting the forecast data intervals.
+	ListForecastIntervals(ctx context.Context, in *ListForecastIntervalsReq, opts ...grpc.CallOption) (WFM_ListForecastIntervalsClient, error)
 	// Generates a regression forecast using the provided @regression_template.
-	// It will generate forecast intervals for the skill profiles sids in @skill_profile_sids_to_forecast,
-	// if the list is empty or has no valid skill profile sids, it will generate and save forecasts for all active skill profiles.
+	// It will generate forecast intervals for the skill profiles sids in @skill_profile_sids_to_forecast.
 	// It will use the client's saved forecasting test range as the start datetime and the forecast range as the end datetime of the forecasted data.
 	// It will use the client's saved interval width to divide the resulting forecast intervals.
 	// Required permissions:
@@ -458,18 +539,17 @@ type WFMClient interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @regression_template in the request is invalid.
+	//   - grpc.Invalid: no @skill_profile_sids_to_forecast are given or the @regression_template in the request is invalid.
 	//   - grpc.Internal: error occurs during the building of the regression forecast.
 	BuildRegressionForecastByInterval(ctx context.Context, in *BuildRegressionForecastByIntervalReq, opts ...grpc.CallOption) (WFM_BuildRegressionForecastByIntervalClient, error)
 	// Generates a regression forecast and calculates forecast statistics using the provided @regression_template.
-	// It will generate forecast intervals for the skill profiles sids in @skill_profile_sids_to_forecast,
-	// if the list is empty or has no valid skill profile sids, it will generate and save forecasts for all active skill profiles.
+	// It will generate forecast intervals for the skill profiles sids in @skill_profile_sids_to_forecast.
 	// It will use the client's saved forecasting test range as the start datetime and the forecast range as the end datetime of the forecasted data.
 	// It will use the client's saved interval width to divide the resulting forecast intervals.
 	// The first message received will be the forecast statistics while all subsequent ones will be the forecast intervals.
 	//
 	// Errors:
-	//   - grpc.Invalid: the @regression_template in the request is invalid.
+	//   - grpc.Invalid: no @skill_profile_sids_to_forecast are given or the @regression_template in the request is invalid.
 	//   - grpc.Internal: error occurs either during the when building the forecast or calculating the stats.
 	BuildRegressionForecastByIntervalWithStats(ctx context.Context, in *BuildRegressionForecastByIntervalWithStatsReq, opts ...grpc.CallOption) (WFM_BuildRegressionForecastByIntervalWithStatsClient, error)
 	// Gets the call profile templates that the org sending the request has.
@@ -513,7 +593,7 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when upserting the forecast data deltas.
 	UpsertForecastDataDeltas(ctx context.Context, in *UpsertForecastDataDeltasReq, opts ...grpc.CallOption) (*UpsertForecastDataDeltasRes, error)
 	// Deletes forecast data intervals/deltas based on the parameters provided.
-	// If @delete_param is type skill_profile_sid, then the intervals/deltas to be deleted will be
+	// If @delete_param is type skill_profile_category, then the intervals/deltas to be deleted will be
 	// associated with that id. If @delete_param is type interval_sids, then the intervals/deltas to be
 	// deleted will be contained in the list @interval_sids. The @delete_type field determines which
 	// table(s) in the database the intervals/deltas will be deleted from.
@@ -665,6 +745,15 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when updating the program node.
 	//   - grpc.NotFound: entry to be updated doesn't exist, or the given parent @location_node_sid belongs to a different scenario than the program node to update.
 	UpdateProgramNode(ctx context.Context, in *UpdateProgramNodeReq, opts ...grpc.CallOption) (*UpdateProgramNodeRes, error)
+	// Lists the program nodes with the given @program_node_sids for the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the given @program_node_sids are invalid.
+	//   - grpc.Internal: error occurs when listing the program nodes.
+	ListProgramNodesBySid(ctx context.Context, in *ListProgramNodesBySidReq, opts ...grpc.CallOption) (*ListProgramNodesBySidRes, error)
 	// Creates the given @constraint_rule for the org sending the request.
 	// The @constraint_rule_sid and @skill_proficiency_sid (if one was created) of the new entities will be returned in the response.
 	// The @schedule_scenario_sid must match the scenario of the @parent_entity.
@@ -732,6 +821,14 @@ type WFMClient interface {
 	//   - grpc.NotFound: non skill activity for the given @non_skill_activity_sid doesn't exist.
 	//   - grpc.Internal: error occurs when updating the non skill activity.
 	UpdateNonSkillActivity(ctx context.Context, in *UpdateNonSkillActivityReq, opts ...grpc.CallOption) (*UpdateNonSkillActivityRes, error)
+	// Lists the non skill activities that belong to the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:.
+	//   - grpc.Internal: error occurs when listing the activites.
+	ListNonSkillActivities(ctx context.Context, in *ListNonSkillActivitiesReq, opts ...grpc.CallOption) (*ListNonSkillActivitiesRes, error)
 	// Lists the IDs of non skill activities that belong to the org sending the request which have the given @relationship_type with the @associated_entity.
 	// Required permissions:
 	//
@@ -799,6 +896,10 @@ type WFMClient interface {
 	// if @include_inactive is true then inactive agents will also be included, otherwise only active agents will be returned.
 	// if @include_skill_proficiencies is true then agents returned will include their skill proficiencies.
 	// if @include_agent_groups is true then the @agent_groups_by_agent response field will be set with a list of agent groups correlating to each agents index in the @wfm_agents field.
+	// if @include_agent_groups is set to true, the @agent_group_schedule_scenario_sid field must be set, so that the agent groups for the correct scenario are returned.
+	// if @include_agent_groups is set to true, and @agent_group_schedule_scenario_sid is not set, the agent groups will not be filtered by schedule scenario.
+	// if @include_agent_groups is set to false, the @agent_group_schedule_scenario_sid will be ignored.
+	// @agent_group_schedule_scenario_sid does not effect which @wfm_agents are returned.
 	// WFM agents with no associated agent_groups will have an empty slice in agent_groups_by_agent at their correlated index.
 	// Required Permissions:
 	//
@@ -830,6 +931,17 @@ type WFMClient interface {
 	//   - grpc.Invalid: @created_after_datetime has an invalid value.
 	//   - grpc.Internal: error occurs when getting the wfm agents.
 	ListUngroupedWFMAgents(ctx context.Context, in *ListUngroupedWFMAgentsReq, opts ...grpc.CallOption) (*ListUngroupedWFMAgentsRes, error)
+	// Gets the wfm_agent_sids with the given @tcn_agent_sids for the org sending the request.
+	// Returns a map where Key: tcn_agent_sid - Value: wfm_agent_sid.
+	// If the wfm_agent_sid is not found for any @tcn_agent_sids, they will not have an entry in the returned @sids.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @tcn_agent_sids are invalid.
+	//   - grpc.Internal: error occours while listing the wfm_agent_sids.
+	ListWFMAgentSids(ctx context.Context, in *ListWFMAgentSidsReq, opts ...grpc.CallOption) (*ListWFMAgentSidsRes, error)
 	// Lists the IDs of wfm agents that belong to the org sending the request which are associated with the given @agent_group_sid.
 	// Required permissions:
 	//
@@ -1328,6 +1440,26 @@ type WFMClient interface {
 	//   - grpc.Invalid: the @datetime_range is invalid.
 	//   - grpc.Internal: error occurs when listing the draft schedules.
 	ListDraftSchedules(ctx context.Context, in *ListDraftSchedulesReq, opts ...grpc.CallOption) (*ListDraftSchedulesRes, error)
+	// Clears shift instances from the @schedule_selector for the org sending the request.
+	// If @node_selector is set, only shifts related to the given @node_selector will be cleared.
+	// If @node_selector is not set, all shifts on the @schedule_selector may be cleared, regardless of the shift template they are associated with.
+	// If @datetime_range is set, only the shifts overlapping the @datetime_range will be cleared.
+	// If @datetime_range is not set, all shifts on the schedule will be considered in range to be deleted and @invert_datetime_range and @start_datetimes_only must be set to false.
+	// If @invert_datetime_range is set to true, the shifts overlapping the range before and after the provided @datetime_range will be deleted.
+	// If @invert_datetime_range is set to false, the provided @datetime_range will be used.
+	// If @start_datetimes_only is set to true, deletes the shifts that start within the @datetime range, or start before or after @datetime_range if @invert_datetime_range is true.
+	// If @start_datetimes_only is set to false, deletes the shifts that overlap with the @datetime range, or overlap the range before or after @datetime_range if @invert_datetime_range is true.
+	// If @delete_locked is set to true, both locked and unlocked shifts will be cleared.
+	// If @delete_locked is set to false, only shifts with @is_locked set to false may be cleared.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @node_selector, @schedule_selector, or @datetime_range in the request are invalid.
+	//   - grpc.NotFound: the draft schedule with the given @schedule_selector doesn't exist.
+	//   - grpc.Internal: error occurs when removing the shifts from the schedule.
+	ClearSchedule(ctx context.Context, in *ClearScheduleReq, opts ...grpc.CallOption) (*ClearScheduleRes, error)
 	// Deletes a draft schedule with the corresponding @draft_schedule_sid for the org sending the request.
 	// It also deletes all of its shift instances and segments.
 	// Required permissions:
@@ -1339,6 +1471,21 @@ type WFMClient interface {
 	//   - grpc.NotFound: the draft schedule with the given @draft_schedule_sid doesn't exist.
 	//   - grpc.Internal: error occurs when removing the draft schedule.
 	DeleteDraftSchedule(ctx context.Context, in *DeleteDraftScheduleReq, opts ...grpc.CallOption) (*DeleteDraftScheduleRes, error)
+	// Lists the shift instances with the corresponding @shift_instance_sids for the org sending the request.
+	// If @include_shift_template is set to true then the related shift template for the shift instances will be returned in the shift template field.
+	// If @include_shift_segments is set to true then the related shift segments for the shift instances will be returned in the shift segments field.
+	// If @include_scheduling_activity is set to true then the related scheduling activity for the shift segment will be returned in the scheduling activity field.
+	// @include_shift_segments must be true to take effect.
+	// If @include_activity is set to true then the related non skill activity for the scheduling activity will be returned in the scheduling
+	// activities member non skill activity field. @include_scheduling_activity must be true to take effect.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @shift_instance_sids in the request are invalid.
+	//   - grpc.Internal: error occurs when listing the shift instances or their shift segments.
+	ListShiftInstancesBySid(ctx context.Context, in *ListShiftInstancesBySidReq, opts ...grpc.CallOption) (*ListShiftInstancesBySidRes, error)
 	// Copies the shifts from @source_schedule_selector to @destination_schedule_selector, constrained by the given parameters for the org sending the request.
 	// If @datetime_range is set, all shifts within the datetime range will be copied.
 	// If @datetime_range is not set, all shifts in the @source_schedule_selector within the schedule range of the @destination_schedule_selector will be copied. However if one of them is a published schedule, it will use the schedule range of the draft schedule.
@@ -1382,7 +1529,7 @@ type WFMClient interface {
 	// NONE
 	// Errors:
 	//   - grpc.Invalid: one or more fields in the request have invalid values.
-	//   - grpc.NotFound: wfm_agent_sid_1, wfm_agent_sid_2, or shift_instance_sids do not exist for org_id.
+	//   - grpc.NotFound: wfm_agent_sid_1, wfm_agent_sid_2, or shift_instance_sids do not exist for the org sending the request.
 	//   - grpc.Internal: error occurs when swapping the shift instances.
 	SwapShiftInstances(ctx context.Context, in *SwapShiftInstancesReq, opts ...grpc.CallOption) (*SwapShiftInstancesRes, error)
 	// Updates a shift instance for the org sending the request with the provided parameters.
@@ -1467,6 +1614,15 @@ type WFMClient interface {
 	//	-grpc.NotFound: the scheduling target for the given @node_selector doesn't exist for the org making the request.
 	//	-grpc.Internal: error occurs when removing the scheduling target.
 	DeleteSchedulingTarget(ctx context.Context, in *DeleteSchedulingTargetReq, opts ...grpc.CallOption) (*DeleteSchedulingTargetRes, error)
+	// Gets the scheduling-target values for the org making the request.
+	// Errors:
+	//   - grpc.Internal: error occours when getting the scheduling-target values.
+	GetDefaultSchedulingTarget(ctx context.Context, in *GetDefaultSchedulingTargetReq, opts ...grpc.CallOption) (*GetDefaultSchedulingTargetRes, error)
+	// Sets the scheduling-target values for the org making the request.
+	// Errors:
+	//   - grpc.Invalid: any of the given values are invalid.
+	//   - grpc.Internal: error occours when setting the scheduling-target values.
+	SetDefaultSchedulingTarget(ctx context.Context, in *SetDefaultSchedulingTargetReq, opts ...grpc.CallOption) (*SetDefaultSchedulingTargetRes, error)
 	// Gets the performance metrics across @datetime_range for shift instances in @schedule_selector associated with @node_selector for the org making the request.
 	// Performance metrics will be generated for each of the given @metric_params.
 	// The @interval_width_in_minutes must be a multiple of 5.
@@ -1607,9 +1763,19 @@ func (c *wFMClient) ListSkills(ctx context.Context, in *ListSkillsReq, opts ...g
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *wFMClient) BuildCallProfileTemplateForSkillProfile(ctx context.Context, in *BuildCallProfileTemplateForSkillProfileReq, opts ...grpc.CallOption) (*BuildCallProfileTemplateForSkillProfileRes, error) {
 	out := new(BuildCallProfileTemplateForSkillProfileRes)
 	err := c.cc.Invoke(ctx, WFM_BuildCallProfileTemplateForSkillProfile_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) BuildCallProfileTemplate(ctx context.Context, in *BuildCallProfileTemplateReq, opts ...grpc.CallOption) (*BuildCallProfileTemplateRes, error) {
+	out := new(BuildCallProfileTemplateRes)
+	err := c.cc.Invoke(ctx, WFM_BuildCallProfileTemplate_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1637,6 +1803,42 @@ func (c *wFMClient) GetAvailableRegressionForecasterModelTypes(ctx context.Conte
 func (c *wFMClient) DisconnectInactiveSkillProfileMapping(ctx context.Context, in *DisconnectInactiveSkillProfileMappingReq, opts ...grpc.CallOption) (*DisconnectInactiveSkillProfileMappingRes, error) {
 	out := new(DisconnectInactiveSkillProfileMappingRes)
 	err := c.cc.Invoke(ctx, WFM_DisconnectInactiveSkillProfileMapping_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) CreateSkillProfileGroup(ctx context.Context, in *CreateSkillProfileGroupReq, opts ...grpc.CallOption) (*CreateSkillProfileGroupRes, error) {
+	out := new(CreateSkillProfileGroupRes)
+	err := c.cc.Invoke(ctx, WFM_CreateSkillProfileGroup_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) UpdateSkillProfileGroup(ctx context.Context, in *UpdateSkillProfileGroupReq, opts ...grpc.CallOption) (*UpdateSkillProfileGroupRes, error) {
+	out := new(UpdateSkillProfileGroupRes)
+	err := c.cc.Invoke(ctx, WFM_UpdateSkillProfileGroup_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) ListSkillProfileGroups(ctx context.Context, in *ListSkillProfileGroupsReq, opts ...grpc.CallOption) (*ListSkillProfileGroupsRes, error) {
+	out := new(ListSkillProfileGroupsRes)
+	err := c.cc.Invoke(ctx, WFM_ListSkillProfileGroups_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) UpdateSkillProfileGroupAssociations(ctx context.Context, in *UpdateSkillProfileGroupAssociationsReq, opts ...grpc.CallOption) (*UpdateSkillProfileGroupAssociationsRes, error) {
+	out := new(UpdateSkillProfileGroupAssociationsRes)
+	err := c.cc.Invoke(ctx, WFM_UpdateSkillProfileGroupAssociations_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1788,6 +1990,7 @@ func (c *wFMClient) ListRegressionTemplates(ctx context.Context, in *ListRegress
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *wFMClient) ListForecastIntervalsForSkillProfile(ctx context.Context, in *ListForecastIntervalsForSkillProfileReq, opts ...grpc.CallOption) (WFM_ListForecastIntervalsForSkillProfileClient, error) {
 	stream, err := c.cc.NewStream(ctx, &WFM_ServiceDesc.Streams[2], WFM_ListForecastIntervalsForSkillProfile_FullMethodName, opts...)
 	if err != nil {
@@ -1820,8 +2023,40 @@ func (x *wFMListForecastIntervalsForSkillProfileClient) Recv() (*CallDataByInter
 	return m, nil
 }
 
+func (c *wFMClient) ListForecastIntervals(ctx context.Context, in *ListForecastIntervalsReq, opts ...grpc.CallOption) (WFM_ListForecastIntervalsClient, error) {
+	stream, err := c.cc.NewStream(ctx, &WFM_ServiceDesc.Streams[3], WFM_ListForecastIntervals_FullMethodName, opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &wFMListForecastIntervalsClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type WFM_ListForecastIntervalsClient interface {
+	Recv() (*CallDataByInterval, error)
+	grpc.ClientStream
+}
+
+type wFMListForecastIntervalsClient struct {
+	grpc.ClientStream
+}
+
+func (x *wFMListForecastIntervalsClient) Recv() (*CallDataByInterval, error) {
+	m := new(CallDataByInterval)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 func (c *wFMClient) BuildRegressionForecastByInterval(ctx context.Context, in *BuildRegressionForecastByIntervalReq, opts ...grpc.CallOption) (WFM_BuildRegressionForecastByIntervalClient, error) {
-	stream, err := c.cc.NewStream(ctx, &WFM_ServiceDesc.Streams[3], WFM_BuildRegressionForecastByInterval_FullMethodName, opts...)
+	stream, err := c.cc.NewStream(ctx, &WFM_ServiceDesc.Streams[4], WFM_BuildRegressionForecastByInterval_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1853,7 +2088,7 @@ func (x *wFMBuildRegressionForecastByIntervalClient) Recv() (*CallDataByInterval
 }
 
 func (c *wFMClient) BuildRegressionForecastByIntervalWithStats(ctx context.Context, in *BuildRegressionForecastByIntervalWithStatsReq, opts ...grpc.CallOption) (WFM_BuildRegressionForecastByIntervalWithStatsClient, error) {
-	stream, err := c.cc.NewStream(ctx, &WFM_ServiceDesc.Streams[4], WFM_BuildRegressionForecastByIntervalWithStats_FullMethodName, opts...)
+	stream, err := c.cc.NewStream(ctx, &WFM_ServiceDesc.Streams[5], WFM_BuildRegressionForecastByIntervalWithStats_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -2028,6 +2263,15 @@ func (c *wFMClient) UpdateProgramNode(ctx context.Context, in *UpdateProgramNode
 	return out, nil
 }
 
+func (c *wFMClient) ListProgramNodesBySid(ctx context.Context, in *ListProgramNodesBySidReq, opts ...grpc.CallOption) (*ListProgramNodesBySidRes, error) {
+	out := new(ListProgramNodesBySidRes)
+	err := c.cc.Invoke(ctx, WFM_ListProgramNodesBySid_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) CreateConstraintRule(ctx context.Context, in *CreateConstraintRuleReq, opts ...grpc.CallOption) (*CreateConstraintRuleRes, error) {
 	out := new(CreateConstraintRuleRes)
 	err := c.cc.Invoke(ctx, WFM_CreateConstraintRule_FullMethodName, in, out, opts...)
@@ -2067,6 +2311,15 @@ func (c *wFMClient) CreateNonSkillActivity(ctx context.Context, in *CreateNonSki
 func (c *wFMClient) UpdateNonSkillActivity(ctx context.Context, in *UpdateNonSkillActivityReq, opts ...grpc.CallOption) (*UpdateNonSkillActivityRes, error) {
 	out := new(UpdateNonSkillActivityRes)
 	err := c.cc.Invoke(ctx, WFM_UpdateNonSkillActivity_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) ListNonSkillActivities(ctx context.Context, in *ListNonSkillActivitiesReq, opts ...grpc.CallOption) (*ListNonSkillActivitiesRes, error) {
+	out := new(ListNonSkillActivitiesRes)
+	err := c.cc.Invoke(ctx, WFM_ListNonSkillActivities_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -2139,6 +2392,15 @@ func (c *wFMClient) ListCandidateWFMAgents(ctx context.Context, in *ListCandidat
 func (c *wFMClient) ListUngroupedWFMAgents(ctx context.Context, in *ListUngroupedWFMAgentsReq, opts ...grpc.CallOption) (*ListUngroupedWFMAgentsRes, error) {
 	out := new(ListUngroupedWFMAgentsRes)
 	err := c.cc.Invoke(ctx, WFM_ListUngroupedWFMAgents_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) ListWFMAgentSids(ctx context.Context, in *ListWFMAgentSidsReq, opts ...grpc.CallOption) (*ListWFMAgentSidsRes, error) {
+	out := new(ListWFMAgentSidsRes)
+	err := c.cc.Invoke(ctx, WFM_ListWFMAgentSids_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -2514,9 +2776,27 @@ func (c *wFMClient) ListDraftSchedules(ctx context.Context, in *ListDraftSchedul
 	return out, nil
 }
 
+func (c *wFMClient) ClearSchedule(ctx context.Context, in *ClearScheduleReq, opts ...grpc.CallOption) (*ClearScheduleRes, error) {
+	out := new(ClearScheduleRes)
+	err := c.cc.Invoke(ctx, WFM_ClearSchedule_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) DeleteDraftSchedule(ctx context.Context, in *DeleteDraftScheduleReq, opts ...grpc.CallOption) (*DeleteDraftScheduleRes, error) {
 	out := new(DeleteDraftScheduleRes)
 	err := c.cc.Invoke(ctx, WFM_DeleteDraftSchedule_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) ListShiftInstancesBySid(ctx context.Context, in *ListShiftInstancesBySidReq, opts ...grpc.CallOption) (*ListShiftInstancesBySidRes, error) {
+	out := new(ListShiftInstancesBySidRes)
+	err := c.cc.Invoke(ctx, WFM_ListShiftInstancesBySid_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -2631,6 +2911,24 @@ func (c *wFMClient) DeleteSchedulingTarget(ctx context.Context, in *DeleteSchedu
 	return out, nil
 }
 
+func (c *wFMClient) GetDefaultSchedulingTarget(ctx context.Context, in *GetDefaultSchedulingTargetReq, opts ...grpc.CallOption) (*GetDefaultSchedulingTargetRes, error) {
+	out := new(GetDefaultSchedulingTargetRes)
+	err := c.cc.Invoke(ctx, WFM_GetDefaultSchedulingTarget_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) SetDefaultSchedulingTarget(ctx context.Context, in *SetDefaultSchedulingTargetReq, opts ...grpc.CallOption) (*SetDefaultSchedulingTargetRes, error) {
+	out := new(SetDefaultSchedulingTargetRes)
+	err := c.cc.Invoke(ctx, WFM_SetDefaultSchedulingTarget_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) GetPerformanceMetrics(ctx context.Context, in *GetPerformanceMetricsReq, opts ...grpc.CallOption) (*GetPerformanceMetricsRes, error) {
 	out := new(GetPerformanceMetricsRes)
 	err := c.cc.Invoke(ctx, WFM_GetPerformanceMetrics_FullMethodName, in, out, opts...)
@@ -2731,19 +3029,18 @@ type WFMServer interface {
 	// Errors:
 	//   - grpc.Internal: error occurs when getting the parameters.
 	GetForecastingParameters(context.Context, *GetForecastingParametersReq) (*GetForecastingParametersRes, error)
-	// Gets the historical data for the org sending the request and the given @skill_profile_sid.
+	// Gets the historical data for the org sending the request and the given @skill_profile_category.
 	// It will look through the client's call history and generate the historical data by using their configured forecasting parameters (historical data period and interval width).
 	// The duration of each interval will be the interval width of the org's forecasting parameters.
-	// It also applies any deltas that the client has stored for the given @SkillProfileSid.
+	// It also applies any deltas that the client has stored for the given @skill_profile_category, if the category is a group it will use the deltas of the skill profiles part of that group.
 	// If the client has no historical data, only the deltas will be applied to the returned intervals, all other intervals will have nil averages.
-	// If any inactive skill profiles are mapped to the given @skill_profile_sid, the call history and deltas of those skill profiles will be included for the historical data calculation.
 	// Required permissions:
 	//
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @skill_profile_sid in the request is invalid.
-	//   - grpc.NotFound: the @skill_profile_sid given is not found for the org.
+	//   - grpc.Invalid: the @skill_profile_category in the request is invalid.
+	//   - grpc.NotFound: the @skill_profile_category given is not found for the org.
 	//   - grpc.Internal: error occurs when getting the historical data.
 	ListHistoricalData(context.Context, *ListHistoricalDataReq) (*ListHistoricalDataRes, error)
 	// Tries to create an entry for the given @delta for the org sending the request.
@@ -2776,12 +3073,14 @@ type WFMServer interface {
 	// Errors:
 	//   - grpc.Internal: error occurs when getting the skills.
 	ListSkills(context.Context, *ListSkillsReq) (*ListSkillsRes, error)
+	// Deprecated: Do not use.
 	// Builds and returns a call profile template for the org sending the request and the given @skill_profile_sid.
 	// The template will be generated using the training data for said skill profile using the @training_data_range and @averages_calculation_range_in_months
 	// from the client's saved forecasting parameters.
 	// The @total_calls in the returned template be summed from the (@training_data_start_datetime - @averages_calculation_range_in_months) to @training_data_end_datetime,
 	// or from @training_data_start_datetime to @training_data_end_datetime if @averages_calculation_range_in_months is 0.
 	// The fixed averages fields in the call profile template, will be set to the averages that the skill profile has.
+	// DEPRECATED as of Sep/7/2023 - Use BuildCallProfileTemplate instead.
 	// Required permissions:
 	//
 	//	NONE
@@ -2791,6 +3090,21 @@ type WFMServer interface {
 	//   - grpc.NotFound: the @skill_profile_sid given is not found for the org.
 	//   - grpc.Internal: error occurs when building the call profile template.
 	BuildCallProfileTemplateForSkillProfile(context.Context, *BuildCallProfileTemplateForSkillProfileReq) (*BuildCallProfileTemplateForSkillProfileRes, error)
+	// Builds and returns a call profile template for the org sending the request and the given @skill_profile_category.
+	// The template will be generated using the training data for said skill profile category using the @training_data_range and @averages_calculation_range_in_months
+	// from the client's saved forecasting parameters.
+	// The @total_calls in the returned template be summed from the (@training_data_start_datetime - @averages_calculation_range_in_months) to @training_data_end_datetime,
+	// or from @training_data_start_datetime to @training_data_end_datetime if @averages_calculation_range_in_months is 0.
+	// The fixed averages fields in the call profile template, will be set to the averages that the skill profile category has.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @skill_profile_category in the request is invalid.
+	//   - grpc.NotFound: the @skill_profile_category given is not found for the org.
+	//   - grpc.Internal: error occurs when building the call profile template.
+	BuildCallProfileTemplate(context.Context, *BuildCallProfileTemplateReq) (*BuildCallProfileTemplateRes, error)
 	// Creates a mapping entry for the @inactive_skill_profile_sid to the @active_skill_profile_sid for the org sending the request.
 	// Required permissions:
 	//
@@ -2822,6 +3136,48 @@ type WFMServer interface {
 	//   - grpc.Internal: the current mapping for the given @inactive_skill_profile_sid is already disconnected,
 	//     the given @inactive_skill_profile_sid is of an active skill profile.
 	DisconnectInactiveSkillProfileMapping(context.Context, *DisconnectInactiveSkillProfileMappingReq) (*DisconnectInactiveSkillProfileMappingRes, error)
+	// Creates the given @skill_profile_group.
+	// @skill_profile_group_sids will be ignored since associations cannot be created by this method.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @skill_profile_group in the request is invalid.
+	//   - grpc.Internal: error occurs creating the skill profile group.
+	CreateSkillProfileGroup(context.Context, *CreateSkillProfileGroupReq) (*CreateSkillProfileGroupRes, error)
+	// Updates the given @skill_profile_group that has the @skill_profile_group_sid for the org sending the request.
+	// @skill_profile_group_sids will be ignored since associations cannot be updated by this method.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @skill_profile_group in the request is invalid.
+	//   - grpc.NotFound: the skill profile group to update doesn't exist.
+	//   - grpc.Internal: error occurs updating the skill profile group.
+	UpdateSkillProfileGroup(context.Context, *UpdateSkillProfileGroupReq) (*UpdateSkillProfileGroupRes, error)
+	// Gets the skill profile groups that have the @skill_profile_group_sids for the org sending the request.
+	// If @skill_profile_group_sids is empty it will get all the skill profile groups for the org.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @skill_profile_group_sids in the request is invalid.
+	//   - grpc.Internal: error occurs getting the skill profile groups.
+	ListSkillProfileGroups(context.Context, *ListSkillProfileGroupsReq) (*ListSkillProfileGroupsRes, error)
+	// Updates associations of the given @skill_profile_group_sid for the org sending the request.
+	// It will create the associations with the @skill_profile_sids_to_associate, and remove the associations with the @skill_profile_sids_to_disassociate.
+	// Only one of the skill_profile_sids fields needs to be set, but both can be set on the same request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the values in the request are invalid.
+	//   - grpc.Internal: error occurs updating the skill profile group associations.
+	UpdateSkillProfileGroupAssociations(context.Context, *UpdateSkillProfileGroupAssociationsReq) (*UpdateSkillProfileGroupAssociationsRes, error)
 	// Deletes deltas whose dates match the given @start_datetimes for the given @skill_profile_sid.
 	// If no @start_datetimes are given, it will delete all the deltas that the given @skill_profile_sid has.
 	// Required permissions:
@@ -2855,28 +3211,28 @@ type WFMServer interface {
 	// Builds a profile forecast using the provided @call_profile_template.
 	// The forecaster will produce intervals from the following range using the client's saved forecasting parameters:
 	// (@training_data_range_end_datetime - @forecast_test_range_in_weeks) to @forecast_range_end_datetime.
-	// The @total_calls in the @call_profile_template will be scaled using the same ranges as BuildCallProfileTemplateForSkillProfile.
+	// The @total_calls in the @call_profile_template will be scaled using the same ranges as BuildCallProfileTemplate.
 	// The @fixed_averages_forecast field indicates whether or not to do a fixed averages forecast.
 	// Required permissions:
 	//
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @skill_profile_sid or @call_profile_template in the request is invalid.
+	//   - grpc.Invalid: the @skill_profile_category or @call_profile_template in the request is invalid.
 	//   - grpc.Internal: error occurs during the building of the profile forecast.
 	BuildProfileForecastByInterval(*BuildProfileForecastByIntervalReq, WFM_BuildProfileForecastByIntervalServer) error
 	// Builds a profile forecast using the provided @call_profile_template.
 	// The forecaster will produce intervals from the following range using the client's saved forecasting parameters:
 	// (@training_data_range_end_datetime - @forecast_test_range_in_weeks) to @forecast_range_end_datetime.
-	// The @total_calls in the @call_profile_template will be scaled using the same ranges as BuildCallProfileTemplateForSkillProfile.
+	// The @total_calls in the @call_profile_template will be scaled using the same ranges as BuildCallProfileTemplate.
 	// The @fixed_averages_forecast field indicates whether or not to do a fixed averages forecast.
-	// It also returns the statistics of the produced forecast by using the test data of the given @skill_profile_sid.
+	// It also returns the statistics of the produced forecast by using the test data of the given @skill_profile_category.
 	// Required permissions:
 	//
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @skill_profile_sid or @call_profile_template in the request is invalid.
+	//   - grpc.Invalid: the @skill_profile_category or @call_profile_template in the request is invalid.
 	//   - grpc.Internal: error occurs during the building of the profile forecast.
 	BuildProfileForecastByIntervalWithStats(*BuildProfileForecastByIntervalWithStatsReq, WFM_BuildProfileForecastByIntervalWithStatsServer) error
 	// Builds a profile forecast for the given @skill_profile_sid and org sending the request using the given @call_profile_template.
@@ -2938,7 +3294,9 @@ type WFMServer interface {
 	// Errors:
 	//   - grpc.Internal: error occurs when getting the regression templates.
 	ListRegressionTemplates(context.Context, *ListRegressionTemplatesReq) (*ListRegressionTemplatesRes, error)
+	// Deprecated: Do not use.
 	// Gets the forecast data intervals for the given @skill_profile_sid.
+	// DEPRECATED as of Sep/13/2023 - Use ListForecastIntervals instead.
 	// Required permissions:
 	//
 	//	NONE
@@ -2947,9 +3305,17 @@ type WFMServer interface {
 	//   - grpc.Invalid: the @skill_profile_sid in the request is invalid.
 	//   - grpc.Internal: error occurs when getting the forecast data intervals.
 	ListForecastIntervalsForSkillProfile(*ListForecastIntervalsForSkillProfileReq, WFM_ListForecastIntervalsForSkillProfileServer) error
+	// Gets the forecast data intervals for the given @skill_profile_category.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @skill_profile_category in the request is invalid.
+	//   - grpc.Internal: error occurs when getting the forecast data intervals.
+	ListForecastIntervals(*ListForecastIntervalsReq, WFM_ListForecastIntervalsServer) error
 	// Generates a regression forecast using the provided @regression_template.
-	// It will generate forecast intervals for the skill profiles sids in @skill_profile_sids_to_forecast,
-	// if the list is empty or has no valid skill profile sids, it will generate and save forecasts for all active skill profiles.
+	// It will generate forecast intervals for the skill profiles sids in @skill_profile_sids_to_forecast.
 	// It will use the client's saved forecasting test range as the start datetime and the forecast range as the end datetime of the forecasted data.
 	// It will use the client's saved interval width to divide the resulting forecast intervals.
 	// Required permissions:
@@ -2957,18 +3323,17 @@ type WFMServer interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @regression_template in the request is invalid.
+	//   - grpc.Invalid: no @skill_profile_sids_to_forecast are given or the @regression_template in the request is invalid.
 	//   - grpc.Internal: error occurs during the building of the regression forecast.
 	BuildRegressionForecastByInterval(*BuildRegressionForecastByIntervalReq, WFM_BuildRegressionForecastByIntervalServer) error
 	// Generates a regression forecast and calculates forecast statistics using the provided @regression_template.
-	// It will generate forecast intervals for the skill profiles sids in @skill_profile_sids_to_forecast,
-	// if the list is empty or has no valid skill profile sids, it will generate and save forecasts for all active skill profiles.
+	// It will generate forecast intervals for the skill profiles sids in @skill_profile_sids_to_forecast.
 	// It will use the client's saved forecasting test range as the start datetime and the forecast range as the end datetime of the forecasted data.
 	// It will use the client's saved interval width to divide the resulting forecast intervals.
 	// The first message received will be the forecast statistics while all subsequent ones will be the forecast intervals.
 	//
 	// Errors:
-	//   - grpc.Invalid: the @regression_template in the request is invalid.
+	//   - grpc.Invalid: no @skill_profile_sids_to_forecast are given or the @regression_template in the request is invalid.
 	//   - grpc.Internal: error occurs either during the when building the forecast or calculating the stats.
 	BuildRegressionForecastByIntervalWithStats(*BuildRegressionForecastByIntervalWithStatsReq, WFM_BuildRegressionForecastByIntervalWithStatsServer) error
 	// Gets the call profile templates that the org sending the request has.
@@ -3012,7 +3377,7 @@ type WFMServer interface {
 	//   - grpc.Internal: error occurs when upserting the forecast data deltas.
 	UpsertForecastDataDeltas(context.Context, *UpsertForecastDataDeltasReq) (*UpsertForecastDataDeltasRes, error)
 	// Deletes forecast data intervals/deltas based on the parameters provided.
-	// If @delete_param is type skill_profile_sid, then the intervals/deltas to be deleted will be
+	// If @delete_param is type skill_profile_category, then the intervals/deltas to be deleted will be
 	// associated with that id. If @delete_param is type interval_sids, then the intervals/deltas to be
 	// deleted will be contained in the list @interval_sids. The @delete_type field determines which
 	// table(s) in the database the intervals/deltas will be deleted from.
@@ -3164,6 +3529,15 @@ type WFMServer interface {
 	//   - grpc.Internal: error occurs when updating the program node.
 	//   - grpc.NotFound: entry to be updated doesn't exist, or the given parent @location_node_sid belongs to a different scenario than the program node to update.
 	UpdateProgramNode(context.Context, *UpdateProgramNodeReq) (*UpdateProgramNodeRes, error)
+	// Lists the program nodes with the given @program_node_sids for the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the given @program_node_sids are invalid.
+	//   - grpc.Internal: error occurs when listing the program nodes.
+	ListProgramNodesBySid(context.Context, *ListProgramNodesBySidReq) (*ListProgramNodesBySidRes, error)
 	// Creates the given @constraint_rule for the org sending the request.
 	// The @constraint_rule_sid and @skill_proficiency_sid (if one was created) of the new entities will be returned in the response.
 	// The @schedule_scenario_sid must match the scenario of the @parent_entity.
@@ -3231,6 +3605,14 @@ type WFMServer interface {
 	//   - grpc.NotFound: non skill activity for the given @non_skill_activity_sid doesn't exist.
 	//   - grpc.Internal: error occurs when updating the non skill activity.
 	UpdateNonSkillActivity(context.Context, *UpdateNonSkillActivityReq) (*UpdateNonSkillActivityRes, error)
+	// Lists the non skill activities that belong to the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:.
+	//   - grpc.Internal: error occurs when listing the activites.
+	ListNonSkillActivities(context.Context, *ListNonSkillActivitiesReq) (*ListNonSkillActivitiesRes, error)
 	// Lists the IDs of non skill activities that belong to the org sending the request which have the given @relationship_type with the @associated_entity.
 	// Required permissions:
 	//
@@ -3298,6 +3680,10 @@ type WFMServer interface {
 	// if @include_inactive is true then inactive agents will also be included, otherwise only active agents will be returned.
 	// if @include_skill_proficiencies is true then agents returned will include their skill proficiencies.
 	// if @include_agent_groups is true then the @agent_groups_by_agent response field will be set with a list of agent groups correlating to each agents index in the @wfm_agents field.
+	// if @include_agent_groups is set to true, the @agent_group_schedule_scenario_sid field must be set, so that the agent groups for the correct scenario are returned.
+	// if @include_agent_groups is set to true, and @agent_group_schedule_scenario_sid is not set, the agent groups will not be filtered by schedule scenario.
+	// if @include_agent_groups is set to false, the @agent_group_schedule_scenario_sid will be ignored.
+	// @agent_group_schedule_scenario_sid does not effect which @wfm_agents are returned.
 	// WFM agents with no associated agent_groups will have an empty slice in agent_groups_by_agent at their correlated index.
 	// Required Permissions:
 	//
@@ -3329,6 +3715,17 @@ type WFMServer interface {
 	//   - grpc.Invalid: @created_after_datetime has an invalid value.
 	//   - grpc.Internal: error occurs when getting the wfm agents.
 	ListUngroupedWFMAgents(context.Context, *ListUngroupedWFMAgentsReq) (*ListUngroupedWFMAgentsRes, error)
+	// Gets the wfm_agent_sids with the given @tcn_agent_sids for the org sending the request.
+	// Returns a map where Key: tcn_agent_sid - Value: wfm_agent_sid.
+	// If the wfm_agent_sid is not found for any @tcn_agent_sids, they will not have an entry in the returned @sids.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @tcn_agent_sids are invalid.
+	//   - grpc.Internal: error occours while listing the wfm_agent_sids.
+	ListWFMAgentSids(context.Context, *ListWFMAgentSidsReq) (*ListWFMAgentSidsRes, error)
 	// Lists the IDs of wfm agents that belong to the org sending the request which are associated with the given @agent_group_sid.
 	// Required permissions:
 	//
@@ -3827,6 +4224,26 @@ type WFMServer interface {
 	//   - grpc.Invalid: the @datetime_range is invalid.
 	//   - grpc.Internal: error occurs when listing the draft schedules.
 	ListDraftSchedules(context.Context, *ListDraftSchedulesReq) (*ListDraftSchedulesRes, error)
+	// Clears shift instances from the @schedule_selector for the org sending the request.
+	// If @node_selector is set, only shifts related to the given @node_selector will be cleared.
+	// If @node_selector is not set, all shifts on the @schedule_selector may be cleared, regardless of the shift template they are associated with.
+	// If @datetime_range is set, only the shifts overlapping the @datetime_range will be cleared.
+	// If @datetime_range is not set, all shifts on the schedule will be considered in range to be deleted and @invert_datetime_range and @start_datetimes_only must be set to false.
+	// If @invert_datetime_range is set to true, the shifts overlapping the range before and after the provided @datetime_range will be deleted.
+	// If @invert_datetime_range is set to false, the provided @datetime_range will be used.
+	// If @start_datetimes_only is set to true, deletes the shifts that start within the @datetime range, or start before or after @datetime_range if @invert_datetime_range is true.
+	// If @start_datetimes_only is set to false, deletes the shifts that overlap with the @datetime range, or overlap the range before or after @datetime_range if @invert_datetime_range is true.
+	// If @delete_locked is set to true, both locked and unlocked shifts will be cleared.
+	// If @delete_locked is set to false, only shifts with @is_locked set to false may be cleared.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @node_selector, @schedule_selector, or @datetime_range in the request are invalid.
+	//   - grpc.NotFound: the draft schedule with the given @schedule_selector doesn't exist.
+	//   - grpc.Internal: error occurs when removing the shifts from the schedule.
+	ClearSchedule(context.Context, *ClearScheduleReq) (*ClearScheduleRes, error)
 	// Deletes a draft schedule with the corresponding @draft_schedule_sid for the org sending the request.
 	// It also deletes all of its shift instances and segments.
 	// Required permissions:
@@ -3838,6 +4255,21 @@ type WFMServer interface {
 	//   - grpc.NotFound: the draft schedule with the given @draft_schedule_sid doesn't exist.
 	//   - grpc.Internal: error occurs when removing the draft schedule.
 	DeleteDraftSchedule(context.Context, *DeleteDraftScheduleReq) (*DeleteDraftScheduleRes, error)
+	// Lists the shift instances with the corresponding @shift_instance_sids for the org sending the request.
+	// If @include_shift_template is set to true then the related shift template for the shift instances will be returned in the shift template field.
+	// If @include_shift_segments is set to true then the related shift segments for the shift instances will be returned in the shift segments field.
+	// If @include_scheduling_activity is set to true then the related scheduling activity for the shift segment will be returned in the scheduling activity field.
+	// @include_shift_segments must be true to take effect.
+	// If @include_activity is set to true then the related non skill activity for the scheduling activity will be returned in the scheduling
+	// activities member non skill activity field. @include_scheduling_activity must be true to take effect.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @shift_instance_sids in the request are invalid.
+	//   - grpc.Internal: error occurs when listing the shift instances or their shift segments.
+	ListShiftInstancesBySid(context.Context, *ListShiftInstancesBySidReq) (*ListShiftInstancesBySidRes, error)
 	// Copies the shifts from @source_schedule_selector to @destination_schedule_selector, constrained by the given parameters for the org sending the request.
 	// If @datetime_range is set, all shifts within the datetime range will be copied.
 	// If @datetime_range is not set, all shifts in the @source_schedule_selector within the schedule range of the @destination_schedule_selector will be copied. However if one of them is a published schedule, it will use the schedule range of the draft schedule.
@@ -3881,7 +4313,7 @@ type WFMServer interface {
 	// NONE
 	// Errors:
 	//   - grpc.Invalid: one or more fields in the request have invalid values.
-	//   - grpc.NotFound: wfm_agent_sid_1, wfm_agent_sid_2, or shift_instance_sids do not exist for org_id.
+	//   - grpc.NotFound: wfm_agent_sid_1, wfm_agent_sid_2, or shift_instance_sids do not exist for the org sending the request.
 	//   - grpc.Internal: error occurs when swapping the shift instances.
 	SwapShiftInstances(context.Context, *SwapShiftInstancesReq) (*SwapShiftInstancesRes, error)
 	// Updates a shift instance for the org sending the request with the provided parameters.
@@ -3966,6 +4398,15 @@ type WFMServer interface {
 	//	-grpc.NotFound: the scheduling target for the given @node_selector doesn't exist for the org making the request.
 	//	-grpc.Internal: error occurs when removing the scheduling target.
 	DeleteSchedulingTarget(context.Context, *DeleteSchedulingTargetReq) (*DeleteSchedulingTargetRes, error)
+	// Gets the scheduling-target values for the org making the request.
+	// Errors:
+	//   - grpc.Internal: error occours when getting the scheduling-target values.
+	GetDefaultSchedulingTarget(context.Context, *GetDefaultSchedulingTargetReq) (*GetDefaultSchedulingTargetRes, error)
+	// Sets the scheduling-target values for the org making the request.
+	// Errors:
+	//   - grpc.Invalid: any of the given values are invalid.
+	//   - grpc.Internal: error occours when setting the scheduling-target values.
+	SetDefaultSchedulingTarget(context.Context, *SetDefaultSchedulingTargetReq) (*SetDefaultSchedulingTargetRes, error)
 	// Gets the performance metrics across @datetime_range for shift instances in @schedule_selector associated with @node_selector for the org making the request.
 	// Performance metrics will be generated for each of the given @metric_params.
 	// The @interval_width_in_minutes must be a multiple of 5.
@@ -4034,6 +4475,9 @@ func (UnimplementedWFMServer) ListSkills(context.Context, *ListSkillsReq) (*List
 func (UnimplementedWFMServer) BuildCallProfileTemplateForSkillProfile(context.Context, *BuildCallProfileTemplateForSkillProfileReq) (*BuildCallProfileTemplateForSkillProfileRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BuildCallProfileTemplateForSkillProfile not implemented")
 }
+func (UnimplementedWFMServer) BuildCallProfileTemplate(context.Context, *BuildCallProfileTemplateReq) (*BuildCallProfileTemplateRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BuildCallProfileTemplate not implemented")
+}
 func (UnimplementedWFMServer) CreateInactiveSkillProfileMapping(context.Context, *CreateInactiveSkillProfileMappingReq) (*CreateInactiveSkillProfileMappingRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateInactiveSkillProfileMapping not implemented")
 }
@@ -4042,6 +4486,18 @@ func (UnimplementedWFMServer) GetAvailableRegressionForecasterModelTypes(context
 }
 func (UnimplementedWFMServer) DisconnectInactiveSkillProfileMapping(context.Context, *DisconnectInactiveSkillProfileMappingReq) (*DisconnectInactiveSkillProfileMappingRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DisconnectInactiveSkillProfileMapping not implemented")
+}
+func (UnimplementedWFMServer) CreateSkillProfileGroup(context.Context, *CreateSkillProfileGroupReq) (*CreateSkillProfileGroupRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateSkillProfileGroup not implemented")
+}
+func (UnimplementedWFMServer) UpdateSkillProfileGroup(context.Context, *UpdateSkillProfileGroupReq) (*UpdateSkillProfileGroupRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateSkillProfileGroup not implemented")
+}
+func (UnimplementedWFMServer) ListSkillProfileGroups(context.Context, *ListSkillProfileGroupsReq) (*ListSkillProfileGroupsRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListSkillProfileGroups not implemented")
+}
+func (UnimplementedWFMServer) UpdateSkillProfileGroupAssociations(context.Context, *UpdateSkillProfileGroupAssociationsReq) (*UpdateSkillProfileGroupAssociationsRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateSkillProfileGroupAssociations not implemented")
 }
 func (UnimplementedWFMServer) DeleteHistoricalDataDeltas(context.Context, *DeleteHistoricalDataDeltasReq) (*DeleteHistoricalDataDeltasRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteHistoricalDataDeltas not implemented")
@@ -4078,6 +4534,9 @@ func (UnimplementedWFMServer) ListRegressionTemplates(context.Context, *ListRegr
 }
 func (UnimplementedWFMServer) ListForecastIntervalsForSkillProfile(*ListForecastIntervalsForSkillProfileReq, WFM_ListForecastIntervalsForSkillProfileServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListForecastIntervalsForSkillProfile not implemented")
+}
+func (UnimplementedWFMServer) ListForecastIntervals(*ListForecastIntervalsReq, WFM_ListForecastIntervalsServer) error {
+	return status.Errorf(codes.Unimplemented, "method ListForecastIntervals not implemented")
 }
 func (UnimplementedWFMServer) BuildRegressionForecastByInterval(*BuildRegressionForecastByIntervalReq, WFM_BuildRegressionForecastByIntervalServer) error {
 	return status.Errorf(codes.Unimplemented, "method BuildRegressionForecastByInterval not implemented")
@@ -4133,6 +4592,9 @@ func (UnimplementedWFMServer) CreateProgramNode(context.Context, *CreateProgramN
 func (UnimplementedWFMServer) UpdateProgramNode(context.Context, *UpdateProgramNodeReq) (*UpdateProgramNodeRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateProgramNode not implemented")
 }
+func (UnimplementedWFMServer) ListProgramNodesBySid(context.Context, *ListProgramNodesBySidReq) (*ListProgramNodesBySidRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListProgramNodesBySid not implemented")
+}
 func (UnimplementedWFMServer) CreateConstraintRule(context.Context, *CreateConstraintRuleReq) (*CreateConstraintRuleRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateConstraintRule not implemented")
 }
@@ -4147,6 +4609,9 @@ func (UnimplementedWFMServer) CreateNonSkillActivity(context.Context, *CreateNon
 }
 func (UnimplementedWFMServer) UpdateNonSkillActivity(context.Context, *UpdateNonSkillActivityReq) (*UpdateNonSkillActivityRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateNonSkillActivity not implemented")
+}
+func (UnimplementedWFMServer) ListNonSkillActivities(context.Context, *ListNonSkillActivitiesReq) (*ListNonSkillActivitiesRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListNonSkillActivities not implemented")
 }
 func (UnimplementedWFMServer) ListNonSkillActivityAssociations(context.Context, *ListNonSkillActivityAssociationsReq) (*ListNonSkillActivityAssociationsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListNonSkillActivityAssociations not implemented")
@@ -4171,6 +4636,9 @@ func (UnimplementedWFMServer) ListCandidateWFMAgents(context.Context, *ListCandi
 }
 func (UnimplementedWFMServer) ListUngroupedWFMAgents(context.Context, *ListUngroupedWFMAgentsReq) (*ListUngroupedWFMAgentsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListUngroupedWFMAgents not implemented")
+}
+func (UnimplementedWFMServer) ListWFMAgentSids(context.Context, *ListWFMAgentSidsReq) (*ListWFMAgentSidsRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListWFMAgentSids not implemented")
 }
 func (UnimplementedWFMServer) ListWFMAgentsAssociatedWithAgentGroup(context.Context, *ListWFMAgentsAssociatedWithAgentGroupReq) (*ListWFMAgentsAssociatedWithAgentGroupRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListWFMAgentsAssociatedWithAgentGroup not implemented")
@@ -4295,8 +4763,14 @@ func (UnimplementedWFMServer) GetDraftSchedule(context.Context, *GetDraftSchedul
 func (UnimplementedWFMServer) ListDraftSchedules(context.Context, *ListDraftSchedulesReq) (*ListDraftSchedulesRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListDraftSchedules not implemented")
 }
+func (UnimplementedWFMServer) ClearSchedule(context.Context, *ClearScheduleReq) (*ClearScheduleRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ClearSchedule not implemented")
+}
 func (UnimplementedWFMServer) DeleteDraftSchedule(context.Context, *DeleteDraftScheduleReq) (*DeleteDraftScheduleRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteDraftSchedule not implemented")
+}
+func (UnimplementedWFMServer) ListShiftInstancesBySid(context.Context, *ListShiftInstancesBySidReq) (*ListShiftInstancesBySidRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListShiftInstancesBySid not implemented")
 }
 func (UnimplementedWFMServer) CopyScheduleToSchedule(context.Context, *CopyScheduleToScheduleReq) (*CopyScheduleToScheduleRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CopyScheduleToSchedule not implemented")
@@ -4333,6 +4807,12 @@ func (UnimplementedWFMServer) GetSchedulingTarget(context.Context, *GetSchedulin
 }
 func (UnimplementedWFMServer) DeleteSchedulingTarget(context.Context, *DeleteSchedulingTargetReq) (*DeleteSchedulingTargetRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteSchedulingTarget not implemented")
+}
+func (UnimplementedWFMServer) GetDefaultSchedulingTarget(context.Context, *GetDefaultSchedulingTargetReq) (*GetDefaultSchedulingTargetRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDefaultSchedulingTarget not implemented")
+}
+func (UnimplementedWFMServer) SetDefaultSchedulingTarget(context.Context, *SetDefaultSchedulingTargetReq) (*SetDefaultSchedulingTargetRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetDefaultSchedulingTarget not implemented")
 }
 func (UnimplementedWFMServer) GetPerformanceMetrics(context.Context, *GetPerformanceMetricsReq) (*GetPerformanceMetricsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPerformanceMetrics not implemented")
@@ -4587,6 +5067,24 @@ func _WFM_BuildCallProfileTemplateForSkillProfile_Handler(srv interface{}, ctx c
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_BuildCallProfileTemplate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BuildCallProfileTemplateReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).BuildCallProfileTemplate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_BuildCallProfileTemplate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).BuildCallProfileTemplate(ctx, req.(*BuildCallProfileTemplateReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WFM_CreateInactiveSkillProfileMapping_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateInactiveSkillProfileMappingReq)
 	if err := dec(in); err != nil {
@@ -4637,6 +5135,78 @@ func _WFM_DisconnectInactiveSkillProfileMapping_Handler(srv interface{}, ctx con
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WFMServer).DisconnectInactiveSkillProfileMapping(ctx, req.(*DisconnectInactiveSkillProfileMappingReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_CreateSkillProfileGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateSkillProfileGroupReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).CreateSkillProfileGroup(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_CreateSkillProfileGroup_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).CreateSkillProfileGroup(ctx, req.(*CreateSkillProfileGroupReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_UpdateSkillProfileGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateSkillProfileGroupReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).UpdateSkillProfileGroup(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_UpdateSkillProfileGroup_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).UpdateSkillProfileGroup(ctx, req.(*UpdateSkillProfileGroupReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_ListSkillProfileGroups_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListSkillProfileGroupsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).ListSkillProfileGroups(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_ListSkillProfileGroups_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).ListSkillProfileGroups(ctx, req.(*ListSkillProfileGroupsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_UpdateSkillProfileGroupAssociations_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateSkillProfileGroupAssociationsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).UpdateSkillProfileGroupAssociations(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_UpdateSkillProfileGroupAssociations_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).UpdateSkillProfileGroupAssociations(ctx, req.(*UpdateSkillProfileGroupAssociationsReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -4863,6 +5433,27 @@ type wFMListForecastIntervalsForSkillProfileServer struct {
 }
 
 func (x *wFMListForecastIntervalsForSkillProfileServer) Send(m *CallDataByInterval) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func _WFM_ListForecastIntervals_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(ListForecastIntervalsReq)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(WFMServer).ListForecastIntervals(m, &wFMListForecastIntervalsServer{stream})
+}
+
+type WFM_ListForecastIntervalsServer interface {
+	Send(*CallDataByInterval) error
+	grpc.ServerStream
+}
+
+type wFMListForecastIntervalsServer struct {
+	grpc.ServerStream
+}
+
+func (x *wFMListForecastIntervalsServer) Send(m *CallDataByInterval) error {
 	return x.ServerStream.SendMsg(m)
 }
 
@@ -5196,6 +5787,24 @@ func _WFM_UpdateProgramNode_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_ListProgramNodesBySid_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListProgramNodesBySidReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).ListProgramNodesBySid(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_ListProgramNodesBySid_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).ListProgramNodesBySid(ctx, req.(*ListProgramNodesBySidReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WFM_CreateConstraintRule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateConstraintRuleReq)
 	if err := dec(in); err != nil {
@@ -5282,6 +5891,24 @@ func _WFM_UpdateNonSkillActivity_Handler(srv interface{}, ctx context.Context, d
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WFMServer).UpdateNonSkillActivity(ctx, req.(*UpdateNonSkillActivityReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_ListNonSkillActivities_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListNonSkillActivitiesReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).ListNonSkillActivities(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_ListNonSkillActivities_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).ListNonSkillActivities(ctx, req.(*ListNonSkillActivitiesReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -5426,6 +6053,24 @@ func _WFM_ListUngroupedWFMAgents_Handler(srv interface{}, ctx context.Context, d
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WFMServer).ListUngroupedWFMAgents(ctx, req.(*ListUngroupedWFMAgentsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_ListWFMAgentSids_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListWFMAgentSidsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).ListWFMAgentSids(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_ListWFMAgentSids_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).ListWFMAgentSids(ctx, req.(*ListWFMAgentSidsReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -6168,6 +6813,24 @@ func _WFM_ListDraftSchedules_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_ClearSchedule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ClearScheduleReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).ClearSchedule(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_ClearSchedule_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).ClearSchedule(ctx, req.(*ClearScheduleReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WFM_DeleteDraftSchedule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteDraftScheduleReq)
 	if err := dec(in); err != nil {
@@ -6182,6 +6845,24 @@ func _WFM_DeleteDraftSchedule_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WFMServer).DeleteDraftSchedule(ctx, req.(*DeleteDraftScheduleReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_ListShiftInstancesBySid_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListShiftInstancesBySidReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).ListShiftInstancesBySid(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_ListShiftInstancesBySid_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).ListShiftInstancesBySid(ctx, req.(*ListShiftInstancesBySidReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -6402,6 +7083,42 @@ func _WFM_DeleteSchedulingTarget_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_GetDefaultSchedulingTarget_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetDefaultSchedulingTargetReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).GetDefaultSchedulingTarget(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_GetDefaultSchedulingTarget_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).GetDefaultSchedulingTarget(ctx, req.(*GetDefaultSchedulingTargetReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_SetDefaultSchedulingTarget_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetDefaultSchedulingTargetReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).SetDefaultSchedulingTarget(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_SetDefaultSchedulingTarget_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).SetDefaultSchedulingTarget(ctx, req.(*SetDefaultSchedulingTargetReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WFM_GetPerformanceMetrics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetPerformanceMetricsReq)
 	if err := dec(in); err != nil {
@@ -6498,6 +7215,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _WFM_BuildCallProfileTemplateForSkillProfile_Handler,
 		},
 		{
+			MethodName: "BuildCallProfileTemplate",
+			Handler:    _WFM_BuildCallProfileTemplate_Handler,
+		},
+		{
 			MethodName: "CreateInactiveSkillProfileMapping",
 			Handler:    _WFM_CreateInactiveSkillProfileMapping_Handler,
 		},
@@ -6508,6 +7229,22 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DisconnectInactiveSkillProfileMapping",
 			Handler:    _WFM_DisconnectInactiveSkillProfileMapping_Handler,
+		},
+		{
+			MethodName: "CreateSkillProfileGroup",
+			Handler:    _WFM_CreateSkillProfileGroup_Handler,
+		},
+		{
+			MethodName: "UpdateSkillProfileGroup",
+			Handler:    _WFM_UpdateSkillProfileGroup_Handler,
+		},
+		{
+			MethodName: "ListSkillProfileGroups",
+			Handler:    _WFM_ListSkillProfileGroups_Handler,
+		},
+		{
+			MethodName: "UpdateSkillProfileGroupAssociations",
+			Handler:    _WFM_UpdateSkillProfileGroupAssociations_Handler,
 		},
 		{
 			MethodName: "DeleteHistoricalDataDeltas",
@@ -6610,6 +7347,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _WFM_UpdateProgramNode_Handler,
 		},
 		{
+			MethodName: "ListProgramNodesBySid",
+			Handler:    _WFM_ListProgramNodesBySid_Handler,
+		},
+		{
 			MethodName: "CreateConstraintRule",
 			Handler:    _WFM_CreateConstraintRule_Handler,
 		},
@@ -6628,6 +7369,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateNonSkillActivity",
 			Handler:    _WFM_UpdateNonSkillActivity_Handler,
+		},
+		{
+			MethodName: "ListNonSkillActivities",
+			Handler:    _WFM_ListNonSkillActivities_Handler,
 		},
 		{
 			MethodName: "ListNonSkillActivityAssociations",
@@ -6660,6 +7405,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListUngroupedWFMAgents",
 			Handler:    _WFM_ListUngroupedWFMAgents_Handler,
+		},
+		{
+			MethodName: "ListWFMAgentSids",
+			Handler:    _WFM_ListWFMAgentSids_Handler,
 		},
 		{
 			MethodName: "ListWFMAgentsAssociatedWithAgentGroup",
@@ -6826,8 +7575,16 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _WFM_ListDraftSchedules_Handler,
 		},
 		{
+			MethodName: "ClearSchedule",
+			Handler:    _WFM_ClearSchedule_Handler,
+		},
+		{
 			MethodName: "DeleteDraftSchedule",
 			Handler:    _WFM_DeleteDraftSchedule_Handler,
+		},
+		{
+			MethodName: "ListShiftInstancesBySid",
+			Handler:    _WFM_ListShiftInstancesBySid_Handler,
 		},
 		{
 			MethodName: "CopyScheduleToSchedule",
@@ -6878,6 +7635,14 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _WFM_DeleteSchedulingTarget_Handler,
 		},
 		{
+			MethodName: "GetDefaultSchedulingTarget",
+			Handler:    _WFM_GetDefaultSchedulingTarget_Handler,
+		},
+		{
+			MethodName: "SetDefaultSchedulingTarget",
+			Handler:    _WFM_SetDefaultSchedulingTarget_Handler,
+		},
+		{
 			MethodName: "GetPerformanceMetrics",
 			Handler:    _WFM_GetPerformanceMetrics_Handler,
 		},
@@ -6900,6 +7665,11 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "ListForecastIntervalsForSkillProfile",
 			Handler:       _WFM_ListForecastIntervalsForSkillProfile_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "ListForecastIntervals",
+			Handler:       _WFM_ListForecastIntervals_Handler,
 			ServerStreams: true,
 		},
 		{

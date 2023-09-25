@@ -40,6 +40,10 @@ const (
 	Tickets_ListAvailableAgentTickets_FullMethodName = "/api.v1alpha1.tickets.Tickets/ListAvailableAgentTickets"
 	Tickets_ListSkills_FullMethodName                = "/api.v1alpha1.tickets.Tickets/ListSkills"
 	Tickets_ListUsers_FullMethodName                 = "/api.v1alpha1.tickets.Tickets/ListUsers"
+	Tickets_CloseTicketAction_FullMethodName         = "/api.v1alpha1.tickets.Tickets/CloseTicketAction"
+	Tickets_AssignTicketAction_FullMethodName        = "/api.v1alpha1.tickets.Tickets/AssignTicketAction"
+	Tickets_CreateTicketAction_FullMethodName        = "/api.v1alpha1.tickets.Tickets/CreateTicketAction"
+	Tickets_ChangeTicketStatus_FullMethodName        = "/api.v1alpha1.tickets.Tickets/ChangeTicketStatus"
 )
 
 // TicketsClient is the client API for Tickets service.
@@ -53,8 +57,10 @@ type TicketsClient interface {
 	// Public method to list tickets
 	ListTickets(ctx context.Context, in *ListTicketsReq, opts ...grpc.CallOption) (*ListTicketsRes, error)
 	// Public method to assign ticket
+	// Would be deprecated
 	AssignTicket(ctx context.Context, in *AssignTicketReq, opts ...grpc.CallOption) (*AssignTicketRes, error)
 	// Public Method to Close a ticket
+	// Any agent can close the ticket. No BE validation required
 	CloseTicket(ctx context.Context, in *CloseTicketReq, opts ...grpc.CallOption) (*CloseTicketRes, error)
 	// Public method to view ticket
 	ViewTicket(ctx context.Context, in *ViewTicketReq, opts ...grpc.CallOption) (*ViewTicketRes, error)
@@ -89,6 +95,14 @@ type TicketsClient interface {
 	ListSkills(ctx context.Context, in *ListSkillsRequest, opts ...grpc.CallOption) (*ListSkillsResponse, error)
 	// public method to fetch list of users for a tickets user
 	ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (*ListUsersResponse, error)
+	// Any agent can close the ticket. No BE validation required
+	CloseTicketAction(ctx context.Context, in *CloseTicketActionRequest, opts ...grpc.CallOption) (*CloseTicketActionResponse, error)
+	// Public method to assign a ticket action
+	AssignTicketAction(ctx context.Context, in *AssignTicketActionRequest, opts ...grpc.CallOption) (*AssignTicketActionResponse, error)
+	// Public method to assign a ticket
+	CreateTicketAction(ctx context.Context, in *CreateTicketActionRequest, opts ...grpc.CallOption) (*CreateTicketActionResponse, error)
+	// Public method to change the Status of a ticket
+	ChangeTicketStatus(ctx context.Context, in *ChangeTicketStatusRequest, opts ...grpc.CallOption) (*ChangeTicketStatusResponse, error)
 }
 
 type ticketsClient struct {
@@ -289,6 +303,42 @@ func (c *ticketsClient) ListUsers(ctx context.Context, in *ListUsersRequest, opt
 	return out, nil
 }
 
+func (c *ticketsClient) CloseTicketAction(ctx context.Context, in *CloseTicketActionRequest, opts ...grpc.CallOption) (*CloseTicketActionResponse, error) {
+	out := new(CloseTicketActionResponse)
+	err := c.cc.Invoke(ctx, Tickets_CloseTicketAction_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *ticketsClient) AssignTicketAction(ctx context.Context, in *AssignTicketActionRequest, opts ...grpc.CallOption) (*AssignTicketActionResponse, error) {
+	out := new(AssignTicketActionResponse)
+	err := c.cc.Invoke(ctx, Tickets_AssignTicketAction_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *ticketsClient) CreateTicketAction(ctx context.Context, in *CreateTicketActionRequest, opts ...grpc.CallOption) (*CreateTicketActionResponse, error) {
+	out := new(CreateTicketActionResponse)
+	err := c.cc.Invoke(ctx, Tickets_CreateTicketAction_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *ticketsClient) ChangeTicketStatus(ctx context.Context, in *ChangeTicketStatusRequest, opts ...grpc.CallOption) (*ChangeTicketStatusResponse, error) {
+	out := new(ChangeTicketStatusResponse)
+	err := c.cc.Invoke(ctx, Tickets_ChangeTicketStatus_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TicketsServer is the server API for Tickets service.
 // All implementations must embed UnimplementedTicketsServer
 // for forward compatibility
@@ -300,8 +350,10 @@ type TicketsServer interface {
 	// Public method to list tickets
 	ListTickets(context.Context, *ListTicketsReq) (*ListTicketsRes, error)
 	// Public method to assign ticket
+	// Would be deprecated
 	AssignTicket(context.Context, *AssignTicketReq) (*AssignTicketRes, error)
 	// Public Method to Close a ticket
+	// Any agent can close the ticket. No BE validation required
 	CloseTicket(context.Context, *CloseTicketReq) (*CloseTicketRes, error)
 	// Public method to view ticket
 	ViewTicket(context.Context, *ViewTicketReq) (*ViewTicketRes, error)
@@ -336,6 +388,14 @@ type TicketsServer interface {
 	ListSkills(context.Context, *ListSkillsRequest) (*ListSkillsResponse, error)
 	// public method to fetch list of users for a tickets user
 	ListUsers(context.Context, *ListUsersRequest) (*ListUsersResponse, error)
+	// Any agent can close the ticket. No BE validation required
+	CloseTicketAction(context.Context, *CloseTicketActionRequest) (*CloseTicketActionResponse, error)
+	// Public method to assign a ticket action
+	AssignTicketAction(context.Context, *AssignTicketActionRequest) (*AssignTicketActionResponse, error)
+	// Public method to assign a ticket
+	CreateTicketAction(context.Context, *CreateTicketActionRequest) (*CreateTicketActionResponse, error)
+	// Public method to change the Status of a ticket
+	ChangeTicketStatus(context.Context, *ChangeTicketStatusRequest) (*ChangeTicketStatusResponse, error)
 	mustEmbedUnimplementedTicketsServer()
 }
 
@@ -405,6 +465,18 @@ func (UnimplementedTicketsServer) ListSkills(context.Context, *ListSkillsRequest
 }
 func (UnimplementedTicketsServer) ListUsers(context.Context, *ListUsersRequest) (*ListUsersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListUsers not implemented")
+}
+func (UnimplementedTicketsServer) CloseTicketAction(context.Context, *CloseTicketActionRequest) (*CloseTicketActionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CloseTicketAction not implemented")
+}
+func (UnimplementedTicketsServer) AssignTicketAction(context.Context, *AssignTicketActionRequest) (*AssignTicketActionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AssignTicketAction not implemented")
+}
+func (UnimplementedTicketsServer) CreateTicketAction(context.Context, *CreateTicketActionRequest) (*CreateTicketActionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateTicketAction not implemented")
+}
+func (UnimplementedTicketsServer) ChangeTicketStatus(context.Context, *ChangeTicketStatusRequest) (*ChangeTicketStatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ChangeTicketStatus not implemented")
 }
 func (UnimplementedTicketsServer) mustEmbedUnimplementedTicketsServer() {}
 
@@ -797,6 +869,78 @@ func _Tickets_ListUsers_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Tickets_CloseTicketAction_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CloseTicketActionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TicketsServer).CloseTicketAction(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Tickets_CloseTicketAction_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TicketsServer).CloseTicketAction(ctx, req.(*CloseTicketActionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Tickets_AssignTicketAction_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AssignTicketActionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TicketsServer).AssignTicketAction(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Tickets_AssignTicketAction_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TicketsServer).AssignTicketAction(ctx, req.(*AssignTicketActionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Tickets_CreateTicketAction_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateTicketActionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TicketsServer).CreateTicketAction(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Tickets_CreateTicketAction_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TicketsServer).CreateTicketAction(ctx, req.(*CreateTicketActionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Tickets_ChangeTicketStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ChangeTicketStatusRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TicketsServer).ChangeTicketStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Tickets_ChangeTicketStatus_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TicketsServer).ChangeTicketStatus(ctx, req.(*ChangeTicketStatusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Tickets_ServiceDesc is the grpc.ServiceDesc for Tickets service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -887,6 +1031,22 @@ var Tickets_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListUsers",
 			Handler:    _Tickets_ListUsers_Handler,
+		},
+		{
+			MethodName: "CloseTicketAction",
+			Handler:    _Tickets_CloseTicketAction_Handler,
+		},
+		{
+			MethodName: "AssignTicketAction",
+			Handler:    _Tickets_AssignTicketAction_Handler,
+		},
+		{
+			MethodName: "CreateTicketAction",
+			Handler:    _Tickets_CreateTicketAction_Handler,
+		},
+		{
+			MethodName: "ChangeTicketStatus",
+			Handler:    _Tickets_ChangeTicketStatus_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -80,6 +80,18 @@ const (
 	TicketsListSkillsProcedure = "/api.v1alpha1.tickets.Tickets/ListSkills"
 	// TicketsListUsersProcedure is the fully-qualified name of the Tickets's ListUsers RPC.
 	TicketsListUsersProcedure = "/api.v1alpha1.tickets.Tickets/ListUsers"
+	// TicketsCloseTicketActionProcedure is the fully-qualified name of the Tickets's CloseTicketAction
+	// RPC.
+	TicketsCloseTicketActionProcedure = "/api.v1alpha1.tickets.Tickets/CloseTicketAction"
+	// TicketsAssignTicketActionProcedure is the fully-qualified name of the Tickets's
+	// AssignTicketAction RPC.
+	TicketsAssignTicketActionProcedure = "/api.v1alpha1.tickets.Tickets/AssignTicketAction"
+	// TicketsCreateTicketActionProcedure is the fully-qualified name of the Tickets's
+	// CreateTicketAction RPC.
+	TicketsCreateTicketActionProcedure = "/api.v1alpha1.tickets.Tickets/CreateTicketAction"
+	// TicketsChangeTicketStatusProcedure is the fully-qualified name of the Tickets's
+	// ChangeTicketStatus RPC.
+	TicketsChangeTicketStatusProcedure = "/api.v1alpha1.tickets.Tickets/ChangeTicketStatus"
 )
 
 // TicketsClient is a client for the api.v1alpha1.tickets.Tickets service.
@@ -91,8 +103,10 @@ type TicketsClient interface {
 	// Public method to list tickets
 	ListTickets(context.Context, *connect_go.Request[tickets.ListTicketsReq]) (*connect_go.Response[tickets.ListTicketsRes], error)
 	// Public method to assign ticket
+	// Would be deprecated
 	AssignTicket(context.Context, *connect_go.Request[tickets.AssignTicketReq]) (*connect_go.Response[tickets.AssignTicketRes], error)
 	// Public Method to Close a ticket
+	// Any agent can close the ticket. No BE validation required
 	CloseTicket(context.Context, *connect_go.Request[tickets.CloseTicketReq]) (*connect_go.Response[tickets.CloseTicketRes], error)
 	// Public method to view ticket
 	ViewTicket(context.Context, *connect_go.Request[tickets.ViewTicketReq]) (*connect_go.Response[tickets.ViewTicketRes], error)
@@ -127,6 +141,14 @@ type TicketsClient interface {
 	ListSkills(context.Context, *connect_go.Request[tickets.ListSkillsRequest]) (*connect_go.Response[tickets.ListSkillsResponse], error)
 	// public method to fetch list of users for a tickets user
 	ListUsers(context.Context, *connect_go.Request[tickets.ListUsersRequest]) (*connect_go.Response[tickets.ListUsersResponse], error)
+	// Any agent can close the ticket. No BE validation required
+	CloseTicketAction(context.Context, *connect_go.Request[tickets.CloseTicketActionRequest]) (*connect_go.Response[tickets.CloseTicketActionResponse], error)
+	// Public method to assign a ticket action
+	AssignTicketAction(context.Context, *connect_go.Request[tickets.AssignTicketActionRequest]) (*connect_go.Response[tickets.AssignTicketActionResponse], error)
+	// Public method to assign a ticket
+	CreateTicketAction(context.Context, *connect_go.Request[tickets.CreateTicketActionRequest]) (*connect_go.Response[tickets.CreateTicketActionResponse], error)
+	// Public method to change the Status of a ticket
+	ChangeTicketStatus(context.Context, *connect_go.Request[tickets.ChangeTicketStatusRequest]) (*connect_go.Response[tickets.ChangeTicketStatusResponse], error)
 }
 
 // NewTicketsClient constructs a client for the api.v1alpha1.tickets.Tickets service. By default, it
@@ -244,6 +266,26 @@ func NewTicketsClient(httpClient connect_go.HTTPClient, baseURL string, opts ...
 			baseURL+TicketsListUsersProcedure,
 			opts...,
 		),
+		closeTicketAction: connect_go.NewClient[tickets.CloseTicketActionRequest, tickets.CloseTicketActionResponse](
+			httpClient,
+			baseURL+TicketsCloseTicketActionProcedure,
+			opts...,
+		),
+		assignTicketAction: connect_go.NewClient[tickets.AssignTicketActionRequest, tickets.AssignTicketActionResponse](
+			httpClient,
+			baseURL+TicketsAssignTicketActionProcedure,
+			opts...,
+		),
+		createTicketAction: connect_go.NewClient[tickets.CreateTicketActionRequest, tickets.CreateTicketActionResponse](
+			httpClient,
+			baseURL+TicketsCreateTicketActionProcedure,
+			opts...,
+		),
+		changeTicketStatus: connect_go.NewClient[tickets.ChangeTicketStatusRequest, tickets.ChangeTicketStatusResponse](
+			httpClient,
+			baseURL+TicketsChangeTicketStatusProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -270,6 +312,10 @@ type ticketsClient struct {
 	listAvailableAgentTickets *connect_go.Client[tickets.ListAvailableAgentTicketsRequest, tickets.ListAvailableAgentTicketsResponse]
 	listSkills                *connect_go.Client[tickets.ListSkillsRequest, tickets.ListSkillsResponse]
 	listUsers                 *connect_go.Client[tickets.ListUsersRequest, tickets.ListUsersResponse]
+	closeTicketAction         *connect_go.Client[tickets.CloseTicketActionRequest, tickets.CloseTicketActionResponse]
+	assignTicketAction        *connect_go.Client[tickets.AssignTicketActionRequest, tickets.AssignTicketActionResponse]
+	createTicketAction        *connect_go.Client[tickets.CreateTicketActionRequest, tickets.CreateTicketActionResponse]
+	changeTicketStatus        *connect_go.Client[tickets.ChangeTicketStatusRequest, tickets.ChangeTicketStatusResponse]
 }
 
 // CreateTicket calls api.v1alpha1.tickets.Tickets.CreateTicket.
@@ -379,6 +425,26 @@ func (c *ticketsClient) ListUsers(ctx context.Context, req *connect_go.Request[t
 	return c.listUsers.CallUnary(ctx, req)
 }
 
+// CloseTicketAction calls api.v1alpha1.tickets.Tickets.CloseTicketAction.
+func (c *ticketsClient) CloseTicketAction(ctx context.Context, req *connect_go.Request[tickets.CloseTicketActionRequest]) (*connect_go.Response[tickets.CloseTicketActionResponse], error) {
+	return c.closeTicketAction.CallUnary(ctx, req)
+}
+
+// AssignTicketAction calls api.v1alpha1.tickets.Tickets.AssignTicketAction.
+func (c *ticketsClient) AssignTicketAction(ctx context.Context, req *connect_go.Request[tickets.AssignTicketActionRequest]) (*connect_go.Response[tickets.AssignTicketActionResponse], error) {
+	return c.assignTicketAction.CallUnary(ctx, req)
+}
+
+// CreateTicketAction calls api.v1alpha1.tickets.Tickets.CreateTicketAction.
+func (c *ticketsClient) CreateTicketAction(ctx context.Context, req *connect_go.Request[tickets.CreateTicketActionRequest]) (*connect_go.Response[tickets.CreateTicketActionResponse], error) {
+	return c.createTicketAction.CallUnary(ctx, req)
+}
+
+// ChangeTicketStatus calls api.v1alpha1.tickets.Tickets.ChangeTicketStatus.
+func (c *ticketsClient) ChangeTicketStatus(ctx context.Context, req *connect_go.Request[tickets.ChangeTicketStatusRequest]) (*connect_go.Response[tickets.ChangeTicketStatusResponse], error) {
+	return c.changeTicketStatus.CallUnary(ctx, req)
+}
+
 // TicketsHandler is an implementation of the api.v1alpha1.tickets.Tickets service.
 type TicketsHandler interface {
 	// Public Method to create a ticket.
@@ -388,8 +454,10 @@ type TicketsHandler interface {
 	// Public method to list tickets
 	ListTickets(context.Context, *connect_go.Request[tickets.ListTicketsReq]) (*connect_go.Response[tickets.ListTicketsRes], error)
 	// Public method to assign ticket
+	// Would be deprecated
 	AssignTicket(context.Context, *connect_go.Request[tickets.AssignTicketReq]) (*connect_go.Response[tickets.AssignTicketRes], error)
 	// Public Method to Close a ticket
+	// Any agent can close the ticket. No BE validation required
 	CloseTicket(context.Context, *connect_go.Request[tickets.CloseTicketReq]) (*connect_go.Response[tickets.CloseTicketRes], error)
 	// Public method to view ticket
 	ViewTicket(context.Context, *connect_go.Request[tickets.ViewTicketReq]) (*connect_go.Response[tickets.ViewTicketRes], error)
@@ -424,6 +492,14 @@ type TicketsHandler interface {
 	ListSkills(context.Context, *connect_go.Request[tickets.ListSkillsRequest]) (*connect_go.Response[tickets.ListSkillsResponse], error)
 	// public method to fetch list of users for a tickets user
 	ListUsers(context.Context, *connect_go.Request[tickets.ListUsersRequest]) (*connect_go.Response[tickets.ListUsersResponse], error)
+	// Any agent can close the ticket. No BE validation required
+	CloseTicketAction(context.Context, *connect_go.Request[tickets.CloseTicketActionRequest]) (*connect_go.Response[tickets.CloseTicketActionResponse], error)
+	// Public method to assign a ticket action
+	AssignTicketAction(context.Context, *connect_go.Request[tickets.AssignTicketActionRequest]) (*connect_go.Response[tickets.AssignTicketActionResponse], error)
+	// Public method to assign a ticket
+	CreateTicketAction(context.Context, *connect_go.Request[tickets.CreateTicketActionRequest]) (*connect_go.Response[tickets.CreateTicketActionResponse], error)
+	// Public method to change the Status of a ticket
+	ChangeTicketStatus(context.Context, *connect_go.Request[tickets.ChangeTicketStatusRequest]) (*connect_go.Response[tickets.ChangeTicketStatusResponse], error)
 }
 
 // NewTicketsHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -537,6 +613,26 @@ func NewTicketsHandler(svc TicketsHandler, opts ...connect_go.HandlerOption) (st
 		svc.ListUsers,
 		opts...,
 	)
+	ticketsCloseTicketActionHandler := connect_go.NewUnaryHandler(
+		TicketsCloseTicketActionProcedure,
+		svc.CloseTicketAction,
+		opts...,
+	)
+	ticketsAssignTicketActionHandler := connect_go.NewUnaryHandler(
+		TicketsAssignTicketActionProcedure,
+		svc.AssignTicketAction,
+		opts...,
+	)
+	ticketsCreateTicketActionHandler := connect_go.NewUnaryHandler(
+		TicketsCreateTicketActionProcedure,
+		svc.CreateTicketAction,
+		opts...,
+	)
+	ticketsChangeTicketStatusHandler := connect_go.NewUnaryHandler(
+		TicketsChangeTicketStatusProcedure,
+		svc.ChangeTicketStatus,
+		opts...,
+	)
 	return "/api.v1alpha1.tickets.Tickets/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case TicketsCreateTicketProcedure:
@@ -581,6 +677,14 @@ func NewTicketsHandler(svc TicketsHandler, opts ...connect_go.HandlerOption) (st
 			ticketsListSkillsHandler.ServeHTTP(w, r)
 		case TicketsListUsersProcedure:
 			ticketsListUsersHandler.ServeHTTP(w, r)
+		case TicketsCloseTicketActionProcedure:
+			ticketsCloseTicketActionHandler.ServeHTTP(w, r)
+		case TicketsAssignTicketActionProcedure:
+			ticketsAssignTicketActionHandler.ServeHTTP(w, r)
+		case TicketsCreateTicketActionProcedure:
+			ticketsCreateTicketActionHandler.ServeHTTP(w, r)
+		case TicketsChangeTicketStatusProcedure:
+			ticketsChangeTicketStatusHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -672,4 +776,20 @@ func (UnimplementedTicketsHandler) ListSkills(context.Context, *connect_go.Reque
 
 func (UnimplementedTicketsHandler) ListUsers(context.Context, *connect_go.Request[tickets.ListUsersRequest]) (*connect_go.Response[tickets.ListUsersResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.tickets.Tickets.ListUsers is not implemented"))
+}
+
+func (UnimplementedTicketsHandler) CloseTicketAction(context.Context, *connect_go.Request[tickets.CloseTicketActionRequest]) (*connect_go.Response[tickets.CloseTicketActionResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.tickets.Tickets.CloseTicketAction is not implemented"))
+}
+
+func (UnimplementedTicketsHandler) AssignTicketAction(context.Context, *connect_go.Request[tickets.AssignTicketActionRequest]) (*connect_go.Response[tickets.AssignTicketActionResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.tickets.Tickets.AssignTicketAction is not implemented"))
+}
+
+func (UnimplementedTicketsHandler) CreateTicketAction(context.Context, *connect_go.Request[tickets.CreateTicketActionRequest]) (*connect_go.Response[tickets.CreateTicketActionResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.tickets.Tickets.CreateTicketAction is not implemented"))
+}
+
+func (UnimplementedTicketsHandler) ChangeTicketStatus(context.Context, *connect_go.Request[tickets.ChangeTicketStatusRequest]) (*connect_go.Response[tickets.ChangeTicketStatusResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.tickets.Tickets.ChangeTicketStatus is not implemented"))
 }
