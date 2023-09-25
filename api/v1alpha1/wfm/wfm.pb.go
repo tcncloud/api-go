@@ -18880,7 +18880,7 @@ type CreateTourPatternReq struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// ID of the shift template to create the tour pattern for.
+	// ID of the Shift Template to create the Tour Pattern for.
 	ShiftTemplateSid int64 `protobuf:"varint,1,opt,name=shift_template_sid,json=shiftTemplateSid,proto3" json:"shift_template_sid,omitempty"`
 }
 
@@ -18929,6 +18929,7 @@ type CreateTourPatternRes struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// ID of the newly created Tour Pattern
 	TourPatternSid int64 `protobuf:"varint,1,opt,name=tour_pattern_sid,json=tourPatternSid,proto3" json:"tour_pattern_sid,omitempty"`
 }
 
@@ -18977,7 +18978,7 @@ type GetTourPatternReq struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// ID of the shift template to get the tour pattern for.
+	// ID of the Shift Template to get the Tour Pattern for.
 	ShiftTemplateSid int64 `protobuf:"varint,1,opt,name=shift_template_sid,json=shiftTemplateSid,proto3" json:"shift_template_sid,omitempty"`
 }
 
@@ -19026,7 +19027,7 @@ type GetTourPatternRes struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// The requested tour pattern
+	// The requested Tour Pattern
 	TourPattern *commons.TourPattern `protobuf:"bytes,1,opt,name=tour_pattern,json=tourPattern,proto3" json:"tour_pattern,omitempty"`
 }
 
@@ -19164,7 +19165,7 @@ type CreateTourWeekPatternReq struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// ID of the tour pattern to create the tour week pattern for.
+	// ID of the Tour Pattern to create the tour week pattern for.
 	TourPatternSid int64 `protobuf:"varint,1,opt,name=tour_pattern_sid,json=tourPatternSid,proto3" json:"tour_pattern_sid,omitempty"`
 }
 
@@ -19213,7 +19214,7 @@ type CreateTourWeekPatternRes struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// ID of the newly created tour pattern.
+	// ID of the newly created Tour Pattern.
 	TourWeekPatternSid int64 `protobuf:"varint,1,opt,name=tour_week_pattern_sid,json=tourWeekPatternSid,proto3" json:"tour_week_pattern_sid,omitempty"`
 }
 
@@ -19311,6 +19312,7 @@ type ListTourWeekPatternsRes struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// The requested Tour Week Patterns.
 	TourWeekPatterns []*commons.TourWeekPattern `protobuf:"bytes,1,rep,name=tour_week_patterns,json=tourWeekPatterns,proto3" json:"tour_week_patterns,omitempty"`
 }
 
@@ -19498,7 +19500,7 @@ type CreateTourShiftInstanceConfigRes struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// ID of the newly created tour shift instance config.
+	// ID of the newly created Tour Shift Instance Config.
 	TourShiftInstanceConfigSid int64 `protobuf:"varint,1,opt,name=tour_shift_instance_config_sid,json=tourShiftInstanceConfigSid,proto3" json:"tour_shift_instance_config_sid,omitempty"`
 }
 
@@ -19635,7 +19637,7 @@ type ListTourShiftInstanceConfigsReq struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// IDs of the tour week patterns to get the child tour shift instance configs for.
+	// IDs of the tour week patterns to get the child Tour Shift Instance Configs for.
 	TourWeekPatternSids []int64 `protobuf:"varint,1,rep,packed,name=tour_week_pattern_sids,json=tourWeekPatternSids,proto3" json:"tour_week_pattern_sids,omitempty"`
 }
 
@@ -19684,7 +19686,7 @@ type ListTourShiftInstanceConfigsRes struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Requested tour shift instance configs.
+	// Requested Tour Shift Instance Configs.
 	TourShiftInstanceConfigs []*commons.TourShiftInstanceConfig `protobuf:"bytes,1,rep,name=tour_shift_instance_configs,json=tourShiftInstanceConfigs,proto3" json:"tour_shift_instance_configs,omitempty"`
 }
 
@@ -19733,7 +19735,7 @@ type DeleteTourShiftInstanceConfigsReq struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// IDs of the tour shift instance configs to be deleted.
+	// IDs of the Tour Shift Instance Configs to be deleted.
 	TourShiftInstanceConfigSids []int64 `protobuf:"varint,1,rep,packed,name=tour_shift_instance_config_sids,json=tourShiftInstanceConfigSids,proto3" json:"tour_shift_instance_config_sids,omitempty"`
 }
 
@@ -19821,7 +19823,7 @@ type CreateTourShiftSegmentConfigReq struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// The tour shift segment config to create.
+	// The tour Shift Segment Config to Create.
 	TourShiftSegmentConfig *commons.TourShiftSegmentConfig `protobuf:"bytes,1,opt,name=tour_shift_segment_config,json=tourShiftSegmentConfig,proto3" json:"tour_shift_segment_config,omitempty"`
 }
 
@@ -19870,7 +19872,7 @@ type CreateTourShiftSegmentConfigRes struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// ID of the newly created tour shift segment config.
+	// ID of the newly created Tour shift Segment Config.
 	TourShiftSegmentConfigSid int64 `protobuf:"varint,1,opt,name=tour_shift_segment_config_sid,json=tourShiftSegmentConfigSid,proto3" json:"tour_shift_segment_config_sid,omitempty"`
 }
 
@@ -19919,7 +19921,7 @@ type UpdateTourShiftSegmentConfigReq struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// The tour shift segment config to update.
+	// The Tour Shift Segment Config to update.
 	TourShiftSegmentConfig *commons.TourShiftSegmentConfig `protobuf:"bytes,1,opt,name=tour_shift_segment_config,json=tourShiftSegmentConfig,proto3" json:"tour_shift_segment_config,omitempty"`
 }
 
@@ -20007,7 +20009,7 @@ type ListTourShiftSegmentConfigsReq struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// IDs of the tour shift instance configs to get the child tour shift segment configs for.
+	// IDs of the Tour Shift Instance Configs to get the child Tour Shift Segment Configs for.
 	TourShiftInstanceConfigSids []int64 `protobuf:"varint,1,rep,packed,name=tour_shift_instance_config_sids,json=tourShiftInstanceConfigSids,proto3" json:"tour_shift_instance_config_sids,omitempty"`
 }
 
@@ -20056,7 +20058,7 @@ type ListTourShiftSegmentConfigsRes struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Requested tour shift segment configs.
+	// Requested Tour Shift Segment Configs.
 	TourShiftSegmentConfigs []*commons.TourShiftSegmentConfig `protobuf:"bytes,1,rep,name=tour_shift_segment_configs,json=tourShiftSegmentConfigs,proto3" json:"tour_shift_segment_configs,omitempty"`
 }
 
@@ -20105,7 +20107,7 @@ type DeleteTourShiftSegmentConfigsReq struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// IDs of the tour shift segment configs to delete.
+	// IDs of the Tour Shift Segment Configs to delete.
 	TourShiftSegmentConfigSids []int64 `protobuf:"varint,1,rep,packed,name=tour_shift_segment_config_sids,json=tourShiftSegmentConfigSids,proto3" json:"tour_shift_segment_config_sids,omitempty"`
 }
 
@@ -20193,7 +20195,7 @@ type CreateTourAgentCollectionReq struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// The tour agent collection to create.
+	// The Tour Agent Collection to create.
 	TourAgentCollection *commons.TourAgentCollection `protobuf:"bytes,1,opt,name=tour_agent_collection,json=tourAgentCollection,proto3" json:"tour_agent_collection,omitempty"`
 }
 
@@ -20242,7 +20244,7 @@ type CreateTourAgentCollectionRes struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// ID of the newly created tour agent collection.
+	// ID of the newly created Tour Agent Collection.
 	TourAgentCollectionSid int64 `protobuf:"varint,1,opt,name=tour_agent_collection_sid,json=tourAgentCollectionSid,proto3" json:"tour_agent_collection_sid,omitempty"`
 }
 
@@ -20291,7 +20293,7 @@ type UpdateTourAgentCollectionReq struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// The tour agent collection to update.
+	// The Tour Agent Collection to update.
 	TourAgentCollection *commons.TourAgentCollection `protobuf:"bytes,1,opt,name=tour_agent_collection,json=tourAgentCollection,proto3" json:"tour_agent_collection,omitempty"`
 }
 
@@ -20379,7 +20381,7 @@ type ListTourAgentCollectionsReq struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// ID of the tour pattern to get the child tour agent collections for.
+	// ID of the tour pattern to get the child Tour Agent Collections for.
 	TourPatternSid int64 `protobuf:"varint,1,opt,name=tour_pattern_sid,json=tourPatternSid,proto3" json:"tour_pattern_sid,omitempty"`
 }
 
@@ -20428,7 +20430,7 @@ type ListTourAgentCollectionsRes struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Requested tour agent collections.
+	// Requested Tour Agent Collections.
 	TourAgentCollections []*commons.TourAgentCollection `protobuf:"bytes,1,rep,name=tour_agent_collections,json=tourAgentCollections,proto3" json:"tour_agent_collections,omitempty"`
 }
 
@@ -20477,7 +20479,7 @@ type DeleteTourAgentCollectionsReq struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// IDs of the tour agent collections to be deleted.
+	// IDs of the Tour Agent Collections to be deleted.
 	// Any associations with WFM Agent SIDS for these Collections will also be deleted.
 	TourAgentCollectionSids []int64 `protobuf:"varint,1,rep,packed,name=tour_agent_collection_sids,json=tourAgentCollectionSids,proto3" json:"tour_agent_collection_sids,omitempty"`
 }
@@ -20568,7 +20570,7 @@ type CreateTourAgentCollectionWFMAgentsReq struct {
 
 	// ID of the wfm agents to add to @tour_agent_collection_sid.
 	WfmAgentSids []int64 `protobuf:"varint,1,rep,packed,name=wfm_agent_sids,json=wfmAgentSids,proto3" json:"wfm_agent_sids,omitempty"`
-	// ID of the tour agent collection that the @wfm_agent_sids will belong to.
+	// ID of the Tour Agent Collection that the @wfm_agent_sids will belong to.
 	TourAgentCollectionSid int64 `protobuf:"varint,2,opt,name=tour_agent_collection_sid,json=tourAgentCollectionSid,proto3" json:"tour_agent_collection_sid,omitempty"`
 }
 
@@ -20761,7 +20763,7 @@ type DeleteTourAgentCollectionWFMAgentsReq struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// ID of the wfm agents to delete from @tour_agent_collection_sid.
+	// ID of the WFM Agents to delete from @tour_agent_collection_sid.
 	// If no wfm_angent_sids are provided, all will be removed for @tour_agent_collection_sid.
 	WfmAgentSids []int64 `protobuf:"varint,1,rep,packed,name=wfm_agent_sids,json=wfmAgentSids,proto3" json:"wfm_agent_sids,omitempty"`
 	// ID of the tour agent collection that the @wfm_agent_sids will be deleted from.

@@ -2809,7 +2809,7 @@ type TourAgentCollection struct {
 	// The maximum number of agents that are allowed to be scheduled using this collection.
 	MaxAgentsToSchedule int32 `protobuf:"varint,4,opt,name=max_agents_to_schedule,json=maxAgentsToSchedule,proto3" json:"max_agents_to_schedule,omitempty"`
 	// The week pattern number to start scheduling this collection with.
-	// Each week a the next week pattern number in sequence will be scheduled, starting with the @first_week_pattern_number.
+	// Each the next week pattern number in sequence will be scheduled, starting with the @first_week_pattern_number.
 	FirstWeekPatternNumber int32 `protobuf:"varint,5,opt,name=first_week_pattern_number,json=firstWeekPatternNumber,proto3" json:"first_week_pattern_number,omitempty"`
 	// The name used to describe this tour agent collection to the user.
 	Name string `protobuf:"bytes,6,opt,name=name,proto3" json:"name,omitempty"`
