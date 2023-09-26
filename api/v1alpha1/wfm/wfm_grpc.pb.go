@@ -1673,7 +1673,8 @@ type WFMClient interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the request data is invalid or a Tour Pattern already exists for @shift_template_sid.
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.AlreadyExists: A Tour Pattern already exists for @shift_template_sid.
 	//   - grpc.Internal: error occurs when creating the Tour Pattern.
 	CreateTourPattern(ctx context.Context, in *CreateTourPatternReq, opts ...grpc.CallOption) (*CreateTourPatternRes, error)
 	// Gets the Tour Pattern belonging to @shift_template_sid and the org sending the request.
@@ -1703,7 +1704,8 @@ type WFMClient interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the request data is invalid, or the given @tour_pattern_sid does not exist for the org sending the request.
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.NotFound: the given @tour_pattern_sid does not exist for the org sending the request.
 	//   - grpc.Internal: error occurs when creating the Tour Week Pattern.
 	CreateTourWeekPattern(ctx context.Context, in *CreateTourWeekPatternReq, opts ...grpc.CallOption) (*CreateTourWeekPatternRes, error)
 	// Lists the Tour Week Patterns with @tour_pattern_sid for the org sending the request
@@ -1723,7 +1725,8 @@ type WFMClient interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the request data is invalid or a @tour_week_pattern_sid is in use by a Tour Agent Collection.
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.FailedPrecondition: a @tour_week_pattern_sid is in use by a Tour Agent Collection.
 	//   - grpc.Internal: error occurs when deleting the tour week patterns or configs.
 	DeleteTourWeekPatterns(ctx context.Context, in *DeleteTourWeekPatternsReq, opts ...grpc.CallOption) (*DeleteTourWeekPatternsRes, error)
 	// Creates the @tour_shift_instance_config for the org sending the request, returning @tour_shift_instance_config_sid.
@@ -1772,7 +1775,8 @@ type WFMClient interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the request data is invalid or the @tour_shift_instance_config_sid does not exist for the org sending the request.
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.NotFound: the @tour_shift_instance_config_sid does not exist for the org sending the request.
 	//   - grpc.Internal: error occurs when creating the entity.
 	CreateTourShiftSegmentConfig(ctx context.Context, in *CreateTourShiftSegmentConfigReq, opts ...grpc.CallOption) (*CreateTourShiftSegmentConfigRes, error)
 	// Updates the given @tour_shift_segment_config matching @tour_shift_segment_config_sid for the org sending the request.
@@ -1782,7 +1786,8 @@ type WFMClient interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the request data is invalid, the @tour_shift_instance_config_sid does not exist for the org sending the request, or the resulting update would result in a conflict.
+	//   - grpc.Invalid: the request data is invalid or the resulting update would result in a conflict.
+	//   - grpc.NotFound: the @tour_shift_instance_config_sid does not exist for the org sending the request.
 	//   - grpc.Internal: error occurs when updating the entity.
 	UpdateTourShiftSegmentConfig(ctx context.Context, in *UpdateTourShiftSegmentConfigReq, opts ...grpc.CallOption) (*UpdateTourShiftSegmentConfigRes, error)
 	// Lists the Tour Shift Segment Configs belonging to @tour_shift_instance_config_sids for the org sending the request.
@@ -1810,8 +1815,9 @@ type WFMClient interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the request data is invalid, the first_week_pattern_number for @tour_pattern_sid is already in use by another tour agent collection,
-	//     or the given @tour_pattern_sid does not exist for the org sending the request.
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.AlreadyExists: the first_week_pattern_number for @tour_pattern_sid is already in use by another tour agent collection.
+	//   - grpc.NotFound: the given @tour_pattern_sid does not exist for the org sending the request.
 	//   - grpc.Internal: error occurs when creating the entity.
 	CreateTourAgentCollection(ctx context.Context, in *CreateTourAgentCollectionReq, opts ...grpc.CallOption) (*CreateTourAgentCollectionRes, error)
 	// Updates the given @tour_agent_collection matching the @tour_agent_collection_sid for the org sending the request.
@@ -1821,8 +1827,9 @@ type WFMClient interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the request data is invalid, the first_week_pattern_number for @tour_pattern_sid is already in use by another tour agent collection,
-	//     or the given @tour_pattern_sid does not exist for the org sending the request.
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.AlreadyExists: the first_week_pattern_number for @tour_pattern_sid is already in use by another tour agent collection.
+	//   - grpc.NotFound: the given @tour_pattern_sid does not exist for the org sending the request.
 	//   - grpc.Internal: error occurs when updating the entity.
 	UpdateTourAgentCollection(ctx context.Context, in *UpdateTourAgentCollectionReq, opts ...grpc.CallOption) (*UpdateTourAgentCollectionRes, error)
 	// Lists the Tour Agent Collections belonging to @tour_pattern_sid for the org sending the request.
@@ -1851,12 +1858,13 @@ type WFMClient interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the request data is invalid or an association already exists for at least one SID in @wfm_agent_sids.
+	//   - grpc.Invalid: the request data is invalid
+	//   - grpc.AlreadyExists: an association already exists for at least one SID in @wfm_agent_sids.
 	//   - grpc.Internal: error occurs when creating the association.
 	CreateTourAgentCollectionWFMAgents(ctx context.Context, in *CreateTourAgentCollectionWFMAgentsReq, opts ...grpc.CallOption) (*CreateTourAgentCollectionWFMAgentsRes, error)
 	// Lists the WFM Agent SIDs belonging to @tour_agent_collection_sids for the org sending the request.
 	// The resulting sids will be returned in @wfm_agent_pairings each containing an @agent_collection_sid and @wfm_agent_sids.
-	// If no agents are found for an sid in the given @tour_agent_collection_sids, that @agent_collection_sid will have an empty slice in @wfm_agent_sids.
+	// If no agents are found for a sid in the given @tour_agent_collection_sids, that @agent_collection_sid will have an empty slice in @wfm_agent_sids.
 	// Required permissions:
 	//
 	//	NONE
@@ -1872,7 +1880,8 @@ type WFMClient interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the request data is invalid or there are no WFM Agent associations to delete for @tour_agent_collection_sid .
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.NotFound: there are no WFM Agent associations to delete for @tour_agent_collection_sid.
 	//   - grpc.Internal: error occurs when getting the tour agent collections.
 	DeleteTourAgentCollectionWFMAgents(ctx context.Context, in *DeleteTourAgentCollectionWFMAgentsReq, opts ...grpc.CallOption) (*DeleteTourAgentCollectionWFMAgentsRes, error)
 }
@@ -4855,7 +4864,8 @@ type WFMServer interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the request data is invalid or a Tour Pattern already exists for @shift_template_sid.
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.AlreadyExists: A Tour Pattern already exists for @shift_template_sid.
 	//   - grpc.Internal: error occurs when creating the Tour Pattern.
 	CreateTourPattern(context.Context, *CreateTourPatternReq) (*CreateTourPatternRes, error)
 	// Gets the Tour Pattern belonging to @shift_template_sid and the org sending the request.
@@ -4885,7 +4895,8 @@ type WFMServer interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the request data is invalid, or the given @tour_pattern_sid does not exist for the org sending the request.
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.NotFound: the given @tour_pattern_sid does not exist for the org sending the request.
 	//   - grpc.Internal: error occurs when creating the Tour Week Pattern.
 	CreateTourWeekPattern(context.Context, *CreateTourWeekPatternReq) (*CreateTourWeekPatternRes, error)
 	// Lists the Tour Week Patterns with @tour_pattern_sid for the org sending the request
@@ -4905,7 +4916,8 @@ type WFMServer interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the request data is invalid or a @tour_week_pattern_sid is in use by a Tour Agent Collection.
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.FailedPrecondition: a @tour_week_pattern_sid is in use by a Tour Agent Collection.
 	//   - grpc.Internal: error occurs when deleting the tour week patterns or configs.
 	DeleteTourWeekPatterns(context.Context, *DeleteTourWeekPatternsReq) (*DeleteTourWeekPatternsRes, error)
 	// Creates the @tour_shift_instance_config for the org sending the request, returning @tour_shift_instance_config_sid.
@@ -4954,7 +4966,8 @@ type WFMServer interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the request data is invalid or the @tour_shift_instance_config_sid does not exist for the org sending the request.
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.NotFound: the @tour_shift_instance_config_sid does not exist for the org sending the request.
 	//   - grpc.Internal: error occurs when creating the entity.
 	CreateTourShiftSegmentConfig(context.Context, *CreateTourShiftSegmentConfigReq) (*CreateTourShiftSegmentConfigRes, error)
 	// Updates the given @tour_shift_segment_config matching @tour_shift_segment_config_sid for the org sending the request.
@@ -4964,7 +4977,8 @@ type WFMServer interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the request data is invalid, the @tour_shift_instance_config_sid does not exist for the org sending the request, or the resulting update would result in a conflict.
+	//   - grpc.Invalid: the request data is invalid or the resulting update would result in a conflict.
+	//   - grpc.NotFound: the @tour_shift_instance_config_sid does not exist for the org sending the request.
 	//   - grpc.Internal: error occurs when updating the entity.
 	UpdateTourShiftSegmentConfig(context.Context, *UpdateTourShiftSegmentConfigReq) (*UpdateTourShiftSegmentConfigRes, error)
 	// Lists the Tour Shift Segment Configs belonging to @tour_shift_instance_config_sids for the org sending the request.
@@ -4992,8 +5006,9 @@ type WFMServer interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the request data is invalid, the first_week_pattern_number for @tour_pattern_sid is already in use by another tour agent collection,
-	//     or the given @tour_pattern_sid does not exist for the org sending the request.
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.AlreadyExists: the first_week_pattern_number for @tour_pattern_sid is already in use by another tour agent collection.
+	//   - grpc.NotFound: the given @tour_pattern_sid does not exist for the org sending the request.
 	//   - grpc.Internal: error occurs when creating the entity.
 	CreateTourAgentCollection(context.Context, *CreateTourAgentCollectionReq) (*CreateTourAgentCollectionRes, error)
 	// Updates the given @tour_agent_collection matching the @tour_agent_collection_sid for the org sending the request.
@@ -5003,8 +5018,9 @@ type WFMServer interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the request data is invalid, the first_week_pattern_number for @tour_pattern_sid is already in use by another tour agent collection,
-	//     or the given @tour_pattern_sid does not exist for the org sending the request.
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.AlreadyExists: the first_week_pattern_number for @tour_pattern_sid is already in use by another tour agent collection.
+	//   - grpc.NotFound: the given @tour_pattern_sid does not exist for the org sending the request.
 	//   - grpc.Internal: error occurs when updating the entity.
 	UpdateTourAgentCollection(context.Context, *UpdateTourAgentCollectionReq) (*UpdateTourAgentCollectionRes, error)
 	// Lists the Tour Agent Collections belonging to @tour_pattern_sid for the org sending the request.
@@ -5033,12 +5049,13 @@ type WFMServer interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the request data is invalid or an association already exists for at least one SID in @wfm_agent_sids.
+	//   - grpc.Invalid: the request data is invalid
+	//   - grpc.AlreadyExists: an association already exists for at least one SID in @wfm_agent_sids.
 	//   - grpc.Internal: error occurs when creating the association.
 	CreateTourAgentCollectionWFMAgents(context.Context, *CreateTourAgentCollectionWFMAgentsReq) (*CreateTourAgentCollectionWFMAgentsRes, error)
 	// Lists the WFM Agent SIDs belonging to @tour_agent_collection_sids for the org sending the request.
 	// The resulting sids will be returned in @wfm_agent_pairings each containing an @agent_collection_sid and @wfm_agent_sids.
-	// If no agents are found for an sid in the given @tour_agent_collection_sids, that @agent_collection_sid will have an empty slice in @wfm_agent_sids.
+	// If no agents are found for a sid in the given @tour_agent_collection_sids, that @agent_collection_sid will have an empty slice in @wfm_agent_sids.
 	// Required permissions:
 	//
 	//	NONE
@@ -5054,7 +5071,8 @@ type WFMServer interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the request data is invalid or there are no WFM Agent associations to delete for @tour_agent_collection_sid .
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.NotFound: there are no WFM Agent associations to delete for @tour_agent_collection_sid.
 	//   - grpc.Internal: error occurs when getting the tour agent collections.
 	DeleteTourAgentCollectionWFMAgents(context.Context, *DeleteTourAgentCollectionWFMAgentsReq) (*DeleteTourAgentCollectionWFMAgentsRes, error)
 	mustEmbedUnimplementedWFMServer()
