@@ -2177,13 +2177,14 @@ type WFMClient interface {
 	//   - grpc.NotFound: there are no WFM Agent associations to delete for @tour_agent_collection_sid.
 	//   - grpc.Internal: error occurs when getting the tour agent collections.
 	DeleteTourAgentCollectionWFMAgents(context.Context, *connect_go.Request[wfm.DeleteTourAgentCollectionWFMAgentsReq]) (*connect_go.Response[wfm.DeleteTourAgentCollectionWFMAgentsRes], error)
-	// Generates a tour pattern for @target_shift_template_sid and the org sending the request.
+	// Generates a list of tour week patterns for @target_shift_template_sid and the org sending the request.
 	// Sets the member_tour_week_patterns with a tour week pattern for each of the @num_weeks_in_tour.
 	// Each of the tour week patterns will be set with tour shift instances and segment configs based on
 	//
 	//	the forecasted call data over the next @num_weeks_in_tour, starting on the next Monday.
 	//
-	// The returned data will not be persisted. This endpoint will not effect any existing tour week patterns in the database.
+	// The returned data will not be persisted. This method will not effect any existing tour week patterns in the database.
+	// The @tour_week_patterns returned by this method are intended to replace, not append, all currenly existing tour week patterns for @target_shift_template_sid, once persisted.
 	// Required permissions:
 	//
 	//	NONE
@@ -5605,13 +5606,14 @@ type WFMHandler interface {
 	//   - grpc.NotFound: there are no WFM Agent associations to delete for @tour_agent_collection_sid.
 	//   - grpc.Internal: error occurs when getting the tour agent collections.
 	DeleteTourAgentCollectionWFMAgents(context.Context, *connect_go.Request[wfm.DeleteTourAgentCollectionWFMAgentsReq]) (*connect_go.Response[wfm.DeleteTourAgentCollectionWFMAgentsRes], error)
-	// Generates a tour pattern for @target_shift_template_sid and the org sending the request.
+	// Generates a list of tour week patterns for @target_shift_template_sid and the org sending the request.
 	// Sets the member_tour_week_patterns with a tour week pattern for each of the @num_weeks_in_tour.
 	// Each of the tour week patterns will be set with tour shift instances and segment configs based on
 	//
 	//	the forecasted call data over the next @num_weeks_in_tour, starting on the next Monday.
 	//
-	// The returned data will not be persisted. This endpoint will not effect any existing tour week patterns in the database.
+	// The returned data will not be persisted. This method will not effect any existing tour week patterns in the database.
+	// The @tour_week_patterns returned by this method are intended to replace, not append, all currenly existing tour week patterns for @target_shift_template_sid, once persisted.
 	// Required permissions:
 	//
 	//	NONE
