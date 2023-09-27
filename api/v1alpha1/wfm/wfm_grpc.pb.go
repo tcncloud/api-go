@@ -668,7 +668,7 @@ type WFMClient interface {
 	// If @averages_calculation_range_in_months is 0, it will use the @training_data_range_start_datetime as the start datetime of the range.
 	//
 	// If @exclude_skill_profiles_with_manual_averages is true, it will exclude skill profiles and groups that have manual averages from the calculation
-	// even if those skill profiles and groups are in @skill_profile_sids or @skill_profile_group_sids.
+	// even if those skill profiles and groups are in @skill_profile_sids or @skill_profile_group_sids respectively.
 	//
 	// Errors:
 	//   - grpc.Internal: error occurs when calculating the averages from the historical data.
@@ -3860,7 +3860,7 @@ type WFMServer interface {
 	// If @averages_calculation_range_in_months is 0, it will use the @training_data_range_start_datetime as the start datetime of the range.
 	//
 	// If @exclude_skill_profiles_with_manual_averages is true, it will exclude skill profiles and groups that have manual averages from the calculation
-	// even if those skill profiles and groups are in @skill_profile_sids or @skill_profile_group_sids.
+	// even if those skill profiles and groups are in @skill_profile_sids or @skill_profile_group_sids respectively.
 	//
 	// Errors:
 	//   - grpc.Internal: error occurs when calculating the averages from the historical data.
