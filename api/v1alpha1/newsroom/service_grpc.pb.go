@@ -19,15 +19,17 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	NewsroomAPI_CreateNewsArticle_FullMethodName       = "/api.v1alpha1.newsroom.NewsroomAPI/CreateNewsArticle"
-	NewsroomAPI_ListNewsArticles_FullMethodName        = "/api.v1alpha1.newsroom.NewsroomAPI/ListNewsArticles"
-	NewsroomAPI_GetNewsArticleById_FullMethodName      = "/api.v1alpha1.newsroom.NewsroomAPI/GetNewsArticleById"
-	NewsroomAPI_UpdateNewsArticle_FullMethodName       = "/api.v1alpha1.newsroom.NewsroomAPI/UpdateNewsArticle"
-	NewsroomAPI_CreatePublishedArticle_FullMethodName  = "/api.v1alpha1.newsroom.NewsroomAPI/CreatePublishedArticle"
-	NewsroomAPI_ListPublishedArticles_FullMethodName   = "/api.v1alpha1.newsroom.NewsroomAPI/ListPublishedArticles"
-	NewsroomAPI_GetPublishedArticleById_FullMethodName = "/api.v1alpha1.newsroom.NewsroomAPI/GetPublishedArticleById"
-	NewsroomAPI_UserActivity_FullMethodName            = "/api.v1alpha1.newsroom.NewsroomAPI/UserActivity"
-	NewsroomAPI_GetNewsForUser_FullMethodName          = "/api.v1alpha1.newsroom.NewsroomAPI/GetNewsForUser"
+	NewsroomAPI_CreateNewsArticle_FullMethodName        = "/api.v1alpha1.newsroom.NewsroomAPI/CreateNewsArticle"
+	NewsroomAPI_ListNewsArticles_FullMethodName         = "/api.v1alpha1.newsroom.NewsroomAPI/ListNewsArticles"
+	NewsroomAPI_GetNewsArticleById_FullMethodName       = "/api.v1alpha1.newsroom.NewsroomAPI/GetNewsArticleById"
+	NewsroomAPI_UpdateNewsArticle_FullMethodName        = "/api.v1alpha1.newsroom.NewsroomAPI/UpdateNewsArticle"
+	NewsroomAPI_CreatePublishedArticle_FullMethodName   = "/api.v1alpha1.newsroom.NewsroomAPI/CreatePublishedArticle"
+	NewsroomAPI_ListPublishedArticles_FullMethodName    = "/api.v1alpha1.newsroom.NewsroomAPI/ListPublishedArticles"
+	NewsroomAPI_GetPublishedArticleById_FullMethodName  = "/api.v1alpha1.newsroom.NewsroomAPI/GetPublishedArticleById"
+	NewsroomAPI_UserActivity_FullMethodName             = "/api.v1alpha1.newsroom.NewsroomAPI/UserActivity"
+	NewsroomAPI_GetNewsForUser_FullMethodName           = "/api.v1alpha1.newsroom.NewsroomAPI/GetNewsForUser"
+	NewsroomAPI_StoreNewsArticleImage_FullMethodName    = "/api.v1alpha1.newsroom.NewsroomAPI/StoreNewsArticleImage"
+	NewsroomAPI_ListImagesForNewsArticle_FullMethodName = "/api.v1alpha1.newsroom.NewsroomAPI/ListImagesForNewsArticle"
 )
 
 // NewsroomAPIClient is the client API for NewsroomAPI service.
@@ -52,6 +54,10 @@ type NewsroomAPIClient interface {
 	UserActivity(ctx context.Context, in *UserActivityRequest, opts ...grpc.CallOption) (*UserActivityResponse, error)
 	// fetch the unseen articles for the user
 	GetNewsForUser(ctx context.Context, in *GetNewsForUserRequest, opts ...grpc.CallOption) (*GetNewsForUserResponse, error)
+	// upload newsroom image for the news article
+	StoreNewsArticleImage(ctx context.Context, in *StoreNewsArticleImageRequest, opts ...grpc.CallOption) (*StoreNewsArticleImageResponse, error)
+	// list newsroom images
+	ListImagesForNewsArticle(ctx context.Context, in *ListImagesForNewsArticleRequest, opts ...grpc.CallOption) (*ListImagesForNewsArticleResponse, error)
 }
 
 type newsroomAPIClient struct {
@@ -143,6 +149,24 @@ func (c *newsroomAPIClient) GetNewsForUser(ctx context.Context, in *GetNewsForUs
 	return out, nil
 }
 
+func (c *newsroomAPIClient) StoreNewsArticleImage(ctx context.Context, in *StoreNewsArticleImageRequest, opts ...grpc.CallOption) (*StoreNewsArticleImageResponse, error) {
+	out := new(StoreNewsArticleImageResponse)
+	err := c.cc.Invoke(ctx, NewsroomAPI_StoreNewsArticleImage_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *newsroomAPIClient) ListImagesForNewsArticle(ctx context.Context, in *ListImagesForNewsArticleRequest, opts ...grpc.CallOption) (*ListImagesForNewsArticleResponse, error) {
+	out := new(ListImagesForNewsArticleResponse)
+	err := c.cc.Invoke(ctx, NewsroomAPI_ListImagesForNewsArticle_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // NewsroomAPIServer is the server API for NewsroomAPI service.
 // All implementations must embed UnimplementedNewsroomAPIServer
 // for forward compatibility
@@ -165,6 +189,10 @@ type NewsroomAPIServer interface {
 	UserActivity(context.Context, *UserActivityRequest) (*UserActivityResponse, error)
 	// fetch the unseen articles for the user
 	GetNewsForUser(context.Context, *GetNewsForUserRequest) (*GetNewsForUserResponse, error)
+	// upload newsroom image for the news article
+	StoreNewsArticleImage(context.Context, *StoreNewsArticleImageRequest) (*StoreNewsArticleImageResponse, error)
+	// list newsroom images
+	ListImagesForNewsArticle(context.Context, *ListImagesForNewsArticleRequest) (*ListImagesForNewsArticleResponse, error)
 	mustEmbedUnimplementedNewsroomAPIServer()
 }
 
@@ -198,6 +226,12 @@ func (UnimplementedNewsroomAPIServer) UserActivity(context.Context, *UserActivit
 }
 func (UnimplementedNewsroomAPIServer) GetNewsForUser(context.Context, *GetNewsForUserRequest) (*GetNewsForUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetNewsForUser not implemented")
+}
+func (UnimplementedNewsroomAPIServer) StoreNewsArticleImage(context.Context, *StoreNewsArticleImageRequest) (*StoreNewsArticleImageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StoreNewsArticleImage not implemented")
+}
+func (UnimplementedNewsroomAPIServer) ListImagesForNewsArticle(context.Context, *ListImagesForNewsArticleRequest) (*ListImagesForNewsArticleResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListImagesForNewsArticle not implemented")
 }
 func (UnimplementedNewsroomAPIServer) mustEmbedUnimplementedNewsroomAPIServer() {}
 
@@ -374,6 +408,42 @@ func _NewsroomAPI_GetNewsForUser_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _NewsroomAPI_StoreNewsArticleImage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StoreNewsArticleImageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NewsroomAPIServer).StoreNewsArticleImage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NewsroomAPI_StoreNewsArticleImage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NewsroomAPIServer).StoreNewsArticleImage(ctx, req.(*StoreNewsArticleImageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _NewsroomAPI_ListImagesForNewsArticle_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListImagesForNewsArticleRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NewsroomAPIServer).ListImagesForNewsArticle(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NewsroomAPI_ListImagesForNewsArticle_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NewsroomAPIServer).ListImagesForNewsArticle(ctx, req.(*ListImagesForNewsArticleRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // NewsroomAPI_ServiceDesc is the grpc.ServiceDesc for NewsroomAPI service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -416,6 +486,14 @@ var NewsroomAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetNewsForUser",
 			Handler:    _NewsroomAPI_GetNewsForUser_Handler,
+		},
+		{
+			MethodName: "StoreNewsArticleImage",
+			Handler:    _NewsroomAPI_StoreNewsArticleImage_Handler,
+		},
+		{
+			MethodName: "ListImagesForNewsArticle",
+			Handler:    _NewsroomAPI_ListImagesForNewsArticle_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
