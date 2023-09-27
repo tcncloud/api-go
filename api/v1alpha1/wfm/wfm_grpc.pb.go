@@ -658,16 +658,17 @@ type WFMClient interface {
 	//   - grpc.NotFound: the @skill_profile_sid given is not found.
 	//   - grpc.Internal: error occurs when calculating the averages from the training data.
 	CalculateTrainingDataAveragesForSkillProfile(ctx context.Context, in *CalculateTrainingDataAveragesForSkillProfileReq, opts ...grpc.CallOption) (*CalculateTrainingDataAveragesForSkillProfileRes, error)
-	// Calculates the averages for call characteristics using the historical data of the given @skill_profile_sids and org sending the request.
+	// Calculates the averages for call characteristics using the historical data of the given @skill_profile_sids, @skill_profile_group_sids and org sending the request.
 	// If no @skill_profile_sids are given, it will calculate the averages for all skill profiles for the org sending the request.
+	// If no @skill_profile_group_sids are given, it will calculate the averages for all skill profile groups for the org sending the request.
 	// Averages will be weighted by the number of calls that each historical data interval has.
 	// Once the averages are calculated, they will be updated in the db for those skill profiles.
 	//
 	// If a nil @datetime_range is given then the range used will be @training_data_range_end_datetime - @averages_calculation_range_in_months to the @training_data_range_end_datetime from the forecasting parameters.
 	// If @averages_calculation_range_in_months is 0, it will use the @training_data_range_start_datetime as the start datetime of the range.
 	//
-	// If @exclude_skill_profiles_with_manual_averages is true, it will exclude skill profiles that have manual averages from the calculation
-	// even if those skill profiles are in @skill_profile_sids.
+	// If @exclude_skill_profiles_with_manual_averages is true, it will exclude skill profiles and groups that have manual averages from the calculation
+	// even if those skill profiles and groups are in @skill_profile_sids or @skill_profile_group_sids.
 	//
 	// Errors:
 	//   - grpc.Internal: error occurs when calculating the averages from the historical data.
@@ -3849,16 +3850,17 @@ type WFMServer interface {
 	//   - grpc.NotFound: the @skill_profile_sid given is not found.
 	//   - grpc.Internal: error occurs when calculating the averages from the training data.
 	CalculateTrainingDataAveragesForSkillProfile(context.Context, *CalculateTrainingDataAveragesForSkillProfileReq) (*CalculateTrainingDataAveragesForSkillProfileRes, error)
-	// Calculates the averages for call characteristics using the historical data of the given @skill_profile_sids and org sending the request.
+	// Calculates the averages for call characteristics using the historical data of the given @skill_profile_sids, @skill_profile_group_sids and org sending the request.
 	// If no @skill_profile_sids are given, it will calculate the averages for all skill profiles for the org sending the request.
+	// If no @skill_profile_group_sids are given, it will calculate the averages for all skill profile groups for the org sending the request.
 	// Averages will be weighted by the number of calls that each historical data interval has.
 	// Once the averages are calculated, they will be updated in the db for those skill profiles.
 	//
 	// If a nil @datetime_range is given then the range used will be @training_data_range_end_datetime - @averages_calculation_range_in_months to the @training_data_range_end_datetime from the forecasting parameters.
 	// If @averages_calculation_range_in_months is 0, it will use the @training_data_range_start_datetime as the start datetime of the range.
 	//
-	// If @exclude_skill_profiles_with_manual_averages is true, it will exclude skill profiles that have manual averages from the calculation
-	// even if those skill profiles are in @skill_profile_sids.
+	// If @exclude_skill_profiles_with_manual_averages is true, it will exclude skill profiles and groups that have manual averages from the calculation
+	// even if those skill profiles and groups are in @skill_profile_sids or @skill_profile_group_sids.
 	//
 	// Errors:
 	//   - grpc.Internal: error occurs when calculating the averages from the historical data.
