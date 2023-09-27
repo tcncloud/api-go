@@ -105,6 +105,9 @@ const (
 	// VanalyticsListFlagTranscriptFiltersProcedure is the fully-qualified name of the Vanalytics's
 	// ListFlagTranscriptFilters RPC.
 	VanalyticsListFlagTranscriptFiltersProcedure = "/api.v1alpha1.vanalytics.Vanalytics/ListFlagTranscriptFilters"
+	// VanalyticsCreateCorrectionProcedure is the fully-qualified name of the Vanalytics's
+	// CreateCorrection RPC.
+	VanalyticsCreateCorrectionProcedure = "/api.v1alpha1.vanalytics.Vanalytics/CreateCorrection"
 )
 
 // VanalyticsClient is a client for the api.v1alpha1.vanalytics.Vanalytics service.
@@ -170,6 +173,8 @@ type VanalyticsClient interface {
 	ListFlagSnapshots(context.Context, *connect_go.Request[vanalytics.ListFlagSnapshotsRequest]) (*connect_go.Response[vanalytics.ListFlagSnapshotsResponse], error)
 	// ListFlagTranscriptFilters lists flag transcript filters in an organization.
 	ListFlagTranscriptFilters(context.Context, *connect_go.Request[vanalytics.ListFlagTranscriptFiltersRequest]) (*connect_go.Response[vanalytics.ListFlagTranscriptFiltersResponse], error)
+	// CreateCorrection creates a correction.
+	CreateCorrection(context.Context, *connect_go.Request[vanalytics.CreateCorrectionRequest]) (*connect_go.Response[vanalytics.CreateCorrectionResponse], error)
 }
 
 // NewVanalyticsClient constructs a client for the api.v1alpha1.vanalytics.Vanalytics service. By
@@ -322,6 +327,11 @@ func NewVanalyticsClient(httpClient connect_go.HTTPClient, baseURL string, opts 
 			baseURL+VanalyticsListFlagTranscriptFiltersProcedure,
 			opts...,
 		),
+		createCorrection: connect_go.NewClient[vanalytics.CreateCorrectionRequest, vanalytics.CreateCorrectionResponse](
+			httpClient,
+			baseURL+VanalyticsCreateCorrectionProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -355,6 +365,7 @@ type vanalyticsClient struct {
 	deleteFlagFilter          *connect_go.Client[vanalytics.DeleteFlagFilterRequest, vanalytics.DeleteFlagFilterResponse]
 	listFlagSnapshots         *connect_go.Client[vanalytics.ListFlagSnapshotsRequest, vanalytics.ListFlagSnapshotsResponse]
 	listFlagTranscriptFilters *connect_go.Client[vanalytics.ListFlagTranscriptFiltersRequest, vanalytics.ListFlagTranscriptFiltersResponse]
+	createCorrection          *connect_go.Client[vanalytics.CreateCorrectionRequest, vanalytics.CreateCorrectionResponse]
 }
 
 // Audit calls api.v1alpha1.vanalytics.Vanalytics.Audit.
@@ -497,6 +508,11 @@ func (c *vanalyticsClient) ListFlagTranscriptFilters(ctx context.Context, req *c
 	return c.listFlagTranscriptFilters.CallUnary(ctx, req)
 }
 
+// CreateCorrection calls api.v1alpha1.vanalytics.Vanalytics.CreateCorrection.
+func (c *vanalyticsClient) CreateCorrection(ctx context.Context, req *connect_go.Request[vanalytics.CreateCorrectionRequest]) (*connect_go.Response[vanalytics.CreateCorrectionResponse], error) {
+	return c.createCorrection.CallUnary(ctx, req)
+}
+
 // VanalyticsHandler is an implementation of the api.v1alpha1.vanalytics.Vanalytics service.
 type VanalyticsHandler interface {
 	// Audit audits the used transcription audio time for a client. The window
@@ -560,6 +576,8 @@ type VanalyticsHandler interface {
 	ListFlagSnapshots(context.Context, *connect_go.Request[vanalytics.ListFlagSnapshotsRequest]) (*connect_go.Response[vanalytics.ListFlagSnapshotsResponse], error)
 	// ListFlagTranscriptFilters lists flag transcript filters in an organization.
 	ListFlagTranscriptFilters(context.Context, *connect_go.Request[vanalytics.ListFlagTranscriptFiltersRequest]) (*connect_go.Response[vanalytics.ListFlagTranscriptFiltersResponse], error)
+	// CreateCorrection creates a correction.
+	CreateCorrection(context.Context, *connect_go.Request[vanalytics.CreateCorrectionRequest]) (*connect_go.Response[vanalytics.CreateCorrectionResponse], error)
 }
 
 // NewVanalyticsHandler builds an HTTP handler from the service implementation. It returns the path
@@ -708,6 +726,11 @@ func NewVanalyticsHandler(svc VanalyticsHandler, opts ...connect_go.HandlerOptio
 		svc.ListFlagTranscriptFilters,
 		opts...,
 	)
+	vanalyticsCreateCorrectionHandler := connect_go.NewUnaryHandler(
+		VanalyticsCreateCorrectionProcedure,
+		svc.CreateCorrection,
+		opts...,
+	)
 	return "/api.v1alpha1.vanalytics.Vanalytics/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case VanalyticsAuditProcedure:
@@ -766,6 +789,8 @@ func NewVanalyticsHandler(svc VanalyticsHandler, opts ...connect_go.HandlerOptio
 			vanalyticsListFlagSnapshotsHandler.ServeHTTP(w, r)
 		case VanalyticsListFlagTranscriptFiltersProcedure:
 			vanalyticsListFlagTranscriptFiltersHandler.ServeHTTP(w, r)
+		case VanalyticsCreateCorrectionProcedure:
+			vanalyticsCreateCorrectionHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -885,4 +910,8 @@ func (UnimplementedVanalyticsHandler) ListFlagSnapshots(context.Context, *connec
 
 func (UnimplementedVanalyticsHandler) ListFlagTranscriptFilters(context.Context, *connect_go.Request[vanalytics.ListFlagTranscriptFiltersRequest]) (*connect_go.Response[vanalytics.ListFlagTranscriptFiltersResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.vanalytics.Vanalytics.ListFlagTranscriptFilters is not implemented"))
+}
+
+func (UnimplementedVanalyticsHandler) CreateCorrection(context.Context, *connect_go.Request[vanalytics.CreateCorrectionRequest]) (*connect_go.Response[vanalytics.CreateCorrectionResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.vanalytics.Vanalytics.CreateCorrection is not implemented"))
 }
