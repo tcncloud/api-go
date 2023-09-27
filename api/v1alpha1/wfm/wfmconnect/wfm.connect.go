@@ -622,6 +622,8 @@ type WFMClient interface {
 	//     the @inactive_skill_profile_sid given is of an active skill profile.
 	//     the @active_skill_profile_sid given is of an inactive skill profile.
 	//   - grpc.Internal: error occurs when creating the inactive skill profile mapping.
+	//
+	// Deprecated: do not use.
 	CreateInactiveSkillProfileMapping(context.Context, *connect_go.Request[wfm.CreateInactiveSkillProfileMappingReq]) (*connect_go.Response[wfm.CreateInactiveSkillProfileMappingRes], error)
 	// Gets a list of enums that represent all of the forecaster types that are currently available for use
 	// Required permissions:
@@ -642,6 +644,8 @@ type WFMClient interface {
 	//   - grpc.NotFound: the skill profile is not found for the org.
 	//   - grpc.Internal: the current mapping for the given @inactive_skill_profile_sid is already disconnected,
 	//     the given @inactive_skill_profile_sid is of an active skill profile.
+	//
+	// Deprecated: do not use.
 	DisconnectInactiveSkillProfileMapping(context.Context, *connect_go.Request[wfm.DisconnectInactiveSkillProfileMappingReq]) (*connect_go.Response[wfm.DisconnectInactiveSkillProfileMappingRes], error)
 	// Creates the given @skill_profile_group.
 	// @skill_profile_group_sids will be ignored since associations cannot be created by this method.
@@ -3143,6 +3147,8 @@ func (c *wFMClient) BuildCallProfileTemplate(ctx context.Context, req *connect_g
 }
 
 // CreateInactiveSkillProfileMapping calls api.v1alpha1.wfm.WFM.CreateInactiveSkillProfileMapping.
+//
+// Deprecated: do not use.
 func (c *wFMClient) CreateInactiveSkillProfileMapping(ctx context.Context, req *connect_go.Request[wfm.CreateInactiveSkillProfileMappingReq]) (*connect_go.Response[wfm.CreateInactiveSkillProfileMappingRes], error) {
 	return c.createInactiveSkillProfileMapping.CallUnary(ctx, req)
 }
@@ -3155,6 +3161,8 @@ func (c *wFMClient) GetAvailableRegressionForecasterModelTypes(ctx context.Conte
 
 // DisconnectInactiveSkillProfileMapping calls
 // api.v1alpha1.wfm.WFM.DisconnectInactiveSkillProfileMapping.
+//
+// Deprecated: do not use.
 func (c *wFMClient) DisconnectInactiveSkillProfileMapping(ctx context.Context, req *connect_go.Request[wfm.DisconnectInactiveSkillProfileMappingReq]) (*connect_go.Response[wfm.DisconnectInactiveSkillProfileMappingRes], error) {
 	return c.disconnectInactiveSkillProfileMapping.CallUnary(ctx, req)
 }
@@ -3997,6 +4005,8 @@ type WFMHandler interface {
 	//     the @inactive_skill_profile_sid given is of an active skill profile.
 	//     the @active_skill_profile_sid given is of an inactive skill profile.
 	//   - grpc.Internal: error occurs when creating the inactive skill profile mapping.
+	//
+	// Deprecated: do not use.
 	CreateInactiveSkillProfileMapping(context.Context, *connect_go.Request[wfm.CreateInactiveSkillProfileMappingReq]) (*connect_go.Response[wfm.CreateInactiveSkillProfileMappingRes], error)
 	// Gets a list of enums that represent all of the forecaster types that are currently available for use
 	// Required permissions:
@@ -4017,6 +4027,8 @@ type WFMHandler interface {
 	//   - grpc.NotFound: the skill profile is not found for the org.
 	//   - grpc.Internal: the current mapping for the given @inactive_skill_profile_sid is already disconnected,
 	//     the given @inactive_skill_profile_sid is of an active skill profile.
+	//
+	// Deprecated: do not use.
 	DisconnectInactiveSkillProfileMapping(context.Context, *connect_go.Request[wfm.DisconnectInactiveSkillProfileMappingReq]) (*connect_go.Response[wfm.DisconnectInactiveSkillProfileMappingRes], error)
 	// Creates the given @skill_profile_group.
 	// @skill_profile_group_sids will be ignored since associations cannot be created by this method.

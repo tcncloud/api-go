@@ -342,6 +342,7 @@ type WFMClient interface {
 	//   - grpc.NotFound: the @skill_profile_category given is not found for the org.
 	//   - grpc.Internal: error occurs when building the call profile template.
 	BuildCallProfileTemplate(ctx context.Context, in *BuildCallProfileTemplateReq, opts ...grpc.CallOption) (*BuildCallProfileTemplateRes, error)
+	// Deprecated: Do not use.
 	// Creates a mapping entry for the @inactive_skill_profile_sid to the @active_skill_profile_sid for the org sending the request.
 	// Required permissions:
 	//
@@ -362,6 +363,7 @@ type WFMClient interface {
 	//
 	//	-grpc.Internal: error occurs when contacting the forecaster to get the available forecaster types.
 	GetAvailableRegressionForecasterModelTypes(ctx context.Context, in *GetAvailableRegressionForecasterModelTypesReq, opts ...grpc.CallOption) (*GetAvailableRegressionForecasterModelTypesRes, error)
+	// Deprecated: Do not use.
 	// Changes the current mapping for the given @inactive_skill_profile_sid to be disconnected.
 	// Required permissions:
 	//
@@ -2022,6 +2024,7 @@ func (c *wFMClient) BuildCallProfileTemplate(ctx context.Context, in *BuildCallP
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *wFMClient) CreateInactiveSkillProfileMapping(ctx context.Context, in *CreateInactiveSkillProfileMappingReq, opts ...grpc.CallOption) (*CreateInactiveSkillProfileMappingRes, error) {
 	out := new(CreateInactiveSkillProfileMappingRes)
 	err := c.cc.Invoke(ctx, WFM_CreateInactiveSkillProfileMapping_FullMethodName, in, out, opts...)
@@ -2040,6 +2043,7 @@ func (c *wFMClient) GetAvailableRegressionForecasterModelTypes(ctx context.Conte
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *wFMClient) DisconnectInactiveSkillProfileMapping(ctx context.Context, in *DisconnectInactiveSkillProfileMappingReq, opts ...grpc.CallOption) (*DisconnectInactiveSkillProfileMappingRes, error) {
 	out := new(DisconnectInactiveSkillProfileMappingRes)
 	err := c.cc.Invoke(ctx, WFM_DisconnectInactiveSkillProfileMapping_FullMethodName, in, out, opts...)
@@ -3534,6 +3538,7 @@ type WFMServer interface {
 	//   - grpc.NotFound: the @skill_profile_category given is not found for the org.
 	//   - grpc.Internal: error occurs when building the call profile template.
 	BuildCallProfileTemplate(context.Context, *BuildCallProfileTemplateReq) (*BuildCallProfileTemplateRes, error)
+	// Deprecated: Do not use.
 	// Creates a mapping entry for the @inactive_skill_profile_sid to the @active_skill_profile_sid for the org sending the request.
 	// Required permissions:
 	//
@@ -3554,6 +3559,7 @@ type WFMServer interface {
 	//
 	//	-grpc.Internal: error occurs when contacting the forecaster to get the available forecaster types.
 	GetAvailableRegressionForecasterModelTypes(context.Context, *GetAvailableRegressionForecasterModelTypesReq) (*GetAvailableRegressionForecasterModelTypesRes, error)
+	// Deprecated: Do not use.
 	// Changes the current mapping for the given @inactive_skill_profile_sid to be disconnected.
 	// Required permissions:
 	//
