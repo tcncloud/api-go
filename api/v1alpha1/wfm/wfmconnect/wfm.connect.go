@@ -613,6 +613,7 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when building the call profile template.
 	BuildCallProfileTemplate(context.Context, *connect_go.Request[wfm.BuildCallProfileTemplateReq]) (*connect_go.Response[wfm.BuildCallProfileTemplateRes], error)
 	// Creates a mapping entry for the @inactive_skill_profile_sid to the @active_skill_profile_sid for the org sending the request.
+	// DEPRECATED as of Sep/27/2023 - Use skill profile groups instead.
 	// Required permissions:
 	//
 	//	NONE
@@ -635,6 +636,7 @@ type WFMClient interface {
 	//	-grpc.Internal: error occurs when contacting the forecaster to get the available forecaster types.
 	GetAvailableRegressionForecasterModelTypes(context.Context, *connect_go.Request[wfm.GetAvailableRegressionForecasterModelTypesReq]) (*connect_go.Response[wfm.GetAvailableRegressionForecasterModelTypesRes], error)
 	// Changes the current mapping for the given @inactive_skill_profile_sid to be disconnected.
+	// DEPRECATED as of Sep/27/2023 - Use skill profile groups instead.
 	// Required permissions:
 	//
 	//	NONE
@@ -3996,6 +3998,7 @@ type WFMHandler interface {
 	//   - grpc.Internal: error occurs when building the call profile template.
 	BuildCallProfileTemplate(context.Context, *connect_go.Request[wfm.BuildCallProfileTemplateReq]) (*connect_go.Response[wfm.BuildCallProfileTemplateRes], error)
 	// Creates a mapping entry for the @inactive_skill_profile_sid to the @active_skill_profile_sid for the org sending the request.
+	// DEPRECATED as of Sep/27/2023 - Use skill profile groups instead.
 	// Required permissions:
 	//
 	//	NONE
@@ -4018,6 +4021,7 @@ type WFMHandler interface {
 	//	-grpc.Internal: error occurs when contacting the forecaster to get the available forecaster types.
 	GetAvailableRegressionForecasterModelTypes(context.Context, *connect_go.Request[wfm.GetAvailableRegressionForecasterModelTypesReq]) (*connect_go.Response[wfm.GetAvailableRegressionForecasterModelTypesRes], error)
 	// Changes the current mapping for the given @inactive_skill_profile_sid to be disconnected.
+	// DEPRECATED as of Sep/27/2023 - Use skill profile groups instead.
 	// Required permissions:
 	//
 	//	NONE
