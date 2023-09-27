@@ -393,6 +393,66 @@ const (
 	// WFMListRequiredCallsIntervalsProcedure is the fully-qualified name of the WFM's
 	// ListRequiredCallsIntervals RPC.
 	WFMListRequiredCallsIntervalsProcedure = "/api.v1alpha1.wfm.WFM/ListRequiredCallsIntervals"
+	// WFMCreateTourPatternProcedure is the fully-qualified name of the WFM's CreateTourPattern RPC.
+	WFMCreateTourPatternProcedure = "/api.v1alpha1.wfm.WFM/CreateTourPattern"
+	// WFMGetTourPatternProcedure is the fully-qualified name of the WFM's GetTourPattern RPC.
+	WFMGetTourPatternProcedure = "/api.v1alpha1.wfm.WFM/GetTourPattern"
+	// WFMDeleteTourPatternProcedure is the fully-qualified name of the WFM's DeleteTourPattern RPC.
+	WFMDeleteTourPatternProcedure = "/api.v1alpha1.wfm.WFM/DeleteTourPattern"
+	// WFMCreateTourWeekPatternProcedure is the fully-qualified name of the WFM's CreateTourWeekPattern
+	// RPC.
+	WFMCreateTourWeekPatternProcedure = "/api.v1alpha1.wfm.WFM/CreateTourWeekPattern"
+	// WFMListTourWeekPatternsProcedure is the fully-qualified name of the WFM's ListTourWeekPatterns
+	// RPC.
+	WFMListTourWeekPatternsProcedure = "/api.v1alpha1.wfm.WFM/ListTourWeekPatterns"
+	// WFMDeleteTourWeekPatternsProcedure is the fully-qualified name of the WFM's
+	// DeleteTourWeekPatterns RPC.
+	WFMDeleteTourWeekPatternsProcedure = "/api.v1alpha1.wfm.WFM/DeleteTourWeekPatterns"
+	// WFMCreateTourShiftInstanceConfigProcedure is the fully-qualified name of the WFM's
+	// CreateTourShiftInstanceConfig RPC.
+	WFMCreateTourShiftInstanceConfigProcedure = "/api.v1alpha1.wfm.WFM/CreateTourShiftInstanceConfig"
+	// WFMUpdateTourShiftInstanceConfigProcedure is the fully-qualified name of the WFM's
+	// UpdateTourShiftInstanceConfig RPC.
+	WFMUpdateTourShiftInstanceConfigProcedure = "/api.v1alpha1.wfm.WFM/UpdateTourShiftInstanceConfig"
+	// WFMListTourShiftInstanceConfigsProcedure is the fully-qualified name of the WFM's
+	// ListTourShiftInstanceConfigs RPC.
+	WFMListTourShiftInstanceConfigsProcedure = "/api.v1alpha1.wfm.WFM/ListTourShiftInstanceConfigs"
+	// WFMDeleteTourShiftInstanceConfigsProcedure is the fully-qualified name of the WFM's
+	// DeleteTourShiftInstanceConfigs RPC.
+	WFMDeleteTourShiftInstanceConfigsProcedure = "/api.v1alpha1.wfm.WFM/DeleteTourShiftInstanceConfigs"
+	// WFMCreateTourShiftSegmentConfigProcedure is the fully-qualified name of the WFM's
+	// CreateTourShiftSegmentConfig RPC.
+	WFMCreateTourShiftSegmentConfigProcedure = "/api.v1alpha1.wfm.WFM/CreateTourShiftSegmentConfig"
+	// WFMUpdateTourShiftSegmentConfigProcedure is the fully-qualified name of the WFM's
+	// UpdateTourShiftSegmentConfig RPC.
+	WFMUpdateTourShiftSegmentConfigProcedure = "/api.v1alpha1.wfm.WFM/UpdateTourShiftSegmentConfig"
+	// WFMListTourShiftSegmentConfigsProcedure is the fully-qualified name of the WFM's
+	// ListTourShiftSegmentConfigs RPC.
+	WFMListTourShiftSegmentConfigsProcedure = "/api.v1alpha1.wfm.WFM/ListTourShiftSegmentConfigs"
+	// WFMDeleteTourShiftSegmentConfigsProcedure is the fully-qualified name of the WFM's
+	// DeleteTourShiftSegmentConfigs RPC.
+	WFMDeleteTourShiftSegmentConfigsProcedure = "/api.v1alpha1.wfm.WFM/DeleteTourShiftSegmentConfigs"
+	// WFMCreateTourAgentCollectionProcedure is the fully-qualified name of the WFM's
+	// CreateTourAgentCollection RPC.
+	WFMCreateTourAgentCollectionProcedure = "/api.v1alpha1.wfm.WFM/CreateTourAgentCollection"
+	// WFMUpdateTourAgentCollectionProcedure is the fully-qualified name of the WFM's
+	// UpdateTourAgentCollection RPC.
+	WFMUpdateTourAgentCollectionProcedure = "/api.v1alpha1.wfm.WFM/UpdateTourAgentCollection"
+	// WFMListTourAgentCollectionsProcedure is the fully-qualified name of the WFM's
+	// ListTourAgentCollections RPC.
+	WFMListTourAgentCollectionsProcedure = "/api.v1alpha1.wfm.WFM/ListTourAgentCollections"
+	// WFMDeleteTourAgentCollectionsProcedure is the fully-qualified name of the WFM's
+	// DeleteTourAgentCollections RPC.
+	WFMDeleteTourAgentCollectionsProcedure = "/api.v1alpha1.wfm.WFM/DeleteTourAgentCollections"
+	// WFMCreateTourAgentCollectionWFMAgentsProcedure is the fully-qualified name of the WFM's
+	// CreateTourAgentCollectionWFMAgents RPC.
+	WFMCreateTourAgentCollectionWFMAgentsProcedure = "/api.v1alpha1.wfm.WFM/CreateTourAgentCollectionWFMAgents"
+	// WFMListTourAgentCollectionWFMAgentsProcedure is the fully-qualified name of the WFM's
+	// ListTourAgentCollectionWFMAgents RPC.
+	WFMListTourAgentCollectionWFMAgentsProcedure = "/api.v1alpha1.wfm.WFM/ListTourAgentCollectionWFMAgents"
+	// WFMDeleteTourAgentCollectionWFMAgentsProcedure is the fully-qualified name of the WFM's
+	// DeleteTourAgentCollectionWFMAgents RPC.
+	WFMDeleteTourAgentCollectionWFMAgentsProcedure = "/api.v1alpha1.wfm.WFM/DeleteTourAgentCollectionWFMAgents"
 )
 
 // WFMClient is a client for the api.v1alpha1.wfm.WFM service.
@@ -1715,7 +1775,7 @@ type WFMClient interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @shift_instance_sids in the request are invalid.
+	//   - grpc.Invalid: @shift_instance_sids in the request are invalid.
 	//   - grpc.Internal: error occurs when listing the shift instances or their shift segments.
 	ListShiftInstancesBySid(context.Context, *connect_go.Request[wfm.ListShiftInstancesBySidReq]) (*connect_go.Response[wfm.ListShiftInstancesBySidRes], error)
 	// Copies the shifts from @source_schedule_selector to @destination_schedule_selector, constrained by the given parameters for the org sending the request.
@@ -1877,6 +1937,224 @@ type WFMClient interface {
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when getting the data.
 	ListRequiredCallsIntervals(context.Context, *connect_go.Request[wfm.ListRequiredCallsIntervalsReq]) (*connect_go.Response[wfm.ListRequiredCallsIntervalsRes], error)
+	// Creates a Tour Pattern for @shift_template_sid and the org sending the request, returning @tour_pattern_sid.
+	// If there is already a Tour Pattern for @shift_template_sid then the method call will fail to create a new Tour Pattern.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.AlreadyExists: A Tour Pattern already exists for @shift_template_sid.
+	//   - grpc.Internal: error occurs when creating the Tour Pattern.
+	CreateTourPattern(context.Context, *connect_go.Request[wfm.CreateTourPatternReq]) (*connect_go.Response[wfm.CreateTourPatternRes], error)
+	// Gets the Tour Pattern belonging to @shift_template_sid and the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.NotFound: the requested Tour Pattern does not exist.
+	//   - grpc.Internal: error occurs when getting the data.
+	GetTourPattern(context.Context, *connect_go.Request[wfm.GetTourPatternReq]) (*connect_go.Response[wfm.GetTourPatternRes], error)
+	// Deletes the Tour Pattern belonging to @tour_pattern_sid and the org sending the request.
+	// Any member Tour Week Patterns or Agent Collections will be deleted as well.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when deleting the data or it's children.
+	DeleteTourPattern(context.Context, *connect_go.Request[wfm.DeleteTourPatternReq]) (*connect_go.Response[wfm.DeleteTourPatternRes], error)
+	// Creates a Tour Week Pattern for @tour_pattern_sid for the org sending the request, returning @tour_week_pattern_sid.
+	// The newly created Tour Week Pattern will be placed at the end of the existing sequence of tour week patterns for @tour_pattern_sid.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.NotFound: the given @tour_pattern_sid does not exist for the org sending the request.
+	//   - grpc.Internal: error occurs when creating the Tour Week Pattern.
+	CreateTourWeekPattern(context.Context, *connect_go.Request[wfm.CreateTourWeekPatternReq]) (*connect_go.Response[wfm.CreateTourWeekPatternRes], error)
+	// Lists the Tour Week Patterns with @tour_pattern_sid for the org sending the request
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when getting the Tour Week Patterns.
+	ListTourWeekPatterns(context.Context, *connect_go.Request[wfm.ListTourWeekPatternsReq]) (*connect_go.Response[wfm.ListTourWeekPatternsRes], error)
+	// Deletes the Tour Week Patterns with the given @tour_week_pattern_sids for the org sending the request.
+	// Any Tour Week Instance or Segment Configs using @tour_week_pattern_sids will be deleted.
+	// Request will error if any @tour_week_pattern_sids are in use by a Tour Agent Collection, as those must be removed first.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.FailedPrecondition: a @tour_week_pattern_sid is in use by a Tour Agent Collection.
+	//   - grpc.Internal: error occurs when deleting the tour week patterns or configs.
+	DeleteTourWeekPatterns(context.Context, *connect_go.Request[wfm.DeleteTourWeekPatternsReq]) (*connect_go.Response[wfm.DeleteTourWeekPatternsRes], error)
+	// Creates the @tour_shift_instance_config for the org sending the request, returning @tour_shift_instance_config_sid.
+	// The given @tour_shift_instance_config will not be created if it will overlap another tour shift instance config belonging to @tour_week_pattern_sid.
+	// The @member_tour_shift_segment_configs field will be ignored, and will not be created if passed through this endpoint.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid or a preexisting tour shift instance config would overlap @tour_shift_instance_config.
+	//   - grpc.Internal: error occurs when creating the data.
+	CreateTourShiftInstanceConfig(context.Context, *connect_go.Request[wfm.CreateTourShiftInstanceConfigReq]) (*connect_go.Response[wfm.CreateTourShiftInstanceConfigRes], error)
+	// Updates the @tour_shift_instance_config for the org sending the request, returning @tour_shift_instance_config_sid.
+	// The given @tour_shift_instance_config will not be created if it will overlap another tour shift instance config belonging to @tour_week_pattern_sid.
+	// The @member_tour_shift_segment_configs field will be ignored, and will not be updated if passed through this endpoint.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid or a preexisting Tour Shift Instance Config would overlap @tour_shift_instance_config.
+	//   - grpc.Internal: error occurs when updating the data.
+	UpdateTourShiftInstanceConfig(context.Context, *connect_go.Request[wfm.UpdateTourShiftInstanceConfigReq]) (*connect_go.Response[wfm.UpdateTourShiftInstanceConfigRes], error)
+	// Lists the Tour Shift Instance Configs belonging to @tour_week_pattern_sids for the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when getting the Tour Shift Instance Configs.
+	ListTourShiftInstanceConfigs(context.Context, *connect_go.Request[wfm.ListTourShiftInstanceConfigsReq]) (*connect_go.Response[wfm.ListTourShiftInstanceConfigsRes], error)
+	// Deletes the Tour Shift Instance Configs matching @tour_shift_instance_config_sids for the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when getting the Tour Shift Instance Configs.
+	DeleteTourShiftInstanceConfigs(context.Context, *connect_go.Request[wfm.DeleteTourShiftInstanceConfigsReq]) (*connect_go.Response[wfm.DeleteTourShiftInstanceConfigsRes], error)
+	// Creates the given @tour_shift_segment_config for the org sending the request, returning @tour_shift_segment_config_sid.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.NotFound: the @tour_shift_instance_config_sid does not exist for the org sending the request.
+	//   - grpc.Internal: error occurs when creating the entity.
+	CreateTourShiftSegmentConfig(context.Context, *connect_go.Request[wfm.CreateTourShiftSegmentConfigReq]) (*connect_go.Response[wfm.CreateTourShiftSegmentConfigRes], error)
+	// Updates the given @tour_shift_segment_config matching @tour_shift_segment_config_sid for the org sending the request.
+	// If the updated Tour Shift Segment Config overlaps another segment or does not fit within the parent Tour Shift Instance Config the update will fail.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid or the resulting update would result in a conflict.
+	//   - grpc.NotFound: the @tour_shift_instance_config_sid does not exist for the org sending the request.
+	//   - grpc.Internal: error occurs when updating the entity.
+	UpdateTourShiftSegmentConfig(context.Context, *connect_go.Request[wfm.UpdateTourShiftSegmentConfigReq]) (*connect_go.Response[wfm.UpdateTourShiftSegmentConfigRes], error)
+	// Lists the Tour Shift Segment Configs belonging to @tour_shift_instance_config_sids for the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when getting the Tour Shift Segment Configs.
+	ListTourShiftSegmentConfigs(context.Context, *connect_go.Request[wfm.ListTourShiftSegmentConfigsReq]) (*connect_go.Response[wfm.ListTourShiftSegmentConfigsRes], error)
+	// Deletes the Tour Shift Segment Configs associated with the given @tour_shift_segment_config_sids for the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when deleting the Tour Shift Segment Configs.
+	DeleteTourShiftSegmentConfigs(context.Context, *connect_go.Request[wfm.DeleteTourShiftSegmentConfigsReq]) (*connect_go.Response[wfm.DeleteTourShiftSegmentConfigsRes], error)
+	// Creates the given @tour_agent_collection for the org sending the request and return the @tour_agent_collection_sid.
+	// The @wfm_agent_sids will be ignored and will not be created through this endpoint.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.AlreadyExists: the first_week_pattern_number for @tour_pattern_sid is already in use by another tour agent collection.
+	//   - grpc.NotFound: the given @tour_pattern_sid does not exist for the org sending the request.
+	//   - grpc.Internal: error occurs when creating the entity.
+	CreateTourAgentCollection(context.Context, *connect_go.Request[wfm.CreateTourAgentCollectionReq]) (*connect_go.Response[wfm.CreateTourAgentCollectionRes], error)
+	// Updates the given @tour_agent_collection matching the @tour_agent_collection_sid for the org sending the request.
+	// The @wfm_agent_sids will be ignored and will not be updated through this endpoint.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.AlreadyExists: the first_week_pattern_number for @tour_pattern_sid is already in use by another tour agent collection.
+	//   - grpc.NotFound: the given @tour_pattern_sid does not exist for the org sending the request.
+	//   - grpc.Internal: error occurs when updating the entity.
+	UpdateTourAgentCollection(context.Context, *connect_go.Request[wfm.UpdateTourAgentCollectionReq]) (*connect_go.Response[wfm.UpdateTourAgentCollectionRes], error)
+	// Lists the Tour Agent Collections belonging to @tour_pattern_sid for the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when getting the tour agent collections.
+	ListTourAgentCollections(context.Context, *connect_go.Request[wfm.ListTourAgentCollectionsReq]) (*connect_go.Response[wfm.ListTourAgentCollectionsRes], error)
+	// Deletes the Tour Agent collections matching @tour_agent_collection_sids for the org sending the request.
+	// Any existing associations with WFM Agent Sids will be deleted as well.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when deleting the tour agent collections.
+	DeleteTourAgentCollections(context.Context, *connect_go.Request[wfm.DeleteTourAgentCollectionsReq]) (*connect_go.Response[wfm.DeleteTourAgentCollectionsRes], error)
+	// Creates an assocation between the @tour_agent_collection_sid and the @wfm_agent_sids for the org sending the request.
+	// If there is already an association between any of the @wfm_agent_sids and the Tour Pattern that @tour_agent_collection_sid belongs to, the method will fail and no associations will be created.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid
+	//   - grpc.AlreadyExists: an association already exists for at least one SID in @wfm_agent_sids.
+	//   - grpc.Internal: error occurs when creating the association.
+	CreateTourAgentCollectionWFMAgents(context.Context, *connect_go.Request[wfm.CreateTourAgentCollectionWFMAgentsReq]) (*connect_go.Response[wfm.CreateTourAgentCollectionWFMAgentsRes], error)
+	// Lists the WFM Agent SIDs belonging to @tour_agent_collection_sids for the org sending the request.
+	// The resulting sids will be returned in @wfm_agent_pairings each containing an @agent_collection_sid and @wfm_agent_sids.
+	// If no agents are found for a sid in the given @tour_agent_collection_sids, that @agent_collection_sid will have an empty slice in @wfm_agent_sids.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when getting the tour agent collections.
+	ListTourAgentCollectionWFMAgents(context.Context, *connect_go.Request[wfm.ListTourAgentCollectionWFMAgentsReq]) (*connect_go.Response[wfm.ListTourAgentCollectionWFMAgentsRes], error)
+	// Deletes association between the @wfm_agent_sids and @tour_agent_collection_sid for the org sending the request.
+	// If no @wfm_agent_sids are provided, all existing @wfm_agent_sids for the given @tour_agent_collection_sid will be deleted.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.NotFound: there are no WFM Agent associations to delete for @tour_agent_collection_sid.
+	//   - grpc.Internal: error occurs when getting the tour agent collections.
+	DeleteTourAgentCollectionWFMAgents(context.Context, *connect_go.Request[wfm.DeleteTourAgentCollectionWFMAgentsReq]) (*connect_go.Response[wfm.DeleteTourAgentCollectionWFMAgentsRes], error)
 }
 
 // NewWFMClient constructs a client for the api.v1alpha1.wfm.WFM service. By default, it uses the
@@ -2529,6 +2807,111 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMListRequiredCallsIntervalsProcedure,
 			opts...,
 		),
+		createTourPattern: connect_go.NewClient[wfm.CreateTourPatternReq, wfm.CreateTourPatternRes](
+			httpClient,
+			baseURL+WFMCreateTourPatternProcedure,
+			opts...,
+		),
+		getTourPattern: connect_go.NewClient[wfm.GetTourPatternReq, wfm.GetTourPatternRes](
+			httpClient,
+			baseURL+WFMGetTourPatternProcedure,
+			opts...,
+		),
+		deleteTourPattern: connect_go.NewClient[wfm.DeleteTourPatternReq, wfm.DeleteTourPatternRes](
+			httpClient,
+			baseURL+WFMDeleteTourPatternProcedure,
+			opts...,
+		),
+		createTourWeekPattern: connect_go.NewClient[wfm.CreateTourWeekPatternReq, wfm.CreateTourWeekPatternRes](
+			httpClient,
+			baseURL+WFMCreateTourWeekPatternProcedure,
+			opts...,
+		),
+		listTourWeekPatterns: connect_go.NewClient[wfm.ListTourWeekPatternsReq, wfm.ListTourWeekPatternsRes](
+			httpClient,
+			baseURL+WFMListTourWeekPatternsProcedure,
+			opts...,
+		),
+		deleteTourWeekPatterns: connect_go.NewClient[wfm.DeleteTourWeekPatternsReq, wfm.DeleteTourWeekPatternsRes](
+			httpClient,
+			baseURL+WFMDeleteTourWeekPatternsProcedure,
+			opts...,
+		),
+		createTourShiftInstanceConfig: connect_go.NewClient[wfm.CreateTourShiftInstanceConfigReq, wfm.CreateTourShiftInstanceConfigRes](
+			httpClient,
+			baseURL+WFMCreateTourShiftInstanceConfigProcedure,
+			opts...,
+		),
+		updateTourShiftInstanceConfig: connect_go.NewClient[wfm.UpdateTourShiftInstanceConfigReq, wfm.UpdateTourShiftInstanceConfigRes](
+			httpClient,
+			baseURL+WFMUpdateTourShiftInstanceConfigProcedure,
+			opts...,
+		),
+		listTourShiftInstanceConfigs: connect_go.NewClient[wfm.ListTourShiftInstanceConfigsReq, wfm.ListTourShiftInstanceConfigsRes](
+			httpClient,
+			baseURL+WFMListTourShiftInstanceConfigsProcedure,
+			opts...,
+		),
+		deleteTourShiftInstanceConfigs: connect_go.NewClient[wfm.DeleteTourShiftInstanceConfigsReq, wfm.DeleteTourShiftInstanceConfigsRes](
+			httpClient,
+			baseURL+WFMDeleteTourShiftInstanceConfigsProcedure,
+			opts...,
+		),
+		createTourShiftSegmentConfig: connect_go.NewClient[wfm.CreateTourShiftSegmentConfigReq, wfm.CreateTourShiftSegmentConfigRes](
+			httpClient,
+			baseURL+WFMCreateTourShiftSegmentConfigProcedure,
+			opts...,
+		),
+		updateTourShiftSegmentConfig: connect_go.NewClient[wfm.UpdateTourShiftSegmentConfigReq, wfm.UpdateTourShiftSegmentConfigRes](
+			httpClient,
+			baseURL+WFMUpdateTourShiftSegmentConfigProcedure,
+			opts...,
+		),
+		listTourShiftSegmentConfigs: connect_go.NewClient[wfm.ListTourShiftSegmentConfigsReq, wfm.ListTourShiftSegmentConfigsRes](
+			httpClient,
+			baseURL+WFMListTourShiftSegmentConfigsProcedure,
+			opts...,
+		),
+		deleteTourShiftSegmentConfigs: connect_go.NewClient[wfm.DeleteTourShiftSegmentConfigsReq, wfm.DeleteTourShiftSegmentConfigsRes](
+			httpClient,
+			baseURL+WFMDeleteTourShiftSegmentConfigsProcedure,
+			opts...,
+		),
+		createTourAgentCollection: connect_go.NewClient[wfm.CreateTourAgentCollectionReq, wfm.CreateTourAgentCollectionRes](
+			httpClient,
+			baseURL+WFMCreateTourAgentCollectionProcedure,
+			opts...,
+		),
+		updateTourAgentCollection: connect_go.NewClient[wfm.UpdateTourAgentCollectionReq, wfm.UpdateTourAgentCollectionRes](
+			httpClient,
+			baseURL+WFMUpdateTourAgentCollectionProcedure,
+			opts...,
+		),
+		listTourAgentCollections: connect_go.NewClient[wfm.ListTourAgentCollectionsReq, wfm.ListTourAgentCollectionsRes](
+			httpClient,
+			baseURL+WFMListTourAgentCollectionsProcedure,
+			opts...,
+		),
+		deleteTourAgentCollections: connect_go.NewClient[wfm.DeleteTourAgentCollectionsReq, wfm.DeleteTourAgentCollectionsRes](
+			httpClient,
+			baseURL+WFMDeleteTourAgentCollectionsProcedure,
+			opts...,
+		),
+		createTourAgentCollectionWFMAgents: connect_go.NewClient[wfm.CreateTourAgentCollectionWFMAgentsReq, wfm.CreateTourAgentCollectionWFMAgentsRes](
+			httpClient,
+			baseURL+WFMCreateTourAgentCollectionWFMAgentsProcedure,
+			opts...,
+		),
+		listTourAgentCollectionWFMAgents: connect_go.NewClient[wfm.ListTourAgentCollectionWFMAgentsReq, wfm.ListTourAgentCollectionWFMAgentsRes](
+			httpClient,
+			baseURL+WFMListTourAgentCollectionWFMAgentsProcedure,
+			opts...,
+		),
+		deleteTourAgentCollectionWFMAgents: connect_go.NewClient[wfm.DeleteTourAgentCollectionWFMAgentsReq, wfm.DeleteTourAgentCollectionWFMAgentsRes](
+			httpClient,
+			baseURL+WFMDeleteTourAgentCollectionWFMAgentsProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -2662,6 +3045,27 @@ type wFMClient struct {
 	setDefaultSchedulingTarget                    *connect_go.Client[wfm.SetDefaultSchedulingTargetReq, wfm.SetDefaultSchedulingTargetRes]
 	getPerformanceMetrics                         *connect_go.Client[wfm.GetPerformanceMetricsReq, wfm.GetPerformanceMetricsRes]
 	listRequiredCallsIntervals                    *connect_go.Client[wfm.ListRequiredCallsIntervalsReq, wfm.ListRequiredCallsIntervalsRes]
+	createTourPattern                             *connect_go.Client[wfm.CreateTourPatternReq, wfm.CreateTourPatternRes]
+	getTourPattern                                *connect_go.Client[wfm.GetTourPatternReq, wfm.GetTourPatternRes]
+	deleteTourPattern                             *connect_go.Client[wfm.DeleteTourPatternReq, wfm.DeleteTourPatternRes]
+	createTourWeekPattern                         *connect_go.Client[wfm.CreateTourWeekPatternReq, wfm.CreateTourWeekPatternRes]
+	listTourWeekPatterns                          *connect_go.Client[wfm.ListTourWeekPatternsReq, wfm.ListTourWeekPatternsRes]
+	deleteTourWeekPatterns                        *connect_go.Client[wfm.DeleteTourWeekPatternsReq, wfm.DeleteTourWeekPatternsRes]
+	createTourShiftInstanceConfig                 *connect_go.Client[wfm.CreateTourShiftInstanceConfigReq, wfm.CreateTourShiftInstanceConfigRes]
+	updateTourShiftInstanceConfig                 *connect_go.Client[wfm.UpdateTourShiftInstanceConfigReq, wfm.UpdateTourShiftInstanceConfigRes]
+	listTourShiftInstanceConfigs                  *connect_go.Client[wfm.ListTourShiftInstanceConfigsReq, wfm.ListTourShiftInstanceConfigsRes]
+	deleteTourShiftInstanceConfigs                *connect_go.Client[wfm.DeleteTourShiftInstanceConfigsReq, wfm.DeleteTourShiftInstanceConfigsRes]
+	createTourShiftSegmentConfig                  *connect_go.Client[wfm.CreateTourShiftSegmentConfigReq, wfm.CreateTourShiftSegmentConfigRes]
+	updateTourShiftSegmentConfig                  *connect_go.Client[wfm.UpdateTourShiftSegmentConfigReq, wfm.UpdateTourShiftSegmentConfigRes]
+	listTourShiftSegmentConfigs                   *connect_go.Client[wfm.ListTourShiftSegmentConfigsReq, wfm.ListTourShiftSegmentConfigsRes]
+	deleteTourShiftSegmentConfigs                 *connect_go.Client[wfm.DeleteTourShiftSegmentConfigsReq, wfm.DeleteTourShiftSegmentConfigsRes]
+	createTourAgentCollection                     *connect_go.Client[wfm.CreateTourAgentCollectionReq, wfm.CreateTourAgentCollectionRes]
+	updateTourAgentCollection                     *connect_go.Client[wfm.UpdateTourAgentCollectionReq, wfm.UpdateTourAgentCollectionRes]
+	listTourAgentCollections                      *connect_go.Client[wfm.ListTourAgentCollectionsReq, wfm.ListTourAgentCollectionsRes]
+	deleteTourAgentCollections                    *connect_go.Client[wfm.DeleteTourAgentCollectionsReq, wfm.DeleteTourAgentCollectionsRes]
+	createTourAgentCollectionWFMAgents            *connect_go.Client[wfm.CreateTourAgentCollectionWFMAgentsReq, wfm.CreateTourAgentCollectionWFMAgentsRes]
+	listTourAgentCollectionWFMAgents              *connect_go.Client[wfm.ListTourAgentCollectionWFMAgentsReq, wfm.ListTourAgentCollectionWFMAgentsRes]
+	deleteTourAgentCollectionWFMAgents            *connect_go.Client[wfm.DeleteTourAgentCollectionWFMAgentsReq, wfm.DeleteTourAgentCollectionWFMAgentsRes]
 }
 
 // ListSkillProfiles calls api.v1alpha1.wfm.WFM.ListSkillProfiles.
@@ -3318,6 +3722,111 @@ func (c *wFMClient) GetPerformanceMetrics(ctx context.Context, req *connect_go.R
 // ListRequiredCallsIntervals calls api.v1alpha1.wfm.WFM.ListRequiredCallsIntervals.
 func (c *wFMClient) ListRequiredCallsIntervals(ctx context.Context, req *connect_go.Request[wfm.ListRequiredCallsIntervalsReq]) (*connect_go.Response[wfm.ListRequiredCallsIntervalsRes], error) {
 	return c.listRequiredCallsIntervals.CallUnary(ctx, req)
+}
+
+// CreateTourPattern calls api.v1alpha1.wfm.WFM.CreateTourPattern.
+func (c *wFMClient) CreateTourPattern(ctx context.Context, req *connect_go.Request[wfm.CreateTourPatternReq]) (*connect_go.Response[wfm.CreateTourPatternRes], error) {
+	return c.createTourPattern.CallUnary(ctx, req)
+}
+
+// GetTourPattern calls api.v1alpha1.wfm.WFM.GetTourPattern.
+func (c *wFMClient) GetTourPattern(ctx context.Context, req *connect_go.Request[wfm.GetTourPatternReq]) (*connect_go.Response[wfm.GetTourPatternRes], error) {
+	return c.getTourPattern.CallUnary(ctx, req)
+}
+
+// DeleteTourPattern calls api.v1alpha1.wfm.WFM.DeleteTourPattern.
+func (c *wFMClient) DeleteTourPattern(ctx context.Context, req *connect_go.Request[wfm.DeleteTourPatternReq]) (*connect_go.Response[wfm.DeleteTourPatternRes], error) {
+	return c.deleteTourPattern.CallUnary(ctx, req)
+}
+
+// CreateTourWeekPattern calls api.v1alpha1.wfm.WFM.CreateTourWeekPattern.
+func (c *wFMClient) CreateTourWeekPattern(ctx context.Context, req *connect_go.Request[wfm.CreateTourWeekPatternReq]) (*connect_go.Response[wfm.CreateTourWeekPatternRes], error) {
+	return c.createTourWeekPattern.CallUnary(ctx, req)
+}
+
+// ListTourWeekPatterns calls api.v1alpha1.wfm.WFM.ListTourWeekPatterns.
+func (c *wFMClient) ListTourWeekPatterns(ctx context.Context, req *connect_go.Request[wfm.ListTourWeekPatternsReq]) (*connect_go.Response[wfm.ListTourWeekPatternsRes], error) {
+	return c.listTourWeekPatterns.CallUnary(ctx, req)
+}
+
+// DeleteTourWeekPatterns calls api.v1alpha1.wfm.WFM.DeleteTourWeekPatterns.
+func (c *wFMClient) DeleteTourWeekPatterns(ctx context.Context, req *connect_go.Request[wfm.DeleteTourWeekPatternsReq]) (*connect_go.Response[wfm.DeleteTourWeekPatternsRes], error) {
+	return c.deleteTourWeekPatterns.CallUnary(ctx, req)
+}
+
+// CreateTourShiftInstanceConfig calls api.v1alpha1.wfm.WFM.CreateTourShiftInstanceConfig.
+func (c *wFMClient) CreateTourShiftInstanceConfig(ctx context.Context, req *connect_go.Request[wfm.CreateTourShiftInstanceConfigReq]) (*connect_go.Response[wfm.CreateTourShiftInstanceConfigRes], error) {
+	return c.createTourShiftInstanceConfig.CallUnary(ctx, req)
+}
+
+// UpdateTourShiftInstanceConfig calls api.v1alpha1.wfm.WFM.UpdateTourShiftInstanceConfig.
+func (c *wFMClient) UpdateTourShiftInstanceConfig(ctx context.Context, req *connect_go.Request[wfm.UpdateTourShiftInstanceConfigReq]) (*connect_go.Response[wfm.UpdateTourShiftInstanceConfigRes], error) {
+	return c.updateTourShiftInstanceConfig.CallUnary(ctx, req)
+}
+
+// ListTourShiftInstanceConfigs calls api.v1alpha1.wfm.WFM.ListTourShiftInstanceConfigs.
+func (c *wFMClient) ListTourShiftInstanceConfigs(ctx context.Context, req *connect_go.Request[wfm.ListTourShiftInstanceConfigsReq]) (*connect_go.Response[wfm.ListTourShiftInstanceConfigsRes], error) {
+	return c.listTourShiftInstanceConfigs.CallUnary(ctx, req)
+}
+
+// DeleteTourShiftInstanceConfigs calls api.v1alpha1.wfm.WFM.DeleteTourShiftInstanceConfigs.
+func (c *wFMClient) DeleteTourShiftInstanceConfigs(ctx context.Context, req *connect_go.Request[wfm.DeleteTourShiftInstanceConfigsReq]) (*connect_go.Response[wfm.DeleteTourShiftInstanceConfigsRes], error) {
+	return c.deleteTourShiftInstanceConfigs.CallUnary(ctx, req)
+}
+
+// CreateTourShiftSegmentConfig calls api.v1alpha1.wfm.WFM.CreateTourShiftSegmentConfig.
+func (c *wFMClient) CreateTourShiftSegmentConfig(ctx context.Context, req *connect_go.Request[wfm.CreateTourShiftSegmentConfigReq]) (*connect_go.Response[wfm.CreateTourShiftSegmentConfigRes], error) {
+	return c.createTourShiftSegmentConfig.CallUnary(ctx, req)
+}
+
+// UpdateTourShiftSegmentConfig calls api.v1alpha1.wfm.WFM.UpdateTourShiftSegmentConfig.
+func (c *wFMClient) UpdateTourShiftSegmentConfig(ctx context.Context, req *connect_go.Request[wfm.UpdateTourShiftSegmentConfigReq]) (*connect_go.Response[wfm.UpdateTourShiftSegmentConfigRes], error) {
+	return c.updateTourShiftSegmentConfig.CallUnary(ctx, req)
+}
+
+// ListTourShiftSegmentConfigs calls api.v1alpha1.wfm.WFM.ListTourShiftSegmentConfigs.
+func (c *wFMClient) ListTourShiftSegmentConfigs(ctx context.Context, req *connect_go.Request[wfm.ListTourShiftSegmentConfigsReq]) (*connect_go.Response[wfm.ListTourShiftSegmentConfigsRes], error) {
+	return c.listTourShiftSegmentConfigs.CallUnary(ctx, req)
+}
+
+// DeleteTourShiftSegmentConfigs calls api.v1alpha1.wfm.WFM.DeleteTourShiftSegmentConfigs.
+func (c *wFMClient) DeleteTourShiftSegmentConfigs(ctx context.Context, req *connect_go.Request[wfm.DeleteTourShiftSegmentConfigsReq]) (*connect_go.Response[wfm.DeleteTourShiftSegmentConfigsRes], error) {
+	return c.deleteTourShiftSegmentConfigs.CallUnary(ctx, req)
+}
+
+// CreateTourAgentCollection calls api.v1alpha1.wfm.WFM.CreateTourAgentCollection.
+func (c *wFMClient) CreateTourAgentCollection(ctx context.Context, req *connect_go.Request[wfm.CreateTourAgentCollectionReq]) (*connect_go.Response[wfm.CreateTourAgentCollectionRes], error) {
+	return c.createTourAgentCollection.CallUnary(ctx, req)
+}
+
+// UpdateTourAgentCollection calls api.v1alpha1.wfm.WFM.UpdateTourAgentCollection.
+func (c *wFMClient) UpdateTourAgentCollection(ctx context.Context, req *connect_go.Request[wfm.UpdateTourAgentCollectionReq]) (*connect_go.Response[wfm.UpdateTourAgentCollectionRes], error) {
+	return c.updateTourAgentCollection.CallUnary(ctx, req)
+}
+
+// ListTourAgentCollections calls api.v1alpha1.wfm.WFM.ListTourAgentCollections.
+func (c *wFMClient) ListTourAgentCollections(ctx context.Context, req *connect_go.Request[wfm.ListTourAgentCollectionsReq]) (*connect_go.Response[wfm.ListTourAgentCollectionsRes], error) {
+	return c.listTourAgentCollections.CallUnary(ctx, req)
+}
+
+// DeleteTourAgentCollections calls api.v1alpha1.wfm.WFM.DeleteTourAgentCollections.
+func (c *wFMClient) DeleteTourAgentCollections(ctx context.Context, req *connect_go.Request[wfm.DeleteTourAgentCollectionsReq]) (*connect_go.Response[wfm.DeleteTourAgentCollectionsRes], error) {
+	return c.deleteTourAgentCollections.CallUnary(ctx, req)
+}
+
+// CreateTourAgentCollectionWFMAgents calls api.v1alpha1.wfm.WFM.CreateTourAgentCollectionWFMAgents.
+func (c *wFMClient) CreateTourAgentCollectionWFMAgents(ctx context.Context, req *connect_go.Request[wfm.CreateTourAgentCollectionWFMAgentsReq]) (*connect_go.Response[wfm.CreateTourAgentCollectionWFMAgentsRes], error) {
+	return c.createTourAgentCollectionWFMAgents.CallUnary(ctx, req)
+}
+
+// ListTourAgentCollectionWFMAgents calls api.v1alpha1.wfm.WFM.ListTourAgentCollectionWFMAgents.
+func (c *wFMClient) ListTourAgentCollectionWFMAgents(ctx context.Context, req *connect_go.Request[wfm.ListTourAgentCollectionWFMAgentsReq]) (*connect_go.Response[wfm.ListTourAgentCollectionWFMAgentsRes], error) {
+	return c.listTourAgentCollectionWFMAgents.CallUnary(ctx, req)
+}
+
+// DeleteTourAgentCollectionWFMAgents calls api.v1alpha1.wfm.WFM.DeleteTourAgentCollectionWFMAgents.
+func (c *wFMClient) DeleteTourAgentCollectionWFMAgents(ctx context.Context, req *connect_go.Request[wfm.DeleteTourAgentCollectionWFMAgentsReq]) (*connect_go.Response[wfm.DeleteTourAgentCollectionWFMAgentsRes], error) {
+	return c.deleteTourAgentCollectionWFMAgents.CallUnary(ctx, req)
 }
 
 // WFMHandler is an implementation of the api.v1alpha1.wfm.WFM service.
@@ -4640,7 +5149,7 @@ type WFMHandler interface {
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Invalid: the @shift_instance_sids in the request are invalid.
+	//   - grpc.Invalid: @shift_instance_sids in the request are invalid.
 	//   - grpc.Internal: error occurs when listing the shift instances or their shift segments.
 	ListShiftInstancesBySid(context.Context, *connect_go.Request[wfm.ListShiftInstancesBySidReq]) (*connect_go.Response[wfm.ListShiftInstancesBySidRes], error)
 	// Copies the shifts from @source_schedule_selector to @destination_schedule_selector, constrained by the given parameters for the org sending the request.
@@ -4802,6 +5311,224 @@ type WFMHandler interface {
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when getting the data.
 	ListRequiredCallsIntervals(context.Context, *connect_go.Request[wfm.ListRequiredCallsIntervalsReq]) (*connect_go.Response[wfm.ListRequiredCallsIntervalsRes], error)
+	// Creates a Tour Pattern for @shift_template_sid and the org sending the request, returning @tour_pattern_sid.
+	// If there is already a Tour Pattern for @shift_template_sid then the method call will fail to create a new Tour Pattern.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.AlreadyExists: A Tour Pattern already exists for @shift_template_sid.
+	//   - grpc.Internal: error occurs when creating the Tour Pattern.
+	CreateTourPattern(context.Context, *connect_go.Request[wfm.CreateTourPatternReq]) (*connect_go.Response[wfm.CreateTourPatternRes], error)
+	// Gets the Tour Pattern belonging to @shift_template_sid and the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.NotFound: the requested Tour Pattern does not exist.
+	//   - grpc.Internal: error occurs when getting the data.
+	GetTourPattern(context.Context, *connect_go.Request[wfm.GetTourPatternReq]) (*connect_go.Response[wfm.GetTourPatternRes], error)
+	// Deletes the Tour Pattern belonging to @tour_pattern_sid and the org sending the request.
+	// Any member Tour Week Patterns or Agent Collections will be deleted as well.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when deleting the data or it's children.
+	DeleteTourPattern(context.Context, *connect_go.Request[wfm.DeleteTourPatternReq]) (*connect_go.Response[wfm.DeleteTourPatternRes], error)
+	// Creates a Tour Week Pattern for @tour_pattern_sid for the org sending the request, returning @tour_week_pattern_sid.
+	// The newly created Tour Week Pattern will be placed at the end of the existing sequence of tour week patterns for @tour_pattern_sid.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.NotFound: the given @tour_pattern_sid does not exist for the org sending the request.
+	//   - grpc.Internal: error occurs when creating the Tour Week Pattern.
+	CreateTourWeekPattern(context.Context, *connect_go.Request[wfm.CreateTourWeekPatternReq]) (*connect_go.Response[wfm.CreateTourWeekPatternRes], error)
+	// Lists the Tour Week Patterns with @tour_pattern_sid for the org sending the request
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when getting the Tour Week Patterns.
+	ListTourWeekPatterns(context.Context, *connect_go.Request[wfm.ListTourWeekPatternsReq]) (*connect_go.Response[wfm.ListTourWeekPatternsRes], error)
+	// Deletes the Tour Week Patterns with the given @tour_week_pattern_sids for the org sending the request.
+	// Any Tour Week Instance or Segment Configs using @tour_week_pattern_sids will be deleted.
+	// Request will error if any @tour_week_pattern_sids are in use by a Tour Agent Collection, as those must be removed first.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.FailedPrecondition: a @tour_week_pattern_sid is in use by a Tour Agent Collection.
+	//   - grpc.Internal: error occurs when deleting the tour week patterns or configs.
+	DeleteTourWeekPatterns(context.Context, *connect_go.Request[wfm.DeleteTourWeekPatternsReq]) (*connect_go.Response[wfm.DeleteTourWeekPatternsRes], error)
+	// Creates the @tour_shift_instance_config for the org sending the request, returning @tour_shift_instance_config_sid.
+	// The given @tour_shift_instance_config will not be created if it will overlap another tour shift instance config belonging to @tour_week_pattern_sid.
+	// The @member_tour_shift_segment_configs field will be ignored, and will not be created if passed through this endpoint.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid or a preexisting tour shift instance config would overlap @tour_shift_instance_config.
+	//   - grpc.Internal: error occurs when creating the data.
+	CreateTourShiftInstanceConfig(context.Context, *connect_go.Request[wfm.CreateTourShiftInstanceConfigReq]) (*connect_go.Response[wfm.CreateTourShiftInstanceConfigRes], error)
+	// Updates the @tour_shift_instance_config for the org sending the request, returning @tour_shift_instance_config_sid.
+	// The given @tour_shift_instance_config will not be created if it will overlap another tour shift instance config belonging to @tour_week_pattern_sid.
+	// The @member_tour_shift_segment_configs field will be ignored, and will not be updated if passed through this endpoint.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid or a preexisting Tour Shift Instance Config would overlap @tour_shift_instance_config.
+	//   - grpc.Internal: error occurs when updating the data.
+	UpdateTourShiftInstanceConfig(context.Context, *connect_go.Request[wfm.UpdateTourShiftInstanceConfigReq]) (*connect_go.Response[wfm.UpdateTourShiftInstanceConfigRes], error)
+	// Lists the Tour Shift Instance Configs belonging to @tour_week_pattern_sids for the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when getting the Tour Shift Instance Configs.
+	ListTourShiftInstanceConfigs(context.Context, *connect_go.Request[wfm.ListTourShiftInstanceConfigsReq]) (*connect_go.Response[wfm.ListTourShiftInstanceConfigsRes], error)
+	// Deletes the Tour Shift Instance Configs matching @tour_shift_instance_config_sids for the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when getting the Tour Shift Instance Configs.
+	DeleteTourShiftInstanceConfigs(context.Context, *connect_go.Request[wfm.DeleteTourShiftInstanceConfigsReq]) (*connect_go.Response[wfm.DeleteTourShiftInstanceConfigsRes], error)
+	// Creates the given @tour_shift_segment_config for the org sending the request, returning @tour_shift_segment_config_sid.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.NotFound: the @tour_shift_instance_config_sid does not exist for the org sending the request.
+	//   - grpc.Internal: error occurs when creating the entity.
+	CreateTourShiftSegmentConfig(context.Context, *connect_go.Request[wfm.CreateTourShiftSegmentConfigReq]) (*connect_go.Response[wfm.CreateTourShiftSegmentConfigRes], error)
+	// Updates the given @tour_shift_segment_config matching @tour_shift_segment_config_sid for the org sending the request.
+	// If the updated Tour Shift Segment Config overlaps another segment or does not fit within the parent Tour Shift Instance Config the update will fail.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid or the resulting update would result in a conflict.
+	//   - grpc.NotFound: the @tour_shift_instance_config_sid does not exist for the org sending the request.
+	//   - grpc.Internal: error occurs when updating the entity.
+	UpdateTourShiftSegmentConfig(context.Context, *connect_go.Request[wfm.UpdateTourShiftSegmentConfigReq]) (*connect_go.Response[wfm.UpdateTourShiftSegmentConfigRes], error)
+	// Lists the Tour Shift Segment Configs belonging to @tour_shift_instance_config_sids for the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when getting the Tour Shift Segment Configs.
+	ListTourShiftSegmentConfigs(context.Context, *connect_go.Request[wfm.ListTourShiftSegmentConfigsReq]) (*connect_go.Response[wfm.ListTourShiftSegmentConfigsRes], error)
+	// Deletes the Tour Shift Segment Configs associated with the given @tour_shift_segment_config_sids for the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when deleting the Tour Shift Segment Configs.
+	DeleteTourShiftSegmentConfigs(context.Context, *connect_go.Request[wfm.DeleteTourShiftSegmentConfigsReq]) (*connect_go.Response[wfm.DeleteTourShiftSegmentConfigsRes], error)
+	// Creates the given @tour_agent_collection for the org sending the request and return the @tour_agent_collection_sid.
+	// The @wfm_agent_sids will be ignored and will not be created through this endpoint.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.AlreadyExists: the first_week_pattern_number for @tour_pattern_sid is already in use by another tour agent collection.
+	//   - grpc.NotFound: the given @tour_pattern_sid does not exist for the org sending the request.
+	//   - grpc.Internal: error occurs when creating the entity.
+	CreateTourAgentCollection(context.Context, *connect_go.Request[wfm.CreateTourAgentCollectionReq]) (*connect_go.Response[wfm.CreateTourAgentCollectionRes], error)
+	// Updates the given @tour_agent_collection matching the @tour_agent_collection_sid for the org sending the request.
+	// The @wfm_agent_sids will be ignored and will not be updated through this endpoint.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.AlreadyExists: the first_week_pattern_number for @tour_pattern_sid is already in use by another tour agent collection.
+	//   - grpc.NotFound: the given @tour_pattern_sid does not exist for the org sending the request.
+	//   - grpc.Internal: error occurs when updating the entity.
+	UpdateTourAgentCollection(context.Context, *connect_go.Request[wfm.UpdateTourAgentCollectionReq]) (*connect_go.Response[wfm.UpdateTourAgentCollectionRes], error)
+	// Lists the Tour Agent Collections belonging to @tour_pattern_sid for the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when getting the tour agent collections.
+	ListTourAgentCollections(context.Context, *connect_go.Request[wfm.ListTourAgentCollectionsReq]) (*connect_go.Response[wfm.ListTourAgentCollectionsRes], error)
+	// Deletes the Tour Agent collections matching @tour_agent_collection_sids for the org sending the request.
+	// Any existing associations with WFM Agent Sids will be deleted as well.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when deleting the tour agent collections.
+	DeleteTourAgentCollections(context.Context, *connect_go.Request[wfm.DeleteTourAgentCollectionsReq]) (*connect_go.Response[wfm.DeleteTourAgentCollectionsRes], error)
+	// Creates an assocation between the @tour_agent_collection_sid and the @wfm_agent_sids for the org sending the request.
+	// If there is already an association between any of the @wfm_agent_sids and the Tour Pattern that @tour_agent_collection_sid belongs to, the method will fail and no associations will be created.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid
+	//   - grpc.AlreadyExists: an association already exists for at least one SID in @wfm_agent_sids.
+	//   - grpc.Internal: error occurs when creating the association.
+	CreateTourAgentCollectionWFMAgents(context.Context, *connect_go.Request[wfm.CreateTourAgentCollectionWFMAgentsReq]) (*connect_go.Response[wfm.CreateTourAgentCollectionWFMAgentsRes], error)
+	// Lists the WFM Agent SIDs belonging to @tour_agent_collection_sids for the org sending the request.
+	// The resulting sids will be returned in @wfm_agent_pairings each containing an @agent_collection_sid and @wfm_agent_sids.
+	// If no agents are found for a sid in the given @tour_agent_collection_sids, that @agent_collection_sid will have an empty slice in @wfm_agent_sids.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when getting the tour agent collections.
+	ListTourAgentCollectionWFMAgents(context.Context, *connect_go.Request[wfm.ListTourAgentCollectionWFMAgentsReq]) (*connect_go.Response[wfm.ListTourAgentCollectionWFMAgentsRes], error)
+	// Deletes association between the @wfm_agent_sids and @tour_agent_collection_sid for the org sending the request.
+	// If no @wfm_agent_sids are provided, all existing @wfm_agent_sids for the given @tour_agent_collection_sid will be deleted.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.NotFound: there are no WFM Agent associations to delete for @tour_agent_collection_sid.
+	//   - grpc.Internal: error occurs when getting the tour agent collections.
+	DeleteTourAgentCollectionWFMAgents(context.Context, *connect_go.Request[wfm.DeleteTourAgentCollectionWFMAgentsReq]) (*connect_go.Response[wfm.DeleteTourAgentCollectionWFMAgentsRes], error)
 }
 
 // NewWFMHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -5450,6 +6177,111 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.ListRequiredCallsIntervals,
 		opts...,
 	)
+	wFMCreateTourPatternHandler := connect_go.NewUnaryHandler(
+		WFMCreateTourPatternProcedure,
+		svc.CreateTourPattern,
+		opts...,
+	)
+	wFMGetTourPatternHandler := connect_go.NewUnaryHandler(
+		WFMGetTourPatternProcedure,
+		svc.GetTourPattern,
+		opts...,
+	)
+	wFMDeleteTourPatternHandler := connect_go.NewUnaryHandler(
+		WFMDeleteTourPatternProcedure,
+		svc.DeleteTourPattern,
+		opts...,
+	)
+	wFMCreateTourWeekPatternHandler := connect_go.NewUnaryHandler(
+		WFMCreateTourWeekPatternProcedure,
+		svc.CreateTourWeekPattern,
+		opts...,
+	)
+	wFMListTourWeekPatternsHandler := connect_go.NewUnaryHandler(
+		WFMListTourWeekPatternsProcedure,
+		svc.ListTourWeekPatterns,
+		opts...,
+	)
+	wFMDeleteTourWeekPatternsHandler := connect_go.NewUnaryHandler(
+		WFMDeleteTourWeekPatternsProcedure,
+		svc.DeleteTourWeekPatterns,
+		opts...,
+	)
+	wFMCreateTourShiftInstanceConfigHandler := connect_go.NewUnaryHandler(
+		WFMCreateTourShiftInstanceConfigProcedure,
+		svc.CreateTourShiftInstanceConfig,
+		opts...,
+	)
+	wFMUpdateTourShiftInstanceConfigHandler := connect_go.NewUnaryHandler(
+		WFMUpdateTourShiftInstanceConfigProcedure,
+		svc.UpdateTourShiftInstanceConfig,
+		opts...,
+	)
+	wFMListTourShiftInstanceConfigsHandler := connect_go.NewUnaryHandler(
+		WFMListTourShiftInstanceConfigsProcedure,
+		svc.ListTourShiftInstanceConfigs,
+		opts...,
+	)
+	wFMDeleteTourShiftInstanceConfigsHandler := connect_go.NewUnaryHandler(
+		WFMDeleteTourShiftInstanceConfigsProcedure,
+		svc.DeleteTourShiftInstanceConfigs,
+		opts...,
+	)
+	wFMCreateTourShiftSegmentConfigHandler := connect_go.NewUnaryHandler(
+		WFMCreateTourShiftSegmentConfigProcedure,
+		svc.CreateTourShiftSegmentConfig,
+		opts...,
+	)
+	wFMUpdateTourShiftSegmentConfigHandler := connect_go.NewUnaryHandler(
+		WFMUpdateTourShiftSegmentConfigProcedure,
+		svc.UpdateTourShiftSegmentConfig,
+		opts...,
+	)
+	wFMListTourShiftSegmentConfigsHandler := connect_go.NewUnaryHandler(
+		WFMListTourShiftSegmentConfigsProcedure,
+		svc.ListTourShiftSegmentConfigs,
+		opts...,
+	)
+	wFMDeleteTourShiftSegmentConfigsHandler := connect_go.NewUnaryHandler(
+		WFMDeleteTourShiftSegmentConfigsProcedure,
+		svc.DeleteTourShiftSegmentConfigs,
+		opts...,
+	)
+	wFMCreateTourAgentCollectionHandler := connect_go.NewUnaryHandler(
+		WFMCreateTourAgentCollectionProcedure,
+		svc.CreateTourAgentCollection,
+		opts...,
+	)
+	wFMUpdateTourAgentCollectionHandler := connect_go.NewUnaryHandler(
+		WFMUpdateTourAgentCollectionProcedure,
+		svc.UpdateTourAgentCollection,
+		opts...,
+	)
+	wFMListTourAgentCollectionsHandler := connect_go.NewUnaryHandler(
+		WFMListTourAgentCollectionsProcedure,
+		svc.ListTourAgentCollections,
+		opts...,
+	)
+	wFMDeleteTourAgentCollectionsHandler := connect_go.NewUnaryHandler(
+		WFMDeleteTourAgentCollectionsProcedure,
+		svc.DeleteTourAgentCollections,
+		opts...,
+	)
+	wFMCreateTourAgentCollectionWFMAgentsHandler := connect_go.NewUnaryHandler(
+		WFMCreateTourAgentCollectionWFMAgentsProcedure,
+		svc.CreateTourAgentCollectionWFMAgents,
+		opts...,
+	)
+	wFMListTourAgentCollectionWFMAgentsHandler := connect_go.NewUnaryHandler(
+		WFMListTourAgentCollectionWFMAgentsProcedure,
+		svc.ListTourAgentCollectionWFMAgents,
+		opts...,
+	)
+	wFMDeleteTourAgentCollectionWFMAgentsHandler := connect_go.NewUnaryHandler(
+		WFMDeleteTourAgentCollectionWFMAgentsProcedure,
+		svc.DeleteTourAgentCollectionWFMAgents,
+		opts...,
+	)
 	return "/api.v1alpha1.wfm.WFM/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case WFMListSkillProfilesProcedure:
@@ -5708,6 +6540,48 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMGetPerformanceMetricsHandler.ServeHTTP(w, r)
 		case WFMListRequiredCallsIntervalsProcedure:
 			wFMListRequiredCallsIntervalsHandler.ServeHTTP(w, r)
+		case WFMCreateTourPatternProcedure:
+			wFMCreateTourPatternHandler.ServeHTTP(w, r)
+		case WFMGetTourPatternProcedure:
+			wFMGetTourPatternHandler.ServeHTTP(w, r)
+		case WFMDeleteTourPatternProcedure:
+			wFMDeleteTourPatternHandler.ServeHTTP(w, r)
+		case WFMCreateTourWeekPatternProcedure:
+			wFMCreateTourWeekPatternHandler.ServeHTTP(w, r)
+		case WFMListTourWeekPatternsProcedure:
+			wFMListTourWeekPatternsHandler.ServeHTTP(w, r)
+		case WFMDeleteTourWeekPatternsProcedure:
+			wFMDeleteTourWeekPatternsHandler.ServeHTTP(w, r)
+		case WFMCreateTourShiftInstanceConfigProcedure:
+			wFMCreateTourShiftInstanceConfigHandler.ServeHTTP(w, r)
+		case WFMUpdateTourShiftInstanceConfigProcedure:
+			wFMUpdateTourShiftInstanceConfigHandler.ServeHTTP(w, r)
+		case WFMListTourShiftInstanceConfigsProcedure:
+			wFMListTourShiftInstanceConfigsHandler.ServeHTTP(w, r)
+		case WFMDeleteTourShiftInstanceConfigsProcedure:
+			wFMDeleteTourShiftInstanceConfigsHandler.ServeHTTP(w, r)
+		case WFMCreateTourShiftSegmentConfigProcedure:
+			wFMCreateTourShiftSegmentConfigHandler.ServeHTTP(w, r)
+		case WFMUpdateTourShiftSegmentConfigProcedure:
+			wFMUpdateTourShiftSegmentConfigHandler.ServeHTTP(w, r)
+		case WFMListTourShiftSegmentConfigsProcedure:
+			wFMListTourShiftSegmentConfigsHandler.ServeHTTP(w, r)
+		case WFMDeleteTourShiftSegmentConfigsProcedure:
+			wFMDeleteTourShiftSegmentConfigsHandler.ServeHTTP(w, r)
+		case WFMCreateTourAgentCollectionProcedure:
+			wFMCreateTourAgentCollectionHandler.ServeHTTP(w, r)
+		case WFMUpdateTourAgentCollectionProcedure:
+			wFMUpdateTourAgentCollectionHandler.ServeHTTP(w, r)
+		case WFMListTourAgentCollectionsProcedure:
+			wFMListTourAgentCollectionsHandler.ServeHTTP(w, r)
+		case WFMDeleteTourAgentCollectionsProcedure:
+			wFMDeleteTourAgentCollectionsHandler.ServeHTTP(w, r)
+		case WFMCreateTourAgentCollectionWFMAgentsProcedure:
+			wFMCreateTourAgentCollectionWFMAgentsHandler.ServeHTTP(w, r)
+		case WFMListTourAgentCollectionWFMAgentsProcedure:
+			wFMListTourAgentCollectionWFMAgentsHandler.ServeHTTP(w, r)
+		case WFMDeleteTourAgentCollectionWFMAgentsProcedure:
+			wFMDeleteTourAgentCollectionWFMAgentsHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -6227,4 +7101,88 @@ func (UnimplementedWFMHandler) GetPerformanceMetrics(context.Context, *connect_g
 
 func (UnimplementedWFMHandler) ListRequiredCallsIntervals(context.Context, *connect_go.Request[wfm.ListRequiredCallsIntervalsReq]) (*connect_go.Response[wfm.ListRequiredCallsIntervalsRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListRequiredCallsIntervals is not implemented"))
+}
+
+func (UnimplementedWFMHandler) CreateTourPattern(context.Context, *connect_go.Request[wfm.CreateTourPatternReq]) (*connect_go.Response[wfm.CreateTourPatternRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.CreateTourPattern is not implemented"))
+}
+
+func (UnimplementedWFMHandler) GetTourPattern(context.Context, *connect_go.Request[wfm.GetTourPatternReq]) (*connect_go.Response[wfm.GetTourPatternRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.GetTourPattern is not implemented"))
+}
+
+func (UnimplementedWFMHandler) DeleteTourPattern(context.Context, *connect_go.Request[wfm.DeleteTourPatternReq]) (*connect_go.Response[wfm.DeleteTourPatternRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.DeleteTourPattern is not implemented"))
+}
+
+func (UnimplementedWFMHandler) CreateTourWeekPattern(context.Context, *connect_go.Request[wfm.CreateTourWeekPatternReq]) (*connect_go.Response[wfm.CreateTourWeekPatternRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.CreateTourWeekPattern is not implemented"))
+}
+
+func (UnimplementedWFMHandler) ListTourWeekPatterns(context.Context, *connect_go.Request[wfm.ListTourWeekPatternsReq]) (*connect_go.Response[wfm.ListTourWeekPatternsRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListTourWeekPatterns is not implemented"))
+}
+
+func (UnimplementedWFMHandler) DeleteTourWeekPatterns(context.Context, *connect_go.Request[wfm.DeleteTourWeekPatternsReq]) (*connect_go.Response[wfm.DeleteTourWeekPatternsRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.DeleteTourWeekPatterns is not implemented"))
+}
+
+func (UnimplementedWFMHandler) CreateTourShiftInstanceConfig(context.Context, *connect_go.Request[wfm.CreateTourShiftInstanceConfigReq]) (*connect_go.Response[wfm.CreateTourShiftInstanceConfigRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.CreateTourShiftInstanceConfig is not implemented"))
+}
+
+func (UnimplementedWFMHandler) UpdateTourShiftInstanceConfig(context.Context, *connect_go.Request[wfm.UpdateTourShiftInstanceConfigReq]) (*connect_go.Response[wfm.UpdateTourShiftInstanceConfigRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.UpdateTourShiftInstanceConfig is not implemented"))
+}
+
+func (UnimplementedWFMHandler) ListTourShiftInstanceConfigs(context.Context, *connect_go.Request[wfm.ListTourShiftInstanceConfigsReq]) (*connect_go.Response[wfm.ListTourShiftInstanceConfigsRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListTourShiftInstanceConfigs is not implemented"))
+}
+
+func (UnimplementedWFMHandler) DeleteTourShiftInstanceConfigs(context.Context, *connect_go.Request[wfm.DeleteTourShiftInstanceConfigsReq]) (*connect_go.Response[wfm.DeleteTourShiftInstanceConfigsRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.DeleteTourShiftInstanceConfigs is not implemented"))
+}
+
+func (UnimplementedWFMHandler) CreateTourShiftSegmentConfig(context.Context, *connect_go.Request[wfm.CreateTourShiftSegmentConfigReq]) (*connect_go.Response[wfm.CreateTourShiftSegmentConfigRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.CreateTourShiftSegmentConfig is not implemented"))
+}
+
+func (UnimplementedWFMHandler) UpdateTourShiftSegmentConfig(context.Context, *connect_go.Request[wfm.UpdateTourShiftSegmentConfigReq]) (*connect_go.Response[wfm.UpdateTourShiftSegmentConfigRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.UpdateTourShiftSegmentConfig is not implemented"))
+}
+
+func (UnimplementedWFMHandler) ListTourShiftSegmentConfigs(context.Context, *connect_go.Request[wfm.ListTourShiftSegmentConfigsReq]) (*connect_go.Response[wfm.ListTourShiftSegmentConfigsRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListTourShiftSegmentConfigs is not implemented"))
+}
+
+func (UnimplementedWFMHandler) DeleteTourShiftSegmentConfigs(context.Context, *connect_go.Request[wfm.DeleteTourShiftSegmentConfigsReq]) (*connect_go.Response[wfm.DeleteTourShiftSegmentConfigsRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.DeleteTourShiftSegmentConfigs is not implemented"))
+}
+
+func (UnimplementedWFMHandler) CreateTourAgentCollection(context.Context, *connect_go.Request[wfm.CreateTourAgentCollectionReq]) (*connect_go.Response[wfm.CreateTourAgentCollectionRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.CreateTourAgentCollection is not implemented"))
+}
+
+func (UnimplementedWFMHandler) UpdateTourAgentCollection(context.Context, *connect_go.Request[wfm.UpdateTourAgentCollectionReq]) (*connect_go.Response[wfm.UpdateTourAgentCollectionRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.UpdateTourAgentCollection is not implemented"))
+}
+
+func (UnimplementedWFMHandler) ListTourAgentCollections(context.Context, *connect_go.Request[wfm.ListTourAgentCollectionsReq]) (*connect_go.Response[wfm.ListTourAgentCollectionsRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListTourAgentCollections is not implemented"))
+}
+
+func (UnimplementedWFMHandler) DeleteTourAgentCollections(context.Context, *connect_go.Request[wfm.DeleteTourAgentCollectionsReq]) (*connect_go.Response[wfm.DeleteTourAgentCollectionsRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.DeleteTourAgentCollections is not implemented"))
+}
+
+func (UnimplementedWFMHandler) CreateTourAgentCollectionWFMAgents(context.Context, *connect_go.Request[wfm.CreateTourAgentCollectionWFMAgentsReq]) (*connect_go.Response[wfm.CreateTourAgentCollectionWFMAgentsRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.CreateTourAgentCollectionWFMAgents is not implemented"))
+}
+
+func (UnimplementedWFMHandler) ListTourAgentCollectionWFMAgents(context.Context, *connect_go.Request[wfm.ListTourAgentCollectionWFMAgentsReq]) (*connect_go.Response[wfm.ListTourAgentCollectionWFMAgentsRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListTourAgentCollectionWFMAgents is not implemented"))
+}
+
+func (UnimplementedWFMHandler) DeleteTourAgentCollectionWFMAgents(context.Context, *connect_go.Request[wfm.DeleteTourAgentCollectionWFMAgentsReq]) (*connect_go.Response[wfm.DeleteTourAgentCollectionWFMAgentsRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.DeleteTourAgentCollectionWFMAgents is not implemented"))
 }

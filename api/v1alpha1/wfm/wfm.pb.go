@@ -18874,6 +18874,2414 @@ func (x *ListRequiredCallsIntervalsRes) GetRequiredCallsIntervals() []*RequiredC
 	return nil
 }
 
+// Represents a TourShiftSegmentConfig
+type TourShiftSegmentConfig struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The unique ID of the tour shift segment config.
+	TourShiftSegmentConfigSid int64 `protobuf:"varint,1,opt,name=tour_shift_segment_config_sid,json=tourShiftSegmentConfigSid,proto3" json:"tour_shift_segment_config_sid,omitempty"`
+	// The ID of the parent tour shift instance config
+	TourShiftInstanceConfigSid int64 `protobuf:"varint,2,opt,name=tour_shift_instance_config_sid,json=tourShiftInstanceConfigSid,proto3" json:"tour_shift_instance_config_sid,omitempty"`
+	// The minute within the shift instance config where the shift segment config starts.
+	StartMinuteInShift int32 `protobuf:"varint,3,opt,name=start_minute_in_shift,json=startMinuteInShift,proto3" json:"start_minute_in_shift,omitempty"`
+	// The number of minutes wide that the segment covers.
+	WidthInMinutes int32 `protobuf:"varint,4,opt,name=width_in_minutes,json=widthInMinutes,proto3" json:"width_in_minutes,omitempty"`
+	// The ID of the scheduling activity that the segment will schedule.
+	SchedulingActivitySid int64 `protobuf:"varint,5,opt,name=scheduling_activity_sid,json=schedulingActivitySid,proto3" json:"scheduling_activity_sid,omitempty"`
+}
+
+func (x *TourShiftSegmentConfig) Reset() {
+	*x = TourShiftSegmentConfig{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[292]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TourShiftSegmentConfig) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TourShiftSegmentConfig) ProtoMessage() {}
+
+func (x *TourShiftSegmentConfig) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[292]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TourShiftSegmentConfig.ProtoReflect.Descriptor instead.
+func (*TourShiftSegmentConfig) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{292}
+}
+
+func (x *TourShiftSegmentConfig) GetTourShiftSegmentConfigSid() int64 {
+	if x != nil {
+		return x.TourShiftSegmentConfigSid
+	}
+	return 0
+}
+
+func (x *TourShiftSegmentConfig) GetTourShiftInstanceConfigSid() int64 {
+	if x != nil {
+		return x.TourShiftInstanceConfigSid
+	}
+	return 0
+}
+
+func (x *TourShiftSegmentConfig) GetStartMinuteInShift() int32 {
+	if x != nil {
+		return x.StartMinuteInShift
+	}
+	return 0
+}
+
+func (x *TourShiftSegmentConfig) GetWidthInMinutes() int32 {
+	if x != nil {
+		return x.WidthInMinutes
+	}
+	return 0
+}
+
+func (x *TourShiftSegmentConfig) GetSchedulingActivitySid() int64 {
+	if x != nil {
+		return x.SchedulingActivitySid
+	}
+	return 0
+}
+
+// Represents a TourShiftInstanceConfig
+type TourShiftInstanceConfig struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The unique ID of the tour shift instance config.
+	TourShiftInstanceConfigSid int64 `protobuf:"varint,1,opt,name=tour_shift_instance_config_sid,json=tourShiftInstanceConfigSid,proto3" json:"tour_shift_instance_config_sid,omitempty"`
+	// The ID of the tour week pattern that the tour shift instance config belongs to.
+	TourWeekPatternSid int64 `protobuf:"varint,2,opt,name=tour_week_pattern_sid,json=tourWeekPatternSid,proto3" json:"tour_week_pattern_sid,omitempty"`
+	// The number of minutes after the start of week UTC for the shift instance config to start.
+	// May not be greater than 10080, as that would begin during the next week.
+	StartMinuteInWeek int32 `protobuf:"varint,3,opt,name=start_minute_in_week,json=startMinuteInWeek,proto3" json:"start_minute_in_week,omitempty"`
+	// The number of minutes wide that the tour shift instance config covers.
+	WidthInMinutes int32 `protobuf:"varint,4,opt,name=width_in_minutes,json=widthInMinutes,proto3" json:"width_in_minutes,omitempty"`
+	// The tour shift segment configs that are associated with @tour_shift_instance_config_sid.
+	MemberTourShiftSegmentConfigs []*TourShiftSegmentConfig `protobuf:"bytes,5,rep,name=member_tour_shift_segment_configs,json=memberTourShiftSegmentConfigs,proto3" json:"member_tour_shift_segment_configs,omitempty"`
+}
+
+func (x *TourShiftInstanceConfig) Reset() {
+	*x = TourShiftInstanceConfig{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[293]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TourShiftInstanceConfig) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TourShiftInstanceConfig) ProtoMessage() {}
+
+func (x *TourShiftInstanceConfig) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[293]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TourShiftInstanceConfig.ProtoReflect.Descriptor instead.
+func (*TourShiftInstanceConfig) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{293}
+}
+
+func (x *TourShiftInstanceConfig) GetTourShiftInstanceConfigSid() int64 {
+	if x != nil {
+		return x.TourShiftInstanceConfigSid
+	}
+	return 0
+}
+
+func (x *TourShiftInstanceConfig) GetTourWeekPatternSid() int64 {
+	if x != nil {
+		return x.TourWeekPatternSid
+	}
+	return 0
+}
+
+func (x *TourShiftInstanceConfig) GetStartMinuteInWeek() int32 {
+	if x != nil {
+		return x.StartMinuteInWeek
+	}
+	return 0
+}
+
+func (x *TourShiftInstanceConfig) GetWidthInMinutes() int32 {
+	if x != nil {
+		return x.WidthInMinutes
+	}
+	return 0
+}
+
+func (x *TourShiftInstanceConfig) GetMemberTourShiftSegmentConfigs() []*TourShiftSegmentConfig {
+	if x != nil {
+		return x.MemberTourShiftSegmentConfigs
+	}
+	return nil
+}
+
+// Represents a TourWeekPattern
+type TourWeekPattern struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The unique ID of the tour week pattern.
+	TourWeekPatternSid int64 `protobuf:"varint,1,opt,name=tour_week_pattern_sid,json=tourWeekPatternSid,proto3" json:"tour_week_pattern_sid,omitempty"`
+	// The ID of the tour pattern that the tour week pattern belongs to.
+	TourPatternSid int64 `protobuf:"varint,2,opt,name=tour_pattern_sid,json=tourPatternSid,proto3" json:"tour_pattern_sid,omitempty"`
+	// The tour week patterns place within the sequence of tour week patterns that belong to @tour_pattern_sid.
+	WeekPatternNumber int32 `protobuf:"varint,3,opt,name=week_pattern_number,json=weekPatternNumber,proto3" json:"week_pattern_number,omitempty"`
+	// The tour shift instance configs associated with @tour_week_pattern_sid.
+	MemberTourShiftInstanceConfigs []*TourShiftInstanceConfig `protobuf:"bytes,4,rep,name=member_tour_shift_instance_configs,json=memberTourShiftInstanceConfigs,proto3" json:"member_tour_shift_instance_configs,omitempty"`
+}
+
+func (x *TourWeekPattern) Reset() {
+	*x = TourWeekPattern{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[294]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TourWeekPattern) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TourWeekPattern) ProtoMessage() {}
+
+func (x *TourWeekPattern) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[294]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TourWeekPattern.ProtoReflect.Descriptor instead.
+func (*TourWeekPattern) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{294}
+}
+
+func (x *TourWeekPattern) GetTourWeekPatternSid() int64 {
+	if x != nil {
+		return x.TourWeekPatternSid
+	}
+	return 0
+}
+
+func (x *TourWeekPattern) GetTourPatternSid() int64 {
+	if x != nil {
+		return x.TourPatternSid
+	}
+	return 0
+}
+
+func (x *TourWeekPattern) GetWeekPatternNumber() int32 {
+	if x != nil {
+		return x.WeekPatternNumber
+	}
+	return 0
+}
+
+func (x *TourWeekPattern) GetMemberTourShiftInstanceConfigs() []*TourShiftInstanceConfig {
+	if x != nil {
+		return x.MemberTourShiftInstanceConfigs
+	}
+	return nil
+}
+
+// Represents a TourAgentCollection
+type TourAgentCollection struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The unique ID of this tour agent collection sid.
+	TourAgentCollectionSid int64 `protobuf:"varint,1,opt,name=tour_agent_collection_sid,json=tourAgentCollectionSid,proto3" json:"tour_agent_collection_sid,omitempty"`
+	// The ID of the tour pattern that the tour agent collection is associated with.
+	TourPatternSid int64 `protobuf:"varint,2,opt,name=tour_pattern_sid,json=tourPatternSid,proto3" json:"tour_pattern_sid,omitempty"`
+	// The minimum number of agents that are required to be scheduled using this collection.
+	MinAgentsToSchedule int32 `protobuf:"varint,3,opt,name=min_agents_to_schedule,json=minAgentsToSchedule,proto3" json:"min_agents_to_schedule,omitempty"`
+	// The maximum number of agents that are allowed to be scheduled using this collection.
+	MaxAgentsToSchedule int32 `protobuf:"varint,4,opt,name=max_agents_to_schedule,json=maxAgentsToSchedule,proto3" json:"max_agents_to_schedule,omitempty"`
+	// The week pattern number to start scheduling this collection with.
+	// Each the next week pattern number in sequence will be scheduled, starting with the @first_week_pattern_number.
+	FirstWeekPatternNumber int32 `protobuf:"varint,5,opt,name=first_week_pattern_number,json=firstWeekPatternNumber,proto3" json:"first_week_pattern_number,omitempty"`
+	// The name used to describe this tour agent collection to the user.
+	Name string `protobuf:"bytes,6,opt,name=name,proto3" json:"name,omitempty"`
+	// The IDs of any wfm agents associated with @tour_collection_sid.
+	WfmAgentSids []int64 `protobuf:"varint,7,rep,packed,name=wfm_agent_sids,json=wfmAgentSids,proto3" json:"wfm_agent_sids,omitempty"`
+}
+
+func (x *TourAgentCollection) Reset() {
+	*x = TourAgentCollection{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[295]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TourAgentCollection) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TourAgentCollection) ProtoMessage() {}
+
+func (x *TourAgentCollection) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[295]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TourAgentCollection.ProtoReflect.Descriptor instead.
+func (*TourAgentCollection) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{295}
+}
+
+func (x *TourAgentCollection) GetTourAgentCollectionSid() int64 {
+	if x != nil {
+		return x.TourAgentCollectionSid
+	}
+	return 0
+}
+
+func (x *TourAgentCollection) GetTourPatternSid() int64 {
+	if x != nil {
+		return x.TourPatternSid
+	}
+	return 0
+}
+
+func (x *TourAgentCollection) GetMinAgentsToSchedule() int32 {
+	if x != nil {
+		return x.MinAgentsToSchedule
+	}
+	return 0
+}
+
+func (x *TourAgentCollection) GetMaxAgentsToSchedule() int32 {
+	if x != nil {
+		return x.MaxAgentsToSchedule
+	}
+	return 0
+}
+
+func (x *TourAgentCollection) GetFirstWeekPatternNumber() int32 {
+	if x != nil {
+		return x.FirstWeekPatternNumber
+	}
+	return 0
+}
+
+func (x *TourAgentCollection) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *TourAgentCollection) GetWfmAgentSids() []int64 {
+	if x != nil {
+		return x.WfmAgentSids
+	}
+	return nil
+}
+
+// Represents a TourPattern
+type TourPattern struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The unique ID of this tour pattern sid.
+	TourPatternSid int64 `protobuf:"varint,1,opt,name=tour_pattern_sid,json=tourPatternSid,proto3" json:"tour_pattern_sid,omitempty"`
+	// The ID of the shift template that the tour pattern belongs to.
+	ShiftTemplateSid int64 `protobuf:"varint,2,opt,name=shift_template_sid,json=shiftTemplateSid,proto3" json:"shift_template_sid,omitempty"`
+	// The tour week patterns associated with @tour_pattern_sid.
+	MemberTourWeekPatterns []*TourWeekPattern `protobuf:"bytes,3,rep,name=member_tour_week_patterns,json=memberTourWeekPatterns,proto3" json:"member_tour_week_patterns,omitempty"`
+	// The tour agent collection associated with @tour_pattern_sid.
+	MemberTourAgentCollections []*TourAgentCollection `protobuf:"bytes,4,rep,name=member_tour_agent_collections,json=memberTourAgentCollections,proto3" json:"member_tour_agent_collections,omitempty"`
+}
+
+func (x *TourPattern) Reset() {
+	*x = TourPattern{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[296]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TourPattern) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TourPattern) ProtoMessage() {}
+
+func (x *TourPattern) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[296]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TourPattern.ProtoReflect.Descriptor instead.
+func (*TourPattern) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{296}
+}
+
+func (x *TourPattern) GetTourPatternSid() int64 {
+	if x != nil {
+		return x.TourPatternSid
+	}
+	return 0
+}
+
+func (x *TourPattern) GetShiftTemplateSid() int64 {
+	if x != nil {
+		return x.ShiftTemplateSid
+	}
+	return 0
+}
+
+func (x *TourPattern) GetMemberTourWeekPatterns() []*TourWeekPattern {
+	if x != nil {
+		return x.MemberTourWeekPatterns
+	}
+	return nil
+}
+
+func (x *TourPattern) GetMemberTourAgentCollections() []*TourAgentCollection {
+	if x != nil {
+		return x.MemberTourAgentCollections
+	}
+	return nil
+}
+
+// Request message for the CreateTourPattern RPC.
+type CreateTourPatternReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// ID of the Shift Template to create the Tour Pattern for.
+	ShiftTemplateSid int64 `protobuf:"varint,1,opt,name=shift_template_sid,json=shiftTemplateSid,proto3" json:"shift_template_sid,omitempty"`
+}
+
+func (x *CreateTourPatternReq) Reset() {
+	*x = CreateTourPatternReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[297]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CreateTourPatternReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateTourPatternReq) ProtoMessage() {}
+
+func (x *CreateTourPatternReq) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[297]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateTourPatternReq.ProtoReflect.Descriptor instead.
+func (*CreateTourPatternReq) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{297}
+}
+
+func (x *CreateTourPatternReq) GetShiftTemplateSid() int64 {
+	if x != nil {
+		return x.ShiftTemplateSid
+	}
+	return 0
+}
+
+// Response message for the CreateTourPattern RPC.
+type CreateTourPatternRes struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// ID of the newly created Tour Pattern
+	TourPatternSid int64 `protobuf:"varint,1,opt,name=tour_pattern_sid,json=tourPatternSid,proto3" json:"tour_pattern_sid,omitempty"`
+}
+
+func (x *CreateTourPatternRes) Reset() {
+	*x = CreateTourPatternRes{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[298]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CreateTourPatternRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateTourPatternRes) ProtoMessage() {}
+
+func (x *CreateTourPatternRes) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[298]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateTourPatternRes.ProtoReflect.Descriptor instead.
+func (*CreateTourPatternRes) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{298}
+}
+
+func (x *CreateTourPatternRes) GetTourPatternSid() int64 {
+	if x != nil {
+		return x.TourPatternSid
+	}
+	return 0
+}
+
+// Request message for the GetTourPattern RPC.
+type GetTourPatternReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// ID of the Shift Template to get the Tour Pattern for.
+	ShiftTemplateSid int64 `protobuf:"varint,1,opt,name=shift_template_sid,json=shiftTemplateSid,proto3" json:"shift_template_sid,omitempty"`
+}
+
+func (x *GetTourPatternReq) Reset() {
+	*x = GetTourPatternReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[299]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetTourPatternReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetTourPatternReq) ProtoMessage() {}
+
+func (x *GetTourPatternReq) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[299]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetTourPatternReq.ProtoReflect.Descriptor instead.
+func (*GetTourPatternReq) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{299}
+}
+
+func (x *GetTourPatternReq) GetShiftTemplateSid() int64 {
+	if x != nil {
+		return x.ShiftTemplateSid
+	}
+	return 0
+}
+
+// Request message for the GetTourPattern RPC.
+type GetTourPatternRes struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The requested Tour Pattern
+	TourPattern *TourPattern `protobuf:"bytes,1,opt,name=tour_pattern,json=tourPattern,proto3" json:"tour_pattern,omitempty"`
+}
+
+func (x *GetTourPatternRes) Reset() {
+	*x = GetTourPatternRes{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[300]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetTourPatternRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetTourPatternRes) ProtoMessage() {}
+
+func (x *GetTourPatternRes) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[300]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetTourPatternRes.ProtoReflect.Descriptor instead.
+func (*GetTourPatternRes) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{300}
+}
+
+func (x *GetTourPatternRes) GetTourPattern() *TourPattern {
+	if x != nil {
+		return x.TourPattern
+	}
+	return nil
+}
+
+// Request message for the DeleteTourPattern RPC.
+type DeleteTourPatternReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// ID of the tour pattern to delete.
+	// If any entities belong to @tour_pattern_sid they will be deleted too.
+	TourPatternSid int64 `protobuf:"varint,1,opt,name=tour_pattern_sid,json=tourPatternSid,proto3" json:"tour_pattern_sid,omitempty"`
+}
+
+func (x *DeleteTourPatternReq) Reset() {
+	*x = DeleteTourPatternReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[301]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DeleteTourPatternReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteTourPatternReq) ProtoMessage() {}
+
+func (x *DeleteTourPatternReq) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[301]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteTourPatternReq.ProtoReflect.Descriptor instead.
+func (*DeleteTourPatternReq) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{301}
+}
+
+func (x *DeleteTourPatternReq) GetTourPatternSid() int64 {
+	if x != nil {
+		return x.TourPatternSid
+	}
+	return 0
+}
+
+// Request message for the DeleteTourPattern RPC.
+type DeleteTourPatternRes struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *DeleteTourPatternRes) Reset() {
+	*x = DeleteTourPatternRes{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[302]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DeleteTourPatternRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteTourPatternRes) ProtoMessage() {}
+
+func (x *DeleteTourPatternRes) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[302]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteTourPatternRes.ProtoReflect.Descriptor instead.
+func (*DeleteTourPatternRes) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{302}
+}
+
+// Request message for the CreateTourWeekPattern RPC.
+type CreateTourWeekPatternReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// ID of the Tour Pattern to create the tour week pattern for.
+	TourPatternSid int64 `protobuf:"varint,1,opt,name=tour_pattern_sid,json=tourPatternSid,proto3" json:"tour_pattern_sid,omitempty"`
+}
+
+func (x *CreateTourWeekPatternReq) Reset() {
+	*x = CreateTourWeekPatternReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[303]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CreateTourWeekPatternReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateTourWeekPatternReq) ProtoMessage() {}
+
+func (x *CreateTourWeekPatternReq) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[303]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateTourWeekPatternReq.ProtoReflect.Descriptor instead.
+func (*CreateTourWeekPatternReq) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{303}
+}
+
+func (x *CreateTourWeekPatternReq) GetTourPatternSid() int64 {
+	if x != nil {
+		return x.TourPatternSid
+	}
+	return 0
+}
+
+// Response message for the CreateTourWeekPattern RPC.
+type CreateTourWeekPatternRes struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// ID of the newly created Tour Pattern.
+	TourWeekPatternSid int64 `protobuf:"varint,1,opt,name=tour_week_pattern_sid,json=tourWeekPatternSid,proto3" json:"tour_week_pattern_sid,omitempty"`
+}
+
+func (x *CreateTourWeekPatternRes) Reset() {
+	*x = CreateTourWeekPatternRes{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[304]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CreateTourWeekPatternRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateTourWeekPatternRes) ProtoMessage() {}
+
+func (x *CreateTourWeekPatternRes) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[304]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateTourWeekPatternRes.ProtoReflect.Descriptor instead.
+func (*CreateTourWeekPatternRes) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{304}
+}
+
+func (x *CreateTourWeekPatternRes) GetTourWeekPatternSid() int64 {
+	if x != nil {
+		return x.TourWeekPatternSid
+	}
+	return 0
+}
+
+// Request message for the ListTourWeekPatterns RPC.
+type ListTourWeekPatternsReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// ID of the tour pattern that the @tour_week_patterns to retrieve belong to.
+	TourPatternSid int64 `protobuf:"varint,1,opt,name=tour_pattern_sid,json=tourPatternSid,proto3" json:"tour_pattern_sid,omitempty"`
+}
+
+func (x *ListTourWeekPatternsReq) Reset() {
+	*x = ListTourWeekPatternsReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[305]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ListTourWeekPatternsReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTourWeekPatternsReq) ProtoMessage() {}
+
+func (x *ListTourWeekPatternsReq) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[305]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTourWeekPatternsReq.ProtoReflect.Descriptor instead.
+func (*ListTourWeekPatternsReq) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{305}
+}
+
+func (x *ListTourWeekPatternsReq) GetTourPatternSid() int64 {
+	if x != nil {
+		return x.TourPatternSid
+	}
+	return 0
+}
+
+// Response message for the ListTourWeekPatterns RPC.
+type ListTourWeekPatternsRes struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The requested Tour Week Patterns.
+	TourWeekPatterns []*TourWeekPattern `protobuf:"bytes,1,rep,name=tour_week_patterns,json=tourWeekPatterns,proto3" json:"tour_week_patterns,omitempty"`
+}
+
+func (x *ListTourWeekPatternsRes) Reset() {
+	*x = ListTourWeekPatternsRes{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[306]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ListTourWeekPatternsRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTourWeekPatternsRes) ProtoMessage() {}
+
+func (x *ListTourWeekPatternsRes) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[306]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTourWeekPatternsRes.ProtoReflect.Descriptor instead.
+func (*ListTourWeekPatternsRes) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{306}
+}
+
+func (x *ListTourWeekPatternsRes) GetTourWeekPatterns() []*TourWeekPattern {
+	if x != nil {
+		return x.TourWeekPatterns
+	}
+	return nil
+}
+
+// Request message for the DeleteTourWeekPatterns RPC.
+type DeleteTourWeekPatternsReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// IDs of the tour week patterns to be deleted.
+	// Any member Configs will be deletes as well.
+	// If any Tour Agent Collections are using the @tour_week_pattern_sids, they must be deleted first.
+	TourWeekPatternSids []int64 `protobuf:"varint,1,rep,packed,name=tour_week_pattern_sids,json=tourWeekPatternSids,proto3" json:"tour_week_pattern_sids,omitempty"`
+}
+
+func (x *DeleteTourWeekPatternsReq) Reset() {
+	*x = DeleteTourWeekPatternsReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[307]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DeleteTourWeekPatternsReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteTourWeekPatternsReq) ProtoMessage() {}
+
+func (x *DeleteTourWeekPatternsReq) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[307]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteTourWeekPatternsReq.ProtoReflect.Descriptor instead.
+func (*DeleteTourWeekPatternsReq) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{307}
+}
+
+func (x *DeleteTourWeekPatternsReq) GetTourWeekPatternSids() []int64 {
+	if x != nil {
+		return x.TourWeekPatternSids
+	}
+	return nil
+}
+
+// Response message for the DeleteTourWeekPatterns RPC.
+type DeleteTourWeekPatternsRes struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *DeleteTourWeekPatternsRes) Reset() {
+	*x = DeleteTourWeekPatternsRes{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[308]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DeleteTourWeekPatternsRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteTourWeekPatternsRes) ProtoMessage() {}
+
+func (x *DeleteTourWeekPatternsRes) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[308]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteTourWeekPatternsRes.ProtoReflect.Descriptor instead.
+func (*DeleteTourWeekPatternsRes) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{308}
+}
+
+// Request message for the CreateTourShiftInstanceConfig RPC.
+type CreateTourShiftInstanceConfigReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The Tour Shift Instance Config to create.
+	TourShiftInstanceConfig *TourShiftInstanceConfig `protobuf:"bytes,1,opt,name=tour_shift_instance_config,json=tourShiftInstanceConfig,proto3" json:"tour_shift_instance_config,omitempty"`
+}
+
+func (x *CreateTourShiftInstanceConfigReq) Reset() {
+	*x = CreateTourShiftInstanceConfigReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[309]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CreateTourShiftInstanceConfigReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateTourShiftInstanceConfigReq) ProtoMessage() {}
+
+func (x *CreateTourShiftInstanceConfigReq) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[309]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateTourShiftInstanceConfigReq.ProtoReflect.Descriptor instead.
+func (*CreateTourShiftInstanceConfigReq) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{309}
+}
+
+func (x *CreateTourShiftInstanceConfigReq) GetTourShiftInstanceConfig() *TourShiftInstanceConfig {
+	if x != nil {
+		return x.TourShiftInstanceConfig
+	}
+	return nil
+}
+
+// Response message for the CreateTourShiftInstanceConfig RPC.
+type CreateTourShiftInstanceConfigRes struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// ID of the newly created Tour Shift Instance Config.
+	TourShiftInstanceConfigSid int64 `protobuf:"varint,1,opt,name=tour_shift_instance_config_sid,json=tourShiftInstanceConfigSid,proto3" json:"tour_shift_instance_config_sid,omitempty"`
+}
+
+func (x *CreateTourShiftInstanceConfigRes) Reset() {
+	*x = CreateTourShiftInstanceConfigRes{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[310]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CreateTourShiftInstanceConfigRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateTourShiftInstanceConfigRes) ProtoMessage() {}
+
+func (x *CreateTourShiftInstanceConfigRes) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[310]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateTourShiftInstanceConfigRes.ProtoReflect.Descriptor instead.
+func (*CreateTourShiftInstanceConfigRes) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{310}
+}
+
+func (x *CreateTourShiftInstanceConfigRes) GetTourShiftInstanceConfigSid() int64 {
+	if x != nil {
+		return x.TourShiftInstanceConfigSid
+	}
+	return 0
+}
+
+// Request message for the UpdateTourShiftInstanceConfig RPC.
+type UpdateTourShiftInstanceConfigReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The Tour Shift Instance Config to update.
+	TourShiftInstanceConfig *TourShiftInstanceConfig `protobuf:"bytes,1,opt,name=tour_shift_instance_config,json=tourShiftInstanceConfig,proto3" json:"tour_shift_instance_config,omitempty"`
+}
+
+func (x *UpdateTourShiftInstanceConfigReq) Reset() {
+	*x = UpdateTourShiftInstanceConfigReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[311]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UpdateTourShiftInstanceConfigReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateTourShiftInstanceConfigReq) ProtoMessage() {}
+
+func (x *UpdateTourShiftInstanceConfigReq) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[311]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateTourShiftInstanceConfigReq.ProtoReflect.Descriptor instead.
+func (*UpdateTourShiftInstanceConfigReq) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{311}
+}
+
+func (x *UpdateTourShiftInstanceConfigReq) GetTourShiftInstanceConfig() *TourShiftInstanceConfig {
+	if x != nil {
+		return x.TourShiftInstanceConfig
+	}
+	return nil
+}
+
+// Response message for the UpdateTourShiftInstanceConfig RPC.
+type UpdateTourShiftInstanceConfigRes struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *UpdateTourShiftInstanceConfigRes) Reset() {
+	*x = UpdateTourShiftInstanceConfigRes{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[312]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UpdateTourShiftInstanceConfigRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateTourShiftInstanceConfigRes) ProtoMessage() {}
+
+func (x *UpdateTourShiftInstanceConfigRes) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[312]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateTourShiftInstanceConfigRes.ProtoReflect.Descriptor instead.
+func (*UpdateTourShiftInstanceConfigRes) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{312}
+}
+
+// Request message for the ListTourShiftInstanceConfigs RPC.
+type ListTourShiftInstanceConfigsReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// IDs of the tour week patterns to get the child Tour Shift Instance Configs for.
+	TourWeekPatternSids []int64 `protobuf:"varint,1,rep,packed,name=tour_week_pattern_sids,json=tourWeekPatternSids,proto3" json:"tour_week_pattern_sids,omitempty"`
+}
+
+func (x *ListTourShiftInstanceConfigsReq) Reset() {
+	*x = ListTourShiftInstanceConfigsReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[313]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ListTourShiftInstanceConfigsReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTourShiftInstanceConfigsReq) ProtoMessage() {}
+
+func (x *ListTourShiftInstanceConfigsReq) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[313]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTourShiftInstanceConfigsReq.ProtoReflect.Descriptor instead.
+func (*ListTourShiftInstanceConfigsReq) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{313}
+}
+
+func (x *ListTourShiftInstanceConfigsReq) GetTourWeekPatternSids() []int64 {
+	if x != nil {
+		return x.TourWeekPatternSids
+	}
+	return nil
+}
+
+// Response message for the ListTourShiftInstanceConfigs RPC.
+type ListTourShiftInstanceConfigsRes struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Requested Tour Shift Instance Configs.
+	TourShiftInstanceConfigs []*TourShiftInstanceConfig `protobuf:"bytes,1,rep,name=tour_shift_instance_configs,json=tourShiftInstanceConfigs,proto3" json:"tour_shift_instance_configs,omitempty"`
+}
+
+func (x *ListTourShiftInstanceConfigsRes) Reset() {
+	*x = ListTourShiftInstanceConfigsRes{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[314]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ListTourShiftInstanceConfigsRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTourShiftInstanceConfigsRes) ProtoMessage() {}
+
+func (x *ListTourShiftInstanceConfigsRes) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[314]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTourShiftInstanceConfigsRes.ProtoReflect.Descriptor instead.
+func (*ListTourShiftInstanceConfigsRes) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{314}
+}
+
+func (x *ListTourShiftInstanceConfigsRes) GetTourShiftInstanceConfigs() []*TourShiftInstanceConfig {
+	if x != nil {
+		return x.TourShiftInstanceConfigs
+	}
+	return nil
+}
+
+// Request message for the DeleteTourShiftInstanceConfigs RPC.
+type DeleteTourShiftInstanceConfigsReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// IDs of the Tour Shift Instance Configs to be deleted.
+	TourShiftInstanceConfigSids []int64 `protobuf:"varint,1,rep,packed,name=tour_shift_instance_config_sids,json=tourShiftInstanceConfigSids,proto3" json:"tour_shift_instance_config_sids,omitempty"`
+}
+
+func (x *DeleteTourShiftInstanceConfigsReq) Reset() {
+	*x = DeleteTourShiftInstanceConfigsReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[315]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DeleteTourShiftInstanceConfigsReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteTourShiftInstanceConfigsReq) ProtoMessage() {}
+
+func (x *DeleteTourShiftInstanceConfigsReq) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[315]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteTourShiftInstanceConfigsReq.ProtoReflect.Descriptor instead.
+func (*DeleteTourShiftInstanceConfigsReq) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{315}
+}
+
+func (x *DeleteTourShiftInstanceConfigsReq) GetTourShiftInstanceConfigSids() []int64 {
+	if x != nil {
+		return x.TourShiftInstanceConfigSids
+	}
+	return nil
+}
+
+// Response message for the DeleteTourShiftInstanceConfigs RPC.
+type DeleteTourShiftInstanceConfigsRes struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *DeleteTourShiftInstanceConfigsRes) Reset() {
+	*x = DeleteTourShiftInstanceConfigsRes{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[316]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DeleteTourShiftInstanceConfigsRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteTourShiftInstanceConfigsRes) ProtoMessage() {}
+
+func (x *DeleteTourShiftInstanceConfigsRes) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[316]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteTourShiftInstanceConfigsRes.ProtoReflect.Descriptor instead.
+func (*DeleteTourShiftInstanceConfigsRes) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{316}
+}
+
+// Request message for the CreateTourShiftSegmentConfig RPC.
+type CreateTourShiftSegmentConfigReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The tour Shift Segment Config to Create.
+	TourShiftSegmentConfig *TourShiftSegmentConfig `protobuf:"bytes,1,opt,name=tour_shift_segment_config,json=tourShiftSegmentConfig,proto3" json:"tour_shift_segment_config,omitempty"`
+}
+
+func (x *CreateTourShiftSegmentConfigReq) Reset() {
+	*x = CreateTourShiftSegmentConfigReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[317]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CreateTourShiftSegmentConfigReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateTourShiftSegmentConfigReq) ProtoMessage() {}
+
+func (x *CreateTourShiftSegmentConfigReq) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[317]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateTourShiftSegmentConfigReq.ProtoReflect.Descriptor instead.
+func (*CreateTourShiftSegmentConfigReq) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{317}
+}
+
+func (x *CreateTourShiftSegmentConfigReq) GetTourShiftSegmentConfig() *TourShiftSegmentConfig {
+	if x != nil {
+		return x.TourShiftSegmentConfig
+	}
+	return nil
+}
+
+// Response message for the CreateTourPattern RPC.
+type CreateTourShiftSegmentConfigRes struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// ID of the newly created Tour shift Segment Config.
+	TourShiftSegmentConfigSid int64 `protobuf:"varint,1,opt,name=tour_shift_segment_config_sid,json=tourShiftSegmentConfigSid,proto3" json:"tour_shift_segment_config_sid,omitempty"`
+}
+
+func (x *CreateTourShiftSegmentConfigRes) Reset() {
+	*x = CreateTourShiftSegmentConfigRes{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[318]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CreateTourShiftSegmentConfigRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateTourShiftSegmentConfigRes) ProtoMessage() {}
+
+func (x *CreateTourShiftSegmentConfigRes) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[318]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateTourShiftSegmentConfigRes.ProtoReflect.Descriptor instead.
+func (*CreateTourShiftSegmentConfigRes) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{318}
+}
+
+func (x *CreateTourShiftSegmentConfigRes) GetTourShiftSegmentConfigSid() int64 {
+	if x != nil {
+		return x.TourShiftSegmentConfigSid
+	}
+	return 0
+}
+
+// Request message for the UpdateTourShiftSegmentConfig RPC.
+type UpdateTourShiftSegmentConfigReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The Tour Shift Segment Config to update.
+	TourShiftSegmentConfig *TourShiftSegmentConfig `protobuf:"bytes,1,opt,name=tour_shift_segment_config,json=tourShiftSegmentConfig,proto3" json:"tour_shift_segment_config,omitempty"`
+}
+
+func (x *UpdateTourShiftSegmentConfigReq) Reset() {
+	*x = UpdateTourShiftSegmentConfigReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[319]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UpdateTourShiftSegmentConfigReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateTourShiftSegmentConfigReq) ProtoMessage() {}
+
+func (x *UpdateTourShiftSegmentConfigReq) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[319]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateTourShiftSegmentConfigReq.ProtoReflect.Descriptor instead.
+func (*UpdateTourShiftSegmentConfigReq) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{319}
+}
+
+func (x *UpdateTourShiftSegmentConfigReq) GetTourShiftSegmentConfig() *TourShiftSegmentConfig {
+	if x != nil {
+		return x.TourShiftSegmentConfig
+	}
+	return nil
+}
+
+// Response message for the CreateTourPattern RPC.
+type UpdateTourShiftSegmentConfigRes struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *UpdateTourShiftSegmentConfigRes) Reset() {
+	*x = UpdateTourShiftSegmentConfigRes{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[320]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UpdateTourShiftSegmentConfigRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateTourShiftSegmentConfigRes) ProtoMessage() {}
+
+func (x *UpdateTourShiftSegmentConfigRes) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[320]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateTourShiftSegmentConfigRes.ProtoReflect.Descriptor instead.
+func (*UpdateTourShiftSegmentConfigRes) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{320}
+}
+
+// Request message for the ListTourShiftSegmentConfigs RPC.
+type ListTourShiftSegmentConfigsReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// IDs of the Tour Shift Instance Configs to get the child Tour Shift Segment Configs for.
+	TourShiftInstanceConfigSids []int64 `protobuf:"varint,1,rep,packed,name=tour_shift_instance_config_sids,json=tourShiftInstanceConfigSids,proto3" json:"tour_shift_instance_config_sids,omitempty"`
+}
+
+func (x *ListTourShiftSegmentConfigsReq) Reset() {
+	*x = ListTourShiftSegmentConfigsReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[321]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ListTourShiftSegmentConfigsReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTourShiftSegmentConfigsReq) ProtoMessage() {}
+
+func (x *ListTourShiftSegmentConfigsReq) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[321]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTourShiftSegmentConfigsReq.ProtoReflect.Descriptor instead.
+func (*ListTourShiftSegmentConfigsReq) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{321}
+}
+
+func (x *ListTourShiftSegmentConfigsReq) GetTourShiftInstanceConfigSids() []int64 {
+	if x != nil {
+		return x.TourShiftInstanceConfigSids
+	}
+	return nil
+}
+
+// Response message for the ListTourShiftSegmentConfigs RPC.
+type ListTourShiftSegmentConfigsRes struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Requested Tour Shift Segment Configs.
+	TourShiftSegmentConfigs []*TourShiftSegmentConfig `protobuf:"bytes,1,rep,name=tour_shift_segment_configs,json=tourShiftSegmentConfigs,proto3" json:"tour_shift_segment_configs,omitempty"`
+}
+
+func (x *ListTourShiftSegmentConfigsRes) Reset() {
+	*x = ListTourShiftSegmentConfigsRes{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[322]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ListTourShiftSegmentConfigsRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTourShiftSegmentConfigsRes) ProtoMessage() {}
+
+func (x *ListTourShiftSegmentConfigsRes) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[322]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTourShiftSegmentConfigsRes.ProtoReflect.Descriptor instead.
+func (*ListTourShiftSegmentConfigsRes) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{322}
+}
+
+func (x *ListTourShiftSegmentConfigsRes) GetTourShiftSegmentConfigs() []*TourShiftSegmentConfig {
+	if x != nil {
+		return x.TourShiftSegmentConfigs
+	}
+	return nil
+}
+
+// Request message for the DeleteTourShiftSegmentConfigs RPC.
+type DeleteTourShiftSegmentConfigsReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// IDs of the Tour Shift Segment Configs to delete.
+	TourShiftSegmentConfigSids []int64 `protobuf:"varint,1,rep,packed,name=tour_shift_segment_config_sids,json=tourShiftSegmentConfigSids,proto3" json:"tour_shift_segment_config_sids,omitempty"`
+}
+
+func (x *DeleteTourShiftSegmentConfigsReq) Reset() {
+	*x = DeleteTourShiftSegmentConfigsReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[323]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DeleteTourShiftSegmentConfigsReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteTourShiftSegmentConfigsReq) ProtoMessage() {}
+
+func (x *DeleteTourShiftSegmentConfigsReq) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[323]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteTourShiftSegmentConfigsReq.ProtoReflect.Descriptor instead.
+func (*DeleteTourShiftSegmentConfigsReq) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{323}
+}
+
+func (x *DeleteTourShiftSegmentConfigsReq) GetTourShiftSegmentConfigSids() []int64 {
+	if x != nil {
+		return x.TourShiftSegmentConfigSids
+	}
+	return nil
+}
+
+// Response message for the DeleteTourShiftSegmentConfigs RPC.
+type DeleteTourShiftSegmentConfigsRes struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *DeleteTourShiftSegmentConfigsRes) Reset() {
+	*x = DeleteTourShiftSegmentConfigsRes{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[324]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DeleteTourShiftSegmentConfigsRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteTourShiftSegmentConfigsRes) ProtoMessage() {}
+
+func (x *DeleteTourShiftSegmentConfigsRes) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[324]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteTourShiftSegmentConfigsRes.ProtoReflect.Descriptor instead.
+func (*DeleteTourShiftSegmentConfigsRes) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{324}
+}
+
+// Request message for the CreateTourAgentCollection RPC.
+type CreateTourAgentCollectionReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The Tour Agent Collection to create.
+	TourAgentCollection *TourAgentCollection `protobuf:"bytes,1,opt,name=tour_agent_collection,json=tourAgentCollection,proto3" json:"tour_agent_collection,omitempty"`
+}
+
+func (x *CreateTourAgentCollectionReq) Reset() {
+	*x = CreateTourAgentCollectionReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[325]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CreateTourAgentCollectionReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateTourAgentCollectionReq) ProtoMessage() {}
+
+func (x *CreateTourAgentCollectionReq) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[325]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateTourAgentCollectionReq.ProtoReflect.Descriptor instead.
+func (*CreateTourAgentCollectionReq) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{325}
+}
+
+func (x *CreateTourAgentCollectionReq) GetTourAgentCollection() *TourAgentCollection {
+	if x != nil {
+		return x.TourAgentCollection
+	}
+	return nil
+}
+
+// Response message for the CreateTourAgentCollection RPC.
+type CreateTourAgentCollectionRes struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// ID of the newly created Tour Agent Collection.
+	TourAgentCollectionSid int64 `protobuf:"varint,1,opt,name=tour_agent_collection_sid,json=tourAgentCollectionSid,proto3" json:"tour_agent_collection_sid,omitempty"`
+}
+
+func (x *CreateTourAgentCollectionRes) Reset() {
+	*x = CreateTourAgentCollectionRes{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[326]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CreateTourAgentCollectionRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateTourAgentCollectionRes) ProtoMessage() {}
+
+func (x *CreateTourAgentCollectionRes) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[326]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateTourAgentCollectionRes.ProtoReflect.Descriptor instead.
+func (*CreateTourAgentCollectionRes) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{326}
+}
+
+func (x *CreateTourAgentCollectionRes) GetTourAgentCollectionSid() int64 {
+	if x != nil {
+		return x.TourAgentCollectionSid
+	}
+	return 0
+}
+
+// Request message for the UpdateTourAgentCollection RPC.
+type UpdateTourAgentCollectionReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The Tour Agent Collection to update.
+	TourAgentCollection *TourAgentCollection `protobuf:"bytes,1,opt,name=tour_agent_collection,json=tourAgentCollection,proto3" json:"tour_agent_collection,omitempty"`
+}
+
+func (x *UpdateTourAgentCollectionReq) Reset() {
+	*x = UpdateTourAgentCollectionReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[327]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UpdateTourAgentCollectionReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateTourAgentCollectionReq) ProtoMessage() {}
+
+func (x *UpdateTourAgentCollectionReq) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[327]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateTourAgentCollectionReq.ProtoReflect.Descriptor instead.
+func (*UpdateTourAgentCollectionReq) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{327}
+}
+
+func (x *UpdateTourAgentCollectionReq) GetTourAgentCollection() *TourAgentCollection {
+	if x != nil {
+		return x.TourAgentCollection
+	}
+	return nil
+}
+
+// Response message for the UpdateTourAgentCollection RPC.
+type UpdateTourAgentCollectionRes struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *UpdateTourAgentCollectionRes) Reset() {
+	*x = UpdateTourAgentCollectionRes{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[328]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UpdateTourAgentCollectionRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateTourAgentCollectionRes) ProtoMessage() {}
+
+func (x *UpdateTourAgentCollectionRes) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[328]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateTourAgentCollectionRes.ProtoReflect.Descriptor instead.
+func (*UpdateTourAgentCollectionRes) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{328}
+}
+
+// Request message for the ListTourAgentCollections RPC.
+type ListTourAgentCollectionsReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// ID of the tour pattern to get the child Tour Agent Collections for.
+	TourPatternSid int64 `protobuf:"varint,1,opt,name=tour_pattern_sid,json=tourPatternSid,proto3" json:"tour_pattern_sid,omitempty"`
+}
+
+func (x *ListTourAgentCollectionsReq) Reset() {
+	*x = ListTourAgentCollectionsReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[329]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ListTourAgentCollectionsReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTourAgentCollectionsReq) ProtoMessage() {}
+
+func (x *ListTourAgentCollectionsReq) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[329]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTourAgentCollectionsReq.ProtoReflect.Descriptor instead.
+func (*ListTourAgentCollectionsReq) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{329}
+}
+
+func (x *ListTourAgentCollectionsReq) GetTourPatternSid() int64 {
+	if x != nil {
+		return x.TourPatternSid
+	}
+	return 0
+}
+
+// Response message for the ListTourAgentCollections RPC.
+type ListTourAgentCollectionsRes struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Requested Tour Agent Collections.
+	TourAgentCollections []*TourAgentCollection `protobuf:"bytes,1,rep,name=tour_agent_collections,json=tourAgentCollections,proto3" json:"tour_agent_collections,omitempty"`
+}
+
+func (x *ListTourAgentCollectionsRes) Reset() {
+	*x = ListTourAgentCollectionsRes{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[330]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ListTourAgentCollectionsRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTourAgentCollectionsRes) ProtoMessage() {}
+
+func (x *ListTourAgentCollectionsRes) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[330]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTourAgentCollectionsRes.ProtoReflect.Descriptor instead.
+func (*ListTourAgentCollectionsRes) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{330}
+}
+
+func (x *ListTourAgentCollectionsRes) GetTourAgentCollections() []*TourAgentCollection {
+	if x != nil {
+		return x.TourAgentCollections
+	}
+	return nil
+}
+
+// Request message for the DeleteTourAgentCollections RPC.
+type DeleteTourAgentCollectionsReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// IDs of the Tour Agent Collections to be deleted.
+	// Any associations with WFM Agent SIDS for these Collections will also be deleted.
+	TourAgentCollectionSids []int64 `protobuf:"varint,1,rep,packed,name=tour_agent_collection_sids,json=tourAgentCollectionSids,proto3" json:"tour_agent_collection_sids,omitempty"`
+}
+
+func (x *DeleteTourAgentCollectionsReq) Reset() {
+	*x = DeleteTourAgentCollectionsReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[331]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DeleteTourAgentCollectionsReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteTourAgentCollectionsReq) ProtoMessage() {}
+
+func (x *DeleteTourAgentCollectionsReq) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[331]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteTourAgentCollectionsReq.ProtoReflect.Descriptor instead.
+func (*DeleteTourAgentCollectionsReq) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{331}
+}
+
+func (x *DeleteTourAgentCollectionsReq) GetTourAgentCollectionSids() []int64 {
+	if x != nil {
+		return x.TourAgentCollectionSids
+	}
+	return nil
+}
+
+// Response message for the DeleteTourAgentCollections RPC.
+type DeleteTourAgentCollectionsRes struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *DeleteTourAgentCollectionsRes) Reset() {
+	*x = DeleteTourAgentCollectionsRes{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[332]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DeleteTourAgentCollectionsRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteTourAgentCollectionsRes) ProtoMessage() {}
+
+func (x *DeleteTourAgentCollectionsRes) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[332]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteTourAgentCollectionsRes.ProtoReflect.Descriptor instead.
+func (*DeleteTourAgentCollectionsRes) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{332}
+}
+
+// Request message for the CreateTourAgentCollectionWFMAgents RPC.
+type CreateTourAgentCollectionWFMAgentsReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// ID of the wfm agents to add to @tour_agent_collection_sid.
+	WfmAgentSids []int64 `protobuf:"varint,1,rep,packed,name=wfm_agent_sids,json=wfmAgentSids,proto3" json:"wfm_agent_sids,omitempty"`
+	// ID of the Tour Agent Collection that the @wfm_agent_sids will belong to.
+	TourAgentCollectionSid int64 `protobuf:"varint,2,opt,name=tour_agent_collection_sid,json=tourAgentCollectionSid,proto3" json:"tour_agent_collection_sid,omitempty"`
+}
+
+func (x *CreateTourAgentCollectionWFMAgentsReq) Reset() {
+	*x = CreateTourAgentCollectionWFMAgentsReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[333]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CreateTourAgentCollectionWFMAgentsReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateTourAgentCollectionWFMAgentsReq) ProtoMessage() {}
+
+func (x *CreateTourAgentCollectionWFMAgentsReq) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[333]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateTourAgentCollectionWFMAgentsReq.ProtoReflect.Descriptor instead.
+func (*CreateTourAgentCollectionWFMAgentsReq) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{333}
+}
+
+func (x *CreateTourAgentCollectionWFMAgentsReq) GetWfmAgentSids() []int64 {
+	if x != nil {
+		return x.WfmAgentSids
+	}
+	return nil
+}
+
+func (x *CreateTourAgentCollectionWFMAgentsReq) GetTourAgentCollectionSid() int64 {
+	if x != nil {
+		return x.TourAgentCollectionSid
+	}
+	return 0
+}
+
+// Response message for the CreateTourAgentCollectionWFMAgents RPC.
+type CreateTourAgentCollectionWFMAgentsRes struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *CreateTourAgentCollectionWFMAgentsRes) Reset() {
+	*x = CreateTourAgentCollectionWFMAgentsRes{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[334]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CreateTourAgentCollectionWFMAgentsRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateTourAgentCollectionWFMAgentsRes) ProtoMessage() {}
+
+func (x *CreateTourAgentCollectionWFMAgentsRes) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[334]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateTourAgentCollectionWFMAgentsRes.ProtoReflect.Descriptor instead.
+func (*CreateTourAgentCollectionWFMAgentsRes) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{334}
+}
+
+// Request message for the ListTourAgentCollectionWFMAgents RPC.
+type ListTourAgentCollectionWFMAgentsReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// ID of the Tour Agent Collections to get the @wfm_agent_pairings for.
+	TourAgentCollectionSids []int64 `protobuf:"varint,1,rep,packed,name=tour_agent_collection_sids,json=tourAgentCollectionSids,proto3" json:"tour_agent_collection_sids,omitempty"`
+}
+
+func (x *ListTourAgentCollectionWFMAgentsReq) Reset() {
+	*x = ListTourAgentCollectionWFMAgentsReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[335]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ListTourAgentCollectionWFMAgentsReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTourAgentCollectionWFMAgentsReq) ProtoMessage() {}
+
+func (x *ListTourAgentCollectionWFMAgentsReq) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[335]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTourAgentCollectionWFMAgentsReq.ProtoReflect.Descriptor instead.
+func (*ListTourAgentCollectionWFMAgentsReq) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{335}
+}
+
+func (x *ListTourAgentCollectionWFMAgentsReq) GetTourAgentCollectionSids() []int64 {
+	if x != nil {
+		return x.TourAgentCollectionSids
+	}
+	return nil
+}
+
+// Response message for the ListTourAgentCollectionWFMAgents RPC.
+type ListTourAgentCollectionWFMAgentsRes struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Requested WFM Agent SIDs.
+	WfmAgentPairings []*ListTourAgentCollectionWFMAgentsRes_SidMapping `protobuf:"bytes,1,rep,name=wfm_agent_pairings,json=wfmAgentPairings,proto3" json:"wfm_agent_pairings,omitempty"`
+}
+
+func (x *ListTourAgentCollectionWFMAgentsRes) Reset() {
+	*x = ListTourAgentCollectionWFMAgentsRes{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[336]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ListTourAgentCollectionWFMAgentsRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTourAgentCollectionWFMAgentsRes) ProtoMessage() {}
+
+func (x *ListTourAgentCollectionWFMAgentsRes) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[336]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTourAgentCollectionWFMAgentsRes.ProtoReflect.Descriptor instead.
+func (*ListTourAgentCollectionWFMAgentsRes) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{336}
+}
+
+func (x *ListTourAgentCollectionWFMAgentsRes) GetWfmAgentPairings() []*ListTourAgentCollectionWFMAgentsRes_SidMapping {
+	if x != nil {
+		return x.WfmAgentPairings
+	}
+	return nil
+}
+
+// Request message for the DeleteTourAgentCollectionWFMAgents RPC.
+type DeleteTourAgentCollectionWFMAgentsReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// ID of the WFM Agents to delete from @tour_agent_collection_sid.
+	// If no wfm_angent_sids are provided, all will be removed for @tour_agent_collection_sid.
+	WfmAgentSids []int64 `protobuf:"varint,1,rep,packed,name=wfm_agent_sids,json=wfmAgentSids,proto3" json:"wfm_agent_sids,omitempty"`
+	// ID of the tour agent collection that the @wfm_agent_sids will be deleted from.
+	TourAgentCollectionSid int64 `protobuf:"varint,2,opt,name=tour_agent_collection_sid,json=tourAgentCollectionSid,proto3" json:"tour_agent_collection_sid,omitempty"`
+}
+
+func (x *DeleteTourAgentCollectionWFMAgentsReq) Reset() {
+	*x = DeleteTourAgentCollectionWFMAgentsReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[337]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DeleteTourAgentCollectionWFMAgentsReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteTourAgentCollectionWFMAgentsReq) ProtoMessage() {}
+
+func (x *DeleteTourAgentCollectionWFMAgentsReq) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[337]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteTourAgentCollectionWFMAgentsReq.ProtoReflect.Descriptor instead.
+func (*DeleteTourAgentCollectionWFMAgentsReq) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{337}
+}
+
+func (x *DeleteTourAgentCollectionWFMAgentsReq) GetWfmAgentSids() []int64 {
+	if x != nil {
+		return x.WfmAgentSids
+	}
+	return nil
+}
+
+func (x *DeleteTourAgentCollectionWFMAgentsReq) GetTourAgentCollectionSid() int64 {
+	if x != nil {
+		return x.TourAgentCollectionSid
+	}
+	return 0
+}
+
+// Response message for the DeleteTourAgentCollectionWFMAgents RPC.
+type DeleteTourAgentCollectionWFMAgentsRes struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *DeleteTourAgentCollectionWFMAgentsRes) Reset() {
+	*x = DeleteTourAgentCollectionWFMAgentsRes{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[338]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DeleteTourAgentCollectionWFMAgentsRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteTourAgentCollectionWFMAgentsRes) ProtoMessage() {}
+
+func (x *DeleteTourAgentCollectionWFMAgentsRes) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[338]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteTourAgentCollectionWFMAgentsRes.ProtoReflect.Descriptor instead.
+func (*DeleteTourAgentCollectionWFMAgentsRes) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{338}
+}
+
 type UpdateSkillProfileProficienciesReq_Proficiency struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -18890,7 +21298,7 @@ type UpdateSkillProfileProficienciesReq_Proficiency struct {
 func (x *UpdateSkillProfileProficienciesReq_Proficiency) Reset() {
 	*x = UpdateSkillProfileProficienciesReq_Proficiency{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[292]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[339]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -18903,7 +21311,7 @@ func (x *UpdateSkillProfileProficienciesReq_Proficiency) String() string {
 func (*UpdateSkillProfileProficienciesReq_Proficiency) ProtoMessage() {}
 
 func (x *UpdateSkillProfileProficienciesReq_Proficiency) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[292]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[339]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -18954,7 +21362,7 @@ type GetSkillProfileRes_Mapping struct {
 func (x *GetSkillProfileRes_Mapping) Reset() {
 	*x = GetSkillProfileRes_Mapping{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[293]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[340]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -18967,7 +21375,7 @@ func (x *GetSkillProfileRes_Mapping) String() string {
 func (*GetSkillProfileRes_Mapping) ProtoMessage() {}
 
 func (x *GetSkillProfileRes_Mapping) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[293]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[340]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19010,7 +21418,7 @@ type DeleteForecastIntervalsReq_IntervalSids struct {
 func (x *DeleteForecastIntervalsReq_IntervalSids) Reset() {
 	*x = DeleteForecastIntervalsReq_IntervalSids{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[294]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[341]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -19023,7 +21431,7 @@ func (x *DeleteForecastIntervalsReq_IntervalSids) String() string {
 func (*DeleteForecastIntervalsReq_IntervalSids) ProtoMessage() {}
 
 func (x *DeleteForecastIntervalsReq_IntervalSids) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[294]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[341]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19058,7 +21466,7 @@ type ListAllWFMAgentsRes_AgentGroupsByAgent struct {
 func (x *ListAllWFMAgentsRes_AgentGroupsByAgent) Reset() {
 	*x = ListAllWFMAgentsRes_AgentGroupsByAgent{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[295]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[342]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -19071,7 +21479,7 @@ func (x *ListAllWFMAgentsRes_AgentGroupsByAgent) String() string {
 func (*ListAllWFMAgentsRes_AgentGroupsByAgent) ProtoMessage() {}
 
 func (x *ListAllWFMAgentsRes_AgentGroupsByAgent) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[295]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[342]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19108,7 +21516,7 @@ type DatetimePattern_WeekMap struct {
 func (x *DatetimePattern_WeekMap) Reset() {
 	*x = DatetimePattern_WeekMap{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[297]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[344]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -19121,7 +21529,7 @@ func (x *DatetimePattern_WeekMap) String() string {
 func (*DatetimePattern_WeekMap) ProtoMessage() {}
 
 func (x *DatetimePattern_WeekMap) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[297]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[344]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19165,7 +21573,7 @@ type DatetimePattern_CalendarItem struct {
 func (x *DatetimePattern_CalendarItem) Reset() {
 	*x = DatetimePattern_CalendarItem{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[298]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[345]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -19178,7 +21586,7 @@ func (x *DatetimePattern_CalendarItem) String() string {
 func (*DatetimePattern_CalendarItem) ProtoMessage() {}
 
 func (x *DatetimePattern_CalendarItem) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[298]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[345]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19226,7 +21634,7 @@ type DatetimePattern_WeekMap_WeekMapDOW struct {
 func (x *DatetimePattern_WeekMap_WeekMapDOW) Reset() {
 	*x = DatetimePattern_WeekMap_WeekMapDOW{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[299]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[346]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -19239,7 +21647,7 @@ func (x *DatetimePattern_WeekMap_WeekMapDOW) String() string {
 func (*DatetimePattern_WeekMap_WeekMapDOW) ProtoMessage() {}
 
 func (x *DatetimePattern_WeekMap_WeekMapDOW) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[299]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[346]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19298,7 +21706,7 @@ type UpsertNonSkillActivityAssociationRes_EntityMapping struct {
 func (x *UpsertNonSkillActivityAssociationRes_EntityMapping) Reset() {
 	*x = UpsertNonSkillActivityAssociationRes_EntityMapping{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[300]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[347]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -19311,7 +21719,7 @@ func (x *UpsertNonSkillActivityAssociationRes_EntityMapping) String() string {
 func (*UpsertNonSkillActivityAssociationRes_EntityMapping) ProtoMessage() {}
 
 func (x *UpsertNonSkillActivityAssociationRes_EntityMapping) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[300]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[347]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19354,7 +21762,7 @@ type ListConfigEntitiesRes_ClientNodeEntities struct {
 func (x *ListConfigEntitiesRes_ClientNodeEntities) Reset() {
 	*x = ListConfigEntitiesRes_ClientNodeEntities{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[301]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[348]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -19367,7 +21775,7 @@ func (x *ListConfigEntitiesRes_ClientNodeEntities) String() string {
 func (*ListConfigEntitiesRes_ClientNodeEntities) ProtoMessage() {}
 
 func (x *ListConfigEntitiesRes_ClientNodeEntities) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[301]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[348]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19403,7 +21811,7 @@ type ListConfigEntitiesRes_LocationNodeEntities struct {
 func (x *ListConfigEntitiesRes_LocationNodeEntities) Reset() {
 	*x = ListConfigEntitiesRes_LocationNodeEntities{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[302]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[349]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -19416,7 +21824,7 @@ func (x *ListConfigEntitiesRes_LocationNodeEntities) String() string {
 func (*ListConfigEntitiesRes_LocationNodeEntities) ProtoMessage() {}
 
 func (x *ListConfigEntitiesRes_LocationNodeEntities) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[302]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[349]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19452,7 +21860,7 @@ type ListConfigEntitiesRes_ProgramNodeEntities struct {
 func (x *ListConfigEntitiesRes_ProgramNodeEntities) Reset() {
 	*x = ListConfigEntitiesRes_ProgramNodeEntities{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[303]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[350]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -19465,7 +21873,7 @@ func (x *ListConfigEntitiesRes_ProgramNodeEntities) String() string {
 func (*ListConfigEntitiesRes_ProgramNodeEntities) ProtoMessage() {}
 
 func (x *ListConfigEntitiesRes_ProgramNodeEntities) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[303]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[350]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19501,7 +21909,7 @@ type ListConfigEntitiesRes_AgentGroupEntities struct {
 func (x *ListConfigEntitiesRes_AgentGroupEntities) Reset() {
 	*x = ListConfigEntitiesRes_AgentGroupEntities{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[304]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[351]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -19514,7 +21922,7 @@ func (x *ListConfigEntitiesRes_AgentGroupEntities) String() string {
 func (*ListConfigEntitiesRes_AgentGroupEntities) ProtoMessage() {}
 
 func (x *ListConfigEntitiesRes_AgentGroupEntities) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[304]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[351]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19550,7 +21958,7 @@ type ListConfigEntitiesRes_ShiftTemplateEntities struct {
 func (x *ListConfigEntitiesRes_ShiftTemplateEntities) Reset() {
 	*x = ListConfigEntitiesRes_ShiftTemplateEntities{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[305]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[352]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -19563,7 +21971,7 @@ func (x *ListConfigEntitiesRes_ShiftTemplateEntities) String() string {
 func (*ListConfigEntitiesRes_ShiftTemplateEntities) ProtoMessage() {}
 
 func (x *ListConfigEntitiesRes_ShiftTemplateEntities) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[305]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[352]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19599,7 +22007,7 @@ type ListConfigEntitiesRes_WFMAgentEntities struct {
 func (x *ListConfigEntitiesRes_WFMAgentEntities) Reset() {
 	*x = ListConfigEntitiesRes_WFMAgentEntities{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[306]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[353]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -19612,7 +22020,7 @@ func (x *ListConfigEntitiesRes_WFMAgentEntities) String() string {
 func (*ListConfigEntitiesRes_WFMAgentEntities) ProtoMessage() {}
 
 func (x *ListConfigEntitiesRes_WFMAgentEntities) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[306]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[353]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19648,7 +22056,7 @@ type ListConfigEntitiesRes_PlacementRuleEntities struct {
 func (x *ListConfigEntitiesRes_PlacementRuleEntities) Reset() {
 	*x = ListConfigEntitiesRes_PlacementRuleEntities{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[307]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[354]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -19661,7 +22069,7 @@ func (x *ListConfigEntitiesRes_PlacementRuleEntities) String() string {
 func (*ListConfigEntitiesRes_PlacementRuleEntities) ProtoMessage() {}
 
 func (x *ListConfigEntitiesRes_PlacementRuleEntities) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[307]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[354]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19697,7 +22105,7 @@ type ListConfigEntitiesRes_ConstraintRuleEntities struct {
 func (x *ListConfigEntitiesRes_ConstraintRuleEntities) Reset() {
 	*x = ListConfigEntitiesRes_ConstraintRuleEntities{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[308]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[355]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -19710,7 +22118,7 @@ func (x *ListConfigEntitiesRes_ConstraintRuleEntities) String() string {
 func (*ListConfigEntitiesRes_ConstraintRuleEntities) ProtoMessage() {}
 
 func (x *ListConfigEntitiesRes_ConstraintRuleEntities) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[308]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[355]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19746,7 +22154,7 @@ type ListConfigEntitiesRes_NonSkillActivityEntities struct {
 func (x *ListConfigEntitiesRes_NonSkillActivityEntities) Reset() {
 	*x = ListConfigEntitiesRes_NonSkillActivityEntities{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[309]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[356]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -19759,7 +22167,7 @@ func (x *ListConfigEntitiesRes_NonSkillActivityEntities) String() string {
 func (*ListConfigEntitiesRes_NonSkillActivityEntities) ProtoMessage() {}
 
 func (x *ListConfigEntitiesRes_NonSkillActivityEntities) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[309]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[356]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19795,7 +22203,7 @@ type ListConfigEntitiesRes_AgentAvailabilityPatternEntities struct {
 func (x *ListConfigEntitiesRes_AgentAvailabilityPatternEntities) Reset() {
 	*x = ListConfigEntitiesRes_AgentAvailabilityPatternEntities{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[310]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[357]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -19808,7 +22216,7 @@ func (x *ListConfigEntitiesRes_AgentAvailabilityPatternEntities) String() string
 func (*ListConfigEntitiesRes_AgentAvailabilityPatternEntities) ProtoMessage() {}
 
 func (x *ListConfigEntitiesRes_AgentAvailabilityPatternEntities) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[310]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[357]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19844,7 +22252,7 @@ type ListConfigEntitiesRes_OpenTimesPatternEntities struct {
 func (x *ListConfigEntitiesRes_OpenTimesPatternEntities) Reset() {
 	*x = ListConfigEntitiesRes_OpenTimesPatternEntities{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[311]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[358]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -19857,7 +22265,7 @@ func (x *ListConfigEntitiesRes_OpenTimesPatternEntities) String() string {
 func (*ListConfigEntitiesRes_OpenTimesPatternEntities) ProtoMessage() {}
 
 func (x *ListConfigEntitiesRes_OpenTimesPatternEntities) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[311]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[358]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19893,7 +22301,7 @@ type ListConfigEntitiesRes_SkillProficiencyEntities struct {
 func (x *ListConfigEntitiesRes_SkillProficiencyEntities) Reset() {
 	*x = ListConfigEntitiesRes_SkillProficiencyEntities{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[312]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[359]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -19906,7 +22314,7 @@ func (x *ListConfigEntitiesRes_SkillProficiencyEntities) String() string {
 func (*ListConfigEntitiesRes_SkillProficiencyEntities) ProtoMessage() {}
 
 func (x *ListConfigEntitiesRes_SkillProficiencyEntities) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[312]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[359]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19942,7 +22350,7 @@ type ListConfigEntitiesRes_ScheduleScenarioEntities struct {
 func (x *ListConfigEntitiesRes_ScheduleScenarioEntities) Reset() {
 	*x = ListConfigEntitiesRes_ScheduleScenarioEntities{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[313]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[360]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -19955,7 +22363,7 @@ func (x *ListConfigEntitiesRes_ScheduleScenarioEntities) String() string {
 func (*ListConfigEntitiesRes_ScheduleScenarioEntities) ProtoMessage() {}
 
 func (x *ListConfigEntitiesRes_ScheduleScenarioEntities) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[313]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[360]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -19974,6 +22382,64 @@ func (*ListConfigEntitiesRes_ScheduleScenarioEntities) Descriptor() ([]byte, []i
 func (x *ListConfigEntitiesRes_ScheduleScenarioEntities) GetEntities() []*ScheduleScenario {
 	if x != nil {
 		return x.Entities
+	}
+	return nil
+}
+
+// Pair of IDs, to relate a Tour Agent Collection and a WFM Agent.
+type ListTourAgentCollectionWFMAgentsRes_SidMapping struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// ID of the Tour Agent Collection that the @wfm_agent_sid is associated with.
+	AgentCollectionSid int64 `protobuf:"varint,1,opt,name=agent_collection_sid,json=agentCollectionSid,proto3" json:"agent_collection_sid,omitempty"`
+	// ID of the WFM Agent that the agent_collection_sid is associated with.
+	WfmAgentSids []int64 `protobuf:"varint,2,rep,packed,name=wfm_agent_sids,json=wfmAgentSids,proto3" json:"wfm_agent_sids,omitempty"`
+}
+
+func (x *ListTourAgentCollectionWFMAgentsRes_SidMapping) Reset() {
+	*x = ListTourAgentCollectionWFMAgentsRes_SidMapping{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[361]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ListTourAgentCollectionWFMAgentsRes_SidMapping) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTourAgentCollectionWFMAgentsRes_SidMapping) ProtoMessage() {}
+
+func (x *ListTourAgentCollectionWFMAgentsRes_SidMapping) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[361]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTourAgentCollectionWFMAgentsRes_SidMapping.ProtoReflect.Descriptor instead.
+func (*ListTourAgentCollectionWFMAgentsRes_SidMapping) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{336, 0}
+}
+
+func (x *ListTourAgentCollectionWFMAgentsRes_SidMapping) GetAgentCollectionSid() int64 {
+	if x != nil {
+		return x.AgentCollectionSid
+	}
+	return 0
+}
+
+func (x *ListTourAgentCollectionWFMAgentsRes_SidMapping) GetWfmAgentSids() []int64 {
+	if x != nil {
+		return x.WfmAgentSids
 	}
 	return nil
 }
@@ -23609,8 +26075,346 @@ var file_api_v1alpha1_wfm_wfm_proto_rawDesc = []byte{
 	0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d,
 	0x2e, 0x52, 0x65, 0x71, 0x75, 0x69, 0x72, 0x65, 0x64, 0x43, 0x61, 0x6c, 0x6c, 0x73, 0x49, 0x6e,
 	0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x52, 0x16, 0x72, 0x65, 0x71, 0x75, 0x69, 0x72, 0x65, 0x64,
-	0x43, 0x61, 0x6c, 0x6c, 0x73, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x73, 0x32, 0xd5,
-	0xba, 0x01, 0x0a, 0x03, 0x57, 0x46, 0x4d, 0x12, 0xa2, 0x01, 0x0a, 0x11, 0x4c, 0x69, 0x73, 0x74,
+	0x43, 0x61, 0x6c, 0x6c, 0x73, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x73, 0x22, 0xb3,
+	0x02, 0x0a, 0x16, 0x54, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74, 0x53, 0x65, 0x67, 0x6d,
+	0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x12, 0x40, 0x0a, 0x1d, 0x74, 0x6f, 0x75,
+	0x72, 0x5f, 0x73, 0x68, 0x69, 0x66, 0x74, 0x5f, 0x73, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74, 0x5f,
+	0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03,
+	0x52, 0x19, 0x74, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74, 0x53, 0x65, 0x67, 0x6d, 0x65,
+	0x6e, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x53, 0x69, 0x64, 0x12, 0x42, 0x0a, 0x1e, 0x74,
+	0x6f, 0x75, 0x72, 0x5f, 0x73, 0x68, 0x69, 0x66, 0x74, 0x5f, 0x69, 0x6e, 0x73, 0x74, 0x61, 0x6e,
+	0x63, 0x65, 0x5f, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x03, 0x52, 0x1a, 0x74, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74, 0x49, 0x6e,
+	0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x53, 0x69, 0x64, 0x12,
+	0x31, 0x0a, 0x15, 0x73, 0x74, 0x61, 0x72, 0x74, 0x5f, 0x6d, 0x69, 0x6e, 0x75, 0x74, 0x65, 0x5f,
+	0x69, 0x6e, 0x5f, 0x73, 0x68, 0x69, 0x66, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x12,
+	0x73, 0x74, 0x61, 0x72, 0x74, 0x4d, 0x69, 0x6e, 0x75, 0x74, 0x65, 0x49, 0x6e, 0x53, 0x68, 0x69,
+	0x66, 0x74, 0x12, 0x28, 0x0a, 0x10, 0x77, 0x69, 0x64, 0x74, 0x68, 0x5f, 0x69, 0x6e, 0x5f, 0x6d,
+	0x69, 0x6e, 0x75, 0x74, 0x65, 0x73, 0x18, 0x04, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0e, 0x77, 0x69,
+	0x64, 0x74, 0x68, 0x49, 0x6e, 0x4d, 0x69, 0x6e, 0x75, 0x74, 0x65, 0x73, 0x12, 0x36, 0x0a, 0x17,
+	0x73, 0x63, 0x68, 0x65, 0x64, 0x75, 0x6c, 0x69, 0x6e, 0x67, 0x5f, 0x61, 0x63, 0x74, 0x69, 0x76,
+	0x69, 0x74, 0x79, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x05, 0x20, 0x01, 0x28, 0x03, 0x52, 0x15, 0x73,
+	0x63, 0x68, 0x65, 0x64, 0x75, 0x6c, 0x69, 0x6e, 0x67, 0x41, 0x63, 0x74, 0x69, 0x76, 0x69, 0x74,
+	0x79, 0x53, 0x69, 0x64, 0x22, 0xdf, 0x02, 0x0a, 0x17, 0x54, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69,
+	0x66, 0x74, 0x49, 0x6e, 0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67,
+	0x12, 0x42, 0x0a, 0x1e, 0x74, 0x6f, 0x75, 0x72, 0x5f, 0x73, 0x68, 0x69, 0x66, 0x74, 0x5f, 0x69,
+	0x6e, 0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x5f, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x5f, 0x73,
+	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x1a, 0x74, 0x6f, 0x75, 0x72, 0x53, 0x68,
+	0x69, 0x66, 0x74, 0x49, 0x6e, 0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69,
+	0x67, 0x53, 0x69, 0x64, 0x12, 0x31, 0x0a, 0x15, 0x74, 0x6f, 0x75, 0x72, 0x5f, 0x77, 0x65, 0x65,
+	0x6b, 0x5f, 0x70, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x03, 0x52, 0x12, 0x74, 0x6f, 0x75, 0x72, 0x57, 0x65, 0x65, 0x6b, 0x50, 0x61, 0x74,
+	0x74, 0x65, 0x72, 0x6e, 0x53, 0x69, 0x64, 0x12, 0x2f, 0x0a, 0x14, 0x73, 0x74, 0x61, 0x72, 0x74,
+	0x5f, 0x6d, 0x69, 0x6e, 0x75, 0x74, 0x65, 0x5f, 0x69, 0x6e, 0x5f, 0x77, 0x65, 0x65, 0x6b, 0x18,
+	0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x11, 0x73, 0x74, 0x61, 0x72, 0x74, 0x4d, 0x69, 0x6e, 0x75,
+	0x74, 0x65, 0x49, 0x6e, 0x57, 0x65, 0x65, 0x6b, 0x12, 0x28, 0x0a, 0x10, 0x77, 0x69, 0x64, 0x74,
+	0x68, 0x5f, 0x69, 0x6e, 0x5f, 0x6d, 0x69, 0x6e, 0x75, 0x74, 0x65, 0x73, 0x18, 0x04, 0x20, 0x01,
+	0x28, 0x05, 0x52, 0x0e, 0x77, 0x69, 0x64, 0x74, 0x68, 0x49, 0x6e, 0x4d, 0x69, 0x6e, 0x75, 0x74,
+	0x65, 0x73, 0x12, 0x72, 0x0a, 0x21, 0x6d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x5f, 0x74, 0x6f, 0x75,
+	0x72, 0x5f, 0x73, 0x68, 0x69, 0x66, 0x74, 0x5f, 0x73, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74, 0x5f,
+	0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x73, 0x18, 0x05, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x28, 0x2e,
+	0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d,
+	0x2e, 0x54, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74, 0x53, 0x65, 0x67, 0x6d, 0x65, 0x6e,
+	0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52, 0x1d, 0x6d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x54,
+	0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74, 0x53, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74, 0x43,
+	0x6f, 0x6e, 0x66, 0x69, 0x67, 0x73, 0x22, 0x95, 0x02, 0x0a, 0x0f, 0x54, 0x6f, 0x75, 0x72, 0x57,
+	0x65, 0x65, 0x6b, 0x50, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x12, 0x31, 0x0a, 0x15, 0x74, 0x6f,
+	0x75, 0x72, 0x5f, 0x77, 0x65, 0x65, 0x6b, 0x5f, 0x70, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x5f,
+	0x73, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x12, 0x74, 0x6f, 0x75, 0x72, 0x57,
+	0x65, 0x65, 0x6b, 0x50, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x53, 0x69, 0x64, 0x12, 0x28, 0x0a,
+	0x10, 0x74, 0x6f, 0x75, 0x72, 0x5f, 0x70, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x5f, 0x73, 0x69,
+	0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0e, 0x74, 0x6f, 0x75, 0x72, 0x50, 0x61, 0x74,
+	0x74, 0x65, 0x72, 0x6e, 0x53, 0x69, 0x64, 0x12, 0x2e, 0x0a, 0x13, 0x77, 0x65, 0x65, 0x6b, 0x5f,
+	0x70, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x5f, 0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x18, 0x03,
+	0x20, 0x01, 0x28, 0x05, 0x52, 0x11, 0x77, 0x65, 0x65, 0x6b, 0x50, 0x61, 0x74, 0x74, 0x65, 0x72,
+	0x6e, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x12, 0x75, 0x0a, 0x22, 0x6d, 0x65, 0x6d, 0x62, 0x65,
+	0x72, 0x5f, 0x74, 0x6f, 0x75, 0x72, 0x5f, 0x73, 0x68, 0x69, 0x66, 0x74, 0x5f, 0x69, 0x6e, 0x73,
+	0x74, 0x61, 0x6e, 0x63, 0x65, 0x5f, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x73, 0x18, 0x04, 0x20,
+	0x03, 0x28, 0x0b, 0x32, 0x29, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68,
+	0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x54, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74,
+	0x49, 0x6e, 0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52, 0x1e,
+	0x6d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x54, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74, 0x49,
+	0x6e, 0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x73, 0x22, 0xd9,
+	0x02, 0x0a, 0x13, 0x54, 0x6f, 0x75, 0x72, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6c, 0x6c,
+	0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x39, 0x0a, 0x19, 0x74, 0x6f, 0x75, 0x72, 0x5f, 0x61,
+	0x67, 0x65, 0x6e, 0x74, 0x5f, 0x63, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x5f,
+	0x73, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x16, 0x74, 0x6f, 0x75, 0x72, 0x41,
+	0x67, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x69,
+	0x64, 0x12, 0x28, 0x0a, 0x10, 0x74, 0x6f, 0x75, 0x72, 0x5f, 0x70, 0x61, 0x74, 0x74, 0x65, 0x72,
+	0x6e, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0e, 0x74, 0x6f, 0x75,
+	0x72, 0x50, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x53, 0x69, 0x64, 0x12, 0x33, 0x0a, 0x16, 0x6d,
+	0x69, 0x6e, 0x5f, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x73, 0x5f, 0x74, 0x6f, 0x5f, 0x73, 0x63, 0x68,
+	0x65, 0x64, 0x75, 0x6c, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x13, 0x6d, 0x69, 0x6e,
+	0x41, 0x67, 0x65, 0x6e, 0x74, 0x73, 0x54, 0x6f, 0x53, 0x63, 0x68, 0x65, 0x64, 0x75, 0x6c, 0x65,
+	0x12, 0x33, 0x0a, 0x16, 0x6d, 0x61, 0x78, 0x5f, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x73, 0x5f, 0x74,
+	0x6f, 0x5f, 0x73, 0x63, 0x68, 0x65, 0x64, 0x75, 0x6c, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x05,
+	0x52, 0x13, 0x6d, 0x61, 0x78, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x73, 0x54, 0x6f, 0x53, 0x63, 0x68,
+	0x65, 0x64, 0x75, 0x6c, 0x65, 0x12, 0x39, 0x0a, 0x19, 0x66, 0x69, 0x72, 0x73, 0x74, 0x5f, 0x77,
+	0x65, 0x65, 0x6b, 0x5f, 0x70, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x5f, 0x6e, 0x75, 0x6d, 0x62,
+	0x65, 0x72, 0x18, 0x05, 0x20, 0x01, 0x28, 0x05, 0x52, 0x16, 0x66, 0x69, 0x72, 0x73, 0x74, 0x57,
+	0x65, 0x65, 0x6b, 0x50, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72,
+	0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04,
+	0x6e, 0x61, 0x6d, 0x65, 0x12, 0x24, 0x0a, 0x0e, 0x77, 0x66, 0x6d, 0x5f, 0x61, 0x67, 0x65, 0x6e,
+	0x74, 0x5f, 0x73, 0x69, 0x64, 0x73, 0x18, 0x07, 0x20, 0x03, 0x28, 0x03, 0x52, 0x0c, 0x77, 0x66,
+	0x6d, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x53, 0x69, 0x64, 0x73, 0x22, 0xad, 0x02, 0x0a, 0x0b, 0x54,
+	0x6f, 0x75, 0x72, 0x50, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x12, 0x28, 0x0a, 0x10, 0x74, 0x6f,
+	0x75, 0x72, 0x5f, 0x70, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x03, 0x52, 0x0e, 0x74, 0x6f, 0x75, 0x72, 0x50, 0x61, 0x74, 0x74, 0x65, 0x72,
+	0x6e, 0x53, 0x69, 0x64, 0x12, 0x2c, 0x0a, 0x12, 0x73, 0x68, 0x69, 0x66, 0x74, 0x5f, 0x74, 0x65,
+	0x6d, 0x70, 0x6c, 0x61, 0x74, 0x65, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03,
+	0x52, 0x10, 0x73, 0x68, 0x69, 0x66, 0x74, 0x54, 0x65, 0x6d, 0x70, 0x6c, 0x61, 0x74, 0x65, 0x53,
+	0x69, 0x64, 0x12, 0x5c, 0x0a, 0x19, 0x6d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x5f, 0x74, 0x6f, 0x75,
+	0x72, 0x5f, 0x77, 0x65, 0x65, 0x6b, 0x5f, 0x70, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x73, 0x18,
+	0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x21, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c,
+	0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x54, 0x6f, 0x75, 0x72, 0x57, 0x65, 0x65,
+	0x6b, 0x50, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x52, 0x16, 0x6d, 0x65, 0x6d, 0x62, 0x65, 0x72,
+	0x54, 0x6f, 0x75, 0x72, 0x57, 0x65, 0x65, 0x6b, 0x50, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x73,
+	0x12, 0x68, 0x0a, 0x1d, 0x6d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x5f, 0x74, 0x6f, 0x75, 0x72, 0x5f,
+	0x61, 0x67, 0x65, 0x6e, 0x74, 0x5f, 0x63, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e,
+	0x73, 0x18, 0x04, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x25, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31,
+	0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x54, 0x6f, 0x75, 0x72, 0x41,
+	0x67, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x1a,
+	0x6d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x54, 0x6f, 0x75, 0x72, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x43,
+	0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x22, 0x44, 0x0a, 0x14, 0x43, 0x72,
+	0x65, 0x61, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x50, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x52,
+	0x65, 0x71, 0x12, 0x2c, 0x0a, 0x12, 0x73, 0x68, 0x69, 0x66, 0x74, 0x5f, 0x74, 0x65, 0x6d, 0x70,
+	0x6c, 0x61, 0x74, 0x65, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x10,
+	0x73, 0x68, 0x69, 0x66, 0x74, 0x54, 0x65, 0x6d, 0x70, 0x6c, 0x61, 0x74, 0x65, 0x53, 0x69, 0x64,
+	0x22, 0x40, 0x0a, 0x14, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x50, 0x61,
+	0x74, 0x74, 0x65, 0x72, 0x6e, 0x52, 0x65, 0x73, 0x12, 0x28, 0x0a, 0x10, 0x74, 0x6f, 0x75, 0x72,
+	0x5f, 0x70, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x03, 0x52, 0x0e, 0x74, 0x6f, 0x75, 0x72, 0x50, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x53,
+	0x69, 0x64, 0x22, 0x41, 0x0a, 0x11, 0x47, 0x65, 0x74, 0x54, 0x6f, 0x75, 0x72, 0x50, 0x61, 0x74,
+	0x74, 0x65, 0x72, 0x6e, 0x52, 0x65, 0x71, 0x12, 0x2c, 0x0a, 0x12, 0x73, 0x68, 0x69, 0x66, 0x74,
+	0x5f, 0x74, 0x65, 0x6d, 0x70, 0x6c, 0x61, 0x74, 0x65, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x03, 0x52, 0x10, 0x73, 0x68, 0x69, 0x66, 0x74, 0x54, 0x65, 0x6d, 0x70, 0x6c, 0x61,
+	0x74, 0x65, 0x53, 0x69, 0x64, 0x22, 0x55, 0x0a, 0x11, 0x47, 0x65, 0x74, 0x54, 0x6f, 0x75, 0x72,
+	0x50, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x52, 0x65, 0x73, 0x12, 0x40, 0x0a, 0x0c, 0x74, 0x6f,
+	0x75, 0x72, 0x5f, 0x70, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x1d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e,
+	0x77, 0x66, 0x6d, 0x2e, 0x54, 0x6f, 0x75, 0x72, 0x50, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x52,
+	0x0b, 0x74, 0x6f, 0x75, 0x72, 0x50, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x22, 0x40, 0x0a, 0x14,
+	0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x50, 0x61, 0x74, 0x74, 0x65, 0x72,
+	0x6e, 0x52, 0x65, 0x71, 0x12, 0x28, 0x0a, 0x10, 0x74, 0x6f, 0x75, 0x72, 0x5f, 0x70, 0x61, 0x74,
+	0x74, 0x65, 0x72, 0x6e, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0e,
+	0x74, 0x6f, 0x75, 0x72, 0x50, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x53, 0x69, 0x64, 0x22, 0x16,
+	0x0a, 0x14, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x50, 0x61, 0x74, 0x74,
+	0x65, 0x72, 0x6e, 0x52, 0x65, 0x73, 0x22, 0x44, 0x0a, 0x18, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65,
+	0x54, 0x6f, 0x75, 0x72, 0x57, 0x65, 0x65, 0x6b, 0x50, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x52,
+	0x65, 0x71, 0x12, 0x28, 0x0a, 0x10, 0x74, 0x6f, 0x75, 0x72, 0x5f, 0x70, 0x61, 0x74, 0x74, 0x65,
+	0x72, 0x6e, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0e, 0x74, 0x6f,
+	0x75, 0x72, 0x50, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x53, 0x69, 0x64, 0x22, 0x4d, 0x0a, 0x18,
+	0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x57, 0x65, 0x65, 0x6b, 0x50, 0x61,
+	0x74, 0x74, 0x65, 0x72, 0x6e, 0x52, 0x65, 0x73, 0x12, 0x31, 0x0a, 0x15, 0x74, 0x6f, 0x75, 0x72,
+	0x5f, 0x77, 0x65, 0x65, 0x6b, 0x5f, 0x70, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x5f, 0x73, 0x69,
+	0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x12, 0x74, 0x6f, 0x75, 0x72, 0x57, 0x65, 0x65,
+	0x6b, 0x50, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x53, 0x69, 0x64, 0x22, 0x43, 0x0a, 0x17, 0x4c,
+	0x69, 0x73, 0x74, 0x54, 0x6f, 0x75, 0x72, 0x57, 0x65, 0x65, 0x6b, 0x50, 0x61, 0x74, 0x74, 0x65,
+	0x72, 0x6e, 0x73, 0x52, 0x65, 0x71, 0x12, 0x28, 0x0a, 0x10, 0x74, 0x6f, 0x75, 0x72, 0x5f, 0x70,
+	0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03,
+	0x52, 0x0e, 0x74, 0x6f, 0x75, 0x72, 0x50, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x53, 0x69, 0x64,
+	0x22, 0x6a, 0x0a, 0x17, 0x4c, 0x69, 0x73, 0x74, 0x54, 0x6f, 0x75, 0x72, 0x57, 0x65, 0x65, 0x6b,
+	0x50, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x73, 0x52, 0x65, 0x73, 0x12, 0x4f, 0x0a, 0x12, 0x74,
+	0x6f, 0x75, 0x72, 0x5f, 0x77, 0x65, 0x65, 0x6b, 0x5f, 0x70, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e,
+	0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x21, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31,
+	0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x54, 0x6f, 0x75, 0x72, 0x57,
+	0x65, 0x65, 0x6b, 0x50, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x52, 0x10, 0x74, 0x6f, 0x75, 0x72,
+	0x57, 0x65, 0x65, 0x6b, 0x50, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x73, 0x22, 0x50, 0x0a, 0x19,
+	0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x57, 0x65, 0x65, 0x6b, 0x50, 0x61,
+	0x74, 0x74, 0x65, 0x72, 0x6e, 0x73, 0x52, 0x65, 0x71, 0x12, 0x33, 0x0a, 0x16, 0x74, 0x6f, 0x75,
+	0x72, 0x5f, 0x77, 0x65, 0x65, 0x6b, 0x5f, 0x70, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x5f, 0x73,
+	0x69, 0x64, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x03, 0x52, 0x13, 0x74, 0x6f, 0x75, 0x72, 0x57,
+	0x65, 0x65, 0x6b, 0x50, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x53, 0x69, 0x64, 0x73, 0x22, 0x1b,
+	0x0a, 0x19, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x57, 0x65, 0x65, 0x6b,
+	0x50, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x73, 0x52, 0x65, 0x73, 0x22, 0x8a, 0x01, 0x0a, 0x20,
+	0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74, 0x49,
+	0x6e, 0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52, 0x65, 0x71,
+	0x12, 0x66, 0x0a, 0x1a, 0x74, 0x6f, 0x75, 0x72, 0x5f, 0x73, 0x68, 0x69, 0x66, 0x74, 0x5f, 0x69,
+	0x6e, 0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x5f, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x29, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70,
+	0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x54, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66,
+	0x74, 0x49, 0x6e, 0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52,
+	0x17, 0x74, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74, 0x49, 0x6e, 0x73, 0x74, 0x61, 0x6e,
+	0x63, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x22, 0x66, 0x0a, 0x20, 0x43, 0x72, 0x65, 0x61,
+	0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74, 0x49, 0x6e, 0x73, 0x74, 0x61,
+	0x6e, 0x63, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52, 0x65, 0x73, 0x12, 0x42, 0x0a, 0x1e,
+	0x74, 0x6f, 0x75, 0x72, 0x5f, 0x73, 0x68, 0x69, 0x66, 0x74, 0x5f, 0x69, 0x6e, 0x73, 0x74, 0x61,
+	0x6e, 0x63, 0x65, 0x5f, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x03, 0x52, 0x1a, 0x74, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74, 0x49,
+	0x6e, 0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x53, 0x69, 0x64,
+	0x22, 0x8a, 0x01, 0x0a, 0x20, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x53,
+	0x68, 0x69, 0x66, 0x74, 0x49, 0x6e, 0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x43, 0x6f, 0x6e, 0x66,
+	0x69, 0x67, 0x52, 0x65, 0x71, 0x12, 0x66, 0x0a, 0x1a, 0x74, 0x6f, 0x75, 0x72, 0x5f, 0x73, 0x68,
+	0x69, 0x66, 0x74, 0x5f, 0x69, 0x6e, 0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x5f, 0x63, 0x6f, 0x6e,
+	0x66, 0x69, 0x67, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x29, 0x2e, 0x61, 0x70, 0x69, 0x2e,
+	0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x54, 0x6f, 0x75,
+	0x72, 0x53, 0x68, 0x69, 0x66, 0x74, 0x49, 0x6e, 0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x43, 0x6f,
+	0x6e, 0x66, 0x69, 0x67, 0x52, 0x17, 0x74, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74, 0x49,
+	0x6e, 0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x22, 0x22, 0x0a,
+	0x20, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74,
+	0x49, 0x6e, 0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52, 0x65,
+	0x73, 0x22, 0x56, 0x0a, 0x1f, 0x4c, 0x69, 0x73, 0x74, 0x54, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69,
+	0x66, 0x74, 0x49, 0x6e, 0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67,
+	0x73, 0x52, 0x65, 0x71, 0x12, 0x33, 0x0a, 0x16, 0x74, 0x6f, 0x75, 0x72, 0x5f, 0x77, 0x65, 0x65,
+	0x6b, 0x5f, 0x70, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x5f, 0x73, 0x69, 0x64, 0x73, 0x18, 0x01,
+	0x20, 0x03, 0x28, 0x03, 0x52, 0x13, 0x74, 0x6f, 0x75, 0x72, 0x57, 0x65, 0x65, 0x6b, 0x50, 0x61,
+	0x74, 0x74, 0x65, 0x72, 0x6e, 0x53, 0x69, 0x64, 0x73, 0x22, 0x8b, 0x01, 0x0a, 0x1f, 0x4c, 0x69,
+	0x73, 0x74, 0x54, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74, 0x49, 0x6e, 0x73, 0x74, 0x61,
+	0x6e, 0x63, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x73, 0x52, 0x65, 0x73, 0x12, 0x68, 0x0a,
+	0x1b, 0x74, 0x6f, 0x75, 0x72, 0x5f, 0x73, 0x68, 0x69, 0x66, 0x74, 0x5f, 0x69, 0x6e, 0x73, 0x74,
+	0x61, 0x6e, 0x63, 0x65, 0x5f, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x73, 0x18, 0x01, 0x20, 0x03,
+	0x28, 0x0b, 0x32, 0x29, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61,
+	0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x54, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74, 0x49,
+	0x6e, 0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52, 0x18, 0x74,
+	0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74, 0x49, 0x6e, 0x73, 0x74, 0x61, 0x6e, 0x63, 0x65,
+	0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x73, 0x22, 0x69, 0x0a, 0x21, 0x44, 0x65, 0x6c, 0x65, 0x74,
+	0x65, 0x54, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74, 0x49, 0x6e, 0x73, 0x74, 0x61, 0x6e,
+	0x63, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x73, 0x52, 0x65, 0x71, 0x12, 0x44, 0x0a, 0x1f,
+	0x74, 0x6f, 0x75, 0x72, 0x5f, 0x73, 0x68, 0x69, 0x66, 0x74, 0x5f, 0x69, 0x6e, 0x73, 0x74, 0x61,
+	0x6e, 0x63, 0x65, 0x5f, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x5f, 0x73, 0x69, 0x64, 0x73, 0x18,
+	0x01, 0x20, 0x03, 0x28, 0x03, 0x52, 0x1b, 0x74, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74,
+	0x49, 0x6e, 0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x53, 0x69,
+	0x64, 0x73, 0x22, 0x23, 0x0a, 0x21, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72,
+	0x53, 0x68, 0x69, 0x66, 0x74, 0x49, 0x6e, 0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x43, 0x6f, 0x6e,
+	0x66, 0x69, 0x67, 0x73, 0x52, 0x65, 0x73, 0x22, 0x86, 0x01, 0x0a, 0x1f, 0x43, 0x72, 0x65, 0x61,
+	0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74, 0x53, 0x65, 0x67, 0x6d, 0x65,
+	0x6e, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52, 0x65, 0x71, 0x12, 0x63, 0x0a, 0x19, 0x74,
+	0x6f, 0x75, 0x72, 0x5f, 0x73, 0x68, 0x69, 0x66, 0x74, 0x5f, 0x73, 0x65, 0x67, 0x6d, 0x65, 0x6e,
+	0x74, 0x5f, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x28,
+	0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66,
+	0x6d, 0x2e, 0x54, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74, 0x53, 0x65, 0x67, 0x6d, 0x65,
+	0x6e, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52, 0x16, 0x74, 0x6f, 0x75, 0x72, 0x53, 0x68,
+	0x69, 0x66, 0x74, 0x53, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67,
+	0x22, 0x63, 0x0a, 0x1f, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x53, 0x68,
+	0x69, 0x66, 0x74, 0x53, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67,
+	0x52, 0x65, 0x73, 0x12, 0x40, 0x0a, 0x1d, 0x74, 0x6f, 0x75, 0x72, 0x5f, 0x73, 0x68, 0x69, 0x66,
+	0x74, 0x5f, 0x73, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74, 0x5f, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67,
+	0x5f, 0x73, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x19, 0x74, 0x6f, 0x75, 0x72,
+	0x53, 0x68, 0x69, 0x66, 0x74, 0x53, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6e, 0x66,
+	0x69, 0x67, 0x53, 0x69, 0x64, 0x22, 0x86, 0x01, 0x0a, 0x1f, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65,
+	0x54, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74, 0x53, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74,
+	0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52, 0x65, 0x71, 0x12, 0x63, 0x0a, 0x19, 0x74, 0x6f, 0x75,
+	0x72, 0x5f, 0x73, 0x68, 0x69, 0x66, 0x74, 0x5f, 0x73, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74, 0x5f,
+	0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x28, 0x2e, 0x61,
+	0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e,
+	0x54, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74, 0x53, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74,
+	0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52, 0x16, 0x74, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66,
+	0x74, 0x53, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x22, 0x21,
+	0x0a, 0x1f, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66,
+	0x74, 0x53, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52, 0x65,
+	0x73, 0x22, 0x66, 0x0a, 0x1e, 0x4c, 0x69, 0x73, 0x74, 0x54, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69,
+	0x66, 0x74, 0x53, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x73,
+	0x52, 0x65, 0x71, 0x12, 0x44, 0x0a, 0x1f, 0x74, 0x6f, 0x75, 0x72, 0x5f, 0x73, 0x68, 0x69, 0x66,
+	0x74, 0x5f, 0x69, 0x6e, 0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x5f, 0x63, 0x6f, 0x6e, 0x66, 0x69,
+	0x67, 0x5f, 0x73, 0x69, 0x64, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x03, 0x52, 0x1b, 0x74, 0x6f,
+	0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74, 0x49, 0x6e, 0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x43,
+	0x6f, 0x6e, 0x66, 0x69, 0x67, 0x53, 0x69, 0x64, 0x73, 0x22, 0x87, 0x01, 0x0a, 0x1e, 0x4c, 0x69,
+	0x73, 0x74, 0x54, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74, 0x53, 0x65, 0x67, 0x6d, 0x65,
+	0x6e, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x73, 0x52, 0x65, 0x73, 0x12, 0x65, 0x0a, 0x1a,
+	0x74, 0x6f, 0x75, 0x72, 0x5f, 0x73, 0x68, 0x69, 0x66, 0x74, 0x5f, 0x73, 0x65, 0x67, 0x6d, 0x65,
+	0x6e, 0x74, 0x5f, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b,
+	0x32, 0x28, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e,
+	0x77, 0x66, 0x6d, 0x2e, 0x54, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74, 0x53, 0x65, 0x67,
+	0x6d, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52, 0x17, 0x74, 0x6f, 0x75, 0x72,
+	0x53, 0x68, 0x69, 0x66, 0x74, 0x53, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6e, 0x66,
+	0x69, 0x67, 0x73, 0x22, 0x66, 0x0a, 0x20, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x54, 0x6f, 0x75,
+	0x72, 0x53, 0x68, 0x69, 0x66, 0x74, 0x53, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6e,
+	0x66, 0x69, 0x67, 0x73, 0x52, 0x65, 0x71, 0x12, 0x42, 0x0a, 0x1e, 0x74, 0x6f, 0x75, 0x72, 0x5f,
+	0x73, 0x68, 0x69, 0x66, 0x74, 0x5f, 0x73, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74, 0x5f, 0x63, 0x6f,
+	0x6e, 0x66, 0x69, 0x67, 0x5f, 0x73, 0x69, 0x64, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x03, 0x52,
+	0x1a, 0x74, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74, 0x53, 0x65, 0x67, 0x6d, 0x65, 0x6e,
+	0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x53, 0x69, 0x64, 0x73, 0x22, 0x22, 0x0a, 0x20, 0x44,
+	0x65, 0x6c, 0x65, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74, 0x53, 0x65,
+	0x67, 0x6d, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x73, 0x52, 0x65, 0x73, 0x22,
+	0x79, 0x0a, 0x1c, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x41, 0x67, 0x65,
+	0x6e, 0x74, 0x43, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71, 0x12,
+	0x59, 0x0a, 0x15, 0x74, 0x6f, 0x75, 0x72, 0x5f, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x5f, 0x63, 0x6f,
+	0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x25,
+	0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66,
+	0x6d, 0x2e, 0x54, 0x6f, 0x75, 0x72, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6c, 0x6c, 0x65,
+	0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x13, 0x74, 0x6f, 0x75, 0x72, 0x41, 0x67, 0x65, 0x6e, 0x74,
+	0x43, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0x59, 0x0a, 0x1c, 0x43, 0x72,
+	0x65, 0x61, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6c,
+	0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x12, 0x39, 0x0a, 0x19, 0x74, 0x6f,
+	0x75, 0x72, 0x5f, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x5f, 0x63, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74,
+	0x69, 0x6f, 0x6e, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x16, 0x74,
+	0x6f, 0x75, 0x72, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69,
+	0x6f, 0x6e, 0x53, 0x69, 0x64, 0x22, 0x79, 0x0a, 0x1c, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x54,
+	0x6f, 0x75, 0x72, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69,
+	0x6f, 0x6e, 0x52, 0x65, 0x71, 0x12, 0x59, 0x0a, 0x15, 0x74, 0x6f, 0x75, 0x72, 0x5f, 0x61, 0x67,
+	0x65, 0x6e, 0x74, 0x5f, 0x63, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x25, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70,
+	0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x54, 0x6f, 0x75, 0x72, 0x41, 0x67, 0x65, 0x6e,
+	0x74, 0x43, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x13, 0x74, 0x6f, 0x75,
+	0x72, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e,
+	0x22, 0x1e, 0x0a, 0x1c, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x41, 0x67,
+	0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73,
+	0x22, 0x47, 0x0a, 0x1b, 0x4c, 0x69, 0x73, 0x74, 0x54, 0x6f, 0x75, 0x72, 0x41, 0x67, 0x65, 0x6e,
+	0x74, 0x43, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x52, 0x65, 0x71, 0x12,
+	0x28, 0x0a, 0x10, 0x74, 0x6f, 0x75, 0x72, 0x5f, 0x70, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x5f,
+	0x73, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0e, 0x74, 0x6f, 0x75, 0x72, 0x50,
+	0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x53, 0x69, 0x64, 0x22, 0x7a, 0x0a, 0x1b, 0x4c, 0x69, 0x73,
+	0x74, 0x54, 0x6f, 0x75, 0x72, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6c, 0x6c, 0x65, 0x63,
+	0x74, 0x69, 0x6f, 0x6e, 0x73, 0x52, 0x65, 0x73, 0x12, 0x5b, 0x0a, 0x16, 0x74, 0x6f, 0x75, 0x72,
+	0x5f, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x5f, 0x63, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f,
+	0x6e, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x25, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76,
+	0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x54, 0x6f, 0x75, 0x72,
+	0x41, 0x67, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52,
+	0x14, 0x74, 0x6f, 0x75, 0x72, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6c, 0x6c, 0x65, 0x63,
+	0x74, 0x69, 0x6f, 0x6e, 0x73, 0x22, 0x5c, 0x0a, 0x1d, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x54,
+	0x6f, 0x75, 0x72, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69,
+	0x6f, 0x6e, 0x73, 0x52, 0x65, 0x71, 0x12, 0x3b, 0x0a, 0x1a, 0x74, 0x6f, 0x75, 0x72, 0x5f, 0x61,
+	0x67, 0x65, 0x6e, 0x74, 0x5f, 0x63, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x5f,
+	0x73, 0x69, 0x64, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x03, 0x52, 0x17, 0x74, 0x6f, 0x75, 0x72,
+	0x41, 0x67, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x53,
+	0x69, 0x64, 0x73, 0x22, 0x1f, 0x0a, 0x1d, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x54, 0x6f, 0x75,
+	0x72, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e,
+	0x73, 0x52, 0x65, 0x73, 0x22, 0x88, 0x01, 0x0a, 0x25, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x54,
+	0x6f, 0x75, 0x72, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69,
+	0x6f, 0x6e, 0x57, 0x46, 0x4d, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x73, 0x52, 0x65, 0x71, 0x12, 0x24,
+	0x0a, 0x0e, 0x77, 0x66, 0x6d, 0x5f, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x5f, 0x73, 0x69, 0x64, 0x73,
+	0x18, 0x01, 0x20, 0x03, 0x28, 0x03, 0x52, 0x0c, 0x77, 0x66, 0x6d, 0x41, 0x67, 0x65, 0x6e, 0x74,
+	0x53, 0x69, 0x64, 0x73, 0x12, 0x39, 0x0a, 0x19, 0x74, 0x6f, 0x75, 0x72, 0x5f, 0x61, 0x67, 0x65,
+	0x6e, 0x74, 0x5f, 0x63, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x73, 0x69,
+	0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x16, 0x74, 0x6f, 0x75, 0x72, 0x41, 0x67, 0x65,
+	0x6e, 0x74, 0x43, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x69, 0x64, 0x22,
+	0x27, 0x0a, 0x25, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x41, 0x67, 0x65,
+	0x6e, 0x74, 0x43, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x57, 0x46, 0x4d, 0x41,
+	0x67, 0x65, 0x6e, 0x74, 0x73, 0x52, 0x65, 0x73, 0x22, 0x62, 0x0a, 0x23, 0x4c, 0x69, 0x73, 0x74,
+	0x54, 0x6f, 0x75, 0x72, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74,
+	0x69, 0x6f, 0x6e, 0x57, 0x46, 0x4d, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x73, 0x52, 0x65, 0x71, 0x12,
+	0x3b, 0x0a, 0x1a, 0x74, 0x6f, 0x75, 0x72, 0x5f, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x5f, 0x63, 0x6f,
+	0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x73, 0x69, 0x64, 0x73, 0x18, 0x01, 0x20,
+	0x03, 0x28, 0x03, 0x52, 0x17, 0x74, 0x6f, 0x75, 0x72, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x43, 0x6f,
+	0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x69, 0x64, 0x73, 0x22, 0xfb, 0x01, 0x0a,
+	0x23, 0x4c, 0x69, 0x73, 0x74, 0x54, 0x6f, 0x75, 0x72, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x43, 0x6f,
+	0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x57, 0x46, 0x4d, 0x41, 0x67, 0x65, 0x6e, 0x74,
+	0x73, 0x52, 0x65, 0x73, 0x12, 0x6e, 0x0a, 0x12, 0x77, 0x66, 0x6d, 0x5f, 0x61, 0x67, 0x65, 0x6e,
+	0x74, 0x5f, 0x70, 0x61, 0x69, 0x72, 0x69, 0x6e, 0x67, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b,
+	0x32, 0x40, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e,
+	0x77, 0x66, 0x6d, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x54, 0x6f, 0x75, 0x72, 0x41, 0x67, 0x65, 0x6e,
+	0x74, 0x43, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x57, 0x46, 0x4d, 0x41, 0x67,
+	0x65, 0x6e, 0x74, 0x73, 0x52, 0x65, 0x73, 0x2e, 0x53, 0x69, 0x64, 0x4d, 0x61, 0x70, 0x70, 0x69,
+	0x6e, 0x67, 0x52, 0x10, 0x77, 0x66, 0x6d, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x50, 0x61, 0x69, 0x72,
+	0x69, 0x6e, 0x67, 0x73, 0x1a, 0x64, 0x0a, 0x0a, 0x53, 0x69, 0x64, 0x4d, 0x61, 0x70, 0x70, 0x69,
+	0x6e, 0x67, 0x12, 0x30, 0x0a, 0x14, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x5f, 0x63, 0x6f, 0x6c, 0x6c,
+	0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03,
+	0x52, 0x12, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f,
+	0x6e, 0x53, 0x69, 0x64, 0x12, 0x24, 0x0a, 0x0e, 0x77, 0x66, 0x6d, 0x5f, 0x61, 0x67, 0x65, 0x6e,
+	0x74, 0x5f, 0x73, 0x69, 0x64, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x03, 0x52, 0x0c, 0x77, 0x66,
+	0x6d, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x53, 0x69, 0x64, 0x73, 0x22, 0x88, 0x01, 0x0a, 0x25, 0x44,
+	0x65, 0x6c, 0x65, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x43, 0x6f,
+	0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x57, 0x46, 0x4d, 0x41, 0x67, 0x65, 0x6e, 0x74,
+	0x73, 0x52, 0x65, 0x71, 0x12, 0x24, 0x0a, 0x0e, 0x77, 0x66, 0x6d, 0x5f, 0x61, 0x67, 0x65, 0x6e,
+	0x74, 0x5f, 0x73, 0x69, 0x64, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x03, 0x52, 0x0c, 0x77, 0x66,
+	0x6d, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x53, 0x69, 0x64, 0x73, 0x12, 0x39, 0x0a, 0x19, 0x74, 0x6f,
+	0x75, 0x72, 0x5f, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x5f, 0x63, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74,
+	0x69, 0x6f, 0x6e, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x16, 0x74,
+	0x6f, 0x75, 0x72, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69,
+	0x6f, 0x6e, 0x53, 0x69, 0x64, 0x22, 0x27, 0x0a, 0x25, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x54,
+	0x6f, 0x75, 0x72, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69,
+	0x6f, 0x6e, 0x57, 0x46, 0x4d, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x73, 0x52, 0x65, 0x73, 0x32, 0xce,
+	0xda, 0x01, 0x0a, 0x03, 0x57, 0x46, 0x4d, 0x12, 0xa2, 0x01, 0x0a, 0x11, 0x4c, 0x69, 0x73, 0x74,
 	0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x50, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x73, 0x12, 0x26, 0x2e,
 	0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d,
 	0x2e, 0x4c, 0x69, 0x73, 0x74, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x50, 0x72, 0x6f, 0x66, 0x69, 0x6c,
@@ -25103,19 +27907,274 @@ var file_api_v1alpha1_wfm_wfm_proto_rawDesc = []byte{
 	0x82, 0xd3, 0xe4, 0x93, 0x02, 0x31, 0x3a, 0x01, 0x2a, 0x22, 0x2c, 0x2f, 0x61, 0x70, 0x69, 0x2f,
 	0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x77, 0x66, 0x6d, 0x2f, 0x6c, 0x69, 0x73,
 	0x74, 0x72, 0x65, 0x71, 0x75, 0x69, 0x72, 0x65, 0x64, 0x63, 0x61, 0x6c, 0x6c, 0x73, 0x69, 0x6e,
-	0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x73, 0x42, 0xaf, 0x01, 0x0a, 0x14, 0x63, 0x6f, 0x6d, 0x2e,
+	0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x73, 0x12, 0x9d, 0x01, 0x0a, 0x11, 0x43, 0x72, 0x65, 0x61,
+	0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x50, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x12, 0x26, 0x2e,
 	0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d,
-	0x42, 0x08, 0x57, 0x66, 0x6d, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x2b, 0x67, 0x69,
-	0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75,
-	0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61,
-	0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x77, 0x66, 0x6d, 0xa2, 0x02, 0x03, 0x41, 0x56, 0x57, 0xaa,
-	0x02, 0x10, 0x41, 0x70, 0x69, 0x2e, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x57,
-	0x66, 0x6d, 0xca, 0x02, 0x10, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61,
-	0x31, 0x5c, 0x57, 0x66, 0x6d, 0xe2, 0x02, 0x1c, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c,
-	0x70, 0x68, 0x61, 0x31, 0x5c, 0x57, 0x66, 0x6d, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61,
-	0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x12, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x56, 0x31, 0x61, 0x6c,
-	0x70, 0x68, 0x61, 0x31, 0x3a, 0x3a, 0x57, 0x66, 0x6d, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x33,
+	0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x50, 0x61, 0x74, 0x74, 0x65,
+	0x72, 0x6e, 0x52, 0x65, 0x71, 0x1a, 0x26, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c,
+	0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x54,
+	0x6f, 0x75, 0x72, 0x50, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x52, 0x65, 0x73, 0x22, 0x38, 0xba,
+	0xb8, 0x91, 0x02, 0x05, 0x0a, 0x03, 0x08, 0xdc, 0x0b, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x28, 0x3a,
+	0x01, 0x2a, 0x22, 0x23, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61,
+	0x31, 0x2f, 0x77, 0x66, 0x6d, 0x2f, 0x63, 0x72, 0x65, 0x61, 0x74, 0x65, 0x74, 0x6f, 0x75, 0x72,
+	0x70, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x12, 0x91, 0x01, 0x0a, 0x0e, 0x47, 0x65, 0x74, 0x54,
+	0x6f, 0x75, 0x72, 0x50, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x12, 0x23, 0x2e, 0x61, 0x70, 0x69,
+	0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x47, 0x65,
+	0x74, 0x54, 0x6f, 0x75, 0x72, 0x50, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x52, 0x65, 0x71, 0x1a,
+	0x23, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77,
+	0x66, 0x6d, 0x2e, 0x47, 0x65, 0x74, 0x54, 0x6f, 0x75, 0x72, 0x50, 0x61, 0x74, 0x74, 0x65, 0x72,
+	0x6e, 0x52, 0x65, 0x73, 0x22, 0x35, 0xba, 0xb8, 0x91, 0x02, 0x05, 0x0a, 0x03, 0x08, 0xdc, 0x0b,
+	0x82, 0xd3, 0xe4, 0x93, 0x02, 0x25, 0x3a, 0x01, 0x2a, 0x22, 0x20, 0x2f, 0x61, 0x70, 0x69, 0x2f,
+	0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x77, 0x66, 0x6d, 0x2f, 0x67, 0x65, 0x74,
+	0x74, 0x6f, 0x75, 0x72, 0x70, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x12, 0x9d, 0x01, 0x0a, 0x11,
+	0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x50, 0x61, 0x74, 0x74, 0x65, 0x72,
+	0x6e, 0x12, 0x26, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31,
+	0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x50,
+	0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x52, 0x65, 0x71, 0x1a, 0x26, 0x2e, 0x61, 0x70, 0x69, 0x2e,
+	0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x44, 0x65, 0x6c,
+	0x65, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x50, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x52, 0x65,
+	0x73, 0x22, 0x38, 0xba, 0xb8, 0x91, 0x02, 0x05, 0x0a, 0x03, 0x08, 0xdc, 0x0b, 0x82, 0xd3, 0xe4,
+	0x93, 0x02, 0x28, 0x3a, 0x01, 0x2a, 0x22, 0x23, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61,
+	0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x77, 0x66, 0x6d, 0x2f, 0x64, 0x65, 0x6c, 0x65, 0x74, 0x65,
+	0x74, 0x6f, 0x75, 0x72, 0x70, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x12, 0xad, 0x01, 0x0a, 0x15,
+	0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x57, 0x65, 0x65, 0x6b, 0x50, 0x61,
+	0x74, 0x74, 0x65, 0x72, 0x6e, 0x12, 0x2a, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c,
+	0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x54,
+	0x6f, 0x75, 0x72, 0x57, 0x65, 0x65, 0x6b, 0x50, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x52, 0x65,
+	0x71, 0x1a, 0x2a, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31,
+	0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x57,
+	0x65, 0x65, 0x6b, 0x50, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x52, 0x65, 0x73, 0x22, 0x3c, 0xba,
+	0xb8, 0x91, 0x02, 0x05, 0x0a, 0x03, 0x08, 0xdc, 0x0b, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x2c, 0x3a,
+	0x01, 0x2a, 0x22, 0x27, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61,
+	0x31, 0x2f, 0x77, 0x66, 0x6d, 0x2f, 0x63, 0x72, 0x65, 0x61, 0x74, 0x65, 0x74, 0x6f, 0x75, 0x72,
+	0x77, 0x65, 0x65, 0x6b, 0x70, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x12, 0xa9, 0x01, 0x0a, 0x14,
+	0x4c, 0x69, 0x73, 0x74, 0x54, 0x6f, 0x75, 0x72, 0x57, 0x65, 0x65, 0x6b, 0x50, 0x61, 0x74, 0x74,
+	0x65, 0x72, 0x6e, 0x73, 0x12, 0x29, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70,
+	0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x54, 0x6f, 0x75, 0x72,
+	0x57, 0x65, 0x65, 0x6b, 0x50, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x73, 0x52, 0x65, 0x71, 0x1a,
+	0x29, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77,
+	0x66, 0x6d, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x54, 0x6f, 0x75, 0x72, 0x57, 0x65, 0x65, 0x6b, 0x50,
+	0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x73, 0x52, 0x65, 0x73, 0x22, 0x3b, 0xba, 0xb8, 0x91, 0x02,
+	0x05, 0x0a, 0x03, 0x08, 0xdc, 0x0b, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x2b, 0x3a, 0x01, 0x2a, 0x22,
+	0x26, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x77,
+	0x66, 0x6d, 0x2f, 0x6c, 0x69, 0x73, 0x74, 0x74, 0x6f, 0x75, 0x72, 0x77, 0x65, 0x65, 0x6b, 0x70,
+	0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x73, 0x12, 0xb1, 0x01, 0x0a, 0x16, 0x44, 0x65, 0x6c, 0x65,
+	0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x57, 0x65, 0x65, 0x6b, 0x50, 0x61, 0x74, 0x74, 0x65, 0x72,
+	0x6e, 0x73, 0x12, 0x2b, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61,
+	0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72,
+	0x57, 0x65, 0x65, 0x6b, 0x50, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x73, 0x52, 0x65, 0x71, 0x1a,
+	0x2b, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77,
+	0x66, 0x6d, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x57, 0x65, 0x65,
+	0x6b, 0x50, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x73, 0x52, 0x65, 0x73, 0x22, 0x3d, 0xba, 0xb8,
+	0x91, 0x02, 0x05, 0x0a, 0x03, 0x08, 0xdc, 0x0b, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x2d, 0x3a, 0x01,
+	0x2a, 0x22, 0x28, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31,
+	0x2f, 0x77, 0x66, 0x6d, 0x2f, 0x64, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x74, 0x6f, 0x75, 0x72, 0x77,
+	0x65, 0x65, 0x6b, 0x70, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e, 0x73, 0x12, 0xcd, 0x01, 0x0a, 0x1d,
+	0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74, 0x49,
+	0x6e, 0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x12, 0x32, 0x2e,
+	0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d,
+	0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74,
+	0x49, 0x6e, 0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52, 0x65,
+	0x71, 0x1a, 0x32, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31,
+	0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x53,
+	0x68, 0x69, 0x66, 0x74, 0x49, 0x6e, 0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x43, 0x6f, 0x6e, 0x66,
+	0x69, 0x67, 0x52, 0x65, 0x73, 0x22, 0x44, 0xba, 0xb8, 0x91, 0x02, 0x05, 0x0a, 0x03, 0x08, 0xdc,
+	0x0b, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x34, 0x3a, 0x01, 0x2a, 0x22, 0x2f, 0x2f, 0x61, 0x70, 0x69,
+	0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x77, 0x66, 0x6d, 0x2f, 0x63, 0x72,
+	0x65, 0x61, 0x74, 0x65, 0x74, 0x6f, 0x75, 0x72, 0x73, 0x68, 0x69, 0x66, 0x74, 0x69, 0x6e, 0x73,
+	0x74, 0x61, 0x6e, 0x63, 0x65, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x12, 0xce, 0x01, 0x0a, 0x1d,
+	0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74, 0x49,
+	0x6e, 0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x12, 0x32, 0x2e,
+	0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d,
+	0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74,
+	0x49, 0x6e, 0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52, 0x65,
+	0x71, 0x1a, 0x32, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31,
+	0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x53,
+	0x68, 0x69, 0x66, 0x74, 0x49, 0x6e, 0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x43, 0x6f, 0x6e, 0x66,
+	0x69, 0x67, 0x52, 0x65, 0x73, 0x22, 0x45, 0xba, 0xb8, 0x91, 0x02, 0x05, 0x0a, 0x03, 0x08, 0xdc,
+	0x0b, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x35, 0x3a, 0x01, 0x2a, 0x22, 0x30, 0x2f, 0x61, 0x70, 0x69,
+	0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x77, 0x66, 0x6d, 0x2f, 0x75, 0x70,
+	0x64, 0x61, 0x74, 0x65, 0x74, 0x6f, 0x75, 0x72, 0x73, 0x68, 0x69, 0x66, 0x74, 0x69, 0x6e, 0x73,
+	0x74, 0x61, 0x6e, 0x63, 0x65, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x73, 0x12, 0xc9, 0x01, 0x0a,
+	0x1c, 0x4c, 0x69, 0x73, 0x74, 0x54, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74, 0x49, 0x6e,
+	0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x73, 0x12, 0x31, 0x2e,
+	0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d,
+	0x2e, 0x4c, 0x69, 0x73, 0x74, 0x54, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74, 0x49, 0x6e,
+	0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x73, 0x52, 0x65, 0x71,
+	0x1a, 0x31, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e,
+	0x77, 0x66, 0x6d, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x54, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66,
+	0x74, 0x49, 0x6e, 0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x73,
+	0x52, 0x65, 0x73, 0x22, 0x43, 0xba, 0xb8, 0x91, 0x02, 0x05, 0x0a, 0x03, 0x08, 0xdc, 0x0b, 0x82,
+	0xd3, 0xe4, 0x93, 0x02, 0x33, 0x3a, 0x01, 0x2a, 0x22, 0x2e, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76,
+	0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x77, 0x66, 0x6d, 0x2f, 0x6c, 0x69, 0x73, 0x74,
+	0x74, 0x6f, 0x75, 0x72, 0x73, 0x68, 0x69, 0x66, 0x74, 0x69, 0x6e, 0x73, 0x74, 0x61, 0x6e, 0x63,
+	0x65, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x73, 0x12, 0xd1, 0x01, 0x0a, 0x1e, 0x44, 0x65, 0x6c,
+	0x65, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74, 0x49, 0x6e, 0x73, 0x74,
+	0x61, 0x6e, 0x63, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x73, 0x12, 0x33, 0x2e, 0x61, 0x70,
+	0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x44,
+	0x65, 0x6c, 0x65, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74, 0x49, 0x6e,
+	0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x73, 0x52, 0x65, 0x71,
+	0x1a, 0x33, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e,
+	0x77, 0x66, 0x6d, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x53, 0x68,
+	0x69, 0x66, 0x74, 0x49, 0x6e, 0x73, 0x74, 0x61, 0x6e, 0x63, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69,
+	0x67, 0x73, 0x52, 0x65, 0x73, 0x22, 0x45, 0xba, 0xb8, 0x91, 0x02, 0x05, 0x0a, 0x03, 0x08, 0xdc,
+	0x0b, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x35, 0x3a, 0x01, 0x2a, 0x22, 0x30, 0x2f, 0x61, 0x70, 0x69,
+	0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x77, 0x66, 0x6d, 0x2f, 0x64, 0x65,
+	0x6c, 0x65, 0x74, 0x65, 0x74, 0x6f, 0x75, 0x72, 0x73, 0x68, 0x69, 0x66, 0x74, 0x69, 0x6e, 0x73,
+	0x74, 0x61, 0x6e, 0x63, 0x65, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x73, 0x12, 0xc9, 0x01, 0x0a,
+	0x1c, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74,
+	0x53, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x12, 0x31, 0x2e,
+	0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d,
+	0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74,
+	0x53, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52, 0x65, 0x71,
+	0x1a, 0x31, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e,
+	0x77, 0x66, 0x6d, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x53, 0x68,
+	0x69, 0x66, 0x74, 0x53, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67,
+	0x52, 0x65, 0x73, 0x22, 0x43, 0xba, 0xb8, 0x91, 0x02, 0x05, 0x0a, 0x03, 0x08, 0xdc, 0x0b, 0x82,
+	0xd3, 0xe4, 0x93, 0x02, 0x33, 0x3a, 0x01, 0x2a, 0x22, 0x2e, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76,
+	0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x77, 0x66, 0x6d, 0x2f, 0x63, 0x72, 0x65, 0x61,
+	0x74, 0x65, 0x74, 0x6f, 0x75, 0x72, 0x73, 0x68, 0x69, 0x66, 0x74, 0x73, 0x65, 0x67, 0x6d, 0x65,
+	0x6e, 0x74, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x12, 0xc9, 0x01, 0x0a, 0x1c, 0x55, 0x70, 0x64,
+	0x61, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74, 0x53, 0x65, 0x67, 0x6d,
+	0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x12, 0x31, 0x2e, 0x61, 0x70, 0x69, 0x2e,
+	0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x55, 0x70, 0x64,
+	0x61, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74, 0x53, 0x65, 0x67, 0x6d,
+	0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52, 0x65, 0x71, 0x1a, 0x31, 0x2e, 0x61,
+	0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e,
+	0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74, 0x53,
+	0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52, 0x65, 0x73, 0x22,
+	0x43, 0xba, 0xb8, 0x91, 0x02, 0x05, 0x0a, 0x03, 0x08, 0xdc, 0x0b, 0x82, 0xd3, 0xe4, 0x93, 0x02,
+	0x33, 0x3a, 0x01, 0x2a, 0x22, 0x2e, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70,
+	0x68, 0x61, 0x31, 0x2f, 0x77, 0x66, 0x6d, 0x2f, 0x75, 0x70, 0x64, 0x61, 0x74, 0x65, 0x74, 0x6f,
+	0x75, 0x72, 0x73, 0x68, 0x69, 0x66, 0x74, 0x73, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74, 0x63, 0x6f,
+	0x6e, 0x66, 0x69, 0x67, 0x12, 0xc5, 0x01, 0x0a, 0x1b, 0x4c, 0x69, 0x73, 0x74, 0x54, 0x6f, 0x75,
+	0x72, 0x53, 0x68, 0x69, 0x66, 0x74, 0x53, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6e,
+	0x66, 0x69, 0x67, 0x73, 0x12, 0x30, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70,
+	0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x54, 0x6f, 0x75, 0x72,
+	0x53, 0x68, 0x69, 0x66, 0x74, 0x53, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6e, 0x66,
+	0x69, 0x67, 0x73, 0x52, 0x65, 0x71, 0x1a, 0x30, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61,
+	0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x54, 0x6f,
+	0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74, 0x53, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74, 0x43, 0x6f,
+	0x6e, 0x66, 0x69, 0x67, 0x73, 0x52, 0x65, 0x73, 0x22, 0x42, 0xba, 0xb8, 0x91, 0x02, 0x05, 0x0a,
+	0x03, 0x08, 0xdc, 0x0b, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x32, 0x3a, 0x01, 0x2a, 0x22, 0x2d, 0x2f,
+	0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x77, 0x66, 0x6d,
+	0x2f, 0x6c, 0x69, 0x73, 0x74, 0x74, 0x6f, 0x75, 0x72, 0x73, 0x68, 0x69, 0x66, 0x74, 0x73, 0x65,
+	0x67, 0x6d, 0x65, 0x6e, 0x74, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x73, 0x12, 0xcd, 0x01, 0x0a,
+	0x1d, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66, 0x74,
+	0x53, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x73, 0x12, 0x32,
+	0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66,
+	0x6d, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x53, 0x68, 0x69, 0x66,
+	0x74, 0x53, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x73, 0x52,
+	0x65, 0x71, 0x1a, 0x32, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61,
+	0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72,
+	0x53, 0x68, 0x69, 0x66, 0x74, 0x53, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6e, 0x66,
+	0x69, 0x67, 0x73, 0x52, 0x65, 0x73, 0x22, 0x44, 0xba, 0xb8, 0x91, 0x02, 0x05, 0x0a, 0x03, 0x08,
+	0xdc, 0x0b, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x34, 0x3a, 0x01, 0x2a, 0x22, 0x2f, 0x2f, 0x61, 0x70,
+	0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x77, 0x66, 0x6d, 0x2f, 0x64,
+	0x65, 0x6c, 0x65, 0x74, 0x65, 0x74, 0x6f, 0x75, 0x72, 0x73, 0x68, 0x69, 0x66, 0x74, 0x73, 0x65,
+	0x67, 0x6d, 0x65, 0x6e, 0x74, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x73, 0x12, 0xbd, 0x01, 0x0a,
+	0x19, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x41, 0x67, 0x65, 0x6e, 0x74,
+	0x43, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x2e, 0x2e, 0x61, 0x70, 0x69,
+	0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x43, 0x72,
+	0x65, 0x61, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6c,
+	0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71, 0x1a, 0x2e, 0x2e, 0x61, 0x70, 0x69,
+	0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x43, 0x72,
+	0x65, 0x61, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6c,
+	0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x22, 0x40, 0xba, 0xb8, 0x91, 0x02,
+	0x05, 0x0a, 0x03, 0x08, 0xdc, 0x0b, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x30, 0x3a, 0x01, 0x2a, 0x22,
+	0x2b, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x77,
+	0x66, 0x6d, 0x2f, 0x63, 0x72, 0x65, 0x61, 0x74, 0x65, 0x74, 0x6f, 0x75, 0x72, 0x61, 0x67, 0x65,
+	0x6e, 0x74, 0x63, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0xbd, 0x01, 0x0a,
+	0x19, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x41, 0x67, 0x65, 0x6e, 0x74,
+	0x43, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x2e, 0x2e, 0x61, 0x70, 0x69,
+	0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x55, 0x70,
+	0x64, 0x61, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6c,
+	0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71, 0x1a, 0x2e, 0x2e, 0x61, 0x70, 0x69,
+	0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x55, 0x70,
+	0x64, 0x61, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6c,
+	0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x22, 0x40, 0xba, 0xb8, 0x91, 0x02,
+	0x05, 0x0a, 0x03, 0x08, 0xdc, 0x0b, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x30, 0x3a, 0x01, 0x2a, 0x22,
+	0x2b, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x77,
+	0x66, 0x6d, 0x2f, 0x75, 0x70, 0x64, 0x61, 0x74, 0x65, 0x74, 0x6f, 0x75, 0x72, 0x61, 0x67, 0x65,
+	0x6e, 0x74, 0x63, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0xb9, 0x01, 0x0a,
+	0x18, 0x4c, 0x69, 0x73, 0x74, 0x54, 0x6f, 0x75, 0x72, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x43, 0x6f,
+	0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x12, 0x2d, 0x2e, 0x61, 0x70, 0x69, 0x2e,
+	0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x4c, 0x69, 0x73,
+	0x74, 0x54, 0x6f, 0x75, 0x72, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6c, 0x6c, 0x65, 0x63,
+	0x74, 0x69, 0x6f, 0x6e, 0x73, 0x52, 0x65, 0x71, 0x1a, 0x2d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76,
+	0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x4c, 0x69, 0x73, 0x74,
+	0x54, 0x6f, 0x75, 0x72, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74,
+	0x69, 0x6f, 0x6e, 0x73, 0x52, 0x65, 0x73, 0x22, 0x3f, 0xba, 0xb8, 0x91, 0x02, 0x05, 0x0a, 0x03,
+	0x08, 0xdc, 0x0b, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x2f, 0x3a, 0x01, 0x2a, 0x22, 0x2a, 0x2f, 0x61,
+	0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x77, 0x66, 0x6d, 0x2f,
+	0x6c, 0x69, 0x73, 0x74, 0x74, 0x6f, 0x75, 0x72, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x63, 0x6f, 0x6c,
+	0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x12, 0xc1, 0x01, 0x0a, 0x1a, 0x44, 0x65, 0x6c,
+	0x65, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6c, 0x6c,
+	0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x12, 0x2f, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31,
+	0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74,
+	0x65, 0x54, 0x6f, 0x75, 0x72, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6c, 0x6c, 0x65, 0x63,
+	0x74, 0x69, 0x6f, 0x6e, 0x73, 0x52, 0x65, 0x71, 0x1a, 0x2f, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76,
+	0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x44, 0x65, 0x6c, 0x65,
+	0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6c, 0x6c, 0x65,
+	0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x52, 0x65, 0x73, 0x22, 0x41, 0xba, 0xb8, 0x91, 0x02, 0x05,
+	0x0a, 0x03, 0x08, 0xdc, 0x0b, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x31, 0x3a, 0x01, 0x2a, 0x22, 0x2c,
+	0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x77, 0x66,
+	0x6d, 0x2f, 0x64, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x74, 0x6f, 0x75, 0x72, 0x61, 0x67, 0x65, 0x6e,
+	0x74, 0x63, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x12, 0xe1, 0x01, 0x0a,
+	0x22, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x41, 0x67, 0x65, 0x6e, 0x74,
+	0x43, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x57, 0x46, 0x4d, 0x41, 0x67, 0x65,
+	0x6e, 0x74, 0x73, 0x12, 0x37, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68,
+	0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x54, 0x6f, 0x75,
+	0x72, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e,
+	0x57, 0x46, 0x4d, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x73, 0x52, 0x65, 0x71, 0x1a, 0x37, 0x2e, 0x61,
+	0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e,
+	0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x43,
+	0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x57, 0x46, 0x4d, 0x41, 0x67, 0x65, 0x6e,
+	0x74, 0x73, 0x52, 0x65, 0x73, 0x22, 0x49, 0xba, 0xb8, 0x91, 0x02, 0x05, 0x0a, 0x03, 0x08, 0xdc,
+	0x0b, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x39, 0x3a, 0x01, 0x2a, 0x22, 0x34, 0x2f, 0x61, 0x70, 0x69,
+	0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x77, 0x66, 0x6d, 0x2f, 0x63, 0x72,
+	0x65, 0x61, 0x74, 0x65, 0x74, 0x6f, 0x75, 0x72, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x63, 0x6f, 0x6c,
+	0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x77, 0x66, 0x6d, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x73,
+	0x12, 0xd9, 0x01, 0x0a, 0x20, 0x4c, 0x69, 0x73, 0x74, 0x54, 0x6f, 0x75, 0x72, 0x41, 0x67, 0x65,
+	0x6e, 0x74, 0x43, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x57, 0x46, 0x4d, 0x41,
+	0x67, 0x65, 0x6e, 0x74, 0x73, 0x12, 0x35, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c,
+	0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x54, 0x6f, 0x75,
+	0x72, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e,
+	0x57, 0x46, 0x4d, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x73, 0x52, 0x65, 0x71, 0x1a, 0x35, 0x2e, 0x61,
+	0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e,
+	0x4c, 0x69, 0x73, 0x74, 0x54, 0x6f, 0x75, 0x72, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6c,
+	0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x57, 0x46, 0x4d, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x73,
+	0x52, 0x65, 0x73, 0x22, 0x47, 0xba, 0xb8, 0x91, 0x02, 0x05, 0x0a, 0x03, 0x08, 0xdc, 0x0b, 0x82,
+	0xd3, 0xe4, 0x93, 0x02, 0x37, 0x3a, 0x01, 0x2a, 0x22, 0x32, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76,
+	0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x77, 0x66, 0x6d, 0x2f, 0x6c, 0x69, 0x73, 0x74,
+	0x74, 0x6f, 0x75, 0x72, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x63, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74,
+	0x69, 0x6f, 0x6e, 0x77, 0x66, 0x6d, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x73, 0x12, 0xe1, 0x01, 0x0a,
+	0x22, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x41, 0x67, 0x65, 0x6e, 0x74,
+	0x43, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x57, 0x46, 0x4d, 0x41, 0x67, 0x65,
+	0x6e, 0x74, 0x73, 0x12, 0x37, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68,
+	0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x54, 0x6f, 0x75,
+	0x72, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e,
+	0x57, 0x46, 0x4d, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x73, 0x52, 0x65, 0x71, 0x1a, 0x37, 0x2e, 0x61,
+	0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e,
+	0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x54, 0x6f, 0x75, 0x72, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x43,
+	0x6f, 0x6c, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x57, 0x46, 0x4d, 0x41, 0x67, 0x65, 0x6e,
+	0x74, 0x73, 0x52, 0x65, 0x73, 0x22, 0x49, 0xba, 0xb8, 0x91, 0x02, 0x05, 0x0a, 0x03, 0x08, 0xdc,
+	0x0b, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x39, 0x3a, 0x01, 0x2a, 0x22, 0x34, 0x2f, 0x61, 0x70, 0x69,
+	0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x77, 0x66, 0x6d, 0x2f, 0x64, 0x65,
+	0x6c, 0x65, 0x74, 0x65, 0x74, 0x6f, 0x75, 0x72, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x63, 0x6f, 0x6c,
+	0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x77, 0x66, 0x6d, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x73,
+	0x42, 0xaf, 0x01, 0x0a, 0x14, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61,
+	0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x42, 0x08, 0x57, 0x66, 0x6d, 0x50, 0x72,
+	0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x2b, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f,
+	0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67,
+	0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x77,
+	0x66, 0x6d, 0xa2, 0x02, 0x03, 0x41, 0x56, 0x57, 0xaa, 0x02, 0x10, 0x41, 0x70, 0x69, 0x2e, 0x56,
+	0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x57, 0x66, 0x6d, 0xca, 0x02, 0x10, 0x41, 0x70,
+	0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x57, 0x66, 0x6d, 0xe2, 0x02,
+	0x1c, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x57, 0x66,
+	0x6d, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x12,
+	0x41, 0x70, 0x69, 0x3a, 0x3a, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x3a, 0x3a, 0x57,
+	0x66, 0x6d, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -25131,7 +28190,7 @@ func file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP() []byte {
 }
 
 var file_api_v1alpha1_wfm_wfm_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_api_v1alpha1_wfm_wfm_proto_msgTypes = make([]protoimpl.MessageInfo, 314)
+var file_api_v1alpha1_wfm_wfm_proto_msgTypes = make([]protoimpl.MessageInfo, 362)
 var file_api_v1alpha1_wfm_wfm_proto_goTypes = []interface{}{
 	(DeleteForecastIntervalsReq_ForecastIntervalDeleteType)(0), // 0: api.v1alpha1.wfm.DeleteForecastIntervalsReq.ForecastIntervalDeleteType
 	(*Skill)(nil),                                            // 1: api.v1alpha1.wfm.Skill
@@ -25426,119 +28485,167 @@ var file_api_v1alpha1_wfm_wfm_proto_goTypes = []interface{}{
 	(*SetDefaultSchedulingTargetRes)(nil),                    // 290: api.v1alpha1.wfm.SetDefaultSchedulingTargetRes
 	(*ListRequiredCallsIntervalsReq)(nil),                    // 291: api.v1alpha1.wfm.ListRequiredCallsIntervalsReq
 	(*ListRequiredCallsIntervalsRes)(nil),                    // 292: api.v1alpha1.wfm.ListRequiredCallsIntervalsRes
-	(*UpdateSkillProfileProficienciesReq_Proficiency)(nil),   // 293: api.v1alpha1.wfm.UpdateSkillProfileProficienciesReq.Proficiency
-	(*GetSkillProfileRes_Mapping)(nil),                       // 294: api.v1alpha1.wfm.GetSkillProfileRes.Mapping
-	(*DeleteForecastIntervalsReq_IntervalSids)(nil),          // 295: api.v1alpha1.wfm.DeleteForecastIntervalsReq.IntervalSids
-	(*ListAllWFMAgentsRes_AgentGroupsByAgent)(nil),           // 296: api.v1alpha1.wfm.ListAllWFMAgentsRes.AgentGroupsByAgent
-	nil,                                  // 297: api.v1alpha1.wfm.ListWFMAgentSidsRes.SidsEntry
-	(*DatetimePattern_WeekMap)(nil),      // 298: api.v1alpha1.wfm.DatetimePattern.WeekMap
-	(*DatetimePattern_CalendarItem)(nil), // 299: api.v1alpha1.wfm.DatetimePattern.CalendarItem
-	(*DatetimePattern_WeekMap_WeekMapDOW)(nil),                     // 300: api.v1alpha1.wfm.DatetimePattern.WeekMap.WeekMapDOW
-	(*UpsertNonSkillActivityAssociationRes_EntityMapping)(nil),     // 301: api.v1alpha1.wfm.UpsertNonSkillActivityAssociationRes.EntityMapping
-	(*ListConfigEntitiesRes_ClientNodeEntities)(nil),               // 302: api.v1alpha1.wfm.ListConfigEntitiesRes.ClientNodeEntities
-	(*ListConfigEntitiesRes_LocationNodeEntities)(nil),             // 303: api.v1alpha1.wfm.ListConfigEntitiesRes.LocationNodeEntities
-	(*ListConfigEntitiesRes_ProgramNodeEntities)(nil),              // 304: api.v1alpha1.wfm.ListConfigEntitiesRes.ProgramNodeEntities
-	(*ListConfigEntitiesRes_AgentGroupEntities)(nil),               // 305: api.v1alpha1.wfm.ListConfigEntitiesRes.AgentGroupEntities
-	(*ListConfigEntitiesRes_ShiftTemplateEntities)(nil),            // 306: api.v1alpha1.wfm.ListConfigEntitiesRes.ShiftTemplateEntities
-	(*ListConfigEntitiesRes_WFMAgentEntities)(nil),                 // 307: api.v1alpha1.wfm.ListConfigEntitiesRes.WFMAgentEntities
-	(*ListConfigEntitiesRes_PlacementRuleEntities)(nil),            // 308: api.v1alpha1.wfm.ListConfigEntitiesRes.PlacementRuleEntities
-	(*ListConfigEntitiesRes_ConstraintRuleEntities)(nil),           // 309: api.v1alpha1.wfm.ListConfigEntitiesRes.ConstraintRuleEntities
-	(*ListConfigEntitiesRes_NonSkillActivityEntities)(nil),         // 310: api.v1alpha1.wfm.ListConfigEntitiesRes.NonSkillActivityEntities
-	(*ListConfigEntitiesRes_AgentAvailabilityPatternEntities)(nil), // 311: api.v1alpha1.wfm.ListConfigEntitiesRes.AgentAvailabilityPatternEntities
-	(*ListConfigEntitiesRes_OpenTimesPatternEntities)(nil),         // 312: api.v1alpha1.wfm.ListConfigEntitiesRes.OpenTimesPatternEntities
-	(*ListConfigEntitiesRes_SkillProficiencyEntities)(nil),         // 313: api.v1alpha1.wfm.ListConfigEntitiesRes.SkillProficiencyEntities
-	(*ListConfigEntitiesRes_ScheduleScenarioEntities)(nil),         // 314: api.v1alpha1.wfm.ListConfigEntitiesRes.ScheduleScenarioEntities
-	(commons.SkillType_Enum)(0),                                    // 315: api.commons.SkillType.Enum
-	(*timestamppb.Timestamp)(nil),                                  // 316: google.protobuf.Timestamp
-	(*commons.ForecastingParameters)(nil),                          // 317: api.commons.ForecastingParameters
-	(*wrapperspb.FloatValue)(nil),                                  // 318: google.protobuf.FloatValue
-	(*commons.SkillProfileCategory)(nil),                           // 319: api.commons.SkillProfileCategory
-	(*commons.CallProfileGroupCalls)(nil),                          // 320: api.commons.CallProfileGroupCalls
-	(*commons.CallProfileGroupAvgs)(nil),                           // 321: api.commons.CallProfileGroupAvgs
-	(commons.RegressionForecasterModelTypes)(0),                    // 322: api.commons.RegressionForecasterModelTypes
-	(commons.RegressionForecasterAvgsProcessingType)(0),            // 323: api.commons.RegressionForecasterAvgsProcessingType
-	(*commons.ProfileTOD)(nil),                                     // 324: api.commons.ProfileTOD
-	(*commons.ProfileWOMS)(nil),                                    // 325: api.commons.ProfileWOMS
-	(*commons.ProfileDOW)(nil),                                     // 326: api.commons.ProfileDOW
-	(*commons.ProfileMOY)(nil),                                     // 327: api.commons.ProfileMOY
-	(*commons.DatetimeRange)(nil),                                  // 328: api.commons.DatetimeRange
-	(commons.TimeZone)(0),                                          // 329: api.commons.TimeZone
-	(*wrapperspb.Int64Value)(nil),                                  // 330: google.protobuf.Int64Value
-	(commons.ConfigEntityType)(0),                                  // 331: api.commons.ConfigEntityType
-	(commons.ConstraintTimeUnit)(0),                                // 332: api.commons.ConstraintTimeUnit
-	(commons.ConstraintRuleType)(0),                                // 333: api.commons.ConstraintRuleType
-	(commons.ConfigRelationshipType)(0),                            // 334: api.commons.ConfigRelationshipType
-	(commons.DOWPlacementType)(0),                                  // 335: api.commons.DOWPlacementType
-	(commons.DayOfWeek)(0),                                         // 336: api.commons.DayOfWeek
-	(commons.BitmapType)(0),                                        // 337: api.commons.BitmapType
-	(commons.OpenTimesOption)(0),                                   // 338: api.commons.OpenTimesOption
-	(commons.AvailabilityOption)(0),                                // 339: api.commons.AvailabilityOption
-	(commons.DiagnosticLevel)(0),                                   // 340: api.commons.DiagnosticLevel
-	(commons.DiagnosticCode)(0),                                    // 341: api.commons.DiagnosticCode
-	(commons.PerformanceMetricType)(0),                             // 342: api.commons.PerformanceMetricType
-	(commons.ScheduleType)(0),                                      // 343: api.commons.ScheduleType
-	(*commons.ScheduleSelector)(nil),                               // 344: api.commons.ScheduleSelector
-	(commons.SchedulingTargetType)(0),                              // 345: api.commons.SchedulingTargetType
-	(*commons.OptionTypes)(nil),                                    // 346: api.commons.OptionTypes
+	(*TourShiftSegmentConfig)(nil),                           // 293: api.v1alpha1.wfm.TourShiftSegmentConfig
+	(*TourShiftInstanceConfig)(nil),                          // 294: api.v1alpha1.wfm.TourShiftInstanceConfig
+	(*TourWeekPattern)(nil),                                  // 295: api.v1alpha1.wfm.TourWeekPattern
+	(*TourAgentCollection)(nil),                              // 296: api.v1alpha1.wfm.TourAgentCollection
+	(*TourPattern)(nil),                                      // 297: api.v1alpha1.wfm.TourPattern
+	(*CreateTourPatternReq)(nil),                             // 298: api.v1alpha1.wfm.CreateTourPatternReq
+	(*CreateTourPatternRes)(nil),                             // 299: api.v1alpha1.wfm.CreateTourPatternRes
+	(*GetTourPatternReq)(nil),                                // 300: api.v1alpha1.wfm.GetTourPatternReq
+	(*GetTourPatternRes)(nil),                                // 301: api.v1alpha1.wfm.GetTourPatternRes
+	(*DeleteTourPatternReq)(nil),                             // 302: api.v1alpha1.wfm.DeleteTourPatternReq
+	(*DeleteTourPatternRes)(nil),                             // 303: api.v1alpha1.wfm.DeleteTourPatternRes
+	(*CreateTourWeekPatternReq)(nil),                         // 304: api.v1alpha1.wfm.CreateTourWeekPatternReq
+	(*CreateTourWeekPatternRes)(nil),                         // 305: api.v1alpha1.wfm.CreateTourWeekPatternRes
+	(*ListTourWeekPatternsReq)(nil),                          // 306: api.v1alpha1.wfm.ListTourWeekPatternsReq
+	(*ListTourWeekPatternsRes)(nil),                          // 307: api.v1alpha1.wfm.ListTourWeekPatternsRes
+	(*DeleteTourWeekPatternsReq)(nil),                        // 308: api.v1alpha1.wfm.DeleteTourWeekPatternsReq
+	(*DeleteTourWeekPatternsRes)(nil),                        // 309: api.v1alpha1.wfm.DeleteTourWeekPatternsRes
+	(*CreateTourShiftInstanceConfigReq)(nil),                 // 310: api.v1alpha1.wfm.CreateTourShiftInstanceConfigReq
+	(*CreateTourShiftInstanceConfigRes)(nil),                 // 311: api.v1alpha1.wfm.CreateTourShiftInstanceConfigRes
+	(*UpdateTourShiftInstanceConfigReq)(nil),                 // 312: api.v1alpha1.wfm.UpdateTourShiftInstanceConfigReq
+	(*UpdateTourShiftInstanceConfigRes)(nil),                 // 313: api.v1alpha1.wfm.UpdateTourShiftInstanceConfigRes
+	(*ListTourShiftInstanceConfigsReq)(nil),                  // 314: api.v1alpha1.wfm.ListTourShiftInstanceConfigsReq
+	(*ListTourShiftInstanceConfigsRes)(nil),                  // 315: api.v1alpha1.wfm.ListTourShiftInstanceConfigsRes
+	(*DeleteTourShiftInstanceConfigsReq)(nil),                // 316: api.v1alpha1.wfm.DeleteTourShiftInstanceConfigsReq
+	(*DeleteTourShiftInstanceConfigsRes)(nil),                // 317: api.v1alpha1.wfm.DeleteTourShiftInstanceConfigsRes
+	(*CreateTourShiftSegmentConfigReq)(nil),                  // 318: api.v1alpha1.wfm.CreateTourShiftSegmentConfigReq
+	(*CreateTourShiftSegmentConfigRes)(nil),                  // 319: api.v1alpha1.wfm.CreateTourShiftSegmentConfigRes
+	(*UpdateTourShiftSegmentConfigReq)(nil),                  // 320: api.v1alpha1.wfm.UpdateTourShiftSegmentConfigReq
+	(*UpdateTourShiftSegmentConfigRes)(nil),                  // 321: api.v1alpha1.wfm.UpdateTourShiftSegmentConfigRes
+	(*ListTourShiftSegmentConfigsReq)(nil),                   // 322: api.v1alpha1.wfm.ListTourShiftSegmentConfigsReq
+	(*ListTourShiftSegmentConfigsRes)(nil),                   // 323: api.v1alpha1.wfm.ListTourShiftSegmentConfigsRes
+	(*DeleteTourShiftSegmentConfigsReq)(nil),                 // 324: api.v1alpha1.wfm.DeleteTourShiftSegmentConfigsReq
+	(*DeleteTourShiftSegmentConfigsRes)(nil),                 // 325: api.v1alpha1.wfm.DeleteTourShiftSegmentConfigsRes
+	(*CreateTourAgentCollectionReq)(nil),                     // 326: api.v1alpha1.wfm.CreateTourAgentCollectionReq
+	(*CreateTourAgentCollectionRes)(nil),                     // 327: api.v1alpha1.wfm.CreateTourAgentCollectionRes
+	(*UpdateTourAgentCollectionReq)(nil),                     // 328: api.v1alpha1.wfm.UpdateTourAgentCollectionReq
+	(*UpdateTourAgentCollectionRes)(nil),                     // 329: api.v1alpha1.wfm.UpdateTourAgentCollectionRes
+	(*ListTourAgentCollectionsReq)(nil),                      // 330: api.v1alpha1.wfm.ListTourAgentCollectionsReq
+	(*ListTourAgentCollectionsRes)(nil),                      // 331: api.v1alpha1.wfm.ListTourAgentCollectionsRes
+	(*DeleteTourAgentCollectionsReq)(nil),                    // 332: api.v1alpha1.wfm.DeleteTourAgentCollectionsReq
+	(*DeleteTourAgentCollectionsRes)(nil),                    // 333: api.v1alpha1.wfm.DeleteTourAgentCollectionsRes
+	(*CreateTourAgentCollectionWFMAgentsReq)(nil),            // 334: api.v1alpha1.wfm.CreateTourAgentCollectionWFMAgentsReq
+	(*CreateTourAgentCollectionWFMAgentsRes)(nil),            // 335: api.v1alpha1.wfm.CreateTourAgentCollectionWFMAgentsRes
+	(*ListTourAgentCollectionWFMAgentsReq)(nil),              // 336: api.v1alpha1.wfm.ListTourAgentCollectionWFMAgentsReq
+	(*ListTourAgentCollectionWFMAgentsRes)(nil),              // 337: api.v1alpha1.wfm.ListTourAgentCollectionWFMAgentsRes
+	(*DeleteTourAgentCollectionWFMAgentsReq)(nil),            // 338: api.v1alpha1.wfm.DeleteTourAgentCollectionWFMAgentsReq
+	(*DeleteTourAgentCollectionWFMAgentsRes)(nil),            // 339: api.v1alpha1.wfm.DeleteTourAgentCollectionWFMAgentsRes
+	(*UpdateSkillProfileProficienciesReq_Proficiency)(nil),   // 340: api.v1alpha1.wfm.UpdateSkillProfileProficienciesReq.Proficiency
+	(*GetSkillProfileRes_Mapping)(nil),                       // 341: api.v1alpha1.wfm.GetSkillProfileRes.Mapping
+	(*DeleteForecastIntervalsReq_IntervalSids)(nil),          // 342: api.v1alpha1.wfm.DeleteForecastIntervalsReq.IntervalSids
+	(*ListAllWFMAgentsRes_AgentGroupsByAgent)(nil),           // 343: api.v1alpha1.wfm.ListAllWFMAgentsRes.AgentGroupsByAgent
+	nil,                                  // 344: api.v1alpha1.wfm.ListWFMAgentSidsRes.SidsEntry
+	(*DatetimePattern_WeekMap)(nil),      // 345: api.v1alpha1.wfm.DatetimePattern.WeekMap
+	(*DatetimePattern_CalendarItem)(nil), // 346: api.v1alpha1.wfm.DatetimePattern.CalendarItem
+	(*DatetimePattern_WeekMap_WeekMapDOW)(nil),                     // 347: api.v1alpha1.wfm.DatetimePattern.WeekMap.WeekMapDOW
+	(*UpsertNonSkillActivityAssociationRes_EntityMapping)(nil),     // 348: api.v1alpha1.wfm.UpsertNonSkillActivityAssociationRes.EntityMapping
+	(*ListConfigEntitiesRes_ClientNodeEntities)(nil),               // 349: api.v1alpha1.wfm.ListConfigEntitiesRes.ClientNodeEntities
+	(*ListConfigEntitiesRes_LocationNodeEntities)(nil),             // 350: api.v1alpha1.wfm.ListConfigEntitiesRes.LocationNodeEntities
+	(*ListConfigEntitiesRes_ProgramNodeEntities)(nil),              // 351: api.v1alpha1.wfm.ListConfigEntitiesRes.ProgramNodeEntities
+	(*ListConfigEntitiesRes_AgentGroupEntities)(nil),               // 352: api.v1alpha1.wfm.ListConfigEntitiesRes.AgentGroupEntities
+	(*ListConfigEntitiesRes_ShiftTemplateEntities)(nil),            // 353: api.v1alpha1.wfm.ListConfigEntitiesRes.ShiftTemplateEntities
+	(*ListConfigEntitiesRes_WFMAgentEntities)(nil),                 // 354: api.v1alpha1.wfm.ListConfigEntitiesRes.WFMAgentEntities
+	(*ListConfigEntitiesRes_PlacementRuleEntities)(nil),            // 355: api.v1alpha1.wfm.ListConfigEntitiesRes.PlacementRuleEntities
+	(*ListConfigEntitiesRes_ConstraintRuleEntities)(nil),           // 356: api.v1alpha1.wfm.ListConfigEntitiesRes.ConstraintRuleEntities
+	(*ListConfigEntitiesRes_NonSkillActivityEntities)(nil),         // 357: api.v1alpha1.wfm.ListConfigEntitiesRes.NonSkillActivityEntities
+	(*ListConfigEntitiesRes_AgentAvailabilityPatternEntities)(nil), // 358: api.v1alpha1.wfm.ListConfigEntitiesRes.AgentAvailabilityPatternEntities
+	(*ListConfigEntitiesRes_OpenTimesPatternEntities)(nil),         // 359: api.v1alpha1.wfm.ListConfigEntitiesRes.OpenTimesPatternEntities
+	(*ListConfigEntitiesRes_SkillProficiencyEntities)(nil),         // 360: api.v1alpha1.wfm.ListConfigEntitiesRes.SkillProficiencyEntities
+	(*ListConfigEntitiesRes_ScheduleScenarioEntities)(nil),         // 361: api.v1alpha1.wfm.ListConfigEntitiesRes.ScheduleScenarioEntities
+	(*ListTourAgentCollectionWFMAgentsRes_SidMapping)(nil),         // 362: api.v1alpha1.wfm.ListTourAgentCollectionWFMAgentsRes.SidMapping
+	(commons.SkillType_Enum)(0),                                    // 363: api.commons.SkillType.Enum
+	(*timestamppb.Timestamp)(nil),                                  // 364: google.protobuf.Timestamp
+	(*commons.ForecastingParameters)(nil),                          // 365: api.commons.ForecastingParameters
+	(*wrapperspb.FloatValue)(nil),                                  // 366: google.protobuf.FloatValue
+	(*commons.SkillProfileCategory)(nil),                           // 367: api.commons.SkillProfileCategory
+	(*commons.CallProfileGroupCalls)(nil),                          // 368: api.commons.CallProfileGroupCalls
+	(*commons.CallProfileGroupAvgs)(nil),                           // 369: api.commons.CallProfileGroupAvgs
+	(commons.RegressionForecasterModelTypes)(0),                    // 370: api.commons.RegressionForecasterModelTypes
+	(commons.RegressionForecasterAvgsProcessingType)(0),            // 371: api.commons.RegressionForecasterAvgsProcessingType
+	(*commons.ProfileTOD)(nil),                                     // 372: api.commons.ProfileTOD
+	(*commons.ProfileWOMS)(nil),                                    // 373: api.commons.ProfileWOMS
+	(*commons.ProfileDOW)(nil),                                     // 374: api.commons.ProfileDOW
+	(*commons.ProfileMOY)(nil),                                     // 375: api.commons.ProfileMOY
+	(*commons.DatetimeRange)(nil),                                  // 376: api.commons.DatetimeRange
+	(commons.TimeZone)(0),                                          // 377: api.commons.TimeZone
+	(*wrapperspb.Int64Value)(nil),                                  // 378: google.protobuf.Int64Value
+	(commons.ConfigEntityType)(0),                                  // 379: api.commons.ConfigEntityType
+	(commons.ConstraintTimeUnit)(0),                                // 380: api.commons.ConstraintTimeUnit
+	(commons.ConstraintRuleType)(0),                                // 381: api.commons.ConstraintRuleType
+	(commons.ConfigRelationshipType)(0),                            // 382: api.commons.ConfigRelationshipType
+	(commons.DOWPlacementType)(0),                                  // 383: api.commons.DOWPlacementType
+	(commons.DayOfWeek)(0),                                         // 384: api.commons.DayOfWeek
+	(commons.BitmapType)(0),                                        // 385: api.commons.BitmapType
+	(commons.OpenTimesOption)(0),                                   // 386: api.commons.OpenTimesOption
+	(commons.AvailabilityOption)(0),                                // 387: api.commons.AvailabilityOption
+	(commons.DiagnosticLevel)(0),                                   // 388: api.commons.DiagnosticLevel
+	(commons.DiagnosticCode)(0),                                    // 389: api.commons.DiagnosticCode
+	(commons.PerformanceMetricType)(0),                             // 390: api.commons.PerformanceMetricType
+	(commons.ScheduleType)(0),                                      // 391: api.commons.ScheduleType
+	(*commons.ScheduleSelector)(nil),                               // 392: api.commons.ScheduleSelector
+	(commons.SchedulingTargetType)(0),                              // 393: api.commons.SchedulingTargetType
+	(*commons.OptionTypes)(nil),                                    // 394: api.commons.OptionTypes
 }
 var file_api_v1alpha1_wfm_wfm_proto_depIdxs = []int32{
-	315, // 0: api.v1alpha1.wfm.Skill.client_skill_type:type_name -> api.commons.SkillType.Enum
-	316, // 1: api.v1alpha1.wfm.Skill.delete_date:type_name -> google.protobuf.Timestamp
-	316, // 2: api.v1alpha1.wfm.SkillProfile.create_date:type_name -> google.protobuf.Timestamp
-	316, // 3: api.v1alpha1.wfm.SkillProfile.inactive_as_of_date:type_name -> google.protobuf.Timestamp
+	363, // 0: api.v1alpha1.wfm.Skill.client_skill_type:type_name -> api.commons.SkillType.Enum
+	364, // 1: api.v1alpha1.wfm.Skill.delete_date:type_name -> google.protobuf.Timestamp
+	364, // 2: api.v1alpha1.wfm.SkillProfile.create_date:type_name -> google.protobuf.Timestamp
+	364, // 3: api.v1alpha1.wfm.SkillProfile.inactive_as_of_date:type_name -> google.protobuf.Timestamp
 	1,   // 4: api.v1alpha1.wfm.SkillProfile.skills:type_name -> api.v1alpha1.wfm.Skill
-	316, // 5: api.v1alpha1.wfm.SkillProfileGroup.create_time:type_name -> google.protobuf.Timestamp
+	364, // 5: api.v1alpha1.wfm.SkillProfileGroup.create_time:type_name -> google.protobuf.Timestamp
 	2,   // 6: api.v1alpha1.wfm.ListSkillProfilesRes.skill_profiles:type_name -> api.v1alpha1.wfm.SkillProfile
-	293, // 7: api.v1alpha1.wfm.UpdateSkillProfileProficienciesReq.proficiencies:type_name -> api.v1alpha1.wfm.UpdateSkillProfileProficienciesReq.Proficiency
+	340, // 7: api.v1alpha1.wfm.UpdateSkillProfileProficienciesReq.proficiencies:type_name -> api.v1alpha1.wfm.UpdateSkillProfileProficienciesReq.Proficiency
 	2,   // 8: api.v1alpha1.wfm.GetSkillProfileRes.skill_profile:type_name -> api.v1alpha1.wfm.SkillProfile
-	294, // 9: api.v1alpha1.wfm.GetSkillProfileRes.mappings:type_name -> api.v1alpha1.wfm.GetSkillProfileRes.Mapping
-	316, // 10: api.v1alpha1.wfm.GetLastSkillProfileResyncDateRes.resync_date:type_name -> google.protobuf.Timestamp
-	317, // 11: api.v1alpha1.wfm.UpsertForecastingParametersReq.forecasting_parameters:type_name -> api.commons.ForecastingParameters
-	317, // 12: api.v1alpha1.wfm.GetForecastingParametersRes.forecasting_parameters:type_name -> api.commons.ForecastingParameters
-	316, // 13: api.v1alpha1.wfm.HistoricalDataInterval.start_datetime:type_name -> google.protobuf.Timestamp
-	318, // 14: api.v1alpha1.wfm.HistoricalDataInterval.average_speed_of_answer_in_seconds:type_name -> google.protobuf.FloatValue
-	318, // 15: api.v1alpha1.wfm.HistoricalDataInterval.average_handle_time_in_seconds:type_name -> google.protobuf.FloatValue
-	318, // 16: api.v1alpha1.wfm.HistoricalDataInterval.average_after_call_work_in_seconds:type_name -> google.protobuf.FloatValue
-	318, // 17: api.v1alpha1.wfm.HistoricalDataInterval.average_time_to_abort_in_seconds:type_name -> google.protobuf.FloatValue
-	318, // 18: api.v1alpha1.wfm.HistoricalDataInterval.original_average_speed_of_answer_in_seconds:type_name -> google.protobuf.FloatValue
-	318, // 19: api.v1alpha1.wfm.HistoricalDataInterval.original_average_handle_time_in_seconds:type_name -> google.protobuf.FloatValue
-	318, // 20: api.v1alpha1.wfm.HistoricalDataInterval.original_average_after_call_work_in_seconds:type_name -> google.protobuf.FloatValue
-	318, // 21: api.v1alpha1.wfm.HistoricalDataInterval.original_average_time_to_abort_in_seconds:type_name -> google.protobuf.FloatValue
-	319, // 22: api.v1alpha1.wfm.HistoricalDataInterval.skill_profile_category:type_name -> api.commons.SkillProfileCategory
-	319, // 23: api.v1alpha1.wfm.ListHistoricalDataReq.skill_profile_category:type_name -> api.commons.SkillProfileCategory
+	341, // 9: api.v1alpha1.wfm.GetSkillProfileRes.mappings:type_name -> api.v1alpha1.wfm.GetSkillProfileRes.Mapping
+	364, // 10: api.v1alpha1.wfm.GetLastSkillProfileResyncDateRes.resync_date:type_name -> google.protobuf.Timestamp
+	365, // 11: api.v1alpha1.wfm.UpsertForecastingParametersReq.forecasting_parameters:type_name -> api.commons.ForecastingParameters
+	365, // 12: api.v1alpha1.wfm.GetForecastingParametersRes.forecasting_parameters:type_name -> api.commons.ForecastingParameters
+	364, // 13: api.v1alpha1.wfm.HistoricalDataInterval.start_datetime:type_name -> google.protobuf.Timestamp
+	366, // 14: api.v1alpha1.wfm.HistoricalDataInterval.average_speed_of_answer_in_seconds:type_name -> google.protobuf.FloatValue
+	366, // 15: api.v1alpha1.wfm.HistoricalDataInterval.average_handle_time_in_seconds:type_name -> google.protobuf.FloatValue
+	366, // 16: api.v1alpha1.wfm.HistoricalDataInterval.average_after_call_work_in_seconds:type_name -> google.protobuf.FloatValue
+	366, // 17: api.v1alpha1.wfm.HistoricalDataInterval.average_time_to_abort_in_seconds:type_name -> google.protobuf.FloatValue
+	366, // 18: api.v1alpha1.wfm.HistoricalDataInterval.original_average_speed_of_answer_in_seconds:type_name -> google.protobuf.FloatValue
+	366, // 19: api.v1alpha1.wfm.HistoricalDataInterval.original_average_handle_time_in_seconds:type_name -> google.protobuf.FloatValue
+	366, // 20: api.v1alpha1.wfm.HistoricalDataInterval.original_average_after_call_work_in_seconds:type_name -> google.protobuf.FloatValue
+	366, // 21: api.v1alpha1.wfm.HistoricalDataInterval.original_average_time_to_abort_in_seconds:type_name -> google.protobuf.FloatValue
+	367, // 22: api.v1alpha1.wfm.HistoricalDataInterval.skill_profile_category:type_name -> api.commons.SkillProfileCategory
+	367, // 23: api.v1alpha1.wfm.ListHistoricalDataReq.skill_profile_category:type_name -> api.commons.SkillProfileCategory
 	20,  // 24: api.v1alpha1.wfm.ListHistoricalDataRes.historical_data_intervals:type_name -> api.v1alpha1.wfm.HistoricalDataInterval
 	20,  // 25: api.v1alpha1.wfm.UpsertHistoricalDataDeltaReq.delta:type_name -> api.v1alpha1.wfm.HistoricalDataInterval
 	20,  // 26: api.v1alpha1.wfm.UpsertHistoricalDataDeltaRes.delta:type_name -> api.v1alpha1.wfm.HistoricalDataInterval
 	20,  // 27: api.v1alpha1.wfm.UpsertHistoricalDataDeltasReq.deltas:type_name -> api.v1alpha1.wfm.HistoricalDataInterval
 	1,   // 28: api.v1alpha1.wfm.ListSkillsRes.skills:type_name -> api.v1alpha1.wfm.Skill
-	320, // 29: api.v1alpha1.wfm.CallProfileTemplate.total_calls_profile:type_name -> api.commons.CallProfileGroupCalls
-	320, // 30: api.v1alpha1.wfm.CallProfileTemplate.total_abandoned_calls_profile:type_name -> api.commons.CallProfileGroupCalls
-	321, // 31: api.v1alpha1.wfm.CallProfileTemplate.average_speed_of_answer_profile:type_name -> api.commons.CallProfileGroupAvgs
-	321, // 32: api.v1alpha1.wfm.CallProfileTemplate.average_handle_time_profile:type_name -> api.commons.CallProfileGroupAvgs
-	321, // 33: api.v1alpha1.wfm.CallProfileTemplate.average_after_call_work_profile:type_name -> api.commons.CallProfileGroupAvgs
-	321, // 34: api.v1alpha1.wfm.CallProfileTemplate.average_time_to_abort_profile:type_name -> api.commons.CallProfileGroupAvgs
+	368, // 29: api.v1alpha1.wfm.CallProfileTemplate.total_calls_profile:type_name -> api.commons.CallProfileGroupCalls
+	368, // 30: api.v1alpha1.wfm.CallProfileTemplate.total_abandoned_calls_profile:type_name -> api.commons.CallProfileGroupCalls
+	369, // 31: api.v1alpha1.wfm.CallProfileTemplate.average_speed_of_answer_profile:type_name -> api.commons.CallProfileGroupAvgs
+	369, // 32: api.v1alpha1.wfm.CallProfileTemplate.average_handle_time_profile:type_name -> api.commons.CallProfileGroupAvgs
+	369, // 33: api.v1alpha1.wfm.CallProfileTemplate.average_after_call_work_profile:type_name -> api.commons.CallProfileGroupAvgs
+	369, // 34: api.v1alpha1.wfm.CallProfileTemplate.average_time_to_abort_profile:type_name -> api.commons.CallProfileGroupAvgs
 	29,  // 35: api.v1alpha1.wfm.BuildCallProfileTemplateForSkillProfileRes.call_profile_template:type_name -> api.v1alpha1.wfm.CallProfileTemplate
-	319, // 36: api.v1alpha1.wfm.BuildCallProfileTemplateReq.skill_profile_category:type_name -> api.commons.SkillProfileCategory
+	367, // 36: api.v1alpha1.wfm.BuildCallProfileTemplateReq.skill_profile_category:type_name -> api.commons.SkillProfileCategory
 	29,  // 37: api.v1alpha1.wfm.BuildCallProfileTemplateRes.call_profile_template:type_name -> api.v1alpha1.wfm.CallProfileTemplate
-	322, // 38: api.v1alpha1.wfm.GetAvailableRegressionForecasterModelTypesRes.model_types:type_name -> api.commons.RegressionForecasterModelTypes
+	370, // 38: api.v1alpha1.wfm.GetAvailableRegressionForecasterModelTypesRes.model_types:type_name -> api.commons.RegressionForecasterModelTypes
 	3,   // 39: api.v1alpha1.wfm.CreateSkillProfileGroupReq.skill_profile_group:type_name -> api.v1alpha1.wfm.SkillProfileGroup
 	3,   // 40: api.v1alpha1.wfm.UpdateSkillProfileGroupReq.skill_profile_group:type_name -> api.v1alpha1.wfm.SkillProfileGroup
 	3,   // 41: api.v1alpha1.wfm.ListSkillProfileGroupsRes.skill_profile_groups:type_name -> api.v1alpha1.wfm.SkillProfileGroup
-	316, // 42: api.v1alpha1.wfm.DeleteHistoricalDataDeltasReq.start_datetimes:type_name -> google.protobuf.Timestamp
+	364, // 42: api.v1alpha1.wfm.DeleteHistoricalDataDeltasReq.start_datetimes:type_name -> google.protobuf.Timestamp
 	2,   // 43: api.v1alpha1.wfm.ListTopSkillProfilesRes.skill_profiles:type_name -> api.v1alpha1.wfm.SkillProfile
 	29,  // 44: api.v1alpha1.wfm.BuildProfileForecastByIntervalReq.call_profile_template:type_name -> api.v1alpha1.wfm.CallProfileTemplate
-	319, // 45: api.v1alpha1.wfm.BuildProfileForecastByIntervalReq.skill_profile_category:type_name -> api.commons.SkillProfileCategory
-	316, // 46: api.v1alpha1.wfm.CallDataByInterval.start_datetime:type_name -> google.protobuf.Timestamp
-	319, // 47: api.v1alpha1.wfm.CallDataByInterval.skill_profile_category:type_name -> api.commons.SkillProfileCategory
+	367, // 45: api.v1alpha1.wfm.BuildProfileForecastByIntervalReq.skill_profile_category:type_name -> api.commons.SkillProfileCategory
+	364, // 46: api.v1alpha1.wfm.CallDataByInterval.start_datetime:type_name -> google.protobuf.Timestamp
+	367, // 47: api.v1alpha1.wfm.CallDataByInterval.skill_profile_category:type_name -> api.commons.SkillProfileCategory
 	29,  // 48: api.v1alpha1.wfm.BuildProfileForecastByIntervalWithStatsReq.call_profile_template:type_name -> api.v1alpha1.wfm.CallProfileTemplate
-	319, // 49: api.v1alpha1.wfm.BuildProfileForecastByIntervalWithStatsReq.skill_profile_category:type_name -> api.commons.SkillProfileCategory
+	367, // 49: api.v1alpha1.wfm.BuildProfileForecastByIntervalWithStatsReq.skill_profile_category:type_name -> api.commons.SkillProfileCategory
 	55,  // 50: api.v1alpha1.wfm.BuildProfileForecastByIntervalWithStatsRes.call_data:type_name -> api.v1alpha1.wfm.CallDataByInterval
 	73,  // 51: api.v1alpha1.wfm.BuildProfileForecastByIntervalWithStatsRes.forecast_stats:type_name -> api.v1alpha1.wfm.GetForecastStatisticsRes
 	29,  // 52: api.v1alpha1.wfm.UpsertProfileForecastReq.call_profile_template:type_name -> api.v1alpha1.wfm.CallProfileTemplate
-	319, // 53: api.v1alpha1.wfm.UpsertProfileForecastReq.skill_profile_category:type_name -> api.commons.SkillProfileCategory
+	367, // 53: api.v1alpha1.wfm.UpsertProfileForecastReq.skill_profile_category:type_name -> api.commons.SkillProfileCategory
 	29,  // 54: api.v1alpha1.wfm.CreateCallProfileTemplateReq.call_profile_template:type_name -> api.v1alpha1.wfm.CallProfileTemplate
-	322, // 55: api.v1alpha1.wfm.RegressionTemplate.model_type:type_name -> api.commons.RegressionForecasterModelTypes
-	323, // 56: api.v1alpha1.wfm.RegressionTemplate.avgs_processing_type:type_name -> api.commons.RegressionForecasterAvgsProcessingType
+	370, // 55: api.v1alpha1.wfm.RegressionTemplate.model_type:type_name -> api.commons.RegressionForecasterModelTypes
+	371, // 56: api.v1alpha1.wfm.RegressionTemplate.avgs_processing_type:type_name -> api.commons.RegressionForecasterAvgsProcessingType
 	64,  // 57: api.v1alpha1.wfm.CreateRegressionTemplateReq.regression_template:type_name -> api.v1alpha1.wfm.RegressionTemplate
 	64,  // 58: api.v1alpha1.wfm.ListRegressionTemplatesRes.regression_templates:type_name -> api.v1alpha1.wfm.RegressionTemplate
 	64,  // 59: api.v1alpha1.wfm.BuildRegressionForecastByIntervalReq.regression_template:type_name -> api.v1alpha1.wfm.RegressionTemplate
@@ -25546,53 +28653,53 @@ var file_api_v1alpha1_wfm_wfm_proto_depIdxs = []int32{
 	55,  // 61: api.v1alpha1.wfm.BuildRegressionForecastByIntervalWithStatsRes.call_data:type_name -> api.v1alpha1.wfm.CallDataByInterval
 	73,  // 62: api.v1alpha1.wfm.BuildRegressionForecastByIntervalWithStatsRes.forecast_stats:type_name -> api.v1alpha1.wfm.GetForecastStatisticsRes
 	29,  // 63: api.v1alpha1.wfm.ListCallProfileTemplatesRes.call_profile_templates:type_name -> api.v1alpha1.wfm.CallProfileTemplate
-	319, // 64: api.v1alpha1.wfm.ListForecastIntervalsReq.skill_profile_category:type_name -> api.commons.SkillProfileCategory
+	367, // 64: api.v1alpha1.wfm.ListForecastIntervalsReq.skill_profile_category:type_name -> api.commons.SkillProfileCategory
 	64,  // 65: api.v1alpha1.wfm.UpsertRegressionForecastReq.regression_template:type_name -> api.v1alpha1.wfm.RegressionTemplate
 	55,  // 66: api.v1alpha1.wfm.UpsertForecastDataDeltaReq.delta:type_name -> api.v1alpha1.wfm.CallDataByInterval
 	55,  // 67: api.v1alpha1.wfm.UpsertForecastDataDeltaRes.delta:type_name -> api.v1alpha1.wfm.CallDataByInterval
 	55,  // 68: api.v1alpha1.wfm.UpsertForecastDataDeltasReq.deltas:type_name -> api.v1alpha1.wfm.CallDataByInterval
-	295, // 69: api.v1alpha1.wfm.DeleteForecastIntervalsReq.forecast_interval_sids:type_name -> api.v1alpha1.wfm.DeleteForecastIntervalsReq.IntervalSids
-	319, // 70: api.v1alpha1.wfm.DeleteForecastIntervalsReq.skill_profile_category:type_name -> api.commons.SkillProfileCategory
+	342, // 69: api.v1alpha1.wfm.DeleteForecastIntervalsReq.forecast_interval_sids:type_name -> api.v1alpha1.wfm.DeleteForecastIntervalsReq.IntervalSids
+	367, // 70: api.v1alpha1.wfm.DeleteForecastIntervalsReq.skill_profile_category:type_name -> api.commons.SkillProfileCategory
 	0,   // 71: api.v1alpha1.wfm.DeleteForecastIntervalsReq.forecast_interval_delete_type:type_name -> api.v1alpha1.wfm.DeleteForecastIntervalsReq.ForecastIntervalDeleteType
 	20,  // 72: api.v1alpha1.wfm.ListHistoricalDataForAllSkillProfilesRes.history:type_name -> api.v1alpha1.wfm.HistoricalDataInterval
-	324, // 73: api.v1alpha1.wfm.BuildDOWAndMOYProfilesReq.profile_tod:type_name -> api.commons.ProfileTOD
-	325, // 74: api.v1alpha1.wfm.BuildDOWAndMOYProfilesReq.profile_woms:type_name -> api.commons.ProfileWOMS
-	326, // 75: api.v1alpha1.wfm.BuildDOWAndMOYProfilesRes.profile_dow:type_name -> api.commons.ProfileDOW
-	327, // 76: api.v1alpha1.wfm.BuildDOWAndMOYProfilesRes.profile_moy:type_name -> api.commons.ProfileMOY
-	328, // 77: api.v1alpha1.wfm.UpdateSkillProfileAveragesUsingHistoricalDataReq.datetime_range:type_name -> api.commons.DatetimeRange
-	316, // 78: api.v1alpha1.wfm.CallCenterNode.datetime_set_to_inactive:type_name -> google.protobuf.Timestamp
-	329, // 79: api.v1alpha1.wfm.CallCenterNode.time_zone_val:type_name -> api.commons.TimeZone
+	372, // 73: api.v1alpha1.wfm.BuildDOWAndMOYProfilesReq.profile_tod:type_name -> api.commons.ProfileTOD
+	373, // 74: api.v1alpha1.wfm.BuildDOWAndMOYProfilesReq.profile_woms:type_name -> api.commons.ProfileWOMS
+	374, // 75: api.v1alpha1.wfm.BuildDOWAndMOYProfilesRes.profile_dow:type_name -> api.commons.ProfileDOW
+	375, // 76: api.v1alpha1.wfm.BuildDOWAndMOYProfilesRes.profile_moy:type_name -> api.commons.ProfileMOY
+	376, // 77: api.v1alpha1.wfm.UpdateSkillProfileAveragesUsingHistoricalDataReq.datetime_range:type_name -> api.commons.DatetimeRange
+	364, // 78: api.v1alpha1.wfm.CallCenterNode.datetime_set_to_inactive:type_name -> google.protobuf.Timestamp
+	377, // 79: api.v1alpha1.wfm.CallCenterNode.time_zone_val:type_name -> api.commons.TimeZone
 	99,  // 80: api.v1alpha1.wfm.CallCenterNode.member_client_nodes:type_name -> api.v1alpha1.wfm.ClientNode
 	124, // 81: api.v1alpha1.wfm.CallCenterNode.member_non_skill_activities:type_name -> api.v1alpha1.wfm.NonSkillActivity
 	180, // 82: api.v1alpha1.wfm.CallCenterNode.member_open_times_patterns:type_name -> api.v1alpha1.wfm.OpenTimesPattern
 	189, // 83: api.v1alpha1.wfm.CallCenterNode.member_agent_availability_patterns:type_name -> api.v1alpha1.wfm.AgentAvailabilityPattern
 	117, // 84: api.v1alpha1.wfm.CallCenterNode.member_constraint_rules:type_name -> api.v1alpha1.wfm.ConstraintRule
 	136, // 85: api.v1alpha1.wfm.CallCenterNode.member_agent_groups:type_name -> api.v1alpha1.wfm.AgentGroup
-	330, // 86: api.v1alpha1.wfm.CallCenterNode.origin_sid:type_name -> google.protobuf.Int64Value
+	378, // 86: api.v1alpha1.wfm.CallCenterNode.origin_sid:type_name -> google.protobuf.Int64Value
 	96,  // 87: api.v1alpha1.wfm.UpdateCallCenterNodeReq.node:type_name -> api.v1alpha1.wfm.CallCenterNode
-	316, // 88: api.v1alpha1.wfm.ClientNode.datetime_set_to_inactive:type_name -> google.protobuf.Timestamp
-	329, // 89: api.v1alpha1.wfm.ClientNode.time_zone_val:type_name -> api.commons.TimeZone
+	364, // 88: api.v1alpha1.wfm.ClientNode.datetime_set_to_inactive:type_name -> google.protobuf.Timestamp
+	377, // 89: api.v1alpha1.wfm.ClientNode.time_zone_val:type_name -> api.commons.TimeZone
 	104, // 90: api.v1alpha1.wfm.ClientNode.member_location_nodes:type_name -> api.v1alpha1.wfm.LocationNode
 	124, // 91: api.v1alpha1.wfm.ClientNode.member_non_skill_activities:type_name -> api.v1alpha1.wfm.NonSkillActivity
 	180, // 92: api.v1alpha1.wfm.ClientNode.member_open_times_patterns:type_name -> api.v1alpha1.wfm.OpenTimesPattern
 	189, // 93: api.v1alpha1.wfm.ClientNode.member_agent_availability_patterns:type_name -> api.v1alpha1.wfm.AgentAvailabilityPattern
 	117, // 94: api.v1alpha1.wfm.ClientNode.member_constraint_rules:type_name -> api.v1alpha1.wfm.ConstraintRule
 	136, // 95: api.v1alpha1.wfm.ClientNode.member_agent_groups:type_name -> api.v1alpha1.wfm.AgentGroup
-	330, // 96: api.v1alpha1.wfm.ClientNode.origin_sid:type_name -> google.protobuf.Int64Value
+	378, // 96: api.v1alpha1.wfm.ClientNode.origin_sid:type_name -> google.protobuf.Int64Value
 	99,  // 97: api.v1alpha1.wfm.CreateClientNodeReq.node:type_name -> api.v1alpha1.wfm.ClientNode
 	99,  // 98: api.v1alpha1.wfm.UpdateClientNodeReq.node:type_name -> api.v1alpha1.wfm.ClientNode
-	316, // 99: api.v1alpha1.wfm.LocationNode.datetime_set_to_inactive:type_name -> google.protobuf.Timestamp
-	329, // 100: api.v1alpha1.wfm.LocationNode.time_zone_val:type_name -> api.commons.TimeZone
+	364, // 99: api.v1alpha1.wfm.LocationNode.datetime_set_to_inactive:type_name -> google.protobuf.Timestamp
+	377, // 100: api.v1alpha1.wfm.LocationNode.time_zone_val:type_name -> api.commons.TimeZone
 	109, // 101: api.v1alpha1.wfm.LocationNode.member_program_nodes:type_name -> api.v1alpha1.wfm.ProgramNode
 	124, // 102: api.v1alpha1.wfm.LocationNode.member_non_skill_activities:type_name -> api.v1alpha1.wfm.NonSkillActivity
 	180, // 103: api.v1alpha1.wfm.LocationNode.member_open_times_patterns:type_name -> api.v1alpha1.wfm.OpenTimesPattern
 	189, // 104: api.v1alpha1.wfm.LocationNode.member_agent_availability_patterns:type_name -> api.v1alpha1.wfm.AgentAvailabilityPattern
 	117, // 105: api.v1alpha1.wfm.LocationNode.member_constraint_rules:type_name -> api.v1alpha1.wfm.ConstraintRule
 	136, // 106: api.v1alpha1.wfm.LocationNode.member_agent_groups:type_name -> api.v1alpha1.wfm.AgentGroup
-	330, // 107: api.v1alpha1.wfm.LocationNode.origin_sid:type_name -> google.protobuf.Int64Value
+	378, // 107: api.v1alpha1.wfm.LocationNode.origin_sid:type_name -> google.protobuf.Int64Value
 	104, // 108: api.v1alpha1.wfm.CreateLocationNodeReq.node:type_name -> api.v1alpha1.wfm.LocationNode
 	104, // 109: api.v1alpha1.wfm.UpdateLocationNodeReq.location_node:type_name -> api.v1alpha1.wfm.LocationNode
-	316, // 110: api.v1alpha1.wfm.ProgramNode.datetime_set_to_inactive:type_name -> google.protobuf.Timestamp
+	364, // 110: api.v1alpha1.wfm.ProgramNode.datetime_set_to_inactive:type_name -> google.protobuf.Timestamp
 	163, // 111: api.v1alpha1.wfm.ProgramNode.member_shift_templates:type_name -> api.v1alpha1.wfm.ShiftTemplate
 	124, // 112: api.v1alpha1.wfm.ProgramNode.member_non_skill_activities:type_name -> api.v1alpha1.wfm.NonSkillActivity
 	180, // 113: api.v1alpha1.wfm.ProgramNode.member_open_times_patterns:type_name -> api.v1alpha1.wfm.OpenTimesPattern
@@ -25600,55 +28707,55 @@ var file_api_v1alpha1_wfm_wfm_proto_depIdxs = []int32{
 	117, // 115: api.v1alpha1.wfm.ProgramNode.member_constraint_rules:type_name -> api.v1alpha1.wfm.ConstraintRule
 	136, // 116: api.v1alpha1.wfm.ProgramNode.member_agent_groups:type_name -> api.v1alpha1.wfm.AgentGroup
 	201, // 117: api.v1alpha1.wfm.ProgramNode.member_skill_proficiencies:type_name -> api.v1alpha1.wfm.SkillProficiency
-	330, // 118: api.v1alpha1.wfm.ProgramNode.origin_sid:type_name -> google.protobuf.Int64Value
+	378, // 118: api.v1alpha1.wfm.ProgramNode.origin_sid:type_name -> google.protobuf.Int64Value
 	109, // 119: api.v1alpha1.wfm.CreateProgramNodeReq.node:type_name -> api.v1alpha1.wfm.ProgramNode
 	109, // 120: api.v1alpha1.wfm.UpdateProgramNodeReq.program_node:type_name -> api.v1alpha1.wfm.ProgramNode
 	109, // 121: api.v1alpha1.wfm.ListProgramNodesBySidRes.program_nodes:type_name -> api.v1alpha1.wfm.ProgramNode
-	331, // 122: api.v1alpha1.wfm.ParentEntity.parent_type:type_name -> api.commons.ConfigEntityType
+	379, // 122: api.v1alpha1.wfm.ParentEntity.parent_type:type_name -> api.commons.ConfigEntityType
 	116, // 123: api.v1alpha1.wfm.ConstraintRule.parent_entity:type_name -> api.v1alpha1.wfm.ParentEntity
-	332, // 124: api.v1alpha1.wfm.ConstraintRule.val_unit:type_name -> api.commons.ConstraintTimeUnit
-	332, // 125: api.v1alpha1.wfm.ConstraintRule.per_unit:type_name -> api.commons.ConstraintTimeUnit
-	333, // 126: api.v1alpha1.wfm.ConstraintRule.rule_type:type_name -> api.commons.ConstraintRuleType
+	380, // 124: api.v1alpha1.wfm.ConstraintRule.val_unit:type_name -> api.commons.ConstraintTimeUnit
+	380, // 125: api.v1alpha1.wfm.ConstraintRule.per_unit:type_name -> api.commons.ConstraintTimeUnit
+	381, // 126: api.v1alpha1.wfm.ConstraintRule.rule_type:type_name -> api.commons.ConstraintRuleType
 	133, // 127: api.v1alpha1.wfm.ConstraintRule.scheduling_activity:type_name -> api.v1alpha1.wfm.SchedulingActivity
 	201, // 128: api.v1alpha1.wfm.ConstraintRule.skill_proficiency:type_name -> api.v1alpha1.wfm.SkillProficiency
 	117, // 129: api.v1alpha1.wfm.CreateConstraintRuleReq.constraint_rule:type_name -> api.v1alpha1.wfm.ConstraintRule
 	117, // 130: api.v1alpha1.wfm.UpdateConstraintRuleReq.constraint_rule:type_name -> api.v1alpha1.wfm.ConstraintRule
-	316, // 131: api.v1alpha1.wfm.NonSkillActivity.datetime_set_to_inactive:type_name -> google.protobuf.Timestamp
+	364, // 131: api.v1alpha1.wfm.NonSkillActivity.datetime_set_to_inactive:type_name -> google.protobuf.Timestamp
 	116, // 132: api.v1alpha1.wfm.NonSkillActivity.inherited_from_entity:type_name -> api.v1alpha1.wfm.ParentEntity
 	124, // 133: api.v1alpha1.wfm.CreateNonSkillActivityReq.non_skill_activity:type_name -> api.v1alpha1.wfm.NonSkillActivity
 	124, // 134: api.v1alpha1.wfm.UpdateNonSkillActivityReq.non_skill_activity:type_name -> api.v1alpha1.wfm.NonSkillActivity
 	124, // 135: api.v1alpha1.wfm.ListNonSkillActivitiesRes.non_skill_activities:type_name -> api.v1alpha1.wfm.NonSkillActivity
 	116, // 136: api.v1alpha1.wfm.ListNonSkillActivityAssociationsReq.associated_entity:type_name -> api.v1alpha1.wfm.ParentEntity
-	334, // 137: api.v1alpha1.wfm.ListNonSkillActivityAssociationsReq.relationship_type:type_name -> api.commons.ConfigRelationshipType
-	330, // 138: api.v1alpha1.wfm.SchedulingActivity.activity_sid:type_name -> google.protobuf.Int64Value
+	382, // 137: api.v1alpha1.wfm.ListNonSkillActivityAssociationsReq.relationship_type:type_name -> api.commons.ConfigRelationshipType
+	378, // 138: api.v1alpha1.wfm.SchedulingActivity.activity_sid:type_name -> google.protobuf.Int64Value
 	124, // 139: api.v1alpha1.wfm.SchedulingActivity.member_non_skill_activity:type_name -> api.v1alpha1.wfm.NonSkillActivity
 	116, // 140: api.v1alpha1.wfm.ListCandidateSchedulingActivitiesReq.parent_of_rule:type_name -> api.v1alpha1.wfm.ParentEntity
 	133, // 141: api.v1alpha1.wfm.ListCandidateSchedulingActivitiesRes.scheduling_activities:type_name -> api.v1alpha1.wfm.SchedulingActivity
 	116, // 142: api.v1alpha1.wfm.AgentGroup.parent_entity:type_name -> api.v1alpha1.wfm.ParentEntity
-	316, // 143: api.v1alpha1.wfm.AgentGroup.datetime_set_to_inactive:type_name -> google.protobuf.Timestamp
+	364, // 143: api.v1alpha1.wfm.AgentGroup.datetime_set_to_inactive:type_name -> google.protobuf.Timestamp
 	117, // 144: api.v1alpha1.wfm.AgentGroup.member_constraint_rules:type_name -> api.v1alpha1.wfm.ConstraintRule
 	141, // 145: api.v1alpha1.wfm.AgentGroup.member_wfm_agents:type_name -> api.v1alpha1.wfm.WFMAgent
 	201, // 146: api.v1alpha1.wfm.AgentGroup.member_skill_proficiencies:type_name -> api.v1alpha1.wfm.SkillProficiency
 	189, // 147: api.v1alpha1.wfm.AgentGroup.member_agent_availability_patterns:type_name -> api.v1alpha1.wfm.AgentAvailabilityPattern
 	136, // 148: api.v1alpha1.wfm.CreateAgentGroupReq.agent_group:type_name -> api.v1alpha1.wfm.AgentGroup
 	136, // 149: api.v1alpha1.wfm.UpdateAgentGroupReq.agent_group:type_name -> api.v1alpha1.wfm.AgentGroup
-	330, // 150: api.v1alpha1.wfm.WFMAgent.tcn_agent_sid:type_name -> google.protobuf.Int64Value
-	316, // 151: api.v1alpha1.wfm.WFMAgent.datetime_set_to_inactive:type_name -> google.protobuf.Timestamp
+	378, // 150: api.v1alpha1.wfm.WFMAgent.tcn_agent_sid:type_name -> google.protobuf.Int64Value
+	364, // 151: api.v1alpha1.wfm.WFMAgent.datetime_set_to_inactive:type_name -> google.protobuf.Timestamp
 	117, // 152: api.v1alpha1.wfm.WFMAgent.member_constraint_rules:type_name -> api.v1alpha1.wfm.ConstraintRule
 	201, // 153: api.v1alpha1.wfm.WFMAgent.member_skill_proficiencies:type_name -> api.v1alpha1.wfm.SkillProficiency
 	189, // 154: api.v1alpha1.wfm.WFMAgent.member_agent_availability_patterns:type_name -> api.v1alpha1.wfm.AgentAvailabilityPattern
-	316, // 155: api.v1alpha1.wfm.WFMAgent.created_at:type_name -> google.protobuf.Timestamp
+	364, // 155: api.v1alpha1.wfm.WFMAgent.created_at:type_name -> google.protobuf.Timestamp
 	141, // 156: api.v1alpha1.wfm.UpdateWFMAgentReq.wfm_agent:type_name -> api.v1alpha1.wfm.WFMAgent
 	141, // 157: api.v1alpha1.wfm.ListAllWFMAgentsRes.wfm_agents:type_name -> api.v1alpha1.wfm.WFMAgent
-	296, // 158: api.v1alpha1.wfm.ListAllWFMAgentsRes.agent_groups_by_agent:type_name -> api.v1alpha1.wfm.ListAllWFMAgentsRes.AgentGroupsByAgent
+	343, // 158: api.v1alpha1.wfm.ListAllWFMAgentsRes.agent_groups_by_agent:type_name -> api.v1alpha1.wfm.ListAllWFMAgentsRes.AgentGroupsByAgent
 	141, // 159: api.v1alpha1.wfm.ListCandidateWFMAgentsRes.wfm_agents:type_name -> api.v1alpha1.wfm.WFMAgent
-	316, // 160: api.v1alpha1.wfm.ListUngroupedWFMAgentsReq.created_after_datetime:type_name -> google.protobuf.Timestamp
+	364, // 160: api.v1alpha1.wfm.ListUngroupedWFMAgentsReq.created_after_datetime:type_name -> google.protobuf.Timestamp
 	141, // 161: api.v1alpha1.wfm.ListUngroupedWFMAgentsRes.wfm_agents:type_name -> api.v1alpha1.wfm.WFMAgent
-	297, // 162: api.v1alpha1.wfm.ListWFMAgentSidsRes.sids:type_name -> api.v1alpha1.wfm.ListWFMAgentSidsRes.SidsEntry
+	344, // 162: api.v1alpha1.wfm.ListWFMAgentSidsRes.sids:type_name -> api.v1alpha1.wfm.ListWFMAgentSidsRes.SidsEntry
 	218, // 163: api.v1alpha1.wfm.BuildAgentDiagnosticsRes.diagnostics:type_name -> api.v1alpha1.wfm.Diagnostics
-	335, // 164: api.v1alpha1.wfm.DOWPlacement.placement_type:type_name -> api.commons.DOWPlacementType
-	336, // 165: api.v1alpha1.wfm.DOWPlacement.day_of_week:type_name -> api.commons.DayOfWeek
-	316, // 166: api.v1alpha1.wfm.ShiftTemplate.datetime_set_to_inactive:type_name -> google.protobuf.Timestamp
+	383, // 164: api.v1alpha1.wfm.DOWPlacement.placement_type:type_name -> api.commons.DOWPlacementType
+	384, // 165: api.v1alpha1.wfm.DOWPlacement.day_of_week:type_name -> api.commons.DayOfWeek
+	364, // 166: api.v1alpha1.wfm.ShiftTemplate.datetime_set_to_inactive:type_name -> google.protobuf.Timestamp
 	172, // 167: api.v1alpha1.wfm.ShiftTemplate.member_placement_rules:type_name -> api.v1alpha1.wfm.PlacementRule
 	162, // 168: api.v1alpha1.wfm.ShiftTemplate.DOW_placements:type_name -> api.v1alpha1.wfm.DOWPlacement
 	136, // 169: api.v1alpha1.wfm.ShiftTemplate.member_agent_groups:type_name -> api.v1alpha1.wfm.AgentGroup
@@ -25659,65 +28766,65 @@ var file_api_v1alpha1_wfm_wfm_proto_depIdxs = []int32{
 	133, // 174: api.v1alpha1.wfm.PlacementRule.member_scheduling_activity:type_name -> api.v1alpha1.wfm.SchedulingActivity
 	172, // 175: api.v1alpha1.wfm.CreatePlacementRuleReq.placement_rule:type_name -> api.v1alpha1.wfm.PlacementRule
 	172, // 176: api.v1alpha1.wfm.UpdatePlacementRuleReq.placement_rule:type_name -> api.v1alpha1.wfm.PlacementRule
-	298, // 177: api.v1alpha1.wfm.DatetimePattern.week_maps:type_name -> api.v1alpha1.wfm.DatetimePattern.WeekMap
-	299, // 178: api.v1alpha1.wfm.DatetimePattern.calendar_items:type_name -> api.v1alpha1.wfm.DatetimePattern.CalendarItem
+	345, // 177: api.v1alpha1.wfm.DatetimePattern.week_maps:type_name -> api.v1alpha1.wfm.DatetimePattern.WeekMap
+	346, // 178: api.v1alpha1.wfm.DatetimePattern.calendar_items:type_name -> api.v1alpha1.wfm.DatetimePattern.CalendarItem
 	116, // 179: api.v1alpha1.wfm.OpenTimesPattern.parent_entity:type_name -> api.v1alpha1.wfm.ParentEntity
 	179, // 180: api.v1alpha1.wfm.OpenTimesPattern.datetime_pattern:type_name -> api.v1alpha1.wfm.DatetimePattern
 	180, // 181: api.v1alpha1.wfm.CreateOpenTimesPatternReq.open_times_pattern:type_name -> api.v1alpha1.wfm.OpenTimesPattern
 	180, // 182: api.v1alpha1.wfm.UpdateOpenTimesPatternReq.open_times_pattern:type_name -> api.v1alpha1.wfm.OpenTimesPattern
 	116, // 183: api.v1alpha1.wfm.GetOpenTimesBitmapsReq.node_to_check:type_name -> api.v1alpha1.wfm.ParentEntity
-	328, // 184: api.v1alpha1.wfm.GetOpenTimesBitmapsReq.datetime_range:type_name -> api.commons.DatetimeRange
-	337, // 185: api.v1alpha1.wfm.GetOpenTimesBitmapsReq.bitmap_type:type_name -> api.commons.BitmapType
-	338, // 186: api.v1alpha1.wfm.GetOpenTimesBitmapsRes.inherited_bitmap:type_name -> api.commons.OpenTimesOption
-	338, // 187: api.v1alpha1.wfm.GetOpenTimesBitmapsRes.own_bitmap:type_name -> api.commons.OpenTimesOption
-	338, // 188: api.v1alpha1.wfm.GetOpenTimesBitmapsRes.resulting_bitmap:type_name -> api.commons.OpenTimesOption
+	376, // 184: api.v1alpha1.wfm.GetOpenTimesBitmapsReq.datetime_range:type_name -> api.commons.DatetimeRange
+	385, // 185: api.v1alpha1.wfm.GetOpenTimesBitmapsReq.bitmap_type:type_name -> api.commons.BitmapType
+	386, // 186: api.v1alpha1.wfm.GetOpenTimesBitmapsRes.inherited_bitmap:type_name -> api.commons.OpenTimesOption
+	386, // 187: api.v1alpha1.wfm.GetOpenTimesBitmapsRes.own_bitmap:type_name -> api.commons.OpenTimesOption
+	386, // 188: api.v1alpha1.wfm.GetOpenTimesBitmapsRes.resulting_bitmap:type_name -> api.commons.OpenTimesOption
 	116, // 189: api.v1alpha1.wfm.AgentAvailabilityPattern.parent_entity:type_name -> api.v1alpha1.wfm.ParentEntity
 	179, // 190: api.v1alpha1.wfm.AgentAvailabilityPattern.datetime_pattern:type_name -> api.v1alpha1.wfm.DatetimePattern
 	189, // 191: api.v1alpha1.wfm.CreateAgentAvailabilityPatternReq.agent_availability_pattern:type_name -> api.v1alpha1.wfm.AgentAvailabilityPattern
 	189, // 192: api.v1alpha1.wfm.UpdateAgentAvailabilityPatternReq.agent_availability_pattern:type_name -> api.v1alpha1.wfm.AgentAvailabilityPattern
-	339, // 193: api.v1alpha1.wfm.AvailabilityBitmapSet.own_bitmap:type_name -> api.commons.AvailabilityOption
-	339, // 194: api.v1alpha1.wfm.AvailabilityBitmapSet.inherited_bitmap:type_name -> api.commons.AvailabilityOption
-	339, // 195: api.v1alpha1.wfm.AvailabilityBitmapSet.resulting_bitmap:type_name -> api.commons.AvailabilityOption
+	387, // 193: api.v1alpha1.wfm.AvailabilityBitmapSet.own_bitmap:type_name -> api.commons.AvailabilityOption
+	387, // 194: api.v1alpha1.wfm.AvailabilityBitmapSet.inherited_bitmap:type_name -> api.commons.AvailabilityOption
+	387, // 195: api.v1alpha1.wfm.AvailabilityBitmapSet.resulting_bitmap:type_name -> api.commons.AvailabilityOption
 	116, // 196: api.v1alpha1.wfm.AvailabilityBitmapSet.parent_entity:type_name -> api.v1alpha1.wfm.ParentEntity
 	116, // 197: api.v1alpha1.wfm.GetAvailabilityBitmapsReq.entities_to_check:type_name -> api.v1alpha1.wfm.ParentEntity
-	328, // 198: api.v1alpha1.wfm.GetAvailabilityBitmapsReq.datetime_range:type_name -> api.commons.DatetimeRange
-	337, // 199: api.v1alpha1.wfm.GetAvailabilityBitmapsReq.bitmap_type:type_name -> api.commons.BitmapType
+	376, // 198: api.v1alpha1.wfm.GetAvailabilityBitmapsReq.datetime_range:type_name -> api.commons.DatetimeRange
+	385, // 199: api.v1alpha1.wfm.GetAvailabilityBitmapsReq.bitmap_type:type_name -> api.commons.BitmapType
 	196, // 200: api.v1alpha1.wfm.GetAvailabilityBitmapsRes.bitmaps:type_name -> api.v1alpha1.wfm.AvailabilityBitmapSet
 	116, // 201: api.v1alpha1.wfm.UpsertNonSkillActivityAssociationReq.node:type_name -> api.v1alpha1.wfm.ParentEntity
-	334, // 202: api.v1alpha1.wfm.UpsertNonSkillActivityAssociationReq.association_type:type_name -> api.commons.ConfigRelationshipType
+	382, // 202: api.v1alpha1.wfm.UpsertNonSkillActivityAssociationReq.association_type:type_name -> api.commons.ConfigRelationshipType
 	116, // 203: api.v1alpha1.wfm.UpsertNonSkillActivityAssociationRes.nodes_affected:type_name -> api.v1alpha1.wfm.ParentEntity
-	301, // 204: api.v1alpha1.wfm.UpsertNonSkillActivityAssociationRes.rules_using_activity:type_name -> api.v1alpha1.wfm.UpsertNonSkillActivityAssociationRes.EntityMapping
-	330, // 205: api.v1alpha1.wfm.SkillProficiency.preferred_skill_profile_sid:type_name -> google.protobuf.Int64Value
+	348, // 204: api.v1alpha1.wfm.UpsertNonSkillActivityAssociationRes.rules_using_activity:type_name -> api.v1alpha1.wfm.UpsertNonSkillActivityAssociationRes.EntityMapping
+	378, // 205: api.v1alpha1.wfm.SkillProficiency.preferred_skill_profile_sid:type_name -> google.protobuf.Int64Value
 	116, // 206: api.v1alpha1.wfm.SkillProficiency.parent_entity:type_name -> api.v1alpha1.wfm.ParentEntity
 	201, // 207: api.v1alpha1.wfm.CreateSkillProficienciesReq.proficiencies:type_name -> api.v1alpha1.wfm.SkillProficiency
 	201, // 208: api.v1alpha1.wfm.UpdateSkillProficienciesReq.skill_proficiencies:type_name -> api.v1alpha1.wfm.SkillProficiency
-	316, // 209: api.v1alpha1.wfm.ScheduleScenario.creation_datetime:type_name -> google.protobuf.Timestamp
-	330, // 210: api.v1alpha1.wfm.ScheduleScenario.copied_from_scenario_sid:type_name -> google.protobuf.Int64Value
-	328, // 211: api.v1alpha1.wfm.ScheduleScenario.schedule_range:type_name -> api.commons.DatetimeRange
-	316, // 212: api.v1alpha1.wfm.ScheduleScenario.datetime_set_to_inactive:type_name -> google.protobuf.Timestamp
-	328, // 213: api.v1alpha1.wfm.CopyScenarioReq.schedule_range:type_name -> api.commons.DatetimeRange
+	364, // 209: api.v1alpha1.wfm.ScheduleScenario.creation_datetime:type_name -> google.protobuf.Timestamp
+	378, // 210: api.v1alpha1.wfm.ScheduleScenario.copied_from_scenario_sid:type_name -> google.protobuf.Int64Value
+	376, // 211: api.v1alpha1.wfm.ScheduleScenario.schedule_range:type_name -> api.commons.DatetimeRange
+	364, // 212: api.v1alpha1.wfm.ScheduleScenario.datetime_set_to_inactive:type_name -> google.protobuf.Timestamp
+	376, // 213: api.v1alpha1.wfm.CopyScenarioReq.schedule_range:type_name -> api.commons.DatetimeRange
 	208, // 214: api.v1alpha1.wfm.CreateScheduleScenarioWithNodesReq.schedule_scenario:type_name -> api.v1alpha1.wfm.ScheduleScenario
-	329, // 215: api.v1alpha1.wfm.CreateScheduleScenarioWithNodesReq.time_zone_val:type_name -> api.commons.TimeZone
+	377, // 215: api.v1alpha1.wfm.CreateScheduleScenarioWithNodesReq.time_zone_val:type_name -> api.commons.TimeZone
 	208, // 216: api.v1alpha1.wfm.UpdateScheduleScenarioReq.scheduleScenario:type_name -> api.v1alpha1.wfm.ScheduleScenario
-	331, // 217: api.v1alpha1.wfm.ListConfigEntitiesReq.entity_type:type_name -> api.commons.ConfigEntityType
+	379, // 217: api.v1alpha1.wfm.ListConfigEntitiesReq.entity_type:type_name -> api.commons.ConfigEntityType
 	116, // 218: api.v1alpha1.wfm.ListConfigEntitiesReq.belongs_to_entity:type_name -> api.v1alpha1.wfm.ParentEntity
 	96,  // 219: api.v1alpha1.wfm.ListConfigEntitiesRes.call_center_node:type_name -> api.v1alpha1.wfm.CallCenterNode
-	302, // 220: api.v1alpha1.wfm.ListConfigEntitiesRes.client_nodes:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.ClientNodeEntities
-	303, // 221: api.v1alpha1.wfm.ListConfigEntitiesRes.location_nodes:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.LocationNodeEntities
-	304, // 222: api.v1alpha1.wfm.ListConfigEntitiesRes.program_nodes:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.ProgramNodeEntities
-	305, // 223: api.v1alpha1.wfm.ListConfigEntitiesRes.agent_groups:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.AgentGroupEntities
-	306, // 224: api.v1alpha1.wfm.ListConfigEntitiesRes.shift_templates:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.ShiftTemplateEntities
-	307, // 225: api.v1alpha1.wfm.ListConfigEntitiesRes.wfm_agents:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.WFMAgentEntities
-	308, // 226: api.v1alpha1.wfm.ListConfigEntitiesRes.placement_rules:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.PlacementRuleEntities
-	309, // 227: api.v1alpha1.wfm.ListConfigEntitiesRes.constraint_rules:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.ConstraintRuleEntities
-	310, // 228: api.v1alpha1.wfm.ListConfigEntitiesRes.non_skill_activities:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.NonSkillActivityEntities
-	311, // 229: api.v1alpha1.wfm.ListConfigEntitiesRes.agent_availability_patterns:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.AgentAvailabilityPatternEntities
-	312, // 230: api.v1alpha1.wfm.ListConfigEntitiesRes.open_times_patterns:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.OpenTimesPatternEntities
+	349, // 220: api.v1alpha1.wfm.ListConfigEntitiesRes.client_nodes:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.ClientNodeEntities
+	350, // 221: api.v1alpha1.wfm.ListConfigEntitiesRes.location_nodes:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.LocationNodeEntities
+	351, // 222: api.v1alpha1.wfm.ListConfigEntitiesRes.program_nodes:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.ProgramNodeEntities
+	352, // 223: api.v1alpha1.wfm.ListConfigEntitiesRes.agent_groups:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.AgentGroupEntities
+	353, // 224: api.v1alpha1.wfm.ListConfigEntitiesRes.shift_templates:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.ShiftTemplateEntities
+	354, // 225: api.v1alpha1.wfm.ListConfigEntitiesRes.wfm_agents:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.WFMAgentEntities
+	355, // 226: api.v1alpha1.wfm.ListConfigEntitiesRes.placement_rules:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.PlacementRuleEntities
+	356, // 227: api.v1alpha1.wfm.ListConfigEntitiesRes.constraint_rules:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.ConstraintRuleEntities
+	357, // 228: api.v1alpha1.wfm.ListConfigEntitiesRes.non_skill_activities:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.NonSkillActivityEntities
+	358, // 229: api.v1alpha1.wfm.ListConfigEntitiesRes.agent_availability_patterns:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.AgentAvailabilityPatternEntities
+	359, // 230: api.v1alpha1.wfm.ListConfigEntitiesRes.open_times_patterns:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.OpenTimesPatternEntities
 	133, // 231: api.v1alpha1.wfm.ListConfigEntitiesRes.scheduling_activity:type_name -> api.v1alpha1.wfm.SchedulingActivity
-	313, // 232: api.v1alpha1.wfm.ListConfigEntitiesRes.skill_proficiencies:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.SkillProficiencyEntities
-	314, // 233: api.v1alpha1.wfm.ListConfigEntitiesRes.schedule_scenarios:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.ScheduleScenarioEntities
-	340, // 234: api.v1alpha1.wfm.Diagnostic.level:type_name -> api.commons.DiagnosticLevel
-	341, // 235: api.v1alpha1.wfm.Diagnostic.code:type_name -> api.commons.DiagnosticCode
+	360, // 232: api.v1alpha1.wfm.ListConfigEntitiesRes.skill_proficiencies:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.SkillProficiencyEntities
+	361, // 233: api.v1alpha1.wfm.ListConfigEntitiesRes.schedule_scenarios:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.ScheduleScenarioEntities
+	388, // 234: api.v1alpha1.wfm.Diagnostic.level:type_name -> api.commons.DiagnosticLevel
+	389, // 235: api.v1alpha1.wfm.Diagnostic.code:type_name -> api.commons.DiagnosticCode
 	116, // 236: api.v1alpha1.wfm.Diagnostic.source_entity:type_name -> api.v1alpha1.wfm.ParentEntity
 	116, // 237: api.v1alpha1.wfm.Diagnostics.source_entity:type_name -> api.v1alpha1.wfm.ParentEntity
 	217, // 238: api.v1alpha1.wfm.Diagnostics.diagnostics:type_name -> api.v1alpha1.wfm.Diagnostic
@@ -25726,94 +28833,94 @@ var file_api_v1alpha1_wfm_wfm_proto_depIdxs = []int32{
 	116, // 241: api.v1alpha1.wfm.BuildNodeDiagnosticsRes.nodes_checked:type_name -> api.v1alpha1.wfm.ParentEntity
 	217, // 242: api.v1alpha1.wfm.BuildGlobalDiagnosticsRes.diagnostics:type_name -> api.v1alpha1.wfm.Diagnostic
 	116, // 243: api.v1alpha1.wfm.BuildGlobalDiagnosticsRes.nodes_checked:type_name -> api.v1alpha1.wfm.ParentEntity
-	316, // 244: api.v1alpha1.wfm.PublishedSchedule.created_at:type_name -> google.protobuf.Timestamp
-	316, // 245: api.v1alpha1.wfm.PublishedSchedule.last_updated_at:type_name -> google.protobuf.Timestamp
+	364, // 244: api.v1alpha1.wfm.PublishedSchedule.created_at:type_name -> google.protobuf.Timestamp
+	364, // 245: api.v1alpha1.wfm.PublishedSchedule.last_updated_at:type_name -> google.protobuf.Timestamp
 	231, // 246: api.v1alpha1.wfm.PublishedSchedule.shift_instances:type_name -> api.v1alpha1.wfm.ShiftInstance
 	227, // 247: api.v1alpha1.wfm.PublishedSchedule.performance_metrics:type_name -> api.v1alpha1.wfm.PerformanceMetric
-	316, // 248: api.v1alpha1.wfm.DraftSchedule.created_at:type_name -> google.protobuf.Timestamp
-	316, // 249: api.v1alpha1.wfm.DraftSchedule.last_updated_at:type_name -> google.protobuf.Timestamp
-	328, // 250: api.v1alpha1.wfm.DraftSchedule.datetime_range:type_name -> api.commons.DatetimeRange
+	364, // 248: api.v1alpha1.wfm.DraftSchedule.created_at:type_name -> google.protobuf.Timestamp
+	364, // 249: api.v1alpha1.wfm.DraftSchedule.last_updated_at:type_name -> google.protobuf.Timestamp
+	376, // 250: api.v1alpha1.wfm.DraftSchedule.datetime_range:type_name -> api.commons.DatetimeRange
 	231, // 251: api.v1alpha1.wfm.DraftSchedule.shift_instances:type_name -> api.v1alpha1.wfm.ShiftInstance
 	227, // 252: api.v1alpha1.wfm.DraftSchedule.performance_metrics:type_name -> api.v1alpha1.wfm.PerformanceMetric
-	328, // 253: api.v1alpha1.wfm.PerformanceMetric.date_range:type_name -> api.commons.DatetimeRange
-	342, // 254: api.v1alpha1.wfm.PerformanceMetric.metric_type:type_name -> api.commons.PerformanceMetricType
+	376, // 253: api.v1alpha1.wfm.PerformanceMetric.date_range:type_name -> api.commons.DatetimeRange
+	390, // 254: api.v1alpha1.wfm.PerformanceMetric.metric_type:type_name -> api.commons.PerformanceMetricType
 	229, // 255: api.v1alpha1.wfm.PerformanceMetric.fte_intervals:type_name -> api.v1alpha1.wfm.FTERequiredVsAchievedInterval
 	228, // 256: api.v1alpha1.wfm.PerformanceMetric.service_level_intervals:type_name -> api.v1alpha1.wfm.ServiceLevelInterval
-	316, // 257: api.v1alpha1.wfm.ServiceLevelInterval.start_datetime:type_name -> google.protobuf.Timestamp
-	316, // 258: api.v1alpha1.wfm.FTERequiredVsAchievedInterval.start_datetime:type_name -> google.protobuf.Timestamp
-	316, // 259: api.v1alpha1.wfm.RequiredCallsInterval.start_datetime:type_name -> google.protobuf.Timestamp
-	316, // 260: api.v1alpha1.wfm.ShiftInstance.start_datetime:type_name -> google.protobuf.Timestamp
-	343, // 261: api.v1alpha1.wfm.ShiftInstance.schedule_type:type_name -> api.commons.ScheduleType
+	364, // 257: api.v1alpha1.wfm.ServiceLevelInterval.start_datetime:type_name -> google.protobuf.Timestamp
+	364, // 258: api.v1alpha1.wfm.FTERequiredVsAchievedInterval.start_datetime:type_name -> google.protobuf.Timestamp
+	364, // 259: api.v1alpha1.wfm.RequiredCallsInterval.start_datetime:type_name -> google.protobuf.Timestamp
+	364, // 260: api.v1alpha1.wfm.ShiftInstance.start_datetime:type_name -> google.protobuf.Timestamp
+	391, // 261: api.v1alpha1.wfm.ShiftInstance.schedule_type:type_name -> api.commons.ScheduleType
 	232, // 262: api.v1alpha1.wfm.ShiftInstance.shift_segments:type_name -> api.v1alpha1.wfm.ShiftSegment
 	163, // 263: api.v1alpha1.wfm.ShiftInstance.shift_template:type_name -> api.v1alpha1.wfm.ShiftTemplate
 	133, // 264: api.v1alpha1.wfm.ShiftSegment.scheduling_activity:type_name -> api.v1alpha1.wfm.SchedulingActivity
-	328, // 265: api.v1alpha1.wfm.GetPublishedScheduleReq.datetime_range:type_name -> api.commons.DatetimeRange
+	376, // 265: api.v1alpha1.wfm.GetPublishedScheduleReq.datetime_range:type_name -> api.commons.DatetimeRange
 	116, // 266: api.v1alpha1.wfm.GetPublishedScheduleReq.node_selector:type_name -> api.v1alpha1.wfm.ParentEntity
 	225, // 267: api.v1alpha1.wfm.GetPublishedScheduleRes.published_schedule:type_name -> api.v1alpha1.wfm.PublishedSchedule
-	328, // 268: api.v1alpha1.wfm.GetPublishedScheduleRequiredCallsReq.viewing_range:type_name -> api.commons.DatetimeRange
+	376, // 268: api.v1alpha1.wfm.GetPublishedScheduleRequiredCallsReq.viewing_range:type_name -> api.commons.DatetimeRange
 	230, // 269: api.v1alpha1.wfm.GetPublishedScheduleRequiredCallsRes.required_calls_intervals:type_name -> api.v1alpha1.wfm.RequiredCallsInterval
-	328, // 270: api.v1alpha1.wfm.GetDraftScheduleRequiredCallsReq.viewing_range:type_name -> api.commons.DatetimeRange
+	376, // 270: api.v1alpha1.wfm.GetDraftScheduleRequiredCallsReq.viewing_range:type_name -> api.commons.DatetimeRange
 	230, // 271: api.v1alpha1.wfm.GetDraftScheduleRequiredCallsRes.required_calls_intervals:type_name -> api.v1alpha1.wfm.RequiredCallsInterval
-	328, // 272: api.v1alpha1.wfm.CreateDraftScheduleReq.scheduling_range:type_name -> api.commons.DatetimeRange
-	328, // 273: api.v1alpha1.wfm.UpdateDraftScheduleReq.datetime_range:type_name -> api.commons.DatetimeRange
+	376, // 272: api.v1alpha1.wfm.CreateDraftScheduleReq.scheduling_range:type_name -> api.commons.DatetimeRange
+	376, // 273: api.v1alpha1.wfm.UpdateDraftScheduleReq.datetime_range:type_name -> api.commons.DatetimeRange
 	226, // 274: api.v1alpha1.wfm.UpdateDraftScheduleRes.draft_schedule:type_name -> api.v1alpha1.wfm.DraftSchedule
-	328, // 275: api.v1alpha1.wfm.BuildDraftScheduleReq.schedule_scenario_scheduling_range:type_name -> api.commons.DatetimeRange
+	376, // 275: api.v1alpha1.wfm.BuildDraftScheduleReq.schedule_scenario_scheduling_range:type_name -> api.commons.DatetimeRange
 	116, // 276: api.v1alpha1.wfm.BuildDraftScheduleReq.node_selector:type_name -> api.v1alpha1.wfm.ParentEntity
 	226, // 277: api.v1alpha1.wfm.BuildDraftScheduleRes.draft_schedule:type_name -> api.v1alpha1.wfm.DraftSchedule
 	217, // 278: api.v1alpha1.wfm.BuildDraftScheduleRes.diagnostics:type_name -> api.v1alpha1.wfm.Diagnostic
 	116, // 279: api.v1alpha1.wfm.PublishDraftScheduleReq.node_selector:type_name -> api.v1alpha1.wfm.ParentEntity
-	328, // 280: api.v1alpha1.wfm.PublishDraftScheduleReq.datetime_range:type_name -> api.commons.DatetimeRange
+	376, // 280: api.v1alpha1.wfm.PublishDraftScheduleReq.datetime_range:type_name -> api.commons.DatetimeRange
 	225, // 281: api.v1alpha1.wfm.PublishDraftScheduleRes.published_schedule:type_name -> api.v1alpha1.wfm.PublishedSchedule
 	217, // 282: api.v1alpha1.wfm.PublishDraftScheduleRes.diagnostics:type_name -> api.v1alpha1.wfm.Diagnostic
-	328, // 283: api.v1alpha1.wfm.ResetDraftScheduleReq.datetime_range:type_name -> api.commons.DatetimeRange
+	376, // 283: api.v1alpha1.wfm.ResetDraftScheduleReq.datetime_range:type_name -> api.commons.DatetimeRange
 	217, // 284: api.v1alpha1.wfm.ResetDraftScheduleRes.diagnostics:type_name -> api.v1alpha1.wfm.Diagnostic
-	328, // 285: api.v1alpha1.wfm.GetDraftScheduleReq.datetime_range:type_name -> api.commons.DatetimeRange
+	376, // 285: api.v1alpha1.wfm.GetDraftScheduleReq.datetime_range:type_name -> api.commons.DatetimeRange
 	116, // 286: api.v1alpha1.wfm.GetDraftScheduleReq.node_selector:type_name -> api.v1alpha1.wfm.ParentEntity
 	226, // 287: api.v1alpha1.wfm.GetDraftScheduleRes.draft_schedule:type_name -> api.v1alpha1.wfm.DraftSchedule
-	328, // 288: api.v1alpha1.wfm.ListDraftSchedulesReq.datetime_range:type_name -> api.commons.DatetimeRange
+	376, // 288: api.v1alpha1.wfm.ListDraftSchedulesReq.datetime_range:type_name -> api.commons.DatetimeRange
 	226, // 289: api.v1alpha1.wfm.ListDraftSchedulesRes.draft_schedules:type_name -> api.v1alpha1.wfm.DraftSchedule
-	344, // 290: api.v1alpha1.wfm.ClearScheduleReq.schedule_selector:type_name -> api.commons.ScheduleSelector
+	392, // 290: api.v1alpha1.wfm.ClearScheduleReq.schedule_selector:type_name -> api.commons.ScheduleSelector
 	116, // 291: api.v1alpha1.wfm.ClearScheduleReq.node_selector:type_name -> api.v1alpha1.wfm.ParentEntity
-	328, // 292: api.v1alpha1.wfm.ClearScheduleReq.datetime_range:type_name -> api.commons.DatetimeRange
+	376, // 292: api.v1alpha1.wfm.ClearScheduleReq.datetime_range:type_name -> api.commons.DatetimeRange
 	217, // 293: api.v1alpha1.wfm.ClearScheduleRes.diagnostics:type_name -> api.v1alpha1.wfm.Diagnostic
 	231, // 294: api.v1alpha1.wfm.ListShiftInstancesBySidRes.shift_instances:type_name -> api.v1alpha1.wfm.ShiftInstance
-	344, // 295: api.v1alpha1.wfm.CopyScheduleToScheduleReq.source_schedule_selector:type_name -> api.commons.ScheduleSelector
-	344, // 296: api.v1alpha1.wfm.CopyScheduleToScheduleReq.destination_schedule_selector:type_name -> api.commons.ScheduleSelector
+	392, // 295: api.v1alpha1.wfm.CopyScheduleToScheduleReq.source_schedule_selector:type_name -> api.commons.ScheduleSelector
+	392, // 296: api.v1alpha1.wfm.CopyScheduleToScheduleReq.destination_schedule_selector:type_name -> api.commons.ScheduleSelector
 	116, // 297: api.v1alpha1.wfm.CopyScheduleToScheduleReq.node_selector:type_name -> api.v1alpha1.wfm.ParentEntity
-	328, // 298: api.v1alpha1.wfm.CopyScheduleToScheduleReq.datetime_range:type_name -> api.commons.DatetimeRange
+	376, // 298: api.v1alpha1.wfm.CopyScheduleToScheduleReq.datetime_range:type_name -> api.commons.DatetimeRange
 	217, // 299: api.v1alpha1.wfm.CopyScheduleToScheduleRes.diagnostics:type_name -> api.v1alpha1.wfm.Diagnostic
-	316, // 300: api.v1alpha1.wfm.CreateShiftInstanceReq.start_datetime:type_name -> google.protobuf.Timestamp
-	330, // 301: api.v1alpha1.wfm.CreateShiftInstanceReq.wfm_agent_sid:type_name -> google.protobuf.Int64Value
-	342, // 302: api.v1alpha1.wfm.CreateShiftInstanceReq.metric_types:type_name -> api.commons.PerformanceMetricType
+	364, // 300: api.v1alpha1.wfm.CreateShiftInstanceReq.start_datetime:type_name -> google.protobuf.Timestamp
+	378, // 301: api.v1alpha1.wfm.CreateShiftInstanceReq.wfm_agent_sid:type_name -> google.protobuf.Int64Value
+	390, // 302: api.v1alpha1.wfm.CreateShiftInstanceReq.metric_types:type_name -> api.commons.PerformanceMetricType
 	231, // 303: api.v1alpha1.wfm.CreateShiftInstanceRes.shift_instance:type_name -> api.v1alpha1.wfm.ShiftInstance
 	227, // 304: api.v1alpha1.wfm.CreateShiftInstanceRes.performance_metrics:type_name -> api.v1alpha1.wfm.PerformanceMetric
-	316, // 305: api.v1alpha1.wfm.CreateShiftInstanceV2Req.start_datetime:type_name -> google.protobuf.Timestamp
+	364, // 305: api.v1alpha1.wfm.CreateShiftInstanceV2Req.start_datetime:type_name -> google.protobuf.Timestamp
 	231, // 306: api.v1alpha1.wfm.CreateShiftInstanceV2Res.shift_instances:type_name -> api.v1alpha1.wfm.ShiftInstance
 	217, // 307: api.v1alpha1.wfm.CreateShiftInstanceV2Res.diagnostics:type_name -> api.v1alpha1.wfm.Diagnostic
 	231, // 308: api.v1alpha1.wfm.SwapShiftInstancesRes.shift_instances:type_name -> api.v1alpha1.wfm.ShiftInstance
 	217, // 309: api.v1alpha1.wfm.SwapShiftInstancesRes.diagnostics:type_name -> api.v1alpha1.wfm.Diagnostic
-	316, // 310: api.v1alpha1.wfm.UpdateShiftInstanceReq.start_datetime:type_name -> google.protobuf.Timestamp
-	330, // 311: api.v1alpha1.wfm.UpdateShiftInstanceReq.wfm_agent_sid:type_name -> google.protobuf.Int64Value
-	342, // 312: api.v1alpha1.wfm.UpdateShiftInstanceReq.metric_types:type_name -> api.commons.PerformanceMetricType
+	364, // 310: api.v1alpha1.wfm.UpdateShiftInstanceReq.start_datetime:type_name -> google.protobuf.Timestamp
+	378, // 311: api.v1alpha1.wfm.UpdateShiftInstanceReq.wfm_agent_sid:type_name -> google.protobuf.Int64Value
+	390, // 312: api.v1alpha1.wfm.UpdateShiftInstanceReq.metric_types:type_name -> api.commons.PerformanceMetricType
 	231, // 313: api.v1alpha1.wfm.UpdateShiftInstanceRes.shift_instance:type_name -> api.v1alpha1.wfm.ShiftInstance
 	227, // 314: api.v1alpha1.wfm.UpdateShiftInstanceRes.performance_metrics:type_name -> api.v1alpha1.wfm.PerformanceMetric
-	316, // 315: api.v1alpha1.wfm.UpdateShiftInstanceV2Req.start_datetime:type_name -> google.protobuf.Timestamp
+	364, // 315: api.v1alpha1.wfm.UpdateShiftInstanceV2Req.start_datetime:type_name -> google.protobuf.Timestamp
 	231, // 316: api.v1alpha1.wfm.UpdateShiftInstanceV2Res.shift_instance:type_name -> api.v1alpha1.wfm.ShiftInstance
 	217, // 317: api.v1alpha1.wfm.UpdateShiftInstanceV2Res.diagnostics:type_name -> api.v1alpha1.wfm.Diagnostic
-	344, // 318: api.v1alpha1.wfm.CopyShiftInstancesToScheduleReq.destination_schedule:type_name -> api.commons.ScheduleSelector
+	392, // 318: api.v1alpha1.wfm.CopyShiftInstancesToScheduleReq.destination_schedule:type_name -> api.commons.ScheduleSelector
 	217, // 319: api.v1alpha1.wfm.CopyShiftInstancesToScheduleRes.diagnostics:type_name -> api.v1alpha1.wfm.Diagnostic
-	344, // 320: api.v1alpha1.wfm.ListShiftInstanceSidsForAgentReq.schedule_selector:type_name -> api.commons.ScheduleSelector
-	328, // 321: api.v1alpha1.wfm.ListShiftInstanceSidsForAgentReq.datetime_range:type_name -> api.commons.DatetimeRange
+	392, // 320: api.v1alpha1.wfm.ListShiftInstanceSidsForAgentReq.schedule_selector:type_name -> api.commons.ScheduleSelector
+	376, // 321: api.v1alpha1.wfm.ListShiftInstanceSidsForAgentReq.datetime_range:type_name -> api.commons.DatetimeRange
 	232, // 322: api.v1alpha1.wfm.ListShiftSegmentsByShiftInstanceSidsRes.shift_segments:type_name -> api.v1alpha1.wfm.ShiftSegment
-	342, // 323: api.v1alpha1.wfm.PerformanceMetricParameter.metric_type:type_name -> api.commons.PerformanceMetricType
-	330, // 324: api.v1alpha1.wfm.PerformanceMetricParameter.service_level_target_duration_seconds:type_name -> google.protobuf.Int64Value
-	344, // 325: api.v1alpha1.wfm.GetPerformanceMetricsReq.schedule_selector:type_name -> api.commons.ScheduleSelector
+	390, // 323: api.v1alpha1.wfm.PerformanceMetricParameter.metric_type:type_name -> api.commons.PerformanceMetricType
+	378, // 324: api.v1alpha1.wfm.PerformanceMetricParameter.service_level_target_duration_seconds:type_name -> google.protobuf.Int64Value
+	392, // 325: api.v1alpha1.wfm.GetPerformanceMetricsReq.schedule_selector:type_name -> api.commons.ScheduleSelector
 	116, // 326: api.v1alpha1.wfm.GetPerformanceMetricsReq.node_selector:type_name -> api.v1alpha1.wfm.ParentEntity
-	328, // 327: api.v1alpha1.wfm.GetPerformanceMetricsReq.datetime_range:type_name -> api.commons.DatetimeRange
+	376, // 327: api.v1alpha1.wfm.GetPerformanceMetricsReq.datetime_range:type_name -> api.commons.DatetimeRange
 	277, // 328: api.v1alpha1.wfm.GetPerformanceMetricsReq.metric_params:type_name -> api.v1alpha1.wfm.PerformanceMetricParameter
 	227, // 329: api.v1alpha1.wfm.GetPerformanceMetricsRes.performance_metrics:type_name -> api.v1alpha1.wfm.PerformanceMetric
-	345, // 330: api.v1alpha1.wfm.SchedulingTarget.scheduling_target_type:type_name -> api.commons.SchedulingTargetType
-	330, // 331: api.v1alpha1.wfm.SchedulingTarget.service_level_target_duration_seconds:type_name -> google.protobuf.Int64Value
+	393, // 330: api.v1alpha1.wfm.SchedulingTarget.scheduling_target_type:type_name -> api.commons.SchedulingTargetType
+	378, // 331: api.v1alpha1.wfm.SchedulingTarget.service_level_target_duration_seconds:type_name -> google.protobuf.Int64Value
 	116, // 332: api.v1alpha1.wfm.SchedulingTarget.node_entity:type_name -> api.v1alpha1.wfm.ParentEntity
 	280, // 333: api.v1alpha1.wfm.SetSchedulingTargetReq.scheduling_target:type_name -> api.v1alpha1.wfm.SchedulingTarget
 	116, // 334: api.v1alpha1.wfm.GetSchedulingTargetReq.node_selector:type_name -> api.v1alpha1.wfm.ParentEntity
@@ -25824,291 +28931,349 @@ var file_api_v1alpha1_wfm_wfm_proto_depIdxs = []int32{
 	280, // 339: api.v1alpha1.wfm.GetDefaultSchedulingTargetRes.scheduling_target:type_name -> api.v1alpha1.wfm.SchedulingTarget
 	280, // 340: api.v1alpha1.wfm.SetDefaultSchedulingTargetReq.scheduling_target:type_name -> api.v1alpha1.wfm.SchedulingTarget
 	116, // 341: api.v1alpha1.wfm.ListRequiredCallsIntervalsReq.node_selector:type_name -> api.v1alpha1.wfm.ParentEntity
-	328, // 342: api.v1alpha1.wfm.ListRequiredCallsIntervalsReq.datetime_range:type_name -> api.commons.DatetimeRange
+	376, // 342: api.v1alpha1.wfm.ListRequiredCallsIntervalsReq.datetime_range:type_name -> api.commons.DatetimeRange
 	230, // 343: api.v1alpha1.wfm.ListRequiredCallsIntervalsRes.required_calls_intervals:type_name -> api.v1alpha1.wfm.RequiredCallsInterval
-	136, // 344: api.v1alpha1.wfm.ListAllWFMAgentsRes.AgentGroupsByAgent.agent_groups:type_name -> api.v1alpha1.wfm.AgentGroup
-	328, // 345: api.v1alpha1.wfm.DatetimePattern.WeekMap.datetime_range:type_name -> api.commons.DatetimeRange
-	300, // 346: api.v1alpha1.wfm.DatetimePattern.WeekMap.day_maps:type_name -> api.v1alpha1.wfm.DatetimePattern.WeekMap.WeekMapDOW
-	328, // 347: api.v1alpha1.wfm.DatetimePattern.CalendarItem.datetime_range:type_name -> api.commons.DatetimeRange
-	346, // 348: api.v1alpha1.wfm.DatetimePattern.CalendarItem.value:type_name -> api.commons.OptionTypes
-	336, // 349: api.v1alpha1.wfm.DatetimePattern.WeekMap.WeekMapDOW.day_of_week:type_name -> api.commons.DayOfWeek
-	346, // 350: api.v1alpha1.wfm.DatetimePattern.WeekMap.WeekMapDOW.value:type_name -> api.commons.OptionTypes
-	116, // 351: api.v1alpha1.wfm.UpsertNonSkillActivityAssociationRes.EntityMapping.left_entity:type_name -> api.v1alpha1.wfm.ParentEntity
-	116, // 352: api.v1alpha1.wfm.UpsertNonSkillActivityAssociationRes.EntityMapping.right_entity:type_name -> api.v1alpha1.wfm.ParentEntity
-	99,  // 353: api.v1alpha1.wfm.ListConfigEntitiesRes.ClientNodeEntities.entities:type_name -> api.v1alpha1.wfm.ClientNode
-	104, // 354: api.v1alpha1.wfm.ListConfigEntitiesRes.LocationNodeEntities.entities:type_name -> api.v1alpha1.wfm.LocationNode
-	109, // 355: api.v1alpha1.wfm.ListConfigEntitiesRes.ProgramNodeEntities.entities:type_name -> api.v1alpha1.wfm.ProgramNode
-	136, // 356: api.v1alpha1.wfm.ListConfigEntitiesRes.AgentGroupEntities.entities:type_name -> api.v1alpha1.wfm.AgentGroup
-	163, // 357: api.v1alpha1.wfm.ListConfigEntitiesRes.ShiftTemplateEntities.entities:type_name -> api.v1alpha1.wfm.ShiftTemplate
-	141, // 358: api.v1alpha1.wfm.ListConfigEntitiesRes.WFMAgentEntities.entities:type_name -> api.v1alpha1.wfm.WFMAgent
-	172, // 359: api.v1alpha1.wfm.ListConfigEntitiesRes.PlacementRuleEntities.entities:type_name -> api.v1alpha1.wfm.PlacementRule
-	117, // 360: api.v1alpha1.wfm.ListConfigEntitiesRes.ConstraintRuleEntities.entities:type_name -> api.v1alpha1.wfm.ConstraintRule
-	124, // 361: api.v1alpha1.wfm.ListConfigEntitiesRes.NonSkillActivityEntities.entities:type_name -> api.v1alpha1.wfm.NonSkillActivity
-	189, // 362: api.v1alpha1.wfm.ListConfigEntitiesRes.AgentAvailabilityPatternEntities.entities:type_name -> api.v1alpha1.wfm.AgentAvailabilityPattern
-	180, // 363: api.v1alpha1.wfm.ListConfigEntitiesRes.OpenTimesPatternEntities.entities:type_name -> api.v1alpha1.wfm.OpenTimesPattern
-	201, // 364: api.v1alpha1.wfm.ListConfigEntitiesRes.SkillProficiencyEntities.entities:type_name -> api.v1alpha1.wfm.SkillProficiency
-	208, // 365: api.v1alpha1.wfm.ListConfigEntitiesRes.ScheduleScenarioEntities.entities:type_name -> api.v1alpha1.wfm.ScheduleScenario
-	4,   // 366: api.v1alpha1.wfm.WFM.ListSkillProfiles:input_type -> api.v1alpha1.wfm.ListSkillProfilesReq
-	6,   // 367: api.v1alpha1.wfm.WFM.UpdateSkillProfile:input_type -> api.v1alpha1.wfm.UpdateSkillProfileReq
-	8,   // 368: api.v1alpha1.wfm.WFM.UpdateSkillProfileProficiencies:input_type -> api.v1alpha1.wfm.UpdateSkillProfileProficienciesReq
-	10,  // 369: api.v1alpha1.wfm.WFM.GetSkillProfile:input_type -> api.v1alpha1.wfm.GetSkillProfileReq
-	12,  // 370: api.v1alpha1.wfm.WFM.ResyncSkillProfiles:input_type -> api.v1alpha1.wfm.ResyncSkillProfilesReq
-	14,  // 371: api.v1alpha1.wfm.WFM.GetLastSkillProfileResyncDate:input_type -> api.v1alpha1.wfm.GetLastSkillProfileResyncDateReq
-	16,  // 372: api.v1alpha1.wfm.WFM.UpsertForecastingParameters:input_type -> api.v1alpha1.wfm.UpsertForecastingParametersReq
-	18,  // 373: api.v1alpha1.wfm.WFM.GetForecastingParameters:input_type -> api.v1alpha1.wfm.GetForecastingParametersReq
-	21,  // 374: api.v1alpha1.wfm.WFM.ListHistoricalData:input_type -> api.v1alpha1.wfm.ListHistoricalDataReq
-	23,  // 375: api.v1alpha1.wfm.WFM.UpsertHistoricalDataDelta:input_type -> api.v1alpha1.wfm.UpsertHistoricalDataDeltaReq
-	25,  // 376: api.v1alpha1.wfm.WFM.UpsertHistoricalDataDeltas:input_type -> api.v1alpha1.wfm.UpsertHistoricalDataDeltasReq
-	27,  // 377: api.v1alpha1.wfm.WFM.ListSkills:input_type -> api.v1alpha1.wfm.ListSkillsReq
-	30,  // 378: api.v1alpha1.wfm.WFM.BuildCallProfileTemplateForSkillProfile:input_type -> api.v1alpha1.wfm.BuildCallProfileTemplateForSkillProfileReq
-	32,  // 379: api.v1alpha1.wfm.WFM.BuildCallProfileTemplate:input_type -> api.v1alpha1.wfm.BuildCallProfileTemplateReq
-	34,  // 380: api.v1alpha1.wfm.WFM.CreateInactiveSkillProfileMapping:input_type -> api.v1alpha1.wfm.CreateInactiveSkillProfileMappingReq
-	36,  // 381: api.v1alpha1.wfm.WFM.GetAvailableRegressionForecasterModelTypes:input_type -> api.v1alpha1.wfm.GetAvailableRegressionForecasterModelTypesReq
-	38,  // 382: api.v1alpha1.wfm.WFM.DisconnectInactiveSkillProfileMapping:input_type -> api.v1alpha1.wfm.DisconnectInactiveSkillProfileMappingReq
-	40,  // 383: api.v1alpha1.wfm.WFM.CreateSkillProfileGroup:input_type -> api.v1alpha1.wfm.CreateSkillProfileGroupReq
-	42,  // 384: api.v1alpha1.wfm.WFM.UpdateSkillProfileGroup:input_type -> api.v1alpha1.wfm.UpdateSkillProfileGroupReq
-	44,  // 385: api.v1alpha1.wfm.WFM.ListSkillProfileGroups:input_type -> api.v1alpha1.wfm.ListSkillProfileGroupsReq
-	46,  // 386: api.v1alpha1.wfm.WFM.UpdateSkillProfileGroupAssociations:input_type -> api.v1alpha1.wfm.UpdateSkillProfileGroupAssociationsReq
-	48,  // 387: api.v1alpha1.wfm.WFM.DeleteHistoricalDataDeltas:input_type -> api.v1alpha1.wfm.DeleteHistoricalDataDeltasReq
-	50,  // 388: api.v1alpha1.wfm.WFM.ListTopSkillProfiles:input_type -> api.v1alpha1.wfm.ListTopSkillProfilesReq
-	52,  // 389: api.v1alpha1.wfm.WFM.GetSkillProfilesCount:input_type -> api.v1alpha1.wfm.GetSkillProfilesCountReq
-	54,  // 390: api.v1alpha1.wfm.WFM.BuildProfileForecastByInterval:input_type -> api.v1alpha1.wfm.BuildProfileForecastByIntervalReq
-	56,  // 391: api.v1alpha1.wfm.WFM.BuildProfileForecastByIntervalWithStats:input_type -> api.v1alpha1.wfm.BuildProfileForecastByIntervalWithStatsReq
-	58,  // 392: api.v1alpha1.wfm.WFM.UpsertProfileForecast:input_type -> api.v1alpha1.wfm.UpsertProfileForecastReq
-	60,  // 393: api.v1alpha1.wfm.WFM.CreateCallProfileTemplate:input_type -> api.v1alpha1.wfm.CreateCallProfileTemplateReq
-	62,  // 394: api.v1alpha1.wfm.WFM.DeleteCallProfileTemplate:input_type -> api.v1alpha1.wfm.DeleteCallProfileTemplateReq
-	65,  // 395: api.v1alpha1.wfm.WFM.CreateRegressionTemplate:input_type -> api.v1alpha1.wfm.CreateRegressionTemplateReq
-	67,  // 396: api.v1alpha1.wfm.WFM.DeleteRegressionTemplate:input_type -> api.v1alpha1.wfm.DeleteRegressionTemplateReq
-	69,  // 397: api.v1alpha1.wfm.WFM.ListRegressionTemplates:input_type -> api.v1alpha1.wfm.ListRegressionTemplatesReq
-	77,  // 398: api.v1alpha1.wfm.WFM.ListForecastIntervalsForSkillProfile:input_type -> api.v1alpha1.wfm.ListForecastIntervalsForSkillProfileReq
-	78,  // 399: api.v1alpha1.wfm.WFM.ListForecastIntervals:input_type -> api.v1alpha1.wfm.ListForecastIntervalsReq
-	71,  // 400: api.v1alpha1.wfm.WFM.BuildRegressionForecastByInterval:input_type -> api.v1alpha1.wfm.BuildRegressionForecastByIntervalReq
-	72,  // 401: api.v1alpha1.wfm.WFM.BuildRegressionForecastByIntervalWithStats:input_type -> api.v1alpha1.wfm.BuildRegressionForecastByIntervalWithStatsReq
-	75,  // 402: api.v1alpha1.wfm.WFM.ListCallProfileTemplates:input_type -> api.v1alpha1.wfm.ListCallProfileTemplatesReq
-	79,  // 403: api.v1alpha1.wfm.WFM.UpsertRegressionForecast:input_type -> api.v1alpha1.wfm.UpsertRegressionForecastReq
-	81,  // 404: api.v1alpha1.wfm.WFM.UpsertForecastDataDelta:input_type -> api.v1alpha1.wfm.UpsertForecastDataDeltaReq
-	83,  // 405: api.v1alpha1.wfm.WFM.UpsertForecastDataDeltas:input_type -> api.v1alpha1.wfm.UpsertForecastDataDeltasReq
-	85,  // 406: api.v1alpha1.wfm.WFM.DeleteForecastIntervals:input_type -> api.v1alpha1.wfm.DeleteForecastIntervalsReq
-	87,  // 407: api.v1alpha1.wfm.WFM.ListHistoricalDataForAllSkillProfiles:input_type -> api.v1alpha1.wfm.ListHistoricalDataForAllSkillProfilesReq
-	89,  // 408: api.v1alpha1.wfm.WFM.BuildDOWAndMOYProfiles:input_type -> api.v1alpha1.wfm.BuildDOWAndMOYProfilesReq
-	91,  // 409: api.v1alpha1.wfm.WFM.CalculateTrainingDataAveragesForSkillProfile:input_type -> api.v1alpha1.wfm.CalculateTrainingDataAveragesForSkillProfileReq
-	93,  // 410: api.v1alpha1.wfm.WFM.UpdateSkillProfileAveragesUsingHistoricalData:input_type -> api.v1alpha1.wfm.UpdateSkillProfileAveragesUsingHistoricalDataReq
-	97,  // 411: api.v1alpha1.wfm.WFM.UpdateCallCenterNode:input_type -> api.v1alpha1.wfm.UpdateCallCenterNodeReq
-	100, // 412: api.v1alpha1.wfm.WFM.CreateClientNode:input_type -> api.v1alpha1.wfm.CreateClientNodeReq
-	102, // 413: api.v1alpha1.wfm.WFM.UpdateClientNode:input_type -> api.v1alpha1.wfm.UpdateClientNodeReq
-	105, // 414: api.v1alpha1.wfm.WFM.CreateLocationNode:input_type -> api.v1alpha1.wfm.CreateLocationNodeReq
-	107, // 415: api.v1alpha1.wfm.WFM.UpdateLocationNode:input_type -> api.v1alpha1.wfm.UpdateLocationNodeReq
-	110, // 416: api.v1alpha1.wfm.WFM.CreateProgramNode:input_type -> api.v1alpha1.wfm.CreateProgramNodeReq
-	112, // 417: api.v1alpha1.wfm.WFM.UpdateProgramNode:input_type -> api.v1alpha1.wfm.UpdateProgramNodeReq
-	114, // 418: api.v1alpha1.wfm.WFM.ListProgramNodesBySid:input_type -> api.v1alpha1.wfm.ListProgramNodesBySidReq
-	118, // 419: api.v1alpha1.wfm.WFM.CreateConstraintRule:input_type -> api.v1alpha1.wfm.CreateConstraintRuleReq
-	120, // 420: api.v1alpha1.wfm.WFM.UpdateConstraintRule:input_type -> api.v1alpha1.wfm.UpdateConstraintRuleReq
-	122, // 421: api.v1alpha1.wfm.WFM.DeleteConstraintRule:input_type -> api.v1alpha1.wfm.DeleteConstraintRuleReq
-	125, // 422: api.v1alpha1.wfm.WFM.CreateNonSkillActivity:input_type -> api.v1alpha1.wfm.CreateNonSkillActivityReq
-	127, // 423: api.v1alpha1.wfm.WFM.UpdateNonSkillActivity:input_type -> api.v1alpha1.wfm.UpdateNonSkillActivityReq
-	129, // 424: api.v1alpha1.wfm.WFM.ListNonSkillActivities:input_type -> api.v1alpha1.wfm.ListNonSkillActivitiesReq
-	131, // 425: api.v1alpha1.wfm.WFM.ListNonSkillActivityAssociations:input_type -> api.v1alpha1.wfm.ListNonSkillActivityAssociationsReq
-	134, // 426: api.v1alpha1.wfm.WFM.ListCandidateSchedulingActivities:input_type -> api.v1alpha1.wfm.ListCandidateSchedulingActivitiesReq
-	137, // 427: api.v1alpha1.wfm.WFM.CreateAgentGroup:input_type -> api.v1alpha1.wfm.CreateAgentGroupReq
-	139, // 428: api.v1alpha1.wfm.WFM.UpdateAgentGroup:input_type -> api.v1alpha1.wfm.UpdateAgentGroupReq
-	142, // 429: api.v1alpha1.wfm.WFM.UpdateWFMAgent:input_type -> api.v1alpha1.wfm.UpdateWFMAgentReq
-	144, // 430: api.v1alpha1.wfm.WFM.ListAllWFMAgents:input_type -> api.v1alpha1.wfm.ListAllWFMAgentsReq
-	146, // 431: api.v1alpha1.wfm.WFM.ListCandidateWFMAgents:input_type -> api.v1alpha1.wfm.ListCandidateWFMAgentsReq
-	148, // 432: api.v1alpha1.wfm.WFM.ListUngroupedWFMAgents:input_type -> api.v1alpha1.wfm.ListUngroupedWFMAgentsReq
-	150, // 433: api.v1alpha1.wfm.WFM.ListWFMAgentSids:input_type -> api.v1alpha1.wfm.ListWFMAgentSidsReq
-	152, // 434: api.v1alpha1.wfm.WFM.ListWFMAgentsAssociatedWithAgentGroup:input_type -> api.v1alpha1.wfm.ListWFMAgentsAssociatedWithAgentGroupReq
-	156, // 435: api.v1alpha1.wfm.WFM.CreateWFMAgentMemberships:input_type -> api.v1alpha1.wfm.CreateWFMAgentMembershipsReq
-	158, // 436: api.v1alpha1.wfm.WFM.DeleteWFMAgentMemberships:input_type -> api.v1alpha1.wfm.DeleteWFMAgentMembershipsReq
-	160, // 437: api.v1alpha1.wfm.WFM.DeleteWFMAgentsMemberships:input_type -> api.v1alpha1.wfm.DeleteWFMAgentsMembershipsReq
-	154, // 438: api.v1alpha1.wfm.WFM.BuildAgentDiagnostics:input_type -> api.v1alpha1.wfm.BuildAgentDiagnosticsReq
-	164, // 439: api.v1alpha1.wfm.WFM.CreateShiftTemplate:input_type -> api.v1alpha1.wfm.CreateShiftTemplateReq
-	166, // 440: api.v1alpha1.wfm.WFM.UpdateShiftTemplate:input_type -> api.v1alpha1.wfm.UpdateShiftTemplateReq
-	168, // 441: api.v1alpha1.wfm.WFM.ListShiftTemplatesBySids:input_type -> api.v1alpha1.wfm.ListShiftTemplatesBySidsReq
-	170, // 442: api.v1alpha1.wfm.WFM.BuildShiftTemplateDiagnostics:input_type -> api.v1alpha1.wfm.BuildShiftTemplateDiagnosticsReq
-	173, // 443: api.v1alpha1.wfm.WFM.CreatePlacementRule:input_type -> api.v1alpha1.wfm.CreatePlacementRuleReq
-	175, // 444: api.v1alpha1.wfm.WFM.UpdatePlacementRule:input_type -> api.v1alpha1.wfm.UpdatePlacementRuleReq
-	177, // 445: api.v1alpha1.wfm.WFM.DeletePlacementRule:input_type -> api.v1alpha1.wfm.DeletePlacementRuleReq
-	181, // 446: api.v1alpha1.wfm.WFM.CreateOpenTimesPattern:input_type -> api.v1alpha1.wfm.CreateOpenTimesPatternReq
-	183, // 447: api.v1alpha1.wfm.WFM.UpdateOpenTimesPattern:input_type -> api.v1alpha1.wfm.UpdateOpenTimesPatternReq
-	185, // 448: api.v1alpha1.wfm.WFM.DeleteOpenTimesPattern:input_type -> api.v1alpha1.wfm.DeleteOpenTimesPatternReq
-	187, // 449: api.v1alpha1.wfm.WFM.GetOpenTimesBitmaps:input_type -> api.v1alpha1.wfm.GetOpenTimesBitmapsReq
-	190, // 450: api.v1alpha1.wfm.WFM.CreateAgentAvailabilityPattern:input_type -> api.v1alpha1.wfm.CreateAgentAvailabilityPatternReq
-	192, // 451: api.v1alpha1.wfm.WFM.UpdateAgentAvailabilityPattern:input_type -> api.v1alpha1.wfm.UpdateAgentAvailabilityPatternReq
-	194, // 452: api.v1alpha1.wfm.WFM.DeleteAgentAvailabilityPattern:input_type -> api.v1alpha1.wfm.DeleteAgentAvailabilityPatternReq
-	197, // 453: api.v1alpha1.wfm.WFM.GetAvailabilityBitmaps:input_type -> api.v1alpha1.wfm.GetAvailabilityBitmapsReq
-	199, // 454: api.v1alpha1.wfm.WFM.UpsertNonSkillActivityAssociation:input_type -> api.v1alpha1.wfm.UpsertNonSkillActivityAssociationReq
-	202, // 455: api.v1alpha1.wfm.WFM.CreateSkillProficiencies:input_type -> api.v1alpha1.wfm.CreateSkillProficienciesReq
-	204, // 456: api.v1alpha1.wfm.WFM.UpdateSkillProficiencies:input_type -> api.v1alpha1.wfm.UpdateSkillProficienciesReq
-	206, // 457: api.v1alpha1.wfm.WFM.DeleteSkillProficiency:input_type -> api.v1alpha1.wfm.DeleteSkillProficiencyReq
-	209, // 458: api.v1alpha1.wfm.WFM.CopyScenario:input_type -> api.v1alpha1.wfm.CopyScenarioReq
-	211, // 459: api.v1alpha1.wfm.WFM.CreateScheduleScenarioWithNodes:input_type -> api.v1alpha1.wfm.CreateScheduleScenarioWithNodesReq
-	213, // 460: api.v1alpha1.wfm.WFM.UpdateScheduleScenario:input_type -> api.v1alpha1.wfm.UpdateScheduleScenarioReq
-	215, // 461: api.v1alpha1.wfm.WFM.ListConfigEntities:input_type -> api.v1alpha1.wfm.ListConfigEntitiesReq
-	219, // 462: api.v1alpha1.wfm.WFM.DeleteShiftInstances:input_type -> api.v1alpha1.wfm.DeleteShiftInstancesReq
-	221, // 463: api.v1alpha1.wfm.WFM.BuildNodeDiagnostics:input_type -> api.v1alpha1.wfm.BuildNodeDiagnosticsReq
-	223, // 464: api.v1alpha1.wfm.WFM.BuildGlobalDiagnostics:input_type -> api.v1alpha1.wfm.BuildGlobalDiagnosticsReq
-	233, // 465: api.v1alpha1.wfm.WFM.GetPublishedSchedule:input_type -> api.v1alpha1.wfm.GetPublishedScheduleReq
-	235, // 466: api.v1alpha1.wfm.WFM.GetPublishedScheduleRequiredCalls:input_type -> api.v1alpha1.wfm.GetPublishedScheduleRequiredCallsReq
-	237, // 467: api.v1alpha1.wfm.WFM.GetDraftScheduleRequiredCalls:input_type -> api.v1alpha1.wfm.GetDraftScheduleRequiredCallsReq
-	239, // 468: api.v1alpha1.wfm.WFM.CreateDraftSchedule:input_type -> api.v1alpha1.wfm.CreateDraftScheduleReq
-	241, // 469: api.v1alpha1.wfm.WFM.UpdateDraftSchedule:input_type -> api.v1alpha1.wfm.UpdateDraftScheduleReq
-	243, // 470: api.v1alpha1.wfm.WFM.BuildDraftSchedule:input_type -> api.v1alpha1.wfm.BuildDraftScheduleReq
-	245, // 471: api.v1alpha1.wfm.WFM.PublishDraftSchedule:input_type -> api.v1alpha1.wfm.PublishDraftScheduleReq
-	247, // 472: api.v1alpha1.wfm.WFM.ResetDraftSchedule:input_type -> api.v1alpha1.wfm.ResetDraftScheduleReq
-	249, // 473: api.v1alpha1.wfm.WFM.GetDraftSchedule:input_type -> api.v1alpha1.wfm.GetDraftScheduleReq
-	251, // 474: api.v1alpha1.wfm.WFM.ListDraftSchedules:input_type -> api.v1alpha1.wfm.ListDraftSchedulesReq
-	253, // 475: api.v1alpha1.wfm.WFM.ClearSchedule:input_type -> api.v1alpha1.wfm.ClearScheduleReq
-	255, // 476: api.v1alpha1.wfm.WFM.DeleteDraftSchedule:input_type -> api.v1alpha1.wfm.DeleteDraftScheduleReq
-	257, // 477: api.v1alpha1.wfm.WFM.ListShiftInstancesBySid:input_type -> api.v1alpha1.wfm.ListShiftInstancesBySidReq
-	259, // 478: api.v1alpha1.wfm.WFM.CopyScheduleToSchedule:input_type -> api.v1alpha1.wfm.CopyScheduleToScheduleReq
-	261, // 479: api.v1alpha1.wfm.WFM.CreateShiftInstance:input_type -> api.v1alpha1.wfm.CreateShiftInstanceReq
-	263, // 480: api.v1alpha1.wfm.WFM.CreateShiftInstanceV2:input_type -> api.v1alpha1.wfm.CreateShiftInstanceV2Req
-	265, // 481: api.v1alpha1.wfm.WFM.SwapShiftInstances:input_type -> api.v1alpha1.wfm.SwapShiftInstancesReq
-	267, // 482: api.v1alpha1.wfm.WFM.UpdateShiftInstance:input_type -> api.v1alpha1.wfm.UpdateShiftInstanceReq
-	269, // 483: api.v1alpha1.wfm.WFM.UpdateShiftInstanceV2:input_type -> api.v1alpha1.wfm.UpdateShiftInstanceV2Req
-	271, // 484: api.v1alpha1.wfm.WFM.CopyShiftInstancesToSchedule:input_type -> api.v1alpha1.wfm.CopyShiftInstancesToScheduleReq
-	273, // 485: api.v1alpha1.wfm.WFM.ListShiftInstanceSidsForAgent:input_type -> api.v1alpha1.wfm.ListShiftInstanceSidsForAgentReq
-	275, // 486: api.v1alpha1.wfm.WFM.ListShiftSegmentsByShiftInstanceSids:input_type -> api.v1alpha1.wfm.ListShiftSegmentsByShiftInstanceSidsReq
-	281, // 487: api.v1alpha1.wfm.WFM.SetSchedulingTarget:input_type -> api.v1alpha1.wfm.SetSchedulingTargetReq
-	283, // 488: api.v1alpha1.wfm.WFM.GetSchedulingTarget:input_type -> api.v1alpha1.wfm.GetSchedulingTargetReq
-	285, // 489: api.v1alpha1.wfm.WFM.DeleteSchedulingTarget:input_type -> api.v1alpha1.wfm.DeleteSchedulingTargetReq
-	287, // 490: api.v1alpha1.wfm.WFM.GetDefaultSchedulingTarget:input_type -> api.v1alpha1.wfm.GetDefaultSchedulingTargetReq
-	289, // 491: api.v1alpha1.wfm.WFM.SetDefaultSchedulingTarget:input_type -> api.v1alpha1.wfm.SetDefaultSchedulingTargetReq
-	278, // 492: api.v1alpha1.wfm.WFM.GetPerformanceMetrics:input_type -> api.v1alpha1.wfm.GetPerformanceMetricsReq
-	291, // 493: api.v1alpha1.wfm.WFM.ListRequiredCallsIntervals:input_type -> api.v1alpha1.wfm.ListRequiredCallsIntervalsReq
-	5,   // 494: api.v1alpha1.wfm.WFM.ListSkillProfiles:output_type -> api.v1alpha1.wfm.ListSkillProfilesRes
-	7,   // 495: api.v1alpha1.wfm.WFM.UpdateSkillProfile:output_type -> api.v1alpha1.wfm.UpdateSkillProfileRes
-	9,   // 496: api.v1alpha1.wfm.WFM.UpdateSkillProfileProficiencies:output_type -> api.v1alpha1.wfm.UpdateSkillProfileProficienciesRes
-	11,  // 497: api.v1alpha1.wfm.WFM.GetSkillProfile:output_type -> api.v1alpha1.wfm.GetSkillProfileRes
-	13,  // 498: api.v1alpha1.wfm.WFM.ResyncSkillProfiles:output_type -> api.v1alpha1.wfm.ResyncSkillProfilesRes
-	15,  // 499: api.v1alpha1.wfm.WFM.GetLastSkillProfileResyncDate:output_type -> api.v1alpha1.wfm.GetLastSkillProfileResyncDateRes
-	17,  // 500: api.v1alpha1.wfm.WFM.UpsertForecastingParameters:output_type -> api.v1alpha1.wfm.UpsertForecastingParametersRes
-	19,  // 501: api.v1alpha1.wfm.WFM.GetForecastingParameters:output_type -> api.v1alpha1.wfm.GetForecastingParametersRes
-	22,  // 502: api.v1alpha1.wfm.WFM.ListHistoricalData:output_type -> api.v1alpha1.wfm.ListHistoricalDataRes
-	24,  // 503: api.v1alpha1.wfm.WFM.UpsertHistoricalDataDelta:output_type -> api.v1alpha1.wfm.UpsertHistoricalDataDeltaRes
-	26,  // 504: api.v1alpha1.wfm.WFM.UpsertHistoricalDataDeltas:output_type -> api.v1alpha1.wfm.UpsertHistoricalDataDeltasRes
-	28,  // 505: api.v1alpha1.wfm.WFM.ListSkills:output_type -> api.v1alpha1.wfm.ListSkillsRes
-	31,  // 506: api.v1alpha1.wfm.WFM.BuildCallProfileTemplateForSkillProfile:output_type -> api.v1alpha1.wfm.BuildCallProfileTemplateForSkillProfileRes
-	33,  // 507: api.v1alpha1.wfm.WFM.BuildCallProfileTemplate:output_type -> api.v1alpha1.wfm.BuildCallProfileTemplateRes
-	35,  // 508: api.v1alpha1.wfm.WFM.CreateInactiveSkillProfileMapping:output_type -> api.v1alpha1.wfm.CreateInactiveSkillProfileMappingRes
-	37,  // 509: api.v1alpha1.wfm.WFM.GetAvailableRegressionForecasterModelTypes:output_type -> api.v1alpha1.wfm.GetAvailableRegressionForecasterModelTypesRes
-	39,  // 510: api.v1alpha1.wfm.WFM.DisconnectInactiveSkillProfileMapping:output_type -> api.v1alpha1.wfm.DisconnectInactiveSkillProfileMappingRes
-	41,  // 511: api.v1alpha1.wfm.WFM.CreateSkillProfileGroup:output_type -> api.v1alpha1.wfm.CreateSkillProfileGroupRes
-	43,  // 512: api.v1alpha1.wfm.WFM.UpdateSkillProfileGroup:output_type -> api.v1alpha1.wfm.UpdateSkillProfileGroupRes
-	45,  // 513: api.v1alpha1.wfm.WFM.ListSkillProfileGroups:output_type -> api.v1alpha1.wfm.ListSkillProfileGroupsRes
-	47,  // 514: api.v1alpha1.wfm.WFM.UpdateSkillProfileGroupAssociations:output_type -> api.v1alpha1.wfm.UpdateSkillProfileGroupAssociationsRes
-	49,  // 515: api.v1alpha1.wfm.WFM.DeleteHistoricalDataDeltas:output_type -> api.v1alpha1.wfm.DeleteHistoricalDataDeltasRes
-	51,  // 516: api.v1alpha1.wfm.WFM.ListTopSkillProfiles:output_type -> api.v1alpha1.wfm.ListTopSkillProfilesRes
-	53,  // 517: api.v1alpha1.wfm.WFM.GetSkillProfilesCount:output_type -> api.v1alpha1.wfm.GetSkillProfilesCountRes
-	55,  // 518: api.v1alpha1.wfm.WFM.BuildProfileForecastByInterval:output_type -> api.v1alpha1.wfm.CallDataByInterval
-	57,  // 519: api.v1alpha1.wfm.WFM.BuildProfileForecastByIntervalWithStats:output_type -> api.v1alpha1.wfm.BuildProfileForecastByIntervalWithStatsRes
-	59,  // 520: api.v1alpha1.wfm.WFM.UpsertProfileForecast:output_type -> api.v1alpha1.wfm.UpsertProfileForecastRes
-	61,  // 521: api.v1alpha1.wfm.WFM.CreateCallProfileTemplate:output_type -> api.v1alpha1.wfm.CreateCallProfileTemplateRes
-	63,  // 522: api.v1alpha1.wfm.WFM.DeleteCallProfileTemplate:output_type -> api.v1alpha1.wfm.DeleteCallProfileTemplateRes
-	66,  // 523: api.v1alpha1.wfm.WFM.CreateRegressionTemplate:output_type -> api.v1alpha1.wfm.CreateRegressionTemplateRes
-	68,  // 524: api.v1alpha1.wfm.WFM.DeleteRegressionTemplate:output_type -> api.v1alpha1.wfm.DeleteRegressionTemplateRes
-	70,  // 525: api.v1alpha1.wfm.WFM.ListRegressionTemplates:output_type -> api.v1alpha1.wfm.ListRegressionTemplatesRes
-	55,  // 526: api.v1alpha1.wfm.WFM.ListForecastIntervalsForSkillProfile:output_type -> api.v1alpha1.wfm.CallDataByInterval
-	55,  // 527: api.v1alpha1.wfm.WFM.ListForecastIntervals:output_type -> api.v1alpha1.wfm.CallDataByInterval
-	55,  // 528: api.v1alpha1.wfm.WFM.BuildRegressionForecastByInterval:output_type -> api.v1alpha1.wfm.CallDataByInterval
-	74,  // 529: api.v1alpha1.wfm.WFM.BuildRegressionForecastByIntervalWithStats:output_type -> api.v1alpha1.wfm.BuildRegressionForecastByIntervalWithStatsRes
-	76,  // 530: api.v1alpha1.wfm.WFM.ListCallProfileTemplates:output_type -> api.v1alpha1.wfm.ListCallProfileTemplatesRes
-	80,  // 531: api.v1alpha1.wfm.WFM.UpsertRegressionForecast:output_type -> api.v1alpha1.wfm.UpsertRegressionForecastRes
-	82,  // 532: api.v1alpha1.wfm.WFM.UpsertForecastDataDelta:output_type -> api.v1alpha1.wfm.UpsertForecastDataDeltaRes
-	84,  // 533: api.v1alpha1.wfm.WFM.UpsertForecastDataDeltas:output_type -> api.v1alpha1.wfm.UpsertForecastDataDeltasRes
-	86,  // 534: api.v1alpha1.wfm.WFM.DeleteForecastIntervals:output_type -> api.v1alpha1.wfm.DeleteForecastIntervalsRes
-	88,  // 535: api.v1alpha1.wfm.WFM.ListHistoricalDataForAllSkillProfiles:output_type -> api.v1alpha1.wfm.ListHistoricalDataForAllSkillProfilesRes
-	90,  // 536: api.v1alpha1.wfm.WFM.BuildDOWAndMOYProfiles:output_type -> api.v1alpha1.wfm.BuildDOWAndMOYProfilesRes
-	92,  // 537: api.v1alpha1.wfm.WFM.CalculateTrainingDataAveragesForSkillProfile:output_type -> api.v1alpha1.wfm.CalculateTrainingDataAveragesForSkillProfileRes
-	94,  // 538: api.v1alpha1.wfm.WFM.UpdateSkillProfileAveragesUsingHistoricalData:output_type -> api.v1alpha1.wfm.UpdateSkillProfileAveragesUsingHistoricalDataRes
-	98,  // 539: api.v1alpha1.wfm.WFM.UpdateCallCenterNode:output_type -> api.v1alpha1.wfm.UpdateCallCenterNodeRes
-	101, // 540: api.v1alpha1.wfm.WFM.CreateClientNode:output_type -> api.v1alpha1.wfm.CreateClientNodeRes
-	103, // 541: api.v1alpha1.wfm.WFM.UpdateClientNode:output_type -> api.v1alpha1.wfm.UpdateClientNodeRes
-	106, // 542: api.v1alpha1.wfm.WFM.CreateLocationNode:output_type -> api.v1alpha1.wfm.CreateLocationNodeRes
-	108, // 543: api.v1alpha1.wfm.WFM.UpdateLocationNode:output_type -> api.v1alpha1.wfm.UpdateLocationNodeRes
-	111, // 544: api.v1alpha1.wfm.WFM.CreateProgramNode:output_type -> api.v1alpha1.wfm.CreateProgramNodeRes
-	113, // 545: api.v1alpha1.wfm.WFM.UpdateProgramNode:output_type -> api.v1alpha1.wfm.UpdateProgramNodeRes
-	115, // 546: api.v1alpha1.wfm.WFM.ListProgramNodesBySid:output_type -> api.v1alpha1.wfm.ListProgramNodesBySidRes
-	119, // 547: api.v1alpha1.wfm.WFM.CreateConstraintRule:output_type -> api.v1alpha1.wfm.CreateConstraintRuleRes
-	121, // 548: api.v1alpha1.wfm.WFM.UpdateConstraintRule:output_type -> api.v1alpha1.wfm.UpdateConstraintRuleRes
-	123, // 549: api.v1alpha1.wfm.WFM.DeleteConstraintRule:output_type -> api.v1alpha1.wfm.DeleteConstraintRuleRes
-	126, // 550: api.v1alpha1.wfm.WFM.CreateNonSkillActivity:output_type -> api.v1alpha1.wfm.CreateNonSkillActivityRes
-	128, // 551: api.v1alpha1.wfm.WFM.UpdateNonSkillActivity:output_type -> api.v1alpha1.wfm.UpdateNonSkillActivityRes
-	130, // 552: api.v1alpha1.wfm.WFM.ListNonSkillActivities:output_type -> api.v1alpha1.wfm.ListNonSkillActivitiesRes
-	132, // 553: api.v1alpha1.wfm.WFM.ListNonSkillActivityAssociations:output_type -> api.v1alpha1.wfm.ListNonSkillActivityAssociationsRes
-	135, // 554: api.v1alpha1.wfm.WFM.ListCandidateSchedulingActivities:output_type -> api.v1alpha1.wfm.ListCandidateSchedulingActivitiesRes
-	138, // 555: api.v1alpha1.wfm.WFM.CreateAgentGroup:output_type -> api.v1alpha1.wfm.CreateAgentGroupRes
-	140, // 556: api.v1alpha1.wfm.WFM.UpdateAgentGroup:output_type -> api.v1alpha1.wfm.UpdateAgentGroupRes
-	143, // 557: api.v1alpha1.wfm.WFM.UpdateWFMAgent:output_type -> api.v1alpha1.wfm.UpdateWFMAgentRes
-	145, // 558: api.v1alpha1.wfm.WFM.ListAllWFMAgents:output_type -> api.v1alpha1.wfm.ListAllWFMAgentsRes
-	147, // 559: api.v1alpha1.wfm.WFM.ListCandidateWFMAgents:output_type -> api.v1alpha1.wfm.ListCandidateWFMAgentsRes
-	149, // 560: api.v1alpha1.wfm.WFM.ListUngroupedWFMAgents:output_type -> api.v1alpha1.wfm.ListUngroupedWFMAgentsRes
-	151, // 561: api.v1alpha1.wfm.WFM.ListWFMAgentSids:output_type -> api.v1alpha1.wfm.ListWFMAgentSidsRes
-	153, // 562: api.v1alpha1.wfm.WFM.ListWFMAgentsAssociatedWithAgentGroup:output_type -> api.v1alpha1.wfm.ListWFMAgentsAssociatedWithAgentGroupRes
-	157, // 563: api.v1alpha1.wfm.WFM.CreateWFMAgentMemberships:output_type -> api.v1alpha1.wfm.CreateWFMAgentMembershipsRes
-	159, // 564: api.v1alpha1.wfm.WFM.DeleteWFMAgentMemberships:output_type -> api.v1alpha1.wfm.DeleteWFMAgentMembershipsRes
-	161, // 565: api.v1alpha1.wfm.WFM.DeleteWFMAgentsMemberships:output_type -> api.v1alpha1.wfm.DeleteWFMAgentsMembershipsRes
-	155, // 566: api.v1alpha1.wfm.WFM.BuildAgentDiagnostics:output_type -> api.v1alpha1.wfm.BuildAgentDiagnosticsRes
-	165, // 567: api.v1alpha1.wfm.WFM.CreateShiftTemplate:output_type -> api.v1alpha1.wfm.CreateShiftTemplateRes
-	167, // 568: api.v1alpha1.wfm.WFM.UpdateShiftTemplate:output_type -> api.v1alpha1.wfm.UpdateShiftTemplateRes
-	169, // 569: api.v1alpha1.wfm.WFM.ListShiftTemplatesBySids:output_type -> api.v1alpha1.wfm.ListShiftTemplatesBySidsRes
-	171, // 570: api.v1alpha1.wfm.WFM.BuildShiftTemplateDiagnostics:output_type -> api.v1alpha1.wfm.BuildShiftTemplateDiagnosticsRes
-	174, // 571: api.v1alpha1.wfm.WFM.CreatePlacementRule:output_type -> api.v1alpha1.wfm.CreatePlacementRuleRes
-	176, // 572: api.v1alpha1.wfm.WFM.UpdatePlacementRule:output_type -> api.v1alpha1.wfm.UpdatePlacementRuleRes
-	178, // 573: api.v1alpha1.wfm.WFM.DeletePlacementRule:output_type -> api.v1alpha1.wfm.DeletePlacementRuleRes
-	182, // 574: api.v1alpha1.wfm.WFM.CreateOpenTimesPattern:output_type -> api.v1alpha1.wfm.CreateOpenTimesPatternRes
-	184, // 575: api.v1alpha1.wfm.WFM.UpdateOpenTimesPattern:output_type -> api.v1alpha1.wfm.UpdateOpenTimesPatternRes
-	186, // 576: api.v1alpha1.wfm.WFM.DeleteOpenTimesPattern:output_type -> api.v1alpha1.wfm.DeleteOpenTimesPatternRes
-	188, // 577: api.v1alpha1.wfm.WFM.GetOpenTimesBitmaps:output_type -> api.v1alpha1.wfm.GetOpenTimesBitmapsRes
-	191, // 578: api.v1alpha1.wfm.WFM.CreateAgentAvailabilityPattern:output_type -> api.v1alpha1.wfm.CreateAgentAvailabilityPatternRes
-	193, // 579: api.v1alpha1.wfm.WFM.UpdateAgentAvailabilityPattern:output_type -> api.v1alpha1.wfm.UpdateAgentAvailabilityPatternRes
-	195, // 580: api.v1alpha1.wfm.WFM.DeleteAgentAvailabilityPattern:output_type -> api.v1alpha1.wfm.DeleteAgentAvailabilityPatternRes
-	198, // 581: api.v1alpha1.wfm.WFM.GetAvailabilityBitmaps:output_type -> api.v1alpha1.wfm.GetAvailabilityBitmapsRes
-	200, // 582: api.v1alpha1.wfm.WFM.UpsertNonSkillActivityAssociation:output_type -> api.v1alpha1.wfm.UpsertNonSkillActivityAssociationRes
-	203, // 583: api.v1alpha1.wfm.WFM.CreateSkillProficiencies:output_type -> api.v1alpha1.wfm.CreateSkillProficienciesRes
-	205, // 584: api.v1alpha1.wfm.WFM.UpdateSkillProficiencies:output_type -> api.v1alpha1.wfm.UpdateSkillProficienciesRes
-	207, // 585: api.v1alpha1.wfm.WFM.DeleteSkillProficiency:output_type -> api.v1alpha1.wfm.DeleteSkillProficiencyRes
-	210, // 586: api.v1alpha1.wfm.WFM.CopyScenario:output_type -> api.v1alpha1.wfm.CopyScenarioRes
-	212, // 587: api.v1alpha1.wfm.WFM.CreateScheduleScenarioWithNodes:output_type -> api.v1alpha1.wfm.CreateScheduleScenarioWithNodesRes
-	214, // 588: api.v1alpha1.wfm.WFM.UpdateScheduleScenario:output_type -> api.v1alpha1.wfm.UpdateScheduleScenarioRes
-	216, // 589: api.v1alpha1.wfm.WFM.ListConfigEntities:output_type -> api.v1alpha1.wfm.ListConfigEntitiesRes
-	220, // 590: api.v1alpha1.wfm.WFM.DeleteShiftInstances:output_type -> api.v1alpha1.wfm.DeleteShiftInstancesRes
-	222, // 591: api.v1alpha1.wfm.WFM.BuildNodeDiagnostics:output_type -> api.v1alpha1.wfm.BuildNodeDiagnosticsRes
-	224, // 592: api.v1alpha1.wfm.WFM.BuildGlobalDiagnostics:output_type -> api.v1alpha1.wfm.BuildGlobalDiagnosticsRes
-	234, // 593: api.v1alpha1.wfm.WFM.GetPublishedSchedule:output_type -> api.v1alpha1.wfm.GetPublishedScheduleRes
-	236, // 594: api.v1alpha1.wfm.WFM.GetPublishedScheduleRequiredCalls:output_type -> api.v1alpha1.wfm.GetPublishedScheduleRequiredCallsRes
-	238, // 595: api.v1alpha1.wfm.WFM.GetDraftScheduleRequiredCalls:output_type -> api.v1alpha1.wfm.GetDraftScheduleRequiredCallsRes
-	240, // 596: api.v1alpha1.wfm.WFM.CreateDraftSchedule:output_type -> api.v1alpha1.wfm.CreateDraftScheduleRes
-	242, // 597: api.v1alpha1.wfm.WFM.UpdateDraftSchedule:output_type -> api.v1alpha1.wfm.UpdateDraftScheduleRes
-	244, // 598: api.v1alpha1.wfm.WFM.BuildDraftSchedule:output_type -> api.v1alpha1.wfm.BuildDraftScheduleRes
-	246, // 599: api.v1alpha1.wfm.WFM.PublishDraftSchedule:output_type -> api.v1alpha1.wfm.PublishDraftScheduleRes
-	248, // 600: api.v1alpha1.wfm.WFM.ResetDraftSchedule:output_type -> api.v1alpha1.wfm.ResetDraftScheduleRes
-	250, // 601: api.v1alpha1.wfm.WFM.GetDraftSchedule:output_type -> api.v1alpha1.wfm.GetDraftScheduleRes
-	252, // 602: api.v1alpha1.wfm.WFM.ListDraftSchedules:output_type -> api.v1alpha1.wfm.ListDraftSchedulesRes
-	254, // 603: api.v1alpha1.wfm.WFM.ClearSchedule:output_type -> api.v1alpha1.wfm.ClearScheduleRes
-	256, // 604: api.v1alpha1.wfm.WFM.DeleteDraftSchedule:output_type -> api.v1alpha1.wfm.DeleteDraftScheduleRes
-	258, // 605: api.v1alpha1.wfm.WFM.ListShiftInstancesBySid:output_type -> api.v1alpha1.wfm.ListShiftInstancesBySidRes
-	260, // 606: api.v1alpha1.wfm.WFM.CopyScheduleToSchedule:output_type -> api.v1alpha1.wfm.CopyScheduleToScheduleRes
-	262, // 607: api.v1alpha1.wfm.WFM.CreateShiftInstance:output_type -> api.v1alpha1.wfm.CreateShiftInstanceRes
-	264, // 608: api.v1alpha1.wfm.WFM.CreateShiftInstanceV2:output_type -> api.v1alpha1.wfm.CreateShiftInstanceV2Res
-	266, // 609: api.v1alpha1.wfm.WFM.SwapShiftInstances:output_type -> api.v1alpha1.wfm.SwapShiftInstancesRes
-	268, // 610: api.v1alpha1.wfm.WFM.UpdateShiftInstance:output_type -> api.v1alpha1.wfm.UpdateShiftInstanceRes
-	270, // 611: api.v1alpha1.wfm.WFM.UpdateShiftInstanceV2:output_type -> api.v1alpha1.wfm.UpdateShiftInstanceV2Res
-	272, // 612: api.v1alpha1.wfm.WFM.CopyShiftInstancesToSchedule:output_type -> api.v1alpha1.wfm.CopyShiftInstancesToScheduleRes
-	274, // 613: api.v1alpha1.wfm.WFM.ListShiftInstanceSidsForAgent:output_type -> api.v1alpha1.wfm.ListShiftInstanceSidsForAgentRes
-	276, // 614: api.v1alpha1.wfm.WFM.ListShiftSegmentsByShiftInstanceSids:output_type -> api.v1alpha1.wfm.ListShiftSegmentsByShiftInstanceSidsRes
-	282, // 615: api.v1alpha1.wfm.WFM.SetSchedulingTarget:output_type -> api.v1alpha1.wfm.SetSchedulingTargetRes
-	284, // 616: api.v1alpha1.wfm.WFM.GetSchedulingTarget:output_type -> api.v1alpha1.wfm.GetSchedulingTargetRes
-	286, // 617: api.v1alpha1.wfm.WFM.DeleteSchedulingTarget:output_type -> api.v1alpha1.wfm.DeleteSchedulingTargetRes
-	288, // 618: api.v1alpha1.wfm.WFM.GetDefaultSchedulingTarget:output_type -> api.v1alpha1.wfm.GetDefaultSchedulingTargetRes
-	290, // 619: api.v1alpha1.wfm.WFM.SetDefaultSchedulingTarget:output_type -> api.v1alpha1.wfm.SetDefaultSchedulingTargetRes
-	279, // 620: api.v1alpha1.wfm.WFM.GetPerformanceMetrics:output_type -> api.v1alpha1.wfm.GetPerformanceMetricsRes
-	292, // 621: api.v1alpha1.wfm.WFM.ListRequiredCallsIntervals:output_type -> api.v1alpha1.wfm.ListRequiredCallsIntervalsRes
-	494, // [494:622] is the sub-list for method output_type
-	366, // [366:494] is the sub-list for method input_type
-	366, // [366:366] is the sub-list for extension type_name
-	366, // [366:366] is the sub-list for extension extendee
-	0,   // [0:366] is the sub-list for field type_name
+	293, // 344: api.v1alpha1.wfm.TourShiftInstanceConfig.member_tour_shift_segment_configs:type_name -> api.v1alpha1.wfm.TourShiftSegmentConfig
+	294, // 345: api.v1alpha1.wfm.TourWeekPattern.member_tour_shift_instance_configs:type_name -> api.v1alpha1.wfm.TourShiftInstanceConfig
+	295, // 346: api.v1alpha1.wfm.TourPattern.member_tour_week_patterns:type_name -> api.v1alpha1.wfm.TourWeekPattern
+	296, // 347: api.v1alpha1.wfm.TourPattern.member_tour_agent_collections:type_name -> api.v1alpha1.wfm.TourAgentCollection
+	297, // 348: api.v1alpha1.wfm.GetTourPatternRes.tour_pattern:type_name -> api.v1alpha1.wfm.TourPattern
+	295, // 349: api.v1alpha1.wfm.ListTourWeekPatternsRes.tour_week_patterns:type_name -> api.v1alpha1.wfm.TourWeekPattern
+	294, // 350: api.v1alpha1.wfm.CreateTourShiftInstanceConfigReq.tour_shift_instance_config:type_name -> api.v1alpha1.wfm.TourShiftInstanceConfig
+	294, // 351: api.v1alpha1.wfm.UpdateTourShiftInstanceConfigReq.tour_shift_instance_config:type_name -> api.v1alpha1.wfm.TourShiftInstanceConfig
+	294, // 352: api.v1alpha1.wfm.ListTourShiftInstanceConfigsRes.tour_shift_instance_configs:type_name -> api.v1alpha1.wfm.TourShiftInstanceConfig
+	293, // 353: api.v1alpha1.wfm.CreateTourShiftSegmentConfigReq.tour_shift_segment_config:type_name -> api.v1alpha1.wfm.TourShiftSegmentConfig
+	293, // 354: api.v1alpha1.wfm.UpdateTourShiftSegmentConfigReq.tour_shift_segment_config:type_name -> api.v1alpha1.wfm.TourShiftSegmentConfig
+	293, // 355: api.v1alpha1.wfm.ListTourShiftSegmentConfigsRes.tour_shift_segment_configs:type_name -> api.v1alpha1.wfm.TourShiftSegmentConfig
+	296, // 356: api.v1alpha1.wfm.CreateTourAgentCollectionReq.tour_agent_collection:type_name -> api.v1alpha1.wfm.TourAgentCollection
+	296, // 357: api.v1alpha1.wfm.UpdateTourAgentCollectionReq.tour_agent_collection:type_name -> api.v1alpha1.wfm.TourAgentCollection
+	296, // 358: api.v1alpha1.wfm.ListTourAgentCollectionsRes.tour_agent_collections:type_name -> api.v1alpha1.wfm.TourAgentCollection
+	362, // 359: api.v1alpha1.wfm.ListTourAgentCollectionWFMAgentsRes.wfm_agent_pairings:type_name -> api.v1alpha1.wfm.ListTourAgentCollectionWFMAgentsRes.SidMapping
+	136, // 360: api.v1alpha1.wfm.ListAllWFMAgentsRes.AgentGroupsByAgent.agent_groups:type_name -> api.v1alpha1.wfm.AgentGroup
+	376, // 361: api.v1alpha1.wfm.DatetimePattern.WeekMap.datetime_range:type_name -> api.commons.DatetimeRange
+	347, // 362: api.v1alpha1.wfm.DatetimePattern.WeekMap.day_maps:type_name -> api.v1alpha1.wfm.DatetimePattern.WeekMap.WeekMapDOW
+	376, // 363: api.v1alpha1.wfm.DatetimePattern.CalendarItem.datetime_range:type_name -> api.commons.DatetimeRange
+	394, // 364: api.v1alpha1.wfm.DatetimePattern.CalendarItem.value:type_name -> api.commons.OptionTypes
+	384, // 365: api.v1alpha1.wfm.DatetimePattern.WeekMap.WeekMapDOW.day_of_week:type_name -> api.commons.DayOfWeek
+	394, // 366: api.v1alpha1.wfm.DatetimePattern.WeekMap.WeekMapDOW.value:type_name -> api.commons.OptionTypes
+	116, // 367: api.v1alpha1.wfm.UpsertNonSkillActivityAssociationRes.EntityMapping.left_entity:type_name -> api.v1alpha1.wfm.ParentEntity
+	116, // 368: api.v1alpha1.wfm.UpsertNonSkillActivityAssociationRes.EntityMapping.right_entity:type_name -> api.v1alpha1.wfm.ParentEntity
+	99,  // 369: api.v1alpha1.wfm.ListConfigEntitiesRes.ClientNodeEntities.entities:type_name -> api.v1alpha1.wfm.ClientNode
+	104, // 370: api.v1alpha1.wfm.ListConfigEntitiesRes.LocationNodeEntities.entities:type_name -> api.v1alpha1.wfm.LocationNode
+	109, // 371: api.v1alpha1.wfm.ListConfigEntitiesRes.ProgramNodeEntities.entities:type_name -> api.v1alpha1.wfm.ProgramNode
+	136, // 372: api.v1alpha1.wfm.ListConfigEntitiesRes.AgentGroupEntities.entities:type_name -> api.v1alpha1.wfm.AgentGroup
+	163, // 373: api.v1alpha1.wfm.ListConfigEntitiesRes.ShiftTemplateEntities.entities:type_name -> api.v1alpha1.wfm.ShiftTemplate
+	141, // 374: api.v1alpha1.wfm.ListConfigEntitiesRes.WFMAgentEntities.entities:type_name -> api.v1alpha1.wfm.WFMAgent
+	172, // 375: api.v1alpha1.wfm.ListConfigEntitiesRes.PlacementRuleEntities.entities:type_name -> api.v1alpha1.wfm.PlacementRule
+	117, // 376: api.v1alpha1.wfm.ListConfigEntitiesRes.ConstraintRuleEntities.entities:type_name -> api.v1alpha1.wfm.ConstraintRule
+	124, // 377: api.v1alpha1.wfm.ListConfigEntitiesRes.NonSkillActivityEntities.entities:type_name -> api.v1alpha1.wfm.NonSkillActivity
+	189, // 378: api.v1alpha1.wfm.ListConfigEntitiesRes.AgentAvailabilityPatternEntities.entities:type_name -> api.v1alpha1.wfm.AgentAvailabilityPattern
+	180, // 379: api.v1alpha1.wfm.ListConfigEntitiesRes.OpenTimesPatternEntities.entities:type_name -> api.v1alpha1.wfm.OpenTimesPattern
+	201, // 380: api.v1alpha1.wfm.ListConfigEntitiesRes.SkillProficiencyEntities.entities:type_name -> api.v1alpha1.wfm.SkillProficiency
+	208, // 381: api.v1alpha1.wfm.ListConfigEntitiesRes.ScheduleScenarioEntities.entities:type_name -> api.v1alpha1.wfm.ScheduleScenario
+	4,   // 382: api.v1alpha1.wfm.WFM.ListSkillProfiles:input_type -> api.v1alpha1.wfm.ListSkillProfilesReq
+	6,   // 383: api.v1alpha1.wfm.WFM.UpdateSkillProfile:input_type -> api.v1alpha1.wfm.UpdateSkillProfileReq
+	8,   // 384: api.v1alpha1.wfm.WFM.UpdateSkillProfileProficiencies:input_type -> api.v1alpha1.wfm.UpdateSkillProfileProficienciesReq
+	10,  // 385: api.v1alpha1.wfm.WFM.GetSkillProfile:input_type -> api.v1alpha1.wfm.GetSkillProfileReq
+	12,  // 386: api.v1alpha1.wfm.WFM.ResyncSkillProfiles:input_type -> api.v1alpha1.wfm.ResyncSkillProfilesReq
+	14,  // 387: api.v1alpha1.wfm.WFM.GetLastSkillProfileResyncDate:input_type -> api.v1alpha1.wfm.GetLastSkillProfileResyncDateReq
+	16,  // 388: api.v1alpha1.wfm.WFM.UpsertForecastingParameters:input_type -> api.v1alpha1.wfm.UpsertForecastingParametersReq
+	18,  // 389: api.v1alpha1.wfm.WFM.GetForecastingParameters:input_type -> api.v1alpha1.wfm.GetForecastingParametersReq
+	21,  // 390: api.v1alpha1.wfm.WFM.ListHistoricalData:input_type -> api.v1alpha1.wfm.ListHistoricalDataReq
+	23,  // 391: api.v1alpha1.wfm.WFM.UpsertHistoricalDataDelta:input_type -> api.v1alpha1.wfm.UpsertHistoricalDataDeltaReq
+	25,  // 392: api.v1alpha1.wfm.WFM.UpsertHistoricalDataDeltas:input_type -> api.v1alpha1.wfm.UpsertHistoricalDataDeltasReq
+	27,  // 393: api.v1alpha1.wfm.WFM.ListSkills:input_type -> api.v1alpha1.wfm.ListSkillsReq
+	30,  // 394: api.v1alpha1.wfm.WFM.BuildCallProfileTemplateForSkillProfile:input_type -> api.v1alpha1.wfm.BuildCallProfileTemplateForSkillProfileReq
+	32,  // 395: api.v1alpha1.wfm.WFM.BuildCallProfileTemplate:input_type -> api.v1alpha1.wfm.BuildCallProfileTemplateReq
+	34,  // 396: api.v1alpha1.wfm.WFM.CreateInactiveSkillProfileMapping:input_type -> api.v1alpha1.wfm.CreateInactiveSkillProfileMappingReq
+	36,  // 397: api.v1alpha1.wfm.WFM.GetAvailableRegressionForecasterModelTypes:input_type -> api.v1alpha1.wfm.GetAvailableRegressionForecasterModelTypesReq
+	38,  // 398: api.v1alpha1.wfm.WFM.DisconnectInactiveSkillProfileMapping:input_type -> api.v1alpha1.wfm.DisconnectInactiveSkillProfileMappingReq
+	40,  // 399: api.v1alpha1.wfm.WFM.CreateSkillProfileGroup:input_type -> api.v1alpha1.wfm.CreateSkillProfileGroupReq
+	42,  // 400: api.v1alpha1.wfm.WFM.UpdateSkillProfileGroup:input_type -> api.v1alpha1.wfm.UpdateSkillProfileGroupReq
+	44,  // 401: api.v1alpha1.wfm.WFM.ListSkillProfileGroups:input_type -> api.v1alpha1.wfm.ListSkillProfileGroupsReq
+	46,  // 402: api.v1alpha1.wfm.WFM.UpdateSkillProfileGroupAssociations:input_type -> api.v1alpha1.wfm.UpdateSkillProfileGroupAssociationsReq
+	48,  // 403: api.v1alpha1.wfm.WFM.DeleteHistoricalDataDeltas:input_type -> api.v1alpha1.wfm.DeleteHistoricalDataDeltasReq
+	50,  // 404: api.v1alpha1.wfm.WFM.ListTopSkillProfiles:input_type -> api.v1alpha1.wfm.ListTopSkillProfilesReq
+	52,  // 405: api.v1alpha1.wfm.WFM.GetSkillProfilesCount:input_type -> api.v1alpha1.wfm.GetSkillProfilesCountReq
+	54,  // 406: api.v1alpha1.wfm.WFM.BuildProfileForecastByInterval:input_type -> api.v1alpha1.wfm.BuildProfileForecastByIntervalReq
+	56,  // 407: api.v1alpha1.wfm.WFM.BuildProfileForecastByIntervalWithStats:input_type -> api.v1alpha1.wfm.BuildProfileForecastByIntervalWithStatsReq
+	58,  // 408: api.v1alpha1.wfm.WFM.UpsertProfileForecast:input_type -> api.v1alpha1.wfm.UpsertProfileForecastReq
+	60,  // 409: api.v1alpha1.wfm.WFM.CreateCallProfileTemplate:input_type -> api.v1alpha1.wfm.CreateCallProfileTemplateReq
+	62,  // 410: api.v1alpha1.wfm.WFM.DeleteCallProfileTemplate:input_type -> api.v1alpha1.wfm.DeleteCallProfileTemplateReq
+	65,  // 411: api.v1alpha1.wfm.WFM.CreateRegressionTemplate:input_type -> api.v1alpha1.wfm.CreateRegressionTemplateReq
+	67,  // 412: api.v1alpha1.wfm.WFM.DeleteRegressionTemplate:input_type -> api.v1alpha1.wfm.DeleteRegressionTemplateReq
+	69,  // 413: api.v1alpha1.wfm.WFM.ListRegressionTemplates:input_type -> api.v1alpha1.wfm.ListRegressionTemplatesReq
+	77,  // 414: api.v1alpha1.wfm.WFM.ListForecastIntervalsForSkillProfile:input_type -> api.v1alpha1.wfm.ListForecastIntervalsForSkillProfileReq
+	78,  // 415: api.v1alpha1.wfm.WFM.ListForecastIntervals:input_type -> api.v1alpha1.wfm.ListForecastIntervalsReq
+	71,  // 416: api.v1alpha1.wfm.WFM.BuildRegressionForecastByInterval:input_type -> api.v1alpha1.wfm.BuildRegressionForecastByIntervalReq
+	72,  // 417: api.v1alpha1.wfm.WFM.BuildRegressionForecastByIntervalWithStats:input_type -> api.v1alpha1.wfm.BuildRegressionForecastByIntervalWithStatsReq
+	75,  // 418: api.v1alpha1.wfm.WFM.ListCallProfileTemplates:input_type -> api.v1alpha1.wfm.ListCallProfileTemplatesReq
+	79,  // 419: api.v1alpha1.wfm.WFM.UpsertRegressionForecast:input_type -> api.v1alpha1.wfm.UpsertRegressionForecastReq
+	81,  // 420: api.v1alpha1.wfm.WFM.UpsertForecastDataDelta:input_type -> api.v1alpha1.wfm.UpsertForecastDataDeltaReq
+	83,  // 421: api.v1alpha1.wfm.WFM.UpsertForecastDataDeltas:input_type -> api.v1alpha1.wfm.UpsertForecastDataDeltasReq
+	85,  // 422: api.v1alpha1.wfm.WFM.DeleteForecastIntervals:input_type -> api.v1alpha1.wfm.DeleteForecastIntervalsReq
+	87,  // 423: api.v1alpha1.wfm.WFM.ListHistoricalDataForAllSkillProfiles:input_type -> api.v1alpha1.wfm.ListHistoricalDataForAllSkillProfilesReq
+	89,  // 424: api.v1alpha1.wfm.WFM.BuildDOWAndMOYProfiles:input_type -> api.v1alpha1.wfm.BuildDOWAndMOYProfilesReq
+	91,  // 425: api.v1alpha1.wfm.WFM.CalculateTrainingDataAveragesForSkillProfile:input_type -> api.v1alpha1.wfm.CalculateTrainingDataAveragesForSkillProfileReq
+	93,  // 426: api.v1alpha1.wfm.WFM.UpdateSkillProfileAveragesUsingHistoricalData:input_type -> api.v1alpha1.wfm.UpdateSkillProfileAveragesUsingHistoricalDataReq
+	97,  // 427: api.v1alpha1.wfm.WFM.UpdateCallCenterNode:input_type -> api.v1alpha1.wfm.UpdateCallCenterNodeReq
+	100, // 428: api.v1alpha1.wfm.WFM.CreateClientNode:input_type -> api.v1alpha1.wfm.CreateClientNodeReq
+	102, // 429: api.v1alpha1.wfm.WFM.UpdateClientNode:input_type -> api.v1alpha1.wfm.UpdateClientNodeReq
+	105, // 430: api.v1alpha1.wfm.WFM.CreateLocationNode:input_type -> api.v1alpha1.wfm.CreateLocationNodeReq
+	107, // 431: api.v1alpha1.wfm.WFM.UpdateLocationNode:input_type -> api.v1alpha1.wfm.UpdateLocationNodeReq
+	110, // 432: api.v1alpha1.wfm.WFM.CreateProgramNode:input_type -> api.v1alpha1.wfm.CreateProgramNodeReq
+	112, // 433: api.v1alpha1.wfm.WFM.UpdateProgramNode:input_type -> api.v1alpha1.wfm.UpdateProgramNodeReq
+	114, // 434: api.v1alpha1.wfm.WFM.ListProgramNodesBySid:input_type -> api.v1alpha1.wfm.ListProgramNodesBySidReq
+	118, // 435: api.v1alpha1.wfm.WFM.CreateConstraintRule:input_type -> api.v1alpha1.wfm.CreateConstraintRuleReq
+	120, // 436: api.v1alpha1.wfm.WFM.UpdateConstraintRule:input_type -> api.v1alpha1.wfm.UpdateConstraintRuleReq
+	122, // 437: api.v1alpha1.wfm.WFM.DeleteConstraintRule:input_type -> api.v1alpha1.wfm.DeleteConstraintRuleReq
+	125, // 438: api.v1alpha1.wfm.WFM.CreateNonSkillActivity:input_type -> api.v1alpha1.wfm.CreateNonSkillActivityReq
+	127, // 439: api.v1alpha1.wfm.WFM.UpdateNonSkillActivity:input_type -> api.v1alpha1.wfm.UpdateNonSkillActivityReq
+	129, // 440: api.v1alpha1.wfm.WFM.ListNonSkillActivities:input_type -> api.v1alpha1.wfm.ListNonSkillActivitiesReq
+	131, // 441: api.v1alpha1.wfm.WFM.ListNonSkillActivityAssociations:input_type -> api.v1alpha1.wfm.ListNonSkillActivityAssociationsReq
+	134, // 442: api.v1alpha1.wfm.WFM.ListCandidateSchedulingActivities:input_type -> api.v1alpha1.wfm.ListCandidateSchedulingActivitiesReq
+	137, // 443: api.v1alpha1.wfm.WFM.CreateAgentGroup:input_type -> api.v1alpha1.wfm.CreateAgentGroupReq
+	139, // 444: api.v1alpha1.wfm.WFM.UpdateAgentGroup:input_type -> api.v1alpha1.wfm.UpdateAgentGroupReq
+	142, // 445: api.v1alpha1.wfm.WFM.UpdateWFMAgent:input_type -> api.v1alpha1.wfm.UpdateWFMAgentReq
+	144, // 446: api.v1alpha1.wfm.WFM.ListAllWFMAgents:input_type -> api.v1alpha1.wfm.ListAllWFMAgentsReq
+	146, // 447: api.v1alpha1.wfm.WFM.ListCandidateWFMAgents:input_type -> api.v1alpha1.wfm.ListCandidateWFMAgentsReq
+	148, // 448: api.v1alpha1.wfm.WFM.ListUngroupedWFMAgents:input_type -> api.v1alpha1.wfm.ListUngroupedWFMAgentsReq
+	150, // 449: api.v1alpha1.wfm.WFM.ListWFMAgentSids:input_type -> api.v1alpha1.wfm.ListWFMAgentSidsReq
+	152, // 450: api.v1alpha1.wfm.WFM.ListWFMAgentsAssociatedWithAgentGroup:input_type -> api.v1alpha1.wfm.ListWFMAgentsAssociatedWithAgentGroupReq
+	156, // 451: api.v1alpha1.wfm.WFM.CreateWFMAgentMemberships:input_type -> api.v1alpha1.wfm.CreateWFMAgentMembershipsReq
+	158, // 452: api.v1alpha1.wfm.WFM.DeleteWFMAgentMemberships:input_type -> api.v1alpha1.wfm.DeleteWFMAgentMembershipsReq
+	160, // 453: api.v1alpha1.wfm.WFM.DeleteWFMAgentsMemberships:input_type -> api.v1alpha1.wfm.DeleteWFMAgentsMembershipsReq
+	154, // 454: api.v1alpha1.wfm.WFM.BuildAgentDiagnostics:input_type -> api.v1alpha1.wfm.BuildAgentDiagnosticsReq
+	164, // 455: api.v1alpha1.wfm.WFM.CreateShiftTemplate:input_type -> api.v1alpha1.wfm.CreateShiftTemplateReq
+	166, // 456: api.v1alpha1.wfm.WFM.UpdateShiftTemplate:input_type -> api.v1alpha1.wfm.UpdateShiftTemplateReq
+	168, // 457: api.v1alpha1.wfm.WFM.ListShiftTemplatesBySids:input_type -> api.v1alpha1.wfm.ListShiftTemplatesBySidsReq
+	170, // 458: api.v1alpha1.wfm.WFM.BuildShiftTemplateDiagnostics:input_type -> api.v1alpha1.wfm.BuildShiftTemplateDiagnosticsReq
+	173, // 459: api.v1alpha1.wfm.WFM.CreatePlacementRule:input_type -> api.v1alpha1.wfm.CreatePlacementRuleReq
+	175, // 460: api.v1alpha1.wfm.WFM.UpdatePlacementRule:input_type -> api.v1alpha1.wfm.UpdatePlacementRuleReq
+	177, // 461: api.v1alpha1.wfm.WFM.DeletePlacementRule:input_type -> api.v1alpha1.wfm.DeletePlacementRuleReq
+	181, // 462: api.v1alpha1.wfm.WFM.CreateOpenTimesPattern:input_type -> api.v1alpha1.wfm.CreateOpenTimesPatternReq
+	183, // 463: api.v1alpha1.wfm.WFM.UpdateOpenTimesPattern:input_type -> api.v1alpha1.wfm.UpdateOpenTimesPatternReq
+	185, // 464: api.v1alpha1.wfm.WFM.DeleteOpenTimesPattern:input_type -> api.v1alpha1.wfm.DeleteOpenTimesPatternReq
+	187, // 465: api.v1alpha1.wfm.WFM.GetOpenTimesBitmaps:input_type -> api.v1alpha1.wfm.GetOpenTimesBitmapsReq
+	190, // 466: api.v1alpha1.wfm.WFM.CreateAgentAvailabilityPattern:input_type -> api.v1alpha1.wfm.CreateAgentAvailabilityPatternReq
+	192, // 467: api.v1alpha1.wfm.WFM.UpdateAgentAvailabilityPattern:input_type -> api.v1alpha1.wfm.UpdateAgentAvailabilityPatternReq
+	194, // 468: api.v1alpha1.wfm.WFM.DeleteAgentAvailabilityPattern:input_type -> api.v1alpha1.wfm.DeleteAgentAvailabilityPatternReq
+	197, // 469: api.v1alpha1.wfm.WFM.GetAvailabilityBitmaps:input_type -> api.v1alpha1.wfm.GetAvailabilityBitmapsReq
+	199, // 470: api.v1alpha1.wfm.WFM.UpsertNonSkillActivityAssociation:input_type -> api.v1alpha1.wfm.UpsertNonSkillActivityAssociationReq
+	202, // 471: api.v1alpha1.wfm.WFM.CreateSkillProficiencies:input_type -> api.v1alpha1.wfm.CreateSkillProficienciesReq
+	204, // 472: api.v1alpha1.wfm.WFM.UpdateSkillProficiencies:input_type -> api.v1alpha1.wfm.UpdateSkillProficienciesReq
+	206, // 473: api.v1alpha1.wfm.WFM.DeleteSkillProficiency:input_type -> api.v1alpha1.wfm.DeleteSkillProficiencyReq
+	209, // 474: api.v1alpha1.wfm.WFM.CopyScenario:input_type -> api.v1alpha1.wfm.CopyScenarioReq
+	211, // 475: api.v1alpha1.wfm.WFM.CreateScheduleScenarioWithNodes:input_type -> api.v1alpha1.wfm.CreateScheduleScenarioWithNodesReq
+	213, // 476: api.v1alpha1.wfm.WFM.UpdateScheduleScenario:input_type -> api.v1alpha1.wfm.UpdateScheduleScenarioReq
+	215, // 477: api.v1alpha1.wfm.WFM.ListConfigEntities:input_type -> api.v1alpha1.wfm.ListConfigEntitiesReq
+	219, // 478: api.v1alpha1.wfm.WFM.DeleteShiftInstances:input_type -> api.v1alpha1.wfm.DeleteShiftInstancesReq
+	221, // 479: api.v1alpha1.wfm.WFM.BuildNodeDiagnostics:input_type -> api.v1alpha1.wfm.BuildNodeDiagnosticsReq
+	223, // 480: api.v1alpha1.wfm.WFM.BuildGlobalDiagnostics:input_type -> api.v1alpha1.wfm.BuildGlobalDiagnosticsReq
+	233, // 481: api.v1alpha1.wfm.WFM.GetPublishedSchedule:input_type -> api.v1alpha1.wfm.GetPublishedScheduleReq
+	235, // 482: api.v1alpha1.wfm.WFM.GetPublishedScheduleRequiredCalls:input_type -> api.v1alpha1.wfm.GetPublishedScheduleRequiredCallsReq
+	237, // 483: api.v1alpha1.wfm.WFM.GetDraftScheduleRequiredCalls:input_type -> api.v1alpha1.wfm.GetDraftScheduleRequiredCallsReq
+	239, // 484: api.v1alpha1.wfm.WFM.CreateDraftSchedule:input_type -> api.v1alpha1.wfm.CreateDraftScheduleReq
+	241, // 485: api.v1alpha1.wfm.WFM.UpdateDraftSchedule:input_type -> api.v1alpha1.wfm.UpdateDraftScheduleReq
+	243, // 486: api.v1alpha1.wfm.WFM.BuildDraftSchedule:input_type -> api.v1alpha1.wfm.BuildDraftScheduleReq
+	245, // 487: api.v1alpha1.wfm.WFM.PublishDraftSchedule:input_type -> api.v1alpha1.wfm.PublishDraftScheduleReq
+	247, // 488: api.v1alpha1.wfm.WFM.ResetDraftSchedule:input_type -> api.v1alpha1.wfm.ResetDraftScheduleReq
+	249, // 489: api.v1alpha1.wfm.WFM.GetDraftSchedule:input_type -> api.v1alpha1.wfm.GetDraftScheduleReq
+	251, // 490: api.v1alpha1.wfm.WFM.ListDraftSchedules:input_type -> api.v1alpha1.wfm.ListDraftSchedulesReq
+	253, // 491: api.v1alpha1.wfm.WFM.ClearSchedule:input_type -> api.v1alpha1.wfm.ClearScheduleReq
+	255, // 492: api.v1alpha1.wfm.WFM.DeleteDraftSchedule:input_type -> api.v1alpha1.wfm.DeleteDraftScheduleReq
+	257, // 493: api.v1alpha1.wfm.WFM.ListShiftInstancesBySid:input_type -> api.v1alpha1.wfm.ListShiftInstancesBySidReq
+	259, // 494: api.v1alpha1.wfm.WFM.CopyScheduleToSchedule:input_type -> api.v1alpha1.wfm.CopyScheduleToScheduleReq
+	261, // 495: api.v1alpha1.wfm.WFM.CreateShiftInstance:input_type -> api.v1alpha1.wfm.CreateShiftInstanceReq
+	263, // 496: api.v1alpha1.wfm.WFM.CreateShiftInstanceV2:input_type -> api.v1alpha1.wfm.CreateShiftInstanceV2Req
+	265, // 497: api.v1alpha1.wfm.WFM.SwapShiftInstances:input_type -> api.v1alpha1.wfm.SwapShiftInstancesReq
+	267, // 498: api.v1alpha1.wfm.WFM.UpdateShiftInstance:input_type -> api.v1alpha1.wfm.UpdateShiftInstanceReq
+	269, // 499: api.v1alpha1.wfm.WFM.UpdateShiftInstanceV2:input_type -> api.v1alpha1.wfm.UpdateShiftInstanceV2Req
+	271, // 500: api.v1alpha1.wfm.WFM.CopyShiftInstancesToSchedule:input_type -> api.v1alpha1.wfm.CopyShiftInstancesToScheduleReq
+	273, // 501: api.v1alpha1.wfm.WFM.ListShiftInstanceSidsForAgent:input_type -> api.v1alpha1.wfm.ListShiftInstanceSidsForAgentReq
+	275, // 502: api.v1alpha1.wfm.WFM.ListShiftSegmentsByShiftInstanceSids:input_type -> api.v1alpha1.wfm.ListShiftSegmentsByShiftInstanceSidsReq
+	281, // 503: api.v1alpha1.wfm.WFM.SetSchedulingTarget:input_type -> api.v1alpha1.wfm.SetSchedulingTargetReq
+	283, // 504: api.v1alpha1.wfm.WFM.GetSchedulingTarget:input_type -> api.v1alpha1.wfm.GetSchedulingTargetReq
+	285, // 505: api.v1alpha1.wfm.WFM.DeleteSchedulingTarget:input_type -> api.v1alpha1.wfm.DeleteSchedulingTargetReq
+	287, // 506: api.v1alpha1.wfm.WFM.GetDefaultSchedulingTarget:input_type -> api.v1alpha1.wfm.GetDefaultSchedulingTargetReq
+	289, // 507: api.v1alpha1.wfm.WFM.SetDefaultSchedulingTarget:input_type -> api.v1alpha1.wfm.SetDefaultSchedulingTargetReq
+	278, // 508: api.v1alpha1.wfm.WFM.GetPerformanceMetrics:input_type -> api.v1alpha1.wfm.GetPerformanceMetricsReq
+	291, // 509: api.v1alpha1.wfm.WFM.ListRequiredCallsIntervals:input_type -> api.v1alpha1.wfm.ListRequiredCallsIntervalsReq
+	298, // 510: api.v1alpha1.wfm.WFM.CreateTourPattern:input_type -> api.v1alpha1.wfm.CreateTourPatternReq
+	300, // 511: api.v1alpha1.wfm.WFM.GetTourPattern:input_type -> api.v1alpha1.wfm.GetTourPatternReq
+	302, // 512: api.v1alpha1.wfm.WFM.DeleteTourPattern:input_type -> api.v1alpha1.wfm.DeleteTourPatternReq
+	304, // 513: api.v1alpha1.wfm.WFM.CreateTourWeekPattern:input_type -> api.v1alpha1.wfm.CreateTourWeekPatternReq
+	306, // 514: api.v1alpha1.wfm.WFM.ListTourWeekPatterns:input_type -> api.v1alpha1.wfm.ListTourWeekPatternsReq
+	308, // 515: api.v1alpha1.wfm.WFM.DeleteTourWeekPatterns:input_type -> api.v1alpha1.wfm.DeleteTourWeekPatternsReq
+	310, // 516: api.v1alpha1.wfm.WFM.CreateTourShiftInstanceConfig:input_type -> api.v1alpha1.wfm.CreateTourShiftInstanceConfigReq
+	312, // 517: api.v1alpha1.wfm.WFM.UpdateTourShiftInstanceConfig:input_type -> api.v1alpha1.wfm.UpdateTourShiftInstanceConfigReq
+	314, // 518: api.v1alpha1.wfm.WFM.ListTourShiftInstanceConfigs:input_type -> api.v1alpha1.wfm.ListTourShiftInstanceConfigsReq
+	316, // 519: api.v1alpha1.wfm.WFM.DeleteTourShiftInstanceConfigs:input_type -> api.v1alpha1.wfm.DeleteTourShiftInstanceConfigsReq
+	318, // 520: api.v1alpha1.wfm.WFM.CreateTourShiftSegmentConfig:input_type -> api.v1alpha1.wfm.CreateTourShiftSegmentConfigReq
+	320, // 521: api.v1alpha1.wfm.WFM.UpdateTourShiftSegmentConfig:input_type -> api.v1alpha1.wfm.UpdateTourShiftSegmentConfigReq
+	322, // 522: api.v1alpha1.wfm.WFM.ListTourShiftSegmentConfigs:input_type -> api.v1alpha1.wfm.ListTourShiftSegmentConfigsReq
+	324, // 523: api.v1alpha1.wfm.WFM.DeleteTourShiftSegmentConfigs:input_type -> api.v1alpha1.wfm.DeleteTourShiftSegmentConfigsReq
+	326, // 524: api.v1alpha1.wfm.WFM.CreateTourAgentCollection:input_type -> api.v1alpha1.wfm.CreateTourAgentCollectionReq
+	328, // 525: api.v1alpha1.wfm.WFM.UpdateTourAgentCollection:input_type -> api.v1alpha1.wfm.UpdateTourAgentCollectionReq
+	330, // 526: api.v1alpha1.wfm.WFM.ListTourAgentCollections:input_type -> api.v1alpha1.wfm.ListTourAgentCollectionsReq
+	332, // 527: api.v1alpha1.wfm.WFM.DeleteTourAgentCollections:input_type -> api.v1alpha1.wfm.DeleteTourAgentCollectionsReq
+	334, // 528: api.v1alpha1.wfm.WFM.CreateTourAgentCollectionWFMAgents:input_type -> api.v1alpha1.wfm.CreateTourAgentCollectionWFMAgentsReq
+	336, // 529: api.v1alpha1.wfm.WFM.ListTourAgentCollectionWFMAgents:input_type -> api.v1alpha1.wfm.ListTourAgentCollectionWFMAgentsReq
+	338, // 530: api.v1alpha1.wfm.WFM.DeleteTourAgentCollectionWFMAgents:input_type -> api.v1alpha1.wfm.DeleteTourAgentCollectionWFMAgentsReq
+	5,   // 531: api.v1alpha1.wfm.WFM.ListSkillProfiles:output_type -> api.v1alpha1.wfm.ListSkillProfilesRes
+	7,   // 532: api.v1alpha1.wfm.WFM.UpdateSkillProfile:output_type -> api.v1alpha1.wfm.UpdateSkillProfileRes
+	9,   // 533: api.v1alpha1.wfm.WFM.UpdateSkillProfileProficiencies:output_type -> api.v1alpha1.wfm.UpdateSkillProfileProficienciesRes
+	11,  // 534: api.v1alpha1.wfm.WFM.GetSkillProfile:output_type -> api.v1alpha1.wfm.GetSkillProfileRes
+	13,  // 535: api.v1alpha1.wfm.WFM.ResyncSkillProfiles:output_type -> api.v1alpha1.wfm.ResyncSkillProfilesRes
+	15,  // 536: api.v1alpha1.wfm.WFM.GetLastSkillProfileResyncDate:output_type -> api.v1alpha1.wfm.GetLastSkillProfileResyncDateRes
+	17,  // 537: api.v1alpha1.wfm.WFM.UpsertForecastingParameters:output_type -> api.v1alpha1.wfm.UpsertForecastingParametersRes
+	19,  // 538: api.v1alpha1.wfm.WFM.GetForecastingParameters:output_type -> api.v1alpha1.wfm.GetForecastingParametersRes
+	22,  // 539: api.v1alpha1.wfm.WFM.ListHistoricalData:output_type -> api.v1alpha1.wfm.ListHistoricalDataRes
+	24,  // 540: api.v1alpha1.wfm.WFM.UpsertHistoricalDataDelta:output_type -> api.v1alpha1.wfm.UpsertHistoricalDataDeltaRes
+	26,  // 541: api.v1alpha1.wfm.WFM.UpsertHistoricalDataDeltas:output_type -> api.v1alpha1.wfm.UpsertHistoricalDataDeltasRes
+	28,  // 542: api.v1alpha1.wfm.WFM.ListSkills:output_type -> api.v1alpha1.wfm.ListSkillsRes
+	31,  // 543: api.v1alpha1.wfm.WFM.BuildCallProfileTemplateForSkillProfile:output_type -> api.v1alpha1.wfm.BuildCallProfileTemplateForSkillProfileRes
+	33,  // 544: api.v1alpha1.wfm.WFM.BuildCallProfileTemplate:output_type -> api.v1alpha1.wfm.BuildCallProfileTemplateRes
+	35,  // 545: api.v1alpha1.wfm.WFM.CreateInactiveSkillProfileMapping:output_type -> api.v1alpha1.wfm.CreateInactiveSkillProfileMappingRes
+	37,  // 546: api.v1alpha1.wfm.WFM.GetAvailableRegressionForecasterModelTypes:output_type -> api.v1alpha1.wfm.GetAvailableRegressionForecasterModelTypesRes
+	39,  // 547: api.v1alpha1.wfm.WFM.DisconnectInactiveSkillProfileMapping:output_type -> api.v1alpha1.wfm.DisconnectInactiveSkillProfileMappingRes
+	41,  // 548: api.v1alpha1.wfm.WFM.CreateSkillProfileGroup:output_type -> api.v1alpha1.wfm.CreateSkillProfileGroupRes
+	43,  // 549: api.v1alpha1.wfm.WFM.UpdateSkillProfileGroup:output_type -> api.v1alpha1.wfm.UpdateSkillProfileGroupRes
+	45,  // 550: api.v1alpha1.wfm.WFM.ListSkillProfileGroups:output_type -> api.v1alpha1.wfm.ListSkillProfileGroupsRes
+	47,  // 551: api.v1alpha1.wfm.WFM.UpdateSkillProfileGroupAssociations:output_type -> api.v1alpha1.wfm.UpdateSkillProfileGroupAssociationsRes
+	49,  // 552: api.v1alpha1.wfm.WFM.DeleteHistoricalDataDeltas:output_type -> api.v1alpha1.wfm.DeleteHistoricalDataDeltasRes
+	51,  // 553: api.v1alpha1.wfm.WFM.ListTopSkillProfiles:output_type -> api.v1alpha1.wfm.ListTopSkillProfilesRes
+	53,  // 554: api.v1alpha1.wfm.WFM.GetSkillProfilesCount:output_type -> api.v1alpha1.wfm.GetSkillProfilesCountRes
+	55,  // 555: api.v1alpha1.wfm.WFM.BuildProfileForecastByInterval:output_type -> api.v1alpha1.wfm.CallDataByInterval
+	57,  // 556: api.v1alpha1.wfm.WFM.BuildProfileForecastByIntervalWithStats:output_type -> api.v1alpha1.wfm.BuildProfileForecastByIntervalWithStatsRes
+	59,  // 557: api.v1alpha1.wfm.WFM.UpsertProfileForecast:output_type -> api.v1alpha1.wfm.UpsertProfileForecastRes
+	61,  // 558: api.v1alpha1.wfm.WFM.CreateCallProfileTemplate:output_type -> api.v1alpha1.wfm.CreateCallProfileTemplateRes
+	63,  // 559: api.v1alpha1.wfm.WFM.DeleteCallProfileTemplate:output_type -> api.v1alpha1.wfm.DeleteCallProfileTemplateRes
+	66,  // 560: api.v1alpha1.wfm.WFM.CreateRegressionTemplate:output_type -> api.v1alpha1.wfm.CreateRegressionTemplateRes
+	68,  // 561: api.v1alpha1.wfm.WFM.DeleteRegressionTemplate:output_type -> api.v1alpha1.wfm.DeleteRegressionTemplateRes
+	70,  // 562: api.v1alpha1.wfm.WFM.ListRegressionTemplates:output_type -> api.v1alpha1.wfm.ListRegressionTemplatesRes
+	55,  // 563: api.v1alpha1.wfm.WFM.ListForecastIntervalsForSkillProfile:output_type -> api.v1alpha1.wfm.CallDataByInterval
+	55,  // 564: api.v1alpha1.wfm.WFM.ListForecastIntervals:output_type -> api.v1alpha1.wfm.CallDataByInterval
+	55,  // 565: api.v1alpha1.wfm.WFM.BuildRegressionForecastByInterval:output_type -> api.v1alpha1.wfm.CallDataByInterval
+	74,  // 566: api.v1alpha1.wfm.WFM.BuildRegressionForecastByIntervalWithStats:output_type -> api.v1alpha1.wfm.BuildRegressionForecastByIntervalWithStatsRes
+	76,  // 567: api.v1alpha1.wfm.WFM.ListCallProfileTemplates:output_type -> api.v1alpha1.wfm.ListCallProfileTemplatesRes
+	80,  // 568: api.v1alpha1.wfm.WFM.UpsertRegressionForecast:output_type -> api.v1alpha1.wfm.UpsertRegressionForecastRes
+	82,  // 569: api.v1alpha1.wfm.WFM.UpsertForecastDataDelta:output_type -> api.v1alpha1.wfm.UpsertForecastDataDeltaRes
+	84,  // 570: api.v1alpha1.wfm.WFM.UpsertForecastDataDeltas:output_type -> api.v1alpha1.wfm.UpsertForecastDataDeltasRes
+	86,  // 571: api.v1alpha1.wfm.WFM.DeleteForecastIntervals:output_type -> api.v1alpha1.wfm.DeleteForecastIntervalsRes
+	88,  // 572: api.v1alpha1.wfm.WFM.ListHistoricalDataForAllSkillProfiles:output_type -> api.v1alpha1.wfm.ListHistoricalDataForAllSkillProfilesRes
+	90,  // 573: api.v1alpha1.wfm.WFM.BuildDOWAndMOYProfiles:output_type -> api.v1alpha1.wfm.BuildDOWAndMOYProfilesRes
+	92,  // 574: api.v1alpha1.wfm.WFM.CalculateTrainingDataAveragesForSkillProfile:output_type -> api.v1alpha1.wfm.CalculateTrainingDataAveragesForSkillProfileRes
+	94,  // 575: api.v1alpha1.wfm.WFM.UpdateSkillProfileAveragesUsingHistoricalData:output_type -> api.v1alpha1.wfm.UpdateSkillProfileAveragesUsingHistoricalDataRes
+	98,  // 576: api.v1alpha1.wfm.WFM.UpdateCallCenterNode:output_type -> api.v1alpha1.wfm.UpdateCallCenterNodeRes
+	101, // 577: api.v1alpha1.wfm.WFM.CreateClientNode:output_type -> api.v1alpha1.wfm.CreateClientNodeRes
+	103, // 578: api.v1alpha1.wfm.WFM.UpdateClientNode:output_type -> api.v1alpha1.wfm.UpdateClientNodeRes
+	106, // 579: api.v1alpha1.wfm.WFM.CreateLocationNode:output_type -> api.v1alpha1.wfm.CreateLocationNodeRes
+	108, // 580: api.v1alpha1.wfm.WFM.UpdateLocationNode:output_type -> api.v1alpha1.wfm.UpdateLocationNodeRes
+	111, // 581: api.v1alpha1.wfm.WFM.CreateProgramNode:output_type -> api.v1alpha1.wfm.CreateProgramNodeRes
+	113, // 582: api.v1alpha1.wfm.WFM.UpdateProgramNode:output_type -> api.v1alpha1.wfm.UpdateProgramNodeRes
+	115, // 583: api.v1alpha1.wfm.WFM.ListProgramNodesBySid:output_type -> api.v1alpha1.wfm.ListProgramNodesBySidRes
+	119, // 584: api.v1alpha1.wfm.WFM.CreateConstraintRule:output_type -> api.v1alpha1.wfm.CreateConstraintRuleRes
+	121, // 585: api.v1alpha1.wfm.WFM.UpdateConstraintRule:output_type -> api.v1alpha1.wfm.UpdateConstraintRuleRes
+	123, // 586: api.v1alpha1.wfm.WFM.DeleteConstraintRule:output_type -> api.v1alpha1.wfm.DeleteConstraintRuleRes
+	126, // 587: api.v1alpha1.wfm.WFM.CreateNonSkillActivity:output_type -> api.v1alpha1.wfm.CreateNonSkillActivityRes
+	128, // 588: api.v1alpha1.wfm.WFM.UpdateNonSkillActivity:output_type -> api.v1alpha1.wfm.UpdateNonSkillActivityRes
+	130, // 589: api.v1alpha1.wfm.WFM.ListNonSkillActivities:output_type -> api.v1alpha1.wfm.ListNonSkillActivitiesRes
+	132, // 590: api.v1alpha1.wfm.WFM.ListNonSkillActivityAssociations:output_type -> api.v1alpha1.wfm.ListNonSkillActivityAssociationsRes
+	135, // 591: api.v1alpha1.wfm.WFM.ListCandidateSchedulingActivities:output_type -> api.v1alpha1.wfm.ListCandidateSchedulingActivitiesRes
+	138, // 592: api.v1alpha1.wfm.WFM.CreateAgentGroup:output_type -> api.v1alpha1.wfm.CreateAgentGroupRes
+	140, // 593: api.v1alpha1.wfm.WFM.UpdateAgentGroup:output_type -> api.v1alpha1.wfm.UpdateAgentGroupRes
+	143, // 594: api.v1alpha1.wfm.WFM.UpdateWFMAgent:output_type -> api.v1alpha1.wfm.UpdateWFMAgentRes
+	145, // 595: api.v1alpha1.wfm.WFM.ListAllWFMAgents:output_type -> api.v1alpha1.wfm.ListAllWFMAgentsRes
+	147, // 596: api.v1alpha1.wfm.WFM.ListCandidateWFMAgents:output_type -> api.v1alpha1.wfm.ListCandidateWFMAgentsRes
+	149, // 597: api.v1alpha1.wfm.WFM.ListUngroupedWFMAgents:output_type -> api.v1alpha1.wfm.ListUngroupedWFMAgentsRes
+	151, // 598: api.v1alpha1.wfm.WFM.ListWFMAgentSids:output_type -> api.v1alpha1.wfm.ListWFMAgentSidsRes
+	153, // 599: api.v1alpha1.wfm.WFM.ListWFMAgentsAssociatedWithAgentGroup:output_type -> api.v1alpha1.wfm.ListWFMAgentsAssociatedWithAgentGroupRes
+	157, // 600: api.v1alpha1.wfm.WFM.CreateWFMAgentMemberships:output_type -> api.v1alpha1.wfm.CreateWFMAgentMembershipsRes
+	159, // 601: api.v1alpha1.wfm.WFM.DeleteWFMAgentMemberships:output_type -> api.v1alpha1.wfm.DeleteWFMAgentMembershipsRes
+	161, // 602: api.v1alpha1.wfm.WFM.DeleteWFMAgentsMemberships:output_type -> api.v1alpha1.wfm.DeleteWFMAgentsMembershipsRes
+	155, // 603: api.v1alpha1.wfm.WFM.BuildAgentDiagnostics:output_type -> api.v1alpha1.wfm.BuildAgentDiagnosticsRes
+	165, // 604: api.v1alpha1.wfm.WFM.CreateShiftTemplate:output_type -> api.v1alpha1.wfm.CreateShiftTemplateRes
+	167, // 605: api.v1alpha1.wfm.WFM.UpdateShiftTemplate:output_type -> api.v1alpha1.wfm.UpdateShiftTemplateRes
+	169, // 606: api.v1alpha1.wfm.WFM.ListShiftTemplatesBySids:output_type -> api.v1alpha1.wfm.ListShiftTemplatesBySidsRes
+	171, // 607: api.v1alpha1.wfm.WFM.BuildShiftTemplateDiagnostics:output_type -> api.v1alpha1.wfm.BuildShiftTemplateDiagnosticsRes
+	174, // 608: api.v1alpha1.wfm.WFM.CreatePlacementRule:output_type -> api.v1alpha1.wfm.CreatePlacementRuleRes
+	176, // 609: api.v1alpha1.wfm.WFM.UpdatePlacementRule:output_type -> api.v1alpha1.wfm.UpdatePlacementRuleRes
+	178, // 610: api.v1alpha1.wfm.WFM.DeletePlacementRule:output_type -> api.v1alpha1.wfm.DeletePlacementRuleRes
+	182, // 611: api.v1alpha1.wfm.WFM.CreateOpenTimesPattern:output_type -> api.v1alpha1.wfm.CreateOpenTimesPatternRes
+	184, // 612: api.v1alpha1.wfm.WFM.UpdateOpenTimesPattern:output_type -> api.v1alpha1.wfm.UpdateOpenTimesPatternRes
+	186, // 613: api.v1alpha1.wfm.WFM.DeleteOpenTimesPattern:output_type -> api.v1alpha1.wfm.DeleteOpenTimesPatternRes
+	188, // 614: api.v1alpha1.wfm.WFM.GetOpenTimesBitmaps:output_type -> api.v1alpha1.wfm.GetOpenTimesBitmapsRes
+	191, // 615: api.v1alpha1.wfm.WFM.CreateAgentAvailabilityPattern:output_type -> api.v1alpha1.wfm.CreateAgentAvailabilityPatternRes
+	193, // 616: api.v1alpha1.wfm.WFM.UpdateAgentAvailabilityPattern:output_type -> api.v1alpha1.wfm.UpdateAgentAvailabilityPatternRes
+	195, // 617: api.v1alpha1.wfm.WFM.DeleteAgentAvailabilityPattern:output_type -> api.v1alpha1.wfm.DeleteAgentAvailabilityPatternRes
+	198, // 618: api.v1alpha1.wfm.WFM.GetAvailabilityBitmaps:output_type -> api.v1alpha1.wfm.GetAvailabilityBitmapsRes
+	200, // 619: api.v1alpha1.wfm.WFM.UpsertNonSkillActivityAssociation:output_type -> api.v1alpha1.wfm.UpsertNonSkillActivityAssociationRes
+	203, // 620: api.v1alpha1.wfm.WFM.CreateSkillProficiencies:output_type -> api.v1alpha1.wfm.CreateSkillProficienciesRes
+	205, // 621: api.v1alpha1.wfm.WFM.UpdateSkillProficiencies:output_type -> api.v1alpha1.wfm.UpdateSkillProficienciesRes
+	207, // 622: api.v1alpha1.wfm.WFM.DeleteSkillProficiency:output_type -> api.v1alpha1.wfm.DeleteSkillProficiencyRes
+	210, // 623: api.v1alpha1.wfm.WFM.CopyScenario:output_type -> api.v1alpha1.wfm.CopyScenarioRes
+	212, // 624: api.v1alpha1.wfm.WFM.CreateScheduleScenarioWithNodes:output_type -> api.v1alpha1.wfm.CreateScheduleScenarioWithNodesRes
+	214, // 625: api.v1alpha1.wfm.WFM.UpdateScheduleScenario:output_type -> api.v1alpha1.wfm.UpdateScheduleScenarioRes
+	216, // 626: api.v1alpha1.wfm.WFM.ListConfigEntities:output_type -> api.v1alpha1.wfm.ListConfigEntitiesRes
+	220, // 627: api.v1alpha1.wfm.WFM.DeleteShiftInstances:output_type -> api.v1alpha1.wfm.DeleteShiftInstancesRes
+	222, // 628: api.v1alpha1.wfm.WFM.BuildNodeDiagnostics:output_type -> api.v1alpha1.wfm.BuildNodeDiagnosticsRes
+	224, // 629: api.v1alpha1.wfm.WFM.BuildGlobalDiagnostics:output_type -> api.v1alpha1.wfm.BuildGlobalDiagnosticsRes
+	234, // 630: api.v1alpha1.wfm.WFM.GetPublishedSchedule:output_type -> api.v1alpha1.wfm.GetPublishedScheduleRes
+	236, // 631: api.v1alpha1.wfm.WFM.GetPublishedScheduleRequiredCalls:output_type -> api.v1alpha1.wfm.GetPublishedScheduleRequiredCallsRes
+	238, // 632: api.v1alpha1.wfm.WFM.GetDraftScheduleRequiredCalls:output_type -> api.v1alpha1.wfm.GetDraftScheduleRequiredCallsRes
+	240, // 633: api.v1alpha1.wfm.WFM.CreateDraftSchedule:output_type -> api.v1alpha1.wfm.CreateDraftScheduleRes
+	242, // 634: api.v1alpha1.wfm.WFM.UpdateDraftSchedule:output_type -> api.v1alpha1.wfm.UpdateDraftScheduleRes
+	244, // 635: api.v1alpha1.wfm.WFM.BuildDraftSchedule:output_type -> api.v1alpha1.wfm.BuildDraftScheduleRes
+	246, // 636: api.v1alpha1.wfm.WFM.PublishDraftSchedule:output_type -> api.v1alpha1.wfm.PublishDraftScheduleRes
+	248, // 637: api.v1alpha1.wfm.WFM.ResetDraftSchedule:output_type -> api.v1alpha1.wfm.ResetDraftScheduleRes
+	250, // 638: api.v1alpha1.wfm.WFM.GetDraftSchedule:output_type -> api.v1alpha1.wfm.GetDraftScheduleRes
+	252, // 639: api.v1alpha1.wfm.WFM.ListDraftSchedules:output_type -> api.v1alpha1.wfm.ListDraftSchedulesRes
+	254, // 640: api.v1alpha1.wfm.WFM.ClearSchedule:output_type -> api.v1alpha1.wfm.ClearScheduleRes
+	256, // 641: api.v1alpha1.wfm.WFM.DeleteDraftSchedule:output_type -> api.v1alpha1.wfm.DeleteDraftScheduleRes
+	258, // 642: api.v1alpha1.wfm.WFM.ListShiftInstancesBySid:output_type -> api.v1alpha1.wfm.ListShiftInstancesBySidRes
+	260, // 643: api.v1alpha1.wfm.WFM.CopyScheduleToSchedule:output_type -> api.v1alpha1.wfm.CopyScheduleToScheduleRes
+	262, // 644: api.v1alpha1.wfm.WFM.CreateShiftInstance:output_type -> api.v1alpha1.wfm.CreateShiftInstanceRes
+	264, // 645: api.v1alpha1.wfm.WFM.CreateShiftInstanceV2:output_type -> api.v1alpha1.wfm.CreateShiftInstanceV2Res
+	266, // 646: api.v1alpha1.wfm.WFM.SwapShiftInstances:output_type -> api.v1alpha1.wfm.SwapShiftInstancesRes
+	268, // 647: api.v1alpha1.wfm.WFM.UpdateShiftInstance:output_type -> api.v1alpha1.wfm.UpdateShiftInstanceRes
+	270, // 648: api.v1alpha1.wfm.WFM.UpdateShiftInstanceV2:output_type -> api.v1alpha1.wfm.UpdateShiftInstanceV2Res
+	272, // 649: api.v1alpha1.wfm.WFM.CopyShiftInstancesToSchedule:output_type -> api.v1alpha1.wfm.CopyShiftInstancesToScheduleRes
+	274, // 650: api.v1alpha1.wfm.WFM.ListShiftInstanceSidsForAgent:output_type -> api.v1alpha1.wfm.ListShiftInstanceSidsForAgentRes
+	276, // 651: api.v1alpha1.wfm.WFM.ListShiftSegmentsByShiftInstanceSids:output_type -> api.v1alpha1.wfm.ListShiftSegmentsByShiftInstanceSidsRes
+	282, // 652: api.v1alpha1.wfm.WFM.SetSchedulingTarget:output_type -> api.v1alpha1.wfm.SetSchedulingTargetRes
+	284, // 653: api.v1alpha1.wfm.WFM.GetSchedulingTarget:output_type -> api.v1alpha1.wfm.GetSchedulingTargetRes
+	286, // 654: api.v1alpha1.wfm.WFM.DeleteSchedulingTarget:output_type -> api.v1alpha1.wfm.DeleteSchedulingTargetRes
+	288, // 655: api.v1alpha1.wfm.WFM.GetDefaultSchedulingTarget:output_type -> api.v1alpha1.wfm.GetDefaultSchedulingTargetRes
+	290, // 656: api.v1alpha1.wfm.WFM.SetDefaultSchedulingTarget:output_type -> api.v1alpha1.wfm.SetDefaultSchedulingTargetRes
+	279, // 657: api.v1alpha1.wfm.WFM.GetPerformanceMetrics:output_type -> api.v1alpha1.wfm.GetPerformanceMetricsRes
+	292, // 658: api.v1alpha1.wfm.WFM.ListRequiredCallsIntervals:output_type -> api.v1alpha1.wfm.ListRequiredCallsIntervalsRes
+	299, // 659: api.v1alpha1.wfm.WFM.CreateTourPattern:output_type -> api.v1alpha1.wfm.CreateTourPatternRes
+	301, // 660: api.v1alpha1.wfm.WFM.GetTourPattern:output_type -> api.v1alpha1.wfm.GetTourPatternRes
+	303, // 661: api.v1alpha1.wfm.WFM.DeleteTourPattern:output_type -> api.v1alpha1.wfm.DeleteTourPatternRes
+	305, // 662: api.v1alpha1.wfm.WFM.CreateTourWeekPattern:output_type -> api.v1alpha1.wfm.CreateTourWeekPatternRes
+	307, // 663: api.v1alpha1.wfm.WFM.ListTourWeekPatterns:output_type -> api.v1alpha1.wfm.ListTourWeekPatternsRes
+	309, // 664: api.v1alpha1.wfm.WFM.DeleteTourWeekPatterns:output_type -> api.v1alpha1.wfm.DeleteTourWeekPatternsRes
+	311, // 665: api.v1alpha1.wfm.WFM.CreateTourShiftInstanceConfig:output_type -> api.v1alpha1.wfm.CreateTourShiftInstanceConfigRes
+	313, // 666: api.v1alpha1.wfm.WFM.UpdateTourShiftInstanceConfig:output_type -> api.v1alpha1.wfm.UpdateTourShiftInstanceConfigRes
+	315, // 667: api.v1alpha1.wfm.WFM.ListTourShiftInstanceConfigs:output_type -> api.v1alpha1.wfm.ListTourShiftInstanceConfigsRes
+	317, // 668: api.v1alpha1.wfm.WFM.DeleteTourShiftInstanceConfigs:output_type -> api.v1alpha1.wfm.DeleteTourShiftInstanceConfigsRes
+	319, // 669: api.v1alpha1.wfm.WFM.CreateTourShiftSegmentConfig:output_type -> api.v1alpha1.wfm.CreateTourShiftSegmentConfigRes
+	321, // 670: api.v1alpha1.wfm.WFM.UpdateTourShiftSegmentConfig:output_type -> api.v1alpha1.wfm.UpdateTourShiftSegmentConfigRes
+	323, // 671: api.v1alpha1.wfm.WFM.ListTourShiftSegmentConfigs:output_type -> api.v1alpha1.wfm.ListTourShiftSegmentConfigsRes
+	325, // 672: api.v1alpha1.wfm.WFM.DeleteTourShiftSegmentConfigs:output_type -> api.v1alpha1.wfm.DeleteTourShiftSegmentConfigsRes
+	327, // 673: api.v1alpha1.wfm.WFM.CreateTourAgentCollection:output_type -> api.v1alpha1.wfm.CreateTourAgentCollectionRes
+	329, // 674: api.v1alpha1.wfm.WFM.UpdateTourAgentCollection:output_type -> api.v1alpha1.wfm.UpdateTourAgentCollectionRes
+	331, // 675: api.v1alpha1.wfm.WFM.ListTourAgentCollections:output_type -> api.v1alpha1.wfm.ListTourAgentCollectionsRes
+	333, // 676: api.v1alpha1.wfm.WFM.DeleteTourAgentCollections:output_type -> api.v1alpha1.wfm.DeleteTourAgentCollectionsRes
+	335, // 677: api.v1alpha1.wfm.WFM.CreateTourAgentCollectionWFMAgents:output_type -> api.v1alpha1.wfm.CreateTourAgentCollectionWFMAgentsRes
+	337, // 678: api.v1alpha1.wfm.WFM.ListTourAgentCollectionWFMAgents:output_type -> api.v1alpha1.wfm.ListTourAgentCollectionWFMAgentsRes
+	339, // 679: api.v1alpha1.wfm.WFM.DeleteTourAgentCollectionWFMAgents:output_type -> api.v1alpha1.wfm.DeleteTourAgentCollectionWFMAgentsRes
+	531, // [531:680] is the sub-list for method output_type
+	382, // [382:531] is the sub-list for method input_type
+	382, // [382:382] is the sub-list for extension type_name
+	382, // [382:382] is the sub-list for extension extendee
+	0,   // [0:382] is the sub-list for field type_name
 }
 
 func init() { file_api_v1alpha1_wfm_wfm_proto_init() }
@@ -29622,7 +32787,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[292].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpdateSkillProfileProficienciesReq_Proficiency); i {
+			switch v := v.(*TourShiftSegmentConfig); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -29634,7 +32799,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[293].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetSkillProfileRes_Mapping); i {
+			switch v := v.(*TourShiftInstanceConfig); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -29646,7 +32811,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[294].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DeleteForecastIntervalsReq_IntervalSids); i {
+			switch v := v.(*TourWeekPattern); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -29658,7 +32823,19 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[295].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListAllWFMAgentsRes_AgentGroupsByAgent); i {
+			switch v := v.(*TourAgentCollection); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[296].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TourPattern); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -29670,7 +32847,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[297].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DatetimePattern_WeekMap); i {
+			switch v := v.(*CreateTourPatternReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -29682,7 +32859,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[298].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DatetimePattern_CalendarItem); i {
+			switch v := v.(*CreateTourPatternRes); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -29694,7 +32871,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[299].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DatetimePattern_WeekMap_WeekMapDOW); i {
+			switch v := v.(*GetTourPatternReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -29706,7 +32883,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[300].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpsertNonSkillActivityAssociationRes_EntityMapping); i {
+			switch v := v.(*GetTourPatternRes); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -29718,7 +32895,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[301].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListConfigEntitiesRes_ClientNodeEntities); i {
+			switch v := v.(*DeleteTourPatternReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -29730,7 +32907,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[302].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListConfigEntitiesRes_LocationNodeEntities); i {
+			switch v := v.(*DeleteTourPatternRes); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -29742,7 +32919,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[303].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListConfigEntitiesRes_ProgramNodeEntities); i {
+			switch v := v.(*CreateTourWeekPatternReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -29754,7 +32931,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[304].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListConfigEntitiesRes_AgentGroupEntities); i {
+			switch v := v.(*CreateTourWeekPatternRes); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -29766,7 +32943,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[305].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListConfigEntitiesRes_ShiftTemplateEntities); i {
+			switch v := v.(*ListTourWeekPatternsReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -29778,7 +32955,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[306].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListConfigEntitiesRes_WFMAgentEntities); i {
+			switch v := v.(*ListTourWeekPatternsRes); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -29790,7 +32967,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[307].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListConfigEntitiesRes_PlacementRuleEntities); i {
+			switch v := v.(*DeleteTourWeekPatternsReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -29802,7 +32979,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[308].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListConfigEntitiesRes_ConstraintRuleEntities); i {
+			switch v := v.(*DeleteTourWeekPatternsRes); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -29814,7 +32991,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[309].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListConfigEntitiesRes_NonSkillActivityEntities); i {
+			switch v := v.(*CreateTourShiftInstanceConfigReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -29826,7 +33003,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[310].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListConfigEntitiesRes_AgentAvailabilityPatternEntities); i {
+			switch v := v.(*CreateTourShiftInstanceConfigRes); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -29838,7 +33015,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[311].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListConfigEntitiesRes_OpenTimesPatternEntities); i {
+			switch v := v.(*UpdateTourShiftInstanceConfigReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -29850,7 +33027,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[312].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListConfigEntitiesRes_SkillProficiencyEntities); i {
+			switch v := v.(*UpdateTourShiftInstanceConfigRes); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -29862,7 +33039,571 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[313].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListTourShiftInstanceConfigsReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[314].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListTourShiftInstanceConfigsRes); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[315].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DeleteTourShiftInstanceConfigsReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[316].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DeleteTourShiftInstanceConfigsRes); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[317].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*CreateTourShiftSegmentConfigReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[318].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*CreateTourShiftSegmentConfigRes); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[319].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UpdateTourShiftSegmentConfigReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[320].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UpdateTourShiftSegmentConfigRes); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[321].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListTourShiftSegmentConfigsReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[322].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListTourShiftSegmentConfigsRes); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[323].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DeleteTourShiftSegmentConfigsReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[324].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DeleteTourShiftSegmentConfigsRes); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[325].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*CreateTourAgentCollectionReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[326].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*CreateTourAgentCollectionRes); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[327].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UpdateTourAgentCollectionReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[328].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UpdateTourAgentCollectionRes); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[329].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListTourAgentCollectionsReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[330].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListTourAgentCollectionsRes); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[331].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DeleteTourAgentCollectionsReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[332].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DeleteTourAgentCollectionsRes); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[333].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*CreateTourAgentCollectionWFMAgentsReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[334].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*CreateTourAgentCollectionWFMAgentsRes); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[335].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListTourAgentCollectionWFMAgentsReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[336].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListTourAgentCollectionWFMAgentsRes); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[337].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DeleteTourAgentCollectionWFMAgentsReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[338].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DeleteTourAgentCollectionWFMAgentsRes); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[339].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UpdateSkillProfileProficienciesReq_Proficiency); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[340].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetSkillProfileRes_Mapping); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[341].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DeleteForecastIntervalsReq_IntervalSids); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[342].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListAllWFMAgentsRes_AgentGroupsByAgent); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[344].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DatetimePattern_WeekMap); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[345].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DatetimePattern_CalendarItem); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[346].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DatetimePattern_WeekMap_WeekMapDOW); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[347].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UpsertNonSkillActivityAssociationRes_EntityMapping); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[348].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListConfigEntitiesRes_ClientNodeEntities); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[349].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListConfigEntitiesRes_LocationNodeEntities); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[350].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListConfigEntitiesRes_ProgramNodeEntities); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[351].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListConfigEntitiesRes_AgentGroupEntities); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[352].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListConfigEntitiesRes_ShiftTemplateEntities); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[353].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListConfigEntitiesRes_WFMAgentEntities); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[354].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListConfigEntitiesRes_PlacementRuleEntities); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[355].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListConfigEntitiesRes_ConstraintRuleEntities); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[356].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListConfigEntitiesRes_NonSkillActivityEntities); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[357].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListConfigEntitiesRes_AgentAvailabilityPatternEntities); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[358].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListConfigEntitiesRes_OpenTimesPatternEntities); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[359].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListConfigEntitiesRes_SkillProficiencyEntities); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[360].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ListConfigEntitiesRes_ScheduleScenarioEntities); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[361].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListTourAgentCollectionWFMAgentsRes_SidMapping); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -29914,7 +33655,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_v1alpha1_wfm_wfm_proto_rawDesc,
 			NumEnums:      1,
-			NumMessages:   314,
+			NumMessages:   362,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
