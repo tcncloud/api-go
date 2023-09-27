@@ -1680,7 +1680,7 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when creating the Tour Pattern.
 	CreateTourPattern(ctx context.Context, in *CreateTourPatternReq, opts ...grpc.CallOption) (*CreateTourPatternRes, error)
 	// Replaces the existing Tour Pattern and members with @tour_pattern for the @tour_pattern.shift_template_sid and the org sending the request.
-	// Returns the newly created Tour Pattern and members with their updated SIDS and Week Pattern Numbers.
+	// Returns the newly created Tour Pattern and members with their updated SIDs and Week Pattern Numbers.
 	// Any existing Tour Week Patterns, Tour Shift Instance and Segment Configs, Tour Agent Collections and their WFM Agent SIDs
 	//
 	//	belonging to @tour_pattern.shift_template_sid will be replaced with the members on the provided @tour_pattern.
@@ -4921,7 +4921,7 @@ type WFMServer interface {
 	//   - grpc.Internal: error occurs when creating the Tour Pattern.
 	CreateTourPattern(context.Context, *CreateTourPatternReq) (*CreateTourPatternRes, error)
 	// Replaces the existing Tour Pattern and members with @tour_pattern for the @tour_pattern.shift_template_sid and the org sending the request.
-	// Returns the newly created Tour Pattern and members with their updated SIDS and Week Pattern Numbers.
+	// Returns the newly created Tour Pattern and members with their updated SIDs and Week Pattern Numbers.
 	// Any existing Tour Week Patterns, Tour Shift Instance and Segment Configs, Tour Agent Collections and their WFM Agent SIDs
 	//
 	//	belonging to @tour_pattern.shift_template_sid will be replaced with the members on the provided @tour_pattern.
