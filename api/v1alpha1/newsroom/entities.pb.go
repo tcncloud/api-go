@@ -1170,6 +1170,278 @@ func (x *GetNewsForUserResponse) GetPublishedArticleDetails() []*PublishedArticl
 	return nil
 }
 
+// request to upload image for the news article
+type StoreNewsArticleImageRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// NewsArticleImage
+	Image *NewsArticleImage `protobuf:"bytes,1,opt,name=image,proto3" json:"image,omitempty"`
+}
+
+func (x *StoreNewsArticleImageRequest) Reset() {
+	*x = StoreNewsArticleImageRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[21]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *StoreNewsArticleImageRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StoreNewsArticleImageRequest) ProtoMessage() {}
+
+func (x *StoreNewsArticleImageRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[21]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StoreNewsArticleImageRequest.ProtoReflect.Descriptor instead.
+func (*StoreNewsArticleImageRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_newsroom_entities_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *StoreNewsArticleImageRequest) GetImage() *NewsArticleImage {
+	if x != nil {
+		return x.Image
+	}
+	return nil
+}
+
+// image for the news article details
+type NewsArticleImage struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// unique name of the image
+	Uuid string `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
+	// image for the new article
+	NewArticleSid int64 `protobuf:"varint,2,opt,name=new_article_sid,json=newArticleSid,proto3" json:"new_article_sid,omitempty"`
+	// image content
+	Content string `protobuf:"bytes,3,opt,name=content,proto3" json:"content,omitempty"`
+	// download image url
+	DownloadUrl string `protobuf:"bytes,4,opt,name=download_url,json=downloadUrl,proto3" json:"download_url,omitempty"`
+}
+
+func (x *NewsArticleImage) Reset() {
+	*x = NewsArticleImage{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[22]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *NewsArticleImage) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*NewsArticleImage) ProtoMessage() {}
+
+func (x *NewsArticleImage) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[22]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use NewsArticleImage.ProtoReflect.Descriptor instead.
+func (*NewsArticleImage) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_newsroom_entities_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *NewsArticleImage) GetUuid() string {
+	if x != nil {
+		return x.Uuid
+	}
+	return ""
+}
+
+func (x *NewsArticleImage) GetNewArticleSid() int64 {
+	if x != nil {
+		return x.NewArticleSid
+	}
+	return 0
+}
+
+func (x *NewsArticleImage) GetContent() string {
+	if x != nil {
+		return x.Content
+	}
+	return ""
+}
+
+func (x *NewsArticleImage) GetDownloadUrl() string {
+	if x != nil {
+		return x.DownloadUrl
+	}
+	return ""
+}
+
+// response to uploaded image
+type StoreNewsArticleImageResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// stored image details
+	Image *NewsArticleImage `protobuf:"bytes,1,opt,name=image,proto3" json:"image,omitempty"`
+}
+
+func (x *StoreNewsArticleImageResponse) Reset() {
+	*x = StoreNewsArticleImageResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[23]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *StoreNewsArticleImageResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StoreNewsArticleImageResponse) ProtoMessage() {}
+
+func (x *StoreNewsArticleImageResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[23]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StoreNewsArticleImageResponse.ProtoReflect.Descriptor instead.
+func (*StoreNewsArticleImageResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_newsroom_entities_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *StoreNewsArticleImageResponse) GetImage() *NewsArticleImage {
+	if x != nil {
+		return x.Image
+	}
+	return nil
+}
+
+// request to list all images news article
+type ListImagesForNewsArticleRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// images for the new article sid
+	NewArticleSid int64 `protobuf:"varint,1,opt,name=new_article_sid,json=newArticleSid,proto3" json:"new_article_sid,omitempty"`
+}
+
+func (x *ListImagesForNewsArticleRequest) Reset() {
+	*x = ListImagesForNewsArticleRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[24]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ListImagesForNewsArticleRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListImagesForNewsArticleRequest) ProtoMessage() {}
+
+func (x *ListImagesForNewsArticleRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[24]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListImagesForNewsArticleRequest.ProtoReflect.Descriptor instead.
+func (*ListImagesForNewsArticleRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_newsroom_entities_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *ListImagesForNewsArticleRequest) GetNewArticleSid() int64 {
+	if x != nil {
+		return x.NewArticleSid
+	}
+	return 0
+}
+
+// response to list all images for the news article
+type ListImagesForNewsArticleResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// images for the news article
+	NewsArticleImages []*NewsArticleImage `protobuf:"bytes,1,rep,name=news_article_images,json=newsArticleImages,proto3" json:"news_article_images,omitempty"`
+}
+
+func (x *ListImagesForNewsArticleResponse) Reset() {
+	*x = ListImagesForNewsArticleResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[25]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ListImagesForNewsArticleResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListImagesForNewsArticleResponse) ProtoMessage() {}
+
+func (x *ListImagesForNewsArticleResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[25]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListImagesForNewsArticleResponse.ProtoReflect.Descriptor instead.
+func (*ListImagesForNewsArticleResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_newsroom_entities_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *ListImagesForNewsArticleResponse) GetNewsArticleImages() []*NewsArticleImage {
+	if x != nil {
+		return x.NewsArticleImages
+	}
+	return nil
+}
+
 // user activity details
 type UserActivity_UserActivityDetails struct {
 	state         protoimpl.MessageState
@@ -1183,7 +1455,7 @@ type UserActivity_UserActivityDetails struct {
 func (x *UserActivity_UserActivityDetails) Reset() {
 	*x = UserActivity_UserActivityDetails{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[21]
+		mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[26]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1196,7 +1468,7 @@ func (x *UserActivity_UserActivityDetails) String() string {
 func (*UserActivity_UserActivityDetails) ProtoMessage() {}
 
 func (x *UserActivity_UserActivityDetails) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[21]
+	mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[26]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1410,21 +1682,55 @@ var file_api_v1alpha1_newsroom_entities_proto_rawDesc = []byte{
 	0x61, 0x31, 0x2e, 0x6e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f, 0x6d, 0x2e, 0x50, 0x75, 0x62, 0x6c,
 	0x69, 0x73, 0x68, 0x65, 0x64, 0x41, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x44, 0x65, 0x74, 0x61,
 	0x69, 0x6c, 0x73, 0x52, 0x17, 0x70, 0x75, 0x62, 0x6c, 0x69, 0x73, 0x68, 0x65, 0x64, 0x41, 0x72,
-	0x74, 0x69, 0x63, 0x6c, 0x65, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x42, 0xd2, 0x01, 0x0a,
-	0x19, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61,
-	0x31, 0x2e, 0x6e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f, 0x6d, 0x42, 0x0d, 0x45, 0x6e, 0x74, 0x69,
-	0x74, 0x69, 0x65, 0x73, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x30, 0x67, 0x69, 0x74,
-	0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64,
-	0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c,
-	0x70, 0x68, 0x61, 0x31, 0x2f, 0x6e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f, 0x6d, 0xa2, 0x02, 0x03,
-	0x41, 0x56, 0x4e, 0xaa, 0x02, 0x15, 0x41, 0x70, 0x69, 0x2e, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68,
-	0x61, 0x31, 0x2e, 0x4e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f, 0x6d, 0xca, 0x02, 0x15, 0x41, 0x70,
-	0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x4e, 0x65, 0x77, 0x73, 0x72,
-	0x6f, 0x6f, 0x6d, 0xe2, 0x02, 0x21, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68,
-	0x61, 0x31, 0x5c, 0x4e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f, 0x6d, 0x5c, 0x47, 0x50, 0x42, 0x4d,
-	0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x17, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x56,
-	0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x3a, 0x3a, 0x4e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f,
-	0x6d, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x74, 0x69, 0x63, 0x6c, 0x65, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x22, 0x5d, 0x0a, 0x1c,
+	0x53, 0x74, 0x6f, 0x72, 0x65, 0x4e, 0x65, 0x77, 0x73, 0x41, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65,
+	0x49, 0x6d, 0x61, 0x67, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x3d, 0x0a, 0x05,
+	0x69, 0x6d, 0x61, 0x67, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x27, 0x2e, 0x61, 0x70,
+	0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x6e, 0x65, 0x77, 0x73, 0x72,
+	0x6f, 0x6f, 0x6d, 0x2e, 0x4e, 0x65, 0x77, 0x73, 0x41, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x49,
+	0x6d, 0x61, 0x67, 0x65, 0x52, 0x05, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x22, 0x8f, 0x01, 0x0a, 0x10,
+	0x4e, 0x65, 0x77, 0x73, 0x41, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x49, 0x6d, 0x61, 0x67, 0x65,
+	0x12, 0x12, 0x0a, 0x04, 0x75, 0x75, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04,
+	0x75, 0x75, 0x69, 0x64, 0x12, 0x2a, 0x0a, 0x0f, 0x6e, 0x65, 0x77, 0x5f, 0x61, 0x72, 0x74, 0x69,
+	0x63, 0x6c, 0x65, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x42, 0x02, 0x30,
+	0x01, 0x52, 0x0d, 0x6e, 0x65, 0x77, 0x41, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x53, 0x69, 0x64,
+	0x12, 0x18, 0x0a, 0x07, 0x63, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x07, 0x63, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x12, 0x21, 0x0a, 0x0c, 0x64, 0x6f,
+	0x77, 0x6e, 0x6c, 0x6f, 0x61, 0x64, 0x5f, 0x75, 0x72, 0x6c, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x0b, 0x64, 0x6f, 0x77, 0x6e, 0x6c, 0x6f, 0x61, 0x64, 0x55, 0x72, 0x6c, 0x22, 0x5e, 0x0a,
+	0x1d, 0x53, 0x74, 0x6f, 0x72, 0x65, 0x4e, 0x65, 0x77, 0x73, 0x41, 0x72, 0x74, 0x69, 0x63, 0x6c,
+	0x65, 0x49, 0x6d, 0x61, 0x67, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x3d,
+	0x0a, 0x05, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x27, 0x2e,
+	0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x6e, 0x65, 0x77,
+	0x73, 0x72, 0x6f, 0x6f, 0x6d, 0x2e, 0x4e, 0x65, 0x77, 0x73, 0x41, 0x72, 0x74, 0x69, 0x63, 0x6c,
+	0x65, 0x49, 0x6d, 0x61, 0x67, 0x65, 0x52, 0x05, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x22, 0x4d, 0x0a,
+	0x1f, 0x4c, 0x69, 0x73, 0x74, 0x49, 0x6d, 0x61, 0x67, 0x65, 0x73, 0x46, 0x6f, 0x72, 0x4e, 0x65,
+	0x77, 0x73, 0x41, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x12, 0x2a, 0x0a, 0x0f, 0x6e, 0x65, 0x77, 0x5f, 0x61, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x5f,
+	0x73, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x42, 0x02, 0x30, 0x01, 0x52, 0x0d, 0x6e,
+	0x65, 0x77, 0x41, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x53, 0x69, 0x64, 0x22, 0x7b, 0x0a, 0x20,
+	0x4c, 0x69, 0x73, 0x74, 0x49, 0x6d, 0x61, 0x67, 0x65, 0x73, 0x46, 0x6f, 0x72, 0x4e, 0x65, 0x77,
+	0x73, 0x41, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x12, 0x57, 0x0a, 0x13, 0x6e, 0x65, 0x77, 0x73, 0x5f, 0x61, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65,
+	0x5f, 0x69, 0x6d, 0x61, 0x67, 0x65, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x27, 0x2e,
+	0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x6e, 0x65, 0x77,
+	0x73, 0x72, 0x6f, 0x6f, 0x6d, 0x2e, 0x4e, 0x65, 0x77, 0x73, 0x41, 0x72, 0x74, 0x69, 0x63, 0x6c,
+	0x65, 0x49, 0x6d, 0x61, 0x67, 0x65, 0x52, 0x11, 0x6e, 0x65, 0x77, 0x73, 0x41, 0x72, 0x74, 0x69,
+	0x63, 0x6c, 0x65, 0x49, 0x6d, 0x61, 0x67, 0x65, 0x73, 0x42, 0xd2, 0x01, 0x0a, 0x19, 0x63, 0x6f,
+	0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x6e,
+	0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f, 0x6d, 0x42, 0x0d, 0x45, 0x6e, 0x74, 0x69, 0x74, 0x69, 0x65,
+	0x73, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x30, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62,
+	0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70,
+	0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61,
+	0x31, 0x2f, 0x6e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f, 0x6d, 0xa2, 0x02, 0x03, 0x41, 0x56, 0x4e,
+	0xaa, 0x02, 0x15, 0x41, 0x70, 0x69, 0x2e, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e,
+	0x4e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f, 0x6d, 0xca, 0x02, 0x15, 0x41, 0x70, 0x69, 0x5c, 0x56,
+	0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x4e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f, 0x6d,
+	0xe2, 0x02, 0x21, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c,
+	0x4e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f, 0x6d, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61,
+	0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x17, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x56, 0x31, 0x61, 0x6c,
+	0x70, 0x68, 0x61, 0x31, 0x3a, 0x3a, 0x4e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f, 0x6d, 0x62, 0x06,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1439,7 +1745,7 @@ func file_api_v1alpha1_newsroom_entities_proto_rawDescGZIP() []byte {
 	return file_api_v1alpha1_newsroom_entities_proto_rawDescData
 }
 
-var file_api_v1alpha1_newsroom_entities_proto_msgTypes = make([]protoimpl.MessageInfo, 22)
+var file_api_v1alpha1_newsroom_entities_proto_msgTypes = make([]protoimpl.MessageInfo, 27)
 var file_api_v1alpha1_newsroom_entities_proto_goTypes = []interface{}{
 	(*CreateNewsArticleRequest)(nil),         // 0: api.v1alpha1.newsroom.CreateNewsArticleRequest
 	(*CreateNewsArticleResponse)(nil),        // 1: api.v1alpha1.newsroom.CreateNewsArticleResponse
@@ -1462,37 +1768,45 @@ var file_api_v1alpha1_newsroom_entities_proto_goTypes = []interface{}{
 	(*UserActivityResponse)(nil),             // 18: api.v1alpha1.newsroom.UserActivityResponse
 	(*GetNewsForUserRequest)(nil),            // 19: api.v1alpha1.newsroom.GetNewsForUserRequest
 	(*GetNewsForUserResponse)(nil),           // 20: api.v1alpha1.newsroom.GetNewsForUserResponse
-	(*UserActivity_UserActivityDetails)(nil), // 21: api.v1alpha1.newsroom.UserActivity.UserActivityDetails
-	(commons.ArticleStatus)(0),               // 22: api.commons.ArticleStatus
-	(*fieldmaskpb.FieldMask)(nil),            // 23: google.protobuf.FieldMask
-	(*timestamppb.Timestamp)(nil),            // 24: google.protobuf.Timestamp
+	(*StoreNewsArticleImageRequest)(nil),     // 21: api.v1alpha1.newsroom.StoreNewsArticleImageRequest
+	(*NewsArticleImage)(nil),                 // 22: api.v1alpha1.newsroom.NewsArticleImage
+	(*StoreNewsArticleImageResponse)(nil),    // 23: api.v1alpha1.newsroom.StoreNewsArticleImageResponse
+	(*ListImagesForNewsArticleRequest)(nil),  // 24: api.v1alpha1.newsroom.ListImagesForNewsArticleRequest
+	(*ListImagesForNewsArticleResponse)(nil), // 25: api.v1alpha1.newsroom.ListImagesForNewsArticleResponse
+	(*UserActivity_UserActivityDetails)(nil), // 26: api.v1alpha1.newsroom.UserActivity.UserActivityDetails
+	(commons.ArticleStatus)(0),               // 27: api.commons.ArticleStatus
+	(*fieldmaskpb.FieldMask)(nil),            // 28: google.protobuf.FieldMask
+	(*timestamppb.Timestamp)(nil),            // 29: google.protobuf.Timestamp
 }
 var file_api_v1alpha1_newsroom_entities_proto_depIdxs = []int32{
 	8,  // 0: api.v1alpha1.newsroom.CreateNewsArticleResponse.article_details:type_name -> api.v1alpha1.newsroom.NewsArticleDetails
-	22, // 1: api.v1alpha1.newsroom.ListNewsArticlesRequest.statuses:type_name -> api.commons.ArticleStatus
-	23, // 2: api.v1alpha1.newsroom.ListNewsArticlesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	27, // 1: api.v1alpha1.newsroom.ListNewsArticlesRequest.statuses:type_name -> api.commons.ArticleStatus
+	28, // 2: api.v1alpha1.newsroom.ListNewsArticlesRequest.field_mask:type_name -> google.protobuf.FieldMask
 	8,  // 3: api.v1alpha1.newsroom.ListNewsArticlesResponse.article_details:type_name -> api.v1alpha1.newsroom.NewsArticleDetails
 	8,  // 4: api.v1alpha1.newsroom.GetNewsArticleByIdResponse.article_details:type_name -> api.v1alpha1.newsroom.NewsArticleDetails
 	8,  // 5: api.v1alpha1.newsroom.UpdateNewsArticleRequest.article_details:type_name -> api.v1alpha1.newsroom.NewsArticleDetails
-	23, // 6: api.v1alpha1.newsroom.UpdateNewsArticleRequest.field_mask:type_name -> google.protobuf.FieldMask
+	28, // 6: api.v1alpha1.newsroom.UpdateNewsArticleRequest.field_mask:type_name -> google.protobuf.FieldMask
 	8,  // 7: api.v1alpha1.newsroom.UpdateNewsArticleResponse.article_details:type_name -> api.v1alpha1.newsroom.NewsArticleDetails
-	22, // 8: api.v1alpha1.newsroom.NewsArticleDetails.status:type_name -> api.commons.ArticleStatus
-	24, // 9: api.v1alpha1.newsroom.NewsArticleDetails.date_created:type_name -> google.protobuf.Timestamp
-	24, // 10: api.v1alpha1.newsroom.NewsArticleDetails.last_edited:type_name -> google.protobuf.Timestamp
+	27, // 8: api.v1alpha1.newsroom.NewsArticleDetails.status:type_name -> api.commons.ArticleStatus
+	29, // 9: api.v1alpha1.newsroom.NewsArticleDetails.date_created:type_name -> google.protobuf.Timestamp
+	29, // 10: api.v1alpha1.newsroom.NewsArticleDetails.last_edited:type_name -> google.protobuf.Timestamp
 	8,  // 11: api.v1alpha1.newsroom.PublishedArticleDetails.news_article_details:type_name -> api.v1alpha1.newsroom.NewsArticleDetails
-	24, // 12: api.v1alpha1.newsroom.PublishedArticleDetails.date_published:type_name -> google.protobuf.Timestamp
-	24, // 13: api.v1alpha1.newsroom.UserActivity.date_created:type_name -> google.protobuf.Timestamp
-	21, // 14: api.v1alpha1.newsroom.UserActivity.user_activity_details:type_name -> api.v1alpha1.newsroom.UserActivity.UserActivityDetails
+	29, // 12: api.v1alpha1.newsroom.PublishedArticleDetails.date_published:type_name -> google.protobuf.Timestamp
+	29, // 13: api.v1alpha1.newsroom.UserActivity.date_created:type_name -> google.protobuf.Timestamp
+	26, // 14: api.v1alpha1.newsroom.UserActivity.user_activity_details:type_name -> api.v1alpha1.newsroom.UserActivity.UserActivityDetails
 	9,  // 15: api.v1alpha1.newsroom.CreatePublishedArticleResponse.published_article_details:type_name -> api.v1alpha1.newsroom.PublishedArticleDetails
 	9,  // 16: api.v1alpha1.newsroom.ListPublishedArticlesResponse.published_article_details:type_name -> api.v1alpha1.newsroom.PublishedArticleDetails
 	9,  // 17: api.v1alpha1.newsroom.GetPublishedArticleByIdResponse.published_article_details:type_name -> api.v1alpha1.newsroom.PublishedArticleDetails
 	10, // 18: api.v1alpha1.newsroom.UserActivityResponse.user_activity:type_name -> api.v1alpha1.newsroom.UserActivity
 	9,  // 19: api.v1alpha1.newsroom.GetNewsForUserResponse.published_article_details:type_name -> api.v1alpha1.newsroom.PublishedArticleDetails
-	20, // [20:20] is the sub-list for method output_type
-	20, // [20:20] is the sub-list for method input_type
-	20, // [20:20] is the sub-list for extension type_name
-	20, // [20:20] is the sub-list for extension extendee
-	0,  // [0:20] is the sub-list for field type_name
+	22, // 20: api.v1alpha1.newsroom.StoreNewsArticleImageRequest.image:type_name -> api.v1alpha1.newsroom.NewsArticleImage
+	22, // 21: api.v1alpha1.newsroom.StoreNewsArticleImageResponse.image:type_name -> api.v1alpha1.newsroom.NewsArticleImage
+	22, // 22: api.v1alpha1.newsroom.ListImagesForNewsArticleResponse.news_article_images:type_name -> api.v1alpha1.newsroom.NewsArticleImage
+	23, // [23:23] is the sub-list for method output_type
+	23, // [23:23] is the sub-list for method input_type
+	23, // [23:23] is the sub-list for extension type_name
+	23, // [23:23] is the sub-list for extension extendee
+	0,  // [0:23] is the sub-list for field type_name
 }
 
 func init() { file_api_v1alpha1_newsroom_entities_proto_init() }
@@ -1754,6 +2068,66 @@ func file_api_v1alpha1_newsroom_entities_proto_init() {
 			}
 		}
 		file_api_v1alpha1_newsroom_entities_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*StoreNewsArticleImageRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_newsroom_entities_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*NewsArticleImage); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_newsroom_entities_proto_msgTypes[23].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*StoreNewsArticleImageResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_newsroom_entities_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListImagesForNewsArticleRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_newsroom_entities_proto_msgTypes[25].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListImagesForNewsArticleResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_newsroom_entities_proto_msgTypes[26].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*UserActivity_UserActivityDetails); i {
 			case 0:
 				return &v.state
@@ -1772,7 +2146,7 @@ func file_api_v1alpha1_newsroom_entities_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_v1alpha1_newsroom_entities_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   22,
+			NumMessages:   27,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

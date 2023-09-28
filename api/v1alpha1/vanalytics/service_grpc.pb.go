@@ -47,6 +47,7 @@ const (
 	Vanalytics_DeleteFlagFilter_FullMethodName          = "/api.v1alpha1.vanalytics.Vanalytics/DeleteFlagFilter"
 	Vanalytics_ListFlagSnapshots_FullMethodName         = "/api.v1alpha1.vanalytics.Vanalytics/ListFlagSnapshots"
 	Vanalytics_ListFlagTranscriptFilters_FullMethodName = "/api.v1alpha1.vanalytics.Vanalytics/ListFlagTranscriptFilters"
+	Vanalytics_CreateCorrection_FullMethodName          = "/api.v1alpha1.vanalytics.Vanalytics/CreateCorrection"
 )
 
 // VanalyticsClient is the client API for Vanalytics service.
@@ -114,6 +115,8 @@ type VanalyticsClient interface {
 	ListFlagSnapshots(ctx context.Context, in *ListFlagSnapshotsRequest, opts ...grpc.CallOption) (*ListFlagSnapshotsResponse, error)
 	// ListFlagTranscriptFilters lists flag transcript filters in an organization.
 	ListFlagTranscriptFilters(ctx context.Context, in *ListFlagTranscriptFiltersRequest, opts ...grpc.CallOption) (*ListFlagTranscriptFiltersResponse, error)
+	// CreateCorrection creates a correction.
+	CreateCorrection(ctx context.Context, in *CreateCorrectionRequest, opts ...grpc.CallOption) (*CreateCorrectionResponse, error)
 }
 
 type vanalyticsClient struct {
@@ -376,6 +379,15 @@ func (c *vanalyticsClient) ListFlagTranscriptFilters(ctx context.Context, in *Li
 	return out, nil
 }
 
+func (c *vanalyticsClient) CreateCorrection(ctx context.Context, in *CreateCorrectionRequest, opts ...grpc.CallOption) (*CreateCorrectionResponse, error) {
+	out := new(CreateCorrectionResponse)
+	err := c.cc.Invoke(ctx, Vanalytics_CreateCorrection_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // VanalyticsServer is the server API for Vanalytics service.
 // All implementations must embed UnimplementedVanalyticsServer
 // for forward compatibility
@@ -441,6 +453,8 @@ type VanalyticsServer interface {
 	ListFlagSnapshots(context.Context, *ListFlagSnapshotsRequest) (*ListFlagSnapshotsResponse, error)
 	// ListFlagTranscriptFilters lists flag transcript filters in an organization.
 	ListFlagTranscriptFilters(context.Context, *ListFlagTranscriptFiltersRequest) (*ListFlagTranscriptFiltersResponse, error)
+	// CreateCorrection creates a correction.
+	CreateCorrection(context.Context, *CreateCorrectionRequest) (*CreateCorrectionResponse, error)
 	mustEmbedUnimplementedVanalyticsServer()
 }
 
@@ -531,6 +545,9 @@ func (UnimplementedVanalyticsServer) ListFlagSnapshots(context.Context, *ListFla
 }
 func (UnimplementedVanalyticsServer) ListFlagTranscriptFilters(context.Context, *ListFlagTranscriptFiltersRequest) (*ListFlagTranscriptFiltersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListFlagTranscriptFilters not implemented")
+}
+func (UnimplementedVanalyticsServer) CreateCorrection(context.Context, *CreateCorrectionRequest) (*CreateCorrectionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateCorrection not implemented")
 }
 func (UnimplementedVanalyticsServer) mustEmbedUnimplementedVanalyticsServer() {}
 
@@ -1049,6 +1066,24 @@ func _Vanalytics_ListFlagTranscriptFilters_Handler(srv interface{}, ctx context.
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Vanalytics_CreateCorrection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateCorrectionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VanalyticsServer).CreateCorrection(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Vanalytics_CreateCorrection_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VanalyticsServer).CreateCorrection(ctx, req.(*CreateCorrectionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Vanalytics_ServiceDesc is the grpc.ServiceDesc for Vanalytics service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1167,6 +1202,10 @@ var Vanalytics_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListFlagTranscriptFilters",
 			Handler:    _Vanalytics_ListFlagTranscriptFilters_Handler,
+		},
+		{
+			MethodName: "CreateCorrection",
+			Handler:    _Vanalytics_CreateCorrection_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
