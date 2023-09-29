@@ -35,9 +35,9 @@ import (
 const _ = connect_go.IsAtLeastVersion0_1_0
 
 const (
-	// FlowDefinitionPersistServiceName is the fully-qualified name of the FlowDefinitionPersistService
-	// service.
-	FlowDefinitionPersistServiceName = "api.v1alpha1.workflows.FlowDefinitionPersistService"
+	// WorkflowDefinitionPersistServiceName is the fully-qualified name of the
+	// WorkflowDefinitionPersistService service.
+	WorkflowDefinitionPersistServiceName = "api.v1alpha1.workflows.WorkflowDefinitionPersistService"
 )
 
 // These constants are the fully-qualified names of the RPCs defined in this package. They're
@@ -48,200 +48,201 @@ const (
 // reflection-formatted method names, remove the leading slash and convert the remaining slash to a
 // period.
 const (
-	// FlowDefinitionPersistServiceCreateFlowDefinitionProcedure is the fully-qualified name of the
-	// FlowDefinitionPersistService's CreateFlowDefinition RPC.
-	FlowDefinitionPersistServiceCreateFlowDefinitionProcedure = "/api.v1alpha1.workflows.FlowDefinitionPersistService/CreateFlowDefinition"
-	// FlowDefinitionPersistServiceGetFlowDefinitionProcedure is the fully-qualified name of the
-	// FlowDefinitionPersistService's GetFlowDefinition RPC.
-	FlowDefinitionPersistServiceGetFlowDefinitionProcedure = "/api.v1alpha1.workflows.FlowDefinitionPersistService/GetFlowDefinition"
-	// FlowDefinitionPersistServiceListFlowDefinitionsProcedure is the fully-qualified name of the
-	// FlowDefinitionPersistService's ListFlowDefinitions RPC.
-	FlowDefinitionPersistServiceListFlowDefinitionsProcedure = "/api.v1alpha1.workflows.FlowDefinitionPersistService/ListFlowDefinitions"
-	// FlowDefinitionPersistServiceUpdateFlowDefinitionProcedure is the fully-qualified name of the
-	// FlowDefinitionPersistService's UpdateFlowDefinition RPC.
-	FlowDefinitionPersistServiceUpdateFlowDefinitionProcedure = "/api.v1alpha1.workflows.FlowDefinitionPersistService/UpdateFlowDefinition"
-	// FlowDefinitionPersistServiceValidateFlowDefinitionProcedure is the fully-qualified name of the
-	// FlowDefinitionPersistService's ValidateFlowDefinition RPC.
-	FlowDefinitionPersistServiceValidateFlowDefinitionProcedure = "/api.v1alpha1.workflows.FlowDefinitionPersistService/ValidateFlowDefinition"
+	// WorkflowDefinitionPersistServiceCreateWorkflowDefinitionProcedure is the fully-qualified name of
+	// the WorkflowDefinitionPersistService's CreateWorkflowDefinition RPC.
+	WorkflowDefinitionPersistServiceCreateWorkflowDefinitionProcedure = "/api.v1alpha1.workflows.WorkflowDefinitionPersistService/CreateWorkflowDefinition"
+	// WorkflowDefinitionPersistServiceGetWorkflowDefinitionProcedure is the fully-qualified name of the
+	// WorkflowDefinitionPersistService's GetWorkflowDefinition RPC.
+	WorkflowDefinitionPersistServiceGetWorkflowDefinitionProcedure = "/api.v1alpha1.workflows.WorkflowDefinitionPersistService/GetWorkflowDefinition"
+	// WorkflowDefinitionPersistServiceListWorkflowDefinitionsProcedure is the fully-qualified name of
+	// the WorkflowDefinitionPersistService's ListWorkflowDefinitions RPC.
+	WorkflowDefinitionPersistServiceListWorkflowDefinitionsProcedure = "/api.v1alpha1.workflows.WorkflowDefinitionPersistService/ListWorkflowDefinitions"
+	// WorkflowDefinitionPersistServiceUpdateWorkflowDefinitionProcedure is the fully-qualified name of
+	// the WorkflowDefinitionPersistService's UpdateWorkflowDefinition RPC.
+	WorkflowDefinitionPersistServiceUpdateWorkflowDefinitionProcedure = "/api.v1alpha1.workflows.WorkflowDefinitionPersistService/UpdateWorkflowDefinition"
+	// WorkflowDefinitionPersistServiceValidateWorkflowDefinitionProcedure is the fully-qualified name
+	// of the WorkflowDefinitionPersistService's ValidateWorkflowDefinition RPC.
+	WorkflowDefinitionPersistServiceValidateWorkflowDefinitionProcedure = "/api.v1alpha1.workflows.WorkflowDefinitionPersistService/ValidateWorkflowDefinition"
 )
 
-// FlowDefinitionPersistServiceClient is a client for the
-// api.v1alpha1.workflows.FlowDefinitionPersistService service.
-type FlowDefinitionPersistServiceClient interface {
+// WorkflowDefinitionPersistServiceClient is a client for the
+// api.v1alpha1.workflows.WorkflowDefinitionPersistService service.
+type WorkflowDefinitionPersistServiceClient interface {
 	// CreateFlowDefinition creates a new flow definition in the database
-	CreateFlowDefinition(context.Context, *connect_go.Request[workflows.CreateFlowDefinitionRequest]) (*connect_go.Response[workflows.CreateFlowDefinitionResponse], error)
-	// GetFlowDefinition retrieves a flow definition from the database
-	GetFlowDefinition(context.Context, *connect_go.Request[workflows.GetFlowDefinitionRequest]) (*connect_go.Response[workflows.GetFlowDefinitionResponse], error)
-	// ListFlowDefinitions retrieves a list of flow definitions from the database optionally filtered by the owning application
+	CreateWorkflowDefinition(context.Context, *connect_go.Request[workflows.CreateWorkflowDefinitionRequest]) (*connect_go.Response[workflows.CreateWorkflowDefinitionResponse], error)
+	// GetWorkflowDefinition retrieves a flow definition from the database
+	GetWorkflowDefinition(context.Context, *connect_go.Request[workflows.GetWorkflowDefinitionRequest]) (*connect_go.Response[workflows.GetWorkflowDefinitionResponse], error)
+	// ListWorkflowDefinitions retrieves a list of flow definitions from the database optionally filtered by the owning application
 	// if application is not specified, all flow definitions for the org are returned
-	ListFlowDefinitions(context.Context, *connect_go.Request[workflows.ListFlowDefinitionsRequest]) (*connect_go.ServerStreamForClient[workflows.ListFlowDefinitionsResponse], error)
-	// UpdateFlowDefinition updates a flow definition in the database. Only the name, description and definition graph itself are updated
-	UpdateFlowDefinition(context.Context, *connect_go.Request[workflows.UpdateFlowDefinitionRequest]) (*connect_go.Response[workflows.UpdateFlowDefinitionResponse], error)
-	// ValidateFlowDefinition validates a flow definition in the database. Only the name, description and definition graph itself are updated
-	ValidateFlowDefinition(context.Context, *connect_go.Request[workflows.ValidateFlowDefinitionRequest]) (*connect_go.Response[workflows.ValidateFlowDefinitionResponse], error)
+	ListWorkflowDefinitions(context.Context, *connect_go.Request[workflows.ListWorkflowDefinitionsRequest]) (*connect_go.ServerStreamForClient[workflows.ListWorkflowDefinitionsResponse], error)
+	// UpdateWorkflowDefinition updates a flow definition in the database. Only the name, description and definition graph itself are updated
+	UpdateWorkflowDefinition(context.Context, *connect_go.Request[workflows.UpdateWorkflowDefinitionRequest]) (*connect_go.Response[workflows.UpdateWorkflowDefinitionResponse], error)
+	// ValidateWorkflowDefinition validates a flow definition in the database. Only the name, description and definition graph itself are updated
+	ValidateWorkflowDefinition(context.Context, *connect_go.Request[workflows.ValidateWorkflowDefinitionRequest]) (*connect_go.Response[workflows.ValidateWorkflowDefinitionResponse], error)
 }
 
-// NewFlowDefinitionPersistServiceClient constructs a client for the
-// api.v1alpha1.workflows.FlowDefinitionPersistService service. By default, it uses the Connect
+// NewWorkflowDefinitionPersistServiceClient constructs a client for the
+// api.v1alpha1.workflows.WorkflowDefinitionPersistService service. By default, it uses the Connect
 // protocol with the binary Protobuf Codec, asks for gzipped responses, and sends uncompressed
 // requests. To use the gRPC or gRPC-Web protocols, supply the connect.WithGRPC() or
 // connect.WithGRPCWeb() options.
 //
 // The URL supplied here should be the base URL for the Connect or gRPC server (for example,
 // http://api.acme.com or https://acme.com/grpc).
-func NewFlowDefinitionPersistServiceClient(httpClient connect_go.HTTPClient, baseURL string, opts ...connect_go.ClientOption) FlowDefinitionPersistServiceClient {
+func NewWorkflowDefinitionPersistServiceClient(httpClient connect_go.HTTPClient, baseURL string, opts ...connect_go.ClientOption) WorkflowDefinitionPersistServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
-	return &flowDefinitionPersistServiceClient{
-		createFlowDefinition: connect_go.NewClient[workflows.CreateFlowDefinitionRequest, workflows.CreateFlowDefinitionResponse](
+	return &workflowDefinitionPersistServiceClient{
+		createWorkflowDefinition: connect_go.NewClient[workflows.CreateWorkflowDefinitionRequest, workflows.CreateWorkflowDefinitionResponse](
 			httpClient,
-			baseURL+FlowDefinitionPersistServiceCreateFlowDefinitionProcedure,
+			baseURL+WorkflowDefinitionPersistServiceCreateWorkflowDefinitionProcedure,
 			opts...,
 		),
-		getFlowDefinition: connect_go.NewClient[workflows.GetFlowDefinitionRequest, workflows.GetFlowDefinitionResponse](
+		getWorkflowDefinition: connect_go.NewClient[workflows.GetWorkflowDefinitionRequest, workflows.GetWorkflowDefinitionResponse](
 			httpClient,
-			baseURL+FlowDefinitionPersistServiceGetFlowDefinitionProcedure,
+			baseURL+WorkflowDefinitionPersistServiceGetWorkflowDefinitionProcedure,
 			opts...,
 		),
-		listFlowDefinitions: connect_go.NewClient[workflows.ListFlowDefinitionsRequest, workflows.ListFlowDefinitionsResponse](
+		listWorkflowDefinitions: connect_go.NewClient[workflows.ListWorkflowDefinitionsRequest, workflows.ListWorkflowDefinitionsResponse](
 			httpClient,
-			baseURL+FlowDefinitionPersistServiceListFlowDefinitionsProcedure,
+			baseURL+WorkflowDefinitionPersistServiceListWorkflowDefinitionsProcedure,
 			opts...,
 		),
-		updateFlowDefinition: connect_go.NewClient[workflows.UpdateFlowDefinitionRequest, workflows.UpdateFlowDefinitionResponse](
+		updateWorkflowDefinition: connect_go.NewClient[workflows.UpdateWorkflowDefinitionRequest, workflows.UpdateWorkflowDefinitionResponse](
 			httpClient,
-			baseURL+FlowDefinitionPersistServiceUpdateFlowDefinitionProcedure,
+			baseURL+WorkflowDefinitionPersistServiceUpdateWorkflowDefinitionProcedure,
 			opts...,
 		),
-		validateFlowDefinition: connect_go.NewClient[workflows.ValidateFlowDefinitionRequest, workflows.ValidateFlowDefinitionResponse](
+		validateWorkflowDefinition: connect_go.NewClient[workflows.ValidateWorkflowDefinitionRequest, workflows.ValidateWorkflowDefinitionResponse](
 			httpClient,
-			baseURL+FlowDefinitionPersistServiceValidateFlowDefinitionProcedure,
+			baseURL+WorkflowDefinitionPersistServiceValidateWorkflowDefinitionProcedure,
 			opts...,
 		),
 	}
 }
 
-// flowDefinitionPersistServiceClient implements FlowDefinitionPersistServiceClient.
-type flowDefinitionPersistServiceClient struct {
-	createFlowDefinition   *connect_go.Client[workflows.CreateFlowDefinitionRequest, workflows.CreateFlowDefinitionResponse]
-	getFlowDefinition      *connect_go.Client[workflows.GetFlowDefinitionRequest, workflows.GetFlowDefinitionResponse]
-	listFlowDefinitions    *connect_go.Client[workflows.ListFlowDefinitionsRequest, workflows.ListFlowDefinitionsResponse]
-	updateFlowDefinition   *connect_go.Client[workflows.UpdateFlowDefinitionRequest, workflows.UpdateFlowDefinitionResponse]
-	validateFlowDefinition *connect_go.Client[workflows.ValidateFlowDefinitionRequest, workflows.ValidateFlowDefinitionResponse]
+// workflowDefinitionPersistServiceClient implements WorkflowDefinitionPersistServiceClient.
+type workflowDefinitionPersistServiceClient struct {
+	createWorkflowDefinition   *connect_go.Client[workflows.CreateWorkflowDefinitionRequest, workflows.CreateWorkflowDefinitionResponse]
+	getWorkflowDefinition      *connect_go.Client[workflows.GetWorkflowDefinitionRequest, workflows.GetWorkflowDefinitionResponse]
+	listWorkflowDefinitions    *connect_go.Client[workflows.ListWorkflowDefinitionsRequest, workflows.ListWorkflowDefinitionsResponse]
+	updateWorkflowDefinition   *connect_go.Client[workflows.UpdateWorkflowDefinitionRequest, workflows.UpdateWorkflowDefinitionResponse]
+	validateWorkflowDefinition *connect_go.Client[workflows.ValidateWorkflowDefinitionRequest, workflows.ValidateWorkflowDefinitionResponse]
 }
 
-// CreateFlowDefinition calls
-// api.v1alpha1.workflows.FlowDefinitionPersistService.CreateFlowDefinition.
-func (c *flowDefinitionPersistServiceClient) CreateFlowDefinition(ctx context.Context, req *connect_go.Request[workflows.CreateFlowDefinitionRequest]) (*connect_go.Response[workflows.CreateFlowDefinitionResponse], error) {
-	return c.createFlowDefinition.CallUnary(ctx, req)
+// CreateWorkflowDefinition calls
+// api.v1alpha1.workflows.WorkflowDefinitionPersistService.CreateWorkflowDefinition.
+func (c *workflowDefinitionPersistServiceClient) CreateWorkflowDefinition(ctx context.Context, req *connect_go.Request[workflows.CreateWorkflowDefinitionRequest]) (*connect_go.Response[workflows.CreateWorkflowDefinitionResponse], error) {
+	return c.createWorkflowDefinition.CallUnary(ctx, req)
 }
 
-// GetFlowDefinition calls api.v1alpha1.workflows.FlowDefinitionPersistService.GetFlowDefinition.
-func (c *flowDefinitionPersistServiceClient) GetFlowDefinition(ctx context.Context, req *connect_go.Request[workflows.GetFlowDefinitionRequest]) (*connect_go.Response[workflows.GetFlowDefinitionResponse], error) {
-	return c.getFlowDefinition.CallUnary(ctx, req)
+// GetWorkflowDefinition calls
+// api.v1alpha1.workflows.WorkflowDefinitionPersistService.GetWorkflowDefinition.
+func (c *workflowDefinitionPersistServiceClient) GetWorkflowDefinition(ctx context.Context, req *connect_go.Request[workflows.GetWorkflowDefinitionRequest]) (*connect_go.Response[workflows.GetWorkflowDefinitionResponse], error) {
+	return c.getWorkflowDefinition.CallUnary(ctx, req)
 }
 
-// ListFlowDefinitions calls
-// api.v1alpha1.workflows.FlowDefinitionPersistService.ListFlowDefinitions.
-func (c *flowDefinitionPersistServiceClient) ListFlowDefinitions(ctx context.Context, req *connect_go.Request[workflows.ListFlowDefinitionsRequest]) (*connect_go.ServerStreamForClient[workflows.ListFlowDefinitionsResponse], error) {
-	return c.listFlowDefinitions.CallServerStream(ctx, req)
+// ListWorkflowDefinitions calls
+// api.v1alpha1.workflows.WorkflowDefinitionPersistService.ListWorkflowDefinitions.
+func (c *workflowDefinitionPersistServiceClient) ListWorkflowDefinitions(ctx context.Context, req *connect_go.Request[workflows.ListWorkflowDefinitionsRequest]) (*connect_go.ServerStreamForClient[workflows.ListWorkflowDefinitionsResponse], error) {
+	return c.listWorkflowDefinitions.CallServerStream(ctx, req)
 }
 
-// UpdateFlowDefinition calls
-// api.v1alpha1.workflows.FlowDefinitionPersistService.UpdateFlowDefinition.
-func (c *flowDefinitionPersistServiceClient) UpdateFlowDefinition(ctx context.Context, req *connect_go.Request[workflows.UpdateFlowDefinitionRequest]) (*connect_go.Response[workflows.UpdateFlowDefinitionResponse], error) {
-	return c.updateFlowDefinition.CallUnary(ctx, req)
+// UpdateWorkflowDefinition calls
+// api.v1alpha1.workflows.WorkflowDefinitionPersistService.UpdateWorkflowDefinition.
+func (c *workflowDefinitionPersistServiceClient) UpdateWorkflowDefinition(ctx context.Context, req *connect_go.Request[workflows.UpdateWorkflowDefinitionRequest]) (*connect_go.Response[workflows.UpdateWorkflowDefinitionResponse], error) {
+	return c.updateWorkflowDefinition.CallUnary(ctx, req)
 }
 
-// ValidateFlowDefinition calls
-// api.v1alpha1.workflows.FlowDefinitionPersistService.ValidateFlowDefinition.
-func (c *flowDefinitionPersistServiceClient) ValidateFlowDefinition(ctx context.Context, req *connect_go.Request[workflows.ValidateFlowDefinitionRequest]) (*connect_go.Response[workflows.ValidateFlowDefinitionResponse], error) {
-	return c.validateFlowDefinition.CallUnary(ctx, req)
+// ValidateWorkflowDefinition calls
+// api.v1alpha1.workflows.WorkflowDefinitionPersistService.ValidateWorkflowDefinition.
+func (c *workflowDefinitionPersistServiceClient) ValidateWorkflowDefinition(ctx context.Context, req *connect_go.Request[workflows.ValidateWorkflowDefinitionRequest]) (*connect_go.Response[workflows.ValidateWorkflowDefinitionResponse], error) {
+	return c.validateWorkflowDefinition.CallUnary(ctx, req)
 }
 
-// FlowDefinitionPersistServiceHandler is an implementation of the
-// api.v1alpha1.workflows.FlowDefinitionPersistService service.
-type FlowDefinitionPersistServiceHandler interface {
+// WorkflowDefinitionPersistServiceHandler is an implementation of the
+// api.v1alpha1.workflows.WorkflowDefinitionPersistService service.
+type WorkflowDefinitionPersistServiceHandler interface {
 	// CreateFlowDefinition creates a new flow definition in the database
-	CreateFlowDefinition(context.Context, *connect_go.Request[workflows.CreateFlowDefinitionRequest]) (*connect_go.Response[workflows.CreateFlowDefinitionResponse], error)
-	// GetFlowDefinition retrieves a flow definition from the database
-	GetFlowDefinition(context.Context, *connect_go.Request[workflows.GetFlowDefinitionRequest]) (*connect_go.Response[workflows.GetFlowDefinitionResponse], error)
-	// ListFlowDefinitions retrieves a list of flow definitions from the database optionally filtered by the owning application
+	CreateWorkflowDefinition(context.Context, *connect_go.Request[workflows.CreateWorkflowDefinitionRequest]) (*connect_go.Response[workflows.CreateWorkflowDefinitionResponse], error)
+	// GetWorkflowDefinition retrieves a flow definition from the database
+	GetWorkflowDefinition(context.Context, *connect_go.Request[workflows.GetWorkflowDefinitionRequest]) (*connect_go.Response[workflows.GetWorkflowDefinitionResponse], error)
+	// ListWorkflowDefinitions retrieves a list of flow definitions from the database optionally filtered by the owning application
 	// if application is not specified, all flow definitions for the org are returned
-	ListFlowDefinitions(context.Context, *connect_go.Request[workflows.ListFlowDefinitionsRequest], *connect_go.ServerStream[workflows.ListFlowDefinitionsResponse]) error
-	// UpdateFlowDefinition updates a flow definition in the database. Only the name, description and definition graph itself are updated
-	UpdateFlowDefinition(context.Context, *connect_go.Request[workflows.UpdateFlowDefinitionRequest]) (*connect_go.Response[workflows.UpdateFlowDefinitionResponse], error)
-	// ValidateFlowDefinition validates a flow definition in the database. Only the name, description and definition graph itself are updated
-	ValidateFlowDefinition(context.Context, *connect_go.Request[workflows.ValidateFlowDefinitionRequest]) (*connect_go.Response[workflows.ValidateFlowDefinitionResponse], error)
+	ListWorkflowDefinitions(context.Context, *connect_go.Request[workflows.ListWorkflowDefinitionsRequest], *connect_go.ServerStream[workflows.ListWorkflowDefinitionsResponse]) error
+	// UpdateWorkflowDefinition updates a flow definition in the database. Only the name, description and definition graph itself are updated
+	UpdateWorkflowDefinition(context.Context, *connect_go.Request[workflows.UpdateWorkflowDefinitionRequest]) (*connect_go.Response[workflows.UpdateWorkflowDefinitionResponse], error)
+	// ValidateWorkflowDefinition validates a flow definition in the database. Only the name, description and definition graph itself are updated
+	ValidateWorkflowDefinition(context.Context, *connect_go.Request[workflows.ValidateWorkflowDefinitionRequest]) (*connect_go.Response[workflows.ValidateWorkflowDefinitionResponse], error)
 }
 
-// NewFlowDefinitionPersistServiceHandler builds an HTTP handler from the service implementation. It
-// returns the path on which to mount the handler and the handler itself.
+// NewWorkflowDefinitionPersistServiceHandler builds an HTTP handler from the service
+// implementation. It returns the path on which to mount the handler and the handler itself.
 //
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
-func NewFlowDefinitionPersistServiceHandler(svc FlowDefinitionPersistServiceHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	flowDefinitionPersistServiceCreateFlowDefinitionHandler := connect_go.NewUnaryHandler(
-		FlowDefinitionPersistServiceCreateFlowDefinitionProcedure,
-		svc.CreateFlowDefinition,
+func NewWorkflowDefinitionPersistServiceHandler(svc WorkflowDefinitionPersistServiceHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
+	workflowDefinitionPersistServiceCreateWorkflowDefinitionHandler := connect_go.NewUnaryHandler(
+		WorkflowDefinitionPersistServiceCreateWorkflowDefinitionProcedure,
+		svc.CreateWorkflowDefinition,
 		opts...,
 	)
-	flowDefinitionPersistServiceGetFlowDefinitionHandler := connect_go.NewUnaryHandler(
-		FlowDefinitionPersistServiceGetFlowDefinitionProcedure,
-		svc.GetFlowDefinition,
+	workflowDefinitionPersistServiceGetWorkflowDefinitionHandler := connect_go.NewUnaryHandler(
+		WorkflowDefinitionPersistServiceGetWorkflowDefinitionProcedure,
+		svc.GetWorkflowDefinition,
 		opts...,
 	)
-	flowDefinitionPersistServiceListFlowDefinitionsHandler := connect_go.NewServerStreamHandler(
-		FlowDefinitionPersistServiceListFlowDefinitionsProcedure,
-		svc.ListFlowDefinitions,
+	workflowDefinitionPersistServiceListWorkflowDefinitionsHandler := connect_go.NewServerStreamHandler(
+		WorkflowDefinitionPersistServiceListWorkflowDefinitionsProcedure,
+		svc.ListWorkflowDefinitions,
 		opts...,
 	)
-	flowDefinitionPersistServiceUpdateFlowDefinitionHandler := connect_go.NewUnaryHandler(
-		FlowDefinitionPersistServiceUpdateFlowDefinitionProcedure,
-		svc.UpdateFlowDefinition,
+	workflowDefinitionPersistServiceUpdateWorkflowDefinitionHandler := connect_go.NewUnaryHandler(
+		WorkflowDefinitionPersistServiceUpdateWorkflowDefinitionProcedure,
+		svc.UpdateWorkflowDefinition,
 		opts...,
 	)
-	flowDefinitionPersistServiceValidateFlowDefinitionHandler := connect_go.NewUnaryHandler(
-		FlowDefinitionPersistServiceValidateFlowDefinitionProcedure,
-		svc.ValidateFlowDefinition,
+	workflowDefinitionPersistServiceValidateWorkflowDefinitionHandler := connect_go.NewUnaryHandler(
+		WorkflowDefinitionPersistServiceValidateWorkflowDefinitionProcedure,
+		svc.ValidateWorkflowDefinition,
 		opts...,
 	)
-	return "/api.v1alpha1.workflows.FlowDefinitionPersistService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	return "/api.v1alpha1.workflows.WorkflowDefinitionPersistService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
-		case FlowDefinitionPersistServiceCreateFlowDefinitionProcedure:
-			flowDefinitionPersistServiceCreateFlowDefinitionHandler.ServeHTTP(w, r)
-		case FlowDefinitionPersistServiceGetFlowDefinitionProcedure:
-			flowDefinitionPersistServiceGetFlowDefinitionHandler.ServeHTTP(w, r)
-		case FlowDefinitionPersistServiceListFlowDefinitionsProcedure:
-			flowDefinitionPersistServiceListFlowDefinitionsHandler.ServeHTTP(w, r)
-		case FlowDefinitionPersistServiceUpdateFlowDefinitionProcedure:
-			flowDefinitionPersistServiceUpdateFlowDefinitionHandler.ServeHTTP(w, r)
-		case FlowDefinitionPersistServiceValidateFlowDefinitionProcedure:
-			flowDefinitionPersistServiceValidateFlowDefinitionHandler.ServeHTTP(w, r)
+		case WorkflowDefinitionPersistServiceCreateWorkflowDefinitionProcedure:
+			workflowDefinitionPersistServiceCreateWorkflowDefinitionHandler.ServeHTTP(w, r)
+		case WorkflowDefinitionPersistServiceGetWorkflowDefinitionProcedure:
+			workflowDefinitionPersistServiceGetWorkflowDefinitionHandler.ServeHTTP(w, r)
+		case WorkflowDefinitionPersistServiceListWorkflowDefinitionsProcedure:
+			workflowDefinitionPersistServiceListWorkflowDefinitionsHandler.ServeHTTP(w, r)
+		case WorkflowDefinitionPersistServiceUpdateWorkflowDefinitionProcedure:
+			workflowDefinitionPersistServiceUpdateWorkflowDefinitionHandler.ServeHTTP(w, r)
+		case WorkflowDefinitionPersistServiceValidateWorkflowDefinitionProcedure:
+			workflowDefinitionPersistServiceValidateWorkflowDefinitionHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
 	})
 }
 
-// UnimplementedFlowDefinitionPersistServiceHandler returns CodeUnimplemented from all methods.
-type UnimplementedFlowDefinitionPersistServiceHandler struct{}
+// UnimplementedWorkflowDefinitionPersistServiceHandler returns CodeUnimplemented from all methods.
+type UnimplementedWorkflowDefinitionPersistServiceHandler struct{}
 
-func (UnimplementedFlowDefinitionPersistServiceHandler) CreateFlowDefinition(context.Context, *connect_go.Request[workflows.CreateFlowDefinitionRequest]) (*connect_go.Response[workflows.CreateFlowDefinitionResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.workflows.FlowDefinitionPersistService.CreateFlowDefinition is not implemented"))
+func (UnimplementedWorkflowDefinitionPersistServiceHandler) CreateWorkflowDefinition(context.Context, *connect_go.Request[workflows.CreateWorkflowDefinitionRequest]) (*connect_go.Response[workflows.CreateWorkflowDefinitionResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.workflows.WorkflowDefinitionPersistService.CreateWorkflowDefinition is not implemented"))
 }
 
-func (UnimplementedFlowDefinitionPersistServiceHandler) GetFlowDefinition(context.Context, *connect_go.Request[workflows.GetFlowDefinitionRequest]) (*connect_go.Response[workflows.GetFlowDefinitionResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.workflows.FlowDefinitionPersistService.GetFlowDefinition is not implemented"))
+func (UnimplementedWorkflowDefinitionPersistServiceHandler) GetWorkflowDefinition(context.Context, *connect_go.Request[workflows.GetWorkflowDefinitionRequest]) (*connect_go.Response[workflows.GetWorkflowDefinitionResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.workflows.WorkflowDefinitionPersistService.GetWorkflowDefinition is not implemented"))
 }
 
-func (UnimplementedFlowDefinitionPersistServiceHandler) ListFlowDefinitions(context.Context, *connect_go.Request[workflows.ListFlowDefinitionsRequest], *connect_go.ServerStream[workflows.ListFlowDefinitionsResponse]) error {
-	return connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.workflows.FlowDefinitionPersistService.ListFlowDefinitions is not implemented"))
+func (UnimplementedWorkflowDefinitionPersistServiceHandler) ListWorkflowDefinitions(context.Context, *connect_go.Request[workflows.ListWorkflowDefinitionsRequest], *connect_go.ServerStream[workflows.ListWorkflowDefinitionsResponse]) error {
+	return connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.workflows.WorkflowDefinitionPersistService.ListWorkflowDefinitions is not implemented"))
 }
 
-func (UnimplementedFlowDefinitionPersistServiceHandler) UpdateFlowDefinition(context.Context, *connect_go.Request[workflows.UpdateFlowDefinitionRequest]) (*connect_go.Response[workflows.UpdateFlowDefinitionResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.workflows.FlowDefinitionPersistService.UpdateFlowDefinition is not implemented"))
+func (UnimplementedWorkflowDefinitionPersistServiceHandler) UpdateWorkflowDefinition(context.Context, *connect_go.Request[workflows.UpdateWorkflowDefinitionRequest]) (*connect_go.Response[workflows.UpdateWorkflowDefinitionResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.workflows.WorkflowDefinitionPersistService.UpdateWorkflowDefinition is not implemented"))
 }
 
-func (UnimplementedFlowDefinitionPersistServiceHandler) ValidateFlowDefinition(context.Context, *connect_go.Request[workflows.ValidateFlowDefinitionRequest]) (*connect_go.Response[workflows.ValidateFlowDefinitionResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.workflows.FlowDefinitionPersistService.ValidateFlowDefinition is not implemented"))
+func (UnimplementedWorkflowDefinitionPersistServiceHandler) ValidateWorkflowDefinition(context.Context, *connect_go.Request[workflows.ValidateWorkflowDefinitionRequest]) (*connect_go.Response[workflows.ValidateWorkflowDefinitionResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.workflows.WorkflowDefinitionPersistService.ValidateWorkflowDefinition is not implemented"))
 }

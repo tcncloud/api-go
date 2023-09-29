@@ -33,62 +33,62 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	FlowDefinitionPersistService_CreateFlowDefinition_FullMethodName   = "/api.v1alpha1.workflows.FlowDefinitionPersistService/CreateFlowDefinition"
-	FlowDefinitionPersistService_GetFlowDefinition_FullMethodName      = "/api.v1alpha1.workflows.FlowDefinitionPersistService/GetFlowDefinition"
-	FlowDefinitionPersistService_ListFlowDefinitions_FullMethodName    = "/api.v1alpha1.workflows.FlowDefinitionPersistService/ListFlowDefinitions"
-	FlowDefinitionPersistService_UpdateFlowDefinition_FullMethodName   = "/api.v1alpha1.workflows.FlowDefinitionPersistService/UpdateFlowDefinition"
-	FlowDefinitionPersistService_ValidateFlowDefinition_FullMethodName = "/api.v1alpha1.workflows.FlowDefinitionPersistService/ValidateFlowDefinition"
+	WorkflowDefinitionPersistService_CreateWorkflowDefinition_FullMethodName   = "/api.v1alpha1.workflows.WorkflowDefinitionPersistService/CreateWorkflowDefinition"
+	WorkflowDefinitionPersistService_GetWorkflowDefinition_FullMethodName      = "/api.v1alpha1.workflows.WorkflowDefinitionPersistService/GetWorkflowDefinition"
+	WorkflowDefinitionPersistService_ListWorkflowDefinitions_FullMethodName    = "/api.v1alpha1.workflows.WorkflowDefinitionPersistService/ListWorkflowDefinitions"
+	WorkflowDefinitionPersistService_UpdateWorkflowDefinition_FullMethodName   = "/api.v1alpha1.workflows.WorkflowDefinitionPersistService/UpdateWorkflowDefinition"
+	WorkflowDefinitionPersistService_ValidateWorkflowDefinition_FullMethodName = "/api.v1alpha1.workflows.WorkflowDefinitionPersistService/ValidateWorkflowDefinition"
 )
 
-// FlowDefinitionPersistServiceClient is the client API for FlowDefinitionPersistService service.
+// WorkflowDefinitionPersistServiceClient is the client API for WorkflowDefinitionPersistService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type FlowDefinitionPersistServiceClient interface {
+type WorkflowDefinitionPersistServiceClient interface {
 	// CreateFlowDefinition creates a new flow definition in the database
-	CreateFlowDefinition(ctx context.Context, in *CreateFlowDefinitionRequest, opts ...grpc.CallOption) (*CreateFlowDefinitionResponse, error)
-	// GetFlowDefinition retrieves a flow definition from the database
-	GetFlowDefinition(ctx context.Context, in *GetFlowDefinitionRequest, opts ...grpc.CallOption) (*GetFlowDefinitionResponse, error)
-	// ListFlowDefinitions retrieves a list of flow definitions from the database optionally filtered by the owning application
+	CreateWorkflowDefinition(ctx context.Context, in *CreateWorkflowDefinitionRequest, opts ...grpc.CallOption) (*CreateWorkflowDefinitionResponse, error)
+	// GetWorkflowDefinition retrieves a flow definition from the database
+	GetWorkflowDefinition(ctx context.Context, in *GetWorkflowDefinitionRequest, opts ...grpc.CallOption) (*GetWorkflowDefinitionResponse, error)
+	// ListWorkflowDefinitions retrieves a list of flow definitions from the database optionally filtered by the owning application
 	// if application is not specified, all flow definitions for the org are returned
-	ListFlowDefinitions(ctx context.Context, in *ListFlowDefinitionsRequest, opts ...grpc.CallOption) (FlowDefinitionPersistService_ListFlowDefinitionsClient, error)
-	// UpdateFlowDefinition updates a flow definition in the database. Only the name, description and definition graph itself are updated
-	UpdateFlowDefinition(ctx context.Context, in *UpdateFlowDefinitionRequest, opts ...grpc.CallOption) (*UpdateFlowDefinitionResponse, error)
-	// ValidateFlowDefinition validates a flow definition in the database. Only the name, description and definition graph itself are updated
-	ValidateFlowDefinition(ctx context.Context, in *ValidateFlowDefinitionRequest, opts ...grpc.CallOption) (*ValidateFlowDefinitionResponse, error)
+	ListWorkflowDefinitions(ctx context.Context, in *ListWorkflowDefinitionsRequest, opts ...grpc.CallOption) (WorkflowDefinitionPersistService_ListWorkflowDefinitionsClient, error)
+	// UpdateWorkflowDefinition updates a flow definition in the database. Only the name, description and definition graph itself are updated
+	UpdateWorkflowDefinition(ctx context.Context, in *UpdateWorkflowDefinitionRequest, opts ...grpc.CallOption) (*UpdateWorkflowDefinitionResponse, error)
+	// ValidateWorkflowDefinition validates a flow definition in the database. Only the name, description and definition graph itself are updated
+	ValidateWorkflowDefinition(ctx context.Context, in *ValidateWorkflowDefinitionRequest, opts ...grpc.CallOption) (*ValidateWorkflowDefinitionResponse, error)
 }
 
-type flowDefinitionPersistServiceClient struct {
+type workflowDefinitionPersistServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewFlowDefinitionPersistServiceClient(cc grpc.ClientConnInterface) FlowDefinitionPersistServiceClient {
-	return &flowDefinitionPersistServiceClient{cc}
+func NewWorkflowDefinitionPersistServiceClient(cc grpc.ClientConnInterface) WorkflowDefinitionPersistServiceClient {
+	return &workflowDefinitionPersistServiceClient{cc}
 }
 
-func (c *flowDefinitionPersistServiceClient) CreateFlowDefinition(ctx context.Context, in *CreateFlowDefinitionRequest, opts ...grpc.CallOption) (*CreateFlowDefinitionResponse, error) {
-	out := new(CreateFlowDefinitionResponse)
-	err := c.cc.Invoke(ctx, FlowDefinitionPersistService_CreateFlowDefinition_FullMethodName, in, out, opts...)
+func (c *workflowDefinitionPersistServiceClient) CreateWorkflowDefinition(ctx context.Context, in *CreateWorkflowDefinitionRequest, opts ...grpc.CallOption) (*CreateWorkflowDefinitionResponse, error) {
+	out := new(CreateWorkflowDefinitionResponse)
+	err := c.cc.Invoke(ctx, WorkflowDefinitionPersistService_CreateWorkflowDefinition_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *flowDefinitionPersistServiceClient) GetFlowDefinition(ctx context.Context, in *GetFlowDefinitionRequest, opts ...grpc.CallOption) (*GetFlowDefinitionResponse, error) {
-	out := new(GetFlowDefinitionResponse)
-	err := c.cc.Invoke(ctx, FlowDefinitionPersistService_GetFlowDefinition_FullMethodName, in, out, opts...)
+func (c *workflowDefinitionPersistServiceClient) GetWorkflowDefinition(ctx context.Context, in *GetWorkflowDefinitionRequest, opts ...grpc.CallOption) (*GetWorkflowDefinitionResponse, error) {
+	out := new(GetWorkflowDefinitionResponse)
+	err := c.cc.Invoke(ctx, WorkflowDefinitionPersistService_GetWorkflowDefinition_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *flowDefinitionPersistServiceClient) ListFlowDefinitions(ctx context.Context, in *ListFlowDefinitionsRequest, opts ...grpc.CallOption) (FlowDefinitionPersistService_ListFlowDefinitionsClient, error) {
-	stream, err := c.cc.NewStream(ctx, &FlowDefinitionPersistService_ServiceDesc.Streams[0], FlowDefinitionPersistService_ListFlowDefinitions_FullMethodName, opts...)
+func (c *workflowDefinitionPersistServiceClient) ListWorkflowDefinitions(ctx context.Context, in *ListWorkflowDefinitionsRequest, opts ...grpc.CallOption) (WorkflowDefinitionPersistService_ListWorkflowDefinitionsClient, error) {
+	stream, err := c.cc.NewStream(ctx, &WorkflowDefinitionPersistService_ServiceDesc.Streams[0], WorkflowDefinitionPersistService_ListWorkflowDefinitions_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &flowDefinitionPersistServiceListFlowDefinitionsClient{stream}
+	x := &workflowDefinitionPersistServiceListWorkflowDefinitionsClient{stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -98,213 +98,213 @@ func (c *flowDefinitionPersistServiceClient) ListFlowDefinitions(ctx context.Con
 	return x, nil
 }
 
-type FlowDefinitionPersistService_ListFlowDefinitionsClient interface {
-	Recv() (*ListFlowDefinitionsResponse, error)
+type WorkflowDefinitionPersistService_ListWorkflowDefinitionsClient interface {
+	Recv() (*ListWorkflowDefinitionsResponse, error)
 	grpc.ClientStream
 }
 
-type flowDefinitionPersistServiceListFlowDefinitionsClient struct {
+type workflowDefinitionPersistServiceListWorkflowDefinitionsClient struct {
 	grpc.ClientStream
 }
 
-func (x *flowDefinitionPersistServiceListFlowDefinitionsClient) Recv() (*ListFlowDefinitionsResponse, error) {
-	m := new(ListFlowDefinitionsResponse)
+func (x *workflowDefinitionPersistServiceListWorkflowDefinitionsClient) Recv() (*ListWorkflowDefinitionsResponse, error) {
+	m := new(ListWorkflowDefinitionsResponse)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
 }
 
-func (c *flowDefinitionPersistServiceClient) UpdateFlowDefinition(ctx context.Context, in *UpdateFlowDefinitionRequest, opts ...grpc.CallOption) (*UpdateFlowDefinitionResponse, error) {
-	out := new(UpdateFlowDefinitionResponse)
-	err := c.cc.Invoke(ctx, FlowDefinitionPersistService_UpdateFlowDefinition_FullMethodName, in, out, opts...)
+func (c *workflowDefinitionPersistServiceClient) UpdateWorkflowDefinition(ctx context.Context, in *UpdateWorkflowDefinitionRequest, opts ...grpc.CallOption) (*UpdateWorkflowDefinitionResponse, error) {
+	out := new(UpdateWorkflowDefinitionResponse)
+	err := c.cc.Invoke(ctx, WorkflowDefinitionPersistService_UpdateWorkflowDefinition_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *flowDefinitionPersistServiceClient) ValidateFlowDefinition(ctx context.Context, in *ValidateFlowDefinitionRequest, opts ...grpc.CallOption) (*ValidateFlowDefinitionResponse, error) {
-	out := new(ValidateFlowDefinitionResponse)
-	err := c.cc.Invoke(ctx, FlowDefinitionPersistService_ValidateFlowDefinition_FullMethodName, in, out, opts...)
+func (c *workflowDefinitionPersistServiceClient) ValidateWorkflowDefinition(ctx context.Context, in *ValidateWorkflowDefinitionRequest, opts ...grpc.CallOption) (*ValidateWorkflowDefinitionResponse, error) {
+	out := new(ValidateWorkflowDefinitionResponse)
+	err := c.cc.Invoke(ctx, WorkflowDefinitionPersistService_ValidateWorkflowDefinition_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// FlowDefinitionPersistServiceServer is the server API for FlowDefinitionPersistService service.
-// All implementations must embed UnimplementedFlowDefinitionPersistServiceServer
+// WorkflowDefinitionPersistServiceServer is the server API for WorkflowDefinitionPersistService service.
+// All implementations must embed UnimplementedWorkflowDefinitionPersistServiceServer
 // for forward compatibility
-type FlowDefinitionPersistServiceServer interface {
+type WorkflowDefinitionPersistServiceServer interface {
 	// CreateFlowDefinition creates a new flow definition in the database
-	CreateFlowDefinition(context.Context, *CreateFlowDefinitionRequest) (*CreateFlowDefinitionResponse, error)
-	// GetFlowDefinition retrieves a flow definition from the database
-	GetFlowDefinition(context.Context, *GetFlowDefinitionRequest) (*GetFlowDefinitionResponse, error)
-	// ListFlowDefinitions retrieves a list of flow definitions from the database optionally filtered by the owning application
+	CreateWorkflowDefinition(context.Context, *CreateWorkflowDefinitionRequest) (*CreateWorkflowDefinitionResponse, error)
+	// GetWorkflowDefinition retrieves a flow definition from the database
+	GetWorkflowDefinition(context.Context, *GetWorkflowDefinitionRequest) (*GetWorkflowDefinitionResponse, error)
+	// ListWorkflowDefinitions retrieves a list of flow definitions from the database optionally filtered by the owning application
 	// if application is not specified, all flow definitions for the org are returned
-	ListFlowDefinitions(*ListFlowDefinitionsRequest, FlowDefinitionPersistService_ListFlowDefinitionsServer) error
-	// UpdateFlowDefinition updates a flow definition in the database. Only the name, description and definition graph itself are updated
-	UpdateFlowDefinition(context.Context, *UpdateFlowDefinitionRequest) (*UpdateFlowDefinitionResponse, error)
-	// ValidateFlowDefinition validates a flow definition in the database. Only the name, description and definition graph itself are updated
-	ValidateFlowDefinition(context.Context, *ValidateFlowDefinitionRequest) (*ValidateFlowDefinitionResponse, error)
-	mustEmbedUnimplementedFlowDefinitionPersistServiceServer()
+	ListWorkflowDefinitions(*ListWorkflowDefinitionsRequest, WorkflowDefinitionPersistService_ListWorkflowDefinitionsServer) error
+	// UpdateWorkflowDefinition updates a flow definition in the database. Only the name, description and definition graph itself are updated
+	UpdateWorkflowDefinition(context.Context, *UpdateWorkflowDefinitionRequest) (*UpdateWorkflowDefinitionResponse, error)
+	// ValidateWorkflowDefinition validates a flow definition in the database. Only the name, description and definition graph itself are updated
+	ValidateWorkflowDefinition(context.Context, *ValidateWorkflowDefinitionRequest) (*ValidateWorkflowDefinitionResponse, error)
+	mustEmbedUnimplementedWorkflowDefinitionPersistServiceServer()
 }
 
-// UnimplementedFlowDefinitionPersistServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedFlowDefinitionPersistServiceServer struct {
+// UnimplementedWorkflowDefinitionPersistServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedWorkflowDefinitionPersistServiceServer struct {
 }
 
-func (UnimplementedFlowDefinitionPersistServiceServer) CreateFlowDefinition(context.Context, *CreateFlowDefinitionRequest) (*CreateFlowDefinitionResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateFlowDefinition not implemented")
+func (UnimplementedWorkflowDefinitionPersistServiceServer) CreateWorkflowDefinition(context.Context, *CreateWorkflowDefinitionRequest) (*CreateWorkflowDefinitionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateWorkflowDefinition not implemented")
 }
-func (UnimplementedFlowDefinitionPersistServiceServer) GetFlowDefinition(context.Context, *GetFlowDefinitionRequest) (*GetFlowDefinitionResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetFlowDefinition not implemented")
+func (UnimplementedWorkflowDefinitionPersistServiceServer) GetWorkflowDefinition(context.Context, *GetWorkflowDefinitionRequest) (*GetWorkflowDefinitionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetWorkflowDefinition not implemented")
 }
-func (UnimplementedFlowDefinitionPersistServiceServer) ListFlowDefinitions(*ListFlowDefinitionsRequest, FlowDefinitionPersistService_ListFlowDefinitionsServer) error {
-	return status.Errorf(codes.Unimplemented, "method ListFlowDefinitions not implemented")
+func (UnimplementedWorkflowDefinitionPersistServiceServer) ListWorkflowDefinitions(*ListWorkflowDefinitionsRequest, WorkflowDefinitionPersistService_ListWorkflowDefinitionsServer) error {
+	return status.Errorf(codes.Unimplemented, "method ListWorkflowDefinitions not implemented")
 }
-func (UnimplementedFlowDefinitionPersistServiceServer) UpdateFlowDefinition(context.Context, *UpdateFlowDefinitionRequest) (*UpdateFlowDefinitionResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateFlowDefinition not implemented")
+func (UnimplementedWorkflowDefinitionPersistServiceServer) UpdateWorkflowDefinition(context.Context, *UpdateWorkflowDefinitionRequest) (*UpdateWorkflowDefinitionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateWorkflowDefinition not implemented")
 }
-func (UnimplementedFlowDefinitionPersistServiceServer) ValidateFlowDefinition(context.Context, *ValidateFlowDefinitionRequest) (*ValidateFlowDefinitionResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ValidateFlowDefinition not implemented")
+func (UnimplementedWorkflowDefinitionPersistServiceServer) ValidateWorkflowDefinition(context.Context, *ValidateWorkflowDefinitionRequest) (*ValidateWorkflowDefinitionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ValidateWorkflowDefinition not implemented")
 }
-func (UnimplementedFlowDefinitionPersistServiceServer) mustEmbedUnimplementedFlowDefinitionPersistServiceServer() {
+func (UnimplementedWorkflowDefinitionPersistServiceServer) mustEmbedUnimplementedWorkflowDefinitionPersistServiceServer() {
 }
 
-// UnsafeFlowDefinitionPersistServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to FlowDefinitionPersistServiceServer will
+// UnsafeWorkflowDefinitionPersistServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to WorkflowDefinitionPersistServiceServer will
 // result in compilation errors.
-type UnsafeFlowDefinitionPersistServiceServer interface {
-	mustEmbedUnimplementedFlowDefinitionPersistServiceServer()
+type UnsafeWorkflowDefinitionPersistServiceServer interface {
+	mustEmbedUnimplementedWorkflowDefinitionPersistServiceServer()
 }
 
-func RegisterFlowDefinitionPersistServiceServer(s grpc.ServiceRegistrar, srv FlowDefinitionPersistServiceServer) {
-	s.RegisterService(&FlowDefinitionPersistService_ServiceDesc, srv)
+func RegisterWorkflowDefinitionPersistServiceServer(s grpc.ServiceRegistrar, srv WorkflowDefinitionPersistServiceServer) {
+	s.RegisterService(&WorkflowDefinitionPersistService_ServiceDesc, srv)
 }
 
-func _FlowDefinitionPersistService_CreateFlowDefinition_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateFlowDefinitionRequest)
+func _WorkflowDefinitionPersistService_CreateWorkflowDefinition_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateWorkflowDefinitionRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(FlowDefinitionPersistServiceServer).CreateFlowDefinition(ctx, in)
+		return srv.(WorkflowDefinitionPersistServiceServer).CreateWorkflowDefinition(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: FlowDefinitionPersistService_CreateFlowDefinition_FullMethodName,
+		FullMethod: WorkflowDefinitionPersistService_CreateWorkflowDefinition_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FlowDefinitionPersistServiceServer).CreateFlowDefinition(ctx, req.(*CreateFlowDefinitionRequest))
+		return srv.(WorkflowDefinitionPersistServiceServer).CreateWorkflowDefinition(ctx, req.(*CreateWorkflowDefinitionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _FlowDefinitionPersistService_GetFlowDefinition_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetFlowDefinitionRequest)
+func _WorkflowDefinitionPersistService_GetWorkflowDefinition_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetWorkflowDefinitionRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(FlowDefinitionPersistServiceServer).GetFlowDefinition(ctx, in)
+		return srv.(WorkflowDefinitionPersistServiceServer).GetWorkflowDefinition(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: FlowDefinitionPersistService_GetFlowDefinition_FullMethodName,
+		FullMethod: WorkflowDefinitionPersistService_GetWorkflowDefinition_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FlowDefinitionPersistServiceServer).GetFlowDefinition(ctx, req.(*GetFlowDefinitionRequest))
+		return srv.(WorkflowDefinitionPersistServiceServer).GetWorkflowDefinition(ctx, req.(*GetWorkflowDefinitionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _FlowDefinitionPersistService_ListFlowDefinitions_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(ListFlowDefinitionsRequest)
+func _WorkflowDefinitionPersistService_ListWorkflowDefinitions_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(ListWorkflowDefinitionsRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(FlowDefinitionPersistServiceServer).ListFlowDefinitions(m, &flowDefinitionPersistServiceListFlowDefinitionsServer{stream})
+	return srv.(WorkflowDefinitionPersistServiceServer).ListWorkflowDefinitions(m, &workflowDefinitionPersistServiceListWorkflowDefinitionsServer{stream})
 }
 
-type FlowDefinitionPersistService_ListFlowDefinitionsServer interface {
-	Send(*ListFlowDefinitionsResponse) error
+type WorkflowDefinitionPersistService_ListWorkflowDefinitionsServer interface {
+	Send(*ListWorkflowDefinitionsResponse) error
 	grpc.ServerStream
 }
 
-type flowDefinitionPersistServiceListFlowDefinitionsServer struct {
+type workflowDefinitionPersistServiceListWorkflowDefinitionsServer struct {
 	grpc.ServerStream
 }
 
-func (x *flowDefinitionPersistServiceListFlowDefinitionsServer) Send(m *ListFlowDefinitionsResponse) error {
+func (x *workflowDefinitionPersistServiceListWorkflowDefinitionsServer) Send(m *ListWorkflowDefinitionsResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func _FlowDefinitionPersistService_UpdateFlowDefinition_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateFlowDefinitionRequest)
+func _WorkflowDefinitionPersistService_UpdateWorkflowDefinition_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateWorkflowDefinitionRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(FlowDefinitionPersistServiceServer).UpdateFlowDefinition(ctx, in)
+		return srv.(WorkflowDefinitionPersistServiceServer).UpdateWorkflowDefinition(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: FlowDefinitionPersistService_UpdateFlowDefinition_FullMethodName,
+		FullMethod: WorkflowDefinitionPersistService_UpdateWorkflowDefinition_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FlowDefinitionPersistServiceServer).UpdateFlowDefinition(ctx, req.(*UpdateFlowDefinitionRequest))
+		return srv.(WorkflowDefinitionPersistServiceServer).UpdateWorkflowDefinition(ctx, req.(*UpdateWorkflowDefinitionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _FlowDefinitionPersistService_ValidateFlowDefinition_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ValidateFlowDefinitionRequest)
+func _WorkflowDefinitionPersistService_ValidateWorkflowDefinition_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ValidateWorkflowDefinitionRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(FlowDefinitionPersistServiceServer).ValidateFlowDefinition(ctx, in)
+		return srv.(WorkflowDefinitionPersistServiceServer).ValidateWorkflowDefinition(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: FlowDefinitionPersistService_ValidateFlowDefinition_FullMethodName,
+		FullMethod: WorkflowDefinitionPersistService_ValidateWorkflowDefinition_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FlowDefinitionPersistServiceServer).ValidateFlowDefinition(ctx, req.(*ValidateFlowDefinitionRequest))
+		return srv.(WorkflowDefinitionPersistServiceServer).ValidateWorkflowDefinition(ctx, req.(*ValidateWorkflowDefinitionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// FlowDefinitionPersistService_ServiceDesc is the grpc.ServiceDesc for FlowDefinitionPersistService service.
+// WorkflowDefinitionPersistService_ServiceDesc is the grpc.ServiceDesc for WorkflowDefinitionPersistService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var FlowDefinitionPersistService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "api.v1alpha1.workflows.FlowDefinitionPersistService",
-	HandlerType: (*FlowDefinitionPersistServiceServer)(nil),
+var WorkflowDefinitionPersistService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "api.v1alpha1.workflows.WorkflowDefinitionPersistService",
+	HandlerType: (*WorkflowDefinitionPersistServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "CreateFlowDefinition",
-			Handler:    _FlowDefinitionPersistService_CreateFlowDefinition_Handler,
+			MethodName: "CreateWorkflowDefinition",
+			Handler:    _WorkflowDefinitionPersistService_CreateWorkflowDefinition_Handler,
 		},
 		{
-			MethodName: "GetFlowDefinition",
-			Handler:    _FlowDefinitionPersistService_GetFlowDefinition_Handler,
+			MethodName: "GetWorkflowDefinition",
+			Handler:    _WorkflowDefinitionPersistService_GetWorkflowDefinition_Handler,
 		},
 		{
-			MethodName: "UpdateFlowDefinition",
-			Handler:    _FlowDefinitionPersistService_UpdateFlowDefinition_Handler,
+			MethodName: "UpdateWorkflowDefinition",
+			Handler:    _WorkflowDefinitionPersistService_UpdateWorkflowDefinition_Handler,
 		},
 		{
-			MethodName: "ValidateFlowDefinition",
-			Handler:    _FlowDefinitionPersistService_ValidateFlowDefinition_Handler,
+			MethodName: "ValidateWorkflowDefinition",
+			Handler:    _WorkflowDefinitionPersistService_ValidateWorkflowDefinition_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
 		{
-			StreamName:    "ListFlowDefinitions",
-			Handler:       _FlowDefinitionPersistService_ListFlowDefinitions_Handler,
+			StreamName:    "ListWorkflowDefinitions",
+			Handler:       _WorkflowDefinitionPersistService_ListWorkflowDefinitions_Handler,
 			ServerStreams: true,
 		},
 	},
