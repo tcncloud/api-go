@@ -185,7 +185,7 @@ type BillingServiceClient interface {
 	//   - grpc.InvalidArgument: The request is invalid.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
-	ListBillingPlans(context.Context, *connect_go.Request[v1alpha1.ListBillingPlansRequest]) (*connect_go.ServerStreamForClient[v1alpha1.ListBillingPlansResponse], error)
+	ListBillingPlans(context.Context, *connect_go.Request[v1alpha1.ListBillingPlansRequest]) (*connect_go.Response[v1alpha1.ListBillingPlansResponse], error)
 	// Lists the invoices for the ORG.
 	// Required permissions:
 	//
@@ -196,7 +196,7 @@ type BillingServiceClient interface {
 	//   - grpc.InvalidArgument: The request is invalid.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
-	ListInvoices(context.Context, *connect_go.Request[v1alpha1.ListInvoicesRequest]) (*connect_go.ServerStreamForClient[v1alpha1.ListInvoicesResponse], error)
+	ListInvoices(context.Context, *connect_go.Request[v1alpha1.ListInvoicesRequest]) (*connect_go.Response[v1alpha1.ListInvoicesResponse], error)
 	// Updates an inactive billing plan. A billing plan is inactive if it hasn't started.
 	// Required permissions:
 	//
@@ -370,13 +370,13 @@ func (c *billingServiceClient) GetInvoice(ctx context.Context, req *connect_go.R
 }
 
 // ListBillingPlans calls services.billing.v1alpha1.BillingService.ListBillingPlans.
-func (c *billingServiceClient) ListBillingPlans(ctx context.Context, req *connect_go.Request[v1alpha1.ListBillingPlansRequest]) (*connect_go.ServerStreamForClient[v1alpha1.ListBillingPlansResponse], error) {
-	return c.listBillingPlans.CallServerStream(ctx, req)
+func (c *billingServiceClient) ListBillingPlans(ctx context.Context, req *connect_go.Request[v1alpha1.ListBillingPlansRequest]) (*connect_go.Response[v1alpha1.ListBillingPlansResponse], error) {
+	return c.listBillingPlans.CallUnary(ctx, req)
 }
 
 // ListInvoices calls services.billing.v1alpha1.BillingService.ListInvoices.
-func (c *billingServiceClient) ListInvoices(ctx context.Context, req *connect_go.Request[v1alpha1.ListInvoicesRequest]) (*connect_go.ServerStreamForClient[v1alpha1.ListInvoicesResponse], error) {
-	return c.listInvoices.CallServerStream(ctx, req)
+func (c *billingServiceClient) ListInvoices(ctx context.Context, req *connect_go.Request[v1alpha1.ListInvoicesRequest]) (*connect_go.Response[v1alpha1.ListInvoicesResponse], error) {
+	return c.listInvoices.CallUnary(ctx, req)
 }
 
 // UpdateBillingPlan calls services.billing.v1alpha1.BillingService.UpdateBillingPlan.
@@ -506,7 +506,7 @@ type BillingServiceHandler interface {
 	//   - grpc.InvalidArgument: The request is invalid.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
-	ListBillingPlans(context.Context, *connect_go.Request[v1alpha1.ListBillingPlansRequest], *connect_go.ServerStream[v1alpha1.ListBillingPlansResponse]) error
+	ListBillingPlans(context.Context, *connect_go.Request[v1alpha1.ListBillingPlansRequest]) (*connect_go.Response[v1alpha1.ListBillingPlansResponse], error)
 	// Lists the invoices for the ORG.
 	// Required permissions:
 	//
@@ -517,7 +517,7 @@ type BillingServiceHandler interface {
 	//   - grpc.InvalidArgument: The request is invalid.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
-	ListInvoices(context.Context, *connect_go.Request[v1alpha1.ListInvoicesRequest], *connect_go.ServerStream[v1alpha1.ListInvoicesResponse]) error
+	ListInvoices(context.Context, *connect_go.Request[v1alpha1.ListInvoicesRequest]) (*connect_go.Response[v1alpha1.ListInvoicesResponse], error)
 	// Updates an inactive billing plan. A billing plan is inactive if it hasn't started.
 	// Required permissions:
 	//
@@ -601,12 +601,12 @@ func NewBillingServiceHandler(svc BillingServiceHandler, opts ...connect_go.Hand
 		svc.GetInvoice,
 		opts...,
 	)
-	billingServiceListBillingPlansHandler := connect_go.NewServerStreamHandler(
+	billingServiceListBillingPlansHandler := connect_go.NewUnaryHandler(
 		BillingServiceListBillingPlansProcedure,
 		svc.ListBillingPlans,
 		opts...,
 	)
-	billingServiceListInvoicesHandler := connect_go.NewServerStreamHandler(
+	billingServiceListInvoicesHandler := connect_go.NewUnaryHandler(
 		BillingServiceListInvoicesProcedure,
 		svc.ListInvoices,
 		opts...,
@@ -695,12 +695,12 @@ func (UnimplementedBillingServiceHandler) GetInvoice(context.Context, *connect_g
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.billing.v1alpha1.BillingService.GetInvoice is not implemented"))
 }
 
-func (UnimplementedBillingServiceHandler) ListBillingPlans(context.Context, *connect_go.Request[v1alpha1.ListBillingPlansRequest], *connect_go.ServerStream[v1alpha1.ListBillingPlansResponse]) error {
-	return connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.billing.v1alpha1.BillingService.ListBillingPlans is not implemented"))
+func (UnimplementedBillingServiceHandler) ListBillingPlans(context.Context, *connect_go.Request[v1alpha1.ListBillingPlansRequest]) (*connect_go.Response[v1alpha1.ListBillingPlansResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.billing.v1alpha1.BillingService.ListBillingPlans is not implemented"))
 }
 
-func (UnimplementedBillingServiceHandler) ListInvoices(context.Context, *connect_go.Request[v1alpha1.ListInvoicesRequest], *connect_go.ServerStream[v1alpha1.ListInvoicesResponse]) error {
-	return connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.billing.v1alpha1.BillingService.ListInvoices is not implemented"))
+func (UnimplementedBillingServiceHandler) ListInvoices(context.Context, *connect_go.Request[v1alpha1.ListInvoicesRequest]) (*connect_go.Response[v1alpha1.ListInvoicesResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.billing.v1alpha1.BillingService.ListInvoices is not implemented"))
 }
 
 func (UnimplementedBillingServiceHandler) UpdateBillingPlan(context.Context, *connect_go.Request[v1alpha1.UpdateBillingPlanRequest]) (*connect_go.Response[v1alpha1.UpdateBillingPlanResponse], error) {

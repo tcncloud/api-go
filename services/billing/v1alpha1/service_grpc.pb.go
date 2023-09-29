@@ -147,7 +147,7 @@ type BillingServiceClient interface {
 	//   - grpc.InvalidArgument: The request is invalid.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
-	ListBillingPlans(ctx context.Context, in *ListBillingPlansRequest, opts ...grpc.CallOption) (BillingService_ListBillingPlansClient, error)
+	ListBillingPlans(ctx context.Context, in *ListBillingPlansRequest, opts ...grpc.CallOption) (*ListBillingPlansResponse, error)
 	// Lists the invoices for the ORG.
 	// Required permissions:
 	//
@@ -158,7 +158,7 @@ type BillingServiceClient interface {
 	//   - grpc.InvalidArgument: The request is invalid.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
-	ListInvoices(ctx context.Context, in *ListInvoicesRequest, opts ...grpc.CallOption) (BillingService_ListInvoicesClient, error)
+	ListInvoices(ctx context.Context, in *ListInvoicesRequest, opts ...grpc.CallOption) (*ListInvoicesResponse, error)
 	// Updates an inactive billing plan. A billing plan is inactive if it hasn't started.
 	// Required permissions:
 	//
@@ -276,68 +276,22 @@ func (c *billingServiceClient) GetInvoice(ctx context.Context, in *GetInvoiceReq
 	return out, nil
 }
 
-func (c *billingServiceClient) ListBillingPlans(ctx context.Context, in *ListBillingPlansRequest, opts ...grpc.CallOption) (BillingService_ListBillingPlansClient, error) {
-	stream, err := c.cc.NewStream(ctx, &BillingService_ServiceDesc.Streams[0], BillingService_ListBillingPlans_FullMethodName, opts...)
+func (c *billingServiceClient) ListBillingPlans(ctx context.Context, in *ListBillingPlansRequest, opts ...grpc.CallOption) (*ListBillingPlansResponse, error) {
+	out := new(ListBillingPlansResponse)
+	err := c.cc.Invoke(ctx, BillingService_ListBillingPlans_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &billingServiceListBillingPlansClient{stream}
-	if err := x.ClientStream.SendMsg(in); err != nil {
-		return nil, err
-	}
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	return x, nil
+	return out, nil
 }
 
-type BillingService_ListBillingPlansClient interface {
-	Recv() (*ListBillingPlansResponse, error)
-	grpc.ClientStream
-}
-
-type billingServiceListBillingPlansClient struct {
-	grpc.ClientStream
-}
-
-func (x *billingServiceListBillingPlansClient) Recv() (*ListBillingPlansResponse, error) {
-	m := new(ListBillingPlansResponse)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
-func (c *billingServiceClient) ListInvoices(ctx context.Context, in *ListInvoicesRequest, opts ...grpc.CallOption) (BillingService_ListInvoicesClient, error) {
-	stream, err := c.cc.NewStream(ctx, &BillingService_ServiceDesc.Streams[1], BillingService_ListInvoices_FullMethodName, opts...)
+func (c *billingServiceClient) ListInvoices(ctx context.Context, in *ListInvoicesRequest, opts ...grpc.CallOption) (*ListInvoicesResponse, error) {
+	out := new(ListInvoicesResponse)
+	err := c.cc.Invoke(ctx, BillingService_ListInvoices_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &billingServiceListInvoicesClient{stream}
-	if err := x.ClientStream.SendMsg(in); err != nil {
-		return nil, err
-	}
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	return x, nil
-}
-
-type BillingService_ListInvoicesClient interface {
-	Recv() (*ListInvoicesResponse, error)
-	grpc.ClientStream
-}
-
-type billingServiceListInvoicesClient struct {
-	grpc.ClientStream
-}
-
-func (x *billingServiceListInvoicesClient) Recv() (*ListInvoicesResponse, error) {
-	m := new(ListInvoicesResponse)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
+	return out, nil
 }
 
 func (c *billingServiceClient) UpdateBillingPlan(ctx context.Context, in *UpdateBillingPlanRequest, opts ...grpc.CallOption) (*UpdateBillingPlanResponse, error) {
@@ -480,7 +434,7 @@ type BillingServiceServer interface {
 	//   - grpc.InvalidArgument: The request is invalid.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
-	ListBillingPlans(*ListBillingPlansRequest, BillingService_ListBillingPlansServer) error
+	ListBillingPlans(context.Context, *ListBillingPlansRequest) (*ListBillingPlansResponse, error)
 	// Lists the invoices for the ORG.
 	// Required permissions:
 	//
@@ -491,7 +445,7 @@ type BillingServiceServer interface {
 	//   - grpc.InvalidArgument: The request is invalid.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
-	ListInvoices(*ListInvoicesRequest, BillingService_ListInvoicesServer) error
+	ListInvoices(context.Context, *ListInvoicesRequest) (*ListInvoicesResponse, error)
 	// Updates an inactive billing plan. A billing plan is inactive if it hasn't started.
 	// Required permissions:
 	//
@@ -558,11 +512,11 @@ func (UnimplementedBillingServiceServer) GetDefaultBillingPlan(context.Context, 
 func (UnimplementedBillingServiceServer) GetInvoice(context.Context, *GetInvoiceRequest) (*GetInvoiceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetInvoice not implemented")
 }
-func (UnimplementedBillingServiceServer) ListBillingPlans(*ListBillingPlansRequest, BillingService_ListBillingPlansServer) error {
-	return status.Errorf(codes.Unimplemented, "method ListBillingPlans not implemented")
+func (UnimplementedBillingServiceServer) ListBillingPlans(context.Context, *ListBillingPlansRequest) (*ListBillingPlansResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListBillingPlans not implemented")
 }
-func (UnimplementedBillingServiceServer) ListInvoices(*ListInvoicesRequest, BillingService_ListInvoicesServer) error {
-	return status.Errorf(codes.Unimplemented, "method ListInvoices not implemented")
+func (UnimplementedBillingServiceServer) ListInvoices(context.Context, *ListInvoicesRequest) (*ListInvoicesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListInvoices not implemented")
 }
 func (UnimplementedBillingServiceServer) UpdateBillingPlan(context.Context, *UpdateBillingPlanRequest) (*UpdateBillingPlanResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateBillingPlan not implemented")
@@ -730,46 +684,40 @@ func _BillingService_GetInvoice_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BillingService_ListBillingPlans_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(ListBillingPlansRequest)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
+func _BillingService_ListBillingPlans_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListBillingPlansRequest)
+	if err := dec(in); err != nil {
+		return nil, err
 	}
-	return srv.(BillingServiceServer).ListBillingPlans(m, &billingServiceListBillingPlansServer{stream})
-}
-
-type BillingService_ListBillingPlansServer interface {
-	Send(*ListBillingPlansResponse) error
-	grpc.ServerStream
-}
-
-type billingServiceListBillingPlansServer struct {
-	grpc.ServerStream
-}
-
-func (x *billingServiceListBillingPlansServer) Send(m *ListBillingPlansResponse) error {
-	return x.ServerStream.SendMsg(m)
-}
-
-func _BillingService_ListInvoices_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(ListInvoicesRequest)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
+	if interceptor == nil {
+		return srv.(BillingServiceServer).ListBillingPlans(ctx, in)
 	}
-	return srv.(BillingServiceServer).ListInvoices(m, &billingServiceListInvoicesServer{stream})
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_ListBillingPlans_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).ListBillingPlans(ctx, req.(*ListBillingPlansRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
-type BillingService_ListInvoicesServer interface {
-	Send(*ListInvoicesResponse) error
-	grpc.ServerStream
-}
-
-type billingServiceListInvoicesServer struct {
-	grpc.ServerStream
-}
-
-func (x *billingServiceListInvoicesServer) Send(m *ListInvoicesResponse) error {
-	return x.ServerStream.SendMsg(m)
+func _BillingService_ListInvoices_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListInvoicesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).ListInvoices(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_ListInvoices_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).ListInvoices(ctx, req.(*ListInvoicesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _BillingService_UpdateBillingPlan_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -866,6 +814,14 @@ var BillingService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _BillingService_GetInvoice_Handler,
 		},
 		{
+			MethodName: "ListBillingPlans",
+			Handler:    _BillingService_ListBillingPlans_Handler,
+		},
+		{
+			MethodName: "ListInvoices",
+			Handler:    _BillingService_ListInvoices_Handler,
+		},
+		{
 			MethodName: "UpdateBillingPlan",
 			Handler:    _BillingService_UpdateBillingPlan_Handler,
 		},
@@ -878,17 +834,6 @@ var BillingService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _BillingService_UpdateInvoice_Handler,
 		},
 	},
-	Streams: []grpc.StreamDesc{
-		{
-			StreamName:    "ListBillingPlans",
-			Handler:       _BillingService_ListBillingPlans_Handler,
-			ServerStreams: true,
-		},
-		{
-			StreamName:    "ListInvoices",
-			Handler:       _BillingService_ListInvoices_Handler,
-			ServerStreams: true,
-		},
-	},
+	Streams:  []grpc.StreamDesc{},
 	Metadata: "services/billing/v1alpha1/service.proto",
 }
