@@ -68,7 +68,7 @@ const (
 // WorkflowDefinitionPersistServiceClient is a client for the
 // api.v1alpha1.workflows.WorkflowDefinitionPersistService service.
 type WorkflowDefinitionPersistServiceClient interface {
-	// CreateFlowDefinition creates a new flow definition in the database
+	// CreateWorkflowDefinition creates a new flow definition in the database
 	CreateWorkflowDefinition(context.Context, *connect_go.Request[workflows.CreateWorkflowDefinitionRequest]) (*connect_go.Response[workflows.CreateWorkflowDefinitionResponse], error)
 	// GetWorkflowDefinition retrieves a flow definition from the database
 	GetWorkflowDefinition(context.Context, *connect_go.Request[workflows.GetWorkflowDefinitionRequest]) (*connect_go.Response[workflows.GetWorkflowDefinitionResponse], error)
@@ -162,7 +162,7 @@ func (c *workflowDefinitionPersistServiceClient) ValidateWorkflowDefinition(ctx 
 // WorkflowDefinitionPersistServiceHandler is an implementation of the
 // api.v1alpha1.workflows.WorkflowDefinitionPersistService service.
 type WorkflowDefinitionPersistServiceHandler interface {
-	// CreateFlowDefinition creates a new flow definition in the database
+	// CreateWorkflowDefinition creates a new flow definition in the database
 	CreateWorkflowDefinition(context.Context, *connect_go.Request[workflows.CreateWorkflowDefinitionRequest]) (*connect_go.Response[workflows.CreateWorkflowDefinitionResponse], error)
 	// GetWorkflowDefinition retrieves a flow definition from the database
 	GetWorkflowDefinition(context.Context, *connect_go.Request[workflows.GetWorkflowDefinitionRequest]) (*connect_go.Response[workflows.GetWorkflowDefinitionResponse], error)

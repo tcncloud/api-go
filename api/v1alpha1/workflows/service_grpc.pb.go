@@ -44,7 +44,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type WorkflowDefinitionPersistServiceClient interface {
-	// CreateFlowDefinition creates a new flow definition in the database
+	// CreateWorkflowDefinition creates a new flow definition in the database
 	CreateWorkflowDefinition(ctx context.Context, in *CreateWorkflowDefinitionRequest, opts ...grpc.CallOption) (*CreateWorkflowDefinitionResponse, error)
 	// GetWorkflowDefinition retrieves a flow definition from the database
 	GetWorkflowDefinition(ctx context.Context, in *GetWorkflowDefinitionRequest, opts ...grpc.CallOption) (*GetWorkflowDefinitionResponse, error)
@@ -137,7 +137,7 @@ func (c *workflowDefinitionPersistServiceClient) ValidateWorkflowDefinition(ctx 
 // All implementations must embed UnimplementedWorkflowDefinitionPersistServiceServer
 // for forward compatibility
 type WorkflowDefinitionPersistServiceServer interface {
-	// CreateFlowDefinition creates a new flow definition in the database
+	// CreateWorkflowDefinition creates a new flow definition in the database
 	CreateWorkflowDefinition(context.Context, *CreateWorkflowDefinitionRequest) (*CreateWorkflowDefinitionResponse, error)
 	// GetWorkflowDefinition retrieves a flow definition from the database
 	GetWorkflowDefinition(context.Context, *GetWorkflowDefinitionRequest) (*GetWorkflowDefinitionResponse, error)

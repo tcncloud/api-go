@@ -207,7 +207,7 @@ func (x *CreateWorkflowDefinitionRequest) GetWorkflowDefinition() *PersistedWork
 	return nil
 }
 
-// CreateFlowDefinitionResponse is the response object for creating a flow definition
+// CreateWorkflowDefinitionResponse is the response object for creating a flow definition
 type CreateWorkflowDefinitionResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -412,7 +412,7 @@ func (x *ListWorkflowDefinitionsRequest) GetApplication() string {
 	return ""
 }
 
-// ListFlowDefinitionsResponse is the response object for listing flow definitions
+// ListWorkflowDefinitionsResponse is the response object for listing flow definitions
 type ListWorkflowDefinitionsResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
