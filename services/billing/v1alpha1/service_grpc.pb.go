@@ -23,6 +23,7 @@ const (
 	BillingService_CreateInvoice_FullMethodName            = "/services.billing.v1alpha1.BillingService/CreateInvoice"
 	BillingService_DeleteBillingPlan_FullMethodName        = "/services.billing.v1alpha1.BillingService/DeleteBillingPlan"
 	BillingService_DeleteInvoice_FullMethodName            = "/services.billing.v1alpha1.BillingService/DeleteInvoice"
+	BillingService_GetActiveBillingPlan_FullMethodName     = "/services.billing.v1alpha1.BillingService/GetActiveBillingPlan"
 	BillingService_GetBillingPlan_FullMethodName           = "/services.billing.v1alpha1.BillingService/GetBillingPlan"
 	BillingService_GetDefaultBillingPlan_FullMethodName    = "/services.billing.v1alpha1.BillingService/GetDefaultBillingPlan"
 	BillingService_GetInvoice_FullMethodName               = "/services.billing.v1alpha1.BillingService/GetInvoice"
@@ -37,33 +38,161 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type BillingServiceClient interface {
-	// CreateBillingPlan creates a new billing plan for an organization.
+	// Creates a billing plan for the ORG.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	CreateBillingPlan(ctx context.Context, in *CreateBillingPlanRequest, opts ...grpc.CallOption) (*CreateBillingPlanResponse, error)
-	// CreateInvoice creates a new invoice for an organization for the specified
-	// billing cycle. If one already exists, the old one will be deleted first.
+	// Creates an invoice for the ORG for the specified billing cycle.
+	//   - If an invoice already exists for the ORG for the specified billing cycle,
+	//     the old one will be deleted first.
+	//
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	CreateInvoice(ctx context.Context, in *CreateInvoiceRequest, opts ...grpc.CallOption) (*CreateInvoiceResponse, error)
-	// DeleteBillingPlan deletes the specified inactive billing plan. This will fail
-	// if the billing plan is in use, or already deleted.
+	// Deletes an inactive billing plan. A billing plan is inactive if it hasn't started.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The specified billing plan doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	DeleteBillingPlan(ctx context.Context, in *DeleteBillingPlanRequest, opts ...grpc.CallOption) (*DeleteBillingPlanResponse, error)
-	// DeleteInvoice deletes the specified invoice.
+	// Deletes an invoice.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The specified invoice doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	DeleteInvoice(ctx context.Context, in *DeleteInvoiceRequest, opts ...grpc.CallOption) (*DeleteInvoiceResponse, error)
-	// GetBillingPlan returns the active billing plan for the organization.
+	// Returns the active billing plan for the ORG. The active billing plan is a billing plan whose
+	// start_time has passed and end_time has not passed. If multiple satisfy that requirement, the
+	// newest one is considered active. If no plan is active, it indicates the org is currently using
+	// only the system defaults.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The org does not have an active billing plan.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	GetActiveBillingPlan(ctx context.Context, in *GetActiveBillingPlanRequest, opts ...grpc.CallOption) (*GetActiveBillingPlanResponse, error)
+	// Returns the specified billing plan.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The specified billing plan doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	GetBillingPlan(ctx context.Context, in *GetBillingPlanRequest, opts ...grpc.CallOption) (*GetBillingPlanResponse, error)
-	// GetDefaultBillingPlan returns the default billing plan for the region.
+	// Returns the default billing plan for the REGION.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	GetDefaultBillingPlan(ctx context.Context, in *GetDefaultBillingPlanRequest, opts ...grpc.CallOption) (*GetDefaultBillingPlanResponse, error)
-	// GetInvoice returns the specified invoice.
+	// Returns the specified invoice.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The specified invoice doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	GetInvoice(ctx context.Context, in *GetInvoiceRequest, opts ...grpc.CallOption) (*GetInvoiceResponse, error)
-	// ListBillingPlans returns the specified list of billing plans.
+	// Lists the billing plans for the ORG. This includes both active and inactive plans, but does not
+	// include deleted plans.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	ListBillingPlans(ctx context.Context, in *ListBillingPlansRequest, opts ...grpc.CallOption) (BillingService_ListBillingPlansClient, error)
-	// ListInvoices returns the specified list of invoices.
+	// Lists the invoices for the ORG.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	ListInvoices(ctx context.Context, in *ListInvoicesRequest, opts ...grpc.CallOption) (BillingService_ListInvoicesClient, error)
-	// UpdateBillingPlan updates the specified billing plan. This is expected to provide
-	// all the rate definitions for the billing plan if updating rates.
+	// Updates an inactive billing plan. A billing plan is inactive if it hasn't started.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The specified billing plan doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	UpdateBillingPlan(ctx context.Context, in *UpdateBillingPlanRequest, opts ...grpc.CallOption) (*UpdateBillingPlanResponse, error)
-	// UpdateDefaultBillingPlan updates the default billing plan. This is expected to provide
-	// all the rate definitions for the billing plan.
+	// Updates the default billing plan for the REGION.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	UpdateDefaultBillingPlan(ctx context.Context, in *UpdateDefaultBillingPlanRequest, opts ...grpc.CallOption) (*UpdateDefaultBillingPlanResponse, error)
-	// UpdateInvoice updates the specified invoice.
+	// Updates the specified invoice.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The specified invoice doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	UpdateInvoice(ctx context.Context, in *UpdateInvoiceRequest, opts ...grpc.CallOption) (*UpdateInvoiceResponse, error)
 }
 
@@ -105,6 +234,15 @@ func (c *billingServiceClient) DeleteBillingPlan(ctx context.Context, in *Delete
 func (c *billingServiceClient) DeleteInvoice(ctx context.Context, in *DeleteInvoiceRequest, opts ...grpc.CallOption) (*DeleteInvoiceResponse, error) {
 	out := new(DeleteInvoiceResponse)
 	err := c.cc.Invoke(ctx, BillingService_DeleteInvoice_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) GetActiveBillingPlan(ctx context.Context, in *GetActiveBillingPlanRequest, opts ...grpc.CallOption) (*GetActiveBillingPlanResponse, error) {
+	out := new(GetActiveBillingPlanResponse)
+	err := c.cc.Invoke(ctx, BillingService_GetActiveBillingPlan_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -233,33 +371,161 @@ func (c *billingServiceClient) UpdateInvoice(ctx context.Context, in *UpdateInvo
 // All implementations must embed UnimplementedBillingServiceServer
 // for forward compatibility
 type BillingServiceServer interface {
-	// CreateBillingPlan creates a new billing plan for an organization.
+	// Creates a billing plan for the ORG.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	CreateBillingPlan(context.Context, *CreateBillingPlanRequest) (*CreateBillingPlanResponse, error)
-	// CreateInvoice creates a new invoice for an organization for the specified
-	// billing cycle. If one already exists, the old one will be deleted first.
+	// Creates an invoice for the ORG for the specified billing cycle.
+	//   - If an invoice already exists for the ORG for the specified billing cycle,
+	//     the old one will be deleted first.
+	//
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	CreateInvoice(context.Context, *CreateInvoiceRequest) (*CreateInvoiceResponse, error)
-	// DeleteBillingPlan deletes the specified inactive billing plan. This will fail
-	// if the billing plan is in use, or already deleted.
+	// Deletes an inactive billing plan. A billing plan is inactive if it hasn't started.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The specified billing plan doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	DeleteBillingPlan(context.Context, *DeleteBillingPlanRequest) (*DeleteBillingPlanResponse, error)
-	// DeleteInvoice deletes the specified invoice.
+	// Deletes an invoice.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The specified invoice doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	DeleteInvoice(context.Context, *DeleteInvoiceRequest) (*DeleteInvoiceResponse, error)
-	// GetBillingPlan returns the active billing plan for the organization.
+	// Returns the active billing plan for the ORG. The active billing plan is a billing plan whose
+	// start_time has passed and end_time has not passed. If multiple satisfy that requirement, the
+	// newest one is considered active. If no plan is active, it indicates the org is currently using
+	// only the system defaults.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The org does not have an active billing plan.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	GetActiveBillingPlan(context.Context, *GetActiveBillingPlanRequest) (*GetActiveBillingPlanResponse, error)
+	// Returns the specified billing plan.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The specified billing plan doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	GetBillingPlan(context.Context, *GetBillingPlanRequest) (*GetBillingPlanResponse, error)
-	// GetDefaultBillingPlan returns the default billing plan for the region.
+	// Returns the default billing plan for the REGION.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	GetDefaultBillingPlan(context.Context, *GetDefaultBillingPlanRequest) (*GetDefaultBillingPlanResponse, error)
-	// GetInvoice returns the specified invoice.
+	// Returns the specified invoice.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The specified invoice doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	GetInvoice(context.Context, *GetInvoiceRequest) (*GetInvoiceResponse, error)
-	// ListBillingPlans returns the specified list of billing plans.
+	// Lists the billing plans for the ORG. This includes both active and inactive plans, but does not
+	// include deleted plans.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	ListBillingPlans(*ListBillingPlansRequest, BillingService_ListBillingPlansServer) error
-	// ListInvoices returns the specified list of invoices.
+	// Lists the invoices for the ORG.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	ListInvoices(*ListInvoicesRequest, BillingService_ListInvoicesServer) error
-	// UpdateBillingPlan updates the specified billing plan. This is expected to provide
-	// all the rate definitions for the billing plan if updating rates.
+	// Updates an inactive billing plan. A billing plan is inactive if it hasn't started.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The specified billing plan doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	UpdateBillingPlan(context.Context, *UpdateBillingPlanRequest) (*UpdateBillingPlanResponse, error)
-	// UpdateDefaultBillingPlan updates the default billing plan. This is expected to provide
-	// all the rate definitions for the billing plan.
+	// Updates the default billing plan for the REGION.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	UpdateDefaultBillingPlan(context.Context, *UpdateDefaultBillingPlanRequest) (*UpdateDefaultBillingPlanResponse, error)
-	// UpdateInvoice updates the specified invoice.
+	// Updates the specified invoice.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The specified invoice doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	UpdateInvoice(context.Context, *UpdateInvoiceRequest) (*UpdateInvoiceResponse, error)
 	mustEmbedUnimplementedBillingServiceServer()
 }
@@ -279,6 +545,9 @@ func (UnimplementedBillingServiceServer) DeleteBillingPlan(context.Context, *Del
 }
 func (UnimplementedBillingServiceServer) DeleteInvoice(context.Context, *DeleteInvoiceRequest) (*DeleteInvoiceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteInvoice not implemented")
+}
+func (UnimplementedBillingServiceServer) GetActiveBillingPlan(context.Context, *GetActiveBillingPlanRequest) (*GetActiveBillingPlanResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetActiveBillingPlan not implemented")
 }
 func (UnimplementedBillingServiceServer) GetBillingPlan(context.Context, *GetBillingPlanRequest) (*GetBillingPlanResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBillingPlan not implemented")
@@ -385,6 +654,24 @@ func _BillingService_DeleteInvoice_Handler(srv interface{}, ctx context.Context,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BillingServiceServer).DeleteInvoice(ctx, req.(*DeleteInvoiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_GetActiveBillingPlan_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetActiveBillingPlanRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).GetActiveBillingPlan(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_GetActiveBillingPlan_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).GetActiveBillingPlan(ctx, req.(*GetActiveBillingPlanRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -561,6 +848,10 @@ var BillingService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteInvoice",
 			Handler:    _BillingService_DeleteInvoice_Handler,
+		},
+		{
+			MethodName: "GetActiveBillingPlan",
+			Handler:    _BillingService_GetActiveBillingPlan_Handler,
 		},
 		{
 			MethodName: "GetBillingPlan",

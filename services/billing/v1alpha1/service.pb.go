@@ -36,7 +36,7 @@ var file_services_billing_v1alpha1_service_proto_rawDesc = []byte{
 	0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x69, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x73, 0x2e,
 	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x25, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x73, 0x2f,
 	0x62, 0x69, 0x6c, 0x6c, 0x69, 0x6e, 0x67, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31,
-	0x2f, 0x70, 0x6c, 0x61, 0x6e, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x32, 0x80, 0x12, 0x0a,
+	0x2f, 0x70, 0x6c, 0x61, 0x6e, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x32, 0xd0, 0x13, 0x0a,
 	0x0e, 0x42, 0x69, 0x6c, 0x6c, 0x69, 0x6e, 0x67, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12,
 	0xc1, 0x01, 0x0a, 0x11, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x42, 0x69, 0x6c, 0x6c, 0x69, 0x6e,
 	0x67, 0x50, 0x6c, 0x61, 0x6e, 0x12, 0x33, 0x2e, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x73,
@@ -85,6 +85,19 @@ var file_services_billing_v1alpha1_service_proto_rawDesc = []byte{
 	0x02, 0x2d, 0x3a, 0x01, 0x2a, 0x22, 0x28, 0x2f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x73,
 	0x2f, 0x62, 0x69, 0x6c, 0x6c, 0x69, 0x6e, 0x67, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61,
 	0x31, 0x2f, 0x64, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x69, 0x6e, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x12,
+	0xcd, 0x01, 0x0a, 0x14, 0x47, 0x65, 0x74, 0x41, 0x63, 0x74, 0x69, 0x76, 0x65, 0x42, 0x69, 0x6c,
+	0x6c, 0x69, 0x6e, 0x67, 0x50, 0x6c, 0x61, 0x6e, 0x12, 0x36, 0x2e, 0x73, 0x65, 0x72, 0x76, 0x69,
+	0x63, 0x65, 0x73, 0x2e, 0x62, 0x69, 0x6c, 0x6c, 0x69, 0x6e, 0x67, 0x2e, 0x76, 0x31, 0x61, 0x6c,
+	0x70, 0x68, 0x61, 0x31, 0x2e, 0x47, 0x65, 0x74, 0x41, 0x63, 0x74, 0x69, 0x76, 0x65, 0x42, 0x69,
+	0x6c, 0x6c, 0x69, 0x6e, 0x67, 0x50, 0x6c, 0x61, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x1a, 0x37, 0x2e, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x73, 0x2e, 0x62, 0x69, 0x6c, 0x6c,
+	0x69, 0x6e, 0x67, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x47, 0x65, 0x74,
+	0x41, 0x63, 0x74, 0x69, 0x76, 0x65, 0x42, 0x69, 0x6c, 0x6c, 0x69, 0x6e, 0x67, 0x50, 0x6c, 0x61,
+	0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x44, 0xba, 0xb8, 0x91, 0x02, 0x05,
+	0x0a, 0x03, 0x08, 0xc8, 0x01, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x34, 0x3a, 0x01, 0x2a, 0x22, 0x2f,
+	0x2f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x73, 0x2f, 0x62, 0x69, 0x6c, 0x6c, 0x69, 0x6e,
+	0x67, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x67, 0x65, 0x74, 0x61, 0x63,
+	0x74, 0x69, 0x76, 0x65, 0x62, 0x69, 0x6c, 0x6c, 0x69, 0x6e, 0x67, 0x70, 0x6c, 0x61, 0x6e, 0x12,
 	0xb5, 0x01, 0x0a, 0x0e, 0x47, 0x65, 0x74, 0x42, 0x69, 0x6c, 0x6c, 0x69, 0x6e, 0x67, 0x50, 0x6c,
 	0x61, 0x6e, 0x12, 0x30, 0x2e, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x73, 0x2e, 0x62, 0x69,
 	0x6c, 0x6c, 0x69, 0x6e, 0x67, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x47,
@@ -205,54 +218,58 @@ var file_services_billing_v1alpha1_service_proto_goTypes = []interface{}{
 	(*CreateInvoiceRequest)(nil),             // 1: services.billing.v1alpha1.CreateInvoiceRequest
 	(*DeleteBillingPlanRequest)(nil),         // 2: services.billing.v1alpha1.DeleteBillingPlanRequest
 	(*DeleteInvoiceRequest)(nil),             // 3: services.billing.v1alpha1.DeleteInvoiceRequest
-	(*GetBillingPlanRequest)(nil),            // 4: services.billing.v1alpha1.GetBillingPlanRequest
-	(*GetDefaultBillingPlanRequest)(nil),     // 5: services.billing.v1alpha1.GetDefaultBillingPlanRequest
-	(*GetInvoiceRequest)(nil),                // 6: services.billing.v1alpha1.GetInvoiceRequest
-	(*ListBillingPlansRequest)(nil),          // 7: services.billing.v1alpha1.ListBillingPlansRequest
-	(*ListInvoicesRequest)(nil),              // 8: services.billing.v1alpha1.ListInvoicesRequest
-	(*UpdateBillingPlanRequest)(nil),         // 9: services.billing.v1alpha1.UpdateBillingPlanRequest
-	(*UpdateDefaultBillingPlanRequest)(nil),  // 10: services.billing.v1alpha1.UpdateDefaultBillingPlanRequest
-	(*UpdateInvoiceRequest)(nil),             // 11: services.billing.v1alpha1.UpdateInvoiceRequest
-	(*CreateBillingPlanResponse)(nil),        // 12: services.billing.v1alpha1.CreateBillingPlanResponse
-	(*CreateInvoiceResponse)(nil),            // 13: services.billing.v1alpha1.CreateInvoiceResponse
-	(*DeleteBillingPlanResponse)(nil),        // 14: services.billing.v1alpha1.DeleteBillingPlanResponse
-	(*DeleteInvoiceResponse)(nil),            // 15: services.billing.v1alpha1.DeleteInvoiceResponse
-	(*GetBillingPlanResponse)(nil),           // 16: services.billing.v1alpha1.GetBillingPlanResponse
-	(*GetDefaultBillingPlanResponse)(nil),    // 17: services.billing.v1alpha1.GetDefaultBillingPlanResponse
-	(*GetInvoiceResponse)(nil),               // 18: services.billing.v1alpha1.GetInvoiceResponse
-	(*ListBillingPlansResponse)(nil),         // 19: services.billing.v1alpha1.ListBillingPlansResponse
-	(*ListInvoicesResponse)(nil),             // 20: services.billing.v1alpha1.ListInvoicesResponse
-	(*UpdateBillingPlanResponse)(nil),        // 21: services.billing.v1alpha1.UpdateBillingPlanResponse
-	(*UpdateDefaultBillingPlanResponse)(nil), // 22: services.billing.v1alpha1.UpdateDefaultBillingPlanResponse
-	(*UpdateInvoiceResponse)(nil),            // 23: services.billing.v1alpha1.UpdateInvoiceResponse
+	(*GetActiveBillingPlanRequest)(nil),      // 4: services.billing.v1alpha1.GetActiveBillingPlanRequest
+	(*GetBillingPlanRequest)(nil),            // 5: services.billing.v1alpha1.GetBillingPlanRequest
+	(*GetDefaultBillingPlanRequest)(nil),     // 6: services.billing.v1alpha1.GetDefaultBillingPlanRequest
+	(*GetInvoiceRequest)(nil),                // 7: services.billing.v1alpha1.GetInvoiceRequest
+	(*ListBillingPlansRequest)(nil),          // 8: services.billing.v1alpha1.ListBillingPlansRequest
+	(*ListInvoicesRequest)(nil),              // 9: services.billing.v1alpha1.ListInvoicesRequest
+	(*UpdateBillingPlanRequest)(nil),         // 10: services.billing.v1alpha1.UpdateBillingPlanRequest
+	(*UpdateDefaultBillingPlanRequest)(nil),  // 11: services.billing.v1alpha1.UpdateDefaultBillingPlanRequest
+	(*UpdateInvoiceRequest)(nil),             // 12: services.billing.v1alpha1.UpdateInvoiceRequest
+	(*CreateBillingPlanResponse)(nil),        // 13: services.billing.v1alpha1.CreateBillingPlanResponse
+	(*CreateInvoiceResponse)(nil),            // 14: services.billing.v1alpha1.CreateInvoiceResponse
+	(*DeleteBillingPlanResponse)(nil),        // 15: services.billing.v1alpha1.DeleteBillingPlanResponse
+	(*DeleteInvoiceResponse)(nil),            // 16: services.billing.v1alpha1.DeleteInvoiceResponse
+	(*GetActiveBillingPlanResponse)(nil),     // 17: services.billing.v1alpha1.GetActiveBillingPlanResponse
+	(*GetBillingPlanResponse)(nil),           // 18: services.billing.v1alpha1.GetBillingPlanResponse
+	(*GetDefaultBillingPlanResponse)(nil),    // 19: services.billing.v1alpha1.GetDefaultBillingPlanResponse
+	(*GetInvoiceResponse)(nil),               // 20: services.billing.v1alpha1.GetInvoiceResponse
+	(*ListBillingPlansResponse)(nil),         // 21: services.billing.v1alpha1.ListBillingPlansResponse
+	(*ListInvoicesResponse)(nil),             // 22: services.billing.v1alpha1.ListInvoicesResponse
+	(*UpdateBillingPlanResponse)(nil),        // 23: services.billing.v1alpha1.UpdateBillingPlanResponse
+	(*UpdateDefaultBillingPlanResponse)(nil), // 24: services.billing.v1alpha1.UpdateDefaultBillingPlanResponse
+	(*UpdateInvoiceResponse)(nil),            // 25: services.billing.v1alpha1.UpdateInvoiceResponse
 }
 var file_services_billing_v1alpha1_service_proto_depIdxs = []int32{
 	0,  // 0: services.billing.v1alpha1.BillingService.CreateBillingPlan:input_type -> services.billing.v1alpha1.CreateBillingPlanRequest
 	1,  // 1: services.billing.v1alpha1.BillingService.CreateInvoice:input_type -> services.billing.v1alpha1.CreateInvoiceRequest
 	2,  // 2: services.billing.v1alpha1.BillingService.DeleteBillingPlan:input_type -> services.billing.v1alpha1.DeleteBillingPlanRequest
 	3,  // 3: services.billing.v1alpha1.BillingService.DeleteInvoice:input_type -> services.billing.v1alpha1.DeleteInvoiceRequest
-	4,  // 4: services.billing.v1alpha1.BillingService.GetBillingPlan:input_type -> services.billing.v1alpha1.GetBillingPlanRequest
-	5,  // 5: services.billing.v1alpha1.BillingService.GetDefaultBillingPlan:input_type -> services.billing.v1alpha1.GetDefaultBillingPlanRequest
-	6,  // 6: services.billing.v1alpha1.BillingService.GetInvoice:input_type -> services.billing.v1alpha1.GetInvoiceRequest
-	7,  // 7: services.billing.v1alpha1.BillingService.ListBillingPlans:input_type -> services.billing.v1alpha1.ListBillingPlansRequest
-	8,  // 8: services.billing.v1alpha1.BillingService.ListInvoices:input_type -> services.billing.v1alpha1.ListInvoicesRequest
-	9,  // 9: services.billing.v1alpha1.BillingService.UpdateBillingPlan:input_type -> services.billing.v1alpha1.UpdateBillingPlanRequest
-	10, // 10: services.billing.v1alpha1.BillingService.UpdateDefaultBillingPlan:input_type -> services.billing.v1alpha1.UpdateDefaultBillingPlanRequest
-	11, // 11: services.billing.v1alpha1.BillingService.UpdateInvoice:input_type -> services.billing.v1alpha1.UpdateInvoiceRequest
-	12, // 12: services.billing.v1alpha1.BillingService.CreateBillingPlan:output_type -> services.billing.v1alpha1.CreateBillingPlanResponse
-	13, // 13: services.billing.v1alpha1.BillingService.CreateInvoice:output_type -> services.billing.v1alpha1.CreateInvoiceResponse
-	14, // 14: services.billing.v1alpha1.BillingService.DeleteBillingPlan:output_type -> services.billing.v1alpha1.DeleteBillingPlanResponse
-	15, // 15: services.billing.v1alpha1.BillingService.DeleteInvoice:output_type -> services.billing.v1alpha1.DeleteInvoiceResponse
-	16, // 16: services.billing.v1alpha1.BillingService.GetBillingPlan:output_type -> services.billing.v1alpha1.GetBillingPlanResponse
-	17, // 17: services.billing.v1alpha1.BillingService.GetDefaultBillingPlan:output_type -> services.billing.v1alpha1.GetDefaultBillingPlanResponse
-	18, // 18: services.billing.v1alpha1.BillingService.GetInvoice:output_type -> services.billing.v1alpha1.GetInvoiceResponse
-	19, // 19: services.billing.v1alpha1.BillingService.ListBillingPlans:output_type -> services.billing.v1alpha1.ListBillingPlansResponse
-	20, // 20: services.billing.v1alpha1.BillingService.ListInvoices:output_type -> services.billing.v1alpha1.ListInvoicesResponse
-	21, // 21: services.billing.v1alpha1.BillingService.UpdateBillingPlan:output_type -> services.billing.v1alpha1.UpdateBillingPlanResponse
-	22, // 22: services.billing.v1alpha1.BillingService.UpdateDefaultBillingPlan:output_type -> services.billing.v1alpha1.UpdateDefaultBillingPlanResponse
-	23, // 23: services.billing.v1alpha1.BillingService.UpdateInvoice:output_type -> services.billing.v1alpha1.UpdateInvoiceResponse
-	12, // [12:24] is the sub-list for method output_type
-	0,  // [0:12] is the sub-list for method input_type
+	4,  // 4: services.billing.v1alpha1.BillingService.GetActiveBillingPlan:input_type -> services.billing.v1alpha1.GetActiveBillingPlanRequest
+	5,  // 5: services.billing.v1alpha1.BillingService.GetBillingPlan:input_type -> services.billing.v1alpha1.GetBillingPlanRequest
+	6,  // 6: services.billing.v1alpha1.BillingService.GetDefaultBillingPlan:input_type -> services.billing.v1alpha1.GetDefaultBillingPlanRequest
+	7,  // 7: services.billing.v1alpha1.BillingService.GetInvoice:input_type -> services.billing.v1alpha1.GetInvoiceRequest
+	8,  // 8: services.billing.v1alpha1.BillingService.ListBillingPlans:input_type -> services.billing.v1alpha1.ListBillingPlansRequest
+	9,  // 9: services.billing.v1alpha1.BillingService.ListInvoices:input_type -> services.billing.v1alpha1.ListInvoicesRequest
+	10, // 10: services.billing.v1alpha1.BillingService.UpdateBillingPlan:input_type -> services.billing.v1alpha1.UpdateBillingPlanRequest
+	11, // 11: services.billing.v1alpha1.BillingService.UpdateDefaultBillingPlan:input_type -> services.billing.v1alpha1.UpdateDefaultBillingPlanRequest
+	12, // 12: services.billing.v1alpha1.BillingService.UpdateInvoice:input_type -> services.billing.v1alpha1.UpdateInvoiceRequest
+	13, // 13: services.billing.v1alpha1.BillingService.CreateBillingPlan:output_type -> services.billing.v1alpha1.CreateBillingPlanResponse
+	14, // 14: services.billing.v1alpha1.BillingService.CreateInvoice:output_type -> services.billing.v1alpha1.CreateInvoiceResponse
+	15, // 15: services.billing.v1alpha1.BillingService.DeleteBillingPlan:output_type -> services.billing.v1alpha1.DeleteBillingPlanResponse
+	16, // 16: services.billing.v1alpha1.BillingService.DeleteInvoice:output_type -> services.billing.v1alpha1.DeleteInvoiceResponse
+	17, // 17: services.billing.v1alpha1.BillingService.GetActiveBillingPlan:output_type -> services.billing.v1alpha1.GetActiveBillingPlanResponse
+	18, // 18: services.billing.v1alpha1.BillingService.GetBillingPlan:output_type -> services.billing.v1alpha1.GetBillingPlanResponse
+	19, // 19: services.billing.v1alpha1.BillingService.GetDefaultBillingPlan:output_type -> services.billing.v1alpha1.GetDefaultBillingPlanResponse
+	20, // 20: services.billing.v1alpha1.BillingService.GetInvoice:output_type -> services.billing.v1alpha1.GetInvoiceResponse
+	21, // 21: services.billing.v1alpha1.BillingService.ListBillingPlans:output_type -> services.billing.v1alpha1.ListBillingPlansResponse
+	22, // 22: services.billing.v1alpha1.BillingService.ListInvoices:output_type -> services.billing.v1alpha1.ListInvoicesResponse
+	23, // 23: services.billing.v1alpha1.BillingService.UpdateBillingPlan:output_type -> services.billing.v1alpha1.UpdateBillingPlanResponse
+	24, // 24: services.billing.v1alpha1.BillingService.UpdateDefaultBillingPlan:output_type -> services.billing.v1alpha1.UpdateDefaultBillingPlanResponse
+	25, // 25: services.billing.v1alpha1.BillingService.UpdateInvoice:output_type -> services.billing.v1alpha1.UpdateInvoiceResponse
+	13, // [13:26] is the sub-list for method output_type
+	0,  // [0:13] is the sub-list for method input_type
 	0,  // [0:0] is the sub-list for extension type_name
 	0,  // [0:0] is the sub-list for extension extendee
 	0,  // [0:0] is the sub-list for field type_name
