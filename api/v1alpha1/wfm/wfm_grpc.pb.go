@@ -162,6 +162,7 @@ const (
 	WFM_GetPerformanceMetrics_FullMethodName                         = "/api.v1alpha1.wfm.WFM/GetPerformanceMetrics"
 	WFM_ListRequiredCallsIntervals_FullMethodName                    = "/api.v1alpha1.wfm.WFM/ListRequiredCallsIntervals"
 	WFM_CreateTourPattern_FullMethodName                             = "/api.v1alpha1.wfm.WFM/CreateTourPattern"
+	WFM_UpsertTourPatternWithMembers_FullMethodName                  = "/api.v1alpha1.wfm.WFM/UpsertTourPatternWithMembers"
 	WFM_GetTourPattern_FullMethodName                                = "/api.v1alpha1.wfm.WFM/GetTourPattern"
 	WFM_DeleteTourPattern_FullMethodName                             = "/api.v1alpha1.wfm.WFM/DeleteTourPattern"
 	WFM_CreateTourWeekPattern_FullMethodName                         = "/api.v1alpha1.wfm.WFM/CreateTourWeekPattern"
@@ -182,6 +183,7 @@ const (
 	WFM_CreateTourAgentCollectionWFMAgents_FullMethodName            = "/api.v1alpha1.wfm.WFM/CreateTourAgentCollectionWFMAgents"
 	WFM_ListTourAgentCollectionWFMAgents_FullMethodName              = "/api.v1alpha1.wfm.WFM/ListTourAgentCollectionWFMAgents"
 	WFM_DeleteTourAgentCollectionWFMAgents_FullMethodName            = "/api.v1alpha1.wfm.WFM/DeleteTourAgentCollectionWFMAgents"
+	WFM_GenerateTourWeekPatterns_FullMethodName                      = "/api.v1alpha1.wfm.WFM/GenerateTourWeekPatterns"
 )
 
 // WFMClient is the client API for WFM service.
@@ -1677,6 +1679,22 @@ type WFMClient interface {
 	//   - grpc.AlreadyExists: A Tour Pattern already exists for @shift_template_sid.
 	//   - grpc.Internal: error occurs when creating the Tour Pattern.
 	CreateTourPattern(ctx context.Context, in *CreateTourPatternReq, opts ...grpc.CallOption) (*CreateTourPatternRes, error)
+	// Replaces the existing Tour Pattern and members with @tour_pattern for the @tour_pattern.shift_template_sid and the org sending the request.
+	// Returns the newly created Tour Pattern and members with their updated SIDs and Week Pattern Numbers.
+	// Any existing Tour Week Patterns, Tour Shift Instance and Segment Configs, Tour Agent Collections and their WFM Agent SIDs
+	//
+	//	belonging to @tour_pattern.shift_template_sid will be replaced with the members on the provided @tour_pattern.
+	//
+	// At least one Tour Agent Collection and one Tour Week Pattern must be provided in the member fields.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.NotFound: the @tour_pattern.shift_template_sid does not exist.
+	//   - grpc.Internal: error occurs when upserting the tour pattern or members.
+	UpsertTourPatternWithMembers(ctx context.Context, in *UpsertTourPatternWithMembersReq, opts ...grpc.CallOption) (*UpsertTourPatternWithMembersRes, error)
 	// Gets the Tour Pattern belonging to @shift_template_sid and the org sending the request.
 	// Required permissions:
 	//
@@ -1884,6 +1902,23 @@ type WFMClient interface {
 	//   - grpc.NotFound: there are no WFM Agent associations to delete for @tour_agent_collection_sid.
 	//   - grpc.Internal: error occurs when getting the tour agent collections.
 	DeleteTourAgentCollectionWFMAgents(ctx context.Context, in *DeleteTourAgentCollectionWFMAgentsReq, opts ...grpc.CallOption) (*DeleteTourAgentCollectionWFMAgentsRes, error)
+	// Generates a list of tour week patterns for @target_shift_template_sid and the org sending the request.
+	// Sets the member_tour_week_patterns with a tour week pattern for each of the @num_weeks_in_tour.
+	// Each of the tour week patterns will be set with tour shift instances and segment configs based on
+	//
+	//	the forecasted call data over the next @num_weeks_in_tour, starting on the next Monday.
+	//
+	// The returned data will not be persisted. This method will not effect any existing tour week patterns in the database.
+	// The @tour_week_patterns returned by this method are intended to replace, not append, all currenly existing tour week patterns for @target_shift_template_sid, once persisted.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.NotFound: there is no call center node or @shift_template_sid associated with @schedule_scenario_sid.
+	//   - grpc.Internal: error occurs when generating the tour week patterns.
+	GenerateTourWeekPatterns(ctx context.Context, in *GenerateTourWeekPatternsReq, opts ...grpc.CallOption) (*GenerateTourWeekPatternsRes, error)
 }
 
 type wFMClient struct {
@@ -3195,6 +3230,15 @@ func (c *wFMClient) CreateTourPattern(ctx context.Context, in *CreateTourPattern
 	return out, nil
 }
 
+func (c *wFMClient) UpsertTourPatternWithMembers(ctx context.Context, in *UpsertTourPatternWithMembersReq, opts ...grpc.CallOption) (*UpsertTourPatternWithMembersRes, error) {
+	out := new(UpsertTourPatternWithMembersRes)
+	err := c.cc.Invoke(ctx, WFM_UpsertTourPatternWithMembers_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) GetTourPattern(ctx context.Context, in *GetTourPatternReq, opts ...grpc.CallOption) (*GetTourPatternRes, error) {
 	out := new(GetTourPatternRes)
 	err := c.cc.Invoke(ctx, WFM_GetTourPattern_FullMethodName, in, out, opts...)
@@ -3369,6 +3413,15 @@ func (c *wFMClient) ListTourAgentCollectionWFMAgents(ctx context.Context, in *Li
 func (c *wFMClient) DeleteTourAgentCollectionWFMAgents(ctx context.Context, in *DeleteTourAgentCollectionWFMAgentsReq, opts ...grpc.CallOption) (*DeleteTourAgentCollectionWFMAgentsRes, error) {
 	out := new(DeleteTourAgentCollectionWFMAgentsRes)
 	err := c.cc.Invoke(ctx, WFM_DeleteTourAgentCollectionWFMAgents_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) GenerateTourWeekPatterns(ctx context.Context, in *GenerateTourWeekPatternsReq, opts ...grpc.CallOption) (*GenerateTourWeekPatternsRes, error) {
+	out := new(GenerateTourWeekPatternsRes)
+	err := c.cc.Invoke(ctx, WFM_GenerateTourWeekPatterns_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4868,6 +4921,22 @@ type WFMServer interface {
 	//   - grpc.AlreadyExists: A Tour Pattern already exists for @shift_template_sid.
 	//   - grpc.Internal: error occurs when creating the Tour Pattern.
 	CreateTourPattern(context.Context, *CreateTourPatternReq) (*CreateTourPatternRes, error)
+	// Replaces the existing Tour Pattern and members with @tour_pattern for the @tour_pattern.shift_template_sid and the org sending the request.
+	// Returns the newly created Tour Pattern and members with their updated SIDs and Week Pattern Numbers.
+	// Any existing Tour Week Patterns, Tour Shift Instance and Segment Configs, Tour Agent Collections and their WFM Agent SIDs
+	//
+	//	belonging to @tour_pattern.shift_template_sid will be replaced with the members on the provided @tour_pattern.
+	//
+	// At least one Tour Agent Collection and one Tour Week Pattern must be provided in the member fields.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.NotFound: the @tour_pattern.shift_template_sid does not exist.
+	//   - grpc.Internal: error occurs when upserting the tour pattern or members.
+	UpsertTourPatternWithMembers(context.Context, *UpsertTourPatternWithMembersReq) (*UpsertTourPatternWithMembersRes, error)
 	// Gets the Tour Pattern belonging to @shift_template_sid and the org sending the request.
 	// Required permissions:
 	//
@@ -5075,6 +5144,23 @@ type WFMServer interface {
 	//   - grpc.NotFound: there are no WFM Agent associations to delete for @tour_agent_collection_sid.
 	//   - grpc.Internal: error occurs when getting the tour agent collections.
 	DeleteTourAgentCollectionWFMAgents(context.Context, *DeleteTourAgentCollectionWFMAgentsReq) (*DeleteTourAgentCollectionWFMAgentsRes, error)
+	// Generates a list of tour week patterns for @target_shift_template_sid and the org sending the request.
+	// Sets the member_tour_week_patterns with a tour week pattern for each of the @num_weeks_in_tour.
+	// Each of the tour week patterns will be set with tour shift instances and segment configs based on
+	//
+	//	the forecasted call data over the next @num_weeks_in_tour, starting on the next Monday.
+	//
+	// The returned data will not be persisted. This method will not effect any existing tour week patterns in the database.
+	// The @tour_week_patterns returned by this method are intended to replace, not append, all currenly existing tour week patterns for @target_shift_template_sid, once persisted.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.NotFound: there is no call center node or @shift_template_sid associated with @schedule_scenario_sid.
+	//   - grpc.Internal: error occurs when generating the tour week patterns.
+	GenerateTourWeekPatterns(context.Context, *GenerateTourWeekPatternsReq) (*GenerateTourWeekPatternsRes, error)
 	mustEmbedUnimplementedWFMServer()
 }
 
@@ -5469,6 +5555,9 @@ func (UnimplementedWFMServer) ListRequiredCallsIntervals(context.Context, *ListR
 func (UnimplementedWFMServer) CreateTourPattern(context.Context, *CreateTourPatternReq) (*CreateTourPatternRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateTourPattern not implemented")
 }
+func (UnimplementedWFMServer) UpsertTourPatternWithMembers(context.Context, *UpsertTourPatternWithMembersReq) (*UpsertTourPatternWithMembersRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpsertTourPatternWithMembers not implemented")
+}
 func (UnimplementedWFMServer) GetTourPattern(context.Context, *GetTourPatternReq) (*GetTourPatternRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTourPattern not implemented")
 }
@@ -5528,6 +5617,9 @@ func (UnimplementedWFMServer) ListTourAgentCollectionWFMAgents(context.Context, 
 }
 func (UnimplementedWFMServer) DeleteTourAgentCollectionWFMAgents(context.Context, *DeleteTourAgentCollectionWFMAgentsReq) (*DeleteTourAgentCollectionWFMAgentsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteTourAgentCollectionWFMAgents not implemented")
+}
+func (UnimplementedWFMServer) GenerateTourWeekPatterns(context.Context, *GenerateTourWeekPatternsReq) (*GenerateTourWeekPatternsRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GenerateTourWeekPatterns not implemented")
 }
 func (UnimplementedWFMServer) mustEmbedUnimplementedWFMServer() {}
 
@@ -7882,6 +7974,24 @@ func _WFM_CreateTourPattern_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_UpsertTourPatternWithMembers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpsertTourPatternWithMembersReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).UpsertTourPatternWithMembers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_UpsertTourPatternWithMembers_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).UpsertTourPatternWithMembers(ctx, req.(*UpsertTourPatternWithMembersReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WFM_GetTourPattern_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetTourPatternReq)
 	if err := dec(in); err != nil {
@@ -8238,6 +8348,24 @@ func _WFM_DeleteTourAgentCollectionWFMAgents_Handler(srv interface{}, ctx contex
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WFMServer).DeleteTourAgentCollectionWFMAgents(ctx, req.(*DeleteTourAgentCollectionWFMAgentsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_GenerateTourWeekPatterns_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GenerateTourWeekPatternsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).GenerateTourWeekPatterns(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_GenerateTourWeekPatterns_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).GenerateTourWeekPatterns(ctx, req.(*GenerateTourWeekPatternsReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -8742,6 +8870,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _WFM_CreateTourPattern_Handler,
 		},
 		{
+			MethodName: "UpsertTourPatternWithMembers",
+			Handler:    _WFM_UpsertTourPatternWithMembers_Handler,
+		},
+		{
 			MethodName: "GetTourPattern",
 			Handler:    _WFM_GetTourPattern_Handler,
 		},
@@ -8820,6 +8952,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteTourAgentCollectionWFMAgents",
 			Handler:    _WFM_DeleteTourAgentCollectionWFMAgents_Handler,
+		},
+		{
+			MethodName: "GenerateTourWeekPatterns",
+			Handler:    _WFM_GenerateTourWeekPatterns_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
