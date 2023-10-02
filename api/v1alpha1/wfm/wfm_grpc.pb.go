@@ -344,9 +344,7 @@ type WFMClient interface {
 	//   - grpc.NotFound: the @skill_profile_category given is not found for the org.
 	//   - grpc.Internal: error occurs when building the call profile template.
 	BuildCallProfileTemplate(ctx context.Context, in *BuildCallProfileTemplateReq, opts ...grpc.CallOption) (*BuildCallProfileTemplateRes, error)
-	// Deprecated: Do not use.
 	// Creates a mapping entry for the @inactive_skill_profile_sid to the @active_skill_profile_sid for the org sending the request.
-	// DEPRECATED as of Sep/27/2023 - Use skill profile groups instead.
 	// Required permissions:
 	//
 	//	NONE
@@ -366,9 +364,7 @@ type WFMClient interface {
 	//
 	//	-grpc.Internal: error occurs when contacting the forecaster to get the available forecaster types.
 	GetAvailableRegressionForecasterModelTypes(ctx context.Context, in *GetAvailableRegressionForecasterModelTypesReq, opts ...grpc.CallOption) (*GetAvailableRegressionForecasterModelTypesRes, error)
-	// Deprecated: Do not use.
 	// Changes the current mapping for the given @inactive_skill_profile_sid to be disconnected.
-	// DEPRECATED as of Sep/27/2023 - Use skill profile groups instead.
 	// Required permissions:
 	//
 	//	NONE
@@ -664,17 +660,16 @@ type WFMClient interface {
 	//   - grpc.NotFound: the @skill_profile_sid given is not found.
 	//   - grpc.Internal: error occurs when calculating the averages from the training data.
 	CalculateTrainingDataAveragesForSkillProfile(ctx context.Context, in *CalculateTrainingDataAveragesForSkillProfileReq, opts ...grpc.CallOption) (*CalculateTrainingDataAveragesForSkillProfileRes, error)
-	// Calculates the averages for call characteristics using the historical data of the given @skill_profile_sids, @skill_profile_group_sids and org sending the request.
+	// Calculates the averages for call characteristics using the historical data of the given @skill_profile_sids and org sending the request.
 	// If no @skill_profile_sids are given, it will calculate the averages for all skill profiles for the org sending the request.
-	// If no @skill_profile_group_sids are given, it will calculate the averages for all skill profile groups for the org sending the request.
 	// Averages will be weighted by the number of calls that each historical data interval has.
 	// Once the averages are calculated, they will be updated in the db for those skill profiles.
 	//
 	// If a nil @datetime_range is given then the range used will be @training_data_range_end_datetime - @averages_calculation_range_in_months to the @training_data_range_end_datetime from the forecasting parameters.
 	// If @averages_calculation_range_in_months is 0, it will use the @training_data_range_start_datetime as the start datetime of the range.
 	//
-	// If @exclude_skill_profiles_with_manual_averages is true, it will exclude skill profiles and groups that have manual averages from the calculation
-	// even if those skill profiles and groups are in @skill_profile_sids or @skill_profile_group_sids respectively.
+	// If @exclude_skill_profiles_with_manual_averages is true, it will exclude skill profiles that have manual averages from the calculation
+	// even if those skill profiles are in @skill_profile_sids.
 	//
 	// Errors:
 	//   - grpc.Internal: error occurs when calculating the averages from the historical data.
@@ -2061,7 +2056,6 @@ func (c *wFMClient) BuildCallProfileTemplate(ctx context.Context, in *BuildCallP
 	return out, nil
 }
 
-// Deprecated: Do not use.
 func (c *wFMClient) CreateInactiveSkillProfileMapping(ctx context.Context, in *CreateInactiveSkillProfileMappingReq, opts ...grpc.CallOption) (*CreateInactiveSkillProfileMappingRes, error) {
 	out := new(CreateInactiveSkillProfileMappingRes)
 	err := c.cc.Invoke(ctx, WFM_CreateInactiveSkillProfileMapping_FullMethodName, in, out, opts...)
@@ -2080,7 +2074,6 @@ func (c *wFMClient) GetAvailableRegressionForecasterModelTypes(ctx context.Conte
 	return out, nil
 }
 
-// Deprecated: Do not use.
 func (c *wFMClient) DisconnectInactiveSkillProfileMapping(ctx context.Context, in *DisconnectInactiveSkillProfileMappingReq, opts ...grpc.CallOption) (*DisconnectInactiveSkillProfileMappingRes, error) {
 	out := new(DisconnectInactiveSkillProfileMappingRes)
 	err := c.cc.Invoke(ctx, WFM_DisconnectInactiveSkillProfileMapping_FullMethodName, in, out, opts...)
@@ -3593,9 +3586,7 @@ type WFMServer interface {
 	//   - grpc.NotFound: the @skill_profile_category given is not found for the org.
 	//   - grpc.Internal: error occurs when building the call profile template.
 	BuildCallProfileTemplate(context.Context, *BuildCallProfileTemplateReq) (*BuildCallProfileTemplateRes, error)
-	// Deprecated: Do not use.
 	// Creates a mapping entry for the @inactive_skill_profile_sid to the @active_skill_profile_sid for the org sending the request.
-	// DEPRECATED as of Sep/27/2023 - Use skill profile groups instead.
 	// Required permissions:
 	//
 	//	NONE
@@ -3615,9 +3606,7 @@ type WFMServer interface {
 	//
 	//	-grpc.Internal: error occurs when contacting the forecaster to get the available forecaster types.
 	GetAvailableRegressionForecasterModelTypes(context.Context, *GetAvailableRegressionForecasterModelTypesReq) (*GetAvailableRegressionForecasterModelTypesRes, error)
-	// Deprecated: Do not use.
 	// Changes the current mapping for the given @inactive_skill_profile_sid to be disconnected.
-	// DEPRECATED as of Sep/27/2023 - Use skill profile groups instead.
 	// Required permissions:
 	//
 	//	NONE
@@ -3913,17 +3902,16 @@ type WFMServer interface {
 	//   - grpc.NotFound: the @skill_profile_sid given is not found.
 	//   - grpc.Internal: error occurs when calculating the averages from the training data.
 	CalculateTrainingDataAveragesForSkillProfile(context.Context, *CalculateTrainingDataAveragesForSkillProfileReq) (*CalculateTrainingDataAveragesForSkillProfileRes, error)
-	// Calculates the averages for call characteristics using the historical data of the given @skill_profile_sids, @skill_profile_group_sids and org sending the request.
+	// Calculates the averages for call characteristics using the historical data of the given @skill_profile_sids and org sending the request.
 	// If no @skill_profile_sids are given, it will calculate the averages for all skill profiles for the org sending the request.
-	// If no @skill_profile_group_sids are given, it will calculate the averages for all skill profile groups for the org sending the request.
 	// Averages will be weighted by the number of calls that each historical data interval has.
 	// Once the averages are calculated, they will be updated in the db for those skill profiles.
 	//
 	// If a nil @datetime_range is given then the range used will be @training_data_range_end_datetime - @averages_calculation_range_in_months to the @training_data_range_end_datetime from the forecasting parameters.
 	// If @averages_calculation_range_in_months is 0, it will use the @training_data_range_start_datetime as the start datetime of the range.
 	//
-	// If @exclude_skill_profiles_with_manual_averages is true, it will exclude skill profiles and groups that have manual averages from the calculation
-	// even if those skill profiles and groups are in @skill_profile_sids or @skill_profile_group_sids respectively.
+	// If @exclude_skill_profiles_with_manual_averages is true, it will exclude skill profiles that have manual averages from the calculation
+	// even if those skill profiles are in @skill_profile_sids.
 	//
 	// Errors:
 	//   - grpc.Internal: error occurs when calculating the averages from the historical data.
