@@ -39,6 +39,9 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type BillingServiceClient interface {
 	// Creates a billing plan for the ORG.
+	//   - The rate definitions must have the rate definition group id populated and it
+	//     must be a valid reference to a rate definition group on the default billing plan.
+	//
 	// Required permissions:
 	//
 	//	CUSTOMER_SUPPORT
@@ -326,6 +329,9 @@ func (c *billingServiceClient) UpdateInvoice(ctx context.Context, in *UpdateInvo
 // for forward compatibility
 type BillingServiceServer interface {
 	// Creates a billing plan for the ORG.
+	//   - The rate definitions must have the rate definition group id populated and it
+	//     must be a valid reference to a rate definition group on the default billing plan.
+	//
 	// Required permissions:
 	//
 	//	CUSTOMER_SUPPORT

@@ -77,6 +77,9 @@ const (
 // BillingServiceClient is a client for the services.billing.v1alpha1.BillingService service.
 type BillingServiceClient interface {
 	// Creates a billing plan for the ORG.
+	//   - The rate definitions must have the rate definition group id populated and it
+	//     must be a valid reference to a rate definition group on the default billing plan.
+	//
 	// Required permissions:
 	//
 	//	CUSTOMER_SUPPORT
@@ -398,6 +401,9 @@ func (c *billingServiceClient) UpdateInvoice(ctx context.Context, req *connect_g
 // service.
 type BillingServiceHandler interface {
 	// Creates a billing plan for the ORG.
+	//   - The rate definitions must have the rate definition group id populated and it
+	//     must be a valid reference to a rate definition group on the default billing plan.
+	//
 	// Required permissions:
 	//
 	//	CUSTOMER_SUPPORT
