@@ -313,6 +313,11 @@ const (
 	// OrgDeleteDataDipTemplateProcedure is the fully-qualified name of the Org's DeleteDataDipTemplate
 	// RPC.
 	OrgDeleteDataDipTemplateProcedure = "/api.v1alpha1.org.Org/DeleteDataDipTemplate"
+	// OrgCopyDataDipTemplateProcedure is the fully-qualified name of the Org's CopyDataDipTemplate RPC.
+	OrgCopyDataDipTemplateProcedure = "/api.v1alpha1.org.Org/CopyDataDipTemplate"
+	// OrgCopyDataDipTemplateToOrganizationProcedure is the fully-qualified name of the Org's
+	// CopyDataDipTemplateToOrganization RPC.
+	OrgCopyDataDipTemplateToOrganizationProcedure = "/api.v1alpha1.org.Org/CopyDataDipTemplateToOrganization"
 	// OrgListAgentResponseAutoRulesProcedure is the fully-qualified name of the Org's
 	// ListAgentResponseAutoRules RPC.
 	OrgListAgentResponseAutoRulesProcedure = "/api.v1alpha1.org.Org/ListAgentResponseAutoRules"
@@ -673,6 +678,10 @@ type OrgClient interface {
 	UpdateDataDipTemplate(context.Context, *connect_go.Request[org.UpdateDataDipTemplateRequest]) (*connect_go.Response[org.UpdateDataDipTemplateResponse], error)
 	// Deletes a data dip template.
 	DeleteDataDipTemplate(context.Context, *connect_go.Request[org.DeleteDataDipTemplateRequest]) (*connect_go.Response[org.DeleteDataDipTemplateResponse], error)
+	// Copies a data dip template.
+	CopyDataDipTemplate(context.Context, *connect_go.Request[org.CopyDataDipTemplateRequest]) (*connect_go.Response[org.CopyDataDipTemplateResponse], error)
+	// Copies a data dip template to a different organization.
+	CopyDataDipTemplateToOrganization(context.Context, *connect_go.Request[org.CopyDataDipTemplateToOrganizationRequest]) (*connect_go.Response[org.CopyDataDipTemplateToOrganizationResponse], error)
 	// Lists Agent Call Response Automatically added compliance rules for an Org.
 	ListAgentResponseAutoRules(context.Context, *connect_go.Request[org.ListAgentResponseAutoRulesRequest]) (*connect_go.Response[org.ListAgentResponseAutoRulesResponse], error)
 	// Creates a new Agent Call Response Automatically added compliance rule set.
@@ -1313,6 +1322,16 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgDeleteDataDipTemplateProcedure,
 			opts...,
 		),
+		copyDataDipTemplate: connect_go.NewClient[org.CopyDataDipTemplateRequest, org.CopyDataDipTemplateResponse](
+			httpClient,
+			baseURL+OrgCopyDataDipTemplateProcedure,
+			opts...,
+		),
+		copyDataDipTemplateToOrganization: connect_go.NewClient[org.CopyDataDipTemplateToOrganizationRequest, org.CopyDataDipTemplateToOrganizationResponse](
+			httpClient,
+			baseURL+OrgCopyDataDipTemplateToOrganizationProcedure,
+			opts...,
+		),
 		listAgentResponseAutoRules: connect_go.NewClient[org.ListAgentResponseAutoRulesRequest, org.ListAgentResponseAutoRulesResponse](
 			httpClient,
 			baseURL+OrgListAgentResponseAutoRulesProcedure,
@@ -1661,6 +1680,8 @@ type orgClient struct {
 	createDataDipTemplate                   *connect_go.Client[org.CreateDataDipTemplateRequest, org.CreateDataDipTemplateResponse]
 	updateDataDipTemplate                   *connect_go.Client[org.UpdateDataDipTemplateRequest, org.UpdateDataDipTemplateResponse]
 	deleteDataDipTemplate                   *connect_go.Client[org.DeleteDataDipTemplateRequest, org.DeleteDataDipTemplateResponse]
+	copyDataDipTemplate                     *connect_go.Client[org.CopyDataDipTemplateRequest, org.CopyDataDipTemplateResponse]
+	copyDataDipTemplateToOrganization       *connect_go.Client[org.CopyDataDipTemplateToOrganizationRequest, org.CopyDataDipTemplateToOrganizationResponse]
 	listAgentResponseAutoRules              *connect_go.Client[org.ListAgentResponseAutoRulesRequest, org.ListAgentResponseAutoRulesResponse]
 	createAgentResponseAutoRules            *connect_go.Client[org.CreateAgentResponseAutoRulesRequest, org.CreateAgentResponseAutoRulesResponse]
 	updateAgentResponseAutoRules            *connect_go.Client[org.UpdateAgentResponseAutoRulesRequest, org.UpdateAgentResponseAutoRulesResponse]
@@ -2228,6 +2249,16 @@ func (c *orgClient) DeleteDataDipTemplate(ctx context.Context, req *connect_go.R
 	return c.deleteDataDipTemplate.CallUnary(ctx, req)
 }
 
+// CopyDataDipTemplate calls api.v1alpha1.org.Org.CopyDataDipTemplate.
+func (c *orgClient) CopyDataDipTemplate(ctx context.Context, req *connect_go.Request[org.CopyDataDipTemplateRequest]) (*connect_go.Response[org.CopyDataDipTemplateResponse], error) {
+	return c.copyDataDipTemplate.CallUnary(ctx, req)
+}
+
+// CopyDataDipTemplateToOrganization calls api.v1alpha1.org.Org.CopyDataDipTemplateToOrganization.
+func (c *orgClient) CopyDataDipTemplateToOrganization(ctx context.Context, req *connect_go.Request[org.CopyDataDipTemplateToOrganizationRequest]) (*connect_go.Response[org.CopyDataDipTemplateToOrganizationResponse], error) {
+	return c.copyDataDipTemplateToOrganization.CallUnary(ctx, req)
+}
+
 // ListAgentResponseAutoRules calls api.v1alpha1.org.Org.ListAgentResponseAutoRules.
 func (c *orgClient) ListAgentResponseAutoRules(ctx context.Context, req *connect_go.Request[org.ListAgentResponseAutoRulesRequest]) (*connect_go.Response[org.ListAgentResponseAutoRulesResponse], error) {
 	return c.listAgentResponseAutoRules.CallUnary(ctx, req)
@@ -2707,6 +2738,10 @@ type OrgHandler interface {
 	UpdateDataDipTemplate(context.Context, *connect_go.Request[org.UpdateDataDipTemplateRequest]) (*connect_go.Response[org.UpdateDataDipTemplateResponse], error)
 	// Deletes a data dip template.
 	DeleteDataDipTemplate(context.Context, *connect_go.Request[org.DeleteDataDipTemplateRequest]) (*connect_go.Response[org.DeleteDataDipTemplateResponse], error)
+	// Copies a data dip template.
+	CopyDataDipTemplate(context.Context, *connect_go.Request[org.CopyDataDipTemplateRequest]) (*connect_go.Response[org.CopyDataDipTemplateResponse], error)
+	// Copies a data dip template to a different organization.
+	CopyDataDipTemplateToOrganization(context.Context, *connect_go.Request[org.CopyDataDipTemplateToOrganizationRequest]) (*connect_go.Response[org.CopyDataDipTemplateToOrganizationResponse], error)
 	// Lists Agent Call Response Automatically added compliance rules for an Org.
 	ListAgentResponseAutoRules(context.Context, *connect_go.Request[org.ListAgentResponseAutoRulesRequest]) (*connect_go.Response[org.ListAgentResponseAutoRulesResponse], error)
 	// Creates a new Agent Call Response Automatically added compliance rule set.
@@ -3343,6 +3378,16 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.DeleteDataDipTemplate,
 		opts...,
 	)
+	orgCopyDataDipTemplateHandler := connect_go.NewUnaryHandler(
+		OrgCopyDataDipTemplateProcedure,
+		svc.CopyDataDipTemplate,
+		opts...,
+	)
+	orgCopyDataDipTemplateToOrganizationHandler := connect_go.NewUnaryHandler(
+		OrgCopyDataDipTemplateToOrganizationProcedure,
+		svc.CopyDataDipTemplateToOrganization,
+		opts...,
+	)
 	orgListAgentResponseAutoRulesHandler := connect_go.NewUnaryHandler(
 		OrgListAgentResponseAutoRulesProcedure,
 		svc.ListAgentResponseAutoRules,
@@ -3791,6 +3836,10 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 			orgUpdateDataDipTemplateHandler.ServeHTTP(w, r)
 		case OrgDeleteDataDipTemplateProcedure:
 			orgDeleteDataDipTemplateHandler.ServeHTTP(w, r)
+		case OrgCopyDataDipTemplateProcedure:
+			orgCopyDataDipTemplateHandler.ServeHTTP(w, r)
+		case OrgCopyDataDipTemplateToOrganizationProcedure:
+			orgCopyDataDipTemplateToOrganizationHandler.ServeHTTP(w, r)
 		case OrgListAgentResponseAutoRulesProcedure:
 			orgListAgentResponseAutoRulesHandler.ServeHTTP(w, r)
 		case OrgCreateAgentResponseAutoRulesProcedure:
@@ -4306,6 +4355,14 @@ func (UnimplementedOrgHandler) UpdateDataDipTemplate(context.Context, *connect_g
 
 func (UnimplementedOrgHandler) DeleteDataDipTemplate(context.Context, *connect_go.Request[org.DeleteDataDipTemplateRequest]) (*connect_go.Response[org.DeleteDataDipTemplateResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.DeleteDataDipTemplate is not implemented"))
+}
+
+func (UnimplementedOrgHandler) CopyDataDipTemplate(context.Context, *connect_go.Request[org.CopyDataDipTemplateRequest]) (*connect_go.Response[org.CopyDataDipTemplateResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.CopyDataDipTemplate is not implemented"))
+}
+
+func (UnimplementedOrgHandler) CopyDataDipTemplateToOrganization(context.Context, *connect_go.Request[org.CopyDataDipTemplateToOrganizationRequest]) (*connect_go.Response[org.CopyDataDipTemplateToOrganizationResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.CopyDataDipTemplateToOrganization is not implemented"))
 }
 
 func (UnimplementedOrgHandler) ListAgentResponseAutoRules(context.Context, *connect_go.Request[org.ListAgentResponseAutoRulesRequest]) (*connect_go.Response[org.ListAgentResponseAutoRulesResponse], error) {
