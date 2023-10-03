@@ -42,6 +42,9 @@ const (
 	// AgentTrainingServiceListAgentLearningOpportunitiesProcedure is the fully-qualified name of the
 	// AgentTrainingService's ListAgentLearningOpportunities RPC.
 	AgentTrainingServiceListAgentLearningOpportunitiesProcedure = "/api.v1alpha1.agenttraining.AgentTrainingService/ListAgentLearningOpportunities"
+	// AgentTrainingServiceCompleteAgentLearningOpportunityProcedure is the fully-qualified name of the
+	// AgentTrainingService's CompleteAgentLearningOpportunity RPC.
+	AgentTrainingServiceCompleteAgentLearningOpportunityProcedure = "/api.v1alpha1.agenttraining.AgentTrainingService/CompleteAgentLearningOpportunity"
 	// AgentTrainingServiceUpdateLearningOpportunityProcedure is the fully-qualified name of the
 	// AgentTrainingService's UpdateLearningOpportunity RPC.
 	AgentTrainingServiceUpdateLearningOpportunityProcedure = "/api.v1alpha1.agenttraining.AgentTrainingService/UpdateLearningOpportunity"
@@ -62,6 +65,8 @@ type AgentTrainingServiceClient interface {
 	ListLearningOpportunities(context.Context, *connect_go.Request[agenttraining.ListLearningOpportunitiesRequest]) (*connect_go.Response[agenttraining.ListLearningOpportunitiesResponse], error)
 	// ListAgentLearningOpportunities lists learning opportunities by agent.
 	ListAgentLearningOpportunities(context.Context, *connect_go.Request[agenttraining.ListAgentLearningOpportunitiesRequest]) (*connect_go.Response[agenttraining.ListAgentLearningOpportunitiesResponse], error)
+	// CompleteAgentLearningOpportunity completes an agent's learning opportunity.
+	CompleteAgentLearningOpportunity(context.Context, *connect_go.Request[agenttraining.CompleteAgentLearningOpportunityRequest]) (*connect_go.Response[agenttraining.CompleteAgentLearningOpportunityResponse], error)
 	// UpdateLearningOpportunity updates a learning opportunity.
 	UpdateLearningOpportunity(context.Context, *connect_go.Request[agenttraining.UpdateLearningOpportunityRequest]) (*connect_go.Response[agenttraining.UpdateLearningOpportunityResponse], error)
 	// DeleteLearningOpportunity deletes a learning opportunity.
@@ -96,6 +101,11 @@ func NewAgentTrainingServiceClient(httpClient connect_go.HTTPClient, baseURL str
 			baseURL+AgentTrainingServiceListAgentLearningOpportunitiesProcedure,
 			opts...,
 		),
+		completeAgentLearningOpportunity: connect_go.NewClient[agenttraining.CompleteAgentLearningOpportunityRequest, agenttraining.CompleteAgentLearningOpportunityResponse](
+			httpClient,
+			baseURL+AgentTrainingServiceCompleteAgentLearningOpportunityProcedure,
+			opts...,
+		),
 		updateLearningOpportunity: connect_go.NewClient[agenttraining.UpdateLearningOpportunityRequest, agenttraining.UpdateLearningOpportunityResponse](
 			httpClient,
 			baseURL+AgentTrainingServiceUpdateLearningOpportunityProcedure,
@@ -116,12 +126,13 @@ func NewAgentTrainingServiceClient(httpClient connect_go.HTTPClient, baseURL str
 
 // agentTrainingServiceClient implements AgentTrainingServiceClient.
 type agentTrainingServiceClient struct {
-	createLearningOpportunity      *connect_go.Client[agenttraining.CreateLearningOpportunityRequest, agenttraining.CreateLearningOpportunityResponse]
-	listLearningOpportunities      *connect_go.Client[agenttraining.ListLearningOpportunitiesRequest, agenttraining.ListLearningOpportunitiesResponse]
-	listAgentLearningOpportunities *connect_go.Client[agenttraining.ListAgentLearningOpportunitiesRequest, agenttraining.ListAgentLearningOpportunitiesResponse]
-	updateLearningOpportunity      *connect_go.Client[agenttraining.UpdateLearningOpportunityRequest, agenttraining.UpdateLearningOpportunityResponse]
-	deleteLearningOpportunity      *connect_go.Client[agenttraining.DeleteLearningOpportunityRequest, agenttraining.DeleteLearningOpportunityResponse]
-	getLearningOpportunity         *connect_go.Client[agenttraining.GetLearningOpportunityRequest, agenttraining.GetLearningOpportunityResponse]
+	createLearningOpportunity        *connect_go.Client[agenttraining.CreateLearningOpportunityRequest, agenttraining.CreateLearningOpportunityResponse]
+	listLearningOpportunities        *connect_go.Client[agenttraining.ListLearningOpportunitiesRequest, agenttraining.ListLearningOpportunitiesResponse]
+	listAgentLearningOpportunities   *connect_go.Client[agenttraining.ListAgentLearningOpportunitiesRequest, agenttraining.ListAgentLearningOpportunitiesResponse]
+	completeAgentLearningOpportunity *connect_go.Client[agenttraining.CompleteAgentLearningOpportunityRequest, agenttraining.CompleteAgentLearningOpportunityResponse]
+	updateLearningOpportunity        *connect_go.Client[agenttraining.UpdateLearningOpportunityRequest, agenttraining.UpdateLearningOpportunityResponse]
+	deleteLearningOpportunity        *connect_go.Client[agenttraining.DeleteLearningOpportunityRequest, agenttraining.DeleteLearningOpportunityResponse]
+	getLearningOpportunity           *connect_go.Client[agenttraining.GetLearningOpportunityRequest, agenttraining.GetLearningOpportunityResponse]
 }
 
 // CreateLearningOpportunity calls
@@ -140,6 +151,12 @@ func (c *agentTrainingServiceClient) ListLearningOpportunities(ctx context.Conte
 // api.v1alpha1.agenttraining.AgentTrainingService.ListAgentLearningOpportunities.
 func (c *agentTrainingServiceClient) ListAgentLearningOpportunities(ctx context.Context, req *connect_go.Request[agenttraining.ListAgentLearningOpportunitiesRequest]) (*connect_go.Response[agenttraining.ListAgentLearningOpportunitiesResponse], error) {
 	return c.listAgentLearningOpportunities.CallUnary(ctx, req)
+}
+
+// CompleteAgentLearningOpportunity calls
+// api.v1alpha1.agenttraining.AgentTrainingService.CompleteAgentLearningOpportunity.
+func (c *agentTrainingServiceClient) CompleteAgentLearningOpportunity(ctx context.Context, req *connect_go.Request[agenttraining.CompleteAgentLearningOpportunityRequest]) (*connect_go.Response[agenttraining.CompleteAgentLearningOpportunityResponse], error) {
+	return c.completeAgentLearningOpportunity.CallUnary(ctx, req)
 }
 
 // UpdateLearningOpportunity calls
@@ -169,6 +186,8 @@ type AgentTrainingServiceHandler interface {
 	ListLearningOpportunities(context.Context, *connect_go.Request[agenttraining.ListLearningOpportunitiesRequest]) (*connect_go.Response[agenttraining.ListLearningOpportunitiesResponse], error)
 	// ListAgentLearningOpportunities lists learning opportunities by agent.
 	ListAgentLearningOpportunities(context.Context, *connect_go.Request[agenttraining.ListAgentLearningOpportunitiesRequest]) (*connect_go.Response[agenttraining.ListAgentLearningOpportunitiesResponse], error)
+	// CompleteAgentLearningOpportunity completes an agent's learning opportunity.
+	CompleteAgentLearningOpportunity(context.Context, *connect_go.Request[agenttraining.CompleteAgentLearningOpportunityRequest]) (*connect_go.Response[agenttraining.CompleteAgentLearningOpportunityResponse], error)
 	// UpdateLearningOpportunity updates a learning opportunity.
 	UpdateLearningOpportunity(context.Context, *connect_go.Request[agenttraining.UpdateLearningOpportunityRequest]) (*connect_go.Response[agenttraining.UpdateLearningOpportunityResponse], error)
 	// DeleteLearningOpportunity deletes a learning opportunity.
@@ -198,6 +217,11 @@ func NewAgentTrainingServiceHandler(svc AgentTrainingServiceHandler, opts ...con
 		svc.ListAgentLearningOpportunities,
 		opts...,
 	)
+	agentTrainingServiceCompleteAgentLearningOpportunityHandler := connect_go.NewUnaryHandler(
+		AgentTrainingServiceCompleteAgentLearningOpportunityProcedure,
+		svc.CompleteAgentLearningOpportunity,
+		opts...,
+	)
 	agentTrainingServiceUpdateLearningOpportunityHandler := connect_go.NewUnaryHandler(
 		AgentTrainingServiceUpdateLearningOpportunityProcedure,
 		svc.UpdateLearningOpportunity,
@@ -221,6 +245,8 @@ func NewAgentTrainingServiceHandler(svc AgentTrainingServiceHandler, opts ...con
 			agentTrainingServiceListLearningOpportunitiesHandler.ServeHTTP(w, r)
 		case AgentTrainingServiceListAgentLearningOpportunitiesProcedure:
 			agentTrainingServiceListAgentLearningOpportunitiesHandler.ServeHTTP(w, r)
+		case AgentTrainingServiceCompleteAgentLearningOpportunityProcedure:
+			agentTrainingServiceCompleteAgentLearningOpportunityHandler.ServeHTTP(w, r)
 		case AgentTrainingServiceUpdateLearningOpportunityProcedure:
 			agentTrainingServiceUpdateLearningOpportunityHandler.ServeHTTP(w, r)
 		case AgentTrainingServiceDeleteLearningOpportunityProcedure:
@@ -246,6 +272,10 @@ func (UnimplementedAgentTrainingServiceHandler) ListLearningOpportunities(contex
 
 func (UnimplementedAgentTrainingServiceHandler) ListAgentLearningOpportunities(context.Context, *connect_go.Request[agenttraining.ListAgentLearningOpportunitiesRequest]) (*connect_go.Response[agenttraining.ListAgentLearningOpportunitiesResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.agenttraining.AgentTrainingService.ListAgentLearningOpportunities is not implemented"))
+}
+
+func (UnimplementedAgentTrainingServiceHandler) CompleteAgentLearningOpportunity(context.Context, *connect_go.Request[agenttraining.CompleteAgentLearningOpportunityRequest]) (*connect_go.Response[agenttraining.CompleteAgentLearningOpportunityResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.agenttraining.AgentTrainingService.CompleteAgentLearningOpportunity is not implemented"))
 }
 
 func (UnimplementedAgentTrainingServiceHandler) UpdateLearningOpportunity(context.Context, *connect_go.Request[agenttraining.UpdateLearningOpportunityRequest]) (*connect_go.Response[agenttraining.UpdateLearningOpportunityResponse], error) {
