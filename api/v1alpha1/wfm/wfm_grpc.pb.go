@@ -1403,6 +1403,7 @@ type WFMClient interface {
 	// If @get_updated_shifts is true, then the returned draft schedule will also contain the shift instances and segments in the given @datetime_range.
 	// Errors:
 	//   - grpc.Invalid: the @name, @description or @datetime_range are invalid.
+	//   - grpc.NotFound: the @draft_schedule_sid does not exist for the org sending the request.
 	//   - grpc.Internal: error occurs when updating the schedule or its instances.
 	UpdateDraftSchedule(ctx context.Context, in *UpdateDraftScheduleReq, opts ...grpc.CallOption) (*UpdateDraftScheduleRes, error)
 	// Builds a draft schedule for the given @node_selector in @schedule_scenario_sid over @schedule_scenario_scheduling_range for @draft_schedule_sid and the org making the request.
@@ -1718,6 +1719,7 @@ type WFMClient interface {
 	//
 	// Errors:
 	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.NotFound: the Tour Pattern to delete does not exist.
 	//   - grpc.Internal: error occurs when deleting the data or it's children.
 	DeleteTourPattern(ctx context.Context, in *DeleteTourPatternReq, opts ...grpc.CallOption) (*DeleteTourPatternRes, error)
 	// Creates a Tour Week Pattern for @tour_pattern_sid for the org sending the request, returning @tour_week_pattern_sid.
@@ -1761,6 +1763,7 @@ type WFMClient interface {
 	//
 	// Errors:
 	//   - grpc.Invalid: the request data is invalid or a preexisting tour shift instance config would overlap @tour_shift_instance_config.
+	//   - grpc.NotFound: the @tour_week_pattern_sid does not exist for the org sending the request.
 	//   - grpc.Internal: error occurs when creating the data.
 	CreateTourShiftInstanceConfig(ctx context.Context, in *CreateTourShiftInstanceConfigReq, opts ...grpc.CallOption) (*CreateTourShiftInstanceConfigRes, error)
 	// Updates the @tour_shift_instance_config for the org sending the request, returning @tour_shift_instance_config_sid.
@@ -1772,6 +1775,7 @@ type WFMClient interface {
 	//
 	// Errors:
 	//   - grpc.Invalid: the request data is invalid or a preexisting Tour Shift Instance Config would overlap @tour_shift_instance_config.
+	//   - grpc.NotFound: the @tour_week_pattern_sid does not exist for the org sending the request.
 	//   - grpc.Internal: error occurs when updating the data.
 	UpdateTourShiftInstanceConfig(ctx context.Context, in *UpdateTourShiftInstanceConfigReq, opts ...grpc.CallOption) (*UpdateTourShiftInstanceConfigRes, error)
 	// Lists the Tour Shift Instance Configs belonging to @tour_week_pattern_sids for the org sending the request.
@@ -1882,6 +1886,7 @@ type WFMClient interface {
 	//
 	// Errors:
 	//   - grpc.Invalid: the request data is invalid
+	//   - grpc.NotFound: one or more @wfm_agent_sids does not exist for the org sending the request.
 	//   - grpc.AlreadyExists: an association already exists for at least one SID in @wfm_agent_sids.
 	//   - grpc.Internal: error occurs when creating the association.
 	CreateTourAgentCollectionWFMAgents(ctx context.Context, in *CreateTourAgentCollectionWFMAgentsReq, opts ...grpc.CallOption) (*CreateTourAgentCollectionWFMAgentsRes, error)
@@ -4652,6 +4657,7 @@ type WFMServer interface {
 	// If @get_updated_shifts is true, then the returned draft schedule will also contain the shift instances and segments in the given @datetime_range.
 	// Errors:
 	//   - grpc.Invalid: the @name, @description or @datetime_range are invalid.
+	//   - grpc.NotFound: the @draft_schedule_sid does not exist for the org sending the request.
 	//   - grpc.Internal: error occurs when updating the schedule or its instances.
 	UpdateDraftSchedule(context.Context, *UpdateDraftScheduleReq) (*UpdateDraftScheduleRes, error)
 	// Builds a draft schedule for the given @node_selector in @schedule_scenario_sid over @schedule_scenario_scheduling_range for @draft_schedule_sid and the org making the request.
@@ -4967,6 +4973,7 @@ type WFMServer interface {
 	//
 	// Errors:
 	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.NotFound: the Tour Pattern to delete does not exist.
 	//   - grpc.Internal: error occurs when deleting the data or it's children.
 	DeleteTourPattern(context.Context, *DeleteTourPatternReq) (*DeleteTourPatternRes, error)
 	// Creates a Tour Week Pattern for @tour_pattern_sid for the org sending the request, returning @tour_week_pattern_sid.
@@ -5010,6 +5017,7 @@ type WFMServer interface {
 	//
 	// Errors:
 	//   - grpc.Invalid: the request data is invalid or a preexisting tour shift instance config would overlap @tour_shift_instance_config.
+	//   - grpc.NotFound: the @tour_week_pattern_sid does not exist for the org sending the request.
 	//   - grpc.Internal: error occurs when creating the data.
 	CreateTourShiftInstanceConfig(context.Context, *CreateTourShiftInstanceConfigReq) (*CreateTourShiftInstanceConfigRes, error)
 	// Updates the @tour_shift_instance_config for the org sending the request, returning @tour_shift_instance_config_sid.
@@ -5021,6 +5029,7 @@ type WFMServer interface {
 	//
 	// Errors:
 	//   - grpc.Invalid: the request data is invalid or a preexisting Tour Shift Instance Config would overlap @tour_shift_instance_config.
+	//   - grpc.NotFound: the @tour_week_pattern_sid does not exist for the org sending the request.
 	//   - grpc.Internal: error occurs when updating the data.
 	UpdateTourShiftInstanceConfig(context.Context, *UpdateTourShiftInstanceConfigReq) (*UpdateTourShiftInstanceConfigRes, error)
 	// Lists the Tour Shift Instance Configs belonging to @tour_week_pattern_sids for the org sending the request.
@@ -5131,6 +5140,7 @@ type WFMServer interface {
 	//
 	// Errors:
 	//   - grpc.Invalid: the request data is invalid
+	//   - grpc.NotFound: one or more @wfm_agent_sids does not exist for the org sending the request.
 	//   - grpc.AlreadyExists: an association already exists for at least one SID in @wfm_agent_sids.
 	//   - grpc.Internal: error occurs when creating the association.
 	CreateTourAgentCollectionWFMAgents(context.Context, *CreateTourAgentCollectionWFMAgentsReq) (*CreateTourAgentCollectionWFMAgentsRes, error)
