@@ -45,6 +45,9 @@ const (
 	// BillingServiceDeleteInvoiceProcedure is the fully-qualified name of the BillingService's
 	// DeleteInvoice RPC.
 	BillingServiceDeleteInvoiceProcedure = "/services.billing.v1alpha1.BillingService/DeleteInvoice"
+	// BillingServiceExportInvoiceProcedure is the fully-qualified name of the BillingService's
+	// ExportInvoice RPC.
+	BillingServiceExportInvoiceProcedure = "/services.billing.v1alpha1.BillingService/ExportInvoice"
 	// BillingServiceGetActiveBillingPlanProcedure is the fully-qualified name of the BillingService's
 	// GetActiveBillingPlan RPC.
 	BillingServiceGetActiveBillingPlanProcedure = "/services.billing.v1alpha1.BillingService/GetActiveBillingPlan"
@@ -128,6 +131,18 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	DeleteInvoice(context.Context, *connect_go.Request[v1alpha1.DeleteInvoiceRequest]) (*connect_go.Response[v1alpha1.DeleteInvoiceResponse], error)
+	// Exports an invoice.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The specified invoice doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	ExportInvoice(context.Context, *connect_go.Request[v1alpha1.ExportInvoiceRequest]) (*connect_go.Response[v1alpha1.ExportInvoiceResponse], error)
 	// Returns the active billing plan for the ORG. The active billing plan is a billing plan whose
 	// start_time has passed and end_time has not passed. If multiple satisfy that requirement, the
 	// newest one is considered active. If no plan is active, it indicates the org is currently using
@@ -267,6 +282,11 @@ func NewBillingServiceClient(httpClient connect_go.HTTPClient, baseURL string, o
 			baseURL+BillingServiceDeleteInvoiceProcedure,
 			opts...,
 		),
+		exportInvoice: connect_go.NewClient[v1alpha1.ExportInvoiceRequest, v1alpha1.ExportInvoiceResponse](
+			httpClient,
+			baseURL+BillingServiceExportInvoiceProcedure,
+			opts...,
+		),
 		getActiveBillingPlan: connect_go.NewClient[v1alpha1.GetActiveBillingPlanRequest, v1alpha1.GetActiveBillingPlanResponse](
 			httpClient,
 			baseURL+BillingServiceGetActiveBillingPlanProcedure,
@@ -321,6 +341,7 @@ type billingServiceClient struct {
 	createInvoice            *connect_go.Client[v1alpha1.CreateInvoiceRequest, v1alpha1.CreateInvoiceResponse]
 	deleteBillingPlan        *connect_go.Client[v1alpha1.DeleteBillingPlanRequest, v1alpha1.DeleteBillingPlanResponse]
 	deleteInvoice            *connect_go.Client[v1alpha1.DeleteInvoiceRequest, v1alpha1.DeleteInvoiceResponse]
+	exportInvoice            *connect_go.Client[v1alpha1.ExportInvoiceRequest, v1alpha1.ExportInvoiceResponse]
 	getActiveBillingPlan     *connect_go.Client[v1alpha1.GetActiveBillingPlanRequest, v1alpha1.GetActiveBillingPlanResponse]
 	getBillingPlan           *connect_go.Client[v1alpha1.GetBillingPlanRequest, v1alpha1.GetBillingPlanResponse]
 	getDefaultBillingPlan    *connect_go.Client[v1alpha1.GetDefaultBillingPlanRequest, v1alpha1.GetDefaultBillingPlanResponse]
@@ -350,6 +371,11 @@ func (c *billingServiceClient) DeleteBillingPlan(ctx context.Context, req *conne
 // DeleteInvoice calls services.billing.v1alpha1.BillingService.DeleteInvoice.
 func (c *billingServiceClient) DeleteInvoice(ctx context.Context, req *connect_go.Request[v1alpha1.DeleteInvoiceRequest]) (*connect_go.Response[v1alpha1.DeleteInvoiceResponse], error) {
 	return c.deleteInvoice.CallUnary(ctx, req)
+}
+
+// ExportInvoice calls services.billing.v1alpha1.BillingService.ExportInvoice.
+func (c *billingServiceClient) ExportInvoice(ctx context.Context, req *connect_go.Request[v1alpha1.ExportInvoiceRequest]) (*connect_go.Response[v1alpha1.ExportInvoiceResponse], error) {
+	return c.exportInvoice.CallUnary(ctx, req)
 }
 
 // GetActiveBillingPlan calls services.billing.v1alpha1.BillingService.GetActiveBillingPlan.
@@ -452,6 +478,18 @@ type BillingServiceHandler interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	DeleteInvoice(context.Context, *connect_go.Request[v1alpha1.DeleteInvoiceRequest]) (*connect_go.Response[v1alpha1.DeleteInvoiceResponse], error)
+	// Exports an invoice.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The specified invoice doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	ExportInvoice(context.Context, *connect_go.Request[v1alpha1.ExportInvoiceRequest]) (*connect_go.Response[v1alpha1.ExportInvoiceResponse], error)
 	// Returns the active billing plan for the ORG. The active billing plan is a billing plan whose
 	// start_time has passed and end_time has not passed. If multiple satisfy that requirement, the
 	// newest one is considered active. If no plan is active, it indicates the org is currently using
@@ -587,6 +625,11 @@ func NewBillingServiceHandler(svc BillingServiceHandler, opts ...connect_go.Hand
 		svc.DeleteInvoice,
 		opts...,
 	)
+	billingServiceExportInvoiceHandler := connect_go.NewUnaryHandler(
+		BillingServiceExportInvoiceProcedure,
+		svc.ExportInvoice,
+		opts...,
+	)
 	billingServiceGetActiveBillingPlanHandler := connect_go.NewUnaryHandler(
 		BillingServiceGetActiveBillingPlanProcedure,
 		svc.GetActiveBillingPlan,
@@ -642,6 +685,8 @@ func NewBillingServiceHandler(svc BillingServiceHandler, opts ...connect_go.Hand
 			billingServiceDeleteBillingPlanHandler.ServeHTTP(w, r)
 		case BillingServiceDeleteInvoiceProcedure:
 			billingServiceDeleteInvoiceHandler.ServeHTTP(w, r)
+		case BillingServiceExportInvoiceProcedure:
+			billingServiceExportInvoiceHandler.ServeHTTP(w, r)
 		case BillingServiceGetActiveBillingPlanProcedure:
 			billingServiceGetActiveBillingPlanHandler.ServeHTTP(w, r)
 		case BillingServiceGetBillingPlanProcedure:
@@ -683,6 +728,10 @@ func (UnimplementedBillingServiceHandler) DeleteBillingPlan(context.Context, *co
 
 func (UnimplementedBillingServiceHandler) DeleteInvoice(context.Context, *connect_go.Request[v1alpha1.DeleteInvoiceRequest]) (*connect_go.Response[v1alpha1.DeleteInvoiceResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.billing.v1alpha1.BillingService.DeleteInvoice is not implemented"))
+}
+
+func (UnimplementedBillingServiceHandler) ExportInvoice(context.Context, *connect_go.Request[v1alpha1.ExportInvoiceRequest]) (*connect_go.Response[v1alpha1.ExportInvoiceResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.billing.v1alpha1.BillingService.ExportInvoice is not implemented"))
 }
 
 func (UnimplementedBillingServiceHandler) GetActiveBillingPlan(context.Context, *connect_go.Request[v1alpha1.GetActiveBillingPlanRequest]) (*connect_go.Response[v1alpha1.GetActiveBillingPlanResponse], error) {

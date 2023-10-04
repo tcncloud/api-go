@@ -23,6 +23,7 @@ const (
 	BillingService_CreateInvoice_FullMethodName            = "/services.billing.v1alpha1.BillingService/CreateInvoice"
 	BillingService_DeleteBillingPlan_FullMethodName        = "/services.billing.v1alpha1.BillingService/DeleteBillingPlan"
 	BillingService_DeleteInvoice_FullMethodName            = "/services.billing.v1alpha1.BillingService/DeleteInvoice"
+	BillingService_ExportInvoice_FullMethodName            = "/services.billing.v1alpha1.BillingService/ExportInvoice"
 	BillingService_GetActiveBillingPlan_FullMethodName     = "/services.billing.v1alpha1.BillingService/GetActiveBillingPlan"
 	BillingService_GetBillingPlan_FullMethodName           = "/services.billing.v1alpha1.BillingService/GetBillingPlan"
 	BillingService_GetDefaultBillingPlan_FullMethodName    = "/services.billing.v1alpha1.BillingService/GetDefaultBillingPlan"
@@ -90,6 +91,18 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	DeleteInvoice(ctx context.Context, in *DeleteInvoiceRequest, opts ...grpc.CallOption) (*DeleteInvoiceResponse, error)
+	// Exports an invoice.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The specified invoice doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	ExportInvoice(ctx context.Context, in *ExportInvoiceRequest, opts ...grpc.CallOption) (*ExportInvoiceResponse, error)
 	// Returns the active billing plan for the ORG. The active billing plan is a billing plan whose
 	// start_time has passed and end_time has not passed. If multiple satisfy that requirement, the
 	// newest one is considered active. If no plan is active, it indicates the org is currently using
@@ -243,6 +256,15 @@ func (c *billingServiceClient) DeleteInvoice(ctx context.Context, in *DeleteInvo
 	return out, nil
 }
 
+func (c *billingServiceClient) ExportInvoice(ctx context.Context, in *ExportInvoiceRequest, opts ...grpc.CallOption) (*ExportInvoiceResponse, error) {
+	out := new(ExportInvoiceResponse)
+	err := c.cc.Invoke(ctx, BillingService_ExportInvoice_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *billingServiceClient) GetActiveBillingPlan(ctx context.Context, in *GetActiveBillingPlanRequest, opts ...grpc.CallOption) (*GetActiveBillingPlanResponse, error) {
 	out := new(GetActiveBillingPlanResponse)
 	err := c.cc.Invoke(ctx, BillingService_GetActiveBillingPlan_FullMethodName, in, out, opts...)
@@ -380,6 +402,18 @@ type BillingServiceServer interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	DeleteInvoice(context.Context, *DeleteInvoiceRequest) (*DeleteInvoiceResponse, error)
+	// Exports an invoice.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The specified invoice doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	ExportInvoice(context.Context, *ExportInvoiceRequest) (*ExportInvoiceResponse, error)
 	// Returns the active billing plan for the ORG. The active billing plan is a billing plan whose
 	// start_time has passed and end_time has not passed. If multiple satisfy that requirement, the
 	// newest one is considered active. If no plan is active, it indicates the org is currently using
@@ -506,6 +540,9 @@ func (UnimplementedBillingServiceServer) DeleteBillingPlan(context.Context, *Del
 func (UnimplementedBillingServiceServer) DeleteInvoice(context.Context, *DeleteInvoiceRequest) (*DeleteInvoiceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteInvoice not implemented")
 }
+func (UnimplementedBillingServiceServer) ExportInvoice(context.Context, *ExportInvoiceRequest) (*ExportInvoiceResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ExportInvoice not implemented")
+}
 func (UnimplementedBillingServiceServer) GetActiveBillingPlan(context.Context, *GetActiveBillingPlanRequest) (*GetActiveBillingPlanResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetActiveBillingPlan not implemented")
 }
@@ -614,6 +651,24 @@ func _BillingService_DeleteInvoice_Handler(srv interface{}, ctx context.Context,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BillingServiceServer).DeleteInvoice(ctx, req.(*DeleteInvoiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_ExportInvoice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExportInvoiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).ExportInvoice(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_ExportInvoice_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).ExportInvoice(ctx, req.(*ExportInvoiceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -802,6 +857,10 @@ var BillingService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteInvoice",
 			Handler:    _BillingService_DeleteInvoice_Handler,
+		},
+		{
+			MethodName: "ExportInvoice",
+			Handler:    _BillingService_ExportInvoice_Handler,
 		},
 		{
 			MethodName: "GetActiveBillingPlan",
