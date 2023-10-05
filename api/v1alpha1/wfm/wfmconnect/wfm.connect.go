@@ -1559,12 +1559,14 @@ type WFMClient interface {
 	// The @node_description fields may optionally be left blank.
 	// The @copied_from_scenario_sid field will be ignored, as it will be set to nil in the newly created scenario.
 	// The @creation_datetime and @is_default fields will also be ignored and set as the current time and false respectively.
+	// The @skill_profile_category will be associated with the created program node.
 	// Required permissions:
 	//
 	//	NONE
 	//
 	// Errors:
 	//   - grpc.Invalid: parameters in the @req are invalid for the org making the request.
+	//   - grpc.NotFound: the @skill_profile_category does not exist.
 	//   - grpc.Internal: error occurs when creating the new scenario, or any of the node entities.
 	CreateScheduleScenarioWithNodes(context.Context, *connect_go.Request[wfm.CreateScheduleScenarioWithNodesReq]) (*connect_go.Response[wfm.CreateScheduleScenarioWithNodesRes], error)
 	// Updates a schedule scenario corresponding to the given @schedule_scenario_sid and org sending the request with the provided parameters.
@@ -4999,12 +5001,14 @@ type WFMHandler interface {
 	// The @node_description fields may optionally be left blank.
 	// The @copied_from_scenario_sid field will be ignored, as it will be set to nil in the newly created scenario.
 	// The @creation_datetime and @is_default fields will also be ignored and set as the current time and false respectively.
+	// The @skill_profile_category will be associated with the created program node.
 	// Required permissions:
 	//
 	//	NONE
 	//
 	// Errors:
 	//   - grpc.Invalid: parameters in the @req are invalid for the org making the request.
+	//   - grpc.NotFound: the @skill_profile_category does not exist.
 	//   - grpc.Internal: error occurs when creating the new scenario, or any of the node entities.
 	CreateScheduleScenarioWithNodes(context.Context, *connect_go.Request[wfm.CreateScheduleScenarioWithNodesReq]) (*connect_go.Response[wfm.CreateScheduleScenarioWithNodesRes], error)
 	// Updates a schedule scenario corresponding to the given @schedule_scenario_sid and org sending the request with the provided parameters.
