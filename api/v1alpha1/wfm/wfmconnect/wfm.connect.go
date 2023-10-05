@@ -1035,6 +1035,7 @@ type WFMClient interface {
 	// Errors:
 	//   - grpc.Invalid: one or more fields in the @node have invalid values.
 	//   - grpc.NotFound: parent location node doesn't exist or belongs to a different scenario than the one given.
+	//     the @skill_profile_category does not exist.
 	//   - grpc.Internal: error occurs when creating the program node.
 	CreateProgramNode(context.Context, *connect_go.Request[wfm.CreateProgramNodeReq]) (*connect_go.Response[wfm.CreateProgramNodeRes], error)
 	// Updates a program node for the given @program_node_sid and org sending the request with the provided parameters.
@@ -1049,6 +1050,7 @@ type WFMClient interface {
 	//   - grpc.Invalid: one or more fields in the @program_node have invalid values.
 	//   - grpc.Internal: error occurs when updating the program node.
 	//   - grpc.NotFound: entry to be updated doesn't exist, or the given parent @location_node_sid belongs to a different scenario than the program node to update.
+	//     the @skill_profile_category does not exist.
 	UpdateProgramNode(context.Context, *connect_go.Request[wfm.UpdateProgramNodeReq]) (*connect_go.Response[wfm.UpdateProgramNodeRes], error)
 	// Lists the program nodes with the given @program_node_sids for the org sending the request.
 	// Required permissions:
@@ -4477,6 +4479,7 @@ type WFMHandler interface {
 	// Errors:
 	//   - grpc.Invalid: one or more fields in the @node have invalid values.
 	//   - grpc.NotFound: parent location node doesn't exist or belongs to a different scenario than the one given.
+	//     the @skill_profile_category does not exist.
 	//   - grpc.Internal: error occurs when creating the program node.
 	CreateProgramNode(context.Context, *connect_go.Request[wfm.CreateProgramNodeReq]) (*connect_go.Response[wfm.CreateProgramNodeRes], error)
 	// Updates a program node for the given @program_node_sid and org sending the request with the provided parameters.
@@ -4491,6 +4494,7 @@ type WFMHandler interface {
 	//   - grpc.Invalid: one or more fields in the @program_node have invalid values.
 	//   - grpc.Internal: error occurs when updating the program node.
 	//   - grpc.NotFound: entry to be updated doesn't exist, or the given parent @location_node_sid belongs to a different scenario than the program node to update.
+	//     the @skill_profile_category does not exist.
 	UpdateProgramNode(context.Context, *connect_go.Request[wfm.UpdateProgramNodeReq]) (*connect_go.Response[wfm.UpdateProgramNodeRes], error)
 	// Lists the program nodes with the given @program_node_sids for the org sending the request.
 	// Required permissions:
