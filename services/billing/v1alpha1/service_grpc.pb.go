@@ -19,66 +19,35 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	BillingService_BulkDeleteRateDefinitions_FullMethodName = "/services.billing.v1alpha1.BillingService/BulkDeleteRateDefinitions"
-	BillingService_BulkUpdateRateDefinitions_FullMethodName = "/services.billing.v1alpha1.BillingService/BulkUpdateRateDefinitions"
-	BillingService_CreateBillingPlan_FullMethodName         = "/services.billing.v1alpha1.BillingService/CreateBillingPlan"
-	BillingService_CreateInvoice_FullMethodName             = "/services.billing.v1alpha1.BillingService/CreateInvoice"
-	BillingService_CreateRateDefinition_FullMethodName      = "/services.billing.v1alpha1.BillingService/CreateRateDefinition"
-	BillingService_CreateRateDefinitionGroup_FullMethodName = "/services.billing.v1alpha1.BillingService/CreateRateDefinitionGroup"
-	BillingService_DeleteBillingPlan_FullMethodName         = "/services.billing.v1alpha1.BillingService/DeleteBillingPlan"
-	BillingService_DeleteInvoice_FullMethodName             = "/services.billing.v1alpha1.BillingService/DeleteInvoice"
-	BillingService_DeleteRateDefinition_FullMethodName      = "/services.billing.v1alpha1.BillingService/DeleteRateDefinition"
-	BillingService_DeleteRateDefinitionGroup_FullMethodName = "/services.billing.v1alpha1.BillingService/DeleteRateDefinitionGroup"
-	BillingService_ExportInvoice_FullMethodName             = "/services.billing.v1alpha1.BillingService/ExportInvoice"
-	BillingService_GetActiveBillingPlan_FullMethodName      = "/services.billing.v1alpha1.BillingService/GetActiveBillingPlan"
-	BillingService_GetBillingPlan_FullMethodName            = "/services.billing.v1alpha1.BillingService/GetBillingPlan"
-	BillingService_GetDefaultBillingPlan_FullMethodName     = "/services.billing.v1alpha1.BillingService/GetDefaultBillingPlan"
-	BillingService_GetInvoice_FullMethodName                = "/services.billing.v1alpha1.BillingService/GetInvoice"
-	BillingService_GetRateDefinition_FullMethodName         = "/services.billing.v1alpha1.BillingService/GetRateDefinition"
-	BillingService_GetRateDefinitionGroup_FullMethodName    = "/services.billing.v1alpha1.BillingService/GetRateDefinitionGroup"
-	BillingService_ListBillingPlans_FullMethodName          = "/services.billing.v1alpha1.BillingService/ListBillingPlans"
-	BillingService_ListInvoices_FullMethodName              = "/services.billing.v1alpha1.BillingService/ListInvoices"
-	BillingService_ListRateDefinitions_FullMethodName       = "/services.billing.v1alpha1.BillingService/ListRateDefinitions"
-	BillingService_ListRateDefinitionGroups_FullMethodName  = "/services.billing.v1alpha1.BillingService/ListRateDefinitionGroups"
-	BillingService_UpdateBillingPlan_FullMethodName         = "/services.billing.v1alpha1.BillingService/UpdateBillingPlan"
-	BillingService_UpdateDefaultBillingPlan_FullMethodName  = "/services.billing.v1alpha1.BillingService/UpdateDefaultBillingPlan"
-	BillingService_UpdateInvoice_FullMethodName             = "/services.billing.v1alpha1.BillingService/UpdateInvoice"
-	BillingService_UpdateRateDefinition_FullMethodName      = "/services.billing.v1alpha1.BillingService/UpdateRateDefinition"
-	BillingService_UpdateRateDefinitionGroup_FullMethodName = "/services.billing.v1alpha1.BillingService/UpdateRateDefinitionGroup"
+	BillingService_CreateBillingPlan_FullMethodName           = "/services.billing.v1alpha1.BillingService/CreateBillingPlan"
+	BillingService_CreateDefaultBillingPlan_FullMethodName    = "/services.billing.v1alpha1.BillingService/CreateDefaultBillingPlan"
+	BillingService_CreateDefaultRateDefinition_FullMethodName = "/services.billing.v1alpha1.BillingService/CreateDefaultRateDefinition"
+	BillingService_CreateInvoice_FullMethodName               = "/services.billing.v1alpha1.BillingService/CreateInvoice"
+	BillingService_CreateRateDefinition_FullMethodName        = "/services.billing.v1alpha1.BillingService/CreateRateDefinition"
+	BillingService_DeleteBillingPlan_FullMethodName           = "/services.billing.v1alpha1.BillingService/DeleteBillingPlan"
+	BillingService_DeleteDefaultBillingPlan_FullMethodName    = "/services.billing.v1alpha1.BillingService/DeleteDefaultBillingPlan"
+	BillingService_DeleteDefaultRateDefinition_FullMethodName = "/services.billing.v1alpha1.BillingService/DeleteDefaultRateDefinition"
+	BillingService_DeleteInvoice_FullMethodName               = "/services.billing.v1alpha1.BillingService/DeleteInvoice"
+	BillingService_DeleteRateDefinition_FullMethodName        = "/services.billing.v1alpha1.BillingService/DeleteRateDefinition"
+	BillingService_ExportInvoice_FullMethodName               = "/services.billing.v1alpha1.BillingService/ExportInvoice"
+	BillingService_GetActiveBillingPlan_FullMethodName        = "/services.billing.v1alpha1.BillingService/GetActiveBillingPlan"
+	BillingService_GetBillingPlan_FullMethodName              = "/services.billing.v1alpha1.BillingService/GetBillingPlan"
+	BillingService_GetInvoice_FullMethodName                  = "/services.billing.v1alpha1.BillingService/GetInvoice"
+	BillingService_GetRateDefinition_FullMethodName           = "/services.billing.v1alpha1.BillingService/GetRateDefinition"
+	BillingService_ListBillingPlans_FullMethodName            = "/services.billing.v1alpha1.BillingService/ListBillingPlans"
+	BillingService_ListInvoices_FullMethodName                = "/services.billing.v1alpha1.BillingService/ListInvoices"
+	BillingService_ListRateDefinitions_FullMethodName         = "/services.billing.v1alpha1.BillingService/ListRateDefinitions"
+	BillingService_UpdateBillingPlan_FullMethodName           = "/services.billing.v1alpha1.BillingService/UpdateBillingPlan"
+	BillingService_UpdateDefaultBillingPlan_FullMethodName    = "/services.billing.v1alpha1.BillingService/UpdateDefaultBillingPlan"
+	BillingService_UpdateDefaultRateDefinition_FullMethodName = "/services.billing.v1alpha1.BillingService/UpdateDefaultRateDefinition"
+	BillingService_UpdateInvoice_FullMethodName               = "/services.billing.v1alpha1.BillingService/UpdateInvoice"
+	BillingService_UpdateRateDefinition_FullMethodName        = "/services.billing.v1alpha1.BillingService/UpdateRateDefinition"
 )
 
 // BillingServiceClient is the client API for BillingService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type BillingServiceClient interface {
-	// Bulk deletes rate definitions.
-	//   - The billing plan(s) must be inactive.
-	//
-	// Required permissions:
-	//
-	//	CUSTOMER_SUPPORT
-	//
-	// Errors:
-	//   - grpc.FailedPrecondition: The billing plan(s) are active.
-	//   - grpc.Internal: An internal error occurred.
-	//   - grpc.InvalidArgument: The request is invalid.
-	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
-	//   - grpc.Unavailable: The operation is currently unavailable.
-	BulkDeleteRateDefinitions(ctx context.Context, in *BulkDeleteRateDefinitionsRequest, opts ...grpc.CallOption) (*BulkDeleteRateDefinitionsResponse, error)
-	// Bulk updates rate definitions.
-	//   - The billing plan(s) must be inactive.
-	//
-	// Required permissions:
-	//
-	//	CUSTOMER_SUPPORT
-	//
-	// Errors:
-	//   - grpc.FailedPrecondition: The billing plan(s) are active.
-	//   - grpc.Internal: An internal error occurred.
-	//   - grpc.InvalidArgument: The request is invalid.
-	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
-	//   - grpc.Unavailable: The operation is currently unavailable.
-	BulkUpdateRateDefinitions(ctx context.Context, in *BulkUpdateRateDefinitionsRequest, opts ...grpc.CallOption) (*BulkUpdateRateDefinitionsResponse, error)
 	// Creates a billing plan for the ORG.
 	// Required permissions:
 	//
@@ -90,6 +59,32 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	CreateBillingPlan(ctx context.Context, in *CreateBillingPlanRequest, opts ...grpc.CallOption) (*CreateBillingPlanResponse, error)
+	// Creates the default billing plan for the REGION.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//	TCN_BILLING_ADMIN
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable.
+	CreateDefaultBillingPlan(ctx context.Context, in *CreateDefaultBillingPlanRequest, opts ...grpc.CallOption) (*CreateDefaultBillingPlanResponse, error)
+	// Creates a default rate definition for a default billing plan for the REGION.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//	TCN_BILLING_ADMIN
+	//
+	// Errors:
+	//   - grpc.AlreadyExists: A rate definition with the same feature already exists.
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The default billing plan doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable.
+	CreateDefaultRateDefinition(ctx context.Context, in *CreateDefaultRateDefinitionRequest, opts ...grpc.CallOption) (*CreateDefaultRateDefinitionResponse, error)
 	// Creates an invoice for the ORG for the specified billing cycle.
 	// Required permissions:
 	//
@@ -108,38 +103,57 @@ type BillingServiceClient interface {
 	//	CUSTOMER_SUPPORT
 	//
 	// Errors:
-	//   - grpc.AlreadyExists: A rate definition with the same group id already exists.
+	//   - grpc.AlreadyExists: A rate definition with the same feature id already exists.
 	//   - grpc.Internal: An internal error occurred.
 	//   - grpc.InvalidArgument: The request is invalid.
 	//   - grpc.NotFound: The specified billing plan or rate definition group doesn't exist.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	CreateRateDefinition(ctx context.Context, in *CreateRateDefinitionRequest, opts ...grpc.CallOption) (*CreateRateDefinitionResponse, error)
-	// Creates a rate definition group.
-	// Required permissions:
-	//
-	//	CUSTOMER_SUPPORT
-	//	TCN_BILLING_ADMIN
-	//
-	// Errors:
-	//   - grpc.AlreadyExists: A rate definition group with the same data already exists.
-	//   - grpc.Internal: An internal error occurred.
-	//   - grpc.InvalidArgument: The request is invalid.
-	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
-	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
-	CreateRateDefinitionGroup(ctx context.Context, in *CreateRateDefinitionGroupRequest, opts ...grpc.CallOption) (*CreateRateDefinitionGroupResponse, error)
 	// Deletes an inactive billing plan. A billing plan is inactive if it hasn't started.
 	// Required permissions:
 	//
 	//	CUSTOMER_SUPPORT
 	//
 	// Errors:
+	//   - grpc.FailedPrecondition: The billing plan is active.
 	//   - grpc.Internal: An internal error occurred.
 	//   - grpc.InvalidArgument: The request is invalid.
 	//   - grpc.NotFound: The specified billing plan doesn't exist.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	DeleteBillingPlan(ctx context.Context, in *DeleteBillingPlanRequest, opts ...grpc.CallOption) (*DeleteBillingPlanResponse, error)
+	// Deletes an inactive default billing plan for the REGION. A billing plan is inactive
+	// if it hasn't started.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//	TCN_BILLING_ADMIN
+	//
+	// Errors:
+	//   - grpc.FailedPrecondition: The billing plan is active.
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The default billing plan doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable.
+	DeleteDefaultBillingPlan(ctx context.Context, in *DeleteDefaultBillingPlanRequest, opts ...grpc.CallOption) (*DeleteDefaultBillingPlanResponse, error)
+	// Deletes a rate definition from the default billing plan for the REGION.
+	//   - The default billing plan must be inactive.
+	//
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//	TCN_BILLING_ADMIN
+	//
+	// Errors:
+	//   - grpc.FailedPrecondition: The billing plan is active.
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The rate definition doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable.
+	DeleteDefaultRateDefinition(ctx context.Context, in *DeleteDefaultRateDefinitionRequest, opts ...grpc.CallOption) (*DeleteDefaultRateDefinitionResponse, error)
 	// Deletes an invoice.
 	// Required permissions:
 	//
@@ -167,21 +181,6 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	DeleteRateDefinition(ctx context.Context, in *DeleteRateDefinitionRequest, opts ...grpc.CallOption) (*DeleteRateDefinitionResponse, error)
-	// Deletes a rate definition group.
-	//   - This will stop any rate definitions in the group from generating charges.
-	//
-	// Required permissions:
-	//
-	//	CUSTOMER_SUPPORT
-	//	TCN_BILLING_ADMIN
-	//
-	// Errors:
-	//   - grpc.Internal: An internal error occurred.
-	//   - grpc.InvalidArgument: The request is invalid.
-	//   - grpc.NotFound: The specified rate definition group doesn't exist.
-	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
-	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
-	DeleteRateDefinitionGroup(ctx context.Context, in *DeleteRateDefinitionGroupRequest, opts ...grpc.CallOption) (*DeleteRateDefinitionGroupResponse, error)
 	// Exports an invoice.
 	// Required permissions:
 	//
@@ -194,10 +193,10 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	ExportInvoice(ctx context.Context, in *ExportInvoiceRequest, opts ...grpc.CallOption) (*ExportInvoiceResponse, error)
-	// Returns the active billing plan for the ORG. The active billing plan is a billing plan whose
-	// start_time has passed and end_time has not passed. If multiple satisfy that requirement, the
-	// newest one is considered active. If no plan is active, it indicates the org is currently using
-	// only the system defaults.
+	// Returns the active billing plan for the ORG or REGION. The active billing plan is a billing plan
+	// whose start_time has passed and end_time has not passed. If multiple satisfy that requirement, the
+	// newest one is considered active. If no plan is active, it indicates the ORG is using REGION defaults,
+	// or that the REGION has not been set up for billing yet.
 	// Required permissions:
 	//
 	//	CUSTOMER_SUPPORT
@@ -205,7 +204,7 @@ type BillingServiceClient interface {
 	// Errors:
 	//   - grpc.Internal: An internal error occurred.
 	//   - grpc.InvalidArgument: The request is invalid.
-	//   - grpc.NotFound: The org does not have an active billing plan.
+	//   - grpc.NotFound: There isn't an active billing plan.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	GetActiveBillingPlan(ctx context.Context, in *GetActiveBillingPlanRequest, opts ...grpc.CallOption) (*GetActiveBillingPlanResponse, error)
@@ -221,16 +220,6 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	GetBillingPlan(ctx context.Context, in *GetBillingPlanRequest, opts ...grpc.CallOption) (*GetBillingPlanResponse, error)
-	// Returns the default billing plan for the REGION.
-	// Required permissions:
-	//
-	//	CUSTOMER_SUPPORT
-	//
-	// Errors:
-	//   - grpc.Internal: An internal error occurred.
-	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
-	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
-	GetDefaultBillingPlan(ctx context.Context, in *GetDefaultBillingPlanRequest, opts ...grpc.CallOption) (*GetDefaultBillingPlanResponse, error)
 	// Returns the specified invoice.
 	// Required permissions:
 	//
@@ -255,18 +244,6 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
 	GetRateDefinition(ctx context.Context, in *GetRateDefinitionRequest, opts ...grpc.CallOption) (*GetRateDefinitionResponse, error)
-	// Returns the specified rate definition group.
-	// Required permissions:
-	//
-	//	CUSTOMER_SUPPORT
-	//
-	// Errors:
-	//   - grpc.Internal: An internal error occurred.
-	//   - grpc.InvalidArgument: The request is invalid.
-	//   - grpc.NotFound: The specified rate definition group doesn't exist.
-	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
-	//   - grpc.Unavailable: The operation is currently unavailable.
-	GetRateDefinitionGroup(ctx context.Context, in *GetRateDefinitionGroupRequest, opts ...grpc.CallOption) (*GetRateDefinitionGroupResponse, error)
 	// Lists billing plans.
 	// Required permissions:
 	//
@@ -300,41 +277,48 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
 	ListRateDefinitions(ctx context.Context, in *ListRateDefinitionsRequest, opts ...grpc.CallOption) (*ListRateDefinitionsResponse, error)
-	// Lists rate definition groups.
-	// Required permissions:
-	//
-	//	CUSTOMER_SUPPORT
-	//
-	// Errors:
-	//   - grpc.Internal: An internal error occurred.
-	//   - grpc.InvalidArgument: The request is invalid.
-	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
-	//   - grpc.Unavailable: The operation is currently unavailable.
-	ListRateDefinitionGroups(ctx context.Context, in *ListRateDefinitionGroupsRequest, opts ...grpc.CallOption) (*ListRateDefinitionGroupsResponse, error)
 	// Updates an inactive billing plan. A billing plan is inactive if it hasn't started.
 	// Required permissions:
 	//
 	//	CUSTOMER_SUPPORT
 	//
 	// Errors:
+	//   - grpc.FailedPrecondition: The billing plan is active.
 	//   - grpc.Internal: An internal error occurred.
 	//   - grpc.InvalidArgument: The request is invalid.
 	//   - grpc.NotFound: The specified billing plan doesn't exist.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	UpdateBillingPlan(ctx context.Context, in *UpdateBillingPlanRequest, opts ...grpc.CallOption) (*UpdateBillingPlanResponse, error)
-	// Updates the default billing plan for the REGION.
+	// Updates an inactive default billing plan for the REGION. A billing plan is inactive
+	// if it hasn't started.
 	// Required permissions:
 	//
 	//	CUSTOMER_SUPPORT
 	//	TCN_BILLING_ADMIN
 	//
 	// Errors:
+	//   - grpc.FailedPrecondition: The billing plan is active.
 	//   - grpc.Internal: An internal error occurred.
 	//   - grpc.InvalidArgument: The request is invalid.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	UpdateDefaultBillingPlan(ctx context.Context, in *UpdateDefaultBillingPlanRequest, opts ...grpc.CallOption) (*UpdateDefaultBillingPlanResponse, error)
+	// Updates a default rate definition.
+	//   - The billing plan must be inactive.
+	//
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.FailedPrecondition: The billing plan is active.
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The specified rate definition doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable.
+	UpdateDefaultRateDefinition(ctx context.Context, in *UpdateDefaultRateDefinitionRequest, opts ...grpc.CallOption) (*UpdateDefaultRateDefinitionResponse, error)
 	// Updates the specified invoice.
 	// Required permissions:
 	//
@@ -362,21 +346,6 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
 	UpdateRateDefinition(ctx context.Context, in *UpdateRateDefinitionRequest, opts ...grpc.CallOption) (*UpdateRateDefinitionResponse, error)
-	// Updates a rate definition group.
-	//   - Any rate definitions using this group will use the new data.
-	//
-	// Required permissions:
-	//
-	//	CUSTOMER_SUPPORT
-	//	TCN_BILLING_ADMIN
-	//
-	// Errors:
-	//   - grpc.Internal: An internal error occurred.
-	//   - grpc.InvalidArgument: The request is invalid.
-	//   - grpc.NotFound: The specified rate definition group doesn't exist.
-	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
-	//   - grpc.Unavailable: The operation is currently unavailable.
-	UpdateRateDefinitionGroup(ctx context.Context, in *UpdateRateDefinitionGroupRequest, opts ...grpc.CallOption) (*UpdateRateDefinitionGroupResponse, error)
 }
 
 type billingServiceClient struct {
@@ -387,27 +356,27 @@ func NewBillingServiceClient(cc grpc.ClientConnInterface) BillingServiceClient {
 	return &billingServiceClient{cc}
 }
 
-func (c *billingServiceClient) BulkDeleteRateDefinitions(ctx context.Context, in *BulkDeleteRateDefinitionsRequest, opts ...grpc.CallOption) (*BulkDeleteRateDefinitionsResponse, error) {
-	out := new(BulkDeleteRateDefinitionsResponse)
-	err := c.cc.Invoke(ctx, BillingService_BulkDeleteRateDefinitions_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *billingServiceClient) BulkUpdateRateDefinitions(ctx context.Context, in *BulkUpdateRateDefinitionsRequest, opts ...grpc.CallOption) (*BulkUpdateRateDefinitionsResponse, error) {
-	out := new(BulkUpdateRateDefinitionsResponse)
-	err := c.cc.Invoke(ctx, BillingService_BulkUpdateRateDefinitions_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *billingServiceClient) CreateBillingPlan(ctx context.Context, in *CreateBillingPlanRequest, opts ...grpc.CallOption) (*CreateBillingPlanResponse, error) {
 	out := new(CreateBillingPlanResponse)
 	err := c.cc.Invoke(ctx, BillingService_CreateBillingPlan_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) CreateDefaultBillingPlan(ctx context.Context, in *CreateDefaultBillingPlanRequest, opts ...grpc.CallOption) (*CreateDefaultBillingPlanResponse, error) {
+	out := new(CreateDefaultBillingPlanResponse)
+	err := c.cc.Invoke(ctx, BillingService_CreateDefaultBillingPlan_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) CreateDefaultRateDefinition(ctx context.Context, in *CreateDefaultRateDefinitionRequest, opts ...grpc.CallOption) (*CreateDefaultRateDefinitionResponse, error) {
+	out := new(CreateDefaultRateDefinitionResponse)
+	err := c.cc.Invoke(ctx, BillingService_CreateDefaultRateDefinition_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -432,18 +401,27 @@ func (c *billingServiceClient) CreateRateDefinition(ctx context.Context, in *Cre
 	return out, nil
 }
 
-func (c *billingServiceClient) CreateRateDefinitionGroup(ctx context.Context, in *CreateRateDefinitionGroupRequest, opts ...grpc.CallOption) (*CreateRateDefinitionGroupResponse, error) {
-	out := new(CreateRateDefinitionGroupResponse)
-	err := c.cc.Invoke(ctx, BillingService_CreateRateDefinitionGroup_FullMethodName, in, out, opts...)
+func (c *billingServiceClient) DeleteBillingPlan(ctx context.Context, in *DeleteBillingPlanRequest, opts ...grpc.CallOption) (*DeleteBillingPlanResponse, error) {
+	out := new(DeleteBillingPlanResponse)
+	err := c.cc.Invoke(ctx, BillingService_DeleteBillingPlan_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *billingServiceClient) DeleteBillingPlan(ctx context.Context, in *DeleteBillingPlanRequest, opts ...grpc.CallOption) (*DeleteBillingPlanResponse, error) {
-	out := new(DeleteBillingPlanResponse)
-	err := c.cc.Invoke(ctx, BillingService_DeleteBillingPlan_FullMethodName, in, out, opts...)
+func (c *billingServiceClient) DeleteDefaultBillingPlan(ctx context.Context, in *DeleteDefaultBillingPlanRequest, opts ...grpc.CallOption) (*DeleteDefaultBillingPlanResponse, error) {
+	out := new(DeleteDefaultBillingPlanResponse)
+	err := c.cc.Invoke(ctx, BillingService_DeleteDefaultBillingPlan_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) DeleteDefaultRateDefinition(ctx context.Context, in *DeleteDefaultRateDefinitionRequest, opts ...grpc.CallOption) (*DeleteDefaultRateDefinitionResponse, error) {
+	out := new(DeleteDefaultRateDefinitionResponse)
+	err := c.cc.Invoke(ctx, BillingService_DeleteDefaultRateDefinition_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -462,15 +440,6 @@ func (c *billingServiceClient) DeleteInvoice(ctx context.Context, in *DeleteInvo
 func (c *billingServiceClient) DeleteRateDefinition(ctx context.Context, in *DeleteRateDefinitionRequest, opts ...grpc.CallOption) (*DeleteRateDefinitionResponse, error) {
 	out := new(DeleteRateDefinitionResponse)
 	err := c.cc.Invoke(ctx, BillingService_DeleteRateDefinition_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *billingServiceClient) DeleteRateDefinitionGroup(ctx context.Context, in *DeleteRateDefinitionGroupRequest, opts ...grpc.CallOption) (*DeleteRateDefinitionGroupResponse, error) {
-	out := new(DeleteRateDefinitionGroupResponse)
-	err := c.cc.Invoke(ctx, BillingService_DeleteRateDefinitionGroup_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -504,15 +473,6 @@ func (c *billingServiceClient) GetBillingPlan(ctx context.Context, in *GetBillin
 	return out, nil
 }
 
-func (c *billingServiceClient) GetDefaultBillingPlan(ctx context.Context, in *GetDefaultBillingPlanRequest, opts ...grpc.CallOption) (*GetDefaultBillingPlanResponse, error) {
-	out := new(GetDefaultBillingPlanResponse)
-	err := c.cc.Invoke(ctx, BillingService_GetDefaultBillingPlan_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *billingServiceClient) GetInvoice(ctx context.Context, in *GetInvoiceRequest, opts ...grpc.CallOption) (*GetInvoiceResponse, error) {
 	out := new(GetInvoiceResponse)
 	err := c.cc.Invoke(ctx, BillingService_GetInvoice_FullMethodName, in, out, opts...)
@@ -525,15 +485,6 @@ func (c *billingServiceClient) GetInvoice(ctx context.Context, in *GetInvoiceReq
 func (c *billingServiceClient) GetRateDefinition(ctx context.Context, in *GetRateDefinitionRequest, opts ...grpc.CallOption) (*GetRateDefinitionResponse, error) {
 	out := new(GetRateDefinitionResponse)
 	err := c.cc.Invoke(ctx, BillingService_GetRateDefinition_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *billingServiceClient) GetRateDefinitionGroup(ctx context.Context, in *GetRateDefinitionGroupRequest, opts ...grpc.CallOption) (*GetRateDefinitionGroupResponse, error) {
-	out := new(GetRateDefinitionGroupResponse)
-	err := c.cc.Invoke(ctx, BillingService_GetRateDefinitionGroup_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -567,15 +518,6 @@ func (c *billingServiceClient) ListRateDefinitions(ctx context.Context, in *List
 	return out, nil
 }
 
-func (c *billingServiceClient) ListRateDefinitionGroups(ctx context.Context, in *ListRateDefinitionGroupsRequest, opts ...grpc.CallOption) (*ListRateDefinitionGroupsResponse, error) {
-	out := new(ListRateDefinitionGroupsResponse)
-	err := c.cc.Invoke(ctx, BillingService_ListRateDefinitionGroups_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *billingServiceClient) UpdateBillingPlan(ctx context.Context, in *UpdateBillingPlanRequest, opts ...grpc.CallOption) (*UpdateBillingPlanResponse, error) {
 	out := new(UpdateBillingPlanResponse)
 	err := c.cc.Invoke(ctx, BillingService_UpdateBillingPlan_FullMethodName, in, out, opts...)
@@ -588,6 +530,15 @@ func (c *billingServiceClient) UpdateBillingPlan(ctx context.Context, in *Update
 func (c *billingServiceClient) UpdateDefaultBillingPlan(ctx context.Context, in *UpdateDefaultBillingPlanRequest, opts ...grpc.CallOption) (*UpdateDefaultBillingPlanResponse, error) {
 	out := new(UpdateDefaultBillingPlanResponse)
 	err := c.cc.Invoke(ctx, BillingService_UpdateDefaultBillingPlan_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) UpdateDefaultRateDefinition(ctx context.Context, in *UpdateDefaultRateDefinitionRequest, opts ...grpc.CallOption) (*UpdateDefaultRateDefinitionResponse, error) {
+	out := new(UpdateDefaultRateDefinitionResponse)
+	err := c.cc.Invoke(ctx, BillingService_UpdateDefaultRateDefinition_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -612,47 +563,10 @@ func (c *billingServiceClient) UpdateRateDefinition(ctx context.Context, in *Upd
 	return out, nil
 }
 
-func (c *billingServiceClient) UpdateRateDefinitionGroup(ctx context.Context, in *UpdateRateDefinitionGroupRequest, opts ...grpc.CallOption) (*UpdateRateDefinitionGroupResponse, error) {
-	out := new(UpdateRateDefinitionGroupResponse)
-	err := c.cc.Invoke(ctx, BillingService_UpdateRateDefinitionGroup_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // BillingServiceServer is the server API for BillingService service.
 // All implementations must embed UnimplementedBillingServiceServer
 // for forward compatibility
 type BillingServiceServer interface {
-	// Bulk deletes rate definitions.
-	//   - The billing plan(s) must be inactive.
-	//
-	// Required permissions:
-	//
-	//	CUSTOMER_SUPPORT
-	//
-	// Errors:
-	//   - grpc.FailedPrecondition: The billing plan(s) are active.
-	//   - grpc.Internal: An internal error occurred.
-	//   - grpc.InvalidArgument: The request is invalid.
-	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
-	//   - grpc.Unavailable: The operation is currently unavailable.
-	BulkDeleteRateDefinitions(context.Context, *BulkDeleteRateDefinitionsRequest) (*BulkDeleteRateDefinitionsResponse, error)
-	// Bulk updates rate definitions.
-	//   - The billing plan(s) must be inactive.
-	//
-	// Required permissions:
-	//
-	//	CUSTOMER_SUPPORT
-	//
-	// Errors:
-	//   - grpc.FailedPrecondition: The billing plan(s) are active.
-	//   - grpc.Internal: An internal error occurred.
-	//   - grpc.InvalidArgument: The request is invalid.
-	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
-	//   - grpc.Unavailable: The operation is currently unavailable.
-	BulkUpdateRateDefinitions(context.Context, *BulkUpdateRateDefinitionsRequest) (*BulkUpdateRateDefinitionsResponse, error)
 	// Creates a billing plan for the ORG.
 	// Required permissions:
 	//
@@ -664,6 +578,32 @@ type BillingServiceServer interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	CreateBillingPlan(context.Context, *CreateBillingPlanRequest) (*CreateBillingPlanResponse, error)
+	// Creates the default billing plan for the REGION.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//	TCN_BILLING_ADMIN
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable.
+	CreateDefaultBillingPlan(context.Context, *CreateDefaultBillingPlanRequest) (*CreateDefaultBillingPlanResponse, error)
+	// Creates a default rate definition for a default billing plan for the REGION.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//	TCN_BILLING_ADMIN
+	//
+	// Errors:
+	//   - grpc.AlreadyExists: A rate definition with the same feature already exists.
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The default billing plan doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable.
+	CreateDefaultRateDefinition(context.Context, *CreateDefaultRateDefinitionRequest) (*CreateDefaultRateDefinitionResponse, error)
 	// Creates an invoice for the ORG for the specified billing cycle.
 	// Required permissions:
 	//
@@ -682,38 +622,57 @@ type BillingServiceServer interface {
 	//	CUSTOMER_SUPPORT
 	//
 	// Errors:
-	//   - grpc.AlreadyExists: A rate definition with the same group id already exists.
+	//   - grpc.AlreadyExists: A rate definition with the same feature id already exists.
 	//   - grpc.Internal: An internal error occurred.
 	//   - grpc.InvalidArgument: The request is invalid.
 	//   - grpc.NotFound: The specified billing plan or rate definition group doesn't exist.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	CreateRateDefinition(context.Context, *CreateRateDefinitionRequest) (*CreateRateDefinitionResponse, error)
-	// Creates a rate definition group.
-	// Required permissions:
-	//
-	//	CUSTOMER_SUPPORT
-	//	TCN_BILLING_ADMIN
-	//
-	// Errors:
-	//   - grpc.AlreadyExists: A rate definition group with the same data already exists.
-	//   - grpc.Internal: An internal error occurred.
-	//   - grpc.InvalidArgument: The request is invalid.
-	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
-	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
-	CreateRateDefinitionGroup(context.Context, *CreateRateDefinitionGroupRequest) (*CreateRateDefinitionGroupResponse, error)
 	// Deletes an inactive billing plan. A billing plan is inactive if it hasn't started.
 	// Required permissions:
 	//
 	//	CUSTOMER_SUPPORT
 	//
 	// Errors:
+	//   - grpc.FailedPrecondition: The billing plan is active.
 	//   - grpc.Internal: An internal error occurred.
 	//   - grpc.InvalidArgument: The request is invalid.
 	//   - grpc.NotFound: The specified billing plan doesn't exist.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	DeleteBillingPlan(context.Context, *DeleteBillingPlanRequest) (*DeleteBillingPlanResponse, error)
+	// Deletes an inactive default billing plan for the REGION. A billing plan is inactive
+	// if it hasn't started.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//	TCN_BILLING_ADMIN
+	//
+	// Errors:
+	//   - grpc.FailedPrecondition: The billing plan is active.
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The default billing plan doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable.
+	DeleteDefaultBillingPlan(context.Context, *DeleteDefaultBillingPlanRequest) (*DeleteDefaultBillingPlanResponse, error)
+	// Deletes a rate definition from the default billing plan for the REGION.
+	//   - The default billing plan must be inactive.
+	//
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//	TCN_BILLING_ADMIN
+	//
+	// Errors:
+	//   - grpc.FailedPrecondition: The billing plan is active.
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The rate definition doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable.
+	DeleteDefaultRateDefinition(context.Context, *DeleteDefaultRateDefinitionRequest) (*DeleteDefaultRateDefinitionResponse, error)
 	// Deletes an invoice.
 	// Required permissions:
 	//
@@ -741,21 +700,6 @@ type BillingServiceServer interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	DeleteRateDefinition(context.Context, *DeleteRateDefinitionRequest) (*DeleteRateDefinitionResponse, error)
-	// Deletes a rate definition group.
-	//   - This will stop any rate definitions in the group from generating charges.
-	//
-	// Required permissions:
-	//
-	//	CUSTOMER_SUPPORT
-	//	TCN_BILLING_ADMIN
-	//
-	// Errors:
-	//   - grpc.Internal: An internal error occurred.
-	//   - grpc.InvalidArgument: The request is invalid.
-	//   - grpc.NotFound: The specified rate definition group doesn't exist.
-	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
-	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
-	DeleteRateDefinitionGroup(context.Context, *DeleteRateDefinitionGroupRequest) (*DeleteRateDefinitionGroupResponse, error)
 	// Exports an invoice.
 	// Required permissions:
 	//
@@ -768,10 +712,10 @@ type BillingServiceServer interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	ExportInvoice(context.Context, *ExportInvoiceRequest) (*ExportInvoiceResponse, error)
-	// Returns the active billing plan for the ORG. The active billing plan is a billing plan whose
-	// start_time has passed and end_time has not passed. If multiple satisfy that requirement, the
-	// newest one is considered active. If no plan is active, it indicates the org is currently using
-	// only the system defaults.
+	// Returns the active billing plan for the ORG or REGION. The active billing plan is a billing plan
+	// whose start_time has passed and end_time has not passed. If multiple satisfy that requirement, the
+	// newest one is considered active. If no plan is active, it indicates the ORG is using REGION defaults,
+	// or that the REGION has not been set up for billing yet.
 	// Required permissions:
 	//
 	//	CUSTOMER_SUPPORT
@@ -779,7 +723,7 @@ type BillingServiceServer interface {
 	// Errors:
 	//   - grpc.Internal: An internal error occurred.
 	//   - grpc.InvalidArgument: The request is invalid.
-	//   - grpc.NotFound: The org does not have an active billing plan.
+	//   - grpc.NotFound: There isn't an active billing plan.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	GetActiveBillingPlan(context.Context, *GetActiveBillingPlanRequest) (*GetActiveBillingPlanResponse, error)
@@ -795,16 +739,6 @@ type BillingServiceServer interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	GetBillingPlan(context.Context, *GetBillingPlanRequest) (*GetBillingPlanResponse, error)
-	// Returns the default billing plan for the REGION.
-	// Required permissions:
-	//
-	//	CUSTOMER_SUPPORT
-	//
-	// Errors:
-	//   - grpc.Internal: An internal error occurred.
-	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
-	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
-	GetDefaultBillingPlan(context.Context, *GetDefaultBillingPlanRequest) (*GetDefaultBillingPlanResponse, error)
 	// Returns the specified invoice.
 	// Required permissions:
 	//
@@ -829,18 +763,6 @@ type BillingServiceServer interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
 	GetRateDefinition(context.Context, *GetRateDefinitionRequest) (*GetRateDefinitionResponse, error)
-	// Returns the specified rate definition group.
-	// Required permissions:
-	//
-	//	CUSTOMER_SUPPORT
-	//
-	// Errors:
-	//   - grpc.Internal: An internal error occurred.
-	//   - grpc.InvalidArgument: The request is invalid.
-	//   - grpc.NotFound: The specified rate definition group doesn't exist.
-	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
-	//   - grpc.Unavailable: The operation is currently unavailable.
-	GetRateDefinitionGroup(context.Context, *GetRateDefinitionGroupRequest) (*GetRateDefinitionGroupResponse, error)
 	// Lists billing plans.
 	// Required permissions:
 	//
@@ -874,41 +796,48 @@ type BillingServiceServer interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
 	ListRateDefinitions(context.Context, *ListRateDefinitionsRequest) (*ListRateDefinitionsResponse, error)
-	// Lists rate definition groups.
-	// Required permissions:
-	//
-	//	CUSTOMER_SUPPORT
-	//
-	// Errors:
-	//   - grpc.Internal: An internal error occurred.
-	//   - grpc.InvalidArgument: The request is invalid.
-	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
-	//   - grpc.Unavailable: The operation is currently unavailable.
-	ListRateDefinitionGroups(context.Context, *ListRateDefinitionGroupsRequest) (*ListRateDefinitionGroupsResponse, error)
 	// Updates an inactive billing plan. A billing plan is inactive if it hasn't started.
 	// Required permissions:
 	//
 	//	CUSTOMER_SUPPORT
 	//
 	// Errors:
+	//   - grpc.FailedPrecondition: The billing plan is active.
 	//   - grpc.Internal: An internal error occurred.
 	//   - grpc.InvalidArgument: The request is invalid.
 	//   - grpc.NotFound: The specified billing plan doesn't exist.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	UpdateBillingPlan(context.Context, *UpdateBillingPlanRequest) (*UpdateBillingPlanResponse, error)
-	// Updates the default billing plan for the REGION.
+	// Updates an inactive default billing plan for the REGION. A billing plan is inactive
+	// if it hasn't started.
 	// Required permissions:
 	//
 	//	CUSTOMER_SUPPORT
 	//	TCN_BILLING_ADMIN
 	//
 	// Errors:
+	//   - grpc.FailedPrecondition: The billing plan is active.
 	//   - grpc.Internal: An internal error occurred.
 	//   - grpc.InvalidArgument: The request is invalid.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	UpdateDefaultBillingPlan(context.Context, *UpdateDefaultBillingPlanRequest) (*UpdateDefaultBillingPlanResponse, error)
+	// Updates a default rate definition.
+	//   - The billing plan must be inactive.
+	//
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.FailedPrecondition: The billing plan is active.
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The specified rate definition doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable.
+	UpdateDefaultRateDefinition(context.Context, *UpdateDefaultRateDefinitionRequest) (*UpdateDefaultRateDefinitionResponse, error)
 	// Updates the specified invoice.
 	// Required permissions:
 	//
@@ -936,21 +865,6 @@ type BillingServiceServer interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
 	UpdateRateDefinition(context.Context, *UpdateRateDefinitionRequest) (*UpdateRateDefinitionResponse, error)
-	// Updates a rate definition group.
-	//   - Any rate definitions using this group will use the new data.
-	//
-	// Required permissions:
-	//
-	//	CUSTOMER_SUPPORT
-	//	TCN_BILLING_ADMIN
-	//
-	// Errors:
-	//   - grpc.Internal: An internal error occurred.
-	//   - grpc.InvalidArgument: The request is invalid.
-	//   - grpc.NotFound: The specified rate definition group doesn't exist.
-	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
-	//   - grpc.Unavailable: The operation is currently unavailable.
-	UpdateRateDefinitionGroup(context.Context, *UpdateRateDefinitionGroupRequest) (*UpdateRateDefinitionGroupResponse, error)
 	mustEmbedUnimplementedBillingServiceServer()
 }
 
@@ -958,14 +872,14 @@ type BillingServiceServer interface {
 type UnimplementedBillingServiceServer struct {
 }
 
-func (UnimplementedBillingServiceServer) BulkDeleteRateDefinitions(context.Context, *BulkDeleteRateDefinitionsRequest) (*BulkDeleteRateDefinitionsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method BulkDeleteRateDefinitions not implemented")
-}
-func (UnimplementedBillingServiceServer) BulkUpdateRateDefinitions(context.Context, *BulkUpdateRateDefinitionsRequest) (*BulkUpdateRateDefinitionsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method BulkUpdateRateDefinitions not implemented")
-}
 func (UnimplementedBillingServiceServer) CreateBillingPlan(context.Context, *CreateBillingPlanRequest) (*CreateBillingPlanResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateBillingPlan not implemented")
+}
+func (UnimplementedBillingServiceServer) CreateDefaultBillingPlan(context.Context, *CreateDefaultBillingPlanRequest) (*CreateDefaultBillingPlanResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateDefaultBillingPlan not implemented")
+}
+func (UnimplementedBillingServiceServer) CreateDefaultRateDefinition(context.Context, *CreateDefaultRateDefinitionRequest) (*CreateDefaultRateDefinitionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateDefaultRateDefinition not implemented")
 }
 func (UnimplementedBillingServiceServer) CreateInvoice(context.Context, *CreateInvoiceRequest) (*CreateInvoiceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateInvoice not implemented")
@@ -973,20 +887,20 @@ func (UnimplementedBillingServiceServer) CreateInvoice(context.Context, *CreateI
 func (UnimplementedBillingServiceServer) CreateRateDefinition(context.Context, *CreateRateDefinitionRequest) (*CreateRateDefinitionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateRateDefinition not implemented")
 }
-func (UnimplementedBillingServiceServer) CreateRateDefinitionGroup(context.Context, *CreateRateDefinitionGroupRequest) (*CreateRateDefinitionGroupResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateRateDefinitionGroup not implemented")
-}
 func (UnimplementedBillingServiceServer) DeleteBillingPlan(context.Context, *DeleteBillingPlanRequest) (*DeleteBillingPlanResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteBillingPlan not implemented")
+}
+func (UnimplementedBillingServiceServer) DeleteDefaultBillingPlan(context.Context, *DeleteDefaultBillingPlanRequest) (*DeleteDefaultBillingPlanResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteDefaultBillingPlan not implemented")
+}
+func (UnimplementedBillingServiceServer) DeleteDefaultRateDefinition(context.Context, *DeleteDefaultRateDefinitionRequest) (*DeleteDefaultRateDefinitionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteDefaultRateDefinition not implemented")
 }
 func (UnimplementedBillingServiceServer) DeleteInvoice(context.Context, *DeleteInvoiceRequest) (*DeleteInvoiceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteInvoice not implemented")
 }
 func (UnimplementedBillingServiceServer) DeleteRateDefinition(context.Context, *DeleteRateDefinitionRequest) (*DeleteRateDefinitionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteRateDefinition not implemented")
-}
-func (UnimplementedBillingServiceServer) DeleteRateDefinitionGroup(context.Context, *DeleteRateDefinitionGroupRequest) (*DeleteRateDefinitionGroupResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteRateDefinitionGroup not implemented")
 }
 func (UnimplementedBillingServiceServer) ExportInvoice(context.Context, *ExportInvoiceRequest) (*ExportInvoiceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ExportInvoice not implemented")
@@ -997,17 +911,11 @@ func (UnimplementedBillingServiceServer) GetActiveBillingPlan(context.Context, *
 func (UnimplementedBillingServiceServer) GetBillingPlan(context.Context, *GetBillingPlanRequest) (*GetBillingPlanResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBillingPlan not implemented")
 }
-func (UnimplementedBillingServiceServer) GetDefaultBillingPlan(context.Context, *GetDefaultBillingPlanRequest) (*GetDefaultBillingPlanResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetDefaultBillingPlan not implemented")
-}
 func (UnimplementedBillingServiceServer) GetInvoice(context.Context, *GetInvoiceRequest) (*GetInvoiceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetInvoice not implemented")
 }
 func (UnimplementedBillingServiceServer) GetRateDefinition(context.Context, *GetRateDefinitionRequest) (*GetRateDefinitionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetRateDefinition not implemented")
-}
-func (UnimplementedBillingServiceServer) GetRateDefinitionGroup(context.Context, *GetRateDefinitionGroupRequest) (*GetRateDefinitionGroupResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetRateDefinitionGroup not implemented")
 }
 func (UnimplementedBillingServiceServer) ListBillingPlans(context.Context, *ListBillingPlansRequest) (*ListBillingPlansResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListBillingPlans not implemented")
@@ -1018,23 +926,20 @@ func (UnimplementedBillingServiceServer) ListInvoices(context.Context, *ListInvo
 func (UnimplementedBillingServiceServer) ListRateDefinitions(context.Context, *ListRateDefinitionsRequest) (*ListRateDefinitionsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListRateDefinitions not implemented")
 }
-func (UnimplementedBillingServiceServer) ListRateDefinitionGroups(context.Context, *ListRateDefinitionGroupsRequest) (*ListRateDefinitionGroupsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListRateDefinitionGroups not implemented")
-}
 func (UnimplementedBillingServiceServer) UpdateBillingPlan(context.Context, *UpdateBillingPlanRequest) (*UpdateBillingPlanResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateBillingPlan not implemented")
 }
 func (UnimplementedBillingServiceServer) UpdateDefaultBillingPlan(context.Context, *UpdateDefaultBillingPlanRequest) (*UpdateDefaultBillingPlanResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateDefaultBillingPlan not implemented")
 }
+func (UnimplementedBillingServiceServer) UpdateDefaultRateDefinition(context.Context, *UpdateDefaultRateDefinitionRequest) (*UpdateDefaultRateDefinitionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateDefaultRateDefinition not implemented")
+}
 func (UnimplementedBillingServiceServer) UpdateInvoice(context.Context, *UpdateInvoiceRequest) (*UpdateInvoiceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateInvoice not implemented")
 }
 func (UnimplementedBillingServiceServer) UpdateRateDefinition(context.Context, *UpdateRateDefinitionRequest) (*UpdateRateDefinitionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateRateDefinition not implemented")
-}
-func (UnimplementedBillingServiceServer) UpdateRateDefinitionGroup(context.Context, *UpdateRateDefinitionGroupRequest) (*UpdateRateDefinitionGroupResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateRateDefinitionGroup not implemented")
 }
 func (UnimplementedBillingServiceServer) mustEmbedUnimplementedBillingServiceServer() {}
 
@@ -1047,42 +952,6 @@ type UnsafeBillingServiceServer interface {
 
 func RegisterBillingServiceServer(s grpc.ServiceRegistrar, srv BillingServiceServer) {
 	s.RegisterService(&BillingService_ServiceDesc, srv)
-}
-
-func _BillingService_BulkDeleteRateDefinitions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(BulkDeleteRateDefinitionsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BillingServiceServer).BulkDeleteRateDefinitions(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: BillingService_BulkDeleteRateDefinitions_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BillingServiceServer).BulkDeleteRateDefinitions(ctx, req.(*BulkDeleteRateDefinitionsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _BillingService_BulkUpdateRateDefinitions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(BulkUpdateRateDefinitionsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BillingServiceServer).BulkUpdateRateDefinitions(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: BillingService_BulkUpdateRateDefinitions_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BillingServiceServer).BulkUpdateRateDefinitions(ctx, req.(*BulkUpdateRateDefinitionsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _BillingService_CreateBillingPlan_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -1099,6 +968,42 @@ func _BillingService_CreateBillingPlan_Handler(srv interface{}, ctx context.Cont
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BillingServiceServer).CreateBillingPlan(ctx, req.(*CreateBillingPlanRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_CreateDefaultBillingPlan_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateDefaultBillingPlanRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).CreateDefaultBillingPlan(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_CreateDefaultBillingPlan_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).CreateDefaultBillingPlan(ctx, req.(*CreateDefaultBillingPlanRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_CreateDefaultRateDefinition_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateDefaultRateDefinitionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).CreateDefaultRateDefinition(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_CreateDefaultRateDefinition_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).CreateDefaultRateDefinition(ctx, req.(*CreateDefaultRateDefinitionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1139,24 +1044,6 @@ func _BillingService_CreateRateDefinition_Handler(srv interface{}, ctx context.C
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BillingService_CreateRateDefinitionGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateRateDefinitionGroupRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BillingServiceServer).CreateRateDefinitionGroup(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: BillingService_CreateRateDefinitionGroup_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BillingServiceServer).CreateRateDefinitionGroup(ctx, req.(*CreateRateDefinitionGroupRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _BillingService_DeleteBillingPlan_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteBillingPlanRequest)
 	if err := dec(in); err != nil {
@@ -1171,6 +1058,42 @@ func _BillingService_DeleteBillingPlan_Handler(srv interface{}, ctx context.Cont
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BillingServiceServer).DeleteBillingPlan(ctx, req.(*DeleteBillingPlanRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_DeleteDefaultBillingPlan_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteDefaultBillingPlanRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).DeleteDefaultBillingPlan(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_DeleteDefaultBillingPlan_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).DeleteDefaultBillingPlan(ctx, req.(*DeleteDefaultBillingPlanRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_DeleteDefaultRateDefinition_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteDefaultRateDefinitionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).DeleteDefaultRateDefinition(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_DeleteDefaultRateDefinition_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).DeleteDefaultRateDefinition(ctx, req.(*DeleteDefaultRateDefinitionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1207,24 +1130,6 @@ func _BillingService_DeleteRateDefinition_Handler(srv interface{}, ctx context.C
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BillingServiceServer).DeleteRateDefinition(ctx, req.(*DeleteRateDefinitionRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _BillingService_DeleteRateDefinitionGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteRateDefinitionGroupRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BillingServiceServer).DeleteRateDefinitionGroup(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: BillingService_DeleteRateDefinitionGroup_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BillingServiceServer).DeleteRateDefinitionGroup(ctx, req.(*DeleteRateDefinitionGroupRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1283,24 +1188,6 @@ func _BillingService_GetBillingPlan_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BillingService_GetDefaultBillingPlan_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetDefaultBillingPlanRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BillingServiceServer).GetDefaultBillingPlan(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: BillingService_GetDefaultBillingPlan_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BillingServiceServer).GetDefaultBillingPlan(ctx, req.(*GetDefaultBillingPlanRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _BillingService_GetInvoice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetInvoiceRequest)
 	if err := dec(in); err != nil {
@@ -1333,24 +1220,6 @@ func _BillingService_GetRateDefinition_Handler(srv interface{}, ctx context.Cont
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BillingServiceServer).GetRateDefinition(ctx, req.(*GetRateDefinitionRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _BillingService_GetRateDefinitionGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetRateDefinitionGroupRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BillingServiceServer).GetRateDefinitionGroup(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: BillingService_GetRateDefinitionGroup_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BillingServiceServer).GetRateDefinitionGroup(ctx, req.(*GetRateDefinitionGroupRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1409,24 +1278,6 @@ func _BillingService_ListRateDefinitions_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BillingService_ListRateDefinitionGroups_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListRateDefinitionGroupsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BillingServiceServer).ListRateDefinitionGroups(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: BillingService_ListRateDefinitionGroups_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BillingServiceServer).ListRateDefinitionGroups(ctx, req.(*ListRateDefinitionGroupsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _BillingService_UpdateBillingPlan_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateBillingPlanRequest)
 	if err := dec(in); err != nil {
@@ -1459,6 +1310,24 @@ func _BillingService_UpdateDefaultBillingPlan_Handler(srv interface{}, ctx conte
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BillingServiceServer).UpdateDefaultBillingPlan(ctx, req.(*UpdateDefaultBillingPlanRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_UpdateDefaultRateDefinition_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateDefaultRateDefinitionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).UpdateDefaultRateDefinition(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_UpdateDefaultRateDefinition_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).UpdateDefaultRateDefinition(ctx, req.(*UpdateDefaultRateDefinitionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1499,24 +1368,6 @@ func _BillingService_UpdateRateDefinition_Handler(srv interface{}, ctx context.C
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BillingService_UpdateRateDefinitionGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateRateDefinitionGroupRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BillingServiceServer).UpdateRateDefinitionGroup(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: BillingService_UpdateRateDefinitionGroup_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BillingServiceServer).UpdateRateDefinitionGroup(ctx, req.(*UpdateRateDefinitionGroupRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // BillingService_ServiceDesc is the grpc.ServiceDesc for BillingService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1525,16 +1376,16 @@ var BillingService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*BillingServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "BulkDeleteRateDefinitions",
-			Handler:    _BillingService_BulkDeleteRateDefinitions_Handler,
-		},
-		{
-			MethodName: "BulkUpdateRateDefinitions",
-			Handler:    _BillingService_BulkUpdateRateDefinitions_Handler,
-		},
-		{
 			MethodName: "CreateBillingPlan",
 			Handler:    _BillingService_CreateBillingPlan_Handler,
+		},
+		{
+			MethodName: "CreateDefaultBillingPlan",
+			Handler:    _BillingService_CreateDefaultBillingPlan_Handler,
+		},
+		{
+			MethodName: "CreateDefaultRateDefinition",
+			Handler:    _BillingService_CreateDefaultRateDefinition_Handler,
 		},
 		{
 			MethodName: "CreateInvoice",
@@ -1545,12 +1396,16 @@ var BillingService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _BillingService_CreateRateDefinition_Handler,
 		},
 		{
-			MethodName: "CreateRateDefinitionGroup",
-			Handler:    _BillingService_CreateRateDefinitionGroup_Handler,
-		},
-		{
 			MethodName: "DeleteBillingPlan",
 			Handler:    _BillingService_DeleteBillingPlan_Handler,
+		},
+		{
+			MethodName: "DeleteDefaultBillingPlan",
+			Handler:    _BillingService_DeleteDefaultBillingPlan_Handler,
+		},
+		{
+			MethodName: "DeleteDefaultRateDefinition",
+			Handler:    _BillingService_DeleteDefaultRateDefinition_Handler,
 		},
 		{
 			MethodName: "DeleteInvoice",
@@ -1559,10 +1414,6 @@ var BillingService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteRateDefinition",
 			Handler:    _BillingService_DeleteRateDefinition_Handler,
-		},
-		{
-			MethodName: "DeleteRateDefinitionGroup",
-			Handler:    _BillingService_DeleteRateDefinitionGroup_Handler,
 		},
 		{
 			MethodName: "ExportInvoice",
@@ -1577,20 +1428,12 @@ var BillingService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _BillingService_GetBillingPlan_Handler,
 		},
 		{
-			MethodName: "GetDefaultBillingPlan",
-			Handler:    _BillingService_GetDefaultBillingPlan_Handler,
-		},
-		{
 			MethodName: "GetInvoice",
 			Handler:    _BillingService_GetInvoice_Handler,
 		},
 		{
 			MethodName: "GetRateDefinition",
 			Handler:    _BillingService_GetRateDefinition_Handler,
-		},
-		{
-			MethodName: "GetRateDefinitionGroup",
-			Handler:    _BillingService_GetRateDefinitionGroup_Handler,
 		},
 		{
 			MethodName: "ListBillingPlans",
@@ -1605,10 +1448,6 @@ var BillingService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _BillingService_ListRateDefinitions_Handler,
 		},
 		{
-			MethodName: "ListRateDefinitionGroups",
-			Handler:    _BillingService_ListRateDefinitionGroups_Handler,
-		},
-		{
 			MethodName: "UpdateBillingPlan",
 			Handler:    _BillingService_UpdateBillingPlan_Handler,
 		},
@@ -1617,16 +1456,16 @@ var BillingService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _BillingService_UpdateDefaultBillingPlan_Handler,
 		},
 		{
+			MethodName: "UpdateDefaultRateDefinition",
+			Handler:    _BillingService_UpdateDefaultRateDefinition_Handler,
+		},
+		{
 			MethodName: "UpdateInvoice",
 			Handler:    _BillingService_UpdateInvoice_Handler,
 		},
 		{
 			MethodName: "UpdateRateDefinition",
 			Handler:    _BillingService_UpdateRateDefinition_Handler,
-		},
-		{
-			MethodName: "UpdateRateDefinitionGroup",
-			Handler:    _BillingService_UpdateRateDefinitionGroup_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
