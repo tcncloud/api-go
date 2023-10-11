@@ -952,6 +952,7 @@ type FrequencyExp struct {
 	Dispositions     *DispositionMod `protobuf:"bytes,4,opt,name=dispositions,proto3" json:"dispositions,omitempty"`
 	FieldNames       *FieldNamesMod  `protobuf:"bytes,5,opt,name=field_names,json=fieldNames,proto3" json:"field_names,omitempty"`
 	CheckingEntities []*EntityExp    `protobuf:"bytes,6,rep,name=checking_entities,json=checkingEntities,proto3" json:"checking_entities,omitempty"`
+	Matching         *MatchingMod    `protobuf:"bytes,7,opt,name=matching,proto3" json:"matching,omitempty"`
 }
 
 func (x *FrequencyExp) Reset() {
@@ -1028,6 +1029,157 @@ func (x *FrequencyExp) GetCheckingEntities() []*EntityExp {
 	return nil
 }
 
+func (x *FrequencyExp) GetMatching() *MatchingMod {
+	if x != nil {
+		return x.Matching
+	}
+	return nil
+}
+
+type MatchingMod struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	And []*MatchingMod  `protobuf:"bytes,1,rep,name=and,proto3" json:"and,omitempty"`
+	Or  []*MatchingMod  `protobuf:"bytes,2,rep,name=or,proto3" json:"or,omitempty"`
+	Mod *MatchingEntity `protobuf:"bytes,3,opt,name=mod,proto3" json:"mod,omitempty"`
+}
+
+func (x *MatchingMod) Reset() {
+	*x = MatchingMod{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_commons_compliance_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MatchingMod) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MatchingMod) ProtoMessage() {}
+
+func (x *MatchingMod) ProtoReflect() protoreflect.Message {
+	mi := &file_api_commons_compliance_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MatchingMod.ProtoReflect.Descriptor instead.
+func (*MatchingMod) Descriptor() ([]byte, []int) {
+	return file_api_commons_compliance_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *MatchingMod) GetAnd() []*MatchingMod {
+	if x != nil {
+		return x.And
+	}
+	return nil
+}
+
+func (x *MatchingMod) GetOr() []*MatchingMod {
+	if x != nil {
+		return x.Or
+	}
+	return nil
+}
+
+func (x *MatchingMod) GetMod() *MatchingEntity {
+	if x != nil {
+		return x.Mod
+	}
+	return nil
+}
+
+type MatchingEntity struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Types that are assignable to Entity:
+	//
+	//	*MatchingEntity_Results
+	//	*MatchingEntity_Dispositions
+	Entity isMatchingEntity_Entity `protobuf_oneof:"entity"`
+}
+
+func (x *MatchingEntity) Reset() {
+	*x = MatchingEntity{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_commons_compliance_proto_msgTypes[7]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MatchingEntity) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MatchingEntity) ProtoMessage() {}
+
+func (x *MatchingEntity) ProtoReflect() protoreflect.Message {
+	mi := &file_api_commons_compliance_proto_msgTypes[7]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MatchingEntity.ProtoReflect.Descriptor instead.
+func (*MatchingEntity) Descriptor() ([]byte, []int) {
+	return file_api_commons_compliance_proto_rawDescGZIP(), []int{7}
+}
+
+func (m *MatchingEntity) GetEntity() isMatchingEntity_Entity {
+	if m != nil {
+		return m.Entity
+	}
+	return nil
+}
+
+func (x *MatchingEntity) GetResults() *ResultsMod {
+	if x, ok := x.GetEntity().(*MatchingEntity_Results); ok {
+		return x.Results
+	}
+	return nil
+}
+
+func (x *MatchingEntity) GetDispositions() *DispositionMod {
+	if x, ok := x.GetEntity().(*MatchingEntity_Dispositions); ok {
+		return x.Dispositions
+	}
+	return nil
+}
+
+type isMatchingEntity_Entity interface {
+	isMatchingEntity_Entity()
+}
+
+type MatchingEntity_Results struct {
+	Results *ResultsMod `protobuf:"bytes,1,opt,name=results,proto3,oneof"`
+}
+
+type MatchingEntity_Dispositions struct {
+	Dispositions *DispositionMod `protobuf:"bytes,2,opt,name=dispositions,proto3,oneof"`
+}
+
+func (*MatchingEntity_Results) isMatchingEntity_Entity() {}
+
+func (*MatchingEntity_Dispositions) isMatchingEntity_Entity() {}
+
 type LocationExp struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1045,7 +1197,7 @@ type LocationExp struct {
 func (x *LocationExp) Reset() {
 	*x = LocationExp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_compliance_proto_msgTypes[6]
+		mi := &file_api_commons_compliance_proto_msgTypes[8]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1058,7 +1210,7 @@ func (x *LocationExp) String() string {
 func (*LocationExp) ProtoMessage() {}
 
 func (x *LocationExp) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_compliance_proto_msgTypes[6]
+	mi := &file_api_commons_compliance_proto_msgTypes[8]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1071,7 +1223,7 @@ func (x *LocationExp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LocationExp.ProtoReflect.Descriptor instead.
 func (*LocationExp) Descriptor() ([]byte, []int) {
-	return file_api_commons_compliance_proto_rawDescGZIP(), []int{6}
+	return file_api_commons_compliance_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *LocationExp) GetCountry() string {
@@ -1134,7 +1286,7 @@ type PhoneTypeExp struct {
 func (x *PhoneTypeExp) Reset() {
 	*x = PhoneTypeExp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_compliance_proto_msgTypes[7]
+		mi := &file_api_commons_compliance_proto_msgTypes[9]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1147,7 +1299,7 @@ func (x *PhoneTypeExp) String() string {
 func (*PhoneTypeExp) ProtoMessage() {}
 
 func (x *PhoneTypeExp) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_compliance_proto_msgTypes[7]
+	mi := &file_api_commons_compliance_proto_msgTypes[9]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1160,7 +1312,7 @@ func (x *PhoneTypeExp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PhoneTypeExp.ProtoReflect.Descriptor instead.
 func (*PhoneTypeExp) Descriptor() ([]byte, []int) {
-	return file_api_commons_compliance_proto_rawDescGZIP(), []int{7}
+	return file_api_commons_compliance_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *PhoneTypeExp) GetPhoneType() PhoneType {
@@ -1182,7 +1334,7 @@ type MonthExp struct {
 func (x *MonthExp) Reset() {
 	*x = MonthExp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_compliance_proto_msgTypes[8]
+		mi := &file_api_commons_compliance_proto_msgTypes[10]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1195,7 +1347,7 @@ func (x *MonthExp) String() string {
 func (*MonthExp) ProtoMessage() {}
 
 func (x *MonthExp) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_compliance_proto_msgTypes[8]
+	mi := &file_api_commons_compliance_proto_msgTypes[10]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1208,7 +1360,7 @@ func (x *MonthExp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MonthExp.ProtoReflect.Descriptor instead.
 func (*MonthExp) Descriptor() ([]byte, []int) {
-	return file_api_commons_compliance_proto_rawDescGZIP(), []int{8}
+	return file_api_commons_compliance_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *MonthExp) GetMonth() Month {
@@ -1238,7 +1390,7 @@ type DateExp struct {
 func (x *DateExp) Reset() {
 	*x = DateExp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_compliance_proto_msgTypes[9]
+		mi := &file_api_commons_compliance_proto_msgTypes[11]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1251,7 +1403,7 @@ func (x *DateExp) String() string {
 func (*DateExp) ProtoMessage() {}
 
 func (x *DateExp) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_compliance_proto_msgTypes[9]
+	mi := &file_api_commons_compliance_proto_msgTypes[11]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1264,7 +1416,7 @@ func (x *DateExp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DateExp.ProtoReflect.Descriptor instead.
 func (*DateExp) Descriptor() ([]byte, []int) {
-	return file_api_commons_compliance_proto_rawDescGZIP(), []int{9}
+	return file_api_commons_compliance_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *DateExp) GetMonth() Month {
@@ -1301,7 +1453,7 @@ type HolidayExp struct {
 func (x *HolidayExp) Reset() {
 	*x = HolidayExp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_compliance_proto_msgTypes[10]
+		mi := &file_api_commons_compliance_proto_msgTypes[12]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1314,7 +1466,7 @@ func (x *HolidayExp) String() string {
 func (*HolidayExp) ProtoMessage() {}
 
 func (x *HolidayExp) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_compliance_proto_msgTypes[10]
+	mi := &file_api_commons_compliance_proto_msgTypes[12]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1327,7 +1479,7 @@ func (x *HolidayExp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HolidayExp.ProtoReflect.Descriptor instead.
 func (*HolidayExp) Descriptor() ([]byte, []int) {
-	return file_api_commons_compliance_proto_rawDescGZIP(), []int{10}
+	return file_api_commons_compliance_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *HolidayExp) GetName() string {
@@ -1362,7 +1514,7 @@ type MetaFieldExp struct {
 func (x *MetaFieldExp) Reset() {
 	*x = MetaFieldExp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_compliance_proto_msgTypes[11]
+		mi := &file_api_commons_compliance_proto_msgTypes[13]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1375,7 +1527,7 @@ func (x *MetaFieldExp) String() string {
 func (*MetaFieldExp) ProtoMessage() {}
 
 func (x *MetaFieldExp) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_compliance_proto_msgTypes[11]
+	mi := &file_api_commons_compliance_proto_msgTypes[13]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1388,7 +1540,7 @@ func (x *MetaFieldExp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MetaFieldExp.ProtoReflect.Descriptor instead.
 func (*MetaFieldExp) Descriptor() ([]byte, []int) {
-	return file_api_commons_compliance_proto_rawDescGZIP(), []int{11}
+	return file_api_commons_compliance_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *MetaFieldExp) GetField() string {
@@ -1422,7 +1574,7 @@ type PluginExp struct {
 func (x *PluginExp) Reset() {
 	*x = PluginExp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_compliance_proto_msgTypes[12]
+		mi := &file_api_commons_compliance_proto_msgTypes[14]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1435,7 +1587,7 @@ func (x *PluginExp) String() string {
 func (*PluginExp) ProtoMessage() {}
 
 func (x *PluginExp) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_compliance_proto_msgTypes[12]
+	mi := &file_api_commons_compliance_proto_msgTypes[14]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1448,7 +1600,7 @@ func (x *PluginExp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PluginExp.ProtoReflect.Descriptor instead.
 func (*PluginExp) Descriptor() ([]byte, []int) {
-	return file_api_commons_compliance_proto_rawDescGZIP(), []int{12}
+	return file_api_commons_compliance_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *PluginExp) GetType() PluginType {
@@ -1540,7 +1692,7 @@ type EntityExp struct {
 func (x *EntityExp) Reset() {
 	*x = EntityExp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_compliance_proto_msgTypes[13]
+		mi := &file_api_commons_compliance_proto_msgTypes[15]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1553,7 +1705,7 @@ func (x *EntityExp) String() string {
 func (*EntityExp) ProtoMessage() {}
 
 func (x *EntityExp) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_compliance_proto_msgTypes[13]
+	mi := &file_api_commons_compliance_proto_msgTypes[15]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1566,7 +1718,7 @@ func (x *EntityExp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EntityExp.ProtoReflect.Descriptor instead.
 func (*EntityExp) Descriptor() ([]byte, []int) {
-	return file_api_commons_compliance_proto_rawDescGZIP(), []int{13}
+	return file_api_commons_compliance_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *EntityExp) GetSubEntity() SubEntity {
@@ -1594,7 +1746,7 @@ type FieldNamesMod struct {
 func (x *FieldNamesMod) Reset() {
 	*x = FieldNamesMod{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_compliance_proto_msgTypes[14]
+		mi := &file_api_commons_compliance_proto_msgTypes[16]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1607,7 +1759,7 @@ func (x *FieldNamesMod) String() string {
 func (*FieldNamesMod) ProtoMessage() {}
 
 func (x *FieldNamesMod) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_compliance_proto_msgTypes[14]
+	mi := &file_api_commons_compliance_proto_msgTypes[16]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1620,7 +1772,7 @@ func (x *FieldNamesMod) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FieldNamesMod.ProtoReflect.Descriptor instead.
 func (*FieldNamesMod) Descriptor() ([]byte, []int) {
-	return file_api_commons_compliance_proto_rawDescGZIP(), []int{14}
+	return file_api_commons_compliance_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *FieldNamesMod) GetFieldNames() []*Field {
@@ -1641,7 +1793,7 @@ type ResultsMod struct {
 func (x *ResultsMod) Reset() {
 	*x = ResultsMod{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_compliance_proto_msgTypes[15]
+		mi := &file_api_commons_compliance_proto_msgTypes[17]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1654,7 +1806,7 @@ func (x *ResultsMod) String() string {
 func (*ResultsMod) ProtoMessage() {}
 
 func (x *ResultsMod) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_compliance_proto_msgTypes[15]
+	mi := &file_api_commons_compliance_proto_msgTypes[17]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1667,7 +1819,7 @@ func (x *ResultsMod) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ResultsMod.ProtoReflect.Descriptor instead.
 func (*ResultsMod) Descriptor() ([]byte, []int) {
-	return file_api_commons_compliance_proto_rawDescGZIP(), []int{15}
+	return file_api_commons_compliance_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *ResultsMod) GetResults() []string {
@@ -1688,7 +1840,7 @@ type DispositionMod struct {
 func (x *DispositionMod) Reset() {
 	*x = DispositionMod{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_compliance_proto_msgTypes[16]
+		mi := &file_api_commons_compliance_proto_msgTypes[18]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1701,7 +1853,7 @@ func (x *DispositionMod) String() string {
 func (*DispositionMod) ProtoMessage() {}
 
 func (x *DispositionMod) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_compliance_proto_msgTypes[16]
+	mi := &file_api_commons_compliance_proto_msgTypes[18]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1714,7 +1866,7 @@ func (x *DispositionMod) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DispositionMod.ProtoReflect.Descriptor instead.
 func (*DispositionMod) Descriptor() ([]byte, []int) {
-	return file_api_commons_compliance_proto_rawDescGZIP(), []int{16}
+	return file_api_commons_compliance_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *DispositionMod) GetDispositions() []*DispositionField {
@@ -1737,7 +1889,7 @@ type DispositionField struct {
 func (x *DispositionField) Reset() {
 	*x = DispositionField{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_compliance_proto_msgTypes[17]
+		mi := &file_api_commons_compliance_proto_msgTypes[19]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1750,7 +1902,7 @@ func (x *DispositionField) String() string {
 func (*DispositionField) ProtoMessage() {}
 
 func (x *DispositionField) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_compliance_proto_msgTypes[17]
+	mi := &file_api_commons_compliance_proto_msgTypes[19]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1763,7 +1915,7 @@ func (x *DispositionField) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DispositionField.ProtoReflect.Descriptor instead.
 func (*DispositionField) Descriptor() ([]byte, []int) {
-	return file_api_commons_compliance_proto_rawDescGZIP(), []int{17}
+	return file_api_commons_compliance_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *DispositionField) GetKey() string {
@@ -1799,7 +1951,7 @@ type DispositionPair struct {
 func (x *DispositionPair) Reset() {
 	*x = DispositionPair{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_compliance_proto_msgTypes[18]
+		mi := &file_api_commons_compliance_proto_msgTypes[20]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1812,7 +1964,7 @@ func (x *DispositionPair) String() string {
 func (*DispositionPair) ProtoMessage() {}
 
 func (x *DispositionPair) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_compliance_proto_msgTypes[18]
+	mi := &file_api_commons_compliance_proto_msgTypes[20]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1825,7 +1977,7 @@ func (x *DispositionPair) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DispositionPair.ProtoReflect.Descriptor instead.
 func (*DispositionPair) Descriptor() ([]byte, []int) {
-	return file_api_commons_compliance_proto_rawDescGZIP(), []int{18}
+	return file_api_commons_compliance_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *DispositionPair) GetKey() string {
@@ -1854,7 +2006,7 @@ type Field struct {
 func (x *Field) Reset() {
 	*x = Field{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_compliance_proto_msgTypes[19]
+		mi := &file_api_commons_compliance_proto_msgTypes[21]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1867,7 +2019,7 @@ func (x *Field) String() string {
 func (*Field) ProtoMessage() {}
 
 func (x *Field) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_compliance_proto_msgTypes[19]
+	mi := &file_api_commons_compliance_proto_msgTypes[21]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1880,7 +2032,7 @@ func (x *Field) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Field.ProtoReflect.Descriptor instead.
 func (*Field) Descriptor() ([]byte, []int) {
-	return file_api_commons_compliance_proto_rawDescGZIP(), []int{19}
+	return file_api_commons_compliance_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *Field) GetField() string {
@@ -1923,7 +2075,7 @@ type ConsentCondition struct {
 func (x *ConsentCondition) Reset() {
 	*x = ConsentCondition{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_compliance_proto_msgTypes[20]
+		mi := &file_api_commons_compliance_proto_msgTypes[22]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1936,7 +2088,7 @@ func (x *ConsentCondition) String() string {
 func (*ConsentCondition) ProtoMessage() {}
 
 func (x *ConsentCondition) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_compliance_proto_msgTypes[20]
+	mi := &file_api_commons_compliance_proto_msgTypes[22]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1949,7 +2101,7 @@ func (x *ConsentCondition) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ConsentCondition.ProtoReflect.Descriptor instead.
 func (*ConsentCondition) Descriptor() ([]byte, []int) {
-	return file_api_commons_compliance_proto_rawDescGZIP(), []int{20}
+	return file_api_commons_compliance_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *ConsentCondition) GetConsentConditionId() int64 {
@@ -2031,7 +2183,7 @@ type ScenarioData struct {
 func (x *ScenarioData) Reset() {
 	*x = ScenarioData{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_compliance_proto_msgTypes[21]
+		mi := &file_api_commons_compliance_proto_msgTypes[23]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2044,7 +2196,7 @@ func (x *ScenarioData) String() string {
 func (*ScenarioData) ProtoMessage() {}
 
 func (x *ScenarioData) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_compliance_proto_msgTypes[21]
+	mi := &file_api_commons_compliance_proto_msgTypes[23]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2057,7 +2209,7 @@ func (x *ScenarioData) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ScenarioData.ProtoReflect.Descriptor instead.
 func (*ScenarioData) Descriptor() ([]byte, []int) {
-	return file_api_commons_compliance_proto_rawDescGZIP(), []int{21}
+	return file_api_commons_compliance_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *ScenarioData) GetCommType() *CommType {
@@ -2200,7 +2352,7 @@ type CountryCode struct {
 func (x *CountryCode) Reset() {
 	*x = CountryCode{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_compliance_proto_msgTypes[22]
+		mi := &file_api_commons_compliance_proto_msgTypes[24]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2213,7 +2365,7 @@ func (x *CountryCode) String() string {
 func (*CountryCode) ProtoMessage() {}
 
 func (x *CountryCode) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_compliance_proto_msgTypes[22]
+	mi := &file_api_commons_compliance_proto_msgTypes[24]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2226,7 +2378,7 @@ func (x *CountryCode) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CountryCode.ProtoReflect.Descriptor instead.
 func (*CountryCode) Descriptor() ([]byte, []int) {
-	return file_api_commons_compliance_proto_rawDescGZIP(), []int{22}
+	return file_api_commons_compliance_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *CountryCode) GetCountryCode() int64 {
@@ -2264,7 +2416,7 @@ type ScenarioResult struct {
 func (x *ScenarioResult) Reset() {
 	*x = ScenarioResult{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_compliance_proto_msgTypes[23]
+		mi := &file_api_commons_compliance_proto_msgTypes[25]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2277,7 +2429,7 @@ func (x *ScenarioResult) String() string {
 func (*ScenarioResult) ProtoMessage() {}
 
 func (x *ScenarioResult) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_compliance_proto_msgTypes[23]
+	mi := &file_api_commons_compliance_proto_msgTypes[25]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2290,7 +2442,7 @@ func (x *ScenarioResult) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ScenarioResult.ProtoReflect.Descriptor instead.
 func (*ScenarioResult) Descriptor() ([]byte, []int) {
-	return file_api_commons_compliance_proto_rawDescGZIP(), []int{23}
+	return file_api_commons_compliance_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *ScenarioResult) GetPassedValue() bool {
@@ -2333,7 +2485,7 @@ type ScenarioRuleResponse struct {
 func (x *ScenarioRuleResponse) Reset() {
 	*x = ScenarioRuleResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_compliance_proto_msgTypes[24]
+		mi := &file_api_commons_compliance_proto_msgTypes[26]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2346,7 +2498,7 @@ func (x *ScenarioRuleResponse) String() string {
 func (*ScenarioRuleResponse) ProtoMessage() {}
 
 func (x *ScenarioRuleResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_compliance_proto_msgTypes[24]
+	mi := &file_api_commons_compliance_proto_msgTypes[26]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2359,7 +2511,7 @@ func (x *ScenarioRuleResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ScenarioRuleResponse.ProtoReflect.Descriptor instead.
 func (*ScenarioRuleResponse) Descriptor() ([]byte, []int) {
-	return file_api_commons_compliance_proto_rawDescGZIP(), []int{24}
+	return file_api_commons_compliance_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *ScenarioRuleResponse) GetRuleText() string {
@@ -2392,7 +2544,7 @@ type ScrubEntryDetails struct {
 func (x *ScrubEntryDetails) Reset() {
 	*x = ScrubEntryDetails{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_compliance_proto_msgTypes[25]
+		mi := &file_api_commons_compliance_proto_msgTypes[27]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2405,7 +2557,7 @@ func (x *ScrubEntryDetails) String() string {
 func (*ScrubEntryDetails) ProtoMessage() {}
 
 func (x *ScrubEntryDetails) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_compliance_proto_msgTypes[25]
+	mi := &file_api_commons_compliance_proto_msgTypes[27]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2418,7 +2570,7 @@ func (x *ScrubEntryDetails) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ScrubEntryDetails.ProtoReflect.Descriptor instead.
 func (*ScrubEntryDetails) Descriptor() ([]byte, []int) {
-	return file_api_commons_compliance_proto_rawDescGZIP(), []int{25}
+	return file_api_commons_compliance_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *ScrubEntryDetails) GetContent() string {
@@ -2458,7 +2610,7 @@ type RuleResponse struct {
 func (x *RuleResponse) Reset() {
 	*x = RuleResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_compliance_proto_msgTypes[26]
+		mi := &file_api_commons_compliance_proto_msgTypes[28]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2471,7 +2623,7 @@ func (x *RuleResponse) String() string {
 func (*RuleResponse) ProtoMessage() {}
 
 func (x *RuleResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_compliance_proto_msgTypes[26]
+	mi := &file_api_commons_compliance_proto_msgTypes[28]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2484,7 +2636,7 @@ func (x *RuleResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RuleResponse.ProtoReflect.Descriptor instead.
 func (*RuleResponse) Descriptor() ([]byte, []int) {
-	return file_api_commons_compliance_proto_rawDescGZIP(), []int{26}
+	return file_api_commons_compliance_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *RuleResponse) GetRuleText() string {
@@ -2587,7 +2739,7 @@ var file_api_commons_compliance_proto_rawDesc = []byte{
 	0x12, 0x3b, 0x0a, 0x0b, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x73, 0x18,
 	0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d,
 	0x6f, 0x6e, 0x73, 0x2e, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x4e, 0x61, 0x6d, 0x65, 0x73, 0x4d, 0x6f,
-	0x64, 0x52, 0x0a, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x4e, 0x61, 0x6d, 0x65, 0x73, 0x22, 0xb6, 0x02,
+	0x64, 0x52, 0x0a, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x4e, 0x61, 0x6d, 0x65, 0x73, 0x22, 0xec, 0x02,
 	0x0a, 0x0c, 0x46, 0x72, 0x65, 0x71, 0x75, 0x65, 0x6e, 0x63, 0x79, 0x45, 0x78, 0x70, 0x12, 0x14,
 	0x0a, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x63,
 	0x6f, 0x75, 0x6e, 0x74, 0x12, 0x1a, 0x0a, 0x08, 0x64, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e,
@@ -2607,7 +2759,29 @@ var file_api_commons_compliance_proto_rawDesc = []byte{
 	0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x18, 0x06, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x61,
 	0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x45, 0x6e, 0x74, 0x69, 0x74,
 	0x79, 0x45, 0x78, 0x70, 0x52, 0x10, 0x63, 0x68, 0x65, 0x63, 0x6b, 0x69, 0x6e, 0x67, 0x45, 0x6e,
-	0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x22, 0xc7, 0x01, 0x0a, 0x0b, 0x4c, 0x6f, 0x63, 0x61, 0x74,
+	0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x12, 0x34, 0x0a, 0x08, 0x6d, 0x61, 0x74, 0x63, 0x68, 0x69,
+	0x6e, 0x67, 0x18, 0x07, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63,
+	0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x69, 0x6e, 0x67, 0x4d,
+	0x6f, 0x64, 0x52, 0x08, 0x6d, 0x61, 0x74, 0x63, 0x68, 0x69, 0x6e, 0x67, 0x22, 0x92, 0x01, 0x0a,
+	0x0b, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x69, 0x6e, 0x67, 0x4d, 0x6f, 0x64, 0x12, 0x2a, 0x0a, 0x03,
+	0x61, 0x6e, 0x64, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x61, 0x70, 0x69, 0x2e,
+	0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x69, 0x6e, 0x67,
+	0x4d, 0x6f, 0x64, 0x52, 0x03, 0x61, 0x6e, 0x64, 0x12, 0x28, 0x0a, 0x02, 0x6f, 0x72, 0x18, 0x02,
+	0x20, 0x03, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f,
+	0x6e, 0x73, 0x2e, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x69, 0x6e, 0x67, 0x4d, 0x6f, 0x64, 0x52, 0x02,
+	0x6f, 0x72, 0x12, 0x2d, 0x0a, 0x03, 0x6d, 0x6f, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x1b, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x4d, 0x61,
+	0x74, 0x63, 0x68, 0x69, 0x6e, 0x67, 0x45, 0x6e, 0x74, 0x69, 0x74, 0x79, 0x52, 0x03, 0x6d, 0x6f,
+	0x64, 0x22, 0x92, 0x01, 0x0a, 0x0e, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x69, 0x6e, 0x67, 0x45, 0x6e,
+	0x74, 0x69, 0x74, 0x79, 0x12, 0x33, 0x0a, 0x07, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x73, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x17, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d,
+	0x6f, 0x6e, 0x73, 0x2e, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x73, 0x4d, 0x6f, 0x64, 0x48, 0x00,
+	0x52, 0x07, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x73, 0x12, 0x41, 0x0a, 0x0c, 0x64, 0x69, 0x73,
+	0x70, 0x6f, 0x73, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x1b, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x44, 0x69,
+	0x73, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x4d, 0x6f, 0x64, 0x48, 0x00, 0x52, 0x0c,
+	0x64, 0x69, 0x73, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x42, 0x08, 0x0a, 0x06,
+	0x65, 0x6e, 0x74, 0x69, 0x74, 0x79, 0x22, 0xc7, 0x01, 0x0a, 0x0b, 0x4c, 0x6f, 0x63, 0x61, 0x74,
 	0x69, 0x6f, 0x6e, 0x45, 0x78, 0x70, 0x12, 0x18, 0x0a, 0x07, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x72,
 	0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x72, 0x79,
 	0x12, 0x14, 0x0a, 0x05, 0x73, 0x74, 0x61, 0x74, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
@@ -2892,7 +3066,7 @@ func file_api_commons_compliance_proto_rawDescGZIP() []byte {
 }
 
 var file_api_commons_compliance_proto_enumTypes = make([]protoimpl.EnumInfo, 9)
-var file_api_commons_compliance_proto_msgTypes = make([]protoimpl.MessageInfo, 28)
+var file_api_commons_compliance_proto_msgTypes = make([]protoimpl.MessageInfo, 30)
 var file_api_commons_compliance_proto_goTypes = []interface{}{
 	(Verb)(0),                      // 0: api.commons.Verb
 	(Entity)(0),                    // 1: api.commons.Entity
@@ -2909,33 +3083,35 @@ var file_api_commons_compliance_proto_goTypes = []interface{}{
 	(*WeekdayExp)(nil),             // 12: api.commons.WeekdayExp
 	(*DnclExp)(nil),                // 13: api.commons.DnclExp
 	(*FrequencyExp)(nil),           // 14: api.commons.FrequencyExp
-	(*LocationExp)(nil),            // 15: api.commons.LocationExp
-	(*PhoneTypeExp)(nil),           // 16: api.commons.PhoneTypeExp
-	(*MonthExp)(nil),               // 17: api.commons.MonthExp
-	(*DateExp)(nil),                // 18: api.commons.DateExp
-	(*HolidayExp)(nil),             // 19: api.commons.HolidayExp
-	(*MetaFieldExp)(nil),           // 20: api.commons.MetaFieldExp
-	(*PluginExp)(nil),              // 21: api.commons.PluginExp
-	(*EntityExp)(nil),              // 22: api.commons.EntityExp
-	(*FieldNamesMod)(nil),          // 23: api.commons.FieldNamesMod
-	(*ResultsMod)(nil),             // 24: api.commons.ResultsMod
-	(*DispositionMod)(nil),         // 25: api.commons.DispositionMod
-	(*DispositionField)(nil),       // 26: api.commons.DispositionField
-	(*DispositionPair)(nil),        // 27: api.commons.DispositionPair
-	(*Field)(nil),                  // 28: api.commons.Field
-	(*ConsentCondition)(nil),       // 29: api.commons.ConsentCondition
-	(*ScenarioData)(nil),           // 30: api.commons.ScenarioData
-	(*CountryCode)(nil),            // 31: api.commons.CountryCode
-	(*ScenarioResult)(nil),         // 32: api.commons.ScenarioResult
-	(*ScenarioRuleResponse)(nil),   // 33: api.commons.ScenarioRuleResponse
-	(*ScrubEntryDetails)(nil),      // 34: api.commons.ScrubEntryDetails
-	(*RuleResponse)(nil),           // 35: api.commons.RuleResponse
-	nil,                            // 36: api.commons.ScenarioData.CallMetadataEntry
-	(Weekday_Enum)(0),              // 37: api.commons.Weekday.Enum
-	(Month)(0),                     // 38: api.commons.Month
-	(*timestamppb.Timestamp)(nil),  // 39: google.protobuf.Timestamp
-	(*CommType)(nil),               // 40: api.commons.CommType
-	(*wrapperspb.StringValue)(nil), // 41: google.protobuf.StringValue
+	(*MatchingMod)(nil),            // 15: api.commons.MatchingMod
+	(*MatchingEntity)(nil),         // 16: api.commons.MatchingEntity
+	(*LocationExp)(nil),            // 17: api.commons.LocationExp
+	(*PhoneTypeExp)(nil),           // 18: api.commons.PhoneTypeExp
+	(*MonthExp)(nil),               // 19: api.commons.MonthExp
+	(*DateExp)(nil),                // 20: api.commons.DateExp
+	(*HolidayExp)(nil),             // 21: api.commons.HolidayExp
+	(*MetaFieldExp)(nil),           // 22: api.commons.MetaFieldExp
+	(*PluginExp)(nil),              // 23: api.commons.PluginExp
+	(*EntityExp)(nil),              // 24: api.commons.EntityExp
+	(*FieldNamesMod)(nil),          // 25: api.commons.FieldNamesMod
+	(*ResultsMod)(nil),             // 26: api.commons.ResultsMod
+	(*DispositionMod)(nil),         // 27: api.commons.DispositionMod
+	(*DispositionField)(nil),       // 28: api.commons.DispositionField
+	(*DispositionPair)(nil),        // 29: api.commons.DispositionPair
+	(*Field)(nil),                  // 30: api.commons.Field
+	(*ConsentCondition)(nil),       // 31: api.commons.ConsentCondition
+	(*ScenarioData)(nil),           // 32: api.commons.ScenarioData
+	(*CountryCode)(nil),            // 33: api.commons.CountryCode
+	(*ScenarioResult)(nil),         // 34: api.commons.ScenarioResult
+	(*ScenarioRuleResponse)(nil),   // 35: api.commons.ScenarioRuleResponse
+	(*ScrubEntryDetails)(nil),      // 36: api.commons.ScrubEntryDetails
+	(*RuleResponse)(nil),           // 37: api.commons.RuleResponse
+	nil,                            // 38: api.commons.ScenarioData.CallMetadataEntry
+	(Weekday_Enum)(0),              // 39: api.commons.Weekday.Enum
+	(Month)(0),                     // 40: api.commons.Month
+	(*timestamppb.Timestamp)(nil),  // 41: google.protobuf.Timestamp
+	(*CommType)(nil),               // 42: api.commons.CommType
+	(*wrapperspb.StringValue)(nil), // 43: google.protobuf.StringValue
 }
 var file_api_commons_compliance_proto_depIdxs = []int32{
 	0,  // 0: api.commons.Rule.verb:type_name -> api.commons.Verb
@@ -2946,47 +3122,53 @@ var file_api_commons_compliance_proto_depIdxs = []int32{
 	12, // 5: api.commons.Selector.week:type_name -> api.commons.WeekdayExp
 	13, // 6: api.commons.Selector.dncl:type_name -> api.commons.DnclExp
 	14, // 7: api.commons.Selector.frequency:type_name -> api.commons.FrequencyExp
-	15, // 8: api.commons.Selector.location:type_name -> api.commons.LocationExp
-	16, // 9: api.commons.Selector.phone_type:type_name -> api.commons.PhoneTypeExp
-	17, // 10: api.commons.Selector.month:type_name -> api.commons.MonthExp
-	18, // 11: api.commons.Selector.date:type_name -> api.commons.DateExp
-	19, // 12: api.commons.Selector.holiday:type_name -> api.commons.HolidayExp
-	20, // 13: api.commons.Selector.meta:type_name -> api.commons.MetaFieldExp
-	21, // 14: api.commons.Selector.plugin:type_name -> api.commons.PluginExp
-	37, // 15: api.commons.WeekdayExp.day:type_name -> api.commons.Weekday.Enum
-	23, // 16: api.commons.DnclExp.field_names:type_name -> api.commons.FieldNamesMod
-	24, // 17: api.commons.FrequencyExp.results:type_name -> api.commons.ResultsMod
-	25, // 18: api.commons.FrequencyExp.dispositions:type_name -> api.commons.DispositionMod
-	23, // 19: api.commons.FrequencyExp.field_names:type_name -> api.commons.FieldNamesMod
-	22, // 20: api.commons.FrequencyExp.checking_entities:type_name -> api.commons.EntityExp
-	3,  // 21: api.commons.PhoneTypeExp.phone_type:type_name -> api.commons.PhoneType
-	38, // 22: api.commons.MonthExp.month:type_name -> api.commons.Month
-	38, // 23: api.commons.DateExp.month:type_name -> api.commons.Month
-	6,  // 24: api.commons.PluginExp.type:type_name -> api.commons.PluginType
-	7,  // 25: api.commons.PluginExp.env:type_name -> api.commons.Environment
-	8,  // 26: api.commons.PluginExp.absent_action:type_name -> api.commons.ConsentAbsentAction
-	2,  // 27: api.commons.EntityExp.sub_entity:type_name -> api.commons.SubEntity
-	1,  // 28: api.commons.EntityExp.entity:type_name -> api.commons.Entity
-	28, // 29: api.commons.FieldNamesMod.field_names:type_name -> api.commons.Field
-	26, // 30: api.commons.DispositionMod.dispositions:type_name -> api.commons.DispositionField
-	27, // 31: api.commons.DispositionField.pairs:type_name -> api.commons.DispositionPair
-	37, // 32: api.commons.ConsentCondition.days_of_the_week:type_name -> api.commons.Weekday.Enum
-	39, // 33: api.commons.ConsentCondition.from_date:type_name -> google.protobuf.Timestamp
-	39, // 34: api.commons.ConsentCondition.to_date:type_name -> google.protobuf.Timestamp
-	40, // 35: api.commons.ScenarioData.comm_type:type_name -> api.commons.CommType
-	36, // 36: api.commons.ScenarioData.call_metadata:type_name -> api.commons.ScenarioData.CallMetadataEntry
-	39, // 37: api.commons.ScenarioData.time_of_call:type_name -> google.protobuf.Timestamp
-	3,  // 38: api.commons.ScenarioData.phone_type:type_name -> api.commons.PhoneType
-	31, // 39: api.commons.ScenarioData.country_code_data:type_name -> api.commons.CountryCode
-	33, // 40: api.commons.ScenarioResult.should_allow_responses:type_name -> api.commons.ScenarioRuleResponse
-	33, // 41: api.commons.ScenarioResult.should_deny_responses:type_name -> api.commons.ScenarioRuleResponse
-	39, // 42: api.commons.ScrubEntryDetails.expiration_date:type_name -> google.protobuf.Timestamp
-	41, // 43: api.commons.ScrubEntryDetails.notes:type_name -> google.protobuf.StringValue
-	44, // [44:44] is the sub-list for method output_type
-	44, // [44:44] is the sub-list for method input_type
-	44, // [44:44] is the sub-list for extension type_name
-	44, // [44:44] is the sub-list for extension extendee
-	0,  // [0:44] is the sub-list for field type_name
+	17, // 8: api.commons.Selector.location:type_name -> api.commons.LocationExp
+	18, // 9: api.commons.Selector.phone_type:type_name -> api.commons.PhoneTypeExp
+	19, // 10: api.commons.Selector.month:type_name -> api.commons.MonthExp
+	20, // 11: api.commons.Selector.date:type_name -> api.commons.DateExp
+	21, // 12: api.commons.Selector.holiday:type_name -> api.commons.HolidayExp
+	22, // 13: api.commons.Selector.meta:type_name -> api.commons.MetaFieldExp
+	23, // 14: api.commons.Selector.plugin:type_name -> api.commons.PluginExp
+	39, // 15: api.commons.WeekdayExp.day:type_name -> api.commons.Weekday.Enum
+	25, // 16: api.commons.DnclExp.field_names:type_name -> api.commons.FieldNamesMod
+	26, // 17: api.commons.FrequencyExp.results:type_name -> api.commons.ResultsMod
+	27, // 18: api.commons.FrequencyExp.dispositions:type_name -> api.commons.DispositionMod
+	25, // 19: api.commons.FrequencyExp.field_names:type_name -> api.commons.FieldNamesMod
+	24, // 20: api.commons.FrequencyExp.checking_entities:type_name -> api.commons.EntityExp
+	15, // 21: api.commons.FrequencyExp.matching:type_name -> api.commons.MatchingMod
+	15, // 22: api.commons.MatchingMod.and:type_name -> api.commons.MatchingMod
+	15, // 23: api.commons.MatchingMod.or:type_name -> api.commons.MatchingMod
+	16, // 24: api.commons.MatchingMod.mod:type_name -> api.commons.MatchingEntity
+	26, // 25: api.commons.MatchingEntity.results:type_name -> api.commons.ResultsMod
+	27, // 26: api.commons.MatchingEntity.dispositions:type_name -> api.commons.DispositionMod
+	3,  // 27: api.commons.PhoneTypeExp.phone_type:type_name -> api.commons.PhoneType
+	40, // 28: api.commons.MonthExp.month:type_name -> api.commons.Month
+	40, // 29: api.commons.DateExp.month:type_name -> api.commons.Month
+	6,  // 30: api.commons.PluginExp.type:type_name -> api.commons.PluginType
+	7,  // 31: api.commons.PluginExp.env:type_name -> api.commons.Environment
+	8,  // 32: api.commons.PluginExp.absent_action:type_name -> api.commons.ConsentAbsentAction
+	2,  // 33: api.commons.EntityExp.sub_entity:type_name -> api.commons.SubEntity
+	1,  // 34: api.commons.EntityExp.entity:type_name -> api.commons.Entity
+	30, // 35: api.commons.FieldNamesMod.field_names:type_name -> api.commons.Field
+	28, // 36: api.commons.DispositionMod.dispositions:type_name -> api.commons.DispositionField
+	29, // 37: api.commons.DispositionField.pairs:type_name -> api.commons.DispositionPair
+	39, // 38: api.commons.ConsentCondition.days_of_the_week:type_name -> api.commons.Weekday.Enum
+	41, // 39: api.commons.ConsentCondition.from_date:type_name -> google.protobuf.Timestamp
+	41, // 40: api.commons.ConsentCondition.to_date:type_name -> google.protobuf.Timestamp
+	42, // 41: api.commons.ScenarioData.comm_type:type_name -> api.commons.CommType
+	38, // 42: api.commons.ScenarioData.call_metadata:type_name -> api.commons.ScenarioData.CallMetadataEntry
+	41, // 43: api.commons.ScenarioData.time_of_call:type_name -> google.protobuf.Timestamp
+	3,  // 44: api.commons.ScenarioData.phone_type:type_name -> api.commons.PhoneType
+	33, // 45: api.commons.ScenarioData.country_code_data:type_name -> api.commons.CountryCode
+	35, // 46: api.commons.ScenarioResult.should_allow_responses:type_name -> api.commons.ScenarioRuleResponse
+	35, // 47: api.commons.ScenarioResult.should_deny_responses:type_name -> api.commons.ScenarioRuleResponse
+	41, // 48: api.commons.ScrubEntryDetails.expiration_date:type_name -> google.protobuf.Timestamp
+	43, // 49: api.commons.ScrubEntryDetails.notes:type_name -> google.protobuf.StringValue
+	50, // [50:50] is the sub-list for method output_type
+	50, // [50:50] is the sub-list for method input_type
+	50, // [50:50] is the sub-list for extension type_name
+	50, // [50:50] is the sub-list for extension extendee
+	0,  // [0:50] is the sub-list for field type_name
 }
 
 func init() { file_api_commons_compliance_proto_init() }
@@ -3070,7 +3252,7 @@ func file_api_commons_compliance_proto_init() {
 			}
 		}
 		file_api_commons_compliance_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*LocationExp); i {
+			switch v := v.(*MatchingMod); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3082,7 +3264,7 @@ func file_api_commons_compliance_proto_init() {
 			}
 		}
 		file_api_commons_compliance_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*PhoneTypeExp); i {
+			switch v := v.(*MatchingEntity); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3094,7 +3276,7 @@ func file_api_commons_compliance_proto_init() {
 			}
 		}
 		file_api_commons_compliance_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*MonthExp); i {
+			switch v := v.(*LocationExp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3106,7 +3288,7 @@ func file_api_commons_compliance_proto_init() {
 			}
 		}
 		file_api_commons_compliance_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DateExp); i {
+			switch v := v.(*PhoneTypeExp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3118,7 +3300,7 @@ func file_api_commons_compliance_proto_init() {
 			}
 		}
 		file_api_commons_compliance_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*HolidayExp); i {
+			switch v := v.(*MonthExp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3130,7 +3312,7 @@ func file_api_commons_compliance_proto_init() {
 			}
 		}
 		file_api_commons_compliance_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*MetaFieldExp); i {
+			switch v := v.(*DateExp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3142,7 +3324,7 @@ func file_api_commons_compliance_proto_init() {
 			}
 		}
 		file_api_commons_compliance_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*PluginExp); i {
+			switch v := v.(*HolidayExp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3154,7 +3336,7 @@ func file_api_commons_compliance_proto_init() {
 			}
 		}
 		file_api_commons_compliance_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*EntityExp); i {
+			switch v := v.(*MetaFieldExp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3166,7 +3348,7 @@ func file_api_commons_compliance_proto_init() {
 			}
 		}
 		file_api_commons_compliance_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*FieldNamesMod); i {
+			switch v := v.(*PluginExp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3178,7 +3360,7 @@ func file_api_commons_compliance_proto_init() {
 			}
 		}
 		file_api_commons_compliance_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ResultsMod); i {
+			switch v := v.(*EntityExp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3190,7 +3372,7 @@ func file_api_commons_compliance_proto_init() {
 			}
 		}
 		file_api_commons_compliance_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DispositionMod); i {
+			switch v := v.(*FieldNamesMod); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3202,7 +3384,7 @@ func file_api_commons_compliance_proto_init() {
 			}
 		}
 		file_api_commons_compliance_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DispositionField); i {
+			switch v := v.(*ResultsMod); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3214,7 +3396,7 @@ func file_api_commons_compliance_proto_init() {
 			}
 		}
 		file_api_commons_compliance_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DispositionPair); i {
+			switch v := v.(*DispositionMod); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3226,7 +3408,7 @@ func file_api_commons_compliance_proto_init() {
 			}
 		}
 		file_api_commons_compliance_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Field); i {
+			switch v := v.(*DispositionField); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3238,7 +3420,7 @@ func file_api_commons_compliance_proto_init() {
 			}
 		}
 		file_api_commons_compliance_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ConsentCondition); i {
+			switch v := v.(*DispositionPair); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3250,7 +3432,7 @@ func file_api_commons_compliance_proto_init() {
 			}
 		}
 		file_api_commons_compliance_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ScenarioData); i {
+			switch v := v.(*Field); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3262,7 +3444,7 @@ func file_api_commons_compliance_proto_init() {
 			}
 		}
 		file_api_commons_compliance_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CountryCode); i {
+			switch v := v.(*ConsentCondition); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3274,7 +3456,7 @@ func file_api_commons_compliance_proto_init() {
 			}
 		}
 		file_api_commons_compliance_proto_msgTypes[23].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ScenarioResult); i {
+			switch v := v.(*ScenarioData); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3286,7 +3468,7 @@ func file_api_commons_compliance_proto_init() {
 			}
 		}
 		file_api_commons_compliance_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ScenarioRuleResponse); i {
+			switch v := v.(*CountryCode); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3298,7 +3480,7 @@ func file_api_commons_compliance_proto_init() {
 			}
 		}
 		file_api_commons_compliance_proto_msgTypes[25].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ScrubEntryDetails); i {
+			switch v := v.(*ScenarioResult); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3310,6 +3492,30 @@ func file_api_commons_compliance_proto_init() {
 			}
 		}
 		file_api_commons_compliance_proto_msgTypes[26].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ScenarioRuleResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_commons_compliance_proto_msgTypes[27].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ScrubEntryDetails); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_commons_compliance_proto_msgTypes[28].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*RuleResponse); i {
 			case 0:
 				return &v.state
@@ -3335,13 +3541,17 @@ func file_api_commons_compliance_proto_init() {
 		(*Selector_Meta)(nil),
 		(*Selector_Plugin)(nil),
 	}
+	file_api_commons_compliance_proto_msgTypes[7].OneofWrappers = []interface{}{
+		(*MatchingEntity_Results)(nil),
+		(*MatchingEntity_Dispositions)(nil),
+	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_commons_compliance_proto_rawDesc,
 			NumEnums:      9,
-			NumMessages:   28,
+			NumMessages:   30,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
