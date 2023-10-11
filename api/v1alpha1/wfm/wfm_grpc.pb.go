@@ -758,6 +758,7 @@ type WFMClient interface {
 	// Errors:
 	//   - grpc.Invalid: one or more fields in the @node have invalid values.
 	//   - grpc.NotFound: parent location node doesn't exist or belongs to a different scenario than the one given.
+	//     the @skill_profile_category does not exist.
 	//   - grpc.Internal: error occurs when creating the program node.
 	CreateProgramNode(ctx context.Context, in *CreateProgramNodeReq, opts ...grpc.CallOption) (*CreateProgramNodeRes, error)
 	// Updates a program node for the given @program_node_sid and org sending the request with the provided parameters.
@@ -772,6 +773,7 @@ type WFMClient interface {
 	//   - grpc.Invalid: one or more fields in the @program_node have invalid values.
 	//   - grpc.Internal: error occurs when updating the program node.
 	//   - grpc.NotFound: entry to be updated doesn't exist, or the given parent @location_node_sid belongs to a different scenario than the program node to update.
+	//     the @skill_profile_category does not exist.
 	UpdateProgramNode(ctx context.Context, in *UpdateProgramNodeReq, opts ...grpc.CallOption) (*UpdateProgramNodeRes, error)
 	// Lists the program nodes with the given @program_node_sids for the org sending the request.
 	// Required permissions:
@@ -1282,12 +1284,14 @@ type WFMClient interface {
 	// The @node_description fields may optionally be left blank.
 	// The @copied_from_scenario_sid field will be ignored, as it will be set to nil in the newly created scenario.
 	// The @creation_datetime and @is_default fields will also be ignored and set as the current time and false respectively.
+	// The @skill_profile_category will be associated with the created program node.
 	// Required permissions:
 	//
 	//	NONE
 	//
 	// Errors:
 	//   - grpc.Invalid: parameters in the @req are invalid for the org making the request.
+	//   - grpc.NotFound: the @skill_profile_category does not exist.
 	//   - grpc.Internal: error occurs when creating the new scenario, or any of the node entities.
 	CreateScheduleScenarioWithNodes(ctx context.Context, in *CreateScheduleScenarioWithNodesReq, opts ...grpc.CallOption) (*CreateScheduleScenarioWithNodesRes, error)
 	// Updates a schedule scenario corresponding to the given @schedule_scenario_sid and org sending the request with the provided parameters.
@@ -4007,6 +4011,7 @@ type WFMServer interface {
 	// Errors:
 	//   - grpc.Invalid: one or more fields in the @node have invalid values.
 	//   - grpc.NotFound: parent location node doesn't exist or belongs to a different scenario than the one given.
+	//     the @skill_profile_category does not exist.
 	//   - grpc.Internal: error occurs when creating the program node.
 	CreateProgramNode(context.Context, *CreateProgramNodeReq) (*CreateProgramNodeRes, error)
 	// Updates a program node for the given @program_node_sid and org sending the request with the provided parameters.
@@ -4021,6 +4026,7 @@ type WFMServer interface {
 	//   - grpc.Invalid: one or more fields in the @program_node have invalid values.
 	//   - grpc.Internal: error occurs when updating the program node.
 	//   - grpc.NotFound: entry to be updated doesn't exist, or the given parent @location_node_sid belongs to a different scenario than the program node to update.
+	//     the @skill_profile_category does not exist.
 	UpdateProgramNode(context.Context, *UpdateProgramNodeReq) (*UpdateProgramNodeRes, error)
 	// Lists the program nodes with the given @program_node_sids for the org sending the request.
 	// Required permissions:
@@ -4531,12 +4537,14 @@ type WFMServer interface {
 	// The @node_description fields may optionally be left blank.
 	// The @copied_from_scenario_sid field will be ignored, as it will be set to nil in the newly created scenario.
 	// The @creation_datetime and @is_default fields will also be ignored and set as the current time and false respectively.
+	// The @skill_profile_category will be associated with the created program node.
 	// Required permissions:
 	//
 	//	NONE
 	//
 	// Errors:
 	//   - grpc.Invalid: parameters in the @req are invalid for the org making the request.
+	//   - grpc.NotFound: the @skill_profile_category does not exist.
 	//   - grpc.Internal: error occurs when creating the new scenario, or any of the node entities.
 	CreateScheduleScenarioWithNodes(context.Context, *CreateScheduleScenarioWithNodesReq) (*CreateScheduleScenarioWithNodesRes, error)
 	// Updates a schedule scenario corresponding to the given @schedule_scenario_sid and org sending the request with the provided parameters.
