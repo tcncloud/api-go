@@ -162,6 +162,7 @@ const (
 	WFM_GetPerformanceMetrics_FullMethodName                         = "/api.v1alpha1.wfm.WFM/GetPerformanceMetrics"
 	WFM_ListRequiredCallsIntervals_FullMethodName                    = "/api.v1alpha1.wfm.WFM/ListRequiredCallsIntervals"
 	WFM_CreateTourPattern_FullMethodName                             = "/api.v1alpha1.wfm.WFM/CreateTourPattern"
+	WFM_GetTourPatternDiagnostics_FullMethodName                     = "/api.v1alpha1.wfm.WFM/GetTourPatternDiagnostics"
 	WFM_UpsertTourPatternWithMembers_FullMethodName                  = "/api.v1alpha1.wfm.WFM/UpsertTourPatternWithMembers"
 	WFM_GetTourPattern_FullMethodName                                = "/api.v1alpha1.wfm.WFM/GetTourPattern"
 	WFM_DeleteTourPattern_FullMethodName                             = "/api.v1alpha1.wfm.WFM/DeleteTourPattern"
@@ -759,6 +760,7 @@ type WFMClient interface {
 	// Errors:
 	//   - grpc.Invalid: one or more fields in the @node have invalid values.
 	//   - grpc.NotFound: parent location node doesn't exist or belongs to a different scenario than the one given.
+	//     the @skill_profile_category does not exist.
 	//   - grpc.Internal: error occurs when creating the program node.
 	CreateProgramNode(ctx context.Context, in *CreateProgramNodeReq, opts ...grpc.CallOption) (*CreateProgramNodeRes, error)
 	// Updates a program node for the given @program_node_sid and org sending the request with the provided parameters.
@@ -773,6 +775,7 @@ type WFMClient interface {
 	//   - grpc.Invalid: one or more fields in the @program_node have invalid values.
 	//   - grpc.Internal: error occurs when updating the program node.
 	//   - grpc.NotFound: entry to be updated doesn't exist, or the given parent @location_node_sid belongs to a different scenario than the program node to update.
+	//     the @skill_profile_category does not exist.
 	UpdateProgramNode(ctx context.Context, in *UpdateProgramNodeReq, opts ...grpc.CallOption) (*UpdateProgramNodeRes, error)
 	// Lists the program nodes with the given @program_node_sids for the org sending the request.
 	// Required permissions:
@@ -1283,12 +1286,14 @@ type WFMClient interface {
 	// The @node_description fields may optionally be left blank.
 	// The @copied_from_scenario_sid field will be ignored, as it will be set to nil in the newly created scenario.
 	// The @creation_datetime and @is_default fields will also be ignored and set as the current time and false respectively.
+	// The @skill_profile_category will be associated with the created program node.
 	// Required permissions:
 	//
 	//	NONE
 	//
 	// Errors:
 	//   - grpc.Invalid: parameters in the @req are invalid for the org making the request.
+	//   - grpc.NotFound: the @skill_profile_category does not exist.
 	//   - grpc.Internal: error occurs when creating the new scenario, or any of the node entities.
 	CreateScheduleScenarioWithNodes(ctx context.Context, in *CreateScheduleScenarioWithNodesReq, opts ...grpc.CallOption) (*CreateScheduleScenarioWithNodesRes, error)
 	// Updates a schedule scenario corresponding to the given @schedule_scenario_sid and org sending the request with the provided parameters.
@@ -1685,6 +1690,19 @@ type WFMClient interface {
 	//   - grpc.AlreadyExists: A Tour Pattern already exists for @shift_template_sid.
 	//   - grpc.Internal: error occurs when creating the Tour Pattern.
 	CreateTourPattern(ctx context.Context, in *CreateTourPatternReq, opts ...grpc.CallOption) (*CreateTourPatternRes, error)
+	// Returns a list of diagnostics describing any issues with the given @tour_pattern.
+	// Checks the internal consistency between the pattern and all members, as well as making sure required fields are set with valid values.
+	// Ignores sid fields, except for @shift_template_sid and @scheduling_activity_sid.
+	// Does not query the database to check that foreign keys exist.
+	// Returns a single diagnostic with an OK code if the given @tour_pattern has no issues.
+	// The @member_tour_week_patterns and @member_tour_agent_collections fields must be set on @tour_pattern.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Internal: error occurs when validating the tour pattern or members.
+	GetTourPatternDiagnostics(ctx context.Context, in *GetTourPatternDiagnosticsReq, opts ...grpc.CallOption) (*GetTourPatternDiagnosticsRes, error)
 	// Replaces the existing Tour Pattern and members with @tour_pattern for the @tour_pattern.shift_template_sid and the org sending the request.
 	// Returns the newly created Tour Pattern and members with their updated SIDs and Week Pattern Numbers.
 	// Any existing Tour Week Patterns, Tour Shift Instance and Segment Configs, Tour Agent Collections and their WFM Agent SIDs
@@ -1692,6 +1710,7 @@ type WFMClient interface {
 	//	belonging to @tour_pattern.shift_template_sid will be replaced with the members on the provided @tour_pattern.
 	//
 	// At least one Tour Agent Collection and one Tour Week Pattern must be provided in the member fields.
+	// If the tour pattern data or members have issues that prevent them from being persisted, a list of diagnostics will be returned describing the issues that must be resolved.
 	// Required permissions:
 	//
 	//	NONE
@@ -3238,6 +3257,15 @@ func (c *wFMClient) CreateTourPattern(ctx context.Context, in *CreateTourPattern
 	return out, nil
 }
 
+func (c *wFMClient) GetTourPatternDiagnostics(ctx context.Context, in *GetTourPatternDiagnosticsReq, opts ...grpc.CallOption) (*GetTourPatternDiagnosticsRes, error) {
+	out := new(GetTourPatternDiagnosticsRes)
+	err := c.cc.Invoke(ctx, WFM_GetTourPatternDiagnostics_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) UpsertTourPatternWithMembers(ctx context.Context, in *UpsertTourPatternWithMembersReq, opts ...grpc.CallOption) (*UpsertTourPatternWithMembersRes, error) {
 	out := new(UpsertTourPatternWithMembersRes)
 	err := c.cc.Invoke(ctx, WFM_UpsertTourPatternWithMembers_FullMethodName, in, out, opts...)
@@ -4009,6 +4037,7 @@ type WFMServer interface {
 	// Errors:
 	//   - grpc.Invalid: one or more fields in the @node have invalid values.
 	//   - grpc.NotFound: parent location node doesn't exist or belongs to a different scenario than the one given.
+	//     the @skill_profile_category does not exist.
 	//   - grpc.Internal: error occurs when creating the program node.
 	CreateProgramNode(context.Context, *CreateProgramNodeReq) (*CreateProgramNodeRes, error)
 	// Updates a program node for the given @program_node_sid and org sending the request with the provided parameters.
@@ -4023,6 +4052,7 @@ type WFMServer interface {
 	//   - grpc.Invalid: one or more fields in the @program_node have invalid values.
 	//   - grpc.Internal: error occurs when updating the program node.
 	//   - grpc.NotFound: entry to be updated doesn't exist, or the given parent @location_node_sid belongs to a different scenario than the program node to update.
+	//     the @skill_profile_category does not exist.
 	UpdateProgramNode(context.Context, *UpdateProgramNodeReq) (*UpdateProgramNodeRes, error)
 	// Lists the program nodes with the given @program_node_sids for the org sending the request.
 	// Required permissions:
@@ -4533,12 +4563,14 @@ type WFMServer interface {
 	// The @node_description fields may optionally be left blank.
 	// The @copied_from_scenario_sid field will be ignored, as it will be set to nil in the newly created scenario.
 	// The @creation_datetime and @is_default fields will also be ignored and set as the current time and false respectively.
+	// The @skill_profile_category will be associated with the created program node.
 	// Required permissions:
 	//
 	//	NONE
 	//
 	// Errors:
 	//   - grpc.Invalid: parameters in the @req are invalid for the org making the request.
+	//   - grpc.NotFound: the @skill_profile_category does not exist.
 	//   - grpc.Internal: error occurs when creating the new scenario, or any of the node entities.
 	CreateScheduleScenarioWithNodes(context.Context, *CreateScheduleScenarioWithNodesReq) (*CreateScheduleScenarioWithNodesRes, error)
 	// Updates a schedule scenario corresponding to the given @schedule_scenario_sid and org sending the request with the provided parameters.
@@ -4935,6 +4967,19 @@ type WFMServer interface {
 	//   - grpc.AlreadyExists: A Tour Pattern already exists for @shift_template_sid.
 	//   - grpc.Internal: error occurs when creating the Tour Pattern.
 	CreateTourPattern(context.Context, *CreateTourPatternReq) (*CreateTourPatternRes, error)
+	// Returns a list of diagnostics describing any issues with the given @tour_pattern.
+	// Checks the internal consistency between the pattern and all members, as well as making sure required fields are set with valid values.
+	// Ignores sid fields, except for @shift_template_sid and @scheduling_activity_sid.
+	// Does not query the database to check that foreign keys exist.
+	// Returns a single diagnostic with an OK code if the given @tour_pattern has no issues.
+	// The @member_tour_week_patterns and @member_tour_agent_collections fields must be set on @tour_pattern.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Internal: error occurs when validating the tour pattern or members.
+	GetTourPatternDiagnostics(context.Context, *GetTourPatternDiagnosticsReq) (*GetTourPatternDiagnosticsRes, error)
 	// Replaces the existing Tour Pattern and members with @tour_pattern for the @tour_pattern.shift_template_sid and the org sending the request.
 	// Returns the newly created Tour Pattern and members with their updated SIDs and Week Pattern Numbers.
 	// Any existing Tour Week Patterns, Tour Shift Instance and Segment Configs, Tour Agent Collections and their WFM Agent SIDs
@@ -4942,6 +4987,7 @@ type WFMServer interface {
 	//	belonging to @tour_pattern.shift_template_sid will be replaced with the members on the provided @tour_pattern.
 	//
 	// At least one Tour Agent Collection and one Tour Week Pattern must be provided in the member fields.
+	// If the tour pattern data or members have issues that prevent them from being persisted, a list of diagnostics will be returned describing the issues that must be resolved.
 	// Required permissions:
 	//
 	//	NONE
@@ -5568,6 +5614,9 @@ func (UnimplementedWFMServer) ListRequiredCallsIntervals(context.Context, *ListR
 }
 func (UnimplementedWFMServer) CreateTourPattern(context.Context, *CreateTourPatternReq) (*CreateTourPatternRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateTourPattern not implemented")
+}
+func (UnimplementedWFMServer) GetTourPatternDiagnostics(context.Context, *GetTourPatternDiagnosticsReq) (*GetTourPatternDiagnosticsRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTourPatternDiagnostics not implemented")
 }
 func (UnimplementedWFMServer) UpsertTourPatternWithMembers(context.Context, *UpsertTourPatternWithMembersReq) (*UpsertTourPatternWithMembersRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpsertTourPatternWithMembers not implemented")
@@ -7988,6 +8037,24 @@ func _WFM_CreateTourPattern_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_GetTourPatternDiagnostics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTourPatternDiagnosticsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).GetTourPatternDiagnostics(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_GetTourPatternDiagnostics_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).GetTourPatternDiagnostics(ctx, req.(*GetTourPatternDiagnosticsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WFM_UpsertTourPatternWithMembers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpsertTourPatternWithMembersReq)
 	if err := dec(in); err != nil {
@@ -8882,6 +8949,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateTourPattern",
 			Handler:    _WFM_CreateTourPattern_Handler,
+		},
+		{
+			MethodName: "GetTourPatternDiagnostics",
+			Handler:    _WFM_GetTourPatternDiagnostics_Handler,
 		},
 		{
 			MethodName: "UpsertTourPatternWithMembers",
