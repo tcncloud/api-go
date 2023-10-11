@@ -395,6 +395,9 @@ const (
 	WFMListRequiredCallsIntervalsProcedure = "/api.v1alpha1.wfm.WFM/ListRequiredCallsIntervals"
 	// WFMCreateTourPatternProcedure is the fully-qualified name of the WFM's CreateTourPattern RPC.
 	WFMCreateTourPatternProcedure = "/api.v1alpha1.wfm.WFM/CreateTourPattern"
+	// WFMGetTourPatternDiagnosticsProcedure is the fully-qualified name of the WFM's
+	// GetTourPatternDiagnostics RPC.
+	WFMGetTourPatternDiagnosticsProcedure = "/api.v1alpha1.wfm.WFM/GetTourPatternDiagnostics"
 	// WFMUpsertTourPatternWithMembersProcedure is the fully-qualified name of the WFM's
 	// UpsertTourPatternWithMembers RPC.
 	WFMUpsertTourPatternWithMembersProcedure = "/api.v1alpha1.wfm.WFM/UpsertTourPatternWithMembers"
@@ -1965,6 +1968,19 @@ type WFMClient interface {
 	//   - grpc.AlreadyExists: A Tour Pattern already exists for @shift_template_sid.
 	//   - grpc.Internal: error occurs when creating the Tour Pattern.
 	CreateTourPattern(context.Context, *connect_go.Request[wfm.CreateTourPatternReq]) (*connect_go.Response[wfm.CreateTourPatternRes], error)
+	// Returns a list of diagnostics describing any issues with the given @tour_pattern.
+	// Checks the internal consistency between the pattern and all members, as well as making sure required fields are set with valid values.
+	// Ignores sid fields, except for @shift_template_sid and @scheduling_activity_sid.
+	// Does not query the database to check that foreign keys exist.
+	// Returns a single diagnostic with an OK code if the given @tour_pattern has no issues.
+	// The @member_tour_week_patterns and @member_tour_agent_collections fields must be set on @tour_pattern.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Internal: error occurs when validating the tour pattern or members.
+	GetTourPatternDiagnostics(context.Context, *connect_go.Request[wfm.GetTourPatternDiagnosticsReq]) (*connect_go.Response[wfm.GetTourPatternDiagnosticsRes], error)
 	// Replaces the existing Tour Pattern and members with @tour_pattern for the @tour_pattern.shift_template_sid and the org sending the request.
 	// Returns the newly created Tour Pattern and members with their updated SIDs and Week Pattern Numbers.
 	// Any existing Tour Week Patterns, Tour Shift Instance and Segment Configs, Tour Agent Collections and their WFM Agent SIDs
@@ -1972,6 +1988,7 @@ type WFMClient interface {
 	//	belonging to @tour_pattern.shift_template_sid will be replaced with the members on the provided @tour_pattern.
 	//
 	// At least one Tour Agent Collection and one Tour Week Pattern must be provided in the member fields.
+	// If the tour pattern data or members have issues that prevent them from being persisted, a list of diagnostics will be returned describing the issues that must be resolved.
 	// Required permissions:
 	//
 	//	NONE
@@ -2862,6 +2879,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMCreateTourPatternProcedure,
 			opts...,
 		),
+		getTourPatternDiagnostics: connect_go.NewClient[wfm.GetTourPatternDiagnosticsReq, wfm.GetTourPatternDiagnosticsRes](
+			httpClient,
+			baseURL+WFMGetTourPatternDiagnosticsProcedure,
+			opts...,
+		),
 		upsertTourPatternWithMembers: connect_go.NewClient[wfm.UpsertTourPatternWithMembersReq, wfm.UpsertTourPatternWithMembersRes](
 			httpClient,
 			baseURL+WFMUpsertTourPatternWithMembersProcedure,
@@ -3106,6 +3128,7 @@ type wFMClient struct {
 	getPerformanceMetrics                         *connect_go.Client[wfm.GetPerformanceMetricsReq, wfm.GetPerformanceMetricsRes]
 	listRequiredCallsIntervals                    *connect_go.Client[wfm.ListRequiredCallsIntervalsReq, wfm.ListRequiredCallsIntervalsRes]
 	createTourPattern                             *connect_go.Client[wfm.CreateTourPatternReq, wfm.CreateTourPatternRes]
+	getTourPatternDiagnostics                     *connect_go.Client[wfm.GetTourPatternDiagnosticsReq, wfm.GetTourPatternDiagnosticsRes]
 	upsertTourPatternWithMembers                  *connect_go.Client[wfm.UpsertTourPatternWithMembersReq, wfm.UpsertTourPatternWithMembersRes]
 	getTourPattern                                *connect_go.Client[wfm.GetTourPatternReq, wfm.GetTourPatternRes]
 	deleteTourPattern                             *connect_go.Client[wfm.DeleteTourPatternReq, wfm.DeleteTourPatternRes]
@@ -3793,6 +3816,11 @@ func (c *wFMClient) ListRequiredCallsIntervals(ctx context.Context, req *connect
 // CreateTourPattern calls api.v1alpha1.wfm.WFM.CreateTourPattern.
 func (c *wFMClient) CreateTourPattern(ctx context.Context, req *connect_go.Request[wfm.CreateTourPatternReq]) (*connect_go.Response[wfm.CreateTourPatternRes], error) {
 	return c.createTourPattern.CallUnary(ctx, req)
+}
+
+// GetTourPatternDiagnostics calls api.v1alpha1.wfm.WFM.GetTourPatternDiagnostics.
+func (c *wFMClient) GetTourPatternDiagnostics(ctx context.Context, req *connect_go.Request[wfm.GetTourPatternDiagnosticsReq]) (*connect_go.Response[wfm.GetTourPatternDiagnosticsRes], error) {
+	return c.getTourPatternDiagnostics.CallUnary(ctx, req)
 }
 
 // UpsertTourPatternWithMembers calls api.v1alpha1.wfm.WFM.UpsertTourPatternWithMembers.
@@ -5409,6 +5437,19 @@ type WFMHandler interface {
 	//   - grpc.AlreadyExists: A Tour Pattern already exists for @shift_template_sid.
 	//   - grpc.Internal: error occurs when creating the Tour Pattern.
 	CreateTourPattern(context.Context, *connect_go.Request[wfm.CreateTourPatternReq]) (*connect_go.Response[wfm.CreateTourPatternRes], error)
+	// Returns a list of diagnostics describing any issues with the given @tour_pattern.
+	// Checks the internal consistency between the pattern and all members, as well as making sure required fields are set with valid values.
+	// Ignores sid fields, except for @shift_template_sid and @scheduling_activity_sid.
+	// Does not query the database to check that foreign keys exist.
+	// Returns a single diagnostic with an OK code if the given @tour_pattern has no issues.
+	// The @member_tour_week_patterns and @member_tour_agent_collections fields must be set on @tour_pattern.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Internal: error occurs when validating the tour pattern or members.
+	GetTourPatternDiagnostics(context.Context, *connect_go.Request[wfm.GetTourPatternDiagnosticsReq]) (*connect_go.Response[wfm.GetTourPatternDiagnosticsRes], error)
 	// Replaces the existing Tour Pattern and members with @tour_pattern for the @tour_pattern.shift_template_sid and the org sending the request.
 	// Returns the newly created Tour Pattern and members with their updated SIDs and Week Pattern Numbers.
 	// Any existing Tour Week Patterns, Tour Shift Instance and Segment Configs, Tour Agent Collections and their WFM Agent SIDs
@@ -5416,6 +5457,7 @@ type WFMHandler interface {
 	//	belonging to @tour_pattern.shift_template_sid will be replaced with the members on the provided @tour_pattern.
 	//
 	// At least one Tour Agent Collection and one Tour Week Pattern must be provided in the member fields.
+	// If the tour pattern data or members have issues that prevent them from being persisted, a list of diagnostics will be returned describing the issues that must be resolved.
 	// Required permissions:
 	//
 	//	NONE
@@ -6302,6 +6344,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.CreateTourPattern,
 		opts...,
 	)
+	wFMGetTourPatternDiagnosticsHandler := connect_go.NewUnaryHandler(
+		WFMGetTourPatternDiagnosticsProcedure,
+		svc.GetTourPatternDiagnostics,
+		opts...,
+	)
 	wFMUpsertTourPatternWithMembersHandler := connect_go.NewUnaryHandler(
 		WFMUpsertTourPatternWithMembersProcedure,
 		svc.UpsertTourPatternWithMembers,
@@ -6672,6 +6719,8 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMListRequiredCallsIntervalsHandler.ServeHTTP(w, r)
 		case WFMCreateTourPatternProcedure:
 			wFMCreateTourPatternHandler.ServeHTTP(w, r)
+		case WFMGetTourPatternDiagnosticsProcedure:
+			wFMGetTourPatternDiagnosticsHandler.ServeHTTP(w, r)
 		case WFMUpsertTourPatternWithMembersProcedure:
 			wFMUpsertTourPatternWithMembersHandler.ServeHTTP(w, r)
 		case WFMGetTourPatternProcedure:
@@ -7239,6 +7288,10 @@ func (UnimplementedWFMHandler) ListRequiredCallsIntervals(context.Context, *conn
 
 func (UnimplementedWFMHandler) CreateTourPattern(context.Context, *connect_go.Request[wfm.CreateTourPatternReq]) (*connect_go.Response[wfm.CreateTourPatternRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.CreateTourPattern is not implemented"))
+}
+
+func (UnimplementedWFMHandler) GetTourPatternDiagnostics(context.Context, *connect_go.Request[wfm.GetTourPatternDiagnosticsReq]) (*connect_go.Response[wfm.GetTourPatternDiagnosticsRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.GetTourPatternDiagnostics is not implemented"))
 }
 
 func (UnimplementedWFMHandler) UpsertTourPatternWithMembers(context.Context, *connect_go.Request[wfm.UpsertTourPatternWithMembersReq]) (*connect_go.Response[wfm.UpsertTourPatternWithMembersRes], error) {
