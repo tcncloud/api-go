@@ -90,6 +90,7 @@ const (
 	P3Api_GetContactGroupDetails_FullMethodName              = "/api.v0alpha.P3Api/GetContactGroupDetails"
 	P3Api_GetContactGroupSize_FullMethodName                 = "/api.v0alpha.P3Api/GetContactGroupSize"
 	P3Api_CreateContactFieldDescription_FullMethodName       = "/api.v0alpha.P3Api/CreateContactFieldDescription"
+	P3Api_UpdateContactFieldDescription_FullMethodName       = "/api.v0alpha.P3Api/UpdateContactFieldDescription"
 	P3Api_DeleteContactFieldDescription_FullMethodName       = "/api.v0alpha.P3Api/DeleteContactFieldDescription"
 	P3Api_ListContactFieldDescriptions_FullMethodName        = "/api.v0alpha.P3Api/ListContactFieldDescriptions"
 	P3Api_ListContactFieldDescriptionsByCGSid_FullMethodName = "/api.v0alpha.P3Api/ListContactFieldDescriptionsByCGSid"
@@ -360,6 +361,8 @@ type P3ApiClient interface {
 	GetContactGroupSize(ctx context.Context, in *GetContactGroupReq, opts ...grpc.CallOption) (*GetContactGroupSizeRes, error)
 	// Create contact field description details
 	CreateContactFieldDescription(ctx context.Context, in *CreateContactFieldDescriptionReq, opts ...grpc.CallOption) (*CreateContactFieldDescriptionRes, error)
+	// Update contact field description details
+	UpdateContactFieldDescription(ctx context.Context, in *UpdateContactFieldDescriptionReq, opts ...grpc.CallOption) (*UpdateContactFieldDescriptionRes, error)
 	// Delete contact field description details
 	DeleteContactFieldDescription(ctx context.Context, in *DeleteContactFieldDescriptionReq, opts ...grpc.CallOption) (*DeleteContactFieldDescriptionRes, error)
 	// List contact field desc details from contact_field_description table
@@ -1169,6 +1172,15 @@ func (c *p3ApiClient) CreateContactFieldDescription(ctx context.Context, in *Cre
 	return out, nil
 }
 
+func (c *p3ApiClient) UpdateContactFieldDescription(ctx context.Context, in *UpdateContactFieldDescriptionReq, opts ...grpc.CallOption) (*UpdateContactFieldDescriptionRes, error) {
+	out := new(UpdateContactFieldDescriptionRes)
+	err := c.cc.Invoke(ctx, P3Api_UpdateContactFieldDescription_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *p3ApiClient) DeleteContactFieldDescription(ctx context.Context, in *DeleteContactFieldDescriptionReq, opts ...grpc.CallOption) (*DeleteContactFieldDescriptionRes, error) {
 	out := new(DeleteContactFieldDescriptionRes)
 	err := c.cc.Invoke(ctx, P3Api_DeleteContactFieldDescription_FullMethodName, in, out, opts...)
@@ -1668,6 +1680,8 @@ type P3ApiServer interface {
 	GetContactGroupSize(context.Context, *GetContactGroupReq) (*GetContactGroupSizeRes, error)
 	// Create contact field description details
 	CreateContactFieldDescription(context.Context, *CreateContactFieldDescriptionReq) (*CreateContactFieldDescriptionRes, error)
+	// Update contact field description details
+	UpdateContactFieldDescription(context.Context, *UpdateContactFieldDescriptionReq) (*UpdateContactFieldDescriptionRes, error)
 	// Delete contact field description details
 	DeleteContactFieldDescription(context.Context, *DeleteContactFieldDescriptionReq) (*DeleteContactFieldDescriptionRes, error)
 	// List contact field desc details from contact_field_description table
@@ -2024,6 +2038,9 @@ func (UnimplementedP3ApiServer) GetContactGroupSize(context.Context, *GetContact
 }
 func (UnimplementedP3ApiServer) CreateContactFieldDescription(context.Context, *CreateContactFieldDescriptionReq) (*CreateContactFieldDescriptionRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateContactFieldDescription not implemented")
+}
+func (UnimplementedP3ApiServer) UpdateContactFieldDescription(context.Context, *UpdateContactFieldDescriptionReq) (*UpdateContactFieldDescriptionRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateContactFieldDescription not implemented")
 }
 func (UnimplementedP3ApiServer) DeleteContactFieldDescription(context.Context, *DeleteContactFieldDescriptionReq) (*DeleteContactFieldDescriptionRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteContactFieldDescription not implemented")
@@ -3397,6 +3414,24 @@ func _P3Api_CreateContactFieldDescription_Handler(srv interface{}, ctx context.C
 	return interceptor(ctx, in, info, handler)
 }
 
+func _P3Api_UpdateContactFieldDescription_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateContactFieldDescriptionReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(P3ApiServer).UpdateContactFieldDescription(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: P3Api_UpdateContactFieldDescription_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(P3ApiServer).UpdateContactFieldDescription(ctx, req.(*UpdateContactFieldDescriptionReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _P3Api_DeleteContactFieldDescription_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteContactFieldDescriptionReq)
 	if err := dec(in); err != nil {
@@ -4154,6 +4189,10 @@ var P3Api_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateContactFieldDescription",
 			Handler:    _P3Api_CreateContactFieldDescription_Handler,
+		},
+		{
+			MethodName: "UpdateContactFieldDescription",
+			Handler:    _P3Api_UpdateContactFieldDescription_Handler,
 		},
 		{
 			MethodName: "DeleteContactFieldDescription",
