@@ -680,6 +680,7 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs updating the skill profile group.
 	UpdateSkillProfileGroup(context.Context, *connect_go.Request[wfm.UpdateSkillProfileGroupReq]) (*connect_go.Response[wfm.UpdateSkillProfileGroupRes], error)
 	// Gets the skill profile groups that have the @skill_profile_group_sids for the org sending the request.
+	// if @include_inactive is true then inactive groups will also be included, otherwise only active groups will be returned.
 	// If @skill_profile_group_sids is empty it will get all the skill profile groups for the org.
 	// Required permissions:
 	//
@@ -4149,6 +4150,7 @@ type WFMHandler interface {
 	//   - grpc.Internal: error occurs updating the skill profile group.
 	UpdateSkillProfileGroup(context.Context, *connect_go.Request[wfm.UpdateSkillProfileGroupReq]) (*connect_go.Response[wfm.UpdateSkillProfileGroupRes], error)
 	// Gets the skill profile groups that have the @skill_profile_group_sids for the org sending the request.
+	// if @include_inactive is true then inactive groups will also be included, otherwise only active groups will be returned.
 	// If @skill_profile_group_sids is empty it will get all the skill profile groups for the org.
 	// Required permissions:
 	//
