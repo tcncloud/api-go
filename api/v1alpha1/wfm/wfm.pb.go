@@ -15808,7 +15808,7 @@ type BuildDraftScheduleRes struct {
 	DraftSchedule *DraftSchedule `protobuf:"bytes,1,opt,name=draft_schedule,json=draftSchedule,proto3" json:"draft_schedule,omitempty"`
 	// Set of diagnostic reports for the given @draft_schedule_sid.
 	Diagnostics []*Diagnostic `protobuf:"bytes,2,rep,name=diagnostics,proto3" json:"diagnostics,omitempty"`
-	// The scheduling resulting metric for the built schedule range..
+	// The scheduling resulting metric for the built schedule range.
 	SchedulingResultingMetric *commons.SchedulingResultMetric `protobuf:"bytes,3,opt,name=scheduling_resulting_metric,json=schedulingResultingMetric,proto3" json:"scheduling_resulting_metric,omitempty"`
 }
 
