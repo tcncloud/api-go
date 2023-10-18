@@ -41,6 +41,7 @@ const (
 	Room303API_ListRoomsForMember_FullMethodName    = "/api.v1alpha1.room303.Room303API/ListRoomsForMember"
 	Room303API_ArchiveRoom_FullMethodName           = "/api.v1alpha1.room303.Room303API/ArchiveRoom"
 	Room303API_ListUsersNames_FullMethodName        = "/api.v1alpha1.room303.Room303API/ListUsersNames"
+	Room303API_UpdateRoomConfig_FullMethodName      = "/api.v1alpha1.room303.Room303API/UpdateRoomConfig"
 )
 
 // Room303APIClient is the client API for Room303API service.
@@ -79,6 +80,8 @@ type Room303APIClient interface {
 	ArchiveRoom(ctx context.Context, in *ArchiveRoomRequest, opts ...grpc.CallOption) (*commons.Room, error)
 	// ListUsersNames returns a list of users with names and ids
 	ListUsersNames(ctx context.Context, in *ListUsersNamesRequest, opts ...grpc.CallOption) (Room303API_ListUsersNamesClient, error)
+	// allow room configurations to be updated
+	UpdateRoomConfig(ctx context.Context, in *UpdateRoomConfigRequest, opts ...grpc.CallOption) (*commons.Room, error)
 }
 
 type room303APIClient struct {
@@ -324,6 +327,15 @@ func (x *room303APIListUsersNamesClient) Recv() (*ListUsersNamesResponse, error)
 	return m, nil
 }
 
+func (c *room303APIClient) UpdateRoomConfig(ctx context.Context, in *UpdateRoomConfigRequest, opts ...grpc.CallOption) (*commons.Room, error) {
+	out := new(commons.Room)
+	err := c.cc.Invoke(ctx, Room303API_UpdateRoomConfig_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Room303APIServer is the server API for Room303API service.
 // All implementations must embed UnimplementedRoom303APIServer
 // for forward compatibility
@@ -360,6 +372,8 @@ type Room303APIServer interface {
 	ArchiveRoom(context.Context, *ArchiveRoomRequest) (*commons.Room, error)
 	// ListUsersNames returns a list of users with names and ids
 	ListUsersNames(*ListUsersNamesRequest, Room303API_ListUsersNamesServer) error
+	// allow room configurations to be updated
+	UpdateRoomConfig(context.Context, *UpdateRoomConfigRequest) (*commons.Room, error)
 	mustEmbedUnimplementedRoom303APIServer()
 }
 
@@ -429,6 +443,9 @@ func (UnimplementedRoom303APIServer) ArchiveRoom(context.Context, *ArchiveRoomRe
 }
 func (UnimplementedRoom303APIServer) ListUsersNames(*ListUsersNamesRequest, Room303API_ListUsersNamesServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListUsersNames not implemented")
+}
+func (UnimplementedRoom303APIServer) UpdateRoomConfig(context.Context, *UpdateRoomConfigRequest) (*commons.Room, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateRoomConfig not implemented")
 }
 func (UnimplementedRoom303APIServer) mustEmbedUnimplementedRoom303APIServer() {}
 
@@ -827,6 +844,24 @@ func (x *room303APIListUsersNamesServer) Send(m *ListUsersNamesResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
+func _Room303API_UpdateRoomConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateRoomConfigRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(Room303APIServer).UpdateRoomConfig(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Room303API_UpdateRoomConfig_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(Room303APIServer).UpdateRoomConfig(ctx, req.(*UpdateRoomConfigRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Room303API_ServiceDesc is the grpc.ServiceDesc for Room303API service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -909,6 +944,10 @@ var Room303API_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ArchiveRoom",
 			Handler:    _Room303API_ArchiveRoom_Handler,
+		},
+		{
+			MethodName: "UpdateRoomConfig",
+			Handler:    _Room303API_UpdateRoomConfig_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
