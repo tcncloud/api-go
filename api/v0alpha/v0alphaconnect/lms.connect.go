@@ -163,6 +163,8 @@ const (
 	// LMSUpdateCjsSecureSearchCriteriaProcedure is the fully-qualified name of the LMS's
 	// UpdateCjsSecureSearchCriteria RPC.
 	LMSUpdateCjsSecureSearchCriteriaProcedure = "/api.v0alpha.LMS/UpdateCjsSecureSearchCriteria"
+	// LMSTestByteFieldProcedure is the fully-qualified name of the LMS's TestByteField RPC.
+	LMSTestByteFieldProcedure = "/api.v0alpha.LMS/TestByteField"
 	// LMSGetQueuedEventsStatusByElementIdProcedure is the fully-qualified name of the LMS's
 	// GetQueuedEventsStatusByElementId RPC.
 	LMSGetQueuedEventsStatusByElementIdProcedure = "/api.v0alpha.LMS/GetQueuedEventsStatusByElementId"
@@ -245,6 +247,7 @@ type LMSClient interface {
 	CreateCjsSecureSearchCriteria(context.Context, *connect_go.Request[v0alpha.CjsSecureSearchCriteria]) (*connect_go.Response[v0alpha.CjsSecureSearchCriteria], error)
 	// UpdateCjsSecureSearchCriteria updates the secure search criteria
 	UpdateCjsSecureSearchCriteria(context.Context, *connect_go.Request[v0alpha.CjsSecureSearchCriteria]) (*connect_go.Response[emptypb.Empty], error)
+	TestByteField(context.Context, *connect_go.Request[v0alpha.TestingBytes]) (*connect_go.Response[emptypb.Empty], error)
 	GetQueuedEventsStatusByElementId(context.Context, *connect_go.Request[v0alpha.ElementPK]) (*connect_go.Response[v0alpha.Events], error)
 }
 
@@ -533,6 +536,11 @@ func NewLMSClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+LMSUpdateCjsSecureSearchCriteriaProcedure,
 			opts...,
 		),
+		testByteField: connect_go.NewClient[v0alpha.TestingBytes, emptypb.Empty](
+			httpClient,
+			baseURL+LMSTestByteFieldProcedure,
+			opts...,
+		),
 		getQueuedEventsStatusByElementId: connect_go.NewClient[v0alpha.ElementPK, v0alpha.Events](
 			httpClient,
 			baseURL+LMSGetQueuedEventsStatusByElementIdProcedure,
@@ -598,6 +606,7 @@ type lMSClient struct {
 	getCjsSecureSearchCriteria       *connect_go.Client[v0alpha.GetCjsSecureSearchCriteriaReq, v0alpha.CjsSecureSearchCriteria]
 	createCjsSecureSearchCriteria    *connect_go.Client[v0alpha.CjsSecureSearchCriteria, v0alpha.CjsSecureSearchCriteria]
 	updateCjsSecureSearchCriteria    *connect_go.Client[v0alpha.CjsSecureSearchCriteria, emptypb.Empty]
+	testByteField                    *connect_go.Client[v0alpha.TestingBytes, emptypb.Empty]
 	getQueuedEventsStatusByElementId *connect_go.Client[v0alpha.ElementPK, v0alpha.Events]
 }
 
@@ -876,6 +885,11 @@ func (c *lMSClient) UpdateCjsSecureSearchCriteria(ctx context.Context, req *conn
 	return c.updateCjsSecureSearchCriteria.CallUnary(ctx, req)
 }
 
+// TestByteField calls api.v0alpha.LMS.TestByteField.
+func (c *lMSClient) TestByteField(ctx context.Context, req *connect_go.Request[v0alpha.TestingBytes]) (*connect_go.Response[emptypb.Empty], error) {
+	return c.testByteField.CallUnary(ctx, req)
+}
+
 // GetQueuedEventsStatusByElementId calls api.v0alpha.LMS.GetQueuedEventsStatusByElementId.
 func (c *lMSClient) GetQueuedEventsStatusByElementId(ctx context.Context, req *connect_go.Request[v0alpha.ElementPK]) (*connect_go.Response[v0alpha.Events], error) {
 	return c.getQueuedEventsStatusByElementId.CallUnary(ctx, req)
@@ -958,6 +972,7 @@ type LMSHandler interface {
 	CreateCjsSecureSearchCriteria(context.Context, *connect_go.Request[v0alpha.CjsSecureSearchCriteria]) (*connect_go.Response[v0alpha.CjsSecureSearchCriteria], error)
 	// UpdateCjsSecureSearchCriteria updates the secure search criteria
 	UpdateCjsSecureSearchCriteria(context.Context, *connect_go.Request[v0alpha.CjsSecureSearchCriteria]) (*connect_go.Response[emptypb.Empty], error)
+	TestByteField(context.Context, *connect_go.Request[v0alpha.TestingBytes]) (*connect_go.Response[emptypb.Empty], error)
 	GetQueuedEventsStatusByElementId(context.Context, *connect_go.Request[v0alpha.ElementPK]) (*connect_go.Response[v0alpha.Events], error)
 }
 
@@ -1242,6 +1257,11 @@ func NewLMSHandler(svc LMSHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.UpdateCjsSecureSearchCriteria,
 		opts...,
 	)
+	lMSTestByteFieldHandler := connect_go.NewUnaryHandler(
+		LMSTestByteFieldProcedure,
+		svc.TestByteField,
+		opts...,
+	)
 	lMSGetQueuedEventsStatusByElementIdHandler := connect_go.NewUnaryHandler(
 		LMSGetQueuedEventsStatusByElementIdProcedure,
 		svc.GetQueuedEventsStatusByElementId,
@@ -1359,6 +1379,8 @@ func NewLMSHandler(svc LMSHandler, opts ...connect_go.HandlerOption) (string, ht
 			lMSCreateCjsSecureSearchCriteriaHandler.ServeHTTP(w, r)
 		case LMSUpdateCjsSecureSearchCriteriaProcedure:
 			lMSUpdateCjsSecureSearchCriteriaHandler.ServeHTTP(w, r)
+		case LMSTestByteFieldProcedure:
+			lMSTestByteFieldHandler.ServeHTTP(w, r)
 		case LMSGetQueuedEventsStatusByElementIdProcedure:
 			lMSGetQueuedEventsStatusByElementIdHandler.ServeHTTP(w, r)
 		default:
@@ -1588,6 +1610,10 @@ func (UnimplementedLMSHandler) CreateCjsSecureSearchCriteria(context.Context, *c
 
 func (UnimplementedLMSHandler) UpdateCjsSecureSearchCriteria(context.Context, *connect_go.Request[v0alpha.CjsSecureSearchCriteria]) (*connect_go.Response[emptypb.Empty], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.LMS.UpdateCjsSecureSearchCriteria is not implemented"))
+}
+
+func (UnimplementedLMSHandler) TestByteField(context.Context, *connect_go.Request[v0alpha.TestingBytes]) (*connect_go.Response[emptypb.Empty], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.LMS.TestByteField is not implemented"))
 }
 
 func (UnimplementedLMSHandler) GetQueuedEventsStatusByElementId(context.Context, *connect_go.Request[v0alpha.ElementPK]) (*connect_go.Response[v0alpha.Events], error) {
