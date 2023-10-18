@@ -90,6 +90,9 @@ const (
 	// Room303APIListUsersNamesProcedure is the fully-qualified name of the Room303API's ListUsersNames
 	// RPC.
 	Room303APIListUsersNamesProcedure = "/api.v1alpha1.room303.Room303API/ListUsersNames"
+	// Room303APIEditRoomConfigProcedure is the fully-qualified name of the Room303API's EditRoomConfig
+	// RPC.
+	Room303APIEditRoomConfigProcedure = "/api.v1alpha1.room303.Room303API/EditRoomConfig"
 )
 
 // Room303APIClient is a client for the api.v1alpha1.room303.Room303API service.
@@ -126,6 +129,8 @@ type Room303APIClient interface {
 	ArchiveRoom(context.Context, *connect_go.Request[room303.ArchiveRoomRequest]) (*connect_go.Response[commons.Room], error)
 	// ListUsersNames returns a list of users with names and ids
 	ListUsersNames(context.Context, *connect_go.Request[room303.ListUsersNamesRequest]) (*connect_go.ServerStreamForClient[room303.ListUsersNamesResponse], error)
+	// allow room configurations to be edited
+	EditRoomConfig(context.Context, *connect_go.Request[room303.EditRoomConfigRequest]) (*connect_go.Response[commons.Room], error)
 }
 
 // NewRoom303APIClient constructs a client for the api.v1alpha1.room303.Room303API service. By
@@ -243,6 +248,11 @@ func NewRoom303APIClient(httpClient connect_go.HTTPClient, baseURL string, opts 
 			baseURL+Room303APIListUsersNamesProcedure,
 			opts...,
 		),
+		editRoomConfig: connect_go.NewClient[room303.EditRoomConfigRequest, commons.Room](
+			httpClient,
+			baseURL+Room303APIEditRoomConfigProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -269,6 +279,7 @@ type room303APIClient struct {
 	listRoomsForMember    *connect_go.Client[room303.ListRoomsForMemberRequest, room303.ListRoomsResponse]
 	archiveRoom           *connect_go.Client[room303.ArchiveRoomRequest, commons.Room]
 	listUsersNames        *connect_go.Client[room303.ListUsersNamesRequest, room303.ListUsersNamesResponse]
+	editRoomConfig        *connect_go.Client[room303.EditRoomConfigRequest, commons.Room]
 }
 
 // AddRoomMember calls api.v1alpha1.room303.Room303API.AddRoomMember.
@@ -376,6 +387,11 @@ func (c *room303APIClient) ListUsersNames(ctx context.Context, req *connect_go.R
 	return c.listUsersNames.CallServerStream(ctx, req)
 }
 
+// EditRoomConfig calls api.v1alpha1.room303.Room303API.EditRoomConfig.
+func (c *room303APIClient) EditRoomConfig(ctx context.Context, req *connect_go.Request[room303.EditRoomConfigRequest]) (*connect_go.Response[commons.Room], error) {
+	return c.editRoomConfig.CallUnary(ctx, req)
+}
+
 // Room303APIHandler is an implementation of the api.v1alpha1.room303.Room303API service.
 type Room303APIHandler interface {
 	// Member
@@ -410,6 +426,8 @@ type Room303APIHandler interface {
 	ArchiveRoom(context.Context, *connect_go.Request[room303.ArchiveRoomRequest]) (*connect_go.Response[commons.Room], error)
 	// ListUsersNames returns a list of users with names and ids
 	ListUsersNames(context.Context, *connect_go.Request[room303.ListUsersNamesRequest], *connect_go.ServerStream[room303.ListUsersNamesResponse]) error
+	// allow room configurations to be edited
+	EditRoomConfig(context.Context, *connect_go.Request[room303.EditRoomConfigRequest]) (*connect_go.Response[commons.Room], error)
 }
 
 // NewRoom303APIHandler builds an HTTP handler from the service implementation. It returns the path
@@ -523,6 +541,11 @@ func NewRoom303APIHandler(svc Room303APIHandler, opts ...connect_go.HandlerOptio
 		svc.ListUsersNames,
 		opts...,
 	)
+	room303APIEditRoomConfigHandler := connect_go.NewUnaryHandler(
+		Room303APIEditRoomConfigProcedure,
+		svc.EditRoomConfig,
+		opts...,
+	)
 	return "/api.v1alpha1.room303.Room303API/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case Room303APIAddRoomMemberProcedure:
@@ -567,6 +590,8 @@ func NewRoom303APIHandler(svc Room303APIHandler, opts ...connect_go.HandlerOptio
 			room303APIArchiveRoomHandler.ServeHTTP(w, r)
 		case Room303APIListUsersNamesProcedure:
 			room303APIListUsersNamesHandler.ServeHTTP(w, r)
+		case Room303APIEditRoomConfigProcedure:
+			room303APIEditRoomConfigHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -658,4 +683,8 @@ func (UnimplementedRoom303APIHandler) ArchiveRoom(context.Context, *connect_go.R
 
 func (UnimplementedRoom303APIHandler) ListUsersNames(context.Context, *connect_go.Request[room303.ListUsersNamesRequest], *connect_go.ServerStream[room303.ListUsersNamesResponse]) error {
 	return connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.room303.Room303API.ListUsersNames is not implemented"))
+}
+
+func (UnimplementedRoom303APIHandler) EditRoomConfig(context.Context, *connect_go.Request[room303.EditRoomConfigRequest]) (*connect_go.Response[commons.Room], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.room303.Room303API.EditRoomConfig is not implemented"))
 }
