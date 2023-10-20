@@ -92,6 +92,9 @@ const (
 	// TicketsChangeTicketStatusProcedure is the fully-qualified name of the Tickets's
 	// ChangeTicketStatus RPC.
 	TicketsChangeTicketStatusProcedure = "/api.v1alpha1.tickets.Tickets/ChangeTicketStatus"
+	// TicketsCreateTicketTemplateProcedure is the fully-qualified name of the Tickets's
+	// CreateTicketTemplate RPC.
+	TicketsCreateTicketTemplateProcedure = "/api.v1alpha1.tickets.Tickets/CreateTicketTemplate"
 )
 
 // TicketsClient is a client for the api.v1alpha1.tickets.Tickets service.
@@ -149,6 +152,8 @@ type TicketsClient interface {
 	CreateTicketAction(context.Context, *connect_go.Request[tickets.CreateTicketActionRequest]) (*connect_go.Response[tickets.CreateTicketActionResponse], error)
 	// Public method to change the Status of a ticket
 	ChangeTicketStatus(context.Context, *connect_go.Request[tickets.ChangeTicketStatusRequest]) (*connect_go.Response[tickets.ChangeTicketStatusResponse], error)
+	// Public method to change the Status of a ticket
+	CreateTicketTemplate(context.Context, *connect_go.Request[tickets.CreateTicketTemplateRequest]) (*connect_go.Response[tickets.CreateTicketTemplateResponse], error)
 }
 
 // NewTicketsClient constructs a client for the api.v1alpha1.tickets.Tickets service. By default, it
@@ -286,6 +291,11 @@ func NewTicketsClient(httpClient connect_go.HTTPClient, baseURL string, opts ...
 			baseURL+TicketsChangeTicketStatusProcedure,
 			opts...,
 		),
+		createTicketTemplate: connect_go.NewClient[tickets.CreateTicketTemplateRequest, tickets.CreateTicketTemplateResponse](
+			httpClient,
+			baseURL+TicketsCreateTicketTemplateProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -316,6 +326,7 @@ type ticketsClient struct {
 	assignTicketAction        *connect_go.Client[tickets.AssignTicketActionRequest, tickets.AssignTicketActionResponse]
 	createTicketAction        *connect_go.Client[tickets.CreateTicketActionRequest, tickets.CreateTicketActionResponse]
 	changeTicketStatus        *connect_go.Client[tickets.ChangeTicketStatusRequest, tickets.ChangeTicketStatusResponse]
+	createTicketTemplate      *connect_go.Client[tickets.CreateTicketTemplateRequest, tickets.CreateTicketTemplateResponse]
 }
 
 // CreateTicket calls api.v1alpha1.tickets.Tickets.CreateTicket.
@@ -445,6 +456,11 @@ func (c *ticketsClient) ChangeTicketStatus(ctx context.Context, req *connect_go.
 	return c.changeTicketStatus.CallUnary(ctx, req)
 }
 
+// CreateTicketTemplate calls api.v1alpha1.tickets.Tickets.CreateTicketTemplate.
+func (c *ticketsClient) CreateTicketTemplate(ctx context.Context, req *connect_go.Request[tickets.CreateTicketTemplateRequest]) (*connect_go.Response[tickets.CreateTicketTemplateResponse], error) {
+	return c.createTicketTemplate.CallUnary(ctx, req)
+}
+
 // TicketsHandler is an implementation of the api.v1alpha1.tickets.Tickets service.
 type TicketsHandler interface {
 	// Public Method to create a ticket.
@@ -500,6 +516,8 @@ type TicketsHandler interface {
 	CreateTicketAction(context.Context, *connect_go.Request[tickets.CreateTicketActionRequest]) (*connect_go.Response[tickets.CreateTicketActionResponse], error)
 	// Public method to change the Status of a ticket
 	ChangeTicketStatus(context.Context, *connect_go.Request[tickets.ChangeTicketStatusRequest]) (*connect_go.Response[tickets.ChangeTicketStatusResponse], error)
+	// Public method to change the Status of a ticket
+	CreateTicketTemplate(context.Context, *connect_go.Request[tickets.CreateTicketTemplateRequest]) (*connect_go.Response[tickets.CreateTicketTemplateResponse], error)
 }
 
 // NewTicketsHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -633,6 +651,11 @@ func NewTicketsHandler(svc TicketsHandler, opts ...connect_go.HandlerOption) (st
 		svc.ChangeTicketStatus,
 		opts...,
 	)
+	ticketsCreateTicketTemplateHandler := connect_go.NewUnaryHandler(
+		TicketsCreateTicketTemplateProcedure,
+		svc.CreateTicketTemplate,
+		opts...,
+	)
 	return "/api.v1alpha1.tickets.Tickets/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case TicketsCreateTicketProcedure:
@@ -685,6 +708,8 @@ func NewTicketsHandler(svc TicketsHandler, opts ...connect_go.HandlerOption) (st
 			ticketsCreateTicketActionHandler.ServeHTTP(w, r)
 		case TicketsChangeTicketStatusProcedure:
 			ticketsChangeTicketStatusHandler.ServeHTTP(w, r)
+		case TicketsCreateTicketTemplateProcedure:
+			ticketsCreateTicketTemplateHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -792,4 +817,8 @@ func (UnimplementedTicketsHandler) CreateTicketAction(context.Context, *connect_
 
 func (UnimplementedTicketsHandler) ChangeTicketStatus(context.Context, *connect_go.Request[tickets.ChangeTicketStatusRequest]) (*connect_go.Response[tickets.ChangeTicketStatusResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.tickets.Tickets.ChangeTicketStatus is not implemented"))
+}
+
+func (UnimplementedTicketsHandler) CreateTicketTemplate(context.Context, *connect_go.Request[tickets.CreateTicketTemplateRequest]) (*connect_go.Response[tickets.CreateTicketTemplateResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.tickets.Tickets.CreateTicketTemplate is not implemented"))
 }
