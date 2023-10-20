@@ -44,6 +44,9 @@ const (
 	// IntegrationsGetIntegrationTransactionReportDataProcedure is the fully-qualified name of the
 	// Integrations's GetIntegrationTransactionReportData RPC.
 	IntegrationsGetIntegrationTransactionReportDataProcedure = "/api.v1alpha1.integrations.Integrations/GetIntegrationTransactionReportData"
+	// IntegrationsSearchPastTransactionsProcedure is the fully-qualified name of the Integrations's
+	// SearchPastTransactions RPC.
+	IntegrationsSearchPastTransactionsProcedure = "/api.v1alpha1.integrations.Integrations/SearchPastTransactions"
 	// IntegrationsGetAggregatedMetadataProcedure is the fully-qualified name of the Integrations's
 	// GetAggregatedMetadata RPC.
 	IntegrationsGetAggregatedMetadataProcedure = "/api.v1alpha1.integrations.Integrations/GetAggregatedMetadata"
@@ -116,6 +119,7 @@ type IntegrationsClient interface {
 	GetIntegrationTransaction(context.Context, *connect_go.Request[integrations.GetIntegrationTransactionReq]) (*connect_go.Response[integrations.IntegrationTransaction], error)
 	GetIntegrationTransactionReport(context.Context, *connect_go.Request[integrations.GetIntegrationTransactionReportReq]) (*connect_go.Response[integrations.GetIntegrationTransactionReportRes], error)
 	GetIntegrationTransactionReportData(context.Context, *connect_go.Request[integrations.GetIntegrationTransactionReportDataReq]) (*connect_go.Response[integrations.GetIntegrationTransactionReportDataRes], error)
+	SearchPastTransactions(context.Context, *connect_go.Request[integrations.SearchPastTransactionsRequest]) (*connect_go.Response[integrations.SearchPastTransactionsResponse], error)
 	// GetAggregatedMetadata returns the aggregated metrics about the portal links for a specified date range
 	GetAggregatedMetadata(context.Context, *connect_go.Request[integrations.GetAggregatedMetadataReq]) (*connect_go.Response[integrations.GetAggregatedMetadataRes], error)
 	// GetPortalLinksByDateRange returns portal link metrics and portal linnk data for specific range
@@ -191,6 +195,11 @@ func NewIntegrationsClient(httpClient connect_go.HTTPClient, baseURL string, opt
 		getIntegrationTransactionReportData: connect_go.NewClient[integrations.GetIntegrationTransactionReportDataReq, integrations.GetIntegrationTransactionReportDataRes](
 			httpClient,
 			baseURL+IntegrationsGetIntegrationTransactionReportDataProcedure,
+			opts...,
+		),
+		searchPastTransactions: connect_go.NewClient[integrations.SearchPastTransactionsRequest, integrations.SearchPastTransactionsResponse](
+			httpClient,
+			baseURL+IntegrationsSearchPastTransactionsProcedure,
 			opts...,
 		),
 		getAggregatedMetadata: connect_go.NewClient[integrations.GetAggregatedMetadataReq, integrations.GetAggregatedMetadataRes](
@@ -307,6 +316,7 @@ type integrationsClient struct {
 	getIntegrationTransaction           *connect_go.Client[integrations.GetIntegrationTransactionReq, integrations.IntegrationTransaction]
 	getIntegrationTransactionReport     *connect_go.Client[integrations.GetIntegrationTransactionReportReq, integrations.GetIntegrationTransactionReportRes]
 	getIntegrationTransactionReportData *connect_go.Client[integrations.GetIntegrationTransactionReportDataReq, integrations.GetIntegrationTransactionReportDataRes]
+	searchPastTransactions              *connect_go.Client[integrations.SearchPastTransactionsRequest, integrations.SearchPastTransactionsResponse]
 	getAggregatedMetadata               *connect_go.Client[integrations.GetAggregatedMetadataReq, integrations.GetAggregatedMetadataRes]
 	getPortalLinksByDateRange           *connect_go.Client[integrations.GetPortalLinksByDateRangeReq, integrations.GetPortalLinksByDateRangeRes]
 	createIntegrationConfig             *connect_go.Client[integrations.IntegrationConfig, integrations.Empty]
@@ -350,6 +360,11 @@ func (c *integrationsClient) GetIntegrationTransactionReport(ctx context.Context
 // api.v1alpha1.integrations.Integrations.GetIntegrationTransactionReportData.
 func (c *integrationsClient) GetIntegrationTransactionReportData(ctx context.Context, req *connect_go.Request[integrations.GetIntegrationTransactionReportDataReq]) (*connect_go.Response[integrations.GetIntegrationTransactionReportDataRes], error) {
 	return c.getIntegrationTransactionReportData.CallUnary(ctx, req)
+}
+
+// SearchPastTransactions calls api.v1alpha1.integrations.Integrations.SearchPastTransactions.
+func (c *integrationsClient) SearchPastTransactions(ctx context.Context, req *connect_go.Request[integrations.SearchPastTransactionsRequest]) (*connect_go.Response[integrations.SearchPastTransactionsResponse], error) {
+	return c.searchPastTransactions.CallUnary(ctx, req)
 }
 
 // GetAggregatedMetadata calls api.v1alpha1.integrations.Integrations.GetAggregatedMetadata.
@@ -467,6 +482,7 @@ type IntegrationsHandler interface {
 	GetIntegrationTransaction(context.Context, *connect_go.Request[integrations.GetIntegrationTransactionReq]) (*connect_go.Response[integrations.IntegrationTransaction], error)
 	GetIntegrationTransactionReport(context.Context, *connect_go.Request[integrations.GetIntegrationTransactionReportReq]) (*connect_go.Response[integrations.GetIntegrationTransactionReportRes], error)
 	GetIntegrationTransactionReportData(context.Context, *connect_go.Request[integrations.GetIntegrationTransactionReportDataReq]) (*connect_go.Response[integrations.GetIntegrationTransactionReportDataRes], error)
+	SearchPastTransactions(context.Context, *connect_go.Request[integrations.SearchPastTransactionsRequest]) (*connect_go.Response[integrations.SearchPastTransactionsResponse], error)
 	// GetAggregatedMetadata returns the aggregated metrics about the portal links for a specified date range
 	GetAggregatedMetadata(context.Context, *connect_go.Request[integrations.GetAggregatedMetadataReq]) (*connect_go.Response[integrations.GetAggregatedMetadataRes], error)
 	// GetPortalLinksByDateRange returns portal link metrics and portal linnk data for specific range
@@ -538,6 +554,11 @@ func NewIntegrationsHandler(svc IntegrationsHandler, opts ...connect_go.HandlerO
 	integrationsGetIntegrationTransactionReportDataHandler := connect_go.NewUnaryHandler(
 		IntegrationsGetIntegrationTransactionReportDataProcedure,
 		svc.GetIntegrationTransactionReportData,
+		opts...,
+	)
+	integrationsSearchPastTransactionsHandler := connect_go.NewUnaryHandler(
+		IntegrationsSearchPastTransactionsProcedure,
+		svc.SearchPastTransactions,
 		opts...,
 	)
 	integrationsGetAggregatedMetadataHandler := connect_go.NewUnaryHandler(
@@ -655,6 +676,8 @@ func NewIntegrationsHandler(svc IntegrationsHandler, opts ...connect_go.HandlerO
 			integrationsGetIntegrationTransactionReportHandler.ServeHTTP(w, r)
 		case IntegrationsGetIntegrationTransactionReportDataProcedure:
 			integrationsGetIntegrationTransactionReportDataHandler.ServeHTTP(w, r)
+		case IntegrationsSearchPastTransactionsProcedure:
+			integrationsSearchPastTransactionsHandler.ServeHTTP(w, r)
 		case IntegrationsGetAggregatedMetadataProcedure:
 			integrationsGetAggregatedMetadataHandler.ServeHTTP(w, r)
 		case IntegrationsGetPortalLinksByDateRangeProcedure:
@@ -720,6 +743,10 @@ func (UnimplementedIntegrationsHandler) GetIntegrationTransactionReport(context.
 
 func (UnimplementedIntegrationsHandler) GetIntegrationTransactionReportData(context.Context, *connect_go.Request[integrations.GetIntegrationTransactionReportDataReq]) (*connect_go.Response[integrations.GetIntegrationTransactionReportDataRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.integrations.Integrations.GetIntegrationTransactionReportData is not implemented"))
+}
+
+func (UnimplementedIntegrationsHandler) SearchPastTransactions(context.Context, *connect_go.Request[integrations.SearchPastTransactionsRequest]) (*connect_go.Response[integrations.SearchPastTransactionsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.integrations.Integrations.SearchPastTransactions is not implemented"))
 }
 
 func (UnimplementedIntegrationsHandler) GetAggregatedMetadata(context.Context, *connect_go.Request[integrations.GetAggregatedMetadataReq]) (*connect_go.Response[integrations.GetAggregatedMetadataRes], error) {

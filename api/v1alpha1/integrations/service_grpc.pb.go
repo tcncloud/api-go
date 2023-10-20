@@ -23,6 +23,7 @@ const (
 	Integrations_GetIntegrationTransaction_FullMethodName           = "/api.v1alpha1.integrations.Integrations/GetIntegrationTransaction"
 	Integrations_GetIntegrationTransactionReport_FullMethodName     = "/api.v1alpha1.integrations.Integrations/GetIntegrationTransactionReport"
 	Integrations_GetIntegrationTransactionReportData_FullMethodName = "/api.v1alpha1.integrations.Integrations/GetIntegrationTransactionReportData"
+	Integrations_SearchPastTransactions_FullMethodName              = "/api.v1alpha1.integrations.Integrations/SearchPastTransactions"
 	Integrations_GetAggregatedMetadata_FullMethodName               = "/api.v1alpha1.integrations.Integrations/GetAggregatedMetadata"
 	Integrations_GetPortalLinksByDateRange_FullMethodName           = "/api.v1alpha1.integrations.Integrations/GetPortalLinksByDateRange"
 	Integrations_CreateIntegrationConfig_FullMethodName             = "/api.v1alpha1.integrations.Integrations/CreateIntegrationConfig"
@@ -56,6 +57,7 @@ type IntegrationsClient interface {
 	GetIntegrationTransaction(ctx context.Context, in *GetIntegrationTransactionReq, opts ...grpc.CallOption) (*IntegrationTransaction, error)
 	GetIntegrationTransactionReport(ctx context.Context, in *GetIntegrationTransactionReportReq, opts ...grpc.CallOption) (*GetIntegrationTransactionReportRes, error)
 	GetIntegrationTransactionReportData(ctx context.Context, in *GetIntegrationTransactionReportDataReq, opts ...grpc.CallOption) (*GetIntegrationTransactionReportDataRes, error)
+	SearchPastTransactions(ctx context.Context, in *SearchPastTransactionsRequest, opts ...grpc.CallOption) (*SearchPastTransactionsResponse, error)
 	// GetAggregatedMetadata returns the aggregated metrics about the portal links for a specified date range
 	GetAggregatedMetadata(ctx context.Context, in *GetAggregatedMetadataReq, opts ...grpc.CallOption) (*GetAggregatedMetadataRes, error)
 	// GetPortalLinksByDateRange returns portal link metrics and portal linnk data for specific range
@@ -141,6 +143,15 @@ func (c *integrationsClient) GetIntegrationTransactionReport(ctx context.Context
 func (c *integrationsClient) GetIntegrationTransactionReportData(ctx context.Context, in *GetIntegrationTransactionReportDataReq, opts ...grpc.CallOption) (*GetIntegrationTransactionReportDataRes, error) {
 	out := new(GetIntegrationTransactionReportDataRes)
 	err := c.cc.Invoke(ctx, Integrations_GetIntegrationTransactionReportData_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *integrationsClient) SearchPastTransactions(ctx context.Context, in *SearchPastTransactionsRequest, opts ...grpc.CallOption) (*SearchPastTransactionsResponse, error) {
+	out := new(SearchPastTransactionsResponse)
+	err := c.cc.Invoke(ctx, Integrations_SearchPastTransactions_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -346,6 +357,7 @@ type IntegrationsServer interface {
 	GetIntegrationTransaction(context.Context, *GetIntegrationTransactionReq) (*IntegrationTransaction, error)
 	GetIntegrationTransactionReport(context.Context, *GetIntegrationTransactionReportReq) (*GetIntegrationTransactionReportRes, error)
 	GetIntegrationTransactionReportData(context.Context, *GetIntegrationTransactionReportDataReq) (*GetIntegrationTransactionReportDataRes, error)
+	SearchPastTransactions(context.Context, *SearchPastTransactionsRequest) (*SearchPastTransactionsResponse, error)
 	// GetAggregatedMetadata returns the aggregated metrics about the portal links for a specified date range
 	GetAggregatedMetadata(context.Context, *GetAggregatedMetadataReq) (*GetAggregatedMetadataRes, error)
 	// GetPortalLinksByDateRange returns portal link metrics and portal linnk data for specific range
@@ -409,6 +421,9 @@ func (UnimplementedIntegrationsServer) GetIntegrationTransactionReport(context.C
 }
 func (UnimplementedIntegrationsServer) GetIntegrationTransactionReportData(context.Context, *GetIntegrationTransactionReportDataReq) (*GetIntegrationTransactionReportDataRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetIntegrationTransactionReportData not implemented")
+}
+func (UnimplementedIntegrationsServer) SearchPastTransactions(context.Context, *SearchPastTransactionsRequest) (*SearchPastTransactionsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SearchPastTransactions not implemented")
 }
 func (UnimplementedIntegrationsServer) GetAggregatedMetadata(context.Context, *GetAggregatedMetadataReq) (*GetAggregatedMetadataRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAggregatedMetadata not implemented")
@@ -554,6 +569,24 @@ func _Integrations_GetIntegrationTransactionReportData_Handler(srv interface{}, 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(IntegrationsServer).GetIntegrationTransactionReportData(ctx, req.(*GetIntegrationTransactionReportDataReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Integrations_SearchPastTransactions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SearchPastTransactionsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IntegrationsServer).SearchPastTransactions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Integrations_SearchPastTransactions_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IntegrationsServer).SearchPastTransactions(ctx, req.(*SearchPastTransactionsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -958,6 +991,10 @@ var Integrations_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetIntegrationTransactionReportData",
 			Handler:    _Integrations_GetIntegrationTransactionReportData_Handler,
+		},
+		{
+			MethodName: "SearchPastTransactions",
+			Handler:    _Integrations_SearchPastTransactions_Handler,
 		},
 		{
 			MethodName: "GetAggregatedMetadata",
