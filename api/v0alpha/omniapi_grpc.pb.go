@@ -43,8 +43,12 @@ const (
 	OmniApi_ManagerListConversations_FullMethodName     = "/api.v0alpha.OmniApi/ManagerListConversations"
 	OmniApi_ListContactLists_FullMethodName             = "/api.v0alpha.OmniApi/ListContactLists"
 	OmniApi_GetAvailableHeaders_FullMethodName          = "/api.v0alpha.OmniApi/GetAvailableHeaders"
+	OmniApi_ApproveTask_FullMethodName                  = "/api.v0alpha.OmniApi/ApproveTask"
+	OmniApi_GetNextQueuedTask_FullMethodName            = "/api.v0alpha.OmniApi/GetNextQueuedTask"
 	OmniApi_GetTask_FullMethodName                      = "/api.v0alpha.OmniApi/GetTask"
 	OmniApi_ListTasks_FullMethodName                    = "/api.v0alpha.OmniApi/ListTasks"
+	OmniApi_RejectTask_FullMethodName                   = "/api.v0alpha.OmniApi/RejectTask"
+	OmniApi_RequeueTask_FullMethodName                  = "/api.v0alpha.OmniApi/RequeueTask"
 	OmniApi_CreateConnectedInbox_FullMethodName         = "/api.v0alpha.OmniApi/CreateConnectedInbox"
 	OmniApi_DeleteConnectedInboxBySid_FullMethodName    = "/api.v0alpha.OmniApi/DeleteConnectedInboxBySid"
 	OmniApi_GetConnectedInboxBySid_FullMethodName       = "/api.v0alpha.OmniApi/GetConnectedInboxBySid"
@@ -155,6 +159,10 @@ type OmniApiClient interface {
 	//
 	//	OMNI_BOSS
 	GetAvailableHeaders(ctx context.Context, in *GetAvailableHeadersReq, opts ...grpc.CallOption) (*GetAvailableHeadersRes, error)
+	// ApproveTask approves a task.
+	ApproveTask(ctx context.Context, in *ApproveTaskRequest, opts ...grpc.CallOption) (*ApproveTaskResponse, error)
+	// GetNextQueuedTask retrieves the next queued task for the agent.
+	GetNextQueuedTask(ctx context.Context, in *GetNextQueuedTaskRequest, opts ...grpc.CallOption) (*GetNextQueuedTaskResponse, error)
 	// GetTask - retrieves a task using the provided criteria
 	// Required permissions:
 	//
@@ -165,6 +173,10 @@ type OmniApiClient interface {
 	//
 	//	OMNI_BOSS
 	ListTasks(ctx context.Context, in *ListTasksReq, opts ...grpc.CallOption) (*ListTasksRes, error)
+	// RejectTask rejects a task.
+	RejectTask(ctx context.Context, in *RejectTaskRequest, opts ...grpc.CallOption) (*RejectTaskResponse, error)
+	// RequeueTask requeues a task.
+	RequeueTask(ctx context.Context, in *RequeueTaskRequest, opts ...grpc.CallOption) (*RequeueTaskResponse, error)
 	// CreateConnectedInbox - create a new connected inbox
 	// Required permissions:
 	//
@@ -660,6 +672,24 @@ func (c *omniApiClient) GetAvailableHeaders(ctx context.Context, in *GetAvailabl
 	return out, nil
 }
 
+func (c *omniApiClient) ApproveTask(ctx context.Context, in *ApproveTaskRequest, opts ...grpc.CallOption) (*ApproveTaskResponse, error) {
+	out := new(ApproveTaskResponse)
+	err := c.cc.Invoke(ctx, OmniApi_ApproveTask_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *omniApiClient) GetNextQueuedTask(ctx context.Context, in *GetNextQueuedTaskRequest, opts ...grpc.CallOption) (*GetNextQueuedTaskResponse, error) {
+	out := new(GetNextQueuedTaskResponse)
+	err := c.cc.Invoke(ctx, OmniApi_GetNextQueuedTask_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *omniApiClient) GetTask(ctx context.Context, in *GetTaskReq, opts ...grpc.CallOption) (*commons.OmniTask, error) {
 	out := new(commons.OmniTask)
 	err := c.cc.Invoke(ctx, OmniApi_GetTask_FullMethodName, in, out, opts...)
@@ -672,6 +702,24 @@ func (c *omniApiClient) GetTask(ctx context.Context, in *GetTaskReq, opts ...grp
 func (c *omniApiClient) ListTasks(ctx context.Context, in *ListTasksReq, opts ...grpc.CallOption) (*ListTasksRes, error) {
 	out := new(ListTasksRes)
 	err := c.cc.Invoke(ctx, OmniApi_ListTasks_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *omniApiClient) RejectTask(ctx context.Context, in *RejectTaskRequest, opts ...grpc.CallOption) (*RejectTaskResponse, error) {
+	out := new(RejectTaskResponse)
+	err := c.cc.Invoke(ctx, OmniApi_RejectTask_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *omniApiClient) RequeueTask(ctx context.Context, in *RequeueTaskRequest, opts ...grpc.CallOption) (*RequeueTaskResponse, error) {
+	out := new(RequeueTaskResponse)
+	err := c.cc.Invoke(ctx, OmniApi_RequeueTask_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1106,6 +1154,10 @@ type OmniApiServer interface {
 	//
 	//	OMNI_BOSS
 	GetAvailableHeaders(context.Context, *GetAvailableHeadersReq) (*GetAvailableHeadersRes, error)
+	// ApproveTask approves a task.
+	ApproveTask(context.Context, *ApproveTaskRequest) (*ApproveTaskResponse, error)
+	// GetNextQueuedTask retrieves the next queued task for the agent.
+	GetNextQueuedTask(context.Context, *GetNextQueuedTaskRequest) (*GetNextQueuedTaskResponse, error)
 	// GetTask - retrieves a task using the provided criteria
 	// Required permissions:
 	//
@@ -1116,6 +1168,10 @@ type OmniApiServer interface {
 	//
 	//	OMNI_BOSS
 	ListTasks(context.Context, *ListTasksReq) (*ListTasksRes, error)
+	// RejectTask rejects a task.
+	RejectTask(context.Context, *RejectTaskRequest) (*RejectTaskResponse, error)
+	// RequeueTask requeues a task.
+	RequeueTask(context.Context, *RequeueTaskRequest) (*RequeueTaskResponse, error)
 	// CreateConnectedInbox - create a new connected inbox
 	// Required permissions:
 	//
@@ -1424,11 +1480,23 @@ func (UnimplementedOmniApiServer) ListContactLists(context.Context, *ListContact
 func (UnimplementedOmniApiServer) GetAvailableHeaders(context.Context, *GetAvailableHeadersReq) (*GetAvailableHeadersRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAvailableHeaders not implemented")
 }
+func (UnimplementedOmniApiServer) ApproveTask(context.Context, *ApproveTaskRequest) (*ApproveTaskResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ApproveTask not implemented")
+}
+func (UnimplementedOmniApiServer) GetNextQueuedTask(context.Context, *GetNextQueuedTaskRequest) (*GetNextQueuedTaskResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetNextQueuedTask not implemented")
+}
 func (UnimplementedOmniApiServer) GetTask(context.Context, *GetTaskReq) (*commons.OmniTask, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTask not implemented")
 }
 func (UnimplementedOmniApiServer) ListTasks(context.Context, *ListTasksReq) (*ListTasksRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListTasks not implemented")
+}
+func (UnimplementedOmniApiServer) RejectTask(context.Context, *RejectTaskRequest) (*RejectTaskResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RejectTask not implemented")
+}
+func (UnimplementedOmniApiServer) RequeueTask(context.Context, *RequeueTaskRequest) (*RequeueTaskResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RequeueTask not implemented")
 }
 func (UnimplementedOmniApiServer) CreateConnectedInbox(context.Context, *commons.ConnectedInbox) (*CreateConnectedInboxRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateConnectedInbox not implemented")
@@ -1983,6 +2051,42 @@ func _OmniApi_GetAvailableHeaders_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OmniApi_ApproveTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ApproveTaskRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmniApiServer).ApproveTask(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OmniApi_ApproveTask_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmniApiServer).ApproveTask(ctx, req.(*ApproveTaskRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OmniApi_GetNextQueuedTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetNextQueuedTaskRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmniApiServer).GetNextQueuedTask(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OmniApi_GetNextQueuedTask_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmniApiServer).GetNextQueuedTask(ctx, req.(*GetNextQueuedTaskRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _OmniApi_GetTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetTaskReq)
 	if err := dec(in); err != nil {
@@ -2015,6 +2119,42 @@ func _OmniApi_ListTasks_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OmniApiServer).ListTasks(ctx, req.(*ListTasksReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OmniApi_RejectTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RejectTaskRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmniApiServer).RejectTask(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OmniApi_RejectTask_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmniApiServer).RejectTask(ctx, req.(*RejectTaskRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OmniApi_RequeueTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequeueTaskRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmniApiServer).RequeueTask(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OmniApi_RequeueTask_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmniApiServer).RequeueTask(ctx, req.(*RequeueTaskRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -2831,12 +2971,28 @@ var OmniApi_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _OmniApi_GetAvailableHeaders_Handler,
 		},
 		{
+			MethodName: "ApproveTask",
+			Handler:    _OmniApi_ApproveTask_Handler,
+		},
+		{
+			MethodName: "GetNextQueuedTask",
+			Handler:    _OmniApi_GetNextQueuedTask_Handler,
+		},
+		{
 			MethodName: "GetTask",
 			Handler:    _OmniApi_GetTask_Handler,
 		},
 		{
 			MethodName: "ListTasks",
 			Handler:    _OmniApi_ListTasks_Handler,
+		},
+		{
+			MethodName: "RejectTask",
+			Handler:    _OmniApi_RejectTask_Handler,
+		},
+		{
+			MethodName: "RequeueTask",
+			Handler:    _OmniApi_RequeueTask_Handler,
 		},
 		{
 			MethodName: "CreateConnectedInbox",
