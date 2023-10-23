@@ -946,11 +946,11 @@ const (
 	// 'First Week Patterns not found in Tour Week Patterns' type.
 	// The diagnostic is reporting a First Week Pattern Number used be a Tour Agent Collection which is not found in the given Tour Week Patterns.
 	DiagnosticCode_FIRST_WEEK_PATTERN_NUMBERS_NOT_FOUND_IN_TOUR_WEEK_PATTERNS DiagnosticCode = 64
-	// DiagnosticShiftTemplateHasNoSchedulingAgentGroups integer value for a diagnostic coded as
+	// DiagnosticCodeShiftTemplateHasNotAssociatedSchedulingAgentGroups integer value for a diagnostic coded as
 	// 'Shift Template Has No Associated Scheduling Agent Groups' type.
 	// The diagnostic is reporting a Shift Template with no associated Schedulable Agent Groups.
 	DiagnosticCode_SHIFT_TEMPLATE_HAS_NO_ASSOCIATED_SCHEDULING_AGENT_GROUPS DiagnosticCode = 65
-	// DiagnosticAttemptToBuildSchedulesForInvalidParentNode integer value for a diagnostic coded as
+	// DiagnosticCodeAttemptToBuildSchedulesForInvalidParentNode integer value for a diagnostic coded as
 	// 'Attempt To Build Schedules For Invalid Parent Node' type.
 	// The diagnostic is reporting an attemplt to build a schedule for an invalid Parent Node.
 	DiagnosticCode_ATTEMPT_TO_BUILD_SCHEDULES_FOR_INVALID_PARENT_NODE DiagnosticCode = 66
