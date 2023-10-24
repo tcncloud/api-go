@@ -94,10 +94,19 @@ const (
 	// OmniApiGetAvailableHeadersProcedure is the fully-qualified name of the OmniApi's
 	// GetAvailableHeaders RPC.
 	OmniApiGetAvailableHeadersProcedure = "/api.v0alpha.OmniApi/GetAvailableHeaders"
+	// OmniApiApproveTaskProcedure is the fully-qualified name of the OmniApi's ApproveTask RPC.
+	OmniApiApproveTaskProcedure = "/api.v0alpha.OmniApi/ApproveTask"
+	// OmniApiGetNextQueuedTaskProcedure is the fully-qualified name of the OmniApi's GetNextQueuedTask
+	// RPC.
+	OmniApiGetNextQueuedTaskProcedure = "/api.v0alpha.OmniApi/GetNextQueuedTask"
 	// OmniApiGetTaskProcedure is the fully-qualified name of the OmniApi's GetTask RPC.
 	OmniApiGetTaskProcedure = "/api.v0alpha.OmniApi/GetTask"
 	// OmniApiListTasksProcedure is the fully-qualified name of the OmniApi's ListTasks RPC.
 	OmniApiListTasksProcedure = "/api.v0alpha.OmniApi/ListTasks"
+	// OmniApiRejectTaskProcedure is the fully-qualified name of the OmniApi's RejectTask RPC.
+	OmniApiRejectTaskProcedure = "/api.v0alpha.OmniApi/RejectTask"
+	// OmniApiRequeueTaskProcedure is the fully-qualified name of the OmniApi's RequeueTask RPC.
+	OmniApiRequeueTaskProcedure = "/api.v0alpha.OmniApi/RequeueTask"
 	// OmniApiCreateConnectedInboxProcedure is the fully-qualified name of the OmniApi's
 	// CreateConnectedInbox RPC.
 	OmniApiCreateConnectedInboxProcedure = "/api.v0alpha.OmniApi/CreateConnectedInbox"
@@ -275,6 +284,10 @@ type OmniApiClient interface {
 	//
 	//	OMNI_BOSS
 	GetAvailableHeaders(context.Context, *connect_go.Request[v0alpha.GetAvailableHeadersReq]) (*connect_go.Response[v0alpha.GetAvailableHeadersRes], error)
+	// ApproveTask approves a task.
+	ApproveTask(context.Context, *connect_go.Request[v0alpha.ApproveTaskRequest]) (*connect_go.Response[v0alpha.ApproveTaskResponse], error)
+	// GetNextQueuedTask retrieves the next queued task for the agent.
+	GetNextQueuedTask(context.Context, *connect_go.Request[v0alpha.GetNextQueuedTaskRequest]) (*connect_go.Response[v0alpha.GetNextQueuedTaskResponse], error)
 	// GetTask - retrieves a task using the provided criteria
 	// Required permissions:
 	//
@@ -285,6 +298,10 @@ type OmniApiClient interface {
 	//
 	//	OMNI_BOSS
 	ListTasks(context.Context, *connect_go.Request[v0alpha.ListTasksReq]) (*connect_go.Response[v0alpha.ListTasksRes], error)
+	// RejectTask rejects a task.
+	RejectTask(context.Context, *connect_go.Request[v0alpha.RejectTaskRequest]) (*connect_go.Response[v0alpha.RejectTaskResponse], error)
+	// RequeueTask requeues a task.
+	RequeueTask(context.Context, *connect_go.Request[v0alpha.RequeueTaskRequest]) (*connect_go.Response[v0alpha.RequeueTaskResponse], error)
 	// CreateConnectedInbox - create a new connected inbox
 	// Required permissions:
 	//
@@ -644,6 +661,16 @@ func NewOmniApiClient(httpClient connect_go.HTTPClient, baseURL string, opts ...
 			baseURL+OmniApiGetAvailableHeadersProcedure,
 			opts...,
 		),
+		approveTask: connect_go.NewClient[v0alpha.ApproveTaskRequest, v0alpha.ApproveTaskResponse](
+			httpClient,
+			baseURL+OmniApiApproveTaskProcedure,
+			opts...,
+		),
+		getNextQueuedTask: connect_go.NewClient[v0alpha.GetNextQueuedTaskRequest, v0alpha.GetNextQueuedTaskResponse](
+			httpClient,
+			baseURL+OmniApiGetNextQueuedTaskProcedure,
+			opts...,
+		),
 		getTask: connect_go.NewClient[v0alpha.GetTaskReq, commons.OmniTask](
 			httpClient,
 			baseURL+OmniApiGetTaskProcedure,
@@ -652,6 +679,16 @@ func NewOmniApiClient(httpClient connect_go.HTTPClient, baseURL string, opts ...
 		listTasks: connect_go.NewClient[v0alpha.ListTasksReq, v0alpha.ListTasksRes](
 			httpClient,
 			baseURL+OmniApiListTasksProcedure,
+			opts...,
+		),
+		rejectTask: connect_go.NewClient[v0alpha.RejectTaskRequest, v0alpha.RejectTaskResponse](
+			httpClient,
+			baseURL+OmniApiRejectTaskProcedure,
+			opts...,
+		),
+		requeueTask: connect_go.NewClient[v0alpha.RequeueTaskRequest, v0alpha.RequeueTaskResponse](
+			httpClient,
+			baseURL+OmniApiRequeueTaskProcedure,
 			opts...,
 		),
 		createConnectedInbox: connect_go.NewClient[commons.ConnectedInbox, v0alpha.CreateConnectedInboxRes](
@@ -882,8 +919,12 @@ type omniApiClient struct {
 	managerListConversations     *connect_go.Client[v0alpha.ListConversationsReq, v0alpha.ListConversationsRes]
 	listContactLists             *connect_go.Client[v0alpha.ListContactListsReq, v0alpha.ListContactListsRes]
 	getAvailableHeaders          *connect_go.Client[v0alpha.GetAvailableHeadersReq, v0alpha.GetAvailableHeadersRes]
+	approveTask                  *connect_go.Client[v0alpha.ApproveTaskRequest, v0alpha.ApproveTaskResponse]
+	getNextQueuedTask            *connect_go.Client[v0alpha.GetNextQueuedTaskRequest, v0alpha.GetNextQueuedTaskResponse]
 	getTask                      *connect_go.Client[v0alpha.GetTaskReq, commons.OmniTask]
 	listTasks                    *connect_go.Client[v0alpha.ListTasksReq, v0alpha.ListTasksRes]
+	rejectTask                   *connect_go.Client[v0alpha.RejectTaskRequest, v0alpha.RejectTaskResponse]
+	requeueTask                  *connect_go.Client[v0alpha.RequeueTaskRequest, v0alpha.RequeueTaskResponse]
 	createConnectedInbox         *connect_go.Client[commons.ConnectedInbox, v0alpha.CreateConnectedInboxRes]
 	deleteConnectedInboxBySid    *connect_go.Client[v0alpha.DeleteConnectedInboxBySidReq, commons.Empty]
 	getConnectedInboxBySid       *connect_go.Client[v0alpha.GetConnectedInboxBySidReq, commons.ConnectedInbox]
@@ -1041,6 +1082,16 @@ func (c *omniApiClient) GetAvailableHeaders(ctx context.Context, req *connect_go
 	return c.getAvailableHeaders.CallUnary(ctx, req)
 }
 
+// ApproveTask calls api.v0alpha.OmniApi.ApproveTask.
+func (c *omniApiClient) ApproveTask(ctx context.Context, req *connect_go.Request[v0alpha.ApproveTaskRequest]) (*connect_go.Response[v0alpha.ApproveTaskResponse], error) {
+	return c.approveTask.CallUnary(ctx, req)
+}
+
+// GetNextQueuedTask calls api.v0alpha.OmniApi.GetNextQueuedTask.
+func (c *omniApiClient) GetNextQueuedTask(ctx context.Context, req *connect_go.Request[v0alpha.GetNextQueuedTaskRequest]) (*connect_go.Response[v0alpha.GetNextQueuedTaskResponse], error) {
+	return c.getNextQueuedTask.CallUnary(ctx, req)
+}
+
 // GetTask calls api.v0alpha.OmniApi.GetTask.
 func (c *omniApiClient) GetTask(ctx context.Context, req *connect_go.Request[v0alpha.GetTaskReq]) (*connect_go.Response[commons.OmniTask], error) {
 	return c.getTask.CallUnary(ctx, req)
@@ -1049,6 +1100,16 @@ func (c *omniApiClient) GetTask(ctx context.Context, req *connect_go.Request[v0a
 // ListTasks calls api.v0alpha.OmniApi.ListTasks.
 func (c *omniApiClient) ListTasks(ctx context.Context, req *connect_go.Request[v0alpha.ListTasksReq]) (*connect_go.Response[v0alpha.ListTasksRes], error) {
 	return c.listTasks.CallUnary(ctx, req)
+}
+
+// RejectTask calls api.v0alpha.OmniApi.RejectTask.
+func (c *omniApiClient) RejectTask(ctx context.Context, req *connect_go.Request[v0alpha.RejectTaskRequest]) (*connect_go.Response[v0alpha.RejectTaskResponse], error) {
+	return c.rejectTask.CallUnary(ctx, req)
+}
+
+// RequeueTask calls api.v0alpha.OmniApi.RequeueTask.
+func (c *omniApiClient) RequeueTask(ctx context.Context, req *connect_go.Request[v0alpha.RequeueTaskRequest]) (*connect_go.Response[v0alpha.RequeueTaskResponse], error) {
+	return c.requeueTask.CallUnary(ctx, req)
 }
 
 // CreateConnectedInbox calls api.v0alpha.OmniApi.CreateConnectedInbox.
@@ -1317,6 +1378,10 @@ type OmniApiHandler interface {
 	//
 	//	OMNI_BOSS
 	GetAvailableHeaders(context.Context, *connect_go.Request[v0alpha.GetAvailableHeadersReq]) (*connect_go.Response[v0alpha.GetAvailableHeadersRes], error)
+	// ApproveTask approves a task.
+	ApproveTask(context.Context, *connect_go.Request[v0alpha.ApproveTaskRequest]) (*connect_go.Response[v0alpha.ApproveTaskResponse], error)
+	// GetNextQueuedTask retrieves the next queued task for the agent.
+	GetNextQueuedTask(context.Context, *connect_go.Request[v0alpha.GetNextQueuedTaskRequest]) (*connect_go.Response[v0alpha.GetNextQueuedTaskResponse], error)
 	// GetTask - retrieves a task using the provided criteria
 	// Required permissions:
 	//
@@ -1327,6 +1392,10 @@ type OmniApiHandler interface {
 	//
 	//	OMNI_BOSS
 	ListTasks(context.Context, *connect_go.Request[v0alpha.ListTasksReq]) (*connect_go.Response[v0alpha.ListTasksRes], error)
+	// RejectTask rejects a task.
+	RejectTask(context.Context, *connect_go.Request[v0alpha.RejectTaskRequest]) (*connect_go.Response[v0alpha.RejectTaskResponse], error)
+	// RequeueTask requeues a task.
+	RequeueTask(context.Context, *connect_go.Request[v0alpha.RequeueTaskRequest]) (*connect_go.Response[v0alpha.RequeueTaskResponse], error)
 	// CreateConnectedInbox - create a new connected inbox
 	// Required permissions:
 	//
@@ -1682,6 +1751,16 @@ func NewOmniApiHandler(svc OmniApiHandler, opts ...connect_go.HandlerOption) (st
 		svc.GetAvailableHeaders,
 		opts...,
 	)
+	omniApiApproveTaskHandler := connect_go.NewUnaryHandler(
+		OmniApiApproveTaskProcedure,
+		svc.ApproveTask,
+		opts...,
+	)
+	omniApiGetNextQueuedTaskHandler := connect_go.NewUnaryHandler(
+		OmniApiGetNextQueuedTaskProcedure,
+		svc.GetNextQueuedTask,
+		opts...,
+	)
 	omniApiGetTaskHandler := connect_go.NewUnaryHandler(
 		OmniApiGetTaskProcedure,
 		svc.GetTask,
@@ -1690,6 +1769,16 @@ func NewOmniApiHandler(svc OmniApiHandler, opts ...connect_go.HandlerOption) (st
 	omniApiListTasksHandler := connect_go.NewUnaryHandler(
 		OmniApiListTasksProcedure,
 		svc.ListTasks,
+		opts...,
+	)
+	omniApiRejectTaskHandler := connect_go.NewUnaryHandler(
+		OmniApiRejectTaskProcedure,
+		svc.RejectTask,
+		opts...,
+	)
+	omniApiRequeueTaskHandler := connect_go.NewUnaryHandler(
+		OmniApiRequeueTaskProcedure,
+		svc.RequeueTask,
 		opts...,
 	)
 	omniApiCreateConnectedInboxHandler := connect_go.NewUnaryHandler(
@@ -1940,10 +2029,18 @@ func NewOmniApiHandler(svc OmniApiHandler, opts ...connect_go.HandlerOption) (st
 			omniApiListContactListsHandler.ServeHTTP(w, r)
 		case OmniApiGetAvailableHeadersProcedure:
 			omniApiGetAvailableHeadersHandler.ServeHTTP(w, r)
+		case OmniApiApproveTaskProcedure:
+			omniApiApproveTaskHandler.ServeHTTP(w, r)
+		case OmniApiGetNextQueuedTaskProcedure:
+			omniApiGetNextQueuedTaskHandler.ServeHTTP(w, r)
 		case OmniApiGetTaskProcedure:
 			omniApiGetTaskHandler.ServeHTTP(w, r)
 		case OmniApiListTasksProcedure:
 			omniApiListTasksHandler.ServeHTTP(w, r)
+		case OmniApiRejectTaskProcedure:
+			omniApiRejectTaskHandler.ServeHTTP(w, r)
+		case OmniApiRequeueTaskProcedure:
+			omniApiRequeueTaskHandler.ServeHTTP(w, r)
 		case OmniApiCreateConnectedInboxProcedure:
 			omniApiCreateConnectedInboxHandler.ServeHTTP(w, r)
 		case OmniApiDeleteConnectedInboxBySidProcedure:
@@ -2125,12 +2222,28 @@ func (UnimplementedOmniApiHandler) GetAvailableHeaders(context.Context, *connect
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.GetAvailableHeaders is not implemented"))
 }
 
+func (UnimplementedOmniApiHandler) ApproveTask(context.Context, *connect_go.Request[v0alpha.ApproveTaskRequest]) (*connect_go.Response[v0alpha.ApproveTaskResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.ApproveTask is not implemented"))
+}
+
+func (UnimplementedOmniApiHandler) GetNextQueuedTask(context.Context, *connect_go.Request[v0alpha.GetNextQueuedTaskRequest]) (*connect_go.Response[v0alpha.GetNextQueuedTaskResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.GetNextQueuedTask is not implemented"))
+}
+
 func (UnimplementedOmniApiHandler) GetTask(context.Context, *connect_go.Request[v0alpha.GetTaskReq]) (*connect_go.Response[commons.OmniTask], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.GetTask is not implemented"))
 }
 
 func (UnimplementedOmniApiHandler) ListTasks(context.Context, *connect_go.Request[v0alpha.ListTasksReq]) (*connect_go.Response[v0alpha.ListTasksRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.ListTasks is not implemented"))
+}
+
+func (UnimplementedOmniApiHandler) RejectTask(context.Context, *connect_go.Request[v0alpha.RejectTaskRequest]) (*connect_go.Response[v0alpha.RejectTaskResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.RejectTask is not implemented"))
+}
+
+func (UnimplementedOmniApiHandler) RequeueTask(context.Context, *connect_go.Request[v0alpha.RequeueTaskRequest]) (*connect_go.Response[v0alpha.RequeueTaskResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.RequeueTask is not implemented"))
 }
 
 func (UnimplementedOmniApiHandler) CreateConnectedInbox(context.Context, *connect_go.Request[commons.ConnectedInbox]) (*connect_go.Response[v0alpha.CreateConnectedInboxRes], error) {
