@@ -75,6 +75,7 @@ const (
 	LMS_GetCjsSecureSearchCriteria_FullMethodName       = "/api.v0alpha.LMS/GetCjsSecureSearchCriteria"
 	LMS_CreateCjsSecureSearchCriteria_FullMethodName    = "/api.v0alpha.LMS/CreateCjsSecureSearchCriteria"
 	LMS_UpdateCjsSecureSearchCriteria_FullMethodName    = "/api.v0alpha.LMS/UpdateCjsSecureSearchCriteria"
+	LMS_SampleEndpoint_FullMethodName                   = "/api.v0alpha.LMS/SampleEndpoint"
 	LMS_GetQueuedEventsStatusByElementId_FullMethodName = "/api.v0alpha.LMS/GetQueuedEventsStatusByElementId"
 )
 
@@ -157,6 +158,8 @@ type LMSClient interface {
 	CreateCjsSecureSearchCriteria(ctx context.Context, in *CjsSecureSearchCriteria, opts ...grpc.CallOption) (*CjsSecureSearchCriteria, error)
 	// UpdateCjsSecureSearchCriteria updates the secure search criteria
 	UpdateCjsSecureSearchCriteria(ctx context.Context, in *CjsSecureSearchCriteria, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// SampleEndpoint is to test that values come through to the api appropriately
+	SampleEndpoint(ctx context.Context, in *SampleRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetQueuedEventsStatusByElementId(ctx context.Context, in *ElementPK, opts ...grpc.CallOption) (*Events, error)
 }
 
@@ -803,6 +806,15 @@ func (c *lMSClient) UpdateCjsSecureSearchCriteria(ctx context.Context, in *CjsSe
 	return out, nil
 }
 
+func (c *lMSClient) SampleEndpoint(ctx context.Context, in *SampleRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, LMS_SampleEndpoint_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *lMSClient) GetQueuedEventsStatusByElementId(ctx context.Context, in *ElementPK, opts ...grpc.CallOption) (*Events, error) {
 	out := new(Events)
 	err := c.cc.Invoke(ctx, LMS_GetQueuedEventsStatusByElementId_FullMethodName, in, out, opts...)
@@ -891,6 +903,8 @@ type LMSServer interface {
 	CreateCjsSecureSearchCriteria(context.Context, *CjsSecureSearchCriteria) (*CjsSecureSearchCriteria, error)
 	// UpdateCjsSecureSearchCriteria updates the secure search criteria
 	UpdateCjsSecureSearchCriteria(context.Context, *CjsSecureSearchCriteria) (*emptypb.Empty, error)
+	// SampleEndpoint is to test that values come through to the api appropriately
+	SampleEndpoint(context.Context, *SampleRequest) (*emptypb.Empty, error)
 	GetQueuedEventsStatusByElementId(context.Context, *ElementPK) (*Events, error)
 	mustEmbedUnimplementedLMSServer()
 }
@@ -1063,6 +1077,9 @@ func (UnimplementedLMSServer) CreateCjsSecureSearchCriteria(context.Context, *Cj
 }
 func (UnimplementedLMSServer) UpdateCjsSecureSearchCriteria(context.Context, *CjsSecureSearchCriteria) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateCjsSecureSearchCriteria not implemented")
+}
+func (UnimplementedLMSServer) SampleEndpoint(context.Context, *SampleRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SampleEndpoint not implemented")
 }
 func (UnimplementedLMSServer) GetQueuedEventsStatusByElementId(context.Context, *ElementPK) (*Events, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetQueuedEventsStatusByElementId not implemented")
@@ -2093,6 +2110,24 @@ func _LMS_UpdateCjsSecureSearchCriteria_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LMS_SampleEndpoint_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SampleRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LMSServer).SampleEndpoint(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LMS_SampleEndpoint_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LMSServer).SampleEndpoint(ctx, req.(*SampleRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _LMS_GetQueuedEventsStatusByElementId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ElementPK)
 	if err := dec(in); err != nil {
@@ -2313,6 +2348,10 @@ var LMS_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateCjsSecureSearchCriteria",
 			Handler:    _LMS_UpdateCjsSecureSearchCriteria_Handler,
+		},
+		{
+			MethodName: "SampleEndpoint",
+			Handler:    _LMS_SampleEndpoint_Handler,
 		},
 		{
 			MethodName: "GetQueuedEventsStatusByElementId",
