@@ -108,6 +108,18 @@ const (
 	// VanalyticsCreateCorrectionProcedure is the fully-qualified name of the Vanalytics's
 	// CreateCorrection RPC.
 	VanalyticsCreateCorrectionProcedure = "/api.v1alpha1.vanalytics.Vanalytics/CreateCorrection"
+	// VanalyticsGetCorrectionProcedure is the fully-qualified name of the Vanalytics's GetCorrection
+	// RPC.
+	VanalyticsGetCorrectionProcedure = "/api.v1alpha1.vanalytics.Vanalytics/GetCorrection"
+	// VanalyticsDeleteCorrectionProcedure is the fully-qualified name of the Vanalytics's
+	// DeleteCorrection RPC.
+	VanalyticsDeleteCorrectionProcedure = "/api.v1alpha1.vanalytics.Vanalytics/DeleteCorrection"
+	// VanalyticsListCorrectionsProcedure is the fully-qualified name of the Vanalytics's
+	// ListCorrections RPC.
+	VanalyticsListCorrectionsProcedure = "/api.v1alpha1.vanalytics.Vanalytics/ListCorrections"
+	// VanalyticsUpdateCorrectionProcedure is the fully-qualified name of the Vanalytics's
+	// UpdateCorrection RPC.
+	VanalyticsUpdateCorrectionProcedure = "/api.v1alpha1.vanalytics.Vanalytics/UpdateCorrection"
 )
 
 // VanalyticsClient is a client for the api.v1alpha1.vanalytics.Vanalytics service.
@@ -175,6 +187,14 @@ type VanalyticsClient interface {
 	ListFlagTranscriptFilters(context.Context, *connect_go.Request[vanalytics.ListFlagTranscriptFiltersRequest]) (*connect_go.Response[vanalytics.ListFlagTranscriptFiltersResponse], error)
 	// CreateCorrection creates a correction.
 	CreateCorrection(context.Context, *connect_go.Request[vanalytics.CreateCorrectionRequest]) (*connect_go.Response[vanalytics.CreateCorrectionResponse], error)
+	// GetCorrection gets a correction.
+	GetCorrection(context.Context, *connect_go.Request[vanalytics.GetCorrectionRequest]) (*connect_go.Response[vanalytics.Correction], error)
+	// DeleteCorrection deletes a correction.
+	DeleteCorrection(context.Context, *connect_go.Request[vanalytics.DeleteCorrectionRequest]) (*connect_go.Response[vanalytics.DeleteCorrectionResponse], error)
+	// ListCorrections lists corrections.
+	ListCorrections(context.Context, *connect_go.Request[vanalytics.ListCorrectionsRequest]) (*connect_go.Response[vanalytics.ListCorrectionsResponse], error)
+	// UpdateCorrection updates a correction.
+	UpdateCorrection(context.Context, *connect_go.Request[vanalytics.UpdateCorrectionRequest]) (*connect_go.Response[vanalytics.UpdateCorrectionResponse], error)
 }
 
 // NewVanalyticsClient constructs a client for the api.v1alpha1.vanalytics.Vanalytics service. By
@@ -332,6 +352,26 @@ func NewVanalyticsClient(httpClient connect_go.HTTPClient, baseURL string, opts 
 			baseURL+VanalyticsCreateCorrectionProcedure,
 			opts...,
 		),
+		getCorrection: connect_go.NewClient[vanalytics.GetCorrectionRequest, vanalytics.Correction](
+			httpClient,
+			baseURL+VanalyticsGetCorrectionProcedure,
+			opts...,
+		),
+		deleteCorrection: connect_go.NewClient[vanalytics.DeleteCorrectionRequest, vanalytics.DeleteCorrectionResponse](
+			httpClient,
+			baseURL+VanalyticsDeleteCorrectionProcedure,
+			opts...,
+		),
+		listCorrections: connect_go.NewClient[vanalytics.ListCorrectionsRequest, vanalytics.ListCorrectionsResponse](
+			httpClient,
+			baseURL+VanalyticsListCorrectionsProcedure,
+			opts...,
+		),
+		updateCorrection: connect_go.NewClient[vanalytics.UpdateCorrectionRequest, vanalytics.UpdateCorrectionResponse](
+			httpClient,
+			baseURL+VanalyticsUpdateCorrectionProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -366,6 +406,10 @@ type vanalyticsClient struct {
 	listFlagSnapshots         *connect_go.Client[vanalytics.ListFlagSnapshotsRequest, vanalytics.ListFlagSnapshotsResponse]
 	listFlagTranscriptFilters *connect_go.Client[vanalytics.ListFlagTranscriptFiltersRequest, vanalytics.ListFlagTranscriptFiltersResponse]
 	createCorrection          *connect_go.Client[vanalytics.CreateCorrectionRequest, vanalytics.CreateCorrectionResponse]
+	getCorrection             *connect_go.Client[vanalytics.GetCorrectionRequest, vanalytics.Correction]
+	deleteCorrection          *connect_go.Client[vanalytics.DeleteCorrectionRequest, vanalytics.DeleteCorrectionResponse]
+	listCorrections           *connect_go.Client[vanalytics.ListCorrectionsRequest, vanalytics.ListCorrectionsResponse]
+	updateCorrection          *connect_go.Client[vanalytics.UpdateCorrectionRequest, vanalytics.UpdateCorrectionResponse]
 }
 
 // Audit calls api.v1alpha1.vanalytics.Vanalytics.Audit.
@@ -513,6 +557,26 @@ func (c *vanalyticsClient) CreateCorrection(ctx context.Context, req *connect_go
 	return c.createCorrection.CallUnary(ctx, req)
 }
 
+// GetCorrection calls api.v1alpha1.vanalytics.Vanalytics.GetCorrection.
+func (c *vanalyticsClient) GetCorrection(ctx context.Context, req *connect_go.Request[vanalytics.GetCorrectionRequest]) (*connect_go.Response[vanalytics.Correction], error) {
+	return c.getCorrection.CallUnary(ctx, req)
+}
+
+// DeleteCorrection calls api.v1alpha1.vanalytics.Vanalytics.DeleteCorrection.
+func (c *vanalyticsClient) DeleteCorrection(ctx context.Context, req *connect_go.Request[vanalytics.DeleteCorrectionRequest]) (*connect_go.Response[vanalytics.DeleteCorrectionResponse], error) {
+	return c.deleteCorrection.CallUnary(ctx, req)
+}
+
+// ListCorrections calls api.v1alpha1.vanalytics.Vanalytics.ListCorrections.
+func (c *vanalyticsClient) ListCorrections(ctx context.Context, req *connect_go.Request[vanalytics.ListCorrectionsRequest]) (*connect_go.Response[vanalytics.ListCorrectionsResponse], error) {
+	return c.listCorrections.CallUnary(ctx, req)
+}
+
+// UpdateCorrection calls api.v1alpha1.vanalytics.Vanalytics.UpdateCorrection.
+func (c *vanalyticsClient) UpdateCorrection(ctx context.Context, req *connect_go.Request[vanalytics.UpdateCorrectionRequest]) (*connect_go.Response[vanalytics.UpdateCorrectionResponse], error) {
+	return c.updateCorrection.CallUnary(ctx, req)
+}
+
 // VanalyticsHandler is an implementation of the api.v1alpha1.vanalytics.Vanalytics service.
 type VanalyticsHandler interface {
 	// Audit audits the used transcription audio time for a client. The window
@@ -578,6 +642,14 @@ type VanalyticsHandler interface {
 	ListFlagTranscriptFilters(context.Context, *connect_go.Request[vanalytics.ListFlagTranscriptFiltersRequest]) (*connect_go.Response[vanalytics.ListFlagTranscriptFiltersResponse], error)
 	// CreateCorrection creates a correction.
 	CreateCorrection(context.Context, *connect_go.Request[vanalytics.CreateCorrectionRequest]) (*connect_go.Response[vanalytics.CreateCorrectionResponse], error)
+	// GetCorrection gets a correction.
+	GetCorrection(context.Context, *connect_go.Request[vanalytics.GetCorrectionRequest]) (*connect_go.Response[vanalytics.Correction], error)
+	// DeleteCorrection deletes a correction.
+	DeleteCorrection(context.Context, *connect_go.Request[vanalytics.DeleteCorrectionRequest]) (*connect_go.Response[vanalytics.DeleteCorrectionResponse], error)
+	// ListCorrections lists corrections.
+	ListCorrections(context.Context, *connect_go.Request[vanalytics.ListCorrectionsRequest]) (*connect_go.Response[vanalytics.ListCorrectionsResponse], error)
+	// UpdateCorrection updates a correction.
+	UpdateCorrection(context.Context, *connect_go.Request[vanalytics.UpdateCorrectionRequest]) (*connect_go.Response[vanalytics.UpdateCorrectionResponse], error)
 }
 
 // NewVanalyticsHandler builds an HTTP handler from the service implementation. It returns the path
@@ -731,6 +803,26 @@ func NewVanalyticsHandler(svc VanalyticsHandler, opts ...connect_go.HandlerOptio
 		svc.CreateCorrection,
 		opts...,
 	)
+	vanalyticsGetCorrectionHandler := connect_go.NewUnaryHandler(
+		VanalyticsGetCorrectionProcedure,
+		svc.GetCorrection,
+		opts...,
+	)
+	vanalyticsDeleteCorrectionHandler := connect_go.NewUnaryHandler(
+		VanalyticsDeleteCorrectionProcedure,
+		svc.DeleteCorrection,
+		opts...,
+	)
+	vanalyticsListCorrectionsHandler := connect_go.NewUnaryHandler(
+		VanalyticsListCorrectionsProcedure,
+		svc.ListCorrections,
+		opts...,
+	)
+	vanalyticsUpdateCorrectionHandler := connect_go.NewUnaryHandler(
+		VanalyticsUpdateCorrectionProcedure,
+		svc.UpdateCorrection,
+		opts...,
+	)
 	return "/api.v1alpha1.vanalytics.Vanalytics/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case VanalyticsAuditProcedure:
@@ -791,6 +883,14 @@ func NewVanalyticsHandler(svc VanalyticsHandler, opts ...connect_go.HandlerOptio
 			vanalyticsListFlagTranscriptFiltersHandler.ServeHTTP(w, r)
 		case VanalyticsCreateCorrectionProcedure:
 			vanalyticsCreateCorrectionHandler.ServeHTTP(w, r)
+		case VanalyticsGetCorrectionProcedure:
+			vanalyticsGetCorrectionHandler.ServeHTTP(w, r)
+		case VanalyticsDeleteCorrectionProcedure:
+			vanalyticsDeleteCorrectionHandler.ServeHTTP(w, r)
+		case VanalyticsListCorrectionsProcedure:
+			vanalyticsListCorrectionsHandler.ServeHTTP(w, r)
+		case VanalyticsUpdateCorrectionProcedure:
+			vanalyticsUpdateCorrectionHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -914,4 +1014,20 @@ func (UnimplementedVanalyticsHandler) ListFlagTranscriptFilters(context.Context,
 
 func (UnimplementedVanalyticsHandler) CreateCorrection(context.Context, *connect_go.Request[vanalytics.CreateCorrectionRequest]) (*connect_go.Response[vanalytics.CreateCorrectionResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.vanalytics.Vanalytics.CreateCorrection is not implemented"))
+}
+
+func (UnimplementedVanalyticsHandler) GetCorrection(context.Context, *connect_go.Request[vanalytics.GetCorrectionRequest]) (*connect_go.Response[vanalytics.Correction], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.vanalytics.Vanalytics.GetCorrection is not implemented"))
+}
+
+func (UnimplementedVanalyticsHandler) DeleteCorrection(context.Context, *connect_go.Request[vanalytics.DeleteCorrectionRequest]) (*connect_go.Response[vanalytics.DeleteCorrectionResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.vanalytics.Vanalytics.DeleteCorrection is not implemented"))
+}
+
+func (UnimplementedVanalyticsHandler) ListCorrections(context.Context, *connect_go.Request[vanalytics.ListCorrectionsRequest]) (*connect_go.Response[vanalytics.ListCorrectionsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.vanalytics.Vanalytics.ListCorrections is not implemented"))
+}
+
+func (UnimplementedVanalyticsHandler) UpdateCorrection(context.Context, *connect_go.Request[vanalytics.UpdateCorrectionRequest]) (*connect_go.Response[vanalytics.UpdateCorrectionResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.vanalytics.Vanalytics.UpdateCorrection is not implemented"))
 }
