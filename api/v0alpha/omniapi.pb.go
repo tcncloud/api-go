@@ -2726,7 +2726,9 @@ type GetNextQueuedTaskRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Skills *commons.OmniConversationSkills `protobuf:"bytes,1,opt,name=skills,proto3" json:"skills,omitempty"`
+	// Deprecated: Marked as deprecated in api/v0alpha/omniapi.proto.
+	Skills      *commons.OmniConversationSkills `protobuf:"bytes,1,opt,name=skills,proto3" json:"skills,omitempty"`
+	AgentSkills map[string]int64                `protobuf:"bytes,2,rep,name=agent_skills,json=agentSkills,proto3" json:"agent_skills,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"varint,2,opt,name=value,proto3"`
 }
 
 func (x *GetNextQueuedTaskRequest) Reset() {
@@ -2761,9 +2763,17 @@ func (*GetNextQueuedTaskRequest) Descriptor() ([]byte, []int) {
 	return file_api_v0alpha_omniapi_proto_rawDescGZIP(), []int{44}
 }
 
+// Deprecated: Marked as deprecated in api/v0alpha/omniapi.proto.
 func (x *GetNextQueuedTaskRequest) GetSkills() *commons.OmniConversationSkills {
 	if x != nil {
 		return x.Skills
+	}
+	return nil
+}
+
+func (x *GetNextQueuedTaskRequest) GetAgentSkills() map[string]int64 {
+	if x != nil {
+		return x.AgentSkills
 	}
 	return nil
 }
@@ -7796,7 +7806,7 @@ type GetTaskReq_ByConversation struct {
 func (x *GetTaskReq_ByConversation) Reset() {
 	*x = GetTaskReq_ByConversation{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v0alpha_omniapi_proto_msgTypes[134]
+		mi := &file_api_v0alpha_omniapi_proto_msgTypes[135]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7809,7 +7819,7 @@ func (x *GetTaskReq_ByConversation) String() string {
 func (*GetTaskReq_ByConversation) ProtoMessage() {}
 
 func (x *GetTaskReq_ByConversation) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_omniapi_proto_msgTypes[134]
+	mi := &file_api_v0alpha_omniapi_proto_msgTypes[135]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7851,7 +7861,7 @@ type ListTasksReq_ByCampaign struct {
 func (x *ListTasksReq_ByCampaign) Reset() {
 	*x = ListTasksReq_ByCampaign{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v0alpha_omniapi_proto_msgTypes[135]
+		mi := &file_api_v0alpha_omniapi_proto_msgTypes[136]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7864,7 +7874,7 @@ func (x *ListTasksReq_ByCampaign) String() string {
 func (*ListTasksReq_ByCampaign) ProtoMessage() {}
 
 func (x *ListTasksReq_ByCampaign) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_omniapi_proto_msgTypes[135]
+	mi := &file_api_v0alpha_omniapi_proto_msgTypes[136]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7916,7 +7926,7 @@ type ListConnectedInboxesRes_ListConnectedInbox struct {
 func (x *ListConnectedInboxesRes_ListConnectedInbox) Reset() {
 	*x = ListConnectedInboxesRes_ListConnectedInbox{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v0alpha_omniapi_proto_msgTypes[136]
+		mi := &file_api_v0alpha_omniapi_proto_msgTypes[137]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7929,7 +7939,7 @@ func (x *ListConnectedInboxesRes_ListConnectedInbox) String() string {
 func (*ListConnectedInboxesRes_ListConnectedInbox) ProtoMessage() {}
 
 func (x *ListConnectedInboxesRes_ListConnectedInbox) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_omniapi_proto_msgTypes[136]
+	mi := &file_api_v0alpha_omniapi_proto_msgTypes[137]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7972,7 +7982,7 @@ type GetOmniAttachmentReq_ByOmniAttachmentSid struct {
 func (x *GetOmniAttachmentReq_ByOmniAttachmentSid) Reset() {
 	*x = GetOmniAttachmentReq_ByOmniAttachmentSid{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v0alpha_omniapi_proto_msgTypes[137]
+		mi := &file_api_v0alpha_omniapi_proto_msgTypes[138]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7985,7 +7995,7 @@ func (x *GetOmniAttachmentReq_ByOmniAttachmentSid) String() string {
 func (*GetOmniAttachmentReq_ByOmniAttachmentSid) ProtoMessage() {}
 
 func (x *GetOmniAttachmentReq_ByOmniAttachmentSid) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_omniapi_proto_msgTypes[137]
+	mi := &file_api_v0alpha_omniapi_proto_msgTypes[138]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8474,13 +8484,23 @@ var file_api_v0alpha_omniapi_proto_rawDesc = []byte{
 	0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1d, 0x0a, 0x08, 0x74, 0x61, 0x73, 0x6b,
 	0x5f, 0x73, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x42, 0x02, 0x30, 0x01, 0x52, 0x07,
 	0x74, 0x61, 0x73, 0x6b, 0x53, 0x69, 0x64, 0x22, 0x15, 0x0a, 0x13, 0x41, 0x70, 0x70, 0x72, 0x6f,
-	0x76, 0x65, 0x54, 0x61, 0x73, 0x6b, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x57,
-	0x0a, 0x18, 0x47, 0x65, 0x74, 0x4e, 0x65, 0x78, 0x74, 0x51, 0x75, 0x65, 0x75, 0x65, 0x64, 0x54,
-	0x61, 0x73, 0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x3b, 0x0a, 0x06, 0x73, 0x6b,
-	0x69, 0x6c, 0x6c, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x23, 0x2e, 0x61, 0x70, 0x69,
-	0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x4f, 0x6d, 0x6e, 0x69, 0x43, 0x6f, 0x6e,
-	0x76, 0x65, 0x72, 0x73, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x73, 0x52,
-	0x06, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x73, 0x22, 0x46, 0x0a, 0x19, 0x47, 0x65, 0x74, 0x4e, 0x65,
+	0x76, 0x65, 0x54, 0x61, 0x73, 0x6b, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0xf6,
+	0x01, 0x0a, 0x18, 0x47, 0x65, 0x74, 0x4e, 0x65, 0x78, 0x74, 0x51, 0x75, 0x65, 0x75, 0x65, 0x64,
+	0x54, 0x61, 0x73, 0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x3f, 0x0a, 0x06, 0x73,
+	0x6b, 0x69, 0x6c, 0x6c, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x23, 0x2e, 0x61, 0x70,
+	0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x4f, 0x6d, 0x6e, 0x69, 0x43, 0x6f,
+	0x6e, 0x76, 0x65, 0x72, 0x73, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x73,
+	0x42, 0x02, 0x18, 0x01, 0x52, 0x06, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x73, 0x12, 0x59, 0x0a, 0x0c,
+	0x61, 0x67, 0x65, 0x6e, 0x74, 0x5f, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x73, 0x18, 0x02, 0x20, 0x03,
+	0x28, 0x0b, 0x32, 0x36, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x30, 0x61, 0x6c, 0x70, 0x68, 0x61,
+	0x2e, 0x47, 0x65, 0x74, 0x4e, 0x65, 0x78, 0x74, 0x51, 0x75, 0x65, 0x75, 0x65, 0x64, 0x54, 0x61,
+	0x73, 0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x2e, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x53,
+	0x6b, 0x69, 0x6c, 0x6c, 0x73, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x52, 0x0b, 0x61, 0x67, 0x65, 0x6e,
+	0x74, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x73, 0x1a, 0x3e, 0x0a, 0x10, 0x41, 0x67, 0x65, 0x6e, 0x74,
+	0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x73, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x10, 0x0a, 0x03, 0x6b,
+	0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x14, 0x0a,
+	0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x76, 0x61,
+	0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x22, 0x46, 0x0a, 0x19, 0x47, 0x65, 0x74, 0x4e, 0x65,
 	0x78, 0x74, 0x51, 0x75, 0x65, 0x75, 0x65, 0x64, 0x54, 0x61, 0x73, 0x6b, 0x52, 0x65, 0x73, 0x70,
 	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x29, 0x0a, 0x04, 0x74, 0x61, 0x73, 0x6b, 0x18, 0x01, 0x20, 0x01,
 	0x28, 0x0b, 0x32, 0x15, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73,
@@ -9694,7 +9714,7 @@ func file_api_v0alpha_omniapi_proto_rawDescGZIP() []byte {
 	return file_api_v0alpha_omniapi_proto_rawDescData
 }
 
-var file_api_v0alpha_omniapi_proto_msgTypes = make([]protoimpl.MessageInfo, 138)
+var file_api_v0alpha_omniapi_proto_msgTypes = make([]protoimpl.MessageInfo, 139)
 var file_api_v0alpha_omniapi_proto_goTypes = []interface{}{
 	(*SuggestResponseReq)(nil),                         // 0: api.v0alpha.SuggestResponseReq
 	(*SuggestResponseRes)(nil),                         // 1: api.v0alpha.SuggestResponseRes
@@ -9830,41 +9850,42 @@ var file_api_v0alpha_omniapi_proto_goTypes = []interface{}{
 	(*ListConversationsReq_ByTime)(nil),                // 131: api.v0alpha.ListConversationsReq.ByTime
 	(*ListConversationsReq_ByAssignedUser)(nil),        // 132: api.v0alpha.ListConversationsReq.ByAssignedUser
 	(*ListContactListsReq_ByProject)(nil),              // 133: api.v0alpha.ListContactListsReq.ByProject
-	(*GetTaskReq_ByConversation)(nil),                  // 134: api.v0alpha.GetTaskReq.ByConversation
-	(*ListTasksReq_ByCampaign)(nil),                    // 135: api.v0alpha.ListTasksReq.ByCampaign
-	(*ListConnectedInboxesRes_ListConnectedInbox)(nil), // 136: api.v0alpha.ListConnectedInboxesRes.ListConnectedInbox
-	(*GetOmniAttachmentReq_ByOmniAttachmentSid)(nil),   // 137: api.v0alpha.GetOmniAttachmentReq.ByOmniAttachmentSid
-	(*commons.OmniCampaign)(nil),                       // 138: api.commons.OmniCampaign
-	(commons.OmniCampaignStatus)(0),                    // 139: api.commons.OmniCampaignStatus
-	(*fieldmaskpb.FieldMask)(nil),                      // 140: google.protobuf.FieldMask
-	(*commons.OmniCampaignModule)(nil),                 // 141: api.commons.OmniCampaignModule
-	(*timestamppb.Timestamp)(nil),                      // 142: google.protobuf.Timestamp
-	(commons.ChannelType)(0),                           // 143: api.commons.ChannelType
-	(*commons.OmniMessagePayload)(nil),                 // 144: api.commons.OmniMessagePayload
-	(commons.ConversationStatus)(0),                    // 145: api.commons.ConversationStatus
-	(*commons.OmniConversation)(nil),                   // 146: api.commons.OmniConversation
-	(*commons.Disposition)(nil),                        // 147: api.commons.Disposition
-	(*commons.OmniCustomUnsubscribeLink)(nil),          // 148: api.commons.OmniCustomUnsubscribeLink
-	(commons.OmniCampaignDirection)(0),                 // 149: api.commons.OmniCampaignDirection
-	(*commons.ContactList)(nil),                        // 150: api.commons.ContactList
-	(*commons.OmniConversationSkills)(nil),             // 151: api.commons.OmniConversationSkills
-	(*commons.OmniTask)(nil),                           // 152: api.commons.OmniTask
-	(*commons.ConnectedInbox)(nil),                     // 153: api.commons.ConnectedInbox
-	(*commons.VerifiedEmail)(nil),                      // 154: api.commons.VerifiedEmail
-	(*commons.Signature)(nil),                          // 155: api.commons.Signature
-	(*commons.OmniProjectComplianceConfig)(nil),        // 156: api.commons.OmniProjectComplianceConfig
-	(commons.ProjectStatus)(0),                         // 157: api.commons.ProjectStatus
-	(*commons.OmniAttachment)(nil),                     // 158: api.commons.OmniAttachment
-	(commons.SkillType_Enum)(0),                        // 159: api.commons.SkillType.Enum
-	(*commons.Empty)(nil),                              // 160: api.commons.Empty
-	(*commons.OmniMessage)(nil),                        // 161: api.commons.OmniMessage
+	nil,                                                // 134: api.v0alpha.GetNextQueuedTaskRequest.AgentSkillsEntry
+	(*GetTaskReq_ByConversation)(nil),                  // 135: api.v0alpha.GetTaskReq.ByConversation
+	(*ListTasksReq_ByCampaign)(nil),                    // 136: api.v0alpha.ListTasksReq.ByCampaign
+	(*ListConnectedInboxesRes_ListConnectedInbox)(nil), // 137: api.v0alpha.ListConnectedInboxesRes.ListConnectedInbox
+	(*GetOmniAttachmentReq_ByOmniAttachmentSid)(nil),   // 138: api.v0alpha.GetOmniAttachmentReq.ByOmniAttachmentSid
+	(*commons.OmniCampaign)(nil),                       // 139: api.commons.OmniCampaign
+	(commons.OmniCampaignStatus)(0),                    // 140: api.commons.OmniCampaignStatus
+	(*fieldmaskpb.FieldMask)(nil),                      // 141: google.protobuf.FieldMask
+	(*commons.OmniCampaignModule)(nil),                 // 142: api.commons.OmniCampaignModule
+	(*timestamppb.Timestamp)(nil),                      // 143: google.protobuf.Timestamp
+	(commons.ChannelType)(0),                           // 144: api.commons.ChannelType
+	(*commons.OmniMessagePayload)(nil),                 // 145: api.commons.OmniMessagePayload
+	(commons.ConversationStatus)(0),                    // 146: api.commons.ConversationStatus
+	(*commons.OmniConversation)(nil),                   // 147: api.commons.OmniConversation
+	(*commons.Disposition)(nil),                        // 148: api.commons.Disposition
+	(*commons.OmniCustomUnsubscribeLink)(nil),          // 149: api.commons.OmniCustomUnsubscribeLink
+	(commons.OmniCampaignDirection)(0),                 // 150: api.commons.OmniCampaignDirection
+	(*commons.ContactList)(nil),                        // 151: api.commons.ContactList
+	(*commons.OmniConversationSkills)(nil),             // 152: api.commons.OmniConversationSkills
+	(*commons.OmniTask)(nil),                           // 153: api.commons.OmniTask
+	(*commons.ConnectedInbox)(nil),                     // 154: api.commons.ConnectedInbox
+	(*commons.VerifiedEmail)(nil),                      // 155: api.commons.VerifiedEmail
+	(*commons.Signature)(nil),                          // 156: api.commons.Signature
+	(*commons.OmniProjectComplianceConfig)(nil),        // 157: api.commons.OmniProjectComplianceConfig
+	(commons.ProjectStatus)(0),                         // 158: api.commons.ProjectStatus
+	(*commons.OmniAttachment)(nil),                     // 159: api.commons.OmniAttachment
+	(commons.SkillType_Enum)(0),                        // 160: api.commons.SkillType.Enum
+	(*commons.Empty)(nil),                              // 161: api.commons.Empty
+	(*commons.OmniMessage)(nil),                        // 162: api.commons.OmniMessage
 }
 var file_api_v0alpha_omniapi_proto_depIdxs = []int32{
-	138, // 0: api.v0alpha.CreateCampaignReq.campaign:type_name -> api.commons.OmniCampaign
+	139, // 0: api.v0alpha.CreateCampaignReq.campaign:type_name -> api.commons.OmniCampaign
 	120, // 1: api.v0alpha.CreateCampaignReq.modules:type_name -> api.v0alpha.CreateCampaignReq.CampaignModule
 	4,   // 2: api.v0alpha.ContactListsDataSource.contact_lists_data_source:type_name -> api.v0alpha.ContactListDataSource
-	139, // 3: api.v0alpha.ListCampaignsReq.statuses:type_name -> api.commons.OmniCampaignStatus
-	140, // 4: api.v0alpha.ListCampaignsReq.field_mask:type_name -> google.protobuf.FieldMask
+	140, // 3: api.v0alpha.ListCampaignsReq.statuses:type_name -> api.commons.OmniCampaignStatus
+	141, // 4: api.v0alpha.ListCampaignsReq.field_mask:type_name -> google.protobuf.FieldMask
 	122, // 5: api.v0alpha.ListCampaignsReq.by_ids:type_name -> api.v0alpha.ListCampaignsReq.ByIds
 	123, // 6: api.v0alpha.ListCampaignsReq.by_project:type_name -> api.v0alpha.ListCampaignsReq.ByProject
 	124, // 7: api.v0alpha.ListCampaignsReq.by_time:type_name -> api.v0alpha.ListCampaignsReq.ByTime
@@ -9872,239 +9893,240 @@ var file_api_v0alpha_omniapi_proto_depIdxs = []int32{
 	121, // 9: api.v0alpha.ListCampaignsReq.by_connected_inbox:type_name -> api.v0alpha.ListCampaignsReq.ByConnectedInbox
 	126, // 10: api.v0alpha.ListCampaignsReq.by_verified_email:type_name -> api.v0alpha.ListCampaignsReq.ByVerifiedEmail
 	127, // 11: api.v0alpha.ListCampaignsReq.by_sms_number:type_name -> api.v0alpha.ListCampaignsReq.BySmsNumber
-	138, // 12: api.v0alpha.ListCampaignsRes.campaigns:type_name -> api.commons.OmniCampaign
-	141, // 13: api.v0alpha.ListCampaignsRes.modules:type_name -> api.commons.OmniCampaignModule
-	142, // 14: api.v0alpha.ManagerListMessagesReq.timestamp:type_name -> google.protobuf.Timestamp
-	143, // 15: api.v0alpha.ManagerListMessagesReq.channel_type:type_name -> api.commons.ChannelType
+	139, // 12: api.v0alpha.ListCampaignsRes.campaigns:type_name -> api.commons.OmniCampaign
+	142, // 13: api.v0alpha.ListCampaignsRes.modules:type_name -> api.commons.OmniCampaignModule
+	143, // 14: api.v0alpha.ManagerListMessagesReq.timestamp:type_name -> google.protobuf.Timestamp
+	144, // 15: api.v0alpha.ManagerListMessagesReq.channel_type:type_name -> api.commons.ChannelType
 	128, // 16: api.v0alpha.ManagerListMessagesReq.by_conversation_sid:type_name -> api.v0alpha.ManagerListMessagesReq.ByConversationSid
 	129, // 17: api.v0alpha.ManagerListMessagesReq.by_task_sid:type_name -> api.v0alpha.ManagerListMessagesReq.ByTaskSid
-	142, // 18: api.v0alpha.ListMessagesReq.timestamp:type_name -> google.protobuf.Timestamp
-	143, // 19: api.v0alpha.ListMessagesReq.channel_type:type_name -> api.commons.ChannelType
+	143, // 18: api.v0alpha.ListMessagesReq.timestamp:type_name -> google.protobuf.Timestamp
+	144, // 19: api.v0alpha.ListMessagesReq.channel_type:type_name -> api.commons.ChannelType
 	130, // 20: api.v0alpha.ListMessagesReq.by_conversation_sid:type_name -> api.v0alpha.ListMessagesReq.ByConversationSid
-	144, // 21: api.v0alpha.SendOmniMessageReq.payload:type_name -> api.commons.OmniMessagePayload
-	143, // 22: api.v0alpha.SendOmniMessageReq.channel_type:type_name -> api.commons.ChannelType
-	138, // 23: api.v0alpha.UpdateCampaignReq.campaign:type_name -> api.commons.OmniCampaign
-	140, // 24: api.v0alpha.UpdateCampaignReq.field_mask:type_name -> google.protobuf.FieldMask
-	143, // 25: api.v0alpha.ListConversationsReq.channel_types:type_name -> api.commons.ChannelType
-	140, // 26: api.v0alpha.ListConversationsReq.field_mask:type_name -> google.protobuf.FieldMask
-	145, // 27: api.v0alpha.ListConversationsReq.statuses:type_name -> api.commons.ConversationStatus
+	145, // 21: api.v0alpha.SendOmniMessageReq.payload:type_name -> api.commons.OmniMessagePayload
+	144, // 22: api.v0alpha.SendOmniMessageReq.channel_type:type_name -> api.commons.ChannelType
+	139, // 23: api.v0alpha.UpdateCampaignReq.campaign:type_name -> api.commons.OmniCampaign
+	141, // 24: api.v0alpha.UpdateCampaignReq.field_mask:type_name -> google.protobuf.FieldMask
+	144, // 25: api.v0alpha.ListConversationsReq.channel_types:type_name -> api.commons.ChannelType
+	141, // 26: api.v0alpha.ListConversationsReq.field_mask:type_name -> google.protobuf.FieldMask
+	146, // 27: api.v0alpha.ListConversationsReq.statuses:type_name -> api.commons.ConversationStatus
 	131, // 28: api.v0alpha.ListConversationsReq.by_time:type_name -> api.v0alpha.ListConversationsReq.ByTime
 	132, // 29: api.v0alpha.ListConversationsReq.by_assigned_user:type_name -> api.v0alpha.ListConversationsReq.ByAssignedUser
-	146, // 30: api.v0alpha.ListConversationsRes.conversations:type_name -> api.commons.OmniConversation
-	147, // 31: api.v0alpha.DeleteDispositionReq.disposition:type_name -> api.commons.Disposition
-	147, // 32: api.v0alpha.ListDispositionsRes.dispositions:type_name -> api.commons.Disposition
-	148, // 33: api.v0alpha.ListCustomUnsubscribeLinksRes.custom_unsubscribe_links:type_name -> api.commons.OmniCustomUnsubscribeLink
-	142, // 34: api.v0alpha.UpdateCustomUnsubscribeLinkRes.date_validated:type_name -> google.protobuf.Timestamp
-	143, // 35: api.v0alpha.PauseCampaignReq.channel_type:type_name -> api.commons.ChannelType
-	149, // 36: api.v0alpha.PauseCampaignReq.campaign_direction:type_name -> api.commons.OmniCampaignDirection
-	143, // 37: api.v0alpha.ResumeCampaignReq.channel_type:type_name -> api.commons.ChannelType
-	149, // 38: api.v0alpha.ResumeCampaignReq.campaign_direction:type_name -> api.commons.OmniCampaignDirection
-	143, // 39: api.v0alpha.ArchiveCampaignReq.channel_type:type_name -> api.commons.ChannelType
-	149, // 40: api.v0alpha.ArchiveCampaignReq.campaign_direction:type_name -> api.commons.OmniCampaignDirection
-	143, // 41: api.v0alpha.UpdateCampaignPacingSpeedReq.channel_type:type_name -> api.commons.ChannelType
-	149, // 42: api.v0alpha.UpdateCampaignPacingSpeedReq.campaign_direction:type_name -> api.commons.OmniCampaignDirection
-	140, // 43: api.v0alpha.ListContactListsReq.field_mask:type_name -> google.protobuf.FieldMask
+	147, // 30: api.v0alpha.ListConversationsRes.conversations:type_name -> api.commons.OmniConversation
+	148, // 31: api.v0alpha.DeleteDispositionReq.disposition:type_name -> api.commons.Disposition
+	148, // 32: api.v0alpha.ListDispositionsRes.dispositions:type_name -> api.commons.Disposition
+	149, // 33: api.v0alpha.ListCustomUnsubscribeLinksRes.custom_unsubscribe_links:type_name -> api.commons.OmniCustomUnsubscribeLink
+	143, // 34: api.v0alpha.UpdateCustomUnsubscribeLinkRes.date_validated:type_name -> google.protobuf.Timestamp
+	144, // 35: api.v0alpha.PauseCampaignReq.channel_type:type_name -> api.commons.ChannelType
+	150, // 36: api.v0alpha.PauseCampaignReq.campaign_direction:type_name -> api.commons.OmniCampaignDirection
+	144, // 37: api.v0alpha.ResumeCampaignReq.channel_type:type_name -> api.commons.ChannelType
+	150, // 38: api.v0alpha.ResumeCampaignReq.campaign_direction:type_name -> api.commons.OmniCampaignDirection
+	144, // 39: api.v0alpha.ArchiveCampaignReq.channel_type:type_name -> api.commons.ChannelType
+	150, // 40: api.v0alpha.ArchiveCampaignReq.campaign_direction:type_name -> api.commons.OmniCampaignDirection
+	144, // 41: api.v0alpha.UpdateCampaignPacingSpeedReq.channel_type:type_name -> api.commons.ChannelType
+	150, // 42: api.v0alpha.UpdateCampaignPacingSpeedReq.campaign_direction:type_name -> api.commons.OmniCampaignDirection
+	141, // 43: api.v0alpha.ListContactListsReq.field_mask:type_name -> google.protobuf.FieldMask
 	133, // 44: api.v0alpha.ListContactListsReq.by_project:type_name -> api.v0alpha.ListContactListsReq.ByProject
-	150, // 45: api.v0alpha.ListContactListsRes.contact_lists:type_name -> api.commons.ContactList
+	151, // 45: api.v0alpha.ListContactListsRes.contact_lists:type_name -> api.commons.ContactList
 	41,  // 46: api.v0alpha.GetAvailableHeadersRes.headers:type_name -> api.v0alpha.HeaderGroup
-	151, // 47: api.v0alpha.GetNextQueuedTaskRequest.skills:type_name -> api.commons.OmniConversationSkills
-	152, // 48: api.v0alpha.GetNextQueuedTaskResponse.task:type_name -> api.commons.OmniTask
-	140, // 49: api.v0alpha.GetTaskReq.field_mask:type_name -> google.protobuf.FieldMask
-	134, // 50: api.v0alpha.GetTaskReq.by_conversation:type_name -> api.v0alpha.GetTaskReq.ByConversation
-	140, // 51: api.v0alpha.ListTasksReq.field_mask:type_name -> google.protobuf.FieldMask
-	135, // 52: api.v0alpha.ListTasksReq.by_campaign:type_name -> api.v0alpha.ListTasksReq.ByCampaign
-	152, // 53: api.v0alpha.ListTasksRes.tasks:type_name -> api.commons.OmniTask
-	140, // 54: api.v0alpha.ListConnectedInboxesReq.field_mask:type_name -> google.protobuf.FieldMask
-	136, // 55: api.v0alpha.ListConnectedInboxesRes.connected_inboxes:type_name -> api.v0alpha.ListConnectedInboxesRes.ListConnectedInbox
-	153, // 56: api.v0alpha.UpdateConnectedInboxReq.connected_inbox:type_name -> api.commons.ConnectedInbox
-	140, // 57: api.v0alpha.UpdateConnectedInboxReq.field_mask:type_name -> google.protobuf.FieldMask
-	154, // 58: api.v0alpha.ListVerifiedEmailsRes.verified_emails:type_name -> api.commons.VerifiedEmail
-	137, // 59: api.v0alpha.GetOmniAttachmentReq.by_omni_attachment_sid:type_name -> api.v0alpha.GetOmniAttachmentReq.ByOmniAttachmentSid
-	4,   // 60: api.v0alpha.CreateTasksReq.contact_list_data_source:type_name -> api.v0alpha.ContactListDataSource
-	155, // 61: api.v0alpha.CreateSignatureRes.signature:type_name -> api.commons.Signature
-	155, // 62: api.v0alpha.ListSignaturesRes.signatures:type_name -> api.commons.Signature
-	155, // 63: api.v0alpha.UpdateSignatureReq.signature:type_name -> api.commons.Signature
-	140, // 64: api.v0alpha.UpdateSignatureReq.field_mask:type_name -> google.protobuf.FieldMask
-	155, // 65: api.v0alpha.UpdateSignatureRes.signature:type_name -> api.commons.Signature
-	156, // 66: api.v0alpha.CreateProjectReq.compliance_config:type_name -> api.commons.OmniProjectComplianceConfig
-	89,  // 67: api.v0alpha.CreateProjectRes.project:type_name -> api.v0alpha.Project
-	157, // 68: api.v0alpha.Project.status:type_name -> api.commons.ProjectStatus
-	142, // 69: api.v0alpha.Project.date_created:type_name -> google.protobuf.Timestamp
-	156, // 70: api.v0alpha.Project.compliance_config:type_name -> api.commons.OmniProjectComplianceConfig
-	89,  // 71: api.v0alpha.ListProjectsRes.projects:type_name -> api.v0alpha.Project
-	89,  // 72: api.v0alpha.EditProjectByIdReq.project:type_name -> api.v0alpha.Project
-	140, // 73: api.v0alpha.EditProjectByIdReq.field_mask:type_name -> google.protobuf.FieldMask
-	89,  // 74: api.v0alpha.EditProjectByIdRes.project:type_name -> api.v0alpha.Project
-	158, // 75: api.v0alpha.CreateCannedMessageReq.attachments:type_name -> api.commons.OmniAttachment
-	142, // 76: api.v0alpha.CannedMessage.date_created:type_name -> google.protobuf.Timestamp
-	142, // 77: api.v0alpha.CannedMessage.last_updated:type_name -> google.protobuf.Timestamp
-	158, // 78: api.v0alpha.CannedMessage.attachments:type_name -> api.commons.OmniAttachment
-	107, // 79: api.v0alpha.ListCannedMessagesRes.canned_messages_with_group:type_name -> api.v0alpha.CannedMessageWithGroup
-	158, // 80: api.v0alpha.UpdateCannedMessageReq.attachments:type_name -> api.commons.OmniAttachment
-	142, // 81: api.v0alpha.CannedMessageGroup.date_created:type_name -> google.protobuf.Timestamp
-	142, // 82: api.v0alpha.CannedMessageGroup.last_updated:type_name -> google.protobuf.Timestamp
-	142, // 83: api.v0alpha.CannedMessageWithGroup.date_created:type_name -> google.protobuf.Timestamp
-	142, // 84: api.v0alpha.CannedMessageWithGroup.last_updated:type_name -> google.protobuf.Timestamp
-	142, // 85: api.v0alpha.CannedMessageWithGroup.group_date_created:type_name -> google.protobuf.Timestamp
-	142, // 86: api.v0alpha.CannedMessageWithGroup.group_last_updated:type_name -> google.protobuf.Timestamp
-	158, // 87: api.v0alpha.CannedMessageWithGroup.attachments:type_name -> api.commons.OmniAttachment
-	106, // 88: api.v0alpha.ListCannedMessageGroupsRes.canned_message_groups:type_name -> api.v0alpha.CannedMessageGroup
-	107, // 89: api.v0alpha.ListCannedMessagesByGroupIdRes.canned_messages_with_group:type_name -> api.v0alpha.CannedMessageWithGroup
-	159, // 90: api.v0alpha.ListUserSkillsReq.type_filters:type_name -> api.commons.SkillType.Enum
-	119, // 91: api.v0alpha.ListUserSkillsRes.skills:type_name -> api.v0alpha.OmniSkill
-	159, // 92: api.v0alpha.OmniSkill.type:type_name -> api.commons.SkillType.Enum
-	141, // 93: api.v0alpha.CreateCampaignReq.CampaignModule.module:type_name -> api.commons.OmniCampaignModule
-	3,   // 94: api.v0alpha.CreateCampaignReq.CampaignModule.omni_contact_list:type_name -> api.v0alpha.ContactListsDataSource
-	142, // 95: api.v0alpha.ListCampaignsReq.ByTime.search_from:type_name -> google.protobuf.Timestamp
-	142, // 96: api.v0alpha.ListCampaignsReq.ByTime.search_to:type_name -> google.protobuf.Timestamp
-	142, // 97: api.v0alpha.ListConversationsReq.ByTime.start_time:type_name -> google.protobuf.Timestamp
-	142, // 98: api.v0alpha.ListConversationsReq.ByTime.end_time:type_name -> google.protobuf.Timestamp
-	145, // 99: api.v0alpha.ListConversationsReq.ByAssignedUser.statuses:type_name -> api.commons.ConversationStatus
-	153, // 100: api.v0alpha.ListConnectedInboxesRes.ListConnectedInbox.connected_inbox:type_name -> api.commons.ConnectedInbox
-	138, // 101: api.v0alpha.ListConnectedInboxesRes.ListConnectedInbox.campaigns:type_name -> api.commons.OmniCampaign
-	33,  // 102: api.v0alpha.OmniApi.ArchiveCampaign:input_type -> api.v0alpha.ArchiveCampaignReq
-	2,   // 103: api.v0alpha.OmniApi.CreateCampaign:input_type -> api.v0alpha.CreateCampaignReq
-	7,   // 104: api.v0alpha.OmniApi.GetCampaignById:input_type -> api.v0alpha.GetCampaignByIdReq
-	29,  // 105: api.v0alpha.OmniApi.PauseCampaign:input_type -> api.v0alpha.PauseCampaignReq
-	31,  // 106: api.v0alpha.OmniApi.ResumeCampaign:input_type -> api.v0alpha.ResumeCampaignReq
-	14,  // 107: api.v0alpha.OmniApi.UpdateCampaign:input_type -> api.v0alpha.UpdateCampaignReq
-	35,  // 108: api.v0alpha.OmniApi.UpdateCampaignPacingSpeed:input_type -> api.v0alpha.UpdateCampaignPacingSpeedReq
-	13,  // 109: api.v0alpha.OmniApi.SendOmniMessage:input_type -> api.v0alpha.SendOmniMessageReq
-	13,  // 110: api.v0alpha.OmniApi.ManagerSendOmniMessage:input_type -> api.v0alpha.SendOmniMessageReq
-	18,  // 111: api.v0alpha.OmniApi.CreateDisposition:input_type -> api.v0alpha.CreateDispositionReq
-	20,  // 112: api.v0alpha.OmniApi.DeleteDisposition:input_type -> api.v0alpha.DeleteDispositionReq
-	21,  // 113: api.v0alpha.OmniApi.ListDispositions:input_type -> api.v0alpha.ListDispositionsReq
-	23,  // 114: api.v0alpha.OmniApi.UpdateDisposition:input_type -> api.v0alpha.UpdateDispositionReq
-	160, // 115: api.v0alpha.OmniApi.ListCustomUnsubscribeLinks:input_type -> api.commons.Empty
-	148, // 116: api.v0alpha.OmniApi.CreateCustomUnsubscribeLink:input_type -> api.commons.OmniCustomUnsubscribeLink
-	26,  // 117: api.v0alpha.OmniApi.UpdateCustomUnsubscribeLink:input_type -> api.v0alpha.UpdateCustomUnsubscribeLinkReq
-	28,  // 118: api.v0alpha.OmniApi.DeleteCustomUnsubscribeLink:input_type -> api.v0alpha.DeleteCustomUnsubscribeLinkReq
-	5,   // 119: api.v0alpha.OmniApi.ListCampaigns:input_type -> api.v0alpha.ListCampaignsReq
-	10,  // 120: api.v0alpha.OmniApi.ManagerListMessages:input_type -> api.v0alpha.ManagerListMessagesReq
-	11,  // 121: api.v0alpha.OmniApi.ListMessages:input_type -> api.v0alpha.ListMessagesReq
-	16,  // 122: api.v0alpha.OmniApi.ManagerListConversations:input_type -> api.v0alpha.ListConversationsReq
-	37,  // 123: api.v0alpha.OmniApi.ListContactLists:input_type -> api.v0alpha.ListContactListsReq
-	39,  // 124: api.v0alpha.OmniApi.GetAvailableHeaders:input_type -> api.v0alpha.GetAvailableHeadersReq
-	42,  // 125: api.v0alpha.OmniApi.ApproveTask:input_type -> api.v0alpha.ApproveTaskRequest
-	44,  // 126: api.v0alpha.OmniApi.GetNextQueuedTask:input_type -> api.v0alpha.GetNextQueuedTaskRequest
-	46,  // 127: api.v0alpha.OmniApi.GetTask:input_type -> api.v0alpha.GetTaskReq
-	47,  // 128: api.v0alpha.OmniApi.ListTasks:input_type -> api.v0alpha.ListTasksReq
-	49,  // 129: api.v0alpha.OmniApi.RejectTask:input_type -> api.v0alpha.RejectTaskRequest
-	51,  // 130: api.v0alpha.OmniApi.RequeueTask:input_type -> api.v0alpha.RequeueTaskRequest
-	153, // 131: api.v0alpha.OmniApi.CreateConnectedInbox:input_type -> api.commons.ConnectedInbox
-	54,  // 132: api.v0alpha.OmniApi.DeleteConnectedInboxBySid:input_type -> api.v0alpha.DeleteConnectedInboxBySidReq
-	55,  // 133: api.v0alpha.OmniApi.GetConnectedInboxBySid:input_type -> api.v0alpha.GetConnectedInboxBySidReq
-	56,  // 134: api.v0alpha.OmniApi.PerformSendgridAccountChecks:input_type -> api.v0alpha.SendgridAccountByClientReq
-	58,  // 135: api.v0alpha.OmniApi.ListConnectedInboxes:input_type -> api.v0alpha.ListConnectedInboxesReq
-	153, // 136: api.v0alpha.OmniApi.TestConnectedInbox:input_type -> api.commons.ConnectedInbox
-	61,  // 137: api.v0alpha.OmniApi.UpdateConnectedInbox:input_type -> api.v0alpha.UpdateConnectedInboxReq
-	154, // 138: api.v0alpha.OmniApi.CreateVerifiedEmail:input_type -> api.commons.VerifiedEmail
-	66,  // 139: api.v0alpha.OmniApi.DeleteVerifiedEmail:input_type -> api.v0alpha.DeleteVerifiedEmailReq
-	65,  // 140: api.v0alpha.OmniApi.GetVerifiedEmailBySid:input_type -> api.v0alpha.GetVerifiedEmailBySidReq
-	67,  // 141: api.v0alpha.OmniApi.ListVerifiedEmails:input_type -> api.v0alpha.ListVerifiedEmailsReq
-	69,  // 142: api.v0alpha.OmniApi.ResendVerifiedEmail:input_type -> api.v0alpha.ResendVerifiedEmailReq
-	71,  // 143: api.v0alpha.OmniApi.UpdateVerifiedEmail:input_type -> api.v0alpha.UpdateVerifiedEmailReq
-	72,  // 144: api.v0alpha.OmniApi.GetPendingGoogleXOAuth2Data:input_type -> api.v0alpha.GetPendingGoogleXOAuth2DataReq
-	63,  // 145: api.v0alpha.OmniApi.SendEmailNotification:input_type -> api.v0alpha.SendEmailNotificationReq
-	74,  // 146: api.v0alpha.OmniApi.SendFeedbackEmail:input_type -> api.v0alpha.SendFeedbackEmailReq
-	76,  // 147: api.v0alpha.OmniApi.GetOmniAttachment:input_type -> api.v0alpha.GetOmniAttachmentReq
-	77,  // 148: api.v0alpha.OmniApi.CreateTasks:input_type -> api.v0alpha.CreateTasksReq
-	79,  // 149: api.v0alpha.OmniApi.CreateSignature:input_type -> api.v0alpha.CreateSignatureReq
-	81,  // 150: api.v0alpha.OmniApi.DeleteSignature:input_type -> api.v0alpha.DeleteSignatureReq
-	83,  // 151: api.v0alpha.OmniApi.ListSignatures:input_type -> api.v0alpha.ListSignaturesReq
-	85,  // 152: api.v0alpha.OmniApi.UpdateSignature:input_type -> api.v0alpha.UpdateSignatureReq
-	0,   // 153: api.v0alpha.OmniApi.SuggestResponse:input_type -> api.v0alpha.SuggestResponseReq
-	87,  // 154: api.v0alpha.OmniApi.CreateProject:input_type -> api.v0alpha.CreateProjectReq
-	90,  // 155: api.v0alpha.OmniApi.ListProjects:input_type -> api.v0alpha.ListProjectsReq
-	92,  // 156: api.v0alpha.OmniApi.EditProjectById:input_type -> api.v0alpha.EditProjectByIdReq
-	94,  // 157: api.v0alpha.OmniApi.CloseProjectById:input_type -> api.v0alpha.CloseProjectByIdReq
-	96,  // 158: api.v0alpha.OmniApi.GetProjectById:input_type -> api.v0alpha.GetProjectByIdReq
-	97,  // 159: api.v0alpha.OmniApi.CreateCannedMessage:input_type -> api.v0alpha.CreateCannedMessageReq
-	99,  // 160: api.v0alpha.OmniApi.ListCannedMessages:input_type -> api.v0alpha.ListCannedMessagesReq
-	101, // 161: api.v0alpha.OmniApi.UpdateCannedMessage:input_type -> api.v0alpha.UpdateCannedMessageReq
-	102, // 162: api.v0alpha.OmniApi.GetCannedMessageById:input_type -> api.v0alpha.GetCannedMessageByIdReq
-	103, // 163: api.v0alpha.OmniApi.DeleteCannedMessageById:input_type -> api.v0alpha.DeleteCannedMessageByIdReq
-	105, // 164: api.v0alpha.OmniApi.CreateCannedMessageGroup:input_type -> api.v0alpha.CreateCannedMessageGroupReq
-	108, // 165: api.v0alpha.OmniApi.ListCannedMessageGroups:input_type -> api.v0alpha.ListCannedMessageGroupsReq
-	110, // 166: api.v0alpha.OmniApi.UpdateCannedMessageGroup:input_type -> api.v0alpha.UpdateCannedMessageGroupReq
-	112, // 167: api.v0alpha.OmniApi.DeleteCannedMessageGroup:input_type -> api.v0alpha.DeleteCannedMessageGroupReq
-	114, // 168: api.v0alpha.OmniApi.ListCannedMessagesByGroupId:input_type -> api.v0alpha.ListCannedMessagesByGroupIdReq
-	116, // 169: api.v0alpha.OmniApi.GetCannedMessageGroupById:input_type -> api.v0alpha.GetCannedMessageGroupByIdReq
-	117, // 170: api.v0alpha.OmniApi.ListUserSkills:input_type -> api.v0alpha.ListUserSkillsReq
-	34,  // 171: api.v0alpha.OmniApi.ArchiveCampaign:output_type -> api.v0alpha.ArchiveCampaignRes
-	138, // 172: api.v0alpha.OmniApi.CreateCampaign:output_type -> api.commons.OmniCampaign
-	138, // 173: api.v0alpha.OmniApi.GetCampaignById:output_type -> api.commons.OmniCampaign
-	30,  // 174: api.v0alpha.OmniApi.PauseCampaign:output_type -> api.v0alpha.PauseCampaignRes
-	32,  // 175: api.v0alpha.OmniApi.ResumeCampaign:output_type -> api.v0alpha.ResumeCampaignRes
-	15,  // 176: api.v0alpha.OmniApi.UpdateCampaign:output_type -> api.v0alpha.UpdateCampaignRes
-	36,  // 177: api.v0alpha.OmniApi.UpdateCampaignPacingSpeed:output_type -> api.v0alpha.UpdateCampaignPacingSpeedRes
-	160, // 178: api.v0alpha.OmniApi.SendOmniMessage:output_type -> api.commons.Empty
-	160, // 179: api.v0alpha.OmniApi.ManagerSendOmniMessage:output_type -> api.commons.Empty
-	19,  // 180: api.v0alpha.OmniApi.CreateDisposition:output_type -> api.v0alpha.CreateDispositionRes
-	160, // 181: api.v0alpha.OmniApi.DeleteDisposition:output_type -> api.commons.Empty
-	22,  // 182: api.v0alpha.OmniApi.ListDispositions:output_type -> api.v0alpha.ListDispositionsRes
-	160, // 183: api.v0alpha.OmniApi.UpdateDisposition:output_type -> api.commons.Empty
-	24,  // 184: api.v0alpha.OmniApi.ListCustomUnsubscribeLinks:output_type -> api.v0alpha.ListCustomUnsubscribeLinksRes
-	25,  // 185: api.v0alpha.OmniApi.CreateCustomUnsubscribeLink:output_type -> api.v0alpha.CreateCustomUnsubscribeLinkRes
-	27,  // 186: api.v0alpha.OmniApi.UpdateCustomUnsubscribeLink:output_type -> api.v0alpha.UpdateCustomUnsubscribeLinkRes
-	160, // 187: api.v0alpha.OmniApi.DeleteCustomUnsubscribeLink:output_type -> api.commons.Empty
-	6,   // 188: api.v0alpha.OmniApi.ListCampaigns:output_type -> api.v0alpha.ListCampaignsRes
-	161, // 189: api.v0alpha.OmniApi.ManagerListMessages:output_type -> api.commons.OmniMessage
-	161, // 190: api.v0alpha.OmniApi.ListMessages:output_type -> api.commons.OmniMessage
-	17,  // 191: api.v0alpha.OmniApi.ManagerListConversations:output_type -> api.v0alpha.ListConversationsRes
-	38,  // 192: api.v0alpha.OmniApi.ListContactLists:output_type -> api.v0alpha.ListContactListsRes
-	40,  // 193: api.v0alpha.OmniApi.GetAvailableHeaders:output_type -> api.v0alpha.GetAvailableHeadersRes
-	43,  // 194: api.v0alpha.OmniApi.ApproveTask:output_type -> api.v0alpha.ApproveTaskResponse
-	45,  // 195: api.v0alpha.OmniApi.GetNextQueuedTask:output_type -> api.v0alpha.GetNextQueuedTaskResponse
-	152, // 196: api.v0alpha.OmniApi.GetTask:output_type -> api.commons.OmniTask
-	48,  // 197: api.v0alpha.OmniApi.ListTasks:output_type -> api.v0alpha.ListTasksRes
-	50,  // 198: api.v0alpha.OmniApi.RejectTask:output_type -> api.v0alpha.RejectTaskResponse
-	52,  // 199: api.v0alpha.OmniApi.RequeueTask:output_type -> api.v0alpha.RequeueTaskResponse
-	53,  // 200: api.v0alpha.OmniApi.CreateConnectedInbox:output_type -> api.v0alpha.CreateConnectedInboxRes
-	160, // 201: api.v0alpha.OmniApi.DeleteConnectedInboxBySid:output_type -> api.commons.Empty
-	153, // 202: api.v0alpha.OmniApi.GetConnectedInboxBySid:output_type -> api.commons.ConnectedInbox
-	57,  // 203: api.v0alpha.OmniApi.PerformSendgridAccountChecks:output_type -> api.v0alpha.SendgridAccountByClientRes
-	59,  // 204: api.v0alpha.OmniApi.ListConnectedInboxes:output_type -> api.v0alpha.ListConnectedInboxesRes
-	60,  // 205: api.v0alpha.OmniApi.TestConnectedInbox:output_type -> api.v0alpha.TestConnectedInboxRes
-	160, // 206: api.v0alpha.OmniApi.UpdateConnectedInbox:output_type -> api.commons.Empty
-	62,  // 207: api.v0alpha.OmniApi.CreateVerifiedEmail:output_type -> api.v0alpha.CreateVerifiedEmailRes
-	160, // 208: api.v0alpha.OmniApi.DeleteVerifiedEmail:output_type -> api.commons.Empty
-	154, // 209: api.v0alpha.OmniApi.GetVerifiedEmailBySid:output_type -> api.commons.VerifiedEmail
-	68,  // 210: api.v0alpha.OmniApi.ListVerifiedEmails:output_type -> api.v0alpha.ListVerifiedEmailsRes
-	70,  // 211: api.v0alpha.OmniApi.ResendVerifiedEmail:output_type -> api.v0alpha.ResendVerifiedEmailRes
-	160, // 212: api.v0alpha.OmniApi.UpdateVerifiedEmail:output_type -> api.commons.Empty
-	73,  // 213: api.v0alpha.OmniApi.GetPendingGoogleXOAuth2Data:output_type -> api.v0alpha.GetPendingGoogleXOAuth2DataRes
-	64,  // 214: api.v0alpha.OmniApi.SendEmailNotification:output_type -> api.v0alpha.SendEmailNotificationRes
-	75,  // 215: api.v0alpha.OmniApi.SendFeedbackEmail:output_type -> api.v0alpha.SendFeedbackEmailRes
-	158, // 216: api.v0alpha.OmniApi.GetOmniAttachment:output_type -> api.commons.OmniAttachment
-	78,  // 217: api.v0alpha.OmniApi.CreateTasks:output_type -> api.v0alpha.CreateTasksRes
-	80,  // 218: api.v0alpha.OmniApi.CreateSignature:output_type -> api.v0alpha.CreateSignatureRes
-	82,  // 219: api.v0alpha.OmniApi.DeleteSignature:output_type -> api.v0alpha.DeleteSignatureRes
-	84,  // 220: api.v0alpha.OmniApi.ListSignatures:output_type -> api.v0alpha.ListSignaturesRes
-	86,  // 221: api.v0alpha.OmniApi.UpdateSignature:output_type -> api.v0alpha.UpdateSignatureRes
-	1,   // 222: api.v0alpha.OmniApi.SuggestResponse:output_type -> api.v0alpha.SuggestResponseRes
-	88,  // 223: api.v0alpha.OmniApi.CreateProject:output_type -> api.v0alpha.CreateProjectRes
-	91,  // 224: api.v0alpha.OmniApi.ListProjects:output_type -> api.v0alpha.ListProjectsRes
-	93,  // 225: api.v0alpha.OmniApi.EditProjectById:output_type -> api.v0alpha.EditProjectByIdRes
-	95,  // 226: api.v0alpha.OmniApi.CloseProjectById:output_type -> api.v0alpha.CloseProjectByIdRes
-	89,  // 227: api.v0alpha.OmniApi.GetProjectById:output_type -> api.v0alpha.Project
-	98,  // 228: api.v0alpha.OmniApi.CreateCannedMessage:output_type -> api.v0alpha.CannedMessage
-	100, // 229: api.v0alpha.OmniApi.ListCannedMessages:output_type -> api.v0alpha.ListCannedMessagesRes
-	98,  // 230: api.v0alpha.OmniApi.UpdateCannedMessage:output_type -> api.v0alpha.CannedMessage
-	107, // 231: api.v0alpha.OmniApi.GetCannedMessageById:output_type -> api.v0alpha.CannedMessageWithGroup
-	104, // 232: api.v0alpha.OmniApi.DeleteCannedMessageById:output_type -> api.v0alpha.DeleteCannedMessageByIdRes
-	106, // 233: api.v0alpha.OmniApi.CreateCannedMessageGroup:output_type -> api.v0alpha.CannedMessageGroup
-	109, // 234: api.v0alpha.OmniApi.ListCannedMessageGroups:output_type -> api.v0alpha.ListCannedMessageGroupsRes
-	111, // 235: api.v0alpha.OmniApi.UpdateCannedMessageGroup:output_type -> api.v0alpha.UpdateCannedMessageGroupRes
-	113, // 236: api.v0alpha.OmniApi.DeleteCannedMessageGroup:output_type -> api.v0alpha.DeleteCannedMessageGroupRes
-	115, // 237: api.v0alpha.OmniApi.ListCannedMessagesByGroupId:output_type -> api.v0alpha.ListCannedMessagesByGroupIdRes
-	106, // 238: api.v0alpha.OmniApi.GetCannedMessageGroupById:output_type -> api.v0alpha.CannedMessageGroup
-	118, // 239: api.v0alpha.OmniApi.ListUserSkills:output_type -> api.v0alpha.ListUserSkillsRes
-	171, // [171:240] is the sub-list for method output_type
-	102, // [102:171] is the sub-list for method input_type
-	102, // [102:102] is the sub-list for extension type_name
-	102, // [102:102] is the sub-list for extension extendee
-	0,   // [0:102] is the sub-list for field type_name
+	152, // 47: api.v0alpha.GetNextQueuedTaskRequest.skills:type_name -> api.commons.OmniConversationSkills
+	134, // 48: api.v0alpha.GetNextQueuedTaskRequest.agent_skills:type_name -> api.v0alpha.GetNextQueuedTaskRequest.AgentSkillsEntry
+	153, // 49: api.v0alpha.GetNextQueuedTaskResponse.task:type_name -> api.commons.OmniTask
+	141, // 50: api.v0alpha.GetTaskReq.field_mask:type_name -> google.protobuf.FieldMask
+	135, // 51: api.v0alpha.GetTaskReq.by_conversation:type_name -> api.v0alpha.GetTaskReq.ByConversation
+	141, // 52: api.v0alpha.ListTasksReq.field_mask:type_name -> google.protobuf.FieldMask
+	136, // 53: api.v0alpha.ListTasksReq.by_campaign:type_name -> api.v0alpha.ListTasksReq.ByCampaign
+	153, // 54: api.v0alpha.ListTasksRes.tasks:type_name -> api.commons.OmniTask
+	141, // 55: api.v0alpha.ListConnectedInboxesReq.field_mask:type_name -> google.protobuf.FieldMask
+	137, // 56: api.v0alpha.ListConnectedInboxesRes.connected_inboxes:type_name -> api.v0alpha.ListConnectedInboxesRes.ListConnectedInbox
+	154, // 57: api.v0alpha.UpdateConnectedInboxReq.connected_inbox:type_name -> api.commons.ConnectedInbox
+	141, // 58: api.v0alpha.UpdateConnectedInboxReq.field_mask:type_name -> google.protobuf.FieldMask
+	155, // 59: api.v0alpha.ListVerifiedEmailsRes.verified_emails:type_name -> api.commons.VerifiedEmail
+	138, // 60: api.v0alpha.GetOmniAttachmentReq.by_omni_attachment_sid:type_name -> api.v0alpha.GetOmniAttachmentReq.ByOmniAttachmentSid
+	4,   // 61: api.v0alpha.CreateTasksReq.contact_list_data_source:type_name -> api.v0alpha.ContactListDataSource
+	156, // 62: api.v0alpha.CreateSignatureRes.signature:type_name -> api.commons.Signature
+	156, // 63: api.v0alpha.ListSignaturesRes.signatures:type_name -> api.commons.Signature
+	156, // 64: api.v0alpha.UpdateSignatureReq.signature:type_name -> api.commons.Signature
+	141, // 65: api.v0alpha.UpdateSignatureReq.field_mask:type_name -> google.protobuf.FieldMask
+	156, // 66: api.v0alpha.UpdateSignatureRes.signature:type_name -> api.commons.Signature
+	157, // 67: api.v0alpha.CreateProjectReq.compliance_config:type_name -> api.commons.OmniProjectComplianceConfig
+	89,  // 68: api.v0alpha.CreateProjectRes.project:type_name -> api.v0alpha.Project
+	158, // 69: api.v0alpha.Project.status:type_name -> api.commons.ProjectStatus
+	143, // 70: api.v0alpha.Project.date_created:type_name -> google.protobuf.Timestamp
+	157, // 71: api.v0alpha.Project.compliance_config:type_name -> api.commons.OmniProjectComplianceConfig
+	89,  // 72: api.v0alpha.ListProjectsRes.projects:type_name -> api.v0alpha.Project
+	89,  // 73: api.v0alpha.EditProjectByIdReq.project:type_name -> api.v0alpha.Project
+	141, // 74: api.v0alpha.EditProjectByIdReq.field_mask:type_name -> google.protobuf.FieldMask
+	89,  // 75: api.v0alpha.EditProjectByIdRes.project:type_name -> api.v0alpha.Project
+	159, // 76: api.v0alpha.CreateCannedMessageReq.attachments:type_name -> api.commons.OmniAttachment
+	143, // 77: api.v0alpha.CannedMessage.date_created:type_name -> google.protobuf.Timestamp
+	143, // 78: api.v0alpha.CannedMessage.last_updated:type_name -> google.protobuf.Timestamp
+	159, // 79: api.v0alpha.CannedMessage.attachments:type_name -> api.commons.OmniAttachment
+	107, // 80: api.v0alpha.ListCannedMessagesRes.canned_messages_with_group:type_name -> api.v0alpha.CannedMessageWithGroup
+	159, // 81: api.v0alpha.UpdateCannedMessageReq.attachments:type_name -> api.commons.OmniAttachment
+	143, // 82: api.v0alpha.CannedMessageGroup.date_created:type_name -> google.protobuf.Timestamp
+	143, // 83: api.v0alpha.CannedMessageGroup.last_updated:type_name -> google.protobuf.Timestamp
+	143, // 84: api.v0alpha.CannedMessageWithGroup.date_created:type_name -> google.protobuf.Timestamp
+	143, // 85: api.v0alpha.CannedMessageWithGroup.last_updated:type_name -> google.protobuf.Timestamp
+	143, // 86: api.v0alpha.CannedMessageWithGroup.group_date_created:type_name -> google.protobuf.Timestamp
+	143, // 87: api.v0alpha.CannedMessageWithGroup.group_last_updated:type_name -> google.protobuf.Timestamp
+	159, // 88: api.v0alpha.CannedMessageWithGroup.attachments:type_name -> api.commons.OmniAttachment
+	106, // 89: api.v0alpha.ListCannedMessageGroupsRes.canned_message_groups:type_name -> api.v0alpha.CannedMessageGroup
+	107, // 90: api.v0alpha.ListCannedMessagesByGroupIdRes.canned_messages_with_group:type_name -> api.v0alpha.CannedMessageWithGroup
+	160, // 91: api.v0alpha.ListUserSkillsReq.type_filters:type_name -> api.commons.SkillType.Enum
+	119, // 92: api.v0alpha.ListUserSkillsRes.skills:type_name -> api.v0alpha.OmniSkill
+	160, // 93: api.v0alpha.OmniSkill.type:type_name -> api.commons.SkillType.Enum
+	142, // 94: api.v0alpha.CreateCampaignReq.CampaignModule.module:type_name -> api.commons.OmniCampaignModule
+	3,   // 95: api.v0alpha.CreateCampaignReq.CampaignModule.omni_contact_list:type_name -> api.v0alpha.ContactListsDataSource
+	143, // 96: api.v0alpha.ListCampaignsReq.ByTime.search_from:type_name -> google.protobuf.Timestamp
+	143, // 97: api.v0alpha.ListCampaignsReq.ByTime.search_to:type_name -> google.protobuf.Timestamp
+	143, // 98: api.v0alpha.ListConversationsReq.ByTime.start_time:type_name -> google.protobuf.Timestamp
+	143, // 99: api.v0alpha.ListConversationsReq.ByTime.end_time:type_name -> google.protobuf.Timestamp
+	146, // 100: api.v0alpha.ListConversationsReq.ByAssignedUser.statuses:type_name -> api.commons.ConversationStatus
+	154, // 101: api.v0alpha.ListConnectedInboxesRes.ListConnectedInbox.connected_inbox:type_name -> api.commons.ConnectedInbox
+	139, // 102: api.v0alpha.ListConnectedInboxesRes.ListConnectedInbox.campaigns:type_name -> api.commons.OmniCampaign
+	33,  // 103: api.v0alpha.OmniApi.ArchiveCampaign:input_type -> api.v0alpha.ArchiveCampaignReq
+	2,   // 104: api.v0alpha.OmniApi.CreateCampaign:input_type -> api.v0alpha.CreateCampaignReq
+	7,   // 105: api.v0alpha.OmniApi.GetCampaignById:input_type -> api.v0alpha.GetCampaignByIdReq
+	29,  // 106: api.v0alpha.OmniApi.PauseCampaign:input_type -> api.v0alpha.PauseCampaignReq
+	31,  // 107: api.v0alpha.OmniApi.ResumeCampaign:input_type -> api.v0alpha.ResumeCampaignReq
+	14,  // 108: api.v0alpha.OmniApi.UpdateCampaign:input_type -> api.v0alpha.UpdateCampaignReq
+	35,  // 109: api.v0alpha.OmniApi.UpdateCampaignPacingSpeed:input_type -> api.v0alpha.UpdateCampaignPacingSpeedReq
+	13,  // 110: api.v0alpha.OmniApi.SendOmniMessage:input_type -> api.v0alpha.SendOmniMessageReq
+	13,  // 111: api.v0alpha.OmniApi.ManagerSendOmniMessage:input_type -> api.v0alpha.SendOmniMessageReq
+	18,  // 112: api.v0alpha.OmniApi.CreateDisposition:input_type -> api.v0alpha.CreateDispositionReq
+	20,  // 113: api.v0alpha.OmniApi.DeleteDisposition:input_type -> api.v0alpha.DeleteDispositionReq
+	21,  // 114: api.v0alpha.OmniApi.ListDispositions:input_type -> api.v0alpha.ListDispositionsReq
+	23,  // 115: api.v0alpha.OmniApi.UpdateDisposition:input_type -> api.v0alpha.UpdateDispositionReq
+	161, // 116: api.v0alpha.OmniApi.ListCustomUnsubscribeLinks:input_type -> api.commons.Empty
+	149, // 117: api.v0alpha.OmniApi.CreateCustomUnsubscribeLink:input_type -> api.commons.OmniCustomUnsubscribeLink
+	26,  // 118: api.v0alpha.OmniApi.UpdateCustomUnsubscribeLink:input_type -> api.v0alpha.UpdateCustomUnsubscribeLinkReq
+	28,  // 119: api.v0alpha.OmniApi.DeleteCustomUnsubscribeLink:input_type -> api.v0alpha.DeleteCustomUnsubscribeLinkReq
+	5,   // 120: api.v0alpha.OmniApi.ListCampaigns:input_type -> api.v0alpha.ListCampaignsReq
+	10,  // 121: api.v0alpha.OmniApi.ManagerListMessages:input_type -> api.v0alpha.ManagerListMessagesReq
+	11,  // 122: api.v0alpha.OmniApi.ListMessages:input_type -> api.v0alpha.ListMessagesReq
+	16,  // 123: api.v0alpha.OmniApi.ManagerListConversations:input_type -> api.v0alpha.ListConversationsReq
+	37,  // 124: api.v0alpha.OmniApi.ListContactLists:input_type -> api.v0alpha.ListContactListsReq
+	39,  // 125: api.v0alpha.OmniApi.GetAvailableHeaders:input_type -> api.v0alpha.GetAvailableHeadersReq
+	42,  // 126: api.v0alpha.OmniApi.ApproveTask:input_type -> api.v0alpha.ApproveTaskRequest
+	44,  // 127: api.v0alpha.OmniApi.GetNextQueuedTask:input_type -> api.v0alpha.GetNextQueuedTaskRequest
+	46,  // 128: api.v0alpha.OmniApi.GetTask:input_type -> api.v0alpha.GetTaskReq
+	47,  // 129: api.v0alpha.OmniApi.ListTasks:input_type -> api.v0alpha.ListTasksReq
+	49,  // 130: api.v0alpha.OmniApi.RejectTask:input_type -> api.v0alpha.RejectTaskRequest
+	51,  // 131: api.v0alpha.OmniApi.RequeueTask:input_type -> api.v0alpha.RequeueTaskRequest
+	154, // 132: api.v0alpha.OmniApi.CreateConnectedInbox:input_type -> api.commons.ConnectedInbox
+	54,  // 133: api.v0alpha.OmniApi.DeleteConnectedInboxBySid:input_type -> api.v0alpha.DeleteConnectedInboxBySidReq
+	55,  // 134: api.v0alpha.OmniApi.GetConnectedInboxBySid:input_type -> api.v0alpha.GetConnectedInboxBySidReq
+	56,  // 135: api.v0alpha.OmniApi.PerformSendgridAccountChecks:input_type -> api.v0alpha.SendgridAccountByClientReq
+	58,  // 136: api.v0alpha.OmniApi.ListConnectedInboxes:input_type -> api.v0alpha.ListConnectedInboxesReq
+	154, // 137: api.v0alpha.OmniApi.TestConnectedInbox:input_type -> api.commons.ConnectedInbox
+	61,  // 138: api.v0alpha.OmniApi.UpdateConnectedInbox:input_type -> api.v0alpha.UpdateConnectedInboxReq
+	155, // 139: api.v0alpha.OmniApi.CreateVerifiedEmail:input_type -> api.commons.VerifiedEmail
+	66,  // 140: api.v0alpha.OmniApi.DeleteVerifiedEmail:input_type -> api.v0alpha.DeleteVerifiedEmailReq
+	65,  // 141: api.v0alpha.OmniApi.GetVerifiedEmailBySid:input_type -> api.v0alpha.GetVerifiedEmailBySidReq
+	67,  // 142: api.v0alpha.OmniApi.ListVerifiedEmails:input_type -> api.v0alpha.ListVerifiedEmailsReq
+	69,  // 143: api.v0alpha.OmniApi.ResendVerifiedEmail:input_type -> api.v0alpha.ResendVerifiedEmailReq
+	71,  // 144: api.v0alpha.OmniApi.UpdateVerifiedEmail:input_type -> api.v0alpha.UpdateVerifiedEmailReq
+	72,  // 145: api.v0alpha.OmniApi.GetPendingGoogleXOAuth2Data:input_type -> api.v0alpha.GetPendingGoogleXOAuth2DataReq
+	63,  // 146: api.v0alpha.OmniApi.SendEmailNotification:input_type -> api.v0alpha.SendEmailNotificationReq
+	74,  // 147: api.v0alpha.OmniApi.SendFeedbackEmail:input_type -> api.v0alpha.SendFeedbackEmailReq
+	76,  // 148: api.v0alpha.OmniApi.GetOmniAttachment:input_type -> api.v0alpha.GetOmniAttachmentReq
+	77,  // 149: api.v0alpha.OmniApi.CreateTasks:input_type -> api.v0alpha.CreateTasksReq
+	79,  // 150: api.v0alpha.OmniApi.CreateSignature:input_type -> api.v0alpha.CreateSignatureReq
+	81,  // 151: api.v0alpha.OmniApi.DeleteSignature:input_type -> api.v0alpha.DeleteSignatureReq
+	83,  // 152: api.v0alpha.OmniApi.ListSignatures:input_type -> api.v0alpha.ListSignaturesReq
+	85,  // 153: api.v0alpha.OmniApi.UpdateSignature:input_type -> api.v0alpha.UpdateSignatureReq
+	0,   // 154: api.v0alpha.OmniApi.SuggestResponse:input_type -> api.v0alpha.SuggestResponseReq
+	87,  // 155: api.v0alpha.OmniApi.CreateProject:input_type -> api.v0alpha.CreateProjectReq
+	90,  // 156: api.v0alpha.OmniApi.ListProjects:input_type -> api.v0alpha.ListProjectsReq
+	92,  // 157: api.v0alpha.OmniApi.EditProjectById:input_type -> api.v0alpha.EditProjectByIdReq
+	94,  // 158: api.v0alpha.OmniApi.CloseProjectById:input_type -> api.v0alpha.CloseProjectByIdReq
+	96,  // 159: api.v0alpha.OmniApi.GetProjectById:input_type -> api.v0alpha.GetProjectByIdReq
+	97,  // 160: api.v0alpha.OmniApi.CreateCannedMessage:input_type -> api.v0alpha.CreateCannedMessageReq
+	99,  // 161: api.v0alpha.OmniApi.ListCannedMessages:input_type -> api.v0alpha.ListCannedMessagesReq
+	101, // 162: api.v0alpha.OmniApi.UpdateCannedMessage:input_type -> api.v0alpha.UpdateCannedMessageReq
+	102, // 163: api.v0alpha.OmniApi.GetCannedMessageById:input_type -> api.v0alpha.GetCannedMessageByIdReq
+	103, // 164: api.v0alpha.OmniApi.DeleteCannedMessageById:input_type -> api.v0alpha.DeleteCannedMessageByIdReq
+	105, // 165: api.v0alpha.OmniApi.CreateCannedMessageGroup:input_type -> api.v0alpha.CreateCannedMessageGroupReq
+	108, // 166: api.v0alpha.OmniApi.ListCannedMessageGroups:input_type -> api.v0alpha.ListCannedMessageGroupsReq
+	110, // 167: api.v0alpha.OmniApi.UpdateCannedMessageGroup:input_type -> api.v0alpha.UpdateCannedMessageGroupReq
+	112, // 168: api.v0alpha.OmniApi.DeleteCannedMessageGroup:input_type -> api.v0alpha.DeleteCannedMessageGroupReq
+	114, // 169: api.v0alpha.OmniApi.ListCannedMessagesByGroupId:input_type -> api.v0alpha.ListCannedMessagesByGroupIdReq
+	116, // 170: api.v0alpha.OmniApi.GetCannedMessageGroupById:input_type -> api.v0alpha.GetCannedMessageGroupByIdReq
+	117, // 171: api.v0alpha.OmniApi.ListUserSkills:input_type -> api.v0alpha.ListUserSkillsReq
+	34,  // 172: api.v0alpha.OmniApi.ArchiveCampaign:output_type -> api.v0alpha.ArchiveCampaignRes
+	139, // 173: api.v0alpha.OmniApi.CreateCampaign:output_type -> api.commons.OmniCampaign
+	139, // 174: api.v0alpha.OmniApi.GetCampaignById:output_type -> api.commons.OmniCampaign
+	30,  // 175: api.v0alpha.OmniApi.PauseCampaign:output_type -> api.v0alpha.PauseCampaignRes
+	32,  // 176: api.v0alpha.OmniApi.ResumeCampaign:output_type -> api.v0alpha.ResumeCampaignRes
+	15,  // 177: api.v0alpha.OmniApi.UpdateCampaign:output_type -> api.v0alpha.UpdateCampaignRes
+	36,  // 178: api.v0alpha.OmniApi.UpdateCampaignPacingSpeed:output_type -> api.v0alpha.UpdateCampaignPacingSpeedRes
+	161, // 179: api.v0alpha.OmniApi.SendOmniMessage:output_type -> api.commons.Empty
+	161, // 180: api.v0alpha.OmniApi.ManagerSendOmniMessage:output_type -> api.commons.Empty
+	19,  // 181: api.v0alpha.OmniApi.CreateDisposition:output_type -> api.v0alpha.CreateDispositionRes
+	161, // 182: api.v0alpha.OmniApi.DeleteDisposition:output_type -> api.commons.Empty
+	22,  // 183: api.v0alpha.OmniApi.ListDispositions:output_type -> api.v0alpha.ListDispositionsRes
+	161, // 184: api.v0alpha.OmniApi.UpdateDisposition:output_type -> api.commons.Empty
+	24,  // 185: api.v0alpha.OmniApi.ListCustomUnsubscribeLinks:output_type -> api.v0alpha.ListCustomUnsubscribeLinksRes
+	25,  // 186: api.v0alpha.OmniApi.CreateCustomUnsubscribeLink:output_type -> api.v0alpha.CreateCustomUnsubscribeLinkRes
+	27,  // 187: api.v0alpha.OmniApi.UpdateCustomUnsubscribeLink:output_type -> api.v0alpha.UpdateCustomUnsubscribeLinkRes
+	161, // 188: api.v0alpha.OmniApi.DeleteCustomUnsubscribeLink:output_type -> api.commons.Empty
+	6,   // 189: api.v0alpha.OmniApi.ListCampaigns:output_type -> api.v0alpha.ListCampaignsRes
+	162, // 190: api.v0alpha.OmniApi.ManagerListMessages:output_type -> api.commons.OmniMessage
+	162, // 191: api.v0alpha.OmniApi.ListMessages:output_type -> api.commons.OmniMessage
+	17,  // 192: api.v0alpha.OmniApi.ManagerListConversations:output_type -> api.v0alpha.ListConversationsRes
+	38,  // 193: api.v0alpha.OmniApi.ListContactLists:output_type -> api.v0alpha.ListContactListsRes
+	40,  // 194: api.v0alpha.OmniApi.GetAvailableHeaders:output_type -> api.v0alpha.GetAvailableHeadersRes
+	43,  // 195: api.v0alpha.OmniApi.ApproveTask:output_type -> api.v0alpha.ApproveTaskResponse
+	45,  // 196: api.v0alpha.OmniApi.GetNextQueuedTask:output_type -> api.v0alpha.GetNextQueuedTaskResponse
+	153, // 197: api.v0alpha.OmniApi.GetTask:output_type -> api.commons.OmniTask
+	48,  // 198: api.v0alpha.OmniApi.ListTasks:output_type -> api.v0alpha.ListTasksRes
+	50,  // 199: api.v0alpha.OmniApi.RejectTask:output_type -> api.v0alpha.RejectTaskResponse
+	52,  // 200: api.v0alpha.OmniApi.RequeueTask:output_type -> api.v0alpha.RequeueTaskResponse
+	53,  // 201: api.v0alpha.OmniApi.CreateConnectedInbox:output_type -> api.v0alpha.CreateConnectedInboxRes
+	161, // 202: api.v0alpha.OmniApi.DeleteConnectedInboxBySid:output_type -> api.commons.Empty
+	154, // 203: api.v0alpha.OmniApi.GetConnectedInboxBySid:output_type -> api.commons.ConnectedInbox
+	57,  // 204: api.v0alpha.OmniApi.PerformSendgridAccountChecks:output_type -> api.v0alpha.SendgridAccountByClientRes
+	59,  // 205: api.v0alpha.OmniApi.ListConnectedInboxes:output_type -> api.v0alpha.ListConnectedInboxesRes
+	60,  // 206: api.v0alpha.OmniApi.TestConnectedInbox:output_type -> api.v0alpha.TestConnectedInboxRes
+	161, // 207: api.v0alpha.OmniApi.UpdateConnectedInbox:output_type -> api.commons.Empty
+	62,  // 208: api.v0alpha.OmniApi.CreateVerifiedEmail:output_type -> api.v0alpha.CreateVerifiedEmailRes
+	161, // 209: api.v0alpha.OmniApi.DeleteVerifiedEmail:output_type -> api.commons.Empty
+	155, // 210: api.v0alpha.OmniApi.GetVerifiedEmailBySid:output_type -> api.commons.VerifiedEmail
+	68,  // 211: api.v0alpha.OmniApi.ListVerifiedEmails:output_type -> api.v0alpha.ListVerifiedEmailsRes
+	70,  // 212: api.v0alpha.OmniApi.ResendVerifiedEmail:output_type -> api.v0alpha.ResendVerifiedEmailRes
+	161, // 213: api.v0alpha.OmniApi.UpdateVerifiedEmail:output_type -> api.commons.Empty
+	73,  // 214: api.v0alpha.OmniApi.GetPendingGoogleXOAuth2Data:output_type -> api.v0alpha.GetPendingGoogleXOAuth2DataRes
+	64,  // 215: api.v0alpha.OmniApi.SendEmailNotification:output_type -> api.v0alpha.SendEmailNotificationRes
+	75,  // 216: api.v0alpha.OmniApi.SendFeedbackEmail:output_type -> api.v0alpha.SendFeedbackEmailRes
+	159, // 217: api.v0alpha.OmniApi.GetOmniAttachment:output_type -> api.commons.OmniAttachment
+	78,  // 218: api.v0alpha.OmniApi.CreateTasks:output_type -> api.v0alpha.CreateTasksRes
+	80,  // 219: api.v0alpha.OmniApi.CreateSignature:output_type -> api.v0alpha.CreateSignatureRes
+	82,  // 220: api.v0alpha.OmniApi.DeleteSignature:output_type -> api.v0alpha.DeleteSignatureRes
+	84,  // 221: api.v0alpha.OmniApi.ListSignatures:output_type -> api.v0alpha.ListSignaturesRes
+	86,  // 222: api.v0alpha.OmniApi.UpdateSignature:output_type -> api.v0alpha.UpdateSignatureRes
+	1,   // 223: api.v0alpha.OmniApi.SuggestResponse:output_type -> api.v0alpha.SuggestResponseRes
+	88,  // 224: api.v0alpha.OmniApi.CreateProject:output_type -> api.v0alpha.CreateProjectRes
+	91,  // 225: api.v0alpha.OmniApi.ListProjects:output_type -> api.v0alpha.ListProjectsRes
+	93,  // 226: api.v0alpha.OmniApi.EditProjectById:output_type -> api.v0alpha.EditProjectByIdRes
+	95,  // 227: api.v0alpha.OmniApi.CloseProjectById:output_type -> api.v0alpha.CloseProjectByIdRes
+	89,  // 228: api.v0alpha.OmniApi.GetProjectById:output_type -> api.v0alpha.Project
+	98,  // 229: api.v0alpha.OmniApi.CreateCannedMessage:output_type -> api.v0alpha.CannedMessage
+	100, // 230: api.v0alpha.OmniApi.ListCannedMessages:output_type -> api.v0alpha.ListCannedMessagesRes
+	98,  // 231: api.v0alpha.OmniApi.UpdateCannedMessage:output_type -> api.v0alpha.CannedMessage
+	107, // 232: api.v0alpha.OmniApi.GetCannedMessageById:output_type -> api.v0alpha.CannedMessageWithGroup
+	104, // 233: api.v0alpha.OmniApi.DeleteCannedMessageById:output_type -> api.v0alpha.DeleteCannedMessageByIdRes
+	106, // 234: api.v0alpha.OmniApi.CreateCannedMessageGroup:output_type -> api.v0alpha.CannedMessageGroup
+	109, // 235: api.v0alpha.OmniApi.ListCannedMessageGroups:output_type -> api.v0alpha.ListCannedMessageGroupsRes
+	111, // 236: api.v0alpha.OmniApi.UpdateCannedMessageGroup:output_type -> api.v0alpha.UpdateCannedMessageGroupRes
+	113, // 237: api.v0alpha.OmniApi.DeleteCannedMessageGroup:output_type -> api.v0alpha.DeleteCannedMessageGroupRes
+	115, // 238: api.v0alpha.OmniApi.ListCannedMessagesByGroupId:output_type -> api.v0alpha.ListCannedMessagesByGroupIdRes
+	106, // 239: api.v0alpha.OmniApi.GetCannedMessageGroupById:output_type -> api.v0alpha.CannedMessageGroup
+	118, // 240: api.v0alpha.OmniApi.ListUserSkills:output_type -> api.v0alpha.ListUserSkillsRes
+	172, // [172:241] is the sub-list for method output_type
+	103, // [103:172] is the sub-list for method input_type
+	103, // [103:103] is the sub-list for extension type_name
+	103, // [103:103] is the sub-list for extension extendee
+	0,   // [0:103] is the sub-list for field type_name
 }
 
 func init() { file_api_v0alpha_omniapi_proto_init() }
@@ -11721,7 +11743,7 @@ func file_api_v0alpha_omniapi_proto_init() {
 				return nil
 			}
 		}
-		file_api_v0alpha_omniapi_proto_msgTypes[134].Exporter = func(v interface{}, i int) interface{} {
+		file_api_v0alpha_omniapi_proto_msgTypes[135].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetTaskReq_ByConversation); i {
 			case 0:
 				return &v.state
@@ -11733,7 +11755,7 @@ func file_api_v0alpha_omniapi_proto_init() {
 				return nil
 			}
 		}
-		file_api_v0alpha_omniapi_proto_msgTypes[135].Exporter = func(v interface{}, i int) interface{} {
+		file_api_v0alpha_omniapi_proto_msgTypes[136].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ListTasksReq_ByCampaign); i {
 			case 0:
 				return &v.state
@@ -11745,7 +11767,7 @@ func file_api_v0alpha_omniapi_proto_init() {
 				return nil
 			}
 		}
-		file_api_v0alpha_omniapi_proto_msgTypes[136].Exporter = func(v interface{}, i int) interface{} {
+		file_api_v0alpha_omniapi_proto_msgTypes[137].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ListConnectedInboxesRes_ListConnectedInbox); i {
 			case 0:
 				return &v.state
@@ -11757,7 +11779,7 @@ func file_api_v0alpha_omniapi_proto_init() {
 				return nil
 			}
 		}
-		file_api_v0alpha_omniapi_proto_msgTypes[137].Exporter = func(v interface{}, i int) interface{} {
+		file_api_v0alpha_omniapi_proto_msgTypes[138].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetOmniAttachmentReq_ByOmniAttachmentSid); i {
 			case 0:
 				return &v.state
@@ -11814,7 +11836,7 @@ func file_api_v0alpha_omniapi_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_v0alpha_omniapi_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   138,
+			NumMessages:   139,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
