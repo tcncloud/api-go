@@ -358,6 +358,8 @@ const (
 	// WFMCreateShiftInstanceV2Procedure is the fully-qualified name of the WFM's CreateShiftInstanceV2
 	// RPC.
 	WFMCreateShiftInstanceV2Procedure = "/api.v1alpha1.wfm.WFM/CreateShiftInstanceV2"
+	// WFMSplitShiftInstanceProcedure is the fully-qualified name of the WFM's SplitShiftInstance RPC.
+	WFMSplitShiftInstanceProcedure = "/api.v1alpha1.wfm.WFM/SplitShiftInstance"
 	// WFMSwapShiftInstancesProcedure is the fully-qualified name of the WFM's SwapShiftInstances RPC.
 	WFMSwapShiftInstancesProcedure = "/api.v1alpha1.wfm.WFM/SwapShiftInstances"
 	// WFMUpdateShiftInstanceProcedure is the fully-qualified name of the WFM's UpdateShiftInstance RPC.
@@ -1834,6 +1836,22 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when creating the shift instance.
 	//   - grpc.NotFound: the @draft_schedule_sid, @shift_template_sid, or @wfm_agent_sids do not exist for the org sending the request.
 	CreateShiftInstanceV2(context.Context, *connect_go.Request[wfm.CreateShiftInstanceV2Req]) (*connect_go.Response[wfm.CreateShiftInstanceV2Res], error)
+	// Splits the @shift_instance_sid into two, at the given @time_to_split, returning the updated and new @shift_instances.
+	// Any shift segments will be split between the two shift instances at @time_to_split.
+	// If the @time_to_split creates instances shorter then the minimum length specified by the shift template,
+	//
+	//	warning diagnostics will be returned and the instance will still be split.
+	//
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//
+	//	-grpc.Invalid: one or more fields in the request have invalid values, or @time_to_split is not at least 5 minutes from the start or end of @shift_instance_sid.
+	//	-grpc.NotFound: the @shift_instance_sid does't exist for the org sending the request.
+	//	-grpc.Internal: error occurs when creating or updating the shift instances.
+	SplitShiftInstance(context.Context, *connect_go.Request[wfm.SplitShiftInstanceReq]) (*connect_go.Response[wfm.SplitShiftInstanceRes], error)
 	// Swaps shift instances with the given @shift_instance_sids that belong to @wfm_agent_sid1 to belong to @wfm_agent_sid2 (and viceversa).
 	// Returns the swapped @shift_instances after they are succesfully updated.
 	// If there are other shifts for the given @wfm_agent_sids with an overlap conflict, diagnostics will be returned instead.
@@ -2810,6 +2828,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMCreateShiftInstanceV2Procedure,
 			opts...,
 		),
+		splitShiftInstance: connect_go.NewClient[wfm.SplitShiftInstanceReq, wfm.SplitShiftInstanceRes](
+			httpClient,
+			baseURL+WFMSplitShiftInstanceProcedure,
+			opts...,
+		),
 		swapShiftInstances: connect_go.NewClient[wfm.SwapShiftInstancesReq, wfm.SwapShiftInstancesRes](
 			httpClient,
 			baseURL+WFMSwapShiftInstancesProcedure,
@@ -3115,6 +3138,7 @@ type wFMClient struct {
 	copyScheduleToSchedule                        *connect_go.Client[wfm.CopyScheduleToScheduleReq, wfm.CopyScheduleToScheduleRes]
 	createShiftInstance                           *connect_go.Client[wfm.CreateShiftInstanceReq, wfm.CreateShiftInstanceRes]
 	createShiftInstanceV2                         *connect_go.Client[wfm.CreateShiftInstanceV2Req, wfm.CreateShiftInstanceV2Res]
+	splitShiftInstance                            *connect_go.Client[wfm.SplitShiftInstanceReq, wfm.SplitShiftInstanceRes]
 	swapShiftInstances                            *connect_go.Client[wfm.SwapShiftInstancesReq, wfm.SwapShiftInstancesRes]
 	updateShiftInstance                           *connect_go.Client[wfm.UpdateShiftInstanceReq, wfm.UpdateShiftInstanceRes]
 	updateShiftInstanceV2                         *connect_go.Client[wfm.UpdateShiftInstanceV2Req, wfm.UpdateShiftInstanceV2Res]
@@ -3746,6 +3770,11 @@ func (c *wFMClient) CreateShiftInstance(ctx context.Context, req *connect_go.Req
 // CreateShiftInstanceV2 calls api.v1alpha1.wfm.WFM.CreateShiftInstanceV2.
 func (c *wFMClient) CreateShiftInstanceV2(ctx context.Context, req *connect_go.Request[wfm.CreateShiftInstanceV2Req]) (*connect_go.Response[wfm.CreateShiftInstanceV2Res], error) {
 	return c.createShiftInstanceV2.CallUnary(ctx, req)
+}
+
+// SplitShiftInstance calls api.v1alpha1.wfm.WFM.SplitShiftInstance.
+func (c *wFMClient) SplitShiftInstance(ctx context.Context, req *connect_go.Request[wfm.SplitShiftInstanceReq]) (*connect_go.Response[wfm.SplitShiftInstanceRes], error) {
+	return c.splitShiftInstance.CallUnary(ctx, req)
 }
 
 // SwapShiftInstances calls api.v1alpha1.wfm.WFM.SwapShiftInstances.
@@ -5304,6 +5333,22 @@ type WFMHandler interface {
 	//   - grpc.Internal: error occurs when creating the shift instance.
 	//   - grpc.NotFound: the @draft_schedule_sid, @shift_template_sid, or @wfm_agent_sids do not exist for the org sending the request.
 	CreateShiftInstanceV2(context.Context, *connect_go.Request[wfm.CreateShiftInstanceV2Req]) (*connect_go.Response[wfm.CreateShiftInstanceV2Res], error)
+	// Splits the @shift_instance_sid into two, at the given @time_to_split, returning the updated and new @shift_instances.
+	// Any shift segments will be split between the two shift instances at @time_to_split.
+	// If the @time_to_split creates instances shorter then the minimum length specified by the shift template,
+	//
+	//	warning diagnostics will be returned and the instance will still be split.
+	//
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//
+	//	-grpc.Invalid: one or more fields in the request have invalid values, or @time_to_split is not at least 5 minutes from the start or end of @shift_instance_sid.
+	//	-grpc.NotFound: the @shift_instance_sid does't exist for the org sending the request.
+	//	-grpc.Internal: error occurs when creating or updating the shift instances.
+	SplitShiftInstance(context.Context, *connect_go.Request[wfm.SplitShiftInstanceReq]) (*connect_go.Response[wfm.SplitShiftInstanceRes], error)
 	// Swaps shift instances with the given @shift_instance_sids that belong to @wfm_agent_sid1 to belong to @wfm_agent_sid2 (and viceversa).
 	// Returns the swapped @shift_instances after they are succesfully updated.
 	// If there are other shifts for the given @wfm_agent_sids with an overlap conflict, diagnostics will be returned instead.
@@ -6276,6 +6321,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.CreateShiftInstanceV2,
 		opts...,
 	)
+	wFMSplitShiftInstanceHandler := connect_go.NewUnaryHandler(
+		WFMSplitShiftInstanceProcedure,
+		svc.SplitShiftInstance,
+		opts...,
+	)
 	wFMSwapShiftInstancesHandler := connect_go.NewUnaryHandler(
 		WFMSwapShiftInstancesProcedure,
 		svc.SwapShiftInstances,
@@ -6693,6 +6743,8 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMCreateShiftInstanceHandler.ServeHTTP(w, r)
 		case WFMCreateShiftInstanceV2Procedure:
 			wFMCreateShiftInstanceV2Handler.ServeHTTP(w, r)
+		case WFMSplitShiftInstanceProcedure:
+			wFMSplitShiftInstanceHandler.ServeHTTP(w, r)
 		case WFMSwapShiftInstancesProcedure:
 			wFMSwapShiftInstancesHandler.ServeHTTP(w, r)
 		case WFMUpdateShiftInstanceProcedure:
@@ -7234,6 +7286,10 @@ func (UnimplementedWFMHandler) CreateShiftInstance(context.Context, *connect_go.
 
 func (UnimplementedWFMHandler) CreateShiftInstanceV2(context.Context, *connect_go.Request[wfm.CreateShiftInstanceV2Req]) (*connect_go.Response[wfm.CreateShiftInstanceV2Res], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.CreateShiftInstanceV2 is not implemented"))
+}
+
+func (UnimplementedWFMHandler) SplitShiftInstance(context.Context, *connect_go.Request[wfm.SplitShiftInstanceReq]) (*connect_go.Response[wfm.SplitShiftInstanceRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.SplitShiftInstance is not implemented"))
 }
 
 func (UnimplementedWFMHandler) SwapShiftInstances(context.Context, *connect_go.Request[wfm.SwapShiftInstancesReq]) (*connect_go.Response[wfm.SwapShiftInstancesRes], error) {
