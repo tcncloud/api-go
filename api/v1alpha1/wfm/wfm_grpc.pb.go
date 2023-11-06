@@ -166,6 +166,7 @@ const (
 	WFM_GetTourPatternDiagnostics_FullMethodName                     = "/api.v1alpha1.wfm.WFM/GetTourPatternDiagnostics"
 	WFM_UpsertTourPatternWithMembers_FullMethodName                  = "/api.v1alpha1.wfm.WFM/UpsertTourPatternWithMembers"
 	WFM_GetTourPattern_FullMethodName                                = "/api.v1alpha1.wfm.WFM/GetTourPattern"
+	WFM_GetTourPatternWithMembers_FullMethodName                     = "/api.v1alpha1.wfm.WFM/GetTourPatternWithMembers"
 	WFM_DeleteTourPattern_FullMethodName                             = "/api.v1alpha1.wfm.WFM/DeleteTourPattern"
 	WFM_CreateTourWeekPattern_FullMethodName                         = "/api.v1alpha1.wfm.WFM/CreateTourWeekPattern"
 	WFM_ListTourWeekPatterns_FullMethodName                          = "/api.v1alpha1.wfm.WFM/ListTourWeekPatterns"
@@ -1747,6 +1748,17 @@ type WFMClient interface {
 	//   - grpc.NotFound: the requested Tour Pattern does not exist.
 	//   - grpc.Internal: error occurs when getting the data.
 	GetTourPattern(ctx context.Context, in *GetTourPatternReq, opts ...grpc.CallOption) (*GetTourPatternRes, error)
+	// Gets the Tour Pattern belonging to @shift_template_sid and the org sending the request.
+	// The @tour_pattern will be returned with all member entities.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.NotFound: the requested Tour Pattern does not exist.
+	//   - grpc.Internal: error occurs when getting the data.
+	GetTourPatternWithMembers(ctx context.Context, in *GetTourPatternWithMembersReq, opts ...grpc.CallOption) (*GetTourPatternWithMembersRes, error)
 	// Deletes the Tour Pattern belonging to @tour_pattern_sid and the org sending the request.
 	// Any member Tour Week Patterns or Agent Collections will be deleted as well.
 	// Required permissions:
@@ -3304,6 +3316,15 @@ func (c *wFMClient) UpsertTourPatternWithMembers(ctx context.Context, in *Upsert
 func (c *wFMClient) GetTourPattern(ctx context.Context, in *GetTourPatternReq, opts ...grpc.CallOption) (*GetTourPatternRes, error) {
 	out := new(GetTourPatternRes)
 	err := c.cc.Invoke(ctx, WFM_GetTourPattern_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) GetTourPatternWithMembers(ctx context.Context, in *GetTourPatternWithMembersReq, opts ...grpc.CallOption) (*GetTourPatternWithMembersRes, error) {
+	out := new(GetTourPatternWithMembersRes)
+	err := c.cc.Invoke(ctx, WFM_GetTourPatternWithMembers_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -5049,6 +5070,17 @@ type WFMServer interface {
 	//   - grpc.NotFound: the requested Tour Pattern does not exist.
 	//   - grpc.Internal: error occurs when getting the data.
 	GetTourPattern(context.Context, *GetTourPatternReq) (*GetTourPatternRes, error)
+	// Gets the Tour Pattern belonging to @shift_template_sid and the org sending the request.
+	// The @tour_pattern will be returned with all member entities.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.NotFound: the requested Tour Pattern does not exist.
+	//   - grpc.Internal: error occurs when getting the data.
+	GetTourPatternWithMembers(context.Context, *GetTourPatternWithMembersReq) (*GetTourPatternWithMembersRes, error)
 	// Deletes the Tour Pattern belonging to @tour_pattern_sid and the org sending the request.
 	// Any member Tour Week Patterns or Agent Collections will be deleted as well.
 	// Required permissions:
@@ -5668,6 +5700,9 @@ func (UnimplementedWFMServer) UpsertTourPatternWithMembers(context.Context, *Ups
 }
 func (UnimplementedWFMServer) GetTourPattern(context.Context, *GetTourPatternReq) (*GetTourPatternRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTourPattern not implemented")
+}
+func (UnimplementedWFMServer) GetTourPatternWithMembers(context.Context, *GetTourPatternWithMembersReq) (*GetTourPatternWithMembersRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTourPatternWithMembers not implemented")
 }
 func (UnimplementedWFMServer) DeleteTourPattern(context.Context, *DeleteTourPatternReq) (*DeleteTourPatternRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteTourPattern not implemented")
@@ -8154,6 +8189,24 @@ func _WFM_GetTourPattern_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_GetTourPatternWithMembers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTourPatternWithMembersReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).GetTourPatternWithMembers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_GetTourPatternWithMembers_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).GetTourPatternWithMembers(ctx, req.(*GetTourPatternWithMembersReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WFM_DeleteTourPattern_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteTourPatternReq)
 	if err := dec(in); err != nil {
@@ -9028,6 +9081,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetTourPattern",
 			Handler:    _WFM_GetTourPattern_Handler,
+		},
+		{
+			MethodName: "GetTourPatternWithMembers",
+			Handler:    _WFM_GetTourPatternWithMembers_Handler,
 		},
 		{
 			MethodName: "DeleteTourPattern",

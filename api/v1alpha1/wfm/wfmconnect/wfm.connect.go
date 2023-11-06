@@ -405,6 +405,9 @@ const (
 	WFMUpsertTourPatternWithMembersProcedure = "/api.v1alpha1.wfm.WFM/UpsertTourPatternWithMembers"
 	// WFMGetTourPatternProcedure is the fully-qualified name of the WFM's GetTourPattern RPC.
 	WFMGetTourPatternProcedure = "/api.v1alpha1.wfm.WFM/GetTourPattern"
+	// WFMGetTourPatternWithMembersProcedure is the fully-qualified name of the WFM's
+	// GetTourPatternWithMembers RPC.
+	WFMGetTourPatternWithMembersProcedure = "/api.v1alpha1.wfm.WFM/GetTourPatternWithMembers"
 	// WFMDeleteTourPatternProcedure is the fully-qualified name of the WFM's DeleteTourPattern RPC.
 	WFMDeleteTourPatternProcedure = "/api.v1alpha1.wfm.WFM/DeleteTourPattern"
 	// WFMCreateTourWeekPatternProcedure is the fully-qualified name of the WFM's CreateTourWeekPattern
@@ -2027,6 +2030,17 @@ type WFMClient interface {
 	//   - grpc.NotFound: the requested Tour Pattern does not exist.
 	//   - grpc.Internal: error occurs when getting the data.
 	GetTourPattern(context.Context, *connect_go.Request[wfm.GetTourPatternReq]) (*connect_go.Response[wfm.GetTourPatternRes], error)
+	// Gets the Tour Pattern belonging to @shift_template_sid and the org sending the request.
+	// The @tour_pattern will be returned with all member entities.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.NotFound: the requested Tour Pattern does not exist.
+	//   - grpc.Internal: error occurs when getting the data.
+	GetTourPatternWithMembers(context.Context, *connect_go.Request[wfm.GetTourPatternWithMembersReq]) (*connect_go.Response[wfm.GetTourPatternWithMembersRes], error)
 	// Deletes the Tour Pattern belonging to @tour_pattern_sid and the org sending the request.
 	// Any member Tour Week Patterns or Agent Collections will be deleted as well.
 	// Required permissions:
@@ -2918,6 +2932,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMGetTourPatternProcedure,
 			opts...,
 		),
+		getTourPatternWithMembers: connect_go.NewClient[wfm.GetTourPatternWithMembersReq, wfm.GetTourPatternWithMembersRes](
+			httpClient,
+			baseURL+WFMGetTourPatternWithMembersProcedure,
+			opts...,
+		),
 		deleteTourPattern: connect_go.NewClient[wfm.DeleteTourPatternReq, wfm.DeleteTourPatternRes](
 			httpClient,
 			baseURL+WFMDeleteTourPatternProcedure,
@@ -3156,6 +3175,7 @@ type wFMClient struct {
 	getTourPatternDiagnostics                     *connect_go.Client[wfm.GetTourPatternDiagnosticsReq, wfm.GetTourPatternDiagnosticsRes]
 	upsertTourPatternWithMembers                  *connect_go.Client[wfm.UpsertTourPatternWithMembersReq, wfm.UpsertTourPatternWithMembersRes]
 	getTourPattern                                *connect_go.Client[wfm.GetTourPatternReq, wfm.GetTourPatternRes]
+	getTourPatternWithMembers                     *connect_go.Client[wfm.GetTourPatternWithMembersReq, wfm.GetTourPatternWithMembersRes]
 	deleteTourPattern                             *connect_go.Client[wfm.DeleteTourPatternReq, wfm.DeleteTourPatternRes]
 	createTourWeekPattern                         *connect_go.Client[wfm.CreateTourWeekPatternReq, wfm.CreateTourWeekPatternRes]
 	listTourWeekPatterns                          *connect_go.Client[wfm.ListTourWeekPatternsReq, wfm.ListTourWeekPatternsRes]
@@ -3861,6 +3881,11 @@ func (c *wFMClient) UpsertTourPatternWithMembers(ctx context.Context, req *conne
 // GetTourPattern calls api.v1alpha1.wfm.WFM.GetTourPattern.
 func (c *wFMClient) GetTourPattern(ctx context.Context, req *connect_go.Request[wfm.GetTourPatternReq]) (*connect_go.Response[wfm.GetTourPatternRes], error) {
 	return c.getTourPattern.CallUnary(ctx, req)
+}
+
+// GetTourPatternWithMembers calls api.v1alpha1.wfm.WFM.GetTourPatternWithMembers.
+func (c *wFMClient) GetTourPatternWithMembers(ctx context.Context, req *connect_go.Request[wfm.GetTourPatternWithMembersReq]) (*connect_go.Response[wfm.GetTourPatternWithMembersRes], error) {
+	return c.getTourPatternWithMembers.CallUnary(ctx, req)
 }
 
 // DeleteTourPattern calls api.v1alpha1.wfm.WFM.DeleteTourPattern.
@@ -5524,6 +5549,17 @@ type WFMHandler interface {
 	//   - grpc.NotFound: the requested Tour Pattern does not exist.
 	//   - grpc.Internal: error occurs when getting the data.
 	GetTourPattern(context.Context, *connect_go.Request[wfm.GetTourPatternReq]) (*connect_go.Response[wfm.GetTourPatternRes], error)
+	// Gets the Tour Pattern belonging to @shift_template_sid and the org sending the request.
+	// The @tour_pattern will be returned with all member entities.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.NotFound: the requested Tour Pattern does not exist.
+	//   - grpc.Internal: error occurs when getting the data.
+	GetTourPatternWithMembers(context.Context, *connect_go.Request[wfm.GetTourPatternWithMembersReq]) (*connect_go.Response[wfm.GetTourPatternWithMembersRes], error)
 	// Deletes the Tour Pattern belonging to @tour_pattern_sid and the org sending the request.
 	// Any member Tour Week Patterns or Agent Collections will be deleted as well.
 	// Required permissions:
@@ -6411,6 +6447,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.GetTourPattern,
 		opts...,
 	)
+	wFMGetTourPatternWithMembersHandler := connect_go.NewUnaryHandler(
+		WFMGetTourPatternWithMembersProcedure,
+		svc.GetTourPatternWithMembers,
+		opts...,
+	)
 	wFMDeleteTourPatternHandler := connect_go.NewUnaryHandler(
 		WFMDeleteTourPatternProcedure,
 		svc.DeleteTourPattern,
@@ -6779,6 +6820,8 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMUpsertTourPatternWithMembersHandler.ServeHTTP(w, r)
 		case WFMGetTourPatternProcedure:
 			wFMGetTourPatternHandler.ServeHTTP(w, r)
+		case WFMGetTourPatternWithMembersProcedure:
+			wFMGetTourPatternWithMembersHandler.ServeHTTP(w, r)
 		case WFMDeleteTourPatternProcedure:
 			wFMDeleteTourPatternHandler.ServeHTTP(w, r)
 		case WFMCreateTourWeekPatternProcedure:
@@ -7358,6 +7401,10 @@ func (UnimplementedWFMHandler) UpsertTourPatternWithMembers(context.Context, *co
 
 func (UnimplementedWFMHandler) GetTourPattern(context.Context, *connect_go.Request[wfm.GetTourPatternReq]) (*connect_go.Response[wfm.GetTourPatternRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.GetTourPattern is not implemented"))
+}
+
+func (UnimplementedWFMHandler) GetTourPatternWithMembers(context.Context, *connect_go.Request[wfm.GetTourPatternWithMembersReq]) (*connect_go.Response[wfm.GetTourPatternWithMembersRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.GetTourPatternWithMembers is not implemented"))
 }
 
 func (UnimplementedWFMHandler) DeleteTourPattern(context.Context, *connect_go.Request[wfm.DeleteTourPatternReq]) (*connect_go.Response[wfm.DeleteTourPatternRes], error) {
