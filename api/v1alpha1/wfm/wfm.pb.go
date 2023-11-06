@@ -19930,7 +19930,7 @@ type GetTourPatternWithMembersRes struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// The requested Tour Pattern
+	// The requested Tour Pattern with all member entities.
 	TourPattern *TourPattern `protobuf:"bytes,1,opt,name=tour_pattern,json=tourPattern,proto3" json:"tour_pattern,omitempty"`
 }
 
