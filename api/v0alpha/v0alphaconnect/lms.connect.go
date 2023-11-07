@@ -165,6 +165,9 @@ const (
 	LMSUpdateCjsSecureSearchCriteriaProcedure = "/api.v0alpha.LMS/UpdateCjsSecureSearchCriteria"
 	// LMSSampleEndpointProcedure is the fully-qualified name of the LMS's SampleEndpoint RPC.
 	LMSSampleEndpointProcedure = "/api.v0alpha.LMS/SampleEndpoint"
+	// LMSGetAvailableEHRFieldsProcedure is the fully-qualified name of the LMS's GetAvailableEHRFields
+	// RPC.
+	LMSGetAvailableEHRFieldsProcedure = "/api.v0alpha.LMS/GetAvailableEHRFields"
 	// LMSGetQueuedEventsStatusByElementIdProcedure is the fully-qualified name of the LMS's
 	// GetQueuedEventsStatusByElementId RPC.
 	LMSGetQueuedEventsStatusByElementIdProcedure = "/api.v0alpha.LMS/GetQueuedEventsStatusByElementId"
@@ -249,6 +252,8 @@ type LMSClient interface {
 	UpdateCjsSecureSearchCriteria(context.Context, *connect_go.Request[v0alpha.CjsSecureSearchCriteria]) (*connect_go.Response[emptypb.Empty], error)
 	// SampleEndpoint is to test that values come through to the api appropriately
 	SampleEndpoint(context.Context, *connect_go.Request[v0alpha.SampleRequest]) (*connect_go.Response[emptypb.Empty], error)
+	// returns all fields possible that an ehr entity type could return (that we know of)
+	GetAvailableEHRFields(context.Context, *connect_go.Request[v0alpha.EHREntityType]) (*connect_go.Response[v0alpha.Fields], error)
 	GetQueuedEventsStatusByElementId(context.Context, *connect_go.Request[v0alpha.ElementPK]) (*connect_go.Response[v0alpha.Events], error)
 }
 
@@ -542,6 +547,11 @@ func NewLMSClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+LMSSampleEndpointProcedure,
 			opts...,
 		),
+		getAvailableEHRFields: connect_go.NewClient[v0alpha.EHREntityType, v0alpha.Fields](
+			httpClient,
+			baseURL+LMSGetAvailableEHRFieldsProcedure,
+			opts...,
+		),
 		getQueuedEventsStatusByElementId: connect_go.NewClient[v0alpha.ElementPK, v0alpha.Events](
 			httpClient,
 			baseURL+LMSGetQueuedEventsStatusByElementIdProcedure,
@@ -608,6 +618,7 @@ type lMSClient struct {
 	createCjsSecureSearchCriteria    *connect_go.Client[v0alpha.CjsSecureSearchCriteria, v0alpha.CjsSecureSearchCriteria]
 	updateCjsSecureSearchCriteria    *connect_go.Client[v0alpha.CjsSecureSearchCriteria, emptypb.Empty]
 	sampleEndpoint                   *connect_go.Client[v0alpha.SampleRequest, emptypb.Empty]
+	getAvailableEHRFields            *connect_go.Client[v0alpha.EHREntityType, v0alpha.Fields]
 	getQueuedEventsStatusByElementId *connect_go.Client[v0alpha.ElementPK, v0alpha.Events]
 }
 
@@ -891,6 +902,11 @@ func (c *lMSClient) SampleEndpoint(ctx context.Context, req *connect_go.Request[
 	return c.sampleEndpoint.CallUnary(ctx, req)
 }
 
+// GetAvailableEHRFields calls api.v0alpha.LMS.GetAvailableEHRFields.
+func (c *lMSClient) GetAvailableEHRFields(ctx context.Context, req *connect_go.Request[v0alpha.EHREntityType]) (*connect_go.Response[v0alpha.Fields], error) {
+	return c.getAvailableEHRFields.CallUnary(ctx, req)
+}
+
 // GetQueuedEventsStatusByElementId calls api.v0alpha.LMS.GetQueuedEventsStatusByElementId.
 func (c *lMSClient) GetQueuedEventsStatusByElementId(ctx context.Context, req *connect_go.Request[v0alpha.ElementPK]) (*connect_go.Response[v0alpha.Events], error) {
 	return c.getQueuedEventsStatusByElementId.CallUnary(ctx, req)
@@ -975,6 +991,8 @@ type LMSHandler interface {
 	UpdateCjsSecureSearchCriteria(context.Context, *connect_go.Request[v0alpha.CjsSecureSearchCriteria]) (*connect_go.Response[emptypb.Empty], error)
 	// SampleEndpoint is to test that values come through to the api appropriately
 	SampleEndpoint(context.Context, *connect_go.Request[v0alpha.SampleRequest]) (*connect_go.Response[emptypb.Empty], error)
+	// returns all fields possible that an ehr entity type could return (that we know of)
+	GetAvailableEHRFields(context.Context, *connect_go.Request[v0alpha.EHREntityType]) (*connect_go.Response[v0alpha.Fields], error)
 	GetQueuedEventsStatusByElementId(context.Context, *connect_go.Request[v0alpha.ElementPK]) (*connect_go.Response[v0alpha.Events], error)
 }
 
@@ -1264,6 +1282,11 @@ func NewLMSHandler(svc LMSHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.SampleEndpoint,
 		opts...,
 	)
+	lMSGetAvailableEHRFieldsHandler := connect_go.NewUnaryHandler(
+		LMSGetAvailableEHRFieldsProcedure,
+		svc.GetAvailableEHRFields,
+		opts...,
+	)
 	lMSGetQueuedEventsStatusByElementIdHandler := connect_go.NewUnaryHandler(
 		LMSGetQueuedEventsStatusByElementIdProcedure,
 		svc.GetQueuedEventsStatusByElementId,
@@ -1383,6 +1406,8 @@ func NewLMSHandler(svc LMSHandler, opts ...connect_go.HandlerOption) (string, ht
 			lMSUpdateCjsSecureSearchCriteriaHandler.ServeHTTP(w, r)
 		case LMSSampleEndpointProcedure:
 			lMSSampleEndpointHandler.ServeHTTP(w, r)
+		case LMSGetAvailableEHRFieldsProcedure:
+			lMSGetAvailableEHRFieldsHandler.ServeHTTP(w, r)
 		case LMSGetQueuedEventsStatusByElementIdProcedure:
 			lMSGetQueuedEventsStatusByElementIdHandler.ServeHTTP(w, r)
 		default:
@@ -1616,6 +1641,10 @@ func (UnimplementedLMSHandler) UpdateCjsSecureSearchCriteria(context.Context, *c
 
 func (UnimplementedLMSHandler) SampleEndpoint(context.Context, *connect_go.Request[v0alpha.SampleRequest]) (*connect_go.Response[emptypb.Empty], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.LMS.SampleEndpoint is not implemented"))
+}
+
+func (UnimplementedLMSHandler) GetAvailableEHRFields(context.Context, *connect_go.Request[v0alpha.EHREntityType]) (*connect_go.Response[v0alpha.Fields], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.LMS.GetAvailableEHRFields is not implemented"))
 }
 
 func (UnimplementedLMSHandler) GetQueuedEventsStatusByElementId(context.Context, *connect_go.Request[v0alpha.ElementPK]) (*connect_go.Response[v0alpha.Events], error) {
