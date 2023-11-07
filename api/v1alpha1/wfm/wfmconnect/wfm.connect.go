@@ -67,9 +67,6 @@ const (
 	// WFMGetForecastingParametersProcedure is the fully-qualified name of the WFM's
 	// GetForecastingParameters RPC.
 	WFMGetForecastingParametersProcedure = "/api.v1alpha1.wfm.WFM/GetForecastingParameters"
-	// WFMGetClientHistoryCacheInfoProcedure is the fully-qualified name of the WFM's
-	// GetClientHistoryCacheInfo RPC.
-	WFMGetClientHistoryCacheInfoProcedure = "/api.v1alpha1.wfm.WFM/GetClientHistoryCacheInfo"
 	// WFMListHistoricalDataProcedure is the fully-qualified name of the WFM's ListHistoricalData RPC.
 	WFMListHistoricalDataProcedure = "/api.v1alpha1.wfm.WFM/ListHistoricalData"
 	// WFMUpsertHistoricalDataDeltaProcedure is the fully-qualified name of the WFM's
@@ -549,16 +546,6 @@ type WFMClient interface {
 	// Errors:
 	//   - grpc.Internal: error occurs when getting the parameters.
 	GetForecastingParameters(context.Context, *connect_go.Request[wfm.GetForecastingParametersReq]) (*connect_go.Response[wfm.GetForecastingParametersRes], error)
-	// Gets the state of the cache for the given @org_id, and if the cache's state is not_loaded, or loading_failed,
-	// it will start the loading task before returning the current state.
-	// Required permissions:
-	//
-	//	NONE
-	//
-	// Errors:
-	//
-	//	-grpc.Internal: error occurs when getting the cache info.
-	GetClientHistoryCacheInfo(context.Context, *connect_go.Request[wfm.GetClientHistoryCacheInfoReq]) (*connect_go.Response[wfm.GetClientHistoryCacheInfoRes], error)
 	// Gets the historical data for the org sending the request and the given @skill_profile_category.
 	// It will look through the client's call history and generate the historical data by using their configured forecasting parameters (historical data period and interval width).
 	// The duration of each interval will be the interval width of the org's forecasting parameters.
@@ -2306,11 +2293,6 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMGetForecastingParametersProcedure,
 			opts...,
 		),
-		getClientHistoryCacheInfo: connect_go.NewClient[wfm.GetClientHistoryCacheInfoReq, wfm.GetClientHistoryCacheInfoRes](
-			httpClient,
-			baseURL+WFMGetClientHistoryCacheInfoProcedure,
-			opts...,
-		),
 		listHistoricalData: connect_go.NewClient[wfm.ListHistoricalDataReq, wfm.ListHistoricalDataRes](
 			httpClient,
 			baseURL+WFMListHistoricalDataProcedure,
@@ -3049,7 +3031,6 @@ type wFMClient struct {
 	getLastSkillProfileResyncDate                 *connect_go.Client[wfm.GetLastSkillProfileResyncDateReq, wfm.GetLastSkillProfileResyncDateRes]
 	upsertForecastingParameters                   *connect_go.Client[wfm.UpsertForecastingParametersReq, wfm.UpsertForecastingParametersRes]
 	getForecastingParameters                      *connect_go.Client[wfm.GetForecastingParametersReq, wfm.GetForecastingParametersRes]
-	getClientHistoryCacheInfo                     *connect_go.Client[wfm.GetClientHistoryCacheInfoReq, wfm.GetClientHistoryCacheInfoRes]
 	listHistoricalData                            *connect_go.Client[wfm.ListHistoricalDataReq, wfm.ListHistoricalDataRes]
 	upsertHistoricalDataDelta                     *connect_go.Client[wfm.UpsertHistoricalDataDeltaReq, wfm.UpsertHistoricalDataDeltaRes]
 	upsertHistoricalDataDeltas                    *connect_go.Client[wfm.UpsertHistoricalDataDeltasReq, wfm.UpsertHistoricalDataDeltasRes]
@@ -3235,11 +3216,6 @@ func (c *wFMClient) UpsertForecastingParameters(ctx context.Context, req *connec
 // GetForecastingParameters calls api.v1alpha1.wfm.WFM.GetForecastingParameters.
 func (c *wFMClient) GetForecastingParameters(ctx context.Context, req *connect_go.Request[wfm.GetForecastingParametersReq]) (*connect_go.Response[wfm.GetForecastingParametersRes], error) {
 	return c.getForecastingParameters.CallUnary(ctx, req)
-}
-
-// GetClientHistoryCacheInfo calls api.v1alpha1.wfm.WFM.GetClientHistoryCacheInfo.
-func (c *wFMClient) GetClientHistoryCacheInfo(ctx context.Context, req *connect_go.Request[wfm.GetClientHistoryCacheInfoReq]) (*connect_go.Response[wfm.GetClientHistoryCacheInfoRes], error) {
-	return c.getClientHistoryCacheInfo.CallUnary(ctx, req)
 }
 
 // ListHistoricalData calls api.v1alpha1.wfm.WFM.ListHistoricalData.
@@ -4067,16 +4043,6 @@ type WFMHandler interface {
 	// Errors:
 	//   - grpc.Internal: error occurs when getting the parameters.
 	GetForecastingParameters(context.Context, *connect_go.Request[wfm.GetForecastingParametersReq]) (*connect_go.Response[wfm.GetForecastingParametersRes], error)
-	// Gets the state of the cache for the given @org_id, and if the cache's state is not_loaded, or loading_failed,
-	// it will start the loading task before returning the current state.
-	// Required permissions:
-	//
-	//	NONE
-	//
-	// Errors:
-	//
-	//	-grpc.Internal: error occurs when getting the cache info.
-	GetClientHistoryCacheInfo(context.Context, *connect_go.Request[wfm.GetClientHistoryCacheInfoReq]) (*connect_go.Response[wfm.GetClientHistoryCacheInfoRes], error)
 	// Gets the historical data for the org sending the request and the given @skill_profile_category.
 	// It will look through the client's call history and generate the historical data by using their configured forecasting parameters (historical data period and interval width).
 	// The duration of each interval will be the interval width of the org's forecasting parameters.
@@ -5820,11 +5786,6 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.GetForecastingParameters,
 		opts...,
 	)
-	wFMGetClientHistoryCacheInfoHandler := connect_go.NewUnaryHandler(
-		WFMGetClientHistoryCacheInfoProcedure,
-		svc.GetClientHistoryCacheInfo,
-		opts...,
-	)
 	wFMListHistoricalDataHandler := connect_go.NewUnaryHandler(
 		WFMListHistoricalDataProcedure,
 		svc.ListHistoricalData,
@@ -6568,8 +6529,6 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMUpsertForecastingParametersHandler.ServeHTTP(w, r)
 		case WFMGetForecastingParametersProcedure:
 			wFMGetForecastingParametersHandler.ServeHTTP(w, r)
-		case WFMGetClientHistoryCacheInfoProcedure:
-			wFMGetClientHistoryCacheInfoHandler.ServeHTTP(w, r)
 		case WFMListHistoricalDataProcedure:
 			wFMListHistoricalDataHandler.ServeHTTP(w, r)
 		case WFMUpsertHistoricalDataDeltaProcedure:
@@ -6899,10 +6858,6 @@ func (UnimplementedWFMHandler) UpsertForecastingParameters(context.Context, *con
 
 func (UnimplementedWFMHandler) GetForecastingParameters(context.Context, *connect_go.Request[wfm.GetForecastingParametersReq]) (*connect_go.Response[wfm.GetForecastingParametersRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.GetForecastingParameters is not implemented"))
-}
-
-func (UnimplementedWFMHandler) GetClientHistoryCacheInfo(context.Context, *connect_go.Request[wfm.GetClientHistoryCacheInfoReq]) (*connect_go.Response[wfm.GetClientHistoryCacheInfoRes], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.GetClientHistoryCacheInfo is not implemented"))
 }
 
 func (UnimplementedWFMHandler) ListHistoricalData(context.Context, *connect_go.Request[wfm.ListHistoricalDataReq]) (*connect_go.Response[wfm.ListHistoricalDataRes], error) {
