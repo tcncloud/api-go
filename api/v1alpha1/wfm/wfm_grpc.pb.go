@@ -41,6 +41,7 @@ const (
 	WFM_GetLastSkillProfileResyncDate_FullMethodName                 = "/api.v1alpha1.wfm.WFM/GetLastSkillProfileResyncDate"
 	WFM_UpsertForecastingParameters_FullMethodName                   = "/api.v1alpha1.wfm.WFM/UpsertForecastingParameters"
 	WFM_GetForecastingParameters_FullMethodName                      = "/api.v1alpha1.wfm.WFM/GetForecastingParameters"
+	WFM_GetClientHistoryCacheInfo_FullMethodName                     = "/api.v1alpha1.wfm.WFM/GetClientHistoryCacheInfo"
 	WFM_ListHistoricalData_FullMethodName                            = "/api.v1alpha1.wfm.WFM/ListHistoricalData"
 	WFM_UpsertHistoricalDataDelta_FullMethodName                     = "/api.v1alpha1.wfm.WFM/UpsertHistoricalDataDelta"
 	WFM_UpsertHistoricalDataDeltas_FullMethodName                    = "/api.v1alpha1.wfm.WFM/UpsertHistoricalDataDeltas"
@@ -270,6 +271,16 @@ type WFMClient interface {
 	// Errors:
 	//   - grpc.Internal: error occurs when getting the parameters.
 	GetForecastingParameters(ctx context.Context, in *GetForecastingParametersReq, opts ...grpc.CallOption) (*GetForecastingParametersRes, error)
+	// Gets the state of the cache for the given @org_id, and if the cache's state is not_loaded, or loading_failed,
+	// it will start the loading task before returning the current state.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//
+	//	-grpc.Internal: error occurs when getting the cache info.
+	GetClientHistoryCacheInfo(ctx context.Context, in *GetClientHistoryCacheInfoReq, opts ...grpc.CallOption) (*GetClientHistoryCacheInfoRes, error)
 	// Gets the historical data for the org sending the request and the given @skill_profile_category.
 	// It will look through the client's call history and generate the historical data by using their configured forecasting parameters (historical data period and interval width).
 	// The duration of each interval will be the interval width of the org's forecasting parameters.
@@ -2043,6 +2054,15 @@ func (c *wFMClient) GetForecastingParameters(ctx context.Context, in *GetForecas
 	return out, nil
 }
 
+func (c *wFMClient) GetClientHistoryCacheInfo(ctx context.Context, in *GetClientHistoryCacheInfoReq, opts ...grpc.CallOption) (*GetClientHistoryCacheInfoRes, error) {
+	out := new(GetClientHistoryCacheInfoRes)
+	err := c.cc.Invoke(ctx, WFM_GetClientHistoryCacheInfo_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) ListHistoricalData(ctx context.Context, in *ListHistoricalDataReq, opts ...grpc.CallOption) (*ListHistoricalDataRes, error) {
 	out := new(ListHistoricalDataRes)
 	err := c.cc.Invoke(ctx, WFM_ListHistoricalData_FullMethodName, in, out, opts...)
@@ -3572,6 +3592,16 @@ type WFMServer interface {
 	// Errors:
 	//   - grpc.Internal: error occurs when getting the parameters.
 	GetForecastingParameters(context.Context, *GetForecastingParametersReq) (*GetForecastingParametersRes, error)
+	// Gets the state of the cache for the given @org_id, and if the cache's state is not_loaded, or loading_failed,
+	// it will start the loading task before returning the current state.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//
+	//	-grpc.Internal: error occurs when getting the cache info.
+	GetClientHistoryCacheInfo(context.Context, *GetClientHistoryCacheInfoReq) (*GetClientHistoryCacheInfoRes, error)
 	// Gets the historical data for the org sending the request and the given @skill_profile_category.
 	// It will look through the client's call history and generate the historical data by using their configured forecasting parameters (historical data period and interval width).
 	// The duration of each interval will be the interval width of the org's forecasting parameters.
@@ -5294,6 +5324,9 @@ func (UnimplementedWFMServer) UpsertForecastingParameters(context.Context, *Upse
 func (UnimplementedWFMServer) GetForecastingParameters(context.Context, *GetForecastingParametersReq) (*GetForecastingParametersRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetForecastingParameters not implemented")
 }
+func (UnimplementedWFMServer) GetClientHistoryCacheInfo(context.Context, *GetClientHistoryCacheInfoReq) (*GetClientHistoryCacheInfoRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetClientHistoryCacheInfo not implemented")
+}
 func (UnimplementedWFMServer) ListHistoricalData(context.Context, *ListHistoricalDataReq) (*ListHistoricalDataRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListHistoricalData not implemented")
 }
@@ -5882,6 +5915,24 @@ func _WFM_GetForecastingParameters_Handler(srv interface{}, ctx context.Context,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WFMServer).GetForecastingParameters(ctx, req.(*GetForecastingParametersReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_GetClientHistoryCacheInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetClientHistoryCacheInfoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).GetClientHistoryCacheInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_GetClientHistoryCacheInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).GetClientHistoryCacheInfo(ctx, req.(*GetClientHistoryCacheInfoReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -8552,6 +8603,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetForecastingParameters",
 			Handler:    _WFM_GetForecastingParameters_Handler,
+		},
+		{
+			MethodName: "GetClientHistoryCacheInfo",
+			Handler:    _WFM_GetClientHistoryCacheInfo_Handler,
 		},
 		{
 			MethodName: "ListHistoricalData",
