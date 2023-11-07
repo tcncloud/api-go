@@ -220,6 +220,9 @@ const (
 	WFMListCandidateSchedulingActivitiesProcedure = "/api.v1alpha1.wfm.WFM/ListCandidateSchedulingActivities"
 	// WFMCreateAgentGroupProcedure is the fully-qualified name of the WFM's CreateAgentGroup RPC.
 	WFMCreateAgentGroupProcedure = "/api.v1alpha1.wfm.WFM/CreateAgentGroup"
+	// WFMListAgentScheduleGroupsProcedure is the fully-qualified name of the WFM's
+	// ListAgentScheduleGroups RPC.
+	WFMListAgentScheduleGroupsProcedure = "/api.v1alpha1.wfm.WFM/ListAgentScheduleGroups"
 	// WFMUpdateAgentGroupProcedure is the fully-qualified name of the WFM's UpdateAgentGroup RPC.
 	WFMUpdateAgentGroupProcedure = "/api.v1alpha1.wfm.WFM/UpdateAgentGroup"
 	// WFMUpdateWFMAgentProcedure is the fully-qualified name of the WFM's UpdateWFMAgent RPC.
@@ -1178,6 +1181,8 @@ type WFMClient interface {
 	//   - grpc.NotFound: @parent_entity doesn't exist
 	//   - grpc.Internal: error occurs when creating the agent group.
 	CreateAgentGroup(context.Context, *connect_go.Request[wfm.CreateAgentGroupReq]) (*connect_go.Response[wfm.CreateAgentGroupRes], error)
+	// Lists all schedulable AgentGroups on or under the given Node or ShiftTemplate.
+	ListAgentScheduleGroups(context.Context, *connect_go.Request[wfm.ListAgentScheduleGroupsRequest]) (*connect_go.Response[wfm.ListAgentScheduleGroupsResponse], error)
 	// Updates the agent group corresponding to the @agent_group_sid, @name, and @parent_entity.
 	// All of the entity's parameters that are not desired to be updated must be filled with their current values.
 	// The @schedule_scenario_sid must be the original for this agent group since it cannot be changed.
@@ -2563,6 +2568,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMCreateAgentGroupProcedure,
 			opts...,
 		),
+		listAgentScheduleGroups: connect_go.NewClient[wfm.ListAgentScheduleGroupsRequest, wfm.ListAgentScheduleGroupsResponse](
+			httpClient,
+			baseURL+WFMListAgentScheduleGroupsProcedure,
+			opts...,
+		),
 		updateAgentGroup: connect_go.NewClient[wfm.UpdateAgentGroupReq, wfm.UpdateAgentGroupRes](
 			httpClient,
 			baseURL+WFMUpdateAgentGroupProcedure,
@@ -3085,6 +3095,7 @@ type wFMClient struct {
 	listNonSkillActivityAssociations              *connect_go.Client[wfm.ListNonSkillActivityAssociationsReq, wfm.ListNonSkillActivityAssociationsRes]
 	listCandidateSchedulingActivities             *connect_go.Client[wfm.ListCandidateSchedulingActivitiesReq, wfm.ListCandidateSchedulingActivitiesRes]
 	createAgentGroup                              *connect_go.Client[wfm.CreateAgentGroupReq, wfm.CreateAgentGroupRes]
+	listAgentScheduleGroups                       *connect_go.Client[wfm.ListAgentScheduleGroupsRequest, wfm.ListAgentScheduleGroupsResponse]
 	updateAgentGroup                              *connect_go.Client[wfm.UpdateAgentGroupReq, wfm.UpdateAgentGroupRes]
 	updateWFMAgent                                *connect_go.Client[wfm.UpdateWFMAgentReq, wfm.UpdateWFMAgentRes]
 	listAllWFMAgents                              *connect_go.Client[wfm.ListAllWFMAgentsReq, wfm.ListAllWFMAgentsRes]
@@ -3504,6 +3515,11 @@ func (c *wFMClient) ListCandidateSchedulingActivities(ctx context.Context, req *
 // CreateAgentGroup calls api.v1alpha1.wfm.WFM.CreateAgentGroup.
 func (c *wFMClient) CreateAgentGroup(ctx context.Context, req *connect_go.Request[wfm.CreateAgentGroupReq]) (*connect_go.Response[wfm.CreateAgentGroupRes], error) {
 	return c.createAgentGroup.CallUnary(ctx, req)
+}
+
+// ListAgentScheduleGroups calls api.v1alpha1.wfm.WFM.ListAgentScheduleGroups.
+func (c *wFMClient) ListAgentScheduleGroups(ctx context.Context, req *connect_go.Request[wfm.ListAgentScheduleGroupsRequest]) (*connect_go.Response[wfm.ListAgentScheduleGroupsResponse], error) {
+	return c.listAgentScheduleGroups.CallUnary(ctx, req)
 }
 
 // UpdateAgentGroup calls api.v1alpha1.wfm.WFM.UpdateAgentGroup.
@@ -4675,6 +4691,8 @@ type WFMHandler interface {
 	//   - grpc.NotFound: @parent_entity doesn't exist
 	//   - grpc.Internal: error occurs when creating the agent group.
 	CreateAgentGroup(context.Context, *connect_go.Request[wfm.CreateAgentGroupReq]) (*connect_go.Response[wfm.CreateAgentGroupRes], error)
+	// Lists all schedulable AgentGroups on or under the given Node or ShiftTemplate.
+	ListAgentScheduleGroups(context.Context, *connect_go.Request[wfm.ListAgentScheduleGroupsRequest]) (*connect_go.Response[wfm.ListAgentScheduleGroupsResponse], error)
 	// Updates the agent group corresponding to the @agent_group_sid, @name, and @parent_entity.
 	// All of the entity's parameters that are not desired to be updated must be filled with their current values.
 	// The @schedule_scenario_sid must be the original for this agent group since it cannot be changed.
@@ -6056,6 +6074,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.CreateAgentGroup,
 		opts...,
 	)
+	wFMListAgentScheduleGroupsHandler := connect_go.NewUnaryHandler(
+		WFMListAgentScheduleGroupsProcedure,
+		svc.ListAgentScheduleGroups,
+		opts...,
+	)
 	wFMUpdateAgentGroupHandler := connect_go.NewUnaryHandler(
 		WFMUpdateAgentGroupProcedure,
 		svc.UpdateAgentGroup,
@@ -6637,6 +6660,8 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMListCandidateSchedulingActivitiesHandler.ServeHTTP(w, r)
 		case WFMCreateAgentGroupProcedure:
 			wFMCreateAgentGroupHandler.ServeHTTP(w, r)
+		case WFMListAgentScheduleGroupsProcedure:
+			wFMListAgentScheduleGroupsHandler.ServeHTTP(w, r)
 		case WFMUpdateAgentGroupProcedure:
 			wFMUpdateAgentGroupHandler.ServeHTTP(w, r)
 		case WFMUpdateWFMAgentProcedure:
@@ -7074,6 +7099,10 @@ func (UnimplementedWFMHandler) ListCandidateSchedulingActivities(context.Context
 
 func (UnimplementedWFMHandler) CreateAgentGroup(context.Context, *connect_go.Request[wfm.CreateAgentGroupReq]) (*connect_go.Response[wfm.CreateAgentGroupRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.CreateAgentGroup is not implemented"))
+}
+
+func (UnimplementedWFMHandler) ListAgentScheduleGroups(context.Context, *connect_go.Request[wfm.ListAgentScheduleGroupsRequest]) (*connect_go.Response[wfm.ListAgentScheduleGroupsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListAgentScheduleGroups is not implemented"))
 }
 
 func (UnimplementedWFMHandler) UpdateAgentGroup(context.Context, *connect_go.Request[wfm.UpdateAgentGroupReq]) (*connect_go.Response[wfm.UpdateAgentGroupRes], error) {
