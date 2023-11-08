@@ -96,7 +96,6 @@ const (
 	WFM_ListNonSkillActivityAssociations_FullMethodName              = "/api.v1alpha1.wfm.WFM/ListNonSkillActivityAssociations"
 	WFM_ListCandidateSchedulingActivities_FullMethodName             = "/api.v1alpha1.wfm.WFM/ListCandidateSchedulingActivities"
 	WFM_CreateAgentGroup_FullMethodName                              = "/api.v1alpha1.wfm.WFM/CreateAgentGroup"
-	WFM_ListAgentScheduleGroups_FullMethodName                       = "/api.v1alpha1.wfm.WFM/ListAgentScheduleGroups"
 	WFM_UpdateAgentGroup_FullMethodName                              = "/api.v1alpha1.wfm.WFM/UpdateAgentGroup"
 	WFM_UpdateWFMAgent_FullMethodName                                = "/api.v1alpha1.wfm.WFM/UpdateWFMAgent"
 	WFM_ListAllWFMAgents_FullMethodName                              = "/api.v1alpha1.wfm.WFM/ListAllWFMAgents"
@@ -911,8 +910,6 @@ type WFMClient interface {
 	//   - grpc.NotFound: @parent_entity doesn't exist
 	//   - grpc.Internal: error occurs when creating the agent group.
 	CreateAgentGroup(ctx context.Context, in *CreateAgentGroupReq, opts ...grpc.CallOption) (*CreateAgentGroupRes, error)
-	// Lists all schedulable AgentGroups on or under the given Node or ShiftTemplate.
-	ListAgentScheduleGroups(ctx context.Context, in *ListAgentScheduleGroupsRequest, opts ...grpc.CallOption) (*ListAgentScheduleGroupsResponse, error)
 	// Updates the agent group corresponding to the @agent_group_sid, @name, and @parent_entity.
 	// All of the entity's parameters that are not desired to be updated must be filled with their current values.
 	// The @schedule_scenario_sid must be the original for this agent group since it cannot be changed.
@@ -2706,15 +2703,6 @@ func (c *wFMClient) CreateAgentGroup(ctx context.Context, in *CreateAgentGroupRe
 	return out, nil
 }
 
-func (c *wFMClient) ListAgentScheduleGroups(ctx context.Context, in *ListAgentScheduleGroupsRequest, opts ...grpc.CallOption) (*ListAgentScheduleGroupsResponse, error) {
-	out := new(ListAgentScheduleGroupsResponse)
-	err := c.cc.Invoke(ctx, WFM_ListAgentScheduleGroups_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *wFMClient) UpdateAgentGroup(ctx context.Context, in *UpdateAgentGroupReq, opts ...grpc.CallOption) (*UpdateAgentGroupRes, error) {
 	out := new(UpdateAgentGroupRes)
 	err := c.cc.Invoke(ctx, WFM_UpdateAgentGroup_FullMethodName, in, out, opts...)
@@ -4263,8 +4251,6 @@ type WFMServer interface {
 	//   - grpc.NotFound: @parent_entity doesn't exist
 	//   - grpc.Internal: error occurs when creating the agent group.
 	CreateAgentGroup(context.Context, *CreateAgentGroupReq) (*CreateAgentGroupRes, error)
-	// Lists all schedulable AgentGroups on or under the given Node or ShiftTemplate.
-	ListAgentScheduleGroups(context.Context, *ListAgentScheduleGroupsRequest) (*ListAgentScheduleGroupsResponse, error)
 	// Updates the agent group corresponding to the @agent_group_sid, @name, and @parent_entity.
 	// All of the entity's parameters that are not desired to be updated must be filled with their current values.
 	// The @schedule_scenario_sid must be the original for this agent group since it cannot be changed.
@@ -5534,9 +5520,6 @@ func (UnimplementedWFMServer) ListCandidateSchedulingActivities(context.Context,
 }
 func (UnimplementedWFMServer) CreateAgentGroup(context.Context, *CreateAgentGroupReq) (*CreateAgentGroupRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateAgentGroup not implemented")
-}
-func (UnimplementedWFMServer) ListAgentScheduleGroups(context.Context, *ListAgentScheduleGroupsRequest) (*ListAgentScheduleGroupsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListAgentScheduleGroups not implemented")
 }
 func (UnimplementedWFMServer) UpdateAgentGroup(context.Context, *UpdateAgentGroupReq) (*UpdateAgentGroupRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateAgentGroup not implemented")
@@ -6975,24 +6958,6 @@ func _WFM_CreateAgentGroup_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WFMServer).CreateAgentGroup(ctx, req.(*CreateAgentGroupReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _WFM_ListAgentScheduleGroups_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListAgentScheduleGroupsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(WFMServer).ListAgentScheduleGroups(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: WFM_ListAgentScheduleGroups_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WFMServer).ListAgentScheduleGroups(ctx, req.(*ListAgentScheduleGroupsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -8887,10 +8852,6 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateAgentGroup",
 			Handler:    _WFM_CreateAgentGroup_Handler,
-		},
-		{
-			MethodName: "ListAgentScheduleGroups",
-			Handler:    _WFM_ListAgentScheduleGroups_Handler,
 		},
 		{
 			MethodName: "UpdateAgentGroup",
