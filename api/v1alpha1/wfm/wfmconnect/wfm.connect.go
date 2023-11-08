@@ -67,6 +67,9 @@ const (
 	// WFMGetForecastingParametersProcedure is the fully-qualified name of the WFM's
 	// GetForecastingParameters RPC.
 	WFMGetForecastingParametersProcedure = "/api.v1alpha1.wfm.WFM/GetForecastingParameters"
+	// WFMGetClientHistoryCacheInfoProcedure is the fully-qualified name of the WFM's
+	// GetClientHistoryCacheInfo RPC.
+	WFMGetClientHistoryCacheInfoProcedure = "/api.v1alpha1.wfm.WFM/GetClientHistoryCacheInfo"
 	// WFMListHistoricalDataProcedure is the fully-qualified name of the WFM's ListHistoricalData RPC.
 	WFMListHistoricalDataProcedure = "/api.v1alpha1.wfm.WFM/ListHistoricalData"
 	// WFMUpsertHistoricalDataDeltaProcedure is the fully-qualified name of the WFM's
@@ -220,6 +223,9 @@ const (
 	WFMListCandidateSchedulingActivitiesProcedure = "/api.v1alpha1.wfm.WFM/ListCandidateSchedulingActivities"
 	// WFMCreateAgentGroupProcedure is the fully-qualified name of the WFM's CreateAgentGroup RPC.
 	WFMCreateAgentGroupProcedure = "/api.v1alpha1.wfm.WFM/CreateAgentGroup"
+	// WFMListAgentScheduleGroupsProcedure is the fully-qualified name of the WFM's
+	// ListAgentScheduleGroups RPC.
+	WFMListAgentScheduleGroupsProcedure = "/api.v1alpha1.wfm.WFM/ListAgentScheduleGroups"
 	// WFMUpdateAgentGroupProcedure is the fully-qualified name of the WFM's UpdateAgentGroup RPC.
 	WFMUpdateAgentGroupProcedure = "/api.v1alpha1.wfm.WFM/UpdateAgentGroup"
 	// WFMUpdateWFMAgentProcedure is the fully-qualified name of the WFM's UpdateWFMAgent RPC.
@@ -405,6 +411,9 @@ const (
 	WFMUpsertTourPatternWithMembersProcedure = "/api.v1alpha1.wfm.WFM/UpsertTourPatternWithMembers"
 	// WFMGetTourPatternProcedure is the fully-qualified name of the WFM's GetTourPattern RPC.
 	WFMGetTourPatternProcedure = "/api.v1alpha1.wfm.WFM/GetTourPattern"
+	// WFMGetTourPatternWithMembersProcedure is the fully-qualified name of the WFM's
+	// GetTourPatternWithMembers RPC.
+	WFMGetTourPatternWithMembersProcedure = "/api.v1alpha1.wfm.WFM/GetTourPatternWithMembers"
 	// WFMDeleteTourPatternProcedure is the fully-qualified name of the WFM's DeleteTourPattern RPC.
 	WFMDeleteTourPatternProcedure = "/api.v1alpha1.wfm.WFM/DeleteTourPattern"
 	// WFMCreateTourWeekPatternProcedure is the fully-qualified name of the WFM's CreateTourWeekPattern
@@ -546,6 +555,16 @@ type WFMClient interface {
 	// Errors:
 	//   - grpc.Internal: error occurs when getting the parameters.
 	GetForecastingParameters(context.Context, *connect_go.Request[wfm.GetForecastingParametersReq]) (*connect_go.Response[wfm.GetForecastingParametersRes], error)
+	// Gets the state of the cache for the given @org_id, and if the cache's state is not_loaded, or loading_failed,
+	// it will start the loading task before returning the current state.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//
+	//	-grpc.Internal: error occurs when getting the cache info.
+	GetClientHistoryCacheInfo(context.Context, *connect_go.Request[wfm.GetClientHistoryCacheInfoReq]) (*connect_go.Response[wfm.GetClientHistoryCacheInfoRes], error)
 	// Gets the historical data for the org sending the request and the given @skill_profile_category.
 	// It will look through the client's call history and generate the historical data by using their configured forecasting parameters (historical data period and interval width).
 	// The duration of each interval will be the interval width of the org's forecasting parameters.
@@ -1178,6 +1197,8 @@ type WFMClient interface {
 	//   - grpc.NotFound: @parent_entity doesn't exist
 	//   - grpc.Internal: error occurs when creating the agent group.
 	CreateAgentGroup(context.Context, *connect_go.Request[wfm.CreateAgentGroupReq]) (*connect_go.Response[wfm.CreateAgentGroupRes], error)
+	// Lists all schedulable AgentGroups on or under the given Node or ShiftTemplate.
+	ListAgentScheduleGroups(context.Context, *connect_go.Request[wfm.ListAgentScheduleGroupsRequest]) (*connect_go.Response[wfm.ListAgentScheduleGroupsResponse], error)
 	// Updates the agent group corresponding to the @agent_group_sid, @name, and @parent_entity.
 	// All of the entity's parameters that are not desired to be updated must be filled with their current values.
 	// The @schedule_scenario_sid must be the original for this agent group since it cannot be changed.
@@ -2027,6 +2048,17 @@ type WFMClient interface {
 	//   - grpc.NotFound: the requested Tour Pattern does not exist.
 	//   - grpc.Internal: error occurs when getting the data.
 	GetTourPattern(context.Context, *connect_go.Request[wfm.GetTourPatternReq]) (*connect_go.Response[wfm.GetTourPatternRes], error)
+	// Gets the Tour Pattern belonging to @shift_template_sid and the org sending the request.
+	// The @tour_pattern will be returned with all member entities.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.NotFound: the requested Tour Pattern does not exist.
+	//   - grpc.Internal: error occurs when getting the data.
+	GetTourPatternWithMembers(context.Context, *connect_go.Request[wfm.GetTourPatternWithMembersReq]) (*connect_go.Response[wfm.GetTourPatternWithMembersRes], error)
 	// Deletes the Tour Pattern belonging to @tour_pattern_sid and the org sending the request.
 	// Any member Tour Week Patterns or Agent Collections will be deleted as well.
 	// Required permissions:
@@ -2291,6 +2323,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 		getForecastingParameters: connect_go.NewClient[wfm.GetForecastingParametersReq, wfm.GetForecastingParametersRes](
 			httpClient,
 			baseURL+WFMGetForecastingParametersProcedure,
+			opts...,
+		),
+		getClientHistoryCacheInfo: connect_go.NewClient[wfm.GetClientHistoryCacheInfoReq, wfm.GetClientHistoryCacheInfoRes](
+			httpClient,
+			baseURL+WFMGetClientHistoryCacheInfoProcedure,
 			opts...,
 		),
 		listHistoricalData: connect_go.NewClient[wfm.ListHistoricalDataReq, wfm.ListHistoricalDataRes](
@@ -2561,6 +2598,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 		createAgentGroup: connect_go.NewClient[wfm.CreateAgentGroupReq, wfm.CreateAgentGroupRes](
 			httpClient,
 			baseURL+WFMCreateAgentGroupProcedure,
+			opts...,
+		),
+		listAgentScheduleGroups: connect_go.NewClient[wfm.ListAgentScheduleGroupsRequest, wfm.ListAgentScheduleGroupsResponse](
+			httpClient,
+			baseURL+WFMListAgentScheduleGroupsProcedure,
 			opts...,
 		),
 		updateAgentGroup: connect_go.NewClient[wfm.UpdateAgentGroupReq, wfm.UpdateAgentGroupRes](
@@ -2918,6 +2960,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMGetTourPatternProcedure,
 			opts...,
 		),
+		getTourPatternWithMembers: connect_go.NewClient[wfm.GetTourPatternWithMembersReq, wfm.GetTourPatternWithMembersRes](
+			httpClient,
+			baseURL+WFMGetTourPatternWithMembersProcedure,
+			opts...,
+		),
 		deleteTourPattern: connect_go.NewClient[wfm.DeleteTourPatternReq, wfm.DeleteTourPatternRes](
 			httpClient,
 			baseURL+WFMDeleteTourPatternProcedure,
@@ -3031,6 +3078,7 @@ type wFMClient struct {
 	getLastSkillProfileResyncDate                 *connect_go.Client[wfm.GetLastSkillProfileResyncDateReq, wfm.GetLastSkillProfileResyncDateRes]
 	upsertForecastingParameters                   *connect_go.Client[wfm.UpsertForecastingParametersReq, wfm.UpsertForecastingParametersRes]
 	getForecastingParameters                      *connect_go.Client[wfm.GetForecastingParametersReq, wfm.GetForecastingParametersRes]
+	getClientHistoryCacheInfo                     *connect_go.Client[wfm.GetClientHistoryCacheInfoReq, wfm.GetClientHistoryCacheInfoRes]
 	listHistoricalData                            *connect_go.Client[wfm.ListHistoricalDataReq, wfm.ListHistoricalDataRes]
 	upsertHistoricalDataDelta                     *connect_go.Client[wfm.UpsertHistoricalDataDeltaReq, wfm.UpsertHistoricalDataDeltaRes]
 	upsertHistoricalDataDeltas                    *connect_go.Client[wfm.UpsertHistoricalDataDeltasReq, wfm.UpsertHistoricalDataDeltasRes]
@@ -3085,6 +3133,7 @@ type wFMClient struct {
 	listNonSkillActivityAssociations              *connect_go.Client[wfm.ListNonSkillActivityAssociationsReq, wfm.ListNonSkillActivityAssociationsRes]
 	listCandidateSchedulingActivities             *connect_go.Client[wfm.ListCandidateSchedulingActivitiesReq, wfm.ListCandidateSchedulingActivitiesRes]
 	createAgentGroup                              *connect_go.Client[wfm.CreateAgentGroupReq, wfm.CreateAgentGroupRes]
+	listAgentScheduleGroups                       *connect_go.Client[wfm.ListAgentScheduleGroupsRequest, wfm.ListAgentScheduleGroupsResponse]
 	updateAgentGroup                              *connect_go.Client[wfm.UpdateAgentGroupReq, wfm.UpdateAgentGroupRes]
 	updateWFMAgent                                *connect_go.Client[wfm.UpdateWFMAgentReq, wfm.UpdateWFMAgentRes]
 	listAllWFMAgents                              *connect_go.Client[wfm.ListAllWFMAgentsReq, wfm.ListAllWFMAgentsRes]
@@ -3156,6 +3205,7 @@ type wFMClient struct {
 	getTourPatternDiagnostics                     *connect_go.Client[wfm.GetTourPatternDiagnosticsReq, wfm.GetTourPatternDiagnosticsRes]
 	upsertTourPatternWithMembers                  *connect_go.Client[wfm.UpsertTourPatternWithMembersReq, wfm.UpsertTourPatternWithMembersRes]
 	getTourPattern                                *connect_go.Client[wfm.GetTourPatternReq, wfm.GetTourPatternRes]
+	getTourPatternWithMembers                     *connect_go.Client[wfm.GetTourPatternWithMembersReq, wfm.GetTourPatternWithMembersRes]
 	deleteTourPattern                             *connect_go.Client[wfm.DeleteTourPatternReq, wfm.DeleteTourPatternRes]
 	createTourWeekPattern                         *connect_go.Client[wfm.CreateTourWeekPatternReq, wfm.CreateTourWeekPatternRes]
 	listTourWeekPatterns                          *connect_go.Client[wfm.ListTourWeekPatternsReq, wfm.ListTourWeekPatternsRes]
@@ -3216,6 +3266,11 @@ func (c *wFMClient) UpsertForecastingParameters(ctx context.Context, req *connec
 // GetForecastingParameters calls api.v1alpha1.wfm.WFM.GetForecastingParameters.
 func (c *wFMClient) GetForecastingParameters(ctx context.Context, req *connect_go.Request[wfm.GetForecastingParametersReq]) (*connect_go.Response[wfm.GetForecastingParametersRes], error) {
 	return c.getForecastingParameters.CallUnary(ctx, req)
+}
+
+// GetClientHistoryCacheInfo calls api.v1alpha1.wfm.WFM.GetClientHistoryCacheInfo.
+func (c *wFMClient) GetClientHistoryCacheInfo(ctx context.Context, req *connect_go.Request[wfm.GetClientHistoryCacheInfoReq]) (*connect_go.Response[wfm.GetClientHistoryCacheInfoRes], error) {
+	return c.getClientHistoryCacheInfo.CallUnary(ctx, req)
 }
 
 // ListHistoricalData calls api.v1alpha1.wfm.WFM.ListHistoricalData.
@@ -3504,6 +3559,11 @@ func (c *wFMClient) ListCandidateSchedulingActivities(ctx context.Context, req *
 // CreateAgentGroup calls api.v1alpha1.wfm.WFM.CreateAgentGroup.
 func (c *wFMClient) CreateAgentGroup(ctx context.Context, req *connect_go.Request[wfm.CreateAgentGroupReq]) (*connect_go.Response[wfm.CreateAgentGroupRes], error) {
 	return c.createAgentGroup.CallUnary(ctx, req)
+}
+
+// ListAgentScheduleGroups calls api.v1alpha1.wfm.WFM.ListAgentScheduleGroups.
+func (c *wFMClient) ListAgentScheduleGroups(ctx context.Context, req *connect_go.Request[wfm.ListAgentScheduleGroupsRequest]) (*connect_go.Response[wfm.ListAgentScheduleGroupsResponse], error) {
+	return c.listAgentScheduleGroups.CallUnary(ctx, req)
 }
 
 // UpdateAgentGroup calls api.v1alpha1.wfm.WFM.UpdateAgentGroup.
@@ -3863,6 +3923,11 @@ func (c *wFMClient) GetTourPattern(ctx context.Context, req *connect_go.Request[
 	return c.getTourPattern.CallUnary(ctx, req)
 }
 
+// GetTourPatternWithMembers calls api.v1alpha1.wfm.WFM.GetTourPatternWithMembers.
+func (c *wFMClient) GetTourPatternWithMembers(ctx context.Context, req *connect_go.Request[wfm.GetTourPatternWithMembersReq]) (*connect_go.Response[wfm.GetTourPatternWithMembersRes], error) {
+	return c.getTourPatternWithMembers.CallUnary(ctx, req)
+}
+
 // DeleteTourPattern calls api.v1alpha1.wfm.WFM.DeleteTourPattern.
 func (c *wFMClient) DeleteTourPattern(ctx context.Context, req *connect_go.Request[wfm.DeleteTourPatternReq]) (*connect_go.Response[wfm.DeleteTourPatternRes], error) {
 	return c.deleteTourPattern.CallUnary(ctx, req)
@@ -4043,6 +4108,16 @@ type WFMHandler interface {
 	// Errors:
 	//   - grpc.Internal: error occurs when getting the parameters.
 	GetForecastingParameters(context.Context, *connect_go.Request[wfm.GetForecastingParametersReq]) (*connect_go.Response[wfm.GetForecastingParametersRes], error)
+	// Gets the state of the cache for the given @org_id, and if the cache's state is not_loaded, or loading_failed,
+	// it will start the loading task before returning the current state.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//
+	//	-grpc.Internal: error occurs when getting the cache info.
+	GetClientHistoryCacheInfo(context.Context, *connect_go.Request[wfm.GetClientHistoryCacheInfoReq]) (*connect_go.Response[wfm.GetClientHistoryCacheInfoRes], error)
 	// Gets the historical data for the org sending the request and the given @skill_profile_category.
 	// It will look through the client's call history and generate the historical data by using their configured forecasting parameters (historical data period and interval width).
 	// The duration of each interval will be the interval width of the org's forecasting parameters.
@@ -4675,6 +4750,8 @@ type WFMHandler interface {
 	//   - grpc.NotFound: @parent_entity doesn't exist
 	//   - grpc.Internal: error occurs when creating the agent group.
 	CreateAgentGroup(context.Context, *connect_go.Request[wfm.CreateAgentGroupReq]) (*connect_go.Response[wfm.CreateAgentGroupRes], error)
+	// Lists all schedulable AgentGroups on or under the given Node or ShiftTemplate.
+	ListAgentScheduleGroups(context.Context, *connect_go.Request[wfm.ListAgentScheduleGroupsRequest]) (*connect_go.Response[wfm.ListAgentScheduleGroupsResponse], error)
 	// Updates the agent group corresponding to the @agent_group_sid, @name, and @parent_entity.
 	// All of the entity's parameters that are not desired to be updated must be filled with their current values.
 	// The @schedule_scenario_sid must be the original for this agent group since it cannot be changed.
@@ -5524,6 +5601,17 @@ type WFMHandler interface {
 	//   - grpc.NotFound: the requested Tour Pattern does not exist.
 	//   - grpc.Internal: error occurs when getting the data.
 	GetTourPattern(context.Context, *connect_go.Request[wfm.GetTourPatternReq]) (*connect_go.Response[wfm.GetTourPatternRes], error)
+	// Gets the Tour Pattern belonging to @shift_template_sid and the org sending the request.
+	// The @tour_pattern will be returned with all member entities.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.NotFound: the requested Tour Pattern does not exist.
+	//   - grpc.Internal: error occurs when getting the data.
+	GetTourPatternWithMembers(context.Context, *connect_go.Request[wfm.GetTourPatternWithMembersReq]) (*connect_go.Response[wfm.GetTourPatternWithMembersRes], error)
 	// Deletes the Tour Pattern belonging to @tour_pattern_sid and the org sending the request.
 	// Any member Tour Week Patterns or Agent Collections will be deleted as well.
 	// Required permissions:
@@ -5784,6 +5872,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 	wFMGetForecastingParametersHandler := connect_go.NewUnaryHandler(
 		WFMGetForecastingParametersProcedure,
 		svc.GetForecastingParameters,
+		opts...,
+	)
+	wFMGetClientHistoryCacheInfoHandler := connect_go.NewUnaryHandler(
+		WFMGetClientHistoryCacheInfoProcedure,
+		svc.GetClientHistoryCacheInfo,
 		opts...,
 	)
 	wFMListHistoricalDataHandler := connect_go.NewUnaryHandler(
@@ -6054,6 +6147,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 	wFMCreateAgentGroupHandler := connect_go.NewUnaryHandler(
 		WFMCreateAgentGroupProcedure,
 		svc.CreateAgentGroup,
+		opts...,
+	)
+	wFMListAgentScheduleGroupsHandler := connect_go.NewUnaryHandler(
+		WFMListAgentScheduleGroupsProcedure,
+		svc.ListAgentScheduleGroups,
 		opts...,
 	)
 	wFMUpdateAgentGroupHandler := connect_go.NewUnaryHandler(
@@ -6411,6 +6509,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.GetTourPattern,
 		opts...,
 	)
+	wFMGetTourPatternWithMembersHandler := connect_go.NewUnaryHandler(
+		WFMGetTourPatternWithMembersProcedure,
+		svc.GetTourPatternWithMembers,
+		opts...,
+	)
 	wFMDeleteTourPatternHandler := connect_go.NewUnaryHandler(
 		WFMDeleteTourPatternProcedure,
 		svc.DeleteTourPattern,
@@ -6529,6 +6632,8 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMUpsertForecastingParametersHandler.ServeHTTP(w, r)
 		case WFMGetForecastingParametersProcedure:
 			wFMGetForecastingParametersHandler.ServeHTTP(w, r)
+		case WFMGetClientHistoryCacheInfoProcedure:
+			wFMGetClientHistoryCacheInfoHandler.ServeHTTP(w, r)
 		case WFMListHistoricalDataProcedure:
 			wFMListHistoricalDataHandler.ServeHTTP(w, r)
 		case WFMUpsertHistoricalDataDeltaProcedure:
@@ -6637,6 +6742,8 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMListCandidateSchedulingActivitiesHandler.ServeHTTP(w, r)
 		case WFMCreateAgentGroupProcedure:
 			wFMCreateAgentGroupHandler.ServeHTTP(w, r)
+		case WFMListAgentScheduleGroupsProcedure:
+			wFMListAgentScheduleGroupsHandler.ServeHTTP(w, r)
 		case WFMUpdateAgentGroupProcedure:
 			wFMUpdateAgentGroupHandler.ServeHTTP(w, r)
 		case WFMUpdateWFMAgentProcedure:
@@ -6779,6 +6886,8 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMUpsertTourPatternWithMembersHandler.ServeHTTP(w, r)
 		case WFMGetTourPatternProcedure:
 			wFMGetTourPatternHandler.ServeHTTP(w, r)
+		case WFMGetTourPatternWithMembersProcedure:
+			wFMGetTourPatternWithMembersHandler.ServeHTTP(w, r)
 		case WFMDeleteTourPatternProcedure:
 			wFMDeleteTourPatternHandler.ServeHTTP(w, r)
 		case WFMCreateTourWeekPatternProcedure:
@@ -6858,6 +6967,10 @@ func (UnimplementedWFMHandler) UpsertForecastingParameters(context.Context, *con
 
 func (UnimplementedWFMHandler) GetForecastingParameters(context.Context, *connect_go.Request[wfm.GetForecastingParametersReq]) (*connect_go.Response[wfm.GetForecastingParametersRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.GetForecastingParameters is not implemented"))
+}
+
+func (UnimplementedWFMHandler) GetClientHistoryCacheInfo(context.Context, *connect_go.Request[wfm.GetClientHistoryCacheInfoReq]) (*connect_go.Response[wfm.GetClientHistoryCacheInfoRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.GetClientHistoryCacheInfo is not implemented"))
 }
 
 func (UnimplementedWFMHandler) ListHistoricalData(context.Context, *connect_go.Request[wfm.ListHistoricalDataReq]) (*connect_go.Response[wfm.ListHistoricalDataRes], error) {
@@ -7074,6 +7187,10 @@ func (UnimplementedWFMHandler) ListCandidateSchedulingActivities(context.Context
 
 func (UnimplementedWFMHandler) CreateAgentGroup(context.Context, *connect_go.Request[wfm.CreateAgentGroupReq]) (*connect_go.Response[wfm.CreateAgentGroupRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.CreateAgentGroup is not implemented"))
+}
+
+func (UnimplementedWFMHandler) ListAgentScheduleGroups(context.Context, *connect_go.Request[wfm.ListAgentScheduleGroupsRequest]) (*connect_go.Response[wfm.ListAgentScheduleGroupsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListAgentScheduleGroups is not implemented"))
 }
 
 func (UnimplementedWFMHandler) UpdateAgentGroup(context.Context, *connect_go.Request[wfm.UpdateAgentGroupReq]) (*connect_go.Response[wfm.UpdateAgentGroupRes], error) {
@@ -7358,6 +7475,10 @@ func (UnimplementedWFMHandler) UpsertTourPatternWithMembers(context.Context, *co
 
 func (UnimplementedWFMHandler) GetTourPattern(context.Context, *connect_go.Request[wfm.GetTourPatternReq]) (*connect_go.Response[wfm.GetTourPatternRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.GetTourPattern is not implemented"))
+}
+
+func (UnimplementedWFMHandler) GetTourPatternWithMembers(context.Context, *connect_go.Request[wfm.GetTourPatternWithMembersReq]) (*connect_go.Response[wfm.GetTourPatternWithMembersRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.GetTourPatternWithMembers is not implemented"))
 }
 
 func (UnimplementedWFMHandler) DeleteTourPattern(context.Context, *connect_go.Request[wfm.DeleteTourPatternReq]) (*connect_go.Response[wfm.DeleteTourPatternRes], error) {

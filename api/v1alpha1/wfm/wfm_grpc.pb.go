@@ -41,6 +41,7 @@ const (
 	WFM_GetLastSkillProfileResyncDate_FullMethodName                 = "/api.v1alpha1.wfm.WFM/GetLastSkillProfileResyncDate"
 	WFM_UpsertForecastingParameters_FullMethodName                   = "/api.v1alpha1.wfm.WFM/UpsertForecastingParameters"
 	WFM_GetForecastingParameters_FullMethodName                      = "/api.v1alpha1.wfm.WFM/GetForecastingParameters"
+	WFM_GetClientHistoryCacheInfo_FullMethodName                     = "/api.v1alpha1.wfm.WFM/GetClientHistoryCacheInfo"
 	WFM_ListHistoricalData_FullMethodName                            = "/api.v1alpha1.wfm.WFM/ListHistoricalData"
 	WFM_UpsertHistoricalDataDelta_FullMethodName                     = "/api.v1alpha1.wfm.WFM/UpsertHistoricalDataDelta"
 	WFM_UpsertHistoricalDataDeltas_FullMethodName                    = "/api.v1alpha1.wfm.WFM/UpsertHistoricalDataDeltas"
@@ -95,6 +96,7 @@ const (
 	WFM_ListNonSkillActivityAssociations_FullMethodName              = "/api.v1alpha1.wfm.WFM/ListNonSkillActivityAssociations"
 	WFM_ListCandidateSchedulingActivities_FullMethodName             = "/api.v1alpha1.wfm.WFM/ListCandidateSchedulingActivities"
 	WFM_CreateAgentGroup_FullMethodName                              = "/api.v1alpha1.wfm.WFM/CreateAgentGroup"
+	WFM_ListAgentScheduleGroups_FullMethodName                       = "/api.v1alpha1.wfm.WFM/ListAgentScheduleGroups"
 	WFM_UpdateAgentGroup_FullMethodName                              = "/api.v1alpha1.wfm.WFM/UpdateAgentGroup"
 	WFM_UpdateWFMAgent_FullMethodName                                = "/api.v1alpha1.wfm.WFM/UpdateWFMAgent"
 	WFM_ListAllWFMAgents_FullMethodName                              = "/api.v1alpha1.wfm.WFM/ListAllWFMAgents"
@@ -166,6 +168,7 @@ const (
 	WFM_GetTourPatternDiagnostics_FullMethodName                     = "/api.v1alpha1.wfm.WFM/GetTourPatternDiagnostics"
 	WFM_UpsertTourPatternWithMembers_FullMethodName                  = "/api.v1alpha1.wfm.WFM/UpsertTourPatternWithMembers"
 	WFM_GetTourPattern_FullMethodName                                = "/api.v1alpha1.wfm.WFM/GetTourPattern"
+	WFM_GetTourPatternWithMembers_FullMethodName                     = "/api.v1alpha1.wfm.WFM/GetTourPatternWithMembers"
 	WFM_DeleteTourPattern_FullMethodName                             = "/api.v1alpha1.wfm.WFM/DeleteTourPattern"
 	WFM_CreateTourWeekPattern_FullMethodName                         = "/api.v1alpha1.wfm.WFM/CreateTourWeekPattern"
 	WFM_ListTourWeekPatterns_FullMethodName                          = "/api.v1alpha1.wfm.WFM/ListTourWeekPatterns"
@@ -270,6 +273,16 @@ type WFMClient interface {
 	// Errors:
 	//   - grpc.Internal: error occurs when getting the parameters.
 	GetForecastingParameters(ctx context.Context, in *GetForecastingParametersReq, opts ...grpc.CallOption) (*GetForecastingParametersRes, error)
+	// Gets the state of the cache for the given @org_id, and if the cache's state is not_loaded, or loading_failed,
+	// it will start the loading task before returning the current state.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//
+	//	-grpc.Internal: error occurs when getting the cache info.
+	GetClientHistoryCacheInfo(ctx context.Context, in *GetClientHistoryCacheInfoReq, opts ...grpc.CallOption) (*GetClientHistoryCacheInfoRes, error)
 	// Gets the historical data for the org sending the request and the given @skill_profile_category.
 	// It will look through the client's call history and generate the historical data by using their configured forecasting parameters (historical data period and interval width).
 	// The duration of each interval will be the interval width of the org's forecasting parameters.
@@ -898,6 +911,8 @@ type WFMClient interface {
 	//   - grpc.NotFound: @parent_entity doesn't exist
 	//   - grpc.Internal: error occurs when creating the agent group.
 	CreateAgentGroup(ctx context.Context, in *CreateAgentGroupReq, opts ...grpc.CallOption) (*CreateAgentGroupRes, error)
+	// Lists all schedulable AgentGroups on or under the given Node or ShiftTemplate.
+	ListAgentScheduleGroups(ctx context.Context, in *ListAgentScheduleGroupsRequest, opts ...grpc.CallOption) (*ListAgentScheduleGroupsResponse, error)
 	// Updates the agent group corresponding to the @agent_group_sid, @name, and @parent_entity.
 	// All of the entity's parameters that are not desired to be updated must be filled with their current values.
 	// The @schedule_scenario_sid must be the original for this agent group since it cannot be changed.
@@ -1747,6 +1762,17 @@ type WFMClient interface {
 	//   - grpc.NotFound: the requested Tour Pattern does not exist.
 	//   - grpc.Internal: error occurs when getting the data.
 	GetTourPattern(ctx context.Context, in *GetTourPatternReq, opts ...grpc.CallOption) (*GetTourPatternRes, error)
+	// Gets the Tour Pattern belonging to @shift_template_sid and the org sending the request.
+	// The @tour_pattern will be returned with all member entities.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.NotFound: the requested Tour Pattern does not exist.
+	//   - grpc.Internal: error occurs when getting the data.
+	GetTourPatternWithMembers(ctx context.Context, in *GetTourPatternWithMembersReq, opts ...grpc.CallOption) (*GetTourPatternWithMembersRes, error)
 	// Deletes the Tour Pattern belonging to @tour_pattern_sid and the org sending the request.
 	// Any member Tour Week Patterns or Agent Collections will be deleted as well.
 	// Required permissions:
@@ -2037,6 +2063,15 @@ func (c *wFMClient) UpsertForecastingParameters(ctx context.Context, in *UpsertF
 func (c *wFMClient) GetForecastingParameters(ctx context.Context, in *GetForecastingParametersReq, opts ...grpc.CallOption) (*GetForecastingParametersRes, error) {
 	out := new(GetForecastingParametersRes)
 	err := c.cc.Invoke(ctx, WFM_GetForecastingParameters_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) GetClientHistoryCacheInfo(ctx context.Context, in *GetClientHistoryCacheInfoReq, opts ...grpc.CallOption) (*GetClientHistoryCacheInfoRes, error) {
+	out := new(GetClientHistoryCacheInfoRes)
+	err := c.cc.Invoke(ctx, WFM_GetClientHistoryCacheInfo_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -2665,6 +2700,15 @@ func (c *wFMClient) ListCandidateSchedulingActivities(ctx context.Context, in *L
 func (c *wFMClient) CreateAgentGroup(ctx context.Context, in *CreateAgentGroupReq, opts ...grpc.CallOption) (*CreateAgentGroupRes, error) {
 	out := new(CreateAgentGroupRes)
 	err := c.cc.Invoke(ctx, WFM_CreateAgentGroup_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) ListAgentScheduleGroups(ctx context.Context, in *ListAgentScheduleGroupsRequest, opts ...grpc.CallOption) (*ListAgentScheduleGroupsResponse, error) {
+	out := new(ListAgentScheduleGroupsResponse)
+	err := c.cc.Invoke(ctx, WFM_ListAgentScheduleGroups_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -3310,6 +3354,15 @@ func (c *wFMClient) GetTourPattern(ctx context.Context, in *GetTourPatternReq, o
 	return out, nil
 }
 
+func (c *wFMClient) GetTourPatternWithMembers(ctx context.Context, in *GetTourPatternWithMembersReq, opts ...grpc.CallOption) (*GetTourPatternWithMembersRes, error) {
+	out := new(GetTourPatternWithMembersRes)
+	err := c.cc.Invoke(ctx, WFM_GetTourPatternWithMembers_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) DeleteTourPattern(ctx context.Context, in *DeleteTourPatternReq, opts ...grpc.CallOption) (*DeleteTourPatternRes, error) {
 	out := new(DeleteTourPatternRes)
 	err := c.cc.Invoke(ctx, WFM_DeleteTourPattern_FullMethodName, in, out, opts...)
@@ -3572,6 +3625,16 @@ type WFMServer interface {
 	// Errors:
 	//   - grpc.Internal: error occurs when getting the parameters.
 	GetForecastingParameters(context.Context, *GetForecastingParametersReq) (*GetForecastingParametersRes, error)
+	// Gets the state of the cache for the given @org_id, and if the cache's state is not_loaded, or loading_failed,
+	// it will start the loading task before returning the current state.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//
+	//	-grpc.Internal: error occurs when getting the cache info.
+	GetClientHistoryCacheInfo(context.Context, *GetClientHistoryCacheInfoReq) (*GetClientHistoryCacheInfoRes, error)
 	// Gets the historical data for the org sending the request and the given @skill_profile_category.
 	// It will look through the client's call history and generate the historical data by using their configured forecasting parameters (historical data period and interval width).
 	// The duration of each interval will be the interval width of the org's forecasting parameters.
@@ -4200,6 +4263,8 @@ type WFMServer interface {
 	//   - grpc.NotFound: @parent_entity doesn't exist
 	//   - grpc.Internal: error occurs when creating the agent group.
 	CreateAgentGroup(context.Context, *CreateAgentGroupReq) (*CreateAgentGroupRes, error)
+	// Lists all schedulable AgentGroups on or under the given Node or ShiftTemplate.
+	ListAgentScheduleGroups(context.Context, *ListAgentScheduleGroupsRequest) (*ListAgentScheduleGroupsResponse, error)
 	// Updates the agent group corresponding to the @agent_group_sid, @name, and @parent_entity.
 	// All of the entity's parameters that are not desired to be updated must be filled with their current values.
 	// The @schedule_scenario_sid must be the original for this agent group since it cannot be changed.
@@ -5049,6 +5114,17 @@ type WFMServer interface {
 	//   - grpc.NotFound: the requested Tour Pattern does not exist.
 	//   - grpc.Internal: error occurs when getting the data.
 	GetTourPattern(context.Context, *GetTourPatternReq) (*GetTourPatternRes, error)
+	// Gets the Tour Pattern belonging to @shift_template_sid and the org sending the request.
+	// The @tour_pattern will be returned with all member entities.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.NotFound: the requested Tour Pattern does not exist.
+	//   - grpc.Internal: error occurs when getting the data.
+	GetTourPatternWithMembers(context.Context, *GetTourPatternWithMembersReq) (*GetTourPatternWithMembersRes, error)
 	// Deletes the Tour Pattern belonging to @tour_pattern_sid and the org sending the request.
 	// Any member Tour Week Patterns or Agent Collections will be deleted as well.
 	// Required permissions:
@@ -5294,6 +5370,9 @@ func (UnimplementedWFMServer) UpsertForecastingParameters(context.Context, *Upse
 func (UnimplementedWFMServer) GetForecastingParameters(context.Context, *GetForecastingParametersReq) (*GetForecastingParametersRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetForecastingParameters not implemented")
 }
+func (UnimplementedWFMServer) GetClientHistoryCacheInfo(context.Context, *GetClientHistoryCacheInfoReq) (*GetClientHistoryCacheInfoRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetClientHistoryCacheInfo not implemented")
+}
 func (UnimplementedWFMServer) ListHistoricalData(context.Context, *ListHistoricalDataReq) (*ListHistoricalDataRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListHistoricalData not implemented")
 }
@@ -5455,6 +5534,9 @@ func (UnimplementedWFMServer) ListCandidateSchedulingActivities(context.Context,
 }
 func (UnimplementedWFMServer) CreateAgentGroup(context.Context, *CreateAgentGroupReq) (*CreateAgentGroupRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateAgentGroup not implemented")
+}
+func (UnimplementedWFMServer) ListAgentScheduleGroups(context.Context, *ListAgentScheduleGroupsRequest) (*ListAgentScheduleGroupsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListAgentScheduleGroups not implemented")
 }
 func (UnimplementedWFMServer) UpdateAgentGroup(context.Context, *UpdateAgentGroupReq) (*UpdateAgentGroupRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateAgentGroup not implemented")
@@ -5669,6 +5751,9 @@ func (UnimplementedWFMServer) UpsertTourPatternWithMembers(context.Context, *Ups
 func (UnimplementedWFMServer) GetTourPattern(context.Context, *GetTourPatternReq) (*GetTourPatternRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTourPattern not implemented")
 }
+func (UnimplementedWFMServer) GetTourPatternWithMembers(context.Context, *GetTourPatternWithMembersReq) (*GetTourPatternWithMembersRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTourPatternWithMembers not implemented")
+}
 func (UnimplementedWFMServer) DeleteTourPattern(context.Context, *DeleteTourPatternReq) (*DeleteTourPatternRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteTourPattern not implemented")
 }
@@ -5882,6 +5967,24 @@ func _WFM_GetForecastingParameters_Handler(srv interface{}, ctx context.Context,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WFMServer).GetForecastingParameters(ctx, req.(*GetForecastingParametersReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_GetClientHistoryCacheInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetClientHistoryCacheInfoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).GetClientHistoryCacheInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_GetClientHistoryCacheInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).GetClientHistoryCacheInfo(ctx, req.(*GetClientHistoryCacheInfoReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -6872,6 +6975,24 @@ func _WFM_CreateAgentGroup_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WFMServer).CreateAgentGroup(ctx, req.(*CreateAgentGroupReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_ListAgentScheduleGroups_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListAgentScheduleGroupsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).ListAgentScheduleGroups(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_ListAgentScheduleGroups_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).ListAgentScheduleGroups(ctx, req.(*ListAgentScheduleGroupsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -8154,6 +8275,24 @@ func _WFM_GetTourPattern_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_GetTourPatternWithMembers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTourPatternWithMembersReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).GetTourPatternWithMembers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_GetTourPatternWithMembers_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).GetTourPatternWithMembers(ctx, req.(*GetTourPatternWithMembersReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WFM_DeleteTourPattern_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteTourPatternReq)
 	if err := dec(in); err != nil {
@@ -8554,6 +8693,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _WFM_GetForecastingParameters_Handler,
 		},
 		{
+			MethodName: "GetClientHistoryCacheInfo",
+			Handler:    _WFM_GetClientHistoryCacheInfo_Handler,
+		},
+		{
 			MethodName: "ListHistoricalData",
 			Handler:    _WFM_ListHistoricalData_Handler,
 		},
@@ -8744,6 +8887,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateAgentGroup",
 			Handler:    _WFM_CreateAgentGroup_Handler,
+		},
+		{
+			MethodName: "ListAgentScheduleGroups",
+			Handler:    _WFM_ListAgentScheduleGroups_Handler,
 		},
 		{
 			MethodName: "UpdateAgentGroup",
@@ -9028,6 +9175,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetTourPattern",
 			Handler:    _WFM_GetTourPattern_Handler,
+		},
+		{
+			MethodName: "GetTourPatternWithMembers",
+			Handler:    _WFM_GetTourPatternWithMembers_Handler,
 		},
 		{
 			MethodName: "DeleteTourPattern",
