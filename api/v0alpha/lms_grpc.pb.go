@@ -76,6 +76,7 @@ const (
 	LMS_CreateCjsSecureSearchCriteria_FullMethodName    = "/api.v0alpha.LMS/CreateCjsSecureSearchCriteria"
 	LMS_UpdateCjsSecureSearchCriteria_FullMethodName    = "/api.v0alpha.LMS/UpdateCjsSecureSearchCriteria"
 	LMS_SampleEndpoint_FullMethodName                   = "/api.v0alpha.LMS/SampleEndpoint"
+	LMS_GetAvailableEHRFields_FullMethodName            = "/api.v0alpha.LMS/GetAvailableEHRFields"
 	LMS_GetQueuedEventsStatusByElementId_FullMethodName = "/api.v0alpha.LMS/GetQueuedEventsStatusByElementId"
 )
 
@@ -160,6 +161,8 @@ type LMSClient interface {
 	UpdateCjsSecureSearchCriteria(ctx context.Context, in *CjsSecureSearchCriteria, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// SampleEndpoint is to test that values come through to the api appropriately
 	SampleEndpoint(ctx context.Context, in *SampleRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// returns all fields possible that an ehr entity type could return (that we know of)
+	GetAvailableEHRFields(ctx context.Context, in *EHREntityType, opts ...grpc.CallOption) (*Fields, error)
 	GetQueuedEventsStatusByElementId(ctx context.Context, in *ElementPK, opts ...grpc.CallOption) (*Events, error)
 }
 
@@ -815,6 +818,15 @@ func (c *lMSClient) SampleEndpoint(ctx context.Context, in *SampleRequest, opts 
 	return out, nil
 }
 
+func (c *lMSClient) GetAvailableEHRFields(ctx context.Context, in *EHREntityType, opts ...grpc.CallOption) (*Fields, error) {
+	out := new(Fields)
+	err := c.cc.Invoke(ctx, LMS_GetAvailableEHRFields_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *lMSClient) GetQueuedEventsStatusByElementId(ctx context.Context, in *ElementPK, opts ...grpc.CallOption) (*Events, error) {
 	out := new(Events)
 	err := c.cc.Invoke(ctx, LMS_GetQueuedEventsStatusByElementId_FullMethodName, in, out, opts...)
@@ -905,6 +917,8 @@ type LMSServer interface {
 	UpdateCjsSecureSearchCriteria(context.Context, *CjsSecureSearchCriteria) (*emptypb.Empty, error)
 	// SampleEndpoint is to test that values come through to the api appropriately
 	SampleEndpoint(context.Context, *SampleRequest) (*emptypb.Empty, error)
+	// returns all fields possible that an ehr entity type could return (that we know of)
+	GetAvailableEHRFields(context.Context, *EHREntityType) (*Fields, error)
 	GetQueuedEventsStatusByElementId(context.Context, *ElementPK) (*Events, error)
 	mustEmbedUnimplementedLMSServer()
 }
@@ -1080,6 +1094,9 @@ func (UnimplementedLMSServer) UpdateCjsSecureSearchCriteria(context.Context, *Cj
 }
 func (UnimplementedLMSServer) SampleEndpoint(context.Context, *SampleRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SampleEndpoint not implemented")
+}
+func (UnimplementedLMSServer) GetAvailableEHRFields(context.Context, *EHREntityType) (*Fields, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAvailableEHRFields not implemented")
 }
 func (UnimplementedLMSServer) GetQueuedEventsStatusByElementId(context.Context, *ElementPK) (*Events, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetQueuedEventsStatusByElementId not implemented")
@@ -2128,6 +2145,24 @@ func _LMS_SampleEndpoint_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LMS_GetAvailableEHRFields_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EHREntityType)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LMSServer).GetAvailableEHRFields(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LMS_GetAvailableEHRFields_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LMSServer).GetAvailableEHRFields(ctx, req.(*EHREntityType))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _LMS_GetQueuedEventsStatusByElementId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ElementPK)
 	if err := dec(in); err != nil {
@@ -2352,6 +2387,10 @@ var LMS_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SampleEndpoint",
 			Handler:    _LMS_SampleEndpoint_Handler,
+		},
+		{
+			MethodName: "GetAvailableEHRFields",
+			Handler:    _LMS_GetAvailableEHRFields_Handler,
 		},
 		{
 			MethodName: "GetQueuedEventsStatusByElementId",
