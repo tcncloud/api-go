@@ -44,7 +44,6 @@ const (
 	Room303API_UpdateRoomConfig_FullMethodName      = "/api.v1alpha1.room303.Room303API/UpdateRoomConfig"
 	Room303API_UpdateGlobalConfig_FullMethodName    = "/api.v1alpha1.room303.Room303API/UpdateGlobalConfig"
 	Room303API_GetGlobalConfig_FullMethodName       = "/api.v1alpha1.room303.Room303API/GetGlobalConfig"
-	Room303API_CreateNewsRoom_FullMethodName        = "/api.v1alpha1.room303.Room303API/CreateNewsRoom"
 )
 
 // Room303APIClient is the client API for Room303API service.
@@ -89,8 +88,6 @@ type Room303APIClient interface {
 	UpdateGlobalConfig(ctx context.Context, in *UpdateGlobalConfigRequest, opts ...grpc.CallOption) (*UpdateGlobalConfigResponse, error)
 	// get global configuration
 	GetGlobalConfig(ctx context.Context, in *GetGlobalConfigRequest, opts ...grpc.CallOption) (*GetGlobalConfigResponse, error)
-	// CreateNewsRoom
-	CreateNewsRoom(ctx context.Context, in *CreateNewsRoomRequest, opts ...grpc.CallOption) (*commons.Room, error)
 }
 
 type room303APIClient struct {
@@ -363,15 +360,6 @@ func (c *room303APIClient) GetGlobalConfig(ctx context.Context, in *GetGlobalCon
 	return out, nil
 }
 
-func (c *room303APIClient) CreateNewsRoom(ctx context.Context, in *CreateNewsRoomRequest, opts ...grpc.CallOption) (*commons.Room, error) {
-	out := new(commons.Room)
-	err := c.cc.Invoke(ctx, Room303API_CreateNewsRoom_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // Room303APIServer is the server API for Room303API service.
 // All implementations must embed UnimplementedRoom303APIServer
 // for forward compatibility
@@ -414,8 +402,6 @@ type Room303APIServer interface {
 	UpdateGlobalConfig(context.Context, *UpdateGlobalConfigRequest) (*UpdateGlobalConfigResponse, error)
 	// get global configuration
 	GetGlobalConfig(context.Context, *GetGlobalConfigRequest) (*GetGlobalConfigResponse, error)
-	// CreateNewsRoom
-	CreateNewsRoom(context.Context, *CreateNewsRoomRequest) (*commons.Room, error)
 	mustEmbedUnimplementedRoom303APIServer()
 }
 
@@ -494,9 +480,6 @@ func (UnimplementedRoom303APIServer) UpdateGlobalConfig(context.Context, *Update
 }
 func (UnimplementedRoom303APIServer) GetGlobalConfig(context.Context, *GetGlobalConfigRequest) (*GetGlobalConfigResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetGlobalConfig not implemented")
-}
-func (UnimplementedRoom303APIServer) CreateNewsRoom(context.Context, *CreateNewsRoomRequest) (*commons.Room, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateNewsRoom not implemented")
 }
 func (UnimplementedRoom303APIServer) mustEmbedUnimplementedRoom303APIServer() {}
 
@@ -949,24 +932,6 @@ func _Room303API_GetGlobalConfig_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Room303API_CreateNewsRoom_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateNewsRoomRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(Room303APIServer).CreateNewsRoom(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Room303API_CreateNewsRoom_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(Room303APIServer).CreateNewsRoom(ctx, req.(*CreateNewsRoomRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // Room303API_ServiceDesc is the grpc.ServiceDesc for Room303API service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1061,10 +1026,6 @@ var Room303API_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetGlobalConfig",
 			Handler:    _Room303API_GetGlobalConfig_Handler,
-		},
-		{
-			MethodName: "CreateNewsRoom",
-			Handler:    _Room303API_CreateNewsRoom_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

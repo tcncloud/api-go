@@ -99,9 +99,6 @@ const (
 	// Room303APIGetGlobalConfigProcedure is the fully-qualified name of the Room303API's
 	// GetGlobalConfig RPC.
 	Room303APIGetGlobalConfigProcedure = "/api.v1alpha1.room303.Room303API/GetGlobalConfig"
-	// Room303APICreateNewsRoomProcedure is the fully-qualified name of the Room303API's CreateNewsRoom
-	// RPC.
-	Room303APICreateNewsRoomProcedure = "/api.v1alpha1.room303.Room303API/CreateNewsRoom"
 )
 
 // Room303APIClient is a client for the api.v1alpha1.room303.Room303API service.
@@ -144,8 +141,6 @@ type Room303APIClient interface {
 	UpdateGlobalConfig(context.Context, *connect_go.Request[room303.UpdateGlobalConfigRequest]) (*connect_go.Response[room303.UpdateGlobalConfigResponse], error)
 	// get global configuration
 	GetGlobalConfig(context.Context, *connect_go.Request[room303.GetGlobalConfigRequest]) (*connect_go.Response[room303.GetGlobalConfigResponse], error)
-	// CreateNewsRoom
-	CreateNewsRoom(context.Context, *connect_go.Request[room303.CreateNewsRoomRequest]) (*connect_go.Response[commons.Room], error)
 }
 
 // NewRoom303APIClient constructs a client for the api.v1alpha1.room303.Room303API service. By
@@ -278,11 +273,6 @@ func NewRoom303APIClient(httpClient connect_go.HTTPClient, baseURL string, opts 
 			baseURL+Room303APIGetGlobalConfigProcedure,
 			opts...,
 		),
-		createNewsRoom: connect_go.NewClient[room303.CreateNewsRoomRequest, commons.Room](
-			httpClient,
-			baseURL+Room303APICreateNewsRoomProcedure,
-			opts...,
-		),
 	}
 }
 
@@ -312,7 +302,6 @@ type room303APIClient struct {
 	updateRoomConfig      *connect_go.Client[room303.UpdateRoomConfigRequest, commons.Room]
 	updateGlobalConfig    *connect_go.Client[room303.UpdateGlobalConfigRequest, room303.UpdateGlobalConfigResponse]
 	getGlobalConfig       *connect_go.Client[room303.GetGlobalConfigRequest, room303.GetGlobalConfigResponse]
-	createNewsRoom        *connect_go.Client[room303.CreateNewsRoomRequest, commons.Room]
 }
 
 // AddRoomMember calls api.v1alpha1.room303.Room303API.AddRoomMember.
@@ -435,11 +424,6 @@ func (c *room303APIClient) GetGlobalConfig(ctx context.Context, req *connect_go.
 	return c.getGlobalConfig.CallUnary(ctx, req)
 }
 
-// CreateNewsRoom calls api.v1alpha1.room303.Room303API.CreateNewsRoom.
-func (c *room303APIClient) CreateNewsRoom(ctx context.Context, req *connect_go.Request[room303.CreateNewsRoomRequest]) (*connect_go.Response[commons.Room], error) {
-	return c.createNewsRoom.CallUnary(ctx, req)
-}
-
 // Room303APIHandler is an implementation of the api.v1alpha1.room303.Room303API service.
 type Room303APIHandler interface {
 	// Member
@@ -480,8 +464,6 @@ type Room303APIHandler interface {
 	UpdateGlobalConfig(context.Context, *connect_go.Request[room303.UpdateGlobalConfigRequest]) (*connect_go.Response[room303.UpdateGlobalConfigResponse], error)
 	// get global configuration
 	GetGlobalConfig(context.Context, *connect_go.Request[room303.GetGlobalConfigRequest]) (*connect_go.Response[room303.GetGlobalConfigResponse], error)
-	// CreateNewsRoom
-	CreateNewsRoom(context.Context, *connect_go.Request[room303.CreateNewsRoomRequest]) (*connect_go.Response[commons.Room], error)
 }
 
 // NewRoom303APIHandler builds an HTTP handler from the service implementation. It returns the path
@@ -610,11 +592,6 @@ func NewRoom303APIHandler(svc Room303APIHandler, opts ...connect_go.HandlerOptio
 		svc.GetGlobalConfig,
 		opts...,
 	)
-	room303APICreateNewsRoomHandler := connect_go.NewUnaryHandler(
-		Room303APICreateNewsRoomProcedure,
-		svc.CreateNewsRoom,
-		opts...,
-	)
 	return "/api.v1alpha1.room303.Room303API/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case Room303APIAddRoomMemberProcedure:
@@ -665,8 +642,6 @@ func NewRoom303APIHandler(svc Room303APIHandler, opts ...connect_go.HandlerOptio
 			room303APIUpdateGlobalConfigHandler.ServeHTTP(w, r)
 		case Room303APIGetGlobalConfigProcedure:
 			room303APIGetGlobalConfigHandler.ServeHTTP(w, r)
-		case Room303APICreateNewsRoomProcedure:
-			room303APICreateNewsRoomHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -770,8 +745,4 @@ func (UnimplementedRoom303APIHandler) UpdateGlobalConfig(context.Context, *conne
 
 func (UnimplementedRoom303APIHandler) GetGlobalConfig(context.Context, *connect_go.Request[room303.GetGlobalConfigRequest]) (*connect_go.Response[room303.GetGlobalConfigResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.room303.Room303API.GetGlobalConfig is not implemented"))
-}
-
-func (UnimplementedRoom303APIHandler) CreateNewsRoom(context.Context, *connect_go.Request[room303.CreateNewsRoomRequest]) (*connect_go.Response[commons.Room], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.room303.Room303API.CreateNewsRoom is not implemented"))
 }
