@@ -122,6 +122,8 @@ const (
 	Org_CreateDataDipTemplate_FullMethodName                   = "/api.v1alpha1.org.Org/CreateDataDipTemplate"
 	Org_UpdateDataDipTemplate_FullMethodName                   = "/api.v1alpha1.org.Org/UpdateDataDipTemplate"
 	Org_DeleteDataDipTemplate_FullMethodName                   = "/api.v1alpha1.org.Org/DeleteDataDipTemplate"
+	Org_CopyDataDipTemplate_FullMethodName                     = "/api.v1alpha1.org.Org/CopyDataDipTemplate"
+	Org_CopyDataDipTemplateToOrganization_FullMethodName       = "/api.v1alpha1.org.Org/CopyDataDipTemplateToOrganization"
 	Org_ListAgentResponseAutoRules_FullMethodName              = "/api.v1alpha1.org.Org/ListAgentResponseAutoRules"
 	Org_CreateAgentResponseAutoRules_FullMethodName            = "/api.v1alpha1.org.Org/CreateAgentResponseAutoRules"
 	Org_UpdateAgentResponseAutoRules_FullMethodName            = "/api.v1alpha1.org.Org/UpdateAgentResponseAutoRules"
@@ -411,6 +413,10 @@ type OrgClient interface {
 	UpdateDataDipTemplate(ctx context.Context, in *UpdateDataDipTemplateRequest, opts ...grpc.CallOption) (*UpdateDataDipTemplateResponse, error)
 	// Deletes a data dip template.
 	DeleteDataDipTemplate(ctx context.Context, in *DeleteDataDipTemplateRequest, opts ...grpc.CallOption) (*DeleteDataDipTemplateResponse, error)
+	// Copies a data dip template.
+	CopyDataDipTemplate(ctx context.Context, in *CopyDataDipTemplateRequest, opts ...grpc.CallOption) (*CopyDataDipTemplateResponse, error)
+	// Copies a data dip template to a different organization.
+	CopyDataDipTemplateToOrganization(ctx context.Context, in *CopyDataDipTemplateToOrganizationRequest, opts ...grpc.CallOption) (*CopyDataDipTemplateToOrganizationResponse, error)
 	// Lists Agent Call Response Automatically added compliance rules for an Org.
 	ListAgentResponseAutoRules(ctx context.Context, in *ListAgentResponseAutoRulesRequest, opts ...grpc.CallOption) (*ListAgentResponseAutoRulesResponse, error)
 	// Creates a new Agent Call Response Automatically added compliance rule set.
@@ -1645,6 +1651,24 @@ func (c *orgClient) DeleteDataDipTemplate(ctx context.Context, in *DeleteDataDip
 	return out, nil
 }
 
+func (c *orgClient) CopyDataDipTemplate(ctx context.Context, in *CopyDataDipTemplateRequest, opts ...grpc.CallOption) (*CopyDataDipTemplateResponse, error) {
+	out := new(CopyDataDipTemplateResponse)
+	err := c.cc.Invoke(ctx, Org_CopyDataDipTemplate_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) CopyDataDipTemplateToOrganization(ctx context.Context, in *CopyDataDipTemplateToOrganizationRequest, opts ...grpc.CallOption) (*CopyDataDipTemplateToOrganizationResponse, error) {
+	out := new(CopyDataDipTemplateToOrganizationResponse)
+	err := c.cc.Invoke(ctx, Org_CopyDataDipTemplateToOrganization_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *orgClient) ListAgentResponseAutoRules(ctx context.Context, in *ListAgentResponseAutoRulesRequest, opts ...grpc.CallOption) (*ListAgentResponseAutoRulesResponse, error) {
 	out := new(ListAgentResponseAutoRulesResponse)
 	err := c.cc.Invoke(ctx, Org_ListAgentResponseAutoRules_FullMethodName, in, out, opts...)
@@ -2316,6 +2340,10 @@ type OrgServer interface {
 	UpdateDataDipTemplate(context.Context, *UpdateDataDipTemplateRequest) (*UpdateDataDipTemplateResponse, error)
 	// Deletes a data dip template.
 	DeleteDataDipTemplate(context.Context, *DeleteDataDipTemplateRequest) (*DeleteDataDipTemplateResponse, error)
+	// Copies a data dip template.
+	CopyDataDipTemplate(context.Context, *CopyDataDipTemplateRequest) (*CopyDataDipTemplateResponse, error)
+	// Copies a data dip template to a different organization.
+	CopyDataDipTemplateToOrganization(context.Context, *CopyDataDipTemplateToOrganizationRequest) (*CopyDataDipTemplateToOrganizationResponse, error)
 	// Lists Agent Call Response Automatically added compliance rules for an Org.
 	ListAgentResponseAutoRules(context.Context, *ListAgentResponseAutoRulesRequest) (*ListAgentResponseAutoRulesResponse, error)
 	// Creates a new Agent Call Response Automatically added compliance rule set.
@@ -2744,6 +2772,12 @@ func (UnimplementedOrgServer) UpdateDataDipTemplate(context.Context, *UpdateData
 }
 func (UnimplementedOrgServer) DeleteDataDipTemplate(context.Context, *DeleteDataDipTemplateRequest) (*DeleteDataDipTemplateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteDataDipTemplate not implemented")
+}
+func (UnimplementedOrgServer) CopyDataDipTemplate(context.Context, *CopyDataDipTemplateRequest) (*CopyDataDipTemplateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CopyDataDipTemplate not implemented")
+}
+func (UnimplementedOrgServer) CopyDataDipTemplateToOrganization(context.Context, *CopyDataDipTemplateToOrganizationRequest) (*CopyDataDipTemplateToOrganizationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CopyDataDipTemplateToOrganization not implemented")
 }
 func (UnimplementedOrgServer) ListAgentResponseAutoRules(context.Context, *ListAgentResponseAutoRulesRequest) (*ListAgentResponseAutoRulesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAgentResponseAutoRules not implemented")
@@ -4780,6 +4814,42 @@ func _Org_DeleteDataDipTemplate_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Org_CopyDataDipTemplate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CopyDataDipTemplateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).CopyDataDipTemplate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_CopyDataDipTemplate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).CopyDataDipTemplate(ctx, req.(*CopyDataDipTemplateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_CopyDataDipTemplateToOrganization_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CopyDataDipTemplateToOrganizationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).CopyDataDipTemplateToOrganization(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_CopyDataDipTemplateToOrganization_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).CopyDataDipTemplateToOrganization(ctx, req.(*CopyDataDipTemplateToOrganizationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Org_ListAgentResponseAutoRules_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListAgentResponseAutoRulesRequest)
 	if err := dec(in); err != nil {
@@ -6030,6 +6100,14 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteDataDipTemplate",
 			Handler:    _Org_DeleteDataDipTemplate_Handler,
+		},
+		{
+			MethodName: "CopyDataDipTemplate",
+			Handler:    _Org_CopyDataDipTemplate_Handler,
+		},
+		{
+			MethodName: "CopyDataDipTemplateToOrganization",
+			Handler:    _Org_CopyDataDipTemplateToOrganization_Handler,
 		},
 		{
 			MethodName: "ListAgentResponseAutoRules",

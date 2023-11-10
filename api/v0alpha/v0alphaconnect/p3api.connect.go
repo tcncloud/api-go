@@ -222,6 +222,9 @@ const (
 	// P3ApiCreateContactFieldDescriptionProcedure is the fully-qualified name of the P3Api's
 	// CreateContactFieldDescription RPC.
 	P3ApiCreateContactFieldDescriptionProcedure = "/api.v0alpha.P3Api/CreateContactFieldDescription"
+	// P3ApiUpdateContactFieldDescriptionProcedure is the fully-qualified name of the P3Api's
+	// UpdateContactFieldDescription RPC.
+	P3ApiUpdateContactFieldDescriptionProcedure = "/api.v0alpha.P3Api/UpdateContactFieldDescription"
 	// P3ApiDeleteContactFieldDescriptionProcedure is the fully-qualified name of the P3Api's
 	// DeleteContactFieldDescription RPC.
 	P3ApiDeleteContactFieldDescriptionProcedure = "/api.v0alpha.P3Api/DeleteContactFieldDescription"
@@ -536,6 +539,8 @@ type P3ApiClient interface {
 	GetContactGroupSize(context.Context, *connect_go.Request[v0alpha.GetContactGroupReq]) (*connect_go.Response[v0alpha.GetContactGroupSizeRes], error)
 	// Create contact field description details
 	CreateContactFieldDescription(context.Context, *connect_go.Request[v0alpha.CreateContactFieldDescriptionReq]) (*connect_go.Response[v0alpha.CreateContactFieldDescriptionRes], error)
+	// Update contact field description details
+	UpdateContactFieldDescription(context.Context, *connect_go.Request[v0alpha.UpdateContactFieldDescriptionReq]) (*connect_go.Response[v0alpha.UpdateContactFieldDescriptionRes], error)
 	// Delete contact field description details
 	DeleteContactFieldDescription(context.Context, *connect_go.Request[v0alpha.DeleteContactFieldDescriptionReq]) (*connect_go.Response[v0alpha.DeleteContactFieldDescriptionRes], error)
 	// List contact field desc details from contact_field_description table
@@ -1040,6 +1045,11 @@ func NewP3ApiClient(httpClient connect_go.HTTPClient, baseURL string, opts ...co
 			baseURL+P3ApiCreateContactFieldDescriptionProcedure,
 			opts...,
 		),
+		updateContactFieldDescription: connect_go.NewClient[v0alpha.UpdateContactFieldDescriptionReq, v0alpha.UpdateContactFieldDescriptionRes](
+			httpClient,
+			baseURL+P3ApiUpdateContactFieldDescriptionProcedure,
+			opts...,
+		),
 		deleteContactFieldDescription: connect_go.NewClient[v0alpha.DeleteContactFieldDescriptionReq, v0alpha.DeleteContactFieldDescriptionRes](
 			httpClient,
 			baseURL+P3ApiDeleteContactFieldDescriptionProcedure,
@@ -1246,6 +1256,7 @@ type p3ApiClient struct {
 	getContactGroupDetails              *connect_go.Client[v0alpha.GetContactGroupReq, v0alpha.ContactGroup]
 	getContactGroupSize                 *connect_go.Client[v0alpha.GetContactGroupReq, v0alpha.GetContactGroupSizeRes]
 	createContactFieldDescription       *connect_go.Client[v0alpha.CreateContactFieldDescriptionReq, v0alpha.CreateContactFieldDescriptionRes]
+	updateContactFieldDescription       *connect_go.Client[v0alpha.UpdateContactFieldDescriptionReq, v0alpha.UpdateContactFieldDescriptionRes]
 	deleteContactFieldDescription       *connect_go.Client[v0alpha.DeleteContactFieldDescriptionReq, v0alpha.DeleteContactFieldDescriptionRes]
 	listContactFieldDescriptions        *connect_go.Client[v0alpha.ListContactFieldDescriptionsReq, v0alpha.ListContactFieldDescriptionsRes]
 	listContactFieldDescriptionsByCGSid *connect_go.Client[v0alpha.ListContactFieldDescriptionsByCGSidReq, v0alpha.ListContactFieldDescriptionsByCGSidRes]
@@ -1629,6 +1640,11 @@ func (c *p3ApiClient) CreateContactFieldDescription(ctx context.Context, req *co
 	return c.createContactFieldDescription.CallUnary(ctx, req)
 }
 
+// UpdateContactFieldDescription calls api.v0alpha.P3Api.UpdateContactFieldDescription.
+func (c *p3ApiClient) UpdateContactFieldDescription(ctx context.Context, req *connect_go.Request[v0alpha.UpdateContactFieldDescriptionReq]) (*connect_go.Response[v0alpha.UpdateContactFieldDescriptionRes], error) {
+	return c.updateContactFieldDescription.CallUnary(ctx, req)
+}
+
 // DeleteContactFieldDescription calls api.v0alpha.P3Api.DeleteContactFieldDescription.
 func (c *p3ApiClient) DeleteContactFieldDescription(ctx context.Context, req *connect_go.Request[v0alpha.DeleteContactFieldDescriptionReq]) (*connect_go.Response[v0alpha.DeleteContactFieldDescriptionRes], error) {
 	return c.deleteContactFieldDescription.CallUnary(ctx, req)
@@ -1999,6 +2015,8 @@ type P3ApiHandler interface {
 	GetContactGroupSize(context.Context, *connect_go.Request[v0alpha.GetContactGroupReq]) (*connect_go.Response[v0alpha.GetContactGroupSizeRes], error)
 	// Create contact field description details
 	CreateContactFieldDescription(context.Context, *connect_go.Request[v0alpha.CreateContactFieldDescriptionReq]) (*connect_go.Response[v0alpha.CreateContactFieldDescriptionRes], error)
+	// Update contact field description details
+	UpdateContactFieldDescription(context.Context, *connect_go.Request[v0alpha.UpdateContactFieldDescriptionReq]) (*connect_go.Response[v0alpha.UpdateContactFieldDescriptionRes], error)
 	// Delete contact field description details
 	DeleteContactFieldDescription(context.Context, *connect_go.Request[v0alpha.DeleteContactFieldDescriptionReq]) (*connect_go.Response[v0alpha.DeleteContactFieldDescriptionRes], error)
 	// List contact field desc details from contact_field_description table
@@ -2499,6 +2517,11 @@ func NewP3ApiHandler(svc P3ApiHandler, opts ...connect_go.HandlerOption) (string
 		svc.CreateContactFieldDescription,
 		opts...,
 	)
+	p3ApiUpdateContactFieldDescriptionHandler := connect_go.NewUnaryHandler(
+		P3ApiUpdateContactFieldDescriptionProcedure,
+		svc.UpdateContactFieldDescription,
+		opts...,
+	)
 	p3ApiDeleteContactFieldDescriptionHandler := connect_go.NewUnaryHandler(
 		P3ApiDeleteContactFieldDescriptionProcedure,
 		svc.DeleteContactFieldDescription,
@@ -2773,6 +2796,8 @@ func NewP3ApiHandler(svc P3ApiHandler, opts ...connect_go.HandlerOption) (string
 			p3ApiGetContactGroupSizeHandler.ServeHTTP(w, r)
 		case P3ApiCreateContactFieldDescriptionProcedure:
 			p3ApiCreateContactFieldDescriptionHandler.ServeHTTP(w, r)
+		case P3ApiUpdateContactFieldDescriptionProcedure:
+			p3ApiUpdateContactFieldDescriptionHandler.ServeHTTP(w, r)
 		case P3ApiDeleteContactFieldDescriptionProcedure:
 			p3ApiDeleteContactFieldDescriptionHandler.ServeHTTP(w, r)
 		case P3ApiListContactFieldDescriptionsProcedure:
@@ -3116,6 +3141,10 @@ func (UnimplementedP3ApiHandler) GetContactGroupSize(context.Context, *connect_g
 
 func (UnimplementedP3ApiHandler) CreateContactFieldDescription(context.Context, *connect_go.Request[v0alpha.CreateContactFieldDescriptionReq]) (*connect_go.Response[v0alpha.CreateContactFieldDescriptionRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.P3Api.CreateContactFieldDescription is not implemented"))
+}
+
+func (UnimplementedP3ApiHandler) UpdateContactFieldDescription(context.Context, *connect_go.Request[v0alpha.UpdateContactFieldDescriptionReq]) (*connect_go.Response[v0alpha.UpdateContactFieldDescriptionRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.P3Api.UpdateContactFieldDescription is not implemented"))
 }
 
 func (UnimplementedP3ApiHandler) DeleteContactFieldDescription(context.Context, *connect_go.Request[v0alpha.DeleteContactFieldDescriptionReq]) (*connect_go.Response[v0alpha.DeleteContactFieldDescriptionRes], error) {

@@ -66,6 +66,9 @@ const (
 	// DashboardsUpdateDashboardLayoutProcedure is the fully-qualified name of the Dashboards's
 	// UpdateDashboardLayout RPC.
 	DashboardsUpdateDashboardLayoutProcedure = "/api.v0alpha.Dashboards/UpdateDashboardLayout"
+	// DashboardsPublishDashboardProcedure is the fully-qualified name of the Dashboards's
+	// PublishDashboard RPC.
+	DashboardsPublishDashboardProcedure = "/api.v0alpha.Dashboards/PublishDashboard"
 )
 
 // DashboardsClient is a client for the api.v0alpha.Dashboards service.
@@ -90,6 +93,8 @@ type DashboardsClient interface {
 	UpdateDashboardView(context.Context, *connect_go.Request[v0alpha.UpdateDashboardViewRequest]) (*connect_go.Response[emptypb.Empty], error)
 	// UpdateDashboardLayout replaces a dashboards layout with a given layout
 	UpdateDashboardLayout(context.Context, *connect_go.Request[v0alpha.UpdateDashboardLayoutRequest]) (*connect_go.Response[emptypb.Empty], error)
+	// PublishDashboard publishes a dashboard
+	PublishDashboard(context.Context, *connect_go.Request[v0alpha.PublishDashboardRequest]) (*connect_go.Response[v0alpha.PublishDashboardResponse], error)
 }
 
 // NewDashboardsClient constructs a client for the api.v0alpha.Dashboards service. By default, it
@@ -157,6 +162,11 @@ func NewDashboardsClient(httpClient connect_go.HTTPClient, baseURL string, opts 
 			baseURL+DashboardsUpdateDashboardLayoutProcedure,
 			opts...,
 		),
+		publishDashboard: connect_go.NewClient[v0alpha.PublishDashboardRequest, v0alpha.PublishDashboardResponse](
+			httpClient,
+			baseURL+DashboardsPublishDashboardProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -173,6 +183,7 @@ type dashboardsClient struct {
 	updateDashboardTitleAndDescription *connect_go.Client[v0alpha.UpdateDashboardTitleAndDescriptionRequest, emptypb.Empty]
 	updateDashboardView                *connect_go.Client[v0alpha.UpdateDashboardViewRequest, emptypb.Empty]
 	updateDashboardLayout              *connect_go.Client[v0alpha.UpdateDashboardLayoutRequest, emptypb.Empty]
+	publishDashboard                   *connect_go.Client[v0alpha.PublishDashboardRequest, v0alpha.PublishDashboardResponse]
 }
 
 // CreateDashboard calls api.v0alpha.Dashboards.CreateDashboard.
@@ -231,6 +242,11 @@ func (c *dashboardsClient) UpdateDashboardLayout(ctx context.Context, req *conne
 	return c.updateDashboardLayout.CallUnary(ctx, req)
 }
 
+// PublishDashboard calls api.v0alpha.Dashboards.PublishDashboard.
+func (c *dashboardsClient) PublishDashboard(ctx context.Context, req *connect_go.Request[v0alpha.PublishDashboardRequest]) (*connect_go.Response[v0alpha.PublishDashboardResponse], error) {
+	return c.publishDashboard.CallUnary(ctx, req)
+}
+
 // DashboardsHandler is an implementation of the api.v0alpha.Dashboards service.
 type DashboardsHandler interface {
 	// CreateDashboard creates a dashboard and associated panels
@@ -253,6 +269,8 @@ type DashboardsHandler interface {
 	UpdateDashboardView(context.Context, *connect_go.Request[v0alpha.UpdateDashboardViewRequest]) (*connect_go.Response[emptypb.Empty], error)
 	// UpdateDashboardLayout replaces a dashboards layout with a given layout
 	UpdateDashboardLayout(context.Context, *connect_go.Request[v0alpha.UpdateDashboardLayoutRequest]) (*connect_go.Response[emptypb.Empty], error)
+	// PublishDashboard publishes a dashboard
+	PublishDashboard(context.Context, *connect_go.Request[v0alpha.PublishDashboardRequest]) (*connect_go.Response[v0alpha.PublishDashboardResponse], error)
 }
 
 // NewDashboardsHandler builds an HTTP handler from the service implementation. It returns the path
@@ -316,6 +334,11 @@ func NewDashboardsHandler(svc DashboardsHandler, opts ...connect_go.HandlerOptio
 		svc.UpdateDashboardLayout,
 		opts...,
 	)
+	dashboardsPublishDashboardHandler := connect_go.NewUnaryHandler(
+		DashboardsPublishDashboardProcedure,
+		svc.PublishDashboard,
+		opts...,
+	)
 	return "/api.v0alpha.Dashboards/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case DashboardsCreateDashboardProcedure:
@@ -340,6 +363,8 @@ func NewDashboardsHandler(svc DashboardsHandler, opts ...connect_go.HandlerOptio
 			dashboardsUpdateDashboardViewHandler.ServeHTTP(w, r)
 		case DashboardsUpdateDashboardLayoutProcedure:
 			dashboardsUpdateDashboardLayoutHandler.ServeHTTP(w, r)
+		case DashboardsPublishDashboardProcedure:
+			dashboardsPublishDashboardHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -391,4 +416,8 @@ func (UnimplementedDashboardsHandler) UpdateDashboardView(context.Context, *conn
 
 func (UnimplementedDashboardsHandler) UpdateDashboardLayout(context.Context, *connect_go.Request[v0alpha.UpdateDashboardLayoutRequest]) (*connect_go.Response[emptypb.Empty], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Dashboards.UpdateDashboardLayout is not implemented"))
+}
+
+func (UnimplementedDashboardsHandler) PublishDashboard(context.Context, *connect_go.Request[v0alpha.PublishDashboardRequest]) (*connect_go.Response[v0alpha.PublishDashboardResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Dashboards.PublishDashboard is not implemented"))
 }

@@ -89,6 +89,10 @@ const (
 	LMSCopyPipelineDownstreamProcedure = "/api.v0alpha.LMS/CopyPipelineDownstream"
 	// LMSProcessElementProcedure is the fully-qualified name of the LMS's ProcessElement RPC.
 	LMSProcessElementProcedure = "/api.v0alpha.LMS/ProcessElement"
+	// LMSProcessListProcedure is the fully-qualified name of the LMS's ProcessList RPC.
+	LMSProcessListProcedure = "/api.v0alpha.LMS/ProcessList"
+	// LMSStreamListProcedure is the fully-qualified name of the LMS's StreamList RPC.
+	LMSStreamListProcedure = "/api.v0alpha.LMS/StreamList"
 	// LMSGetAvailableFieldsProcedure is the fully-qualified name of the LMS's GetAvailableFields RPC.
 	LMSGetAvailableFieldsProcedure = "/api.v0alpha.LMS/GetAvailableFields"
 	// LMSListNewEventsProcedure is the fully-qualified name of the LMS's ListNewEvents RPC.
@@ -159,6 +163,11 @@ const (
 	// LMSUpdateCjsSecureSearchCriteriaProcedure is the fully-qualified name of the LMS's
 	// UpdateCjsSecureSearchCriteria RPC.
 	LMSUpdateCjsSecureSearchCriteriaProcedure = "/api.v0alpha.LMS/UpdateCjsSecureSearchCriteria"
+	// LMSSampleEndpointProcedure is the fully-qualified name of the LMS's SampleEndpoint RPC.
+	LMSSampleEndpointProcedure = "/api.v0alpha.LMS/SampleEndpoint"
+	// LMSGetAvailableEHRFieldsProcedure is the fully-qualified name of the LMS's GetAvailableEHRFields
+	// RPC.
+	LMSGetAvailableEHRFieldsProcedure = "/api.v0alpha.LMS/GetAvailableEHRFields"
 	// LMSGetQueuedEventsStatusByElementIdProcedure is the fully-qualified name of the LMS's
 	// GetQueuedEventsStatusByElementId RPC.
 	LMSGetQueuedEventsStatusByElementIdProcedure = "/api.v0alpha.LMS/GetQueuedEventsStatusByElementId"
@@ -194,6 +203,8 @@ type LMSClient interface {
 	// CopyPipelineDownstream copies an Element and all of its' children
 	CopyPipelineDownstream(context.Context, *connect_go.Request[v0alpha.Element]) (*connect_go.ServerStreamForClient[v0alpha.Element], error)
 	ProcessElement(context.Context, *connect_go.Request[v0alpha.ProcessElementReq]) (*connect_go.Response[emptypb.Empty], error)
+	ProcessList(context.Context, *connect_go.Request[v0alpha.ProcessListRequest]) (*connect_go.Response[v0alpha.ProcessListResponse], error)
+	StreamList(context.Context) *connect_go.ClientStreamForClient[v0alpha.StreamListRequest, v0alpha.StreamListResponse]
 	GetAvailableFields(context.Context, *connect_go.Request[emptypb.Empty]) (*connect_go.Response[v0alpha.ProcessFields], error)
 	// returns queue events for the last 30 minutes
 	ListNewEvents(context.Context, *connect_go.Request[emptypb.Empty]) (*connect_go.Response[v0alpha.Events], error)
@@ -239,6 +250,10 @@ type LMSClient interface {
 	CreateCjsSecureSearchCriteria(context.Context, *connect_go.Request[v0alpha.CjsSecureSearchCriteria]) (*connect_go.Response[v0alpha.CjsSecureSearchCriteria], error)
 	// UpdateCjsSecureSearchCriteria updates the secure search criteria
 	UpdateCjsSecureSearchCriteria(context.Context, *connect_go.Request[v0alpha.CjsSecureSearchCriteria]) (*connect_go.Response[emptypb.Empty], error)
+	// SampleEndpoint is to test that values come through to the api appropriately
+	SampleEndpoint(context.Context, *connect_go.Request[v0alpha.SampleRequest]) (*connect_go.Response[emptypb.Empty], error)
+	// returns all fields possible that an ehr entity type could return (that we know of)
+	GetAvailableEHRFields(context.Context, *connect_go.Request[v0alpha.EHREntityType]) (*connect_go.Response[v0alpha.Fields], error)
 	GetQueuedEventsStatusByElementId(context.Context, *connect_go.Request[v0alpha.ElementPK]) (*connect_go.Response[v0alpha.Events], error)
 }
 
@@ -375,6 +390,16 @@ func NewLMSClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 		processElement: connect_go.NewClient[v0alpha.ProcessElementReq, emptypb.Empty](
 			httpClient,
 			baseURL+LMSProcessElementProcedure,
+			opts...,
+		),
+		processList: connect_go.NewClient[v0alpha.ProcessListRequest, v0alpha.ProcessListResponse](
+			httpClient,
+			baseURL+LMSProcessListProcedure,
+			opts...,
+		),
+		streamList: connect_go.NewClient[v0alpha.StreamListRequest, v0alpha.StreamListResponse](
+			httpClient,
+			baseURL+LMSStreamListProcedure,
 			opts...,
 		),
 		getAvailableFields: connect_go.NewClient[emptypb.Empty, v0alpha.ProcessFields](
@@ -517,6 +542,16 @@ func NewLMSClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+LMSUpdateCjsSecureSearchCriteriaProcedure,
 			opts...,
 		),
+		sampleEndpoint: connect_go.NewClient[v0alpha.SampleRequest, emptypb.Empty](
+			httpClient,
+			baseURL+LMSSampleEndpointProcedure,
+			opts...,
+		),
+		getAvailableEHRFields: connect_go.NewClient[v0alpha.EHREntityType, v0alpha.Fields](
+			httpClient,
+			baseURL+LMSGetAvailableEHRFieldsProcedure,
+			opts...,
+		),
 		getQueuedEventsStatusByElementId: connect_go.NewClient[v0alpha.ElementPK, v0alpha.Events](
 			httpClient,
 			baseURL+LMSGetQueuedEventsStatusByElementIdProcedure,
@@ -552,6 +587,8 @@ type lMSClient struct {
 	copyPipelineUpstream             *connect_go.Client[v0alpha.Element, v0alpha.Element]
 	copyPipelineDownstream           *connect_go.Client[v0alpha.Element, v0alpha.Element]
 	processElement                   *connect_go.Client[v0alpha.ProcessElementReq, emptypb.Empty]
+	processList                      *connect_go.Client[v0alpha.ProcessListRequest, v0alpha.ProcessListResponse]
+	streamList                       *connect_go.Client[v0alpha.StreamListRequest, v0alpha.StreamListResponse]
 	getAvailableFields               *connect_go.Client[emptypb.Empty, v0alpha.ProcessFields]
 	listNewEvents                    *connect_go.Client[emptypb.Empty, v0alpha.Events]
 	viewQueue                        *connect_go.Client[v0alpha.ViewQueueReq, v0alpha.Events]
@@ -580,6 +617,8 @@ type lMSClient struct {
 	getCjsSecureSearchCriteria       *connect_go.Client[v0alpha.GetCjsSecureSearchCriteriaReq, v0alpha.CjsSecureSearchCriteria]
 	createCjsSecureSearchCriteria    *connect_go.Client[v0alpha.CjsSecureSearchCriteria, v0alpha.CjsSecureSearchCriteria]
 	updateCjsSecureSearchCriteria    *connect_go.Client[v0alpha.CjsSecureSearchCriteria, emptypb.Empty]
+	sampleEndpoint                   *connect_go.Client[v0alpha.SampleRequest, emptypb.Empty]
+	getAvailableEHRFields            *connect_go.Client[v0alpha.EHREntityType, v0alpha.Fields]
 	getQueuedEventsStatusByElementId *connect_go.Client[v0alpha.ElementPK, v0alpha.Events]
 }
 
@@ -706,6 +745,16 @@ func (c *lMSClient) CopyPipelineDownstream(ctx context.Context, req *connect_go.
 // ProcessElement calls api.v0alpha.LMS.ProcessElement.
 func (c *lMSClient) ProcessElement(ctx context.Context, req *connect_go.Request[v0alpha.ProcessElementReq]) (*connect_go.Response[emptypb.Empty], error) {
 	return c.processElement.CallUnary(ctx, req)
+}
+
+// ProcessList calls api.v0alpha.LMS.ProcessList.
+func (c *lMSClient) ProcessList(ctx context.Context, req *connect_go.Request[v0alpha.ProcessListRequest]) (*connect_go.Response[v0alpha.ProcessListResponse], error) {
+	return c.processList.CallUnary(ctx, req)
+}
+
+// StreamList calls api.v0alpha.LMS.StreamList.
+func (c *lMSClient) StreamList(ctx context.Context) *connect_go.ClientStreamForClient[v0alpha.StreamListRequest, v0alpha.StreamListResponse] {
+	return c.streamList.CallClientStream(ctx)
 }
 
 // GetAvailableFields calls api.v0alpha.LMS.GetAvailableFields.
@@ -848,6 +897,16 @@ func (c *lMSClient) UpdateCjsSecureSearchCriteria(ctx context.Context, req *conn
 	return c.updateCjsSecureSearchCriteria.CallUnary(ctx, req)
 }
 
+// SampleEndpoint calls api.v0alpha.LMS.SampleEndpoint.
+func (c *lMSClient) SampleEndpoint(ctx context.Context, req *connect_go.Request[v0alpha.SampleRequest]) (*connect_go.Response[emptypb.Empty], error) {
+	return c.sampleEndpoint.CallUnary(ctx, req)
+}
+
+// GetAvailableEHRFields calls api.v0alpha.LMS.GetAvailableEHRFields.
+func (c *lMSClient) GetAvailableEHRFields(ctx context.Context, req *connect_go.Request[v0alpha.EHREntityType]) (*connect_go.Response[v0alpha.Fields], error) {
+	return c.getAvailableEHRFields.CallUnary(ctx, req)
+}
+
 // GetQueuedEventsStatusByElementId calls api.v0alpha.LMS.GetQueuedEventsStatusByElementId.
 func (c *lMSClient) GetQueuedEventsStatusByElementId(ctx context.Context, req *connect_go.Request[v0alpha.ElementPK]) (*connect_go.Response[v0alpha.Events], error) {
 	return c.getQueuedEventsStatusByElementId.CallUnary(ctx, req)
@@ -883,6 +942,8 @@ type LMSHandler interface {
 	// CopyPipelineDownstream copies an Element and all of its' children
 	CopyPipelineDownstream(context.Context, *connect_go.Request[v0alpha.Element], *connect_go.ServerStream[v0alpha.Element]) error
 	ProcessElement(context.Context, *connect_go.Request[v0alpha.ProcessElementReq]) (*connect_go.Response[emptypb.Empty], error)
+	ProcessList(context.Context, *connect_go.Request[v0alpha.ProcessListRequest]) (*connect_go.Response[v0alpha.ProcessListResponse], error)
+	StreamList(context.Context, *connect_go.ClientStream[v0alpha.StreamListRequest]) (*connect_go.Response[v0alpha.StreamListResponse], error)
 	GetAvailableFields(context.Context, *connect_go.Request[emptypb.Empty]) (*connect_go.Response[v0alpha.ProcessFields], error)
 	// returns queue events for the last 30 minutes
 	ListNewEvents(context.Context, *connect_go.Request[emptypb.Empty]) (*connect_go.Response[v0alpha.Events], error)
@@ -928,6 +989,10 @@ type LMSHandler interface {
 	CreateCjsSecureSearchCriteria(context.Context, *connect_go.Request[v0alpha.CjsSecureSearchCriteria]) (*connect_go.Response[v0alpha.CjsSecureSearchCriteria], error)
 	// UpdateCjsSecureSearchCriteria updates the secure search criteria
 	UpdateCjsSecureSearchCriteria(context.Context, *connect_go.Request[v0alpha.CjsSecureSearchCriteria]) (*connect_go.Response[emptypb.Empty], error)
+	// SampleEndpoint is to test that values come through to the api appropriately
+	SampleEndpoint(context.Context, *connect_go.Request[v0alpha.SampleRequest]) (*connect_go.Response[emptypb.Empty], error)
+	// returns all fields possible that an ehr entity type could return (that we know of)
+	GetAvailableEHRFields(context.Context, *connect_go.Request[v0alpha.EHREntityType]) (*connect_go.Response[v0alpha.Fields], error)
 	GetQueuedEventsStatusByElementId(context.Context, *connect_go.Request[v0alpha.ElementPK]) (*connect_go.Response[v0alpha.Events], error)
 }
 
@@ -1060,6 +1125,16 @@ func NewLMSHandler(svc LMSHandler, opts ...connect_go.HandlerOption) (string, ht
 	lMSProcessElementHandler := connect_go.NewUnaryHandler(
 		LMSProcessElementProcedure,
 		svc.ProcessElement,
+		opts...,
+	)
+	lMSProcessListHandler := connect_go.NewUnaryHandler(
+		LMSProcessListProcedure,
+		svc.ProcessList,
+		opts...,
+	)
+	lMSStreamListHandler := connect_go.NewClientStreamHandler(
+		LMSStreamListProcedure,
+		svc.StreamList,
 		opts...,
 	)
 	lMSGetAvailableFieldsHandler := connect_go.NewUnaryHandler(
@@ -1202,6 +1277,16 @@ func NewLMSHandler(svc LMSHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.UpdateCjsSecureSearchCriteria,
 		opts...,
 	)
+	lMSSampleEndpointHandler := connect_go.NewUnaryHandler(
+		LMSSampleEndpointProcedure,
+		svc.SampleEndpoint,
+		opts...,
+	)
+	lMSGetAvailableEHRFieldsHandler := connect_go.NewUnaryHandler(
+		LMSGetAvailableEHRFieldsProcedure,
+		svc.GetAvailableEHRFields,
+		opts...,
+	)
 	lMSGetQueuedEventsStatusByElementIdHandler := connect_go.NewUnaryHandler(
 		LMSGetQueuedEventsStatusByElementIdProcedure,
 		svc.GetQueuedEventsStatusByElementId,
@@ -1259,6 +1344,10 @@ func NewLMSHandler(svc LMSHandler, opts ...connect_go.HandlerOption) (string, ht
 			lMSCopyPipelineDownstreamHandler.ServeHTTP(w, r)
 		case LMSProcessElementProcedure:
 			lMSProcessElementHandler.ServeHTTP(w, r)
+		case LMSProcessListProcedure:
+			lMSProcessListHandler.ServeHTTP(w, r)
+		case LMSStreamListProcedure:
+			lMSStreamListHandler.ServeHTTP(w, r)
 		case LMSGetAvailableFieldsProcedure:
 			lMSGetAvailableFieldsHandler.ServeHTTP(w, r)
 		case LMSListNewEventsProcedure:
@@ -1315,6 +1404,10 @@ func NewLMSHandler(svc LMSHandler, opts ...connect_go.HandlerOption) (string, ht
 			lMSCreateCjsSecureSearchCriteriaHandler.ServeHTTP(w, r)
 		case LMSUpdateCjsSecureSearchCriteriaProcedure:
 			lMSUpdateCjsSecureSearchCriteriaHandler.ServeHTTP(w, r)
+		case LMSSampleEndpointProcedure:
+			lMSSampleEndpointHandler.ServeHTTP(w, r)
+		case LMSGetAvailableEHRFieldsProcedure:
+			lMSGetAvailableEHRFieldsHandler.ServeHTTP(w, r)
 		case LMSGetQueuedEventsStatusByElementIdProcedure:
 			lMSGetQueuedEventsStatusByElementIdHandler.ServeHTTP(w, r)
 		default:
@@ -1424,6 +1517,14 @@ func (UnimplementedLMSHandler) CopyPipelineDownstream(context.Context, *connect_
 
 func (UnimplementedLMSHandler) ProcessElement(context.Context, *connect_go.Request[v0alpha.ProcessElementReq]) (*connect_go.Response[emptypb.Empty], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.LMS.ProcessElement is not implemented"))
+}
+
+func (UnimplementedLMSHandler) ProcessList(context.Context, *connect_go.Request[v0alpha.ProcessListRequest]) (*connect_go.Response[v0alpha.ProcessListResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.LMS.ProcessList is not implemented"))
+}
+
+func (UnimplementedLMSHandler) StreamList(context.Context, *connect_go.ClientStream[v0alpha.StreamListRequest]) (*connect_go.Response[v0alpha.StreamListResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.LMS.StreamList is not implemented"))
 }
 
 func (UnimplementedLMSHandler) GetAvailableFields(context.Context, *connect_go.Request[emptypb.Empty]) (*connect_go.Response[v0alpha.ProcessFields], error) {
@@ -1536,6 +1637,14 @@ func (UnimplementedLMSHandler) CreateCjsSecureSearchCriteria(context.Context, *c
 
 func (UnimplementedLMSHandler) UpdateCjsSecureSearchCriteria(context.Context, *connect_go.Request[v0alpha.CjsSecureSearchCriteria]) (*connect_go.Response[emptypb.Empty], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.LMS.UpdateCjsSecureSearchCriteria is not implemented"))
+}
+
+func (UnimplementedLMSHandler) SampleEndpoint(context.Context, *connect_go.Request[v0alpha.SampleRequest]) (*connect_go.Response[emptypb.Empty], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.LMS.SampleEndpoint is not implemented"))
+}
+
+func (UnimplementedLMSHandler) GetAvailableEHRFields(context.Context, *connect_go.Request[v0alpha.EHREntityType]) (*connect_go.Response[v0alpha.Fields], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.LMS.GetAvailableEHRFields is not implemented"))
 }
 
 func (UnimplementedLMSHandler) GetQueuedEventsStatusByElementId(context.Context, *connect_go.Request[v0alpha.ElementPK]) (*connect_go.Response[v0alpha.Events], error) {

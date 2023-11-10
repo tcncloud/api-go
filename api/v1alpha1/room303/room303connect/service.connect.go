@@ -90,6 +90,15 @@ const (
 	// Room303APIListUsersNamesProcedure is the fully-qualified name of the Room303API's ListUsersNames
 	// RPC.
 	Room303APIListUsersNamesProcedure = "/api.v1alpha1.room303.Room303API/ListUsersNames"
+	// Room303APIUpdateRoomConfigProcedure is the fully-qualified name of the Room303API's
+	// UpdateRoomConfig RPC.
+	Room303APIUpdateRoomConfigProcedure = "/api.v1alpha1.room303.Room303API/UpdateRoomConfig"
+	// Room303APIUpdateGlobalConfigProcedure is the fully-qualified name of the Room303API's
+	// UpdateGlobalConfig RPC.
+	Room303APIUpdateGlobalConfigProcedure = "/api.v1alpha1.room303.Room303API/UpdateGlobalConfig"
+	// Room303APIGetGlobalConfigProcedure is the fully-qualified name of the Room303API's
+	// GetGlobalConfig RPC.
+	Room303APIGetGlobalConfigProcedure = "/api.v1alpha1.room303.Room303API/GetGlobalConfig"
 )
 
 // Room303APIClient is a client for the api.v1alpha1.room303.Room303API service.
@@ -126,6 +135,12 @@ type Room303APIClient interface {
 	ArchiveRoom(context.Context, *connect_go.Request[room303.ArchiveRoomRequest]) (*connect_go.Response[commons.Room], error)
 	// ListUsersNames returns a list of users with names and ids
 	ListUsersNames(context.Context, *connect_go.Request[room303.ListUsersNamesRequest]) (*connect_go.ServerStreamForClient[room303.ListUsersNamesResponse], error)
+	// allow room configurations to be updated
+	UpdateRoomConfig(context.Context, *connect_go.Request[room303.UpdateRoomConfigRequest]) (*connect_go.Response[commons.Room], error)
+	// update global configuration
+	UpdateGlobalConfig(context.Context, *connect_go.Request[room303.UpdateGlobalConfigRequest]) (*connect_go.Response[room303.UpdateGlobalConfigResponse], error)
+	// get global configuration
+	GetGlobalConfig(context.Context, *connect_go.Request[room303.GetGlobalConfigRequest]) (*connect_go.Response[room303.GetGlobalConfigResponse], error)
 }
 
 // NewRoom303APIClient constructs a client for the api.v1alpha1.room303.Room303API service. By
@@ -243,6 +258,21 @@ func NewRoom303APIClient(httpClient connect_go.HTTPClient, baseURL string, opts 
 			baseURL+Room303APIListUsersNamesProcedure,
 			opts...,
 		),
+		updateRoomConfig: connect_go.NewClient[room303.UpdateRoomConfigRequest, commons.Room](
+			httpClient,
+			baseURL+Room303APIUpdateRoomConfigProcedure,
+			opts...,
+		),
+		updateGlobalConfig: connect_go.NewClient[room303.UpdateGlobalConfigRequest, room303.UpdateGlobalConfigResponse](
+			httpClient,
+			baseURL+Room303APIUpdateGlobalConfigProcedure,
+			opts...,
+		),
+		getGlobalConfig: connect_go.NewClient[room303.GetGlobalConfigRequest, room303.GetGlobalConfigResponse](
+			httpClient,
+			baseURL+Room303APIGetGlobalConfigProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -269,6 +299,9 @@ type room303APIClient struct {
 	listRoomsForMember    *connect_go.Client[room303.ListRoomsForMemberRequest, room303.ListRoomsResponse]
 	archiveRoom           *connect_go.Client[room303.ArchiveRoomRequest, commons.Room]
 	listUsersNames        *connect_go.Client[room303.ListUsersNamesRequest, room303.ListUsersNamesResponse]
+	updateRoomConfig      *connect_go.Client[room303.UpdateRoomConfigRequest, commons.Room]
+	updateGlobalConfig    *connect_go.Client[room303.UpdateGlobalConfigRequest, room303.UpdateGlobalConfigResponse]
+	getGlobalConfig       *connect_go.Client[room303.GetGlobalConfigRequest, room303.GetGlobalConfigResponse]
 }
 
 // AddRoomMember calls api.v1alpha1.room303.Room303API.AddRoomMember.
@@ -376,6 +409,21 @@ func (c *room303APIClient) ListUsersNames(ctx context.Context, req *connect_go.R
 	return c.listUsersNames.CallServerStream(ctx, req)
 }
 
+// UpdateRoomConfig calls api.v1alpha1.room303.Room303API.UpdateRoomConfig.
+func (c *room303APIClient) UpdateRoomConfig(ctx context.Context, req *connect_go.Request[room303.UpdateRoomConfigRequest]) (*connect_go.Response[commons.Room], error) {
+	return c.updateRoomConfig.CallUnary(ctx, req)
+}
+
+// UpdateGlobalConfig calls api.v1alpha1.room303.Room303API.UpdateGlobalConfig.
+func (c *room303APIClient) UpdateGlobalConfig(ctx context.Context, req *connect_go.Request[room303.UpdateGlobalConfigRequest]) (*connect_go.Response[room303.UpdateGlobalConfigResponse], error) {
+	return c.updateGlobalConfig.CallUnary(ctx, req)
+}
+
+// GetGlobalConfig calls api.v1alpha1.room303.Room303API.GetGlobalConfig.
+func (c *room303APIClient) GetGlobalConfig(ctx context.Context, req *connect_go.Request[room303.GetGlobalConfigRequest]) (*connect_go.Response[room303.GetGlobalConfigResponse], error) {
+	return c.getGlobalConfig.CallUnary(ctx, req)
+}
+
 // Room303APIHandler is an implementation of the api.v1alpha1.room303.Room303API service.
 type Room303APIHandler interface {
 	// Member
@@ -410,6 +458,12 @@ type Room303APIHandler interface {
 	ArchiveRoom(context.Context, *connect_go.Request[room303.ArchiveRoomRequest]) (*connect_go.Response[commons.Room], error)
 	// ListUsersNames returns a list of users with names and ids
 	ListUsersNames(context.Context, *connect_go.Request[room303.ListUsersNamesRequest], *connect_go.ServerStream[room303.ListUsersNamesResponse]) error
+	// allow room configurations to be updated
+	UpdateRoomConfig(context.Context, *connect_go.Request[room303.UpdateRoomConfigRequest]) (*connect_go.Response[commons.Room], error)
+	// update global configuration
+	UpdateGlobalConfig(context.Context, *connect_go.Request[room303.UpdateGlobalConfigRequest]) (*connect_go.Response[room303.UpdateGlobalConfigResponse], error)
+	// get global configuration
+	GetGlobalConfig(context.Context, *connect_go.Request[room303.GetGlobalConfigRequest]) (*connect_go.Response[room303.GetGlobalConfigResponse], error)
 }
 
 // NewRoom303APIHandler builds an HTTP handler from the service implementation. It returns the path
@@ -523,6 +577,21 @@ func NewRoom303APIHandler(svc Room303APIHandler, opts ...connect_go.HandlerOptio
 		svc.ListUsersNames,
 		opts...,
 	)
+	room303APIUpdateRoomConfigHandler := connect_go.NewUnaryHandler(
+		Room303APIUpdateRoomConfigProcedure,
+		svc.UpdateRoomConfig,
+		opts...,
+	)
+	room303APIUpdateGlobalConfigHandler := connect_go.NewUnaryHandler(
+		Room303APIUpdateGlobalConfigProcedure,
+		svc.UpdateGlobalConfig,
+		opts...,
+	)
+	room303APIGetGlobalConfigHandler := connect_go.NewUnaryHandler(
+		Room303APIGetGlobalConfigProcedure,
+		svc.GetGlobalConfig,
+		opts...,
+	)
 	return "/api.v1alpha1.room303.Room303API/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case Room303APIAddRoomMemberProcedure:
@@ -567,6 +636,12 @@ func NewRoom303APIHandler(svc Room303APIHandler, opts ...connect_go.HandlerOptio
 			room303APIArchiveRoomHandler.ServeHTTP(w, r)
 		case Room303APIListUsersNamesProcedure:
 			room303APIListUsersNamesHandler.ServeHTTP(w, r)
+		case Room303APIUpdateRoomConfigProcedure:
+			room303APIUpdateRoomConfigHandler.ServeHTTP(w, r)
+		case Room303APIUpdateGlobalConfigProcedure:
+			room303APIUpdateGlobalConfigHandler.ServeHTTP(w, r)
+		case Room303APIGetGlobalConfigProcedure:
+			room303APIGetGlobalConfigHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -658,4 +733,16 @@ func (UnimplementedRoom303APIHandler) ArchiveRoom(context.Context, *connect_go.R
 
 func (UnimplementedRoom303APIHandler) ListUsersNames(context.Context, *connect_go.Request[room303.ListUsersNamesRequest], *connect_go.ServerStream[room303.ListUsersNamesResponse]) error {
 	return connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.room303.Room303API.ListUsersNames is not implemented"))
+}
+
+func (UnimplementedRoom303APIHandler) UpdateRoomConfig(context.Context, *connect_go.Request[room303.UpdateRoomConfigRequest]) (*connect_go.Response[commons.Room], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.room303.Room303API.UpdateRoomConfig is not implemented"))
+}
+
+func (UnimplementedRoom303APIHandler) UpdateGlobalConfig(context.Context, *connect_go.Request[room303.UpdateGlobalConfigRequest]) (*connect_go.Response[room303.UpdateGlobalConfigResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.room303.Room303API.UpdateGlobalConfig is not implemented"))
+}
+
+func (UnimplementedRoom303APIHandler) GetGlobalConfig(context.Context, *connect_go.Request[room303.GetGlobalConfigRequest]) (*connect_go.Response[room303.GetGlobalConfigResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.room303.Room303API.GetGlobalConfig is not implemented"))
 }

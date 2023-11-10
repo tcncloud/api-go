@@ -47,6 +47,11 @@ const (
 	Vanalytics_DeleteFlagFilter_FullMethodName          = "/api.v1alpha1.vanalytics.Vanalytics/DeleteFlagFilter"
 	Vanalytics_ListFlagSnapshots_FullMethodName         = "/api.v1alpha1.vanalytics.Vanalytics/ListFlagSnapshots"
 	Vanalytics_ListFlagTranscriptFilters_FullMethodName = "/api.v1alpha1.vanalytics.Vanalytics/ListFlagTranscriptFilters"
+	Vanalytics_CreateCorrection_FullMethodName          = "/api.v1alpha1.vanalytics.Vanalytics/CreateCorrection"
+	Vanalytics_GetCorrection_FullMethodName             = "/api.v1alpha1.vanalytics.Vanalytics/GetCorrection"
+	Vanalytics_DeleteCorrection_FullMethodName          = "/api.v1alpha1.vanalytics.Vanalytics/DeleteCorrection"
+	Vanalytics_ListCorrections_FullMethodName           = "/api.v1alpha1.vanalytics.Vanalytics/ListCorrections"
+	Vanalytics_UpdateCorrection_FullMethodName          = "/api.v1alpha1.vanalytics.Vanalytics/UpdateCorrection"
 )
 
 // VanalyticsClient is the client API for Vanalytics service.
@@ -114,6 +119,16 @@ type VanalyticsClient interface {
 	ListFlagSnapshots(ctx context.Context, in *ListFlagSnapshotsRequest, opts ...grpc.CallOption) (*ListFlagSnapshotsResponse, error)
 	// ListFlagTranscriptFilters lists flag transcript filters in an organization.
 	ListFlagTranscriptFilters(ctx context.Context, in *ListFlagTranscriptFiltersRequest, opts ...grpc.CallOption) (*ListFlagTranscriptFiltersResponse, error)
+	// CreateCorrection creates a correction.
+	CreateCorrection(ctx context.Context, in *CreateCorrectionRequest, opts ...grpc.CallOption) (*CreateCorrectionResponse, error)
+	// GetCorrection gets a correction.
+	GetCorrection(ctx context.Context, in *GetCorrectionRequest, opts ...grpc.CallOption) (*Correction, error)
+	// DeleteCorrection deletes a correction.
+	DeleteCorrection(ctx context.Context, in *DeleteCorrectionRequest, opts ...grpc.CallOption) (*DeleteCorrectionResponse, error)
+	// ListCorrections lists corrections.
+	ListCorrections(ctx context.Context, in *ListCorrectionsRequest, opts ...grpc.CallOption) (*ListCorrectionsResponse, error)
+	// UpdateCorrection updates a correction.
+	UpdateCorrection(ctx context.Context, in *UpdateCorrectionRequest, opts ...grpc.CallOption) (*UpdateCorrectionResponse, error)
 }
 
 type vanalyticsClient struct {
@@ -376,6 +391,51 @@ func (c *vanalyticsClient) ListFlagTranscriptFilters(ctx context.Context, in *Li
 	return out, nil
 }
 
+func (c *vanalyticsClient) CreateCorrection(ctx context.Context, in *CreateCorrectionRequest, opts ...grpc.CallOption) (*CreateCorrectionResponse, error) {
+	out := new(CreateCorrectionResponse)
+	err := c.cc.Invoke(ctx, Vanalytics_CreateCorrection_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *vanalyticsClient) GetCorrection(ctx context.Context, in *GetCorrectionRequest, opts ...grpc.CallOption) (*Correction, error) {
+	out := new(Correction)
+	err := c.cc.Invoke(ctx, Vanalytics_GetCorrection_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *vanalyticsClient) DeleteCorrection(ctx context.Context, in *DeleteCorrectionRequest, opts ...grpc.CallOption) (*DeleteCorrectionResponse, error) {
+	out := new(DeleteCorrectionResponse)
+	err := c.cc.Invoke(ctx, Vanalytics_DeleteCorrection_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *vanalyticsClient) ListCorrections(ctx context.Context, in *ListCorrectionsRequest, opts ...grpc.CallOption) (*ListCorrectionsResponse, error) {
+	out := new(ListCorrectionsResponse)
+	err := c.cc.Invoke(ctx, Vanalytics_ListCorrections_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *vanalyticsClient) UpdateCorrection(ctx context.Context, in *UpdateCorrectionRequest, opts ...grpc.CallOption) (*UpdateCorrectionResponse, error) {
+	out := new(UpdateCorrectionResponse)
+	err := c.cc.Invoke(ctx, Vanalytics_UpdateCorrection_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // VanalyticsServer is the server API for Vanalytics service.
 // All implementations must embed UnimplementedVanalyticsServer
 // for forward compatibility
@@ -441,6 +501,16 @@ type VanalyticsServer interface {
 	ListFlagSnapshots(context.Context, *ListFlagSnapshotsRequest) (*ListFlagSnapshotsResponse, error)
 	// ListFlagTranscriptFilters lists flag transcript filters in an organization.
 	ListFlagTranscriptFilters(context.Context, *ListFlagTranscriptFiltersRequest) (*ListFlagTranscriptFiltersResponse, error)
+	// CreateCorrection creates a correction.
+	CreateCorrection(context.Context, *CreateCorrectionRequest) (*CreateCorrectionResponse, error)
+	// GetCorrection gets a correction.
+	GetCorrection(context.Context, *GetCorrectionRequest) (*Correction, error)
+	// DeleteCorrection deletes a correction.
+	DeleteCorrection(context.Context, *DeleteCorrectionRequest) (*DeleteCorrectionResponse, error)
+	// ListCorrections lists corrections.
+	ListCorrections(context.Context, *ListCorrectionsRequest) (*ListCorrectionsResponse, error)
+	// UpdateCorrection updates a correction.
+	UpdateCorrection(context.Context, *UpdateCorrectionRequest) (*UpdateCorrectionResponse, error)
 	mustEmbedUnimplementedVanalyticsServer()
 }
 
@@ -531,6 +601,21 @@ func (UnimplementedVanalyticsServer) ListFlagSnapshots(context.Context, *ListFla
 }
 func (UnimplementedVanalyticsServer) ListFlagTranscriptFilters(context.Context, *ListFlagTranscriptFiltersRequest) (*ListFlagTranscriptFiltersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListFlagTranscriptFilters not implemented")
+}
+func (UnimplementedVanalyticsServer) CreateCorrection(context.Context, *CreateCorrectionRequest) (*CreateCorrectionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateCorrection not implemented")
+}
+func (UnimplementedVanalyticsServer) GetCorrection(context.Context, *GetCorrectionRequest) (*Correction, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCorrection not implemented")
+}
+func (UnimplementedVanalyticsServer) DeleteCorrection(context.Context, *DeleteCorrectionRequest) (*DeleteCorrectionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteCorrection not implemented")
+}
+func (UnimplementedVanalyticsServer) ListCorrections(context.Context, *ListCorrectionsRequest) (*ListCorrectionsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListCorrections not implemented")
+}
+func (UnimplementedVanalyticsServer) UpdateCorrection(context.Context, *UpdateCorrectionRequest) (*UpdateCorrectionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateCorrection not implemented")
 }
 func (UnimplementedVanalyticsServer) mustEmbedUnimplementedVanalyticsServer() {}
 
@@ -1049,6 +1134,96 @@ func _Vanalytics_ListFlagTranscriptFilters_Handler(srv interface{}, ctx context.
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Vanalytics_CreateCorrection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateCorrectionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VanalyticsServer).CreateCorrection(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Vanalytics_CreateCorrection_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VanalyticsServer).CreateCorrection(ctx, req.(*CreateCorrectionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Vanalytics_GetCorrection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCorrectionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VanalyticsServer).GetCorrection(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Vanalytics_GetCorrection_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VanalyticsServer).GetCorrection(ctx, req.(*GetCorrectionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Vanalytics_DeleteCorrection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteCorrectionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VanalyticsServer).DeleteCorrection(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Vanalytics_DeleteCorrection_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VanalyticsServer).DeleteCorrection(ctx, req.(*DeleteCorrectionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Vanalytics_ListCorrections_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListCorrectionsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VanalyticsServer).ListCorrections(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Vanalytics_ListCorrections_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VanalyticsServer).ListCorrections(ctx, req.(*ListCorrectionsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Vanalytics_UpdateCorrection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateCorrectionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VanalyticsServer).UpdateCorrection(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Vanalytics_UpdateCorrection_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VanalyticsServer).UpdateCorrection(ctx, req.(*UpdateCorrectionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Vanalytics_ServiceDesc is the grpc.ServiceDesc for Vanalytics service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1167,6 +1342,26 @@ var Vanalytics_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListFlagTranscriptFilters",
 			Handler:    _Vanalytics_ListFlagTranscriptFilters_Handler,
+		},
+		{
+			MethodName: "CreateCorrection",
+			Handler:    _Vanalytics_CreateCorrection_Handler,
+		},
+		{
+			MethodName: "GetCorrection",
+			Handler:    _Vanalytics_GetCorrection_Handler,
+		},
+		{
+			MethodName: "DeleteCorrection",
+			Handler:    _Vanalytics_DeleteCorrection_Handler,
+		},
+		{
+			MethodName: "ListCorrections",
+			Handler:    _Vanalytics_ListCorrections_Handler,
+		},
+		{
+			MethodName: "UpdateCorrection",
+			Handler:    _Vanalytics_UpdateCorrection_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

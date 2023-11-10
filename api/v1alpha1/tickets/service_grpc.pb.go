@@ -44,6 +44,10 @@ const (
 	Tickets_AssignTicketAction_FullMethodName        = "/api.v1alpha1.tickets.Tickets/AssignTicketAction"
 	Tickets_CreateTicketAction_FullMethodName        = "/api.v1alpha1.tickets.Tickets/CreateTicketAction"
 	Tickets_ChangeTicketStatus_FullMethodName        = "/api.v1alpha1.tickets.Tickets/ChangeTicketStatus"
+	Tickets_CreateTicketTemplate_FullMethodName      = "/api.v1alpha1.tickets.Tickets/CreateTicketTemplate"
+	Tickets_EditTicketTemplate_FullMethodName        = "/api.v1alpha1.tickets.Tickets/EditTicketTemplate"
+	Tickets_ListTicketTemplate_FullMethodName        = "/api.v1alpha1.tickets.Tickets/ListTicketTemplate"
+	Tickets_AssignTicketTemplate_FullMethodName      = "/api.v1alpha1.tickets.Tickets/AssignTicketTemplate"
 )
 
 // TicketsClient is the client API for Tickets service.
@@ -103,6 +107,14 @@ type TicketsClient interface {
 	CreateTicketAction(ctx context.Context, in *CreateTicketActionRequest, opts ...grpc.CallOption) (*CreateTicketActionResponse, error)
 	// Public method to change the Status of a ticket
 	ChangeTicketStatus(ctx context.Context, in *ChangeTicketStatusRequest, opts ...grpc.CallOption) (*ChangeTicketStatusResponse, error)
+	// Public method to change the Status of a ticket
+	CreateTicketTemplate(ctx context.Context, in *CreateTicketTemplateRequest, opts ...grpc.CallOption) (*CreateTicketTemplateResponse, error)
+	// Public method to change the Status of a ticket
+	EditTicketTemplate(ctx context.Context, in *EditTicketTemplateRequest, opts ...grpc.CallOption) (*EditTicketTemplateResponse, error)
+	// Public method to change the Status of a ticket
+	ListTicketTemplate(ctx context.Context, in *ListTicketTemplateRequest, opts ...grpc.CallOption) (*ListTicketTemplateResponse, error)
+	// Public method to change the Status of a ticket
+	AssignTicketTemplate(ctx context.Context, in *AssignProjectTemplateRequest, opts ...grpc.CallOption) (*AssignProjectTemplateResponse, error)
 }
 
 type ticketsClient struct {
@@ -339,6 +351,42 @@ func (c *ticketsClient) ChangeTicketStatus(ctx context.Context, in *ChangeTicket
 	return out, nil
 }
 
+func (c *ticketsClient) CreateTicketTemplate(ctx context.Context, in *CreateTicketTemplateRequest, opts ...grpc.CallOption) (*CreateTicketTemplateResponse, error) {
+	out := new(CreateTicketTemplateResponse)
+	err := c.cc.Invoke(ctx, Tickets_CreateTicketTemplate_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *ticketsClient) EditTicketTemplate(ctx context.Context, in *EditTicketTemplateRequest, opts ...grpc.CallOption) (*EditTicketTemplateResponse, error) {
+	out := new(EditTicketTemplateResponse)
+	err := c.cc.Invoke(ctx, Tickets_EditTicketTemplate_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *ticketsClient) ListTicketTemplate(ctx context.Context, in *ListTicketTemplateRequest, opts ...grpc.CallOption) (*ListTicketTemplateResponse, error) {
+	out := new(ListTicketTemplateResponse)
+	err := c.cc.Invoke(ctx, Tickets_ListTicketTemplate_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *ticketsClient) AssignTicketTemplate(ctx context.Context, in *AssignProjectTemplateRequest, opts ...grpc.CallOption) (*AssignProjectTemplateResponse, error) {
+	out := new(AssignProjectTemplateResponse)
+	err := c.cc.Invoke(ctx, Tickets_AssignTicketTemplate_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TicketsServer is the server API for Tickets service.
 // All implementations must embed UnimplementedTicketsServer
 // for forward compatibility
@@ -396,6 +444,14 @@ type TicketsServer interface {
 	CreateTicketAction(context.Context, *CreateTicketActionRequest) (*CreateTicketActionResponse, error)
 	// Public method to change the Status of a ticket
 	ChangeTicketStatus(context.Context, *ChangeTicketStatusRequest) (*ChangeTicketStatusResponse, error)
+	// Public method to change the Status of a ticket
+	CreateTicketTemplate(context.Context, *CreateTicketTemplateRequest) (*CreateTicketTemplateResponse, error)
+	// Public method to change the Status of a ticket
+	EditTicketTemplate(context.Context, *EditTicketTemplateRequest) (*EditTicketTemplateResponse, error)
+	// Public method to change the Status of a ticket
+	ListTicketTemplate(context.Context, *ListTicketTemplateRequest) (*ListTicketTemplateResponse, error)
+	// Public method to change the Status of a ticket
+	AssignTicketTemplate(context.Context, *AssignProjectTemplateRequest) (*AssignProjectTemplateResponse, error)
 	mustEmbedUnimplementedTicketsServer()
 }
 
@@ -477,6 +533,18 @@ func (UnimplementedTicketsServer) CreateTicketAction(context.Context, *CreateTic
 }
 func (UnimplementedTicketsServer) ChangeTicketStatus(context.Context, *ChangeTicketStatusRequest) (*ChangeTicketStatusResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ChangeTicketStatus not implemented")
+}
+func (UnimplementedTicketsServer) CreateTicketTemplate(context.Context, *CreateTicketTemplateRequest) (*CreateTicketTemplateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateTicketTemplate not implemented")
+}
+func (UnimplementedTicketsServer) EditTicketTemplate(context.Context, *EditTicketTemplateRequest) (*EditTicketTemplateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EditTicketTemplate not implemented")
+}
+func (UnimplementedTicketsServer) ListTicketTemplate(context.Context, *ListTicketTemplateRequest) (*ListTicketTemplateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListTicketTemplate not implemented")
+}
+func (UnimplementedTicketsServer) AssignTicketTemplate(context.Context, *AssignProjectTemplateRequest) (*AssignProjectTemplateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AssignTicketTemplate not implemented")
 }
 func (UnimplementedTicketsServer) mustEmbedUnimplementedTicketsServer() {}
 
@@ -941,6 +1009,78 @@ func _Tickets_ChangeTicketStatus_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Tickets_CreateTicketTemplate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateTicketTemplateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TicketsServer).CreateTicketTemplate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Tickets_CreateTicketTemplate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TicketsServer).CreateTicketTemplate(ctx, req.(*CreateTicketTemplateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Tickets_EditTicketTemplate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EditTicketTemplateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TicketsServer).EditTicketTemplate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Tickets_EditTicketTemplate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TicketsServer).EditTicketTemplate(ctx, req.(*EditTicketTemplateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Tickets_ListTicketTemplate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListTicketTemplateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TicketsServer).ListTicketTemplate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Tickets_ListTicketTemplate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TicketsServer).ListTicketTemplate(ctx, req.(*ListTicketTemplateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Tickets_AssignTicketTemplate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AssignProjectTemplateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TicketsServer).AssignTicketTemplate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Tickets_AssignTicketTemplate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TicketsServer).AssignTicketTemplate(ctx, req.(*AssignProjectTemplateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Tickets_ServiceDesc is the grpc.ServiceDesc for Tickets service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1047,6 +1187,22 @@ var Tickets_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ChangeTicketStatus",
 			Handler:    _Tickets_ChangeTicketStatus_Handler,
+		},
+		{
+			MethodName: "CreateTicketTemplate",
+			Handler:    _Tickets_CreateTicketTemplate_Handler,
+		},
+		{
+			MethodName: "EditTicketTemplate",
+			Handler:    _Tickets_EditTicketTemplate_Handler,
+		},
+		{
+			MethodName: "ListTicketTemplate",
+			Handler:    _Tickets_ListTicketTemplate_Handler,
+		},
+		{
+			MethodName: "AssignTicketTemplate",
+			Handler:    _Tickets_AssignTicketTemplate_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
