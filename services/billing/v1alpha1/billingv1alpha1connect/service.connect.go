@@ -33,6 +33,12 @@ const (
 // reflection-formatted method names, remove the leading slash and convert the remaining slash to a
 // period.
 const (
+	// BillingServiceCommitBillingPlanProcedure is the fully-qualified name of the BillingService's
+	// CommitBillingPlan RPC.
+	BillingServiceCommitBillingPlanProcedure = "/services.billing.v1alpha1.BillingService/CommitBillingPlan"
+	// BillingServiceCommitDefaultBillingPlanProcedure is the fully-qualified name of the
+	// BillingService's CommitDefaultBillingPlan RPC.
+	BillingServiceCommitDefaultBillingPlanProcedure = "/services.billing.v1alpha1.BillingService/CommitDefaultBillingPlan"
 	// BillingServiceCreateBillingPlanProcedure is the fully-qualified name of the BillingService's
 	// CreateBillingPlan RPC.
 	BillingServiceCreateBillingPlanProcedure = "/services.billing.v1alpha1.BillingService/CreateBillingPlan"
@@ -106,6 +112,35 @@ const (
 
 // BillingServiceClient is a client for the services.billing.v1alpha1.BillingService service.
 type BillingServiceClient interface {
+	// Commits a billing plan for the ORG, finalizing it's creation and allowing it
+	// to become active.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.FailedPrecondition: The billing plan is already committed.
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The specified billing plan doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	CommitBillingPlan(context.Context, *connect_go.Request[v1alpha1.CommitBillingPlanRequest]) (*connect_go.Response[v1alpha1.CommitBillingPlanResponse], error)
+	// Commits a default billing plan for the REGION, finalizing it's creation and allowing it
+	// to become active.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//	TCN_BILLING_ADMIN
+	//
+	// Errors:
+	//   - grpc.FailedPrecondition: The default billing plan is already committed.
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The specified default billing plan doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable.
+	CommitDefaultBillingPlan(context.Context, *connect_go.Request[v1alpha1.CommitDefaultBillingPlanRequest]) (*connect_go.Response[v1alpha1.CommitDefaultBillingPlanResponse], error)
 	// Creates a billing plan for the ORG.
 	// Required permissions:
 	//
@@ -416,6 +451,16 @@ type BillingServiceClient interface {
 func NewBillingServiceClient(httpClient connect_go.HTTPClient, baseURL string, opts ...connect_go.ClientOption) BillingServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
 	return &billingServiceClient{
+		commitBillingPlan: connect_go.NewClient[v1alpha1.CommitBillingPlanRequest, v1alpha1.CommitBillingPlanResponse](
+			httpClient,
+			baseURL+BillingServiceCommitBillingPlanProcedure,
+			opts...,
+		),
+		commitDefaultBillingPlan: connect_go.NewClient[v1alpha1.CommitDefaultBillingPlanRequest, v1alpha1.CommitDefaultBillingPlanResponse](
+			httpClient,
+			baseURL+BillingServiceCommitDefaultBillingPlanProcedure,
+			opts...,
+		),
 		createBillingPlan: connect_go.NewClient[v1alpha1.CreateBillingPlanRequest, v1alpha1.CreateBillingPlanResponse](
 			httpClient,
 			baseURL+BillingServiceCreateBillingPlanProcedure,
@@ -536,6 +581,8 @@ func NewBillingServiceClient(httpClient connect_go.HTTPClient, baseURL string, o
 
 // billingServiceClient implements BillingServiceClient.
 type billingServiceClient struct {
+	commitBillingPlan           *connect_go.Client[v1alpha1.CommitBillingPlanRequest, v1alpha1.CommitBillingPlanResponse]
+	commitDefaultBillingPlan    *connect_go.Client[v1alpha1.CommitDefaultBillingPlanRequest, v1alpha1.CommitDefaultBillingPlanResponse]
 	createBillingPlan           *connect_go.Client[v1alpha1.CreateBillingPlanRequest, v1alpha1.CreateBillingPlanResponse]
 	createDefaultBillingPlan    *connect_go.Client[v1alpha1.CreateDefaultBillingPlanRequest, v1alpha1.CreateDefaultBillingPlanResponse]
 	createDefaultRateDefinition *connect_go.Client[v1alpha1.CreateDefaultRateDefinitionRequest, v1alpha1.CreateDefaultRateDefinitionResponse]
@@ -559,6 +606,16 @@ type billingServiceClient struct {
 	updateDefaultRateDefinition *connect_go.Client[v1alpha1.UpdateDefaultRateDefinitionRequest, v1alpha1.UpdateDefaultRateDefinitionResponse]
 	updateInvoice               *connect_go.Client[v1alpha1.UpdateInvoiceRequest, v1alpha1.UpdateInvoiceResponse]
 	updateRateDefinition        *connect_go.Client[v1alpha1.UpdateRateDefinitionRequest, v1alpha1.UpdateRateDefinitionResponse]
+}
+
+// CommitBillingPlan calls services.billing.v1alpha1.BillingService.CommitBillingPlan.
+func (c *billingServiceClient) CommitBillingPlan(ctx context.Context, req *connect_go.Request[v1alpha1.CommitBillingPlanRequest]) (*connect_go.Response[v1alpha1.CommitBillingPlanResponse], error) {
+	return c.commitBillingPlan.CallUnary(ctx, req)
+}
+
+// CommitDefaultBillingPlan calls services.billing.v1alpha1.BillingService.CommitDefaultBillingPlan.
+func (c *billingServiceClient) CommitDefaultBillingPlan(ctx context.Context, req *connect_go.Request[v1alpha1.CommitDefaultBillingPlanRequest]) (*connect_go.Response[v1alpha1.CommitDefaultBillingPlanResponse], error) {
+	return c.commitDefaultBillingPlan.CallUnary(ctx, req)
 }
 
 // CreateBillingPlan calls services.billing.v1alpha1.BillingService.CreateBillingPlan.
@@ -682,6 +739,35 @@ func (c *billingServiceClient) UpdateRateDefinition(ctx context.Context, req *co
 // BillingServiceHandler is an implementation of the services.billing.v1alpha1.BillingService
 // service.
 type BillingServiceHandler interface {
+	// Commits a billing plan for the ORG, finalizing it's creation and allowing it
+	// to become active.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.FailedPrecondition: The billing plan is already committed.
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The specified billing plan doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	CommitBillingPlan(context.Context, *connect_go.Request[v1alpha1.CommitBillingPlanRequest]) (*connect_go.Response[v1alpha1.CommitBillingPlanResponse], error)
+	// Commits a default billing plan for the REGION, finalizing it's creation and allowing it
+	// to become active.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//	TCN_BILLING_ADMIN
+	//
+	// Errors:
+	//   - grpc.FailedPrecondition: The default billing plan is already committed.
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The specified default billing plan doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable.
+	CommitDefaultBillingPlan(context.Context, *connect_go.Request[v1alpha1.CommitDefaultBillingPlanRequest]) (*connect_go.Response[v1alpha1.CommitDefaultBillingPlanResponse], error)
 	// Creates a billing plan for the ORG.
 	// Required permissions:
 	//
@@ -988,6 +1074,16 @@ type BillingServiceHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewBillingServiceHandler(svc BillingServiceHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
+	billingServiceCommitBillingPlanHandler := connect_go.NewUnaryHandler(
+		BillingServiceCommitBillingPlanProcedure,
+		svc.CommitBillingPlan,
+		opts...,
+	)
+	billingServiceCommitDefaultBillingPlanHandler := connect_go.NewUnaryHandler(
+		BillingServiceCommitDefaultBillingPlanProcedure,
+		svc.CommitDefaultBillingPlan,
+		opts...,
+	)
 	billingServiceCreateBillingPlanHandler := connect_go.NewUnaryHandler(
 		BillingServiceCreateBillingPlanProcedure,
 		svc.CreateBillingPlan,
@@ -1105,6 +1201,10 @@ func NewBillingServiceHandler(svc BillingServiceHandler, opts ...connect_go.Hand
 	)
 	return "/services.billing.v1alpha1.BillingService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
+		case BillingServiceCommitBillingPlanProcedure:
+			billingServiceCommitBillingPlanHandler.ServeHTTP(w, r)
+		case BillingServiceCommitDefaultBillingPlanProcedure:
+			billingServiceCommitDefaultBillingPlanHandler.ServeHTTP(w, r)
 		case BillingServiceCreateBillingPlanProcedure:
 			billingServiceCreateBillingPlanHandler.ServeHTTP(w, r)
 		case BillingServiceCreateDefaultBillingPlanProcedure:
@@ -1159,6 +1259,14 @@ func NewBillingServiceHandler(svc BillingServiceHandler, opts ...connect_go.Hand
 
 // UnimplementedBillingServiceHandler returns CodeUnimplemented from all methods.
 type UnimplementedBillingServiceHandler struct{}
+
+func (UnimplementedBillingServiceHandler) CommitBillingPlan(context.Context, *connect_go.Request[v1alpha1.CommitBillingPlanRequest]) (*connect_go.Response[v1alpha1.CommitBillingPlanResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.billing.v1alpha1.BillingService.CommitBillingPlan is not implemented"))
+}
+
+func (UnimplementedBillingServiceHandler) CommitDefaultBillingPlan(context.Context, *connect_go.Request[v1alpha1.CommitDefaultBillingPlanRequest]) (*connect_go.Response[v1alpha1.CommitDefaultBillingPlanResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.billing.v1alpha1.BillingService.CommitDefaultBillingPlan is not implemented"))
+}
 
 func (UnimplementedBillingServiceHandler) CreateBillingPlan(context.Context, *connect_go.Request[v1alpha1.CreateBillingPlanRequest]) (*connect_go.Response[v1alpha1.CreateBillingPlanResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.billing.v1alpha1.BillingService.CreateBillingPlan is not implemented"))

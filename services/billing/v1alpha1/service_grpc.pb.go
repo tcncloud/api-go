@@ -19,6 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
+	BillingService_CommitBillingPlan_FullMethodName           = "/services.billing.v1alpha1.BillingService/CommitBillingPlan"
+	BillingService_CommitDefaultBillingPlan_FullMethodName    = "/services.billing.v1alpha1.BillingService/CommitDefaultBillingPlan"
 	BillingService_CreateBillingPlan_FullMethodName           = "/services.billing.v1alpha1.BillingService/CreateBillingPlan"
 	BillingService_CreateDefaultBillingPlan_FullMethodName    = "/services.billing.v1alpha1.BillingService/CreateDefaultBillingPlan"
 	BillingService_CreateDefaultRateDefinition_FullMethodName = "/services.billing.v1alpha1.BillingService/CreateDefaultRateDefinition"
@@ -48,6 +50,35 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type BillingServiceClient interface {
+	// Commits a billing plan for the ORG, finalizing it's creation and allowing it
+	// to become active.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.FailedPrecondition: The billing plan is already committed.
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The specified billing plan doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	CommitBillingPlan(ctx context.Context, in *CommitBillingPlanRequest, opts ...grpc.CallOption) (*CommitBillingPlanResponse, error)
+	// Commits a default billing plan for the REGION, finalizing it's creation and allowing it
+	// to become active.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//	TCN_BILLING_ADMIN
+	//
+	// Errors:
+	//   - grpc.FailedPrecondition: The default billing plan is already committed.
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The specified default billing plan doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable.
+	CommitDefaultBillingPlan(ctx context.Context, in *CommitDefaultBillingPlanRequest, opts ...grpc.CallOption) (*CommitDefaultBillingPlanResponse, error)
 	// Creates a billing plan for the ORG.
 	// Required permissions:
 	//
@@ -356,6 +387,24 @@ func NewBillingServiceClient(cc grpc.ClientConnInterface) BillingServiceClient {
 	return &billingServiceClient{cc}
 }
 
+func (c *billingServiceClient) CommitBillingPlan(ctx context.Context, in *CommitBillingPlanRequest, opts ...grpc.CallOption) (*CommitBillingPlanResponse, error) {
+	out := new(CommitBillingPlanResponse)
+	err := c.cc.Invoke(ctx, BillingService_CommitBillingPlan_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) CommitDefaultBillingPlan(ctx context.Context, in *CommitDefaultBillingPlanRequest, opts ...grpc.CallOption) (*CommitDefaultBillingPlanResponse, error) {
+	out := new(CommitDefaultBillingPlanResponse)
+	err := c.cc.Invoke(ctx, BillingService_CommitDefaultBillingPlan_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *billingServiceClient) CreateBillingPlan(ctx context.Context, in *CreateBillingPlanRequest, opts ...grpc.CallOption) (*CreateBillingPlanResponse, error) {
 	out := new(CreateBillingPlanResponse)
 	err := c.cc.Invoke(ctx, BillingService_CreateBillingPlan_FullMethodName, in, out, opts...)
@@ -567,6 +616,35 @@ func (c *billingServiceClient) UpdateRateDefinition(ctx context.Context, in *Upd
 // All implementations must embed UnimplementedBillingServiceServer
 // for forward compatibility
 type BillingServiceServer interface {
+	// Commits a billing plan for the ORG, finalizing it's creation and allowing it
+	// to become active.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.FailedPrecondition: The billing plan is already committed.
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The specified billing plan doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	CommitBillingPlan(context.Context, *CommitBillingPlanRequest) (*CommitBillingPlanResponse, error)
+	// Commits a default billing plan for the REGION, finalizing it's creation and allowing it
+	// to become active.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//	TCN_BILLING_ADMIN
+	//
+	// Errors:
+	//   - grpc.FailedPrecondition: The default billing plan is already committed.
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The specified default billing plan doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable.
+	CommitDefaultBillingPlan(context.Context, *CommitDefaultBillingPlanRequest) (*CommitDefaultBillingPlanResponse, error)
 	// Creates a billing plan for the ORG.
 	// Required permissions:
 	//
@@ -872,6 +950,12 @@ type BillingServiceServer interface {
 type UnimplementedBillingServiceServer struct {
 }
 
+func (UnimplementedBillingServiceServer) CommitBillingPlan(context.Context, *CommitBillingPlanRequest) (*CommitBillingPlanResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CommitBillingPlan not implemented")
+}
+func (UnimplementedBillingServiceServer) CommitDefaultBillingPlan(context.Context, *CommitDefaultBillingPlanRequest) (*CommitDefaultBillingPlanResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CommitDefaultBillingPlan not implemented")
+}
 func (UnimplementedBillingServiceServer) CreateBillingPlan(context.Context, *CreateBillingPlanRequest) (*CreateBillingPlanResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateBillingPlan not implemented")
 }
@@ -952,6 +1036,42 @@ type UnsafeBillingServiceServer interface {
 
 func RegisterBillingServiceServer(s grpc.ServiceRegistrar, srv BillingServiceServer) {
 	s.RegisterService(&BillingService_ServiceDesc, srv)
+}
+
+func _BillingService_CommitBillingPlan_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CommitBillingPlanRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).CommitBillingPlan(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_CommitBillingPlan_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).CommitBillingPlan(ctx, req.(*CommitBillingPlanRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_CommitDefaultBillingPlan_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CommitDefaultBillingPlanRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).CommitDefaultBillingPlan(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_CommitDefaultBillingPlan_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).CommitDefaultBillingPlan(ctx, req.(*CommitDefaultBillingPlanRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _BillingService_CreateBillingPlan_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -1375,6 +1495,14 @@ var BillingService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "services.billing.v1alpha1.BillingService",
 	HandlerType: (*BillingServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "CommitBillingPlan",
+			Handler:    _BillingService_CommitBillingPlan_Handler,
+		},
+		{
+			MethodName: "CommitDefaultBillingPlan",
+			Handler:    _BillingService_CommitDefaultBillingPlan_Handler,
+		},
 		{
 			MethodName: "CreateBillingPlan",
 			Handler:    _BillingService_CreateBillingPlan_Handler,
