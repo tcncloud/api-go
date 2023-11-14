@@ -31,6 +31,8 @@ const (
 	BillingService_DeleteDefaultRateDefinition_FullMethodName = "/services.billing.v1alpha1.BillingService/DeleteDefaultRateDefinition"
 	BillingService_DeleteInvoice_FullMethodName               = "/services.billing.v1alpha1.BillingService/DeleteInvoice"
 	BillingService_DeleteRateDefinition_FullMethodName        = "/services.billing.v1alpha1.BillingService/DeleteRateDefinition"
+	BillingService_DuplicateBillingPlan_FullMethodName        = "/services.billing.v1alpha1.BillingService/DuplicateBillingPlan"
+	BillingService_DuplicateDefaultBillingPlan_FullMethodName = "/services.billing.v1alpha1.BillingService/DuplicateDefaultBillingPlan"
 	BillingService_ExportInvoice_FullMethodName               = "/services.billing.v1alpha1.BillingService/ExportInvoice"
 	BillingService_GetActiveBillingPlan_FullMethodName        = "/services.billing.v1alpha1.BillingService/GetActiveBillingPlan"
 	BillingService_GetBillingPlan_FullMethodName              = "/services.billing.v1alpha1.BillingService/GetBillingPlan"
@@ -212,6 +214,32 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	DeleteRateDefinition(ctx context.Context, in *DeleteRateDefinitionRequest, opts ...grpc.CallOption) (*DeleteRateDefinitionResponse, error)
+	// Duplicates a billing plan. This copies the billing plan and all of its rate definitions.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The specified billing plan doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	DuplicateBillingPlan(ctx context.Context, in *DuplicateBillingPlanRequest, opts ...grpc.CallOption) (*DuplicateBillingPlanResponse, error)
+	// Duplicates a default billing plan. This copies the billing plan, all of its rate definitions,
+	// and all of its rate definition groups and features.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//	TCN_BILLING_ADMIN
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The specified billing plan doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	DuplicateDefaultBillingPlan(ctx context.Context, in *DuplicateDefaultBillingPlanRequest, opts ...grpc.CallOption) (*DuplicateDefaultBillingPlanResponse, error)
 	// Exports an invoice.
 	// Required permissions:
 	//
@@ -489,6 +517,24 @@ func (c *billingServiceClient) DeleteInvoice(ctx context.Context, in *DeleteInvo
 func (c *billingServiceClient) DeleteRateDefinition(ctx context.Context, in *DeleteRateDefinitionRequest, opts ...grpc.CallOption) (*DeleteRateDefinitionResponse, error) {
 	out := new(DeleteRateDefinitionResponse)
 	err := c.cc.Invoke(ctx, BillingService_DeleteRateDefinition_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) DuplicateBillingPlan(ctx context.Context, in *DuplicateBillingPlanRequest, opts ...grpc.CallOption) (*DuplicateBillingPlanResponse, error) {
+	out := new(DuplicateBillingPlanResponse)
+	err := c.cc.Invoke(ctx, BillingService_DuplicateBillingPlan_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) DuplicateDefaultBillingPlan(ctx context.Context, in *DuplicateDefaultBillingPlanRequest, opts ...grpc.CallOption) (*DuplicateDefaultBillingPlanResponse, error) {
+	out := new(DuplicateDefaultBillingPlanResponse)
+	err := c.cc.Invoke(ctx, BillingService_DuplicateDefaultBillingPlan_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -778,6 +824,32 @@ type BillingServiceServer interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	DeleteRateDefinition(context.Context, *DeleteRateDefinitionRequest) (*DeleteRateDefinitionResponse, error)
+	// Duplicates a billing plan. This copies the billing plan and all of its rate definitions.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The specified billing plan doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	DuplicateBillingPlan(context.Context, *DuplicateBillingPlanRequest) (*DuplicateBillingPlanResponse, error)
+	// Duplicates a default billing plan. This copies the billing plan, all of its rate definitions,
+	// and all of its rate definition groups and features.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//	TCN_BILLING_ADMIN
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The specified billing plan doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	DuplicateDefaultBillingPlan(context.Context, *DuplicateDefaultBillingPlanRequest) (*DuplicateDefaultBillingPlanResponse, error)
 	// Exports an invoice.
 	// Required permissions:
 	//
@@ -985,6 +1057,12 @@ func (UnimplementedBillingServiceServer) DeleteInvoice(context.Context, *DeleteI
 }
 func (UnimplementedBillingServiceServer) DeleteRateDefinition(context.Context, *DeleteRateDefinitionRequest) (*DeleteRateDefinitionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteRateDefinition not implemented")
+}
+func (UnimplementedBillingServiceServer) DuplicateBillingPlan(context.Context, *DuplicateBillingPlanRequest) (*DuplicateBillingPlanResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DuplicateBillingPlan not implemented")
+}
+func (UnimplementedBillingServiceServer) DuplicateDefaultBillingPlan(context.Context, *DuplicateDefaultBillingPlanRequest) (*DuplicateDefaultBillingPlanResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DuplicateDefaultBillingPlan not implemented")
 }
 func (UnimplementedBillingServiceServer) ExportInvoice(context.Context, *ExportInvoiceRequest) (*ExportInvoiceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ExportInvoice not implemented")
@@ -1250,6 +1328,42 @@ func _BillingService_DeleteRateDefinition_Handler(srv interface{}, ctx context.C
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BillingServiceServer).DeleteRateDefinition(ctx, req.(*DeleteRateDefinitionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_DuplicateBillingPlan_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DuplicateBillingPlanRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).DuplicateBillingPlan(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_DuplicateBillingPlan_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).DuplicateBillingPlan(ctx, req.(*DuplicateBillingPlanRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_DuplicateDefaultBillingPlan_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DuplicateDefaultBillingPlanRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).DuplicateDefaultBillingPlan(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_DuplicateDefaultBillingPlan_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).DuplicateDefaultBillingPlan(ctx, req.(*DuplicateDefaultBillingPlanRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1542,6 +1656,14 @@ var BillingService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteRateDefinition",
 			Handler:    _BillingService_DeleteRateDefinition_Handler,
+		},
+		{
+			MethodName: "DuplicateBillingPlan",
+			Handler:    _BillingService_DuplicateBillingPlan_Handler,
+		},
+		{
+			MethodName: "DuplicateDefaultBillingPlan",
+			Handler:    _BillingService_DuplicateDefaultBillingPlan_Handler,
 		},
 		{
 			MethodName: "ExportInvoice",

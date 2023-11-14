@@ -69,6 +69,12 @@ const (
 	// BillingServiceDeleteRateDefinitionProcedure is the fully-qualified name of the BillingService's
 	// DeleteRateDefinition RPC.
 	BillingServiceDeleteRateDefinitionProcedure = "/services.billing.v1alpha1.BillingService/DeleteRateDefinition"
+	// BillingServiceDuplicateBillingPlanProcedure is the fully-qualified name of the BillingService's
+	// DuplicateBillingPlan RPC.
+	BillingServiceDuplicateBillingPlanProcedure = "/services.billing.v1alpha1.BillingService/DuplicateBillingPlan"
+	// BillingServiceDuplicateDefaultBillingPlanProcedure is the fully-qualified name of the
+	// BillingService's DuplicateDefaultBillingPlan RPC.
+	BillingServiceDuplicateDefaultBillingPlanProcedure = "/services.billing.v1alpha1.BillingService/DuplicateDefaultBillingPlan"
 	// BillingServiceExportInvoiceProcedure is the fully-qualified name of the BillingService's
 	// ExportInvoice RPC.
 	BillingServiceExportInvoiceProcedure = "/services.billing.v1alpha1.BillingService/ExportInvoice"
@@ -274,6 +280,32 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	DeleteRateDefinition(context.Context, *connect_go.Request[v1alpha1.DeleteRateDefinitionRequest]) (*connect_go.Response[v1alpha1.DeleteRateDefinitionResponse], error)
+	// Duplicates a billing plan. This copies the billing plan and all of its rate definitions.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The specified billing plan doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	DuplicateBillingPlan(context.Context, *connect_go.Request[v1alpha1.DuplicateBillingPlanRequest]) (*connect_go.Response[v1alpha1.DuplicateBillingPlanResponse], error)
+	// Duplicates a default billing plan. This copies the billing plan, all of its rate definitions,
+	// and all of its rate definition groups and features.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//	TCN_BILLING_ADMIN
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The specified billing plan doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	DuplicateDefaultBillingPlan(context.Context, *connect_go.Request[v1alpha1.DuplicateDefaultBillingPlanRequest]) (*connect_go.Response[v1alpha1.DuplicateDefaultBillingPlanResponse], error)
 	// Exports an invoice.
 	// Required permissions:
 	//
@@ -511,6 +543,16 @@ func NewBillingServiceClient(httpClient connect_go.HTTPClient, baseURL string, o
 			baseURL+BillingServiceDeleteRateDefinitionProcedure,
 			opts...,
 		),
+		duplicateBillingPlan: connect_go.NewClient[v1alpha1.DuplicateBillingPlanRequest, v1alpha1.DuplicateBillingPlanResponse](
+			httpClient,
+			baseURL+BillingServiceDuplicateBillingPlanProcedure,
+			opts...,
+		),
+		duplicateDefaultBillingPlan: connect_go.NewClient[v1alpha1.DuplicateDefaultBillingPlanRequest, v1alpha1.DuplicateDefaultBillingPlanResponse](
+			httpClient,
+			baseURL+BillingServiceDuplicateDefaultBillingPlanProcedure,
+			opts...,
+		),
 		exportInvoice: connect_go.NewClient[v1alpha1.ExportInvoiceRequest, v1alpha1.ExportInvoiceResponse](
 			httpClient,
 			baseURL+BillingServiceExportInvoiceProcedure,
@@ -593,6 +635,8 @@ type billingServiceClient struct {
 	deleteDefaultRateDefinition *connect_go.Client[v1alpha1.DeleteDefaultRateDefinitionRequest, v1alpha1.DeleteDefaultRateDefinitionResponse]
 	deleteInvoice               *connect_go.Client[v1alpha1.DeleteInvoiceRequest, v1alpha1.DeleteInvoiceResponse]
 	deleteRateDefinition        *connect_go.Client[v1alpha1.DeleteRateDefinitionRequest, v1alpha1.DeleteRateDefinitionResponse]
+	duplicateBillingPlan        *connect_go.Client[v1alpha1.DuplicateBillingPlanRequest, v1alpha1.DuplicateBillingPlanResponse]
+	duplicateDefaultBillingPlan *connect_go.Client[v1alpha1.DuplicateDefaultBillingPlanRequest, v1alpha1.DuplicateDefaultBillingPlanResponse]
 	exportInvoice               *connect_go.Client[v1alpha1.ExportInvoiceRequest, v1alpha1.ExportInvoiceResponse]
 	getActiveBillingPlan        *connect_go.Client[v1alpha1.GetActiveBillingPlanRequest, v1alpha1.GetActiveBillingPlanResponse]
 	getBillingPlan              *connect_go.Client[v1alpha1.GetBillingPlanRequest, v1alpha1.GetBillingPlanResponse]
@@ -668,6 +712,17 @@ func (c *billingServiceClient) DeleteInvoice(ctx context.Context, req *connect_g
 // DeleteRateDefinition calls services.billing.v1alpha1.BillingService.DeleteRateDefinition.
 func (c *billingServiceClient) DeleteRateDefinition(ctx context.Context, req *connect_go.Request[v1alpha1.DeleteRateDefinitionRequest]) (*connect_go.Response[v1alpha1.DeleteRateDefinitionResponse], error) {
 	return c.deleteRateDefinition.CallUnary(ctx, req)
+}
+
+// DuplicateBillingPlan calls services.billing.v1alpha1.BillingService.DuplicateBillingPlan.
+func (c *billingServiceClient) DuplicateBillingPlan(ctx context.Context, req *connect_go.Request[v1alpha1.DuplicateBillingPlanRequest]) (*connect_go.Response[v1alpha1.DuplicateBillingPlanResponse], error) {
+	return c.duplicateBillingPlan.CallUnary(ctx, req)
+}
+
+// DuplicateDefaultBillingPlan calls
+// services.billing.v1alpha1.BillingService.DuplicateDefaultBillingPlan.
+func (c *billingServiceClient) DuplicateDefaultBillingPlan(ctx context.Context, req *connect_go.Request[v1alpha1.DuplicateDefaultBillingPlanRequest]) (*connect_go.Response[v1alpha1.DuplicateDefaultBillingPlanResponse], error) {
+	return c.duplicateDefaultBillingPlan.CallUnary(ctx, req)
 }
 
 // ExportInvoice calls services.billing.v1alpha1.BillingService.ExportInvoice.
@@ -901,6 +956,32 @@ type BillingServiceHandler interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	DeleteRateDefinition(context.Context, *connect_go.Request[v1alpha1.DeleteRateDefinitionRequest]) (*connect_go.Response[v1alpha1.DeleteRateDefinitionResponse], error)
+	// Duplicates a billing plan. This copies the billing plan and all of its rate definitions.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The specified billing plan doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	DuplicateBillingPlan(context.Context, *connect_go.Request[v1alpha1.DuplicateBillingPlanRequest]) (*connect_go.Response[v1alpha1.DuplicateBillingPlanResponse], error)
+	// Duplicates a default billing plan. This copies the billing plan, all of its rate definitions,
+	// and all of its rate definition groups and features.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//	TCN_BILLING_ADMIN
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The specified billing plan doesn't exist.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	DuplicateDefaultBillingPlan(context.Context, *connect_go.Request[v1alpha1.DuplicateDefaultBillingPlanRequest]) (*connect_go.Response[v1alpha1.DuplicateDefaultBillingPlanResponse], error)
 	// Exports an invoice.
 	// Required permissions:
 	//
@@ -1134,6 +1215,16 @@ func NewBillingServiceHandler(svc BillingServiceHandler, opts ...connect_go.Hand
 		svc.DeleteRateDefinition,
 		opts...,
 	)
+	billingServiceDuplicateBillingPlanHandler := connect_go.NewUnaryHandler(
+		BillingServiceDuplicateBillingPlanProcedure,
+		svc.DuplicateBillingPlan,
+		opts...,
+	)
+	billingServiceDuplicateDefaultBillingPlanHandler := connect_go.NewUnaryHandler(
+		BillingServiceDuplicateDefaultBillingPlanProcedure,
+		svc.DuplicateDefaultBillingPlan,
+		opts...,
+	)
 	billingServiceExportInvoiceHandler := connect_go.NewUnaryHandler(
 		BillingServiceExportInvoiceProcedure,
 		svc.ExportInvoice,
@@ -1225,6 +1316,10 @@ func NewBillingServiceHandler(svc BillingServiceHandler, opts ...connect_go.Hand
 			billingServiceDeleteInvoiceHandler.ServeHTTP(w, r)
 		case BillingServiceDeleteRateDefinitionProcedure:
 			billingServiceDeleteRateDefinitionHandler.ServeHTTP(w, r)
+		case BillingServiceDuplicateBillingPlanProcedure:
+			billingServiceDuplicateBillingPlanHandler.ServeHTTP(w, r)
+		case BillingServiceDuplicateDefaultBillingPlanProcedure:
+			billingServiceDuplicateDefaultBillingPlanHandler.ServeHTTP(w, r)
 		case BillingServiceExportInvoiceProcedure:
 			billingServiceExportInvoiceHandler.ServeHTTP(w, r)
 		case BillingServiceGetActiveBillingPlanProcedure:
@@ -1306,6 +1401,14 @@ func (UnimplementedBillingServiceHandler) DeleteInvoice(context.Context, *connec
 
 func (UnimplementedBillingServiceHandler) DeleteRateDefinition(context.Context, *connect_go.Request[v1alpha1.DeleteRateDefinitionRequest]) (*connect_go.Response[v1alpha1.DeleteRateDefinitionResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.billing.v1alpha1.BillingService.DeleteRateDefinition is not implemented"))
+}
+
+func (UnimplementedBillingServiceHandler) DuplicateBillingPlan(context.Context, *connect_go.Request[v1alpha1.DuplicateBillingPlanRequest]) (*connect_go.Response[v1alpha1.DuplicateBillingPlanResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.billing.v1alpha1.BillingService.DuplicateBillingPlan is not implemented"))
+}
+
+func (UnimplementedBillingServiceHandler) DuplicateDefaultBillingPlan(context.Context, *connect_go.Request[v1alpha1.DuplicateDefaultBillingPlanRequest]) (*connect_go.Response[v1alpha1.DuplicateDefaultBillingPlanResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.billing.v1alpha1.BillingService.DuplicateDefaultBillingPlan is not implemented"))
 }
 
 func (UnimplementedBillingServiceHandler) ExportInvoice(context.Context, *connect_go.Request[v1alpha1.ExportInvoiceRequest]) (*connect_go.Response[v1alpha1.ExportInvoiceResponse], error) {
