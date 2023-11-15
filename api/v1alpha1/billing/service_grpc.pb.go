@@ -28,31 +28,16 @@ const (
 // BillingClient is the client API for Billing service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+//
+// Deprecated: Do not use.
 type BillingClient interface {
-	// GetBillingPlan - returns the billing plan for the provided organization.
+	// Deprecated: Do not use.
 	GetBillingPlan(ctx context.Context, in *GetBillingPlanReq, opts ...grpc.CallOption) (*GetBillingPlanRes, error)
-	// UpdateBillingPlan - updates the provided billing plan and it's details.
-	// If some details are not provided, they will be left as is. However, if
-	// deletion is desired, the DeleteBillingDetails method should be used. The
-	// billing plan still follows the constraint of only having one billing detail
-	// with a specific config type and event type, and so if the request contains
-	// more than one billing detail with a config type and event type, the request
-	// is malformed and will result in potentially unexpected behavior.
+	// Deprecated: Do not use.
 	UpdateBillingPlan(ctx context.Context, in *UpdateBillingPlanReq, opts ...grpc.CallOption) (*UpdateBillingPlanRes, error)
-	// GetInvoice - returns the invoice for the organization.
-	// If a date is provided, this will return the invoice for the
-	// organization that corresponds to the billing cycle that contains
-	// the provided date. If no date is provided, this will return the
-	// invoice as it currently stands for the current billing cycle.
+	// Deprecated: Do not use.
 	GetInvoice(ctx context.Context, in *GetInvoiceReq, opts ...grpc.CallOption) (*GetInvoiceRes, error)
-	// ExportGeneratedInvoice - returns the invoice for the organization.
-	// If a date is provided, this will return the invoice for the
-	// organization that corresponds to the billing cycle that contains
-	// the provided date. If no date is provided, this will return the
-	// invoice, as it has been last generated, for the current billing cycle.
-	// This differs from GetInvoice in that it returns the invoice as
-	// it was last generated. It will not take into account new billing
-	// events since the last generation.
+	// Deprecated: Do not use.
 	ExportGeneratedInvoice(ctx context.Context, in *ExportGeneratedInvoiceReq, opts ...grpc.CallOption) (*ExportGeneratedInvoiceRes, error)
 }
 
@@ -60,10 +45,12 @@ type billingClient struct {
 	cc grpc.ClientConnInterface
 }
 
+// Deprecated: Do not use.
 func NewBillingClient(cc grpc.ClientConnInterface) BillingClient {
 	return &billingClient{cc}
 }
 
+// Deprecated: Do not use.
 func (c *billingClient) GetBillingPlan(ctx context.Context, in *GetBillingPlanReq, opts ...grpc.CallOption) (*GetBillingPlanRes, error) {
 	out := new(GetBillingPlanRes)
 	err := c.cc.Invoke(ctx, Billing_GetBillingPlan_FullMethodName, in, out, opts...)
@@ -73,6 +60,7 @@ func (c *billingClient) GetBillingPlan(ctx context.Context, in *GetBillingPlanRe
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *billingClient) UpdateBillingPlan(ctx context.Context, in *UpdateBillingPlanReq, opts ...grpc.CallOption) (*UpdateBillingPlanRes, error) {
 	out := new(UpdateBillingPlanRes)
 	err := c.cc.Invoke(ctx, Billing_UpdateBillingPlan_FullMethodName, in, out, opts...)
@@ -82,6 +70,7 @@ func (c *billingClient) UpdateBillingPlan(ctx context.Context, in *UpdateBilling
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *billingClient) GetInvoice(ctx context.Context, in *GetInvoiceReq, opts ...grpc.CallOption) (*GetInvoiceRes, error) {
 	out := new(GetInvoiceRes)
 	err := c.cc.Invoke(ctx, Billing_GetInvoice_FullMethodName, in, out, opts...)
@@ -91,6 +80,7 @@ func (c *billingClient) GetInvoice(ctx context.Context, in *GetInvoiceReq, opts 
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *billingClient) ExportGeneratedInvoice(ctx context.Context, in *ExportGeneratedInvoiceReq, opts ...grpc.CallOption) (*ExportGeneratedInvoiceRes, error) {
 	out := new(ExportGeneratedInvoiceRes)
 	err := c.cc.Invoke(ctx, Billing_ExportGeneratedInvoice_FullMethodName, in, out, opts...)
@@ -103,31 +93,16 @@ func (c *billingClient) ExportGeneratedInvoice(ctx context.Context, in *ExportGe
 // BillingServer is the server API for Billing service.
 // All implementations must embed UnimplementedBillingServer
 // for forward compatibility
+//
+// Deprecated: Do not use.
 type BillingServer interface {
-	// GetBillingPlan - returns the billing plan for the provided organization.
+	// Deprecated: Do not use.
 	GetBillingPlan(context.Context, *GetBillingPlanReq) (*GetBillingPlanRes, error)
-	// UpdateBillingPlan - updates the provided billing plan and it's details.
-	// If some details are not provided, they will be left as is. However, if
-	// deletion is desired, the DeleteBillingDetails method should be used. The
-	// billing plan still follows the constraint of only having one billing detail
-	// with a specific config type and event type, and so if the request contains
-	// more than one billing detail with a config type and event type, the request
-	// is malformed and will result in potentially unexpected behavior.
+	// Deprecated: Do not use.
 	UpdateBillingPlan(context.Context, *UpdateBillingPlanReq) (*UpdateBillingPlanRes, error)
-	// GetInvoice - returns the invoice for the organization.
-	// If a date is provided, this will return the invoice for the
-	// organization that corresponds to the billing cycle that contains
-	// the provided date. If no date is provided, this will return the
-	// invoice as it currently stands for the current billing cycle.
+	// Deprecated: Do not use.
 	GetInvoice(context.Context, *GetInvoiceReq) (*GetInvoiceRes, error)
-	// ExportGeneratedInvoice - returns the invoice for the organization.
-	// If a date is provided, this will return the invoice for the
-	// organization that corresponds to the billing cycle that contains
-	// the provided date. If no date is provided, this will return the
-	// invoice, as it has been last generated, for the current billing cycle.
-	// This differs from GetInvoice in that it returns the invoice as
-	// it was last generated. It will not take into account new billing
-	// events since the last generation.
+	// Deprecated: Do not use.
 	ExportGeneratedInvoice(context.Context, *ExportGeneratedInvoiceReq) (*ExportGeneratedInvoiceRes, error)
 	mustEmbedUnimplementedBillingServer()
 }
@@ -157,6 +132,7 @@ type UnsafeBillingServer interface {
 	mustEmbedUnimplementedBillingServer()
 }
 
+// Deprecated: Do not use.
 func RegisterBillingServer(s grpc.ServiceRegistrar, srv BillingServer) {
 	s.RegisterService(&Billing_ServiceDesc, srv)
 }
