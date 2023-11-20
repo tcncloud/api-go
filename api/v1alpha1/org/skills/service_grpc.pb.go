@@ -24,8 +24,8 @@ const (
 	SkillsService_UpdateSkillGroup_FullMethodName     = "/api.v1alpha1.org.skills.SkillsService/UpdateSkillGroup"
 	SkillsService_GetSkillGroup_FullMethodName        = "/api.v1alpha1.org.skills.SkillsService/GetSkillGroup"
 	SkillsService_DeleteSkillGroup_FullMethodName     = "/api.v1alpha1.org.skills.SkillsService/DeleteSkillGroup"
-	SkillsService_AssignSkillGroup_FullMethodName     = "/api.v1alpha1.org.skills.SkillsService/AssignSkillGroup"
-	SkillsService_RevokeSkillGroup_FullMethodName     = "/api.v1alpha1.org.skills.SkillsService/RevokeSkillGroup"
+	SkillsService_AssignSkillGroups_FullMethodName    = "/api.v1alpha1.org.skills.SkillsService/AssignSkillGroups"
+	SkillsService_RevokeSkillGroups_FullMethodName    = "/api.v1alpha1.org.skills.SkillsService/RevokeSkillGroups"
 	SkillsService_GetUserSkillGroups_FullMethodName   = "/api.v1alpha1.org.skills.SkillsService/GetUserSkillGroups"
 	SkillsService_GetUserSkills_FullMethodName        = "/api.v1alpha1.org.skills.SkillsService/GetUserSkills"
 	SkillsService_GetSkillGroupMembers_FullMethodName = "/api.v1alpha1.org.skills.SkillsService/GetSkillGroupMembers"
@@ -45,10 +45,10 @@ type SkillsServiceClient interface {
 	GetSkillGroup(ctx context.Context, in *GetSkillGroupRequest, opts ...grpc.CallOption) (*GetSkillGroupResponse, error)
 	// DeleteSkillGroup deletes a skill group.
 	DeleteSkillGroup(ctx context.Context, in *DeleteSkillGroupRequest, opts ...grpc.CallOption) (*DeleteSkillGroupResponse, error)
-	// AssignSkillGroup assigns a user to a skill group.
-	AssignSkillGroup(ctx context.Context, in *AssignSkillGroupRequest, opts ...grpc.CallOption) (*AssignSkillGroupResponse, error)
-	// RevokeSkillGroup revokes a skill group from a user.
-	RevokeSkillGroup(ctx context.Context, in *RevokeSkillGroupRequest, opts ...grpc.CallOption) (*RevokeSkillGroupResponse, error)
+	// AssignSkillGroups assigns a user to the given skill groups.
+	AssignSkillGroups(ctx context.Context, in *AssignSkillGroupsRequest, opts ...grpc.CallOption) (*AssignSkillGroupsResponse, error)
+	// RevokeSkillGroups revokes the given skill groups from a user.
+	RevokeSkillGroups(ctx context.Context, in *RevokeSkillGroupsRequest, opts ...grpc.CallOption) (*RevokeSkillGroupsResponse, error)
 	// GetUserSkillGroups gets the skill groups assigned to a user.
 	GetUserSkillGroups(ctx context.Context, in *GetUserSkillGroupsRequest, opts ...grpc.CallOption) (*GetUserSkillGroupsResponse, error)
 	// GetUserSkills gets a user's skill proficiencies.
@@ -110,18 +110,18 @@ func (c *skillsServiceClient) DeleteSkillGroup(ctx context.Context, in *DeleteSk
 	return out, nil
 }
 
-func (c *skillsServiceClient) AssignSkillGroup(ctx context.Context, in *AssignSkillGroupRequest, opts ...grpc.CallOption) (*AssignSkillGroupResponse, error) {
-	out := new(AssignSkillGroupResponse)
-	err := c.cc.Invoke(ctx, SkillsService_AssignSkillGroup_FullMethodName, in, out, opts...)
+func (c *skillsServiceClient) AssignSkillGroups(ctx context.Context, in *AssignSkillGroupsRequest, opts ...grpc.CallOption) (*AssignSkillGroupsResponse, error) {
+	out := new(AssignSkillGroupsResponse)
+	err := c.cc.Invoke(ctx, SkillsService_AssignSkillGroups_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *skillsServiceClient) RevokeSkillGroup(ctx context.Context, in *RevokeSkillGroupRequest, opts ...grpc.CallOption) (*RevokeSkillGroupResponse, error) {
-	out := new(RevokeSkillGroupResponse)
-	err := c.cc.Invoke(ctx, SkillsService_RevokeSkillGroup_FullMethodName, in, out, opts...)
+func (c *skillsServiceClient) RevokeSkillGroups(ctx context.Context, in *RevokeSkillGroupsRequest, opts ...grpc.CallOption) (*RevokeSkillGroupsResponse, error) {
+	out := new(RevokeSkillGroupsResponse)
+	err := c.cc.Invoke(ctx, SkillsService_RevokeSkillGroups_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -169,10 +169,10 @@ type SkillsServiceServer interface {
 	GetSkillGroup(context.Context, *GetSkillGroupRequest) (*GetSkillGroupResponse, error)
 	// DeleteSkillGroup deletes a skill group.
 	DeleteSkillGroup(context.Context, *DeleteSkillGroupRequest) (*DeleteSkillGroupResponse, error)
-	// AssignSkillGroup assigns a user to a skill group.
-	AssignSkillGroup(context.Context, *AssignSkillGroupRequest) (*AssignSkillGroupResponse, error)
-	// RevokeSkillGroup revokes a skill group from a user.
-	RevokeSkillGroup(context.Context, *RevokeSkillGroupRequest) (*RevokeSkillGroupResponse, error)
+	// AssignSkillGroups assigns a user to the given skill groups.
+	AssignSkillGroups(context.Context, *AssignSkillGroupsRequest) (*AssignSkillGroupsResponse, error)
+	// RevokeSkillGroups revokes the given skill groups from a user.
+	RevokeSkillGroups(context.Context, *RevokeSkillGroupsRequest) (*RevokeSkillGroupsResponse, error)
 	// GetUserSkillGroups gets the skill groups assigned to a user.
 	GetUserSkillGroups(context.Context, *GetUserSkillGroupsRequest) (*GetUserSkillGroupsResponse, error)
 	// GetUserSkills gets a user's skill proficiencies.
@@ -201,11 +201,11 @@ func (UnimplementedSkillsServiceServer) GetSkillGroup(context.Context, *GetSkill
 func (UnimplementedSkillsServiceServer) DeleteSkillGroup(context.Context, *DeleteSkillGroupRequest) (*DeleteSkillGroupResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteSkillGroup not implemented")
 }
-func (UnimplementedSkillsServiceServer) AssignSkillGroup(context.Context, *AssignSkillGroupRequest) (*AssignSkillGroupResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AssignSkillGroup not implemented")
+func (UnimplementedSkillsServiceServer) AssignSkillGroups(context.Context, *AssignSkillGroupsRequest) (*AssignSkillGroupsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AssignSkillGroups not implemented")
 }
-func (UnimplementedSkillsServiceServer) RevokeSkillGroup(context.Context, *RevokeSkillGroupRequest) (*RevokeSkillGroupResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RevokeSkillGroup not implemented")
+func (UnimplementedSkillsServiceServer) RevokeSkillGroups(context.Context, *RevokeSkillGroupsRequest) (*RevokeSkillGroupsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RevokeSkillGroups not implemented")
 }
 func (UnimplementedSkillsServiceServer) GetUserSkillGroups(context.Context, *GetUserSkillGroupsRequest) (*GetUserSkillGroupsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserSkillGroups not implemented")
@@ -319,38 +319,38 @@ func _SkillsService_DeleteSkillGroup_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SkillsService_AssignSkillGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AssignSkillGroupRequest)
+func _SkillsService_AssignSkillGroups_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AssignSkillGroupsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SkillsServiceServer).AssignSkillGroup(ctx, in)
+		return srv.(SkillsServiceServer).AssignSkillGroups(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: SkillsService_AssignSkillGroup_FullMethodName,
+		FullMethod: SkillsService_AssignSkillGroups_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SkillsServiceServer).AssignSkillGroup(ctx, req.(*AssignSkillGroupRequest))
+		return srv.(SkillsServiceServer).AssignSkillGroups(ctx, req.(*AssignSkillGroupsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SkillsService_RevokeSkillGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RevokeSkillGroupRequest)
+func _SkillsService_RevokeSkillGroups_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RevokeSkillGroupsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SkillsServiceServer).RevokeSkillGroup(ctx, in)
+		return srv.(SkillsServiceServer).RevokeSkillGroups(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: SkillsService_RevokeSkillGroup_FullMethodName,
+		FullMethod: SkillsService_RevokeSkillGroups_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SkillsServiceServer).RevokeSkillGroup(ctx, req.(*RevokeSkillGroupRequest))
+		return srv.(SkillsServiceServer).RevokeSkillGroups(ctx, req.(*RevokeSkillGroupsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -437,12 +437,12 @@ var SkillsService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _SkillsService_DeleteSkillGroup_Handler,
 		},
 		{
-			MethodName: "AssignSkillGroup",
-			Handler:    _SkillsService_AssignSkillGroup_Handler,
+			MethodName: "AssignSkillGroups",
+			Handler:    _SkillsService_AssignSkillGroups_Handler,
 		},
 		{
-			MethodName: "RevokeSkillGroup",
-			Handler:    _SkillsService_RevokeSkillGroup_Handler,
+			MethodName: "RevokeSkillGroups",
+			Handler:    _SkillsService_RevokeSkillGroups_Handler,
 		},
 		{
 			MethodName: "GetUserSkillGroups",
