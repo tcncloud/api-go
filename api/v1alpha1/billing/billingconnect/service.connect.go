@@ -46,31 +46,16 @@ const (
 )
 
 // BillingClient is a client for the api.v1alpha1.billing.Billing service.
+//
+// Deprecated: do not use.
 type BillingClient interface {
-	// GetBillingPlan - returns the billing plan for the provided organization.
+	// Deprecated: do not use.
 	GetBillingPlan(context.Context, *connect_go.Request[billing.GetBillingPlanReq]) (*connect_go.Response[billing.GetBillingPlanRes], error)
-	// UpdateBillingPlan - updates the provided billing plan and it's details.
-	// If some details are not provided, they will be left as is. However, if
-	// deletion is desired, the DeleteBillingDetails method should be used. The
-	// billing plan still follows the constraint of only having one billing detail
-	// with a specific config type and event type, and so if the request contains
-	// more than one billing detail with a config type and event type, the request
-	// is malformed and will result in potentially unexpected behavior.
+	// Deprecated: do not use.
 	UpdateBillingPlan(context.Context, *connect_go.Request[billing.UpdateBillingPlanReq]) (*connect_go.Response[billing.UpdateBillingPlanRes], error)
-	// GetInvoice - returns the invoice for the organization.
-	// If a date is provided, this will return the invoice for the
-	// organization that corresponds to the billing cycle that contains
-	// the provided date. If no date is provided, this will return the
-	// invoice as it currently stands for the current billing cycle.
+	// Deprecated: do not use.
 	GetInvoice(context.Context, *connect_go.Request[billing.GetInvoiceReq]) (*connect_go.Response[billing.GetInvoiceRes], error)
-	// ExportGeneratedInvoice - returns the invoice for the organization.
-	// If a date is provided, this will return the invoice for the
-	// organization that corresponds to the billing cycle that contains
-	// the provided date. If no date is provided, this will return the
-	// invoice, as it has been last generated, for the current billing cycle.
-	// This differs from GetInvoice in that it returns the invoice as
-	// it was last generated. It will not take into account new billing
-	// events since the last generation.
+	// Deprecated: do not use.
 	ExportGeneratedInvoice(context.Context, *connect_go.Request[billing.ExportGeneratedInvoiceReq]) (*connect_go.Response[billing.ExportGeneratedInvoiceRes], error)
 }
 
@@ -81,6 +66,8 @@ type BillingClient interface {
 //
 // The URL supplied here should be the base URL for the Connect or gRPC server (for example,
 // http://api.acme.com or https://acme.com/grpc).
+//
+// Deprecated: do not use.
 func NewBillingClient(httpClient connect_go.HTTPClient, baseURL string, opts ...connect_go.ClientOption) BillingClient {
 	baseURL = strings.TrimRight(baseURL, "/")
 	return &billingClient{
@@ -116,51 +103,44 @@ type billingClient struct {
 }
 
 // GetBillingPlan calls api.v1alpha1.billing.Billing.GetBillingPlan.
+//
+// Deprecated: do not use.
 func (c *billingClient) GetBillingPlan(ctx context.Context, req *connect_go.Request[billing.GetBillingPlanReq]) (*connect_go.Response[billing.GetBillingPlanRes], error) {
 	return c.getBillingPlan.CallUnary(ctx, req)
 }
 
 // UpdateBillingPlan calls api.v1alpha1.billing.Billing.UpdateBillingPlan.
+//
+// Deprecated: do not use.
 func (c *billingClient) UpdateBillingPlan(ctx context.Context, req *connect_go.Request[billing.UpdateBillingPlanReq]) (*connect_go.Response[billing.UpdateBillingPlanRes], error) {
 	return c.updateBillingPlan.CallUnary(ctx, req)
 }
 
 // GetInvoice calls api.v1alpha1.billing.Billing.GetInvoice.
+//
+// Deprecated: do not use.
 func (c *billingClient) GetInvoice(ctx context.Context, req *connect_go.Request[billing.GetInvoiceReq]) (*connect_go.Response[billing.GetInvoiceRes], error) {
 	return c.getInvoice.CallUnary(ctx, req)
 }
 
 // ExportGeneratedInvoice calls api.v1alpha1.billing.Billing.ExportGeneratedInvoice.
+//
+// Deprecated: do not use.
 func (c *billingClient) ExportGeneratedInvoice(ctx context.Context, req *connect_go.Request[billing.ExportGeneratedInvoiceReq]) (*connect_go.Response[billing.ExportGeneratedInvoiceRes], error) {
 	return c.exportGeneratedInvoice.CallUnary(ctx, req)
 }
 
 // BillingHandler is an implementation of the api.v1alpha1.billing.Billing service.
+//
+// Deprecated: do not use.
 type BillingHandler interface {
-	// GetBillingPlan - returns the billing plan for the provided organization.
+	// Deprecated: do not use.
 	GetBillingPlan(context.Context, *connect_go.Request[billing.GetBillingPlanReq]) (*connect_go.Response[billing.GetBillingPlanRes], error)
-	// UpdateBillingPlan - updates the provided billing plan and it's details.
-	// If some details are not provided, they will be left as is. However, if
-	// deletion is desired, the DeleteBillingDetails method should be used. The
-	// billing plan still follows the constraint of only having one billing detail
-	// with a specific config type and event type, and so if the request contains
-	// more than one billing detail with a config type and event type, the request
-	// is malformed and will result in potentially unexpected behavior.
+	// Deprecated: do not use.
 	UpdateBillingPlan(context.Context, *connect_go.Request[billing.UpdateBillingPlanReq]) (*connect_go.Response[billing.UpdateBillingPlanRes], error)
-	// GetInvoice - returns the invoice for the organization.
-	// If a date is provided, this will return the invoice for the
-	// organization that corresponds to the billing cycle that contains
-	// the provided date. If no date is provided, this will return the
-	// invoice as it currently stands for the current billing cycle.
+	// Deprecated: do not use.
 	GetInvoice(context.Context, *connect_go.Request[billing.GetInvoiceReq]) (*connect_go.Response[billing.GetInvoiceRes], error)
-	// ExportGeneratedInvoice - returns the invoice for the organization.
-	// If a date is provided, this will return the invoice for the
-	// organization that corresponds to the billing cycle that contains
-	// the provided date. If no date is provided, this will return the
-	// invoice, as it has been last generated, for the current billing cycle.
-	// This differs from GetInvoice in that it returns the invoice as
-	// it was last generated. It will not take into account new billing
-	// events since the last generation.
+	// Deprecated: do not use.
 	ExportGeneratedInvoice(context.Context, *connect_go.Request[billing.ExportGeneratedInvoiceReq]) (*connect_go.Response[billing.ExportGeneratedInvoiceRes], error)
 }
 
@@ -169,6 +149,8 @@ type BillingHandler interface {
 //
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
+//
+// Deprecated: do not use.
 func NewBillingHandler(svc BillingHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
 	billingGetBillingPlanHandler := connect_go.NewUnaryHandler(
 		BillingGetBillingPlanProcedure,
