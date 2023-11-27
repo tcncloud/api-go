@@ -56,6 +56,8 @@ const (
 	InsightsGetVfsSchemaProcedure = "/api.v1alpha1.insights.Insights/GetVfsSchema"
 	// InsightsListVfsesProcedure is the fully-qualified name of the Insights's ListVfses RPC.
 	InsightsListVfsesProcedure = "/api.v1alpha1.insights.Insights/ListVfses"
+	// InsightsListVfsSchemasProcedure is the fully-qualified name of the Insights's ListVfsSchemas RPC.
+	InsightsListVfsSchemasProcedure = "/api.v1alpha1.insights.Insights/ListVfsSchemas"
 	// InsightsPublishInsightProcedure is the fully-qualified name of the Insights's PublishInsight RPC.
 	InsightsPublishInsightProcedure = "/api.v1alpha1.insights.Insights/PublishInsight"
 )
@@ -82,6 +84,8 @@ type InsightsClient interface {
 	GetVfsSchema(context.Context, *connect_go.Request[insights.GetVfsSchemaRequest]) (*connect_go.Response[insights.GetVfsSchemaResponse], error)
 	// ListVfses lists exported vfs aliases
 	ListVfses(context.Context, *connect_go.Request[insights.ListVfsesRequest]) (*connect_go.Response[insights.ListVfsesResponse], error)
+	// ListVfses lists exported vfs aliases
+	ListVfsSchemas(context.Context, *connect_go.Request[insights.ListVfsSchemasRequest]) (*connect_go.Response[insights.ListVfsSchemasResponse], error)
 	// PublishInsight publishes an insight
 	PublishInsight(context.Context, *connect_go.Request[insights.PublishInsightRequest]) (*connect_go.Response[insights.PublishInsightResponse], error)
 }
@@ -146,6 +150,11 @@ func NewInsightsClient(httpClient connect_go.HTTPClient, baseURL string, opts ..
 			baseURL+InsightsListVfsesProcedure,
 			opts...,
 		),
+		listVfsSchemas: connect_go.NewClient[insights.ListVfsSchemasRequest, insights.ListVfsSchemasResponse](
+			httpClient,
+			baseURL+InsightsListVfsSchemasProcedure,
+			opts...,
+		),
 		publishInsight: connect_go.NewClient[insights.PublishInsightRequest, insights.PublishInsightResponse](
 			httpClient,
 			baseURL+InsightsPublishInsightProcedure,
@@ -166,6 +175,7 @@ type insightsClient struct {
 	deleteCommonsInsight *connect_go.Client[insights.DeleteInsightRequest, insights.DeleteInsightResponse]
 	getVfsSchema         *connect_go.Client[insights.GetVfsSchemaRequest, insights.GetVfsSchemaResponse]
 	listVfses            *connect_go.Client[insights.ListVfsesRequest, insights.ListVfsesResponse]
+	listVfsSchemas       *connect_go.Client[insights.ListVfsSchemasRequest, insights.ListVfsSchemasResponse]
 	publishInsight       *connect_go.Client[insights.PublishInsightRequest, insights.PublishInsightResponse]
 }
 
@@ -219,6 +229,11 @@ func (c *insightsClient) ListVfses(ctx context.Context, req *connect_go.Request[
 	return c.listVfses.CallUnary(ctx, req)
 }
 
+// ListVfsSchemas calls api.v1alpha1.insights.Insights.ListVfsSchemas.
+func (c *insightsClient) ListVfsSchemas(ctx context.Context, req *connect_go.Request[insights.ListVfsSchemasRequest]) (*connect_go.Response[insights.ListVfsSchemasResponse], error) {
+	return c.listVfsSchemas.CallUnary(ctx, req)
+}
+
 // PublishInsight calls api.v1alpha1.insights.Insights.PublishInsight.
 func (c *insightsClient) PublishInsight(ctx context.Context, req *connect_go.Request[insights.PublishInsightRequest]) (*connect_go.Response[insights.PublishInsightResponse], error) {
 	return c.publishInsight.CallUnary(ctx, req)
@@ -246,6 +261,8 @@ type InsightsHandler interface {
 	GetVfsSchema(context.Context, *connect_go.Request[insights.GetVfsSchemaRequest]) (*connect_go.Response[insights.GetVfsSchemaResponse], error)
 	// ListVfses lists exported vfs aliases
 	ListVfses(context.Context, *connect_go.Request[insights.ListVfsesRequest]) (*connect_go.Response[insights.ListVfsesResponse], error)
+	// ListVfses lists exported vfs aliases
+	ListVfsSchemas(context.Context, *connect_go.Request[insights.ListVfsSchemasRequest]) (*connect_go.Response[insights.ListVfsSchemasResponse], error)
 	// PublishInsight publishes an insight
 	PublishInsight(context.Context, *connect_go.Request[insights.PublishInsightRequest]) (*connect_go.Response[insights.PublishInsightResponse], error)
 }
@@ -306,6 +323,11 @@ func NewInsightsHandler(svc InsightsHandler, opts ...connect_go.HandlerOption) (
 		svc.ListVfses,
 		opts...,
 	)
+	insightsListVfsSchemasHandler := connect_go.NewUnaryHandler(
+		InsightsListVfsSchemasProcedure,
+		svc.ListVfsSchemas,
+		opts...,
+	)
 	insightsPublishInsightHandler := connect_go.NewUnaryHandler(
 		InsightsPublishInsightProcedure,
 		svc.PublishInsight,
@@ -333,6 +355,8 @@ func NewInsightsHandler(svc InsightsHandler, opts ...connect_go.HandlerOption) (
 			insightsGetVfsSchemaHandler.ServeHTTP(w, r)
 		case InsightsListVfsesProcedure:
 			insightsListVfsesHandler.ServeHTTP(w, r)
+		case InsightsListVfsSchemasProcedure:
+			insightsListVfsSchemasHandler.ServeHTTP(w, r)
 		case InsightsPublishInsightProcedure:
 			insightsPublishInsightHandler.ServeHTTP(w, r)
 		default:
@@ -382,6 +406,10 @@ func (UnimplementedInsightsHandler) GetVfsSchema(context.Context, *connect_go.Re
 
 func (UnimplementedInsightsHandler) ListVfses(context.Context, *connect_go.Request[insights.ListVfsesRequest]) (*connect_go.Response[insights.ListVfsesResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.insights.Insights.ListVfses is not implemented"))
+}
+
+func (UnimplementedInsightsHandler) ListVfsSchemas(context.Context, *connect_go.Request[insights.ListVfsSchemasRequest]) (*connect_go.Response[insights.ListVfsSchemasResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.insights.Insights.ListVfsSchemas is not implemented"))
 }
 
 func (UnimplementedInsightsHandler) PublishInsight(context.Context, *connect_go.Request[insights.PublishInsightRequest]) (*connect_go.Response[insights.PublishInsightResponse], error) {
