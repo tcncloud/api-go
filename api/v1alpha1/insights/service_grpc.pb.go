@@ -29,6 +29,7 @@ const (
 	Insights_DeleteCommonsInsight_FullMethodName = "/api.v1alpha1.insights.Insights/DeleteCommonsInsight"
 	Insights_GetVfsSchema_FullMethodName         = "/api.v1alpha1.insights.Insights/GetVfsSchema"
 	Insights_ListVfses_FullMethodName            = "/api.v1alpha1.insights.Insights/ListVfses"
+	Insights_ListVfsSchemas_FullMethodName       = "/api.v1alpha1.insights.Insights/ListVfsSchemas"
 	Insights_PublishInsight_FullMethodName       = "/api.v1alpha1.insights.Insights/PublishInsight"
 )
 
@@ -56,6 +57,8 @@ type InsightsClient interface {
 	GetVfsSchema(ctx context.Context, in *GetVfsSchemaRequest, opts ...grpc.CallOption) (*GetVfsSchemaResponse, error)
 	// ListVfses lists exported vfs aliases
 	ListVfses(ctx context.Context, in *ListVfsesRequest, opts ...grpc.CallOption) (*ListVfsesResponse, error)
+	// ListVfses lists exported vfs aliases
+	ListVfsSchemas(ctx context.Context, in *ListVfsSchemasRequest, opts ...grpc.CallOption) (*ListVfsSchemasResponse, error)
 	// PublishInsight publishes an insight
 	PublishInsight(ctx context.Context, in *PublishInsightRequest, opts ...grpc.CallOption) (*PublishInsightResponse, error)
 }
@@ -158,6 +161,15 @@ func (c *insightsClient) ListVfses(ctx context.Context, in *ListVfsesRequest, op
 	return out, nil
 }
 
+func (c *insightsClient) ListVfsSchemas(ctx context.Context, in *ListVfsSchemasRequest, opts ...grpc.CallOption) (*ListVfsSchemasResponse, error) {
+	out := new(ListVfsSchemasResponse)
+	err := c.cc.Invoke(ctx, Insights_ListVfsSchemas_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *insightsClient) PublishInsight(ctx context.Context, in *PublishInsightRequest, opts ...grpc.CallOption) (*PublishInsightResponse, error) {
 	out := new(PublishInsightResponse)
 	err := c.cc.Invoke(ctx, Insights_PublishInsight_FullMethodName, in, out, opts...)
@@ -191,6 +203,8 @@ type InsightsServer interface {
 	GetVfsSchema(context.Context, *GetVfsSchemaRequest) (*GetVfsSchemaResponse, error)
 	// ListVfses lists exported vfs aliases
 	ListVfses(context.Context, *ListVfsesRequest) (*ListVfsesResponse, error)
+	// ListVfses lists exported vfs aliases
+	ListVfsSchemas(context.Context, *ListVfsSchemasRequest) (*ListVfsSchemasResponse, error)
 	// PublishInsight publishes an insight
 	PublishInsight(context.Context, *PublishInsightRequest) (*PublishInsightResponse, error)
 	mustEmbedUnimplementedInsightsServer()
@@ -229,6 +243,9 @@ func (UnimplementedInsightsServer) GetVfsSchema(context.Context, *GetVfsSchemaRe
 }
 func (UnimplementedInsightsServer) ListVfses(context.Context, *ListVfsesRequest) (*ListVfsesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListVfses not implemented")
+}
+func (UnimplementedInsightsServer) ListVfsSchemas(context.Context, *ListVfsSchemasRequest) (*ListVfsSchemasResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListVfsSchemas not implemented")
 }
 func (UnimplementedInsightsServer) PublishInsight(context.Context, *PublishInsightRequest) (*PublishInsightResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PublishInsight not implemented")
@@ -426,6 +443,24 @@ func _Insights_ListVfses_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Insights_ListVfsSchemas_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListVfsSchemasRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InsightsServer).ListVfsSchemas(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Insights_ListVfsSchemas_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InsightsServer).ListVfsSchemas(ctx, req.(*ListVfsSchemasRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Insights_PublishInsight_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(PublishInsightRequest)
 	if err := dec(in); err != nil {
@@ -490,6 +525,10 @@ var Insights_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListVfses",
 			Handler:    _Insights_ListVfses_Handler,
+		},
+		{
+			MethodName: "ListVfsSchemas",
+			Handler:    _Insights_ListVfsSchemas_Handler,
 		},
 		{
 			MethodName: "PublishInsight",
