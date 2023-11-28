@@ -912,7 +912,16 @@ type WFMClient interface {
 	//   - grpc.NotFound: @parent_entity doesn't exist
 	//   - grpc.Internal: error occurs when creating the agent group.
 	CreateAgentGroup(ctx context.Context, in *CreateAgentGroupReq, opts ...grpc.CallOption) (*CreateAgentGroupRes, error)
-	// Lists all schedulable AgentGroups on or under the given Node or ShiftTemplate.
+	// ListAgentScheduleGroups lists all schedulable agent groups for the given @entity and @org_id, filled with @member_wfm_agents.
+	// The given @entity must be either a Node or a ShiftTemplate.
+	//
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when getting the agent groups.
 	ListAgentScheduleGroups(ctx context.Context, in *ListAgentScheduleGroupsRequest, opts ...grpc.CallOption) (*ListAgentScheduleGroupsResponse, error)
 	// Updates the agent group corresponding to the @agent_group_sid, @name, and @parent_entity.
 	// All of the entity's parameters that are not desired to be updated must be filled with their current values.
@@ -4265,7 +4274,16 @@ type WFMServer interface {
 	//   - grpc.NotFound: @parent_entity doesn't exist
 	//   - grpc.Internal: error occurs when creating the agent group.
 	CreateAgentGroup(context.Context, *CreateAgentGroupReq) (*CreateAgentGroupRes, error)
-	// Lists all schedulable AgentGroups on or under the given Node or ShiftTemplate.
+	// ListAgentScheduleGroups lists all schedulable agent groups for the given @entity and @org_id, filled with @member_wfm_agents.
+	// The given @entity must be either a Node or a ShiftTemplate.
+	//
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when getting the agent groups.
 	ListAgentScheduleGroups(context.Context, *ListAgentScheduleGroupsRequest) (*ListAgentScheduleGroupsResponse, error)
 	// Updates the agent group corresponding to the @agent_group_sid, @name, and @parent_entity.
 	// All of the entity's parameters that are not desired to be updated must be filled with their current values.

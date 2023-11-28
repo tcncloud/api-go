@@ -8940,7 +8940,7 @@ type ListAgentScheduleGroupsRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Any Node or ShiftTemplate.
+	// Any node or shift template that the agent groups belong to.
 	Entity *ParentEntity `protobuf:"bytes,1,opt,name=entity,proto3" json:"entity,omitempty"`
 }
 
@@ -8989,6 +8989,7 @@ type ListAgentScheduleGroupsResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// The agent_groups found. They will be filled with member_wfm_agents only.
 	AgentGroups []*AgentGroup `protobuf:"bytes,1,rep,name=agent_groups,json=agentGroups,proto3" json:"agent_groups,omitempty"`
 }
 
