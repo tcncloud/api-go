@@ -611,6 +611,8 @@ func (x *ProjectDescription) GetProjectTitle() string {
 	return ""
 }
 
+// Deprecated and will not be used
+//
 // Deprecated: Marked as deprecated in api/commons/tickets.proto.
 type ListTemplate struct {
 	state         protoimpl.MessageState
@@ -731,6 +733,8 @@ func (x *ListTemplate) GetAssignedProject() []int64 {
 	return nil
 }
 
+// Deprecated and will not be used
+//
 // Deprecated: Marked as deprecated in api/commons/tickets.proto.
 type AssignProjectTemplate struct {
 	state         protoimpl.MessageState
