@@ -291,6 +291,27 @@ const (
 	// OrgListOrgSubscriptionsProcedure is the fully-qualified name of the Org's ListOrgSubscriptions
 	// RPC.
 	OrgListOrgSubscriptionsProcedure = "/api.v1alpha1.org.Org/ListOrgSubscriptions"
+	// OrgCreateAuthTokenProcedure is the fully-qualified name of the Org's CreateAuthToken RPC.
+	OrgCreateAuthTokenProcedure = "/api.v1alpha1.org.Org/CreateAuthToken"
+	// OrgCreateAuthTokenByUserIdProcedure is the fully-qualified name of the Org's
+	// CreateAuthTokenByUserId RPC.
+	OrgCreateAuthTokenByUserIdProcedure = "/api.v1alpha1.org.Org/CreateAuthTokenByUserId"
+	// OrgListAuthTokensProcedure is the fully-qualified name of the Org's ListAuthTokens RPC.
+	OrgListAuthTokensProcedure = "/api.v1alpha1.org.Org/ListAuthTokens"
+	// OrgListAuthTokensByUserIdProcedure is the fully-qualified name of the Org's
+	// ListAuthTokensByUserId RPC.
+	OrgListAuthTokensByUserIdProcedure = "/api.v1alpha1.org.Org/ListAuthTokensByUserId"
+	// OrgSetAuthTokenExpirationProcedure is the fully-qualified name of the Org's
+	// SetAuthTokenExpiration RPC.
+	OrgSetAuthTokenExpirationProcedure = "/api.v1alpha1.org.Org/SetAuthTokenExpiration"
+	// OrgSetAuthTokenExpirationByUserIdProcedure is the fully-qualified name of the Org's
+	// SetAuthTokenExpirationByUserId RPC.
+	OrgSetAuthTokenExpirationByUserIdProcedure = "/api.v1alpha1.org.Org/SetAuthTokenExpirationByUserId"
+	// OrgDeleteAuthTokenProcedure is the fully-qualified name of the Org's DeleteAuthToken RPC.
+	OrgDeleteAuthTokenProcedure = "/api.v1alpha1.org.Org/DeleteAuthToken"
+	// OrgDeleteAuthTokenByUserIdProcedure is the fully-qualified name of the Org's
+	// DeleteAuthTokenByUserId RPC.
+	OrgDeleteAuthTokenByUserIdProcedure = "/api.v1alpha1.org.Org/DeleteAuthTokenByUserId"
 	// OrgGetHuntGroupSettingsProcedure is the fully-qualified name of the Org's GetHuntGroupSettings
 	// RPC.
 	OrgGetHuntGroupSettingsProcedure = "/api.v1alpha1.org.Org/GetHuntGroupSettings"
@@ -659,6 +680,23 @@ type OrgClient interface {
 	ListUserSubscriptionsByUserId(context.Context, *connect_go.Request[org.ListUserSubscriptionsByUserIdRequest]) (*connect_go.Response[org.ListUserSubscriptionsByUserIdResponse], error)
 	// Lists subscriptions for multiple users in an org.
 	ListOrgSubscriptions(context.Context, *connect_go.Request[org.ListOrgSubscriptionsRequest]) (*connect_go.Response[org.ListOrgSubscriptionsResponse], error)
+	// AUTH TOKEN
+	// CreateAuthToken creates an auth token for the current user.
+	CreateAuthToken(context.Context, *connect_go.Request[org.CreateAuthTokenRequest]) (*connect_go.Response[org.CreateAuthTokenResponse], error)
+	// CreateAuthTokenByUserId creates an auth token for the given user.
+	CreateAuthTokenByUserId(context.Context, *connect_go.Request[org.CreateAuthTokenByUserIdRequest]) (*connect_go.Response[org.CreateAuthTokenByUserIdResponse], error)
+	// ListAuthTokens list tokens of current user.
+	ListAuthTokens(context.Context, *connect_go.Request[org.ListAuthTokensRequest]) (*connect_go.Response[org.ListAuthTokensResponse], error)
+	// ListAuthTokensByUserId list tokens of given user.
+	ListAuthTokensByUserId(context.Context, *connect_go.Request[org.ListAuthTokensByUserIdRequest]) (*connect_go.Response[org.ListAuthTokensByUserIdResponse], error)
+	// SetAuthTokenExpiration sets expiration back one year for current user.
+	SetAuthTokenExpiration(context.Context, *connect_go.Request[org.SetAuthTokenExpirationRequest]) (*connect_go.Response[org.SetAuthTokenExpirationResponse], error)
+	// SetAuthTokenExpirationByUserId sets expiration back one year for given user.
+	SetAuthTokenExpirationByUserId(context.Context, *connect_go.Request[org.SetAuthTokenExpirationByUserIdRequest]) (*connect_go.Response[org.SetAuthTokenExpirationByUserIdResponse], error)
+	// DeleteAuthToken deletes a given auth token for the current user.
+	DeleteAuthToken(context.Context, *connect_go.Request[org.DeleteAuthTokenRequest]) (*connect_go.Response[org.DeleteAuthTokenResponse], error)
+	// DeleteAuthTokenByUserId deletes a given auth token for the given user.
+	DeleteAuthTokenByUserId(context.Context, *connect_go.Request[org.DeleteAuthTokenByUserIdRequest]) (*connect_go.Response[org.DeleteAuthTokenByUserIdResponse], error)
 	// GetHuntGroupSettings returns the field masked hunt group settings for the
 	// provided hunt group.
 	GetHuntGroupSettings(context.Context, *connect_go.Request[org.GetHuntGroupSettingsRequest]) (*connect_go.Response[org.GetHuntGroupSettingsResponse], error)
@@ -1282,6 +1320,46 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgListOrgSubscriptionsProcedure,
 			opts...,
 		),
+		createAuthToken: connect_go.NewClient[org.CreateAuthTokenRequest, org.CreateAuthTokenResponse](
+			httpClient,
+			baseURL+OrgCreateAuthTokenProcedure,
+			opts...,
+		),
+		createAuthTokenByUserId: connect_go.NewClient[org.CreateAuthTokenByUserIdRequest, org.CreateAuthTokenByUserIdResponse](
+			httpClient,
+			baseURL+OrgCreateAuthTokenByUserIdProcedure,
+			opts...,
+		),
+		listAuthTokens: connect_go.NewClient[org.ListAuthTokensRequest, org.ListAuthTokensResponse](
+			httpClient,
+			baseURL+OrgListAuthTokensProcedure,
+			opts...,
+		),
+		listAuthTokensByUserId: connect_go.NewClient[org.ListAuthTokensByUserIdRequest, org.ListAuthTokensByUserIdResponse](
+			httpClient,
+			baseURL+OrgListAuthTokensByUserIdProcedure,
+			opts...,
+		),
+		setAuthTokenExpiration: connect_go.NewClient[org.SetAuthTokenExpirationRequest, org.SetAuthTokenExpirationResponse](
+			httpClient,
+			baseURL+OrgSetAuthTokenExpirationProcedure,
+			opts...,
+		),
+		setAuthTokenExpirationByUserId: connect_go.NewClient[org.SetAuthTokenExpirationByUserIdRequest, org.SetAuthTokenExpirationByUserIdResponse](
+			httpClient,
+			baseURL+OrgSetAuthTokenExpirationByUserIdProcedure,
+			opts...,
+		),
+		deleteAuthToken: connect_go.NewClient[org.DeleteAuthTokenRequest, org.DeleteAuthTokenResponse](
+			httpClient,
+			baseURL+OrgDeleteAuthTokenProcedure,
+			opts...,
+		),
+		deleteAuthTokenByUserId: connect_go.NewClient[org.DeleteAuthTokenByUserIdRequest, org.DeleteAuthTokenByUserIdResponse](
+			httpClient,
+			baseURL+OrgDeleteAuthTokenByUserIdProcedure,
+			opts...,
+		),
 		getHuntGroupSettings: connect_go.NewClient[org.GetHuntGroupSettingsRequest, org.GetHuntGroupSettingsResponse](
 			httpClient,
 			baseURL+OrgGetHuntGroupSettingsProcedure,
@@ -1672,6 +1750,14 @@ type orgClient struct {
 	listUserSubscriptions                   *connect_go.Client[org.ListUserSubscriptionsRequest, org.ListUserSubscriptionsResponse]
 	listUserSubscriptionsByUserId           *connect_go.Client[org.ListUserSubscriptionsByUserIdRequest, org.ListUserSubscriptionsByUserIdResponse]
 	listOrgSubscriptions                    *connect_go.Client[org.ListOrgSubscriptionsRequest, org.ListOrgSubscriptionsResponse]
+	createAuthToken                         *connect_go.Client[org.CreateAuthTokenRequest, org.CreateAuthTokenResponse]
+	createAuthTokenByUserId                 *connect_go.Client[org.CreateAuthTokenByUserIdRequest, org.CreateAuthTokenByUserIdResponse]
+	listAuthTokens                          *connect_go.Client[org.ListAuthTokensRequest, org.ListAuthTokensResponse]
+	listAuthTokensByUserId                  *connect_go.Client[org.ListAuthTokensByUserIdRequest, org.ListAuthTokensByUserIdResponse]
+	setAuthTokenExpiration                  *connect_go.Client[org.SetAuthTokenExpirationRequest, org.SetAuthTokenExpirationResponse]
+	setAuthTokenExpirationByUserId          *connect_go.Client[org.SetAuthTokenExpirationByUserIdRequest, org.SetAuthTokenExpirationByUserIdResponse]
+	deleteAuthToken                         *connect_go.Client[org.DeleteAuthTokenRequest, org.DeleteAuthTokenResponse]
+	deleteAuthTokenByUserId                 *connect_go.Client[org.DeleteAuthTokenByUserIdRequest, org.DeleteAuthTokenByUserIdResponse]
 	getHuntGroupSettings                    *connect_go.Client[org.GetHuntGroupSettingsRequest, org.GetHuntGroupSettingsResponse]
 	updateHuntGroupSettings                 *connect_go.Client[org.UpdateHuntGroupSettingsRequest, org.UpdateHuntGroupSettingsResponse]
 	listCallerIdBuckets                     *connect_go.Client[org.ListCallerIdBucketsRequest, org.ListCallerIdBucketsResponse]
@@ -2209,6 +2295,46 @@ func (c *orgClient) ListOrgSubscriptions(ctx context.Context, req *connect_go.Re
 	return c.listOrgSubscriptions.CallUnary(ctx, req)
 }
 
+// CreateAuthToken calls api.v1alpha1.org.Org.CreateAuthToken.
+func (c *orgClient) CreateAuthToken(ctx context.Context, req *connect_go.Request[org.CreateAuthTokenRequest]) (*connect_go.Response[org.CreateAuthTokenResponse], error) {
+	return c.createAuthToken.CallUnary(ctx, req)
+}
+
+// CreateAuthTokenByUserId calls api.v1alpha1.org.Org.CreateAuthTokenByUserId.
+func (c *orgClient) CreateAuthTokenByUserId(ctx context.Context, req *connect_go.Request[org.CreateAuthTokenByUserIdRequest]) (*connect_go.Response[org.CreateAuthTokenByUserIdResponse], error) {
+	return c.createAuthTokenByUserId.CallUnary(ctx, req)
+}
+
+// ListAuthTokens calls api.v1alpha1.org.Org.ListAuthTokens.
+func (c *orgClient) ListAuthTokens(ctx context.Context, req *connect_go.Request[org.ListAuthTokensRequest]) (*connect_go.Response[org.ListAuthTokensResponse], error) {
+	return c.listAuthTokens.CallUnary(ctx, req)
+}
+
+// ListAuthTokensByUserId calls api.v1alpha1.org.Org.ListAuthTokensByUserId.
+func (c *orgClient) ListAuthTokensByUserId(ctx context.Context, req *connect_go.Request[org.ListAuthTokensByUserIdRequest]) (*connect_go.Response[org.ListAuthTokensByUserIdResponse], error) {
+	return c.listAuthTokensByUserId.CallUnary(ctx, req)
+}
+
+// SetAuthTokenExpiration calls api.v1alpha1.org.Org.SetAuthTokenExpiration.
+func (c *orgClient) SetAuthTokenExpiration(ctx context.Context, req *connect_go.Request[org.SetAuthTokenExpirationRequest]) (*connect_go.Response[org.SetAuthTokenExpirationResponse], error) {
+	return c.setAuthTokenExpiration.CallUnary(ctx, req)
+}
+
+// SetAuthTokenExpirationByUserId calls api.v1alpha1.org.Org.SetAuthTokenExpirationByUserId.
+func (c *orgClient) SetAuthTokenExpirationByUserId(ctx context.Context, req *connect_go.Request[org.SetAuthTokenExpirationByUserIdRequest]) (*connect_go.Response[org.SetAuthTokenExpirationByUserIdResponse], error) {
+	return c.setAuthTokenExpirationByUserId.CallUnary(ctx, req)
+}
+
+// DeleteAuthToken calls api.v1alpha1.org.Org.DeleteAuthToken.
+func (c *orgClient) DeleteAuthToken(ctx context.Context, req *connect_go.Request[org.DeleteAuthTokenRequest]) (*connect_go.Response[org.DeleteAuthTokenResponse], error) {
+	return c.deleteAuthToken.CallUnary(ctx, req)
+}
+
+// DeleteAuthTokenByUserId calls api.v1alpha1.org.Org.DeleteAuthTokenByUserId.
+func (c *orgClient) DeleteAuthTokenByUserId(ctx context.Context, req *connect_go.Request[org.DeleteAuthTokenByUserIdRequest]) (*connect_go.Response[org.DeleteAuthTokenByUserIdResponse], error) {
+	return c.deleteAuthTokenByUserId.CallUnary(ctx, req)
+}
+
 // GetHuntGroupSettings calls api.v1alpha1.org.Org.GetHuntGroupSettings.
 func (c *orgClient) GetHuntGroupSettings(ctx context.Context, req *connect_go.Request[org.GetHuntGroupSettingsRequest]) (*connect_go.Response[org.GetHuntGroupSettingsResponse], error) {
 	return c.getHuntGroupSettings.CallUnary(ctx, req)
@@ -2719,6 +2845,23 @@ type OrgHandler interface {
 	ListUserSubscriptionsByUserId(context.Context, *connect_go.Request[org.ListUserSubscriptionsByUserIdRequest]) (*connect_go.Response[org.ListUserSubscriptionsByUserIdResponse], error)
 	// Lists subscriptions for multiple users in an org.
 	ListOrgSubscriptions(context.Context, *connect_go.Request[org.ListOrgSubscriptionsRequest]) (*connect_go.Response[org.ListOrgSubscriptionsResponse], error)
+	// AUTH TOKEN
+	// CreateAuthToken creates an auth token for the current user.
+	CreateAuthToken(context.Context, *connect_go.Request[org.CreateAuthTokenRequest]) (*connect_go.Response[org.CreateAuthTokenResponse], error)
+	// CreateAuthTokenByUserId creates an auth token for the given user.
+	CreateAuthTokenByUserId(context.Context, *connect_go.Request[org.CreateAuthTokenByUserIdRequest]) (*connect_go.Response[org.CreateAuthTokenByUserIdResponse], error)
+	// ListAuthTokens list tokens of current user.
+	ListAuthTokens(context.Context, *connect_go.Request[org.ListAuthTokensRequest]) (*connect_go.Response[org.ListAuthTokensResponse], error)
+	// ListAuthTokensByUserId list tokens of given user.
+	ListAuthTokensByUserId(context.Context, *connect_go.Request[org.ListAuthTokensByUserIdRequest]) (*connect_go.Response[org.ListAuthTokensByUserIdResponse], error)
+	// SetAuthTokenExpiration sets expiration back one year for current user.
+	SetAuthTokenExpiration(context.Context, *connect_go.Request[org.SetAuthTokenExpirationRequest]) (*connect_go.Response[org.SetAuthTokenExpirationResponse], error)
+	// SetAuthTokenExpirationByUserId sets expiration back one year for given user.
+	SetAuthTokenExpirationByUserId(context.Context, *connect_go.Request[org.SetAuthTokenExpirationByUserIdRequest]) (*connect_go.Response[org.SetAuthTokenExpirationByUserIdResponse], error)
+	// DeleteAuthToken deletes a given auth token for the current user.
+	DeleteAuthToken(context.Context, *connect_go.Request[org.DeleteAuthTokenRequest]) (*connect_go.Response[org.DeleteAuthTokenResponse], error)
+	// DeleteAuthTokenByUserId deletes a given auth token for the given user.
+	DeleteAuthTokenByUserId(context.Context, *connect_go.Request[org.DeleteAuthTokenByUserIdRequest]) (*connect_go.Response[org.DeleteAuthTokenByUserIdResponse], error)
 	// GetHuntGroupSettings returns the field masked hunt group settings for the
 	// provided hunt group.
 	GetHuntGroupSettings(context.Context, *connect_go.Request[org.GetHuntGroupSettingsRequest]) (*connect_go.Response[org.GetHuntGroupSettingsResponse], error)
@@ -3338,6 +3481,46 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.ListOrgSubscriptions,
 		opts...,
 	)
+	orgCreateAuthTokenHandler := connect_go.NewUnaryHandler(
+		OrgCreateAuthTokenProcedure,
+		svc.CreateAuthToken,
+		opts...,
+	)
+	orgCreateAuthTokenByUserIdHandler := connect_go.NewUnaryHandler(
+		OrgCreateAuthTokenByUserIdProcedure,
+		svc.CreateAuthTokenByUserId,
+		opts...,
+	)
+	orgListAuthTokensHandler := connect_go.NewUnaryHandler(
+		OrgListAuthTokensProcedure,
+		svc.ListAuthTokens,
+		opts...,
+	)
+	orgListAuthTokensByUserIdHandler := connect_go.NewUnaryHandler(
+		OrgListAuthTokensByUserIdProcedure,
+		svc.ListAuthTokensByUserId,
+		opts...,
+	)
+	orgSetAuthTokenExpirationHandler := connect_go.NewUnaryHandler(
+		OrgSetAuthTokenExpirationProcedure,
+		svc.SetAuthTokenExpiration,
+		opts...,
+	)
+	orgSetAuthTokenExpirationByUserIdHandler := connect_go.NewUnaryHandler(
+		OrgSetAuthTokenExpirationByUserIdProcedure,
+		svc.SetAuthTokenExpirationByUserId,
+		opts...,
+	)
+	orgDeleteAuthTokenHandler := connect_go.NewUnaryHandler(
+		OrgDeleteAuthTokenProcedure,
+		svc.DeleteAuthToken,
+		opts...,
+	)
+	orgDeleteAuthTokenByUserIdHandler := connect_go.NewUnaryHandler(
+		OrgDeleteAuthTokenByUserIdProcedure,
+		svc.DeleteAuthTokenByUserId,
+		opts...,
+	)
 	orgGetHuntGroupSettingsHandler := connect_go.NewUnaryHandler(
 		OrgGetHuntGroupSettingsProcedure,
 		svc.GetHuntGroupSettings,
@@ -3820,6 +4003,22 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 			orgListUserSubscriptionsByUserIdHandler.ServeHTTP(w, r)
 		case OrgListOrgSubscriptionsProcedure:
 			orgListOrgSubscriptionsHandler.ServeHTTP(w, r)
+		case OrgCreateAuthTokenProcedure:
+			orgCreateAuthTokenHandler.ServeHTTP(w, r)
+		case OrgCreateAuthTokenByUserIdProcedure:
+			orgCreateAuthTokenByUserIdHandler.ServeHTTP(w, r)
+		case OrgListAuthTokensProcedure:
+			orgListAuthTokensHandler.ServeHTTP(w, r)
+		case OrgListAuthTokensByUserIdProcedure:
+			orgListAuthTokensByUserIdHandler.ServeHTTP(w, r)
+		case OrgSetAuthTokenExpirationProcedure:
+			orgSetAuthTokenExpirationHandler.ServeHTTP(w, r)
+		case OrgSetAuthTokenExpirationByUserIdProcedure:
+			orgSetAuthTokenExpirationByUserIdHandler.ServeHTTP(w, r)
+		case OrgDeleteAuthTokenProcedure:
+			orgDeleteAuthTokenHandler.ServeHTTP(w, r)
+		case OrgDeleteAuthTokenByUserIdProcedure:
+			orgDeleteAuthTokenByUserIdHandler.ServeHTTP(w, r)
 		case OrgGetHuntGroupSettingsProcedure:
 			orgGetHuntGroupSettingsHandler.ServeHTTP(w, r)
 		case OrgUpdateHuntGroupSettingsProcedure:
@@ -4323,6 +4522,38 @@ func (UnimplementedOrgHandler) ListUserSubscriptionsByUserId(context.Context, *c
 
 func (UnimplementedOrgHandler) ListOrgSubscriptions(context.Context, *connect_go.Request[org.ListOrgSubscriptionsRequest]) (*connect_go.Response[org.ListOrgSubscriptionsResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.ListOrgSubscriptions is not implemented"))
+}
+
+func (UnimplementedOrgHandler) CreateAuthToken(context.Context, *connect_go.Request[org.CreateAuthTokenRequest]) (*connect_go.Response[org.CreateAuthTokenResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.CreateAuthToken is not implemented"))
+}
+
+func (UnimplementedOrgHandler) CreateAuthTokenByUserId(context.Context, *connect_go.Request[org.CreateAuthTokenByUserIdRequest]) (*connect_go.Response[org.CreateAuthTokenByUserIdResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.CreateAuthTokenByUserId is not implemented"))
+}
+
+func (UnimplementedOrgHandler) ListAuthTokens(context.Context, *connect_go.Request[org.ListAuthTokensRequest]) (*connect_go.Response[org.ListAuthTokensResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.ListAuthTokens is not implemented"))
+}
+
+func (UnimplementedOrgHandler) ListAuthTokensByUserId(context.Context, *connect_go.Request[org.ListAuthTokensByUserIdRequest]) (*connect_go.Response[org.ListAuthTokensByUserIdResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.ListAuthTokensByUserId is not implemented"))
+}
+
+func (UnimplementedOrgHandler) SetAuthTokenExpiration(context.Context, *connect_go.Request[org.SetAuthTokenExpirationRequest]) (*connect_go.Response[org.SetAuthTokenExpirationResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.SetAuthTokenExpiration is not implemented"))
+}
+
+func (UnimplementedOrgHandler) SetAuthTokenExpirationByUserId(context.Context, *connect_go.Request[org.SetAuthTokenExpirationByUserIdRequest]) (*connect_go.Response[org.SetAuthTokenExpirationByUserIdResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.SetAuthTokenExpirationByUserId is not implemented"))
+}
+
+func (UnimplementedOrgHandler) DeleteAuthToken(context.Context, *connect_go.Request[org.DeleteAuthTokenRequest]) (*connect_go.Response[org.DeleteAuthTokenResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.DeleteAuthToken is not implemented"))
+}
+
+func (UnimplementedOrgHandler) DeleteAuthTokenByUserId(context.Context, *connect_go.Request[org.DeleteAuthTokenByUserIdRequest]) (*connect_go.Response[org.DeleteAuthTokenByUserIdResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.DeleteAuthTokenByUserId is not implemented"))
 }
 
 func (UnimplementedOrgHandler) GetHuntGroupSettings(context.Context, *connect_go.Request[org.GetHuntGroupSettingsRequest]) (*connect_go.Response[org.GetHuntGroupSettingsResponse], error) {

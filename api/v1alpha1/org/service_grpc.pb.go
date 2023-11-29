@@ -114,6 +114,14 @@ const (
 	Org_ListUserSubscriptions_FullMethodName                   = "/api.v1alpha1.org.Org/ListUserSubscriptions"
 	Org_ListUserSubscriptionsByUserId_FullMethodName           = "/api.v1alpha1.org.Org/ListUserSubscriptionsByUserId"
 	Org_ListOrgSubscriptions_FullMethodName                    = "/api.v1alpha1.org.Org/ListOrgSubscriptions"
+	Org_CreateAuthToken_FullMethodName                         = "/api.v1alpha1.org.Org/CreateAuthToken"
+	Org_CreateAuthTokenByUserId_FullMethodName                 = "/api.v1alpha1.org.Org/CreateAuthTokenByUserId"
+	Org_ListAuthTokens_FullMethodName                          = "/api.v1alpha1.org.Org/ListAuthTokens"
+	Org_ListAuthTokensByUserId_FullMethodName                  = "/api.v1alpha1.org.Org/ListAuthTokensByUserId"
+	Org_SetAuthTokenExpiration_FullMethodName                  = "/api.v1alpha1.org.Org/SetAuthTokenExpiration"
+	Org_SetAuthTokenExpirationByUserId_FullMethodName          = "/api.v1alpha1.org.Org/SetAuthTokenExpirationByUserId"
+	Org_DeleteAuthToken_FullMethodName                         = "/api.v1alpha1.org.Org/DeleteAuthToken"
+	Org_DeleteAuthTokenByUserId_FullMethodName                 = "/api.v1alpha1.org.Org/DeleteAuthTokenByUserId"
 	Org_GetHuntGroupSettings_FullMethodName                    = "/api.v1alpha1.org.Org/GetHuntGroupSettings"
 	Org_UpdateHuntGroupSettings_FullMethodName                 = "/api.v1alpha1.org.Org/UpdateHuntGroupSettings"
 	Org_ListCallerIdBuckets_FullMethodName                     = "/api.v1alpha1.org.Org/ListCallerIdBuckets"
@@ -394,6 +402,23 @@ type OrgClient interface {
 	ListUserSubscriptionsByUserId(ctx context.Context, in *ListUserSubscriptionsByUserIdRequest, opts ...grpc.CallOption) (*ListUserSubscriptionsByUserIdResponse, error)
 	// Lists subscriptions for multiple users in an org.
 	ListOrgSubscriptions(ctx context.Context, in *ListOrgSubscriptionsRequest, opts ...grpc.CallOption) (*ListOrgSubscriptionsResponse, error)
+	// AUTH TOKEN
+	// CreateAuthToken creates an auth token for the current user.
+	CreateAuthToken(ctx context.Context, in *CreateAuthTokenRequest, opts ...grpc.CallOption) (*CreateAuthTokenResponse, error)
+	// CreateAuthTokenByUserId creates an auth token for the given user.
+	CreateAuthTokenByUserId(ctx context.Context, in *CreateAuthTokenByUserIdRequest, opts ...grpc.CallOption) (*CreateAuthTokenByUserIdResponse, error)
+	// ListAuthTokens list tokens of current user.
+	ListAuthTokens(ctx context.Context, in *ListAuthTokensRequest, opts ...grpc.CallOption) (*ListAuthTokensResponse, error)
+	// ListAuthTokensByUserId list tokens of given user.
+	ListAuthTokensByUserId(ctx context.Context, in *ListAuthTokensByUserIdRequest, opts ...grpc.CallOption) (*ListAuthTokensByUserIdResponse, error)
+	// SetAuthTokenExpiration sets expiration back one year for current user.
+	SetAuthTokenExpiration(ctx context.Context, in *SetAuthTokenExpirationRequest, opts ...grpc.CallOption) (*SetAuthTokenExpirationResponse, error)
+	// SetAuthTokenExpirationByUserId sets expiration back one year for given user.
+	SetAuthTokenExpirationByUserId(ctx context.Context, in *SetAuthTokenExpirationByUserIdRequest, opts ...grpc.CallOption) (*SetAuthTokenExpirationByUserIdResponse, error)
+	// DeleteAuthToken deletes a given auth token for the current user.
+	DeleteAuthToken(ctx context.Context, in *DeleteAuthTokenRequest, opts ...grpc.CallOption) (*DeleteAuthTokenResponse, error)
+	// DeleteAuthTokenByUserId deletes a given auth token for the given user.
+	DeleteAuthTokenByUserId(ctx context.Context, in *DeleteAuthTokenByUserIdRequest, opts ...grpc.CallOption) (*DeleteAuthTokenByUserIdResponse, error)
 	// GetHuntGroupSettings returns the field masked hunt group settings for the
 	// provided hunt group.
 	GetHuntGroupSettings(ctx context.Context, in *GetHuntGroupSettingsRequest, opts ...grpc.CallOption) (*GetHuntGroupSettingsResponse, error)
@@ -1579,6 +1604,78 @@ func (c *orgClient) ListOrgSubscriptions(ctx context.Context, in *ListOrgSubscri
 	return out, nil
 }
 
+func (c *orgClient) CreateAuthToken(ctx context.Context, in *CreateAuthTokenRequest, opts ...grpc.CallOption) (*CreateAuthTokenResponse, error) {
+	out := new(CreateAuthTokenResponse)
+	err := c.cc.Invoke(ctx, Org_CreateAuthToken_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) CreateAuthTokenByUserId(ctx context.Context, in *CreateAuthTokenByUserIdRequest, opts ...grpc.CallOption) (*CreateAuthTokenByUserIdResponse, error) {
+	out := new(CreateAuthTokenByUserIdResponse)
+	err := c.cc.Invoke(ctx, Org_CreateAuthTokenByUserId_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) ListAuthTokens(ctx context.Context, in *ListAuthTokensRequest, opts ...grpc.CallOption) (*ListAuthTokensResponse, error) {
+	out := new(ListAuthTokensResponse)
+	err := c.cc.Invoke(ctx, Org_ListAuthTokens_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) ListAuthTokensByUserId(ctx context.Context, in *ListAuthTokensByUserIdRequest, opts ...grpc.CallOption) (*ListAuthTokensByUserIdResponse, error) {
+	out := new(ListAuthTokensByUserIdResponse)
+	err := c.cc.Invoke(ctx, Org_ListAuthTokensByUserId_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) SetAuthTokenExpiration(ctx context.Context, in *SetAuthTokenExpirationRequest, opts ...grpc.CallOption) (*SetAuthTokenExpirationResponse, error) {
+	out := new(SetAuthTokenExpirationResponse)
+	err := c.cc.Invoke(ctx, Org_SetAuthTokenExpiration_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) SetAuthTokenExpirationByUserId(ctx context.Context, in *SetAuthTokenExpirationByUserIdRequest, opts ...grpc.CallOption) (*SetAuthTokenExpirationByUserIdResponse, error) {
+	out := new(SetAuthTokenExpirationByUserIdResponse)
+	err := c.cc.Invoke(ctx, Org_SetAuthTokenExpirationByUserId_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) DeleteAuthToken(ctx context.Context, in *DeleteAuthTokenRequest, opts ...grpc.CallOption) (*DeleteAuthTokenResponse, error) {
+	out := new(DeleteAuthTokenResponse)
+	err := c.cc.Invoke(ctx, Org_DeleteAuthToken_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) DeleteAuthTokenByUserId(ctx context.Context, in *DeleteAuthTokenByUserIdRequest, opts ...grpc.CallOption) (*DeleteAuthTokenByUserIdResponse, error) {
+	out := new(DeleteAuthTokenByUserIdResponse)
+	err := c.cc.Invoke(ctx, Org_DeleteAuthTokenByUserId_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *orgClient) GetHuntGroupSettings(ctx context.Context, in *GetHuntGroupSettingsRequest, opts ...grpc.CallOption) (*GetHuntGroupSettingsResponse, error) {
 	out := new(GetHuntGroupSettingsResponse)
 	err := c.cc.Invoke(ctx, Org_GetHuntGroupSettings_FullMethodName, in, out, opts...)
@@ -2321,6 +2418,23 @@ type OrgServer interface {
 	ListUserSubscriptionsByUserId(context.Context, *ListUserSubscriptionsByUserIdRequest) (*ListUserSubscriptionsByUserIdResponse, error)
 	// Lists subscriptions for multiple users in an org.
 	ListOrgSubscriptions(context.Context, *ListOrgSubscriptionsRequest) (*ListOrgSubscriptionsResponse, error)
+	// AUTH TOKEN
+	// CreateAuthToken creates an auth token for the current user.
+	CreateAuthToken(context.Context, *CreateAuthTokenRequest) (*CreateAuthTokenResponse, error)
+	// CreateAuthTokenByUserId creates an auth token for the given user.
+	CreateAuthTokenByUserId(context.Context, *CreateAuthTokenByUserIdRequest) (*CreateAuthTokenByUserIdResponse, error)
+	// ListAuthTokens list tokens of current user.
+	ListAuthTokens(context.Context, *ListAuthTokensRequest) (*ListAuthTokensResponse, error)
+	// ListAuthTokensByUserId list tokens of given user.
+	ListAuthTokensByUserId(context.Context, *ListAuthTokensByUserIdRequest) (*ListAuthTokensByUserIdResponse, error)
+	// SetAuthTokenExpiration sets expiration back one year for current user.
+	SetAuthTokenExpiration(context.Context, *SetAuthTokenExpirationRequest) (*SetAuthTokenExpirationResponse, error)
+	// SetAuthTokenExpirationByUserId sets expiration back one year for given user.
+	SetAuthTokenExpirationByUserId(context.Context, *SetAuthTokenExpirationByUserIdRequest) (*SetAuthTokenExpirationByUserIdResponse, error)
+	// DeleteAuthToken deletes a given auth token for the current user.
+	DeleteAuthToken(context.Context, *DeleteAuthTokenRequest) (*DeleteAuthTokenResponse, error)
+	// DeleteAuthTokenByUserId deletes a given auth token for the given user.
+	DeleteAuthTokenByUserId(context.Context, *DeleteAuthTokenByUserIdRequest) (*DeleteAuthTokenByUserIdResponse, error)
 	// GetHuntGroupSettings returns the field masked hunt group settings for the
 	// provided hunt group.
 	GetHuntGroupSettings(context.Context, *GetHuntGroupSettingsRequest) (*GetHuntGroupSettingsResponse, error)
@@ -2748,6 +2862,30 @@ func (UnimplementedOrgServer) ListUserSubscriptionsByUserId(context.Context, *Li
 }
 func (UnimplementedOrgServer) ListOrgSubscriptions(context.Context, *ListOrgSubscriptionsRequest) (*ListOrgSubscriptionsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListOrgSubscriptions not implemented")
+}
+func (UnimplementedOrgServer) CreateAuthToken(context.Context, *CreateAuthTokenRequest) (*CreateAuthTokenResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateAuthToken not implemented")
+}
+func (UnimplementedOrgServer) CreateAuthTokenByUserId(context.Context, *CreateAuthTokenByUserIdRequest) (*CreateAuthTokenByUserIdResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateAuthTokenByUserId not implemented")
+}
+func (UnimplementedOrgServer) ListAuthTokens(context.Context, *ListAuthTokensRequest) (*ListAuthTokensResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListAuthTokens not implemented")
+}
+func (UnimplementedOrgServer) ListAuthTokensByUserId(context.Context, *ListAuthTokensByUserIdRequest) (*ListAuthTokensByUserIdResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListAuthTokensByUserId not implemented")
+}
+func (UnimplementedOrgServer) SetAuthTokenExpiration(context.Context, *SetAuthTokenExpirationRequest) (*SetAuthTokenExpirationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetAuthTokenExpiration not implemented")
+}
+func (UnimplementedOrgServer) SetAuthTokenExpirationByUserId(context.Context, *SetAuthTokenExpirationByUserIdRequest) (*SetAuthTokenExpirationByUserIdResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetAuthTokenExpirationByUserId not implemented")
+}
+func (UnimplementedOrgServer) DeleteAuthToken(context.Context, *DeleteAuthTokenRequest) (*DeleteAuthTokenResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteAuthToken not implemented")
+}
+func (UnimplementedOrgServer) DeleteAuthTokenByUserId(context.Context, *DeleteAuthTokenByUserIdRequest) (*DeleteAuthTokenByUserIdResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteAuthTokenByUserId not implemented")
 }
 func (UnimplementedOrgServer) GetHuntGroupSettings(context.Context, *GetHuntGroupSettingsRequest) (*GetHuntGroupSettingsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetHuntGroupSettings not implemented")
@@ -4670,6 +4808,150 @@ func _Org_ListOrgSubscriptions_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Org_CreateAuthToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateAuthTokenRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).CreateAuthToken(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_CreateAuthToken_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).CreateAuthToken(ctx, req.(*CreateAuthTokenRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_CreateAuthTokenByUserId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateAuthTokenByUserIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).CreateAuthTokenByUserId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_CreateAuthTokenByUserId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).CreateAuthTokenByUserId(ctx, req.(*CreateAuthTokenByUserIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_ListAuthTokens_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListAuthTokensRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).ListAuthTokens(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_ListAuthTokens_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).ListAuthTokens(ctx, req.(*ListAuthTokensRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_ListAuthTokensByUserId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListAuthTokensByUserIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).ListAuthTokensByUserId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_ListAuthTokensByUserId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).ListAuthTokensByUserId(ctx, req.(*ListAuthTokensByUserIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_SetAuthTokenExpiration_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetAuthTokenExpirationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).SetAuthTokenExpiration(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_SetAuthTokenExpiration_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).SetAuthTokenExpiration(ctx, req.(*SetAuthTokenExpirationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_SetAuthTokenExpirationByUserId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetAuthTokenExpirationByUserIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).SetAuthTokenExpirationByUserId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_SetAuthTokenExpirationByUserId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).SetAuthTokenExpirationByUserId(ctx, req.(*SetAuthTokenExpirationByUserIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_DeleteAuthToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteAuthTokenRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).DeleteAuthToken(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_DeleteAuthToken_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).DeleteAuthToken(ctx, req.(*DeleteAuthTokenRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_DeleteAuthTokenByUserId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteAuthTokenByUserIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).DeleteAuthTokenByUserId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_DeleteAuthTokenByUserId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).DeleteAuthTokenByUserId(ctx, req.(*DeleteAuthTokenByUserIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Org_GetHuntGroupSettings_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetHuntGroupSettingsRequest)
 	if err := dec(in); err != nil {
@@ -6068,6 +6350,38 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListOrgSubscriptions",
 			Handler:    _Org_ListOrgSubscriptions_Handler,
+		},
+		{
+			MethodName: "CreateAuthToken",
+			Handler:    _Org_CreateAuthToken_Handler,
+		},
+		{
+			MethodName: "CreateAuthTokenByUserId",
+			Handler:    _Org_CreateAuthTokenByUserId_Handler,
+		},
+		{
+			MethodName: "ListAuthTokens",
+			Handler:    _Org_ListAuthTokens_Handler,
+		},
+		{
+			MethodName: "ListAuthTokensByUserId",
+			Handler:    _Org_ListAuthTokensByUserId_Handler,
+		},
+		{
+			MethodName: "SetAuthTokenExpiration",
+			Handler:    _Org_SetAuthTokenExpiration_Handler,
+		},
+		{
+			MethodName: "SetAuthTokenExpirationByUserId",
+			Handler:    _Org_SetAuthTokenExpirationByUserId_Handler,
+		},
+		{
+			MethodName: "DeleteAuthToken",
+			Handler:    _Org_DeleteAuthToken_Handler,
+		},
+		{
+			MethodName: "DeleteAuthTokenByUserId",
+			Handler:    _Org_DeleteAuthTokenByUserId_Handler,
 		},
 		{
 			MethodName: "GetHuntGroupSettings",
