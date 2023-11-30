@@ -20,30 +20,32 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Room303API_AddRoomMember_FullMethodName         = "/api.v1alpha1.room303.Room303API/AddRoomMember"
-	Room303API_RemoveRoomMember_FullMethodName      = "/api.v1alpha1.room303.Room303API/RemoveRoomMember"
-	Room303API_ListRoomMembers_FullMethodName       = "/api.v1alpha1.room303.Room303API/ListRoomMembers"
-	Room303API_SetAdminForRoomMember_FullMethodName = "/api.v1alpha1.room303.Room303API/SetAdminForRoomMember"
-	Room303API_JoinRoom_FullMethodName              = "/api.v1alpha1.room303.Room303API/JoinRoom"
-	Room303API_GetRoomMember_FullMethodName         = "/api.v1alpha1.room303.Room303API/GetRoomMember"
-	Room303API_CreateMessage_FullMethodName         = "/api.v1alpha1.room303.Room303API/CreateMessage"
-	Room303API_EditMessage_FullMethodName           = "/api.v1alpha1.room303.Room303API/EditMessage"
-	Room303API_DeleteMessage_FullMethodName         = "/api.v1alpha1.room303.Room303API/DeleteMessage"
-	Room303API_GetMessages_FullMethodName           = "/api.v1alpha1.room303.Room303API/GetMessages"
-	Room303API_StreamMessageUpdates_FullMethodName  = "/api.v1alpha1.room303.Room303API/StreamMessageUpdates"
-	Room303API_GetUnreadStats_FullMethodName        = "/api.v1alpha1.room303.Room303API/GetUnreadStats"
-	Room303API_MarkMessageRead_FullMethodName       = "/api.v1alpha1.room303.Room303API/MarkMessageRead"
-	Room303API_MarkAllMessagesRead_FullMethodName   = "/api.v1alpha1.room303.Room303API/MarkAllMessagesRead"
-	Room303API_BulkMarkMessageRead_FullMethodName   = "/api.v1alpha1.room303.Room303API/BulkMarkMessageRead"
-	Room303API_CreateRoom_FullMethodName            = "/api.v1alpha1.room303.Room303API/CreateRoom"
-	Room303API_GetRoom_FullMethodName               = "/api.v1alpha1.room303.Room303API/GetRoom"
-	Room303API_ListAllRooms_FullMethodName          = "/api.v1alpha1.room303.Room303API/ListAllRooms"
-	Room303API_ListRoomsForMember_FullMethodName    = "/api.v1alpha1.room303.Room303API/ListRoomsForMember"
-	Room303API_ArchiveRoom_FullMethodName           = "/api.v1alpha1.room303.Room303API/ArchiveRoom"
-	Room303API_ListUsersNames_FullMethodName        = "/api.v1alpha1.room303.Room303API/ListUsersNames"
-	Room303API_UpdateRoomConfig_FullMethodName      = "/api.v1alpha1.room303.Room303API/UpdateRoomConfig"
-	Room303API_UpdateGlobalConfig_FullMethodName    = "/api.v1alpha1.room303.Room303API/UpdateGlobalConfig"
-	Room303API_GetGlobalConfig_FullMethodName       = "/api.v1alpha1.room303.Room303API/GetGlobalConfig"
+	Room303API_AddRoomMember_FullMethodName              = "/api.v1alpha1.room303.Room303API/AddRoomMember"
+	Room303API_RemoveRoomMember_FullMethodName           = "/api.v1alpha1.room303.Room303API/RemoveRoomMember"
+	Room303API_ListRoomMembers_FullMethodName            = "/api.v1alpha1.room303.Room303API/ListRoomMembers"
+	Room303API_SetAdminForRoomMember_FullMethodName      = "/api.v1alpha1.room303.Room303API/SetAdminForRoomMember"
+	Room303API_JoinRoom_FullMethodName                   = "/api.v1alpha1.room303.Room303API/JoinRoom"
+	Room303API_GetRoomMember_FullMethodName              = "/api.v1alpha1.room303.Room303API/GetRoomMember"
+	Room303API_CreateMessage_FullMethodName              = "/api.v1alpha1.room303.Room303API/CreateMessage"
+	Room303API_EditMessage_FullMethodName                = "/api.v1alpha1.room303.Room303API/EditMessage"
+	Room303API_DeleteMessage_FullMethodName              = "/api.v1alpha1.room303.Room303API/DeleteMessage"
+	Room303API_GetMessages_FullMethodName                = "/api.v1alpha1.room303.Room303API/GetMessages"
+	Room303API_StreamMessageUpdates_FullMethodName       = "/api.v1alpha1.room303.Room303API/StreamMessageUpdates"
+	Room303API_GetUnreadStats_FullMethodName             = "/api.v1alpha1.room303.Room303API/GetUnreadStats"
+	Room303API_MarkMessageRead_FullMethodName            = "/api.v1alpha1.room303.Room303API/MarkMessageRead"
+	Room303API_MarkAllMessagesRead_FullMethodName        = "/api.v1alpha1.room303.Room303API/MarkAllMessagesRead"
+	Room303API_BulkMarkMessageRead_FullMethodName        = "/api.v1alpha1.room303.Room303API/BulkMarkMessageRead"
+	Room303API_CreateRoom_FullMethodName                 = "/api.v1alpha1.room303.Room303API/CreateRoom"
+	Room303API_GetRoom_FullMethodName                    = "/api.v1alpha1.room303.Room303API/GetRoom"
+	Room303API_ListAllRooms_FullMethodName               = "/api.v1alpha1.room303.Room303API/ListAllRooms"
+	Room303API_ListRoomsForMember_FullMethodName         = "/api.v1alpha1.room303.Room303API/ListRoomsForMember"
+	Room303API_ArchiveRoom_FullMethodName                = "/api.v1alpha1.room303.Room303API/ArchiveRoom"
+	Room303API_ListUsersNames_FullMethodName             = "/api.v1alpha1.room303.Room303API/ListUsersNames"
+	Room303API_UpdateRoomConfig_FullMethodName           = "/api.v1alpha1.room303.Room303API/UpdateRoomConfig"
+	Room303API_UpdateGlobalConfig_FullMethodName         = "/api.v1alpha1.room303.Room303API/UpdateGlobalConfig"
+	Room303API_GetGlobalConfig_FullMethodName            = "/api.v1alpha1.room303.Room303API/GetGlobalConfig"
+	Room303API_ListNewsRoomGlobalMessages_FullMethodName = "/api.v1alpha1.room303.Room303API/ListNewsRoomGlobalMessages"
+	Room303API_SendNewsRoomGlobalMessage_FullMethodName  = "/api.v1alpha1.room303.Room303API/SendNewsRoomGlobalMessage"
 )
 
 // Room303APIClient is the client API for Room303API service.
@@ -88,6 +90,10 @@ type Room303APIClient interface {
 	UpdateGlobalConfig(ctx context.Context, in *UpdateGlobalConfigRequest, opts ...grpc.CallOption) (*UpdateGlobalConfigResponse, error)
 	// get global configuration
 	GetGlobalConfig(ctx context.Context, in *GetGlobalConfigRequest, opts ...grpc.CallOption) (*GetGlobalConfigResponse, error)
+	// ListNewsRoomGlobalMessages returns a list of global messages for newsroom
+	ListNewsRoomGlobalMessages(ctx context.Context, in *ListNewsRoomGlobalMessagesRequest, opts ...grpc.CallOption) (*ListNewsRoomGlobalMessagesResponse, error)
+	// SendNewsRoomGlobalMessage - send global message for newsroom to be added
+	SendNewsRoomGlobalMessage(ctx context.Context, in *SendNewsRoomGlobalMessageRequest, opts ...grpc.CallOption) (*SendNewsRoomGlobalMessageResponse, error)
 }
 
 type room303APIClient struct {
@@ -360,6 +366,24 @@ func (c *room303APIClient) GetGlobalConfig(ctx context.Context, in *GetGlobalCon
 	return out, nil
 }
 
+func (c *room303APIClient) ListNewsRoomGlobalMessages(ctx context.Context, in *ListNewsRoomGlobalMessagesRequest, opts ...grpc.CallOption) (*ListNewsRoomGlobalMessagesResponse, error) {
+	out := new(ListNewsRoomGlobalMessagesResponse)
+	err := c.cc.Invoke(ctx, Room303API_ListNewsRoomGlobalMessages_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *room303APIClient) SendNewsRoomGlobalMessage(ctx context.Context, in *SendNewsRoomGlobalMessageRequest, opts ...grpc.CallOption) (*SendNewsRoomGlobalMessageResponse, error) {
+	out := new(SendNewsRoomGlobalMessageResponse)
+	err := c.cc.Invoke(ctx, Room303API_SendNewsRoomGlobalMessage_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Room303APIServer is the server API for Room303API service.
 // All implementations must embed UnimplementedRoom303APIServer
 // for forward compatibility
@@ -402,6 +426,10 @@ type Room303APIServer interface {
 	UpdateGlobalConfig(context.Context, *UpdateGlobalConfigRequest) (*UpdateGlobalConfigResponse, error)
 	// get global configuration
 	GetGlobalConfig(context.Context, *GetGlobalConfigRequest) (*GetGlobalConfigResponse, error)
+	// ListNewsRoomGlobalMessages returns a list of global messages for newsroom
+	ListNewsRoomGlobalMessages(context.Context, *ListNewsRoomGlobalMessagesRequest) (*ListNewsRoomGlobalMessagesResponse, error)
+	// SendNewsRoomGlobalMessage - send global message for newsroom to be added
+	SendNewsRoomGlobalMessage(context.Context, *SendNewsRoomGlobalMessageRequest) (*SendNewsRoomGlobalMessageResponse, error)
 	mustEmbedUnimplementedRoom303APIServer()
 }
 
@@ -480,6 +508,12 @@ func (UnimplementedRoom303APIServer) UpdateGlobalConfig(context.Context, *Update
 }
 func (UnimplementedRoom303APIServer) GetGlobalConfig(context.Context, *GetGlobalConfigRequest) (*GetGlobalConfigResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetGlobalConfig not implemented")
+}
+func (UnimplementedRoom303APIServer) ListNewsRoomGlobalMessages(context.Context, *ListNewsRoomGlobalMessagesRequest) (*ListNewsRoomGlobalMessagesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListNewsRoomGlobalMessages not implemented")
+}
+func (UnimplementedRoom303APIServer) SendNewsRoomGlobalMessage(context.Context, *SendNewsRoomGlobalMessageRequest) (*SendNewsRoomGlobalMessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendNewsRoomGlobalMessage not implemented")
 }
 func (UnimplementedRoom303APIServer) mustEmbedUnimplementedRoom303APIServer() {}
 
@@ -932,6 +966,42 @@ func _Room303API_GetGlobalConfig_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Room303API_ListNewsRoomGlobalMessages_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListNewsRoomGlobalMessagesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(Room303APIServer).ListNewsRoomGlobalMessages(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Room303API_ListNewsRoomGlobalMessages_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(Room303APIServer).ListNewsRoomGlobalMessages(ctx, req.(*ListNewsRoomGlobalMessagesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Room303API_SendNewsRoomGlobalMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SendNewsRoomGlobalMessageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(Room303APIServer).SendNewsRoomGlobalMessage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Room303API_SendNewsRoomGlobalMessage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(Room303APIServer).SendNewsRoomGlobalMessage(ctx, req.(*SendNewsRoomGlobalMessageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Room303API_ServiceDesc is the grpc.ServiceDesc for Room303API service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1026,6 +1096,14 @@ var Room303API_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetGlobalConfig",
 			Handler:    _Room303API_GetGlobalConfig_Handler,
+		},
+		{
+			MethodName: "ListNewsRoomGlobalMessages",
+			Handler:    _Room303API_ListNewsRoomGlobalMessages_Handler,
+		},
+		{
+			MethodName: "SendNewsRoomGlobalMessage",
+			Handler:    _Room303API_SendNewsRoomGlobalMessage_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

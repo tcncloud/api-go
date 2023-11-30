@@ -99,6 +99,12 @@ const (
 	// Room303APIGetGlobalConfigProcedure is the fully-qualified name of the Room303API's
 	// GetGlobalConfig RPC.
 	Room303APIGetGlobalConfigProcedure = "/api.v1alpha1.room303.Room303API/GetGlobalConfig"
+	// Room303APIListNewsRoomGlobalMessagesProcedure is the fully-qualified name of the Room303API's
+	// ListNewsRoomGlobalMessages RPC.
+	Room303APIListNewsRoomGlobalMessagesProcedure = "/api.v1alpha1.room303.Room303API/ListNewsRoomGlobalMessages"
+	// Room303APISendNewsRoomGlobalMessageProcedure is the fully-qualified name of the Room303API's
+	// SendNewsRoomGlobalMessage RPC.
+	Room303APISendNewsRoomGlobalMessageProcedure = "/api.v1alpha1.room303.Room303API/SendNewsRoomGlobalMessage"
 )
 
 // Room303APIClient is a client for the api.v1alpha1.room303.Room303API service.
@@ -141,6 +147,10 @@ type Room303APIClient interface {
 	UpdateGlobalConfig(context.Context, *connect_go.Request[room303.UpdateGlobalConfigRequest]) (*connect_go.Response[room303.UpdateGlobalConfigResponse], error)
 	// get global configuration
 	GetGlobalConfig(context.Context, *connect_go.Request[room303.GetGlobalConfigRequest]) (*connect_go.Response[room303.GetGlobalConfigResponse], error)
+	// ListNewsRoomGlobalMessages returns a list of global messages for newsroom
+	ListNewsRoomGlobalMessages(context.Context, *connect_go.Request[room303.ListNewsRoomGlobalMessagesRequest]) (*connect_go.Response[room303.ListNewsRoomGlobalMessagesResponse], error)
+	// SendNewsRoomGlobalMessage - send global message for newsroom to be added
+	SendNewsRoomGlobalMessage(context.Context, *connect_go.Request[room303.SendNewsRoomGlobalMessageRequest]) (*connect_go.Response[room303.SendNewsRoomGlobalMessageResponse], error)
 }
 
 // NewRoom303APIClient constructs a client for the api.v1alpha1.room303.Room303API service. By
@@ -273,35 +283,47 @@ func NewRoom303APIClient(httpClient connect_go.HTTPClient, baseURL string, opts 
 			baseURL+Room303APIGetGlobalConfigProcedure,
 			opts...,
 		),
+		listNewsRoomGlobalMessages: connect_go.NewClient[room303.ListNewsRoomGlobalMessagesRequest, room303.ListNewsRoomGlobalMessagesResponse](
+			httpClient,
+			baseURL+Room303APIListNewsRoomGlobalMessagesProcedure,
+			opts...,
+		),
+		sendNewsRoomGlobalMessage: connect_go.NewClient[room303.SendNewsRoomGlobalMessageRequest, room303.SendNewsRoomGlobalMessageResponse](
+			httpClient,
+			baseURL+Room303APISendNewsRoomGlobalMessageProcedure,
+			opts...,
+		),
 	}
 }
 
 // room303APIClient implements Room303APIClient.
 type room303APIClient struct {
-	addRoomMember         *connect_go.Client[room303.AddRoomMemberRequest, commons.Member]
-	removeRoomMember      *connect_go.Client[room303.RemoveRoomMemberRequest, room303.RemoveRoomMemberResponse]
-	listRoomMembers       *connect_go.Client[room303.ListRoomMembersRequest, room303.ListRoomMembersResponse]
-	setAdminForRoomMember *connect_go.Client[room303.SetAdminForRoomMemberRequest, room303.SetAdminForRoomMemberResponse]
-	joinRoom              *connect_go.Client[room303.JoinRoomRequest, commons.Room]
-	getRoomMember         *connect_go.Client[room303.GetRoomMemberRequest, commons.Member]
-	createMessage         *connect_go.Client[room303.CreateMessageRequest, room303.CreateMessageResponse]
-	editMessage           *connect_go.Client[room303.EditMessageRequest, room303.EditMessageResponse]
-	deleteMessage         *connect_go.Client[room303.DeleteMessageRequest, room303.DeleteMessageResponse]
-	getMessages           *connect_go.Client[room303.GetMessagesRequest, room303.GetMessagesResponse]
-	streamMessageUpdates  *connect_go.Client[room303.StreamMessageUpdatesRequest, room303.StreamMessageUpdatesResponse]
-	getUnreadStats        *connect_go.Client[room303.GetUnreadStatsRequest, room303.GetUnreadStatsResponse]
-	markMessageRead       *connect_go.Client[room303.MarkMessageReadRequest, room303.MarkMessageReadResponse]
-	markAllMessagesRead   *connect_go.Client[room303.MarkAllMessagesReadRequest, room303.MarkAllMessagesReadResponse]
-	bulkMarkMessageRead   *connect_go.Client[room303.BulkMarkMessageReadRequest, room303.BulkMarkMessageReadResponse]
-	createRoom            *connect_go.Client[room303.CreateRoomRequest, commons.Room]
-	getRoom               *connect_go.Client[room303.GetRoomRequest, commons.Room]
-	listAllRooms          *connect_go.Client[room303.ListAllRoomsRequest, room303.ListRoomsResponse]
-	listRoomsForMember    *connect_go.Client[room303.ListRoomsForMemberRequest, room303.ListRoomsResponse]
-	archiveRoom           *connect_go.Client[room303.ArchiveRoomRequest, commons.Room]
-	listUsersNames        *connect_go.Client[room303.ListUsersNamesRequest, room303.ListUsersNamesResponse]
-	updateRoomConfig      *connect_go.Client[room303.UpdateRoomConfigRequest, commons.Room]
-	updateGlobalConfig    *connect_go.Client[room303.UpdateGlobalConfigRequest, room303.UpdateGlobalConfigResponse]
-	getGlobalConfig       *connect_go.Client[room303.GetGlobalConfigRequest, room303.GetGlobalConfigResponse]
+	addRoomMember              *connect_go.Client[room303.AddRoomMemberRequest, commons.Member]
+	removeRoomMember           *connect_go.Client[room303.RemoveRoomMemberRequest, room303.RemoveRoomMemberResponse]
+	listRoomMembers            *connect_go.Client[room303.ListRoomMembersRequest, room303.ListRoomMembersResponse]
+	setAdminForRoomMember      *connect_go.Client[room303.SetAdminForRoomMemberRequest, room303.SetAdminForRoomMemberResponse]
+	joinRoom                   *connect_go.Client[room303.JoinRoomRequest, commons.Room]
+	getRoomMember              *connect_go.Client[room303.GetRoomMemberRequest, commons.Member]
+	createMessage              *connect_go.Client[room303.CreateMessageRequest, room303.CreateMessageResponse]
+	editMessage                *connect_go.Client[room303.EditMessageRequest, room303.EditMessageResponse]
+	deleteMessage              *connect_go.Client[room303.DeleteMessageRequest, room303.DeleteMessageResponse]
+	getMessages                *connect_go.Client[room303.GetMessagesRequest, room303.GetMessagesResponse]
+	streamMessageUpdates       *connect_go.Client[room303.StreamMessageUpdatesRequest, room303.StreamMessageUpdatesResponse]
+	getUnreadStats             *connect_go.Client[room303.GetUnreadStatsRequest, room303.GetUnreadStatsResponse]
+	markMessageRead            *connect_go.Client[room303.MarkMessageReadRequest, room303.MarkMessageReadResponse]
+	markAllMessagesRead        *connect_go.Client[room303.MarkAllMessagesReadRequest, room303.MarkAllMessagesReadResponse]
+	bulkMarkMessageRead        *connect_go.Client[room303.BulkMarkMessageReadRequest, room303.BulkMarkMessageReadResponse]
+	createRoom                 *connect_go.Client[room303.CreateRoomRequest, commons.Room]
+	getRoom                    *connect_go.Client[room303.GetRoomRequest, commons.Room]
+	listAllRooms               *connect_go.Client[room303.ListAllRoomsRequest, room303.ListRoomsResponse]
+	listRoomsForMember         *connect_go.Client[room303.ListRoomsForMemberRequest, room303.ListRoomsResponse]
+	archiveRoom                *connect_go.Client[room303.ArchiveRoomRequest, commons.Room]
+	listUsersNames             *connect_go.Client[room303.ListUsersNamesRequest, room303.ListUsersNamesResponse]
+	updateRoomConfig           *connect_go.Client[room303.UpdateRoomConfigRequest, commons.Room]
+	updateGlobalConfig         *connect_go.Client[room303.UpdateGlobalConfigRequest, room303.UpdateGlobalConfigResponse]
+	getGlobalConfig            *connect_go.Client[room303.GetGlobalConfigRequest, room303.GetGlobalConfigResponse]
+	listNewsRoomGlobalMessages *connect_go.Client[room303.ListNewsRoomGlobalMessagesRequest, room303.ListNewsRoomGlobalMessagesResponse]
+	sendNewsRoomGlobalMessage  *connect_go.Client[room303.SendNewsRoomGlobalMessageRequest, room303.SendNewsRoomGlobalMessageResponse]
 }
 
 // AddRoomMember calls api.v1alpha1.room303.Room303API.AddRoomMember.
@@ -424,6 +446,16 @@ func (c *room303APIClient) GetGlobalConfig(ctx context.Context, req *connect_go.
 	return c.getGlobalConfig.CallUnary(ctx, req)
 }
 
+// ListNewsRoomGlobalMessages calls api.v1alpha1.room303.Room303API.ListNewsRoomGlobalMessages.
+func (c *room303APIClient) ListNewsRoomGlobalMessages(ctx context.Context, req *connect_go.Request[room303.ListNewsRoomGlobalMessagesRequest]) (*connect_go.Response[room303.ListNewsRoomGlobalMessagesResponse], error) {
+	return c.listNewsRoomGlobalMessages.CallUnary(ctx, req)
+}
+
+// SendNewsRoomGlobalMessage calls api.v1alpha1.room303.Room303API.SendNewsRoomGlobalMessage.
+func (c *room303APIClient) SendNewsRoomGlobalMessage(ctx context.Context, req *connect_go.Request[room303.SendNewsRoomGlobalMessageRequest]) (*connect_go.Response[room303.SendNewsRoomGlobalMessageResponse], error) {
+	return c.sendNewsRoomGlobalMessage.CallUnary(ctx, req)
+}
+
 // Room303APIHandler is an implementation of the api.v1alpha1.room303.Room303API service.
 type Room303APIHandler interface {
 	// Member
@@ -464,6 +496,10 @@ type Room303APIHandler interface {
 	UpdateGlobalConfig(context.Context, *connect_go.Request[room303.UpdateGlobalConfigRequest]) (*connect_go.Response[room303.UpdateGlobalConfigResponse], error)
 	// get global configuration
 	GetGlobalConfig(context.Context, *connect_go.Request[room303.GetGlobalConfigRequest]) (*connect_go.Response[room303.GetGlobalConfigResponse], error)
+	// ListNewsRoomGlobalMessages returns a list of global messages for newsroom
+	ListNewsRoomGlobalMessages(context.Context, *connect_go.Request[room303.ListNewsRoomGlobalMessagesRequest]) (*connect_go.Response[room303.ListNewsRoomGlobalMessagesResponse], error)
+	// SendNewsRoomGlobalMessage - send global message for newsroom to be added
+	SendNewsRoomGlobalMessage(context.Context, *connect_go.Request[room303.SendNewsRoomGlobalMessageRequest]) (*connect_go.Response[room303.SendNewsRoomGlobalMessageResponse], error)
 }
 
 // NewRoom303APIHandler builds an HTTP handler from the service implementation. It returns the path
@@ -592,6 +628,16 @@ func NewRoom303APIHandler(svc Room303APIHandler, opts ...connect_go.HandlerOptio
 		svc.GetGlobalConfig,
 		opts...,
 	)
+	room303APIListNewsRoomGlobalMessagesHandler := connect_go.NewUnaryHandler(
+		Room303APIListNewsRoomGlobalMessagesProcedure,
+		svc.ListNewsRoomGlobalMessages,
+		opts...,
+	)
+	room303APISendNewsRoomGlobalMessageHandler := connect_go.NewUnaryHandler(
+		Room303APISendNewsRoomGlobalMessageProcedure,
+		svc.SendNewsRoomGlobalMessage,
+		opts...,
+	)
 	return "/api.v1alpha1.room303.Room303API/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case Room303APIAddRoomMemberProcedure:
@@ -642,6 +688,10 @@ func NewRoom303APIHandler(svc Room303APIHandler, opts ...connect_go.HandlerOptio
 			room303APIUpdateGlobalConfigHandler.ServeHTTP(w, r)
 		case Room303APIGetGlobalConfigProcedure:
 			room303APIGetGlobalConfigHandler.ServeHTTP(w, r)
+		case Room303APIListNewsRoomGlobalMessagesProcedure:
+			room303APIListNewsRoomGlobalMessagesHandler.ServeHTTP(w, r)
+		case Room303APISendNewsRoomGlobalMessageProcedure:
+			room303APISendNewsRoomGlobalMessageHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -745,4 +795,12 @@ func (UnimplementedRoom303APIHandler) UpdateGlobalConfig(context.Context, *conne
 
 func (UnimplementedRoom303APIHandler) GetGlobalConfig(context.Context, *connect_go.Request[room303.GetGlobalConfigRequest]) (*connect_go.Response[room303.GetGlobalConfigResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.room303.Room303API.GetGlobalConfig is not implemented"))
+}
+
+func (UnimplementedRoom303APIHandler) ListNewsRoomGlobalMessages(context.Context, *connect_go.Request[room303.ListNewsRoomGlobalMessagesRequest]) (*connect_go.Response[room303.ListNewsRoomGlobalMessagesResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.room303.Room303API.ListNewsRoomGlobalMessages is not implemented"))
+}
+
+func (UnimplementedRoom303APIHandler) SendNewsRoomGlobalMessage(context.Context, *connect_go.Request[room303.SendNewsRoomGlobalMessageRequest]) (*connect_go.Response[room303.SendNewsRoomGlobalMessageResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.room303.Room303API.SendNewsRoomGlobalMessage is not implemented"))
 }
