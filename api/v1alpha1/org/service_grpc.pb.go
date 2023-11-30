@@ -56,6 +56,7 @@ const (
 	Org_UpdateEmailSmsPreferences_FullMethodName               = "/api.v1alpha1.org.Org/UpdateEmailSmsPreferences"
 	Org_GetBusinessPreferences_FullMethodName                  = "/api.v1alpha1.org.Org/GetBusinessPreferences"
 	Org_UpdateBusinessPreferences_FullMethodName               = "/api.v1alpha1.org.Org/UpdateBusinessPreferences"
+	Org_UpdateAdminBusinessPreferences_FullMethodName          = "/api.v1alpha1.org.Org/UpdateAdminBusinessPreferences"
 	Org_GetScorecardsPreferences_FullMethodName                = "/api.v1alpha1.org.Org/GetScorecardsPreferences"
 	Org_UpdateScorecardsPreferences_FullMethodName             = "/api.v1alpha1.org.Org/UpdateScorecardsPreferences"
 	Org_GetVoiceAnalyticsPreferences_FullMethodName            = "/api.v1alpha1.org.Org/GetVoiceAnalyticsPreferences"
@@ -277,6 +278,8 @@ type OrgClient interface {
 	GetBusinessPreferences(ctx context.Context, in *GetBusinessPreferencesRequest, opts ...grpc.CallOption) (*GetBusinessPreferencesResponse, error)
 	// UpdateBusinessPreferences updates preferences for business intelligence.
 	UpdateBusinessPreferences(ctx context.Context, in *UpdateBusinessPreferencesRequest, opts ...grpc.CallOption) (*UpdateBusinessPreferencesResponse, error)
+	// UpdateAdminBusinessPreferences updates preferences for business intelligence.
+	UpdateAdminBusinessPreferences(ctx context.Context, in *UpdateAdminBusinessPreferencesRequest, opts ...grpc.CallOption) (*UpdateAdminBusinessPreferencesResponse, error)
 	// GetScorecardsPreferences returns preferences for scorecards.
 	GetScorecardsPreferences(ctx context.Context, in *GetScorecardsPreferencesRequest, opts ...grpc.CallOption) (*GetScorecardsPreferencesResponse, error)
 	// UpdateScorecardsPreferences updates preferences for scorecards.
@@ -984,6 +987,15 @@ func (c *orgClient) GetBusinessPreferences(ctx context.Context, in *GetBusinessP
 func (c *orgClient) UpdateBusinessPreferences(ctx context.Context, in *UpdateBusinessPreferencesRequest, opts ...grpc.CallOption) (*UpdateBusinessPreferencesResponse, error) {
 	out := new(UpdateBusinessPreferencesResponse)
 	err := c.cc.Invoke(ctx, Org_UpdateBusinessPreferences_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) UpdateAdminBusinessPreferences(ctx context.Context, in *UpdateAdminBusinessPreferencesRequest, opts ...grpc.CallOption) (*UpdateAdminBusinessPreferencesResponse, error) {
+	out := new(UpdateAdminBusinessPreferencesResponse)
+	err := c.cc.Invoke(ctx, Org_UpdateAdminBusinessPreferences_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -2293,6 +2305,8 @@ type OrgServer interface {
 	GetBusinessPreferences(context.Context, *GetBusinessPreferencesRequest) (*GetBusinessPreferencesResponse, error)
 	// UpdateBusinessPreferences updates preferences for business intelligence.
 	UpdateBusinessPreferences(context.Context, *UpdateBusinessPreferencesRequest) (*UpdateBusinessPreferencesResponse, error)
+	// UpdateAdminBusinessPreferences updates preferences for business intelligence.
+	UpdateAdminBusinessPreferences(context.Context, *UpdateAdminBusinessPreferencesRequest) (*UpdateAdminBusinessPreferencesResponse, error)
 	// GetScorecardsPreferences returns preferences for scorecards.
 	GetScorecardsPreferences(context.Context, *GetScorecardsPreferencesRequest) (*GetScorecardsPreferencesResponse, error)
 	// UpdateScorecardsPreferences updates preferences for scorecards.
@@ -2688,6 +2702,9 @@ func (UnimplementedOrgServer) GetBusinessPreferences(context.Context, *GetBusine
 }
 func (UnimplementedOrgServer) UpdateBusinessPreferences(context.Context, *UpdateBusinessPreferencesRequest) (*UpdateBusinessPreferencesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateBusinessPreferences not implemented")
+}
+func (UnimplementedOrgServer) UpdateAdminBusinessPreferences(context.Context, *UpdateAdminBusinessPreferencesRequest) (*UpdateAdminBusinessPreferencesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateAdminBusinessPreferences not implemented")
 }
 func (UnimplementedOrgServer) GetScorecardsPreferences(context.Context, *GetScorecardsPreferencesRequest) (*GetScorecardsPreferencesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetScorecardsPreferences not implemented")
@@ -3748,6 +3765,24 @@ func _Org_UpdateBusinessPreferences_Handler(srv interface{}, ctx context.Context
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrgServer).UpdateBusinessPreferences(ctx, req.(*UpdateBusinessPreferencesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_UpdateAdminBusinessPreferences_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateAdminBusinessPreferencesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).UpdateAdminBusinessPreferences(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_UpdateAdminBusinessPreferences_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).UpdateAdminBusinessPreferences(ctx, req.(*UpdateAdminBusinessPreferencesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -6134,6 +6169,10 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateBusinessPreferences",
 			Handler:    _Org_UpdateBusinessPreferences_Handler,
+		},
+		{
+			MethodName: "UpdateAdminBusinessPreferences",
+			Handler:    _Org_UpdateAdminBusinessPreferences_Handler,
 		},
 		{
 			MethodName: "GetScorecardsPreferences",
