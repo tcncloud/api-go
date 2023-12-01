@@ -135,6 +135,9 @@ const (
 	// OrgUpdateBusinessPreferencesProcedure is the fully-qualified name of the Org's
 	// UpdateBusinessPreferences RPC.
 	OrgUpdateBusinessPreferencesProcedure = "/api.v1alpha1.org.Org/UpdateBusinessPreferences"
+	// OrgUpdateAdminBusinessPreferencesProcedure is the fully-qualified name of the Org's
+	// UpdateAdminBusinessPreferences RPC.
+	OrgUpdateAdminBusinessPreferencesProcedure = "/api.v1alpha1.org.Org/UpdateAdminBusinessPreferences"
 	// OrgGetScorecardsPreferencesProcedure is the fully-qualified name of the Org's
 	// GetScorecardsPreferences RPC.
 	OrgGetScorecardsPreferencesProcedure = "/api.v1alpha1.org.Org/GetScorecardsPreferences"
@@ -555,6 +558,8 @@ type OrgClient interface {
 	GetBusinessPreferences(context.Context, *connect_go.Request[org.GetBusinessPreferencesRequest]) (*connect_go.Response[org.GetBusinessPreferencesResponse], error)
 	// UpdateBusinessPreferences updates preferences for business intelligence.
 	UpdateBusinessPreferences(context.Context, *connect_go.Request[org.UpdateBusinessPreferencesRequest]) (*connect_go.Response[org.UpdateBusinessPreferencesResponse], error)
+	// UpdateAdminBusinessPreferences updates preferences for business intelligence.
+	UpdateAdminBusinessPreferences(context.Context, *connect_go.Request[org.UpdateAdminBusinessPreferencesRequest]) (*connect_go.Response[org.UpdateAdminBusinessPreferencesResponse], error)
 	// GetScorecardsPreferences returns preferences for scorecards.
 	GetScorecardsPreferences(context.Context, *connect_go.Request[org.GetScorecardsPreferencesRequest]) (*connect_go.Response[org.GetScorecardsPreferencesResponse], error)
 	// UpdateScorecardsPreferences updates preferences for scorecards.
@@ -1028,6 +1033,11 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 		updateBusinessPreferences: connect_go.NewClient[org.UpdateBusinessPreferencesRequest, org.UpdateBusinessPreferencesResponse](
 			httpClient,
 			baseURL+OrgUpdateBusinessPreferencesProcedure,
+			opts...,
+		),
+		updateAdminBusinessPreferences: connect_go.NewClient[org.UpdateAdminBusinessPreferencesRequest, org.UpdateAdminBusinessPreferencesResponse](
+			httpClient,
+			baseURL+OrgUpdateAdminBusinessPreferencesProcedure,
 			opts...,
 		),
 		getScorecardsPreferences: connect_go.NewClient[org.GetScorecardsPreferencesRequest, org.GetScorecardsPreferencesResponse](
@@ -1692,6 +1702,7 @@ type orgClient struct {
 	updateEmailSmsPreferences               *connect_go.Client[org.UpdateEmailSmsPreferencesRequest, org.UpdateEmailSmsPreferencesResponse]
 	getBusinessPreferences                  *connect_go.Client[org.GetBusinessPreferencesRequest, org.GetBusinessPreferencesResponse]
 	updateBusinessPreferences               *connect_go.Client[org.UpdateBusinessPreferencesRequest, org.UpdateBusinessPreferencesResponse]
+	updateAdminBusinessPreferences          *connect_go.Client[org.UpdateAdminBusinessPreferencesRequest, org.UpdateAdminBusinessPreferencesResponse]
 	getScorecardsPreferences                *connect_go.Client[org.GetScorecardsPreferencesRequest, org.GetScorecardsPreferencesResponse]
 	updateScorecardsPreferences             *connect_go.Client[org.UpdateScorecardsPreferencesRequest, org.UpdateScorecardsPreferencesResponse]
 	getVoiceAnalyticsPreferences            *connect_go.Client[org.GetVoiceAnalyticsPreferencesRequest, org.GetVoiceAnalyticsPreferencesResponse]
@@ -2001,6 +2012,11 @@ func (c *orgClient) GetBusinessPreferences(ctx context.Context, req *connect_go.
 // UpdateBusinessPreferences calls api.v1alpha1.org.Org.UpdateBusinessPreferences.
 func (c *orgClient) UpdateBusinessPreferences(ctx context.Context, req *connect_go.Request[org.UpdateBusinessPreferencesRequest]) (*connect_go.Response[org.UpdateBusinessPreferencesResponse], error) {
 	return c.updateBusinessPreferences.CallUnary(ctx, req)
+}
+
+// UpdateAdminBusinessPreferences calls api.v1alpha1.org.Org.UpdateAdminBusinessPreferences.
+func (c *orgClient) UpdateAdminBusinessPreferences(ctx context.Context, req *connect_go.Request[org.UpdateAdminBusinessPreferencesRequest]) (*connect_go.Response[org.UpdateAdminBusinessPreferencesResponse], error) {
+	return c.updateAdminBusinessPreferences.CallUnary(ctx, req)
 }
 
 // GetScorecardsPreferences calls api.v1alpha1.org.Org.GetScorecardsPreferences.
@@ -2720,6 +2736,8 @@ type OrgHandler interface {
 	GetBusinessPreferences(context.Context, *connect_go.Request[org.GetBusinessPreferencesRequest]) (*connect_go.Response[org.GetBusinessPreferencesResponse], error)
 	// UpdateBusinessPreferences updates preferences for business intelligence.
 	UpdateBusinessPreferences(context.Context, *connect_go.Request[org.UpdateBusinessPreferencesRequest]) (*connect_go.Response[org.UpdateBusinessPreferencesResponse], error)
+	// UpdateAdminBusinessPreferences updates preferences for business intelligence.
+	UpdateAdminBusinessPreferences(context.Context, *connect_go.Request[org.UpdateAdminBusinessPreferencesRequest]) (*connect_go.Response[org.UpdateAdminBusinessPreferencesResponse], error)
 	// GetScorecardsPreferences returns preferences for scorecards.
 	GetScorecardsPreferences(context.Context, *connect_go.Request[org.GetScorecardsPreferencesRequest]) (*connect_go.Response[org.GetScorecardsPreferencesResponse], error)
 	// UpdateScorecardsPreferences updates preferences for scorecards.
@@ -3189,6 +3207,11 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 	orgUpdateBusinessPreferencesHandler := connect_go.NewUnaryHandler(
 		OrgUpdateBusinessPreferencesProcedure,
 		svc.UpdateBusinessPreferences,
+		opts...,
+	)
+	orgUpdateAdminBusinessPreferencesHandler := connect_go.NewUnaryHandler(
+		OrgUpdateAdminBusinessPreferencesProcedure,
+		svc.UpdateAdminBusinessPreferences,
 		opts...,
 	)
 	orgGetScorecardsPreferencesHandler := connect_go.NewUnaryHandler(
@@ -3887,6 +3910,8 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 			orgGetBusinessPreferencesHandler.ServeHTTP(w, r)
 		case OrgUpdateBusinessPreferencesProcedure:
 			orgUpdateBusinessPreferencesHandler.ServeHTTP(w, r)
+		case OrgUpdateAdminBusinessPreferencesProcedure:
+			orgUpdateAdminBusinessPreferencesHandler.ServeHTTP(w, r)
 		case OrgGetScorecardsPreferencesProcedure:
 			orgGetScorecardsPreferencesHandler.ServeHTTP(w, r)
 		case OrgUpdateScorecardsPreferencesProcedure:
@@ -4290,6 +4315,10 @@ func (UnimplementedOrgHandler) GetBusinessPreferences(context.Context, *connect_
 
 func (UnimplementedOrgHandler) UpdateBusinessPreferences(context.Context, *connect_go.Request[org.UpdateBusinessPreferencesRequest]) (*connect_go.Response[org.UpdateBusinessPreferencesResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.UpdateBusinessPreferences is not implemented"))
+}
+
+func (UnimplementedOrgHandler) UpdateAdminBusinessPreferences(context.Context, *connect_go.Request[org.UpdateAdminBusinessPreferencesRequest]) (*connect_go.Response[org.UpdateAdminBusinessPreferencesResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.UpdateAdminBusinessPreferences is not implemented"))
 }
 
 func (UnimplementedOrgHandler) GetScorecardsPreferences(context.Context, *connect_go.Request[org.GetScorecardsPreferencesRequest]) (*connect_go.Response[org.GetScorecardsPreferencesResponse], error) {
