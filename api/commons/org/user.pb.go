@@ -446,7 +446,7 @@ func (x *Skill) GetSkillSid() int64 {
 	return 0
 }
 
-// PasswordResetLink
+// PasswordResetLink defines a link for the given user to reset their password.
 type PasswordResetLink struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
