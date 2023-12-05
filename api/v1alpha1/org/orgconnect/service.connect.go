@@ -229,6 +229,9 @@ const (
 	// OrgGetUserPasswordResetLinkByOrgIdProcedure is the fully-qualified name of the Org's
 	// GetUserPasswordResetLinkByOrgId RPC.
 	OrgGetUserPasswordResetLinkByOrgIdProcedure = "/api.v1alpha1.org.Org/GetUserPasswordResetLinkByOrgId"
+	// OrgCreatePasswordResetLinkProcedure is the fully-qualified name of the Org's
+	// CreatePasswordResetLink RPC.
+	OrgCreatePasswordResetLinkProcedure = "/api.v1alpha1.org.Org/CreatePasswordResetLink"
 	// OrgGetUserLoginInfoProcedure is the fully-qualified name of the Org's GetUserLoginInfo RPC.
 	OrgGetUserLoginInfoProcedure = "/api.v1alpha1.org.Org/GetUserLoginInfo"
 	// OrgGetUserEmailVerifiedProcedure is the fully-qualified name of the Org's GetUserEmailVerified
@@ -638,6 +641,8 @@ type OrgClient interface {
 	GetUserPasswordResetLink(context.Context, *connect_go.Request[org.GetUserPasswordResetLinkRequest]) (*connect_go.Response[org.GetUserPasswordResetLinkResponse], error)
 	// GetUserPasswordResetLinkByOrgId gets a link to update a user's password.
 	GetUserPasswordResetLinkByOrgId(context.Context, *connect_go.Request[org.GetUserPasswordResetLinkByOrgIdRequest]) (*connect_go.Response[org.GetUserPasswordResetLinkByOrgIdResponse], error)
+	// CreatePasswordResetLink creates a password reset link for the given user id.
+	CreatePasswordResetLink(context.Context, *connect_go.Request[org.CreatePasswordResetLinkRequest]) (*connect_go.Response[org.CreatePasswordResetLinkResponse], error)
 	// Used to be called GetUserBlocked
 	// GetUserLoginInfo gets information about a user's login.
 	GetUserLoginInfo(context.Context, *connect_go.Request[org.GetUserLoginInfoRequest]) (*connect_go.Response[org.GetUserLoginInfoResponse], error)
@@ -1215,6 +1220,11 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgGetUserPasswordResetLinkByOrgIdProcedure,
 			opts...,
 		),
+		createPasswordResetLink: connect_go.NewClient[org.CreatePasswordResetLinkRequest, org.CreatePasswordResetLinkResponse](
+			httpClient,
+			baseURL+OrgCreatePasswordResetLinkProcedure,
+			opts...,
+		),
 		getUserLoginInfo: connect_go.NewClient[org.GetUserLoginInfoRequest, org.GetUserLoginInfoResponse](
 			httpClient,
 			baseURL+OrgGetUserLoginInfoProcedure,
@@ -1738,6 +1748,7 @@ type orgClient struct {
 	getMyUserPasswordResetLink              *connect_go.Client[org.GetMyUserPasswordResetLinkRequest, org.GetMyUserPasswordResetLinkResponse]
 	getUserPasswordResetLink                *connect_go.Client[org.GetUserPasswordResetLinkRequest, org.GetUserPasswordResetLinkResponse]
 	getUserPasswordResetLinkByOrgId         *connect_go.Client[org.GetUserPasswordResetLinkByOrgIdRequest, org.GetUserPasswordResetLinkByOrgIdResponse]
+	createPasswordResetLink                 *connect_go.Client[org.CreatePasswordResetLinkRequest, org.CreatePasswordResetLinkResponse]
 	getUserLoginInfo                        *connect_go.Client[org.GetUserLoginInfoRequest, org.GetUserLoginInfoResponse]
 	getUserEmailVerified                    *connect_go.Client[org.GetUserEmailVerifiedRequest, org.GetUserEmailVerifiedResponse]
 	getUserEmailVerifiedByOrgId             *connect_go.Client[org.GetUserEmailVerifiedByOrgIdRequest, org.GetUserEmailVerifiedByOrgIdResponse]
@@ -2194,6 +2205,11 @@ func (c *orgClient) GetUserPasswordResetLink(ctx context.Context, req *connect_g
 // GetUserPasswordResetLinkByOrgId calls api.v1alpha1.org.Org.GetUserPasswordResetLinkByOrgId.
 func (c *orgClient) GetUserPasswordResetLinkByOrgId(ctx context.Context, req *connect_go.Request[org.GetUserPasswordResetLinkByOrgIdRequest]) (*connect_go.Response[org.GetUserPasswordResetLinkByOrgIdResponse], error) {
 	return c.getUserPasswordResetLinkByOrgId.CallUnary(ctx, req)
+}
+
+// CreatePasswordResetLink calls api.v1alpha1.org.Org.CreatePasswordResetLink.
+func (c *orgClient) CreatePasswordResetLink(ctx context.Context, req *connect_go.Request[org.CreatePasswordResetLinkRequest]) (*connect_go.Response[org.CreatePasswordResetLinkResponse], error) {
+	return c.createPasswordResetLink.CallUnary(ctx, req)
 }
 
 // GetUserLoginInfo calls api.v1alpha1.org.Org.GetUserLoginInfo.
@@ -2816,6 +2832,8 @@ type OrgHandler interface {
 	GetUserPasswordResetLink(context.Context, *connect_go.Request[org.GetUserPasswordResetLinkRequest]) (*connect_go.Response[org.GetUserPasswordResetLinkResponse], error)
 	// GetUserPasswordResetLinkByOrgId gets a link to update a user's password.
 	GetUserPasswordResetLinkByOrgId(context.Context, *connect_go.Request[org.GetUserPasswordResetLinkByOrgIdRequest]) (*connect_go.Response[org.GetUserPasswordResetLinkByOrgIdResponse], error)
+	// CreatePasswordResetLink creates a password reset link for the given user id.
+	CreatePasswordResetLink(context.Context, *connect_go.Request[org.CreatePasswordResetLinkRequest]) (*connect_go.Response[org.CreatePasswordResetLinkResponse], error)
 	// Used to be called GetUserBlocked
 	// GetUserLoginInfo gets information about a user's login.
 	GetUserLoginInfo(context.Context, *connect_go.Request[org.GetUserLoginInfoRequest]) (*connect_go.Response[org.GetUserLoginInfoResponse], error)
@@ -3387,6 +3405,11 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 	orgGetUserPasswordResetLinkByOrgIdHandler := connect_go.NewUnaryHandler(
 		OrgGetUserPasswordResetLinkByOrgIdProcedure,
 		svc.GetUserPasswordResetLinkByOrgId,
+		opts...,
+	)
+	orgCreatePasswordResetLinkHandler := connect_go.NewUnaryHandler(
+		OrgCreatePasswordResetLinkProcedure,
+		svc.CreatePasswordResetLink,
 		opts...,
 	)
 	orgGetUserLoginInfoHandler := connect_go.NewUnaryHandler(
@@ -3982,6 +4005,8 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 			orgGetUserPasswordResetLinkHandler.ServeHTTP(w, r)
 		case OrgGetUserPasswordResetLinkByOrgIdProcedure:
 			orgGetUserPasswordResetLinkByOrgIdHandler.ServeHTTP(w, r)
+		case OrgCreatePasswordResetLinkProcedure:
+			orgCreatePasswordResetLinkHandler.ServeHTTP(w, r)
 		case OrgGetUserLoginInfoProcedure:
 			orgGetUserLoginInfoHandler.ServeHTTP(w, r)
 		case OrgGetUserEmailVerifiedProcedure:
@@ -4459,6 +4484,10 @@ func (UnimplementedOrgHandler) GetUserPasswordResetLink(context.Context, *connec
 
 func (UnimplementedOrgHandler) GetUserPasswordResetLinkByOrgId(context.Context, *connect_go.Request[org.GetUserPasswordResetLinkByOrgIdRequest]) (*connect_go.Response[org.GetUserPasswordResetLinkByOrgIdResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.GetUserPasswordResetLinkByOrgId is not implemented"))
+}
+
+func (UnimplementedOrgHandler) CreatePasswordResetLink(context.Context, *connect_go.Request[org.CreatePasswordResetLinkRequest]) (*connect_go.Response[org.CreatePasswordResetLinkResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.CreatePasswordResetLink is not implemented"))
 }
 
 func (UnimplementedOrgHandler) GetUserLoginInfo(context.Context, *connect_go.Request[org.GetUserLoginInfoRequest]) (*connect_go.Response[org.GetUserLoginInfoResponse], error) {

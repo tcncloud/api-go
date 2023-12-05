@@ -92,6 +92,7 @@ const (
 	Org_GetMyUserPasswordResetLink_FullMethodName              = "/api.v1alpha1.org.Org/GetMyUserPasswordResetLink"
 	Org_GetUserPasswordResetLink_FullMethodName                = "/api.v1alpha1.org.Org/GetUserPasswordResetLink"
 	Org_GetUserPasswordResetLinkByOrgId_FullMethodName         = "/api.v1alpha1.org.Org/GetUserPasswordResetLinkByOrgId"
+	Org_CreatePasswordResetLink_FullMethodName                 = "/api.v1alpha1.org.Org/CreatePasswordResetLink"
 	Org_GetUserLoginInfo_FullMethodName                        = "/api.v1alpha1.org.Org/GetUserLoginInfo"
 	Org_GetUserEmailVerified_FullMethodName                    = "/api.v1alpha1.org.Org/GetUserEmailVerified"
 	Org_GetUserEmailVerifiedByOrgId_FullMethodName             = "/api.v1alpha1.org.Org/GetUserEmailVerifiedByOrgId"
@@ -358,6 +359,8 @@ type OrgClient interface {
 	GetUserPasswordResetLink(ctx context.Context, in *GetUserPasswordResetLinkRequest, opts ...grpc.CallOption) (*GetUserPasswordResetLinkResponse, error)
 	// GetUserPasswordResetLinkByOrgId gets a link to update a user's password.
 	GetUserPasswordResetLinkByOrgId(ctx context.Context, in *GetUserPasswordResetLinkByOrgIdRequest, opts ...grpc.CallOption) (*GetUserPasswordResetLinkByOrgIdResponse, error)
+	// CreatePasswordResetLink creates a password reset link for the given user id.
+	CreatePasswordResetLink(ctx context.Context, in *CreatePasswordResetLinkRequest, opts ...grpc.CallOption) (*CreatePasswordResetLinkResponse, error)
 	// Used to be called GetUserBlocked
 	// GetUserLoginInfo gets information about a user's login.
 	GetUserLoginInfo(ctx context.Context, in *GetUserLoginInfoRequest, opts ...grpc.CallOption) (*GetUserLoginInfoResponse, error)
@@ -1409,6 +1412,15 @@ func (c *orgClient) GetUserPasswordResetLinkByOrgId(ctx context.Context, in *Get
 	return out, nil
 }
 
+func (c *orgClient) CreatePasswordResetLink(ctx context.Context, in *CreatePasswordResetLinkRequest, opts ...grpc.CallOption) (*CreatePasswordResetLinkResponse, error) {
+	out := new(CreatePasswordResetLinkResponse)
+	err := c.cc.Invoke(ctx, Org_CreatePasswordResetLink_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *orgClient) GetUserLoginInfo(ctx context.Context, in *GetUserLoginInfoRequest, opts ...grpc.CallOption) (*GetUserLoginInfoResponse, error) {
 	out := new(GetUserLoginInfoResponse)
 	err := c.cc.Invoke(ctx, Org_GetUserLoginInfo_FullMethodName, in, out, opts...)
@@ -2385,6 +2397,8 @@ type OrgServer interface {
 	GetUserPasswordResetLink(context.Context, *GetUserPasswordResetLinkRequest) (*GetUserPasswordResetLinkResponse, error)
 	// GetUserPasswordResetLinkByOrgId gets a link to update a user's password.
 	GetUserPasswordResetLinkByOrgId(context.Context, *GetUserPasswordResetLinkByOrgIdRequest) (*GetUserPasswordResetLinkByOrgIdResponse, error)
+	// CreatePasswordResetLink creates a password reset link for the given user id.
+	CreatePasswordResetLink(context.Context, *CreatePasswordResetLinkRequest) (*CreatePasswordResetLinkResponse, error)
 	// Used to be called GetUserBlocked
 	// GetUserLoginInfo gets information about a user's login.
 	GetUserLoginInfo(context.Context, *GetUserLoginInfoRequest) (*GetUserLoginInfoResponse, error)
@@ -2810,6 +2824,9 @@ func (UnimplementedOrgServer) GetUserPasswordResetLink(context.Context, *GetUser
 }
 func (UnimplementedOrgServer) GetUserPasswordResetLinkByOrgId(context.Context, *GetUserPasswordResetLinkByOrgIdRequest) (*GetUserPasswordResetLinkByOrgIdResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserPasswordResetLinkByOrgId not implemented")
+}
+func (UnimplementedOrgServer) CreatePasswordResetLink(context.Context, *CreatePasswordResetLinkRequest) (*CreatePasswordResetLinkResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreatePasswordResetLink not implemented")
 }
 func (UnimplementedOrgServer) GetUserLoginInfo(context.Context, *GetUserLoginInfoRequest) (*GetUserLoginInfoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserLoginInfo not implemented")
@@ -4425,6 +4442,24 @@ func _Org_GetUserPasswordResetLinkByOrgId_Handler(srv interface{}, ctx context.C
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrgServer).GetUserPasswordResetLinkByOrgId(ctx, req.(*GetUserPasswordResetLinkByOrgIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_CreatePasswordResetLink_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreatePasswordResetLinkRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).CreatePasswordResetLink(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_CreatePasswordResetLink_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).CreatePasswordResetLink(ctx, req.(*CreatePasswordResetLinkRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -6297,6 +6332,10 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetUserPasswordResetLinkByOrgId",
 			Handler:    _Org_GetUserPasswordResetLinkByOrgId_Handler,
+		},
+		{
+			MethodName: "CreatePasswordResetLink",
+			Handler:    _Org_CreatePasswordResetLink_Handler,
 		},
 		{
 			MethodName: "GetUserLoginInfo",
