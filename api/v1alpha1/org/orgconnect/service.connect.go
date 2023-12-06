@@ -135,6 +135,9 @@ const (
 	// OrgUpdateBusinessPreferencesProcedure is the fully-qualified name of the Org's
 	// UpdateBusinessPreferences RPC.
 	OrgUpdateBusinessPreferencesProcedure = "/api.v1alpha1.org.Org/UpdateBusinessPreferences"
+	// OrgUpdateAdminBusinessPreferencesProcedure is the fully-qualified name of the Org's
+	// UpdateAdminBusinessPreferences RPC.
+	OrgUpdateAdminBusinessPreferencesProcedure = "/api.v1alpha1.org.Org/UpdateAdminBusinessPreferences"
 	// OrgGetScorecardsPreferencesProcedure is the fully-qualified name of the Org's
 	// GetScorecardsPreferences RPC.
 	OrgGetScorecardsPreferencesProcedure = "/api.v1alpha1.org.Org/GetScorecardsPreferences"
@@ -226,6 +229,9 @@ const (
 	// OrgGetUserPasswordResetLinkByOrgIdProcedure is the fully-qualified name of the Org's
 	// GetUserPasswordResetLinkByOrgId RPC.
 	OrgGetUserPasswordResetLinkByOrgIdProcedure = "/api.v1alpha1.org.Org/GetUserPasswordResetLinkByOrgId"
+	// OrgCreatePasswordResetLinkProcedure is the fully-qualified name of the Org's
+	// CreatePasswordResetLink RPC.
+	OrgCreatePasswordResetLinkProcedure = "/api.v1alpha1.org.Org/CreatePasswordResetLink"
 	// OrgGetUserLoginInfoProcedure is the fully-qualified name of the Org's GetUserLoginInfo RPC.
 	OrgGetUserLoginInfoProcedure = "/api.v1alpha1.org.Org/GetUserLoginInfo"
 	// OrgGetUserEmailVerifiedProcedure is the fully-qualified name of the Org's GetUserEmailVerified
@@ -555,6 +561,8 @@ type OrgClient interface {
 	GetBusinessPreferences(context.Context, *connect_go.Request[org.GetBusinessPreferencesRequest]) (*connect_go.Response[org.GetBusinessPreferencesResponse], error)
 	// UpdateBusinessPreferences updates preferences for business intelligence.
 	UpdateBusinessPreferences(context.Context, *connect_go.Request[org.UpdateBusinessPreferencesRequest]) (*connect_go.Response[org.UpdateBusinessPreferencesResponse], error)
+	// UpdateAdminBusinessPreferences updates preferences for business intelligence.
+	UpdateAdminBusinessPreferences(context.Context, *connect_go.Request[org.UpdateAdminBusinessPreferencesRequest]) (*connect_go.Response[org.UpdateAdminBusinessPreferencesResponse], error)
 	// GetScorecardsPreferences returns preferences for scorecards.
 	GetScorecardsPreferences(context.Context, *connect_go.Request[org.GetScorecardsPreferencesRequest]) (*connect_go.Response[org.GetScorecardsPreferencesResponse], error)
 	// UpdateScorecardsPreferences updates preferences for scorecards.
@@ -633,6 +641,8 @@ type OrgClient interface {
 	GetUserPasswordResetLink(context.Context, *connect_go.Request[org.GetUserPasswordResetLinkRequest]) (*connect_go.Response[org.GetUserPasswordResetLinkResponse], error)
 	// GetUserPasswordResetLinkByOrgId gets a link to update a user's password.
 	GetUserPasswordResetLinkByOrgId(context.Context, *connect_go.Request[org.GetUserPasswordResetLinkByOrgIdRequest]) (*connect_go.Response[org.GetUserPasswordResetLinkByOrgIdResponse], error)
+	// CreatePasswordResetLink creates a password reset link for the given user id.
+	CreatePasswordResetLink(context.Context, *connect_go.Request[org.CreatePasswordResetLinkRequest]) (*connect_go.Response[org.CreatePasswordResetLinkResponse], error)
 	// Used to be called GetUserBlocked
 	// GetUserLoginInfo gets information about a user's login.
 	GetUserLoginInfo(context.Context, *connect_go.Request[org.GetUserLoginInfoRequest]) (*connect_go.Response[org.GetUserLoginInfoResponse], error)
@@ -1030,6 +1040,11 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgUpdateBusinessPreferencesProcedure,
 			opts...,
 		),
+		updateAdminBusinessPreferences: connect_go.NewClient[org.UpdateAdminBusinessPreferencesRequest, org.UpdateAdminBusinessPreferencesResponse](
+			httpClient,
+			baseURL+OrgUpdateAdminBusinessPreferencesProcedure,
+			opts...,
+		),
 		getScorecardsPreferences: connect_go.NewClient[org.GetScorecardsPreferencesRequest, org.GetScorecardsPreferencesResponse](
 			httpClient,
 			baseURL+OrgGetScorecardsPreferencesProcedure,
@@ -1203,6 +1218,11 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 		getUserPasswordResetLinkByOrgId: connect_go.NewClient[org.GetUserPasswordResetLinkByOrgIdRequest, org.GetUserPasswordResetLinkByOrgIdResponse](
 			httpClient,
 			baseURL+OrgGetUserPasswordResetLinkByOrgIdProcedure,
+			opts...,
+		),
+		createPasswordResetLink: connect_go.NewClient[org.CreatePasswordResetLinkRequest, org.CreatePasswordResetLinkResponse](
+			httpClient,
+			baseURL+OrgCreatePasswordResetLinkProcedure,
 			opts...,
 		),
 		getUserLoginInfo: connect_go.NewClient[org.GetUserLoginInfoRequest, org.GetUserLoginInfoResponse](
@@ -1692,6 +1712,7 @@ type orgClient struct {
 	updateEmailSmsPreferences               *connect_go.Client[org.UpdateEmailSmsPreferencesRequest, org.UpdateEmailSmsPreferencesResponse]
 	getBusinessPreferences                  *connect_go.Client[org.GetBusinessPreferencesRequest, org.GetBusinessPreferencesResponse]
 	updateBusinessPreferences               *connect_go.Client[org.UpdateBusinessPreferencesRequest, org.UpdateBusinessPreferencesResponse]
+	updateAdminBusinessPreferences          *connect_go.Client[org.UpdateAdminBusinessPreferencesRequest, org.UpdateAdminBusinessPreferencesResponse]
 	getScorecardsPreferences                *connect_go.Client[org.GetScorecardsPreferencesRequest, org.GetScorecardsPreferencesResponse]
 	updateScorecardsPreferences             *connect_go.Client[org.UpdateScorecardsPreferencesRequest, org.UpdateScorecardsPreferencesResponse]
 	getVoiceAnalyticsPreferences            *connect_go.Client[org.GetVoiceAnalyticsPreferencesRequest, org.GetVoiceAnalyticsPreferencesResponse]
@@ -1727,6 +1748,7 @@ type orgClient struct {
 	getMyUserPasswordResetLink              *connect_go.Client[org.GetMyUserPasswordResetLinkRequest, org.GetMyUserPasswordResetLinkResponse]
 	getUserPasswordResetLink                *connect_go.Client[org.GetUserPasswordResetLinkRequest, org.GetUserPasswordResetLinkResponse]
 	getUserPasswordResetLinkByOrgId         *connect_go.Client[org.GetUserPasswordResetLinkByOrgIdRequest, org.GetUserPasswordResetLinkByOrgIdResponse]
+	createPasswordResetLink                 *connect_go.Client[org.CreatePasswordResetLinkRequest, org.CreatePasswordResetLinkResponse]
 	getUserLoginInfo                        *connect_go.Client[org.GetUserLoginInfoRequest, org.GetUserLoginInfoResponse]
 	getUserEmailVerified                    *connect_go.Client[org.GetUserEmailVerifiedRequest, org.GetUserEmailVerifiedResponse]
 	getUserEmailVerifiedByOrgId             *connect_go.Client[org.GetUserEmailVerifiedByOrgIdRequest, org.GetUserEmailVerifiedByOrgIdResponse]
@@ -2003,6 +2025,11 @@ func (c *orgClient) UpdateBusinessPreferences(ctx context.Context, req *connect_
 	return c.updateBusinessPreferences.CallUnary(ctx, req)
 }
 
+// UpdateAdminBusinessPreferences calls api.v1alpha1.org.Org.UpdateAdminBusinessPreferences.
+func (c *orgClient) UpdateAdminBusinessPreferences(ctx context.Context, req *connect_go.Request[org.UpdateAdminBusinessPreferencesRequest]) (*connect_go.Response[org.UpdateAdminBusinessPreferencesResponse], error) {
+	return c.updateAdminBusinessPreferences.CallUnary(ctx, req)
+}
+
 // GetScorecardsPreferences calls api.v1alpha1.org.Org.GetScorecardsPreferences.
 func (c *orgClient) GetScorecardsPreferences(ctx context.Context, req *connect_go.Request[org.GetScorecardsPreferencesRequest]) (*connect_go.Response[org.GetScorecardsPreferencesResponse], error) {
 	return c.getScorecardsPreferences.CallUnary(ctx, req)
@@ -2178,6 +2205,11 @@ func (c *orgClient) GetUserPasswordResetLink(ctx context.Context, req *connect_g
 // GetUserPasswordResetLinkByOrgId calls api.v1alpha1.org.Org.GetUserPasswordResetLinkByOrgId.
 func (c *orgClient) GetUserPasswordResetLinkByOrgId(ctx context.Context, req *connect_go.Request[org.GetUserPasswordResetLinkByOrgIdRequest]) (*connect_go.Response[org.GetUserPasswordResetLinkByOrgIdResponse], error) {
 	return c.getUserPasswordResetLinkByOrgId.CallUnary(ctx, req)
+}
+
+// CreatePasswordResetLink calls api.v1alpha1.org.Org.CreatePasswordResetLink.
+func (c *orgClient) CreatePasswordResetLink(ctx context.Context, req *connect_go.Request[org.CreatePasswordResetLinkRequest]) (*connect_go.Response[org.CreatePasswordResetLinkResponse], error) {
+	return c.createPasswordResetLink.CallUnary(ctx, req)
 }
 
 // GetUserLoginInfo calls api.v1alpha1.org.Org.GetUserLoginInfo.
@@ -2720,6 +2752,8 @@ type OrgHandler interface {
 	GetBusinessPreferences(context.Context, *connect_go.Request[org.GetBusinessPreferencesRequest]) (*connect_go.Response[org.GetBusinessPreferencesResponse], error)
 	// UpdateBusinessPreferences updates preferences for business intelligence.
 	UpdateBusinessPreferences(context.Context, *connect_go.Request[org.UpdateBusinessPreferencesRequest]) (*connect_go.Response[org.UpdateBusinessPreferencesResponse], error)
+	// UpdateAdminBusinessPreferences updates preferences for business intelligence.
+	UpdateAdminBusinessPreferences(context.Context, *connect_go.Request[org.UpdateAdminBusinessPreferencesRequest]) (*connect_go.Response[org.UpdateAdminBusinessPreferencesResponse], error)
 	// GetScorecardsPreferences returns preferences for scorecards.
 	GetScorecardsPreferences(context.Context, *connect_go.Request[org.GetScorecardsPreferencesRequest]) (*connect_go.Response[org.GetScorecardsPreferencesResponse], error)
 	// UpdateScorecardsPreferences updates preferences for scorecards.
@@ -2798,6 +2832,8 @@ type OrgHandler interface {
 	GetUserPasswordResetLink(context.Context, *connect_go.Request[org.GetUserPasswordResetLinkRequest]) (*connect_go.Response[org.GetUserPasswordResetLinkResponse], error)
 	// GetUserPasswordResetLinkByOrgId gets a link to update a user's password.
 	GetUserPasswordResetLinkByOrgId(context.Context, *connect_go.Request[org.GetUserPasswordResetLinkByOrgIdRequest]) (*connect_go.Response[org.GetUserPasswordResetLinkByOrgIdResponse], error)
+	// CreatePasswordResetLink creates a password reset link for the given user id.
+	CreatePasswordResetLink(context.Context, *connect_go.Request[org.CreatePasswordResetLinkRequest]) (*connect_go.Response[org.CreatePasswordResetLinkResponse], error)
 	// Used to be called GetUserBlocked
 	// GetUserLoginInfo gets information about a user's login.
 	GetUserLoginInfo(context.Context, *connect_go.Request[org.GetUserLoginInfoRequest]) (*connect_go.Response[org.GetUserLoginInfoResponse], error)
@@ -3191,6 +3227,11 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.UpdateBusinessPreferences,
 		opts...,
 	)
+	orgUpdateAdminBusinessPreferencesHandler := connect_go.NewUnaryHandler(
+		OrgUpdateAdminBusinessPreferencesProcedure,
+		svc.UpdateAdminBusinessPreferences,
+		opts...,
+	)
 	orgGetScorecardsPreferencesHandler := connect_go.NewUnaryHandler(
 		OrgGetScorecardsPreferencesProcedure,
 		svc.GetScorecardsPreferences,
@@ -3364,6 +3405,11 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 	orgGetUserPasswordResetLinkByOrgIdHandler := connect_go.NewUnaryHandler(
 		OrgGetUserPasswordResetLinkByOrgIdProcedure,
 		svc.GetUserPasswordResetLinkByOrgId,
+		opts...,
+	)
+	orgCreatePasswordResetLinkHandler := connect_go.NewUnaryHandler(
+		OrgCreatePasswordResetLinkProcedure,
+		svc.CreatePasswordResetLink,
 		opts...,
 	)
 	orgGetUserLoginInfoHandler := connect_go.NewUnaryHandler(
@@ -3887,6 +3933,8 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 			orgGetBusinessPreferencesHandler.ServeHTTP(w, r)
 		case OrgUpdateBusinessPreferencesProcedure:
 			orgUpdateBusinessPreferencesHandler.ServeHTTP(w, r)
+		case OrgUpdateAdminBusinessPreferencesProcedure:
+			orgUpdateAdminBusinessPreferencesHandler.ServeHTTP(w, r)
 		case OrgGetScorecardsPreferencesProcedure:
 			orgGetScorecardsPreferencesHandler.ServeHTTP(w, r)
 		case OrgUpdateScorecardsPreferencesProcedure:
@@ -3957,6 +4005,8 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 			orgGetUserPasswordResetLinkHandler.ServeHTTP(w, r)
 		case OrgGetUserPasswordResetLinkByOrgIdProcedure:
 			orgGetUserPasswordResetLinkByOrgIdHandler.ServeHTTP(w, r)
+		case OrgCreatePasswordResetLinkProcedure:
+			orgCreatePasswordResetLinkHandler.ServeHTTP(w, r)
 		case OrgGetUserLoginInfoProcedure:
 			orgGetUserLoginInfoHandler.ServeHTTP(w, r)
 		case OrgGetUserEmailVerifiedProcedure:
@@ -4292,6 +4342,10 @@ func (UnimplementedOrgHandler) UpdateBusinessPreferences(context.Context, *conne
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.UpdateBusinessPreferences is not implemented"))
 }
 
+func (UnimplementedOrgHandler) UpdateAdminBusinessPreferences(context.Context, *connect_go.Request[org.UpdateAdminBusinessPreferencesRequest]) (*connect_go.Response[org.UpdateAdminBusinessPreferencesResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.UpdateAdminBusinessPreferences is not implemented"))
+}
+
 func (UnimplementedOrgHandler) GetScorecardsPreferences(context.Context, *connect_go.Request[org.GetScorecardsPreferencesRequest]) (*connect_go.Response[org.GetScorecardsPreferencesResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.GetScorecardsPreferences is not implemented"))
 }
@@ -4430,6 +4484,10 @@ func (UnimplementedOrgHandler) GetUserPasswordResetLink(context.Context, *connec
 
 func (UnimplementedOrgHandler) GetUserPasswordResetLinkByOrgId(context.Context, *connect_go.Request[org.GetUserPasswordResetLinkByOrgIdRequest]) (*connect_go.Response[org.GetUserPasswordResetLinkByOrgIdResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.GetUserPasswordResetLinkByOrgId is not implemented"))
+}
+
+func (UnimplementedOrgHandler) CreatePasswordResetLink(context.Context, *connect_go.Request[org.CreatePasswordResetLinkRequest]) (*connect_go.Response[org.CreatePasswordResetLinkResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.CreatePasswordResetLink is not implemented"))
 }
 
 func (UnimplementedOrgHandler) GetUserLoginInfo(context.Context, *connect_go.Request[org.GetUserLoginInfoRequest]) (*connect_go.Response[org.GetUserLoginInfoResponse], error) {

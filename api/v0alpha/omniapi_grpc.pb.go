@@ -89,6 +89,7 @@ const (
 	OmniApi_ListCannedMessagesByGroupId_FullMethodName  = "/api.v0alpha.OmniApi/ListCannedMessagesByGroupId"
 	OmniApi_GetCannedMessageGroupById_FullMethodName    = "/api.v0alpha.OmniApi/GetCannedMessageGroupById"
 	OmniApi_ListUserSkills_FullMethodName               = "/api.v0alpha.OmniApi/ListUserSkills"
+	OmniApi_ListWhatsAppNumbers_FullMethodName          = "/api.v0alpha.OmniApi/ListWhatsAppNumbers"
 )
 
 // OmniApiClient is the client API for OmniApi service.
@@ -409,6 +410,8 @@ type OmniApiClient interface {
 	// the request message field type_filter. Leaving the type_filter
 	// field empty will return all types of skills.
 	ListUserSkills(ctx context.Context, in *ListUserSkillsReq, opts ...grpc.CallOption) (*ListUserSkillsRes, error)
+	// List whatsapp numbers for the client
+	ListWhatsAppNumbers(ctx context.Context, in *ListWhatsAppNumbersReq, opts ...grpc.CallOption) (*ListWhatsAppNumbersRes, error)
 }
 
 type omniApiClient struct {
@@ -1086,6 +1089,15 @@ func (c *omniApiClient) ListUserSkills(ctx context.Context, in *ListUserSkillsRe
 	return out, nil
 }
 
+func (c *omniApiClient) ListWhatsAppNumbers(ctx context.Context, in *ListWhatsAppNumbersReq, opts ...grpc.CallOption) (*ListWhatsAppNumbersRes, error) {
+	out := new(ListWhatsAppNumbersRes)
+	err := c.cc.Invoke(ctx, OmniApi_ListWhatsAppNumbers_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OmniApiServer is the server API for OmniApi service.
 // All implementations must embed UnimplementedOmniApiServer
 // for forward compatibility
@@ -1404,6 +1416,8 @@ type OmniApiServer interface {
 	// the request message field type_filter. Leaving the type_filter
 	// field empty will return all types of skills.
 	ListUserSkills(context.Context, *ListUserSkillsReq) (*ListUserSkillsRes, error)
+	// List whatsapp numbers for the client
+	ListWhatsAppNumbers(context.Context, *ListWhatsAppNumbersReq) (*ListWhatsAppNumbersRes, error)
 	mustEmbedUnimplementedOmniApiServer()
 }
 
@@ -1617,6 +1631,9 @@ func (UnimplementedOmniApiServer) GetCannedMessageGroupById(context.Context, *Ge
 }
 func (UnimplementedOmniApiServer) ListUserSkills(context.Context, *ListUserSkillsReq) (*ListUserSkillsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListUserSkills not implemented")
+}
+func (UnimplementedOmniApiServer) ListWhatsAppNumbers(context.Context, *ListWhatsAppNumbersReq) (*ListWhatsAppNumbersRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListWhatsAppNumbers not implemented")
 }
 func (UnimplementedOmniApiServer) mustEmbedUnimplementedOmniApiServer() {}
 
@@ -2879,6 +2896,24 @@ func _OmniApi_ListUserSkills_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OmniApi_ListWhatsAppNumbers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListWhatsAppNumbersReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmniApiServer).ListWhatsAppNumbers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OmniApi_ListWhatsAppNumbers_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmniApiServer).ListWhatsAppNumbers(ctx, req.(*ListWhatsAppNumbersReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // OmniApi_ServiceDesc is the grpc.ServiceDesc for OmniApi service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -3153,6 +3188,10 @@ var OmniApi_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListUserSkills",
 			Handler:    _OmniApi_ListUserSkills_Handler,
+		},
+		{
+			MethodName: "ListWhatsAppNumbers",
+			Handler:    _OmniApi_ListWhatsAppNumbers_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
