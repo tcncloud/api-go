@@ -82,8 +82,11 @@ func (TimeScale) EnumDescriptor() ([]byte, []int) {
 type TicketStatus int32
 
 const (
-	TicketStatus_TICKET_STATUS_NEW   TicketStatus = 0
-	TicketStatus_TICKET_STATUS_OPEN  TicketStatus = 1
+	// NEW
+	TicketStatus_TICKET_STATUS_NEW TicketStatus = 0
+	// OPEN
+	TicketStatus_TICKET_STATUS_OPEN TicketStatus = 1
+	// CLOSE
 	TicketStatus_TICKET_STATUS_CLOSE TicketStatus = 2
 )
 
@@ -800,7 +803,9 @@ type Duration struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Value int64     `protobuf:"varint,1,opt,name=value,proto3" json:"value,omitempty"`
+	// Value of of the Scale
+	Value int64 `protobuf:"varint,1,opt,name=value,proto3" json:"value,omitempty"`
+	// Scale - In minutes,hour,day,week,month,year
 	Scale TimeScale `protobuf:"varint,2,opt,name=scale,proto3,enum=api.commons.TimeScale" json:"scale,omitempty"`
 }
 
