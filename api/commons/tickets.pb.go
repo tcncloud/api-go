@@ -861,6 +861,7 @@ type TicketAction struct {
 	// action id from ACTION_MASTER table, Only callback for now
 	ActionId int64 `protobuf:"varint,2,opt,name=action_id,json=actionId,proto3" json:"action_id,omitempty"`
 	// Attributes for a callback Action
+	// To be Deprecated Later
 	CallbackContext *CallbackContext `protobuf:"bytes,3,opt,name=callback_context,json=callbackContext,proto3" json:"callback_context,omitempty"`
 	// ticket id from ticket table
 	TicketId int64 `protobuf:"varint,4,opt,name=ticket_id,json=ticketId,proto3" json:"ticket_id,omitempty"`
@@ -877,7 +878,7 @@ type TicketAction struct {
 	ActionSlaId []*Sla `protobuf:"bytes,10,rep,name=action_sla_id,json=actionSlaId,proto3" json:"action_sla_id,omitempty"`
 	// work done by
 	WorkDoneBy string `protobuf:"bytes,11,opt,name=work_done_by,json=workDoneBy,proto3" json:"work_done_by,omitempty"`
-	// Context Object Sent from FE - Only one object to be sent
+	// Context Object For Voice,SMS,Email - Only one object to be in Request
 	//
 	// Types that are assignable to Context:
 	//
@@ -1022,14 +1023,17 @@ type isTicketAction_Context interface {
 }
 
 type TicketAction_VoiceContext struct {
+	// Voice Callback Context
 	VoiceContext *CallbackContext `protobuf:"bytes,12,opt,name=voice_context,json=voiceContext,proto3,oneof"`
 }
 
 type TicketAction_SmsContext struct {
+	// SMS Callback Context
 	SmsContext *SmsbackContext `protobuf:"bytes,13,opt,name=sms_context,json=smsContext,proto3,oneof"`
 }
 
 type TicketAction_EmailContext struct {
+	// Email Callback Context
 	EmailContext *EmailbackContext `protobuf:"bytes,14,opt,name=email_context,json=emailContext,proto3,oneof"`
 }
 
