@@ -247,13 +247,12 @@ type WFMClient interface {
 	ResyncSkillProfiles(ctx context.Context, in *ResyncSkillProfilesReq, opts ...grpc.CallOption) (*ResyncSkillProfilesRes, error)
 	// Gets the last date of a skill profile resync for the org seding the request.
 	// If the org has never done a skill profile resync @resync_date will not be set.
-	// It will also start loading the client's history cache if its not loaded already.
 	// Required permissions:
 	//
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Internal: error occurs when getting the resync date or starting the client's history cache.
+	//   - grpc.Internal: error occurs when getting the resync date.
 	GetLastSkillProfileResyncDate(ctx context.Context, in *GetLastSkillProfileResyncDateReq, opts ...grpc.CallOption) (*GetLastSkillProfileResyncDateRes, error)
 	// Tries to create an entry for the given forecasting parameters for the org sending the request.
 	// If the org already has an entry for them, it will update the already existing entry.
@@ -3609,13 +3608,12 @@ type WFMServer interface {
 	ResyncSkillProfiles(context.Context, *ResyncSkillProfilesReq) (*ResyncSkillProfilesRes, error)
 	// Gets the last date of a skill profile resync for the org seding the request.
 	// If the org has never done a skill profile resync @resync_date will not be set.
-	// It will also start loading the client's history cache if its not loaded already.
 	// Required permissions:
 	//
 	//	NONE
 	//
 	// Errors:
-	//   - grpc.Internal: error occurs when getting the resync date or starting the client's history cache.
+	//   - grpc.Internal: error occurs when getting the resync date.
 	GetLastSkillProfileResyncDate(context.Context, *GetLastSkillProfileResyncDateReq) (*GetLastSkillProfileResyncDateRes, error)
 	// Tries to create an entry for the given forecasting parameters for the org sending the request.
 	// If the org already has an entry for them, it will update the already existing entry.
