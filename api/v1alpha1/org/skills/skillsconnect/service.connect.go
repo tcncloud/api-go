@@ -63,6 +63,9 @@ const (
 	// SkillsServiceGetSkillGroupMembersProcedure is the fully-qualified name of the SkillsService's
 	// GetSkillGroupMembers RPC.
 	SkillsServiceGetSkillGroupMembersProcedure = "/api.v1alpha1.org.skills.SkillsService/GetSkillGroupMembers"
+	// SkillsServiceListSkillGroupsMembersProcedure is the fully-qualified name of the SkillsService's
+	// ListSkillGroupsMembers RPC.
+	SkillsServiceListSkillGroupsMembersProcedure = "/api.v1alpha1.org.skills.SkillsService/ListSkillGroupsMembers"
 )
 
 // SkillsServiceClient is a client for the api.v1alpha1.org.skills.SkillsService service.
@@ -87,6 +90,8 @@ type SkillsServiceClient interface {
 	GetUserSkills(context.Context, *connect_go.Request[skills.GetUserSkillsRequest]) (*connect_go.Response[skills.GetUserSkillsResponse], error)
 	// GetSkillGroupMembers gets the members of a skill group.
 	GetSkillGroupMembers(context.Context, *connect_go.Request[skills.GetSkillGroupMembersRequest]) (*connect_go.Response[skills.GetSkillGroupMembersResponse], error)
+	// ListSkillGroupsMembers gets the members of a skill group for each skill group in an Org.
+	ListSkillGroupsMembers(context.Context, *connect_go.Request[skills.ListSkillGroupsMembersRequest]) (*connect_go.Response[skills.ListSkillGroupsMembersResponse], error)
 }
 
 // NewSkillsServiceClient constructs a client for the api.v1alpha1.org.skills.SkillsService service.
@@ -149,21 +154,27 @@ func NewSkillsServiceClient(httpClient connect_go.HTTPClient, baseURL string, op
 			baseURL+SkillsServiceGetSkillGroupMembersProcedure,
 			opts...,
 		),
+		listSkillGroupsMembers: connect_go.NewClient[skills.ListSkillGroupsMembersRequest, skills.ListSkillGroupsMembersResponse](
+			httpClient,
+			baseURL+SkillsServiceListSkillGroupsMembersProcedure,
+			opts...,
+		),
 	}
 }
 
 // skillsServiceClient implements SkillsServiceClient.
 type skillsServiceClient struct {
-	createSkillGroup     *connect_go.Client[skills.CreateSkillGroupRequest, skills.CreateSkillGroupResponse]
-	listSkillGroups      *connect_go.Client[skills.ListSkillGroupsRequest, skills.ListSkillGroupsResponse]
-	updateSkillGroup     *connect_go.Client[skills.UpdateSkillGroupRequest, skills.UpdateSkillGroupResponse]
-	getSkillGroup        *connect_go.Client[skills.GetSkillGroupRequest, skills.GetSkillGroupResponse]
-	deleteSkillGroup     *connect_go.Client[skills.DeleteSkillGroupRequest, skills.DeleteSkillGroupResponse]
-	assignSkillGroups    *connect_go.Client[skills.AssignSkillGroupsRequest, skills.AssignSkillGroupsResponse]
-	revokeSkillGroups    *connect_go.Client[skills.RevokeSkillGroupsRequest, skills.RevokeSkillGroupsResponse]
-	getUserSkillGroups   *connect_go.Client[skills.GetUserSkillGroupsRequest, skills.GetUserSkillGroupsResponse]
-	getUserSkills        *connect_go.Client[skills.GetUserSkillsRequest, skills.GetUserSkillsResponse]
-	getSkillGroupMembers *connect_go.Client[skills.GetSkillGroupMembersRequest, skills.GetSkillGroupMembersResponse]
+	createSkillGroup       *connect_go.Client[skills.CreateSkillGroupRequest, skills.CreateSkillGroupResponse]
+	listSkillGroups        *connect_go.Client[skills.ListSkillGroupsRequest, skills.ListSkillGroupsResponse]
+	updateSkillGroup       *connect_go.Client[skills.UpdateSkillGroupRequest, skills.UpdateSkillGroupResponse]
+	getSkillGroup          *connect_go.Client[skills.GetSkillGroupRequest, skills.GetSkillGroupResponse]
+	deleteSkillGroup       *connect_go.Client[skills.DeleteSkillGroupRequest, skills.DeleteSkillGroupResponse]
+	assignSkillGroups      *connect_go.Client[skills.AssignSkillGroupsRequest, skills.AssignSkillGroupsResponse]
+	revokeSkillGroups      *connect_go.Client[skills.RevokeSkillGroupsRequest, skills.RevokeSkillGroupsResponse]
+	getUserSkillGroups     *connect_go.Client[skills.GetUserSkillGroupsRequest, skills.GetUserSkillGroupsResponse]
+	getUserSkills          *connect_go.Client[skills.GetUserSkillsRequest, skills.GetUserSkillsResponse]
+	getSkillGroupMembers   *connect_go.Client[skills.GetSkillGroupMembersRequest, skills.GetSkillGroupMembersResponse]
+	listSkillGroupsMembers *connect_go.Client[skills.ListSkillGroupsMembersRequest, skills.ListSkillGroupsMembersResponse]
 }
 
 // CreateSkillGroup calls api.v1alpha1.org.skills.SkillsService.CreateSkillGroup.
@@ -216,6 +227,11 @@ func (c *skillsServiceClient) GetSkillGroupMembers(ctx context.Context, req *con
 	return c.getSkillGroupMembers.CallUnary(ctx, req)
 }
 
+// ListSkillGroupsMembers calls api.v1alpha1.org.skills.SkillsService.ListSkillGroupsMembers.
+func (c *skillsServiceClient) ListSkillGroupsMembers(ctx context.Context, req *connect_go.Request[skills.ListSkillGroupsMembersRequest]) (*connect_go.Response[skills.ListSkillGroupsMembersResponse], error) {
+	return c.listSkillGroupsMembers.CallUnary(ctx, req)
+}
+
 // SkillsServiceHandler is an implementation of the api.v1alpha1.org.skills.SkillsService service.
 type SkillsServiceHandler interface {
 	// CreateSkillGroup creates a new skill group.
@@ -238,6 +254,8 @@ type SkillsServiceHandler interface {
 	GetUserSkills(context.Context, *connect_go.Request[skills.GetUserSkillsRequest]) (*connect_go.Response[skills.GetUserSkillsResponse], error)
 	// GetSkillGroupMembers gets the members of a skill group.
 	GetSkillGroupMembers(context.Context, *connect_go.Request[skills.GetSkillGroupMembersRequest]) (*connect_go.Response[skills.GetSkillGroupMembersResponse], error)
+	// ListSkillGroupsMembers gets the members of a skill group for each skill group in an Org.
+	ListSkillGroupsMembers(context.Context, *connect_go.Request[skills.ListSkillGroupsMembersRequest]) (*connect_go.Response[skills.ListSkillGroupsMembersResponse], error)
 }
 
 // NewSkillsServiceHandler builds an HTTP handler from the service implementation. It returns the
@@ -296,6 +314,11 @@ func NewSkillsServiceHandler(svc SkillsServiceHandler, opts ...connect_go.Handle
 		svc.GetSkillGroupMembers,
 		opts...,
 	)
+	skillsServiceListSkillGroupsMembersHandler := connect_go.NewUnaryHandler(
+		SkillsServiceListSkillGroupsMembersProcedure,
+		svc.ListSkillGroupsMembers,
+		opts...,
+	)
 	return "/api.v1alpha1.org.skills.SkillsService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case SkillsServiceCreateSkillGroupProcedure:
@@ -318,6 +341,8 @@ func NewSkillsServiceHandler(svc SkillsServiceHandler, opts ...connect_go.Handle
 			skillsServiceGetUserSkillsHandler.ServeHTTP(w, r)
 		case SkillsServiceGetSkillGroupMembersProcedure:
 			skillsServiceGetSkillGroupMembersHandler.ServeHTTP(w, r)
+		case SkillsServiceListSkillGroupsMembersProcedure:
+			skillsServiceListSkillGroupsMembersHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -365,4 +390,8 @@ func (UnimplementedSkillsServiceHandler) GetUserSkills(context.Context, *connect
 
 func (UnimplementedSkillsServiceHandler) GetSkillGroupMembers(context.Context, *connect_go.Request[skills.GetSkillGroupMembersRequest]) (*connect_go.Response[skills.GetSkillGroupMembersResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.skills.SkillsService.GetSkillGroupMembers is not implemented"))
+}
+
+func (UnimplementedSkillsServiceHandler) ListSkillGroupsMembers(context.Context, *connect_go.Request[skills.ListSkillGroupsMembersRequest]) (*connect_go.Response[skills.ListSkillGroupsMembersResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.skills.SkillsService.ListSkillGroupsMembers is not implemented"))
 }
