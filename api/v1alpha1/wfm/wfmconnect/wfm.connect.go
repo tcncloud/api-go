@@ -481,7 +481,7 @@ const (
 // WFMClient is a client for the api.v1alpha1.wfm.WFM service.
 type WFMClient interface {
 	// Starts the tasks to perform the initial setup on wfm services for the org sending the request.
-	// It will report then report the state of their setup task.
+	// It will then report the state of their setup task.
 	// A new setup task will only be started if the client hasn't done one before, or their setup failed previously.
 	// Required permissions:
 	//
@@ -4069,7 +4069,7 @@ func (c *wFMClient) GenerateTourWeekPatterns(ctx context.Context, req *connect_g
 // WFMHandler is an implementation of the api.v1alpha1.wfm.WFM service.
 type WFMHandler interface {
 	// Starts the tasks to perform the initial setup on wfm services for the org sending the request.
-	// It will report then report the state of their setup task.
+	// It will then report the state of their setup task.
 	// A new setup task will only be started if the client hasn't done one before, or their setup failed previously.
 	// Required permissions:
 	//
