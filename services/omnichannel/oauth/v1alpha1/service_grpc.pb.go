@@ -8,7 +8,6 @@ package oauthv1alpha1
 
 import (
 	context "context"
-	v1alpha1 "github.com/tcncloud/api-go/services/omnichannel/oauth/entities/v1alpha1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -27,7 +26,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type OauthServiceClient interface {
-	GetConnectedInboxOAuthSpecifications(ctx context.Context, in *v1alpha1.GetConnectedInboxOAuthSpecificationsRequest, opts ...grpc.CallOption) (*v1alpha1.GetConnectedInboxOAuthSpecificationsResponse, error)
+	GetConnectedInboxOAuthSpecifications(ctx context.Context, in *GetConnectedInboxOAuthSpecificationsRequest, opts ...grpc.CallOption) (*GetConnectedInboxOAuthSpecificationsResponse, error)
 }
 
 type oauthServiceClient struct {
@@ -38,8 +37,8 @@ func NewOauthServiceClient(cc grpc.ClientConnInterface) OauthServiceClient {
 	return &oauthServiceClient{cc}
 }
 
-func (c *oauthServiceClient) GetConnectedInboxOAuthSpecifications(ctx context.Context, in *v1alpha1.GetConnectedInboxOAuthSpecificationsRequest, opts ...grpc.CallOption) (*v1alpha1.GetConnectedInboxOAuthSpecificationsResponse, error) {
-	out := new(v1alpha1.GetConnectedInboxOAuthSpecificationsResponse)
+func (c *oauthServiceClient) GetConnectedInboxOAuthSpecifications(ctx context.Context, in *GetConnectedInboxOAuthSpecificationsRequest, opts ...grpc.CallOption) (*GetConnectedInboxOAuthSpecificationsResponse, error) {
+	out := new(GetConnectedInboxOAuthSpecificationsResponse)
 	err := c.cc.Invoke(ctx, OauthService_GetConnectedInboxOAuthSpecifications_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -51,7 +50,7 @@ func (c *oauthServiceClient) GetConnectedInboxOAuthSpecifications(ctx context.Co
 // All implementations must embed UnimplementedOauthServiceServer
 // for forward compatibility
 type OauthServiceServer interface {
-	GetConnectedInboxOAuthSpecifications(context.Context, *v1alpha1.GetConnectedInboxOAuthSpecificationsRequest) (*v1alpha1.GetConnectedInboxOAuthSpecificationsResponse, error)
+	GetConnectedInboxOAuthSpecifications(context.Context, *GetConnectedInboxOAuthSpecificationsRequest) (*GetConnectedInboxOAuthSpecificationsResponse, error)
 	mustEmbedUnimplementedOauthServiceServer()
 }
 
@@ -59,7 +58,7 @@ type OauthServiceServer interface {
 type UnimplementedOauthServiceServer struct {
 }
 
-func (UnimplementedOauthServiceServer) GetConnectedInboxOAuthSpecifications(context.Context, *v1alpha1.GetConnectedInboxOAuthSpecificationsRequest) (*v1alpha1.GetConnectedInboxOAuthSpecificationsResponse, error) {
+func (UnimplementedOauthServiceServer) GetConnectedInboxOAuthSpecifications(context.Context, *GetConnectedInboxOAuthSpecificationsRequest) (*GetConnectedInboxOAuthSpecificationsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetConnectedInboxOAuthSpecifications not implemented")
 }
 func (UnimplementedOauthServiceServer) mustEmbedUnimplementedOauthServiceServer() {}
@@ -76,7 +75,7 @@ func RegisterOauthServiceServer(s grpc.ServiceRegistrar, srv OauthServiceServer)
 }
 
 func _OauthService_GetConnectedInboxOAuthSpecifications_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v1alpha1.GetConnectedInboxOAuthSpecificationsRequest)
+	in := new(GetConnectedInboxOAuthSpecificationsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -88,7 +87,7 @@ func _OauthService_GetConnectedInboxOAuthSpecifications_Handler(srv interface{},
 		FullMethod: OauthService_GetConnectedInboxOAuthSpecifications_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OauthServiceServer).GetConnectedInboxOAuthSpecifications(ctx, req.(*v1alpha1.GetConnectedInboxOAuthSpecificationsRequest))
+		return srv.(OauthServiceServer).GetConnectedInboxOAuthSpecifications(ctx, req.(*GetConnectedInboxOAuthSpecificationsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

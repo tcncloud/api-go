@@ -8,8 +8,7 @@ import (
 	context "context"
 	errors "errors"
 	connect_go "github.com/bufbuild/connect-go"
-	v1alpha1 "github.com/tcncloud/api-go/services/omnichannel/oauth/entities/v1alpha1"
-	_ "github.com/tcncloud/api-go/services/omnichannel/oauth/v1alpha1"
+	v1alpha1 "github.com/tcncloud/api-go/services/omnichannel/oauth/v1alpha1"
 	http "net/http"
 	strings "strings"
 )
