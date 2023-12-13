@@ -48,6 +48,7 @@ const (
 	Tickets_EditTicketTemplate_FullMethodName        = "/api.v1alpha1.tickets.Tickets/EditTicketTemplate"
 	Tickets_ListTicketTemplate_FullMethodName        = "/api.v1alpha1.tickets.Tickets/ListTicketTemplate"
 	Tickets_AssignTicketTemplate_FullMethodName      = "/api.v1alpha1.tickets.Tickets/AssignTicketTemplate"
+	Tickets_GetAllActionType_FullMethodName          = "/api.v1alpha1.tickets.Tickets/GetAllActionType"
 )
 
 // TicketsClient is the client API for Tickets service.
@@ -107,14 +108,16 @@ type TicketsClient interface {
 	CreateTicketAction(ctx context.Context, in *CreateTicketActionRequest, opts ...grpc.CallOption) (*CreateTicketActionResponse, error)
 	// Public method to change the Status of a ticket
 	ChangeTicketStatus(ctx context.Context, in *ChangeTicketStatusRequest, opts ...grpc.CallOption) (*ChangeTicketStatusResponse, error)
-	// Public method to change the Status of a ticket
+	// Public method to create a Ticket Template
 	CreateTicketTemplate(ctx context.Context, in *CreateTicketTemplateRequest, opts ...grpc.CallOption) (*CreateTicketTemplateResponse, error)
-	// Public method to change the Status of a ticket
+	// Public method to Edit a Ticket Template
 	EditTicketTemplate(ctx context.Context, in *EditTicketTemplateRequest, opts ...grpc.CallOption) (*EditTicketTemplateResponse, error)
-	// Public method to change the Status of a ticket
+	// Public method to all Ticket Templates
 	ListTicketTemplate(ctx context.Context, in *ListTicketTemplateRequest, opts ...grpc.CallOption) (*ListTicketTemplateResponse, error)
-	// Public method to change the Status of a ticket
+	// Public method to assign a Template To a Project
 	AssignTicketTemplate(ctx context.Context, in *AssignProjectTemplateRequest, opts ...grpc.CallOption) (*AssignProjectTemplateResponse, error)
+	// Public method to list all Action Types
+	GetAllActionType(ctx context.Context, in *GetActionTypeRequest, opts ...grpc.CallOption) (*GetActionTypeResponse, error)
 }
 
 type ticketsClient struct {
@@ -387,6 +390,15 @@ func (c *ticketsClient) AssignTicketTemplate(ctx context.Context, in *AssignProj
 	return out, nil
 }
 
+func (c *ticketsClient) GetAllActionType(ctx context.Context, in *GetActionTypeRequest, opts ...grpc.CallOption) (*GetActionTypeResponse, error) {
+	out := new(GetActionTypeResponse)
+	err := c.cc.Invoke(ctx, Tickets_GetAllActionType_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TicketsServer is the server API for Tickets service.
 // All implementations must embed UnimplementedTicketsServer
 // for forward compatibility
@@ -444,14 +456,16 @@ type TicketsServer interface {
 	CreateTicketAction(context.Context, *CreateTicketActionRequest) (*CreateTicketActionResponse, error)
 	// Public method to change the Status of a ticket
 	ChangeTicketStatus(context.Context, *ChangeTicketStatusRequest) (*ChangeTicketStatusResponse, error)
-	// Public method to change the Status of a ticket
+	// Public method to create a Ticket Template
 	CreateTicketTemplate(context.Context, *CreateTicketTemplateRequest) (*CreateTicketTemplateResponse, error)
-	// Public method to change the Status of a ticket
+	// Public method to Edit a Ticket Template
 	EditTicketTemplate(context.Context, *EditTicketTemplateRequest) (*EditTicketTemplateResponse, error)
-	// Public method to change the Status of a ticket
+	// Public method to all Ticket Templates
 	ListTicketTemplate(context.Context, *ListTicketTemplateRequest) (*ListTicketTemplateResponse, error)
-	// Public method to change the Status of a ticket
+	// Public method to assign a Template To a Project
 	AssignTicketTemplate(context.Context, *AssignProjectTemplateRequest) (*AssignProjectTemplateResponse, error)
+	// Public method to list all Action Types
+	GetAllActionType(context.Context, *GetActionTypeRequest) (*GetActionTypeResponse, error)
 	mustEmbedUnimplementedTicketsServer()
 }
 
@@ -545,6 +559,9 @@ func (UnimplementedTicketsServer) ListTicketTemplate(context.Context, *ListTicke
 }
 func (UnimplementedTicketsServer) AssignTicketTemplate(context.Context, *AssignProjectTemplateRequest) (*AssignProjectTemplateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AssignTicketTemplate not implemented")
+}
+func (UnimplementedTicketsServer) GetAllActionType(context.Context, *GetActionTypeRequest) (*GetActionTypeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllActionType not implemented")
 }
 func (UnimplementedTicketsServer) mustEmbedUnimplementedTicketsServer() {}
 
@@ -1081,6 +1098,24 @@ func _Tickets_AssignTicketTemplate_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Tickets_GetAllActionType_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetActionTypeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TicketsServer).GetAllActionType(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Tickets_GetAllActionType_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TicketsServer).GetAllActionType(ctx, req.(*GetActionTypeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Tickets_ServiceDesc is the grpc.ServiceDesc for Tickets service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1203,6 +1238,10 @@ var Tickets_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AssignTicketTemplate",
 			Handler:    _Tickets_AssignTicketTemplate_Handler,
+		},
+		{
+			MethodName: "GetAllActionType",
+			Handler:    _Tickets_GetAllActionType_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -104,6 +104,9 @@ const (
 	// TicketsAssignTicketTemplateProcedure is the fully-qualified name of the Tickets's
 	// AssignTicketTemplate RPC.
 	TicketsAssignTicketTemplateProcedure = "/api.v1alpha1.tickets.Tickets/AssignTicketTemplate"
+	// TicketsGetAllActionTypeProcedure is the fully-qualified name of the Tickets's GetAllActionType
+	// RPC.
+	TicketsGetAllActionTypeProcedure = "/api.v1alpha1.tickets.Tickets/GetAllActionType"
 )
 
 // TicketsClient is a client for the api.v1alpha1.tickets.Tickets service.
@@ -161,14 +164,16 @@ type TicketsClient interface {
 	CreateTicketAction(context.Context, *connect_go.Request[tickets.CreateTicketActionRequest]) (*connect_go.Response[tickets.CreateTicketActionResponse], error)
 	// Public method to change the Status of a ticket
 	ChangeTicketStatus(context.Context, *connect_go.Request[tickets.ChangeTicketStatusRequest]) (*connect_go.Response[tickets.ChangeTicketStatusResponse], error)
-	// Public method to change the Status of a ticket
+	// Public method to create a Ticket Template
 	CreateTicketTemplate(context.Context, *connect_go.Request[tickets.CreateTicketTemplateRequest]) (*connect_go.Response[tickets.CreateTicketTemplateResponse], error)
-	// Public method to change the Status of a ticket
+	// Public method to Edit a Ticket Template
 	EditTicketTemplate(context.Context, *connect_go.Request[tickets.EditTicketTemplateRequest]) (*connect_go.Response[tickets.EditTicketTemplateResponse], error)
-	// Public method to change the Status of a ticket
+	// Public method to all Ticket Templates
 	ListTicketTemplate(context.Context, *connect_go.Request[tickets.ListTicketTemplateRequest]) (*connect_go.Response[tickets.ListTicketTemplateResponse], error)
-	// Public method to change the Status of a ticket
+	// Public method to assign a Template To a Project
 	AssignTicketTemplate(context.Context, *connect_go.Request[tickets.AssignProjectTemplateRequest]) (*connect_go.Response[tickets.AssignProjectTemplateResponse], error)
+	// Public method to list all Action Types
+	GetAllActionType(context.Context, *connect_go.Request[tickets.GetActionTypeRequest]) (*connect_go.Response[tickets.GetActionTypeResponse], error)
 }
 
 // NewTicketsClient constructs a client for the api.v1alpha1.tickets.Tickets service. By default, it
@@ -326,6 +331,11 @@ func NewTicketsClient(httpClient connect_go.HTTPClient, baseURL string, opts ...
 			baseURL+TicketsAssignTicketTemplateProcedure,
 			opts...,
 		),
+		getAllActionType: connect_go.NewClient[tickets.GetActionTypeRequest, tickets.GetActionTypeResponse](
+			httpClient,
+			baseURL+TicketsGetAllActionTypeProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -360,6 +370,7 @@ type ticketsClient struct {
 	editTicketTemplate        *connect_go.Client[tickets.EditTicketTemplateRequest, tickets.EditTicketTemplateResponse]
 	listTicketTemplate        *connect_go.Client[tickets.ListTicketTemplateRequest, tickets.ListTicketTemplateResponse]
 	assignTicketTemplate      *connect_go.Client[tickets.AssignProjectTemplateRequest, tickets.AssignProjectTemplateResponse]
+	getAllActionType          *connect_go.Client[tickets.GetActionTypeRequest, tickets.GetActionTypeResponse]
 }
 
 // CreateTicket calls api.v1alpha1.tickets.Tickets.CreateTicket.
@@ -509,6 +520,11 @@ func (c *ticketsClient) AssignTicketTemplate(ctx context.Context, req *connect_g
 	return c.assignTicketTemplate.CallUnary(ctx, req)
 }
 
+// GetAllActionType calls api.v1alpha1.tickets.Tickets.GetAllActionType.
+func (c *ticketsClient) GetAllActionType(ctx context.Context, req *connect_go.Request[tickets.GetActionTypeRequest]) (*connect_go.Response[tickets.GetActionTypeResponse], error) {
+	return c.getAllActionType.CallUnary(ctx, req)
+}
+
 // TicketsHandler is an implementation of the api.v1alpha1.tickets.Tickets service.
 type TicketsHandler interface {
 	// Public Method to create a ticket.
@@ -564,14 +580,16 @@ type TicketsHandler interface {
 	CreateTicketAction(context.Context, *connect_go.Request[tickets.CreateTicketActionRequest]) (*connect_go.Response[tickets.CreateTicketActionResponse], error)
 	// Public method to change the Status of a ticket
 	ChangeTicketStatus(context.Context, *connect_go.Request[tickets.ChangeTicketStatusRequest]) (*connect_go.Response[tickets.ChangeTicketStatusResponse], error)
-	// Public method to change the Status of a ticket
+	// Public method to create a Ticket Template
 	CreateTicketTemplate(context.Context, *connect_go.Request[tickets.CreateTicketTemplateRequest]) (*connect_go.Response[tickets.CreateTicketTemplateResponse], error)
-	// Public method to change the Status of a ticket
+	// Public method to Edit a Ticket Template
 	EditTicketTemplate(context.Context, *connect_go.Request[tickets.EditTicketTemplateRequest]) (*connect_go.Response[tickets.EditTicketTemplateResponse], error)
-	// Public method to change the Status of a ticket
+	// Public method to all Ticket Templates
 	ListTicketTemplate(context.Context, *connect_go.Request[tickets.ListTicketTemplateRequest]) (*connect_go.Response[tickets.ListTicketTemplateResponse], error)
-	// Public method to change the Status of a ticket
+	// Public method to assign a Template To a Project
 	AssignTicketTemplate(context.Context, *connect_go.Request[tickets.AssignProjectTemplateRequest]) (*connect_go.Response[tickets.AssignProjectTemplateResponse], error)
+	// Public method to list all Action Types
+	GetAllActionType(context.Context, *connect_go.Request[tickets.GetActionTypeRequest]) (*connect_go.Response[tickets.GetActionTypeResponse], error)
 }
 
 // NewTicketsHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -725,6 +743,11 @@ func NewTicketsHandler(svc TicketsHandler, opts ...connect_go.HandlerOption) (st
 		svc.AssignTicketTemplate,
 		opts...,
 	)
+	ticketsGetAllActionTypeHandler := connect_go.NewUnaryHandler(
+		TicketsGetAllActionTypeProcedure,
+		svc.GetAllActionType,
+		opts...,
+	)
 	return "/api.v1alpha1.tickets.Tickets/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case TicketsCreateTicketProcedure:
@@ -785,6 +808,8 @@ func NewTicketsHandler(svc TicketsHandler, opts ...connect_go.HandlerOption) (st
 			ticketsListTicketTemplateHandler.ServeHTTP(w, r)
 		case TicketsAssignTicketTemplateProcedure:
 			ticketsAssignTicketTemplateHandler.ServeHTTP(w, r)
+		case TicketsGetAllActionTypeProcedure:
+			ticketsGetAllActionTypeHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -908,4 +933,8 @@ func (UnimplementedTicketsHandler) ListTicketTemplate(context.Context, *connect_
 
 func (UnimplementedTicketsHandler) AssignTicketTemplate(context.Context, *connect_go.Request[tickets.AssignProjectTemplateRequest]) (*connect_go.Response[tickets.AssignProjectTemplateResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.tickets.Tickets.AssignTicketTemplate is not implemented"))
+}
+
+func (UnimplementedTicketsHandler) GetAllActionType(context.Context, *connect_go.Request[tickets.GetActionTypeRequest]) (*connect_go.Response[tickets.GetActionTypeResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.tickets.Tickets.GetAllActionType is not implemented"))
 }
