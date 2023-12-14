@@ -97,6 +97,7 @@ const (
 	Org_GetUserEmailVerified_FullMethodName                    = "/api.v1alpha1.org.Org/GetUserEmailVerified"
 	Org_GetUserEmailVerifiedByOrgId_FullMethodName             = "/api.v1alpha1.org.Org/GetUserEmailVerifiedByOrgId"
 	Org_SendUserEmailVerification_FullMethodName               = "/api.v1alpha1.org.Org/SendUserEmailVerification"
+	Org_SendUserEmailPasswordReset_FullMethodName              = "/api.v1alpha1.org.Org/SendUserEmailPasswordReset"
 	Org_SendUserEmailVerificationByOrgId_FullMethodName        = "/api.v1alpha1.org.Org/SendUserEmailVerificationByOrgId"
 	Org_GetUserSessionData_FullMethodName                      = "/api.v1alpha1.org.Org/GetUserSessionData"
 	Org_GetAgentProfileGroup_FullMethodName                    = "/api.v1alpha1.org.Org/GetAgentProfileGroup"
@@ -370,6 +371,8 @@ type OrgClient interface {
 	GetUserEmailVerifiedByOrgId(ctx context.Context, in *GetUserEmailVerifiedByOrgIdRequest, opts ...grpc.CallOption) (*GetUserEmailVerifiedByOrgIdResponse, error)
 	// SendUserEmailVerification sends a verification email to the user.
 	SendUserEmailVerification(ctx context.Context, in *SendUserEmailVerificationRequest, opts ...grpc.CallOption) (*SendUserEmailVerificationResponse, error)
+	// SendUserEmailPasswordReset sends a verification email to the user.
+	SendUserEmailPasswordReset(ctx context.Context, in *SendUserEmailPasswordResetRequest, opts ...grpc.CallOption) (*SendUserEmailPasswordResetResponse, error)
 	// SendUserEmailVerificationByOrgId sends a verification email to the user.
 	SendUserEmailVerificationByOrgId(ctx context.Context, in *SendUserEmailVerificationByOrgIdRequest, opts ...grpc.CallOption) (*SendUserEmailVerificationByOrgIdResponse, error)
 	// GetUserSessionData returns data for the front end's session state
@@ -1457,6 +1460,15 @@ func (c *orgClient) SendUserEmailVerification(ctx context.Context, in *SendUserE
 	return out, nil
 }
 
+func (c *orgClient) SendUserEmailPasswordReset(ctx context.Context, in *SendUserEmailPasswordResetRequest, opts ...grpc.CallOption) (*SendUserEmailPasswordResetResponse, error) {
+	out := new(SendUserEmailPasswordResetResponse)
+	err := c.cc.Invoke(ctx, Org_SendUserEmailPasswordReset_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *orgClient) SendUserEmailVerificationByOrgId(ctx context.Context, in *SendUserEmailVerificationByOrgIdRequest, opts ...grpc.CallOption) (*SendUserEmailVerificationByOrgIdResponse, error) {
 	out := new(SendUserEmailVerificationByOrgIdResponse)
 	err := c.cc.Invoke(ctx, Org_SendUserEmailVerificationByOrgId_FullMethodName, in, out, opts...)
@@ -2408,6 +2420,8 @@ type OrgServer interface {
 	GetUserEmailVerifiedByOrgId(context.Context, *GetUserEmailVerifiedByOrgIdRequest) (*GetUserEmailVerifiedByOrgIdResponse, error)
 	// SendUserEmailVerification sends a verification email to the user.
 	SendUserEmailVerification(context.Context, *SendUserEmailVerificationRequest) (*SendUserEmailVerificationResponse, error)
+	// SendUserEmailPasswordReset sends a verification email to the user.
+	SendUserEmailPasswordReset(context.Context, *SendUserEmailPasswordResetRequest) (*SendUserEmailPasswordResetResponse, error)
 	// SendUserEmailVerificationByOrgId sends a verification email to the user.
 	SendUserEmailVerificationByOrgId(context.Context, *SendUserEmailVerificationByOrgIdRequest) (*SendUserEmailVerificationByOrgIdResponse, error)
 	// GetUserSessionData returns data for the front end's session state
@@ -2839,6 +2853,9 @@ func (UnimplementedOrgServer) GetUserEmailVerifiedByOrgId(context.Context, *GetU
 }
 func (UnimplementedOrgServer) SendUserEmailVerification(context.Context, *SendUserEmailVerificationRequest) (*SendUserEmailVerificationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendUserEmailVerification not implemented")
+}
+func (UnimplementedOrgServer) SendUserEmailPasswordReset(context.Context, *SendUserEmailPasswordResetRequest) (*SendUserEmailPasswordResetResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendUserEmailPasswordReset not implemented")
 }
 func (UnimplementedOrgServer) SendUserEmailVerificationByOrgId(context.Context, *SendUserEmailVerificationByOrgIdRequest) (*SendUserEmailVerificationByOrgIdResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendUserEmailVerificationByOrgId not implemented")
@@ -4532,6 +4549,24 @@ func _Org_SendUserEmailVerification_Handler(srv interface{}, ctx context.Context
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrgServer).SendUserEmailVerification(ctx, req.(*SendUserEmailVerificationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_SendUserEmailPasswordReset_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SendUserEmailPasswordResetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).SendUserEmailPasswordReset(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_SendUserEmailPasswordReset_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).SendUserEmailPasswordReset(ctx, req.(*SendUserEmailPasswordResetRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -6352,6 +6387,10 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SendUserEmailVerification",
 			Handler:    _Org_SendUserEmailVerification_Handler,
+		},
+		{
+			MethodName: "SendUserEmailPasswordReset",
+			Handler:    _Org_SendUserEmailPasswordReset_Handler,
 		},
 		{
 			MethodName: "SendUserEmailVerificationByOrgId",

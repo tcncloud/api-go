@@ -243,6 +243,9 @@ const (
 	// OrgSendUserEmailVerificationProcedure is the fully-qualified name of the Org's
 	// SendUserEmailVerification RPC.
 	OrgSendUserEmailVerificationProcedure = "/api.v1alpha1.org.Org/SendUserEmailVerification"
+	// OrgSendUserEmailPasswordResetProcedure is the fully-qualified name of the Org's
+	// SendUserEmailPasswordReset RPC.
+	OrgSendUserEmailPasswordResetProcedure = "/api.v1alpha1.org.Org/SendUserEmailPasswordReset"
 	// OrgSendUserEmailVerificationByOrgIdProcedure is the fully-qualified name of the Org's
 	// SendUserEmailVerificationByOrgId RPC.
 	OrgSendUserEmailVerificationByOrgIdProcedure = "/api.v1alpha1.org.Org/SendUserEmailVerificationByOrgId"
@@ -652,6 +655,8 @@ type OrgClient interface {
 	GetUserEmailVerifiedByOrgId(context.Context, *connect_go.Request[org.GetUserEmailVerifiedByOrgIdRequest]) (*connect_go.Response[org.GetUserEmailVerifiedByOrgIdResponse], error)
 	// SendUserEmailVerification sends a verification email to the user.
 	SendUserEmailVerification(context.Context, *connect_go.Request[org.SendUserEmailVerificationRequest]) (*connect_go.Response[org.SendUserEmailVerificationResponse], error)
+	// SendUserEmailPasswordReset sends a verification email to the user.
+	SendUserEmailPasswordReset(context.Context, *connect_go.Request[org.SendUserEmailPasswordResetRequest]) (*connect_go.Response[org.SendUserEmailPasswordResetResponse], error)
 	// SendUserEmailVerificationByOrgId sends a verification email to the user.
 	SendUserEmailVerificationByOrgId(context.Context, *connect_go.Request[org.SendUserEmailVerificationByOrgIdRequest]) (*connect_go.Response[org.SendUserEmailVerificationByOrgIdResponse], error)
 	// GetUserSessionData returns data for the front end's session state
@@ -1245,6 +1250,11 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgSendUserEmailVerificationProcedure,
 			opts...,
 		),
+		sendUserEmailPasswordReset: connect_go.NewClient[org.SendUserEmailPasswordResetRequest, org.SendUserEmailPasswordResetResponse](
+			httpClient,
+			baseURL+OrgSendUserEmailPasswordResetProcedure,
+			opts...,
+		),
 		sendUserEmailVerificationByOrgId: connect_go.NewClient[org.SendUserEmailVerificationByOrgIdRequest, org.SendUserEmailVerificationByOrgIdResponse](
 			httpClient,
 			baseURL+OrgSendUserEmailVerificationByOrgIdProcedure,
@@ -1753,6 +1763,7 @@ type orgClient struct {
 	getUserEmailVerified                    *connect_go.Client[org.GetUserEmailVerifiedRequest, org.GetUserEmailVerifiedResponse]
 	getUserEmailVerifiedByOrgId             *connect_go.Client[org.GetUserEmailVerifiedByOrgIdRequest, org.GetUserEmailVerifiedByOrgIdResponse]
 	sendUserEmailVerification               *connect_go.Client[org.SendUserEmailVerificationRequest, org.SendUserEmailVerificationResponse]
+	sendUserEmailPasswordReset              *connect_go.Client[org.SendUserEmailPasswordResetRequest, org.SendUserEmailPasswordResetResponse]
 	sendUserEmailVerificationByOrgId        *connect_go.Client[org.SendUserEmailVerificationByOrgIdRequest, org.SendUserEmailVerificationByOrgIdResponse]
 	getUserSessionData                      *connect_go.Client[org.GetUserSessionDataRequest, org.GetUserSessionDataResponse]
 	getAgentProfileGroup                    *connect_go.Client[org.GetAgentProfileGroupRequest, org.GetAgentProfileGroupResponse]
@@ -2230,6 +2241,11 @@ func (c *orgClient) GetUserEmailVerifiedByOrgId(ctx context.Context, req *connec
 // SendUserEmailVerification calls api.v1alpha1.org.Org.SendUserEmailVerification.
 func (c *orgClient) SendUserEmailVerification(ctx context.Context, req *connect_go.Request[org.SendUserEmailVerificationRequest]) (*connect_go.Response[org.SendUserEmailVerificationResponse], error) {
 	return c.sendUserEmailVerification.CallUnary(ctx, req)
+}
+
+// SendUserEmailPasswordReset calls api.v1alpha1.org.Org.SendUserEmailPasswordReset.
+func (c *orgClient) SendUserEmailPasswordReset(ctx context.Context, req *connect_go.Request[org.SendUserEmailPasswordResetRequest]) (*connect_go.Response[org.SendUserEmailPasswordResetResponse], error) {
+	return c.sendUserEmailPasswordReset.CallUnary(ctx, req)
 }
 
 // SendUserEmailVerificationByOrgId calls api.v1alpha1.org.Org.SendUserEmailVerificationByOrgId.
@@ -2843,6 +2859,8 @@ type OrgHandler interface {
 	GetUserEmailVerifiedByOrgId(context.Context, *connect_go.Request[org.GetUserEmailVerifiedByOrgIdRequest]) (*connect_go.Response[org.GetUserEmailVerifiedByOrgIdResponse], error)
 	// SendUserEmailVerification sends a verification email to the user.
 	SendUserEmailVerification(context.Context, *connect_go.Request[org.SendUserEmailVerificationRequest]) (*connect_go.Response[org.SendUserEmailVerificationResponse], error)
+	// SendUserEmailPasswordReset sends a verification email to the user.
+	SendUserEmailPasswordReset(context.Context, *connect_go.Request[org.SendUserEmailPasswordResetRequest]) (*connect_go.Response[org.SendUserEmailPasswordResetResponse], error)
 	// SendUserEmailVerificationByOrgId sends a verification email to the user.
 	SendUserEmailVerificationByOrgId(context.Context, *connect_go.Request[org.SendUserEmailVerificationByOrgIdRequest]) (*connect_go.Response[org.SendUserEmailVerificationByOrgIdResponse], error)
 	// GetUserSessionData returns data for the front end's session state
@@ -3432,6 +3450,11 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.SendUserEmailVerification,
 		opts...,
 	)
+	orgSendUserEmailPasswordResetHandler := connect_go.NewUnaryHandler(
+		OrgSendUserEmailPasswordResetProcedure,
+		svc.SendUserEmailPasswordReset,
+		opts...,
+	)
 	orgSendUserEmailVerificationByOrgIdHandler := connect_go.NewUnaryHandler(
 		OrgSendUserEmailVerificationByOrgIdProcedure,
 		svc.SendUserEmailVerificationByOrgId,
@@ -4015,6 +4038,8 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 			orgGetUserEmailVerifiedByOrgIdHandler.ServeHTTP(w, r)
 		case OrgSendUserEmailVerificationProcedure:
 			orgSendUserEmailVerificationHandler.ServeHTTP(w, r)
+		case OrgSendUserEmailPasswordResetProcedure:
+			orgSendUserEmailPasswordResetHandler.ServeHTTP(w, r)
 		case OrgSendUserEmailVerificationByOrgIdProcedure:
 			orgSendUserEmailVerificationByOrgIdHandler.ServeHTTP(w, r)
 		case OrgGetUserSessionDataProcedure:
@@ -4504,6 +4529,10 @@ func (UnimplementedOrgHandler) GetUserEmailVerifiedByOrgId(context.Context, *con
 
 func (UnimplementedOrgHandler) SendUserEmailVerification(context.Context, *connect_go.Request[org.SendUserEmailVerificationRequest]) (*connect_go.Response[org.SendUserEmailVerificationResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.SendUserEmailVerification is not implemented"))
+}
+
+func (UnimplementedOrgHandler) SendUserEmailPasswordReset(context.Context, *connect_go.Request[org.SendUserEmailPasswordResetRequest]) (*connect_go.Response[org.SendUserEmailPasswordResetResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.SendUserEmailPasswordReset is not implemented"))
 }
 
 func (UnimplementedOrgHandler) SendUserEmailVerificationByOrgId(context.Context, *connect_go.Request[org.SendUserEmailVerificationByOrgIdRequest]) (*connect_go.Response[org.SendUserEmailVerificationByOrgIdResponse], error) {
