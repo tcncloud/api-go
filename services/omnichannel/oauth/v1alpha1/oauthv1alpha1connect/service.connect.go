@@ -33,14 +33,14 @@ const (
 // reflection-formatted method names, remove the leading slash and convert the remaining slash to a
 // period.
 const (
-	// OauthServiceGetConnectedInboxOAuthSpecificationsProcedure is the fully-qualified name of the
-	// OauthService's GetConnectedInboxOAuthSpecifications RPC.
-	OauthServiceGetConnectedInboxOAuthSpecificationsProcedure = "/services.omnichannel.oauth.v1alpha1.OauthService/GetConnectedInboxOAuthSpecifications"
+	// OauthServiceGetConnectedInboxOAuthURLProcedure is the fully-qualified name of the OauthService's
+	// GetConnectedInboxOAuthURL RPC.
+	OauthServiceGetConnectedInboxOAuthURLProcedure = "/services.omnichannel.oauth.v1alpha1.OauthService/GetConnectedInboxOAuthURL"
 )
 
 // OauthServiceClient is a client for the services.omnichannel.oauth.v1alpha1.OauthService service.
 type OauthServiceClient interface {
-	GetConnectedInboxOAuthSpecifications(context.Context, *connect_go.Request[v1alpha1.GetConnectedInboxOAuthSpecificationsRequest]) (*connect_go.Response[v1alpha1.GetConnectedInboxOAuthSpecificationsResponse], error)
+	GetConnectedInboxOAuthURL(context.Context, *connect_go.Request[v1alpha1.GetConnectedInboxOAuthURLRequest]) (*connect_go.Response[v1alpha1.GetConnectedInboxOAuthURLResponse], error)
 }
 
 // NewOauthServiceClient constructs a client for the
@@ -54,9 +54,9 @@ type OauthServiceClient interface {
 func NewOauthServiceClient(httpClient connect_go.HTTPClient, baseURL string, opts ...connect_go.ClientOption) OauthServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
 	return &oauthServiceClient{
-		getConnectedInboxOAuthSpecifications: connect_go.NewClient[v1alpha1.GetConnectedInboxOAuthSpecificationsRequest, v1alpha1.GetConnectedInboxOAuthSpecificationsResponse](
+		getConnectedInboxOAuthURL: connect_go.NewClient[v1alpha1.GetConnectedInboxOAuthURLRequest, v1alpha1.GetConnectedInboxOAuthURLResponse](
 			httpClient,
-			baseURL+OauthServiceGetConnectedInboxOAuthSpecificationsProcedure,
+			baseURL+OauthServiceGetConnectedInboxOAuthURLProcedure,
 			opts...,
 		),
 	}
@@ -64,19 +64,19 @@ func NewOauthServiceClient(httpClient connect_go.HTTPClient, baseURL string, opt
 
 // oauthServiceClient implements OauthServiceClient.
 type oauthServiceClient struct {
-	getConnectedInboxOAuthSpecifications *connect_go.Client[v1alpha1.GetConnectedInboxOAuthSpecificationsRequest, v1alpha1.GetConnectedInboxOAuthSpecificationsResponse]
+	getConnectedInboxOAuthURL *connect_go.Client[v1alpha1.GetConnectedInboxOAuthURLRequest, v1alpha1.GetConnectedInboxOAuthURLResponse]
 }
 
-// GetConnectedInboxOAuthSpecifications calls
-// services.omnichannel.oauth.v1alpha1.OauthService.GetConnectedInboxOAuthSpecifications.
-func (c *oauthServiceClient) GetConnectedInboxOAuthSpecifications(ctx context.Context, req *connect_go.Request[v1alpha1.GetConnectedInboxOAuthSpecificationsRequest]) (*connect_go.Response[v1alpha1.GetConnectedInboxOAuthSpecificationsResponse], error) {
-	return c.getConnectedInboxOAuthSpecifications.CallUnary(ctx, req)
+// GetConnectedInboxOAuthURL calls
+// services.omnichannel.oauth.v1alpha1.OauthService.GetConnectedInboxOAuthURL.
+func (c *oauthServiceClient) GetConnectedInboxOAuthURL(ctx context.Context, req *connect_go.Request[v1alpha1.GetConnectedInboxOAuthURLRequest]) (*connect_go.Response[v1alpha1.GetConnectedInboxOAuthURLResponse], error) {
+	return c.getConnectedInboxOAuthURL.CallUnary(ctx, req)
 }
 
 // OauthServiceHandler is an implementation of the services.omnichannel.oauth.v1alpha1.OauthService
 // service.
 type OauthServiceHandler interface {
-	GetConnectedInboxOAuthSpecifications(context.Context, *connect_go.Request[v1alpha1.GetConnectedInboxOAuthSpecificationsRequest]) (*connect_go.Response[v1alpha1.GetConnectedInboxOAuthSpecificationsResponse], error)
+	GetConnectedInboxOAuthURL(context.Context, *connect_go.Request[v1alpha1.GetConnectedInboxOAuthURLRequest]) (*connect_go.Response[v1alpha1.GetConnectedInboxOAuthURLResponse], error)
 }
 
 // NewOauthServiceHandler builds an HTTP handler from the service implementation. It returns the
@@ -85,15 +85,15 @@ type OauthServiceHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewOauthServiceHandler(svc OauthServiceHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	oauthServiceGetConnectedInboxOAuthSpecificationsHandler := connect_go.NewUnaryHandler(
-		OauthServiceGetConnectedInboxOAuthSpecificationsProcedure,
-		svc.GetConnectedInboxOAuthSpecifications,
+	oauthServiceGetConnectedInboxOAuthURLHandler := connect_go.NewUnaryHandler(
+		OauthServiceGetConnectedInboxOAuthURLProcedure,
+		svc.GetConnectedInboxOAuthURL,
 		opts...,
 	)
 	return "/services.omnichannel.oauth.v1alpha1.OauthService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
-		case OauthServiceGetConnectedInboxOAuthSpecificationsProcedure:
-			oauthServiceGetConnectedInboxOAuthSpecificationsHandler.ServeHTTP(w, r)
+		case OauthServiceGetConnectedInboxOAuthURLProcedure:
+			oauthServiceGetConnectedInboxOAuthURLHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -103,6 +103,6 @@ func NewOauthServiceHandler(svc OauthServiceHandler, opts ...connect_go.HandlerO
 // UnimplementedOauthServiceHandler returns CodeUnimplemented from all methods.
 type UnimplementedOauthServiceHandler struct{}
 
-func (UnimplementedOauthServiceHandler) GetConnectedInboxOAuthSpecifications(context.Context, *connect_go.Request[v1alpha1.GetConnectedInboxOAuthSpecificationsRequest]) (*connect_go.Response[v1alpha1.GetConnectedInboxOAuthSpecificationsResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.omnichannel.oauth.v1alpha1.OauthService.GetConnectedInboxOAuthSpecifications is not implemented"))
+func (UnimplementedOauthServiceHandler) GetConnectedInboxOAuthURL(context.Context, *connect_go.Request[v1alpha1.GetConnectedInboxOAuthURLRequest]) (*connect_go.Response[v1alpha1.GetConnectedInboxOAuthURLResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.omnichannel.oauth.v1alpha1.OauthService.GetConnectedInboxOAuthURL is not implemented"))
 }

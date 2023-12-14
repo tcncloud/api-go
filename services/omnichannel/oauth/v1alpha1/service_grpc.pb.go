@@ -19,14 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	OauthService_GetConnectedInboxOAuthSpecifications_FullMethodName = "/services.omnichannel.oauth.v1alpha1.OauthService/GetConnectedInboxOAuthSpecifications"
+	OauthService_GetConnectedInboxOAuthURL_FullMethodName = "/services.omnichannel.oauth.v1alpha1.OauthService/GetConnectedInboxOAuthURL"
 )
 
 // OauthServiceClient is the client API for OauthService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type OauthServiceClient interface {
-	GetConnectedInboxOAuthSpecifications(ctx context.Context, in *GetConnectedInboxOAuthSpecificationsRequest, opts ...grpc.CallOption) (*GetConnectedInboxOAuthSpecificationsResponse, error)
+	GetConnectedInboxOAuthURL(ctx context.Context, in *GetConnectedInboxOAuthURLRequest, opts ...grpc.CallOption) (*GetConnectedInboxOAuthURLResponse, error)
 }
 
 type oauthServiceClient struct {
@@ -37,9 +37,9 @@ func NewOauthServiceClient(cc grpc.ClientConnInterface) OauthServiceClient {
 	return &oauthServiceClient{cc}
 }
 
-func (c *oauthServiceClient) GetConnectedInboxOAuthSpecifications(ctx context.Context, in *GetConnectedInboxOAuthSpecificationsRequest, opts ...grpc.CallOption) (*GetConnectedInboxOAuthSpecificationsResponse, error) {
-	out := new(GetConnectedInboxOAuthSpecificationsResponse)
-	err := c.cc.Invoke(ctx, OauthService_GetConnectedInboxOAuthSpecifications_FullMethodName, in, out, opts...)
+func (c *oauthServiceClient) GetConnectedInboxOAuthURL(ctx context.Context, in *GetConnectedInboxOAuthURLRequest, opts ...grpc.CallOption) (*GetConnectedInboxOAuthURLResponse, error) {
+	out := new(GetConnectedInboxOAuthURLResponse)
+	err := c.cc.Invoke(ctx, OauthService_GetConnectedInboxOAuthURL_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -50,7 +50,7 @@ func (c *oauthServiceClient) GetConnectedInboxOAuthSpecifications(ctx context.Co
 // All implementations must embed UnimplementedOauthServiceServer
 // for forward compatibility
 type OauthServiceServer interface {
-	GetConnectedInboxOAuthSpecifications(context.Context, *GetConnectedInboxOAuthSpecificationsRequest) (*GetConnectedInboxOAuthSpecificationsResponse, error)
+	GetConnectedInboxOAuthURL(context.Context, *GetConnectedInboxOAuthURLRequest) (*GetConnectedInboxOAuthURLResponse, error)
 	mustEmbedUnimplementedOauthServiceServer()
 }
 
@@ -58,8 +58,8 @@ type OauthServiceServer interface {
 type UnimplementedOauthServiceServer struct {
 }
 
-func (UnimplementedOauthServiceServer) GetConnectedInboxOAuthSpecifications(context.Context, *GetConnectedInboxOAuthSpecificationsRequest) (*GetConnectedInboxOAuthSpecificationsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetConnectedInboxOAuthSpecifications not implemented")
+func (UnimplementedOauthServiceServer) GetConnectedInboxOAuthURL(context.Context, *GetConnectedInboxOAuthURLRequest) (*GetConnectedInboxOAuthURLResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetConnectedInboxOAuthURL not implemented")
 }
 func (UnimplementedOauthServiceServer) mustEmbedUnimplementedOauthServiceServer() {}
 
@@ -74,20 +74,20 @@ func RegisterOauthServiceServer(s grpc.ServiceRegistrar, srv OauthServiceServer)
 	s.RegisterService(&OauthService_ServiceDesc, srv)
 }
 
-func _OauthService_GetConnectedInboxOAuthSpecifications_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetConnectedInboxOAuthSpecificationsRequest)
+func _OauthService_GetConnectedInboxOAuthURL_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetConnectedInboxOAuthURLRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(OauthServiceServer).GetConnectedInboxOAuthSpecifications(ctx, in)
+		return srv.(OauthServiceServer).GetConnectedInboxOAuthURL(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: OauthService_GetConnectedInboxOAuthSpecifications_FullMethodName,
+		FullMethod: OauthService_GetConnectedInboxOAuthURL_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OauthServiceServer).GetConnectedInboxOAuthSpecifications(ctx, req.(*GetConnectedInboxOAuthSpecificationsRequest))
+		return srv.(OauthServiceServer).GetConnectedInboxOAuthURL(ctx, req.(*GetConnectedInboxOAuthURLRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -100,8 +100,8 @@ var OauthService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*OauthServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetConnectedInboxOAuthSpecifications",
-			Handler:    _OauthService_GetConnectedInboxOAuthSpecifications_Handler,
+			MethodName: "GetConnectedInboxOAuthURL",
+			Handler:    _OauthService_GetConnectedInboxOAuthURL_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
