@@ -93,11 +93,17 @@ const (
 	Org_GetUserPasswordResetLink_FullMethodName                = "/api.v1alpha1.org.Org/GetUserPasswordResetLink"
 	Org_GetUserPasswordResetLinkByOrgId_FullMethodName         = "/api.v1alpha1.org.Org/GetUserPasswordResetLinkByOrgId"
 	Org_CreatePasswordResetLink_FullMethodName                 = "/api.v1alpha1.org.Org/CreatePasswordResetLink"
+	Org_CreatePasswordResetLinkByOrgId_FullMethodName          = "/api.v1alpha1.org.Org/CreatePasswordResetLinkByOrgId"
 	Org_GetUserLoginInfo_FullMethodName                        = "/api.v1alpha1.org.Org/GetUserLoginInfo"
 	Org_GetUserEmailVerified_FullMethodName                    = "/api.v1alpha1.org.Org/GetUserEmailVerified"
 	Org_GetUserEmailVerifiedByOrgId_FullMethodName             = "/api.v1alpha1.org.Org/GetUserEmailVerifiedByOrgId"
+	Org_ResetMyPassword_FullMethodName                         = "/api.v1alpha1.org.Org/ResetMyPassword"
+	Org_ResetUserPassword_FullMethodName                       = "/api.v1alpha1.org.Org/ResetUserPassword"
+	Org_ResetUserPasswordByOrgId_FullMethodName                = "/api.v1alpha1.org.Org/ResetUserPasswordByOrgId"
 	Org_SendUserEmailVerification_FullMethodName               = "/api.v1alpha1.org.Org/SendUserEmailVerification"
 	Org_SendUserEmailVerificationByOrgId_FullMethodName        = "/api.v1alpha1.org.Org/SendUserEmailVerificationByOrgId"
+	Org_SendPasswordReset_FullMethodName                       = "/api.v1alpha1.org.Org/SendPasswordReset"
+	Org_SendPasswordResetByOrgId_FullMethodName                = "/api.v1alpha1.org.Org/SendPasswordResetByOrgId"
 	Org_GetUserSessionData_FullMethodName                      = "/api.v1alpha1.org.Org/GetUserSessionData"
 	Org_GetAgentProfileGroup_FullMethodName                    = "/api.v1alpha1.org.Org/GetAgentProfileGroup"
 	Org_ListAgentProfileGroups_FullMethodName                  = "/api.v1alpha1.org.Org/ListAgentProfileGroups"
@@ -138,6 +144,7 @@ const (
 	Org_CreateAgentResponseAutoRules_FullMethodName            = "/api.v1alpha1.org.Org/CreateAgentResponseAutoRules"
 	Org_UpdateAgentResponseAutoRules_FullMethodName            = "/api.v1alpha1.org.Org/UpdateAgentResponseAutoRules"
 	Org_DeleteAgentResponseAutoRules_FullMethodName            = "/api.v1alpha1.org.Org/DeleteAgentResponseAutoRules"
+	Org_ListHuntGroupIntegrationLinks_FullMethodName           = "/api.v1alpha1.org.Org/ListHuntGroupIntegrationLinks"
 	Org_CreateTrust_FullMethodName                             = "/api.v1alpha1.org.Org/CreateTrust"
 	Org_AcceptTrust_FullMethodName                             = "/api.v1alpha1.org.Org/AcceptTrust"
 	Org_RejectTrust_FullMethodName                             = "/api.v1alpha1.org.Org/RejectTrust"
@@ -361,6 +368,8 @@ type OrgClient interface {
 	GetUserPasswordResetLinkByOrgId(ctx context.Context, in *GetUserPasswordResetLinkByOrgIdRequest, opts ...grpc.CallOption) (*GetUserPasswordResetLinkByOrgIdResponse, error)
 	// CreatePasswordResetLink creates a password reset link for the given user id.
 	CreatePasswordResetLink(ctx context.Context, in *CreatePasswordResetLinkRequest, opts ...grpc.CallOption) (*CreatePasswordResetLinkResponse, error)
+	// CreatePasswordResetLinkByOrgId creates a password reset link for the given user id.
+	CreatePasswordResetLinkByOrgId(ctx context.Context, in *CreatePasswordResetLinkByOrgIdRequest, opts ...grpc.CallOption) (*CreatePasswordResetLinkByOrgIdResponse, error)
 	// Used to be called GetUserBlocked
 	// GetUserLoginInfo gets information about a user's login.
 	GetUserLoginInfo(ctx context.Context, in *GetUserLoginInfoRequest, opts ...grpc.CallOption) (*GetUserLoginInfoResponse, error)
@@ -368,10 +377,20 @@ type OrgClient interface {
 	GetUserEmailVerified(ctx context.Context, in *GetUserEmailVerifiedRequest, opts ...grpc.CallOption) (*GetUserEmailVerifiedResponse, error)
 	// GetUserEmailVerifiedByOrgId gets whether the user's email is verified.
 	GetUserEmailVerifiedByOrgId(ctx context.Context, in *GetUserEmailVerifiedByOrgIdRequest, opts ...grpc.CallOption) (*GetUserEmailVerifiedByOrgIdResponse, error)
+	// ResetMyPassword resets the user's password.
+	ResetMyPassword(ctx context.Context, in *ResetMyPasswordRequest, opts ...grpc.CallOption) (*ResetMyPasswordResponse, error)
+	// ResetUserPassword resets the user's password.
+	ResetUserPassword(ctx context.Context, in *ResetUserPasswordRequest, opts ...grpc.CallOption) (*ResetUserPasswordResponse, error)
+	// ResetUserPasswordByOrgId resets the user's password.
+	ResetUserPasswordByOrgId(ctx context.Context, in *ResetUserPasswordByOrgIdRequest, opts ...grpc.CallOption) (*ResetUserPasswordByOrgIdResponse, error)
 	// SendUserEmailVerification sends a verification email to the user.
 	SendUserEmailVerification(ctx context.Context, in *SendUserEmailVerificationRequest, opts ...grpc.CallOption) (*SendUserEmailVerificationResponse, error)
 	// SendUserEmailVerificationByOrgId sends a verification email to the user.
 	SendUserEmailVerificationByOrgId(ctx context.Context, in *SendUserEmailVerificationByOrgIdRequest, opts ...grpc.CallOption) (*SendUserEmailVerificationByOrgIdResponse, error)
+	// SendPasswordReset sends a password reset email to the user.
+	SendPasswordReset(ctx context.Context, in *SendPasswordResetRequest, opts ...grpc.CallOption) (*SendPasswordResetResponse, error)
+	// SendPasswordResetByOrgId sends a password reset email to the user.
+	SendPasswordResetByOrgId(ctx context.Context, in *SendPasswordResetByOrgIdRequest, opts ...grpc.CallOption) (*SendPasswordResetByOrgIdResponse, error)
 	// GetUserSessionData returns data for the front end's session state
 	GetUserSessionData(ctx context.Context, in *GetUserSessionDataRequest, opts ...grpc.CallOption) (*GetUserSessionDataResponse, error)
 	// GetAgentProfileGroup returns an agent profile group by id
@@ -456,6 +475,8 @@ type OrgClient interface {
 	UpdateAgentResponseAutoRules(ctx context.Context, in *UpdateAgentResponseAutoRulesRequest, opts ...grpc.CallOption) (*UpdateAgentResponseAutoRulesResponse, error)
 	// Deletes an existing Agent Call Response Automatically added compliance rule set.
 	DeleteAgentResponseAutoRules(ctx context.Context, in *DeleteAgentResponseAutoRulesRequest, opts ...grpc.CallOption) (*DeleteAgentResponseAutoRulesResponse, error)
+	// ListHuntGroupIntegrationLinks returns all integration links for a hunt group.
+	ListHuntGroupIntegrationLinks(ctx context.Context, in *ListHuntGroupIntegrationLinksRequest, opts ...grpc.CallOption) (*ListHuntGroupIntegrationLinksResponse, error)
 	// CreateTrust creates a new trust.
 	CreateTrust(ctx context.Context, in *CreateTrustRequest, opts ...grpc.CallOption) (*CreateTrustResponse, error)
 	// AcceptTrust accepts an incoming trust.
@@ -1421,6 +1442,15 @@ func (c *orgClient) CreatePasswordResetLink(ctx context.Context, in *CreatePassw
 	return out, nil
 }
 
+func (c *orgClient) CreatePasswordResetLinkByOrgId(ctx context.Context, in *CreatePasswordResetLinkByOrgIdRequest, opts ...grpc.CallOption) (*CreatePasswordResetLinkByOrgIdResponse, error) {
+	out := new(CreatePasswordResetLinkByOrgIdResponse)
+	err := c.cc.Invoke(ctx, Org_CreatePasswordResetLinkByOrgId_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *orgClient) GetUserLoginInfo(ctx context.Context, in *GetUserLoginInfoRequest, opts ...grpc.CallOption) (*GetUserLoginInfoResponse, error) {
 	out := new(GetUserLoginInfoResponse)
 	err := c.cc.Invoke(ctx, Org_GetUserLoginInfo_FullMethodName, in, out, opts...)
@@ -1448,6 +1478,33 @@ func (c *orgClient) GetUserEmailVerifiedByOrgId(ctx context.Context, in *GetUser
 	return out, nil
 }
 
+func (c *orgClient) ResetMyPassword(ctx context.Context, in *ResetMyPasswordRequest, opts ...grpc.CallOption) (*ResetMyPasswordResponse, error) {
+	out := new(ResetMyPasswordResponse)
+	err := c.cc.Invoke(ctx, Org_ResetMyPassword_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) ResetUserPassword(ctx context.Context, in *ResetUserPasswordRequest, opts ...grpc.CallOption) (*ResetUserPasswordResponse, error) {
+	out := new(ResetUserPasswordResponse)
+	err := c.cc.Invoke(ctx, Org_ResetUserPassword_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) ResetUserPasswordByOrgId(ctx context.Context, in *ResetUserPasswordByOrgIdRequest, opts ...grpc.CallOption) (*ResetUserPasswordByOrgIdResponse, error) {
+	out := new(ResetUserPasswordByOrgIdResponse)
+	err := c.cc.Invoke(ctx, Org_ResetUserPasswordByOrgId_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *orgClient) SendUserEmailVerification(ctx context.Context, in *SendUserEmailVerificationRequest, opts ...grpc.CallOption) (*SendUserEmailVerificationResponse, error) {
 	out := new(SendUserEmailVerificationResponse)
 	err := c.cc.Invoke(ctx, Org_SendUserEmailVerification_FullMethodName, in, out, opts...)
@@ -1460,6 +1517,24 @@ func (c *orgClient) SendUserEmailVerification(ctx context.Context, in *SendUserE
 func (c *orgClient) SendUserEmailVerificationByOrgId(ctx context.Context, in *SendUserEmailVerificationByOrgIdRequest, opts ...grpc.CallOption) (*SendUserEmailVerificationByOrgIdResponse, error) {
 	out := new(SendUserEmailVerificationByOrgIdResponse)
 	err := c.cc.Invoke(ctx, Org_SendUserEmailVerificationByOrgId_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) SendPasswordReset(ctx context.Context, in *SendPasswordResetRequest, opts ...grpc.CallOption) (*SendPasswordResetResponse, error) {
+	out := new(SendPasswordResetResponse)
+	err := c.cc.Invoke(ctx, Org_SendPasswordReset_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) SendPasswordResetByOrgId(ctx context.Context, in *SendPasswordResetByOrgIdRequest, opts ...grpc.CallOption) (*SendPasswordResetByOrgIdResponse, error) {
+	out := new(SendPasswordResetByOrgIdResponse)
+	err := c.cc.Invoke(ctx, Org_SendPasswordResetByOrgId_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1820,6 +1895,15 @@ func (c *orgClient) UpdateAgentResponseAutoRules(ctx context.Context, in *Update
 func (c *orgClient) DeleteAgentResponseAutoRules(ctx context.Context, in *DeleteAgentResponseAutoRulesRequest, opts ...grpc.CallOption) (*DeleteAgentResponseAutoRulesResponse, error) {
 	out := new(DeleteAgentResponseAutoRulesResponse)
 	err := c.cc.Invoke(ctx, Org_DeleteAgentResponseAutoRules_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) ListHuntGroupIntegrationLinks(ctx context.Context, in *ListHuntGroupIntegrationLinksRequest, opts ...grpc.CallOption) (*ListHuntGroupIntegrationLinksResponse, error) {
+	out := new(ListHuntGroupIntegrationLinksResponse)
+	err := c.cc.Invoke(ctx, Org_ListHuntGroupIntegrationLinks_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -2399,6 +2483,8 @@ type OrgServer interface {
 	GetUserPasswordResetLinkByOrgId(context.Context, *GetUserPasswordResetLinkByOrgIdRequest) (*GetUserPasswordResetLinkByOrgIdResponse, error)
 	// CreatePasswordResetLink creates a password reset link for the given user id.
 	CreatePasswordResetLink(context.Context, *CreatePasswordResetLinkRequest) (*CreatePasswordResetLinkResponse, error)
+	// CreatePasswordResetLinkByOrgId creates a password reset link for the given user id.
+	CreatePasswordResetLinkByOrgId(context.Context, *CreatePasswordResetLinkByOrgIdRequest) (*CreatePasswordResetLinkByOrgIdResponse, error)
 	// Used to be called GetUserBlocked
 	// GetUserLoginInfo gets information about a user's login.
 	GetUserLoginInfo(context.Context, *GetUserLoginInfoRequest) (*GetUserLoginInfoResponse, error)
@@ -2406,10 +2492,20 @@ type OrgServer interface {
 	GetUserEmailVerified(context.Context, *GetUserEmailVerifiedRequest) (*GetUserEmailVerifiedResponse, error)
 	// GetUserEmailVerifiedByOrgId gets whether the user's email is verified.
 	GetUserEmailVerifiedByOrgId(context.Context, *GetUserEmailVerifiedByOrgIdRequest) (*GetUserEmailVerifiedByOrgIdResponse, error)
+	// ResetMyPassword resets the user's password.
+	ResetMyPassword(context.Context, *ResetMyPasswordRequest) (*ResetMyPasswordResponse, error)
+	// ResetUserPassword resets the user's password.
+	ResetUserPassword(context.Context, *ResetUserPasswordRequest) (*ResetUserPasswordResponse, error)
+	// ResetUserPasswordByOrgId resets the user's password.
+	ResetUserPasswordByOrgId(context.Context, *ResetUserPasswordByOrgIdRequest) (*ResetUserPasswordByOrgIdResponse, error)
 	// SendUserEmailVerification sends a verification email to the user.
 	SendUserEmailVerification(context.Context, *SendUserEmailVerificationRequest) (*SendUserEmailVerificationResponse, error)
 	// SendUserEmailVerificationByOrgId sends a verification email to the user.
 	SendUserEmailVerificationByOrgId(context.Context, *SendUserEmailVerificationByOrgIdRequest) (*SendUserEmailVerificationByOrgIdResponse, error)
+	// SendPasswordReset sends a password reset email to the user.
+	SendPasswordReset(context.Context, *SendPasswordResetRequest) (*SendPasswordResetResponse, error)
+	// SendPasswordResetByOrgId sends a password reset email to the user.
+	SendPasswordResetByOrgId(context.Context, *SendPasswordResetByOrgIdRequest) (*SendPasswordResetByOrgIdResponse, error)
 	// GetUserSessionData returns data for the front end's session state
 	GetUserSessionData(context.Context, *GetUserSessionDataRequest) (*GetUserSessionDataResponse, error)
 	// GetAgentProfileGroup returns an agent profile group by id
@@ -2494,6 +2590,8 @@ type OrgServer interface {
 	UpdateAgentResponseAutoRules(context.Context, *UpdateAgentResponseAutoRulesRequest) (*UpdateAgentResponseAutoRulesResponse, error)
 	// Deletes an existing Agent Call Response Automatically added compliance rule set.
 	DeleteAgentResponseAutoRules(context.Context, *DeleteAgentResponseAutoRulesRequest) (*DeleteAgentResponseAutoRulesResponse, error)
+	// ListHuntGroupIntegrationLinks returns all integration links for a hunt group.
+	ListHuntGroupIntegrationLinks(context.Context, *ListHuntGroupIntegrationLinksRequest) (*ListHuntGroupIntegrationLinksResponse, error)
 	// CreateTrust creates a new trust.
 	CreateTrust(context.Context, *CreateTrustRequest) (*CreateTrustResponse, error)
 	// AcceptTrust accepts an incoming trust.
@@ -2828,6 +2926,9 @@ func (UnimplementedOrgServer) GetUserPasswordResetLinkByOrgId(context.Context, *
 func (UnimplementedOrgServer) CreatePasswordResetLink(context.Context, *CreatePasswordResetLinkRequest) (*CreatePasswordResetLinkResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreatePasswordResetLink not implemented")
 }
+func (UnimplementedOrgServer) CreatePasswordResetLinkByOrgId(context.Context, *CreatePasswordResetLinkByOrgIdRequest) (*CreatePasswordResetLinkByOrgIdResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreatePasswordResetLinkByOrgId not implemented")
+}
 func (UnimplementedOrgServer) GetUserLoginInfo(context.Context, *GetUserLoginInfoRequest) (*GetUserLoginInfoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserLoginInfo not implemented")
 }
@@ -2837,11 +2938,26 @@ func (UnimplementedOrgServer) GetUserEmailVerified(context.Context, *GetUserEmai
 func (UnimplementedOrgServer) GetUserEmailVerifiedByOrgId(context.Context, *GetUserEmailVerifiedByOrgIdRequest) (*GetUserEmailVerifiedByOrgIdResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserEmailVerifiedByOrgId not implemented")
 }
+func (UnimplementedOrgServer) ResetMyPassword(context.Context, *ResetMyPasswordRequest) (*ResetMyPasswordResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ResetMyPassword not implemented")
+}
+func (UnimplementedOrgServer) ResetUserPassword(context.Context, *ResetUserPasswordRequest) (*ResetUserPasswordResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ResetUserPassword not implemented")
+}
+func (UnimplementedOrgServer) ResetUserPasswordByOrgId(context.Context, *ResetUserPasswordByOrgIdRequest) (*ResetUserPasswordByOrgIdResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ResetUserPasswordByOrgId not implemented")
+}
 func (UnimplementedOrgServer) SendUserEmailVerification(context.Context, *SendUserEmailVerificationRequest) (*SendUserEmailVerificationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendUserEmailVerification not implemented")
 }
 func (UnimplementedOrgServer) SendUserEmailVerificationByOrgId(context.Context, *SendUserEmailVerificationByOrgIdRequest) (*SendUserEmailVerificationByOrgIdResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendUserEmailVerificationByOrgId not implemented")
+}
+func (UnimplementedOrgServer) SendPasswordReset(context.Context, *SendPasswordResetRequest) (*SendPasswordResetResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendPasswordReset not implemented")
+}
+func (UnimplementedOrgServer) SendPasswordResetByOrgId(context.Context, *SendPasswordResetByOrgIdRequest) (*SendPasswordResetByOrgIdResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendPasswordResetByOrgId not implemented")
 }
 func (UnimplementedOrgServer) GetUserSessionData(context.Context, *GetUserSessionDataRequest) (*GetUserSessionDataResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserSessionData not implemented")
@@ -2962,6 +3078,9 @@ func (UnimplementedOrgServer) UpdateAgentResponseAutoRules(context.Context, *Upd
 }
 func (UnimplementedOrgServer) DeleteAgentResponseAutoRules(context.Context, *DeleteAgentResponseAutoRulesRequest) (*DeleteAgentResponseAutoRulesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteAgentResponseAutoRules not implemented")
+}
+func (UnimplementedOrgServer) ListHuntGroupIntegrationLinks(context.Context, *ListHuntGroupIntegrationLinksRequest) (*ListHuntGroupIntegrationLinksResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListHuntGroupIntegrationLinks not implemented")
 }
 func (UnimplementedOrgServer) CreateTrust(context.Context, *CreateTrustRequest) (*CreateTrustResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateTrust not implemented")
@@ -4464,6 +4583,24 @@ func _Org_CreatePasswordResetLink_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Org_CreatePasswordResetLinkByOrgId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreatePasswordResetLinkByOrgIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).CreatePasswordResetLinkByOrgId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_CreatePasswordResetLinkByOrgId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).CreatePasswordResetLinkByOrgId(ctx, req.(*CreatePasswordResetLinkByOrgIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Org_GetUserLoginInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetUserLoginInfoRequest)
 	if err := dec(in); err != nil {
@@ -4518,6 +4655,60 @@ func _Org_GetUserEmailVerifiedByOrgId_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Org_ResetMyPassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ResetMyPasswordRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).ResetMyPassword(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_ResetMyPassword_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).ResetMyPassword(ctx, req.(*ResetMyPasswordRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_ResetUserPassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ResetUserPasswordRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).ResetUserPassword(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_ResetUserPassword_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).ResetUserPassword(ctx, req.(*ResetUserPasswordRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_ResetUserPasswordByOrgId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ResetUserPasswordByOrgIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).ResetUserPasswordByOrgId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_ResetUserPasswordByOrgId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).ResetUserPasswordByOrgId(ctx, req.(*ResetUserPasswordByOrgIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Org_SendUserEmailVerification_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SendUserEmailVerificationRequest)
 	if err := dec(in); err != nil {
@@ -4550,6 +4741,42 @@ func _Org_SendUserEmailVerificationByOrgId_Handler(srv interface{}, ctx context.
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrgServer).SendUserEmailVerificationByOrgId(ctx, req.(*SendUserEmailVerificationByOrgIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_SendPasswordReset_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SendPasswordResetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).SendPasswordReset(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_SendPasswordReset_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).SendPasswordReset(ctx, req.(*SendPasswordResetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_SendPasswordResetByOrgId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SendPasswordResetByOrgIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).SendPasswordResetByOrgId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_SendPasswordResetByOrgId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).SendPasswordResetByOrgId(ctx, req.(*SendPasswordResetByOrgIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -5270,6 +5497,24 @@ func _Org_DeleteAgentResponseAutoRules_Handler(srv interface{}, ctx context.Cont
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrgServer).DeleteAgentResponseAutoRules(ctx, req.(*DeleteAgentResponseAutoRulesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_ListHuntGroupIntegrationLinks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListHuntGroupIntegrationLinksRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).ListHuntGroupIntegrationLinks(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_ListHuntGroupIntegrationLinks_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).ListHuntGroupIntegrationLinks(ctx, req.(*ListHuntGroupIntegrationLinksRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -6338,6 +6583,10 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Org_CreatePasswordResetLink_Handler,
 		},
 		{
+			MethodName: "CreatePasswordResetLinkByOrgId",
+			Handler:    _Org_CreatePasswordResetLinkByOrgId_Handler,
+		},
+		{
 			MethodName: "GetUserLoginInfo",
 			Handler:    _Org_GetUserLoginInfo_Handler,
 		},
@@ -6350,12 +6599,32 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Org_GetUserEmailVerifiedByOrgId_Handler,
 		},
 		{
+			MethodName: "ResetMyPassword",
+			Handler:    _Org_ResetMyPassword_Handler,
+		},
+		{
+			MethodName: "ResetUserPassword",
+			Handler:    _Org_ResetUserPassword_Handler,
+		},
+		{
+			MethodName: "ResetUserPasswordByOrgId",
+			Handler:    _Org_ResetUserPasswordByOrgId_Handler,
+		},
+		{
 			MethodName: "SendUserEmailVerification",
 			Handler:    _Org_SendUserEmailVerification_Handler,
 		},
 		{
 			MethodName: "SendUserEmailVerificationByOrgId",
 			Handler:    _Org_SendUserEmailVerificationByOrgId_Handler,
+		},
+		{
+			MethodName: "SendPasswordReset",
+			Handler:    _Org_SendPasswordReset_Handler,
+		},
+		{
+			MethodName: "SendPasswordResetByOrgId",
+			Handler:    _Org_SendPasswordResetByOrgId_Handler,
 		},
 		{
 			MethodName: "GetUserSessionData",
@@ -6516,6 +6785,10 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteAgentResponseAutoRules",
 			Handler:    _Org_DeleteAgentResponseAutoRules_Handler,
+		},
+		{
+			MethodName: "ListHuntGroupIntegrationLinks",
+			Handler:    _Org_ListHuntGroupIntegrationLinks_Handler,
 		},
 		{
 			MethodName: "CreateTrust",
