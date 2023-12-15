@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion7
 
 const (
 	AuthConnectionService_CreateAuthConnection_FullMethodName       = "/api.v1alpha1.org.authconnection.AuthConnectionService/CreateAuthConnection"
+	AuthConnectionService_ListAuthConnectionIds_FullMethodName      = "/api.v1alpha1.org.authconnection.AuthConnectionService/ListAuthConnectionIds"
 	AuthConnectionService_GetAuthConnectionSettings_FullMethodName  = "/api.v1alpha1.org.authconnection.AuthConnectionService/GetAuthConnectionSettings"
 	AuthConnectionService_GetAuthConnection_FullMethodName          = "/api.v1alpha1.org.authconnection.AuthConnectionService/GetAuthConnection"
 	AuthConnectionService_DeleteAuthConnection_FullMethodName       = "/api.v1alpha1.org.authconnection.AuthConnectionService/DeleteAuthConnection"
@@ -33,6 +34,8 @@ const (
 type AuthConnectionServiceClient interface {
 	// CreateAuthConnection creates a new auth0 connection.
 	CreateAuthConnection(ctx context.Context, in *CreateAuthConnectionRequest, opts ...grpc.CallOption) (*CreateAuthConnectionResponse, error)
+	// ListAuthConnectionIds returns the IDs of all authconnections belonging to the current org.
+	ListAuthConnectionIds(ctx context.Context, in *ListAuthConnectionIdsRequest, opts ...grpc.CallOption) (*ListAuthConnectionIdsResponse, error)
 	// GetAuthConnectionSettings gets auth connection settings.
 	// DEPRECATED: use GetAuthConnection
 	GetAuthConnectionSettings(ctx context.Context, in *GetAuthConnectionSettingsRequest, opts ...grpc.CallOption) (*GetAuthConnectionSettingsResponse, error)
@@ -57,6 +60,15 @@ func NewAuthConnectionServiceClient(cc grpc.ClientConnInterface) AuthConnectionS
 func (c *authConnectionServiceClient) CreateAuthConnection(ctx context.Context, in *CreateAuthConnectionRequest, opts ...grpc.CallOption) (*CreateAuthConnectionResponse, error) {
 	out := new(CreateAuthConnectionResponse)
 	err := c.cc.Invoke(ctx, AuthConnectionService_CreateAuthConnection_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authConnectionServiceClient) ListAuthConnectionIds(ctx context.Context, in *ListAuthConnectionIdsRequest, opts ...grpc.CallOption) (*ListAuthConnectionIdsResponse, error) {
+	out := new(ListAuthConnectionIdsResponse)
+	err := c.cc.Invoke(ctx, AuthConnectionService_ListAuthConnectionIds_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -114,6 +126,8 @@ func (c *authConnectionServiceClient) UpdateAuthConnectionGroups(ctx context.Con
 type AuthConnectionServiceServer interface {
 	// CreateAuthConnection creates a new auth0 connection.
 	CreateAuthConnection(context.Context, *CreateAuthConnectionRequest) (*CreateAuthConnectionResponse, error)
+	// ListAuthConnectionIds returns the IDs of all authconnections belonging to the current org.
+	ListAuthConnectionIds(context.Context, *ListAuthConnectionIdsRequest) (*ListAuthConnectionIdsResponse, error)
 	// GetAuthConnectionSettings gets auth connection settings.
 	// DEPRECATED: use GetAuthConnection
 	GetAuthConnectionSettings(context.Context, *GetAuthConnectionSettingsRequest) (*GetAuthConnectionSettingsResponse, error)
@@ -134,6 +148,9 @@ type UnimplementedAuthConnectionServiceServer struct {
 
 func (UnimplementedAuthConnectionServiceServer) CreateAuthConnection(context.Context, *CreateAuthConnectionRequest) (*CreateAuthConnectionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateAuthConnection not implemented")
+}
+func (UnimplementedAuthConnectionServiceServer) ListAuthConnectionIds(context.Context, *ListAuthConnectionIdsRequest) (*ListAuthConnectionIdsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListAuthConnectionIds not implemented")
 }
 func (UnimplementedAuthConnectionServiceServer) GetAuthConnectionSettings(context.Context, *GetAuthConnectionSettingsRequest) (*GetAuthConnectionSettingsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAuthConnectionSettings not implemented")
@@ -177,6 +194,24 @@ func _AuthConnectionService_CreateAuthConnection_Handler(srv interface{}, ctx co
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AuthConnectionServiceServer).CreateAuthConnection(ctx, req.(*CreateAuthConnectionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthConnectionService_ListAuthConnectionIds_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListAuthConnectionIdsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthConnectionServiceServer).ListAuthConnectionIds(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthConnectionService_ListAuthConnectionIds_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthConnectionServiceServer).ListAuthConnectionIds(ctx, req.(*ListAuthConnectionIdsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -281,6 +316,10 @@ var AuthConnectionService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateAuthConnection",
 			Handler:    _AuthConnectionService_CreateAuthConnection_Handler,
+		},
+		{
+			MethodName: "ListAuthConnectionIds",
+			Handler:    _AuthConnectionService_ListAuthConnectionIds_Handler,
 		},
 		{
 			MethodName: "GetAuthConnectionSettings",
