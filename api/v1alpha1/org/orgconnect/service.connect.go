@@ -232,9 +232,6 @@ const (
 	// OrgCreatePasswordResetLinkProcedure is the fully-qualified name of the Org's
 	// CreatePasswordResetLink RPC.
 	OrgCreatePasswordResetLinkProcedure = "/api.v1alpha1.org.Org/CreatePasswordResetLink"
-	// OrgCreatePasswordResetLinkByOrgIdProcedure is the fully-qualified name of the Org's
-	// CreatePasswordResetLinkByOrgId RPC.
-	OrgCreatePasswordResetLinkByOrgIdProcedure = "/api.v1alpha1.org.Org/CreatePasswordResetLinkByOrgId"
 	// OrgGetUserLoginInfoProcedure is the fully-qualified name of the Org's GetUserLoginInfo RPC.
 	OrgGetUserLoginInfoProcedure = "/api.v1alpha1.org.Org/GetUserLoginInfo"
 	// OrgGetUserEmailVerifiedProcedure is the fully-qualified name of the Org's GetUserEmailVerified
@@ -243,24 +240,12 @@ const (
 	// OrgGetUserEmailVerifiedByOrgIdProcedure is the fully-qualified name of the Org's
 	// GetUserEmailVerifiedByOrgId RPC.
 	OrgGetUserEmailVerifiedByOrgIdProcedure = "/api.v1alpha1.org.Org/GetUserEmailVerifiedByOrgId"
-	// OrgResetMyPasswordProcedure is the fully-qualified name of the Org's ResetMyPassword RPC.
-	OrgResetMyPasswordProcedure = "/api.v1alpha1.org.Org/ResetMyPassword"
-	// OrgResetUserPasswordProcedure is the fully-qualified name of the Org's ResetUserPassword RPC.
-	OrgResetUserPasswordProcedure = "/api.v1alpha1.org.Org/ResetUserPassword"
-	// OrgResetUserPasswordByOrgIdProcedure is the fully-qualified name of the Org's
-	// ResetUserPasswordByOrgId RPC.
-	OrgResetUserPasswordByOrgIdProcedure = "/api.v1alpha1.org.Org/ResetUserPasswordByOrgId"
 	// OrgSendUserEmailVerificationProcedure is the fully-qualified name of the Org's
 	// SendUserEmailVerification RPC.
 	OrgSendUserEmailVerificationProcedure = "/api.v1alpha1.org.Org/SendUserEmailVerification"
 	// OrgSendUserEmailVerificationByOrgIdProcedure is the fully-qualified name of the Org's
 	// SendUserEmailVerificationByOrgId RPC.
 	OrgSendUserEmailVerificationByOrgIdProcedure = "/api.v1alpha1.org.Org/SendUserEmailVerificationByOrgId"
-	// OrgSendPasswordResetProcedure is the fully-qualified name of the Org's SendPasswordReset RPC.
-	OrgSendPasswordResetProcedure = "/api.v1alpha1.org.Org/SendPasswordReset"
-	// OrgSendPasswordResetByOrgIdProcedure is the fully-qualified name of the Org's
-	// SendPasswordResetByOrgId RPC.
-	OrgSendPasswordResetByOrgIdProcedure = "/api.v1alpha1.org.Org/SendPasswordResetByOrgId"
 	// OrgGetUserSessionDataProcedure is the fully-qualified name of the Org's GetUserSessionData RPC.
 	OrgGetUserSessionDataProcedure = "/api.v1alpha1.org.Org/GetUserSessionData"
 	// OrgGetAgentProfileGroupProcedure is the fully-qualified name of the Org's GetAgentProfileGroup
@@ -372,9 +357,6 @@ const (
 	// OrgDeleteAgentResponseAutoRulesProcedure is the fully-qualified name of the Org's
 	// DeleteAgentResponseAutoRules RPC.
 	OrgDeleteAgentResponseAutoRulesProcedure = "/api.v1alpha1.org.Org/DeleteAgentResponseAutoRules"
-	// OrgListHuntGroupIntegrationLinksProcedure is the fully-qualified name of the Org's
-	// ListHuntGroupIntegrationLinks RPC.
-	OrgListHuntGroupIntegrationLinksProcedure = "/api.v1alpha1.org.Org/ListHuntGroupIntegrationLinks"
 	// OrgCreateTrustProcedure is the fully-qualified name of the Org's CreateTrust RPC.
 	OrgCreateTrustProcedure = "/api.v1alpha1.org.Org/CreateTrust"
 	// OrgAcceptTrustProcedure is the fully-qualified name of the Org's AcceptTrust RPC.
@@ -661,8 +643,6 @@ type OrgClient interface {
 	GetUserPasswordResetLinkByOrgId(context.Context, *connect_go.Request[org.GetUserPasswordResetLinkByOrgIdRequest]) (*connect_go.Response[org.GetUserPasswordResetLinkByOrgIdResponse], error)
 	// CreatePasswordResetLink creates a password reset link for the given user id.
 	CreatePasswordResetLink(context.Context, *connect_go.Request[org.CreatePasswordResetLinkRequest]) (*connect_go.Response[org.CreatePasswordResetLinkResponse], error)
-	// CreatePasswordResetLinkByOrgId creates a password reset link for the given user id.
-	CreatePasswordResetLinkByOrgId(context.Context, *connect_go.Request[org.CreatePasswordResetLinkByOrgIdRequest]) (*connect_go.Response[org.CreatePasswordResetLinkByOrgIdResponse], error)
 	// Used to be called GetUserBlocked
 	// GetUserLoginInfo gets information about a user's login.
 	GetUserLoginInfo(context.Context, *connect_go.Request[org.GetUserLoginInfoRequest]) (*connect_go.Response[org.GetUserLoginInfoResponse], error)
@@ -670,20 +650,10 @@ type OrgClient interface {
 	GetUserEmailVerified(context.Context, *connect_go.Request[org.GetUserEmailVerifiedRequest]) (*connect_go.Response[org.GetUserEmailVerifiedResponse], error)
 	// GetUserEmailVerifiedByOrgId gets whether the user's email is verified.
 	GetUserEmailVerifiedByOrgId(context.Context, *connect_go.Request[org.GetUserEmailVerifiedByOrgIdRequest]) (*connect_go.Response[org.GetUserEmailVerifiedByOrgIdResponse], error)
-	// ResetMyPassword resets the user's password.
-	ResetMyPassword(context.Context, *connect_go.Request[org.ResetMyPasswordRequest]) (*connect_go.Response[org.ResetMyPasswordResponse], error)
-	// ResetUserPassword resets the user's password.
-	ResetUserPassword(context.Context, *connect_go.Request[org.ResetUserPasswordRequest]) (*connect_go.Response[org.ResetUserPasswordResponse], error)
-	// ResetUserPasswordByOrgId resets the user's password.
-	ResetUserPasswordByOrgId(context.Context, *connect_go.Request[org.ResetUserPasswordByOrgIdRequest]) (*connect_go.Response[org.ResetUserPasswordByOrgIdResponse], error)
 	// SendUserEmailVerification sends a verification email to the user.
 	SendUserEmailVerification(context.Context, *connect_go.Request[org.SendUserEmailVerificationRequest]) (*connect_go.Response[org.SendUserEmailVerificationResponse], error)
 	// SendUserEmailVerificationByOrgId sends a verification email to the user.
 	SendUserEmailVerificationByOrgId(context.Context, *connect_go.Request[org.SendUserEmailVerificationByOrgIdRequest]) (*connect_go.Response[org.SendUserEmailVerificationByOrgIdResponse], error)
-	// SendPasswordReset sends a password reset email to the user.
-	SendPasswordReset(context.Context, *connect_go.Request[org.SendPasswordResetRequest]) (*connect_go.Response[org.SendPasswordResetResponse], error)
-	// SendPasswordResetByOrgId sends a password reset email to the user.
-	SendPasswordResetByOrgId(context.Context, *connect_go.Request[org.SendPasswordResetByOrgIdRequest]) (*connect_go.Response[org.SendPasswordResetByOrgIdResponse], error)
 	// GetUserSessionData returns data for the front end's session state
 	GetUserSessionData(context.Context, *connect_go.Request[org.GetUserSessionDataRequest]) (*connect_go.Response[org.GetUserSessionDataResponse], error)
 	// GetAgentProfileGroup returns an agent profile group by id
@@ -768,8 +738,6 @@ type OrgClient interface {
 	UpdateAgentResponseAutoRules(context.Context, *connect_go.Request[org.UpdateAgentResponseAutoRulesRequest]) (*connect_go.Response[org.UpdateAgentResponseAutoRulesResponse], error)
 	// Deletes an existing Agent Call Response Automatically added compliance rule set.
 	DeleteAgentResponseAutoRules(context.Context, *connect_go.Request[org.DeleteAgentResponseAutoRulesRequest]) (*connect_go.Response[org.DeleteAgentResponseAutoRulesResponse], error)
-	// ListHuntGroupIntegrationLinks returns all integration links for a hunt group.
-	ListHuntGroupIntegrationLinks(context.Context, *connect_go.Request[org.ListHuntGroupIntegrationLinksRequest]) (*connect_go.Response[org.ListHuntGroupIntegrationLinksResponse], error)
 	// CreateTrust creates a new trust.
 	CreateTrust(context.Context, *connect_go.Request[org.CreateTrustRequest]) (*connect_go.Response[org.CreateTrustResponse], error)
 	// AcceptTrust accepts an incoming trust.
@@ -1257,11 +1225,6 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgCreatePasswordResetLinkProcedure,
 			opts...,
 		),
-		createPasswordResetLinkByOrgId: connect_go.NewClient[org.CreatePasswordResetLinkByOrgIdRequest, org.CreatePasswordResetLinkByOrgIdResponse](
-			httpClient,
-			baseURL+OrgCreatePasswordResetLinkByOrgIdProcedure,
-			opts...,
-		),
 		getUserLoginInfo: connect_go.NewClient[org.GetUserLoginInfoRequest, org.GetUserLoginInfoResponse](
 			httpClient,
 			baseURL+OrgGetUserLoginInfoProcedure,
@@ -1277,21 +1240,6 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgGetUserEmailVerifiedByOrgIdProcedure,
 			opts...,
 		),
-		resetMyPassword: connect_go.NewClient[org.ResetMyPasswordRequest, org.ResetMyPasswordResponse](
-			httpClient,
-			baseURL+OrgResetMyPasswordProcedure,
-			opts...,
-		),
-		resetUserPassword: connect_go.NewClient[org.ResetUserPasswordRequest, org.ResetUserPasswordResponse](
-			httpClient,
-			baseURL+OrgResetUserPasswordProcedure,
-			opts...,
-		),
-		resetUserPasswordByOrgId: connect_go.NewClient[org.ResetUserPasswordByOrgIdRequest, org.ResetUserPasswordByOrgIdResponse](
-			httpClient,
-			baseURL+OrgResetUserPasswordByOrgIdProcedure,
-			opts...,
-		),
 		sendUserEmailVerification: connect_go.NewClient[org.SendUserEmailVerificationRequest, org.SendUserEmailVerificationResponse](
 			httpClient,
 			baseURL+OrgSendUserEmailVerificationProcedure,
@@ -1300,16 +1248,6 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 		sendUserEmailVerificationByOrgId: connect_go.NewClient[org.SendUserEmailVerificationByOrgIdRequest, org.SendUserEmailVerificationByOrgIdResponse](
 			httpClient,
 			baseURL+OrgSendUserEmailVerificationByOrgIdProcedure,
-			opts...,
-		),
-		sendPasswordReset: connect_go.NewClient[org.SendPasswordResetRequest, org.SendPasswordResetResponse](
-			httpClient,
-			baseURL+OrgSendPasswordResetProcedure,
-			opts...,
-		),
-		sendPasswordResetByOrgId: connect_go.NewClient[org.SendPasswordResetByOrgIdRequest, org.SendPasswordResetByOrgIdResponse](
-			httpClient,
-			baseURL+OrgSendPasswordResetByOrgIdProcedure,
 			opts...,
 		),
 		getUserSessionData: connect_go.NewClient[org.GetUserSessionDataRequest, org.GetUserSessionDataResponse](
@@ -1510,11 +1448,6 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 		deleteAgentResponseAutoRules: connect_go.NewClient[org.DeleteAgentResponseAutoRulesRequest, org.DeleteAgentResponseAutoRulesResponse](
 			httpClient,
 			baseURL+OrgDeleteAgentResponseAutoRulesProcedure,
-			opts...,
-		),
-		listHuntGroupIntegrationLinks: connect_go.NewClient[org.ListHuntGroupIntegrationLinksRequest, org.ListHuntGroupIntegrationLinksResponse](
-			httpClient,
-			baseURL+OrgListHuntGroupIntegrationLinksProcedure,
 			opts...,
 		),
 		createTrust: connect_go.NewClient[org.CreateTrustRequest, org.CreateTrustResponse](
@@ -1816,17 +1749,11 @@ type orgClient struct {
 	getUserPasswordResetLink                *connect_go.Client[org.GetUserPasswordResetLinkRequest, org.GetUserPasswordResetLinkResponse]
 	getUserPasswordResetLinkByOrgId         *connect_go.Client[org.GetUserPasswordResetLinkByOrgIdRequest, org.GetUserPasswordResetLinkByOrgIdResponse]
 	createPasswordResetLink                 *connect_go.Client[org.CreatePasswordResetLinkRequest, org.CreatePasswordResetLinkResponse]
-	createPasswordResetLinkByOrgId          *connect_go.Client[org.CreatePasswordResetLinkByOrgIdRequest, org.CreatePasswordResetLinkByOrgIdResponse]
 	getUserLoginInfo                        *connect_go.Client[org.GetUserLoginInfoRequest, org.GetUserLoginInfoResponse]
 	getUserEmailVerified                    *connect_go.Client[org.GetUserEmailVerifiedRequest, org.GetUserEmailVerifiedResponse]
 	getUserEmailVerifiedByOrgId             *connect_go.Client[org.GetUserEmailVerifiedByOrgIdRequest, org.GetUserEmailVerifiedByOrgIdResponse]
-	resetMyPassword                         *connect_go.Client[org.ResetMyPasswordRequest, org.ResetMyPasswordResponse]
-	resetUserPassword                       *connect_go.Client[org.ResetUserPasswordRequest, org.ResetUserPasswordResponse]
-	resetUserPasswordByOrgId                *connect_go.Client[org.ResetUserPasswordByOrgIdRequest, org.ResetUserPasswordByOrgIdResponse]
 	sendUserEmailVerification               *connect_go.Client[org.SendUserEmailVerificationRequest, org.SendUserEmailVerificationResponse]
 	sendUserEmailVerificationByOrgId        *connect_go.Client[org.SendUserEmailVerificationByOrgIdRequest, org.SendUserEmailVerificationByOrgIdResponse]
-	sendPasswordReset                       *connect_go.Client[org.SendPasswordResetRequest, org.SendPasswordResetResponse]
-	sendPasswordResetByOrgId                *connect_go.Client[org.SendPasswordResetByOrgIdRequest, org.SendPasswordResetByOrgIdResponse]
 	getUserSessionData                      *connect_go.Client[org.GetUserSessionDataRequest, org.GetUserSessionDataResponse]
 	getAgentProfileGroup                    *connect_go.Client[org.GetAgentProfileGroupRequest, org.GetAgentProfileGroupResponse]
 	listAgentProfileGroups                  *connect_go.Client[org.ListAgentProfileGroupsRequest, org.ListAgentProfileGroupsResponse]
@@ -1867,7 +1794,6 @@ type orgClient struct {
 	createAgentResponseAutoRules            *connect_go.Client[org.CreateAgentResponseAutoRulesRequest, org.CreateAgentResponseAutoRulesResponse]
 	updateAgentResponseAutoRules            *connect_go.Client[org.UpdateAgentResponseAutoRulesRequest, org.UpdateAgentResponseAutoRulesResponse]
 	deleteAgentResponseAutoRules            *connect_go.Client[org.DeleteAgentResponseAutoRulesRequest, org.DeleteAgentResponseAutoRulesResponse]
-	listHuntGroupIntegrationLinks           *connect_go.Client[org.ListHuntGroupIntegrationLinksRequest, org.ListHuntGroupIntegrationLinksResponse]
 	createTrust                             *connect_go.Client[org.CreateTrustRequest, org.CreateTrustResponse]
 	acceptTrust                             *connect_go.Client[org.AcceptTrustRequest, org.AcceptTrustResponse]
 	rejectTrust                             *connect_go.Client[org.RejectTrustRequest, org.RejectTrustResponse]
@@ -2286,11 +2212,6 @@ func (c *orgClient) CreatePasswordResetLink(ctx context.Context, req *connect_go
 	return c.createPasswordResetLink.CallUnary(ctx, req)
 }
 
-// CreatePasswordResetLinkByOrgId calls api.v1alpha1.org.Org.CreatePasswordResetLinkByOrgId.
-func (c *orgClient) CreatePasswordResetLinkByOrgId(ctx context.Context, req *connect_go.Request[org.CreatePasswordResetLinkByOrgIdRequest]) (*connect_go.Response[org.CreatePasswordResetLinkByOrgIdResponse], error) {
-	return c.createPasswordResetLinkByOrgId.CallUnary(ctx, req)
-}
-
 // GetUserLoginInfo calls api.v1alpha1.org.Org.GetUserLoginInfo.
 func (c *orgClient) GetUserLoginInfo(ctx context.Context, req *connect_go.Request[org.GetUserLoginInfoRequest]) (*connect_go.Response[org.GetUserLoginInfoResponse], error) {
 	return c.getUserLoginInfo.CallUnary(ctx, req)
@@ -2306,21 +2227,6 @@ func (c *orgClient) GetUserEmailVerifiedByOrgId(ctx context.Context, req *connec
 	return c.getUserEmailVerifiedByOrgId.CallUnary(ctx, req)
 }
 
-// ResetMyPassword calls api.v1alpha1.org.Org.ResetMyPassword.
-func (c *orgClient) ResetMyPassword(ctx context.Context, req *connect_go.Request[org.ResetMyPasswordRequest]) (*connect_go.Response[org.ResetMyPasswordResponse], error) {
-	return c.resetMyPassword.CallUnary(ctx, req)
-}
-
-// ResetUserPassword calls api.v1alpha1.org.Org.ResetUserPassword.
-func (c *orgClient) ResetUserPassword(ctx context.Context, req *connect_go.Request[org.ResetUserPasswordRequest]) (*connect_go.Response[org.ResetUserPasswordResponse], error) {
-	return c.resetUserPassword.CallUnary(ctx, req)
-}
-
-// ResetUserPasswordByOrgId calls api.v1alpha1.org.Org.ResetUserPasswordByOrgId.
-func (c *orgClient) ResetUserPasswordByOrgId(ctx context.Context, req *connect_go.Request[org.ResetUserPasswordByOrgIdRequest]) (*connect_go.Response[org.ResetUserPasswordByOrgIdResponse], error) {
-	return c.resetUserPasswordByOrgId.CallUnary(ctx, req)
-}
-
 // SendUserEmailVerification calls api.v1alpha1.org.Org.SendUserEmailVerification.
 func (c *orgClient) SendUserEmailVerification(ctx context.Context, req *connect_go.Request[org.SendUserEmailVerificationRequest]) (*connect_go.Response[org.SendUserEmailVerificationResponse], error) {
 	return c.sendUserEmailVerification.CallUnary(ctx, req)
@@ -2329,16 +2235,6 @@ func (c *orgClient) SendUserEmailVerification(ctx context.Context, req *connect_
 // SendUserEmailVerificationByOrgId calls api.v1alpha1.org.Org.SendUserEmailVerificationByOrgId.
 func (c *orgClient) SendUserEmailVerificationByOrgId(ctx context.Context, req *connect_go.Request[org.SendUserEmailVerificationByOrgIdRequest]) (*connect_go.Response[org.SendUserEmailVerificationByOrgIdResponse], error) {
 	return c.sendUserEmailVerificationByOrgId.CallUnary(ctx, req)
-}
-
-// SendPasswordReset calls api.v1alpha1.org.Org.SendPasswordReset.
-func (c *orgClient) SendPasswordReset(ctx context.Context, req *connect_go.Request[org.SendPasswordResetRequest]) (*connect_go.Response[org.SendPasswordResetResponse], error) {
-	return c.sendPasswordReset.CallUnary(ctx, req)
-}
-
-// SendPasswordResetByOrgId calls api.v1alpha1.org.Org.SendPasswordResetByOrgId.
-func (c *orgClient) SendPasswordResetByOrgId(ctx context.Context, req *connect_go.Request[org.SendPasswordResetByOrgIdRequest]) (*connect_go.Response[org.SendPasswordResetByOrgIdResponse], error) {
-	return c.sendPasswordResetByOrgId.CallUnary(ctx, req)
 }
 
 // GetUserSessionData calls api.v1alpha1.org.Org.GetUserSessionData.
@@ -2539,11 +2435,6 @@ func (c *orgClient) UpdateAgentResponseAutoRules(ctx context.Context, req *conne
 // DeleteAgentResponseAutoRules calls api.v1alpha1.org.Org.DeleteAgentResponseAutoRules.
 func (c *orgClient) DeleteAgentResponseAutoRules(ctx context.Context, req *connect_go.Request[org.DeleteAgentResponseAutoRulesRequest]) (*connect_go.Response[org.DeleteAgentResponseAutoRulesResponse], error) {
 	return c.deleteAgentResponseAutoRules.CallUnary(ctx, req)
-}
-
-// ListHuntGroupIntegrationLinks calls api.v1alpha1.org.Org.ListHuntGroupIntegrationLinks.
-func (c *orgClient) ListHuntGroupIntegrationLinks(ctx context.Context, req *connect_go.Request[org.ListHuntGroupIntegrationLinksRequest]) (*connect_go.Response[org.ListHuntGroupIntegrationLinksResponse], error) {
-	return c.listHuntGroupIntegrationLinks.CallUnary(ctx, req)
 }
 
 // CreateTrust calls api.v1alpha1.org.Org.CreateTrust.
@@ -2943,8 +2834,6 @@ type OrgHandler interface {
 	GetUserPasswordResetLinkByOrgId(context.Context, *connect_go.Request[org.GetUserPasswordResetLinkByOrgIdRequest]) (*connect_go.Response[org.GetUserPasswordResetLinkByOrgIdResponse], error)
 	// CreatePasswordResetLink creates a password reset link for the given user id.
 	CreatePasswordResetLink(context.Context, *connect_go.Request[org.CreatePasswordResetLinkRequest]) (*connect_go.Response[org.CreatePasswordResetLinkResponse], error)
-	// CreatePasswordResetLinkByOrgId creates a password reset link for the given user id.
-	CreatePasswordResetLinkByOrgId(context.Context, *connect_go.Request[org.CreatePasswordResetLinkByOrgIdRequest]) (*connect_go.Response[org.CreatePasswordResetLinkByOrgIdResponse], error)
 	// Used to be called GetUserBlocked
 	// GetUserLoginInfo gets information about a user's login.
 	GetUserLoginInfo(context.Context, *connect_go.Request[org.GetUserLoginInfoRequest]) (*connect_go.Response[org.GetUserLoginInfoResponse], error)
@@ -2952,20 +2841,10 @@ type OrgHandler interface {
 	GetUserEmailVerified(context.Context, *connect_go.Request[org.GetUserEmailVerifiedRequest]) (*connect_go.Response[org.GetUserEmailVerifiedResponse], error)
 	// GetUserEmailVerifiedByOrgId gets whether the user's email is verified.
 	GetUserEmailVerifiedByOrgId(context.Context, *connect_go.Request[org.GetUserEmailVerifiedByOrgIdRequest]) (*connect_go.Response[org.GetUserEmailVerifiedByOrgIdResponse], error)
-	// ResetMyPassword resets the user's password.
-	ResetMyPassword(context.Context, *connect_go.Request[org.ResetMyPasswordRequest]) (*connect_go.Response[org.ResetMyPasswordResponse], error)
-	// ResetUserPassword resets the user's password.
-	ResetUserPassword(context.Context, *connect_go.Request[org.ResetUserPasswordRequest]) (*connect_go.Response[org.ResetUserPasswordResponse], error)
-	// ResetUserPasswordByOrgId resets the user's password.
-	ResetUserPasswordByOrgId(context.Context, *connect_go.Request[org.ResetUserPasswordByOrgIdRequest]) (*connect_go.Response[org.ResetUserPasswordByOrgIdResponse], error)
 	// SendUserEmailVerification sends a verification email to the user.
 	SendUserEmailVerification(context.Context, *connect_go.Request[org.SendUserEmailVerificationRequest]) (*connect_go.Response[org.SendUserEmailVerificationResponse], error)
 	// SendUserEmailVerificationByOrgId sends a verification email to the user.
 	SendUserEmailVerificationByOrgId(context.Context, *connect_go.Request[org.SendUserEmailVerificationByOrgIdRequest]) (*connect_go.Response[org.SendUserEmailVerificationByOrgIdResponse], error)
-	// SendPasswordReset sends a password reset email to the user.
-	SendPasswordReset(context.Context, *connect_go.Request[org.SendPasswordResetRequest]) (*connect_go.Response[org.SendPasswordResetResponse], error)
-	// SendPasswordResetByOrgId sends a password reset email to the user.
-	SendPasswordResetByOrgId(context.Context, *connect_go.Request[org.SendPasswordResetByOrgIdRequest]) (*connect_go.Response[org.SendPasswordResetByOrgIdResponse], error)
 	// GetUserSessionData returns data for the front end's session state
 	GetUserSessionData(context.Context, *connect_go.Request[org.GetUserSessionDataRequest]) (*connect_go.Response[org.GetUserSessionDataResponse], error)
 	// GetAgentProfileGroup returns an agent profile group by id
@@ -3050,8 +2929,6 @@ type OrgHandler interface {
 	UpdateAgentResponseAutoRules(context.Context, *connect_go.Request[org.UpdateAgentResponseAutoRulesRequest]) (*connect_go.Response[org.UpdateAgentResponseAutoRulesResponse], error)
 	// Deletes an existing Agent Call Response Automatically added compliance rule set.
 	DeleteAgentResponseAutoRules(context.Context, *connect_go.Request[org.DeleteAgentResponseAutoRulesRequest]) (*connect_go.Response[org.DeleteAgentResponseAutoRulesResponse], error)
-	// ListHuntGroupIntegrationLinks returns all integration links for a hunt group.
-	ListHuntGroupIntegrationLinks(context.Context, *connect_go.Request[org.ListHuntGroupIntegrationLinksRequest]) (*connect_go.Response[org.ListHuntGroupIntegrationLinksResponse], error)
 	// CreateTrust creates a new trust.
 	CreateTrust(context.Context, *connect_go.Request[org.CreateTrustRequest]) (*connect_go.Response[org.CreateTrustResponse], error)
 	// AcceptTrust accepts an incoming trust.
@@ -3535,11 +3412,6 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.CreatePasswordResetLink,
 		opts...,
 	)
-	orgCreatePasswordResetLinkByOrgIdHandler := connect_go.NewUnaryHandler(
-		OrgCreatePasswordResetLinkByOrgIdProcedure,
-		svc.CreatePasswordResetLinkByOrgId,
-		opts...,
-	)
 	orgGetUserLoginInfoHandler := connect_go.NewUnaryHandler(
 		OrgGetUserLoginInfoProcedure,
 		svc.GetUserLoginInfo,
@@ -3555,21 +3427,6 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.GetUserEmailVerifiedByOrgId,
 		opts...,
 	)
-	orgResetMyPasswordHandler := connect_go.NewUnaryHandler(
-		OrgResetMyPasswordProcedure,
-		svc.ResetMyPassword,
-		opts...,
-	)
-	orgResetUserPasswordHandler := connect_go.NewUnaryHandler(
-		OrgResetUserPasswordProcedure,
-		svc.ResetUserPassword,
-		opts...,
-	)
-	orgResetUserPasswordByOrgIdHandler := connect_go.NewUnaryHandler(
-		OrgResetUserPasswordByOrgIdProcedure,
-		svc.ResetUserPasswordByOrgId,
-		opts...,
-	)
 	orgSendUserEmailVerificationHandler := connect_go.NewUnaryHandler(
 		OrgSendUserEmailVerificationProcedure,
 		svc.SendUserEmailVerification,
@@ -3578,16 +3435,6 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 	orgSendUserEmailVerificationByOrgIdHandler := connect_go.NewUnaryHandler(
 		OrgSendUserEmailVerificationByOrgIdProcedure,
 		svc.SendUserEmailVerificationByOrgId,
-		opts...,
-	)
-	orgSendPasswordResetHandler := connect_go.NewUnaryHandler(
-		OrgSendPasswordResetProcedure,
-		svc.SendPasswordReset,
-		opts...,
-	)
-	orgSendPasswordResetByOrgIdHandler := connect_go.NewUnaryHandler(
-		OrgSendPasswordResetByOrgIdProcedure,
-		svc.SendPasswordResetByOrgId,
 		opts...,
 	)
 	orgGetUserSessionDataHandler := connect_go.NewUnaryHandler(
@@ -3788,11 +3635,6 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 	orgDeleteAgentResponseAutoRulesHandler := connect_go.NewUnaryHandler(
 		OrgDeleteAgentResponseAutoRulesProcedure,
 		svc.DeleteAgentResponseAutoRules,
-		opts...,
-	)
-	orgListHuntGroupIntegrationLinksHandler := connect_go.NewUnaryHandler(
-		OrgListHuntGroupIntegrationLinksProcedure,
-		svc.ListHuntGroupIntegrationLinks,
 		opts...,
 	)
 	orgCreateTrustHandler := connect_go.NewUnaryHandler(
@@ -4165,28 +4007,16 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 			orgGetUserPasswordResetLinkByOrgIdHandler.ServeHTTP(w, r)
 		case OrgCreatePasswordResetLinkProcedure:
 			orgCreatePasswordResetLinkHandler.ServeHTTP(w, r)
-		case OrgCreatePasswordResetLinkByOrgIdProcedure:
-			orgCreatePasswordResetLinkByOrgIdHandler.ServeHTTP(w, r)
 		case OrgGetUserLoginInfoProcedure:
 			orgGetUserLoginInfoHandler.ServeHTTP(w, r)
 		case OrgGetUserEmailVerifiedProcedure:
 			orgGetUserEmailVerifiedHandler.ServeHTTP(w, r)
 		case OrgGetUserEmailVerifiedByOrgIdProcedure:
 			orgGetUserEmailVerifiedByOrgIdHandler.ServeHTTP(w, r)
-		case OrgResetMyPasswordProcedure:
-			orgResetMyPasswordHandler.ServeHTTP(w, r)
-		case OrgResetUserPasswordProcedure:
-			orgResetUserPasswordHandler.ServeHTTP(w, r)
-		case OrgResetUserPasswordByOrgIdProcedure:
-			orgResetUserPasswordByOrgIdHandler.ServeHTTP(w, r)
 		case OrgSendUserEmailVerificationProcedure:
 			orgSendUserEmailVerificationHandler.ServeHTTP(w, r)
 		case OrgSendUserEmailVerificationByOrgIdProcedure:
 			orgSendUserEmailVerificationByOrgIdHandler.ServeHTTP(w, r)
-		case OrgSendPasswordResetProcedure:
-			orgSendPasswordResetHandler.ServeHTTP(w, r)
-		case OrgSendPasswordResetByOrgIdProcedure:
-			orgSendPasswordResetByOrgIdHandler.ServeHTTP(w, r)
 		case OrgGetUserSessionDataProcedure:
 			orgGetUserSessionDataHandler.ServeHTTP(w, r)
 		case OrgGetAgentProfileGroupProcedure:
@@ -4267,8 +4097,6 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 			orgUpdateAgentResponseAutoRulesHandler.ServeHTTP(w, r)
 		case OrgDeleteAgentResponseAutoRulesProcedure:
 			orgDeleteAgentResponseAutoRulesHandler.ServeHTTP(w, r)
-		case OrgListHuntGroupIntegrationLinksProcedure:
-			orgListHuntGroupIntegrationLinksHandler.ServeHTTP(w, r)
 		case OrgCreateTrustProcedure:
 			orgCreateTrustHandler.ServeHTTP(w, r)
 		case OrgAcceptTrustProcedure:
@@ -4662,10 +4490,6 @@ func (UnimplementedOrgHandler) CreatePasswordResetLink(context.Context, *connect
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.CreatePasswordResetLink is not implemented"))
 }
 
-func (UnimplementedOrgHandler) CreatePasswordResetLinkByOrgId(context.Context, *connect_go.Request[org.CreatePasswordResetLinkByOrgIdRequest]) (*connect_go.Response[org.CreatePasswordResetLinkByOrgIdResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.CreatePasswordResetLinkByOrgId is not implemented"))
-}
-
 func (UnimplementedOrgHandler) GetUserLoginInfo(context.Context, *connect_go.Request[org.GetUserLoginInfoRequest]) (*connect_go.Response[org.GetUserLoginInfoResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.GetUserLoginInfo is not implemented"))
 }
@@ -4678,32 +4502,12 @@ func (UnimplementedOrgHandler) GetUserEmailVerifiedByOrgId(context.Context, *con
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.GetUserEmailVerifiedByOrgId is not implemented"))
 }
 
-func (UnimplementedOrgHandler) ResetMyPassword(context.Context, *connect_go.Request[org.ResetMyPasswordRequest]) (*connect_go.Response[org.ResetMyPasswordResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.ResetMyPassword is not implemented"))
-}
-
-func (UnimplementedOrgHandler) ResetUserPassword(context.Context, *connect_go.Request[org.ResetUserPasswordRequest]) (*connect_go.Response[org.ResetUserPasswordResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.ResetUserPassword is not implemented"))
-}
-
-func (UnimplementedOrgHandler) ResetUserPasswordByOrgId(context.Context, *connect_go.Request[org.ResetUserPasswordByOrgIdRequest]) (*connect_go.Response[org.ResetUserPasswordByOrgIdResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.ResetUserPasswordByOrgId is not implemented"))
-}
-
 func (UnimplementedOrgHandler) SendUserEmailVerification(context.Context, *connect_go.Request[org.SendUserEmailVerificationRequest]) (*connect_go.Response[org.SendUserEmailVerificationResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.SendUserEmailVerification is not implemented"))
 }
 
 func (UnimplementedOrgHandler) SendUserEmailVerificationByOrgId(context.Context, *connect_go.Request[org.SendUserEmailVerificationByOrgIdRequest]) (*connect_go.Response[org.SendUserEmailVerificationByOrgIdResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.SendUserEmailVerificationByOrgId is not implemented"))
-}
-
-func (UnimplementedOrgHandler) SendPasswordReset(context.Context, *connect_go.Request[org.SendPasswordResetRequest]) (*connect_go.Response[org.SendPasswordResetResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.SendPasswordReset is not implemented"))
-}
-
-func (UnimplementedOrgHandler) SendPasswordResetByOrgId(context.Context, *connect_go.Request[org.SendPasswordResetByOrgIdRequest]) (*connect_go.Response[org.SendPasswordResetByOrgIdResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.SendPasswordResetByOrgId is not implemented"))
 }
 
 func (UnimplementedOrgHandler) GetUserSessionData(context.Context, *connect_go.Request[org.GetUserSessionDataRequest]) (*connect_go.Response[org.GetUserSessionDataResponse], error) {
@@ -4864,10 +4668,6 @@ func (UnimplementedOrgHandler) UpdateAgentResponseAutoRules(context.Context, *co
 
 func (UnimplementedOrgHandler) DeleteAgentResponseAutoRules(context.Context, *connect_go.Request[org.DeleteAgentResponseAutoRulesRequest]) (*connect_go.Response[org.DeleteAgentResponseAutoRulesResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.DeleteAgentResponseAutoRules is not implemented"))
-}
-
-func (UnimplementedOrgHandler) ListHuntGroupIntegrationLinks(context.Context, *connect_go.Request[org.ListHuntGroupIntegrationLinksRequest]) (*connect_go.Response[org.ListHuntGroupIntegrationLinksResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.ListHuntGroupIntegrationLinks is not implemented"))
 }
 
 func (UnimplementedOrgHandler) CreateTrust(context.Context, *connect_go.Request[org.CreateTrustRequest]) (*connect_go.Response[org.CreateTrustResponse], error) {

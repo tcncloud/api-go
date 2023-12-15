@@ -36,9 +36,6 @@ const (
 	// AuthConnectionServiceCreateAuthConnectionProcedure is the fully-qualified name of the
 	// AuthConnectionService's CreateAuthConnection RPC.
 	AuthConnectionServiceCreateAuthConnectionProcedure = "/api.v1alpha1.org.authconnection.AuthConnectionService/CreateAuthConnection"
-	// AuthConnectionServiceListAuthConnectionIdsProcedure is the fully-qualified name of the
-	// AuthConnectionService's ListAuthConnectionIds RPC.
-	AuthConnectionServiceListAuthConnectionIdsProcedure = "/api.v1alpha1.org.authconnection.AuthConnectionService/ListAuthConnectionIds"
 	// AuthConnectionServiceGetAuthConnectionSettingsProcedure is the fully-qualified name of the
 	// AuthConnectionService's GetAuthConnectionSettings RPC.
 	AuthConnectionServiceGetAuthConnectionSettingsProcedure = "/api.v1alpha1.org.authconnection.AuthConnectionService/GetAuthConnectionSettings"
@@ -61,8 +58,6 @@ const (
 type AuthConnectionServiceClient interface {
 	// CreateAuthConnection creates a new auth0 connection.
 	CreateAuthConnection(context.Context, *connect_go.Request[authconnection.CreateAuthConnectionRequest]) (*connect_go.Response[authconnection.CreateAuthConnectionResponse], error)
-	// ListAuthConnectionIds returns the IDs of all authconnections belonging to the current org.
-	ListAuthConnectionIds(context.Context, *connect_go.Request[authconnection.ListAuthConnectionIdsRequest]) (*connect_go.Response[authconnection.ListAuthConnectionIdsResponse], error)
 	// GetAuthConnectionSettings gets auth connection settings.
 	// DEPRECATED: use GetAuthConnection
 	GetAuthConnectionSettings(context.Context, *connect_go.Request[authconnection.GetAuthConnectionSettingsRequest]) (*connect_go.Response[authconnection.GetAuthConnectionSettingsResponse], error)
@@ -90,11 +85,6 @@ func NewAuthConnectionServiceClient(httpClient connect_go.HTTPClient, baseURL st
 		createAuthConnection: connect_go.NewClient[authconnection.CreateAuthConnectionRequest, authconnection.CreateAuthConnectionResponse](
 			httpClient,
 			baseURL+AuthConnectionServiceCreateAuthConnectionProcedure,
-			opts...,
-		),
-		listAuthConnectionIds: connect_go.NewClient[authconnection.ListAuthConnectionIdsRequest, authconnection.ListAuthConnectionIdsResponse](
-			httpClient,
-			baseURL+AuthConnectionServiceListAuthConnectionIdsProcedure,
 			opts...,
 		),
 		getAuthConnectionSettings: connect_go.NewClient[authconnection.GetAuthConnectionSettingsRequest, authconnection.GetAuthConnectionSettingsResponse](
@@ -128,7 +118,6 @@ func NewAuthConnectionServiceClient(httpClient connect_go.HTTPClient, baseURL st
 // authConnectionServiceClient implements AuthConnectionServiceClient.
 type authConnectionServiceClient struct {
 	createAuthConnection       *connect_go.Client[authconnection.CreateAuthConnectionRequest, authconnection.CreateAuthConnectionResponse]
-	listAuthConnectionIds      *connect_go.Client[authconnection.ListAuthConnectionIdsRequest, authconnection.ListAuthConnectionIdsResponse]
 	getAuthConnectionSettings  *connect_go.Client[authconnection.GetAuthConnectionSettingsRequest, authconnection.GetAuthConnectionSettingsResponse]
 	getAuthConnection          *connect_go.Client[authconnection.GetAuthConnectionRequest, authconnection.GetAuthConnectionResponse]
 	deleteAuthConnection       *connect_go.Client[authconnection.DeleteAuthConnectionRequest, authconnection.DeleteAuthConnectionResponse]
@@ -140,12 +129,6 @@ type authConnectionServiceClient struct {
 // api.v1alpha1.org.authconnection.AuthConnectionService.CreateAuthConnection.
 func (c *authConnectionServiceClient) CreateAuthConnection(ctx context.Context, req *connect_go.Request[authconnection.CreateAuthConnectionRequest]) (*connect_go.Response[authconnection.CreateAuthConnectionResponse], error) {
 	return c.createAuthConnection.CallUnary(ctx, req)
-}
-
-// ListAuthConnectionIds calls
-// api.v1alpha1.org.authconnection.AuthConnectionService.ListAuthConnectionIds.
-func (c *authConnectionServiceClient) ListAuthConnectionIds(ctx context.Context, req *connect_go.Request[authconnection.ListAuthConnectionIdsRequest]) (*connect_go.Response[authconnection.ListAuthConnectionIdsResponse], error) {
-	return c.listAuthConnectionIds.CallUnary(ctx, req)
 }
 
 // GetAuthConnectionSettings calls
@@ -182,8 +165,6 @@ func (c *authConnectionServiceClient) UpdateAuthConnectionGroups(ctx context.Con
 type AuthConnectionServiceHandler interface {
 	// CreateAuthConnection creates a new auth0 connection.
 	CreateAuthConnection(context.Context, *connect_go.Request[authconnection.CreateAuthConnectionRequest]) (*connect_go.Response[authconnection.CreateAuthConnectionResponse], error)
-	// ListAuthConnectionIds returns the IDs of all authconnections belonging to the current org.
-	ListAuthConnectionIds(context.Context, *connect_go.Request[authconnection.ListAuthConnectionIdsRequest]) (*connect_go.Response[authconnection.ListAuthConnectionIdsResponse], error)
 	// GetAuthConnectionSettings gets auth connection settings.
 	// DEPRECATED: use GetAuthConnection
 	GetAuthConnectionSettings(context.Context, *connect_go.Request[authconnection.GetAuthConnectionSettingsRequest]) (*connect_go.Response[authconnection.GetAuthConnectionSettingsResponse], error)
@@ -206,11 +187,6 @@ func NewAuthConnectionServiceHandler(svc AuthConnectionServiceHandler, opts ...c
 	authConnectionServiceCreateAuthConnectionHandler := connect_go.NewUnaryHandler(
 		AuthConnectionServiceCreateAuthConnectionProcedure,
 		svc.CreateAuthConnection,
-		opts...,
-	)
-	authConnectionServiceListAuthConnectionIdsHandler := connect_go.NewUnaryHandler(
-		AuthConnectionServiceListAuthConnectionIdsProcedure,
-		svc.ListAuthConnectionIds,
 		opts...,
 	)
 	authConnectionServiceGetAuthConnectionSettingsHandler := connect_go.NewUnaryHandler(
@@ -242,8 +218,6 @@ func NewAuthConnectionServiceHandler(svc AuthConnectionServiceHandler, opts ...c
 		switch r.URL.Path {
 		case AuthConnectionServiceCreateAuthConnectionProcedure:
 			authConnectionServiceCreateAuthConnectionHandler.ServeHTTP(w, r)
-		case AuthConnectionServiceListAuthConnectionIdsProcedure:
-			authConnectionServiceListAuthConnectionIdsHandler.ServeHTTP(w, r)
 		case AuthConnectionServiceGetAuthConnectionSettingsProcedure:
 			authConnectionServiceGetAuthConnectionSettingsHandler.ServeHTTP(w, r)
 		case AuthConnectionServiceGetAuthConnectionProcedure:
@@ -265,10 +239,6 @@ type UnimplementedAuthConnectionServiceHandler struct{}
 
 func (UnimplementedAuthConnectionServiceHandler) CreateAuthConnection(context.Context, *connect_go.Request[authconnection.CreateAuthConnectionRequest]) (*connect_go.Response[authconnection.CreateAuthConnectionResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.authconnection.AuthConnectionService.CreateAuthConnection is not implemented"))
-}
-
-func (UnimplementedAuthConnectionServiceHandler) ListAuthConnectionIds(context.Context, *connect_go.Request[authconnection.ListAuthConnectionIdsRequest]) (*connect_go.Response[authconnection.ListAuthConnectionIdsResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.authconnection.AuthConnectionService.ListAuthConnectionIds is not implemented"))
 }
 
 func (UnimplementedAuthConnectionServiceHandler) GetAuthConnectionSettings(context.Context, *connect_go.Request[authconnection.GetAuthConnectionSettingsRequest]) (*connect_go.Response[authconnection.GetAuthConnectionSettingsResponse], error) {
