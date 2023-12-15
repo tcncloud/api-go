@@ -33,6 +33,7 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
+	WFM_PerformInitialClientSetup_FullMethodName                     = "/api.v1alpha1.wfm.WFM/PerformInitialClientSetup"
 	WFM_ListSkillProfiles_FullMethodName                             = "/api.v1alpha1.wfm.WFM/ListSkillProfiles"
 	WFM_UpdateSkillProfile_FullMethodName                            = "/api.v1alpha1.wfm.WFM/UpdateSkillProfile"
 	WFM_UpdateSkillProfileProficiencies_FullMethodName               = "/api.v1alpha1.wfm.WFM/UpdateSkillProfileProficiencies"
@@ -195,6 +196,16 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type WFMClient interface {
+	// Starts the tasks to perform the initial setup on wfm services for the org sending the request.
+	// It will then report the state of their setup task.
+	// A new setup task will only be started if the client hasn't done one before, or their setup failed previously.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Internal: error occurs when performing the initial setup.
+	PerformInitialClientSetup(ctx context.Context, in *PerformInitialClientSetupRequest, opts ...grpc.CallOption) (*PerformInitialClientSetupResponse, error)
 	// Retrieves all the skill profiles of the org sending the request.
 	// Also it can return the skills of each of the returned profiles.
 	// Required permissions:
@@ -273,8 +284,10 @@ type WFMClient interface {
 	// Errors:
 	//   - grpc.Internal: error occurs when getting the parameters.
 	GetForecastingParameters(ctx context.Context, in *GetForecastingParametersReq, opts ...grpc.CallOption) (*GetForecastingParametersRes, error)
+	// Deprecated: Do not use.
 	// Gets the state of the cache for the given @org_id, and if the cache's state is not_loaded, or loading_failed,
 	// it will start the loading task before returning the current state.
+	// DEPRECATED as of Dec/13/2023 - Use PerformInitialClientSetup instead.
 	// Required permissions:
 	//
 	//	NONE
@@ -2006,6 +2019,15 @@ func NewWFMClient(cc grpc.ClientConnInterface) WFMClient {
 	return &wFMClient{cc}
 }
 
+func (c *wFMClient) PerformInitialClientSetup(ctx context.Context, in *PerformInitialClientSetupRequest, opts ...grpc.CallOption) (*PerformInitialClientSetupResponse, error) {
+	out := new(PerformInitialClientSetupResponse)
+	err := c.cc.Invoke(ctx, WFM_PerformInitialClientSetup_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) ListSkillProfiles(ctx context.Context, in *ListSkillProfilesReq, opts ...grpc.CallOption) (*ListSkillProfilesRes, error) {
 	out := new(ListSkillProfilesRes)
 	err := c.cc.Invoke(ctx, WFM_ListSkillProfiles_FullMethodName, in, out, opts...)
@@ -2078,6 +2100,7 @@ func (c *wFMClient) GetForecastingParameters(ctx context.Context, in *GetForecas
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *wFMClient) GetClientHistoryCacheInfo(ctx context.Context, in *GetClientHistoryCacheInfoReq, opts ...grpc.CallOption) (*GetClientHistoryCacheInfoRes, error) {
 	out := new(GetClientHistoryCacheInfoRes)
 	err := c.cc.Invoke(ctx, WFM_GetClientHistoryCacheInfo_FullMethodName, in, out, opts...)
@@ -3556,6 +3579,16 @@ func (c *wFMClient) GenerateTourWeekPatterns(ctx context.Context, in *GenerateTo
 // All implementations must embed UnimplementedWFMServer
 // for forward compatibility
 type WFMServer interface {
+	// Starts the tasks to perform the initial setup on wfm services for the org sending the request.
+	// It will then report the state of their setup task.
+	// A new setup task will only be started if the client hasn't done one before, or their setup failed previously.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Internal: error occurs when performing the initial setup.
+	PerformInitialClientSetup(context.Context, *PerformInitialClientSetupRequest) (*PerformInitialClientSetupResponse, error)
 	// Retrieves all the skill profiles of the org sending the request.
 	// Also it can return the skills of each of the returned profiles.
 	// Required permissions:
@@ -3634,8 +3667,10 @@ type WFMServer interface {
 	// Errors:
 	//   - grpc.Internal: error occurs when getting the parameters.
 	GetForecastingParameters(context.Context, *GetForecastingParametersReq) (*GetForecastingParametersRes, error)
+	// Deprecated: Do not use.
 	// Gets the state of the cache for the given @org_id, and if the cache's state is not_loaded, or loading_failed,
 	// it will start the loading task before returning the current state.
+	// DEPRECATED as of Dec/13/2023 - Use PerformInitialClientSetup instead.
 	// Required permissions:
 	//
 	//	NONE
@@ -5364,6 +5399,9 @@ type WFMServer interface {
 type UnimplementedWFMServer struct {
 }
 
+func (UnimplementedWFMServer) PerformInitialClientSetup(context.Context, *PerformInitialClientSetupRequest) (*PerformInitialClientSetupResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PerformInitialClientSetup not implemented")
+}
 func (UnimplementedWFMServer) ListSkillProfiles(context.Context, *ListSkillProfilesReq) (*ListSkillProfilesRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListSkillProfiles not implemented")
 }
@@ -5843,6 +5881,24 @@ type UnsafeWFMServer interface {
 
 func RegisterWFMServer(s grpc.ServiceRegistrar, srv WFMServer) {
 	s.RegisterService(&WFM_ServiceDesc, srv)
+}
+
+func _WFM_PerformInitialClientSetup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PerformInitialClientSetupRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).PerformInitialClientSetup(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_PerformInitialClientSetup_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).PerformInitialClientSetup(ctx, req.(*PerformInitialClientSetupRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _WFM_ListSkillProfiles_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -8678,6 +8734,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "api.v1alpha1.wfm.WFM",
 	HandlerType: (*WFMServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "PerformInitialClientSetup",
+			Handler:    _WFM_PerformInitialClientSetup_Handler,
+		},
 		{
 			MethodName: "ListSkillProfiles",
 			Handler:    _WFM_ListSkillProfiles_Handler,

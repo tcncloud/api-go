@@ -47,6 +47,9 @@ const (
 // reflection-formatted method names, remove the leading slash and convert the remaining slash to a
 // period.
 const (
+	// WFMPerformInitialClientSetupProcedure is the fully-qualified name of the WFM's
+	// PerformInitialClientSetup RPC.
+	WFMPerformInitialClientSetupProcedure = "/api.v1alpha1.wfm.WFM/PerformInitialClientSetup"
 	// WFMListSkillProfilesProcedure is the fully-qualified name of the WFM's ListSkillProfiles RPC.
 	WFMListSkillProfilesProcedure = "/api.v1alpha1.wfm.WFM/ListSkillProfiles"
 	// WFMUpdateSkillProfileProcedure is the fully-qualified name of the WFM's UpdateSkillProfile RPC.
@@ -477,6 +480,16 @@ const (
 
 // WFMClient is a client for the api.v1alpha1.wfm.WFM service.
 type WFMClient interface {
+	// Starts the tasks to perform the initial setup on wfm services for the org sending the request.
+	// It will then report the state of their setup task.
+	// A new setup task will only be started if the client hasn't done one before, or their setup failed previously.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Internal: error occurs when performing the initial setup.
+	PerformInitialClientSetup(context.Context, *connect_go.Request[wfm.PerformInitialClientSetupRequest]) (*connect_go.Response[wfm.PerformInitialClientSetupResponse], error)
 	// Retrieves all the skill profiles of the org sending the request.
 	// Also it can return the skills of each of the returned profiles.
 	// Required permissions:
@@ -557,6 +570,7 @@ type WFMClient interface {
 	GetForecastingParameters(context.Context, *connect_go.Request[wfm.GetForecastingParametersReq]) (*connect_go.Response[wfm.GetForecastingParametersRes], error)
 	// Gets the state of the cache for the given @org_id, and if the cache's state is not_loaded, or loading_failed,
 	// it will start the loading task before returning the current state.
+	// DEPRECATED as of Dec/13/2023 - Use PerformInitialClientSetup instead.
 	// Required permissions:
 	//
 	//	NONE
@@ -564,6 +578,8 @@ type WFMClient interface {
 	// Errors:
 	//
 	//	-grpc.Internal: error occurs when getting the cache info.
+	//
+	// Deprecated: do not use.
 	GetClientHistoryCacheInfo(context.Context, *connect_go.Request[wfm.GetClientHistoryCacheInfoReq]) (*connect_go.Response[wfm.GetClientHistoryCacheInfoRes], error)
 	// Gets the historical data for the org sending the request and the given @skill_profile_category.
 	// It will look through the client's call history and generate the historical data by using their configured forecasting parameters (historical data period and interval width).
@@ -2294,6 +2310,11 @@ type WFMClient interface {
 func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...connect_go.ClientOption) WFMClient {
 	baseURL = strings.TrimRight(baseURL, "/")
 	return &wFMClient{
+		performInitialClientSetup: connect_go.NewClient[wfm.PerformInitialClientSetupRequest, wfm.PerformInitialClientSetupResponse](
+			httpClient,
+			baseURL+WFMPerformInitialClientSetupProcedure,
+			opts...,
+		),
 		listSkillProfiles: connect_go.NewClient[wfm.ListSkillProfilesReq, wfm.ListSkillProfilesRes](
 			httpClient,
 			baseURL+WFMListSkillProfilesProcedure,
@@ -3079,6 +3100,7 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 
 // wFMClient implements WFMClient.
 type wFMClient struct {
+	performInitialClientSetup                     *connect_go.Client[wfm.PerformInitialClientSetupRequest, wfm.PerformInitialClientSetupResponse]
 	listSkillProfiles                             *connect_go.Client[wfm.ListSkillProfilesReq, wfm.ListSkillProfilesRes]
 	updateSkillProfile                            *connect_go.Client[wfm.UpdateSkillProfileReq, wfm.UpdateSkillProfileRes]
 	updateSkillProfileProficiencies               *connect_go.Client[wfm.UpdateSkillProfileProficienciesReq, wfm.UpdateSkillProfileProficienciesRes]
@@ -3237,6 +3259,11 @@ type wFMClient struct {
 	generateTourWeekPatterns                      *connect_go.Client[wfm.GenerateTourWeekPatternsReq, wfm.GenerateTourWeekPatternsRes]
 }
 
+// PerformInitialClientSetup calls api.v1alpha1.wfm.WFM.PerformInitialClientSetup.
+func (c *wFMClient) PerformInitialClientSetup(ctx context.Context, req *connect_go.Request[wfm.PerformInitialClientSetupRequest]) (*connect_go.Response[wfm.PerformInitialClientSetupResponse], error) {
+	return c.performInitialClientSetup.CallUnary(ctx, req)
+}
+
 // ListSkillProfiles calls api.v1alpha1.wfm.WFM.ListSkillProfiles.
 func (c *wFMClient) ListSkillProfiles(ctx context.Context, req *connect_go.Request[wfm.ListSkillProfilesReq]) (*connect_go.Response[wfm.ListSkillProfilesRes], error) {
 	return c.listSkillProfiles.CallUnary(ctx, req)
@@ -3278,6 +3305,8 @@ func (c *wFMClient) GetForecastingParameters(ctx context.Context, req *connect_g
 }
 
 // GetClientHistoryCacheInfo calls api.v1alpha1.wfm.WFM.GetClientHistoryCacheInfo.
+//
+// Deprecated: do not use.
 func (c *wFMClient) GetClientHistoryCacheInfo(ctx context.Context, req *connect_go.Request[wfm.GetClientHistoryCacheInfoReq]) (*connect_go.Response[wfm.GetClientHistoryCacheInfoRes], error) {
 	return c.getClientHistoryCacheInfo.CallUnary(ctx, req)
 }
@@ -4039,6 +4068,16 @@ func (c *wFMClient) GenerateTourWeekPatterns(ctx context.Context, req *connect_g
 
 // WFMHandler is an implementation of the api.v1alpha1.wfm.WFM service.
 type WFMHandler interface {
+	// Starts the tasks to perform the initial setup on wfm services for the org sending the request.
+	// It will then report the state of their setup task.
+	// A new setup task will only be started if the client hasn't done one before, or their setup failed previously.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Internal: error occurs when performing the initial setup.
+	PerformInitialClientSetup(context.Context, *connect_go.Request[wfm.PerformInitialClientSetupRequest]) (*connect_go.Response[wfm.PerformInitialClientSetupResponse], error)
 	// Retrieves all the skill profiles of the org sending the request.
 	// Also it can return the skills of each of the returned profiles.
 	// Required permissions:
@@ -4119,6 +4158,7 @@ type WFMHandler interface {
 	GetForecastingParameters(context.Context, *connect_go.Request[wfm.GetForecastingParametersReq]) (*connect_go.Response[wfm.GetForecastingParametersRes], error)
 	// Gets the state of the cache for the given @org_id, and if the cache's state is not_loaded, or loading_failed,
 	// it will start the loading task before returning the current state.
+	// DEPRECATED as of Dec/13/2023 - Use PerformInitialClientSetup instead.
 	// Required permissions:
 	//
 	//	NONE
@@ -4126,6 +4166,8 @@ type WFMHandler interface {
 	// Errors:
 	//
 	//	-grpc.Internal: error occurs when getting the cache info.
+	//
+	// Deprecated: do not use.
 	GetClientHistoryCacheInfo(context.Context, *connect_go.Request[wfm.GetClientHistoryCacheInfoReq]) (*connect_go.Response[wfm.GetClientHistoryCacheInfoRes], error)
 	// Gets the historical data for the org sending the request and the given @skill_profile_category.
 	// It will look through the client's call history and generate the historical data by using their configured forecasting parameters (historical data period and interval width).
@@ -5852,6 +5894,11 @@ type WFMHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
+	wFMPerformInitialClientSetupHandler := connect_go.NewUnaryHandler(
+		WFMPerformInitialClientSetupProcedure,
+		svc.PerformInitialClientSetup,
+		opts...,
+	)
 	wFMListSkillProfilesHandler := connect_go.NewUnaryHandler(
 		WFMListSkillProfilesProcedure,
 		svc.ListSkillProfiles,
@@ -6634,6 +6681,8 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 	)
 	return "/api.v1alpha1.wfm.WFM/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
+		case WFMPerformInitialClientSetupProcedure:
+			wFMPerformInitialClientSetupHandler.ServeHTTP(w, r)
 		case WFMListSkillProfilesProcedure:
 			wFMListSkillProfilesHandler.ServeHTTP(w, r)
 		case WFMUpdateSkillProfileProcedure:
@@ -6954,6 +7003,10 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 
 // UnimplementedWFMHandler returns CodeUnimplemented from all methods.
 type UnimplementedWFMHandler struct{}
+
+func (UnimplementedWFMHandler) PerformInitialClientSetup(context.Context, *connect_go.Request[wfm.PerformInitialClientSetupRequest]) (*connect_go.Response[wfm.PerformInitialClientSetupResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.PerformInitialClientSetup is not implemented"))
+}
 
 func (UnimplementedWFMHandler) ListSkillProfiles(context.Context, *connect_go.Request[wfm.ListSkillProfilesReq]) (*connect_go.Response[wfm.ListSkillProfilesRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListSkillProfiles is not implemented"))

@@ -357,6 +357,9 @@ const (
 	// OrgDeleteAgentResponseAutoRulesProcedure is the fully-qualified name of the Org's
 	// DeleteAgentResponseAutoRules RPC.
 	OrgDeleteAgentResponseAutoRulesProcedure = "/api.v1alpha1.org.Org/DeleteAgentResponseAutoRules"
+	// OrgListHuntGroupIntegrationLinksProcedure is the fully-qualified name of the Org's
+	// ListHuntGroupIntegrationLinks RPC.
+	OrgListHuntGroupIntegrationLinksProcedure = "/api.v1alpha1.org.Org/ListHuntGroupIntegrationLinks"
 	// OrgCreateTrustProcedure is the fully-qualified name of the Org's CreateTrust RPC.
 	OrgCreateTrustProcedure = "/api.v1alpha1.org.Org/CreateTrust"
 	// OrgAcceptTrustProcedure is the fully-qualified name of the Org's AcceptTrust RPC.
@@ -738,6 +741,8 @@ type OrgClient interface {
 	UpdateAgentResponseAutoRules(context.Context, *connect_go.Request[org.UpdateAgentResponseAutoRulesRequest]) (*connect_go.Response[org.UpdateAgentResponseAutoRulesResponse], error)
 	// Deletes an existing Agent Call Response Automatically added compliance rule set.
 	DeleteAgentResponseAutoRules(context.Context, *connect_go.Request[org.DeleteAgentResponseAutoRulesRequest]) (*connect_go.Response[org.DeleteAgentResponseAutoRulesResponse], error)
+	// ListHuntGroupIntegrationLinks returns all integration links for a hunt group.
+	ListHuntGroupIntegrationLinks(context.Context, *connect_go.Request[org.ListHuntGroupIntegrationLinksRequest]) (*connect_go.Response[org.ListHuntGroupIntegrationLinksResponse], error)
 	// CreateTrust creates a new trust.
 	CreateTrust(context.Context, *connect_go.Request[org.CreateTrustRequest]) (*connect_go.Response[org.CreateTrustResponse], error)
 	// AcceptTrust accepts an incoming trust.
@@ -1450,6 +1455,11 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgDeleteAgentResponseAutoRulesProcedure,
 			opts...,
 		),
+		listHuntGroupIntegrationLinks: connect_go.NewClient[org.ListHuntGroupIntegrationLinksRequest, org.ListHuntGroupIntegrationLinksResponse](
+			httpClient,
+			baseURL+OrgListHuntGroupIntegrationLinksProcedure,
+			opts...,
+		),
 		createTrust: connect_go.NewClient[org.CreateTrustRequest, org.CreateTrustResponse](
 			httpClient,
 			baseURL+OrgCreateTrustProcedure,
@@ -1794,6 +1804,7 @@ type orgClient struct {
 	createAgentResponseAutoRules            *connect_go.Client[org.CreateAgentResponseAutoRulesRequest, org.CreateAgentResponseAutoRulesResponse]
 	updateAgentResponseAutoRules            *connect_go.Client[org.UpdateAgentResponseAutoRulesRequest, org.UpdateAgentResponseAutoRulesResponse]
 	deleteAgentResponseAutoRules            *connect_go.Client[org.DeleteAgentResponseAutoRulesRequest, org.DeleteAgentResponseAutoRulesResponse]
+	listHuntGroupIntegrationLinks           *connect_go.Client[org.ListHuntGroupIntegrationLinksRequest, org.ListHuntGroupIntegrationLinksResponse]
 	createTrust                             *connect_go.Client[org.CreateTrustRequest, org.CreateTrustResponse]
 	acceptTrust                             *connect_go.Client[org.AcceptTrustRequest, org.AcceptTrustResponse]
 	rejectTrust                             *connect_go.Client[org.RejectTrustRequest, org.RejectTrustResponse]
@@ -2437,6 +2448,11 @@ func (c *orgClient) DeleteAgentResponseAutoRules(ctx context.Context, req *conne
 	return c.deleteAgentResponseAutoRules.CallUnary(ctx, req)
 }
 
+// ListHuntGroupIntegrationLinks calls api.v1alpha1.org.Org.ListHuntGroupIntegrationLinks.
+func (c *orgClient) ListHuntGroupIntegrationLinks(ctx context.Context, req *connect_go.Request[org.ListHuntGroupIntegrationLinksRequest]) (*connect_go.Response[org.ListHuntGroupIntegrationLinksResponse], error) {
+	return c.listHuntGroupIntegrationLinks.CallUnary(ctx, req)
+}
+
 // CreateTrust calls api.v1alpha1.org.Org.CreateTrust.
 func (c *orgClient) CreateTrust(ctx context.Context, req *connect_go.Request[org.CreateTrustRequest]) (*connect_go.Response[org.CreateTrustResponse], error) {
 	return c.createTrust.CallUnary(ctx, req)
@@ -2929,6 +2945,8 @@ type OrgHandler interface {
 	UpdateAgentResponseAutoRules(context.Context, *connect_go.Request[org.UpdateAgentResponseAutoRulesRequest]) (*connect_go.Response[org.UpdateAgentResponseAutoRulesResponse], error)
 	// Deletes an existing Agent Call Response Automatically added compliance rule set.
 	DeleteAgentResponseAutoRules(context.Context, *connect_go.Request[org.DeleteAgentResponseAutoRulesRequest]) (*connect_go.Response[org.DeleteAgentResponseAutoRulesResponse], error)
+	// ListHuntGroupIntegrationLinks returns all integration links for a hunt group.
+	ListHuntGroupIntegrationLinks(context.Context, *connect_go.Request[org.ListHuntGroupIntegrationLinksRequest]) (*connect_go.Response[org.ListHuntGroupIntegrationLinksResponse], error)
 	// CreateTrust creates a new trust.
 	CreateTrust(context.Context, *connect_go.Request[org.CreateTrustRequest]) (*connect_go.Response[org.CreateTrustResponse], error)
 	// AcceptTrust accepts an incoming trust.
@@ -3637,6 +3655,11 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.DeleteAgentResponseAutoRules,
 		opts...,
 	)
+	orgListHuntGroupIntegrationLinksHandler := connect_go.NewUnaryHandler(
+		OrgListHuntGroupIntegrationLinksProcedure,
+		svc.ListHuntGroupIntegrationLinks,
+		opts...,
+	)
 	orgCreateTrustHandler := connect_go.NewUnaryHandler(
 		OrgCreateTrustProcedure,
 		svc.CreateTrust,
@@ -4097,6 +4120,8 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 			orgUpdateAgentResponseAutoRulesHandler.ServeHTTP(w, r)
 		case OrgDeleteAgentResponseAutoRulesProcedure:
 			orgDeleteAgentResponseAutoRulesHandler.ServeHTTP(w, r)
+		case OrgListHuntGroupIntegrationLinksProcedure:
+			orgListHuntGroupIntegrationLinksHandler.ServeHTTP(w, r)
 		case OrgCreateTrustProcedure:
 			orgCreateTrustHandler.ServeHTTP(w, r)
 		case OrgAcceptTrustProcedure:
@@ -4668,6 +4693,10 @@ func (UnimplementedOrgHandler) UpdateAgentResponseAutoRules(context.Context, *co
 
 func (UnimplementedOrgHandler) DeleteAgentResponseAutoRules(context.Context, *connect_go.Request[org.DeleteAgentResponseAutoRulesRequest]) (*connect_go.Response[org.DeleteAgentResponseAutoRulesResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.DeleteAgentResponseAutoRules is not implemented"))
+}
+
+func (UnimplementedOrgHandler) ListHuntGroupIntegrationLinks(context.Context, *connect_go.Request[org.ListHuntGroupIntegrationLinksRequest]) (*connect_go.Response[org.ListHuntGroupIntegrationLinksResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.ListHuntGroupIntegrationLinks is not implemented"))
 }
 
 func (UnimplementedOrgHandler) CreateTrust(context.Context, *connect_go.Request[org.CreateTrustRequest]) (*connect_go.Response[org.CreateTrustResponse], error) {

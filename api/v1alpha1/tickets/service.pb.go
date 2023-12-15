@@ -35,7 +35,7 @@ var file_api_v1alpha1_tickets_service_proto_rawDesc = []byte{
 	0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x2f, 0x74, 0x69,
 	0x63, 0x6b, 0x65, 0x74, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1c, 0x67, 0x6f, 0x6f, 0x67,
 	0x6c, 0x65, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x61, 0x6e, 0x6e, 0x6f, 0x74, 0x61, 0x74, 0x69, 0x6f,
-	0x6e, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x32, 0xad, 0x27, 0x0a, 0x07, 0x54, 0x69, 0x63,
+	0x6e, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x32, 0xe5, 0x28, 0x0a, 0x07, 0x54, 0x69, 0x63,
 	0x6b, 0x65, 0x74, 0x73, 0x12, 0x9d, 0x01, 0x0a, 0x0c, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x54,
 	0x69, 0x63, 0x6b, 0x65, 0x74, 0x12, 0x25, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c,
 	0x70, 0x68, 0x61, 0x31, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x2e, 0x43, 0x72, 0x65,
@@ -350,20 +350,32 @@ var file_api_v1alpha1_tickets_service_proto_rawDesc = []byte{
 	0x37, 0x3a, 0x01, 0x2a, 0x22, 0x32, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70,
 	0x68, 0x61, 0x31, 0x2f, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x2f, 0x74, 0x69, 0x63, 0x6b,
 	0x65, 0x74, 0x73, 0x2f, 0x61, 0x73, 0x73, 0x69, 0x67, 0x6e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74,
-	0x74, 0x65, 0x6d, 0x70, 0x6c, 0x61, 0x74, 0x65, 0x42, 0xcb, 0x01, 0x0a, 0x18, 0x63, 0x6f, 0x6d,
-	0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x74, 0x69,
-	0x63, 0x6b, 0x65, 0x74, 0x73, 0x42, 0x0c, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x50, 0x72,
-	0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x2f, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f,
-	0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67,
-	0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x74,
-	0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0xa2, 0x02, 0x03, 0x41, 0x56, 0x54, 0xaa, 0x02, 0x14, 0x41,
-	0x70, 0x69, 0x2e, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x54, 0x69, 0x63, 0x6b,
-	0x65, 0x74, 0x73, 0xca, 0x02, 0x14, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68,
-	0x61, 0x31, 0x5c, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0xe2, 0x02, 0x20, 0x41, 0x70, 0x69,
-	0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74,
-	0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x16,
-	0x41, 0x70, 0x69, 0x3a, 0x3a, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x3a, 0x3a, 0x54,
-	0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x74, 0x65, 0x6d, 0x70, 0x6c, 0x61, 0x74, 0x65, 0x12, 0xb5, 0x01, 0x0a, 0x10, 0x47, 0x65, 0x74,
+	0x41, 0x6c, 0x6c, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x12, 0x2a, 0x2e,
+	0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x74, 0x69, 0x63,
+	0x6b, 0x65, 0x74, 0x73, 0x2e, 0x47, 0x65, 0x74, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x79,
+	0x70, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2b, 0x2e, 0x61, 0x70, 0x69, 0x2e,
+	0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73,
+	0x2e, 0x47, 0x65, 0x74, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x48, 0xba, 0xb8, 0x91, 0x02, 0x0a, 0x0a, 0x03, 0x08,
+	0x9d, 0x18, 0x0a, 0x03, 0x08, 0x9c, 0x18, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x33, 0x3a, 0x01, 0x2a,
+	0x22, 0x2e, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f,
+	0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x2f, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x2f,
+	0x67, 0x65, 0x74, 0x61, 0x6c, 0x6c, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x74, 0x79, 0x70, 0x65,
+	0x42, 0xcb, 0x01, 0x0a, 0x18, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61,
+	0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x42, 0x0c, 0x53,
+	0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x2f, 0x67,
+	0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f,
+	0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31,
+	0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0xa2, 0x02,
+	0x03, 0x41, 0x56, 0x54, 0xaa, 0x02, 0x14, 0x41, 0x70, 0x69, 0x2e, 0x56, 0x31, 0x61, 0x6c, 0x70,
+	0x68, 0x61, 0x31, 0x2e, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0xca, 0x02, 0x14, 0x41, 0x70,
+	0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x54, 0x69, 0x63, 0x6b, 0x65,
+	0x74, 0x73, 0xe2, 0x02, 0x20, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61,
+	0x31, 0x5c, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74,
+	0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x16, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x56, 0x31, 0x61,
+	0x6c, 0x70, 0x68, 0x61, 0x31, 0x3a, 0x3a, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x62, 0x06,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var file_api_v1alpha1_tickets_service_proto_goTypes = []interface{}{
@@ -396,35 +408,37 @@ var file_api_v1alpha1_tickets_service_proto_goTypes = []interface{}{
 	(*EditTicketTemplateRequest)(nil),         // 26: api.v1alpha1.tickets.EditTicketTemplateRequest
 	(*ListTicketTemplateRequest)(nil),         // 27: api.v1alpha1.tickets.ListTicketTemplateRequest
 	(*AssignProjectTemplateRequest)(nil),      // 28: api.v1alpha1.tickets.AssignProjectTemplateRequest
-	(*CreateTicketRes)(nil),                   // 29: api.v1alpha1.tickets.CreateTicketRes
-	(*EditTicketRes)(nil),                     // 30: api.v1alpha1.tickets.EditTicketRes
-	(*ListTicketsRes)(nil),                    // 31: api.v1alpha1.tickets.ListTicketsRes
-	(*AssignTicketRes)(nil),                   // 32: api.v1alpha1.tickets.AssignTicketRes
-	(*CloseTicketRes)(nil),                    // 33: api.v1alpha1.tickets.CloseTicketRes
-	(*ViewTicketRes)(nil),                     // 34: api.v1alpha1.tickets.ViewTicketRes
-	(*CreateCommentRes)(nil),                  // 35: api.v1alpha1.tickets.CreateCommentRes
-	(*EnableProjectRes)(nil),                  // 36: api.v1alpha1.tickets.EnableProjectRes
-	(*ListEnabledProjectsRes)(nil),            // 37: api.v1alpha1.tickets.ListEnabledProjectsRes
-	(*CreateSlaRes)(nil),                      // 38: api.v1alpha1.tickets.CreateSlaRes
-	(*ListSlaRes)(nil),                        // 39: api.v1alpha1.tickets.ListSlaRes
-	(*UpdateSlaRes)(nil),                      // 40: api.v1alpha1.tickets.UpdateSlaRes
-	(*ListSlaConditionRes)(nil),               // 41: api.v1alpha1.tickets.ListSlaConditionRes
-	(*ReplyCommentRes)(nil),                   // 42: api.v1alpha1.tickets.ReplyCommentRes
-	(*ListTicketAuditLogRes)(nil),             // 43: api.v1alpha1.tickets.ListTicketAuditLogRes
-	(*CreateSelfAssignRes)(nil),               // 44: api.v1alpha1.tickets.CreateSelfAssignRes
-	(*EditMaskTicketRes)(nil),                 // 45: api.v1alpha1.tickets.EditMaskTicketRes
-	(*ListAllocatedTicketRes)(nil),            // 46: api.v1alpha1.tickets.ListAllocatedTicketRes
-	(*ListAvailableAgentTicketsResponse)(nil), // 47: api.v1alpha1.tickets.ListAvailableAgentTicketsResponse
-	(*ListSkillsResponse)(nil),                // 48: api.v1alpha1.tickets.ListSkillsResponse
-	(*ListUsersResponse)(nil),                 // 49: api.v1alpha1.tickets.ListUsersResponse
-	(*CloseTicketActionResponse)(nil),         // 50: api.v1alpha1.tickets.CloseTicketActionResponse
-	(*AssignTicketActionResponse)(nil),        // 51: api.v1alpha1.tickets.AssignTicketActionResponse
-	(*CreateTicketActionResponse)(nil),        // 52: api.v1alpha1.tickets.CreateTicketActionResponse
-	(*ChangeTicketStatusResponse)(nil),        // 53: api.v1alpha1.tickets.ChangeTicketStatusResponse
-	(*CreateTicketTemplateResponse)(nil),      // 54: api.v1alpha1.tickets.CreateTicketTemplateResponse
-	(*EditTicketTemplateResponse)(nil),        // 55: api.v1alpha1.tickets.EditTicketTemplateResponse
-	(*ListTicketTemplateResponse)(nil),        // 56: api.v1alpha1.tickets.ListTicketTemplateResponse
-	(*AssignProjectTemplateResponse)(nil),     // 57: api.v1alpha1.tickets.AssignProjectTemplateResponse
+	(*GetActionTypeRequest)(nil),              // 29: api.v1alpha1.tickets.GetActionTypeRequest
+	(*CreateTicketRes)(nil),                   // 30: api.v1alpha1.tickets.CreateTicketRes
+	(*EditTicketRes)(nil),                     // 31: api.v1alpha1.tickets.EditTicketRes
+	(*ListTicketsRes)(nil),                    // 32: api.v1alpha1.tickets.ListTicketsRes
+	(*AssignTicketRes)(nil),                   // 33: api.v1alpha1.tickets.AssignTicketRes
+	(*CloseTicketRes)(nil),                    // 34: api.v1alpha1.tickets.CloseTicketRes
+	(*ViewTicketRes)(nil),                     // 35: api.v1alpha1.tickets.ViewTicketRes
+	(*CreateCommentRes)(nil),                  // 36: api.v1alpha1.tickets.CreateCommentRes
+	(*EnableProjectRes)(nil),                  // 37: api.v1alpha1.tickets.EnableProjectRes
+	(*ListEnabledProjectsRes)(nil),            // 38: api.v1alpha1.tickets.ListEnabledProjectsRes
+	(*CreateSlaRes)(nil),                      // 39: api.v1alpha1.tickets.CreateSlaRes
+	(*ListSlaRes)(nil),                        // 40: api.v1alpha1.tickets.ListSlaRes
+	(*UpdateSlaRes)(nil),                      // 41: api.v1alpha1.tickets.UpdateSlaRes
+	(*ListSlaConditionRes)(nil),               // 42: api.v1alpha1.tickets.ListSlaConditionRes
+	(*ReplyCommentRes)(nil),                   // 43: api.v1alpha1.tickets.ReplyCommentRes
+	(*ListTicketAuditLogRes)(nil),             // 44: api.v1alpha1.tickets.ListTicketAuditLogRes
+	(*CreateSelfAssignRes)(nil),               // 45: api.v1alpha1.tickets.CreateSelfAssignRes
+	(*EditMaskTicketRes)(nil),                 // 46: api.v1alpha1.tickets.EditMaskTicketRes
+	(*ListAllocatedTicketRes)(nil),            // 47: api.v1alpha1.tickets.ListAllocatedTicketRes
+	(*ListAvailableAgentTicketsResponse)(nil), // 48: api.v1alpha1.tickets.ListAvailableAgentTicketsResponse
+	(*ListSkillsResponse)(nil),                // 49: api.v1alpha1.tickets.ListSkillsResponse
+	(*ListUsersResponse)(nil),                 // 50: api.v1alpha1.tickets.ListUsersResponse
+	(*CloseTicketActionResponse)(nil),         // 51: api.v1alpha1.tickets.CloseTicketActionResponse
+	(*AssignTicketActionResponse)(nil),        // 52: api.v1alpha1.tickets.AssignTicketActionResponse
+	(*CreateTicketActionResponse)(nil),        // 53: api.v1alpha1.tickets.CreateTicketActionResponse
+	(*ChangeTicketStatusResponse)(nil),        // 54: api.v1alpha1.tickets.ChangeTicketStatusResponse
+	(*CreateTicketTemplateResponse)(nil),      // 55: api.v1alpha1.tickets.CreateTicketTemplateResponse
+	(*EditTicketTemplateResponse)(nil),        // 56: api.v1alpha1.tickets.EditTicketTemplateResponse
+	(*ListTicketTemplateResponse)(nil),        // 57: api.v1alpha1.tickets.ListTicketTemplateResponse
+	(*AssignProjectTemplateResponse)(nil),     // 58: api.v1alpha1.tickets.AssignProjectTemplateResponse
+	(*GetActionTypeResponse)(nil),             // 59: api.v1alpha1.tickets.GetActionTypeResponse
 }
 var file_api_v1alpha1_tickets_service_proto_depIdxs = []int32{
 	0,  // 0: api.v1alpha1.tickets.Tickets.CreateTicket:input_type -> api.v1alpha1.tickets.CreateTicketReq
@@ -456,37 +470,39 @@ var file_api_v1alpha1_tickets_service_proto_depIdxs = []int32{
 	26, // 26: api.v1alpha1.tickets.Tickets.EditTicketTemplate:input_type -> api.v1alpha1.tickets.EditTicketTemplateRequest
 	27, // 27: api.v1alpha1.tickets.Tickets.ListTicketTemplate:input_type -> api.v1alpha1.tickets.ListTicketTemplateRequest
 	28, // 28: api.v1alpha1.tickets.Tickets.AssignTicketTemplate:input_type -> api.v1alpha1.tickets.AssignProjectTemplateRequest
-	29, // 29: api.v1alpha1.tickets.Tickets.CreateTicket:output_type -> api.v1alpha1.tickets.CreateTicketRes
-	30, // 30: api.v1alpha1.tickets.Tickets.EditTicket:output_type -> api.v1alpha1.tickets.EditTicketRes
-	31, // 31: api.v1alpha1.tickets.Tickets.ListTickets:output_type -> api.v1alpha1.tickets.ListTicketsRes
-	32, // 32: api.v1alpha1.tickets.Tickets.AssignTicket:output_type -> api.v1alpha1.tickets.AssignTicketRes
-	33, // 33: api.v1alpha1.tickets.Tickets.CloseTicket:output_type -> api.v1alpha1.tickets.CloseTicketRes
-	34, // 34: api.v1alpha1.tickets.Tickets.ViewTicket:output_type -> api.v1alpha1.tickets.ViewTicketRes
-	35, // 35: api.v1alpha1.tickets.Tickets.CreateComment:output_type -> api.v1alpha1.tickets.CreateCommentRes
-	36, // 36: api.v1alpha1.tickets.Tickets.EnableProject:output_type -> api.v1alpha1.tickets.EnableProjectRes
-	37, // 37: api.v1alpha1.tickets.Tickets.ListEnabledProjects:output_type -> api.v1alpha1.tickets.ListEnabledProjectsRes
-	38, // 38: api.v1alpha1.tickets.Tickets.CreateSLA:output_type -> api.v1alpha1.tickets.CreateSlaRes
-	39, // 39: api.v1alpha1.tickets.Tickets.ListSLA:output_type -> api.v1alpha1.tickets.ListSlaRes
-	40, // 40: api.v1alpha1.tickets.Tickets.UpdateSLA:output_type -> api.v1alpha1.tickets.UpdateSlaRes
-	41, // 41: api.v1alpha1.tickets.Tickets.ListSLACondition:output_type -> api.v1alpha1.tickets.ListSlaConditionRes
-	42, // 42: api.v1alpha1.tickets.Tickets.ReplyComment:output_type -> api.v1alpha1.tickets.ReplyCommentRes
-	43, // 43: api.v1alpha1.tickets.Tickets.ListTicketAuditLog:output_type -> api.v1alpha1.tickets.ListTicketAuditLogRes
-	44, // 44: api.v1alpha1.tickets.Tickets.AssignSelf:output_type -> api.v1alpha1.tickets.CreateSelfAssignRes
-	45, // 45: api.v1alpha1.tickets.Tickets.EditMaskTicket:output_type -> api.v1alpha1.tickets.EditMaskTicketRes
-	46, // 46: api.v1alpha1.tickets.Tickets.ListAllocatedTickets:output_type -> api.v1alpha1.tickets.ListAllocatedTicketRes
-	47, // 47: api.v1alpha1.tickets.Tickets.ListAvailableAgentTickets:output_type -> api.v1alpha1.tickets.ListAvailableAgentTicketsResponse
-	48, // 48: api.v1alpha1.tickets.Tickets.ListSkills:output_type -> api.v1alpha1.tickets.ListSkillsResponse
-	49, // 49: api.v1alpha1.tickets.Tickets.ListUsers:output_type -> api.v1alpha1.tickets.ListUsersResponse
-	50, // 50: api.v1alpha1.tickets.Tickets.CloseTicketAction:output_type -> api.v1alpha1.tickets.CloseTicketActionResponse
-	51, // 51: api.v1alpha1.tickets.Tickets.AssignTicketAction:output_type -> api.v1alpha1.tickets.AssignTicketActionResponse
-	52, // 52: api.v1alpha1.tickets.Tickets.CreateTicketAction:output_type -> api.v1alpha1.tickets.CreateTicketActionResponse
-	53, // 53: api.v1alpha1.tickets.Tickets.ChangeTicketStatus:output_type -> api.v1alpha1.tickets.ChangeTicketStatusResponse
-	54, // 54: api.v1alpha1.tickets.Tickets.CreateTicketTemplate:output_type -> api.v1alpha1.tickets.CreateTicketTemplateResponse
-	55, // 55: api.v1alpha1.tickets.Tickets.EditTicketTemplate:output_type -> api.v1alpha1.tickets.EditTicketTemplateResponse
-	56, // 56: api.v1alpha1.tickets.Tickets.ListTicketTemplate:output_type -> api.v1alpha1.tickets.ListTicketTemplateResponse
-	57, // 57: api.v1alpha1.tickets.Tickets.AssignTicketTemplate:output_type -> api.v1alpha1.tickets.AssignProjectTemplateResponse
-	29, // [29:58] is the sub-list for method output_type
-	0,  // [0:29] is the sub-list for method input_type
+	29, // 29: api.v1alpha1.tickets.Tickets.GetAllActionType:input_type -> api.v1alpha1.tickets.GetActionTypeRequest
+	30, // 30: api.v1alpha1.tickets.Tickets.CreateTicket:output_type -> api.v1alpha1.tickets.CreateTicketRes
+	31, // 31: api.v1alpha1.tickets.Tickets.EditTicket:output_type -> api.v1alpha1.tickets.EditTicketRes
+	32, // 32: api.v1alpha1.tickets.Tickets.ListTickets:output_type -> api.v1alpha1.tickets.ListTicketsRes
+	33, // 33: api.v1alpha1.tickets.Tickets.AssignTicket:output_type -> api.v1alpha1.tickets.AssignTicketRes
+	34, // 34: api.v1alpha1.tickets.Tickets.CloseTicket:output_type -> api.v1alpha1.tickets.CloseTicketRes
+	35, // 35: api.v1alpha1.tickets.Tickets.ViewTicket:output_type -> api.v1alpha1.tickets.ViewTicketRes
+	36, // 36: api.v1alpha1.tickets.Tickets.CreateComment:output_type -> api.v1alpha1.tickets.CreateCommentRes
+	37, // 37: api.v1alpha1.tickets.Tickets.EnableProject:output_type -> api.v1alpha1.tickets.EnableProjectRes
+	38, // 38: api.v1alpha1.tickets.Tickets.ListEnabledProjects:output_type -> api.v1alpha1.tickets.ListEnabledProjectsRes
+	39, // 39: api.v1alpha1.tickets.Tickets.CreateSLA:output_type -> api.v1alpha1.tickets.CreateSlaRes
+	40, // 40: api.v1alpha1.tickets.Tickets.ListSLA:output_type -> api.v1alpha1.tickets.ListSlaRes
+	41, // 41: api.v1alpha1.tickets.Tickets.UpdateSLA:output_type -> api.v1alpha1.tickets.UpdateSlaRes
+	42, // 42: api.v1alpha1.tickets.Tickets.ListSLACondition:output_type -> api.v1alpha1.tickets.ListSlaConditionRes
+	43, // 43: api.v1alpha1.tickets.Tickets.ReplyComment:output_type -> api.v1alpha1.tickets.ReplyCommentRes
+	44, // 44: api.v1alpha1.tickets.Tickets.ListTicketAuditLog:output_type -> api.v1alpha1.tickets.ListTicketAuditLogRes
+	45, // 45: api.v1alpha1.tickets.Tickets.AssignSelf:output_type -> api.v1alpha1.tickets.CreateSelfAssignRes
+	46, // 46: api.v1alpha1.tickets.Tickets.EditMaskTicket:output_type -> api.v1alpha1.tickets.EditMaskTicketRes
+	47, // 47: api.v1alpha1.tickets.Tickets.ListAllocatedTickets:output_type -> api.v1alpha1.tickets.ListAllocatedTicketRes
+	48, // 48: api.v1alpha1.tickets.Tickets.ListAvailableAgentTickets:output_type -> api.v1alpha1.tickets.ListAvailableAgentTicketsResponse
+	49, // 49: api.v1alpha1.tickets.Tickets.ListSkills:output_type -> api.v1alpha1.tickets.ListSkillsResponse
+	50, // 50: api.v1alpha1.tickets.Tickets.ListUsers:output_type -> api.v1alpha1.tickets.ListUsersResponse
+	51, // 51: api.v1alpha1.tickets.Tickets.CloseTicketAction:output_type -> api.v1alpha1.tickets.CloseTicketActionResponse
+	52, // 52: api.v1alpha1.tickets.Tickets.AssignTicketAction:output_type -> api.v1alpha1.tickets.AssignTicketActionResponse
+	53, // 53: api.v1alpha1.tickets.Tickets.CreateTicketAction:output_type -> api.v1alpha1.tickets.CreateTicketActionResponse
+	54, // 54: api.v1alpha1.tickets.Tickets.ChangeTicketStatus:output_type -> api.v1alpha1.tickets.ChangeTicketStatusResponse
+	55, // 55: api.v1alpha1.tickets.Tickets.CreateTicketTemplate:output_type -> api.v1alpha1.tickets.CreateTicketTemplateResponse
+	56, // 56: api.v1alpha1.tickets.Tickets.EditTicketTemplate:output_type -> api.v1alpha1.tickets.EditTicketTemplateResponse
+	57, // 57: api.v1alpha1.tickets.Tickets.ListTicketTemplate:output_type -> api.v1alpha1.tickets.ListTicketTemplateResponse
+	58, // 58: api.v1alpha1.tickets.Tickets.AssignTicketTemplate:output_type -> api.v1alpha1.tickets.AssignProjectTemplateResponse
+	59, // 59: api.v1alpha1.tickets.Tickets.GetAllActionType:output_type -> api.v1alpha1.tickets.GetActionTypeResponse
+	30, // [30:60] is the sub-list for method output_type
+	0,  // [0:30] is the sub-list for method input_type
 	0,  // [0:0] is the sub-list for extension type_name
 	0,  // [0:0] is the sub-list for extension extendee
 	0,  // [0:0] is the sub-list for field type_name

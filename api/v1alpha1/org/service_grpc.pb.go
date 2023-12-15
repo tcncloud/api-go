@@ -138,6 +138,7 @@ const (
 	Org_CreateAgentResponseAutoRules_FullMethodName            = "/api.v1alpha1.org.Org/CreateAgentResponseAutoRules"
 	Org_UpdateAgentResponseAutoRules_FullMethodName            = "/api.v1alpha1.org.Org/UpdateAgentResponseAutoRules"
 	Org_DeleteAgentResponseAutoRules_FullMethodName            = "/api.v1alpha1.org.Org/DeleteAgentResponseAutoRules"
+	Org_ListHuntGroupIntegrationLinks_FullMethodName           = "/api.v1alpha1.org.Org/ListHuntGroupIntegrationLinks"
 	Org_CreateTrust_FullMethodName                             = "/api.v1alpha1.org.Org/CreateTrust"
 	Org_AcceptTrust_FullMethodName                             = "/api.v1alpha1.org.Org/AcceptTrust"
 	Org_RejectTrust_FullMethodName                             = "/api.v1alpha1.org.Org/RejectTrust"
@@ -456,6 +457,8 @@ type OrgClient interface {
 	UpdateAgentResponseAutoRules(ctx context.Context, in *UpdateAgentResponseAutoRulesRequest, opts ...grpc.CallOption) (*UpdateAgentResponseAutoRulesResponse, error)
 	// Deletes an existing Agent Call Response Automatically added compliance rule set.
 	DeleteAgentResponseAutoRules(ctx context.Context, in *DeleteAgentResponseAutoRulesRequest, opts ...grpc.CallOption) (*DeleteAgentResponseAutoRulesResponse, error)
+	// ListHuntGroupIntegrationLinks returns all integration links for a hunt group.
+	ListHuntGroupIntegrationLinks(ctx context.Context, in *ListHuntGroupIntegrationLinksRequest, opts ...grpc.CallOption) (*ListHuntGroupIntegrationLinksResponse, error)
 	// CreateTrust creates a new trust.
 	CreateTrust(ctx context.Context, in *CreateTrustRequest, opts ...grpc.CallOption) (*CreateTrustResponse, error)
 	// AcceptTrust accepts an incoming trust.
@@ -1826,6 +1829,15 @@ func (c *orgClient) DeleteAgentResponseAutoRules(ctx context.Context, in *Delete
 	return out, nil
 }
 
+func (c *orgClient) ListHuntGroupIntegrationLinks(ctx context.Context, in *ListHuntGroupIntegrationLinksRequest, opts ...grpc.CallOption) (*ListHuntGroupIntegrationLinksResponse, error) {
+	out := new(ListHuntGroupIntegrationLinksResponse)
+	err := c.cc.Invoke(ctx, Org_ListHuntGroupIntegrationLinks_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *orgClient) CreateTrust(ctx context.Context, in *CreateTrustRequest, opts ...grpc.CallOption) (*CreateTrustResponse, error) {
 	out := new(CreateTrustResponse)
 	err := c.cc.Invoke(ctx, Org_CreateTrust_FullMethodName, in, out, opts...)
@@ -2494,6 +2506,8 @@ type OrgServer interface {
 	UpdateAgentResponseAutoRules(context.Context, *UpdateAgentResponseAutoRulesRequest) (*UpdateAgentResponseAutoRulesResponse, error)
 	// Deletes an existing Agent Call Response Automatically added compliance rule set.
 	DeleteAgentResponseAutoRules(context.Context, *DeleteAgentResponseAutoRulesRequest) (*DeleteAgentResponseAutoRulesResponse, error)
+	// ListHuntGroupIntegrationLinks returns all integration links for a hunt group.
+	ListHuntGroupIntegrationLinks(context.Context, *ListHuntGroupIntegrationLinksRequest) (*ListHuntGroupIntegrationLinksResponse, error)
 	// CreateTrust creates a new trust.
 	CreateTrust(context.Context, *CreateTrustRequest) (*CreateTrustResponse, error)
 	// AcceptTrust accepts an incoming trust.
@@ -2962,6 +2976,9 @@ func (UnimplementedOrgServer) UpdateAgentResponseAutoRules(context.Context, *Upd
 }
 func (UnimplementedOrgServer) DeleteAgentResponseAutoRules(context.Context, *DeleteAgentResponseAutoRulesRequest) (*DeleteAgentResponseAutoRulesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteAgentResponseAutoRules not implemented")
+}
+func (UnimplementedOrgServer) ListHuntGroupIntegrationLinks(context.Context, *ListHuntGroupIntegrationLinksRequest) (*ListHuntGroupIntegrationLinksResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListHuntGroupIntegrationLinks not implemented")
 }
 func (UnimplementedOrgServer) CreateTrust(context.Context, *CreateTrustRequest) (*CreateTrustResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateTrust not implemented")
@@ -5274,6 +5291,24 @@ func _Org_DeleteAgentResponseAutoRules_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Org_ListHuntGroupIntegrationLinks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListHuntGroupIntegrationLinksRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).ListHuntGroupIntegrationLinks(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_ListHuntGroupIntegrationLinks_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).ListHuntGroupIntegrationLinks(ctx, req.(*ListHuntGroupIntegrationLinksRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Org_CreateTrust_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateTrustRequest)
 	if err := dec(in); err != nil {
@@ -6516,6 +6551,10 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteAgentResponseAutoRules",
 			Handler:    _Org_DeleteAgentResponseAutoRules_Handler,
+		},
+		{
+			MethodName: "ListHuntGroupIntegrationLinks",
+			Handler:    _Org_ListHuntGroupIntegrationLinks_Handler,
 		},
 		{
 			MethodName: "CreateTrust",
