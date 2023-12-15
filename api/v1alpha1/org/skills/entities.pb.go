@@ -997,6 +997,149 @@ func (x *GetSkillGroupMembersResponse) GetUserIds() []string {
 	return nil
 }
 
+// Request message for the ListSkillGroupsMembers rpc.
+type ListSkillGroupsMembersRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *ListSkillGroupsMembersRequest) Reset() {
+	*x = ListSkillGroupsMembersRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[20]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ListSkillGroupsMembersRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListSkillGroupsMembersRequest) ProtoMessage() {}
+
+func (x *ListSkillGroupsMembersRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[20]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListSkillGroupsMembersRequest.ProtoReflect.Descriptor instead.
+func (*ListSkillGroupsMembersRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_org_skills_entities_proto_rawDescGZIP(), []int{20}
+}
+
+// Response message for the ListSkillGroupsMembers rpc.
+type ListSkillGroupsMembersResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	SkillGroupMembers []*SkillGroupMembers `protobuf:"bytes,1,rep,name=skill_group_members,json=skillGroupMembers,proto3" json:"skill_group_members,omitempty"`
+}
+
+func (x *ListSkillGroupsMembersResponse) Reset() {
+	*x = ListSkillGroupsMembersResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[21]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ListSkillGroupsMembersResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListSkillGroupsMembersResponse) ProtoMessage() {}
+
+func (x *ListSkillGroupsMembersResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[21]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListSkillGroupsMembersResponse.ProtoReflect.Descriptor instead.
+func (*ListSkillGroupsMembersResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_org_skills_entities_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *ListSkillGroupsMembersResponse) GetSkillGroupMembers() []*SkillGroupMembers {
+	if x != nil {
+		return x.SkillGroupMembers
+	}
+	return nil
+}
+
+// Submessage for ListSkillGroupsMembersResponse.
+type SkillGroupMembers struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	SkillGroupId string   `protobuf:"bytes,1,opt,name=skill_group_id,json=skillGroupId,proto3" json:"skill_group_id,omitempty"`
+	UserIds      []string `protobuf:"bytes,2,rep,name=user_ids,json=userIds,proto3" json:"user_ids,omitempty"`
+}
+
+func (x *SkillGroupMembers) Reset() {
+	*x = SkillGroupMembers{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[22]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SkillGroupMembers) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SkillGroupMembers) ProtoMessage() {}
+
+func (x *SkillGroupMembers) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[22]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SkillGroupMembers.ProtoReflect.Descriptor instead.
+func (*SkillGroupMembers) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_org_skills_entities_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *SkillGroupMembers) GetSkillGroupId() string {
+	if x != nil {
+		return x.SkillGroupId
+	}
+	return ""
+}
+
+func (x *SkillGroupMembers) GetUserIds() []string {
+	if x != nil {
+		return x.UserIds
+	}
+	return nil
+}
+
 var File_api_v1alpha1_org_skills_entities_proto protoreflect.FileDescriptor
 
 var file_api_v1alpha1_org_skills_entities_proto_rawDesc = []byte{
@@ -1090,22 +1233,37 @@ var file_api_v1alpha1_org_skills_entities_proto_rawDesc = []byte{
 	0x64, 0x22, 0x39, 0x0a, 0x1c, 0x47, 0x65, 0x74, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x47, 0x72, 0x6f,
 	0x75, 0x70, 0x4d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
 	0x65, 0x12, 0x19, 0x0a, 0x08, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x73, 0x18, 0x01, 0x20,
-	0x03, 0x28, 0x09, 0x52, 0x07, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x73, 0x42, 0xe0, 0x01, 0x0a,
-	0x1b, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61,
-	0x31, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x73, 0x42, 0x0d, 0x45, 0x6e,
-	0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x32, 0x67,
-	0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f,
-	0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31,
-	0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x6f, 0x72, 0x67, 0x2f, 0x73, 0x6b, 0x69, 0x6c, 0x6c,
-	0x73, 0xa2, 0x02, 0x04, 0x41, 0x56, 0x4f, 0x53, 0xaa, 0x02, 0x17, 0x41, 0x70, 0x69, 0x2e, 0x56,
-	0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x4f, 0x72, 0x67, 0x2e, 0x53, 0x6b, 0x69, 0x6c,
-	0x6c, 0x73, 0xca, 0x02, 0x17, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61,
-	0x31, 0x5c, 0x4f, 0x72, 0x67, 0x5c, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x73, 0xe2, 0x02, 0x23, 0x41,
-	0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x4f, 0x72, 0x67, 0x5c,
-	0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61,
-	0x74, 0x61, 0xea, 0x02, 0x1a, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68,
-	0x61, 0x31, 0x3a, 0x3a, 0x4f, 0x72, 0x67, 0x3a, 0x3a, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x73, 0x62,
-	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x03, 0x28, 0x09, 0x52, 0x07, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x73, 0x22, 0x1f, 0x0a, 0x1d,
+	0x4c, 0x69, 0x73, 0x74, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x73, 0x4d,
+	0x65, 0x6d, 0x62, 0x65, 0x72, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x22, 0x7c, 0x0a,
+	0x1e, 0x4c, 0x69, 0x73, 0x74, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x73,
+	0x4d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12,
+	0x5a, 0x0a, 0x13, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x5f, 0x67, 0x72, 0x6f, 0x75, 0x70, 0x5f, 0x6d,
+	0x65, 0x6d, 0x62, 0x65, 0x72, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x2a, 0x2e, 0x61,
+	0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x6f, 0x72, 0x67, 0x2e,
+	0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x73, 0x2e, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x47, 0x72, 0x6f, 0x75,
+	0x70, 0x4d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x73, 0x52, 0x11, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x47,
+	0x72, 0x6f, 0x75, 0x70, 0x4d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x73, 0x22, 0x54, 0x0a, 0x11, 0x53,
+	0x6b, 0x69, 0x6c, 0x6c, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x4d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x73,
+	0x12, 0x24, 0x0a, 0x0e, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x5f, 0x67, 0x72, 0x6f, 0x75, 0x70, 0x5f,
+	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x47,
+	0x72, 0x6f, 0x75, 0x70, 0x49, 0x64, 0x12, 0x19, 0x0a, 0x08, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69,
+	0x64, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x09, 0x52, 0x07, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64,
+	0x73, 0x42, 0xe0, 0x01, 0x0a, 0x1b, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31,
+	0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x73, 0x6b, 0x69, 0x6c, 0x6c,
+	0x73, 0x42, 0x0d, 0x45, 0x6e, 0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x50, 0x72, 0x6f, 0x74, 0x6f,
+	0x50, 0x01, 0x5a, 0x32, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74,
+	0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61,
+	0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x6f, 0x72, 0x67, 0x2f,
+	0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x73, 0xa2, 0x02, 0x04, 0x41, 0x56, 0x4f, 0x53, 0xaa, 0x02, 0x17,
+	0x41, 0x70, 0x69, 0x2e, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x4f, 0x72, 0x67,
+	0x2e, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x73, 0xca, 0x02, 0x17, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31,
+	0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x4f, 0x72, 0x67, 0x5c, 0x53, 0x6b, 0x69, 0x6c, 0x6c,
+	0x73, 0xe2, 0x02, 0x23, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31,
+	0x5c, 0x4f, 0x72, 0x67, 0x5c, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d,
+	0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x1a, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x56,
+	0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x3a, 0x3a, 0x4f, 0x72, 0x67, 0x3a, 0x3a, 0x53, 0x6b,
+	0x69, 0x6c, 0x6c, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1120,42 +1278,46 @@ func file_api_v1alpha1_org_skills_entities_proto_rawDescGZIP() []byte {
 	return file_api_v1alpha1_org_skills_entities_proto_rawDescData
 }
 
-var file_api_v1alpha1_org_skills_entities_proto_msgTypes = make([]protoimpl.MessageInfo, 20)
+var file_api_v1alpha1_org_skills_entities_proto_msgTypes = make([]protoimpl.MessageInfo, 23)
 var file_api_v1alpha1_org_skills_entities_proto_goTypes = []interface{}{
-	(*CreateSkillGroupRequest)(nil),      // 0: api.v1alpha1.org.skills.CreateSkillGroupRequest
-	(*CreateSkillGroupResponse)(nil),     // 1: api.v1alpha1.org.skills.CreateSkillGroupResponse
-	(*ListSkillGroupsRequest)(nil),       // 2: api.v1alpha1.org.skills.ListSkillGroupsRequest
-	(*ListSkillGroupsResponse)(nil),      // 3: api.v1alpha1.org.skills.ListSkillGroupsResponse
-	(*UpdateSkillGroupRequest)(nil),      // 4: api.v1alpha1.org.skills.UpdateSkillGroupRequest
-	(*UpdateSkillGroupResponse)(nil),     // 5: api.v1alpha1.org.skills.UpdateSkillGroupResponse
-	(*GetSkillGroupRequest)(nil),         // 6: api.v1alpha1.org.skills.GetSkillGroupRequest
-	(*GetSkillGroupResponse)(nil),        // 7: api.v1alpha1.org.skills.GetSkillGroupResponse
-	(*DeleteSkillGroupRequest)(nil),      // 8: api.v1alpha1.org.skills.DeleteSkillGroupRequest
-	(*DeleteSkillGroupResponse)(nil),     // 9: api.v1alpha1.org.skills.DeleteSkillGroupResponse
-	(*AssignSkillGroupsRequest)(nil),     // 10: api.v1alpha1.org.skills.AssignSkillGroupsRequest
-	(*AssignSkillGroupsResponse)(nil),    // 11: api.v1alpha1.org.skills.AssignSkillGroupsResponse
-	(*RevokeSkillGroupsRequest)(nil),     // 12: api.v1alpha1.org.skills.RevokeSkillGroupsRequest
-	(*RevokeSkillGroupsResponse)(nil),    // 13: api.v1alpha1.org.skills.RevokeSkillGroupsResponse
-	(*GetUserSkillGroupsRequest)(nil),    // 14: api.v1alpha1.org.skills.GetUserSkillGroupsRequest
-	(*GetUserSkillGroupsResponse)(nil),   // 15: api.v1alpha1.org.skills.GetUserSkillGroupsResponse
-	(*GetUserSkillsRequest)(nil),         // 16: api.v1alpha1.org.skills.GetUserSkillsRequest
-	(*GetUserSkillsResponse)(nil),        // 17: api.v1alpha1.org.skills.GetUserSkillsResponse
-	(*GetSkillGroupMembersRequest)(nil),  // 18: api.v1alpha1.org.skills.GetSkillGroupMembersRequest
-	(*GetSkillGroupMembersResponse)(nil), // 19: api.v1alpha1.org.skills.GetSkillGroupMembersResponse
-	(*org.SkillGroup)(nil),               // 20: api.commons.org.SkillGroup
-	(*org.SkillSet)(nil),                 // 21: api.commons.org.SkillSet
+	(*CreateSkillGroupRequest)(nil),        // 0: api.v1alpha1.org.skills.CreateSkillGroupRequest
+	(*CreateSkillGroupResponse)(nil),       // 1: api.v1alpha1.org.skills.CreateSkillGroupResponse
+	(*ListSkillGroupsRequest)(nil),         // 2: api.v1alpha1.org.skills.ListSkillGroupsRequest
+	(*ListSkillGroupsResponse)(nil),        // 3: api.v1alpha1.org.skills.ListSkillGroupsResponse
+	(*UpdateSkillGroupRequest)(nil),        // 4: api.v1alpha1.org.skills.UpdateSkillGroupRequest
+	(*UpdateSkillGroupResponse)(nil),       // 5: api.v1alpha1.org.skills.UpdateSkillGroupResponse
+	(*GetSkillGroupRequest)(nil),           // 6: api.v1alpha1.org.skills.GetSkillGroupRequest
+	(*GetSkillGroupResponse)(nil),          // 7: api.v1alpha1.org.skills.GetSkillGroupResponse
+	(*DeleteSkillGroupRequest)(nil),        // 8: api.v1alpha1.org.skills.DeleteSkillGroupRequest
+	(*DeleteSkillGroupResponse)(nil),       // 9: api.v1alpha1.org.skills.DeleteSkillGroupResponse
+	(*AssignSkillGroupsRequest)(nil),       // 10: api.v1alpha1.org.skills.AssignSkillGroupsRequest
+	(*AssignSkillGroupsResponse)(nil),      // 11: api.v1alpha1.org.skills.AssignSkillGroupsResponse
+	(*RevokeSkillGroupsRequest)(nil),       // 12: api.v1alpha1.org.skills.RevokeSkillGroupsRequest
+	(*RevokeSkillGroupsResponse)(nil),      // 13: api.v1alpha1.org.skills.RevokeSkillGroupsResponse
+	(*GetUserSkillGroupsRequest)(nil),      // 14: api.v1alpha1.org.skills.GetUserSkillGroupsRequest
+	(*GetUserSkillGroupsResponse)(nil),     // 15: api.v1alpha1.org.skills.GetUserSkillGroupsResponse
+	(*GetUserSkillsRequest)(nil),           // 16: api.v1alpha1.org.skills.GetUserSkillsRequest
+	(*GetUserSkillsResponse)(nil),          // 17: api.v1alpha1.org.skills.GetUserSkillsResponse
+	(*GetSkillGroupMembersRequest)(nil),    // 18: api.v1alpha1.org.skills.GetSkillGroupMembersRequest
+	(*GetSkillGroupMembersResponse)(nil),   // 19: api.v1alpha1.org.skills.GetSkillGroupMembersResponse
+	(*ListSkillGroupsMembersRequest)(nil),  // 20: api.v1alpha1.org.skills.ListSkillGroupsMembersRequest
+	(*ListSkillGroupsMembersResponse)(nil), // 21: api.v1alpha1.org.skills.ListSkillGroupsMembersResponse
+	(*SkillGroupMembers)(nil),              // 22: api.v1alpha1.org.skills.SkillGroupMembers
+	(*org.SkillGroup)(nil),                 // 23: api.commons.org.SkillGroup
+	(*org.SkillSet)(nil),                   // 24: api.commons.org.SkillSet
 }
 var file_api_v1alpha1_org_skills_entities_proto_depIdxs = []int32{
-	20, // 0: api.v1alpha1.org.skills.CreateSkillGroupRequest.skill_group:type_name -> api.commons.org.SkillGroup
-	20, // 1: api.v1alpha1.org.skills.ListSkillGroupsResponse.skill_groups:type_name -> api.commons.org.SkillGroup
-	20, // 2: api.v1alpha1.org.skills.UpdateSkillGroupRequest.skill_group:type_name -> api.commons.org.SkillGroup
-	20, // 3: api.v1alpha1.org.skills.GetSkillGroupResponse.skill_group:type_name -> api.commons.org.SkillGroup
-	21, // 4: api.v1alpha1.org.skills.GetUserSkillsResponse.skill_sets:type_name -> api.commons.org.SkillSet
-	5,  // [5:5] is the sub-list for method output_type
-	5,  // [5:5] is the sub-list for method input_type
-	5,  // [5:5] is the sub-list for extension type_name
-	5,  // [5:5] is the sub-list for extension extendee
-	0,  // [0:5] is the sub-list for field type_name
+	23, // 0: api.v1alpha1.org.skills.CreateSkillGroupRequest.skill_group:type_name -> api.commons.org.SkillGroup
+	23, // 1: api.v1alpha1.org.skills.ListSkillGroupsResponse.skill_groups:type_name -> api.commons.org.SkillGroup
+	23, // 2: api.v1alpha1.org.skills.UpdateSkillGroupRequest.skill_group:type_name -> api.commons.org.SkillGroup
+	23, // 3: api.v1alpha1.org.skills.GetSkillGroupResponse.skill_group:type_name -> api.commons.org.SkillGroup
+	24, // 4: api.v1alpha1.org.skills.GetUserSkillsResponse.skill_sets:type_name -> api.commons.org.SkillSet
+	22, // 5: api.v1alpha1.org.skills.ListSkillGroupsMembersResponse.skill_group_members:type_name -> api.v1alpha1.org.skills.SkillGroupMembers
+	6,  // [6:6] is the sub-list for method output_type
+	6,  // [6:6] is the sub-list for method input_type
+	6,  // [6:6] is the sub-list for extension type_name
+	6,  // [6:6] is the sub-list for extension extendee
+	0,  // [0:6] is the sub-list for field type_name
 }
 
 func init() { file_api_v1alpha1_org_skills_entities_proto_init() }
@@ -1404,6 +1566,42 @@ func file_api_v1alpha1_org_skills_entities_proto_init() {
 				return nil
 			}
 		}
+		file_api_v1alpha1_org_skills_entities_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListSkillGroupsMembersRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_org_skills_entities_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListSkillGroupsMembersResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_org_skills_entities_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*SkillGroupMembers); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -1411,7 +1609,7 @@ func file_api_v1alpha1_org_skills_entities_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_v1alpha1_org_skills_entities_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   20,
+			NumMessages:   23,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

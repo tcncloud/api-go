@@ -19,16 +19,17 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	SkillsService_CreateSkillGroup_FullMethodName     = "/api.v1alpha1.org.skills.SkillsService/CreateSkillGroup"
-	SkillsService_ListSkillGroups_FullMethodName      = "/api.v1alpha1.org.skills.SkillsService/ListSkillGroups"
-	SkillsService_UpdateSkillGroup_FullMethodName     = "/api.v1alpha1.org.skills.SkillsService/UpdateSkillGroup"
-	SkillsService_GetSkillGroup_FullMethodName        = "/api.v1alpha1.org.skills.SkillsService/GetSkillGroup"
-	SkillsService_DeleteSkillGroup_FullMethodName     = "/api.v1alpha1.org.skills.SkillsService/DeleteSkillGroup"
-	SkillsService_AssignSkillGroups_FullMethodName    = "/api.v1alpha1.org.skills.SkillsService/AssignSkillGroups"
-	SkillsService_RevokeSkillGroups_FullMethodName    = "/api.v1alpha1.org.skills.SkillsService/RevokeSkillGroups"
-	SkillsService_GetUserSkillGroups_FullMethodName   = "/api.v1alpha1.org.skills.SkillsService/GetUserSkillGroups"
-	SkillsService_GetUserSkills_FullMethodName        = "/api.v1alpha1.org.skills.SkillsService/GetUserSkills"
-	SkillsService_GetSkillGroupMembers_FullMethodName = "/api.v1alpha1.org.skills.SkillsService/GetSkillGroupMembers"
+	SkillsService_CreateSkillGroup_FullMethodName       = "/api.v1alpha1.org.skills.SkillsService/CreateSkillGroup"
+	SkillsService_ListSkillGroups_FullMethodName        = "/api.v1alpha1.org.skills.SkillsService/ListSkillGroups"
+	SkillsService_UpdateSkillGroup_FullMethodName       = "/api.v1alpha1.org.skills.SkillsService/UpdateSkillGroup"
+	SkillsService_GetSkillGroup_FullMethodName          = "/api.v1alpha1.org.skills.SkillsService/GetSkillGroup"
+	SkillsService_DeleteSkillGroup_FullMethodName       = "/api.v1alpha1.org.skills.SkillsService/DeleteSkillGroup"
+	SkillsService_AssignSkillGroups_FullMethodName      = "/api.v1alpha1.org.skills.SkillsService/AssignSkillGroups"
+	SkillsService_RevokeSkillGroups_FullMethodName      = "/api.v1alpha1.org.skills.SkillsService/RevokeSkillGroups"
+	SkillsService_GetUserSkillGroups_FullMethodName     = "/api.v1alpha1.org.skills.SkillsService/GetUserSkillGroups"
+	SkillsService_GetUserSkills_FullMethodName          = "/api.v1alpha1.org.skills.SkillsService/GetUserSkills"
+	SkillsService_GetSkillGroupMembers_FullMethodName   = "/api.v1alpha1.org.skills.SkillsService/GetSkillGroupMembers"
+	SkillsService_ListSkillGroupsMembers_FullMethodName = "/api.v1alpha1.org.skills.SkillsService/ListSkillGroupsMembers"
 )
 
 // SkillsServiceClient is the client API for SkillsService service.
@@ -55,6 +56,8 @@ type SkillsServiceClient interface {
 	GetUserSkills(ctx context.Context, in *GetUserSkillsRequest, opts ...grpc.CallOption) (*GetUserSkillsResponse, error)
 	// GetSkillGroupMembers gets the members of a skill group.
 	GetSkillGroupMembers(ctx context.Context, in *GetSkillGroupMembersRequest, opts ...grpc.CallOption) (*GetSkillGroupMembersResponse, error)
+	// ListSkillGroupsMembers gets the members of a skill group for each skill group in an Org.
+	ListSkillGroupsMembers(ctx context.Context, in *ListSkillGroupsMembersRequest, opts ...grpc.CallOption) (*ListSkillGroupsMembersResponse, error)
 }
 
 type skillsServiceClient struct {
@@ -155,6 +158,15 @@ func (c *skillsServiceClient) GetSkillGroupMembers(ctx context.Context, in *GetS
 	return out, nil
 }
 
+func (c *skillsServiceClient) ListSkillGroupsMembers(ctx context.Context, in *ListSkillGroupsMembersRequest, opts ...grpc.CallOption) (*ListSkillGroupsMembersResponse, error) {
+	out := new(ListSkillGroupsMembersResponse)
+	err := c.cc.Invoke(ctx, SkillsService_ListSkillGroupsMembers_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SkillsServiceServer is the server API for SkillsService service.
 // All implementations must embed UnimplementedSkillsServiceServer
 // for forward compatibility
@@ -179,6 +191,8 @@ type SkillsServiceServer interface {
 	GetUserSkills(context.Context, *GetUserSkillsRequest) (*GetUserSkillsResponse, error)
 	// GetSkillGroupMembers gets the members of a skill group.
 	GetSkillGroupMembers(context.Context, *GetSkillGroupMembersRequest) (*GetSkillGroupMembersResponse, error)
+	// ListSkillGroupsMembers gets the members of a skill group for each skill group in an Org.
+	ListSkillGroupsMembers(context.Context, *ListSkillGroupsMembersRequest) (*ListSkillGroupsMembersResponse, error)
 	mustEmbedUnimplementedSkillsServiceServer()
 }
 
@@ -215,6 +229,9 @@ func (UnimplementedSkillsServiceServer) GetUserSkills(context.Context, *GetUserS
 }
 func (UnimplementedSkillsServiceServer) GetSkillGroupMembers(context.Context, *GetSkillGroupMembersRequest) (*GetSkillGroupMembersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSkillGroupMembers not implemented")
+}
+func (UnimplementedSkillsServiceServer) ListSkillGroupsMembers(context.Context, *ListSkillGroupsMembersRequest) (*ListSkillGroupsMembersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListSkillGroupsMembers not implemented")
 }
 func (UnimplementedSkillsServiceServer) mustEmbedUnimplementedSkillsServiceServer() {}
 
@@ -409,6 +426,24 @@ func _SkillsService_GetSkillGroupMembers_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SkillsService_ListSkillGroupsMembers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListSkillGroupsMembersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SkillsServiceServer).ListSkillGroupsMembers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SkillsService_ListSkillGroupsMembers_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SkillsServiceServer).ListSkillGroupsMembers(ctx, req.(*ListSkillGroupsMembersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SkillsService_ServiceDesc is the grpc.ServiceDesc for SkillsService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -455,6 +490,10 @@ var SkillsService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetSkillGroupMembers",
 			Handler:    _SkillsService_GetSkillGroupMembers_Handler,
+		},
+		{
+			MethodName: "ListSkillGroupsMembers",
+			Handler:    _SkillsService_ListSkillGroupsMembers_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
