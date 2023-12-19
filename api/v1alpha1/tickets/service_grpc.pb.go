@@ -49,6 +49,7 @@ const (
 	Tickets_ListTicketTemplate_FullMethodName        = "/api.v1alpha1.tickets.Tickets/ListTicketTemplate"
 	Tickets_AssignTicketTemplate_FullMethodName      = "/api.v1alpha1.tickets.Tickets/AssignTicketTemplate"
 	Tickets_GetAllActionType_FullMethodName          = "/api.v1alpha1.tickets.Tickets/GetAllActionType"
+	Tickets_GetPhoneNumberType_FullMethodName        = "/api.v1alpha1.tickets.Tickets/GetPhoneNumberType"
 )
 
 // TicketsClient is the client API for Tickets service.
@@ -118,6 +119,8 @@ type TicketsClient interface {
 	AssignTicketTemplate(ctx context.Context, in *AssignProjectTemplateRequest, opts ...grpc.CallOption) (*AssignProjectTemplateResponse, error)
 	// Public method to list all Action Types
 	GetAllActionType(ctx context.Context, in *GetActionTypeRequest, opts ...grpc.CallOption) (*GetActionTypeResponse, error)
+	// Public method to list all Action Types
+	GetPhoneNumberType(ctx context.Context, in *GetPhoneNumberTypeRequest, opts ...grpc.CallOption) (*GetPhoneNumberTypeResponse, error)
 }
 
 type ticketsClient struct {
@@ -399,6 +402,15 @@ func (c *ticketsClient) GetAllActionType(ctx context.Context, in *GetActionTypeR
 	return out, nil
 }
 
+func (c *ticketsClient) GetPhoneNumberType(ctx context.Context, in *GetPhoneNumberTypeRequest, opts ...grpc.CallOption) (*GetPhoneNumberTypeResponse, error) {
+	out := new(GetPhoneNumberTypeResponse)
+	err := c.cc.Invoke(ctx, Tickets_GetPhoneNumberType_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TicketsServer is the server API for Tickets service.
 // All implementations must embed UnimplementedTicketsServer
 // for forward compatibility
@@ -466,6 +478,8 @@ type TicketsServer interface {
 	AssignTicketTemplate(context.Context, *AssignProjectTemplateRequest) (*AssignProjectTemplateResponse, error)
 	// Public method to list all Action Types
 	GetAllActionType(context.Context, *GetActionTypeRequest) (*GetActionTypeResponse, error)
+	// Public method to list all Action Types
+	GetPhoneNumberType(context.Context, *GetPhoneNumberTypeRequest) (*GetPhoneNumberTypeResponse, error)
 	mustEmbedUnimplementedTicketsServer()
 }
 
@@ -562,6 +576,9 @@ func (UnimplementedTicketsServer) AssignTicketTemplate(context.Context, *AssignP
 }
 func (UnimplementedTicketsServer) GetAllActionType(context.Context, *GetActionTypeRequest) (*GetActionTypeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllActionType not implemented")
+}
+func (UnimplementedTicketsServer) GetPhoneNumberType(context.Context, *GetPhoneNumberTypeRequest) (*GetPhoneNumberTypeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPhoneNumberType not implemented")
 }
 func (UnimplementedTicketsServer) mustEmbedUnimplementedTicketsServer() {}
 
@@ -1116,6 +1133,24 @@ func _Tickets_GetAllActionType_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Tickets_GetPhoneNumberType_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPhoneNumberTypeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TicketsServer).GetPhoneNumberType(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Tickets_GetPhoneNumberType_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TicketsServer).GetPhoneNumberType(ctx, req.(*GetPhoneNumberTypeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Tickets_ServiceDesc is the grpc.ServiceDesc for Tickets service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1242,6 +1277,10 @@ var Tickets_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAllActionType",
 			Handler:    _Tickets_GetAllActionType_Handler,
+		},
+		{
+			MethodName: "GetPhoneNumberType",
+			Handler:    _Tickets_GetPhoneNumberType_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

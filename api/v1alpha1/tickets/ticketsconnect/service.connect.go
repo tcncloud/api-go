@@ -107,6 +107,9 @@ const (
 	// TicketsGetAllActionTypeProcedure is the fully-qualified name of the Tickets's GetAllActionType
 	// RPC.
 	TicketsGetAllActionTypeProcedure = "/api.v1alpha1.tickets.Tickets/GetAllActionType"
+	// TicketsGetPhoneNumberTypeProcedure is the fully-qualified name of the Tickets's
+	// GetPhoneNumberType RPC.
+	TicketsGetPhoneNumberTypeProcedure = "/api.v1alpha1.tickets.Tickets/GetPhoneNumberType"
 )
 
 // TicketsClient is a client for the api.v1alpha1.tickets.Tickets service.
@@ -174,6 +177,8 @@ type TicketsClient interface {
 	AssignTicketTemplate(context.Context, *connect_go.Request[tickets.AssignProjectTemplateRequest]) (*connect_go.Response[tickets.AssignProjectTemplateResponse], error)
 	// Public method to list all Action Types
 	GetAllActionType(context.Context, *connect_go.Request[tickets.GetActionTypeRequest]) (*connect_go.Response[tickets.GetActionTypeResponse], error)
+	// Public method to list all Action Types
+	GetPhoneNumberType(context.Context, *connect_go.Request[tickets.GetPhoneNumberTypeRequest]) (*connect_go.Response[tickets.GetPhoneNumberTypeResponse], error)
 }
 
 // NewTicketsClient constructs a client for the api.v1alpha1.tickets.Tickets service. By default, it
@@ -336,6 +341,11 @@ func NewTicketsClient(httpClient connect_go.HTTPClient, baseURL string, opts ...
 			baseURL+TicketsGetAllActionTypeProcedure,
 			opts...,
 		),
+		getPhoneNumberType: connect_go.NewClient[tickets.GetPhoneNumberTypeRequest, tickets.GetPhoneNumberTypeResponse](
+			httpClient,
+			baseURL+TicketsGetPhoneNumberTypeProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -371,6 +381,7 @@ type ticketsClient struct {
 	listTicketTemplate        *connect_go.Client[tickets.ListTicketTemplateRequest, tickets.ListTicketTemplateResponse]
 	assignTicketTemplate      *connect_go.Client[tickets.AssignProjectTemplateRequest, tickets.AssignProjectTemplateResponse]
 	getAllActionType          *connect_go.Client[tickets.GetActionTypeRequest, tickets.GetActionTypeResponse]
+	getPhoneNumberType        *connect_go.Client[tickets.GetPhoneNumberTypeRequest, tickets.GetPhoneNumberTypeResponse]
 }
 
 // CreateTicket calls api.v1alpha1.tickets.Tickets.CreateTicket.
@@ -525,6 +536,11 @@ func (c *ticketsClient) GetAllActionType(ctx context.Context, req *connect_go.Re
 	return c.getAllActionType.CallUnary(ctx, req)
 }
 
+// GetPhoneNumberType calls api.v1alpha1.tickets.Tickets.GetPhoneNumberType.
+func (c *ticketsClient) GetPhoneNumberType(ctx context.Context, req *connect_go.Request[tickets.GetPhoneNumberTypeRequest]) (*connect_go.Response[tickets.GetPhoneNumberTypeResponse], error) {
+	return c.getPhoneNumberType.CallUnary(ctx, req)
+}
+
 // TicketsHandler is an implementation of the api.v1alpha1.tickets.Tickets service.
 type TicketsHandler interface {
 	// Public Method to create a ticket.
@@ -590,6 +606,8 @@ type TicketsHandler interface {
 	AssignTicketTemplate(context.Context, *connect_go.Request[tickets.AssignProjectTemplateRequest]) (*connect_go.Response[tickets.AssignProjectTemplateResponse], error)
 	// Public method to list all Action Types
 	GetAllActionType(context.Context, *connect_go.Request[tickets.GetActionTypeRequest]) (*connect_go.Response[tickets.GetActionTypeResponse], error)
+	// Public method to list all Action Types
+	GetPhoneNumberType(context.Context, *connect_go.Request[tickets.GetPhoneNumberTypeRequest]) (*connect_go.Response[tickets.GetPhoneNumberTypeResponse], error)
 }
 
 // NewTicketsHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -748,6 +766,11 @@ func NewTicketsHandler(svc TicketsHandler, opts ...connect_go.HandlerOption) (st
 		svc.GetAllActionType,
 		opts...,
 	)
+	ticketsGetPhoneNumberTypeHandler := connect_go.NewUnaryHandler(
+		TicketsGetPhoneNumberTypeProcedure,
+		svc.GetPhoneNumberType,
+		opts...,
+	)
 	return "/api.v1alpha1.tickets.Tickets/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case TicketsCreateTicketProcedure:
@@ -810,6 +833,8 @@ func NewTicketsHandler(svc TicketsHandler, opts ...connect_go.HandlerOption) (st
 			ticketsAssignTicketTemplateHandler.ServeHTTP(w, r)
 		case TicketsGetAllActionTypeProcedure:
 			ticketsGetAllActionTypeHandler.ServeHTTP(w, r)
+		case TicketsGetPhoneNumberTypeProcedure:
+			ticketsGetPhoneNumberTypeHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -937,4 +962,8 @@ func (UnimplementedTicketsHandler) AssignTicketTemplate(context.Context, *connec
 
 func (UnimplementedTicketsHandler) GetAllActionType(context.Context, *connect_go.Request[tickets.GetActionTypeRequest]) (*connect_go.Response[tickets.GetActionTypeResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.tickets.Tickets.GetAllActionType is not implemented"))
+}
+
+func (UnimplementedTicketsHandler) GetPhoneNumberType(context.Context, *connect_go.Request[tickets.GetPhoneNumberTypeRequest]) (*connect_go.Response[tickets.GetPhoneNumberTypeResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.tickets.Tickets.GetPhoneNumberType is not implemented"))
 }
