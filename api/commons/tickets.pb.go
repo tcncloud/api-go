@@ -131,6 +131,58 @@ func (TicketStatus) EnumDescriptor() ([]byte, []int) {
 	return file_api_commons_tickets_proto_rawDescGZIP(), []int{1}
 }
 
+type PhoneNumberType int32
+
+const (
+	// Mobile Phone NUmber
+	PhoneNumberType_MOBILE PhoneNumberType = 0
+	// Geographic OR Other Number
+	PhoneNumberType_OTHER PhoneNumberType = 1
+	// No Response/Invalid/ERROR
+	PhoneNumberType_INVALID_ERROR PhoneNumberType = 2
+)
+
+// Enum value maps for PhoneNumberType.
+var (
+	PhoneNumberType_name = map[int32]string{
+		0: "MOBILE",
+		1: "OTHER",
+		2: "INVALID_ERROR",
+	}
+	PhoneNumberType_value = map[string]int32{
+		"MOBILE":        0,
+		"OTHER":         1,
+		"INVALID_ERROR": 2,
+	}
+)
+
+func (x PhoneNumberType) Enum() *PhoneNumberType {
+	p := new(PhoneNumberType)
+	*p = x
+	return p
+}
+
+func (x PhoneNumberType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (PhoneNumberType) Descriptor() protoreflect.EnumDescriptor {
+	return file_api_commons_tickets_proto_enumTypes[2].Descriptor()
+}
+
+func (PhoneNumberType) Type() protoreflect.EnumType {
+	return &file_api_commons_tickets_proto_enumTypes[2]
+}
+
+func (x PhoneNumberType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use PhoneNumberType.Descriptor instead.
+func (PhoneNumberType) EnumDescriptor() ([]byte, []int) {
+	return file_api_commons_tickets_proto_rawDescGZIP(), []int{2}
+}
+
 // Ticket - Fields for Ticket creation, List tickets and view ticket
 type Ticket struct {
 	state         protoimpl.MessageState
@@ -2810,17 +2862,21 @@ var file_api_commons_tickets_proto_rawDesc = []byte{
 	0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x4e, 0x45, 0x57, 0x10, 0x00, 0x12, 0x16, 0x0a, 0x12, 0x54,
 	0x49, 0x43, 0x4b, 0x45, 0x54, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x4f, 0x50, 0x45,
 	0x4e, 0x10, 0x01, 0x12, 0x17, 0x0a, 0x13, 0x54, 0x49, 0x43, 0x4b, 0x45, 0x54, 0x5f, 0x53, 0x54,
-	0x41, 0x54, 0x55, 0x53, 0x5f, 0x43, 0x4c, 0x4f, 0x53, 0x45, 0x10, 0x02, 0x42, 0x94, 0x01, 0x0a,
-	0x0f, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73,
-	0x42, 0x0c, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01,
-	0x5a, 0x26, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e,
-	0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69,
-	0x2f, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0xa2, 0x02, 0x03, 0x41, 0x43, 0x58, 0xaa, 0x02,
-	0x0b, 0x41, 0x70, 0x69, 0x2e, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0xca, 0x02, 0x0b, 0x41,
-	0x70, 0x69, 0x5c, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0xe2, 0x02, 0x17, 0x41, 0x70, 0x69,
-	0x5c, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61,
-	0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x0c, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x43, 0x6f, 0x6d, 0x6d,
-	0x6f, 0x6e, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x41, 0x54, 0x55, 0x53, 0x5f, 0x43, 0x4c, 0x4f, 0x53, 0x45, 0x10, 0x02, 0x2a, 0x3b, 0x0a, 0x0f,
+	0x50, 0x68, 0x6f, 0x6e, 0x65, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x54, 0x79, 0x70, 0x65, 0x12,
+	0x0a, 0x0a, 0x06, 0x4d, 0x4f, 0x42, 0x49, 0x4c, 0x45, 0x10, 0x00, 0x12, 0x09, 0x0a, 0x05, 0x4f,
+	0x54, 0x48, 0x45, 0x52, 0x10, 0x01, 0x12, 0x11, 0x0a, 0x0d, 0x49, 0x4e, 0x56, 0x41, 0x4c, 0x49,
+	0x44, 0x5f, 0x45, 0x52, 0x52, 0x4f, 0x52, 0x10, 0x02, 0x42, 0x94, 0x01, 0x0a, 0x0f, 0x63, 0x6f,
+	0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x42, 0x0c, 0x54,
+	0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x26, 0x67,
+	0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f,
+	0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x63, 0x6f,
+	0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0xa2, 0x02, 0x03, 0x41, 0x43, 0x58, 0xaa, 0x02, 0x0b, 0x41, 0x70,
+	0x69, 0x2e, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0xca, 0x02, 0x0b, 0x41, 0x70, 0x69, 0x5c,
+	0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0xe2, 0x02, 0x17, 0x41, 0x70, 0x69, 0x5c, 0x43, 0x6f,
+	0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74,
+	0x61, 0xea, 0x02, 0x0c, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73,
+	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -2835,69 +2891,70 @@ func file_api_commons_tickets_proto_rawDescGZIP() []byte {
 	return file_api_commons_tickets_proto_rawDescData
 }
 
-var file_api_commons_tickets_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
+var file_api_commons_tickets_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
 var file_api_commons_tickets_proto_msgTypes = make([]protoimpl.MessageInfo, 27)
 var file_api_commons_tickets_proto_goTypes = []interface{}{
 	(TimeScale)(0),                // 0: api.commons.TimeScale
 	(TicketStatus)(0),             // 1: api.commons.TicketStatus
-	(*Ticket)(nil),                // 2: api.commons.Ticket
-	(*TicketTemplate)(nil),        // 3: api.commons.TicketTemplate
-	(*TicketProjectTemplate)(nil), // 4: api.commons.TicketProjectTemplate
-	(*ProjectDescription)(nil),    // 5: api.commons.ProjectDescription
-	(*ListTemplate)(nil),          // 6: api.commons.ListTemplate
-	(*AssignProjectTemplate)(nil), // 7: api.commons.AssignProjectTemplate
-	(*Duration)(nil),              // 8: api.commons.Duration
-	(*TicketAction)(nil),          // 9: api.commons.TicketAction
-	(*CallbackContext)(nil),       // 10: api.commons.CallbackContext
-	(*SmsbackContext)(nil),        // 11: api.commons.SmsbackContext
-	(*ActionType)(nil),            // 12: api.commons.ActionType
-	(*EmailbackContext)(nil),      // 13: api.commons.EmailbackContext
-	(*Metadata)(nil),              // 14: api.commons.Metadata
-	(*Skills)(nil),                // 15: api.commons.Skills
-	(*Sla)(nil),                   // 16: api.commons.Sla
-	(*Comment)(nil),               // 17: api.commons.Comment
-	(*CloseTicket)(nil),           // 18: api.commons.CloseTicket
-	(*ConfirmClose)(nil),          // 19: api.commons.ConfirmClose
-	(*TicketProject)(nil),         // 20: api.commons.TicketProject
-	(*TemplateDescription)(nil),   // 21: api.commons.TemplateDescription
-	(*TicketSla)(nil),             // 22: api.commons.TicketSla
-	(*SlaConditions)(nil),         // 23: api.commons.SlaConditions
-	(*ReplyComment)(nil),          // 24: api.commons.ReplyComment
-	(*ConfirmReplyComment)(nil),   // 25: api.commons.ConfirmReplyComment
-	(*TicketAuditLog)(nil),        // 26: api.commons.TicketAuditLog
-	(*EditTicket)(nil),            // 27: api.commons.EditTicket
-	(*EditAttribute)(nil),         // 28: api.commons.EditAttribute
-	(*timestamppb.Timestamp)(nil), // 29: google.protobuf.Timestamp
+	(PhoneNumberType)(0),          // 2: api.commons.PhoneNumberType
+	(*Ticket)(nil),                // 3: api.commons.Ticket
+	(*TicketTemplate)(nil),        // 4: api.commons.TicketTemplate
+	(*TicketProjectTemplate)(nil), // 5: api.commons.TicketProjectTemplate
+	(*ProjectDescription)(nil),    // 6: api.commons.ProjectDescription
+	(*ListTemplate)(nil),          // 7: api.commons.ListTemplate
+	(*AssignProjectTemplate)(nil), // 8: api.commons.AssignProjectTemplate
+	(*Duration)(nil),              // 9: api.commons.Duration
+	(*TicketAction)(nil),          // 10: api.commons.TicketAction
+	(*CallbackContext)(nil),       // 11: api.commons.CallbackContext
+	(*SmsbackContext)(nil),        // 12: api.commons.SmsbackContext
+	(*ActionType)(nil),            // 13: api.commons.ActionType
+	(*EmailbackContext)(nil),      // 14: api.commons.EmailbackContext
+	(*Metadata)(nil),              // 15: api.commons.Metadata
+	(*Skills)(nil),                // 16: api.commons.Skills
+	(*Sla)(nil),                   // 17: api.commons.Sla
+	(*Comment)(nil),               // 18: api.commons.Comment
+	(*CloseTicket)(nil),           // 19: api.commons.CloseTicket
+	(*ConfirmClose)(nil),          // 20: api.commons.ConfirmClose
+	(*TicketProject)(nil),         // 21: api.commons.TicketProject
+	(*TemplateDescription)(nil),   // 22: api.commons.TemplateDescription
+	(*TicketSla)(nil),             // 23: api.commons.TicketSla
+	(*SlaConditions)(nil),         // 24: api.commons.SlaConditions
+	(*ReplyComment)(nil),          // 25: api.commons.ReplyComment
+	(*ConfirmReplyComment)(nil),   // 26: api.commons.ConfirmReplyComment
+	(*TicketAuditLog)(nil),        // 27: api.commons.TicketAuditLog
+	(*EditTicket)(nil),            // 28: api.commons.EditTicket
+	(*EditAttribute)(nil),         // 29: api.commons.EditAttribute
+	(*timestamppb.Timestamp)(nil), // 30: google.protobuf.Timestamp
 }
 var file_api_commons_tickets_proto_depIdxs = []int32{
-	29, // 0: api.commons.Ticket.created_by_date:type_name -> google.protobuf.Timestamp
-	29, // 1: api.commons.Ticket.due_date:type_name -> google.protobuf.Timestamp
-	14, // 2: api.commons.Ticket.metadata:type_name -> api.commons.Metadata
-	15, // 3: api.commons.Ticket.ticket_skills:type_name -> api.commons.Skills
-	16, // 4: api.commons.Ticket.ticket_sla:type_name -> api.commons.Sla
-	9,  // 5: api.commons.Ticket.ticket_action:type_name -> api.commons.TicketAction
+	30, // 0: api.commons.Ticket.created_by_date:type_name -> google.protobuf.Timestamp
+	30, // 1: api.commons.Ticket.due_date:type_name -> google.protobuf.Timestamp
+	15, // 2: api.commons.Ticket.metadata:type_name -> api.commons.Metadata
+	16, // 3: api.commons.Ticket.ticket_skills:type_name -> api.commons.Skills
+	17, // 4: api.commons.Ticket.ticket_sla:type_name -> api.commons.Sla
+	10, // 5: api.commons.Ticket.ticket_action:type_name -> api.commons.TicketAction
 	1,  // 6: api.commons.Ticket.ticket_status:type_name -> api.commons.TicketStatus
-	29, // 7: api.commons.TicketTemplate.created_date:type_name -> google.protobuf.Timestamp
-	29, // 8: api.commons.TicketTemplate.modified_date:type_name -> google.protobuf.Timestamp
-	3,  // 9: api.commons.TicketProjectTemplate.ticket_template:type_name -> api.commons.TicketTemplate
-	5,  // 10: api.commons.TicketProjectTemplate.project_description:type_name -> api.commons.ProjectDescription
-	29, // 11: api.commons.ListTemplate.created_date:type_name -> google.protobuf.Timestamp
+	30, // 7: api.commons.TicketTemplate.created_date:type_name -> google.protobuf.Timestamp
+	30, // 8: api.commons.TicketTemplate.modified_date:type_name -> google.protobuf.Timestamp
+	4,  // 9: api.commons.TicketProjectTemplate.ticket_template:type_name -> api.commons.TicketTemplate
+	6,  // 10: api.commons.TicketProjectTemplate.project_description:type_name -> api.commons.ProjectDescription
+	30, // 11: api.commons.ListTemplate.created_date:type_name -> google.protobuf.Timestamp
 	0,  // 12: api.commons.Duration.scale:type_name -> api.commons.TimeScale
-	10, // 13: api.commons.TicketAction.callback_context:type_name -> api.commons.CallbackContext
-	29, // 14: api.commons.TicketAction.start_ts:type_name -> google.protobuf.Timestamp
-	29, // 15: api.commons.TicketAction.expiry_ts:type_name -> google.protobuf.Timestamp
-	16, // 16: api.commons.TicketAction.action_sla_id:type_name -> api.commons.Sla
-	10, // 17: api.commons.TicketAction.voice_context:type_name -> api.commons.CallbackContext
-	11, // 18: api.commons.TicketAction.sms_context:type_name -> api.commons.SmsbackContext
-	13, // 19: api.commons.TicketAction.email_context:type_name -> api.commons.EmailbackContext
-	12, // 20: api.commons.TicketAction.action_type:type_name -> api.commons.ActionType
-	8,  // 21: api.commons.Sla.sla_duration:type_name -> api.commons.Duration
-	29, // 22: api.commons.Comment.created_by_date:type_name -> google.protobuf.Timestamp
-	21, // 23: api.commons.TicketProject.template_desc:type_name -> api.commons.TemplateDescription
-	8,  // 24: api.commons.TicketSla.ticket_sla_duration:type_name -> api.commons.Duration
-	29, // 25: api.commons.ReplyComment.created_by_date:type_name -> google.protobuf.Timestamp
-	29, // 26: api.commons.TicketAuditLog.created_by_date:type_name -> google.protobuf.Timestamp
-	28, // 27: api.commons.EditTicket.edit_value:type_name -> api.commons.EditAttribute
+	11, // 13: api.commons.TicketAction.callback_context:type_name -> api.commons.CallbackContext
+	30, // 14: api.commons.TicketAction.start_ts:type_name -> google.protobuf.Timestamp
+	30, // 15: api.commons.TicketAction.expiry_ts:type_name -> google.protobuf.Timestamp
+	17, // 16: api.commons.TicketAction.action_sla_id:type_name -> api.commons.Sla
+	11, // 17: api.commons.TicketAction.voice_context:type_name -> api.commons.CallbackContext
+	12, // 18: api.commons.TicketAction.sms_context:type_name -> api.commons.SmsbackContext
+	14, // 19: api.commons.TicketAction.email_context:type_name -> api.commons.EmailbackContext
+	13, // 20: api.commons.TicketAction.action_type:type_name -> api.commons.ActionType
+	9,  // 21: api.commons.Sla.sla_duration:type_name -> api.commons.Duration
+	30, // 22: api.commons.Comment.created_by_date:type_name -> google.protobuf.Timestamp
+	22, // 23: api.commons.TicketProject.template_desc:type_name -> api.commons.TemplateDescription
+	9,  // 24: api.commons.TicketSla.ticket_sla_duration:type_name -> api.commons.Duration
+	30, // 25: api.commons.ReplyComment.created_by_date:type_name -> google.protobuf.Timestamp
+	30, // 26: api.commons.TicketAuditLog.created_by_date:type_name -> google.protobuf.Timestamp
+	29, // 27: api.commons.EditTicket.edit_value:type_name -> api.commons.EditAttribute
 	28, // [28:28] is the sub-list for method output_type
 	28, // [28:28] is the sub-list for method input_type
 	28, // [28:28] is the sub-list for extension type_name
@@ -3246,7 +3303,7 @@ func file_api_commons_tickets_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_commons_tickets_proto_rawDesc,
-			NumEnums:      2,
+			NumEnums:      3,
 			NumMessages:   27,
 			NumExtensions: 0,
 			NumServices:   0,
