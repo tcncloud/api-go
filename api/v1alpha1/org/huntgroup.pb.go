@@ -1518,8 +1518,10 @@ type ListHuntGroupIntegrationLinksRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	OrgId        string `protobuf:"bytes,1,opt,name=org_id,json=orgId,proto3" json:"org_id,omitempty"`
-	HuntGroupSid int64  `protobuf:"varint,2,opt,name=hunt_group_sid,json=huntGroupSid,proto3" json:"hunt_group_sid,omitempty"`
+	// The ID of the organization which the hunt group belongs to.
+	OrgId string `protobuf:"bytes,1,opt,name=org_id,json=orgId,proto3" json:"org_id,omitempty"`
+	// The ID of the hunt group to list integration links for.
+	HuntGroupSid int64 `protobuf:"varint,2,opt,name=hunt_group_sid,json=huntGroupSid,proto3" json:"hunt_group_sid,omitempty"`
 }
 
 func (x *ListHuntGroupIntegrationLinksRequest) Reset() {
@@ -1574,6 +1576,7 @@ type ListHuntGroupIntegrationLinksResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// The list of integration links for the hunt group.
 	Links []*org.IntegrationLink `protobuf:"bytes,1,rep,name=links,proto3" json:"links,omitempty"`
 }
 
