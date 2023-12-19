@@ -27,8 +27,10 @@ type TemplateCategory int32
 const (
 	// 0 explicitly means unspecified or invalid.
 	TemplateCategory_TEMPLATE_CATEGORY_UNSPECIFIED TemplateCategory = 0
-	TemplateCategory_TEMPLATE_CATEGORY_HUNT_GROUP  TemplateCategory = 1
-	TemplateCategory_TEMPLATE_CATEGORY_CAMPAIGN    TemplateCategory = 2
+	// 1 means a hunt group client info display template
+	TemplateCategory_TEMPLATE_CATEGORY_HUNT_GROUP TemplateCategory = 1
+	// 2 means a campaign client info display template
+	TemplateCategory_TEMPLATE_CATEGORY_CAMPAIGN TemplateCategory = 2
 )
 
 // Enum value maps for TemplateCategory.
@@ -2347,13 +2349,20 @@ type ClientInfoDisplayTemplate struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	TemplateSid            string                  `protobuf:"bytes,1,opt,name=template_sid,json=templateSid,proto3" json:"template_sid,omitempty"`
-	Name                   string                  `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	Description            string                  `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
-	DisplayAllFields       bool                    `protobuf:"varint,4,opt,name=display_all_fields,json=displayAllFields,proto3" json:"display_all_fields,omitempty"`
+	// The template sid of the client info display template
+	TemplateSid string `protobuf:"bytes,1,opt,name=template_sid,json=templateSid,proto3" json:"template_sid,omitempty"`
+	// The name of the client info display template
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	// The description of the client info display template
+	Description string `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	// Bool used to determine whether to show all fields in a client info display template
+	DisplayAllFields bool `protobuf:"varint,4,opt,name=display_all_fields,json=displayAllFields,proto3" json:"display_all_fields,omitempty"`
+	// The dialed number field style of a client info display template
 	DialedNumberFieldStyle *DialedNumberFieldStyle `protobuf:"bytes,5,opt,name=dialed_number_field_style,json=dialedNumberFieldStyle,proto3" json:"dialed_number_field_style,omitempty"`
-	ContactFieldStyles     []*ContactFieldStyle    `protobuf:"bytes,6,rep,name=contact_field_styles,json=contactFieldStyles,proto3" json:"contact_field_styles,omitempty"`
-	TemplateCategory       TemplateCategory        `protobuf:"varint,7,opt,name=template_category,json=templateCategory,proto3,enum=api.commons.org.TemplateCategory" json:"template_category,omitempty"`
+	// A list of Contact Field Styles for a client info display template
+	ContactFieldStyles []*ContactFieldStyle `protobuf:"bytes,6,rep,name=contact_field_styles,json=contactFieldStyles,proto3" json:"contact_field_styles,omitempty"`
+	// The template type
+	TemplateCategory TemplateCategory `protobuf:"varint,7,opt,name=template_category,json=templateCategory,proto3,enum=api.commons.org.TemplateCategory" json:"template_category,omitempty"`
 }
 
 func (x *ClientInfoDisplayTemplate) Reset() {
@@ -2443,9 +2452,12 @@ type FieldStyle struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	TextColor       string `protobuf:"bytes,1,opt,name=text_color,json=textColor,proto3" json:"text_color,omitempty"`
+	// Text color of a field style
+	TextColor string `protobuf:"bytes,1,opt,name=text_color,json=textColor,proto3" json:"text_color,omitempty"`
+	// Background color of a field style
 	BackgroundColor string `protobuf:"bytes,2,opt,name=background_color,json=backgroundColor,proto3" json:"background_color,omitempty"`
-	AllowAgentCopy  bool   `protobuf:"varint,3,opt,name=allow_agent_copy,json=allowAgentCopy,proto3" json:"allow_agent_copy,omitempty"`
+	// Allow the agent to copy this field style
+	AllowAgentCopy bool `protobuf:"varint,3,opt,name=allow_agent_copy,json=allowAgentCopy,proto3" json:"allow_agent_copy,omitempty"`
 }
 
 func (x *FieldStyle) Reset() {
@@ -2508,8 +2520,10 @@ type ContactFieldStyle struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	DescriptionId int64       `protobuf:"varint,1,opt,name=description_id,json=descriptionId,proto3" json:"description_id,omitempty"`
-	FieldStyle    *FieldStyle `protobuf:"bytes,2,opt,name=field_style,json=fieldStyle,proto3" json:"field_style,omitempty"`
+	// The description id of the contact field style
+	DescriptionId int64 `protobuf:"varint,1,opt,name=description_id,json=descriptionId,proto3" json:"description_id,omitempty"`
+	// The field style of the contact field
+	FieldStyle *FieldStyle `protobuf:"bytes,2,opt,name=field_style,json=fieldStyle,proto3" json:"field_style,omitempty"`
 }
 
 func (x *ContactFieldStyle) Reset() {
@@ -2564,8 +2578,10 @@ type DialedNumberFieldStyle struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	FieldStyle     *FieldStyle `protobuf:"bytes,1,opt,name=field_style,json=fieldStyle,proto3" json:"field_style,omitempty"`
-	DisplayToAgent bool        `protobuf:"varint,2,opt,name=display_to_agent,json=displayToAgent,proto3" json:"display_to_agent,omitempty"`
+	// The field style of the dialed number field
+	FieldStyle *FieldStyle `protobuf:"bytes,1,opt,name=field_style,json=fieldStyle,proto3" json:"field_style,omitempty"`
+	// Display the dialed number field to the agent
+	DisplayToAgent bool `protobuf:"varint,2,opt,name=display_to_agent,json=displayToAgent,proto3" json:"display_to_agent,omitempty"`
 }
 
 func (x *DialedNumberFieldStyle) Reset() {

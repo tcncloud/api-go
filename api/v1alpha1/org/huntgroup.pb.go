@@ -1518,6 +1518,7 @@ type GetHuntGroupClientInfoDisplayTemplateRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// The hunt group sid of the desired client info display template
 	HuntGroupSid int64 `protobuf:"varint,1,opt,name=hunt_group_sid,json=huntGroupSid,proto3" json:"hunt_group_sid,omitempty"`
 }
 
@@ -1566,6 +1567,7 @@ type GetHuntGroupClientInfoDisplayTemplateResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// The template info of the client info display template
 	Template *org.ClientInfoDisplayTemplate `protobuf:"bytes,1,opt,name=template,proto3" json:"template,omitempty"`
 }
 
@@ -1614,8 +1616,10 @@ type CreateHuntGroupClientInfoDisplayTemplateRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	HuntGroupSid int64                          `protobuf:"varint,1,opt,name=hunt_group_sid,json=huntGroupSid,proto3" json:"hunt_group_sid,omitempty"`
-	Template     *org.ClientInfoDisplayTemplate `protobuf:"bytes,2,opt,name=template,proto3" json:"template,omitempty"`
+	// The hunt group sid of the desired client info display template
+	HuntGroupSid int64 `protobuf:"varint,1,opt,name=hunt_group_sid,json=huntGroupSid,proto3" json:"hunt_group_sid,omitempty"`
+	// The template info of the client info display template
+	Template *org.ClientInfoDisplayTemplate `protobuf:"bytes,2,opt,name=template,proto3" json:"template,omitempty"`
 }
 
 func (x *CreateHuntGroupClientInfoDisplayTemplateRequest) Reset() {
@@ -1670,6 +1674,7 @@ type CreateHuntGroupClientInfoDisplayTemplateResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// The template sid of the created client info display template
 	TemplateSid int64 `protobuf:"varint,1,opt,name=template_sid,json=templateSid,proto3" json:"template_sid,omitempty"`
 }
 
@@ -1718,8 +1723,10 @@ type UpdateHuntGroupClientInfoDisplayTemplateRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	HuntGroupSid int64                          `protobuf:"varint,1,opt,name=hunt_group_sid,json=huntGroupSid,proto3" json:"hunt_group_sid,omitempty"`
-	Template     *org.ClientInfoDisplayTemplate `protobuf:"bytes,2,opt,name=template,proto3" json:"template,omitempty"`
+	// The hunt group sid of the desired client info display template to update
+	HuntGroupSid int64 `protobuf:"varint,1,opt,name=hunt_group_sid,json=huntGroupSid,proto3" json:"hunt_group_sid,omitempty"`
+	// The template info of the updated client info display template
+	Template *org.ClientInfoDisplayTemplate `protobuf:"bytes,2,opt,name=template,proto3" json:"template,omitempty"`
 }
 
 func (x *UpdateHuntGroupClientInfoDisplayTemplateRequest) Reset() {
@@ -1813,8 +1820,10 @@ type DeleteHuntGroupClientInfoDisplayTemplateRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// The hunt group sid of the desired client info display template to delete
 	HuntGroupSid int64 `protobuf:"varint,1,opt,name=hunt_group_sid,json=huntGroupSid,proto3" json:"hunt_group_sid,omitempty"`
-	TemplateSid  int64 `protobuf:"varint,2,opt,name=template_sid,json=templateSid,proto3" json:"template_sid,omitempty"`
+	// The template sid of the client info display template to delete
+	TemplateSid int64 `protobuf:"varint,2,opt,name=template_sid,json=templateSid,proto3" json:"template_sid,omitempty"`
 }
 
 func (x *DeleteHuntGroupClientInfoDisplayTemplateRequest) Reset() {
