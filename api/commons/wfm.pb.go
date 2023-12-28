@@ -2787,7 +2787,10 @@ func (x *SkillProfileCategory) GetSkillProfileCategoryType() SkillProfileCategor
 	return SkillProfileCategory_SINGLE_SKILL_PROFILE
 }
 
+// Deprecated.
 // Defines a Scheduling Result Metric from the Scheduler.
+// This is version 1. Use version 2, which is api.v1alpha1.wfm.SchedulingResultMetric.
+// This message only exists for backwards compatibility.
 type SchedulingResultMetric struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
