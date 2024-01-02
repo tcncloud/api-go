@@ -476,6 +476,9 @@ const (
 	// WFMGenerateTourWeekPatternsProcedure is the fully-qualified name of the WFM's
 	// GenerateTourWeekPatterns RPC.
 	WFMGenerateTourWeekPatternsProcedure = "/api.v1alpha1.wfm.WFM/GenerateTourWeekPatterns"
+	// WFMRemoveAgentFromScheduleProcedure is the fully-qualified name of the WFM's
+	// RemoveAgentFromSchedule RPC.
+	WFMRemoveAgentFromScheduleProcedure = "/api.v1alpha1.wfm.WFM/RemoveAgentFromSchedule"
 )
 
 // WFMClient is a client for the api.v1alpha1.wfm.WFM service.
@@ -2298,6 +2301,17 @@ type WFMClient interface {
 	//   - grpc.NotFound: there is no call center node or @shift_template_sid associated with @schedule_scenario_sid.
 	//   - grpc.Internal: error occurs when generating the tour week patterns.
 	GenerateTourWeekPatterns(context.Context, *connect_go.Request[wfm.GenerateTourWeekPatternsReq]) (*connect_go.Response[wfm.GenerateTourWeekPatternsRes], error)
+	// Removes the @wfm_agent_sid from @schedule_selector over @datetime_range for the org sending the request.
+	// Creates a new unassigned agent with the same active agent group associations as @wfm_agent_sid for @schedule_scenario_sid.
+	// The unassigned agent will be assigned to shifts belonging to @wfm_agent_sid, returning newly created unassigned agent's SID and the updated shifts.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when creating the unassigned agent or updating the shifts.
+	RemoveAgentFromSchedule(context.Context, *connect_go.Request[wfm.RemoveAgentFromScheduleRequest]) (*connect_go.Response[wfm.RemoveAgentFromScheduleResponse], error)
 }
 
 // NewWFMClient constructs a client for the api.v1alpha1.wfm.WFM service. By default, it uses the
@@ -3095,6 +3109,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMGenerateTourWeekPatternsProcedure,
 			opts...,
 		),
+		removeAgentFromSchedule: connect_go.NewClient[wfm.RemoveAgentFromScheduleRequest, wfm.RemoveAgentFromScheduleResponse](
+			httpClient,
+			baseURL+WFMRemoveAgentFromScheduleProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -3257,6 +3276,7 @@ type wFMClient struct {
 	listTourAgentCollectionWFMAgents              *connect_go.Client[wfm.ListTourAgentCollectionWFMAgentsReq, wfm.ListTourAgentCollectionWFMAgentsRes]
 	deleteTourAgentCollectionWFMAgents            *connect_go.Client[wfm.DeleteTourAgentCollectionWFMAgentsReq, wfm.DeleteTourAgentCollectionWFMAgentsRes]
 	generateTourWeekPatterns                      *connect_go.Client[wfm.GenerateTourWeekPatternsReq, wfm.GenerateTourWeekPatternsRes]
+	removeAgentFromSchedule                       *connect_go.Client[wfm.RemoveAgentFromScheduleRequest, wfm.RemoveAgentFromScheduleResponse]
 }
 
 // PerformInitialClientSetup calls api.v1alpha1.wfm.WFM.PerformInitialClientSetup.
@@ -4064,6 +4084,11 @@ func (c *wFMClient) DeleteTourAgentCollectionWFMAgents(ctx context.Context, req 
 // GenerateTourWeekPatterns calls api.v1alpha1.wfm.WFM.GenerateTourWeekPatterns.
 func (c *wFMClient) GenerateTourWeekPatterns(ctx context.Context, req *connect_go.Request[wfm.GenerateTourWeekPatternsReq]) (*connect_go.Response[wfm.GenerateTourWeekPatternsRes], error) {
 	return c.generateTourWeekPatterns.CallUnary(ctx, req)
+}
+
+// RemoveAgentFromSchedule calls api.v1alpha1.wfm.WFM.RemoveAgentFromSchedule.
+func (c *wFMClient) RemoveAgentFromSchedule(ctx context.Context, req *connect_go.Request[wfm.RemoveAgentFromScheduleRequest]) (*connect_go.Response[wfm.RemoveAgentFromScheduleResponse], error) {
+	return c.removeAgentFromSchedule.CallUnary(ctx, req)
 }
 
 // WFMHandler is an implementation of the api.v1alpha1.wfm.WFM service.
@@ -5886,6 +5911,17 @@ type WFMHandler interface {
 	//   - grpc.NotFound: there is no call center node or @shift_template_sid associated with @schedule_scenario_sid.
 	//   - grpc.Internal: error occurs when generating the tour week patterns.
 	GenerateTourWeekPatterns(context.Context, *connect_go.Request[wfm.GenerateTourWeekPatternsReq]) (*connect_go.Response[wfm.GenerateTourWeekPatternsRes], error)
+	// Removes the @wfm_agent_sid from @schedule_selector over @datetime_range for the org sending the request.
+	// Creates a new unassigned agent with the same active agent group associations as @wfm_agent_sid for @schedule_scenario_sid.
+	// The unassigned agent will be assigned to shifts belonging to @wfm_agent_sid, returning newly created unassigned agent's SID and the updated shifts.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when creating the unassigned agent or updating the shifts.
+	RemoveAgentFromSchedule(context.Context, *connect_go.Request[wfm.RemoveAgentFromScheduleRequest]) (*connect_go.Response[wfm.RemoveAgentFromScheduleResponse], error)
 }
 
 // NewWFMHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -6679,6 +6715,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.GenerateTourWeekPatterns,
 		opts...,
 	)
+	wFMRemoveAgentFromScheduleHandler := connect_go.NewUnaryHandler(
+		WFMRemoveAgentFromScheduleProcedure,
+		svc.RemoveAgentFromSchedule,
+		opts...,
+	)
 	return "/api.v1alpha1.wfm.WFM/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case WFMPerformInitialClientSetupProcedure:
@@ -6995,6 +7036,8 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMDeleteTourAgentCollectionWFMAgentsHandler.ServeHTTP(w, r)
 		case WFMGenerateTourWeekPatternsProcedure:
 			wFMGenerateTourWeekPatternsHandler.ServeHTTP(w, r)
+		case WFMRemoveAgentFromScheduleProcedure:
+			wFMRemoveAgentFromScheduleHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -7630,4 +7673,8 @@ func (UnimplementedWFMHandler) DeleteTourAgentCollectionWFMAgents(context.Contex
 
 func (UnimplementedWFMHandler) GenerateTourWeekPatterns(context.Context, *connect_go.Request[wfm.GenerateTourWeekPatternsReq]) (*connect_go.Response[wfm.GenerateTourWeekPatternsRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.GenerateTourWeekPatterns is not implemented"))
+}
+
+func (UnimplementedWFMHandler) RemoveAgentFromSchedule(context.Context, *connect_go.Request[wfm.RemoveAgentFromScheduleRequest]) (*connect_go.Response[wfm.RemoveAgentFromScheduleResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.RemoveAgentFromSchedule is not implemented"))
 }
