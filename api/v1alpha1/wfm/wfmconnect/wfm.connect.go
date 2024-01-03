@@ -476,6 +476,12 @@ const (
 	// WFMGenerateTourWeekPatternsProcedure is the fully-qualified name of the WFM's
 	// GenerateTourWeekPatterns RPC.
 	WFMGenerateTourWeekPatternsProcedure = "/api.v1alpha1.wfm.WFM/GenerateTourWeekPatterns"
+	// WFMListValidAgentsForReplacementProcedure is the fully-qualified name of the WFM's
+	// ListValidAgentsForReplacement RPC.
+	WFMListValidAgentsForReplacementProcedure = "/api.v1alpha1.wfm.WFM/ListValidAgentsForReplacement"
+	// WFMReplaceAgentOnScheduleProcedure is the fully-qualified name of the WFM's
+	// ReplaceAgentOnSchedule RPC.
+	WFMReplaceAgentOnScheduleProcedure = "/api.v1alpha1.wfm.WFM/ReplaceAgentOnSchedule"
 )
 
 // WFMClient is a client for the api.v1alpha1.wfm.WFM service.
@@ -2298,6 +2304,30 @@ type WFMClient interface {
 	//   - grpc.NotFound: there is no call center node or @shift_template_sid associated with @schedule_scenario_sid.
 	//   - grpc.Internal: error occurs when generating the tour week patterns.
 	GenerateTourWeekPatterns(context.Context, *connect_go.Request[wfm.GenerateTourWeekPatternsReq]) (*connect_go.Response[wfm.GenerateTourWeekPatternsRes], error)
+	// Returns a list of @wfm_agent_sids that are suitable for replacing @wfm_agent_sid_to_replace for the given parameters and the org sending the request.
+	// Only enforces that skill proficiencies are covered by the individual wfm agents, does not enforce constraint rules.
+	// If @skip_skill_proficiency_sort is False, the agents will be returned in order of cumulative skill proficiency towards the required skills.
+	// If @include_skill_mismatches is True, the agents will be included even if they do not include all of the required skills for the shifts being replaced.
+	// If @skip_force_same_agent_groups is False, the agents will only be returned if they belong to every agent group that @wfm_agent_sid_to_replace is a member of. Otherwise, this check will be skipped.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when determinining which agents are valid.
+	ListValidAgentsForReplacement(context.Context, *connect_go.Request[wfm.ListValidAgentsForReplacementReq]) (*connect_go.Response[wfm.ListValidAgentsForReplacementRes], error)
+	// Replaces @wfm_agent_sid_to_remove with @wfm_agent_sid_to_add for the given parameters and the org sending the request.
+	// If @skip_overlapping_shifts, shifts with an overlap conflict will be skipped, otherwise overlap conflicts will cause a diagnostic to be returned.
+	// Does not enforce skill proficiencies. To check skill proficiencies for shift replacement use ListValidAgentsForReplacement.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when replacing the @wfm_agent_sid_to_remove.
+	ReplaceAgentOnSchedule(context.Context, *connect_go.Request[wfm.ReplaceAgentOnScheduleRes]) (*connect_go.Response[wfm.ReplaceAgentOnScheduleRes], error)
 }
 
 // NewWFMClient constructs a client for the api.v1alpha1.wfm.WFM service. By default, it uses the
@@ -3095,6 +3125,16 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMGenerateTourWeekPatternsProcedure,
 			opts...,
 		),
+		listValidAgentsForReplacement: connect_go.NewClient[wfm.ListValidAgentsForReplacementReq, wfm.ListValidAgentsForReplacementRes](
+			httpClient,
+			baseURL+WFMListValidAgentsForReplacementProcedure,
+			opts...,
+		),
+		replaceAgentOnSchedule: connect_go.NewClient[wfm.ReplaceAgentOnScheduleRes, wfm.ReplaceAgentOnScheduleRes](
+			httpClient,
+			baseURL+WFMReplaceAgentOnScheduleProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -3257,6 +3297,8 @@ type wFMClient struct {
 	listTourAgentCollectionWFMAgents              *connect_go.Client[wfm.ListTourAgentCollectionWFMAgentsReq, wfm.ListTourAgentCollectionWFMAgentsRes]
 	deleteTourAgentCollectionWFMAgents            *connect_go.Client[wfm.DeleteTourAgentCollectionWFMAgentsReq, wfm.DeleteTourAgentCollectionWFMAgentsRes]
 	generateTourWeekPatterns                      *connect_go.Client[wfm.GenerateTourWeekPatternsReq, wfm.GenerateTourWeekPatternsRes]
+	listValidAgentsForReplacement                 *connect_go.Client[wfm.ListValidAgentsForReplacementReq, wfm.ListValidAgentsForReplacementRes]
+	replaceAgentOnSchedule                        *connect_go.Client[wfm.ReplaceAgentOnScheduleRes, wfm.ReplaceAgentOnScheduleRes]
 }
 
 // PerformInitialClientSetup calls api.v1alpha1.wfm.WFM.PerformInitialClientSetup.
@@ -4064,6 +4106,16 @@ func (c *wFMClient) DeleteTourAgentCollectionWFMAgents(ctx context.Context, req 
 // GenerateTourWeekPatterns calls api.v1alpha1.wfm.WFM.GenerateTourWeekPatterns.
 func (c *wFMClient) GenerateTourWeekPatterns(ctx context.Context, req *connect_go.Request[wfm.GenerateTourWeekPatternsReq]) (*connect_go.Response[wfm.GenerateTourWeekPatternsRes], error) {
 	return c.generateTourWeekPatterns.CallUnary(ctx, req)
+}
+
+// ListValidAgentsForReplacement calls api.v1alpha1.wfm.WFM.ListValidAgentsForReplacement.
+func (c *wFMClient) ListValidAgentsForReplacement(ctx context.Context, req *connect_go.Request[wfm.ListValidAgentsForReplacementReq]) (*connect_go.Response[wfm.ListValidAgentsForReplacementRes], error) {
+	return c.listValidAgentsForReplacement.CallUnary(ctx, req)
+}
+
+// ReplaceAgentOnSchedule calls api.v1alpha1.wfm.WFM.ReplaceAgentOnSchedule.
+func (c *wFMClient) ReplaceAgentOnSchedule(ctx context.Context, req *connect_go.Request[wfm.ReplaceAgentOnScheduleRes]) (*connect_go.Response[wfm.ReplaceAgentOnScheduleRes], error) {
+	return c.replaceAgentOnSchedule.CallUnary(ctx, req)
 }
 
 // WFMHandler is an implementation of the api.v1alpha1.wfm.WFM service.
@@ -5886,6 +5938,30 @@ type WFMHandler interface {
 	//   - grpc.NotFound: there is no call center node or @shift_template_sid associated with @schedule_scenario_sid.
 	//   - grpc.Internal: error occurs when generating the tour week patterns.
 	GenerateTourWeekPatterns(context.Context, *connect_go.Request[wfm.GenerateTourWeekPatternsReq]) (*connect_go.Response[wfm.GenerateTourWeekPatternsRes], error)
+	// Returns a list of @wfm_agent_sids that are suitable for replacing @wfm_agent_sid_to_replace for the given parameters and the org sending the request.
+	// Only enforces that skill proficiencies are covered by the individual wfm agents, does not enforce constraint rules.
+	// If @skip_skill_proficiency_sort is False, the agents will be returned in order of cumulative skill proficiency towards the required skills.
+	// If @include_skill_mismatches is True, the agents will be included even if they do not include all of the required skills for the shifts being replaced.
+	// If @skip_force_same_agent_groups is False, the agents will only be returned if they belong to every agent group that @wfm_agent_sid_to_replace is a member of. Otherwise, this check will be skipped.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when determinining which agents are valid.
+	ListValidAgentsForReplacement(context.Context, *connect_go.Request[wfm.ListValidAgentsForReplacementReq]) (*connect_go.Response[wfm.ListValidAgentsForReplacementRes], error)
+	// Replaces @wfm_agent_sid_to_remove with @wfm_agent_sid_to_add for the given parameters and the org sending the request.
+	// If @skip_overlapping_shifts, shifts with an overlap conflict will be skipped, otherwise overlap conflicts will cause a diagnostic to be returned.
+	// Does not enforce skill proficiencies. To check skill proficiencies for shift replacement use ListValidAgentsForReplacement.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when replacing the @wfm_agent_sid_to_remove.
+	ReplaceAgentOnSchedule(context.Context, *connect_go.Request[wfm.ReplaceAgentOnScheduleRes]) (*connect_go.Response[wfm.ReplaceAgentOnScheduleRes], error)
 }
 
 // NewWFMHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -6679,6 +6755,16 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.GenerateTourWeekPatterns,
 		opts...,
 	)
+	wFMListValidAgentsForReplacementHandler := connect_go.NewUnaryHandler(
+		WFMListValidAgentsForReplacementProcedure,
+		svc.ListValidAgentsForReplacement,
+		opts...,
+	)
+	wFMReplaceAgentOnScheduleHandler := connect_go.NewUnaryHandler(
+		WFMReplaceAgentOnScheduleProcedure,
+		svc.ReplaceAgentOnSchedule,
+		opts...,
+	)
 	return "/api.v1alpha1.wfm.WFM/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case WFMPerformInitialClientSetupProcedure:
@@ -6995,6 +7081,10 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMDeleteTourAgentCollectionWFMAgentsHandler.ServeHTTP(w, r)
 		case WFMGenerateTourWeekPatternsProcedure:
 			wFMGenerateTourWeekPatternsHandler.ServeHTTP(w, r)
+		case WFMListValidAgentsForReplacementProcedure:
+			wFMListValidAgentsForReplacementHandler.ServeHTTP(w, r)
+		case WFMReplaceAgentOnScheduleProcedure:
+			wFMReplaceAgentOnScheduleHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -7630,4 +7720,12 @@ func (UnimplementedWFMHandler) DeleteTourAgentCollectionWFMAgents(context.Contex
 
 func (UnimplementedWFMHandler) GenerateTourWeekPatterns(context.Context, *connect_go.Request[wfm.GenerateTourWeekPatternsReq]) (*connect_go.Response[wfm.GenerateTourWeekPatternsRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.GenerateTourWeekPatterns is not implemented"))
+}
+
+func (UnimplementedWFMHandler) ListValidAgentsForReplacement(context.Context, *connect_go.Request[wfm.ListValidAgentsForReplacementReq]) (*connect_go.Response[wfm.ListValidAgentsForReplacementRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListValidAgentsForReplacement is not implemented"))
+}
+
+func (UnimplementedWFMHandler) ReplaceAgentOnSchedule(context.Context, *connect_go.Request[wfm.ReplaceAgentOnScheduleRes]) (*connect_go.Response[wfm.ReplaceAgentOnScheduleRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ReplaceAgentOnSchedule is not implemented"))
 }
