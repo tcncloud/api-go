@@ -15879,7 +15879,7 @@ type ShiftSegment struct {
 	// The following field is only returned in List requests of the entity.
 	// The scheduling activity referred to by @scheduling_activity_sid
 	SchedulingActivity *SchedulingActivity `protobuf:"bytes,8,opt,name=scheduling_activity,json=schedulingActivity,proto3" json:"scheduling_activity,omitempty"`
-	// A map of ShiftSegmentCallStats by SkillProfileCategory.
+	// Per-skill call stats.
 	CallStatsBySkillCollection []*ShiftSegmentCallStat `protobuf:"bytes,9,rep,name=call_stats_by_skill_collection,json=callStatsBySkillCollection,proto3" json:"call_stats_by_skill_collection,omitempty"`
 }
 
