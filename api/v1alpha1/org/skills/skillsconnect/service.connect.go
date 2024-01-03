@@ -51,9 +51,6 @@ const (
 	// SkillsServiceAssignSkillGroupsProcedure is the fully-qualified name of the SkillsService's
 	// AssignSkillGroups RPC.
 	SkillsServiceAssignSkillGroupsProcedure = "/api.v1alpha1.org.skills.SkillsService/AssignSkillGroups"
-	// SkillsServiceAssignUsersProcedure is the fully-qualified name of the SkillsService's AssignUsers
-	// RPC.
-	SkillsServiceAssignUsersProcedure = "/api.v1alpha1.org.skills.SkillsService/AssignUsers"
 	// SkillsServiceRevokeSkillGroupsProcedure is the fully-qualified name of the SkillsService's
 	// RevokeSkillGroups RPC.
 	SkillsServiceRevokeSkillGroupsProcedure = "/api.v1alpha1.org.skills.SkillsService/RevokeSkillGroups"
@@ -85,8 +82,6 @@ type SkillsServiceClient interface {
 	DeleteSkillGroup(context.Context, *connect_go.Request[skills.DeleteSkillGroupRequest]) (*connect_go.Response[skills.DeleteSkillGroupResponse], error)
 	// AssignSkillGroups assigns a user to the given skill groups.
 	AssignSkillGroups(context.Context, *connect_go.Request[skills.AssignSkillGroupsRequest]) (*connect_go.Response[skills.AssignSkillGroupsResponse], error)
-	// AssignUsers assigns users to the given skill group.
-	AssignUsers(context.Context, *connect_go.Request[skills.AssignUsersRequest]) (*connect_go.Response[skills.AssignUsersResponse], error)
 	// RevokeSkillGroups revokes the given skill groups from a user.
 	RevokeSkillGroups(context.Context, *connect_go.Request[skills.RevokeSkillGroupsRequest]) (*connect_go.Response[skills.RevokeSkillGroupsResponse], error)
 	// GetUserSkillGroups gets the skill groups assigned to a user.
@@ -139,11 +134,6 @@ func NewSkillsServiceClient(httpClient connect_go.HTTPClient, baseURL string, op
 			baseURL+SkillsServiceAssignSkillGroupsProcedure,
 			opts...,
 		),
-		assignUsers: connect_go.NewClient[skills.AssignUsersRequest, skills.AssignUsersResponse](
-			httpClient,
-			baseURL+SkillsServiceAssignUsersProcedure,
-			opts...,
-		),
 		revokeSkillGroups: connect_go.NewClient[skills.RevokeSkillGroupsRequest, skills.RevokeSkillGroupsResponse](
 			httpClient,
 			baseURL+SkillsServiceRevokeSkillGroupsProcedure,
@@ -180,7 +170,6 @@ type skillsServiceClient struct {
 	getSkillGroup          *connect_go.Client[skills.GetSkillGroupRequest, skills.GetSkillGroupResponse]
 	deleteSkillGroup       *connect_go.Client[skills.DeleteSkillGroupRequest, skills.DeleteSkillGroupResponse]
 	assignSkillGroups      *connect_go.Client[skills.AssignSkillGroupsRequest, skills.AssignSkillGroupsResponse]
-	assignUsers            *connect_go.Client[skills.AssignUsersRequest, skills.AssignUsersResponse]
 	revokeSkillGroups      *connect_go.Client[skills.RevokeSkillGroupsRequest, skills.RevokeSkillGroupsResponse]
 	getUserSkillGroups     *connect_go.Client[skills.GetUserSkillGroupsRequest, skills.GetUserSkillGroupsResponse]
 	getUserSkills          *connect_go.Client[skills.GetUserSkillsRequest, skills.GetUserSkillsResponse]
@@ -216,11 +205,6 @@ func (c *skillsServiceClient) DeleteSkillGroup(ctx context.Context, req *connect
 // AssignSkillGroups calls api.v1alpha1.org.skills.SkillsService.AssignSkillGroups.
 func (c *skillsServiceClient) AssignSkillGroups(ctx context.Context, req *connect_go.Request[skills.AssignSkillGroupsRequest]) (*connect_go.Response[skills.AssignSkillGroupsResponse], error) {
 	return c.assignSkillGroups.CallUnary(ctx, req)
-}
-
-// AssignUsers calls api.v1alpha1.org.skills.SkillsService.AssignUsers.
-func (c *skillsServiceClient) AssignUsers(ctx context.Context, req *connect_go.Request[skills.AssignUsersRequest]) (*connect_go.Response[skills.AssignUsersResponse], error) {
-	return c.assignUsers.CallUnary(ctx, req)
 }
 
 // RevokeSkillGroups calls api.v1alpha1.org.skills.SkillsService.RevokeSkillGroups.
@@ -262,8 +246,6 @@ type SkillsServiceHandler interface {
 	DeleteSkillGroup(context.Context, *connect_go.Request[skills.DeleteSkillGroupRequest]) (*connect_go.Response[skills.DeleteSkillGroupResponse], error)
 	// AssignSkillGroups assigns a user to the given skill groups.
 	AssignSkillGroups(context.Context, *connect_go.Request[skills.AssignSkillGroupsRequest]) (*connect_go.Response[skills.AssignSkillGroupsResponse], error)
-	// AssignUsers assigns users to the given skill group.
-	AssignUsers(context.Context, *connect_go.Request[skills.AssignUsersRequest]) (*connect_go.Response[skills.AssignUsersResponse], error)
 	// RevokeSkillGroups revokes the given skill groups from a user.
 	RevokeSkillGroups(context.Context, *connect_go.Request[skills.RevokeSkillGroupsRequest]) (*connect_go.Response[skills.RevokeSkillGroupsResponse], error)
 	// GetUserSkillGroups gets the skill groups assigned to a user.
@@ -312,11 +294,6 @@ func NewSkillsServiceHandler(svc SkillsServiceHandler, opts ...connect_go.Handle
 		svc.AssignSkillGroups,
 		opts...,
 	)
-	skillsServiceAssignUsersHandler := connect_go.NewUnaryHandler(
-		SkillsServiceAssignUsersProcedure,
-		svc.AssignUsers,
-		opts...,
-	)
 	skillsServiceRevokeSkillGroupsHandler := connect_go.NewUnaryHandler(
 		SkillsServiceRevokeSkillGroupsProcedure,
 		svc.RevokeSkillGroups,
@@ -356,8 +333,6 @@ func NewSkillsServiceHandler(svc SkillsServiceHandler, opts ...connect_go.Handle
 			skillsServiceDeleteSkillGroupHandler.ServeHTTP(w, r)
 		case SkillsServiceAssignSkillGroupsProcedure:
 			skillsServiceAssignSkillGroupsHandler.ServeHTTP(w, r)
-		case SkillsServiceAssignUsersProcedure:
-			skillsServiceAssignUsersHandler.ServeHTTP(w, r)
 		case SkillsServiceRevokeSkillGroupsProcedure:
 			skillsServiceRevokeSkillGroupsHandler.ServeHTTP(w, r)
 		case SkillsServiceGetUserSkillGroupsProcedure:
@@ -399,10 +374,6 @@ func (UnimplementedSkillsServiceHandler) DeleteSkillGroup(context.Context, *conn
 
 func (UnimplementedSkillsServiceHandler) AssignSkillGroups(context.Context, *connect_go.Request[skills.AssignSkillGroupsRequest]) (*connect_go.Response[skills.AssignSkillGroupsResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.skills.SkillsService.AssignSkillGroups is not implemented"))
-}
-
-func (UnimplementedSkillsServiceHandler) AssignUsers(context.Context, *connect_go.Request[skills.AssignUsersRequest]) (*connect_go.Response[skills.AssignUsersResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.skills.SkillsService.AssignUsers is not implemented"))
 }
 
 func (UnimplementedSkillsServiceHandler) RevokeSkillGroups(context.Context, *connect_go.Request[skills.RevokeSkillGroupsRequest]) (*connect_go.Response[skills.RevokeSkillGroupsResponse], error) {
