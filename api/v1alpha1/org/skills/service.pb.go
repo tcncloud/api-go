@@ -34,7 +34,7 @@ var file_api_v1alpha1_org_skills_service_proto_rawDesc = []byte{
 	0x6c, 0x73, 0x2f, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74,
 	0x6f, 0x1a, 0x1c, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x61, 0x6e,
 	0x6e, 0x6f, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x32,
-	0xf2, 0x0f, 0x0a, 0x0d, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x73, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63,
+	0xc2, 0x11, 0x0a, 0x0d, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x73, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63,
 	0x65, 0x12, 0xb2, 0x01, 0x0a, 0x10, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x53, 0x6b, 0x69, 0x6c,
 	0x6c, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x12, 0x30, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61,
 	0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x73,
@@ -102,7 +102,20 @@ var file_api_v1alpha1_org_skills_service_proto_rawDesc = []byte{
 	0x08, 0x64, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x2b, 0x3a, 0x01, 0x2a, 0x22, 0x26, 0x2f, 0x61, 0x70,
 	0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x73, 0x6b, 0x69, 0x6c, 0x6c,
 	0x73, 0x2f, 0x61, 0x73, 0x73, 0x69, 0x67, 0x6e, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x67, 0x72, 0x6f,
-	0x75, 0x70, 0x73, 0x12, 0xb6, 0x01, 0x0a, 0x11, 0x52, 0x65, 0x76, 0x6f, 0x6b, 0x65, 0x53, 0x6b,
+	0x75, 0x70, 0x73, 0x12, 0xcd, 0x01, 0x0a, 0x17, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x55, 0x73,
+	0x65, 0x72, 0x73, 0x4f, 0x6e, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x12,
+	0x37, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x6f,
+	0x72, 0x67, 0x2e, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x73, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65,
+	0x55, 0x73, 0x65, 0x72, 0x73, 0x4f, 0x6e, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x47, 0x72, 0x6f, 0x75,
+	0x70, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x38, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76,
+	0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x73, 0x6b, 0x69, 0x6c,
+	0x6c, 0x73, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x55, 0x73, 0x65, 0x72, 0x73, 0x4f, 0x6e,
+	0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x22, 0x3f, 0xba, 0xb8, 0x91, 0x02, 0x04, 0x0a, 0x02, 0x08, 0x64, 0x82, 0xd3, 0xe4,
+	0x93, 0x02, 0x30, 0x3a, 0x01, 0x2a, 0x22, 0x2b, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61,
+	0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x73, 0x2f, 0x75, 0x70, 0x64,
+	0x61, 0x74, 0x65, 0x75, 0x73, 0x65, 0x72, 0x6f, 0x6e, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x67, 0x72,
+	0x6f, 0x75, 0x70, 0x12, 0xb6, 0x01, 0x0a, 0x11, 0x52, 0x65, 0x76, 0x6f, 0x6b, 0x65, 0x53, 0x6b,
 	0x69, 0x6c, 0x6c, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x73, 0x12, 0x31, 0x2e, 0x61, 0x70, 0x69, 0x2e,
 	0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x73, 0x6b, 0x69,
 	0x6c, 0x6c, 0x73, 0x2e, 0x52, 0x65, 0x76, 0x6f, 0x6b, 0x65, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x47,
@@ -179,28 +192,30 @@ var file_api_v1alpha1_org_skills_service_proto_rawDesc = []byte{
 }
 
 var file_api_v1alpha1_org_skills_service_proto_goTypes = []interface{}{
-	(*CreateSkillGroupRequest)(nil),        // 0: api.v1alpha1.org.skills.CreateSkillGroupRequest
-	(*ListSkillGroupsRequest)(nil),         // 1: api.v1alpha1.org.skills.ListSkillGroupsRequest
-	(*UpdateSkillGroupRequest)(nil),        // 2: api.v1alpha1.org.skills.UpdateSkillGroupRequest
-	(*GetSkillGroupRequest)(nil),           // 3: api.v1alpha1.org.skills.GetSkillGroupRequest
-	(*DeleteSkillGroupRequest)(nil),        // 4: api.v1alpha1.org.skills.DeleteSkillGroupRequest
-	(*AssignSkillGroupsRequest)(nil),       // 5: api.v1alpha1.org.skills.AssignSkillGroupsRequest
-	(*RevokeSkillGroupsRequest)(nil),       // 6: api.v1alpha1.org.skills.RevokeSkillGroupsRequest
-	(*GetUserSkillGroupsRequest)(nil),      // 7: api.v1alpha1.org.skills.GetUserSkillGroupsRequest
-	(*GetUserSkillsRequest)(nil),           // 8: api.v1alpha1.org.skills.GetUserSkillsRequest
-	(*GetSkillGroupMembersRequest)(nil),    // 9: api.v1alpha1.org.skills.GetSkillGroupMembersRequest
-	(*ListSkillGroupsMembersRequest)(nil),  // 10: api.v1alpha1.org.skills.ListSkillGroupsMembersRequest
-	(*CreateSkillGroupResponse)(nil),       // 11: api.v1alpha1.org.skills.CreateSkillGroupResponse
-	(*ListSkillGroupsResponse)(nil),        // 12: api.v1alpha1.org.skills.ListSkillGroupsResponse
-	(*UpdateSkillGroupResponse)(nil),       // 13: api.v1alpha1.org.skills.UpdateSkillGroupResponse
-	(*GetSkillGroupResponse)(nil),          // 14: api.v1alpha1.org.skills.GetSkillGroupResponse
-	(*DeleteSkillGroupResponse)(nil),       // 15: api.v1alpha1.org.skills.DeleteSkillGroupResponse
-	(*AssignSkillGroupsResponse)(nil),      // 16: api.v1alpha1.org.skills.AssignSkillGroupsResponse
-	(*RevokeSkillGroupsResponse)(nil),      // 17: api.v1alpha1.org.skills.RevokeSkillGroupsResponse
-	(*GetUserSkillGroupsResponse)(nil),     // 18: api.v1alpha1.org.skills.GetUserSkillGroupsResponse
-	(*GetUserSkillsResponse)(nil),          // 19: api.v1alpha1.org.skills.GetUserSkillsResponse
-	(*GetSkillGroupMembersResponse)(nil),   // 20: api.v1alpha1.org.skills.GetSkillGroupMembersResponse
-	(*ListSkillGroupsMembersResponse)(nil), // 21: api.v1alpha1.org.skills.ListSkillGroupsMembersResponse
+	(*CreateSkillGroupRequest)(nil),         // 0: api.v1alpha1.org.skills.CreateSkillGroupRequest
+	(*ListSkillGroupsRequest)(nil),          // 1: api.v1alpha1.org.skills.ListSkillGroupsRequest
+	(*UpdateSkillGroupRequest)(nil),         // 2: api.v1alpha1.org.skills.UpdateSkillGroupRequest
+	(*GetSkillGroupRequest)(nil),            // 3: api.v1alpha1.org.skills.GetSkillGroupRequest
+	(*DeleteSkillGroupRequest)(nil),         // 4: api.v1alpha1.org.skills.DeleteSkillGroupRequest
+	(*AssignSkillGroupsRequest)(nil),        // 5: api.v1alpha1.org.skills.AssignSkillGroupsRequest
+	(*UpdateUsersOnSkillGroupRequest)(nil),  // 6: api.v1alpha1.org.skills.UpdateUsersOnSkillGroupRequest
+	(*RevokeSkillGroupsRequest)(nil),        // 7: api.v1alpha1.org.skills.RevokeSkillGroupsRequest
+	(*GetUserSkillGroupsRequest)(nil),       // 8: api.v1alpha1.org.skills.GetUserSkillGroupsRequest
+	(*GetUserSkillsRequest)(nil),            // 9: api.v1alpha1.org.skills.GetUserSkillsRequest
+	(*GetSkillGroupMembersRequest)(nil),     // 10: api.v1alpha1.org.skills.GetSkillGroupMembersRequest
+	(*ListSkillGroupsMembersRequest)(nil),   // 11: api.v1alpha1.org.skills.ListSkillGroupsMembersRequest
+	(*CreateSkillGroupResponse)(nil),        // 12: api.v1alpha1.org.skills.CreateSkillGroupResponse
+	(*ListSkillGroupsResponse)(nil),         // 13: api.v1alpha1.org.skills.ListSkillGroupsResponse
+	(*UpdateSkillGroupResponse)(nil),        // 14: api.v1alpha1.org.skills.UpdateSkillGroupResponse
+	(*GetSkillGroupResponse)(nil),           // 15: api.v1alpha1.org.skills.GetSkillGroupResponse
+	(*DeleteSkillGroupResponse)(nil),        // 16: api.v1alpha1.org.skills.DeleteSkillGroupResponse
+	(*AssignSkillGroupsResponse)(nil),       // 17: api.v1alpha1.org.skills.AssignSkillGroupsResponse
+	(*UpdateUsersOnSkillGroupResponse)(nil), // 18: api.v1alpha1.org.skills.UpdateUsersOnSkillGroupResponse
+	(*RevokeSkillGroupsResponse)(nil),       // 19: api.v1alpha1.org.skills.RevokeSkillGroupsResponse
+	(*GetUserSkillGroupsResponse)(nil),      // 20: api.v1alpha1.org.skills.GetUserSkillGroupsResponse
+	(*GetUserSkillsResponse)(nil),           // 21: api.v1alpha1.org.skills.GetUserSkillsResponse
+	(*GetSkillGroupMembersResponse)(nil),    // 22: api.v1alpha1.org.skills.GetSkillGroupMembersResponse
+	(*ListSkillGroupsMembersResponse)(nil),  // 23: api.v1alpha1.org.skills.ListSkillGroupsMembersResponse
 }
 var file_api_v1alpha1_org_skills_service_proto_depIdxs = []int32{
 	0,  // 0: api.v1alpha1.org.skills.SkillsService.CreateSkillGroup:input_type -> api.v1alpha1.org.skills.CreateSkillGroupRequest
@@ -209,24 +224,26 @@ var file_api_v1alpha1_org_skills_service_proto_depIdxs = []int32{
 	3,  // 3: api.v1alpha1.org.skills.SkillsService.GetSkillGroup:input_type -> api.v1alpha1.org.skills.GetSkillGroupRequest
 	4,  // 4: api.v1alpha1.org.skills.SkillsService.DeleteSkillGroup:input_type -> api.v1alpha1.org.skills.DeleteSkillGroupRequest
 	5,  // 5: api.v1alpha1.org.skills.SkillsService.AssignSkillGroups:input_type -> api.v1alpha1.org.skills.AssignSkillGroupsRequest
-	6,  // 6: api.v1alpha1.org.skills.SkillsService.RevokeSkillGroups:input_type -> api.v1alpha1.org.skills.RevokeSkillGroupsRequest
-	7,  // 7: api.v1alpha1.org.skills.SkillsService.GetUserSkillGroups:input_type -> api.v1alpha1.org.skills.GetUserSkillGroupsRequest
-	8,  // 8: api.v1alpha1.org.skills.SkillsService.GetUserSkills:input_type -> api.v1alpha1.org.skills.GetUserSkillsRequest
-	9,  // 9: api.v1alpha1.org.skills.SkillsService.GetSkillGroupMembers:input_type -> api.v1alpha1.org.skills.GetSkillGroupMembersRequest
-	10, // 10: api.v1alpha1.org.skills.SkillsService.ListSkillGroupsMembers:input_type -> api.v1alpha1.org.skills.ListSkillGroupsMembersRequest
-	11, // 11: api.v1alpha1.org.skills.SkillsService.CreateSkillGroup:output_type -> api.v1alpha1.org.skills.CreateSkillGroupResponse
-	12, // 12: api.v1alpha1.org.skills.SkillsService.ListSkillGroups:output_type -> api.v1alpha1.org.skills.ListSkillGroupsResponse
-	13, // 13: api.v1alpha1.org.skills.SkillsService.UpdateSkillGroup:output_type -> api.v1alpha1.org.skills.UpdateSkillGroupResponse
-	14, // 14: api.v1alpha1.org.skills.SkillsService.GetSkillGroup:output_type -> api.v1alpha1.org.skills.GetSkillGroupResponse
-	15, // 15: api.v1alpha1.org.skills.SkillsService.DeleteSkillGroup:output_type -> api.v1alpha1.org.skills.DeleteSkillGroupResponse
-	16, // 16: api.v1alpha1.org.skills.SkillsService.AssignSkillGroups:output_type -> api.v1alpha1.org.skills.AssignSkillGroupsResponse
-	17, // 17: api.v1alpha1.org.skills.SkillsService.RevokeSkillGroups:output_type -> api.v1alpha1.org.skills.RevokeSkillGroupsResponse
-	18, // 18: api.v1alpha1.org.skills.SkillsService.GetUserSkillGroups:output_type -> api.v1alpha1.org.skills.GetUserSkillGroupsResponse
-	19, // 19: api.v1alpha1.org.skills.SkillsService.GetUserSkills:output_type -> api.v1alpha1.org.skills.GetUserSkillsResponse
-	20, // 20: api.v1alpha1.org.skills.SkillsService.GetSkillGroupMembers:output_type -> api.v1alpha1.org.skills.GetSkillGroupMembersResponse
-	21, // 21: api.v1alpha1.org.skills.SkillsService.ListSkillGroupsMembers:output_type -> api.v1alpha1.org.skills.ListSkillGroupsMembersResponse
-	11, // [11:22] is the sub-list for method output_type
-	0,  // [0:11] is the sub-list for method input_type
+	6,  // 6: api.v1alpha1.org.skills.SkillsService.UpdateUsersOnSkillGroup:input_type -> api.v1alpha1.org.skills.UpdateUsersOnSkillGroupRequest
+	7,  // 7: api.v1alpha1.org.skills.SkillsService.RevokeSkillGroups:input_type -> api.v1alpha1.org.skills.RevokeSkillGroupsRequest
+	8,  // 8: api.v1alpha1.org.skills.SkillsService.GetUserSkillGroups:input_type -> api.v1alpha1.org.skills.GetUserSkillGroupsRequest
+	9,  // 9: api.v1alpha1.org.skills.SkillsService.GetUserSkills:input_type -> api.v1alpha1.org.skills.GetUserSkillsRequest
+	10, // 10: api.v1alpha1.org.skills.SkillsService.GetSkillGroupMembers:input_type -> api.v1alpha1.org.skills.GetSkillGroupMembersRequest
+	11, // 11: api.v1alpha1.org.skills.SkillsService.ListSkillGroupsMembers:input_type -> api.v1alpha1.org.skills.ListSkillGroupsMembersRequest
+	12, // 12: api.v1alpha1.org.skills.SkillsService.CreateSkillGroup:output_type -> api.v1alpha1.org.skills.CreateSkillGroupResponse
+	13, // 13: api.v1alpha1.org.skills.SkillsService.ListSkillGroups:output_type -> api.v1alpha1.org.skills.ListSkillGroupsResponse
+	14, // 14: api.v1alpha1.org.skills.SkillsService.UpdateSkillGroup:output_type -> api.v1alpha1.org.skills.UpdateSkillGroupResponse
+	15, // 15: api.v1alpha1.org.skills.SkillsService.GetSkillGroup:output_type -> api.v1alpha1.org.skills.GetSkillGroupResponse
+	16, // 16: api.v1alpha1.org.skills.SkillsService.DeleteSkillGroup:output_type -> api.v1alpha1.org.skills.DeleteSkillGroupResponse
+	17, // 17: api.v1alpha1.org.skills.SkillsService.AssignSkillGroups:output_type -> api.v1alpha1.org.skills.AssignSkillGroupsResponse
+	18, // 18: api.v1alpha1.org.skills.SkillsService.UpdateUsersOnSkillGroup:output_type -> api.v1alpha1.org.skills.UpdateUsersOnSkillGroupResponse
+	19, // 19: api.v1alpha1.org.skills.SkillsService.RevokeSkillGroups:output_type -> api.v1alpha1.org.skills.RevokeSkillGroupsResponse
+	20, // 20: api.v1alpha1.org.skills.SkillsService.GetUserSkillGroups:output_type -> api.v1alpha1.org.skills.GetUserSkillGroupsResponse
+	21, // 21: api.v1alpha1.org.skills.SkillsService.GetUserSkills:output_type -> api.v1alpha1.org.skills.GetUserSkillsResponse
+	22, // 22: api.v1alpha1.org.skills.SkillsService.GetSkillGroupMembers:output_type -> api.v1alpha1.org.skills.GetSkillGroupMembersResponse
+	23, // 23: api.v1alpha1.org.skills.SkillsService.ListSkillGroupsMembers:output_type -> api.v1alpha1.org.skills.ListSkillGroupsMembersResponse
+	12, // [12:24] is the sub-list for method output_type
+	0,  // [0:12] is the sub-list for method input_type
 	0,  // [0:0] is the sub-list for extension type_name
 	0,  // [0:0] is the sub-list for extension extendee
 	0,  // [0:0] is the sub-list for field type_name
