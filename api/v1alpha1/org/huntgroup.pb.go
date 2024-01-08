@@ -2019,7 +2019,7 @@ type CopyHuntGroupWebLinkRequest struct {
 	FromHuntGroupSid int64 `protobuf:"varint,1,opt,name=from_hunt_group_sid,json=fromHuntGroupSid,proto3" json:"from_hunt_group_sid,omitempty"`
 	// The hunt group sid of where the web link will be copied
 	ToHuntGroupSid int64 `protobuf:"varint,2,opt,name=to_hunt_group_sid,json=toHuntGroupSid,proto3" json:"to_hunt_group_sid,omitempty"`
-	// The web link to be assigned
+	// The web link to be copied
 	WebLink *org.WebLink `protobuf:"bytes,3,opt,name=web_link,json=webLink,proto3" json:"web_link,omitempty"`
 }
 
