@@ -777,8 +777,11 @@ type OrgClient interface {
 	UpdateAgentResponseAutoRules(context.Context, *connect_go.Request[org.UpdateAgentResponseAutoRulesRequest]) (*connect_go.Response[org.UpdateAgentResponseAutoRulesResponse], error)
 	// Deletes an existing Agent Call Response Automatically added compliance rule set.
 	DeleteAgentResponseAutoRules(context.Context, *connect_go.Request[org.DeleteAgentResponseAutoRulesRequest]) (*connect_go.Response[org.DeleteAgentResponseAutoRulesResponse], error)
+	// Lists all web links for a given hunt group
 	ListHuntGroupWebLinks(context.Context, *connect_go.Request[org.ListHuntGroupWebLinksRequest]) (*connect_go.Response[org.ListHuntGroupWebLinksResponse], error)
+	// Copies a web link from one hunt group to another
 	CopyHuntGroupWebLink(context.Context, *connect_go.Request[org.CopyHuntGroupWebLinkRequest]) (*connect_go.Response[org.CopyHuntGroupWebLinkResponse], error)
+	// Updates the list of web links in a hunt group to be the given list
 	UpdateHuntGroupWebLinks(context.Context, *connect_go.Request[org.UpdateHuntGroupWebLinksRequest]) (*connect_go.Response[org.UpdateHuntGroupWebLinksResponse], error)
 	// ListHuntGroupIntegrationLinks returns all integration links for a hunt group.
 	ListHuntGroupIntegrationLinks(context.Context, *connect_go.Request[org.ListHuntGroupIntegrationLinksRequest]) (*connect_go.Response[org.ListHuntGroupIntegrationLinksResponse], error)
@@ -3095,8 +3098,11 @@ type OrgHandler interface {
 	UpdateAgentResponseAutoRules(context.Context, *connect_go.Request[org.UpdateAgentResponseAutoRulesRequest]) (*connect_go.Response[org.UpdateAgentResponseAutoRulesResponse], error)
 	// Deletes an existing Agent Call Response Automatically added compliance rule set.
 	DeleteAgentResponseAutoRules(context.Context, *connect_go.Request[org.DeleteAgentResponseAutoRulesRequest]) (*connect_go.Response[org.DeleteAgentResponseAutoRulesResponse], error)
+	// Lists all web links for a given hunt group
 	ListHuntGroupWebLinks(context.Context, *connect_go.Request[org.ListHuntGroupWebLinksRequest]) (*connect_go.Response[org.ListHuntGroupWebLinksResponse], error)
+	// Copies a web link from one hunt group to another
 	CopyHuntGroupWebLink(context.Context, *connect_go.Request[org.CopyHuntGroupWebLinkRequest]) (*connect_go.Response[org.CopyHuntGroupWebLinkResponse], error)
+	// Updates the list of web links in a hunt group to be the given list
 	UpdateHuntGroupWebLinks(context.Context, *connect_go.Request[org.UpdateHuntGroupWebLinksRequest]) (*connect_go.Response[org.UpdateHuntGroupWebLinksResponse], error)
 	// ListHuntGroupIntegrationLinks returns all integration links for a hunt group.
 	ListHuntGroupIntegrationLinks(context.Context, *connect_go.Request[org.ListHuntGroupIntegrationLinksRequest]) (*connect_go.Response[org.ListHuntGroupIntegrationLinksResponse], error)

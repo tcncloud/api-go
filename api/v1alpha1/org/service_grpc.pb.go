@@ -478,8 +478,11 @@ type OrgClient interface {
 	UpdateAgentResponseAutoRules(ctx context.Context, in *UpdateAgentResponseAutoRulesRequest, opts ...grpc.CallOption) (*UpdateAgentResponseAutoRulesResponse, error)
 	// Deletes an existing Agent Call Response Automatically added compliance rule set.
 	DeleteAgentResponseAutoRules(ctx context.Context, in *DeleteAgentResponseAutoRulesRequest, opts ...grpc.CallOption) (*DeleteAgentResponseAutoRulesResponse, error)
+	// Lists all web links for a given hunt group
 	ListHuntGroupWebLinks(ctx context.Context, in *ListHuntGroupWebLinksRequest, opts ...grpc.CallOption) (*ListHuntGroupWebLinksResponse, error)
+	// Copies a web link from one hunt group to another
 	CopyHuntGroupWebLink(ctx context.Context, in *CopyHuntGroupWebLinkRequest, opts ...grpc.CallOption) (*CopyHuntGroupWebLinkResponse, error)
+	// Updates the list of web links in a hunt group to be the given list
 	UpdateHuntGroupWebLinks(ctx context.Context, in *UpdateHuntGroupWebLinksRequest, opts ...grpc.CallOption) (*UpdateHuntGroupWebLinksResponse, error)
 	// ListHuntGroupIntegrationLinks returns all integration links for a hunt group.
 	ListHuntGroupIntegrationLinks(ctx context.Context, in *ListHuntGroupIntegrationLinksRequest, opts ...grpc.CallOption) (*ListHuntGroupIntegrationLinksResponse, error)
@@ -2623,8 +2626,11 @@ type OrgServer interface {
 	UpdateAgentResponseAutoRules(context.Context, *UpdateAgentResponseAutoRulesRequest) (*UpdateAgentResponseAutoRulesResponse, error)
 	// Deletes an existing Agent Call Response Automatically added compliance rule set.
 	DeleteAgentResponseAutoRules(context.Context, *DeleteAgentResponseAutoRulesRequest) (*DeleteAgentResponseAutoRulesResponse, error)
+	// Lists all web links for a given hunt group
 	ListHuntGroupWebLinks(context.Context, *ListHuntGroupWebLinksRequest) (*ListHuntGroupWebLinksResponse, error)
+	// Copies a web link from one hunt group to another
 	CopyHuntGroupWebLink(context.Context, *CopyHuntGroupWebLinkRequest) (*CopyHuntGroupWebLinkResponse, error)
+	// Updates the list of web links in a hunt group to be the given list
 	UpdateHuntGroupWebLinks(context.Context, *UpdateHuntGroupWebLinksRequest) (*UpdateHuntGroupWebLinksResponse, error)
 	// ListHuntGroupIntegrationLinks returns all integration links for a hunt group.
 	ListHuntGroupIntegrationLinks(context.Context, *ListHuntGroupIntegrationLinksRequest) (*ListHuntGroupIntegrationLinksResponse, error)
