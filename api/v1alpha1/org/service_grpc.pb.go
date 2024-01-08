@@ -481,9 +481,13 @@ type OrgClient interface {
 	DeleteAgentResponseAutoRules(ctx context.Context, in *DeleteAgentResponseAutoRulesRequest, opts ...grpc.CallOption) (*DeleteAgentResponseAutoRulesResponse, error)
 	// ListHuntGroupIntegrationLinks returns all integration links for a hunt group.
 	ListHuntGroupIntegrationLinks(ctx context.Context, in *ListHuntGroupIntegrationLinksRequest, opts ...grpc.CallOption) (*ListHuntGroupIntegrationLinksResponse, error)
+	// GetHuntGroupClientInfoDisplayTemplate returns the client info display template for a given hunt group.
 	GetHuntGroupClientInfoDisplayTemplate(ctx context.Context, in *GetHuntGroupClientInfoDisplayTemplateRequest, opts ...grpc.CallOption) (*GetHuntGroupClientInfoDisplayTemplateResponse, error)
+	// CreateHuntGroupClientInfoDisplayTemplate creates a new client info display template for a givne hunt group.
 	CreateHuntGroupClientInfoDisplayTemplate(ctx context.Context, in *CreateHuntGroupClientInfoDisplayTemplateRequest, opts ...grpc.CallOption) (*CreateHuntGroupClientInfoDisplayTemplateResponse, error)
+	// UpdateHuntGroupClientInfoDisplayTemplate updates a client info display template for a given hunt group.
 	UpdateHuntGroupClientInfoDisplayTemplate(ctx context.Context, in *UpdateHuntGroupClientInfoDisplayTemplateRequest, opts ...grpc.CallOption) (*UpdateHuntGroupClientInfoDisplayTemplateResponse, error)
+	// DeleteHuntGroupClientInfoDisplayTemplate deletes a client info display template for a given hunt group.
 	DeleteHuntGroupClientInfoDisplayTemplate(ctx context.Context, in *DeleteHuntGroupClientInfoDisplayTemplateRequest, opts ...grpc.CallOption) (*DeleteHuntGroupClientInfoDisplayTemplateResponse, error)
 	// CreateTrust creates a new trust.
 	CreateTrust(ctx context.Context, in *CreateTrustRequest, opts ...grpc.CallOption) (*CreateTrustResponse, error)
@@ -2636,9 +2640,13 @@ type OrgServer interface {
 	DeleteAgentResponseAutoRules(context.Context, *DeleteAgentResponseAutoRulesRequest) (*DeleteAgentResponseAutoRulesResponse, error)
 	// ListHuntGroupIntegrationLinks returns all integration links for a hunt group.
 	ListHuntGroupIntegrationLinks(context.Context, *ListHuntGroupIntegrationLinksRequest) (*ListHuntGroupIntegrationLinksResponse, error)
+	// GetHuntGroupClientInfoDisplayTemplate returns the client info display template for a given hunt group.
 	GetHuntGroupClientInfoDisplayTemplate(context.Context, *GetHuntGroupClientInfoDisplayTemplateRequest) (*GetHuntGroupClientInfoDisplayTemplateResponse, error)
+	// CreateHuntGroupClientInfoDisplayTemplate creates a new client info display template for a givne hunt group.
 	CreateHuntGroupClientInfoDisplayTemplate(context.Context, *CreateHuntGroupClientInfoDisplayTemplateRequest) (*CreateHuntGroupClientInfoDisplayTemplateResponse, error)
+	// UpdateHuntGroupClientInfoDisplayTemplate updates a client info display template for a given hunt group.
 	UpdateHuntGroupClientInfoDisplayTemplate(context.Context, *UpdateHuntGroupClientInfoDisplayTemplateRequest) (*UpdateHuntGroupClientInfoDisplayTemplateResponse, error)
+	// DeleteHuntGroupClientInfoDisplayTemplate deletes a client info display template for a given hunt group.
 	DeleteHuntGroupClientInfoDisplayTemplate(context.Context, *DeleteHuntGroupClientInfoDisplayTemplateRequest) (*DeleteHuntGroupClientInfoDisplayTemplateResponse, error)
 	// CreateTrust creates a new trust.
 	CreateTrust(context.Context, *CreateTrustRequest) (*CreateTrustResponse, error)

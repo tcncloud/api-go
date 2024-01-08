@@ -782,9 +782,13 @@ type OrgClient interface {
 	DeleteAgentResponseAutoRules(context.Context, *connect_go.Request[org.DeleteAgentResponseAutoRulesRequest]) (*connect_go.Response[org.DeleteAgentResponseAutoRulesResponse], error)
 	// ListHuntGroupIntegrationLinks returns all integration links for a hunt group.
 	ListHuntGroupIntegrationLinks(context.Context, *connect_go.Request[org.ListHuntGroupIntegrationLinksRequest]) (*connect_go.Response[org.ListHuntGroupIntegrationLinksResponse], error)
+	// GetHuntGroupClientInfoDisplayTemplate returns the client info display template for a given hunt group.
 	GetHuntGroupClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.GetHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.GetHuntGroupClientInfoDisplayTemplateResponse], error)
+	// CreateHuntGroupClientInfoDisplayTemplate creates a new client info display template for a givne hunt group.
 	CreateHuntGroupClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.CreateHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.CreateHuntGroupClientInfoDisplayTemplateResponse], error)
+	// UpdateHuntGroupClientInfoDisplayTemplate updates a client info display template for a given hunt group.
 	UpdateHuntGroupClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.UpdateHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.UpdateHuntGroupClientInfoDisplayTemplateResponse], error)
+	// DeleteHuntGroupClientInfoDisplayTemplate deletes a client info display template for a given hunt group.
 	DeleteHuntGroupClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.DeleteHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.DeleteHuntGroupClientInfoDisplayTemplateResponse], error)
 	// CreateTrust creates a new trust.
 	CreateTrust(context.Context, *connect_go.Request[org.CreateTrustRequest]) (*connect_go.Response[org.CreateTrustResponse], error)
@@ -3116,9 +3120,13 @@ type OrgHandler interface {
 	DeleteAgentResponseAutoRules(context.Context, *connect_go.Request[org.DeleteAgentResponseAutoRulesRequest]) (*connect_go.Response[org.DeleteAgentResponseAutoRulesResponse], error)
 	// ListHuntGroupIntegrationLinks returns all integration links for a hunt group.
 	ListHuntGroupIntegrationLinks(context.Context, *connect_go.Request[org.ListHuntGroupIntegrationLinksRequest]) (*connect_go.Response[org.ListHuntGroupIntegrationLinksResponse], error)
+	// GetHuntGroupClientInfoDisplayTemplate returns the client info display template for a given hunt group.
 	GetHuntGroupClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.GetHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.GetHuntGroupClientInfoDisplayTemplateResponse], error)
+	// CreateHuntGroupClientInfoDisplayTemplate creates a new client info display template for a givne hunt group.
 	CreateHuntGroupClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.CreateHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.CreateHuntGroupClientInfoDisplayTemplateResponse], error)
+	// UpdateHuntGroupClientInfoDisplayTemplate updates a client info display template for a given hunt group.
 	UpdateHuntGroupClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.UpdateHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.UpdateHuntGroupClientInfoDisplayTemplateResponse], error)
+	// DeleteHuntGroupClientInfoDisplayTemplate deletes a client info display template for a given hunt group.
 	DeleteHuntGroupClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.DeleteHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.DeleteHuntGroupClientInfoDisplayTemplateResponse], error)
 	// CreateTrust creates a new trust.
 	CreateTrust(context.Context, *connect_go.Request[org.CreateTrustRequest]) (*connect_go.Response[org.CreateTrustResponse], error)
