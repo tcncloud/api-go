@@ -145,7 +145,7 @@ const (
 	Org_UpdateAgentResponseAutoRules_FullMethodName            = "/api.v1alpha1.org.Org/UpdateAgentResponseAutoRules"
 	Org_DeleteAgentResponseAutoRules_FullMethodName            = "/api.v1alpha1.org.Org/DeleteAgentResponseAutoRules"
 	Org_ListHuntGroupWebLinks_FullMethodName                   = "/api.v1alpha1.org.Org/ListHuntGroupWebLinks"
-	Org_AssignHuntGroupWebLink_FullMethodName                  = "/api.v1alpha1.org.Org/AssignHuntGroupWebLink"
+	Org_CopyHuntGroupWebLink_FullMethodName                    = "/api.v1alpha1.org.Org/CopyHuntGroupWebLink"
 	Org_UpdateHuntGroupWebLinks_FullMethodName                 = "/api.v1alpha1.org.Org/UpdateHuntGroupWebLinks"
 	Org_ListHuntGroupIntegrationLinks_FullMethodName           = "/api.v1alpha1.org.Org/ListHuntGroupIntegrationLinks"
 	Org_CreateTrust_FullMethodName                             = "/api.v1alpha1.org.Org/CreateTrust"
@@ -480,8 +480,8 @@ type OrgClient interface {
 	DeleteAgentResponseAutoRules(ctx context.Context, in *DeleteAgentResponseAutoRulesRequest, opts ...grpc.CallOption) (*DeleteAgentResponseAutoRulesResponse, error)
 	// Lists all web links for a given hunt group
 	ListHuntGroupWebLinks(ctx context.Context, in *ListHuntGroupWebLinksRequest, opts ...grpc.CallOption) (*ListHuntGroupWebLinksResponse, error)
-	// Assigns a web link from one hunt group to another
-	AssignHuntGroupWebLink(ctx context.Context, in *AssignHuntGroupWebLinkRequest, opts ...grpc.CallOption) (*AssignHuntGroupWebLinkResponse, error)
+	// Copies a web link from one hunt group to another
+	CopyHuntGroupWebLink(ctx context.Context, in *CopyHuntGroupWebLinkRequest, opts ...grpc.CallOption) (*CopyHuntGroupWebLinkResponse, error)
 	// Updates the list of web links in a hunt group to be the given list
 	UpdateHuntGroupWebLinks(ctx context.Context, in *UpdateHuntGroupWebLinksRequest, opts ...grpc.CallOption) (*UpdateHuntGroupWebLinksResponse, error)
 	// ListHuntGroupIntegrationLinks returns all integration links for a hunt group.
@@ -1919,9 +1919,9 @@ func (c *orgClient) ListHuntGroupWebLinks(ctx context.Context, in *ListHuntGroup
 	return out, nil
 }
 
-func (c *orgClient) AssignHuntGroupWebLink(ctx context.Context, in *AssignHuntGroupWebLinkRequest, opts ...grpc.CallOption) (*AssignHuntGroupWebLinkResponse, error) {
-	out := new(AssignHuntGroupWebLinkResponse)
-	err := c.cc.Invoke(ctx, Org_AssignHuntGroupWebLink_FullMethodName, in, out, opts...)
+func (c *orgClient) CopyHuntGroupWebLink(ctx context.Context, in *CopyHuntGroupWebLinkRequest, opts ...grpc.CallOption) (*CopyHuntGroupWebLinkResponse, error) {
+	out := new(CopyHuntGroupWebLinkResponse)
+	err := c.cc.Invoke(ctx, Org_CopyHuntGroupWebLink_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -2628,8 +2628,8 @@ type OrgServer interface {
 	DeleteAgentResponseAutoRules(context.Context, *DeleteAgentResponseAutoRulesRequest) (*DeleteAgentResponseAutoRulesResponse, error)
 	// Lists all web links for a given hunt group
 	ListHuntGroupWebLinks(context.Context, *ListHuntGroupWebLinksRequest) (*ListHuntGroupWebLinksResponse, error)
-	// Assigns a web link from one hunt group to another
-	AssignHuntGroupWebLink(context.Context, *AssignHuntGroupWebLinkRequest) (*AssignHuntGroupWebLinkResponse, error)
+	// Copies a web link from one hunt group to another
+	CopyHuntGroupWebLink(context.Context, *CopyHuntGroupWebLinkRequest) (*CopyHuntGroupWebLinkResponse, error)
 	// Updates the list of web links in a hunt group to be the given list
 	UpdateHuntGroupWebLinks(context.Context, *UpdateHuntGroupWebLinksRequest) (*UpdateHuntGroupWebLinksResponse, error)
 	// ListHuntGroupIntegrationLinks returns all integration links for a hunt group.
@@ -3124,8 +3124,8 @@ func (UnimplementedOrgServer) DeleteAgentResponseAutoRules(context.Context, *Del
 func (UnimplementedOrgServer) ListHuntGroupWebLinks(context.Context, *ListHuntGroupWebLinksRequest) (*ListHuntGroupWebLinksResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListHuntGroupWebLinks not implemented")
 }
-func (UnimplementedOrgServer) AssignHuntGroupWebLink(context.Context, *AssignHuntGroupWebLinkRequest) (*AssignHuntGroupWebLinkResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AssignHuntGroupWebLink not implemented")
+func (UnimplementedOrgServer) CopyHuntGroupWebLink(context.Context, *CopyHuntGroupWebLinkRequest) (*CopyHuntGroupWebLinkResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CopyHuntGroupWebLink not implemented")
 }
 func (UnimplementedOrgServer) UpdateHuntGroupWebLinks(context.Context, *UpdateHuntGroupWebLinksRequest) (*UpdateHuntGroupWebLinksResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateHuntGroupWebLinks not implemented")
@@ -5570,20 +5570,20 @@ func _Org_ListHuntGroupWebLinks_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Org_AssignHuntGroupWebLink_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AssignHuntGroupWebLinkRequest)
+func _Org_CopyHuntGroupWebLink_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CopyHuntGroupWebLinkRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(OrgServer).AssignHuntGroupWebLink(ctx, in)
+		return srv.(OrgServer).CopyHuntGroupWebLink(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Org_AssignHuntGroupWebLink_FullMethodName,
+		FullMethod: Org_CopyHuntGroupWebLink_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrgServer).AssignHuntGroupWebLink(ctx, req.(*AssignHuntGroupWebLinkRequest))
+		return srv.(OrgServer).CopyHuntGroupWebLink(ctx, req.(*CopyHuntGroupWebLinkRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -6896,8 +6896,8 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Org_ListHuntGroupWebLinks_Handler,
 		},
 		{
-			MethodName: "AssignHuntGroupWebLink",
-			Handler:    _Org_AssignHuntGroupWebLink_Handler,
+			MethodName: "CopyHuntGroupWebLink",
+			Handler:    _Org_CopyHuntGroupWebLink_Handler,
 		},
 		{
 			MethodName: "UpdateHuntGroupWebLinks",
