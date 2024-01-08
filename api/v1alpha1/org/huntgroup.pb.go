@@ -1917,6 +1917,7 @@ type ListHuntGroupWebLinksRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// The hunt group sid of the desired web links
 	HuntGroupSid int64 `protobuf:"varint,1,opt,name=hunt_group_sid,json=huntGroupSid,proto3" json:"hunt_group_sid,omitempty"`
 }
 
@@ -1965,6 +1966,7 @@ type ListHuntGroupWebLinksResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// The web links list from a givne hunt group
 	WebLinks []*org.WebLink `protobuf:"bytes,1,rep,name=web_links,json=webLinks,proto3" json:"web_links,omitempty"`
 }
 
@@ -2013,9 +2015,12 @@ type AssignHuntGroupWebLinkRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	FromHuntGroupSid int64        `protobuf:"varint,1,opt,name=from_hunt_group_sid,json=fromHuntGroupSid,proto3" json:"from_hunt_group_sid,omitempty"`
-	ToHuntGroupSid   int64        `protobuf:"varint,2,opt,name=to_hunt_group_sid,json=toHuntGroupSid,proto3" json:"to_hunt_group_sid,omitempty"`
-	WebLink          *org.WebLink `protobuf:"bytes,3,opt,name=web_link,json=webLink,proto3" json:"web_link,omitempty"`
+	// The hunt group sid of the residng web link
+	FromHuntGroupSid int64 `protobuf:"varint,1,opt,name=from_hunt_group_sid,json=fromHuntGroupSid,proto3" json:"from_hunt_group_sid,omitempty"`
+	// The hunt group sid of where the web link will be assigned
+	ToHuntGroupSid int64 `protobuf:"varint,2,opt,name=to_hunt_group_sid,json=toHuntGroupSid,proto3" json:"to_hunt_group_sid,omitempty"`
+	// The web link to be assigned
+	WebLink *org.WebLink `protobuf:"bytes,3,opt,name=web_link,json=webLink,proto3" json:"web_link,omitempty"`
 }
 
 func (x *AssignHuntGroupWebLinkRequest) Reset() {
@@ -2116,8 +2121,10 @@ type UpdateHuntGroupWebLinksRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	HuntGroupSid int64          `protobuf:"varint,1,opt,name=hunt_group_sid,json=huntGroupSid,proto3" json:"hunt_group_sid,omitempty"`
-	WebLinks     []*org.WebLink `protobuf:"bytes,2,rep,name=web_links,json=webLinks,proto3" json:"web_links,omitempty"`
+	// The hunt group sid of the web links to be updated
+	HuntGroupSid int64 `protobuf:"varint,1,opt,name=hunt_group_sid,json=huntGroupSid,proto3" json:"hunt_group_sid,omitempty"`
+	// The list of web links to be updated
+	WebLinks []*org.WebLink `protobuf:"bytes,2,rep,name=web_links,json=webLinks,proto3" json:"web_links,omitempty"`
 }
 
 func (x *UpdateHuntGroupWebLinksRequest) Reset() {
