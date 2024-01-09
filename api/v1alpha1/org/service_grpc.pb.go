@@ -144,6 +144,9 @@ const (
 	Org_CreateAgentResponseAutoRules_FullMethodName            = "/api.v1alpha1.org.Org/CreateAgentResponseAutoRules"
 	Org_UpdateAgentResponseAutoRules_FullMethodName            = "/api.v1alpha1.org.Org/UpdateAgentResponseAutoRules"
 	Org_DeleteAgentResponseAutoRules_FullMethodName            = "/api.v1alpha1.org.Org/DeleteAgentResponseAutoRules"
+	Org_ListHuntGroupWebLinks_FullMethodName                   = "/api.v1alpha1.org.Org/ListHuntGroupWebLinks"
+	Org_CopyHuntGroupWebLink_FullMethodName                    = "/api.v1alpha1.org.Org/CopyHuntGroupWebLink"
+	Org_UpdateHuntGroupWebLinks_FullMethodName                 = "/api.v1alpha1.org.Org/UpdateHuntGroupWebLinks"
 	Org_ListHuntGroupIntegrationLinks_FullMethodName           = "/api.v1alpha1.org.Org/ListHuntGroupIntegrationLinks"
 	Org_CreateTrust_FullMethodName                             = "/api.v1alpha1.org.Org/CreateTrust"
 	Org_AcceptTrust_FullMethodName                             = "/api.v1alpha1.org.Org/AcceptTrust"
@@ -475,6 +478,12 @@ type OrgClient interface {
 	UpdateAgentResponseAutoRules(ctx context.Context, in *UpdateAgentResponseAutoRulesRequest, opts ...grpc.CallOption) (*UpdateAgentResponseAutoRulesResponse, error)
 	// Deletes an existing Agent Call Response Automatically added compliance rule set.
 	DeleteAgentResponseAutoRules(ctx context.Context, in *DeleteAgentResponseAutoRulesRequest, opts ...grpc.CallOption) (*DeleteAgentResponseAutoRulesResponse, error)
+	// Lists all web links for a given hunt group
+	ListHuntGroupWebLinks(ctx context.Context, in *ListHuntGroupWebLinksRequest, opts ...grpc.CallOption) (*ListHuntGroupWebLinksResponse, error)
+	// Copies a web link from one hunt group to another
+	CopyHuntGroupWebLink(ctx context.Context, in *CopyHuntGroupWebLinkRequest, opts ...grpc.CallOption) (*CopyHuntGroupWebLinkResponse, error)
+	// Updates the list of web links in a hunt group to be the given list
+	UpdateHuntGroupWebLinks(ctx context.Context, in *UpdateHuntGroupWebLinksRequest, opts ...grpc.CallOption) (*UpdateHuntGroupWebLinksResponse, error)
 	// ListHuntGroupIntegrationLinks returns all integration links for a hunt group.
 	ListHuntGroupIntegrationLinks(ctx context.Context, in *ListHuntGroupIntegrationLinksRequest, opts ...grpc.CallOption) (*ListHuntGroupIntegrationLinksResponse, error)
 	// CreateTrust creates a new trust.
@@ -1901,6 +1910,33 @@ func (c *orgClient) DeleteAgentResponseAutoRules(ctx context.Context, in *Delete
 	return out, nil
 }
 
+func (c *orgClient) ListHuntGroupWebLinks(ctx context.Context, in *ListHuntGroupWebLinksRequest, opts ...grpc.CallOption) (*ListHuntGroupWebLinksResponse, error) {
+	out := new(ListHuntGroupWebLinksResponse)
+	err := c.cc.Invoke(ctx, Org_ListHuntGroupWebLinks_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) CopyHuntGroupWebLink(ctx context.Context, in *CopyHuntGroupWebLinkRequest, opts ...grpc.CallOption) (*CopyHuntGroupWebLinkResponse, error) {
+	out := new(CopyHuntGroupWebLinkResponse)
+	err := c.cc.Invoke(ctx, Org_CopyHuntGroupWebLink_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) UpdateHuntGroupWebLinks(ctx context.Context, in *UpdateHuntGroupWebLinksRequest, opts ...grpc.CallOption) (*UpdateHuntGroupWebLinksResponse, error) {
+	out := new(UpdateHuntGroupWebLinksResponse)
+	err := c.cc.Invoke(ctx, Org_UpdateHuntGroupWebLinks_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *orgClient) ListHuntGroupIntegrationLinks(ctx context.Context, in *ListHuntGroupIntegrationLinksRequest, opts ...grpc.CallOption) (*ListHuntGroupIntegrationLinksResponse, error) {
 	out := new(ListHuntGroupIntegrationLinksResponse)
 	err := c.cc.Invoke(ctx, Org_ListHuntGroupIntegrationLinks_FullMethodName, in, out, opts...)
@@ -2590,6 +2626,12 @@ type OrgServer interface {
 	UpdateAgentResponseAutoRules(context.Context, *UpdateAgentResponseAutoRulesRequest) (*UpdateAgentResponseAutoRulesResponse, error)
 	// Deletes an existing Agent Call Response Automatically added compliance rule set.
 	DeleteAgentResponseAutoRules(context.Context, *DeleteAgentResponseAutoRulesRequest) (*DeleteAgentResponseAutoRulesResponse, error)
+	// Lists all web links for a given hunt group
+	ListHuntGroupWebLinks(context.Context, *ListHuntGroupWebLinksRequest) (*ListHuntGroupWebLinksResponse, error)
+	// Copies a web link from one hunt group to another
+	CopyHuntGroupWebLink(context.Context, *CopyHuntGroupWebLinkRequest) (*CopyHuntGroupWebLinkResponse, error)
+	// Updates the list of web links in a hunt group to be the given list
+	UpdateHuntGroupWebLinks(context.Context, *UpdateHuntGroupWebLinksRequest) (*UpdateHuntGroupWebLinksResponse, error)
 	// ListHuntGroupIntegrationLinks returns all integration links for a hunt group.
 	ListHuntGroupIntegrationLinks(context.Context, *ListHuntGroupIntegrationLinksRequest) (*ListHuntGroupIntegrationLinksResponse, error)
 	// CreateTrust creates a new trust.
@@ -3078,6 +3120,15 @@ func (UnimplementedOrgServer) UpdateAgentResponseAutoRules(context.Context, *Upd
 }
 func (UnimplementedOrgServer) DeleteAgentResponseAutoRules(context.Context, *DeleteAgentResponseAutoRulesRequest) (*DeleteAgentResponseAutoRulesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteAgentResponseAutoRules not implemented")
+}
+func (UnimplementedOrgServer) ListHuntGroupWebLinks(context.Context, *ListHuntGroupWebLinksRequest) (*ListHuntGroupWebLinksResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListHuntGroupWebLinks not implemented")
+}
+func (UnimplementedOrgServer) CopyHuntGroupWebLink(context.Context, *CopyHuntGroupWebLinkRequest) (*CopyHuntGroupWebLinkResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CopyHuntGroupWebLink not implemented")
+}
+func (UnimplementedOrgServer) UpdateHuntGroupWebLinks(context.Context, *UpdateHuntGroupWebLinksRequest) (*UpdateHuntGroupWebLinksResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateHuntGroupWebLinks not implemented")
 }
 func (UnimplementedOrgServer) ListHuntGroupIntegrationLinks(context.Context, *ListHuntGroupIntegrationLinksRequest) (*ListHuntGroupIntegrationLinksResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListHuntGroupIntegrationLinks not implemented")
@@ -5501,6 +5552,60 @@ func _Org_DeleteAgentResponseAutoRules_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Org_ListHuntGroupWebLinks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListHuntGroupWebLinksRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).ListHuntGroupWebLinks(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_ListHuntGroupWebLinks_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).ListHuntGroupWebLinks(ctx, req.(*ListHuntGroupWebLinksRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_CopyHuntGroupWebLink_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CopyHuntGroupWebLinkRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).CopyHuntGroupWebLink(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_CopyHuntGroupWebLink_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).CopyHuntGroupWebLink(ctx, req.(*CopyHuntGroupWebLinkRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_UpdateHuntGroupWebLinks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateHuntGroupWebLinksRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).UpdateHuntGroupWebLinks(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_UpdateHuntGroupWebLinks_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).UpdateHuntGroupWebLinks(ctx, req.(*UpdateHuntGroupWebLinksRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Org_ListHuntGroupIntegrationLinks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListHuntGroupIntegrationLinksRequest)
 	if err := dec(in); err != nil {
@@ -6785,6 +6890,18 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteAgentResponseAutoRules",
 			Handler:    _Org_DeleteAgentResponseAutoRules_Handler,
+		},
+		{
+			MethodName: "ListHuntGroupWebLinks",
+			Handler:    _Org_ListHuntGroupWebLinks_Handler,
+		},
+		{
+			MethodName: "CopyHuntGroupWebLink",
+			Handler:    _Org_CopyHuntGroupWebLink_Handler,
+		},
+		{
+			MethodName: "UpdateHuntGroupWebLinks",
+			Handler:    _Org_UpdateHuntGroupWebLinks_Handler,
 		},
 		{
 			MethodName: "ListHuntGroupIntegrationLinks",

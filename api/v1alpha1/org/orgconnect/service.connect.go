@@ -372,6 +372,15 @@ const (
 	// OrgDeleteAgentResponseAutoRulesProcedure is the fully-qualified name of the Org's
 	// DeleteAgentResponseAutoRules RPC.
 	OrgDeleteAgentResponseAutoRulesProcedure = "/api.v1alpha1.org.Org/DeleteAgentResponseAutoRules"
+	// OrgListHuntGroupWebLinksProcedure is the fully-qualified name of the Org's ListHuntGroupWebLinks
+	// RPC.
+	OrgListHuntGroupWebLinksProcedure = "/api.v1alpha1.org.Org/ListHuntGroupWebLinks"
+	// OrgCopyHuntGroupWebLinkProcedure is the fully-qualified name of the Org's CopyHuntGroupWebLink
+	// RPC.
+	OrgCopyHuntGroupWebLinkProcedure = "/api.v1alpha1.org.Org/CopyHuntGroupWebLink"
+	// OrgUpdateHuntGroupWebLinksProcedure is the fully-qualified name of the Org's
+	// UpdateHuntGroupWebLinks RPC.
+	OrgUpdateHuntGroupWebLinksProcedure = "/api.v1alpha1.org.Org/UpdateHuntGroupWebLinks"
 	// OrgListHuntGroupIntegrationLinksProcedure is the fully-qualified name of the Org's
 	// ListHuntGroupIntegrationLinks RPC.
 	OrgListHuntGroupIntegrationLinksProcedure = "/api.v1alpha1.org.Org/ListHuntGroupIntegrationLinks"
@@ -768,6 +777,12 @@ type OrgClient interface {
 	UpdateAgentResponseAutoRules(context.Context, *connect_go.Request[org.UpdateAgentResponseAutoRulesRequest]) (*connect_go.Response[org.UpdateAgentResponseAutoRulesResponse], error)
 	// Deletes an existing Agent Call Response Automatically added compliance rule set.
 	DeleteAgentResponseAutoRules(context.Context, *connect_go.Request[org.DeleteAgentResponseAutoRulesRequest]) (*connect_go.Response[org.DeleteAgentResponseAutoRulesResponse], error)
+	// Lists all web links for a given hunt group
+	ListHuntGroupWebLinks(context.Context, *connect_go.Request[org.ListHuntGroupWebLinksRequest]) (*connect_go.Response[org.ListHuntGroupWebLinksResponse], error)
+	// Copies a web link from one hunt group to another
+	CopyHuntGroupWebLink(context.Context, *connect_go.Request[org.CopyHuntGroupWebLinkRequest]) (*connect_go.Response[org.CopyHuntGroupWebLinkResponse], error)
+	// Updates the list of web links in a hunt group to be the given list
+	UpdateHuntGroupWebLinks(context.Context, *connect_go.Request[org.UpdateHuntGroupWebLinksRequest]) (*connect_go.Response[org.UpdateHuntGroupWebLinksResponse], error)
 	// ListHuntGroupIntegrationLinks returns all integration links for a hunt group.
 	ListHuntGroupIntegrationLinks(context.Context, *connect_go.Request[org.ListHuntGroupIntegrationLinksRequest]) (*connect_go.Response[org.ListHuntGroupIntegrationLinksResponse], error)
 	// CreateTrust creates a new trust.
@@ -1512,6 +1527,21 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgDeleteAgentResponseAutoRulesProcedure,
 			opts...,
 		),
+		listHuntGroupWebLinks: connect_go.NewClient[org.ListHuntGroupWebLinksRequest, org.ListHuntGroupWebLinksResponse](
+			httpClient,
+			baseURL+OrgListHuntGroupWebLinksProcedure,
+			opts...,
+		),
+		copyHuntGroupWebLink: connect_go.NewClient[org.CopyHuntGroupWebLinkRequest, org.CopyHuntGroupWebLinkResponse](
+			httpClient,
+			baseURL+OrgCopyHuntGroupWebLinkProcedure,
+			opts...,
+		),
+		updateHuntGroupWebLinks: connect_go.NewClient[org.UpdateHuntGroupWebLinksRequest, org.UpdateHuntGroupWebLinksResponse](
+			httpClient,
+			baseURL+OrgUpdateHuntGroupWebLinksProcedure,
+			opts...,
+		),
 		listHuntGroupIntegrationLinks: connect_go.NewClient[org.ListHuntGroupIntegrationLinksRequest, org.ListHuntGroupIntegrationLinksResponse](
 			httpClient,
 			baseURL+OrgListHuntGroupIntegrationLinksProcedure,
@@ -1867,6 +1897,9 @@ type orgClient struct {
 	createAgentResponseAutoRules            *connect_go.Client[org.CreateAgentResponseAutoRulesRequest, org.CreateAgentResponseAutoRulesResponse]
 	updateAgentResponseAutoRules            *connect_go.Client[org.UpdateAgentResponseAutoRulesRequest, org.UpdateAgentResponseAutoRulesResponse]
 	deleteAgentResponseAutoRules            *connect_go.Client[org.DeleteAgentResponseAutoRulesRequest, org.DeleteAgentResponseAutoRulesResponse]
+	listHuntGroupWebLinks                   *connect_go.Client[org.ListHuntGroupWebLinksRequest, org.ListHuntGroupWebLinksResponse]
+	copyHuntGroupWebLink                    *connect_go.Client[org.CopyHuntGroupWebLinkRequest, org.CopyHuntGroupWebLinkResponse]
+	updateHuntGroupWebLinks                 *connect_go.Client[org.UpdateHuntGroupWebLinksRequest, org.UpdateHuntGroupWebLinksResponse]
 	listHuntGroupIntegrationLinks           *connect_go.Client[org.ListHuntGroupIntegrationLinksRequest, org.ListHuntGroupIntegrationLinksResponse]
 	createTrust                             *connect_go.Client[org.CreateTrustRequest, org.CreateTrustResponse]
 	acceptTrust                             *connect_go.Client[org.AcceptTrustRequest, org.AcceptTrustResponse]
@@ -2541,6 +2574,21 @@ func (c *orgClient) DeleteAgentResponseAutoRules(ctx context.Context, req *conne
 	return c.deleteAgentResponseAutoRules.CallUnary(ctx, req)
 }
 
+// ListHuntGroupWebLinks calls api.v1alpha1.org.Org.ListHuntGroupWebLinks.
+func (c *orgClient) ListHuntGroupWebLinks(ctx context.Context, req *connect_go.Request[org.ListHuntGroupWebLinksRequest]) (*connect_go.Response[org.ListHuntGroupWebLinksResponse], error) {
+	return c.listHuntGroupWebLinks.CallUnary(ctx, req)
+}
+
+// CopyHuntGroupWebLink calls api.v1alpha1.org.Org.CopyHuntGroupWebLink.
+func (c *orgClient) CopyHuntGroupWebLink(ctx context.Context, req *connect_go.Request[org.CopyHuntGroupWebLinkRequest]) (*connect_go.Response[org.CopyHuntGroupWebLinkResponse], error) {
+	return c.copyHuntGroupWebLink.CallUnary(ctx, req)
+}
+
+// UpdateHuntGroupWebLinks calls api.v1alpha1.org.Org.UpdateHuntGroupWebLinks.
+func (c *orgClient) UpdateHuntGroupWebLinks(ctx context.Context, req *connect_go.Request[org.UpdateHuntGroupWebLinksRequest]) (*connect_go.Response[org.UpdateHuntGroupWebLinksResponse], error) {
+	return c.updateHuntGroupWebLinks.CallUnary(ctx, req)
+}
+
 // ListHuntGroupIntegrationLinks calls api.v1alpha1.org.Org.ListHuntGroupIntegrationLinks.
 func (c *orgClient) ListHuntGroupIntegrationLinks(ctx context.Context, req *connect_go.Request[org.ListHuntGroupIntegrationLinksRequest]) (*connect_go.Response[org.ListHuntGroupIntegrationLinksResponse], error) {
 	return c.listHuntGroupIntegrationLinks.CallUnary(ctx, req)
@@ -3050,6 +3098,12 @@ type OrgHandler interface {
 	UpdateAgentResponseAutoRules(context.Context, *connect_go.Request[org.UpdateAgentResponseAutoRulesRequest]) (*connect_go.Response[org.UpdateAgentResponseAutoRulesResponse], error)
 	// Deletes an existing Agent Call Response Automatically added compliance rule set.
 	DeleteAgentResponseAutoRules(context.Context, *connect_go.Request[org.DeleteAgentResponseAutoRulesRequest]) (*connect_go.Response[org.DeleteAgentResponseAutoRulesResponse], error)
+	// Lists all web links for a given hunt group
+	ListHuntGroupWebLinks(context.Context, *connect_go.Request[org.ListHuntGroupWebLinksRequest]) (*connect_go.Response[org.ListHuntGroupWebLinksResponse], error)
+	// Copies a web link from one hunt group to another
+	CopyHuntGroupWebLink(context.Context, *connect_go.Request[org.CopyHuntGroupWebLinkRequest]) (*connect_go.Response[org.CopyHuntGroupWebLinkResponse], error)
+	// Updates the list of web links in a hunt group to be the given list
+	UpdateHuntGroupWebLinks(context.Context, *connect_go.Request[org.UpdateHuntGroupWebLinksRequest]) (*connect_go.Response[org.UpdateHuntGroupWebLinksResponse], error)
 	// ListHuntGroupIntegrationLinks returns all integration links for a hunt group.
 	ListHuntGroupIntegrationLinks(context.Context, *connect_go.Request[org.ListHuntGroupIntegrationLinksRequest]) (*connect_go.Response[org.ListHuntGroupIntegrationLinksResponse], error)
 	// CreateTrust creates a new trust.
@@ -3790,6 +3844,21 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.DeleteAgentResponseAutoRules,
 		opts...,
 	)
+	orgListHuntGroupWebLinksHandler := connect_go.NewUnaryHandler(
+		OrgListHuntGroupWebLinksProcedure,
+		svc.ListHuntGroupWebLinks,
+		opts...,
+	)
+	orgCopyHuntGroupWebLinkHandler := connect_go.NewUnaryHandler(
+		OrgCopyHuntGroupWebLinkProcedure,
+		svc.CopyHuntGroupWebLink,
+		opts...,
+	)
+	orgUpdateHuntGroupWebLinksHandler := connect_go.NewUnaryHandler(
+		OrgUpdateHuntGroupWebLinksProcedure,
+		svc.UpdateHuntGroupWebLinks,
+		opts...,
+	)
 	orgListHuntGroupIntegrationLinksHandler := connect_go.NewUnaryHandler(
 		OrgListHuntGroupIntegrationLinksProcedure,
 		svc.ListHuntGroupIntegrationLinks,
@@ -4267,6 +4336,12 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 			orgUpdateAgentResponseAutoRulesHandler.ServeHTTP(w, r)
 		case OrgDeleteAgentResponseAutoRulesProcedure:
 			orgDeleteAgentResponseAutoRulesHandler.ServeHTTP(w, r)
+		case OrgListHuntGroupWebLinksProcedure:
+			orgListHuntGroupWebLinksHandler.ServeHTTP(w, r)
+		case OrgCopyHuntGroupWebLinkProcedure:
+			orgCopyHuntGroupWebLinkHandler.ServeHTTP(w, r)
+		case OrgUpdateHuntGroupWebLinksProcedure:
+			orgUpdateHuntGroupWebLinksHandler.ServeHTTP(w, r)
 		case OrgListHuntGroupIntegrationLinksProcedure:
 			orgListHuntGroupIntegrationLinksHandler.ServeHTTP(w, r)
 		case OrgCreateTrustProcedure:
@@ -4864,6 +4939,18 @@ func (UnimplementedOrgHandler) UpdateAgentResponseAutoRules(context.Context, *co
 
 func (UnimplementedOrgHandler) DeleteAgentResponseAutoRules(context.Context, *connect_go.Request[org.DeleteAgentResponseAutoRulesRequest]) (*connect_go.Response[org.DeleteAgentResponseAutoRulesResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.DeleteAgentResponseAutoRules is not implemented"))
+}
+
+func (UnimplementedOrgHandler) ListHuntGroupWebLinks(context.Context, *connect_go.Request[org.ListHuntGroupWebLinksRequest]) (*connect_go.Response[org.ListHuntGroupWebLinksResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.ListHuntGroupWebLinks is not implemented"))
+}
+
+func (UnimplementedOrgHandler) CopyHuntGroupWebLink(context.Context, *connect_go.Request[org.CopyHuntGroupWebLinkRequest]) (*connect_go.Response[org.CopyHuntGroupWebLinkResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.CopyHuntGroupWebLink is not implemented"))
+}
+
+func (UnimplementedOrgHandler) UpdateHuntGroupWebLinks(context.Context, *connect_go.Request[org.UpdateHuntGroupWebLinksRequest]) (*connect_go.Response[org.UpdateHuntGroupWebLinksResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.UpdateHuntGroupWebLinks is not implemented"))
 }
 
 func (UnimplementedOrgHandler) ListHuntGroupIntegrationLinks(context.Context, *connect_go.Request[org.ListHuntGroupIntegrationLinksRequest]) (*connect_go.Response[org.ListHuntGroupIntegrationLinksResponse], error) {
