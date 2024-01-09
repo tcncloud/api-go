@@ -201,6 +201,8 @@ const (
 	OrgGetUserByOrgIdProcedure = "/api.v1alpha1.org.Org/GetUserByOrgId"
 	// OrgListAgentsProcedure is the fully-qualified name of the Org's ListAgents RPC.
 	OrgListAgentsProcedure = "/api.v1alpha1.org.Org/ListAgents"
+	// OrgListPublicUsersProcedure is the fully-qualified name of the Org's ListPublicUsers RPC.
+	OrgListPublicUsersProcedure = "/api.v1alpha1.org.Org/ListPublicUsers"
 	// OrgListUsersProcedure is the fully-qualified name of the Org's ListUsers RPC.
 	OrgListUsersProcedure = "/api.v1alpha1.org.Org/ListUsers"
 	// OrgListUsersByOrgIdProcedure is the fully-qualified name of the Org's ListUsersByOrgId RPC.
@@ -656,6 +658,8 @@ type OrgClient interface {
 	GetUserByOrgId(context.Context, *connect_go.Request[org.GetUserByOrgIdRequest]) (*connect_go.Response[org.GetUserByOrgIdResponse], error)
 	// ListAgents returns a list of Agents.
 	ListAgents(context.Context, *connect_go.Request[org.ListAgentsRequest]) (*connect_go.ServerStreamForClient[org.ListAgentsResponse], error)
+	// ListPublicUsers returns a list of users with limited data for most applications.
+	ListPublicUsers(context.Context, *connect_go.Request[org.ListPublicUsersRequest]) (*connect_go.ServerStreamForClient[org.ListPublicUsersResponse], error)
 	// ListUsers returns a list of users.
 	ListUsers(context.Context, *connect_go.Request[org.ListUsersRequest]) (*connect_go.ServerStreamForClient[org.ListUsersResponse], error)
 	// ListUsersByOrgId returns a list of users.
@@ -1225,6 +1229,11 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 		listAgents: connect_go.NewClient[org.ListAgentsRequest, org.ListAgentsResponse](
 			httpClient,
 			baseURL+OrgListAgentsProcedure,
+			opts...,
+		),
+		listPublicUsers: connect_go.NewClient[org.ListPublicUsersRequest, org.ListPublicUsersResponse](
+			httpClient,
+			baseURL+OrgListPublicUsersProcedure,
 			opts...,
 		),
 		listUsers: connect_go.NewClient[org.ListUsersRequest, org.ListUsersResponse](
@@ -1873,6 +1882,7 @@ type orgClient struct {
 	getUser                                  *connect_go.Client[org.GetUserRequest, org.GetUserResponse]
 	getUserByOrgId                           *connect_go.Client[org.GetUserByOrgIdRequest, org.GetUserByOrgIdResponse]
 	listAgents                               *connect_go.Client[org.ListAgentsRequest, org.ListAgentsResponse]
+	listPublicUsers                          *connect_go.Client[org.ListPublicUsersRequest, org.ListPublicUsersResponse]
 	listUsers                                *connect_go.Client[org.ListUsersRequest, org.ListUsersResponse]
 	listUsersByOrgId                         *connect_go.Client[org.ListUsersByOrgIdRequest, org.ListUsersByOrgIdResponse]
 	listUsersByRegion                        *connect_go.Client[org.ListUsersByRegionRequest, org.ListUsersByRegionResponse]
@@ -2296,6 +2306,11 @@ func (c *orgClient) GetUserByOrgId(ctx context.Context, req *connect_go.Request[
 // ListAgents calls api.v1alpha1.org.Org.ListAgents.
 func (c *orgClient) ListAgents(ctx context.Context, req *connect_go.Request[org.ListAgentsRequest]) (*connect_go.ServerStreamForClient[org.ListAgentsResponse], error) {
 	return c.listAgents.CallServerStream(ctx, req)
+}
+
+// ListPublicUsers calls api.v1alpha1.org.Org.ListPublicUsers.
+func (c *orgClient) ListPublicUsers(ctx context.Context, req *connect_go.Request[org.ListPublicUsersRequest]) (*connect_go.ServerStreamForClient[org.ListPublicUsersResponse], error) {
+	return c.listPublicUsers.CallServerStream(ctx, req)
 }
 
 // ListUsers calls api.v1alpha1.org.Org.ListUsers.
@@ -3033,6 +3048,8 @@ type OrgHandler interface {
 	GetUserByOrgId(context.Context, *connect_go.Request[org.GetUserByOrgIdRequest]) (*connect_go.Response[org.GetUserByOrgIdResponse], error)
 	// ListAgents returns a list of Agents.
 	ListAgents(context.Context, *connect_go.Request[org.ListAgentsRequest], *connect_go.ServerStream[org.ListAgentsResponse]) error
+	// ListPublicUsers returns a list of users with limited data for most applications.
+	ListPublicUsers(context.Context, *connect_go.Request[org.ListPublicUsersRequest], *connect_go.ServerStream[org.ListPublicUsersResponse]) error
 	// ListUsers returns a list of users.
 	ListUsers(context.Context, *connect_go.Request[org.ListUsersRequest], *connect_go.ServerStream[org.ListUsersResponse]) error
 	// ListUsersByOrgId returns a list of users.
@@ -3598,6 +3615,11 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 	orgListAgentsHandler := connect_go.NewServerStreamHandler(
 		OrgListAgentsProcedure,
 		svc.ListAgents,
+		opts...,
+	)
+	orgListPublicUsersHandler := connect_go.NewServerStreamHandler(
+		OrgListPublicUsersProcedure,
+		svc.ListPublicUsers,
 		opts...,
 	)
 	orgListUsersHandler := connect_go.NewServerStreamHandler(
@@ -4304,6 +4326,8 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 			orgGetUserByOrgIdHandler.ServeHTTP(w, r)
 		case OrgListAgentsProcedure:
 			orgListAgentsHandler.ServeHTTP(w, r)
+		case OrgListPublicUsersProcedure:
+			orgListPublicUsersHandler.ServeHTTP(w, r)
 		case OrgListUsersProcedure:
 			orgListUsersHandler.ServeHTTP(w, r)
 		case OrgListUsersByOrgIdProcedure:
@@ -4787,6 +4811,10 @@ func (UnimplementedOrgHandler) GetUserByOrgId(context.Context, *connect_go.Reque
 
 func (UnimplementedOrgHandler) ListAgents(context.Context, *connect_go.Request[org.ListAgentsRequest], *connect_go.ServerStream[org.ListAgentsResponse]) error {
 	return connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.ListAgents is not implemented"))
+}
+
+func (UnimplementedOrgHandler) ListPublicUsers(context.Context, *connect_go.Request[org.ListPublicUsersRequest], *connect_go.ServerStream[org.ListPublicUsersResponse]) error {
+	return connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.ListPublicUsers is not implemented"))
 }
 
 func (UnimplementedOrgHandler) ListUsers(context.Context, *connect_go.Request[org.ListUsersRequest], *connect_go.ServerStream[org.ListUsersResponse]) error {

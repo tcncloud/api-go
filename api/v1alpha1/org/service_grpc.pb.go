@@ -80,6 +80,7 @@ const (
 	Org_GetUser_FullMethodName                                  = "/api.v1alpha1.org.Org/GetUser"
 	Org_GetUserByOrgId_FullMethodName                           = "/api.v1alpha1.org.Org/GetUserByOrgId"
 	Org_ListAgents_FullMethodName                               = "/api.v1alpha1.org.Org/ListAgents"
+	Org_ListPublicUsers_FullMethodName                          = "/api.v1alpha1.org.Org/ListPublicUsers"
 	Org_ListUsers_FullMethodName                                = "/api.v1alpha1.org.Org/ListUsers"
 	Org_ListUsersByOrgId_FullMethodName                         = "/api.v1alpha1.org.Org/ListUsersByOrgId"
 	Org_ListUsersByRegion_FullMethodName                        = "/api.v1alpha1.org.Org/ListUsersByRegion"
@@ -349,6 +350,8 @@ type OrgClient interface {
 	GetUserByOrgId(ctx context.Context, in *GetUserByOrgIdRequest, opts ...grpc.CallOption) (*GetUserByOrgIdResponse, error)
 	// ListAgents returns a list of Agents.
 	ListAgents(ctx context.Context, in *ListAgentsRequest, opts ...grpc.CallOption) (Org_ListAgentsClient, error)
+	// ListPublicUsers returns a list of users with limited data for most applications.
+	ListPublicUsers(ctx context.Context, in *ListPublicUsersRequest, opts ...grpc.CallOption) (Org_ListPublicUsersClient, error)
 	// ListUsers returns a list of users.
 	ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (Org_ListUsersClient, error)
 	// ListUsersByOrgId returns a list of users.
@@ -1277,8 +1280,40 @@ func (x *orgListAgentsClient) Recv() (*ListAgentsResponse, error) {
 	return m, nil
 }
 
+func (c *orgClient) ListPublicUsers(ctx context.Context, in *ListPublicUsersRequest, opts ...grpc.CallOption) (Org_ListPublicUsersClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Org_ServiceDesc.Streams[5], Org_ListPublicUsers_FullMethodName, opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &orgListPublicUsersClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type Org_ListPublicUsersClient interface {
+	Recv() (*ListPublicUsersResponse, error)
+	grpc.ClientStream
+}
+
+type orgListPublicUsersClient struct {
+	grpc.ClientStream
+}
+
+func (x *orgListPublicUsersClient) Recv() (*ListPublicUsersResponse, error) {
+	m := new(ListPublicUsersResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 func (c *orgClient) ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (Org_ListUsersClient, error) {
-	stream, err := c.cc.NewStream(ctx, &Org_ServiceDesc.Streams[5], Org_ListUsers_FullMethodName, opts...)
+	stream, err := c.cc.NewStream(ctx, &Org_ServiceDesc.Streams[6], Org_ListUsers_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1310,7 +1345,7 @@ func (x *orgListUsersClient) Recv() (*ListUsersResponse, error) {
 }
 
 func (c *orgClient) ListUsersByOrgId(ctx context.Context, in *ListUsersByOrgIdRequest, opts ...grpc.CallOption) (Org_ListUsersByOrgIdClient, error) {
-	stream, err := c.cc.NewStream(ctx, &Org_ServiceDesc.Streams[6], Org_ListUsersByOrgId_FullMethodName, opts...)
+	stream, err := c.cc.NewStream(ctx, &Org_ServiceDesc.Streams[7], Org_ListUsersByOrgId_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1342,7 +1377,7 @@ func (x *orgListUsersByOrgIdClient) Recv() (*ListUsersByOrgIdResponse, error) {
 }
 
 func (c *orgClient) ListUsersByRegion(ctx context.Context, in *ListUsersByRegionRequest, opts ...grpc.CallOption) (Org_ListUsersByRegionClient, error) {
-	stream, err := c.cc.NewStream(ctx, &Org_ServiceDesc.Streams[7], Org_ListUsersByRegion_FullMethodName, opts...)
+	stream, err := c.cc.NewStream(ctx, &Org_ServiceDesc.Streams[8], Org_ListUsersByRegion_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -2541,6 +2576,8 @@ type OrgServer interface {
 	GetUserByOrgId(context.Context, *GetUserByOrgIdRequest) (*GetUserByOrgIdResponse, error)
 	// ListAgents returns a list of Agents.
 	ListAgents(*ListAgentsRequest, Org_ListAgentsServer) error
+	// ListPublicUsers returns a list of users with limited data for most applications.
+	ListPublicUsers(*ListPublicUsersRequest, Org_ListPublicUsersServer) error
 	// ListUsers returns a list of users.
 	ListUsers(*ListUsersRequest, Org_ListUsersServer) error
 	// ListUsersByOrgId returns a list of users.
@@ -2984,6 +3021,9 @@ func (UnimplementedOrgServer) GetUserByOrgId(context.Context, *GetUserByOrgIdReq
 }
 func (UnimplementedOrgServer) ListAgents(*ListAgentsRequest, Org_ListAgentsServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListAgents not implemented")
+}
+func (UnimplementedOrgServer) ListPublicUsers(*ListPublicUsersRequest, Org_ListPublicUsersServer) error {
+	return status.Errorf(codes.Unimplemented, "method ListPublicUsers not implemented")
 }
 func (UnimplementedOrgServer) ListUsers(*ListUsersRequest, Org_ListUsersServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListUsers not implemented")
@@ -4456,6 +4496,27 @@ type orgListAgentsServer struct {
 }
 
 func (x *orgListAgentsServer) Send(m *ListAgentsResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func _Org_ListPublicUsers_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(ListPublicUsersRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(OrgServer).ListPublicUsers(m, &orgListPublicUsersServer{stream})
+}
+
+type Org_ListPublicUsersServer interface {
+	Send(*ListPublicUsersResponse) error
+	grpc.ServerStream
+}
+
+type orgListPublicUsersServer struct {
+	grpc.ServerStream
+}
+
+func (x *orgListPublicUsersServer) Send(m *ListPublicUsersResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
@@ -7264,6 +7325,11 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "ListAgents",
 			Handler:       _Org_ListAgents_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "ListPublicUsers",
+			Handler:       _Org_ListPublicUsers_Handler,
 			ServerStreams: true,
 		},
 		{
