@@ -90,6 +90,8 @@ const (
 	OmniApi_GetCannedMessageGroupById_FullMethodName    = "/api.v0alpha.OmniApi/GetCannedMessageGroupById"
 	OmniApi_ListUserSkills_FullMethodName               = "/api.v0alpha.OmniApi/ListUserSkills"
 	OmniApi_ListWhatsAppNumbers_FullMethodName          = "/api.v0alpha.OmniApi/ListWhatsAppNumbers"
+	OmniApi_CreateWhatsAppNumber_FullMethodName         = "/api.v0alpha.OmniApi/CreateWhatsAppNumber"
+	OmniApi_UpdateWhatsAppNumber_FullMethodName         = "/api.v0alpha.OmniApi/UpdateWhatsAppNumber"
 )
 
 // OmniApiClient is the client API for OmniApi service.
@@ -412,6 +414,10 @@ type OmniApiClient interface {
 	ListUserSkills(ctx context.Context, in *ListUserSkillsReq, opts ...grpc.CallOption) (*ListUserSkillsRes, error)
 	// List whatsapp numbers for the client
 	ListWhatsAppNumbers(ctx context.Context, in *ListWhatsAppNumbersReq, opts ...grpc.CallOption) (*ListWhatsAppNumbersRes, error)
+	// Create whatsapp number for the client
+	CreateWhatsAppNumber(ctx context.Context, in *CreateWhatsAppNumberRequest, opts ...grpc.CallOption) (*CreateWhatsAppNumberResponse, error)
+	// Update whatsapp number for the client
+	UpdateWhatsAppNumber(ctx context.Context, in *UpdateWhatsAppNumberRequest, opts ...grpc.CallOption) (*UpdateWhatsAppNumberResponse, error)
 }
 
 type omniApiClient struct {
@@ -1098,6 +1104,24 @@ func (c *omniApiClient) ListWhatsAppNumbers(ctx context.Context, in *ListWhatsAp
 	return out, nil
 }
 
+func (c *omniApiClient) CreateWhatsAppNumber(ctx context.Context, in *CreateWhatsAppNumberRequest, opts ...grpc.CallOption) (*CreateWhatsAppNumberResponse, error) {
+	out := new(CreateWhatsAppNumberResponse)
+	err := c.cc.Invoke(ctx, OmniApi_CreateWhatsAppNumber_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *omniApiClient) UpdateWhatsAppNumber(ctx context.Context, in *UpdateWhatsAppNumberRequest, opts ...grpc.CallOption) (*UpdateWhatsAppNumberResponse, error) {
+	out := new(UpdateWhatsAppNumberResponse)
+	err := c.cc.Invoke(ctx, OmniApi_UpdateWhatsAppNumber_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OmniApiServer is the server API for OmniApi service.
 // All implementations must embed UnimplementedOmniApiServer
 // for forward compatibility
@@ -1418,6 +1442,10 @@ type OmniApiServer interface {
 	ListUserSkills(context.Context, *ListUserSkillsReq) (*ListUserSkillsRes, error)
 	// List whatsapp numbers for the client
 	ListWhatsAppNumbers(context.Context, *ListWhatsAppNumbersReq) (*ListWhatsAppNumbersRes, error)
+	// Create whatsapp number for the client
+	CreateWhatsAppNumber(context.Context, *CreateWhatsAppNumberRequest) (*CreateWhatsAppNumberResponse, error)
+	// Update whatsapp number for the client
+	UpdateWhatsAppNumber(context.Context, *UpdateWhatsAppNumberRequest) (*UpdateWhatsAppNumberResponse, error)
 	mustEmbedUnimplementedOmniApiServer()
 }
 
@@ -1634,6 +1662,12 @@ func (UnimplementedOmniApiServer) ListUserSkills(context.Context, *ListUserSkill
 }
 func (UnimplementedOmniApiServer) ListWhatsAppNumbers(context.Context, *ListWhatsAppNumbersReq) (*ListWhatsAppNumbersRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListWhatsAppNumbers not implemented")
+}
+func (UnimplementedOmniApiServer) CreateWhatsAppNumber(context.Context, *CreateWhatsAppNumberRequest) (*CreateWhatsAppNumberResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateWhatsAppNumber not implemented")
+}
+func (UnimplementedOmniApiServer) UpdateWhatsAppNumber(context.Context, *UpdateWhatsAppNumberRequest) (*UpdateWhatsAppNumberResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateWhatsAppNumber not implemented")
 }
 func (UnimplementedOmniApiServer) mustEmbedUnimplementedOmniApiServer() {}
 
@@ -2914,6 +2948,42 @@ func _OmniApi_ListWhatsAppNumbers_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OmniApi_CreateWhatsAppNumber_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateWhatsAppNumberRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmniApiServer).CreateWhatsAppNumber(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OmniApi_CreateWhatsAppNumber_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmniApiServer).CreateWhatsAppNumber(ctx, req.(*CreateWhatsAppNumberRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OmniApi_UpdateWhatsAppNumber_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateWhatsAppNumberRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmniApiServer).UpdateWhatsAppNumber(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OmniApi_UpdateWhatsAppNumber_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmniApiServer).UpdateWhatsAppNumber(ctx, req.(*UpdateWhatsAppNumberRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // OmniApi_ServiceDesc is the grpc.ServiceDesc for OmniApi service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -3192,6 +3262,14 @@ var OmniApi_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListWhatsAppNumbers",
 			Handler:    _OmniApi_ListWhatsAppNumbers_Handler,
+		},
+		{
+			MethodName: "CreateWhatsAppNumber",
+			Handler:    _OmniApi_CreateWhatsAppNumber_Handler,
+		},
+		{
+			MethodName: "UpdateWhatsAppNumber",
+			Handler:    _OmniApi_UpdateWhatsAppNumber_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
