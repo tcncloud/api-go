@@ -482,6 +482,9 @@ const (
 	// WFMReplaceAgentOnScheduleProcedure is the fully-qualified name of the WFM's
 	// ReplaceAgentOnSchedule RPC.
 	WFMReplaceAgentOnScheduleProcedure = "/api.v1alpha1.wfm.WFM/ReplaceAgentOnSchedule"
+	// WFMRemoveAgentFromScheduleProcedure is the fully-qualified name of the WFM's
+	// RemoveAgentFromSchedule RPC.
+	WFMRemoveAgentFromScheduleProcedure = "/api.v1alpha1.wfm.WFM/RemoveAgentFromSchedule"
 )
 
 // WFMClient is a client for the api.v1alpha1.wfm.WFM service.
@@ -2328,6 +2331,17 @@ type WFMClient interface {
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when replacing the @wfm_agent_sid_to_remove.
 	ReplaceAgentOnSchedule(context.Context, *connect_go.Request[wfm.ReplaceAgentOnScheduleRes]) (*connect_go.Response[wfm.ReplaceAgentOnScheduleRes], error)
+	// Removes the @wfm_agent_sid from @schedule_selector over @datetime_range for the org sending the request.
+	// Creates a new unassigned agent with the same active agent group associations as @wfm_agent_sid for @schedule_scenario_sid.
+	// The unassigned agent will be assigned to shifts belonging to @wfm_agent_sid, returning newly created unassigned agent's SID and the updated shifts.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when creating the unassigned agent or updating the shifts.
+	RemoveAgentFromSchedule(context.Context, *connect_go.Request[wfm.RemoveAgentFromScheduleRequest]) (*connect_go.Response[wfm.RemoveAgentFromScheduleResponse], error)
 }
 
 // NewWFMClient constructs a client for the api.v1alpha1.wfm.WFM service. By default, it uses the
@@ -3135,6 +3149,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMReplaceAgentOnScheduleProcedure,
 			opts...,
 		),
+		removeAgentFromSchedule: connect_go.NewClient[wfm.RemoveAgentFromScheduleRequest, wfm.RemoveAgentFromScheduleResponse](
+			httpClient,
+			baseURL+WFMRemoveAgentFromScheduleProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -3299,6 +3318,7 @@ type wFMClient struct {
 	generateTourWeekPatterns                      *connect_go.Client[wfm.GenerateTourWeekPatternsReq, wfm.GenerateTourWeekPatternsRes]
 	listValidAgentsForReplacement                 *connect_go.Client[wfm.ListValidAgentsForReplacementReq, wfm.ListValidAgentsForReplacementRes]
 	replaceAgentOnSchedule                        *connect_go.Client[wfm.ReplaceAgentOnScheduleRes, wfm.ReplaceAgentOnScheduleRes]
+	removeAgentFromSchedule                       *connect_go.Client[wfm.RemoveAgentFromScheduleRequest, wfm.RemoveAgentFromScheduleResponse]
 }
 
 // PerformInitialClientSetup calls api.v1alpha1.wfm.WFM.PerformInitialClientSetup.
@@ -4116,6 +4136,11 @@ func (c *wFMClient) ListValidAgentsForReplacement(ctx context.Context, req *conn
 // ReplaceAgentOnSchedule calls api.v1alpha1.wfm.WFM.ReplaceAgentOnSchedule.
 func (c *wFMClient) ReplaceAgentOnSchedule(ctx context.Context, req *connect_go.Request[wfm.ReplaceAgentOnScheduleRes]) (*connect_go.Response[wfm.ReplaceAgentOnScheduleRes], error) {
 	return c.replaceAgentOnSchedule.CallUnary(ctx, req)
+}
+
+// RemoveAgentFromSchedule calls api.v1alpha1.wfm.WFM.RemoveAgentFromSchedule.
+func (c *wFMClient) RemoveAgentFromSchedule(ctx context.Context, req *connect_go.Request[wfm.RemoveAgentFromScheduleRequest]) (*connect_go.Response[wfm.RemoveAgentFromScheduleResponse], error) {
+	return c.removeAgentFromSchedule.CallUnary(ctx, req)
 }
 
 // WFMHandler is an implementation of the api.v1alpha1.wfm.WFM service.
@@ -5962,6 +5987,17 @@ type WFMHandler interface {
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when replacing the @wfm_agent_sid_to_remove.
 	ReplaceAgentOnSchedule(context.Context, *connect_go.Request[wfm.ReplaceAgentOnScheduleRes]) (*connect_go.Response[wfm.ReplaceAgentOnScheduleRes], error)
+	// Removes the @wfm_agent_sid from @schedule_selector over @datetime_range for the org sending the request.
+	// Creates a new unassigned agent with the same active agent group associations as @wfm_agent_sid for @schedule_scenario_sid.
+	// The unassigned agent will be assigned to shifts belonging to @wfm_agent_sid, returning newly created unassigned agent's SID and the updated shifts.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when creating the unassigned agent or updating the shifts.
+	RemoveAgentFromSchedule(context.Context, *connect_go.Request[wfm.RemoveAgentFromScheduleRequest]) (*connect_go.Response[wfm.RemoveAgentFromScheduleResponse], error)
 }
 
 // NewWFMHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -6765,6 +6801,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.ReplaceAgentOnSchedule,
 		opts...,
 	)
+	wFMRemoveAgentFromScheduleHandler := connect_go.NewUnaryHandler(
+		WFMRemoveAgentFromScheduleProcedure,
+		svc.RemoveAgentFromSchedule,
+		opts...,
+	)
 	return "/api.v1alpha1.wfm.WFM/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case WFMPerformInitialClientSetupProcedure:
@@ -7085,6 +7126,8 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMListValidAgentsForReplacementHandler.ServeHTTP(w, r)
 		case WFMReplaceAgentOnScheduleProcedure:
 			wFMReplaceAgentOnScheduleHandler.ServeHTTP(w, r)
+		case WFMRemoveAgentFromScheduleProcedure:
+			wFMRemoveAgentFromScheduleHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -7728,4 +7771,8 @@ func (UnimplementedWFMHandler) ListValidAgentsForReplacement(context.Context, *c
 
 func (UnimplementedWFMHandler) ReplaceAgentOnSchedule(context.Context, *connect_go.Request[wfm.ReplaceAgentOnScheduleRes]) (*connect_go.Response[wfm.ReplaceAgentOnScheduleRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ReplaceAgentOnSchedule is not implemented"))
+}
+
+func (UnimplementedWFMHandler) RemoveAgentFromSchedule(context.Context, *connect_go.Request[wfm.RemoveAgentFromScheduleRequest]) (*connect_go.Response[wfm.RemoveAgentFromScheduleResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.RemoveAgentFromSchedule is not implemented"))
 }

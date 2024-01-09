@@ -192,6 +192,7 @@ const (
 	WFM_GenerateTourWeekPatterns_FullMethodName                      = "/api.v1alpha1.wfm.WFM/GenerateTourWeekPatterns"
 	WFM_ListValidAgentsForReplacement_FullMethodName                 = "/api.v1alpha1.wfm.WFM/ListValidAgentsForReplacement"
 	WFM_ReplaceAgentOnSchedule_FullMethodName                        = "/api.v1alpha1.wfm.WFM/ReplaceAgentOnSchedule"
+	WFM_RemoveAgentFromSchedule_FullMethodName                       = "/api.v1alpha1.wfm.WFM/RemoveAgentFromSchedule"
 )
 
 // WFMClient is the client API for WFM service.
@@ -2035,6 +2036,17 @@ type WFMClient interface {
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when replacing the @wfm_agent_sid_to_remove.
 	ReplaceAgentOnSchedule(ctx context.Context, in *ReplaceAgentOnScheduleRes, opts ...grpc.CallOption) (*ReplaceAgentOnScheduleRes, error)
+	// Removes the @wfm_agent_sid from @schedule_selector over @datetime_range for the org sending the request.
+	// Creates a new unassigned agent with the same active agent group associations as @wfm_agent_sid for @schedule_scenario_sid.
+	// The unassigned agent will be assigned to shifts belonging to @wfm_agent_sid, returning newly created unassigned agent's SID and the updated shifts.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when creating the unassigned agent or updating the shifts.
+	RemoveAgentFromSchedule(ctx context.Context, in *RemoveAgentFromScheduleRequest, opts ...grpc.CallOption) (*RemoveAgentFromScheduleResponse, error)
 }
 
 type wFMClient struct {
@@ -3613,6 +3625,15 @@ func (c *wFMClient) ListValidAgentsForReplacement(ctx context.Context, in *ListV
 func (c *wFMClient) ReplaceAgentOnSchedule(ctx context.Context, in *ReplaceAgentOnScheduleRes, opts ...grpc.CallOption) (*ReplaceAgentOnScheduleRes, error) {
 	out := new(ReplaceAgentOnScheduleRes)
 	err := c.cc.Invoke(ctx, WFM_ReplaceAgentOnSchedule_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) RemoveAgentFromSchedule(ctx context.Context, in *RemoveAgentFromScheduleRequest, opts ...grpc.CallOption) (*RemoveAgentFromScheduleResponse, error) {
+	out := new(RemoveAgentFromScheduleResponse)
+	err := c.cc.Invoke(ctx, WFM_RemoveAgentFromSchedule_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -5460,6 +5481,17 @@ type WFMServer interface {
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when replacing the @wfm_agent_sid_to_remove.
 	ReplaceAgentOnSchedule(context.Context, *ReplaceAgentOnScheduleRes) (*ReplaceAgentOnScheduleRes, error)
+	// Removes the @wfm_agent_sid from @schedule_selector over @datetime_range for the org sending the request.
+	// Creates a new unassigned agent with the same active agent group associations as @wfm_agent_sid for @schedule_scenario_sid.
+	// The unassigned agent will be assigned to shifts belonging to @wfm_agent_sid, returning newly created unassigned agent's SID and the updated shifts.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when creating the unassigned agent or updating the shifts.
+	RemoveAgentFromSchedule(context.Context, *RemoveAgentFromScheduleRequest) (*RemoveAgentFromScheduleResponse, error)
 	mustEmbedUnimplementedWFMServer()
 }
 
@@ -5943,6 +5975,9 @@ func (UnimplementedWFMServer) ListValidAgentsForReplacement(context.Context, *Li
 }
 func (UnimplementedWFMServer) ReplaceAgentOnSchedule(context.Context, *ReplaceAgentOnScheduleRes) (*ReplaceAgentOnScheduleRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ReplaceAgentOnSchedule not implemented")
+}
+func (UnimplementedWFMServer) RemoveAgentFromSchedule(context.Context, *RemoveAgentFromScheduleRequest) (*RemoveAgentFromScheduleResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RemoveAgentFromSchedule not implemented")
 }
 func (UnimplementedWFMServer) mustEmbedUnimplementedWFMServer() {}
 
@@ -8837,6 +8872,24 @@ func _WFM_ReplaceAgentOnSchedule_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_RemoveAgentFromSchedule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RemoveAgentFromScheduleRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).RemoveAgentFromSchedule(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_RemoveAgentFromSchedule_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).RemoveAgentFromSchedule(ctx, req.(*RemoveAgentFromScheduleRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WFM_ServiceDesc is the grpc.ServiceDesc for WFM service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -9455,6 +9508,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ReplaceAgentOnSchedule",
 			Handler:    _WFM_ReplaceAgentOnSchedule_Handler,
+		},
+		{
+			MethodName: "RemoveAgentFromSchedule",
+			Handler:    _WFM_RemoveAgentFromSchedule_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
