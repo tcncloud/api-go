@@ -384,6 +384,18 @@ const (
 	// OrgListHuntGroupIntegrationLinksProcedure is the fully-qualified name of the Org's
 	// ListHuntGroupIntegrationLinks RPC.
 	OrgListHuntGroupIntegrationLinksProcedure = "/api.v1alpha1.org.Org/ListHuntGroupIntegrationLinks"
+	// OrgGetHuntGroupClientInfoDisplayTemplateProcedure is the fully-qualified name of the Org's
+	// GetHuntGroupClientInfoDisplayTemplate RPC.
+	OrgGetHuntGroupClientInfoDisplayTemplateProcedure = "/api.v1alpha1.org.Org/GetHuntGroupClientInfoDisplayTemplate"
+	// OrgCreateHuntGroupClientInfoDisplayTemplateProcedure is the fully-qualified name of the Org's
+	// CreateHuntGroupClientInfoDisplayTemplate RPC.
+	OrgCreateHuntGroupClientInfoDisplayTemplateProcedure = "/api.v1alpha1.org.Org/CreateHuntGroupClientInfoDisplayTemplate"
+	// OrgUpdateHuntGroupClientInfoDisplayTemplateProcedure is the fully-qualified name of the Org's
+	// UpdateHuntGroupClientInfoDisplayTemplate RPC.
+	OrgUpdateHuntGroupClientInfoDisplayTemplateProcedure = "/api.v1alpha1.org.Org/UpdateHuntGroupClientInfoDisplayTemplate"
+	// OrgDeleteHuntGroupClientInfoDisplayTemplateProcedure is the fully-qualified name of the Org's
+	// DeleteHuntGroupClientInfoDisplayTemplate RPC.
+	OrgDeleteHuntGroupClientInfoDisplayTemplateProcedure = "/api.v1alpha1.org.Org/DeleteHuntGroupClientInfoDisplayTemplate"
 	// OrgCreateTrustProcedure is the fully-qualified name of the Org's CreateTrust RPC.
 	OrgCreateTrustProcedure = "/api.v1alpha1.org.Org/CreateTrust"
 	// OrgAcceptTrustProcedure is the fully-qualified name of the Org's AcceptTrust RPC.
@@ -785,6 +797,14 @@ type OrgClient interface {
 	UpdateHuntGroupWebLinks(context.Context, *connect_go.Request[org.UpdateHuntGroupWebLinksRequest]) (*connect_go.Response[org.UpdateHuntGroupWebLinksResponse], error)
 	// ListHuntGroupIntegrationLinks returns all integration links for a hunt group.
 	ListHuntGroupIntegrationLinks(context.Context, *connect_go.Request[org.ListHuntGroupIntegrationLinksRequest]) (*connect_go.Response[org.ListHuntGroupIntegrationLinksResponse], error)
+	// GetHuntGroupClientInfoDisplayTemplate returns the client info display template for a given hunt group.
+	GetHuntGroupClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.GetHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.GetHuntGroupClientInfoDisplayTemplateResponse], error)
+	// CreateHuntGroupClientInfoDisplayTemplate creates a new client info display template for a givne hunt group.
+	CreateHuntGroupClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.CreateHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.CreateHuntGroupClientInfoDisplayTemplateResponse], error)
+	// UpdateHuntGroupClientInfoDisplayTemplate updates a client info display template for a given hunt group.
+	UpdateHuntGroupClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.UpdateHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.UpdateHuntGroupClientInfoDisplayTemplateResponse], error)
+	// DeleteHuntGroupClientInfoDisplayTemplate deletes a client info display template for a given hunt group.
+	DeleteHuntGroupClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.DeleteHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.DeleteHuntGroupClientInfoDisplayTemplateResponse], error)
 	// CreateTrust creates a new trust.
 	CreateTrust(context.Context, *connect_go.Request[org.CreateTrustRequest]) (*connect_go.Response[org.CreateTrustResponse], error)
 	// AcceptTrust accepts an incoming trust.
@@ -1547,6 +1567,26 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgListHuntGroupIntegrationLinksProcedure,
 			opts...,
 		),
+		getHuntGroupClientInfoDisplayTemplate: connect_go.NewClient[org.GetHuntGroupClientInfoDisplayTemplateRequest, org.GetHuntGroupClientInfoDisplayTemplateResponse](
+			httpClient,
+			baseURL+OrgGetHuntGroupClientInfoDisplayTemplateProcedure,
+			opts...,
+		),
+		createHuntGroupClientInfoDisplayTemplate: connect_go.NewClient[org.CreateHuntGroupClientInfoDisplayTemplateRequest, org.CreateHuntGroupClientInfoDisplayTemplateResponse](
+			httpClient,
+			baseURL+OrgCreateHuntGroupClientInfoDisplayTemplateProcedure,
+			opts...,
+		),
+		updateHuntGroupClientInfoDisplayTemplate: connect_go.NewClient[org.UpdateHuntGroupClientInfoDisplayTemplateRequest, org.UpdateHuntGroupClientInfoDisplayTemplateResponse](
+			httpClient,
+			baseURL+OrgUpdateHuntGroupClientInfoDisplayTemplateProcedure,
+			opts...,
+		),
+		deleteHuntGroupClientInfoDisplayTemplate: connect_go.NewClient[org.DeleteHuntGroupClientInfoDisplayTemplateRequest, org.DeleteHuntGroupClientInfoDisplayTemplateResponse](
+			httpClient,
+			baseURL+OrgDeleteHuntGroupClientInfoDisplayTemplateProcedure,
+			opts...,
+		),
 		createTrust: connect_go.NewClient[org.CreateTrustRequest, org.CreateTrustResponse](
 			httpClient,
 			baseURL+OrgCreateTrustProcedure,
@@ -1772,179 +1812,183 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 
 // orgClient implements OrgClient.
 type orgClient struct {
-	createOrganization                      *connect_go.Client[org.CreateOrganizationRequest, org.CreateOrganizationResponse]
-	getOrganization                         *connect_go.Client[org.GetOrganizationRequest, org.GetOrganizationResponse]
-	getOrganizationById                     *connect_go.Client[org.GetOrganizationByIdRequest, org.GetOrganizationByIdResponse]
-	updateOrganization                      *connect_go.Client[org.UpdateOrganizationRequest, org.UpdateOrganizationResponse]
-	archiveOrganization                     *connect_go.Client[org.ArchiveOrganizationRequest, org.ArchiveOrganizationResponse]
-	unArchiveOrganization                   *connect_go.Client[org.UnArchiveOrganizationRequest, org.UnArchiveOrganizationResponse]
-	listAllOrganizationsGlobally            *connect_go.Client[org.ListAllOrganizationsGloballyRequest, org.ListAllOrganizationsGloballyResponse]
-	listOrganizationsByRegion               *connect_go.Client[org.ListOrganizationsByRegionRequest, org.ListOrganizationsByRegionResponse]
-	listArchivedOrganizations               *connect_go.Client[org.ListArchivedOrganizationsRequest, org.ListArchivedOrganizationsResponse]
-	convertOrgToManual                      *connect_go.Client[org.ConvertOrgToManualRequest, org.ConvertOrgToManualResponse]
-	listOwnedOrgs                           *connect_go.Client[org.ListOwnedOrgsRequest, org.ListOwnedOrgsResponse]
-	getOrganizationPreferences              *connect_go.Client[org.GetOrganizationPreferencesRequest, org.GetOrganizationPreferencesResponse]
-	updateOrganizationPreferences           *connect_go.Client[org.UpdateOrganizationPreferencesRequest, org.UpdateOrganizationPreferencesResponse]
-	getAgentPreferences                     *connect_go.Client[org.GetAgentPreferencesRequest, org.GetAgentPreferencesResponse]
-	updateAgentPreferences                  *connect_go.Client[org.UpdateAgentPreferencesRequest, org.UpdateAgentPreferencesResponse]
-	getContactPreferences                   *connect_go.Client[org.GetContactPreferencesRequest, org.GetContactPreferencesResponse]
-	updateContactPreferences                *connect_go.Client[org.UpdateContactPreferencesRequest, org.UpdateContactPreferencesResponse]
-	getAuthenticationPreferences            *connect_go.Client[org.GetAuthenticationPreferencesRequest, org.GetAuthenticationPreferencesResponse]
-	updateAuthenticationPreferences         *connect_go.Client[org.UpdateAuthenticationPreferencesRequest, org.UpdateAuthenticationPreferencesResponse]
-	getWebhookPreferences                   *connect_go.Client[org.GetWebhookPreferencesRequest, org.GetWebhookPreferencesResponse]
-	updateWebhookPreferences                *connect_go.Client[org.UpdateWebhookPreferencesRequest, org.UpdateWebhookPreferencesResponse]
-	getDashboardGeneralPreferences          *connect_go.Client[org.GetDashboardGeneralPreferencesRequest, org.GetDashboardGeneralPreferencesResponse]
-	updateDashboardGeneralPreferences       *connect_go.Client[org.UpdateDashboardGeneralPreferencesRequest, org.UpdateDashboardGeneralPreferencesResponse]
-	getDashboardQueuePreferences            *connect_go.Client[org.GetDashboardQueuePreferencesRequest, org.GetDashboardQueuePreferencesResponse]
-	updateDashboardQueuePreferences         *connect_go.Client[org.UpdateDashboardQueuePreferencesRequest, org.UpdateDashboardQueuePreferencesResponse]
-	getPhonePreferences                     *connect_go.Client[org.GetPhonePreferencesRequest, org.GetPhonePreferencesResponse]
-	updatePhonePreferences                  *connect_go.Client[org.UpdatePhonePreferencesRequest, org.UpdatePhonePreferencesResponse]
-	getCompliancePreferences                *connect_go.Client[org.GetCompliancePreferencesRequest, org.GetCompliancePreferencesResponse]
-	updateCompliancePreferences             *connect_go.Client[org.UpdateCompliancePreferencesRequest, org.UpdateCompliancePreferencesResponse]
-	getBroadcastPreferences                 *connect_go.Client[org.GetBroadcastPreferencesRequest, org.GetBroadcastPreferencesResponse]
-	updateBroadcastPreferences              *connect_go.Client[org.UpdateBroadcastPreferencesRequest, org.UpdateBroadcastPreferencesResponse]
-	getSchedulePreferences                  *connect_go.Client[org.GetSchedulePreferencesRequest, org.GetSchedulePreferencesResponse]
-	updateSchedulePreferences               *connect_go.Client[org.UpdateSchedulePreferencesRequest, org.UpdateSchedulePreferencesResponse]
-	getEmailSmsPreferences                  *connect_go.Client[org.GetEmailSmsPreferencesRequest, org.GetEmailSmsPreferencesResponse]
-	updateEmailSmsPreferences               *connect_go.Client[org.UpdateEmailSmsPreferencesRequest, org.UpdateEmailSmsPreferencesResponse]
-	getBusinessPreferences                  *connect_go.Client[org.GetBusinessPreferencesRequest, org.GetBusinessPreferencesResponse]
-	updateBusinessPreferences               *connect_go.Client[org.UpdateBusinessPreferencesRequest, org.UpdateBusinessPreferencesResponse]
-	updateAdminBusinessPreferences          *connect_go.Client[org.UpdateAdminBusinessPreferencesRequest, org.UpdateAdminBusinessPreferencesResponse]
-	getScorecardsPreferences                *connect_go.Client[org.GetScorecardsPreferencesRequest, org.GetScorecardsPreferencesResponse]
-	updateScorecardsPreferences             *connect_go.Client[org.UpdateScorecardsPreferencesRequest, org.UpdateScorecardsPreferencesResponse]
-	getVoiceAnalyticsPreferences            *connect_go.Client[org.GetVoiceAnalyticsPreferencesRequest, org.GetVoiceAnalyticsPreferencesResponse]
-	listVoiceAnalyticsPreferences           *connect_go.Client[org.ListVoiceAnalyticsPreferencesRequest, org.ListVoiceAnalyticsPreferencesResponse]
-	updateVoiceAnalyticsPreferences         *connect_go.Client[org.UpdateVoiceAnalyticsPreferencesRequest, org.UpdateVoiceAnalyticsPreferencesResponse]
-	getEndOfDayPreferences                  *connect_go.Client[org.GetEndOfDayPreferencesRequest, org.GetEndOfDayPreferencesResponse]
-	updateEndOfDayPreferences               *connect_go.Client[org.UpdateEndOfDayPreferencesRequest, org.UpdateEndOfDayPreferencesResponse]
-	getReportFilterPreferences              *connect_go.Client[org.GetFilterPreferencesRequest, org.GetFilterPreferencesResponse]
-	updateReportFilterPreferences           *connect_go.Client[org.UpdateFilterPreferencesRequest, org.UpdateFilterPreferencesResponse]
-	getRecordingPreferences                 *connect_go.Client[org.GetRecordingPreferencesRequest, org.GetRecordingPreferencesResponse]
-	updateRecordingPreferences              *connect_go.Client[org.UpdateRecordingPreferencesRequest, org.UpdateRecordingPreferencesResponse]
-	getAdminClientPreferences               *connect_go.Client[org.GetAdminClientPreferencesRequest, org.GetAdminClientPreferencesResponse]
-	updateAdminClientPreferences            *connect_go.Client[org.UpdateAdminClientPreferencesRequest, org.UpdateAdminClientPreferencesResponse]
-	acceptLinkbackRecordingTerms            *connect_go.Client[org.AcceptLinkbackRecordingTermsRequest, org.AcceptLinkbackRecordingTermsResponse]
-	linkbackUpdateBroadcastTemplates        *connect_go.Client[org.LinkbackUpdateBroadcastTemplatesRequest, org.LinkbackUpdateBroadcastTemplatesResponse]
-	recordEmailUnsubscribeAcknowledgement   *connect_go.Client[org.RecordEmailUnsubscribeAcknowledgementRequest, org.RecordEmailUnsubscribeAcknowledgementResponse]
-	clearEmailUnsubscribeAcknowledgement    *connect_go.Client[org.ClearEmailUnsubscribeAcknowledgementRequest, org.ClearEmailUnsubscribeAcknowledgementResponse]
-	createUser                              *connect_go.Client[org.CreateUserRequest, org.CreateUserResponse]
-	createDelegatedUser                     *connect_go.Client[org.CreateDelegatedUserRequest, org.CreateDelegatedUserResponse]
-	getMyUser                               *connect_go.Client[org.GetMyUserRequest, org.GetMyUserResponse]
-	getUser                                 *connect_go.Client[org.GetUserRequest, org.GetUserResponse]
-	getUserByOrgId                          *connect_go.Client[org.GetUserByOrgIdRequest, org.GetUserByOrgIdResponse]
-	listAgents                              *connect_go.Client[org.ListAgentsRequest, org.ListAgentsResponse]
-	listUsers                               *connect_go.Client[org.ListUsersRequest, org.ListUsersResponse]
-	listUsersByOrgId                        *connect_go.Client[org.ListUsersByOrgIdRequest, org.ListUsersByOrgIdResponse]
-	listUsersByRegion                       *connect_go.Client[org.ListUsersByRegionRequest, org.ListUsersByRegionResponse]
-	updateMyUser                            *connect_go.Client[org.UpdateMyUserRequest, org.UpdateMyUserResponse]
-	updateUser                              *connect_go.Client[org.UpdateUserRequest, org.UpdateUserResponse]
-	updateUserLabels                        *connect_go.Client[org.UpdateUserLabelsRequest, org.UpdateUserLabelsResponse]
-	updateUserCallerId                      *connect_go.Client[org.UpdateUserCallerIdRequest, org.UpdateUserCallerIdResponse]
-	updateUserDisabled                      *connect_go.Client[org.UpdateUserDisabledRequest, org.UpdateUserDisabledResponse]
-	updateUserDisabledByOrgId               *connect_go.Client[org.UpdateUserDisabledByOrgIdRequest, org.UpdateUserDisabledByOrgIdResponse]
-	getMyUserPasswordResetLink              *connect_go.Client[org.GetMyUserPasswordResetLinkRequest, org.GetMyUserPasswordResetLinkResponse]
-	getUserPasswordResetLink                *connect_go.Client[org.GetUserPasswordResetLinkRequest, org.GetUserPasswordResetLinkResponse]
-	getUserPasswordResetLinkByOrgId         *connect_go.Client[org.GetUserPasswordResetLinkByOrgIdRequest, org.GetUserPasswordResetLinkByOrgIdResponse]
-	createPasswordResetLink                 *connect_go.Client[org.CreatePasswordResetLinkRequest, org.CreatePasswordResetLinkResponse]
-	createPasswordResetLinkByOrgId          *connect_go.Client[org.CreatePasswordResetLinkByOrgIdRequest, org.CreatePasswordResetLinkByOrgIdResponse]
-	getUserLoginInfo                        *connect_go.Client[org.GetUserLoginInfoRequest, org.GetUserLoginInfoResponse]
-	getUserEmailVerified                    *connect_go.Client[org.GetUserEmailVerifiedRequest, org.GetUserEmailVerifiedResponse]
-	getUserEmailVerifiedByOrgId             *connect_go.Client[org.GetUserEmailVerifiedByOrgIdRequest, org.GetUserEmailVerifiedByOrgIdResponse]
-	resetMyPassword                         *connect_go.Client[org.ResetMyPasswordRequest, org.ResetMyPasswordResponse]
-	resetUserPassword                       *connect_go.Client[org.ResetUserPasswordRequest, org.ResetUserPasswordResponse]
-	resetUserPasswordByOrgId                *connect_go.Client[org.ResetUserPasswordByOrgIdRequest, org.ResetUserPasswordByOrgIdResponse]
-	sendUserEmailVerification               *connect_go.Client[org.SendUserEmailVerificationRequest, org.SendUserEmailVerificationResponse]
-	sendUserEmailVerificationByOrgId        *connect_go.Client[org.SendUserEmailVerificationByOrgIdRequest, org.SendUserEmailVerificationByOrgIdResponse]
-	sendPasswordReset                       *connect_go.Client[org.SendPasswordResetRequest, org.SendPasswordResetResponse]
-	sendPasswordResetByOrgId                *connect_go.Client[org.SendPasswordResetByOrgIdRequest, org.SendPasswordResetByOrgIdResponse]
-	getUserSessionData                      *connect_go.Client[org.GetUserSessionDataRequest, org.GetUserSessionDataResponse]
-	getAgentProfileGroup                    *connect_go.Client[org.GetAgentProfileGroupRequest, org.GetAgentProfileGroupResponse]
-	listAgentProfileGroups                  *connect_go.Client[org.ListAgentProfileGroupsRequest, org.ListAgentProfileGroupsResponse]
-	updateAgentProfileGroup                 *connect_go.Client[org.UpdateAgentProfileGroupRequest, org.UpdateAgentProfileGroupResponse]
-	createAgentProfileGroup                 *connect_go.Client[org.CreateAgentProfileGroupRequest, org.CreateAgentProfileGroupResponse]
-	deleteAgentProfileGroup                 *connect_go.Client[org.DeleteAgentProfileGroupRequest, org.DeleteAgentProfileGroupResponse]
-	assignAgentProfileGroups                *connect_go.Client[org.AssignAgentProfileGroupsRequest, org.AssignAgentProfileGroupsResponse]
-	addUserSubscription                     *connect_go.Client[org.AddUserSubscriptionRequest, org.AddUserSubscriptionResponse]
-	addUserSubscriptionByUserId             *connect_go.Client[org.AddUserSubscriptionByUserIdRequest, org.AddUserSubscriptionByUserIdResponse]
-	getUserSubscription                     *connect_go.Client[org.GetUserSubscriptionRequest, org.GetUserSubscriptionResponse]
-	getUserSubscriptionByUserId             *connect_go.Client[org.GetUserSubscriptionByUserIdRequest, org.GetUserSubscriptionByUserIdResponse]
-	updateUserSubscription                  *connect_go.Client[org.UpdateUserSubscriptionRequest, org.UpdateUserSubscriptionResponse]
-	updateUserSubscriptionByUserId          *connect_go.Client[org.UpdateUserSubscriptionByUserIdRequest, org.UpdateUserSubscriptionByUserIdResponse]
-	removeUserSubscription                  *connect_go.Client[org.RemoveUserSubscriptionRequest, org.RemoveUserSubscriptionResponse]
-	removeUserSubscriptionByUserId          *connect_go.Client[org.RemoveUserSubscriptionByUserIdRequest, org.RemoveUserSubscriptionByUserIdResponse]
-	listUserSubscriptions                   *connect_go.Client[org.ListUserSubscriptionsRequest, org.ListUserSubscriptionsResponse]
-	listUserSubscriptionsByUserId           *connect_go.Client[org.ListUserSubscriptionsByUserIdRequest, org.ListUserSubscriptionsByUserIdResponse]
-	listOrgSubscriptions                    *connect_go.Client[org.ListOrgSubscriptionsRequest, org.ListOrgSubscriptionsResponse]
-	createAuthToken                         *connect_go.Client[org.CreateAuthTokenRequest, org.CreateAuthTokenResponse]
-	createAuthTokenByUserId                 *connect_go.Client[org.CreateAuthTokenByUserIdRequest, org.CreateAuthTokenByUserIdResponse]
-	listAuthTokens                          *connect_go.Client[org.ListAuthTokensRequest, org.ListAuthTokensResponse]
-	listAuthTokensByUserId                  *connect_go.Client[org.ListAuthTokensByUserIdRequest, org.ListAuthTokensByUserIdResponse]
-	setAuthTokenExpiration                  *connect_go.Client[org.SetAuthTokenExpirationRequest, org.SetAuthTokenExpirationResponse]
-	setAuthTokenExpirationByUserId          *connect_go.Client[org.SetAuthTokenExpirationByUserIdRequest, org.SetAuthTokenExpirationByUserIdResponse]
-	deleteAuthToken                         *connect_go.Client[org.DeleteAuthTokenRequest, org.DeleteAuthTokenResponse]
-	deleteAuthTokenByUserId                 *connect_go.Client[org.DeleteAuthTokenByUserIdRequest, org.DeleteAuthTokenByUserIdResponse]
-	getHuntGroupSettings                    *connect_go.Client[org.GetHuntGroupSettingsRequest, org.GetHuntGroupSettingsResponse]
-	updateHuntGroupSettings                 *connect_go.Client[org.UpdateHuntGroupSettingsRequest, org.UpdateHuntGroupSettingsResponse]
-	listCallerIdBuckets                     *connect_go.Client[org.ListCallerIdBucketsRequest, org.ListCallerIdBucketsResponse]
-	getDataDipTemplate                      *connect_go.Client[org.GetDataDipTemplateRequest, org.GetDataDipTemplateResponse]
-	listDataDipTemplates                    *connect_go.Client[org.ListDataDipTemplatesRequest, org.ListDataDipTemplatesResponse]
-	createDataDipTemplate                   *connect_go.Client[org.CreateDataDipTemplateRequest, org.CreateDataDipTemplateResponse]
-	updateDataDipTemplate                   *connect_go.Client[org.UpdateDataDipTemplateRequest, org.UpdateDataDipTemplateResponse]
-	deleteDataDipTemplate                   *connect_go.Client[org.DeleteDataDipTemplateRequest, org.DeleteDataDipTemplateResponse]
-	copyDataDipTemplate                     *connect_go.Client[org.CopyDataDipTemplateRequest, org.CopyDataDipTemplateResponse]
-	copyDataDipTemplateToOrganization       *connect_go.Client[org.CopyDataDipTemplateToOrganizationRequest, org.CopyDataDipTemplateToOrganizationResponse]
-	listAgentResponseAutoRules              *connect_go.Client[org.ListAgentResponseAutoRulesRequest, org.ListAgentResponseAutoRulesResponse]
-	createAgentResponseAutoRules            *connect_go.Client[org.CreateAgentResponseAutoRulesRequest, org.CreateAgentResponseAutoRulesResponse]
-	updateAgentResponseAutoRules            *connect_go.Client[org.UpdateAgentResponseAutoRulesRequest, org.UpdateAgentResponseAutoRulesResponse]
-	deleteAgentResponseAutoRules            *connect_go.Client[org.DeleteAgentResponseAutoRulesRequest, org.DeleteAgentResponseAutoRulesResponse]
-	listHuntGroupWebLinks                   *connect_go.Client[org.ListHuntGroupWebLinksRequest, org.ListHuntGroupWebLinksResponse]
-	copyHuntGroupWebLink                    *connect_go.Client[org.CopyHuntGroupWebLinkRequest, org.CopyHuntGroupWebLinkResponse]
-	updateHuntGroupWebLinks                 *connect_go.Client[org.UpdateHuntGroupWebLinksRequest, org.UpdateHuntGroupWebLinksResponse]
-	listHuntGroupIntegrationLinks           *connect_go.Client[org.ListHuntGroupIntegrationLinksRequest, org.ListHuntGroupIntegrationLinksResponse]
-	createTrust                             *connect_go.Client[org.CreateTrustRequest, org.CreateTrustResponse]
-	acceptTrust                             *connect_go.Client[org.AcceptTrustRequest, org.AcceptTrustResponse]
-	rejectTrust                             *connect_go.Client[org.RejectTrustRequest, org.RejectTrustResponse]
-	getTrust                                *connect_go.Client[org.GetTrustRequest, org.GetTrustResponse]
-	listIncomingTrusts                      *connect_go.Client[org.ListIncomingTrustsRequest, org.ListIncomingTrustsResponse]
-	listGivenTrusts                         *connect_go.Client[org.ListGivenTrustsRequest, org.ListGivenTrustsResponse]
-	listAssignableTrusts                    *connect_go.Client[org.ListAssignableTrustsRequest, org.ListAssignableTrustsResponse]
-	deleteTrust                             *connect_go.Client[org.DeleteTrustRequest, org.DeleteTrustResponse]
-	assignTrust                             *connect_go.Client[org.AssignTrustRequest, org.AssignTrustResponse]
-	unassignTrust                           *connect_go.Client[org.UnassignTrustRequest, org.UnassignTrustResponse]
-	createLabel                             *connect_go.Client[org.CreateLabelRequest, org.CreateLabelResponse]
-	deleteLabel                             *connect_go.Client[org.DeleteLabelRequest, org.DeleteLabelResponse]
-	listLabels                              *connect_go.Client[org.ListLabelsRequest, org.ListLabelsResponse]
-	getLabel                                *connect_go.Client[org.GetLabelRequest, org.GetLabelResponse]
-	updateLabel                             *connect_go.Client[org.UpdateLabelRequest, org.UpdateLabelResponse]
-	assignLabel                             *connect_go.Client[org.AssignLabelRequest, org.AssignLabelResponse]
-	unassignLabel                           *connect_go.Client[org.UnassignLabelRequest, org.UnassignLabelResponse]
-	getAssignmentCounts                     *connect_go.Client[org.GetAssignmentCountsRequest, org.GetAssignmentCountsResponse]
-	getAssignableLabels                     *connect_go.Client[org.GetAssignableLabelsRequest, org.GetAssignableLabelsResponse]
-	getPermissions                          *connect_go.Client[org.GetPermissionsRequest, org.GetPermissionsResponse]
-	getUserPermissions                      *connect_go.Client[org.GetUserPermissionsRequest, org.GetUserPermissionsResponse]
-	createPermissionGroup                   *connect_go.Client[org.CreatePermissionGroupRequest, org.CreatePermissionGroupResponse]
-	updatePermissionGroup                   *connect_go.Client[org.UpdatePermissionGroupRequest, org.UpdatePermissionGroupResponse]
-	deletePermissionGroup                   *connect_go.Client[org.DeletePermissionGroupRequest, org.DeletePermissionGroupResponse]
-	listPermissionGroups                    *connect_go.Client[org.ListPermissionGroupsRequest, org.ListPermissionGroupsResponse]
-	listPermissionGroupsByOrgId             *connect_go.Client[org.ListPermissionGroupsByOrgIdRequest, org.ListPermissionGroupsByOrgIdResponse]
-	assignUsersPermissionGroup              *connect_go.Client[org.AssignUsersPermissionGroupRequest, org.AssignUsersPermissionGroupResponse]
-	revokeUsersPermissionGroup              *connect_go.Client[org.RevokeUsersPermissionGroupRequest, org.RevokeUsersPermissionGroupResponse]
-	assignAccountOwnerPermissionToUser      *connect_go.Client[org.AssignAccountOwnerPermissionToUserRequest, org.AssignAccountOwnerPermissionToUserResponse]
-	revokeAccountOwnerPermissionFromUser    *connect_go.Client[org.RevokeAccountOwnerPermissionFromUserRequest, org.RevokeAccountOwnerPermissionFromUserResponse]
-	initDefaultPermissionGroups             *connect_go.Client[org.InitDefaultPermissionGroupsRequest, org.InitDefaultPermissionGroupsResponse]
-	getAccountOwnerGroup                    *connect_go.Client[org.GetAccountOwnerGroupRequest, org.GetAccountOwnerGroupResponse]
-	getLicenses                             *connect_go.Client[org.GetLicensesRequest, org.GetLicensesResponse]
-	getOrgLicenses                          *connect_go.Client[org.GetOrgLicensesRequest, org.GetOrgLicensesResponse]
-	updateLicenses                          *connect_go.Client[org.UpdateLicensesRequest, org.UpdateLicensesResponse]
-	removePermissionFromAllPermissionGroups *connect_go.Client[org.RemovePermissionFromAllPermissionGroupsRequest, org.RemovePermissionFromAllPermissionGroupsResponse]
-	listP3PermissionGroups                  *connect_go.Client[org.ListP3PermissionGroupsRequest, org.ListP3PermissionGroupsResponse]
-	listP3PermissionGroupsByOrgId           *connect_go.Client[org.ListP3PermissionGroupsRequest, org.ListP3PermissionGroupsResponse]
-	createP3PermissionGroup                 *connect_go.Client[org.CreateP3PermissionGroupRequest, org.CreateP3PermissionGroupResponse]
-	updateP3PermissionGroup                 *connect_go.Client[org.UpdateP3PermissionGroupRequest, org.UpdateP3PermissionGroupResponse]
-	updateP3PermissionGroupByOrgId          *connect_go.Client[org.UpdateP3PermissionGroupByOrgIdRequest, org.UpdateP3PermissionGroupByOrgIdResponse]
-	deleteP3PermissionGroup                 *connect_go.Client[org.DeleteP3PermissionGroupRequest, org.DeleteP3PermissionGroupResponse]
-	assignUsersP3PermissionGroup            *connect_go.Client[org.AssignUsersP3PermissionGroupRequest, org.AssignUsersP3PermissionGroupResponse]
-	revokeUsersP3PermissionGroup            *connect_go.Client[org.RevokeUsersP3PermissionGroupRequest, org.RevokeUsersP3PermissionGroupResponse]
+	createOrganization                       *connect_go.Client[org.CreateOrganizationRequest, org.CreateOrganizationResponse]
+	getOrganization                          *connect_go.Client[org.GetOrganizationRequest, org.GetOrganizationResponse]
+	getOrganizationById                      *connect_go.Client[org.GetOrganizationByIdRequest, org.GetOrganizationByIdResponse]
+	updateOrganization                       *connect_go.Client[org.UpdateOrganizationRequest, org.UpdateOrganizationResponse]
+	archiveOrganization                      *connect_go.Client[org.ArchiveOrganizationRequest, org.ArchiveOrganizationResponse]
+	unArchiveOrganization                    *connect_go.Client[org.UnArchiveOrganizationRequest, org.UnArchiveOrganizationResponse]
+	listAllOrganizationsGlobally             *connect_go.Client[org.ListAllOrganizationsGloballyRequest, org.ListAllOrganizationsGloballyResponse]
+	listOrganizationsByRegion                *connect_go.Client[org.ListOrganizationsByRegionRequest, org.ListOrganizationsByRegionResponse]
+	listArchivedOrganizations                *connect_go.Client[org.ListArchivedOrganizationsRequest, org.ListArchivedOrganizationsResponse]
+	convertOrgToManual                       *connect_go.Client[org.ConvertOrgToManualRequest, org.ConvertOrgToManualResponse]
+	listOwnedOrgs                            *connect_go.Client[org.ListOwnedOrgsRequest, org.ListOwnedOrgsResponse]
+	getOrganizationPreferences               *connect_go.Client[org.GetOrganizationPreferencesRequest, org.GetOrganizationPreferencesResponse]
+	updateOrganizationPreferences            *connect_go.Client[org.UpdateOrganizationPreferencesRequest, org.UpdateOrganizationPreferencesResponse]
+	getAgentPreferences                      *connect_go.Client[org.GetAgentPreferencesRequest, org.GetAgentPreferencesResponse]
+	updateAgentPreferences                   *connect_go.Client[org.UpdateAgentPreferencesRequest, org.UpdateAgentPreferencesResponse]
+	getContactPreferences                    *connect_go.Client[org.GetContactPreferencesRequest, org.GetContactPreferencesResponse]
+	updateContactPreferences                 *connect_go.Client[org.UpdateContactPreferencesRequest, org.UpdateContactPreferencesResponse]
+	getAuthenticationPreferences             *connect_go.Client[org.GetAuthenticationPreferencesRequest, org.GetAuthenticationPreferencesResponse]
+	updateAuthenticationPreferences          *connect_go.Client[org.UpdateAuthenticationPreferencesRequest, org.UpdateAuthenticationPreferencesResponse]
+	getWebhookPreferences                    *connect_go.Client[org.GetWebhookPreferencesRequest, org.GetWebhookPreferencesResponse]
+	updateWebhookPreferences                 *connect_go.Client[org.UpdateWebhookPreferencesRequest, org.UpdateWebhookPreferencesResponse]
+	getDashboardGeneralPreferences           *connect_go.Client[org.GetDashboardGeneralPreferencesRequest, org.GetDashboardGeneralPreferencesResponse]
+	updateDashboardGeneralPreferences        *connect_go.Client[org.UpdateDashboardGeneralPreferencesRequest, org.UpdateDashboardGeneralPreferencesResponse]
+	getDashboardQueuePreferences             *connect_go.Client[org.GetDashboardQueuePreferencesRequest, org.GetDashboardQueuePreferencesResponse]
+	updateDashboardQueuePreferences          *connect_go.Client[org.UpdateDashboardQueuePreferencesRequest, org.UpdateDashboardQueuePreferencesResponse]
+	getPhonePreferences                      *connect_go.Client[org.GetPhonePreferencesRequest, org.GetPhonePreferencesResponse]
+	updatePhonePreferences                   *connect_go.Client[org.UpdatePhonePreferencesRequest, org.UpdatePhonePreferencesResponse]
+	getCompliancePreferences                 *connect_go.Client[org.GetCompliancePreferencesRequest, org.GetCompliancePreferencesResponse]
+	updateCompliancePreferences              *connect_go.Client[org.UpdateCompliancePreferencesRequest, org.UpdateCompliancePreferencesResponse]
+	getBroadcastPreferences                  *connect_go.Client[org.GetBroadcastPreferencesRequest, org.GetBroadcastPreferencesResponse]
+	updateBroadcastPreferences               *connect_go.Client[org.UpdateBroadcastPreferencesRequest, org.UpdateBroadcastPreferencesResponse]
+	getSchedulePreferences                   *connect_go.Client[org.GetSchedulePreferencesRequest, org.GetSchedulePreferencesResponse]
+	updateSchedulePreferences                *connect_go.Client[org.UpdateSchedulePreferencesRequest, org.UpdateSchedulePreferencesResponse]
+	getEmailSmsPreferences                   *connect_go.Client[org.GetEmailSmsPreferencesRequest, org.GetEmailSmsPreferencesResponse]
+	updateEmailSmsPreferences                *connect_go.Client[org.UpdateEmailSmsPreferencesRequest, org.UpdateEmailSmsPreferencesResponse]
+	getBusinessPreferences                   *connect_go.Client[org.GetBusinessPreferencesRequest, org.GetBusinessPreferencesResponse]
+	updateBusinessPreferences                *connect_go.Client[org.UpdateBusinessPreferencesRequest, org.UpdateBusinessPreferencesResponse]
+	updateAdminBusinessPreferences           *connect_go.Client[org.UpdateAdminBusinessPreferencesRequest, org.UpdateAdminBusinessPreferencesResponse]
+	getScorecardsPreferences                 *connect_go.Client[org.GetScorecardsPreferencesRequest, org.GetScorecardsPreferencesResponse]
+	updateScorecardsPreferences              *connect_go.Client[org.UpdateScorecardsPreferencesRequest, org.UpdateScorecardsPreferencesResponse]
+	getVoiceAnalyticsPreferences             *connect_go.Client[org.GetVoiceAnalyticsPreferencesRequest, org.GetVoiceAnalyticsPreferencesResponse]
+	listVoiceAnalyticsPreferences            *connect_go.Client[org.ListVoiceAnalyticsPreferencesRequest, org.ListVoiceAnalyticsPreferencesResponse]
+	updateVoiceAnalyticsPreferences          *connect_go.Client[org.UpdateVoiceAnalyticsPreferencesRequest, org.UpdateVoiceAnalyticsPreferencesResponse]
+	getEndOfDayPreferences                   *connect_go.Client[org.GetEndOfDayPreferencesRequest, org.GetEndOfDayPreferencesResponse]
+	updateEndOfDayPreferences                *connect_go.Client[org.UpdateEndOfDayPreferencesRequest, org.UpdateEndOfDayPreferencesResponse]
+	getReportFilterPreferences               *connect_go.Client[org.GetFilterPreferencesRequest, org.GetFilterPreferencesResponse]
+	updateReportFilterPreferences            *connect_go.Client[org.UpdateFilterPreferencesRequest, org.UpdateFilterPreferencesResponse]
+	getRecordingPreferences                  *connect_go.Client[org.GetRecordingPreferencesRequest, org.GetRecordingPreferencesResponse]
+	updateRecordingPreferences               *connect_go.Client[org.UpdateRecordingPreferencesRequest, org.UpdateRecordingPreferencesResponse]
+	getAdminClientPreferences                *connect_go.Client[org.GetAdminClientPreferencesRequest, org.GetAdminClientPreferencesResponse]
+	updateAdminClientPreferences             *connect_go.Client[org.UpdateAdminClientPreferencesRequest, org.UpdateAdminClientPreferencesResponse]
+	acceptLinkbackRecordingTerms             *connect_go.Client[org.AcceptLinkbackRecordingTermsRequest, org.AcceptLinkbackRecordingTermsResponse]
+	linkbackUpdateBroadcastTemplates         *connect_go.Client[org.LinkbackUpdateBroadcastTemplatesRequest, org.LinkbackUpdateBroadcastTemplatesResponse]
+	recordEmailUnsubscribeAcknowledgement    *connect_go.Client[org.RecordEmailUnsubscribeAcknowledgementRequest, org.RecordEmailUnsubscribeAcknowledgementResponse]
+	clearEmailUnsubscribeAcknowledgement     *connect_go.Client[org.ClearEmailUnsubscribeAcknowledgementRequest, org.ClearEmailUnsubscribeAcknowledgementResponse]
+	createUser                               *connect_go.Client[org.CreateUserRequest, org.CreateUserResponse]
+	createDelegatedUser                      *connect_go.Client[org.CreateDelegatedUserRequest, org.CreateDelegatedUserResponse]
+	getMyUser                                *connect_go.Client[org.GetMyUserRequest, org.GetMyUserResponse]
+	getUser                                  *connect_go.Client[org.GetUserRequest, org.GetUserResponse]
+	getUserByOrgId                           *connect_go.Client[org.GetUserByOrgIdRequest, org.GetUserByOrgIdResponse]
+	listAgents                               *connect_go.Client[org.ListAgentsRequest, org.ListAgentsResponse]
+	listUsers                                *connect_go.Client[org.ListUsersRequest, org.ListUsersResponse]
+	listUsersByOrgId                         *connect_go.Client[org.ListUsersByOrgIdRequest, org.ListUsersByOrgIdResponse]
+	listUsersByRegion                        *connect_go.Client[org.ListUsersByRegionRequest, org.ListUsersByRegionResponse]
+	updateMyUser                             *connect_go.Client[org.UpdateMyUserRequest, org.UpdateMyUserResponse]
+	updateUser                               *connect_go.Client[org.UpdateUserRequest, org.UpdateUserResponse]
+	updateUserLabels                         *connect_go.Client[org.UpdateUserLabelsRequest, org.UpdateUserLabelsResponse]
+	updateUserCallerId                       *connect_go.Client[org.UpdateUserCallerIdRequest, org.UpdateUserCallerIdResponse]
+	updateUserDisabled                       *connect_go.Client[org.UpdateUserDisabledRequest, org.UpdateUserDisabledResponse]
+	updateUserDisabledByOrgId                *connect_go.Client[org.UpdateUserDisabledByOrgIdRequest, org.UpdateUserDisabledByOrgIdResponse]
+	getMyUserPasswordResetLink               *connect_go.Client[org.GetMyUserPasswordResetLinkRequest, org.GetMyUserPasswordResetLinkResponse]
+	getUserPasswordResetLink                 *connect_go.Client[org.GetUserPasswordResetLinkRequest, org.GetUserPasswordResetLinkResponse]
+	getUserPasswordResetLinkByOrgId          *connect_go.Client[org.GetUserPasswordResetLinkByOrgIdRequest, org.GetUserPasswordResetLinkByOrgIdResponse]
+	createPasswordResetLink                  *connect_go.Client[org.CreatePasswordResetLinkRequest, org.CreatePasswordResetLinkResponse]
+	createPasswordResetLinkByOrgId           *connect_go.Client[org.CreatePasswordResetLinkByOrgIdRequest, org.CreatePasswordResetLinkByOrgIdResponse]
+	getUserLoginInfo                         *connect_go.Client[org.GetUserLoginInfoRequest, org.GetUserLoginInfoResponse]
+	getUserEmailVerified                     *connect_go.Client[org.GetUserEmailVerifiedRequest, org.GetUserEmailVerifiedResponse]
+	getUserEmailVerifiedByOrgId              *connect_go.Client[org.GetUserEmailVerifiedByOrgIdRequest, org.GetUserEmailVerifiedByOrgIdResponse]
+	resetMyPassword                          *connect_go.Client[org.ResetMyPasswordRequest, org.ResetMyPasswordResponse]
+	resetUserPassword                        *connect_go.Client[org.ResetUserPasswordRequest, org.ResetUserPasswordResponse]
+	resetUserPasswordByOrgId                 *connect_go.Client[org.ResetUserPasswordByOrgIdRequest, org.ResetUserPasswordByOrgIdResponse]
+	sendUserEmailVerification                *connect_go.Client[org.SendUserEmailVerificationRequest, org.SendUserEmailVerificationResponse]
+	sendUserEmailVerificationByOrgId         *connect_go.Client[org.SendUserEmailVerificationByOrgIdRequest, org.SendUserEmailVerificationByOrgIdResponse]
+	sendPasswordReset                        *connect_go.Client[org.SendPasswordResetRequest, org.SendPasswordResetResponse]
+	sendPasswordResetByOrgId                 *connect_go.Client[org.SendPasswordResetByOrgIdRequest, org.SendPasswordResetByOrgIdResponse]
+	getUserSessionData                       *connect_go.Client[org.GetUserSessionDataRequest, org.GetUserSessionDataResponse]
+	getAgentProfileGroup                     *connect_go.Client[org.GetAgentProfileGroupRequest, org.GetAgentProfileGroupResponse]
+	listAgentProfileGroups                   *connect_go.Client[org.ListAgentProfileGroupsRequest, org.ListAgentProfileGroupsResponse]
+	updateAgentProfileGroup                  *connect_go.Client[org.UpdateAgentProfileGroupRequest, org.UpdateAgentProfileGroupResponse]
+	createAgentProfileGroup                  *connect_go.Client[org.CreateAgentProfileGroupRequest, org.CreateAgentProfileGroupResponse]
+	deleteAgentProfileGroup                  *connect_go.Client[org.DeleteAgentProfileGroupRequest, org.DeleteAgentProfileGroupResponse]
+	assignAgentProfileGroups                 *connect_go.Client[org.AssignAgentProfileGroupsRequest, org.AssignAgentProfileGroupsResponse]
+	addUserSubscription                      *connect_go.Client[org.AddUserSubscriptionRequest, org.AddUserSubscriptionResponse]
+	addUserSubscriptionByUserId              *connect_go.Client[org.AddUserSubscriptionByUserIdRequest, org.AddUserSubscriptionByUserIdResponse]
+	getUserSubscription                      *connect_go.Client[org.GetUserSubscriptionRequest, org.GetUserSubscriptionResponse]
+	getUserSubscriptionByUserId              *connect_go.Client[org.GetUserSubscriptionByUserIdRequest, org.GetUserSubscriptionByUserIdResponse]
+	updateUserSubscription                   *connect_go.Client[org.UpdateUserSubscriptionRequest, org.UpdateUserSubscriptionResponse]
+	updateUserSubscriptionByUserId           *connect_go.Client[org.UpdateUserSubscriptionByUserIdRequest, org.UpdateUserSubscriptionByUserIdResponse]
+	removeUserSubscription                   *connect_go.Client[org.RemoveUserSubscriptionRequest, org.RemoveUserSubscriptionResponse]
+	removeUserSubscriptionByUserId           *connect_go.Client[org.RemoveUserSubscriptionByUserIdRequest, org.RemoveUserSubscriptionByUserIdResponse]
+	listUserSubscriptions                    *connect_go.Client[org.ListUserSubscriptionsRequest, org.ListUserSubscriptionsResponse]
+	listUserSubscriptionsByUserId            *connect_go.Client[org.ListUserSubscriptionsByUserIdRequest, org.ListUserSubscriptionsByUserIdResponse]
+	listOrgSubscriptions                     *connect_go.Client[org.ListOrgSubscriptionsRequest, org.ListOrgSubscriptionsResponse]
+	createAuthToken                          *connect_go.Client[org.CreateAuthTokenRequest, org.CreateAuthTokenResponse]
+	createAuthTokenByUserId                  *connect_go.Client[org.CreateAuthTokenByUserIdRequest, org.CreateAuthTokenByUserIdResponse]
+	listAuthTokens                           *connect_go.Client[org.ListAuthTokensRequest, org.ListAuthTokensResponse]
+	listAuthTokensByUserId                   *connect_go.Client[org.ListAuthTokensByUserIdRequest, org.ListAuthTokensByUserIdResponse]
+	setAuthTokenExpiration                   *connect_go.Client[org.SetAuthTokenExpirationRequest, org.SetAuthTokenExpirationResponse]
+	setAuthTokenExpirationByUserId           *connect_go.Client[org.SetAuthTokenExpirationByUserIdRequest, org.SetAuthTokenExpirationByUserIdResponse]
+	deleteAuthToken                          *connect_go.Client[org.DeleteAuthTokenRequest, org.DeleteAuthTokenResponse]
+	deleteAuthTokenByUserId                  *connect_go.Client[org.DeleteAuthTokenByUserIdRequest, org.DeleteAuthTokenByUserIdResponse]
+	getHuntGroupSettings                     *connect_go.Client[org.GetHuntGroupSettingsRequest, org.GetHuntGroupSettingsResponse]
+	updateHuntGroupSettings                  *connect_go.Client[org.UpdateHuntGroupSettingsRequest, org.UpdateHuntGroupSettingsResponse]
+	listCallerIdBuckets                      *connect_go.Client[org.ListCallerIdBucketsRequest, org.ListCallerIdBucketsResponse]
+	getDataDipTemplate                       *connect_go.Client[org.GetDataDipTemplateRequest, org.GetDataDipTemplateResponse]
+	listDataDipTemplates                     *connect_go.Client[org.ListDataDipTemplatesRequest, org.ListDataDipTemplatesResponse]
+	createDataDipTemplate                    *connect_go.Client[org.CreateDataDipTemplateRequest, org.CreateDataDipTemplateResponse]
+	updateDataDipTemplate                    *connect_go.Client[org.UpdateDataDipTemplateRequest, org.UpdateDataDipTemplateResponse]
+	deleteDataDipTemplate                    *connect_go.Client[org.DeleteDataDipTemplateRequest, org.DeleteDataDipTemplateResponse]
+	copyDataDipTemplate                      *connect_go.Client[org.CopyDataDipTemplateRequest, org.CopyDataDipTemplateResponse]
+	copyDataDipTemplateToOrganization        *connect_go.Client[org.CopyDataDipTemplateToOrganizationRequest, org.CopyDataDipTemplateToOrganizationResponse]
+	listAgentResponseAutoRules               *connect_go.Client[org.ListAgentResponseAutoRulesRequest, org.ListAgentResponseAutoRulesResponse]
+	createAgentResponseAutoRules             *connect_go.Client[org.CreateAgentResponseAutoRulesRequest, org.CreateAgentResponseAutoRulesResponse]
+	updateAgentResponseAutoRules             *connect_go.Client[org.UpdateAgentResponseAutoRulesRequest, org.UpdateAgentResponseAutoRulesResponse]
+	deleteAgentResponseAutoRules             *connect_go.Client[org.DeleteAgentResponseAutoRulesRequest, org.DeleteAgentResponseAutoRulesResponse]
+	listHuntGroupWebLinks                    *connect_go.Client[org.ListHuntGroupWebLinksRequest, org.ListHuntGroupWebLinksResponse]
+	copyHuntGroupWebLink                     *connect_go.Client[org.CopyHuntGroupWebLinkRequest, org.CopyHuntGroupWebLinkResponse]
+	updateHuntGroupWebLinks                  *connect_go.Client[org.UpdateHuntGroupWebLinksRequest, org.UpdateHuntGroupWebLinksResponse]
+	listHuntGroupIntegrationLinks            *connect_go.Client[org.ListHuntGroupIntegrationLinksRequest, org.ListHuntGroupIntegrationLinksResponse]
+	getHuntGroupClientInfoDisplayTemplate    *connect_go.Client[org.GetHuntGroupClientInfoDisplayTemplateRequest, org.GetHuntGroupClientInfoDisplayTemplateResponse]
+	createHuntGroupClientInfoDisplayTemplate *connect_go.Client[org.CreateHuntGroupClientInfoDisplayTemplateRequest, org.CreateHuntGroupClientInfoDisplayTemplateResponse]
+	updateHuntGroupClientInfoDisplayTemplate *connect_go.Client[org.UpdateHuntGroupClientInfoDisplayTemplateRequest, org.UpdateHuntGroupClientInfoDisplayTemplateResponse]
+	deleteHuntGroupClientInfoDisplayTemplate *connect_go.Client[org.DeleteHuntGroupClientInfoDisplayTemplateRequest, org.DeleteHuntGroupClientInfoDisplayTemplateResponse]
+	createTrust                              *connect_go.Client[org.CreateTrustRequest, org.CreateTrustResponse]
+	acceptTrust                              *connect_go.Client[org.AcceptTrustRequest, org.AcceptTrustResponse]
+	rejectTrust                              *connect_go.Client[org.RejectTrustRequest, org.RejectTrustResponse]
+	getTrust                                 *connect_go.Client[org.GetTrustRequest, org.GetTrustResponse]
+	listIncomingTrusts                       *connect_go.Client[org.ListIncomingTrustsRequest, org.ListIncomingTrustsResponse]
+	listGivenTrusts                          *connect_go.Client[org.ListGivenTrustsRequest, org.ListGivenTrustsResponse]
+	listAssignableTrusts                     *connect_go.Client[org.ListAssignableTrustsRequest, org.ListAssignableTrustsResponse]
+	deleteTrust                              *connect_go.Client[org.DeleteTrustRequest, org.DeleteTrustResponse]
+	assignTrust                              *connect_go.Client[org.AssignTrustRequest, org.AssignTrustResponse]
+	unassignTrust                            *connect_go.Client[org.UnassignTrustRequest, org.UnassignTrustResponse]
+	createLabel                              *connect_go.Client[org.CreateLabelRequest, org.CreateLabelResponse]
+	deleteLabel                              *connect_go.Client[org.DeleteLabelRequest, org.DeleteLabelResponse]
+	listLabels                               *connect_go.Client[org.ListLabelsRequest, org.ListLabelsResponse]
+	getLabel                                 *connect_go.Client[org.GetLabelRequest, org.GetLabelResponse]
+	updateLabel                              *connect_go.Client[org.UpdateLabelRequest, org.UpdateLabelResponse]
+	assignLabel                              *connect_go.Client[org.AssignLabelRequest, org.AssignLabelResponse]
+	unassignLabel                            *connect_go.Client[org.UnassignLabelRequest, org.UnassignLabelResponse]
+	getAssignmentCounts                      *connect_go.Client[org.GetAssignmentCountsRequest, org.GetAssignmentCountsResponse]
+	getAssignableLabels                      *connect_go.Client[org.GetAssignableLabelsRequest, org.GetAssignableLabelsResponse]
+	getPermissions                           *connect_go.Client[org.GetPermissionsRequest, org.GetPermissionsResponse]
+	getUserPermissions                       *connect_go.Client[org.GetUserPermissionsRequest, org.GetUserPermissionsResponse]
+	createPermissionGroup                    *connect_go.Client[org.CreatePermissionGroupRequest, org.CreatePermissionGroupResponse]
+	updatePermissionGroup                    *connect_go.Client[org.UpdatePermissionGroupRequest, org.UpdatePermissionGroupResponse]
+	deletePermissionGroup                    *connect_go.Client[org.DeletePermissionGroupRequest, org.DeletePermissionGroupResponse]
+	listPermissionGroups                     *connect_go.Client[org.ListPermissionGroupsRequest, org.ListPermissionGroupsResponse]
+	listPermissionGroupsByOrgId              *connect_go.Client[org.ListPermissionGroupsByOrgIdRequest, org.ListPermissionGroupsByOrgIdResponse]
+	assignUsersPermissionGroup               *connect_go.Client[org.AssignUsersPermissionGroupRequest, org.AssignUsersPermissionGroupResponse]
+	revokeUsersPermissionGroup               *connect_go.Client[org.RevokeUsersPermissionGroupRequest, org.RevokeUsersPermissionGroupResponse]
+	assignAccountOwnerPermissionToUser       *connect_go.Client[org.AssignAccountOwnerPermissionToUserRequest, org.AssignAccountOwnerPermissionToUserResponse]
+	revokeAccountOwnerPermissionFromUser     *connect_go.Client[org.RevokeAccountOwnerPermissionFromUserRequest, org.RevokeAccountOwnerPermissionFromUserResponse]
+	initDefaultPermissionGroups              *connect_go.Client[org.InitDefaultPermissionGroupsRequest, org.InitDefaultPermissionGroupsResponse]
+	getAccountOwnerGroup                     *connect_go.Client[org.GetAccountOwnerGroupRequest, org.GetAccountOwnerGroupResponse]
+	getLicenses                              *connect_go.Client[org.GetLicensesRequest, org.GetLicensesResponse]
+	getOrgLicenses                           *connect_go.Client[org.GetOrgLicensesRequest, org.GetOrgLicensesResponse]
+	updateLicenses                           *connect_go.Client[org.UpdateLicensesRequest, org.UpdateLicensesResponse]
+	removePermissionFromAllPermissionGroups  *connect_go.Client[org.RemovePermissionFromAllPermissionGroupsRequest, org.RemovePermissionFromAllPermissionGroupsResponse]
+	listP3PermissionGroups                   *connect_go.Client[org.ListP3PermissionGroupsRequest, org.ListP3PermissionGroupsResponse]
+	listP3PermissionGroupsByOrgId            *connect_go.Client[org.ListP3PermissionGroupsRequest, org.ListP3PermissionGroupsResponse]
+	createP3PermissionGroup                  *connect_go.Client[org.CreateP3PermissionGroupRequest, org.CreateP3PermissionGroupResponse]
+	updateP3PermissionGroup                  *connect_go.Client[org.UpdateP3PermissionGroupRequest, org.UpdateP3PermissionGroupResponse]
+	updateP3PermissionGroupByOrgId           *connect_go.Client[org.UpdateP3PermissionGroupByOrgIdRequest, org.UpdateP3PermissionGroupByOrgIdResponse]
+	deleteP3PermissionGroup                  *connect_go.Client[org.DeleteP3PermissionGroupRequest, org.DeleteP3PermissionGroupResponse]
+	assignUsersP3PermissionGroup             *connect_go.Client[org.AssignUsersP3PermissionGroupRequest, org.AssignUsersP3PermissionGroupResponse]
+	revokeUsersP3PermissionGroup             *connect_go.Client[org.RevokeUsersP3PermissionGroupRequest, org.RevokeUsersP3PermissionGroupResponse]
 }
 
 // CreateOrganization calls api.v1alpha1.org.Org.CreateOrganization.
@@ -2594,6 +2638,30 @@ func (c *orgClient) ListHuntGroupIntegrationLinks(ctx context.Context, req *conn
 	return c.listHuntGroupIntegrationLinks.CallUnary(ctx, req)
 }
 
+// GetHuntGroupClientInfoDisplayTemplate calls
+// api.v1alpha1.org.Org.GetHuntGroupClientInfoDisplayTemplate.
+func (c *orgClient) GetHuntGroupClientInfoDisplayTemplate(ctx context.Context, req *connect_go.Request[org.GetHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.GetHuntGroupClientInfoDisplayTemplateResponse], error) {
+	return c.getHuntGroupClientInfoDisplayTemplate.CallUnary(ctx, req)
+}
+
+// CreateHuntGroupClientInfoDisplayTemplate calls
+// api.v1alpha1.org.Org.CreateHuntGroupClientInfoDisplayTemplate.
+func (c *orgClient) CreateHuntGroupClientInfoDisplayTemplate(ctx context.Context, req *connect_go.Request[org.CreateHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.CreateHuntGroupClientInfoDisplayTemplateResponse], error) {
+	return c.createHuntGroupClientInfoDisplayTemplate.CallUnary(ctx, req)
+}
+
+// UpdateHuntGroupClientInfoDisplayTemplate calls
+// api.v1alpha1.org.Org.UpdateHuntGroupClientInfoDisplayTemplate.
+func (c *orgClient) UpdateHuntGroupClientInfoDisplayTemplate(ctx context.Context, req *connect_go.Request[org.UpdateHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.UpdateHuntGroupClientInfoDisplayTemplateResponse], error) {
+	return c.updateHuntGroupClientInfoDisplayTemplate.CallUnary(ctx, req)
+}
+
+// DeleteHuntGroupClientInfoDisplayTemplate calls
+// api.v1alpha1.org.Org.DeleteHuntGroupClientInfoDisplayTemplate.
+func (c *orgClient) DeleteHuntGroupClientInfoDisplayTemplate(ctx context.Context, req *connect_go.Request[org.DeleteHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.DeleteHuntGroupClientInfoDisplayTemplateResponse], error) {
+	return c.deleteHuntGroupClientInfoDisplayTemplate.CallUnary(ctx, req)
+}
+
 // CreateTrust calls api.v1alpha1.org.Org.CreateTrust.
 func (c *orgClient) CreateTrust(ctx context.Context, req *connect_go.Request[org.CreateTrustRequest]) (*connect_go.Response[org.CreateTrustResponse], error) {
 	return c.createTrust.CallUnary(ctx, req)
@@ -3106,6 +3174,14 @@ type OrgHandler interface {
 	UpdateHuntGroupWebLinks(context.Context, *connect_go.Request[org.UpdateHuntGroupWebLinksRequest]) (*connect_go.Response[org.UpdateHuntGroupWebLinksResponse], error)
 	// ListHuntGroupIntegrationLinks returns all integration links for a hunt group.
 	ListHuntGroupIntegrationLinks(context.Context, *connect_go.Request[org.ListHuntGroupIntegrationLinksRequest]) (*connect_go.Response[org.ListHuntGroupIntegrationLinksResponse], error)
+	// GetHuntGroupClientInfoDisplayTemplate returns the client info display template for a given hunt group.
+	GetHuntGroupClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.GetHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.GetHuntGroupClientInfoDisplayTemplateResponse], error)
+	// CreateHuntGroupClientInfoDisplayTemplate creates a new client info display template for a givne hunt group.
+	CreateHuntGroupClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.CreateHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.CreateHuntGroupClientInfoDisplayTemplateResponse], error)
+	// UpdateHuntGroupClientInfoDisplayTemplate updates a client info display template for a given hunt group.
+	UpdateHuntGroupClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.UpdateHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.UpdateHuntGroupClientInfoDisplayTemplateResponse], error)
+	// DeleteHuntGroupClientInfoDisplayTemplate deletes a client info display template for a given hunt group.
+	DeleteHuntGroupClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.DeleteHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.DeleteHuntGroupClientInfoDisplayTemplateResponse], error)
 	// CreateTrust creates a new trust.
 	CreateTrust(context.Context, *connect_go.Request[org.CreateTrustRequest]) (*connect_go.Response[org.CreateTrustResponse], error)
 	// AcceptTrust accepts an incoming trust.
@@ -3864,6 +3940,26 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.ListHuntGroupIntegrationLinks,
 		opts...,
 	)
+	orgGetHuntGroupClientInfoDisplayTemplateHandler := connect_go.NewUnaryHandler(
+		OrgGetHuntGroupClientInfoDisplayTemplateProcedure,
+		svc.GetHuntGroupClientInfoDisplayTemplate,
+		opts...,
+	)
+	orgCreateHuntGroupClientInfoDisplayTemplateHandler := connect_go.NewUnaryHandler(
+		OrgCreateHuntGroupClientInfoDisplayTemplateProcedure,
+		svc.CreateHuntGroupClientInfoDisplayTemplate,
+		opts...,
+	)
+	orgUpdateHuntGroupClientInfoDisplayTemplateHandler := connect_go.NewUnaryHandler(
+		OrgUpdateHuntGroupClientInfoDisplayTemplateProcedure,
+		svc.UpdateHuntGroupClientInfoDisplayTemplate,
+		opts...,
+	)
+	orgDeleteHuntGroupClientInfoDisplayTemplateHandler := connect_go.NewUnaryHandler(
+		OrgDeleteHuntGroupClientInfoDisplayTemplateProcedure,
+		svc.DeleteHuntGroupClientInfoDisplayTemplate,
+		opts...,
+	)
 	orgCreateTrustHandler := connect_go.NewUnaryHandler(
 		OrgCreateTrustProcedure,
 		svc.CreateTrust,
@@ -4344,6 +4440,14 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 			orgUpdateHuntGroupWebLinksHandler.ServeHTTP(w, r)
 		case OrgListHuntGroupIntegrationLinksProcedure:
 			orgListHuntGroupIntegrationLinksHandler.ServeHTTP(w, r)
+		case OrgGetHuntGroupClientInfoDisplayTemplateProcedure:
+			orgGetHuntGroupClientInfoDisplayTemplateHandler.ServeHTTP(w, r)
+		case OrgCreateHuntGroupClientInfoDisplayTemplateProcedure:
+			orgCreateHuntGroupClientInfoDisplayTemplateHandler.ServeHTTP(w, r)
+		case OrgUpdateHuntGroupClientInfoDisplayTemplateProcedure:
+			orgUpdateHuntGroupClientInfoDisplayTemplateHandler.ServeHTTP(w, r)
+		case OrgDeleteHuntGroupClientInfoDisplayTemplateProcedure:
+			orgDeleteHuntGroupClientInfoDisplayTemplateHandler.ServeHTTP(w, r)
 		case OrgCreateTrustProcedure:
 			orgCreateTrustHandler.ServeHTTP(w, r)
 		case OrgAcceptTrustProcedure:
@@ -4955,6 +5059,22 @@ func (UnimplementedOrgHandler) UpdateHuntGroupWebLinks(context.Context, *connect
 
 func (UnimplementedOrgHandler) ListHuntGroupIntegrationLinks(context.Context, *connect_go.Request[org.ListHuntGroupIntegrationLinksRequest]) (*connect_go.Response[org.ListHuntGroupIntegrationLinksResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.ListHuntGroupIntegrationLinks is not implemented"))
+}
+
+func (UnimplementedOrgHandler) GetHuntGroupClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.GetHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.GetHuntGroupClientInfoDisplayTemplateResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.GetHuntGroupClientInfoDisplayTemplate is not implemented"))
+}
+
+func (UnimplementedOrgHandler) CreateHuntGroupClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.CreateHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.CreateHuntGroupClientInfoDisplayTemplateResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.CreateHuntGroupClientInfoDisplayTemplate is not implemented"))
+}
+
+func (UnimplementedOrgHandler) UpdateHuntGroupClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.UpdateHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.UpdateHuntGroupClientInfoDisplayTemplateResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.UpdateHuntGroupClientInfoDisplayTemplate is not implemented"))
+}
+
+func (UnimplementedOrgHandler) DeleteHuntGroupClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.DeleteHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.DeleteHuntGroupClientInfoDisplayTemplateResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.DeleteHuntGroupClientInfoDisplayTemplate is not implemented"))
 }
 
 func (UnimplementedOrgHandler) CreateTrust(context.Context, *connect_go.Request[org.CreateTrustRequest]) (*connect_go.Response[org.CreateTrustResponse], error) {
