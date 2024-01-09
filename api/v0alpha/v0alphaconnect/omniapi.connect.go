@@ -219,6 +219,12 @@ const (
 	// OmniApiListWhatsAppNumbersProcedure is the fully-qualified name of the OmniApi's
 	// ListWhatsAppNumbers RPC.
 	OmniApiListWhatsAppNumbersProcedure = "/api.v0alpha.OmniApi/ListWhatsAppNumbers"
+	// OmniApiCreateWhatsAppNumberProcedure is the fully-qualified name of the OmniApi's
+	// CreateWhatsAppNumber RPC.
+	OmniApiCreateWhatsAppNumberProcedure = "/api.v0alpha.OmniApi/CreateWhatsAppNumber"
+	// OmniApiUpdateWhatsAppNumberProcedure is the fully-qualified name of the OmniApi's
+	// UpdateWhatsAppNumber RPC.
+	OmniApiUpdateWhatsAppNumberProcedure = "/api.v0alpha.OmniApi/UpdateWhatsAppNumber"
 )
 
 // OmniApiClient is a client for the api.v0alpha.OmniApi service.
@@ -539,6 +545,10 @@ type OmniApiClient interface {
 	ListUserSkills(context.Context, *connect_go.Request[v0alpha.ListUserSkillsReq]) (*connect_go.Response[v0alpha.ListUserSkillsRes], error)
 	// List whatsapp numbers for the client
 	ListWhatsAppNumbers(context.Context, *connect_go.Request[v0alpha.ListWhatsAppNumbersReq]) (*connect_go.Response[v0alpha.ListWhatsAppNumbersRes], error)
+	// Create whatsapp number for the client
+	CreateWhatsAppNumber(context.Context, *connect_go.Request[v0alpha.CreateWhatsAppNumberRequest]) (*connect_go.Response[v0alpha.CreateWhatsAppNumberResponse], error)
+	// Update whatsapp number for the client
+	UpdateWhatsAppNumber(context.Context, *connect_go.Request[v0alpha.UpdateWhatsAppNumberRequest]) (*connect_go.Response[v0alpha.UpdateWhatsAppNumberResponse], error)
 }
 
 // NewOmniApiClient constructs a client for the api.v0alpha.OmniApi service. By default, it uses the
@@ -901,6 +911,16 @@ func NewOmniApiClient(httpClient connect_go.HTTPClient, baseURL string, opts ...
 			baseURL+OmniApiListWhatsAppNumbersProcedure,
 			opts...,
 		),
+		createWhatsAppNumber: connect_go.NewClient[v0alpha.CreateWhatsAppNumberRequest, v0alpha.CreateWhatsAppNumberResponse](
+			httpClient,
+			baseURL+OmniApiCreateWhatsAppNumberProcedure,
+			opts...,
+		),
+		updateWhatsAppNumber: connect_go.NewClient[v0alpha.UpdateWhatsAppNumberRequest, v0alpha.UpdateWhatsAppNumberResponse](
+			httpClient,
+			baseURL+OmniApiUpdateWhatsAppNumberProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -976,6 +996,8 @@ type omniApiClient struct {
 	getCannedMessageGroupById    *connect_go.Client[v0alpha.GetCannedMessageGroupByIdReq, v0alpha.CannedMessageGroup]
 	listUserSkills               *connect_go.Client[v0alpha.ListUserSkillsReq, v0alpha.ListUserSkillsRes]
 	listWhatsAppNumbers          *connect_go.Client[v0alpha.ListWhatsAppNumbersReq, v0alpha.ListWhatsAppNumbersRes]
+	createWhatsAppNumber         *connect_go.Client[v0alpha.CreateWhatsAppNumberRequest, v0alpha.CreateWhatsAppNumberResponse]
+	updateWhatsAppNumber         *connect_go.Client[v0alpha.UpdateWhatsAppNumberRequest, v0alpha.UpdateWhatsAppNumberResponse]
 }
 
 // ArchiveCampaign calls api.v0alpha.OmniApi.ArchiveCampaign.
@@ -1328,6 +1350,16 @@ func (c *omniApiClient) ListWhatsAppNumbers(ctx context.Context, req *connect_go
 	return c.listWhatsAppNumbers.CallUnary(ctx, req)
 }
 
+// CreateWhatsAppNumber calls api.v0alpha.OmniApi.CreateWhatsAppNumber.
+func (c *omniApiClient) CreateWhatsAppNumber(ctx context.Context, req *connect_go.Request[v0alpha.CreateWhatsAppNumberRequest]) (*connect_go.Response[v0alpha.CreateWhatsAppNumberResponse], error) {
+	return c.createWhatsAppNumber.CallUnary(ctx, req)
+}
+
+// UpdateWhatsAppNumber calls api.v0alpha.OmniApi.UpdateWhatsAppNumber.
+func (c *omniApiClient) UpdateWhatsAppNumber(ctx context.Context, req *connect_go.Request[v0alpha.UpdateWhatsAppNumberRequest]) (*connect_go.Response[v0alpha.UpdateWhatsAppNumberResponse], error) {
+	return c.updateWhatsAppNumber.CallUnary(ctx, req)
+}
+
 // OmniApiHandler is an implementation of the api.v0alpha.OmniApi service.
 type OmniApiHandler interface {
 	// archive a campaign
@@ -1646,6 +1678,10 @@ type OmniApiHandler interface {
 	ListUserSkills(context.Context, *connect_go.Request[v0alpha.ListUserSkillsReq]) (*connect_go.Response[v0alpha.ListUserSkillsRes], error)
 	// List whatsapp numbers for the client
 	ListWhatsAppNumbers(context.Context, *connect_go.Request[v0alpha.ListWhatsAppNumbersReq]) (*connect_go.Response[v0alpha.ListWhatsAppNumbersRes], error)
+	// Create whatsapp number for the client
+	CreateWhatsAppNumber(context.Context, *connect_go.Request[v0alpha.CreateWhatsAppNumberRequest]) (*connect_go.Response[v0alpha.CreateWhatsAppNumberResponse], error)
+	// Update whatsapp number for the client
+	UpdateWhatsAppNumber(context.Context, *connect_go.Request[v0alpha.UpdateWhatsAppNumberRequest]) (*connect_go.Response[v0alpha.UpdateWhatsAppNumberResponse], error)
 }
 
 // NewOmniApiHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -2004,6 +2040,16 @@ func NewOmniApiHandler(svc OmniApiHandler, opts ...connect_go.HandlerOption) (st
 		svc.ListWhatsAppNumbers,
 		opts...,
 	)
+	omniApiCreateWhatsAppNumberHandler := connect_go.NewUnaryHandler(
+		OmniApiCreateWhatsAppNumberProcedure,
+		svc.CreateWhatsAppNumber,
+		opts...,
+	)
+	omniApiUpdateWhatsAppNumberHandler := connect_go.NewUnaryHandler(
+		OmniApiUpdateWhatsAppNumberProcedure,
+		svc.UpdateWhatsAppNumber,
+		opts...,
+	)
 	return "/api.v0alpha.OmniApi/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case OmniApiArchiveCampaignProcedure:
@@ -2146,6 +2192,10 @@ func NewOmniApiHandler(svc OmniApiHandler, opts ...connect_go.HandlerOption) (st
 			omniApiListUserSkillsHandler.ServeHTTP(w, r)
 		case OmniApiListWhatsAppNumbersProcedure:
 			omniApiListWhatsAppNumbersHandler.ServeHTTP(w, r)
+		case OmniApiCreateWhatsAppNumberProcedure:
+			omniApiCreateWhatsAppNumberHandler.ServeHTTP(w, r)
+		case OmniApiUpdateWhatsAppNumberProcedure:
+			omniApiUpdateWhatsAppNumberHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -2433,4 +2483,12 @@ func (UnimplementedOmniApiHandler) ListUserSkills(context.Context, *connect_go.R
 
 func (UnimplementedOmniApiHandler) ListWhatsAppNumbers(context.Context, *connect_go.Request[v0alpha.ListWhatsAppNumbersReq]) (*connect_go.Response[v0alpha.ListWhatsAppNumbersRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.ListWhatsAppNumbers is not implemented"))
+}
+
+func (UnimplementedOmniApiHandler) CreateWhatsAppNumber(context.Context, *connect_go.Request[v0alpha.CreateWhatsAppNumberRequest]) (*connect_go.Response[v0alpha.CreateWhatsAppNumberResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.CreateWhatsAppNumber is not implemented"))
+}
+
+func (UnimplementedOmniApiHandler) UpdateWhatsAppNumber(context.Context, *connect_go.Request[v0alpha.UpdateWhatsAppNumberRequest]) (*connect_go.Response[v0alpha.UpdateWhatsAppNumberResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.UpdateWhatsAppNumber is not implemented"))
 }
