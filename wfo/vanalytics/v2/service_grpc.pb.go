@@ -19,8 +19,6 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Vanalytics_CreateTranscript_FullMethodName  = "/wfo.vanalytics.v2.Vanalytics/CreateTranscript"
-	Vanalytics_UpdateTranscript_FullMethodName  = "/wfo.vanalytics.v2.Vanalytics/UpdateTranscript"
 	Vanalytics_SearchTranscripts_FullMethodName = "/wfo.vanalytics.v2.Vanalytics/SearchTranscripts"
 	Vanalytics_CreateFilter_FullMethodName      = "/wfo.vanalytics.v2.Vanalytics/CreateFilter"
 )
@@ -29,12 +27,12 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type VanalyticsClient interface {
-	// CreateTranscript audits the used transcription audio time for a client. The window
-	// of time to audit can be widened or narrowed using the request since and
-	// until fields.
-	CreateTranscript(ctx context.Context, in *CreateTranscriptRequest, opts ...grpc.CallOption) (*CreateTranscriptResponse, error)
-	UpdateTranscript(ctx context.Context, in *UpdateTranscriptRequest, opts ...grpc.CallOption) (*UpdateTranscriptResponse, error)
+	// SearchTranscripts searches transcripts by search criteria. The search response
+	// contains one page of transcript hits. Traversing the paginated hits is
+	// achieved through subsequent requests using the response sort field.
 	SearchTranscripts(ctx context.Context, in *SearchTranscriptsRequest, opts ...grpc.CallOption) (*SearchTranscriptsResponse, error)
+	// CreateFilter creates a new filter. The filter contains a
+	// transcript query to filter transcripts.
 	CreateFilter(ctx context.Context, in *CreateFilterRequest, opts ...grpc.CallOption) (*CreateFilterResponse, error)
 }
 
@@ -44,24 +42,6 @@ type vanalyticsClient struct {
 
 func NewVanalyticsClient(cc grpc.ClientConnInterface) VanalyticsClient {
 	return &vanalyticsClient{cc}
-}
-
-func (c *vanalyticsClient) CreateTranscript(ctx context.Context, in *CreateTranscriptRequest, opts ...grpc.CallOption) (*CreateTranscriptResponse, error) {
-	out := new(CreateTranscriptResponse)
-	err := c.cc.Invoke(ctx, Vanalytics_CreateTranscript_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *vanalyticsClient) UpdateTranscript(ctx context.Context, in *UpdateTranscriptRequest, opts ...grpc.CallOption) (*UpdateTranscriptResponse, error) {
-	out := new(UpdateTranscriptResponse)
-	err := c.cc.Invoke(ctx, Vanalytics_UpdateTranscript_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *vanalyticsClient) SearchTranscripts(ctx context.Context, in *SearchTranscriptsRequest, opts ...grpc.CallOption) (*SearchTranscriptsResponse, error) {
@@ -86,12 +66,12 @@ func (c *vanalyticsClient) CreateFilter(ctx context.Context, in *CreateFilterReq
 // All implementations must embed UnimplementedVanalyticsServer
 // for forward compatibility
 type VanalyticsServer interface {
-	// CreateTranscript audits the used transcription audio time for a client. The window
-	// of time to audit can be widened or narrowed using the request since and
-	// until fields.
-	CreateTranscript(context.Context, *CreateTranscriptRequest) (*CreateTranscriptResponse, error)
-	UpdateTranscript(context.Context, *UpdateTranscriptRequest) (*UpdateTranscriptResponse, error)
+	// SearchTranscripts searches transcripts by search criteria. The search response
+	// contains one page of transcript hits. Traversing the paginated hits is
+	// achieved through subsequent requests using the response sort field.
 	SearchTranscripts(context.Context, *SearchTranscriptsRequest) (*SearchTranscriptsResponse, error)
+	// CreateFilter creates a new filter. The filter contains a
+	// transcript query to filter transcripts.
 	CreateFilter(context.Context, *CreateFilterRequest) (*CreateFilterResponse, error)
 	mustEmbedUnimplementedVanalyticsServer()
 }
@@ -100,12 +80,6 @@ type VanalyticsServer interface {
 type UnimplementedVanalyticsServer struct {
 }
 
-func (UnimplementedVanalyticsServer) CreateTranscript(context.Context, *CreateTranscriptRequest) (*CreateTranscriptResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateTranscript not implemented")
-}
-func (UnimplementedVanalyticsServer) UpdateTranscript(context.Context, *UpdateTranscriptRequest) (*UpdateTranscriptResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateTranscript not implemented")
-}
 func (UnimplementedVanalyticsServer) SearchTranscripts(context.Context, *SearchTranscriptsRequest) (*SearchTranscriptsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SearchTranscripts not implemented")
 }
@@ -123,42 +97,6 @@ type UnsafeVanalyticsServer interface {
 
 func RegisterVanalyticsServer(s grpc.ServiceRegistrar, srv VanalyticsServer) {
 	s.RegisterService(&Vanalytics_ServiceDesc, srv)
-}
-
-func _Vanalytics_CreateTranscript_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateTranscriptRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(VanalyticsServer).CreateTranscript(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Vanalytics_CreateTranscript_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(VanalyticsServer).CreateTranscript(ctx, req.(*CreateTranscriptRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Vanalytics_UpdateTranscript_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateTranscriptRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(VanalyticsServer).UpdateTranscript(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Vanalytics_UpdateTranscript_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(VanalyticsServer).UpdateTranscript(ctx, req.(*UpdateTranscriptRequest))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _Vanalytics_SearchTranscripts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -204,14 +142,6 @@ var Vanalytics_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "wfo.vanalytics.v2.Vanalytics",
 	HandlerType: (*VanalyticsServer)(nil),
 	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "CreateTranscript",
-			Handler:    _Vanalytics_CreateTranscript_Handler,
-		},
-		{
-			MethodName: "UpdateTranscript",
-			Handler:    _Vanalytics_UpdateTranscript_Handler,
-		},
 		{
 			MethodName: "SearchTranscripts",
 			Handler:    _Vanalytics_SearchTranscripts_Handler,

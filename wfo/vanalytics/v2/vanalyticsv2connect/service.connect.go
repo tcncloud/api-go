@@ -33,12 +33,6 @@ const (
 // reflection-formatted method names, remove the leading slash and convert the remaining slash to a
 // period.
 const (
-	// VanalyticsCreateTranscriptProcedure is the fully-qualified name of the Vanalytics's
-	// CreateTranscript RPC.
-	VanalyticsCreateTranscriptProcedure = "/wfo.vanalytics.v2.Vanalytics/CreateTranscript"
-	// VanalyticsUpdateTranscriptProcedure is the fully-qualified name of the Vanalytics's
-	// UpdateTranscript RPC.
-	VanalyticsUpdateTranscriptProcedure = "/wfo.vanalytics.v2.Vanalytics/UpdateTranscript"
 	// VanalyticsSearchTranscriptsProcedure is the fully-qualified name of the Vanalytics's
 	// SearchTranscripts RPC.
 	VanalyticsSearchTranscriptsProcedure = "/wfo.vanalytics.v2.Vanalytics/SearchTranscripts"
@@ -48,12 +42,12 @@ const (
 
 // VanalyticsClient is a client for the wfo.vanalytics.v2.Vanalytics service.
 type VanalyticsClient interface {
-	// CreateTranscript audits the used transcription audio time for a client. The window
-	// of time to audit can be widened or narrowed using the request since and
-	// until fields.
-	CreateTranscript(context.Context, *connect_go.Request[v2.CreateTranscriptRequest]) (*connect_go.Response[v2.CreateTranscriptResponse], error)
-	UpdateTranscript(context.Context, *connect_go.Request[v2.UpdateTranscriptRequest]) (*connect_go.Response[v2.UpdateTranscriptResponse], error)
+	// SearchTranscripts searches transcripts by search criteria. The search response
+	// contains one page of transcript hits. Traversing the paginated hits is
+	// achieved through subsequent requests using the response sort field.
 	SearchTranscripts(context.Context, *connect_go.Request[v2.SearchTranscriptsRequest]) (*connect_go.Response[v2.SearchTranscriptsResponse], error)
+	// CreateFilter creates a new filter. The filter contains a
+	// transcript query to filter transcripts.
 	CreateFilter(context.Context, *connect_go.Request[v2.CreateFilterRequest]) (*connect_go.Response[v2.CreateFilterResponse], error)
 }
 
@@ -67,16 +61,6 @@ type VanalyticsClient interface {
 func NewVanalyticsClient(httpClient connect_go.HTTPClient, baseURL string, opts ...connect_go.ClientOption) VanalyticsClient {
 	baseURL = strings.TrimRight(baseURL, "/")
 	return &vanalyticsClient{
-		createTranscript: connect_go.NewClient[v2.CreateTranscriptRequest, v2.CreateTranscriptResponse](
-			httpClient,
-			baseURL+VanalyticsCreateTranscriptProcedure,
-			opts...,
-		),
-		updateTranscript: connect_go.NewClient[v2.UpdateTranscriptRequest, v2.UpdateTranscriptResponse](
-			httpClient,
-			baseURL+VanalyticsUpdateTranscriptProcedure,
-			opts...,
-		),
 		searchTranscripts: connect_go.NewClient[v2.SearchTranscriptsRequest, v2.SearchTranscriptsResponse](
 			httpClient,
 			baseURL+VanalyticsSearchTranscriptsProcedure,
@@ -92,20 +76,8 @@ func NewVanalyticsClient(httpClient connect_go.HTTPClient, baseURL string, opts 
 
 // vanalyticsClient implements VanalyticsClient.
 type vanalyticsClient struct {
-	createTranscript  *connect_go.Client[v2.CreateTranscriptRequest, v2.CreateTranscriptResponse]
-	updateTranscript  *connect_go.Client[v2.UpdateTranscriptRequest, v2.UpdateTranscriptResponse]
 	searchTranscripts *connect_go.Client[v2.SearchTranscriptsRequest, v2.SearchTranscriptsResponse]
 	createFilter      *connect_go.Client[v2.CreateFilterRequest, v2.CreateFilterResponse]
-}
-
-// CreateTranscript calls wfo.vanalytics.v2.Vanalytics.CreateTranscript.
-func (c *vanalyticsClient) CreateTranscript(ctx context.Context, req *connect_go.Request[v2.CreateTranscriptRequest]) (*connect_go.Response[v2.CreateTranscriptResponse], error) {
-	return c.createTranscript.CallUnary(ctx, req)
-}
-
-// UpdateTranscript calls wfo.vanalytics.v2.Vanalytics.UpdateTranscript.
-func (c *vanalyticsClient) UpdateTranscript(ctx context.Context, req *connect_go.Request[v2.UpdateTranscriptRequest]) (*connect_go.Response[v2.UpdateTranscriptResponse], error) {
-	return c.updateTranscript.CallUnary(ctx, req)
 }
 
 // SearchTranscripts calls wfo.vanalytics.v2.Vanalytics.SearchTranscripts.
@@ -120,12 +92,12 @@ func (c *vanalyticsClient) CreateFilter(ctx context.Context, req *connect_go.Req
 
 // VanalyticsHandler is an implementation of the wfo.vanalytics.v2.Vanalytics service.
 type VanalyticsHandler interface {
-	// CreateTranscript audits the used transcription audio time for a client. The window
-	// of time to audit can be widened or narrowed using the request since and
-	// until fields.
-	CreateTranscript(context.Context, *connect_go.Request[v2.CreateTranscriptRequest]) (*connect_go.Response[v2.CreateTranscriptResponse], error)
-	UpdateTranscript(context.Context, *connect_go.Request[v2.UpdateTranscriptRequest]) (*connect_go.Response[v2.UpdateTranscriptResponse], error)
+	// SearchTranscripts searches transcripts by search criteria. The search response
+	// contains one page of transcript hits. Traversing the paginated hits is
+	// achieved through subsequent requests using the response sort field.
 	SearchTranscripts(context.Context, *connect_go.Request[v2.SearchTranscriptsRequest]) (*connect_go.Response[v2.SearchTranscriptsResponse], error)
+	// CreateFilter creates a new filter. The filter contains a
+	// transcript query to filter transcripts.
 	CreateFilter(context.Context, *connect_go.Request[v2.CreateFilterRequest]) (*connect_go.Response[v2.CreateFilterResponse], error)
 }
 
@@ -135,16 +107,6 @@ type VanalyticsHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewVanalyticsHandler(svc VanalyticsHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	vanalyticsCreateTranscriptHandler := connect_go.NewUnaryHandler(
-		VanalyticsCreateTranscriptProcedure,
-		svc.CreateTranscript,
-		opts...,
-	)
-	vanalyticsUpdateTranscriptHandler := connect_go.NewUnaryHandler(
-		VanalyticsUpdateTranscriptProcedure,
-		svc.UpdateTranscript,
-		opts...,
-	)
 	vanalyticsSearchTranscriptsHandler := connect_go.NewUnaryHandler(
 		VanalyticsSearchTranscriptsProcedure,
 		svc.SearchTranscripts,
@@ -157,10 +119,6 @@ func NewVanalyticsHandler(svc VanalyticsHandler, opts ...connect_go.HandlerOptio
 	)
 	return "/wfo.vanalytics.v2.Vanalytics/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
-		case VanalyticsCreateTranscriptProcedure:
-			vanalyticsCreateTranscriptHandler.ServeHTTP(w, r)
-		case VanalyticsUpdateTranscriptProcedure:
-			vanalyticsUpdateTranscriptHandler.ServeHTTP(w, r)
 		case VanalyticsSearchTranscriptsProcedure:
 			vanalyticsSearchTranscriptsHandler.ServeHTTP(w, r)
 		case VanalyticsCreateFilterProcedure:
@@ -173,14 +131,6 @@ func NewVanalyticsHandler(svc VanalyticsHandler, opts ...connect_go.HandlerOptio
 
 // UnimplementedVanalyticsHandler returns CodeUnimplemented from all methods.
 type UnimplementedVanalyticsHandler struct{}
-
-func (UnimplementedVanalyticsHandler) CreateTranscript(context.Context, *connect_go.Request[v2.CreateTranscriptRequest]) (*connect_go.Response[v2.CreateTranscriptResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("wfo.vanalytics.v2.Vanalytics.CreateTranscript is not implemented"))
-}
-
-func (UnimplementedVanalyticsHandler) UpdateTranscript(context.Context, *connect_go.Request[v2.UpdateTranscriptRequest]) (*connect_go.Response[v2.UpdateTranscriptResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("wfo.vanalytics.v2.Vanalytics.UpdateTranscript is not implemented"))
-}
 
 func (UnimplementedVanalyticsHandler) SearchTranscripts(context.Context, *connect_go.Request[v2.SearchTranscriptsRequest]) (*connect_go.Response[v2.SearchTranscriptsResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("wfo.vanalytics.v2.Vanalytics.SearchTranscripts is not implemented"))
