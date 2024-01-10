@@ -20,7 +20,6 @@ const _ = grpc.SupportPackageIsVersion7
 
 const (
 	Vanalytics_SearchTranscripts_FullMethodName = "/wfo.vanalytics.v2.Vanalytics/SearchTranscripts"
-	Vanalytics_CreateFilter_FullMethodName      = "/wfo.vanalytics.v2.Vanalytics/CreateFilter"
 )
 
 // VanalyticsClient is the client API for Vanalytics service.
@@ -31,9 +30,6 @@ type VanalyticsClient interface {
 	// contains one page of transcript hits. Traversing the paginated hits is
 	// achieved through subsequent requests using the response sort field.
 	SearchTranscripts(ctx context.Context, in *SearchTranscriptsRequest, opts ...grpc.CallOption) (*SearchTranscriptsResponse, error)
-	// CreateFilter creates a new filter. The filter contains a
-	// transcript query to filter transcripts.
-	CreateFilter(ctx context.Context, in *CreateFilterRequest, opts ...grpc.CallOption) (*CreateFilterResponse, error)
 }
 
 type vanalyticsClient struct {
@@ -53,15 +49,6 @@ func (c *vanalyticsClient) SearchTranscripts(ctx context.Context, in *SearchTran
 	return out, nil
 }
 
-func (c *vanalyticsClient) CreateFilter(ctx context.Context, in *CreateFilterRequest, opts ...grpc.CallOption) (*CreateFilterResponse, error) {
-	out := new(CreateFilterResponse)
-	err := c.cc.Invoke(ctx, Vanalytics_CreateFilter_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // VanalyticsServer is the server API for Vanalytics service.
 // All implementations must embed UnimplementedVanalyticsServer
 // for forward compatibility
@@ -70,9 +57,6 @@ type VanalyticsServer interface {
 	// contains one page of transcript hits. Traversing the paginated hits is
 	// achieved through subsequent requests using the response sort field.
 	SearchTranscripts(context.Context, *SearchTranscriptsRequest) (*SearchTranscriptsResponse, error)
-	// CreateFilter creates a new filter. The filter contains a
-	// transcript query to filter transcripts.
-	CreateFilter(context.Context, *CreateFilterRequest) (*CreateFilterResponse, error)
 	mustEmbedUnimplementedVanalyticsServer()
 }
 
@@ -82,9 +66,6 @@ type UnimplementedVanalyticsServer struct {
 
 func (UnimplementedVanalyticsServer) SearchTranscripts(context.Context, *SearchTranscriptsRequest) (*SearchTranscriptsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SearchTranscripts not implemented")
-}
-func (UnimplementedVanalyticsServer) CreateFilter(context.Context, *CreateFilterRequest) (*CreateFilterResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateFilter not implemented")
 }
 func (UnimplementedVanalyticsServer) mustEmbedUnimplementedVanalyticsServer() {}
 
@@ -117,24 +98,6 @@ func _Vanalytics_SearchTranscripts_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Vanalytics_CreateFilter_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateFilterRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(VanalyticsServer).CreateFilter(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Vanalytics_CreateFilter_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(VanalyticsServer).CreateFilter(ctx, req.(*CreateFilterRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // Vanalytics_ServiceDesc is the grpc.ServiceDesc for Vanalytics service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -145,10 +108,6 @@ var Vanalytics_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SearchTranscripts",
 			Handler:    _Vanalytics_SearchTranscripts_Handler,
-		},
-		{
-			MethodName: "CreateFilter",
-			Handler:    _Vanalytics_CreateFilter_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
