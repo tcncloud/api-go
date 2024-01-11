@@ -28,7 +28,7 @@ const (
 type VanalyticsClient interface {
 	// SearchTranscripts searches transcripts by search criteria. The search response
 	// contains one page of transcript hits. Traversing the paginated hits is
-	// achieved through subsequent requests using the response sort field.
+	// achieved by making use of the given page token.
 	SearchTranscripts(ctx context.Context, in *SearchTranscriptsRequest, opts ...grpc.CallOption) (*SearchTranscriptsResponse, error)
 }
 
@@ -55,7 +55,7 @@ func (c *vanalyticsClient) SearchTranscripts(ctx context.Context, in *SearchTran
 type VanalyticsServer interface {
 	// SearchTranscripts searches transcripts by search criteria. The search response
 	// contains one page of transcript hits. Traversing the paginated hits is
-	// achieved through subsequent requests using the response sort field.
+	// achieved by making use of the given page token.
 	SearchTranscripts(context.Context, *SearchTranscriptsRequest) (*SearchTranscriptsResponse, error)
 	mustEmbedUnimplementedVanalyticsServer()
 }

@@ -755,12 +755,16 @@ func (x *TranscriptQuery) GetThreads() *TranscriptQuery_Threads {
 	return nil
 }
 
+// Resourse that is used to automatically pick a fuzziness value
+// based on the word length that is within the given bounds.
 type FuzzinessAuto struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Low  uint32 `protobuf:"varint,1,opt,name=low,proto3" json:"low,omitempty"`
+	// lowest fuzziness value that will be used.
+	Low uint32 `protobuf:"varint,1,opt,name=low,proto3" json:"low,omitempty"`
+	// highest fuzziness value that will be used.
 	High uint32 `protobuf:"varint,2,opt,name=high,proto3" json:"high,omitempty"`
 }
 
@@ -810,13 +814,22 @@ func (x *FuzzinessAuto) GetHigh() uint32 {
 	return 0
 }
 
+// Used for a basic text match.
 type Match struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Text     string `protobuf:"bytes,1,opt,name=text,proto3" json:"text,omitempty"`
+	// The text used to check a match.
+	Text string `protobuf:"bytes,1,opt,name=text,proto3" json:"text,omitempty"`
+	// TODO: ???
 	Operator string `protobuf:"bytes,2,opt,name=operator,proto3" json:"operator,omitempty"`
+	// fuzziness allows the term to be spelled slightly incorrect and still
+	// match. fuzziness_value can have the values 0, 1, or 2; 0 would require
+	// that the term matches exactly, 2 would allow 2 letter differences.
+	// fuzziness_auto would automatically pick a number based on the word length
+	// within the given bounds.
+	//
 	// Types that are assignable to Fuzziness:
 	//
 	//	*Match_FuzzinessAuto
@@ -912,8 +925,13 @@ type SpanNear struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Slop    int32              `protobuf:"varint,1,opt,name=slop,proto3" json:"slop,omitempty"`
-	InOrder bool               `protobuf:"varint,2,opt,name=in_order,json=inOrder,proto3" json:"in_order,omitempty"`
+	// slop is the number of extra terms that can be in the query that
+	// are not being searched for. For example: slop of 2 when searching for
+	// "This is my dog" would allow "This is my quick brown dog".
+	Slop int32 `protobuf:"varint,1,opt,name=slop,proto3" json:"slop,omitempty"`
+	// when in_order is true then the terms must be found in the order given.
+	InOrder bool `protobuf:"varint,2,opt,name=in_order,json=inOrder,proto3" json:"in_order,omitempty"`
+	// TODO: ???
 	Clauses []*SpanNear_Clause `protobuf:"bytes,3,rep,name=clauses,proto3" json:"clauses,omitempty"`
 }
 
@@ -970,11 +988,13 @@ func (x *SpanNear) GetClauses() []*SpanNear_Clause {
 	return nil
 }
 
+// Represents a text term to match against.
 type SpanTerm struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// The text to match against.
 	Value string `protobuf:"bytes,1,opt,name=value,proto3" json:"value,omitempty"`
 }
 
@@ -1017,12 +1037,20 @@ func (x *SpanTerm) GetValue() string {
 	return ""
 }
 
+// Represents a fuzzy text match.
 type SpanFuzzy struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// The text to match against.
 	Value string `protobuf:"bytes,1,opt,name=value,proto3" json:"value,omitempty"`
+	// fuzziness allows the term to be spelled slightly incorrect and still
+	// match. fuzziness_value can have the values 0, 1, or 2; 0 would require
+	// that the term matches exactly, 2 would allow 2 letter differences.
+	// fuzziness_auto would automatically pick a number based on the word length
+	// within the given bounds.
+	//
 	// Types that are assignable to Fuzziness:
 	//
 	//	*SpanFuzzy_FuzzinessAuto
@@ -1453,7 +1481,7 @@ type Sms_Thread struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// TODO: ? A unique identifier for the thread.
+	// A unique identifier for the thread.
 	Id int32 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 	// A segment contains text of the thread.
 	Segments []*Sms_Segment `protobuf:"bytes,2,rep,name=segments,proto3" json:"segments,omitempty"`
@@ -1824,7 +1852,7 @@ func (x *TranscriptQuery_Channel) GetAny() []Channel {
 	return nil
 }
 
-// Queries on channel specific data.
+// Resource to query on channel specific data.
 type TranscriptQuery_Metadata struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1880,11 +1908,13 @@ func (x *TranscriptQuery_Metadata) GetSms() *TranscriptQuery_Sms {
 	return nil
 }
 
+// Resource to query on call specific data.
 type TranscriptQuery_Call struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// Used to query for specific calls.
 	CallSid *TranscriptQuery_Call_CallSid `protobuf:"bytes,1,opt,name=call_sid,json=callSid,proto3" json:"call_sid,omitempty"`
 }
 
@@ -1927,11 +1957,13 @@ func (x *TranscriptQuery_Call) GetCallSid() *TranscriptQuery_Call_CallSid {
 	return nil
 }
 
+// Resource to query on sms specific data.
 type TranscriptQuery_Sms struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// Used to query for specific sms conversations.
 	ConversationSid *TranscriptQuery_Sms_ConversationSid `protobuf:"bytes,1,opt,name=conversation_sid,json=conversationSid,proto3" json:"conversation_sid,omitempty"`
 }
 
@@ -1974,12 +2006,15 @@ func (x *TranscriptQuery_Sms) GetConversationSid() *TranscriptQuery_Sms_Conversa
 	return nil
 }
 
+// Resource to query for text in the threads.
 type TranscriptQuery_Threads struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id   *TranscriptQuery_Threads_Id   `protobuf:"bytes,4,opt,name=id,proto3" json:"id,omitempty"`
+	// Used to query for specific thread ids.
+	Id *TranscriptQuery_Threads_Id `protobuf:"bytes,4,opt,name=id,proto3" json:"id,omitempty"`
+	// Used to query for text within the threads
 	Text *TranscriptQuery_Threads_Text `protobuf:"bytes,5,opt,name=text,proto3" json:"text,omitempty"`
 }
 
@@ -2029,11 +2064,13 @@ func (x *TranscriptQuery_Threads) GetText() *TranscriptQuery_Threads_Text {
 	return nil
 }
 
+// Represents a set of calls.
 type TranscriptQuery_Call_CallSid struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// Will match any call with a call_sid in the list.
 	Any []int64 `protobuf:"varint,1,rep,packed,name=any,proto3" json:"any,omitempty"`
 }
 
@@ -2076,11 +2113,13 @@ func (x *TranscriptQuery_Call_CallSid) GetAny() []int64 {
 	return nil
 }
 
+// Represents a set of sms conversations.
 type TranscriptQuery_Sms_ConversationSid struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// Will match any sms with a conversation_sid in the list.
 	Any []int64 `protobuf:"varint,1,rep,packed,name=any,proto3" json:"any,omitempty"`
 }
 
@@ -2123,11 +2162,13 @@ func (x *TranscriptQuery_Sms_ConversationSid) GetAny() []int64 {
 	return nil
 }
 
+// Represents a set of threads.
 type TranscriptQuery_Threads_Id struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// Will match any thread with a thread id in the list.
 	Any []int32 `protobuf:"varint,1,rep,packed,name=any,proto3" json:"any,omitempty"`
 }
 
@@ -2170,12 +2211,15 @@ func (x *TranscriptQuery_Threads_Id) GetAny() []int32 {
 	return nil
 }
 
+// Represents text to match.
 type TranscriptQuery_Threads_Text struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Match    *Match    `protobuf:"bytes,1,opt,name=match,proto3" json:"match,omitempty"`
+	// Used for a more basic text match.
+	Match *Match `protobuf:"bytes,1,opt,name=match,proto3" json:"match,omitempty"`
+	// Used for a more advanced text match.
 	SpanNear *SpanNear `protobuf:"bytes,2,opt,name=span_near,json=spanNear,proto3" json:"span_near,omitempty"`
 }
 
@@ -2230,6 +2274,8 @@ type SpanNear_Clause struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// TODO: ???
+	//
 	// Types that are assignable to Match:
 	//
 	//	*SpanNear_Clause_SpanNear
