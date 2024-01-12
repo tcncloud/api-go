@@ -750,16 +750,20 @@ func (x *TranscriptQuery) GetThreads() *TranscriptQuery_Threads {
 	return nil
 }
 
-// Resourse that is used to automatically pick a fuzziness value
-// based on the word length that is within the given bounds.
+// FuzzinessAuto defines an automatic max allowable edit distance based on the
+// length of the match text.
+//
+// length  <  low -- Must match exactly.
+// length  < high -- Must match with one edit allowed.
+// length >= high -- Must match with two edits allowed.
 type FuzzinessAuto struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// lowest fuzziness value that will be used.
+	// The match text low length threshold.
 	Low uint32 `protobuf:"varint,1,opt,name=low,proto3" json:"low,omitempty"`
-	// highest fuzziness value that will be used.
+	// The match text high length threshold.
 	High uint32 `protobuf:"varint,2,opt,name=high,proto3" json:"high,omitempty"`
 }
 
@@ -815,15 +819,17 @@ type Match struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// The text used to check a match.
+	// The text to be matched.
 	Text string `protobuf:"bytes,1,opt,name=text,proto3" json:"text,omitempty"`
 	// Optional. Operator must be one of: (AND, OR). Defaults to OR when empty.
+	// When the match text contains multiple terms separated by spaces the
+	// operator determines whether any or all of the terms must be matched.
 	Operator string `protobuf:"bytes,2,opt,name=operator,proto3" json:"operator,omitempty"`
-	// fuzziness allows the term to be spelled slightly incorrect and still
-	// match. fuzziness_value can have the values 0, 1, or 2; 0 would require
+	// Allows the term to be spelled slightly incorrect and still
+	// match. The fuzziness_value can have the values 0, 1, or 2; 0 would require
 	// that the term matches exactly, 2 would allow 2 letter differences.
-	// fuzziness_auto would automatically pick a number based on the word length
-	// within the given bounds.
+	// The fuzziness_auto would automatically pick a number based on the
+	// word length within the given bounds.
 	//
 	// Types that are assignable to Fuzziness:
 	//
@@ -989,7 +995,7 @@ type SpanTerm struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// The text to match against.
+	// The text to be matched.
 	Value string `protobuf:"bytes,1,opt,name=value,proto3" json:"value,omitempty"`
 }
 
@@ -1041,10 +1047,10 @@ type SpanFuzzy struct {
 	// The text to match against.
 	Value string `protobuf:"bytes,1,opt,name=value,proto3" json:"value,omitempty"`
 	// Allows the term to be spelled slightly incorrect and still
-	// match. fuzziness_value can have the values 0, 1, or 2; 0 would require
+	// match. The fuzziness_value can have the values 0, 1, or 2; 0 would require
 	// that the term matches exactly, 2 would allow 2 letter differences.
-	// fuzziness_auto would automatically pick a number based on the word length
-	// within the given bounds.
+	// The fuzziness_auto would automatically pick a number based on the
+	// word length within the given bounds.
 	//
 	// Types that are assignable to Fuzziness:
 	//
