@@ -153,6 +153,9 @@ const (
 	Org_CreateHuntGroupClientInfoDisplayTemplate_FullMethodName = "/api.v1alpha1.org.Org/CreateHuntGroupClientInfoDisplayTemplate"
 	Org_UpdateHuntGroupClientInfoDisplayTemplate_FullMethodName = "/api.v1alpha1.org.Org/UpdateHuntGroupClientInfoDisplayTemplate"
 	Org_DeleteHuntGroupClientInfoDisplayTemplate_FullMethodName = "/api.v1alpha1.org.Org/DeleteHuntGroupClientInfoDisplayTemplate"
+	Org_ListAgentTriggers_FullMethodName                        = "/api.v1alpha1.org.Org/ListAgentTriggers"
+	Org_CopyAgentTrigger_FullMethodName                         = "/api.v1alpha1.org.Org/CopyAgentTrigger"
+	Org_UpdateAgentTriggers_FullMethodName                      = "/api.v1alpha1.org.Org/UpdateAgentTriggers"
 	Org_CreateTrust_FullMethodName                              = "/api.v1alpha1.org.Org/CreateTrust"
 	Org_AcceptTrust_FullMethodName                              = "/api.v1alpha1.org.Org/AcceptTrust"
 	Org_RejectTrust_FullMethodName                              = "/api.v1alpha1.org.Org/RejectTrust"
@@ -501,6 +504,12 @@ type OrgClient interface {
 	UpdateHuntGroupClientInfoDisplayTemplate(ctx context.Context, in *UpdateHuntGroupClientInfoDisplayTemplateRequest, opts ...grpc.CallOption) (*UpdateHuntGroupClientInfoDisplayTemplateResponse, error)
 	// DeleteHuntGroupClientInfoDisplayTemplate deletes a client info display template for a given hunt group.
 	DeleteHuntGroupClientInfoDisplayTemplate(ctx context.Context, in *DeleteHuntGroupClientInfoDisplayTemplateRequest, opts ...grpc.CallOption) (*DeleteHuntGroupClientInfoDisplayTemplateResponse, error)
+	// ListAgentTriggers returns a list of agent triggers for the given hunt group.
+	ListAgentTriggers(ctx context.Context, in *ListAgentTriggersRequest, opts ...grpc.CallOption) (*ListAgentTriggersResponse, error)
+	// CopyAgentTrigger copys an agent trigger to the given hunt group in the same org.
+	CopyAgentTrigger(ctx context.Context, in *CopyAgentTriggerRequest, opts ...grpc.CallOption) (*CopyAgentTriggerResponse, error)
+	// UpdateAgentTriggers updates all agent triggers for the given hunt group.
+	UpdateAgentTriggers(ctx context.Context, in *UpdateAgentTriggersRequest, opts ...grpc.CallOption) (*UpdateAgentTriggersResponse, error)
 	// CreateTrust creates a new trust.
 	CreateTrust(ctx context.Context, in *CreateTrustRequest, opts ...grpc.CallOption) (*CreateTrustResponse, error)
 	// AcceptTrust accepts an incoming trust.
@@ -2029,6 +2038,33 @@ func (c *orgClient) DeleteHuntGroupClientInfoDisplayTemplate(ctx context.Context
 	return out, nil
 }
 
+func (c *orgClient) ListAgentTriggers(ctx context.Context, in *ListAgentTriggersRequest, opts ...grpc.CallOption) (*ListAgentTriggersResponse, error) {
+	out := new(ListAgentTriggersResponse)
+	err := c.cc.Invoke(ctx, Org_ListAgentTriggers_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) CopyAgentTrigger(ctx context.Context, in *CopyAgentTriggerRequest, opts ...grpc.CallOption) (*CopyAgentTriggerResponse, error) {
+	out := new(CopyAgentTriggerResponse)
+	err := c.cc.Invoke(ctx, Org_CopyAgentTrigger_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) UpdateAgentTriggers(ctx context.Context, in *UpdateAgentTriggersRequest, opts ...grpc.CallOption) (*UpdateAgentTriggersResponse, error) {
+	out := new(UpdateAgentTriggersResponse)
+	err := c.cc.Invoke(ctx, Org_UpdateAgentTriggers_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *orgClient) CreateTrust(ctx context.Context, in *CreateTrustRequest, opts ...grpc.CallOption) (*CreateTrustResponse, error) {
 	out := new(CreateTrustResponse)
 	err := c.cc.Invoke(ctx, Org_CreateTrust_FullMethodName, in, out, opts...)
@@ -2727,6 +2763,12 @@ type OrgServer interface {
 	UpdateHuntGroupClientInfoDisplayTemplate(context.Context, *UpdateHuntGroupClientInfoDisplayTemplateRequest) (*UpdateHuntGroupClientInfoDisplayTemplateResponse, error)
 	// DeleteHuntGroupClientInfoDisplayTemplate deletes a client info display template for a given hunt group.
 	DeleteHuntGroupClientInfoDisplayTemplate(context.Context, *DeleteHuntGroupClientInfoDisplayTemplateRequest) (*DeleteHuntGroupClientInfoDisplayTemplateResponse, error)
+	// ListAgentTriggers returns a list of agent triggers for the given hunt group.
+	ListAgentTriggers(context.Context, *ListAgentTriggersRequest) (*ListAgentTriggersResponse, error)
+	// CopyAgentTrigger copys an agent trigger to the given hunt group in the same org.
+	CopyAgentTrigger(context.Context, *CopyAgentTriggerRequest) (*CopyAgentTriggerResponse, error)
+	// UpdateAgentTriggers updates all agent triggers for the given hunt group.
+	UpdateAgentTriggers(context.Context, *UpdateAgentTriggersRequest) (*UpdateAgentTriggersResponse, error)
 	// CreateTrust creates a new trust.
 	CreateTrust(context.Context, *CreateTrustRequest) (*CreateTrustResponse, error)
 	// AcceptTrust accepts an incoming trust.
@@ -3240,6 +3282,15 @@ func (UnimplementedOrgServer) UpdateHuntGroupClientInfoDisplayTemplate(context.C
 }
 func (UnimplementedOrgServer) DeleteHuntGroupClientInfoDisplayTemplate(context.Context, *DeleteHuntGroupClientInfoDisplayTemplateRequest) (*DeleteHuntGroupClientInfoDisplayTemplateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteHuntGroupClientInfoDisplayTemplate not implemented")
+}
+func (UnimplementedOrgServer) ListAgentTriggers(context.Context, *ListAgentTriggersRequest) (*ListAgentTriggersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListAgentTriggers not implemented")
+}
+func (UnimplementedOrgServer) CopyAgentTrigger(context.Context, *CopyAgentTriggerRequest) (*CopyAgentTriggerResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CopyAgentTrigger not implemented")
+}
+func (UnimplementedOrgServer) UpdateAgentTriggers(context.Context, *UpdateAgentTriggersRequest) (*UpdateAgentTriggersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateAgentTriggers not implemented")
 }
 func (UnimplementedOrgServer) CreateTrust(context.Context, *CreateTrustRequest) (*CreateTrustResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateTrust not implemented")
@@ -5825,6 +5876,60 @@ func _Org_DeleteHuntGroupClientInfoDisplayTemplate_Handler(srv interface{}, ctx 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Org_ListAgentTriggers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListAgentTriggersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).ListAgentTriggers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_ListAgentTriggers_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).ListAgentTriggers(ctx, req.(*ListAgentTriggersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_CopyAgentTrigger_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CopyAgentTriggerRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).CopyAgentTrigger(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_CopyAgentTrigger_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).CopyAgentTrigger(ctx, req.(*CopyAgentTriggerRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_UpdateAgentTriggers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateAgentTriggersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).UpdateAgentTriggers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_UpdateAgentTriggers_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).UpdateAgentTriggers(ctx, req.(*UpdateAgentTriggersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Org_CreateTrust_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateTrustRequest)
 	if err := dec(in); err != nil {
@@ -7123,6 +7228,18 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteHuntGroupClientInfoDisplayTemplate",
 			Handler:    _Org_DeleteHuntGroupClientInfoDisplayTemplate_Handler,
+		},
+		{
+			MethodName: "ListAgentTriggers",
+			Handler:    _Org_ListAgentTriggers_Handler,
+		},
+		{
+			MethodName: "CopyAgentTrigger",
+			Handler:    _Org_CopyAgentTrigger_Handler,
+		},
+		{
+			MethodName: "UpdateAgentTriggers",
+			Handler:    _Org_UpdateAgentTriggers_Handler,
 		},
 		{
 			MethodName: "CreateTrust",
