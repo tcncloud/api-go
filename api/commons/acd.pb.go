@@ -2248,6 +2248,12 @@ type TransferMember struct {
 	Identifier   string             `protobuf:"bytes,1,opt,name=identifier,proto3" json:"identifier,omitempty"`
 	DisplayLabel string             `protobuf:"bytes,2,opt,name=display_label,json=displayLabel,proto3" json:"display_label,omitempty"`
 	MemberType   TransferMemberType `protobuf:"varint,3,opt,name=member_type,json=memberType,proto3,enum=api.commons.TransferMemberType" json:"member_type,omitempty"`
+	// Types that are assignable to LocatableData:
+	//
+	//	*TransferMember_AgentSession
+	//	*TransferMember_CallerSid
+	//	*TransferMember_OutboundId
+	LocatableData isTransferMember_LocatableData `protobuf_oneof:"locatable_data"`
 }
 
 func (x *TransferMember) Reset() {
@@ -2302,6 +2308,56 @@ func (x *TransferMember) GetMemberType() TransferMemberType {
 	}
 	return TransferMemberType_TransferMemberType_AGENT
 }
+
+func (m *TransferMember) GetLocatableData() isTransferMember_LocatableData {
+	if m != nil {
+		return m.LocatableData
+	}
+	return nil
+}
+
+func (x *TransferMember) GetAgentSession() *AgentSession {
+	if x, ok := x.GetLocatableData().(*TransferMember_AgentSession); ok {
+		return x.AgentSession
+	}
+	return nil
+}
+
+func (x *TransferMember) GetCallerSid() *CallerSid {
+	if x, ok := x.GetLocatableData().(*TransferMember_CallerSid); ok {
+		return x.CallerSid
+	}
+	return nil
+}
+
+func (x *TransferMember) GetOutboundId() string {
+	if x, ok := x.GetLocatableData().(*TransferMember_OutboundId); ok {
+		return x.OutboundId
+	}
+	return ""
+}
+
+type isTransferMember_LocatableData interface {
+	isTransferMember_LocatableData()
+}
+
+type TransferMember_AgentSession struct {
+	AgentSession *AgentSession `protobuf:"bytes,100,opt,name=agent_session,json=agentSession,proto3,oneof"`
+}
+
+type TransferMember_CallerSid struct {
+	CallerSid *CallerSid `protobuf:"bytes,101,opt,name=caller_sid,json=callerSid,proto3,oneof"`
+}
+
+type TransferMember_OutboundId struct {
+	OutboundId string `protobuf:"bytes,102,opt,name=outbound_id,json=outboundId,proto3,oneof"`
+}
+
+func (*TransferMember_AgentSession) isTransferMember_LocatableData() {}
+
+func (*TransferMember_CallerSid) isTransferMember_LocatableData() {}
+
+func (*TransferMember_OutboundId) isTransferMember_LocatableData() {}
 
 // message used to wrap the alert one of
 type AgentAlert struct {
@@ -3442,7 +3498,7 @@ var file_api_commons_acd_proto_rawDesc = []byte{
 	0x65, 0x70, 0x6c, 0x61, 0x63, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x22, 0x2e, 0x0a, 0x04,
 	0x45, 0x6e, 0x75, 0x6d, 0x12, 0x0d, 0x0a, 0x09, 0x4e, 0x4f, 0x5f, 0x43, 0x48, 0x41, 0x4e, 0x47,
 	0x45, 0x10, 0x00, 0x12, 0x0a, 0x0a, 0x06, 0x54, 0x45, 0x4e, 0x41, 0x4e, 0x54, 0x10, 0x01, 0x12,
-	0x0b, 0x0a, 0x07, 0x52, 0x45, 0x50, 0x4c, 0x41, 0x43, 0x45, 0x10, 0x02, 0x22, 0x97, 0x01, 0x0a,
+	0x0b, 0x0a, 0x07, 0x52, 0x45, 0x50, 0x4c, 0x41, 0x43, 0x45, 0x10, 0x02, 0x22, 0xc7, 0x02, 0x0a,
 	0x0e, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72, 0x4d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x12,
 	0x1e, 0x0a, 0x0a, 0x69, 0x64, 0x65, 0x6e, 0x74, 0x69, 0x66, 0x69, 0x65, 0x72, 0x18, 0x01, 0x20,
 	0x01, 0x28, 0x09, 0x52, 0x0a, 0x69, 0x64, 0x65, 0x6e, 0x74, 0x69, 0x66, 0x69, 0x65, 0x72, 0x12,
@@ -3452,7 +3508,18 @@ var file_api_commons_acd_proto_rawDesc = []byte{
 	0x79, 0x70, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x1f, 0x2e, 0x61, 0x70, 0x69, 0x2e,
 	0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x65, 0x72,
 	0x4d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x54, 0x79, 0x70, 0x65, 0x52, 0x0a, 0x6d, 0x65, 0x6d, 0x62,
-	0x65, 0x72, 0x54, 0x79, 0x70, 0x65, 0x22, 0xb1, 0x02, 0x0a, 0x0a, 0x41, 0x67, 0x65, 0x6e, 0x74,
+	0x65, 0x72, 0x54, 0x79, 0x70, 0x65, 0x12, 0x40, 0x0a, 0x0d, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x5f,
+	0x73, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x18, 0x64, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x19, 0x2e,
+	0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x41, 0x67, 0x65, 0x6e,
+	0x74, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x48, 0x00, 0x52, 0x0c, 0x61, 0x67, 0x65, 0x6e,
+	0x74, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x12, 0x37, 0x0a, 0x0a, 0x63, 0x61, 0x6c, 0x6c,
+	0x65, 0x72, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x65, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x61,
+	0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x43, 0x61, 0x6c, 0x6c, 0x65,
+	0x72, 0x53, 0x69, 0x64, 0x48, 0x00, 0x52, 0x09, 0x63, 0x61, 0x6c, 0x6c, 0x65, 0x72, 0x53, 0x69,
+	0x64, 0x12, 0x21, 0x0a, 0x0b, 0x6f, 0x75, 0x74, 0x62, 0x6f, 0x75, 0x6e, 0x64, 0x5f, 0x69, 0x64,
+	0x18, 0x66, 0x20, 0x01, 0x28, 0x09, 0x48, 0x00, 0x52, 0x0a, 0x6f, 0x75, 0x74, 0x62, 0x6f, 0x75,
+	0x6e, 0x64, 0x49, 0x64, 0x42, 0x10, 0x0a, 0x0e, 0x6c, 0x6f, 0x63, 0x61, 0x74, 0x61, 0x62, 0x6c,
+	0x65, 0x5f, 0x64, 0x61, 0x74, 0x61, 0x22, 0xb1, 0x02, 0x0a, 0x0a, 0x41, 0x67, 0x65, 0x6e, 0x74,
 	0x41, 0x6c, 0x65, 0x72, 0x74, 0x12, 0x59, 0x0a, 0x12, 0x62, 0x61, 0x63, 0x6b, 0x6f, 0x66, 0x66,
 	0x69, 0x63, 0x65, 0x5f, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
 	0x0b, 0x32, 0x28, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e,
@@ -3706,24 +3773,26 @@ var file_api_commons_acd_proto_goTypes = []interface{}{
 var file_api_commons_acd_proto_depIdxs = []int32{
 	8,  // 0: api.commons.CallerSid.type:type_name -> api.commons.CallType.Enum
 	4,  // 1: api.commons.TransferMember.member_type:type_name -> api.commons.TransferMemberType
-	30, // 2: api.commons.AgentAlert.backoffice_message:type_name -> api.commons.AgentBackofficeMessageAlert
-	31, // 3: api.commons.AgentAlert.directed_call_ringing:type_name -> api.commons.AgentDirectedCallRingingAlert
-	32, // 4: api.commons.AgentAlert.directed_call_hangup:type_name -> api.commons.AgentDirectedCallHangupAlert
-	34, // 5: api.commons.AgentBackofficeMessageAlert.timestamp:type_name -> google.protobuf.Timestamp
-	16, // 6: api.commons.AgentBackofficeMessageAlert.target_agent_session:type_name -> api.commons.AgentSession
-	34, // 7: api.commons.AgentDirectedCallRingingAlert.timestamp:type_name -> google.protobuf.Timestamp
-	16, // 8: api.commons.AgentDirectedCallRingingAlert.target_agent_session:type_name -> api.commons.AgentSession
-	17, // 9: api.commons.AgentDirectedCallRingingAlert.caller_sid:type_name -> api.commons.CallerSid
-	34, // 10: api.commons.AgentDirectedCallHangupAlert.timestamp:type_name -> google.protobuf.Timestamp
-	16, // 11: api.commons.AgentDirectedCallHangupAlert.target_agent_session:type_name -> api.commons.AgentSession
-	17, // 12: api.commons.AgentDirectedCallHangupAlert.caller_sid:type_name -> api.commons.CallerSid
-	6,  // 13: api.commons.AgentState.status_desc:type_name -> api.commons.AgentStatus.Enum
-	28, // 14: api.commons.AgentState.transfer_members:type_name -> api.commons.TransferMember
-	15, // [15:15] is the sub-list for method output_type
-	15, // [15:15] is the sub-list for method input_type
-	15, // [15:15] is the sub-list for extension type_name
-	15, // [15:15] is the sub-list for extension extendee
-	0,  // [0:15] is the sub-list for field type_name
+	16, // 2: api.commons.TransferMember.agent_session:type_name -> api.commons.AgentSession
+	17, // 3: api.commons.TransferMember.caller_sid:type_name -> api.commons.CallerSid
+	30, // 4: api.commons.AgentAlert.backoffice_message:type_name -> api.commons.AgentBackofficeMessageAlert
+	31, // 5: api.commons.AgentAlert.directed_call_ringing:type_name -> api.commons.AgentDirectedCallRingingAlert
+	32, // 6: api.commons.AgentAlert.directed_call_hangup:type_name -> api.commons.AgentDirectedCallHangupAlert
+	34, // 7: api.commons.AgentBackofficeMessageAlert.timestamp:type_name -> google.protobuf.Timestamp
+	16, // 8: api.commons.AgentBackofficeMessageAlert.target_agent_session:type_name -> api.commons.AgentSession
+	34, // 9: api.commons.AgentDirectedCallRingingAlert.timestamp:type_name -> google.protobuf.Timestamp
+	16, // 10: api.commons.AgentDirectedCallRingingAlert.target_agent_session:type_name -> api.commons.AgentSession
+	17, // 11: api.commons.AgentDirectedCallRingingAlert.caller_sid:type_name -> api.commons.CallerSid
+	34, // 12: api.commons.AgentDirectedCallHangupAlert.timestamp:type_name -> google.protobuf.Timestamp
+	16, // 13: api.commons.AgentDirectedCallHangupAlert.target_agent_session:type_name -> api.commons.AgentSession
+	17, // 14: api.commons.AgentDirectedCallHangupAlert.caller_sid:type_name -> api.commons.CallerSid
+	6,  // 15: api.commons.AgentState.status_desc:type_name -> api.commons.AgentStatus.Enum
+	28, // 16: api.commons.AgentState.transfer_members:type_name -> api.commons.TransferMember
+	17, // [17:17] is the sub-list for method output_type
+	17, // [17:17] is the sub-list for method input_type
+	17, // [17:17] is the sub-list for extension type_name
+	17, // [17:17] is the sub-list for extension extendee
+	0,  // [0:17] is the sub-list for field type_name
 }
 
 func init() { file_api_commons_acd_proto_init() }
@@ -3948,6 +4017,11 @@ func file_api_commons_acd_proto_init() {
 				return nil
 			}
 		}
+	}
+	file_api_commons_acd_proto_msgTypes[12].OneofWrappers = []interface{}{
+		(*TransferMember_AgentSession)(nil),
+		(*TransferMember_CallerSid)(nil),
+		(*TransferMember_OutboundId)(nil),
 	}
 	file_api_commons_acd_proto_msgTypes[13].OneofWrappers = []interface{}{
 		(*AgentAlert_BackofficeMessage)(nil),
