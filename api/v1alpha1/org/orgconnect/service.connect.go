@@ -398,6 +398,12 @@ const (
 	// OrgDeleteHuntGroupClientInfoDisplayTemplateProcedure is the fully-qualified name of the Org's
 	// DeleteHuntGroupClientInfoDisplayTemplate RPC.
 	OrgDeleteHuntGroupClientInfoDisplayTemplateProcedure = "/api.v1alpha1.org.Org/DeleteHuntGroupClientInfoDisplayTemplate"
+	// OrgListAgentTriggersProcedure is the fully-qualified name of the Org's ListAgentTriggers RPC.
+	OrgListAgentTriggersProcedure = "/api.v1alpha1.org.Org/ListAgentTriggers"
+	// OrgCopyAgentTriggerProcedure is the fully-qualified name of the Org's CopyAgentTrigger RPC.
+	OrgCopyAgentTriggerProcedure = "/api.v1alpha1.org.Org/CopyAgentTrigger"
+	// OrgUpdateAgentTriggersProcedure is the fully-qualified name of the Org's UpdateAgentTriggers RPC.
+	OrgUpdateAgentTriggersProcedure = "/api.v1alpha1.org.Org/UpdateAgentTriggers"
 	// OrgCreateTrustProcedure is the fully-qualified name of the Org's CreateTrust RPC.
 	OrgCreateTrustProcedure = "/api.v1alpha1.org.Org/CreateTrust"
 	// OrgAcceptTrustProcedure is the fully-qualified name of the Org's AcceptTrust RPC.
@@ -809,6 +815,12 @@ type OrgClient interface {
 	UpdateHuntGroupClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.UpdateHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.UpdateHuntGroupClientInfoDisplayTemplateResponse], error)
 	// DeleteHuntGroupClientInfoDisplayTemplate deletes a client info display template for a given hunt group.
 	DeleteHuntGroupClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.DeleteHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.DeleteHuntGroupClientInfoDisplayTemplateResponse], error)
+	// ListAgentTriggers returns a list of agent triggers for the given hunt group.
+	ListAgentTriggers(context.Context, *connect_go.Request[org.ListAgentTriggersRequest]) (*connect_go.Response[org.ListAgentTriggersResponse], error)
+	// CopyAgentTrigger copys an agent trigger to the given hunt group in the same org.
+	CopyAgentTrigger(context.Context, *connect_go.Request[org.CopyAgentTriggerRequest]) (*connect_go.Response[org.CopyAgentTriggerResponse], error)
+	// UpdateAgentTriggers updates all agent triggers for the given hunt group.
+	UpdateAgentTriggers(context.Context, *connect_go.Request[org.UpdateAgentTriggersRequest]) (*connect_go.Response[org.UpdateAgentTriggersResponse], error)
 	// CreateTrust creates a new trust.
 	CreateTrust(context.Context, *connect_go.Request[org.CreateTrustRequest]) (*connect_go.Response[org.CreateTrustResponse], error)
 	// AcceptTrust accepts an incoming trust.
@@ -1596,6 +1608,21 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgDeleteHuntGroupClientInfoDisplayTemplateProcedure,
 			opts...,
 		),
+		listAgentTriggers: connect_go.NewClient[org.ListAgentTriggersRequest, org.ListAgentTriggersResponse](
+			httpClient,
+			baseURL+OrgListAgentTriggersProcedure,
+			opts...,
+		),
+		copyAgentTrigger: connect_go.NewClient[org.CopyAgentTriggerRequest, org.CopyAgentTriggerResponse](
+			httpClient,
+			baseURL+OrgCopyAgentTriggerProcedure,
+			opts...,
+		),
+		updateAgentTriggers: connect_go.NewClient[org.UpdateAgentTriggersRequest, org.UpdateAgentTriggersResponse](
+			httpClient,
+			baseURL+OrgUpdateAgentTriggersProcedure,
+			opts...,
+		),
 		createTrust: connect_go.NewClient[org.CreateTrustRequest, org.CreateTrustResponse](
 			httpClient,
 			baseURL+OrgCreateTrustProcedure,
@@ -1955,6 +1982,9 @@ type orgClient struct {
 	createHuntGroupClientInfoDisplayTemplate *connect_go.Client[org.CreateHuntGroupClientInfoDisplayTemplateRequest, org.CreateHuntGroupClientInfoDisplayTemplateResponse]
 	updateHuntGroupClientInfoDisplayTemplate *connect_go.Client[org.UpdateHuntGroupClientInfoDisplayTemplateRequest, org.UpdateHuntGroupClientInfoDisplayTemplateResponse]
 	deleteHuntGroupClientInfoDisplayTemplate *connect_go.Client[org.DeleteHuntGroupClientInfoDisplayTemplateRequest, org.DeleteHuntGroupClientInfoDisplayTemplateResponse]
+	listAgentTriggers                        *connect_go.Client[org.ListAgentTriggersRequest, org.ListAgentTriggersResponse]
+	copyAgentTrigger                         *connect_go.Client[org.CopyAgentTriggerRequest, org.CopyAgentTriggerResponse]
+	updateAgentTriggers                      *connect_go.Client[org.UpdateAgentTriggersRequest, org.UpdateAgentTriggersResponse]
 	createTrust                              *connect_go.Client[org.CreateTrustRequest, org.CreateTrustResponse]
 	acceptTrust                              *connect_go.Client[org.AcceptTrustRequest, org.AcceptTrustResponse]
 	rejectTrust                              *connect_go.Client[org.RejectTrustRequest, org.RejectTrustResponse]
@@ -2677,6 +2707,21 @@ func (c *orgClient) DeleteHuntGroupClientInfoDisplayTemplate(ctx context.Context
 	return c.deleteHuntGroupClientInfoDisplayTemplate.CallUnary(ctx, req)
 }
 
+// ListAgentTriggers calls api.v1alpha1.org.Org.ListAgentTriggers.
+func (c *orgClient) ListAgentTriggers(ctx context.Context, req *connect_go.Request[org.ListAgentTriggersRequest]) (*connect_go.Response[org.ListAgentTriggersResponse], error) {
+	return c.listAgentTriggers.CallUnary(ctx, req)
+}
+
+// CopyAgentTrigger calls api.v1alpha1.org.Org.CopyAgentTrigger.
+func (c *orgClient) CopyAgentTrigger(ctx context.Context, req *connect_go.Request[org.CopyAgentTriggerRequest]) (*connect_go.Response[org.CopyAgentTriggerResponse], error) {
+	return c.copyAgentTrigger.CallUnary(ctx, req)
+}
+
+// UpdateAgentTriggers calls api.v1alpha1.org.Org.UpdateAgentTriggers.
+func (c *orgClient) UpdateAgentTriggers(ctx context.Context, req *connect_go.Request[org.UpdateAgentTriggersRequest]) (*connect_go.Response[org.UpdateAgentTriggersResponse], error) {
+	return c.updateAgentTriggers.CallUnary(ctx, req)
+}
+
 // CreateTrust calls api.v1alpha1.org.Org.CreateTrust.
 func (c *orgClient) CreateTrust(ctx context.Context, req *connect_go.Request[org.CreateTrustRequest]) (*connect_go.Response[org.CreateTrustResponse], error) {
 	return c.createTrust.CallUnary(ctx, req)
@@ -3199,6 +3244,12 @@ type OrgHandler interface {
 	UpdateHuntGroupClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.UpdateHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.UpdateHuntGroupClientInfoDisplayTemplateResponse], error)
 	// DeleteHuntGroupClientInfoDisplayTemplate deletes a client info display template for a given hunt group.
 	DeleteHuntGroupClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.DeleteHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.DeleteHuntGroupClientInfoDisplayTemplateResponse], error)
+	// ListAgentTriggers returns a list of agent triggers for the given hunt group.
+	ListAgentTriggers(context.Context, *connect_go.Request[org.ListAgentTriggersRequest]) (*connect_go.Response[org.ListAgentTriggersResponse], error)
+	// CopyAgentTrigger copys an agent trigger to the given hunt group in the same org.
+	CopyAgentTrigger(context.Context, *connect_go.Request[org.CopyAgentTriggerRequest]) (*connect_go.Response[org.CopyAgentTriggerResponse], error)
+	// UpdateAgentTriggers updates all agent triggers for the given hunt group.
+	UpdateAgentTriggers(context.Context, *connect_go.Request[org.UpdateAgentTriggersRequest]) (*connect_go.Response[org.UpdateAgentTriggersResponse], error)
 	// CreateTrust creates a new trust.
 	CreateTrust(context.Context, *connect_go.Request[org.CreateTrustRequest]) (*connect_go.Response[org.CreateTrustResponse], error)
 	// AcceptTrust accepts an incoming trust.
@@ -3982,6 +4033,21 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.DeleteHuntGroupClientInfoDisplayTemplate,
 		opts...,
 	)
+	orgListAgentTriggersHandler := connect_go.NewUnaryHandler(
+		OrgListAgentTriggersProcedure,
+		svc.ListAgentTriggers,
+		opts...,
+	)
+	orgCopyAgentTriggerHandler := connect_go.NewUnaryHandler(
+		OrgCopyAgentTriggerProcedure,
+		svc.CopyAgentTrigger,
+		opts...,
+	)
+	orgUpdateAgentTriggersHandler := connect_go.NewUnaryHandler(
+		OrgUpdateAgentTriggersProcedure,
+		svc.UpdateAgentTriggers,
+		opts...,
+	)
 	orgCreateTrustHandler := connect_go.NewUnaryHandler(
 		OrgCreateTrustProcedure,
 		svc.CreateTrust,
@@ -4472,6 +4538,12 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 			orgUpdateHuntGroupClientInfoDisplayTemplateHandler.ServeHTTP(w, r)
 		case OrgDeleteHuntGroupClientInfoDisplayTemplateProcedure:
 			orgDeleteHuntGroupClientInfoDisplayTemplateHandler.ServeHTTP(w, r)
+		case OrgListAgentTriggersProcedure:
+			orgListAgentTriggersHandler.ServeHTTP(w, r)
+		case OrgCopyAgentTriggerProcedure:
+			orgCopyAgentTriggerHandler.ServeHTTP(w, r)
+		case OrgUpdateAgentTriggersProcedure:
+			orgUpdateAgentTriggersHandler.ServeHTTP(w, r)
 		case OrgCreateTrustProcedure:
 			orgCreateTrustHandler.ServeHTTP(w, r)
 		case OrgAcceptTrustProcedure:
@@ -5103,6 +5175,18 @@ func (UnimplementedOrgHandler) UpdateHuntGroupClientInfoDisplayTemplate(context.
 
 func (UnimplementedOrgHandler) DeleteHuntGroupClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.DeleteHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.DeleteHuntGroupClientInfoDisplayTemplateResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.DeleteHuntGroupClientInfoDisplayTemplate is not implemented"))
+}
+
+func (UnimplementedOrgHandler) ListAgentTriggers(context.Context, *connect_go.Request[org.ListAgentTriggersRequest]) (*connect_go.Response[org.ListAgentTriggersResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.ListAgentTriggers is not implemented"))
+}
+
+func (UnimplementedOrgHandler) CopyAgentTrigger(context.Context, *connect_go.Request[org.CopyAgentTriggerRequest]) (*connect_go.Response[org.CopyAgentTriggerResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.CopyAgentTrigger is not implemented"))
+}
+
+func (UnimplementedOrgHandler) UpdateAgentTriggers(context.Context, *connect_go.Request[org.UpdateAgentTriggersRequest]) (*connect_go.Response[org.UpdateAgentTriggersResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.UpdateAgentTriggers is not implemented"))
 }
 
 func (UnimplementedOrgHandler) CreateTrust(context.Context, *connect_go.Request[org.CreateTrustRequest]) (*connect_go.Response[org.CreateTrustResponse], error) {
