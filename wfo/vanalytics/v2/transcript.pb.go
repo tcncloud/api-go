@@ -12,6 +12,7 @@ import (
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	fieldmaskpb "google.golang.org/protobuf/types/known/fieldmaskpb"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
+	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
 	reflect "reflect"
 	sync "sync"
 )
@@ -23,7 +24,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Channel defines types of communication.
+// An enumeration of transcript communication channels.
 type Channel int32
 
 const (
@@ -70,10 +71,9 @@ func (Channel) EnumDescriptor() ([]byte, []int) {
 	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{0}
 }
 
-// ReviewStatus is an enumeration of a flagged transcripts review statuses.
-// Todo means there are flags that need review and have not been reviewed.
-// Done means every flag that needs review has been reviewed. None means zero
-// flags require review.
+// An enumeration of a flagged transcripts review statuses. Todo means there
+// are flags that need review and have not been reviewed. Done means every flag
+// that needs review has been reviewed. None means no flags require review.
 type ReviewStatus int32
 
 const (
@@ -123,27 +123,24 @@ func (ReviewStatus) EnumDescriptor() ([]byte, []int) {
 	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{1}
 }
 
-// A Transcript is the textualized interaction between two or more parties.
+// A textualized interaction between two or more participants.
 type Transcript struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// The metadata field contain metadata
-	// pertaining to the conversation type.
-	// They also contain the actual text of
-	// the transcript.
+	// Channel specific transcript metadata.
 	//
 	// Types that are assignable to Metadata:
 	//
 	//	*Transcript_Call
 	//	*Transcript_Sms
 	Metadata isTranscript_Metadata `protobuf_oneof:"metadata"`
-	// The type of communication.
+	// The communication channel of the transcript.
 	Channel Channel `protobuf:"varint,12,opt,name=channel,proto3,enum=wfo.vanalytics.v2.Channel" json:"channel,omitempty"`
-	// The time this transcript was started.
+	// The time the transcript was started.
 	StartTime *timestamppb.Timestamp `protobuf:"bytes,13,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
-	// The time this transcript was marked as deleted.
+	// The time the transcript was marked as deleted.
 	DeleteTime *timestamppb.Timestamp `protobuf:"bytes,15,opt,name=delete_time,json=deleteTime,proto3" json:"delete_time,omitempty"`
 	// The flag summary of the transcript.
 	FlagSummary *FlagSummary `protobuf:"bytes,16,opt,name=flag_summary,json=flagSummary,proto3" json:"flag_summary,omitempty"`
@@ -244,10 +241,12 @@ type isTranscript_Metadata interface {
 }
 
 type Transcript_Call struct {
+	// Call specific transcript metadata.
 	Call *Call `protobuf:"bytes,1,opt,name=call,proto3,oneof"`
 }
 
 type Transcript_Sms struct {
+	// Sms specific transcript metadata.
 	Sms *Sms `protobuf:"bytes,2,opt,name=sms,proto3,oneof"`
 }
 
@@ -349,7 +348,7 @@ func (x *FlagSummary) GetReviewStatus() ReviewStatus {
 	return ReviewStatus_REVIEW_STATUS_TODO
 }
 
-// A resource defining sms specific transcript metadata.
+// Sms specific transcript metadata.
 type Sms struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -357,7 +356,7 @@ type Sms struct {
 
 	// The unique identifier of the sms conversation.
 	ConversationSid int64 `protobuf:"varint,1,opt,name=conversation_sid,json=conversationSid,proto3" json:"conversation_sid,omitempty"`
-	// The threads of the sms conversation.
+	// The text from the sms in threads.
 	Threads []*Sms_Thread `protobuf:"bytes,2,rep,name=threads,proto3" json:"threads,omitempty"`
 }
 
@@ -407,19 +406,19 @@ func (x *Sms) GetThreads() []*Sms_Thread {
 	return nil
 }
 
-// Call defines channel specific transcript metadata.
+// Call specific transcript metadata.
 type Call struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// A unique identifier for a call.
+	// The unique identifier for the call.
 	CallSid int64 `protobuf:"varint,1,opt,name=call_sid,json=callSid,proto3" json:"call_sid,omitempty"`
 	// The type of call.
 	CallType commons.CallType_Enum `protobuf:"varint,2,opt,name=call_type,json=callType,proto3,enum=api.commons.CallType_Enum" json:"call_type,omitempty"`
 	// The total audio time of a call.
 	AudioTime uint32 `protobuf:"varint,3,opt,name=audio_time,json=audioTime,proto3" json:"audio_time,omitempty"`
-	// The threads of the call conversation.
+	// The text from the call in threads.
 	Threads []*Call_Thread `protobuf:"bytes,4,rep,name=threads,proto3" json:"threads,omitempty"`
 }
 
@@ -483,24 +482,26 @@ func (x *Call) GetThreads() []*Call_Thread {
 	return nil
 }
 
+// The request for the search transcripts RPC.
 type SearchTranscriptsRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Optional. Number of hits included in response.
-	// If not set, it will default to 10.
+	// Number of hits to include in response. Defaults to 10.
 	PageSize uint32 `protobuf:"varint,2,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
-	// Optional. The order by which transcripts will be listed. Follows sql order by
+	// The order by which transcripts will be listed. Follows SQL order by
 	// syntax. When not provided the order defaults to transcript_sid asc.
 	OrderBy string `protobuf:"bytes,3,opt,name=order_by,json=orderBy,proto3" json:"order_by,omitempty"`
-	// Optional. A field mask which defines which transcript fields to return.
-	// When the mask is empty all fields will be returned.
+	// A field mask which defines which transcript fields to return. When empty
+	// all transcript fields will be returned.
 	ReadMask *fieldmaskpb.FieldMask `protobuf:"bytes,4,opt,name=read_mask,json=readMask,proto3" json:"read_mask,omitempty"`
-	// Optional. Query by which to filter transcripts.
+	// Query by which to filter transcripts.
 	BoolQuery *TranscriptBoolQuery `protobuf:"bytes,5,opt,name=bool_query,json=boolQuery,proto3" json:"bool_query,omitempty"`
-	// Optional. Token for getting the next page of results.
+	// The next page token from a previous response.
 	PageToken string `protobuf:"bytes,6,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
+	// Configuration to enable and control text highlights.
+	Highlight *Highlight `protobuf:"bytes,7,opt,name=highlight,proto3" json:"highlight,omitempty"`
 }
 
 func (x *SearchTranscriptsRequest) Reset() {
@@ -570,21 +571,88 @@ func (x *SearchTranscriptsRequest) GetPageToken() string {
 	return ""
 }
 
+func (x *SearchTranscriptsRequest) GetHighlight() *Highlight {
+	if x != nil {
+		return x.Highlight
+	}
+	return nil
+}
+
+// Configuration to enable and control text highlights.
+type Highlight struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The prefix for highlighted text. Defaults to "{{" when empty.
+	Prefix string `protobuf:"bytes,1,opt,name=prefix,proto3" json:"prefix,omitempty"`
+	// The suffix for highlighted text. Defaults to "}}" when empty.
+	Suffix string `protobuf:"bytes,2,opt,name=suffix,proto3" json:"suffix,omitempty"`
+}
+
+func (x *Highlight) Reset() {
+	*x = Highlight{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Highlight) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Highlight) ProtoMessage() {}
+
+func (x *Highlight) ProtoReflect() protoreflect.Message {
+	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Highlight.ProtoReflect.Descriptor instead.
+func (*Highlight) Descriptor() ([]byte, []int) {
+	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *Highlight) GetPrefix() string {
+	if x != nil {
+		return x.Prefix
+	}
+	return ""
+}
+
+func (x *Highlight) GetSuffix() string {
+	if x != nil {
+		return x.Suffix
+	}
+	return ""
+}
+
+// The response for the search transcripts RPC.
 type SearchTranscriptsResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// One page of results.
+	// One page of search response hits.
 	Hits []*SearchTranscriptsResponse_Hit `protobuf:"bytes,1,rep,name=hits,proto3" json:"hits,omitempty"`
-	// Token for retrieving the next page of hits.
+	// A page token which can be provided on a follow up request to retrieve the
+	// next page of transcript hits.
 	NextPageToken string `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
 }
 
 func (x *SearchTranscriptsResponse) Reset() {
 	*x = SearchTranscriptsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[5]
+		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -597,7 +665,7 @@ func (x *SearchTranscriptsResponse) String() string {
 func (*SearchTranscriptsResponse) ProtoMessage() {}
 
 func (x *SearchTranscriptsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[5]
+	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -610,7 +678,7 @@ func (x *SearchTranscriptsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SearchTranscriptsResponse.ProtoReflect.Descriptor instead.
 func (*SearchTranscriptsResponse) Descriptor() ([]byte, []int) {
-	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{5}
+	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *SearchTranscriptsResponse) GetHits() []*SearchTranscriptsResponse_Hit {
@@ -627,19 +695,20 @@ func (x *SearchTranscriptsResponse) GetNextPageToken() string {
 	return ""
 }
 
-// A query used to filter the transcripts.
+// Boolean query to filter transcripts.
 type TranscriptBoolQuery struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// Query constraints on transcript.
 	Transcript *TranscriptQuery `protobuf:"bytes,1,opt,name=transcript,proto3" json:"transcript,omitempty"`
 }
 
 func (x *TranscriptBoolQuery) Reset() {
 	*x = TranscriptBoolQuery{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[6]
+		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -652,7 +721,7 @@ func (x *TranscriptBoolQuery) String() string {
 func (*TranscriptBoolQuery) ProtoMessage() {}
 
 func (x *TranscriptBoolQuery) ProtoReflect() protoreflect.Message {
-	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[6]
+	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -665,7 +734,7 @@ func (x *TranscriptBoolQuery) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TranscriptBoolQuery.ProtoReflect.Descriptor instead.
 func (*TranscriptBoolQuery) Descriptor() ([]byte, []int) {
-	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{6}
+	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *TranscriptBoolQuery) GetTranscript() *TranscriptQuery {
@@ -675,25 +744,26 @@ func (x *TranscriptBoolQuery) GetTranscript() *TranscriptQuery {
 	return nil
 }
 
+// Query to filter transcripts.
 type TranscriptQuery struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Optional. Transcript sid to filter by.
+	// Query constraints on transcript sid.
 	TranscriptSid *TranscriptQuery_TranscriptSid `protobuf:"bytes,1,opt,name=transcript_sid,json=transcriptSid,proto3" json:"transcript_sid,omitempty"`
-	// Optional. Channel to filter by.
+	// Query constraints on channel.
 	Channel *TranscriptQuery_Channel `protobuf:"bytes,2,opt,name=channel,proto3" json:"channel,omitempty"`
-	// Optional. Metadata to filter by.
+	// Query constraints on metadata.
 	Metadata *TranscriptQuery_Metadata `protobuf:"bytes,3,opt,name=metadata,proto3" json:"metadata,omitempty"`
-	// Optional. Criteria for filtering by the text of the transcript.
+	// Query constraints on threads.
 	Threads *TranscriptQuery_Threads `protobuf:"bytes,4,opt,name=threads,proto3" json:"threads,omitempty"`
 }
 
 func (x *TranscriptQuery) Reset() {
 	*x = TranscriptQuery{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[7]
+		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[8]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -706,7 +776,7 @@ func (x *TranscriptQuery) String() string {
 func (*TranscriptQuery) ProtoMessage() {}
 
 func (x *TranscriptQuery) ProtoReflect() protoreflect.Message {
-	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[7]
+	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[8]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -719,7 +789,7 @@ func (x *TranscriptQuery) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TranscriptQuery.ProtoReflect.Descriptor instead.
 func (*TranscriptQuery) Descriptor() ([]byte, []int) {
-	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{7}
+	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *TranscriptQuery) GetTranscriptSid() *TranscriptQuery_TranscriptSid {
@@ -750,8 +820,8 @@ func (x *TranscriptQuery) GetThreads() *TranscriptQuery_Threads {
 	return nil
 }
 
-// FuzzinessAuto defines an automatic max allowable edit distance based on the
-// length of the match text.
+// Defines an automatic max allowable edit distance based on the length of the
+// text to match.
 //
 // length  <  low -- Must match exactly.
 // length  < high -- Must match with one edit allowed.
@@ -761,16 +831,16 @@ type FuzzinessAuto struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// The match text low length threshold.
+	// The low length threshold.
 	Low uint32 `protobuf:"varint,1,opt,name=low,proto3" json:"low,omitempty"`
-	// The match text high length threshold.
+	// The high length threshold.
 	High uint32 `protobuf:"varint,2,opt,name=high,proto3" json:"high,omitempty"`
 }
 
 func (x *FuzzinessAuto) Reset() {
 	*x = FuzzinessAuto{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[8]
+		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[9]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -783,7 +853,7 @@ func (x *FuzzinessAuto) String() string {
 func (*FuzzinessAuto) ProtoMessage() {}
 
 func (x *FuzzinessAuto) ProtoReflect() protoreflect.Message {
-	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[8]
+	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[9]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -796,7 +866,7 @@ func (x *FuzzinessAuto) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FuzzinessAuto.ProtoReflect.Descriptor instead.
 func (*FuzzinessAuto) Descriptor() ([]byte, []int) {
-	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{8}
+	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *FuzzinessAuto) GetLow() uint32 {
@@ -813,23 +883,22 @@ func (x *FuzzinessAuto) GetHigh() uint32 {
 	return 0
 }
 
-// Used for a basic text match.
+// Query text terms with optional fuzziness.
 type Match struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// The text to be matched.
+	// Required. The text to be matched. The field may contain multiple terms
+	// to match when separated by spaces.
 	Text string `protobuf:"bytes,1,opt,name=text,proto3" json:"text,omitempty"`
-	// Optional. Operator must be one of: (AND, OR). Defaults to OR when empty.
-	// When the match text contains multiple terms separated by spaces the
-	// operator determines whether any or all of the terms must be matched.
+	// Determines whether any or all of the terms must be matched. Operator must
+	// be one of: (AND, OR). Defaults to OR when empty.
 	Operator string `protobuf:"bytes,2,opt,name=operator,proto3" json:"operator,omitempty"`
-	// Allows the term to be spelled slightly incorrect and still
-	// match. The fuzziness_value can have the values 0, 1, or 2; 0 would require
-	// that the term matches exactly, 2 would allow 2 letter differences.
-	// The fuzziness_auto would automatically pick a number based on the
-	// word length within the given bounds.
+	// Fuzziness controls the maximum edit distance that a similar term can have
+	// and be considered a match. For example, the edit distance between cat and
+	// bat would be 1 since only one letter is different. The edit distance
+	// between unity and united would be 2. Fuzziness auto is recommended.
 	//
 	// Types that are assignable to Fuzziness:
 	//
@@ -841,7 +910,7 @@ type Match struct {
 func (x *Match) Reset() {
 	*x = Match{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[9]
+		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[10]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -854,7 +923,7 @@ func (x *Match) String() string {
 func (*Match) ProtoMessage() {}
 
 func (x *Match) ProtoReflect() protoreflect.Message {
-	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[9]
+	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[10]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -867,7 +936,7 @@ func (x *Match) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Match.ProtoReflect.Descriptor instead.
 func (*Match) Descriptor() ([]byte, []int) {
-	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{9}
+	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *Match) GetText() string {
@@ -910,10 +979,12 @@ type isMatch_Fuzziness interface {
 }
 
 type Match_FuzzinessAuto struct {
+	// Variable fuzziness based on the match term length.
 	FuzzinessAuto *FuzzinessAuto `protobuf:"bytes,15,opt,name=fuzziness_auto,json=fuzzinessAuto,proto3,oneof"`
 }
 
 type Match_FuzzinessValue struct {
+	// Constant fuzziness with allowed range from 0, 1 and 2.
 	FuzzinessValue uint32 `protobuf:"varint,16,opt,name=fuzziness_value,json=fuzzinessValue,proto3,oneof"`
 }
 
@@ -921,25 +992,26 @@ func (*Match_FuzzinessAuto) isMatch_Fuzziness() {}
 
 func (*Match_FuzzinessValue) isMatch_Fuzziness() {}
 
+// Query which matches a list of clauses that are near to each other.
 type SpanNear struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// The number of extra terms that can be in the query that
-	// are not being searched for. For example: slop of 2 when searching for
-	// "This is my dog" would allow "This is my quick brown dog".
+	// The number of allowed non matching terms within the span. For example, a
+	// slop of 2 when searching for "This is my dog" would allow a match on
+	// "This is my quick brown dog".
 	Slop int32 `protobuf:"varint,1,opt,name=slop,proto3" json:"slop,omitempty"`
-	// When in_order is true then the terms must be found in the order given.
+	// Requires clauses to be matched in the order.
 	InOrder bool `protobuf:"varint,2,opt,name=in_order,json=inOrder,proto3" json:"in_order,omitempty"`
-	// TODO: ???
+	// Required. The clauses to be matched.
 	Clauses []*SpanNear_Clause `protobuf:"bytes,3,rep,name=clauses,proto3" json:"clauses,omitempty"`
 }
 
 func (x *SpanNear) Reset() {
 	*x = SpanNear{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[10]
+		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[11]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -952,7 +1024,7 @@ func (x *SpanNear) String() string {
 func (*SpanNear) ProtoMessage() {}
 
 func (x *SpanNear) ProtoReflect() protoreflect.Message {
-	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[10]
+	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[11]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -965,7 +1037,7 @@ func (x *SpanNear) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SpanNear.ProtoReflect.Descriptor instead.
 func (*SpanNear) Descriptor() ([]byte, []int) {
-	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{10}
+	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *SpanNear) GetSlop() int32 {
@@ -989,20 +1061,20 @@ func (x *SpanNear) GetClauses() []*SpanNear_Clause {
 	return nil
 }
 
-// Represents a text term to match against.
+// Query which matches a span term exactly.
 type SpanTerm struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// The text to be matched.
+	// Required. The value to be matched.
 	Value string `protobuf:"bytes,1,opt,name=value,proto3" json:"value,omitempty"`
 }
 
 func (x *SpanTerm) Reset() {
 	*x = SpanTerm{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[11]
+		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[12]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1015,7 +1087,7 @@ func (x *SpanTerm) String() string {
 func (*SpanTerm) ProtoMessage() {}
 
 func (x *SpanTerm) ProtoReflect() protoreflect.Message {
-	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[11]
+	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[12]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1028,7 +1100,7 @@ func (x *SpanTerm) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SpanTerm.ProtoReflect.Descriptor instead.
 func (*SpanTerm) Descriptor() ([]byte, []int) {
-	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{11}
+	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *SpanTerm) GetValue() string {
@@ -1038,19 +1110,18 @@ func (x *SpanTerm) GetValue() string {
 	return ""
 }
 
-// Represents a fuzzy text match.
+// Query which matches a span term with fuzziness.
 type SpanFuzzy struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// The text to match against.
+	// Required. The value to be fuzzy matched.
 	Value string `protobuf:"bytes,1,opt,name=value,proto3" json:"value,omitempty"`
-	// Allows the term to be spelled slightly incorrect and still
-	// match. The fuzziness_value can have the values 0, 1, or 2; 0 would require
-	// that the term matches exactly, 2 would allow 2 letter differences.
-	// The fuzziness_auto would automatically pick a number based on the
-	// word length within the given bounds.
+	// Fuzziness controls the maximum edit distance that a similar term can have
+	// and be considered a match. For example, the edit distance between cat and
+	// bat would be 1 since only one letter is different. The edit distance
+	// between unity and united would be 2. Fuzziness auto is recommended.
 	//
 	// Types that are assignable to Fuzziness:
 	//
@@ -1062,7 +1133,7 @@ type SpanFuzzy struct {
 func (x *SpanFuzzy) Reset() {
 	*x = SpanFuzzy{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[12]
+		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[13]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1075,7 +1146,7 @@ func (x *SpanFuzzy) String() string {
 func (*SpanFuzzy) ProtoMessage() {}
 
 func (x *SpanFuzzy) ProtoReflect() protoreflect.Message {
-	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[12]
+	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[13]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1088,7 +1159,7 @@ func (x *SpanFuzzy) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SpanFuzzy.ProtoReflect.Descriptor instead.
 func (*SpanFuzzy) Descriptor() ([]byte, []int) {
-	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{12}
+	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *SpanFuzzy) GetValue() string {
@@ -1124,10 +1195,12 @@ type isSpanFuzzy_Fuzziness interface {
 }
 
 type SpanFuzzy_FuzzinessAuto struct {
+	// Variable fuzziness based on the match term length.
 	FuzzinessAuto *FuzzinessAuto `protobuf:"bytes,10,opt,name=fuzziness_auto,json=fuzzinessAuto,proto3,oneof"`
 }
 
 type SpanFuzzy_FuzzinessValue struct {
+	// Constant fuzziness with allowed range from 0, 1 and 2.
 	FuzzinessValue uint32 `protobuf:"varint,11,opt,name=fuzziness_value,json=fuzzinessValue,proto3,oneof"`
 }
 
@@ -1154,7 +1227,7 @@ type FlagSummary_NeedReview struct {
 func (x *FlagSummary_NeedReview) Reset() {
 	*x = FlagSummary_NeedReview{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[13]
+		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[14]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1167,7 +1240,7 @@ func (x *FlagSummary_NeedReview) String() string {
 func (*FlagSummary_NeedReview) ProtoMessage() {}
 
 func (x *FlagSummary_NeedReview) ProtoReflect() protoreflect.Message {
-	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[13]
+	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[14]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1239,7 +1312,7 @@ type FlagSummary_Flag struct {
 func (x *FlagSummary_Flag) Reset() {
 	*x = FlagSummary_Flag{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[14]
+		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[15]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1252,7 +1325,7 @@ func (x *FlagSummary_Flag) String() string {
 func (*FlagSummary_Flag) ProtoMessage() {}
 
 func (x *FlagSummary_Flag) ProtoReflect() protoreflect.Message {
-	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[14]
+	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[15]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1345,7 +1418,7 @@ type FlagSummary_Filter struct {
 func (x *FlagSummary_Filter) Reset() {
 	*x = FlagSummary_Filter{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[15]
+		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[16]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1358,7 +1431,7 @@ func (x *FlagSummary_Filter) String() string {
 func (*FlagSummary_Filter) ProtoMessage() {}
 
 func (x *FlagSummary_Filter) ProtoReflect() protoreflect.Message {
-	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[15]
+	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[16]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1426,7 +1499,7 @@ type FlagSummary_Review struct {
 func (x *FlagSummary_Review) Reset() {
 	*x = FlagSummary_Review{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[16]
+		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[17]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1439,7 +1512,7 @@ func (x *FlagSummary_Review) String() string {
 func (*FlagSummary_Review) ProtoMessage() {}
 
 func (x *FlagSummary_Review) ProtoReflect() protoreflect.Message {
-	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[16]
+	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[17]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1476,22 +1549,22 @@ func (x *FlagSummary_Review) GetUserId() string {
 	return ""
 }
 
-// Thread contains the text of the transcript
+// A thread is the text from one participant.
 type Sms_Thread struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// A unique identifier for the thread.
+	// The unique identifier of the thread.
 	Id int32 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	// A segment contains text of the thread.
+	// The text of the thread in segments.
 	Segments []*Sms_Segment `protobuf:"bytes,2,rep,name=segments,proto3" json:"segments,omitempty"`
 }
 
 func (x *Sms_Thread) Reset() {
 	*x = Sms_Thread{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[17]
+		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[18]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1504,7 +1577,7 @@ func (x *Sms_Thread) String() string {
 func (*Sms_Thread) ProtoMessage() {}
 
 func (x *Sms_Thread) ProtoReflect() protoreflect.Message {
-	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[17]
+	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[18]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1534,7 +1607,7 @@ func (x *Sms_Thread) GetSegments() []*Sms_Segment {
 	return nil
 }
 
-// The text of a segment of a thread of a conversation.
+// A segment of text.
 type Sms_Segment struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1546,7 +1619,7 @@ type Sms_Segment struct {
 func (x *Sms_Segment) Reset() {
 	*x = Sms_Segment{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[18]
+		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[19]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1559,7 +1632,7 @@ func (x *Sms_Segment) String() string {
 func (*Sms_Segment) ProtoMessage() {}
 
 func (x *Sms_Segment) ProtoReflect() protoreflect.Message {
-	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[18]
+	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[19]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1582,22 +1655,22 @@ func (x *Sms_Segment) GetText() string {
 	return ""
 }
 
-// The text of the call.
+// A thread is the text from one participant.
 type Call_Thread struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// A unique identifier for a thread.
+	// The unique identifier of the thread.
 	Id int32 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	// The segments of a thread.
+	// The text of the thread in segments.
 	Segments []*Call_Segment `protobuf:"bytes,2,rep,name=segments,proto3" json:"segments,omitempty"`
 }
 
 func (x *Call_Thread) Reset() {
 	*x = Call_Thread{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[19]
+		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[20]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1610,7 +1683,7 @@ func (x *Call_Thread) String() string {
 func (*Call_Thread) ProtoMessage() {}
 
 func (x *Call_Thread) ProtoReflect() protoreflect.Message {
-	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[19]
+	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[20]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1640,7 +1713,7 @@ func (x *Call_Thread) GetSegments() []*Call_Segment {
 	return nil
 }
 
-// The text of a segment of a thread of a call.
+// A segment of text.
 type Call_Segment struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1652,7 +1725,7 @@ type Call_Segment struct {
 func (x *Call_Segment) Reset() {
 	*x = Call_Segment{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[20]
+		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[21]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1665,7 +1738,7 @@ func (x *Call_Segment) String() string {
 func (*Call_Segment) ProtoMessage() {}
 
 func (x *Call_Segment) ProtoReflect() protoreflect.Message {
-	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[20]
+	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[21]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1688,20 +1761,20 @@ func (x *Call_Segment) GetText() string {
 	return ""
 }
 
-// A matching result.
+// A search response hit.
 type SearchTranscriptsResponse_Hit struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// A matching transcript.
+	// A transcript which matched the transcript query.
 	Transcript *Transcript `protobuf:"bytes,1,opt,name=transcript,proto3" json:"transcript,omitempty"`
 }
 
 func (x *SearchTranscriptsResponse_Hit) Reset() {
 	*x = SearchTranscriptsResponse_Hit{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[21]
+		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[22]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1714,7 +1787,7 @@ func (x *SearchTranscriptsResponse_Hit) String() string {
 func (*SearchTranscriptsResponse_Hit) ProtoMessage() {}
 
 func (x *SearchTranscriptsResponse_Hit) ProtoReflect() protoreflect.Message {
-	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[21]
+	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[22]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1727,7 +1800,7 @@ func (x *SearchTranscriptsResponse_Hit) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SearchTranscriptsResponse_Hit.ProtoReflect.Descriptor instead.
 func (*SearchTranscriptsResponse_Hit) Descriptor() ([]byte, []int) {
-	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{5, 0}
+	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{6, 0}
 }
 
 func (x *SearchTranscriptsResponse_Hit) GetTranscript() *Transcript {
@@ -1737,20 +1810,20 @@ func (x *SearchTranscriptsResponse_Hit) GetTranscript() *Transcript {
 	return nil
 }
 
-// Represents a list of transcripts
+// Query constraints on transcript sid.
 type TranscriptQuery_TranscriptSid struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Will match any transcript with a transcript sid in the list.
+	// Requires all transcript hits to have a transcript sid in the list.
 	Any []int64 `protobuf:"varint,1,rep,packed,name=any,proto3" json:"any,omitempty"`
 }
 
 func (x *TranscriptQuery_TranscriptSid) Reset() {
 	*x = TranscriptQuery_TranscriptSid{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[22]
+		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[23]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1763,7 +1836,7 @@ func (x *TranscriptQuery_TranscriptSid) String() string {
 func (*TranscriptQuery_TranscriptSid) ProtoMessage() {}
 
 func (x *TranscriptQuery_TranscriptSid) ProtoReflect() protoreflect.Message {
-	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[22]
+	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[23]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1776,7 +1849,7 @@ func (x *TranscriptQuery_TranscriptSid) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TranscriptQuery_TranscriptSid.ProtoReflect.Descriptor instead.
 func (*TranscriptQuery_TranscriptSid) Descriptor() ([]byte, []int) {
-	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{7, 0}
+	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{8, 0}
 }
 
 func (x *TranscriptQuery_TranscriptSid) GetAny() []int64 {
@@ -1786,20 +1859,20 @@ func (x *TranscriptQuery_TranscriptSid) GetAny() []int64 {
 	return nil
 }
 
-// Represents a list of channels
+// Query constraints on channel.
 type TranscriptQuery_Channel struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Will match any transcript with a channel in the list.
+	// Requires all transcript hits to have a channel in the list.
 	Any []Channel `protobuf:"varint,1,rep,packed,name=any,proto3,enum=wfo.vanalytics.v2.Channel" json:"any,omitempty"`
 }
 
 func (x *TranscriptQuery_Channel) Reset() {
 	*x = TranscriptQuery_Channel{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[23]
+		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[24]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1812,7 +1885,7 @@ func (x *TranscriptQuery_Channel) String() string {
 func (*TranscriptQuery_Channel) ProtoMessage() {}
 
 func (x *TranscriptQuery_Channel) ProtoReflect() protoreflect.Message {
-	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[23]
+	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[24]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1825,7 +1898,7 @@ func (x *TranscriptQuery_Channel) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TranscriptQuery_Channel.ProtoReflect.Descriptor instead.
 func (*TranscriptQuery_Channel) Descriptor() ([]byte, []int) {
-	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{7, 1}
+	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{8, 1}
 }
 
 func (x *TranscriptQuery_Channel) GetAny() []Channel {
@@ -1835,20 +1908,22 @@ func (x *TranscriptQuery_Channel) GetAny() []Channel {
 	return nil
 }
 
-// Resource to query on channel specific data.
+// Query constraints on metadata.
 type TranscriptQuery_Metadata struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// Query constraints on call metadata.
 	Call *TranscriptQuery_Call `protobuf:"bytes,1,opt,name=call,proto3" json:"call,omitempty"`
-	Sms  *TranscriptQuery_Sms  `protobuf:"bytes,2,opt,name=sms,proto3" json:"sms,omitempty"`
+	// Query constraints on sms metadata.
+	Sms *TranscriptQuery_Sms `protobuf:"bytes,2,opt,name=sms,proto3" json:"sms,omitempty"`
 }
 
 func (x *TranscriptQuery_Metadata) Reset() {
 	*x = TranscriptQuery_Metadata{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[24]
+		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[25]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1861,7 +1936,7 @@ func (x *TranscriptQuery_Metadata) String() string {
 func (*TranscriptQuery_Metadata) ProtoMessage() {}
 
 func (x *TranscriptQuery_Metadata) ProtoReflect() protoreflect.Message {
-	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[24]
+	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[25]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1874,7 +1949,7 @@ func (x *TranscriptQuery_Metadata) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TranscriptQuery_Metadata.ProtoReflect.Descriptor instead.
 func (*TranscriptQuery_Metadata) Descriptor() ([]byte, []int) {
-	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{7, 2}
+	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{8, 2}
 }
 
 func (x *TranscriptQuery_Metadata) GetCall() *TranscriptQuery_Call {
@@ -1891,20 +1966,24 @@ func (x *TranscriptQuery_Metadata) GetSms() *TranscriptQuery_Sms {
 	return nil
 }
 
-// Resource to query on call specific data.
+// Query constraints on call metadata.
 type TranscriptQuery_Call struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Used to query for specific calls.
+	// Query constraints on call sid.
 	CallSid *TranscriptQuery_Call_CallSid `protobuf:"bytes,1,opt,name=call_sid,json=callSid,proto3" json:"call_sid,omitempty"`
+	// Query constraints on audio time.
+	AudioTime *TranscriptQuery_Call_AudioTime `protobuf:"bytes,2,opt,name=audio_time,json=audioTime,proto3" json:"audio_time,omitempty"`
+	// Query constraints on call type.
+	CallType *TranscriptQuery_Call_CallType `protobuf:"bytes,3,opt,name=call_type,json=callType,proto3" json:"call_type,omitempty"`
 }
 
 func (x *TranscriptQuery_Call) Reset() {
 	*x = TranscriptQuery_Call{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[25]
+		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[26]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1917,7 +1996,7 @@ func (x *TranscriptQuery_Call) String() string {
 func (*TranscriptQuery_Call) ProtoMessage() {}
 
 func (x *TranscriptQuery_Call) ProtoReflect() protoreflect.Message {
-	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[25]
+	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[26]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1930,7 +2009,7 @@ func (x *TranscriptQuery_Call) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TranscriptQuery_Call.ProtoReflect.Descriptor instead.
 func (*TranscriptQuery_Call) Descriptor() ([]byte, []int) {
-	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{7, 3}
+	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{8, 3}
 }
 
 func (x *TranscriptQuery_Call) GetCallSid() *TranscriptQuery_Call_CallSid {
@@ -1940,20 +2019,34 @@ func (x *TranscriptQuery_Call) GetCallSid() *TranscriptQuery_Call_CallSid {
 	return nil
 }
 
-// Resource to query on sms specific data.
+func (x *TranscriptQuery_Call) GetAudioTime() *TranscriptQuery_Call_AudioTime {
+	if x != nil {
+		return x.AudioTime
+	}
+	return nil
+}
+
+func (x *TranscriptQuery_Call) GetCallType() *TranscriptQuery_Call_CallType {
+	if x != nil {
+		return x.CallType
+	}
+	return nil
+}
+
+// Query constraints on sms metadata.
 type TranscriptQuery_Sms struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Used to query for specific sms conversations.
+	// Query constraints on conversation sid.
 	ConversationSid *TranscriptQuery_Sms_ConversationSid `protobuf:"bytes,1,opt,name=conversation_sid,json=conversationSid,proto3" json:"conversation_sid,omitempty"`
 }
 
 func (x *TranscriptQuery_Sms) Reset() {
 	*x = TranscriptQuery_Sms{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[26]
+		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[27]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1966,7 +2059,7 @@ func (x *TranscriptQuery_Sms) String() string {
 func (*TranscriptQuery_Sms) ProtoMessage() {}
 
 func (x *TranscriptQuery_Sms) ProtoReflect() protoreflect.Message {
-	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[26]
+	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[27]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1979,7 +2072,7 @@ func (x *TranscriptQuery_Sms) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TranscriptQuery_Sms.ProtoReflect.Descriptor instead.
 func (*TranscriptQuery_Sms) Descriptor() ([]byte, []int) {
-	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{7, 4}
+	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{8, 4}
 }
 
 func (x *TranscriptQuery_Sms) GetConversationSid() *TranscriptQuery_Sms_ConversationSid {
@@ -1989,22 +2082,22 @@ func (x *TranscriptQuery_Sms) GetConversationSid() *TranscriptQuery_Sms_Conversa
 	return nil
 }
 
-// Resource to query for text in the threads.
+// Query constraints on threads.
 type TranscriptQuery_Threads struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Used to query for specific thread ids.
+	// Query constraints on thread id.
 	Id *TranscriptQuery_Threads_Id `protobuf:"bytes,4,opt,name=id,proto3" json:"id,omitempty"`
-	// Used to query for text within the threads
+	// Query constraints on thread text.
 	Text *TranscriptQuery_Threads_Text `protobuf:"bytes,5,opt,name=text,proto3" json:"text,omitempty"`
 }
 
 func (x *TranscriptQuery_Threads) Reset() {
 	*x = TranscriptQuery_Threads{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[27]
+		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[28]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2017,7 +2110,7 @@ func (x *TranscriptQuery_Threads) String() string {
 func (*TranscriptQuery_Threads) ProtoMessage() {}
 
 func (x *TranscriptQuery_Threads) ProtoReflect() protoreflect.Message {
-	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[27]
+	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[28]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2030,7 +2123,7 @@ func (x *TranscriptQuery_Threads) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TranscriptQuery_Threads.ProtoReflect.Descriptor instead.
 func (*TranscriptQuery_Threads) Descriptor() ([]byte, []int) {
-	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{7, 5}
+	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{8, 5}
 }
 
 func (x *TranscriptQuery_Threads) GetId() *TranscriptQuery_Threads_Id {
@@ -2047,20 +2140,71 @@ func (x *TranscriptQuery_Threads) GetText() *TranscriptQuery_Threads_Text {
 	return nil
 }
 
-// Represents a set of calls.
+// Query constraints on call type.
+type TranscriptQuery_Call_CallType struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Requires all call specific transcript hits to have a call type in the
+	// list.
+	Any []commons.CallType_Enum `protobuf:"varint,1,rep,packed,name=any,proto3,enum=api.commons.CallType_Enum" json:"any,omitempty"`
+}
+
+func (x *TranscriptQuery_Call_CallType) Reset() {
+	*x = TranscriptQuery_Call_CallType{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[29]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TranscriptQuery_Call_CallType) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TranscriptQuery_Call_CallType) ProtoMessage() {}
+
+func (x *TranscriptQuery_Call_CallType) ProtoReflect() protoreflect.Message {
+	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[29]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TranscriptQuery_Call_CallType.ProtoReflect.Descriptor instead.
+func (*TranscriptQuery_Call_CallType) Descriptor() ([]byte, []int) {
+	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{8, 3, 0}
+}
+
+func (x *TranscriptQuery_Call_CallType) GetAny() []commons.CallType_Enum {
+	if x != nil {
+		return x.Any
+	}
+	return nil
+}
+
+// Query constraints on call sid.
 type TranscriptQuery_Call_CallSid struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Will match any call with a call_sid in the list.
+	// Requires all call specific transcript hits to have a call sid in the
+	// list.
 	Any []int64 `protobuf:"varint,1,rep,packed,name=any,proto3" json:"any,omitempty"`
 }
 
 func (x *TranscriptQuery_Call_CallSid) Reset() {
 	*x = TranscriptQuery_Call_CallSid{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[28]
+		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[30]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2073,7 +2217,7 @@ func (x *TranscriptQuery_Call_CallSid) String() string {
 func (*TranscriptQuery_Call_CallSid) ProtoMessage() {}
 
 func (x *TranscriptQuery_Call_CallSid) ProtoReflect() protoreflect.Message {
-	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[28]
+	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[30]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2086,7 +2230,7 @@ func (x *TranscriptQuery_Call_CallSid) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TranscriptQuery_Call_CallSid.ProtoReflect.Descriptor instead.
 func (*TranscriptQuery_Call_CallSid) Descriptor() ([]byte, []int) {
-	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{7, 3, 0}
+	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{8, 3, 1}
 }
 
 func (x *TranscriptQuery_Call_CallSid) GetAny() []int64 {
@@ -2096,20 +2240,97 @@ func (x *TranscriptQuery_Call_CallSid) GetAny() []int64 {
 	return nil
 }
 
-// Represents a set of sms conversations.
+// Query constraints on audio time.
+type TranscriptQuery_Call_AudioTime struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Queries where greater than or equal.
+	Gte *wrapperspb.Int32Value `protobuf:"bytes,1,opt,name=gte,proto3" json:"gte,omitempty"`
+	// Queries where less than or equal.
+	Lte *wrapperspb.Int32Value `protobuf:"bytes,2,opt,name=lte,proto3" json:"lte,omitempty"`
+	// Queries where greater than.
+	Gt *wrapperspb.Int32Value `protobuf:"bytes,3,opt,name=gt,proto3" json:"gt,omitempty"`
+	// Queries where less than.
+	Lt *wrapperspb.Int32Value `protobuf:"bytes,4,opt,name=lt,proto3" json:"lt,omitempty"`
+}
+
+func (x *TranscriptQuery_Call_AudioTime) Reset() {
+	*x = TranscriptQuery_Call_AudioTime{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[31]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TranscriptQuery_Call_AudioTime) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TranscriptQuery_Call_AudioTime) ProtoMessage() {}
+
+func (x *TranscriptQuery_Call_AudioTime) ProtoReflect() protoreflect.Message {
+	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[31]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TranscriptQuery_Call_AudioTime.ProtoReflect.Descriptor instead.
+func (*TranscriptQuery_Call_AudioTime) Descriptor() ([]byte, []int) {
+	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{8, 3, 2}
+}
+
+func (x *TranscriptQuery_Call_AudioTime) GetGte() *wrapperspb.Int32Value {
+	if x != nil {
+		return x.Gte
+	}
+	return nil
+}
+
+func (x *TranscriptQuery_Call_AudioTime) GetLte() *wrapperspb.Int32Value {
+	if x != nil {
+		return x.Lte
+	}
+	return nil
+}
+
+func (x *TranscriptQuery_Call_AudioTime) GetGt() *wrapperspb.Int32Value {
+	if x != nil {
+		return x.Gt
+	}
+	return nil
+}
+
+func (x *TranscriptQuery_Call_AudioTime) GetLt() *wrapperspb.Int32Value {
+	if x != nil {
+		return x.Lt
+	}
+	return nil
+}
+
+// Query constraints on conversation sid.
 type TranscriptQuery_Sms_ConversationSid struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Will match any sms with a conversation_sid in the list.
+	// Requires all sms specific transcript hits to have a conversation sid
+	// in the list.
 	Any []int64 `protobuf:"varint,1,rep,packed,name=any,proto3" json:"any,omitempty"`
 }
 
 func (x *TranscriptQuery_Sms_ConversationSid) Reset() {
 	*x = TranscriptQuery_Sms_ConversationSid{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[29]
+		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[32]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2122,7 +2343,7 @@ func (x *TranscriptQuery_Sms_ConversationSid) String() string {
 func (*TranscriptQuery_Sms_ConversationSid) ProtoMessage() {}
 
 func (x *TranscriptQuery_Sms_ConversationSid) ProtoReflect() protoreflect.Message {
-	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[29]
+	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[32]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2135,7 +2356,7 @@ func (x *TranscriptQuery_Sms_ConversationSid) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use TranscriptQuery_Sms_ConversationSid.ProtoReflect.Descriptor instead.
 func (*TranscriptQuery_Sms_ConversationSid) Descriptor() ([]byte, []int) {
-	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{7, 4, 0}
+	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{8, 4, 0}
 }
 
 func (x *TranscriptQuery_Sms_ConversationSid) GetAny() []int64 {
@@ -2145,20 +2366,20 @@ func (x *TranscriptQuery_Sms_ConversationSid) GetAny() []int64 {
 	return nil
 }
 
-// Represents a set of threads.
+// Query constraints on thread id.
 type TranscriptQuery_Threads_Id struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Will match any thread with a thread id in the list.
+	// Requires all transcript hits to have a thread id in the list.
 	Any []int32 `protobuf:"varint,1,rep,packed,name=any,proto3" json:"any,omitempty"`
 }
 
 func (x *TranscriptQuery_Threads_Id) Reset() {
 	*x = TranscriptQuery_Threads_Id{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[30]
+		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[33]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2171,7 +2392,7 @@ func (x *TranscriptQuery_Threads_Id) String() string {
 func (*TranscriptQuery_Threads_Id) ProtoMessage() {}
 
 func (x *TranscriptQuery_Threads_Id) ProtoReflect() protoreflect.Message {
-	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[30]
+	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[33]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2184,7 +2405,7 @@ func (x *TranscriptQuery_Threads_Id) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TranscriptQuery_Threads_Id.ProtoReflect.Descriptor instead.
 func (*TranscriptQuery_Threads_Id) Descriptor() ([]byte, []int) {
-	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{7, 5, 0}
+	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{8, 5, 0}
 }
 
 func (x *TranscriptQuery_Threads_Id) GetAny() []int32 {
@@ -2194,22 +2415,22 @@ func (x *TranscriptQuery_Threads_Id) GetAny() []int32 {
 	return nil
 }
 
-// Represents text to match.
+// Query constraints on thread text.
 type TranscriptQuery_Threads_Text struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Used for a more basic text match.
+	// Query text terms with optional fuzziness.
 	Match *Match `protobuf:"bytes,1,opt,name=match,proto3" json:"match,omitempty"`
-	// Used for a more advanced text match.
+	// Query text phrases.
 	SpanNear *SpanNear `protobuf:"bytes,2,opt,name=span_near,json=spanNear,proto3" json:"span_near,omitempty"`
 }
 
 func (x *TranscriptQuery_Threads_Text) Reset() {
 	*x = TranscriptQuery_Threads_Text{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[31]
+		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[34]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2222,7 +2443,7 @@ func (x *TranscriptQuery_Threads_Text) String() string {
 func (*TranscriptQuery_Threads_Text) ProtoMessage() {}
 
 func (x *TranscriptQuery_Threads_Text) ProtoReflect() protoreflect.Message {
-	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[31]
+	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[34]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2235,7 +2456,7 @@ func (x *TranscriptQuery_Threads_Text) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TranscriptQuery_Threads_Text.ProtoReflect.Descriptor instead.
 func (*TranscriptQuery_Threads_Text) Descriptor() ([]byte, []int) {
-	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{7, 5, 1}
+	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{8, 5, 1}
 }
 
 func (x *TranscriptQuery_Threads_Text) GetMatch() *Match {
@@ -2252,12 +2473,13 @@ func (x *TranscriptQuery_Threads_Text) GetSpanNear() *SpanNear {
 	return nil
 }
 
+// Generic clause for use in span near queries.
 type SpanNear_Clause struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// TODO: ???
+	// Generic clause matcher.
 	//
 	// Types that are assignable to Match:
 	//
@@ -2270,7 +2492,7 @@ type SpanNear_Clause struct {
 func (x *SpanNear_Clause) Reset() {
 	*x = SpanNear_Clause{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[32]
+		mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[35]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2283,7 +2505,7 @@ func (x *SpanNear_Clause) String() string {
 func (*SpanNear_Clause) ProtoMessage() {}
 
 func (x *SpanNear_Clause) ProtoReflect() protoreflect.Message {
-	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[32]
+	mi := &file_wfo_vanalytics_v2_transcript_proto_msgTypes[35]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2296,7 +2518,7 @@ func (x *SpanNear_Clause) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SpanNear_Clause.ProtoReflect.Descriptor instead.
 func (*SpanNear_Clause) Descriptor() ([]byte, []int) {
-	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{10, 0}
+	return file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP(), []int{11, 0}
 }
 
 func (m *SpanNear_Clause) GetMatch() isSpanNear_Clause_Match {
@@ -2332,14 +2554,17 @@ type isSpanNear_Clause_Match interface {
 }
 
 type SpanNear_Clause_SpanNear struct {
+	// A span near clause to match a phrase.
 	SpanNear *SpanNear `protobuf:"bytes,1,opt,name=span_near,json=spanNear,proto3,oneof"`
 }
 
 type SpanNear_Clause_SpanFuzzy struct {
+	// A span near clause to match a fuzzy term.
 	SpanFuzzy *SpanFuzzy `protobuf:"bytes,2,opt,name=span_fuzzy,json=spanFuzzy,proto3,oneof"`
 }
 
 type SpanNear_Clause_SpanTerm struct {
+	// A span near clause to match a term.
 	SpanTerm *SpanTerm `protobuf:"bytes,3,opt,name=span_term,json=spanTerm,proto3,oneof"`
 }
 
@@ -2361,6 +2586,8 @@ var file_wfo_vanalytics_v2_transcript_proto_rawDesc = []byte{
 	0x66, 0x69, 0x65, 0x6c, 0x64, 0x5f, 0x6d, 0x61, 0x73, 0x6b, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f,
 	0x1a, 0x1f, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75,
 	0x66, 0x2f, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x2e, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x1a, 0x1e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62,
+	0x75, 0x66, 0x2f, 0x77, 0x72, 0x61, 0x70, 0x70, 0x65, 0x72, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74,
 	0x6f, 0x22, 0x91, 0x03, 0x0a, 0x0a, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74,
 	0x12, 0x2d, 0x0a, 0x04, 0x63, 0x61, 0x6c, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x17,
 	0x2e, 0x77, 0x66, 0x6f, 0x2e, 0x76, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x2e,
@@ -2480,7 +2707,7 @@ var file_wfo_vanalytics_v2_transcript_proto_rawDesc = []byte{
 	0x69, 0x63, 0x73, 0x2e, 0x76, 0x32, 0x2e, 0x43, 0x61, 0x6c, 0x6c, 0x2e, 0x53, 0x65, 0x67, 0x6d,
 	0x65, 0x6e, 0x74, 0x52, 0x08, 0x73, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x1a, 0x1d, 0x0a,
 	0x07, 0x53, 0x65, 0x67, 0x6d, 0x65, 0x6e, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x74, 0x65, 0x78, 0x74,
-	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x74, 0x65, 0x78, 0x74, 0x22, 0xf7, 0x01, 0x0a,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x74, 0x65, 0x78, 0x74, 0x22, 0xb3, 0x02, 0x0a,
 	0x18, 0x53, 0x65, 0x61, 0x72, 0x63, 0x68, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70,
 	0x74, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1b, 0x0a, 0x09, 0x70, 0x61, 0x67,
 	0x65, 0x5f, 0x73, 0x69, 0x7a, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x08, 0x70, 0x61,
@@ -2496,164 +2723,198 @@ var file_wfo_vanalytics_v2_transcript_proto_rawDesc = []byte{
 	0x6c, 0x51, 0x75, 0x65, 0x72, 0x79, 0x52, 0x09, 0x62, 0x6f, 0x6f, 0x6c, 0x51, 0x75, 0x65, 0x72,
 	0x79, 0x12, 0x1d, 0x0a, 0x0a, 0x70, 0x61, 0x67, 0x65, 0x5f, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x18,
 	0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x70, 0x61, 0x67, 0x65, 0x54, 0x6f, 0x6b, 0x65, 0x6e,
-	0x4a, 0x04, 0x08, 0x01, 0x10, 0x02, 0x22, 0xdb, 0x01, 0x0a, 0x19, 0x53, 0x65, 0x61, 0x72, 0x63,
-	0x68, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x73, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x44, 0x0a, 0x04, 0x68, 0x69, 0x74, 0x73, 0x18, 0x01, 0x20, 0x03,
-	0x28, 0x0b, 0x32, 0x30, 0x2e, 0x77, 0x66, 0x6f, 0x2e, 0x76, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74,
-	0x69, 0x63, 0x73, 0x2e, 0x76, 0x32, 0x2e, 0x53, 0x65, 0x61, 0x72, 0x63, 0x68, 0x54, 0x72, 0x61,
-	0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
-	0x2e, 0x48, 0x69, 0x74, 0x52, 0x04, 0x68, 0x69, 0x74, 0x73, 0x12, 0x26, 0x0a, 0x0f, 0x6e, 0x65,
-	0x78, 0x74, 0x5f, 0x70, 0x61, 0x67, 0x65, 0x5f, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x18, 0x02, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x0d, 0x6e, 0x65, 0x78, 0x74, 0x50, 0x61, 0x67, 0x65, 0x54, 0x6f, 0x6b,
-	0x65, 0x6e, 0x1a, 0x50, 0x0a, 0x03, 0x48, 0x69, 0x74, 0x12, 0x3d, 0x0a, 0x0a, 0x74, 0x72, 0x61,
-	0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1d, 0x2e,
-	0x77, 0x66, 0x6f, 0x2e, 0x76, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x2e, 0x76,
-	0x32, 0x2e, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x52, 0x0a, 0x74, 0x72,
-	0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x4a, 0x04, 0x08, 0x02, 0x10, 0x03, 0x4a, 0x04,
-	0x08, 0x03, 0x10, 0x04, 0x22, 0x59, 0x0a, 0x13, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69,
-	0x70, 0x74, 0x42, 0x6f, 0x6f, 0x6c, 0x51, 0x75, 0x65, 0x72, 0x79, 0x12, 0x42, 0x0a, 0x0a, 0x74,
-	0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32,
-	0x22, 0x2e, 0x77, 0x66, 0x6f, 0x2e, 0x76, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69, 0x63, 0x73,
-	0x2e, 0x76, 0x32, 0x2e, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x51, 0x75,
-	0x65, 0x72, 0x79, 0x52, 0x0a, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x22,
-	0xba, 0x08, 0x0a, 0x0f, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x51, 0x75,
-	0x65, 0x72, 0x79, 0x12, 0x57, 0x0a, 0x0e, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70,
-	0x74, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x30, 0x2e, 0x77, 0x66,
+	0x12, 0x3a, 0x0a, 0x09, 0x68, 0x69, 0x67, 0x68, 0x6c, 0x69, 0x67, 0x68, 0x74, 0x18, 0x07, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x1c, 0x2e, 0x77, 0x66, 0x6f, 0x2e, 0x76, 0x61, 0x6e, 0x61, 0x6c, 0x79,
+	0x74, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x32, 0x2e, 0x48, 0x69, 0x67, 0x68, 0x6c, 0x69, 0x67, 0x68,
+	0x74, 0x52, 0x09, 0x68, 0x69, 0x67, 0x68, 0x6c, 0x69, 0x67, 0x68, 0x74, 0x4a, 0x04, 0x08, 0x01,
+	0x10, 0x02, 0x22, 0x3b, 0x0a, 0x09, 0x48, 0x69, 0x67, 0x68, 0x6c, 0x69, 0x67, 0x68, 0x74, 0x12,
+	0x16, 0x0a, 0x06, 0x70, 0x72, 0x65, 0x66, 0x69, 0x78, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x06, 0x70, 0x72, 0x65, 0x66, 0x69, 0x78, 0x12, 0x16, 0x0a, 0x06, 0x73, 0x75, 0x66, 0x66, 0x69,
+	0x78, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x73, 0x75, 0x66, 0x66, 0x69, 0x78, 0x22,
+	0xdb, 0x01, 0x0a, 0x19, 0x53, 0x65, 0x61, 0x72, 0x63, 0x68, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x63,
+	0x72, 0x69, 0x70, 0x74, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x44, 0x0a,
+	0x04, 0x68, 0x69, 0x74, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x30, 0x2e, 0x77, 0x66,
 	0x6f, 0x2e, 0x76, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x32, 0x2e,
-	0x54, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x51, 0x75, 0x65, 0x72, 0x79, 0x2e,
-	0x54, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x53, 0x69, 0x64, 0x52, 0x0d, 0x74,
-	0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x53, 0x69, 0x64, 0x12, 0x44, 0x0a, 0x07,
-	0x63, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2a, 0x2e,
+	0x53, 0x65, 0x61, 0x72, 0x63, 0x68, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74,
+	0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x2e, 0x48, 0x69, 0x74, 0x52, 0x04, 0x68,
+	0x69, 0x74, 0x73, 0x12, 0x26, 0x0a, 0x0f, 0x6e, 0x65, 0x78, 0x74, 0x5f, 0x70, 0x61, 0x67, 0x65,
+	0x5f, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x6e, 0x65,
+	0x78, 0x74, 0x50, 0x61, 0x67, 0x65, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x1a, 0x50, 0x0a, 0x03, 0x48,
+	0x69, 0x74, 0x12, 0x3d, 0x0a, 0x0a, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1d, 0x2e, 0x77, 0x66, 0x6f, 0x2e, 0x76, 0x61, 0x6e,
+	0x61, 0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x32, 0x2e, 0x54, 0x72, 0x61, 0x6e, 0x73,
+	0x63, 0x72, 0x69, 0x70, 0x74, 0x52, 0x0a, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70,
+	0x74, 0x4a, 0x04, 0x08, 0x02, 0x10, 0x03, 0x4a, 0x04, 0x08, 0x03, 0x10, 0x04, 0x22, 0x59, 0x0a,
+	0x13, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x42, 0x6f, 0x6f, 0x6c, 0x51,
+	0x75, 0x65, 0x72, 0x79, 0x12, 0x42, 0x0a, 0x0a, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69,
+	0x70, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x22, 0x2e, 0x77, 0x66, 0x6f, 0x2e, 0x76,
+	0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x32, 0x2e, 0x54, 0x72, 0x61,
+	0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x51, 0x75, 0x65, 0x72, 0x79, 0x52, 0x0a, 0x74, 0x72,
+	0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x22, 0xdc, 0x0b, 0x0a, 0x0f, 0x54, 0x72, 0x61,
+	0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x51, 0x75, 0x65, 0x72, 0x79, 0x12, 0x57, 0x0a, 0x0e,
+	0x74, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x30, 0x2e, 0x77, 0x66, 0x6f, 0x2e, 0x76, 0x61, 0x6e, 0x61, 0x6c,
+	0x79, 0x74, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x32, 0x2e, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72,
+	0x69, 0x70, 0x74, 0x51, 0x75, 0x65, 0x72, 0x79, 0x2e, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72,
+	0x69, 0x70, 0x74, 0x53, 0x69, 0x64, 0x52, 0x0d, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69,
+	0x70, 0x74, 0x53, 0x69, 0x64, 0x12, 0x44, 0x0a, 0x07, 0x63, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2a, 0x2e, 0x77, 0x66, 0x6f, 0x2e, 0x76, 0x61, 0x6e,
+	0x61, 0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x32, 0x2e, 0x54, 0x72, 0x61, 0x6e, 0x73,
+	0x63, 0x72, 0x69, 0x70, 0x74, 0x51, 0x75, 0x65, 0x72, 0x79, 0x2e, 0x43, 0x68, 0x61, 0x6e, 0x6e,
+	0x65, 0x6c, 0x52, 0x07, 0x63, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x12, 0x47, 0x0a, 0x08, 0x6d,
+	0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2b, 0x2e,
 	0x77, 0x66, 0x6f, 0x2e, 0x76, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x2e, 0x76,
 	0x32, 0x2e, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x51, 0x75, 0x65, 0x72,
-	0x79, 0x2e, 0x43, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x52, 0x07, 0x63, 0x68, 0x61, 0x6e, 0x6e,
-	0x65, 0x6c, 0x12, 0x47, 0x0a, 0x08, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x03,
-	0x20, 0x01, 0x28, 0x0b, 0x32, 0x2b, 0x2e, 0x77, 0x66, 0x6f, 0x2e, 0x76, 0x61, 0x6e, 0x61, 0x6c,
-	0x79, 0x74, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x32, 0x2e, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72,
-	0x69, 0x70, 0x74, 0x51, 0x75, 0x65, 0x72, 0x79, 0x2e, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74,
-	0x61, 0x52, 0x08, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x44, 0x0a, 0x07, 0x74,
-	0x68, 0x72, 0x65, 0x61, 0x64, 0x73, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2a, 0x2e, 0x77,
-	0x66, 0x6f, 0x2e, 0x76, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x32,
-	0x2e, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x51, 0x75, 0x65, 0x72, 0x79,
-	0x2e, 0x54, 0x68, 0x72, 0x65, 0x61, 0x64, 0x73, 0x52, 0x07, 0x74, 0x68, 0x72, 0x65, 0x61, 0x64,
-	0x73, 0x1a, 0x21, 0x0a, 0x0d, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x53,
-	0x69, 0x64, 0x12, 0x10, 0x0a, 0x03, 0x61, 0x6e, 0x79, 0x18, 0x01, 0x20, 0x03, 0x28, 0x03, 0x52,
-	0x03, 0x61, 0x6e, 0x79, 0x1a, 0x37, 0x0a, 0x07, 0x43, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x12,
-	0x2c, 0x0a, 0x03, 0x61, 0x6e, 0x79, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0e, 0x32, 0x1a, 0x2e, 0x77,
-	0x66, 0x6f, 0x2e, 0x76, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x32,
-	0x2e, 0x43, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x52, 0x03, 0x61, 0x6e, 0x79, 0x1a, 0x81, 0x01,
-	0x0a, 0x08, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x3b, 0x0a, 0x04, 0x63, 0x61,
-	0x6c, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x27, 0x2e, 0x77, 0x66, 0x6f, 0x2e, 0x76,
-	0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x32, 0x2e, 0x54, 0x72, 0x61,
-	0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x51, 0x75, 0x65, 0x72, 0x79, 0x2e, 0x43, 0x61, 0x6c,
-	0x6c, 0x52, 0x04, 0x63, 0x61, 0x6c, 0x6c, 0x12, 0x38, 0x0a, 0x03, 0x73, 0x6d, 0x73, 0x18, 0x02,
-	0x20, 0x01, 0x28, 0x0b, 0x32, 0x26, 0x2e, 0x77, 0x66, 0x6f, 0x2e, 0x76, 0x61, 0x6e, 0x61, 0x6c,
-	0x79, 0x74, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x32, 0x2e, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72,
-	0x69, 0x70, 0x74, 0x51, 0x75, 0x65, 0x72, 0x79, 0x2e, 0x53, 0x6d, 0x73, 0x52, 0x03, 0x73, 0x6d,
-	0x73, 0x1a, 0x6f, 0x0a, 0x04, 0x43, 0x61, 0x6c, 0x6c, 0x12, 0x4a, 0x0a, 0x08, 0x63, 0x61, 0x6c,
-	0x6c, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2f, 0x2e, 0x77, 0x66,
-	0x6f, 0x2e, 0x76, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x32, 0x2e,
-	0x54, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x51, 0x75, 0x65, 0x72, 0x79, 0x2e,
-	0x43, 0x61, 0x6c, 0x6c, 0x2e, 0x43, 0x61, 0x6c, 0x6c, 0x53, 0x69, 0x64, 0x52, 0x07, 0x63, 0x61,
-	0x6c, 0x6c, 0x53, 0x69, 0x64, 0x1a, 0x1b, 0x0a, 0x07, 0x43, 0x61, 0x6c, 0x6c, 0x53, 0x69, 0x64,
-	0x12, 0x10, 0x0a, 0x03, 0x61, 0x6e, 0x79, 0x18, 0x01, 0x20, 0x03, 0x28, 0x03, 0x52, 0x03, 0x61,
-	0x6e, 0x79, 0x1a, 0x8d, 0x01, 0x0a, 0x03, 0x53, 0x6d, 0x73, 0x12, 0x61, 0x0a, 0x10, 0x63, 0x6f,
-	0x6e, 0x76, 0x65, 0x72, 0x73, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x01,
-	0x20, 0x01, 0x28, 0x0b, 0x32, 0x36, 0x2e, 0x77, 0x66, 0x6f, 0x2e, 0x76, 0x61, 0x6e, 0x61, 0x6c,
-	0x79, 0x74, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x32, 0x2e, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72,
-	0x69, 0x70, 0x74, 0x51, 0x75, 0x65, 0x72, 0x79, 0x2e, 0x53, 0x6d, 0x73, 0x2e, 0x43, 0x6f, 0x6e,
-	0x76, 0x65, 0x72, 0x73, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x69, 0x64, 0x52, 0x0f, 0x63, 0x6f,
-	0x6e, 0x76, 0x65, 0x72, 0x73, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x69, 0x64, 0x1a, 0x23, 0x0a,
-	0x0f, 0x43, 0x6f, 0x6e, 0x76, 0x65, 0x72, 0x73, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x69, 0x64,
-	0x12, 0x10, 0x0a, 0x03, 0x61, 0x6e, 0x79, 0x18, 0x01, 0x20, 0x03, 0x28, 0x03, 0x52, 0x03, 0x61,
-	0x6e, 0x79, 0x1a, 0x97, 0x02, 0x0a, 0x07, 0x54, 0x68, 0x72, 0x65, 0x61, 0x64, 0x73, 0x12, 0x3d,
-	0x0a, 0x02, 0x69, 0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x77, 0x66, 0x6f,
-	0x2e, 0x76, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x32, 0x2e, 0x54,
-	0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x51, 0x75, 0x65, 0x72, 0x79, 0x2e, 0x54,
-	0x68, 0x72, 0x65, 0x61, 0x64, 0x73, 0x2e, 0x49, 0x64, 0x52, 0x02, 0x69, 0x64, 0x12, 0x43, 0x0a,
-	0x04, 0x74, 0x65, 0x78, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2f, 0x2e, 0x77, 0x66,
-	0x6f, 0x2e, 0x76, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x32, 0x2e,
-	0x54, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x51, 0x75, 0x65, 0x72, 0x79, 0x2e,
-	0x54, 0x68, 0x72, 0x65, 0x61, 0x64, 0x73, 0x2e, 0x54, 0x65, 0x78, 0x74, 0x52, 0x04, 0x74, 0x65,
-	0x78, 0x74, 0x1a, 0x16, 0x0a, 0x02, 0x49, 0x64, 0x12, 0x10, 0x0a, 0x03, 0x61, 0x6e, 0x79, 0x18,
-	0x01, 0x20, 0x03, 0x28, 0x05, 0x52, 0x03, 0x61, 0x6e, 0x79, 0x1a, 0x70, 0x0a, 0x04, 0x54, 0x65,
-	0x78, 0x74, 0x12, 0x2e, 0x0a, 0x05, 0x6d, 0x61, 0x74, 0x63, 0x68, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x0b, 0x32, 0x18, 0x2e, 0x77, 0x66, 0x6f, 0x2e, 0x76, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69,
-	0x63, 0x73, 0x2e, 0x76, 0x32, 0x2e, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x52, 0x05, 0x6d, 0x61, 0x74,
-	0x63, 0x68, 0x12, 0x38, 0x0a, 0x09, 0x73, 0x70, 0x61, 0x6e, 0x5f, 0x6e, 0x65, 0x61, 0x72, 0x18,
-	0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x77, 0x66, 0x6f, 0x2e, 0x76, 0x61, 0x6e, 0x61,
-	0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x32, 0x2e, 0x53, 0x70, 0x61, 0x6e, 0x4e, 0x65,
-	0x61, 0x72, 0x52, 0x08, 0x73, 0x70, 0x61, 0x6e, 0x4e, 0x65, 0x61, 0x72, 0x22, 0x35, 0x0a, 0x0d,
-	0x46, 0x75, 0x7a, 0x7a, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x41, 0x75, 0x74, 0x6f, 0x12, 0x10, 0x0a,
-	0x03, 0x6c, 0x6f, 0x77, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x03, 0x6c, 0x6f, 0x77, 0x12,
-	0x12, 0x0a, 0x04, 0x68, 0x69, 0x67, 0x68, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x04, 0x68,
-	0x69, 0x67, 0x68, 0x22, 0xba, 0x01, 0x0a, 0x05, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x12, 0x12, 0x0a,
-	0x04, 0x74, 0x65, 0x78, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x74, 0x65, 0x78,
-	0x74, 0x12, 0x1a, 0x0a, 0x08, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x18, 0x02, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x08, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x12, 0x49, 0x0a,
-	0x0e, 0x66, 0x75, 0x7a, 0x7a, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x5f, 0x61, 0x75, 0x74, 0x6f, 0x18,
-	0x0f, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x20, 0x2e, 0x77, 0x66, 0x6f, 0x2e, 0x76, 0x61, 0x6e, 0x61,
-	0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x32, 0x2e, 0x46, 0x75, 0x7a, 0x7a, 0x69, 0x6e,
-	0x65, 0x73, 0x73, 0x41, 0x75, 0x74, 0x6f, 0x48, 0x00, 0x52, 0x0d, 0x66, 0x75, 0x7a, 0x7a, 0x69,
-	0x6e, 0x65, 0x73, 0x73, 0x41, 0x75, 0x74, 0x6f, 0x12, 0x29, 0x0a, 0x0f, 0x66, 0x75, 0x7a, 0x7a,
-	0x69, 0x6e, 0x65, 0x73, 0x73, 0x5f, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x10, 0x20, 0x01, 0x28,
-	0x0d, 0x48, 0x00, 0x52, 0x0e, 0x66, 0x75, 0x7a, 0x7a, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x56, 0x61,
-	0x6c, 0x75, 0x65, 0x42, 0x0b, 0x0a, 0x09, 0x66, 0x75, 0x7a, 0x7a, 0x69, 0x6e, 0x65, 0x73, 0x73,
-	0x22, 0xc2, 0x02, 0x0a, 0x08, 0x53, 0x70, 0x61, 0x6e, 0x4e, 0x65, 0x61, 0x72, 0x12, 0x12, 0x0a,
-	0x04, 0x73, 0x6c, 0x6f, 0x70, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x73, 0x6c, 0x6f,
-	0x70, 0x12, 0x19, 0x0a, 0x08, 0x69, 0x6e, 0x5f, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x18, 0x02, 0x20,
-	0x01, 0x28, 0x08, 0x52, 0x07, 0x69, 0x6e, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x12, 0x3c, 0x0a, 0x07,
-	0x63, 0x6c, 0x61, 0x75, 0x73, 0x65, 0x73, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x22, 0x2e,
+	0x79, 0x2e, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x08, 0x6d, 0x65, 0x74, 0x61,
+	0x64, 0x61, 0x74, 0x61, 0x12, 0x44, 0x0a, 0x07, 0x74, 0x68, 0x72, 0x65, 0x61, 0x64, 0x73, 0x18,
+	0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2a, 0x2e, 0x77, 0x66, 0x6f, 0x2e, 0x76, 0x61, 0x6e, 0x61,
+	0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x32, 0x2e, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x63,
+	0x72, 0x69, 0x70, 0x74, 0x51, 0x75, 0x65, 0x72, 0x79, 0x2e, 0x54, 0x68, 0x72, 0x65, 0x61, 0x64,
+	0x73, 0x52, 0x07, 0x74, 0x68, 0x72, 0x65, 0x61, 0x64, 0x73, 0x1a, 0x21, 0x0a, 0x0d, 0x54, 0x72,
+	0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x53, 0x69, 0x64, 0x12, 0x10, 0x0a, 0x03, 0x61,
+	0x6e, 0x79, 0x18, 0x01, 0x20, 0x03, 0x28, 0x03, 0x52, 0x03, 0x61, 0x6e, 0x79, 0x1a, 0x37, 0x0a,
+	0x07, 0x43, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x12, 0x2c, 0x0a, 0x03, 0x61, 0x6e, 0x79, 0x18,
+	0x01, 0x20, 0x03, 0x28, 0x0e, 0x32, 0x1a, 0x2e, 0x77, 0x66, 0x6f, 0x2e, 0x76, 0x61, 0x6e, 0x61,
+	0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x32, 0x2e, 0x43, 0x68, 0x61, 0x6e, 0x6e, 0x65,
+	0x6c, 0x52, 0x03, 0x61, 0x6e, 0x79, 0x1a, 0x81, 0x01, 0x0a, 0x08, 0x4d, 0x65, 0x74, 0x61, 0x64,
+	0x61, 0x74, 0x61, 0x12, 0x3b, 0x0a, 0x04, 0x63, 0x61, 0x6c, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x0b, 0x32, 0x27, 0x2e, 0x77, 0x66, 0x6f, 0x2e, 0x76, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69,
+	0x63, 0x73, 0x2e, 0x76, 0x32, 0x2e, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74,
+	0x51, 0x75, 0x65, 0x72, 0x79, 0x2e, 0x43, 0x61, 0x6c, 0x6c, 0x52, 0x04, 0x63, 0x61, 0x6c, 0x6c,
+	0x12, 0x38, 0x0a, 0x03, 0x73, 0x6d, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x26, 0x2e,
 	0x77, 0x66, 0x6f, 0x2e, 0x76, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x2e, 0x76,
-	0x32, 0x2e, 0x53, 0x70, 0x61, 0x6e, 0x4e, 0x65, 0x61, 0x72, 0x2e, 0x43, 0x6c, 0x61, 0x75, 0x73,
-	0x65, 0x52, 0x07, 0x63, 0x6c, 0x61, 0x75, 0x73, 0x65, 0x73, 0x1a, 0xc8, 0x01, 0x0a, 0x06, 0x43,
-	0x6c, 0x61, 0x75, 0x73, 0x65, 0x12, 0x3a, 0x0a, 0x09, 0x73, 0x70, 0x61, 0x6e, 0x5f, 0x6e, 0x65,
-	0x61, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x77, 0x66, 0x6f, 0x2e, 0x76,
+	0x32, 0x2e, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x51, 0x75, 0x65, 0x72,
+	0x79, 0x2e, 0x53, 0x6d, 0x73, 0x52, 0x03, 0x73, 0x6d, 0x73, 0x1a, 0x90, 0x04, 0x0a, 0x04, 0x43,
+	0x61, 0x6c, 0x6c, 0x12, 0x4a, 0x0a, 0x08, 0x63, 0x61, 0x6c, 0x6c, 0x5f, 0x73, 0x69, 0x64, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2f, 0x2e, 0x77, 0x66, 0x6f, 0x2e, 0x76, 0x61, 0x6e, 0x61,
+	0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x32, 0x2e, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x63,
+	0x72, 0x69, 0x70, 0x74, 0x51, 0x75, 0x65, 0x72, 0x79, 0x2e, 0x43, 0x61, 0x6c, 0x6c, 0x2e, 0x43,
+	0x61, 0x6c, 0x6c, 0x53, 0x69, 0x64, 0x52, 0x07, 0x63, 0x61, 0x6c, 0x6c, 0x53, 0x69, 0x64, 0x12,
+	0x50, 0x0a, 0x0a, 0x61, 0x75, 0x64, 0x69, 0x6f, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x31, 0x2e, 0x77, 0x66, 0x6f, 0x2e, 0x76, 0x61, 0x6e, 0x61, 0x6c, 0x79,
+	0x74, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x32, 0x2e, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69,
+	0x70, 0x74, 0x51, 0x75, 0x65, 0x72, 0x79, 0x2e, 0x43, 0x61, 0x6c, 0x6c, 0x2e, 0x41, 0x75, 0x64,
+	0x69, 0x6f, 0x54, 0x69, 0x6d, 0x65, 0x52, 0x09, 0x61, 0x75, 0x64, 0x69, 0x6f, 0x54, 0x69, 0x6d,
+	0x65, 0x12, 0x4d, 0x0a, 0x09, 0x63, 0x61, 0x6c, 0x6c, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x03,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x30, 0x2e, 0x77, 0x66, 0x6f, 0x2e, 0x76, 0x61, 0x6e, 0x61, 0x6c,
+	0x79, 0x74, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x32, 0x2e, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72,
+	0x69, 0x70, 0x74, 0x51, 0x75, 0x65, 0x72, 0x79, 0x2e, 0x43, 0x61, 0x6c, 0x6c, 0x2e, 0x43, 0x61,
+	0x6c, 0x6c, 0x54, 0x79, 0x70, 0x65, 0x52, 0x08, 0x63, 0x61, 0x6c, 0x6c, 0x54, 0x79, 0x70, 0x65,
+	0x1a, 0x38, 0x0a, 0x08, 0x43, 0x61, 0x6c, 0x6c, 0x54, 0x79, 0x70, 0x65, 0x12, 0x2c, 0x0a, 0x03,
+	0x61, 0x6e, 0x79, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0e, 0x32, 0x1a, 0x2e, 0x61, 0x70, 0x69, 0x2e,
+	0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x43, 0x61, 0x6c, 0x6c, 0x54, 0x79, 0x70, 0x65,
+	0x2e, 0x45, 0x6e, 0x75, 0x6d, 0x52, 0x03, 0x61, 0x6e, 0x79, 0x1a, 0x1b, 0x0a, 0x07, 0x43, 0x61,
+	0x6c, 0x6c, 0x53, 0x69, 0x64, 0x12, 0x10, 0x0a, 0x03, 0x61, 0x6e, 0x79, 0x18, 0x01, 0x20, 0x03,
+	0x28, 0x03, 0x52, 0x03, 0x61, 0x6e, 0x79, 0x1a, 0xc3, 0x01, 0x0a, 0x09, 0x41, 0x75, 0x64, 0x69,
+	0x6f, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x2d, 0x0a, 0x03, 0x67, 0x74, 0x65, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x62, 0x75, 0x66, 0x2e, 0x49, 0x6e, 0x74, 0x33, 0x32, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x52,
+	0x03, 0x67, 0x74, 0x65, 0x12, 0x2d, 0x0a, 0x03, 0x6c, 0x74, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x0b, 0x32, 0x1b, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f,
+	0x62, 0x75, 0x66, 0x2e, 0x49, 0x6e, 0x74, 0x33, 0x32, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x52, 0x03,
+	0x6c, 0x74, 0x65, 0x12, 0x2b, 0x0a, 0x02, 0x67, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x1b, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75,
+	0x66, 0x2e, 0x49, 0x6e, 0x74, 0x33, 0x32, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x52, 0x02, 0x67, 0x74,
+	0x12, 0x2b, 0x0a, 0x02, 0x6c, 0x74, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x67,
+	0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x49,
+	0x6e, 0x74, 0x33, 0x32, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x52, 0x02, 0x6c, 0x74, 0x1a, 0x8d, 0x01,
+	0x0a, 0x03, 0x53, 0x6d, 0x73, 0x12, 0x61, 0x0a, 0x10, 0x63, 0x6f, 0x6e, 0x76, 0x65, 0x72, 0x73,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x36, 0x2e, 0x77, 0x66, 0x6f, 0x2e, 0x76, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69, 0x63, 0x73,
+	0x2e, 0x76, 0x32, 0x2e, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x51, 0x75,
+	0x65, 0x72, 0x79, 0x2e, 0x53, 0x6d, 0x73, 0x2e, 0x43, 0x6f, 0x6e, 0x76, 0x65, 0x72, 0x73, 0x61,
+	0x74, 0x69, 0x6f, 0x6e, 0x53, 0x69, 0x64, 0x52, 0x0f, 0x63, 0x6f, 0x6e, 0x76, 0x65, 0x72, 0x73,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x69, 0x64, 0x1a, 0x23, 0x0a, 0x0f, 0x43, 0x6f, 0x6e, 0x76,
+	0x65, 0x72, 0x73, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x69, 0x64, 0x12, 0x10, 0x0a, 0x03, 0x61,
+	0x6e, 0x79, 0x18, 0x01, 0x20, 0x03, 0x28, 0x03, 0x52, 0x03, 0x61, 0x6e, 0x79, 0x1a, 0x97, 0x02,
+	0x0a, 0x07, 0x54, 0x68, 0x72, 0x65, 0x61, 0x64, 0x73, 0x12, 0x3d, 0x0a, 0x02, 0x69, 0x64, 0x18,
+	0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x77, 0x66, 0x6f, 0x2e, 0x76, 0x61, 0x6e, 0x61,
+	0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x32, 0x2e, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x63,
+	0x72, 0x69, 0x70, 0x74, 0x51, 0x75, 0x65, 0x72, 0x79, 0x2e, 0x54, 0x68, 0x72, 0x65, 0x61, 0x64,
+	0x73, 0x2e, 0x49, 0x64, 0x52, 0x02, 0x69, 0x64, 0x12, 0x43, 0x0a, 0x04, 0x74, 0x65, 0x78, 0x74,
+	0x18, 0x05, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2f, 0x2e, 0x77, 0x66, 0x6f, 0x2e, 0x76, 0x61, 0x6e,
+	0x61, 0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x32, 0x2e, 0x54, 0x72, 0x61, 0x6e, 0x73,
+	0x63, 0x72, 0x69, 0x70, 0x74, 0x51, 0x75, 0x65, 0x72, 0x79, 0x2e, 0x54, 0x68, 0x72, 0x65, 0x61,
+	0x64, 0x73, 0x2e, 0x54, 0x65, 0x78, 0x74, 0x52, 0x04, 0x74, 0x65, 0x78, 0x74, 0x1a, 0x16, 0x0a,
+	0x02, 0x49, 0x64, 0x12, 0x10, 0x0a, 0x03, 0x61, 0x6e, 0x79, 0x18, 0x01, 0x20, 0x03, 0x28, 0x05,
+	0x52, 0x03, 0x61, 0x6e, 0x79, 0x1a, 0x70, 0x0a, 0x04, 0x54, 0x65, 0x78, 0x74, 0x12, 0x2e, 0x0a,
+	0x05, 0x6d, 0x61, 0x74, 0x63, 0x68, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x77,
+	0x66, 0x6f, 0x2e, 0x76, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x32,
+	0x2e, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x52, 0x05, 0x6d, 0x61, 0x74, 0x63, 0x68, 0x12, 0x38, 0x0a,
+	0x09, 0x73, 0x70, 0x61, 0x6e, 0x5f, 0x6e, 0x65, 0x61, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x1b, 0x2e, 0x77, 0x66, 0x6f, 0x2e, 0x76, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69, 0x63,
+	0x73, 0x2e, 0x76, 0x32, 0x2e, 0x53, 0x70, 0x61, 0x6e, 0x4e, 0x65, 0x61, 0x72, 0x52, 0x08, 0x73,
+	0x70, 0x61, 0x6e, 0x4e, 0x65, 0x61, 0x72, 0x22, 0x35, 0x0a, 0x0d, 0x46, 0x75, 0x7a, 0x7a, 0x69,
+	0x6e, 0x65, 0x73, 0x73, 0x41, 0x75, 0x74, 0x6f, 0x12, 0x10, 0x0a, 0x03, 0x6c, 0x6f, 0x77, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x03, 0x6c, 0x6f, 0x77, 0x12, 0x12, 0x0a, 0x04, 0x68, 0x69,
+	0x67, 0x68, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x04, 0x68, 0x69, 0x67, 0x68, 0x22, 0xba,
+	0x01, 0x0a, 0x05, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x12, 0x12, 0x0a, 0x04, 0x74, 0x65, 0x78, 0x74,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x74, 0x65, 0x78, 0x74, 0x12, 0x1a, 0x0a, 0x08,
+	0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08,
+	0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x12, 0x49, 0x0a, 0x0e, 0x66, 0x75, 0x7a, 0x7a,
+	0x69, 0x6e, 0x65, 0x73, 0x73, 0x5f, 0x61, 0x75, 0x74, 0x6f, 0x18, 0x0f, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x20, 0x2e, 0x77, 0x66, 0x6f, 0x2e, 0x76, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69, 0x63,
+	0x73, 0x2e, 0x76, 0x32, 0x2e, 0x46, 0x75, 0x7a, 0x7a, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x41, 0x75,
+	0x74, 0x6f, 0x48, 0x00, 0x52, 0x0d, 0x66, 0x75, 0x7a, 0x7a, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x41,
+	0x75, 0x74, 0x6f, 0x12, 0x29, 0x0a, 0x0f, 0x66, 0x75, 0x7a, 0x7a, 0x69, 0x6e, 0x65, 0x73, 0x73,
+	0x5f, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x10, 0x20, 0x01, 0x28, 0x0d, 0x48, 0x00, 0x52, 0x0e,
+	0x66, 0x75, 0x7a, 0x7a, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x42, 0x0b,
+	0x0a, 0x09, 0x66, 0x75, 0x7a, 0x7a, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x22, 0xc2, 0x02, 0x0a, 0x08,
+	0x53, 0x70, 0x61, 0x6e, 0x4e, 0x65, 0x61, 0x72, 0x12, 0x12, 0x0a, 0x04, 0x73, 0x6c, 0x6f, 0x70,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x73, 0x6c, 0x6f, 0x70, 0x12, 0x19, 0x0a, 0x08,
+	0x69, 0x6e, 0x5f, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x08, 0x52, 0x07,
+	0x69, 0x6e, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x12, 0x3c, 0x0a, 0x07, 0x63, 0x6c, 0x61, 0x75, 0x73,
+	0x65, 0x73, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x22, 0x2e, 0x77, 0x66, 0x6f, 0x2e, 0x76,
 	0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x32, 0x2e, 0x53, 0x70, 0x61,
-	0x6e, 0x4e, 0x65, 0x61, 0x72, 0x48, 0x00, 0x52, 0x08, 0x73, 0x70, 0x61, 0x6e, 0x4e, 0x65, 0x61,
-	0x72, 0x12, 0x3d, 0x0a, 0x0a, 0x73, 0x70, 0x61, 0x6e, 0x5f, 0x66, 0x75, 0x7a, 0x7a, 0x79, 0x18,
-	0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1c, 0x2e, 0x77, 0x66, 0x6f, 0x2e, 0x76, 0x61, 0x6e, 0x61,
-	0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x32, 0x2e, 0x53, 0x70, 0x61, 0x6e, 0x46, 0x75,
-	0x7a, 0x7a, 0x79, 0x48, 0x00, 0x52, 0x09, 0x73, 0x70, 0x61, 0x6e, 0x46, 0x75, 0x7a, 0x7a, 0x79,
-	0x12, 0x3a, 0x0a, 0x09, 0x73, 0x70, 0x61, 0x6e, 0x5f, 0x74, 0x65, 0x72, 0x6d, 0x18, 0x03, 0x20,
+	0x6e, 0x4e, 0x65, 0x61, 0x72, 0x2e, 0x43, 0x6c, 0x61, 0x75, 0x73, 0x65, 0x52, 0x07, 0x63, 0x6c,
+	0x61, 0x75, 0x73, 0x65, 0x73, 0x1a, 0xc8, 0x01, 0x0a, 0x06, 0x43, 0x6c, 0x61, 0x75, 0x73, 0x65,
+	0x12, 0x3a, 0x0a, 0x09, 0x73, 0x70, 0x61, 0x6e, 0x5f, 0x6e, 0x65, 0x61, 0x72, 0x18, 0x01, 0x20,
 	0x01, 0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x77, 0x66, 0x6f, 0x2e, 0x76, 0x61, 0x6e, 0x61, 0x6c, 0x79,
-	0x74, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x32, 0x2e, 0x53, 0x70, 0x61, 0x6e, 0x54, 0x65, 0x72, 0x6d,
-	0x48, 0x00, 0x52, 0x08, 0x73, 0x70, 0x61, 0x6e, 0x54, 0x65, 0x72, 0x6d, 0x42, 0x07, 0x0a, 0x05,
-	0x6d, 0x61, 0x74, 0x63, 0x68, 0x22, 0x20, 0x0a, 0x08, 0x53, 0x70, 0x61, 0x6e, 0x54, 0x65, 0x72,
-	0x6d, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x22, 0xa4, 0x01, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x6e,
-	0x46, 0x75, 0x7a, 0x7a, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x01,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x12, 0x49, 0x0a, 0x0e, 0x66,
-	0x75, 0x7a, 0x7a, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x5f, 0x61, 0x75, 0x74, 0x6f, 0x18, 0x0a, 0x20,
-	0x01, 0x28, 0x0b, 0x32, 0x20, 0x2e, 0x77, 0x66, 0x6f, 0x2e, 0x76, 0x61, 0x6e, 0x61, 0x6c, 0x79,
-	0x74, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x32, 0x2e, 0x46, 0x75, 0x7a, 0x7a, 0x69, 0x6e, 0x65, 0x73,
-	0x73, 0x41, 0x75, 0x74, 0x6f, 0x48, 0x00, 0x52, 0x0d, 0x66, 0x75, 0x7a, 0x7a, 0x69, 0x6e, 0x65,
-	0x73, 0x73, 0x41, 0x75, 0x74, 0x6f, 0x12, 0x29, 0x0a, 0x0f, 0x66, 0x75, 0x7a, 0x7a, 0x69, 0x6e,
-	0x65, 0x73, 0x73, 0x5f, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x0b, 0x20, 0x01, 0x28, 0x0d, 0x48,
-	0x00, 0x52, 0x0e, 0x66, 0x75, 0x7a, 0x7a, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x56, 0x61, 0x6c, 0x75,
-	0x65, 0x42, 0x0b, 0x0a, 0x09, 0x66, 0x75, 0x7a, 0x7a, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2a, 0x2c,
-	0x0a, 0x07, 0x43, 0x68, 0x61, 0x6e, 0x6e, 0x65, 0x6c, 0x12, 0x10, 0x0a, 0x0c, 0x43, 0x48, 0x41,
-	0x4e, 0x4e, 0x45, 0x4c, 0x5f, 0x43, 0x41, 0x4c, 0x4c, 0x10, 0x00, 0x12, 0x0f, 0x0a, 0x0b, 0x43,
-	0x48, 0x41, 0x4e, 0x4e, 0x45, 0x4c, 0x5f, 0x53, 0x4d, 0x53, 0x10, 0x01, 0x2a, 0x56, 0x0a, 0x0c,
-	0x52, 0x65, 0x76, 0x69, 0x65, 0x77, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x16, 0x0a, 0x12,
-	0x52, 0x45, 0x56, 0x49, 0x45, 0x57, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x54, 0x4f,
-	0x44, 0x4f, 0x10, 0x00, 0x12, 0x16, 0x0a, 0x12, 0x52, 0x45, 0x56, 0x49, 0x45, 0x57, 0x5f, 0x53,
-	0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x44, 0x4f, 0x4e, 0x45, 0x10, 0x01, 0x12, 0x16, 0x0a, 0x12,
-	0x52, 0x45, 0x56, 0x49, 0x45, 0x57, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x4e, 0x4f,
-	0x4e, 0x45, 0x10, 0x02, 0x42, 0xc9, 0x01, 0x0a, 0x15, 0x63, 0x6f, 0x6d, 0x2e, 0x77, 0x66, 0x6f,
-	0x2e, 0x76, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x32, 0x42, 0x0f,
-	0x54, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50,
-	0x01, 0x5a, 0x39, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63,
-	0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x77, 0x66,
-	0x6f, 0x2f, 0x76, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x2f, 0x76, 0x32, 0x3b,
-	0x76, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x76, 0x32, 0xa2, 0x02, 0x03, 0x57,
-	0x56, 0x58, 0xaa, 0x02, 0x11, 0x57, 0x66, 0x6f, 0x2e, 0x56, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74,
-	0x69, 0x63, 0x73, 0x2e, 0x56, 0x32, 0xca, 0x02, 0x11, 0x57, 0x66, 0x6f, 0x5c, 0x56, 0x61, 0x6e,
-	0x61, 0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x5c, 0x56, 0x32, 0xe2, 0x02, 0x1d, 0x57, 0x66, 0x6f,
-	0x5c, 0x56, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x5c, 0x56, 0x32, 0x5c, 0x47,
-	0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x13, 0x57, 0x66, 0x6f,
-	0x3a, 0x3a, 0x56, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x3a, 0x3a, 0x56, 0x32,
-	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x74, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x32, 0x2e, 0x53, 0x70, 0x61, 0x6e, 0x4e, 0x65, 0x61, 0x72,
+	0x48, 0x00, 0x52, 0x08, 0x73, 0x70, 0x61, 0x6e, 0x4e, 0x65, 0x61, 0x72, 0x12, 0x3d, 0x0a, 0x0a,
+	0x73, 0x70, 0x61, 0x6e, 0x5f, 0x66, 0x75, 0x7a, 0x7a, 0x79, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x1c, 0x2e, 0x77, 0x66, 0x6f, 0x2e, 0x76, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69, 0x63,
+	0x73, 0x2e, 0x76, 0x32, 0x2e, 0x53, 0x70, 0x61, 0x6e, 0x46, 0x75, 0x7a, 0x7a, 0x79, 0x48, 0x00,
+	0x52, 0x09, 0x73, 0x70, 0x61, 0x6e, 0x46, 0x75, 0x7a, 0x7a, 0x79, 0x12, 0x3a, 0x0a, 0x09, 0x73,
+	0x70, 0x61, 0x6e, 0x5f, 0x74, 0x65, 0x72, 0x6d, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1b,
+	0x2e, 0x77, 0x66, 0x6f, 0x2e, 0x76, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x2e,
+	0x76, 0x32, 0x2e, 0x53, 0x70, 0x61, 0x6e, 0x54, 0x65, 0x72, 0x6d, 0x48, 0x00, 0x52, 0x08, 0x73,
+	0x70, 0x61, 0x6e, 0x54, 0x65, 0x72, 0x6d, 0x42, 0x07, 0x0a, 0x05, 0x6d, 0x61, 0x74, 0x63, 0x68,
+	0x22, 0x20, 0x0a, 0x08, 0x53, 0x70, 0x61, 0x6e, 0x54, 0x65, 0x72, 0x6d, 0x12, 0x14, 0x0a, 0x05,
+	0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c,
+	0x75, 0x65, 0x22, 0xa4, 0x01, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x6e, 0x46, 0x75, 0x7a, 0x7a, 0x79,
+	0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x12, 0x49, 0x0a, 0x0e, 0x66, 0x75, 0x7a, 0x7a, 0x69, 0x6e,
+	0x65, 0x73, 0x73, 0x5f, 0x61, 0x75, 0x74, 0x6f, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x20,
+	0x2e, 0x77, 0x66, 0x6f, 0x2e, 0x76, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x2e,
+	0x76, 0x32, 0x2e, 0x46, 0x75, 0x7a, 0x7a, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x41, 0x75, 0x74, 0x6f,
+	0x48, 0x00, 0x52, 0x0d, 0x66, 0x75, 0x7a, 0x7a, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x41, 0x75, 0x74,
+	0x6f, 0x12, 0x29, 0x0a, 0x0f, 0x66, 0x75, 0x7a, 0x7a, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x5f, 0x76,
+	0x61, 0x6c, 0x75, 0x65, 0x18, 0x0b, 0x20, 0x01, 0x28, 0x0d, 0x48, 0x00, 0x52, 0x0e, 0x66, 0x75,
+	0x7a, 0x7a, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x42, 0x0b, 0x0a, 0x09,
+	0x66, 0x75, 0x7a, 0x7a, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2a, 0x2c, 0x0a, 0x07, 0x43, 0x68, 0x61,
+	0x6e, 0x6e, 0x65, 0x6c, 0x12, 0x10, 0x0a, 0x0c, 0x43, 0x48, 0x41, 0x4e, 0x4e, 0x45, 0x4c, 0x5f,
+	0x43, 0x41, 0x4c, 0x4c, 0x10, 0x00, 0x12, 0x0f, 0x0a, 0x0b, 0x43, 0x48, 0x41, 0x4e, 0x4e, 0x45,
+	0x4c, 0x5f, 0x53, 0x4d, 0x53, 0x10, 0x01, 0x2a, 0x56, 0x0a, 0x0c, 0x52, 0x65, 0x76, 0x69, 0x65,
+	0x77, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x16, 0x0a, 0x12, 0x52, 0x45, 0x56, 0x49, 0x45,
+	0x57, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x54, 0x4f, 0x44, 0x4f, 0x10, 0x00, 0x12,
+	0x16, 0x0a, 0x12, 0x52, 0x45, 0x56, 0x49, 0x45, 0x57, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53,
+	0x5f, 0x44, 0x4f, 0x4e, 0x45, 0x10, 0x01, 0x12, 0x16, 0x0a, 0x12, 0x52, 0x45, 0x56, 0x49, 0x45,
+	0x57, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x4e, 0x4f, 0x4e, 0x45, 0x10, 0x02, 0x42,
+	0xc9, 0x01, 0x0a, 0x15, 0x63, 0x6f, 0x6d, 0x2e, 0x77, 0x66, 0x6f, 0x2e, 0x76, 0x61, 0x6e, 0x61,
+	0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x2e, 0x76, 0x32, 0x42, 0x0f, 0x54, 0x72, 0x61, 0x6e, 0x73,
+	0x63, 0x72, 0x69, 0x70, 0x74, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x39, 0x67, 0x69,
+	0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75,
+	0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x77, 0x66, 0x6f, 0x2f, 0x76, 0x61, 0x6e,
+	0x61, 0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x2f, 0x76, 0x32, 0x3b, 0x76, 0x61, 0x6e, 0x61, 0x6c,
+	0x79, 0x74, 0x69, 0x63, 0x73, 0x76, 0x32, 0xa2, 0x02, 0x03, 0x57, 0x56, 0x58, 0xaa, 0x02, 0x11,
+	0x57, 0x66, 0x6f, 0x2e, 0x56, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x2e, 0x56,
+	0x32, 0xca, 0x02, 0x11, 0x57, 0x66, 0x6f, 0x5c, 0x56, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69,
+	0x63, 0x73, 0x5c, 0x56, 0x32, 0xe2, 0x02, 0x1d, 0x57, 0x66, 0x6f, 0x5c, 0x56, 0x61, 0x6e, 0x61,
+	0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x5c, 0x56, 0x32, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74,
+	0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x13, 0x57, 0x66, 0x6f, 0x3a, 0x3a, 0x56, 0x61, 0x6e,
+	0x61, 0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x3a, 0x3a, 0x56, 0x32, 0x62, 0x06, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x33,
 }
 
 var (
@@ -2669,7 +2930,7 @@ func file_wfo_vanalytics_v2_transcript_proto_rawDescGZIP() []byte {
 }
 
 var file_wfo_vanalytics_v2_transcript_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_wfo_vanalytics_v2_transcript_proto_msgTypes = make([]protoimpl.MessageInfo, 33)
+var file_wfo_vanalytics_v2_transcript_proto_msgTypes = make([]protoimpl.MessageInfo, 36)
 var file_wfo_vanalytics_v2_transcript_proto_goTypes = []interface{}{
 	(Channel)(0),                                // 0: wfo.vanalytics.v2.Channel
 	(ReviewStatus)(0),                           // 1: wfo.vanalytics.v2.ReviewStatus
@@ -2678,84 +2939,96 @@ var file_wfo_vanalytics_v2_transcript_proto_goTypes = []interface{}{
 	(*Sms)(nil),                                 // 4: wfo.vanalytics.v2.Sms
 	(*Call)(nil),                                // 5: wfo.vanalytics.v2.Call
 	(*SearchTranscriptsRequest)(nil),            // 6: wfo.vanalytics.v2.SearchTranscriptsRequest
-	(*SearchTranscriptsResponse)(nil),           // 7: wfo.vanalytics.v2.SearchTranscriptsResponse
-	(*TranscriptBoolQuery)(nil),                 // 8: wfo.vanalytics.v2.TranscriptBoolQuery
-	(*TranscriptQuery)(nil),                     // 9: wfo.vanalytics.v2.TranscriptQuery
-	(*FuzzinessAuto)(nil),                       // 10: wfo.vanalytics.v2.FuzzinessAuto
-	(*Match)(nil),                               // 11: wfo.vanalytics.v2.Match
-	(*SpanNear)(nil),                            // 12: wfo.vanalytics.v2.SpanNear
-	(*SpanTerm)(nil),                            // 13: wfo.vanalytics.v2.SpanTerm
-	(*SpanFuzzy)(nil),                           // 14: wfo.vanalytics.v2.SpanFuzzy
-	(*FlagSummary_NeedReview)(nil),              // 15: wfo.vanalytics.v2.FlagSummary.NeedReview
-	(*FlagSummary_Flag)(nil),                    // 16: wfo.vanalytics.v2.FlagSummary.Flag
-	(*FlagSummary_Filter)(nil),                  // 17: wfo.vanalytics.v2.FlagSummary.Filter
-	(*FlagSummary_Review)(nil),                  // 18: wfo.vanalytics.v2.FlagSummary.Review
-	(*Sms_Thread)(nil),                          // 19: wfo.vanalytics.v2.Sms.Thread
-	(*Sms_Segment)(nil),                         // 20: wfo.vanalytics.v2.Sms.Segment
-	(*Call_Thread)(nil),                         // 21: wfo.vanalytics.v2.Call.Thread
-	(*Call_Segment)(nil),                        // 22: wfo.vanalytics.v2.Call.Segment
-	(*SearchTranscriptsResponse_Hit)(nil),       // 23: wfo.vanalytics.v2.SearchTranscriptsResponse.Hit
-	(*TranscriptQuery_TranscriptSid)(nil),       // 24: wfo.vanalytics.v2.TranscriptQuery.TranscriptSid
-	(*TranscriptQuery_Channel)(nil),             // 25: wfo.vanalytics.v2.TranscriptQuery.Channel
-	(*TranscriptQuery_Metadata)(nil),            // 26: wfo.vanalytics.v2.TranscriptQuery.Metadata
-	(*TranscriptQuery_Call)(nil),                // 27: wfo.vanalytics.v2.TranscriptQuery.Call
-	(*TranscriptQuery_Sms)(nil),                 // 28: wfo.vanalytics.v2.TranscriptQuery.Sms
-	(*TranscriptQuery_Threads)(nil),             // 29: wfo.vanalytics.v2.TranscriptQuery.Threads
-	(*TranscriptQuery_Call_CallSid)(nil),        // 30: wfo.vanalytics.v2.TranscriptQuery.Call.CallSid
-	(*TranscriptQuery_Sms_ConversationSid)(nil), // 31: wfo.vanalytics.v2.TranscriptQuery.Sms.ConversationSid
-	(*TranscriptQuery_Threads_Id)(nil),          // 32: wfo.vanalytics.v2.TranscriptQuery.Threads.Id
-	(*TranscriptQuery_Threads_Text)(nil),        // 33: wfo.vanalytics.v2.TranscriptQuery.Threads.Text
-	(*SpanNear_Clause)(nil),                     // 34: wfo.vanalytics.v2.SpanNear.Clause
-	(*timestamppb.Timestamp)(nil),               // 35: google.protobuf.Timestamp
-	(commons.CallType_Enum)(0),                  // 36: api.commons.CallType.Enum
-	(*fieldmaskpb.FieldMask)(nil),               // 37: google.protobuf.FieldMask
+	(*Highlight)(nil),                           // 7: wfo.vanalytics.v2.Highlight
+	(*SearchTranscriptsResponse)(nil),           // 8: wfo.vanalytics.v2.SearchTranscriptsResponse
+	(*TranscriptBoolQuery)(nil),                 // 9: wfo.vanalytics.v2.TranscriptBoolQuery
+	(*TranscriptQuery)(nil),                     // 10: wfo.vanalytics.v2.TranscriptQuery
+	(*FuzzinessAuto)(nil),                       // 11: wfo.vanalytics.v2.FuzzinessAuto
+	(*Match)(nil),                               // 12: wfo.vanalytics.v2.Match
+	(*SpanNear)(nil),                            // 13: wfo.vanalytics.v2.SpanNear
+	(*SpanTerm)(nil),                            // 14: wfo.vanalytics.v2.SpanTerm
+	(*SpanFuzzy)(nil),                           // 15: wfo.vanalytics.v2.SpanFuzzy
+	(*FlagSummary_NeedReview)(nil),              // 16: wfo.vanalytics.v2.FlagSummary.NeedReview
+	(*FlagSummary_Flag)(nil),                    // 17: wfo.vanalytics.v2.FlagSummary.Flag
+	(*FlagSummary_Filter)(nil),                  // 18: wfo.vanalytics.v2.FlagSummary.Filter
+	(*FlagSummary_Review)(nil),                  // 19: wfo.vanalytics.v2.FlagSummary.Review
+	(*Sms_Thread)(nil),                          // 20: wfo.vanalytics.v2.Sms.Thread
+	(*Sms_Segment)(nil),                         // 21: wfo.vanalytics.v2.Sms.Segment
+	(*Call_Thread)(nil),                         // 22: wfo.vanalytics.v2.Call.Thread
+	(*Call_Segment)(nil),                        // 23: wfo.vanalytics.v2.Call.Segment
+	(*SearchTranscriptsResponse_Hit)(nil),       // 24: wfo.vanalytics.v2.SearchTranscriptsResponse.Hit
+	(*TranscriptQuery_TranscriptSid)(nil),       // 25: wfo.vanalytics.v2.TranscriptQuery.TranscriptSid
+	(*TranscriptQuery_Channel)(nil),             // 26: wfo.vanalytics.v2.TranscriptQuery.Channel
+	(*TranscriptQuery_Metadata)(nil),            // 27: wfo.vanalytics.v2.TranscriptQuery.Metadata
+	(*TranscriptQuery_Call)(nil),                // 28: wfo.vanalytics.v2.TranscriptQuery.Call
+	(*TranscriptQuery_Sms)(nil),                 // 29: wfo.vanalytics.v2.TranscriptQuery.Sms
+	(*TranscriptQuery_Threads)(nil),             // 30: wfo.vanalytics.v2.TranscriptQuery.Threads
+	(*TranscriptQuery_Call_CallType)(nil),       // 31: wfo.vanalytics.v2.TranscriptQuery.Call.CallType
+	(*TranscriptQuery_Call_CallSid)(nil),        // 32: wfo.vanalytics.v2.TranscriptQuery.Call.CallSid
+	(*TranscriptQuery_Call_AudioTime)(nil),      // 33: wfo.vanalytics.v2.TranscriptQuery.Call.AudioTime
+	(*TranscriptQuery_Sms_ConversationSid)(nil), // 34: wfo.vanalytics.v2.TranscriptQuery.Sms.ConversationSid
+	(*TranscriptQuery_Threads_Id)(nil),          // 35: wfo.vanalytics.v2.TranscriptQuery.Threads.Id
+	(*TranscriptQuery_Threads_Text)(nil),        // 36: wfo.vanalytics.v2.TranscriptQuery.Threads.Text
+	(*SpanNear_Clause)(nil),                     // 37: wfo.vanalytics.v2.SpanNear.Clause
+	(*timestamppb.Timestamp)(nil),               // 38: google.protobuf.Timestamp
+	(commons.CallType_Enum)(0),                  // 39: api.commons.CallType.Enum
+	(*fieldmaskpb.FieldMask)(nil),               // 40: google.protobuf.FieldMask
+	(*wrapperspb.Int32Value)(nil),               // 41: google.protobuf.Int32Value
 }
 var file_wfo_vanalytics_v2_transcript_proto_depIdxs = []int32{
 	5,  // 0: wfo.vanalytics.v2.Transcript.call:type_name -> wfo.vanalytics.v2.Call
 	4,  // 1: wfo.vanalytics.v2.Transcript.sms:type_name -> wfo.vanalytics.v2.Sms
 	0,  // 2: wfo.vanalytics.v2.Transcript.channel:type_name -> wfo.vanalytics.v2.Channel
-	35, // 3: wfo.vanalytics.v2.Transcript.start_time:type_name -> google.protobuf.Timestamp
-	35, // 4: wfo.vanalytics.v2.Transcript.delete_time:type_name -> google.protobuf.Timestamp
+	38, // 3: wfo.vanalytics.v2.Transcript.start_time:type_name -> google.protobuf.Timestamp
+	38, // 4: wfo.vanalytics.v2.Transcript.delete_time:type_name -> google.protobuf.Timestamp
 	3,  // 5: wfo.vanalytics.v2.Transcript.flag_summary:type_name -> wfo.vanalytics.v2.FlagSummary
-	15, // 6: wfo.vanalytics.v2.FlagSummary.need_review:type_name -> wfo.vanalytics.v2.FlagSummary.NeedReview
-	16, // 7: wfo.vanalytics.v2.FlagSummary.flags:type_name -> wfo.vanalytics.v2.FlagSummary.Flag
+	16, // 6: wfo.vanalytics.v2.FlagSummary.need_review:type_name -> wfo.vanalytics.v2.FlagSummary.NeedReview
+	17, // 7: wfo.vanalytics.v2.FlagSummary.flags:type_name -> wfo.vanalytics.v2.FlagSummary.Flag
 	1,  // 8: wfo.vanalytics.v2.FlagSummary.review_status:type_name -> wfo.vanalytics.v2.ReviewStatus
-	19, // 9: wfo.vanalytics.v2.Sms.threads:type_name -> wfo.vanalytics.v2.Sms.Thread
-	36, // 10: wfo.vanalytics.v2.Call.call_type:type_name -> api.commons.CallType.Enum
-	21, // 11: wfo.vanalytics.v2.Call.threads:type_name -> wfo.vanalytics.v2.Call.Thread
-	37, // 12: wfo.vanalytics.v2.SearchTranscriptsRequest.read_mask:type_name -> google.protobuf.FieldMask
-	8,  // 13: wfo.vanalytics.v2.SearchTranscriptsRequest.bool_query:type_name -> wfo.vanalytics.v2.TranscriptBoolQuery
-	23, // 14: wfo.vanalytics.v2.SearchTranscriptsResponse.hits:type_name -> wfo.vanalytics.v2.SearchTranscriptsResponse.Hit
-	9,  // 15: wfo.vanalytics.v2.TranscriptBoolQuery.transcript:type_name -> wfo.vanalytics.v2.TranscriptQuery
-	24, // 16: wfo.vanalytics.v2.TranscriptQuery.transcript_sid:type_name -> wfo.vanalytics.v2.TranscriptQuery.TranscriptSid
-	25, // 17: wfo.vanalytics.v2.TranscriptQuery.channel:type_name -> wfo.vanalytics.v2.TranscriptQuery.Channel
-	26, // 18: wfo.vanalytics.v2.TranscriptQuery.metadata:type_name -> wfo.vanalytics.v2.TranscriptQuery.Metadata
-	29, // 19: wfo.vanalytics.v2.TranscriptQuery.threads:type_name -> wfo.vanalytics.v2.TranscriptQuery.Threads
-	10, // 20: wfo.vanalytics.v2.Match.fuzziness_auto:type_name -> wfo.vanalytics.v2.FuzzinessAuto
-	34, // 21: wfo.vanalytics.v2.SpanNear.clauses:type_name -> wfo.vanalytics.v2.SpanNear.Clause
-	10, // 22: wfo.vanalytics.v2.SpanFuzzy.fuzziness_auto:type_name -> wfo.vanalytics.v2.FuzzinessAuto
-	17, // 23: wfo.vanalytics.v2.FlagSummary.Flag.filters:type_name -> wfo.vanalytics.v2.FlagSummary.Filter
-	18, // 24: wfo.vanalytics.v2.FlagSummary.Flag.reviews:type_name -> wfo.vanalytics.v2.FlagSummary.Review
-	20, // 25: wfo.vanalytics.v2.Sms.Thread.segments:type_name -> wfo.vanalytics.v2.Sms.Segment
-	22, // 26: wfo.vanalytics.v2.Call.Thread.segments:type_name -> wfo.vanalytics.v2.Call.Segment
-	2,  // 27: wfo.vanalytics.v2.SearchTranscriptsResponse.Hit.transcript:type_name -> wfo.vanalytics.v2.Transcript
-	0,  // 28: wfo.vanalytics.v2.TranscriptQuery.Channel.any:type_name -> wfo.vanalytics.v2.Channel
-	27, // 29: wfo.vanalytics.v2.TranscriptQuery.Metadata.call:type_name -> wfo.vanalytics.v2.TranscriptQuery.Call
-	28, // 30: wfo.vanalytics.v2.TranscriptQuery.Metadata.sms:type_name -> wfo.vanalytics.v2.TranscriptQuery.Sms
-	30, // 31: wfo.vanalytics.v2.TranscriptQuery.Call.call_sid:type_name -> wfo.vanalytics.v2.TranscriptQuery.Call.CallSid
-	31, // 32: wfo.vanalytics.v2.TranscriptQuery.Sms.conversation_sid:type_name -> wfo.vanalytics.v2.TranscriptQuery.Sms.ConversationSid
-	32, // 33: wfo.vanalytics.v2.TranscriptQuery.Threads.id:type_name -> wfo.vanalytics.v2.TranscriptQuery.Threads.Id
-	33, // 34: wfo.vanalytics.v2.TranscriptQuery.Threads.text:type_name -> wfo.vanalytics.v2.TranscriptQuery.Threads.Text
-	11, // 35: wfo.vanalytics.v2.TranscriptQuery.Threads.Text.match:type_name -> wfo.vanalytics.v2.Match
-	12, // 36: wfo.vanalytics.v2.TranscriptQuery.Threads.Text.span_near:type_name -> wfo.vanalytics.v2.SpanNear
-	12, // 37: wfo.vanalytics.v2.SpanNear.Clause.span_near:type_name -> wfo.vanalytics.v2.SpanNear
-	14, // 38: wfo.vanalytics.v2.SpanNear.Clause.span_fuzzy:type_name -> wfo.vanalytics.v2.SpanFuzzy
-	13, // 39: wfo.vanalytics.v2.SpanNear.Clause.span_term:type_name -> wfo.vanalytics.v2.SpanTerm
-	40, // [40:40] is the sub-list for method output_type
-	40, // [40:40] is the sub-list for method input_type
-	40, // [40:40] is the sub-list for extension type_name
-	40, // [40:40] is the sub-list for extension extendee
-	0,  // [0:40] is the sub-list for field type_name
+	20, // 9: wfo.vanalytics.v2.Sms.threads:type_name -> wfo.vanalytics.v2.Sms.Thread
+	39, // 10: wfo.vanalytics.v2.Call.call_type:type_name -> api.commons.CallType.Enum
+	22, // 11: wfo.vanalytics.v2.Call.threads:type_name -> wfo.vanalytics.v2.Call.Thread
+	40, // 12: wfo.vanalytics.v2.SearchTranscriptsRequest.read_mask:type_name -> google.protobuf.FieldMask
+	9,  // 13: wfo.vanalytics.v2.SearchTranscriptsRequest.bool_query:type_name -> wfo.vanalytics.v2.TranscriptBoolQuery
+	7,  // 14: wfo.vanalytics.v2.SearchTranscriptsRequest.highlight:type_name -> wfo.vanalytics.v2.Highlight
+	24, // 15: wfo.vanalytics.v2.SearchTranscriptsResponse.hits:type_name -> wfo.vanalytics.v2.SearchTranscriptsResponse.Hit
+	10, // 16: wfo.vanalytics.v2.TranscriptBoolQuery.transcript:type_name -> wfo.vanalytics.v2.TranscriptQuery
+	25, // 17: wfo.vanalytics.v2.TranscriptQuery.transcript_sid:type_name -> wfo.vanalytics.v2.TranscriptQuery.TranscriptSid
+	26, // 18: wfo.vanalytics.v2.TranscriptQuery.channel:type_name -> wfo.vanalytics.v2.TranscriptQuery.Channel
+	27, // 19: wfo.vanalytics.v2.TranscriptQuery.metadata:type_name -> wfo.vanalytics.v2.TranscriptQuery.Metadata
+	30, // 20: wfo.vanalytics.v2.TranscriptQuery.threads:type_name -> wfo.vanalytics.v2.TranscriptQuery.Threads
+	11, // 21: wfo.vanalytics.v2.Match.fuzziness_auto:type_name -> wfo.vanalytics.v2.FuzzinessAuto
+	37, // 22: wfo.vanalytics.v2.SpanNear.clauses:type_name -> wfo.vanalytics.v2.SpanNear.Clause
+	11, // 23: wfo.vanalytics.v2.SpanFuzzy.fuzziness_auto:type_name -> wfo.vanalytics.v2.FuzzinessAuto
+	18, // 24: wfo.vanalytics.v2.FlagSummary.Flag.filters:type_name -> wfo.vanalytics.v2.FlagSummary.Filter
+	19, // 25: wfo.vanalytics.v2.FlagSummary.Flag.reviews:type_name -> wfo.vanalytics.v2.FlagSummary.Review
+	21, // 26: wfo.vanalytics.v2.Sms.Thread.segments:type_name -> wfo.vanalytics.v2.Sms.Segment
+	23, // 27: wfo.vanalytics.v2.Call.Thread.segments:type_name -> wfo.vanalytics.v2.Call.Segment
+	2,  // 28: wfo.vanalytics.v2.SearchTranscriptsResponse.Hit.transcript:type_name -> wfo.vanalytics.v2.Transcript
+	0,  // 29: wfo.vanalytics.v2.TranscriptQuery.Channel.any:type_name -> wfo.vanalytics.v2.Channel
+	28, // 30: wfo.vanalytics.v2.TranscriptQuery.Metadata.call:type_name -> wfo.vanalytics.v2.TranscriptQuery.Call
+	29, // 31: wfo.vanalytics.v2.TranscriptQuery.Metadata.sms:type_name -> wfo.vanalytics.v2.TranscriptQuery.Sms
+	32, // 32: wfo.vanalytics.v2.TranscriptQuery.Call.call_sid:type_name -> wfo.vanalytics.v2.TranscriptQuery.Call.CallSid
+	33, // 33: wfo.vanalytics.v2.TranscriptQuery.Call.audio_time:type_name -> wfo.vanalytics.v2.TranscriptQuery.Call.AudioTime
+	31, // 34: wfo.vanalytics.v2.TranscriptQuery.Call.call_type:type_name -> wfo.vanalytics.v2.TranscriptQuery.Call.CallType
+	34, // 35: wfo.vanalytics.v2.TranscriptQuery.Sms.conversation_sid:type_name -> wfo.vanalytics.v2.TranscriptQuery.Sms.ConversationSid
+	35, // 36: wfo.vanalytics.v2.TranscriptQuery.Threads.id:type_name -> wfo.vanalytics.v2.TranscriptQuery.Threads.Id
+	36, // 37: wfo.vanalytics.v2.TranscriptQuery.Threads.text:type_name -> wfo.vanalytics.v2.TranscriptQuery.Threads.Text
+	39, // 38: wfo.vanalytics.v2.TranscriptQuery.Call.CallType.any:type_name -> api.commons.CallType.Enum
+	41, // 39: wfo.vanalytics.v2.TranscriptQuery.Call.AudioTime.gte:type_name -> google.protobuf.Int32Value
+	41, // 40: wfo.vanalytics.v2.TranscriptQuery.Call.AudioTime.lte:type_name -> google.protobuf.Int32Value
+	41, // 41: wfo.vanalytics.v2.TranscriptQuery.Call.AudioTime.gt:type_name -> google.protobuf.Int32Value
+	41, // 42: wfo.vanalytics.v2.TranscriptQuery.Call.AudioTime.lt:type_name -> google.protobuf.Int32Value
+	12, // 43: wfo.vanalytics.v2.TranscriptQuery.Threads.Text.match:type_name -> wfo.vanalytics.v2.Match
+	13, // 44: wfo.vanalytics.v2.TranscriptQuery.Threads.Text.span_near:type_name -> wfo.vanalytics.v2.SpanNear
+	13, // 45: wfo.vanalytics.v2.SpanNear.Clause.span_near:type_name -> wfo.vanalytics.v2.SpanNear
+	15, // 46: wfo.vanalytics.v2.SpanNear.Clause.span_fuzzy:type_name -> wfo.vanalytics.v2.SpanFuzzy
+	14, // 47: wfo.vanalytics.v2.SpanNear.Clause.span_term:type_name -> wfo.vanalytics.v2.SpanTerm
+	48, // [48:48] is the sub-list for method output_type
+	48, // [48:48] is the sub-list for method input_type
+	48, // [48:48] is the sub-list for extension type_name
+	48, // [48:48] is the sub-list for extension extendee
+	0,  // [0:48] is the sub-list for field type_name
 }
 
 func init() { file_wfo_vanalytics_v2_transcript_proto_init() }
@@ -2825,7 +3098,7 @@ func file_wfo_vanalytics_v2_transcript_proto_init() {
 			}
 		}
 		file_wfo_vanalytics_v2_transcript_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchTranscriptsResponse); i {
+			switch v := v.(*Highlight); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2837,7 +3110,7 @@ func file_wfo_vanalytics_v2_transcript_proto_init() {
 			}
 		}
 		file_wfo_vanalytics_v2_transcript_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*TranscriptBoolQuery); i {
+			switch v := v.(*SearchTranscriptsResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2849,7 +3122,7 @@ func file_wfo_vanalytics_v2_transcript_proto_init() {
 			}
 		}
 		file_wfo_vanalytics_v2_transcript_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*TranscriptQuery); i {
+			switch v := v.(*TranscriptBoolQuery); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2861,7 +3134,7 @@ func file_wfo_vanalytics_v2_transcript_proto_init() {
 			}
 		}
 		file_wfo_vanalytics_v2_transcript_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*FuzzinessAuto); i {
+			switch v := v.(*TranscriptQuery); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2873,7 +3146,7 @@ func file_wfo_vanalytics_v2_transcript_proto_init() {
 			}
 		}
 		file_wfo_vanalytics_v2_transcript_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Match); i {
+			switch v := v.(*FuzzinessAuto); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2885,7 +3158,7 @@ func file_wfo_vanalytics_v2_transcript_proto_init() {
 			}
 		}
 		file_wfo_vanalytics_v2_transcript_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SpanNear); i {
+			switch v := v.(*Match); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2897,7 +3170,7 @@ func file_wfo_vanalytics_v2_transcript_proto_init() {
 			}
 		}
 		file_wfo_vanalytics_v2_transcript_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SpanTerm); i {
+			switch v := v.(*SpanNear); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2909,7 +3182,7 @@ func file_wfo_vanalytics_v2_transcript_proto_init() {
 			}
 		}
 		file_wfo_vanalytics_v2_transcript_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SpanFuzzy); i {
+			switch v := v.(*SpanTerm); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2921,7 +3194,7 @@ func file_wfo_vanalytics_v2_transcript_proto_init() {
 			}
 		}
 		file_wfo_vanalytics_v2_transcript_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*FlagSummary_NeedReview); i {
+			switch v := v.(*SpanFuzzy); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2933,7 +3206,7 @@ func file_wfo_vanalytics_v2_transcript_proto_init() {
 			}
 		}
 		file_wfo_vanalytics_v2_transcript_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*FlagSummary_Flag); i {
+			switch v := v.(*FlagSummary_NeedReview); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2945,7 +3218,7 @@ func file_wfo_vanalytics_v2_transcript_proto_init() {
 			}
 		}
 		file_wfo_vanalytics_v2_transcript_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*FlagSummary_Filter); i {
+			switch v := v.(*FlagSummary_Flag); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2957,7 +3230,7 @@ func file_wfo_vanalytics_v2_transcript_proto_init() {
 			}
 		}
 		file_wfo_vanalytics_v2_transcript_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*FlagSummary_Review); i {
+			switch v := v.(*FlagSummary_Filter); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2969,7 +3242,7 @@ func file_wfo_vanalytics_v2_transcript_proto_init() {
 			}
 		}
 		file_wfo_vanalytics_v2_transcript_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Sms_Thread); i {
+			switch v := v.(*FlagSummary_Review); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2981,7 +3254,7 @@ func file_wfo_vanalytics_v2_transcript_proto_init() {
 			}
 		}
 		file_wfo_vanalytics_v2_transcript_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Sms_Segment); i {
+			switch v := v.(*Sms_Thread); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2993,7 +3266,7 @@ func file_wfo_vanalytics_v2_transcript_proto_init() {
 			}
 		}
 		file_wfo_vanalytics_v2_transcript_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Call_Thread); i {
+			switch v := v.(*Sms_Segment); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3005,7 +3278,7 @@ func file_wfo_vanalytics_v2_transcript_proto_init() {
 			}
 		}
 		file_wfo_vanalytics_v2_transcript_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Call_Segment); i {
+			switch v := v.(*Call_Thread); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3017,7 +3290,7 @@ func file_wfo_vanalytics_v2_transcript_proto_init() {
 			}
 		}
 		file_wfo_vanalytics_v2_transcript_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchTranscriptsResponse_Hit); i {
+			switch v := v.(*Call_Segment); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3029,7 +3302,7 @@ func file_wfo_vanalytics_v2_transcript_proto_init() {
 			}
 		}
 		file_wfo_vanalytics_v2_transcript_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*TranscriptQuery_TranscriptSid); i {
+			switch v := v.(*SearchTranscriptsResponse_Hit); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3041,7 +3314,7 @@ func file_wfo_vanalytics_v2_transcript_proto_init() {
 			}
 		}
 		file_wfo_vanalytics_v2_transcript_proto_msgTypes[23].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*TranscriptQuery_Channel); i {
+			switch v := v.(*TranscriptQuery_TranscriptSid); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3053,7 +3326,7 @@ func file_wfo_vanalytics_v2_transcript_proto_init() {
 			}
 		}
 		file_wfo_vanalytics_v2_transcript_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*TranscriptQuery_Metadata); i {
+			switch v := v.(*TranscriptQuery_Channel); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3065,7 +3338,7 @@ func file_wfo_vanalytics_v2_transcript_proto_init() {
 			}
 		}
 		file_wfo_vanalytics_v2_transcript_proto_msgTypes[25].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*TranscriptQuery_Call); i {
+			switch v := v.(*TranscriptQuery_Metadata); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3077,7 +3350,7 @@ func file_wfo_vanalytics_v2_transcript_proto_init() {
 			}
 		}
 		file_wfo_vanalytics_v2_transcript_proto_msgTypes[26].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*TranscriptQuery_Sms); i {
+			switch v := v.(*TranscriptQuery_Call); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3089,7 +3362,7 @@ func file_wfo_vanalytics_v2_transcript_proto_init() {
 			}
 		}
 		file_wfo_vanalytics_v2_transcript_proto_msgTypes[27].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*TranscriptQuery_Threads); i {
+			switch v := v.(*TranscriptQuery_Sms); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3101,7 +3374,7 @@ func file_wfo_vanalytics_v2_transcript_proto_init() {
 			}
 		}
 		file_wfo_vanalytics_v2_transcript_proto_msgTypes[28].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*TranscriptQuery_Call_CallSid); i {
+			switch v := v.(*TranscriptQuery_Threads); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3113,7 +3386,7 @@ func file_wfo_vanalytics_v2_transcript_proto_init() {
 			}
 		}
 		file_wfo_vanalytics_v2_transcript_proto_msgTypes[29].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*TranscriptQuery_Sms_ConversationSid); i {
+			switch v := v.(*TranscriptQuery_Call_CallType); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3125,7 +3398,7 @@ func file_wfo_vanalytics_v2_transcript_proto_init() {
 			}
 		}
 		file_wfo_vanalytics_v2_transcript_proto_msgTypes[30].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*TranscriptQuery_Threads_Id); i {
+			switch v := v.(*TranscriptQuery_Call_CallSid); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3137,7 +3410,7 @@ func file_wfo_vanalytics_v2_transcript_proto_init() {
 			}
 		}
 		file_wfo_vanalytics_v2_transcript_proto_msgTypes[31].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*TranscriptQuery_Threads_Text); i {
+			switch v := v.(*TranscriptQuery_Call_AudioTime); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3149,6 +3422,42 @@ func file_wfo_vanalytics_v2_transcript_proto_init() {
 			}
 		}
 		file_wfo_vanalytics_v2_transcript_proto_msgTypes[32].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TranscriptQuery_Sms_ConversationSid); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_wfo_vanalytics_v2_transcript_proto_msgTypes[33].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TranscriptQuery_Threads_Id); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_wfo_vanalytics_v2_transcript_proto_msgTypes[34].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TranscriptQuery_Threads_Text); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_wfo_vanalytics_v2_transcript_proto_msgTypes[35].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*SpanNear_Clause); i {
 			case 0:
 				return &v.state
@@ -3165,15 +3474,15 @@ func file_wfo_vanalytics_v2_transcript_proto_init() {
 		(*Transcript_Call)(nil),
 		(*Transcript_Sms)(nil),
 	}
-	file_wfo_vanalytics_v2_transcript_proto_msgTypes[9].OneofWrappers = []interface{}{
+	file_wfo_vanalytics_v2_transcript_proto_msgTypes[10].OneofWrappers = []interface{}{
 		(*Match_FuzzinessAuto)(nil),
 		(*Match_FuzzinessValue)(nil),
 	}
-	file_wfo_vanalytics_v2_transcript_proto_msgTypes[12].OneofWrappers = []interface{}{
+	file_wfo_vanalytics_v2_transcript_proto_msgTypes[13].OneofWrappers = []interface{}{
 		(*SpanFuzzy_FuzzinessAuto)(nil),
 		(*SpanFuzzy_FuzzinessValue)(nil),
 	}
-	file_wfo_vanalytics_v2_transcript_proto_msgTypes[32].OneofWrappers = []interface{}{
+	file_wfo_vanalytics_v2_transcript_proto_msgTypes[35].OneofWrappers = []interface{}{
 		(*SpanNear_Clause_SpanNear)(nil),
 		(*SpanNear_Clause_SpanFuzzy)(nil),
 		(*SpanNear_Clause_SpanTerm)(nil),
@@ -3184,7 +3493,7 @@ func file_wfo_vanalytics_v2_transcript_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_wfo_vanalytics_v2_transcript_proto_rawDesc,
 			NumEnums:      2,
-			NumMessages:   33,
+			NumMessages:   36,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
