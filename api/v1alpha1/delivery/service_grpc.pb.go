@@ -45,6 +45,7 @@ const (
 	DeliveryApi_GetEncryption_FullMethodName                         = "/api.v1alpha1.delivery.DeliveryApi/GetEncryption"
 	DeliveryApi_ListEncryptions_FullMethodName                       = "/api.v1alpha1.delivery.DeliveryApi/ListEncryptions"
 	DeliveryApi_UpdateEncryption_FullMethodName                      = "/api.v1alpha1.delivery.DeliveryApi/UpdateEncryption"
+	DeliveryApi_ListSMSNumbers_FullMethodName                        = "/api.v1alpha1.delivery.DeliveryApi/ListSMSNumbers"
 )
 
 // DeliveryApiClient is the client API for DeliveryApi service.
@@ -77,6 +78,7 @@ type DeliveryApiClient interface {
 	GetEncryption(ctx context.Context, in *GetEncryptionReq, opts ...grpc.CallOption) (*GetEncryptionRes, error)
 	ListEncryptions(ctx context.Context, in *ListEncryptionsReq, opts ...grpc.CallOption) (*ListEncryptionsRes, error)
 	UpdateEncryption(ctx context.Context, in *UpdateEncryptionReq, opts ...grpc.CallOption) (*UpdateEncryptionRes, error)
+	ListSMSNumbers(ctx context.Context, in *ListSMSNumbersReq, opts ...grpc.CallOption) (*ListSMSNumbersRes, error)
 }
 
 type deliveryApiClient struct {
@@ -321,6 +323,15 @@ func (c *deliveryApiClient) UpdateEncryption(ctx context.Context, in *UpdateEncr
 	return out, nil
 }
 
+func (c *deliveryApiClient) ListSMSNumbers(ctx context.Context, in *ListSMSNumbersReq, opts ...grpc.CallOption) (*ListSMSNumbersRes, error) {
+	out := new(ListSMSNumbersRes)
+	err := c.cc.Invoke(ctx, DeliveryApi_ListSMSNumbers_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DeliveryApiServer is the server API for DeliveryApi service.
 // All implementations must embed UnimplementedDeliveryApiServer
 // for forward compatibility
@@ -351,6 +362,7 @@ type DeliveryApiServer interface {
 	GetEncryption(context.Context, *GetEncryptionReq) (*GetEncryptionRes, error)
 	ListEncryptions(context.Context, *ListEncryptionsReq) (*ListEncryptionsRes, error)
 	UpdateEncryption(context.Context, *UpdateEncryptionReq) (*UpdateEncryptionRes, error)
+	ListSMSNumbers(context.Context, *ListSMSNumbersReq) (*ListSMSNumbersRes, error)
 	mustEmbedUnimplementedDeliveryApiServer()
 }
 
@@ -435,6 +447,9 @@ func (UnimplementedDeliveryApiServer) ListEncryptions(context.Context, *ListEncr
 }
 func (UnimplementedDeliveryApiServer) UpdateEncryption(context.Context, *UpdateEncryptionReq) (*UpdateEncryptionRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateEncryption not implemented")
+}
+func (UnimplementedDeliveryApiServer) ListSMSNumbers(context.Context, *ListSMSNumbersReq) (*ListSMSNumbersRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListSMSNumbers not implemented")
 }
 func (UnimplementedDeliveryApiServer) mustEmbedUnimplementedDeliveryApiServer() {}
 
@@ -917,6 +932,24 @@ func _DeliveryApi_UpdateEncryption_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DeliveryApi_ListSMSNumbers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListSMSNumbersReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeliveryApiServer).ListSMSNumbers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DeliveryApi_ListSMSNumbers_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeliveryApiServer).ListSMSNumbers(ctx, req.(*ListSMSNumbersReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // DeliveryApi_ServiceDesc is the grpc.ServiceDesc for DeliveryApi service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1027,6 +1060,10 @@ var DeliveryApi_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateEncryption",
 			Handler:    _DeliveryApi_UpdateEncryption_Handler,
+		},
+		{
+			MethodName: "ListSMSNumbers",
+			Handler:    _DeliveryApi_ListSMSNumbers_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
