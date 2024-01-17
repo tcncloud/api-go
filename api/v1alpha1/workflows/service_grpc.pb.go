@@ -37,6 +37,7 @@ const (
 	WorkflowDefinitionPersistService_GetWorkflowDefinition_FullMethodName      = "/api.v1alpha1.workflows.WorkflowDefinitionPersistService/GetWorkflowDefinition"
 	WorkflowDefinitionPersistService_ListWorkflowDefinitions_FullMethodName    = "/api.v1alpha1.workflows.WorkflowDefinitionPersistService/ListWorkflowDefinitions"
 	WorkflowDefinitionPersistService_UpdateWorkflowDefinition_FullMethodName   = "/api.v1alpha1.workflows.WorkflowDefinitionPersistService/UpdateWorkflowDefinition"
+	WorkflowDefinitionPersistService_DeleteWorkflowDefinition_FullMethodName   = "/api.v1alpha1.workflows.WorkflowDefinitionPersistService/DeleteWorkflowDefinition"
 	WorkflowDefinitionPersistService_ValidateWorkflowDefinition_FullMethodName = "/api.v1alpha1.workflows.WorkflowDefinitionPersistService/ValidateWorkflowDefinition"
 )
 
@@ -53,6 +54,8 @@ type WorkflowDefinitionPersistServiceClient interface {
 	ListWorkflowDefinitions(ctx context.Context, in *ListWorkflowDefinitionsRequest, opts ...grpc.CallOption) (WorkflowDefinitionPersistService_ListWorkflowDefinitionsClient, error)
 	// UpdateWorkflowDefinition updates a flow definition in the database. Only the name, description and definition graph itself are updated
 	UpdateWorkflowDefinition(ctx context.Context, in *UpdateWorkflowDefinitionRequest, opts ...grpc.CallOption) (*UpdateWorkflowDefinitionResponse, error)
+	// DeleteWorkflowDefinition deletes a flow definition from the database
+	DeleteWorkflowDefinition(ctx context.Context, in *DeleteWorkflowDefinitionRequest, opts ...grpc.CallOption) (*DeleteWorkflowDefinitionResponse, error)
 	// ValidateWorkflowDefinition validates a flow definition in the database. Only the name, description and definition graph itself are updated
 	ValidateWorkflowDefinition(ctx context.Context, in *ValidateWorkflowDefinitionRequest, opts ...grpc.CallOption) (*ValidateWorkflowDefinitionResponse, error)
 }
@@ -124,6 +127,15 @@ func (c *workflowDefinitionPersistServiceClient) UpdateWorkflowDefinition(ctx co
 	return out, nil
 }
 
+func (c *workflowDefinitionPersistServiceClient) DeleteWorkflowDefinition(ctx context.Context, in *DeleteWorkflowDefinitionRequest, opts ...grpc.CallOption) (*DeleteWorkflowDefinitionResponse, error) {
+	out := new(DeleteWorkflowDefinitionResponse)
+	err := c.cc.Invoke(ctx, WorkflowDefinitionPersistService_DeleteWorkflowDefinition_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *workflowDefinitionPersistServiceClient) ValidateWorkflowDefinition(ctx context.Context, in *ValidateWorkflowDefinitionRequest, opts ...grpc.CallOption) (*ValidateWorkflowDefinitionResponse, error) {
 	out := new(ValidateWorkflowDefinitionResponse)
 	err := c.cc.Invoke(ctx, WorkflowDefinitionPersistService_ValidateWorkflowDefinition_FullMethodName, in, out, opts...)
@@ -146,6 +158,8 @@ type WorkflowDefinitionPersistServiceServer interface {
 	ListWorkflowDefinitions(*ListWorkflowDefinitionsRequest, WorkflowDefinitionPersistService_ListWorkflowDefinitionsServer) error
 	// UpdateWorkflowDefinition updates a flow definition in the database. Only the name, description and definition graph itself are updated
 	UpdateWorkflowDefinition(context.Context, *UpdateWorkflowDefinitionRequest) (*UpdateWorkflowDefinitionResponse, error)
+	// DeleteWorkflowDefinition deletes a flow definition from the database
+	DeleteWorkflowDefinition(context.Context, *DeleteWorkflowDefinitionRequest) (*DeleteWorkflowDefinitionResponse, error)
 	// ValidateWorkflowDefinition validates a flow definition in the database. Only the name, description and definition graph itself are updated
 	ValidateWorkflowDefinition(context.Context, *ValidateWorkflowDefinitionRequest) (*ValidateWorkflowDefinitionResponse, error)
 	mustEmbedUnimplementedWorkflowDefinitionPersistServiceServer()
@@ -166,6 +180,9 @@ func (UnimplementedWorkflowDefinitionPersistServiceServer) ListWorkflowDefinitio
 }
 func (UnimplementedWorkflowDefinitionPersistServiceServer) UpdateWorkflowDefinition(context.Context, *UpdateWorkflowDefinitionRequest) (*UpdateWorkflowDefinitionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateWorkflowDefinition not implemented")
+}
+func (UnimplementedWorkflowDefinitionPersistServiceServer) DeleteWorkflowDefinition(context.Context, *DeleteWorkflowDefinitionRequest) (*DeleteWorkflowDefinitionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteWorkflowDefinition not implemented")
 }
 func (UnimplementedWorkflowDefinitionPersistServiceServer) ValidateWorkflowDefinition(context.Context, *ValidateWorkflowDefinitionRequest) (*ValidateWorkflowDefinitionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ValidateWorkflowDefinition not implemented")
@@ -259,6 +276,24 @@ func _WorkflowDefinitionPersistService_UpdateWorkflowDefinition_Handler(srv inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WorkflowDefinitionPersistService_DeleteWorkflowDefinition_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteWorkflowDefinitionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WorkflowDefinitionPersistServiceServer).DeleteWorkflowDefinition(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WorkflowDefinitionPersistService_DeleteWorkflowDefinition_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WorkflowDefinitionPersistServiceServer).DeleteWorkflowDefinition(ctx, req.(*DeleteWorkflowDefinitionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WorkflowDefinitionPersistService_ValidateWorkflowDefinition_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ValidateWorkflowDefinitionRequest)
 	if err := dec(in); err != nil {
@@ -295,6 +330,10 @@ var WorkflowDefinitionPersistService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateWorkflowDefinition",
 			Handler:    _WorkflowDefinitionPersistService_UpdateWorkflowDefinition_Handler,
+		},
+		{
+			MethodName: "DeleteWorkflowDefinition",
+			Handler:    _WorkflowDefinitionPersistService_DeleteWorkflowDefinition_Handler,
 		},
 		{
 			MethodName: "ValidateWorkflowDefinition",
