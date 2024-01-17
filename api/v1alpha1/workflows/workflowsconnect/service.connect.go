@@ -60,6 +60,9 @@ const (
 	// WorkflowDefinitionPersistServiceUpdateWorkflowDefinitionProcedure is the fully-qualified name of
 	// the WorkflowDefinitionPersistService's UpdateWorkflowDefinition RPC.
 	WorkflowDefinitionPersistServiceUpdateWorkflowDefinitionProcedure = "/api.v1alpha1.workflows.WorkflowDefinitionPersistService/UpdateWorkflowDefinition"
+	// WorkflowDefinitionPersistServiceDeleteWorkflowDefinitionProcedure is the fully-qualified name of
+	// the WorkflowDefinitionPersistService's DeleteWorkflowDefinition RPC.
+	WorkflowDefinitionPersistServiceDeleteWorkflowDefinitionProcedure = "/api.v1alpha1.workflows.WorkflowDefinitionPersistService/DeleteWorkflowDefinition"
 	// WorkflowDefinitionPersistServiceValidateWorkflowDefinitionProcedure is the fully-qualified name
 	// of the WorkflowDefinitionPersistService's ValidateWorkflowDefinition RPC.
 	WorkflowDefinitionPersistServiceValidateWorkflowDefinitionProcedure = "/api.v1alpha1.workflows.WorkflowDefinitionPersistService/ValidateWorkflowDefinition"
@@ -77,6 +80,8 @@ type WorkflowDefinitionPersistServiceClient interface {
 	ListWorkflowDefinitions(context.Context, *connect_go.Request[workflows.ListWorkflowDefinitionsRequest]) (*connect_go.ServerStreamForClient[workflows.ListWorkflowDefinitionsResponse], error)
 	// UpdateWorkflowDefinition updates a flow definition in the database. Only the name, description and definition graph itself are updated
 	UpdateWorkflowDefinition(context.Context, *connect_go.Request[workflows.UpdateWorkflowDefinitionRequest]) (*connect_go.Response[workflows.UpdateWorkflowDefinitionResponse], error)
+	// DeleteWorkflowDefinition deletes a flow definition from the database
+	DeleteWorkflowDefinition(context.Context, *connect_go.Request[workflows.DeleteWorkflowDefinitionRequest]) (*connect_go.Response[workflows.DeleteWorkflowDefinitionResponse], error)
 	// ValidateWorkflowDefinition validates a flow definition in the database. Only the name, description and definition graph itself are updated
 	ValidateWorkflowDefinition(context.Context, *connect_go.Request[workflows.ValidateWorkflowDefinitionRequest]) (*connect_go.Response[workflows.ValidateWorkflowDefinitionResponse], error)
 }
@@ -112,6 +117,11 @@ func NewWorkflowDefinitionPersistServiceClient(httpClient connect_go.HTTPClient,
 			baseURL+WorkflowDefinitionPersistServiceUpdateWorkflowDefinitionProcedure,
 			opts...,
 		),
+		deleteWorkflowDefinition: connect_go.NewClient[workflows.DeleteWorkflowDefinitionRequest, workflows.DeleteWorkflowDefinitionResponse](
+			httpClient,
+			baseURL+WorkflowDefinitionPersistServiceDeleteWorkflowDefinitionProcedure,
+			opts...,
+		),
 		validateWorkflowDefinition: connect_go.NewClient[workflows.ValidateWorkflowDefinitionRequest, workflows.ValidateWorkflowDefinitionResponse](
 			httpClient,
 			baseURL+WorkflowDefinitionPersistServiceValidateWorkflowDefinitionProcedure,
@@ -126,6 +136,7 @@ type workflowDefinitionPersistServiceClient struct {
 	getWorkflowDefinition      *connect_go.Client[workflows.GetWorkflowDefinitionRequest, workflows.GetWorkflowDefinitionResponse]
 	listWorkflowDefinitions    *connect_go.Client[workflows.ListWorkflowDefinitionsRequest, workflows.ListWorkflowDefinitionsResponse]
 	updateWorkflowDefinition   *connect_go.Client[workflows.UpdateWorkflowDefinitionRequest, workflows.UpdateWorkflowDefinitionResponse]
+	deleteWorkflowDefinition   *connect_go.Client[workflows.DeleteWorkflowDefinitionRequest, workflows.DeleteWorkflowDefinitionResponse]
 	validateWorkflowDefinition *connect_go.Client[workflows.ValidateWorkflowDefinitionRequest, workflows.ValidateWorkflowDefinitionResponse]
 }
 
@@ -153,6 +164,12 @@ func (c *workflowDefinitionPersistServiceClient) UpdateWorkflowDefinition(ctx co
 	return c.updateWorkflowDefinition.CallUnary(ctx, req)
 }
 
+// DeleteWorkflowDefinition calls
+// api.v1alpha1.workflows.WorkflowDefinitionPersistService.DeleteWorkflowDefinition.
+func (c *workflowDefinitionPersistServiceClient) DeleteWorkflowDefinition(ctx context.Context, req *connect_go.Request[workflows.DeleteWorkflowDefinitionRequest]) (*connect_go.Response[workflows.DeleteWorkflowDefinitionResponse], error) {
+	return c.deleteWorkflowDefinition.CallUnary(ctx, req)
+}
+
 // ValidateWorkflowDefinition calls
 // api.v1alpha1.workflows.WorkflowDefinitionPersistService.ValidateWorkflowDefinition.
 func (c *workflowDefinitionPersistServiceClient) ValidateWorkflowDefinition(ctx context.Context, req *connect_go.Request[workflows.ValidateWorkflowDefinitionRequest]) (*connect_go.Response[workflows.ValidateWorkflowDefinitionResponse], error) {
@@ -171,6 +188,8 @@ type WorkflowDefinitionPersistServiceHandler interface {
 	ListWorkflowDefinitions(context.Context, *connect_go.Request[workflows.ListWorkflowDefinitionsRequest], *connect_go.ServerStream[workflows.ListWorkflowDefinitionsResponse]) error
 	// UpdateWorkflowDefinition updates a flow definition in the database. Only the name, description and definition graph itself are updated
 	UpdateWorkflowDefinition(context.Context, *connect_go.Request[workflows.UpdateWorkflowDefinitionRequest]) (*connect_go.Response[workflows.UpdateWorkflowDefinitionResponse], error)
+	// DeleteWorkflowDefinition deletes a flow definition from the database
+	DeleteWorkflowDefinition(context.Context, *connect_go.Request[workflows.DeleteWorkflowDefinitionRequest]) (*connect_go.Response[workflows.DeleteWorkflowDefinitionResponse], error)
 	// ValidateWorkflowDefinition validates a flow definition in the database. Only the name, description and definition graph itself are updated
 	ValidateWorkflowDefinition(context.Context, *connect_go.Request[workflows.ValidateWorkflowDefinitionRequest]) (*connect_go.Response[workflows.ValidateWorkflowDefinitionResponse], error)
 }
@@ -201,6 +220,11 @@ func NewWorkflowDefinitionPersistServiceHandler(svc WorkflowDefinitionPersistSer
 		svc.UpdateWorkflowDefinition,
 		opts...,
 	)
+	workflowDefinitionPersistServiceDeleteWorkflowDefinitionHandler := connect_go.NewUnaryHandler(
+		WorkflowDefinitionPersistServiceDeleteWorkflowDefinitionProcedure,
+		svc.DeleteWorkflowDefinition,
+		opts...,
+	)
 	workflowDefinitionPersistServiceValidateWorkflowDefinitionHandler := connect_go.NewUnaryHandler(
 		WorkflowDefinitionPersistServiceValidateWorkflowDefinitionProcedure,
 		svc.ValidateWorkflowDefinition,
@@ -216,6 +240,8 @@ func NewWorkflowDefinitionPersistServiceHandler(svc WorkflowDefinitionPersistSer
 			workflowDefinitionPersistServiceListWorkflowDefinitionsHandler.ServeHTTP(w, r)
 		case WorkflowDefinitionPersistServiceUpdateWorkflowDefinitionProcedure:
 			workflowDefinitionPersistServiceUpdateWorkflowDefinitionHandler.ServeHTTP(w, r)
+		case WorkflowDefinitionPersistServiceDeleteWorkflowDefinitionProcedure:
+			workflowDefinitionPersistServiceDeleteWorkflowDefinitionHandler.ServeHTTP(w, r)
 		case WorkflowDefinitionPersistServiceValidateWorkflowDefinitionProcedure:
 			workflowDefinitionPersistServiceValidateWorkflowDefinitionHandler.ServeHTTP(w, r)
 		default:
@@ -241,6 +267,10 @@ func (UnimplementedWorkflowDefinitionPersistServiceHandler) ListWorkflowDefiniti
 
 func (UnimplementedWorkflowDefinitionPersistServiceHandler) UpdateWorkflowDefinition(context.Context, *connect_go.Request[workflows.UpdateWorkflowDefinitionRequest]) (*connect_go.Response[workflows.UpdateWorkflowDefinitionResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.workflows.WorkflowDefinitionPersistService.UpdateWorkflowDefinition is not implemented"))
+}
+
+func (UnimplementedWorkflowDefinitionPersistServiceHandler) DeleteWorkflowDefinition(context.Context, *connect_go.Request[workflows.DeleteWorkflowDefinitionRequest]) (*connect_go.Response[workflows.DeleteWorkflowDefinitionResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.workflows.WorkflowDefinitionPersistService.DeleteWorkflowDefinition is not implemented"))
 }
 
 func (UnimplementedWorkflowDefinitionPersistServiceHandler) ValidateWorkflowDefinition(context.Context, *connect_go.Request[workflows.ValidateWorkflowDefinitionRequest]) (*connect_go.Response[workflows.ValidateWorkflowDefinitionResponse], error) {
