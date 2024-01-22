@@ -482,6 +482,9 @@ const (
 	// WFMReplaceAgentOnScheduleProcedure is the fully-qualified name of the WFM's
 	// ReplaceAgentOnSchedule RPC.
 	WFMReplaceAgentOnScheduleProcedure = "/api.v1alpha1.wfm.WFM/ReplaceAgentOnSchedule"
+	// WFMReplaceAgentOnScheduleV1Procedure is the fully-qualified name of the WFM's
+	// ReplaceAgentOnScheduleV1 RPC.
+	WFMReplaceAgentOnScheduleV1Procedure = "/api.v1alpha1.wfm.WFM/ReplaceAgentOnScheduleV1"
 	// WFMRemoveAgentFromScheduleProcedure is the fully-qualified name of the WFM's
 	// RemoveAgentFromSchedule RPC.
 	WFMRemoveAgentFromScheduleProcedure = "/api.v1alpha1.wfm.WFM/RemoveAgentFromSchedule"
@@ -2323,6 +2326,7 @@ type WFMClient interface {
 	// Replaces @wfm_agent_sid_to_remove with @wfm_agent_sid_to_add for the given parameters and the org sending the request.
 	// If @skip_overlapping_shifts, shifts with an overlap conflict will be skipped, otherwise overlap conflicts will cause a diagnostic to be returned.
 	// Does not enforce skill proficiencies. To check skill proficiencies for shift replacement use ListValidAgentsForReplacement.
+	// DEPRECATED as of Jan/22/2024 - Use ReplaceAgentOnScheduleV1 instead.
 	// Required permissions:
 	//
 	//	NONE
@@ -2330,7 +2334,20 @@ type WFMClient interface {
 	// Errors:
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when replacing the @wfm_agent_sid_to_remove.
+	//
+	// Deprecated: do not use.
 	ReplaceAgentOnSchedule(context.Context, *connect_go.Request[wfm.ReplaceAgentOnScheduleRes]) (*connect_go.Response[wfm.ReplaceAgentOnScheduleRes], error)
+	// Replaces @wfm_agent_sid_to_remove with @wfm_agent_sid_to_add for the given parameters and the org sending the request.
+	// If @skip_overlapping_shifts, shifts with an overlap conflict will be skipped, otherwise overlap conflicts will cause a diagnostic to be returned.
+	// Does not enforce skill proficiencies. To check skill proficiencies for shift replacement use ListValidAgentsForReplacement.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when replacing the @wfm_agent_sid_to_remove.
+	ReplaceAgentOnScheduleV1(context.Context, *connect_go.Request[wfm.ReplaceAgentOnScheduleReq]) (*connect_go.Response[wfm.ReplaceAgentOnScheduleRes], error)
 	// Removes the @wfm_agent_sid from @schedule_selector over @datetime_range for the org sending the request.
 	// Creates a new unassigned agent with the same active agent group associations as @wfm_agent_sid for @schedule_scenario_sid.
 	// The unassigned agent will be assigned to shifts belonging to @wfm_agent_sid, returning newly created unassigned agent's SID and the updated shifts.
@@ -3149,6 +3166,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMReplaceAgentOnScheduleProcedure,
 			opts...,
 		),
+		replaceAgentOnScheduleV1: connect_go.NewClient[wfm.ReplaceAgentOnScheduleReq, wfm.ReplaceAgentOnScheduleRes](
+			httpClient,
+			baseURL+WFMReplaceAgentOnScheduleV1Procedure,
+			opts...,
+		),
 		removeAgentFromSchedule: connect_go.NewClient[wfm.RemoveAgentFromScheduleRequest, wfm.RemoveAgentFromScheduleResponse](
 			httpClient,
 			baseURL+WFMRemoveAgentFromScheduleProcedure,
@@ -3318,6 +3340,7 @@ type wFMClient struct {
 	generateTourWeekPatterns                      *connect_go.Client[wfm.GenerateTourWeekPatternsReq, wfm.GenerateTourWeekPatternsRes]
 	listValidAgentsForReplacement                 *connect_go.Client[wfm.ListValidAgentsForReplacementReq, wfm.ListValidAgentsForReplacementRes]
 	replaceAgentOnSchedule                        *connect_go.Client[wfm.ReplaceAgentOnScheduleRes, wfm.ReplaceAgentOnScheduleRes]
+	replaceAgentOnScheduleV1                      *connect_go.Client[wfm.ReplaceAgentOnScheduleReq, wfm.ReplaceAgentOnScheduleRes]
 	removeAgentFromSchedule                       *connect_go.Client[wfm.RemoveAgentFromScheduleRequest, wfm.RemoveAgentFromScheduleResponse]
 }
 
@@ -4134,8 +4157,15 @@ func (c *wFMClient) ListValidAgentsForReplacement(ctx context.Context, req *conn
 }
 
 // ReplaceAgentOnSchedule calls api.v1alpha1.wfm.WFM.ReplaceAgentOnSchedule.
+//
+// Deprecated: do not use.
 func (c *wFMClient) ReplaceAgentOnSchedule(ctx context.Context, req *connect_go.Request[wfm.ReplaceAgentOnScheduleRes]) (*connect_go.Response[wfm.ReplaceAgentOnScheduleRes], error) {
 	return c.replaceAgentOnSchedule.CallUnary(ctx, req)
+}
+
+// ReplaceAgentOnScheduleV1 calls api.v1alpha1.wfm.WFM.ReplaceAgentOnScheduleV1.
+func (c *wFMClient) ReplaceAgentOnScheduleV1(ctx context.Context, req *connect_go.Request[wfm.ReplaceAgentOnScheduleReq]) (*connect_go.Response[wfm.ReplaceAgentOnScheduleRes], error) {
+	return c.replaceAgentOnScheduleV1.CallUnary(ctx, req)
 }
 
 // RemoveAgentFromSchedule calls api.v1alpha1.wfm.WFM.RemoveAgentFromSchedule.
@@ -5979,6 +6009,7 @@ type WFMHandler interface {
 	// Replaces @wfm_agent_sid_to_remove with @wfm_agent_sid_to_add for the given parameters and the org sending the request.
 	// If @skip_overlapping_shifts, shifts with an overlap conflict will be skipped, otherwise overlap conflicts will cause a diagnostic to be returned.
 	// Does not enforce skill proficiencies. To check skill proficiencies for shift replacement use ListValidAgentsForReplacement.
+	// DEPRECATED as of Jan/22/2024 - Use ReplaceAgentOnScheduleV1 instead.
 	// Required permissions:
 	//
 	//	NONE
@@ -5986,7 +6017,20 @@ type WFMHandler interface {
 	// Errors:
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when replacing the @wfm_agent_sid_to_remove.
+	//
+	// Deprecated: do not use.
 	ReplaceAgentOnSchedule(context.Context, *connect_go.Request[wfm.ReplaceAgentOnScheduleRes]) (*connect_go.Response[wfm.ReplaceAgentOnScheduleRes], error)
+	// Replaces @wfm_agent_sid_to_remove with @wfm_agent_sid_to_add for the given parameters and the org sending the request.
+	// If @skip_overlapping_shifts, shifts with an overlap conflict will be skipped, otherwise overlap conflicts will cause a diagnostic to be returned.
+	// Does not enforce skill proficiencies. To check skill proficiencies for shift replacement use ListValidAgentsForReplacement.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when replacing the @wfm_agent_sid_to_remove.
+	ReplaceAgentOnScheduleV1(context.Context, *connect_go.Request[wfm.ReplaceAgentOnScheduleReq]) (*connect_go.Response[wfm.ReplaceAgentOnScheduleRes], error)
 	// Removes the @wfm_agent_sid from @schedule_selector over @datetime_range for the org sending the request.
 	// Creates a new unassigned agent with the same active agent group associations as @wfm_agent_sid for @schedule_scenario_sid.
 	// The unassigned agent will be assigned to shifts belonging to @wfm_agent_sid, returning newly created unassigned agent's SID and the updated shifts.
@@ -6801,6 +6845,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.ReplaceAgentOnSchedule,
 		opts...,
 	)
+	wFMReplaceAgentOnScheduleV1Handler := connect_go.NewUnaryHandler(
+		WFMReplaceAgentOnScheduleV1Procedure,
+		svc.ReplaceAgentOnScheduleV1,
+		opts...,
+	)
 	wFMRemoveAgentFromScheduleHandler := connect_go.NewUnaryHandler(
 		WFMRemoveAgentFromScheduleProcedure,
 		svc.RemoveAgentFromSchedule,
@@ -7126,6 +7175,8 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMListValidAgentsForReplacementHandler.ServeHTTP(w, r)
 		case WFMReplaceAgentOnScheduleProcedure:
 			wFMReplaceAgentOnScheduleHandler.ServeHTTP(w, r)
+		case WFMReplaceAgentOnScheduleV1Procedure:
+			wFMReplaceAgentOnScheduleV1Handler.ServeHTTP(w, r)
 		case WFMRemoveAgentFromScheduleProcedure:
 			wFMRemoveAgentFromScheduleHandler.ServeHTTP(w, r)
 		default:
@@ -7771,6 +7822,10 @@ func (UnimplementedWFMHandler) ListValidAgentsForReplacement(context.Context, *c
 
 func (UnimplementedWFMHandler) ReplaceAgentOnSchedule(context.Context, *connect_go.Request[wfm.ReplaceAgentOnScheduleRes]) (*connect_go.Response[wfm.ReplaceAgentOnScheduleRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ReplaceAgentOnSchedule is not implemented"))
+}
+
+func (UnimplementedWFMHandler) ReplaceAgentOnScheduleV1(context.Context, *connect_go.Request[wfm.ReplaceAgentOnScheduleReq]) (*connect_go.Response[wfm.ReplaceAgentOnScheduleRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ReplaceAgentOnScheduleV1 is not implemented"))
 }
 
 func (UnimplementedWFMHandler) RemoveAgentFromSchedule(context.Context, *connect_go.Request[wfm.RemoveAgentFromScheduleRequest]) (*connect_go.Response[wfm.RemoveAgentFromScheduleResponse], error) {
