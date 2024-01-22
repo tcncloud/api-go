@@ -133,6 +133,10 @@ const (
 	Org_DeleteAuthTokenByUserId_FullMethodName                  = "/api.v1alpha1.org.Org/DeleteAuthTokenByUserId"
 	Org_GetHuntGroupSettings_FullMethodName                     = "/api.v1alpha1.org.Org/GetHuntGroupSettings"
 	Org_UpdateHuntGroupSettings_FullMethodName                  = "/api.v1alpha1.org.Org/UpdateHuntGroupSettings"
+	Org_CreateHuntGroup_FullMethodName                          = "/api.v1alpha1.org.Org/CreateHuntGroup"
+	Org_UpdateHuntGroupGeneralDetails_FullMethodName            = "/api.v1alpha1.org.Org/UpdateHuntGroupGeneralDetails"
+	Org_DeleteHuntGroup_FullMethodName                          = "/api.v1alpha1.org.Org/DeleteHuntGroup"
+	Org_GetHuntGroupDetails_FullMethodName                      = "/api.v1alpha1.org.Org/GetHuntGroupDetails"
 	Org_ListCallerIdBuckets_FullMethodName                      = "/api.v1alpha1.org.Org/ListCallerIdBuckets"
 	Org_GetDataDipTemplate_FullMethodName                       = "/api.v1alpha1.org.Org/GetDataDipTemplate"
 	Org_ListDataDipTemplates_FullMethodName                     = "/api.v1alpha1.org.Org/ListDataDipTemplates"
@@ -463,6 +467,15 @@ type OrgClient interface {
 	// UpdateHuntGroupSettings updates the selected/masked hunt group settings
 	// for the given hunt group.
 	UpdateHuntGroupSettings(ctx context.Context, in *UpdateHuntGroupSettingsRequest, opts ...grpc.CallOption) (*UpdateHuntGroupSettingsResponse, error)
+	// CreateHuntGroup is the RPC method for creating a hunt group.
+	// It will create a hunt group with the given general details.
+	CreateHuntGroup(ctx context.Context, in *CreateHuntGroupRequest, opts ...grpc.CallOption) (*CreateHuntGroupResponse, error)
+	// UpdateHuntGroupGeneralDetails is the RPC method for updating the general details of a hunt group.
+	UpdateHuntGroupGeneralDetails(ctx context.Context, in *UpdateHuntGroupGeneralDetailsRequest, opts ...grpc.CallOption) (*UpdateHuntGroupGeneralDetailsResponse, error)
+	// DeleteHuntGroup is the RPC method for deleting a hunt group.
+	DeleteHuntGroup(ctx context.Context, in *DeleteHuntGroupRequest, opts ...grpc.CallOption) (*DeleteHuntGroupResponse, error)
+	// GetHuntGroupDetails returns the hunt group details for the given hunt group.
+	GetHuntGroupDetails(ctx context.Context, in *GetHuntGroupDetailsRequest, opts ...grpc.CallOption) (*GetHuntGroupDetailsResponse, error)
 	// Lists caller id numbers with their associated region codes for the given
 	// bucket.
 	ListCallerIdBuckets(ctx context.Context, in *ListCallerIdBucketsRequest, opts ...grpc.CallOption) (*ListCallerIdBucketsResponse, error)
@@ -1858,6 +1871,42 @@ func (c *orgClient) UpdateHuntGroupSettings(ctx context.Context, in *UpdateHuntG
 	return out, nil
 }
 
+func (c *orgClient) CreateHuntGroup(ctx context.Context, in *CreateHuntGroupRequest, opts ...grpc.CallOption) (*CreateHuntGroupResponse, error) {
+	out := new(CreateHuntGroupResponse)
+	err := c.cc.Invoke(ctx, Org_CreateHuntGroup_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) UpdateHuntGroupGeneralDetails(ctx context.Context, in *UpdateHuntGroupGeneralDetailsRequest, opts ...grpc.CallOption) (*UpdateHuntGroupGeneralDetailsResponse, error) {
+	out := new(UpdateHuntGroupGeneralDetailsResponse)
+	err := c.cc.Invoke(ctx, Org_UpdateHuntGroupGeneralDetails_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) DeleteHuntGroup(ctx context.Context, in *DeleteHuntGroupRequest, opts ...grpc.CallOption) (*DeleteHuntGroupResponse, error) {
+	out := new(DeleteHuntGroupResponse)
+	err := c.cc.Invoke(ctx, Org_DeleteHuntGroup_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) GetHuntGroupDetails(ctx context.Context, in *GetHuntGroupDetailsRequest, opts ...grpc.CallOption) (*GetHuntGroupDetailsResponse, error) {
+	out := new(GetHuntGroupDetailsResponse)
+	err := c.cc.Invoke(ctx, Org_GetHuntGroupDetails_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *orgClient) ListCallerIdBuckets(ctx context.Context, in *ListCallerIdBucketsRequest, opts ...grpc.CallOption) (*ListCallerIdBucketsResponse, error) {
 	out := new(ListCallerIdBucketsResponse)
 	err := c.cc.Invoke(ctx, Org_ListCallerIdBuckets_FullMethodName, in, out, opts...)
@@ -2722,6 +2771,15 @@ type OrgServer interface {
 	// UpdateHuntGroupSettings updates the selected/masked hunt group settings
 	// for the given hunt group.
 	UpdateHuntGroupSettings(context.Context, *UpdateHuntGroupSettingsRequest) (*UpdateHuntGroupSettingsResponse, error)
+	// CreateHuntGroup is the RPC method for creating a hunt group.
+	// It will create a hunt group with the given general details.
+	CreateHuntGroup(context.Context, *CreateHuntGroupRequest) (*CreateHuntGroupResponse, error)
+	// UpdateHuntGroupGeneralDetails is the RPC method for updating the general details of a hunt group.
+	UpdateHuntGroupGeneralDetails(context.Context, *UpdateHuntGroupGeneralDetailsRequest) (*UpdateHuntGroupGeneralDetailsResponse, error)
+	// DeleteHuntGroup is the RPC method for deleting a hunt group.
+	DeleteHuntGroup(context.Context, *DeleteHuntGroupRequest) (*DeleteHuntGroupResponse, error)
+	// GetHuntGroupDetails returns the hunt group details for the given hunt group.
+	GetHuntGroupDetails(context.Context, *GetHuntGroupDetailsRequest) (*GetHuntGroupDetailsResponse, error)
 	// Lists caller id numbers with their associated region codes for the given
 	// bucket.
 	ListCallerIdBuckets(context.Context, *ListCallerIdBucketsRequest) (*ListCallerIdBucketsResponse, error)
@@ -3222,6 +3280,18 @@ func (UnimplementedOrgServer) GetHuntGroupSettings(context.Context, *GetHuntGrou
 }
 func (UnimplementedOrgServer) UpdateHuntGroupSettings(context.Context, *UpdateHuntGroupSettingsRequest) (*UpdateHuntGroupSettingsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateHuntGroupSettings not implemented")
+}
+func (UnimplementedOrgServer) CreateHuntGroup(context.Context, *CreateHuntGroupRequest) (*CreateHuntGroupResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateHuntGroup not implemented")
+}
+func (UnimplementedOrgServer) UpdateHuntGroupGeneralDetails(context.Context, *UpdateHuntGroupGeneralDetailsRequest) (*UpdateHuntGroupGeneralDetailsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateHuntGroupGeneralDetails not implemented")
+}
+func (UnimplementedOrgServer) DeleteHuntGroup(context.Context, *DeleteHuntGroupRequest) (*DeleteHuntGroupResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteHuntGroup not implemented")
+}
+func (UnimplementedOrgServer) GetHuntGroupDetails(context.Context, *GetHuntGroupDetailsRequest) (*GetHuntGroupDetailsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetHuntGroupDetails not implemented")
 }
 func (UnimplementedOrgServer) ListCallerIdBuckets(context.Context, *ListCallerIdBucketsRequest) (*ListCallerIdBucketsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListCallerIdBuckets not implemented")
@@ -5516,6 +5586,78 @@ func _Org_UpdateHuntGroupSettings_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Org_CreateHuntGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateHuntGroupRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).CreateHuntGroup(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_CreateHuntGroup_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).CreateHuntGroup(ctx, req.(*CreateHuntGroupRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_UpdateHuntGroupGeneralDetails_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateHuntGroupGeneralDetailsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).UpdateHuntGroupGeneralDetails(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_UpdateHuntGroupGeneralDetails_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).UpdateHuntGroupGeneralDetails(ctx, req.(*UpdateHuntGroupGeneralDetailsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_DeleteHuntGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteHuntGroupRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).DeleteHuntGroup(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_DeleteHuntGroup_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).DeleteHuntGroup(ctx, req.(*DeleteHuntGroupRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_GetHuntGroupDetails_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetHuntGroupDetailsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).GetHuntGroupDetails(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_GetHuntGroupDetails_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).GetHuntGroupDetails(ctx, req.(*GetHuntGroupDetailsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Org_ListCallerIdBuckets_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListCallerIdBucketsRequest)
 	if err := dec(in); err != nil {
@@ -7148,6 +7290,22 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateHuntGroupSettings",
 			Handler:    _Org_UpdateHuntGroupSettings_Handler,
+		},
+		{
+			MethodName: "CreateHuntGroup",
+			Handler:    _Org_CreateHuntGroup_Handler,
+		},
+		{
+			MethodName: "UpdateHuntGroupGeneralDetails",
+			Handler:    _Org_UpdateHuntGroupGeneralDetails_Handler,
+		},
+		{
+			MethodName: "DeleteHuntGroup",
+			Handler:    _Org_DeleteHuntGroup_Handler,
+		},
+		{
+			MethodName: "GetHuntGroupDetails",
+			Handler:    _Org_GetHuntGroupDetails_Handler,
 		},
 		{
 			MethodName: "ListCallerIdBuckets",

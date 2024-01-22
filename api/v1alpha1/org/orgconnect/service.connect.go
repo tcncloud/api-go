@@ -341,6 +341,15 @@ const (
 	// OrgUpdateHuntGroupSettingsProcedure is the fully-qualified name of the Org's
 	// UpdateHuntGroupSettings RPC.
 	OrgUpdateHuntGroupSettingsProcedure = "/api.v1alpha1.org.Org/UpdateHuntGroupSettings"
+	// OrgCreateHuntGroupProcedure is the fully-qualified name of the Org's CreateHuntGroup RPC.
+	OrgCreateHuntGroupProcedure = "/api.v1alpha1.org.Org/CreateHuntGroup"
+	// OrgUpdateHuntGroupGeneralDetailsProcedure is the fully-qualified name of the Org's
+	// UpdateHuntGroupGeneralDetails RPC.
+	OrgUpdateHuntGroupGeneralDetailsProcedure = "/api.v1alpha1.org.Org/UpdateHuntGroupGeneralDetails"
+	// OrgDeleteHuntGroupProcedure is the fully-qualified name of the Org's DeleteHuntGroup RPC.
+	OrgDeleteHuntGroupProcedure = "/api.v1alpha1.org.Org/DeleteHuntGroup"
+	// OrgGetHuntGroupDetailsProcedure is the fully-qualified name of the Org's GetHuntGroupDetails RPC.
+	OrgGetHuntGroupDetailsProcedure = "/api.v1alpha1.org.Org/GetHuntGroupDetails"
 	// OrgListCallerIdBucketsProcedure is the fully-qualified name of the Org's ListCallerIdBuckets RPC.
 	OrgListCallerIdBucketsProcedure = "/api.v1alpha1.org.Org/ListCallerIdBuckets"
 	// OrgGetDataDipTemplateProcedure is the fully-qualified name of the Org's GetDataDipTemplate RPC.
@@ -774,6 +783,15 @@ type OrgClient interface {
 	// UpdateHuntGroupSettings updates the selected/masked hunt group settings
 	// for the given hunt group.
 	UpdateHuntGroupSettings(context.Context, *connect_go.Request[org.UpdateHuntGroupSettingsRequest]) (*connect_go.Response[org.UpdateHuntGroupSettingsResponse], error)
+	// CreateHuntGroup is the RPC method for creating a hunt group.
+	// It will create a hunt group with the given general details.
+	CreateHuntGroup(context.Context, *connect_go.Request[org.CreateHuntGroupRequest]) (*connect_go.Response[org.CreateHuntGroupResponse], error)
+	// UpdateHuntGroupGeneralDetails is the RPC method for updating the general details of a hunt group.
+	UpdateHuntGroupGeneralDetails(context.Context, *connect_go.Request[org.UpdateHuntGroupGeneralDetailsRequest]) (*connect_go.Response[org.UpdateHuntGroupGeneralDetailsResponse], error)
+	// DeleteHuntGroup is the RPC method for deleting a hunt group.
+	DeleteHuntGroup(context.Context, *connect_go.Request[org.DeleteHuntGroupRequest]) (*connect_go.Response[org.DeleteHuntGroupResponse], error)
+	// GetHuntGroupDetails returns the hunt group details for the given hunt group.
+	GetHuntGroupDetails(context.Context, *connect_go.Request[org.GetHuntGroupDetailsRequest]) (*connect_go.Response[org.GetHuntGroupDetailsResponse], error)
 	// Lists caller id numbers with their associated region codes for the given
 	// bucket.
 	ListCallerIdBuckets(context.Context, *connect_go.Request[org.ListCallerIdBucketsRequest]) (*connect_go.Response[org.ListCallerIdBucketsResponse], error)
@@ -1508,6 +1526,26 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgUpdateHuntGroupSettingsProcedure,
 			opts...,
 		),
+		createHuntGroup: connect_go.NewClient[org.CreateHuntGroupRequest, org.CreateHuntGroupResponse](
+			httpClient,
+			baseURL+OrgCreateHuntGroupProcedure,
+			opts...,
+		),
+		updateHuntGroupGeneralDetails: connect_go.NewClient[org.UpdateHuntGroupGeneralDetailsRequest, org.UpdateHuntGroupGeneralDetailsResponse](
+			httpClient,
+			baseURL+OrgUpdateHuntGroupGeneralDetailsProcedure,
+			opts...,
+		),
+		deleteHuntGroup: connect_go.NewClient[org.DeleteHuntGroupRequest, org.DeleteHuntGroupResponse](
+			httpClient,
+			baseURL+OrgDeleteHuntGroupProcedure,
+			opts...,
+		),
+		getHuntGroupDetails: connect_go.NewClient[org.GetHuntGroupDetailsRequest, org.GetHuntGroupDetailsResponse](
+			httpClient,
+			baseURL+OrgGetHuntGroupDetailsProcedure,
+			opts...,
+		),
 		listCallerIdBuckets: connect_go.NewClient[org.ListCallerIdBucketsRequest, org.ListCallerIdBucketsResponse](
 			httpClient,
 			baseURL+OrgListCallerIdBucketsProcedure,
@@ -1962,6 +2000,10 @@ type orgClient struct {
 	deleteAuthTokenByUserId                  *connect_go.Client[org.DeleteAuthTokenByUserIdRequest, org.DeleteAuthTokenByUserIdResponse]
 	getHuntGroupSettings                     *connect_go.Client[org.GetHuntGroupSettingsRequest, org.GetHuntGroupSettingsResponse]
 	updateHuntGroupSettings                  *connect_go.Client[org.UpdateHuntGroupSettingsRequest, org.UpdateHuntGroupSettingsResponse]
+	createHuntGroup                          *connect_go.Client[org.CreateHuntGroupRequest, org.CreateHuntGroupResponse]
+	updateHuntGroupGeneralDetails            *connect_go.Client[org.UpdateHuntGroupGeneralDetailsRequest, org.UpdateHuntGroupGeneralDetailsResponse]
+	deleteHuntGroup                          *connect_go.Client[org.DeleteHuntGroupRequest, org.DeleteHuntGroupResponse]
+	getHuntGroupDetails                      *connect_go.Client[org.GetHuntGroupDetailsRequest, org.GetHuntGroupDetailsResponse]
 	listCallerIdBuckets                      *connect_go.Client[org.ListCallerIdBucketsRequest, org.ListCallerIdBucketsResponse]
 	getDataDipTemplate                       *connect_go.Client[org.GetDataDipTemplateRequest, org.GetDataDipTemplateResponse]
 	listDataDipTemplates                     *connect_go.Client[org.ListDataDipTemplatesRequest, org.ListDataDipTemplatesResponse]
@@ -2603,6 +2645,26 @@ func (c *orgClient) UpdateHuntGroupSettings(ctx context.Context, req *connect_go
 	return c.updateHuntGroupSettings.CallUnary(ctx, req)
 }
 
+// CreateHuntGroup calls api.v1alpha1.org.Org.CreateHuntGroup.
+func (c *orgClient) CreateHuntGroup(ctx context.Context, req *connect_go.Request[org.CreateHuntGroupRequest]) (*connect_go.Response[org.CreateHuntGroupResponse], error) {
+	return c.createHuntGroup.CallUnary(ctx, req)
+}
+
+// UpdateHuntGroupGeneralDetails calls api.v1alpha1.org.Org.UpdateHuntGroupGeneralDetails.
+func (c *orgClient) UpdateHuntGroupGeneralDetails(ctx context.Context, req *connect_go.Request[org.UpdateHuntGroupGeneralDetailsRequest]) (*connect_go.Response[org.UpdateHuntGroupGeneralDetailsResponse], error) {
+	return c.updateHuntGroupGeneralDetails.CallUnary(ctx, req)
+}
+
+// DeleteHuntGroup calls api.v1alpha1.org.Org.DeleteHuntGroup.
+func (c *orgClient) DeleteHuntGroup(ctx context.Context, req *connect_go.Request[org.DeleteHuntGroupRequest]) (*connect_go.Response[org.DeleteHuntGroupResponse], error) {
+	return c.deleteHuntGroup.CallUnary(ctx, req)
+}
+
+// GetHuntGroupDetails calls api.v1alpha1.org.Org.GetHuntGroupDetails.
+func (c *orgClient) GetHuntGroupDetails(ctx context.Context, req *connect_go.Request[org.GetHuntGroupDetailsRequest]) (*connect_go.Response[org.GetHuntGroupDetailsResponse], error) {
+	return c.getHuntGroupDetails.CallUnary(ctx, req)
+}
+
 // ListCallerIdBuckets calls api.v1alpha1.org.Org.ListCallerIdBuckets.
 func (c *orgClient) ListCallerIdBuckets(ctx context.Context, req *connect_go.Request[org.ListCallerIdBucketsRequest]) (*connect_go.Response[org.ListCallerIdBucketsResponse], error) {
 	return c.listCallerIdBuckets.CallUnary(ctx, req)
@@ -3203,6 +3265,15 @@ type OrgHandler interface {
 	// UpdateHuntGroupSettings updates the selected/masked hunt group settings
 	// for the given hunt group.
 	UpdateHuntGroupSettings(context.Context, *connect_go.Request[org.UpdateHuntGroupSettingsRequest]) (*connect_go.Response[org.UpdateHuntGroupSettingsResponse], error)
+	// CreateHuntGroup is the RPC method for creating a hunt group.
+	// It will create a hunt group with the given general details.
+	CreateHuntGroup(context.Context, *connect_go.Request[org.CreateHuntGroupRequest]) (*connect_go.Response[org.CreateHuntGroupResponse], error)
+	// UpdateHuntGroupGeneralDetails is the RPC method for updating the general details of a hunt group.
+	UpdateHuntGroupGeneralDetails(context.Context, *connect_go.Request[org.UpdateHuntGroupGeneralDetailsRequest]) (*connect_go.Response[org.UpdateHuntGroupGeneralDetailsResponse], error)
+	// DeleteHuntGroup is the RPC method for deleting a hunt group.
+	DeleteHuntGroup(context.Context, *connect_go.Request[org.DeleteHuntGroupRequest]) (*connect_go.Response[org.DeleteHuntGroupResponse], error)
+	// GetHuntGroupDetails returns the hunt group details for the given hunt group.
+	GetHuntGroupDetails(context.Context, *connect_go.Request[org.GetHuntGroupDetailsRequest]) (*connect_go.Response[org.GetHuntGroupDetailsResponse], error)
 	// Lists caller id numbers with their associated region codes for the given
 	// bucket.
 	ListCallerIdBuckets(context.Context, *connect_go.Request[org.ListCallerIdBucketsRequest]) (*connect_go.Response[org.ListCallerIdBucketsResponse], error)
@@ -3933,6 +4004,26 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.UpdateHuntGroupSettings,
 		opts...,
 	)
+	orgCreateHuntGroupHandler := connect_go.NewUnaryHandler(
+		OrgCreateHuntGroupProcedure,
+		svc.CreateHuntGroup,
+		opts...,
+	)
+	orgUpdateHuntGroupGeneralDetailsHandler := connect_go.NewUnaryHandler(
+		OrgUpdateHuntGroupGeneralDetailsProcedure,
+		svc.UpdateHuntGroupGeneralDetails,
+		opts...,
+	)
+	orgDeleteHuntGroupHandler := connect_go.NewUnaryHandler(
+		OrgDeleteHuntGroupProcedure,
+		svc.DeleteHuntGroup,
+		opts...,
+	)
+	orgGetHuntGroupDetailsHandler := connect_go.NewUnaryHandler(
+		OrgGetHuntGroupDetailsProcedure,
+		svc.GetHuntGroupDetails,
+		opts...,
+	)
 	orgListCallerIdBucketsHandler := connect_go.NewUnaryHandler(
 		OrgListCallerIdBucketsProcedure,
 		svc.ListCallerIdBuckets,
@@ -4498,6 +4589,14 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 			orgGetHuntGroupSettingsHandler.ServeHTTP(w, r)
 		case OrgUpdateHuntGroupSettingsProcedure:
 			orgUpdateHuntGroupSettingsHandler.ServeHTTP(w, r)
+		case OrgCreateHuntGroupProcedure:
+			orgCreateHuntGroupHandler.ServeHTTP(w, r)
+		case OrgUpdateHuntGroupGeneralDetailsProcedure:
+			orgUpdateHuntGroupGeneralDetailsHandler.ServeHTTP(w, r)
+		case OrgDeleteHuntGroupProcedure:
+			orgDeleteHuntGroupHandler.ServeHTTP(w, r)
+		case OrgGetHuntGroupDetailsProcedure:
+			orgGetHuntGroupDetailsHandler.ServeHTTP(w, r)
 		case OrgListCallerIdBucketsProcedure:
 			orgListCallerIdBucketsHandler.ServeHTTP(w, r)
 		case OrgGetDataDipTemplateProcedure:
@@ -5095,6 +5194,22 @@ func (UnimplementedOrgHandler) GetHuntGroupSettings(context.Context, *connect_go
 
 func (UnimplementedOrgHandler) UpdateHuntGroupSettings(context.Context, *connect_go.Request[org.UpdateHuntGroupSettingsRequest]) (*connect_go.Response[org.UpdateHuntGroupSettingsResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.UpdateHuntGroupSettings is not implemented"))
+}
+
+func (UnimplementedOrgHandler) CreateHuntGroup(context.Context, *connect_go.Request[org.CreateHuntGroupRequest]) (*connect_go.Response[org.CreateHuntGroupResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.CreateHuntGroup is not implemented"))
+}
+
+func (UnimplementedOrgHandler) UpdateHuntGroupGeneralDetails(context.Context, *connect_go.Request[org.UpdateHuntGroupGeneralDetailsRequest]) (*connect_go.Response[org.UpdateHuntGroupGeneralDetailsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.UpdateHuntGroupGeneralDetails is not implemented"))
+}
+
+func (UnimplementedOrgHandler) DeleteHuntGroup(context.Context, *connect_go.Request[org.DeleteHuntGroupRequest]) (*connect_go.Response[org.DeleteHuntGroupResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.DeleteHuntGroup is not implemented"))
+}
+
+func (UnimplementedOrgHandler) GetHuntGroupDetails(context.Context, *connect_go.Request[org.GetHuntGroupDetailsRequest]) (*connect_go.Response[org.GetHuntGroupDetailsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.GetHuntGroupDetails is not implemented"))
 }
 
 func (UnimplementedOrgHandler) ListCallerIdBuckets(context.Context, *connect_go.Request[org.ListCallerIdBucketsRequest]) (*connect_go.Response[org.ListCallerIdBucketsResponse], error) {
