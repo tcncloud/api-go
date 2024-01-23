@@ -109,6 +109,12 @@ const (
 	// IntegrationsListIntegrationTemplatesByConfigProcedure is the fully-qualified name of the
 	// Integrations's ListIntegrationTemplatesByConfig RPC.
 	IntegrationsListIntegrationTemplatesByConfigProcedure = "/api.v1alpha1.integrations.Integrations/ListIntegrationTemplatesByConfig"
+	// IntegrationsCallEpicPatientProcedure is the fully-qualified name of the Integrations's
+	// CallEpicPatient RPC.
+	IntegrationsCallEpicPatientProcedure = "/api.v1alpha1.integrations.Integrations/CallEpicPatient"
+	// IntegrationsHangUpEpicPatientCallProcedure is the fully-qualified name of the Integrations's
+	// HangUpEpicPatientCall RPC.
+	IntegrationsHangUpEpicPatientCallProcedure = "/api.v1alpha1.integrations.Integrations/HangUpEpicPatientCall"
 )
 
 // IntegrationsClient is a client for the api.v1alpha1.integrations.Integrations service.
@@ -165,6 +171,10 @@ type IntegrationsClient interface {
 	Summary(context.Context, *connect_go.Request[integrations.SummaryReq]) (*connect_go.Response[integrations.SummaryRes], error)
 	// Lists integration templates that use the passed in integration config
 	ListIntegrationTemplatesByConfig(context.Context, *connect_go.Request[integrations.ListIntegrationTemplatesByConfigReq]) (*connect_go.Response[integrations.ListIntegrationTemplatesByConfigRes], error)
+	// CallEpicPatient initiates a call to the specified number from the agent using the click to call button within epic
+	CallEpicPatient(context.Context, *connect_go.Request[integrations.CallEpicPatientReq]) (*connect_go.Response[integrations.CallEpicPatientRes], error)
+	// CallEpicPatient initiates a call to the specified number from the agent using the click to call button within epic
+	HangUpEpicPatientCall(context.Context, *connect_go.Request[integrations.HangUpEpicPatientCallReq]) (*connect_go.Response[integrations.Empty], error)
 }
 
 // NewIntegrationsClient constructs a client for the api.v1alpha1.integrations.Integrations service.
@@ -307,6 +317,16 @@ func NewIntegrationsClient(httpClient connect_go.HTTPClient, baseURL string, opt
 			baseURL+IntegrationsListIntegrationTemplatesByConfigProcedure,
 			opts...,
 		),
+		callEpicPatient: connect_go.NewClient[integrations.CallEpicPatientReq, integrations.CallEpicPatientRes](
+			httpClient,
+			baseURL+IntegrationsCallEpicPatientProcedure,
+			opts...,
+		),
+		hangUpEpicPatientCall: connect_go.NewClient[integrations.HangUpEpicPatientCallReq, integrations.Empty](
+			httpClient,
+			baseURL+IntegrationsHangUpEpicPatientCallProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -338,6 +358,8 @@ type integrationsClient struct {
 	createPaymentPortalLinks            *connect_go.Client[integrations.CreatePaymentPortalLinksReq, integrations.CreatePaymentPortalLinksRes]
 	summary                             *connect_go.Client[integrations.SummaryReq, integrations.SummaryRes]
 	listIntegrationTemplatesByConfig    *connect_go.Client[integrations.ListIntegrationTemplatesByConfigReq, integrations.ListIntegrationTemplatesByConfigRes]
+	callEpicPatient                     *connect_go.Client[integrations.CallEpicPatientReq, integrations.CallEpicPatientRes]
+	hangUpEpicPatientCall               *connect_go.Client[integrations.HangUpEpicPatientCallReq, integrations.Empty]
 }
 
 // Process calls api.v1alpha1.integrations.Integrations.Process.
@@ -474,6 +496,16 @@ func (c *integrationsClient) ListIntegrationTemplatesByConfig(ctx context.Contex
 	return c.listIntegrationTemplatesByConfig.CallUnary(ctx, req)
 }
 
+// CallEpicPatient calls api.v1alpha1.integrations.Integrations.CallEpicPatient.
+func (c *integrationsClient) CallEpicPatient(ctx context.Context, req *connect_go.Request[integrations.CallEpicPatientReq]) (*connect_go.Response[integrations.CallEpicPatientRes], error) {
+	return c.callEpicPatient.CallUnary(ctx, req)
+}
+
+// HangUpEpicPatientCall calls api.v1alpha1.integrations.Integrations.HangUpEpicPatientCall.
+func (c *integrationsClient) HangUpEpicPatientCall(ctx context.Context, req *connect_go.Request[integrations.HangUpEpicPatientCallReq]) (*connect_go.Response[integrations.Empty], error) {
+	return c.hangUpEpicPatientCall.CallUnary(ctx, req)
+}
+
 // IntegrationsHandler is an implementation of the api.v1alpha1.integrations.Integrations service.
 type IntegrationsHandler interface {
 	// combine rquest parameters with the config parameters and run the integration method
@@ -528,6 +560,10 @@ type IntegrationsHandler interface {
 	Summary(context.Context, *connect_go.Request[integrations.SummaryReq]) (*connect_go.Response[integrations.SummaryRes], error)
 	// Lists integration templates that use the passed in integration config
 	ListIntegrationTemplatesByConfig(context.Context, *connect_go.Request[integrations.ListIntegrationTemplatesByConfigReq]) (*connect_go.Response[integrations.ListIntegrationTemplatesByConfigRes], error)
+	// CallEpicPatient initiates a call to the specified number from the agent using the click to call button within epic
+	CallEpicPatient(context.Context, *connect_go.Request[integrations.CallEpicPatientReq]) (*connect_go.Response[integrations.CallEpicPatientRes], error)
+	// CallEpicPatient initiates a call to the specified number from the agent using the click to call button within epic
+	HangUpEpicPatientCall(context.Context, *connect_go.Request[integrations.HangUpEpicPatientCallReq]) (*connect_go.Response[integrations.Empty], error)
 }
 
 // NewIntegrationsHandler builds an HTTP handler from the service implementation. It returns the
@@ -666,6 +702,16 @@ func NewIntegrationsHandler(svc IntegrationsHandler, opts ...connect_go.HandlerO
 		svc.ListIntegrationTemplatesByConfig,
 		opts...,
 	)
+	integrationsCallEpicPatientHandler := connect_go.NewUnaryHandler(
+		IntegrationsCallEpicPatientProcedure,
+		svc.CallEpicPatient,
+		opts...,
+	)
+	integrationsHangUpEpicPatientCallHandler := connect_go.NewUnaryHandler(
+		IntegrationsHangUpEpicPatientCallProcedure,
+		svc.HangUpEpicPatientCall,
+		opts...,
+	)
 	return "/api.v1alpha1.integrations.Integrations/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case IntegrationsProcessProcedure:
@@ -720,6 +766,10 @@ func NewIntegrationsHandler(svc IntegrationsHandler, opts ...connect_go.HandlerO
 			integrationsSummaryHandler.ServeHTTP(w, r)
 		case IntegrationsListIntegrationTemplatesByConfigProcedure:
 			integrationsListIntegrationTemplatesByConfigHandler.ServeHTTP(w, r)
+		case IntegrationsCallEpicPatientProcedure:
+			integrationsCallEpicPatientHandler.ServeHTTP(w, r)
+		case IntegrationsHangUpEpicPatientCallProcedure:
+			integrationsHangUpEpicPatientCallHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -831,4 +881,12 @@ func (UnimplementedIntegrationsHandler) Summary(context.Context, *connect_go.Req
 
 func (UnimplementedIntegrationsHandler) ListIntegrationTemplatesByConfig(context.Context, *connect_go.Request[integrations.ListIntegrationTemplatesByConfigReq]) (*connect_go.Response[integrations.ListIntegrationTemplatesByConfigRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.integrations.Integrations.ListIntegrationTemplatesByConfig is not implemented"))
+}
+
+func (UnimplementedIntegrationsHandler) CallEpicPatient(context.Context, *connect_go.Request[integrations.CallEpicPatientReq]) (*connect_go.Response[integrations.CallEpicPatientRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.integrations.Integrations.CallEpicPatient is not implemented"))
+}
+
+func (UnimplementedIntegrationsHandler) HangUpEpicPatientCall(context.Context, *connect_go.Request[integrations.HangUpEpicPatientCallReq]) (*connect_go.Response[integrations.Empty], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.integrations.Integrations.HangUpEpicPatientCall is not implemented"))
 }

@@ -45,6 +45,8 @@ const (
 	Integrations_CreatePaymentPortalLinks_FullMethodName            = "/api.v1alpha1.integrations.Integrations/CreatePaymentPortalLinks"
 	Integrations_Summary_FullMethodName                             = "/api.v1alpha1.integrations.Integrations/Summary"
 	Integrations_ListIntegrationTemplatesByConfig_FullMethodName    = "/api.v1alpha1.integrations.Integrations/ListIntegrationTemplatesByConfig"
+	Integrations_CallEpicPatient_FullMethodName                     = "/api.v1alpha1.integrations.Integrations/CallEpicPatient"
+	Integrations_HangUpEpicPatientCall_FullMethodName               = "/api.v1alpha1.integrations.Integrations/HangUpEpicPatientCall"
 )
 
 // IntegrationsClient is the client API for Integrations service.
@@ -103,6 +105,10 @@ type IntegrationsClient interface {
 	Summary(ctx context.Context, in *SummaryReq, opts ...grpc.CallOption) (*SummaryRes, error)
 	// Lists integration templates that use the passed in integration config
 	ListIntegrationTemplatesByConfig(ctx context.Context, in *ListIntegrationTemplatesByConfigReq, opts ...grpc.CallOption) (*ListIntegrationTemplatesByConfigRes, error)
+	// CallEpicPatient initiates a call to the specified number from the agent using the click to call button within epic
+	CallEpicPatient(ctx context.Context, in *CallEpicPatientReq, opts ...grpc.CallOption) (*CallEpicPatientRes, error)
+	// CallEpicPatient initiates a call to the specified number from the agent using the click to call button within epic
+	HangUpEpicPatientCall(ctx context.Context, in *HangUpEpicPatientCallReq, opts ...grpc.CallOption) (*Empty, error)
 }
 
 type integrationsClient struct {
@@ -347,6 +353,24 @@ func (c *integrationsClient) ListIntegrationTemplatesByConfig(ctx context.Contex
 	return out, nil
 }
 
+func (c *integrationsClient) CallEpicPatient(ctx context.Context, in *CallEpicPatientReq, opts ...grpc.CallOption) (*CallEpicPatientRes, error) {
+	out := new(CallEpicPatientRes)
+	err := c.cc.Invoke(ctx, Integrations_CallEpicPatient_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *integrationsClient) HangUpEpicPatientCall(ctx context.Context, in *HangUpEpicPatientCallReq, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, Integrations_HangUpEpicPatientCall_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // IntegrationsServer is the server API for Integrations service.
 // All implementations must embed UnimplementedIntegrationsServer
 // for forward compatibility
@@ -403,6 +427,10 @@ type IntegrationsServer interface {
 	Summary(context.Context, *SummaryReq) (*SummaryRes, error)
 	// Lists integration templates that use the passed in integration config
 	ListIntegrationTemplatesByConfig(context.Context, *ListIntegrationTemplatesByConfigReq) (*ListIntegrationTemplatesByConfigRes, error)
+	// CallEpicPatient initiates a call to the specified number from the agent using the click to call button within epic
+	CallEpicPatient(context.Context, *CallEpicPatientReq) (*CallEpicPatientRes, error)
+	// CallEpicPatient initiates a call to the specified number from the agent using the click to call button within epic
+	HangUpEpicPatientCall(context.Context, *HangUpEpicPatientCallReq) (*Empty, error)
 	mustEmbedUnimplementedIntegrationsServer()
 }
 
@@ -487,6 +515,12 @@ func (UnimplementedIntegrationsServer) Summary(context.Context, *SummaryReq) (*S
 }
 func (UnimplementedIntegrationsServer) ListIntegrationTemplatesByConfig(context.Context, *ListIntegrationTemplatesByConfigReq) (*ListIntegrationTemplatesByConfigRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListIntegrationTemplatesByConfig not implemented")
+}
+func (UnimplementedIntegrationsServer) CallEpicPatient(context.Context, *CallEpicPatientReq) (*CallEpicPatientRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CallEpicPatient not implemented")
+}
+func (UnimplementedIntegrationsServer) HangUpEpicPatientCall(context.Context, *HangUpEpicPatientCallReq) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HangUpEpicPatientCall not implemented")
 }
 func (UnimplementedIntegrationsServer) mustEmbedUnimplementedIntegrationsServer() {}
 
@@ -969,6 +1003,42 @@ func _Integrations_ListIntegrationTemplatesByConfig_Handler(srv interface{}, ctx
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Integrations_CallEpicPatient_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CallEpicPatientReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IntegrationsServer).CallEpicPatient(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Integrations_CallEpicPatient_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IntegrationsServer).CallEpicPatient(ctx, req.(*CallEpicPatientReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Integrations_HangUpEpicPatientCall_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HangUpEpicPatientCallReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IntegrationsServer).HangUpEpicPatientCall(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Integrations_HangUpEpicPatientCall_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IntegrationsServer).HangUpEpicPatientCall(ctx, req.(*HangUpEpicPatientCallReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Integrations_ServiceDesc is the grpc.ServiceDesc for Integrations service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1079,6 +1149,14 @@ var Integrations_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListIntegrationTemplatesByConfig",
 			Handler:    _Integrations_ListIntegrationTemplatesByConfig_Handler,
+		},
+		{
+			MethodName: "CallEpicPatient",
+			Handler:    _Integrations_CallEpicPatient_Handler,
+		},
+		{
+			MethodName: "HangUpEpicPatientCall",
+			Handler:    _Integrations_HangUpEpicPatientCall_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
