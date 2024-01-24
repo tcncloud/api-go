@@ -204,6 +204,7 @@ const (
 	Org_DeleteP3PermissionGroup_FullMethodName                  = "/api.v1alpha1.org.Org/DeleteP3PermissionGroup"
 	Org_AssignUsersP3PermissionGroup_FullMethodName             = "/api.v1alpha1.org.Org/AssignUsersP3PermissionGroup"
 	Org_RevokeUsersP3PermissionGroup_FullMethodName             = "/api.v1alpha1.org.Org/RevokeUsersP3PermissionGroup"
+	Org_Refresh2FALockout_FullMethodName                        = "/api.v1alpha1.org.Org/Refresh2FALockout"
 )
 
 // OrgClient is the client API for Org service.
@@ -628,6 +629,8 @@ type OrgClient interface {
 	// RevokeUsersP3PermissionGroup revokes a p3 permission group
 	// from a list of users.
 	RevokeUsersP3PermissionGroup(ctx context.Context, in *RevokeUsersP3PermissionGroupRequest, opts ...grpc.CallOption) (*RevokeUsersP3PermissionGroupResponse, error)
+	// Refresh2FALockout resets the lockout timer for the given user.
+	Refresh2FALockout(ctx context.Context, in *Refresh2FALockoutRequest, opts ...grpc.CallOption) (*Refresh2FALockoutResponse, error)
 }
 
 type orgClient struct {
@@ -2510,6 +2513,15 @@ func (c *orgClient) RevokeUsersP3PermissionGroup(ctx context.Context, in *Revoke
 	return out, nil
 }
 
+func (c *orgClient) Refresh2FALockout(ctx context.Context, in *Refresh2FALockoutRequest, opts ...grpc.CallOption) (*Refresh2FALockoutResponse, error) {
+	out := new(Refresh2FALockoutResponse)
+	err := c.cc.Invoke(ctx, Org_Refresh2FALockout_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OrgServer is the server API for Org service.
 // All implementations must embed UnimplementedOrgServer
 // for forward compatibility
@@ -2932,6 +2944,8 @@ type OrgServer interface {
 	// RevokeUsersP3PermissionGroup revokes a p3 permission group
 	// from a list of users.
 	RevokeUsersP3PermissionGroup(context.Context, *RevokeUsersP3PermissionGroupRequest) (*RevokeUsersP3PermissionGroupResponse, error)
+	// Refresh2FALockout resets the lockout timer for the given user.
+	Refresh2FALockout(context.Context, *Refresh2FALockoutRequest) (*Refresh2FALockoutResponse, error)
 	mustEmbedUnimplementedOrgServer()
 }
 
@@ -3493,6 +3507,9 @@ func (UnimplementedOrgServer) AssignUsersP3PermissionGroup(context.Context, *Ass
 }
 func (UnimplementedOrgServer) RevokeUsersP3PermissionGroup(context.Context, *RevokeUsersP3PermissionGroupRequest) (*RevokeUsersP3PermissionGroupResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RevokeUsersP3PermissionGroup not implemented")
+}
+func (UnimplementedOrgServer) Refresh2FALockout(context.Context, *Refresh2FALockoutRequest) (*Refresh2FALockoutResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Refresh2FALockout not implemented")
 }
 func (UnimplementedOrgServer) mustEmbedUnimplementedOrgServer() {}
 
@@ -6864,6 +6881,24 @@ func _Org_RevokeUsersP3PermissionGroup_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Org_Refresh2FALockout_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Refresh2FALockoutRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).Refresh2FALockout(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_Refresh2FALockout_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).Refresh2FALockout(ctx, req.(*Refresh2FALockoutRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Org_ServiceDesc is the grpc.ServiceDesc for Org service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -7574,6 +7609,10 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RevokeUsersP3PermissionGroup",
 			Handler:    _Org_RevokeUsersP3PermissionGroup_Handler,
+		},
+		{
+			MethodName: "Refresh2FALockout",
+			Handler:    _Org_Refresh2FALockout_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
