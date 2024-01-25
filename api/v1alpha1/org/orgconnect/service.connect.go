@@ -522,11 +522,11 @@ const (
 	// OrgRevokeUsersP3PermissionGroupProcedure is the fully-qualified name of the Org's
 	// RevokeUsersP3PermissionGroup RPC.
 	OrgRevokeUsersP3PermissionGroupProcedure = "/api.v1alpha1.org.Org/RevokeUsersP3PermissionGroup"
-	// OrgRefresh2FALockoutProcedure is the fully-qualified name of the Org's Refresh2FALockout RPC.
-	OrgRefresh2FALockoutProcedure = "/api.v1alpha1.org.Org/Refresh2FALockout"
-	// OrgRefresh2FALockoutByOrgIdProcedure is the fully-qualified name of the Org's
-	// Refresh2FALockoutByOrgId RPC.
-	OrgRefresh2FALockoutByOrgIdProcedure = "/api.v1alpha1.org.Org/Refresh2FALockoutByOrgId"
+	// OrgRefreshMfaLockoutProcedure is the fully-qualified name of the Org's RefreshMfaLockout RPC.
+	OrgRefreshMfaLockoutProcedure = "/api.v1alpha1.org.Org/RefreshMfaLockout"
+	// OrgRefreshMfaLockoutByOrgIdProcedure is the fully-qualified name of the Org's
+	// RefreshMfaLockoutByOrgId RPC.
+	OrgRefreshMfaLockoutByOrgIdProcedure = "/api.v1alpha1.org.Org/RefreshMfaLockoutByOrgId"
 )
 
 // OrgClient is a client for the api.v1alpha1.org.Org service.
@@ -949,10 +949,10 @@ type OrgClient interface {
 	// RevokeUsersP3PermissionGroup revokes a p3 permission group
 	// from a list of users.
 	RevokeUsersP3PermissionGroup(context.Context, *connect_go.Request[org.RevokeUsersP3PermissionGroupRequest]) (*connect_go.Response[org.RevokeUsersP3PermissionGroupResponse], error)
-	// Refresh2FALockout resets the lockout timer for the given user.
-	Refresh2FALockout(context.Context, *connect_go.Request[org.Refresh2FALockoutRequest]) (*connect_go.Response[org.Refresh2FALockoutResponse], error)
-	// Refresh2FALockoutByOrgId resets the lockout timer for the given user and org id.
-	Refresh2FALockoutByOrgId(context.Context, *connect_go.Request[org.Refresh2FALockoutByOrgIdRequest]) (*connect_go.Response[org.Refresh2FALockoutByOrgIdResponse], error)
+	// RefreshMfaLockout resets the lockout timer for the given user.
+	RefreshMfaLockout(context.Context, *connect_go.Request[org.RefreshMfaLockoutRequest]) (*connect_go.Response[org.RefreshMfaLockoutResponse], error)
+	// RefreshMfaLockoutByOrgId resets the lockout timer for the given user and org id.
+	RefreshMfaLockoutByOrgId(context.Context, *connect_go.Request[org.RefreshMfaLockoutByOrgIdRequest]) (*connect_go.Response[org.RefreshMfaLockoutByOrgIdResponse], error)
 }
 
 // NewOrgClient constructs a client for the api.v1alpha1.org.Org service. By default, it uses the
@@ -1890,14 +1890,14 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgRevokeUsersP3PermissionGroupProcedure,
 			opts...,
 		),
-		refresh2FALockout: connect_go.NewClient[org.Refresh2FALockoutRequest, org.Refresh2FALockoutResponse](
+		refreshMfaLockout: connect_go.NewClient[org.RefreshMfaLockoutRequest, org.RefreshMfaLockoutResponse](
 			httpClient,
-			baseURL+OrgRefresh2FALockoutProcedure,
+			baseURL+OrgRefreshMfaLockoutProcedure,
 			opts...,
 		),
-		refresh2FALockoutByOrgId: connect_go.NewClient[org.Refresh2FALockoutByOrgIdRequest, org.Refresh2FALockoutByOrgIdResponse](
+		refreshMfaLockoutByOrgId: connect_go.NewClient[org.RefreshMfaLockoutByOrgIdRequest, org.RefreshMfaLockoutByOrgIdResponse](
 			httpClient,
-			baseURL+OrgRefresh2FALockoutByOrgIdProcedure,
+			baseURL+OrgRefreshMfaLockoutByOrgIdProcedure,
 			opts...,
 		),
 	}
@@ -2090,8 +2090,8 @@ type orgClient struct {
 	deleteP3PermissionGroup                  *connect_go.Client[org.DeleteP3PermissionGroupRequest, org.DeleteP3PermissionGroupResponse]
 	assignUsersP3PermissionGroup             *connect_go.Client[org.AssignUsersP3PermissionGroupRequest, org.AssignUsersP3PermissionGroupResponse]
 	revokeUsersP3PermissionGroup             *connect_go.Client[org.RevokeUsersP3PermissionGroupRequest, org.RevokeUsersP3PermissionGroupResponse]
-	refresh2FALockout                        *connect_go.Client[org.Refresh2FALockoutRequest, org.Refresh2FALockoutResponse]
-	refresh2FALockoutByOrgId                 *connect_go.Client[org.Refresh2FALockoutByOrgIdRequest, org.Refresh2FALockoutByOrgIdResponse]
+	refreshMfaLockout                        *connect_go.Client[org.RefreshMfaLockoutRequest, org.RefreshMfaLockoutResponse]
+	refreshMfaLockoutByOrgId                 *connect_go.Client[org.RefreshMfaLockoutByOrgIdRequest, org.RefreshMfaLockoutByOrgIdResponse]
 }
 
 // CreateOrganization calls api.v1alpha1.org.Org.CreateOrganization.
@@ -3027,14 +3027,14 @@ func (c *orgClient) RevokeUsersP3PermissionGroup(ctx context.Context, req *conne
 	return c.revokeUsersP3PermissionGroup.CallUnary(ctx, req)
 }
 
-// Refresh2FALockout calls api.v1alpha1.org.Org.Refresh2FALockout.
-func (c *orgClient) Refresh2FALockout(ctx context.Context, req *connect_go.Request[org.Refresh2FALockoutRequest]) (*connect_go.Response[org.Refresh2FALockoutResponse], error) {
-	return c.refresh2FALockout.CallUnary(ctx, req)
+// RefreshMfaLockout calls api.v1alpha1.org.Org.RefreshMfaLockout.
+func (c *orgClient) RefreshMfaLockout(ctx context.Context, req *connect_go.Request[org.RefreshMfaLockoutRequest]) (*connect_go.Response[org.RefreshMfaLockoutResponse], error) {
+	return c.refreshMfaLockout.CallUnary(ctx, req)
 }
 
-// Refresh2FALockoutByOrgId calls api.v1alpha1.org.Org.Refresh2FALockoutByOrgId.
-func (c *orgClient) Refresh2FALockoutByOrgId(ctx context.Context, req *connect_go.Request[org.Refresh2FALockoutByOrgIdRequest]) (*connect_go.Response[org.Refresh2FALockoutByOrgIdResponse], error) {
-	return c.refresh2FALockoutByOrgId.CallUnary(ctx, req)
+// RefreshMfaLockoutByOrgId calls api.v1alpha1.org.Org.RefreshMfaLockoutByOrgId.
+func (c *orgClient) RefreshMfaLockoutByOrgId(ctx context.Context, req *connect_go.Request[org.RefreshMfaLockoutByOrgIdRequest]) (*connect_go.Response[org.RefreshMfaLockoutByOrgIdResponse], error) {
+	return c.refreshMfaLockoutByOrgId.CallUnary(ctx, req)
 }
 
 // OrgHandler is an implementation of the api.v1alpha1.org.Org service.
@@ -3457,10 +3457,10 @@ type OrgHandler interface {
 	// RevokeUsersP3PermissionGroup revokes a p3 permission group
 	// from a list of users.
 	RevokeUsersP3PermissionGroup(context.Context, *connect_go.Request[org.RevokeUsersP3PermissionGroupRequest]) (*connect_go.Response[org.RevokeUsersP3PermissionGroupResponse], error)
-	// Refresh2FALockout resets the lockout timer for the given user.
-	Refresh2FALockout(context.Context, *connect_go.Request[org.Refresh2FALockoutRequest]) (*connect_go.Response[org.Refresh2FALockoutResponse], error)
-	// Refresh2FALockoutByOrgId resets the lockout timer for the given user and org id.
-	Refresh2FALockoutByOrgId(context.Context, *connect_go.Request[org.Refresh2FALockoutByOrgIdRequest]) (*connect_go.Response[org.Refresh2FALockoutByOrgIdResponse], error)
+	// RefreshMfaLockout resets the lockout timer for the given user.
+	RefreshMfaLockout(context.Context, *connect_go.Request[org.RefreshMfaLockoutRequest]) (*connect_go.Response[org.RefreshMfaLockoutResponse], error)
+	// RefreshMfaLockoutByOrgId resets the lockout timer for the given user and org id.
+	RefreshMfaLockoutByOrgId(context.Context, *connect_go.Request[org.RefreshMfaLockoutByOrgIdRequest]) (*connect_go.Response[org.RefreshMfaLockoutByOrgIdResponse], error)
 }
 
 // NewOrgHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -4394,14 +4394,14 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.RevokeUsersP3PermissionGroup,
 		opts...,
 	)
-	orgRefresh2FALockoutHandler := connect_go.NewUnaryHandler(
-		OrgRefresh2FALockoutProcedure,
-		svc.Refresh2FALockout,
+	orgRefreshMfaLockoutHandler := connect_go.NewUnaryHandler(
+		OrgRefreshMfaLockoutProcedure,
+		svc.RefreshMfaLockout,
 		opts...,
 	)
-	orgRefresh2FALockoutByOrgIdHandler := connect_go.NewUnaryHandler(
-		OrgRefresh2FALockoutByOrgIdProcedure,
-		svc.Refresh2FALockoutByOrgId,
+	orgRefreshMfaLockoutByOrgIdHandler := connect_go.NewUnaryHandler(
+		OrgRefreshMfaLockoutByOrgIdProcedure,
+		svc.RefreshMfaLockoutByOrgId,
 		opts...,
 	)
 	return "/api.v1alpha1.org.Org/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -4776,10 +4776,10 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 			orgAssignUsersP3PermissionGroupHandler.ServeHTTP(w, r)
 		case OrgRevokeUsersP3PermissionGroupProcedure:
 			orgRevokeUsersP3PermissionGroupHandler.ServeHTTP(w, r)
-		case OrgRefresh2FALockoutProcedure:
-			orgRefresh2FALockoutHandler.ServeHTTP(w, r)
-		case OrgRefresh2FALockoutByOrgIdProcedure:
-			orgRefresh2FALockoutByOrgIdHandler.ServeHTTP(w, r)
+		case OrgRefreshMfaLockoutProcedure:
+			orgRefreshMfaLockoutHandler.ServeHTTP(w, r)
+		case OrgRefreshMfaLockoutByOrgIdProcedure:
+			orgRefreshMfaLockoutByOrgIdHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -5529,10 +5529,10 @@ func (UnimplementedOrgHandler) RevokeUsersP3PermissionGroup(context.Context, *co
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.RevokeUsersP3PermissionGroup is not implemented"))
 }
 
-func (UnimplementedOrgHandler) Refresh2FALockout(context.Context, *connect_go.Request[org.Refresh2FALockoutRequest]) (*connect_go.Response[org.Refresh2FALockoutResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.Refresh2FALockout is not implemented"))
+func (UnimplementedOrgHandler) RefreshMfaLockout(context.Context, *connect_go.Request[org.RefreshMfaLockoutRequest]) (*connect_go.Response[org.RefreshMfaLockoutResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.RefreshMfaLockout is not implemented"))
 }
 
-func (UnimplementedOrgHandler) Refresh2FALockoutByOrgId(context.Context, *connect_go.Request[org.Refresh2FALockoutByOrgIdRequest]) (*connect_go.Response[org.Refresh2FALockoutByOrgIdResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.Refresh2FALockoutByOrgId is not implemented"))
+func (UnimplementedOrgHandler) RefreshMfaLockoutByOrgId(context.Context, *connect_go.Request[org.RefreshMfaLockoutByOrgIdRequest]) (*connect_go.Response[org.RefreshMfaLockoutByOrgIdResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.RefreshMfaLockoutByOrgId is not implemented"))
 }

@@ -4185,8 +4185,8 @@ func (x *GetUserSessionDataResponse) GetLabels() []*org.Label {
 	return nil
 }
 
-// Request message for the Refresh2FALockout rpc.
-type Refresh2FALockoutRequest struct {
+// Request message for the RefreshMfaLockout rpc.
+type RefreshMfaLockoutRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -4195,8 +4195,8 @@ type Refresh2FALockoutRequest struct {
 	UserId string `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 }
 
-func (x *Refresh2FALockoutRequest) Reset() {
-	*x = Refresh2FALockoutRequest{}
+func (x *RefreshMfaLockoutRequest) Reset() {
+	*x = RefreshMfaLockoutRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_api_v1alpha1_org_user_proto_msgTypes[64]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -4204,13 +4204,13 @@ func (x *Refresh2FALockoutRequest) Reset() {
 	}
 }
 
-func (x *Refresh2FALockoutRequest) String() string {
+func (x *RefreshMfaLockoutRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Refresh2FALockoutRequest) ProtoMessage() {}
+func (*RefreshMfaLockoutRequest) ProtoMessage() {}
 
-func (x *Refresh2FALockoutRequest) ProtoReflect() protoreflect.Message {
+func (x *RefreshMfaLockoutRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_api_v1alpha1_org_user_proto_msgTypes[64]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -4222,30 +4222,30 @@ func (x *Refresh2FALockoutRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use Refresh2FALockoutRequest.ProtoReflect.Descriptor instead.
-func (*Refresh2FALockoutRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use RefreshMfaLockoutRequest.ProtoReflect.Descriptor instead.
+func (*RefreshMfaLockoutRequest) Descriptor() ([]byte, []int) {
 	return file_api_v1alpha1_org_user_proto_rawDescGZIP(), []int{64}
 }
 
-func (x *Refresh2FALockoutRequest) GetUserId() string {
+func (x *RefreshMfaLockoutRequest) GetUserId() string {
 	if x != nil {
 		return x.UserId
 	}
 	return ""
 }
 
-// Response message for the Refresh2FALockout rpc.
-type Refresh2FALockoutResponse struct {
+// Response message for the RefreshMfaLockout rpc.
+type RefreshMfaLockoutResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// The new time that the user must setup 2fa by.
+	// The new time that the user must setup mfa by.
 	Timeout *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=timeout,proto3" json:"timeout,omitempty"`
 }
 
-func (x *Refresh2FALockoutResponse) Reset() {
-	*x = Refresh2FALockoutResponse{}
+func (x *RefreshMfaLockoutResponse) Reset() {
+	*x = RefreshMfaLockoutResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_api_v1alpha1_org_user_proto_msgTypes[65]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -4253,13 +4253,13 @@ func (x *Refresh2FALockoutResponse) Reset() {
 	}
 }
 
-func (x *Refresh2FALockoutResponse) String() string {
+func (x *RefreshMfaLockoutResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Refresh2FALockoutResponse) ProtoMessage() {}
+func (*RefreshMfaLockoutResponse) ProtoMessage() {}
 
-func (x *Refresh2FALockoutResponse) ProtoReflect() protoreflect.Message {
+func (x *RefreshMfaLockoutResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_api_v1alpha1_org_user_proto_msgTypes[65]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -4271,20 +4271,20 @@ func (x *Refresh2FALockoutResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use Refresh2FALockoutResponse.ProtoReflect.Descriptor instead.
-func (*Refresh2FALockoutResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use RefreshMfaLockoutResponse.ProtoReflect.Descriptor instead.
+func (*RefreshMfaLockoutResponse) Descriptor() ([]byte, []int) {
 	return file_api_v1alpha1_org_user_proto_rawDescGZIP(), []int{65}
 }
 
-func (x *Refresh2FALockoutResponse) GetTimeout() *timestamppb.Timestamp {
+func (x *RefreshMfaLockoutResponse) GetTimeout() *timestamppb.Timestamp {
 	if x != nil {
 		return x.Timeout
 	}
 	return nil
 }
 
-// Request message for the Refresh2FALockoutByOrgId rpc.
-type Refresh2FALockoutByOrgIdRequest struct {
+// Request message for the RefreshMfaLockoutByOrgId rpc.
+type RefreshMfaLockoutByOrgIdRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -4295,8 +4295,8 @@ type Refresh2FALockoutByOrgIdRequest struct {
 	OrgId string `protobuf:"bytes,2,opt,name=org_id,json=orgId,proto3" json:"org_id,omitempty"`
 }
 
-func (x *Refresh2FALockoutByOrgIdRequest) Reset() {
-	*x = Refresh2FALockoutByOrgIdRequest{}
+func (x *RefreshMfaLockoutByOrgIdRequest) Reset() {
+	*x = RefreshMfaLockoutByOrgIdRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_api_v1alpha1_org_user_proto_msgTypes[66]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -4304,13 +4304,13 @@ func (x *Refresh2FALockoutByOrgIdRequest) Reset() {
 	}
 }
 
-func (x *Refresh2FALockoutByOrgIdRequest) String() string {
+func (x *RefreshMfaLockoutByOrgIdRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Refresh2FALockoutByOrgIdRequest) ProtoMessage() {}
+func (*RefreshMfaLockoutByOrgIdRequest) ProtoMessage() {}
 
-func (x *Refresh2FALockoutByOrgIdRequest) ProtoReflect() protoreflect.Message {
+func (x *RefreshMfaLockoutByOrgIdRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_api_v1alpha1_org_user_proto_msgTypes[66]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -4322,37 +4322,37 @@ func (x *Refresh2FALockoutByOrgIdRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use Refresh2FALockoutByOrgIdRequest.ProtoReflect.Descriptor instead.
-func (*Refresh2FALockoutByOrgIdRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use RefreshMfaLockoutByOrgIdRequest.ProtoReflect.Descriptor instead.
+func (*RefreshMfaLockoutByOrgIdRequest) Descriptor() ([]byte, []int) {
 	return file_api_v1alpha1_org_user_proto_rawDescGZIP(), []int{66}
 }
 
-func (x *Refresh2FALockoutByOrgIdRequest) GetUserId() string {
+func (x *RefreshMfaLockoutByOrgIdRequest) GetUserId() string {
 	if x != nil {
 		return x.UserId
 	}
 	return ""
 }
 
-func (x *Refresh2FALockoutByOrgIdRequest) GetOrgId() string {
+func (x *RefreshMfaLockoutByOrgIdRequest) GetOrgId() string {
 	if x != nil {
 		return x.OrgId
 	}
 	return ""
 }
 
-// Response message for the Refresh2FALockoutByOrgId rpc.
-type Refresh2FALockoutByOrgIdResponse struct {
+// Response message for the RefreshMfaLockoutByOrgId rpc.
+type RefreshMfaLockoutByOrgIdResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// The new time that the user must setup 2fa by.
+	// The new time that the user must setup mfa by.
 	Timeout *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=timeout,proto3" json:"timeout,omitempty"`
 }
 
-func (x *Refresh2FALockoutByOrgIdResponse) Reset() {
-	*x = Refresh2FALockoutByOrgIdResponse{}
+func (x *RefreshMfaLockoutByOrgIdResponse) Reset() {
+	*x = RefreshMfaLockoutByOrgIdResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_api_v1alpha1_org_user_proto_msgTypes[67]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -4360,13 +4360,13 @@ func (x *Refresh2FALockoutByOrgIdResponse) Reset() {
 	}
 }
 
-func (x *Refresh2FALockoutByOrgIdResponse) String() string {
+func (x *RefreshMfaLockoutByOrgIdResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Refresh2FALockoutByOrgIdResponse) ProtoMessage() {}
+func (*RefreshMfaLockoutByOrgIdResponse) ProtoMessage() {}
 
-func (x *Refresh2FALockoutByOrgIdResponse) ProtoReflect() protoreflect.Message {
+func (x *RefreshMfaLockoutByOrgIdResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_api_v1alpha1_org_user_proto_msgTypes[67]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -4378,14 +4378,402 @@ func (x *Refresh2FALockoutByOrgIdResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use Refresh2FALockoutByOrgIdResponse.ProtoReflect.Descriptor instead.
-func (*Refresh2FALockoutByOrgIdResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use RefreshMfaLockoutByOrgIdResponse.ProtoReflect.Descriptor instead.
+func (*RefreshMfaLockoutByOrgIdResponse) Descriptor() ([]byte, []int) {
 	return file_api_v1alpha1_org_user_proto_rawDescGZIP(), []int{67}
 }
 
-func (x *Refresh2FALockoutByOrgIdResponse) GetTimeout() *timestamppb.Timestamp {
+func (x *RefreshMfaLockoutByOrgIdResponse) GetTimeout() *timestamppb.Timestamp {
 	if x != nil {
 		return x.Timeout
+	}
+	return nil
+}
+
+// Request message for the SetMfaTypeRequest rpc.
+type SetMfaTypeRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Types that are assignable to MfaType:
+	//
+	//	*SetMfaTypeRequest_Otp
+	MfaType isSetMfaTypeRequest_MfaType `protobuf_oneof:"mfa_type"`
+}
+
+func (x *SetMfaTypeRequest) Reset() {
+	*x = SetMfaTypeRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[68]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SetMfaTypeRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SetMfaTypeRequest) ProtoMessage() {}
+
+func (x *SetMfaTypeRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[68]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SetMfaTypeRequest.ProtoReflect.Descriptor instead.
+func (*SetMfaTypeRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_org_user_proto_rawDescGZIP(), []int{68}
+}
+
+func (m *SetMfaTypeRequest) GetMfaType() isSetMfaTypeRequest_MfaType {
+	if m != nil {
+		return m.MfaType
+	}
+	return nil
+}
+
+func (x *SetMfaTypeRequest) GetOtp() *org.MfaInfo_OtpType {
+	if x, ok := x.GetMfaType().(*SetMfaTypeRequest_Otp); ok {
+		return x.Otp
+	}
+	return nil
+}
+
+type isSetMfaTypeRequest_MfaType interface {
+	isSetMfaTypeRequest_MfaType()
+}
+
+type SetMfaTypeRequest_Otp struct {
+	Otp *org.MfaInfo_OtpType `protobuf:"bytes,1,opt,name=otp,proto3,oneof"`
+}
+
+func (*SetMfaTypeRequest_Otp) isSetMfaTypeRequest_MfaType() {}
+
+// Response message for the SetMfaTypeRequest rpc.
+type SetMfaTypeResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *SetMfaTypeResponse) Reset() {
+	*x = SetMfaTypeResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[69]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SetMfaTypeResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SetMfaTypeResponse) ProtoMessage() {}
+
+func (x *SetMfaTypeResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[69]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SetMfaTypeResponse.ProtoReflect.Descriptor instead.
+func (*SetMfaTypeResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_org_user_proto_rawDescGZIP(), []int{69}
+}
+
+// Request message for the EnableMfa rpc.
+type EnableMfaRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The user to enable mfa for.
+	UserId string `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	// Whether or not mfa is enabled for the user.
+	Enabled bool `protobuf:"varint,2,opt,name=enabled,proto3" json:"enabled,omitempty"`
+}
+
+func (x *EnableMfaRequest) Reset() {
+	*x = EnableMfaRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[70]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *EnableMfaRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EnableMfaRequest) ProtoMessage() {}
+
+func (x *EnableMfaRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[70]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EnableMfaRequest.ProtoReflect.Descriptor instead.
+func (*EnableMfaRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_org_user_proto_rawDescGZIP(), []int{70}
+}
+
+func (x *EnableMfaRequest) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *EnableMfaRequest) GetEnabled() bool {
+	if x != nil {
+		return x.Enabled
+	}
+	return false
+}
+
+// Response message for the EnableMfa rpc.
+type EnableMfaResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *EnableMfaResponse) Reset() {
+	*x = EnableMfaResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[71]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *EnableMfaResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EnableMfaResponse) ProtoMessage() {}
+
+func (x *EnableMfaResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[71]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EnableMfaResponse.ProtoReflect.Descriptor instead.
+func (*EnableMfaResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_org_user_proto_rawDescGZIP(), []int{71}
+}
+
+// Request message for the GetUserMfaInfo rpc.
+type GetUserMfaInfoRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The user to get the mfa info of.
+	UserId string `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+}
+
+func (x *GetUserMfaInfoRequest) Reset() {
+	*x = GetUserMfaInfoRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[72]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetUserMfaInfoRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetUserMfaInfoRequest) ProtoMessage() {}
+
+func (x *GetUserMfaInfoRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[72]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetUserMfaInfoRequest.ProtoReflect.Descriptor instead.
+func (*GetUserMfaInfoRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_org_user_proto_rawDescGZIP(), []int{72}
+}
+
+func (x *GetUserMfaInfoRequest) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+// Response message for the GetUserMfaInfo rpc.
+type GetUserMfaInfoResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Info *org.MfaInfo `protobuf:"bytes,1,opt,name=info,proto3" json:"info,omitempty"`
+}
+
+func (x *GetUserMfaInfoResponse) Reset() {
+	*x = GetUserMfaInfoResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[73]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetUserMfaInfoResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetUserMfaInfoResponse) ProtoMessage() {}
+
+func (x *GetUserMfaInfoResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[73]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetUserMfaInfoResponse.ProtoReflect.Descriptor instead.
+func (*GetUserMfaInfoResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_org_user_proto_rawDescGZIP(), []int{73}
+}
+
+func (x *GetUserMfaInfoResponse) GetInfo() *org.MfaInfo {
+	if x != nil {
+		return x.Info
+	}
+	return nil
+}
+
+// Response message for the GetMyUserMfaInfo rpc.
+type GetMyUserMfaInfoRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *GetMyUserMfaInfoRequest) Reset() {
+	*x = GetMyUserMfaInfoRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[74]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetMyUserMfaInfoRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetMyUserMfaInfoRequest) ProtoMessage() {}
+
+func (x *GetMyUserMfaInfoRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[74]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetMyUserMfaInfoRequest.ProtoReflect.Descriptor instead.
+func (*GetMyUserMfaInfoRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_org_user_proto_rawDescGZIP(), []int{74}
+}
+
+// Request message for the GetMyUserMfaInfo rpc.
+type GetMyUserMfaInfoResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Info *org.MfaInfo `protobuf:"bytes,1,opt,name=info,proto3" json:"info,omitempty"`
+}
+
+func (x *GetMyUserMfaInfoResponse) Reset() {
+	*x = GetMyUserMfaInfoResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[75]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetMyUserMfaInfoResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetMyUserMfaInfoResponse) ProtoMessage() {}
+
+func (x *GetMyUserMfaInfoResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[75]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetMyUserMfaInfoResponse.ProtoReflect.Descriptor instead.
+func (*GetMyUserMfaInfoResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_org_user_proto_rawDescGZIP(), []int{75}
+}
+
+func (x *GetMyUserMfaInfoResponse) GetInfo() *org.MfaInfo {
+	if x != nil {
+		return x.Info
 	}
 	return nil
 }
@@ -4405,7 +4793,7 @@ type GetMyUserResponse_HuntGroup struct {
 func (x *GetMyUserResponse_HuntGroup) Reset() {
 	*x = GetMyUserResponse_HuntGroup{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_user_proto_msgTypes[68]
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[76]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4418,7 +4806,7 @@ func (x *GetMyUserResponse_HuntGroup) String() string {
 func (*GetMyUserResponse_HuntGroup) ProtoMessage() {}
 
 func (x *GetMyUserResponse_HuntGroup) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_user_proto_msgTypes[68]
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[76]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4463,7 +4851,7 @@ type GetMyUserResponse_AgentProfileGroup struct {
 func (x *GetMyUserResponse_AgentProfileGroup) Reset() {
 	*x = GetMyUserResponse_AgentProfileGroup{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_user_proto_msgTypes[69]
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[77]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4476,7 +4864,7 @@ func (x *GetMyUserResponse_AgentProfileGroup) String() string {
 func (*GetMyUserResponse_AgentProfileGroup) ProtoMessage() {}
 
 func (x *GetMyUserResponse_AgentProfileGroup) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_user_proto_msgTypes[69]
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[77]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4521,7 +4909,7 @@ type GetUserResponse_HuntGroup struct {
 func (x *GetUserResponse_HuntGroup) Reset() {
 	*x = GetUserResponse_HuntGroup{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_user_proto_msgTypes[70]
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[78]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4534,7 +4922,7 @@ func (x *GetUserResponse_HuntGroup) String() string {
 func (*GetUserResponse_HuntGroup) ProtoMessage() {}
 
 func (x *GetUserResponse_HuntGroup) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_user_proto_msgTypes[70]
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[78]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4579,7 +4967,7 @@ type GetUserResponse_AgentProfileGroup struct {
 func (x *GetUserResponse_AgentProfileGroup) Reset() {
 	*x = GetUserResponse_AgentProfileGroup{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_user_proto_msgTypes[71]
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[79]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4592,7 +4980,7 @@ func (x *GetUserResponse_AgentProfileGroup) String() string {
 func (*GetUserResponse_AgentProfileGroup) ProtoMessage() {}
 
 func (x *GetUserResponse_AgentProfileGroup) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_user_proto_msgTypes[71]
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[79]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4637,7 +5025,7 @@ type GetUserByOrgIdResponse_HuntGroup struct {
 func (x *GetUserByOrgIdResponse_HuntGroup) Reset() {
 	*x = GetUserByOrgIdResponse_HuntGroup{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_user_proto_msgTypes[72]
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[80]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4650,7 +5038,7 @@ func (x *GetUserByOrgIdResponse_HuntGroup) String() string {
 func (*GetUserByOrgIdResponse_HuntGroup) ProtoMessage() {}
 
 func (x *GetUserByOrgIdResponse_HuntGroup) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_user_proto_msgTypes[72]
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[80]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4695,7 +5083,7 @@ type GetUserByOrgIdResponse_AgentProfileGroup struct {
 func (x *GetUserByOrgIdResponse_AgentProfileGroup) Reset() {
 	*x = GetUserByOrgIdResponse_AgentProfileGroup{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_user_proto_msgTypes[73]
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[81]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4708,7 +5096,7 @@ func (x *GetUserByOrgIdResponse_AgentProfileGroup) String() string {
 func (*GetUserByOrgIdResponse_AgentProfileGroup) ProtoMessage() {}
 
 func (x *GetUserByOrgIdResponse_AgentProfileGroup) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_user_proto_msgTypes[73]
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[81]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4793,7 +5181,7 @@ type ListAgentsResponse_AgentDetails struct {
 func (x *ListAgentsResponse_AgentDetails) Reset() {
 	*x = ListAgentsResponse_AgentDetails{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_user_proto_msgTypes[74]
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[82]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4806,7 +5194,7 @@ func (x *ListAgentsResponse_AgentDetails) String() string {
 func (*ListAgentsResponse_AgentDetails) ProtoMessage() {}
 
 func (x *ListAgentsResponse_AgentDetails) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_user_proto_msgTypes[74]
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[82]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4991,7 +5379,7 @@ type ListAgentsResponse_AgentDetails_HuntGroup struct {
 func (x *ListAgentsResponse_AgentDetails_HuntGroup) Reset() {
 	*x = ListAgentsResponse_AgentDetails_HuntGroup{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_user_proto_msgTypes[75]
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[83]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5004,7 +5392,7 @@ func (x *ListAgentsResponse_AgentDetails_HuntGroup) String() string {
 func (*ListAgentsResponse_AgentDetails_HuntGroup) ProtoMessage() {}
 
 func (x *ListAgentsResponse_AgentDetails_HuntGroup) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_user_proto_msgTypes[75]
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[83]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5049,7 +5437,7 @@ type ListAgentsResponse_AgentDetails_AgentProfileGroup struct {
 func (x *ListAgentsResponse_AgentDetails_AgentProfileGroup) Reset() {
 	*x = ListAgentsResponse_AgentDetails_AgentProfileGroup{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_user_proto_msgTypes[76]
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[84]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5062,7 +5450,7 @@ func (x *ListAgentsResponse_AgentDetails_AgentProfileGroup) String() string {
 func (*ListAgentsResponse_AgentDetails_AgentProfileGroup) ProtoMessage() {}
 
 func (x *ListAgentsResponse_AgentDetails_AgentProfileGroup) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_user_proto_msgTypes[76]
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[84]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5110,7 +5498,7 @@ type ListPublicUsersResponse_User struct {
 func (x *ListPublicUsersResponse_User) Reset() {
 	*x = ListPublicUsersResponse_User{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_user_proto_msgTypes[77]
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[85]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5123,7 +5511,7 @@ func (x *ListPublicUsersResponse_User) String() string {
 func (*ListPublicUsersResponse_User) ProtoMessage() {}
 
 func (x *ListPublicUsersResponse_User) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_user_proto_msgTypes[77]
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[85]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5200,7 +5588,7 @@ type ListUsersResponse_UserDetails struct {
 func (x *ListUsersResponse_UserDetails) Reset() {
 	*x = ListUsersResponse_UserDetails{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_user_proto_msgTypes[78]
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[86]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5213,7 +5601,7 @@ func (x *ListUsersResponse_UserDetails) String() string {
 func (*ListUsersResponse_UserDetails) ProtoMessage() {}
 
 func (x *ListUsersResponse_UserDetails) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_user_proto_msgTypes[78]
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[86]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5341,7 +5729,7 @@ type ListUsersByOrgIdResponse_UserDetails struct {
 func (x *ListUsersByOrgIdResponse_UserDetails) Reset() {
 	*x = ListUsersByOrgIdResponse_UserDetails{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_user_proto_msgTypes[79]
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[87]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5354,7 +5742,7 @@ func (x *ListUsersByOrgIdResponse_UserDetails) String() string {
 func (*ListUsersByOrgIdResponse_UserDetails) ProtoMessage() {}
 
 func (x *ListUsersByOrgIdResponse_UserDetails) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_user_proto_msgTypes[79]
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[87]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5487,7 +5875,7 @@ type ListUsersByRegionResponse_UserDetails struct {
 func (x *ListUsersByRegionResponse_UserDetails) Reset() {
 	*x = ListUsersByRegionResponse_UserDetails{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_user_proto_msgTypes[80]
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[88]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5500,7 +5888,7 @@ func (x *ListUsersByRegionResponse_UserDetails) String() string {
 func (*ListUsersByRegionResponse_UserDetails) ProtoMessage() {}
 
 func (x *ListUsersByRegionResponse_UserDetails) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_user_proto_msgTypes[80]
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[88]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5659,7 +6047,7 @@ type GetUserSessionDataResponse_User struct {
 func (x *GetUserSessionDataResponse_User) Reset() {
 	*x = GetUserSessionDataResponse_User{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_user_proto_msgTypes[81]
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[89]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5672,7 +6060,7 @@ func (x *GetUserSessionDataResponse_User) String() string {
 func (*GetUserSessionDataResponse_User) ProtoMessage() {}
 
 func (x *GetUserSessionDataResponse_User) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_user_proto_msgTypes[81]
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[89]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5901,7 +6289,7 @@ type GetUserSessionDataResponse_User_RegionSids struct {
 func (x *GetUserSessionDataResponse_User_RegionSids) Reset() {
 	*x = GetUserSessionDataResponse_User_RegionSids{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_user_proto_msgTypes[82]
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[90]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5914,7 +6302,7 @@ func (x *GetUserSessionDataResponse_User_RegionSids) String() string {
 func (*GetUserSessionDataResponse_User_RegionSids) ProtoMessage() {}
 
 func (x *GetUserSessionDataResponse_User_RegionSids) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_user_proto_msgTypes[82]
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[90]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6836,37 +7224,63 @@ var file_api_v1alpha1_org_user_proto_rawDesc = []byte{
 	0x74, 0x61, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x2e, 0x55, 0x73, 0x65, 0x72, 0x2e,
 	0x52, 0x65, 0x67, 0x69, 0x6f, 0x6e, 0x53, 0x69, 0x64, 0x73, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75,
 	0x65, 0x3a, 0x02, 0x38, 0x01, 0x22, 0x33, 0x0a, 0x18, 0x52, 0x65, 0x66, 0x72, 0x65, 0x73, 0x68,
-	0x32, 0x46, 0x41, 0x4c, 0x6f, 0x63, 0x6b, 0x6f, 0x75, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x4d, 0x66, 0x61, 0x4c, 0x6f, 0x63, 0x6b, 0x6f, 0x75, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
 	0x74, 0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01,
 	0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x22, 0x51, 0x0a, 0x19, 0x52, 0x65,
-	0x66, 0x72, 0x65, 0x73, 0x68, 0x32, 0x46, 0x41, 0x4c, 0x6f, 0x63, 0x6b, 0x6f, 0x75, 0x74, 0x52,
+	0x66, 0x72, 0x65, 0x73, 0x68, 0x4d, 0x66, 0x61, 0x4c, 0x6f, 0x63, 0x6b, 0x6f, 0x75, 0x74, 0x52,
 	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x34, 0x0a, 0x07, 0x74, 0x69, 0x6d, 0x65, 0x6f,
 	0x75, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c,
 	0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73,
 	0x74, 0x61, 0x6d, 0x70, 0x52, 0x07, 0x74, 0x69, 0x6d, 0x65, 0x6f, 0x75, 0x74, 0x22, 0x51, 0x0a,
-	0x1f, 0x52, 0x65, 0x66, 0x72, 0x65, 0x73, 0x68, 0x32, 0x46, 0x41, 0x4c, 0x6f, 0x63, 0x6b, 0x6f,
+	0x1f, 0x52, 0x65, 0x66, 0x72, 0x65, 0x73, 0x68, 0x4d, 0x66, 0x61, 0x4c, 0x6f, 0x63, 0x6b, 0x6f,
 	0x75, 0x74, 0x42, 0x79, 0x4f, 0x72, 0x67, 0x49, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
 	0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
 	0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x12, 0x15, 0x0a, 0x06, 0x6f, 0x72, 0x67,
 	0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x6f, 0x72, 0x67, 0x49, 0x64,
-	0x22, 0x58, 0x0a, 0x20, 0x52, 0x65, 0x66, 0x72, 0x65, 0x73, 0x68, 0x32, 0x46, 0x41, 0x4c, 0x6f,
+	0x22, 0x58, 0x0a, 0x20, 0x52, 0x65, 0x66, 0x72, 0x65, 0x73, 0x68, 0x4d, 0x66, 0x61, 0x4c, 0x6f,
 	0x63, 0x6b, 0x6f, 0x75, 0x74, 0x42, 0x79, 0x4f, 0x72, 0x67, 0x49, 0x64, 0x52, 0x65, 0x73, 0x70,
 	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x34, 0x0a, 0x07, 0x74, 0x69, 0x6d, 0x65, 0x6f, 0x75, 0x74, 0x18,
 	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70,
 	0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d,
-	0x70, 0x52, 0x07, 0x74, 0x69, 0x6d, 0x65, 0x6f, 0x75, 0x74, 0x42, 0xb0, 0x01, 0x0a, 0x14, 0x63,
-	0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e,
-	0x6f, 0x72, 0x67, 0x42, 0x09, 0x55, 0x73, 0x65, 0x72, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01,
-	0x5a, 0x2b, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e,
-	0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69,
-	0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x6f, 0x72, 0x67, 0xa2, 0x02, 0x03,
-	0x41, 0x56, 0x4f, 0xaa, 0x02, 0x10, 0x41, 0x70, 0x69, 0x2e, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68,
-	0x61, 0x31, 0x2e, 0x4f, 0x72, 0x67, 0xca, 0x02, 0x10, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61,
-	0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x4f, 0x72, 0x67, 0xe2, 0x02, 0x1c, 0x41, 0x70, 0x69, 0x5c,
-	0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x4f, 0x72, 0x67, 0x5c, 0x47, 0x50, 0x42,
-	0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x12, 0x41, 0x70, 0x69, 0x3a, 0x3a,
-	0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x3a, 0x3a, 0x4f, 0x72, 0x67, 0x62, 0x06, 0x70,
-	0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x70, 0x52, 0x07, 0x74, 0x69, 0x6d, 0x65, 0x6f, 0x75, 0x74, 0x22, 0x55, 0x0a, 0x11, 0x53, 0x65,
+	0x74, 0x4d, 0x66, 0x61, 0x54, 0x79, 0x70, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12,
+	0x34, 0x0a, 0x03, 0x6f, 0x74, 0x70, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x20, 0x2e, 0x61,
+	0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x4d,
+	0x66, 0x61, 0x49, 0x6e, 0x66, 0x6f, 0x2e, 0x4f, 0x74, 0x70, 0x54, 0x79, 0x70, 0x65, 0x48, 0x00,
+	0x52, 0x03, 0x6f, 0x74, 0x70, 0x42, 0x0a, 0x0a, 0x08, 0x6d, 0x66, 0x61, 0x5f, 0x74, 0x79, 0x70,
+	0x65, 0x22, 0x14, 0x0a, 0x12, 0x53, 0x65, 0x74, 0x4d, 0x66, 0x61, 0x54, 0x79, 0x70, 0x65, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x45, 0x0a, 0x10, 0x45, 0x6e, 0x61, 0x62, 0x6c,
+	0x65, 0x4d, 0x66, 0x61, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x17, 0x0a, 0x07, 0x75,
+	0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73,
+	0x65, 0x72, 0x49, 0x64, 0x12, 0x18, 0x0a, 0x07, 0x65, 0x6e, 0x61, 0x62, 0x6c, 0x65, 0x64, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x08, 0x52, 0x07, 0x65, 0x6e, 0x61, 0x62, 0x6c, 0x65, 0x64, 0x22, 0x13,
+	0x0a, 0x11, 0x45, 0x6e, 0x61, 0x62, 0x6c, 0x65, 0x4d, 0x66, 0x61, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x22, 0x30, 0x0a, 0x15, 0x47, 0x65, 0x74, 0x55, 0x73, 0x65, 0x72, 0x4d, 0x66,
+	0x61, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x17, 0x0a, 0x07,
+	0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75,
+	0x73, 0x65, 0x72, 0x49, 0x64, 0x22, 0x46, 0x0a, 0x16, 0x47, 0x65, 0x74, 0x55, 0x73, 0x65, 0x72,
+	0x4d, 0x66, 0x61, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12,
+	0x2c, 0x0a, 0x04, 0x69, 0x6e, 0x66, 0x6f, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x18, 0x2e,
+	0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x6f, 0x72, 0x67, 0x2e,
+	0x4d, 0x66, 0x61, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x04, 0x69, 0x6e, 0x66, 0x6f, 0x22, 0x19, 0x0a,
+	0x17, 0x47, 0x65, 0x74, 0x4d, 0x79, 0x55, 0x73, 0x65, 0x72, 0x4d, 0x66, 0x61, 0x49, 0x6e, 0x66,
+	0x6f, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x22, 0x48, 0x0a, 0x18, 0x47, 0x65, 0x74, 0x4d,
+	0x79, 0x55, 0x73, 0x65, 0x72, 0x4d, 0x66, 0x61, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x2c, 0x0a, 0x04, 0x69, 0x6e, 0x66, 0x6f, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x18, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73,
+	0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x4d, 0x66, 0x61, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x04, 0x69, 0x6e,
+	0x66, 0x6f, 0x42, 0xb0, 0x01, 0x0a, 0x14, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76,
+	0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x6f, 0x72, 0x67, 0x42, 0x09, 0x55, 0x73, 0x65,
+	0x72, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x2b, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62,
+	0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70,
+	0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61,
+	0x31, 0x2f, 0x6f, 0x72, 0x67, 0xa2, 0x02, 0x03, 0x41, 0x56, 0x4f, 0xaa, 0x02, 0x10, 0x41, 0x70,
+	0x69, 0x2e, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x4f, 0x72, 0x67, 0xca, 0x02,
+	0x10, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x4f, 0x72,
+	0x67, 0xe2, 0x02, 0x1c, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31,
+	0x5c, 0x4f, 0x72, 0x67, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
+	0xea, 0x02, 0x12, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31,
+	0x3a, 0x3a, 0x4f, 0x72, 0x67, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -6881,7 +7295,7 @@ func file_api_v1alpha1_org_user_proto_rawDescGZIP() []byte {
 	return file_api_v1alpha1_org_user_proto_rawDescData
 }
 
-var file_api_v1alpha1_org_user_proto_msgTypes = make([]protoimpl.MessageInfo, 84)
+var file_api_v1alpha1_org_user_proto_msgTypes = make([]protoimpl.MessageInfo, 92)
 var file_api_v1alpha1_org_user_proto_goTypes = []interface{}{
 	(*CreateUserRequest)(nil),                                 // 0: api.v1alpha1.org.CreateUserRequest
 	(*CreateUserResponse)(nil),                                // 1: api.v1alpha1.org.CreateUserResponse
@@ -6947,112 +7361,125 @@ var file_api_v1alpha1_org_user_proto_goTypes = []interface{}{
 	(*SendUserEmailVerificationByOrgIdResponse)(nil),          // 61: api.v1alpha1.org.SendUserEmailVerificationByOrgIdResponse
 	(*GetUserSessionDataRequest)(nil),                         // 62: api.v1alpha1.org.GetUserSessionDataRequest
 	(*GetUserSessionDataResponse)(nil),                        // 63: api.v1alpha1.org.GetUserSessionDataResponse
-	(*Refresh2FALockoutRequest)(nil),                          // 64: api.v1alpha1.org.Refresh2FALockoutRequest
-	(*Refresh2FALockoutResponse)(nil),                         // 65: api.v1alpha1.org.Refresh2FALockoutResponse
-	(*Refresh2FALockoutByOrgIdRequest)(nil),                   // 66: api.v1alpha1.org.Refresh2FALockoutByOrgIdRequest
-	(*Refresh2FALockoutByOrgIdResponse)(nil),                  // 67: api.v1alpha1.org.Refresh2FALockoutByOrgIdResponse
-	(*GetMyUserResponse_HuntGroup)(nil),                       // 68: api.v1alpha1.org.GetMyUserResponse.HuntGroup
-	(*GetMyUserResponse_AgentProfileGroup)(nil),               // 69: api.v1alpha1.org.GetMyUserResponse.AgentProfileGroup
-	(*GetUserResponse_HuntGroup)(nil),                         // 70: api.v1alpha1.org.GetUserResponse.HuntGroup
-	(*GetUserResponse_AgentProfileGroup)(nil),                 // 71: api.v1alpha1.org.GetUserResponse.AgentProfileGroup
-	(*GetUserByOrgIdResponse_HuntGroup)(nil),                  // 72: api.v1alpha1.org.GetUserByOrgIdResponse.HuntGroup
-	(*GetUserByOrgIdResponse_AgentProfileGroup)(nil),          // 73: api.v1alpha1.org.GetUserByOrgIdResponse.AgentProfileGroup
-	(*ListAgentsResponse_AgentDetails)(nil),                   // 74: api.v1alpha1.org.ListAgentsResponse.AgentDetails
-	(*ListAgentsResponse_AgentDetails_HuntGroup)(nil),         // 75: api.v1alpha1.org.ListAgentsResponse.AgentDetails.HuntGroup
-	(*ListAgentsResponse_AgentDetails_AgentProfileGroup)(nil), // 76: api.v1alpha1.org.ListAgentsResponse.AgentDetails.AgentProfileGroup
-	(*ListPublicUsersResponse_User)(nil),                      // 77: api.v1alpha1.org.ListPublicUsersResponse.User
-	(*ListUsersResponse_UserDetails)(nil),                     // 78: api.v1alpha1.org.ListUsersResponse.UserDetails
-	(*ListUsersByOrgIdResponse_UserDetails)(nil),              // 79: api.v1alpha1.org.ListUsersByOrgIdResponse.UserDetails
-	(*ListUsersByRegionResponse_UserDetails)(nil),             // 80: api.v1alpha1.org.ListUsersByRegionResponse.UserDetails
-	(*GetUserSessionDataResponse_User)(nil),                   // 81: api.v1alpha1.org.GetUserSessionDataResponse.User
-	(*GetUserSessionDataResponse_User_RegionSids)(nil),        // 82: api.v1alpha1.org.GetUserSessionDataResponse.User.RegionSids
-	nil,                                  // 83: api.v1alpha1.org.GetUserSessionDataResponse.User.RegionSidMapEntry
-	(commons.OperatorApplications)(0),    // 84: api.commons.OperatorApplications
-	(*commons.TimeZoneWrapper)(nil),      // 85: api.commons.TimeZoneWrapper
-	(*org.Label)(nil),                    // 86: api.commons.org.Label
-	(*org.Skill)(nil),                    // 87: api.commons.org.Skill
-	(*org.PermissionGroup)(nil),          // 88: api.commons.org.PermissionGroup
-	(*org.P3PermissionGroup)(nil),        // 89: api.commons.org.P3PermissionGroup
-	(*org.Trust)(nil),                    // 90: api.commons.org.Trust
-	(*timestamppb.Timestamp)(nil),        // 91: google.protobuf.Timestamp
-	(commons.UserArchivedStateFilter)(0), // 92: api.commons.UserArchivedStateFilter
-	(commons.Permission)(0),              // 93: api.commons.Permission
-	(*wrapperspb.StringValue)(nil),       // 94: google.protobuf.StringValue
+	(*RefreshMfaLockoutRequest)(nil),                          // 64: api.v1alpha1.org.RefreshMfaLockoutRequest
+	(*RefreshMfaLockoutResponse)(nil),                         // 65: api.v1alpha1.org.RefreshMfaLockoutResponse
+	(*RefreshMfaLockoutByOrgIdRequest)(nil),                   // 66: api.v1alpha1.org.RefreshMfaLockoutByOrgIdRequest
+	(*RefreshMfaLockoutByOrgIdResponse)(nil),                  // 67: api.v1alpha1.org.RefreshMfaLockoutByOrgIdResponse
+	(*SetMfaTypeRequest)(nil),                                 // 68: api.v1alpha1.org.SetMfaTypeRequest
+	(*SetMfaTypeResponse)(nil),                                // 69: api.v1alpha1.org.SetMfaTypeResponse
+	(*EnableMfaRequest)(nil),                                  // 70: api.v1alpha1.org.EnableMfaRequest
+	(*EnableMfaResponse)(nil),                                 // 71: api.v1alpha1.org.EnableMfaResponse
+	(*GetUserMfaInfoRequest)(nil),                             // 72: api.v1alpha1.org.GetUserMfaInfoRequest
+	(*GetUserMfaInfoResponse)(nil),                            // 73: api.v1alpha1.org.GetUserMfaInfoResponse
+	(*GetMyUserMfaInfoRequest)(nil),                           // 74: api.v1alpha1.org.GetMyUserMfaInfoRequest
+	(*GetMyUserMfaInfoResponse)(nil),                          // 75: api.v1alpha1.org.GetMyUserMfaInfoResponse
+	(*GetMyUserResponse_HuntGroup)(nil),                       // 76: api.v1alpha1.org.GetMyUserResponse.HuntGroup
+	(*GetMyUserResponse_AgentProfileGroup)(nil),               // 77: api.v1alpha1.org.GetMyUserResponse.AgentProfileGroup
+	(*GetUserResponse_HuntGroup)(nil),                         // 78: api.v1alpha1.org.GetUserResponse.HuntGroup
+	(*GetUserResponse_AgentProfileGroup)(nil),                 // 79: api.v1alpha1.org.GetUserResponse.AgentProfileGroup
+	(*GetUserByOrgIdResponse_HuntGroup)(nil),                  // 80: api.v1alpha1.org.GetUserByOrgIdResponse.HuntGroup
+	(*GetUserByOrgIdResponse_AgentProfileGroup)(nil),          // 81: api.v1alpha1.org.GetUserByOrgIdResponse.AgentProfileGroup
+	(*ListAgentsResponse_AgentDetails)(nil),                   // 82: api.v1alpha1.org.ListAgentsResponse.AgentDetails
+	(*ListAgentsResponse_AgentDetails_HuntGroup)(nil),         // 83: api.v1alpha1.org.ListAgentsResponse.AgentDetails.HuntGroup
+	(*ListAgentsResponse_AgentDetails_AgentProfileGroup)(nil), // 84: api.v1alpha1.org.ListAgentsResponse.AgentDetails.AgentProfileGroup
+	(*ListPublicUsersResponse_User)(nil),                      // 85: api.v1alpha1.org.ListPublicUsersResponse.User
+	(*ListUsersResponse_UserDetails)(nil),                     // 86: api.v1alpha1.org.ListUsersResponse.UserDetails
+	(*ListUsersByOrgIdResponse_UserDetails)(nil),              // 87: api.v1alpha1.org.ListUsersByOrgIdResponse.UserDetails
+	(*ListUsersByRegionResponse_UserDetails)(nil),             // 88: api.v1alpha1.org.ListUsersByRegionResponse.UserDetails
+	(*GetUserSessionDataResponse_User)(nil),                   // 89: api.v1alpha1.org.GetUserSessionDataResponse.User
+	(*GetUserSessionDataResponse_User_RegionSids)(nil),        // 90: api.v1alpha1.org.GetUserSessionDataResponse.User.RegionSids
+	nil,                                  // 91: api.v1alpha1.org.GetUserSessionDataResponse.User.RegionSidMapEntry
+	(commons.OperatorApplications)(0),    // 92: api.commons.OperatorApplications
+	(*commons.TimeZoneWrapper)(nil),      // 93: api.commons.TimeZoneWrapper
+	(*org.Label)(nil),                    // 94: api.commons.org.Label
+	(*org.Skill)(nil),                    // 95: api.commons.org.Skill
+	(*org.PermissionGroup)(nil),          // 96: api.commons.org.PermissionGroup
+	(*org.P3PermissionGroup)(nil),        // 97: api.commons.org.P3PermissionGroup
+	(*org.Trust)(nil),                    // 98: api.commons.org.Trust
+	(*timestamppb.Timestamp)(nil),        // 99: google.protobuf.Timestamp
+	(commons.UserArchivedStateFilter)(0), // 100: api.commons.UserArchivedStateFilter
+	(commons.Permission)(0),              // 101: api.commons.Permission
+	(*org.MfaInfo_OtpType)(nil),          // 102: api.commons.org.MfaInfo.OtpType
+	(*org.MfaInfo)(nil),                  // 103: api.commons.org.MfaInfo
+	(*wrapperspb.StringValue)(nil),       // 104: google.protobuf.StringValue
 }
 var file_api_v1alpha1_org_user_proto_depIdxs = []int32{
-	84, // 0: api.v1alpha1.org.CreateUserRequest.default_app:type_name -> api.commons.OperatorApplications
-	85, // 1: api.v1alpha1.org.CreateUserRequest.time_zone_override:type_name -> api.commons.TimeZoneWrapper
-	68, // 2: api.v1alpha1.org.GetMyUserResponse.hunt_group:type_name -> api.v1alpha1.org.GetMyUserResponse.HuntGroup
-	86, // 3: api.v1alpha1.org.GetMyUserResponse.labels:type_name -> api.commons.org.Label
-	87, // 4: api.v1alpha1.org.GetMyUserResponse.skills:type_name -> api.commons.org.Skill
-	88, // 5: api.v1alpha1.org.GetMyUserResponse.permission_groups:type_name -> api.commons.org.PermissionGroup
-	89, // 6: api.v1alpha1.org.GetMyUserResponse.p3_permission_group:type_name -> api.commons.org.P3PermissionGroup
-	69, // 7: api.v1alpha1.org.GetMyUserResponse.agent_profile_group:type_name -> api.v1alpha1.org.GetMyUserResponse.AgentProfileGroup
-	90, // 8: api.v1alpha1.org.GetMyUserResponse.trusts:type_name -> api.commons.org.Trust
-	85, // 9: api.v1alpha1.org.GetUserResponse.time_zone_override:type_name -> api.commons.TimeZoneWrapper
-	70, // 10: api.v1alpha1.org.GetUserResponse.hunt_group:type_name -> api.v1alpha1.org.GetUserResponse.HuntGroup
-	86, // 11: api.v1alpha1.org.GetUserResponse.labels:type_name -> api.commons.org.Label
-	87, // 12: api.v1alpha1.org.GetUserResponse.skills:type_name -> api.commons.org.Skill
-	88, // 13: api.v1alpha1.org.GetUserResponse.permission_groups:type_name -> api.commons.org.PermissionGroup
-	89, // 14: api.v1alpha1.org.GetUserResponse.p3_permission_group:type_name -> api.commons.org.P3PermissionGroup
-	71, // 15: api.v1alpha1.org.GetUserResponse.agent_profile_group:type_name -> api.v1alpha1.org.GetUserResponse.AgentProfileGroup
-	84, // 16: api.v1alpha1.org.GetUserResponse.default_app:type_name -> api.commons.OperatorApplications
-	90, // 17: api.v1alpha1.org.GetUserResponse.trusts:type_name -> api.commons.org.Trust
-	91, // 18: api.v1alpha1.org.GetUserResponse.created_at:type_name -> google.protobuf.Timestamp
-	91, // 19: api.v1alpha1.org.GetUserResponse.last_updated:type_name -> google.protobuf.Timestamp
-	72, // 20: api.v1alpha1.org.GetUserByOrgIdResponse.hunt_group:type_name -> api.v1alpha1.org.GetUserByOrgIdResponse.HuntGroup
-	86, // 21: api.v1alpha1.org.GetUserByOrgIdResponse.labels:type_name -> api.commons.org.Label
-	87, // 22: api.v1alpha1.org.GetUserByOrgIdResponse.skills:type_name -> api.commons.org.Skill
-	88, // 23: api.v1alpha1.org.GetUserByOrgIdResponse.permission_groups:type_name -> api.commons.org.PermissionGroup
-	89, // 24: api.v1alpha1.org.GetUserByOrgIdResponse.p3_permission_group:type_name -> api.commons.org.P3PermissionGroup
-	73, // 25: api.v1alpha1.org.GetUserByOrgIdResponse.agent_profile_group:type_name -> api.v1alpha1.org.GetUserByOrgIdResponse.AgentProfileGroup
-	90, // 26: api.v1alpha1.org.GetUserByOrgIdResponse.trusts:type_name -> api.commons.org.Trust
-	74, // 27: api.v1alpha1.org.ListAgentsResponse.agents:type_name -> api.v1alpha1.org.ListAgentsResponse.AgentDetails
-	92, // 28: api.v1alpha1.org.ListPublicUsersRequest.archived_filter:type_name -> api.commons.UserArchivedStateFilter
-	77, // 29: api.v1alpha1.org.ListPublicUsersResponse.users:type_name -> api.v1alpha1.org.ListPublicUsersResponse.User
-	78, // 30: api.v1alpha1.org.ListUsersResponse.users:type_name -> api.v1alpha1.org.ListUsersResponse.UserDetails
-	92, // 31: api.v1alpha1.org.ListUsersByOrgIdRequest.archived_filter:type_name -> api.commons.UserArchivedStateFilter
-	79, // 32: api.v1alpha1.org.ListUsersByOrgIdResponse.users:type_name -> api.v1alpha1.org.ListUsersByOrgIdResponse.UserDetails
-	92, // 33: api.v1alpha1.org.ListUsersByRegionRequest.archived_filter:type_name -> api.commons.UserArchivedStateFilter
-	80, // 34: api.v1alpha1.org.ListUsersByRegionResponse.users:type_name -> api.v1alpha1.org.ListUsersByRegionResponse.UserDetails
-	85, // 35: api.v1alpha1.org.UpdateMyUserRequest.time_zone_override:type_name -> api.commons.TimeZoneWrapper
-	84, // 36: api.v1alpha1.org.UpdateMyUserRequest.default_app:type_name -> api.commons.OperatorApplications
-	85, // 37: api.v1alpha1.org.UpdateUserRequest.time_zone_override:type_name -> api.commons.TimeZoneWrapper
-	84, // 38: api.v1alpha1.org.UpdateUserRequest.default_app:type_name -> api.commons.OperatorApplications
-	91, // 39: api.v1alpha1.org.CreatePasswordResetLinkRequest.expiration:type_name -> google.protobuf.Timestamp
-	91, // 40: api.v1alpha1.org.GetUserLoginInfoResponse.last_login:type_name -> google.protobuf.Timestamp
-	91, // 41: api.v1alpha1.org.GetUserLoginInfoResponse.last_password_reset:type_name -> google.protobuf.Timestamp
-	91, // 42: api.v1alpha1.org.GetUserLoginInfoResponse.created_at:type_name -> google.protobuf.Timestamp
-	91, // 43: api.v1alpha1.org.GetUserLoginInfoResponse.updated_at:type_name -> google.protobuf.Timestamp
-	81, // 44: api.v1alpha1.org.GetUserSessionDataResponse.user:type_name -> api.v1alpha1.org.GetUserSessionDataResponse.User
-	93, // 45: api.v1alpha1.org.GetUserSessionDataResponse.p3_permissions:type_name -> api.commons.Permission
-	88, // 46: api.v1alpha1.org.GetUserSessionDataResponse.permission_groups:type_name -> api.commons.org.PermissionGroup
-	86, // 47: api.v1alpha1.org.GetUserSessionDataResponse.labels:type_name -> api.commons.org.Label
-	91, // 48: api.v1alpha1.org.Refresh2FALockoutResponse.timeout:type_name -> google.protobuf.Timestamp
-	91, // 49: api.v1alpha1.org.Refresh2FALockoutByOrgIdResponse.timeout:type_name -> google.protobuf.Timestamp
-	87, // 50: api.v1alpha1.org.ListAgentsResponse.AgentDetails.skills:type_name -> api.commons.org.Skill
-	75, // 51: api.v1alpha1.org.ListAgentsResponse.AgentDetails.hunt_group:type_name -> api.v1alpha1.org.ListAgentsResponse.AgentDetails.HuntGroup
-	86, // 52: api.v1alpha1.org.ListAgentsResponse.AgentDetails.labels:type_name -> api.commons.org.Label
-	88, // 53: api.v1alpha1.org.ListAgentsResponse.AgentDetails.permission_groups:type_name -> api.commons.org.PermissionGroup
-	91, // 54: api.v1alpha1.org.ListAgentsResponse.AgentDetails.created:type_name -> google.protobuf.Timestamp
-	91, // 55: api.v1alpha1.org.ListAgentsResponse.AgentDetails.last_updated:type_name -> google.protobuf.Timestamp
-	76, // 56: api.v1alpha1.org.ListAgentsResponse.AgentDetails.agent_profile_group:type_name -> api.v1alpha1.org.ListAgentsResponse.AgentDetails.AgentProfileGroup
-	85, // 57: api.v1alpha1.org.ListAgentsResponse.AgentDetails.time_zone_override:type_name -> api.commons.TimeZoneWrapper
-	86, // 58: api.v1alpha1.org.ListUsersResponse.UserDetails.labels:type_name -> api.commons.org.Label
-	86, // 59: api.v1alpha1.org.ListUsersByOrgIdResponse.UserDetails.labels:type_name -> api.commons.org.Label
-	86, // 60: api.v1alpha1.org.ListUsersByRegionResponse.UserDetails.labels:type_name -> api.commons.org.Label
-	83, // 61: api.v1alpha1.org.GetUserSessionDataResponse.User.region_sid_map:type_name -> api.v1alpha1.org.GetUserSessionDataResponse.User.RegionSidMapEntry
-	91, // 62: api.v1alpha1.org.GetUserSessionDataResponse.User.created:type_name -> google.protobuf.Timestamp
-	91, // 63: api.v1alpha1.org.GetUserSessionDataResponse.User.last_updated:type_name -> google.protobuf.Timestamp
-	94, // 64: api.v1alpha1.org.GetUserSessionDataResponse.User.connection_id:type_name -> google.protobuf.StringValue
-	85, // 65: api.v1alpha1.org.GetUserSessionDataResponse.User.time_zone_override:type_name -> api.commons.TimeZoneWrapper
-	84, // 66: api.v1alpha1.org.GetUserSessionDataResponse.User.default_application:type_name -> api.commons.OperatorApplications
-	82, // 67: api.v1alpha1.org.GetUserSessionDataResponse.User.RegionSidMapEntry.value:type_name -> api.v1alpha1.org.GetUserSessionDataResponse.User.RegionSids
-	68, // [68:68] is the sub-list for method output_type
-	68, // [68:68] is the sub-list for method input_type
-	68, // [68:68] is the sub-list for extension type_name
-	68, // [68:68] is the sub-list for extension extendee
-	0,  // [0:68] is the sub-list for field type_name
+	92,  // 0: api.v1alpha1.org.CreateUserRequest.default_app:type_name -> api.commons.OperatorApplications
+	93,  // 1: api.v1alpha1.org.CreateUserRequest.time_zone_override:type_name -> api.commons.TimeZoneWrapper
+	76,  // 2: api.v1alpha1.org.GetMyUserResponse.hunt_group:type_name -> api.v1alpha1.org.GetMyUserResponse.HuntGroup
+	94,  // 3: api.v1alpha1.org.GetMyUserResponse.labels:type_name -> api.commons.org.Label
+	95,  // 4: api.v1alpha1.org.GetMyUserResponse.skills:type_name -> api.commons.org.Skill
+	96,  // 5: api.v1alpha1.org.GetMyUserResponse.permission_groups:type_name -> api.commons.org.PermissionGroup
+	97,  // 6: api.v1alpha1.org.GetMyUserResponse.p3_permission_group:type_name -> api.commons.org.P3PermissionGroup
+	77,  // 7: api.v1alpha1.org.GetMyUserResponse.agent_profile_group:type_name -> api.v1alpha1.org.GetMyUserResponse.AgentProfileGroup
+	98,  // 8: api.v1alpha1.org.GetMyUserResponse.trusts:type_name -> api.commons.org.Trust
+	93,  // 9: api.v1alpha1.org.GetUserResponse.time_zone_override:type_name -> api.commons.TimeZoneWrapper
+	78,  // 10: api.v1alpha1.org.GetUserResponse.hunt_group:type_name -> api.v1alpha1.org.GetUserResponse.HuntGroup
+	94,  // 11: api.v1alpha1.org.GetUserResponse.labels:type_name -> api.commons.org.Label
+	95,  // 12: api.v1alpha1.org.GetUserResponse.skills:type_name -> api.commons.org.Skill
+	96,  // 13: api.v1alpha1.org.GetUserResponse.permission_groups:type_name -> api.commons.org.PermissionGroup
+	97,  // 14: api.v1alpha1.org.GetUserResponse.p3_permission_group:type_name -> api.commons.org.P3PermissionGroup
+	79,  // 15: api.v1alpha1.org.GetUserResponse.agent_profile_group:type_name -> api.v1alpha1.org.GetUserResponse.AgentProfileGroup
+	92,  // 16: api.v1alpha1.org.GetUserResponse.default_app:type_name -> api.commons.OperatorApplications
+	98,  // 17: api.v1alpha1.org.GetUserResponse.trusts:type_name -> api.commons.org.Trust
+	99,  // 18: api.v1alpha1.org.GetUserResponse.created_at:type_name -> google.protobuf.Timestamp
+	99,  // 19: api.v1alpha1.org.GetUserResponse.last_updated:type_name -> google.protobuf.Timestamp
+	80,  // 20: api.v1alpha1.org.GetUserByOrgIdResponse.hunt_group:type_name -> api.v1alpha1.org.GetUserByOrgIdResponse.HuntGroup
+	94,  // 21: api.v1alpha1.org.GetUserByOrgIdResponse.labels:type_name -> api.commons.org.Label
+	95,  // 22: api.v1alpha1.org.GetUserByOrgIdResponse.skills:type_name -> api.commons.org.Skill
+	96,  // 23: api.v1alpha1.org.GetUserByOrgIdResponse.permission_groups:type_name -> api.commons.org.PermissionGroup
+	97,  // 24: api.v1alpha1.org.GetUserByOrgIdResponse.p3_permission_group:type_name -> api.commons.org.P3PermissionGroup
+	81,  // 25: api.v1alpha1.org.GetUserByOrgIdResponse.agent_profile_group:type_name -> api.v1alpha1.org.GetUserByOrgIdResponse.AgentProfileGroup
+	98,  // 26: api.v1alpha1.org.GetUserByOrgIdResponse.trusts:type_name -> api.commons.org.Trust
+	82,  // 27: api.v1alpha1.org.ListAgentsResponse.agents:type_name -> api.v1alpha1.org.ListAgentsResponse.AgentDetails
+	100, // 28: api.v1alpha1.org.ListPublicUsersRequest.archived_filter:type_name -> api.commons.UserArchivedStateFilter
+	85,  // 29: api.v1alpha1.org.ListPublicUsersResponse.users:type_name -> api.v1alpha1.org.ListPublicUsersResponse.User
+	86,  // 30: api.v1alpha1.org.ListUsersResponse.users:type_name -> api.v1alpha1.org.ListUsersResponse.UserDetails
+	100, // 31: api.v1alpha1.org.ListUsersByOrgIdRequest.archived_filter:type_name -> api.commons.UserArchivedStateFilter
+	87,  // 32: api.v1alpha1.org.ListUsersByOrgIdResponse.users:type_name -> api.v1alpha1.org.ListUsersByOrgIdResponse.UserDetails
+	100, // 33: api.v1alpha1.org.ListUsersByRegionRequest.archived_filter:type_name -> api.commons.UserArchivedStateFilter
+	88,  // 34: api.v1alpha1.org.ListUsersByRegionResponse.users:type_name -> api.v1alpha1.org.ListUsersByRegionResponse.UserDetails
+	93,  // 35: api.v1alpha1.org.UpdateMyUserRequest.time_zone_override:type_name -> api.commons.TimeZoneWrapper
+	92,  // 36: api.v1alpha1.org.UpdateMyUserRequest.default_app:type_name -> api.commons.OperatorApplications
+	93,  // 37: api.v1alpha1.org.UpdateUserRequest.time_zone_override:type_name -> api.commons.TimeZoneWrapper
+	92,  // 38: api.v1alpha1.org.UpdateUserRequest.default_app:type_name -> api.commons.OperatorApplications
+	99,  // 39: api.v1alpha1.org.CreatePasswordResetLinkRequest.expiration:type_name -> google.protobuf.Timestamp
+	99,  // 40: api.v1alpha1.org.GetUserLoginInfoResponse.last_login:type_name -> google.protobuf.Timestamp
+	99,  // 41: api.v1alpha1.org.GetUserLoginInfoResponse.last_password_reset:type_name -> google.protobuf.Timestamp
+	99,  // 42: api.v1alpha1.org.GetUserLoginInfoResponse.created_at:type_name -> google.protobuf.Timestamp
+	99,  // 43: api.v1alpha1.org.GetUserLoginInfoResponse.updated_at:type_name -> google.protobuf.Timestamp
+	89,  // 44: api.v1alpha1.org.GetUserSessionDataResponse.user:type_name -> api.v1alpha1.org.GetUserSessionDataResponse.User
+	101, // 45: api.v1alpha1.org.GetUserSessionDataResponse.p3_permissions:type_name -> api.commons.Permission
+	96,  // 46: api.v1alpha1.org.GetUserSessionDataResponse.permission_groups:type_name -> api.commons.org.PermissionGroup
+	94,  // 47: api.v1alpha1.org.GetUserSessionDataResponse.labels:type_name -> api.commons.org.Label
+	99,  // 48: api.v1alpha1.org.RefreshMfaLockoutResponse.timeout:type_name -> google.protobuf.Timestamp
+	99,  // 49: api.v1alpha1.org.RefreshMfaLockoutByOrgIdResponse.timeout:type_name -> google.protobuf.Timestamp
+	102, // 50: api.v1alpha1.org.SetMfaTypeRequest.otp:type_name -> api.commons.org.MfaInfo.OtpType
+	103, // 51: api.v1alpha1.org.GetUserMfaInfoResponse.info:type_name -> api.commons.org.MfaInfo
+	103, // 52: api.v1alpha1.org.GetMyUserMfaInfoResponse.info:type_name -> api.commons.org.MfaInfo
+	95,  // 53: api.v1alpha1.org.ListAgentsResponse.AgentDetails.skills:type_name -> api.commons.org.Skill
+	83,  // 54: api.v1alpha1.org.ListAgentsResponse.AgentDetails.hunt_group:type_name -> api.v1alpha1.org.ListAgentsResponse.AgentDetails.HuntGroup
+	94,  // 55: api.v1alpha1.org.ListAgentsResponse.AgentDetails.labels:type_name -> api.commons.org.Label
+	96,  // 56: api.v1alpha1.org.ListAgentsResponse.AgentDetails.permission_groups:type_name -> api.commons.org.PermissionGroup
+	99,  // 57: api.v1alpha1.org.ListAgentsResponse.AgentDetails.created:type_name -> google.protobuf.Timestamp
+	99,  // 58: api.v1alpha1.org.ListAgentsResponse.AgentDetails.last_updated:type_name -> google.protobuf.Timestamp
+	84,  // 59: api.v1alpha1.org.ListAgentsResponse.AgentDetails.agent_profile_group:type_name -> api.v1alpha1.org.ListAgentsResponse.AgentDetails.AgentProfileGroup
+	93,  // 60: api.v1alpha1.org.ListAgentsResponse.AgentDetails.time_zone_override:type_name -> api.commons.TimeZoneWrapper
+	94,  // 61: api.v1alpha1.org.ListUsersResponse.UserDetails.labels:type_name -> api.commons.org.Label
+	94,  // 62: api.v1alpha1.org.ListUsersByOrgIdResponse.UserDetails.labels:type_name -> api.commons.org.Label
+	94,  // 63: api.v1alpha1.org.ListUsersByRegionResponse.UserDetails.labels:type_name -> api.commons.org.Label
+	91,  // 64: api.v1alpha1.org.GetUserSessionDataResponse.User.region_sid_map:type_name -> api.v1alpha1.org.GetUserSessionDataResponse.User.RegionSidMapEntry
+	99,  // 65: api.v1alpha1.org.GetUserSessionDataResponse.User.created:type_name -> google.protobuf.Timestamp
+	99,  // 66: api.v1alpha1.org.GetUserSessionDataResponse.User.last_updated:type_name -> google.protobuf.Timestamp
+	104, // 67: api.v1alpha1.org.GetUserSessionDataResponse.User.connection_id:type_name -> google.protobuf.StringValue
+	93,  // 68: api.v1alpha1.org.GetUserSessionDataResponse.User.time_zone_override:type_name -> api.commons.TimeZoneWrapper
+	92,  // 69: api.v1alpha1.org.GetUserSessionDataResponse.User.default_application:type_name -> api.commons.OperatorApplications
+	90,  // 70: api.v1alpha1.org.GetUserSessionDataResponse.User.RegionSidMapEntry.value:type_name -> api.v1alpha1.org.GetUserSessionDataResponse.User.RegionSids
+	71,  // [71:71] is the sub-list for method output_type
+	71,  // [71:71] is the sub-list for method input_type
+	71,  // [71:71] is the sub-list for extension type_name
+	71,  // [71:71] is the sub-list for extension extendee
+	0,   // [0:71] is the sub-list for field type_name
 }
 
 func init() { file_api_v1alpha1_org_user_proto_init() }
@@ -7830,7 +8257,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_user_proto_msgTypes[64].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Refresh2FALockoutRequest); i {
+			switch v := v.(*RefreshMfaLockoutRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7842,7 +8269,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_user_proto_msgTypes[65].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Refresh2FALockoutResponse); i {
+			switch v := v.(*RefreshMfaLockoutResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7854,7 +8281,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_user_proto_msgTypes[66].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Refresh2FALockoutByOrgIdRequest); i {
+			switch v := v.(*RefreshMfaLockoutByOrgIdRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7866,7 +8293,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_user_proto_msgTypes[67].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Refresh2FALockoutByOrgIdResponse); i {
+			switch v := v.(*RefreshMfaLockoutByOrgIdResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7878,7 +8305,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_user_proto_msgTypes[68].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetMyUserResponse_HuntGroup); i {
+			switch v := v.(*SetMfaTypeRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7890,7 +8317,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_user_proto_msgTypes[69].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetMyUserResponse_AgentProfileGroup); i {
+			switch v := v.(*SetMfaTypeResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7902,7 +8329,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_user_proto_msgTypes[70].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetUserResponse_HuntGroup); i {
+			switch v := v.(*EnableMfaRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7914,7 +8341,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_user_proto_msgTypes[71].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetUserResponse_AgentProfileGroup); i {
+			switch v := v.(*EnableMfaResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7926,7 +8353,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_user_proto_msgTypes[72].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetUserByOrgIdResponse_HuntGroup); i {
+			switch v := v.(*GetUserMfaInfoRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7938,7 +8365,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_user_proto_msgTypes[73].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetUserByOrgIdResponse_AgentProfileGroup); i {
+			switch v := v.(*GetUserMfaInfoResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7950,7 +8377,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_user_proto_msgTypes[74].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListAgentsResponse_AgentDetails); i {
+			switch v := v.(*GetMyUserMfaInfoRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7962,7 +8389,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_user_proto_msgTypes[75].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListAgentsResponse_AgentDetails_HuntGroup); i {
+			switch v := v.(*GetMyUserMfaInfoResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7974,7 +8401,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_user_proto_msgTypes[76].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListAgentsResponse_AgentDetails_AgentProfileGroup); i {
+			switch v := v.(*GetMyUserResponse_HuntGroup); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7986,7 +8413,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_user_proto_msgTypes[77].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListPublicUsersResponse_User); i {
+			switch v := v.(*GetMyUserResponse_AgentProfileGroup); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7998,7 +8425,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_user_proto_msgTypes[78].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListUsersResponse_UserDetails); i {
+			switch v := v.(*GetUserResponse_HuntGroup); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -8010,7 +8437,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_user_proto_msgTypes[79].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListUsersByOrgIdResponse_UserDetails); i {
+			switch v := v.(*GetUserResponse_AgentProfileGroup); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -8022,7 +8449,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_user_proto_msgTypes[80].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListUsersByRegionResponse_UserDetails); i {
+			switch v := v.(*GetUserByOrgIdResponse_HuntGroup); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -8034,7 +8461,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_user_proto_msgTypes[81].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetUserSessionDataResponse_User); i {
+			switch v := v.(*GetUserByOrgIdResponse_AgentProfileGroup); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -8046,6 +8473,102 @@ func file_api_v1alpha1_org_user_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_user_proto_msgTypes[82].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListAgentsResponse_AgentDetails); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_org_user_proto_msgTypes[83].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListAgentsResponse_AgentDetails_HuntGroup); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_org_user_proto_msgTypes[84].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListAgentsResponse_AgentDetails_AgentProfileGroup); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_org_user_proto_msgTypes[85].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListPublicUsersResponse_User); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_org_user_proto_msgTypes[86].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListUsersResponse_UserDetails); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_org_user_proto_msgTypes[87].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListUsersByOrgIdResponse_UserDetails); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_org_user_proto_msgTypes[88].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListUsersByRegionResponse_UserDetails); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_org_user_proto_msgTypes[89].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetUserSessionDataResponse_User); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_org_user_proto_msgTypes[90].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetUserSessionDataResponse_User_RegionSids); i {
 			case 0:
 				return &v.state
@@ -8058,13 +8581,16 @@ func file_api_v1alpha1_org_user_proto_init() {
 			}
 		}
 	}
+	file_api_v1alpha1_org_user_proto_msgTypes[68].OneofWrappers = []interface{}{
+		(*SetMfaTypeRequest_Otp)(nil),
+	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_v1alpha1_org_user_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   84,
+			NumMessages:   92,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

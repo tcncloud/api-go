@@ -204,8 +204,8 @@ const (
 	Org_DeleteP3PermissionGroup_FullMethodName                  = "/api.v1alpha1.org.Org/DeleteP3PermissionGroup"
 	Org_AssignUsersP3PermissionGroup_FullMethodName             = "/api.v1alpha1.org.Org/AssignUsersP3PermissionGroup"
 	Org_RevokeUsersP3PermissionGroup_FullMethodName             = "/api.v1alpha1.org.Org/RevokeUsersP3PermissionGroup"
-	Org_Refresh2FALockout_FullMethodName                        = "/api.v1alpha1.org.Org/Refresh2FALockout"
-	Org_Refresh2FALockoutByOrgId_FullMethodName                 = "/api.v1alpha1.org.Org/Refresh2FALockoutByOrgId"
+	Org_RefreshMfaLockout_FullMethodName                        = "/api.v1alpha1.org.Org/RefreshMfaLockout"
+	Org_RefreshMfaLockoutByOrgId_FullMethodName                 = "/api.v1alpha1.org.Org/RefreshMfaLockoutByOrgId"
 )
 
 // OrgClient is the client API for Org service.
@@ -630,10 +630,10 @@ type OrgClient interface {
 	// RevokeUsersP3PermissionGroup revokes a p3 permission group
 	// from a list of users.
 	RevokeUsersP3PermissionGroup(ctx context.Context, in *RevokeUsersP3PermissionGroupRequest, opts ...grpc.CallOption) (*RevokeUsersP3PermissionGroupResponse, error)
-	// Refresh2FALockout resets the lockout timer for the given user.
-	Refresh2FALockout(ctx context.Context, in *Refresh2FALockoutRequest, opts ...grpc.CallOption) (*Refresh2FALockoutResponse, error)
-	// Refresh2FALockoutByOrgId resets the lockout timer for the given user and org id.
-	Refresh2FALockoutByOrgId(ctx context.Context, in *Refresh2FALockoutByOrgIdRequest, opts ...grpc.CallOption) (*Refresh2FALockoutByOrgIdResponse, error)
+	// RefreshMfaLockout resets the lockout timer for the given user.
+	RefreshMfaLockout(ctx context.Context, in *RefreshMfaLockoutRequest, opts ...grpc.CallOption) (*RefreshMfaLockoutResponse, error)
+	// RefreshMfaLockoutByOrgId resets the lockout timer for the given user and org id.
+	RefreshMfaLockoutByOrgId(ctx context.Context, in *RefreshMfaLockoutByOrgIdRequest, opts ...grpc.CallOption) (*RefreshMfaLockoutByOrgIdResponse, error)
 }
 
 type orgClient struct {
@@ -2516,18 +2516,18 @@ func (c *orgClient) RevokeUsersP3PermissionGroup(ctx context.Context, in *Revoke
 	return out, nil
 }
 
-func (c *orgClient) Refresh2FALockout(ctx context.Context, in *Refresh2FALockoutRequest, opts ...grpc.CallOption) (*Refresh2FALockoutResponse, error) {
-	out := new(Refresh2FALockoutResponse)
-	err := c.cc.Invoke(ctx, Org_Refresh2FALockout_FullMethodName, in, out, opts...)
+func (c *orgClient) RefreshMfaLockout(ctx context.Context, in *RefreshMfaLockoutRequest, opts ...grpc.CallOption) (*RefreshMfaLockoutResponse, error) {
+	out := new(RefreshMfaLockoutResponse)
+	err := c.cc.Invoke(ctx, Org_RefreshMfaLockout_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *orgClient) Refresh2FALockoutByOrgId(ctx context.Context, in *Refresh2FALockoutByOrgIdRequest, opts ...grpc.CallOption) (*Refresh2FALockoutByOrgIdResponse, error) {
-	out := new(Refresh2FALockoutByOrgIdResponse)
-	err := c.cc.Invoke(ctx, Org_Refresh2FALockoutByOrgId_FullMethodName, in, out, opts...)
+func (c *orgClient) RefreshMfaLockoutByOrgId(ctx context.Context, in *RefreshMfaLockoutByOrgIdRequest, opts ...grpc.CallOption) (*RefreshMfaLockoutByOrgIdResponse, error) {
+	out := new(RefreshMfaLockoutByOrgIdResponse)
+	err := c.cc.Invoke(ctx, Org_RefreshMfaLockoutByOrgId_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -2956,10 +2956,10 @@ type OrgServer interface {
 	// RevokeUsersP3PermissionGroup revokes a p3 permission group
 	// from a list of users.
 	RevokeUsersP3PermissionGroup(context.Context, *RevokeUsersP3PermissionGroupRequest) (*RevokeUsersP3PermissionGroupResponse, error)
-	// Refresh2FALockout resets the lockout timer for the given user.
-	Refresh2FALockout(context.Context, *Refresh2FALockoutRequest) (*Refresh2FALockoutResponse, error)
-	// Refresh2FALockoutByOrgId resets the lockout timer for the given user and org id.
-	Refresh2FALockoutByOrgId(context.Context, *Refresh2FALockoutByOrgIdRequest) (*Refresh2FALockoutByOrgIdResponse, error)
+	// RefreshMfaLockout resets the lockout timer for the given user.
+	RefreshMfaLockout(context.Context, *RefreshMfaLockoutRequest) (*RefreshMfaLockoutResponse, error)
+	// RefreshMfaLockoutByOrgId resets the lockout timer for the given user and org id.
+	RefreshMfaLockoutByOrgId(context.Context, *RefreshMfaLockoutByOrgIdRequest) (*RefreshMfaLockoutByOrgIdResponse, error)
 	mustEmbedUnimplementedOrgServer()
 }
 
@@ -3522,11 +3522,11 @@ func (UnimplementedOrgServer) AssignUsersP3PermissionGroup(context.Context, *Ass
 func (UnimplementedOrgServer) RevokeUsersP3PermissionGroup(context.Context, *RevokeUsersP3PermissionGroupRequest) (*RevokeUsersP3PermissionGroupResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RevokeUsersP3PermissionGroup not implemented")
 }
-func (UnimplementedOrgServer) Refresh2FALockout(context.Context, *Refresh2FALockoutRequest) (*Refresh2FALockoutResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Refresh2FALockout not implemented")
+func (UnimplementedOrgServer) RefreshMfaLockout(context.Context, *RefreshMfaLockoutRequest) (*RefreshMfaLockoutResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RefreshMfaLockout not implemented")
 }
-func (UnimplementedOrgServer) Refresh2FALockoutByOrgId(context.Context, *Refresh2FALockoutByOrgIdRequest) (*Refresh2FALockoutByOrgIdResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Refresh2FALockoutByOrgId not implemented")
+func (UnimplementedOrgServer) RefreshMfaLockoutByOrgId(context.Context, *RefreshMfaLockoutByOrgIdRequest) (*RefreshMfaLockoutByOrgIdResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RefreshMfaLockoutByOrgId not implemented")
 }
 func (UnimplementedOrgServer) mustEmbedUnimplementedOrgServer() {}
 
@@ -6898,38 +6898,38 @@ func _Org_RevokeUsersP3PermissionGroup_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Org_Refresh2FALockout_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Refresh2FALockoutRequest)
+func _Org_RefreshMfaLockout_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RefreshMfaLockoutRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(OrgServer).Refresh2FALockout(ctx, in)
+		return srv.(OrgServer).RefreshMfaLockout(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Org_Refresh2FALockout_FullMethodName,
+		FullMethod: Org_RefreshMfaLockout_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrgServer).Refresh2FALockout(ctx, req.(*Refresh2FALockoutRequest))
+		return srv.(OrgServer).RefreshMfaLockout(ctx, req.(*RefreshMfaLockoutRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Org_Refresh2FALockoutByOrgId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Refresh2FALockoutByOrgIdRequest)
+func _Org_RefreshMfaLockoutByOrgId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RefreshMfaLockoutByOrgIdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(OrgServer).Refresh2FALockoutByOrgId(ctx, in)
+		return srv.(OrgServer).RefreshMfaLockoutByOrgId(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Org_Refresh2FALockoutByOrgId_FullMethodName,
+		FullMethod: Org_RefreshMfaLockoutByOrgId_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrgServer).Refresh2FALockoutByOrgId(ctx, req.(*Refresh2FALockoutByOrgIdRequest))
+		return srv.(OrgServer).RefreshMfaLockoutByOrgId(ctx, req.(*RefreshMfaLockoutByOrgIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -7646,12 +7646,12 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Org_RevokeUsersP3PermissionGroup_Handler,
 		},
 		{
-			MethodName: "Refresh2FALockout",
-			Handler:    _Org_Refresh2FALockout_Handler,
+			MethodName: "RefreshMfaLockout",
+			Handler:    _Org_RefreshMfaLockout_Handler,
 		},
 		{
-			MethodName: "Refresh2FALockoutByOrgId",
-			Handler:    _Org_Refresh2FALockoutByOrgId_Handler,
+			MethodName: "RefreshMfaLockoutByOrgId",
+			Handler:    _Org_RefreshMfaLockoutByOrgId_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
