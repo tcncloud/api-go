@@ -207,7 +207,8 @@ const (
 	Org_RefreshMfaLockout_FullMethodName                        = "/api.v1alpha1.org.Org/RefreshMfaLockout"
 	Org_RefreshMfaLockoutByOrgId_FullMethodName                 = "/api.v1alpha1.org.Org/RefreshMfaLockoutByOrgId"
 	Org_SetMfaType_FullMethodName                               = "/api.v1alpha1.org.Org/SetMfaType"
-	Org_EnableMfa_FullMethodName                                = "/api.v1alpha1.org.Org/EnableMfa"
+	Org_EnableUserMfa_FullMethodName                            = "/api.v1alpha1.org.Org/EnableUserMfa"
+	Org_EnableMyUserMfa_FullMethodName                          = "/api.v1alpha1.org.Org/EnableMyUserMfa"
 	Org_GetUserMfaInfo_FullMethodName                           = "/api.v1alpha1.org.Org/GetUserMfaInfo"
 	Org_GetMyUserMfaInfo_FullMethodName                         = "/api.v1alpha1.org.Org/GetMyUserMfaInfo"
 )
@@ -640,8 +641,10 @@ type OrgClient interface {
 	RefreshMfaLockoutByOrgId(ctx context.Context, in *RefreshMfaLockoutByOrgIdRequest, opts ...grpc.CallOption) (*RefreshMfaLockoutByOrgIdResponse, error)
 	// SetMfaType sets the current user's mfa type.
 	SetMfaType(ctx context.Context, in *SetMfaTypeRequest, opts ...grpc.CallOption) (*SetMfaTypeResponse, error)
-	// EnableMfa enables or disables mfa for the given user
-	EnableMfa(ctx context.Context, in *EnableMfaRequest, opts ...grpc.CallOption) (*EnableMfaResponse, error)
+	// EnableUserMfa enables or disables mfa for the given user
+	EnableUserMfa(ctx context.Context, in *EnableUserMfaRequest, opts ...grpc.CallOption) (*EnableUserMfaResponse, error)
+	// EnableMyUserMfa enables mfa for the current user
+	EnableMyUserMfa(ctx context.Context, in *EnableMyUserMfaRequest, opts ...grpc.CallOption) (*EnableMyUserMfaResponse, error)
 	// GetUserMfaInfo returns the mfa info for the given user.
 	GetUserMfaInfo(ctx context.Context, in *GetUserMfaInfoRequest, opts ...grpc.CallOption) (*GetUserMfaInfoResponse, error)
 	// GetMyUserMfaInfo returns the mfa info for the current user.
@@ -2555,9 +2558,18 @@ func (c *orgClient) SetMfaType(ctx context.Context, in *SetMfaTypeRequest, opts 
 	return out, nil
 }
 
-func (c *orgClient) EnableMfa(ctx context.Context, in *EnableMfaRequest, opts ...grpc.CallOption) (*EnableMfaResponse, error) {
-	out := new(EnableMfaResponse)
-	err := c.cc.Invoke(ctx, Org_EnableMfa_FullMethodName, in, out, opts...)
+func (c *orgClient) EnableUserMfa(ctx context.Context, in *EnableUserMfaRequest, opts ...grpc.CallOption) (*EnableUserMfaResponse, error) {
+	out := new(EnableUserMfaResponse)
+	err := c.cc.Invoke(ctx, Org_EnableUserMfa_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) EnableMyUserMfa(ctx context.Context, in *EnableMyUserMfaRequest, opts ...grpc.CallOption) (*EnableMyUserMfaResponse, error) {
+	out := new(EnableMyUserMfaResponse)
+	err := c.cc.Invoke(ctx, Org_EnableMyUserMfa_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -3010,8 +3022,10 @@ type OrgServer interface {
 	RefreshMfaLockoutByOrgId(context.Context, *RefreshMfaLockoutByOrgIdRequest) (*RefreshMfaLockoutByOrgIdResponse, error)
 	// SetMfaType sets the current user's mfa type.
 	SetMfaType(context.Context, *SetMfaTypeRequest) (*SetMfaTypeResponse, error)
-	// EnableMfa enables or disables mfa for the given user
-	EnableMfa(context.Context, *EnableMfaRequest) (*EnableMfaResponse, error)
+	// EnableUserMfa enables or disables mfa for the given user
+	EnableUserMfa(context.Context, *EnableUserMfaRequest) (*EnableUserMfaResponse, error)
+	// EnableMyUserMfa enables mfa for the current user
+	EnableMyUserMfa(context.Context, *EnableMyUserMfaRequest) (*EnableMyUserMfaResponse, error)
 	// GetUserMfaInfo returns the mfa info for the given user.
 	GetUserMfaInfo(context.Context, *GetUserMfaInfoRequest) (*GetUserMfaInfoResponse, error)
 	// GetMyUserMfaInfo returns the mfa info for the current user.
@@ -3587,8 +3601,11 @@ func (UnimplementedOrgServer) RefreshMfaLockoutByOrgId(context.Context, *Refresh
 func (UnimplementedOrgServer) SetMfaType(context.Context, *SetMfaTypeRequest) (*SetMfaTypeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetMfaType not implemented")
 }
-func (UnimplementedOrgServer) EnableMfa(context.Context, *EnableMfaRequest) (*EnableMfaResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method EnableMfa not implemented")
+func (UnimplementedOrgServer) EnableUserMfa(context.Context, *EnableUserMfaRequest) (*EnableUserMfaResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EnableUserMfa not implemented")
+}
+func (UnimplementedOrgServer) EnableMyUserMfa(context.Context, *EnableMyUserMfaRequest) (*EnableMyUserMfaResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EnableMyUserMfa not implemented")
 }
 func (UnimplementedOrgServer) GetUserMfaInfo(context.Context, *GetUserMfaInfoRequest) (*GetUserMfaInfoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserMfaInfo not implemented")
@@ -7020,20 +7037,38 @@ func _Org_SetMfaType_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Org_EnableMfa_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(EnableMfaRequest)
+func _Org_EnableUserMfa_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EnableUserMfaRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(OrgServer).EnableMfa(ctx, in)
+		return srv.(OrgServer).EnableUserMfa(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Org_EnableMfa_FullMethodName,
+		FullMethod: Org_EnableUserMfa_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrgServer).EnableMfa(ctx, req.(*EnableMfaRequest))
+		return srv.(OrgServer).EnableUserMfa(ctx, req.(*EnableUserMfaRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_EnableMyUserMfa_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EnableMyUserMfaRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).EnableMyUserMfa(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_EnableMyUserMfa_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).EnableMyUserMfa(ctx, req.(*EnableMyUserMfaRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -7798,8 +7833,12 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Org_SetMfaType_Handler,
 		},
 		{
-			MethodName: "EnableMfa",
-			Handler:    _Org_EnableMfa_Handler,
+			MethodName: "EnableUserMfa",
+			Handler:    _Org_EnableUserMfa_Handler,
+		},
+		{
+			MethodName: "EnableMyUserMfa",
+			Handler:    _Org_EnableMyUserMfa_Handler,
 		},
 		{
 			MethodName: "GetUserMfaInfo",
