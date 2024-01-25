@@ -23,6 +23,8 @@ const (
 	PBXService_GetPBXUser_FullMethodName            = "/services.pbx.v2.PBXService/GetPBXUser"
 	PBXService_ListRingGroups_FullMethodName        = "/services.pbx.v2.PBXService/ListRingGroups"
 	PBXService_GetRingGroup_FullMethodName          = "/services.pbx.v2.PBXService/GetRingGroup"
+	PBXService_GetSIPAccount_FullMethodName         = "/services.pbx.v2.PBXService/GetSIPAccount"
+	PBXService_ListSIPAccounts_FullMethodName       = "/services.pbx.v2.PBXService/ListSIPAccounts"
 	PBXService_UpdateSIPAccount_FullMethodName      = "/services.pbx.v2.PBXService/UpdateSIPAccount"
 	PBXService_UpdateRingGroup_FullMethodName       = "/services.pbx.v2.PBXService/UpdateRingGroup"
 	PBXService_CreateRingGroup_FullMethodName       = "/services.pbx.v2.PBXService/CreateRingGroup"
@@ -78,6 +80,28 @@ type PBXServiceClient interface {
 	//   - grpc.NotFound: The group does not exist or is not in the caller's ORG.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	GetRingGroup(ctx context.Context, in *GetRingGroupRequest, opts ...grpc.CallOption) (*GetRingGroupResponse, error)
+	// Returns details of the SIP Account associated with the sip_id
+	// Required permissions:
+	//
+	//	PBX-MANAGER
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.NotFound: The group does not exist or is not in the caller's ORG.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	GetSIPAccount(ctx context.Context, in *GetSIPAccountRequest, opts ...grpc.CallOption) (*GetSIPAccountResponse, error)
+	// Returns details of all SIP Accounts associated with the authenticated callers ORG
+	// Required permissions:
+	//
+	//	PBX-MANAGER
+	//
+	// Errors:
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	ListSIPAccounts(ctx context.Context, in *ListSIPAccountsRequest, opts ...grpc.CallOption) (*ListSIPAccountsResponse, error)
 	// Updates details of the SIP Account for the specific SIP Account within the authenticated callers ORG.
 	// Allows for updating, activating, and deactivating a user.
 	// Required permissions:
@@ -189,6 +213,24 @@ func (c *pBXServiceClient) GetRingGroup(ctx context.Context, in *GetRingGroupReq
 	return out, nil
 }
 
+func (c *pBXServiceClient) GetSIPAccount(ctx context.Context, in *GetSIPAccountRequest, opts ...grpc.CallOption) (*GetSIPAccountResponse, error) {
+	out := new(GetSIPAccountResponse)
+	err := c.cc.Invoke(ctx, PBXService_GetSIPAccount_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *pBXServiceClient) ListSIPAccounts(ctx context.Context, in *ListSIPAccountsRequest, opts ...grpc.CallOption) (*ListSIPAccountsResponse, error) {
+	out := new(ListSIPAccountsResponse)
+	err := c.cc.Invoke(ctx, PBXService_ListSIPAccounts_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *pBXServiceClient) UpdateSIPAccount(ctx context.Context, in *UpdateSIPAccountRequest, opts ...grpc.CallOption) (*UpdateSIPAccountResponse, error) {
 	out := new(UpdateSIPAccountResponse)
 	err := c.cc.Invoke(ctx, PBXService_UpdateSIPAccount_FullMethodName, in, out, opts...)
@@ -282,6 +324,28 @@ type PBXServiceServer interface {
 	//   - grpc.NotFound: The group does not exist or is not in the caller's ORG.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	GetRingGroup(context.Context, *GetRingGroupRequest) (*GetRingGroupResponse, error)
+	// Returns details of the SIP Account associated with the sip_id
+	// Required permissions:
+	//
+	//	PBX-MANAGER
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.NotFound: The group does not exist or is not in the caller's ORG.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	GetSIPAccount(context.Context, *GetSIPAccountRequest) (*GetSIPAccountResponse, error)
+	// Returns details of all SIP Accounts associated with the authenticated callers ORG
+	// Required permissions:
+	//
+	//	PBX-MANAGER
+	//
+	// Errors:
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	ListSIPAccounts(context.Context, *ListSIPAccountsRequest) (*ListSIPAccountsResponse, error)
 	// Updates details of the SIP Account for the specific SIP Account within the authenticated callers ORG.
 	// Allows for updating, activating, and deactivating a user.
 	// Required permissions:
@@ -365,6 +429,12 @@ func (UnimplementedPBXServiceServer) ListRingGroups(context.Context, *ListRingGr
 }
 func (UnimplementedPBXServiceServer) GetRingGroup(context.Context, *GetRingGroupRequest) (*GetRingGroupResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetRingGroup not implemented")
+}
+func (UnimplementedPBXServiceServer) GetSIPAccount(context.Context, *GetSIPAccountRequest) (*GetSIPAccountResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSIPAccount not implemented")
+}
+func (UnimplementedPBXServiceServer) ListSIPAccounts(context.Context, *ListSIPAccountsRequest) (*ListSIPAccountsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListSIPAccounts not implemented")
 }
 func (UnimplementedPBXServiceServer) UpdateSIPAccount(context.Context, *UpdateSIPAccountRequest) (*UpdateSIPAccountResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateSIPAccount not implemented")
@@ -462,6 +532,42 @@ func _PBXService_GetRingGroup_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PBXServiceServer).GetRingGroup(ctx, req.(*GetRingGroupRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PBXService_GetSIPAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetSIPAccountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PBXServiceServer).GetSIPAccount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PBXService_GetSIPAccount_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PBXServiceServer).GetSIPAccount(ctx, req.(*GetSIPAccountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PBXService_ListSIPAccounts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListSIPAccountsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PBXServiceServer).ListSIPAccounts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PBXService_ListSIPAccounts_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PBXServiceServer).ListSIPAccounts(ctx, req.(*ListSIPAccountsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -578,6 +684,14 @@ var PBXService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetRingGroup",
 			Handler:    _PBXService_GetRingGroup_Handler,
+		},
+		{
+			MethodName: "GetSIPAccount",
+			Handler:    _PBXService_GetSIPAccount_Handler,
+		},
+		{
+			MethodName: "ListSIPAccounts",
+			Handler:    _PBXService_ListSIPAccounts_Handler,
 		},
 		{
 			MethodName: "UpdateSIPAccount",
