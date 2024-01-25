@@ -151,6 +151,7 @@ const (
 	WFM_CopyScheduleToSchedule_FullMethodName                        = "/api.v1alpha1.wfm.WFM/CopyScheduleToSchedule"
 	WFM_CreateShiftInstance_FullMethodName                           = "/api.v1alpha1.wfm.WFM/CreateShiftInstance"
 	WFM_CreateShiftInstanceV2_FullMethodName                         = "/api.v1alpha1.wfm.WFM/CreateShiftInstanceV2"
+	WFM_CreateShiftInstanceWithSegments_FullMethodName               = "/api.v1alpha1.wfm.WFM/CreateShiftInstanceWithSegments"
 	WFM_SplitShiftInstance_FullMethodName                            = "/api.v1alpha1.wfm.WFM/SplitShiftInstance"
 	WFM_SwapShiftInstances_FullMethodName                            = "/api.v1alpha1.wfm.WFM/SwapShiftInstances"
 	WFM_UpdateShiftInstance_FullMethodName                           = "/api.v1alpha1.wfm.WFM/UpdateShiftInstance"
@@ -1597,6 +1598,21 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when creating the shift instance.
 	//   - grpc.NotFound: the @draft_schedule_sid, @shift_template_sid, or @wfm_agent_sids do not exist for the org sending the request.
 	CreateShiftInstanceV2(ctx context.Context, in *CreateShiftInstanceV2Req, opts ...grpc.CallOption) (*CreateShiftInstanceV2Res, error)
+	// Creates the @shift_instance with any member shift segments and shift segment call stats for the org sending the request.
+	// If @ignore_diagnostics_errors any diagnostics encountered will be returned as warnings, and the shift will still be created.
+	//
+	//	Otherwise, any diagnostics triggered by the given @shift_instance will be returned and the shift will not be created.
+	//
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//
+	//	-grpc.Invalid: one or more fields in the request have invalid values.
+	//	-grpc.NotFound: the fields referenced by @shift_instance or its member shift segments don't exist for the org sending the request.
+	//	-grpc.Internal: error occurs when creating the shift instance or its members.
+	CreateShiftInstanceWithSegments(ctx context.Context, in *CreateShiftInstanceWithSegmentsRequest, opts ...grpc.CallOption) (*CreateShiftInstanceWithSegmentsResponse, error)
 	// Splits the @shift_instance_sid into two, at the given @time_to_split, returning the updated and new @shift_instances.
 	// Any shift segments will be split between the two shift instances at @time_to_split.
 	// If the @time_to_split creates instances shorter then the minimum length specified by the shift template,
@@ -3270,6 +3286,15 @@ func (c *wFMClient) CreateShiftInstance(ctx context.Context, in *CreateShiftInst
 func (c *wFMClient) CreateShiftInstanceV2(ctx context.Context, in *CreateShiftInstanceV2Req, opts ...grpc.CallOption) (*CreateShiftInstanceV2Res, error) {
 	out := new(CreateShiftInstanceV2Res)
 	err := c.cc.Invoke(ctx, WFM_CreateShiftInstanceV2_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) CreateShiftInstanceWithSegments(ctx context.Context, in *CreateShiftInstanceWithSegmentsRequest, opts ...grpc.CallOption) (*CreateShiftInstanceWithSegmentsResponse, error) {
+	out := new(CreateShiftInstanceWithSegmentsResponse)
+	err := c.cc.Invoke(ctx, WFM_CreateShiftInstanceWithSegments_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -5065,6 +5090,21 @@ type WFMServer interface {
 	//   - grpc.Internal: error occurs when creating the shift instance.
 	//   - grpc.NotFound: the @draft_schedule_sid, @shift_template_sid, or @wfm_agent_sids do not exist for the org sending the request.
 	CreateShiftInstanceV2(context.Context, *CreateShiftInstanceV2Req) (*CreateShiftInstanceV2Res, error)
+	// Creates the @shift_instance with any member shift segments and shift segment call stats for the org sending the request.
+	// If @ignore_diagnostics_errors any diagnostics encountered will be returned as warnings, and the shift will still be created.
+	//
+	//	Otherwise, any diagnostics triggered by the given @shift_instance will be returned and the shift will not be created.
+	//
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//
+	//	-grpc.Invalid: one or more fields in the request have invalid values.
+	//	-grpc.NotFound: the fields referenced by @shift_instance or its member shift segments don't exist for the org sending the request.
+	//	-grpc.Internal: error occurs when creating the shift instance or its members.
+	CreateShiftInstanceWithSegments(context.Context, *CreateShiftInstanceWithSegmentsRequest) (*CreateShiftInstanceWithSegmentsResponse, error)
 	// Splits the @shift_instance_sid into two, at the given @time_to_split, returning the updated and new @shift_instances.
 	// Any shift segments will be split between the two shift instances at @time_to_split.
 	// If the @time_to_split creates instances shorter then the minimum length specified by the shift template,
@@ -5889,6 +5929,9 @@ func (UnimplementedWFMServer) CreateShiftInstance(context.Context, *CreateShiftI
 }
 func (UnimplementedWFMServer) CreateShiftInstanceV2(context.Context, *CreateShiftInstanceV2Req) (*CreateShiftInstanceV2Res, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateShiftInstanceV2 not implemented")
+}
+func (UnimplementedWFMServer) CreateShiftInstanceWithSegments(context.Context, *CreateShiftInstanceWithSegmentsRequest) (*CreateShiftInstanceWithSegmentsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateShiftInstanceWithSegments not implemented")
 }
 func (UnimplementedWFMServer) SplitShiftInstance(context.Context, *SplitShiftInstanceReq) (*SplitShiftInstanceRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SplitShiftInstance not implemented")
@@ -8174,6 +8217,24 @@ func _WFM_CreateShiftInstanceV2_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_CreateShiftInstanceWithSegments_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateShiftInstanceWithSegmentsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).CreateShiftInstanceWithSegments(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_CreateShiftInstanceWithSegments_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).CreateShiftInstanceWithSegments(ctx, req.(*CreateShiftInstanceWithSegmentsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WFM_SplitShiftInstance_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SplitShiftInstanceReq)
 	if err := dec(in); err != nil {
@@ -9402,6 +9463,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateShiftInstanceV2",
 			Handler:    _WFM_CreateShiftInstanceV2_Handler,
+		},
+		{
+			MethodName: "CreateShiftInstanceWithSegments",
+			Handler:    _WFM_CreateShiftInstanceWithSegments_Handler,
 		},
 		{
 			MethodName: "SplitShiftInstance",
