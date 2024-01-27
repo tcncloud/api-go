@@ -509,6 +509,94 @@ func (*DeleteSkillGroupResponse) Descriptor() ([]byte, []int) {
 	return file_api_v1alpha1_org_skills_entities_proto_rawDescGZIP(), []int{9}
 }
 
+// Request message for the RemoveSkillFromAllGroups rpc.
+type RemoveSkillFromAllGroupsRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The skill sid of the skill to remove.
+	SkillSid int64 `protobuf:"varint,1,opt,name=skill_sid,json=skillSid,proto3" json:"skill_sid,omitempty"`
+}
+
+func (x *RemoveSkillFromAllGroupsRequest) Reset() {
+	*x = RemoveSkillFromAllGroupsRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[10]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RemoveSkillFromAllGroupsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RemoveSkillFromAllGroupsRequest) ProtoMessage() {}
+
+func (x *RemoveSkillFromAllGroupsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[10]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RemoveSkillFromAllGroupsRequest.ProtoReflect.Descriptor instead.
+func (*RemoveSkillFromAllGroupsRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_org_skills_entities_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *RemoveSkillFromAllGroupsRequest) GetSkillSid() int64 {
+	if x != nil {
+		return x.SkillSid
+	}
+	return 0
+}
+
+// Response message for the RemoveSkillFromAllGroups rpc.
+type RemoveSkillFromAllGroupsResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RemoveSkillFromAllGroupsResponse) Reset() {
+	*x = RemoveSkillFromAllGroupsResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[11]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RemoveSkillFromAllGroupsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RemoveSkillFromAllGroupsResponse) ProtoMessage() {}
+
+func (x *RemoveSkillFromAllGroupsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[11]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RemoveSkillFromAllGroupsResponse.ProtoReflect.Descriptor instead.
+func (*RemoveSkillFromAllGroupsResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_org_skills_entities_proto_rawDescGZIP(), []int{11}
+}
+
 // Request message for the AssignSkillGroups rpc.
 type AssignSkillGroupsRequest struct {
 	state         protoimpl.MessageState
@@ -524,7 +612,7 @@ type AssignSkillGroupsRequest struct {
 func (x *AssignSkillGroupsRequest) Reset() {
 	*x = AssignSkillGroupsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[10]
+		mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[12]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -537,7 +625,7 @@ func (x *AssignSkillGroupsRequest) String() string {
 func (*AssignSkillGroupsRequest) ProtoMessage() {}
 
 func (x *AssignSkillGroupsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[10]
+	mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[12]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -550,7 +638,7 @@ func (x *AssignSkillGroupsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AssignSkillGroupsRequest.ProtoReflect.Descriptor instead.
 func (*AssignSkillGroupsRequest) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_org_skills_entities_proto_rawDescGZIP(), []int{10}
+	return file_api_v1alpha1_org_skills_entities_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *AssignSkillGroupsRequest) GetSkillGroupIds() []string {
@@ -577,7 +665,7 @@ type AssignSkillGroupsResponse struct {
 func (x *AssignSkillGroupsResponse) Reset() {
 	*x = AssignSkillGroupsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[11]
+		mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[13]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -590,7 +678,7 @@ func (x *AssignSkillGroupsResponse) String() string {
 func (*AssignSkillGroupsResponse) ProtoMessage() {}
 
 func (x *AssignSkillGroupsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[11]
+	mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[13]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -603,7 +691,7 @@ func (x *AssignSkillGroupsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AssignSkillGroupsResponse.ProtoReflect.Descriptor instead.
 func (*AssignSkillGroupsResponse) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_org_skills_entities_proto_rawDescGZIP(), []int{11}
+	return file_api_v1alpha1_org_skills_entities_proto_rawDescGZIP(), []int{13}
 }
 
 // Request message for the RevokeSkillGroups rpc.
@@ -621,7 +709,7 @@ type RevokeSkillGroupsRequest struct {
 func (x *RevokeSkillGroupsRequest) Reset() {
 	*x = RevokeSkillGroupsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[12]
+		mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[14]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -634,7 +722,7 @@ func (x *RevokeSkillGroupsRequest) String() string {
 func (*RevokeSkillGroupsRequest) ProtoMessage() {}
 
 func (x *RevokeSkillGroupsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[12]
+	mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[14]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -647,7 +735,7 @@ func (x *RevokeSkillGroupsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RevokeSkillGroupsRequest.ProtoReflect.Descriptor instead.
 func (*RevokeSkillGroupsRequest) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_org_skills_entities_proto_rawDescGZIP(), []int{12}
+	return file_api_v1alpha1_org_skills_entities_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *RevokeSkillGroupsRequest) GetSkillGroupIds() []string {
@@ -674,7 +762,7 @@ type RevokeSkillGroupsResponse struct {
 func (x *RevokeSkillGroupsResponse) Reset() {
 	*x = RevokeSkillGroupsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[13]
+		mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[15]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -687,7 +775,7 @@ func (x *RevokeSkillGroupsResponse) String() string {
 func (*RevokeSkillGroupsResponse) ProtoMessage() {}
 
 func (x *RevokeSkillGroupsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[13]
+	mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[15]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -700,7 +788,7 @@ func (x *RevokeSkillGroupsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RevokeSkillGroupsResponse.ProtoReflect.Descriptor instead.
 func (*RevokeSkillGroupsResponse) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_org_skills_entities_proto_rawDescGZIP(), []int{13}
+	return file_api_v1alpha1_org_skills_entities_proto_rawDescGZIP(), []int{15}
 }
 
 // Request message for the GetUserSkillGroups rpc.
@@ -716,7 +804,7 @@ type GetUserSkillGroupsRequest struct {
 func (x *GetUserSkillGroupsRequest) Reset() {
 	*x = GetUserSkillGroupsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[14]
+		mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[16]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -729,7 +817,7 @@ func (x *GetUserSkillGroupsRequest) String() string {
 func (*GetUserSkillGroupsRequest) ProtoMessage() {}
 
 func (x *GetUserSkillGroupsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[14]
+	mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[16]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -742,7 +830,7 @@ func (x *GetUserSkillGroupsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetUserSkillGroupsRequest.ProtoReflect.Descriptor instead.
 func (*GetUserSkillGroupsRequest) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_org_skills_entities_proto_rawDescGZIP(), []int{14}
+	return file_api_v1alpha1_org_skills_entities_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *GetUserSkillGroupsRequest) GetUserId() string {
@@ -765,7 +853,7 @@ type GetUserSkillGroupsResponse struct {
 func (x *GetUserSkillGroupsResponse) Reset() {
 	*x = GetUserSkillGroupsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[15]
+		mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[17]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -778,7 +866,7 @@ func (x *GetUserSkillGroupsResponse) String() string {
 func (*GetUserSkillGroupsResponse) ProtoMessage() {}
 
 func (x *GetUserSkillGroupsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[15]
+	mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[17]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -791,7 +879,7 @@ func (x *GetUserSkillGroupsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetUserSkillGroupsResponse.ProtoReflect.Descriptor instead.
 func (*GetUserSkillGroupsResponse) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_org_skills_entities_proto_rawDescGZIP(), []int{15}
+	return file_api_v1alpha1_org_skills_entities_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *GetUserSkillGroupsResponse) GetSkillGroupIds() []string {
@@ -814,7 +902,7 @@ type GetUserSkillsRequest struct {
 func (x *GetUserSkillsRequest) Reset() {
 	*x = GetUserSkillsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[16]
+		mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[18]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -827,7 +915,7 @@ func (x *GetUserSkillsRequest) String() string {
 func (*GetUserSkillsRequest) ProtoMessage() {}
 
 func (x *GetUserSkillsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[16]
+	mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[18]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -840,7 +928,7 @@ func (x *GetUserSkillsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetUserSkillsRequest.ProtoReflect.Descriptor instead.
 func (*GetUserSkillsRequest) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_org_skills_entities_proto_rawDescGZIP(), []int{16}
+	return file_api_v1alpha1_org_skills_entities_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *GetUserSkillsRequest) GetUserId() string {
@@ -863,7 +951,7 @@ type GetUserSkillsResponse struct {
 func (x *GetUserSkillsResponse) Reset() {
 	*x = GetUserSkillsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[17]
+		mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[19]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -876,7 +964,7 @@ func (x *GetUserSkillsResponse) String() string {
 func (*GetUserSkillsResponse) ProtoMessage() {}
 
 func (x *GetUserSkillsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[17]
+	mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[19]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -889,7 +977,7 @@ func (x *GetUserSkillsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetUserSkillsResponse.ProtoReflect.Descriptor instead.
 func (*GetUserSkillsResponse) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_org_skills_entities_proto_rawDescGZIP(), []int{17}
+	return file_api_v1alpha1_org_skills_entities_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *GetUserSkillsResponse) GetSkillSets() []*org.SkillSet {
@@ -912,7 +1000,7 @@ type GetSkillGroupMembersRequest struct {
 func (x *GetSkillGroupMembersRequest) Reset() {
 	*x = GetSkillGroupMembersRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[18]
+		mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[20]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -925,7 +1013,7 @@ func (x *GetSkillGroupMembersRequest) String() string {
 func (*GetSkillGroupMembersRequest) ProtoMessage() {}
 
 func (x *GetSkillGroupMembersRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[18]
+	mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[20]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -938,7 +1026,7 @@ func (x *GetSkillGroupMembersRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetSkillGroupMembersRequest.ProtoReflect.Descriptor instead.
 func (*GetSkillGroupMembersRequest) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_org_skills_entities_proto_rawDescGZIP(), []int{18}
+	return file_api_v1alpha1_org_skills_entities_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *GetSkillGroupMembersRequest) GetSkillGroupId() string {
@@ -961,7 +1049,7 @@ type GetSkillGroupMembersResponse struct {
 func (x *GetSkillGroupMembersResponse) Reset() {
 	*x = GetSkillGroupMembersResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[19]
+		mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[21]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -974,7 +1062,7 @@ func (x *GetSkillGroupMembersResponse) String() string {
 func (*GetSkillGroupMembersResponse) ProtoMessage() {}
 
 func (x *GetSkillGroupMembersResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[19]
+	mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[21]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -987,7 +1075,7 @@ func (x *GetSkillGroupMembersResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetSkillGroupMembersResponse.ProtoReflect.Descriptor instead.
 func (*GetSkillGroupMembersResponse) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_org_skills_entities_proto_rawDescGZIP(), []int{19}
+	return file_api_v1alpha1_org_skills_entities_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *GetSkillGroupMembersResponse) GetUserIds() []string {
@@ -1007,7 +1095,7 @@ type ListSkillGroupsMembersRequest struct {
 func (x *ListSkillGroupsMembersRequest) Reset() {
 	*x = ListSkillGroupsMembersRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[20]
+		mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[22]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1020,7 +1108,7 @@ func (x *ListSkillGroupsMembersRequest) String() string {
 func (*ListSkillGroupsMembersRequest) ProtoMessage() {}
 
 func (x *ListSkillGroupsMembersRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[20]
+	mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[22]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1033,7 +1121,7 @@ func (x *ListSkillGroupsMembersRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListSkillGroupsMembersRequest.ProtoReflect.Descriptor instead.
 func (*ListSkillGroupsMembersRequest) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_org_skills_entities_proto_rawDescGZIP(), []int{20}
+	return file_api_v1alpha1_org_skills_entities_proto_rawDescGZIP(), []int{22}
 }
 
 // Response message for the ListSkillGroupsMembers rpc.
@@ -1048,7 +1136,7 @@ type ListSkillGroupsMembersResponse struct {
 func (x *ListSkillGroupsMembersResponse) Reset() {
 	*x = ListSkillGroupsMembersResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[21]
+		mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[23]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1061,7 +1149,7 @@ func (x *ListSkillGroupsMembersResponse) String() string {
 func (*ListSkillGroupsMembersResponse) ProtoMessage() {}
 
 func (x *ListSkillGroupsMembersResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[21]
+	mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[23]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1074,7 +1162,7 @@ func (x *ListSkillGroupsMembersResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListSkillGroupsMembersResponse.ProtoReflect.Descriptor instead.
 func (*ListSkillGroupsMembersResponse) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_org_skills_entities_proto_rawDescGZIP(), []int{21}
+	return file_api_v1alpha1_org_skills_entities_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *ListSkillGroupsMembersResponse) GetSkillGroupMembers() []*SkillGroupMembers {
@@ -1097,7 +1185,7 @@ type SkillGroupMembers struct {
 func (x *SkillGroupMembers) Reset() {
 	*x = SkillGroupMembers{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[22]
+		mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[24]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1110,7 +1198,7 @@ func (x *SkillGroupMembers) String() string {
 func (*SkillGroupMembers) ProtoMessage() {}
 
 func (x *SkillGroupMembers) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[22]
+	mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[24]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1123,7 +1211,7 @@ func (x *SkillGroupMembers) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SkillGroupMembers.ProtoReflect.Descriptor instead.
 func (*SkillGroupMembers) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_org_skills_entities_proto_rawDescGZIP(), []int{22}
+	return file_api_v1alpha1_org_skills_entities_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *SkillGroupMembers) GetSkillGroupId() string {
@@ -1155,7 +1243,7 @@ type UpdateUsersOnSkillGroupRequest struct {
 func (x *UpdateUsersOnSkillGroupRequest) Reset() {
 	*x = UpdateUsersOnSkillGroupRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[23]
+		mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[25]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1168,7 +1256,7 @@ func (x *UpdateUsersOnSkillGroupRequest) String() string {
 func (*UpdateUsersOnSkillGroupRequest) ProtoMessage() {}
 
 func (x *UpdateUsersOnSkillGroupRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[23]
+	mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[25]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1181,7 +1269,7 @@ func (x *UpdateUsersOnSkillGroupRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateUsersOnSkillGroupRequest.ProtoReflect.Descriptor instead.
 func (*UpdateUsersOnSkillGroupRequest) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_org_skills_entities_proto_rawDescGZIP(), []int{23}
+	return file_api_v1alpha1_org_skills_entities_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *UpdateUsersOnSkillGroupRequest) GetSkillGroupId() string {
@@ -1208,7 +1296,7 @@ type UpdateUsersOnSkillGroupResponse struct {
 func (x *UpdateUsersOnSkillGroupResponse) Reset() {
 	*x = UpdateUsersOnSkillGroupResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[24]
+		mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[26]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1221,7 +1309,7 @@ func (x *UpdateUsersOnSkillGroupResponse) String() string {
 func (*UpdateUsersOnSkillGroupResponse) ProtoMessage() {}
 
 func (x *UpdateUsersOnSkillGroupResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[24]
+	mi := &file_api_v1alpha1_org_skills_entities_proto_msgTypes[26]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1234,7 +1322,7 @@ func (x *UpdateUsersOnSkillGroupResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateUsersOnSkillGroupResponse.ProtoReflect.Descriptor instead.
 func (*UpdateUsersOnSkillGroupResponse) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_org_skills_entities_proto_rawDescGZIP(), []int{24}
+	return file_api_v1alpha1_org_skills_entities_proto_rawDescGZIP(), []int{26}
 }
 
 var File_api_v1alpha1_org_skills_entities_proto protoreflect.FileDescriptor
@@ -1291,85 +1379,91 @@ var file_api_v1alpha1_org_skills_entities_proto_rawDesc = []byte{
 	0x67, 0x72, 0x6f, 0x75, 0x70, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c,
 	0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x49, 0x64, 0x22, 0x1a, 0x0a, 0x18,
 	0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x47, 0x72, 0x6f, 0x75, 0x70,
-	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x5b, 0x0a, 0x18, 0x41, 0x73, 0x73, 0x69,
-	0x67, 0x6e, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x73, 0x52, 0x65, 0x71,
-	0x75, 0x65, 0x73, 0x74, 0x12, 0x26, 0x0a, 0x0f, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x5f, 0x67, 0x72,
-	0x6f, 0x75, 0x70, 0x5f, 0x69, 0x64, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x0d, 0x73,
-	0x6b, 0x69, 0x6c, 0x6c, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x49, 0x64, 0x73, 0x12, 0x17, 0x0a, 0x07,
-	0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75,
-	0x73, 0x65, 0x72, 0x49, 0x64, 0x22, 0x1b, 0x0a, 0x19, 0x41, 0x73, 0x73, 0x69, 0x67, 0x6e, 0x53,
-	0x6b, 0x69, 0x6c, 0x6c, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
-	0x73, 0x65, 0x22, 0x5b, 0x0a, 0x18, 0x52, 0x65, 0x76, 0x6f, 0x6b, 0x65, 0x53, 0x6b, 0x69, 0x6c,
-	0x6c, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x26,
-	0x0a, 0x0f, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x5f, 0x67, 0x72, 0x6f, 0x75, 0x70, 0x5f, 0x69, 0x64,
-	0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x0d, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x47, 0x72,
-	0x6f, 0x75, 0x70, 0x49, 0x64, 0x73, 0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69,
-	0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x22,
-	0x1b, 0x0a, 0x19, 0x52, 0x65, 0x76, 0x6f, 0x6b, 0x65, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x47, 0x72,
-	0x6f, 0x75, 0x70, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x34, 0x0a, 0x19,
-	0x47, 0x65, 0x74, 0x55, 0x73, 0x65, 0x72, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x47, 0x72, 0x6f, 0x75,
-	0x70, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x65,
-	0x72, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72,
-	0x49, 0x64, 0x22, 0x44, 0x0a, 0x1a, 0x47, 0x65, 0x74, 0x55, 0x73, 0x65, 0x72, 0x53, 0x6b, 0x69,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x3e, 0x0a, 0x1f, 0x52, 0x65, 0x6d, 0x6f,
+	0x76, 0x65, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x46, 0x72, 0x6f, 0x6d, 0x41, 0x6c, 0x6c, 0x47, 0x72,
+	0x6f, 0x75, 0x70, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1b, 0x0a, 0x09, 0x73,
+	0x6b, 0x69, 0x6c, 0x6c, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x08,
+	0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x53, 0x69, 0x64, 0x22, 0x22, 0x0a, 0x20, 0x52, 0x65, 0x6d, 0x6f,
+	0x76, 0x65, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x46, 0x72, 0x6f, 0x6d, 0x41, 0x6c, 0x6c, 0x47, 0x72,
+	0x6f, 0x75, 0x70, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x5b, 0x0a, 0x18,
+	0x41, 0x73, 0x73, 0x69, 0x67, 0x6e, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x47, 0x72, 0x6f, 0x75, 0x70,
+	0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x26, 0x0a, 0x0f, 0x73, 0x6b, 0x69, 0x6c,
+	0x6c, 0x5f, 0x67, 0x72, 0x6f, 0x75, 0x70, 0x5f, 0x69, 0x64, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28,
+	0x09, 0x52, 0x0d, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x49, 0x64, 0x73,
+	0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x22, 0x1b, 0x0a, 0x19, 0x41, 0x73, 0x73,
+	0x69, 0x67, 0x6e, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x73, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x5b, 0x0a, 0x18, 0x52, 0x65, 0x76, 0x6f, 0x6b, 0x65,
+	0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x12, 0x26, 0x0a, 0x0f, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x5f, 0x67, 0x72, 0x6f, 0x75,
+	0x70, 0x5f, 0x69, 0x64, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x0d, 0x73, 0x6b, 0x69,
+	0x6c, 0x6c, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x49, 0x64, 0x73, 0x12, 0x17, 0x0a, 0x07, 0x75, 0x73,
+	0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65,
+	0x72, 0x49, 0x64, 0x22, 0x1b, 0x0a, 0x19, 0x52, 0x65, 0x76, 0x6f, 0x6b, 0x65, 0x53, 0x6b, 0x69,
 	0x6c, 0x6c, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
-	0x12, 0x26, 0x0a, 0x0f, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x5f, 0x67, 0x72, 0x6f, 0x75, 0x70, 0x5f,
-	0x69, 0x64, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x0d, 0x73, 0x6b, 0x69, 0x6c, 0x6c,
-	0x47, 0x72, 0x6f, 0x75, 0x70, 0x49, 0x64, 0x73, 0x22, 0x2f, 0x0a, 0x14, 0x47, 0x65, 0x74, 0x55,
-	0x73, 0x65, 0x72, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
-	0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x22, 0x51, 0x0a, 0x15, 0x47, 0x65, 0x74,
-	0x55, 0x73, 0x65, 0x72, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
-	0x73, 0x65, 0x12, 0x38, 0x0a, 0x0a, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x5f, 0x73, 0x65, 0x74, 0x73,
-	0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d,
-	0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x53, 0x65,
-	0x74, 0x52, 0x09, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x53, 0x65, 0x74, 0x73, 0x22, 0x43, 0x0a, 0x1b,
-	0x47, 0x65, 0x74, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x4d, 0x65, 0x6d,
-	0x62, 0x65, 0x72, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x24, 0x0a, 0x0e, 0x73,
-	0x6b, 0x69, 0x6c, 0x6c, 0x5f, 0x67, 0x72, 0x6f, 0x75, 0x70, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x0c, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x49,
-	0x64, 0x22, 0x39, 0x0a, 0x1c, 0x47, 0x65, 0x74, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x47, 0x72, 0x6f,
-	0x75, 0x70, 0x4d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
-	0x65, 0x12, 0x19, 0x0a, 0x08, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x73, 0x18, 0x01, 0x20,
-	0x03, 0x28, 0x09, 0x52, 0x07, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x73, 0x22, 0x1f, 0x0a, 0x1d,
-	0x4c, 0x69, 0x73, 0x74, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x73, 0x4d,
-	0x65, 0x6d, 0x62, 0x65, 0x72, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x22, 0x7c, 0x0a,
-	0x1e, 0x4c, 0x69, 0x73, 0x74, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x73,
-	0x4d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12,
-	0x5a, 0x0a, 0x13, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x5f, 0x67, 0x72, 0x6f, 0x75, 0x70, 0x5f, 0x6d,
-	0x65, 0x6d, 0x62, 0x65, 0x72, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x2a, 0x2e, 0x61,
-	0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x6f, 0x72, 0x67, 0x2e,
-	0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x73, 0x2e, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x47, 0x72, 0x6f, 0x75,
-	0x70, 0x4d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x73, 0x52, 0x11, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x47,
-	0x72, 0x6f, 0x75, 0x70, 0x4d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x73, 0x22, 0x54, 0x0a, 0x11, 0x53,
-	0x6b, 0x69, 0x6c, 0x6c, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x4d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x73,
-	0x12, 0x24, 0x0a, 0x0e, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x5f, 0x67, 0x72, 0x6f, 0x75, 0x70, 0x5f,
-	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x47,
-	0x72, 0x6f, 0x75, 0x70, 0x49, 0x64, 0x12, 0x19, 0x0a, 0x08, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69,
-	0x64, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x09, 0x52, 0x07, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64,
-	0x73, 0x22, 0x61, 0x0a, 0x1e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x55, 0x73, 0x65, 0x72, 0x73,
-	0x4f, 0x6e, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x52, 0x65, 0x71, 0x75,
-	0x65, 0x73, 0x74, 0x12, 0x24, 0x0a, 0x0e, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x5f, 0x67, 0x72, 0x6f,
-	0x75, 0x70, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x73, 0x6b, 0x69,
-	0x6c, 0x6c, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x49, 0x64, 0x12, 0x19, 0x0a, 0x08, 0x75, 0x73, 0x65,
-	0x72, 0x5f, 0x69, 0x64, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x09, 0x52, 0x07, 0x75, 0x73, 0x65,
-	0x72, 0x49, 0x64, 0x73, 0x22, 0x21, 0x0a, 0x1f, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x55, 0x73,
-	0x65, 0x72, 0x73, 0x4f, 0x6e, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x52,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0xe0, 0x01, 0x0a, 0x1b, 0x63, 0x6f, 0x6d, 0x2e,
-	0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x6f, 0x72, 0x67,
-	0x2e, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x73, 0x42, 0x0d, 0x45, 0x6e, 0x74, 0x69, 0x74, 0x69, 0x65,
-	0x73, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x32, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62,
-	0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70,
-	0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61,
-	0x31, 0x2f, 0x6f, 0x72, 0x67, 0x2f, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x73, 0xa2, 0x02, 0x04, 0x41,
-	0x56, 0x4f, 0x53, 0xaa, 0x02, 0x17, 0x41, 0x70, 0x69, 0x2e, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68,
-	0x61, 0x31, 0x2e, 0x4f, 0x72, 0x67, 0x2e, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x73, 0xca, 0x02, 0x17,
-	0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x4f, 0x72, 0x67,
-	0x5c, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x73, 0xe2, 0x02, 0x23, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31,
-	0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x4f, 0x72, 0x67, 0x5c, 0x53, 0x6b, 0x69, 0x6c, 0x6c,
-	0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x1a,
-	0x41, 0x70, 0x69, 0x3a, 0x3a, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x3a, 0x3a, 0x4f,
-	0x72, 0x67, 0x3a, 0x3a, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x33,
+	0x22, 0x34, 0x0a, 0x19, 0x47, 0x65, 0x74, 0x55, 0x73, 0x65, 0x72, 0x53, 0x6b, 0x69, 0x6c, 0x6c,
+	0x47, 0x72, 0x6f, 0x75, 0x70, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x17, 0x0a,
+	0x07, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06,
+	0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x22, 0x44, 0x0a, 0x1a, 0x47, 0x65, 0x74, 0x55, 0x73, 0x65,
+	0x72, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x73, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x26, 0x0a, 0x0f, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x5f, 0x67, 0x72,
+	0x6f, 0x75, 0x70, 0x5f, 0x69, 0x64, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x0d, 0x73,
+	0x6b, 0x69, 0x6c, 0x6c, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x49, 0x64, 0x73, 0x22, 0x2f, 0x0a, 0x14,
+	0x47, 0x65, 0x74, 0x55, 0x73, 0x65, 0x72, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x73, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x22, 0x51, 0x0a,
+	0x15, 0x47, 0x65, 0x74, 0x55, 0x73, 0x65, 0x72, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x73, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x38, 0x0a, 0x0a, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x5f,
+	0x73, 0x65, 0x74, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x61, 0x70, 0x69,
+	0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x53, 0x6b, 0x69,
+	0x6c, 0x6c, 0x53, 0x65, 0x74, 0x52, 0x09, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x53, 0x65, 0x74, 0x73,
+	0x22, 0x43, 0x0a, 0x1b, 0x47, 0x65, 0x74, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x47, 0x72, 0x6f, 0x75,
+	0x70, 0x4d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12,
+	0x24, 0x0a, 0x0e, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x5f, 0x67, 0x72, 0x6f, 0x75, 0x70, 0x5f, 0x69,
+	0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x47, 0x72,
+	0x6f, 0x75, 0x70, 0x49, 0x64, 0x22, 0x39, 0x0a, 0x1c, 0x47, 0x65, 0x74, 0x53, 0x6b, 0x69, 0x6c,
+	0x6c, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x4d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x73, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x19, 0x0a, 0x08, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64,
+	0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x07, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x73,
+	0x22, 0x1f, 0x0a, 0x1d, 0x4c, 0x69, 0x73, 0x74, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x47, 0x72, 0x6f,
+	0x75, 0x70, 0x73, 0x4d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x22, 0x7c, 0x0a, 0x1e, 0x4c, 0x69, 0x73, 0x74, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x47, 0x72,
+	0x6f, 0x75, 0x70, 0x73, 0x4d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x12, 0x5a, 0x0a, 0x13, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x5f, 0x67, 0x72, 0x6f,
+	0x75, 0x70, 0x5f, 0x6d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b,
+	0x32, 0x2a, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e,
+	0x6f, 0x72, 0x67, 0x2e, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x73, 0x2e, 0x53, 0x6b, 0x69, 0x6c, 0x6c,
+	0x47, 0x72, 0x6f, 0x75, 0x70, 0x4d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x73, 0x52, 0x11, 0x73, 0x6b,
+	0x69, 0x6c, 0x6c, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x4d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x73, 0x22,
+	0x54, 0x0a, 0x11, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x4d, 0x65, 0x6d,
+	0x62, 0x65, 0x72, 0x73, 0x12, 0x24, 0x0a, 0x0e, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x5f, 0x67, 0x72,
+	0x6f, 0x75, 0x70, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x73, 0x6b,
+	0x69, 0x6c, 0x6c, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x49, 0x64, 0x12, 0x19, 0x0a, 0x08, 0x75, 0x73,
+	0x65, 0x72, 0x5f, 0x69, 0x64, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x09, 0x52, 0x07, 0x75, 0x73,
+	0x65, 0x72, 0x49, 0x64, 0x73, 0x22, 0x61, 0x0a, 0x1e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x55,
+	0x73, 0x65, 0x72, 0x73, 0x4f, 0x6e, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x47, 0x72, 0x6f, 0x75, 0x70,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x24, 0x0a, 0x0e, 0x73, 0x6b, 0x69, 0x6c, 0x6c,
+	0x5f, 0x67, 0x72, 0x6f, 0x75, 0x70, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x0c, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x49, 0x64, 0x12, 0x19, 0x0a,
+	0x08, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x09, 0x52,
+	0x07, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x73, 0x22, 0x21, 0x0a, 0x1f, 0x55, 0x70, 0x64, 0x61,
+	0x74, 0x65, 0x55, 0x73, 0x65, 0x72, 0x73, 0x4f, 0x6e, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x47, 0x72,
+	0x6f, 0x75, 0x70, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0xe0, 0x01, 0x0a, 0x1b,
+	0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31,
+	0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x73, 0x42, 0x0d, 0x45, 0x6e, 0x74,
+	0x69, 0x74, 0x69, 0x65, 0x73, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x32, 0x67, 0x69,
+	0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75,
+	0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61,
+	0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x6f, 0x72, 0x67, 0x2f, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x73,
+	0xa2, 0x02, 0x04, 0x41, 0x56, 0x4f, 0x53, 0xaa, 0x02, 0x17, 0x41, 0x70, 0x69, 0x2e, 0x56, 0x31,
+	0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x4f, 0x72, 0x67, 0x2e, 0x53, 0x6b, 0x69, 0x6c, 0x6c,
+	0x73, 0xca, 0x02, 0x17, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31,
+	0x5c, 0x4f, 0x72, 0x67, 0x5c, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x73, 0xe2, 0x02, 0x23, 0x41, 0x70,
+	0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x4f, 0x72, 0x67, 0x5c, 0x53,
+	0x6b, 0x69, 0x6c, 0x6c, 0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74,
+	0x61, 0xea, 0x02, 0x1a, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61,
+	0x31, 0x3a, 0x3a, 0x4f, 0x72, 0x67, 0x3a, 0x3a, 0x53, 0x6b, 0x69, 0x6c, 0x6c, 0x73, 0x62, 0x06,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1384,43 +1478,45 @@ func file_api_v1alpha1_org_skills_entities_proto_rawDescGZIP() []byte {
 	return file_api_v1alpha1_org_skills_entities_proto_rawDescData
 }
 
-var file_api_v1alpha1_org_skills_entities_proto_msgTypes = make([]protoimpl.MessageInfo, 25)
+var file_api_v1alpha1_org_skills_entities_proto_msgTypes = make([]protoimpl.MessageInfo, 27)
 var file_api_v1alpha1_org_skills_entities_proto_goTypes = []interface{}{
-	(*CreateSkillGroupRequest)(nil),         // 0: api.v1alpha1.org.skills.CreateSkillGroupRequest
-	(*CreateSkillGroupResponse)(nil),        // 1: api.v1alpha1.org.skills.CreateSkillGroupResponse
-	(*ListSkillGroupsRequest)(nil),          // 2: api.v1alpha1.org.skills.ListSkillGroupsRequest
-	(*ListSkillGroupsResponse)(nil),         // 3: api.v1alpha1.org.skills.ListSkillGroupsResponse
-	(*UpdateSkillGroupRequest)(nil),         // 4: api.v1alpha1.org.skills.UpdateSkillGroupRequest
-	(*UpdateSkillGroupResponse)(nil),        // 5: api.v1alpha1.org.skills.UpdateSkillGroupResponse
-	(*GetSkillGroupRequest)(nil),            // 6: api.v1alpha1.org.skills.GetSkillGroupRequest
-	(*GetSkillGroupResponse)(nil),           // 7: api.v1alpha1.org.skills.GetSkillGroupResponse
-	(*DeleteSkillGroupRequest)(nil),         // 8: api.v1alpha1.org.skills.DeleteSkillGroupRequest
-	(*DeleteSkillGroupResponse)(nil),        // 9: api.v1alpha1.org.skills.DeleteSkillGroupResponse
-	(*AssignSkillGroupsRequest)(nil),        // 10: api.v1alpha1.org.skills.AssignSkillGroupsRequest
-	(*AssignSkillGroupsResponse)(nil),       // 11: api.v1alpha1.org.skills.AssignSkillGroupsResponse
-	(*RevokeSkillGroupsRequest)(nil),        // 12: api.v1alpha1.org.skills.RevokeSkillGroupsRequest
-	(*RevokeSkillGroupsResponse)(nil),       // 13: api.v1alpha1.org.skills.RevokeSkillGroupsResponse
-	(*GetUserSkillGroupsRequest)(nil),       // 14: api.v1alpha1.org.skills.GetUserSkillGroupsRequest
-	(*GetUserSkillGroupsResponse)(nil),      // 15: api.v1alpha1.org.skills.GetUserSkillGroupsResponse
-	(*GetUserSkillsRequest)(nil),            // 16: api.v1alpha1.org.skills.GetUserSkillsRequest
-	(*GetUserSkillsResponse)(nil),           // 17: api.v1alpha1.org.skills.GetUserSkillsResponse
-	(*GetSkillGroupMembersRequest)(nil),     // 18: api.v1alpha1.org.skills.GetSkillGroupMembersRequest
-	(*GetSkillGroupMembersResponse)(nil),    // 19: api.v1alpha1.org.skills.GetSkillGroupMembersResponse
-	(*ListSkillGroupsMembersRequest)(nil),   // 20: api.v1alpha1.org.skills.ListSkillGroupsMembersRequest
-	(*ListSkillGroupsMembersResponse)(nil),  // 21: api.v1alpha1.org.skills.ListSkillGroupsMembersResponse
-	(*SkillGroupMembers)(nil),               // 22: api.v1alpha1.org.skills.SkillGroupMembers
-	(*UpdateUsersOnSkillGroupRequest)(nil),  // 23: api.v1alpha1.org.skills.UpdateUsersOnSkillGroupRequest
-	(*UpdateUsersOnSkillGroupResponse)(nil), // 24: api.v1alpha1.org.skills.UpdateUsersOnSkillGroupResponse
-	(*org.SkillGroup)(nil),                  // 25: api.commons.org.SkillGroup
-	(*org.SkillSet)(nil),                    // 26: api.commons.org.SkillSet
+	(*CreateSkillGroupRequest)(nil),          // 0: api.v1alpha1.org.skills.CreateSkillGroupRequest
+	(*CreateSkillGroupResponse)(nil),         // 1: api.v1alpha1.org.skills.CreateSkillGroupResponse
+	(*ListSkillGroupsRequest)(nil),           // 2: api.v1alpha1.org.skills.ListSkillGroupsRequest
+	(*ListSkillGroupsResponse)(nil),          // 3: api.v1alpha1.org.skills.ListSkillGroupsResponse
+	(*UpdateSkillGroupRequest)(nil),          // 4: api.v1alpha1.org.skills.UpdateSkillGroupRequest
+	(*UpdateSkillGroupResponse)(nil),         // 5: api.v1alpha1.org.skills.UpdateSkillGroupResponse
+	(*GetSkillGroupRequest)(nil),             // 6: api.v1alpha1.org.skills.GetSkillGroupRequest
+	(*GetSkillGroupResponse)(nil),            // 7: api.v1alpha1.org.skills.GetSkillGroupResponse
+	(*DeleteSkillGroupRequest)(nil),          // 8: api.v1alpha1.org.skills.DeleteSkillGroupRequest
+	(*DeleteSkillGroupResponse)(nil),         // 9: api.v1alpha1.org.skills.DeleteSkillGroupResponse
+	(*RemoveSkillFromAllGroupsRequest)(nil),  // 10: api.v1alpha1.org.skills.RemoveSkillFromAllGroupsRequest
+	(*RemoveSkillFromAllGroupsResponse)(nil), // 11: api.v1alpha1.org.skills.RemoveSkillFromAllGroupsResponse
+	(*AssignSkillGroupsRequest)(nil),         // 12: api.v1alpha1.org.skills.AssignSkillGroupsRequest
+	(*AssignSkillGroupsResponse)(nil),        // 13: api.v1alpha1.org.skills.AssignSkillGroupsResponse
+	(*RevokeSkillGroupsRequest)(nil),         // 14: api.v1alpha1.org.skills.RevokeSkillGroupsRequest
+	(*RevokeSkillGroupsResponse)(nil),        // 15: api.v1alpha1.org.skills.RevokeSkillGroupsResponse
+	(*GetUserSkillGroupsRequest)(nil),        // 16: api.v1alpha1.org.skills.GetUserSkillGroupsRequest
+	(*GetUserSkillGroupsResponse)(nil),       // 17: api.v1alpha1.org.skills.GetUserSkillGroupsResponse
+	(*GetUserSkillsRequest)(nil),             // 18: api.v1alpha1.org.skills.GetUserSkillsRequest
+	(*GetUserSkillsResponse)(nil),            // 19: api.v1alpha1.org.skills.GetUserSkillsResponse
+	(*GetSkillGroupMembersRequest)(nil),      // 20: api.v1alpha1.org.skills.GetSkillGroupMembersRequest
+	(*GetSkillGroupMembersResponse)(nil),     // 21: api.v1alpha1.org.skills.GetSkillGroupMembersResponse
+	(*ListSkillGroupsMembersRequest)(nil),    // 22: api.v1alpha1.org.skills.ListSkillGroupsMembersRequest
+	(*ListSkillGroupsMembersResponse)(nil),   // 23: api.v1alpha1.org.skills.ListSkillGroupsMembersResponse
+	(*SkillGroupMembers)(nil),                // 24: api.v1alpha1.org.skills.SkillGroupMembers
+	(*UpdateUsersOnSkillGroupRequest)(nil),   // 25: api.v1alpha1.org.skills.UpdateUsersOnSkillGroupRequest
+	(*UpdateUsersOnSkillGroupResponse)(nil),  // 26: api.v1alpha1.org.skills.UpdateUsersOnSkillGroupResponse
+	(*org.SkillGroup)(nil),                   // 27: api.commons.org.SkillGroup
+	(*org.SkillSet)(nil),                     // 28: api.commons.org.SkillSet
 }
 var file_api_v1alpha1_org_skills_entities_proto_depIdxs = []int32{
-	25, // 0: api.v1alpha1.org.skills.CreateSkillGroupRequest.skill_group:type_name -> api.commons.org.SkillGroup
-	25, // 1: api.v1alpha1.org.skills.ListSkillGroupsResponse.skill_groups:type_name -> api.commons.org.SkillGroup
-	25, // 2: api.v1alpha1.org.skills.UpdateSkillGroupRequest.skill_group:type_name -> api.commons.org.SkillGroup
-	25, // 3: api.v1alpha1.org.skills.GetSkillGroupResponse.skill_group:type_name -> api.commons.org.SkillGroup
-	26, // 4: api.v1alpha1.org.skills.GetUserSkillsResponse.skill_sets:type_name -> api.commons.org.SkillSet
-	22, // 5: api.v1alpha1.org.skills.ListSkillGroupsMembersResponse.skill_group_members:type_name -> api.v1alpha1.org.skills.SkillGroupMembers
+	27, // 0: api.v1alpha1.org.skills.CreateSkillGroupRequest.skill_group:type_name -> api.commons.org.SkillGroup
+	27, // 1: api.v1alpha1.org.skills.ListSkillGroupsResponse.skill_groups:type_name -> api.commons.org.SkillGroup
+	27, // 2: api.v1alpha1.org.skills.UpdateSkillGroupRequest.skill_group:type_name -> api.commons.org.SkillGroup
+	27, // 3: api.v1alpha1.org.skills.GetSkillGroupResponse.skill_group:type_name -> api.commons.org.SkillGroup
+	28, // 4: api.v1alpha1.org.skills.GetUserSkillsResponse.skill_sets:type_name -> api.commons.org.SkillSet
+	24, // 5: api.v1alpha1.org.skills.ListSkillGroupsMembersResponse.skill_group_members:type_name -> api.v1alpha1.org.skills.SkillGroupMembers
 	6,  // [6:6] is the sub-list for method output_type
 	6,  // [6:6] is the sub-list for method input_type
 	6,  // [6:6] is the sub-list for extension type_name
@@ -1555,7 +1651,7 @@ func file_api_v1alpha1_org_skills_entities_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_skills_entities_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AssignSkillGroupsRequest); i {
+			switch v := v.(*RemoveSkillFromAllGroupsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1567,7 +1663,7 @@ func file_api_v1alpha1_org_skills_entities_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_skills_entities_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AssignSkillGroupsResponse); i {
+			switch v := v.(*RemoveSkillFromAllGroupsResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1579,7 +1675,7 @@ func file_api_v1alpha1_org_skills_entities_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_skills_entities_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RevokeSkillGroupsRequest); i {
+			switch v := v.(*AssignSkillGroupsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1591,7 +1687,7 @@ func file_api_v1alpha1_org_skills_entities_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_skills_entities_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RevokeSkillGroupsResponse); i {
+			switch v := v.(*AssignSkillGroupsResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1603,7 +1699,7 @@ func file_api_v1alpha1_org_skills_entities_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_skills_entities_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetUserSkillGroupsRequest); i {
+			switch v := v.(*RevokeSkillGroupsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1615,7 +1711,7 @@ func file_api_v1alpha1_org_skills_entities_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_skills_entities_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetUserSkillGroupsResponse); i {
+			switch v := v.(*RevokeSkillGroupsResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1627,7 +1723,7 @@ func file_api_v1alpha1_org_skills_entities_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_skills_entities_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetUserSkillsRequest); i {
+			switch v := v.(*GetUserSkillGroupsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1639,7 +1735,7 @@ func file_api_v1alpha1_org_skills_entities_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_skills_entities_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetUserSkillsResponse); i {
+			switch v := v.(*GetUserSkillGroupsResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1651,7 +1747,7 @@ func file_api_v1alpha1_org_skills_entities_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_skills_entities_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetSkillGroupMembersRequest); i {
+			switch v := v.(*GetUserSkillsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1663,7 +1759,7 @@ func file_api_v1alpha1_org_skills_entities_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_skills_entities_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetSkillGroupMembersResponse); i {
+			switch v := v.(*GetUserSkillsResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1675,7 +1771,7 @@ func file_api_v1alpha1_org_skills_entities_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_skills_entities_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListSkillGroupsMembersRequest); i {
+			switch v := v.(*GetSkillGroupMembersRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1687,7 +1783,7 @@ func file_api_v1alpha1_org_skills_entities_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_skills_entities_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListSkillGroupsMembersResponse); i {
+			switch v := v.(*GetSkillGroupMembersResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1699,7 +1795,7 @@ func file_api_v1alpha1_org_skills_entities_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_skills_entities_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SkillGroupMembers); i {
+			switch v := v.(*ListSkillGroupsMembersRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1711,7 +1807,7 @@ func file_api_v1alpha1_org_skills_entities_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_skills_entities_proto_msgTypes[23].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpdateUsersOnSkillGroupRequest); i {
+			switch v := v.(*ListSkillGroupsMembersResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1723,6 +1819,30 @@ func file_api_v1alpha1_org_skills_entities_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_skills_entities_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*SkillGroupMembers); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_org_skills_entities_proto_msgTypes[25].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UpdateUsersOnSkillGroupRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_org_skills_entities_proto_msgTypes[26].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*UpdateUsersOnSkillGroupResponse); i {
 			case 0:
 				return &v.state
@@ -1741,7 +1861,7 @@ func file_api_v1alpha1_org_skills_entities_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_v1alpha1_org_skills_entities_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   25,
+			NumMessages:   27,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
