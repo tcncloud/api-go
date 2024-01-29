@@ -529,6 +529,8 @@ const (
 	OrgRefreshMfaLockoutByOrgIdProcedure = "/api.v1alpha1.org.Org/RefreshMfaLockoutByOrgId"
 	// OrgSetMfaTypeProcedure is the fully-qualified name of the Org's SetMfaType RPC.
 	OrgSetMfaTypeProcedure = "/api.v1alpha1.org.Org/SetMfaType"
+	// OrgSetMyMfaTypeProcedure is the fully-qualified name of the Org's SetMyMfaType RPC.
+	OrgSetMyMfaTypeProcedure = "/api.v1alpha1.org.Org/SetMyMfaType"
 	// OrgEnableUserMfaProcedure is the fully-qualified name of the Org's EnableUserMfa RPC.
 	OrgEnableUserMfaProcedure = "/api.v1alpha1.org.Org/EnableUserMfa"
 	// OrgEnableMyUserMfaProcedure is the fully-qualified name of the Org's EnableMyUserMfa RPC.
@@ -963,8 +965,10 @@ type OrgClient interface {
 	RefreshMfaLockout(context.Context, *connect_go.Request[org.RefreshMfaLockoutRequest]) (*connect_go.Response[org.RefreshMfaLockoutResponse], error)
 	// RefreshMfaLockoutByOrgId resets the lockout timer for the given user and org id.
 	RefreshMfaLockoutByOrgId(context.Context, *connect_go.Request[org.RefreshMfaLockoutByOrgIdRequest]) (*connect_go.Response[org.RefreshMfaLockoutByOrgIdResponse], error)
-	// SetMfaType sets the current user's mfa type.
+	// SetMfaType sets the given user's mfa type.
 	SetMfaType(context.Context, *connect_go.Request[org.SetMfaTypeRequest]) (*connect_go.Response[org.SetMfaTypeResponse], error)
+	// SetMyMfaType sets the current user's mfa type.
+	SetMyMfaType(context.Context, *connect_go.Request[org.SetMyMfaTypeRequest]) (*connect_go.Response[org.SetMyMfaTypeResponse], error)
 	// EnableUserMfa enables or disables mfa for the given user
 	EnableUserMfa(context.Context, *connect_go.Request[org.EnableUserMfaRequest]) (*connect_go.Response[org.EnableUserMfaResponse], error)
 	// EnableMyUserMfa enables mfa for the current user
@@ -1925,6 +1929,11 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgSetMfaTypeProcedure,
 			opts...,
 		),
+		setMyMfaType: connect_go.NewClient[org.SetMyMfaTypeRequest, org.SetMyMfaTypeResponse](
+			httpClient,
+			baseURL+OrgSetMyMfaTypeProcedure,
+			opts...,
+		),
 		enableUserMfa: connect_go.NewClient[org.EnableUserMfaRequest, org.EnableUserMfaResponse](
 			httpClient,
 			baseURL+OrgEnableUserMfaProcedure,
@@ -2138,6 +2147,7 @@ type orgClient struct {
 	refreshMfaLockout                        *connect_go.Client[org.RefreshMfaLockoutRequest, org.RefreshMfaLockoutResponse]
 	refreshMfaLockoutByOrgId                 *connect_go.Client[org.RefreshMfaLockoutByOrgIdRequest, org.RefreshMfaLockoutByOrgIdResponse]
 	setMfaType                               *connect_go.Client[org.SetMfaTypeRequest, org.SetMfaTypeResponse]
+	setMyMfaType                             *connect_go.Client[org.SetMyMfaTypeRequest, org.SetMyMfaTypeResponse]
 	enableUserMfa                            *connect_go.Client[org.EnableUserMfaRequest, org.EnableUserMfaResponse]
 	enableMyUserMfa                          *connect_go.Client[org.EnableMyUserMfaRequest, org.EnableMyUserMfaResponse]
 	getUserMfaInfo                           *connect_go.Client[org.GetUserMfaInfoRequest, org.GetUserMfaInfoResponse]
@@ -3092,6 +3102,11 @@ func (c *orgClient) SetMfaType(ctx context.Context, req *connect_go.Request[org.
 	return c.setMfaType.CallUnary(ctx, req)
 }
 
+// SetMyMfaType calls api.v1alpha1.org.Org.SetMyMfaType.
+func (c *orgClient) SetMyMfaType(ctx context.Context, req *connect_go.Request[org.SetMyMfaTypeRequest]) (*connect_go.Response[org.SetMyMfaTypeResponse], error) {
+	return c.setMyMfaType.CallUnary(ctx, req)
+}
+
 // EnableUserMfa calls api.v1alpha1.org.Org.EnableUserMfa.
 func (c *orgClient) EnableUserMfa(ctx context.Context, req *connect_go.Request[org.EnableUserMfaRequest]) (*connect_go.Response[org.EnableUserMfaResponse], error) {
 	return c.enableUserMfa.CallUnary(ctx, req)
@@ -3536,8 +3551,10 @@ type OrgHandler interface {
 	RefreshMfaLockout(context.Context, *connect_go.Request[org.RefreshMfaLockoutRequest]) (*connect_go.Response[org.RefreshMfaLockoutResponse], error)
 	// RefreshMfaLockoutByOrgId resets the lockout timer for the given user and org id.
 	RefreshMfaLockoutByOrgId(context.Context, *connect_go.Request[org.RefreshMfaLockoutByOrgIdRequest]) (*connect_go.Response[org.RefreshMfaLockoutByOrgIdResponse], error)
-	// SetMfaType sets the current user's mfa type.
+	// SetMfaType sets the given user's mfa type.
 	SetMfaType(context.Context, *connect_go.Request[org.SetMfaTypeRequest]) (*connect_go.Response[org.SetMfaTypeResponse], error)
+	// SetMyMfaType sets the current user's mfa type.
+	SetMyMfaType(context.Context, *connect_go.Request[org.SetMyMfaTypeRequest]) (*connect_go.Response[org.SetMyMfaTypeResponse], error)
 	// EnableUserMfa enables or disables mfa for the given user
 	EnableUserMfa(context.Context, *connect_go.Request[org.EnableUserMfaRequest]) (*connect_go.Response[org.EnableUserMfaResponse], error)
 	// EnableMyUserMfa enables mfa for the current user
@@ -4494,6 +4511,11 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.SetMfaType,
 		opts...,
 	)
+	orgSetMyMfaTypeHandler := connect_go.NewUnaryHandler(
+		OrgSetMyMfaTypeProcedure,
+		svc.SetMyMfaType,
+		opts...,
+	)
 	orgEnableUserMfaHandler := connect_go.NewUnaryHandler(
 		OrgEnableUserMfaProcedure,
 		svc.EnableUserMfa,
@@ -4892,6 +4914,8 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 			orgRefreshMfaLockoutByOrgIdHandler.ServeHTTP(w, r)
 		case OrgSetMfaTypeProcedure:
 			orgSetMfaTypeHandler.ServeHTTP(w, r)
+		case OrgSetMyMfaTypeProcedure:
+			orgSetMyMfaTypeHandler.ServeHTTP(w, r)
 		case OrgEnableUserMfaProcedure:
 			orgEnableUserMfaHandler.ServeHTTP(w, r)
 		case OrgEnableMyUserMfaProcedure:
@@ -5659,6 +5683,10 @@ func (UnimplementedOrgHandler) RefreshMfaLockoutByOrgId(context.Context, *connec
 
 func (UnimplementedOrgHandler) SetMfaType(context.Context, *connect_go.Request[org.SetMfaTypeRequest]) (*connect_go.Response[org.SetMfaTypeResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.SetMfaType is not implemented"))
+}
+
+func (UnimplementedOrgHandler) SetMyMfaType(context.Context, *connect_go.Request[org.SetMyMfaTypeRequest]) (*connect_go.Response[org.SetMyMfaTypeResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.SetMyMfaType is not implemented"))
 }
 
 func (UnimplementedOrgHandler) EnableUserMfa(context.Context, *connect_go.Request[org.EnableUserMfaRequest]) (*connect_go.Response[org.EnableUserMfaResponse], error) {
