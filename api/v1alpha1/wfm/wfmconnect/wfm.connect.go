@@ -367,6 +367,9 @@ const (
 	// WFMCreateShiftInstanceV2Procedure is the fully-qualified name of the WFM's CreateShiftInstanceV2
 	// RPC.
 	WFMCreateShiftInstanceV2Procedure = "/api.v1alpha1.wfm.WFM/CreateShiftInstanceV2"
+	// WFMCreateShiftInstanceWithSegmentsProcedure is the fully-qualified name of the WFM's
+	// CreateShiftInstanceWithSegments RPC.
+	WFMCreateShiftInstanceWithSegmentsProcedure = "/api.v1alpha1.wfm.WFM/CreateShiftInstanceWithSegments"
 	// WFMSplitShiftInstanceProcedure is the fully-qualified name of the WFM's SplitShiftInstance RPC.
 	WFMSplitShiftInstanceProcedure = "/api.v1alpha1.wfm.WFM/SplitShiftInstance"
 	// WFMSwapShiftInstancesProcedure is the fully-qualified name of the WFM's SwapShiftInstances RPC.
@@ -376,6 +379,9 @@ const (
 	// WFMUpdateShiftInstanceV2Procedure is the fully-qualified name of the WFM's UpdateShiftInstanceV2
 	// RPC.
 	WFMUpdateShiftInstanceV2Procedure = "/api.v1alpha1.wfm.WFM/UpdateShiftInstanceV2"
+	// WFMUpdateShiftInstanceWithSegmentsProcedure is the fully-qualified name of the WFM's
+	// UpdateShiftInstanceWithSegments RPC.
+	WFMUpdateShiftInstanceWithSegmentsProcedure = "/api.v1alpha1.wfm.WFM/UpdateShiftInstanceWithSegments"
 	// WFMCopyShiftInstancesToScheduleProcedure is the fully-qualified name of the WFM's
 	// CopyShiftInstancesToSchedule RPC.
 	WFMCopyShiftInstancesToScheduleProcedure = "/api.v1alpha1.wfm.WFM/CopyShiftInstancesToSchedule"
@@ -1894,6 +1900,21 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when creating the shift instance.
 	//   - grpc.NotFound: the @draft_schedule_sid, @shift_template_sid, or @wfm_agent_sids do not exist for the org sending the request.
 	CreateShiftInstanceV2(context.Context, *connect_go.Request[wfm.CreateShiftInstanceV2Req]) (*connect_go.Response[wfm.CreateShiftInstanceV2Res], error)
+	// Creates the @shift_instance with any member shift segments and shift segment call stats for the org sending the request.
+	// If @ignore_diagnostics_errors any diagnostics encountered will be returned as warnings, and the shift will still be created.
+	//
+	//	Otherwise, any diagnostics triggered by the given @shift_instance will be returned and the shift will not be created.
+	//
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//
+	//	-grpc.Invalid: one or more fields in the request have invalid values.
+	//	-grpc.NotFound: the fields referenced in @shift_instance or its member shift segments don't exist for the org.
+	//	-grpc.Internal: error occurs when creating the shift instance or its members.
+	CreateShiftInstanceWithSegments(context.Context, *connect_go.Request[wfm.CreateShiftInstanceWithSegmentsRequest]) (*connect_go.Response[wfm.CreateShiftInstanceWithSegmentsResponse], error)
 	// Splits the @shift_instance_sid into two, at the given @time_to_split, returning the updated and new @shift_instances.
 	// Any shift segments will be split between the two shift instances at @time_to_split.
 	// If the @time_to_split creates instances shorter then the minimum length specified by the shift template,
@@ -1936,6 +1957,21 @@ type WFMClient interface {
 	//   - grpc.Invalid: one or more fields in the request have invalid values.
 	//   - grpc.Internal: error occurs when updating the shift instance.
 	UpdateShiftInstanceV2(context.Context, *connect_go.Request[wfm.UpdateShiftInstanceV2Req]) (*connect_go.Response[wfm.UpdateShiftInstanceV2Res], error)
+	// Runs diagnostics on the given @shift_instance for the org sending the request.
+	// If @ignore_diagnostics_errors is True, the shift will be updated regardless of diagnostic errors and any diagnostics will be returned as warnings.
+	// Otherwise, the shift will only be updated if there are no diagnostic errors.
+	// Only the @start_datetime, @is_locked, @width_in_minutes and @wfm_agent_sid fields of the shift will be updated.
+	//
+	// Any existing shift segments belonging to @shift_instance will be deleted and replaced with the ones in the given @shift_instance.
+	// If no segments are provided, the existing segments will still be deleted and the instances will be left without any.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when updating the @shift_instance or replacing their member shift segments.
+	UpdateShiftInstanceWithSegments(context.Context, *connect_go.Request[wfm.UpdateShiftInstanceWithSegmentsRequest]) (*connect_go.Response[wfm.UpdateShiftInstanceWithSegmentsResponse], error)
 	// Copies the given @shift_instance_sids to @destination_schedule for the org sending the request.
 	// If there are any overlap conflicts on @destination_schedule and @overlap_as_warning is set to false,
 	//
@@ -2961,6 +2997,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMCreateShiftInstanceV2Procedure,
 			opts...,
 		),
+		createShiftInstanceWithSegments: connect_go.NewClient[wfm.CreateShiftInstanceWithSegmentsRequest, wfm.CreateShiftInstanceWithSegmentsResponse](
+			httpClient,
+			baseURL+WFMCreateShiftInstanceWithSegmentsProcedure,
+			opts...,
+		),
 		splitShiftInstance: connect_go.NewClient[wfm.SplitShiftInstanceReq, wfm.SplitShiftInstanceRes](
 			httpClient,
 			baseURL+WFMSplitShiftInstanceProcedure,
@@ -2979,6 +3020,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 		updateShiftInstanceV2: connect_go.NewClient[wfm.UpdateShiftInstanceV2Req, wfm.UpdateShiftInstanceV2Res](
 			httpClient,
 			baseURL+WFMUpdateShiftInstanceV2Procedure,
+			opts...,
+		),
+		updateShiftInstanceWithSegments: connect_go.NewClient[wfm.UpdateShiftInstanceWithSegmentsRequest, wfm.UpdateShiftInstanceWithSegmentsResponse](
+			httpClient,
+			baseURL+WFMUpdateShiftInstanceWithSegmentsProcedure,
 			opts...,
 		),
 		copyShiftInstancesToSchedule: connect_go.NewClient[wfm.CopyShiftInstancesToScheduleReq, wfm.CopyShiftInstancesToScheduleRes](
@@ -3299,10 +3345,12 @@ type wFMClient struct {
 	copyScheduleToSchedule                        *connect_go.Client[wfm.CopyScheduleToScheduleReq, wfm.CopyScheduleToScheduleRes]
 	createShiftInstance                           *connect_go.Client[wfm.CreateShiftInstanceReq, wfm.CreateShiftInstanceRes]
 	createShiftInstanceV2                         *connect_go.Client[wfm.CreateShiftInstanceV2Req, wfm.CreateShiftInstanceV2Res]
+	createShiftInstanceWithSegments               *connect_go.Client[wfm.CreateShiftInstanceWithSegmentsRequest, wfm.CreateShiftInstanceWithSegmentsResponse]
 	splitShiftInstance                            *connect_go.Client[wfm.SplitShiftInstanceReq, wfm.SplitShiftInstanceRes]
 	swapShiftInstances                            *connect_go.Client[wfm.SwapShiftInstancesReq, wfm.SwapShiftInstancesRes]
 	updateShiftInstance                           *connect_go.Client[wfm.UpdateShiftInstanceReq, wfm.UpdateShiftInstanceRes]
 	updateShiftInstanceV2                         *connect_go.Client[wfm.UpdateShiftInstanceV2Req, wfm.UpdateShiftInstanceV2Res]
+	updateShiftInstanceWithSegments               *connect_go.Client[wfm.UpdateShiftInstanceWithSegmentsRequest, wfm.UpdateShiftInstanceWithSegmentsResponse]
 	copyShiftInstancesToSchedule                  *connect_go.Client[wfm.CopyShiftInstancesToScheduleReq, wfm.CopyShiftInstancesToScheduleRes]
 	listShiftInstanceSidsForAgent                 *connect_go.Client[wfm.ListShiftInstanceSidsForAgentReq, wfm.ListShiftInstanceSidsForAgentRes]
 	listShiftSegmentsByShiftInstanceSids          *connect_go.Client[wfm.ListShiftSegmentsByShiftInstanceSidsReq, wfm.ListShiftSegmentsByShiftInstanceSidsRes]
@@ -3955,6 +4003,11 @@ func (c *wFMClient) CreateShiftInstanceV2(ctx context.Context, req *connect_go.R
 	return c.createShiftInstanceV2.CallUnary(ctx, req)
 }
 
+// CreateShiftInstanceWithSegments calls api.v1alpha1.wfm.WFM.CreateShiftInstanceWithSegments.
+func (c *wFMClient) CreateShiftInstanceWithSegments(ctx context.Context, req *connect_go.Request[wfm.CreateShiftInstanceWithSegmentsRequest]) (*connect_go.Response[wfm.CreateShiftInstanceWithSegmentsResponse], error) {
+	return c.createShiftInstanceWithSegments.CallUnary(ctx, req)
+}
+
 // SplitShiftInstance calls api.v1alpha1.wfm.WFM.SplitShiftInstance.
 func (c *wFMClient) SplitShiftInstance(ctx context.Context, req *connect_go.Request[wfm.SplitShiftInstanceReq]) (*connect_go.Response[wfm.SplitShiftInstanceRes], error) {
 	return c.splitShiftInstance.CallUnary(ctx, req)
@@ -3973,6 +4026,11 @@ func (c *wFMClient) UpdateShiftInstance(ctx context.Context, req *connect_go.Req
 // UpdateShiftInstanceV2 calls api.v1alpha1.wfm.WFM.UpdateShiftInstanceV2.
 func (c *wFMClient) UpdateShiftInstanceV2(ctx context.Context, req *connect_go.Request[wfm.UpdateShiftInstanceV2Req]) (*connect_go.Response[wfm.UpdateShiftInstanceV2Res], error) {
 	return c.updateShiftInstanceV2.CallUnary(ctx, req)
+}
+
+// UpdateShiftInstanceWithSegments calls api.v1alpha1.wfm.WFM.UpdateShiftInstanceWithSegments.
+func (c *wFMClient) UpdateShiftInstanceWithSegments(ctx context.Context, req *connect_go.Request[wfm.UpdateShiftInstanceWithSegmentsRequest]) (*connect_go.Response[wfm.UpdateShiftInstanceWithSegmentsResponse], error) {
+	return c.updateShiftInstanceWithSegments.CallUnary(ctx, req)
 }
 
 // CopyShiftInstancesToSchedule calls api.v1alpha1.wfm.WFM.CopyShiftInstancesToSchedule.
@@ -5577,6 +5635,21 @@ type WFMHandler interface {
 	//   - grpc.Internal: error occurs when creating the shift instance.
 	//   - grpc.NotFound: the @draft_schedule_sid, @shift_template_sid, or @wfm_agent_sids do not exist for the org sending the request.
 	CreateShiftInstanceV2(context.Context, *connect_go.Request[wfm.CreateShiftInstanceV2Req]) (*connect_go.Response[wfm.CreateShiftInstanceV2Res], error)
+	// Creates the @shift_instance with any member shift segments and shift segment call stats for the org sending the request.
+	// If @ignore_diagnostics_errors any diagnostics encountered will be returned as warnings, and the shift will still be created.
+	//
+	//	Otherwise, any diagnostics triggered by the given @shift_instance will be returned and the shift will not be created.
+	//
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//
+	//	-grpc.Invalid: one or more fields in the request have invalid values.
+	//	-grpc.NotFound: the fields referenced in @shift_instance or its member shift segments don't exist for the org.
+	//	-grpc.Internal: error occurs when creating the shift instance or its members.
+	CreateShiftInstanceWithSegments(context.Context, *connect_go.Request[wfm.CreateShiftInstanceWithSegmentsRequest]) (*connect_go.Response[wfm.CreateShiftInstanceWithSegmentsResponse], error)
 	// Splits the @shift_instance_sid into two, at the given @time_to_split, returning the updated and new @shift_instances.
 	// Any shift segments will be split between the two shift instances at @time_to_split.
 	// If the @time_to_split creates instances shorter then the minimum length specified by the shift template,
@@ -5619,6 +5692,21 @@ type WFMHandler interface {
 	//   - grpc.Invalid: one or more fields in the request have invalid values.
 	//   - grpc.Internal: error occurs when updating the shift instance.
 	UpdateShiftInstanceV2(context.Context, *connect_go.Request[wfm.UpdateShiftInstanceV2Req]) (*connect_go.Response[wfm.UpdateShiftInstanceV2Res], error)
+	// Runs diagnostics on the given @shift_instance for the org sending the request.
+	// If @ignore_diagnostics_errors is True, the shift will be updated regardless of diagnostic errors and any diagnostics will be returned as warnings.
+	// Otherwise, the shift will only be updated if there are no diagnostic errors.
+	// Only the @start_datetime, @is_locked, @width_in_minutes and @wfm_agent_sid fields of the shift will be updated.
+	//
+	// Any existing shift segments belonging to @shift_instance will be deleted and replaced with the ones in the given @shift_instance.
+	// If no segments are provided, the existing segments will still be deleted and the instances will be left without any.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when updating the @shift_instance or replacing their member shift segments.
+	UpdateShiftInstanceWithSegments(context.Context, *connect_go.Request[wfm.UpdateShiftInstanceWithSegmentsRequest]) (*connect_go.Response[wfm.UpdateShiftInstanceWithSegmentsResponse], error)
 	// Copies the given @shift_instance_sids to @destination_schedule for the org sending the request.
 	// If there are any overlap conflicts on @destination_schedule and @overlap_as_warning is set to false,
 	//
@@ -6640,6 +6728,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.CreateShiftInstanceV2,
 		opts...,
 	)
+	wFMCreateShiftInstanceWithSegmentsHandler := connect_go.NewUnaryHandler(
+		WFMCreateShiftInstanceWithSegmentsProcedure,
+		svc.CreateShiftInstanceWithSegments,
+		opts...,
+	)
 	wFMSplitShiftInstanceHandler := connect_go.NewUnaryHandler(
 		WFMSplitShiftInstanceProcedure,
 		svc.SplitShiftInstance,
@@ -6658,6 +6751,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 	wFMUpdateShiftInstanceV2Handler := connect_go.NewUnaryHandler(
 		WFMUpdateShiftInstanceV2Procedure,
 		svc.UpdateShiftInstanceV2,
+		opts...,
+	)
+	wFMUpdateShiftInstanceWithSegmentsHandler := connect_go.NewUnaryHandler(
+		WFMUpdateShiftInstanceWithSegmentsProcedure,
+		svc.UpdateShiftInstanceWithSegments,
 		opts...,
 	)
 	wFMCopyShiftInstancesToScheduleHandler := connect_go.NewUnaryHandler(
@@ -7093,6 +7191,8 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMCreateShiftInstanceHandler.ServeHTTP(w, r)
 		case WFMCreateShiftInstanceV2Procedure:
 			wFMCreateShiftInstanceV2Handler.ServeHTTP(w, r)
+		case WFMCreateShiftInstanceWithSegmentsProcedure:
+			wFMCreateShiftInstanceWithSegmentsHandler.ServeHTTP(w, r)
 		case WFMSplitShiftInstanceProcedure:
 			wFMSplitShiftInstanceHandler.ServeHTTP(w, r)
 		case WFMSwapShiftInstancesProcedure:
@@ -7101,6 +7201,8 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMUpdateShiftInstanceHandler.ServeHTTP(w, r)
 		case WFMUpdateShiftInstanceV2Procedure:
 			wFMUpdateShiftInstanceV2Handler.ServeHTTP(w, r)
+		case WFMUpdateShiftInstanceWithSegmentsProcedure:
+			wFMUpdateShiftInstanceWithSegmentsHandler.ServeHTTP(w, r)
 		case WFMCopyShiftInstancesToScheduleProcedure:
 			wFMCopyShiftInstancesToScheduleHandler.ServeHTTP(w, r)
 		case WFMListShiftInstanceSidsForAgentProcedure:
@@ -7660,6 +7762,10 @@ func (UnimplementedWFMHandler) CreateShiftInstanceV2(context.Context, *connect_g
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.CreateShiftInstanceV2 is not implemented"))
 }
 
+func (UnimplementedWFMHandler) CreateShiftInstanceWithSegments(context.Context, *connect_go.Request[wfm.CreateShiftInstanceWithSegmentsRequest]) (*connect_go.Response[wfm.CreateShiftInstanceWithSegmentsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.CreateShiftInstanceWithSegments is not implemented"))
+}
+
 func (UnimplementedWFMHandler) SplitShiftInstance(context.Context, *connect_go.Request[wfm.SplitShiftInstanceReq]) (*connect_go.Response[wfm.SplitShiftInstanceRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.SplitShiftInstance is not implemented"))
 }
@@ -7674,6 +7780,10 @@ func (UnimplementedWFMHandler) UpdateShiftInstance(context.Context, *connect_go.
 
 func (UnimplementedWFMHandler) UpdateShiftInstanceV2(context.Context, *connect_go.Request[wfm.UpdateShiftInstanceV2Req]) (*connect_go.Response[wfm.UpdateShiftInstanceV2Res], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.UpdateShiftInstanceV2 is not implemented"))
+}
+
+func (UnimplementedWFMHandler) UpdateShiftInstanceWithSegments(context.Context, *connect_go.Request[wfm.UpdateShiftInstanceWithSegmentsRequest]) (*connect_go.Response[wfm.UpdateShiftInstanceWithSegmentsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.UpdateShiftInstanceWithSegments is not implemented"))
 }
 
 func (UnimplementedWFMHandler) CopyShiftInstancesToSchedule(context.Context, *connect_go.Request[wfm.CopyShiftInstancesToScheduleReq]) (*connect_go.Response[wfm.CopyShiftInstancesToScheduleRes], error) {
