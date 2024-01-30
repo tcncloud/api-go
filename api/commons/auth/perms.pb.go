@@ -110,7 +110,7 @@ const (
 	Permission_PERMISSION_AGENT_PLUGINS_VIEW Permission = 342
 	// Enables Agents to view plugins.
 	Permission_PERMISSION_AGENT_HUNTGROUP_INTEGRATIONS_VIEW Permission = 343
-	// Enables agents to create manual campaigns
+	// Enables agents to create manual conversations
 	Permission_PERMISSION_MANUAL_CAMPAIGN Permission = 344
 	// Enables access to voice analytics app.
 	Permission_PERMISSION_VOICE_ANALYTICS Permission = 500
