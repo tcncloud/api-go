@@ -218,15 +218,22 @@ const (
 	EventType_TICKET_ACTION_EDIT_EVENT         EventType = 604
 	EventType_TICKET_ACTION_STATE_CHANGE_EVENT EventType = 605
 	EventType_TICKET_PARTICIPANT_EVENT         EventType = 606
-	// Change For Create/Reply Comments
-	EventType_TICKET_CREATE_COMMENT_EVENT        EventType = 607
-	EventType_TICKET_REPLY_COMMENT_EVENT         EventType = 608
-	EventType_TICKET_TEMPLATE_CREATE_EVENT       EventType = 609
-	EventType_TICKET_TEMPLATE_EDIT_EVENT         EventType = 610
-	EventType_TICKET_TEMPLATE_CLOSE_EVENT        EventType = 611
-	EventType_TICKET_TEMPLATE_ASSIGN_EVENT       EventType = 612
+	// ticket-create comment event
+	EventType_TICKET_CREATE_COMMENT_EVENT EventType = 607
+	// ticket-reply comment event
+	EventType_TICKET_REPLY_COMMENT_EVENT EventType = 608
+	// ticket-create-template event
+	EventType_TICKET_TEMPLATE_CREATE_EVENT EventType = 609
+	// ticket-edit-template event
+	EventType_TICKET_TEMPLATE_EDIT_EVENT EventType = 610
+	// ticket-close-template event
+	EventType_TICKET_TEMPLATE_CLOSE_EVENT EventType = 611
+	// ticket-assign-template event
+	EventType_TICKET_TEMPLATE_ASSIGN_EVENT EventType = 612
+	// ticket-state-change-template event
 	EventType_TICKET_TEMPLATE_STATE_CHANGE_EVENT EventType = 613
-	EventType_TICKET_PROJECT_STATE_CHANGE_EVENT  EventType = 614
+	// ticket-project-state event
+	EventType_TICKET_PROJECT_STATE_CHANGE_EVENT EventType = 614
 	// Compliance Events
 	// rnd query event
 	EventType_COMPLIANCE_RND_QUERY_EVENT EventType = 700
