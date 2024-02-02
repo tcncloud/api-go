@@ -78,8 +78,6 @@ const (
 	LearnCreateEditVersionProcedure = "/api.v0alpha.Learn/CreateEditVersion"
 	// LearnPublishVersionProcedure is the fully-qualified name of the Learn's PublishVersion RPC.
 	LearnPublishVersionProcedure = "/api.v0alpha.Learn/PublishVersion"
-	// LearnReviewVersionProcedure is the fully-qualified name of the Learn's ReviewVersion RPC.
-	LearnReviewVersionProcedure = "/api.v0alpha.Learn/ReviewVersion"
 )
 
 // LearnClient is a client for the api.v0alpha.Learn service.
@@ -118,8 +116,6 @@ type LearnClient interface {
 	CreateEditVersion(context.Context, *connect_go.Request[v0alpha.CreateEditVersionReq]) (*connect_go.Response[v0alpha.CreateEditVersionRes], error)
 	// publish version
 	PublishVersion(context.Context, *connect_go.Request[v0alpha.PublishVersionReq]) (*connect_go.Response[v0alpha.PublishVersionRes], error)
-	// review version
-	ReviewVersion(context.Context, *connect_go.Request[v0alpha.ReviewVersionReq]) (*connect_go.Response[v0alpha.ReviewVersionRes], error)
 }
 
 // NewLearnClient constructs a client for the api.v0alpha.Learn service. By default, it uses the
@@ -207,11 +203,6 @@ func NewLearnClient(httpClient connect_go.HTTPClient, baseURL string, opts ...co
 			baseURL+LearnPublishVersionProcedure,
 			opts...,
 		),
-		reviewVersion: connect_go.NewClient[v0alpha.ReviewVersionReq, v0alpha.ReviewVersionRes](
-			httpClient,
-			baseURL+LearnReviewVersionProcedure,
-			opts...,
-		),
 	}
 }
 
@@ -232,7 +223,6 @@ type learnClient struct {
 	deleteLearnPages        *connect_go.Client[v0alpha.DeleteLearnPagesReq, v0alpha.DeleteLearnPagesRes]
 	createEditVersion       *connect_go.Client[v0alpha.CreateEditVersionReq, v0alpha.CreateEditVersionRes]
 	publishVersion          *connect_go.Client[v0alpha.PublishVersionReq, v0alpha.PublishVersionRes]
-	reviewVersion           *connect_go.Client[v0alpha.ReviewVersionReq, v0alpha.ReviewVersionRes]
 }
 
 // Exist calls api.v0alpha.Learn.Exist.
@@ -310,11 +300,6 @@ func (c *learnClient) PublishVersion(ctx context.Context, req *connect_go.Reques
 	return c.publishVersion.CallUnary(ctx, req)
 }
 
-// ReviewVersion calls api.v0alpha.Learn.ReviewVersion.
-func (c *learnClient) ReviewVersion(ctx context.Context, req *connect_go.Request[v0alpha.ReviewVersionReq]) (*connect_go.Response[v0alpha.ReviewVersionRes], error) {
-	return c.reviewVersion.CallUnary(ctx, req)
-}
-
 // LearnHandler is an implementation of the api.v0alpha.Learn service.
 type LearnHandler interface {
 	// check if learning page already exists
@@ -351,8 +336,6 @@ type LearnHandler interface {
 	CreateEditVersion(context.Context, *connect_go.Request[v0alpha.CreateEditVersionReq]) (*connect_go.Response[v0alpha.CreateEditVersionRes], error)
 	// publish version
 	PublishVersion(context.Context, *connect_go.Request[v0alpha.PublishVersionReq]) (*connect_go.Response[v0alpha.PublishVersionRes], error)
-	// review version
-	ReviewVersion(context.Context, *connect_go.Request[v0alpha.ReviewVersionReq]) (*connect_go.Response[v0alpha.ReviewVersionRes], error)
 }
 
 // NewLearnHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -436,11 +419,6 @@ func NewLearnHandler(svc LearnHandler, opts ...connect_go.HandlerOption) (string
 		svc.PublishVersion,
 		opts...,
 	)
-	learnReviewVersionHandler := connect_go.NewUnaryHandler(
-		LearnReviewVersionProcedure,
-		svc.ReviewVersion,
-		opts...,
-	)
 	return "/api.v0alpha.Learn/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case LearnExistProcedure:
@@ -473,8 +451,6 @@ func NewLearnHandler(svc LearnHandler, opts ...connect_go.HandlerOption) (string
 			learnCreateEditVersionHandler.ServeHTTP(w, r)
 		case LearnPublishVersionProcedure:
 			learnPublishVersionHandler.ServeHTTP(w, r)
-		case LearnReviewVersionProcedure:
-			learnReviewVersionHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -542,8 +518,4 @@ func (UnimplementedLearnHandler) CreateEditVersion(context.Context, *connect_go.
 
 func (UnimplementedLearnHandler) PublishVersion(context.Context, *connect_go.Request[v0alpha.PublishVersionReq]) (*connect_go.Response[v0alpha.PublishVersionRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.PublishVersion is not implemented"))
-}
-
-func (UnimplementedLearnHandler) ReviewVersion(context.Context, *connect_go.Request[v0alpha.ReviewVersionReq]) (*connect_go.Response[v0alpha.ReviewVersionRes], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.ReviewVersion is not implemented"))
 }
