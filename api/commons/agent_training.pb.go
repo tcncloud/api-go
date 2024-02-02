@@ -305,11 +305,11 @@ type isLearningOpportunity_OriginIdentifier interface {
 }
 
 type LearningOpportunity_EvaluationId struct {
-	EvaluationId int64 `protobuf:"varint,16,opt,name=evaluation_id,json=evaluationId,proto3,oneof"` // Evaluation created from.
+	EvaluationId int64 `protobuf:"varint,16,opt,name=evaluation_id,json=evaluationId,proto3,oneof"` // (Scorecards) Evaluation created from.
 }
 
 type LearningOpportunity_AutoEvaluationId struct {
-	AutoEvaluationId int64 `protobuf:"varint,17,opt,name=auto_evaluation_id,json=autoEvaluationId,proto3,oneof"` // Auto Evaluation created from.
+	AutoEvaluationId int64 `protobuf:"varint,17,opt,name=auto_evaluation_id,json=autoEvaluationId,proto3,oneof"` // (Scorecards) Auto Evaluation created from.
 }
 
 func (*LearningOpportunity_EvaluationId) isLearningOpportunity_OriginIdentifier() {}
