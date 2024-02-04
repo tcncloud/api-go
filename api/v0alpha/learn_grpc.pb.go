@@ -46,8 +46,6 @@ const (
 	Learn_DeleteStandalone_FullMethodName        = "/api.v0alpha.Learn/DeleteStandalone"
 	Learn_Snippet_FullMethodName                 = "/api.v0alpha.Learn/Snippet"
 	Learn_DeleteLearnPages_FullMethodName        = "/api.v0alpha.Learn/DeleteLearnPages"
-	Learn_CreateEditVersion_FullMethodName       = "/api.v0alpha.Learn/CreateEditVersion"
-	Learn_PublishVersion_FullMethodName          = "/api.v0alpha.Learn/PublishVersion"
 )
 
 // LearnClient is the client API for Learn service.
@@ -84,10 +82,6 @@ type LearnClient interface {
 	Snippet(ctx context.Context, in *SnippetReq, opts ...grpc.CallOption) (*SnippetRes, error)
 	// delete learning pages
 	DeleteLearnPages(ctx context.Context, in *DeleteLearnPagesReq, opts ...grpc.CallOption) (*DeleteLearnPagesRes, error)
-	// create edit version
-	CreateEditVersion(ctx context.Context, in *CreateEditVersionReq, opts ...grpc.CallOption) (*CreateEditVersionRes, error)
-	// publish version
-	PublishVersion(ctx context.Context, in *PublishVersionReq, opts ...grpc.CallOption) (*PublishVersionRes, error)
 }
 
 type learnClient struct {
@@ -238,24 +232,6 @@ func (c *learnClient) DeleteLearnPages(ctx context.Context, in *DeleteLearnPages
 	return out, nil
 }
 
-func (c *learnClient) CreateEditVersion(ctx context.Context, in *CreateEditVersionReq, opts ...grpc.CallOption) (*CreateEditVersionRes, error) {
-	out := new(CreateEditVersionRes)
-	err := c.cc.Invoke(ctx, Learn_CreateEditVersion_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *learnClient) PublishVersion(ctx context.Context, in *PublishVersionReq, opts ...grpc.CallOption) (*PublishVersionRes, error) {
-	out := new(PublishVersionRes)
-	err := c.cc.Invoke(ctx, Learn_PublishVersion_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // LearnServer is the server API for Learn service.
 // All implementations must embed UnimplementedLearnServer
 // for forward compatibility
@@ -290,10 +266,6 @@ type LearnServer interface {
 	Snippet(context.Context, *SnippetReq) (*SnippetRes, error)
 	// delete learning pages
 	DeleteLearnPages(context.Context, *DeleteLearnPagesReq) (*DeleteLearnPagesRes, error)
-	// create edit version
-	CreateEditVersion(context.Context, *CreateEditVersionReq) (*CreateEditVersionRes, error)
-	// publish version
-	PublishVersion(context.Context, *PublishVersionReq) (*PublishVersionRes, error)
 	mustEmbedUnimplementedLearnServer()
 }
 
@@ -339,12 +311,6 @@ func (UnimplementedLearnServer) Snippet(context.Context, *SnippetReq) (*SnippetR
 }
 func (UnimplementedLearnServer) DeleteLearnPages(context.Context, *DeleteLearnPagesReq) (*DeleteLearnPagesRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteLearnPages not implemented")
-}
-func (UnimplementedLearnServer) CreateEditVersion(context.Context, *CreateEditVersionReq) (*CreateEditVersionRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateEditVersion not implemented")
-}
-func (UnimplementedLearnServer) PublishVersion(context.Context, *PublishVersionReq) (*PublishVersionRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method PublishVersion not implemented")
 }
 func (UnimplementedLearnServer) mustEmbedUnimplementedLearnServer() {}
 
@@ -596,42 +562,6 @@ func _Learn_DeleteLearnPages_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Learn_CreateEditVersion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateEditVersionReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LearnServer).CreateEditVersion(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Learn_CreateEditVersion_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LearnServer).CreateEditVersion(ctx, req.(*CreateEditVersionReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Learn_PublishVersion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PublishVersionReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LearnServer).PublishVersion(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Learn_PublishVersion_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LearnServer).PublishVersion(ctx, req.(*PublishVersionReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // Learn_ServiceDesc is the grpc.ServiceDesc for Learn service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -686,14 +616,6 @@ var Learn_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteLearnPages",
 			Handler:    _Learn_DeleteLearnPages_Handler,
-		},
-		{
-			MethodName: "CreateEditVersion",
-			Handler:    _Learn_CreateEditVersion_Handler,
-		},
-		{
-			MethodName: "PublishVersion",
-			Handler:    _Learn_PublishVersion_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

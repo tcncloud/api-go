@@ -74,10 +74,6 @@ const (
 	LearnSnippetProcedure = "/api.v0alpha.Learn/Snippet"
 	// LearnDeleteLearnPagesProcedure is the fully-qualified name of the Learn's DeleteLearnPages RPC.
 	LearnDeleteLearnPagesProcedure = "/api.v0alpha.Learn/DeleteLearnPages"
-	// LearnCreateEditVersionProcedure is the fully-qualified name of the Learn's CreateEditVersion RPC.
-	LearnCreateEditVersionProcedure = "/api.v0alpha.Learn/CreateEditVersion"
-	// LearnPublishVersionProcedure is the fully-qualified name of the Learn's PublishVersion RPC.
-	LearnPublishVersionProcedure = "/api.v0alpha.Learn/PublishVersion"
 )
 
 // LearnClient is a client for the api.v0alpha.Learn service.
@@ -112,10 +108,6 @@ type LearnClient interface {
 	Snippet(context.Context, *connect_go.Request[v0alpha.SnippetReq]) (*connect_go.Response[v0alpha.SnippetRes], error)
 	// delete learning pages
 	DeleteLearnPages(context.Context, *connect_go.Request[v0alpha.DeleteLearnPagesReq]) (*connect_go.Response[v0alpha.DeleteLearnPagesRes], error)
-	// create edit version
-	CreateEditVersion(context.Context, *connect_go.Request[v0alpha.CreateEditVersionReq]) (*connect_go.Response[v0alpha.CreateEditVersionRes], error)
-	// publish version
-	PublishVersion(context.Context, *connect_go.Request[v0alpha.PublishVersionReq]) (*connect_go.Response[v0alpha.PublishVersionRes], error)
 }
 
 // NewLearnClient constructs a client for the api.v0alpha.Learn service. By default, it uses the
@@ -193,16 +185,6 @@ func NewLearnClient(httpClient connect_go.HTTPClient, baseURL string, opts ...co
 			baseURL+LearnDeleteLearnPagesProcedure,
 			opts...,
 		),
-		createEditVersion: connect_go.NewClient[v0alpha.CreateEditVersionReq, v0alpha.CreateEditVersionRes](
-			httpClient,
-			baseURL+LearnCreateEditVersionProcedure,
-			opts...,
-		),
-		publishVersion: connect_go.NewClient[v0alpha.PublishVersionReq, v0alpha.PublishVersionRes](
-			httpClient,
-			baseURL+LearnPublishVersionProcedure,
-			opts...,
-		),
 	}
 }
 
@@ -221,8 +203,6 @@ type learnClient struct {
 	deleteStandalone        *connect_go.Client[v0alpha.DeleteStandaloneReq, v0alpha.DeleteStandaloneRes]
 	snippet                 *connect_go.Client[v0alpha.SnippetReq, v0alpha.SnippetRes]
 	deleteLearnPages        *connect_go.Client[v0alpha.DeleteLearnPagesReq, v0alpha.DeleteLearnPagesRes]
-	createEditVersion       *connect_go.Client[v0alpha.CreateEditVersionReq, v0alpha.CreateEditVersionRes]
-	publishVersion          *connect_go.Client[v0alpha.PublishVersionReq, v0alpha.PublishVersionRes]
 }
 
 // Exist calls api.v0alpha.Learn.Exist.
@@ -290,16 +270,6 @@ func (c *learnClient) DeleteLearnPages(ctx context.Context, req *connect_go.Requ
 	return c.deleteLearnPages.CallUnary(ctx, req)
 }
 
-// CreateEditVersion calls api.v0alpha.Learn.CreateEditVersion.
-func (c *learnClient) CreateEditVersion(ctx context.Context, req *connect_go.Request[v0alpha.CreateEditVersionReq]) (*connect_go.Response[v0alpha.CreateEditVersionRes], error) {
-	return c.createEditVersion.CallUnary(ctx, req)
-}
-
-// PublishVersion calls api.v0alpha.Learn.PublishVersion.
-func (c *learnClient) PublishVersion(ctx context.Context, req *connect_go.Request[v0alpha.PublishVersionReq]) (*connect_go.Response[v0alpha.PublishVersionRes], error) {
-	return c.publishVersion.CallUnary(ctx, req)
-}
-
 // LearnHandler is an implementation of the api.v0alpha.Learn service.
 type LearnHandler interface {
 	// check if learning page already exists
@@ -332,10 +302,6 @@ type LearnHandler interface {
 	Snippet(context.Context, *connect_go.Request[v0alpha.SnippetReq]) (*connect_go.Response[v0alpha.SnippetRes], error)
 	// delete learning pages
 	DeleteLearnPages(context.Context, *connect_go.Request[v0alpha.DeleteLearnPagesReq]) (*connect_go.Response[v0alpha.DeleteLearnPagesRes], error)
-	// create edit version
-	CreateEditVersion(context.Context, *connect_go.Request[v0alpha.CreateEditVersionReq]) (*connect_go.Response[v0alpha.CreateEditVersionRes], error)
-	// publish version
-	PublishVersion(context.Context, *connect_go.Request[v0alpha.PublishVersionReq]) (*connect_go.Response[v0alpha.PublishVersionRes], error)
 }
 
 // NewLearnHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -409,16 +375,6 @@ func NewLearnHandler(svc LearnHandler, opts ...connect_go.HandlerOption) (string
 		svc.DeleteLearnPages,
 		opts...,
 	)
-	learnCreateEditVersionHandler := connect_go.NewUnaryHandler(
-		LearnCreateEditVersionProcedure,
-		svc.CreateEditVersion,
-		opts...,
-	)
-	learnPublishVersionHandler := connect_go.NewUnaryHandler(
-		LearnPublishVersionProcedure,
-		svc.PublishVersion,
-		opts...,
-	)
 	return "/api.v0alpha.Learn/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case LearnExistProcedure:
@@ -447,10 +403,6 @@ func NewLearnHandler(svc LearnHandler, opts ...connect_go.HandlerOption) (string
 			learnSnippetHandler.ServeHTTP(w, r)
 		case LearnDeleteLearnPagesProcedure:
 			learnDeleteLearnPagesHandler.ServeHTTP(w, r)
-		case LearnCreateEditVersionProcedure:
-			learnCreateEditVersionHandler.ServeHTTP(w, r)
-		case LearnPublishVersionProcedure:
-			learnPublishVersionHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -510,12 +462,4 @@ func (UnimplementedLearnHandler) Snippet(context.Context, *connect_go.Request[v0
 
 func (UnimplementedLearnHandler) DeleteLearnPages(context.Context, *connect_go.Request[v0alpha.DeleteLearnPagesReq]) (*connect_go.Response[v0alpha.DeleteLearnPagesRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.DeleteLearnPages is not implemented"))
-}
-
-func (UnimplementedLearnHandler) CreateEditVersion(context.Context, *connect_go.Request[v0alpha.CreateEditVersionReq]) (*connect_go.Response[v0alpha.CreateEditVersionRes], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.CreateEditVersion is not implemented"))
-}
-
-func (UnimplementedLearnHandler) PublishVersion(context.Context, *connect_go.Request[v0alpha.PublishVersionReq]) (*connect_go.Response[v0alpha.PublishVersionRes], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.PublishVersion is not implemented"))
 }
