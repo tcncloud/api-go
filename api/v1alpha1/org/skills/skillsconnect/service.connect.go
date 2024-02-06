@@ -72,6 +72,12 @@ const (
 	// SkillsServiceListSkillGroupsMembersProcedure is the fully-qualified name of the SkillsService's
 	// ListSkillGroupsMembers RPC.
 	SkillsServiceListSkillGroupsMembersProcedure = "/api.v1alpha1.org.skills.SkillsService/ListSkillGroupsMembers"
+	// SkillsServiceGetAgentSkillsProcedure is the fully-qualified name of the SkillsService's
+	// GetAgentSkills RPC.
+	SkillsServiceGetAgentSkillsProcedure = "/api.v1alpha1.org.skills.SkillsService/GetAgentSkills"
+	// SkillsServiceListSkillsForCurrentAgentProcedure is the fully-qualified name of the
+	// SkillsService's ListSkillsForCurrentAgent RPC.
+	SkillsServiceListSkillsForCurrentAgentProcedure = "/api.v1alpha1.org.skills.SkillsService/ListSkillsForCurrentAgent"
 )
 
 // SkillsServiceClient is a client for the api.v1alpha1.org.skills.SkillsService service.
@@ -102,6 +108,21 @@ type SkillsServiceClient interface {
 	GetSkillGroupMembers(context.Context, *connect_go.Request[skills.GetSkillGroupMembersRequest]) (*connect_go.Response[skills.GetSkillGroupMembersResponse], error)
 	// ListSkillGroupsMembers gets the members of a skill group for each skill group in an Org.
 	ListSkillGroupsMembers(context.Context, *connect_go.Request[skills.ListSkillGroupsMembersRequest]) (*connect_go.Response[skills.ListSkillGroupsMembersResponse], error)
+	// Gets the skills of the requesting agent. This includes agent skills, hunt group skills, and extension skills(PBX).
+	// Skills will be returned as a value pair (name, level).
+	// For agent skills, the name of each skill will be the agent_skill_sid.
+	// All other skills' names (hunt group and PBX) will be given special formats.
+	// The requesting agent and hunt_group_sid skills will be defaulted to the max level (1000 and 100 respectively).
+	//
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the hunt_group_sid in the request in invalid.
+	GetAgentSkills(context.Context, *connect_go.Request[skills.GetAgentSkillsRequest]) (*connect_go.Response[skills.GetAgentSkillsResponse], error)
+	// Returns a list of skills for the current agent.
+	ListSkillsForCurrentAgent(context.Context, *connect_go.Request[skills.ListSkillsForCurrentAgentRequest]) (*connect_go.Response[skills.ListSkillsForCurrentAgentResponse], error)
 }
 
 // NewSkillsServiceClient constructs a client for the api.v1alpha1.org.skills.SkillsService service.
@@ -179,24 +200,36 @@ func NewSkillsServiceClient(httpClient connect_go.HTTPClient, baseURL string, op
 			baseURL+SkillsServiceListSkillGroupsMembersProcedure,
 			opts...,
 		),
+		getAgentSkills: connect_go.NewClient[skills.GetAgentSkillsRequest, skills.GetAgentSkillsResponse](
+			httpClient,
+			baseURL+SkillsServiceGetAgentSkillsProcedure,
+			opts...,
+		),
+		listSkillsForCurrentAgent: connect_go.NewClient[skills.ListSkillsForCurrentAgentRequest, skills.ListSkillsForCurrentAgentResponse](
+			httpClient,
+			baseURL+SkillsServiceListSkillsForCurrentAgentProcedure,
+			opts...,
+		),
 	}
 }
 
 // skillsServiceClient implements SkillsServiceClient.
 type skillsServiceClient struct {
-	createSkillGroup         *connect_go.Client[skills.CreateSkillGroupRequest, skills.CreateSkillGroupResponse]
-	listSkillGroups          *connect_go.Client[skills.ListSkillGroupsRequest, skills.ListSkillGroupsResponse]
-	updateSkillGroup         *connect_go.Client[skills.UpdateSkillGroupRequest, skills.UpdateSkillGroupResponse]
-	getSkillGroup            *connect_go.Client[skills.GetSkillGroupRequest, skills.GetSkillGroupResponse]
-	deleteSkillGroup         *connect_go.Client[skills.DeleteSkillGroupRequest, skills.DeleteSkillGroupResponse]
-	removeSkillFromAllGroups *connect_go.Client[skills.RemoveSkillFromAllGroupsRequest, skills.RemoveSkillFromAllGroupsResponse]
-	assignSkillGroups        *connect_go.Client[skills.AssignSkillGroupsRequest, skills.AssignSkillGroupsResponse]
-	updateUsersOnSkillGroup  *connect_go.Client[skills.UpdateUsersOnSkillGroupRequest, skills.UpdateUsersOnSkillGroupResponse]
-	revokeSkillGroups        *connect_go.Client[skills.RevokeSkillGroupsRequest, skills.RevokeSkillGroupsResponse]
-	getUserSkillGroups       *connect_go.Client[skills.GetUserSkillGroupsRequest, skills.GetUserSkillGroupsResponse]
-	getUserSkills            *connect_go.Client[skills.GetUserSkillsRequest, skills.GetUserSkillsResponse]
-	getSkillGroupMembers     *connect_go.Client[skills.GetSkillGroupMembersRequest, skills.GetSkillGroupMembersResponse]
-	listSkillGroupsMembers   *connect_go.Client[skills.ListSkillGroupsMembersRequest, skills.ListSkillGroupsMembersResponse]
+	createSkillGroup          *connect_go.Client[skills.CreateSkillGroupRequest, skills.CreateSkillGroupResponse]
+	listSkillGroups           *connect_go.Client[skills.ListSkillGroupsRequest, skills.ListSkillGroupsResponse]
+	updateSkillGroup          *connect_go.Client[skills.UpdateSkillGroupRequest, skills.UpdateSkillGroupResponse]
+	getSkillGroup             *connect_go.Client[skills.GetSkillGroupRequest, skills.GetSkillGroupResponse]
+	deleteSkillGroup          *connect_go.Client[skills.DeleteSkillGroupRequest, skills.DeleteSkillGroupResponse]
+	removeSkillFromAllGroups  *connect_go.Client[skills.RemoveSkillFromAllGroupsRequest, skills.RemoveSkillFromAllGroupsResponse]
+	assignSkillGroups         *connect_go.Client[skills.AssignSkillGroupsRequest, skills.AssignSkillGroupsResponse]
+	updateUsersOnSkillGroup   *connect_go.Client[skills.UpdateUsersOnSkillGroupRequest, skills.UpdateUsersOnSkillGroupResponse]
+	revokeSkillGroups         *connect_go.Client[skills.RevokeSkillGroupsRequest, skills.RevokeSkillGroupsResponse]
+	getUserSkillGroups        *connect_go.Client[skills.GetUserSkillGroupsRequest, skills.GetUserSkillGroupsResponse]
+	getUserSkills             *connect_go.Client[skills.GetUserSkillsRequest, skills.GetUserSkillsResponse]
+	getSkillGroupMembers      *connect_go.Client[skills.GetSkillGroupMembersRequest, skills.GetSkillGroupMembersResponse]
+	listSkillGroupsMembers    *connect_go.Client[skills.ListSkillGroupsMembersRequest, skills.ListSkillGroupsMembersResponse]
+	getAgentSkills            *connect_go.Client[skills.GetAgentSkillsRequest, skills.GetAgentSkillsResponse]
+	listSkillsForCurrentAgent *connect_go.Client[skills.ListSkillsForCurrentAgentRequest, skills.ListSkillsForCurrentAgentResponse]
 }
 
 // CreateSkillGroup calls api.v1alpha1.org.skills.SkillsService.CreateSkillGroup.
@@ -264,6 +297,16 @@ func (c *skillsServiceClient) ListSkillGroupsMembers(ctx context.Context, req *c
 	return c.listSkillGroupsMembers.CallUnary(ctx, req)
 }
 
+// GetAgentSkills calls api.v1alpha1.org.skills.SkillsService.GetAgentSkills.
+func (c *skillsServiceClient) GetAgentSkills(ctx context.Context, req *connect_go.Request[skills.GetAgentSkillsRequest]) (*connect_go.Response[skills.GetAgentSkillsResponse], error) {
+	return c.getAgentSkills.CallUnary(ctx, req)
+}
+
+// ListSkillsForCurrentAgent calls api.v1alpha1.org.skills.SkillsService.ListSkillsForCurrentAgent.
+func (c *skillsServiceClient) ListSkillsForCurrentAgent(ctx context.Context, req *connect_go.Request[skills.ListSkillsForCurrentAgentRequest]) (*connect_go.Response[skills.ListSkillsForCurrentAgentResponse], error) {
+	return c.listSkillsForCurrentAgent.CallUnary(ctx, req)
+}
+
 // SkillsServiceHandler is an implementation of the api.v1alpha1.org.skills.SkillsService service.
 type SkillsServiceHandler interface {
 	// CreateSkillGroup creates a new skill group.
@@ -292,6 +335,21 @@ type SkillsServiceHandler interface {
 	GetSkillGroupMembers(context.Context, *connect_go.Request[skills.GetSkillGroupMembersRequest]) (*connect_go.Response[skills.GetSkillGroupMembersResponse], error)
 	// ListSkillGroupsMembers gets the members of a skill group for each skill group in an Org.
 	ListSkillGroupsMembers(context.Context, *connect_go.Request[skills.ListSkillGroupsMembersRequest]) (*connect_go.Response[skills.ListSkillGroupsMembersResponse], error)
+	// Gets the skills of the requesting agent. This includes agent skills, hunt group skills, and extension skills(PBX).
+	// Skills will be returned as a value pair (name, level).
+	// For agent skills, the name of each skill will be the agent_skill_sid.
+	// All other skills' names (hunt group and PBX) will be given special formats.
+	// The requesting agent and hunt_group_sid skills will be defaulted to the max level (1000 and 100 respectively).
+	//
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the hunt_group_sid in the request in invalid.
+	GetAgentSkills(context.Context, *connect_go.Request[skills.GetAgentSkillsRequest]) (*connect_go.Response[skills.GetAgentSkillsResponse], error)
+	// Returns a list of skills for the current agent.
+	ListSkillsForCurrentAgent(context.Context, *connect_go.Request[skills.ListSkillsForCurrentAgentRequest]) (*connect_go.Response[skills.ListSkillsForCurrentAgentResponse], error)
 }
 
 // NewSkillsServiceHandler builds an HTTP handler from the service implementation. It returns the
@@ -365,6 +423,16 @@ func NewSkillsServiceHandler(svc SkillsServiceHandler, opts ...connect_go.Handle
 		svc.ListSkillGroupsMembers,
 		opts...,
 	)
+	skillsServiceGetAgentSkillsHandler := connect_go.NewUnaryHandler(
+		SkillsServiceGetAgentSkillsProcedure,
+		svc.GetAgentSkills,
+		opts...,
+	)
+	skillsServiceListSkillsForCurrentAgentHandler := connect_go.NewUnaryHandler(
+		SkillsServiceListSkillsForCurrentAgentProcedure,
+		svc.ListSkillsForCurrentAgent,
+		opts...,
+	)
 	return "/api.v1alpha1.org.skills.SkillsService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case SkillsServiceCreateSkillGroupProcedure:
@@ -393,6 +461,10 @@ func NewSkillsServiceHandler(svc SkillsServiceHandler, opts ...connect_go.Handle
 			skillsServiceGetSkillGroupMembersHandler.ServeHTTP(w, r)
 		case SkillsServiceListSkillGroupsMembersProcedure:
 			skillsServiceListSkillGroupsMembersHandler.ServeHTTP(w, r)
+		case SkillsServiceGetAgentSkillsProcedure:
+			skillsServiceGetAgentSkillsHandler.ServeHTTP(w, r)
+		case SkillsServiceListSkillsForCurrentAgentProcedure:
+			skillsServiceListSkillsForCurrentAgentHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -452,4 +524,12 @@ func (UnimplementedSkillsServiceHandler) GetSkillGroupMembers(context.Context, *
 
 func (UnimplementedSkillsServiceHandler) ListSkillGroupsMembers(context.Context, *connect_go.Request[skills.ListSkillGroupsMembersRequest]) (*connect_go.Response[skills.ListSkillGroupsMembersResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.skills.SkillsService.ListSkillGroupsMembers is not implemented"))
+}
+
+func (UnimplementedSkillsServiceHandler) GetAgentSkills(context.Context, *connect_go.Request[skills.GetAgentSkillsRequest]) (*connect_go.Response[skills.GetAgentSkillsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.skills.SkillsService.GetAgentSkills is not implemented"))
+}
+
+func (UnimplementedSkillsServiceHandler) ListSkillsForCurrentAgent(context.Context, *connect_go.Request[skills.ListSkillsForCurrentAgentRequest]) (*connect_go.Response[skills.ListSkillsForCurrentAgentResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.skills.SkillsService.ListSkillsForCurrentAgent is not implemented"))
 }
