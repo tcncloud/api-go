@@ -466,7 +466,7 @@ type ComplianceClient interface {
 	// The method will return a stream of the matching holidays as Rows.
 	// Required permissions:
 	//
-	//	COMPLIANCE
+	//	none
 	QueryHolidays(context.Context, *connect_go.Request[v0alpha.Query]) (*connect_go.Response[v0alpha.QueryHolidaysResponse], error)
 }
 
@@ -1426,7 +1426,7 @@ type ComplianceHandler interface {
 	// The method will return a stream of the matching holidays as Rows.
 	// Required permissions:
 	//
-	//	COMPLIANCE
+	//	none
 	QueryHolidays(context.Context, *connect_go.Request[v0alpha.Query]) (*connect_go.Response[v0alpha.QueryHolidaysResponse], error)
 }
 

@@ -334,7 +334,7 @@ type ComplianceClient interface {
 	// The method will return a stream of the matching holidays as Rows.
 	// Required permissions:
 	//
-	//	COMPLIANCE
+	//	none
 	QueryHolidays(ctx context.Context, in *Query, opts ...grpc.CallOption) (*QueryHolidaysResponse, error)
 }
 
@@ -1184,7 +1184,7 @@ type ComplianceServer interface {
 	// The method will return a stream of the matching holidays as Rows.
 	// Required permissions:
 	//
-	//	COMPLIANCE
+	//	none
 	QueryHolidays(context.Context, *Query) (*QueryHolidaysResponse, error)
 	mustEmbedUnimplementedComplianceServer()
 }
