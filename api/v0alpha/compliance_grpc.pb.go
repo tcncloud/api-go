@@ -83,6 +83,7 @@ const (
 	Compliance_DeleteConsentTopic_FullMethodName             = "/api.v0alpha.Compliance/DeleteConsentTopic"
 	Compliance_UpdateConsentTopic_FullMethodName             = "/api.v0alpha.Compliance/UpdateConsentTopic"
 	Compliance_ProcessOutboundCall_FullMethodName            = "/api.v0alpha.Compliance/ProcessOutboundCall"
+	Compliance_QueryHolidays_FullMethodName                  = "/api.v0alpha.Compliance/QueryHolidays"
 )
 
 // ComplianceClient is the client API for Compliance service.
@@ -329,6 +330,12 @@ type ComplianceClient interface {
 	//
 	//	AGENT
 	ProcessOutboundCall(ctx context.Context, in *ProcessOutboundCallReq, opts ...grpc.CallOption) (*ProcessRes, error)
+	// Return the holidays that match the Query.
+	// The method will return a stream of the matching holidays as Rows.
+	// Required permissions:
+	//
+	//	COMPLIANCE
+	QueryHolidays(ctx context.Context, in *Query, opts ...grpc.CallOption) (Compliance_QueryHolidaysClient, error)
 }
 
 type complianceClient struct {
@@ -920,6 +927,38 @@ func (c *complianceClient) ProcessOutboundCall(ctx context.Context, in *ProcessO
 	return out, nil
 }
 
+func (c *complianceClient) QueryHolidays(ctx context.Context, in *Query, opts ...grpc.CallOption) (Compliance_QueryHolidaysClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Compliance_ServiceDesc.Streams[1], Compliance_QueryHolidays_FullMethodName, opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &complianceQueryHolidaysClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type Compliance_QueryHolidaysClient interface {
+	Recv() (*Row, error)
+	grpc.ClientStream
+}
+
+type complianceQueryHolidaysClient struct {
+	grpc.ClientStream
+}
+
+func (x *complianceQueryHolidaysClient) Recv() (*Row, error) {
+	m := new(Row)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // ComplianceServer is the server API for Compliance service.
 // All implementations must embed UnimplementedComplianceServer
 // for forward compatibility
@@ -1164,6 +1203,12 @@ type ComplianceServer interface {
 	//
 	//	AGENT
 	ProcessOutboundCall(context.Context, *ProcessOutboundCallReq) (*ProcessRes, error)
+	// Return the holidays that match the Query.
+	// The method will return a stream of the matching holidays as Rows.
+	// Required permissions:
+	//
+	//	COMPLIANCE
+	QueryHolidays(*Query, Compliance_QueryHolidaysServer) error
 	mustEmbedUnimplementedComplianceServer()
 }
 
@@ -1356,6 +1401,9 @@ func (UnimplementedComplianceServer) UpdateConsentTopic(context.Context, *Update
 }
 func (UnimplementedComplianceServer) ProcessOutboundCall(context.Context, *ProcessOutboundCallReq) (*ProcessRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ProcessOutboundCall not implemented")
+}
+func (UnimplementedComplianceServer) QueryHolidays(*Query, Compliance_QueryHolidaysServer) error {
+	return status.Errorf(codes.Unimplemented, "method QueryHolidays not implemented")
 }
 func (UnimplementedComplianceServer) mustEmbedUnimplementedComplianceServer() {}
 
@@ -2489,6 +2537,27 @@ func _Compliance_ProcessOutboundCall_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Compliance_QueryHolidays_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(Query)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(ComplianceServer).QueryHolidays(m, &complianceQueryHolidaysServer{stream})
+}
+
+type Compliance_QueryHolidaysServer interface {
+	Send(*Row) error
+	grpc.ServerStream
+}
+
+type complianceQueryHolidaysServer struct {
+	grpc.ServerStream
+}
+
+func (x *complianceQueryHolidaysServer) Send(m *Row) error {
+	return x.ServerStream.SendMsg(m)
+}
+
 // Compliance_ServiceDesc is the grpc.ServiceDesc for Compliance service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -2745,6 +2814,11 @@ var Compliance_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "ListRuleSets",
 			Handler:       _Compliance_ListRuleSets_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "QueryHolidays",
+			Handler:       _Compliance_QueryHolidays_Handler,
 			ServerStreams: true,
 		},
 	},
