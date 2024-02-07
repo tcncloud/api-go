@@ -30,13 +30,13 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type IdpServiceClient interface {
 	// CreateClient creates a client.
-	CreateClient(ctx context.Context, in *CreateClientReq, opts ...grpc.CallOption) (*CreateClientResp, error)
+	CreateClient(ctx context.Context, in *CreateClientRequest, opts ...grpc.CallOption) (*CreateClientResponse, error)
 	// UpdateClient updates an existing client
-	UpdateClient(ctx context.Context, in *UpdateClientReq, opts ...grpc.CallOption) (*UpdateClientResp, error)
+	UpdateClient(ctx context.Context, in *UpdateClientRequest, opts ...grpc.CallOption) (*UpdateClientResponse, error)
 	// DeleteClient deletes the provided client.
-	DeleteClient(ctx context.Context, in *DeleteClientReq, opts ...grpc.CallOption) (*DeleteClientResp, error)
+	DeleteClient(ctx context.Context, in *DeleteClientRequest, opts ...grpc.CallOption) (*DeleteClientResponse, error)
 	// ListClients returns all clients.
-	ListClients(ctx context.Context, in *ListClientsReq, opts ...grpc.CallOption) (*ListClientsResp, error)
+	ListClients(ctx context.Context, in *ListClientsRequest, opts ...grpc.CallOption) (*ListClientsResponse, error)
 }
 
 type idpServiceClient struct {
@@ -47,8 +47,8 @@ func NewIdpServiceClient(cc grpc.ClientConnInterface) IdpServiceClient {
 	return &idpServiceClient{cc}
 }
 
-func (c *idpServiceClient) CreateClient(ctx context.Context, in *CreateClientReq, opts ...grpc.CallOption) (*CreateClientResp, error) {
-	out := new(CreateClientResp)
+func (c *idpServiceClient) CreateClient(ctx context.Context, in *CreateClientRequest, opts ...grpc.CallOption) (*CreateClientResponse, error) {
+	out := new(CreateClientResponse)
 	err := c.cc.Invoke(ctx, IdpService_CreateClient_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -56,8 +56,8 @@ func (c *idpServiceClient) CreateClient(ctx context.Context, in *CreateClientReq
 	return out, nil
 }
 
-func (c *idpServiceClient) UpdateClient(ctx context.Context, in *UpdateClientReq, opts ...grpc.CallOption) (*UpdateClientResp, error) {
-	out := new(UpdateClientResp)
+func (c *idpServiceClient) UpdateClient(ctx context.Context, in *UpdateClientRequest, opts ...grpc.CallOption) (*UpdateClientResponse, error) {
+	out := new(UpdateClientResponse)
 	err := c.cc.Invoke(ctx, IdpService_UpdateClient_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -65,8 +65,8 @@ func (c *idpServiceClient) UpdateClient(ctx context.Context, in *UpdateClientReq
 	return out, nil
 }
 
-func (c *idpServiceClient) DeleteClient(ctx context.Context, in *DeleteClientReq, opts ...grpc.CallOption) (*DeleteClientResp, error) {
-	out := new(DeleteClientResp)
+func (c *idpServiceClient) DeleteClient(ctx context.Context, in *DeleteClientRequest, opts ...grpc.CallOption) (*DeleteClientResponse, error) {
+	out := new(DeleteClientResponse)
 	err := c.cc.Invoke(ctx, IdpService_DeleteClient_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -74,8 +74,8 @@ func (c *idpServiceClient) DeleteClient(ctx context.Context, in *DeleteClientReq
 	return out, nil
 }
 
-func (c *idpServiceClient) ListClients(ctx context.Context, in *ListClientsReq, opts ...grpc.CallOption) (*ListClientsResp, error) {
-	out := new(ListClientsResp)
+func (c *idpServiceClient) ListClients(ctx context.Context, in *ListClientsRequest, opts ...grpc.CallOption) (*ListClientsResponse, error) {
+	out := new(ListClientsResponse)
 	err := c.cc.Invoke(ctx, IdpService_ListClients_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -88,13 +88,13 @@ func (c *idpServiceClient) ListClients(ctx context.Context, in *ListClientsReq, 
 // for forward compatibility
 type IdpServiceServer interface {
 	// CreateClient creates a client.
-	CreateClient(context.Context, *CreateClientReq) (*CreateClientResp, error)
+	CreateClient(context.Context, *CreateClientRequest) (*CreateClientResponse, error)
 	// UpdateClient updates an existing client
-	UpdateClient(context.Context, *UpdateClientReq) (*UpdateClientResp, error)
+	UpdateClient(context.Context, *UpdateClientRequest) (*UpdateClientResponse, error)
 	// DeleteClient deletes the provided client.
-	DeleteClient(context.Context, *DeleteClientReq) (*DeleteClientResp, error)
+	DeleteClient(context.Context, *DeleteClientRequest) (*DeleteClientResponse, error)
 	// ListClients returns all clients.
-	ListClients(context.Context, *ListClientsReq) (*ListClientsResp, error)
+	ListClients(context.Context, *ListClientsRequest) (*ListClientsResponse, error)
 	mustEmbedUnimplementedIdpServiceServer()
 }
 
@@ -102,16 +102,16 @@ type IdpServiceServer interface {
 type UnimplementedIdpServiceServer struct {
 }
 
-func (UnimplementedIdpServiceServer) CreateClient(context.Context, *CreateClientReq) (*CreateClientResp, error) {
+func (UnimplementedIdpServiceServer) CreateClient(context.Context, *CreateClientRequest) (*CreateClientResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateClient not implemented")
 }
-func (UnimplementedIdpServiceServer) UpdateClient(context.Context, *UpdateClientReq) (*UpdateClientResp, error) {
+func (UnimplementedIdpServiceServer) UpdateClient(context.Context, *UpdateClientRequest) (*UpdateClientResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateClient not implemented")
 }
-func (UnimplementedIdpServiceServer) DeleteClient(context.Context, *DeleteClientReq) (*DeleteClientResp, error) {
+func (UnimplementedIdpServiceServer) DeleteClient(context.Context, *DeleteClientRequest) (*DeleteClientResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteClient not implemented")
 }
-func (UnimplementedIdpServiceServer) ListClients(context.Context, *ListClientsReq) (*ListClientsResp, error) {
+func (UnimplementedIdpServiceServer) ListClients(context.Context, *ListClientsRequest) (*ListClientsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListClients not implemented")
 }
 func (UnimplementedIdpServiceServer) mustEmbedUnimplementedIdpServiceServer() {}
@@ -128,7 +128,7 @@ func RegisterIdpServiceServer(s grpc.ServiceRegistrar, srv IdpServiceServer) {
 }
 
 func _IdpService_CreateClient_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateClientReq)
+	in := new(CreateClientRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -140,13 +140,13 @@ func _IdpService_CreateClient_Handler(srv interface{}, ctx context.Context, dec 
 		FullMethod: IdpService_CreateClient_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(IdpServiceServer).CreateClient(ctx, req.(*CreateClientReq))
+		return srv.(IdpServiceServer).CreateClient(ctx, req.(*CreateClientRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _IdpService_UpdateClient_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateClientReq)
+	in := new(UpdateClientRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -158,13 +158,13 @@ func _IdpService_UpdateClient_Handler(srv interface{}, ctx context.Context, dec 
 		FullMethod: IdpService_UpdateClient_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(IdpServiceServer).UpdateClient(ctx, req.(*UpdateClientReq))
+		return srv.(IdpServiceServer).UpdateClient(ctx, req.(*UpdateClientRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _IdpService_DeleteClient_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteClientReq)
+	in := new(DeleteClientRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -176,13 +176,13 @@ func _IdpService_DeleteClient_Handler(srv interface{}, ctx context.Context, dec 
 		FullMethod: IdpService_DeleteClient_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(IdpServiceServer).DeleteClient(ctx, req.(*DeleteClientReq))
+		return srv.(IdpServiceServer).DeleteClient(ctx, req.(*DeleteClientRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _IdpService_ListClients_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListClientsReq)
+	in := new(ListClientsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -194,7 +194,7 @@ func _IdpService_ListClients_Handler(srv interface{}, ctx context.Context, dec f
 		FullMethod: IdpService_ListClients_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(IdpServiceServer).ListClients(ctx, req.(*ListClientsReq))
+		return srv.(IdpServiceServer).ListClients(ctx, req.(*ListClientsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

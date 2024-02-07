@@ -21,8 +21,8 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// CreateClientReq is a request to make a client.
-type CreateClientReq struct {
+// CreateClientRequest is a request to make a client.
+type CreateClientRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -30,8 +30,8 @@ type CreateClientReq struct {
 	Client *org.IdpClient `protobuf:"bytes,1,opt,name=client,proto3" json:"client,omitempty"`
 }
 
-func (x *CreateClientReq) Reset() {
-	*x = CreateClientReq{}
+func (x *CreateClientRequest) Reset() {
+	*x = CreateClientRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_api_v1alpha1_org_idp_entities_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -39,13 +39,13 @@ func (x *CreateClientReq) Reset() {
 	}
 }
 
-func (x *CreateClientReq) String() string {
+func (x *CreateClientRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CreateClientReq) ProtoMessage() {}
+func (*CreateClientRequest) ProtoMessage() {}
 
-func (x *CreateClientReq) ProtoReflect() protoreflect.Message {
+func (x *CreateClientRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_api_v1alpha1_org_idp_entities_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -57,20 +57,20 @@ func (x *CreateClientReq) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CreateClientReq.ProtoReflect.Descriptor instead.
-func (*CreateClientReq) Descriptor() ([]byte, []int) {
+// Deprecated: Use CreateClientRequest.ProtoReflect.Descriptor instead.
+func (*CreateClientRequest) Descriptor() ([]byte, []int) {
 	return file_api_v1alpha1_org_idp_entities_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *CreateClientReq) GetClient() *org.IdpClient {
+func (x *CreateClientRequest) GetClient() *org.IdpClient {
 	if x != nil {
 		return x.Client
 	}
 	return nil
 }
 
-// CreateClientResp returns the response from creating a client.
-type CreateClientResp struct {
+// CreateClientResponse returns the response from creating a client.
+type CreateClientResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -79,8 +79,8 @@ type CreateClientResp struct {
 	Client        *org.IdpClient `protobuf:"bytes,2,opt,name=client,proto3" json:"client,omitempty"`
 }
 
-func (x *CreateClientResp) Reset() {
-	*x = CreateClientResp{}
+func (x *CreateClientResponse) Reset() {
+	*x = CreateClientResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_api_v1alpha1_org_idp_entities_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -88,13 +88,13 @@ func (x *CreateClientResp) Reset() {
 	}
 }
 
-func (x *CreateClientResp) String() string {
+func (x *CreateClientResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CreateClientResp) ProtoMessage() {}
+func (*CreateClientResponse) ProtoMessage() {}
 
-func (x *CreateClientResp) ProtoReflect() protoreflect.Message {
+func (x *CreateClientResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_api_v1alpha1_org_idp_entities_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -106,27 +106,27 @@ func (x *CreateClientResp) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CreateClientResp.ProtoReflect.Descriptor instead.
-func (*CreateClientResp) Descriptor() ([]byte, []int) {
+// Deprecated: Use CreateClientResponse.ProtoReflect.Descriptor instead.
+func (*CreateClientResponse) Descriptor() ([]byte, []int) {
 	return file_api_v1alpha1_org_idp_entities_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *CreateClientResp) GetAlreadyExists() bool {
+func (x *CreateClientResponse) GetAlreadyExists() bool {
 	if x != nil {
 		return x.AlreadyExists
 	}
 	return false
 }
 
-func (x *CreateClientResp) GetClient() *org.IdpClient {
+func (x *CreateClientResponse) GetClient() *org.IdpClient {
 	if x != nil {
 		return x.Client
 	}
 	return nil
 }
 
-// DeleteClientReq is a request to delete a client.
-type DeleteClientReq struct {
+// DeleteClientRequest is a request to delete a client.
+type DeleteClientRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -135,8 +135,8 @@ type DeleteClientReq struct {
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 }
 
-func (x *DeleteClientReq) Reset() {
-	*x = DeleteClientReq{}
+func (x *DeleteClientRequest) Reset() {
+	*x = DeleteClientRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_api_v1alpha1_org_idp_entities_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -144,13 +144,13 @@ func (x *DeleteClientReq) Reset() {
 	}
 }
 
-func (x *DeleteClientReq) String() string {
+func (x *DeleteClientRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*DeleteClientReq) ProtoMessage() {}
+func (*DeleteClientRequest) ProtoMessage() {}
 
-func (x *DeleteClientReq) ProtoReflect() protoreflect.Message {
+func (x *DeleteClientRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_api_v1alpha1_org_idp_entities_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -162,20 +162,20 @@ func (x *DeleteClientReq) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use DeleteClientReq.ProtoReflect.Descriptor instead.
-func (*DeleteClientReq) Descriptor() ([]byte, []int) {
+// Deprecated: Use DeleteClientRequest.ProtoReflect.Descriptor instead.
+func (*DeleteClientRequest) Descriptor() ([]byte, []int) {
 	return file_api_v1alpha1_org_idp_entities_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *DeleteClientReq) GetId() string {
+func (x *DeleteClientRequest) GetId() string {
 	if x != nil {
 		return x.Id
 	}
 	return ""
 }
 
-// DeleteClientResp determines if the client is deleted successfully.
-type DeleteClientResp struct {
+// DeleteClientResponse determines if the client is deleted successfully.
+type DeleteClientResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -183,8 +183,8 @@ type DeleteClientResp struct {
 	NotFound bool `protobuf:"varint,1,opt,name=not_found,json=notFound,proto3" json:"not_found,omitempty"`
 }
 
-func (x *DeleteClientResp) Reset() {
-	*x = DeleteClientResp{}
+func (x *DeleteClientResponse) Reset() {
+	*x = DeleteClientResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_api_v1alpha1_org_idp_entities_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -192,13 +192,13 @@ func (x *DeleteClientResp) Reset() {
 	}
 }
 
-func (x *DeleteClientResp) String() string {
+func (x *DeleteClientResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*DeleteClientResp) ProtoMessage() {}
+func (*DeleteClientResponse) ProtoMessage() {}
 
-func (x *DeleteClientResp) ProtoReflect() protoreflect.Message {
+func (x *DeleteClientResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_api_v1alpha1_org_idp_entities_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -210,20 +210,20 @@ func (x *DeleteClientResp) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use DeleteClientResp.ProtoReflect.Descriptor instead.
-func (*DeleteClientResp) Descriptor() ([]byte, []int) {
+// Deprecated: Use DeleteClientResponse.ProtoReflect.Descriptor instead.
+func (*DeleteClientResponse) Descriptor() ([]byte, []int) {
 	return file_api_v1alpha1_org_idp_entities_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *DeleteClientResp) GetNotFound() bool {
+func (x *DeleteClientResponse) GetNotFound() bool {
 	if x != nil {
 		return x.NotFound
 	}
 	return false
 }
 
-// UpdateClientReq is a request to update an existing client.
-type UpdateClientReq struct {
+// UpdateClientRequest is a request to update an existing client.
+type UpdateClientRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -231,8 +231,8 @@ type UpdateClientReq struct {
 	Client *org.IdpClient `protobuf:"bytes,1,opt,name=client,proto3" json:"client,omitempty"`
 }
 
-func (x *UpdateClientReq) Reset() {
-	*x = UpdateClientReq{}
+func (x *UpdateClientRequest) Reset() {
+	*x = UpdateClientRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_api_v1alpha1_org_idp_entities_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -240,13 +240,13 @@ func (x *UpdateClientReq) Reset() {
 	}
 }
 
-func (x *UpdateClientReq) String() string {
+func (x *UpdateClientRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*UpdateClientReq) ProtoMessage() {}
+func (*UpdateClientRequest) ProtoMessage() {}
 
-func (x *UpdateClientReq) ProtoReflect() protoreflect.Message {
+func (x *UpdateClientRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_api_v1alpha1_org_idp_entities_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -258,20 +258,20 @@ func (x *UpdateClientReq) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use UpdateClientReq.ProtoReflect.Descriptor instead.
-func (*UpdateClientReq) Descriptor() ([]byte, []int) {
+// Deprecated: Use UpdateClientRequest.ProtoReflect.Descriptor instead.
+func (*UpdateClientRequest) Descriptor() ([]byte, []int) {
 	return file_api_v1alpha1_org_idp_entities_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *UpdateClientReq) GetClient() *org.IdpClient {
+func (x *UpdateClientRequest) GetClient() *org.IdpClient {
 	if x != nil {
 		return x.Client
 	}
 	return nil
 }
 
-// UpdateClientResp returns the response from updating a client.
-type UpdateClientResp struct {
+// UpdateClientResponse returns the response from updating a client.
+type UpdateClientResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -279,8 +279,8 @@ type UpdateClientResp struct {
 	NotFound bool `protobuf:"varint,1,opt,name=not_found,json=notFound,proto3" json:"not_found,omitempty"`
 }
 
-func (x *UpdateClientResp) Reset() {
-	*x = UpdateClientResp{}
+func (x *UpdateClientResponse) Reset() {
+	*x = UpdateClientResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_api_v1alpha1_org_idp_entities_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -288,13 +288,13 @@ func (x *UpdateClientResp) Reset() {
 	}
 }
 
-func (x *UpdateClientResp) String() string {
+func (x *UpdateClientResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*UpdateClientResp) ProtoMessage() {}
+func (*UpdateClientResponse) ProtoMessage() {}
 
-func (x *UpdateClientResp) ProtoReflect() protoreflect.Message {
+func (x *UpdateClientResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_api_v1alpha1_org_idp_entities_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -306,26 +306,27 @@ func (x *UpdateClientResp) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use UpdateClientResp.ProtoReflect.Descriptor instead.
-func (*UpdateClientResp) Descriptor() ([]byte, []int) {
+// Deprecated: Use UpdateClientResponse.ProtoReflect.Descriptor instead.
+func (*UpdateClientResponse) Descriptor() ([]byte, []int) {
 	return file_api_v1alpha1_org_idp_entities_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *UpdateClientResp) GetNotFound() bool {
+func (x *UpdateClientResponse) GetNotFound() bool {
 	if x != nil {
 		return x.NotFound
 	}
 	return false
 }
 
-type ListClientsReq struct {
+// ListClientsRequest is a request to list all existing clients.
+type ListClientsRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 }
 
-func (x *ListClientsReq) Reset() {
-	*x = ListClientsReq{}
+func (x *ListClientsRequest) Reset() {
+	*x = ListClientsRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_api_v1alpha1_org_idp_entities_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -333,13 +334,13 @@ func (x *ListClientsReq) Reset() {
 	}
 }
 
-func (x *ListClientsReq) String() string {
+func (x *ListClientsRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ListClientsReq) ProtoMessage() {}
+func (*ListClientsRequest) ProtoMessage() {}
 
-func (x *ListClientsReq) ProtoReflect() protoreflect.Message {
+func (x *ListClientsRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_api_v1alpha1_org_idp_entities_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -351,12 +352,13 @@ func (x *ListClientsReq) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ListClientsReq.ProtoReflect.Descriptor instead.
-func (*ListClientsReq) Descriptor() ([]byte, []int) {
+// Deprecated: Use ListClientsRequest.ProtoReflect.Descriptor instead.
+func (*ListClientsRequest) Descriptor() ([]byte, []int) {
 	return file_api_v1alpha1_org_idp_entities_proto_rawDescGZIP(), []int{6}
 }
 
-type ListClientsResp struct {
+// ListClientsResponse returns the response from listing all clients.
+type ListClientsResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -364,8 +366,8 @@ type ListClientsResp struct {
 	Clients []*org.IdpClient `protobuf:"bytes,1,rep,name=clients,proto3" json:"clients,omitempty"`
 }
 
-func (x *ListClientsResp) Reset() {
-	*x = ListClientsResp{}
+func (x *ListClientsResponse) Reset() {
+	*x = ListClientsResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_api_v1alpha1_org_idp_entities_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -373,13 +375,13 @@ func (x *ListClientsResp) Reset() {
 	}
 }
 
-func (x *ListClientsResp) String() string {
+func (x *ListClientsResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ListClientsResp) ProtoMessage() {}
+func (*ListClientsResponse) ProtoMessage() {}
 
-func (x *ListClientsResp) ProtoReflect() protoreflect.Message {
+func (x *ListClientsResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_api_v1alpha1_org_idp_entities_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -391,12 +393,12 @@ func (x *ListClientsResp) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ListClientsResp.ProtoReflect.Descriptor instead.
-func (*ListClientsResp) Descriptor() ([]byte, []int) {
+// Deprecated: Use ListClientsResponse.ProtoReflect.Descriptor instead.
+func (*ListClientsResponse) Descriptor() ([]byte, []int) {
 	return file_api_v1alpha1_org_idp_entities_proto_rawDescGZIP(), []int{7}
 }
 
-func (x *ListClientsResp) GetClients() []*org.IdpClient {
+func (x *ListClientsResponse) GetClients() []*org.IdpClient {
 	if x != nil {
 		return x.Clients
 	}
@@ -411,33 +413,35 @@ var file_api_v1alpha1_org_idp_entities_proto_rawDesc = []byte{
 	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x14, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70,
 	0x68, 0x61, 0x31, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x69, 0x64, 0x70, 0x1a, 0x19, 0x61, 0x70, 0x69,
 	0x2f, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2f, 0x6f, 0x72, 0x67, 0x2f, 0x69, 0x64, 0x70,
-	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x45, 0x0a, 0x0f, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65,
-	0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x12, 0x32, 0x0a, 0x06, 0x63, 0x6c, 0x69,
-	0x65, 0x6e, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x61, 0x70, 0x69, 0x2e,
-	0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x49, 0x64, 0x70, 0x43,
-	0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x06, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x22, 0x6d, 0x0a,
-	0x10, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73,
-	0x70, 0x12, 0x25, 0x0a, 0x0e, 0x61, 0x6c, 0x72, 0x65, 0x61, 0x64, 0x79, 0x5f, 0x65, 0x78, 0x69,
-	0x73, 0x74, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0d, 0x61, 0x6c, 0x72, 0x65, 0x61,
-	0x64, 0x79, 0x45, 0x78, 0x69, 0x73, 0x74, 0x73, 0x12, 0x32, 0x0a, 0x06, 0x63, 0x6c, 0x69, 0x65,
-	0x6e, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63,
-	0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x49, 0x64, 0x70, 0x43, 0x6c,
-	0x69, 0x65, 0x6e, 0x74, 0x52, 0x06, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x22, 0x21, 0x0a, 0x0f,
-	0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x12,
-	0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x22,
-	0x2f, 0x0a, 0x10, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52,
-	0x65, 0x73, 0x70, 0x12, 0x1b, 0x0a, 0x09, 0x6e, 0x6f, 0x74, 0x5f, 0x66, 0x6f, 0x75, 0x6e, 0x64,
+	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x49, 0x0a, 0x13, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65,
+	0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x32, 0x0a,
+	0x06, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e,
+	0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x6f, 0x72, 0x67, 0x2e,
+	0x49, 0x64, 0x70, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x06, 0x63, 0x6c, 0x69, 0x65, 0x6e,
+	0x74, 0x22, 0x71, 0x0a, 0x14, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x43, 0x6c, 0x69, 0x65, 0x6e,
+	0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x25, 0x0a, 0x0e, 0x61, 0x6c, 0x72,
+	0x65, 0x61, 0x64, 0x79, 0x5f, 0x65, 0x78, 0x69, 0x73, 0x74, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x08, 0x52, 0x0d, 0x61, 0x6c, 0x72, 0x65, 0x61, 0x64, 0x79, 0x45, 0x78, 0x69, 0x73, 0x74, 0x73,
+	0x12, 0x32, 0x0a, 0x06, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x1a, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x6f,
+	0x72, 0x67, 0x2e, 0x49, 0x64, 0x70, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x06, 0x63, 0x6c,
+	0x69, 0x65, 0x6e, 0x74, 0x22, 0x25, 0x0a, 0x13, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x43, 0x6c,
+	0x69, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x69,
+	0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x22, 0x33, 0x0a, 0x14, 0x44,
+	0x65, 0x6c, 0x65, 0x74, 0x65, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x6e, 0x6f, 0x74, 0x5f, 0x66, 0x6f, 0x75, 0x6e, 0x64,
 	0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x08, 0x6e, 0x6f, 0x74, 0x46, 0x6f, 0x75, 0x6e, 0x64,
-	0x22, 0x45, 0x0a, 0x0f, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74,
-	0x52, 0x65, 0x71, 0x12, 0x32, 0x0a, 0x06, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e,
-	0x73, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x49, 0x64, 0x70, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52,
-	0x06, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x22, 0x2f, 0x0a, 0x10, 0x55, 0x70, 0x64, 0x61, 0x74,
-	0x65, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70, 0x12, 0x1b, 0x0a, 0x09, 0x6e,
-	0x6f, 0x74, 0x5f, 0x66, 0x6f, 0x75, 0x6e, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x08,
-	0x6e, 0x6f, 0x74, 0x46, 0x6f, 0x75, 0x6e, 0x64, 0x22, 0x10, 0x0a, 0x0e, 0x4c, 0x69, 0x73, 0x74,
-	0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x73, 0x52, 0x65, 0x71, 0x22, 0x47, 0x0a, 0x0f, 0x4c, 0x69,
-	0x73, 0x74, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x73, 0x52, 0x65, 0x73, 0x70, 0x12, 0x34, 0x0a,
+	0x22, 0x49, 0x0a, 0x13, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x32, 0x0a, 0x06, 0x63, 0x6c, 0x69, 0x65, 0x6e,
+	0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f,
+	0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x49, 0x64, 0x70, 0x43, 0x6c, 0x69,
+	0x65, 0x6e, 0x74, 0x52, 0x06, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x22, 0x33, 0x0a, 0x14, 0x55,
+	0x70, 0x64, 0x61, 0x74, 0x65, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x6e, 0x6f, 0x74, 0x5f, 0x66, 0x6f, 0x75, 0x6e, 0x64,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x08, 0x6e, 0x6f, 0x74, 0x46, 0x6f, 0x75, 0x6e, 0x64,
+	0x22, 0x14, 0x0a, 0x12, 0x4c, 0x69, 0x73, 0x74, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x73, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x22, 0x4b, 0x0a, 0x13, 0x4c, 0x69, 0x73, 0x74, 0x43, 0x6c,
+	0x69, 0x65, 0x6e, 0x74, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x34, 0x0a,
 	0x07, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1a,
 	0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x6f, 0x72, 0x67,
 	0x2e, 0x49, 0x64, 0x70, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x07, 0x63, 0x6c, 0x69, 0x65,
@@ -471,21 +475,21 @@ func file_api_v1alpha1_org_idp_entities_proto_rawDescGZIP() []byte {
 
 var file_api_v1alpha1_org_idp_entities_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_api_v1alpha1_org_idp_entities_proto_goTypes = []interface{}{
-	(*CreateClientReq)(nil),  // 0: api.v1alpha1.org.idp.CreateClientReq
-	(*CreateClientResp)(nil), // 1: api.v1alpha1.org.idp.CreateClientResp
-	(*DeleteClientReq)(nil),  // 2: api.v1alpha1.org.idp.DeleteClientReq
-	(*DeleteClientResp)(nil), // 3: api.v1alpha1.org.idp.DeleteClientResp
-	(*UpdateClientReq)(nil),  // 4: api.v1alpha1.org.idp.UpdateClientReq
-	(*UpdateClientResp)(nil), // 5: api.v1alpha1.org.idp.UpdateClientResp
-	(*ListClientsReq)(nil),   // 6: api.v1alpha1.org.idp.ListClientsReq
-	(*ListClientsResp)(nil),  // 7: api.v1alpha1.org.idp.ListClientsResp
-	(*org.IdpClient)(nil),    // 8: api.commons.org.IdpClient
+	(*CreateClientRequest)(nil),  // 0: api.v1alpha1.org.idp.CreateClientRequest
+	(*CreateClientResponse)(nil), // 1: api.v1alpha1.org.idp.CreateClientResponse
+	(*DeleteClientRequest)(nil),  // 2: api.v1alpha1.org.idp.DeleteClientRequest
+	(*DeleteClientResponse)(nil), // 3: api.v1alpha1.org.idp.DeleteClientResponse
+	(*UpdateClientRequest)(nil),  // 4: api.v1alpha1.org.idp.UpdateClientRequest
+	(*UpdateClientResponse)(nil), // 5: api.v1alpha1.org.idp.UpdateClientResponse
+	(*ListClientsRequest)(nil),   // 6: api.v1alpha1.org.idp.ListClientsRequest
+	(*ListClientsResponse)(nil),  // 7: api.v1alpha1.org.idp.ListClientsResponse
+	(*org.IdpClient)(nil),        // 8: api.commons.org.IdpClient
 }
 var file_api_v1alpha1_org_idp_entities_proto_depIdxs = []int32{
-	8, // 0: api.v1alpha1.org.idp.CreateClientReq.client:type_name -> api.commons.org.IdpClient
-	8, // 1: api.v1alpha1.org.idp.CreateClientResp.client:type_name -> api.commons.org.IdpClient
-	8, // 2: api.v1alpha1.org.idp.UpdateClientReq.client:type_name -> api.commons.org.IdpClient
-	8, // 3: api.v1alpha1.org.idp.ListClientsResp.clients:type_name -> api.commons.org.IdpClient
+	8, // 0: api.v1alpha1.org.idp.CreateClientRequest.client:type_name -> api.commons.org.IdpClient
+	8, // 1: api.v1alpha1.org.idp.CreateClientResponse.client:type_name -> api.commons.org.IdpClient
+	8, // 2: api.v1alpha1.org.idp.UpdateClientRequest.client:type_name -> api.commons.org.IdpClient
+	8, // 3: api.v1alpha1.org.idp.ListClientsResponse.clients:type_name -> api.commons.org.IdpClient
 	4, // [4:4] is the sub-list for method output_type
 	4, // [4:4] is the sub-list for method input_type
 	4, // [4:4] is the sub-list for extension type_name
@@ -500,7 +504,7 @@ func file_api_v1alpha1_org_idp_entities_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_api_v1alpha1_org_idp_entities_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CreateClientReq); i {
+			switch v := v.(*CreateClientRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -512,7 +516,7 @@ func file_api_v1alpha1_org_idp_entities_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_idp_entities_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CreateClientResp); i {
+			switch v := v.(*CreateClientResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -524,7 +528,7 @@ func file_api_v1alpha1_org_idp_entities_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_idp_entities_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DeleteClientReq); i {
+			switch v := v.(*DeleteClientRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -536,7 +540,7 @@ func file_api_v1alpha1_org_idp_entities_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_idp_entities_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DeleteClientResp); i {
+			switch v := v.(*DeleteClientResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -548,7 +552,7 @@ func file_api_v1alpha1_org_idp_entities_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_idp_entities_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpdateClientReq); i {
+			switch v := v.(*UpdateClientRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -560,7 +564,7 @@ func file_api_v1alpha1_org_idp_entities_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_idp_entities_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpdateClientResp); i {
+			switch v := v.(*UpdateClientResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -572,7 +576,7 @@ func file_api_v1alpha1_org_idp_entities_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_idp_entities_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListClientsReq); i {
+			switch v := v.(*ListClientsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -584,7 +588,7 @@ func file_api_v1alpha1_org_idp_entities_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_idp_entities_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListClientsResp); i {
+			switch v := v.(*ListClientsResponse); i {
 			case 0:
 				return &v.state
 			case 1:

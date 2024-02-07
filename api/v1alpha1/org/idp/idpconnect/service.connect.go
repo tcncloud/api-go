@@ -46,13 +46,13 @@ const (
 // IdpServiceClient is a client for the api.v1alpha1.org.idp.IdpService service.
 type IdpServiceClient interface {
 	// CreateClient creates a client.
-	CreateClient(context.Context, *connect_go.Request[idp.CreateClientReq]) (*connect_go.Response[idp.CreateClientResp], error)
+	CreateClient(context.Context, *connect_go.Request[idp.CreateClientRequest]) (*connect_go.Response[idp.CreateClientResponse], error)
 	// UpdateClient updates an existing client
-	UpdateClient(context.Context, *connect_go.Request[idp.UpdateClientReq]) (*connect_go.Response[idp.UpdateClientResp], error)
+	UpdateClient(context.Context, *connect_go.Request[idp.UpdateClientRequest]) (*connect_go.Response[idp.UpdateClientResponse], error)
 	// DeleteClient deletes the provided client.
-	DeleteClient(context.Context, *connect_go.Request[idp.DeleteClientReq]) (*connect_go.Response[idp.DeleteClientResp], error)
+	DeleteClient(context.Context, *connect_go.Request[idp.DeleteClientRequest]) (*connect_go.Response[idp.DeleteClientResponse], error)
 	// ListClients returns all clients.
-	ListClients(context.Context, *connect_go.Request[idp.ListClientsReq]) (*connect_go.Response[idp.ListClientsResp], error)
+	ListClients(context.Context, *connect_go.Request[idp.ListClientsRequest]) (*connect_go.Response[idp.ListClientsResponse], error)
 }
 
 // NewIdpServiceClient constructs a client for the api.v1alpha1.org.idp.IdpService service. By
@@ -65,22 +65,22 @@ type IdpServiceClient interface {
 func NewIdpServiceClient(httpClient connect_go.HTTPClient, baseURL string, opts ...connect_go.ClientOption) IdpServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
 	return &idpServiceClient{
-		createClient: connect_go.NewClient[idp.CreateClientReq, idp.CreateClientResp](
+		createClient: connect_go.NewClient[idp.CreateClientRequest, idp.CreateClientResponse](
 			httpClient,
 			baseURL+IdpServiceCreateClientProcedure,
 			opts...,
 		),
-		updateClient: connect_go.NewClient[idp.UpdateClientReq, idp.UpdateClientResp](
+		updateClient: connect_go.NewClient[idp.UpdateClientRequest, idp.UpdateClientResponse](
 			httpClient,
 			baseURL+IdpServiceUpdateClientProcedure,
 			opts...,
 		),
-		deleteClient: connect_go.NewClient[idp.DeleteClientReq, idp.DeleteClientResp](
+		deleteClient: connect_go.NewClient[idp.DeleteClientRequest, idp.DeleteClientResponse](
 			httpClient,
 			baseURL+IdpServiceDeleteClientProcedure,
 			opts...,
 		),
-		listClients: connect_go.NewClient[idp.ListClientsReq, idp.ListClientsResp](
+		listClients: connect_go.NewClient[idp.ListClientsRequest, idp.ListClientsResponse](
 			httpClient,
 			baseURL+IdpServiceListClientsProcedure,
 			opts...,
@@ -90,42 +90,42 @@ func NewIdpServiceClient(httpClient connect_go.HTTPClient, baseURL string, opts 
 
 // idpServiceClient implements IdpServiceClient.
 type idpServiceClient struct {
-	createClient *connect_go.Client[idp.CreateClientReq, idp.CreateClientResp]
-	updateClient *connect_go.Client[idp.UpdateClientReq, idp.UpdateClientResp]
-	deleteClient *connect_go.Client[idp.DeleteClientReq, idp.DeleteClientResp]
-	listClients  *connect_go.Client[idp.ListClientsReq, idp.ListClientsResp]
+	createClient *connect_go.Client[idp.CreateClientRequest, idp.CreateClientResponse]
+	updateClient *connect_go.Client[idp.UpdateClientRequest, idp.UpdateClientResponse]
+	deleteClient *connect_go.Client[idp.DeleteClientRequest, idp.DeleteClientResponse]
+	listClients  *connect_go.Client[idp.ListClientsRequest, idp.ListClientsResponse]
 }
 
 // CreateClient calls api.v1alpha1.org.idp.IdpService.CreateClient.
-func (c *idpServiceClient) CreateClient(ctx context.Context, req *connect_go.Request[idp.CreateClientReq]) (*connect_go.Response[idp.CreateClientResp], error) {
+func (c *idpServiceClient) CreateClient(ctx context.Context, req *connect_go.Request[idp.CreateClientRequest]) (*connect_go.Response[idp.CreateClientResponse], error) {
 	return c.createClient.CallUnary(ctx, req)
 }
 
 // UpdateClient calls api.v1alpha1.org.idp.IdpService.UpdateClient.
-func (c *idpServiceClient) UpdateClient(ctx context.Context, req *connect_go.Request[idp.UpdateClientReq]) (*connect_go.Response[idp.UpdateClientResp], error) {
+func (c *idpServiceClient) UpdateClient(ctx context.Context, req *connect_go.Request[idp.UpdateClientRequest]) (*connect_go.Response[idp.UpdateClientResponse], error) {
 	return c.updateClient.CallUnary(ctx, req)
 }
 
 // DeleteClient calls api.v1alpha1.org.idp.IdpService.DeleteClient.
-func (c *idpServiceClient) DeleteClient(ctx context.Context, req *connect_go.Request[idp.DeleteClientReq]) (*connect_go.Response[idp.DeleteClientResp], error) {
+func (c *idpServiceClient) DeleteClient(ctx context.Context, req *connect_go.Request[idp.DeleteClientRequest]) (*connect_go.Response[idp.DeleteClientResponse], error) {
 	return c.deleteClient.CallUnary(ctx, req)
 }
 
 // ListClients calls api.v1alpha1.org.idp.IdpService.ListClients.
-func (c *idpServiceClient) ListClients(ctx context.Context, req *connect_go.Request[idp.ListClientsReq]) (*connect_go.Response[idp.ListClientsResp], error) {
+func (c *idpServiceClient) ListClients(ctx context.Context, req *connect_go.Request[idp.ListClientsRequest]) (*connect_go.Response[idp.ListClientsResponse], error) {
 	return c.listClients.CallUnary(ctx, req)
 }
 
 // IdpServiceHandler is an implementation of the api.v1alpha1.org.idp.IdpService service.
 type IdpServiceHandler interface {
 	// CreateClient creates a client.
-	CreateClient(context.Context, *connect_go.Request[idp.CreateClientReq]) (*connect_go.Response[idp.CreateClientResp], error)
+	CreateClient(context.Context, *connect_go.Request[idp.CreateClientRequest]) (*connect_go.Response[idp.CreateClientResponse], error)
 	// UpdateClient updates an existing client
-	UpdateClient(context.Context, *connect_go.Request[idp.UpdateClientReq]) (*connect_go.Response[idp.UpdateClientResp], error)
+	UpdateClient(context.Context, *connect_go.Request[idp.UpdateClientRequest]) (*connect_go.Response[idp.UpdateClientResponse], error)
 	// DeleteClient deletes the provided client.
-	DeleteClient(context.Context, *connect_go.Request[idp.DeleteClientReq]) (*connect_go.Response[idp.DeleteClientResp], error)
+	DeleteClient(context.Context, *connect_go.Request[idp.DeleteClientRequest]) (*connect_go.Response[idp.DeleteClientResponse], error)
 	// ListClients returns all clients.
-	ListClients(context.Context, *connect_go.Request[idp.ListClientsReq]) (*connect_go.Response[idp.ListClientsResp], error)
+	ListClients(context.Context, *connect_go.Request[idp.ListClientsRequest]) (*connect_go.Response[idp.ListClientsResponse], error)
 }
 
 // NewIdpServiceHandler builds an HTTP handler from the service implementation. It returns the path
@@ -173,18 +173,18 @@ func NewIdpServiceHandler(svc IdpServiceHandler, opts ...connect_go.HandlerOptio
 // UnimplementedIdpServiceHandler returns CodeUnimplemented from all methods.
 type UnimplementedIdpServiceHandler struct{}
 
-func (UnimplementedIdpServiceHandler) CreateClient(context.Context, *connect_go.Request[idp.CreateClientReq]) (*connect_go.Response[idp.CreateClientResp], error) {
+func (UnimplementedIdpServiceHandler) CreateClient(context.Context, *connect_go.Request[idp.CreateClientRequest]) (*connect_go.Response[idp.CreateClientResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.idp.IdpService.CreateClient is not implemented"))
 }
 
-func (UnimplementedIdpServiceHandler) UpdateClient(context.Context, *connect_go.Request[idp.UpdateClientReq]) (*connect_go.Response[idp.UpdateClientResp], error) {
+func (UnimplementedIdpServiceHandler) UpdateClient(context.Context, *connect_go.Request[idp.UpdateClientRequest]) (*connect_go.Response[idp.UpdateClientResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.idp.IdpService.UpdateClient is not implemented"))
 }
 
-func (UnimplementedIdpServiceHandler) DeleteClient(context.Context, *connect_go.Request[idp.DeleteClientReq]) (*connect_go.Response[idp.DeleteClientResp], error) {
+func (UnimplementedIdpServiceHandler) DeleteClient(context.Context, *connect_go.Request[idp.DeleteClientRequest]) (*connect_go.Response[idp.DeleteClientResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.idp.IdpService.DeleteClient is not implemented"))
 }
 
-func (UnimplementedIdpServiceHandler) ListClients(context.Context, *connect_go.Request[idp.ListClientsReq]) (*connect_go.Response[idp.ListClientsResp], error) {
+func (UnimplementedIdpServiceHandler) ListClients(context.Context, *connect_go.Request[idp.ListClientsRequest]) (*connect_go.Response[idp.ListClientsResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.idp.IdpService.ListClients is not implemented"))
 }
