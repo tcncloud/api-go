@@ -467,7 +467,7 @@ type ComplianceClient interface {
 	// Required permissions:
 	//
 	//	COMPLIANCE
-	QueryHolidays(context.Context, *connect_go.Request[v0alpha.Query]) (*connect_go.ServerStreamForClient[v0alpha.Row], error)
+	QueryHolidays(context.Context, *connect_go.Request[v0alpha.Query]) (*connect_go.Response[v0alpha.QueryHolidaysResponse], error)
 }
 
 // NewComplianceClient constructs a client for the api.v0alpha.Compliance service. By default, it
@@ -790,7 +790,7 @@ func NewComplianceClient(httpClient connect_go.HTTPClient, baseURL string, opts 
 			baseURL+ComplianceProcessOutboundCallProcedure,
 			opts...,
 		),
-		queryHolidays: connect_go.NewClient[v0alpha.Query, v0alpha.Row](
+		queryHolidays: connect_go.NewClient[v0alpha.Query, v0alpha.QueryHolidaysResponse](
 			httpClient,
 			baseURL+ComplianceQueryHolidaysProcedure,
 			opts...,
@@ -862,7 +862,7 @@ type complianceClient struct {
 	deleteConsentTopic             *connect_go.Client[v0alpha.ConsentTopic, v0alpha.Empty]
 	updateConsentTopic             *connect_go.Client[v0alpha.UpdateConsentTopicReq, v0alpha.Empty]
 	processOutboundCall            *connect_go.Client[v0alpha.ProcessOutboundCallReq, v0alpha.ProcessRes]
-	queryHolidays                  *connect_go.Client[v0alpha.Query, v0alpha.Row]
+	queryHolidays                  *connect_go.Client[v0alpha.Query, v0alpha.QueryHolidaysResponse]
 }
 
 // RuleAutoComplete calls api.v0alpha.Compliance.RuleAutoComplete.
@@ -1176,8 +1176,8 @@ func (c *complianceClient) ProcessOutboundCall(ctx context.Context, req *connect
 }
 
 // QueryHolidays calls api.v0alpha.Compliance.QueryHolidays.
-func (c *complianceClient) QueryHolidays(ctx context.Context, req *connect_go.Request[v0alpha.Query]) (*connect_go.ServerStreamForClient[v0alpha.Row], error) {
-	return c.queryHolidays.CallServerStream(ctx, req)
+func (c *complianceClient) QueryHolidays(ctx context.Context, req *connect_go.Request[v0alpha.Query]) (*connect_go.Response[v0alpha.QueryHolidaysResponse], error) {
+	return c.queryHolidays.CallUnary(ctx, req)
 }
 
 // ComplianceHandler is an implementation of the api.v0alpha.Compliance service.
@@ -1427,7 +1427,7 @@ type ComplianceHandler interface {
 	// Required permissions:
 	//
 	//	COMPLIANCE
-	QueryHolidays(context.Context, *connect_go.Request[v0alpha.Query], *connect_go.ServerStream[v0alpha.Row]) error
+	QueryHolidays(context.Context, *connect_go.Request[v0alpha.Query]) (*connect_go.Response[v0alpha.QueryHolidaysResponse], error)
 }
 
 // NewComplianceHandler builds an HTTP handler from the service implementation. It returns the path
@@ -1746,7 +1746,7 @@ func NewComplianceHandler(svc ComplianceHandler, opts ...connect_go.HandlerOptio
 		svc.ProcessOutboundCall,
 		opts...,
 	)
-	complianceQueryHolidaysHandler := connect_go.NewServerStreamHandler(
+	complianceQueryHolidaysHandler := connect_go.NewUnaryHandler(
 		ComplianceQueryHolidaysProcedure,
 		svc.QueryHolidays,
 		opts...,
@@ -2136,6 +2136,6 @@ func (UnimplementedComplianceHandler) ProcessOutboundCall(context.Context, *conn
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Compliance.ProcessOutboundCall is not implemented"))
 }
 
-func (UnimplementedComplianceHandler) QueryHolidays(context.Context, *connect_go.Request[v0alpha.Query], *connect_go.ServerStream[v0alpha.Row]) error {
-	return connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Compliance.QueryHolidays is not implemented"))
+func (UnimplementedComplianceHandler) QueryHolidays(context.Context, *connect_go.Request[v0alpha.Query]) (*connect_go.Response[v0alpha.QueryHolidaysResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Compliance.QueryHolidays is not implemented"))
 }

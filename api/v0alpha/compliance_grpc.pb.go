@@ -335,7 +335,7 @@ type ComplianceClient interface {
 	// Required permissions:
 	//
 	//	COMPLIANCE
-	QueryHolidays(ctx context.Context, in *Query, opts ...grpc.CallOption) (Compliance_QueryHolidaysClient, error)
+	QueryHolidays(ctx context.Context, in *Query, opts ...grpc.CallOption) (*QueryHolidaysResponse, error)
 }
 
 type complianceClient struct {
@@ -927,36 +927,13 @@ func (c *complianceClient) ProcessOutboundCall(ctx context.Context, in *ProcessO
 	return out, nil
 }
 
-func (c *complianceClient) QueryHolidays(ctx context.Context, in *Query, opts ...grpc.CallOption) (Compliance_QueryHolidaysClient, error) {
-	stream, err := c.cc.NewStream(ctx, &Compliance_ServiceDesc.Streams[1], Compliance_QueryHolidays_FullMethodName, opts...)
+func (c *complianceClient) QueryHolidays(ctx context.Context, in *Query, opts ...grpc.CallOption) (*QueryHolidaysResponse, error) {
+	out := new(QueryHolidaysResponse)
+	err := c.cc.Invoke(ctx, Compliance_QueryHolidays_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &complianceQueryHolidaysClient{stream}
-	if err := x.ClientStream.SendMsg(in); err != nil {
-		return nil, err
-	}
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	return x, nil
-}
-
-type Compliance_QueryHolidaysClient interface {
-	Recv() (*Row, error)
-	grpc.ClientStream
-}
-
-type complianceQueryHolidaysClient struct {
-	grpc.ClientStream
-}
-
-func (x *complianceQueryHolidaysClient) Recv() (*Row, error) {
-	m := new(Row)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
+	return out, nil
 }
 
 // ComplianceServer is the server API for Compliance service.
@@ -1208,7 +1185,7 @@ type ComplianceServer interface {
 	// Required permissions:
 	//
 	//	COMPLIANCE
-	QueryHolidays(*Query, Compliance_QueryHolidaysServer) error
+	QueryHolidays(context.Context, *Query) (*QueryHolidaysResponse, error)
 	mustEmbedUnimplementedComplianceServer()
 }
 
@@ -1402,8 +1379,8 @@ func (UnimplementedComplianceServer) UpdateConsentTopic(context.Context, *Update
 func (UnimplementedComplianceServer) ProcessOutboundCall(context.Context, *ProcessOutboundCallReq) (*ProcessRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ProcessOutboundCall not implemented")
 }
-func (UnimplementedComplianceServer) QueryHolidays(*Query, Compliance_QueryHolidaysServer) error {
-	return status.Errorf(codes.Unimplemented, "method QueryHolidays not implemented")
+func (UnimplementedComplianceServer) QueryHolidays(context.Context, *Query) (*QueryHolidaysResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QueryHolidays not implemented")
 }
 func (UnimplementedComplianceServer) mustEmbedUnimplementedComplianceServer() {}
 
@@ -2537,25 +2514,22 @@ func _Compliance_ProcessOutboundCall_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Compliance_QueryHolidays_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(Query)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
+func _Compliance_QueryHolidays_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Query)
+	if err := dec(in); err != nil {
+		return nil, err
 	}
-	return srv.(ComplianceServer).QueryHolidays(m, &complianceQueryHolidaysServer{stream})
-}
-
-type Compliance_QueryHolidaysServer interface {
-	Send(*Row) error
-	grpc.ServerStream
-}
-
-type complianceQueryHolidaysServer struct {
-	grpc.ServerStream
-}
-
-func (x *complianceQueryHolidaysServer) Send(m *Row) error {
-	return x.ServerStream.SendMsg(m)
+	if interceptor == nil {
+		return srv.(ComplianceServer).QueryHolidays(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Compliance_QueryHolidays_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ComplianceServer).QueryHolidays(ctx, req.(*Query))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 // Compliance_ServiceDesc is the grpc.ServiceDesc for Compliance service.
@@ -2809,16 +2783,15 @@ var Compliance_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "ProcessOutboundCall",
 			Handler:    _Compliance_ProcessOutboundCall_Handler,
 		},
+		{
+			MethodName: "QueryHolidays",
+			Handler:    _Compliance_QueryHolidays_Handler,
+		},
 	},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "ListRuleSets",
 			Handler:       _Compliance_ListRuleSets_Handler,
-			ServerStreams: true,
-		},
-		{
-			StreamName:    "QueryHolidays",
-			Handler:       _Compliance_QueryHolidays_Handler,
 			ServerStreams: true,
 		},
 	},
