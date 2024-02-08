@@ -330,12 +330,12 @@ type ComplianceClient interface {
 	//
 	//	AGENT
 	ProcessOutboundCall(ctx context.Context, in *ProcessOutboundCallReq, opts ...grpc.CallOption) (*ProcessRes, error)
-	// Return the holidays that match the Query.
-	// The method will return a stream of the matching holidays as Rows.
+	// Return the holidays that match the request.
+	// The method will return a stream of the matching holidays.
 	// Required permissions:
 	//
 	//	none
-	QueryHolidays(ctx context.Context, in *Query, opts ...grpc.CallOption) (*QueryHolidaysResponse, error)
+	QueryHolidays(ctx context.Context, in *QueryHolidaysRequest, opts ...grpc.CallOption) (*QueryHolidaysResponse, error)
 }
 
 type complianceClient struct {
@@ -927,7 +927,7 @@ func (c *complianceClient) ProcessOutboundCall(ctx context.Context, in *ProcessO
 	return out, nil
 }
 
-func (c *complianceClient) QueryHolidays(ctx context.Context, in *Query, opts ...grpc.CallOption) (*QueryHolidaysResponse, error) {
+func (c *complianceClient) QueryHolidays(ctx context.Context, in *QueryHolidaysRequest, opts ...grpc.CallOption) (*QueryHolidaysResponse, error) {
 	out := new(QueryHolidaysResponse)
 	err := c.cc.Invoke(ctx, Compliance_QueryHolidays_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -1180,12 +1180,12 @@ type ComplianceServer interface {
 	//
 	//	AGENT
 	ProcessOutboundCall(context.Context, *ProcessOutboundCallReq) (*ProcessRes, error)
-	// Return the holidays that match the Query.
-	// The method will return a stream of the matching holidays as Rows.
+	// Return the holidays that match the request.
+	// The method will return a stream of the matching holidays.
 	// Required permissions:
 	//
 	//	none
-	QueryHolidays(context.Context, *Query) (*QueryHolidaysResponse, error)
+	QueryHolidays(context.Context, *QueryHolidaysRequest) (*QueryHolidaysResponse, error)
 	mustEmbedUnimplementedComplianceServer()
 }
 
@@ -1379,7 +1379,7 @@ func (UnimplementedComplianceServer) UpdateConsentTopic(context.Context, *Update
 func (UnimplementedComplianceServer) ProcessOutboundCall(context.Context, *ProcessOutboundCallReq) (*ProcessRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ProcessOutboundCall not implemented")
 }
-func (UnimplementedComplianceServer) QueryHolidays(context.Context, *Query) (*QueryHolidaysResponse, error) {
+func (UnimplementedComplianceServer) QueryHolidays(context.Context, *QueryHolidaysRequest) (*QueryHolidaysResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method QueryHolidays not implemented")
 }
 func (UnimplementedComplianceServer) mustEmbedUnimplementedComplianceServer() {}
@@ -2515,7 +2515,7 @@ func _Compliance_ProcessOutboundCall_Handler(srv interface{}, ctx context.Contex
 }
 
 func _Compliance_QueryHolidays_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Query)
+	in := new(QueryHolidaysRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -2527,7 +2527,7 @@ func _Compliance_QueryHolidays_Handler(srv interface{}, ctx context.Context, dec
 		FullMethod: Compliance_QueryHolidays_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ComplianceServer).QueryHolidays(ctx, req.(*Query))
+		return srv.(ComplianceServer).QueryHolidays(ctx, req.(*QueryHolidaysRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
