@@ -20,17 +20,17 @@ const _ = connect_go.IsAtLeastVersion0_1_0
 
 const (
 	// WfmAdherenceAppServiceName is the fully-qualified name of the WfmAdherenceAppService service.
-	WfmAdherenceAppServiceName = "api.v1alph1.wfm.WfmAdherenceAppService"
+	WfmAdherenceAppServiceName = "api.v1alpha1.wfm.WfmAdherenceAppService"
 )
 
-// WfmAdherenceAppServiceClient is a client for the api.v1alph1.wfm.WfmAdherenceAppService service.
+// WfmAdherenceAppServiceClient is a client for the api.v1alpha1.wfm.WfmAdherenceAppService service.
 type WfmAdherenceAppServiceClient interface {
 }
 
 // NewWfmAdherenceAppServiceClient constructs a client for the
-// api.v1alph1.wfm.WfmAdherenceAppService service. By default, it uses the Connect protocol with the
-// binary Protobuf Codec, asks for gzipped responses, and sends uncompressed requests. To use the
-// gRPC or gRPC-Web protocols, supply the connect.WithGRPC() or connect.WithGRPCWeb() options.
+// api.v1alpha1.wfm.WfmAdherenceAppService service. By default, it uses the Connect protocol with
+// the binary Protobuf Codec, asks for gzipped responses, and sends uncompressed requests. To use
+// the gRPC or gRPC-Web protocols, supply the connect.WithGRPC() or connect.WithGRPCWeb() options.
 //
 // The URL supplied here should be the base URL for the Connect or gRPC server (for example,
 // http://api.acme.com or https://acme.com/grpc).
@@ -43,7 +43,7 @@ func NewWfmAdherenceAppServiceClient(httpClient connect_go.HTTPClient, baseURL s
 type wfmAdherenceAppServiceClient struct {
 }
 
-// WfmAdherenceAppServiceHandler is an implementation of the api.v1alph1.wfm.WfmAdherenceAppService
+// WfmAdherenceAppServiceHandler is an implementation of the api.v1alpha1.wfm.WfmAdherenceAppService
 // service.
 type WfmAdherenceAppServiceHandler interface {
 }
@@ -54,7 +54,7 @@ type WfmAdherenceAppServiceHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewWfmAdherenceAppServiceHandler(svc WfmAdherenceAppServiceHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	return "/api.v1alph1.wfm.WfmAdherenceAppService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	return "/api.v1alpha1.wfm.WfmAdherenceAppService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		default:
 			http.NotFound(w, r)

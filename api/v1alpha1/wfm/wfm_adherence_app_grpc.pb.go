@@ -60,7 +60,7 @@ func RegisterWfmAdherenceAppServiceServer(s grpc.ServiceRegistrar, srv WfmAdhere
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var WfmAdherenceAppService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "api.v1alph1.wfm.WfmAdherenceAppService",
+	ServiceName: "api.v1alpha1.wfm.WfmAdherenceAppService",
 	HandlerType: (*WfmAdherenceAppServiceServer)(nil),
 	Methods:     []grpc.MethodDesc{},
 	Streams:     []grpc.StreamDesc{},
