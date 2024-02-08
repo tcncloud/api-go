@@ -215,6 +215,9 @@ const (
 	// ComplianceProcessOutboundCallProcedure is the fully-qualified name of the Compliance's
 	// ProcessOutboundCall RPC.
 	ComplianceProcessOutboundCallProcedure = "/api.v0alpha.Compliance/ProcessOutboundCall"
+	// ComplianceQueryHolidaysProcedure is the fully-qualified name of the Compliance's QueryHolidays
+	// RPC.
+	ComplianceQueryHolidaysProcedure = "/api.v0alpha.Compliance/QueryHolidays"
 )
 
 // ComplianceClient is a client for the api.v0alpha.Compliance service.
@@ -459,6 +462,12 @@ type ComplianceClient interface {
 	//
 	//	AGENT
 	ProcessOutboundCall(context.Context, *connect_go.Request[v0alpha.ProcessOutboundCallReq]) (*connect_go.Response[v0alpha.ProcessRes], error)
+	// Return the holidays that match the request.
+	// The method will return a stream of the matching holidays.
+	// Required permissions:
+	//
+	//	none
+	QueryHolidays(context.Context, *connect_go.Request[v0alpha.QueryHolidaysRequest]) (*connect_go.Response[v0alpha.QueryHolidaysResponse], error)
 }
 
 // NewComplianceClient constructs a client for the api.v0alpha.Compliance service. By default, it
@@ -781,6 +790,11 @@ func NewComplianceClient(httpClient connect_go.HTTPClient, baseURL string, opts 
 			baseURL+ComplianceProcessOutboundCallProcedure,
 			opts...,
 		),
+		queryHolidays: connect_go.NewClient[v0alpha.QueryHolidaysRequest, v0alpha.QueryHolidaysResponse](
+			httpClient,
+			baseURL+ComplianceQueryHolidaysProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -848,6 +862,7 @@ type complianceClient struct {
 	deleteConsentTopic             *connect_go.Client[v0alpha.ConsentTopic, v0alpha.Empty]
 	updateConsentTopic             *connect_go.Client[v0alpha.UpdateConsentTopicReq, v0alpha.Empty]
 	processOutboundCall            *connect_go.Client[v0alpha.ProcessOutboundCallReq, v0alpha.ProcessRes]
+	queryHolidays                  *connect_go.Client[v0alpha.QueryHolidaysRequest, v0alpha.QueryHolidaysResponse]
 }
 
 // RuleAutoComplete calls api.v0alpha.Compliance.RuleAutoComplete.
@@ -1160,6 +1175,11 @@ func (c *complianceClient) ProcessOutboundCall(ctx context.Context, req *connect
 	return c.processOutboundCall.CallUnary(ctx, req)
 }
 
+// QueryHolidays calls api.v0alpha.Compliance.QueryHolidays.
+func (c *complianceClient) QueryHolidays(ctx context.Context, req *connect_go.Request[v0alpha.QueryHolidaysRequest]) (*connect_go.Response[v0alpha.QueryHolidaysResponse], error) {
+	return c.queryHolidays.CallUnary(ctx, req)
+}
+
 // ComplianceHandler is an implementation of the api.v0alpha.Compliance service.
 type ComplianceHandler interface {
 	RuleAutoComplete(context.Context, *connect_go.Request[v0alpha.RuleAutoCompleteReq]) (*connect_go.Response[v0alpha.RuleAutoCompleteRes], error)
@@ -1402,6 +1422,12 @@ type ComplianceHandler interface {
 	//
 	//	AGENT
 	ProcessOutboundCall(context.Context, *connect_go.Request[v0alpha.ProcessOutboundCallReq]) (*connect_go.Response[v0alpha.ProcessRes], error)
+	// Return the holidays that match the request.
+	// The method will return a stream of the matching holidays.
+	// Required permissions:
+	//
+	//	none
+	QueryHolidays(context.Context, *connect_go.Request[v0alpha.QueryHolidaysRequest]) (*connect_go.Response[v0alpha.QueryHolidaysResponse], error)
 }
 
 // NewComplianceHandler builds an HTTP handler from the service implementation. It returns the path
@@ -1720,6 +1746,11 @@ func NewComplianceHandler(svc ComplianceHandler, opts ...connect_go.HandlerOptio
 		svc.ProcessOutboundCall,
 		opts...,
 	)
+	complianceQueryHolidaysHandler := connect_go.NewUnaryHandler(
+		ComplianceQueryHolidaysProcedure,
+		svc.QueryHolidays,
+		opts...,
+	)
 	return "/api.v0alpha.Compliance/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case ComplianceRuleAutoCompleteProcedure:
@@ -1846,6 +1877,8 @@ func NewComplianceHandler(svc ComplianceHandler, opts ...connect_go.HandlerOptio
 			complianceUpdateConsentTopicHandler.ServeHTTP(w, r)
 		case ComplianceProcessOutboundCallProcedure:
 			complianceProcessOutboundCallHandler.ServeHTTP(w, r)
+		case ComplianceQueryHolidaysProcedure:
+			complianceQueryHolidaysHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -2101,4 +2134,8 @@ func (UnimplementedComplianceHandler) UpdateConsentTopic(context.Context, *conne
 
 func (UnimplementedComplianceHandler) ProcessOutboundCall(context.Context, *connect_go.Request[v0alpha.ProcessOutboundCallReq]) (*connect_go.Response[v0alpha.ProcessRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Compliance.ProcessOutboundCall is not implemented"))
+}
+
+func (UnimplementedComplianceHandler) QueryHolidays(context.Context, *connect_go.Request[v0alpha.QueryHolidaysRequest]) (*connect_go.Response[v0alpha.QueryHolidaysResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Compliance.QueryHolidays is not implemented"))
 }
