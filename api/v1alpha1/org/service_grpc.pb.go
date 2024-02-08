@@ -160,6 +160,10 @@ const (
 	Org_ListAgentTriggers_FullMethodName                        = "/api.v1alpha1.org.Org/ListAgentTriggers"
 	Org_CopyAgentTrigger_FullMethodName                         = "/api.v1alpha1.org.Org/CopyAgentTrigger"
 	Org_UpdateAgentTriggers_FullMethodName                      = "/api.v1alpha1.org.Org/UpdateAgentTriggers"
+	Org_GetHuntGroupScript_FullMethodName                       = "/api.v1alpha1.org.Org/GetHuntGroupScript"
+	Org_CreateHuntGroupScript_FullMethodName                    = "/api.v1alpha1.org.Org/CreateHuntGroupScript"
+	Org_UpdateHuntGroupScript_FullMethodName                    = "/api.v1alpha1.org.Org/UpdateHuntGroupScript"
+	Org_DeleteHuntGroupScript_FullMethodName                    = "/api.v1alpha1.org.Org/DeleteHuntGroupScript"
 	Org_CreateTrust_FullMethodName                              = "/api.v1alpha1.org.Org/CreateTrust"
 	Org_AcceptTrust_FullMethodName                              = "/api.v1alpha1.org.Org/AcceptTrust"
 	Org_RejectTrust_FullMethodName                              = "/api.v1alpha1.org.Org/RejectTrust"
@@ -531,6 +535,14 @@ type OrgClient interface {
 	CopyAgentTrigger(ctx context.Context, in *CopyAgentTriggerRequest, opts ...grpc.CallOption) (*CopyAgentTriggerResponse, error)
 	// UpdateAgentTriggers updates all agent triggers for the given hunt group.
 	UpdateAgentTriggers(ctx context.Context, in *UpdateAgentTriggersRequest, opts ...grpc.CallOption) (*UpdateAgentTriggersResponse, error)
+	// GetHuntGroupScript gets the hunt group script for a given hunt group
+	GetHuntGroupScript(ctx context.Context, in *GetHuntGroupScriptRequest, opts ...grpc.CallOption) (*GetHuntGroupScriptResponse, error)
+	// CreateHuntGroupScript adds a hunt group script within the given hunt group
+	CreateHuntGroupScript(ctx context.Context, in *CreateHuntGroupScriptRequest, opts ...grpc.CallOption) (*CreateHuntGroupScriptResponse, error)
+	// UpdateHuntGroupScript updates a hunt group script within the given hunt group
+	UpdateHuntGroupScript(ctx context.Context, in *UpdateHuntGroupScriptRequest, opts ...grpc.CallOption) (*UpdateHuntGroupScriptResponse, error)
+	// DeleteHuntGroupScript removes a hunt group script within the given hunt group
+	DeleteHuntGroupScript(ctx context.Context, in *DeleteHuntGroupScriptRequest, opts ...grpc.CallOption) (*DeleteHuntGroupScriptResponse, error)
 	// CreateTrust creates a new trust.
 	CreateTrust(ctx context.Context, in *CreateTrustRequest, opts ...grpc.CallOption) (*CreateTrustResponse, error)
 	// AcceptTrust accepts an incoming trust.
@@ -2138,6 +2150,42 @@ func (c *orgClient) UpdateAgentTriggers(ctx context.Context, in *UpdateAgentTrig
 	return out, nil
 }
 
+func (c *orgClient) GetHuntGroupScript(ctx context.Context, in *GetHuntGroupScriptRequest, opts ...grpc.CallOption) (*GetHuntGroupScriptResponse, error) {
+	out := new(GetHuntGroupScriptResponse)
+	err := c.cc.Invoke(ctx, Org_GetHuntGroupScript_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) CreateHuntGroupScript(ctx context.Context, in *CreateHuntGroupScriptRequest, opts ...grpc.CallOption) (*CreateHuntGroupScriptResponse, error) {
+	out := new(CreateHuntGroupScriptResponse)
+	err := c.cc.Invoke(ctx, Org_CreateHuntGroupScript_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) UpdateHuntGroupScript(ctx context.Context, in *UpdateHuntGroupScriptRequest, opts ...grpc.CallOption) (*UpdateHuntGroupScriptResponse, error) {
+	out := new(UpdateHuntGroupScriptResponse)
+	err := c.cc.Invoke(ctx, Org_UpdateHuntGroupScript_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) DeleteHuntGroupScript(ctx context.Context, in *DeleteHuntGroupScriptRequest, opts ...grpc.CallOption) (*DeleteHuntGroupScriptResponse, error) {
+	out := new(DeleteHuntGroupScriptResponse)
+	err := c.cc.Invoke(ctx, Org_DeleteHuntGroupScript_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *orgClient) CreateTrust(ctx context.Context, in *CreateTrustRequest, opts ...grpc.CallOption) (*CreateTrustResponse, error) {
 	out := new(CreateTrustResponse)
 	err := c.cc.Invoke(ctx, Org_CreateTrust_FullMethodName, in, out, opts...)
@@ -2923,6 +2971,14 @@ type OrgServer interface {
 	CopyAgentTrigger(context.Context, *CopyAgentTriggerRequest) (*CopyAgentTriggerResponse, error)
 	// UpdateAgentTriggers updates all agent triggers for the given hunt group.
 	UpdateAgentTriggers(context.Context, *UpdateAgentTriggersRequest) (*UpdateAgentTriggersResponse, error)
+	// GetHuntGroupScript gets the hunt group script for a given hunt group
+	GetHuntGroupScript(context.Context, *GetHuntGroupScriptRequest) (*GetHuntGroupScriptResponse, error)
+	// CreateHuntGroupScript adds a hunt group script within the given hunt group
+	CreateHuntGroupScript(context.Context, *CreateHuntGroupScriptRequest) (*CreateHuntGroupScriptResponse, error)
+	// UpdateHuntGroupScript updates a hunt group script within the given hunt group
+	UpdateHuntGroupScript(context.Context, *UpdateHuntGroupScriptRequest) (*UpdateHuntGroupScriptResponse, error)
+	// DeleteHuntGroupScript removes a hunt group script within the given hunt group
+	DeleteHuntGroupScript(context.Context, *DeleteHuntGroupScriptRequest) (*DeleteHuntGroupScriptResponse, error)
 	// CreateTrust creates a new trust.
 	CreateTrust(context.Context, *CreateTrustRequest) (*CreateTrustResponse, error)
 	// AcceptTrust accepts an incoming trust.
@@ -3473,6 +3529,18 @@ func (UnimplementedOrgServer) CopyAgentTrigger(context.Context, *CopyAgentTrigge
 }
 func (UnimplementedOrgServer) UpdateAgentTriggers(context.Context, *UpdateAgentTriggersRequest) (*UpdateAgentTriggersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateAgentTriggers not implemented")
+}
+func (UnimplementedOrgServer) GetHuntGroupScript(context.Context, *GetHuntGroupScriptRequest) (*GetHuntGroupScriptResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetHuntGroupScript not implemented")
+}
+func (UnimplementedOrgServer) CreateHuntGroupScript(context.Context, *CreateHuntGroupScriptRequest) (*CreateHuntGroupScriptResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateHuntGroupScript not implemented")
+}
+func (UnimplementedOrgServer) UpdateHuntGroupScript(context.Context, *UpdateHuntGroupScriptRequest) (*UpdateHuntGroupScriptResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateHuntGroupScript not implemented")
+}
+func (UnimplementedOrgServer) DeleteHuntGroupScript(context.Context, *DeleteHuntGroupScriptRequest) (*DeleteHuntGroupScriptResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteHuntGroupScript not implemented")
 }
 func (UnimplementedOrgServer) CreateTrust(context.Context, *CreateTrustRequest) (*CreateTrustResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateTrust not implemented")
@@ -6208,6 +6276,78 @@ func _Org_UpdateAgentTriggers_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Org_GetHuntGroupScript_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetHuntGroupScriptRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).GetHuntGroupScript(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_GetHuntGroupScript_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).GetHuntGroupScript(ctx, req.(*GetHuntGroupScriptRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_CreateHuntGroupScript_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateHuntGroupScriptRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).CreateHuntGroupScript(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_CreateHuntGroupScript_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).CreateHuntGroupScript(ctx, req.(*CreateHuntGroupScriptRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_UpdateHuntGroupScript_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateHuntGroupScriptRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).UpdateHuntGroupScript(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_UpdateHuntGroupScript_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).UpdateHuntGroupScript(ctx, req.(*UpdateHuntGroupScriptRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_DeleteHuntGroupScript_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteHuntGroupScriptRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).DeleteHuntGroupScript(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_DeleteHuntGroupScript_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).DeleteHuntGroupScript(ctx, req.(*DeleteHuntGroupScriptRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Org_CreateTrust_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateTrustRequest)
 	if err := dec(in); err != nil {
@@ -7678,6 +7818,22 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateAgentTriggers",
 			Handler:    _Org_UpdateAgentTriggers_Handler,
+		},
+		{
+			MethodName: "GetHuntGroupScript",
+			Handler:    _Org_GetHuntGroupScript_Handler,
+		},
+		{
+			MethodName: "CreateHuntGroupScript",
+			Handler:    _Org_CreateHuntGroupScript_Handler,
+		},
+		{
+			MethodName: "UpdateHuntGroupScript",
+			Handler:    _Org_UpdateHuntGroupScript_Handler,
+		},
+		{
+			MethodName: "DeleteHuntGroupScript",
+			Handler:    _Org_DeleteHuntGroupScript_Handler,
 		},
 		{
 			MethodName: "CreateTrust",
