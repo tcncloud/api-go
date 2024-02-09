@@ -1697,7 +1697,7 @@ type Sms_Segment struct {
 
 	// The text in the segment.
 	Text string `protobuf:"bytes,1,opt,name=text,proto3" json:"text,omitempty"`
-	// The offset time duration from the last segment.
+	// The offset time duration from the beginning of the conversation.
 	Offset *durationpb.Duration `protobuf:"bytes,2,opt,name=offset,proto3" json:"offset,omitempty"`
 }
 
@@ -1822,7 +1822,7 @@ type Call_Segment struct {
 
 	// The text in the segment.
 	Text string `protobuf:"bytes,1,opt,name=text,proto3" json:"text,omitempty"`
-	// The offset time duration from the last segment.
+	// The offset time duration from the beginning of the conversation.
 	Offset *durationpb.Duration `protobuf:"bytes,2,opt,name=offset,proto3" json:"offset,omitempty"`
 }
 
