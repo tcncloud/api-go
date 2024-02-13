@@ -26,7 +26,8 @@ type GetTranscriptSummaryRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	TranscriptSid int64 `protobuf:"varint,2,opt,name=transcript_sid,json=transcriptSid,proto3" json:"transcript_sid,omitempty"` // Required - transcript to get summary of.
+	// Required - transcript to get summary of.
+	TranscriptSid int64 `protobuf:"varint,2,opt,name=transcript_sid,json=transcriptSid,proto3" json:"transcript_sid,omitempty"`
 }
 
 func (x *GetTranscriptSummaryRequest) Reset() {
@@ -122,7 +123,8 @@ type TranscriptSummary struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	BulletPoints []string `protobuf:"bytes,1,rep,name=bullet_points,json=bulletPoints,proto3" json:"bullet_points,omitempty"` // Summary content provided in multiple bullet points.
+	// Summary content provided in multiple bullet points.
+	BulletPoints []string `protobuf:"bytes,1,rep,name=bullet_points,json=bulletPoints,proto3" json:"bullet_points,omitempty"`
 }
 
 func (x *TranscriptSummary) Reset() {
