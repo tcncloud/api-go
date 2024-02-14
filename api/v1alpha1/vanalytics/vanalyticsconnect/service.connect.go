@@ -55,6 +55,9 @@ const (
 	// VanalyticsListAgentResponseValuesProcedure is the fully-qualified name of the Vanalytics's
 	// ListAgentResponseValues RPC.
 	VanalyticsListAgentResponseValuesProcedure = "/api.v1alpha1.vanalytics.Vanalytics/ListAgentResponseValues"
+	// VanalyticsGetTranscriptSummaryProcedure is the fully-qualified name of the Vanalytics's
+	// GetTranscriptSummary RPC.
+	VanalyticsGetTranscriptSummaryProcedure = "/api.v1alpha1.vanalytics.Vanalytics/GetTranscriptSummary"
 	// VanalyticsCreateFilterProcedure is the fully-qualified name of the Vanalytics's CreateFilter RPC.
 	VanalyticsCreateFilterProcedure = "/api.v1alpha1.vanalytics.Vanalytics/CreateFilter"
 	// VanalyticsListFiltersProcedure is the fully-qualified name of the Vanalytics's ListFilters RPC.
@@ -144,6 +147,8 @@ type VanalyticsClient interface {
 	BulkRestoreTranscripts(context.Context, *connect_go.Request[vanalytics.BulkRestoreTranscriptsRequest]) (*connect_go.Response[vanalytics.BulkRestoreTranscriptsResponse], error)
 	// ListAgentResponseValues lists transcript agent response values.
 	ListAgentResponseValues(context.Context, *connect_go.Request[vanalytics.ListAgentResponseValuesRequest]) (*connect_go.Response[vanalytics.ListAgentResponseValuesResponse], error)
+	// GetTranscriptSummary gets a transcript summary for a provided transcript.
+	GetTranscriptSummary(context.Context, *connect_go.Request[vanalytics.GetTranscriptSummaryRequest]) (*connect_go.Response[vanalytics.GetTranscriptSummaryResponse], error)
 	// CreateFilter creates a new filter. The filter contains a search request
 	// to filter transcripts.
 	CreateFilter(context.Context, *connect_go.Request[vanalytics.CreateFilterRequest]) (*connect_go.Response[vanalytics.Filter], error)
@@ -245,6 +250,11 @@ func NewVanalyticsClient(httpClient connect_go.HTTPClient, baseURL string, opts 
 		listAgentResponseValues: connect_go.NewClient[vanalytics.ListAgentResponseValuesRequest, vanalytics.ListAgentResponseValuesResponse](
 			httpClient,
 			baseURL+VanalyticsListAgentResponseValuesProcedure,
+			opts...,
+		),
+		getTranscriptSummary: connect_go.NewClient[vanalytics.GetTranscriptSummaryRequest, vanalytics.GetTranscriptSummaryResponse](
+			httpClient,
+			baseURL+VanalyticsGetTranscriptSummaryProcedure,
 			opts...,
 		),
 		createFilter: connect_go.NewClient[vanalytics.CreateFilterRequest, vanalytics.Filter](
@@ -385,6 +395,7 @@ type vanalyticsClient struct {
 	bulkDeleteTranscripts     *connect_go.Client[vanalytics.BulkDeleteTranscriptsRequest, vanalytics.BulkDeleteTranscriptsResponse]
 	bulkRestoreTranscripts    *connect_go.Client[vanalytics.BulkRestoreTranscriptsRequest, vanalytics.BulkRestoreTranscriptsResponse]
 	listAgentResponseValues   *connect_go.Client[vanalytics.ListAgentResponseValuesRequest, vanalytics.ListAgentResponseValuesResponse]
+	getTranscriptSummary      *connect_go.Client[vanalytics.GetTranscriptSummaryRequest, vanalytics.GetTranscriptSummaryResponse]
 	createFilter              *connect_go.Client[vanalytics.CreateFilterRequest, vanalytics.Filter]
 	listFilters               *connect_go.Client[vanalytics.ListFiltersRequest, vanalytics.ListFiltersResponse]
 	updateFilter              *connect_go.Client[vanalytics.UpdateFilterRequest, vanalytics.Filter]
@@ -450,6 +461,11 @@ func (c *vanalyticsClient) BulkRestoreTranscripts(ctx context.Context, req *conn
 // ListAgentResponseValues calls api.v1alpha1.vanalytics.Vanalytics.ListAgentResponseValues.
 func (c *vanalyticsClient) ListAgentResponseValues(ctx context.Context, req *connect_go.Request[vanalytics.ListAgentResponseValuesRequest]) (*connect_go.Response[vanalytics.ListAgentResponseValuesResponse], error) {
 	return c.listAgentResponseValues.CallUnary(ctx, req)
+}
+
+// GetTranscriptSummary calls api.v1alpha1.vanalytics.Vanalytics.GetTranscriptSummary.
+func (c *vanalyticsClient) GetTranscriptSummary(ctx context.Context, req *connect_go.Request[vanalytics.GetTranscriptSummaryRequest]) (*connect_go.Response[vanalytics.GetTranscriptSummaryResponse], error) {
+	return c.getTranscriptSummary.CallUnary(ctx, req)
 }
 
 // CreateFilter calls api.v1alpha1.vanalytics.Vanalytics.CreateFilter.
@@ -599,6 +615,8 @@ type VanalyticsHandler interface {
 	BulkRestoreTranscripts(context.Context, *connect_go.Request[vanalytics.BulkRestoreTranscriptsRequest]) (*connect_go.Response[vanalytics.BulkRestoreTranscriptsResponse], error)
 	// ListAgentResponseValues lists transcript agent response values.
 	ListAgentResponseValues(context.Context, *connect_go.Request[vanalytics.ListAgentResponseValuesRequest]) (*connect_go.Response[vanalytics.ListAgentResponseValuesResponse], error)
+	// GetTranscriptSummary gets a transcript summary for a provided transcript.
+	GetTranscriptSummary(context.Context, *connect_go.Request[vanalytics.GetTranscriptSummaryRequest]) (*connect_go.Response[vanalytics.GetTranscriptSummaryResponse], error)
 	// CreateFilter creates a new filter. The filter contains a search request
 	// to filter transcripts.
 	CreateFilter(context.Context, *connect_go.Request[vanalytics.CreateFilterRequest]) (*connect_go.Response[vanalytics.Filter], error)
@@ -696,6 +714,11 @@ func NewVanalyticsHandler(svc VanalyticsHandler, opts ...connect_go.HandlerOptio
 	vanalyticsListAgentResponseValuesHandler := connect_go.NewUnaryHandler(
 		VanalyticsListAgentResponseValuesProcedure,
 		svc.ListAgentResponseValues,
+		opts...,
+	)
+	vanalyticsGetTranscriptSummaryHandler := connect_go.NewUnaryHandler(
+		VanalyticsGetTranscriptSummaryProcedure,
+		svc.GetTranscriptSummary,
 		opts...,
 	)
 	vanalyticsCreateFilterHandler := connect_go.NewUnaryHandler(
@@ -841,6 +864,8 @@ func NewVanalyticsHandler(svc VanalyticsHandler, opts ...connect_go.HandlerOptio
 			vanalyticsBulkRestoreTranscriptsHandler.ServeHTTP(w, r)
 		case VanalyticsListAgentResponseValuesProcedure:
 			vanalyticsListAgentResponseValuesHandler.ServeHTTP(w, r)
+		case VanalyticsGetTranscriptSummaryProcedure:
+			vanalyticsGetTranscriptSummaryHandler.ServeHTTP(w, r)
 		case VanalyticsCreateFilterProcedure:
 			vanalyticsCreateFilterHandler.ServeHTTP(w, r)
 		case VanalyticsListFiltersProcedure:
@@ -930,6 +955,10 @@ func (UnimplementedVanalyticsHandler) BulkRestoreTranscripts(context.Context, *c
 
 func (UnimplementedVanalyticsHandler) ListAgentResponseValues(context.Context, *connect_go.Request[vanalytics.ListAgentResponseValuesRequest]) (*connect_go.Response[vanalytics.ListAgentResponseValuesResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.vanalytics.Vanalytics.ListAgentResponseValues is not implemented"))
+}
+
+func (UnimplementedVanalyticsHandler) GetTranscriptSummary(context.Context, *connect_go.Request[vanalytics.GetTranscriptSummaryRequest]) (*connect_go.Response[vanalytics.GetTranscriptSummaryResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.vanalytics.Vanalytics.GetTranscriptSummary is not implemented"))
 }
 
 func (UnimplementedVanalyticsHandler) CreateFilter(context.Context, *connect_go.Request[vanalytics.CreateFilterRequest]) (*connect_go.Response[vanalytics.Filter], error) {
