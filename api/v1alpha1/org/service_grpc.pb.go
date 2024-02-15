@@ -159,6 +159,7 @@ const (
 	Org_DeleteHuntGroupClientInfoDisplayTemplate_FullMethodName = "/api.v1alpha1.org.Org/DeleteHuntGroupClientInfoDisplayTemplate"
 	Org_CopyHuntGroupClientInfoDisplayTemplate_FullMethodName   = "/api.v1alpha1.org.Org/CopyHuntGroupClientInfoDisplayTemplate"
 	Org_CreateCampaignClientInfoDisplayTemplate_FullMethodName  = "/api.v1alpha1.org.Org/CreateCampaignClientInfoDisplayTemplate"
+	Org_ListHuntGroupsWithClientInfoTemplateData_FullMethodName = "/api.v1alpha1.org.Org/ListHuntGroupsWithClientInfoTemplateData"
 	Org_ListAgentTriggers_FullMethodName                        = "/api.v1alpha1.org.Org/ListAgentTriggers"
 	Org_CopyAgentTrigger_FullMethodName                         = "/api.v1alpha1.org.Org/CopyAgentTrigger"
 	Org_UpdateAgentTriggers_FullMethodName                      = "/api.v1alpha1.org.Org/UpdateAgentTriggers"
@@ -538,6 +539,9 @@ type OrgClient interface {
 	// CreateCampaignClientInfoDisplayTemplate creates a new client info display template for a campaign
 	// with the same settings as the source template from a hunt group.
 	CreateCampaignClientInfoDisplayTemplate(ctx context.Context, in *CreateCampaignClientInfoDisplayTemplateRequest, opts ...grpc.CallOption) (*CreateCampaignClientInfoDisplayTemplateResponse, error)
+	// ListHuntGroupsWithClientInfoTemplateData lists the hunt groups in an organization
+	// with their client info display template data based on the filter.
+	ListHuntGroupsWithClientInfoTemplateData(ctx context.Context, in *ListHuntGroupsWithClientInfoTemplateDataRequest, opts ...grpc.CallOption) (*ListHuntGroupsWithClientInfoTemplateDataResponse, error)
 	// ListAgentTriggers returns a list of agent triggers for the given hunt group.
 	ListAgentTriggers(ctx context.Context, in *ListAgentTriggersRequest, opts ...grpc.CallOption) (*ListAgentTriggersResponse, error)
 	// CopyAgentTrigger copys an agent trigger to the given hunt group in the same org.
@@ -2150,6 +2154,15 @@ func (c *orgClient) CreateCampaignClientInfoDisplayTemplate(ctx context.Context,
 	return out, nil
 }
 
+func (c *orgClient) ListHuntGroupsWithClientInfoTemplateData(ctx context.Context, in *ListHuntGroupsWithClientInfoTemplateDataRequest, opts ...grpc.CallOption) (*ListHuntGroupsWithClientInfoTemplateDataResponse, error) {
+	out := new(ListHuntGroupsWithClientInfoTemplateDataResponse)
+	err := c.cc.Invoke(ctx, Org_ListHuntGroupsWithClientInfoTemplateData_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *orgClient) ListAgentTriggers(ctx context.Context, in *ListAgentTriggersRequest, opts ...grpc.CallOption) (*ListAgentTriggersResponse, error) {
 	out := new(ListAgentTriggersResponse)
 	err := c.cc.Invoke(ctx, Org_ListAgentTriggers_FullMethodName, in, out, opts...)
@@ -2999,6 +3012,9 @@ type OrgServer interface {
 	// CreateCampaignClientInfoDisplayTemplate creates a new client info display template for a campaign
 	// with the same settings as the source template from a hunt group.
 	CreateCampaignClientInfoDisplayTemplate(context.Context, *CreateCampaignClientInfoDisplayTemplateRequest) (*CreateCampaignClientInfoDisplayTemplateResponse, error)
+	// ListHuntGroupsWithClientInfoTemplateData lists the hunt groups in an organization
+	// with their client info display template data based on the filter.
+	ListHuntGroupsWithClientInfoTemplateData(context.Context, *ListHuntGroupsWithClientInfoTemplateDataRequest) (*ListHuntGroupsWithClientInfoTemplateDataResponse, error)
 	// ListAgentTriggers returns a list of agent triggers for the given hunt group.
 	ListAgentTriggers(context.Context, *ListAgentTriggersRequest) (*ListAgentTriggersResponse, error)
 	// CopyAgentTrigger copys an agent trigger to the given hunt group in the same org.
@@ -3560,6 +3576,9 @@ func (UnimplementedOrgServer) CopyHuntGroupClientInfoDisplayTemplate(context.Con
 }
 func (UnimplementedOrgServer) CreateCampaignClientInfoDisplayTemplate(context.Context, *CreateCampaignClientInfoDisplayTemplateRequest) (*CreateCampaignClientInfoDisplayTemplateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateCampaignClientInfoDisplayTemplate not implemented")
+}
+func (UnimplementedOrgServer) ListHuntGroupsWithClientInfoTemplateData(context.Context, *ListHuntGroupsWithClientInfoTemplateDataRequest) (*ListHuntGroupsWithClientInfoTemplateDataResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListHuntGroupsWithClientInfoTemplateData not implemented")
 }
 func (UnimplementedOrgServer) ListAgentTriggers(context.Context, *ListAgentTriggersRequest) (*ListAgentTriggersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAgentTriggers not implemented")
@@ -6298,6 +6317,24 @@ func _Org_CreateCampaignClientInfoDisplayTemplate_Handler(srv interface{}, ctx c
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Org_ListHuntGroupsWithClientInfoTemplateData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListHuntGroupsWithClientInfoTemplateDataRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).ListHuntGroupsWithClientInfoTemplateData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_ListHuntGroupsWithClientInfoTemplateData_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).ListHuntGroupsWithClientInfoTemplateData(ctx, req.(*ListHuntGroupsWithClientInfoTemplateDataRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Org_ListAgentTriggers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListAgentTriggersRequest)
 	if err := dec(in); err != nil {
@@ -7890,6 +7927,10 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateCampaignClientInfoDisplayTemplate",
 			Handler:    _Org_CreateCampaignClientInfoDisplayTemplate_Handler,
+		},
+		{
+			MethodName: "ListHuntGroupsWithClientInfoTemplateData",
+			Handler:    _Org_ListHuntGroupsWithClientInfoTemplateData_Handler,
 		},
 		{
 			MethodName: "ListAgentTriggers",

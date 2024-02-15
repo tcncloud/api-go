@@ -413,6 +413,9 @@ const (
 	// OrgCreateCampaignClientInfoDisplayTemplateProcedure is the fully-qualified name of the Org's
 	// CreateCampaignClientInfoDisplayTemplate RPC.
 	OrgCreateCampaignClientInfoDisplayTemplateProcedure = "/api.v1alpha1.org.Org/CreateCampaignClientInfoDisplayTemplate"
+	// OrgListHuntGroupsWithClientInfoTemplateDataProcedure is the fully-qualified name of the Org's
+	// ListHuntGroupsWithClientInfoTemplateData RPC.
+	OrgListHuntGroupsWithClientInfoTemplateDataProcedure = "/api.v1alpha1.org.Org/ListHuntGroupsWithClientInfoTemplateData"
 	// OrgListAgentTriggersProcedure is the fully-qualified name of the Org's ListAgentTriggers RPC.
 	OrgListAgentTriggersProcedure = "/api.v1alpha1.org.Org/ListAgentTriggers"
 	// OrgCopyAgentTriggerProcedure is the fully-qualified name of the Org's CopyAgentTrigger RPC.
@@ -874,6 +877,9 @@ type OrgClient interface {
 	// CreateCampaignClientInfoDisplayTemplate creates a new client info display template for a campaign
 	// with the same settings as the source template from a hunt group.
 	CreateCampaignClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.CreateCampaignClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.CreateCampaignClientInfoDisplayTemplateResponse], error)
+	// ListHuntGroupsWithClientInfoTemplateData lists the hunt groups in an organization
+	// with their client info display template data based on the filter.
+	ListHuntGroupsWithClientInfoTemplateData(context.Context, *connect_go.Request[org.ListHuntGroupsWithClientInfoTemplateDataRequest]) (*connect_go.Response[org.ListHuntGroupsWithClientInfoTemplateDataResponse], error)
 	// ListAgentTriggers returns a list of agent triggers for the given hunt group.
 	ListAgentTriggers(context.Context, *connect_go.Request[org.ListAgentTriggersRequest]) (*connect_go.Response[org.ListAgentTriggersResponse], error)
 	// CopyAgentTrigger copys an agent trigger to the given hunt group in the same org.
@@ -1721,6 +1727,11 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgCreateCampaignClientInfoDisplayTemplateProcedure,
 			opts...,
 		),
+		listHuntGroupsWithClientInfoTemplateData: connect_go.NewClient[org.ListHuntGroupsWithClientInfoTemplateDataRequest, org.ListHuntGroupsWithClientInfoTemplateDataResponse](
+			httpClient,
+			baseURL+OrgListHuntGroupsWithClientInfoTemplateDataProcedure,
+			opts...,
+		),
 		listAgentTriggers: connect_go.NewClient[org.ListAgentTriggersRequest, org.ListAgentTriggersResponse](
 			httpClient,
 			baseURL+OrgListAgentTriggersProcedure,
@@ -2161,6 +2172,7 @@ type orgClient struct {
 	deleteHuntGroupClientInfoDisplayTemplate *connect_go.Client[org.DeleteHuntGroupClientInfoDisplayTemplateRequest, org.DeleteHuntGroupClientInfoDisplayTemplateResponse]
 	copyHuntGroupClientInfoDisplayTemplate   *connect_go.Client[org.CopyHuntGroupClientInfoDisplayTemplateRequest, org.CopyHuntGroupClientInfoDisplayTemplateResponse]
 	createCampaignClientInfoDisplayTemplate  *connect_go.Client[org.CreateCampaignClientInfoDisplayTemplateRequest, org.CreateCampaignClientInfoDisplayTemplateResponse]
+	listHuntGroupsWithClientInfoTemplateData *connect_go.Client[org.ListHuntGroupsWithClientInfoTemplateDataRequest, org.ListHuntGroupsWithClientInfoTemplateDataResponse]
 	listAgentTriggers                        *connect_go.Client[org.ListAgentTriggersRequest, org.ListAgentTriggersResponse]
 	copyAgentTrigger                         *connect_go.Client[org.CopyAgentTriggerRequest, org.CopyAgentTriggerResponse]
 	updateAgentTriggers                      *connect_go.Client[org.UpdateAgentTriggersRequest, org.UpdateAgentTriggersResponse]
@@ -2930,6 +2942,12 @@ func (c *orgClient) CreateCampaignClientInfoDisplayTemplate(ctx context.Context,
 	return c.createCampaignClientInfoDisplayTemplate.CallUnary(ctx, req)
 }
 
+// ListHuntGroupsWithClientInfoTemplateData calls
+// api.v1alpha1.org.Org.ListHuntGroupsWithClientInfoTemplateData.
+func (c *orgClient) ListHuntGroupsWithClientInfoTemplateData(ctx context.Context, req *connect_go.Request[org.ListHuntGroupsWithClientInfoTemplateDataRequest]) (*connect_go.Response[org.ListHuntGroupsWithClientInfoTemplateDataResponse], error) {
+	return c.listHuntGroupsWithClientInfoTemplateData.CallUnary(ctx, req)
+}
+
 // ListAgentTriggers calls api.v1alpha1.org.Org.ListAgentTriggers.
 func (c *orgClient) ListAgentTriggers(ctx context.Context, req *connect_go.Request[org.ListAgentTriggersRequest]) (*connect_go.Response[org.ListAgentTriggersResponse], error) {
 	return c.listAgentTriggers.CallUnary(ctx, req)
@@ -3543,6 +3561,9 @@ type OrgHandler interface {
 	// CreateCampaignClientInfoDisplayTemplate creates a new client info display template for a campaign
 	// with the same settings as the source template from a hunt group.
 	CreateCampaignClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.CreateCampaignClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.CreateCampaignClientInfoDisplayTemplateResponse], error)
+	// ListHuntGroupsWithClientInfoTemplateData lists the hunt groups in an organization
+	// with their client info display template data based on the filter.
+	ListHuntGroupsWithClientInfoTemplateData(context.Context, *connect_go.Request[org.ListHuntGroupsWithClientInfoTemplateDataRequest]) (*connect_go.Response[org.ListHuntGroupsWithClientInfoTemplateDataResponse], error)
 	// ListAgentTriggers returns a list of agent triggers for the given hunt group.
 	ListAgentTriggers(context.Context, *connect_go.Request[org.ListAgentTriggersRequest]) (*connect_go.Response[org.ListAgentTriggersResponse], error)
 	// CopyAgentTrigger copys an agent trigger to the given hunt group in the same org.
@@ -4386,6 +4407,11 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.CreateCampaignClientInfoDisplayTemplate,
 		opts...,
 	)
+	orgListHuntGroupsWithClientInfoTemplateDataHandler := connect_go.NewUnaryHandler(
+		OrgListHuntGroupsWithClientInfoTemplateDataProcedure,
+		svc.ListHuntGroupsWithClientInfoTemplateData,
+		opts...,
+	)
 	orgListAgentTriggersHandler := connect_go.NewUnaryHandler(
 		OrgListAgentTriggersProcedure,
 		svc.ListAgentTriggers,
@@ -4963,6 +4989,8 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 			orgCopyHuntGroupClientInfoDisplayTemplateHandler.ServeHTTP(w, r)
 		case OrgCreateCampaignClientInfoDisplayTemplateProcedure:
 			orgCreateCampaignClientInfoDisplayTemplateHandler.ServeHTTP(w, r)
+		case OrgListHuntGroupsWithClientInfoTemplateDataProcedure:
+			orgListHuntGroupsWithClientInfoTemplateDataHandler.ServeHTTP(w, r)
 		case OrgListAgentTriggersProcedure:
 			orgListAgentTriggersHandler.ServeHTTP(w, r)
 		case OrgCopyAgentTriggerProcedure:
@@ -5648,6 +5676,10 @@ func (UnimplementedOrgHandler) CopyHuntGroupClientInfoDisplayTemplate(context.Co
 
 func (UnimplementedOrgHandler) CreateCampaignClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.CreateCampaignClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.CreateCampaignClientInfoDisplayTemplateResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.CreateCampaignClientInfoDisplayTemplate is not implemented"))
+}
+
+func (UnimplementedOrgHandler) ListHuntGroupsWithClientInfoTemplateData(context.Context, *connect_go.Request[org.ListHuntGroupsWithClientInfoTemplateDataRequest]) (*connect_go.Response[org.ListHuntGroupsWithClientInfoTemplateDataResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.ListHuntGroupsWithClientInfoTemplateData is not implemented"))
 }
 
 func (UnimplementedOrgHandler) ListAgentTriggers(context.Context, *connect_go.Request[org.ListAgentTriggersRequest]) (*connect_go.Response[org.ListAgentTriggersResponse], error) {
