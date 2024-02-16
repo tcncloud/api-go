@@ -83,6 +83,7 @@ const (
 	Compliance_DeleteConsentTopic_FullMethodName             = "/api.v0alpha.Compliance/DeleteConsentTopic"
 	Compliance_UpdateConsentTopic_FullMethodName             = "/api.v0alpha.Compliance/UpdateConsentTopic"
 	Compliance_ProcessOutboundCall_FullMethodName            = "/api.v0alpha.Compliance/ProcessOutboundCall"
+	Compliance_QueryHolidays_FullMethodName                  = "/api.v0alpha.Compliance/QueryHolidays"
 )
 
 // ComplianceClient is the client API for Compliance service.
@@ -329,6 +330,12 @@ type ComplianceClient interface {
 	//
 	//	AGENT
 	ProcessOutboundCall(ctx context.Context, in *ProcessOutboundCallReq, opts ...grpc.CallOption) (*ProcessRes, error)
+	// Return the holidays that match the request.
+	// The method will return a stream of the matching holidays.
+	// Required permissions:
+	//
+	//	none
+	QueryHolidays(ctx context.Context, in *QueryHolidaysRequest, opts ...grpc.CallOption) (*QueryHolidaysResponse, error)
 }
 
 type complianceClient struct {
@@ -920,6 +927,15 @@ func (c *complianceClient) ProcessOutboundCall(ctx context.Context, in *ProcessO
 	return out, nil
 }
 
+func (c *complianceClient) QueryHolidays(ctx context.Context, in *QueryHolidaysRequest, opts ...grpc.CallOption) (*QueryHolidaysResponse, error) {
+	out := new(QueryHolidaysResponse)
+	err := c.cc.Invoke(ctx, Compliance_QueryHolidays_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ComplianceServer is the server API for Compliance service.
 // All implementations must embed UnimplementedComplianceServer
 // for forward compatibility
@@ -1164,6 +1180,12 @@ type ComplianceServer interface {
 	//
 	//	AGENT
 	ProcessOutboundCall(context.Context, *ProcessOutboundCallReq) (*ProcessRes, error)
+	// Return the holidays that match the request.
+	// The method will return a stream of the matching holidays.
+	// Required permissions:
+	//
+	//	none
+	QueryHolidays(context.Context, *QueryHolidaysRequest) (*QueryHolidaysResponse, error)
 	mustEmbedUnimplementedComplianceServer()
 }
 
@@ -1356,6 +1378,9 @@ func (UnimplementedComplianceServer) UpdateConsentTopic(context.Context, *Update
 }
 func (UnimplementedComplianceServer) ProcessOutboundCall(context.Context, *ProcessOutboundCallReq) (*ProcessRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ProcessOutboundCall not implemented")
+}
+func (UnimplementedComplianceServer) QueryHolidays(context.Context, *QueryHolidaysRequest) (*QueryHolidaysResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QueryHolidays not implemented")
 }
 func (UnimplementedComplianceServer) mustEmbedUnimplementedComplianceServer() {}
 
@@ -2489,6 +2514,24 @@ func _Compliance_ProcessOutboundCall_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Compliance_QueryHolidays_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryHolidaysRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ComplianceServer).QueryHolidays(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Compliance_QueryHolidays_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ComplianceServer).QueryHolidays(ctx, req.(*QueryHolidaysRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Compliance_ServiceDesc is the grpc.ServiceDesc for Compliance service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -2739,6 +2782,10 @@ var Compliance_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ProcessOutboundCall",
 			Handler:    _Compliance_ProcessOutboundCall_Handler,
+		},
+		{
+			MethodName: "QueryHolidays",
+			Handler:    _Compliance_QueryHolidays_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

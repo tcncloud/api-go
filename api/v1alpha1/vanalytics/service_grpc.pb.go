@@ -27,6 +27,7 @@ const (
 	Vanalytics_BulkDeleteTranscripts_FullMethodName     = "/api.v1alpha1.vanalytics.Vanalytics/BulkDeleteTranscripts"
 	Vanalytics_BulkRestoreTranscripts_FullMethodName    = "/api.v1alpha1.vanalytics.Vanalytics/BulkRestoreTranscripts"
 	Vanalytics_ListAgentResponseValues_FullMethodName   = "/api.v1alpha1.vanalytics.Vanalytics/ListAgentResponseValues"
+	Vanalytics_GetTranscriptSummary_FullMethodName      = "/api.v1alpha1.vanalytics.Vanalytics/GetTranscriptSummary"
 	Vanalytics_CreateFilter_FullMethodName              = "/api.v1alpha1.vanalytics.Vanalytics/CreateFilter"
 	Vanalytics_ListFilters_FullMethodName               = "/api.v1alpha1.vanalytics.Vanalytics/ListFilters"
 	Vanalytics_UpdateFilter_FullMethodName              = "/api.v1alpha1.vanalytics.Vanalytics/UpdateFilter"
@@ -78,6 +79,8 @@ type VanalyticsClient interface {
 	BulkRestoreTranscripts(ctx context.Context, in *BulkRestoreTranscriptsRequest, opts ...grpc.CallOption) (*BulkRestoreTranscriptsResponse, error)
 	// ListAgentResponseValues lists transcript agent response values.
 	ListAgentResponseValues(ctx context.Context, in *ListAgentResponseValuesRequest, opts ...grpc.CallOption) (*ListAgentResponseValuesResponse, error)
+	// GetTranscriptSummary gets a transcript summary for a provided transcript.
+	GetTranscriptSummary(ctx context.Context, in *GetTranscriptSummaryRequest, opts ...grpc.CallOption) (*GetTranscriptSummaryResponse, error)
 	// CreateFilter creates a new filter. The filter contains a search request
 	// to filter transcripts.
 	CreateFilter(ctx context.Context, in *CreateFilterRequest, opts ...grpc.CallOption) (*Filter, error)
@@ -205,6 +208,15 @@ func (c *vanalyticsClient) BulkRestoreTranscripts(ctx context.Context, in *BulkR
 func (c *vanalyticsClient) ListAgentResponseValues(ctx context.Context, in *ListAgentResponseValuesRequest, opts ...grpc.CallOption) (*ListAgentResponseValuesResponse, error) {
 	out := new(ListAgentResponseValuesResponse)
 	err := c.cc.Invoke(ctx, Vanalytics_ListAgentResponseValues_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *vanalyticsClient) GetTranscriptSummary(ctx context.Context, in *GetTranscriptSummaryRequest, opts ...grpc.CallOption) (*GetTranscriptSummaryResponse, error) {
+	out := new(GetTranscriptSummaryResponse)
+	err := c.cc.Invoke(ctx, Vanalytics_GetTranscriptSummary_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -460,6 +472,8 @@ type VanalyticsServer interface {
 	BulkRestoreTranscripts(context.Context, *BulkRestoreTranscriptsRequest) (*BulkRestoreTranscriptsResponse, error)
 	// ListAgentResponseValues lists transcript agent response values.
 	ListAgentResponseValues(context.Context, *ListAgentResponseValuesRequest) (*ListAgentResponseValuesResponse, error)
+	// GetTranscriptSummary gets a transcript summary for a provided transcript.
+	GetTranscriptSummary(context.Context, *GetTranscriptSummaryRequest) (*GetTranscriptSummaryResponse, error)
 	// CreateFilter creates a new filter. The filter contains a search request
 	// to filter transcripts.
 	CreateFilter(context.Context, *CreateFilterRequest) (*Filter, error)
@@ -541,6 +555,9 @@ func (UnimplementedVanalyticsServer) BulkRestoreTranscripts(context.Context, *Bu
 }
 func (UnimplementedVanalyticsServer) ListAgentResponseValues(context.Context, *ListAgentResponseValuesRequest) (*ListAgentResponseValuesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAgentResponseValues not implemented")
+}
+func (UnimplementedVanalyticsServer) GetTranscriptSummary(context.Context, *GetTranscriptSummaryRequest) (*GetTranscriptSummaryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTranscriptSummary not implemented")
 }
 func (UnimplementedVanalyticsServer) CreateFilter(context.Context, *CreateFilterRequest) (*Filter, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateFilter not implemented")
@@ -770,6 +787,24 @@ func _Vanalytics_ListAgentResponseValues_Handler(srv interface{}, ctx context.Co
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(VanalyticsServer).ListAgentResponseValues(ctx, req.(*ListAgentResponseValuesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Vanalytics_GetTranscriptSummary_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTranscriptSummaryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VanalyticsServer).GetTranscriptSummary(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Vanalytics_GetTranscriptSummary_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VanalyticsServer).GetTranscriptSummary(ctx, req.(*GetTranscriptSummaryRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1262,6 +1297,10 @@ var Vanalytics_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListAgentResponseValues",
 			Handler:    _Vanalytics_ListAgentResponseValues_Handler,
+		},
+		{
+			MethodName: "GetTranscriptSummary",
+			Handler:    _Vanalytics_GetTranscriptSummary_Handler,
 		},
 		{
 			MethodName: "CreateFilter",
