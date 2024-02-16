@@ -1606,6 +1606,7 @@ type WFMClient interface {
 	// Errors:
 	//
 	//	-grpc.Invalid: one or more fields in the request have invalid values.
+	//	-grpc.NotFound: the fields referenced in @shift_instance or its member shift segments don't exist for the org.
 	//	-grpc.Internal: error occurs when creating the shift instance or its members.
 	CreateShiftInstanceWithSegments(ctx context.Context, in *CreateShiftInstanceWithSegmentsRequest, opts ...grpc.CallOption) (*CreateShiftInstanceWithSegmentsResponse, error)
 	// Splits the @shift_instance_sid into two, at the given @time_to_split, returning the updated and new @shift_instances.
@@ -5116,6 +5117,7 @@ type WFMServer interface {
 	// Errors:
 	//
 	//	-grpc.Invalid: one or more fields in the request have invalid values.
+	//	-grpc.NotFound: the fields referenced in @shift_instance or its member shift segments don't exist for the org.
 	//	-grpc.Internal: error occurs when creating the shift instance or its members.
 	CreateShiftInstanceWithSegments(context.Context, *CreateShiftInstanceWithSegmentsRequest) (*CreateShiftInstanceWithSegmentsResponse, error)
 	// Splits the @shift_instance_sid into two, at the given @time_to_split, returning the updated and new @shift_instances.
