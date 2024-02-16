@@ -550,6 +550,16 @@ const (
 	OrgGetUserMfaInfoProcedure = "/api.v1alpha1.org.Org/GetUserMfaInfo"
 	// OrgGetMyUserMfaInfoProcedure is the fully-qualified name of the Org's GetMyUserMfaInfo RPC.
 	OrgGetMyUserMfaInfoProcedure = "/api.v1alpha1.org.Org/GetMyUserMfaInfo"
+	// OrgCreateBusinessHoursProcedure is the fully-qualified name of the Org's CreateBusinessHours RPC.
+	OrgCreateBusinessHoursProcedure = "/api.v1alpha1.org.Org/CreateBusinessHours"
+	// OrgUpdateBusinessHoursProcedure is the fully-qualified name of the Org's UpdateBusinessHours RPC.
+	OrgUpdateBusinessHoursProcedure = "/api.v1alpha1.org.Org/UpdateBusinessHours"
+	// OrgDeleteBusinessHoursProcedure is the fully-qualified name of the Org's DeleteBusinessHours RPC.
+	OrgDeleteBusinessHoursProcedure = "/api.v1alpha1.org.Org/DeleteBusinessHours"
+	// OrgListBusinessHoursProcedure is the fully-qualified name of the Org's ListBusinessHours RPC.
+	OrgListBusinessHoursProcedure = "/api.v1alpha1.org.Org/ListBusinessHours"
+	// OrgGetBusinessHoursProcedure is the fully-qualified name of the Org's GetBusinessHours RPC.
+	OrgGetBusinessHoursProcedure = "/api.v1alpha1.org.Org/GetBusinessHours"
 )
 
 // OrgClient is a client for the api.v1alpha1.org.Org service.
@@ -996,6 +1006,16 @@ type OrgClient interface {
 	GetUserMfaInfo(context.Context, *connect_go.Request[org.GetUserMfaInfoRequest]) (*connect_go.Response[org.GetUserMfaInfoResponse], error)
 	// GetMyUserMfaInfo returns the mfa info for the current user.
 	GetMyUserMfaInfo(context.Context, *connect_go.Request[org.GetMyUserMfaInfoRequest]) (*connect_go.Response[org.GetMyUserMfaInfoResponse], error)
+	// CreateBusinessHours persists times businesses are available.
+	CreateBusinessHours(context.Context, *connect_go.Request[org.CreateBusinessHoursRequest]) (*connect_go.Response[org.CreateBusinessHoursResponse], error)
+	// UpdateBusinessHours persists changes to times businesses are available.
+	UpdateBusinessHours(context.Context, *connect_go.Request[org.UpdateBusinessHoursRequest]) (*connect_go.Response[org.UpdateBusinessHoursResponse], error)
+	// DeleteBusinessHours removes business hours.
+	DeleteBusinessHours(context.Context, *connect_go.Request[org.DeleteBusinessHoursRequest]) (*connect_go.Response[org.DeleteBusinessHoursResponse], error)
+	// ListBusinessHours returns all business hours for an Org.
+	ListBusinessHours(context.Context, *connect_go.Request[org.ListBusinessHoursRequest]) (*connect_go.Response[org.ListBusinessHoursResponse], error)
+	// GetBusinessHours returns the business hours for the ID.
+	GetBusinessHours(context.Context, *connect_go.Request[org.GetBusinessHoursRequest]) (*connect_go.Response[org.GetBusinessHoursResponse], error)
 }
 
 // NewOrgClient constructs a client for the api.v1alpha1.org.Org service. By default, it uses the
@@ -1993,6 +2013,31 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgGetMyUserMfaInfoProcedure,
 			opts...,
 		),
+		createBusinessHours: connect_go.NewClient[org.CreateBusinessHoursRequest, org.CreateBusinessHoursResponse](
+			httpClient,
+			baseURL+OrgCreateBusinessHoursProcedure,
+			opts...,
+		),
+		updateBusinessHours: connect_go.NewClient[org.UpdateBusinessHoursRequest, org.UpdateBusinessHoursResponse](
+			httpClient,
+			baseURL+OrgUpdateBusinessHoursProcedure,
+			opts...,
+		),
+		deleteBusinessHours: connect_go.NewClient[org.DeleteBusinessHoursRequest, org.DeleteBusinessHoursResponse](
+			httpClient,
+			baseURL+OrgDeleteBusinessHoursProcedure,
+			opts...,
+		),
+		listBusinessHours: connect_go.NewClient[org.ListBusinessHoursRequest, org.ListBusinessHoursResponse](
+			httpClient,
+			baseURL+OrgListBusinessHoursProcedure,
+			opts...,
+		),
+		getBusinessHours: connect_go.NewClient[org.GetBusinessHoursRequest, org.GetBusinessHoursResponse](
+			httpClient,
+			baseURL+OrgGetBusinessHoursProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -2195,6 +2240,11 @@ type orgClient struct {
 	enableMyUserMfa                          *connect_go.Client[org.EnableMyUserMfaRequest, org.EnableMyUserMfaResponse]
 	getUserMfaInfo                           *connect_go.Client[org.GetUserMfaInfoRequest, org.GetUserMfaInfoResponse]
 	getMyUserMfaInfo                         *connect_go.Client[org.GetMyUserMfaInfoRequest, org.GetMyUserMfaInfoResponse]
+	createBusinessHours                      *connect_go.Client[org.CreateBusinessHoursRequest, org.CreateBusinessHoursResponse]
+	updateBusinessHours                      *connect_go.Client[org.UpdateBusinessHoursRequest, org.UpdateBusinessHoursResponse]
+	deleteBusinessHours                      *connect_go.Client[org.DeleteBusinessHoursRequest, org.DeleteBusinessHoursResponse]
+	listBusinessHours                        *connect_go.Client[org.ListBusinessHoursRequest, org.ListBusinessHoursResponse]
+	getBusinessHours                         *connect_go.Client[org.GetBusinessHoursRequest, org.GetBusinessHoursResponse]
 }
 
 // CreateOrganization calls api.v1alpha1.org.Org.CreateOrganization.
@@ -3190,6 +3240,31 @@ func (c *orgClient) GetMyUserMfaInfo(ctx context.Context, req *connect_go.Reques
 	return c.getMyUserMfaInfo.CallUnary(ctx, req)
 }
 
+// CreateBusinessHours calls api.v1alpha1.org.Org.CreateBusinessHours.
+func (c *orgClient) CreateBusinessHours(ctx context.Context, req *connect_go.Request[org.CreateBusinessHoursRequest]) (*connect_go.Response[org.CreateBusinessHoursResponse], error) {
+	return c.createBusinessHours.CallUnary(ctx, req)
+}
+
+// UpdateBusinessHours calls api.v1alpha1.org.Org.UpdateBusinessHours.
+func (c *orgClient) UpdateBusinessHours(ctx context.Context, req *connect_go.Request[org.UpdateBusinessHoursRequest]) (*connect_go.Response[org.UpdateBusinessHoursResponse], error) {
+	return c.updateBusinessHours.CallUnary(ctx, req)
+}
+
+// DeleteBusinessHours calls api.v1alpha1.org.Org.DeleteBusinessHours.
+func (c *orgClient) DeleteBusinessHours(ctx context.Context, req *connect_go.Request[org.DeleteBusinessHoursRequest]) (*connect_go.Response[org.DeleteBusinessHoursResponse], error) {
+	return c.deleteBusinessHours.CallUnary(ctx, req)
+}
+
+// ListBusinessHours calls api.v1alpha1.org.Org.ListBusinessHours.
+func (c *orgClient) ListBusinessHours(ctx context.Context, req *connect_go.Request[org.ListBusinessHoursRequest]) (*connect_go.Response[org.ListBusinessHoursResponse], error) {
+	return c.listBusinessHours.CallUnary(ctx, req)
+}
+
+// GetBusinessHours calls api.v1alpha1.org.Org.GetBusinessHours.
+func (c *orgClient) GetBusinessHours(ctx context.Context, req *connect_go.Request[org.GetBusinessHoursRequest]) (*connect_go.Response[org.GetBusinessHoursResponse], error) {
+	return c.getBusinessHours.CallUnary(ctx, req)
+}
+
 // OrgHandler is an implementation of the api.v1alpha1.org.Org service.
 type OrgHandler interface {
 	// CreateOrganization creates a new organization entity and enables it for the
@@ -3634,6 +3709,16 @@ type OrgHandler interface {
 	GetUserMfaInfo(context.Context, *connect_go.Request[org.GetUserMfaInfoRequest]) (*connect_go.Response[org.GetUserMfaInfoResponse], error)
 	// GetMyUserMfaInfo returns the mfa info for the current user.
 	GetMyUserMfaInfo(context.Context, *connect_go.Request[org.GetMyUserMfaInfoRequest]) (*connect_go.Response[org.GetMyUserMfaInfoResponse], error)
+	// CreateBusinessHours persists times businesses are available.
+	CreateBusinessHours(context.Context, *connect_go.Request[org.CreateBusinessHoursRequest]) (*connect_go.Response[org.CreateBusinessHoursResponse], error)
+	// UpdateBusinessHours persists changes to times businesses are available.
+	UpdateBusinessHours(context.Context, *connect_go.Request[org.UpdateBusinessHoursRequest]) (*connect_go.Response[org.UpdateBusinessHoursResponse], error)
+	// DeleteBusinessHours removes business hours.
+	DeleteBusinessHours(context.Context, *connect_go.Request[org.DeleteBusinessHoursRequest]) (*connect_go.Response[org.DeleteBusinessHoursResponse], error)
+	// ListBusinessHours returns all business hours for an Org.
+	ListBusinessHours(context.Context, *connect_go.Request[org.ListBusinessHoursRequest]) (*connect_go.Response[org.ListBusinessHoursResponse], error)
+	// GetBusinessHours returns the business hours for the ID.
+	GetBusinessHours(context.Context, *connect_go.Request[org.GetBusinessHoursRequest]) (*connect_go.Response[org.GetBusinessHoursResponse], error)
 }
 
 // NewOrgHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -4627,6 +4712,31 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.GetMyUserMfaInfo,
 		opts...,
 	)
+	orgCreateBusinessHoursHandler := connect_go.NewUnaryHandler(
+		OrgCreateBusinessHoursProcedure,
+		svc.CreateBusinessHours,
+		opts...,
+	)
+	orgUpdateBusinessHoursHandler := connect_go.NewUnaryHandler(
+		OrgUpdateBusinessHoursProcedure,
+		svc.UpdateBusinessHours,
+		opts...,
+	)
+	orgDeleteBusinessHoursHandler := connect_go.NewUnaryHandler(
+		OrgDeleteBusinessHoursProcedure,
+		svc.DeleteBusinessHours,
+		opts...,
+	)
+	orgListBusinessHoursHandler := connect_go.NewUnaryHandler(
+		OrgListBusinessHoursProcedure,
+		svc.ListBusinessHours,
+		opts...,
+	)
+	orgGetBusinessHoursHandler := connect_go.NewUnaryHandler(
+		OrgGetBusinessHoursProcedure,
+		svc.GetBusinessHours,
+		opts...,
+	)
 	return "/api.v1alpha1.org.Org/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case OrgCreateOrganizationProcedure:
@@ -5023,6 +5133,16 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 			orgGetUserMfaInfoHandler.ServeHTTP(w, r)
 		case OrgGetMyUserMfaInfoProcedure:
 			orgGetMyUserMfaInfoHandler.ServeHTTP(w, r)
+		case OrgCreateBusinessHoursProcedure:
+			orgCreateBusinessHoursHandler.ServeHTTP(w, r)
+		case OrgUpdateBusinessHoursProcedure:
+			orgUpdateBusinessHoursHandler.ServeHTTP(w, r)
+		case OrgDeleteBusinessHoursProcedure:
+			orgDeleteBusinessHoursHandler.ServeHTTP(w, r)
+		case OrgListBusinessHoursProcedure:
+			orgListBusinessHoursHandler.ServeHTTP(w, r)
+		case OrgGetBusinessHoursProcedure:
+			orgGetBusinessHoursHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -5818,4 +5938,24 @@ func (UnimplementedOrgHandler) GetUserMfaInfo(context.Context, *connect_go.Reque
 
 func (UnimplementedOrgHandler) GetMyUserMfaInfo(context.Context, *connect_go.Request[org.GetMyUserMfaInfoRequest]) (*connect_go.Response[org.GetMyUserMfaInfoResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.GetMyUserMfaInfo is not implemented"))
+}
+
+func (UnimplementedOrgHandler) CreateBusinessHours(context.Context, *connect_go.Request[org.CreateBusinessHoursRequest]) (*connect_go.Response[org.CreateBusinessHoursResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.CreateBusinessHours is not implemented"))
+}
+
+func (UnimplementedOrgHandler) UpdateBusinessHours(context.Context, *connect_go.Request[org.UpdateBusinessHoursRequest]) (*connect_go.Response[org.UpdateBusinessHoursResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.UpdateBusinessHours is not implemented"))
+}
+
+func (UnimplementedOrgHandler) DeleteBusinessHours(context.Context, *connect_go.Request[org.DeleteBusinessHoursRequest]) (*connect_go.Response[org.DeleteBusinessHoursResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.DeleteBusinessHours is not implemented"))
+}
+
+func (UnimplementedOrgHandler) ListBusinessHours(context.Context, *connect_go.Request[org.ListBusinessHoursRequest]) (*connect_go.Response[org.ListBusinessHoursResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.ListBusinessHours is not implemented"))
+}
+
+func (UnimplementedOrgHandler) GetBusinessHours(context.Context, *connect_go.Request[org.GetBusinessHoursRequest]) (*connect_go.Response[org.GetBusinessHoursResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.GetBusinessHours is not implemented"))
 }
