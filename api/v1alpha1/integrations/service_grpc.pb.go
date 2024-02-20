@@ -47,7 +47,6 @@ const (
 	Integrations_ListIntegrationTemplatesByConfig_FullMethodName    = "/api.v1alpha1.integrations.Integrations/ListIntegrationTemplatesByConfig"
 	Integrations_CallEpicPatient_FullMethodName                     = "/api.v1alpha1.integrations.Integrations/CallEpicPatient"
 	Integrations_HangUpEpicPatientCall_FullMethodName               = "/api.v1alpha1.integrations.Integrations/HangUpEpicPatientCall"
-	Integrations_GenerateEpicKeyPairs_FullMethodName                = "/api.v1alpha1.integrations.Integrations/GenerateEpicKeyPairs"
 )
 
 // IntegrationsClient is the client API for Integrations service.
@@ -110,8 +109,6 @@ type IntegrationsClient interface {
 	CallEpicPatient(ctx context.Context, in *CallEpicPatientReq, opts ...grpc.CallOption) (*CallEpicPatientRes, error)
 	// CallEpicPatient initiates a call to the specified number from the agent using the click to call button within epic
 	HangUpEpicPatientCall(ctx context.Context, in *HangUpEpicPatientCallReq, opts ...grpc.CallOption) (*Empty, error)
-	// GenerateEpicKeyPairs creates 2 key pairs, stores the private keys, and returns the public keys
-	GenerateEpicKeyPairs(ctx context.Context, in *GenerateEpicKeyPairReq, opts ...grpc.CallOption) (*GenerateEpicKeyPairRes, error)
 }
 
 type integrationsClient struct {
@@ -374,15 +371,6 @@ func (c *integrationsClient) HangUpEpicPatientCall(ctx context.Context, in *Hang
 	return out, nil
 }
 
-func (c *integrationsClient) GenerateEpicKeyPairs(ctx context.Context, in *GenerateEpicKeyPairReq, opts ...grpc.CallOption) (*GenerateEpicKeyPairRes, error) {
-	out := new(GenerateEpicKeyPairRes)
-	err := c.cc.Invoke(ctx, Integrations_GenerateEpicKeyPairs_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // IntegrationsServer is the server API for Integrations service.
 // All implementations must embed UnimplementedIntegrationsServer
 // for forward compatibility
@@ -443,8 +431,6 @@ type IntegrationsServer interface {
 	CallEpicPatient(context.Context, *CallEpicPatientReq) (*CallEpicPatientRes, error)
 	// CallEpicPatient initiates a call to the specified number from the agent using the click to call button within epic
 	HangUpEpicPatientCall(context.Context, *HangUpEpicPatientCallReq) (*Empty, error)
-	// GenerateEpicKeyPairs creates 2 key pairs, stores the private keys, and returns the public keys
-	GenerateEpicKeyPairs(context.Context, *GenerateEpicKeyPairReq) (*GenerateEpicKeyPairRes, error)
 	mustEmbedUnimplementedIntegrationsServer()
 }
 
@@ -535,9 +521,6 @@ func (UnimplementedIntegrationsServer) CallEpicPatient(context.Context, *CallEpi
 }
 func (UnimplementedIntegrationsServer) HangUpEpicPatientCall(context.Context, *HangUpEpicPatientCallReq) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HangUpEpicPatientCall not implemented")
-}
-func (UnimplementedIntegrationsServer) GenerateEpicKeyPairs(context.Context, *GenerateEpicKeyPairReq) (*GenerateEpicKeyPairRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GenerateEpicKeyPairs not implemented")
 }
 func (UnimplementedIntegrationsServer) mustEmbedUnimplementedIntegrationsServer() {}
 
@@ -1056,24 +1039,6 @@ func _Integrations_HangUpEpicPatientCall_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Integrations_GenerateEpicKeyPairs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GenerateEpicKeyPairReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(IntegrationsServer).GenerateEpicKeyPairs(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Integrations_GenerateEpicKeyPairs_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(IntegrationsServer).GenerateEpicKeyPairs(ctx, req.(*GenerateEpicKeyPairReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // Integrations_ServiceDesc is the grpc.ServiceDesc for Integrations service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1192,10 +1157,6 @@ var Integrations_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "HangUpEpicPatientCall",
 			Handler:    _Integrations_HangUpEpicPatientCall_Handler,
-		},
-		{
-			MethodName: "GenerateEpicKeyPairs",
-			Handler:    _Integrations_GenerateEpicKeyPairs_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

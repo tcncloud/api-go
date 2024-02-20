@@ -92,7 +92,6 @@ const (
 	OmniApi_ListWhatsAppNumbers_FullMethodName          = "/api.v0alpha.OmniApi/ListWhatsAppNumbers"
 	OmniApi_CreateWhatsAppNumber_FullMethodName         = "/api.v0alpha.OmniApi/CreateWhatsAppNumber"
 	OmniApi_UpdateWhatsAppNumber_FullMethodName         = "/api.v0alpha.OmniApi/UpdateWhatsAppNumber"
-	OmniApi_CreateManualTask_FullMethodName             = "/api.v0alpha.OmniApi/CreateManualTask"
 )
 
 // OmniApiClient is the client API for OmniApi service.
@@ -419,10 +418,6 @@ type OmniApiClient interface {
 	CreateWhatsAppNumber(ctx context.Context, in *CreateWhatsAppNumberRequest, opts ...grpc.CallOption) (*CreateWhatsAppNumberResponse, error)
 	// Update whatsapp number for the client
 	UpdateWhatsAppNumber(ctx context.Context, in *UpdateWhatsAppNumberRequest, opts ...grpc.CallOption) (*UpdateWhatsAppNumberResponse, error)
-	// CreateManualTask - Creates a manual task.
-	// Required permissions:
-	// AGENT
-	CreateManualTask(ctx context.Context, in *CreateManualTaskReq, opts ...grpc.CallOption) (*CreateManualTaskRes, error)
 }
 
 type omniApiClient struct {
@@ -1127,15 +1122,6 @@ func (c *omniApiClient) UpdateWhatsAppNumber(ctx context.Context, in *UpdateWhat
 	return out, nil
 }
 
-func (c *omniApiClient) CreateManualTask(ctx context.Context, in *CreateManualTaskReq, opts ...grpc.CallOption) (*CreateManualTaskRes, error) {
-	out := new(CreateManualTaskRes)
-	err := c.cc.Invoke(ctx, OmniApi_CreateManualTask_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // OmniApiServer is the server API for OmniApi service.
 // All implementations must embed UnimplementedOmniApiServer
 // for forward compatibility
@@ -1460,10 +1446,6 @@ type OmniApiServer interface {
 	CreateWhatsAppNumber(context.Context, *CreateWhatsAppNumberRequest) (*CreateWhatsAppNumberResponse, error)
 	// Update whatsapp number for the client
 	UpdateWhatsAppNumber(context.Context, *UpdateWhatsAppNumberRequest) (*UpdateWhatsAppNumberResponse, error)
-	// CreateManualTask - Creates a manual task.
-	// Required permissions:
-	// AGENT
-	CreateManualTask(context.Context, *CreateManualTaskReq) (*CreateManualTaskRes, error)
 	mustEmbedUnimplementedOmniApiServer()
 }
 
@@ -1686,9 +1668,6 @@ func (UnimplementedOmniApiServer) CreateWhatsAppNumber(context.Context, *CreateW
 }
 func (UnimplementedOmniApiServer) UpdateWhatsAppNumber(context.Context, *UpdateWhatsAppNumberRequest) (*UpdateWhatsAppNumberResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateWhatsAppNumber not implemented")
-}
-func (UnimplementedOmniApiServer) CreateManualTask(context.Context, *CreateManualTaskReq) (*CreateManualTaskRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateManualTask not implemented")
 }
 func (UnimplementedOmniApiServer) mustEmbedUnimplementedOmniApiServer() {}
 
@@ -3005,24 +2984,6 @@ func _OmniApi_UpdateWhatsAppNumber_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
-func _OmniApi_CreateManualTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateManualTaskReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(OmniApiServer).CreateManualTask(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: OmniApi_CreateManualTask_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OmniApiServer).CreateManualTask(ctx, req.(*CreateManualTaskReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // OmniApi_ServiceDesc is the grpc.ServiceDesc for OmniApi service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -3309,10 +3270,6 @@ var OmniApi_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateWhatsAppNumber",
 			Handler:    _OmniApi_UpdateWhatsAppNumber_Handler,
-		},
-		{
-			MethodName: "CreateManualTask",
-			Handler:    _OmniApi_CreateManualTask_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
