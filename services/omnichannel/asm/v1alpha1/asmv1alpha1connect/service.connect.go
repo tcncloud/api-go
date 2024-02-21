@@ -53,16 +53,16 @@ const (
 // AsmServiceClient is a client for the services.omnichannel.asm.v1alpha1.AsmService service.
 type AsmServiceClient interface {
 	// Creates an agent session and enables the voice channel
-	CreateSession(context.Context, *connect_go.Request[v1alpha1.CreateSessionReq]) (*connect_go.Response[v1alpha1.CreateSessionRes], error)
+	CreateSession(context.Context, *connect_go.Request[v1alpha1.CreateSessionRequest]) (*connect_go.Response[v1alpha1.CreateSessionResponse], error)
 	// Closes an asm session and all sub sessions
-	EndSession(context.Context, *connect_go.Request[v1alpha1.EndSessionReq]) (*connect_go.Response[v1alpha1.EndSessionRes], error)
+	EndSession(context.Context, *connect_go.Request[v1alpha1.EndSessionRequest]) (*connect_go.Response[v1alpha1.EndSessionResponse], error)
 	// Gets an agent's current asm session
-	GetCurrentSession(context.Context, *connect_go.Request[v1alpha1.GetCurrentSessionReq]) (*connect_go.Response[v1alpha1.GetCurrentSessionRes], error)
+	GetCurrentSession(context.Context, *connect_go.Request[v1alpha1.GetCurrentSessionRequest]) (*connect_go.Response[v1alpha1.GetCurrentSessionResponse], error)
 	// Updates the currently active subsession
-	EnableVoice(context.Context, *connect_go.Request[v1alpha1.EnableVoiceReq]) (*connect_go.Response[v1alpha1.EnableVoiceRes], error)
-	DisableVoice(context.Context, *connect_go.Request[v1alpha1.DisableVoiceReq]) (*connect_go.Response[v1alpha1.DisableVoiceRes], error)
+	EnableVoice(context.Context, *connect_go.Request[v1alpha1.EnableVoiceRequest]) (*connect_go.Response[v1alpha1.EnableVoiceResponse], error)
+	DisableVoice(context.Context, *connect_go.Request[v1alpha1.DisableVoiceRequest]) (*connect_go.Response[v1alpha1.DisableVoiceResponse], error)
 	// List all Sessions for the given user. Contains statistical enrichments for each agent and their conversations.
-	ListAsmUserDetails(context.Context, *connect_go.Request[v1alpha1.ListAsmUserDetailsReq]) (*connect_go.Response[v1alpha1.ListAsmUserDetailsRes], error)
+	ListAsmUserDetails(context.Context, *connect_go.Request[v1alpha1.ListAsmUserDetailsRequest]) (*connect_go.Response[v1alpha1.ListAsmUserDetailsResponse], error)
 }
 
 // NewAsmServiceClient constructs a client for the services.omnichannel.asm.v1alpha1.AsmService
@@ -75,32 +75,32 @@ type AsmServiceClient interface {
 func NewAsmServiceClient(httpClient connect_go.HTTPClient, baseURL string, opts ...connect_go.ClientOption) AsmServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
 	return &asmServiceClient{
-		createSession: connect_go.NewClient[v1alpha1.CreateSessionReq, v1alpha1.CreateSessionRes](
+		createSession: connect_go.NewClient[v1alpha1.CreateSessionRequest, v1alpha1.CreateSessionResponse](
 			httpClient,
 			baseURL+AsmServiceCreateSessionProcedure,
 			opts...,
 		),
-		endSession: connect_go.NewClient[v1alpha1.EndSessionReq, v1alpha1.EndSessionRes](
+		endSession: connect_go.NewClient[v1alpha1.EndSessionRequest, v1alpha1.EndSessionResponse](
 			httpClient,
 			baseURL+AsmServiceEndSessionProcedure,
 			opts...,
 		),
-		getCurrentSession: connect_go.NewClient[v1alpha1.GetCurrentSessionReq, v1alpha1.GetCurrentSessionRes](
+		getCurrentSession: connect_go.NewClient[v1alpha1.GetCurrentSessionRequest, v1alpha1.GetCurrentSessionResponse](
 			httpClient,
 			baseURL+AsmServiceGetCurrentSessionProcedure,
 			opts...,
 		),
-		enableVoice: connect_go.NewClient[v1alpha1.EnableVoiceReq, v1alpha1.EnableVoiceRes](
+		enableVoice: connect_go.NewClient[v1alpha1.EnableVoiceRequest, v1alpha1.EnableVoiceResponse](
 			httpClient,
 			baseURL+AsmServiceEnableVoiceProcedure,
 			opts...,
 		),
-		disableVoice: connect_go.NewClient[v1alpha1.DisableVoiceReq, v1alpha1.DisableVoiceRes](
+		disableVoice: connect_go.NewClient[v1alpha1.DisableVoiceRequest, v1alpha1.DisableVoiceResponse](
 			httpClient,
 			baseURL+AsmServiceDisableVoiceProcedure,
 			opts...,
 		),
-		listAsmUserDetails: connect_go.NewClient[v1alpha1.ListAsmUserDetailsReq, v1alpha1.ListAsmUserDetailsRes](
+		listAsmUserDetails: connect_go.NewClient[v1alpha1.ListAsmUserDetailsRequest, v1alpha1.ListAsmUserDetailsResponse](
 			httpClient,
 			baseURL+AsmServiceListAsmUserDetailsProcedure,
 			opts...,
@@ -110,41 +110,41 @@ func NewAsmServiceClient(httpClient connect_go.HTTPClient, baseURL string, opts 
 
 // asmServiceClient implements AsmServiceClient.
 type asmServiceClient struct {
-	createSession      *connect_go.Client[v1alpha1.CreateSessionReq, v1alpha1.CreateSessionRes]
-	endSession         *connect_go.Client[v1alpha1.EndSessionReq, v1alpha1.EndSessionRes]
-	getCurrentSession  *connect_go.Client[v1alpha1.GetCurrentSessionReq, v1alpha1.GetCurrentSessionRes]
-	enableVoice        *connect_go.Client[v1alpha1.EnableVoiceReq, v1alpha1.EnableVoiceRes]
-	disableVoice       *connect_go.Client[v1alpha1.DisableVoiceReq, v1alpha1.DisableVoiceRes]
-	listAsmUserDetails *connect_go.Client[v1alpha1.ListAsmUserDetailsReq, v1alpha1.ListAsmUserDetailsRes]
+	createSession      *connect_go.Client[v1alpha1.CreateSessionRequest, v1alpha1.CreateSessionResponse]
+	endSession         *connect_go.Client[v1alpha1.EndSessionRequest, v1alpha1.EndSessionResponse]
+	getCurrentSession  *connect_go.Client[v1alpha1.GetCurrentSessionRequest, v1alpha1.GetCurrentSessionResponse]
+	enableVoice        *connect_go.Client[v1alpha1.EnableVoiceRequest, v1alpha1.EnableVoiceResponse]
+	disableVoice       *connect_go.Client[v1alpha1.DisableVoiceRequest, v1alpha1.DisableVoiceResponse]
+	listAsmUserDetails *connect_go.Client[v1alpha1.ListAsmUserDetailsRequest, v1alpha1.ListAsmUserDetailsResponse]
 }
 
 // CreateSession calls services.omnichannel.asm.v1alpha1.AsmService.CreateSession.
-func (c *asmServiceClient) CreateSession(ctx context.Context, req *connect_go.Request[v1alpha1.CreateSessionReq]) (*connect_go.Response[v1alpha1.CreateSessionRes], error) {
+func (c *asmServiceClient) CreateSession(ctx context.Context, req *connect_go.Request[v1alpha1.CreateSessionRequest]) (*connect_go.Response[v1alpha1.CreateSessionResponse], error) {
 	return c.createSession.CallUnary(ctx, req)
 }
 
 // EndSession calls services.omnichannel.asm.v1alpha1.AsmService.EndSession.
-func (c *asmServiceClient) EndSession(ctx context.Context, req *connect_go.Request[v1alpha1.EndSessionReq]) (*connect_go.Response[v1alpha1.EndSessionRes], error) {
+func (c *asmServiceClient) EndSession(ctx context.Context, req *connect_go.Request[v1alpha1.EndSessionRequest]) (*connect_go.Response[v1alpha1.EndSessionResponse], error) {
 	return c.endSession.CallUnary(ctx, req)
 }
 
 // GetCurrentSession calls services.omnichannel.asm.v1alpha1.AsmService.GetCurrentSession.
-func (c *asmServiceClient) GetCurrentSession(ctx context.Context, req *connect_go.Request[v1alpha1.GetCurrentSessionReq]) (*connect_go.Response[v1alpha1.GetCurrentSessionRes], error) {
+func (c *asmServiceClient) GetCurrentSession(ctx context.Context, req *connect_go.Request[v1alpha1.GetCurrentSessionRequest]) (*connect_go.Response[v1alpha1.GetCurrentSessionResponse], error) {
 	return c.getCurrentSession.CallUnary(ctx, req)
 }
 
 // EnableVoice calls services.omnichannel.asm.v1alpha1.AsmService.EnableVoice.
-func (c *asmServiceClient) EnableVoice(ctx context.Context, req *connect_go.Request[v1alpha1.EnableVoiceReq]) (*connect_go.Response[v1alpha1.EnableVoiceRes], error) {
+func (c *asmServiceClient) EnableVoice(ctx context.Context, req *connect_go.Request[v1alpha1.EnableVoiceRequest]) (*connect_go.Response[v1alpha1.EnableVoiceResponse], error) {
 	return c.enableVoice.CallUnary(ctx, req)
 }
 
 // DisableVoice calls services.omnichannel.asm.v1alpha1.AsmService.DisableVoice.
-func (c *asmServiceClient) DisableVoice(ctx context.Context, req *connect_go.Request[v1alpha1.DisableVoiceReq]) (*connect_go.Response[v1alpha1.DisableVoiceRes], error) {
+func (c *asmServiceClient) DisableVoice(ctx context.Context, req *connect_go.Request[v1alpha1.DisableVoiceRequest]) (*connect_go.Response[v1alpha1.DisableVoiceResponse], error) {
 	return c.disableVoice.CallUnary(ctx, req)
 }
 
 // ListAsmUserDetails calls services.omnichannel.asm.v1alpha1.AsmService.ListAsmUserDetails.
-func (c *asmServiceClient) ListAsmUserDetails(ctx context.Context, req *connect_go.Request[v1alpha1.ListAsmUserDetailsReq]) (*connect_go.Response[v1alpha1.ListAsmUserDetailsRes], error) {
+func (c *asmServiceClient) ListAsmUserDetails(ctx context.Context, req *connect_go.Request[v1alpha1.ListAsmUserDetailsRequest]) (*connect_go.Response[v1alpha1.ListAsmUserDetailsResponse], error) {
 	return c.listAsmUserDetails.CallUnary(ctx, req)
 }
 
@@ -152,16 +152,16 @@ func (c *asmServiceClient) ListAsmUserDetails(ctx context.Context, req *connect_
 // service.
 type AsmServiceHandler interface {
 	// Creates an agent session and enables the voice channel
-	CreateSession(context.Context, *connect_go.Request[v1alpha1.CreateSessionReq]) (*connect_go.Response[v1alpha1.CreateSessionRes], error)
+	CreateSession(context.Context, *connect_go.Request[v1alpha1.CreateSessionRequest]) (*connect_go.Response[v1alpha1.CreateSessionResponse], error)
 	// Closes an asm session and all sub sessions
-	EndSession(context.Context, *connect_go.Request[v1alpha1.EndSessionReq]) (*connect_go.Response[v1alpha1.EndSessionRes], error)
+	EndSession(context.Context, *connect_go.Request[v1alpha1.EndSessionRequest]) (*connect_go.Response[v1alpha1.EndSessionResponse], error)
 	// Gets an agent's current asm session
-	GetCurrentSession(context.Context, *connect_go.Request[v1alpha1.GetCurrentSessionReq]) (*connect_go.Response[v1alpha1.GetCurrentSessionRes], error)
+	GetCurrentSession(context.Context, *connect_go.Request[v1alpha1.GetCurrentSessionRequest]) (*connect_go.Response[v1alpha1.GetCurrentSessionResponse], error)
 	// Updates the currently active subsession
-	EnableVoice(context.Context, *connect_go.Request[v1alpha1.EnableVoiceReq]) (*connect_go.Response[v1alpha1.EnableVoiceRes], error)
-	DisableVoice(context.Context, *connect_go.Request[v1alpha1.DisableVoiceReq]) (*connect_go.Response[v1alpha1.DisableVoiceRes], error)
+	EnableVoice(context.Context, *connect_go.Request[v1alpha1.EnableVoiceRequest]) (*connect_go.Response[v1alpha1.EnableVoiceResponse], error)
+	DisableVoice(context.Context, *connect_go.Request[v1alpha1.DisableVoiceRequest]) (*connect_go.Response[v1alpha1.DisableVoiceResponse], error)
 	// List all Sessions for the given user. Contains statistical enrichments for each agent and their conversations.
-	ListAsmUserDetails(context.Context, *connect_go.Request[v1alpha1.ListAsmUserDetailsReq]) (*connect_go.Response[v1alpha1.ListAsmUserDetailsRes], error)
+	ListAsmUserDetails(context.Context, *connect_go.Request[v1alpha1.ListAsmUserDetailsRequest]) (*connect_go.Response[v1alpha1.ListAsmUserDetailsResponse], error)
 }
 
 // NewAsmServiceHandler builds an HTTP handler from the service implementation. It returns the path
@@ -223,26 +223,26 @@ func NewAsmServiceHandler(svc AsmServiceHandler, opts ...connect_go.HandlerOptio
 // UnimplementedAsmServiceHandler returns CodeUnimplemented from all methods.
 type UnimplementedAsmServiceHandler struct{}
 
-func (UnimplementedAsmServiceHandler) CreateSession(context.Context, *connect_go.Request[v1alpha1.CreateSessionReq]) (*connect_go.Response[v1alpha1.CreateSessionRes], error) {
+func (UnimplementedAsmServiceHandler) CreateSession(context.Context, *connect_go.Request[v1alpha1.CreateSessionRequest]) (*connect_go.Response[v1alpha1.CreateSessionResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.omnichannel.asm.v1alpha1.AsmService.CreateSession is not implemented"))
 }
 
-func (UnimplementedAsmServiceHandler) EndSession(context.Context, *connect_go.Request[v1alpha1.EndSessionReq]) (*connect_go.Response[v1alpha1.EndSessionRes], error) {
+func (UnimplementedAsmServiceHandler) EndSession(context.Context, *connect_go.Request[v1alpha1.EndSessionRequest]) (*connect_go.Response[v1alpha1.EndSessionResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.omnichannel.asm.v1alpha1.AsmService.EndSession is not implemented"))
 }
 
-func (UnimplementedAsmServiceHandler) GetCurrentSession(context.Context, *connect_go.Request[v1alpha1.GetCurrentSessionReq]) (*connect_go.Response[v1alpha1.GetCurrentSessionRes], error) {
+func (UnimplementedAsmServiceHandler) GetCurrentSession(context.Context, *connect_go.Request[v1alpha1.GetCurrentSessionRequest]) (*connect_go.Response[v1alpha1.GetCurrentSessionResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.omnichannel.asm.v1alpha1.AsmService.GetCurrentSession is not implemented"))
 }
 
-func (UnimplementedAsmServiceHandler) EnableVoice(context.Context, *connect_go.Request[v1alpha1.EnableVoiceReq]) (*connect_go.Response[v1alpha1.EnableVoiceRes], error) {
+func (UnimplementedAsmServiceHandler) EnableVoice(context.Context, *connect_go.Request[v1alpha1.EnableVoiceRequest]) (*connect_go.Response[v1alpha1.EnableVoiceResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.omnichannel.asm.v1alpha1.AsmService.EnableVoice is not implemented"))
 }
 
-func (UnimplementedAsmServiceHandler) DisableVoice(context.Context, *connect_go.Request[v1alpha1.DisableVoiceReq]) (*connect_go.Response[v1alpha1.DisableVoiceRes], error) {
+func (UnimplementedAsmServiceHandler) DisableVoice(context.Context, *connect_go.Request[v1alpha1.DisableVoiceRequest]) (*connect_go.Response[v1alpha1.DisableVoiceResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.omnichannel.asm.v1alpha1.AsmService.DisableVoice is not implemented"))
 }
 
-func (UnimplementedAsmServiceHandler) ListAsmUserDetails(context.Context, *connect_go.Request[v1alpha1.ListAsmUserDetailsReq]) (*connect_go.Response[v1alpha1.ListAsmUserDetailsRes], error) {
+func (UnimplementedAsmServiceHandler) ListAsmUserDetails(context.Context, *connect_go.Request[v1alpha1.ListAsmUserDetailsRequest]) (*connect_go.Response[v1alpha1.ListAsmUserDetailsResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.omnichannel.asm.v1alpha1.AsmService.ListAsmUserDetails is not implemented"))
 }

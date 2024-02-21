@@ -32,16 +32,16 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AsmServiceClient interface {
 	// Creates an agent session and enables the voice channel
-	CreateSession(ctx context.Context, in *CreateSessionReq, opts ...grpc.CallOption) (*CreateSessionRes, error)
+	CreateSession(ctx context.Context, in *CreateSessionRequest, opts ...grpc.CallOption) (*CreateSessionResponse, error)
 	// Closes an asm session and all sub sessions
-	EndSession(ctx context.Context, in *EndSessionReq, opts ...grpc.CallOption) (*EndSessionRes, error)
+	EndSession(ctx context.Context, in *EndSessionRequest, opts ...grpc.CallOption) (*EndSessionResponse, error)
 	// Gets an agent's current asm session
-	GetCurrentSession(ctx context.Context, in *GetCurrentSessionReq, opts ...grpc.CallOption) (*GetCurrentSessionRes, error)
+	GetCurrentSession(ctx context.Context, in *GetCurrentSessionRequest, opts ...grpc.CallOption) (*GetCurrentSessionResponse, error)
 	// Updates the currently active subsession
-	EnableVoice(ctx context.Context, in *EnableVoiceReq, opts ...grpc.CallOption) (*EnableVoiceRes, error)
-	DisableVoice(ctx context.Context, in *DisableVoiceReq, opts ...grpc.CallOption) (*DisableVoiceRes, error)
+	EnableVoice(ctx context.Context, in *EnableVoiceRequest, opts ...grpc.CallOption) (*EnableVoiceResponse, error)
+	DisableVoice(ctx context.Context, in *DisableVoiceRequest, opts ...grpc.CallOption) (*DisableVoiceResponse, error)
 	// List all Sessions for the given user. Contains statistical enrichments for each agent and their conversations.
-	ListAsmUserDetails(ctx context.Context, in *ListAsmUserDetailsReq, opts ...grpc.CallOption) (*ListAsmUserDetailsRes, error)
+	ListAsmUserDetails(ctx context.Context, in *ListAsmUserDetailsRequest, opts ...grpc.CallOption) (*ListAsmUserDetailsResponse, error)
 }
 
 type asmServiceClient struct {
@@ -52,8 +52,8 @@ func NewAsmServiceClient(cc grpc.ClientConnInterface) AsmServiceClient {
 	return &asmServiceClient{cc}
 }
 
-func (c *asmServiceClient) CreateSession(ctx context.Context, in *CreateSessionReq, opts ...grpc.CallOption) (*CreateSessionRes, error) {
-	out := new(CreateSessionRes)
+func (c *asmServiceClient) CreateSession(ctx context.Context, in *CreateSessionRequest, opts ...grpc.CallOption) (*CreateSessionResponse, error) {
+	out := new(CreateSessionResponse)
 	err := c.cc.Invoke(ctx, AsmService_CreateSession_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -61,8 +61,8 @@ func (c *asmServiceClient) CreateSession(ctx context.Context, in *CreateSessionR
 	return out, nil
 }
 
-func (c *asmServiceClient) EndSession(ctx context.Context, in *EndSessionReq, opts ...grpc.CallOption) (*EndSessionRes, error) {
-	out := new(EndSessionRes)
+func (c *asmServiceClient) EndSession(ctx context.Context, in *EndSessionRequest, opts ...grpc.CallOption) (*EndSessionResponse, error) {
+	out := new(EndSessionResponse)
 	err := c.cc.Invoke(ctx, AsmService_EndSession_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -70,8 +70,8 @@ func (c *asmServiceClient) EndSession(ctx context.Context, in *EndSessionReq, op
 	return out, nil
 }
 
-func (c *asmServiceClient) GetCurrentSession(ctx context.Context, in *GetCurrentSessionReq, opts ...grpc.CallOption) (*GetCurrentSessionRes, error) {
-	out := new(GetCurrentSessionRes)
+func (c *asmServiceClient) GetCurrentSession(ctx context.Context, in *GetCurrentSessionRequest, opts ...grpc.CallOption) (*GetCurrentSessionResponse, error) {
+	out := new(GetCurrentSessionResponse)
 	err := c.cc.Invoke(ctx, AsmService_GetCurrentSession_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -79,8 +79,8 @@ func (c *asmServiceClient) GetCurrentSession(ctx context.Context, in *GetCurrent
 	return out, nil
 }
 
-func (c *asmServiceClient) EnableVoice(ctx context.Context, in *EnableVoiceReq, opts ...grpc.CallOption) (*EnableVoiceRes, error) {
-	out := new(EnableVoiceRes)
+func (c *asmServiceClient) EnableVoice(ctx context.Context, in *EnableVoiceRequest, opts ...grpc.CallOption) (*EnableVoiceResponse, error) {
+	out := new(EnableVoiceResponse)
 	err := c.cc.Invoke(ctx, AsmService_EnableVoice_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -88,8 +88,8 @@ func (c *asmServiceClient) EnableVoice(ctx context.Context, in *EnableVoiceReq, 
 	return out, nil
 }
 
-func (c *asmServiceClient) DisableVoice(ctx context.Context, in *DisableVoiceReq, opts ...grpc.CallOption) (*DisableVoiceRes, error) {
-	out := new(DisableVoiceRes)
+func (c *asmServiceClient) DisableVoice(ctx context.Context, in *DisableVoiceRequest, opts ...grpc.CallOption) (*DisableVoiceResponse, error) {
+	out := new(DisableVoiceResponse)
 	err := c.cc.Invoke(ctx, AsmService_DisableVoice_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -97,8 +97,8 @@ func (c *asmServiceClient) DisableVoice(ctx context.Context, in *DisableVoiceReq
 	return out, nil
 }
 
-func (c *asmServiceClient) ListAsmUserDetails(ctx context.Context, in *ListAsmUserDetailsReq, opts ...grpc.CallOption) (*ListAsmUserDetailsRes, error) {
-	out := new(ListAsmUserDetailsRes)
+func (c *asmServiceClient) ListAsmUserDetails(ctx context.Context, in *ListAsmUserDetailsRequest, opts ...grpc.CallOption) (*ListAsmUserDetailsResponse, error) {
+	out := new(ListAsmUserDetailsResponse)
 	err := c.cc.Invoke(ctx, AsmService_ListAsmUserDetails_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -111,16 +111,16 @@ func (c *asmServiceClient) ListAsmUserDetails(ctx context.Context, in *ListAsmUs
 // for forward compatibility
 type AsmServiceServer interface {
 	// Creates an agent session and enables the voice channel
-	CreateSession(context.Context, *CreateSessionReq) (*CreateSessionRes, error)
+	CreateSession(context.Context, *CreateSessionRequest) (*CreateSessionResponse, error)
 	// Closes an asm session and all sub sessions
-	EndSession(context.Context, *EndSessionReq) (*EndSessionRes, error)
+	EndSession(context.Context, *EndSessionRequest) (*EndSessionResponse, error)
 	// Gets an agent's current asm session
-	GetCurrentSession(context.Context, *GetCurrentSessionReq) (*GetCurrentSessionRes, error)
+	GetCurrentSession(context.Context, *GetCurrentSessionRequest) (*GetCurrentSessionResponse, error)
 	// Updates the currently active subsession
-	EnableVoice(context.Context, *EnableVoiceReq) (*EnableVoiceRes, error)
-	DisableVoice(context.Context, *DisableVoiceReq) (*DisableVoiceRes, error)
+	EnableVoice(context.Context, *EnableVoiceRequest) (*EnableVoiceResponse, error)
+	DisableVoice(context.Context, *DisableVoiceRequest) (*DisableVoiceResponse, error)
 	// List all Sessions for the given user. Contains statistical enrichments for each agent and their conversations.
-	ListAsmUserDetails(context.Context, *ListAsmUserDetailsReq) (*ListAsmUserDetailsRes, error)
+	ListAsmUserDetails(context.Context, *ListAsmUserDetailsRequest) (*ListAsmUserDetailsResponse, error)
 	mustEmbedUnimplementedAsmServiceServer()
 }
 
@@ -128,22 +128,22 @@ type AsmServiceServer interface {
 type UnimplementedAsmServiceServer struct {
 }
 
-func (UnimplementedAsmServiceServer) CreateSession(context.Context, *CreateSessionReq) (*CreateSessionRes, error) {
+func (UnimplementedAsmServiceServer) CreateSession(context.Context, *CreateSessionRequest) (*CreateSessionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateSession not implemented")
 }
-func (UnimplementedAsmServiceServer) EndSession(context.Context, *EndSessionReq) (*EndSessionRes, error) {
+func (UnimplementedAsmServiceServer) EndSession(context.Context, *EndSessionRequest) (*EndSessionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method EndSession not implemented")
 }
-func (UnimplementedAsmServiceServer) GetCurrentSession(context.Context, *GetCurrentSessionReq) (*GetCurrentSessionRes, error) {
+func (UnimplementedAsmServiceServer) GetCurrentSession(context.Context, *GetCurrentSessionRequest) (*GetCurrentSessionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCurrentSession not implemented")
 }
-func (UnimplementedAsmServiceServer) EnableVoice(context.Context, *EnableVoiceReq) (*EnableVoiceRes, error) {
+func (UnimplementedAsmServiceServer) EnableVoice(context.Context, *EnableVoiceRequest) (*EnableVoiceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method EnableVoice not implemented")
 }
-func (UnimplementedAsmServiceServer) DisableVoice(context.Context, *DisableVoiceReq) (*DisableVoiceRes, error) {
+func (UnimplementedAsmServiceServer) DisableVoice(context.Context, *DisableVoiceRequest) (*DisableVoiceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DisableVoice not implemented")
 }
-func (UnimplementedAsmServiceServer) ListAsmUserDetails(context.Context, *ListAsmUserDetailsReq) (*ListAsmUserDetailsRes, error) {
+func (UnimplementedAsmServiceServer) ListAsmUserDetails(context.Context, *ListAsmUserDetailsRequest) (*ListAsmUserDetailsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAsmUserDetails not implemented")
 }
 func (UnimplementedAsmServiceServer) mustEmbedUnimplementedAsmServiceServer() {}
@@ -160,7 +160,7 @@ func RegisterAsmServiceServer(s grpc.ServiceRegistrar, srv AsmServiceServer) {
 }
 
 func _AsmService_CreateSession_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateSessionReq)
+	in := new(CreateSessionRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -172,13 +172,13 @@ func _AsmService_CreateSession_Handler(srv interface{}, ctx context.Context, dec
 		FullMethod: AsmService_CreateSession_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AsmServiceServer).CreateSession(ctx, req.(*CreateSessionReq))
+		return srv.(AsmServiceServer).CreateSession(ctx, req.(*CreateSessionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _AsmService_EndSession_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(EndSessionReq)
+	in := new(EndSessionRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -190,13 +190,13 @@ func _AsmService_EndSession_Handler(srv interface{}, ctx context.Context, dec fu
 		FullMethod: AsmService_EndSession_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AsmServiceServer).EndSession(ctx, req.(*EndSessionReq))
+		return srv.(AsmServiceServer).EndSession(ctx, req.(*EndSessionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _AsmService_GetCurrentSession_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetCurrentSessionReq)
+	in := new(GetCurrentSessionRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -208,13 +208,13 @@ func _AsmService_GetCurrentSession_Handler(srv interface{}, ctx context.Context,
 		FullMethod: AsmService_GetCurrentSession_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AsmServiceServer).GetCurrentSession(ctx, req.(*GetCurrentSessionReq))
+		return srv.(AsmServiceServer).GetCurrentSession(ctx, req.(*GetCurrentSessionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _AsmService_EnableVoice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(EnableVoiceReq)
+	in := new(EnableVoiceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -226,13 +226,13 @@ func _AsmService_EnableVoice_Handler(srv interface{}, ctx context.Context, dec f
 		FullMethod: AsmService_EnableVoice_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AsmServiceServer).EnableVoice(ctx, req.(*EnableVoiceReq))
+		return srv.(AsmServiceServer).EnableVoice(ctx, req.(*EnableVoiceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _AsmService_DisableVoice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DisableVoiceReq)
+	in := new(DisableVoiceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -244,13 +244,13 @@ func _AsmService_DisableVoice_Handler(srv interface{}, ctx context.Context, dec 
 		FullMethod: AsmService_DisableVoice_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AsmServiceServer).DisableVoice(ctx, req.(*DisableVoiceReq))
+		return srv.(AsmServiceServer).DisableVoice(ctx, req.(*DisableVoiceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _AsmService_ListAsmUserDetails_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListAsmUserDetailsReq)
+	in := new(ListAsmUserDetailsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -262,7 +262,7 @@ func _AsmService_ListAsmUserDetails_Handler(srv interface{}, ctx context.Context
 		FullMethod: AsmService_ListAsmUserDetails_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AsmServiceServer).ListAsmUserDetails(ctx, req.(*ListAsmUserDetailsReq))
+		return srv.(AsmServiceServer).ListAsmUserDetails(ctx, req.(*ListAsmUserDetailsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
