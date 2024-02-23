@@ -143,8 +143,10 @@ const (
 	// allows access to edit insights
 	Permission_PERMISSION_INSIGHTS_INSIGHT_EDIT Permission = 606
 	// allows user to read insights for dashboards
+	// deprecated
 	Permission_PERMISSION_INSIGHTS_DASHBOARD_VIEW Permission = 607
 	// allows user to edit insights for dashboards
+	// deprecated
 	Permission_PERMISSION_INSIGHTS_DASHBOARD_EDIT Permission = 608
 	// Enables access to room 303 chat at a base level
 	// Lowest tier permissions for unconfigured rooms and direct messaging
