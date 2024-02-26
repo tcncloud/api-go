@@ -182,9 +182,9 @@ const (
 	Permission_PERMISSION_AGENT_PORTAL Permission = 1501
 	// Enables access to the Adherence app as an Admin user.
 	Permission_PERMISSION_ADHERENCE_ADMIN Permission = 1502
-	// Enables access to the Adherence app as an Admin user.
+	// Enables access to the Adherence app as a Manager user.
 	Permission_PERMISSION_ADHERENCE_MANAGER Permission = 1503
-	// Enables access to the Adherence app as an Admin user.
+	// Enables access to the Adherence app as a Monitor user.
 	Permission_PERMISSION_ADHERENCE_MONITOR Permission = 1504
 	// Enables access to Scorecards app.
 	Permission_PERMISSION_SCORECARDS Permission = 1600
