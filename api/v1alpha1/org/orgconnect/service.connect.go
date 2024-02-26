@@ -407,12 +407,32 @@ const (
 	// OrgDeleteHuntGroupClientInfoDisplayTemplateProcedure is the fully-qualified name of the Org's
 	// DeleteHuntGroupClientInfoDisplayTemplate RPC.
 	OrgDeleteHuntGroupClientInfoDisplayTemplateProcedure = "/api.v1alpha1.org.Org/DeleteHuntGroupClientInfoDisplayTemplate"
+	// OrgCopyHuntGroupClientInfoDisplayTemplateProcedure is the fully-qualified name of the Org's
+	// CopyHuntGroupClientInfoDisplayTemplate RPC.
+	OrgCopyHuntGroupClientInfoDisplayTemplateProcedure = "/api.v1alpha1.org.Org/CopyHuntGroupClientInfoDisplayTemplate"
+	// OrgCreateCampaignClientInfoDisplayTemplateProcedure is the fully-qualified name of the Org's
+	// CreateCampaignClientInfoDisplayTemplate RPC.
+	OrgCreateCampaignClientInfoDisplayTemplateProcedure = "/api.v1alpha1.org.Org/CreateCampaignClientInfoDisplayTemplate"
+	// OrgListHuntGroupsWithClientInfoTemplateDataProcedure is the fully-qualified name of the Org's
+	// ListHuntGroupsWithClientInfoTemplateData RPC.
+	OrgListHuntGroupsWithClientInfoTemplateDataProcedure = "/api.v1alpha1.org.Org/ListHuntGroupsWithClientInfoTemplateData"
 	// OrgListAgentTriggersProcedure is the fully-qualified name of the Org's ListAgentTriggers RPC.
 	OrgListAgentTriggersProcedure = "/api.v1alpha1.org.Org/ListAgentTriggers"
 	// OrgCopyAgentTriggerProcedure is the fully-qualified name of the Org's CopyAgentTrigger RPC.
 	OrgCopyAgentTriggerProcedure = "/api.v1alpha1.org.Org/CopyAgentTrigger"
 	// OrgUpdateAgentTriggersProcedure is the fully-qualified name of the Org's UpdateAgentTriggers RPC.
 	OrgUpdateAgentTriggersProcedure = "/api.v1alpha1.org.Org/UpdateAgentTriggers"
+	// OrgGetHuntGroupScriptProcedure is the fully-qualified name of the Org's GetHuntGroupScript RPC.
+	OrgGetHuntGroupScriptProcedure = "/api.v1alpha1.org.Org/GetHuntGroupScript"
+	// OrgCreateHuntGroupScriptProcedure is the fully-qualified name of the Org's CreateHuntGroupScript
+	// RPC.
+	OrgCreateHuntGroupScriptProcedure = "/api.v1alpha1.org.Org/CreateHuntGroupScript"
+	// OrgUpdateHuntGroupScriptProcedure is the fully-qualified name of the Org's UpdateHuntGroupScript
+	// RPC.
+	OrgUpdateHuntGroupScriptProcedure = "/api.v1alpha1.org.Org/UpdateHuntGroupScript"
+	// OrgDeleteHuntGroupScriptProcedure is the fully-qualified name of the Org's DeleteHuntGroupScript
+	// RPC.
+	OrgDeleteHuntGroupScriptProcedure = "/api.v1alpha1.org.Org/DeleteHuntGroupScript"
 	// OrgCreateTrustProcedure is the fully-qualified name of the Org's CreateTrust RPC.
 	OrgCreateTrustProcedure = "/api.v1alpha1.org.Org/CreateTrust"
 	// OrgAcceptTrustProcedure is the fully-qualified name of the Org's AcceptTrust RPC.
@@ -529,6 +549,8 @@ const (
 	OrgRefreshMfaLockoutByOrgIdProcedure = "/api.v1alpha1.org.Org/RefreshMfaLockoutByOrgId"
 	// OrgSetMfaTypeProcedure is the fully-qualified name of the Org's SetMfaType RPC.
 	OrgSetMfaTypeProcedure = "/api.v1alpha1.org.Org/SetMfaType"
+	// OrgSetMyMfaTypeProcedure is the fully-qualified name of the Org's SetMyMfaType RPC.
+	OrgSetMyMfaTypeProcedure = "/api.v1alpha1.org.Org/SetMyMfaType"
 	// OrgEnableUserMfaProcedure is the fully-qualified name of the Org's EnableUserMfa RPC.
 	OrgEnableUserMfaProcedure = "/api.v1alpha1.org.Org/EnableUserMfa"
 	// OrgEnableMyUserMfaProcedure is the fully-qualified name of the Org's EnableMyUserMfa RPC.
@@ -537,6 +559,16 @@ const (
 	OrgGetUserMfaInfoProcedure = "/api.v1alpha1.org.Org/GetUserMfaInfo"
 	// OrgGetMyUserMfaInfoProcedure is the fully-qualified name of the Org's GetMyUserMfaInfo RPC.
 	OrgGetMyUserMfaInfoProcedure = "/api.v1alpha1.org.Org/GetMyUserMfaInfo"
+	// OrgCreateBusinessHoursProcedure is the fully-qualified name of the Org's CreateBusinessHours RPC.
+	OrgCreateBusinessHoursProcedure = "/api.v1alpha1.org.Org/CreateBusinessHours"
+	// OrgUpdateBusinessHoursProcedure is the fully-qualified name of the Org's UpdateBusinessHours RPC.
+	OrgUpdateBusinessHoursProcedure = "/api.v1alpha1.org.Org/UpdateBusinessHours"
+	// OrgDeleteBusinessHoursProcedure is the fully-qualified name of the Org's DeleteBusinessHours RPC.
+	OrgDeleteBusinessHoursProcedure = "/api.v1alpha1.org.Org/DeleteBusinessHours"
+	// OrgListBusinessHoursProcedure is the fully-qualified name of the Org's ListBusinessHours RPC.
+	OrgListBusinessHoursProcedure = "/api.v1alpha1.org.Org/ListBusinessHours"
+	// OrgGetBusinessHoursProcedure is the fully-qualified name of the Org's GetBusinessHours RPC.
+	OrgGetBusinessHoursProcedure = "/api.v1alpha1.org.Org/GetBusinessHours"
 )
 
 // OrgClient is a client for the api.v1alpha1.org.Org service.
@@ -848,12 +880,30 @@ type OrgClient interface {
 	UpdateHuntGroupClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.UpdateHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.UpdateHuntGroupClientInfoDisplayTemplateResponse], error)
 	// DeleteHuntGroupClientInfoDisplayTemplate deletes a client info display template for a given hunt group.
 	DeleteHuntGroupClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.DeleteHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.DeleteHuntGroupClientInfoDisplayTemplateResponse], error)
+	// CopyHuntGroupClientInfoDisplayTemplate copies the client info display template from one hunt group to another.
+	// It will create a new template in the destination hunt group with the same settings as the source template if it doesn't already exist.
+	// Otherwise, it will update the existing template with the source template settings.
+	CopyHuntGroupClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.CopyHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.CopyHuntGroupClientInfoDisplayTemplateResponse], error)
+	// CreateCampaignClientInfoDisplayTemplate creates a new client info display template for a campaign
+	// with the same settings as the source template from a hunt group.
+	CreateCampaignClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.CreateCampaignClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.CreateCampaignClientInfoDisplayTemplateResponse], error)
+	// ListHuntGroupsWithClientInfoTemplateData lists the hunt groups in an organization
+	// with their client info display template data based on the filter.
+	ListHuntGroupsWithClientInfoTemplateData(context.Context, *connect_go.Request[org.ListHuntGroupsWithClientInfoTemplateDataRequest]) (*connect_go.Response[org.ListHuntGroupsWithClientInfoTemplateDataResponse], error)
 	// ListAgentTriggers returns a list of agent triggers for the given hunt group.
 	ListAgentTriggers(context.Context, *connect_go.Request[org.ListAgentTriggersRequest]) (*connect_go.Response[org.ListAgentTriggersResponse], error)
 	// CopyAgentTrigger copys an agent trigger to the given hunt group in the same org.
 	CopyAgentTrigger(context.Context, *connect_go.Request[org.CopyAgentTriggerRequest]) (*connect_go.Response[org.CopyAgentTriggerResponse], error)
 	// UpdateAgentTriggers updates all agent triggers for the given hunt group.
 	UpdateAgentTriggers(context.Context, *connect_go.Request[org.UpdateAgentTriggersRequest]) (*connect_go.Response[org.UpdateAgentTriggersResponse], error)
+	// GetHuntGroupScript gets the hunt group script for a given hunt group
+	GetHuntGroupScript(context.Context, *connect_go.Request[org.GetHuntGroupScriptRequest]) (*connect_go.Response[org.GetHuntGroupScriptResponse], error)
+	// CreateHuntGroupScript adds a hunt group script within the given hunt group
+	CreateHuntGroupScript(context.Context, *connect_go.Request[org.CreateHuntGroupScriptRequest]) (*connect_go.Response[org.CreateHuntGroupScriptResponse], error)
+	// UpdateHuntGroupScript updates a hunt group script within the given hunt group
+	UpdateHuntGroupScript(context.Context, *connect_go.Request[org.UpdateHuntGroupScriptRequest]) (*connect_go.Response[org.UpdateHuntGroupScriptResponse], error)
+	// DeleteHuntGroupScript removes a hunt group script within the given hunt group
+	DeleteHuntGroupScript(context.Context, *connect_go.Request[org.DeleteHuntGroupScriptRequest]) (*connect_go.Response[org.DeleteHuntGroupScriptResponse], error)
 	// CreateTrust creates a new trust.
 	CreateTrust(context.Context, *connect_go.Request[org.CreateTrustRequest]) (*connect_go.Response[org.CreateTrustResponse], error)
 	// AcceptTrust accepts an incoming trust.
@@ -963,8 +1013,10 @@ type OrgClient interface {
 	RefreshMfaLockout(context.Context, *connect_go.Request[org.RefreshMfaLockoutRequest]) (*connect_go.Response[org.RefreshMfaLockoutResponse], error)
 	// RefreshMfaLockoutByOrgId resets the lockout timer for the given user and org id.
 	RefreshMfaLockoutByOrgId(context.Context, *connect_go.Request[org.RefreshMfaLockoutByOrgIdRequest]) (*connect_go.Response[org.RefreshMfaLockoutByOrgIdResponse], error)
-	// SetMfaType sets the current user's mfa type.
+	// SetMfaType sets the given user's mfa type.
 	SetMfaType(context.Context, *connect_go.Request[org.SetMfaTypeRequest]) (*connect_go.Response[org.SetMfaTypeResponse], error)
+	// SetMyMfaType sets the current user's mfa type.
+	SetMyMfaType(context.Context, *connect_go.Request[org.SetMyMfaTypeRequest]) (*connect_go.Response[org.SetMyMfaTypeResponse], error)
 	// EnableUserMfa enables or disables mfa for the given user
 	EnableUserMfa(context.Context, *connect_go.Request[org.EnableUserMfaRequest]) (*connect_go.Response[org.EnableUserMfaResponse], error)
 	// EnableMyUserMfa enables mfa for the current user
@@ -973,6 +1025,16 @@ type OrgClient interface {
 	GetUserMfaInfo(context.Context, *connect_go.Request[org.GetUserMfaInfoRequest]) (*connect_go.Response[org.GetUserMfaInfoResponse], error)
 	// GetMyUserMfaInfo returns the mfa info for the current user.
 	GetMyUserMfaInfo(context.Context, *connect_go.Request[org.GetMyUserMfaInfoRequest]) (*connect_go.Response[org.GetMyUserMfaInfoResponse], error)
+	// CreateBusinessHours persists times businesses are available.
+	CreateBusinessHours(context.Context, *connect_go.Request[org.CreateBusinessHoursRequest]) (*connect_go.Response[org.CreateBusinessHoursResponse], error)
+	// UpdateBusinessHours persists changes to times businesses are available.
+	UpdateBusinessHours(context.Context, *connect_go.Request[org.UpdateBusinessHoursRequest]) (*connect_go.Response[org.UpdateBusinessHoursResponse], error)
+	// DeleteBusinessHours removes business hours.
+	DeleteBusinessHours(context.Context, *connect_go.Request[org.DeleteBusinessHoursRequest]) (*connect_go.Response[org.DeleteBusinessHoursResponse], error)
+	// ListBusinessHours returns all business hours for an Org.
+	ListBusinessHours(context.Context, *connect_go.Request[org.ListBusinessHoursRequest]) (*connect_go.Response[org.ListBusinessHoursResponse], error)
+	// GetBusinessHours returns the business hours for the ID.
+	GetBusinessHours(context.Context, *connect_go.Request[org.GetBusinessHoursRequest]) (*connect_go.Response[org.GetBusinessHoursResponse], error)
 }
 
 // NewOrgClient constructs a client for the api.v1alpha1.org.Org service. By default, it uses the
@@ -1675,6 +1737,21 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgDeleteHuntGroupClientInfoDisplayTemplateProcedure,
 			opts...,
 		),
+		copyHuntGroupClientInfoDisplayTemplate: connect_go.NewClient[org.CopyHuntGroupClientInfoDisplayTemplateRequest, org.CopyHuntGroupClientInfoDisplayTemplateResponse](
+			httpClient,
+			baseURL+OrgCopyHuntGroupClientInfoDisplayTemplateProcedure,
+			opts...,
+		),
+		createCampaignClientInfoDisplayTemplate: connect_go.NewClient[org.CreateCampaignClientInfoDisplayTemplateRequest, org.CreateCampaignClientInfoDisplayTemplateResponse](
+			httpClient,
+			baseURL+OrgCreateCampaignClientInfoDisplayTemplateProcedure,
+			opts...,
+		),
+		listHuntGroupsWithClientInfoTemplateData: connect_go.NewClient[org.ListHuntGroupsWithClientInfoTemplateDataRequest, org.ListHuntGroupsWithClientInfoTemplateDataResponse](
+			httpClient,
+			baseURL+OrgListHuntGroupsWithClientInfoTemplateDataProcedure,
+			opts...,
+		),
 		listAgentTriggers: connect_go.NewClient[org.ListAgentTriggersRequest, org.ListAgentTriggersResponse](
 			httpClient,
 			baseURL+OrgListAgentTriggersProcedure,
@@ -1688,6 +1765,26 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 		updateAgentTriggers: connect_go.NewClient[org.UpdateAgentTriggersRequest, org.UpdateAgentTriggersResponse](
 			httpClient,
 			baseURL+OrgUpdateAgentTriggersProcedure,
+			opts...,
+		),
+		getHuntGroupScript: connect_go.NewClient[org.GetHuntGroupScriptRequest, org.GetHuntGroupScriptResponse](
+			httpClient,
+			baseURL+OrgGetHuntGroupScriptProcedure,
+			opts...,
+		),
+		createHuntGroupScript: connect_go.NewClient[org.CreateHuntGroupScriptRequest, org.CreateHuntGroupScriptResponse](
+			httpClient,
+			baseURL+OrgCreateHuntGroupScriptProcedure,
+			opts...,
+		),
+		updateHuntGroupScript: connect_go.NewClient[org.UpdateHuntGroupScriptRequest, org.UpdateHuntGroupScriptResponse](
+			httpClient,
+			baseURL+OrgUpdateHuntGroupScriptProcedure,
+			opts...,
+		),
+		deleteHuntGroupScript: connect_go.NewClient[org.DeleteHuntGroupScriptRequest, org.DeleteHuntGroupScriptResponse](
+			httpClient,
+			baseURL+OrgDeleteHuntGroupScriptProcedure,
 			opts...,
 		),
 		createTrust: connect_go.NewClient[org.CreateTrustRequest, org.CreateTrustResponse](
@@ -1925,6 +2022,11 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgSetMfaTypeProcedure,
 			opts...,
 		),
+		setMyMfaType: connect_go.NewClient[org.SetMyMfaTypeRequest, org.SetMyMfaTypeResponse](
+			httpClient,
+			baseURL+OrgSetMyMfaTypeProcedure,
+			opts...,
+		),
 		enableUserMfa: connect_go.NewClient[org.EnableUserMfaRequest, org.EnableUserMfaResponse](
 			httpClient,
 			baseURL+OrgEnableUserMfaProcedure,
@@ -1943,6 +2045,31 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 		getMyUserMfaInfo: connect_go.NewClient[org.GetMyUserMfaInfoRequest, org.GetMyUserMfaInfoResponse](
 			httpClient,
 			baseURL+OrgGetMyUserMfaInfoProcedure,
+			opts...,
+		),
+		createBusinessHours: connect_go.NewClient[org.CreateBusinessHoursRequest, org.CreateBusinessHoursResponse](
+			httpClient,
+			baseURL+OrgCreateBusinessHoursProcedure,
+			opts...,
+		),
+		updateBusinessHours: connect_go.NewClient[org.UpdateBusinessHoursRequest, org.UpdateBusinessHoursResponse](
+			httpClient,
+			baseURL+OrgUpdateBusinessHoursProcedure,
+			opts...,
+		),
+		deleteBusinessHours: connect_go.NewClient[org.DeleteBusinessHoursRequest, org.DeleteBusinessHoursResponse](
+			httpClient,
+			baseURL+OrgDeleteBusinessHoursProcedure,
+			opts...,
+		),
+		listBusinessHours: connect_go.NewClient[org.ListBusinessHoursRequest, org.ListBusinessHoursResponse](
+			httpClient,
+			baseURL+OrgListBusinessHoursProcedure,
+			opts...,
+		),
+		getBusinessHours: connect_go.NewClient[org.GetBusinessHoursRequest, org.GetBusinessHoursResponse](
+			httpClient,
+			baseURL+OrgGetBusinessHoursProcedure,
 			opts...,
 		),
 	}
@@ -2088,9 +2215,16 @@ type orgClient struct {
 	createHuntGroupClientInfoDisplayTemplate *connect_go.Client[org.CreateHuntGroupClientInfoDisplayTemplateRequest, org.CreateHuntGroupClientInfoDisplayTemplateResponse]
 	updateHuntGroupClientInfoDisplayTemplate *connect_go.Client[org.UpdateHuntGroupClientInfoDisplayTemplateRequest, org.UpdateHuntGroupClientInfoDisplayTemplateResponse]
 	deleteHuntGroupClientInfoDisplayTemplate *connect_go.Client[org.DeleteHuntGroupClientInfoDisplayTemplateRequest, org.DeleteHuntGroupClientInfoDisplayTemplateResponse]
+	copyHuntGroupClientInfoDisplayTemplate   *connect_go.Client[org.CopyHuntGroupClientInfoDisplayTemplateRequest, org.CopyHuntGroupClientInfoDisplayTemplateResponse]
+	createCampaignClientInfoDisplayTemplate  *connect_go.Client[org.CreateCampaignClientInfoDisplayTemplateRequest, org.CreateCampaignClientInfoDisplayTemplateResponse]
+	listHuntGroupsWithClientInfoTemplateData *connect_go.Client[org.ListHuntGroupsWithClientInfoTemplateDataRequest, org.ListHuntGroupsWithClientInfoTemplateDataResponse]
 	listAgentTriggers                        *connect_go.Client[org.ListAgentTriggersRequest, org.ListAgentTriggersResponse]
 	copyAgentTrigger                         *connect_go.Client[org.CopyAgentTriggerRequest, org.CopyAgentTriggerResponse]
 	updateAgentTriggers                      *connect_go.Client[org.UpdateAgentTriggersRequest, org.UpdateAgentTriggersResponse]
+	getHuntGroupScript                       *connect_go.Client[org.GetHuntGroupScriptRequest, org.GetHuntGroupScriptResponse]
+	createHuntGroupScript                    *connect_go.Client[org.CreateHuntGroupScriptRequest, org.CreateHuntGroupScriptResponse]
+	updateHuntGroupScript                    *connect_go.Client[org.UpdateHuntGroupScriptRequest, org.UpdateHuntGroupScriptResponse]
+	deleteHuntGroupScript                    *connect_go.Client[org.DeleteHuntGroupScriptRequest, org.DeleteHuntGroupScriptResponse]
 	createTrust                              *connect_go.Client[org.CreateTrustRequest, org.CreateTrustResponse]
 	acceptTrust                              *connect_go.Client[org.AcceptTrustRequest, org.AcceptTrustResponse]
 	rejectTrust                              *connect_go.Client[org.RejectTrustRequest, org.RejectTrustResponse]
@@ -2138,10 +2272,16 @@ type orgClient struct {
 	refreshMfaLockout                        *connect_go.Client[org.RefreshMfaLockoutRequest, org.RefreshMfaLockoutResponse]
 	refreshMfaLockoutByOrgId                 *connect_go.Client[org.RefreshMfaLockoutByOrgIdRequest, org.RefreshMfaLockoutByOrgIdResponse]
 	setMfaType                               *connect_go.Client[org.SetMfaTypeRequest, org.SetMfaTypeResponse]
+	setMyMfaType                             *connect_go.Client[org.SetMyMfaTypeRequest, org.SetMyMfaTypeResponse]
 	enableUserMfa                            *connect_go.Client[org.EnableUserMfaRequest, org.EnableUserMfaResponse]
 	enableMyUserMfa                          *connect_go.Client[org.EnableMyUserMfaRequest, org.EnableMyUserMfaResponse]
 	getUserMfaInfo                           *connect_go.Client[org.GetUserMfaInfoRequest, org.GetUserMfaInfoResponse]
 	getMyUserMfaInfo                         *connect_go.Client[org.GetMyUserMfaInfoRequest, org.GetMyUserMfaInfoResponse]
+	createBusinessHours                      *connect_go.Client[org.CreateBusinessHoursRequest, org.CreateBusinessHoursResponse]
+	updateBusinessHours                      *connect_go.Client[org.UpdateBusinessHoursRequest, org.UpdateBusinessHoursResponse]
+	deleteBusinessHours                      *connect_go.Client[org.DeleteBusinessHoursRequest, org.DeleteBusinessHoursResponse]
+	listBusinessHours                        *connect_go.Client[org.ListBusinessHoursRequest, org.ListBusinessHoursResponse]
+	getBusinessHours                         *connect_go.Client[org.GetBusinessHoursRequest, org.GetBusinessHoursResponse]
 }
 
 // CreateOrganization calls api.v1alpha1.org.Org.CreateOrganization.
@@ -2840,6 +2980,24 @@ func (c *orgClient) DeleteHuntGroupClientInfoDisplayTemplate(ctx context.Context
 	return c.deleteHuntGroupClientInfoDisplayTemplate.CallUnary(ctx, req)
 }
 
+// CopyHuntGroupClientInfoDisplayTemplate calls
+// api.v1alpha1.org.Org.CopyHuntGroupClientInfoDisplayTemplate.
+func (c *orgClient) CopyHuntGroupClientInfoDisplayTemplate(ctx context.Context, req *connect_go.Request[org.CopyHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.CopyHuntGroupClientInfoDisplayTemplateResponse], error) {
+	return c.copyHuntGroupClientInfoDisplayTemplate.CallUnary(ctx, req)
+}
+
+// CreateCampaignClientInfoDisplayTemplate calls
+// api.v1alpha1.org.Org.CreateCampaignClientInfoDisplayTemplate.
+func (c *orgClient) CreateCampaignClientInfoDisplayTemplate(ctx context.Context, req *connect_go.Request[org.CreateCampaignClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.CreateCampaignClientInfoDisplayTemplateResponse], error) {
+	return c.createCampaignClientInfoDisplayTemplate.CallUnary(ctx, req)
+}
+
+// ListHuntGroupsWithClientInfoTemplateData calls
+// api.v1alpha1.org.Org.ListHuntGroupsWithClientInfoTemplateData.
+func (c *orgClient) ListHuntGroupsWithClientInfoTemplateData(ctx context.Context, req *connect_go.Request[org.ListHuntGroupsWithClientInfoTemplateDataRequest]) (*connect_go.Response[org.ListHuntGroupsWithClientInfoTemplateDataResponse], error) {
+	return c.listHuntGroupsWithClientInfoTemplateData.CallUnary(ctx, req)
+}
+
 // ListAgentTriggers calls api.v1alpha1.org.Org.ListAgentTriggers.
 func (c *orgClient) ListAgentTriggers(ctx context.Context, req *connect_go.Request[org.ListAgentTriggersRequest]) (*connect_go.Response[org.ListAgentTriggersResponse], error) {
 	return c.listAgentTriggers.CallUnary(ctx, req)
@@ -2853,6 +3011,26 @@ func (c *orgClient) CopyAgentTrigger(ctx context.Context, req *connect_go.Reques
 // UpdateAgentTriggers calls api.v1alpha1.org.Org.UpdateAgentTriggers.
 func (c *orgClient) UpdateAgentTriggers(ctx context.Context, req *connect_go.Request[org.UpdateAgentTriggersRequest]) (*connect_go.Response[org.UpdateAgentTriggersResponse], error) {
 	return c.updateAgentTriggers.CallUnary(ctx, req)
+}
+
+// GetHuntGroupScript calls api.v1alpha1.org.Org.GetHuntGroupScript.
+func (c *orgClient) GetHuntGroupScript(ctx context.Context, req *connect_go.Request[org.GetHuntGroupScriptRequest]) (*connect_go.Response[org.GetHuntGroupScriptResponse], error) {
+	return c.getHuntGroupScript.CallUnary(ctx, req)
+}
+
+// CreateHuntGroupScript calls api.v1alpha1.org.Org.CreateHuntGroupScript.
+func (c *orgClient) CreateHuntGroupScript(ctx context.Context, req *connect_go.Request[org.CreateHuntGroupScriptRequest]) (*connect_go.Response[org.CreateHuntGroupScriptResponse], error) {
+	return c.createHuntGroupScript.CallUnary(ctx, req)
+}
+
+// UpdateHuntGroupScript calls api.v1alpha1.org.Org.UpdateHuntGroupScript.
+func (c *orgClient) UpdateHuntGroupScript(ctx context.Context, req *connect_go.Request[org.UpdateHuntGroupScriptRequest]) (*connect_go.Response[org.UpdateHuntGroupScriptResponse], error) {
+	return c.updateHuntGroupScript.CallUnary(ctx, req)
+}
+
+// DeleteHuntGroupScript calls api.v1alpha1.org.Org.DeleteHuntGroupScript.
+func (c *orgClient) DeleteHuntGroupScript(ctx context.Context, req *connect_go.Request[org.DeleteHuntGroupScriptRequest]) (*connect_go.Response[org.DeleteHuntGroupScriptResponse], error) {
+	return c.deleteHuntGroupScript.CallUnary(ctx, req)
 }
 
 // CreateTrust calls api.v1alpha1.org.Org.CreateTrust.
@@ -3092,6 +3270,11 @@ func (c *orgClient) SetMfaType(ctx context.Context, req *connect_go.Request[org.
 	return c.setMfaType.CallUnary(ctx, req)
 }
 
+// SetMyMfaType calls api.v1alpha1.org.Org.SetMyMfaType.
+func (c *orgClient) SetMyMfaType(ctx context.Context, req *connect_go.Request[org.SetMyMfaTypeRequest]) (*connect_go.Response[org.SetMyMfaTypeResponse], error) {
+	return c.setMyMfaType.CallUnary(ctx, req)
+}
+
 // EnableUserMfa calls api.v1alpha1.org.Org.EnableUserMfa.
 func (c *orgClient) EnableUserMfa(ctx context.Context, req *connect_go.Request[org.EnableUserMfaRequest]) (*connect_go.Response[org.EnableUserMfaResponse], error) {
 	return c.enableUserMfa.CallUnary(ctx, req)
@@ -3110,6 +3293,31 @@ func (c *orgClient) GetUserMfaInfo(ctx context.Context, req *connect_go.Request[
 // GetMyUserMfaInfo calls api.v1alpha1.org.Org.GetMyUserMfaInfo.
 func (c *orgClient) GetMyUserMfaInfo(ctx context.Context, req *connect_go.Request[org.GetMyUserMfaInfoRequest]) (*connect_go.Response[org.GetMyUserMfaInfoResponse], error) {
 	return c.getMyUserMfaInfo.CallUnary(ctx, req)
+}
+
+// CreateBusinessHours calls api.v1alpha1.org.Org.CreateBusinessHours.
+func (c *orgClient) CreateBusinessHours(ctx context.Context, req *connect_go.Request[org.CreateBusinessHoursRequest]) (*connect_go.Response[org.CreateBusinessHoursResponse], error) {
+	return c.createBusinessHours.CallUnary(ctx, req)
+}
+
+// UpdateBusinessHours calls api.v1alpha1.org.Org.UpdateBusinessHours.
+func (c *orgClient) UpdateBusinessHours(ctx context.Context, req *connect_go.Request[org.UpdateBusinessHoursRequest]) (*connect_go.Response[org.UpdateBusinessHoursResponse], error) {
+	return c.updateBusinessHours.CallUnary(ctx, req)
+}
+
+// DeleteBusinessHours calls api.v1alpha1.org.Org.DeleteBusinessHours.
+func (c *orgClient) DeleteBusinessHours(ctx context.Context, req *connect_go.Request[org.DeleteBusinessHoursRequest]) (*connect_go.Response[org.DeleteBusinessHoursResponse], error) {
+	return c.deleteBusinessHours.CallUnary(ctx, req)
+}
+
+// ListBusinessHours calls api.v1alpha1.org.Org.ListBusinessHours.
+func (c *orgClient) ListBusinessHours(ctx context.Context, req *connect_go.Request[org.ListBusinessHoursRequest]) (*connect_go.Response[org.ListBusinessHoursResponse], error) {
+	return c.listBusinessHours.CallUnary(ctx, req)
+}
+
+// GetBusinessHours calls api.v1alpha1.org.Org.GetBusinessHours.
+func (c *orgClient) GetBusinessHours(ctx context.Context, req *connect_go.Request[org.GetBusinessHoursRequest]) (*connect_go.Response[org.GetBusinessHoursResponse], error) {
+	return c.getBusinessHours.CallUnary(ctx, req)
 }
 
 // OrgHandler is an implementation of the api.v1alpha1.org.Org service.
@@ -3421,12 +3629,30 @@ type OrgHandler interface {
 	UpdateHuntGroupClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.UpdateHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.UpdateHuntGroupClientInfoDisplayTemplateResponse], error)
 	// DeleteHuntGroupClientInfoDisplayTemplate deletes a client info display template for a given hunt group.
 	DeleteHuntGroupClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.DeleteHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.DeleteHuntGroupClientInfoDisplayTemplateResponse], error)
+	// CopyHuntGroupClientInfoDisplayTemplate copies the client info display template from one hunt group to another.
+	// It will create a new template in the destination hunt group with the same settings as the source template if it doesn't already exist.
+	// Otherwise, it will update the existing template with the source template settings.
+	CopyHuntGroupClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.CopyHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.CopyHuntGroupClientInfoDisplayTemplateResponse], error)
+	// CreateCampaignClientInfoDisplayTemplate creates a new client info display template for a campaign
+	// with the same settings as the source template from a hunt group.
+	CreateCampaignClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.CreateCampaignClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.CreateCampaignClientInfoDisplayTemplateResponse], error)
+	// ListHuntGroupsWithClientInfoTemplateData lists the hunt groups in an organization
+	// with their client info display template data based on the filter.
+	ListHuntGroupsWithClientInfoTemplateData(context.Context, *connect_go.Request[org.ListHuntGroupsWithClientInfoTemplateDataRequest]) (*connect_go.Response[org.ListHuntGroupsWithClientInfoTemplateDataResponse], error)
 	// ListAgentTriggers returns a list of agent triggers for the given hunt group.
 	ListAgentTriggers(context.Context, *connect_go.Request[org.ListAgentTriggersRequest]) (*connect_go.Response[org.ListAgentTriggersResponse], error)
 	// CopyAgentTrigger copys an agent trigger to the given hunt group in the same org.
 	CopyAgentTrigger(context.Context, *connect_go.Request[org.CopyAgentTriggerRequest]) (*connect_go.Response[org.CopyAgentTriggerResponse], error)
 	// UpdateAgentTriggers updates all agent triggers for the given hunt group.
 	UpdateAgentTriggers(context.Context, *connect_go.Request[org.UpdateAgentTriggersRequest]) (*connect_go.Response[org.UpdateAgentTriggersResponse], error)
+	// GetHuntGroupScript gets the hunt group script for a given hunt group
+	GetHuntGroupScript(context.Context, *connect_go.Request[org.GetHuntGroupScriptRequest]) (*connect_go.Response[org.GetHuntGroupScriptResponse], error)
+	// CreateHuntGroupScript adds a hunt group script within the given hunt group
+	CreateHuntGroupScript(context.Context, *connect_go.Request[org.CreateHuntGroupScriptRequest]) (*connect_go.Response[org.CreateHuntGroupScriptResponse], error)
+	// UpdateHuntGroupScript updates a hunt group script within the given hunt group
+	UpdateHuntGroupScript(context.Context, *connect_go.Request[org.UpdateHuntGroupScriptRequest]) (*connect_go.Response[org.UpdateHuntGroupScriptResponse], error)
+	// DeleteHuntGroupScript removes a hunt group script within the given hunt group
+	DeleteHuntGroupScript(context.Context, *connect_go.Request[org.DeleteHuntGroupScriptRequest]) (*connect_go.Response[org.DeleteHuntGroupScriptResponse], error)
 	// CreateTrust creates a new trust.
 	CreateTrust(context.Context, *connect_go.Request[org.CreateTrustRequest]) (*connect_go.Response[org.CreateTrustResponse], error)
 	// AcceptTrust accepts an incoming trust.
@@ -3536,8 +3762,10 @@ type OrgHandler interface {
 	RefreshMfaLockout(context.Context, *connect_go.Request[org.RefreshMfaLockoutRequest]) (*connect_go.Response[org.RefreshMfaLockoutResponse], error)
 	// RefreshMfaLockoutByOrgId resets the lockout timer for the given user and org id.
 	RefreshMfaLockoutByOrgId(context.Context, *connect_go.Request[org.RefreshMfaLockoutByOrgIdRequest]) (*connect_go.Response[org.RefreshMfaLockoutByOrgIdResponse], error)
-	// SetMfaType sets the current user's mfa type.
+	// SetMfaType sets the given user's mfa type.
 	SetMfaType(context.Context, *connect_go.Request[org.SetMfaTypeRequest]) (*connect_go.Response[org.SetMfaTypeResponse], error)
+	// SetMyMfaType sets the current user's mfa type.
+	SetMyMfaType(context.Context, *connect_go.Request[org.SetMyMfaTypeRequest]) (*connect_go.Response[org.SetMyMfaTypeResponse], error)
 	// EnableUserMfa enables or disables mfa for the given user
 	EnableUserMfa(context.Context, *connect_go.Request[org.EnableUserMfaRequest]) (*connect_go.Response[org.EnableUserMfaResponse], error)
 	// EnableMyUserMfa enables mfa for the current user
@@ -3546,6 +3774,16 @@ type OrgHandler interface {
 	GetUserMfaInfo(context.Context, *connect_go.Request[org.GetUserMfaInfoRequest]) (*connect_go.Response[org.GetUserMfaInfoResponse], error)
 	// GetMyUserMfaInfo returns the mfa info for the current user.
 	GetMyUserMfaInfo(context.Context, *connect_go.Request[org.GetMyUserMfaInfoRequest]) (*connect_go.Response[org.GetMyUserMfaInfoResponse], error)
+	// CreateBusinessHours persists times businesses are available.
+	CreateBusinessHours(context.Context, *connect_go.Request[org.CreateBusinessHoursRequest]) (*connect_go.Response[org.CreateBusinessHoursResponse], error)
+	// UpdateBusinessHours persists changes to times businesses are available.
+	UpdateBusinessHours(context.Context, *connect_go.Request[org.UpdateBusinessHoursRequest]) (*connect_go.Response[org.UpdateBusinessHoursResponse], error)
+	// DeleteBusinessHours removes business hours.
+	DeleteBusinessHours(context.Context, *connect_go.Request[org.DeleteBusinessHoursRequest]) (*connect_go.Response[org.DeleteBusinessHoursResponse], error)
+	// ListBusinessHours returns all business hours for an Org.
+	ListBusinessHours(context.Context, *connect_go.Request[org.ListBusinessHoursRequest]) (*connect_go.Response[org.ListBusinessHoursResponse], error)
+	// GetBusinessHours returns the business hours for the ID.
+	GetBusinessHours(context.Context, *connect_go.Request[org.GetBusinessHoursRequest]) (*connect_go.Response[org.GetBusinessHoursResponse], error)
 }
 
 // NewOrgHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -4244,6 +4482,21 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.DeleteHuntGroupClientInfoDisplayTemplate,
 		opts...,
 	)
+	orgCopyHuntGroupClientInfoDisplayTemplateHandler := connect_go.NewUnaryHandler(
+		OrgCopyHuntGroupClientInfoDisplayTemplateProcedure,
+		svc.CopyHuntGroupClientInfoDisplayTemplate,
+		opts...,
+	)
+	orgCreateCampaignClientInfoDisplayTemplateHandler := connect_go.NewUnaryHandler(
+		OrgCreateCampaignClientInfoDisplayTemplateProcedure,
+		svc.CreateCampaignClientInfoDisplayTemplate,
+		opts...,
+	)
+	orgListHuntGroupsWithClientInfoTemplateDataHandler := connect_go.NewUnaryHandler(
+		OrgListHuntGroupsWithClientInfoTemplateDataProcedure,
+		svc.ListHuntGroupsWithClientInfoTemplateData,
+		opts...,
+	)
 	orgListAgentTriggersHandler := connect_go.NewUnaryHandler(
 		OrgListAgentTriggersProcedure,
 		svc.ListAgentTriggers,
@@ -4257,6 +4510,26 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 	orgUpdateAgentTriggersHandler := connect_go.NewUnaryHandler(
 		OrgUpdateAgentTriggersProcedure,
 		svc.UpdateAgentTriggers,
+		opts...,
+	)
+	orgGetHuntGroupScriptHandler := connect_go.NewUnaryHandler(
+		OrgGetHuntGroupScriptProcedure,
+		svc.GetHuntGroupScript,
+		opts...,
+	)
+	orgCreateHuntGroupScriptHandler := connect_go.NewUnaryHandler(
+		OrgCreateHuntGroupScriptProcedure,
+		svc.CreateHuntGroupScript,
+		opts...,
+	)
+	orgUpdateHuntGroupScriptHandler := connect_go.NewUnaryHandler(
+		OrgUpdateHuntGroupScriptProcedure,
+		svc.UpdateHuntGroupScript,
+		opts...,
+	)
+	orgDeleteHuntGroupScriptHandler := connect_go.NewUnaryHandler(
+		OrgDeleteHuntGroupScriptProcedure,
+		svc.DeleteHuntGroupScript,
 		opts...,
 	)
 	orgCreateTrustHandler := connect_go.NewUnaryHandler(
@@ -4494,6 +4767,11 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.SetMfaType,
 		opts...,
 	)
+	orgSetMyMfaTypeHandler := connect_go.NewUnaryHandler(
+		OrgSetMyMfaTypeProcedure,
+		svc.SetMyMfaType,
+		opts...,
+	)
 	orgEnableUserMfaHandler := connect_go.NewUnaryHandler(
 		OrgEnableUserMfaProcedure,
 		svc.EnableUserMfa,
@@ -4512,6 +4790,31 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 	orgGetMyUserMfaInfoHandler := connect_go.NewUnaryHandler(
 		OrgGetMyUserMfaInfoProcedure,
 		svc.GetMyUserMfaInfo,
+		opts...,
+	)
+	orgCreateBusinessHoursHandler := connect_go.NewUnaryHandler(
+		OrgCreateBusinessHoursProcedure,
+		svc.CreateBusinessHours,
+		opts...,
+	)
+	orgUpdateBusinessHoursHandler := connect_go.NewUnaryHandler(
+		OrgUpdateBusinessHoursProcedure,
+		svc.UpdateBusinessHours,
+		opts...,
+	)
+	orgDeleteBusinessHoursHandler := connect_go.NewUnaryHandler(
+		OrgDeleteBusinessHoursProcedure,
+		svc.DeleteBusinessHours,
+		opts...,
+	)
+	orgListBusinessHoursHandler := connect_go.NewUnaryHandler(
+		OrgListBusinessHoursProcedure,
+		svc.ListBusinessHours,
+		opts...,
+	)
+	orgGetBusinessHoursHandler := connect_go.NewUnaryHandler(
+		OrgGetBusinessHoursProcedure,
+		svc.GetBusinessHours,
 		opts...,
 	)
 	return "/api.v1alpha1.org.Org/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -4792,12 +5095,26 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 			orgUpdateHuntGroupClientInfoDisplayTemplateHandler.ServeHTTP(w, r)
 		case OrgDeleteHuntGroupClientInfoDisplayTemplateProcedure:
 			orgDeleteHuntGroupClientInfoDisplayTemplateHandler.ServeHTTP(w, r)
+		case OrgCopyHuntGroupClientInfoDisplayTemplateProcedure:
+			orgCopyHuntGroupClientInfoDisplayTemplateHandler.ServeHTTP(w, r)
+		case OrgCreateCampaignClientInfoDisplayTemplateProcedure:
+			orgCreateCampaignClientInfoDisplayTemplateHandler.ServeHTTP(w, r)
+		case OrgListHuntGroupsWithClientInfoTemplateDataProcedure:
+			orgListHuntGroupsWithClientInfoTemplateDataHandler.ServeHTTP(w, r)
 		case OrgListAgentTriggersProcedure:
 			orgListAgentTriggersHandler.ServeHTTP(w, r)
 		case OrgCopyAgentTriggerProcedure:
 			orgCopyAgentTriggerHandler.ServeHTTP(w, r)
 		case OrgUpdateAgentTriggersProcedure:
 			orgUpdateAgentTriggersHandler.ServeHTTP(w, r)
+		case OrgGetHuntGroupScriptProcedure:
+			orgGetHuntGroupScriptHandler.ServeHTTP(w, r)
+		case OrgCreateHuntGroupScriptProcedure:
+			orgCreateHuntGroupScriptHandler.ServeHTTP(w, r)
+		case OrgUpdateHuntGroupScriptProcedure:
+			orgUpdateHuntGroupScriptHandler.ServeHTTP(w, r)
+		case OrgDeleteHuntGroupScriptProcedure:
+			orgDeleteHuntGroupScriptHandler.ServeHTTP(w, r)
 		case OrgCreateTrustProcedure:
 			orgCreateTrustHandler.ServeHTTP(w, r)
 		case OrgAcceptTrustProcedure:
@@ -4892,6 +5209,8 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 			orgRefreshMfaLockoutByOrgIdHandler.ServeHTTP(w, r)
 		case OrgSetMfaTypeProcedure:
 			orgSetMfaTypeHandler.ServeHTTP(w, r)
+		case OrgSetMyMfaTypeProcedure:
+			orgSetMyMfaTypeHandler.ServeHTTP(w, r)
 		case OrgEnableUserMfaProcedure:
 			orgEnableUserMfaHandler.ServeHTTP(w, r)
 		case OrgEnableMyUserMfaProcedure:
@@ -4900,6 +5219,16 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 			orgGetUserMfaInfoHandler.ServeHTTP(w, r)
 		case OrgGetMyUserMfaInfoProcedure:
 			orgGetMyUserMfaInfoHandler.ServeHTTP(w, r)
+		case OrgCreateBusinessHoursProcedure:
+			orgCreateBusinessHoursHandler.ServeHTTP(w, r)
+		case OrgUpdateBusinessHoursProcedure:
+			orgUpdateBusinessHoursHandler.ServeHTTP(w, r)
+		case OrgDeleteBusinessHoursProcedure:
+			orgDeleteBusinessHoursHandler.ServeHTTP(w, r)
+		case OrgListBusinessHoursProcedure:
+			orgListBusinessHoursHandler.ServeHTTP(w, r)
+		case OrgGetBusinessHoursProcedure:
+			orgGetBusinessHoursHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -5461,6 +5790,18 @@ func (UnimplementedOrgHandler) DeleteHuntGroupClientInfoDisplayTemplate(context.
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.DeleteHuntGroupClientInfoDisplayTemplate is not implemented"))
 }
 
+func (UnimplementedOrgHandler) CopyHuntGroupClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.CopyHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.CopyHuntGroupClientInfoDisplayTemplateResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.CopyHuntGroupClientInfoDisplayTemplate is not implemented"))
+}
+
+func (UnimplementedOrgHandler) CreateCampaignClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.CreateCampaignClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.CreateCampaignClientInfoDisplayTemplateResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.CreateCampaignClientInfoDisplayTemplate is not implemented"))
+}
+
+func (UnimplementedOrgHandler) ListHuntGroupsWithClientInfoTemplateData(context.Context, *connect_go.Request[org.ListHuntGroupsWithClientInfoTemplateDataRequest]) (*connect_go.Response[org.ListHuntGroupsWithClientInfoTemplateDataResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.ListHuntGroupsWithClientInfoTemplateData is not implemented"))
+}
+
 func (UnimplementedOrgHandler) ListAgentTriggers(context.Context, *connect_go.Request[org.ListAgentTriggersRequest]) (*connect_go.Response[org.ListAgentTriggersResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.ListAgentTriggers is not implemented"))
 }
@@ -5471,6 +5812,22 @@ func (UnimplementedOrgHandler) CopyAgentTrigger(context.Context, *connect_go.Req
 
 func (UnimplementedOrgHandler) UpdateAgentTriggers(context.Context, *connect_go.Request[org.UpdateAgentTriggersRequest]) (*connect_go.Response[org.UpdateAgentTriggersResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.UpdateAgentTriggers is not implemented"))
+}
+
+func (UnimplementedOrgHandler) GetHuntGroupScript(context.Context, *connect_go.Request[org.GetHuntGroupScriptRequest]) (*connect_go.Response[org.GetHuntGroupScriptResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.GetHuntGroupScript is not implemented"))
+}
+
+func (UnimplementedOrgHandler) CreateHuntGroupScript(context.Context, *connect_go.Request[org.CreateHuntGroupScriptRequest]) (*connect_go.Response[org.CreateHuntGroupScriptResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.CreateHuntGroupScript is not implemented"))
+}
+
+func (UnimplementedOrgHandler) UpdateHuntGroupScript(context.Context, *connect_go.Request[org.UpdateHuntGroupScriptRequest]) (*connect_go.Response[org.UpdateHuntGroupScriptResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.UpdateHuntGroupScript is not implemented"))
+}
+
+func (UnimplementedOrgHandler) DeleteHuntGroupScript(context.Context, *connect_go.Request[org.DeleteHuntGroupScriptRequest]) (*connect_go.Response[org.DeleteHuntGroupScriptResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.DeleteHuntGroupScript is not implemented"))
 }
 
 func (UnimplementedOrgHandler) CreateTrust(context.Context, *connect_go.Request[org.CreateTrustRequest]) (*connect_go.Response[org.CreateTrustResponse], error) {
@@ -5661,6 +6018,10 @@ func (UnimplementedOrgHandler) SetMfaType(context.Context, *connect_go.Request[o
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.SetMfaType is not implemented"))
 }
 
+func (UnimplementedOrgHandler) SetMyMfaType(context.Context, *connect_go.Request[org.SetMyMfaTypeRequest]) (*connect_go.Response[org.SetMyMfaTypeResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.SetMyMfaType is not implemented"))
+}
+
 func (UnimplementedOrgHandler) EnableUserMfa(context.Context, *connect_go.Request[org.EnableUserMfaRequest]) (*connect_go.Response[org.EnableUserMfaResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.EnableUserMfa is not implemented"))
 }
@@ -5675,4 +6036,24 @@ func (UnimplementedOrgHandler) GetUserMfaInfo(context.Context, *connect_go.Reque
 
 func (UnimplementedOrgHandler) GetMyUserMfaInfo(context.Context, *connect_go.Request[org.GetMyUserMfaInfoRequest]) (*connect_go.Response[org.GetMyUserMfaInfoResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.GetMyUserMfaInfo is not implemented"))
+}
+
+func (UnimplementedOrgHandler) CreateBusinessHours(context.Context, *connect_go.Request[org.CreateBusinessHoursRequest]) (*connect_go.Response[org.CreateBusinessHoursResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.CreateBusinessHours is not implemented"))
+}
+
+func (UnimplementedOrgHandler) UpdateBusinessHours(context.Context, *connect_go.Request[org.UpdateBusinessHoursRequest]) (*connect_go.Response[org.UpdateBusinessHoursResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.UpdateBusinessHours is not implemented"))
+}
+
+func (UnimplementedOrgHandler) DeleteBusinessHours(context.Context, *connect_go.Request[org.DeleteBusinessHoursRequest]) (*connect_go.Response[org.DeleteBusinessHoursResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.DeleteBusinessHours is not implemented"))
+}
+
+func (UnimplementedOrgHandler) ListBusinessHours(context.Context, *connect_go.Request[org.ListBusinessHoursRequest]) (*connect_go.Response[org.ListBusinessHoursResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.ListBusinessHours is not implemented"))
+}
+
+func (UnimplementedOrgHandler) GetBusinessHours(context.Context, *connect_go.Request[org.GetBusinessHoursRequest]) (*connect_go.Response[org.GetBusinessHoursResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.GetBusinessHours is not implemented"))
 }
