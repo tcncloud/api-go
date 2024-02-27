@@ -244,6 +244,7 @@ func (DisplayLanguage) EnumDescriptor() ([]byte, []int) {
 	return file_api_commons_org_proto_rawDescGZIP(), []int{1}
 }
 
+// OperatorDisplayLanguage represents the language supported in the Operator app
 type OperatorDisplayLanguage int32
 
 const (
@@ -299,7 +300,7 @@ func (OperatorDisplayLanguage) EnumDescriptor() ([]byte, []int) {
 	return file_api_commons_org_proto_rawDescGZIP(), []int{2}
 }
 
-// OperatorScriptDirection represents the direction of the script
+// OperatorScriptDirection represents the direction of the script in the Operator app
 type OperatorScriptDirection int32
 
 const (
