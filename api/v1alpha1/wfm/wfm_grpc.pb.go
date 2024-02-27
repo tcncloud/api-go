@@ -196,9 +196,7 @@ const (
 	WFM_ReplaceAgentOnSchedule_FullMethodName                        = "/api.v1alpha1.wfm.WFM/ReplaceAgentOnSchedule"
 	WFM_ReplaceAgentOnScheduleV1_FullMethodName                      = "/api.v1alpha1.wfm.WFM/ReplaceAgentOnScheduleV1"
 	WFM_RemoveAgentFromSchedule_FullMethodName                       = "/api.v1alpha1.wfm.WFM/RemoveAgentFromSchedule"
-	WFM_HelloWorldAdherenceAdmin_FullMethodName                      = "/api.v1alpha1.wfm.WFM/HelloWorldAdherenceAdmin"
-	WFM_HelloWorldAdherenceManager_FullMethodName                    = "/api.v1alpha1.wfm.WFM/HelloWorldAdherenceManager"
-	WFM_HelloWorldAdherenceMonitor_FullMethodName                    = "/api.v1alpha1.wfm.WFM/HelloWorldAdherenceMonitor"
+	WFM_HelloWorldWFMAdherence_FullMethodName                        = "/api.v1alpha1.wfm.WFM/HelloWorldWFMAdherence"
 )
 
 // WFMClient is the client API for WFM service.
@@ -2096,24 +2094,12 @@ type WFMClient interface {
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when creating the unassigned agent or updating the shifts.
 	RemoveAgentFromSchedule(ctx context.Context, in *RemoveAgentFromScheduleRequest, opts ...grpc.CallOption) (*RemoveAgentFromScheduleResponse, error)
-	// A hello world endpoint to test the PERMISSION_ADHERENCE_ADMIN permission.
+	// A hello world endpoint to test the WFM Adherence App.
 	// Returns a string with a hello world message.
 	// Required permissions:
 	//
-	//	PERMISSION_ADHERENCE_ADMIN
-	HelloWorldAdherenceAdmin(ctx context.Context, in *HelloWorldAdherenceAdminRequest, opts ...grpc.CallOption) (*HelloWorldAdherenceAdminResponse, error)
-	// A hello world endpoint to test the PERMISSION_ADHERENCE_MANAGER permission.
-	// Returns a string with a hello world message.
-	// Required permissions:
-	//
-	//	PERMISSION_ADHERENCE_MANAGER
-	HelloWorldAdherenceManager(ctx context.Context, in *HelloWorldAdherenceManagerRequest, opts ...grpc.CallOption) (*HelloWorldAdherenceManagerResponse, error)
-	// A hello world endpoint to test the PERMISSION_ADHERENCE_MONITOR permission.
-	// Returns a string with a hello world message.
-	// Required permissions:
-	//
-	//	PERMISSION_ADHERENCE_MONITOR
-	HelloWorldAdherenceMonitor(ctx context.Context, in *HelloWorldAdherenceMonitorRequest, opts ...grpc.CallOption) (*HelloWorldAdherenceMonitorResponse, error)
+	//	PERMISSION_WFM_ADHERENCE_ADMIN, PERMISSION_WFM_ADHERENCE_MANAGER, or PERMISSION_WFM_ADHERENCE_MONITOR
+	HelloWorldWFMAdherence(ctx context.Context, in *HelloWorldWFMAdherenceRequest, opts ...grpc.CallOption) (*HelloWorldWFMAdherenceResponse, error)
 }
 
 type wFMClient struct {
@@ -3735,27 +3721,9 @@ func (c *wFMClient) RemoveAgentFromSchedule(ctx context.Context, in *RemoveAgent
 	return out, nil
 }
 
-func (c *wFMClient) HelloWorldAdherenceAdmin(ctx context.Context, in *HelloWorldAdherenceAdminRequest, opts ...grpc.CallOption) (*HelloWorldAdherenceAdminResponse, error) {
-	out := new(HelloWorldAdherenceAdminResponse)
-	err := c.cc.Invoke(ctx, WFM_HelloWorldAdherenceAdmin_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *wFMClient) HelloWorldAdherenceManager(ctx context.Context, in *HelloWorldAdherenceManagerRequest, opts ...grpc.CallOption) (*HelloWorldAdherenceManagerResponse, error) {
-	out := new(HelloWorldAdherenceManagerResponse)
-	err := c.cc.Invoke(ctx, WFM_HelloWorldAdherenceManager_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *wFMClient) HelloWorldAdherenceMonitor(ctx context.Context, in *HelloWorldAdherenceMonitorRequest, opts ...grpc.CallOption) (*HelloWorldAdherenceMonitorResponse, error) {
-	out := new(HelloWorldAdherenceMonitorResponse)
-	err := c.cc.Invoke(ctx, WFM_HelloWorldAdherenceMonitor_FullMethodName, in, out, opts...)
+func (c *wFMClient) HelloWorldWFMAdherence(ctx context.Context, in *HelloWorldWFMAdherenceRequest, opts ...grpc.CallOption) (*HelloWorldWFMAdherenceResponse, error) {
+	out := new(HelloWorldWFMAdherenceResponse)
+	err := c.cc.Invoke(ctx, WFM_HelloWorldWFMAdherence_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -5657,24 +5625,12 @@ type WFMServer interface {
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when creating the unassigned agent or updating the shifts.
 	RemoveAgentFromSchedule(context.Context, *RemoveAgentFromScheduleRequest) (*RemoveAgentFromScheduleResponse, error)
-	// A hello world endpoint to test the PERMISSION_ADHERENCE_ADMIN permission.
+	// A hello world endpoint to test the WFM Adherence App.
 	// Returns a string with a hello world message.
 	// Required permissions:
 	//
-	//	PERMISSION_ADHERENCE_ADMIN
-	HelloWorldAdherenceAdmin(context.Context, *HelloWorldAdherenceAdminRequest) (*HelloWorldAdherenceAdminResponse, error)
-	// A hello world endpoint to test the PERMISSION_ADHERENCE_MANAGER permission.
-	// Returns a string with a hello world message.
-	// Required permissions:
-	//
-	//	PERMISSION_ADHERENCE_MANAGER
-	HelloWorldAdherenceManager(context.Context, *HelloWorldAdherenceManagerRequest) (*HelloWorldAdherenceManagerResponse, error)
-	// A hello world endpoint to test the PERMISSION_ADHERENCE_MONITOR permission.
-	// Returns a string with a hello world message.
-	// Required permissions:
-	//
-	//	PERMISSION_ADHERENCE_MONITOR
-	HelloWorldAdherenceMonitor(context.Context, *HelloWorldAdherenceMonitorRequest) (*HelloWorldAdherenceMonitorResponse, error)
+	//	PERMISSION_WFM_ADHERENCE_ADMIN, PERMISSION_WFM_ADHERENCE_MANAGER, or PERMISSION_WFM_ADHERENCE_MONITOR
+	HelloWorldWFMAdherence(context.Context, *HelloWorldWFMAdherenceRequest) (*HelloWorldWFMAdherenceResponse, error)
 	mustEmbedUnimplementedWFMServer()
 }
 
@@ -6171,14 +6127,8 @@ func (UnimplementedWFMServer) ReplaceAgentOnScheduleV1(context.Context, *Replace
 func (UnimplementedWFMServer) RemoveAgentFromSchedule(context.Context, *RemoveAgentFromScheduleRequest) (*RemoveAgentFromScheduleResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RemoveAgentFromSchedule not implemented")
 }
-func (UnimplementedWFMServer) HelloWorldAdherenceAdmin(context.Context, *HelloWorldAdherenceAdminRequest) (*HelloWorldAdherenceAdminResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method HelloWorldAdherenceAdmin not implemented")
-}
-func (UnimplementedWFMServer) HelloWorldAdherenceManager(context.Context, *HelloWorldAdherenceManagerRequest) (*HelloWorldAdherenceManagerResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method HelloWorldAdherenceManager not implemented")
-}
-func (UnimplementedWFMServer) HelloWorldAdherenceMonitor(context.Context, *HelloWorldAdherenceMonitorRequest) (*HelloWorldAdherenceMonitorResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method HelloWorldAdherenceMonitor not implemented")
+func (UnimplementedWFMServer) HelloWorldWFMAdherence(context.Context, *HelloWorldWFMAdherenceRequest) (*HelloWorldWFMAdherenceResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HelloWorldWFMAdherence not implemented")
 }
 func (UnimplementedWFMServer) mustEmbedUnimplementedWFMServer() {}
 
@@ -9145,56 +9095,20 @@ func _WFM_RemoveAgentFromSchedule_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _WFM_HelloWorldAdherenceAdmin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HelloWorldAdherenceAdminRequest)
+func _WFM_HelloWorldWFMAdherence_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HelloWorldWFMAdherenceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(WFMServer).HelloWorldAdherenceAdmin(ctx, in)
+		return srv.(WFMServer).HelloWorldWFMAdherence(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: WFM_HelloWorldAdherenceAdmin_FullMethodName,
+		FullMethod: WFM_HelloWorldWFMAdherence_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WFMServer).HelloWorldAdherenceAdmin(ctx, req.(*HelloWorldAdherenceAdminRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _WFM_HelloWorldAdherenceManager_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HelloWorldAdherenceManagerRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(WFMServer).HelloWorldAdherenceManager(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: WFM_HelloWorldAdherenceManager_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WFMServer).HelloWorldAdherenceManager(ctx, req.(*HelloWorldAdherenceManagerRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _WFM_HelloWorldAdherenceMonitor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HelloWorldAdherenceMonitorRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(WFMServer).HelloWorldAdherenceMonitor(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: WFM_HelloWorldAdherenceMonitor_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WFMServer).HelloWorldAdherenceMonitor(ctx, req.(*HelloWorldAdherenceMonitorRequest))
+		return srv.(WFMServer).HelloWorldWFMAdherence(ctx, req.(*HelloWorldWFMAdherenceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -9835,16 +9749,8 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _WFM_RemoveAgentFromSchedule_Handler,
 		},
 		{
-			MethodName: "HelloWorldAdherenceAdmin",
-			Handler:    _WFM_HelloWorldAdherenceAdmin_Handler,
-		},
-		{
-			MethodName: "HelloWorldAdherenceManager",
-			Handler:    _WFM_HelloWorldAdherenceManager_Handler,
-		},
-		{
-			MethodName: "HelloWorldAdherenceMonitor",
-			Handler:    _WFM_HelloWorldAdherenceMonitor_Handler,
+			MethodName: "HelloWorldWFMAdherence",
+			Handler:    _WFM_HelloWorldWFMAdherence_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

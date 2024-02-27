@@ -494,15 +494,9 @@ const (
 	// WFMRemoveAgentFromScheduleProcedure is the fully-qualified name of the WFM's
 	// RemoveAgentFromSchedule RPC.
 	WFMRemoveAgentFromScheduleProcedure = "/api.v1alpha1.wfm.WFM/RemoveAgentFromSchedule"
-	// WFMHelloWorldAdherenceAdminProcedure is the fully-qualified name of the WFM's
-	// HelloWorldAdherenceAdmin RPC.
-	WFMHelloWorldAdherenceAdminProcedure = "/api.v1alpha1.wfm.WFM/HelloWorldAdherenceAdmin"
-	// WFMHelloWorldAdherenceManagerProcedure is the fully-qualified name of the WFM's
-	// HelloWorldAdherenceManager RPC.
-	WFMHelloWorldAdherenceManagerProcedure = "/api.v1alpha1.wfm.WFM/HelloWorldAdherenceManager"
-	// WFMHelloWorldAdherenceMonitorProcedure is the fully-qualified name of the WFM's
-	// HelloWorldAdherenceMonitor RPC.
-	WFMHelloWorldAdherenceMonitorProcedure = "/api.v1alpha1.wfm.WFM/HelloWorldAdherenceMonitor"
+	// WFMHelloWorldWFMAdherenceProcedure is the fully-qualified name of the WFM's
+	// HelloWorldWFMAdherence RPC.
+	WFMHelloWorldWFMAdherenceProcedure = "/api.v1alpha1.wfm.WFM/HelloWorldWFMAdherence"
 )
 
 // WFMClient is a client for the api.v1alpha1.wfm.WFM service.
@@ -2404,24 +2398,12 @@ type WFMClient interface {
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when creating the unassigned agent or updating the shifts.
 	RemoveAgentFromSchedule(context.Context, *connect_go.Request[wfm.RemoveAgentFromScheduleRequest]) (*connect_go.Response[wfm.RemoveAgentFromScheduleResponse], error)
-	// A hello world endpoint to test the PERMISSION_ADHERENCE_ADMIN permission.
+	// A hello world endpoint to test the WFM Adherence App.
 	// Returns a string with a hello world message.
 	// Required permissions:
 	//
-	//	PERMISSION_ADHERENCE_ADMIN
-	HelloWorldAdherenceAdmin(context.Context, *connect_go.Request[wfm.HelloWorldAdherenceAdminRequest]) (*connect_go.Response[wfm.HelloWorldAdherenceAdminResponse], error)
-	// A hello world endpoint to test the PERMISSION_ADHERENCE_MANAGER permission.
-	// Returns a string with a hello world message.
-	// Required permissions:
-	//
-	//	PERMISSION_ADHERENCE_MANAGER
-	HelloWorldAdherenceManager(context.Context, *connect_go.Request[wfm.HelloWorldAdherenceManagerRequest]) (*connect_go.Response[wfm.HelloWorldAdherenceManagerResponse], error)
-	// A hello world endpoint to test the PERMISSION_ADHERENCE_MONITOR permission.
-	// Returns a string with a hello world message.
-	// Required permissions:
-	//
-	//	PERMISSION_ADHERENCE_MONITOR
-	HelloWorldAdherenceMonitor(context.Context, *connect_go.Request[wfm.HelloWorldAdherenceMonitorRequest]) (*connect_go.Response[wfm.HelloWorldAdherenceMonitorResponse], error)
+	//	PERMISSION_WFM_ADHERENCE_ADMIN, PERMISSION_WFM_ADHERENCE_MANAGER, or PERMISSION_WFM_ADHERENCE_MONITOR
+	HelloWorldWFMAdherence(context.Context, *connect_go.Request[wfm.HelloWorldWFMAdherenceRequest]) (*connect_go.Response[wfm.HelloWorldWFMAdherenceResponse], error)
 }
 
 // NewWFMClient constructs a client for the api.v1alpha1.wfm.WFM service. By default, it uses the
@@ -3249,19 +3231,9 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMRemoveAgentFromScheduleProcedure,
 			opts...,
 		),
-		helloWorldAdherenceAdmin: connect_go.NewClient[wfm.HelloWorldAdherenceAdminRequest, wfm.HelloWorldAdherenceAdminResponse](
+		helloWorldWFMAdherence: connect_go.NewClient[wfm.HelloWorldWFMAdherenceRequest, wfm.HelloWorldWFMAdherenceResponse](
 			httpClient,
-			baseURL+WFMHelloWorldAdherenceAdminProcedure,
-			opts...,
-		),
-		helloWorldAdherenceManager: connect_go.NewClient[wfm.HelloWorldAdherenceManagerRequest, wfm.HelloWorldAdherenceManagerResponse](
-			httpClient,
-			baseURL+WFMHelloWorldAdherenceManagerProcedure,
-			opts...,
-		),
-		helloWorldAdherenceMonitor: connect_go.NewClient[wfm.HelloWorldAdherenceMonitorRequest, wfm.HelloWorldAdherenceMonitorResponse](
-			httpClient,
-			baseURL+WFMHelloWorldAdherenceMonitorProcedure,
+			baseURL+WFMHelloWorldWFMAdherenceProcedure,
 			opts...,
 		),
 	}
@@ -3432,9 +3404,7 @@ type wFMClient struct {
 	replaceAgentOnSchedule                        *connect_go.Client[wfm.ReplaceAgentOnScheduleRes, wfm.ReplaceAgentOnScheduleRes]
 	replaceAgentOnScheduleV1                      *connect_go.Client[wfm.ReplaceAgentOnScheduleReq, wfm.ReplaceAgentOnScheduleRes]
 	removeAgentFromSchedule                       *connect_go.Client[wfm.RemoveAgentFromScheduleRequest, wfm.RemoveAgentFromScheduleResponse]
-	helloWorldAdherenceAdmin                      *connect_go.Client[wfm.HelloWorldAdherenceAdminRequest, wfm.HelloWorldAdherenceAdminResponse]
-	helloWorldAdherenceManager                    *connect_go.Client[wfm.HelloWorldAdherenceManagerRequest, wfm.HelloWorldAdherenceManagerResponse]
-	helloWorldAdherenceMonitor                    *connect_go.Client[wfm.HelloWorldAdherenceMonitorRequest, wfm.HelloWorldAdherenceMonitorResponse]
+	helloWorldWFMAdherence                        *connect_go.Client[wfm.HelloWorldWFMAdherenceRequest, wfm.HelloWorldWFMAdherenceResponse]
 }
 
 // PerformInitialClientSetup calls api.v1alpha1.wfm.WFM.PerformInitialClientSetup.
@@ -4276,19 +4246,9 @@ func (c *wFMClient) RemoveAgentFromSchedule(ctx context.Context, req *connect_go
 	return c.removeAgentFromSchedule.CallUnary(ctx, req)
 }
 
-// HelloWorldAdherenceAdmin calls api.v1alpha1.wfm.WFM.HelloWorldAdherenceAdmin.
-func (c *wFMClient) HelloWorldAdherenceAdmin(ctx context.Context, req *connect_go.Request[wfm.HelloWorldAdherenceAdminRequest]) (*connect_go.Response[wfm.HelloWorldAdherenceAdminResponse], error) {
-	return c.helloWorldAdherenceAdmin.CallUnary(ctx, req)
-}
-
-// HelloWorldAdherenceManager calls api.v1alpha1.wfm.WFM.HelloWorldAdherenceManager.
-func (c *wFMClient) HelloWorldAdherenceManager(ctx context.Context, req *connect_go.Request[wfm.HelloWorldAdherenceManagerRequest]) (*connect_go.Response[wfm.HelloWorldAdherenceManagerResponse], error) {
-	return c.helloWorldAdherenceManager.CallUnary(ctx, req)
-}
-
-// HelloWorldAdherenceMonitor calls api.v1alpha1.wfm.WFM.HelloWorldAdherenceMonitor.
-func (c *wFMClient) HelloWorldAdherenceMonitor(ctx context.Context, req *connect_go.Request[wfm.HelloWorldAdherenceMonitorRequest]) (*connect_go.Response[wfm.HelloWorldAdherenceMonitorResponse], error) {
-	return c.helloWorldAdherenceMonitor.CallUnary(ctx, req)
+// HelloWorldWFMAdherence calls api.v1alpha1.wfm.WFM.HelloWorldWFMAdherence.
+func (c *wFMClient) HelloWorldWFMAdherence(ctx context.Context, req *connect_go.Request[wfm.HelloWorldWFMAdherenceRequest]) (*connect_go.Response[wfm.HelloWorldWFMAdherenceResponse], error) {
+	return c.helloWorldWFMAdherence.CallUnary(ctx, req)
 }
 
 // WFMHandler is an implementation of the api.v1alpha1.wfm.WFM service.
@@ -6190,24 +6150,12 @@ type WFMHandler interface {
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when creating the unassigned agent or updating the shifts.
 	RemoveAgentFromSchedule(context.Context, *connect_go.Request[wfm.RemoveAgentFromScheduleRequest]) (*connect_go.Response[wfm.RemoveAgentFromScheduleResponse], error)
-	// A hello world endpoint to test the PERMISSION_ADHERENCE_ADMIN permission.
+	// A hello world endpoint to test the WFM Adherence App.
 	// Returns a string with a hello world message.
 	// Required permissions:
 	//
-	//	PERMISSION_ADHERENCE_ADMIN
-	HelloWorldAdherenceAdmin(context.Context, *connect_go.Request[wfm.HelloWorldAdherenceAdminRequest]) (*connect_go.Response[wfm.HelloWorldAdherenceAdminResponse], error)
-	// A hello world endpoint to test the PERMISSION_ADHERENCE_MANAGER permission.
-	// Returns a string with a hello world message.
-	// Required permissions:
-	//
-	//	PERMISSION_ADHERENCE_MANAGER
-	HelloWorldAdherenceManager(context.Context, *connect_go.Request[wfm.HelloWorldAdherenceManagerRequest]) (*connect_go.Response[wfm.HelloWorldAdherenceManagerResponse], error)
-	// A hello world endpoint to test the PERMISSION_ADHERENCE_MONITOR permission.
-	// Returns a string with a hello world message.
-	// Required permissions:
-	//
-	//	PERMISSION_ADHERENCE_MONITOR
-	HelloWorldAdherenceMonitor(context.Context, *connect_go.Request[wfm.HelloWorldAdherenceMonitorRequest]) (*connect_go.Response[wfm.HelloWorldAdherenceMonitorResponse], error)
+	//	PERMISSION_WFM_ADHERENCE_ADMIN, PERMISSION_WFM_ADHERENCE_MANAGER, or PERMISSION_WFM_ADHERENCE_MONITOR
+	HelloWorldWFMAdherence(context.Context, *connect_go.Request[wfm.HelloWorldWFMAdherenceRequest]) (*connect_go.Response[wfm.HelloWorldWFMAdherenceResponse], error)
 }
 
 // NewWFMHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -7031,19 +6979,9 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.RemoveAgentFromSchedule,
 		opts...,
 	)
-	wFMHelloWorldAdherenceAdminHandler := connect_go.NewUnaryHandler(
-		WFMHelloWorldAdherenceAdminProcedure,
-		svc.HelloWorldAdherenceAdmin,
-		opts...,
-	)
-	wFMHelloWorldAdherenceManagerHandler := connect_go.NewUnaryHandler(
-		WFMHelloWorldAdherenceManagerProcedure,
-		svc.HelloWorldAdherenceManager,
-		opts...,
-	)
-	wFMHelloWorldAdherenceMonitorHandler := connect_go.NewUnaryHandler(
-		WFMHelloWorldAdherenceMonitorProcedure,
-		svc.HelloWorldAdherenceMonitor,
+	wFMHelloWorldWFMAdherenceHandler := connect_go.NewUnaryHandler(
+		WFMHelloWorldWFMAdherenceProcedure,
+		svc.HelloWorldWFMAdherence,
 		opts...,
 	)
 	return "/api.v1alpha1.wfm.WFM/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -7374,12 +7312,8 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMReplaceAgentOnScheduleV1Handler.ServeHTTP(w, r)
 		case WFMRemoveAgentFromScheduleProcedure:
 			wFMRemoveAgentFromScheduleHandler.ServeHTTP(w, r)
-		case WFMHelloWorldAdherenceAdminProcedure:
-			wFMHelloWorldAdherenceAdminHandler.ServeHTTP(w, r)
-		case WFMHelloWorldAdherenceManagerProcedure:
-			wFMHelloWorldAdherenceManagerHandler.ServeHTTP(w, r)
-		case WFMHelloWorldAdherenceMonitorProcedure:
-			wFMHelloWorldAdherenceMonitorHandler.ServeHTTP(w, r)
+		case WFMHelloWorldWFMAdherenceProcedure:
+			wFMHelloWorldWFMAdherenceHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -8041,14 +7975,6 @@ func (UnimplementedWFMHandler) RemoveAgentFromSchedule(context.Context, *connect
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.RemoveAgentFromSchedule is not implemented"))
 }
 
-func (UnimplementedWFMHandler) HelloWorldAdherenceAdmin(context.Context, *connect_go.Request[wfm.HelloWorldAdherenceAdminRequest]) (*connect_go.Response[wfm.HelloWorldAdherenceAdminResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.HelloWorldAdherenceAdmin is not implemented"))
-}
-
-func (UnimplementedWFMHandler) HelloWorldAdherenceManager(context.Context, *connect_go.Request[wfm.HelloWorldAdherenceManagerRequest]) (*connect_go.Response[wfm.HelloWorldAdherenceManagerResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.HelloWorldAdherenceManager is not implemented"))
-}
-
-func (UnimplementedWFMHandler) HelloWorldAdherenceMonitor(context.Context, *connect_go.Request[wfm.HelloWorldAdherenceMonitorRequest]) (*connect_go.Response[wfm.HelloWorldAdherenceMonitorResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.HelloWorldAdherenceMonitor is not implemented"))
+func (UnimplementedWFMHandler) HelloWorldWFMAdherence(context.Context, *connect_go.Request[wfm.HelloWorldWFMAdherenceRequest]) (*connect_go.Response[wfm.HelloWorldWFMAdherenceResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.HelloWorldWFMAdherence is not implemented"))
 }
