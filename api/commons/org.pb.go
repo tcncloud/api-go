@@ -304,8 +304,11 @@ func (OperatorDisplayLanguage) EnumDescriptor() ([]byte, []int) {
 type OperatorScriptDirection int32
 
 const (
-	OperatorScriptDirection_OPERATOR_SCRIPT_DIRECTION_UNSPECIFIED   OperatorScriptDirection = 0
+	// Unspecified direction
+	OperatorScriptDirection_OPERATOR_SCRIPT_DIRECTION_UNSPECIFIED OperatorScriptDirection = 0
+	// Left to right direction (default)
 	OperatorScriptDirection_OPERATOR_SCRIPT_DIRECTION_LEFT_TO_RIGHT OperatorScriptDirection = 1
+	// Right to left direction (for languages like Arabic and Hebrew)
 	OperatorScriptDirection_OPERATOR_SCRIPT_DIRECTION_RIGHT_TO_LEFT OperatorScriptDirection = 2
 )
 
