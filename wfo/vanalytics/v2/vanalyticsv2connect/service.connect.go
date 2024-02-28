@@ -36,6 +36,9 @@ const (
 	// VanalyticsSearchTranscriptsProcedure is the fully-qualified name of the Vanalytics's
 	// SearchTranscripts RPC.
 	VanalyticsSearchTranscriptsProcedure = "/wfo.vanalytics.v2.Vanalytics/SearchTranscripts"
+	// VanalyticsCreateCorrectionProcedure is the fully-qualified name of the Vanalytics's
+	// CreateCorrection RPC.
+	VanalyticsCreateCorrectionProcedure = "/wfo.vanalytics.v2.Vanalytics/CreateCorrection"
 )
 
 // VanalyticsClient is a client for the wfo.vanalytics.v2.Vanalytics service.
@@ -44,6 +47,8 @@ type VanalyticsClient interface {
 	// contains one page of transcript hits. Traversing the paginated hits is
 	// achieved by making use of the given page token.
 	SearchTranscripts(context.Context, *connect_go.Request[v2.SearchTranscriptsRequest]) (*connect_go.Response[v2.SearchTranscriptsResponse], error)
+	// CreateCorrection creates a correction.
+	CreateCorrection(context.Context, *connect_go.Request[v2.CreateCorrectionRequest]) (*connect_go.Response[v2.CreateCorrectionResponse], error)
 }
 
 // NewVanalyticsClient constructs a client for the wfo.vanalytics.v2.Vanalytics service. By default,
@@ -61,17 +66,28 @@ func NewVanalyticsClient(httpClient connect_go.HTTPClient, baseURL string, opts 
 			baseURL+VanalyticsSearchTranscriptsProcedure,
 			opts...,
 		),
+		createCorrection: connect_go.NewClient[v2.CreateCorrectionRequest, v2.CreateCorrectionResponse](
+			httpClient,
+			baseURL+VanalyticsCreateCorrectionProcedure,
+			opts...,
+		),
 	}
 }
 
 // vanalyticsClient implements VanalyticsClient.
 type vanalyticsClient struct {
 	searchTranscripts *connect_go.Client[v2.SearchTranscriptsRequest, v2.SearchTranscriptsResponse]
+	createCorrection  *connect_go.Client[v2.CreateCorrectionRequest, v2.CreateCorrectionResponse]
 }
 
 // SearchTranscripts calls wfo.vanalytics.v2.Vanalytics.SearchTranscripts.
 func (c *vanalyticsClient) SearchTranscripts(ctx context.Context, req *connect_go.Request[v2.SearchTranscriptsRequest]) (*connect_go.Response[v2.SearchTranscriptsResponse], error) {
 	return c.searchTranscripts.CallUnary(ctx, req)
+}
+
+// CreateCorrection calls wfo.vanalytics.v2.Vanalytics.CreateCorrection.
+func (c *vanalyticsClient) CreateCorrection(ctx context.Context, req *connect_go.Request[v2.CreateCorrectionRequest]) (*connect_go.Response[v2.CreateCorrectionResponse], error) {
+	return c.createCorrection.CallUnary(ctx, req)
 }
 
 // VanalyticsHandler is an implementation of the wfo.vanalytics.v2.Vanalytics service.
@@ -80,6 +96,8 @@ type VanalyticsHandler interface {
 	// contains one page of transcript hits. Traversing the paginated hits is
 	// achieved by making use of the given page token.
 	SearchTranscripts(context.Context, *connect_go.Request[v2.SearchTranscriptsRequest]) (*connect_go.Response[v2.SearchTranscriptsResponse], error)
+	// CreateCorrection creates a correction.
+	CreateCorrection(context.Context, *connect_go.Request[v2.CreateCorrectionRequest]) (*connect_go.Response[v2.CreateCorrectionResponse], error)
 }
 
 // NewVanalyticsHandler builds an HTTP handler from the service implementation. It returns the path
@@ -93,10 +111,17 @@ func NewVanalyticsHandler(svc VanalyticsHandler, opts ...connect_go.HandlerOptio
 		svc.SearchTranscripts,
 		opts...,
 	)
+	vanalyticsCreateCorrectionHandler := connect_go.NewUnaryHandler(
+		VanalyticsCreateCorrectionProcedure,
+		svc.CreateCorrection,
+		opts...,
+	)
 	return "/wfo.vanalytics.v2.Vanalytics/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case VanalyticsSearchTranscriptsProcedure:
 			vanalyticsSearchTranscriptsHandler.ServeHTTP(w, r)
+		case VanalyticsCreateCorrectionProcedure:
+			vanalyticsCreateCorrectionHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -108,4 +133,8 @@ type UnimplementedVanalyticsHandler struct{}
 
 func (UnimplementedVanalyticsHandler) SearchTranscripts(context.Context, *connect_go.Request[v2.SearchTranscriptsRequest]) (*connect_go.Response[v2.SearchTranscriptsResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("wfo.vanalytics.v2.Vanalytics.SearchTranscripts is not implemented"))
+}
+
+func (UnimplementedVanalyticsHandler) CreateCorrection(context.Context, *connect_go.Request[v2.CreateCorrectionRequest]) (*connect_go.Response[v2.CreateCorrectionResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("wfo.vanalytics.v2.Vanalytics.CreateCorrection is not implemented"))
 }
