@@ -494,6 +494,9 @@ const (
 	// WFMRemoveAgentFromScheduleProcedure is the fully-qualified name of the WFM's
 	// RemoveAgentFromSchedule RPC.
 	WFMRemoveAgentFromScheduleProcedure = "/api.v1alpha1.wfm.WFM/RemoveAgentFromSchedule"
+	// WFMHelloWorldWFMAdherenceProcedure is the fully-qualified name of the WFM's
+	// HelloWorldWFMAdherence RPC.
+	WFMHelloWorldWFMAdherenceProcedure = "/api.v1alpha1.wfm.WFM/HelloWorldWFMAdherence"
 )
 
 // WFMClient is a client for the api.v1alpha1.wfm.WFM service.
@@ -2395,6 +2398,12 @@ type WFMClient interface {
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when creating the unassigned agent or updating the shifts.
 	RemoveAgentFromSchedule(context.Context, *connect_go.Request[wfm.RemoveAgentFromScheduleRequest]) (*connect_go.Response[wfm.RemoveAgentFromScheduleResponse], error)
+	// A hello world endpoint to test the WFM Adherence App.
+	// Returns a string with a hello world message.
+	// Required permissions:
+	//
+	//	PERMISSION_WFM_ADHERENCE_ADMIN, PERMISSION_WFM_ADHERENCE_MANAGER, or PERMISSION_WFM_ADHERENCE_MONITOR
+	HelloWorldWFMAdherence(context.Context, *connect_go.Request[wfm.HelloWorldWFMAdherenceRequest]) (*connect_go.Response[wfm.HelloWorldWFMAdherenceResponse], error)
 }
 
 // NewWFMClient constructs a client for the api.v1alpha1.wfm.WFM service. By default, it uses the
@@ -3222,6 +3231,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMRemoveAgentFromScheduleProcedure,
 			opts...,
 		),
+		helloWorldWFMAdherence: connect_go.NewClient[wfm.HelloWorldWFMAdherenceRequest, wfm.HelloWorldWFMAdherenceResponse](
+			httpClient,
+			baseURL+WFMHelloWorldWFMAdherenceProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -3390,6 +3404,7 @@ type wFMClient struct {
 	replaceAgentOnSchedule                        *connect_go.Client[wfm.ReplaceAgentOnScheduleRes, wfm.ReplaceAgentOnScheduleRes]
 	replaceAgentOnScheduleV1                      *connect_go.Client[wfm.ReplaceAgentOnScheduleReq, wfm.ReplaceAgentOnScheduleRes]
 	removeAgentFromSchedule                       *connect_go.Client[wfm.RemoveAgentFromScheduleRequest, wfm.RemoveAgentFromScheduleResponse]
+	helloWorldWFMAdherence                        *connect_go.Client[wfm.HelloWorldWFMAdherenceRequest, wfm.HelloWorldWFMAdherenceResponse]
 }
 
 // PerformInitialClientSetup calls api.v1alpha1.wfm.WFM.PerformInitialClientSetup.
@@ -4229,6 +4244,11 @@ func (c *wFMClient) ReplaceAgentOnScheduleV1(ctx context.Context, req *connect_g
 // RemoveAgentFromSchedule calls api.v1alpha1.wfm.WFM.RemoveAgentFromSchedule.
 func (c *wFMClient) RemoveAgentFromSchedule(ctx context.Context, req *connect_go.Request[wfm.RemoveAgentFromScheduleRequest]) (*connect_go.Response[wfm.RemoveAgentFromScheduleResponse], error) {
 	return c.removeAgentFromSchedule.CallUnary(ctx, req)
+}
+
+// HelloWorldWFMAdherence calls api.v1alpha1.wfm.WFM.HelloWorldWFMAdherence.
+func (c *wFMClient) HelloWorldWFMAdherence(ctx context.Context, req *connect_go.Request[wfm.HelloWorldWFMAdherenceRequest]) (*connect_go.Response[wfm.HelloWorldWFMAdherenceResponse], error) {
+	return c.helloWorldWFMAdherence.CallUnary(ctx, req)
 }
 
 // WFMHandler is an implementation of the api.v1alpha1.wfm.WFM service.
@@ -6130,6 +6150,12 @@ type WFMHandler interface {
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when creating the unassigned agent or updating the shifts.
 	RemoveAgentFromSchedule(context.Context, *connect_go.Request[wfm.RemoveAgentFromScheduleRequest]) (*connect_go.Response[wfm.RemoveAgentFromScheduleResponse], error)
+	// A hello world endpoint to test the WFM Adherence App.
+	// Returns a string with a hello world message.
+	// Required permissions:
+	//
+	//	PERMISSION_WFM_ADHERENCE_ADMIN, PERMISSION_WFM_ADHERENCE_MANAGER, or PERMISSION_WFM_ADHERENCE_MONITOR
+	HelloWorldWFMAdherence(context.Context, *connect_go.Request[wfm.HelloWorldWFMAdherenceRequest]) (*connect_go.Response[wfm.HelloWorldWFMAdherenceResponse], error)
 }
 
 // NewWFMHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -6953,6 +6979,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.RemoveAgentFromSchedule,
 		opts...,
 	)
+	wFMHelloWorldWFMAdherenceHandler := connect_go.NewUnaryHandler(
+		WFMHelloWorldWFMAdherenceProcedure,
+		svc.HelloWorldWFMAdherence,
+		opts...,
+	)
 	return "/api.v1alpha1.wfm.WFM/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case WFMPerformInitialClientSetupProcedure:
@@ -7281,6 +7312,8 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMReplaceAgentOnScheduleV1Handler.ServeHTTP(w, r)
 		case WFMRemoveAgentFromScheduleProcedure:
 			wFMRemoveAgentFromScheduleHandler.ServeHTTP(w, r)
+		case WFMHelloWorldWFMAdherenceProcedure:
+			wFMHelloWorldWFMAdherenceHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -7940,4 +7973,8 @@ func (UnimplementedWFMHandler) ReplaceAgentOnScheduleV1(context.Context, *connec
 
 func (UnimplementedWFMHandler) RemoveAgentFromSchedule(context.Context, *connect_go.Request[wfm.RemoveAgentFromScheduleRequest]) (*connect_go.Response[wfm.RemoveAgentFromScheduleResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.RemoveAgentFromSchedule is not implemented"))
+}
+
+func (UnimplementedWFMHandler) HelloWorldWFMAdherence(context.Context, *connect_go.Request[wfm.HelloWorldWFMAdherenceRequest]) (*connect_go.Response[wfm.HelloWorldWFMAdherenceResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.HelloWorldWFMAdherence is not implemented"))
 }

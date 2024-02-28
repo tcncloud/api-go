@@ -5,10 +5,8 @@
 package wfmconnect
 
 import (
-	context "context"
-	errors "errors"
 	connect_go "github.com/bufbuild/connect-go"
-	wfm "github.com/tcncloud/api-go/api/v1alpha1/wfm"
+	_ "github.com/tcncloud/api-go/api/v1alpha1/wfm"
 	http "net/http"
 	strings "strings"
 )
@@ -25,27 +23,8 @@ const (
 	WfmAdherenceAppServiceName = "api.v1alpha1.wfm.WfmAdherenceAppService"
 )
 
-// These constants are the fully-qualified names of the RPCs defined in this package. They're
-// exposed at runtime as Spec.Procedure and as the final two segments of the HTTP route.
-//
-// Note that these are different from the fully-qualified method names used by
-// google.golang.org/protobuf/reflect/protoreflect. To convert from these constants to
-// reflection-formatted method names, remove the leading slash and convert the remaining slash to a
-// period.
-const (
-	// WfmAdherenceAppServiceHelloWorldWFMAdherenceProcedure is the fully-qualified name of the
-	// WfmAdherenceAppService's HelloWorldWFMAdherence RPC.
-	WfmAdherenceAppServiceHelloWorldWFMAdherenceProcedure = "/api.v1alpha1.wfm.WfmAdherenceAppService/HelloWorldWFMAdherence"
-)
-
 // WfmAdherenceAppServiceClient is a client for the api.v1alpha1.wfm.WfmAdherenceAppService service.
 type WfmAdherenceAppServiceClient interface {
-	// A hello world endpoint to test the WFM Adherence App.
-	// Returns a string with a hello world message.
-	// Required permissions:
-	//
-	//	PERMISSION_WFM_ADHERENCE_ADMIN, PERMISSION_WFM_ADHERENCE_MANAGER, or PERMISSION_WFM_ADHERENCE_MONITOR
-	HelloWorldWFMAdherence(context.Context, *connect_go.Request[wfm.HelloWorldWFMAdherenceRequest]) (*connect_go.Response[wfm.HelloWorldWFMAdherenceResponse], error)
 }
 
 // NewWfmAdherenceAppServiceClient constructs a client for the
@@ -57,34 +36,16 @@ type WfmAdherenceAppServiceClient interface {
 // http://api.acme.com or https://acme.com/grpc).
 func NewWfmAdherenceAppServiceClient(httpClient connect_go.HTTPClient, baseURL string, opts ...connect_go.ClientOption) WfmAdherenceAppServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
-	return &wfmAdherenceAppServiceClient{
-		helloWorldWFMAdherence: connect_go.NewClient[wfm.HelloWorldWFMAdherenceRequest, wfm.HelloWorldWFMAdherenceResponse](
-			httpClient,
-			baseURL+WfmAdherenceAppServiceHelloWorldWFMAdherenceProcedure,
-			opts...,
-		),
-	}
+	return &wfmAdherenceAppServiceClient{}
 }
 
 // wfmAdherenceAppServiceClient implements WfmAdherenceAppServiceClient.
 type wfmAdherenceAppServiceClient struct {
-	helloWorldWFMAdherence *connect_go.Client[wfm.HelloWorldWFMAdherenceRequest, wfm.HelloWorldWFMAdherenceResponse]
-}
-
-// HelloWorldWFMAdherence calls api.v1alpha1.wfm.WfmAdherenceAppService.HelloWorldWFMAdherence.
-func (c *wfmAdherenceAppServiceClient) HelloWorldWFMAdherence(ctx context.Context, req *connect_go.Request[wfm.HelloWorldWFMAdherenceRequest]) (*connect_go.Response[wfm.HelloWorldWFMAdherenceResponse], error) {
-	return c.helloWorldWFMAdherence.CallUnary(ctx, req)
 }
 
 // WfmAdherenceAppServiceHandler is an implementation of the api.v1alpha1.wfm.WfmAdherenceAppService
 // service.
 type WfmAdherenceAppServiceHandler interface {
-	// A hello world endpoint to test the WFM Adherence App.
-	// Returns a string with a hello world message.
-	// Required permissions:
-	//
-	//	PERMISSION_WFM_ADHERENCE_ADMIN, PERMISSION_WFM_ADHERENCE_MANAGER, or PERMISSION_WFM_ADHERENCE_MONITOR
-	HelloWorldWFMAdherence(context.Context, *connect_go.Request[wfm.HelloWorldWFMAdherenceRequest]) (*connect_go.Response[wfm.HelloWorldWFMAdherenceResponse], error)
 }
 
 // NewWfmAdherenceAppServiceHandler builds an HTTP handler from the service implementation. It
@@ -93,15 +54,8 @@ type WfmAdherenceAppServiceHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewWfmAdherenceAppServiceHandler(svc WfmAdherenceAppServiceHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
-	wfmAdherenceAppServiceHelloWorldWFMAdherenceHandler := connect_go.NewUnaryHandler(
-		WfmAdherenceAppServiceHelloWorldWFMAdherenceProcedure,
-		svc.HelloWorldWFMAdherence,
-		opts...,
-	)
 	return "/api.v1alpha1.wfm.WfmAdherenceAppService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
-		case WfmAdherenceAppServiceHelloWorldWFMAdherenceProcedure:
-			wfmAdherenceAppServiceHelloWorldWFMAdherenceHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -110,7 +64,3 @@ func NewWfmAdherenceAppServiceHandler(svc WfmAdherenceAppServiceHandler, opts ..
 
 // UnimplementedWfmAdherenceAppServiceHandler returns CodeUnimplemented from all methods.
 type UnimplementedWfmAdherenceAppServiceHandler struct{}
-
-func (UnimplementedWfmAdherenceAppServiceHandler) HelloWorldWFMAdherence(context.Context, *connect_go.Request[wfm.HelloWorldWFMAdherenceRequest]) (*connect_go.Response[wfm.HelloWorldWFMAdherenceResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WfmAdherenceAppService.HelloWorldWFMAdherence is not implemented"))
-}

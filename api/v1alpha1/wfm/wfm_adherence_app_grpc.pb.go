@@ -7,10 +7,7 @@
 package wfm
 
 import (
-	context "context"
 	grpc "google.golang.org/grpc"
-	codes "google.golang.org/grpc/codes"
-	status "google.golang.org/grpc/status"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -18,20 +15,12 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-const (
-	WfmAdherenceAppService_HelloWorldWFMAdherence_FullMethodName = "/api.v1alpha1.wfm.WfmAdherenceAppService/HelloWorldWFMAdherence"
-)
+const ()
 
 // WfmAdherenceAppServiceClient is the client API for WfmAdherenceAppService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type WfmAdherenceAppServiceClient interface {
-	// A hello world endpoint to test the WFM Adherence App.
-	// Returns a string with a hello world message.
-	// Required permissions:
-	//
-	//	PERMISSION_WFM_ADHERENCE_ADMIN, PERMISSION_WFM_ADHERENCE_MANAGER, or PERMISSION_WFM_ADHERENCE_MONITOR
-	HelloWorldWFMAdherence(ctx context.Context, in *HelloWorldWFMAdherenceRequest, opts ...grpc.CallOption) (*HelloWorldWFMAdherenceResponse, error)
 }
 
 type wfmAdherenceAppServiceClient struct {
@@ -42,25 +31,10 @@ func NewWfmAdherenceAppServiceClient(cc grpc.ClientConnInterface) WfmAdherenceAp
 	return &wfmAdherenceAppServiceClient{cc}
 }
 
-func (c *wfmAdherenceAppServiceClient) HelloWorldWFMAdherence(ctx context.Context, in *HelloWorldWFMAdherenceRequest, opts ...grpc.CallOption) (*HelloWorldWFMAdherenceResponse, error) {
-	out := new(HelloWorldWFMAdherenceResponse)
-	err := c.cc.Invoke(ctx, WfmAdherenceAppService_HelloWorldWFMAdherence_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // WfmAdherenceAppServiceServer is the server API for WfmAdherenceAppService service.
 // All implementations must embed UnimplementedWfmAdherenceAppServiceServer
 // for forward compatibility
 type WfmAdherenceAppServiceServer interface {
-	// A hello world endpoint to test the WFM Adherence App.
-	// Returns a string with a hello world message.
-	// Required permissions:
-	//
-	//	PERMISSION_WFM_ADHERENCE_ADMIN, PERMISSION_WFM_ADHERENCE_MANAGER, or PERMISSION_WFM_ADHERENCE_MONITOR
-	HelloWorldWFMAdherence(context.Context, *HelloWorldWFMAdherenceRequest) (*HelloWorldWFMAdherenceResponse, error)
 	mustEmbedUnimplementedWfmAdherenceAppServiceServer()
 }
 
@@ -68,9 +42,6 @@ type WfmAdherenceAppServiceServer interface {
 type UnimplementedWfmAdherenceAppServiceServer struct {
 }
 
-func (UnimplementedWfmAdherenceAppServiceServer) HelloWorldWFMAdherence(context.Context, *HelloWorldWFMAdherenceRequest) (*HelloWorldWFMAdherenceResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method HelloWorldWFMAdherence not implemented")
-}
 func (UnimplementedWfmAdherenceAppServiceServer) mustEmbedUnimplementedWfmAdherenceAppServiceServer() {
 }
 
@@ -85,36 +56,13 @@ func RegisterWfmAdherenceAppServiceServer(s grpc.ServiceRegistrar, srv WfmAdhere
 	s.RegisterService(&WfmAdherenceAppService_ServiceDesc, srv)
 }
 
-func _WfmAdherenceAppService_HelloWorldWFMAdherence_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HelloWorldWFMAdherenceRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(WfmAdherenceAppServiceServer).HelloWorldWFMAdherence(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: WfmAdherenceAppService_HelloWorldWFMAdherence_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WfmAdherenceAppServiceServer).HelloWorldWFMAdherence(ctx, req.(*HelloWorldWFMAdherenceRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // WfmAdherenceAppService_ServiceDesc is the grpc.ServiceDesc for WfmAdherenceAppService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var WfmAdherenceAppService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "api.v1alpha1.wfm.WfmAdherenceAppService",
 	HandlerType: (*WfmAdherenceAppServiceServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "HelloWorldWFMAdherence",
-			Handler:    _WfmAdherenceAppService_HelloWorldWFMAdherence_Handler,
-		},
-	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: "api/v1alpha1/wfm/wfm_adherence_app.proto",
+	Methods:     []grpc.MethodDesc{},
+	Streams:     []grpc.StreamDesc{},
+	Metadata:    "api/v1alpha1/wfm/wfm_adherence_app.proto",
 }
