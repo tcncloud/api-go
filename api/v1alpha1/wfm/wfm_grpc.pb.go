@@ -196,6 +196,7 @@ const (
 	WFM_ReplaceAgentOnSchedule_FullMethodName                        = "/api.v1alpha1.wfm.WFM/ReplaceAgentOnSchedule"
 	WFM_ReplaceAgentOnScheduleV1_FullMethodName                      = "/api.v1alpha1.wfm.WFM/ReplaceAgentOnScheduleV1"
 	WFM_RemoveAgentFromSchedule_FullMethodName                       = "/api.v1alpha1.wfm.WFM/RemoveAgentFromSchedule"
+	WFM_HelloWorldWFMAdherence_FullMethodName                        = "/api.v1alpha1.wfm.WFM/HelloWorldWFMAdherence"
 )
 
 // WFMClient is the client API for WFM service.
@@ -731,7 +732,6 @@ type WFMClient interface {
 	// The @client_node_sid of the new entity will be returned in the response.
 	// The @schedule_scenario_sid must match the scenario of the parent call center node.
 	// The @member fields will be ignored since those cannot be created by this method and must be created by their respective create methods.
-	// The @origin_sid must be set to nil, since this method can only make an original node.
 	// Required permissions:
 	//
 	//	NONE
@@ -758,7 +758,6 @@ type WFMClient interface {
 	// The @location_node_sid of the new entity will be returned in the response.
 	// The @schedule_scenario_sid must match the scenario of the parent client node.
 	// The @member fields will be ignored since those cannot be created by this method and must be created by their respective create methods.
-	// The @origin_sid must be set to nil, since this method can only make an original node.
 	// Required permissions:
 	//
 	//	NONE
@@ -785,7 +784,6 @@ type WFMClient interface {
 	// The @program_node_sid of the new entity will be returned in the response.
 	// The @schedule_scenario_sid must match the scenario of the parent location node.
 	// The @member fields will be ignored since those cannot be created by this method and must be created by their respective create methods.
-	// The @origin_sid must be set to nil, since this method can only make an original node.
 	// Required permissions:
 	//
 	//	NONE
@@ -1401,7 +1399,6 @@ type WFMClient interface {
 	// Gets the published schedule for the corresponding @datetime_range for the org sending the request.
 	// Will create a published schedule if it does not exist already for the org sending the request.
 	// if @include_shift_instances is true, the shift instances associated within @datetime_range for the published schedule will be returned in the published schedules shift_instances field.
-	// if @node_selector is set, then only instances belonging to the origin of @node_selector and its children node will be returned, otherwise all matching shift instances will be included.
 	// if @include_shift_template is true, any returned shift instances will have their orginating shift template returned in their origin_shift_template field.
 	// if @include_shift_segments is true, any returned shift instances will have their shift_segments field set, otherwise the field will be left nil.
 	// if @include_scheduling_activity is true, any returned shift segments will have their scheduling_activity field set, otherwise the field will be left nil.
@@ -1493,7 +1490,6 @@ type WFMClient interface {
 	// Gets the draft schedule with @draft_schedule_sid for the corresponding @datetime_range for the org sending the request.
 	// The @datetime_range field is optional. If not set, the draft schedule will be obtained with it's default range from it's start to end time.
 	// if @include_shift_instances is true, the shift instances associated within @datetime_range for the draft schedule will be returned in the draft schedules shift_instances field.
-	// if @node_selector is set then only instances belonging to the origin of @node_selector and its children node will be returned, otherwise all matching shift instances will be included.
 	// @node_selector must be for a node that belongs to the same schedule scenario as @draft_schedule_sid.
 	// if @include_shift_template is true, any returned shift instances will have their orginating shift template returned in their origin_shift_template field.
 	// if @include_shift_segments is true, any returned shift instances will have their shift_segments field set, otherwise the field will be left nil.
@@ -2093,6 +2089,12 @@ type WFMClient interface {
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when creating the unassigned agent or updating the shifts.
 	RemoveAgentFromSchedule(ctx context.Context, in *RemoveAgentFromScheduleRequest, opts ...grpc.CallOption) (*RemoveAgentFromScheduleResponse, error)
+	// A hello world endpoint to test the WFM Adherence App.
+	// Returns a string with a hello world message.
+	// Required permissions:
+	//
+	//	PERMISSION_WFM_ADHERENCE_ADMIN, PERMISSION_WFM_ADHERENCE_MANAGER, or PERMISSION_WFM_ADHERENCE_MONITOR
+	HelloWorldWFMAdherence(ctx context.Context, in *HelloWorldWFMAdherenceRequest, opts ...grpc.CallOption) (*HelloWorldWFMAdherenceResponse, error)
 }
 
 type wFMClient struct {
@@ -3714,6 +3716,15 @@ func (c *wFMClient) RemoveAgentFromSchedule(ctx context.Context, in *RemoveAgent
 	return out, nil
 }
 
+func (c *wFMClient) HelloWorldWFMAdherence(ctx context.Context, in *HelloWorldWFMAdherenceRequest, opts ...grpc.CallOption) (*HelloWorldWFMAdherenceResponse, error) {
+	out := new(HelloWorldWFMAdherenceResponse)
+	err := c.cc.Invoke(ctx, WFM_HelloWorldWFMAdherence_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WFMServer is the server API for WFM service.
 // All implementations must embed UnimplementedWFMServer
 // for forward compatibility
@@ -4247,7 +4258,6 @@ type WFMServer interface {
 	// The @client_node_sid of the new entity will be returned in the response.
 	// The @schedule_scenario_sid must match the scenario of the parent call center node.
 	// The @member fields will be ignored since those cannot be created by this method and must be created by their respective create methods.
-	// The @origin_sid must be set to nil, since this method can only make an original node.
 	// Required permissions:
 	//
 	//	NONE
@@ -4274,7 +4284,6 @@ type WFMServer interface {
 	// The @location_node_sid of the new entity will be returned in the response.
 	// The @schedule_scenario_sid must match the scenario of the parent client node.
 	// The @member fields will be ignored since those cannot be created by this method and must be created by their respective create methods.
-	// The @origin_sid must be set to nil, since this method can only make an original node.
 	// Required permissions:
 	//
 	//	NONE
@@ -4301,7 +4310,6 @@ type WFMServer interface {
 	// The @program_node_sid of the new entity will be returned in the response.
 	// The @schedule_scenario_sid must match the scenario of the parent location node.
 	// The @member fields will be ignored since those cannot be created by this method and must be created by their respective create methods.
-	// The @origin_sid must be set to nil, since this method can only make an original node.
 	// Required permissions:
 	//
 	//	NONE
@@ -4917,7 +4925,6 @@ type WFMServer interface {
 	// Gets the published schedule for the corresponding @datetime_range for the org sending the request.
 	// Will create a published schedule if it does not exist already for the org sending the request.
 	// if @include_shift_instances is true, the shift instances associated within @datetime_range for the published schedule will be returned in the published schedules shift_instances field.
-	// if @node_selector is set, then only instances belonging to the origin of @node_selector and its children node will be returned, otherwise all matching shift instances will be included.
 	// if @include_shift_template is true, any returned shift instances will have their orginating shift template returned in their origin_shift_template field.
 	// if @include_shift_segments is true, any returned shift instances will have their shift_segments field set, otherwise the field will be left nil.
 	// if @include_scheduling_activity is true, any returned shift segments will have their scheduling_activity field set, otherwise the field will be left nil.
@@ -5009,7 +5016,6 @@ type WFMServer interface {
 	// Gets the draft schedule with @draft_schedule_sid for the corresponding @datetime_range for the org sending the request.
 	// The @datetime_range field is optional. If not set, the draft schedule will be obtained with it's default range from it's start to end time.
 	// if @include_shift_instances is true, the shift instances associated within @datetime_range for the draft schedule will be returned in the draft schedules shift_instances field.
-	// if @node_selector is set then only instances belonging to the origin of @node_selector and its children node will be returned, otherwise all matching shift instances will be included.
 	// @node_selector must be for a node that belongs to the same schedule scenario as @draft_schedule_sid.
 	// if @include_shift_template is true, any returned shift instances will have their orginating shift template returned in their origin_shift_template field.
 	// if @include_shift_segments is true, any returned shift instances will have their shift_segments field set, otherwise the field will be left nil.
@@ -5609,6 +5615,12 @@ type WFMServer interface {
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when creating the unassigned agent or updating the shifts.
 	RemoveAgentFromSchedule(context.Context, *RemoveAgentFromScheduleRequest) (*RemoveAgentFromScheduleResponse, error)
+	// A hello world endpoint to test the WFM Adherence App.
+	// Returns a string with a hello world message.
+	// Required permissions:
+	//
+	//	PERMISSION_WFM_ADHERENCE_ADMIN, PERMISSION_WFM_ADHERENCE_MANAGER, or PERMISSION_WFM_ADHERENCE_MONITOR
+	HelloWorldWFMAdherence(context.Context, *HelloWorldWFMAdherenceRequest) (*HelloWorldWFMAdherenceResponse, error)
 	mustEmbedUnimplementedWFMServer()
 }
 
@@ -6104,6 +6116,9 @@ func (UnimplementedWFMServer) ReplaceAgentOnScheduleV1(context.Context, *Replace
 }
 func (UnimplementedWFMServer) RemoveAgentFromSchedule(context.Context, *RemoveAgentFromScheduleRequest) (*RemoveAgentFromScheduleResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RemoveAgentFromSchedule not implemented")
+}
+func (UnimplementedWFMServer) HelloWorldWFMAdherence(context.Context, *HelloWorldWFMAdherenceRequest) (*HelloWorldWFMAdherenceResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HelloWorldWFMAdherence not implemented")
 }
 func (UnimplementedWFMServer) mustEmbedUnimplementedWFMServer() {}
 
@@ -9070,6 +9085,24 @@ func _WFM_RemoveAgentFromSchedule_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_HelloWorldWFMAdherence_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HelloWorldWFMAdherenceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).HelloWorldWFMAdherence(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_HelloWorldWFMAdherence_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).HelloWorldWFMAdherence(ctx, req.(*HelloWorldWFMAdherenceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WFM_ServiceDesc is the grpc.ServiceDesc for WFM service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -9704,6 +9737,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RemoveAgentFromSchedule",
 			Handler:    _WFM_RemoveAgentFromSchedule_Handler,
+		},
+		{
+			MethodName: "HelloWorldWFMAdherence",
+			Handler:    _WFM_HelloWorldWFMAdherence_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
