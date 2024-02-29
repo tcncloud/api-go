@@ -1035,7 +1035,6 @@ type WFMClient interface {
 	// The @client_node_sid of the new entity will be returned in the response.
 	// The @schedule_scenario_sid must match the scenario of the parent call center node.
 	// The @member fields will be ignored since those cannot be created by this method and must be created by their respective create methods.
-	// The @origin_sid must be set to nil, since this method can only make an original node.
 	// Required permissions:
 	//
 	//	NONE
@@ -1062,7 +1061,6 @@ type WFMClient interface {
 	// The @location_node_sid of the new entity will be returned in the response.
 	// The @schedule_scenario_sid must match the scenario of the parent client node.
 	// The @member fields will be ignored since those cannot be created by this method and must be created by their respective create methods.
-	// The @origin_sid must be set to nil, since this method can only make an original node.
 	// Required permissions:
 	//
 	//	NONE
@@ -1089,7 +1087,6 @@ type WFMClient interface {
 	// The @program_node_sid of the new entity will be returned in the response.
 	// The @schedule_scenario_sid must match the scenario of the parent location node.
 	// The @member fields will be ignored since those cannot be created by this method and must be created by their respective create methods.
-	// The @origin_sid must be set to nil, since this method can only make an original node.
 	// Required permissions:
 	//
 	//	NONE
@@ -1705,7 +1702,6 @@ type WFMClient interface {
 	// Gets the published schedule for the corresponding @datetime_range for the org sending the request.
 	// Will create a published schedule if it does not exist already for the org sending the request.
 	// if @include_shift_instances is true, the shift instances associated within @datetime_range for the published schedule will be returned in the published schedules shift_instances field.
-	// if @node_selector is set, then only instances belonging to the origin of @node_selector and its children node will be returned, otherwise all matching shift instances will be included.
 	// if @include_shift_template is true, any returned shift instances will have their orginating shift template returned in their origin_shift_template field.
 	// if @include_shift_segments is true, any returned shift instances will have their shift_segments field set, otherwise the field will be left nil.
 	// if @include_scheduling_activity is true, any returned shift segments will have their scheduling_activity field set, otherwise the field will be left nil.
@@ -1797,7 +1793,6 @@ type WFMClient interface {
 	// Gets the draft schedule with @draft_schedule_sid for the corresponding @datetime_range for the org sending the request.
 	// The @datetime_range field is optional. If not set, the draft schedule will be obtained with it's default range from it's start to end time.
 	// if @include_shift_instances is true, the shift instances associated within @datetime_range for the draft schedule will be returned in the draft schedules shift_instances field.
-	// if @node_selector is set then only instances belonging to the origin of @node_selector and its children node will be returned, otherwise all matching shift instances will be included.
 	// @node_selector must be for a node that belongs to the same schedule scenario as @draft_schedule_sid.
 	// if @include_shift_template is true, any returned shift instances will have their orginating shift template returned in their origin_shift_template field.
 	// if @include_shift_segments is true, any returned shift instances will have their shift_segments field set, otherwise the field will be left nil.
@@ -4787,7 +4782,6 @@ type WFMHandler interface {
 	// The @client_node_sid of the new entity will be returned in the response.
 	// The @schedule_scenario_sid must match the scenario of the parent call center node.
 	// The @member fields will be ignored since those cannot be created by this method and must be created by their respective create methods.
-	// The @origin_sid must be set to nil, since this method can only make an original node.
 	// Required permissions:
 	//
 	//	NONE
@@ -4814,7 +4808,6 @@ type WFMHandler interface {
 	// The @location_node_sid of the new entity will be returned in the response.
 	// The @schedule_scenario_sid must match the scenario of the parent client node.
 	// The @member fields will be ignored since those cannot be created by this method and must be created by their respective create methods.
-	// The @origin_sid must be set to nil, since this method can only make an original node.
 	// Required permissions:
 	//
 	//	NONE
@@ -4841,7 +4834,6 @@ type WFMHandler interface {
 	// The @program_node_sid of the new entity will be returned in the response.
 	// The @schedule_scenario_sid must match the scenario of the parent location node.
 	// The @member fields will be ignored since those cannot be created by this method and must be created by their respective create methods.
-	// The @origin_sid must be set to nil, since this method can only make an original node.
 	// Required permissions:
 	//
 	//	NONE
@@ -5457,7 +5449,6 @@ type WFMHandler interface {
 	// Gets the published schedule for the corresponding @datetime_range for the org sending the request.
 	// Will create a published schedule if it does not exist already for the org sending the request.
 	// if @include_shift_instances is true, the shift instances associated within @datetime_range for the published schedule will be returned in the published schedules shift_instances field.
-	// if @node_selector is set, then only instances belonging to the origin of @node_selector and its children node will be returned, otherwise all matching shift instances will be included.
 	// if @include_shift_template is true, any returned shift instances will have their orginating shift template returned in their origin_shift_template field.
 	// if @include_shift_segments is true, any returned shift instances will have their shift_segments field set, otherwise the field will be left nil.
 	// if @include_scheduling_activity is true, any returned shift segments will have their scheduling_activity field set, otherwise the field will be left nil.
@@ -5549,7 +5540,6 @@ type WFMHandler interface {
 	// Gets the draft schedule with @draft_schedule_sid for the corresponding @datetime_range for the org sending the request.
 	// The @datetime_range field is optional. If not set, the draft schedule will be obtained with it's default range from it's start to end time.
 	// if @include_shift_instances is true, the shift instances associated within @datetime_range for the draft schedule will be returned in the draft schedules shift_instances field.
-	// if @node_selector is set then only instances belonging to the origin of @node_selector and its children node will be returned, otherwise all matching shift instances will be included.
 	// @node_selector must be for a node that belongs to the same schedule scenario as @draft_schedule_sid.
 	// if @include_shift_template is true, any returned shift instances will have their orginating shift template returned in their origin_shift_template field.
 	// if @include_shift_segments is true, any returned shift instances will have their shift_segments field set, otherwise the field will be left nil.
