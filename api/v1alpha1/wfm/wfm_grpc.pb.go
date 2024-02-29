@@ -196,6 +196,7 @@ const (
 	WFM_ReplaceAgentOnSchedule_FullMethodName                        = "/api.v1alpha1.wfm.WFM/ReplaceAgentOnSchedule"
 	WFM_ReplaceAgentOnScheduleV1_FullMethodName                      = "/api.v1alpha1.wfm.WFM/ReplaceAgentOnScheduleV1"
 	WFM_RemoveAgentFromSchedule_FullMethodName                       = "/api.v1alpha1.wfm.WFM/RemoveAgentFromSchedule"
+	WFM_HelloWorldWFMAdherence_FullMethodName                        = "/api.v1alpha1.wfm.WFM/HelloWorldWFMAdherence"
 )
 
 // WFMClient is the client API for WFM service.
@@ -2093,6 +2094,12 @@ type WFMClient interface {
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when creating the unassigned agent or updating the shifts.
 	RemoveAgentFromSchedule(ctx context.Context, in *RemoveAgentFromScheduleRequest, opts ...grpc.CallOption) (*RemoveAgentFromScheduleResponse, error)
+	// A hello world endpoint to test the WFM Adherence App.
+	// Returns a string with a hello world message.
+	// Required permissions:
+	//
+	//	PERMISSION_WFM_ADHERENCE_ADMIN, PERMISSION_WFM_ADHERENCE_MANAGER, or PERMISSION_WFM_ADHERENCE_MONITOR
+	HelloWorldWFMAdherence(ctx context.Context, in *HelloWorldWFMAdherenceRequest, opts ...grpc.CallOption) (*HelloWorldWFMAdherenceResponse, error)
 }
 
 type wFMClient struct {
@@ -3708,6 +3715,15 @@ func (c *wFMClient) ReplaceAgentOnScheduleV1(ctx context.Context, in *ReplaceAge
 func (c *wFMClient) RemoveAgentFromSchedule(ctx context.Context, in *RemoveAgentFromScheduleRequest, opts ...grpc.CallOption) (*RemoveAgentFromScheduleResponse, error) {
 	out := new(RemoveAgentFromScheduleResponse)
 	err := c.cc.Invoke(ctx, WFM_RemoveAgentFromSchedule_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) HelloWorldWFMAdherence(ctx context.Context, in *HelloWorldWFMAdherenceRequest, opts ...grpc.CallOption) (*HelloWorldWFMAdherenceResponse, error) {
+	out := new(HelloWorldWFMAdherenceResponse)
+	err := c.cc.Invoke(ctx, WFM_HelloWorldWFMAdherence_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -5609,6 +5625,12 @@ type WFMServer interface {
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when creating the unassigned agent or updating the shifts.
 	RemoveAgentFromSchedule(context.Context, *RemoveAgentFromScheduleRequest) (*RemoveAgentFromScheduleResponse, error)
+	// A hello world endpoint to test the WFM Adherence App.
+	// Returns a string with a hello world message.
+	// Required permissions:
+	//
+	//	PERMISSION_WFM_ADHERENCE_ADMIN, PERMISSION_WFM_ADHERENCE_MANAGER, or PERMISSION_WFM_ADHERENCE_MONITOR
+	HelloWorldWFMAdherence(context.Context, *HelloWorldWFMAdherenceRequest) (*HelloWorldWFMAdherenceResponse, error)
 	mustEmbedUnimplementedWFMServer()
 }
 
@@ -6104,6 +6126,9 @@ func (UnimplementedWFMServer) ReplaceAgentOnScheduleV1(context.Context, *Replace
 }
 func (UnimplementedWFMServer) RemoveAgentFromSchedule(context.Context, *RemoveAgentFromScheduleRequest) (*RemoveAgentFromScheduleResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RemoveAgentFromSchedule not implemented")
+}
+func (UnimplementedWFMServer) HelloWorldWFMAdherence(context.Context, *HelloWorldWFMAdherenceRequest) (*HelloWorldWFMAdherenceResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HelloWorldWFMAdherence not implemented")
 }
 func (UnimplementedWFMServer) mustEmbedUnimplementedWFMServer() {}
 
@@ -9070,6 +9095,24 @@ func _WFM_RemoveAgentFromSchedule_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_HelloWorldWFMAdherence_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HelloWorldWFMAdherenceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).HelloWorldWFMAdherence(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_HelloWorldWFMAdherence_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).HelloWorldWFMAdherence(ctx, req.(*HelloWorldWFMAdherenceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WFM_ServiceDesc is the grpc.ServiceDesc for WFM service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -9704,6 +9747,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RemoveAgentFromSchedule",
 			Handler:    _WFM_RemoveAgentFromSchedule_Handler,
+		},
+		{
+			MethodName: "HelloWorldWFMAdherence",
+			Handler:    _WFM_HelloWorldWFMAdherence_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
