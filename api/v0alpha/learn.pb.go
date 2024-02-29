@@ -2154,7 +2154,7 @@ type ReviewFileVersionsRes struct {
 	Content string `protobuf:"bytes,1,opt,name=content,proto3" json:"content,omitempty"`
 	// diff contents between both master and passed version
 	DiffContent string `protobuf:"bytes,2,opt,name=diff_content,json=diffContent,proto3" json:"diff_content,omitempty"`
-	// List containing image links from parsing both file s
+	// List containing image links from parsing both files
 	Images []*LearnImage `protobuf:"bytes,3,rep,name=images,proto3" json:"images,omitempty"`
 }
 
