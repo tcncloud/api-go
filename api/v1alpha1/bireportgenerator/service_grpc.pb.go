@@ -24,7 +24,6 @@ const (
 	BIReportGeneratorService_UpdateReportJob_FullMethodName = "/api.v1alpha1.bireportgenerator.BIReportGeneratorService/UpdateReportJob"
 	BIReportGeneratorService_DeleteReportJob_FullMethodName = "/api.v1alpha1.bireportgenerator.BIReportGeneratorService/DeleteReportJob"
 	BIReportGeneratorService_GetReportJob_FullMethodName    = "/api.v1alpha1.bireportgenerator.BIReportGeneratorService/GetReportJob"
-	BIReportGeneratorService_GenerateReport_FullMethodName  = "/api.v1alpha1.bireportgenerator.BIReportGeneratorService/GenerateReport"
 )
 
 // BIReportGeneratorServiceClient is the client API for BIReportGeneratorService service.
@@ -41,7 +40,6 @@ type BIReportGeneratorServiceClient interface {
 	DeleteReportJob(ctx context.Context, in *DeleteReportJobRequest, opts ...grpc.CallOption) (*DeleteReportJobResponse, error)
 	// GetReportJob gets a report job.
 	GetReportJob(ctx context.Context, in *GetReportJobRequest, opts ...grpc.CallOption) (*GetReportJobResponse, error)
-	GenerateReport(ctx context.Context, in *GenerateReportRequest, opts ...grpc.CallOption) (*GenerateReportResponse, error)
 }
 
 type bIReportGeneratorServiceClient struct {
@@ -97,15 +95,6 @@ func (c *bIReportGeneratorServiceClient) GetReportJob(ctx context.Context, in *G
 	return out, nil
 }
 
-func (c *bIReportGeneratorServiceClient) GenerateReport(ctx context.Context, in *GenerateReportRequest, opts ...grpc.CallOption) (*GenerateReportResponse, error) {
-	out := new(GenerateReportResponse)
-	err := c.cc.Invoke(ctx, BIReportGeneratorService_GenerateReport_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // BIReportGeneratorServiceServer is the server API for BIReportGeneratorService service.
 // All implementations must embed UnimplementedBIReportGeneratorServiceServer
 // for forward compatibility
@@ -120,7 +109,6 @@ type BIReportGeneratorServiceServer interface {
 	DeleteReportJob(context.Context, *DeleteReportJobRequest) (*DeleteReportJobResponse, error)
 	// GetReportJob gets a report job.
 	GetReportJob(context.Context, *GetReportJobRequest) (*GetReportJobResponse, error)
-	GenerateReport(context.Context, *GenerateReportRequest) (*GenerateReportResponse, error)
 	mustEmbedUnimplementedBIReportGeneratorServiceServer()
 }
 
@@ -142,9 +130,6 @@ func (UnimplementedBIReportGeneratorServiceServer) DeleteReportJob(context.Conte
 }
 func (UnimplementedBIReportGeneratorServiceServer) GetReportJob(context.Context, *GetReportJobRequest) (*GetReportJobResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetReportJob not implemented")
-}
-func (UnimplementedBIReportGeneratorServiceServer) GenerateReport(context.Context, *GenerateReportRequest) (*GenerateReportResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GenerateReport not implemented")
 }
 func (UnimplementedBIReportGeneratorServiceServer) mustEmbedUnimplementedBIReportGeneratorServiceServer() {
 }
@@ -250,24 +235,6 @@ func _BIReportGeneratorService_GetReportJob_Handler(srv interface{}, ctx context
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BIReportGeneratorService_GenerateReport_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GenerateReportRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BIReportGeneratorServiceServer).GenerateReport(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: BIReportGeneratorService_GenerateReport_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BIReportGeneratorServiceServer).GenerateReport(ctx, req.(*GenerateReportRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // BIReportGeneratorService_ServiceDesc is the grpc.ServiceDesc for BIReportGeneratorService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -294,10 +261,6 @@ var BIReportGeneratorService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetReportJob",
 			Handler:    _BIReportGeneratorService_GetReportJob_Handler,
-		},
-		{
-			MethodName: "GenerateReport",
-			Handler:    _BIReportGeneratorService_GenerateReport_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
