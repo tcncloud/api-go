@@ -99,7 +99,7 @@ type LearnClient interface {
 	// stream search content results in learning pages by version
 	// we allow all the logged in agents/admins to view search content
 	ListSearchResultsByVersion(ctx context.Context, in *SearchContentByVersionReq, opts ...grpc.CallOption) (Learn_ListSearchResultsByVersionClient, error)
-	// return diff by comparing file contens in any version
+	// return diff by comparing file contens from any version
 	ReviewFileVersions(ctx context.Context, in *ReviewFileVersionsReq, opts ...grpc.CallOption) (*ReviewFileVersionsRes, error)
 }
 
@@ -373,7 +373,7 @@ type LearnServer interface {
 	// stream search content results in learning pages by version
 	// we allow all the logged in agents/admins to view search content
 	ListSearchResultsByVersion(*SearchContentByVersionReq, Learn_ListSearchResultsByVersionServer) error
-	// return diff by comparing file contens in any version
+	// return diff by comparing file contens from any version
 	ReviewFileVersions(context.Context, *ReviewFileVersionsReq) (*ReviewFileVersionsRes, error)
 	mustEmbedUnimplementedLearnServer()
 }

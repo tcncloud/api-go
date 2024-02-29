@@ -133,7 +133,7 @@ type LearnClient interface {
 	// stream search content results in learning pages by version
 	// we allow all the logged in agents/admins to view search content
 	ListSearchResultsByVersion(context.Context, *connect_go.Request[v0alpha.SearchContentByVersionReq]) (*connect_go.ServerStreamForClient[v0alpha.SearchRes], error)
-	// return diff by comparing file contens in any version
+	// return diff by comparing file contens from any version
 	ReviewFileVersions(context.Context, *connect_go.Request[v0alpha.ReviewFileVersionsReq]) (*connect_go.Response[v0alpha.ReviewFileVersionsRes], error)
 }
 
@@ -406,7 +406,7 @@ type LearnHandler interface {
 	// stream search content results in learning pages by version
 	// we allow all the logged in agents/admins to view search content
 	ListSearchResultsByVersion(context.Context, *connect_go.Request[v0alpha.SearchContentByVersionReq], *connect_go.ServerStream[v0alpha.SearchRes]) error
-	// return diff by comparing file contens in any version
+	// return diff by comparing file contens from any version
 	ReviewFileVersions(context.Context, *connect_go.Request[v0alpha.ReviewFileVersionsReq]) (*connect_go.Response[v0alpha.ReviewFileVersionsRes], error)
 }
 
