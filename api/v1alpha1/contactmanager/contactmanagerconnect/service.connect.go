@@ -42,6 +42,9 @@ const (
 	// ContactManagerGetEncContactEntryProcedure is the fully-qualified name of the ContactManager's
 	// GetEncContactEntry RPC.
 	ContactManagerGetEncContactEntryProcedure = "/api.v1alpha1.contactmanager.ContactManager/GetEncContactEntry"
+	// ContactManagerGetKYCEncContactEntryProcedure is the fully-qualified name of the ContactManager's
+	// GetKYCEncContactEntry RPC.
+	ContactManagerGetKYCEncContactEntryProcedure = "/api.v1alpha1.contactmanager.ContactManager/GetKYCEncContactEntry"
 )
 
 // ContactManagerClient is a client for the api.v1alpha1.contactmanager.ContactManager service.
@@ -49,6 +52,7 @@ type ContactManagerClient interface {
 	GetContactList(context.Context, *connect_go.Request[contactmanager.GetContactListRequest]) (*connect_go.Response[contactmanager.GetContactListResponse], error)
 	ListContactEntryList(context.Context, *connect_go.Request[contactmanager.ListContactEntryListRequest]) (*connect_go.Response[contactmanager.ListContactEntryListResponse], error)
 	GetEncContactEntry(context.Context, *connect_go.Request[contactmanager.GetEncContactEntryRequest]) (*connect_go.Response[contactmanager.GetEncContactEntryResponse], error)
+	GetKYCEncContactEntry(context.Context, *connect_go.Request[contactmanager.GetKYCEncContactEntryRequest]) (*connect_go.Response[contactmanager.GetKYCEncContactEntryResponse], error)
 }
 
 // NewContactManagerClient constructs a client for the api.v1alpha1.contactmanager.ContactManager
@@ -76,14 +80,20 @@ func NewContactManagerClient(httpClient connect_go.HTTPClient, baseURL string, o
 			baseURL+ContactManagerGetEncContactEntryProcedure,
 			opts...,
 		),
+		getKYCEncContactEntry: connect_go.NewClient[contactmanager.GetKYCEncContactEntryRequest, contactmanager.GetKYCEncContactEntryResponse](
+			httpClient,
+			baseURL+ContactManagerGetKYCEncContactEntryProcedure,
+			opts...,
+		),
 	}
 }
 
 // contactManagerClient implements ContactManagerClient.
 type contactManagerClient struct {
-	getContactList       *connect_go.Client[contactmanager.GetContactListRequest, contactmanager.GetContactListResponse]
-	listContactEntryList *connect_go.Client[contactmanager.ListContactEntryListRequest, contactmanager.ListContactEntryListResponse]
-	getEncContactEntry   *connect_go.Client[contactmanager.GetEncContactEntryRequest, contactmanager.GetEncContactEntryResponse]
+	getContactList        *connect_go.Client[contactmanager.GetContactListRequest, contactmanager.GetContactListResponse]
+	listContactEntryList  *connect_go.Client[contactmanager.ListContactEntryListRequest, contactmanager.ListContactEntryListResponse]
+	getEncContactEntry    *connect_go.Client[contactmanager.GetEncContactEntryRequest, contactmanager.GetEncContactEntryResponse]
+	getKYCEncContactEntry *connect_go.Client[contactmanager.GetKYCEncContactEntryRequest, contactmanager.GetKYCEncContactEntryResponse]
 }
 
 // GetContactList calls api.v1alpha1.contactmanager.ContactManager.GetContactList.
@@ -101,12 +111,18 @@ func (c *contactManagerClient) GetEncContactEntry(ctx context.Context, req *conn
 	return c.getEncContactEntry.CallUnary(ctx, req)
 }
 
+// GetKYCEncContactEntry calls api.v1alpha1.contactmanager.ContactManager.GetKYCEncContactEntry.
+func (c *contactManagerClient) GetKYCEncContactEntry(ctx context.Context, req *connect_go.Request[contactmanager.GetKYCEncContactEntryRequest]) (*connect_go.Response[contactmanager.GetKYCEncContactEntryResponse], error) {
+	return c.getKYCEncContactEntry.CallUnary(ctx, req)
+}
+
 // ContactManagerHandler is an implementation of the api.v1alpha1.contactmanager.ContactManager
 // service.
 type ContactManagerHandler interface {
 	GetContactList(context.Context, *connect_go.Request[contactmanager.GetContactListRequest]) (*connect_go.Response[contactmanager.GetContactListResponse], error)
 	ListContactEntryList(context.Context, *connect_go.Request[contactmanager.ListContactEntryListRequest]) (*connect_go.Response[contactmanager.ListContactEntryListResponse], error)
 	GetEncContactEntry(context.Context, *connect_go.Request[contactmanager.GetEncContactEntryRequest]) (*connect_go.Response[contactmanager.GetEncContactEntryResponse], error)
+	GetKYCEncContactEntry(context.Context, *connect_go.Request[contactmanager.GetKYCEncContactEntryRequest]) (*connect_go.Response[contactmanager.GetKYCEncContactEntryResponse], error)
 }
 
 // NewContactManagerHandler builds an HTTP handler from the service implementation. It returns the
@@ -130,6 +146,11 @@ func NewContactManagerHandler(svc ContactManagerHandler, opts ...connect_go.Hand
 		svc.GetEncContactEntry,
 		opts...,
 	)
+	contactManagerGetKYCEncContactEntryHandler := connect_go.NewUnaryHandler(
+		ContactManagerGetKYCEncContactEntryProcedure,
+		svc.GetKYCEncContactEntry,
+		opts...,
+	)
 	return "/api.v1alpha1.contactmanager.ContactManager/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case ContactManagerGetContactListProcedure:
@@ -138,6 +159,8 @@ func NewContactManagerHandler(svc ContactManagerHandler, opts ...connect_go.Hand
 			contactManagerListContactEntryListHandler.ServeHTTP(w, r)
 		case ContactManagerGetEncContactEntryProcedure:
 			contactManagerGetEncContactEntryHandler.ServeHTTP(w, r)
+		case ContactManagerGetKYCEncContactEntryProcedure:
+			contactManagerGetKYCEncContactEntryHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -157,4 +180,8 @@ func (UnimplementedContactManagerHandler) ListContactEntryList(context.Context, 
 
 func (UnimplementedContactManagerHandler) GetEncContactEntry(context.Context, *connect_go.Request[contactmanager.GetEncContactEntryRequest]) (*connect_go.Response[contactmanager.GetEncContactEntryResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.contactmanager.ContactManager.GetEncContactEntry is not implemented"))
+}
+
+func (UnimplementedContactManagerHandler) GetKYCEncContactEntry(context.Context, *connect_go.Request[contactmanager.GetKYCEncContactEntryRequest]) (*connect_go.Response[contactmanager.GetKYCEncContactEntryResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.contactmanager.ContactManager.GetKYCEncContactEntry is not implemented"))
 }

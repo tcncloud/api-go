@@ -19,9 +19,10 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	ContactManager_GetContactList_FullMethodName       = "/api.v1alpha1.contactmanager.ContactManager/GetContactList"
-	ContactManager_ListContactEntryList_FullMethodName = "/api.v1alpha1.contactmanager.ContactManager/ListContactEntryList"
-	ContactManager_GetEncContactEntry_FullMethodName   = "/api.v1alpha1.contactmanager.ContactManager/GetEncContactEntry"
+	ContactManager_GetContactList_FullMethodName        = "/api.v1alpha1.contactmanager.ContactManager/GetContactList"
+	ContactManager_ListContactEntryList_FullMethodName  = "/api.v1alpha1.contactmanager.ContactManager/ListContactEntryList"
+	ContactManager_GetEncContactEntry_FullMethodName    = "/api.v1alpha1.contactmanager.ContactManager/GetEncContactEntry"
+	ContactManager_GetKYCEncContactEntry_FullMethodName = "/api.v1alpha1.contactmanager.ContactManager/GetKYCEncContactEntry"
 )
 
 // ContactManagerClient is the client API for ContactManager service.
@@ -31,6 +32,7 @@ type ContactManagerClient interface {
 	GetContactList(ctx context.Context, in *GetContactListRequest, opts ...grpc.CallOption) (*GetContactListResponse, error)
 	ListContactEntryList(ctx context.Context, in *ListContactEntryListRequest, opts ...grpc.CallOption) (*ListContactEntryListResponse, error)
 	GetEncContactEntry(ctx context.Context, in *GetEncContactEntryRequest, opts ...grpc.CallOption) (*GetEncContactEntryResponse, error)
+	GetKYCEncContactEntry(ctx context.Context, in *GetKYCEncContactEntryRequest, opts ...grpc.CallOption) (*GetKYCEncContactEntryResponse, error)
 }
 
 type contactManagerClient struct {
@@ -68,6 +70,15 @@ func (c *contactManagerClient) GetEncContactEntry(ctx context.Context, in *GetEn
 	return out, nil
 }
 
+func (c *contactManagerClient) GetKYCEncContactEntry(ctx context.Context, in *GetKYCEncContactEntryRequest, opts ...grpc.CallOption) (*GetKYCEncContactEntryResponse, error) {
+	out := new(GetKYCEncContactEntryResponse)
+	err := c.cc.Invoke(ctx, ContactManager_GetKYCEncContactEntry_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ContactManagerServer is the server API for ContactManager service.
 // All implementations must embed UnimplementedContactManagerServer
 // for forward compatibility
@@ -75,6 +86,7 @@ type ContactManagerServer interface {
 	GetContactList(context.Context, *GetContactListRequest) (*GetContactListResponse, error)
 	ListContactEntryList(context.Context, *ListContactEntryListRequest) (*ListContactEntryListResponse, error)
 	GetEncContactEntry(context.Context, *GetEncContactEntryRequest) (*GetEncContactEntryResponse, error)
+	GetKYCEncContactEntry(context.Context, *GetKYCEncContactEntryRequest) (*GetKYCEncContactEntryResponse, error)
 	mustEmbedUnimplementedContactManagerServer()
 }
 
@@ -90,6 +102,9 @@ func (UnimplementedContactManagerServer) ListContactEntryList(context.Context, *
 }
 func (UnimplementedContactManagerServer) GetEncContactEntry(context.Context, *GetEncContactEntryRequest) (*GetEncContactEntryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetEncContactEntry not implemented")
+}
+func (UnimplementedContactManagerServer) GetKYCEncContactEntry(context.Context, *GetKYCEncContactEntryRequest) (*GetKYCEncContactEntryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetKYCEncContactEntry not implemented")
 }
 func (UnimplementedContactManagerServer) mustEmbedUnimplementedContactManagerServer() {}
 
@@ -158,6 +173,24 @@ func _ContactManager_GetEncContactEntry_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ContactManager_GetKYCEncContactEntry_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetKYCEncContactEntryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ContactManagerServer).GetKYCEncContactEntry(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ContactManager_GetKYCEncContactEntry_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ContactManagerServer).GetKYCEncContactEntry(ctx, req.(*GetKYCEncContactEntryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ContactManager_ServiceDesc is the grpc.ServiceDesc for ContactManager service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -176,6 +209,10 @@ var ContactManager_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetEncContactEntry",
 			Handler:    _ContactManager_GetEncContactEntry_Handler,
+		},
+		{
+			MethodName: "GetKYCEncContactEntry",
+			Handler:    _ContactManager_GetKYCEncContactEntry_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
