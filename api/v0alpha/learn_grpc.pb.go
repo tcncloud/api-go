@@ -102,7 +102,7 @@ type LearnClient interface {
 	ListSearchResultsByVersion(ctx context.Context, in *SearchContentByVersionReq, opts ...grpc.CallOption) (Learn_ListSearchResultsByVersionClient, error)
 	// return diff by comparing file contens from any version
 	ReviewFileVersions(ctx context.Context, in *ReviewFileVersionsReq, opts ...grpc.CallOption) (*ReviewFileVersionsRes, error)
-	// returns list of filenames that are different between any versions
+	// returns differences that are different between any version
 	ReviewVersion(ctx context.Context, in *ReviewVersionReq, opts ...grpc.CallOption) (*ReviewVersionRes, error)
 }
 
@@ -387,7 +387,7 @@ type LearnServer interface {
 	ListSearchResultsByVersion(*SearchContentByVersionReq, Learn_ListSearchResultsByVersionServer) error
 	// return diff by comparing file contens from any version
 	ReviewFileVersions(context.Context, *ReviewFileVersionsReq) (*ReviewFileVersionsRes, error)
-	// returns list of filenames that are different between any versions
+	// returns differences that are different between any version
 	ReviewVersion(context.Context, *ReviewVersionReq) (*ReviewVersionRes, error)
 	mustEmbedUnimplementedLearnServer()
 }

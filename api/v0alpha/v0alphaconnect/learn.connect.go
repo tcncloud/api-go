@@ -137,7 +137,7 @@ type LearnClient interface {
 	ListSearchResultsByVersion(context.Context, *connect_go.Request[v0alpha.SearchContentByVersionReq]) (*connect_go.ServerStreamForClient[v0alpha.SearchRes], error)
 	// return diff by comparing file contens from any version
 	ReviewFileVersions(context.Context, *connect_go.Request[v0alpha.ReviewFileVersionsReq]) (*connect_go.Response[v0alpha.ReviewFileVersionsRes], error)
-	// returns list of filenames that are different between any versions
+	// returns differences that are different between any version
 	ReviewVersion(context.Context, *connect_go.Request[v0alpha.ReviewVersionReq]) (*connect_go.Response[v0alpha.ReviewVersionRes], error)
 }
 
@@ -423,7 +423,7 @@ type LearnHandler interface {
 	ListSearchResultsByVersion(context.Context, *connect_go.Request[v0alpha.SearchContentByVersionReq], *connect_go.ServerStream[v0alpha.SearchRes]) error
 	// return diff by comparing file contens from any version
 	ReviewFileVersions(context.Context, *connect_go.Request[v0alpha.ReviewFileVersionsReq]) (*connect_go.Response[v0alpha.ReviewFileVersionsRes], error)
-	// returns list of filenames that are different between any versions
+	// returns differences that are different between any version
 	ReviewVersion(context.Context, *connect_go.Request[v0alpha.ReviewVersionReq]) (*connect_go.Response[v0alpha.ReviewVersionRes], error)
 }
 
