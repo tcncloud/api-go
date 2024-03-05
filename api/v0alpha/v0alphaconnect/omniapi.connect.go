@@ -225,6 +225,9 @@ const (
 	// OmniApiUpdateWhatsAppNumberProcedure is the fully-qualified name of the OmniApi's
 	// UpdateWhatsAppNumber RPC.
 	OmniApiUpdateWhatsAppNumberProcedure = "/api.v0alpha.OmniApi/UpdateWhatsAppNumber"
+	// OmniApiCreateManualTaskProcedure is the fully-qualified name of the OmniApi's CreateManualTask
+	// RPC.
+	OmniApiCreateManualTaskProcedure = "/api.v0alpha.OmniApi/CreateManualTask"
 )
 
 // OmniApiClient is a client for the api.v0alpha.OmniApi service.
@@ -549,6 +552,10 @@ type OmniApiClient interface {
 	CreateWhatsAppNumber(context.Context, *connect_go.Request[v0alpha.CreateWhatsAppNumberRequest]) (*connect_go.Response[v0alpha.CreateWhatsAppNumberResponse], error)
 	// Update whatsapp number for the client
 	UpdateWhatsAppNumber(context.Context, *connect_go.Request[v0alpha.UpdateWhatsAppNumberRequest]) (*connect_go.Response[v0alpha.UpdateWhatsAppNumberResponse], error)
+	// CreateManualTask - Creates a manual task.
+	// Required permissions:
+	// AGENT
+	CreateManualTask(context.Context, *connect_go.Request[v0alpha.CreateManualTaskReq]) (*connect_go.Response[v0alpha.CreateManualTaskRes], error)
 }
 
 // NewOmniApiClient constructs a client for the api.v0alpha.OmniApi service. By default, it uses the
@@ -921,6 +928,11 @@ func NewOmniApiClient(httpClient connect_go.HTTPClient, baseURL string, opts ...
 			baseURL+OmniApiUpdateWhatsAppNumberProcedure,
 			opts...,
 		),
+		createManualTask: connect_go.NewClient[v0alpha.CreateManualTaskReq, v0alpha.CreateManualTaskRes](
+			httpClient,
+			baseURL+OmniApiCreateManualTaskProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -998,6 +1010,7 @@ type omniApiClient struct {
 	listWhatsAppNumbers          *connect_go.Client[v0alpha.ListWhatsAppNumbersReq, v0alpha.ListWhatsAppNumbersRes]
 	createWhatsAppNumber         *connect_go.Client[v0alpha.CreateWhatsAppNumberRequest, v0alpha.CreateWhatsAppNumberResponse]
 	updateWhatsAppNumber         *connect_go.Client[v0alpha.UpdateWhatsAppNumberRequest, v0alpha.UpdateWhatsAppNumberResponse]
+	createManualTask             *connect_go.Client[v0alpha.CreateManualTaskReq, v0alpha.CreateManualTaskRes]
 }
 
 // ArchiveCampaign calls api.v0alpha.OmniApi.ArchiveCampaign.
@@ -1360,6 +1373,11 @@ func (c *omniApiClient) UpdateWhatsAppNumber(ctx context.Context, req *connect_g
 	return c.updateWhatsAppNumber.CallUnary(ctx, req)
 }
 
+// CreateManualTask calls api.v0alpha.OmniApi.CreateManualTask.
+func (c *omniApiClient) CreateManualTask(ctx context.Context, req *connect_go.Request[v0alpha.CreateManualTaskReq]) (*connect_go.Response[v0alpha.CreateManualTaskRes], error) {
+	return c.createManualTask.CallUnary(ctx, req)
+}
+
 // OmniApiHandler is an implementation of the api.v0alpha.OmniApi service.
 type OmniApiHandler interface {
 	// archive a campaign
@@ -1682,6 +1700,10 @@ type OmniApiHandler interface {
 	CreateWhatsAppNumber(context.Context, *connect_go.Request[v0alpha.CreateWhatsAppNumberRequest]) (*connect_go.Response[v0alpha.CreateWhatsAppNumberResponse], error)
 	// Update whatsapp number for the client
 	UpdateWhatsAppNumber(context.Context, *connect_go.Request[v0alpha.UpdateWhatsAppNumberRequest]) (*connect_go.Response[v0alpha.UpdateWhatsAppNumberResponse], error)
+	// CreateManualTask - Creates a manual task.
+	// Required permissions:
+	// AGENT
+	CreateManualTask(context.Context, *connect_go.Request[v0alpha.CreateManualTaskReq]) (*connect_go.Response[v0alpha.CreateManualTaskRes], error)
 }
 
 // NewOmniApiHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -2050,6 +2072,11 @@ func NewOmniApiHandler(svc OmniApiHandler, opts ...connect_go.HandlerOption) (st
 		svc.UpdateWhatsAppNumber,
 		opts...,
 	)
+	omniApiCreateManualTaskHandler := connect_go.NewUnaryHandler(
+		OmniApiCreateManualTaskProcedure,
+		svc.CreateManualTask,
+		opts...,
+	)
 	return "/api.v0alpha.OmniApi/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case OmniApiArchiveCampaignProcedure:
@@ -2196,6 +2223,8 @@ func NewOmniApiHandler(svc OmniApiHandler, opts ...connect_go.HandlerOption) (st
 			omniApiCreateWhatsAppNumberHandler.ServeHTTP(w, r)
 		case OmniApiUpdateWhatsAppNumberProcedure:
 			omniApiUpdateWhatsAppNumberHandler.ServeHTTP(w, r)
+		case OmniApiCreateManualTaskProcedure:
+			omniApiCreateManualTaskHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -2491,4 +2520,8 @@ func (UnimplementedOmniApiHandler) CreateWhatsAppNumber(context.Context, *connec
 
 func (UnimplementedOmniApiHandler) UpdateWhatsAppNumber(context.Context, *connect_go.Request[v0alpha.UpdateWhatsAppNumberRequest]) (*connect_go.Response[v0alpha.UpdateWhatsAppNumberResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.UpdateWhatsAppNumber is not implemented"))
+}
+
+func (UnimplementedOmniApiHandler) CreateManualTask(context.Context, *connect_go.Request[v0alpha.CreateManualTaskReq]) (*connect_go.Response[v0alpha.CreateManualTaskRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.CreateManualTask is not implemented"))
 }

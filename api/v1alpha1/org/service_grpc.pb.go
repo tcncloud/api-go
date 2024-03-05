@@ -157,6 +157,9 @@ const (
 	Org_CreateHuntGroupClientInfoDisplayTemplate_FullMethodName = "/api.v1alpha1.org.Org/CreateHuntGroupClientInfoDisplayTemplate"
 	Org_UpdateHuntGroupClientInfoDisplayTemplate_FullMethodName = "/api.v1alpha1.org.Org/UpdateHuntGroupClientInfoDisplayTemplate"
 	Org_DeleteHuntGroupClientInfoDisplayTemplate_FullMethodName = "/api.v1alpha1.org.Org/DeleteHuntGroupClientInfoDisplayTemplate"
+	Org_CopyHuntGroupClientInfoDisplayTemplate_FullMethodName   = "/api.v1alpha1.org.Org/CopyHuntGroupClientInfoDisplayTemplate"
+	Org_CreateCampaignClientInfoDisplayTemplate_FullMethodName  = "/api.v1alpha1.org.Org/CreateCampaignClientInfoDisplayTemplate"
+	Org_ListHuntGroupsWithClientInfoTemplateData_FullMethodName = "/api.v1alpha1.org.Org/ListHuntGroupsWithClientInfoTemplateData"
 	Org_ListAgentTriggers_FullMethodName                        = "/api.v1alpha1.org.Org/ListAgentTriggers"
 	Org_CopyAgentTrigger_FullMethodName                         = "/api.v1alpha1.org.Org/CopyAgentTrigger"
 	Org_UpdateAgentTriggers_FullMethodName                      = "/api.v1alpha1.org.Org/UpdateAgentTriggers"
@@ -216,6 +219,11 @@ const (
 	Org_EnableMyUserMfa_FullMethodName                          = "/api.v1alpha1.org.Org/EnableMyUserMfa"
 	Org_GetUserMfaInfo_FullMethodName                           = "/api.v1alpha1.org.Org/GetUserMfaInfo"
 	Org_GetMyUserMfaInfo_FullMethodName                         = "/api.v1alpha1.org.Org/GetMyUserMfaInfo"
+	Org_CreateBusinessHours_FullMethodName                      = "/api.v1alpha1.org.Org/CreateBusinessHours"
+	Org_UpdateBusinessHours_FullMethodName                      = "/api.v1alpha1.org.Org/UpdateBusinessHours"
+	Org_DeleteBusinessHours_FullMethodName                      = "/api.v1alpha1.org.Org/DeleteBusinessHours"
+	Org_ListBusinessHours_FullMethodName                        = "/api.v1alpha1.org.Org/ListBusinessHours"
+	Org_GetBusinessHours_FullMethodName                         = "/api.v1alpha1.org.Org/GetBusinessHours"
 )
 
 // OrgClient is the client API for Org service.
@@ -529,6 +537,16 @@ type OrgClient interface {
 	UpdateHuntGroupClientInfoDisplayTemplate(ctx context.Context, in *UpdateHuntGroupClientInfoDisplayTemplateRequest, opts ...grpc.CallOption) (*UpdateHuntGroupClientInfoDisplayTemplateResponse, error)
 	// DeleteHuntGroupClientInfoDisplayTemplate deletes a client info display template for a given hunt group.
 	DeleteHuntGroupClientInfoDisplayTemplate(ctx context.Context, in *DeleteHuntGroupClientInfoDisplayTemplateRequest, opts ...grpc.CallOption) (*DeleteHuntGroupClientInfoDisplayTemplateResponse, error)
+	// CopyHuntGroupClientInfoDisplayTemplate copies the client info display template from one hunt group to another.
+	// It will create a new template in the destination hunt group with the same settings as the source template if it doesn't already exist.
+	// Otherwise, it will update the existing template with the source template settings.
+	CopyHuntGroupClientInfoDisplayTemplate(ctx context.Context, in *CopyHuntGroupClientInfoDisplayTemplateRequest, opts ...grpc.CallOption) (*CopyHuntGroupClientInfoDisplayTemplateResponse, error)
+	// CreateCampaignClientInfoDisplayTemplate creates a new client info display template for a campaign
+	// with the same settings as the source template from a hunt group.
+	CreateCampaignClientInfoDisplayTemplate(ctx context.Context, in *CreateCampaignClientInfoDisplayTemplateRequest, opts ...grpc.CallOption) (*CreateCampaignClientInfoDisplayTemplateResponse, error)
+	// ListHuntGroupsWithClientInfoTemplateData lists the hunt groups in an organization
+	// with their client info display template data based on the filter.
+	ListHuntGroupsWithClientInfoTemplateData(ctx context.Context, in *ListHuntGroupsWithClientInfoTemplateDataRequest, opts ...grpc.CallOption) (*ListHuntGroupsWithClientInfoTemplateDataResponse, error)
 	// ListAgentTriggers returns a list of agent triggers for the given hunt group.
 	ListAgentTriggers(ctx context.Context, in *ListAgentTriggersRequest, opts ...grpc.CallOption) (*ListAgentTriggersResponse, error)
 	// CopyAgentTrigger copys an agent trigger to the given hunt group in the same org.
@@ -664,6 +682,16 @@ type OrgClient interface {
 	GetUserMfaInfo(ctx context.Context, in *GetUserMfaInfoRequest, opts ...grpc.CallOption) (*GetUserMfaInfoResponse, error)
 	// GetMyUserMfaInfo returns the mfa info for the current user.
 	GetMyUserMfaInfo(ctx context.Context, in *GetMyUserMfaInfoRequest, opts ...grpc.CallOption) (*GetMyUserMfaInfoResponse, error)
+	// CreateBusinessHours persists times businesses are available.
+	CreateBusinessHours(ctx context.Context, in *CreateBusinessHoursRequest, opts ...grpc.CallOption) (*CreateBusinessHoursResponse, error)
+	// UpdateBusinessHours persists changes to times businesses are available.
+	UpdateBusinessHours(ctx context.Context, in *UpdateBusinessHoursRequest, opts ...grpc.CallOption) (*UpdateBusinessHoursResponse, error)
+	// DeleteBusinessHours removes business hours.
+	DeleteBusinessHours(ctx context.Context, in *DeleteBusinessHoursRequest, opts ...grpc.CallOption) (*DeleteBusinessHoursResponse, error)
+	// ListBusinessHours returns all business hours for an Org.
+	ListBusinessHours(ctx context.Context, in *ListBusinessHoursRequest, opts ...grpc.CallOption) (*ListBusinessHoursResponse, error)
+	// GetBusinessHours returns the business hours for the ID.
+	GetBusinessHours(ctx context.Context, in *GetBusinessHoursRequest, opts ...grpc.CallOption) (*GetBusinessHoursResponse, error)
 }
 
 type orgClient struct {
@@ -2123,6 +2151,33 @@ func (c *orgClient) DeleteHuntGroupClientInfoDisplayTemplate(ctx context.Context
 	return out, nil
 }
 
+func (c *orgClient) CopyHuntGroupClientInfoDisplayTemplate(ctx context.Context, in *CopyHuntGroupClientInfoDisplayTemplateRequest, opts ...grpc.CallOption) (*CopyHuntGroupClientInfoDisplayTemplateResponse, error) {
+	out := new(CopyHuntGroupClientInfoDisplayTemplateResponse)
+	err := c.cc.Invoke(ctx, Org_CopyHuntGroupClientInfoDisplayTemplate_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) CreateCampaignClientInfoDisplayTemplate(ctx context.Context, in *CreateCampaignClientInfoDisplayTemplateRequest, opts ...grpc.CallOption) (*CreateCampaignClientInfoDisplayTemplateResponse, error) {
+	out := new(CreateCampaignClientInfoDisplayTemplateResponse)
+	err := c.cc.Invoke(ctx, Org_CreateCampaignClientInfoDisplayTemplate_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) ListHuntGroupsWithClientInfoTemplateData(ctx context.Context, in *ListHuntGroupsWithClientInfoTemplateDataRequest, opts ...grpc.CallOption) (*ListHuntGroupsWithClientInfoTemplateDataResponse, error) {
+	out := new(ListHuntGroupsWithClientInfoTemplateDataResponse)
+	err := c.cc.Invoke(ctx, Org_ListHuntGroupsWithClientInfoTemplateData_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *orgClient) ListAgentTriggers(ctx context.Context, in *ListAgentTriggersRequest, opts ...grpc.CallOption) (*ListAgentTriggersResponse, error) {
 	out := new(ListAgentTriggersResponse)
 	err := c.cc.Invoke(ctx, Org_ListAgentTriggers_FullMethodName, in, out, opts...)
@@ -2654,6 +2709,51 @@ func (c *orgClient) GetMyUserMfaInfo(ctx context.Context, in *GetMyUserMfaInfoRe
 	return out, nil
 }
 
+func (c *orgClient) CreateBusinessHours(ctx context.Context, in *CreateBusinessHoursRequest, opts ...grpc.CallOption) (*CreateBusinessHoursResponse, error) {
+	out := new(CreateBusinessHoursResponse)
+	err := c.cc.Invoke(ctx, Org_CreateBusinessHours_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) UpdateBusinessHours(ctx context.Context, in *UpdateBusinessHoursRequest, opts ...grpc.CallOption) (*UpdateBusinessHoursResponse, error) {
+	out := new(UpdateBusinessHoursResponse)
+	err := c.cc.Invoke(ctx, Org_UpdateBusinessHours_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) DeleteBusinessHours(ctx context.Context, in *DeleteBusinessHoursRequest, opts ...grpc.CallOption) (*DeleteBusinessHoursResponse, error) {
+	out := new(DeleteBusinessHoursResponse)
+	err := c.cc.Invoke(ctx, Org_DeleteBusinessHours_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) ListBusinessHours(ctx context.Context, in *ListBusinessHoursRequest, opts ...grpc.CallOption) (*ListBusinessHoursResponse, error) {
+	out := new(ListBusinessHoursResponse)
+	err := c.cc.Invoke(ctx, Org_ListBusinessHours_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) GetBusinessHours(ctx context.Context, in *GetBusinessHoursRequest, opts ...grpc.CallOption) (*GetBusinessHoursResponse, error) {
+	out := new(GetBusinessHoursResponse)
+	err := c.cc.Invoke(ctx, Org_GetBusinessHours_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OrgServer is the server API for Org service.
 // All implementations must embed UnimplementedOrgServer
 // for forward compatibility
@@ -2965,6 +3065,16 @@ type OrgServer interface {
 	UpdateHuntGroupClientInfoDisplayTemplate(context.Context, *UpdateHuntGroupClientInfoDisplayTemplateRequest) (*UpdateHuntGroupClientInfoDisplayTemplateResponse, error)
 	// DeleteHuntGroupClientInfoDisplayTemplate deletes a client info display template for a given hunt group.
 	DeleteHuntGroupClientInfoDisplayTemplate(context.Context, *DeleteHuntGroupClientInfoDisplayTemplateRequest) (*DeleteHuntGroupClientInfoDisplayTemplateResponse, error)
+	// CopyHuntGroupClientInfoDisplayTemplate copies the client info display template from one hunt group to another.
+	// It will create a new template in the destination hunt group with the same settings as the source template if it doesn't already exist.
+	// Otherwise, it will update the existing template with the source template settings.
+	CopyHuntGroupClientInfoDisplayTemplate(context.Context, *CopyHuntGroupClientInfoDisplayTemplateRequest) (*CopyHuntGroupClientInfoDisplayTemplateResponse, error)
+	// CreateCampaignClientInfoDisplayTemplate creates a new client info display template for a campaign
+	// with the same settings as the source template from a hunt group.
+	CreateCampaignClientInfoDisplayTemplate(context.Context, *CreateCampaignClientInfoDisplayTemplateRequest) (*CreateCampaignClientInfoDisplayTemplateResponse, error)
+	// ListHuntGroupsWithClientInfoTemplateData lists the hunt groups in an organization
+	// with their client info display template data based on the filter.
+	ListHuntGroupsWithClientInfoTemplateData(context.Context, *ListHuntGroupsWithClientInfoTemplateDataRequest) (*ListHuntGroupsWithClientInfoTemplateDataResponse, error)
 	// ListAgentTriggers returns a list of agent triggers for the given hunt group.
 	ListAgentTriggers(context.Context, *ListAgentTriggersRequest) (*ListAgentTriggersResponse, error)
 	// CopyAgentTrigger copys an agent trigger to the given hunt group in the same org.
@@ -3100,6 +3210,16 @@ type OrgServer interface {
 	GetUserMfaInfo(context.Context, *GetUserMfaInfoRequest) (*GetUserMfaInfoResponse, error)
 	// GetMyUserMfaInfo returns the mfa info for the current user.
 	GetMyUserMfaInfo(context.Context, *GetMyUserMfaInfoRequest) (*GetMyUserMfaInfoResponse, error)
+	// CreateBusinessHours persists times businesses are available.
+	CreateBusinessHours(context.Context, *CreateBusinessHoursRequest) (*CreateBusinessHoursResponse, error)
+	// UpdateBusinessHours persists changes to times businesses are available.
+	UpdateBusinessHours(context.Context, *UpdateBusinessHoursRequest) (*UpdateBusinessHoursResponse, error)
+	// DeleteBusinessHours removes business hours.
+	DeleteBusinessHours(context.Context, *DeleteBusinessHoursRequest) (*DeleteBusinessHoursResponse, error)
+	// ListBusinessHours returns all business hours for an Org.
+	ListBusinessHours(context.Context, *ListBusinessHoursRequest) (*ListBusinessHoursResponse, error)
+	// GetBusinessHours returns the business hours for the ID.
+	GetBusinessHours(context.Context, *GetBusinessHoursRequest) (*GetBusinessHoursResponse, error)
 	mustEmbedUnimplementedOrgServer()
 }
 
@@ -3521,6 +3641,15 @@ func (UnimplementedOrgServer) UpdateHuntGroupClientInfoDisplayTemplate(context.C
 func (UnimplementedOrgServer) DeleteHuntGroupClientInfoDisplayTemplate(context.Context, *DeleteHuntGroupClientInfoDisplayTemplateRequest) (*DeleteHuntGroupClientInfoDisplayTemplateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteHuntGroupClientInfoDisplayTemplate not implemented")
 }
+func (UnimplementedOrgServer) CopyHuntGroupClientInfoDisplayTemplate(context.Context, *CopyHuntGroupClientInfoDisplayTemplateRequest) (*CopyHuntGroupClientInfoDisplayTemplateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CopyHuntGroupClientInfoDisplayTemplate not implemented")
+}
+func (UnimplementedOrgServer) CreateCampaignClientInfoDisplayTemplate(context.Context, *CreateCampaignClientInfoDisplayTemplateRequest) (*CreateCampaignClientInfoDisplayTemplateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateCampaignClientInfoDisplayTemplate not implemented")
+}
+func (UnimplementedOrgServer) ListHuntGroupsWithClientInfoTemplateData(context.Context, *ListHuntGroupsWithClientInfoTemplateDataRequest) (*ListHuntGroupsWithClientInfoTemplateDataResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListHuntGroupsWithClientInfoTemplateData not implemented")
+}
 func (UnimplementedOrgServer) ListAgentTriggers(context.Context, *ListAgentTriggersRequest) (*ListAgentTriggersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAgentTriggers not implemented")
 }
@@ -3697,6 +3826,21 @@ func (UnimplementedOrgServer) GetUserMfaInfo(context.Context, *GetUserMfaInfoReq
 }
 func (UnimplementedOrgServer) GetMyUserMfaInfo(context.Context, *GetMyUserMfaInfoRequest) (*GetMyUserMfaInfoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMyUserMfaInfo not implemented")
+}
+func (UnimplementedOrgServer) CreateBusinessHours(context.Context, *CreateBusinessHoursRequest) (*CreateBusinessHoursResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateBusinessHours not implemented")
+}
+func (UnimplementedOrgServer) UpdateBusinessHours(context.Context, *UpdateBusinessHoursRequest) (*UpdateBusinessHoursResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateBusinessHours not implemented")
+}
+func (UnimplementedOrgServer) DeleteBusinessHours(context.Context, *DeleteBusinessHoursRequest) (*DeleteBusinessHoursResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteBusinessHours not implemented")
+}
+func (UnimplementedOrgServer) ListBusinessHours(context.Context, *ListBusinessHoursRequest) (*ListBusinessHoursResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListBusinessHours not implemented")
+}
+func (UnimplementedOrgServer) GetBusinessHours(context.Context, *GetBusinessHoursRequest) (*GetBusinessHoursResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetBusinessHours not implemented")
 }
 func (UnimplementedOrgServer) mustEmbedUnimplementedOrgServer() {}
 
@@ -6222,6 +6366,60 @@ func _Org_DeleteHuntGroupClientInfoDisplayTemplate_Handler(srv interface{}, ctx 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Org_CopyHuntGroupClientInfoDisplayTemplate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CopyHuntGroupClientInfoDisplayTemplateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).CopyHuntGroupClientInfoDisplayTemplate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_CopyHuntGroupClientInfoDisplayTemplate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).CopyHuntGroupClientInfoDisplayTemplate(ctx, req.(*CopyHuntGroupClientInfoDisplayTemplateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_CreateCampaignClientInfoDisplayTemplate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateCampaignClientInfoDisplayTemplateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).CreateCampaignClientInfoDisplayTemplate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_CreateCampaignClientInfoDisplayTemplate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).CreateCampaignClientInfoDisplayTemplate(ctx, req.(*CreateCampaignClientInfoDisplayTemplateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_ListHuntGroupsWithClientInfoTemplateData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListHuntGroupsWithClientInfoTemplateDataRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).ListHuntGroupsWithClientInfoTemplateData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_ListHuntGroupsWithClientInfoTemplateData_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).ListHuntGroupsWithClientInfoTemplateData(ctx, req.(*ListHuntGroupsWithClientInfoTemplateDataRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Org_ListAgentTriggers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListAgentTriggersRequest)
 	if err := dec(in); err != nil {
@@ -7284,6 +7482,96 @@ func _Org_GetMyUserMfaInfo_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Org_CreateBusinessHours_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateBusinessHoursRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).CreateBusinessHours(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_CreateBusinessHours_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).CreateBusinessHours(ctx, req.(*CreateBusinessHoursRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_UpdateBusinessHours_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateBusinessHoursRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).UpdateBusinessHours(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_UpdateBusinessHours_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).UpdateBusinessHours(ctx, req.(*UpdateBusinessHoursRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_DeleteBusinessHours_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteBusinessHoursRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).DeleteBusinessHours(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_DeleteBusinessHours_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).DeleteBusinessHours(ctx, req.(*DeleteBusinessHoursRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_ListBusinessHours_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListBusinessHoursRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).ListBusinessHours(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_ListBusinessHours_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).ListBusinessHours(ctx, req.(*ListBusinessHoursRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_GetBusinessHours_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetBusinessHoursRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).GetBusinessHours(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_GetBusinessHours_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).GetBusinessHours(ctx, req.(*GetBusinessHoursRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Org_ServiceDesc is the grpc.ServiceDesc for Org service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -7808,6 +8096,18 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Org_DeleteHuntGroupClientInfoDisplayTemplate_Handler,
 		},
 		{
+			MethodName: "CopyHuntGroupClientInfoDisplayTemplate",
+			Handler:    _Org_CopyHuntGroupClientInfoDisplayTemplate_Handler,
+		},
+		{
+			MethodName: "CreateCampaignClientInfoDisplayTemplate",
+			Handler:    _Org_CreateCampaignClientInfoDisplayTemplate_Handler,
+		},
+		{
+			MethodName: "ListHuntGroupsWithClientInfoTemplateData",
+			Handler:    _Org_ListHuntGroupsWithClientInfoTemplateData_Handler,
+		},
+		{
 			MethodName: "ListAgentTriggers",
 			Handler:    _Org_ListAgentTriggers_Handler,
 		},
@@ -8042,6 +8342,26 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetMyUserMfaInfo",
 			Handler:    _Org_GetMyUserMfaInfo_Handler,
+		},
+		{
+			MethodName: "CreateBusinessHours",
+			Handler:    _Org_CreateBusinessHours_Handler,
+		},
+		{
+			MethodName: "UpdateBusinessHours",
+			Handler:    _Org_UpdateBusinessHours_Handler,
+		},
+		{
+			MethodName: "DeleteBusinessHours",
+			Handler:    _Org_DeleteBusinessHours_Handler,
+		},
+		{
+			MethodName: "ListBusinessHours",
+			Handler:    _Org_ListBusinessHours_Handler,
+		},
+		{
+			MethodName: "GetBusinessHours",
+			Handler:    _Org_GetBusinessHours_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
