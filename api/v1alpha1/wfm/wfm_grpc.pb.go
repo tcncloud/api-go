@@ -104,6 +104,8 @@ const (
 	WFM_ListCandidateWFMAgents_FullMethodName                        = "/api.v1alpha1.wfm.WFM/ListCandidateWFMAgents"
 	WFM_ListUngroupedWFMAgents_FullMethodName                        = "/api.v1alpha1.wfm.WFM/ListUngroupedWFMAgents"
 	WFM_ListWFMAgentSids_FullMethodName                              = "/api.v1alpha1.wfm.WFM/ListWFMAgentSids"
+	WFM_ListUnassignedWFMAgents_FullMethodName                       = "/api.v1alpha1.wfm.WFM/ListUnassignedWFMAgents"
+	WFM_RemoveAgentFromOrg_FullMethodName                            = "/api.v1alpha1.wfm.WFM/RemoveAgentFromOrg"
 	WFM_ListWFMAgentsAssociatedWithAgentGroup_FullMethodName         = "/api.v1alpha1.wfm.WFM/ListWFMAgentsAssociatedWithAgentGroup"
 	WFM_CreateWFMAgentMemberships_FullMethodName                     = "/api.v1alpha1.wfm.WFM/CreateWFMAgentMemberships"
 	WFM_DeleteWFMAgentMemberships_FullMethodName                     = "/api.v1alpha1.wfm.WFM/DeleteWFMAgentMemberships"
@@ -1016,6 +1018,25 @@ type WFMClient interface {
 	//   - grpc.Invalid: the @tcn_agent_sids are invalid.
 	//   - grpc.Internal: error occours while listing the wfm_agent_sids.
 	ListWFMAgentSids(ctx context.Context, in *ListWFMAgentSidsReq, opts ...grpc.CallOption) (*ListWFMAgentSidsRes, error)
+	// Lists all wfm agents that don't have a TCN agent assigned to them for the given @orgId.
+	// Member entities will not be returned.
+	// Required Permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Internal: error occurs when getting the wfm agents.
+	ListUnassignedWFMAgents(ctx context.Context, in *ListUnassignedWFMAgentsReq, opts ...grpc.CallOption) (*ListUnassignedWFMAgentsRes, error)
+	// Removes the the @wfm_agent_sid_to_remove from all future shifts for the org.
+	// If @replace_with_new_unassigned_agent is set to true, a new unassigned agent will be created and it will be assigned to the shifts and agent groups from @wfm_agent_sid_to_remove.
+	// If @replace_with_new_unassigned_agent is set to false, the future shifts will just be deleted.
+	// Required Permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Internal: error occurs when deleting the shifts, creating the new unassigned agent, or reassigning the shifts to that agent.
+	RemoveAgentFromOrg(ctx context.Context, in *RemoveAgentFromOrgRequest, opts ...grpc.CallOption) (*RemoveAgentFromOrgResponse, error)
 	// Lists the IDs of wfm agents that belong to the org sending the request which are associated with the given @agent_group_sid.
 	// Required permissions:
 	//
@@ -2887,6 +2908,24 @@ func (c *wFMClient) ListWFMAgentSids(ctx context.Context, in *ListWFMAgentSidsRe
 	return out, nil
 }
 
+func (c *wFMClient) ListUnassignedWFMAgents(ctx context.Context, in *ListUnassignedWFMAgentsReq, opts ...grpc.CallOption) (*ListUnassignedWFMAgentsRes, error) {
+	out := new(ListUnassignedWFMAgentsRes)
+	err := c.cc.Invoke(ctx, WFM_ListUnassignedWFMAgents_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) RemoveAgentFromOrg(ctx context.Context, in *RemoveAgentFromOrgRequest, opts ...grpc.CallOption) (*RemoveAgentFromOrgResponse, error) {
+	out := new(RemoveAgentFromOrgResponse)
+	err := c.cc.Invoke(ctx, WFM_RemoveAgentFromOrg_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) ListWFMAgentsAssociatedWithAgentGroup(ctx context.Context, in *ListWFMAgentsAssociatedWithAgentGroupReq, opts ...grpc.CallOption) (*ListWFMAgentsAssociatedWithAgentGroupRes, error) {
 	out := new(ListWFMAgentsAssociatedWithAgentGroupRes)
 	err := c.cc.Invoke(ctx, WFM_ListWFMAgentsAssociatedWithAgentGroup_FullMethodName, in, out, opts...)
@@ -4542,6 +4581,25 @@ type WFMServer interface {
 	//   - grpc.Invalid: the @tcn_agent_sids are invalid.
 	//   - grpc.Internal: error occours while listing the wfm_agent_sids.
 	ListWFMAgentSids(context.Context, *ListWFMAgentSidsReq) (*ListWFMAgentSidsRes, error)
+	// Lists all wfm agents that don't have a TCN agent assigned to them for the given @orgId.
+	// Member entities will not be returned.
+	// Required Permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Internal: error occurs when getting the wfm agents.
+	ListUnassignedWFMAgents(context.Context, *ListUnassignedWFMAgentsReq) (*ListUnassignedWFMAgentsRes, error)
+	// Removes the the @wfm_agent_sid_to_remove from all future shifts for the org.
+	// If @replace_with_new_unassigned_agent is set to true, a new unassigned agent will be created and it will be assigned to the shifts and agent groups from @wfm_agent_sid_to_remove.
+	// If @replace_with_new_unassigned_agent is set to false, the future shifts will just be deleted.
+	// Required Permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Internal: error occurs when deleting the shifts, creating the new unassigned agent, or reassigning the shifts to that agent.
+	RemoveAgentFromOrg(context.Context, *RemoveAgentFromOrgRequest) (*RemoveAgentFromOrgResponse, error)
 	// Lists the IDs of wfm agents that belong to the org sending the request which are associated with the given @agent_group_sid.
 	// Required permissions:
 	//
@@ -5840,6 +5898,12 @@ func (UnimplementedWFMServer) ListUngroupedWFMAgents(context.Context, *ListUngro
 }
 func (UnimplementedWFMServer) ListWFMAgentSids(context.Context, *ListWFMAgentSidsReq) (*ListWFMAgentSidsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListWFMAgentSids not implemented")
+}
+func (UnimplementedWFMServer) ListUnassignedWFMAgents(context.Context, *ListUnassignedWFMAgentsReq) (*ListUnassignedWFMAgentsRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListUnassignedWFMAgents not implemented")
+}
+func (UnimplementedWFMServer) RemoveAgentFromOrg(context.Context, *RemoveAgentFromOrgRequest) (*RemoveAgentFromOrgResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RemoveAgentFromOrg not implemented")
 }
 func (UnimplementedWFMServer) ListWFMAgentsAssociatedWithAgentGroup(context.Context, *ListWFMAgentsAssociatedWithAgentGroupReq) (*ListWFMAgentsAssociatedWithAgentGroupRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListWFMAgentsAssociatedWithAgentGroup not implemented")
@@ -7425,6 +7489,42 @@ func _WFM_ListWFMAgentSids_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WFMServer).ListWFMAgentSids(ctx, req.(*ListWFMAgentSidsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_ListUnassignedWFMAgents_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListUnassignedWFMAgentsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).ListUnassignedWFMAgents(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_ListUnassignedWFMAgents_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).ListUnassignedWFMAgents(ctx, req.(*ListUnassignedWFMAgentsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_RemoveAgentFromOrg_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RemoveAgentFromOrgRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).RemoveAgentFromOrg(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_RemoveAgentFromOrg_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).RemoveAgentFromOrg(ctx, req.(*RemoveAgentFromOrgRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -9369,6 +9469,14 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListWFMAgentSids",
 			Handler:    _WFM_ListWFMAgentSids_Handler,
+		},
+		{
+			MethodName: "ListUnassignedWFMAgents",
+			Handler:    _WFM_ListUnassignedWFMAgents_Handler,
+		},
+		{
+			MethodName: "RemoveAgentFromOrg",
+			Handler:    _WFM_RemoveAgentFromOrg_Handler,
 		},
 		{
 			MethodName: "ListWFMAgentsAssociatedWithAgentGroup",
