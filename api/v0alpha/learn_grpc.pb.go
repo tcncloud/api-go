@@ -52,6 +52,7 @@ const (
 	Learn_UpdateByVersion_FullMethodName            = "/api.v0alpha.Learn/UpdateByVersion"
 	Learn_ListSearchResultsByVersion_FullMethodName = "/api.v0alpha.Learn/ListSearchResultsByVersion"
 	Learn_ReviewFileVersions_FullMethodName         = "/api.v0alpha.Learn/ReviewFileVersions"
+	Learn_ReviewVersion_FullMethodName              = "/api.v0alpha.Learn/ReviewVersion"
 )
 
 // LearnClient is the client API for Learn service.
@@ -101,6 +102,8 @@ type LearnClient interface {
 	ListSearchResultsByVersion(ctx context.Context, in *SearchContentByVersionReq, opts ...grpc.CallOption) (Learn_ListSearchResultsByVersionClient, error)
 	// return diff by comparing file contens from any version
 	ReviewFileVersions(ctx context.Context, in *ReviewFileVersionsReq, opts ...grpc.CallOption) (*ReviewFileVersionsRes, error)
+	// returns list of file details after comparing different versions
+	ReviewVersion(ctx context.Context, in *ReviewVersionReq, opts ...grpc.CallOption) (*ReviewVersionRes, error)
 }
 
 type learnClient struct {
@@ -328,6 +331,15 @@ func (c *learnClient) ReviewFileVersions(ctx context.Context, in *ReviewFileVers
 	return out, nil
 }
 
+func (c *learnClient) ReviewVersion(ctx context.Context, in *ReviewVersionReq, opts ...grpc.CallOption) (*ReviewVersionRes, error) {
+	out := new(ReviewVersionRes)
+	err := c.cc.Invoke(ctx, Learn_ReviewVersion_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LearnServer is the server API for Learn service.
 // All implementations must embed UnimplementedLearnServer
 // for forward compatibility
@@ -375,6 +387,8 @@ type LearnServer interface {
 	ListSearchResultsByVersion(*SearchContentByVersionReq, Learn_ListSearchResultsByVersionServer) error
 	// return diff by comparing file contens from any version
 	ReviewFileVersions(context.Context, *ReviewFileVersionsReq) (*ReviewFileVersionsRes, error)
+	// returns list of file details after comparing different versions
+	ReviewVersion(context.Context, *ReviewVersionReq) (*ReviewVersionRes, error)
 	mustEmbedUnimplementedLearnServer()
 }
 
@@ -438,6 +452,9 @@ func (UnimplementedLearnServer) ListSearchResultsByVersion(*SearchContentByVersi
 }
 func (UnimplementedLearnServer) ReviewFileVersions(context.Context, *ReviewFileVersionsReq) (*ReviewFileVersionsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ReviewFileVersions not implemented")
+}
+func (UnimplementedLearnServer) ReviewVersion(context.Context, *ReviewVersionReq) (*ReviewVersionRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReviewVersion not implemented")
 }
 func (UnimplementedLearnServer) mustEmbedUnimplementedLearnServer() {}
 
@@ -800,6 +817,24 @@ func _Learn_ReviewFileVersions_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Learn_ReviewVersion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReviewVersionReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LearnServer).ReviewVersion(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Learn_ReviewVersion_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LearnServer).ReviewVersion(ctx, req.(*ReviewVersionReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Learn_ServiceDesc is the grpc.ServiceDesc for Learn service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -874,6 +909,10 @@ var Learn_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ReviewFileVersions",
 			Handler:    _Learn_ReviewFileVersions_Handler,
+		},
+		{
+			MethodName: "ReviewVersion",
+			Handler:    _Learn_ReviewVersion_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

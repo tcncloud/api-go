@@ -88,6 +88,8 @@ const (
 	// LearnReviewFileVersionsProcedure is the fully-qualified name of the Learn's ReviewFileVersions
 	// RPC.
 	LearnReviewFileVersionsProcedure = "/api.v0alpha.Learn/ReviewFileVersions"
+	// LearnReviewVersionProcedure is the fully-qualified name of the Learn's ReviewVersion RPC.
+	LearnReviewVersionProcedure = "/api.v0alpha.Learn/ReviewVersion"
 )
 
 // LearnClient is a client for the api.v0alpha.Learn service.
@@ -135,6 +137,8 @@ type LearnClient interface {
 	ListSearchResultsByVersion(context.Context, *connect_go.Request[v0alpha.SearchContentByVersionReq]) (*connect_go.ServerStreamForClient[v0alpha.SearchRes], error)
 	// return diff by comparing file contens from any version
 	ReviewFileVersions(context.Context, *connect_go.Request[v0alpha.ReviewFileVersionsReq]) (*connect_go.Response[v0alpha.ReviewFileVersionsRes], error)
+	// returns list of file details after comparing different versions
+	ReviewVersion(context.Context, *connect_go.Request[v0alpha.ReviewVersionReq]) (*connect_go.Response[v0alpha.ReviewVersionRes], error)
 }
 
 // NewLearnClient constructs a client for the api.v0alpha.Learn service. By default, it uses the
@@ -242,6 +246,11 @@ func NewLearnClient(httpClient connect_go.HTTPClient, baseURL string, opts ...co
 			baseURL+LearnReviewFileVersionsProcedure,
 			opts...,
 		),
+		reviewVersion: connect_go.NewClient[v0alpha.ReviewVersionReq, v0alpha.ReviewVersionRes](
+			httpClient,
+			baseURL+LearnReviewVersionProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -266,6 +275,7 @@ type learnClient struct {
 	updateByVersion            *connect_go.Client[v0alpha.UpdateByVersionReq, v0alpha.UpdateRes]
 	listSearchResultsByVersion *connect_go.Client[v0alpha.SearchContentByVersionReq, v0alpha.SearchRes]
 	reviewFileVersions         *connect_go.Client[v0alpha.ReviewFileVersionsReq, v0alpha.ReviewFileVersionsRes]
+	reviewVersion              *connect_go.Client[v0alpha.ReviewVersionReq, v0alpha.ReviewVersionRes]
 }
 
 // Exist calls api.v0alpha.Learn.Exist.
@@ -363,6 +373,11 @@ func (c *learnClient) ReviewFileVersions(ctx context.Context, req *connect_go.Re
 	return c.reviewFileVersions.CallUnary(ctx, req)
 }
 
+// ReviewVersion calls api.v0alpha.Learn.ReviewVersion.
+func (c *learnClient) ReviewVersion(ctx context.Context, req *connect_go.Request[v0alpha.ReviewVersionReq]) (*connect_go.Response[v0alpha.ReviewVersionRes], error) {
+	return c.reviewVersion.CallUnary(ctx, req)
+}
+
 // LearnHandler is an implementation of the api.v0alpha.Learn service.
 type LearnHandler interface {
 	// check if learning page already exists
@@ -408,6 +423,8 @@ type LearnHandler interface {
 	ListSearchResultsByVersion(context.Context, *connect_go.Request[v0alpha.SearchContentByVersionReq], *connect_go.ServerStream[v0alpha.SearchRes]) error
 	// return diff by comparing file contens from any version
 	ReviewFileVersions(context.Context, *connect_go.Request[v0alpha.ReviewFileVersionsReq]) (*connect_go.Response[v0alpha.ReviewFileVersionsRes], error)
+	// returns list of file details after comparing different versions
+	ReviewVersion(context.Context, *connect_go.Request[v0alpha.ReviewVersionReq]) (*connect_go.Response[v0alpha.ReviewVersionRes], error)
 }
 
 // NewLearnHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -511,6 +528,11 @@ func NewLearnHandler(svc LearnHandler, opts ...connect_go.HandlerOption) (string
 		svc.ReviewFileVersions,
 		opts...,
 	)
+	learnReviewVersionHandler := connect_go.NewUnaryHandler(
+		LearnReviewVersionProcedure,
+		svc.ReviewVersion,
+		opts...,
+	)
 	return "/api.v0alpha.Learn/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case LearnExistProcedure:
@@ -551,6 +573,8 @@ func NewLearnHandler(svc LearnHandler, opts ...connect_go.HandlerOption) (string
 			learnListSearchResultsByVersionHandler.ServeHTTP(w, r)
 		case LearnReviewFileVersionsProcedure:
 			learnReviewFileVersionsHandler.ServeHTTP(w, r)
+		case LearnReviewVersionProcedure:
+			learnReviewVersionHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -634,4 +658,8 @@ func (UnimplementedLearnHandler) ListSearchResultsByVersion(context.Context, *co
 
 func (UnimplementedLearnHandler) ReviewFileVersions(context.Context, *connect_go.Request[v0alpha.ReviewFileVersionsReq]) (*connect_go.Response[v0alpha.ReviewFileVersionsRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.ReviewFileVersions is not implemented"))
+}
+
+func (UnimplementedLearnHandler) ReviewVersion(context.Context, *connect_go.Request[v0alpha.ReviewVersionReq]) (*connect_go.Response[v0alpha.ReviewVersionRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.ReviewVersion is not implemented"))
 }
