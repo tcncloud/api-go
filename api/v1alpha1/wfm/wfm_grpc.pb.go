@@ -957,7 +957,7 @@ type WFMClient interface {
 	//   - grpc.NotFound: entry to be updated doesn't exist, or the @parent_entity has a different @schedule_scenario_sid than the agent group.
 	UpdateAgentGroup(ctx context.Context, in *UpdateAgentGroupReq, opts ...grpc.CallOption) (*UpdateAgentGroupRes, error)
 	// Creates an agent that is not assigned a tcn agent for the org sending the request.
-	// If @wfm_agent_sid_to_copy_agent_group_associations is not set, it will also copy that agent's agent group associations to the new agent.
+	// If @wfm_agent_sid_to_copy_agent_group_associations is set, it will also copy that agent's agent group associations to the new agent.
 	// Otherwise only the new agent will be created.
 	// Required permissions:
 	//
@@ -4541,7 +4541,7 @@ type WFMServer interface {
 	//   - grpc.NotFound: entry to be updated doesn't exist, or the @parent_entity has a different @schedule_scenario_sid than the agent group.
 	UpdateAgentGroup(context.Context, *UpdateAgentGroupReq) (*UpdateAgentGroupRes, error)
 	// Creates an agent that is not assigned a tcn agent for the org sending the request.
-	// If @wfm_agent_sid_to_copy_agent_group_associations is not set, it will also copy that agent's agent group associations to the new agent.
+	// If @wfm_agent_sid_to_copy_agent_group_associations is set, it will also copy that agent's agent group associations to the new agent.
 	// Otherwise only the new agent will be created.
 	// Required permissions:
 	//
