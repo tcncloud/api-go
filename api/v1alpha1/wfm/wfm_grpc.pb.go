@@ -1026,7 +1026,7 @@ type WFMClient interface {
 	//
 	// Errors:
 	//   - grpc.Internal: error occurs when getting the wfm agents.
-	ListUnassignedWFMAgents(ctx context.Context, in *ListUnassignedWFMAgentsReq, opts ...grpc.CallOption) (*ListUnassignedWFMAgentsRes, error)
+	ListUnassignedWFMAgents(ctx context.Context, in *ListUnassignedWFMAgentsRequest, opts ...grpc.CallOption) (*ListUnassignedWFMAgentsResponse, error)
 	// Removes the the @wfm_agent_sid_to_remove from all future shifts for the org.
 	// If @replace_with_new_unassigned_agent is set to true, a new unassigned agent will be created and it will be assigned to the shifts and agent groups from @wfm_agent_sid_to_remove.
 	// If @replace_with_new_unassigned_agent is set to false, the future shifts will just be deleted.
@@ -2908,8 +2908,8 @@ func (c *wFMClient) ListWFMAgentSids(ctx context.Context, in *ListWFMAgentSidsRe
 	return out, nil
 }
 
-func (c *wFMClient) ListUnassignedWFMAgents(ctx context.Context, in *ListUnassignedWFMAgentsReq, opts ...grpc.CallOption) (*ListUnassignedWFMAgentsRes, error) {
-	out := new(ListUnassignedWFMAgentsRes)
+func (c *wFMClient) ListUnassignedWFMAgents(ctx context.Context, in *ListUnassignedWFMAgentsRequest, opts ...grpc.CallOption) (*ListUnassignedWFMAgentsResponse, error) {
+	out := new(ListUnassignedWFMAgentsResponse)
 	err := c.cc.Invoke(ctx, WFM_ListUnassignedWFMAgents_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -4589,7 +4589,7 @@ type WFMServer interface {
 	//
 	// Errors:
 	//   - grpc.Internal: error occurs when getting the wfm agents.
-	ListUnassignedWFMAgents(context.Context, *ListUnassignedWFMAgentsReq) (*ListUnassignedWFMAgentsRes, error)
+	ListUnassignedWFMAgents(context.Context, *ListUnassignedWFMAgentsRequest) (*ListUnassignedWFMAgentsResponse, error)
 	// Removes the the @wfm_agent_sid_to_remove from all future shifts for the org.
 	// If @replace_with_new_unassigned_agent is set to true, a new unassigned agent will be created and it will be assigned to the shifts and agent groups from @wfm_agent_sid_to_remove.
 	// If @replace_with_new_unassigned_agent is set to false, the future shifts will just be deleted.
@@ -5899,7 +5899,7 @@ func (UnimplementedWFMServer) ListUngroupedWFMAgents(context.Context, *ListUngro
 func (UnimplementedWFMServer) ListWFMAgentSids(context.Context, *ListWFMAgentSidsReq) (*ListWFMAgentSidsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListWFMAgentSids not implemented")
 }
-func (UnimplementedWFMServer) ListUnassignedWFMAgents(context.Context, *ListUnassignedWFMAgentsReq) (*ListUnassignedWFMAgentsRes, error) {
+func (UnimplementedWFMServer) ListUnassignedWFMAgents(context.Context, *ListUnassignedWFMAgentsRequest) (*ListUnassignedWFMAgentsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListUnassignedWFMAgents not implemented")
 }
 func (UnimplementedWFMServer) RemoveAgentFromOrg(context.Context, *RemoveAgentFromOrgRequest) (*RemoveAgentFromOrgResponse, error) {
@@ -7494,7 +7494,7 @@ func _WFM_ListWFMAgentSids_Handler(srv interface{}, ctx context.Context, dec fun
 }
 
 func _WFM_ListUnassignedWFMAgents_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListUnassignedWFMAgentsReq)
+	in := new(ListUnassignedWFMAgentsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -7506,7 +7506,7 @@ func _WFM_ListUnassignedWFMAgents_Handler(srv interface{}, ctx context.Context, 
 		FullMethod: WFM_ListUnassignedWFMAgents_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WFMServer).ListUnassignedWFMAgents(ctx, req.(*ListUnassignedWFMAgentsReq))
+		return srv.(WFMServer).ListUnassignedWFMAgents(ctx, req.(*ListUnassignedWFMAgentsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

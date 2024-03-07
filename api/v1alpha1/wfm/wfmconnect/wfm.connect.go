@@ -1332,7 +1332,7 @@ type WFMClient interface {
 	//
 	// Errors:
 	//   - grpc.Internal: error occurs when getting the wfm agents.
-	ListUnassignedWFMAgents(context.Context, *connect_go.Request[wfm.ListUnassignedWFMAgentsReq]) (*connect_go.Response[wfm.ListUnassignedWFMAgentsRes], error)
+	ListUnassignedWFMAgents(context.Context, *connect_go.Request[wfm.ListUnassignedWFMAgentsRequest]) (*connect_go.Response[wfm.ListUnassignedWFMAgentsResponse], error)
 	// Removes the the @wfm_agent_sid_to_remove from all future shifts for the org.
 	// If @replace_with_new_unassigned_agent is set to true, a new unassigned agent will be created and it will be assigned to the shifts and agent groups from @wfm_agent_sid_to_remove.
 	// If @replace_with_new_unassigned_agent is set to false, the future shifts will just be deleted.
@@ -2790,7 +2790,7 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMListWFMAgentSidsProcedure,
 			opts...,
 		),
-		listUnassignedWFMAgents: connect_go.NewClient[wfm.ListUnassignedWFMAgentsReq, wfm.ListUnassignedWFMAgentsRes](
+		listUnassignedWFMAgents: connect_go.NewClient[wfm.ListUnassignedWFMAgentsRequest, wfm.ListUnassignedWFMAgentsResponse](
 			httpClient,
 			baseURL+WFMListUnassignedWFMAgentsProcedure,
 			opts...,
@@ -3341,7 +3341,7 @@ type wFMClient struct {
 	listCandidateWFMAgents                        *connect_go.Client[wfm.ListCandidateWFMAgentsReq, wfm.ListCandidateWFMAgentsRes]
 	listUngroupedWFMAgents                        *connect_go.Client[wfm.ListUngroupedWFMAgentsReq, wfm.ListUngroupedWFMAgentsRes]
 	listWFMAgentSids                              *connect_go.Client[wfm.ListWFMAgentSidsReq, wfm.ListWFMAgentSidsRes]
-	listUnassignedWFMAgents                       *connect_go.Client[wfm.ListUnassignedWFMAgentsReq, wfm.ListUnassignedWFMAgentsRes]
+	listUnassignedWFMAgents                       *connect_go.Client[wfm.ListUnassignedWFMAgentsRequest, wfm.ListUnassignedWFMAgentsResponse]
 	removeAgentFromOrg                            *connect_go.Client[wfm.RemoveAgentFromOrgRequest, wfm.RemoveAgentFromOrgResponse]
 	listWFMAgentsAssociatedWithAgentGroup         *connect_go.Client[wfm.ListWFMAgentsAssociatedWithAgentGroupReq, wfm.ListWFMAgentsAssociatedWithAgentGroupRes]
 	createWFMAgentMemberships                     *connect_go.Client[wfm.CreateWFMAgentMembershipsReq, wfm.CreateWFMAgentMembershipsRes]
@@ -3814,7 +3814,7 @@ func (c *wFMClient) ListWFMAgentSids(ctx context.Context, req *connect_go.Reques
 }
 
 // ListUnassignedWFMAgents calls api.v1alpha1.wfm.WFM.ListUnassignedWFMAgents.
-func (c *wFMClient) ListUnassignedWFMAgents(ctx context.Context, req *connect_go.Request[wfm.ListUnassignedWFMAgentsReq]) (*connect_go.Response[wfm.ListUnassignedWFMAgentsRes], error) {
+func (c *wFMClient) ListUnassignedWFMAgents(ctx context.Context, req *connect_go.Request[wfm.ListUnassignedWFMAgentsRequest]) (*connect_go.Response[wfm.ListUnassignedWFMAgentsResponse], error) {
 	return c.listUnassignedWFMAgents.CallUnary(ctx, req)
 }
 
@@ -5120,7 +5120,7 @@ type WFMHandler interface {
 	//
 	// Errors:
 	//   - grpc.Internal: error occurs when getting the wfm agents.
-	ListUnassignedWFMAgents(context.Context, *connect_go.Request[wfm.ListUnassignedWFMAgentsReq]) (*connect_go.Response[wfm.ListUnassignedWFMAgentsRes], error)
+	ListUnassignedWFMAgents(context.Context, *connect_go.Request[wfm.ListUnassignedWFMAgentsRequest]) (*connect_go.Response[wfm.ListUnassignedWFMAgentsResponse], error)
 	// Removes the the @wfm_agent_sid_to_remove from all future shifts for the org.
 	// If @replace_with_new_unassigned_agent is set to true, a new unassigned agent will be created and it will be assigned to the shifts and agent groups from @wfm_agent_sid_to_remove.
 	// If @replace_with_new_unassigned_agent is set to false, the future shifts will just be deleted.
@@ -7676,7 +7676,7 @@ func (UnimplementedWFMHandler) ListWFMAgentSids(context.Context, *connect_go.Req
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListWFMAgentSids is not implemented"))
 }
 
-func (UnimplementedWFMHandler) ListUnassignedWFMAgents(context.Context, *connect_go.Request[wfm.ListUnassignedWFMAgentsReq]) (*connect_go.Response[wfm.ListUnassignedWFMAgentsRes], error) {
+func (UnimplementedWFMHandler) ListUnassignedWFMAgents(context.Context, *connect_go.Request[wfm.ListUnassignedWFMAgentsRequest]) (*connect_go.Response[wfm.ListUnassignedWFMAgentsResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListUnassignedWFMAgents is not implemented"))
 }
 
