@@ -99,6 +99,7 @@ const (
 	WFM_CreateAgentGroup_FullMethodName                              = "/api.v1alpha1.wfm.WFM/CreateAgentGroup"
 	WFM_ListAgentScheduleGroups_FullMethodName                       = "/api.v1alpha1.wfm.WFM/ListAgentScheduleGroups"
 	WFM_UpdateAgentGroup_FullMethodName                              = "/api.v1alpha1.wfm.WFM/UpdateAgentGroup"
+	WFM_CreateUnassignedWFMAgent_FullMethodName                      = "/api.v1alpha1.wfm.WFM/CreateUnassignedWFMAgent"
 	WFM_UpdateWFMAgent_FullMethodName                                = "/api.v1alpha1.wfm.WFM/UpdateWFMAgent"
 	WFM_ListAllWFMAgents_FullMethodName                              = "/api.v1alpha1.wfm.WFM/ListAllWFMAgents"
 	WFM_ListCandidateWFMAgents_FullMethodName                        = "/api.v1alpha1.wfm.WFM/ListCandidateWFMAgents"
@@ -955,6 +956,18 @@ type WFMClient interface {
 	//   - grpc.AlreadyExists: an agent group with the given @name already exists.
 	//   - grpc.NotFound: entry to be updated doesn't exist, or the @parent_entity has a different @schedule_scenario_sid than the agent group.
 	UpdateAgentGroup(ctx context.Context, in *UpdateAgentGroupReq, opts ...grpc.CallOption) (*UpdateAgentGroupRes, error)
+	// Creates an agent that is not assigned a tcn agent for the org sending the request.
+	// If @wfm_agent_sid_to_copy_agent_group_associations is not set, it will also copy that agent's agent group associations to the new agent.
+	// Otherwise only the new agent will be created.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @name, or @wfm_agent_sid_to_copy_agent_group_associations in the request are invalid.
+	//   - grpc.Internal: error occurs creating the agent or the memberships.
+	//   - grpc.NotFound: the given @wfm_agent_sid_to_copy_agent_group_associations doesn't exist for the org.
+	CreateUnassignedWFMAgent(ctx context.Context, in *CreateUnassignedWFMAgentRequest, opts ...grpc.CallOption) (*CreateUnassignedWFMAgentResponse, error)
 	// Updates a wfm agent for the given @wfm_agent_sid and org sending the request with the provided parameters.
 	// All of the entity's parameters that are not desired to be updated must be filled with their current values.
 	// The @member fields will be ignored since those cannot be updated by this method and must be updated by their respective update methods.
@@ -2863,6 +2876,15 @@ func (c *wFMClient) UpdateAgentGroup(ctx context.Context, in *UpdateAgentGroupRe
 	return out, nil
 }
 
+func (c *wFMClient) CreateUnassignedWFMAgent(ctx context.Context, in *CreateUnassignedWFMAgentRequest, opts ...grpc.CallOption) (*CreateUnassignedWFMAgentResponse, error) {
+	out := new(CreateUnassignedWFMAgentResponse)
+	err := c.cc.Invoke(ctx, WFM_CreateUnassignedWFMAgent_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) UpdateWFMAgent(ctx context.Context, in *UpdateWFMAgentReq, opts ...grpc.CallOption) (*UpdateWFMAgentRes, error) {
 	out := new(UpdateWFMAgentRes)
 	err := c.cc.Invoke(ctx, WFM_UpdateWFMAgent_FullMethodName, in, out, opts...)
@@ -4518,6 +4540,18 @@ type WFMServer interface {
 	//   - grpc.AlreadyExists: an agent group with the given @name already exists.
 	//   - grpc.NotFound: entry to be updated doesn't exist, or the @parent_entity has a different @schedule_scenario_sid than the agent group.
 	UpdateAgentGroup(context.Context, *UpdateAgentGroupReq) (*UpdateAgentGroupRes, error)
+	// Creates an agent that is not assigned a tcn agent for the org sending the request.
+	// If @wfm_agent_sid_to_copy_agent_group_associations is not set, it will also copy that agent's agent group associations to the new agent.
+	// Otherwise only the new agent will be created.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @name, or @wfm_agent_sid_to_copy_agent_group_associations in the request are invalid.
+	//   - grpc.Internal: error occurs creating the agent or the memberships.
+	//   - grpc.NotFound: the given @wfm_agent_sid_to_copy_agent_group_associations doesn't exist for the org.
+	CreateUnassignedWFMAgent(context.Context, *CreateUnassignedWFMAgentRequest) (*CreateUnassignedWFMAgentResponse, error)
 	// Updates a wfm agent for the given @wfm_agent_sid and org sending the request with the provided parameters.
 	// All of the entity's parameters that are not desired to be updated must be filled with their current values.
 	// The @member fields will be ignored since those cannot be updated by this method and must be updated by their respective update methods.
@@ -5883,6 +5917,9 @@ func (UnimplementedWFMServer) ListAgentScheduleGroups(context.Context, *ListAgen
 }
 func (UnimplementedWFMServer) UpdateAgentGroup(context.Context, *UpdateAgentGroupReq) (*UpdateAgentGroupRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateAgentGroup not implemented")
+}
+func (UnimplementedWFMServer) CreateUnassignedWFMAgent(context.Context, *CreateUnassignedWFMAgentRequest) (*CreateUnassignedWFMAgentResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateUnassignedWFMAgent not implemented")
 }
 func (UnimplementedWFMServer) UpdateWFMAgent(context.Context, *UpdateWFMAgentReq) (*UpdateWFMAgentRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateWFMAgent not implemented")
@@ -7399,6 +7436,24 @@ func _WFM_UpdateAgentGroup_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WFMServer).UpdateAgentGroup(ctx, req.(*UpdateAgentGroupReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_CreateUnassignedWFMAgent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateUnassignedWFMAgentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).CreateUnassignedWFMAgent(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_CreateUnassignedWFMAgent_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).CreateUnassignedWFMAgent(ctx, req.(*CreateUnassignedWFMAgentRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -9449,6 +9504,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateAgentGroup",
 			Handler:    _WFM_UpdateAgentGroup_Handler,
+		},
+		{
+			MethodName: "CreateUnassignedWFMAgent",
+			Handler:    _WFM_CreateUnassignedWFMAgent_Handler,
 		},
 		{
 			MethodName: "UpdateWFMAgent",
