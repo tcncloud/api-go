@@ -3769,7 +3769,7 @@ func (x *Range) GetEndMinute() int32 {
 	return 0
 }
 
-// TimeOfDay describes the time of day via hour and minute.
+// TimeOfDay describes the time of day by hour and minute.
 type TimeOfDay struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
