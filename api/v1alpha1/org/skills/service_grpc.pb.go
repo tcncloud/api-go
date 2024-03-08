@@ -19,19 +19,21 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	SkillsService_CreateSkillGroup_FullMethodName         = "/api.v1alpha1.org.skills.SkillsService/CreateSkillGroup"
-	SkillsService_ListSkillGroups_FullMethodName          = "/api.v1alpha1.org.skills.SkillsService/ListSkillGroups"
-	SkillsService_UpdateSkillGroup_FullMethodName         = "/api.v1alpha1.org.skills.SkillsService/UpdateSkillGroup"
-	SkillsService_GetSkillGroup_FullMethodName            = "/api.v1alpha1.org.skills.SkillsService/GetSkillGroup"
-	SkillsService_DeleteSkillGroup_FullMethodName         = "/api.v1alpha1.org.skills.SkillsService/DeleteSkillGroup"
-	SkillsService_RemoveSkillFromAllGroups_FullMethodName = "/api.v1alpha1.org.skills.SkillsService/RemoveSkillFromAllGroups"
-	SkillsService_AssignSkillGroups_FullMethodName        = "/api.v1alpha1.org.skills.SkillsService/AssignSkillGroups"
-	SkillsService_UpdateUsersOnSkillGroup_FullMethodName  = "/api.v1alpha1.org.skills.SkillsService/UpdateUsersOnSkillGroup"
-	SkillsService_RevokeSkillGroups_FullMethodName        = "/api.v1alpha1.org.skills.SkillsService/RevokeSkillGroups"
-	SkillsService_GetUserSkillGroups_FullMethodName       = "/api.v1alpha1.org.skills.SkillsService/GetUserSkillGroups"
-	SkillsService_GetUserSkills_FullMethodName            = "/api.v1alpha1.org.skills.SkillsService/GetUserSkills"
-	SkillsService_GetSkillGroupMembers_FullMethodName     = "/api.v1alpha1.org.skills.SkillsService/GetSkillGroupMembers"
-	SkillsService_ListSkillGroupsMembers_FullMethodName   = "/api.v1alpha1.org.skills.SkillsService/ListSkillGroupsMembers"
+	SkillsService_CreateSkillGroup_FullMethodName          = "/api.v1alpha1.org.skills.SkillsService/CreateSkillGroup"
+	SkillsService_ListSkillGroups_FullMethodName           = "/api.v1alpha1.org.skills.SkillsService/ListSkillGroups"
+	SkillsService_UpdateSkillGroup_FullMethodName          = "/api.v1alpha1.org.skills.SkillsService/UpdateSkillGroup"
+	SkillsService_GetSkillGroup_FullMethodName             = "/api.v1alpha1.org.skills.SkillsService/GetSkillGroup"
+	SkillsService_DeleteSkillGroup_FullMethodName          = "/api.v1alpha1.org.skills.SkillsService/DeleteSkillGroup"
+	SkillsService_RemoveSkillFromAllGroups_FullMethodName  = "/api.v1alpha1.org.skills.SkillsService/RemoveSkillFromAllGroups"
+	SkillsService_AssignSkillGroups_FullMethodName         = "/api.v1alpha1.org.skills.SkillsService/AssignSkillGroups"
+	SkillsService_UpdateUsersOnSkillGroup_FullMethodName   = "/api.v1alpha1.org.skills.SkillsService/UpdateUsersOnSkillGroup"
+	SkillsService_RevokeSkillGroups_FullMethodName         = "/api.v1alpha1.org.skills.SkillsService/RevokeSkillGroups"
+	SkillsService_GetUserSkillGroups_FullMethodName        = "/api.v1alpha1.org.skills.SkillsService/GetUserSkillGroups"
+	SkillsService_GetUserSkills_FullMethodName             = "/api.v1alpha1.org.skills.SkillsService/GetUserSkills"
+	SkillsService_GetSkillGroupMembers_FullMethodName      = "/api.v1alpha1.org.skills.SkillsService/GetSkillGroupMembers"
+	SkillsService_ListSkillGroupsMembers_FullMethodName    = "/api.v1alpha1.org.skills.SkillsService/ListSkillGroupsMembers"
+	SkillsService_GetAgentSkills_FullMethodName            = "/api.v1alpha1.org.skills.SkillsService/GetAgentSkills"
+	SkillsService_ListSkillsForCurrentAgent_FullMethodName = "/api.v1alpha1.org.skills.SkillsService/ListSkillsForCurrentAgent"
 )
 
 // SkillsServiceClient is the client API for SkillsService service.
@@ -64,6 +66,21 @@ type SkillsServiceClient interface {
 	GetSkillGroupMembers(ctx context.Context, in *GetSkillGroupMembersRequest, opts ...grpc.CallOption) (*GetSkillGroupMembersResponse, error)
 	// ListSkillGroupsMembers gets the members of a skill group for each skill group in an Org.
 	ListSkillGroupsMembers(ctx context.Context, in *ListSkillGroupsMembersRequest, opts ...grpc.CallOption) (*ListSkillGroupsMembersResponse, error)
+	// Gets the skills of the requesting agent. This includes agent skills, hunt group skills, and extension skills(PBX).
+	// Skills will be returned as a value pair (name, level).
+	// For agent skills, the name of each skill will be the agent_skill_sid.
+	// All other skills' names (hunt group and PBX) will be given special formats.
+	// The requesting agent and hunt_group_sid skills will be defaulted to the max level (1000 and 100 respectively).
+	//
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the hunt_group_sid in the request in invalid.
+	GetAgentSkills(ctx context.Context, in *GetAgentSkillsRequest, opts ...grpc.CallOption) (*GetAgentSkillsResponse, error)
+	// Returns a list of skills for the current agent.
+	ListSkillsForCurrentAgent(ctx context.Context, in *ListSkillsForCurrentAgentRequest, opts ...grpc.CallOption) (*ListSkillsForCurrentAgentResponse, error)
 }
 
 type skillsServiceClient struct {
@@ -191,6 +208,24 @@ func (c *skillsServiceClient) ListSkillGroupsMembers(ctx context.Context, in *Li
 	return out, nil
 }
 
+func (c *skillsServiceClient) GetAgentSkills(ctx context.Context, in *GetAgentSkillsRequest, opts ...grpc.CallOption) (*GetAgentSkillsResponse, error) {
+	out := new(GetAgentSkillsResponse)
+	err := c.cc.Invoke(ctx, SkillsService_GetAgentSkills_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *skillsServiceClient) ListSkillsForCurrentAgent(ctx context.Context, in *ListSkillsForCurrentAgentRequest, opts ...grpc.CallOption) (*ListSkillsForCurrentAgentResponse, error) {
+	out := new(ListSkillsForCurrentAgentResponse)
+	err := c.cc.Invoke(ctx, SkillsService_ListSkillsForCurrentAgent_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SkillsServiceServer is the server API for SkillsService service.
 // All implementations must embed UnimplementedSkillsServiceServer
 // for forward compatibility
@@ -221,6 +256,21 @@ type SkillsServiceServer interface {
 	GetSkillGroupMembers(context.Context, *GetSkillGroupMembersRequest) (*GetSkillGroupMembersResponse, error)
 	// ListSkillGroupsMembers gets the members of a skill group for each skill group in an Org.
 	ListSkillGroupsMembers(context.Context, *ListSkillGroupsMembersRequest) (*ListSkillGroupsMembersResponse, error)
+	// Gets the skills of the requesting agent. This includes agent skills, hunt group skills, and extension skills(PBX).
+	// Skills will be returned as a value pair (name, level).
+	// For agent skills, the name of each skill will be the agent_skill_sid.
+	// All other skills' names (hunt group and PBX) will be given special formats.
+	// The requesting agent and hunt_group_sid skills will be defaulted to the max level (1000 and 100 respectively).
+	//
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the hunt_group_sid in the request in invalid.
+	GetAgentSkills(context.Context, *GetAgentSkillsRequest) (*GetAgentSkillsResponse, error)
+	// Returns a list of skills for the current agent.
+	ListSkillsForCurrentAgent(context.Context, *ListSkillsForCurrentAgentRequest) (*ListSkillsForCurrentAgentResponse, error)
 	mustEmbedUnimplementedSkillsServiceServer()
 }
 
@@ -266,6 +316,12 @@ func (UnimplementedSkillsServiceServer) GetSkillGroupMembers(context.Context, *G
 }
 func (UnimplementedSkillsServiceServer) ListSkillGroupsMembers(context.Context, *ListSkillGroupsMembersRequest) (*ListSkillGroupsMembersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListSkillGroupsMembers not implemented")
+}
+func (UnimplementedSkillsServiceServer) GetAgentSkills(context.Context, *GetAgentSkillsRequest) (*GetAgentSkillsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAgentSkills not implemented")
+}
+func (UnimplementedSkillsServiceServer) ListSkillsForCurrentAgent(context.Context, *ListSkillsForCurrentAgentRequest) (*ListSkillsForCurrentAgentResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListSkillsForCurrentAgent not implemented")
 }
 func (UnimplementedSkillsServiceServer) mustEmbedUnimplementedSkillsServiceServer() {}
 
@@ -514,6 +570,42 @@ func _SkillsService_ListSkillGroupsMembers_Handler(srv interface{}, ctx context.
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SkillsService_GetAgentSkills_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAgentSkillsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SkillsServiceServer).GetAgentSkills(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SkillsService_GetAgentSkills_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SkillsServiceServer).GetAgentSkills(ctx, req.(*GetAgentSkillsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SkillsService_ListSkillsForCurrentAgent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListSkillsForCurrentAgentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SkillsServiceServer).ListSkillsForCurrentAgent(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SkillsService_ListSkillsForCurrentAgent_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SkillsServiceServer).ListSkillsForCurrentAgent(ctx, req.(*ListSkillsForCurrentAgentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SkillsService_ServiceDesc is the grpc.ServiceDesc for SkillsService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -572,6 +664,14 @@ var SkillsService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListSkillGroupsMembers",
 			Handler:    _SkillsService_ListSkillGroupsMembers_Handler,
+		},
+		{
+			MethodName: "GetAgentSkills",
+			Handler:    _SkillsService_GetAgentSkills_Handler,
+		},
+		{
+			MethodName: "ListSkillsForCurrentAgent",
+			Handler:    _SkillsService_ListSkillsForCurrentAgent_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

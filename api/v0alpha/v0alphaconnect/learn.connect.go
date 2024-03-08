@@ -74,6 +74,22 @@ const (
 	LearnSnippetProcedure = "/api.v0alpha.Learn/Snippet"
 	// LearnDeleteLearnPagesProcedure is the fully-qualified name of the Learn's DeleteLearnPages RPC.
 	LearnDeleteLearnPagesProcedure = "/api.v0alpha.Learn/DeleteLearnPages"
+	// LearnCreateEditVersionProcedure is the fully-qualified name of the Learn's CreateEditVersion RPC.
+	LearnCreateEditVersionProcedure = "/api.v0alpha.Learn/CreateEditVersion"
+	// LearnPublishVersionProcedure is the fully-qualified name of the Learn's PublishVersion RPC.
+	LearnPublishVersionProcedure = "/api.v0alpha.Learn/PublishVersion"
+	// LearnContentByVersionProcedure is the fully-qualified name of the Learn's ContentByVersion RPC.
+	LearnContentByVersionProcedure = "/api.v0alpha.Learn/ContentByVersion"
+	// LearnUpdateByVersionProcedure is the fully-qualified name of the Learn's UpdateByVersion RPC.
+	LearnUpdateByVersionProcedure = "/api.v0alpha.Learn/UpdateByVersion"
+	// LearnListSearchResultsByVersionProcedure is the fully-qualified name of the Learn's
+	// ListSearchResultsByVersion RPC.
+	LearnListSearchResultsByVersionProcedure = "/api.v0alpha.Learn/ListSearchResultsByVersion"
+	// LearnReviewFileVersionsProcedure is the fully-qualified name of the Learn's ReviewFileVersions
+	// RPC.
+	LearnReviewFileVersionsProcedure = "/api.v0alpha.Learn/ReviewFileVersions"
+	// LearnReviewVersionProcedure is the fully-qualified name of the Learn's ReviewVersion RPC.
+	LearnReviewVersionProcedure = "/api.v0alpha.Learn/ReviewVersion"
 )
 
 // LearnClient is a client for the api.v0alpha.Learn service.
@@ -108,6 +124,21 @@ type LearnClient interface {
 	Snippet(context.Context, *connect_go.Request[v0alpha.SnippetReq]) (*connect_go.Response[v0alpha.SnippetRes], error)
 	// delete learning pages
 	DeleteLearnPages(context.Context, *connect_go.Request[v0alpha.DeleteLearnPagesReq]) (*connect_go.Response[v0alpha.DeleteLearnPagesRes], error)
+	// create edit version
+	CreateEditVersion(context.Context, *connect_go.Request[v0alpha.CreateEditVersionReq]) (*connect_go.Response[v0alpha.CreateEditVersionRes], error)
+	// publish version
+	PublishVersion(context.Context, *connect_go.Request[v0alpha.PublishVersionReq]) (*connect_go.Response[v0alpha.PublishVersionRes], error)
+	// retrieve content from learning pages based on version
+	ContentByVersion(context.Context, *connect_go.Request[v0alpha.ContentByVersionReq]) (*connect_go.Response[v0alpha.ContentRes], error)
+	// update contents for learning pages by version
+	UpdateByVersion(context.Context, *connect_go.Request[v0alpha.UpdateByVersionReq]) (*connect_go.Response[v0alpha.UpdateRes], error)
+	// stream search content results in learning pages by version
+	// we allow all the logged in agents/admins to view search content
+	ListSearchResultsByVersion(context.Context, *connect_go.Request[v0alpha.SearchContentByVersionReq]) (*connect_go.ServerStreamForClient[v0alpha.SearchRes], error)
+	// return diff by comparing file contens from any version
+	ReviewFileVersions(context.Context, *connect_go.Request[v0alpha.ReviewFileVersionsReq]) (*connect_go.Response[v0alpha.ReviewFileVersionsRes], error)
+	// returns list of file details after comparing different versions
+	ReviewVersion(context.Context, *connect_go.Request[v0alpha.ReviewVersionReq]) (*connect_go.Response[v0alpha.ReviewVersionRes], error)
 }
 
 // NewLearnClient constructs a client for the api.v0alpha.Learn service. By default, it uses the
@@ -185,24 +216,66 @@ func NewLearnClient(httpClient connect_go.HTTPClient, baseURL string, opts ...co
 			baseURL+LearnDeleteLearnPagesProcedure,
 			opts...,
 		),
+		createEditVersion: connect_go.NewClient[v0alpha.CreateEditVersionReq, v0alpha.CreateEditVersionRes](
+			httpClient,
+			baseURL+LearnCreateEditVersionProcedure,
+			opts...,
+		),
+		publishVersion: connect_go.NewClient[v0alpha.PublishVersionReq, v0alpha.PublishVersionRes](
+			httpClient,
+			baseURL+LearnPublishVersionProcedure,
+			opts...,
+		),
+		contentByVersion: connect_go.NewClient[v0alpha.ContentByVersionReq, v0alpha.ContentRes](
+			httpClient,
+			baseURL+LearnContentByVersionProcedure,
+			opts...,
+		),
+		updateByVersion: connect_go.NewClient[v0alpha.UpdateByVersionReq, v0alpha.UpdateRes](
+			httpClient,
+			baseURL+LearnUpdateByVersionProcedure,
+			opts...,
+		),
+		listSearchResultsByVersion: connect_go.NewClient[v0alpha.SearchContentByVersionReq, v0alpha.SearchRes](
+			httpClient,
+			baseURL+LearnListSearchResultsByVersionProcedure,
+			opts...,
+		),
+		reviewFileVersions: connect_go.NewClient[v0alpha.ReviewFileVersionsReq, v0alpha.ReviewFileVersionsRes](
+			httpClient,
+			baseURL+LearnReviewFileVersionsProcedure,
+			opts...,
+		),
+		reviewVersion: connect_go.NewClient[v0alpha.ReviewVersionReq, v0alpha.ReviewVersionRes](
+			httpClient,
+			baseURL+LearnReviewVersionProcedure,
+			opts...,
+		),
 	}
 }
 
 // learnClient implements LearnClient.
 type learnClient struct {
-	exist                   *connect_go.Client[v0alpha.ExistReq, v0alpha.ExistRes]
-	content                 *connect_go.Client[v0alpha.ContentReq, v0alpha.ContentRes]
-	exportMany              *connect_go.Client[v0alpha.ExportManyReq, v0alpha.ExportRes]
-	searchContent           *connect_go.Client[v0alpha.SearchContentReq, v0alpha.SearchRes]
-	listSearchResults       *connect_go.Client[v0alpha.SearchContentReq, v0alpha.SearchRes]
-	standalone              *connect_go.Client[v0alpha.StandaloneReq, v0alpha.StandaloneRes]
-	contentEditorData       *connect_go.Client[v0alpha.ContentEditorDataReq, v0alpha.ContentEditorDataRes]
-	update                  *connect_go.Client[v0alpha.UpdateReq, v0alpha.UpdateRes]
-	storeStaticImage        *connect_go.Client[v0alpha.StoreStaticImageReq, v0alpha.StoreStaticImageRes]
-	uploadDynamicScreenshot *connect_go.Client[v0alpha.UploadDynamicScreenshotReq, v0alpha.UploadDynamicScreenshotRes]
-	deleteStandalone        *connect_go.Client[v0alpha.DeleteStandaloneReq, v0alpha.DeleteStandaloneRes]
-	snippet                 *connect_go.Client[v0alpha.SnippetReq, v0alpha.SnippetRes]
-	deleteLearnPages        *connect_go.Client[v0alpha.DeleteLearnPagesReq, v0alpha.DeleteLearnPagesRes]
+	exist                      *connect_go.Client[v0alpha.ExistReq, v0alpha.ExistRes]
+	content                    *connect_go.Client[v0alpha.ContentReq, v0alpha.ContentRes]
+	exportMany                 *connect_go.Client[v0alpha.ExportManyReq, v0alpha.ExportRes]
+	searchContent              *connect_go.Client[v0alpha.SearchContentReq, v0alpha.SearchRes]
+	listSearchResults          *connect_go.Client[v0alpha.SearchContentReq, v0alpha.SearchRes]
+	standalone                 *connect_go.Client[v0alpha.StandaloneReq, v0alpha.StandaloneRes]
+	contentEditorData          *connect_go.Client[v0alpha.ContentEditorDataReq, v0alpha.ContentEditorDataRes]
+	update                     *connect_go.Client[v0alpha.UpdateReq, v0alpha.UpdateRes]
+	storeStaticImage           *connect_go.Client[v0alpha.StoreStaticImageReq, v0alpha.StoreStaticImageRes]
+	uploadDynamicScreenshot    *connect_go.Client[v0alpha.UploadDynamicScreenshotReq, v0alpha.UploadDynamicScreenshotRes]
+	deleteStandalone           *connect_go.Client[v0alpha.DeleteStandaloneReq, v0alpha.DeleteStandaloneRes]
+	snippet                    *connect_go.Client[v0alpha.SnippetReq, v0alpha.SnippetRes]
+	deleteLearnPages           *connect_go.Client[v0alpha.DeleteLearnPagesReq, v0alpha.DeleteLearnPagesRes]
+	createEditVersion          *connect_go.Client[v0alpha.CreateEditVersionReq, v0alpha.CreateEditVersionRes]
+	publishVersion             *connect_go.Client[v0alpha.PublishVersionReq, v0alpha.PublishVersionRes]
+	contentByVersion           *connect_go.Client[v0alpha.ContentByVersionReq, v0alpha.ContentRes]
+	updateByVersion            *connect_go.Client[v0alpha.UpdateByVersionReq, v0alpha.UpdateRes]
+	listSearchResultsByVersion *connect_go.Client[v0alpha.SearchContentByVersionReq, v0alpha.SearchRes]
+	reviewFileVersions         *connect_go.Client[v0alpha.ReviewFileVersionsReq, v0alpha.ReviewFileVersionsRes]
+	reviewVersion              *connect_go.Client[v0alpha.ReviewVersionReq, v0alpha.ReviewVersionRes]
 }
 
 // Exist calls api.v0alpha.Learn.Exist.
@@ -270,6 +343,41 @@ func (c *learnClient) DeleteLearnPages(ctx context.Context, req *connect_go.Requ
 	return c.deleteLearnPages.CallUnary(ctx, req)
 }
 
+// CreateEditVersion calls api.v0alpha.Learn.CreateEditVersion.
+func (c *learnClient) CreateEditVersion(ctx context.Context, req *connect_go.Request[v0alpha.CreateEditVersionReq]) (*connect_go.Response[v0alpha.CreateEditVersionRes], error) {
+	return c.createEditVersion.CallUnary(ctx, req)
+}
+
+// PublishVersion calls api.v0alpha.Learn.PublishVersion.
+func (c *learnClient) PublishVersion(ctx context.Context, req *connect_go.Request[v0alpha.PublishVersionReq]) (*connect_go.Response[v0alpha.PublishVersionRes], error) {
+	return c.publishVersion.CallUnary(ctx, req)
+}
+
+// ContentByVersion calls api.v0alpha.Learn.ContentByVersion.
+func (c *learnClient) ContentByVersion(ctx context.Context, req *connect_go.Request[v0alpha.ContentByVersionReq]) (*connect_go.Response[v0alpha.ContentRes], error) {
+	return c.contentByVersion.CallUnary(ctx, req)
+}
+
+// UpdateByVersion calls api.v0alpha.Learn.UpdateByVersion.
+func (c *learnClient) UpdateByVersion(ctx context.Context, req *connect_go.Request[v0alpha.UpdateByVersionReq]) (*connect_go.Response[v0alpha.UpdateRes], error) {
+	return c.updateByVersion.CallUnary(ctx, req)
+}
+
+// ListSearchResultsByVersion calls api.v0alpha.Learn.ListSearchResultsByVersion.
+func (c *learnClient) ListSearchResultsByVersion(ctx context.Context, req *connect_go.Request[v0alpha.SearchContentByVersionReq]) (*connect_go.ServerStreamForClient[v0alpha.SearchRes], error) {
+	return c.listSearchResultsByVersion.CallServerStream(ctx, req)
+}
+
+// ReviewFileVersions calls api.v0alpha.Learn.ReviewFileVersions.
+func (c *learnClient) ReviewFileVersions(ctx context.Context, req *connect_go.Request[v0alpha.ReviewFileVersionsReq]) (*connect_go.Response[v0alpha.ReviewFileVersionsRes], error) {
+	return c.reviewFileVersions.CallUnary(ctx, req)
+}
+
+// ReviewVersion calls api.v0alpha.Learn.ReviewVersion.
+func (c *learnClient) ReviewVersion(ctx context.Context, req *connect_go.Request[v0alpha.ReviewVersionReq]) (*connect_go.Response[v0alpha.ReviewVersionRes], error) {
+	return c.reviewVersion.CallUnary(ctx, req)
+}
+
 // LearnHandler is an implementation of the api.v0alpha.Learn service.
 type LearnHandler interface {
 	// check if learning page already exists
@@ -302,6 +410,21 @@ type LearnHandler interface {
 	Snippet(context.Context, *connect_go.Request[v0alpha.SnippetReq]) (*connect_go.Response[v0alpha.SnippetRes], error)
 	// delete learning pages
 	DeleteLearnPages(context.Context, *connect_go.Request[v0alpha.DeleteLearnPagesReq]) (*connect_go.Response[v0alpha.DeleteLearnPagesRes], error)
+	// create edit version
+	CreateEditVersion(context.Context, *connect_go.Request[v0alpha.CreateEditVersionReq]) (*connect_go.Response[v0alpha.CreateEditVersionRes], error)
+	// publish version
+	PublishVersion(context.Context, *connect_go.Request[v0alpha.PublishVersionReq]) (*connect_go.Response[v0alpha.PublishVersionRes], error)
+	// retrieve content from learning pages based on version
+	ContentByVersion(context.Context, *connect_go.Request[v0alpha.ContentByVersionReq]) (*connect_go.Response[v0alpha.ContentRes], error)
+	// update contents for learning pages by version
+	UpdateByVersion(context.Context, *connect_go.Request[v0alpha.UpdateByVersionReq]) (*connect_go.Response[v0alpha.UpdateRes], error)
+	// stream search content results in learning pages by version
+	// we allow all the logged in agents/admins to view search content
+	ListSearchResultsByVersion(context.Context, *connect_go.Request[v0alpha.SearchContentByVersionReq], *connect_go.ServerStream[v0alpha.SearchRes]) error
+	// return diff by comparing file contens from any version
+	ReviewFileVersions(context.Context, *connect_go.Request[v0alpha.ReviewFileVersionsReq]) (*connect_go.Response[v0alpha.ReviewFileVersionsRes], error)
+	// returns list of file details after comparing different versions
+	ReviewVersion(context.Context, *connect_go.Request[v0alpha.ReviewVersionReq]) (*connect_go.Response[v0alpha.ReviewVersionRes], error)
 }
 
 // NewLearnHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -375,6 +498,41 @@ func NewLearnHandler(svc LearnHandler, opts ...connect_go.HandlerOption) (string
 		svc.DeleteLearnPages,
 		opts...,
 	)
+	learnCreateEditVersionHandler := connect_go.NewUnaryHandler(
+		LearnCreateEditVersionProcedure,
+		svc.CreateEditVersion,
+		opts...,
+	)
+	learnPublishVersionHandler := connect_go.NewUnaryHandler(
+		LearnPublishVersionProcedure,
+		svc.PublishVersion,
+		opts...,
+	)
+	learnContentByVersionHandler := connect_go.NewUnaryHandler(
+		LearnContentByVersionProcedure,
+		svc.ContentByVersion,
+		opts...,
+	)
+	learnUpdateByVersionHandler := connect_go.NewUnaryHandler(
+		LearnUpdateByVersionProcedure,
+		svc.UpdateByVersion,
+		opts...,
+	)
+	learnListSearchResultsByVersionHandler := connect_go.NewServerStreamHandler(
+		LearnListSearchResultsByVersionProcedure,
+		svc.ListSearchResultsByVersion,
+		opts...,
+	)
+	learnReviewFileVersionsHandler := connect_go.NewUnaryHandler(
+		LearnReviewFileVersionsProcedure,
+		svc.ReviewFileVersions,
+		opts...,
+	)
+	learnReviewVersionHandler := connect_go.NewUnaryHandler(
+		LearnReviewVersionProcedure,
+		svc.ReviewVersion,
+		opts...,
+	)
 	return "/api.v0alpha.Learn/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case LearnExistProcedure:
@@ -403,6 +561,20 @@ func NewLearnHandler(svc LearnHandler, opts ...connect_go.HandlerOption) (string
 			learnSnippetHandler.ServeHTTP(w, r)
 		case LearnDeleteLearnPagesProcedure:
 			learnDeleteLearnPagesHandler.ServeHTTP(w, r)
+		case LearnCreateEditVersionProcedure:
+			learnCreateEditVersionHandler.ServeHTTP(w, r)
+		case LearnPublishVersionProcedure:
+			learnPublishVersionHandler.ServeHTTP(w, r)
+		case LearnContentByVersionProcedure:
+			learnContentByVersionHandler.ServeHTTP(w, r)
+		case LearnUpdateByVersionProcedure:
+			learnUpdateByVersionHandler.ServeHTTP(w, r)
+		case LearnListSearchResultsByVersionProcedure:
+			learnListSearchResultsByVersionHandler.ServeHTTP(w, r)
+		case LearnReviewFileVersionsProcedure:
+			learnReviewFileVersionsHandler.ServeHTTP(w, r)
+		case LearnReviewVersionProcedure:
+			learnReviewVersionHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -462,4 +634,32 @@ func (UnimplementedLearnHandler) Snippet(context.Context, *connect_go.Request[v0
 
 func (UnimplementedLearnHandler) DeleteLearnPages(context.Context, *connect_go.Request[v0alpha.DeleteLearnPagesReq]) (*connect_go.Response[v0alpha.DeleteLearnPagesRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.DeleteLearnPages is not implemented"))
+}
+
+func (UnimplementedLearnHandler) CreateEditVersion(context.Context, *connect_go.Request[v0alpha.CreateEditVersionReq]) (*connect_go.Response[v0alpha.CreateEditVersionRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.CreateEditVersion is not implemented"))
+}
+
+func (UnimplementedLearnHandler) PublishVersion(context.Context, *connect_go.Request[v0alpha.PublishVersionReq]) (*connect_go.Response[v0alpha.PublishVersionRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.PublishVersion is not implemented"))
+}
+
+func (UnimplementedLearnHandler) ContentByVersion(context.Context, *connect_go.Request[v0alpha.ContentByVersionReq]) (*connect_go.Response[v0alpha.ContentRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.ContentByVersion is not implemented"))
+}
+
+func (UnimplementedLearnHandler) UpdateByVersion(context.Context, *connect_go.Request[v0alpha.UpdateByVersionReq]) (*connect_go.Response[v0alpha.UpdateRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.UpdateByVersion is not implemented"))
+}
+
+func (UnimplementedLearnHandler) ListSearchResultsByVersion(context.Context, *connect_go.Request[v0alpha.SearchContentByVersionReq], *connect_go.ServerStream[v0alpha.SearchRes]) error {
+	return connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.ListSearchResultsByVersion is not implemented"))
+}
+
+func (UnimplementedLearnHandler) ReviewFileVersions(context.Context, *connect_go.Request[v0alpha.ReviewFileVersionsReq]) (*connect_go.Response[v0alpha.ReviewFileVersionsRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.ReviewFileVersions is not implemented"))
+}
+
+func (UnimplementedLearnHandler) ReviewVersion(context.Context, *connect_go.Request[v0alpha.ReviewVersionReq]) (*connect_go.Response[v0alpha.ReviewVersionRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.ReviewVersion is not implemented"))
 }

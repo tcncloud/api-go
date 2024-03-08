@@ -33,19 +33,26 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Learn_Exist_FullMethodName                   = "/api.v0alpha.Learn/Exist"
-	Learn_Content_FullMethodName                 = "/api.v0alpha.Learn/Content"
-	Learn_ExportMany_FullMethodName              = "/api.v0alpha.Learn/ExportMany"
-	Learn_SearchContent_FullMethodName           = "/api.v0alpha.Learn/SearchContent"
-	Learn_ListSearchResults_FullMethodName       = "/api.v0alpha.Learn/ListSearchResults"
-	Learn_Standalone_FullMethodName              = "/api.v0alpha.Learn/Standalone"
-	Learn_ContentEditorData_FullMethodName       = "/api.v0alpha.Learn/ContentEditorData"
-	Learn_Update_FullMethodName                  = "/api.v0alpha.Learn/Update"
-	Learn_StoreStaticImage_FullMethodName        = "/api.v0alpha.Learn/StoreStaticImage"
-	Learn_UploadDynamicScreenshot_FullMethodName = "/api.v0alpha.Learn/UploadDynamicScreenshot"
-	Learn_DeleteStandalone_FullMethodName        = "/api.v0alpha.Learn/DeleteStandalone"
-	Learn_Snippet_FullMethodName                 = "/api.v0alpha.Learn/Snippet"
-	Learn_DeleteLearnPages_FullMethodName        = "/api.v0alpha.Learn/DeleteLearnPages"
+	Learn_Exist_FullMethodName                      = "/api.v0alpha.Learn/Exist"
+	Learn_Content_FullMethodName                    = "/api.v0alpha.Learn/Content"
+	Learn_ExportMany_FullMethodName                 = "/api.v0alpha.Learn/ExportMany"
+	Learn_SearchContent_FullMethodName              = "/api.v0alpha.Learn/SearchContent"
+	Learn_ListSearchResults_FullMethodName          = "/api.v0alpha.Learn/ListSearchResults"
+	Learn_Standalone_FullMethodName                 = "/api.v0alpha.Learn/Standalone"
+	Learn_ContentEditorData_FullMethodName          = "/api.v0alpha.Learn/ContentEditorData"
+	Learn_Update_FullMethodName                     = "/api.v0alpha.Learn/Update"
+	Learn_StoreStaticImage_FullMethodName           = "/api.v0alpha.Learn/StoreStaticImage"
+	Learn_UploadDynamicScreenshot_FullMethodName    = "/api.v0alpha.Learn/UploadDynamicScreenshot"
+	Learn_DeleteStandalone_FullMethodName           = "/api.v0alpha.Learn/DeleteStandalone"
+	Learn_Snippet_FullMethodName                    = "/api.v0alpha.Learn/Snippet"
+	Learn_DeleteLearnPages_FullMethodName           = "/api.v0alpha.Learn/DeleteLearnPages"
+	Learn_CreateEditVersion_FullMethodName          = "/api.v0alpha.Learn/CreateEditVersion"
+	Learn_PublishVersion_FullMethodName             = "/api.v0alpha.Learn/PublishVersion"
+	Learn_ContentByVersion_FullMethodName           = "/api.v0alpha.Learn/ContentByVersion"
+	Learn_UpdateByVersion_FullMethodName            = "/api.v0alpha.Learn/UpdateByVersion"
+	Learn_ListSearchResultsByVersion_FullMethodName = "/api.v0alpha.Learn/ListSearchResultsByVersion"
+	Learn_ReviewFileVersions_FullMethodName         = "/api.v0alpha.Learn/ReviewFileVersions"
+	Learn_ReviewVersion_FullMethodName              = "/api.v0alpha.Learn/ReviewVersion"
 )
 
 // LearnClient is the client API for Learn service.
@@ -82,6 +89,21 @@ type LearnClient interface {
 	Snippet(ctx context.Context, in *SnippetReq, opts ...grpc.CallOption) (*SnippetRes, error)
 	// delete learning pages
 	DeleteLearnPages(ctx context.Context, in *DeleteLearnPagesReq, opts ...grpc.CallOption) (*DeleteLearnPagesRes, error)
+	// create edit version
+	CreateEditVersion(ctx context.Context, in *CreateEditVersionReq, opts ...grpc.CallOption) (*CreateEditVersionRes, error)
+	// publish version
+	PublishVersion(ctx context.Context, in *PublishVersionReq, opts ...grpc.CallOption) (*PublishVersionRes, error)
+	// retrieve content from learning pages based on version
+	ContentByVersion(ctx context.Context, in *ContentByVersionReq, opts ...grpc.CallOption) (*ContentRes, error)
+	// update contents for learning pages by version
+	UpdateByVersion(ctx context.Context, in *UpdateByVersionReq, opts ...grpc.CallOption) (*UpdateRes, error)
+	// stream search content results in learning pages by version
+	// we allow all the logged in agents/admins to view search content
+	ListSearchResultsByVersion(ctx context.Context, in *SearchContentByVersionReq, opts ...grpc.CallOption) (Learn_ListSearchResultsByVersionClient, error)
+	// return diff by comparing file contens from any version
+	ReviewFileVersions(ctx context.Context, in *ReviewFileVersionsReq, opts ...grpc.CallOption) (*ReviewFileVersionsRes, error)
+	// returns list of file details after comparing different versions
+	ReviewVersion(ctx context.Context, in *ReviewVersionReq, opts ...grpc.CallOption) (*ReviewVersionRes, error)
 }
 
 type learnClient struct {
@@ -232,6 +254,92 @@ func (c *learnClient) DeleteLearnPages(ctx context.Context, in *DeleteLearnPages
 	return out, nil
 }
 
+func (c *learnClient) CreateEditVersion(ctx context.Context, in *CreateEditVersionReq, opts ...grpc.CallOption) (*CreateEditVersionRes, error) {
+	out := new(CreateEditVersionRes)
+	err := c.cc.Invoke(ctx, Learn_CreateEditVersion_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *learnClient) PublishVersion(ctx context.Context, in *PublishVersionReq, opts ...grpc.CallOption) (*PublishVersionRes, error) {
+	out := new(PublishVersionRes)
+	err := c.cc.Invoke(ctx, Learn_PublishVersion_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *learnClient) ContentByVersion(ctx context.Context, in *ContentByVersionReq, opts ...grpc.CallOption) (*ContentRes, error) {
+	out := new(ContentRes)
+	err := c.cc.Invoke(ctx, Learn_ContentByVersion_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *learnClient) UpdateByVersion(ctx context.Context, in *UpdateByVersionReq, opts ...grpc.CallOption) (*UpdateRes, error) {
+	out := new(UpdateRes)
+	err := c.cc.Invoke(ctx, Learn_UpdateByVersion_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *learnClient) ListSearchResultsByVersion(ctx context.Context, in *SearchContentByVersionReq, opts ...grpc.CallOption) (Learn_ListSearchResultsByVersionClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Learn_ServiceDesc.Streams[1], Learn_ListSearchResultsByVersion_FullMethodName, opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &learnListSearchResultsByVersionClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type Learn_ListSearchResultsByVersionClient interface {
+	Recv() (*SearchRes, error)
+	grpc.ClientStream
+}
+
+type learnListSearchResultsByVersionClient struct {
+	grpc.ClientStream
+}
+
+func (x *learnListSearchResultsByVersionClient) Recv() (*SearchRes, error) {
+	m := new(SearchRes)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *learnClient) ReviewFileVersions(ctx context.Context, in *ReviewFileVersionsReq, opts ...grpc.CallOption) (*ReviewFileVersionsRes, error) {
+	out := new(ReviewFileVersionsRes)
+	err := c.cc.Invoke(ctx, Learn_ReviewFileVersions_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *learnClient) ReviewVersion(ctx context.Context, in *ReviewVersionReq, opts ...grpc.CallOption) (*ReviewVersionRes, error) {
+	out := new(ReviewVersionRes)
+	err := c.cc.Invoke(ctx, Learn_ReviewVersion_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LearnServer is the server API for Learn service.
 // All implementations must embed UnimplementedLearnServer
 // for forward compatibility
@@ -266,6 +374,21 @@ type LearnServer interface {
 	Snippet(context.Context, *SnippetReq) (*SnippetRes, error)
 	// delete learning pages
 	DeleteLearnPages(context.Context, *DeleteLearnPagesReq) (*DeleteLearnPagesRes, error)
+	// create edit version
+	CreateEditVersion(context.Context, *CreateEditVersionReq) (*CreateEditVersionRes, error)
+	// publish version
+	PublishVersion(context.Context, *PublishVersionReq) (*PublishVersionRes, error)
+	// retrieve content from learning pages based on version
+	ContentByVersion(context.Context, *ContentByVersionReq) (*ContentRes, error)
+	// update contents for learning pages by version
+	UpdateByVersion(context.Context, *UpdateByVersionReq) (*UpdateRes, error)
+	// stream search content results in learning pages by version
+	// we allow all the logged in agents/admins to view search content
+	ListSearchResultsByVersion(*SearchContentByVersionReq, Learn_ListSearchResultsByVersionServer) error
+	// return diff by comparing file contens from any version
+	ReviewFileVersions(context.Context, *ReviewFileVersionsReq) (*ReviewFileVersionsRes, error)
+	// returns list of file details after comparing different versions
+	ReviewVersion(context.Context, *ReviewVersionReq) (*ReviewVersionRes, error)
 	mustEmbedUnimplementedLearnServer()
 }
 
@@ -311,6 +434,27 @@ func (UnimplementedLearnServer) Snippet(context.Context, *SnippetReq) (*SnippetR
 }
 func (UnimplementedLearnServer) DeleteLearnPages(context.Context, *DeleteLearnPagesReq) (*DeleteLearnPagesRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteLearnPages not implemented")
+}
+func (UnimplementedLearnServer) CreateEditVersion(context.Context, *CreateEditVersionReq) (*CreateEditVersionRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateEditVersion not implemented")
+}
+func (UnimplementedLearnServer) PublishVersion(context.Context, *PublishVersionReq) (*PublishVersionRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PublishVersion not implemented")
+}
+func (UnimplementedLearnServer) ContentByVersion(context.Context, *ContentByVersionReq) (*ContentRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ContentByVersion not implemented")
+}
+func (UnimplementedLearnServer) UpdateByVersion(context.Context, *UpdateByVersionReq) (*UpdateRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateByVersion not implemented")
+}
+func (UnimplementedLearnServer) ListSearchResultsByVersion(*SearchContentByVersionReq, Learn_ListSearchResultsByVersionServer) error {
+	return status.Errorf(codes.Unimplemented, "method ListSearchResultsByVersion not implemented")
+}
+func (UnimplementedLearnServer) ReviewFileVersions(context.Context, *ReviewFileVersionsReq) (*ReviewFileVersionsRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReviewFileVersions not implemented")
+}
+func (UnimplementedLearnServer) ReviewVersion(context.Context, *ReviewVersionReq) (*ReviewVersionRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReviewVersion not implemented")
 }
 func (UnimplementedLearnServer) mustEmbedUnimplementedLearnServer() {}
 
@@ -562,6 +706,135 @@ func _Learn_DeleteLearnPages_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Learn_CreateEditVersion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateEditVersionReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LearnServer).CreateEditVersion(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Learn_CreateEditVersion_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LearnServer).CreateEditVersion(ctx, req.(*CreateEditVersionReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Learn_PublishVersion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PublishVersionReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LearnServer).PublishVersion(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Learn_PublishVersion_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LearnServer).PublishVersion(ctx, req.(*PublishVersionReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Learn_ContentByVersion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ContentByVersionReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LearnServer).ContentByVersion(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Learn_ContentByVersion_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LearnServer).ContentByVersion(ctx, req.(*ContentByVersionReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Learn_UpdateByVersion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateByVersionReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LearnServer).UpdateByVersion(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Learn_UpdateByVersion_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LearnServer).UpdateByVersion(ctx, req.(*UpdateByVersionReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Learn_ListSearchResultsByVersion_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(SearchContentByVersionReq)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(LearnServer).ListSearchResultsByVersion(m, &learnListSearchResultsByVersionServer{stream})
+}
+
+type Learn_ListSearchResultsByVersionServer interface {
+	Send(*SearchRes) error
+	grpc.ServerStream
+}
+
+type learnListSearchResultsByVersionServer struct {
+	grpc.ServerStream
+}
+
+func (x *learnListSearchResultsByVersionServer) Send(m *SearchRes) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func _Learn_ReviewFileVersions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReviewFileVersionsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LearnServer).ReviewFileVersions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Learn_ReviewFileVersions_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LearnServer).ReviewFileVersions(ctx, req.(*ReviewFileVersionsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Learn_ReviewVersion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReviewVersionReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LearnServer).ReviewVersion(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Learn_ReviewVersion_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LearnServer).ReviewVersion(ctx, req.(*ReviewVersionReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Learn_ServiceDesc is the grpc.ServiceDesc for Learn service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -617,11 +890,40 @@ var Learn_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "DeleteLearnPages",
 			Handler:    _Learn_DeleteLearnPages_Handler,
 		},
+		{
+			MethodName: "CreateEditVersion",
+			Handler:    _Learn_CreateEditVersion_Handler,
+		},
+		{
+			MethodName: "PublishVersion",
+			Handler:    _Learn_PublishVersion_Handler,
+		},
+		{
+			MethodName: "ContentByVersion",
+			Handler:    _Learn_ContentByVersion_Handler,
+		},
+		{
+			MethodName: "UpdateByVersion",
+			Handler:    _Learn_UpdateByVersion_Handler,
+		},
+		{
+			MethodName: "ReviewFileVersions",
+			Handler:    _Learn_ReviewFileVersions_Handler,
+		},
+		{
+			MethodName: "ReviewVersion",
+			Handler:    _Learn_ReviewVersion_Handler,
+		},
 	},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "ListSearchResults",
 			Handler:       _Learn_ListSearchResults_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "ListSearchResultsByVersion",
+			Handler:       _Learn_ListSearchResultsByVersion_Handler,
 			ServerStreams: true,
 		},
 	},
