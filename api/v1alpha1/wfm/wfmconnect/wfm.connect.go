@@ -249,8 +249,6 @@ const (
 	// WFMListUnassignedWFMAgentsProcedure is the fully-qualified name of the WFM's
 	// ListUnassignedWFMAgents RPC.
 	WFMListUnassignedWFMAgentsProcedure = "/api.v1alpha1.wfm.WFM/ListUnassignedWFMAgents"
-	// WFMRemoveAgentFromOrgProcedure is the fully-qualified name of the WFM's RemoveAgentFromOrg RPC.
-	WFMRemoveAgentFromOrgProcedure = "/api.v1alpha1.wfm.WFM/RemoveAgentFromOrg"
 	// WFMListWFMAgentsAssociatedWithAgentGroupProcedure is the fully-qualified name of the WFM's
 	// ListWFMAgentsAssociatedWithAgentGroup RPC.
 	WFMListWFMAgentsAssociatedWithAgentGroupProcedure = "/api.v1alpha1.wfm.WFM/ListWFMAgentsAssociatedWithAgentGroup"
@@ -1348,16 +1346,6 @@ type WFMClient interface {
 	// Errors:
 	//   - grpc.Internal: error occurs when getting the wfm agents.
 	ListUnassignedWFMAgents(context.Context, *connect_go.Request[wfm.ListUnassignedWFMAgentsRequest]) (*connect_go.Response[wfm.ListUnassignedWFMAgentsResponse], error)
-	// Removes the the @wfm_agent_sid_to_remove from all future shifts for the org.
-	// If @replace_with_new_unassigned_agent is set to true, a new unassigned agent will be created and it will be assigned to the shifts and agent groups from @wfm_agent_sid_to_remove.
-	// If @replace_with_new_unassigned_agent is set to false, the future shifts will just be deleted.
-	// Required Permissions:
-	//
-	//	NONE
-	//
-	// Errors:
-	//   - grpc.Internal: error occurs when deleting the shifts, creating the new unassigned agent, or reassigning the shifts to that agent.
-	RemoveAgentFromOrg(context.Context, *connect_go.Request[wfm.RemoveAgentFromOrgRequest]) (*connect_go.Response[wfm.RemoveAgentFromOrgResponse], error)
 	// Lists the IDs of wfm agents that belong to the org sending the request which are associated with the given @agent_group_sid.
 	// Required permissions:
 	//
@@ -2815,11 +2803,6 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMListUnassignedWFMAgentsProcedure,
 			opts...,
 		),
-		removeAgentFromOrg: connect_go.NewClient[wfm.RemoveAgentFromOrgRequest, wfm.RemoveAgentFromOrgResponse](
-			httpClient,
-			baseURL+WFMRemoveAgentFromOrgProcedure,
-			opts...,
-		),
 		listWFMAgentsAssociatedWithAgentGroup: connect_go.NewClient[wfm.ListWFMAgentsAssociatedWithAgentGroupReq, wfm.ListWFMAgentsAssociatedWithAgentGroupRes](
 			httpClient,
 			baseURL+WFMListWFMAgentsAssociatedWithAgentGroupProcedure,
@@ -3363,7 +3346,6 @@ type wFMClient struct {
 	listUngroupedWFMAgents                        *connect_go.Client[wfm.ListUngroupedWFMAgentsReq, wfm.ListUngroupedWFMAgentsRes]
 	listWFMAgentSids                              *connect_go.Client[wfm.ListWFMAgentSidsReq, wfm.ListWFMAgentSidsRes]
 	listUnassignedWFMAgents                       *connect_go.Client[wfm.ListUnassignedWFMAgentsRequest, wfm.ListUnassignedWFMAgentsResponse]
-	removeAgentFromOrg                            *connect_go.Client[wfm.RemoveAgentFromOrgRequest, wfm.RemoveAgentFromOrgResponse]
 	listWFMAgentsAssociatedWithAgentGroup         *connect_go.Client[wfm.ListWFMAgentsAssociatedWithAgentGroupReq, wfm.ListWFMAgentsAssociatedWithAgentGroupRes]
 	createWFMAgentMemberships                     *connect_go.Client[wfm.CreateWFMAgentMembershipsReq, wfm.CreateWFMAgentMembershipsRes]
 	deleteWFMAgentMemberships                     *connect_go.Client[wfm.DeleteWFMAgentMembershipsReq, wfm.DeleteWFMAgentMembershipsRes]
@@ -3842,11 +3824,6 @@ func (c *wFMClient) ListWFMAgentSids(ctx context.Context, req *connect_go.Reques
 // ListUnassignedWFMAgents calls api.v1alpha1.wfm.WFM.ListUnassignedWFMAgents.
 func (c *wFMClient) ListUnassignedWFMAgents(ctx context.Context, req *connect_go.Request[wfm.ListUnassignedWFMAgentsRequest]) (*connect_go.Response[wfm.ListUnassignedWFMAgentsResponse], error) {
 	return c.listUnassignedWFMAgents.CallUnary(ctx, req)
-}
-
-// RemoveAgentFromOrg calls api.v1alpha1.wfm.WFM.RemoveAgentFromOrg.
-func (c *wFMClient) RemoveAgentFromOrg(ctx context.Context, req *connect_go.Request[wfm.RemoveAgentFromOrgRequest]) (*connect_go.Response[wfm.RemoveAgentFromOrgResponse], error) {
-	return c.removeAgentFromOrg.CallUnary(ctx, req)
 }
 
 // ListWFMAgentsAssociatedWithAgentGroup calls
@@ -5159,16 +5136,6 @@ type WFMHandler interface {
 	// Errors:
 	//   - grpc.Internal: error occurs when getting the wfm agents.
 	ListUnassignedWFMAgents(context.Context, *connect_go.Request[wfm.ListUnassignedWFMAgentsRequest]) (*connect_go.Response[wfm.ListUnassignedWFMAgentsResponse], error)
-	// Removes the the @wfm_agent_sid_to_remove from all future shifts for the org.
-	// If @replace_with_new_unassigned_agent is set to true, a new unassigned agent will be created and it will be assigned to the shifts and agent groups from @wfm_agent_sid_to_remove.
-	// If @replace_with_new_unassigned_agent is set to false, the future shifts will just be deleted.
-	// Required Permissions:
-	//
-	//	NONE
-	//
-	// Errors:
-	//   - grpc.Internal: error occurs when deleting the shifts, creating the new unassigned agent, or reassigning the shifts to that agent.
-	RemoveAgentFromOrg(context.Context, *connect_go.Request[wfm.RemoveAgentFromOrgRequest]) (*connect_go.Response[wfm.RemoveAgentFromOrgResponse], error)
 	// Lists the IDs of wfm agents that belong to the org sending the request which are associated with the given @agent_group_sid.
 	// Required permissions:
 	//
@@ -6622,11 +6589,6 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.ListUnassignedWFMAgents,
 		opts...,
 	)
-	wFMRemoveAgentFromOrgHandler := connect_go.NewUnaryHandler(
-		WFMRemoveAgentFromOrgProcedure,
-		svc.RemoveAgentFromOrg,
-		opts...,
-	)
 	wFMListWFMAgentsAssociatedWithAgentGroupHandler := connect_go.NewUnaryHandler(
 		WFMListWFMAgentsAssociatedWithAgentGroupProcedure,
 		svc.ListWFMAgentsAssociatedWithAgentGroup,
@@ -7240,8 +7202,6 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMListWFMAgentSidsHandler.ServeHTTP(w, r)
 		case WFMListUnassignedWFMAgentsProcedure:
 			wFMListUnassignedWFMAgentsHandler.ServeHTTP(w, r)
-		case WFMRemoveAgentFromOrgProcedure:
-			wFMRemoveAgentFromOrgHandler.ServeHTTP(w, r)
 		case WFMListWFMAgentsAssociatedWithAgentGroupProcedure:
 			wFMListWFMAgentsAssociatedWithAgentGroupHandler.ServeHTTP(w, r)
 		case WFMCreateWFMAgentMembershipsProcedure:
@@ -7727,10 +7687,6 @@ func (UnimplementedWFMHandler) ListWFMAgentSids(context.Context, *connect_go.Req
 
 func (UnimplementedWFMHandler) ListUnassignedWFMAgents(context.Context, *connect_go.Request[wfm.ListUnassignedWFMAgentsRequest]) (*connect_go.Response[wfm.ListUnassignedWFMAgentsResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListUnassignedWFMAgents is not implemented"))
-}
-
-func (UnimplementedWFMHandler) RemoveAgentFromOrg(context.Context, *connect_go.Request[wfm.RemoveAgentFromOrgRequest]) (*connect_go.Response[wfm.RemoveAgentFromOrgResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.RemoveAgentFromOrg is not implemented"))
 }
 
 func (UnimplementedWFMHandler) ListWFMAgentsAssociatedWithAgentGroup(context.Context, *connect_go.Request[wfm.ListWFMAgentsAssociatedWithAgentGroupReq]) (*connect_go.Response[wfm.ListWFMAgentsAssociatedWithAgentGroupRes], error) {
