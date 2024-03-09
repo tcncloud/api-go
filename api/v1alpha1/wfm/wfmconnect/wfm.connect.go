@@ -231,6 +231,9 @@ const (
 	WFMListAgentScheduleGroupsProcedure = "/api.v1alpha1.wfm.WFM/ListAgentScheduleGroups"
 	// WFMUpdateAgentGroupProcedure is the fully-qualified name of the WFM's UpdateAgentGroup RPC.
 	WFMUpdateAgentGroupProcedure = "/api.v1alpha1.wfm.WFM/UpdateAgentGroup"
+	// WFMCreateUnassignedWFMAgentProcedure is the fully-qualified name of the WFM's
+	// CreateUnassignedWFMAgent RPC.
+	WFMCreateUnassignedWFMAgentProcedure = "/api.v1alpha1.wfm.WFM/CreateUnassignedWFMAgent"
 	// WFMUpdateWFMAgentProcedure is the fully-qualified name of the WFM's UpdateWFMAgent RPC.
 	WFMUpdateWFMAgentProcedure = "/api.v1alpha1.wfm.WFM/UpdateWFMAgent"
 	// WFMListAllWFMAgentsProcedure is the fully-qualified name of the WFM's ListAllWFMAgents RPC.
@@ -243,6 +246,9 @@ const (
 	WFMListUngroupedWFMAgentsProcedure = "/api.v1alpha1.wfm.WFM/ListUngroupedWFMAgents"
 	// WFMListWFMAgentSidsProcedure is the fully-qualified name of the WFM's ListWFMAgentSids RPC.
 	WFMListWFMAgentSidsProcedure = "/api.v1alpha1.wfm.WFM/ListWFMAgentSids"
+	// WFMListUnassignedWFMAgentsProcedure is the fully-qualified name of the WFM's
+	// ListUnassignedWFMAgents RPC.
+	WFMListUnassignedWFMAgentsProcedure = "/api.v1alpha1.wfm.WFM/ListUnassignedWFMAgents"
 	// WFMListWFMAgentsAssociatedWithAgentGroupProcedure is the fully-qualified name of the WFM's
 	// ListWFMAgentsAssociatedWithAgentGroup RPC.
 	WFMListWFMAgentsAssociatedWithAgentGroupProcedure = "/api.v1alpha1.wfm.WFM/ListWFMAgentsAssociatedWithAgentGroup"
@@ -1256,6 +1262,18 @@ type WFMClient interface {
 	//   - grpc.AlreadyExists: an agent group with the given @name already exists.
 	//   - grpc.NotFound: entry to be updated doesn't exist, or the @parent_entity has a different @schedule_scenario_sid than the agent group.
 	UpdateAgentGroup(context.Context, *connect_go.Request[wfm.UpdateAgentGroupReq]) (*connect_go.Response[wfm.UpdateAgentGroupRes], error)
+	// Creates an agent that is not assigned a tcn agent for the org sending the request.
+	// If @wfm_agent_sid_to_copy_agent_group_associations is set, it will also copy that agent's agent group associations to the new agent.
+	// Otherwise only the new agent will be created.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @wfm_agent_sid_to_copy_agent_group_associations in the request is invalid.
+	//   - grpc.Internal: error occurs creating the agent or the memberships.
+	//   - grpc.NotFound: the given @wfm_agent_sid_to_copy_agent_group_associations doesn't exist for the org.
+	CreateUnassignedWFMAgent(context.Context, *connect_go.Request[wfm.CreateUnassignedWFMAgentRequest]) (*connect_go.Response[wfm.CreateUnassignedWFMAgentResponse], error)
 	// Updates a wfm agent for the given @wfm_agent_sid and org sending the request with the provided parameters.
 	// All of the entity's parameters that are not desired to be updated must be filled with their current values.
 	// The @member fields will be ignored since those cannot be updated by this method and must be updated by their respective update methods.
@@ -1319,6 +1337,15 @@ type WFMClient interface {
 	//   - grpc.Invalid: the @tcn_agent_sids are invalid.
 	//   - grpc.Internal: error occours while listing the wfm_agent_sids.
 	ListWFMAgentSids(context.Context, *connect_go.Request[wfm.ListWFMAgentSidsReq]) (*connect_go.Response[wfm.ListWFMAgentSidsRes], error)
+	// Lists all wfm agents that don't have a TCN agent assigned to them for the given @orgId.
+	// Member entities will not be returned.
+	// Required Permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Internal: error occurs when getting the wfm agents.
+	ListUnassignedWFMAgents(context.Context, *connect_go.Request[wfm.ListUnassignedWFMAgentsRequest]) (*connect_go.Response[wfm.ListUnassignedWFMAgentsResponse], error)
 	// Lists the IDs of wfm agents that belong to the org sending the request which are associated with the given @agent_group_sid.
 	// Required permissions:
 	//
@@ -2741,6 +2768,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMUpdateAgentGroupProcedure,
 			opts...,
 		),
+		createUnassignedWFMAgent: connect_go.NewClient[wfm.CreateUnassignedWFMAgentRequest, wfm.CreateUnassignedWFMAgentResponse](
+			httpClient,
+			baseURL+WFMCreateUnassignedWFMAgentProcedure,
+			opts...,
+		),
 		updateWFMAgent: connect_go.NewClient[wfm.UpdateWFMAgentReq, wfm.UpdateWFMAgentRes](
 			httpClient,
 			baseURL+WFMUpdateWFMAgentProcedure,
@@ -2764,6 +2796,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 		listWFMAgentSids: connect_go.NewClient[wfm.ListWFMAgentSidsReq, wfm.ListWFMAgentSidsRes](
 			httpClient,
 			baseURL+WFMListWFMAgentSidsProcedure,
+			opts...,
+		),
+		listUnassignedWFMAgents: connect_go.NewClient[wfm.ListUnassignedWFMAgentsRequest, wfm.ListUnassignedWFMAgentsResponse](
+			httpClient,
+			baseURL+WFMListUnassignedWFMAgentsProcedure,
 			opts...,
 		),
 		listWFMAgentsAssociatedWithAgentGroup: connect_go.NewClient[wfm.ListWFMAgentsAssociatedWithAgentGroupReq, wfm.ListWFMAgentsAssociatedWithAgentGroupRes](
@@ -3302,11 +3339,13 @@ type wFMClient struct {
 	createAgentGroup                              *connect_go.Client[wfm.CreateAgentGroupReq, wfm.CreateAgentGroupRes]
 	listAgentScheduleGroups                       *connect_go.Client[wfm.ListAgentScheduleGroupsRequest, wfm.ListAgentScheduleGroupsResponse]
 	updateAgentGroup                              *connect_go.Client[wfm.UpdateAgentGroupReq, wfm.UpdateAgentGroupRes]
+	createUnassignedWFMAgent                      *connect_go.Client[wfm.CreateUnassignedWFMAgentRequest, wfm.CreateUnassignedWFMAgentResponse]
 	updateWFMAgent                                *connect_go.Client[wfm.UpdateWFMAgentReq, wfm.UpdateWFMAgentRes]
 	listAllWFMAgents                              *connect_go.Client[wfm.ListAllWFMAgentsReq, wfm.ListAllWFMAgentsRes]
 	listCandidateWFMAgents                        *connect_go.Client[wfm.ListCandidateWFMAgentsReq, wfm.ListCandidateWFMAgentsRes]
 	listUngroupedWFMAgents                        *connect_go.Client[wfm.ListUngroupedWFMAgentsReq, wfm.ListUngroupedWFMAgentsRes]
 	listWFMAgentSids                              *connect_go.Client[wfm.ListWFMAgentSidsReq, wfm.ListWFMAgentSidsRes]
+	listUnassignedWFMAgents                       *connect_go.Client[wfm.ListUnassignedWFMAgentsRequest, wfm.ListUnassignedWFMAgentsResponse]
 	listWFMAgentsAssociatedWithAgentGroup         *connect_go.Client[wfm.ListWFMAgentsAssociatedWithAgentGroupReq, wfm.ListWFMAgentsAssociatedWithAgentGroupRes]
 	createWFMAgentMemberships                     *connect_go.Client[wfm.CreateWFMAgentMembershipsReq, wfm.CreateWFMAgentMembershipsRes]
 	deleteWFMAgentMemberships                     *connect_go.Client[wfm.DeleteWFMAgentMembershipsReq, wfm.DeleteWFMAgentMembershipsRes]
@@ -3752,6 +3791,11 @@ func (c *wFMClient) UpdateAgentGroup(ctx context.Context, req *connect_go.Reques
 	return c.updateAgentGroup.CallUnary(ctx, req)
 }
 
+// CreateUnassignedWFMAgent calls api.v1alpha1.wfm.WFM.CreateUnassignedWFMAgent.
+func (c *wFMClient) CreateUnassignedWFMAgent(ctx context.Context, req *connect_go.Request[wfm.CreateUnassignedWFMAgentRequest]) (*connect_go.Response[wfm.CreateUnassignedWFMAgentResponse], error) {
+	return c.createUnassignedWFMAgent.CallUnary(ctx, req)
+}
+
 // UpdateWFMAgent calls api.v1alpha1.wfm.WFM.UpdateWFMAgent.
 func (c *wFMClient) UpdateWFMAgent(ctx context.Context, req *connect_go.Request[wfm.UpdateWFMAgentReq]) (*connect_go.Response[wfm.UpdateWFMAgentRes], error) {
 	return c.updateWFMAgent.CallUnary(ctx, req)
@@ -3775,6 +3819,11 @@ func (c *wFMClient) ListUngroupedWFMAgents(ctx context.Context, req *connect_go.
 // ListWFMAgentSids calls api.v1alpha1.wfm.WFM.ListWFMAgentSids.
 func (c *wFMClient) ListWFMAgentSids(ctx context.Context, req *connect_go.Request[wfm.ListWFMAgentSidsReq]) (*connect_go.Response[wfm.ListWFMAgentSidsRes], error) {
 	return c.listWFMAgentSids.CallUnary(ctx, req)
+}
+
+// ListUnassignedWFMAgents calls api.v1alpha1.wfm.WFM.ListUnassignedWFMAgents.
+func (c *wFMClient) ListUnassignedWFMAgents(ctx context.Context, req *connect_go.Request[wfm.ListUnassignedWFMAgentsRequest]) (*connect_go.Response[wfm.ListUnassignedWFMAgentsResponse], error) {
+	return c.listUnassignedWFMAgents.CallUnary(ctx, req)
 }
 
 // ListWFMAgentsAssociatedWithAgentGroup calls
@@ -5003,6 +5052,18 @@ type WFMHandler interface {
 	//   - grpc.AlreadyExists: an agent group with the given @name already exists.
 	//   - grpc.NotFound: entry to be updated doesn't exist, or the @parent_entity has a different @schedule_scenario_sid than the agent group.
 	UpdateAgentGroup(context.Context, *connect_go.Request[wfm.UpdateAgentGroupReq]) (*connect_go.Response[wfm.UpdateAgentGroupRes], error)
+	// Creates an agent that is not assigned a tcn agent for the org sending the request.
+	// If @wfm_agent_sid_to_copy_agent_group_associations is set, it will also copy that agent's agent group associations to the new agent.
+	// Otherwise only the new agent will be created.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the @wfm_agent_sid_to_copy_agent_group_associations in the request is invalid.
+	//   - grpc.Internal: error occurs creating the agent or the memberships.
+	//   - grpc.NotFound: the given @wfm_agent_sid_to_copy_agent_group_associations doesn't exist for the org.
+	CreateUnassignedWFMAgent(context.Context, *connect_go.Request[wfm.CreateUnassignedWFMAgentRequest]) (*connect_go.Response[wfm.CreateUnassignedWFMAgentResponse], error)
 	// Updates a wfm agent for the given @wfm_agent_sid and org sending the request with the provided parameters.
 	// All of the entity's parameters that are not desired to be updated must be filled with their current values.
 	// The @member fields will be ignored since those cannot be updated by this method and must be updated by their respective update methods.
@@ -5066,6 +5127,15 @@ type WFMHandler interface {
 	//   - grpc.Invalid: the @tcn_agent_sids are invalid.
 	//   - grpc.Internal: error occours while listing the wfm_agent_sids.
 	ListWFMAgentSids(context.Context, *connect_go.Request[wfm.ListWFMAgentSidsReq]) (*connect_go.Response[wfm.ListWFMAgentSidsRes], error)
+	// Lists all wfm agents that don't have a TCN agent assigned to them for the given @orgId.
+	// Member entities will not be returned.
+	// Required Permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Internal: error occurs when getting the wfm agents.
+	ListUnassignedWFMAgents(context.Context, *connect_go.Request[wfm.ListUnassignedWFMAgentsRequest]) (*connect_go.Response[wfm.ListUnassignedWFMAgentsResponse], error)
 	// Lists the IDs of wfm agents that belong to the org sending the request which are associated with the given @agent_group_sid.
 	// Required permissions:
 	//
@@ -6484,6 +6554,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.UpdateAgentGroup,
 		opts...,
 	)
+	wFMCreateUnassignedWFMAgentHandler := connect_go.NewUnaryHandler(
+		WFMCreateUnassignedWFMAgentProcedure,
+		svc.CreateUnassignedWFMAgent,
+		opts...,
+	)
 	wFMUpdateWFMAgentHandler := connect_go.NewUnaryHandler(
 		WFMUpdateWFMAgentProcedure,
 		svc.UpdateWFMAgent,
@@ -6507,6 +6582,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 	wFMListWFMAgentSidsHandler := connect_go.NewUnaryHandler(
 		WFMListWFMAgentSidsProcedure,
 		svc.ListWFMAgentSids,
+		opts...,
+	)
+	wFMListUnassignedWFMAgentsHandler := connect_go.NewUnaryHandler(
+		WFMListUnassignedWFMAgentsProcedure,
+		svc.ListUnassignedWFMAgents,
 		opts...,
 	)
 	wFMListWFMAgentsAssociatedWithAgentGroupHandler := connect_go.NewUnaryHandler(
@@ -7108,6 +7188,8 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMListAgentScheduleGroupsHandler.ServeHTTP(w, r)
 		case WFMUpdateAgentGroupProcedure:
 			wFMUpdateAgentGroupHandler.ServeHTTP(w, r)
+		case WFMCreateUnassignedWFMAgentProcedure:
+			wFMCreateUnassignedWFMAgentHandler.ServeHTTP(w, r)
 		case WFMUpdateWFMAgentProcedure:
 			wFMUpdateWFMAgentHandler.ServeHTTP(w, r)
 		case WFMListAllWFMAgentsProcedure:
@@ -7118,6 +7200,8 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMListUngroupedWFMAgentsHandler.ServeHTTP(w, r)
 		case WFMListWFMAgentSidsProcedure:
 			wFMListWFMAgentSidsHandler.ServeHTTP(w, r)
+		case WFMListUnassignedWFMAgentsProcedure:
+			wFMListUnassignedWFMAgentsHandler.ServeHTTP(w, r)
 		case WFMListWFMAgentsAssociatedWithAgentGroupProcedure:
 			wFMListWFMAgentsAssociatedWithAgentGroupHandler.ServeHTTP(w, r)
 		case WFMCreateWFMAgentMembershipsProcedure:
@@ -7577,6 +7661,10 @@ func (UnimplementedWFMHandler) UpdateAgentGroup(context.Context, *connect_go.Req
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.UpdateAgentGroup is not implemented"))
 }
 
+func (UnimplementedWFMHandler) CreateUnassignedWFMAgent(context.Context, *connect_go.Request[wfm.CreateUnassignedWFMAgentRequest]) (*connect_go.Response[wfm.CreateUnassignedWFMAgentResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.CreateUnassignedWFMAgent is not implemented"))
+}
+
 func (UnimplementedWFMHandler) UpdateWFMAgent(context.Context, *connect_go.Request[wfm.UpdateWFMAgentReq]) (*connect_go.Response[wfm.UpdateWFMAgentRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.UpdateWFMAgent is not implemented"))
 }
@@ -7595,6 +7683,10 @@ func (UnimplementedWFMHandler) ListUngroupedWFMAgents(context.Context, *connect_
 
 func (UnimplementedWFMHandler) ListWFMAgentSids(context.Context, *connect_go.Request[wfm.ListWFMAgentSidsReq]) (*connect_go.Response[wfm.ListWFMAgentSidsRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListWFMAgentSids is not implemented"))
+}
+
+func (UnimplementedWFMHandler) ListUnassignedWFMAgents(context.Context, *connect_go.Request[wfm.ListUnassignedWFMAgentsRequest]) (*connect_go.Response[wfm.ListUnassignedWFMAgentsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListUnassignedWFMAgents is not implemented"))
 }
 
 func (UnimplementedWFMHandler) ListWFMAgentsAssociatedWithAgentGroup(context.Context, *connect_go.Request[wfm.ListWFMAgentsAssociatedWithAgentGroupReq]) (*connect_go.Response[wfm.ListWFMAgentsAssociatedWithAgentGroupRes], error) {
