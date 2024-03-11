@@ -398,6 +398,9 @@ const (
 	// OrgCopyHuntGroupIntegrationLinkProcedure is the fully-qualified name of the Org's
 	// CopyHuntGroupIntegrationLink RPC.
 	OrgCopyHuntGroupIntegrationLinkProcedure = "/api.v1alpha1.org.Org/CopyHuntGroupIntegrationLink"
+	// OrgUpdateHuntGroupIntegrationLinksProcedure is the fully-qualified name of the Org's
+	// UpdateHuntGroupIntegrationLinks RPC.
+	OrgUpdateHuntGroupIntegrationLinksProcedure = "/api.v1alpha1.org.Org/UpdateHuntGroupIntegrationLinks"
 	// OrgGetHuntGroupClientInfoDisplayTemplateProcedure is the fully-qualified name of the Org's
 	// GetHuntGroupClientInfoDisplayTemplate RPC.
 	OrgGetHuntGroupClientInfoDisplayTemplateProcedure = "/api.v1alpha1.org.Org/GetHuntGroupClientInfoDisplayTemplate"
@@ -879,6 +882,11 @@ type OrgClient interface {
 	// It will create a new integration link in the destination hunt group with the same settings
 	// as the source integration link.
 	CopyHuntGroupIntegrationLink(context.Context, *connect_go.Request[org.CopyHuntGroupIntegrationLinkRequest]) (*connect_go.Response[org.CopyHuntGroupIntegrationLinkResponse], error)
+	// UpdateHuntGroupIntegrationLinks updates the integration links for a hunt group.
+	// It will create any new integration links that do not already exist in the hunt group,
+	// update any existing integration links with the new settings, and delete any integration links
+	// that are not in the request.
+	UpdateHuntGroupIntegrationLinks(context.Context, *connect_go.Request[org.UpdateHuntGroupIntegrationLinksRequest]) (*connect_go.Response[org.UpdateHuntGroupIntegrationLinksResponse], error)
 	// GetHuntGroupClientInfoDisplayTemplate returns the client info display template for a given hunt group.
 	GetHuntGroupClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.GetHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.GetHuntGroupClientInfoDisplayTemplateResponse], error)
 	// CreateHuntGroupClientInfoDisplayTemplate creates a new client info display template for a givne hunt group.
@@ -1729,6 +1737,11 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgCopyHuntGroupIntegrationLinkProcedure,
 			opts...,
 		),
+		updateHuntGroupIntegrationLinks: connect_go.NewClient[org.UpdateHuntGroupIntegrationLinksRequest, org.UpdateHuntGroupIntegrationLinksResponse](
+			httpClient,
+			baseURL+OrgUpdateHuntGroupIntegrationLinksProcedure,
+			opts...,
+		),
 		getHuntGroupClientInfoDisplayTemplate: connect_go.NewClient[org.GetHuntGroupClientInfoDisplayTemplateRequest, org.GetHuntGroupClientInfoDisplayTemplateResponse](
 			httpClient,
 			baseURL+OrgGetHuntGroupClientInfoDisplayTemplateProcedure,
@@ -2224,6 +2237,7 @@ type orgClient struct {
 	updateHuntGroupWebLinks                  *connect_go.Client[org.UpdateHuntGroupWebLinksRequest, org.UpdateHuntGroupWebLinksResponse]
 	listHuntGroupIntegrationLinks            *connect_go.Client[org.ListHuntGroupIntegrationLinksRequest, org.ListHuntGroupIntegrationLinksResponse]
 	copyHuntGroupIntegrationLink             *connect_go.Client[org.CopyHuntGroupIntegrationLinkRequest, org.CopyHuntGroupIntegrationLinkResponse]
+	updateHuntGroupIntegrationLinks          *connect_go.Client[org.UpdateHuntGroupIntegrationLinksRequest, org.UpdateHuntGroupIntegrationLinksResponse]
 	getHuntGroupClientInfoDisplayTemplate    *connect_go.Client[org.GetHuntGroupClientInfoDisplayTemplateRequest, org.GetHuntGroupClientInfoDisplayTemplateResponse]
 	createHuntGroupClientInfoDisplayTemplate *connect_go.Client[org.CreateHuntGroupClientInfoDisplayTemplateRequest, org.CreateHuntGroupClientInfoDisplayTemplateResponse]
 	updateHuntGroupClientInfoDisplayTemplate *connect_go.Client[org.UpdateHuntGroupClientInfoDisplayTemplateRequest, org.UpdateHuntGroupClientInfoDisplayTemplateResponse]
@@ -2974,6 +2988,11 @@ func (c *orgClient) CopyHuntGroupIntegrationLink(ctx context.Context, req *conne
 	return c.copyHuntGroupIntegrationLink.CallUnary(ctx, req)
 }
 
+// UpdateHuntGroupIntegrationLinks calls api.v1alpha1.org.Org.UpdateHuntGroupIntegrationLinks.
+func (c *orgClient) UpdateHuntGroupIntegrationLinks(ctx context.Context, req *connect_go.Request[org.UpdateHuntGroupIntegrationLinksRequest]) (*connect_go.Response[org.UpdateHuntGroupIntegrationLinksResponse], error) {
+	return c.updateHuntGroupIntegrationLinks.CallUnary(ctx, req)
+}
+
 // GetHuntGroupClientInfoDisplayTemplate calls
 // api.v1alpha1.org.Org.GetHuntGroupClientInfoDisplayTemplate.
 func (c *orgClient) GetHuntGroupClientInfoDisplayTemplate(ctx context.Context, req *connect_go.Request[org.GetHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.GetHuntGroupClientInfoDisplayTemplateResponse], error) {
@@ -3643,6 +3662,11 @@ type OrgHandler interface {
 	// It will create a new integration link in the destination hunt group with the same settings
 	// as the source integration link.
 	CopyHuntGroupIntegrationLink(context.Context, *connect_go.Request[org.CopyHuntGroupIntegrationLinkRequest]) (*connect_go.Response[org.CopyHuntGroupIntegrationLinkResponse], error)
+	// UpdateHuntGroupIntegrationLinks updates the integration links for a hunt group.
+	// It will create any new integration links that do not already exist in the hunt group,
+	// update any existing integration links with the new settings, and delete any integration links
+	// that are not in the request.
+	UpdateHuntGroupIntegrationLinks(context.Context, *connect_go.Request[org.UpdateHuntGroupIntegrationLinksRequest]) (*connect_go.Response[org.UpdateHuntGroupIntegrationLinksResponse], error)
 	// GetHuntGroupClientInfoDisplayTemplate returns the client info display template for a given hunt group.
 	GetHuntGroupClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.GetHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.GetHuntGroupClientInfoDisplayTemplateResponse], error)
 	// CreateHuntGroupClientInfoDisplayTemplate creates a new client info display template for a givne hunt group.
@@ -4489,6 +4513,11 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.CopyHuntGroupIntegrationLink,
 		opts...,
 	)
+	orgUpdateHuntGroupIntegrationLinksHandler := connect_go.NewUnaryHandler(
+		OrgUpdateHuntGroupIntegrationLinksProcedure,
+		svc.UpdateHuntGroupIntegrationLinks,
+		opts...,
+	)
 	orgGetHuntGroupClientInfoDisplayTemplateHandler := connect_go.NewUnaryHandler(
 		OrgGetHuntGroupClientInfoDisplayTemplateProcedure,
 		svc.GetHuntGroupClientInfoDisplayTemplate,
@@ -5116,6 +5145,8 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 			orgListHuntGroupIntegrationLinksHandler.ServeHTTP(w, r)
 		case OrgCopyHuntGroupIntegrationLinkProcedure:
 			orgCopyHuntGroupIntegrationLinkHandler.ServeHTTP(w, r)
+		case OrgUpdateHuntGroupIntegrationLinksProcedure:
+			orgUpdateHuntGroupIntegrationLinksHandler.ServeHTTP(w, r)
 		case OrgGetHuntGroupClientInfoDisplayTemplateProcedure:
 			orgGetHuntGroupClientInfoDisplayTemplateHandler.ServeHTTP(w, r)
 		case OrgCreateHuntGroupClientInfoDisplayTemplateProcedure:
@@ -5805,6 +5836,10 @@ func (UnimplementedOrgHandler) ListHuntGroupIntegrationLinks(context.Context, *c
 
 func (UnimplementedOrgHandler) CopyHuntGroupIntegrationLink(context.Context, *connect_go.Request[org.CopyHuntGroupIntegrationLinkRequest]) (*connect_go.Response[org.CopyHuntGroupIntegrationLinkResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.CopyHuntGroupIntegrationLink is not implemented"))
+}
+
+func (UnimplementedOrgHandler) UpdateHuntGroupIntegrationLinks(context.Context, *connect_go.Request[org.UpdateHuntGroupIntegrationLinksRequest]) (*connect_go.Response[org.UpdateHuntGroupIntegrationLinksResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.UpdateHuntGroupIntegrationLinks is not implemented"))
 }
 
 func (UnimplementedOrgHandler) GetHuntGroupClientInfoDisplayTemplate(context.Context, *connect_go.Request[org.GetHuntGroupClientInfoDisplayTemplateRequest]) (*connect_go.Response[org.GetHuntGroupClientInfoDisplayTemplateResponse], error) {
