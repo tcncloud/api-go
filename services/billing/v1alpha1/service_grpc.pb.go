@@ -118,6 +118,7 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
 	CreateDefaultRateDefinition(ctx context.Context, in *CreateDefaultRateDefinitionRequest, opts ...grpc.CallOption) (*CreateDefaultRateDefinitionResponse, error)
+	// Deprecated: Do not use.
 	// Creates an invoice for the ORG for the specified billing cycle.
 	// Required permissions:
 	//
@@ -187,6 +188,7 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
 	DeleteDefaultRateDefinition(ctx context.Context, in *DeleteDefaultRateDefinitionRequest, opts ...grpc.CallOption) (*DeleteDefaultRateDefinitionResponse, error)
+	// Deprecated: Do not use.
 	// Deletes an invoice.
 	// Required permissions:
 	//
@@ -243,12 +245,11 @@ type BillingServiceClient interface {
 	// Exports an invoice.
 	// Required permissions:
 	//
-	//	CUSTOMER_SUPPORT
+	//	TCN_BILLING_ADMIN
 	//
 	// Errors:
 	//   - grpc.Internal: An internal error occurred.
 	//   - grpc.InvalidArgument: The request is invalid.
-	//   - grpc.NotFound: The specified invoice doesn't exist.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	ExportInvoice(ctx context.Context, in *ExportInvoiceRequest, opts ...grpc.CallOption) (*ExportInvoiceResponse, error)
@@ -279,6 +280,7 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	GetBillingPlan(ctx context.Context, in *GetBillingPlanRequest, opts ...grpc.CallOption) (*GetBillingPlanResponse, error)
+	// Deprecated: Do not use.
 	// Returns the specified invoice.
 	// Required permissions:
 	//
@@ -314,6 +316,7 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	ListBillingPlans(ctx context.Context, in *ListBillingPlansRequest, opts ...grpc.CallOption) (*ListBillingPlansResponse, error)
+	// Deprecated: Do not use.
 	// Lists invoices.
 	// Required permissions:
 	//
@@ -378,6 +381,7 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
 	UpdateDefaultRateDefinition(ctx context.Context, in *UpdateDefaultRateDefinitionRequest, opts ...grpc.CallOption) (*UpdateDefaultRateDefinitionResponse, error)
+	// Deprecated: Do not use.
 	// Updates the specified invoice.
 	// Required permissions:
 	//
@@ -460,6 +464,7 @@ func (c *billingServiceClient) CreateDefaultRateDefinition(ctx context.Context, 
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *billingServiceClient) CreateInvoice(ctx context.Context, in *CreateInvoiceRequest, opts ...grpc.CallOption) (*CreateInvoiceResponse, error) {
 	out := new(CreateInvoiceResponse)
 	err := c.cc.Invoke(ctx, BillingService_CreateInvoice_FullMethodName, in, out, opts...)
@@ -505,6 +510,7 @@ func (c *billingServiceClient) DeleteDefaultRateDefinition(ctx context.Context, 
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *billingServiceClient) DeleteInvoice(ctx context.Context, in *DeleteInvoiceRequest, opts ...grpc.CallOption) (*DeleteInvoiceResponse, error) {
 	out := new(DeleteInvoiceResponse)
 	err := c.cc.Invoke(ctx, BillingService_DeleteInvoice_FullMethodName, in, out, opts...)
@@ -568,6 +574,7 @@ func (c *billingServiceClient) GetBillingPlan(ctx context.Context, in *GetBillin
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *billingServiceClient) GetInvoice(ctx context.Context, in *GetInvoiceRequest, opts ...grpc.CallOption) (*GetInvoiceResponse, error) {
 	out := new(GetInvoiceResponse)
 	err := c.cc.Invoke(ctx, BillingService_GetInvoice_FullMethodName, in, out, opts...)
@@ -595,6 +602,7 @@ func (c *billingServiceClient) ListBillingPlans(ctx context.Context, in *ListBil
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *billingServiceClient) ListInvoices(ctx context.Context, in *ListInvoicesRequest, opts ...grpc.CallOption) (*ListInvoicesResponse, error) {
 	out := new(ListInvoicesResponse)
 	err := c.cc.Invoke(ctx, BillingService_ListInvoices_FullMethodName, in, out, opts...)
@@ -640,6 +648,7 @@ func (c *billingServiceClient) UpdateDefaultRateDefinition(ctx context.Context, 
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *billingServiceClient) UpdateInvoice(ctx context.Context, in *UpdateInvoiceRequest, opts ...grpc.CallOption) (*UpdateInvoiceResponse, error) {
 	out := new(UpdateInvoiceResponse)
 	err := c.cc.Invoke(ctx, BillingService_UpdateInvoice_FullMethodName, in, out, opts...)
@@ -728,6 +737,7 @@ type BillingServiceServer interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
 	CreateDefaultRateDefinition(context.Context, *CreateDefaultRateDefinitionRequest) (*CreateDefaultRateDefinitionResponse, error)
+	// Deprecated: Do not use.
 	// Creates an invoice for the ORG for the specified billing cycle.
 	// Required permissions:
 	//
@@ -797,6 +807,7 @@ type BillingServiceServer interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
 	DeleteDefaultRateDefinition(context.Context, *DeleteDefaultRateDefinitionRequest) (*DeleteDefaultRateDefinitionResponse, error)
+	// Deprecated: Do not use.
 	// Deletes an invoice.
 	// Required permissions:
 	//
@@ -853,12 +864,11 @@ type BillingServiceServer interface {
 	// Exports an invoice.
 	// Required permissions:
 	//
-	//	CUSTOMER_SUPPORT
+	//	TCN_BILLING_ADMIN
 	//
 	// Errors:
 	//   - grpc.Internal: An internal error occurred.
 	//   - grpc.InvalidArgument: The request is invalid.
-	//   - grpc.NotFound: The specified invoice doesn't exist.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	ExportInvoice(context.Context, *ExportInvoiceRequest) (*ExportInvoiceResponse, error)
@@ -889,6 +899,7 @@ type BillingServiceServer interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	GetBillingPlan(context.Context, *GetBillingPlanRequest) (*GetBillingPlanResponse, error)
+	// Deprecated: Do not use.
 	// Returns the specified invoice.
 	// Required permissions:
 	//
@@ -924,6 +935,7 @@ type BillingServiceServer interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	ListBillingPlans(context.Context, *ListBillingPlansRequest) (*ListBillingPlansResponse, error)
+	// Deprecated: Do not use.
 	// Lists invoices.
 	// Required permissions:
 	//
@@ -988,6 +1000,7 @@ type BillingServiceServer interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
 	UpdateDefaultRateDefinition(context.Context, *UpdateDefaultRateDefinitionRequest) (*UpdateDefaultRateDefinitionResponse, error)
+	// Deprecated: Do not use.
 	// Updates the specified invoice.
 	// Required permissions:
 	//
