@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             (unknown)
-// source: api/v1alpha2/lms/api.proto
+// source: api/v1alpha1/lms/api.proto
 
-package lmsv2
+package lms
 
 import (
 	context "context"
@@ -19,19 +19,21 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	LMS_CreateFileTemplate_FullMethodName = "/protos.lms.v2.LMS/CreateFileTemplate"
-	LMS_DeleteFileTemplate_FullMethodName = "/protos.lms.v2.LMS/DeleteFileTemplate"
-	LMS_GetFileTemplate_FullMethodName    = "/protos.lms.v2.LMS/GetFileTemplate"
-	LMS_UpdateFileTemplate_FullMethodName = "/protos.lms.v2.LMS/UpdateFileTemplate"
+	LMS_DeleteFileTemplate_FullMethodName = "/api.v1alpha1.lms.LMS/DeleteFileTemplate"
+	LMS_GetFileTemplate_FullMethodName    = "/api.v1alpha1.lms.LMS/GetFileTemplate"
+	LMS_ListFileTemplates_FullMethodName  = "/api.v1alpha1.lms.LMS/ListFileTemplates"
+	LMS_ParseFileTemplate_FullMethodName  = "/api.v1alpha1.lms.LMS/ParseFileTemplate"
+	LMS_UpdateFileTemplate_FullMethodName = "/api.v1alpha1.lms.LMS/UpdateFileTemplate"
 )
 
 // LMSClient is the client API for LMS service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type LMSClient interface {
-	CreateFileTemplate(ctx context.Context, in *CreateFileTemplateRequest, opts ...grpc.CallOption) (*CreateFileTemplateResponse, error)
 	DeleteFileTemplate(ctx context.Context, in *DeleteFileTemplateRequest, opts ...grpc.CallOption) (*DeleteFileTemplateResponse, error)
 	GetFileTemplate(ctx context.Context, in *GetFileTemplateRequest, opts ...grpc.CallOption) (*GetFileTemplateResponse, error)
+	ListFileTemplates(ctx context.Context, in *ListFileTemplatesRequest, opts ...grpc.CallOption) (*ListFileTemplatesResponse, error)
+	ParseFileTemplate(ctx context.Context, in *ParseFileTemplateRequest, opts ...grpc.CallOption) (*ParseFileTemplateResult, error)
 	UpdateFileTemplate(ctx context.Context, in *UpdateFileTemplateRequest, opts ...grpc.CallOption) (*UpdateFileTemplateResponse, error)
 }
 
@@ -41,15 +43,6 @@ type lMSClient struct {
 
 func NewLMSClient(cc grpc.ClientConnInterface) LMSClient {
 	return &lMSClient{cc}
-}
-
-func (c *lMSClient) CreateFileTemplate(ctx context.Context, in *CreateFileTemplateRequest, opts ...grpc.CallOption) (*CreateFileTemplateResponse, error) {
-	out := new(CreateFileTemplateResponse)
-	err := c.cc.Invoke(ctx, LMS_CreateFileTemplate_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *lMSClient) DeleteFileTemplate(ctx context.Context, in *DeleteFileTemplateRequest, opts ...grpc.CallOption) (*DeleteFileTemplateResponse, error) {
@@ -70,6 +63,24 @@ func (c *lMSClient) GetFileTemplate(ctx context.Context, in *GetFileTemplateRequ
 	return out, nil
 }
 
+func (c *lMSClient) ListFileTemplates(ctx context.Context, in *ListFileTemplatesRequest, opts ...grpc.CallOption) (*ListFileTemplatesResponse, error) {
+	out := new(ListFileTemplatesResponse)
+	err := c.cc.Invoke(ctx, LMS_ListFileTemplates_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *lMSClient) ParseFileTemplate(ctx context.Context, in *ParseFileTemplateRequest, opts ...grpc.CallOption) (*ParseFileTemplateResult, error) {
+	out := new(ParseFileTemplateResult)
+	err := c.cc.Invoke(ctx, LMS_ParseFileTemplate_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *lMSClient) UpdateFileTemplate(ctx context.Context, in *UpdateFileTemplateRequest, opts ...grpc.CallOption) (*UpdateFileTemplateResponse, error) {
 	out := new(UpdateFileTemplateResponse)
 	err := c.cc.Invoke(ctx, LMS_UpdateFileTemplate_FullMethodName, in, out, opts...)
@@ -83,9 +94,10 @@ func (c *lMSClient) UpdateFileTemplate(ctx context.Context, in *UpdateFileTempla
 // All implementations must embed UnimplementedLMSServer
 // for forward compatibility
 type LMSServer interface {
-	CreateFileTemplate(context.Context, *CreateFileTemplateRequest) (*CreateFileTemplateResponse, error)
 	DeleteFileTemplate(context.Context, *DeleteFileTemplateRequest) (*DeleteFileTemplateResponse, error)
 	GetFileTemplate(context.Context, *GetFileTemplateRequest) (*GetFileTemplateResponse, error)
+	ListFileTemplates(context.Context, *ListFileTemplatesRequest) (*ListFileTemplatesResponse, error)
+	ParseFileTemplate(context.Context, *ParseFileTemplateRequest) (*ParseFileTemplateResult, error)
 	UpdateFileTemplate(context.Context, *UpdateFileTemplateRequest) (*UpdateFileTemplateResponse, error)
 	mustEmbedUnimplementedLMSServer()
 }
@@ -94,14 +106,17 @@ type LMSServer interface {
 type UnimplementedLMSServer struct {
 }
 
-func (UnimplementedLMSServer) CreateFileTemplate(context.Context, *CreateFileTemplateRequest) (*CreateFileTemplateResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateFileTemplate not implemented")
-}
 func (UnimplementedLMSServer) DeleteFileTemplate(context.Context, *DeleteFileTemplateRequest) (*DeleteFileTemplateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteFileTemplate not implemented")
 }
 func (UnimplementedLMSServer) GetFileTemplate(context.Context, *GetFileTemplateRequest) (*GetFileTemplateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetFileTemplate not implemented")
+}
+func (UnimplementedLMSServer) ListFileTemplates(context.Context, *ListFileTemplatesRequest) (*ListFileTemplatesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListFileTemplates not implemented")
+}
+func (UnimplementedLMSServer) ParseFileTemplate(context.Context, *ParseFileTemplateRequest) (*ParseFileTemplateResult, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ParseFileTemplate not implemented")
 }
 func (UnimplementedLMSServer) UpdateFileTemplate(context.Context, *UpdateFileTemplateRequest) (*UpdateFileTemplateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateFileTemplate not implemented")
@@ -117,24 +132,6 @@ type UnsafeLMSServer interface {
 
 func RegisterLMSServer(s grpc.ServiceRegistrar, srv LMSServer) {
 	s.RegisterService(&LMS_ServiceDesc, srv)
-}
-
-func _LMS_CreateFileTemplate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateFileTemplateRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LMSServer).CreateFileTemplate(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: LMS_CreateFileTemplate_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LMSServer).CreateFileTemplate(ctx, req.(*CreateFileTemplateRequest))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _LMS_DeleteFileTemplate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -173,6 +170,42 @@ func _LMS_GetFileTemplate_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LMS_ListFileTemplates_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListFileTemplatesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LMSServer).ListFileTemplates(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LMS_ListFileTemplates_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LMSServer).ListFileTemplates(ctx, req.(*ListFileTemplatesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LMS_ParseFileTemplate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ParseFileTemplateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LMSServer).ParseFileTemplate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LMS_ParseFileTemplate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LMSServer).ParseFileTemplate(ctx, req.(*ParseFileTemplateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _LMS_UpdateFileTemplate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateFileTemplateRequest)
 	if err := dec(in); err != nil {
@@ -195,13 +228,9 @@ func _LMS_UpdateFileTemplate_Handler(srv interface{}, ctx context.Context, dec f
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var LMS_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "protos.lms.v2.LMS",
+	ServiceName: "api.v1alpha1.lms.LMS",
 	HandlerType: (*LMSServer)(nil),
 	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "CreateFileTemplate",
-			Handler:    _LMS_CreateFileTemplate_Handler,
-		},
 		{
 			MethodName: "DeleteFileTemplate",
 			Handler:    _LMS_DeleteFileTemplate_Handler,
@@ -211,10 +240,18 @@ var LMS_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _LMS_GetFileTemplate_Handler,
 		},
 		{
+			MethodName: "ListFileTemplates",
+			Handler:    _LMS_ListFileTemplates_Handler,
+		},
+		{
+			MethodName: "ParseFileTemplate",
+			Handler:    _LMS_ParseFileTemplate_Handler,
+		},
+		{
 			MethodName: "UpdateFileTemplate",
 			Handler:    _LMS_UpdateFileTemplate_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "api/v1alpha2/lms/api.proto",
+	Metadata: "api/v1alpha1/lms/api.proto",
 }
