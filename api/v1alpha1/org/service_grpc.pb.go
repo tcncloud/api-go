@@ -153,6 +153,7 @@ const (
 	Org_CopyHuntGroupWebLink_FullMethodName                     = "/api.v1alpha1.org.Org/CopyHuntGroupWebLink"
 	Org_UpdateHuntGroupWebLinks_FullMethodName                  = "/api.v1alpha1.org.Org/UpdateHuntGroupWebLinks"
 	Org_ListHuntGroupIntegrationLinks_FullMethodName            = "/api.v1alpha1.org.Org/ListHuntGroupIntegrationLinks"
+	Org_CopyHuntGroupIntegrationLink_FullMethodName             = "/api.v1alpha1.org.Org/CopyHuntGroupIntegrationLink"
 	Org_GetHuntGroupClientInfoDisplayTemplate_FullMethodName    = "/api.v1alpha1.org.Org/GetHuntGroupClientInfoDisplayTemplate"
 	Org_CreateHuntGroupClientInfoDisplayTemplate_FullMethodName = "/api.v1alpha1.org.Org/CreateHuntGroupClientInfoDisplayTemplate"
 	Org_UpdateHuntGroupClientInfoDisplayTemplate_FullMethodName = "/api.v1alpha1.org.Org/UpdateHuntGroupClientInfoDisplayTemplate"
@@ -529,6 +530,10 @@ type OrgClient interface {
 	UpdateHuntGroupWebLinks(ctx context.Context, in *UpdateHuntGroupWebLinksRequest, opts ...grpc.CallOption) (*UpdateHuntGroupWebLinksResponse, error)
 	// ListHuntGroupIntegrationLinks returns all integration links for a hunt group.
 	ListHuntGroupIntegrationLinks(ctx context.Context, in *ListHuntGroupIntegrationLinksRequest, opts ...grpc.CallOption) (*ListHuntGroupIntegrationLinksResponse, error)
+	// CopyHuntGroupIntegrationLink copies the integration link from one hunt group to another.
+	// It will create a new integration link in the destination hunt group with the same settings
+	// as the source integration link.
+	CopyHuntGroupIntegrationLink(ctx context.Context, in *CopyHuntGroupIntegrationLinkRequest, opts ...grpc.CallOption) (*CopyHuntGroupIntegrationLinkResponse, error)
 	// GetHuntGroupClientInfoDisplayTemplate returns the client info display template for a given hunt group.
 	GetHuntGroupClientInfoDisplayTemplate(ctx context.Context, in *GetHuntGroupClientInfoDisplayTemplateRequest, opts ...grpc.CallOption) (*GetHuntGroupClientInfoDisplayTemplateResponse, error)
 	// CreateHuntGroupClientInfoDisplayTemplate creates a new client info display template for a givne hunt group.
@@ -2115,6 +2120,15 @@ func (c *orgClient) ListHuntGroupIntegrationLinks(ctx context.Context, in *ListH
 	return out, nil
 }
 
+func (c *orgClient) CopyHuntGroupIntegrationLink(ctx context.Context, in *CopyHuntGroupIntegrationLinkRequest, opts ...grpc.CallOption) (*CopyHuntGroupIntegrationLinkResponse, error) {
+	out := new(CopyHuntGroupIntegrationLinkResponse)
+	err := c.cc.Invoke(ctx, Org_CopyHuntGroupIntegrationLink_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *orgClient) GetHuntGroupClientInfoDisplayTemplate(ctx context.Context, in *GetHuntGroupClientInfoDisplayTemplateRequest, opts ...grpc.CallOption) (*GetHuntGroupClientInfoDisplayTemplateResponse, error) {
 	out := new(GetHuntGroupClientInfoDisplayTemplateResponse)
 	err := c.cc.Invoke(ctx, Org_GetHuntGroupClientInfoDisplayTemplate_FullMethodName, in, out, opts...)
@@ -3057,6 +3071,10 @@ type OrgServer interface {
 	UpdateHuntGroupWebLinks(context.Context, *UpdateHuntGroupWebLinksRequest) (*UpdateHuntGroupWebLinksResponse, error)
 	// ListHuntGroupIntegrationLinks returns all integration links for a hunt group.
 	ListHuntGroupIntegrationLinks(context.Context, *ListHuntGroupIntegrationLinksRequest) (*ListHuntGroupIntegrationLinksResponse, error)
+	// CopyHuntGroupIntegrationLink copies the integration link from one hunt group to another.
+	// It will create a new integration link in the destination hunt group with the same settings
+	// as the source integration link.
+	CopyHuntGroupIntegrationLink(context.Context, *CopyHuntGroupIntegrationLinkRequest) (*CopyHuntGroupIntegrationLinkResponse, error)
 	// GetHuntGroupClientInfoDisplayTemplate returns the client info display template for a given hunt group.
 	GetHuntGroupClientInfoDisplayTemplate(context.Context, *GetHuntGroupClientInfoDisplayTemplateRequest) (*GetHuntGroupClientInfoDisplayTemplateResponse, error)
 	// CreateHuntGroupClientInfoDisplayTemplate creates a new client info display template for a givne hunt group.
@@ -3628,6 +3646,9 @@ func (UnimplementedOrgServer) UpdateHuntGroupWebLinks(context.Context, *UpdateHu
 }
 func (UnimplementedOrgServer) ListHuntGroupIntegrationLinks(context.Context, *ListHuntGroupIntegrationLinksRequest) (*ListHuntGroupIntegrationLinksResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListHuntGroupIntegrationLinks not implemented")
+}
+func (UnimplementedOrgServer) CopyHuntGroupIntegrationLink(context.Context, *CopyHuntGroupIntegrationLinkRequest) (*CopyHuntGroupIntegrationLinkResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CopyHuntGroupIntegrationLink not implemented")
 }
 func (UnimplementedOrgServer) GetHuntGroupClientInfoDisplayTemplate(context.Context, *GetHuntGroupClientInfoDisplayTemplateRequest) (*GetHuntGroupClientInfoDisplayTemplateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetHuntGroupClientInfoDisplayTemplate not implemented")
@@ -6294,6 +6315,24 @@ func _Org_ListHuntGroupIntegrationLinks_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Org_CopyHuntGroupIntegrationLink_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CopyHuntGroupIntegrationLinkRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).CopyHuntGroupIntegrationLink(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_CopyHuntGroupIntegrationLink_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).CopyHuntGroupIntegrationLink(ctx, req.(*CopyHuntGroupIntegrationLinkRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Org_GetHuntGroupClientInfoDisplayTemplate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetHuntGroupClientInfoDisplayTemplateRequest)
 	if err := dec(in); err != nil {
@@ -8078,6 +8117,10 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListHuntGroupIntegrationLinks",
 			Handler:    _Org_ListHuntGroupIntegrationLinks_Handler,
+		},
+		{
+			MethodName: "CopyHuntGroupIntegrationLink",
+			Handler:    _Org_CopyHuntGroupIntegrationLink_Handler,
 		},
 		{
 			MethodName: "GetHuntGroupClientInfoDisplayTemplate",
