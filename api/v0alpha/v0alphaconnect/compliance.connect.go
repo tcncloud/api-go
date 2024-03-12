@@ -197,6 +197,9 @@ const (
 	// ComplianceProcessConsentUploadProcedure is the fully-qualified name of the Compliance's
 	// ProcessConsentUpload RPC.
 	ComplianceProcessConsentUploadProcedure = "/api.v0alpha.Compliance/ProcessConsentUpload"
+	// ComplianceExportConsentListProcedure is the fully-qualified name of the Compliance's
+	// ExportConsentList RPC.
+	ComplianceExportConsentListProcedure = "/api.v0alpha.Compliance/ExportConsentList"
 	// ComplianceListConsentTopicsProcedure is the fully-qualified name of the Compliance's
 	// ListConsentTopics RPC.
 	ComplianceListConsentTopicsProcedure = "/api.v0alpha.Compliance/ListConsentTopics"
@@ -421,6 +424,9 @@ type ComplianceClient interface {
 	//
 	//	EXECUTE_DO_NOT_CALL_LIST
 	ProcessConsentUpload(context.Context, *connect_go.Request[v0alpha.ProcessConsentUploadReq]) (*connect_go.Response[longrunningpb.Operation], error)
+	// Export consent list defined by ExportConsentListRequest message.
+	// The method will create a consent download file in CSV format and return a URL for download.
+	ExportConsentList(context.Context, *connect_go.Request[v0alpha.ExportConsentListRequest]) (*connect_go.Response[v0alpha.ExportConsentListResponse], error)
 	// List consent topics defined by ListConsentTopicsReq message.
 	// Gets all of the unique consent topics.
 	// The method will return a ListConsentTopicsRes message
@@ -760,6 +766,11 @@ func NewComplianceClient(httpClient connect_go.HTTPClient, baseURL string, opts 
 			baseURL+ComplianceProcessConsentUploadProcedure,
 			opts...,
 		),
+		exportConsentList: connect_go.NewClient[v0alpha.ExportConsentListRequest, v0alpha.ExportConsentListResponse](
+			httpClient,
+			baseURL+ComplianceExportConsentListProcedure,
+			opts...,
+		),
 		listConsentTopics: connect_go.NewClient[v0alpha.ListConsentTopicsReq, v0alpha.ListConsentTopicsRes](
 			httpClient,
 			baseURL+ComplianceListConsentTopicsProcedure,
@@ -856,6 +867,7 @@ type complianceClient struct {
 	listConsentProfiles            *connect_go.Client[v0alpha.ListConsentProfilesReq, v0alpha.ListConsentProfilesRes]
 	getConsentUploadUrl            *connect_go.Client[v0alpha.GetConsentUploadUrlReq, v0alpha.GetConsentUploadUrlRes]
 	processConsentUpload           *connect_go.Client[v0alpha.ProcessConsentUploadReq, longrunningpb.Operation]
+	exportConsentList              *connect_go.Client[v0alpha.ExportConsentListRequest, v0alpha.ExportConsentListResponse]
 	listConsentTopics              *connect_go.Client[v0alpha.ListConsentTopicsReq, v0alpha.ListConsentTopicsRes]
 	getConsentTopic                *connect_go.Client[v0alpha.GetConsentTopicReq, v0alpha.ConsentTopic]
 	createConsentTopic             *connect_go.Client[v0alpha.ConsentTopic, v0alpha.Empty]
@@ -1145,6 +1157,11 @@ func (c *complianceClient) ProcessConsentUpload(ctx context.Context, req *connec
 	return c.processConsentUpload.CallUnary(ctx, req)
 }
 
+// ExportConsentList calls api.v0alpha.Compliance.ExportConsentList.
+func (c *complianceClient) ExportConsentList(ctx context.Context, req *connect_go.Request[v0alpha.ExportConsentListRequest]) (*connect_go.Response[v0alpha.ExportConsentListResponse], error) {
+	return c.exportConsentList.CallUnary(ctx, req)
+}
+
 // ListConsentTopics calls api.v0alpha.Compliance.ListConsentTopics.
 func (c *complianceClient) ListConsentTopics(ctx context.Context, req *connect_go.Request[v0alpha.ListConsentTopicsReq]) (*connect_go.Response[v0alpha.ListConsentTopicsRes], error) {
 	return c.listConsentTopics.CallUnary(ctx, req)
@@ -1381,6 +1398,9 @@ type ComplianceHandler interface {
 	//
 	//	EXECUTE_DO_NOT_CALL_LIST
 	ProcessConsentUpload(context.Context, *connect_go.Request[v0alpha.ProcessConsentUploadReq]) (*connect_go.Response[longrunningpb.Operation], error)
+	// Export consent list defined by ExportConsentListRequest message.
+	// The method will create a consent download file in CSV format and return a URL for download.
+	ExportConsentList(context.Context, *connect_go.Request[v0alpha.ExportConsentListRequest]) (*connect_go.Response[v0alpha.ExportConsentListResponse], error)
 	// List consent topics defined by ListConsentTopicsReq message.
 	// Gets all of the unique consent topics.
 	// The method will return a ListConsentTopicsRes message
@@ -1716,6 +1736,11 @@ func NewComplianceHandler(svc ComplianceHandler, opts ...connect_go.HandlerOptio
 		svc.ProcessConsentUpload,
 		opts...,
 	)
+	complianceExportConsentListHandler := connect_go.NewUnaryHandler(
+		ComplianceExportConsentListProcedure,
+		svc.ExportConsentList,
+		opts...,
+	)
 	complianceListConsentTopicsHandler := connect_go.NewUnaryHandler(
 		ComplianceListConsentTopicsProcedure,
 		svc.ListConsentTopics,
@@ -1865,6 +1890,8 @@ func NewComplianceHandler(svc ComplianceHandler, opts ...connect_go.HandlerOptio
 			complianceGetConsentUploadUrlHandler.ServeHTTP(w, r)
 		case ComplianceProcessConsentUploadProcedure:
 			complianceProcessConsentUploadHandler.ServeHTTP(w, r)
+		case ComplianceExportConsentListProcedure:
+			complianceExportConsentListHandler.ServeHTTP(w, r)
 		case ComplianceListConsentTopicsProcedure:
 			complianceListConsentTopicsHandler.ServeHTTP(w, r)
 		case ComplianceGetConsentTopicProcedure:
@@ -2110,6 +2137,10 @@ func (UnimplementedComplianceHandler) GetConsentUploadUrl(context.Context, *conn
 
 func (UnimplementedComplianceHandler) ProcessConsentUpload(context.Context, *connect_go.Request[v0alpha.ProcessConsentUploadReq]) (*connect_go.Response[longrunningpb.Operation], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Compliance.ProcessConsentUpload is not implemented"))
+}
+
+func (UnimplementedComplianceHandler) ExportConsentList(context.Context, *connect_go.Request[v0alpha.ExportConsentListRequest]) (*connect_go.Response[v0alpha.ExportConsentListResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Compliance.ExportConsentList is not implemented"))
 }
 
 func (UnimplementedComplianceHandler) ListConsentTopics(context.Context, *connect_go.Request[v0alpha.ListConsentTopicsReq]) (*connect_go.Response[v0alpha.ListConsentTopicsRes], error) {
