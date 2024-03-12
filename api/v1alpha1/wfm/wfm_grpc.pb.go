@@ -110,6 +110,7 @@ const (
 	WFM_CreateWFMAgentMemberships_FullMethodName                     = "/api.v1alpha1.wfm.WFM/CreateWFMAgentMemberships"
 	WFM_DeleteWFMAgentMemberships_FullMethodName                     = "/api.v1alpha1.wfm.WFM/DeleteWFMAgentMemberships"
 	WFM_DeleteWFMAgentsMemberships_FullMethodName                    = "/api.v1alpha1.wfm.WFM/DeleteWFMAgentsMemberships"
+	WFM_RemoveAgentFromFutureShifts_FullMethodName                   = "/api.v1alpha1.wfm.WFM/RemoveAgentFromFutureShifts"
 	WFM_BuildAgentDiagnostics_FullMethodName                         = "/api.v1alpha1.wfm.WFM/BuildAgentDiagnostics"
 	WFM_CreateShiftTemplate_FullMethodName                           = "/api.v1alpha1.wfm.WFM/CreateShiftTemplate"
 	WFM_UpdateShiftTemplate_FullMethodName                           = "/api.v1alpha1.wfm.WFM/UpdateShiftTemplate"
@@ -1078,6 +1079,17 @@ type WFMClient interface {
 	//   - grpc.Invalid: the @wfm_agent_sids, or @agent_group_sids are invalid.
 	//   - grpc.Internal: error occurs when deleting the associations.
 	DeleteWFMAgentsMemberships(ctx context.Context, in *DeleteWFMAgentsMembershipsReq, opts ...grpc.CallOption) (*DeleteWFMAgentsMembershipsRes, error)
+	// Removes the @wfm_agent_sid_to_remove from all future shifts for the org.
+	// If @replace_with_new_unassigned_agent is set to true, a new unassigned agent will be created and it will be assigned to the shifts and agent groups from @wfm_agent_sid_to_remove.
+	// If @replace_with_new_unassigned_agent is set to false, the future shifts will just be deleted.
+	// If the @wfm_agent_sid_to_remove is not currently inactive, it will be set as inactive.
+	// Required Permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Internal: error occurs when deleting the shifts, creating the new unassigned agent, reassigning the shifts to that agent, or setting the agent to inactive.
+	RemoveAgentFromFutureShifts(ctx context.Context, in *RemoveAgentFromFutureShiftsRequest, opts ...grpc.CallOption) (*RemoveAgentFromFutureShiftsResponse, error)
 	// Builds and returns the diagnostics for the wfm agent associated with the given @wfm_agent_sid or @agent_group_sid for the org sending the request.
 	// Response will only contain:
 	//
@@ -2964,6 +2976,15 @@ func (c *wFMClient) DeleteWFMAgentsMemberships(ctx context.Context, in *DeleteWF
 	return out, nil
 }
 
+func (c *wFMClient) RemoveAgentFromFutureShifts(ctx context.Context, in *RemoveAgentFromFutureShiftsRequest, opts ...grpc.CallOption) (*RemoveAgentFromFutureShiftsResponse, error) {
+	out := new(RemoveAgentFromFutureShiftsResponse)
+	err := c.cc.Invoke(ctx, WFM_RemoveAgentFromFutureShifts_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) BuildAgentDiagnostics(ctx context.Context, in *BuildAgentDiagnosticsReq, opts ...grpc.CallOption) (*BuildAgentDiagnosticsRes, error) {
 	out := new(BuildAgentDiagnosticsRes)
 	err := c.cc.Invoke(ctx, WFM_BuildAgentDiagnostics_FullMethodName, in, out, opts...)
@@ -4643,6 +4664,17 @@ type WFMServer interface {
 	//   - grpc.Invalid: the @wfm_agent_sids, or @agent_group_sids are invalid.
 	//   - grpc.Internal: error occurs when deleting the associations.
 	DeleteWFMAgentsMemberships(context.Context, *DeleteWFMAgentsMembershipsReq) (*DeleteWFMAgentsMembershipsRes, error)
+	// Removes the @wfm_agent_sid_to_remove from all future shifts for the org.
+	// If @replace_with_new_unassigned_agent is set to true, a new unassigned agent will be created and it will be assigned to the shifts and agent groups from @wfm_agent_sid_to_remove.
+	// If @replace_with_new_unassigned_agent is set to false, the future shifts will just be deleted.
+	// If the @wfm_agent_sid_to_remove is not currently inactive, it will be set as inactive.
+	// Required Permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Internal: error occurs when deleting the shifts, creating the new unassigned agent, reassigning the shifts to that agent, or setting the agent to inactive.
+	RemoveAgentFromFutureShifts(context.Context, *RemoveAgentFromFutureShiftsRequest) (*RemoveAgentFromFutureShiftsResponse, error)
 	// Builds and returns the diagnostics for the wfm agent associated with the given @wfm_agent_sid or @agent_group_sid for the org sending the request.
 	// Response will only contain:
 	//
@@ -5920,6 +5952,9 @@ func (UnimplementedWFMServer) DeleteWFMAgentMemberships(context.Context, *Delete
 }
 func (UnimplementedWFMServer) DeleteWFMAgentsMemberships(context.Context, *DeleteWFMAgentsMembershipsReq) (*DeleteWFMAgentsMembershipsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteWFMAgentsMemberships not implemented")
+}
+func (UnimplementedWFMServer) RemoveAgentFromFutureShifts(context.Context, *RemoveAgentFromFutureShiftsRequest) (*RemoveAgentFromFutureShiftsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RemoveAgentFromFutureShifts not implemented")
 }
 func (UnimplementedWFMServer) BuildAgentDiagnostics(context.Context, *BuildAgentDiagnosticsReq) (*BuildAgentDiagnosticsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BuildAgentDiagnostics not implemented")
@@ -7601,6 +7636,24 @@ func _WFM_DeleteWFMAgentsMemberships_Handler(srv interface{}, ctx context.Contex
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WFMServer).DeleteWFMAgentsMemberships(ctx, req.(*DeleteWFMAgentsMembershipsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_RemoveAgentFromFutureShifts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RemoveAgentFromFutureShiftsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).RemoveAgentFromFutureShifts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_RemoveAgentFromFutureShifts_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).RemoveAgentFromFutureShifts(ctx, req.(*RemoveAgentFromFutureShiftsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -9497,6 +9550,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteWFMAgentsMemberships",
 			Handler:    _WFM_DeleteWFMAgentsMemberships_Handler,
+		},
+		{
+			MethodName: "RemoveAgentFromFutureShifts",
+			Handler:    _WFM_RemoveAgentFromFutureShifts_Handler,
 		},
 		{
 			MethodName: "BuildAgentDiagnostics",
