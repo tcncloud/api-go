@@ -1375,6 +1375,7 @@ type WFMClient interface {
 	// Copies the membership association of @originating_wfm_agent_sid to @target_wfm_agent_sid.
 	// The wfm agents must both belong to the org sending the request.
 	// Any existing membership associations on @target_wfm_agent_sid with be retained.
+	// Any conflicting memberships for @target_wfm_agent_sid will be set with the membership of @originating_wfm_agent_sid.
 	// Required permissions:
 	//
 	//	NONE
@@ -5209,6 +5210,7 @@ type WFMHandler interface {
 	// Copies the membership association of @originating_wfm_agent_sid to @target_wfm_agent_sid.
 	// The wfm agents must both belong to the org sending the request.
 	// Any existing membership associations on @target_wfm_agent_sid with be retained.
+	// Any conflicting memberships for @target_wfm_agent_sid will be set with the membership of @originating_wfm_agent_sid.
 	// Required permissions:
 	//
 	//	NONE
