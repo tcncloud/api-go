@@ -108,6 +108,7 @@ const (
 	WFM_ListUnassignedWFMAgents_FullMethodName                       = "/api.v1alpha1.wfm.WFM/ListUnassignedWFMAgents"
 	WFM_ListWFMAgentsAssociatedWithAgentGroup_FullMethodName         = "/api.v1alpha1.wfm.WFM/ListWFMAgentsAssociatedWithAgentGroup"
 	WFM_CreateWFMAgentMemberships_FullMethodName                     = "/api.v1alpha1.wfm.WFM/CreateWFMAgentMemberships"
+	WFM_CopyWFMAgentMemberships_FullMethodName                       = "/api.v1alpha1.wfm.WFM/CopyWFMAgentMemberships"
 	WFM_DeleteWFMAgentMemberships_FullMethodName                     = "/api.v1alpha1.wfm.WFM/DeleteWFMAgentMemberships"
 	WFM_DeleteWFMAgentsMemberships_FullMethodName                    = "/api.v1alpha1.wfm.WFM/DeleteWFMAgentsMemberships"
 	WFM_RemoveAgentFromFutureShifts_FullMethodName                   = "/api.v1alpha1.wfm.WFM/RemoveAgentFromFutureShifts"
@@ -1060,6 +1061,18 @@ type WFMClient interface {
 	//   - grpc.NotFound: the @wfm_agent_sids or @agent_group_sid don't exist for the org or given @schedule_scenario_sid.
 	//   - grpc.Internal: error occurs when creating the association.
 	CreateWFMAgentMemberships(ctx context.Context, in *CreateWFMAgentMembershipsReq, opts ...grpc.CallOption) (*CreateWFMAgentMembershipsRes, error)
+	// Copies the membership association of @originating_wfm_agent_sid to @target_wfm_agent_sid.
+	// The wfm agents must both belong to the org sending the request.
+	// Any existing membership associations on @target_wfm_agent_sid with be retained.
+	// Any conflicting memberships for @target_wfm_agent_sid will be set with the membership of @originating_wfm_agent_sid.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.NotFound: the @wfm_agent_sids or @agent_group_sid don't exist for the org sending the request.
+	//   - grpc.Internal: error occurs when creating the associations.
+	CopyWFMAgentMemberships(ctx context.Context, in *CopyWFMAgentMembershipsRequest, opts ...grpc.CallOption) (*CopyWFMAgentMembershipsResponse, error)
 	// Deletes a membership association for each of the given @wfm_agent_sids with the given @agent_group_sid for the org sending the request.
 	// Required permissions:
 	//
@@ -2958,6 +2971,15 @@ func (c *wFMClient) CreateWFMAgentMemberships(ctx context.Context, in *CreateWFM
 	return out, nil
 }
 
+func (c *wFMClient) CopyWFMAgentMemberships(ctx context.Context, in *CopyWFMAgentMembershipsRequest, opts ...grpc.CallOption) (*CopyWFMAgentMembershipsResponse, error) {
+	out := new(CopyWFMAgentMembershipsResponse)
+	err := c.cc.Invoke(ctx, WFM_CopyWFMAgentMemberships_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) DeleteWFMAgentMemberships(ctx context.Context, in *DeleteWFMAgentMembershipsReq, opts ...grpc.CallOption) (*DeleteWFMAgentMembershipsRes, error) {
 	out := new(DeleteWFMAgentMembershipsRes)
 	err := c.cc.Invoke(ctx, WFM_DeleteWFMAgentMemberships_FullMethodName, in, out, opts...)
@@ -4645,6 +4667,18 @@ type WFMServer interface {
 	//   - grpc.NotFound: the @wfm_agent_sids or @agent_group_sid don't exist for the org or given @schedule_scenario_sid.
 	//   - grpc.Internal: error occurs when creating the association.
 	CreateWFMAgentMemberships(context.Context, *CreateWFMAgentMembershipsReq) (*CreateWFMAgentMembershipsRes, error)
+	// Copies the membership association of @originating_wfm_agent_sid to @target_wfm_agent_sid.
+	// The wfm agents must both belong to the org sending the request.
+	// Any existing membership associations on @target_wfm_agent_sid with be retained.
+	// Any conflicting memberships for @target_wfm_agent_sid will be set with the membership of @originating_wfm_agent_sid.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.NotFound: the @wfm_agent_sids or @agent_group_sid don't exist for the org sending the request.
+	//   - grpc.Internal: error occurs when creating the associations.
+	CopyWFMAgentMemberships(context.Context, *CopyWFMAgentMembershipsRequest) (*CopyWFMAgentMembershipsResponse, error)
 	// Deletes a membership association for each of the given @wfm_agent_sids with the given @agent_group_sid for the org sending the request.
 	// Required permissions:
 	//
@@ -5946,6 +5980,9 @@ func (UnimplementedWFMServer) ListWFMAgentsAssociatedWithAgentGroup(context.Cont
 }
 func (UnimplementedWFMServer) CreateWFMAgentMemberships(context.Context, *CreateWFMAgentMembershipsReq) (*CreateWFMAgentMembershipsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateWFMAgentMemberships not implemented")
+}
+func (UnimplementedWFMServer) CopyWFMAgentMemberships(context.Context, *CopyWFMAgentMembershipsRequest) (*CopyWFMAgentMembershipsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CopyWFMAgentMemberships not implemented")
 }
 func (UnimplementedWFMServer) DeleteWFMAgentMemberships(context.Context, *DeleteWFMAgentMembershipsReq) (*DeleteWFMAgentMembershipsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteWFMAgentMemberships not implemented")
@@ -7600,6 +7637,24 @@ func _WFM_CreateWFMAgentMemberships_Handler(srv interface{}, ctx context.Context
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WFMServer).CreateWFMAgentMemberships(ctx, req.(*CreateWFMAgentMembershipsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_CopyWFMAgentMemberships_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CopyWFMAgentMembershipsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).CopyWFMAgentMemberships(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_CopyWFMAgentMemberships_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).CopyWFMAgentMemberships(ctx, req.(*CopyWFMAgentMembershipsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -9542,6 +9597,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateWFMAgentMemberships",
 			Handler:    _WFM_CreateWFMAgentMemberships_Handler,
+		},
+		{
+			MethodName: "CopyWFMAgentMemberships",
+			Handler:    _WFM_CopyWFMAgentMemberships_Handler,
 		},
 		{
 			MethodName: "DeleteWFMAgentMemberships",

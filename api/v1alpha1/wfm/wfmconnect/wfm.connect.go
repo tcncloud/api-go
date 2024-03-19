@@ -255,6 +255,9 @@ const (
 	// WFMCreateWFMAgentMembershipsProcedure is the fully-qualified name of the WFM's
 	// CreateWFMAgentMemberships RPC.
 	WFMCreateWFMAgentMembershipsProcedure = "/api.v1alpha1.wfm.WFM/CreateWFMAgentMemberships"
+	// WFMCopyWFMAgentMembershipsProcedure is the fully-qualified name of the WFM's
+	// CopyWFMAgentMemberships RPC.
+	WFMCopyWFMAgentMembershipsProcedure = "/api.v1alpha1.wfm.WFM/CopyWFMAgentMemberships"
 	// WFMDeleteWFMAgentMembershipsProcedure is the fully-qualified name of the WFM's
 	// DeleteWFMAgentMemberships RPC.
 	WFMDeleteWFMAgentMembershipsProcedure = "/api.v1alpha1.wfm.WFM/DeleteWFMAgentMemberships"
@@ -1369,6 +1372,18 @@ type WFMClient interface {
 	//   - grpc.NotFound: the @wfm_agent_sids or @agent_group_sid don't exist for the org or given @schedule_scenario_sid.
 	//   - grpc.Internal: error occurs when creating the association.
 	CreateWFMAgentMemberships(context.Context, *connect_go.Request[wfm.CreateWFMAgentMembershipsReq]) (*connect_go.Response[wfm.CreateWFMAgentMembershipsRes], error)
+	// Copies the membership association of @originating_wfm_agent_sid to @target_wfm_agent_sid.
+	// The wfm agents must both belong to the org sending the request.
+	// Any existing membership associations on @target_wfm_agent_sid with be retained.
+	// Any conflicting memberships for @target_wfm_agent_sid will be set with the membership of @originating_wfm_agent_sid.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.NotFound: the @wfm_agent_sids or @agent_group_sid don't exist for the org sending the request.
+	//   - grpc.Internal: error occurs when creating the associations.
+	CopyWFMAgentMemberships(context.Context, *connect_go.Request[wfm.CopyWFMAgentMembershipsRequest]) (*connect_go.Response[wfm.CopyWFMAgentMembershipsResponse], error)
 	// Deletes a membership association for each of the given @wfm_agent_sids with the given @agent_group_sid for the org sending the request.
 	// Required permissions:
 	//
@@ -2827,6 +2842,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMCreateWFMAgentMembershipsProcedure,
 			opts...,
 		),
+		copyWFMAgentMemberships: connect_go.NewClient[wfm.CopyWFMAgentMembershipsRequest, wfm.CopyWFMAgentMembershipsResponse](
+			httpClient,
+			baseURL+WFMCopyWFMAgentMembershipsProcedure,
+			opts...,
+		),
 		deleteWFMAgentMemberships: connect_go.NewClient[wfm.DeleteWFMAgentMembershipsReq, wfm.DeleteWFMAgentMembershipsRes](
 			httpClient,
 			baseURL+WFMDeleteWFMAgentMembershipsProcedure,
@@ -3367,6 +3387,7 @@ type wFMClient struct {
 	listUnassignedWFMAgents                       *connect_go.Client[wfm.ListUnassignedWFMAgentsRequest, wfm.ListUnassignedWFMAgentsResponse]
 	listWFMAgentsAssociatedWithAgentGroup         *connect_go.Client[wfm.ListWFMAgentsAssociatedWithAgentGroupReq, wfm.ListWFMAgentsAssociatedWithAgentGroupRes]
 	createWFMAgentMemberships                     *connect_go.Client[wfm.CreateWFMAgentMembershipsReq, wfm.CreateWFMAgentMembershipsRes]
+	copyWFMAgentMemberships                       *connect_go.Client[wfm.CopyWFMAgentMembershipsRequest, wfm.CopyWFMAgentMembershipsResponse]
 	deleteWFMAgentMemberships                     *connect_go.Client[wfm.DeleteWFMAgentMembershipsReq, wfm.DeleteWFMAgentMembershipsRes]
 	deleteWFMAgentsMemberships                    *connect_go.Client[wfm.DeleteWFMAgentsMembershipsReq, wfm.DeleteWFMAgentsMembershipsRes]
 	removeAgentFromFutureShifts                   *connect_go.Client[wfm.RemoveAgentFromFutureShiftsRequest, wfm.RemoveAgentFromFutureShiftsResponse]
@@ -3855,6 +3876,11 @@ func (c *wFMClient) ListWFMAgentsAssociatedWithAgentGroup(ctx context.Context, r
 // CreateWFMAgentMemberships calls api.v1alpha1.wfm.WFM.CreateWFMAgentMemberships.
 func (c *wFMClient) CreateWFMAgentMemberships(ctx context.Context, req *connect_go.Request[wfm.CreateWFMAgentMembershipsReq]) (*connect_go.Response[wfm.CreateWFMAgentMembershipsRes], error) {
 	return c.createWFMAgentMemberships.CallUnary(ctx, req)
+}
+
+// CopyWFMAgentMemberships calls api.v1alpha1.wfm.WFM.CopyWFMAgentMemberships.
+func (c *wFMClient) CopyWFMAgentMemberships(ctx context.Context, req *connect_go.Request[wfm.CopyWFMAgentMembershipsRequest]) (*connect_go.Response[wfm.CopyWFMAgentMembershipsResponse], error) {
+	return c.copyWFMAgentMemberships.CallUnary(ctx, req)
 }
 
 // DeleteWFMAgentMemberships calls api.v1alpha1.wfm.WFM.DeleteWFMAgentMemberships.
@@ -5181,6 +5207,18 @@ type WFMHandler interface {
 	//   - grpc.NotFound: the @wfm_agent_sids or @agent_group_sid don't exist for the org or given @schedule_scenario_sid.
 	//   - grpc.Internal: error occurs when creating the association.
 	CreateWFMAgentMemberships(context.Context, *connect_go.Request[wfm.CreateWFMAgentMembershipsReq]) (*connect_go.Response[wfm.CreateWFMAgentMembershipsRes], error)
+	// Copies the membership association of @originating_wfm_agent_sid to @target_wfm_agent_sid.
+	// The wfm agents must both belong to the org sending the request.
+	// Any existing membership associations on @target_wfm_agent_sid with be retained.
+	// Any conflicting memberships for @target_wfm_agent_sid will be set with the membership of @originating_wfm_agent_sid.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.NotFound: the @wfm_agent_sids or @agent_group_sid don't exist for the org sending the request.
+	//   - grpc.Internal: error occurs when creating the associations.
+	CopyWFMAgentMemberships(context.Context, *connect_go.Request[wfm.CopyWFMAgentMembershipsRequest]) (*connect_go.Response[wfm.CopyWFMAgentMembershipsResponse], error)
 	// Deletes a membership association for each of the given @wfm_agent_sids with the given @agent_group_sid for the org sending the request.
 	// Required permissions:
 	//
@@ -6635,6 +6673,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.CreateWFMAgentMemberships,
 		opts...,
 	)
+	wFMCopyWFMAgentMembershipsHandler := connect_go.NewUnaryHandler(
+		WFMCopyWFMAgentMembershipsProcedure,
+		svc.CopyWFMAgentMemberships,
+		opts...,
+	)
 	wFMDeleteWFMAgentMembershipsHandler := connect_go.NewUnaryHandler(
 		WFMDeleteWFMAgentMembershipsProcedure,
 		svc.DeleteWFMAgentMemberships,
@@ -7247,6 +7290,8 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMListWFMAgentsAssociatedWithAgentGroupHandler.ServeHTTP(w, r)
 		case WFMCreateWFMAgentMembershipsProcedure:
 			wFMCreateWFMAgentMembershipsHandler.ServeHTTP(w, r)
+		case WFMCopyWFMAgentMembershipsProcedure:
+			wFMCopyWFMAgentMembershipsHandler.ServeHTTP(w, r)
 		case WFMDeleteWFMAgentMembershipsProcedure:
 			wFMDeleteWFMAgentMembershipsHandler.ServeHTTP(w, r)
 		case WFMDeleteWFMAgentsMembershipsProcedure:
@@ -7738,6 +7783,10 @@ func (UnimplementedWFMHandler) ListWFMAgentsAssociatedWithAgentGroup(context.Con
 
 func (UnimplementedWFMHandler) CreateWFMAgentMemberships(context.Context, *connect_go.Request[wfm.CreateWFMAgentMembershipsReq]) (*connect_go.Response[wfm.CreateWFMAgentMembershipsRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.CreateWFMAgentMemberships is not implemented"))
+}
+
+func (UnimplementedWFMHandler) CopyWFMAgentMemberships(context.Context, *connect_go.Request[wfm.CopyWFMAgentMembershipsRequest]) (*connect_go.Response[wfm.CopyWFMAgentMembershipsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.CopyWFMAgentMemberships is not implemented"))
 }
 
 func (UnimplementedWFMHandler) DeleteWFMAgentMemberships(context.Context, *connect_go.Request[wfm.DeleteWFMAgentMembershipsReq]) (*connect_go.Response[wfm.DeleteWFMAgentMembershipsRes], error) {
