@@ -74,6 +74,14 @@ const (
 	Org_LinkbackUpdateBroadcastTemplates_FullMethodName         = "/api.v1alpha1.org.Org/LinkbackUpdateBroadcastTemplates"
 	Org_RecordEmailUnsubscribeAcknowledgement_FullMethodName    = "/api.v1alpha1.org.Org/RecordEmailUnsubscribeAcknowledgement"
 	Org_ClearEmailUnsubscribeAcknowledgement_FullMethodName     = "/api.v1alpha1.org.Org/ClearEmailUnsubscribeAcknowledgement"
+	Org_ListBusinessHours_FullMethodName                        = "/api.v1alpha1.org.Org/ListBusinessHours"
+	Org_GetBusinessHours_FullMethodName                         = "/api.v1alpha1.org.Org/GetBusinessHours"
+	Org_SetBusinessHours_FullMethodName                         = "/api.v1alpha1.org.Org/SetBusinessHours"
+	Org_AddIntervalToBusinessHours_FullMethodName               = "/api.v1alpha1.org.Org/AddIntervalToBusinessHours"
+	Org_RemoveIntervalFromBusinessHours_FullMethodName          = "/api.v1alpha1.org.Org/RemoveIntervalFromBusinessHours"
+	Org_UpdateBusinessHoursInfo_FullMethodName                  = "/api.v1alpha1.org.Org/UpdateBusinessHoursInfo"
+	Org_DeleteBusinessHours_FullMethodName                      = "/api.v1alpha1.org.Org/DeleteBusinessHours"
+	Org_EvaluateBusinessHours_FullMethodName                    = "/api.v1alpha1.org.Org/EvaluateBusinessHours"
 	Org_CreateUser_FullMethodName                               = "/api.v1alpha1.org.Org/CreateUser"
 	Org_CreateDelegatedUser_FullMethodName                      = "/api.v1alpha1.org.Org/CreateDelegatedUser"
 	Org_GetMyUser_FullMethodName                                = "/api.v1alpha1.org.Org/GetMyUser"
@@ -222,9 +230,6 @@ const (
 	Org_GetMyAllowedMfaMethods_FullMethodName                   = "/api.v1alpha1.org.Org/GetMyAllowedMfaMethods"
 	Org_CreateBusinessHours_FullMethodName                      = "/api.v1alpha1.org.Org/CreateBusinessHours"
 	Org_UpdateBusinessHours_FullMethodName                      = "/api.v1alpha1.org.Org/UpdateBusinessHours"
-	Org_DeleteBusinessHours_FullMethodName                      = "/api.v1alpha1.org.Org/DeleteBusinessHours"
-	Org_ListBusinessHours_FullMethodName                        = "/api.v1alpha1.org.Org/ListBusinessHours"
-	Org_GetBusinessHours_FullMethodName                         = "/api.v1alpha1.org.Org/GetBusinessHours"
 )
 
 // OrgClient is the client API for Org service.
@@ -365,6 +370,22 @@ type OrgClient interface {
 	// ClearEmailUnsubscribeAcknowledgement insert an activity log upon the client
 	// revoking their responsibility for email unsubscribe links.
 	ClearEmailUnsubscribeAcknowledgement(ctx context.Context, in *ClearEmailUnsubscribeAcknowledgementRequest, opts ...grpc.CallOption) (*ClearEmailUnsubscribeAcknowledgementResponse, error)
+	// ListBusinessHours returns all business hours for an Org.
+	ListBusinessHours(ctx context.Context, in *ListBusinessHoursRequest, opts ...grpc.CallOption) (*ListBusinessHoursResponse, error)
+	// GetBusinessHours returns the business hours for the ID.
+	GetBusinessHours(ctx context.Context, in *GetBusinessHoursRequest, opts ...grpc.CallOption) (*GetBusinessHoursResponse, error)
+	// SetBusinessHours initializes a business hours object
+	SetBusinessHours(ctx context.Context, in *SetBusinessHoursRequest, opts ...grpc.CallOption) (*SetBusinessHoursResponse, error)
+	// AddIntervalToBusinessHours adds a day interval to a business hours object
+	AddIntervalToBusinessHours(ctx context.Context, in *AddIntervalToBusinessHoursRequest, opts ...grpc.CallOption) (*AddIntervalToBusinessHoursResponse, error)
+	// RemoveIntervalFromBusinessHours removes a day interval from a business hours object
+	RemoveIntervalFromBusinessHours(ctx context.Context, in *RemoveIntervalFromBusinessHoursRequest, opts ...grpc.CallOption) (*RemoveIntervalFromBusinessHoursResponse, error)
+	// UpdateBusinessHoursInfo updates the general info of a business hours object
+	UpdateBusinessHoursInfo(ctx context.Context, in *UpdateBusinessHoursInfoRequest, opts ...grpc.CallOption) (*UpdateBusinessHoursInfoResponse, error)
+	// DeleteBusinessHours removes business hours.
+	DeleteBusinessHours(ctx context.Context, in *DeleteBusinessHoursRequest, opts ...grpc.CallOption) (*DeleteBusinessHoursResponse, error)
+	// EvaluateBusinessHours determines whether or not the current time is within a business hours day interval
+	EvaluateBusinessHours(ctx context.Context, in *EvaluateBusinessHoursRequest, opts ...grpc.CallOption) (*EvaluateBusinessHoursResponse, error)
 	// CreateUser creates a new user and enables it for the region it is getting created in.
 	CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*CreateUserResponse, error)
 	// CreateDelegatedUser creates a new delegated user and enables it for the region it is getting created in.
@@ -689,12 +710,6 @@ type OrgClient interface {
 	CreateBusinessHours(ctx context.Context, in *CreateBusinessHoursRequest, opts ...grpc.CallOption) (*CreateBusinessHoursResponse, error)
 	// UpdateBusinessHours persists changes to times businesses are available.
 	UpdateBusinessHours(ctx context.Context, in *UpdateBusinessHoursRequest, opts ...grpc.CallOption) (*UpdateBusinessHoursResponse, error)
-	// DeleteBusinessHours removes business hours.
-	DeleteBusinessHours(ctx context.Context, in *DeleteBusinessHoursRequest, opts ...grpc.CallOption) (*DeleteBusinessHoursResponse, error)
-	// ListBusinessHours returns all business hours for an Org.
-	ListBusinessHours(ctx context.Context, in *ListBusinessHoursRequest, opts ...grpc.CallOption) (*ListBusinessHoursResponse, error)
-	// GetBusinessHours returns the business hours for the ID.
-	GetBusinessHours(ctx context.Context, in *GetBusinessHoursRequest, opts ...grpc.CallOption) (*GetBusinessHoursResponse, error)
 }
 
 type orgClient struct {
@@ -1286,6 +1301,78 @@ func (c *orgClient) RecordEmailUnsubscribeAcknowledgement(ctx context.Context, i
 func (c *orgClient) ClearEmailUnsubscribeAcknowledgement(ctx context.Context, in *ClearEmailUnsubscribeAcknowledgementRequest, opts ...grpc.CallOption) (*ClearEmailUnsubscribeAcknowledgementResponse, error) {
 	out := new(ClearEmailUnsubscribeAcknowledgementResponse)
 	err := c.cc.Invoke(ctx, Org_ClearEmailUnsubscribeAcknowledgement_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) ListBusinessHours(ctx context.Context, in *ListBusinessHoursRequest, opts ...grpc.CallOption) (*ListBusinessHoursResponse, error) {
+	out := new(ListBusinessHoursResponse)
+	err := c.cc.Invoke(ctx, Org_ListBusinessHours_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) GetBusinessHours(ctx context.Context, in *GetBusinessHoursRequest, opts ...grpc.CallOption) (*GetBusinessHoursResponse, error) {
+	out := new(GetBusinessHoursResponse)
+	err := c.cc.Invoke(ctx, Org_GetBusinessHours_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) SetBusinessHours(ctx context.Context, in *SetBusinessHoursRequest, opts ...grpc.CallOption) (*SetBusinessHoursResponse, error) {
+	out := new(SetBusinessHoursResponse)
+	err := c.cc.Invoke(ctx, Org_SetBusinessHours_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) AddIntervalToBusinessHours(ctx context.Context, in *AddIntervalToBusinessHoursRequest, opts ...grpc.CallOption) (*AddIntervalToBusinessHoursResponse, error) {
+	out := new(AddIntervalToBusinessHoursResponse)
+	err := c.cc.Invoke(ctx, Org_AddIntervalToBusinessHours_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) RemoveIntervalFromBusinessHours(ctx context.Context, in *RemoveIntervalFromBusinessHoursRequest, opts ...grpc.CallOption) (*RemoveIntervalFromBusinessHoursResponse, error) {
+	out := new(RemoveIntervalFromBusinessHoursResponse)
+	err := c.cc.Invoke(ctx, Org_RemoveIntervalFromBusinessHours_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) UpdateBusinessHoursInfo(ctx context.Context, in *UpdateBusinessHoursInfoRequest, opts ...grpc.CallOption) (*UpdateBusinessHoursInfoResponse, error) {
+	out := new(UpdateBusinessHoursInfoResponse)
+	err := c.cc.Invoke(ctx, Org_UpdateBusinessHoursInfo_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) DeleteBusinessHours(ctx context.Context, in *DeleteBusinessHoursRequest, opts ...grpc.CallOption) (*DeleteBusinessHoursResponse, error) {
+	out := new(DeleteBusinessHoursResponse)
+	err := c.cc.Invoke(ctx, Org_DeleteBusinessHours_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) EvaluateBusinessHours(ctx context.Context, in *EvaluateBusinessHoursRequest, opts ...grpc.CallOption) (*EvaluateBusinessHoursResponse, error) {
+	out := new(EvaluateBusinessHoursResponse)
+	err := c.cc.Invoke(ctx, Org_EvaluateBusinessHours_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -2739,33 +2826,6 @@ func (c *orgClient) UpdateBusinessHours(ctx context.Context, in *UpdateBusinessH
 	return out, nil
 }
 
-func (c *orgClient) DeleteBusinessHours(ctx context.Context, in *DeleteBusinessHoursRequest, opts ...grpc.CallOption) (*DeleteBusinessHoursResponse, error) {
-	out := new(DeleteBusinessHoursResponse)
-	err := c.cc.Invoke(ctx, Org_DeleteBusinessHours_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *orgClient) ListBusinessHours(ctx context.Context, in *ListBusinessHoursRequest, opts ...grpc.CallOption) (*ListBusinessHoursResponse, error) {
-	out := new(ListBusinessHoursResponse)
-	err := c.cc.Invoke(ctx, Org_ListBusinessHours_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *orgClient) GetBusinessHours(ctx context.Context, in *GetBusinessHoursRequest, opts ...grpc.CallOption) (*GetBusinessHoursResponse, error) {
-	out := new(GetBusinessHoursResponse)
-	err := c.cc.Invoke(ctx, Org_GetBusinessHours_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // OrgServer is the server API for Org service.
 // All implementations must embed UnimplementedOrgServer
 // for forward compatibility
@@ -2904,6 +2964,22 @@ type OrgServer interface {
 	// ClearEmailUnsubscribeAcknowledgement insert an activity log upon the client
 	// revoking their responsibility for email unsubscribe links.
 	ClearEmailUnsubscribeAcknowledgement(context.Context, *ClearEmailUnsubscribeAcknowledgementRequest) (*ClearEmailUnsubscribeAcknowledgementResponse, error)
+	// ListBusinessHours returns all business hours for an Org.
+	ListBusinessHours(context.Context, *ListBusinessHoursRequest) (*ListBusinessHoursResponse, error)
+	// GetBusinessHours returns the business hours for the ID.
+	GetBusinessHours(context.Context, *GetBusinessHoursRequest) (*GetBusinessHoursResponse, error)
+	// SetBusinessHours initializes a business hours object
+	SetBusinessHours(context.Context, *SetBusinessHoursRequest) (*SetBusinessHoursResponse, error)
+	// AddIntervalToBusinessHours adds a day interval to a business hours object
+	AddIntervalToBusinessHours(context.Context, *AddIntervalToBusinessHoursRequest) (*AddIntervalToBusinessHoursResponse, error)
+	// RemoveIntervalFromBusinessHours removes a day interval from a business hours object
+	RemoveIntervalFromBusinessHours(context.Context, *RemoveIntervalFromBusinessHoursRequest) (*RemoveIntervalFromBusinessHoursResponse, error)
+	// UpdateBusinessHoursInfo updates the general info of a business hours object
+	UpdateBusinessHoursInfo(context.Context, *UpdateBusinessHoursInfoRequest) (*UpdateBusinessHoursInfoResponse, error)
+	// DeleteBusinessHours removes business hours.
+	DeleteBusinessHours(context.Context, *DeleteBusinessHoursRequest) (*DeleteBusinessHoursResponse, error)
+	// EvaluateBusinessHours determines whether or not the current time is within a business hours day interval
+	EvaluateBusinessHours(context.Context, *EvaluateBusinessHoursRequest) (*EvaluateBusinessHoursResponse, error)
 	// CreateUser creates a new user and enables it for the region it is getting created in.
 	CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error)
 	// CreateDelegatedUser creates a new delegated user and enables it for the region it is getting created in.
@@ -3228,12 +3304,6 @@ type OrgServer interface {
 	CreateBusinessHours(context.Context, *CreateBusinessHoursRequest) (*CreateBusinessHoursResponse, error)
 	// UpdateBusinessHours persists changes to times businesses are available.
 	UpdateBusinessHours(context.Context, *UpdateBusinessHoursRequest) (*UpdateBusinessHoursResponse, error)
-	// DeleteBusinessHours removes business hours.
-	DeleteBusinessHours(context.Context, *DeleteBusinessHoursRequest) (*DeleteBusinessHoursResponse, error)
-	// ListBusinessHours returns all business hours for an Org.
-	ListBusinessHours(context.Context, *ListBusinessHoursRequest) (*ListBusinessHoursResponse, error)
-	// GetBusinessHours returns the business hours for the ID.
-	GetBusinessHours(context.Context, *GetBusinessHoursRequest) (*GetBusinessHoursResponse, error)
 	mustEmbedUnimplementedOrgServer()
 }
 
@@ -3405,6 +3475,30 @@ func (UnimplementedOrgServer) RecordEmailUnsubscribeAcknowledgement(context.Cont
 }
 func (UnimplementedOrgServer) ClearEmailUnsubscribeAcknowledgement(context.Context, *ClearEmailUnsubscribeAcknowledgementRequest) (*ClearEmailUnsubscribeAcknowledgementResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ClearEmailUnsubscribeAcknowledgement not implemented")
+}
+func (UnimplementedOrgServer) ListBusinessHours(context.Context, *ListBusinessHoursRequest) (*ListBusinessHoursResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListBusinessHours not implemented")
+}
+func (UnimplementedOrgServer) GetBusinessHours(context.Context, *GetBusinessHoursRequest) (*GetBusinessHoursResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetBusinessHours not implemented")
+}
+func (UnimplementedOrgServer) SetBusinessHours(context.Context, *SetBusinessHoursRequest) (*SetBusinessHoursResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetBusinessHours not implemented")
+}
+func (UnimplementedOrgServer) AddIntervalToBusinessHours(context.Context, *AddIntervalToBusinessHoursRequest) (*AddIntervalToBusinessHoursResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddIntervalToBusinessHours not implemented")
+}
+func (UnimplementedOrgServer) RemoveIntervalFromBusinessHours(context.Context, *RemoveIntervalFromBusinessHoursRequest) (*RemoveIntervalFromBusinessHoursResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RemoveIntervalFromBusinessHours not implemented")
+}
+func (UnimplementedOrgServer) UpdateBusinessHoursInfo(context.Context, *UpdateBusinessHoursInfoRequest) (*UpdateBusinessHoursInfoResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateBusinessHoursInfo not implemented")
+}
+func (UnimplementedOrgServer) DeleteBusinessHours(context.Context, *DeleteBusinessHoursRequest) (*DeleteBusinessHoursResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteBusinessHours not implemented")
+}
+func (UnimplementedOrgServer) EvaluateBusinessHours(context.Context, *EvaluateBusinessHoursRequest) (*EvaluateBusinessHoursResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EvaluateBusinessHours not implemented")
 }
 func (UnimplementedOrgServer) CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateUser not implemented")
@@ -3849,15 +3943,6 @@ func (UnimplementedOrgServer) CreateBusinessHours(context.Context, *CreateBusine
 }
 func (UnimplementedOrgServer) UpdateBusinessHours(context.Context, *UpdateBusinessHoursRequest) (*UpdateBusinessHoursResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateBusinessHours not implemented")
-}
-func (UnimplementedOrgServer) DeleteBusinessHours(context.Context, *DeleteBusinessHoursRequest) (*DeleteBusinessHoursResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteBusinessHours not implemented")
-}
-func (UnimplementedOrgServer) ListBusinessHours(context.Context, *ListBusinessHoursRequest) (*ListBusinessHoursResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListBusinessHours not implemented")
-}
-func (UnimplementedOrgServer) GetBusinessHours(context.Context, *GetBusinessHoursRequest) (*GetBusinessHoursResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetBusinessHours not implemented")
 }
 func (UnimplementedOrgServer) mustEmbedUnimplementedOrgServer() {}
 
@@ -4870,6 +4955,150 @@ func _Org_ClearEmailUnsubscribeAcknowledgement_Handler(srv interface{}, ctx cont
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrgServer).ClearEmailUnsubscribeAcknowledgement(ctx, req.(*ClearEmailUnsubscribeAcknowledgementRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_ListBusinessHours_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListBusinessHoursRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).ListBusinessHours(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_ListBusinessHours_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).ListBusinessHours(ctx, req.(*ListBusinessHoursRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_GetBusinessHours_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetBusinessHoursRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).GetBusinessHours(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_GetBusinessHours_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).GetBusinessHours(ctx, req.(*GetBusinessHoursRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_SetBusinessHours_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetBusinessHoursRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).SetBusinessHours(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_SetBusinessHours_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).SetBusinessHours(ctx, req.(*SetBusinessHoursRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_AddIntervalToBusinessHours_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddIntervalToBusinessHoursRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).AddIntervalToBusinessHours(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_AddIntervalToBusinessHours_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).AddIntervalToBusinessHours(ctx, req.(*AddIntervalToBusinessHoursRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_RemoveIntervalFromBusinessHours_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RemoveIntervalFromBusinessHoursRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).RemoveIntervalFromBusinessHours(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_RemoveIntervalFromBusinessHours_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).RemoveIntervalFromBusinessHours(ctx, req.(*RemoveIntervalFromBusinessHoursRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_UpdateBusinessHoursInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateBusinessHoursInfoRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).UpdateBusinessHoursInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_UpdateBusinessHoursInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).UpdateBusinessHoursInfo(ctx, req.(*UpdateBusinessHoursInfoRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_DeleteBusinessHours_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteBusinessHoursRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).DeleteBusinessHours(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_DeleteBusinessHours_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).DeleteBusinessHours(ctx, req.(*DeleteBusinessHoursRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_EvaluateBusinessHours_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EvaluateBusinessHoursRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).EvaluateBusinessHours(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_EvaluateBusinessHours_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).EvaluateBusinessHours(ctx, req.(*EvaluateBusinessHoursRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -7553,60 +7782,6 @@ func _Org_UpdateBusinessHours_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Org_DeleteBusinessHours_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteBusinessHoursRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(OrgServer).DeleteBusinessHours(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Org_DeleteBusinessHours_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrgServer).DeleteBusinessHours(ctx, req.(*DeleteBusinessHoursRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Org_ListBusinessHours_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListBusinessHoursRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(OrgServer).ListBusinessHours(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Org_ListBusinessHours_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrgServer).ListBusinessHours(ctx, req.(*ListBusinessHoursRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Org_GetBusinessHours_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetBusinessHoursRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(OrgServer).GetBusinessHours(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Org_GetBusinessHours_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrgServer).GetBusinessHours(ctx, req.(*GetBusinessHoursRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // Org_ServiceDesc is the grpc.ServiceDesc for Org service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -7817,6 +7992,38 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ClearEmailUnsubscribeAcknowledgement",
 			Handler:    _Org_ClearEmailUnsubscribeAcknowledgement_Handler,
+		},
+		{
+			MethodName: "ListBusinessHours",
+			Handler:    _Org_ListBusinessHours_Handler,
+		},
+		{
+			MethodName: "GetBusinessHours",
+			Handler:    _Org_GetBusinessHours_Handler,
+		},
+		{
+			MethodName: "SetBusinessHours",
+			Handler:    _Org_SetBusinessHours_Handler,
+		},
+		{
+			MethodName: "AddIntervalToBusinessHours",
+			Handler:    _Org_AddIntervalToBusinessHours_Handler,
+		},
+		{
+			MethodName: "RemoveIntervalFromBusinessHours",
+			Handler:    _Org_RemoveIntervalFromBusinessHours_Handler,
+		},
+		{
+			MethodName: "UpdateBusinessHoursInfo",
+			Handler:    _Org_UpdateBusinessHoursInfo_Handler,
+		},
+		{
+			MethodName: "DeleteBusinessHours",
+			Handler:    _Org_DeleteBusinessHours_Handler,
+		},
+		{
+			MethodName: "EvaluateBusinessHours",
+			Handler:    _Org_EvaluateBusinessHours_Handler,
 		},
 		{
 			MethodName: "CreateUser",
@@ -8389,18 +8596,6 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateBusinessHours",
 			Handler:    _Org_UpdateBusinessHours_Handler,
-		},
-		{
-			MethodName: "DeleteBusinessHours",
-			Handler:    _Org_DeleteBusinessHours_Handler,
-		},
-		{
-			MethodName: "ListBusinessHours",
-			Handler:    _Org_ListBusinessHours_Handler,
-		},
-		{
-			MethodName: "GetBusinessHours",
-			Handler:    _Org_GetBusinessHours_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
