@@ -559,6 +559,9 @@ const (
 	OrgGetUserMfaInfoProcedure = "/api.v1alpha1.org.Org/GetUserMfaInfo"
 	// OrgGetMyUserMfaInfoProcedure is the fully-qualified name of the Org's GetMyUserMfaInfo RPC.
 	OrgGetMyUserMfaInfoProcedure = "/api.v1alpha1.org.Org/GetMyUserMfaInfo"
+	// OrgGetMyAllowedMfaMethodsProcedure is the fully-qualified name of the Org's
+	// GetMyAllowedMfaMethods RPC.
+	OrgGetMyAllowedMfaMethodsProcedure = "/api.v1alpha1.org.Org/GetMyAllowedMfaMethods"
 	// OrgCreateBusinessHoursProcedure is the fully-qualified name of the Org's CreateBusinessHours RPC.
 	OrgCreateBusinessHoursProcedure = "/api.v1alpha1.org.Org/CreateBusinessHours"
 	// OrgUpdateBusinessHoursProcedure is the fully-qualified name of the Org's UpdateBusinessHours RPC.
@@ -1025,6 +1028,8 @@ type OrgClient interface {
 	GetUserMfaInfo(context.Context, *connect_go.Request[org.GetUserMfaInfoRequest]) (*connect_go.Response[org.GetUserMfaInfoResponse], error)
 	// GetMyUserMfaInfo returns the mfa info for the current user.
 	GetMyUserMfaInfo(context.Context, *connect_go.Request[org.GetMyUserMfaInfoRequest]) (*connect_go.Response[org.GetMyUserMfaInfoResponse], error)
+	// GetMyAllowedMfaMethods returns the mfa methods allowed to the current user.
+	GetMyAllowedMfaMethods(context.Context, *connect_go.Request[org.GetMyAllowedMfaMethodsRequest]) (*connect_go.Response[org.GetMyAllowedMfaMethodsResponse], error)
 	// CreateBusinessHours persists times businesses are available.
 	CreateBusinessHours(context.Context, *connect_go.Request[org.CreateBusinessHoursRequest]) (*connect_go.Response[org.CreateBusinessHoursResponse], error)
 	// UpdateBusinessHours persists changes to times businesses are available.
@@ -2047,6 +2052,11 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgGetMyUserMfaInfoProcedure,
 			opts...,
 		),
+		getMyAllowedMfaMethods: connect_go.NewClient[org.GetMyAllowedMfaMethodsRequest, org.GetMyAllowedMfaMethodsResponse](
+			httpClient,
+			baseURL+OrgGetMyAllowedMfaMethodsProcedure,
+			opts...,
+		),
 		createBusinessHours: connect_go.NewClient[org.CreateBusinessHoursRequest, org.CreateBusinessHoursResponse](
 			httpClient,
 			baseURL+OrgCreateBusinessHoursProcedure,
@@ -2277,6 +2287,7 @@ type orgClient struct {
 	enableMyUserMfa                          *connect_go.Client[org.EnableMyUserMfaRequest, org.EnableMyUserMfaResponse]
 	getUserMfaInfo                           *connect_go.Client[org.GetUserMfaInfoRequest, org.GetUserMfaInfoResponse]
 	getMyUserMfaInfo                         *connect_go.Client[org.GetMyUserMfaInfoRequest, org.GetMyUserMfaInfoResponse]
+	getMyAllowedMfaMethods                   *connect_go.Client[org.GetMyAllowedMfaMethodsRequest, org.GetMyAllowedMfaMethodsResponse]
 	createBusinessHours                      *connect_go.Client[org.CreateBusinessHoursRequest, org.CreateBusinessHoursResponse]
 	updateBusinessHours                      *connect_go.Client[org.UpdateBusinessHoursRequest, org.UpdateBusinessHoursResponse]
 	deleteBusinessHours                      *connect_go.Client[org.DeleteBusinessHoursRequest, org.DeleteBusinessHoursResponse]
@@ -3295,6 +3306,11 @@ func (c *orgClient) GetMyUserMfaInfo(ctx context.Context, req *connect_go.Reques
 	return c.getMyUserMfaInfo.CallUnary(ctx, req)
 }
 
+// GetMyAllowedMfaMethods calls api.v1alpha1.org.Org.GetMyAllowedMfaMethods.
+func (c *orgClient) GetMyAllowedMfaMethods(ctx context.Context, req *connect_go.Request[org.GetMyAllowedMfaMethodsRequest]) (*connect_go.Response[org.GetMyAllowedMfaMethodsResponse], error) {
+	return c.getMyAllowedMfaMethods.CallUnary(ctx, req)
+}
+
 // CreateBusinessHours calls api.v1alpha1.org.Org.CreateBusinessHours.
 func (c *orgClient) CreateBusinessHours(ctx context.Context, req *connect_go.Request[org.CreateBusinessHoursRequest]) (*connect_go.Response[org.CreateBusinessHoursResponse], error) {
 	return c.createBusinessHours.CallUnary(ctx, req)
@@ -3774,6 +3790,8 @@ type OrgHandler interface {
 	GetUserMfaInfo(context.Context, *connect_go.Request[org.GetUserMfaInfoRequest]) (*connect_go.Response[org.GetUserMfaInfoResponse], error)
 	// GetMyUserMfaInfo returns the mfa info for the current user.
 	GetMyUserMfaInfo(context.Context, *connect_go.Request[org.GetMyUserMfaInfoRequest]) (*connect_go.Response[org.GetMyUserMfaInfoResponse], error)
+	// GetMyAllowedMfaMethods returns the mfa methods allowed to the current user.
+	GetMyAllowedMfaMethods(context.Context, *connect_go.Request[org.GetMyAllowedMfaMethodsRequest]) (*connect_go.Response[org.GetMyAllowedMfaMethodsResponse], error)
 	// CreateBusinessHours persists times businesses are available.
 	CreateBusinessHours(context.Context, *connect_go.Request[org.CreateBusinessHoursRequest]) (*connect_go.Response[org.CreateBusinessHoursResponse], error)
 	// UpdateBusinessHours persists changes to times businesses are available.
@@ -4792,6 +4810,11 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.GetMyUserMfaInfo,
 		opts...,
 	)
+	orgGetMyAllowedMfaMethodsHandler := connect_go.NewUnaryHandler(
+		OrgGetMyAllowedMfaMethodsProcedure,
+		svc.GetMyAllowedMfaMethods,
+		opts...,
+	)
 	orgCreateBusinessHoursHandler := connect_go.NewUnaryHandler(
 		OrgCreateBusinessHoursProcedure,
 		svc.CreateBusinessHours,
@@ -5219,6 +5242,8 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 			orgGetUserMfaInfoHandler.ServeHTTP(w, r)
 		case OrgGetMyUserMfaInfoProcedure:
 			orgGetMyUserMfaInfoHandler.ServeHTTP(w, r)
+		case OrgGetMyAllowedMfaMethodsProcedure:
+			orgGetMyAllowedMfaMethodsHandler.ServeHTTP(w, r)
 		case OrgCreateBusinessHoursProcedure:
 			orgCreateBusinessHoursHandler.ServeHTTP(w, r)
 		case OrgUpdateBusinessHoursProcedure:
@@ -6036,6 +6061,10 @@ func (UnimplementedOrgHandler) GetUserMfaInfo(context.Context, *connect_go.Reque
 
 func (UnimplementedOrgHandler) GetMyUserMfaInfo(context.Context, *connect_go.Request[org.GetMyUserMfaInfoRequest]) (*connect_go.Response[org.GetMyUserMfaInfoResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.GetMyUserMfaInfo is not implemented"))
+}
+
+func (UnimplementedOrgHandler) GetMyAllowedMfaMethods(context.Context, *connect_go.Request[org.GetMyAllowedMfaMethodsRequest]) (*connect_go.Response[org.GetMyAllowedMfaMethodsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.GetMyAllowedMfaMethods is not implemented"))
 }
 
 func (UnimplementedOrgHandler) CreateBusinessHours(context.Context, *connect_go.Request[org.CreateBusinessHoursRequest]) (*connect_go.Response[org.CreateBusinessHoursResponse], error) {

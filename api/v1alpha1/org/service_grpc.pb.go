@@ -219,6 +219,7 @@ const (
 	Org_EnableMyUserMfa_FullMethodName                          = "/api.v1alpha1.org.Org/EnableMyUserMfa"
 	Org_GetUserMfaInfo_FullMethodName                           = "/api.v1alpha1.org.Org/GetUserMfaInfo"
 	Org_GetMyUserMfaInfo_FullMethodName                         = "/api.v1alpha1.org.Org/GetMyUserMfaInfo"
+	Org_GetMyAllowedMfaMethods_FullMethodName                   = "/api.v1alpha1.org.Org/GetMyAllowedMfaMethods"
 	Org_CreateBusinessHours_FullMethodName                      = "/api.v1alpha1.org.Org/CreateBusinessHours"
 	Org_UpdateBusinessHours_FullMethodName                      = "/api.v1alpha1.org.Org/UpdateBusinessHours"
 	Org_DeleteBusinessHours_FullMethodName                      = "/api.v1alpha1.org.Org/DeleteBusinessHours"
@@ -682,6 +683,8 @@ type OrgClient interface {
 	GetUserMfaInfo(ctx context.Context, in *GetUserMfaInfoRequest, opts ...grpc.CallOption) (*GetUserMfaInfoResponse, error)
 	// GetMyUserMfaInfo returns the mfa info for the current user.
 	GetMyUserMfaInfo(ctx context.Context, in *GetMyUserMfaInfoRequest, opts ...grpc.CallOption) (*GetMyUserMfaInfoResponse, error)
+	// GetMyAllowedMfaMethods returns the mfa methods allowed to the current user.
+	GetMyAllowedMfaMethods(ctx context.Context, in *GetMyAllowedMfaMethodsRequest, opts ...grpc.CallOption) (*GetMyAllowedMfaMethodsResponse, error)
 	// CreateBusinessHours persists times businesses are available.
 	CreateBusinessHours(ctx context.Context, in *CreateBusinessHoursRequest, opts ...grpc.CallOption) (*CreateBusinessHoursResponse, error)
 	// UpdateBusinessHours persists changes to times businesses are available.
@@ -2709,6 +2712,15 @@ func (c *orgClient) GetMyUserMfaInfo(ctx context.Context, in *GetMyUserMfaInfoRe
 	return out, nil
 }
 
+func (c *orgClient) GetMyAllowedMfaMethods(ctx context.Context, in *GetMyAllowedMfaMethodsRequest, opts ...grpc.CallOption) (*GetMyAllowedMfaMethodsResponse, error) {
+	out := new(GetMyAllowedMfaMethodsResponse)
+	err := c.cc.Invoke(ctx, Org_GetMyAllowedMfaMethods_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *orgClient) CreateBusinessHours(ctx context.Context, in *CreateBusinessHoursRequest, opts ...grpc.CallOption) (*CreateBusinessHoursResponse, error) {
 	out := new(CreateBusinessHoursResponse)
 	err := c.cc.Invoke(ctx, Org_CreateBusinessHours_FullMethodName, in, out, opts...)
@@ -3210,6 +3222,8 @@ type OrgServer interface {
 	GetUserMfaInfo(context.Context, *GetUserMfaInfoRequest) (*GetUserMfaInfoResponse, error)
 	// GetMyUserMfaInfo returns the mfa info for the current user.
 	GetMyUserMfaInfo(context.Context, *GetMyUserMfaInfoRequest) (*GetMyUserMfaInfoResponse, error)
+	// GetMyAllowedMfaMethods returns the mfa methods allowed to the current user.
+	GetMyAllowedMfaMethods(context.Context, *GetMyAllowedMfaMethodsRequest) (*GetMyAllowedMfaMethodsResponse, error)
 	// CreateBusinessHours persists times businesses are available.
 	CreateBusinessHours(context.Context, *CreateBusinessHoursRequest) (*CreateBusinessHoursResponse, error)
 	// UpdateBusinessHours persists changes to times businesses are available.
@@ -3826,6 +3840,9 @@ func (UnimplementedOrgServer) GetUserMfaInfo(context.Context, *GetUserMfaInfoReq
 }
 func (UnimplementedOrgServer) GetMyUserMfaInfo(context.Context, *GetMyUserMfaInfoRequest) (*GetMyUserMfaInfoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMyUserMfaInfo not implemented")
+}
+func (UnimplementedOrgServer) GetMyAllowedMfaMethods(context.Context, *GetMyAllowedMfaMethodsRequest) (*GetMyAllowedMfaMethodsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMyAllowedMfaMethods not implemented")
 }
 func (UnimplementedOrgServer) CreateBusinessHours(context.Context, *CreateBusinessHoursRequest) (*CreateBusinessHoursResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateBusinessHours not implemented")
@@ -7482,6 +7499,24 @@ func _Org_GetMyUserMfaInfo_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Org_GetMyAllowedMfaMethods_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetMyAllowedMfaMethodsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).GetMyAllowedMfaMethods(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_GetMyAllowedMfaMethods_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).GetMyAllowedMfaMethods(ctx, req.(*GetMyAllowedMfaMethodsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Org_CreateBusinessHours_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateBusinessHoursRequest)
 	if err := dec(in); err != nil {
@@ -8342,6 +8377,10 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetMyUserMfaInfo",
 			Handler:    _Org_GetMyUserMfaInfo_Handler,
+		},
+		{
+			MethodName: "GetMyAllowedMfaMethods",
+			Handler:    _Org_GetMyAllowedMfaMethods_Handler,
 		},
 		{
 			MethodName: "CreateBusinessHours",
