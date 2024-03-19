@@ -9409,7 +9409,9 @@ type CreateUnassignedWFMAgentRequest struct {
 
 	// ID of the wfm agent to copy the agent group associations onto the new agent.
 	WfmAgentSidToCopyAgentGroupAssociations *wrapperspb.Int64Value `protobuf:"bytes,1,opt,name=wfm_agent_sid_to_copy_agent_group_associations,json=wfmAgentSidToCopyAgentGroupAssociations,proto3" json:"wfm_agent_sid_to_copy_agent_group_associations,omitempty"`
-	// Optional: name to give the agent, if left blank it will be given a random name in the form 'Unassigned Agent - <random_number>'.
+	// Optional: name to give the agent, it will always have the following random string postfixed to it:
+	// ' - <random_upper_letter><random_upper_letter><random_number_from_100_to_999>'.
+	// If left blank, the name will have 'Unassigned Agent' as its prefix.
 	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 }
 
