@@ -4582,6 +4582,7 @@ type ListBusinessHoursResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// The list of business hours
 	BusinessHours []*org.BusinessHours `protobuf:"bytes,2,rep,name=business_hours,json=businessHours,proto3" json:"business_hours,omitempty"`
 }
 
@@ -4630,6 +4631,7 @@ type GetBusinessHoursRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// The id of the business hours object
 	BusinessHoursId string `protobuf:"bytes,1,opt,name=business_hours_id,json=businessHoursId,proto3" json:"business_hours_id,omitempty"`
 }
 
@@ -4678,6 +4680,7 @@ type GetBusinessHoursResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// The retrieved business hours
 	BusinessHours *org.BusinessHours `protobuf:"bytes,1,opt,name=business_hours,json=businessHours,proto3" json:"business_hours,omitempty"`
 }
 
@@ -4726,10 +4729,14 @@ type SetBusinessHoursRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	BusinessHoursName string             `protobuf:"bytes,1,opt,name=business_hours_name,json=businessHoursName,proto3" json:"business_hours_name,omitempty"`
-	Description       string             `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
-	DayIntervals      []*org.DayInterval `protobuf:"bytes,3,rep,name=day_intervals,json=dayIntervals,proto3" json:"day_intervals,omitempty"`
-	Timezone          commons.TimeZone   `protobuf:"varint,4,opt,name=timezone,proto3,enum=api.commons.TimeZone" json:"timezone,omitempty"`
+	// The name of the business hours
+	BusinessHoursName string `protobuf:"bytes,1,opt,name=business_hours_name,json=businessHoursName,proto3" json:"business_hours_name,omitempty"`
+	// The description of the business hours
+	Description string `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
+	// The list of day intervals for the business hours
+	DayIntervals []*org.DayInterval `protobuf:"bytes,3,rep,name=day_intervals,json=dayIntervals,proto3" json:"day_intervals,omitempty"`
+	// The timezone of the business hours
+	Timezone commons.TimeZone `protobuf:"varint,4,opt,name=timezone,proto3,enum=api.commons.TimeZone" json:"timezone,omitempty"`
 }
 
 func (x *SetBusinessHoursRequest) Reset() {
@@ -4798,6 +4805,7 @@ type SetBusinessHoursResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// The id of the new business hours
 	BusinessHorusId string `protobuf:"bytes,1,opt,name=business_horus_id,json=businessHorusId,proto3" json:"business_horus_id,omitempty"`
 }
 
@@ -4846,8 +4854,10 @@ type AddIntervalToBusinessHoursRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	BusinessHoursId string           `protobuf:"bytes,1,opt,name=business_hours_id,json=businessHoursId,proto3" json:"business_hours_id,omitempty"`
-	DayInterval     *org.DayInterval `protobuf:"bytes,2,opt,name=day_interval,json=dayInterval,proto3" json:"day_interval,omitempty"`
+	// The id of the business hours to add an interval
+	BusinessHoursId string `protobuf:"bytes,1,opt,name=business_hours_id,json=businessHoursId,proto3" json:"business_hours_id,omitempty"`
+	// The day interval to be added
+	DayInterval *org.DayInterval `protobuf:"bytes,2,opt,name=day_interval,json=dayInterval,proto3" json:"day_interval,omitempty"`
 }
 
 func (x *AddIntervalToBusinessHoursRequest) Reset() {
@@ -4941,8 +4951,10 @@ type RemoveIntervalFromBusinessHoursRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	BusinessHoursId string           `protobuf:"bytes,1,opt,name=business_hours_id,json=businessHoursId,proto3" json:"business_hours_id,omitempty"`
-	DayInterval     *org.DayInterval `protobuf:"bytes,2,opt,name=day_interval,json=dayInterval,proto3" json:"day_interval,omitempty"`
+	// The id of the business hours to remove an interval
+	BusinessHoursId string `protobuf:"bytes,1,opt,name=business_hours_id,json=businessHoursId,proto3" json:"business_hours_id,omitempty"`
+	// The day interval to be removed
+	DayInterval *org.DayInterval `protobuf:"bytes,2,opt,name=day_interval,json=dayInterval,proto3" json:"day_interval,omitempty"`
 }
 
 func (x *RemoveIntervalFromBusinessHoursRequest) Reset() {
@@ -5036,11 +5048,16 @@ type UpdateBusinessHoursInfoRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	BusinessHoursId   string                 `protobuf:"bytes,1,opt,name=business_hours_id,json=businessHoursId,proto3" json:"business_hours_id,omitempty"`
-	BusinessHoursName string                 `protobuf:"bytes,2,opt,name=business_hours_name,json=businessHoursName,proto3" json:"business_hours_name,omitempty"`
-	Description       string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
-	Timezone          commons.TimeZone       `protobuf:"varint,4,opt,name=timezone,proto3,enum=api.commons.TimeZone" json:"timezone,omitempty"`
-	FieldMask         *fieldmaskpb.FieldMask `protobuf:"bytes,5,opt,name=field_mask,json=fieldMask,proto3" json:"field_mask,omitempty"`
+	// The id of the business hours object
+	BusinessHoursId string `protobuf:"bytes,1,opt,name=business_hours_id,json=businessHoursId,proto3" json:"business_hours_id,omitempty"`
+	// The updated name of the business hours
+	BusinessHoursName string `protobuf:"bytes,2,opt,name=business_hours_name,json=businessHoursName,proto3" json:"business_hours_name,omitempty"`
+	// The updated description of the business hours
+	Description string `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	// The updated timezone of the business hours
+	Timezone commons.TimeZone `protobuf:"varint,4,opt,name=timezone,proto3,enum=api.commons.TimeZone" json:"timezone,omitempty"`
+	// Field mask for the update request
+	FieldMask *fieldmaskpb.FieldMask `protobuf:"bytes,5,opt,name=field_mask,json=fieldMask,proto3" json:"field_mask,omitempty"`
 }
 
 func (x *UpdateBusinessHoursInfoRequest) Reset() {
@@ -5155,6 +5172,7 @@ type DeleteBusinessHoursRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// The id of the business hours object to be deleted
 	BusinessHoursId string `protobuf:"bytes,1,opt,name=business_hours_id,json=businessHoursId,proto3" json:"business_hours_id,omitempty"`
 }
 
