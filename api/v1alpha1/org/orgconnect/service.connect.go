@@ -206,6 +206,9 @@ const (
 	OrgUpdateBusinessHoursInfoProcedure = "/api.v1alpha1.org.Org/UpdateBusinessHoursInfo"
 	// OrgDeleteBusinessHoursProcedure is the fully-qualified name of the Org's DeleteBusinessHours RPC.
 	OrgDeleteBusinessHoursProcedure = "/api.v1alpha1.org.Org/DeleteBusinessHours"
+	// OrgEvaluateBusinessHoursProcedure is the fully-qualified name of the Org's EvaluateBusinessHours
+	// RPC.
+	OrgEvaluateBusinessHoursProcedure = "/api.v1alpha1.org.Org/EvaluateBusinessHours"
 	// OrgCreateUserProcedure is the fully-qualified name of the Org's CreateUser RPC.
 	OrgCreateUserProcedure = "/api.v1alpha1.org.Org/CreateUser"
 	// OrgCreateDelegatedUserProcedure is the fully-qualified name of the Org's CreateDelegatedUser RPC.
@@ -732,6 +735,8 @@ type OrgClient interface {
 	UpdateBusinessHoursInfo(context.Context, *connect_go.Request[org.UpdateBusinessHoursInfoRequest]) (*connect_go.Response[org.UpdateBusinessHoursInfoResponse], error)
 	// DeleteBusinessHours removes business hours.
 	DeleteBusinessHours(context.Context, *connect_go.Request[org.DeleteBusinessHoursRequest]) (*connect_go.Response[org.DeleteBusinessHoursResponse], error)
+	// EvaluateBusinessHours determines whether or not the current time is within a business hours day interval
+	EvaluateBusinessHours(context.Context, *connect_go.Request[org.EvaluateBusinessHoursRequest]) (*connect_go.Response[org.EvaluateBusinessHoursResponse], error)
 	// CreateUser creates a new user and enables it for the region it is getting created in.
 	CreateUser(context.Context, *connect_go.Request[org.CreateUserRequest]) (*connect_go.Response[org.CreateUserResponse], error)
 	// CreateDelegatedUser creates a new delegated user and enables it for the region it is getting created in.
@@ -1374,6 +1379,11 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 		deleteBusinessHours: connect_go.NewClient[org.DeleteBusinessHoursRequest, org.DeleteBusinessHoursResponse](
 			httpClient,
 			baseURL+OrgDeleteBusinessHoursProcedure,
+			opts...,
+		),
+		evaluateBusinessHours: connect_go.NewClient[org.EvaluateBusinessHoursRequest, org.EvaluateBusinessHoursResponse](
+			httpClient,
+			baseURL+OrgEvaluateBusinessHoursProcedure,
 			opts...,
 		),
 		createUser: connect_go.NewClient[org.CreateUserRequest, org.CreateUserResponse](
@@ -2178,6 +2188,7 @@ type orgClient struct {
 	removeIntervalFromBusinessHours          *connect_go.Client[org.RemoveIntervalFromBusinessHoursRequest, org.RemoveIntervalFromBusinessHoursResponse]
 	updateBusinessHoursInfo                  *connect_go.Client[org.UpdateBusinessHoursInfoRequest, org.UpdateBusinessHoursInfoResponse]
 	deleteBusinessHours                      *connect_go.Client[org.DeleteBusinessHoursRequest, org.DeleteBusinessHoursResponse]
+	evaluateBusinessHours                    *connect_go.Client[org.EvaluateBusinessHoursRequest, org.EvaluateBusinessHoursResponse]
 	createUser                               *connect_go.Client[org.CreateUserRequest, org.CreateUserResponse]
 	createDelegatedUser                      *connect_go.Client[org.CreateDelegatedUserRequest, org.CreateDelegatedUserResponse]
 	getMyUser                                *connect_go.Client[org.GetMyUserRequest, org.GetMyUserResponse]
@@ -2637,6 +2648,11 @@ func (c *orgClient) UpdateBusinessHoursInfo(ctx context.Context, req *connect_go
 // DeleteBusinessHours calls api.v1alpha1.org.Org.DeleteBusinessHours.
 func (c *orgClient) DeleteBusinessHours(ctx context.Context, req *connect_go.Request[org.DeleteBusinessHoursRequest]) (*connect_go.Response[org.DeleteBusinessHoursResponse], error) {
 	return c.deleteBusinessHours.CallUnary(ctx, req)
+}
+
+// EvaluateBusinessHours calls api.v1alpha1.org.Org.EvaluateBusinessHours.
+func (c *orgClient) EvaluateBusinessHours(ctx context.Context, req *connect_go.Request[org.EvaluateBusinessHoursRequest]) (*connect_go.Response[org.EvaluateBusinessHoursResponse], error) {
+	return c.evaluateBusinessHours.CallUnary(ctx, req)
 }
 
 // CreateUser calls api.v1alpha1.org.Org.CreateUser.
@@ -3533,6 +3549,8 @@ type OrgHandler interface {
 	UpdateBusinessHoursInfo(context.Context, *connect_go.Request[org.UpdateBusinessHoursInfoRequest]) (*connect_go.Response[org.UpdateBusinessHoursInfoResponse], error)
 	// DeleteBusinessHours removes business hours.
 	DeleteBusinessHours(context.Context, *connect_go.Request[org.DeleteBusinessHoursRequest]) (*connect_go.Response[org.DeleteBusinessHoursResponse], error)
+	// EvaluateBusinessHours determines whether or not the current time is within a business hours day interval
+	EvaluateBusinessHours(context.Context, *connect_go.Request[org.EvaluateBusinessHoursRequest]) (*connect_go.Response[org.EvaluateBusinessHoursResponse], error)
 	// CreateUser creates a new user and enables it for the region it is getting created in.
 	CreateUser(context.Context, *connect_go.Request[org.CreateUserRequest]) (*connect_go.Response[org.CreateUserResponse], error)
 	// CreateDelegatedUser creates a new delegated user and enables it for the region it is getting created in.
@@ -4171,6 +4189,11 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 	orgDeleteBusinessHoursHandler := connect_go.NewUnaryHandler(
 		OrgDeleteBusinessHoursProcedure,
 		svc.DeleteBusinessHours,
+		opts...,
+	)
+	orgEvaluateBusinessHoursHandler := connect_go.NewUnaryHandler(
+		OrgEvaluateBusinessHoursProcedure,
+		svc.EvaluateBusinessHours,
 		opts...,
 	)
 	orgCreateUserHandler := connect_go.NewUnaryHandler(
@@ -5034,6 +5057,8 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 			orgUpdateBusinessHoursInfoHandler.ServeHTTP(w, r)
 		case OrgDeleteBusinessHoursProcedure:
 			orgDeleteBusinessHoursHandler.ServeHTTP(w, r)
+		case OrgEvaluateBusinessHoursProcedure:
+			orgEvaluateBusinessHoursHandler.ServeHTTP(w, r)
 		case OrgCreateUserProcedure:
 			orgCreateUserHandler.ServeHTTP(w, r)
 		case OrgCreateDelegatedUserProcedure:
@@ -5583,6 +5608,10 @@ func (UnimplementedOrgHandler) UpdateBusinessHoursInfo(context.Context, *connect
 
 func (UnimplementedOrgHandler) DeleteBusinessHours(context.Context, *connect_go.Request[org.DeleteBusinessHoursRequest]) (*connect_go.Response[org.DeleteBusinessHoursResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.DeleteBusinessHours is not implemented"))
+}
+
+func (UnimplementedOrgHandler) EvaluateBusinessHours(context.Context, *connect_go.Request[org.EvaluateBusinessHoursRequest]) (*connect_go.Response[org.EvaluateBusinessHoursResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.EvaluateBusinessHours is not implemented"))
 }
 
 func (UnimplementedOrgHandler) CreateUser(context.Context, *connect_go.Request[org.CreateUserRequest]) (*connect_go.Response[org.CreateUserResponse], error) {

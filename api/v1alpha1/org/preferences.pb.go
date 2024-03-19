@@ -5254,6 +5254,105 @@ func (*DeleteBusinessHoursResponse) Descriptor() ([]byte, []int) {
 	return file_api_v1alpha1_org_preferences_proto_rawDescGZIP(), []int{106}
 }
 
+// Request for EvaluateBusinessHours
+type EvaluateBusinessHoursRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The id of the business hours to evaluate
+	BusinessHoursId string `protobuf:"bytes,1,opt,name=business_hours_id,json=businessHoursId,proto3" json:"business_hours_id,omitempty"`
+}
+
+func (x *EvaluateBusinessHoursRequest) Reset() {
+	*x = EvaluateBusinessHoursRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_org_preferences_proto_msgTypes[107]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *EvaluateBusinessHoursRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EvaluateBusinessHoursRequest) ProtoMessage() {}
+
+func (x *EvaluateBusinessHoursRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_org_preferences_proto_msgTypes[107]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EvaluateBusinessHoursRequest.ProtoReflect.Descriptor instead.
+func (*EvaluateBusinessHoursRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_org_preferences_proto_rawDescGZIP(), []int{107}
+}
+
+func (x *EvaluateBusinessHoursRequest) GetBusinessHoursId() string {
+	if x != nil {
+		return x.BusinessHoursId
+	}
+	return ""
+}
+
+// Response for EvaluateBusinessHours
+type EvaluateBusinessHoursResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Resulting boolean if the current time is within
+	// a day interval of a business hours object
+	WithinRange bool `protobuf:"varint,1,opt,name=within_range,json=withinRange,proto3" json:"within_range,omitempty"`
+}
+
+func (x *EvaluateBusinessHoursResponse) Reset() {
+	*x = EvaluateBusinessHoursResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_org_preferences_proto_msgTypes[108]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *EvaluateBusinessHoursResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EvaluateBusinessHoursResponse) ProtoMessage() {}
+
+func (x *EvaluateBusinessHoursResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_org_preferences_proto_msgTypes[108]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EvaluateBusinessHoursResponse.ProtoReflect.Descriptor instead.
+func (*EvaluateBusinessHoursResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_org_preferences_proto_rawDescGZIP(), []int{108}
+}
+
+func (x *EvaluateBusinessHoursResponse) GetWithinRange() bool {
+	if x != nil {
+		return x.WithinRange
+	}
+	return false
+}
+
 var File_api_v1alpha1_org_preferences_proto protoreflect.FileDescriptor
 
 var file_api_v1alpha1_org_preferences_proto_rawDesc = []byte{
@@ -5976,7 +6075,16 @@ var file_api_v1alpha1_org_preferences_proto_rawDesc = []byte{
 	0x68, 0x6f, 0x75, 0x72, 0x73, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0f,
 	0x62, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x48, 0x6f, 0x75, 0x72, 0x73, 0x49, 0x64, 0x22,
 	0x1d, 0x0a, 0x1b, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73,
-	0x73, 0x48, 0x6f, 0x75, 0x72, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0xb7,
+	0x73, 0x48, 0x6f, 0x75, 0x72, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x4a,
+	0x0a, 0x1c, 0x45, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x65, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65,
+	0x73, 0x73, 0x48, 0x6f, 0x75, 0x72, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x2a,
+	0x0a, 0x11, 0x62, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x5f, 0x68, 0x6f, 0x75, 0x72, 0x73,
+	0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0f, 0x62, 0x75, 0x73, 0x69, 0x6e,
+	0x65, 0x73, 0x73, 0x48, 0x6f, 0x75, 0x72, 0x73, 0x49, 0x64, 0x22, 0x42, 0x0a, 0x1d, 0x45, 0x76,
+	0x61, 0x6c, 0x75, 0x61, 0x74, 0x65, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x48, 0x6f,
+	0x75, 0x72, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x21, 0x0a, 0x0c, 0x77,
+	0x69, 0x74, 0x68, 0x69, 0x6e, 0x5f, 0x72, 0x61, 0x6e, 0x67, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x08, 0x52, 0x0b, 0x77, 0x69, 0x74, 0x68, 0x69, 0x6e, 0x52, 0x61, 0x6e, 0x67, 0x65, 0x42, 0xb7,
 	0x01, 0x0a, 0x14, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70,
 	0x68, 0x61, 0x31, 0x2e, 0x6f, 0x72, 0x67, 0x42, 0x10, 0x50, 0x72, 0x65, 0x66, 0x65, 0x72, 0x65,
 	0x6e, 0x63, 0x65, 0x73, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x2b, 0x67, 0x69, 0x74,
@@ -6003,7 +6111,7 @@ func file_api_v1alpha1_org_preferences_proto_rawDescGZIP() []byte {
 	return file_api_v1alpha1_org_preferences_proto_rawDescData
 }
 
-var file_api_v1alpha1_org_preferences_proto_msgTypes = make([]protoimpl.MessageInfo, 107)
+var file_api_v1alpha1_org_preferences_proto_msgTypes = make([]protoimpl.MessageInfo, 109)
 var file_api_v1alpha1_org_preferences_proto_goTypes = []interface{}{
 	(*GetOrganizationPreferencesRequest)(nil),             // 0: api.v1alpha1.org.GetOrganizationPreferencesRequest
 	(*GetOrganizationPreferencesResponse)(nil),            // 1: api.v1alpha1.org.GetOrganizationPreferencesResponse
@@ -6112,120 +6220,122 @@ var file_api_v1alpha1_org_preferences_proto_goTypes = []interface{}{
 	(*UpdateBusinessHoursInfoResponse)(nil),               // 104: api.v1alpha1.org.UpdateBusinessHoursInfoResponse
 	(*DeleteBusinessHoursRequest)(nil),                    // 105: api.v1alpha1.org.DeleteBusinessHoursRequest
 	(*DeleteBusinessHoursResponse)(nil),                   // 106: api.v1alpha1.org.DeleteBusinessHoursResponse
-	(*fieldmaskpb.FieldMask)(nil),                         // 107: google.protobuf.FieldMask
-	(*org.OrganizationPreferences)(nil),                   // 108: api.commons.org.OrganizationPreferences
-	(*org.AgentPreferences)(nil),                          // 109: api.commons.org.AgentPreferences
-	(*org.ContactPreferences)(nil),                        // 110: api.commons.org.ContactPreferences
-	(*org.AuthenticationPreferences)(nil),                 // 111: api.commons.org.AuthenticationPreferences
-	(*org.WebhookPreferences)(nil),                        // 112: api.commons.org.WebhookPreferences
-	(*org.DashboardPreferences)(nil),                      // 113: api.commons.org.DashboardPreferences
-	(*org.DashboardQueuePreferences)(nil),                 // 114: api.commons.org.DashboardQueuePreferences
-	(*org.PhonePreferences)(nil),                          // 115: api.commons.org.PhonePreferences
-	(*org.CompliancePreferences)(nil),                     // 116: api.commons.org.CompliancePreferences
-	(*org.BroadcastPreferences)(nil),                      // 117: api.commons.org.BroadcastPreferences
-	(*org.SchedulePreferences)(nil),                       // 118: api.commons.org.SchedulePreferences
-	(*org.EmailSmsPreferences)(nil),                       // 119: api.commons.org.EmailSmsPreferences
-	(*org.BusinessPreferences)(nil),                       // 120: api.commons.org.BusinessPreferences
-	(*org.ScorecardsPreferences)(nil),                     // 121: api.commons.org.ScorecardsPreferences
-	(*org.VoiceAnalyticsPreferences)(nil),                 // 122: api.commons.org.VoiceAnalyticsPreferences
-	(*org.EndOfDayPreferences)(nil),                       // 123: api.commons.org.EndOfDayPreferences
-	(*org.FilterPreferences)(nil),                         // 124: api.commons.org.FilterPreferences
-	(*org.RecordingPreferences)(nil),                      // 125: api.commons.org.RecordingPreferences
-	(*org.AdminClientPreferences)(nil),                    // 126: api.commons.org.AdminClientPreferences
-	(*org.BusinessHours)(nil),                             // 127: api.commons.org.BusinessHours
-	(*org.DayInterval)(nil),                               // 128: api.commons.org.DayInterval
-	(commons.TimeZone)(0),                                 // 129: api.commons.TimeZone
+	(*EvaluateBusinessHoursRequest)(nil),                  // 107: api.v1alpha1.org.EvaluateBusinessHoursRequest
+	(*EvaluateBusinessHoursResponse)(nil),                 // 108: api.v1alpha1.org.EvaluateBusinessHoursResponse
+	(*fieldmaskpb.FieldMask)(nil),                         // 109: google.protobuf.FieldMask
+	(*org.OrganizationPreferences)(nil),                   // 110: api.commons.org.OrganizationPreferences
+	(*org.AgentPreferences)(nil),                          // 111: api.commons.org.AgentPreferences
+	(*org.ContactPreferences)(nil),                        // 112: api.commons.org.ContactPreferences
+	(*org.AuthenticationPreferences)(nil),                 // 113: api.commons.org.AuthenticationPreferences
+	(*org.WebhookPreferences)(nil),                        // 114: api.commons.org.WebhookPreferences
+	(*org.DashboardPreferences)(nil),                      // 115: api.commons.org.DashboardPreferences
+	(*org.DashboardQueuePreferences)(nil),                 // 116: api.commons.org.DashboardQueuePreferences
+	(*org.PhonePreferences)(nil),                          // 117: api.commons.org.PhonePreferences
+	(*org.CompliancePreferences)(nil),                     // 118: api.commons.org.CompliancePreferences
+	(*org.BroadcastPreferences)(nil),                      // 119: api.commons.org.BroadcastPreferences
+	(*org.SchedulePreferences)(nil),                       // 120: api.commons.org.SchedulePreferences
+	(*org.EmailSmsPreferences)(nil),                       // 121: api.commons.org.EmailSmsPreferences
+	(*org.BusinessPreferences)(nil),                       // 122: api.commons.org.BusinessPreferences
+	(*org.ScorecardsPreferences)(nil),                     // 123: api.commons.org.ScorecardsPreferences
+	(*org.VoiceAnalyticsPreferences)(nil),                 // 124: api.commons.org.VoiceAnalyticsPreferences
+	(*org.EndOfDayPreferences)(nil),                       // 125: api.commons.org.EndOfDayPreferences
+	(*org.FilterPreferences)(nil),                         // 126: api.commons.org.FilterPreferences
+	(*org.RecordingPreferences)(nil),                      // 127: api.commons.org.RecordingPreferences
+	(*org.AdminClientPreferences)(nil),                    // 128: api.commons.org.AdminClientPreferences
+	(*org.BusinessHours)(nil),                             // 129: api.commons.org.BusinessHours
+	(*org.DayInterval)(nil),                               // 130: api.commons.org.DayInterval
+	(commons.TimeZone)(0),                                 // 131: api.commons.TimeZone
 }
 var file_api_v1alpha1_org_preferences_proto_depIdxs = []int32{
-	107, // 0: api.v1alpha1.org.GetOrganizationPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
-	108, // 1: api.v1alpha1.org.GetOrganizationPreferencesResponse.organization_preferences:type_name -> api.commons.org.OrganizationPreferences
-	108, // 2: api.v1alpha1.org.UpdateOrganizationPreferencesRequest.organization_preferences:type_name -> api.commons.org.OrganizationPreferences
-	107, // 3: api.v1alpha1.org.UpdateOrganizationPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
-	107, // 4: api.v1alpha1.org.GetAgentPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
-	109, // 5: api.v1alpha1.org.GetAgentPreferencesResponse.agent_preferences:type_name -> api.commons.org.AgentPreferences
-	109, // 6: api.v1alpha1.org.UpdateAgentPreferencesRequest.agent_preferences:type_name -> api.commons.org.AgentPreferences
-	107, // 7: api.v1alpha1.org.UpdateAgentPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
-	107, // 8: api.v1alpha1.org.GetContactPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
-	110, // 9: api.v1alpha1.org.GetContactPreferencesResponse.contact_preferences:type_name -> api.commons.org.ContactPreferences
-	110, // 10: api.v1alpha1.org.UpdateContactPreferencesRequest.contact_preferences:type_name -> api.commons.org.ContactPreferences
-	107, // 11: api.v1alpha1.org.UpdateContactPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
-	107, // 12: api.v1alpha1.org.GetAuthenticationPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
-	111, // 13: api.v1alpha1.org.GetAuthenticationPreferencesResponse.authentication_preferences:type_name -> api.commons.org.AuthenticationPreferences
-	111, // 14: api.v1alpha1.org.UpdateAuthenticationPreferencesRequest.authentication_preferences:type_name -> api.commons.org.AuthenticationPreferences
-	107, // 15: api.v1alpha1.org.UpdateAuthenticationPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
-	107, // 16: api.v1alpha1.org.GetWebhookPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
-	112, // 17: api.v1alpha1.org.GetWebhookPreferencesResponse.webhook_preferences:type_name -> api.commons.org.WebhookPreferences
-	112, // 18: api.v1alpha1.org.UpdateWebhookPreferencesRequest.webhook_preferences:type_name -> api.commons.org.WebhookPreferences
-	107, // 19: api.v1alpha1.org.UpdateWebhookPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
-	107, // 20: api.v1alpha1.org.GetDashboardGeneralPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
-	113, // 21: api.v1alpha1.org.GetDashboardGeneralPreferencesResponse.dashboard_preferences:type_name -> api.commons.org.DashboardPreferences
-	113, // 22: api.v1alpha1.org.UpdateDashboardGeneralPreferencesRequest.dashboard_preferences:type_name -> api.commons.org.DashboardPreferences
-	107, // 23: api.v1alpha1.org.UpdateDashboardGeneralPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
-	107, // 24: api.v1alpha1.org.GetDashboardQueuePreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
-	114, // 25: api.v1alpha1.org.GetDashboardQueuePreferencesResponse.dashboard_queue_preferences:type_name -> api.commons.org.DashboardQueuePreferences
-	114, // 26: api.v1alpha1.org.UpdateDashboardQueuePreferencesRequest.dashboard_queue_preferences:type_name -> api.commons.org.DashboardQueuePreferences
-	107, // 27: api.v1alpha1.org.UpdateDashboardQueuePreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
-	107, // 28: api.v1alpha1.org.GetPhonePreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
-	115, // 29: api.v1alpha1.org.GetPhonePreferencesResponse.phone_preferences:type_name -> api.commons.org.PhonePreferences
-	115, // 30: api.v1alpha1.org.UpdatePhonePreferencesRequest.phone_preferences:type_name -> api.commons.org.PhonePreferences
-	107, // 31: api.v1alpha1.org.UpdatePhonePreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
-	107, // 32: api.v1alpha1.org.GetCompliancePreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
-	116, // 33: api.v1alpha1.org.GetCompliancePreferencesResponse.compliance_preferences:type_name -> api.commons.org.CompliancePreferences
-	116, // 34: api.v1alpha1.org.UpdateCompliancePreferencesRequest.compliance_preferences:type_name -> api.commons.org.CompliancePreferences
-	107, // 35: api.v1alpha1.org.UpdateCompliancePreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
-	107, // 36: api.v1alpha1.org.GetBroadcastPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
-	117, // 37: api.v1alpha1.org.GetBroadcastPreferencesResponse.broadcast_preferences:type_name -> api.commons.org.BroadcastPreferences
-	117, // 38: api.v1alpha1.org.UpdateBroadcastPreferencesRequest.broadcast_preferences:type_name -> api.commons.org.BroadcastPreferences
-	107, // 39: api.v1alpha1.org.UpdateBroadcastPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
-	107, // 40: api.v1alpha1.org.GetSchedulePreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
-	118, // 41: api.v1alpha1.org.GetSchedulePreferencesResponse.schedule_preferences:type_name -> api.commons.org.SchedulePreferences
-	118, // 42: api.v1alpha1.org.UpdateSchedulePreferencesRequest.schedule_preferences:type_name -> api.commons.org.SchedulePreferences
-	107, // 43: api.v1alpha1.org.UpdateSchedulePreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
-	107, // 44: api.v1alpha1.org.GetEmailSmsPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
-	119, // 45: api.v1alpha1.org.GetEmailSmsPreferencesResponse.email_sms_preferences:type_name -> api.commons.org.EmailSmsPreferences
-	119, // 46: api.v1alpha1.org.UpdateEmailSmsPreferencesRequest.email_sms_preferences:type_name -> api.commons.org.EmailSmsPreferences
-	107, // 47: api.v1alpha1.org.UpdateEmailSmsPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
-	107, // 48: api.v1alpha1.org.GetBusinessPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
-	120, // 49: api.v1alpha1.org.GetBusinessPreferencesResponse.business_preferences:type_name -> api.commons.org.BusinessPreferences
-	120, // 50: api.v1alpha1.org.UpdateBusinessPreferencesRequest.business_preferences:type_name -> api.commons.org.BusinessPreferences
-	107, // 51: api.v1alpha1.org.UpdateBusinessPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
-	120, // 52: api.v1alpha1.org.UpdateAdminBusinessPreferencesRequest.business_preferences:type_name -> api.commons.org.BusinessPreferences
-	107, // 53: api.v1alpha1.org.UpdateAdminBusinessPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
-	107, // 54: api.v1alpha1.org.GetScorecardsPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
-	121, // 55: api.v1alpha1.org.GetScorecardsPreferencesResponse.scorecards_preferences:type_name -> api.commons.org.ScorecardsPreferences
-	121, // 56: api.v1alpha1.org.UpdateScorecardsPreferencesRequest.scorecards_preferences:type_name -> api.commons.org.ScorecardsPreferences
-	107, // 57: api.v1alpha1.org.UpdateScorecardsPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
-	107, // 58: api.v1alpha1.org.GetVoiceAnalyticsPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
-	122, // 59: api.v1alpha1.org.GetVoiceAnalyticsPreferencesResponse.voice_analytics_preferences:type_name -> api.commons.org.VoiceAnalyticsPreferences
-	122, // 60: api.v1alpha1.org.ListVoiceAnalyticsPreferencesResponse.voice_analytics_preferences:type_name -> api.commons.org.VoiceAnalyticsPreferences
-	122, // 61: api.v1alpha1.org.UpdateVoiceAnalyticsPreferencesRequest.voice_analytics_preferences:type_name -> api.commons.org.VoiceAnalyticsPreferences
-	107, // 62: api.v1alpha1.org.UpdateVoiceAnalyticsPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
-	107, // 63: api.v1alpha1.org.GetEndOfDayPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
-	123, // 64: api.v1alpha1.org.GetEndOfDayPreferencesResponse.end_of_day_preferences:type_name -> api.commons.org.EndOfDayPreferences
-	123, // 65: api.v1alpha1.org.UpdateEndOfDayPreferencesRequest.end_of_day_preferences:type_name -> api.commons.org.EndOfDayPreferences
-	107, // 66: api.v1alpha1.org.UpdateEndOfDayPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
-	107, // 67: api.v1alpha1.org.GetFilterPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
-	124, // 68: api.v1alpha1.org.GetFilterPreferencesResponse.filter_preferences:type_name -> api.commons.org.FilterPreferences
-	124, // 69: api.v1alpha1.org.UpdateFilterPreferencesRequest.filter_preferences:type_name -> api.commons.org.FilterPreferences
-	107, // 70: api.v1alpha1.org.UpdateFilterPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
-	107, // 71: api.v1alpha1.org.GetRecordingPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
-	125, // 72: api.v1alpha1.org.GetRecordingPreferencesResponse.recording_preferences:type_name -> api.commons.org.RecordingPreferences
-	125, // 73: api.v1alpha1.org.UpdateRecordingPreferencesRequest.recording_preferences:type_name -> api.commons.org.RecordingPreferences
-	107, // 74: api.v1alpha1.org.UpdateRecordingPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
-	107, // 75: api.v1alpha1.org.GetAdminClientPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
-	126, // 76: api.v1alpha1.org.GetAdminClientPreferencesResponse.admin_client_preferences:type_name -> api.commons.org.AdminClientPreferences
-	126, // 77: api.v1alpha1.org.UpdateAdminClientPreferencesRequest.admin_client_preferences:type_name -> api.commons.org.AdminClientPreferences
-	107, // 78: api.v1alpha1.org.UpdateAdminClientPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
-	127, // 79: api.v1alpha1.org.CreateBusinessHoursRequest.business_hours:type_name -> api.commons.org.BusinessHours
-	127, // 80: api.v1alpha1.org.UpdateBusinessHoursRequest.business_hours:type_name -> api.commons.org.BusinessHours
-	127, // 81: api.v1alpha1.org.ListBusinessHoursResponse.business_hours:type_name -> api.commons.org.BusinessHours
-	127, // 82: api.v1alpha1.org.GetBusinessHoursResponse.business_hours:type_name -> api.commons.org.BusinessHours
-	128, // 83: api.v1alpha1.org.SetBusinessHoursRequest.day_intervals:type_name -> api.commons.org.DayInterval
-	129, // 84: api.v1alpha1.org.SetBusinessHoursRequest.timezone:type_name -> api.commons.TimeZone
-	128, // 85: api.v1alpha1.org.AddIntervalToBusinessHoursRequest.day_interval:type_name -> api.commons.org.DayInterval
-	128, // 86: api.v1alpha1.org.RemoveIntervalFromBusinessHoursRequest.day_interval:type_name -> api.commons.org.DayInterval
-	129, // 87: api.v1alpha1.org.UpdateBusinessHoursInfoRequest.timezone:type_name -> api.commons.TimeZone
-	107, // 88: api.v1alpha1.org.UpdateBusinessHoursInfoRequest.field_mask:type_name -> google.protobuf.FieldMask
+	109, // 0: api.v1alpha1.org.GetOrganizationPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	110, // 1: api.v1alpha1.org.GetOrganizationPreferencesResponse.organization_preferences:type_name -> api.commons.org.OrganizationPreferences
+	110, // 2: api.v1alpha1.org.UpdateOrganizationPreferencesRequest.organization_preferences:type_name -> api.commons.org.OrganizationPreferences
+	109, // 3: api.v1alpha1.org.UpdateOrganizationPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	109, // 4: api.v1alpha1.org.GetAgentPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	111, // 5: api.v1alpha1.org.GetAgentPreferencesResponse.agent_preferences:type_name -> api.commons.org.AgentPreferences
+	111, // 6: api.v1alpha1.org.UpdateAgentPreferencesRequest.agent_preferences:type_name -> api.commons.org.AgentPreferences
+	109, // 7: api.v1alpha1.org.UpdateAgentPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	109, // 8: api.v1alpha1.org.GetContactPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	112, // 9: api.v1alpha1.org.GetContactPreferencesResponse.contact_preferences:type_name -> api.commons.org.ContactPreferences
+	112, // 10: api.v1alpha1.org.UpdateContactPreferencesRequest.contact_preferences:type_name -> api.commons.org.ContactPreferences
+	109, // 11: api.v1alpha1.org.UpdateContactPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	109, // 12: api.v1alpha1.org.GetAuthenticationPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	113, // 13: api.v1alpha1.org.GetAuthenticationPreferencesResponse.authentication_preferences:type_name -> api.commons.org.AuthenticationPreferences
+	113, // 14: api.v1alpha1.org.UpdateAuthenticationPreferencesRequest.authentication_preferences:type_name -> api.commons.org.AuthenticationPreferences
+	109, // 15: api.v1alpha1.org.UpdateAuthenticationPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	109, // 16: api.v1alpha1.org.GetWebhookPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	114, // 17: api.v1alpha1.org.GetWebhookPreferencesResponse.webhook_preferences:type_name -> api.commons.org.WebhookPreferences
+	114, // 18: api.v1alpha1.org.UpdateWebhookPreferencesRequest.webhook_preferences:type_name -> api.commons.org.WebhookPreferences
+	109, // 19: api.v1alpha1.org.UpdateWebhookPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	109, // 20: api.v1alpha1.org.GetDashboardGeneralPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	115, // 21: api.v1alpha1.org.GetDashboardGeneralPreferencesResponse.dashboard_preferences:type_name -> api.commons.org.DashboardPreferences
+	115, // 22: api.v1alpha1.org.UpdateDashboardGeneralPreferencesRequest.dashboard_preferences:type_name -> api.commons.org.DashboardPreferences
+	109, // 23: api.v1alpha1.org.UpdateDashboardGeneralPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	109, // 24: api.v1alpha1.org.GetDashboardQueuePreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	116, // 25: api.v1alpha1.org.GetDashboardQueuePreferencesResponse.dashboard_queue_preferences:type_name -> api.commons.org.DashboardQueuePreferences
+	116, // 26: api.v1alpha1.org.UpdateDashboardQueuePreferencesRequest.dashboard_queue_preferences:type_name -> api.commons.org.DashboardQueuePreferences
+	109, // 27: api.v1alpha1.org.UpdateDashboardQueuePreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	109, // 28: api.v1alpha1.org.GetPhonePreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	117, // 29: api.v1alpha1.org.GetPhonePreferencesResponse.phone_preferences:type_name -> api.commons.org.PhonePreferences
+	117, // 30: api.v1alpha1.org.UpdatePhonePreferencesRequest.phone_preferences:type_name -> api.commons.org.PhonePreferences
+	109, // 31: api.v1alpha1.org.UpdatePhonePreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	109, // 32: api.v1alpha1.org.GetCompliancePreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	118, // 33: api.v1alpha1.org.GetCompliancePreferencesResponse.compliance_preferences:type_name -> api.commons.org.CompliancePreferences
+	118, // 34: api.v1alpha1.org.UpdateCompliancePreferencesRequest.compliance_preferences:type_name -> api.commons.org.CompliancePreferences
+	109, // 35: api.v1alpha1.org.UpdateCompliancePreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	109, // 36: api.v1alpha1.org.GetBroadcastPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	119, // 37: api.v1alpha1.org.GetBroadcastPreferencesResponse.broadcast_preferences:type_name -> api.commons.org.BroadcastPreferences
+	119, // 38: api.v1alpha1.org.UpdateBroadcastPreferencesRequest.broadcast_preferences:type_name -> api.commons.org.BroadcastPreferences
+	109, // 39: api.v1alpha1.org.UpdateBroadcastPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	109, // 40: api.v1alpha1.org.GetSchedulePreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	120, // 41: api.v1alpha1.org.GetSchedulePreferencesResponse.schedule_preferences:type_name -> api.commons.org.SchedulePreferences
+	120, // 42: api.v1alpha1.org.UpdateSchedulePreferencesRequest.schedule_preferences:type_name -> api.commons.org.SchedulePreferences
+	109, // 43: api.v1alpha1.org.UpdateSchedulePreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	109, // 44: api.v1alpha1.org.GetEmailSmsPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	121, // 45: api.v1alpha1.org.GetEmailSmsPreferencesResponse.email_sms_preferences:type_name -> api.commons.org.EmailSmsPreferences
+	121, // 46: api.v1alpha1.org.UpdateEmailSmsPreferencesRequest.email_sms_preferences:type_name -> api.commons.org.EmailSmsPreferences
+	109, // 47: api.v1alpha1.org.UpdateEmailSmsPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	109, // 48: api.v1alpha1.org.GetBusinessPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	122, // 49: api.v1alpha1.org.GetBusinessPreferencesResponse.business_preferences:type_name -> api.commons.org.BusinessPreferences
+	122, // 50: api.v1alpha1.org.UpdateBusinessPreferencesRequest.business_preferences:type_name -> api.commons.org.BusinessPreferences
+	109, // 51: api.v1alpha1.org.UpdateBusinessPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	122, // 52: api.v1alpha1.org.UpdateAdminBusinessPreferencesRequest.business_preferences:type_name -> api.commons.org.BusinessPreferences
+	109, // 53: api.v1alpha1.org.UpdateAdminBusinessPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	109, // 54: api.v1alpha1.org.GetScorecardsPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	123, // 55: api.v1alpha1.org.GetScorecardsPreferencesResponse.scorecards_preferences:type_name -> api.commons.org.ScorecardsPreferences
+	123, // 56: api.v1alpha1.org.UpdateScorecardsPreferencesRequest.scorecards_preferences:type_name -> api.commons.org.ScorecardsPreferences
+	109, // 57: api.v1alpha1.org.UpdateScorecardsPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	109, // 58: api.v1alpha1.org.GetVoiceAnalyticsPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	124, // 59: api.v1alpha1.org.GetVoiceAnalyticsPreferencesResponse.voice_analytics_preferences:type_name -> api.commons.org.VoiceAnalyticsPreferences
+	124, // 60: api.v1alpha1.org.ListVoiceAnalyticsPreferencesResponse.voice_analytics_preferences:type_name -> api.commons.org.VoiceAnalyticsPreferences
+	124, // 61: api.v1alpha1.org.UpdateVoiceAnalyticsPreferencesRequest.voice_analytics_preferences:type_name -> api.commons.org.VoiceAnalyticsPreferences
+	109, // 62: api.v1alpha1.org.UpdateVoiceAnalyticsPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	109, // 63: api.v1alpha1.org.GetEndOfDayPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	125, // 64: api.v1alpha1.org.GetEndOfDayPreferencesResponse.end_of_day_preferences:type_name -> api.commons.org.EndOfDayPreferences
+	125, // 65: api.v1alpha1.org.UpdateEndOfDayPreferencesRequest.end_of_day_preferences:type_name -> api.commons.org.EndOfDayPreferences
+	109, // 66: api.v1alpha1.org.UpdateEndOfDayPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	109, // 67: api.v1alpha1.org.GetFilterPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	126, // 68: api.v1alpha1.org.GetFilterPreferencesResponse.filter_preferences:type_name -> api.commons.org.FilterPreferences
+	126, // 69: api.v1alpha1.org.UpdateFilterPreferencesRequest.filter_preferences:type_name -> api.commons.org.FilterPreferences
+	109, // 70: api.v1alpha1.org.UpdateFilterPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	109, // 71: api.v1alpha1.org.GetRecordingPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	127, // 72: api.v1alpha1.org.GetRecordingPreferencesResponse.recording_preferences:type_name -> api.commons.org.RecordingPreferences
+	127, // 73: api.v1alpha1.org.UpdateRecordingPreferencesRequest.recording_preferences:type_name -> api.commons.org.RecordingPreferences
+	109, // 74: api.v1alpha1.org.UpdateRecordingPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	109, // 75: api.v1alpha1.org.GetAdminClientPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	128, // 76: api.v1alpha1.org.GetAdminClientPreferencesResponse.admin_client_preferences:type_name -> api.commons.org.AdminClientPreferences
+	128, // 77: api.v1alpha1.org.UpdateAdminClientPreferencesRequest.admin_client_preferences:type_name -> api.commons.org.AdminClientPreferences
+	109, // 78: api.v1alpha1.org.UpdateAdminClientPreferencesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	129, // 79: api.v1alpha1.org.CreateBusinessHoursRequest.business_hours:type_name -> api.commons.org.BusinessHours
+	129, // 80: api.v1alpha1.org.UpdateBusinessHoursRequest.business_hours:type_name -> api.commons.org.BusinessHours
+	129, // 81: api.v1alpha1.org.ListBusinessHoursResponse.business_hours:type_name -> api.commons.org.BusinessHours
+	129, // 82: api.v1alpha1.org.GetBusinessHoursResponse.business_hours:type_name -> api.commons.org.BusinessHours
+	130, // 83: api.v1alpha1.org.SetBusinessHoursRequest.day_intervals:type_name -> api.commons.org.DayInterval
+	131, // 84: api.v1alpha1.org.SetBusinessHoursRequest.timezone:type_name -> api.commons.TimeZone
+	130, // 85: api.v1alpha1.org.AddIntervalToBusinessHoursRequest.day_interval:type_name -> api.commons.org.DayInterval
+	130, // 86: api.v1alpha1.org.RemoveIntervalFromBusinessHoursRequest.day_interval:type_name -> api.commons.org.DayInterval
+	131, // 87: api.v1alpha1.org.UpdateBusinessHoursInfoRequest.timezone:type_name -> api.commons.TimeZone
+	109, // 88: api.v1alpha1.org.UpdateBusinessHoursInfoRequest.field_mask:type_name -> google.protobuf.FieldMask
 	89,  // [89:89] is the sub-list for method output_type
 	89,  // [89:89] is the sub-list for method input_type
 	89,  // [89:89] is the sub-list for extension type_name
@@ -7523,6 +7633,30 @@ func file_api_v1alpha1_org_preferences_proto_init() {
 				return nil
 			}
 		}
+		file_api_v1alpha1_org_preferences_proto_msgTypes[107].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*EvaluateBusinessHoursRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_org_preferences_proto_msgTypes[108].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*EvaluateBusinessHoursResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -7530,7 +7664,7 @@ func file_api_v1alpha1_org_preferences_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_v1alpha1_org_preferences_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   107,
+			NumMessages:   109,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

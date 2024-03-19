@@ -81,6 +81,7 @@ const (
 	Org_RemoveIntervalFromBusinessHours_FullMethodName          = "/api.v1alpha1.org.Org/RemoveIntervalFromBusinessHours"
 	Org_UpdateBusinessHoursInfo_FullMethodName                  = "/api.v1alpha1.org.Org/UpdateBusinessHoursInfo"
 	Org_DeleteBusinessHours_FullMethodName                      = "/api.v1alpha1.org.Org/DeleteBusinessHours"
+	Org_EvaluateBusinessHours_FullMethodName                    = "/api.v1alpha1.org.Org/EvaluateBusinessHours"
 	Org_CreateUser_FullMethodName                               = "/api.v1alpha1.org.Org/CreateUser"
 	Org_CreateDelegatedUser_FullMethodName                      = "/api.v1alpha1.org.Org/CreateDelegatedUser"
 	Org_GetMyUser_FullMethodName                                = "/api.v1alpha1.org.Org/GetMyUser"
@@ -382,6 +383,8 @@ type OrgClient interface {
 	UpdateBusinessHoursInfo(ctx context.Context, in *UpdateBusinessHoursInfoRequest, opts ...grpc.CallOption) (*UpdateBusinessHoursInfoResponse, error)
 	// DeleteBusinessHours removes business hours.
 	DeleteBusinessHours(ctx context.Context, in *DeleteBusinessHoursRequest, opts ...grpc.CallOption) (*DeleteBusinessHoursResponse, error)
+	// EvaluateBusinessHours determines whether or not the current time is within a business hours day interval
+	EvaluateBusinessHours(ctx context.Context, in *EvaluateBusinessHoursRequest, opts ...grpc.CallOption) (*EvaluateBusinessHoursResponse, error)
 	// CreateUser creates a new user and enables it for the region it is getting created in.
 	CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*CreateUserResponse, error)
 	// CreateDelegatedUser creates a new delegated user and enables it for the region it is getting created in.
@@ -1358,6 +1361,15 @@ func (c *orgClient) UpdateBusinessHoursInfo(ctx context.Context, in *UpdateBusin
 func (c *orgClient) DeleteBusinessHours(ctx context.Context, in *DeleteBusinessHoursRequest, opts ...grpc.CallOption) (*DeleteBusinessHoursResponse, error) {
 	out := new(DeleteBusinessHoursResponse)
 	err := c.cc.Invoke(ctx, Org_DeleteBusinessHours_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) EvaluateBusinessHours(ctx context.Context, in *EvaluateBusinessHoursRequest, opts ...grpc.CallOption) (*EvaluateBusinessHoursResponse, error) {
+	out := new(EvaluateBusinessHoursResponse)
+	err := c.cc.Invoke(ctx, Org_EvaluateBusinessHours_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -2954,6 +2966,8 @@ type OrgServer interface {
 	UpdateBusinessHoursInfo(context.Context, *UpdateBusinessHoursInfoRequest) (*UpdateBusinessHoursInfoResponse, error)
 	// DeleteBusinessHours removes business hours.
 	DeleteBusinessHours(context.Context, *DeleteBusinessHoursRequest) (*DeleteBusinessHoursResponse, error)
+	// EvaluateBusinessHours determines whether or not the current time is within a business hours day interval
+	EvaluateBusinessHours(context.Context, *EvaluateBusinessHoursRequest) (*EvaluateBusinessHoursResponse, error)
 	// CreateUser creates a new user and enables it for the region it is getting created in.
 	CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error)
 	// CreateDelegatedUser creates a new delegated user and enables it for the region it is getting created in.
@@ -3468,6 +3482,9 @@ func (UnimplementedOrgServer) UpdateBusinessHoursInfo(context.Context, *UpdateBu
 }
 func (UnimplementedOrgServer) DeleteBusinessHours(context.Context, *DeleteBusinessHoursRequest) (*DeleteBusinessHoursResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteBusinessHours not implemented")
+}
+func (UnimplementedOrgServer) EvaluateBusinessHours(context.Context, *EvaluateBusinessHoursRequest) (*EvaluateBusinessHoursResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EvaluateBusinessHours not implemented")
 }
 func (UnimplementedOrgServer) CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateUser not implemented")
@@ -5047,6 +5064,24 @@ func _Org_DeleteBusinessHours_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrgServer).DeleteBusinessHours(ctx, req.(*DeleteBusinessHoursRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_EvaluateBusinessHours_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EvaluateBusinessHoursRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).EvaluateBusinessHours(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_EvaluateBusinessHours_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).EvaluateBusinessHours(ctx, req.(*EvaluateBusinessHoursRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -7950,6 +7985,10 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteBusinessHours",
 			Handler:    _Org_DeleteBusinessHours_Handler,
+		},
+		{
+			MethodName: "EvaluateBusinessHours",
+			Handler:    _Org_EvaluateBusinessHours_Handler,
 		},
 		{
 			MethodName: "CreateUser",
