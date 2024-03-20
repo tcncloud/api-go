@@ -77,6 +77,7 @@ const (
 	Compliance_ListConsentProfiles_FullMethodName            = "/api.v0alpha.Compliance/ListConsentProfiles"
 	Compliance_GetConsentUploadUrl_FullMethodName            = "/api.v0alpha.Compliance/GetConsentUploadUrl"
 	Compliance_ProcessConsentUpload_FullMethodName           = "/api.v0alpha.Compliance/ProcessConsentUpload"
+	Compliance_ExportConsentList_FullMethodName              = "/api.v0alpha.Compliance/ExportConsentList"
 	Compliance_ListConsentTopics_FullMethodName              = "/api.v0alpha.Compliance/ListConsentTopics"
 	Compliance_GetConsentTopic_FullMethodName                = "/api.v0alpha.Compliance/GetConsentTopic"
 	Compliance_CreateConsentTopic_FullMethodName             = "/api.v0alpha.Compliance/CreateConsentTopic"
@@ -289,6 +290,9 @@ type ComplianceClient interface {
 	//
 	//	EXECUTE_DO_NOT_CALL_LIST
 	ProcessConsentUpload(ctx context.Context, in *ProcessConsentUploadReq, opts ...grpc.CallOption) (*longrunningpb.Operation, error)
+	// Export consent list defined by ExportConsentListRequest message.
+	// The method will create a consent download file in CSV format and return a URL for download.
+	ExportConsentList(ctx context.Context, in *ExportConsentListRequest, opts ...grpc.CallOption) (*ExportConsentListResponse, error)
 	// List consent topics defined by ListConsentTopicsReq message.
 	// Gets all of the unique consent topics.
 	// The method will return a ListConsentTopicsRes message
@@ -873,6 +877,15 @@ func (c *complianceClient) ProcessConsentUpload(ctx context.Context, in *Process
 	return out, nil
 }
 
+func (c *complianceClient) ExportConsentList(ctx context.Context, in *ExportConsentListRequest, opts ...grpc.CallOption) (*ExportConsentListResponse, error) {
+	out := new(ExportConsentListResponse)
+	err := c.cc.Invoke(ctx, Compliance_ExportConsentList_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *complianceClient) ListConsentTopics(ctx context.Context, in *ListConsentTopicsReq, opts ...grpc.CallOption) (*ListConsentTopicsRes, error) {
 	out := new(ListConsentTopicsRes)
 	err := c.cc.Invoke(ctx, Compliance_ListConsentTopics_FullMethodName, in, out, opts...)
@@ -1139,6 +1152,9 @@ type ComplianceServer interface {
 	//
 	//	EXECUTE_DO_NOT_CALL_LIST
 	ProcessConsentUpload(context.Context, *ProcessConsentUploadReq) (*longrunningpb.Operation, error)
+	// Export consent list defined by ExportConsentListRequest message.
+	// The method will create a consent download file in CSV format and return a URL for download.
+	ExportConsentList(context.Context, *ExportConsentListRequest) (*ExportConsentListResponse, error)
 	// List consent topics defined by ListConsentTopicsReq message.
 	// Gets all of the unique consent topics.
 	// The method will return a ListConsentTopicsRes message
@@ -1360,6 +1376,9 @@ func (UnimplementedComplianceServer) GetConsentUploadUrl(context.Context, *GetCo
 }
 func (UnimplementedComplianceServer) ProcessConsentUpload(context.Context, *ProcessConsentUploadReq) (*longrunningpb.Operation, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ProcessConsentUpload not implemented")
+}
+func (UnimplementedComplianceServer) ExportConsentList(context.Context, *ExportConsentListRequest) (*ExportConsentListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ExportConsentList not implemented")
 }
 func (UnimplementedComplianceServer) ListConsentTopics(context.Context, *ListConsentTopicsReq) (*ListConsentTopicsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListConsentTopics not implemented")
@@ -2406,6 +2425,24 @@ func _Compliance_ProcessConsentUpload_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Compliance_ExportConsentList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExportConsentListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ComplianceServer).ExportConsentList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Compliance_ExportConsentList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ComplianceServer).ExportConsentList(ctx, req.(*ExportConsentListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Compliance_ListConsentTopics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListConsentTopicsReq)
 	if err := dec(in); err != nil {
@@ -2758,6 +2795,10 @@ var Compliance_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ProcessConsentUpload",
 			Handler:    _Compliance_ProcessConsentUpload_Handler,
+		},
+		{
+			MethodName: "ExportConsentList",
+			Handler:    _Compliance_ExportConsentList_Handler,
 		},
 		{
 			MethodName: "ListConsentTopics",

@@ -195,6 +195,8 @@ type BillingServiceClient interface {
 	//   - grpc.InvalidArgument: The request is invalid.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	//
+	// Deprecated: do not use.
 	CreateInvoice(context.Context, *connect_go.Request[v1alpha1.CreateInvoiceRequest]) (*connect_go.Response[v1alpha1.CreateInvoiceResponse], error)
 	// Creates a rate definition for a Billing Plan in an ORG.
 	// Required permissions:
@@ -264,6 +266,8 @@ type BillingServiceClient interface {
 	//   - grpc.NotFound: The specified invoice doesn't exist.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	//
+	// Deprecated: do not use.
 	DeleteInvoice(context.Context, *connect_go.Request[v1alpha1.DeleteInvoiceRequest]) (*connect_go.Response[v1alpha1.DeleteInvoiceResponse], error)
 	// Deletes a rate definition from a Billing Plan in an ORG.
 	//   - The billing plan must be inactive.
@@ -309,12 +313,11 @@ type BillingServiceClient interface {
 	// Exports an invoice.
 	// Required permissions:
 	//
-	//	CUSTOMER_SUPPORT
+	//	TCN_BILLING_ADMIN
 	//
 	// Errors:
 	//   - grpc.Internal: An internal error occurred.
 	//   - grpc.InvalidArgument: The request is invalid.
-	//   - grpc.NotFound: The specified invoice doesn't exist.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	ExportInvoice(context.Context, *connect_go.Request[v1alpha1.ExportInvoiceRequest]) (*connect_go.Response[v1alpha1.ExportInvoiceResponse], error)
@@ -356,6 +359,8 @@ type BillingServiceClient interface {
 	//   - grpc.NotFound: The specified invoice doesn't exist.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	//
+	// Deprecated: do not use.
 	GetInvoice(context.Context, *connect_go.Request[v1alpha1.GetInvoiceRequest]) (*connect_go.Response[v1alpha1.GetInvoiceResponse], error)
 	// Returns the specified rate definition.
 	// Required permissions:
@@ -390,6 +395,8 @@ type BillingServiceClient interface {
 	//   - grpc.InvalidArgument: The request is invalid.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	//
+	// Deprecated: do not use.
 	ListInvoices(context.Context, *connect_go.Request[v1alpha1.ListInvoicesRequest]) (*connect_go.Response[v1alpha1.ListInvoicesResponse], error)
 	// Lists rate definitions.
 	// Required permissions:
@@ -455,6 +462,8 @@ type BillingServiceClient interface {
 	//   - grpc.NotFound: The specified invoice doesn't exist.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	//
+	// Deprecated: do not use.
 	UpdateInvoice(context.Context, *connect_go.Request[v1alpha1.UpdateInvoiceRequest]) (*connect_go.Response[v1alpha1.UpdateInvoiceResponse], error)
 	// Updates a rate definition.
 	//   - The billing plan must be inactive.
@@ -679,6 +688,8 @@ func (c *billingServiceClient) CreateDefaultRateDefinition(ctx context.Context, 
 }
 
 // CreateInvoice calls services.billing.v1alpha1.BillingService.CreateInvoice.
+//
+// Deprecated: do not use.
 func (c *billingServiceClient) CreateInvoice(ctx context.Context, req *connect_go.Request[v1alpha1.CreateInvoiceRequest]) (*connect_go.Response[v1alpha1.CreateInvoiceResponse], error) {
 	return c.createInvoice.CallUnary(ctx, req)
 }
@@ -705,6 +716,8 @@ func (c *billingServiceClient) DeleteDefaultRateDefinition(ctx context.Context, 
 }
 
 // DeleteInvoice calls services.billing.v1alpha1.BillingService.DeleteInvoice.
+//
+// Deprecated: do not use.
 func (c *billingServiceClient) DeleteInvoice(ctx context.Context, req *connect_go.Request[v1alpha1.DeleteInvoiceRequest]) (*connect_go.Response[v1alpha1.DeleteInvoiceResponse], error) {
 	return c.deleteInvoice.CallUnary(ctx, req)
 }
@@ -741,6 +754,8 @@ func (c *billingServiceClient) GetBillingPlan(ctx context.Context, req *connect_
 }
 
 // GetInvoice calls services.billing.v1alpha1.BillingService.GetInvoice.
+//
+// Deprecated: do not use.
 func (c *billingServiceClient) GetInvoice(ctx context.Context, req *connect_go.Request[v1alpha1.GetInvoiceRequest]) (*connect_go.Response[v1alpha1.GetInvoiceResponse], error) {
 	return c.getInvoice.CallUnary(ctx, req)
 }
@@ -756,6 +771,8 @@ func (c *billingServiceClient) ListBillingPlans(ctx context.Context, req *connec
 }
 
 // ListInvoices calls services.billing.v1alpha1.BillingService.ListInvoices.
+//
+// Deprecated: do not use.
 func (c *billingServiceClient) ListInvoices(ctx context.Context, req *connect_go.Request[v1alpha1.ListInvoicesRequest]) (*connect_go.Response[v1alpha1.ListInvoicesResponse], error) {
 	return c.listInvoices.CallUnary(ctx, req)
 }
@@ -782,6 +799,8 @@ func (c *billingServiceClient) UpdateDefaultRateDefinition(ctx context.Context, 
 }
 
 // UpdateInvoice calls services.billing.v1alpha1.BillingService.UpdateInvoice.
+//
+// Deprecated: do not use.
 func (c *billingServiceClient) UpdateInvoice(ctx context.Context, req *connect_go.Request[v1alpha1.UpdateInvoiceRequest]) (*connect_go.Response[v1alpha1.UpdateInvoiceResponse], error) {
 	return c.updateInvoice.CallUnary(ctx, req)
 }
@@ -871,6 +890,8 @@ type BillingServiceHandler interface {
 	//   - grpc.InvalidArgument: The request is invalid.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	//
+	// Deprecated: do not use.
 	CreateInvoice(context.Context, *connect_go.Request[v1alpha1.CreateInvoiceRequest]) (*connect_go.Response[v1alpha1.CreateInvoiceResponse], error)
 	// Creates a rate definition for a Billing Plan in an ORG.
 	// Required permissions:
@@ -940,6 +961,8 @@ type BillingServiceHandler interface {
 	//   - grpc.NotFound: The specified invoice doesn't exist.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	//
+	// Deprecated: do not use.
 	DeleteInvoice(context.Context, *connect_go.Request[v1alpha1.DeleteInvoiceRequest]) (*connect_go.Response[v1alpha1.DeleteInvoiceResponse], error)
 	// Deletes a rate definition from a Billing Plan in an ORG.
 	//   - The billing plan must be inactive.
@@ -985,12 +1008,11 @@ type BillingServiceHandler interface {
 	// Exports an invoice.
 	// Required permissions:
 	//
-	//	CUSTOMER_SUPPORT
+	//	TCN_BILLING_ADMIN
 	//
 	// Errors:
 	//   - grpc.Internal: An internal error occurred.
 	//   - grpc.InvalidArgument: The request is invalid.
-	//   - grpc.NotFound: The specified invoice doesn't exist.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	ExportInvoice(context.Context, *connect_go.Request[v1alpha1.ExportInvoiceRequest]) (*connect_go.Response[v1alpha1.ExportInvoiceResponse], error)
@@ -1032,6 +1054,8 @@ type BillingServiceHandler interface {
 	//   - grpc.NotFound: The specified invoice doesn't exist.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	//
+	// Deprecated: do not use.
 	GetInvoice(context.Context, *connect_go.Request[v1alpha1.GetInvoiceRequest]) (*connect_go.Response[v1alpha1.GetInvoiceResponse], error)
 	// Returns the specified rate definition.
 	// Required permissions:
@@ -1066,6 +1090,8 @@ type BillingServiceHandler interface {
 	//   - grpc.InvalidArgument: The request is invalid.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	//
+	// Deprecated: do not use.
 	ListInvoices(context.Context, *connect_go.Request[v1alpha1.ListInvoicesRequest]) (*connect_go.Response[v1alpha1.ListInvoicesResponse], error)
 	// Lists rate definitions.
 	// Required permissions:
@@ -1131,6 +1157,8 @@ type BillingServiceHandler interface {
 	//   - grpc.NotFound: The specified invoice doesn't exist.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	//
+	// Deprecated: do not use.
 	UpdateInvoice(context.Context, *connect_go.Request[v1alpha1.UpdateInvoiceRequest]) (*connect_go.Response[v1alpha1.UpdateInvoiceResponse], error)
 	// Updates a rate definition.
 	//   - The billing plan must be inactive.
