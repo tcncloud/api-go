@@ -19,35 +19,34 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	BillingService_CommitBillingPlan_FullMethodName             = "/services.billing.v1alpha1.BillingService/CommitBillingPlan"
-	BillingService_CommitDefaultBillingPlan_FullMethodName      = "/services.billing.v1alpha1.BillingService/CommitDefaultBillingPlan"
-	BillingService_CreateBillingPlan_FullMethodName             = "/services.billing.v1alpha1.BillingService/CreateBillingPlan"
-	BillingService_CreateDefaultBillingPlan_FullMethodName      = "/services.billing.v1alpha1.BillingService/CreateDefaultBillingPlan"
-	BillingService_CreateDefaultRateDefinition_FullMethodName   = "/services.billing.v1alpha1.BillingService/CreateDefaultRateDefinition"
-	BillingService_CreateInvoice_FullMethodName                 = "/services.billing.v1alpha1.BillingService/CreateInvoice"
-	BillingService_CreateRateDefinition_FullMethodName          = "/services.billing.v1alpha1.BillingService/CreateRateDefinition"
-	BillingService_DeleteBillingPlan_FullMethodName             = "/services.billing.v1alpha1.BillingService/DeleteBillingPlan"
-	BillingService_DeleteDefaultBillingPlan_FullMethodName      = "/services.billing.v1alpha1.BillingService/DeleteDefaultBillingPlan"
-	BillingService_DeleteDefaultRateDefinition_FullMethodName   = "/services.billing.v1alpha1.BillingService/DeleteDefaultRateDefinition"
-	BillingService_DeleteInvoice_FullMethodName                 = "/services.billing.v1alpha1.BillingService/DeleteInvoice"
-	BillingService_DeleteRateDefinition_FullMethodName          = "/services.billing.v1alpha1.BillingService/DeleteRateDefinition"
-	BillingService_DuplicateBillingPlan_FullMethodName          = "/services.billing.v1alpha1.BillingService/DuplicateBillingPlan"
-	BillingService_DuplicateDefaultBillingPlan_FullMethodName   = "/services.billing.v1alpha1.BillingService/DuplicateDefaultBillingPlan"
-	BillingService_ExportInvoice_FullMethodName                 = "/services.billing.v1alpha1.BillingService/ExportInvoice"
-	BillingService_GetActiveBillingPlan_FullMethodName          = "/services.billing.v1alpha1.BillingService/GetActiveBillingPlan"
-	BillingService_GetBillingPlan_FullMethodName                = "/services.billing.v1alpha1.BillingService/GetBillingPlan"
-	BillingService_GetInvoice_FullMethodName                    = "/services.billing.v1alpha1.BillingService/GetInvoice"
-	BillingService_GetRateDefinition_FullMethodName             = "/services.billing.v1alpha1.BillingService/GetRateDefinition"
-	BillingService_GetRateHistory_FullMethodName                = "/services.billing.v1alpha1.BillingService/GetRateHistory"
-	BillingService_ListBillingPlans_FullMethodName              = "/services.billing.v1alpha1.BillingService/ListBillingPlans"
-	BillingService_ListHistoricalRateDefinitions_FullMethodName = "/services.billing.v1alpha1.BillingService/ListHistoricalRateDefinitions"
-	BillingService_ListInvoices_FullMethodName                  = "/services.billing.v1alpha1.BillingService/ListInvoices"
-	BillingService_ListRateDefinitions_FullMethodName           = "/services.billing.v1alpha1.BillingService/ListRateDefinitions"
-	BillingService_UpdateBillingPlan_FullMethodName             = "/services.billing.v1alpha1.BillingService/UpdateBillingPlan"
-	BillingService_UpdateDefaultBillingPlan_FullMethodName      = "/services.billing.v1alpha1.BillingService/UpdateDefaultBillingPlan"
-	BillingService_UpdateDefaultRateDefinition_FullMethodName   = "/services.billing.v1alpha1.BillingService/UpdateDefaultRateDefinition"
-	BillingService_UpdateInvoice_FullMethodName                 = "/services.billing.v1alpha1.BillingService/UpdateInvoice"
-	BillingService_UpdateRateDefinition_FullMethodName          = "/services.billing.v1alpha1.BillingService/UpdateRateDefinition"
+	BillingService_CommitBillingPlan_FullMethodName           = "/services.billing.v1alpha1.BillingService/CommitBillingPlan"
+	BillingService_CommitDefaultBillingPlan_FullMethodName    = "/services.billing.v1alpha1.BillingService/CommitDefaultBillingPlan"
+	BillingService_CreateBillingPlan_FullMethodName           = "/services.billing.v1alpha1.BillingService/CreateBillingPlan"
+	BillingService_CreateDefaultBillingPlan_FullMethodName    = "/services.billing.v1alpha1.BillingService/CreateDefaultBillingPlan"
+	BillingService_CreateDefaultRateDefinition_FullMethodName = "/services.billing.v1alpha1.BillingService/CreateDefaultRateDefinition"
+	BillingService_CreateInvoice_FullMethodName               = "/services.billing.v1alpha1.BillingService/CreateInvoice"
+	BillingService_CreateRateDefinition_FullMethodName        = "/services.billing.v1alpha1.BillingService/CreateRateDefinition"
+	BillingService_DeleteBillingPlan_FullMethodName           = "/services.billing.v1alpha1.BillingService/DeleteBillingPlan"
+	BillingService_DeleteDefaultBillingPlan_FullMethodName    = "/services.billing.v1alpha1.BillingService/DeleteDefaultBillingPlan"
+	BillingService_DeleteDefaultRateDefinition_FullMethodName = "/services.billing.v1alpha1.BillingService/DeleteDefaultRateDefinition"
+	BillingService_DeleteInvoice_FullMethodName               = "/services.billing.v1alpha1.BillingService/DeleteInvoice"
+	BillingService_DeleteRateDefinition_FullMethodName        = "/services.billing.v1alpha1.BillingService/DeleteRateDefinition"
+	BillingService_DuplicateBillingPlan_FullMethodName        = "/services.billing.v1alpha1.BillingService/DuplicateBillingPlan"
+	BillingService_DuplicateDefaultBillingPlan_FullMethodName = "/services.billing.v1alpha1.BillingService/DuplicateDefaultBillingPlan"
+	BillingService_ExportInvoice_FullMethodName               = "/services.billing.v1alpha1.BillingService/ExportInvoice"
+	BillingService_GetActiveBillingPlan_FullMethodName        = "/services.billing.v1alpha1.BillingService/GetActiveBillingPlan"
+	BillingService_GetBillingPlan_FullMethodName              = "/services.billing.v1alpha1.BillingService/GetBillingPlan"
+	BillingService_GetInvoice_FullMethodName                  = "/services.billing.v1alpha1.BillingService/GetInvoice"
+	BillingService_GetRateDefinition_FullMethodName           = "/services.billing.v1alpha1.BillingService/GetRateDefinition"
+	BillingService_GetRateHistory_FullMethodName              = "/services.billing.v1alpha1.BillingService/GetRateHistory"
+	BillingService_ListBillingPlans_FullMethodName            = "/services.billing.v1alpha1.BillingService/ListBillingPlans"
+	BillingService_ListInvoices_FullMethodName                = "/services.billing.v1alpha1.BillingService/ListInvoices"
+	BillingService_ListRateDefinitions_FullMethodName         = "/services.billing.v1alpha1.BillingService/ListRateDefinitions"
+	BillingService_UpdateBillingPlan_FullMethodName           = "/services.billing.v1alpha1.BillingService/UpdateBillingPlan"
+	BillingService_UpdateDefaultBillingPlan_FullMethodName    = "/services.billing.v1alpha1.BillingService/UpdateDefaultBillingPlan"
+	BillingService_UpdateDefaultRateDefinition_FullMethodName = "/services.billing.v1alpha1.BillingService/UpdateDefaultRateDefinition"
+	BillingService_UpdateInvoice_FullMethodName               = "/services.billing.v1alpha1.BillingService/UpdateInvoice"
+	BillingService_UpdateRateDefinition_FullMethodName        = "/services.billing.v1alpha1.BillingService/UpdateRateDefinition"
 )
 
 // BillingServiceClient is the client API for BillingService service.
@@ -329,17 +328,6 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	ListBillingPlans(ctx context.Context, in *ListBillingPlansRequest, opts ...grpc.CallOption) (*ListBillingPlansResponse, error)
-	// List all historical entries for rate definitions given the provided filters.
-	// Required permissions:
-	//
-	//	CUSTOMER_SUPPORT
-	//
-	// Errors:
-	//   - grpc.Internal: An internal error occurred.
-	//   - grpc.InvalidArgument: The request is invalid.
-	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
-	//   - grpc.Unavailable: The operation is currently unavailable.
-	ListHistoricalRateDefinitions(ctx context.Context, in *ListHistoricalRateDefinitionsRequest, opts ...grpc.CallOption) (*ListHistoricalRateDefinitionsResponse, error)
 	// Deprecated: Do not use.
 	// Lists invoices.
 	// Required permissions:
@@ -629,15 +617,6 @@ func (c *billingServiceClient) GetRateHistory(ctx context.Context, in *GetRateHi
 func (c *billingServiceClient) ListBillingPlans(ctx context.Context, in *ListBillingPlansRequest, opts ...grpc.CallOption) (*ListBillingPlansResponse, error) {
 	out := new(ListBillingPlansResponse)
 	err := c.cc.Invoke(ctx, BillingService_ListBillingPlans_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *billingServiceClient) ListHistoricalRateDefinitions(ctx context.Context, in *ListHistoricalRateDefinitionsRequest, opts ...grpc.CallOption) (*ListHistoricalRateDefinitionsResponse, error) {
-	out := new(ListHistoricalRateDefinitionsResponse)
-	err := c.cc.Invoke(ctx, BillingService_ListHistoricalRateDefinitions_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -988,17 +967,6 @@ type BillingServiceServer interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	ListBillingPlans(context.Context, *ListBillingPlansRequest) (*ListBillingPlansResponse, error)
-	// List all historical entries for rate definitions given the provided filters.
-	// Required permissions:
-	//
-	//	CUSTOMER_SUPPORT
-	//
-	// Errors:
-	//   - grpc.Internal: An internal error occurred.
-	//   - grpc.InvalidArgument: The request is invalid.
-	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
-	//   - grpc.Unavailable: The operation is currently unavailable.
-	ListHistoricalRateDefinitions(context.Context, *ListHistoricalRateDefinitionsRequest) (*ListHistoricalRateDefinitionsResponse, error)
 	// Deprecated: Do not use.
 	// Lists invoices.
 	// Required permissions:
@@ -1161,9 +1129,6 @@ func (UnimplementedBillingServiceServer) GetRateHistory(context.Context, *GetRat
 }
 func (UnimplementedBillingServiceServer) ListBillingPlans(context.Context, *ListBillingPlansRequest) (*ListBillingPlansResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListBillingPlans not implemented")
-}
-func (UnimplementedBillingServiceServer) ListHistoricalRateDefinitions(context.Context, *ListHistoricalRateDefinitionsRequest) (*ListHistoricalRateDefinitionsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListHistoricalRateDefinitions not implemented")
 }
 func (UnimplementedBillingServiceServer) ListInvoices(context.Context, *ListInvoicesRequest) (*ListInvoicesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListInvoices not implemented")
@@ -1577,24 +1542,6 @@ func _BillingService_ListBillingPlans_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BillingService_ListHistoricalRateDefinitions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListHistoricalRateDefinitionsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BillingServiceServer).ListHistoricalRateDefinitions(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: BillingService_ListHistoricalRateDefinitions_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BillingServiceServer).ListHistoricalRateDefinitions(ctx, req.(*ListHistoricalRateDefinitionsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _BillingService_ListInvoices_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListInvoicesRequest)
 	if err := dec(in); err != nil {
@@ -1811,10 +1758,6 @@ var BillingService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListBillingPlans",
 			Handler:    _BillingService_ListBillingPlans_Handler,
-		},
-		{
-			MethodName: "ListHistoricalRateDefinitions",
-			Handler:    _BillingService_ListHistoricalRateDefinitions_Handler,
 		},
 		{
 			MethodName: "ListInvoices",
