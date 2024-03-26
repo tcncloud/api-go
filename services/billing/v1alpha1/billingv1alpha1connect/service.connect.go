@@ -84,15 +84,15 @@ const (
 	// BillingServiceGetBillingPlanProcedure is the fully-qualified name of the BillingService's
 	// GetBillingPlan RPC.
 	BillingServiceGetBillingPlanProcedure = "/services.billing.v1alpha1.BillingService/GetBillingPlan"
+	// BillingServiceGetBillingPlanHistoryProcedure is the fully-qualified name of the BillingService's
+	// GetBillingPlanHistory RPC.
+	BillingServiceGetBillingPlanHistoryProcedure = "/services.billing.v1alpha1.BillingService/GetBillingPlanHistory"
 	// BillingServiceGetInvoiceProcedure is the fully-qualified name of the BillingService's GetInvoice
 	// RPC.
 	BillingServiceGetInvoiceProcedure = "/services.billing.v1alpha1.BillingService/GetInvoice"
 	// BillingServiceGetRateDefinitionProcedure is the fully-qualified name of the BillingService's
 	// GetRateDefinition RPC.
 	BillingServiceGetRateDefinitionProcedure = "/services.billing.v1alpha1.BillingService/GetRateDefinition"
-	// BillingServiceGetRateHistoryProcedure is the fully-qualified name of the BillingService's
-	// GetRateHistory RPC.
-	BillingServiceGetRateHistoryProcedure = "/services.billing.v1alpha1.BillingService/GetRateHistory"
 	// BillingServiceListBillingPlansProcedure is the fully-qualified name of the BillingService's
 	// ListBillingPlans RPC.
 	BillingServiceListBillingPlansProcedure = "/services.billing.v1alpha1.BillingService/ListBillingPlans"
@@ -351,6 +351,17 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	GetBillingPlan(context.Context, *connect_go.Request[v1alpha1.GetBillingPlanRequest]) (*connect_go.Response[v1alpha1.GetBillingPlanResponse], error)
+	// Returns the billing plan history for the ORG or REGION.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable.
+	GetBillingPlanHistory(context.Context, *connect_go.Request[v1alpha1.GetBillingPlanHistoryRequest]) (*connect_go.Response[v1alpha1.GetBillingPlanHistoryResponse], error)
 	// Returns the specified invoice.
 	// Required permissions:
 	//
@@ -377,17 +388,6 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
 	GetRateDefinition(context.Context, *connect_go.Request[v1alpha1.GetRateDefinitionRequest]) (*connect_go.Response[v1alpha1.GetRateDefinitionResponse], error)
-	// Returns the rate history for the specified rate definition.
-	// Required permissions:
-	//
-	//	CUSTOMER_SUPPORT
-	//
-	// Errors:
-	//   - grpc.Internal: An internal error occurred.
-	//   - grpc.InvalidArgument: The request is invalid.
-	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
-	//   - grpc.Unavailable: The operation is currently unavailable.
-	GetRateHistory(context.Context, *connect_go.Request[v1alpha1.GetRateHistoryRequest]) (*connect_go.Response[v1alpha1.GetRateHistoryResponse], error)
 	// Lists billing plans.
 	// Required permissions:
 	//
@@ -591,6 +591,11 @@ func NewBillingServiceClient(httpClient connect_go.HTTPClient, baseURL string, o
 			baseURL+BillingServiceGetBillingPlanProcedure,
 			opts...,
 		),
+		getBillingPlanHistory: connect_go.NewClient[v1alpha1.GetBillingPlanHistoryRequest, v1alpha1.GetBillingPlanHistoryResponse](
+			httpClient,
+			baseURL+BillingServiceGetBillingPlanHistoryProcedure,
+			opts...,
+		),
 		getInvoice: connect_go.NewClient[v1alpha1.GetInvoiceRequest, v1alpha1.GetInvoiceResponse](
 			httpClient,
 			baseURL+BillingServiceGetInvoiceProcedure,
@@ -599,11 +604,6 @@ func NewBillingServiceClient(httpClient connect_go.HTTPClient, baseURL string, o
 		getRateDefinition: connect_go.NewClient[v1alpha1.GetRateDefinitionRequest, v1alpha1.GetRateDefinitionResponse](
 			httpClient,
 			baseURL+BillingServiceGetRateDefinitionProcedure,
-			opts...,
-		),
-		getRateHistory: connect_go.NewClient[v1alpha1.GetRateHistoryRequest, v1alpha1.GetRateHistoryResponse](
-			httpClient,
-			baseURL+BillingServiceGetRateHistoryProcedure,
 			opts...,
 		),
 		listBillingPlans: connect_go.NewClient[v1alpha1.ListBillingPlansRequest, v1alpha1.ListBillingPlansResponse](
@@ -668,9 +668,9 @@ type billingServiceClient struct {
 	exportInvoice               *connect_go.Client[v1alpha1.ExportInvoiceRequest, v1alpha1.ExportInvoiceResponse]
 	getActiveBillingPlan        *connect_go.Client[v1alpha1.GetActiveBillingPlanRequest, v1alpha1.GetActiveBillingPlanResponse]
 	getBillingPlan              *connect_go.Client[v1alpha1.GetBillingPlanRequest, v1alpha1.GetBillingPlanResponse]
+	getBillingPlanHistory       *connect_go.Client[v1alpha1.GetBillingPlanHistoryRequest, v1alpha1.GetBillingPlanHistoryResponse]
 	getInvoice                  *connect_go.Client[v1alpha1.GetInvoiceRequest, v1alpha1.GetInvoiceResponse]
 	getRateDefinition           *connect_go.Client[v1alpha1.GetRateDefinitionRequest, v1alpha1.GetRateDefinitionResponse]
-	getRateHistory              *connect_go.Client[v1alpha1.GetRateHistoryRequest, v1alpha1.GetRateHistoryResponse]
 	listBillingPlans            *connect_go.Client[v1alpha1.ListBillingPlansRequest, v1alpha1.ListBillingPlansResponse]
 	listInvoices                *connect_go.Client[v1alpha1.ListInvoicesRequest, v1alpha1.ListInvoicesResponse]
 	listRateDefinitions         *connect_go.Client[v1alpha1.ListRateDefinitionsRequest, v1alpha1.ListRateDefinitionsResponse]
@@ -773,6 +773,11 @@ func (c *billingServiceClient) GetBillingPlan(ctx context.Context, req *connect_
 	return c.getBillingPlan.CallUnary(ctx, req)
 }
 
+// GetBillingPlanHistory calls services.billing.v1alpha1.BillingService.GetBillingPlanHistory.
+func (c *billingServiceClient) GetBillingPlanHistory(ctx context.Context, req *connect_go.Request[v1alpha1.GetBillingPlanHistoryRequest]) (*connect_go.Response[v1alpha1.GetBillingPlanHistoryResponse], error) {
+	return c.getBillingPlanHistory.CallUnary(ctx, req)
+}
+
 // GetInvoice calls services.billing.v1alpha1.BillingService.GetInvoice.
 //
 // Deprecated: do not use.
@@ -783,11 +788,6 @@ func (c *billingServiceClient) GetInvoice(ctx context.Context, req *connect_go.R
 // GetRateDefinition calls services.billing.v1alpha1.BillingService.GetRateDefinition.
 func (c *billingServiceClient) GetRateDefinition(ctx context.Context, req *connect_go.Request[v1alpha1.GetRateDefinitionRequest]) (*connect_go.Response[v1alpha1.GetRateDefinitionResponse], error) {
 	return c.getRateDefinition.CallUnary(ctx, req)
-}
-
-// GetRateHistory calls services.billing.v1alpha1.BillingService.GetRateHistory.
-func (c *billingServiceClient) GetRateHistory(ctx context.Context, req *connect_go.Request[v1alpha1.GetRateHistoryRequest]) (*connect_go.Response[v1alpha1.GetRateHistoryResponse], error) {
-	return c.getRateHistory.CallUnary(ctx, req)
 }
 
 // ListBillingPlans calls services.billing.v1alpha1.BillingService.ListBillingPlans.
@@ -1068,6 +1068,17 @@ type BillingServiceHandler interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	GetBillingPlan(context.Context, *connect_go.Request[v1alpha1.GetBillingPlanRequest]) (*connect_go.Response[v1alpha1.GetBillingPlanResponse], error)
+	// Returns the billing plan history for the ORG or REGION.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable.
+	GetBillingPlanHistory(context.Context, *connect_go.Request[v1alpha1.GetBillingPlanHistoryRequest]) (*connect_go.Response[v1alpha1.GetBillingPlanHistoryResponse], error)
 	// Returns the specified invoice.
 	// Required permissions:
 	//
@@ -1094,17 +1105,6 @@ type BillingServiceHandler interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
 	GetRateDefinition(context.Context, *connect_go.Request[v1alpha1.GetRateDefinitionRequest]) (*connect_go.Response[v1alpha1.GetRateDefinitionResponse], error)
-	// Returns the rate history for the specified rate definition.
-	// Required permissions:
-	//
-	//	CUSTOMER_SUPPORT
-	//
-	// Errors:
-	//   - grpc.Internal: An internal error occurred.
-	//   - grpc.InvalidArgument: The request is invalid.
-	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
-	//   - grpc.Unavailable: The operation is currently unavailable.
-	GetRateHistory(context.Context, *connect_go.Request[v1alpha1.GetRateHistoryRequest]) (*connect_go.Response[v1alpha1.GetRateHistoryResponse], error)
 	// Lists billing plans.
 	// Required permissions:
 	//
@@ -1304,6 +1304,11 @@ func NewBillingServiceHandler(svc BillingServiceHandler, opts ...connect_go.Hand
 		svc.GetBillingPlan,
 		opts...,
 	)
+	billingServiceGetBillingPlanHistoryHandler := connect_go.NewUnaryHandler(
+		BillingServiceGetBillingPlanHistoryProcedure,
+		svc.GetBillingPlanHistory,
+		opts...,
+	)
 	billingServiceGetInvoiceHandler := connect_go.NewUnaryHandler(
 		BillingServiceGetInvoiceProcedure,
 		svc.GetInvoice,
@@ -1312,11 +1317,6 @@ func NewBillingServiceHandler(svc BillingServiceHandler, opts ...connect_go.Hand
 	billingServiceGetRateDefinitionHandler := connect_go.NewUnaryHandler(
 		BillingServiceGetRateDefinitionProcedure,
 		svc.GetRateDefinition,
-		opts...,
-	)
-	billingServiceGetRateHistoryHandler := connect_go.NewUnaryHandler(
-		BillingServiceGetRateHistoryProcedure,
-		svc.GetRateHistory,
 		opts...,
 	)
 	billingServiceListBillingPlansHandler := connect_go.NewUnaryHandler(
@@ -1395,12 +1395,12 @@ func NewBillingServiceHandler(svc BillingServiceHandler, opts ...connect_go.Hand
 			billingServiceGetActiveBillingPlanHandler.ServeHTTP(w, r)
 		case BillingServiceGetBillingPlanProcedure:
 			billingServiceGetBillingPlanHandler.ServeHTTP(w, r)
+		case BillingServiceGetBillingPlanHistoryProcedure:
+			billingServiceGetBillingPlanHistoryHandler.ServeHTTP(w, r)
 		case BillingServiceGetInvoiceProcedure:
 			billingServiceGetInvoiceHandler.ServeHTTP(w, r)
 		case BillingServiceGetRateDefinitionProcedure:
 			billingServiceGetRateDefinitionHandler.ServeHTTP(w, r)
-		case BillingServiceGetRateHistoryProcedure:
-			billingServiceGetRateHistoryHandler.ServeHTTP(w, r)
 		case BillingServiceListBillingPlansProcedure:
 			billingServiceListBillingPlansHandler.ServeHTTP(w, r)
 		case BillingServiceListInvoicesProcedure:
@@ -1494,16 +1494,16 @@ func (UnimplementedBillingServiceHandler) GetBillingPlan(context.Context, *conne
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.billing.v1alpha1.BillingService.GetBillingPlan is not implemented"))
 }
 
+func (UnimplementedBillingServiceHandler) GetBillingPlanHistory(context.Context, *connect_go.Request[v1alpha1.GetBillingPlanHistoryRequest]) (*connect_go.Response[v1alpha1.GetBillingPlanHistoryResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.billing.v1alpha1.BillingService.GetBillingPlanHistory is not implemented"))
+}
+
 func (UnimplementedBillingServiceHandler) GetInvoice(context.Context, *connect_go.Request[v1alpha1.GetInvoiceRequest]) (*connect_go.Response[v1alpha1.GetInvoiceResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.billing.v1alpha1.BillingService.GetInvoice is not implemented"))
 }
 
 func (UnimplementedBillingServiceHandler) GetRateDefinition(context.Context, *connect_go.Request[v1alpha1.GetRateDefinitionRequest]) (*connect_go.Response[v1alpha1.GetRateDefinitionResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.billing.v1alpha1.BillingService.GetRateDefinition is not implemented"))
-}
-
-func (UnimplementedBillingServiceHandler) GetRateHistory(context.Context, *connect_go.Request[v1alpha1.GetRateHistoryRequest]) (*connect_go.Response[v1alpha1.GetRateHistoryResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.billing.v1alpha1.BillingService.GetRateHistory is not implemented"))
 }
 
 func (UnimplementedBillingServiceHandler) ListBillingPlans(context.Context, *connect_go.Request[v1alpha1.ListBillingPlansRequest]) (*connect_go.Response[v1alpha1.ListBillingPlansResponse], error) {

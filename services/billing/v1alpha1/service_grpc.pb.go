@@ -36,9 +36,9 @@ const (
 	BillingService_ExportInvoice_FullMethodName               = "/services.billing.v1alpha1.BillingService/ExportInvoice"
 	BillingService_GetActiveBillingPlan_FullMethodName        = "/services.billing.v1alpha1.BillingService/GetActiveBillingPlan"
 	BillingService_GetBillingPlan_FullMethodName              = "/services.billing.v1alpha1.BillingService/GetBillingPlan"
+	BillingService_GetBillingPlanHistory_FullMethodName       = "/services.billing.v1alpha1.BillingService/GetBillingPlanHistory"
 	BillingService_GetInvoice_FullMethodName                  = "/services.billing.v1alpha1.BillingService/GetInvoice"
 	BillingService_GetRateDefinition_FullMethodName           = "/services.billing.v1alpha1.BillingService/GetRateDefinition"
-	BillingService_GetRateHistory_FullMethodName              = "/services.billing.v1alpha1.BillingService/GetRateHistory"
 	BillingService_ListBillingPlans_FullMethodName            = "/services.billing.v1alpha1.BillingService/ListBillingPlans"
 	BillingService_ListInvoices_FullMethodName                = "/services.billing.v1alpha1.BillingService/ListInvoices"
 	BillingService_ListRateDefinitions_FullMethodName         = "/services.billing.v1alpha1.BillingService/ListRateDefinitions"
@@ -281,6 +281,17 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	GetBillingPlan(ctx context.Context, in *GetBillingPlanRequest, opts ...grpc.CallOption) (*GetBillingPlanResponse, error)
+	// Returns the billing plan history for the ORG or REGION.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable.
+	GetBillingPlanHistory(ctx context.Context, in *GetBillingPlanHistoryRequest, opts ...grpc.CallOption) (*GetBillingPlanHistoryResponse, error)
 	// Deprecated: Do not use.
 	// Returns the specified invoice.
 	// Required permissions:
@@ -306,17 +317,6 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
 	GetRateDefinition(ctx context.Context, in *GetRateDefinitionRequest, opts ...grpc.CallOption) (*GetRateDefinitionResponse, error)
-	// Returns the rate history for the specified rate definition.
-	// Required permissions:
-	//
-	//	CUSTOMER_SUPPORT
-	//
-	// Errors:
-	//   - grpc.Internal: An internal error occurred.
-	//   - grpc.InvalidArgument: The request is invalid.
-	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
-	//   - grpc.Unavailable: The operation is currently unavailable.
-	GetRateHistory(ctx context.Context, in *GetRateHistoryRequest, opts ...grpc.CallOption) (*GetRateHistoryResponse, error)
 	// Lists billing plans.
 	// Required permissions:
 	//
@@ -586,6 +586,15 @@ func (c *billingServiceClient) GetBillingPlan(ctx context.Context, in *GetBillin
 	return out, nil
 }
 
+func (c *billingServiceClient) GetBillingPlanHistory(ctx context.Context, in *GetBillingPlanHistoryRequest, opts ...grpc.CallOption) (*GetBillingPlanHistoryResponse, error) {
+	out := new(GetBillingPlanHistoryResponse)
+	err := c.cc.Invoke(ctx, BillingService_GetBillingPlanHistory_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Deprecated: Do not use.
 func (c *billingServiceClient) GetInvoice(ctx context.Context, in *GetInvoiceRequest, opts ...grpc.CallOption) (*GetInvoiceResponse, error) {
 	out := new(GetInvoiceResponse)
@@ -599,15 +608,6 @@ func (c *billingServiceClient) GetInvoice(ctx context.Context, in *GetInvoiceReq
 func (c *billingServiceClient) GetRateDefinition(ctx context.Context, in *GetRateDefinitionRequest, opts ...grpc.CallOption) (*GetRateDefinitionResponse, error) {
 	out := new(GetRateDefinitionResponse)
 	err := c.cc.Invoke(ctx, BillingService_GetRateDefinition_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *billingServiceClient) GetRateHistory(ctx context.Context, in *GetRateHistoryRequest, opts ...grpc.CallOption) (*GetRateHistoryResponse, error) {
-	out := new(GetRateHistoryResponse)
-	err := c.cc.Invoke(ctx, BillingService_GetRateHistory_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -920,6 +920,17 @@ type BillingServiceServer interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	GetBillingPlan(context.Context, *GetBillingPlanRequest) (*GetBillingPlanResponse, error)
+	// Returns the billing plan history for the ORG or REGION.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable.
+	GetBillingPlanHistory(context.Context, *GetBillingPlanHistoryRequest) (*GetBillingPlanHistoryResponse, error)
 	// Deprecated: Do not use.
 	// Returns the specified invoice.
 	// Required permissions:
@@ -945,17 +956,6 @@ type BillingServiceServer interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
 	GetRateDefinition(context.Context, *GetRateDefinitionRequest) (*GetRateDefinitionResponse, error)
-	// Returns the rate history for the specified rate definition.
-	// Required permissions:
-	//
-	//	CUSTOMER_SUPPORT
-	//
-	// Errors:
-	//   - grpc.Internal: An internal error occurred.
-	//   - grpc.InvalidArgument: The request is invalid.
-	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
-	//   - grpc.Unavailable: The operation is currently unavailable.
-	GetRateHistory(context.Context, *GetRateHistoryRequest) (*GetRateHistoryResponse, error)
 	// Lists billing plans.
 	// Required permissions:
 	//
@@ -1118,14 +1118,14 @@ func (UnimplementedBillingServiceServer) GetActiveBillingPlan(context.Context, *
 func (UnimplementedBillingServiceServer) GetBillingPlan(context.Context, *GetBillingPlanRequest) (*GetBillingPlanResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBillingPlan not implemented")
 }
+func (UnimplementedBillingServiceServer) GetBillingPlanHistory(context.Context, *GetBillingPlanHistoryRequest) (*GetBillingPlanHistoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetBillingPlanHistory not implemented")
+}
 func (UnimplementedBillingServiceServer) GetInvoice(context.Context, *GetInvoiceRequest) (*GetInvoiceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetInvoice not implemented")
 }
 func (UnimplementedBillingServiceServer) GetRateDefinition(context.Context, *GetRateDefinitionRequest) (*GetRateDefinitionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetRateDefinition not implemented")
-}
-func (UnimplementedBillingServiceServer) GetRateHistory(context.Context, *GetRateHistoryRequest) (*GetRateHistoryResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetRateHistory not implemented")
 }
 func (UnimplementedBillingServiceServer) ListBillingPlans(context.Context, *ListBillingPlansRequest) (*ListBillingPlansResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListBillingPlans not implemented")
@@ -1470,6 +1470,24 @@ func _BillingService_GetBillingPlan_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _BillingService_GetBillingPlanHistory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetBillingPlanHistoryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).GetBillingPlanHistory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_GetBillingPlanHistory_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).GetBillingPlanHistory(ctx, req.(*GetBillingPlanHistoryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _BillingService_GetInvoice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetInvoiceRequest)
 	if err := dec(in); err != nil {
@@ -1502,24 +1520,6 @@ func _BillingService_GetRateDefinition_Handler(srv interface{}, ctx context.Cont
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BillingServiceServer).GetRateDefinition(ctx, req.(*GetRateDefinitionRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _BillingService_GetRateHistory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetRateHistoryRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BillingServiceServer).GetRateHistory(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: BillingService_GetRateHistory_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BillingServiceServer).GetRateHistory(ctx, req.(*GetRateHistoryRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1744,16 +1744,16 @@ var BillingService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _BillingService_GetBillingPlan_Handler,
 		},
 		{
+			MethodName: "GetBillingPlanHistory",
+			Handler:    _BillingService_GetBillingPlanHistory_Handler,
+		},
+		{
 			MethodName: "GetInvoice",
 			Handler:    _BillingService_GetInvoice_Handler,
 		},
 		{
 			MethodName: "GetRateDefinition",
 			Handler:    _BillingService_GetRateDefinition_Handler,
-		},
-		{
-			MethodName: "GetRateHistory",
-			Handler:    _BillingService_GetRateHistory_Handler,
 		},
 		{
 			MethodName: "ListBillingPlans",
