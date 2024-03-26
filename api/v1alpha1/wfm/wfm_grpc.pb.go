@@ -201,6 +201,7 @@ const (
 	WFM_ReplaceAgentOnScheduleV1_FullMethodName                      = "/api.v1alpha1.wfm.WFM/ReplaceAgentOnScheduleV1"
 	WFM_RemoveAgentFromSchedule_FullMethodName                       = "/api.v1alpha1.wfm.WFM/RemoveAgentFromSchedule"
 	WFM_HelloWorldWFMAdherence_FullMethodName                        = "/api.v1alpha1.wfm.WFM/HelloWorldWFMAdherence"
+	WFM_ListAgentStatesForDay_FullMethodName                         = "/api.v1alpha1.wfm.WFM/ListAgentStatesForDay"
 )
 
 // WFMClient is the client API for WFM service.
@@ -2143,6 +2144,17 @@ type WFMClient interface {
 	//
 	//	PERMISSION_WFM_ADHERENCE_ADMIN, PERMISSION_WFM_ADHERENCE_MANAGER, or PERMISSION_WFM_ADHERENCE_MONITOR
 	HelloWorldWFMAdherence(ctx context.Context, in *HelloWorldWFMAdherenceRequest, opts ...grpc.CallOption) (*HelloWorldWFMAdherenceResponse, error)
+	// List the real time agent states for published schedule and the org sending the request, starting on the given @start_datetime.
+	// If the @end_datetime is set, all agent state sequences will be returned for the range between @start_datetime and @end_datetime.
+	// If @end_datetime is not set, the agent state sequences will be returned over a 24 hour period or until the current time, whichever is shorter.
+	// Required permissions:
+	//
+	//	PERMISSION_WFM_ADHERENCE_ADMIN, PERMISSION_WFM_ADHERENCE_MANAGER, or PERMISSION_WFM_ADHERENCE_MONITOR
+	//
+	// Errors:
+	//   - grpc.Invalid: the @start_datetime is invalid or beyond the current datetime.
+	//   - grpc.Internal: error occurs when listing the agent states.
+	ListAgentStatesForDay(ctx context.Context, in *ListAgentStatesForDayRequest, opts ...grpc.CallOption) (*ListAgentStatesForDayResponse, error)
 }
 
 type wFMClient struct {
@@ -3803,6 +3815,15 @@ func (c *wFMClient) RemoveAgentFromSchedule(ctx context.Context, in *RemoveAgent
 func (c *wFMClient) HelloWorldWFMAdherence(ctx context.Context, in *HelloWorldWFMAdherenceRequest, opts ...grpc.CallOption) (*HelloWorldWFMAdherenceResponse, error) {
 	out := new(HelloWorldWFMAdherenceResponse)
 	err := c.cc.Invoke(ctx, WFM_HelloWorldWFMAdherence_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) ListAgentStatesForDay(ctx context.Context, in *ListAgentStatesForDayRequest, opts ...grpc.CallOption) (*ListAgentStatesForDayResponse, error) {
+	out := new(ListAgentStatesForDayResponse)
+	err := c.cc.Invoke(ctx, WFM_ListAgentStatesForDay_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -5749,6 +5770,17 @@ type WFMServer interface {
 	//
 	//	PERMISSION_WFM_ADHERENCE_ADMIN, PERMISSION_WFM_ADHERENCE_MANAGER, or PERMISSION_WFM_ADHERENCE_MONITOR
 	HelloWorldWFMAdherence(context.Context, *HelloWorldWFMAdherenceRequest) (*HelloWorldWFMAdherenceResponse, error)
+	// List the real time agent states for published schedule and the org sending the request, starting on the given @start_datetime.
+	// If the @end_datetime is set, all agent state sequences will be returned for the range between @start_datetime and @end_datetime.
+	// If @end_datetime is not set, the agent state sequences will be returned over a 24 hour period or until the current time, whichever is shorter.
+	// Required permissions:
+	//
+	//	PERMISSION_WFM_ADHERENCE_ADMIN, PERMISSION_WFM_ADHERENCE_MANAGER, or PERMISSION_WFM_ADHERENCE_MONITOR
+	//
+	// Errors:
+	//   - grpc.Invalid: the @start_datetime is invalid or beyond the current datetime.
+	//   - grpc.Internal: error occurs when listing the agent states.
+	ListAgentStatesForDay(context.Context, *ListAgentStatesForDayRequest) (*ListAgentStatesForDayResponse, error)
 	mustEmbedUnimplementedWFMServer()
 }
 
@@ -6259,6 +6291,9 @@ func (UnimplementedWFMServer) RemoveAgentFromSchedule(context.Context, *RemoveAg
 }
 func (UnimplementedWFMServer) HelloWorldWFMAdherence(context.Context, *HelloWorldWFMAdherenceRequest) (*HelloWorldWFMAdherenceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HelloWorldWFMAdherence not implemented")
+}
+func (UnimplementedWFMServer) ListAgentStatesForDay(context.Context, *ListAgentStatesForDayRequest) (*ListAgentStatesForDayResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListAgentStatesForDay not implemented")
 }
 func (UnimplementedWFMServer) mustEmbedUnimplementedWFMServer() {}
 
@@ -9315,6 +9350,24 @@ func _WFM_HelloWorldWFMAdherence_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_ListAgentStatesForDay_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListAgentStatesForDayRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).ListAgentStatesForDay(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_ListAgentStatesForDay_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).ListAgentStatesForDay(ctx, req.(*ListAgentStatesForDayRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WFM_ServiceDesc is the grpc.ServiceDesc for WFM service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -9969,6 +10022,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "HelloWorldWFMAdherence",
 			Handler:    _WFM_HelloWorldWFMAdherence_Handler,
+		},
+		{
+			MethodName: "ListAgentStatesForDay",
+			Handler:    _WFM_ListAgentStatesForDay_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

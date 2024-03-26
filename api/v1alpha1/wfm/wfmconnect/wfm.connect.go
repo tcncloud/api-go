@@ -509,6 +509,9 @@ const (
 	// WFMHelloWorldWFMAdherenceProcedure is the fully-qualified name of the WFM's
 	// HelloWorldWFMAdherence RPC.
 	WFMHelloWorldWFMAdherenceProcedure = "/api.v1alpha1.wfm.WFM/HelloWorldWFMAdherence"
+	// WFMListAgentStatesForDayProcedure is the fully-qualified name of the WFM's ListAgentStatesForDay
+	// RPC.
+	WFMListAgentStatesForDayProcedure = "/api.v1alpha1.wfm.WFM/ListAgentStatesForDay"
 )
 
 // WFMClient is a client for the api.v1alpha1.wfm.WFM service.
@@ -2455,6 +2458,17 @@ type WFMClient interface {
 	//
 	//	PERMISSION_WFM_ADHERENCE_ADMIN, PERMISSION_WFM_ADHERENCE_MANAGER, or PERMISSION_WFM_ADHERENCE_MONITOR
 	HelloWorldWFMAdherence(context.Context, *connect_go.Request[wfm.HelloWorldWFMAdherenceRequest]) (*connect_go.Response[wfm.HelloWorldWFMAdherenceResponse], error)
+	// List the real time agent states for published schedule and the org sending the request, starting on the given @start_datetime.
+	// If the @end_datetime is set, all agent state sequences will be returned for the range between @start_datetime and @end_datetime.
+	// If @end_datetime is not set, the agent state sequences will be returned over a 24 hour period or until the current time, whichever is shorter.
+	// Required permissions:
+	//
+	//	PERMISSION_WFM_ADHERENCE_ADMIN, PERMISSION_WFM_ADHERENCE_MANAGER, or PERMISSION_WFM_ADHERENCE_MONITOR
+	//
+	// Errors:
+	//   - grpc.Invalid: the @start_datetime is invalid or beyond the current datetime.
+	//   - grpc.Internal: error occurs when listing the agent states.
+	ListAgentStatesForDay(context.Context, *connect_go.Request[wfm.ListAgentStatesForDayRequest]) (*connect_go.Response[wfm.ListAgentStatesForDayResponse], error)
 }
 
 // NewWFMClient constructs a client for the api.v1alpha1.wfm.WFM service. By default, it uses the
@@ -3307,6 +3321,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMHelloWorldWFMAdherenceProcedure,
 			opts...,
 		),
+		listAgentStatesForDay: connect_go.NewClient[wfm.ListAgentStatesForDayRequest, wfm.ListAgentStatesForDayResponse](
+			httpClient,
+			baseURL+WFMListAgentStatesForDayProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -3480,6 +3499,7 @@ type wFMClient struct {
 	replaceAgentOnScheduleV1                      *connect_go.Client[wfm.ReplaceAgentOnScheduleReq, wfm.ReplaceAgentOnScheduleRes]
 	removeAgentFromSchedule                       *connect_go.Client[wfm.RemoveAgentFromScheduleRequest, wfm.RemoveAgentFromScheduleResponse]
 	helloWorldWFMAdherence                        *connect_go.Client[wfm.HelloWorldWFMAdherenceRequest, wfm.HelloWorldWFMAdherenceResponse]
+	listAgentStatesForDay                         *connect_go.Client[wfm.ListAgentStatesForDayRequest, wfm.ListAgentStatesForDayResponse]
 }
 
 // PerformInitialClientSetup calls api.v1alpha1.wfm.WFM.PerformInitialClientSetup.
@@ -4344,6 +4364,11 @@ func (c *wFMClient) RemoveAgentFromSchedule(ctx context.Context, req *connect_go
 // HelloWorldWFMAdherence calls api.v1alpha1.wfm.WFM.HelloWorldWFMAdherence.
 func (c *wFMClient) HelloWorldWFMAdherence(ctx context.Context, req *connect_go.Request[wfm.HelloWorldWFMAdherenceRequest]) (*connect_go.Response[wfm.HelloWorldWFMAdherenceResponse], error) {
 	return c.helloWorldWFMAdherence.CallUnary(ctx, req)
+}
+
+// ListAgentStatesForDay calls api.v1alpha1.wfm.WFM.ListAgentStatesForDay.
+func (c *wFMClient) ListAgentStatesForDay(ctx context.Context, req *connect_go.Request[wfm.ListAgentStatesForDayRequest]) (*connect_go.Response[wfm.ListAgentStatesForDayResponse], error) {
+	return c.listAgentStatesForDay.CallUnary(ctx, req)
 }
 
 // WFMHandler is an implementation of the api.v1alpha1.wfm.WFM service.
@@ -6290,6 +6315,17 @@ type WFMHandler interface {
 	//
 	//	PERMISSION_WFM_ADHERENCE_ADMIN, PERMISSION_WFM_ADHERENCE_MANAGER, or PERMISSION_WFM_ADHERENCE_MONITOR
 	HelloWorldWFMAdherence(context.Context, *connect_go.Request[wfm.HelloWorldWFMAdherenceRequest]) (*connect_go.Response[wfm.HelloWorldWFMAdherenceResponse], error)
+	// List the real time agent states for published schedule and the org sending the request, starting on the given @start_datetime.
+	// If the @end_datetime is set, all agent state sequences will be returned for the range between @start_datetime and @end_datetime.
+	// If @end_datetime is not set, the agent state sequences will be returned over a 24 hour period or until the current time, whichever is shorter.
+	// Required permissions:
+	//
+	//	PERMISSION_WFM_ADHERENCE_ADMIN, PERMISSION_WFM_ADHERENCE_MANAGER, or PERMISSION_WFM_ADHERENCE_MONITOR
+	//
+	// Errors:
+	//   - grpc.Invalid: the @start_datetime is invalid or beyond the current datetime.
+	//   - grpc.Internal: error occurs when listing the agent states.
+	ListAgentStatesForDay(context.Context, *connect_go.Request[wfm.ListAgentStatesForDayRequest]) (*connect_go.Response[wfm.ListAgentStatesForDayResponse], error)
 }
 
 // NewWFMHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -7138,6 +7174,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.HelloWorldWFMAdherence,
 		opts...,
 	)
+	wFMListAgentStatesForDayHandler := connect_go.NewUnaryHandler(
+		WFMListAgentStatesForDayProcedure,
+		svc.ListAgentStatesForDay,
+		opts...,
+	)
 	return "/api.v1alpha1.wfm.WFM/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case WFMPerformInitialClientSetupProcedure:
@@ -7476,6 +7517,8 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMRemoveAgentFromScheduleHandler.ServeHTTP(w, r)
 		case WFMHelloWorldWFMAdherenceProcedure:
 			wFMHelloWorldWFMAdherenceHandler.ServeHTTP(w, r)
+		case WFMListAgentStatesForDayProcedure:
+			wFMListAgentStatesForDayHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -8155,4 +8198,8 @@ func (UnimplementedWFMHandler) RemoveAgentFromSchedule(context.Context, *connect
 
 func (UnimplementedWFMHandler) HelloWorldWFMAdherence(context.Context, *connect_go.Request[wfm.HelloWorldWFMAdherenceRequest]) (*connect_go.Response[wfm.HelloWorldWFMAdherenceResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.HelloWorldWFMAdherence is not implemented"))
+}
+
+func (UnimplementedWFMHandler) ListAgentStatesForDay(context.Context, *connect_go.Request[wfm.ListAgentStatesForDayRequest]) (*connect_go.Response[wfm.ListAgentStatesForDayResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListAgentStatesForDay is not implemented"))
 }
