@@ -1507,9 +1507,11 @@ func (InitialSetupState) EnumDescriptor() ([]byte, []int) {
 	return file_api_commons_wfm_proto_rawDescGZIP(), []int{18}
 }
 
+// The RealTimeManagementState, which is translated as a reduced AgentStatus from the acd service.
 type RealTimeManagementState int32
 
 const (
+	// Not set.
 	RealTimeManagementState_UNSPECIFIED RealTimeManagementState = 0
 	// The agent is logged in.
 	RealTimeManagementState_LOGGED_IN RealTimeManagementState = 1
