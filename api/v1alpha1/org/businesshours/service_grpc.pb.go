@@ -19,6 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
+	BusinessHoursService_ListBusinessHours_FullMethodName               = "/api.v1alpha1.org.businesshours.BusinessHoursService/ListBusinessHours"
 	BusinessHoursService_GetBusinessHours_FullMethodName                = "/api.v1alpha1.org.businesshours.BusinessHoursService/GetBusinessHours"
 	BusinessHoursService_SetBusinessHours_FullMethodName                = "/api.v1alpha1.org.businesshours.BusinessHoursService/SetBusinessHours"
 	BusinessHoursService_AddIntervalToBusinessHours_FullMethodName      = "/api.v1alpha1.org.businesshours.BusinessHoursService/AddIntervalToBusinessHours"
@@ -32,6 +33,8 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type BusinessHoursServiceClient interface {
+	// ListBusinessHours returns all business hours for an Org.
+	ListBusinessHours(ctx context.Context, in *ListBusinessHoursRequest, opts ...grpc.CallOption) (*ListBusinessHoursResponse, error)
 	// GetBusinessHours returns the business hours for the ID.
 	GetBusinessHours(ctx context.Context, in *GetBusinessHoursRequest, opts ...grpc.CallOption) (*GetBusinessHoursResponse, error)
 	// SetBusinessHours initializes a business hours object
@@ -54,6 +57,15 @@ type businessHoursServiceClient struct {
 
 func NewBusinessHoursServiceClient(cc grpc.ClientConnInterface) BusinessHoursServiceClient {
 	return &businessHoursServiceClient{cc}
+}
+
+func (c *businessHoursServiceClient) ListBusinessHours(ctx context.Context, in *ListBusinessHoursRequest, opts ...grpc.CallOption) (*ListBusinessHoursResponse, error) {
+	out := new(ListBusinessHoursResponse)
+	err := c.cc.Invoke(ctx, BusinessHoursService_ListBusinessHours_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *businessHoursServiceClient) GetBusinessHours(ctx context.Context, in *GetBusinessHoursRequest, opts ...grpc.CallOption) (*GetBusinessHoursResponse, error) {
@@ -123,6 +135,8 @@ func (c *businessHoursServiceClient) EvaluateBusinessHours(ctx context.Context, 
 // All implementations must embed UnimplementedBusinessHoursServiceServer
 // for forward compatibility
 type BusinessHoursServiceServer interface {
+	// ListBusinessHours returns all business hours for an Org.
+	ListBusinessHours(context.Context, *ListBusinessHoursRequest) (*ListBusinessHoursResponse, error)
 	// GetBusinessHours returns the business hours for the ID.
 	GetBusinessHours(context.Context, *GetBusinessHoursRequest) (*GetBusinessHoursResponse, error)
 	// SetBusinessHours initializes a business hours object
@@ -144,6 +158,9 @@ type BusinessHoursServiceServer interface {
 type UnimplementedBusinessHoursServiceServer struct {
 }
 
+func (UnimplementedBusinessHoursServiceServer) ListBusinessHours(context.Context, *ListBusinessHoursRequest) (*ListBusinessHoursResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListBusinessHours not implemented")
+}
 func (UnimplementedBusinessHoursServiceServer) GetBusinessHours(context.Context, *GetBusinessHoursRequest) (*GetBusinessHoursResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBusinessHours not implemented")
 }
@@ -176,6 +193,24 @@ type UnsafeBusinessHoursServiceServer interface {
 
 func RegisterBusinessHoursServiceServer(s grpc.ServiceRegistrar, srv BusinessHoursServiceServer) {
 	s.RegisterService(&BusinessHoursService_ServiceDesc, srv)
+}
+
+func _BusinessHoursService_ListBusinessHours_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListBusinessHoursRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BusinessHoursServiceServer).ListBusinessHours(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BusinessHoursService_ListBusinessHours_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BusinessHoursServiceServer).ListBusinessHours(ctx, req.(*ListBusinessHoursRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _BusinessHoursService_GetBusinessHours_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -311,6 +346,10 @@ var BusinessHoursService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "api.v1alpha1.org.businesshours.BusinessHoursService",
 	HandlerType: (*BusinessHoursServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "ListBusinessHours",
+			Handler:    _BusinessHoursService_ListBusinessHours_Handler,
+		},
 		{
 			MethodName: "GetBusinessHours",
 			Handler:    _BusinessHoursService_GetBusinessHours_Handler,

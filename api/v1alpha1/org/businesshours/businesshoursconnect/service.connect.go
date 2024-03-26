@@ -33,6 +33,9 @@ const (
 // reflection-formatted method names, remove the leading slash and convert the remaining slash to a
 // period.
 const (
+	// BusinessHoursServiceListBusinessHoursProcedure is the fully-qualified name of the
+	// BusinessHoursService's ListBusinessHours RPC.
+	BusinessHoursServiceListBusinessHoursProcedure = "/api.v1alpha1.org.businesshours.BusinessHoursService/ListBusinessHours"
 	// BusinessHoursServiceGetBusinessHoursProcedure is the fully-qualified name of the
 	// BusinessHoursService's GetBusinessHours RPC.
 	BusinessHoursServiceGetBusinessHoursProcedure = "/api.v1alpha1.org.businesshours.BusinessHoursService/GetBusinessHours"
@@ -59,6 +62,8 @@ const (
 // BusinessHoursServiceClient is a client for the
 // api.v1alpha1.org.businesshours.BusinessHoursService service.
 type BusinessHoursServiceClient interface {
+	// ListBusinessHours returns all business hours for an Org.
+	ListBusinessHours(context.Context, *connect_go.Request[businesshours.ListBusinessHoursRequest]) (*connect_go.Response[businesshours.ListBusinessHoursResponse], error)
 	// GetBusinessHours returns the business hours for the ID.
 	GetBusinessHours(context.Context, *connect_go.Request[businesshours.GetBusinessHoursRequest]) (*connect_go.Response[businesshours.GetBusinessHoursResponse], error)
 	// SetBusinessHours initializes a business hours object
@@ -86,6 +91,11 @@ type BusinessHoursServiceClient interface {
 func NewBusinessHoursServiceClient(httpClient connect_go.HTTPClient, baseURL string, opts ...connect_go.ClientOption) BusinessHoursServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
 	return &businessHoursServiceClient{
+		listBusinessHours: connect_go.NewClient[businesshours.ListBusinessHoursRequest, businesshours.ListBusinessHoursResponse](
+			httpClient,
+			baseURL+BusinessHoursServiceListBusinessHoursProcedure,
+			opts...,
+		),
 		getBusinessHours: connect_go.NewClient[businesshours.GetBusinessHoursRequest, businesshours.GetBusinessHoursResponse](
 			httpClient,
 			baseURL+BusinessHoursServiceGetBusinessHoursProcedure,
@@ -126,6 +136,7 @@ func NewBusinessHoursServiceClient(httpClient connect_go.HTTPClient, baseURL str
 
 // businessHoursServiceClient implements BusinessHoursServiceClient.
 type businessHoursServiceClient struct {
+	listBusinessHours               *connect_go.Client[businesshours.ListBusinessHoursRequest, businesshours.ListBusinessHoursResponse]
 	getBusinessHours                *connect_go.Client[businesshours.GetBusinessHoursRequest, businesshours.GetBusinessHoursResponse]
 	setBusinessHours                *connect_go.Client[businesshours.SetBusinessHoursRequest, businesshours.SetBusinessHoursResponse]
 	addIntervalToBusinessHours      *connect_go.Client[businesshours.AddIntervalToBusinessHoursRequest, businesshours.AddIntervalToBusinessHoursResponse]
@@ -133,6 +144,11 @@ type businessHoursServiceClient struct {
 	updateBusinessHoursInfo         *connect_go.Client[businesshours.UpdateBusinessHoursInfoRequest, businesshours.UpdateBusinessHoursInfoResponse]
 	deleteBusinessHours             *connect_go.Client[businesshours.DeleteBusinessHoursRequest, businesshours.DeleteBusinessHoursResponse]
 	evaluateBusinessHours           *connect_go.Client[businesshours.EvaluateBusinessHoursRequest, businesshours.EvaluateBusinessHoursResponse]
+}
+
+// ListBusinessHours calls api.v1alpha1.org.businesshours.BusinessHoursService.ListBusinessHours.
+func (c *businessHoursServiceClient) ListBusinessHours(ctx context.Context, req *connect_go.Request[businesshours.ListBusinessHoursRequest]) (*connect_go.Response[businesshours.ListBusinessHoursResponse], error) {
+	return c.listBusinessHours.CallUnary(ctx, req)
 }
 
 // GetBusinessHours calls api.v1alpha1.org.businesshours.BusinessHoursService.GetBusinessHours.
@@ -178,6 +194,8 @@ func (c *businessHoursServiceClient) EvaluateBusinessHours(ctx context.Context, 
 // BusinessHoursServiceHandler is an implementation of the
 // api.v1alpha1.org.businesshours.BusinessHoursService service.
 type BusinessHoursServiceHandler interface {
+	// ListBusinessHours returns all business hours for an Org.
+	ListBusinessHours(context.Context, *connect_go.Request[businesshours.ListBusinessHoursRequest]) (*connect_go.Response[businesshours.ListBusinessHoursResponse], error)
 	// GetBusinessHours returns the business hours for the ID.
 	GetBusinessHours(context.Context, *connect_go.Request[businesshours.GetBusinessHoursRequest]) (*connect_go.Response[businesshours.GetBusinessHoursResponse], error)
 	// SetBusinessHours initializes a business hours object
@@ -200,6 +218,11 @@ type BusinessHoursServiceHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewBusinessHoursServiceHandler(svc BusinessHoursServiceHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
+	businessHoursServiceListBusinessHoursHandler := connect_go.NewUnaryHandler(
+		BusinessHoursServiceListBusinessHoursProcedure,
+		svc.ListBusinessHours,
+		opts...,
+	)
 	businessHoursServiceGetBusinessHoursHandler := connect_go.NewUnaryHandler(
 		BusinessHoursServiceGetBusinessHoursProcedure,
 		svc.GetBusinessHours,
@@ -237,6 +260,8 @@ func NewBusinessHoursServiceHandler(svc BusinessHoursServiceHandler, opts ...con
 	)
 	return "/api.v1alpha1.org.businesshours.BusinessHoursService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
+		case BusinessHoursServiceListBusinessHoursProcedure:
+			businessHoursServiceListBusinessHoursHandler.ServeHTTP(w, r)
 		case BusinessHoursServiceGetBusinessHoursProcedure:
 			businessHoursServiceGetBusinessHoursHandler.ServeHTTP(w, r)
 		case BusinessHoursServiceSetBusinessHoursProcedure:
@@ -259,6 +284,10 @@ func NewBusinessHoursServiceHandler(svc BusinessHoursServiceHandler, opts ...con
 
 // UnimplementedBusinessHoursServiceHandler returns CodeUnimplemented from all methods.
 type UnimplementedBusinessHoursServiceHandler struct{}
+
+func (UnimplementedBusinessHoursServiceHandler) ListBusinessHours(context.Context, *connect_go.Request[businesshours.ListBusinessHoursRequest]) (*connect_go.Response[businesshours.ListBusinessHoursResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.businesshours.BusinessHoursService.ListBusinessHours is not implemented"))
+}
 
 func (UnimplementedBusinessHoursServiceHandler) GetBusinessHours(context.Context, *connect_go.Request[businesshours.GetBusinessHoursRequest]) (*connect_go.Response[businesshours.GetBusinessHoursResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.businesshours.BusinessHoursService.GetBusinessHours is not implemented"))
