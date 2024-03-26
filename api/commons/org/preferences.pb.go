@@ -3882,6 +3882,320 @@ func (x *DayInterval) GetEnd() *TimeOfDay {
 	return nil
 }
 
+// MonthDayDate enables custom named dates.
+type MonthDayDate struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// A name for this date.
+	DateName string `protobuf:"bytes,1,opt,name=date_name,json=dateName,proto3" json:"date_name,omitempty"`
+	// Month of the year.
+	Month commons.Month `protobuf:"varint,2,opt,name=month,proto3,enum=api.commons.Month" json:"month,omitempty"`
+	// Day of the month.
+	DayOfMonth int32 `protobuf:"varint,3,opt,name=day_of_month,json=dayOfMonth,proto3" json:"day_of_month,omitempty"`
+}
+
+func (x *MonthDayDate) Reset() {
+	*x = MonthDayDate{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_commons_org_preferences_proto_msgTypes[42]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *MonthDayDate) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MonthDayDate) ProtoMessage() {}
+
+func (x *MonthDayDate) ProtoReflect() protoreflect.Message {
+	mi := &file_api_commons_org_preferences_proto_msgTypes[42]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MonthDayDate.ProtoReflect.Descriptor instead.
+func (*MonthDayDate) Descriptor() ([]byte, []int) {
+	return file_api_commons_org_preferences_proto_rawDescGZIP(), []int{42}
+}
+
+func (x *MonthDayDate) GetDateName() string {
+	if x != nil {
+		return x.DateName
+	}
+	return ""
+}
+
+func (x *MonthDayDate) GetMonth() commons.Month {
+	if x != nil {
+		return x.Month
+	}
+	return commons.Month(0)
+}
+
+func (x *MonthDayDate) GetDayOfMonth() int32 {
+	if x != nil {
+		return x.DayOfMonth
+	}
+	return 0
+}
+
+// CountryHoliday holiday service name and country.
+type CountryHoliday struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The name.
+	HolidayName string `protobuf:"bytes,1,opt,name=holiday_name,json=holidayName,proto3" json:"holiday_name,omitempty"`
+	// The country.
+	Country commons.Country `protobuf:"varint,2,opt,name=country,proto3,enum=api.commons.Country" json:"country,omitempty"`
+}
+
+func (x *CountryHoliday) Reset() {
+	*x = CountryHoliday{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_commons_org_preferences_proto_msgTypes[43]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CountryHoliday) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CountryHoliday) ProtoMessage() {}
+
+func (x *CountryHoliday) ProtoReflect() protoreflect.Message {
+	mi := &file_api_commons_org_preferences_proto_msgTypes[43]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CountryHoliday.ProtoReflect.Descriptor instead.
+func (*CountryHoliday) Descriptor() ([]byte, []int) {
+	return file_api_commons_org_preferences_proto_rawDescGZIP(), []int{43}
+}
+
+func (x *CountryHoliday) GetHolidayName() string {
+	if x != nil {
+		return x.HolidayName
+	}
+	return ""
+}
+
+func (x *CountryHoliday) GetCountry() commons.Country {
+	if x != nil {
+		return x.Country
+	}
+	return commons.Country(0)
+}
+
+// ProgrammedDay may be a named date or a holiday.
+type ProgrammedDay struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// A date or holiday
+	//
+	// Types that are assignable to DayType:
+	//
+	//	*ProgrammedDay_Day
+	//	*ProgrammedDay_Holiday
+	DayType isProgrammedDay_DayType `protobuf_oneof:"DayType"`
+}
+
+func (x *ProgrammedDay) Reset() {
+	*x = ProgrammedDay{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_commons_org_preferences_proto_msgTypes[44]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ProgrammedDay) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ProgrammedDay) ProtoMessage() {}
+
+func (x *ProgrammedDay) ProtoReflect() protoreflect.Message {
+	mi := &file_api_commons_org_preferences_proto_msgTypes[44]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ProgrammedDay.ProtoReflect.Descriptor instead.
+func (*ProgrammedDay) Descriptor() ([]byte, []int) {
+	return file_api_commons_org_preferences_proto_rawDescGZIP(), []int{44}
+}
+
+func (m *ProgrammedDay) GetDayType() isProgrammedDay_DayType {
+	if m != nil {
+		return m.DayType
+	}
+	return nil
+}
+
+func (x *ProgrammedDay) GetDay() *MonthDayDate {
+	if x, ok := x.GetDayType().(*ProgrammedDay_Day); ok {
+		return x.Day
+	}
+	return nil
+}
+
+func (x *ProgrammedDay) GetHoliday() *CountryHoliday {
+	if x, ok := x.GetDayType().(*ProgrammedDay_Holiday); ok {
+		return x.Holiday
+	}
+	return nil
+}
+
+type isProgrammedDay_DayType interface {
+	isProgrammedDay_DayType()
+}
+
+type ProgrammedDay_Day struct {
+	// Named date.
+	Day *MonthDayDate `protobuf:"bytes,1,opt,name=day,proto3,oneof"`
+}
+
+type ProgrammedDay_Holiday struct {
+	// Holiday service holiday.
+	Holiday *CountryHoliday `protobuf:"bytes,2,opt,name=holiday,proto3,oneof"`
+}
+
+func (*ProgrammedDay_Day) isProgrammedDay_DayType() {}
+
+func (*ProgrammedDay_Holiday) isProgrammedDay_DayType() {}
+
+// ProgrammedDates a list of dates or holidays.
+type ProgrammedDates struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// ID of the Org related to this.
+	OrgId string `protobuf:"bytes,1,opt,name=org_id,json=orgId,proto3" json:"org_id,omitempty"`
+	// Unique ID.
+	ProgrammedDatesId string `protobuf:"bytes,2,opt,name=programmed_dates_id,json=programmedDatesId,proto3" json:"programmed_dates_id,omitempty"`
+	// Name of the list.
+	ProgrammedDatesName string `protobuf:"bytes,3,opt,name=programmed_dates_name,json=programmedDatesName,proto3" json:"programmed_dates_name,omitempty"`
+	// Description of the list.
+	Description string `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
+	// The timezone.
+	Timezone commons.TimeZone `protobuf:"varint,5,opt,name=timezone,proto3,enum=api.commons.TimeZone" json:"timezone,omitempty"`
+	// The list of dates or holidays.
+	Days []*ProgrammedDay `protobuf:"bytes,6,rep,name=days,proto3" json:"days,omitempty"`
+	// When the list was last updated.
+	LastUpdated *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=last_updated,json=lastUpdated,proto3" json:"last_updated,omitempty"`
+}
+
+func (x *ProgrammedDates) Reset() {
+	*x = ProgrammedDates{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_commons_org_preferences_proto_msgTypes[45]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ProgrammedDates) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ProgrammedDates) ProtoMessage() {}
+
+func (x *ProgrammedDates) ProtoReflect() protoreflect.Message {
+	mi := &file_api_commons_org_preferences_proto_msgTypes[45]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ProgrammedDates.ProtoReflect.Descriptor instead.
+func (*ProgrammedDates) Descriptor() ([]byte, []int) {
+	return file_api_commons_org_preferences_proto_rawDescGZIP(), []int{45}
+}
+
+func (x *ProgrammedDates) GetOrgId() string {
+	if x != nil {
+		return x.OrgId
+	}
+	return ""
+}
+
+func (x *ProgrammedDates) GetProgrammedDatesId() string {
+	if x != nil {
+		return x.ProgrammedDatesId
+	}
+	return ""
+}
+
+func (x *ProgrammedDates) GetProgrammedDatesName() string {
+	if x != nil {
+		return x.ProgrammedDatesName
+	}
+	return ""
+}
+
+func (x *ProgrammedDates) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *ProgrammedDates) GetTimezone() commons.TimeZone {
+	if x != nil {
+		return x.Timezone
+	}
+	return commons.TimeZone(0)
+}
+
+func (x *ProgrammedDates) GetDays() []*ProgrammedDay {
+	if x != nil {
+		return x.Days
+	}
+	return nil
+}
+
+func (x *ProgrammedDates) GetLastUpdated() *timestamppb.Timestamp {
+	if x != nil {
+		return x.LastUpdated
+	}
+	return nil
+}
+
 // A message containing the settings needed to set up a duo mfa client for an organization.
 // The duo client secret is not included here - it only exists on the update api.
 type AuthenticationPreferences_DuoMfaSettings struct {
@@ -3897,7 +4211,7 @@ type AuthenticationPreferences_DuoMfaSettings struct {
 func (x *AuthenticationPreferences_DuoMfaSettings) Reset() {
 	*x = AuthenticationPreferences_DuoMfaSettings{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_org_preferences_proto_msgTypes[42]
+		mi := &file_api_commons_org_preferences_proto_msgTypes[46]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3910,7 +4224,7 @@ func (x *AuthenticationPreferences_DuoMfaSettings) String() string {
 func (*AuthenticationPreferences_DuoMfaSettings) ProtoMessage() {}
 
 func (x *AuthenticationPreferences_DuoMfaSettings) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_org_preferences_proto_msgTypes[42]
+	mi := &file_api_commons_org_preferences_proto_msgTypes[46]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3959,7 +4273,7 @@ type AuthenticationPreferences_EmailMfaSettings struct {
 func (x *AuthenticationPreferences_EmailMfaSettings) Reset() {
 	*x = AuthenticationPreferences_EmailMfaSettings{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_org_preferences_proto_msgTypes[43]
+		mi := &file_api_commons_org_preferences_proto_msgTypes[47]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3972,7 +4286,7 @@ func (x *AuthenticationPreferences_EmailMfaSettings) String() string {
 func (*AuthenticationPreferences_EmailMfaSettings) ProtoMessage() {}
 
 func (x *AuthenticationPreferences_EmailMfaSettings) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_org_preferences_proto_msgTypes[43]
+	mi := &file_api_commons_org_preferences_proto_msgTypes[47]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4009,7 +4323,7 @@ type BargeInFiltering_HuntGroup struct {
 func (x *BargeInFiltering_HuntGroup) Reset() {
 	*x = BargeInFiltering_HuntGroup{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_org_preferences_proto_msgTypes[44]
+		mi := &file_api_commons_org_preferences_proto_msgTypes[48]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4022,7 +4336,7 @@ func (x *BargeInFiltering_HuntGroup) String() string {
 func (*BargeInFiltering_HuntGroup) ProtoMessage() {}
 
 func (x *BargeInFiltering_HuntGroup) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_org_preferences_proto_msgTypes[44]
+	mi := &file_api_commons_org_preferences_proto_msgTypes[48]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4082,7 +4396,7 @@ type BargeInFiltering_AgentStatus struct {
 func (x *BargeInFiltering_AgentStatus) Reset() {
 	*x = BargeInFiltering_AgentStatus{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_org_preferences_proto_msgTypes[45]
+		mi := &file_api_commons_org_preferences_proto_msgTypes[49]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4095,7 +4409,7 @@ func (x *BargeInFiltering_AgentStatus) String() string {
 func (*BargeInFiltering_AgentStatus) ProtoMessage() {}
 
 func (x *BargeInFiltering_AgentStatus) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_org_preferences_proto_msgTypes[45]
+	mi := &file_api_commons_org_preferences_proto_msgTypes[49]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4195,7 +4509,7 @@ type VoiceAnalytics_Redact struct {
 func (x *VoiceAnalytics_Redact) Reset() {
 	*x = VoiceAnalytics_Redact{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_org_preferences_proto_msgTypes[47]
+		mi := &file_api_commons_org_preferences_proto_msgTypes[51]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4208,7 +4522,7 @@ func (x *VoiceAnalytics_Redact) String() string {
 func (*VoiceAnalytics_Redact) ProtoMessage() {}
 
 func (x *VoiceAnalytics_Redact) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_org_preferences_proto_msgTypes[47]
+	mi := &file_api_commons_org_preferences_proto_msgTypes[51]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4275,7 +4589,7 @@ type VoiceAnalytics_Number struct {
 func (x *VoiceAnalytics_Number) Reset() {
 	*x = VoiceAnalytics_Number{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_org_preferences_proto_msgTypes[48]
+		mi := &file_api_commons_org_preferences_proto_msgTypes[52]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4288,7 +4602,7 @@ func (x *VoiceAnalytics_Number) String() string {
 func (*VoiceAnalytics_Number) ProtoMessage() {}
 
 func (x *VoiceAnalytics_Number) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_org_preferences_proto_msgTypes[48]
+	mi := &file_api_commons_org_preferences_proto_msgTypes[52]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4345,7 +4659,7 @@ type VoiceAnalytics_Notify struct {
 func (x *VoiceAnalytics_Notify) Reset() {
 	*x = VoiceAnalytics_Notify{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_org_preferences_proto_msgTypes[49]
+		mi := &file_api_commons_org_preferences_proto_msgTypes[53]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4358,7 +4672,7 @@ func (x *VoiceAnalytics_Notify) String() string {
 func (*VoiceAnalytics_Notify) ProtoMessage() {}
 
 func (x *VoiceAnalytics_Notify) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_org_preferences_proto_msgTypes[49]
+	mi := &file_api_commons_org_preferences_proto_msgTypes[53]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5232,19 +5546,63 @@ var file_api_commons_org_preferences_proto_rawDesc = []byte{
 	0x52, 0x05, 0x73, 0x74, 0x61, 0x72, 0x74, 0x12, 0x2c, 0x0a, 0x03, 0x65, 0x6e, 0x64, 0x18, 0x03,
 	0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f,
 	0x6e, 0x73, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x4f, 0x66, 0x44, 0x61, 0x79,
-	0x52, 0x03, 0x65, 0x6e, 0x64, 0x42, 0xb1, 0x01, 0x0a, 0x13, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70,
-	0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x6f, 0x72, 0x67, 0x42, 0x10, 0x50,
-	0x72, 0x65, 0x66, 0x65, 0x72, 0x65, 0x6e, 0x63, 0x65, 0x73, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50,
-	0x01, 0x5a, 0x2a, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63,
-	0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70,
-	0x69, 0x2f, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2f, 0x6f, 0x72, 0x67, 0xa2, 0x02, 0x03,
-	0x41, 0x43, 0x4f, 0xaa, 0x02, 0x0f, 0x41, 0x70, 0x69, 0x2e, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e,
-	0x73, 0x2e, 0x4f, 0x72, 0x67, 0xca, 0x02, 0x0f, 0x41, 0x70, 0x69, 0x5c, 0x43, 0x6f, 0x6d, 0x6d,
-	0x6f, 0x6e, 0x73, 0x5c, 0x4f, 0x72, 0x67, 0xe2, 0x02, 0x1b, 0x41, 0x70, 0x69, 0x5c, 0x43, 0x6f,
-	0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x5c, 0x4f, 0x72, 0x67, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74,
-	0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x11, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x43, 0x6f, 0x6d,
-	0x6d, 0x6f, 0x6e, 0x73, 0x3a, 0x3a, 0x4f, 0x72, 0x67, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x33,
+	0x52, 0x03, 0x65, 0x6e, 0x64, 0x22, 0x77, 0x0a, 0x0c, 0x4d, 0x6f, 0x6e, 0x74, 0x68, 0x44, 0x61,
+	0x79, 0x44, 0x61, 0x74, 0x65, 0x12, 0x1b, 0x0a, 0x09, 0x64, 0x61, 0x74, 0x65, 0x5f, 0x6e, 0x61,
+	0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x64, 0x61, 0x74, 0x65, 0x4e, 0x61,
+	0x6d, 0x65, 0x12, 0x28, 0x0a, 0x05, 0x6d, 0x6f, 0x6e, 0x74, 0x68, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x0e, 0x32, 0x12, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e,
+	0x4d, 0x6f, 0x6e, 0x74, 0x68, 0x52, 0x05, 0x6d, 0x6f, 0x6e, 0x74, 0x68, 0x12, 0x20, 0x0a, 0x0c,
+	0x64, 0x61, 0x79, 0x5f, 0x6f, 0x66, 0x5f, 0x6d, 0x6f, 0x6e, 0x74, 0x68, 0x18, 0x03, 0x20, 0x01,
+	0x28, 0x05, 0x52, 0x0a, 0x64, 0x61, 0x79, 0x4f, 0x66, 0x4d, 0x6f, 0x6e, 0x74, 0x68, 0x22, 0x63,
+	0x0a, 0x0e, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x72, 0x79, 0x48, 0x6f, 0x6c, 0x69, 0x64, 0x61, 0x79,
+	0x12, 0x21, 0x0a, 0x0c, 0x68, 0x6f, 0x6c, 0x69, 0x64, 0x61, 0x79, 0x5f, 0x6e, 0x61, 0x6d, 0x65,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x68, 0x6f, 0x6c, 0x69, 0x64, 0x61, 0x79, 0x4e,
+	0x61, 0x6d, 0x65, 0x12, 0x2e, 0x0a, 0x07, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x72, 0x79, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x0e, 0x32, 0x14, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f,
+	0x6e, 0x73, 0x2e, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x72, 0x79, 0x52, 0x07, 0x63, 0x6f, 0x75, 0x6e,
+	0x74, 0x72, 0x79, 0x22, 0x8a, 0x01, 0x0a, 0x0d, 0x50, 0x72, 0x6f, 0x67, 0x72, 0x61, 0x6d, 0x6d,
+	0x65, 0x64, 0x44, 0x61, 0x79, 0x12, 0x31, 0x0a, 0x03, 0x64, 0x61, 0x79, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x1d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73,
+	0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x4d, 0x6f, 0x6e, 0x74, 0x68, 0x44, 0x61, 0x79, 0x44, 0x61, 0x74,
+	0x65, 0x48, 0x00, 0x52, 0x03, 0x64, 0x61, 0x79, 0x12, 0x3b, 0x0a, 0x07, 0x68, 0x6f, 0x6c, 0x69,
+	0x64, 0x61, 0x79, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1f, 0x2e, 0x61, 0x70, 0x69, 0x2e,
+	0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x43, 0x6f, 0x75, 0x6e,
+	0x74, 0x72, 0x79, 0x48, 0x6f, 0x6c, 0x69, 0x64, 0x61, 0x79, 0x48, 0x00, 0x52, 0x07, 0x68, 0x6f,
+	0x6c, 0x69, 0x64, 0x61, 0x79, 0x42, 0x09, 0x0a, 0x07, 0x44, 0x61, 0x79, 0x54, 0x79, 0x70, 0x65,
+	0x22, 0xd4, 0x02, 0x0a, 0x0f, 0x50, 0x72, 0x6f, 0x67, 0x72, 0x61, 0x6d, 0x6d, 0x65, 0x64, 0x44,
+	0x61, 0x74, 0x65, 0x73, 0x12, 0x15, 0x0a, 0x06, 0x6f, 0x72, 0x67, 0x5f, 0x69, 0x64, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x6f, 0x72, 0x67, 0x49, 0x64, 0x12, 0x2e, 0x0a, 0x13, 0x70,
+	0x72, 0x6f, 0x67, 0x72, 0x61, 0x6d, 0x6d, 0x65, 0x64, 0x5f, 0x64, 0x61, 0x74, 0x65, 0x73, 0x5f,
+	0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x70, 0x72, 0x6f, 0x67, 0x72, 0x61,
+	0x6d, 0x6d, 0x65, 0x64, 0x44, 0x61, 0x74, 0x65, 0x73, 0x49, 0x64, 0x12, 0x32, 0x0a, 0x15, 0x70,
+	0x72, 0x6f, 0x67, 0x72, 0x61, 0x6d, 0x6d, 0x65, 0x64, 0x5f, 0x64, 0x61, 0x74, 0x65, 0x73, 0x5f,
+	0x6e, 0x61, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x13, 0x70, 0x72, 0x6f, 0x67,
+	0x72, 0x61, 0x6d, 0x6d, 0x65, 0x64, 0x44, 0x61, 0x74, 0x65, 0x73, 0x4e, 0x61, 0x6d, 0x65, 0x12,
+	0x20, 0x0a, 0x0b, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x04,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f,
+	0x6e, 0x12, 0x31, 0x0a, 0x08, 0x74, 0x69, 0x6d, 0x65, 0x7a, 0x6f, 0x6e, 0x65, 0x18, 0x05, 0x20,
+	0x01, 0x28, 0x0e, 0x32, 0x15, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e,
+	0x73, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x5a, 0x6f, 0x6e, 0x65, 0x52, 0x08, 0x74, 0x69, 0x6d, 0x65,
+	0x7a, 0x6f, 0x6e, 0x65, 0x12, 0x32, 0x0a, 0x04, 0x64, 0x61, 0x79, 0x73, 0x18, 0x06, 0x20, 0x03,
+	0x28, 0x0b, 0x32, 0x1e, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73,
+	0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x50, 0x72, 0x6f, 0x67, 0x72, 0x61, 0x6d, 0x6d, 0x65, 0x64, 0x44,
+	0x61, 0x79, 0x52, 0x04, 0x64, 0x61, 0x79, 0x73, 0x12, 0x3d, 0x0a, 0x0c, 0x6c, 0x61, 0x73, 0x74,
+	0x5f, 0x75, 0x70, 0x64, 0x61, 0x74, 0x65, 0x64, 0x18, 0x07, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a,
+	0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66,
+	0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x0b, 0x6c, 0x61, 0x73, 0x74,
+	0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x64, 0x42, 0xb1, 0x01, 0x0a, 0x13, 0x63, 0x6f, 0x6d, 0x2e,
+	0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x6f, 0x72, 0x67, 0x42,
+	0x10, 0x50, 0x72, 0x65, 0x66, 0x65, 0x72, 0x65, 0x6e, 0x63, 0x65, 0x73, 0x50, 0x72, 0x6f, 0x74,
+	0x6f, 0x50, 0x01, 0x5a, 0x2a, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f,
+	0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f,
+	0x61, 0x70, 0x69, 0x2f, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2f, 0x6f, 0x72, 0x67, 0xa2,
+	0x02, 0x03, 0x41, 0x43, 0x4f, 0xaa, 0x02, 0x0f, 0x41, 0x70, 0x69, 0x2e, 0x43, 0x6f, 0x6d, 0x6d,
+	0x6f, 0x6e, 0x73, 0x2e, 0x4f, 0x72, 0x67, 0xca, 0x02, 0x0f, 0x41, 0x70, 0x69, 0x5c, 0x43, 0x6f,
+	0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x5c, 0x4f, 0x72, 0x67, 0xe2, 0x02, 0x1b, 0x41, 0x70, 0x69, 0x5c,
+	0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x5c, 0x4f, 0x72, 0x67, 0x5c, 0x47, 0x50, 0x42, 0x4d,
+	0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x11, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x43,
+	0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x3a, 0x3a, 0x4f, 0x72, 0x67, 0x62, 0x06, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x33,
 }
 
 var (
@@ -5260,7 +5618,7 @@ func file_api_commons_org_preferences_proto_rawDescGZIP() []byte {
 }
 
 var file_api_commons_org_preferences_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_api_commons_org_preferences_proto_msgTypes = make([]protoimpl.MessageInfo, 50)
+var file_api_commons_org_preferences_proto_msgTypes = make([]protoimpl.MessageInfo, 54)
 var file_api_commons_org_preferences_proto_goTypes = []interface{}{
 	(Scorecards_EvaluationInterval)(0),                 // 0: api.commons.org.Scorecards.EvaluationInterval
 	(VoiceAnalytics_Number_Kind)(0),                    // 1: api.commons.org.VoiceAnalytics.Number.Kind
@@ -5306,75 +5664,80 @@ var file_api_commons_org_preferences_proto_goTypes = []interface{}{
 	(*Range)(nil),                                      // 41: api.commons.org.Range
 	(*TimeOfDay)(nil),                                  // 42: api.commons.org.TimeOfDay
 	(*DayInterval)(nil),                                // 43: api.commons.org.DayInterval
-	(*AuthenticationPreferences_DuoMfaSettings)(nil),   // 44: api.commons.org.AuthenticationPreferences.DuoMfaSettings
-	(*AuthenticationPreferences_EmailMfaSettings)(nil), // 45: api.commons.org.AuthenticationPreferences.EmailMfaSettings
-	(*BargeInFiltering_HuntGroup)(nil),                 // 46: api.commons.org.BargeInFiltering.HuntGroup
-	(*BargeInFiltering_AgentStatus)(nil),               // 47: api.commons.org.BargeInFiltering.AgentStatus
-	nil,                                                // 48: api.commons.org.SchedulePreferences.CampaignLinksEntry
-	(*VoiceAnalytics_Redact)(nil),                      // 49: api.commons.org.VoiceAnalytics.Redact
-	(*VoiceAnalytics_Number)(nil),                      // 50: api.commons.org.VoiceAnalytics.Number
-	(*VoiceAnalytics_Notify)(nil),                      // 51: api.commons.org.VoiceAnalytics.Notify
-	(commons.Country)(0),                               // 52: api.commons.Country
-	(commons.TimeZone)(0),                              // 53: api.commons.TimeZone
-	(commons.DisplayLanguage)(0),                       // 54: api.commons.DisplayLanguage
-	(*commons.LocalePreferences)(nil),                  // 55: api.commons.LocalePreferences
-	(commons.DefaultDuplicateHandling)(0),              // 56: api.commons.DefaultDuplicateHandling
-	(commons.StandardImportFormat)(0),                  // 57: api.commons.StandardImportFormat
-	(commons.AgentInfoSortBy)(0),                       // 58: api.commons.AgentInfoSortBy
-	(commons.QueueInfoSortBy)(0),                       // 59: api.commons.QueueInfoSortBy
-	(commons.AnsweringMachineDetection)(0),             // 60: api.commons.AnsweringMachineDetection
-	(commons.DialOrderType)(0),                         // 61: api.commons.DialOrderType
-	(commons.BroadcastTemplateOrdering)(0),             // 62: api.commons.BroadcastTemplateOrdering
-	(commons.ScheduleByTimeZoneScope)(0),               // 63: api.commons.ScheduleByTimeZoneScope
-	(commons.AnaTimeZone)(0),                           // 64: api.commons.AnaTimeZone
-	(commons.StandardReportFilter)(0),                  // 65: api.commons.StandardReportFilter
-	(commons.RecordingFileType)(0),                     // 66: api.commons.RecordingFileType
-	(*timestamppb.Timestamp)(nil),                      // 67: google.protobuf.Timestamp
-	(commons.Weekday_Enum)(0),                          // 68: api.commons.Weekday.Enum
+	(*MonthDayDate)(nil),                               // 44: api.commons.org.MonthDayDate
+	(*CountryHoliday)(nil),                             // 45: api.commons.org.CountryHoliday
+	(*ProgrammedDay)(nil),                              // 46: api.commons.org.ProgrammedDay
+	(*ProgrammedDates)(nil),                            // 47: api.commons.org.ProgrammedDates
+	(*AuthenticationPreferences_DuoMfaSettings)(nil),   // 48: api.commons.org.AuthenticationPreferences.DuoMfaSettings
+	(*AuthenticationPreferences_EmailMfaSettings)(nil), // 49: api.commons.org.AuthenticationPreferences.EmailMfaSettings
+	(*BargeInFiltering_HuntGroup)(nil),                 // 50: api.commons.org.BargeInFiltering.HuntGroup
+	(*BargeInFiltering_AgentStatus)(nil),               // 51: api.commons.org.BargeInFiltering.AgentStatus
+	nil,                                                // 52: api.commons.org.SchedulePreferences.CampaignLinksEntry
+	(*VoiceAnalytics_Redact)(nil),                      // 53: api.commons.org.VoiceAnalytics.Redact
+	(*VoiceAnalytics_Number)(nil),                      // 54: api.commons.org.VoiceAnalytics.Number
+	(*VoiceAnalytics_Notify)(nil),                      // 55: api.commons.org.VoiceAnalytics.Notify
+	(commons.Country)(0),                               // 56: api.commons.Country
+	(commons.TimeZone)(0),                              // 57: api.commons.TimeZone
+	(commons.DisplayLanguage)(0),                       // 58: api.commons.DisplayLanguage
+	(*commons.LocalePreferences)(nil),                  // 59: api.commons.LocalePreferences
+	(commons.DefaultDuplicateHandling)(0),              // 60: api.commons.DefaultDuplicateHandling
+	(commons.StandardImportFormat)(0),                  // 61: api.commons.StandardImportFormat
+	(commons.AgentInfoSortBy)(0),                       // 62: api.commons.AgentInfoSortBy
+	(commons.QueueInfoSortBy)(0),                       // 63: api.commons.QueueInfoSortBy
+	(commons.AnsweringMachineDetection)(0),             // 64: api.commons.AnsweringMachineDetection
+	(commons.DialOrderType)(0),                         // 65: api.commons.DialOrderType
+	(commons.BroadcastTemplateOrdering)(0),             // 66: api.commons.BroadcastTemplateOrdering
+	(commons.ScheduleByTimeZoneScope)(0),               // 67: api.commons.ScheduleByTimeZoneScope
+	(commons.AnaTimeZone)(0),                           // 68: api.commons.AnaTimeZone
+	(commons.StandardReportFilter)(0),                  // 69: api.commons.StandardReportFilter
+	(commons.RecordingFileType)(0),                     // 70: api.commons.RecordingFileType
+	(*timestamppb.Timestamp)(nil),                      // 71: google.protobuf.Timestamp
+	(commons.Weekday_Enum)(0),                          // 72: api.commons.Weekday.Enum
+	(commons.Month)(0),                                 // 73: api.commons.Month
 }
 var file_api_commons_org_preferences_proto_depIdxs = []int32{
-	52, // 0: api.commons.org.OrganizationPreferences.default_country:type_name -> api.commons.Country
-	53, // 1: api.commons.org.OrganizationPreferences.time_zone:type_name -> api.commons.TimeZone
-	54, // 2: api.commons.org.OrganizationPreferences.display_language:type_name -> api.commons.DisplayLanguage
-	55, // 3: api.commons.org.OrganizationPreferences.locale_preferences:type_name -> api.commons.LocalePreferences
+	56, // 0: api.commons.org.OrganizationPreferences.default_country:type_name -> api.commons.Country
+	57, // 1: api.commons.org.OrganizationPreferences.time_zone:type_name -> api.commons.TimeZone
+	58, // 2: api.commons.org.OrganizationPreferences.display_language:type_name -> api.commons.DisplayLanguage
+	59, // 3: api.commons.org.OrganizationPreferences.locale_preferences:type_name -> api.commons.LocalePreferences
 	5,  // 4: api.commons.org.ContactPreferences.default_contact_import_format:type_name -> api.commons.org.ImportFormat
 	7,  // 5: api.commons.org.ContactPreferences.default_contact_area_code:type_name -> api.commons.org.ContactAreaCode
-	56, // 6: api.commons.org.ContactPreferences.default_duplicate_handling:type_name -> api.commons.DefaultDuplicateHandling
-	57, // 7: api.commons.org.ImportFormat.standard:type_name -> api.commons.StandardImportFormat
+	60, // 6: api.commons.org.ContactPreferences.default_duplicate_handling:type_name -> api.commons.DefaultDuplicateHandling
+	61, // 7: api.commons.org.ImportFormat.standard:type_name -> api.commons.StandardImportFormat
 	6,  // 8: api.commons.org.ImportFormat.custom:type_name -> api.commons.org.CustomImportFormat
 	8,  // 9: api.commons.org.ContactAreaCode.cfd:type_name -> api.commons.org.ContactFieldDescription
-	45, // 10: api.commons.org.AuthenticationPreferences.email_mfa_settings:type_name -> api.commons.org.AuthenticationPreferences.EmailMfaSettings
-	44, // 11: api.commons.org.AuthenticationPreferences.duo_mfa_settings:type_name -> api.commons.org.AuthenticationPreferences.DuoMfaSettings
+	49, // 10: api.commons.org.AuthenticationPreferences.email_mfa_settings:type_name -> api.commons.org.AuthenticationPreferences.EmailMfaSettings
+	48, // 11: api.commons.org.AuthenticationPreferences.duo_mfa_settings:type_name -> api.commons.org.AuthenticationPreferences.DuoMfaSettings
 	12, // 12: api.commons.org.DashboardPreferences.default_call_types:type_name -> api.commons.org.IncludedCallTypes
-	58, // 13: api.commons.org.DashboardPreferences.default_info_sort_by_value:type_name -> api.commons.AgentInfoSortBy
+	62, // 13: api.commons.org.DashboardPreferences.default_info_sort_by_value:type_name -> api.commons.AgentInfoSortBy
 	13, // 14: api.commons.org.DashboardPreferences.default_barge_in_filtering:type_name -> api.commons.org.BargeInFiltering
-	46, // 15: api.commons.org.BargeInFiltering.hunt_group:type_name -> api.commons.org.BargeInFiltering.HuntGroup
-	47, // 16: api.commons.org.BargeInFiltering.agent_status:type_name -> api.commons.org.BargeInFiltering.AgentStatus
-	59, // 17: api.commons.org.DashboardQueuePreferences.default_info_sort_by_value:type_name -> api.commons.QueueInfoSortBy
+	50, // 15: api.commons.org.BargeInFiltering.hunt_group:type_name -> api.commons.org.BargeInFiltering.HuntGroup
+	51, // 16: api.commons.org.BargeInFiltering.agent_status:type_name -> api.commons.org.BargeInFiltering.AgentStatus
+	63, // 17: api.commons.org.DashboardQueuePreferences.default_info_sort_by_value:type_name -> api.commons.QueueInfoSortBy
 	16, // 18: api.commons.org.PhonePreferences.default_dial_order:type_name -> api.commons.org.DialOrder
-	60, // 19: api.commons.org.PhonePreferences.answering_machine_detection:type_name -> api.commons.AnsweringMachineDetection
-	61, // 20: api.commons.org.DialOrder.standard:type_name -> api.commons.DialOrderType
+	64, // 19: api.commons.org.PhonePreferences.answering_machine_detection:type_name -> api.commons.AnsweringMachineDetection
+	65, // 20: api.commons.org.DialOrder.standard:type_name -> api.commons.DialOrderType
 	17, // 21: api.commons.org.DialOrder.custom:type_name -> api.commons.org.CustomDialOrder
 	18, // 22: api.commons.org.CustomDialOrder.dial_order_fields:type_name -> api.commons.org.DialOrderField
 	20, // 23: api.commons.org.CompliancePreferences.default_schedule_rule:type_name -> api.commons.org.ScheduleRuleField
 	21, // 24: api.commons.org.CompliancePreferences.zip_code_scrub:type_name -> api.commons.org.ZipCodeField
-	62, // 25: api.commons.org.BroadcastPreferences.broadcast_template_ordering:type_name -> api.commons.BroadcastTemplateOrdering
+	66, // 25: api.commons.org.BroadcastPreferences.broadcast_template_ordering:type_name -> api.commons.BroadcastTemplateOrdering
 	23, // 26: api.commons.org.BroadcastPreferences.default_start_time:type_name -> api.commons.org.BroadcastTime
 	23, // 27: api.commons.org.BroadcastPreferences.default_stop_time:type_name -> api.commons.org.BroadcastTime
-	53, // 28: api.commons.org.BroadcastTime.timezone:type_name -> api.commons.TimeZone
-	63, // 29: api.commons.org.SchedulePreferences.schedule_by_time_zone_scope:type_name -> api.commons.ScheduleByTimeZoneScope
-	48, // 30: api.commons.org.SchedulePreferences.campaign_links:type_name -> api.commons.org.SchedulePreferences.CampaignLinksEntry
-	64, // 31: api.commons.org.BusinessPreferences.time_zone:type_name -> api.commons.AnaTimeZone
+	57, // 28: api.commons.org.BroadcastTime.timezone:type_name -> api.commons.TimeZone
+	67, // 29: api.commons.org.SchedulePreferences.schedule_by_time_zone_scope:type_name -> api.commons.ScheduleByTimeZoneScope
+	52, // 30: api.commons.org.SchedulePreferences.campaign_links:type_name -> api.commons.org.SchedulePreferences.CampaignLinksEntry
+	68, // 31: api.commons.org.BusinessPreferences.time_zone:type_name -> api.commons.AnaTimeZone
 	0,  // 32: api.commons.org.ScorecardsPreferences.evaluation_interval:type_name -> api.commons.org.Scorecards.EvaluationInterval
-	49, // 33: api.commons.org.VoiceAnalyticsPreferences.redact:type_name -> api.commons.org.VoiceAnalytics.Redact
-	51, // 34: api.commons.org.VoiceAnalyticsPreferences.notify:type_name -> api.commons.org.VoiceAnalytics.Notify
-	51, // 35: api.commons.org.VoiceAnalyticsPreferences.billing_notify:type_name -> api.commons.org.VoiceAnalytics.Notify
+	53, // 33: api.commons.org.VoiceAnalyticsPreferences.redact:type_name -> api.commons.org.VoiceAnalytics.Redact
+	55, // 34: api.commons.org.VoiceAnalyticsPreferences.notify:type_name -> api.commons.org.VoiceAnalytics.Notify
+	55, // 35: api.commons.org.VoiceAnalyticsPreferences.billing_notify:type_name -> api.commons.org.VoiceAnalytics.Notify
 	33, // 36: api.commons.org.FilterPreferences.default_auto_report_filter:type_name -> api.commons.org.ReportFilter
 	33, // 37: api.commons.org.FilterPreferences.default_broadcast_resend_filter:type_name -> api.commons.org.ReportFilter
-	65, // 38: api.commons.org.ReportFilter.standard:type_name -> api.commons.StandardReportFilter
+	69, // 38: api.commons.org.ReportFilter.standard:type_name -> api.commons.StandardReportFilter
 	35, // 39: api.commons.org.RecordingPreferences.file_name_convention:type_name -> api.commons.org.RecordingsFileNamingConvention
 	36, // 40: api.commons.org.RecordingPreferences.zip_file_name_convention:type_name -> api.commons.org.RecordingsZipFileNamingConvention
-	66, // 41: api.commons.org.RecordingPreferences.export_file_type:type_name -> api.commons.RecordingFileType
+	70, // 41: api.commons.org.RecordingPreferences.export_file_type:type_name -> api.commons.RecordingFileType
 	37, // 42: api.commons.org.RecordingsFileNamingConvention.inbound:type_name -> api.commons.org.FileNamingConvention
 	37, // 43: api.commons.org.RecordingsFileNamingConvention.manual:type_name -> api.commons.org.FileNamingConvention
 	37, // 44: api.commons.org.RecordingsFileNamingConvention.outbound:type_name -> api.commons.org.FileNamingConvention
@@ -5384,20 +5747,27 @@ var file_api_commons_org_preferences_proto_depIdxs = []int32{
 	37, // 48: api.commons.org.RecordingsZipFileNamingConvention.outbound:type_name -> api.commons.org.FileNamingConvention
 	37, // 49: api.commons.org.RecordingsZipFileNamingConvention.combined:type_name -> api.commons.org.FileNamingConvention
 	38, // 50: api.commons.org.FileNamingConvention.segments:type_name -> api.commons.org.FileNameSegment
-	52, // 51: api.commons.org.AdminClientPreferences.allowed_countries:type_name -> api.commons.Country
-	53, // 52: api.commons.org.BusinessHours.timezone:type_name -> api.commons.TimeZone
+	56, // 51: api.commons.org.AdminClientPreferences.allowed_countries:type_name -> api.commons.Country
+	57, // 52: api.commons.org.BusinessHours.timezone:type_name -> api.commons.TimeZone
 	43, // 53: api.commons.org.BusinessHours.day_intervals:type_name -> api.commons.org.DayInterval
-	67, // 54: api.commons.org.BusinessHours.last_updated:type_name -> google.protobuf.Timestamp
-	68, // 55: api.commons.org.DayInterval.day:type_name -> api.commons.Weekday.Enum
+	71, // 54: api.commons.org.BusinessHours.last_updated:type_name -> google.protobuf.Timestamp
+	72, // 55: api.commons.org.DayInterval.day:type_name -> api.commons.Weekday.Enum
 	42, // 56: api.commons.org.DayInterval.start:type_name -> api.commons.org.TimeOfDay
 	42, // 57: api.commons.org.DayInterval.end:type_name -> api.commons.org.TimeOfDay
-	50, // 58: api.commons.org.VoiceAnalytics.Redact.number:type_name -> api.commons.org.VoiceAnalytics.Number
-	1,  // 59: api.commons.org.VoiceAnalytics.Number.kind:type_name -> api.commons.org.VoiceAnalytics.Number.Kind
-	60, // [60:60] is the sub-list for method output_type
-	60, // [60:60] is the sub-list for method input_type
-	60, // [60:60] is the sub-list for extension type_name
-	60, // [60:60] is the sub-list for extension extendee
-	0,  // [0:60] is the sub-list for field type_name
+	73, // 58: api.commons.org.MonthDayDate.month:type_name -> api.commons.Month
+	56, // 59: api.commons.org.CountryHoliday.country:type_name -> api.commons.Country
+	44, // 60: api.commons.org.ProgrammedDay.day:type_name -> api.commons.org.MonthDayDate
+	45, // 61: api.commons.org.ProgrammedDay.holiday:type_name -> api.commons.org.CountryHoliday
+	57, // 62: api.commons.org.ProgrammedDates.timezone:type_name -> api.commons.TimeZone
+	46, // 63: api.commons.org.ProgrammedDates.days:type_name -> api.commons.org.ProgrammedDay
+	71, // 64: api.commons.org.ProgrammedDates.last_updated:type_name -> google.protobuf.Timestamp
+	54, // 65: api.commons.org.VoiceAnalytics.Redact.number:type_name -> api.commons.org.VoiceAnalytics.Number
+	1,  // 66: api.commons.org.VoiceAnalytics.Number.kind:type_name -> api.commons.org.VoiceAnalytics.Number.Kind
+	67, // [67:67] is the sub-list for method output_type
+	67, // [67:67] is the sub-list for method input_type
+	67, // [67:67] is the sub-list for extension type_name
+	67, // [67:67] is the sub-list for extension extendee
+	0,  // [0:67] is the sub-list for field type_name
 }
 
 func init() { file_api_commons_org_preferences_proto_init() }
@@ -5911,7 +6281,7 @@ func file_api_commons_org_preferences_proto_init() {
 			}
 		}
 		file_api_commons_org_preferences_proto_msgTypes[42].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AuthenticationPreferences_DuoMfaSettings); i {
+			switch v := v.(*MonthDayDate); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5923,7 +6293,7 @@ func file_api_commons_org_preferences_proto_init() {
 			}
 		}
 		file_api_commons_org_preferences_proto_msgTypes[43].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AuthenticationPreferences_EmailMfaSettings); i {
+			switch v := v.(*CountryHoliday); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5935,7 +6305,7 @@ func file_api_commons_org_preferences_proto_init() {
 			}
 		}
 		file_api_commons_org_preferences_proto_msgTypes[44].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*BargeInFiltering_HuntGroup); i {
+			switch v := v.(*ProgrammedDay); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5947,7 +6317,19 @@ func file_api_commons_org_preferences_proto_init() {
 			}
 		}
 		file_api_commons_org_preferences_proto_msgTypes[45].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*BargeInFiltering_AgentStatus); i {
+			switch v := v.(*ProgrammedDates); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_commons_org_preferences_proto_msgTypes[46].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AuthenticationPreferences_DuoMfaSettings); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5959,7 +6341,7 @@ func file_api_commons_org_preferences_proto_init() {
 			}
 		}
 		file_api_commons_org_preferences_proto_msgTypes[47].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VoiceAnalytics_Redact); i {
+			switch v := v.(*AuthenticationPreferences_EmailMfaSettings); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5971,7 +6353,7 @@ func file_api_commons_org_preferences_proto_init() {
 			}
 		}
 		file_api_commons_org_preferences_proto_msgTypes[48].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VoiceAnalytics_Number); i {
+			switch v := v.(*BargeInFiltering_HuntGroup); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5983,6 +6365,42 @@ func file_api_commons_org_preferences_proto_init() {
 			}
 		}
 		file_api_commons_org_preferences_proto_msgTypes[49].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*BargeInFiltering_AgentStatus); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_commons_org_preferences_proto_msgTypes[51].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VoiceAnalytics_Redact); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_commons_org_preferences_proto_msgTypes[52].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VoiceAnalytics_Number); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_commons_org_preferences_proto_msgTypes[53].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*VoiceAnalytics_Notify); i {
 			case 0:
 				return &v.state
@@ -6011,7 +6429,11 @@ func file_api_commons_org_preferences_proto_init() {
 		(*ReportFilter_Standard)(nil),
 		(*ReportFilter_Custom)(nil),
 	}
-	file_api_commons_org_preferences_proto_msgTypes[47].OneofWrappers = []interface{}{
+	file_api_commons_org_preferences_proto_msgTypes[44].OneofWrappers = []interface{}{
+		(*ProgrammedDay_Day)(nil),
+		(*ProgrammedDay_Holiday)(nil),
+	}
+	file_api_commons_org_preferences_proto_msgTypes[51].OneofWrappers = []interface{}{
 		(*VoiceAnalytics_Redact_Number)(nil),
 	}
 	type x struct{}
@@ -6020,7 +6442,7 @@ func file_api_commons_org_preferences_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_commons_org_preferences_proto_rawDesc,
 			NumEnums:      2,
-			NumMessages:   50,
+			NumMessages:   54,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
