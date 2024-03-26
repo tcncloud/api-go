@@ -731,20 +731,36 @@ type OrgClient interface {
 	// revoking their responsibility for email unsubscribe links.
 	ClearEmailUnsubscribeAcknowledgement(context.Context, *connect_go.Request[org.ClearEmailUnsubscribeAcknowledgementRequest]) (*connect_go.Response[org.ClearEmailUnsubscribeAcknowledgementResponse], error)
 	// ListBusinessHours returns all business hours for an Org.
+	//
+	// Deprecated: do not use.
 	ListBusinessHours(context.Context, *connect_go.Request[org.ListBusinessHoursRequest]) (*connect_go.Response[org.ListBusinessHoursResponse], error)
 	// GetBusinessHours returns the business hours for the ID.
+	//
+	// Deprecated: do not use.
 	GetBusinessHours(context.Context, *connect_go.Request[org.GetBusinessHoursRequest]) (*connect_go.Response[org.GetBusinessHoursResponse], error)
 	// SetBusinessHours initializes a business hours object
+	//
+	// Deprecated: do not use.
 	SetBusinessHours(context.Context, *connect_go.Request[org.SetBusinessHoursRequest]) (*connect_go.Response[org.SetBusinessHoursResponse], error)
 	// AddIntervalToBusinessHours adds a day interval to a business hours object
+	//
+	// Deprecated: do not use.
 	AddIntervalToBusinessHours(context.Context, *connect_go.Request[org.AddIntervalToBusinessHoursRequest]) (*connect_go.Response[org.AddIntervalToBusinessHoursResponse], error)
 	// RemoveIntervalFromBusinessHours removes a day interval from a business hours object
+	//
+	// Deprecated: do not use.
 	RemoveIntervalFromBusinessHours(context.Context, *connect_go.Request[org.RemoveIntervalFromBusinessHoursRequest]) (*connect_go.Response[org.RemoveIntervalFromBusinessHoursResponse], error)
 	// UpdateBusinessHoursInfo updates the general info of a business hours object
+	//
+	// Deprecated: do not use.
 	UpdateBusinessHoursInfo(context.Context, *connect_go.Request[org.UpdateBusinessHoursInfoRequest]) (*connect_go.Response[org.UpdateBusinessHoursInfoResponse], error)
 	// DeleteBusinessHours removes business hours.
+	//
+	// Deprecated: do not use.
 	DeleteBusinessHours(context.Context, *connect_go.Request[org.DeleteBusinessHoursRequest]) (*connect_go.Response[org.DeleteBusinessHoursResponse], error)
 	// EvaluateBusinessHours determines whether or not the current time is within a business hours day interval
+	//
+	// Deprecated: do not use.
 	EvaluateBusinessHours(context.Context, *connect_go.Request[org.EvaluateBusinessHoursRequest]) (*connect_go.Response[org.EvaluateBusinessHoursResponse], error)
 	// CreateUser creates a new user and enables it for the region it is getting created in.
 	CreateUser(context.Context, *connect_go.Request[org.CreateUserRequest]) (*connect_go.Response[org.CreateUserResponse], error)
@@ -1076,8 +1092,12 @@ type OrgClient interface {
 	// GetMyAllowedMfaMethods returns the mfa methods allowed to the current user.
 	GetMyAllowedMfaMethods(context.Context, *connect_go.Request[org.GetMyAllowedMfaMethodsRequest]) (*connect_go.Response[org.GetMyAllowedMfaMethodsResponse], error)
 	// CreateBusinessHours persists times businesses are available.
+	//
+	// Deprecated: do not use.
 	CreateBusinessHours(context.Context, *connect_go.Request[org.CreateBusinessHoursRequest]) (*connect_go.Response[org.CreateBusinessHoursResponse], error)
 	// UpdateBusinessHours persists changes to times businesses are available.
+	//
+	// Deprecated: do not use.
 	UpdateBusinessHours(context.Context, *connect_go.Request[org.UpdateBusinessHoursRequest]) (*connect_go.Response[org.UpdateBusinessHoursResponse], error)
 }
 
@@ -2654,41 +2674,57 @@ func (c *orgClient) ClearEmailUnsubscribeAcknowledgement(ctx context.Context, re
 }
 
 // ListBusinessHours calls api.v1alpha1.org.Org.ListBusinessHours.
+//
+// Deprecated: do not use.
 func (c *orgClient) ListBusinessHours(ctx context.Context, req *connect_go.Request[org.ListBusinessHoursRequest]) (*connect_go.Response[org.ListBusinessHoursResponse], error) {
 	return c.listBusinessHours.CallUnary(ctx, req)
 }
 
 // GetBusinessHours calls api.v1alpha1.org.Org.GetBusinessHours.
+//
+// Deprecated: do not use.
 func (c *orgClient) GetBusinessHours(ctx context.Context, req *connect_go.Request[org.GetBusinessHoursRequest]) (*connect_go.Response[org.GetBusinessHoursResponse], error) {
 	return c.getBusinessHours.CallUnary(ctx, req)
 }
 
 // SetBusinessHours calls api.v1alpha1.org.Org.SetBusinessHours.
+//
+// Deprecated: do not use.
 func (c *orgClient) SetBusinessHours(ctx context.Context, req *connect_go.Request[org.SetBusinessHoursRequest]) (*connect_go.Response[org.SetBusinessHoursResponse], error) {
 	return c.setBusinessHours.CallUnary(ctx, req)
 }
 
 // AddIntervalToBusinessHours calls api.v1alpha1.org.Org.AddIntervalToBusinessHours.
+//
+// Deprecated: do not use.
 func (c *orgClient) AddIntervalToBusinessHours(ctx context.Context, req *connect_go.Request[org.AddIntervalToBusinessHoursRequest]) (*connect_go.Response[org.AddIntervalToBusinessHoursResponse], error) {
 	return c.addIntervalToBusinessHours.CallUnary(ctx, req)
 }
 
 // RemoveIntervalFromBusinessHours calls api.v1alpha1.org.Org.RemoveIntervalFromBusinessHours.
+//
+// Deprecated: do not use.
 func (c *orgClient) RemoveIntervalFromBusinessHours(ctx context.Context, req *connect_go.Request[org.RemoveIntervalFromBusinessHoursRequest]) (*connect_go.Response[org.RemoveIntervalFromBusinessHoursResponse], error) {
 	return c.removeIntervalFromBusinessHours.CallUnary(ctx, req)
 }
 
 // UpdateBusinessHoursInfo calls api.v1alpha1.org.Org.UpdateBusinessHoursInfo.
+//
+// Deprecated: do not use.
 func (c *orgClient) UpdateBusinessHoursInfo(ctx context.Context, req *connect_go.Request[org.UpdateBusinessHoursInfoRequest]) (*connect_go.Response[org.UpdateBusinessHoursInfoResponse], error) {
 	return c.updateBusinessHoursInfo.CallUnary(ctx, req)
 }
 
 // DeleteBusinessHours calls api.v1alpha1.org.Org.DeleteBusinessHours.
+//
+// Deprecated: do not use.
 func (c *orgClient) DeleteBusinessHours(ctx context.Context, req *connect_go.Request[org.DeleteBusinessHoursRequest]) (*connect_go.Response[org.DeleteBusinessHoursResponse], error) {
 	return c.deleteBusinessHours.CallUnary(ctx, req)
 }
 
 // EvaluateBusinessHours calls api.v1alpha1.org.Org.EvaluateBusinessHours.
+//
+// Deprecated: do not use.
 func (c *orgClient) EvaluateBusinessHours(ctx context.Context, req *connect_go.Request[org.EvaluateBusinessHoursRequest]) (*connect_go.Response[org.EvaluateBusinessHoursResponse], error) {
 	return c.evaluateBusinessHours.CallUnary(ctx, req)
 }
@@ -3443,11 +3479,15 @@ func (c *orgClient) GetMyAllowedMfaMethods(ctx context.Context, req *connect_go.
 }
 
 // CreateBusinessHours calls api.v1alpha1.org.Org.CreateBusinessHours.
+//
+// Deprecated: do not use.
 func (c *orgClient) CreateBusinessHours(ctx context.Context, req *connect_go.Request[org.CreateBusinessHoursRequest]) (*connect_go.Response[org.CreateBusinessHoursResponse], error) {
 	return c.createBusinessHours.CallUnary(ctx, req)
 }
 
 // UpdateBusinessHours calls api.v1alpha1.org.Org.UpdateBusinessHours.
+//
+// Deprecated: do not use.
 func (c *orgClient) UpdateBusinessHours(ctx context.Context, req *connect_go.Request[org.UpdateBusinessHoursRequest]) (*connect_go.Response[org.UpdateBusinessHoursResponse], error) {
 	return c.updateBusinessHours.CallUnary(ctx, req)
 }
@@ -3589,20 +3629,36 @@ type OrgHandler interface {
 	// revoking their responsibility for email unsubscribe links.
 	ClearEmailUnsubscribeAcknowledgement(context.Context, *connect_go.Request[org.ClearEmailUnsubscribeAcknowledgementRequest]) (*connect_go.Response[org.ClearEmailUnsubscribeAcknowledgementResponse], error)
 	// ListBusinessHours returns all business hours for an Org.
+	//
+	// Deprecated: do not use.
 	ListBusinessHours(context.Context, *connect_go.Request[org.ListBusinessHoursRequest]) (*connect_go.Response[org.ListBusinessHoursResponse], error)
 	// GetBusinessHours returns the business hours for the ID.
+	//
+	// Deprecated: do not use.
 	GetBusinessHours(context.Context, *connect_go.Request[org.GetBusinessHoursRequest]) (*connect_go.Response[org.GetBusinessHoursResponse], error)
 	// SetBusinessHours initializes a business hours object
+	//
+	// Deprecated: do not use.
 	SetBusinessHours(context.Context, *connect_go.Request[org.SetBusinessHoursRequest]) (*connect_go.Response[org.SetBusinessHoursResponse], error)
 	// AddIntervalToBusinessHours adds a day interval to a business hours object
+	//
+	// Deprecated: do not use.
 	AddIntervalToBusinessHours(context.Context, *connect_go.Request[org.AddIntervalToBusinessHoursRequest]) (*connect_go.Response[org.AddIntervalToBusinessHoursResponse], error)
 	// RemoveIntervalFromBusinessHours removes a day interval from a business hours object
+	//
+	// Deprecated: do not use.
 	RemoveIntervalFromBusinessHours(context.Context, *connect_go.Request[org.RemoveIntervalFromBusinessHoursRequest]) (*connect_go.Response[org.RemoveIntervalFromBusinessHoursResponse], error)
 	// UpdateBusinessHoursInfo updates the general info of a business hours object
+	//
+	// Deprecated: do not use.
 	UpdateBusinessHoursInfo(context.Context, *connect_go.Request[org.UpdateBusinessHoursInfoRequest]) (*connect_go.Response[org.UpdateBusinessHoursInfoResponse], error)
 	// DeleteBusinessHours removes business hours.
+	//
+	// Deprecated: do not use.
 	DeleteBusinessHours(context.Context, *connect_go.Request[org.DeleteBusinessHoursRequest]) (*connect_go.Response[org.DeleteBusinessHoursResponse], error)
 	// EvaluateBusinessHours determines whether or not the current time is within a business hours day interval
+	//
+	// Deprecated: do not use.
 	EvaluateBusinessHours(context.Context, *connect_go.Request[org.EvaluateBusinessHoursRequest]) (*connect_go.Response[org.EvaluateBusinessHoursResponse], error)
 	// CreateUser creates a new user and enables it for the region it is getting created in.
 	CreateUser(context.Context, *connect_go.Request[org.CreateUserRequest]) (*connect_go.Response[org.CreateUserResponse], error)
@@ -3934,8 +3990,12 @@ type OrgHandler interface {
 	// GetMyAllowedMfaMethods returns the mfa methods allowed to the current user.
 	GetMyAllowedMfaMethods(context.Context, *connect_go.Request[org.GetMyAllowedMfaMethodsRequest]) (*connect_go.Response[org.GetMyAllowedMfaMethodsResponse], error)
 	// CreateBusinessHours persists times businesses are available.
+	//
+	// Deprecated: do not use.
 	CreateBusinessHours(context.Context, *connect_go.Request[org.CreateBusinessHoursRequest]) (*connect_go.Response[org.CreateBusinessHoursResponse], error)
 	// UpdateBusinessHours persists changes to times businesses are available.
+	//
+	// Deprecated: do not use.
 	UpdateBusinessHours(context.Context, *connect_go.Request[org.UpdateBusinessHoursRequest]) (*connect_go.Response[org.UpdateBusinessHoursResponse], error)
 }
 
