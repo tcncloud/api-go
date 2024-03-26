@@ -1507,6 +1507,87 @@ func (InitialSetupState) EnumDescriptor() ([]byte, []int) {
 	return file_api_commons_wfm_proto_rawDescGZIP(), []int{18}
 }
 
+// The RealTimeManagementState, which is translated as a reduced AgentStatus from the acd service.
+type RealTimeManagementState int32
+
+const (
+	// Not set.
+	RealTimeManagementState_UNSPECIFIED RealTimeManagementState = 0
+	// The agent is logged in.
+	RealTimeManagementState_LOGGED_IN RealTimeManagementState = 1
+	// The agent's call is on hold.
+	RealTimeManagementState_CALL_ON_HOLD RealTimeManagementState = 4
+	// Agent is on an outbound call.
+	RealTimeManagementState_OUTBOUND_CALL RealTimeManagementState = 5
+	// Agent is on a transfered call.
+	RealTimeManagementState_TRANSFER RealTimeManagementState = 7
+	// Agent is on a conference call.
+	RealTimeManagementState_CONFERENCE RealTimeManagementState = 8
+	// Agent is ready to accept a call.
+	RealTimeManagementState_READY RealTimeManagementState = 9
+	// Agent is not_ready to accept a call.
+	RealTimeManagementState_NOT_READY RealTimeManagementState = 10
+	// The agent is is the wrap up state.
+	RealTimeManagementState_WRAP_UP RealTimeManagementState = 11
+	// The agent is logged out.
+	RealTimeManagementState_LOGGED_OUT RealTimeManagementState = 13
+)
+
+// Enum value maps for RealTimeManagementState.
+var (
+	RealTimeManagementState_name = map[int32]string{
+		0:  "UNSPECIFIED",
+		1:  "LOGGED_IN",
+		4:  "CALL_ON_HOLD",
+		5:  "OUTBOUND_CALL",
+		7:  "TRANSFER",
+		8:  "CONFERENCE",
+		9:  "READY",
+		10: "NOT_READY",
+		11: "WRAP_UP",
+		13: "LOGGED_OUT",
+	}
+	RealTimeManagementState_value = map[string]int32{
+		"UNSPECIFIED":   0,
+		"LOGGED_IN":     1,
+		"CALL_ON_HOLD":  4,
+		"OUTBOUND_CALL": 5,
+		"TRANSFER":      7,
+		"CONFERENCE":    8,
+		"READY":         9,
+		"NOT_READY":     10,
+		"WRAP_UP":       11,
+		"LOGGED_OUT":    13,
+	}
+)
+
+func (x RealTimeManagementState) Enum() *RealTimeManagementState {
+	p := new(RealTimeManagementState)
+	*p = x
+	return p
+}
+
+func (x RealTimeManagementState) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (RealTimeManagementState) Descriptor() protoreflect.EnumDescriptor {
+	return file_api_commons_wfm_proto_enumTypes[19].Descriptor()
+}
+
+func (RealTimeManagementState) Type() protoreflect.EnumType {
+	return &file_api_commons_wfm_proto_enumTypes[19]
+}
+
+func (x RealTimeManagementState) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use RealTimeManagementState.Descriptor instead.
+func (RealTimeManagementState) EnumDescriptor() ([]byte, []int) {
+	return file_api_commons_wfm_proto_rawDescGZIP(), []int{19}
+}
+
 type SkillType_Enum int32
 
 const (
@@ -1549,11 +1630,11 @@ func (x SkillType_Enum) String() string {
 }
 
 func (SkillType_Enum) Descriptor() protoreflect.EnumDescriptor {
-	return file_api_commons_wfm_proto_enumTypes[19].Descriptor()
+	return file_api_commons_wfm_proto_enumTypes[20].Descriptor()
 }
 
 func (SkillType_Enum) Type() protoreflect.EnumType {
-	return &file_api_commons_wfm_proto_enumTypes[19]
+	return &file_api_commons_wfm_proto_enumTypes[20]
 }
 
 func (x SkillType_Enum) Number() protoreflect.EnumNumber {
@@ -1598,11 +1679,11 @@ func (x SkillProfileCategory_CategoryType) String() string {
 }
 
 func (SkillProfileCategory_CategoryType) Descriptor() protoreflect.EnumDescriptor {
-	return file_api_commons_wfm_proto_enumTypes[20].Descriptor()
+	return file_api_commons_wfm_proto_enumTypes[21].Descriptor()
 }
 
 func (SkillProfileCategory_CategoryType) Type() protoreflect.EnumType {
-	return &file_api_commons_wfm_proto_enumTypes[20]
+	return &file_api_commons_wfm_proto_enumTypes[21]
 }
 
 func (x SkillProfileCategory_CategoryType) Number() protoreflect.EnumNumber {
@@ -3782,17 +3863,28 @@ var file_api_commons_wfm_proto_rawDesc = []byte{
 	0x0a, 0x09, 0x4e, 0x4f, 0x54, 0x5f, 0x53, 0x45, 0x54, 0x55, 0x50, 0x10, 0x00, 0x12, 0x0e, 0x0a,
 	0x0a, 0x53, 0x45, 0x54, 0x54, 0x49, 0x4e, 0x47, 0x5f, 0x55, 0x50, 0x10, 0x01, 0x12, 0x12, 0x0a,
 	0x0e, 0x53, 0x45, 0x54, 0x55, 0x50, 0x5f, 0x43, 0x4f, 0x4d, 0x50, 0x4c, 0x45, 0x54, 0x45, 0x10,
-	0x02, 0x12, 0x0b, 0x0a, 0x07, 0x46, 0x41, 0x49, 0x4c, 0x55, 0x52, 0x45, 0x10, 0x03, 0x42, 0x90,
-	0x01, 0x0a, 0x0f, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f,
-	0x6e, 0x73, 0x42, 0x08, 0x57, 0x66, 0x6d, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x26,
-	0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c,
-	0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x63,
-	0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0xa2, 0x02, 0x03, 0x41, 0x43, 0x58, 0xaa, 0x02, 0x0b, 0x41,
-	0x70, 0x69, 0x2e, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0xca, 0x02, 0x0b, 0x41, 0x70, 0x69,
-	0x5c, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0xe2, 0x02, 0x17, 0x41, 0x70, 0x69, 0x5c, 0x43,
-	0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61,
-	0x74, 0x61, 0xea, 0x02, 0x0c, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e,
-	0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x02, 0x12, 0x0b, 0x0a, 0x07, 0x46, 0x41, 0x49, 0x4c, 0x55, 0x52, 0x45, 0x10, 0x03, 0x2a, 0xb3,
+	0x01, 0x0a, 0x17, 0x52, 0x65, 0x61, 0x6c, 0x54, 0x69, 0x6d, 0x65, 0x4d, 0x61, 0x6e, 0x61, 0x67,
+	0x65, 0x6d, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x12, 0x0f, 0x0a, 0x0b, 0x55, 0x4e,
+	0x53, 0x50, 0x45, 0x43, 0x49, 0x46, 0x49, 0x45, 0x44, 0x10, 0x00, 0x12, 0x0d, 0x0a, 0x09, 0x4c,
+	0x4f, 0x47, 0x47, 0x45, 0x44, 0x5f, 0x49, 0x4e, 0x10, 0x01, 0x12, 0x10, 0x0a, 0x0c, 0x43, 0x41,
+	0x4c, 0x4c, 0x5f, 0x4f, 0x4e, 0x5f, 0x48, 0x4f, 0x4c, 0x44, 0x10, 0x04, 0x12, 0x11, 0x0a, 0x0d,
+	0x4f, 0x55, 0x54, 0x42, 0x4f, 0x55, 0x4e, 0x44, 0x5f, 0x43, 0x41, 0x4c, 0x4c, 0x10, 0x05, 0x12,
+	0x0c, 0x0a, 0x08, 0x54, 0x52, 0x41, 0x4e, 0x53, 0x46, 0x45, 0x52, 0x10, 0x07, 0x12, 0x0e, 0x0a,
+	0x0a, 0x43, 0x4f, 0x4e, 0x46, 0x45, 0x52, 0x45, 0x4e, 0x43, 0x45, 0x10, 0x08, 0x12, 0x09, 0x0a,
+	0x05, 0x52, 0x45, 0x41, 0x44, 0x59, 0x10, 0x09, 0x12, 0x0d, 0x0a, 0x09, 0x4e, 0x4f, 0x54, 0x5f,
+	0x52, 0x45, 0x41, 0x44, 0x59, 0x10, 0x0a, 0x12, 0x0b, 0x0a, 0x07, 0x57, 0x52, 0x41, 0x50, 0x5f,
+	0x55, 0x50, 0x10, 0x0b, 0x12, 0x0e, 0x0a, 0x0a, 0x4c, 0x4f, 0x47, 0x47, 0x45, 0x44, 0x5f, 0x4f,
+	0x55, 0x54, 0x10, 0x0d, 0x42, 0x90, 0x01, 0x0a, 0x0f, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69,
+	0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x42, 0x08, 0x57, 0x66, 0x6d, 0x50, 0x72, 0x6f,
+	0x74, 0x6f, 0x50, 0x01, 0x5a, 0x26, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d,
+	0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f,
+	0x2f, 0x61, 0x70, 0x69, 0x2f, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0xa2, 0x02, 0x03, 0x41,
+	0x43, 0x58, 0xaa, 0x02, 0x0b, 0x41, 0x70, 0x69, 0x2e, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73,
+	0xca, 0x02, 0x0b, 0x41, 0x70, 0x69, 0x5c, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0xe2, 0x02,
+	0x17, 0x41, 0x70, 0x69, 0x5c, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x5c, 0x47, 0x50, 0x42,
+	0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x0c, 0x41, 0x70, 0x69, 0x3a, 0x3a,
+	0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -3807,7 +3899,7 @@ func file_api_commons_wfm_proto_rawDescGZIP() []byte {
 	return file_api_commons_wfm_proto_rawDescData
 }
 
-var file_api_commons_wfm_proto_enumTypes = make([]protoimpl.EnumInfo, 21)
+var file_api_commons_wfm_proto_enumTypes = make([]protoimpl.EnumInfo, 22)
 var file_api_commons_wfm_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
 var file_api_commons_wfm_proto_goTypes = []interface{}{
 	(RegressionForecasterModelTypes)(0),              // 0: api.commons.RegressionForecasterModelTypes
@@ -3829,46 +3921,47 @@ var file_api_commons_wfm_proto_goTypes = []interface{}{
 	(BitmapType)(0),                                  // 16: api.commons.BitmapType
 	(HistoryCacheState)(0),                           // 17: api.commons.HistoryCacheState
 	(InitialSetupState)(0),                           // 18: api.commons.InitialSetupState
-	(SkillType_Enum)(0),                              // 19: api.commons.SkillType.Enum
-	(SkillProfileCategory_CategoryType)(0),           // 20: api.commons.SkillProfileCategory.CategoryType
-	(*SkillType)(nil),                                // 21: api.commons.SkillType
-	(*DatetimeRange)(nil),                            // 22: api.commons.DatetimeRange
-	(*ForecastingParameters)(nil),                    // 23: api.commons.ForecastingParameters
-	(*ProfileTOD)(nil),                               // 24: api.commons.ProfileTOD
-	(*ProfileWOMS)(nil),                              // 25: api.commons.ProfileWOMS
-	(*ProfileDOW)(nil),                               // 26: api.commons.ProfileDOW
-	(*ProfileMOY)(nil),                               // 27: api.commons.ProfileMOY
-	(*DistributionProfile)(nil),                      // 28: api.commons.DistributionProfile
-	(*CallProfileGroupCalls)(nil),                    // 29: api.commons.CallProfileGroupCalls
-	(*CallProfileGroupAvgs)(nil),                     // 30: api.commons.CallProfileGroupAvgs
-	(*OptionTypes)(nil),                              // 31: api.commons.OptionTypes
-	(*ScheduleSelector)(nil),                         // 32: api.commons.ScheduleSelector
-	(*SkillProfileCategory)(nil),                     // 33: api.commons.SkillProfileCategory
-	(*SchedulingResultMetricForSkillCollection)(nil), // 34: api.commons.SchedulingResultMetricForSkillCollection
-	(*SchedulingResultMetric)(nil),                   // 35: api.commons.SchedulingResultMetric
-	(*ClientHistoryCacheInfo)(nil),                   // 36: api.commons.ClientHistoryCacheInfo
-	(*ErrorTrace)(nil),                               // 37: api.commons.ErrorTrace
-	(*InitialSetupStatus)(nil),                       // 38: api.commons.InitialSetupStatus
-	(*timestamppb.Timestamp)(nil),                    // 39: google.protobuf.Timestamp
+	(RealTimeManagementState)(0),                     // 19: api.commons.RealTimeManagementState
+	(SkillType_Enum)(0),                              // 20: api.commons.SkillType.Enum
+	(SkillProfileCategory_CategoryType)(0),           // 21: api.commons.SkillProfileCategory.CategoryType
+	(*SkillType)(nil),                                // 22: api.commons.SkillType
+	(*DatetimeRange)(nil),                            // 23: api.commons.DatetimeRange
+	(*ForecastingParameters)(nil),                    // 24: api.commons.ForecastingParameters
+	(*ProfileTOD)(nil),                               // 25: api.commons.ProfileTOD
+	(*ProfileWOMS)(nil),                              // 26: api.commons.ProfileWOMS
+	(*ProfileDOW)(nil),                               // 27: api.commons.ProfileDOW
+	(*ProfileMOY)(nil),                               // 28: api.commons.ProfileMOY
+	(*DistributionProfile)(nil),                      // 29: api.commons.DistributionProfile
+	(*CallProfileGroupCalls)(nil),                    // 30: api.commons.CallProfileGroupCalls
+	(*CallProfileGroupAvgs)(nil),                     // 31: api.commons.CallProfileGroupAvgs
+	(*OptionTypes)(nil),                              // 32: api.commons.OptionTypes
+	(*ScheduleSelector)(nil),                         // 33: api.commons.ScheduleSelector
+	(*SkillProfileCategory)(nil),                     // 34: api.commons.SkillProfileCategory
+	(*SchedulingResultMetricForSkillCollection)(nil), // 35: api.commons.SchedulingResultMetricForSkillCollection
+	(*SchedulingResultMetric)(nil),                   // 36: api.commons.SchedulingResultMetric
+	(*ClientHistoryCacheInfo)(nil),                   // 37: api.commons.ClientHistoryCacheInfo
+	(*ErrorTrace)(nil),                               // 38: api.commons.ErrorTrace
+	(*InitialSetupStatus)(nil),                       // 39: api.commons.InitialSetupStatus
+	(*timestamppb.Timestamp)(nil),                    // 40: google.protobuf.Timestamp
 }
 var file_api_commons_wfm_proto_depIdxs = []int32{
-	39, // 0: api.commons.DatetimeRange.start_datetime:type_name -> google.protobuf.Timestamp
-	39, // 1: api.commons.DatetimeRange.end_datetime:type_name -> google.protobuf.Timestamp
-	39, // 2: api.commons.ForecastingParameters.historical_data_range_start_datetime:type_name -> google.protobuf.Timestamp
-	22, // 3: api.commons.ForecastingParameters.forecast_datetime_range:type_name -> api.commons.DatetimeRange
-	22, // 4: api.commons.ForecastingParameters.training_data_datetime_range:type_name -> api.commons.DatetimeRange
-	24, // 5: api.commons.DistributionProfile.profile_tod:type_name -> api.commons.ProfileTOD
-	25, // 6: api.commons.DistributionProfile.profile_woms:type_name -> api.commons.ProfileWOMS
-	26, // 7: api.commons.DistributionProfile.profile_dow:type_name -> api.commons.ProfileDOW
-	27, // 8: api.commons.DistributionProfile.profile_moy:type_name -> api.commons.ProfileMOY
-	28, // 9: api.commons.CallProfileGroupCalls.distribution_profile:type_name -> api.commons.DistributionProfile
-	28, // 10: api.commons.CallProfileGroupAvgs.distribution_profile:type_name -> api.commons.DistributionProfile
+	40, // 0: api.commons.DatetimeRange.start_datetime:type_name -> google.protobuf.Timestamp
+	40, // 1: api.commons.DatetimeRange.end_datetime:type_name -> google.protobuf.Timestamp
+	40, // 2: api.commons.ForecastingParameters.historical_data_range_start_datetime:type_name -> google.protobuf.Timestamp
+	23, // 3: api.commons.ForecastingParameters.forecast_datetime_range:type_name -> api.commons.DatetimeRange
+	23, // 4: api.commons.ForecastingParameters.training_data_datetime_range:type_name -> api.commons.DatetimeRange
+	25, // 5: api.commons.DistributionProfile.profile_tod:type_name -> api.commons.ProfileTOD
+	26, // 6: api.commons.DistributionProfile.profile_woms:type_name -> api.commons.ProfileWOMS
+	27, // 7: api.commons.DistributionProfile.profile_dow:type_name -> api.commons.ProfileDOW
+	28, // 8: api.commons.DistributionProfile.profile_moy:type_name -> api.commons.ProfileMOY
+	29, // 9: api.commons.CallProfileGroupCalls.distribution_profile:type_name -> api.commons.DistributionProfile
+	29, // 10: api.commons.CallProfileGroupAvgs.distribution_profile:type_name -> api.commons.DistributionProfile
 	6,  // 11: api.commons.OptionTypes.open_times_option:type_name -> api.commons.OpenTimesOption
 	7,  // 12: api.commons.OptionTypes.availability_option:type_name -> api.commons.AvailabilityOption
 	14, // 13: api.commons.ScheduleSelector.schedule_type:type_name -> api.commons.ScheduleType
-	20, // 14: api.commons.SkillProfileCategory.skill_profile_category_type:type_name -> api.commons.SkillProfileCategory.CategoryType
-	33, // 15: api.commons.SchedulingResultMetricForSkillCollection.skill_collection:type_name -> api.commons.SkillProfileCategory
-	34, // 16: api.commons.SchedulingResultMetric.metrics_by_skill_collection:type_name -> api.commons.SchedulingResultMetricForSkillCollection
+	21, // 14: api.commons.SkillProfileCategory.skill_profile_category_type:type_name -> api.commons.SkillProfileCategory.CategoryType
+	34, // 15: api.commons.SchedulingResultMetricForSkillCollection.skill_collection:type_name -> api.commons.SkillProfileCategory
+	35, // 16: api.commons.SchedulingResultMetric.metrics_by_skill_collection:type_name -> api.commons.SchedulingResultMetricForSkillCollection
 	17, // 17: api.commons.ClientHistoryCacheInfo.state:type_name -> api.commons.HistoryCacheState
 	18, // 18: api.commons.InitialSetupStatus.state:type_name -> api.commons.InitialSetupState
 	19, // [19:19] is the sub-list for method output_type
@@ -4118,7 +4211,7 @@ func file_api_commons_wfm_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_commons_wfm_proto_rawDesc,
-			NumEnums:      21,
+			NumEnums:      22,
 			NumMessages:   18,
 			NumExtensions: 0,
 			NumServices:   0,
