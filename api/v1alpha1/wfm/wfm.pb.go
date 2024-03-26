@@ -24081,14 +24081,11 @@ type ListAgentStatesForDayRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// An optional parameter.
-	// The datetime to start get agent states for.
-	// If set, agent states will be retrieved starting at this datetime.
-	// If not set, agent states will be retrieved starting from the start of today, based on the...
+	// The datetime to start getting agent states from.
 	StartDatetime *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=start_datetime,json=startDatetime,proto3" json:"start_datetime,omitempty"`
 	// An optional parameter.
 	// If set, all agent states will be retrieved for the given datetime range.
-	// If not set, all agent states will be retrieved for either a 24 hour period or until the current time.
+	// If not set, all agent states will be retrieved for either a 24 hour period or until the current time, whichever is shorter.
 	EndDatetime *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=end_datetime,json=endDatetime,proto3" json:"end_datetime,omitempty"`
 }
 
