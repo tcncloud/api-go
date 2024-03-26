@@ -370,20 +370,28 @@ type OrgClient interface {
 	// ClearEmailUnsubscribeAcknowledgement insert an activity log upon the client
 	// revoking their responsibility for email unsubscribe links.
 	ClearEmailUnsubscribeAcknowledgement(ctx context.Context, in *ClearEmailUnsubscribeAcknowledgementRequest, opts ...grpc.CallOption) (*ClearEmailUnsubscribeAcknowledgementResponse, error)
+	// Deprecated: Do not use.
 	// ListBusinessHours returns all business hours for an Org.
 	ListBusinessHours(ctx context.Context, in *ListBusinessHoursRequest, opts ...grpc.CallOption) (*ListBusinessHoursResponse, error)
+	// Deprecated: Do not use.
 	// GetBusinessHours returns the business hours for the ID.
 	GetBusinessHours(ctx context.Context, in *GetBusinessHoursRequest, opts ...grpc.CallOption) (*GetBusinessHoursResponse, error)
+	// Deprecated: Do not use.
 	// SetBusinessHours initializes a business hours object
 	SetBusinessHours(ctx context.Context, in *SetBusinessHoursRequest, opts ...grpc.CallOption) (*SetBusinessHoursResponse, error)
+	// Deprecated: Do not use.
 	// AddIntervalToBusinessHours adds a day interval to a business hours object
 	AddIntervalToBusinessHours(ctx context.Context, in *AddIntervalToBusinessHoursRequest, opts ...grpc.CallOption) (*AddIntervalToBusinessHoursResponse, error)
+	// Deprecated: Do not use.
 	// RemoveIntervalFromBusinessHours removes a day interval from a business hours object
 	RemoveIntervalFromBusinessHours(ctx context.Context, in *RemoveIntervalFromBusinessHoursRequest, opts ...grpc.CallOption) (*RemoveIntervalFromBusinessHoursResponse, error)
+	// Deprecated: Do not use.
 	// UpdateBusinessHoursInfo updates the general info of a business hours object
 	UpdateBusinessHoursInfo(ctx context.Context, in *UpdateBusinessHoursInfoRequest, opts ...grpc.CallOption) (*UpdateBusinessHoursInfoResponse, error)
+	// Deprecated: Do not use.
 	// DeleteBusinessHours removes business hours.
 	DeleteBusinessHours(ctx context.Context, in *DeleteBusinessHoursRequest, opts ...grpc.CallOption) (*DeleteBusinessHoursResponse, error)
+	// Deprecated: Do not use.
 	// EvaluateBusinessHours determines whether or not the current time is within a business hours day interval
 	EvaluateBusinessHours(ctx context.Context, in *EvaluateBusinessHoursRequest, opts ...grpc.CallOption) (*EvaluateBusinessHoursResponse, error)
 	// CreateUser creates a new user and enables it for the region it is getting created in.
@@ -706,8 +714,10 @@ type OrgClient interface {
 	GetMyUserMfaInfo(ctx context.Context, in *GetMyUserMfaInfoRequest, opts ...grpc.CallOption) (*GetMyUserMfaInfoResponse, error)
 	// GetMyAllowedMfaMethods returns the mfa methods allowed to the current user.
 	GetMyAllowedMfaMethods(ctx context.Context, in *GetMyAllowedMfaMethodsRequest, opts ...grpc.CallOption) (*GetMyAllowedMfaMethodsResponse, error)
+	// Deprecated: Do not use.
 	// CreateBusinessHours persists times businesses are available.
 	CreateBusinessHours(ctx context.Context, in *CreateBusinessHoursRequest, opts ...grpc.CallOption) (*CreateBusinessHoursResponse, error)
+	// Deprecated: Do not use.
 	// UpdateBusinessHours persists changes to times businesses are available.
 	UpdateBusinessHours(ctx context.Context, in *UpdateBusinessHoursRequest, opts ...grpc.CallOption) (*UpdateBusinessHoursResponse, error)
 }
@@ -1307,6 +1317,7 @@ func (c *orgClient) ClearEmailUnsubscribeAcknowledgement(ctx context.Context, in
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *orgClient) ListBusinessHours(ctx context.Context, in *ListBusinessHoursRequest, opts ...grpc.CallOption) (*ListBusinessHoursResponse, error) {
 	out := new(ListBusinessHoursResponse)
 	err := c.cc.Invoke(ctx, Org_ListBusinessHours_FullMethodName, in, out, opts...)
@@ -1316,6 +1327,7 @@ func (c *orgClient) ListBusinessHours(ctx context.Context, in *ListBusinessHours
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *orgClient) GetBusinessHours(ctx context.Context, in *GetBusinessHoursRequest, opts ...grpc.CallOption) (*GetBusinessHoursResponse, error) {
 	out := new(GetBusinessHoursResponse)
 	err := c.cc.Invoke(ctx, Org_GetBusinessHours_FullMethodName, in, out, opts...)
@@ -1325,6 +1337,7 @@ func (c *orgClient) GetBusinessHours(ctx context.Context, in *GetBusinessHoursRe
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *orgClient) SetBusinessHours(ctx context.Context, in *SetBusinessHoursRequest, opts ...grpc.CallOption) (*SetBusinessHoursResponse, error) {
 	out := new(SetBusinessHoursResponse)
 	err := c.cc.Invoke(ctx, Org_SetBusinessHours_FullMethodName, in, out, opts...)
@@ -1334,6 +1347,7 @@ func (c *orgClient) SetBusinessHours(ctx context.Context, in *SetBusinessHoursRe
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *orgClient) AddIntervalToBusinessHours(ctx context.Context, in *AddIntervalToBusinessHoursRequest, opts ...grpc.CallOption) (*AddIntervalToBusinessHoursResponse, error) {
 	out := new(AddIntervalToBusinessHoursResponse)
 	err := c.cc.Invoke(ctx, Org_AddIntervalToBusinessHours_FullMethodName, in, out, opts...)
@@ -1343,6 +1357,7 @@ func (c *orgClient) AddIntervalToBusinessHours(ctx context.Context, in *AddInter
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *orgClient) RemoveIntervalFromBusinessHours(ctx context.Context, in *RemoveIntervalFromBusinessHoursRequest, opts ...grpc.CallOption) (*RemoveIntervalFromBusinessHoursResponse, error) {
 	out := new(RemoveIntervalFromBusinessHoursResponse)
 	err := c.cc.Invoke(ctx, Org_RemoveIntervalFromBusinessHours_FullMethodName, in, out, opts...)
@@ -1352,6 +1367,7 @@ func (c *orgClient) RemoveIntervalFromBusinessHours(ctx context.Context, in *Rem
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *orgClient) UpdateBusinessHoursInfo(ctx context.Context, in *UpdateBusinessHoursInfoRequest, opts ...grpc.CallOption) (*UpdateBusinessHoursInfoResponse, error) {
 	out := new(UpdateBusinessHoursInfoResponse)
 	err := c.cc.Invoke(ctx, Org_UpdateBusinessHoursInfo_FullMethodName, in, out, opts...)
@@ -1361,6 +1377,7 @@ func (c *orgClient) UpdateBusinessHoursInfo(ctx context.Context, in *UpdateBusin
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *orgClient) DeleteBusinessHours(ctx context.Context, in *DeleteBusinessHoursRequest, opts ...grpc.CallOption) (*DeleteBusinessHoursResponse, error) {
 	out := new(DeleteBusinessHoursResponse)
 	err := c.cc.Invoke(ctx, Org_DeleteBusinessHours_FullMethodName, in, out, opts...)
@@ -1370,6 +1387,7 @@ func (c *orgClient) DeleteBusinessHours(ctx context.Context, in *DeleteBusinessH
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *orgClient) EvaluateBusinessHours(ctx context.Context, in *EvaluateBusinessHoursRequest, opts ...grpc.CallOption) (*EvaluateBusinessHoursResponse, error) {
 	out := new(EvaluateBusinessHoursResponse)
 	err := c.cc.Invoke(ctx, Org_EvaluateBusinessHours_FullMethodName, in, out, opts...)
@@ -2808,6 +2826,7 @@ func (c *orgClient) GetMyAllowedMfaMethods(ctx context.Context, in *GetMyAllowed
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *orgClient) CreateBusinessHours(ctx context.Context, in *CreateBusinessHoursRequest, opts ...grpc.CallOption) (*CreateBusinessHoursResponse, error) {
 	out := new(CreateBusinessHoursResponse)
 	err := c.cc.Invoke(ctx, Org_CreateBusinessHours_FullMethodName, in, out, opts...)
@@ -2817,6 +2836,7 @@ func (c *orgClient) CreateBusinessHours(ctx context.Context, in *CreateBusinessH
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *orgClient) UpdateBusinessHours(ctx context.Context, in *UpdateBusinessHoursRequest, opts ...grpc.CallOption) (*UpdateBusinessHoursResponse, error) {
 	out := new(UpdateBusinessHoursResponse)
 	err := c.cc.Invoke(ctx, Org_UpdateBusinessHours_FullMethodName, in, out, opts...)
@@ -2964,20 +2984,28 @@ type OrgServer interface {
 	// ClearEmailUnsubscribeAcknowledgement insert an activity log upon the client
 	// revoking their responsibility for email unsubscribe links.
 	ClearEmailUnsubscribeAcknowledgement(context.Context, *ClearEmailUnsubscribeAcknowledgementRequest) (*ClearEmailUnsubscribeAcknowledgementResponse, error)
+	// Deprecated: Do not use.
 	// ListBusinessHours returns all business hours for an Org.
 	ListBusinessHours(context.Context, *ListBusinessHoursRequest) (*ListBusinessHoursResponse, error)
+	// Deprecated: Do not use.
 	// GetBusinessHours returns the business hours for the ID.
 	GetBusinessHours(context.Context, *GetBusinessHoursRequest) (*GetBusinessHoursResponse, error)
+	// Deprecated: Do not use.
 	// SetBusinessHours initializes a business hours object
 	SetBusinessHours(context.Context, *SetBusinessHoursRequest) (*SetBusinessHoursResponse, error)
+	// Deprecated: Do not use.
 	// AddIntervalToBusinessHours adds a day interval to a business hours object
 	AddIntervalToBusinessHours(context.Context, *AddIntervalToBusinessHoursRequest) (*AddIntervalToBusinessHoursResponse, error)
+	// Deprecated: Do not use.
 	// RemoveIntervalFromBusinessHours removes a day interval from a business hours object
 	RemoveIntervalFromBusinessHours(context.Context, *RemoveIntervalFromBusinessHoursRequest) (*RemoveIntervalFromBusinessHoursResponse, error)
+	// Deprecated: Do not use.
 	// UpdateBusinessHoursInfo updates the general info of a business hours object
 	UpdateBusinessHoursInfo(context.Context, *UpdateBusinessHoursInfoRequest) (*UpdateBusinessHoursInfoResponse, error)
+	// Deprecated: Do not use.
 	// DeleteBusinessHours removes business hours.
 	DeleteBusinessHours(context.Context, *DeleteBusinessHoursRequest) (*DeleteBusinessHoursResponse, error)
+	// Deprecated: Do not use.
 	// EvaluateBusinessHours determines whether or not the current time is within a business hours day interval
 	EvaluateBusinessHours(context.Context, *EvaluateBusinessHoursRequest) (*EvaluateBusinessHoursResponse, error)
 	// CreateUser creates a new user and enables it for the region it is getting created in.
@@ -3300,8 +3328,10 @@ type OrgServer interface {
 	GetMyUserMfaInfo(context.Context, *GetMyUserMfaInfoRequest) (*GetMyUserMfaInfoResponse, error)
 	// GetMyAllowedMfaMethods returns the mfa methods allowed to the current user.
 	GetMyAllowedMfaMethods(context.Context, *GetMyAllowedMfaMethodsRequest) (*GetMyAllowedMfaMethodsResponse, error)
+	// Deprecated: Do not use.
 	// CreateBusinessHours persists times businesses are available.
 	CreateBusinessHours(context.Context, *CreateBusinessHoursRequest) (*CreateBusinessHoursResponse, error)
+	// Deprecated: Do not use.
 	// UpdateBusinessHours persists changes to times businesses are available.
 	UpdateBusinessHours(context.Context, *UpdateBusinessHoursRequest) (*UpdateBusinessHoursResponse, error)
 	mustEmbedUnimplementedOrgServer()
