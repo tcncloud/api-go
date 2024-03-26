@@ -3086,6 +3086,191 @@ func (x *ListHuntGroupIntegrationLinksResponse) GetLinks() []*org.IntegrationLin
 	return nil
 }
 
+// CopyHuntGroupIntegrationLinkRequest is the request message for the CopyHuntGroupIntegrationLink RPC method.
+type CopyHuntGroupIntegrationLinkRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The sid of the hunt group to copy the integration link to.
+	ToHuntGroupSid int64 `protobuf:"varint,1,opt,name=to_hunt_group_sid,json=toHuntGroupSid,proto3" json:"to_hunt_group_sid,omitempty"`
+	// The integration link to copy from the source hunt group.
+	Link *org.IntegrationLink `protobuf:"bytes,2,opt,name=link,proto3" json:"link,omitempty"`
+}
+
+func (x *CopyHuntGroupIntegrationLinkRequest) Reset() {
+	*x = CopyHuntGroupIntegrationLinkRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[58]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CopyHuntGroupIntegrationLinkRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CopyHuntGroupIntegrationLinkRequest) ProtoMessage() {}
+
+func (x *CopyHuntGroupIntegrationLinkRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[58]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CopyHuntGroupIntegrationLinkRequest.ProtoReflect.Descriptor instead.
+func (*CopyHuntGroupIntegrationLinkRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{58}
+}
+
+func (x *CopyHuntGroupIntegrationLinkRequest) GetToHuntGroupSid() int64 {
+	if x != nil {
+		return x.ToHuntGroupSid
+	}
+	return 0
+}
+
+func (x *CopyHuntGroupIntegrationLinkRequest) GetLink() *org.IntegrationLink {
+	if x != nil {
+		return x.Link
+	}
+	return nil
+}
+
+// CopyHuntGroupIntegrationLinkResponse is the response message for the CopyHuntGroupIntegrationLink RPC method.
+type CopyHuntGroupIntegrationLinkResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *CopyHuntGroupIntegrationLinkResponse) Reset() {
+	*x = CopyHuntGroupIntegrationLinkResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[59]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CopyHuntGroupIntegrationLinkResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CopyHuntGroupIntegrationLinkResponse) ProtoMessage() {}
+
+func (x *CopyHuntGroupIntegrationLinkResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[59]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CopyHuntGroupIntegrationLinkResponse.ProtoReflect.Descriptor instead.
+func (*CopyHuntGroupIntegrationLinkResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{59}
+}
+
+// UpdateHuntGroupIntegrationLinksRequest is the request message for the UpdateHuntGroupIntegrationLinks RPC method.
+type UpdateHuntGroupIntegrationLinksRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The list of integration links to update.
+	Links []*org.IntegrationLink `protobuf:"bytes,1,rep,name=links,proto3" json:"links,omitempty"`
+}
+
+func (x *UpdateHuntGroupIntegrationLinksRequest) Reset() {
+	*x = UpdateHuntGroupIntegrationLinksRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[60]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UpdateHuntGroupIntegrationLinksRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateHuntGroupIntegrationLinksRequest) ProtoMessage() {}
+
+func (x *UpdateHuntGroupIntegrationLinksRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[60]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateHuntGroupIntegrationLinksRequest.ProtoReflect.Descriptor instead.
+func (*UpdateHuntGroupIntegrationLinksRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{60}
+}
+
+func (x *UpdateHuntGroupIntegrationLinksRequest) GetLinks() []*org.IntegrationLink {
+	if x != nil {
+		return x.Links
+	}
+	return nil
+}
+
+// UpdateHuntGroupIntegrationLinksResponse is the response message for the UpdateHuntGroupIntegrationLinks RPC method.
+type UpdateHuntGroupIntegrationLinksResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *UpdateHuntGroupIntegrationLinksResponse) Reset() {
+	*x = UpdateHuntGroupIntegrationLinksResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[61]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UpdateHuntGroupIntegrationLinksResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateHuntGroupIntegrationLinksResponse) ProtoMessage() {}
+
+func (x *UpdateHuntGroupIntegrationLinksResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[61]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateHuntGroupIntegrationLinksResponse.ProtoReflect.Descriptor instead.
+func (*UpdateHuntGroupIntegrationLinksResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{61}
+}
+
 // ListAgentTriggersRequest is the request message for the ListAgentTriggers RPC method.
 type ListAgentTriggersRequest struct {
 	state         protoimpl.MessageState
@@ -3099,7 +3284,7 @@ type ListAgentTriggersRequest struct {
 func (x *ListAgentTriggersRequest) Reset() {
 	*x = ListAgentTriggersRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[58]
+		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[62]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3112,7 +3297,7 @@ func (x *ListAgentTriggersRequest) String() string {
 func (*ListAgentTriggersRequest) ProtoMessage() {}
 
 func (x *ListAgentTriggersRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[58]
+	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[62]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3125,7 +3310,7 @@ func (x *ListAgentTriggersRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListAgentTriggersRequest.ProtoReflect.Descriptor instead.
 func (*ListAgentTriggersRequest) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{58}
+	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{62}
 }
 
 func (x *ListAgentTriggersRequest) GetHuntGroupSid() int64 {
@@ -3148,7 +3333,7 @@ type ListAgentTriggersResponse struct {
 func (x *ListAgentTriggersResponse) Reset() {
 	*x = ListAgentTriggersResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[59]
+		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[63]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3161,7 +3346,7 @@ func (x *ListAgentTriggersResponse) String() string {
 func (*ListAgentTriggersResponse) ProtoMessage() {}
 
 func (x *ListAgentTriggersResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[59]
+	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[63]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3174,7 +3359,7 @@ func (x *ListAgentTriggersResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListAgentTriggersResponse.ProtoReflect.Descriptor instead.
 func (*ListAgentTriggersResponse) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{59}
+	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{63}
 }
 
 func (x *ListAgentTriggersResponse) GetAgentTriggers() []*org.AgentTrigger {
@@ -3201,7 +3386,7 @@ type CopyAgentTriggerRequest struct {
 func (x *CopyAgentTriggerRequest) Reset() {
 	*x = CopyAgentTriggerRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[60]
+		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[64]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3214,7 +3399,7 @@ func (x *CopyAgentTriggerRequest) String() string {
 func (*CopyAgentTriggerRequest) ProtoMessage() {}
 
 func (x *CopyAgentTriggerRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[60]
+	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[64]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3227,7 +3412,7 @@ func (x *CopyAgentTriggerRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CopyAgentTriggerRequest.ProtoReflect.Descriptor instead.
 func (*CopyAgentTriggerRequest) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{60}
+	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{64}
 }
 
 func (x *CopyAgentTriggerRequest) GetFromHuntGroupSid() int64 {
@@ -3261,7 +3446,7 @@ type CopyAgentTriggerResponse struct {
 func (x *CopyAgentTriggerResponse) Reset() {
 	*x = CopyAgentTriggerResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[61]
+		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[65]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3274,7 +3459,7 @@ func (x *CopyAgentTriggerResponse) String() string {
 func (*CopyAgentTriggerResponse) ProtoMessage() {}
 
 func (x *CopyAgentTriggerResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[61]
+	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[65]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3287,7 +3472,7 @@ func (x *CopyAgentTriggerResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CopyAgentTriggerResponse.ProtoReflect.Descriptor instead.
 func (*CopyAgentTriggerResponse) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{61}
+	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{65}
 }
 
 // UpdateAgentTriggersRequest is the request message for the UpdateAgentTriggers RPC method.
@@ -3305,7 +3490,7 @@ type UpdateAgentTriggersRequest struct {
 func (x *UpdateAgentTriggersRequest) Reset() {
 	*x = UpdateAgentTriggersRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[62]
+		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[66]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3318,7 +3503,7 @@ func (x *UpdateAgentTriggersRequest) String() string {
 func (*UpdateAgentTriggersRequest) ProtoMessage() {}
 
 func (x *UpdateAgentTriggersRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[62]
+	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[66]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3331,7 +3516,7 @@ func (x *UpdateAgentTriggersRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateAgentTriggersRequest.ProtoReflect.Descriptor instead.
 func (*UpdateAgentTriggersRequest) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{62}
+	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{66}
 }
 
 func (x *UpdateAgentTriggersRequest) GetHuntGroupSid() int64 {
@@ -3358,7 +3543,7 @@ type UpdateAgentTriggersResponse struct {
 func (x *UpdateAgentTriggersResponse) Reset() {
 	*x = UpdateAgentTriggersResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[63]
+		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[67]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3371,7 +3556,7 @@ func (x *UpdateAgentTriggersResponse) String() string {
 func (*UpdateAgentTriggersResponse) ProtoMessage() {}
 
 func (x *UpdateAgentTriggersResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[63]
+	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[67]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3384,7 +3569,7 @@ func (x *UpdateAgentTriggersResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateAgentTriggersResponse.ProtoReflect.Descriptor instead.
 func (*UpdateAgentTriggersResponse) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{63}
+	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{67}
 }
 
 // The request message for GetHuntGroupScript
@@ -3400,7 +3585,7 @@ type GetHuntGroupScriptRequest struct {
 func (x *GetHuntGroupScriptRequest) Reset() {
 	*x = GetHuntGroupScriptRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[64]
+		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[68]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3413,7 +3598,7 @@ func (x *GetHuntGroupScriptRequest) String() string {
 func (*GetHuntGroupScriptRequest) ProtoMessage() {}
 
 func (x *GetHuntGroupScriptRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[64]
+	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[68]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3426,7 +3611,7 @@ func (x *GetHuntGroupScriptRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetHuntGroupScriptRequest.ProtoReflect.Descriptor instead.
 func (*GetHuntGroupScriptRequest) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{64}
+	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{68}
 }
 
 func (x *GetHuntGroupScriptRequest) GetHuntGroupSid() int64 {
@@ -3449,7 +3634,7 @@ type GetHuntGroupScriptResponse struct {
 func (x *GetHuntGroupScriptResponse) Reset() {
 	*x = GetHuntGroupScriptResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[65]
+		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[69]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3462,7 +3647,7 @@ func (x *GetHuntGroupScriptResponse) String() string {
 func (*GetHuntGroupScriptResponse) ProtoMessage() {}
 
 func (x *GetHuntGroupScriptResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[65]
+	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[69]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3475,7 +3660,7 @@ func (x *GetHuntGroupScriptResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetHuntGroupScriptResponse.ProtoReflect.Descriptor instead.
 func (*GetHuntGroupScriptResponse) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{65}
+	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{69}
 }
 
 func (x *GetHuntGroupScriptResponse) GetHuntGroupScript() *org.HuntGroupScript {
@@ -3500,7 +3685,7 @@ type CreateHuntGroupScriptRequest struct {
 func (x *CreateHuntGroupScriptRequest) Reset() {
 	*x = CreateHuntGroupScriptRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[66]
+		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[70]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3513,7 +3698,7 @@ func (x *CreateHuntGroupScriptRequest) String() string {
 func (*CreateHuntGroupScriptRequest) ProtoMessage() {}
 
 func (x *CreateHuntGroupScriptRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[66]
+	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[70]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3526,7 +3711,7 @@ func (x *CreateHuntGroupScriptRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateHuntGroupScriptRequest.ProtoReflect.Descriptor instead.
 func (*CreateHuntGroupScriptRequest) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{66}
+	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{70}
 }
 
 func (x *CreateHuntGroupScriptRequest) GetHuntGroupSid() int64 {
@@ -3553,7 +3738,7 @@ type CreateHuntGroupScriptResponse struct {
 func (x *CreateHuntGroupScriptResponse) Reset() {
 	*x = CreateHuntGroupScriptResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[67]
+		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[71]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3566,7 +3751,7 @@ func (x *CreateHuntGroupScriptResponse) String() string {
 func (*CreateHuntGroupScriptResponse) ProtoMessage() {}
 
 func (x *CreateHuntGroupScriptResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[67]
+	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[71]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3579,7 +3764,7 @@ func (x *CreateHuntGroupScriptResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateHuntGroupScriptResponse.ProtoReflect.Descriptor instead.
 func (*CreateHuntGroupScriptResponse) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{67}
+	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{71}
 }
 
 // The request message for UpdateHuntGroupScript
@@ -3597,7 +3782,7 @@ type UpdateHuntGroupScriptRequest struct {
 func (x *UpdateHuntGroupScriptRequest) Reset() {
 	*x = UpdateHuntGroupScriptRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[68]
+		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[72]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3610,7 +3795,7 @@ func (x *UpdateHuntGroupScriptRequest) String() string {
 func (*UpdateHuntGroupScriptRequest) ProtoMessage() {}
 
 func (x *UpdateHuntGroupScriptRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[68]
+	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[72]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3623,7 +3808,7 @@ func (x *UpdateHuntGroupScriptRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateHuntGroupScriptRequest.ProtoReflect.Descriptor instead.
 func (*UpdateHuntGroupScriptRequest) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{68}
+	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{72}
 }
 
 func (x *UpdateHuntGroupScriptRequest) GetHuntGroupSid() int64 {
@@ -3650,7 +3835,7 @@ type UpdateHuntGroupScriptResponse struct {
 func (x *UpdateHuntGroupScriptResponse) Reset() {
 	*x = UpdateHuntGroupScriptResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[69]
+		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[73]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3663,7 +3848,7 @@ func (x *UpdateHuntGroupScriptResponse) String() string {
 func (*UpdateHuntGroupScriptResponse) ProtoMessage() {}
 
 func (x *UpdateHuntGroupScriptResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[69]
+	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[73]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3676,7 +3861,7 @@ func (x *UpdateHuntGroupScriptResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateHuntGroupScriptResponse.ProtoReflect.Descriptor instead.
 func (*UpdateHuntGroupScriptResponse) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{69}
+	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{73}
 }
 
 // The request message for DeleteHuntGroupScript
@@ -3694,7 +3879,7 @@ type DeleteHuntGroupScriptRequest struct {
 func (x *DeleteHuntGroupScriptRequest) Reset() {
 	*x = DeleteHuntGroupScriptRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[70]
+		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[74]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3707,7 +3892,7 @@ func (x *DeleteHuntGroupScriptRequest) String() string {
 func (*DeleteHuntGroupScriptRequest) ProtoMessage() {}
 
 func (x *DeleteHuntGroupScriptRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[70]
+	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[74]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3720,7 +3905,7 @@ func (x *DeleteHuntGroupScriptRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteHuntGroupScriptRequest.ProtoReflect.Descriptor instead.
 func (*DeleteHuntGroupScriptRequest) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{70}
+	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{74}
 }
 
 func (x *DeleteHuntGroupScriptRequest) GetHuntGroupSid() int64 {
@@ -3747,7 +3932,7 @@ type DeleteHuntGroupScriptResponse struct {
 func (x *DeleteHuntGroupScriptResponse) Reset() {
 	*x = DeleteHuntGroupScriptResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[71]
+		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[75]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3760,7 +3945,7 @@ func (x *DeleteHuntGroupScriptResponse) String() string {
 func (*DeleteHuntGroupScriptResponse) ProtoMessage() {}
 
 func (x *DeleteHuntGroupScriptResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[71]
+	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[75]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3773,7 +3958,7 @@ func (x *DeleteHuntGroupScriptResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteHuntGroupScriptResponse.ProtoReflect.Descriptor instead.
 func (*DeleteHuntGroupScriptResponse) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{71}
+	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{75}
 }
 
 var File_api_v1alpha1_org_huntgroup_proto protoreflect.FileDescriptor
@@ -4209,96 +4394,116 @@ var file_api_v1alpha1_org_huntgroup_proto_rawDesc = []byte{
 	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x36, 0x0a, 0x05, 0x6c, 0x69, 0x6e, 0x6b, 0x73, 0x18, 0x01,
 	0x20, 0x03, 0x28, 0x0b, 0x32, 0x20, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f,
 	0x6e, 0x73, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x49, 0x6e, 0x74, 0x65, 0x67, 0x72, 0x61, 0x74, 0x69,
-	0x6f, 0x6e, 0x4c, 0x69, 0x6e, 0x6b, 0x52, 0x05, 0x6c, 0x69, 0x6e, 0x6b, 0x73, 0x22, 0x40, 0x0a,
-	0x18, 0x4c, 0x69, 0x73, 0x74, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65,
-	0x72, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x24, 0x0a, 0x0e, 0x68, 0x75, 0x6e,
-	0x74, 0x5f, 0x67, 0x72, 0x6f, 0x75, 0x70, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x03, 0x52, 0x0c, 0x68, 0x75, 0x6e, 0x74, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x53, 0x69, 0x64, 0x22,
-	0x61, 0x0a, 0x19, 0x4c, 0x69, 0x73, 0x74, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x54, 0x72, 0x69, 0x67,
-	0x67, 0x65, 0x72, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x44, 0x0a, 0x0e,
-	0x61, 0x67, 0x65, 0x6e, 0x74, 0x5f, 0x74, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x73, 0x18, 0x01,
-	0x20, 0x03, 0x28, 0x0b, 0x32, 0x1d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f,
-	0x6e, 0x73, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x54, 0x72, 0x69, 0x67,
-	0x67, 0x65, 0x72, 0x52, 0x0d, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65,
-	0x72, 0x73, 0x22, 0xb7, 0x01, 0x0a, 0x17, 0x43, 0x6f, 0x70, 0x79, 0x41, 0x67, 0x65, 0x6e, 0x74,
-	0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x2d,
-	0x0a, 0x13, 0x66, 0x72, 0x6f, 0x6d, 0x5f, 0x68, 0x75, 0x6e, 0x74, 0x5f, 0x67, 0x72, 0x6f, 0x75,
-	0x70, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x10, 0x66, 0x72, 0x6f,
-	0x6d, 0x48, 0x75, 0x6e, 0x74, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x53, 0x69, 0x64, 0x12, 0x29, 0x0a,
-	0x11, 0x74, 0x6f, 0x5f, 0x68, 0x75, 0x6e, 0x74, 0x5f, 0x67, 0x72, 0x6f, 0x75, 0x70, 0x5f, 0x73,
-	0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0e, 0x74, 0x6f, 0x48, 0x75, 0x6e, 0x74,
-	0x47, 0x72, 0x6f, 0x75, 0x70, 0x53, 0x69, 0x64, 0x12, 0x42, 0x0a, 0x0d, 0x61, 0x67, 0x65, 0x6e,
-	0x74, 0x5f, 0x74, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32,
-	0x1d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x6f, 0x72,
-	0x67, 0x2e, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x52, 0x0c,
-	0x61, 0x67, 0x65, 0x6e, 0x74, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x22, 0x1a, 0x0a, 0x18,
-	0x43, 0x6f, 0x70, 0x79, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72,
-	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x88, 0x01, 0x0a, 0x1a, 0x55, 0x70, 0x64,
-	0x61, 0x74, 0x65, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x73,
+	0x6f, 0x6e, 0x4c, 0x69, 0x6e, 0x6b, 0x52, 0x05, 0x6c, 0x69, 0x6e, 0x6b, 0x73, 0x22, 0x86, 0x01,
+	0x0a, 0x23, 0x43, 0x6f, 0x70, 0x79, 0x48, 0x75, 0x6e, 0x74, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x49,
+	0x6e, 0x74, 0x65, 0x67, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x4c, 0x69, 0x6e, 0x6b, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x29, 0x0a, 0x11, 0x74, 0x6f, 0x5f, 0x68, 0x75, 0x6e, 0x74,
+	0x5f, 0x67, 0x72, 0x6f, 0x75, 0x70, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03,
+	0x52, 0x0e, 0x74, 0x6f, 0x48, 0x75, 0x6e, 0x74, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x53, 0x69, 0x64,
+	0x12, 0x34, 0x0a, 0x04, 0x6c, 0x69, 0x6e, 0x6b, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x20,
+	0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x6f, 0x72, 0x67,
+	0x2e, 0x49, 0x6e, 0x74, 0x65, 0x67, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x4c, 0x69, 0x6e, 0x6b,
+	0x52, 0x04, 0x6c, 0x69, 0x6e, 0x6b, 0x22, 0x26, 0x0a, 0x24, 0x43, 0x6f, 0x70, 0x79, 0x48, 0x75,
+	0x6e, 0x74, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x49, 0x6e, 0x74, 0x65, 0x67, 0x72, 0x61, 0x74, 0x69,
+	0x6f, 0x6e, 0x4c, 0x69, 0x6e, 0x6b, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x60,
+	0x0a, 0x26, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x48, 0x75, 0x6e, 0x74, 0x47, 0x72, 0x6f, 0x75,
+	0x70, 0x49, 0x6e, 0x74, 0x65, 0x67, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x4c, 0x69, 0x6e, 0x6b,
+	0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x36, 0x0a, 0x05, 0x6c, 0x69, 0x6e, 0x6b,
+	0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x20, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f,
+	0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x49, 0x6e, 0x74, 0x65, 0x67, 0x72,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x4c, 0x69, 0x6e, 0x6b, 0x52, 0x05, 0x6c, 0x69, 0x6e, 0x6b, 0x73,
+	0x22, 0x29, 0x0a, 0x27, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x48, 0x75, 0x6e, 0x74, 0x47, 0x72,
+	0x6f, 0x75, 0x70, 0x49, 0x6e, 0x74, 0x65, 0x67, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x4c, 0x69,
+	0x6e, 0x6b, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x40, 0x0a, 0x18, 0x4c,
+	0x69, 0x73, 0x74, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x73,
 	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x24, 0x0a, 0x0e, 0x68, 0x75, 0x6e, 0x74, 0x5f,
 	0x67, 0x72, 0x6f, 0x75, 0x70, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52,
-	0x0c, 0x68, 0x75, 0x6e, 0x74, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x53, 0x69, 0x64, 0x12, 0x44, 0x0a,
-	0x0e, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x5f, 0x74, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x73, 0x18,
-	0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d,
-	0x6f, 0x6e, 0x73, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x54, 0x72, 0x69,
-	0x67, 0x67, 0x65, 0x72, 0x52, 0x0d, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x54, 0x72, 0x69, 0x67, 0x67,
-	0x65, 0x72, 0x73, 0x22, 0x1d, 0x0a, 0x1b, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x41, 0x67, 0x65,
-	0x6e, 0x74, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
-	0x73, 0x65, 0x22, 0x41, 0x0a, 0x19, 0x47, 0x65, 0x74, 0x48, 0x75, 0x6e, 0x74, 0x47, 0x72, 0x6f,
-	0x75, 0x70, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12,
-	0x24, 0x0a, 0x0e, 0x68, 0x75, 0x6e, 0x74, 0x5f, 0x67, 0x72, 0x6f, 0x75, 0x70, 0x5f, 0x73, 0x69,
-	0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0c, 0x68, 0x75, 0x6e, 0x74, 0x47, 0x72, 0x6f,
-	0x75, 0x70, 0x53, 0x69, 0x64, 0x22, 0x6a, 0x0a, 0x1a, 0x47, 0x65, 0x74, 0x48, 0x75, 0x6e, 0x74,
-	0x47, 0x72, 0x6f, 0x75, 0x70, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x12, 0x4c, 0x0a, 0x11, 0x68, 0x75, 0x6e, 0x74, 0x5f, 0x67, 0x72, 0x6f, 0x75,
-	0x70, 0x5f, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x20,
-	0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x6f, 0x72, 0x67,
-	0x2e, 0x48, 0x75, 0x6e, 0x74, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74,
-	0x52, 0x0f, 0x68, 0x75, 0x6e, 0x74, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x53, 0x63, 0x72, 0x69, 0x70,
-	0x74, 0x22, 0x92, 0x01, 0x0a, 0x1c, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x48, 0x75, 0x6e, 0x74,
-	0x47, 0x72, 0x6f, 0x75, 0x70, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65,
-	0x73, 0x74, 0x12, 0x24, 0x0a, 0x0e, 0x68, 0x75, 0x6e, 0x74, 0x5f, 0x67, 0x72, 0x6f, 0x75, 0x70,
-	0x5f, 0x73, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0c, 0x68, 0x75, 0x6e, 0x74,
-	0x47, 0x72, 0x6f, 0x75, 0x70, 0x53, 0x69, 0x64, 0x12, 0x4c, 0x0a, 0x11, 0x68, 0x75, 0x6e, 0x74,
-	0x5f, 0x67, 0x72, 0x6f, 0x75, 0x70, 0x5f, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x18, 0x02, 0x20,
-	0x01, 0x28, 0x0b, 0x32, 0x20, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e,
-	0x73, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x48, 0x75, 0x6e, 0x74, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x53,
-	0x63, 0x72, 0x69, 0x70, 0x74, 0x52, 0x0f, 0x68, 0x75, 0x6e, 0x74, 0x47, 0x72, 0x6f, 0x75, 0x70,
-	0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0x22, 0x1f, 0x0a, 0x1d, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65,
-	0x48, 0x75, 0x6e, 0x74, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0x52,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x92, 0x01, 0x0a, 0x1c, 0x55, 0x70, 0x64, 0x61,
-	0x74, 0x65, 0x48, 0x75, 0x6e, 0x74, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x53, 0x63, 0x72, 0x69, 0x70,
-	0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x24, 0x0a, 0x0e, 0x68, 0x75, 0x6e, 0x74,
-	0x5f, 0x67, 0x72, 0x6f, 0x75, 0x70, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03,
-	0x52, 0x0c, 0x68, 0x75, 0x6e, 0x74, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x53, 0x69, 0x64, 0x12, 0x4c,
-	0x0a, 0x11, 0x68, 0x75, 0x6e, 0x74, 0x5f, 0x67, 0x72, 0x6f, 0x75, 0x70, 0x5f, 0x73, 0x63, 0x72,
-	0x69, 0x70, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x20, 0x2e, 0x61, 0x70, 0x69, 0x2e,
-	0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x48, 0x75, 0x6e, 0x74,
-	0x47, 0x72, 0x6f, 0x75, 0x70, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0x52, 0x0f, 0x68, 0x75, 0x6e,
-	0x74, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0x22, 0x1f, 0x0a, 0x1d,
-	0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x48, 0x75, 0x6e, 0x74, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x53,
-	0x63, 0x72, 0x69, 0x70, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x63, 0x0a,
-	0x1c, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x48, 0x75, 0x6e, 0x74, 0x47, 0x72, 0x6f, 0x75, 0x70,
+	0x0c, 0x68, 0x75, 0x6e, 0x74, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x53, 0x69, 0x64, 0x22, 0x61, 0x0a,
+	0x19, 0x4c, 0x69, 0x73, 0x74, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65,
+	0x72, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x44, 0x0a, 0x0e, 0x61, 0x67,
+	0x65, 0x6e, 0x74, 0x5f, 0x74, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x73, 0x18, 0x01, 0x20, 0x03,
+	0x28, 0x0b, 0x32, 0x1d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73,
+	0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65,
+	0x72, 0x52, 0x0d, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x73,
+	0x22, 0xb7, 0x01, 0x0a, 0x17, 0x43, 0x6f, 0x70, 0x79, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x54, 0x72,
+	0x69, 0x67, 0x67, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x2d, 0x0a, 0x13,
+	0x66, 0x72, 0x6f, 0x6d, 0x5f, 0x68, 0x75, 0x6e, 0x74, 0x5f, 0x67, 0x72, 0x6f, 0x75, 0x70, 0x5f,
+	0x73, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x10, 0x66, 0x72, 0x6f, 0x6d, 0x48,
+	0x75, 0x6e, 0x74, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x53, 0x69, 0x64, 0x12, 0x29, 0x0a, 0x11, 0x74,
+	0x6f, 0x5f, 0x68, 0x75, 0x6e, 0x74, 0x5f, 0x67, 0x72, 0x6f, 0x75, 0x70, 0x5f, 0x73, 0x69, 0x64,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0e, 0x74, 0x6f, 0x48, 0x75, 0x6e, 0x74, 0x47, 0x72,
+	0x6f, 0x75, 0x70, 0x53, 0x69, 0x64, 0x12, 0x42, 0x0a, 0x0d, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x5f,
+	0x74, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1d, 0x2e,
+	0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x6f, 0x72, 0x67, 0x2e,
+	0x41, 0x67, 0x65, 0x6e, 0x74, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x52, 0x0c, 0x61, 0x67,
+	0x65, 0x6e, 0x74, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x22, 0x1a, 0x0a, 0x18, 0x43, 0x6f,
+	0x70, 0x79, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x88, 0x01, 0x0a, 0x1a, 0x55, 0x70, 0x64, 0x61, 0x74,
+	0x65, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x73, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x24, 0x0a, 0x0e, 0x68, 0x75, 0x6e, 0x74, 0x5f, 0x67, 0x72,
+	0x6f, 0x75, 0x70, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0c, 0x68,
+	0x75, 0x6e, 0x74, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x53, 0x69, 0x64, 0x12, 0x44, 0x0a, 0x0e, 0x61,
+	0x67, 0x65, 0x6e, 0x74, 0x5f, 0x74, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x73, 0x18, 0x02, 0x20,
+	0x03, 0x28, 0x0b, 0x32, 0x1d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e,
+	0x73, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x54, 0x72, 0x69, 0x67, 0x67,
+	0x65, 0x72, 0x52, 0x0d, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72,
+	0x73, 0x22, 0x1d, 0x0a, 0x1b, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x41, 0x67, 0x65, 0x6e, 0x74,
+	0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x22, 0x41, 0x0a, 0x19, 0x47, 0x65, 0x74, 0x48, 0x75, 0x6e, 0x74, 0x47, 0x72, 0x6f, 0x75, 0x70,
 	0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x24, 0x0a,
 	0x0e, 0x68, 0x75, 0x6e, 0x74, 0x5f, 0x67, 0x72, 0x6f, 0x75, 0x70, 0x5f, 0x73, 0x69, 0x64, 0x18,
 	0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0c, 0x68, 0x75, 0x6e, 0x74, 0x47, 0x72, 0x6f, 0x75, 0x70,
-	0x53, 0x69, 0x64, 0x12, 0x1d, 0x0a, 0x0a, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x5f, 0x73, 0x69,
-	0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x09, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x53,
-	0x69, 0x64, 0x22, 0x1f, 0x0a, 0x1d, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x48, 0x75, 0x6e, 0x74,
-	0x47, 0x72, 0x6f, 0x75, 0x70, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x42, 0xb5, 0x01, 0x0a, 0x14, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e,
-	0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x6f, 0x72, 0x67, 0x42, 0x0e, 0x48, 0x75,
-	0x6e, 0x74, 0x67, 0x72, 0x6f, 0x75, 0x70, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x2b,
-	0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c,
-	0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76,
-	0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x6f, 0x72, 0x67, 0xa2, 0x02, 0x03, 0x41, 0x56,
-	0x4f, 0xaa, 0x02, 0x10, 0x41, 0x70, 0x69, 0x2e, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31,
-	0x2e, 0x4f, 0x72, 0x67, 0xca, 0x02, 0x10, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70,
-	0x68, 0x61, 0x31, 0x5c, 0x4f, 0x72, 0x67, 0xe2, 0x02, 0x1c, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31,
-	0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x4f, 0x72, 0x67, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65,
-	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x12, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x56, 0x31,
-	0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x3a, 0x3a, 0x4f, 0x72, 0x67, 0x62, 0x06, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x33,
+	0x53, 0x69, 0x64, 0x22, 0x6a, 0x0a, 0x1a, 0x47, 0x65, 0x74, 0x48, 0x75, 0x6e, 0x74, 0x47, 0x72,
+	0x6f, 0x75, 0x70, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x12, 0x4c, 0x0a, 0x11, 0x68, 0x75, 0x6e, 0x74, 0x5f, 0x67, 0x72, 0x6f, 0x75, 0x70, 0x5f,
+	0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x20, 0x2e, 0x61,
+	0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x48,
+	0x75, 0x6e, 0x74, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0x52, 0x0f,
+	0x68, 0x75, 0x6e, 0x74, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0x22,
+	0x92, 0x01, 0x0a, 0x1c, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x48, 0x75, 0x6e, 0x74, 0x47, 0x72,
+	0x6f, 0x75, 0x70, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x12, 0x24, 0x0a, 0x0e, 0x68, 0x75, 0x6e, 0x74, 0x5f, 0x67, 0x72, 0x6f, 0x75, 0x70, 0x5f, 0x73,
+	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0c, 0x68, 0x75, 0x6e, 0x74, 0x47, 0x72,
+	0x6f, 0x75, 0x70, 0x53, 0x69, 0x64, 0x12, 0x4c, 0x0a, 0x11, 0x68, 0x75, 0x6e, 0x74, 0x5f, 0x67,
+	0x72, 0x6f, 0x75, 0x70, 0x5f, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x0b, 0x32, 0x20, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e,
+	0x6f, 0x72, 0x67, 0x2e, 0x48, 0x75, 0x6e, 0x74, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x53, 0x63, 0x72,
+	0x69, 0x70, 0x74, 0x52, 0x0f, 0x68, 0x75, 0x6e, 0x74, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x53, 0x63,
+	0x72, 0x69, 0x70, 0x74, 0x22, 0x1f, 0x0a, 0x1d, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x48, 0x75,
+	0x6e, 0x74, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x92, 0x01, 0x0a, 0x1c, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65,
+	0x48, 0x75, 0x6e, 0x74, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x24, 0x0a, 0x0e, 0x68, 0x75, 0x6e, 0x74, 0x5f, 0x67,
+	0x72, 0x6f, 0x75, 0x70, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0c,
+	0x68, 0x75, 0x6e, 0x74, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x53, 0x69, 0x64, 0x12, 0x4c, 0x0a, 0x11,
+	0x68, 0x75, 0x6e, 0x74, 0x5f, 0x67, 0x72, 0x6f, 0x75, 0x70, 0x5f, 0x73, 0x63, 0x72, 0x69, 0x70,
+	0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x20, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f,
+	0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x48, 0x75, 0x6e, 0x74, 0x47, 0x72,
+	0x6f, 0x75, 0x70, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0x52, 0x0f, 0x68, 0x75, 0x6e, 0x74, 0x47,
+	0x72, 0x6f, 0x75, 0x70, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0x22, 0x1f, 0x0a, 0x1d, 0x55, 0x70,
+	0x64, 0x61, 0x74, 0x65, 0x48, 0x75, 0x6e, 0x74, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x53, 0x63, 0x72,
+	0x69, 0x70, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x63, 0x0a, 0x1c, 0x44,
+	0x65, 0x6c, 0x65, 0x74, 0x65, 0x48, 0x75, 0x6e, 0x74, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x53, 0x63,
+	0x72, 0x69, 0x70, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x24, 0x0a, 0x0e, 0x68,
+	0x75, 0x6e, 0x74, 0x5f, 0x67, 0x72, 0x6f, 0x75, 0x70, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x03, 0x52, 0x0c, 0x68, 0x75, 0x6e, 0x74, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x53, 0x69,
+	0x64, 0x12, 0x1d, 0x0a, 0x0a, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x5f, 0x73, 0x69, 0x64, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x09, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x53, 0x69, 0x64,
+	0x22, 0x1f, 0x0a, 0x1d, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x48, 0x75, 0x6e, 0x74, 0x47, 0x72,
+	0x6f, 0x75, 0x70, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x42, 0xb5, 0x01, 0x0a, 0x14, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31,
+	0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x6f, 0x72, 0x67, 0x42, 0x0e, 0x48, 0x75, 0x6e, 0x74,
+	0x67, 0x72, 0x6f, 0x75, 0x70, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x2b, 0x67, 0x69,
+	0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75,
+	0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61,
+	0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x6f, 0x72, 0x67, 0xa2, 0x02, 0x03, 0x41, 0x56, 0x4f, 0xaa,
+	0x02, 0x10, 0x41, 0x70, 0x69, 0x2e, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x4f,
+	0x72, 0x67, 0xca, 0x02, 0x10, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61,
+	0x31, 0x5c, 0x4f, 0x72, 0x67, 0xe2, 0x02, 0x1c, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c,
+	0x70, 0x68, 0x61, 0x31, 0x5c, 0x4f, 0x72, 0x67, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61,
+	0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x12, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x56, 0x31, 0x61, 0x6c,
+	0x70, 0x68, 0x61, 0x31, 0x3a, 0x3a, 0x4f, 0x72, 0x67, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
+	0x33,
 }
 
 var (
@@ -4314,7 +4519,7 @@ func file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP() []byte {
 }
 
 var file_api_v1alpha1_org_huntgroup_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_api_v1alpha1_org_huntgroup_proto_msgTypes = make([]protoimpl.MessageInfo, 72)
+var file_api_v1alpha1_org_huntgroup_proto_msgTypes = make([]protoimpl.MessageInfo, 76)
 var file_api_v1alpha1_org_huntgroup_proto_goTypes = []interface{}{
 	(ListHuntGroupsWithClientInfoTemplateDataRequest_Filter)(0), // 0: api.v1alpha1.org.ListHuntGroupsWithClientInfoTemplateDataRequest.Filter
 	(*GetHuntGroupSettingsRequest)(nil),                         // 1: api.v1alpha1.org.GetHuntGroupSettingsRequest
@@ -4375,92 +4580,98 @@ var file_api_v1alpha1_org_huntgroup_proto_goTypes = []interface{}{
 	(*UpdateHuntGroupWebLinksResponse)(nil),                     // 56: api.v1alpha1.org.UpdateHuntGroupWebLinksResponse
 	(*ListHuntGroupIntegrationLinksRequest)(nil),                // 57: api.v1alpha1.org.ListHuntGroupIntegrationLinksRequest
 	(*ListHuntGroupIntegrationLinksResponse)(nil),               // 58: api.v1alpha1.org.ListHuntGroupIntegrationLinksResponse
-	(*ListAgentTriggersRequest)(nil),                            // 59: api.v1alpha1.org.ListAgentTriggersRequest
-	(*ListAgentTriggersResponse)(nil),                           // 60: api.v1alpha1.org.ListAgentTriggersResponse
-	(*CopyAgentTriggerRequest)(nil),                             // 61: api.v1alpha1.org.CopyAgentTriggerRequest
-	(*CopyAgentTriggerResponse)(nil),                            // 62: api.v1alpha1.org.CopyAgentTriggerResponse
-	(*UpdateAgentTriggersRequest)(nil),                          // 63: api.v1alpha1.org.UpdateAgentTriggersRequest
-	(*UpdateAgentTriggersResponse)(nil),                         // 64: api.v1alpha1.org.UpdateAgentTriggersResponse
-	(*GetHuntGroupScriptRequest)(nil),                           // 65: api.v1alpha1.org.GetHuntGroupScriptRequest
-	(*GetHuntGroupScriptResponse)(nil),                          // 66: api.v1alpha1.org.GetHuntGroupScriptResponse
-	(*CreateHuntGroupScriptRequest)(nil),                        // 67: api.v1alpha1.org.CreateHuntGroupScriptRequest
-	(*CreateHuntGroupScriptResponse)(nil),                       // 68: api.v1alpha1.org.CreateHuntGroupScriptResponse
-	(*UpdateHuntGroupScriptRequest)(nil),                        // 69: api.v1alpha1.org.UpdateHuntGroupScriptRequest
-	(*UpdateHuntGroupScriptResponse)(nil),                       // 70: api.v1alpha1.org.UpdateHuntGroupScriptResponse
-	(*DeleteHuntGroupScriptRequest)(nil),                        // 71: api.v1alpha1.org.DeleteHuntGroupScriptRequest
-	(*DeleteHuntGroupScriptResponse)(nil),                       // 72: api.v1alpha1.org.DeleteHuntGroupScriptResponse
-	(*fieldmaskpb.FieldMask)(nil),                               // 73: google.protobuf.FieldMask
-	(*org.GeneralSettings)(nil),                                 // 74: api.commons.org.GeneralSettings
-	(*org.CommunicationSettings)(nil),                           // 75: api.commons.org.CommunicationSettings
-	(*org.CallbackSettings)(nil),                                // 76: api.commons.org.CallbackSettings
-	(*org.PreviewDialSettings)(nil),                             // 77: api.commons.org.PreviewDialSettings
-	(*org.ManualDialSettings)(nil),                              // 78: api.commons.org.ManualDialSettings
-	(*org.TransferCallSettings)(nil),                            // 79: api.commons.org.TransferCallSettings
-	(*org.NumberHistorySettings)(nil),                           // 80: api.commons.org.NumberHistorySettings
-	(org.HuntGroupType)(0),                                      // 81: api.commons.org.HuntGroupType
-	(*org.HuntGroupDetails)(nil),                                // 82: api.commons.org.HuntGroupDetails
-	(*org.CallerIdBucketData)(nil),                              // 83: api.commons.org.CallerIdBucketData
-	(*org.DataDipConfig)(nil),                                   // 84: api.commons.org.DataDipConfig
-	(commons.DataDipTemplateFilterType)(0),                      // 85: api.commons.DataDipTemplateFilterType
-	(*org.AgentResponseAutoRuleSet)(nil),                        // 86: api.commons.org.AgentResponseAutoRuleSet
-	(*org.ClientInfoDisplayTemplate)(nil),                       // 87: api.commons.org.ClientInfoDisplayTemplate
-	(*org.HuntGroupWithClientInfoTemplateData)(nil),             // 88: api.commons.org.HuntGroupWithClientInfoTemplateData
-	(*org.WebLink)(nil),                                         // 89: api.commons.org.WebLink
-	(*org.IntegrationLink)(nil),                                 // 90: api.commons.org.IntegrationLink
-	(*org.AgentTrigger)(nil),                                    // 91: api.commons.org.AgentTrigger
-	(*org.HuntGroupScript)(nil),                                 // 92: api.commons.org.HuntGroupScript
+	(*CopyHuntGroupIntegrationLinkRequest)(nil),                 // 59: api.v1alpha1.org.CopyHuntGroupIntegrationLinkRequest
+	(*CopyHuntGroupIntegrationLinkResponse)(nil),                // 60: api.v1alpha1.org.CopyHuntGroupIntegrationLinkResponse
+	(*UpdateHuntGroupIntegrationLinksRequest)(nil),              // 61: api.v1alpha1.org.UpdateHuntGroupIntegrationLinksRequest
+	(*UpdateHuntGroupIntegrationLinksResponse)(nil),             // 62: api.v1alpha1.org.UpdateHuntGroupIntegrationLinksResponse
+	(*ListAgentTriggersRequest)(nil),                            // 63: api.v1alpha1.org.ListAgentTriggersRequest
+	(*ListAgentTriggersResponse)(nil),                           // 64: api.v1alpha1.org.ListAgentTriggersResponse
+	(*CopyAgentTriggerRequest)(nil),                             // 65: api.v1alpha1.org.CopyAgentTriggerRequest
+	(*CopyAgentTriggerResponse)(nil),                            // 66: api.v1alpha1.org.CopyAgentTriggerResponse
+	(*UpdateAgentTriggersRequest)(nil),                          // 67: api.v1alpha1.org.UpdateAgentTriggersRequest
+	(*UpdateAgentTriggersResponse)(nil),                         // 68: api.v1alpha1.org.UpdateAgentTriggersResponse
+	(*GetHuntGroupScriptRequest)(nil),                           // 69: api.v1alpha1.org.GetHuntGroupScriptRequest
+	(*GetHuntGroupScriptResponse)(nil),                          // 70: api.v1alpha1.org.GetHuntGroupScriptResponse
+	(*CreateHuntGroupScriptRequest)(nil),                        // 71: api.v1alpha1.org.CreateHuntGroupScriptRequest
+	(*CreateHuntGroupScriptResponse)(nil),                       // 72: api.v1alpha1.org.CreateHuntGroupScriptResponse
+	(*UpdateHuntGroupScriptRequest)(nil),                        // 73: api.v1alpha1.org.UpdateHuntGroupScriptRequest
+	(*UpdateHuntGroupScriptResponse)(nil),                       // 74: api.v1alpha1.org.UpdateHuntGroupScriptResponse
+	(*DeleteHuntGroupScriptRequest)(nil),                        // 75: api.v1alpha1.org.DeleteHuntGroupScriptRequest
+	(*DeleteHuntGroupScriptResponse)(nil),                       // 76: api.v1alpha1.org.DeleteHuntGroupScriptResponse
+	(*fieldmaskpb.FieldMask)(nil),                               // 77: google.protobuf.FieldMask
+	(*org.GeneralSettings)(nil),                                 // 78: api.commons.org.GeneralSettings
+	(*org.CommunicationSettings)(nil),                           // 79: api.commons.org.CommunicationSettings
+	(*org.CallbackSettings)(nil),                                // 80: api.commons.org.CallbackSettings
+	(*org.PreviewDialSettings)(nil),                             // 81: api.commons.org.PreviewDialSettings
+	(*org.ManualDialSettings)(nil),                              // 82: api.commons.org.ManualDialSettings
+	(*org.TransferCallSettings)(nil),                            // 83: api.commons.org.TransferCallSettings
+	(*org.NumberHistorySettings)(nil),                           // 84: api.commons.org.NumberHistorySettings
+	(org.HuntGroupType)(0),                                      // 85: api.commons.org.HuntGroupType
+	(*org.HuntGroupDetails)(nil),                                // 86: api.commons.org.HuntGroupDetails
+	(*org.CallerIdBucketData)(nil),                              // 87: api.commons.org.CallerIdBucketData
+	(*org.DataDipConfig)(nil),                                   // 88: api.commons.org.DataDipConfig
+	(commons.DataDipTemplateFilterType)(0),                      // 89: api.commons.DataDipTemplateFilterType
+	(*org.AgentResponseAutoRuleSet)(nil),                        // 90: api.commons.org.AgentResponseAutoRuleSet
+	(*org.ClientInfoDisplayTemplate)(nil),                       // 91: api.commons.org.ClientInfoDisplayTemplate
+	(*org.HuntGroupWithClientInfoTemplateData)(nil),             // 92: api.commons.org.HuntGroupWithClientInfoTemplateData
+	(*org.WebLink)(nil),                                         // 93: api.commons.org.WebLink
+	(*org.IntegrationLink)(nil),                                 // 94: api.commons.org.IntegrationLink
+	(*org.AgentTrigger)(nil),                                    // 95: api.commons.org.AgentTrigger
+	(*org.HuntGroupScript)(nil),                                 // 96: api.commons.org.HuntGroupScript
 }
 var file_api_v1alpha1_org_huntgroup_proto_depIdxs = []int32{
-	73, // 0: api.v1alpha1.org.GetHuntGroupSettingsRequest.field_mask:type_name -> google.protobuf.FieldMask
-	74, // 1: api.v1alpha1.org.GetHuntGroupSettingsResponse.general_settings:type_name -> api.commons.org.GeneralSettings
-	75, // 2: api.v1alpha1.org.GetHuntGroupSettingsResponse.communication_settings:type_name -> api.commons.org.CommunicationSettings
-	76, // 3: api.v1alpha1.org.GetHuntGroupSettingsResponse.callback_settings:type_name -> api.commons.org.CallbackSettings
-	77, // 4: api.v1alpha1.org.GetHuntGroupSettingsResponse.preview_dial_settings:type_name -> api.commons.org.PreviewDialSettings
-	78, // 5: api.v1alpha1.org.GetHuntGroupSettingsResponse.manual_dial_settings:type_name -> api.commons.org.ManualDialSettings
-	79, // 6: api.v1alpha1.org.GetHuntGroupSettingsResponse.transfer_call_settings:type_name -> api.commons.org.TransferCallSettings
-	80, // 7: api.v1alpha1.org.GetHuntGroupSettingsResponse.number_history_settings:type_name -> api.commons.org.NumberHistorySettings
-	74, // 8: api.v1alpha1.org.UpdateHuntGroupSettingsRequest.general_settings:type_name -> api.commons.org.GeneralSettings
-	75, // 9: api.v1alpha1.org.UpdateHuntGroupSettingsRequest.communication_settings:type_name -> api.commons.org.CommunicationSettings
-	76, // 10: api.v1alpha1.org.UpdateHuntGroupSettingsRequest.callback_settings:type_name -> api.commons.org.CallbackSettings
-	77, // 11: api.v1alpha1.org.UpdateHuntGroupSettingsRequest.preview_dial_settings:type_name -> api.commons.org.PreviewDialSettings
-	78, // 12: api.v1alpha1.org.UpdateHuntGroupSettingsRequest.manual_dial_settings:type_name -> api.commons.org.ManualDialSettings
-	79, // 13: api.v1alpha1.org.UpdateHuntGroupSettingsRequest.transfer_call_settings:type_name -> api.commons.org.TransferCallSettings
-	80, // 14: api.v1alpha1.org.UpdateHuntGroupSettingsRequest.number_history_settings:type_name -> api.commons.org.NumberHistorySettings
-	73, // 15: api.v1alpha1.org.UpdateHuntGroupSettingsRequest.field_mask:type_name -> google.protobuf.FieldMask
-	81, // 16: api.v1alpha1.org.CreateHuntGroupRequest.type:type_name -> api.commons.org.HuntGroupType
-	81, // 17: api.v1alpha1.org.UpdateHuntGroupGeneralDetailsRequest.type:type_name -> api.commons.org.HuntGroupType
-	82, // 18: api.v1alpha1.org.GetHuntGroupDetailsResponse.hunt_group_details:type_name -> api.commons.org.HuntGroupDetails
-	83, // 19: api.v1alpha1.org.ListCallerIdBucketsResponse.caller_id_bucket_data:type_name -> api.commons.org.CallerIdBucketData
-	84, // 20: api.v1alpha1.org.GetDataDipTemplateResponse.template:type_name -> api.commons.org.DataDipConfig
-	85, // 21: api.v1alpha1.org.ListDataDipTemplatesRequest.filter:type_name -> api.commons.DataDipTemplateFilterType
-	84, // 22: api.v1alpha1.org.ListDataDipTemplatesResponse.templates:type_name -> api.commons.org.DataDipConfig
-	84, // 23: api.v1alpha1.org.CreateDataDipTemplateRequest.template:type_name -> api.commons.org.DataDipConfig
-	84, // 24: api.v1alpha1.org.UpdateDataDipTemplateRequest.template:type_name -> api.commons.org.DataDipConfig
-	86, // 25: api.v1alpha1.org.ListAgentResponseAutoRulesResponse.rulesets:type_name -> api.commons.org.AgentResponseAutoRuleSet
-	86, // 26: api.v1alpha1.org.CreateAgentResponseAutoRulesRequest.ruleset:type_name -> api.commons.org.AgentResponseAutoRuleSet
-	86, // 27: api.v1alpha1.org.UpdateAgentResponseAutoRulesRequest.ruleset:type_name -> api.commons.org.AgentResponseAutoRuleSet
-	87, // 28: api.v1alpha1.org.GetHuntGroupClientInfoDisplayTemplateResponse.template:type_name -> api.commons.org.ClientInfoDisplayTemplate
-	87, // 29: api.v1alpha1.org.CreateHuntGroupClientInfoDisplayTemplateRequest.template:type_name -> api.commons.org.ClientInfoDisplayTemplate
-	87, // 30: api.v1alpha1.org.UpdateHuntGroupClientInfoDisplayTemplateRequest.template:type_name -> api.commons.org.ClientInfoDisplayTemplate
-	87, // 31: api.v1alpha1.org.CopyHuntGroupClientInfoDisplayTemplateRequest.template:type_name -> api.commons.org.ClientInfoDisplayTemplate
-	87, // 32: api.v1alpha1.org.CreateCampaignClientInfoDisplayTemplateRequest.template:type_name -> api.commons.org.ClientInfoDisplayTemplate
+	77, // 0: api.v1alpha1.org.GetHuntGroupSettingsRequest.field_mask:type_name -> google.protobuf.FieldMask
+	78, // 1: api.v1alpha1.org.GetHuntGroupSettingsResponse.general_settings:type_name -> api.commons.org.GeneralSettings
+	79, // 2: api.v1alpha1.org.GetHuntGroupSettingsResponse.communication_settings:type_name -> api.commons.org.CommunicationSettings
+	80, // 3: api.v1alpha1.org.GetHuntGroupSettingsResponse.callback_settings:type_name -> api.commons.org.CallbackSettings
+	81, // 4: api.v1alpha1.org.GetHuntGroupSettingsResponse.preview_dial_settings:type_name -> api.commons.org.PreviewDialSettings
+	82, // 5: api.v1alpha1.org.GetHuntGroupSettingsResponse.manual_dial_settings:type_name -> api.commons.org.ManualDialSettings
+	83, // 6: api.v1alpha1.org.GetHuntGroupSettingsResponse.transfer_call_settings:type_name -> api.commons.org.TransferCallSettings
+	84, // 7: api.v1alpha1.org.GetHuntGroupSettingsResponse.number_history_settings:type_name -> api.commons.org.NumberHistorySettings
+	78, // 8: api.v1alpha1.org.UpdateHuntGroupSettingsRequest.general_settings:type_name -> api.commons.org.GeneralSettings
+	79, // 9: api.v1alpha1.org.UpdateHuntGroupSettingsRequest.communication_settings:type_name -> api.commons.org.CommunicationSettings
+	80, // 10: api.v1alpha1.org.UpdateHuntGroupSettingsRequest.callback_settings:type_name -> api.commons.org.CallbackSettings
+	81, // 11: api.v1alpha1.org.UpdateHuntGroupSettingsRequest.preview_dial_settings:type_name -> api.commons.org.PreviewDialSettings
+	82, // 12: api.v1alpha1.org.UpdateHuntGroupSettingsRequest.manual_dial_settings:type_name -> api.commons.org.ManualDialSettings
+	83, // 13: api.v1alpha1.org.UpdateHuntGroupSettingsRequest.transfer_call_settings:type_name -> api.commons.org.TransferCallSettings
+	84, // 14: api.v1alpha1.org.UpdateHuntGroupSettingsRequest.number_history_settings:type_name -> api.commons.org.NumberHistorySettings
+	77, // 15: api.v1alpha1.org.UpdateHuntGroupSettingsRequest.field_mask:type_name -> google.protobuf.FieldMask
+	85, // 16: api.v1alpha1.org.CreateHuntGroupRequest.type:type_name -> api.commons.org.HuntGroupType
+	85, // 17: api.v1alpha1.org.UpdateHuntGroupGeneralDetailsRequest.type:type_name -> api.commons.org.HuntGroupType
+	86, // 18: api.v1alpha1.org.GetHuntGroupDetailsResponse.hunt_group_details:type_name -> api.commons.org.HuntGroupDetails
+	87, // 19: api.v1alpha1.org.ListCallerIdBucketsResponse.caller_id_bucket_data:type_name -> api.commons.org.CallerIdBucketData
+	88, // 20: api.v1alpha1.org.GetDataDipTemplateResponse.template:type_name -> api.commons.org.DataDipConfig
+	89, // 21: api.v1alpha1.org.ListDataDipTemplatesRequest.filter:type_name -> api.commons.DataDipTemplateFilterType
+	88, // 22: api.v1alpha1.org.ListDataDipTemplatesResponse.templates:type_name -> api.commons.org.DataDipConfig
+	88, // 23: api.v1alpha1.org.CreateDataDipTemplateRequest.template:type_name -> api.commons.org.DataDipConfig
+	88, // 24: api.v1alpha1.org.UpdateDataDipTemplateRequest.template:type_name -> api.commons.org.DataDipConfig
+	90, // 25: api.v1alpha1.org.ListAgentResponseAutoRulesResponse.rulesets:type_name -> api.commons.org.AgentResponseAutoRuleSet
+	90, // 26: api.v1alpha1.org.CreateAgentResponseAutoRulesRequest.ruleset:type_name -> api.commons.org.AgentResponseAutoRuleSet
+	90, // 27: api.v1alpha1.org.UpdateAgentResponseAutoRulesRequest.ruleset:type_name -> api.commons.org.AgentResponseAutoRuleSet
+	91, // 28: api.v1alpha1.org.GetHuntGroupClientInfoDisplayTemplateResponse.template:type_name -> api.commons.org.ClientInfoDisplayTemplate
+	91, // 29: api.v1alpha1.org.CreateHuntGroupClientInfoDisplayTemplateRequest.template:type_name -> api.commons.org.ClientInfoDisplayTemplate
+	91, // 30: api.v1alpha1.org.UpdateHuntGroupClientInfoDisplayTemplateRequest.template:type_name -> api.commons.org.ClientInfoDisplayTemplate
+	91, // 31: api.v1alpha1.org.CopyHuntGroupClientInfoDisplayTemplateRequest.template:type_name -> api.commons.org.ClientInfoDisplayTemplate
+	91, // 32: api.v1alpha1.org.CreateCampaignClientInfoDisplayTemplateRequest.template:type_name -> api.commons.org.ClientInfoDisplayTemplate
 	0,  // 33: api.v1alpha1.org.ListHuntGroupsWithClientInfoTemplateDataRequest.filter:type_name -> api.v1alpha1.org.ListHuntGroupsWithClientInfoTemplateDataRequest.Filter
-	88, // 34: api.v1alpha1.org.ListHuntGroupsWithClientInfoTemplateDataResponse.hunt_groups_with_template_data:type_name -> api.commons.org.HuntGroupWithClientInfoTemplateData
-	89, // 35: api.v1alpha1.org.ListHuntGroupWebLinksResponse.web_links:type_name -> api.commons.org.WebLink
-	89, // 36: api.v1alpha1.org.CopyHuntGroupWebLinkRequest.web_link:type_name -> api.commons.org.WebLink
-	89, // 37: api.v1alpha1.org.UpdateHuntGroupWebLinksRequest.web_links:type_name -> api.commons.org.WebLink
-	90, // 38: api.v1alpha1.org.ListHuntGroupIntegrationLinksResponse.links:type_name -> api.commons.org.IntegrationLink
-	91, // 39: api.v1alpha1.org.ListAgentTriggersResponse.agent_triggers:type_name -> api.commons.org.AgentTrigger
-	91, // 40: api.v1alpha1.org.CopyAgentTriggerRequest.agent_trigger:type_name -> api.commons.org.AgentTrigger
-	91, // 41: api.v1alpha1.org.UpdateAgentTriggersRequest.agent_triggers:type_name -> api.commons.org.AgentTrigger
-	92, // 42: api.v1alpha1.org.GetHuntGroupScriptResponse.hunt_group_script:type_name -> api.commons.org.HuntGroupScript
-	92, // 43: api.v1alpha1.org.CreateHuntGroupScriptRequest.hunt_group_script:type_name -> api.commons.org.HuntGroupScript
-	92, // 44: api.v1alpha1.org.UpdateHuntGroupScriptRequest.hunt_group_script:type_name -> api.commons.org.HuntGroupScript
-	45, // [45:45] is the sub-list for method output_type
-	45, // [45:45] is the sub-list for method input_type
-	45, // [45:45] is the sub-list for extension type_name
-	45, // [45:45] is the sub-list for extension extendee
-	0,  // [0:45] is the sub-list for field type_name
+	92, // 34: api.v1alpha1.org.ListHuntGroupsWithClientInfoTemplateDataResponse.hunt_groups_with_template_data:type_name -> api.commons.org.HuntGroupWithClientInfoTemplateData
+	93, // 35: api.v1alpha1.org.ListHuntGroupWebLinksResponse.web_links:type_name -> api.commons.org.WebLink
+	93, // 36: api.v1alpha1.org.CopyHuntGroupWebLinkRequest.web_link:type_name -> api.commons.org.WebLink
+	93, // 37: api.v1alpha1.org.UpdateHuntGroupWebLinksRequest.web_links:type_name -> api.commons.org.WebLink
+	94, // 38: api.v1alpha1.org.ListHuntGroupIntegrationLinksResponse.links:type_name -> api.commons.org.IntegrationLink
+	94, // 39: api.v1alpha1.org.CopyHuntGroupIntegrationLinkRequest.link:type_name -> api.commons.org.IntegrationLink
+	94, // 40: api.v1alpha1.org.UpdateHuntGroupIntegrationLinksRequest.links:type_name -> api.commons.org.IntegrationLink
+	95, // 41: api.v1alpha1.org.ListAgentTriggersResponse.agent_triggers:type_name -> api.commons.org.AgentTrigger
+	95, // 42: api.v1alpha1.org.CopyAgentTriggerRequest.agent_trigger:type_name -> api.commons.org.AgentTrigger
+	95, // 43: api.v1alpha1.org.UpdateAgentTriggersRequest.agent_triggers:type_name -> api.commons.org.AgentTrigger
+	96, // 44: api.v1alpha1.org.GetHuntGroupScriptResponse.hunt_group_script:type_name -> api.commons.org.HuntGroupScript
+	96, // 45: api.v1alpha1.org.CreateHuntGroupScriptRequest.hunt_group_script:type_name -> api.commons.org.HuntGroupScript
+	96, // 46: api.v1alpha1.org.UpdateHuntGroupScriptRequest.hunt_group_script:type_name -> api.commons.org.HuntGroupScript
+	47, // [47:47] is the sub-list for method output_type
+	47, // [47:47] is the sub-list for method input_type
+	47, // [47:47] is the sub-list for extension type_name
+	47, // [47:47] is the sub-list for extension extendee
+	0,  // [0:47] is the sub-list for field type_name
 }
 
 func init() { file_api_v1alpha1_org_huntgroup_proto_init() }
@@ -5166,7 +5377,7 @@ func file_api_v1alpha1_org_huntgroup_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_huntgroup_proto_msgTypes[58].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListAgentTriggersRequest); i {
+			switch v := v.(*CopyHuntGroupIntegrationLinkRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5178,7 +5389,7 @@ func file_api_v1alpha1_org_huntgroup_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_huntgroup_proto_msgTypes[59].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListAgentTriggersResponse); i {
+			switch v := v.(*CopyHuntGroupIntegrationLinkResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5190,7 +5401,7 @@ func file_api_v1alpha1_org_huntgroup_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_huntgroup_proto_msgTypes[60].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CopyAgentTriggerRequest); i {
+			switch v := v.(*UpdateHuntGroupIntegrationLinksRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5202,7 +5413,7 @@ func file_api_v1alpha1_org_huntgroup_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_huntgroup_proto_msgTypes[61].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CopyAgentTriggerResponse); i {
+			switch v := v.(*UpdateHuntGroupIntegrationLinksResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5214,7 +5425,7 @@ func file_api_v1alpha1_org_huntgroup_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_huntgroup_proto_msgTypes[62].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpdateAgentTriggersRequest); i {
+			switch v := v.(*ListAgentTriggersRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5226,7 +5437,7 @@ func file_api_v1alpha1_org_huntgroup_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_huntgroup_proto_msgTypes[63].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpdateAgentTriggersResponse); i {
+			switch v := v.(*ListAgentTriggersResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5238,7 +5449,7 @@ func file_api_v1alpha1_org_huntgroup_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_huntgroup_proto_msgTypes[64].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetHuntGroupScriptRequest); i {
+			switch v := v.(*CopyAgentTriggerRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5250,7 +5461,7 @@ func file_api_v1alpha1_org_huntgroup_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_huntgroup_proto_msgTypes[65].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetHuntGroupScriptResponse); i {
+			switch v := v.(*CopyAgentTriggerResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5262,7 +5473,7 @@ func file_api_v1alpha1_org_huntgroup_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_huntgroup_proto_msgTypes[66].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CreateHuntGroupScriptRequest); i {
+			switch v := v.(*UpdateAgentTriggersRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5274,7 +5485,7 @@ func file_api_v1alpha1_org_huntgroup_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_huntgroup_proto_msgTypes[67].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CreateHuntGroupScriptResponse); i {
+			switch v := v.(*UpdateAgentTriggersResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5286,7 +5497,7 @@ func file_api_v1alpha1_org_huntgroup_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_huntgroup_proto_msgTypes[68].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpdateHuntGroupScriptRequest); i {
+			switch v := v.(*GetHuntGroupScriptRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5298,7 +5509,7 @@ func file_api_v1alpha1_org_huntgroup_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_huntgroup_proto_msgTypes[69].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpdateHuntGroupScriptResponse); i {
+			switch v := v.(*GetHuntGroupScriptResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5310,7 +5521,7 @@ func file_api_v1alpha1_org_huntgroup_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_huntgroup_proto_msgTypes[70].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DeleteHuntGroupScriptRequest); i {
+			switch v := v.(*CreateHuntGroupScriptRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5322,6 +5533,54 @@ func file_api_v1alpha1_org_huntgroup_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_huntgroup_proto_msgTypes[71].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*CreateHuntGroupScriptResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_org_huntgroup_proto_msgTypes[72].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UpdateHuntGroupScriptRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_org_huntgroup_proto_msgTypes[73].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UpdateHuntGroupScriptResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_org_huntgroup_proto_msgTypes[74].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DeleteHuntGroupScriptRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_org_huntgroup_proto_msgTypes[75].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DeleteHuntGroupScriptResponse); i {
 			case 0:
 				return &v.state
@@ -5340,7 +5599,7 @@ func file_api_v1alpha1_org_huntgroup_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_v1alpha1_org_huntgroup_proto_rawDesc,
 			NumEnums:      1,
-			NumMessages:   72,
+			NumMessages:   76,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
