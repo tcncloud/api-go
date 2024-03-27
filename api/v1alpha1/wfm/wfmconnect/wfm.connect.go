@@ -2460,7 +2460,7 @@ type WFMClient interface {
 	HelloWorldWFMAdherence(context.Context, *connect_go.Request[wfm.HelloWorldWFMAdherenceRequest]) (*connect_go.Response[wfm.HelloWorldWFMAdherenceResponse], error)
 	// List the real time agent states for published schedule and the org sending the request, starting on the given @start_datetime.
 	// If the @end_datetime is set, all agent state sequences will be returned for the range between @start_datetime and @end_datetime.
-	// If @end_datetime is not set, the agent state sequences will be returned  over a 24 hour period or until the current time, whichever is shorter.
+	// If @end_datetime is not set, the agent state sequences will be returned over a 24 hour period or until the current time, whichever is shorter.
 	// Required permissions:
 	//
 	//	PERMISSION_WFM_ADHERENCE_ADMIN, PERMISSION_WFM_ADHERENCE_MANAGER, or PERMISSION_WFM_ADHERENCE_MONITOR
@@ -6317,7 +6317,7 @@ type WFMHandler interface {
 	HelloWorldWFMAdherence(context.Context, *connect_go.Request[wfm.HelloWorldWFMAdherenceRequest]) (*connect_go.Response[wfm.HelloWorldWFMAdherenceResponse], error)
 	// List the real time agent states for published schedule and the org sending the request, starting on the given @start_datetime.
 	// If the @end_datetime is set, all agent state sequences will be returned for the range between @start_datetime and @end_datetime.
-	// If @end_datetime is not set, the agent state sequences will be returned  over a 24 hour period or until the current time, whichever is shorter.
+	// If @end_datetime is not set, the agent state sequences will be returned over a 24 hour period or until the current time, whichever is shorter.
 	// Required permissions:
 	//
 	//	PERMISSION_WFM_ADHERENCE_ADMIN, PERMISSION_WFM_ADHERENCE_MANAGER, or PERMISSION_WFM_ADHERENCE_MONITOR
