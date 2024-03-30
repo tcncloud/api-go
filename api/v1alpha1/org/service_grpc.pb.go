@@ -232,6 +232,8 @@ const (
 	Org_GetMyAllowedMfaMethods_FullMethodName                   = "/api.v1alpha1.org.Org/GetMyAllowedMfaMethods"
 	Org_CreateBusinessHours_FullMethodName                      = "/api.v1alpha1.org.Org/CreateBusinessHours"
 	Org_UpdateBusinessHours_FullMethodName                      = "/api.v1alpha1.org.Org/UpdateBusinessHours"
+	Org_AddGroupedUserIPRestrictions_FullMethodName             = "/api.v1alpha1.org.Org/AddGroupedUserIPRestrictions"
+	Org_RemoveGroupedUserIPRestrictions_FullMethodName          = "/api.v1alpha1.org.Org/RemoveGroupedUserIPRestrictions"
 )
 
 // OrgClient is the client API for Org service.
@@ -731,6 +733,12 @@ type OrgClient interface {
 	// Deprecated: Do not use.
 	// UpdateBusinessHours persists changes to times businesses are available.
 	UpdateBusinessHours(ctx context.Context, in *UpdateBusinessHoursRequest, opts ...grpc.CallOption) (*UpdateBusinessHoursResponse, error)
+	// AddGroupedUserIPRestrictions adds a user or list of user's IPs they
+	// are required to authenticate with
+	AddGroupedUserIPRestrictions(ctx context.Context, in *AddGroupedUserIPRestrictionsRequest, opts ...grpc.CallOption) (*AddGroupedUserIPRestrictionsResponse, error)
+	// RemoveGroupedUserIPRestrictions removes a user or list of user's IPs they
+	// are required to authenticate with
+	RemoveGroupedUserIPRestrictions(ctx context.Context, in *RemoveGroupedUserIPRestrictionsRequest, opts ...grpc.CallOption) (*RemoveGroupedUserIPRestrictionsResponse, error)
 }
 
 type orgClient struct {
@@ -2875,6 +2883,24 @@ func (c *orgClient) UpdateBusinessHours(ctx context.Context, in *UpdateBusinessH
 	return out, nil
 }
 
+func (c *orgClient) AddGroupedUserIPRestrictions(ctx context.Context, in *AddGroupedUserIPRestrictionsRequest, opts ...grpc.CallOption) (*AddGroupedUserIPRestrictionsResponse, error) {
+	out := new(AddGroupedUserIPRestrictionsResponse)
+	err := c.cc.Invoke(ctx, Org_AddGroupedUserIPRestrictions_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) RemoveGroupedUserIPRestrictions(ctx context.Context, in *RemoveGroupedUserIPRestrictionsRequest, opts ...grpc.CallOption) (*RemoveGroupedUserIPRestrictionsResponse, error) {
+	out := new(RemoveGroupedUserIPRestrictionsResponse)
+	err := c.cc.Invoke(ctx, Org_RemoveGroupedUserIPRestrictions_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OrgServer is the server API for Org service.
 // All implementations must embed UnimplementedOrgServer
 // for forward compatibility
@@ -3372,6 +3398,12 @@ type OrgServer interface {
 	// Deprecated: Do not use.
 	// UpdateBusinessHours persists changes to times businesses are available.
 	UpdateBusinessHours(context.Context, *UpdateBusinessHoursRequest) (*UpdateBusinessHoursResponse, error)
+	// AddGroupedUserIPRestrictions adds a user or list of user's IPs they
+	// are required to authenticate with
+	AddGroupedUserIPRestrictions(context.Context, *AddGroupedUserIPRestrictionsRequest) (*AddGroupedUserIPRestrictionsResponse, error)
+	// RemoveGroupedUserIPRestrictions removes a user or list of user's IPs they
+	// are required to authenticate with
+	RemoveGroupedUserIPRestrictions(context.Context, *RemoveGroupedUserIPRestrictionsRequest) (*RemoveGroupedUserIPRestrictionsResponse, error)
 	mustEmbedUnimplementedOrgServer()
 }
 
@@ -4017,6 +4049,12 @@ func (UnimplementedOrgServer) CreateBusinessHours(context.Context, *CreateBusine
 }
 func (UnimplementedOrgServer) UpdateBusinessHours(context.Context, *UpdateBusinessHoursRequest) (*UpdateBusinessHoursResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateBusinessHours not implemented")
+}
+func (UnimplementedOrgServer) AddGroupedUserIPRestrictions(context.Context, *AddGroupedUserIPRestrictionsRequest) (*AddGroupedUserIPRestrictionsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddGroupedUserIPRestrictions not implemented")
+}
+func (UnimplementedOrgServer) RemoveGroupedUserIPRestrictions(context.Context, *RemoveGroupedUserIPRestrictionsRequest) (*RemoveGroupedUserIPRestrictionsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RemoveGroupedUserIPRestrictions not implemented")
 }
 func (UnimplementedOrgServer) mustEmbedUnimplementedOrgServer() {}
 
@@ -7892,6 +7930,42 @@ func _Org_UpdateBusinessHours_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Org_AddGroupedUserIPRestrictions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddGroupedUserIPRestrictionsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).AddGroupedUserIPRestrictions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_AddGroupedUserIPRestrictions_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).AddGroupedUserIPRestrictions(ctx, req.(*AddGroupedUserIPRestrictionsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_RemoveGroupedUserIPRestrictions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RemoveGroupedUserIPRestrictionsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).RemoveGroupedUserIPRestrictions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_RemoveGroupedUserIPRestrictions_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).RemoveGroupedUserIPRestrictions(ctx, req.(*RemoveGroupedUserIPRestrictionsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Org_ServiceDesc is the grpc.ServiceDesc for Org service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -8714,6 +8788,14 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateBusinessHours",
 			Handler:    _Org_UpdateBusinessHours_Handler,
+		},
+		{
+			MethodName: "AddGroupedUserIPRestrictions",
+			Handler:    _Org_AddGroupedUserIPRestrictions_Handler,
+		},
+		{
+			MethodName: "RemoveGroupedUserIPRestrictions",
+			Handler:    _Org_RemoveGroupedUserIPRestrictions_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

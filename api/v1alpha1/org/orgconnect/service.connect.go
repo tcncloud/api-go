@@ -592,6 +592,12 @@ const (
 	OrgCreateBusinessHoursProcedure = "/api.v1alpha1.org.Org/CreateBusinessHours"
 	// OrgUpdateBusinessHoursProcedure is the fully-qualified name of the Org's UpdateBusinessHours RPC.
 	OrgUpdateBusinessHoursProcedure = "/api.v1alpha1.org.Org/UpdateBusinessHours"
+	// OrgAddGroupedUserIPRestrictionsProcedure is the fully-qualified name of the Org's
+	// AddGroupedUserIPRestrictions RPC.
+	OrgAddGroupedUserIPRestrictionsProcedure = "/api.v1alpha1.org.Org/AddGroupedUserIPRestrictions"
+	// OrgRemoveGroupedUserIPRestrictionsProcedure is the fully-qualified name of the Org's
+	// RemoveGroupedUserIPRestrictions RPC.
+	OrgRemoveGroupedUserIPRestrictionsProcedure = "/api.v1alpha1.org.Org/RemoveGroupedUserIPRestrictions"
 )
 
 // OrgClient is a client for the api.v1alpha1.org.Org service.
@@ -1099,6 +1105,12 @@ type OrgClient interface {
 	//
 	// Deprecated: do not use.
 	UpdateBusinessHours(context.Context, *connect_go.Request[org.UpdateBusinessHoursRequest]) (*connect_go.Response[org.UpdateBusinessHoursResponse], error)
+	// AddGroupedUserIPRestrictions adds a user or list of user's IPs they
+	// are required to authenticate with
+	AddGroupedUserIPRestrictions(context.Context, *connect_go.Request[org.AddGroupedUserIPRestrictionsRequest]) (*connect_go.Response[org.AddGroupedUserIPRestrictionsResponse], error)
+	// RemoveGroupedUserIPRestrictions removes a user or list of user's IPs they
+	// are required to authenticate with
+	RemoveGroupedUserIPRestrictions(context.Context, *connect_go.Request[org.RemoveGroupedUserIPRestrictionsRequest]) (*connect_go.Response[org.RemoveGroupedUserIPRestrictionsResponse], error)
 }
 
 // NewOrgClient constructs a client for the api.v1alpha1.org.Org service. By default, it uses the
@@ -2176,6 +2188,16 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgUpdateBusinessHoursProcedure,
 			opts...,
 		),
+		addGroupedUserIPRestrictions: connect_go.NewClient[org.AddGroupedUserIPRestrictionsRequest, org.AddGroupedUserIPRestrictionsResponse](
+			httpClient,
+			baseURL+OrgAddGroupedUserIPRestrictionsProcedure,
+			opts...,
+		),
+		removeGroupedUserIPRestrictions: connect_go.NewClient[org.RemoveGroupedUserIPRestrictionsRequest, org.RemoveGroupedUserIPRestrictionsResponse](
+			httpClient,
+			baseURL+OrgRemoveGroupedUserIPRestrictionsProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -2394,6 +2416,8 @@ type orgClient struct {
 	getMyAllowedMfaMethods                   *connect_go.Client[org.GetMyAllowedMfaMethodsRequest, org.GetMyAllowedMfaMethodsResponse]
 	createBusinessHours                      *connect_go.Client[org.CreateBusinessHoursRequest, org.CreateBusinessHoursResponse]
 	updateBusinessHours                      *connect_go.Client[org.UpdateBusinessHoursRequest, org.UpdateBusinessHoursResponse]
+	addGroupedUserIPRestrictions             *connect_go.Client[org.AddGroupedUserIPRestrictionsRequest, org.AddGroupedUserIPRestrictionsResponse]
+	removeGroupedUserIPRestrictions          *connect_go.Client[org.RemoveGroupedUserIPRestrictionsRequest, org.RemoveGroupedUserIPRestrictionsResponse]
 }
 
 // CreateOrganization calls api.v1alpha1.org.Org.CreateOrganization.
@@ -3492,6 +3516,16 @@ func (c *orgClient) UpdateBusinessHours(ctx context.Context, req *connect_go.Req
 	return c.updateBusinessHours.CallUnary(ctx, req)
 }
 
+// AddGroupedUserIPRestrictions calls api.v1alpha1.org.Org.AddGroupedUserIPRestrictions.
+func (c *orgClient) AddGroupedUserIPRestrictions(ctx context.Context, req *connect_go.Request[org.AddGroupedUserIPRestrictionsRequest]) (*connect_go.Response[org.AddGroupedUserIPRestrictionsResponse], error) {
+	return c.addGroupedUserIPRestrictions.CallUnary(ctx, req)
+}
+
+// RemoveGroupedUserIPRestrictions calls api.v1alpha1.org.Org.RemoveGroupedUserIPRestrictions.
+func (c *orgClient) RemoveGroupedUserIPRestrictions(ctx context.Context, req *connect_go.Request[org.RemoveGroupedUserIPRestrictionsRequest]) (*connect_go.Response[org.RemoveGroupedUserIPRestrictionsResponse], error) {
+	return c.removeGroupedUserIPRestrictions.CallUnary(ctx, req)
+}
+
 // OrgHandler is an implementation of the api.v1alpha1.org.Org service.
 type OrgHandler interface {
 	// CreateOrganization creates a new organization entity and enables it for the
@@ -3997,6 +4031,12 @@ type OrgHandler interface {
 	//
 	// Deprecated: do not use.
 	UpdateBusinessHours(context.Context, *connect_go.Request[org.UpdateBusinessHoursRequest]) (*connect_go.Response[org.UpdateBusinessHoursResponse], error)
+	// AddGroupedUserIPRestrictions adds a user or list of user's IPs they
+	// are required to authenticate with
+	AddGroupedUserIPRestrictions(context.Context, *connect_go.Request[org.AddGroupedUserIPRestrictionsRequest]) (*connect_go.Response[org.AddGroupedUserIPRestrictionsResponse], error)
+	// RemoveGroupedUserIPRestrictions removes a user or list of user's IPs they
+	// are required to authenticate with
+	RemoveGroupedUserIPRestrictions(context.Context, *connect_go.Request[org.RemoveGroupedUserIPRestrictionsRequest]) (*connect_go.Response[org.RemoveGroupedUserIPRestrictionsResponse], error)
 }
 
 // NewOrgHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -5070,6 +5110,16 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.UpdateBusinessHours,
 		opts...,
 	)
+	orgAddGroupedUserIPRestrictionsHandler := connect_go.NewUnaryHandler(
+		OrgAddGroupedUserIPRestrictionsProcedure,
+		svc.AddGroupedUserIPRestrictions,
+		opts...,
+	)
+	orgRemoveGroupedUserIPRestrictionsHandler := connect_go.NewUnaryHandler(
+		OrgRemoveGroupedUserIPRestrictionsProcedure,
+		svc.RemoveGroupedUserIPRestrictions,
+		opts...,
+	)
 	return "/api.v1alpha1.org.Org/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case OrgCreateOrganizationProcedure:
@@ -5498,6 +5548,10 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 			orgCreateBusinessHoursHandler.ServeHTTP(w, r)
 		case OrgUpdateBusinessHoursProcedure:
 			orgUpdateBusinessHoursHandler.ServeHTTP(w, r)
+		case OrgAddGroupedUserIPRestrictionsProcedure:
+			orgAddGroupedUserIPRestrictionsHandler.ServeHTTP(w, r)
+		case OrgRemoveGroupedUserIPRestrictionsProcedure:
+			orgRemoveGroupedUserIPRestrictionsHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -6357,4 +6411,12 @@ func (UnimplementedOrgHandler) CreateBusinessHours(context.Context, *connect_go.
 
 func (UnimplementedOrgHandler) UpdateBusinessHours(context.Context, *connect_go.Request[org.UpdateBusinessHoursRequest]) (*connect_go.Response[org.UpdateBusinessHoursResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.UpdateBusinessHours is not implemented"))
+}
+
+func (UnimplementedOrgHandler) AddGroupedUserIPRestrictions(context.Context, *connect_go.Request[org.AddGroupedUserIPRestrictionsRequest]) (*connect_go.Response[org.AddGroupedUserIPRestrictionsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.AddGroupedUserIPRestrictions is not implemented"))
+}
+
+func (UnimplementedOrgHandler) RemoveGroupedUserIPRestrictions(context.Context, *connect_go.Request[org.RemoveGroupedUserIPRestrictionsRequest]) (*connect_go.Response[org.RemoveGroupedUserIPRestrictionsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.RemoveGroupedUserIPRestrictions is not implemented"))
 }
