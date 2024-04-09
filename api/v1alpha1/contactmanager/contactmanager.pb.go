@@ -842,6 +842,173 @@ func (x *ContactManagerEntryVal) GetValue() string {
 	return ""
 }
 
+type AddContactEntryRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ContactManagerListId int64 `protobuf:"varint,1,opt,name=contact_manager_list_id,json=contactManagerListId,proto3" json:"contact_manager_list_id,omitempty"`
+	// List of entries of a given contact
+	Entry []*Entry `protobuf:"bytes,2,rep,name=entry,proto3" json:"entry,omitempty"`
+}
+
+func (x *AddContactEntryRequest) Reset() {
+	*x = AddContactEntryRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_contactmanager_contactmanager_proto_msgTypes[13]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AddContactEntryRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AddContactEntryRequest) ProtoMessage() {}
+
+func (x *AddContactEntryRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_contactmanager_contactmanager_proto_msgTypes[13]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AddContactEntryRequest.ProtoReflect.Descriptor instead.
+func (*AddContactEntryRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_contactmanager_contactmanager_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *AddContactEntryRequest) GetContactManagerListId() int64 {
+	if x != nil {
+		return x.ContactManagerListId
+	}
+	return 0
+}
+
+func (x *AddContactEntryRequest) GetEntry() []*Entry {
+	if x != nil {
+		return x.Entry
+	}
+	return nil
+}
+
+type Entry struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Name  string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Value string `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
+	Type  string `protobuf:"bytes,3,opt,name=type,proto3" json:"type,omitempty"`
+}
+
+func (x *Entry) Reset() {
+	*x = Entry{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_contactmanager_contactmanager_proto_msgTypes[14]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Entry) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Entry) ProtoMessage() {}
+
+func (x *Entry) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_contactmanager_contactmanager_proto_msgTypes[14]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Entry.ProtoReflect.Descriptor instead.
+func (*Entry) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_contactmanager_contactmanager_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *Entry) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *Entry) GetValue() string {
+	if x != nil {
+		return x.Value
+	}
+	return ""
+}
+
+func (x *Entry) GetType() string {
+	if x != nil {
+		return x.Type
+	}
+	return ""
+}
+
+type AddContactEntryResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// contact_manager_entry_list_id
+	ContactId int64 `protobuf:"varint,1,opt,name=contact_id,json=contactId,proto3" json:"contact_id,omitempty"`
+}
+
+func (x *AddContactEntryResponse) Reset() {
+	*x = AddContactEntryResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_contactmanager_contactmanager_proto_msgTypes[15]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AddContactEntryResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AddContactEntryResponse) ProtoMessage() {}
+
+func (x *AddContactEntryResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_contactmanager_contactmanager_proto_msgTypes[15]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AddContactEntryResponse.ProtoReflect.Descriptor instead.
+func (*AddContactEntryResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_contactmanager_contactmanager_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *AddContactEntryResponse) GetContactId() int64 {
+	if x != nil {
+		return x.ContactId
+	}
+	return 0
+}
+
 var File_api_v1alpha1_contactmanager_contactmanager_proto protoreflect.FileDescriptor
 
 var file_api_v1alpha1_contactmanager_contactmanager_proto_rawDesc = []byte{
@@ -993,23 +1160,40 @@ var file_api_v1alpha1_contactmanager_contactmanager_proto_rawDesc = []byte{
 	0x6e, 0x74, 0x72, 0x79, 0x56, 0x61, 0x6c, 0x12, 0x12, 0x0a, 0x04, 0x74, 0x79, 0x70, 0x65, 0x18,
 	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x74, 0x79, 0x70, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x76,
 	0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75,
-	0x65, 0x42, 0xfc, 0x01, 0x0a, 0x1f, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31,
-	0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x63, 0x6f, 0x6e, 0x74, 0x61, 0x63, 0x74, 0x6d, 0x61,
-	0x6e, 0x61, 0x67, 0x65, 0x72, 0x42, 0x13, 0x43, 0x6f, 0x6e, 0x74, 0x61, 0x63, 0x74, 0x6d, 0x61,
-	0x6e, 0x61, 0x67, 0x65, 0x72, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x36, 0x67, 0x69,
-	0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75,
-	0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61,
-	0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x63, 0x6f, 0x6e, 0x74, 0x61, 0x63, 0x74, 0x6d, 0x61, 0x6e,
-	0x61, 0x67, 0x65, 0x72, 0xa2, 0x02, 0x03, 0x41, 0x56, 0x43, 0xaa, 0x02, 0x1b, 0x41, 0x70, 0x69,
-	0x2e, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x43, 0x6f, 0x6e, 0x74, 0x61, 0x63,
-	0x74, 0x6d, 0x61, 0x6e, 0x61, 0x67, 0x65, 0x72, 0xca, 0x02, 0x1b, 0x41, 0x70, 0x69, 0x5c, 0x56,
-	0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x43, 0x6f, 0x6e, 0x74, 0x61, 0x63, 0x74, 0x6d,
-	0x61, 0x6e, 0x61, 0x67, 0x65, 0x72, 0xe2, 0x02, 0x27, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61,
-	0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x43, 0x6f, 0x6e, 0x74, 0x61, 0x63, 0x74, 0x6d, 0x61, 0x6e,
-	0x61, 0x67, 0x65, 0x72, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
-	0xea, 0x02, 0x1d, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31,
-	0x3a, 0x3a, 0x43, 0x6f, 0x6e, 0x74, 0x61, 0x63, 0x74, 0x6d, 0x61, 0x6e, 0x61, 0x67, 0x65, 0x72,
-	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x65, 0x22, 0x8d, 0x01, 0x0a, 0x16, 0x41, 0x64, 0x64, 0x43, 0x6f, 0x6e, 0x74, 0x61, 0x63, 0x74,
+	0x45, 0x6e, 0x74, 0x72, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x39, 0x0a, 0x17,
+	0x63, 0x6f, 0x6e, 0x74, 0x61, 0x63, 0x74, 0x5f, 0x6d, 0x61, 0x6e, 0x61, 0x67, 0x65, 0x72, 0x5f,
+	0x6c, 0x69, 0x73, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x42, 0x02, 0x30,
+	0x01, 0x52, 0x14, 0x63, 0x6f, 0x6e, 0x74, 0x61, 0x63, 0x74, 0x4d, 0x61, 0x6e, 0x61, 0x67, 0x65,
+	0x72, 0x4c, 0x69, 0x73, 0x74, 0x49, 0x64, 0x12, 0x38, 0x0a, 0x05, 0x65, 0x6e, 0x74, 0x72, 0x79,
+	0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x22, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61,
+	0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x63, 0x6f, 0x6e, 0x74, 0x61, 0x63, 0x74, 0x6d, 0x61, 0x6e,
+	0x61, 0x67, 0x65, 0x72, 0x2e, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x52, 0x05, 0x65, 0x6e, 0x74, 0x72,
+	0x79, 0x22, 0x45, 0x0a, 0x05, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61,
+	0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x14,
+	0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76,
+	0x61, 0x6c, 0x75, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x74, 0x79, 0x70, 0x65, 0x18, 0x03, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x04, 0x74, 0x79, 0x70, 0x65, 0x22, 0x3c, 0x0a, 0x17, 0x41, 0x64, 0x64, 0x43,
+	0x6f, 0x6e, 0x74, 0x61, 0x63, 0x74, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x12, 0x21, 0x0a, 0x0a, 0x63, 0x6f, 0x6e, 0x74, 0x61, 0x63, 0x74, 0x5f, 0x69,
+	0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x42, 0x02, 0x30, 0x01, 0x52, 0x09, 0x63, 0x6f, 0x6e,
+	0x74, 0x61, 0x63, 0x74, 0x49, 0x64, 0x42, 0xfc, 0x01, 0x0a, 0x1f, 0x63, 0x6f, 0x6d, 0x2e, 0x61,
+	0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x63, 0x6f, 0x6e, 0x74,
+	0x61, 0x63, 0x74, 0x6d, 0x61, 0x6e, 0x61, 0x67, 0x65, 0x72, 0x42, 0x13, 0x43, 0x6f, 0x6e, 0x74,
+	0x61, 0x63, 0x74, 0x6d, 0x61, 0x6e, 0x61, 0x67, 0x65, 0x72, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50,
+	0x01, 0x5a, 0x36, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63,
+	0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70,
+	0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x63, 0x6f, 0x6e, 0x74, 0x61,
+	0x63, 0x74, 0x6d, 0x61, 0x6e, 0x61, 0x67, 0x65, 0x72, 0xa2, 0x02, 0x03, 0x41, 0x56, 0x43, 0xaa,
+	0x02, 0x1b, 0x41, 0x70, 0x69, 0x2e, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x43,
+	0x6f, 0x6e, 0x74, 0x61, 0x63, 0x74, 0x6d, 0x61, 0x6e, 0x61, 0x67, 0x65, 0x72, 0xca, 0x02, 0x1b,
+	0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x43, 0x6f, 0x6e,
+	0x74, 0x61, 0x63, 0x74, 0x6d, 0x61, 0x6e, 0x61, 0x67, 0x65, 0x72, 0xe2, 0x02, 0x27, 0x41, 0x70,
+	0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x43, 0x6f, 0x6e, 0x74, 0x61,
+	0x63, 0x74, 0x6d, 0x61, 0x6e, 0x61, 0x67, 0x65, 0x72, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74,
+	0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x1d, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x56, 0x31, 0x61,
+	0x6c, 0x70, 0x68, 0x61, 0x31, 0x3a, 0x3a, 0x43, 0x6f, 0x6e, 0x74, 0x61, 0x63, 0x74, 0x6d, 0x61,
+	0x6e, 0x61, 0x67, 0x65, 0x72, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1024,7 +1208,7 @@ func file_api_v1alpha1_contactmanager_contactmanager_proto_rawDescGZIP() []byte 
 	return file_api_v1alpha1_contactmanager_contactmanager_proto_rawDescData
 }
 
-var file_api_v1alpha1_contactmanager_contactmanager_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
+var file_api_v1alpha1_contactmanager_contactmanager_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
 var file_api_v1alpha1_contactmanager_contactmanager_proto_goTypes = []interface{}{
 	(*GetContactListRequest)(nil),          // 0: api.v1alpha1.contactmanager.GetContactListRequest
 	(*GetContactListResponse)(nil),         // 1: api.v1alpha1.contactmanager.GetContactListResponse
@@ -1039,30 +1223,34 @@ var file_api_v1alpha1_contactmanager_contactmanager_proto_goTypes = []interface{
 	(*ContactManagerEntry)(nil),            // 10: api.v1alpha1.contactmanager.ContactManagerEntry
 	(*ContactManagerList)(nil),             // 11: api.v1alpha1.contactmanager.ContactManagerList
 	(*ContactManagerEntryVal)(nil),         // 12: api.v1alpha1.contactmanager.ContactManagerEntryVal
-	(*fieldmaskpb.FieldMask)(nil),          // 13: google.protobuf.FieldMask
-	(*commons.ContactManagerList)(nil),     // 14: api.commons.ContactManagerList
-	(*commons.ContactManagerEntry)(nil),    // 15: api.commons.ContactManagerEntry
-	(*commons.ContactManagerEntryVal)(nil), // 16: api.commons.ContactManagerEntryVal
-	(*timestamppb.Timestamp)(nil),          // 17: google.protobuf.Timestamp
+	(*AddContactEntryRequest)(nil),         // 13: api.v1alpha1.contactmanager.AddContactEntryRequest
+	(*Entry)(nil),                          // 14: api.v1alpha1.contactmanager.Entry
+	(*AddContactEntryResponse)(nil),        // 15: api.v1alpha1.contactmanager.AddContactEntryResponse
+	(*fieldmaskpb.FieldMask)(nil),          // 16: google.protobuf.FieldMask
+	(*commons.ContactManagerList)(nil),     // 17: api.commons.ContactManagerList
+	(*commons.ContactManagerEntry)(nil),    // 18: api.commons.ContactManagerEntry
+	(*commons.ContactManagerEntryVal)(nil), // 19: api.commons.ContactManagerEntryVal
+	(*timestamppb.Timestamp)(nil),          // 20: google.protobuf.Timestamp
 }
 var file_api_v1alpha1_contactmanager_contactmanager_proto_depIdxs = []int32{
-	13, // 0: api.v1alpha1.contactmanager.GetContactListRequest.request_mask:type_name -> google.protobuf.FieldMask
-	14, // 1: api.v1alpha1.contactmanager.GetContactListResponse.contact_list:type_name -> api.commons.ContactManagerList
+	16, // 0: api.v1alpha1.contactmanager.GetContactListRequest.request_mask:type_name -> google.protobuf.FieldMask
+	17, // 1: api.v1alpha1.contactmanager.GetContactListResponse.contact_list:type_name -> api.commons.ContactManagerList
 	11, // 2: api.v1alpha1.contactmanager.GetContactListResponse.contact_manager_list:type_name -> api.v1alpha1.contactmanager.ContactManagerList
-	15, // 3: api.v1alpha1.contactmanager.ListContactEntryListResponse.contact_entry:type_name -> api.commons.ContactManagerEntry
+	18, // 3: api.v1alpha1.contactmanager.ListContactEntryListResponse.contact_entry:type_name -> api.commons.ContactManagerEntry
 	10, // 4: api.v1alpha1.contactmanager.ListContactEntryListResponse.contact_manager_entry:type_name -> api.v1alpha1.contactmanager.ContactManagerEntry
-	15, // 5: api.v1alpha1.contactmanager.GetEncContactEntryResponse.contact_entry:type_name -> api.commons.ContactManagerEntry
+	18, // 5: api.v1alpha1.contactmanager.GetEncContactEntryResponse.contact_entry:type_name -> api.commons.ContactManagerEntry
 	10, // 6: api.v1alpha1.contactmanager.GetEncContactEntryResponse.contact_manager_entry:type_name -> api.v1alpha1.contactmanager.ContactManagerEntry
-	16, // 7: api.v1alpha1.contactmanager.GetKYCEncContactEntryRequest.entry_val:type_name -> api.commons.ContactManagerEntryVal
+	19, // 7: api.v1alpha1.contactmanager.GetKYCEncContactEntryRequest.entry_val:type_name -> api.commons.ContactManagerEntryVal
 	12, // 8: api.v1alpha1.contactmanager.GetKYCEncContactEntryRequest.kyc_response:type_name -> api.v1alpha1.contactmanager.ContactManagerEntryVal
 	10, // 9: api.v1alpha1.contactmanager.GetKYCEncContactEntryResponse.contact_entry:type_name -> api.v1alpha1.contactmanager.ContactManagerEntry
-	17, // 10: api.v1alpha1.contactmanager.ContactManagerEntry.date_created:type_name -> google.protobuf.Timestamp
-	17, // 11: api.v1alpha1.contactmanager.ContactManagerList.date_created:type_name -> google.protobuf.Timestamp
-	12, // [12:12] is the sub-list for method output_type
-	12, // [12:12] is the sub-list for method input_type
-	12, // [12:12] is the sub-list for extension type_name
-	12, // [12:12] is the sub-list for extension extendee
-	0,  // [0:12] is the sub-list for field type_name
+	20, // 10: api.v1alpha1.contactmanager.ContactManagerEntry.date_created:type_name -> google.protobuf.Timestamp
+	20, // 11: api.v1alpha1.contactmanager.ContactManagerList.date_created:type_name -> google.protobuf.Timestamp
+	14, // 12: api.v1alpha1.contactmanager.AddContactEntryRequest.entry:type_name -> api.v1alpha1.contactmanager.Entry
+	13, // [13:13] is the sub-list for method output_type
+	13, // [13:13] is the sub-list for method input_type
+	13, // [13:13] is the sub-list for extension type_name
+	13, // [13:13] is the sub-list for extension extendee
+	0,  // [0:13] is the sub-list for field type_name
 }
 
 func init() { file_api_v1alpha1_contactmanager_contactmanager_proto_init() }
@@ -1227,6 +1415,42 @@ func file_api_v1alpha1_contactmanager_contactmanager_proto_init() {
 				return nil
 			}
 		}
+		file_api_v1alpha1_contactmanager_contactmanager_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AddContactEntryRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_contactmanager_contactmanager_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Entry); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_contactmanager_contactmanager_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AddContactEntryResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -1234,7 +1458,7 @@ func file_api_v1alpha1_contactmanager_contactmanager_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_v1alpha1_contactmanager_contactmanager_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   13,
+			NumMessages:   16,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

@@ -24,6 +24,7 @@ const (
 	ContactManager_GetEncContactEntry_FullMethodName    = "/api.v1alpha1.contactmanager.ContactManager/GetEncContactEntry"
 	ContactManager_GetKYCEncContactEntry_FullMethodName = "/api.v1alpha1.contactmanager.ContactManager/GetKYCEncContactEntry"
 	ContactManager_GetKYCKeys_FullMethodName            = "/api.v1alpha1.contactmanager.ContactManager/GetKYCKeys"
+	ContactManager_AddContactEntry_FullMethodName       = "/api.v1alpha1.contactmanager.ContactManager/AddContactEntry"
 )
 
 // ContactManagerClient is the client API for ContactManager service.
@@ -35,6 +36,9 @@ type ContactManagerClient interface {
 	GetEncContactEntry(ctx context.Context, in *GetEncContactEntryRequest, opts ...grpc.CallOption) (*GetEncContactEntryResponse, error)
 	GetKYCEncContactEntry(ctx context.Context, in *GetKYCEncContactEntryRequest, opts ...grpc.CallOption) (*GetKYCEncContactEntryResponse, error)
 	GetKYCKeys(ctx context.Context, in *GetKYCKeysRequest, opts ...grpc.CallOption) (*GetKYCKeysResponse, error)
+	// *
+	// Adds a new contact entry based on the provided request.
+	AddContactEntry(ctx context.Context, in *AddContactEntryRequest, opts ...grpc.CallOption) (*AddContactEntryResponse, error)
 }
 
 type contactManagerClient struct {
@@ -90,6 +94,15 @@ func (c *contactManagerClient) GetKYCKeys(ctx context.Context, in *GetKYCKeysReq
 	return out, nil
 }
 
+func (c *contactManagerClient) AddContactEntry(ctx context.Context, in *AddContactEntryRequest, opts ...grpc.CallOption) (*AddContactEntryResponse, error) {
+	out := new(AddContactEntryResponse)
+	err := c.cc.Invoke(ctx, ContactManager_AddContactEntry_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ContactManagerServer is the server API for ContactManager service.
 // All implementations must embed UnimplementedContactManagerServer
 // for forward compatibility
@@ -99,6 +112,9 @@ type ContactManagerServer interface {
 	GetEncContactEntry(context.Context, *GetEncContactEntryRequest) (*GetEncContactEntryResponse, error)
 	GetKYCEncContactEntry(context.Context, *GetKYCEncContactEntryRequest) (*GetKYCEncContactEntryResponse, error)
 	GetKYCKeys(context.Context, *GetKYCKeysRequest) (*GetKYCKeysResponse, error)
+	// *
+	// Adds a new contact entry based on the provided request.
+	AddContactEntry(context.Context, *AddContactEntryRequest) (*AddContactEntryResponse, error)
 	mustEmbedUnimplementedContactManagerServer()
 }
 
@@ -120,6 +136,9 @@ func (UnimplementedContactManagerServer) GetKYCEncContactEntry(context.Context, 
 }
 func (UnimplementedContactManagerServer) GetKYCKeys(context.Context, *GetKYCKeysRequest) (*GetKYCKeysResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetKYCKeys not implemented")
+}
+func (UnimplementedContactManagerServer) AddContactEntry(context.Context, *AddContactEntryRequest) (*AddContactEntryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddContactEntry not implemented")
 }
 func (UnimplementedContactManagerServer) mustEmbedUnimplementedContactManagerServer() {}
 
@@ -224,6 +243,24 @@ func _ContactManager_GetKYCKeys_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ContactManager_AddContactEntry_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddContactEntryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ContactManagerServer).AddContactEntry(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ContactManager_AddContactEntry_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ContactManagerServer).AddContactEntry(ctx, req.(*AddContactEntryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ContactManager_ServiceDesc is the grpc.ServiceDesc for ContactManager service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -250,6 +287,10 @@ var ContactManager_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetKYCKeys",
 			Handler:    _ContactManager_GetKYCKeys_Handler,
+		},
+		{
+			MethodName: "AddContactEntry",
+			Handler:    _ContactManager_AddContactEntry_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

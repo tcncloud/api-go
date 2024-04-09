@@ -48,6 +48,9 @@ const (
 	// ContactManagerGetKYCKeysProcedure is the fully-qualified name of the ContactManager's GetKYCKeys
 	// RPC.
 	ContactManagerGetKYCKeysProcedure = "/api.v1alpha1.contactmanager.ContactManager/GetKYCKeys"
+	// ContactManagerAddContactEntryProcedure is the fully-qualified name of the ContactManager's
+	// AddContactEntry RPC.
+	ContactManagerAddContactEntryProcedure = "/api.v1alpha1.contactmanager.ContactManager/AddContactEntry"
 )
 
 // ContactManagerClient is a client for the api.v1alpha1.contactmanager.ContactManager service.
@@ -57,6 +60,9 @@ type ContactManagerClient interface {
 	GetEncContactEntry(context.Context, *connect_go.Request[contactmanager.GetEncContactEntryRequest]) (*connect_go.Response[contactmanager.GetEncContactEntryResponse], error)
 	GetKYCEncContactEntry(context.Context, *connect_go.Request[contactmanager.GetKYCEncContactEntryRequest]) (*connect_go.Response[contactmanager.GetKYCEncContactEntryResponse], error)
 	GetKYCKeys(context.Context, *connect_go.Request[contactmanager.GetKYCKeysRequest]) (*connect_go.Response[contactmanager.GetKYCKeysResponse], error)
+	// *
+	// Adds a new contact entry based on the provided request.
+	AddContactEntry(context.Context, *connect_go.Request[contactmanager.AddContactEntryRequest]) (*connect_go.Response[contactmanager.AddContactEntryResponse], error)
 }
 
 // NewContactManagerClient constructs a client for the api.v1alpha1.contactmanager.ContactManager
@@ -94,6 +100,11 @@ func NewContactManagerClient(httpClient connect_go.HTTPClient, baseURL string, o
 			baseURL+ContactManagerGetKYCKeysProcedure,
 			opts...,
 		),
+		addContactEntry: connect_go.NewClient[contactmanager.AddContactEntryRequest, contactmanager.AddContactEntryResponse](
+			httpClient,
+			baseURL+ContactManagerAddContactEntryProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -104,6 +115,7 @@ type contactManagerClient struct {
 	getEncContactEntry    *connect_go.Client[contactmanager.GetEncContactEntryRequest, contactmanager.GetEncContactEntryResponse]
 	getKYCEncContactEntry *connect_go.Client[contactmanager.GetKYCEncContactEntryRequest, contactmanager.GetKYCEncContactEntryResponse]
 	getKYCKeys            *connect_go.Client[contactmanager.GetKYCKeysRequest, contactmanager.GetKYCKeysResponse]
+	addContactEntry       *connect_go.Client[contactmanager.AddContactEntryRequest, contactmanager.AddContactEntryResponse]
 }
 
 // GetContactList calls api.v1alpha1.contactmanager.ContactManager.GetContactList.
@@ -131,6 +143,11 @@ func (c *contactManagerClient) GetKYCKeys(ctx context.Context, req *connect_go.R
 	return c.getKYCKeys.CallUnary(ctx, req)
 }
 
+// AddContactEntry calls api.v1alpha1.contactmanager.ContactManager.AddContactEntry.
+func (c *contactManagerClient) AddContactEntry(ctx context.Context, req *connect_go.Request[contactmanager.AddContactEntryRequest]) (*connect_go.Response[contactmanager.AddContactEntryResponse], error) {
+	return c.addContactEntry.CallUnary(ctx, req)
+}
+
 // ContactManagerHandler is an implementation of the api.v1alpha1.contactmanager.ContactManager
 // service.
 type ContactManagerHandler interface {
@@ -139,6 +156,9 @@ type ContactManagerHandler interface {
 	GetEncContactEntry(context.Context, *connect_go.Request[contactmanager.GetEncContactEntryRequest]) (*connect_go.Response[contactmanager.GetEncContactEntryResponse], error)
 	GetKYCEncContactEntry(context.Context, *connect_go.Request[contactmanager.GetKYCEncContactEntryRequest]) (*connect_go.Response[contactmanager.GetKYCEncContactEntryResponse], error)
 	GetKYCKeys(context.Context, *connect_go.Request[contactmanager.GetKYCKeysRequest]) (*connect_go.Response[contactmanager.GetKYCKeysResponse], error)
+	// *
+	// Adds a new contact entry based on the provided request.
+	AddContactEntry(context.Context, *connect_go.Request[contactmanager.AddContactEntryRequest]) (*connect_go.Response[contactmanager.AddContactEntryResponse], error)
 }
 
 // NewContactManagerHandler builds an HTTP handler from the service implementation. It returns the
@@ -172,6 +192,11 @@ func NewContactManagerHandler(svc ContactManagerHandler, opts ...connect_go.Hand
 		svc.GetKYCKeys,
 		opts...,
 	)
+	contactManagerAddContactEntryHandler := connect_go.NewUnaryHandler(
+		ContactManagerAddContactEntryProcedure,
+		svc.AddContactEntry,
+		opts...,
+	)
 	return "/api.v1alpha1.contactmanager.ContactManager/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case ContactManagerGetContactListProcedure:
@@ -184,6 +209,8 @@ func NewContactManagerHandler(svc ContactManagerHandler, opts ...connect_go.Hand
 			contactManagerGetKYCEncContactEntryHandler.ServeHTTP(w, r)
 		case ContactManagerGetKYCKeysProcedure:
 			contactManagerGetKYCKeysHandler.ServeHTTP(w, r)
+		case ContactManagerAddContactEntryProcedure:
+			contactManagerAddContactEntryHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -211,4 +238,8 @@ func (UnimplementedContactManagerHandler) GetKYCEncContactEntry(context.Context,
 
 func (UnimplementedContactManagerHandler) GetKYCKeys(context.Context, *connect_go.Request[contactmanager.GetKYCKeysRequest]) (*connect_go.Response[contactmanager.GetKYCKeysResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.contactmanager.ContactManager.GetKYCKeys is not implemented"))
+}
+
+func (UnimplementedContactManagerHandler) AddContactEntry(context.Context, *connect_go.Request[contactmanager.AddContactEntryRequest]) (*connect_go.Response[contactmanager.AddContactEntryResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.contactmanager.ContactManager.AddContactEntry is not implemented"))
 }
