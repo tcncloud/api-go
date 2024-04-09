@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion7
 const (
 	Insights_CreateInsight_FullMethodName        = "/api.v1alpha1.insights.Insights/CreateInsight"
 	Insights_ListInsights_FullMethodName         = "/api.v1alpha1.insights.Insights/ListInsights"
+	Insights_ListOrgInsights_FullMethodName      = "/api.v1alpha1.insights.Insights/ListOrgInsights"
 	Insights_UpdateInsight_FullMethodName        = "/api.v1alpha1.insights.Insights/UpdateInsight"
 	Insights_DeleteInsight_FullMethodName        = "/api.v1alpha1.insights.Insights/DeleteInsight"
 	Insights_GetInsight_FullMethodName           = "/api.v1alpha1.insights.Insights/GetInsight"
@@ -41,6 +42,8 @@ type InsightsClient interface {
 	CreateInsight(ctx context.Context, in *CreateInsightRequest, opts ...grpc.CallOption) (*CreateInsightResponse, error)
 	// ListInsights lists insights
 	ListInsights(ctx context.Context, in *ListInsightsRequest, opts ...grpc.CallOption) (*ListInsightsResponse, error)
+	// ListOrgInsights lists insights for an org. Used for support app.
+	ListOrgInsights(ctx context.Context, in *ListOrgInsightsRequest, opts ...grpc.CallOption) (*ListOrgInsightsResponse, error)
 	// UpdateInsight updates an existing insight
 	UpdateInsight(ctx context.Context, in *UpdateInsightRequest, opts ...grpc.CallOption) (*UpdateInsightResponse, error)
 	// DeleteInsight deletes a insight
@@ -83,6 +86,15 @@ func (c *insightsClient) CreateInsight(ctx context.Context, in *CreateInsightReq
 func (c *insightsClient) ListInsights(ctx context.Context, in *ListInsightsRequest, opts ...grpc.CallOption) (*ListInsightsResponse, error) {
 	out := new(ListInsightsResponse)
 	err := c.cc.Invoke(ctx, Insights_ListInsights_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *insightsClient) ListOrgInsights(ctx context.Context, in *ListOrgInsightsRequest, opts ...grpc.CallOption) (*ListOrgInsightsResponse, error) {
+	out := new(ListOrgInsightsResponse)
+	err := c.cc.Invoke(ctx, Insights_ListOrgInsights_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -187,6 +199,8 @@ type InsightsServer interface {
 	CreateInsight(context.Context, *CreateInsightRequest) (*CreateInsightResponse, error)
 	// ListInsights lists insights
 	ListInsights(context.Context, *ListInsightsRequest) (*ListInsightsResponse, error)
+	// ListOrgInsights lists insights for an org. Used for support app.
+	ListOrgInsights(context.Context, *ListOrgInsightsRequest) (*ListOrgInsightsResponse, error)
 	// UpdateInsight updates an existing insight
 	UpdateInsight(context.Context, *UpdateInsightRequest) (*UpdateInsightResponse, error)
 	// DeleteInsight deletes a insight
@@ -219,6 +233,9 @@ func (UnimplementedInsightsServer) CreateInsight(context.Context, *CreateInsight
 }
 func (UnimplementedInsightsServer) ListInsights(context.Context, *ListInsightsRequest) (*ListInsightsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListInsights not implemented")
+}
+func (UnimplementedInsightsServer) ListOrgInsights(context.Context, *ListOrgInsightsRequest) (*ListOrgInsightsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListOrgInsights not implemented")
 }
 func (UnimplementedInsightsServer) UpdateInsight(context.Context, *UpdateInsightRequest) (*UpdateInsightResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateInsight not implemented")
@@ -295,6 +312,24 @@ func _Insights_ListInsights_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(InsightsServer).ListInsights(ctx, req.(*ListInsightsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Insights_ListOrgInsights_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListOrgInsightsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InsightsServer).ListOrgInsights(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Insights_ListOrgInsights_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InsightsServer).ListOrgInsights(ctx, req.(*ListOrgInsightsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -493,6 +528,10 @@ var Insights_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListInsights",
 			Handler:    _Insights_ListInsights_Handler,
+		},
+		{
+			MethodName: "ListOrgInsights",
+			Handler:    _Insights_ListOrgInsights_Handler,
 		},
 		{
 			MethodName: "UpdateInsight",

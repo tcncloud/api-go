@@ -37,6 +37,9 @@ const (
 	InsightsCreateInsightProcedure = "/api.v1alpha1.insights.Insights/CreateInsight"
 	// InsightsListInsightsProcedure is the fully-qualified name of the Insights's ListInsights RPC.
 	InsightsListInsightsProcedure = "/api.v1alpha1.insights.Insights/ListInsights"
+	// InsightsListOrgInsightsProcedure is the fully-qualified name of the Insights's ListOrgInsights
+	// RPC.
+	InsightsListOrgInsightsProcedure = "/api.v1alpha1.insights.Insights/ListOrgInsights"
 	// InsightsUpdateInsightProcedure is the fully-qualified name of the Insights's UpdateInsight RPC.
 	InsightsUpdateInsightProcedure = "/api.v1alpha1.insights.Insights/UpdateInsight"
 	// InsightsDeleteInsightProcedure is the fully-qualified name of the Insights's DeleteInsight RPC.
@@ -68,6 +71,8 @@ type InsightsClient interface {
 	CreateInsight(context.Context, *connect_go.Request[insights.CreateInsightRequest]) (*connect_go.Response[insights.CreateInsightResponse], error)
 	// ListInsights lists insights
 	ListInsights(context.Context, *connect_go.Request[insights.ListInsightsRequest]) (*connect_go.Response[insights.ListInsightsResponse], error)
+	// ListOrgInsights lists insights for an org. Used for support app.
+	ListOrgInsights(context.Context, *connect_go.Request[insights.ListOrgInsightsRequest]) (*connect_go.Response[insights.ListOrgInsightsResponse], error)
 	// UpdateInsight updates an existing insight
 	UpdateInsight(context.Context, *connect_go.Request[insights.UpdateInsightRequest]) (*connect_go.Response[insights.UpdateInsightResponse], error)
 	// DeleteInsight deletes a insight
@@ -108,6 +113,11 @@ func NewInsightsClient(httpClient connect_go.HTTPClient, baseURL string, opts ..
 		listInsights: connect_go.NewClient[insights.ListInsightsRequest, insights.ListInsightsResponse](
 			httpClient,
 			baseURL+InsightsListInsightsProcedure,
+			opts...,
+		),
+		listOrgInsights: connect_go.NewClient[insights.ListOrgInsightsRequest, insights.ListOrgInsightsResponse](
+			httpClient,
+			baseURL+InsightsListOrgInsightsProcedure,
 			opts...,
 		),
 		updateInsight: connect_go.NewClient[insights.UpdateInsightRequest, insights.UpdateInsightResponse](
@@ -167,6 +177,7 @@ func NewInsightsClient(httpClient connect_go.HTTPClient, baseURL string, opts ..
 type insightsClient struct {
 	createInsight        *connect_go.Client[insights.CreateInsightRequest, insights.CreateInsightResponse]
 	listInsights         *connect_go.Client[insights.ListInsightsRequest, insights.ListInsightsResponse]
+	listOrgInsights      *connect_go.Client[insights.ListOrgInsightsRequest, insights.ListOrgInsightsResponse]
 	updateInsight        *connect_go.Client[insights.UpdateInsightRequest, insights.UpdateInsightResponse]
 	deleteInsight        *connect_go.Client[insights.DeleteInsightRequest, insights.DeleteInsightResponse]
 	getInsight           *connect_go.Client[insights.GetInsightRequest, insights.GetInsightResponse]
@@ -187,6 +198,11 @@ func (c *insightsClient) CreateInsight(ctx context.Context, req *connect_go.Requ
 // ListInsights calls api.v1alpha1.insights.Insights.ListInsights.
 func (c *insightsClient) ListInsights(ctx context.Context, req *connect_go.Request[insights.ListInsightsRequest]) (*connect_go.Response[insights.ListInsightsResponse], error) {
 	return c.listInsights.CallUnary(ctx, req)
+}
+
+// ListOrgInsights calls api.v1alpha1.insights.Insights.ListOrgInsights.
+func (c *insightsClient) ListOrgInsights(ctx context.Context, req *connect_go.Request[insights.ListOrgInsightsRequest]) (*connect_go.Response[insights.ListOrgInsightsResponse], error) {
+	return c.listOrgInsights.CallUnary(ctx, req)
 }
 
 // UpdateInsight calls api.v1alpha1.insights.Insights.UpdateInsight.
@@ -245,6 +261,8 @@ type InsightsHandler interface {
 	CreateInsight(context.Context, *connect_go.Request[insights.CreateInsightRequest]) (*connect_go.Response[insights.CreateInsightResponse], error)
 	// ListInsights lists insights
 	ListInsights(context.Context, *connect_go.Request[insights.ListInsightsRequest]) (*connect_go.Response[insights.ListInsightsResponse], error)
+	// ListOrgInsights lists insights for an org. Used for support app.
+	ListOrgInsights(context.Context, *connect_go.Request[insights.ListOrgInsightsRequest]) (*connect_go.Response[insights.ListOrgInsightsResponse], error)
 	// UpdateInsight updates an existing insight
 	UpdateInsight(context.Context, *connect_go.Request[insights.UpdateInsightRequest]) (*connect_go.Response[insights.UpdateInsightResponse], error)
 	// DeleteInsight deletes a insight
@@ -281,6 +299,11 @@ func NewInsightsHandler(svc InsightsHandler, opts ...connect_go.HandlerOption) (
 	insightsListInsightsHandler := connect_go.NewUnaryHandler(
 		InsightsListInsightsProcedure,
 		svc.ListInsights,
+		opts...,
+	)
+	insightsListOrgInsightsHandler := connect_go.NewUnaryHandler(
+		InsightsListOrgInsightsProcedure,
+		svc.ListOrgInsights,
 		opts...,
 	)
 	insightsUpdateInsightHandler := connect_go.NewUnaryHandler(
@@ -339,6 +362,8 @@ func NewInsightsHandler(svc InsightsHandler, opts ...connect_go.HandlerOption) (
 			insightsCreateInsightHandler.ServeHTTP(w, r)
 		case InsightsListInsightsProcedure:
 			insightsListInsightsHandler.ServeHTTP(w, r)
+		case InsightsListOrgInsightsProcedure:
+			insightsListOrgInsightsHandler.ServeHTTP(w, r)
 		case InsightsUpdateInsightProcedure:
 			insightsUpdateInsightHandler.ServeHTTP(w, r)
 		case InsightsDeleteInsightProcedure:
@@ -374,6 +399,10 @@ func (UnimplementedInsightsHandler) CreateInsight(context.Context, *connect_go.R
 
 func (UnimplementedInsightsHandler) ListInsights(context.Context, *connect_go.Request[insights.ListInsightsRequest]) (*connect_go.Response[insights.ListInsightsResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.insights.Insights.ListInsights is not implemented"))
+}
+
+func (UnimplementedInsightsHandler) ListOrgInsights(context.Context, *connect_go.Request[insights.ListOrgInsightsRequest]) (*connect_go.Response[insights.ListOrgInsightsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.insights.Insights.ListOrgInsights is not implemented"))
 }
 
 func (UnimplementedInsightsHandler) UpdateInsight(context.Context, *connect_go.Request[insights.UpdateInsightRequest]) (*connect_go.Response[insights.UpdateInsightResponse], error) {
