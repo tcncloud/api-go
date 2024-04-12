@@ -42,6 +42,8 @@ const (
 	PortalManagerApi_ListFlowFieldNames_FullMethodName              = "/api.v1alpha1.integrations.PortalManagerApi/ListFlowFieldNames"
 	PortalManagerApi_ListAvailableVerificationFields_FullMethodName = "/api.v1alpha1.integrations.PortalManagerApi/ListAvailableVerificationFields"
 	PortalManagerApi_ListAvailablePaymentFields_FullMethodName      = "/api.v1alpha1.integrations.PortalManagerApi/ListAvailablePaymentFields"
+	PortalManagerApi_ListPortalTypes_FullMethodName                 = "/api.v1alpha1.integrations.PortalManagerApi/ListPortalTypes"
+	PortalManagerApi_ListPortalWorkflows_FullMethodName             = "/api.v1alpha1.integrations.PortalManagerApi/ListPortalWorkflows"
 )
 
 // PortalManagerApiClient is the client API for PortalManagerApi service.
@@ -76,6 +78,8 @@ type PortalManagerApiClient interface {
 	ListAvailableVerificationFields(ctx context.Context, in *ListAvailableVerificationFieldsReq, opts ...grpc.CallOption) (*ListAvailableVerificationFieldsRes, error)
 	// returns the default form fields for payment flow
 	ListAvailablePaymentFields(ctx context.Context, in *ListAvailablePaymentFieldsReq, opts ...grpc.CallOption) (*ListAvailablePaymentFieldsRes, error)
+	ListPortalTypes(ctx context.Context, in *ListPortalTypesReq, opts ...grpc.CallOption) (*ListPortalTypesResponse, error)
+	ListPortalWorkflows(ctx context.Context, in *ListPortalWorkflowsReq, opts ...grpc.CallOption) (*ListPortalWorkflowsResponse, error)
 }
 
 type portalManagerApiClient struct {
@@ -293,6 +297,24 @@ func (c *portalManagerApiClient) ListAvailablePaymentFields(ctx context.Context,
 	return out, nil
 }
 
+func (c *portalManagerApiClient) ListPortalTypes(ctx context.Context, in *ListPortalTypesReq, opts ...grpc.CallOption) (*ListPortalTypesResponse, error) {
+	out := new(ListPortalTypesResponse)
+	err := c.cc.Invoke(ctx, PortalManagerApi_ListPortalTypes_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *portalManagerApiClient) ListPortalWorkflows(ctx context.Context, in *ListPortalWorkflowsReq, opts ...grpc.CallOption) (*ListPortalWorkflowsResponse, error) {
+	out := new(ListPortalWorkflowsResponse)
+	err := c.cc.Invoke(ctx, PortalManagerApi_ListPortalWorkflows_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PortalManagerApiServer is the server API for PortalManagerApi service.
 // All implementations must embed UnimplementedPortalManagerApiServer
 // for forward compatibility
@@ -325,6 +347,8 @@ type PortalManagerApiServer interface {
 	ListAvailableVerificationFields(context.Context, *ListAvailableVerificationFieldsReq) (*ListAvailableVerificationFieldsRes, error)
 	// returns the default form fields for payment flow
 	ListAvailablePaymentFields(context.Context, *ListAvailablePaymentFieldsReq) (*ListAvailablePaymentFieldsRes, error)
+	ListPortalTypes(context.Context, *ListPortalTypesReq) (*ListPortalTypesResponse, error)
+	ListPortalWorkflows(context.Context, *ListPortalWorkflowsReq) (*ListPortalWorkflowsResponse, error)
 	mustEmbedUnimplementedPortalManagerApiServer()
 }
 
@@ -400,6 +424,12 @@ func (UnimplementedPortalManagerApiServer) ListAvailableVerificationFields(conte
 }
 func (UnimplementedPortalManagerApiServer) ListAvailablePaymentFields(context.Context, *ListAvailablePaymentFieldsReq) (*ListAvailablePaymentFieldsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAvailablePaymentFields not implemented")
+}
+func (UnimplementedPortalManagerApiServer) ListPortalTypes(context.Context, *ListPortalTypesReq) (*ListPortalTypesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListPortalTypes not implemented")
+}
+func (UnimplementedPortalManagerApiServer) ListPortalWorkflows(context.Context, *ListPortalWorkflowsReq) (*ListPortalWorkflowsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListPortalWorkflows not implemented")
 }
 func (UnimplementedPortalManagerApiServer) mustEmbedUnimplementedPortalManagerApiServer() {}
 
@@ -828,6 +858,42 @@ func _PortalManagerApi_ListAvailablePaymentFields_Handler(srv interface{}, ctx c
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PortalManagerApi_ListPortalTypes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListPortalTypesReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PortalManagerApiServer).ListPortalTypes(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PortalManagerApi_ListPortalTypes_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PortalManagerApiServer).ListPortalTypes(ctx, req.(*ListPortalTypesReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PortalManagerApi_ListPortalWorkflows_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListPortalWorkflowsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PortalManagerApiServer).ListPortalWorkflows(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PortalManagerApi_ListPortalWorkflows_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PortalManagerApiServer).ListPortalWorkflows(ctx, req.(*ListPortalWorkflowsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // PortalManagerApi_ServiceDesc is the grpc.ServiceDesc for PortalManagerApi service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -926,6 +992,14 @@ var PortalManagerApi_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListAvailablePaymentFields",
 			Handler:    _PortalManagerApi_ListAvailablePaymentFields_Handler,
+		},
+		{
+			MethodName: "ListPortalTypes",
+			Handler:    _PortalManagerApi_ListPortalTypes_Handler,
+		},
+		{
+			MethodName: "ListPortalWorkflows",
+			Handler:    _PortalManagerApi_ListPortalWorkflows_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
