@@ -134,6 +134,8 @@ type BillingServiceClient interface {
 	//   - grpc.NotFound: The specified billing plan doesn't exist.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	//
+	// Deprecated: do not use.
 	CommitBillingPlan(context.Context, *connect_go.Request[v1alpha1.CommitBillingPlanRequest]) (*connect_go.Response[v1alpha1.CommitBillingPlanResponse], error)
 	// Commits a default billing plan for the REGION, finalizing it's creation and allowing it
 	// to become active.
@@ -149,6 +151,8 @@ type BillingServiceClient interface {
 	//   - grpc.NotFound: The specified default billing plan doesn't exist.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
+	//
+	// Deprecated: do not use.
 	CommitDefaultBillingPlan(context.Context, *connect_go.Request[v1alpha1.CommitDefaultBillingPlanRequest]) (*connect_go.Response[v1alpha1.CommitDefaultBillingPlanResponse], error)
 	// Creates a billing plan for the ORG.
 	// Required permissions:
@@ -160,6 +164,8 @@ type BillingServiceClient interface {
 	//   - grpc.InvalidArgument: The request is invalid.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	//
+	// Deprecated: do not use.
 	CreateBillingPlan(context.Context, *connect_go.Request[v1alpha1.CreateBillingPlanRequest]) (*connect_go.Response[v1alpha1.CreateBillingPlanResponse], error)
 	// Creates the default billing plan for the REGION.
 	// Required permissions:
@@ -172,6 +178,8 @@ type BillingServiceClient interface {
 	//   - grpc.InvalidArgument: The request is invalid.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
+	//
+	// Deprecated: do not use.
 	CreateDefaultBillingPlan(context.Context, *connect_go.Request[v1alpha1.CreateDefaultBillingPlanRequest]) (*connect_go.Response[v1alpha1.CreateDefaultBillingPlanResponse], error)
 	// Creates a default rate definition for a default billing plan for the REGION.
 	// Required permissions:
@@ -226,6 +234,8 @@ type BillingServiceClient interface {
 	//   - grpc.NotFound: The specified billing plan doesn't exist.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	//
+	// Deprecated: do not use.
 	DeleteBillingPlan(context.Context, *connect_go.Request[v1alpha1.DeleteBillingPlanRequest]) (*connect_go.Response[v1alpha1.DeleteBillingPlanResponse], error)
 	// Deletes an inactive default billing plan for the REGION. A billing plan is inactive
 	// if it hasn't started.
@@ -241,6 +251,8 @@ type BillingServiceClient interface {
 	//   - grpc.NotFound: The default billing plan doesn't exist.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
+	//
+	// Deprecated: do not use.
 	DeleteDefaultBillingPlan(context.Context, *connect_go.Request[v1alpha1.DeleteDefaultBillingPlanRequest]) (*connect_go.Response[v1alpha1.DeleteDefaultBillingPlanResponse], error)
 	// Deletes a rate definition from the default billing plan for the REGION.
 	//   - The default billing plan must be inactive.
@@ -298,6 +310,8 @@ type BillingServiceClient interface {
 	//   - grpc.NotFound: The specified billing plan doesn't exist.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	//
+	// Deprecated: do not use.
 	DuplicateBillingPlan(context.Context, *connect_go.Request[v1alpha1.DuplicateBillingPlanRequest]) (*connect_go.Response[v1alpha1.DuplicateBillingPlanResponse], error)
 	// Duplicates a default billing plan. This copies the billing plan, all of its rate definitions,
 	// and all of its rate definition groups and features.
@@ -312,6 +326,8 @@ type BillingServiceClient interface {
 	//   - grpc.NotFound: The specified billing plan doesn't exist.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	//
+	// Deprecated: do not use.
 	DuplicateDefaultBillingPlan(context.Context, *connect_go.Request[v1alpha1.DuplicateDefaultBillingPlanRequest]) (*connect_go.Response[v1alpha1.DuplicateDefaultBillingPlanResponse], error)
 	// Exports an invoice.
 	// Required permissions:
@@ -338,6 +354,8 @@ type BillingServiceClient interface {
 	//   - grpc.NotFound: There isn't an active billing plan.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	//
+	// Deprecated: do not use.
 	GetActiveBillingPlan(context.Context, *connect_go.Request[v1alpha1.GetActiveBillingPlanRequest]) (*connect_go.Response[v1alpha1.GetActiveBillingPlanResponse], error)
 	// Returns the specified billing plan.
 	// Required permissions:
@@ -350,6 +368,8 @@ type BillingServiceClient interface {
 	//   - grpc.NotFound: The specified billing plan doesn't exist.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	//
+	// Deprecated: do not use.
 	GetBillingPlan(context.Context, *connect_go.Request[v1alpha1.GetBillingPlanRequest]) (*connect_go.Response[v1alpha1.GetBillingPlanResponse], error)
 	// Returns the billing plan history for the ORG or REGION.
 	// Required permissions:
@@ -361,6 +381,8 @@ type BillingServiceClient interface {
 	//   - grpc.InvalidArgument: The request is invalid.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
+	//
+	// Deprecated: do not use.
 	GetBillingPlanHistory(context.Context, *connect_go.Request[v1alpha1.GetBillingPlanHistoryRequest]) (*connect_go.Response[v1alpha1.GetBillingPlanHistoryResponse], error)
 	// Returns the specified invoice.
 	// Required permissions:
@@ -398,6 +420,8 @@ type BillingServiceClient interface {
 	//   - grpc.InvalidArgument: The request is invalid.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	//
+	// Deprecated: do not use.
 	ListBillingPlans(context.Context, *connect_go.Request[v1alpha1.ListBillingPlansRequest]) (*connect_go.Response[v1alpha1.ListBillingPlansResponse], error)
 	// Lists invoices.
 	// Required permissions:
@@ -435,6 +459,8 @@ type BillingServiceClient interface {
 	//   - grpc.NotFound: The specified billing plan doesn't exist.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	//
+	// Deprecated: do not use.
 	UpdateBillingPlan(context.Context, *connect_go.Request[v1alpha1.UpdateBillingPlanRequest]) (*connect_go.Response[v1alpha1.UpdateBillingPlanResponse], error)
 	// Updates an inactive default billing plan for the REGION. A billing plan is inactive
 	// if it hasn't started.
@@ -449,6 +475,8 @@ type BillingServiceClient interface {
 	//   - grpc.InvalidArgument: The request is invalid.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	//
+	// Deprecated: do not use.
 	UpdateDefaultBillingPlan(context.Context, *connect_go.Request[v1alpha1.UpdateDefaultBillingPlanRequest]) (*connect_go.Response[v1alpha1.UpdateDefaultBillingPlanResponse], error)
 	// Updates a default rate definition.
 	//   - The billing plan must be inactive.
@@ -682,21 +710,29 @@ type billingServiceClient struct {
 }
 
 // CommitBillingPlan calls services.billing.v1alpha1.BillingService.CommitBillingPlan.
+//
+// Deprecated: do not use.
 func (c *billingServiceClient) CommitBillingPlan(ctx context.Context, req *connect_go.Request[v1alpha1.CommitBillingPlanRequest]) (*connect_go.Response[v1alpha1.CommitBillingPlanResponse], error) {
 	return c.commitBillingPlan.CallUnary(ctx, req)
 }
 
 // CommitDefaultBillingPlan calls services.billing.v1alpha1.BillingService.CommitDefaultBillingPlan.
+//
+// Deprecated: do not use.
 func (c *billingServiceClient) CommitDefaultBillingPlan(ctx context.Context, req *connect_go.Request[v1alpha1.CommitDefaultBillingPlanRequest]) (*connect_go.Response[v1alpha1.CommitDefaultBillingPlanResponse], error) {
 	return c.commitDefaultBillingPlan.CallUnary(ctx, req)
 }
 
 // CreateBillingPlan calls services.billing.v1alpha1.BillingService.CreateBillingPlan.
+//
+// Deprecated: do not use.
 func (c *billingServiceClient) CreateBillingPlan(ctx context.Context, req *connect_go.Request[v1alpha1.CreateBillingPlanRequest]) (*connect_go.Response[v1alpha1.CreateBillingPlanResponse], error) {
 	return c.createBillingPlan.CallUnary(ctx, req)
 }
 
 // CreateDefaultBillingPlan calls services.billing.v1alpha1.BillingService.CreateDefaultBillingPlan.
+//
+// Deprecated: do not use.
 func (c *billingServiceClient) CreateDefaultBillingPlan(ctx context.Context, req *connect_go.Request[v1alpha1.CreateDefaultBillingPlanRequest]) (*connect_go.Response[v1alpha1.CreateDefaultBillingPlanResponse], error) {
 	return c.createDefaultBillingPlan.CallUnary(ctx, req)
 }
@@ -720,11 +756,15 @@ func (c *billingServiceClient) CreateRateDefinition(ctx context.Context, req *co
 }
 
 // DeleteBillingPlan calls services.billing.v1alpha1.BillingService.DeleteBillingPlan.
+//
+// Deprecated: do not use.
 func (c *billingServiceClient) DeleteBillingPlan(ctx context.Context, req *connect_go.Request[v1alpha1.DeleteBillingPlanRequest]) (*connect_go.Response[v1alpha1.DeleteBillingPlanResponse], error) {
 	return c.deleteBillingPlan.CallUnary(ctx, req)
 }
 
 // DeleteDefaultBillingPlan calls services.billing.v1alpha1.BillingService.DeleteDefaultBillingPlan.
+//
+// Deprecated: do not use.
 func (c *billingServiceClient) DeleteDefaultBillingPlan(ctx context.Context, req *connect_go.Request[v1alpha1.DeleteDefaultBillingPlanRequest]) (*connect_go.Response[v1alpha1.DeleteDefaultBillingPlanResponse], error) {
 	return c.deleteDefaultBillingPlan.CallUnary(ctx, req)
 }
@@ -748,12 +788,16 @@ func (c *billingServiceClient) DeleteRateDefinition(ctx context.Context, req *co
 }
 
 // DuplicateBillingPlan calls services.billing.v1alpha1.BillingService.DuplicateBillingPlan.
+//
+// Deprecated: do not use.
 func (c *billingServiceClient) DuplicateBillingPlan(ctx context.Context, req *connect_go.Request[v1alpha1.DuplicateBillingPlanRequest]) (*connect_go.Response[v1alpha1.DuplicateBillingPlanResponse], error) {
 	return c.duplicateBillingPlan.CallUnary(ctx, req)
 }
 
 // DuplicateDefaultBillingPlan calls
 // services.billing.v1alpha1.BillingService.DuplicateDefaultBillingPlan.
+//
+// Deprecated: do not use.
 func (c *billingServiceClient) DuplicateDefaultBillingPlan(ctx context.Context, req *connect_go.Request[v1alpha1.DuplicateDefaultBillingPlanRequest]) (*connect_go.Response[v1alpha1.DuplicateDefaultBillingPlanResponse], error) {
 	return c.duplicateDefaultBillingPlan.CallUnary(ctx, req)
 }
@@ -764,16 +808,22 @@ func (c *billingServiceClient) ExportInvoice(ctx context.Context, req *connect_g
 }
 
 // GetActiveBillingPlan calls services.billing.v1alpha1.BillingService.GetActiveBillingPlan.
+//
+// Deprecated: do not use.
 func (c *billingServiceClient) GetActiveBillingPlan(ctx context.Context, req *connect_go.Request[v1alpha1.GetActiveBillingPlanRequest]) (*connect_go.Response[v1alpha1.GetActiveBillingPlanResponse], error) {
 	return c.getActiveBillingPlan.CallUnary(ctx, req)
 }
 
 // GetBillingPlan calls services.billing.v1alpha1.BillingService.GetBillingPlan.
+//
+// Deprecated: do not use.
 func (c *billingServiceClient) GetBillingPlan(ctx context.Context, req *connect_go.Request[v1alpha1.GetBillingPlanRequest]) (*connect_go.Response[v1alpha1.GetBillingPlanResponse], error) {
 	return c.getBillingPlan.CallUnary(ctx, req)
 }
 
 // GetBillingPlanHistory calls services.billing.v1alpha1.BillingService.GetBillingPlanHistory.
+//
+// Deprecated: do not use.
 func (c *billingServiceClient) GetBillingPlanHistory(ctx context.Context, req *connect_go.Request[v1alpha1.GetBillingPlanHistoryRequest]) (*connect_go.Response[v1alpha1.GetBillingPlanHistoryResponse], error) {
 	return c.getBillingPlanHistory.CallUnary(ctx, req)
 }
@@ -791,6 +841,8 @@ func (c *billingServiceClient) GetRateDefinition(ctx context.Context, req *conne
 }
 
 // ListBillingPlans calls services.billing.v1alpha1.BillingService.ListBillingPlans.
+//
+// Deprecated: do not use.
 func (c *billingServiceClient) ListBillingPlans(ctx context.Context, req *connect_go.Request[v1alpha1.ListBillingPlansRequest]) (*connect_go.Response[v1alpha1.ListBillingPlansResponse], error) {
 	return c.listBillingPlans.CallUnary(ctx, req)
 }
@@ -808,11 +860,15 @@ func (c *billingServiceClient) ListRateDefinitions(ctx context.Context, req *con
 }
 
 // UpdateBillingPlan calls services.billing.v1alpha1.BillingService.UpdateBillingPlan.
+//
+// Deprecated: do not use.
 func (c *billingServiceClient) UpdateBillingPlan(ctx context.Context, req *connect_go.Request[v1alpha1.UpdateBillingPlanRequest]) (*connect_go.Response[v1alpha1.UpdateBillingPlanResponse], error) {
 	return c.updateBillingPlan.CallUnary(ctx, req)
 }
 
 // UpdateDefaultBillingPlan calls services.billing.v1alpha1.BillingService.UpdateDefaultBillingPlan.
+//
+// Deprecated: do not use.
 func (c *billingServiceClient) UpdateDefaultBillingPlan(ctx context.Context, req *connect_go.Request[v1alpha1.UpdateDefaultBillingPlanRequest]) (*connect_go.Response[v1alpha1.UpdateDefaultBillingPlanResponse], error) {
 	return c.updateDefaultBillingPlan.CallUnary(ctx, req)
 }
@@ -851,6 +907,8 @@ type BillingServiceHandler interface {
 	//   - grpc.NotFound: The specified billing plan doesn't exist.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	//
+	// Deprecated: do not use.
 	CommitBillingPlan(context.Context, *connect_go.Request[v1alpha1.CommitBillingPlanRequest]) (*connect_go.Response[v1alpha1.CommitBillingPlanResponse], error)
 	// Commits a default billing plan for the REGION, finalizing it's creation and allowing it
 	// to become active.
@@ -866,6 +924,8 @@ type BillingServiceHandler interface {
 	//   - grpc.NotFound: The specified default billing plan doesn't exist.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
+	//
+	// Deprecated: do not use.
 	CommitDefaultBillingPlan(context.Context, *connect_go.Request[v1alpha1.CommitDefaultBillingPlanRequest]) (*connect_go.Response[v1alpha1.CommitDefaultBillingPlanResponse], error)
 	// Creates a billing plan for the ORG.
 	// Required permissions:
@@ -877,6 +937,8 @@ type BillingServiceHandler interface {
 	//   - grpc.InvalidArgument: The request is invalid.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	//
+	// Deprecated: do not use.
 	CreateBillingPlan(context.Context, *connect_go.Request[v1alpha1.CreateBillingPlanRequest]) (*connect_go.Response[v1alpha1.CreateBillingPlanResponse], error)
 	// Creates the default billing plan for the REGION.
 	// Required permissions:
@@ -889,6 +951,8 @@ type BillingServiceHandler interface {
 	//   - grpc.InvalidArgument: The request is invalid.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
+	//
+	// Deprecated: do not use.
 	CreateDefaultBillingPlan(context.Context, *connect_go.Request[v1alpha1.CreateDefaultBillingPlanRequest]) (*connect_go.Response[v1alpha1.CreateDefaultBillingPlanResponse], error)
 	// Creates a default rate definition for a default billing plan for the REGION.
 	// Required permissions:
@@ -943,6 +1007,8 @@ type BillingServiceHandler interface {
 	//   - grpc.NotFound: The specified billing plan doesn't exist.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	//
+	// Deprecated: do not use.
 	DeleteBillingPlan(context.Context, *connect_go.Request[v1alpha1.DeleteBillingPlanRequest]) (*connect_go.Response[v1alpha1.DeleteBillingPlanResponse], error)
 	// Deletes an inactive default billing plan for the REGION. A billing plan is inactive
 	// if it hasn't started.
@@ -958,6 +1024,8 @@ type BillingServiceHandler interface {
 	//   - grpc.NotFound: The default billing plan doesn't exist.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
+	//
+	// Deprecated: do not use.
 	DeleteDefaultBillingPlan(context.Context, *connect_go.Request[v1alpha1.DeleteDefaultBillingPlanRequest]) (*connect_go.Response[v1alpha1.DeleteDefaultBillingPlanResponse], error)
 	// Deletes a rate definition from the default billing plan for the REGION.
 	//   - The default billing plan must be inactive.
@@ -1015,6 +1083,8 @@ type BillingServiceHandler interface {
 	//   - grpc.NotFound: The specified billing plan doesn't exist.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	//
+	// Deprecated: do not use.
 	DuplicateBillingPlan(context.Context, *connect_go.Request[v1alpha1.DuplicateBillingPlanRequest]) (*connect_go.Response[v1alpha1.DuplicateBillingPlanResponse], error)
 	// Duplicates a default billing plan. This copies the billing plan, all of its rate definitions,
 	// and all of its rate definition groups and features.
@@ -1029,6 +1099,8 @@ type BillingServiceHandler interface {
 	//   - grpc.NotFound: The specified billing plan doesn't exist.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	//
+	// Deprecated: do not use.
 	DuplicateDefaultBillingPlan(context.Context, *connect_go.Request[v1alpha1.DuplicateDefaultBillingPlanRequest]) (*connect_go.Response[v1alpha1.DuplicateDefaultBillingPlanResponse], error)
 	// Exports an invoice.
 	// Required permissions:
@@ -1055,6 +1127,8 @@ type BillingServiceHandler interface {
 	//   - grpc.NotFound: There isn't an active billing plan.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	//
+	// Deprecated: do not use.
 	GetActiveBillingPlan(context.Context, *connect_go.Request[v1alpha1.GetActiveBillingPlanRequest]) (*connect_go.Response[v1alpha1.GetActiveBillingPlanResponse], error)
 	// Returns the specified billing plan.
 	// Required permissions:
@@ -1067,6 +1141,8 @@ type BillingServiceHandler interface {
 	//   - grpc.NotFound: The specified billing plan doesn't exist.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	//
+	// Deprecated: do not use.
 	GetBillingPlan(context.Context, *connect_go.Request[v1alpha1.GetBillingPlanRequest]) (*connect_go.Response[v1alpha1.GetBillingPlanResponse], error)
 	// Returns the billing plan history for the ORG or REGION.
 	// Required permissions:
@@ -1078,6 +1154,8 @@ type BillingServiceHandler interface {
 	//   - grpc.InvalidArgument: The request is invalid.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
+	//
+	// Deprecated: do not use.
 	GetBillingPlanHistory(context.Context, *connect_go.Request[v1alpha1.GetBillingPlanHistoryRequest]) (*connect_go.Response[v1alpha1.GetBillingPlanHistoryResponse], error)
 	// Returns the specified invoice.
 	// Required permissions:
@@ -1115,6 +1193,8 @@ type BillingServiceHandler interface {
 	//   - grpc.InvalidArgument: The request is invalid.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	//
+	// Deprecated: do not use.
 	ListBillingPlans(context.Context, *connect_go.Request[v1alpha1.ListBillingPlansRequest]) (*connect_go.Response[v1alpha1.ListBillingPlansResponse], error)
 	// Lists invoices.
 	// Required permissions:
@@ -1152,6 +1232,8 @@ type BillingServiceHandler interface {
 	//   - grpc.NotFound: The specified billing plan doesn't exist.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	//
+	// Deprecated: do not use.
 	UpdateBillingPlan(context.Context, *connect_go.Request[v1alpha1.UpdateBillingPlanRequest]) (*connect_go.Response[v1alpha1.UpdateBillingPlanResponse], error)
 	// Updates an inactive default billing plan for the REGION. A billing plan is inactive
 	// if it hasn't started.
@@ -1166,6 +1248,8 @@ type BillingServiceHandler interface {
 	//   - grpc.InvalidArgument: The request is invalid.
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	//
+	// Deprecated: do not use.
 	UpdateDefaultBillingPlan(context.Context, *connect_go.Request[v1alpha1.UpdateDefaultBillingPlanRequest]) (*connect_go.Response[v1alpha1.UpdateDefaultBillingPlanResponse], error)
 	// Updates a default rate definition.
 	//   - The billing plan must be inactive.

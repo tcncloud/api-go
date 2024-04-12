@@ -53,6 +53,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type BillingServiceClient interface {
+	// Deprecated: Do not use.
 	// Commits a billing plan for the ORG, finalizing it's creation and allowing it
 	// to become active.
 	// Required permissions:
@@ -67,6 +68,7 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	CommitBillingPlan(ctx context.Context, in *CommitBillingPlanRequest, opts ...grpc.CallOption) (*CommitBillingPlanResponse, error)
+	// Deprecated: Do not use.
 	// Commits a default billing plan for the REGION, finalizing it's creation and allowing it
 	// to become active.
 	// Required permissions:
@@ -82,6 +84,7 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
 	CommitDefaultBillingPlan(ctx context.Context, in *CommitDefaultBillingPlanRequest, opts ...grpc.CallOption) (*CommitDefaultBillingPlanResponse, error)
+	// Deprecated: Do not use.
 	// Creates a billing plan for the ORG.
 	// Required permissions:
 	//
@@ -93,6 +96,7 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	CreateBillingPlan(ctx context.Context, in *CreateBillingPlanRequest, opts ...grpc.CallOption) (*CreateBillingPlanResponse, error)
+	// Deprecated: Do not use.
 	// Creates the default billing plan for the REGION.
 	// Required permissions:
 	//
@@ -145,6 +149,7 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	CreateRateDefinition(ctx context.Context, in *CreateRateDefinitionRequest, opts ...grpc.CallOption) (*CreateRateDefinitionResponse, error)
+	// Deprecated: Do not use.
 	// Deletes an inactive billing plan. A billing plan is inactive if it hasn't started.
 	// Required permissions:
 	//
@@ -158,6 +163,7 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	DeleteBillingPlan(ctx context.Context, in *DeleteBillingPlanRequest, opts ...grpc.CallOption) (*DeleteBillingPlanResponse, error)
+	// Deprecated: Do not use.
 	// Deletes an inactive default billing plan for the REGION. A billing plan is inactive
 	// if it hasn't started.
 	// Required permissions:
@@ -217,6 +223,7 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	DeleteRateDefinition(ctx context.Context, in *DeleteRateDefinitionRequest, opts ...grpc.CallOption) (*DeleteRateDefinitionResponse, error)
+	// Deprecated: Do not use.
 	// Duplicates a billing plan. This copies the billing plan and all of its rate definitions.
 	// Required permissions:
 	//
@@ -229,6 +236,7 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	DuplicateBillingPlan(ctx context.Context, in *DuplicateBillingPlanRequest, opts ...grpc.CallOption) (*DuplicateBillingPlanResponse, error)
+	// Deprecated: Do not use.
 	// Duplicates a default billing plan. This copies the billing plan, all of its rate definitions,
 	// and all of its rate definition groups and features.
 	// Required permissions:
@@ -254,6 +262,7 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	ExportInvoice(ctx context.Context, in *ExportInvoiceRequest, opts ...grpc.CallOption) (*ExportInvoiceResponse, error)
+	// Deprecated: Do not use.
 	// Returns the active billing plan for the ORG or REGION. The active billing plan is a billing plan
 	// whose start_time has passed and end_time has not passed. If multiple satisfy that requirement, the
 	// newest one is considered active. If no plan is active, it indicates the ORG is using REGION defaults,
@@ -269,6 +278,7 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	GetActiveBillingPlan(ctx context.Context, in *GetActiveBillingPlanRequest, opts ...grpc.CallOption) (*GetActiveBillingPlanResponse, error)
+	// Deprecated: Do not use.
 	// Returns the specified billing plan.
 	// Required permissions:
 	//
@@ -281,6 +291,7 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	GetBillingPlan(ctx context.Context, in *GetBillingPlanRequest, opts ...grpc.CallOption) (*GetBillingPlanResponse, error)
+	// Deprecated: Do not use.
 	// Returns the billing plan history for the ORG or REGION.
 	// Required permissions:
 	//
@@ -317,6 +328,7 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
 	GetRateDefinition(ctx context.Context, in *GetRateDefinitionRequest, opts ...grpc.CallOption) (*GetRateDefinitionResponse, error)
+	// Deprecated: Do not use.
 	// Lists billing plans.
 	// Required permissions:
 	//
@@ -351,6 +363,7 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
 	ListRateDefinitions(ctx context.Context, in *ListRateDefinitionsRequest, opts ...grpc.CallOption) (*ListRateDefinitionsResponse, error)
+	// Deprecated: Do not use.
 	// Updates an inactive billing plan. A billing plan is inactive if it hasn't started.
 	// Required permissions:
 	//
@@ -364,6 +377,7 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	UpdateBillingPlan(ctx context.Context, in *UpdateBillingPlanRequest, opts ...grpc.CallOption) (*UpdateBillingPlanResponse, error)
+	// Deprecated: Do not use.
 	// Updates an inactive default billing plan for the REGION. A billing plan is inactive
 	// if it hasn't started.
 	// Required permissions:
@@ -431,6 +445,7 @@ func NewBillingServiceClient(cc grpc.ClientConnInterface) BillingServiceClient {
 	return &billingServiceClient{cc}
 }
 
+// Deprecated: Do not use.
 func (c *billingServiceClient) CommitBillingPlan(ctx context.Context, in *CommitBillingPlanRequest, opts ...grpc.CallOption) (*CommitBillingPlanResponse, error) {
 	out := new(CommitBillingPlanResponse)
 	err := c.cc.Invoke(ctx, BillingService_CommitBillingPlan_FullMethodName, in, out, opts...)
@@ -440,6 +455,7 @@ func (c *billingServiceClient) CommitBillingPlan(ctx context.Context, in *Commit
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *billingServiceClient) CommitDefaultBillingPlan(ctx context.Context, in *CommitDefaultBillingPlanRequest, opts ...grpc.CallOption) (*CommitDefaultBillingPlanResponse, error) {
 	out := new(CommitDefaultBillingPlanResponse)
 	err := c.cc.Invoke(ctx, BillingService_CommitDefaultBillingPlan_FullMethodName, in, out, opts...)
@@ -449,6 +465,7 @@ func (c *billingServiceClient) CommitDefaultBillingPlan(ctx context.Context, in 
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *billingServiceClient) CreateBillingPlan(ctx context.Context, in *CreateBillingPlanRequest, opts ...grpc.CallOption) (*CreateBillingPlanResponse, error) {
 	out := new(CreateBillingPlanResponse)
 	err := c.cc.Invoke(ctx, BillingService_CreateBillingPlan_FullMethodName, in, out, opts...)
@@ -458,6 +475,7 @@ func (c *billingServiceClient) CreateBillingPlan(ctx context.Context, in *Create
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *billingServiceClient) CreateDefaultBillingPlan(ctx context.Context, in *CreateDefaultBillingPlanRequest, opts ...grpc.CallOption) (*CreateDefaultBillingPlanResponse, error) {
 	out := new(CreateDefaultBillingPlanResponse)
 	err := c.cc.Invoke(ctx, BillingService_CreateDefaultBillingPlan_FullMethodName, in, out, opts...)
@@ -495,6 +513,7 @@ func (c *billingServiceClient) CreateRateDefinition(ctx context.Context, in *Cre
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *billingServiceClient) DeleteBillingPlan(ctx context.Context, in *DeleteBillingPlanRequest, opts ...grpc.CallOption) (*DeleteBillingPlanResponse, error) {
 	out := new(DeleteBillingPlanResponse)
 	err := c.cc.Invoke(ctx, BillingService_DeleteBillingPlan_FullMethodName, in, out, opts...)
@@ -504,6 +523,7 @@ func (c *billingServiceClient) DeleteBillingPlan(ctx context.Context, in *Delete
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *billingServiceClient) DeleteDefaultBillingPlan(ctx context.Context, in *DeleteDefaultBillingPlanRequest, opts ...grpc.CallOption) (*DeleteDefaultBillingPlanResponse, error) {
 	out := new(DeleteDefaultBillingPlanResponse)
 	err := c.cc.Invoke(ctx, BillingService_DeleteDefaultBillingPlan_FullMethodName, in, out, opts...)
@@ -541,6 +561,7 @@ func (c *billingServiceClient) DeleteRateDefinition(ctx context.Context, in *Del
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *billingServiceClient) DuplicateBillingPlan(ctx context.Context, in *DuplicateBillingPlanRequest, opts ...grpc.CallOption) (*DuplicateBillingPlanResponse, error) {
 	out := new(DuplicateBillingPlanResponse)
 	err := c.cc.Invoke(ctx, BillingService_DuplicateBillingPlan_FullMethodName, in, out, opts...)
@@ -550,6 +571,7 @@ func (c *billingServiceClient) DuplicateBillingPlan(ctx context.Context, in *Dup
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *billingServiceClient) DuplicateDefaultBillingPlan(ctx context.Context, in *DuplicateDefaultBillingPlanRequest, opts ...grpc.CallOption) (*DuplicateDefaultBillingPlanResponse, error) {
 	out := new(DuplicateDefaultBillingPlanResponse)
 	err := c.cc.Invoke(ctx, BillingService_DuplicateDefaultBillingPlan_FullMethodName, in, out, opts...)
@@ -568,6 +590,7 @@ func (c *billingServiceClient) ExportInvoice(ctx context.Context, in *ExportInvo
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *billingServiceClient) GetActiveBillingPlan(ctx context.Context, in *GetActiveBillingPlanRequest, opts ...grpc.CallOption) (*GetActiveBillingPlanResponse, error) {
 	out := new(GetActiveBillingPlanResponse)
 	err := c.cc.Invoke(ctx, BillingService_GetActiveBillingPlan_FullMethodName, in, out, opts...)
@@ -577,6 +600,7 @@ func (c *billingServiceClient) GetActiveBillingPlan(ctx context.Context, in *Get
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *billingServiceClient) GetBillingPlan(ctx context.Context, in *GetBillingPlanRequest, opts ...grpc.CallOption) (*GetBillingPlanResponse, error) {
 	out := new(GetBillingPlanResponse)
 	err := c.cc.Invoke(ctx, BillingService_GetBillingPlan_FullMethodName, in, out, opts...)
@@ -586,6 +610,7 @@ func (c *billingServiceClient) GetBillingPlan(ctx context.Context, in *GetBillin
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *billingServiceClient) GetBillingPlanHistory(ctx context.Context, in *GetBillingPlanHistoryRequest, opts ...grpc.CallOption) (*GetBillingPlanHistoryResponse, error) {
 	out := new(GetBillingPlanHistoryResponse)
 	err := c.cc.Invoke(ctx, BillingService_GetBillingPlanHistory_FullMethodName, in, out, opts...)
@@ -614,6 +639,7 @@ func (c *billingServiceClient) GetRateDefinition(ctx context.Context, in *GetRat
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *billingServiceClient) ListBillingPlans(ctx context.Context, in *ListBillingPlansRequest, opts ...grpc.CallOption) (*ListBillingPlansResponse, error) {
 	out := new(ListBillingPlansResponse)
 	err := c.cc.Invoke(ctx, BillingService_ListBillingPlans_FullMethodName, in, out, opts...)
@@ -642,6 +668,7 @@ func (c *billingServiceClient) ListRateDefinitions(ctx context.Context, in *List
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *billingServiceClient) UpdateBillingPlan(ctx context.Context, in *UpdateBillingPlanRequest, opts ...grpc.CallOption) (*UpdateBillingPlanResponse, error) {
 	out := new(UpdateBillingPlanResponse)
 	err := c.cc.Invoke(ctx, BillingService_UpdateBillingPlan_FullMethodName, in, out, opts...)
@@ -651,6 +678,7 @@ func (c *billingServiceClient) UpdateBillingPlan(ctx context.Context, in *Update
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *billingServiceClient) UpdateDefaultBillingPlan(ctx context.Context, in *UpdateDefaultBillingPlanRequest, opts ...grpc.CallOption) (*UpdateDefaultBillingPlanResponse, error) {
 	out := new(UpdateDefaultBillingPlanResponse)
 	err := c.cc.Invoke(ctx, BillingService_UpdateDefaultBillingPlan_FullMethodName, in, out, opts...)
@@ -692,6 +720,7 @@ func (c *billingServiceClient) UpdateRateDefinition(ctx context.Context, in *Upd
 // All implementations must embed UnimplementedBillingServiceServer
 // for forward compatibility
 type BillingServiceServer interface {
+	// Deprecated: Do not use.
 	// Commits a billing plan for the ORG, finalizing it's creation and allowing it
 	// to become active.
 	// Required permissions:
@@ -706,6 +735,7 @@ type BillingServiceServer interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	CommitBillingPlan(context.Context, *CommitBillingPlanRequest) (*CommitBillingPlanResponse, error)
+	// Deprecated: Do not use.
 	// Commits a default billing plan for the REGION, finalizing it's creation and allowing it
 	// to become active.
 	// Required permissions:
@@ -721,6 +751,7 @@ type BillingServiceServer interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
 	CommitDefaultBillingPlan(context.Context, *CommitDefaultBillingPlanRequest) (*CommitDefaultBillingPlanResponse, error)
+	// Deprecated: Do not use.
 	// Creates a billing plan for the ORG.
 	// Required permissions:
 	//
@@ -732,6 +763,7 @@ type BillingServiceServer interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	CreateBillingPlan(context.Context, *CreateBillingPlanRequest) (*CreateBillingPlanResponse, error)
+	// Deprecated: Do not use.
 	// Creates the default billing plan for the REGION.
 	// Required permissions:
 	//
@@ -784,6 +816,7 @@ type BillingServiceServer interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	CreateRateDefinition(context.Context, *CreateRateDefinitionRequest) (*CreateRateDefinitionResponse, error)
+	// Deprecated: Do not use.
 	// Deletes an inactive billing plan. A billing plan is inactive if it hasn't started.
 	// Required permissions:
 	//
@@ -797,6 +830,7 @@ type BillingServiceServer interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	DeleteBillingPlan(context.Context, *DeleteBillingPlanRequest) (*DeleteBillingPlanResponse, error)
+	// Deprecated: Do not use.
 	// Deletes an inactive default billing plan for the REGION. A billing plan is inactive
 	// if it hasn't started.
 	// Required permissions:
@@ -856,6 +890,7 @@ type BillingServiceServer interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	DeleteRateDefinition(context.Context, *DeleteRateDefinitionRequest) (*DeleteRateDefinitionResponse, error)
+	// Deprecated: Do not use.
 	// Duplicates a billing plan. This copies the billing plan and all of its rate definitions.
 	// Required permissions:
 	//
@@ -868,6 +903,7 @@ type BillingServiceServer interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	DuplicateBillingPlan(context.Context, *DuplicateBillingPlanRequest) (*DuplicateBillingPlanResponse, error)
+	// Deprecated: Do not use.
 	// Duplicates a default billing plan. This copies the billing plan, all of its rate definitions,
 	// and all of its rate definition groups and features.
 	// Required permissions:
@@ -893,6 +929,7 @@ type BillingServiceServer interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	ExportInvoice(context.Context, *ExportInvoiceRequest) (*ExportInvoiceResponse, error)
+	// Deprecated: Do not use.
 	// Returns the active billing plan for the ORG or REGION. The active billing plan is a billing plan
 	// whose start_time has passed and end_time has not passed. If multiple satisfy that requirement, the
 	// newest one is considered active. If no plan is active, it indicates the ORG is using REGION defaults,
@@ -908,6 +945,7 @@ type BillingServiceServer interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	GetActiveBillingPlan(context.Context, *GetActiveBillingPlanRequest) (*GetActiveBillingPlanResponse, error)
+	// Deprecated: Do not use.
 	// Returns the specified billing plan.
 	// Required permissions:
 	//
@@ -920,6 +958,7 @@ type BillingServiceServer interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	GetBillingPlan(context.Context, *GetBillingPlanRequest) (*GetBillingPlanResponse, error)
+	// Deprecated: Do not use.
 	// Returns the billing plan history for the ORG or REGION.
 	// Required permissions:
 	//
@@ -956,6 +995,7 @@ type BillingServiceServer interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
 	GetRateDefinition(context.Context, *GetRateDefinitionRequest) (*GetRateDefinitionResponse, error)
+	// Deprecated: Do not use.
 	// Lists billing plans.
 	// Required permissions:
 	//
@@ -990,6 +1030,7 @@ type BillingServiceServer interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
 	ListRateDefinitions(context.Context, *ListRateDefinitionsRequest) (*ListRateDefinitionsResponse, error)
+	// Deprecated: Do not use.
 	// Updates an inactive billing plan. A billing plan is inactive if it hasn't started.
 	// Required permissions:
 	//
@@ -1003,6 +1044,7 @@ type BillingServiceServer interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	UpdateBillingPlan(context.Context, *UpdateBillingPlanRequest) (*UpdateBillingPlanResponse, error)
+	// Deprecated: Do not use.
 	// Updates an inactive default billing plan for the REGION. A billing plan is inactive
 	// if it hasn't started.
 	// Required permissions:
