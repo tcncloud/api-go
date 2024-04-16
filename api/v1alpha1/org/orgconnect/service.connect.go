@@ -598,6 +598,8 @@ const (
 	// OrgRemoveGroupedUserIPRestrictionsProcedure is the fully-qualified name of the Org's
 	// RemoveGroupedUserIPRestrictions RPC.
 	OrgRemoveGroupedUserIPRestrictionsProcedure = "/api.v1alpha1.org.Org/RemoveGroupedUserIPRestrictions"
+	// OrgListUsersAllowedIpsProcedure is the fully-qualified name of the Org's ListUsersAllowedIps RPC.
+	OrgListUsersAllowedIpsProcedure = "/api.v1alpha1.org.Org/ListUsersAllowedIps"
 )
 
 // OrgClient is a client for the api.v1alpha1.org.Org service.
@@ -1111,6 +1113,8 @@ type OrgClient interface {
 	// RemoveGroupedUserIPRestrictions removes a user or list of user's IPs they
 	// are required to authenticate with
 	RemoveGroupedUserIPRestrictions(context.Context, *connect_go.Request[org.RemoveGroupedUserIPRestrictionsRequest]) (*connect_go.Response[org.RemoveGroupedUserIPRestrictionsResponse], error)
+	// ListUsersAllowedIps -
+	ListUsersAllowedIps(context.Context, *connect_go.Request[org.ListUsersAllowedIpsRequest]) (*connect_go.Response[org.ListUsersAllowedIpsResponse], error)
 }
 
 // NewOrgClient constructs a client for the api.v1alpha1.org.Org service. By default, it uses the
@@ -2198,6 +2202,11 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgRemoveGroupedUserIPRestrictionsProcedure,
 			opts...,
 		),
+		listUsersAllowedIps: connect_go.NewClient[org.ListUsersAllowedIpsRequest, org.ListUsersAllowedIpsResponse](
+			httpClient,
+			baseURL+OrgListUsersAllowedIpsProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -2418,6 +2427,7 @@ type orgClient struct {
 	updateBusinessHours                      *connect_go.Client[org.UpdateBusinessHoursRequest, org.UpdateBusinessHoursResponse]
 	addGroupedUserIPRestrictions             *connect_go.Client[org.AddGroupedUserIPRestrictionsRequest, org.AddGroupedUserIPRestrictionsResponse]
 	removeGroupedUserIPRestrictions          *connect_go.Client[org.RemoveGroupedUserIPRestrictionsRequest, org.RemoveGroupedUserIPRestrictionsResponse]
+	listUsersAllowedIps                      *connect_go.Client[org.ListUsersAllowedIpsRequest, org.ListUsersAllowedIpsResponse]
 }
 
 // CreateOrganization calls api.v1alpha1.org.Org.CreateOrganization.
@@ -3526,6 +3536,11 @@ func (c *orgClient) RemoveGroupedUserIPRestrictions(ctx context.Context, req *co
 	return c.removeGroupedUserIPRestrictions.CallUnary(ctx, req)
 }
 
+// ListUsersAllowedIps calls api.v1alpha1.org.Org.ListUsersAllowedIps.
+func (c *orgClient) ListUsersAllowedIps(ctx context.Context, req *connect_go.Request[org.ListUsersAllowedIpsRequest]) (*connect_go.Response[org.ListUsersAllowedIpsResponse], error) {
+	return c.listUsersAllowedIps.CallUnary(ctx, req)
+}
+
 // OrgHandler is an implementation of the api.v1alpha1.org.Org service.
 type OrgHandler interface {
 	// CreateOrganization creates a new organization entity and enables it for the
@@ -4037,6 +4052,8 @@ type OrgHandler interface {
 	// RemoveGroupedUserIPRestrictions removes a user or list of user's IPs they
 	// are required to authenticate with
 	RemoveGroupedUserIPRestrictions(context.Context, *connect_go.Request[org.RemoveGroupedUserIPRestrictionsRequest]) (*connect_go.Response[org.RemoveGroupedUserIPRestrictionsResponse], error)
+	// ListUsersAllowedIps -
+	ListUsersAllowedIps(context.Context, *connect_go.Request[org.ListUsersAllowedIpsRequest]) (*connect_go.Response[org.ListUsersAllowedIpsResponse], error)
 }
 
 // NewOrgHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -5120,6 +5137,11 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.RemoveGroupedUserIPRestrictions,
 		opts...,
 	)
+	orgListUsersAllowedIpsHandler := connect_go.NewUnaryHandler(
+		OrgListUsersAllowedIpsProcedure,
+		svc.ListUsersAllowedIps,
+		opts...,
+	)
 	return "/api.v1alpha1.org.Org/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case OrgCreateOrganizationProcedure:
@@ -5552,6 +5574,8 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 			orgAddGroupedUserIPRestrictionsHandler.ServeHTTP(w, r)
 		case OrgRemoveGroupedUserIPRestrictionsProcedure:
 			orgRemoveGroupedUserIPRestrictionsHandler.ServeHTTP(w, r)
+		case OrgListUsersAllowedIpsProcedure:
+			orgListUsersAllowedIpsHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -6419,4 +6443,8 @@ func (UnimplementedOrgHandler) AddGroupedUserIPRestrictions(context.Context, *co
 
 func (UnimplementedOrgHandler) RemoveGroupedUserIPRestrictions(context.Context, *connect_go.Request[org.RemoveGroupedUserIPRestrictionsRequest]) (*connect_go.Response[org.RemoveGroupedUserIPRestrictionsResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.RemoveGroupedUserIPRestrictions is not implemented"))
+}
+
+func (UnimplementedOrgHandler) ListUsersAllowedIps(context.Context, *connect_go.Request[org.ListUsersAllowedIpsRequest]) (*connect_go.Response[org.ListUsersAllowedIpsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.ListUsersAllowedIps is not implemented"))
 }

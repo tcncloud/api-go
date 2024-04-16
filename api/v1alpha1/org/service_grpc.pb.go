@@ -234,6 +234,7 @@ const (
 	Org_UpdateBusinessHours_FullMethodName                      = "/api.v1alpha1.org.Org/UpdateBusinessHours"
 	Org_AddGroupedUserIPRestrictions_FullMethodName             = "/api.v1alpha1.org.Org/AddGroupedUserIPRestrictions"
 	Org_RemoveGroupedUserIPRestrictions_FullMethodName          = "/api.v1alpha1.org.Org/RemoveGroupedUserIPRestrictions"
+	Org_ListUsersAllowedIps_FullMethodName                      = "/api.v1alpha1.org.Org/ListUsersAllowedIps"
 )
 
 // OrgClient is the client API for Org service.
@@ -739,6 +740,8 @@ type OrgClient interface {
 	// RemoveGroupedUserIPRestrictions removes a user or list of user's IPs they
 	// are required to authenticate with
 	RemoveGroupedUserIPRestrictions(ctx context.Context, in *RemoveGroupedUserIPRestrictionsRequest, opts ...grpc.CallOption) (*RemoveGroupedUserIPRestrictionsResponse, error)
+	// ListUsersAllowedIps -
+	ListUsersAllowedIps(ctx context.Context, in *ListUsersAllowedIpsRequest, opts ...grpc.CallOption) (*ListUsersAllowedIpsResponse, error)
 }
 
 type orgClient struct {
@@ -2901,6 +2904,15 @@ func (c *orgClient) RemoveGroupedUserIPRestrictions(ctx context.Context, in *Rem
 	return out, nil
 }
 
+func (c *orgClient) ListUsersAllowedIps(ctx context.Context, in *ListUsersAllowedIpsRequest, opts ...grpc.CallOption) (*ListUsersAllowedIpsResponse, error) {
+	out := new(ListUsersAllowedIpsResponse)
+	err := c.cc.Invoke(ctx, Org_ListUsersAllowedIps_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OrgServer is the server API for Org service.
 // All implementations must embed UnimplementedOrgServer
 // for forward compatibility
@@ -3404,6 +3416,8 @@ type OrgServer interface {
 	// RemoveGroupedUserIPRestrictions removes a user or list of user's IPs they
 	// are required to authenticate with
 	RemoveGroupedUserIPRestrictions(context.Context, *RemoveGroupedUserIPRestrictionsRequest) (*RemoveGroupedUserIPRestrictionsResponse, error)
+	// ListUsersAllowedIps -
+	ListUsersAllowedIps(context.Context, *ListUsersAllowedIpsRequest) (*ListUsersAllowedIpsResponse, error)
 	mustEmbedUnimplementedOrgServer()
 }
 
@@ -4055,6 +4069,9 @@ func (UnimplementedOrgServer) AddGroupedUserIPRestrictions(context.Context, *Add
 }
 func (UnimplementedOrgServer) RemoveGroupedUserIPRestrictions(context.Context, *RemoveGroupedUserIPRestrictionsRequest) (*RemoveGroupedUserIPRestrictionsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RemoveGroupedUserIPRestrictions not implemented")
+}
+func (UnimplementedOrgServer) ListUsersAllowedIps(context.Context, *ListUsersAllowedIpsRequest) (*ListUsersAllowedIpsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListUsersAllowedIps not implemented")
 }
 func (UnimplementedOrgServer) mustEmbedUnimplementedOrgServer() {}
 
@@ -7966,6 +7983,24 @@ func _Org_RemoveGroupedUserIPRestrictions_Handler(srv interface{}, ctx context.C
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Org_ListUsersAllowedIps_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListUsersAllowedIpsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).ListUsersAllowedIps(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_ListUsersAllowedIps_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).ListUsersAllowedIps(ctx, req.(*ListUsersAllowedIpsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Org_ServiceDesc is the grpc.ServiceDesc for Org service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -8796,6 +8831,10 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RemoveGroupedUserIPRestrictions",
 			Handler:    _Org_RemoveGroupedUserIPRestrictions_Handler,
+		},
+		{
+			MethodName: "ListUsersAllowedIps",
+			Handler:    _Org_ListUsersAllowedIps_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
