@@ -110,6 +110,14 @@ const (
 	// TicketsGetPhoneNumberTypeProcedure is the fully-qualified name of the Tickets's
 	// GetPhoneNumberType RPC.
 	TicketsGetPhoneNumberTypeProcedure = "/api.v1alpha1.tickets.Tickets/GetPhoneNumberType"
+	// TicketsAddEntityRefProcedure is the fully-qualified name of the Tickets's AddEntityRef RPC.
+	TicketsAddEntityRefProcedure = "/api.v1alpha1.tickets.Tickets/AddEntityRef"
+	// TicketsListTicketsByEntityRefProcedure is the fully-qualified name of the Tickets's
+	// ListTicketsByEntityRef RPC.
+	TicketsListTicketsByEntityRefProcedure = "/api.v1alpha1.tickets.Tickets/ListTicketsByEntityRef"
+	// TicketsListEntityRefsByTicketProcedure is the fully-qualified name of the Tickets's
+	// ListEntityRefsByTicket RPC.
+	TicketsListEntityRefsByTicketProcedure = "/api.v1alpha1.tickets.Tickets/ListEntityRefsByTicket"
 )
 
 // TicketsClient is a client for the api.v1alpha1.tickets.Tickets service.
@@ -179,6 +187,12 @@ type TicketsClient interface {
 	GetAllActionType(context.Context, *connect_go.Request[tickets.GetActionTypeRequest]) (*connect_go.Response[tickets.GetActionTypeResponse], error)
 	// Public method to list all Action Types
 	GetPhoneNumberType(context.Context, *connect_go.Request[tickets.GetPhoneNumberTypeRequest]) (*connect_go.Response[tickets.GetPhoneNumberTypeResponse], error)
+	// Public method to addEntityRef
+	AddEntityRef(context.Context, *connect_go.Request[tickets.AddEntityRefRequest]) (*connect_go.Response[tickets.AddEntityRefResponse], error)
+	// Public method to listTicketsByEntityRef
+	ListTicketsByEntityRef(context.Context, *connect_go.Request[tickets.ListTicketsByEntityRefRequest]) (*connect_go.Response[tickets.ListTicketsByEntityRefResponse], error)
+	// Public method to listEntityRefsByTicket
+	ListEntityRefsByTicket(context.Context, *connect_go.Request[tickets.ListEntityRefsByTicketRequest]) (*connect_go.Response[tickets.ListEntityRefsByTicketResponse], error)
 }
 
 // NewTicketsClient constructs a client for the api.v1alpha1.tickets.Tickets service. By default, it
@@ -346,6 +360,21 @@ func NewTicketsClient(httpClient connect_go.HTTPClient, baseURL string, opts ...
 			baseURL+TicketsGetPhoneNumberTypeProcedure,
 			opts...,
 		),
+		addEntityRef: connect_go.NewClient[tickets.AddEntityRefRequest, tickets.AddEntityRefResponse](
+			httpClient,
+			baseURL+TicketsAddEntityRefProcedure,
+			opts...,
+		),
+		listTicketsByEntityRef: connect_go.NewClient[tickets.ListTicketsByEntityRefRequest, tickets.ListTicketsByEntityRefResponse](
+			httpClient,
+			baseURL+TicketsListTicketsByEntityRefProcedure,
+			opts...,
+		),
+		listEntityRefsByTicket: connect_go.NewClient[tickets.ListEntityRefsByTicketRequest, tickets.ListEntityRefsByTicketResponse](
+			httpClient,
+			baseURL+TicketsListEntityRefsByTicketProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -382,6 +411,9 @@ type ticketsClient struct {
 	assignTicketTemplate      *connect_go.Client[tickets.AssignProjectTemplateRequest, tickets.AssignProjectTemplateResponse]
 	getAllActionType          *connect_go.Client[tickets.GetActionTypeRequest, tickets.GetActionTypeResponse]
 	getPhoneNumberType        *connect_go.Client[tickets.GetPhoneNumberTypeRequest, tickets.GetPhoneNumberTypeResponse]
+	addEntityRef              *connect_go.Client[tickets.AddEntityRefRequest, tickets.AddEntityRefResponse]
+	listTicketsByEntityRef    *connect_go.Client[tickets.ListTicketsByEntityRefRequest, tickets.ListTicketsByEntityRefResponse]
+	listEntityRefsByTicket    *connect_go.Client[tickets.ListEntityRefsByTicketRequest, tickets.ListEntityRefsByTicketResponse]
 }
 
 // CreateTicket calls api.v1alpha1.tickets.Tickets.CreateTicket.
@@ -541,6 +573,21 @@ func (c *ticketsClient) GetPhoneNumberType(ctx context.Context, req *connect_go.
 	return c.getPhoneNumberType.CallUnary(ctx, req)
 }
 
+// AddEntityRef calls api.v1alpha1.tickets.Tickets.AddEntityRef.
+func (c *ticketsClient) AddEntityRef(ctx context.Context, req *connect_go.Request[tickets.AddEntityRefRequest]) (*connect_go.Response[tickets.AddEntityRefResponse], error) {
+	return c.addEntityRef.CallUnary(ctx, req)
+}
+
+// ListTicketsByEntityRef calls api.v1alpha1.tickets.Tickets.ListTicketsByEntityRef.
+func (c *ticketsClient) ListTicketsByEntityRef(ctx context.Context, req *connect_go.Request[tickets.ListTicketsByEntityRefRequest]) (*connect_go.Response[tickets.ListTicketsByEntityRefResponse], error) {
+	return c.listTicketsByEntityRef.CallUnary(ctx, req)
+}
+
+// ListEntityRefsByTicket calls api.v1alpha1.tickets.Tickets.ListEntityRefsByTicket.
+func (c *ticketsClient) ListEntityRefsByTicket(ctx context.Context, req *connect_go.Request[tickets.ListEntityRefsByTicketRequest]) (*connect_go.Response[tickets.ListEntityRefsByTicketResponse], error) {
+	return c.listEntityRefsByTicket.CallUnary(ctx, req)
+}
+
 // TicketsHandler is an implementation of the api.v1alpha1.tickets.Tickets service.
 type TicketsHandler interface {
 	// Public Method to create a ticket.
@@ -608,6 +655,12 @@ type TicketsHandler interface {
 	GetAllActionType(context.Context, *connect_go.Request[tickets.GetActionTypeRequest]) (*connect_go.Response[tickets.GetActionTypeResponse], error)
 	// Public method to list all Action Types
 	GetPhoneNumberType(context.Context, *connect_go.Request[tickets.GetPhoneNumberTypeRequest]) (*connect_go.Response[tickets.GetPhoneNumberTypeResponse], error)
+	// Public method to addEntityRef
+	AddEntityRef(context.Context, *connect_go.Request[tickets.AddEntityRefRequest]) (*connect_go.Response[tickets.AddEntityRefResponse], error)
+	// Public method to listTicketsByEntityRef
+	ListTicketsByEntityRef(context.Context, *connect_go.Request[tickets.ListTicketsByEntityRefRequest]) (*connect_go.Response[tickets.ListTicketsByEntityRefResponse], error)
+	// Public method to listEntityRefsByTicket
+	ListEntityRefsByTicket(context.Context, *connect_go.Request[tickets.ListEntityRefsByTicketRequest]) (*connect_go.Response[tickets.ListEntityRefsByTicketResponse], error)
 }
 
 // NewTicketsHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -771,6 +824,21 @@ func NewTicketsHandler(svc TicketsHandler, opts ...connect_go.HandlerOption) (st
 		svc.GetPhoneNumberType,
 		opts...,
 	)
+	ticketsAddEntityRefHandler := connect_go.NewUnaryHandler(
+		TicketsAddEntityRefProcedure,
+		svc.AddEntityRef,
+		opts...,
+	)
+	ticketsListTicketsByEntityRefHandler := connect_go.NewUnaryHandler(
+		TicketsListTicketsByEntityRefProcedure,
+		svc.ListTicketsByEntityRef,
+		opts...,
+	)
+	ticketsListEntityRefsByTicketHandler := connect_go.NewUnaryHandler(
+		TicketsListEntityRefsByTicketProcedure,
+		svc.ListEntityRefsByTicket,
+		opts...,
+	)
 	return "/api.v1alpha1.tickets.Tickets/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case TicketsCreateTicketProcedure:
@@ -835,6 +903,12 @@ func NewTicketsHandler(svc TicketsHandler, opts ...connect_go.HandlerOption) (st
 			ticketsGetAllActionTypeHandler.ServeHTTP(w, r)
 		case TicketsGetPhoneNumberTypeProcedure:
 			ticketsGetPhoneNumberTypeHandler.ServeHTTP(w, r)
+		case TicketsAddEntityRefProcedure:
+			ticketsAddEntityRefHandler.ServeHTTP(w, r)
+		case TicketsListTicketsByEntityRefProcedure:
+			ticketsListTicketsByEntityRefHandler.ServeHTTP(w, r)
+		case TicketsListEntityRefsByTicketProcedure:
+			ticketsListEntityRefsByTicketHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -966,4 +1040,16 @@ func (UnimplementedTicketsHandler) GetAllActionType(context.Context, *connect_go
 
 func (UnimplementedTicketsHandler) GetPhoneNumberType(context.Context, *connect_go.Request[tickets.GetPhoneNumberTypeRequest]) (*connect_go.Response[tickets.GetPhoneNumberTypeResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.tickets.Tickets.GetPhoneNumberType is not implemented"))
+}
+
+func (UnimplementedTicketsHandler) AddEntityRef(context.Context, *connect_go.Request[tickets.AddEntityRefRequest]) (*connect_go.Response[tickets.AddEntityRefResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.tickets.Tickets.AddEntityRef is not implemented"))
+}
+
+func (UnimplementedTicketsHandler) ListTicketsByEntityRef(context.Context, *connect_go.Request[tickets.ListTicketsByEntityRefRequest]) (*connect_go.Response[tickets.ListTicketsByEntityRefResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.tickets.Tickets.ListTicketsByEntityRef is not implemented"))
+}
+
+func (UnimplementedTicketsHandler) ListEntityRefsByTicket(context.Context, *connect_go.Request[tickets.ListEntityRefsByTicketRequest]) (*connect_go.Response[tickets.ListEntityRefsByTicketResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.tickets.Tickets.ListEntityRefsByTicket is not implemented"))
 }

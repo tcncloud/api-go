@@ -50,6 +50,9 @@ const (
 	Tickets_AssignTicketTemplate_FullMethodName      = "/api.v1alpha1.tickets.Tickets/AssignTicketTemplate"
 	Tickets_GetAllActionType_FullMethodName          = "/api.v1alpha1.tickets.Tickets/GetAllActionType"
 	Tickets_GetPhoneNumberType_FullMethodName        = "/api.v1alpha1.tickets.Tickets/GetPhoneNumberType"
+	Tickets_AddEntityRef_FullMethodName              = "/api.v1alpha1.tickets.Tickets/AddEntityRef"
+	Tickets_ListTicketsByEntityRef_FullMethodName    = "/api.v1alpha1.tickets.Tickets/ListTicketsByEntityRef"
+	Tickets_ListEntityRefsByTicket_FullMethodName    = "/api.v1alpha1.tickets.Tickets/ListEntityRefsByTicket"
 )
 
 // TicketsClient is the client API for Tickets service.
@@ -121,6 +124,12 @@ type TicketsClient interface {
 	GetAllActionType(ctx context.Context, in *GetActionTypeRequest, opts ...grpc.CallOption) (*GetActionTypeResponse, error)
 	// Public method to list all Action Types
 	GetPhoneNumberType(ctx context.Context, in *GetPhoneNumberTypeRequest, opts ...grpc.CallOption) (*GetPhoneNumberTypeResponse, error)
+	// Public method to addEntityRef
+	AddEntityRef(ctx context.Context, in *AddEntityRefRequest, opts ...grpc.CallOption) (*AddEntityRefResponse, error)
+	// Public method to listTicketsByEntityRef
+	ListTicketsByEntityRef(ctx context.Context, in *ListTicketsByEntityRefRequest, opts ...grpc.CallOption) (*ListTicketsByEntityRefResponse, error)
+	// Public method to listEntityRefsByTicket
+	ListEntityRefsByTicket(ctx context.Context, in *ListEntityRefsByTicketRequest, opts ...grpc.CallOption) (*ListEntityRefsByTicketResponse, error)
 }
 
 type ticketsClient struct {
@@ -411,6 +420,33 @@ func (c *ticketsClient) GetPhoneNumberType(ctx context.Context, in *GetPhoneNumb
 	return out, nil
 }
 
+func (c *ticketsClient) AddEntityRef(ctx context.Context, in *AddEntityRefRequest, opts ...grpc.CallOption) (*AddEntityRefResponse, error) {
+	out := new(AddEntityRefResponse)
+	err := c.cc.Invoke(ctx, Tickets_AddEntityRef_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *ticketsClient) ListTicketsByEntityRef(ctx context.Context, in *ListTicketsByEntityRefRequest, opts ...grpc.CallOption) (*ListTicketsByEntityRefResponse, error) {
+	out := new(ListTicketsByEntityRefResponse)
+	err := c.cc.Invoke(ctx, Tickets_ListTicketsByEntityRef_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *ticketsClient) ListEntityRefsByTicket(ctx context.Context, in *ListEntityRefsByTicketRequest, opts ...grpc.CallOption) (*ListEntityRefsByTicketResponse, error) {
+	out := new(ListEntityRefsByTicketResponse)
+	err := c.cc.Invoke(ctx, Tickets_ListEntityRefsByTicket_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TicketsServer is the server API for Tickets service.
 // All implementations must embed UnimplementedTicketsServer
 // for forward compatibility
@@ -480,6 +516,12 @@ type TicketsServer interface {
 	GetAllActionType(context.Context, *GetActionTypeRequest) (*GetActionTypeResponse, error)
 	// Public method to list all Action Types
 	GetPhoneNumberType(context.Context, *GetPhoneNumberTypeRequest) (*GetPhoneNumberTypeResponse, error)
+	// Public method to addEntityRef
+	AddEntityRef(context.Context, *AddEntityRefRequest) (*AddEntityRefResponse, error)
+	// Public method to listTicketsByEntityRef
+	ListTicketsByEntityRef(context.Context, *ListTicketsByEntityRefRequest) (*ListTicketsByEntityRefResponse, error)
+	// Public method to listEntityRefsByTicket
+	ListEntityRefsByTicket(context.Context, *ListEntityRefsByTicketRequest) (*ListEntityRefsByTicketResponse, error)
 	mustEmbedUnimplementedTicketsServer()
 }
 
@@ -579,6 +621,15 @@ func (UnimplementedTicketsServer) GetAllActionType(context.Context, *GetActionTy
 }
 func (UnimplementedTicketsServer) GetPhoneNumberType(context.Context, *GetPhoneNumberTypeRequest) (*GetPhoneNumberTypeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPhoneNumberType not implemented")
+}
+func (UnimplementedTicketsServer) AddEntityRef(context.Context, *AddEntityRefRequest) (*AddEntityRefResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddEntityRef not implemented")
+}
+func (UnimplementedTicketsServer) ListTicketsByEntityRef(context.Context, *ListTicketsByEntityRefRequest) (*ListTicketsByEntityRefResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListTicketsByEntityRef not implemented")
+}
+func (UnimplementedTicketsServer) ListEntityRefsByTicket(context.Context, *ListEntityRefsByTicketRequest) (*ListEntityRefsByTicketResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListEntityRefsByTicket not implemented")
 }
 func (UnimplementedTicketsServer) mustEmbedUnimplementedTicketsServer() {}
 
@@ -1151,6 +1202,60 @@ func _Tickets_GetPhoneNumberType_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Tickets_AddEntityRef_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddEntityRefRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TicketsServer).AddEntityRef(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Tickets_AddEntityRef_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TicketsServer).AddEntityRef(ctx, req.(*AddEntityRefRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Tickets_ListTicketsByEntityRef_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListTicketsByEntityRefRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TicketsServer).ListTicketsByEntityRef(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Tickets_ListTicketsByEntityRef_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TicketsServer).ListTicketsByEntityRef(ctx, req.(*ListTicketsByEntityRefRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Tickets_ListEntityRefsByTicket_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListEntityRefsByTicketRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TicketsServer).ListEntityRefsByTicket(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Tickets_ListEntityRefsByTicket_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TicketsServer).ListEntityRefsByTicket(ctx, req.(*ListEntityRefsByTicketRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Tickets_ServiceDesc is the grpc.ServiceDesc for Tickets service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1281,6 +1386,18 @@ var Tickets_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetPhoneNumberType",
 			Handler:    _Tickets_GetPhoneNumberType_Handler,
+		},
+		{
+			MethodName: "AddEntityRef",
+			Handler:    _Tickets_AddEntityRef_Handler,
+		},
+		{
+			MethodName: "ListTicketsByEntityRef",
+			Handler:    _Tickets_ListTicketsByEntityRef_Handler,
+		},
+		{
+			MethodName: "ListEntityRefsByTicket",
+			Handler:    _Tickets_ListEntityRefsByTicket_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
