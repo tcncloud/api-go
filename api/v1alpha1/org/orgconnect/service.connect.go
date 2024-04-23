@@ -451,6 +451,9 @@ const (
 	OrgCopyAgentTriggerProcedure = "/api.v1alpha1.org.Org/CopyAgentTrigger"
 	// OrgUpdateAgentTriggersProcedure is the fully-qualified name of the Org's UpdateAgentTriggers RPC.
 	OrgUpdateAgentTriggersProcedure = "/api.v1alpha1.org.Org/UpdateAgentTriggers"
+	// OrgListHuntGroupScriptsProcedure is the fully-qualified name of the Org's ListHuntGroupScripts
+	// RPC.
+	OrgListHuntGroupScriptsProcedure = "/api.v1alpha1.org.Org/ListHuntGroupScripts"
 	// OrgGetHuntGroupScriptProcedure is the fully-qualified name of the Org's GetHuntGroupScript RPC.
 	OrgGetHuntGroupScriptProcedure = "/api.v1alpha1.org.Org/GetHuntGroupScript"
 	// OrgCreateHuntGroupScriptProcedure is the fully-qualified name of the Org's CreateHuntGroupScript
@@ -462,6 +465,12 @@ const (
 	// OrgDeleteHuntGroupScriptProcedure is the fully-qualified name of the Org's DeleteHuntGroupScript
 	// RPC.
 	OrgDeleteHuntGroupScriptProcedure = "/api.v1alpha1.org.Org/DeleteHuntGroupScript"
+	// OrgAssignScriptToHuntGroupsProcedure is the fully-qualified name of the Org's
+	// AssignScriptToHuntGroups RPC.
+	OrgAssignScriptToHuntGroupsProcedure = "/api.v1alpha1.org.Org/AssignScriptToHuntGroups"
+	// OrgUnassignScriptFromHuntGroupsProcedure is the fully-qualified name of the Org's
+	// UnassignScriptFromHuntGroups RPC.
+	OrgUnassignScriptFromHuntGroupsProcedure = "/api.v1alpha1.org.Org/UnassignScriptFromHuntGroups"
 	// OrgCreateTrustProcedure is the fully-qualified name of the Org's CreateTrust RPC.
 	OrgCreateTrustProcedure = "/api.v1alpha1.org.Org/CreateTrust"
 	// OrgAcceptTrustProcedure is the fully-qualified name of the Org's AcceptTrust RPC.
@@ -973,14 +982,20 @@ type OrgClient interface {
 	CopyAgentTrigger(context.Context, *connect_go.Request[org.CopyAgentTriggerRequest]) (*connect_go.Response[org.CopyAgentTriggerResponse], error)
 	// UpdateAgentTriggers updates all agent triggers for the given hunt group.
 	UpdateAgentTriggers(context.Context, *connect_go.Request[org.UpdateAgentTriggersRequest]) (*connect_go.Response[org.UpdateAgentTriggersResponse], error)
-	// GetHuntGroupScript gets the hunt group script for a given hunt group
+	// ListHuntGroupScripts lists all hunt group scripts for the current organization.
+	ListHuntGroupScripts(context.Context, *connect_go.Request[org.ListHuntGroupScriptsRequest]) (*connect_go.Response[org.ListHuntGroupScriptsResponse], error)
+	// GetHuntGroupScript gets the specified script from the given script sid
 	GetHuntGroupScript(context.Context, *connect_go.Request[org.GetHuntGroupScriptRequest]) (*connect_go.Response[org.GetHuntGroupScriptResponse], error)
-	// CreateHuntGroupScript adds a hunt group script within the given hunt group
+	// CreateHuntGroupScript adds a creates a new hunt group script
 	CreateHuntGroupScript(context.Context, *connect_go.Request[org.CreateHuntGroupScriptRequest]) (*connect_go.Response[org.CreateHuntGroupScriptResponse], error)
-	// UpdateHuntGroupScript updates a hunt group script within the given hunt group
+	// UpdateHuntGroupScript updates a script specified by the given script sid
 	UpdateHuntGroupScript(context.Context, *connect_go.Request[org.UpdateHuntGroupScriptRequest]) (*connect_go.Response[org.UpdateHuntGroupScriptResponse], error)
-	// DeleteHuntGroupScript removes a hunt group script within the given hunt group
+	// DeleteHuntGroupScript deletes a hunt group script
 	DeleteHuntGroupScript(context.Context, *connect_go.Request[org.DeleteHuntGroupScriptRequest]) (*connect_go.Response[org.DeleteHuntGroupScriptResponse], error)
+	// AssignScriptToHuntGroups assigns a script to the specified hunt groups
+	AssignScriptToHuntGroups(context.Context, *connect_go.Request[org.AssignScriptToHuntGroupsRequest]) (*connect_go.Response[org.AssignScriptToHuntGroupsResponse], error)
+	// UnassignScriptFromHuntGroups unassigns a script from the specified hunt groups
+	UnassignScriptFromHuntGroups(context.Context, *connect_go.Request[org.UnassignScriptFromHuntGroupsRequest]) (*connect_go.Response[org.UnassignScriptFromHuntGroupsResponse], error)
 	// CreateTrust creates a new trust.
 	CreateTrust(context.Context, *connect_go.Request[org.CreateTrustRequest]) (*connect_go.Response[org.CreateTrustResponse], error)
 	// AcceptTrust accepts an incoming trust.
@@ -1907,6 +1922,11 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgUpdateAgentTriggersProcedure,
 			opts...,
 		),
+		listHuntGroupScripts: connect_go.NewClient[org.ListHuntGroupScriptsRequest, org.ListHuntGroupScriptsResponse](
+			httpClient,
+			baseURL+OrgListHuntGroupScriptsProcedure,
+			opts...,
+		),
 		getHuntGroupScript: connect_go.NewClient[org.GetHuntGroupScriptRequest, org.GetHuntGroupScriptResponse](
 			httpClient,
 			baseURL+OrgGetHuntGroupScriptProcedure,
@@ -1925,6 +1945,16 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 		deleteHuntGroupScript: connect_go.NewClient[org.DeleteHuntGroupScriptRequest, org.DeleteHuntGroupScriptResponse](
 			httpClient,
 			baseURL+OrgDeleteHuntGroupScriptProcedure,
+			opts...,
+		),
+		assignScriptToHuntGroups: connect_go.NewClient[org.AssignScriptToHuntGroupsRequest, org.AssignScriptToHuntGroupsResponse](
+			httpClient,
+			baseURL+OrgAssignScriptToHuntGroupsProcedure,
+			opts...,
+		),
+		unassignScriptFromHuntGroups: connect_go.NewClient[org.UnassignScriptFromHuntGroupsRequest, org.UnassignScriptFromHuntGroupsResponse](
+			httpClient,
+			baseURL+OrgUnassignScriptFromHuntGroupsProcedure,
 			opts...,
 		),
 		createTrust: connect_go.NewClient[org.CreateTrustRequest, org.CreateTrustResponse](
@@ -2377,10 +2407,13 @@ type orgClient struct {
 	listAgentTriggers                        *connect_go.Client[org.ListAgentTriggersRequest, org.ListAgentTriggersResponse]
 	copyAgentTrigger                         *connect_go.Client[org.CopyAgentTriggerRequest, org.CopyAgentTriggerResponse]
 	updateAgentTriggers                      *connect_go.Client[org.UpdateAgentTriggersRequest, org.UpdateAgentTriggersResponse]
+	listHuntGroupScripts                     *connect_go.Client[org.ListHuntGroupScriptsRequest, org.ListHuntGroupScriptsResponse]
 	getHuntGroupScript                       *connect_go.Client[org.GetHuntGroupScriptRequest, org.GetHuntGroupScriptResponse]
 	createHuntGroupScript                    *connect_go.Client[org.CreateHuntGroupScriptRequest, org.CreateHuntGroupScriptResponse]
 	updateHuntGroupScript                    *connect_go.Client[org.UpdateHuntGroupScriptRequest, org.UpdateHuntGroupScriptResponse]
 	deleteHuntGroupScript                    *connect_go.Client[org.DeleteHuntGroupScriptRequest, org.DeleteHuntGroupScriptResponse]
+	assignScriptToHuntGroups                 *connect_go.Client[org.AssignScriptToHuntGroupsRequest, org.AssignScriptToHuntGroupsResponse]
+	unassignScriptFromHuntGroups             *connect_go.Client[org.UnassignScriptFromHuntGroupsRequest, org.UnassignScriptFromHuntGroupsResponse]
 	createTrust                              *connect_go.Client[org.CreateTrustRequest, org.CreateTrustResponse]
 	acceptTrust                              *connect_go.Client[org.AcceptTrustRequest, org.AcceptTrustResponse]
 	rejectTrust                              *connect_go.Client[org.RejectTrustRequest, org.RejectTrustResponse]
@@ -3242,6 +3275,11 @@ func (c *orgClient) UpdateAgentTriggers(ctx context.Context, req *connect_go.Req
 	return c.updateAgentTriggers.CallUnary(ctx, req)
 }
 
+// ListHuntGroupScripts calls api.v1alpha1.org.Org.ListHuntGroupScripts.
+func (c *orgClient) ListHuntGroupScripts(ctx context.Context, req *connect_go.Request[org.ListHuntGroupScriptsRequest]) (*connect_go.Response[org.ListHuntGroupScriptsResponse], error) {
+	return c.listHuntGroupScripts.CallUnary(ctx, req)
+}
+
 // GetHuntGroupScript calls api.v1alpha1.org.Org.GetHuntGroupScript.
 func (c *orgClient) GetHuntGroupScript(ctx context.Context, req *connect_go.Request[org.GetHuntGroupScriptRequest]) (*connect_go.Response[org.GetHuntGroupScriptResponse], error) {
 	return c.getHuntGroupScript.CallUnary(ctx, req)
@@ -3260,6 +3298,16 @@ func (c *orgClient) UpdateHuntGroupScript(ctx context.Context, req *connect_go.R
 // DeleteHuntGroupScript calls api.v1alpha1.org.Org.DeleteHuntGroupScript.
 func (c *orgClient) DeleteHuntGroupScript(ctx context.Context, req *connect_go.Request[org.DeleteHuntGroupScriptRequest]) (*connect_go.Response[org.DeleteHuntGroupScriptResponse], error) {
 	return c.deleteHuntGroupScript.CallUnary(ctx, req)
+}
+
+// AssignScriptToHuntGroups calls api.v1alpha1.org.Org.AssignScriptToHuntGroups.
+func (c *orgClient) AssignScriptToHuntGroups(ctx context.Context, req *connect_go.Request[org.AssignScriptToHuntGroupsRequest]) (*connect_go.Response[org.AssignScriptToHuntGroupsResponse], error) {
+	return c.assignScriptToHuntGroups.CallUnary(ctx, req)
+}
+
+// UnassignScriptFromHuntGroups calls api.v1alpha1.org.Org.UnassignScriptFromHuntGroups.
+func (c *orgClient) UnassignScriptFromHuntGroups(ctx context.Context, req *connect_go.Request[org.UnassignScriptFromHuntGroupsRequest]) (*connect_go.Response[org.UnassignScriptFromHuntGroupsResponse], error) {
+	return c.unassignScriptFromHuntGroups.CallUnary(ctx, req)
 }
 
 // CreateTrust calls api.v1alpha1.org.Org.CreateTrust.
@@ -3926,14 +3974,20 @@ type OrgHandler interface {
 	CopyAgentTrigger(context.Context, *connect_go.Request[org.CopyAgentTriggerRequest]) (*connect_go.Response[org.CopyAgentTriggerResponse], error)
 	// UpdateAgentTriggers updates all agent triggers for the given hunt group.
 	UpdateAgentTriggers(context.Context, *connect_go.Request[org.UpdateAgentTriggersRequest]) (*connect_go.Response[org.UpdateAgentTriggersResponse], error)
-	// GetHuntGroupScript gets the hunt group script for a given hunt group
+	// ListHuntGroupScripts lists all hunt group scripts for the current organization.
+	ListHuntGroupScripts(context.Context, *connect_go.Request[org.ListHuntGroupScriptsRequest]) (*connect_go.Response[org.ListHuntGroupScriptsResponse], error)
+	// GetHuntGroupScript gets the specified script from the given script sid
 	GetHuntGroupScript(context.Context, *connect_go.Request[org.GetHuntGroupScriptRequest]) (*connect_go.Response[org.GetHuntGroupScriptResponse], error)
-	// CreateHuntGroupScript adds a hunt group script within the given hunt group
+	// CreateHuntGroupScript adds a creates a new hunt group script
 	CreateHuntGroupScript(context.Context, *connect_go.Request[org.CreateHuntGroupScriptRequest]) (*connect_go.Response[org.CreateHuntGroupScriptResponse], error)
-	// UpdateHuntGroupScript updates a hunt group script within the given hunt group
+	// UpdateHuntGroupScript updates a script specified by the given script sid
 	UpdateHuntGroupScript(context.Context, *connect_go.Request[org.UpdateHuntGroupScriptRequest]) (*connect_go.Response[org.UpdateHuntGroupScriptResponse], error)
-	// DeleteHuntGroupScript removes a hunt group script within the given hunt group
+	// DeleteHuntGroupScript deletes a hunt group script
 	DeleteHuntGroupScript(context.Context, *connect_go.Request[org.DeleteHuntGroupScriptRequest]) (*connect_go.Response[org.DeleteHuntGroupScriptResponse], error)
+	// AssignScriptToHuntGroups assigns a script to the specified hunt groups
+	AssignScriptToHuntGroups(context.Context, *connect_go.Request[org.AssignScriptToHuntGroupsRequest]) (*connect_go.Response[org.AssignScriptToHuntGroupsResponse], error)
+	// UnassignScriptFromHuntGroups unassigns a script from the specified hunt groups
+	UnassignScriptFromHuntGroups(context.Context, *connect_go.Request[org.UnassignScriptFromHuntGroupsRequest]) (*connect_go.Response[org.UnassignScriptFromHuntGroupsResponse], error)
 	// CreateTrust creates a new trust.
 	CreateTrust(context.Context, *connect_go.Request[org.CreateTrustRequest]) (*connect_go.Response[org.CreateTrustResponse], error)
 	// AcceptTrust accepts an incoming trust.
@@ -4856,6 +4910,11 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.UpdateAgentTriggers,
 		opts...,
 	)
+	orgListHuntGroupScriptsHandler := connect_go.NewUnaryHandler(
+		OrgListHuntGroupScriptsProcedure,
+		svc.ListHuntGroupScripts,
+		opts...,
+	)
 	orgGetHuntGroupScriptHandler := connect_go.NewUnaryHandler(
 		OrgGetHuntGroupScriptProcedure,
 		svc.GetHuntGroupScript,
@@ -4874,6 +4933,16 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 	orgDeleteHuntGroupScriptHandler := connect_go.NewUnaryHandler(
 		OrgDeleteHuntGroupScriptProcedure,
 		svc.DeleteHuntGroupScript,
+		opts...,
+	)
+	orgAssignScriptToHuntGroupsHandler := connect_go.NewUnaryHandler(
+		OrgAssignScriptToHuntGroupsProcedure,
+		svc.AssignScriptToHuntGroups,
+		opts...,
+	)
+	orgUnassignScriptFromHuntGroupsHandler := connect_go.NewUnaryHandler(
+		OrgUnassignScriptFromHuntGroupsProcedure,
+		svc.UnassignScriptFromHuntGroups,
 		opts...,
 	)
 	orgCreateTrustHandler := connect_go.NewUnaryHandler(
@@ -5478,6 +5547,8 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 			orgCopyAgentTriggerHandler.ServeHTTP(w, r)
 		case OrgUpdateAgentTriggersProcedure:
 			orgUpdateAgentTriggersHandler.ServeHTTP(w, r)
+		case OrgListHuntGroupScriptsProcedure:
+			orgListHuntGroupScriptsHandler.ServeHTTP(w, r)
 		case OrgGetHuntGroupScriptProcedure:
 			orgGetHuntGroupScriptHandler.ServeHTTP(w, r)
 		case OrgCreateHuntGroupScriptProcedure:
@@ -5486,6 +5557,10 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 			orgUpdateHuntGroupScriptHandler.ServeHTTP(w, r)
 		case OrgDeleteHuntGroupScriptProcedure:
 			orgDeleteHuntGroupScriptHandler.ServeHTTP(w, r)
+		case OrgAssignScriptToHuntGroupsProcedure:
+			orgAssignScriptToHuntGroupsHandler.ServeHTTP(w, r)
+		case OrgUnassignScriptFromHuntGroupsProcedure:
+			orgUnassignScriptFromHuntGroupsHandler.ServeHTTP(w, r)
 		case OrgCreateTrustProcedure:
 			orgCreateTrustHandler.ServeHTTP(w, r)
 		case OrgAcceptTrustProcedure:
@@ -6231,6 +6306,10 @@ func (UnimplementedOrgHandler) UpdateAgentTriggers(context.Context, *connect_go.
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.UpdateAgentTriggers is not implemented"))
 }
 
+func (UnimplementedOrgHandler) ListHuntGroupScripts(context.Context, *connect_go.Request[org.ListHuntGroupScriptsRequest]) (*connect_go.Response[org.ListHuntGroupScriptsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.ListHuntGroupScripts is not implemented"))
+}
+
 func (UnimplementedOrgHandler) GetHuntGroupScript(context.Context, *connect_go.Request[org.GetHuntGroupScriptRequest]) (*connect_go.Response[org.GetHuntGroupScriptResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.GetHuntGroupScript is not implemented"))
 }
@@ -6245,6 +6324,14 @@ func (UnimplementedOrgHandler) UpdateHuntGroupScript(context.Context, *connect_g
 
 func (UnimplementedOrgHandler) DeleteHuntGroupScript(context.Context, *connect_go.Request[org.DeleteHuntGroupScriptRequest]) (*connect_go.Response[org.DeleteHuntGroupScriptResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.DeleteHuntGroupScript is not implemented"))
+}
+
+func (UnimplementedOrgHandler) AssignScriptToHuntGroups(context.Context, *connect_go.Request[org.AssignScriptToHuntGroupsRequest]) (*connect_go.Response[org.AssignScriptToHuntGroupsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.AssignScriptToHuntGroups is not implemented"))
+}
+
+func (UnimplementedOrgHandler) UnassignScriptFromHuntGroups(context.Context, *connect_go.Request[org.UnassignScriptFromHuntGroupsRequest]) (*connect_go.Response[org.UnassignScriptFromHuntGroupsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.UnassignScriptFromHuntGroups is not implemented"))
 }
 
 func (UnimplementedOrgHandler) CreateTrust(context.Context, *connect_go.Request[org.CreateTrustRequest]) (*connect_go.Response[org.CreateTrustResponse], error) {
