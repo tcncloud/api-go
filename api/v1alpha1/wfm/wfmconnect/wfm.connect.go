@@ -512,6 +512,12 @@ const (
 	// WFMListAgentStatesForDayProcedure is the fully-qualified name of the WFM's ListAgentStatesForDay
 	// RPC.
 	WFMListAgentStatesForDayProcedure = "/api.v1alpha1.wfm.WFM/ListAgentStatesForDay"
+	// WFMListRealTimeManagementStatesProcedure is the fully-qualified name of the WFM's
+	// ListRealTimeManagementStates RPC.
+	WFMListRealTimeManagementStatesProcedure = "/api.v1alpha1.wfm.WFM/ListRealTimeManagementStates"
+	// WFMListRealTimeManagementStateColorsProcedure is the fully-qualified name of the WFM's
+	// ListRealTimeManagementStateColors RPC.
+	WFMListRealTimeManagementStateColorsProcedure = "/api.v1alpha1.wfm.WFM/ListRealTimeManagementStateColors"
 )
 
 // WFMClient is a client for the api.v1alpha1.wfm.WFM service.
@@ -2469,6 +2475,24 @@ type WFMClient interface {
 	//   - grpc.Invalid: the @start_datetime is invalid or beyond the current datetime.
 	//   - grpc.Internal: error occurs when listing the agent states.
 	ListAgentStatesForDay(context.Context, *connect_go.Request[wfm.ListAgentStatesForDayRequest]) (*connect_go.Response[wfm.ListAgentStatesForDayResponse], error)
+	// List org-level RealTimeManagementStates.
+	// Required permissions:
+	//
+	//	PERMISSION_WFM_ADHERENCE_ADMIN, PERMISSION_WFM_ADHERENCE_MANAGER, or PERMISSION_WFM_ADHERENCE_MONITOR
+	//
+	// Errors:
+	//   - grpc.Invalid: on invalid input.
+	//   - grpc.Internal: on unexpected error.
+	ListRealTimeManagementStates(context.Context, *connect_go.Request[wfm.ListRealTimeManagementStatesRequest]) (*connect_go.Response[wfm.ListRealTimeManagementStatesResponse], error)
+	// List org-level RealTimeManagementStateColors.
+	// Required permissions:
+	//
+	//	PERMISSION_WFM_ADHERENCE_ADMIN, PERMISSION_WFM_ADHERENCE_MANAGER, or PERMISSION_WFM_ADHERENCE_MONITOR
+	//
+	// Errors:
+	//   - grpc.Invalid: on invalid input.
+	//   - grpc.Internal: on unexpected error.
+	ListRealTimeManagementStateColors(context.Context, *connect_go.Request[wfm.ListRealTimeManagementStateColorsRequest]) (*connect_go.Response[wfm.ListRealTimeManagementStateColorsResponse], error)
 }
 
 // NewWFMClient constructs a client for the api.v1alpha1.wfm.WFM service. By default, it uses the
@@ -3326,6 +3350,16 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMListAgentStatesForDayProcedure,
 			opts...,
 		),
+		listRealTimeManagementStates: connect_go.NewClient[wfm.ListRealTimeManagementStatesRequest, wfm.ListRealTimeManagementStatesResponse](
+			httpClient,
+			baseURL+WFMListRealTimeManagementStatesProcedure,
+			opts...,
+		),
+		listRealTimeManagementStateColors: connect_go.NewClient[wfm.ListRealTimeManagementStateColorsRequest, wfm.ListRealTimeManagementStateColorsResponse](
+			httpClient,
+			baseURL+WFMListRealTimeManagementStateColorsProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -3500,6 +3534,8 @@ type wFMClient struct {
 	removeAgentFromSchedule                       *connect_go.Client[wfm.RemoveAgentFromScheduleRequest, wfm.RemoveAgentFromScheduleResponse]
 	helloWorldWFMAdherence                        *connect_go.Client[wfm.HelloWorldWFMAdherenceRequest, wfm.HelloWorldWFMAdherenceResponse]
 	listAgentStatesForDay                         *connect_go.Client[wfm.ListAgentStatesForDayRequest, wfm.ListAgentStatesForDayResponse]
+	listRealTimeManagementStates                  *connect_go.Client[wfm.ListRealTimeManagementStatesRequest, wfm.ListRealTimeManagementStatesResponse]
+	listRealTimeManagementStateColors             *connect_go.Client[wfm.ListRealTimeManagementStateColorsRequest, wfm.ListRealTimeManagementStateColorsResponse]
 }
 
 // PerformInitialClientSetup calls api.v1alpha1.wfm.WFM.PerformInitialClientSetup.
@@ -4369,6 +4405,16 @@ func (c *wFMClient) HelloWorldWFMAdherence(ctx context.Context, req *connect_go.
 // ListAgentStatesForDay calls api.v1alpha1.wfm.WFM.ListAgentStatesForDay.
 func (c *wFMClient) ListAgentStatesForDay(ctx context.Context, req *connect_go.Request[wfm.ListAgentStatesForDayRequest]) (*connect_go.Response[wfm.ListAgentStatesForDayResponse], error) {
 	return c.listAgentStatesForDay.CallUnary(ctx, req)
+}
+
+// ListRealTimeManagementStates calls api.v1alpha1.wfm.WFM.ListRealTimeManagementStates.
+func (c *wFMClient) ListRealTimeManagementStates(ctx context.Context, req *connect_go.Request[wfm.ListRealTimeManagementStatesRequest]) (*connect_go.Response[wfm.ListRealTimeManagementStatesResponse], error) {
+	return c.listRealTimeManagementStates.CallUnary(ctx, req)
+}
+
+// ListRealTimeManagementStateColors calls api.v1alpha1.wfm.WFM.ListRealTimeManagementStateColors.
+func (c *wFMClient) ListRealTimeManagementStateColors(ctx context.Context, req *connect_go.Request[wfm.ListRealTimeManagementStateColorsRequest]) (*connect_go.Response[wfm.ListRealTimeManagementStateColorsResponse], error) {
+	return c.listRealTimeManagementStateColors.CallUnary(ctx, req)
 }
 
 // WFMHandler is an implementation of the api.v1alpha1.wfm.WFM service.
@@ -6326,6 +6372,24 @@ type WFMHandler interface {
 	//   - grpc.Invalid: the @start_datetime is invalid or beyond the current datetime.
 	//   - grpc.Internal: error occurs when listing the agent states.
 	ListAgentStatesForDay(context.Context, *connect_go.Request[wfm.ListAgentStatesForDayRequest]) (*connect_go.Response[wfm.ListAgentStatesForDayResponse], error)
+	// List org-level RealTimeManagementStates.
+	// Required permissions:
+	//
+	//	PERMISSION_WFM_ADHERENCE_ADMIN, PERMISSION_WFM_ADHERENCE_MANAGER, or PERMISSION_WFM_ADHERENCE_MONITOR
+	//
+	// Errors:
+	//   - grpc.Invalid: on invalid input.
+	//   - grpc.Internal: on unexpected error.
+	ListRealTimeManagementStates(context.Context, *connect_go.Request[wfm.ListRealTimeManagementStatesRequest]) (*connect_go.Response[wfm.ListRealTimeManagementStatesResponse], error)
+	// List org-level RealTimeManagementStateColors.
+	// Required permissions:
+	//
+	//	PERMISSION_WFM_ADHERENCE_ADMIN, PERMISSION_WFM_ADHERENCE_MANAGER, or PERMISSION_WFM_ADHERENCE_MONITOR
+	//
+	// Errors:
+	//   - grpc.Invalid: on invalid input.
+	//   - grpc.Internal: on unexpected error.
+	ListRealTimeManagementStateColors(context.Context, *connect_go.Request[wfm.ListRealTimeManagementStateColorsRequest]) (*connect_go.Response[wfm.ListRealTimeManagementStateColorsResponse], error)
 }
 
 // NewWFMHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -7179,6 +7243,16 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.ListAgentStatesForDay,
 		opts...,
 	)
+	wFMListRealTimeManagementStatesHandler := connect_go.NewUnaryHandler(
+		WFMListRealTimeManagementStatesProcedure,
+		svc.ListRealTimeManagementStates,
+		opts...,
+	)
+	wFMListRealTimeManagementStateColorsHandler := connect_go.NewUnaryHandler(
+		WFMListRealTimeManagementStateColorsProcedure,
+		svc.ListRealTimeManagementStateColors,
+		opts...,
+	)
 	return "/api.v1alpha1.wfm.WFM/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case WFMPerformInitialClientSetupProcedure:
@@ -7519,6 +7593,10 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMHelloWorldWFMAdherenceHandler.ServeHTTP(w, r)
 		case WFMListAgentStatesForDayProcedure:
 			wFMListAgentStatesForDayHandler.ServeHTTP(w, r)
+		case WFMListRealTimeManagementStatesProcedure:
+			wFMListRealTimeManagementStatesHandler.ServeHTTP(w, r)
+		case WFMListRealTimeManagementStateColorsProcedure:
+			wFMListRealTimeManagementStateColorsHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -8202,4 +8280,12 @@ func (UnimplementedWFMHandler) HelloWorldWFMAdherence(context.Context, *connect_
 
 func (UnimplementedWFMHandler) ListAgentStatesForDay(context.Context, *connect_go.Request[wfm.ListAgentStatesForDayRequest]) (*connect_go.Response[wfm.ListAgentStatesForDayResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListAgentStatesForDay is not implemented"))
+}
+
+func (UnimplementedWFMHandler) ListRealTimeManagementStates(context.Context, *connect_go.Request[wfm.ListRealTimeManagementStatesRequest]) (*connect_go.Response[wfm.ListRealTimeManagementStatesResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListRealTimeManagementStates is not implemented"))
+}
+
+func (UnimplementedWFMHandler) ListRealTimeManagementStateColors(context.Context, *connect_go.Request[wfm.ListRealTimeManagementStateColorsRequest]) (*connect_go.Response[wfm.ListRealTimeManagementStateColorsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListRealTimeManagementStateColors is not implemented"))
 }

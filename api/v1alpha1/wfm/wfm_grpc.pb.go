@@ -202,6 +202,8 @@ const (
 	WFM_RemoveAgentFromSchedule_FullMethodName                       = "/api.v1alpha1.wfm.WFM/RemoveAgentFromSchedule"
 	WFM_HelloWorldWFMAdherence_FullMethodName                        = "/api.v1alpha1.wfm.WFM/HelloWorldWFMAdherence"
 	WFM_ListAgentStatesForDay_FullMethodName                         = "/api.v1alpha1.wfm.WFM/ListAgentStatesForDay"
+	WFM_ListRealTimeManagementStates_FullMethodName                  = "/api.v1alpha1.wfm.WFM/ListRealTimeManagementStates"
+	WFM_ListRealTimeManagementStateColors_FullMethodName             = "/api.v1alpha1.wfm.WFM/ListRealTimeManagementStateColors"
 )
 
 // WFMClient is the client API for WFM service.
@@ -2155,6 +2157,24 @@ type WFMClient interface {
 	//   - grpc.Invalid: the @start_datetime is invalid or beyond the current datetime.
 	//   - grpc.Internal: error occurs when listing the agent states.
 	ListAgentStatesForDay(ctx context.Context, in *ListAgentStatesForDayRequest, opts ...grpc.CallOption) (*ListAgentStatesForDayResponse, error)
+	// List org-level RealTimeManagementStates.
+	// Required permissions:
+	//
+	//	PERMISSION_WFM_ADHERENCE_ADMIN, PERMISSION_WFM_ADHERENCE_MANAGER, or PERMISSION_WFM_ADHERENCE_MONITOR
+	//
+	// Errors:
+	//   - grpc.Invalid: on invalid input.
+	//   - grpc.Internal: on unexpected error.
+	ListRealTimeManagementStates(ctx context.Context, in *ListRealTimeManagementStatesRequest, opts ...grpc.CallOption) (*ListRealTimeManagementStatesResponse, error)
+	// List org-level RealTimeManagementStateColors.
+	// Required permissions:
+	//
+	//	PERMISSION_WFM_ADHERENCE_ADMIN, PERMISSION_WFM_ADHERENCE_MANAGER, or PERMISSION_WFM_ADHERENCE_MONITOR
+	//
+	// Errors:
+	//   - grpc.Invalid: on invalid input.
+	//   - grpc.Internal: on unexpected error.
+	ListRealTimeManagementStateColors(ctx context.Context, in *ListRealTimeManagementStateColorsRequest, opts ...grpc.CallOption) (*ListRealTimeManagementStateColorsResponse, error)
 }
 
 type wFMClient struct {
@@ -3824,6 +3844,24 @@ func (c *wFMClient) HelloWorldWFMAdherence(ctx context.Context, in *HelloWorldWF
 func (c *wFMClient) ListAgentStatesForDay(ctx context.Context, in *ListAgentStatesForDayRequest, opts ...grpc.CallOption) (*ListAgentStatesForDayResponse, error) {
 	out := new(ListAgentStatesForDayResponse)
 	err := c.cc.Invoke(ctx, WFM_ListAgentStatesForDay_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) ListRealTimeManagementStates(ctx context.Context, in *ListRealTimeManagementStatesRequest, opts ...grpc.CallOption) (*ListRealTimeManagementStatesResponse, error) {
+	out := new(ListRealTimeManagementStatesResponse)
+	err := c.cc.Invoke(ctx, WFM_ListRealTimeManagementStates_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) ListRealTimeManagementStateColors(ctx context.Context, in *ListRealTimeManagementStateColorsRequest, opts ...grpc.CallOption) (*ListRealTimeManagementStateColorsResponse, error) {
+	out := new(ListRealTimeManagementStateColorsResponse)
+	err := c.cc.Invoke(ctx, WFM_ListRealTimeManagementStateColors_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -5781,6 +5819,24 @@ type WFMServer interface {
 	//   - grpc.Invalid: the @start_datetime is invalid or beyond the current datetime.
 	//   - grpc.Internal: error occurs when listing the agent states.
 	ListAgentStatesForDay(context.Context, *ListAgentStatesForDayRequest) (*ListAgentStatesForDayResponse, error)
+	// List org-level RealTimeManagementStates.
+	// Required permissions:
+	//
+	//	PERMISSION_WFM_ADHERENCE_ADMIN, PERMISSION_WFM_ADHERENCE_MANAGER, or PERMISSION_WFM_ADHERENCE_MONITOR
+	//
+	// Errors:
+	//   - grpc.Invalid: on invalid input.
+	//   - grpc.Internal: on unexpected error.
+	ListRealTimeManagementStates(context.Context, *ListRealTimeManagementStatesRequest) (*ListRealTimeManagementStatesResponse, error)
+	// List org-level RealTimeManagementStateColors.
+	// Required permissions:
+	//
+	//	PERMISSION_WFM_ADHERENCE_ADMIN, PERMISSION_WFM_ADHERENCE_MANAGER, or PERMISSION_WFM_ADHERENCE_MONITOR
+	//
+	// Errors:
+	//   - grpc.Invalid: on invalid input.
+	//   - grpc.Internal: on unexpected error.
+	ListRealTimeManagementStateColors(context.Context, *ListRealTimeManagementStateColorsRequest) (*ListRealTimeManagementStateColorsResponse, error)
 	mustEmbedUnimplementedWFMServer()
 }
 
@@ -6294,6 +6350,12 @@ func (UnimplementedWFMServer) HelloWorldWFMAdherence(context.Context, *HelloWorl
 }
 func (UnimplementedWFMServer) ListAgentStatesForDay(context.Context, *ListAgentStatesForDayRequest) (*ListAgentStatesForDayResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAgentStatesForDay not implemented")
+}
+func (UnimplementedWFMServer) ListRealTimeManagementStates(context.Context, *ListRealTimeManagementStatesRequest) (*ListRealTimeManagementStatesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListRealTimeManagementStates not implemented")
+}
+func (UnimplementedWFMServer) ListRealTimeManagementStateColors(context.Context, *ListRealTimeManagementStateColorsRequest) (*ListRealTimeManagementStateColorsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListRealTimeManagementStateColors not implemented")
 }
 func (UnimplementedWFMServer) mustEmbedUnimplementedWFMServer() {}
 
@@ -9368,6 +9430,42 @@ func _WFM_ListAgentStatesForDay_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_ListRealTimeManagementStates_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListRealTimeManagementStatesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).ListRealTimeManagementStates(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_ListRealTimeManagementStates_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).ListRealTimeManagementStates(ctx, req.(*ListRealTimeManagementStatesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_ListRealTimeManagementStateColors_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListRealTimeManagementStateColorsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).ListRealTimeManagementStateColors(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_ListRealTimeManagementStateColors_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).ListRealTimeManagementStateColors(ctx, req.(*ListRealTimeManagementStateColorsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WFM_ServiceDesc is the grpc.ServiceDesc for WFM service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -10026,6 +10124,14 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListAgentStatesForDay",
 			Handler:    _WFM_ListAgentStatesForDay_Handler,
+		},
+		{
+			MethodName: "ListRealTimeManagementStates",
+			Handler:    _WFM_ListRealTimeManagementStates_Handler,
+		},
+		{
+			MethodName: "ListRealTimeManagementStateColors",
+			Handler:    _WFM_ListRealTimeManagementStateColors_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
