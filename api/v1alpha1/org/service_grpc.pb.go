@@ -153,6 +153,7 @@ const (
 	Org_DeleteDataDipTemplate_FullMethodName                    = "/api.v1alpha1.org.Org/DeleteDataDipTemplate"
 	Org_CopyDataDipTemplate_FullMethodName                      = "/api.v1alpha1.org.Org/CopyDataDipTemplate"
 	Org_CopyDataDipTemplateToOrganization_FullMethodName        = "/api.v1alpha1.org.Org/CopyDataDipTemplateToOrganization"
+	Org_ListBroadcastTemplateGeneralDetails_FullMethodName      = "/api.v1alpha1.org.Org/ListBroadcastTemplateGeneralDetails"
 	Org_ListAgentResponseAutoRules_FullMethodName               = "/api.v1alpha1.org.Org/ListAgentResponseAutoRules"
 	Org_CreateAgentResponseAutoRules_FullMethodName             = "/api.v1alpha1.org.Org/CreateAgentResponseAutoRules"
 	Org_UpdateAgentResponseAutoRules_FullMethodName             = "/api.v1alpha1.org.Org/UpdateAgentResponseAutoRules"
@@ -548,6 +549,8 @@ type OrgClient interface {
 	CopyDataDipTemplate(ctx context.Context, in *CopyDataDipTemplateRequest, opts ...grpc.CallOption) (*CopyDataDipTemplateResponse, error)
 	// Copies a data dip template to a different organization.
 	CopyDataDipTemplateToOrganization(ctx context.Context, in *CopyDataDipTemplateToOrganizationRequest, opts ...grpc.CallOption) (*CopyDataDipTemplateToOrganizationResponse, error)
+	// ListBroadcastTemplateGeneralDetails returns a list of broadcast templates for an organization
+	ListBroadcastTemplateGeneralDetails(ctx context.Context, in *ListBroadcastTemplateGeneralDetailsRequest, opts ...grpc.CallOption) (*ListBroadcastTemplateGeneralDetailsResponse, error)
 	// Lists Agent Call Response Automatically added compliance rules for an Org.
 	ListAgentResponseAutoRules(ctx context.Context, in *ListAgentResponseAutoRulesRequest, opts ...grpc.CallOption) (*ListAgentResponseAutoRulesResponse, error)
 	// Creates a new Agent Call Response Automatically added compliance rule set.
@@ -2173,6 +2176,15 @@ func (c *orgClient) CopyDataDipTemplateToOrganization(ctx context.Context, in *C
 	return out, nil
 }
 
+func (c *orgClient) ListBroadcastTemplateGeneralDetails(ctx context.Context, in *ListBroadcastTemplateGeneralDetailsRequest, opts ...grpc.CallOption) (*ListBroadcastTemplateGeneralDetailsResponse, error) {
+	out := new(ListBroadcastTemplateGeneralDetailsResponse)
+	err := c.cc.Invoke(ctx, Org_ListBroadcastTemplateGeneralDetails_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *orgClient) ListAgentResponseAutoRules(ctx context.Context, in *ListAgentResponseAutoRulesRequest, opts ...grpc.CallOption) (*ListAgentResponseAutoRulesResponse, error) {
 	out := new(ListAgentResponseAutoRulesResponse)
 	err := c.cc.Invoke(ctx, Org_ListAgentResponseAutoRules_FullMethodName, in, out, opts...)
@@ -3224,6 +3236,8 @@ type OrgServer interface {
 	CopyDataDipTemplate(context.Context, *CopyDataDipTemplateRequest) (*CopyDataDipTemplateResponse, error)
 	// Copies a data dip template to a different organization.
 	CopyDataDipTemplateToOrganization(context.Context, *CopyDataDipTemplateToOrganizationRequest) (*CopyDataDipTemplateToOrganizationResponse, error)
+	// ListBroadcastTemplateGeneralDetails returns a list of broadcast templates for an organization
+	ListBroadcastTemplateGeneralDetails(context.Context, *ListBroadcastTemplateGeneralDetailsRequest) (*ListBroadcastTemplateGeneralDetailsResponse, error)
 	// Lists Agent Call Response Automatically added compliance rules for an Org.
 	ListAgentResponseAutoRules(context.Context, *ListAgentResponseAutoRulesRequest) (*ListAgentResponseAutoRulesResponse, error)
 	// Creates a new Agent Call Response Automatically added compliance rule set.
@@ -3826,6 +3840,9 @@ func (UnimplementedOrgServer) CopyDataDipTemplate(context.Context, *CopyDataDipT
 }
 func (UnimplementedOrgServer) CopyDataDipTemplateToOrganization(context.Context, *CopyDataDipTemplateToOrganizationRequest) (*CopyDataDipTemplateToOrganizationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CopyDataDipTemplateToOrganization not implemented")
+}
+func (UnimplementedOrgServer) ListBroadcastTemplateGeneralDetails(context.Context, *ListBroadcastTemplateGeneralDetailsRequest) (*ListBroadcastTemplateGeneralDetailsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListBroadcastTemplateGeneralDetails not implemented")
 }
 func (UnimplementedOrgServer) ListAgentResponseAutoRules(context.Context, *ListAgentResponseAutoRulesRequest) (*ListAgentResponseAutoRulesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAgentResponseAutoRules not implemented")
@@ -6525,6 +6542,24 @@ func _Org_CopyDataDipTemplateToOrganization_Handler(srv interface{}, ctx context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Org_ListBroadcastTemplateGeneralDetails_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListBroadcastTemplateGeneralDetailsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).ListBroadcastTemplateGeneralDetails(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_ListBroadcastTemplateGeneralDetails_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).ListBroadcastTemplateGeneralDetails(ctx, req.(*ListBroadcastTemplateGeneralDetailsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Org_ListAgentResponseAutoRules_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListAgentResponseAutoRulesRequest)
 	if err := dec(in); err != nil {
@@ -8507,6 +8542,10 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CopyDataDipTemplateToOrganization",
 			Handler:    _Org_CopyDataDipTemplateToOrganization_Handler,
+		},
+		{
+			MethodName: "ListBroadcastTemplateGeneralDetails",
+			Handler:    _Org_ListBroadcastTemplateGeneralDetails_Handler,
 		},
 		{
 			MethodName: "ListAgentResponseAutoRules",

@@ -391,6 +391,9 @@ const (
 	// OrgCopyDataDipTemplateToOrganizationProcedure is the fully-qualified name of the Org's
 	// CopyDataDipTemplateToOrganization RPC.
 	OrgCopyDataDipTemplateToOrganizationProcedure = "/api.v1alpha1.org.Org/CopyDataDipTemplateToOrganization"
+	// OrgListBroadcastTemplateGeneralDetailsProcedure is the fully-qualified name of the Org's
+	// ListBroadcastTemplateGeneralDetails RPC.
+	OrgListBroadcastTemplateGeneralDetailsProcedure = "/api.v1alpha1.org.Org/ListBroadcastTemplateGeneralDetails"
 	// OrgListAgentResponseAutoRulesProcedure is the fully-qualified name of the Org's
 	// ListAgentResponseAutoRules RPC.
 	OrgListAgentResponseAutoRulesProcedure = "/api.v1alpha1.org.Org/ListAgentResponseAutoRules"
@@ -919,6 +922,8 @@ type OrgClient interface {
 	CopyDataDipTemplate(context.Context, *connect_go.Request[org.CopyDataDipTemplateRequest]) (*connect_go.Response[org.CopyDataDipTemplateResponse], error)
 	// Copies a data dip template to a different organization.
 	CopyDataDipTemplateToOrganization(context.Context, *connect_go.Request[org.CopyDataDipTemplateToOrganizationRequest]) (*connect_go.Response[org.CopyDataDipTemplateToOrganizationResponse], error)
+	// ListBroadcastTemplateGeneralDetails returns a list of broadcast templates for an organization
+	ListBroadcastTemplateGeneralDetails(context.Context, *connect_go.Request[org.ListBroadcastTemplateGeneralDetailsRequest]) (*connect_go.Response[org.ListBroadcastTemplateGeneralDetailsResponse], error)
 	// Lists Agent Call Response Automatically added compliance rules for an Org.
 	ListAgentResponseAutoRules(context.Context, *connect_go.Request[org.ListAgentResponseAutoRulesRequest]) (*connect_go.Response[org.ListAgentResponseAutoRulesResponse], error)
 	// Creates a new Agent Call Response Automatically added compliance rule set.
@@ -1797,6 +1802,11 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgCopyDataDipTemplateToOrganizationProcedure,
 			opts...,
 		),
+		listBroadcastTemplateGeneralDetails: connect_go.NewClient[org.ListBroadcastTemplateGeneralDetailsRequest, org.ListBroadcastTemplateGeneralDetailsResponse](
+			httpClient,
+			baseURL+OrgListBroadcastTemplateGeneralDetailsProcedure,
+			opts...,
+		),
 		listAgentResponseAutoRules: connect_go.NewClient[org.ListAgentResponseAutoRulesRequest, org.ListAgentResponseAutoRulesResponse](
 			httpClient,
 			baseURL+OrgListAgentResponseAutoRulesProcedure,
@@ -2346,6 +2356,7 @@ type orgClient struct {
 	deleteDataDipTemplate                    *connect_go.Client[org.DeleteDataDipTemplateRequest, org.DeleteDataDipTemplateResponse]
 	copyDataDipTemplate                      *connect_go.Client[org.CopyDataDipTemplateRequest, org.CopyDataDipTemplateResponse]
 	copyDataDipTemplateToOrganization        *connect_go.Client[org.CopyDataDipTemplateToOrganizationRequest, org.CopyDataDipTemplateToOrganizationResponse]
+	listBroadcastTemplateGeneralDetails      *connect_go.Client[org.ListBroadcastTemplateGeneralDetailsRequest, org.ListBroadcastTemplateGeneralDetailsResponse]
 	listAgentResponseAutoRules               *connect_go.Client[org.ListAgentResponseAutoRulesRequest, org.ListAgentResponseAutoRulesResponse]
 	createAgentResponseAutoRules             *connect_go.Client[org.CreateAgentResponseAutoRulesRequest, org.CreateAgentResponseAutoRulesResponse]
 	updateAgentResponseAutoRules             *connect_go.Client[org.UpdateAgentResponseAutoRulesRequest, org.UpdateAgentResponseAutoRulesResponse]
@@ -3118,6 +3129,12 @@ func (c *orgClient) CopyDataDipTemplateToOrganization(ctx context.Context, req *
 	return c.copyDataDipTemplateToOrganization.CallUnary(ctx, req)
 }
 
+// ListBroadcastTemplateGeneralDetails calls
+// api.v1alpha1.org.Org.ListBroadcastTemplateGeneralDetails.
+func (c *orgClient) ListBroadcastTemplateGeneralDetails(ctx context.Context, req *connect_go.Request[org.ListBroadcastTemplateGeneralDetailsRequest]) (*connect_go.Response[org.ListBroadcastTemplateGeneralDetailsResponse], error) {
+	return c.listBroadcastTemplateGeneralDetails.CallUnary(ctx, req)
+}
+
 // ListAgentResponseAutoRules calls api.v1alpha1.org.Org.ListAgentResponseAutoRules.
 func (c *orgClient) ListAgentResponseAutoRules(ctx context.Context, req *connect_go.Request[org.ListAgentResponseAutoRulesRequest]) (*connect_go.Response[org.ListAgentResponseAutoRulesResponse], error) {
 	return c.listAgentResponseAutoRules.CallUnary(ctx, req)
@@ -3858,6 +3875,8 @@ type OrgHandler interface {
 	CopyDataDipTemplate(context.Context, *connect_go.Request[org.CopyDataDipTemplateRequest]) (*connect_go.Response[org.CopyDataDipTemplateResponse], error)
 	// Copies a data dip template to a different organization.
 	CopyDataDipTemplateToOrganization(context.Context, *connect_go.Request[org.CopyDataDipTemplateToOrganizationRequest]) (*connect_go.Response[org.CopyDataDipTemplateToOrganizationResponse], error)
+	// ListBroadcastTemplateGeneralDetails returns a list of broadcast templates for an organization
+	ListBroadcastTemplateGeneralDetails(context.Context, *connect_go.Request[org.ListBroadcastTemplateGeneralDetailsRequest]) (*connect_go.Response[org.ListBroadcastTemplateGeneralDetailsResponse], error)
 	// Lists Agent Call Response Automatically added compliance rules for an Org.
 	ListAgentResponseAutoRules(context.Context, *connect_go.Request[org.ListAgentResponseAutoRulesRequest]) (*connect_go.Response[org.ListAgentResponseAutoRulesResponse], error)
 	// Creates a new Agent Call Response Automatically added compliance rule set.
@@ -4732,6 +4751,11 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.CopyDataDipTemplateToOrganization,
 		opts...,
 	)
+	orgListBroadcastTemplateGeneralDetailsHandler := connect_go.NewUnaryHandler(
+		OrgListBroadcastTemplateGeneralDetailsProcedure,
+		svc.ListBroadcastTemplateGeneralDetails,
+		opts...,
+	)
 	orgListAgentResponseAutoRulesHandler := connect_go.NewUnaryHandler(
 		OrgListAgentResponseAutoRulesProcedure,
 		svc.ListAgentResponseAutoRules,
@@ -5412,6 +5436,8 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 			orgCopyDataDipTemplateHandler.ServeHTTP(w, r)
 		case OrgCopyDataDipTemplateToOrganizationProcedure:
 			orgCopyDataDipTemplateToOrganizationHandler.ServeHTTP(w, r)
+		case OrgListBroadcastTemplateGeneralDetailsProcedure:
+			orgListBroadcastTemplateGeneralDetailsHandler.ServeHTTP(w, r)
 		case OrgListAgentResponseAutoRulesProcedure:
 			orgListAgentResponseAutoRulesHandler.ServeHTTP(w, r)
 		case OrgCreateAgentResponseAutoRulesProcedure:
@@ -6119,6 +6145,10 @@ func (UnimplementedOrgHandler) CopyDataDipTemplate(context.Context, *connect_go.
 
 func (UnimplementedOrgHandler) CopyDataDipTemplateToOrganization(context.Context, *connect_go.Request[org.CopyDataDipTemplateToOrganizationRequest]) (*connect_go.Response[org.CopyDataDipTemplateToOrganizationResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.CopyDataDipTemplateToOrganization is not implemented"))
+}
+
+func (UnimplementedOrgHandler) ListBroadcastTemplateGeneralDetails(context.Context, *connect_go.Request[org.ListBroadcastTemplateGeneralDetailsRequest]) (*connect_go.Response[org.ListBroadcastTemplateGeneralDetailsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.ListBroadcastTemplateGeneralDetails is not implemented"))
 }
 
 func (UnimplementedOrgHandler) ListAgentResponseAutoRules(context.Context, *connect_go.Request[org.ListAgentResponseAutoRulesRequest]) (*connect_go.Response[org.ListAgentResponseAutoRulesResponse], error) {
