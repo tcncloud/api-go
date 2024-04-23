@@ -73,6 +73,55 @@ func (ListCategoriesRequest_CategoryType) EnumDescriptor() ([]byte, []int) {
 	return file_api_v1alpha1_scorecards_category_proto_rawDescGZIP(), []int{2, 0}
 }
 
+type ListCategoriesByOrgIdRequest_CategoryType int32
+
+const (
+	ListCategoriesByOrgIdRequest_ANY    ListCategoriesByOrgIdRequest_CategoryType = 0 // Default. Returns all category types.
+	ListCategoriesByOrgIdRequest_SYSTEM ListCategoriesByOrgIdRequest_CategoryType = 1 // System created category (cannot be edited by users).
+	ListCategoriesByOrgIdRequest_USER   ListCategoriesByOrgIdRequest_CategoryType = 2 //  User created category.
+)
+
+// Enum value maps for ListCategoriesByOrgIdRequest_CategoryType.
+var (
+	ListCategoriesByOrgIdRequest_CategoryType_name = map[int32]string{
+		0: "ANY",
+		1: "SYSTEM",
+		2: "USER",
+	}
+	ListCategoriesByOrgIdRequest_CategoryType_value = map[string]int32{
+		"ANY":    0,
+		"SYSTEM": 1,
+		"USER":   2,
+	}
+)
+
+func (x ListCategoriesByOrgIdRequest_CategoryType) Enum() *ListCategoriesByOrgIdRequest_CategoryType {
+	p := new(ListCategoriesByOrgIdRequest_CategoryType)
+	*p = x
+	return p
+}
+
+func (x ListCategoriesByOrgIdRequest_CategoryType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (ListCategoriesByOrgIdRequest_CategoryType) Descriptor() protoreflect.EnumDescriptor {
+	return file_api_v1alpha1_scorecards_category_proto_enumTypes[1].Descriptor()
+}
+
+func (ListCategoriesByOrgIdRequest_CategoryType) Type() protoreflect.EnumType {
+	return &file_api_v1alpha1_scorecards_category_proto_enumTypes[1]
+}
+
+func (x ListCategoriesByOrgIdRequest_CategoryType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use ListCategoriesByOrgIdRequest_CategoryType.Descriptor instead.
+func (ListCategoriesByOrgIdRequest_CategoryType) EnumDescriptor() ([]byte, []int) {
+	return file_api_v1alpha1_scorecards_category_proto_rawDescGZIP(), []int{13, 0}
+}
+
 // CreateCategoryRequest is request to create a category.
 type CreateCategoryRequest struct {
 	state         protoimpl.MessageState
@@ -837,6 +886,78 @@ func (x *SampleAgentCall) GetAgentUserId() string {
 	return ""
 }
 
+// ListCategoriesByOrgIdRequest is the request to list categories by some criteria.
+type ListCategoriesByOrgIdRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	OrgId         string                                    `protobuf:"bytes,1,opt,name=org_id,json=orgId,proto3" json:"org_id,omitempty"`                                                                                              // Required. Specifies the org in which to list categories.
+	AuthorIds     []string                                  `protobuf:"bytes,2,rep,name=author_ids,json=authorIds,proto3" json:"author_ids,omitempty"`                                                                                  // Optional. Returns categories by any author.
+	SkillProfiles []int64                                   `protobuf:"varint,3,rep,packed,name=skill_profiles,json=skillProfiles,proto3" json:"skill_profiles,omitempty"`                                                              // Optional. Returns categories with any skill.
+	CategoryType  ListCategoriesByOrgIdRequest_CategoryType `protobuf:"varint,4,opt,name=category_type,json=categoryType,proto3,enum=api.v1alpha1.scorecards.ListCategoriesByOrgIdRequest_CategoryType" json:"category_type,omitempty"` // Required. Returns categories matching type.
+}
+
+func (x *ListCategoriesByOrgIdRequest) Reset() {
+	*x = ListCategoriesByOrgIdRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_scorecards_category_proto_msgTypes[13]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ListCategoriesByOrgIdRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListCategoriesByOrgIdRequest) ProtoMessage() {}
+
+func (x *ListCategoriesByOrgIdRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_scorecards_category_proto_msgTypes[13]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListCategoriesByOrgIdRequest.ProtoReflect.Descriptor instead.
+func (*ListCategoriesByOrgIdRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_scorecards_category_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *ListCategoriesByOrgIdRequest) GetOrgId() string {
+	if x != nil {
+		return x.OrgId
+	}
+	return ""
+}
+
+func (x *ListCategoriesByOrgIdRequest) GetAuthorIds() []string {
+	if x != nil {
+		return x.AuthorIds
+	}
+	return nil
+}
+
+func (x *ListCategoriesByOrgIdRequest) GetSkillProfiles() []int64 {
+	if x != nil {
+		return x.SkillProfiles
+	}
+	return nil
+}
+
+func (x *ListCategoriesByOrgIdRequest) GetCategoryType() ListCategoriesByOrgIdRequest_CategoryType {
+	if x != nil {
+		return x.CategoryType
+	}
+	return ListCategoriesByOrgIdRequest_ANY
+}
+
 var File_api_v1alpha1_scorecards_category_proto protoreflect.FileDescriptor
 
 var file_api_v1alpha1_scorecards_category_proto_rawDesc = []byte{
@@ -970,21 +1091,39 @@ var file_api_v1alpha1_scorecards_category_proto_rawDesc = []byte{
 	0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x07, 0x73, 0x69, 0x6c, 0x65, 0x6e, 0x63, 0x65, 0x12,
 	0x22, 0x0a, 0x0d, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x5f, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64,
 	0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x55, 0x73, 0x65,
-	0x72, 0x49, 0x64, 0x42, 0xde, 0x01, 0x0a, 0x1b, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e,
-	0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x63, 0x61,
-	0x72, 0x64, 0x73, 0x42, 0x0d, 0x43, 0x61, 0x74, 0x65, 0x67, 0x6f, 0x72, 0x79, 0x50, 0x72, 0x6f,
-	0x74, 0x6f, 0x50, 0x01, 0x5a, 0x32, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d,
-	0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f,
-	0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x73, 0x63,
-	0x6f, 0x72, 0x65, 0x63, 0x61, 0x72, 0x64, 0x73, 0xa2, 0x02, 0x03, 0x41, 0x56, 0x53, 0xaa, 0x02,
-	0x17, 0x41, 0x70, 0x69, 0x2e, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x53, 0x63,
-	0x6f, 0x72, 0x65, 0x63, 0x61, 0x72, 0x64, 0x73, 0xca, 0x02, 0x17, 0x41, 0x70, 0x69, 0x5c, 0x56,
+	0x72, 0x49, 0x64, 0x22, 0x93, 0x02, 0x0a, 0x1c, 0x4c, 0x69, 0x73, 0x74, 0x43, 0x61, 0x74, 0x65,
+	0x67, 0x6f, 0x72, 0x69, 0x65, 0x73, 0x42, 0x79, 0x4f, 0x72, 0x67, 0x49, 0x64, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x12, 0x15, 0x0a, 0x06, 0x6f, 0x72, 0x67, 0x5f, 0x69, 0x64, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x6f, 0x72, 0x67, 0x49, 0x64, 0x12, 0x1d, 0x0a, 0x0a, 0x61,
+	0x75, 0x74, 0x68, 0x6f, 0x72, 0x5f, 0x69, 0x64, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x09, 0x52,
+	0x09, 0x61, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x49, 0x64, 0x73, 0x12, 0x25, 0x0a, 0x0e, 0x73, 0x6b,
+	0x69, 0x6c, 0x6c, 0x5f, 0x70, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x73, 0x18, 0x03, 0x20, 0x03,
+	0x28, 0x03, 0x52, 0x0d, 0x73, 0x6b, 0x69, 0x6c, 0x6c, 0x50, 0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65,
+	0x73, 0x12, 0x67, 0x0a, 0x0d, 0x63, 0x61, 0x74, 0x65, 0x67, 0x6f, 0x72, 0x79, 0x5f, 0x74, 0x79,
+	0x70, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x42, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76,
+	0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x63, 0x61, 0x72,
+	0x64, 0x73, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x43, 0x61, 0x74, 0x65, 0x67, 0x6f, 0x72, 0x69, 0x65,
+	0x73, 0x42, 0x79, 0x4f, 0x72, 0x67, 0x49, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x2e,
+	0x43, 0x61, 0x74, 0x65, 0x67, 0x6f, 0x72, 0x79, 0x54, 0x79, 0x70, 0x65, 0x52, 0x0c, 0x63, 0x61,
+	0x74, 0x65, 0x67, 0x6f, 0x72, 0x79, 0x54, 0x79, 0x70, 0x65, 0x22, 0x2d, 0x0a, 0x0c, 0x43, 0x61,
+	0x74, 0x65, 0x67, 0x6f, 0x72, 0x79, 0x54, 0x79, 0x70, 0x65, 0x12, 0x07, 0x0a, 0x03, 0x41, 0x4e,
+	0x59, 0x10, 0x00, 0x12, 0x0a, 0x0a, 0x06, 0x53, 0x59, 0x53, 0x54, 0x45, 0x4d, 0x10, 0x01, 0x12,
+	0x08, 0x0a, 0x04, 0x55, 0x53, 0x45, 0x52, 0x10, 0x02, 0x42, 0xde, 0x01, 0x0a, 0x1b, 0x63, 0x6f,
+	0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x73,
+	0x63, 0x6f, 0x72, 0x65, 0x63, 0x61, 0x72, 0x64, 0x73, 0x42, 0x0d, 0x43, 0x61, 0x74, 0x65, 0x67,
+	0x6f, 0x72, 0x79, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x32, 0x67, 0x69, 0x74, 0x68,
+	0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f,
+	0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70,
+	0x68, 0x61, 0x31, 0x2f, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x63, 0x61, 0x72, 0x64, 0x73, 0xa2, 0x02,
+	0x03, 0x41, 0x56, 0x53, 0xaa, 0x02, 0x17, 0x41, 0x70, 0x69, 0x2e, 0x56, 0x31, 0x61, 0x6c, 0x70,
+	0x68, 0x61, 0x31, 0x2e, 0x53, 0x63, 0x6f, 0x72, 0x65, 0x63, 0x61, 0x72, 0x64, 0x73, 0xca, 0x02,
+	0x17, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x53, 0x63,
+	0x6f, 0x72, 0x65, 0x63, 0x61, 0x72, 0x64, 0x73, 0xe2, 0x02, 0x23, 0x41, 0x70, 0x69, 0x5c, 0x56,
 	0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x53, 0x63, 0x6f, 0x72, 0x65, 0x63, 0x61, 0x72,
-	0x64, 0x73, 0xe2, 0x02, 0x23, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61,
-	0x31, 0x5c, 0x53, 0x63, 0x6f, 0x72, 0x65, 0x63, 0x61, 0x72, 0x64, 0x73, 0x5c, 0x47, 0x50, 0x42,
-	0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x19, 0x41, 0x70, 0x69, 0x3a, 0x3a,
-	0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x3a, 0x3a, 0x53, 0x63, 0x6f, 0x72, 0x65, 0x63,
-	0x61, 0x72, 0x64, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x64, 0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02,
+	0x19, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x3a, 0x3a,
+	0x53, 0x63, 0x6f, 0x72, 0x65, 0x63, 0x61, 0x72, 0x64, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x33,
 }
 
 var (
@@ -999,53 +1138,56 @@ func file_api_v1alpha1_scorecards_category_proto_rawDescGZIP() []byte {
 	return file_api_v1alpha1_scorecards_category_proto_rawDescData
 }
 
-var file_api_v1alpha1_scorecards_category_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_api_v1alpha1_scorecards_category_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
+var file_api_v1alpha1_scorecards_category_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
+var file_api_v1alpha1_scorecards_category_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
 var file_api_v1alpha1_scorecards_category_proto_goTypes = []interface{}{
-	(ListCategoriesRequest_CategoryType)(0), // 0: api.v1alpha1.scorecards.ListCategoriesRequest.CategoryType
-	(*CreateCategoryRequest)(nil),           // 1: api.v1alpha1.scorecards.CreateCategoryRequest
-	(*CreateCategoryResponse)(nil),          // 2: api.v1alpha1.scorecards.CreateCategoryResponse
-	(*ListCategoriesRequest)(nil),           // 3: api.v1alpha1.scorecards.ListCategoriesRequest
-	(*ListCategoriesResponse)(nil),          // 4: api.v1alpha1.scorecards.ListCategoriesResponse
-	(*UpdateCategoryRequest)(nil),           // 5: api.v1alpha1.scorecards.UpdateCategoryRequest
-	(*UpdateCategoryResponse)(nil),          // 6: api.v1alpha1.scorecards.UpdateCategoryResponse
-	(*DeleteCategoryRequest)(nil),           // 7: api.v1alpha1.scorecards.DeleteCategoryRequest
-	(*DeleteCategoryResponse)(nil),          // 8: api.v1alpha1.scorecards.DeleteCategoryResponse
-	(*GetCategoryRequest)(nil),              // 9: api.v1alpha1.scorecards.GetCategoryRequest
-	(*GetCategoryResponse)(nil),             // 10: api.v1alpha1.scorecards.GetCategoryResponse
-	(*SampleCallsByCategoryRequest)(nil),    // 11: api.v1alpha1.scorecards.SampleCallsByCategoryRequest
-	(*SampleCallsByCategoryResponse)(nil),   // 12: api.v1alpha1.scorecards.SampleCallsByCategoryResponse
-	(*SampleAgentCall)(nil),                 // 13: api.v1alpha1.scorecards.SampleAgentCall
-	(*commons.Category)(nil),                // 14: api.commons.Category
-	(commons.CallType_Enum)(0),              // 15: api.commons.CallType.Enum
-	(*fieldmaskpb.FieldMask)(nil),           // 16: google.protobuf.FieldMask
-	(*timestamppb.Timestamp)(nil),           // 17: google.protobuf.Timestamp
-	(*durationpb.Duration)(nil),             // 18: google.protobuf.Duration
+	(ListCategoriesRequest_CategoryType)(0),        // 0: api.v1alpha1.scorecards.ListCategoriesRequest.CategoryType
+	(ListCategoriesByOrgIdRequest_CategoryType)(0), // 1: api.v1alpha1.scorecards.ListCategoriesByOrgIdRequest.CategoryType
+	(*CreateCategoryRequest)(nil),                  // 2: api.v1alpha1.scorecards.CreateCategoryRequest
+	(*CreateCategoryResponse)(nil),                 // 3: api.v1alpha1.scorecards.CreateCategoryResponse
+	(*ListCategoriesRequest)(nil),                  // 4: api.v1alpha1.scorecards.ListCategoriesRequest
+	(*ListCategoriesResponse)(nil),                 // 5: api.v1alpha1.scorecards.ListCategoriesResponse
+	(*UpdateCategoryRequest)(nil),                  // 6: api.v1alpha1.scorecards.UpdateCategoryRequest
+	(*UpdateCategoryResponse)(nil),                 // 7: api.v1alpha1.scorecards.UpdateCategoryResponse
+	(*DeleteCategoryRequest)(nil),                  // 8: api.v1alpha1.scorecards.DeleteCategoryRequest
+	(*DeleteCategoryResponse)(nil),                 // 9: api.v1alpha1.scorecards.DeleteCategoryResponse
+	(*GetCategoryRequest)(nil),                     // 10: api.v1alpha1.scorecards.GetCategoryRequest
+	(*GetCategoryResponse)(nil),                    // 11: api.v1alpha1.scorecards.GetCategoryResponse
+	(*SampleCallsByCategoryRequest)(nil),           // 12: api.v1alpha1.scorecards.SampleCallsByCategoryRequest
+	(*SampleCallsByCategoryResponse)(nil),          // 13: api.v1alpha1.scorecards.SampleCallsByCategoryResponse
+	(*SampleAgentCall)(nil),                        // 14: api.v1alpha1.scorecards.SampleAgentCall
+	(*ListCategoriesByOrgIdRequest)(nil),           // 15: api.v1alpha1.scorecards.ListCategoriesByOrgIdRequest
+	(*commons.Category)(nil),                       // 16: api.commons.Category
+	(commons.CallType_Enum)(0),                     // 17: api.commons.CallType.Enum
+	(*fieldmaskpb.FieldMask)(nil),                  // 18: google.protobuf.FieldMask
+	(*timestamppb.Timestamp)(nil),                  // 19: google.protobuf.Timestamp
+	(*durationpb.Duration)(nil),                    // 20: google.protobuf.Duration
 }
 var file_api_v1alpha1_scorecards_category_proto_depIdxs = []int32{
-	14, // 0: api.v1alpha1.scorecards.CreateCategoryRequest.category:type_name -> api.commons.Category
-	14, // 1: api.v1alpha1.scorecards.CreateCategoryResponse.category:type_name -> api.commons.Category
-	15, // 2: api.v1alpha1.scorecards.ListCategoriesRequest.call_types:type_name -> api.commons.CallType.Enum
+	16, // 0: api.v1alpha1.scorecards.CreateCategoryRequest.category:type_name -> api.commons.Category
+	16, // 1: api.v1alpha1.scorecards.CreateCategoryResponse.category:type_name -> api.commons.Category
+	17, // 2: api.v1alpha1.scorecards.ListCategoriesRequest.call_types:type_name -> api.commons.CallType.Enum
 	0,  // 3: api.v1alpha1.scorecards.ListCategoriesRequest.category_type:type_name -> api.v1alpha1.scorecards.ListCategoriesRequest.CategoryType
-	14, // 4: api.v1alpha1.scorecards.ListCategoriesResponse.categories:type_name -> api.commons.Category
-	14, // 5: api.v1alpha1.scorecards.UpdateCategoryRequest.category:type_name -> api.commons.Category
-	16, // 6: api.v1alpha1.scorecards.UpdateCategoryRequest.update_mask:type_name -> google.protobuf.FieldMask
-	14, // 7: api.v1alpha1.scorecards.UpdateCategoryResponse.category:type_name -> api.commons.Category
-	14, // 8: api.v1alpha1.scorecards.DeleteCategoryResponse.category:type_name -> api.commons.Category
-	14, // 9: api.v1alpha1.scorecards.GetCategoryResponse.category:type_name -> api.commons.Category
-	17, // 10: api.v1alpha1.scorecards.SampleCallsByCategoryRequest.start_time:type_name -> google.protobuf.Timestamp
-	17, // 11: api.v1alpha1.scorecards.SampleCallsByCategoryRequest.end_time:type_name -> google.protobuf.Timestamp
-	13, // 12: api.v1alpha1.scorecards.SampleCallsByCategoryResponse.agent_calls:type_name -> api.v1alpha1.scorecards.SampleAgentCall
-	15, // 13: api.v1alpha1.scorecards.SampleAgentCall.call_type:type_name -> api.commons.CallType.Enum
-	17, // 14: api.v1alpha1.scorecards.SampleAgentCall.call_start:type_name -> google.protobuf.Timestamp
-	18, // 15: api.v1alpha1.scorecards.SampleAgentCall.call_duration:type_name -> google.protobuf.Duration
-	18, // 16: api.v1alpha1.scorecards.SampleAgentCall.speech:type_name -> google.protobuf.Duration
-	18, // 17: api.v1alpha1.scorecards.SampleAgentCall.silence:type_name -> google.protobuf.Duration
-	18, // [18:18] is the sub-list for method output_type
-	18, // [18:18] is the sub-list for method input_type
-	18, // [18:18] is the sub-list for extension type_name
-	18, // [18:18] is the sub-list for extension extendee
-	0,  // [0:18] is the sub-list for field type_name
+	16, // 4: api.v1alpha1.scorecards.ListCategoriesResponse.categories:type_name -> api.commons.Category
+	16, // 5: api.v1alpha1.scorecards.UpdateCategoryRequest.category:type_name -> api.commons.Category
+	18, // 6: api.v1alpha1.scorecards.UpdateCategoryRequest.update_mask:type_name -> google.protobuf.FieldMask
+	16, // 7: api.v1alpha1.scorecards.UpdateCategoryResponse.category:type_name -> api.commons.Category
+	16, // 8: api.v1alpha1.scorecards.DeleteCategoryResponse.category:type_name -> api.commons.Category
+	16, // 9: api.v1alpha1.scorecards.GetCategoryResponse.category:type_name -> api.commons.Category
+	19, // 10: api.v1alpha1.scorecards.SampleCallsByCategoryRequest.start_time:type_name -> google.protobuf.Timestamp
+	19, // 11: api.v1alpha1.scorecards.SampleCallsByCategoryRequest.end_time:type_name -> google.protobuf.Timestamp
+	14, // 12: api.v1alpha1.scorecards.SampleCallsByCategoryResponse.agent_calls:type_name -> api.v1alpha1.scorecards.SampleAgentCall
+	17, // 13: api.v1alpha1.scorecards.SampleAgentCall.call_type:type_name -> api.commons.CallType.Enum
+	19, // 14: api.v1alpha1.scorecards.SampleAgentCall.call_start:type_name -> google.protobuf.Timestamp
+	20, // 15: api.v1alpha1.scorecards.SampleAgentCall.call_duration:type_name -> google.protobuf.Duration
+	20, // 16: api.v1alpha1.scorecards.SampleAgentCall.speech:type_name -> google.protobuf.Duration
+	20, // 17: api.v1alpha1.scorecards.SampleAgentCall.silence:type_name -> google.protobuf.Duration
+	1,  // 18: api.v1alpha1.scorecards.ListCategoriesByOrgIdRequest.category_type:type_name -> api.v1alpha1.scorecards.ListCategoriesByOrgIdRequest.CategoryType
+	19, // [19:19] is the sub-list for method output_type
+	19, // [19:19] is the sub-list for method input_type
+	19, // [19:19] is the sub-list for extension type_name
+	19, // [19:19] is the sub-list for extension extendee
+	0,  // [0:19] is the sub-list for field type_name
 }
 
 func init() { file_api_v1alpha1_scorecards_category_proto_init() }
@@ -1210,14 +1352,26 @@ func file_api_v1alpha1_scorecards_category_proto_init() {
 				return nil
 			}
 		}
+		file_api_v1alpha1_scorecards_category_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListCategoriesByOrgIdRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_v1alpha1_scorecards_category_proto_rawDesc,
-			NumEnums:      1,
-			NumMessages:   13,
+			NumEnums:      2,
+			NumMessages:   14,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

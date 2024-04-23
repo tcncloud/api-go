@@ -48,6 +48,9 @@ const (
 	// ScorecardsSupportListScorecardsByOrgIdProcedure is the fully-qualified name of the
 	// ScorecardsSupport's ListScorecardsByOrgId RPC.
 	ScorecardsSupportListScorecardsByOrgIdProcedure = "/api.v1alpha1.scorecards.ScorecardsSupport/ListScorecardsByOrgId"
+	// ScorecardsSupportListCategoriesByOrgIdProcedure is the fully-qualified name of the
+	// ScorecardsSupport's ListCategoriesByOrgId RPC.
+	ScorecardsSupportListCategoriesByOrgIdProcedure = "/api.v1alpha1.scorecards.ScorecardsSupport/ListCategoriesByOrgId"
 )
 
 // ScorecardsSupportClient is a client for the api.v1alpha1.scorecards.ScorecardsSupport service.
@@ -62,6 +65,8 @@ type ScorecardsSupportClient interface {
 	DeleteAutoEvaluationByOrgId(context.Context, *connect_go.Request[scorecards.DeleteAutoEvaluationByOrgIdRequest]) (*connect_go.Response[scorecards.DeleteAutoEvaluationResponse], error)
 	// ListScorecardsByOrgId lists scorecards
 	ListScorecardsByOrgId(context.Context, *connect_go.Request[scorecards.ListScorecardsByOrgIdRequest]) (*connect_go.Response[scorecards.ListScorecardsResponse], error)
+	// ListCategoriesByOrgId lists categories
+	ListCategoriesByOrgId(context.Context, *connect_go.Request[scorecards.ListCategoriesByOrgIdRequest]) (*connect_go.Response[scorecards.ListCategoriesResponse], error)
 }
 
 // NewScorecardsSupportClient constructs a client for the api.v1alpha1.scorecards.ScorecardsSupport
@@ -99,6 +104,11 @@ func NewScorecardsSupportClient(httpClient connect_go.HTTPClient, baseURL string
 			baseURL+ScorecardsSupportListScorecardsByOrgIdProcedure,
 			opts...,
 		),
+		listCategoriesByOrgId: connect_go.NewClient[scorecards.ListCategoriesByOrgIdRequest, scorecards.ListCategoriesResponse](
+			httpClient,
+			baseURL+ScorecardsSupportListCategoriesByOrgIdProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -109,6 +119,7 @@ type scorecardsSupportClient struct {
 	deleteEvaluationByOrgId     *connect_go.Client[scorecards.DeleteEvaluationByOrgIdRequest, scorecards.DeleteEvaluationResponse]
 	deleteAutoEvaluationByOrgId *connect_go.Client[scorecards.DeleteAutoEvaluationByOrgIdRequest, scorecards.DeleteAutoEvaluationResponse]
 	listScorecardsByOrgId       *connect_go.Client[scorecards.ListScorecardsByOrgIdRequest, scorecards.ListScorecardsResponse]
+	listCategoriesByOrgId       *connect_go.Client[scorecards.ListCategoriesByOrgIdRequest, scorecards.ListCategoriesResponse]
 }
 
 // ListEvaluationsByOrgId calls api.v1alpha1.scorecards.ScorecardsSupport.ListEvaluationsByOrgId.
@@ -138,6 +149,11 @@ func (c *scorecardsSupportClient) ListScorecardsByOrgId(ctx context.Context, req
 	return c.listScorecardsByOrgId.CallUnary(ctx, req)
 }
 
+// ListCategoriesByOrgId calls api.v1alpha1.scorecards.ScorecardsSupport.ListCategoriesByOrgId.
+func (c *scorecardsSupportClient) ListCategoriesByOrgId(ctx context.Context, req *connect_go.Request[scorecards.ListCategoriesByOrgIdRequest]) (*connect_go.Response[scorecards.ListCategoriesResponse], error) {
+	return c.listCategoriesByOrgId.CallUnary(ctx, req)
+}
+
 // ScorecardsSupportHandler is an implementation of the api.v1alpha1.scorecards.ScorecardsSupport
 // service.
 type ScorecardsSupportHandler interface {
@@ -151,6 +167,8 @@ type ScorecardsSupportHandler interface {
 	DeleteAutoEvaluationByOrgId(context.Context, *connect_go.Request[scorecards.DeleteAutoEvaluationByOrgIdRequest]) (*connect_go.Response[scorecards.DeleteAutoEvaluationResponse], error)
 	// ListScorecardsByOrgId lists scorecards
 	ListScorecardsByOrgId(context.Context, *connect_go.Request[scorecards.ListScorecardsByOrgIdRequest]) (*connect_go.Response[scorecards.ListScorecardsResponse], error)
+	// ListCategoriesByOrgId lists categories
+	ListCategoriesByOrgId(context.Context, *connect_go.Request[scorecards.ListCategoriesByOrgIdRequest]) (*connect_go.Response[scorecards.ListCategoriesResponse], error)
 }
 
 // NewScorecardsSupportHandler builds an HTTP handler from the service implementation. It returns
@@ -184,6 +202,11 @@ func NewScorecardsSupportHandler(svc ScorecardsSupportHandler, opts ...connect_g
 		svc.ListScorecardsByOrgId,
 		opts...,
 	)
+	scorecardsSupportListCategoriesByOrgIdHandler := connect_go.NewUnaryHandler(
+		ScorecardsSupportListCategoriesByOrgIdProcedure,
+		svc.ListCategoriesByOrgId,
+		opts...,
+	)
 	return "/api.v1alpha1.scorecards.ScorecardsSupport/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case ScorecardsSupportListEvaluationsByOrgIdProcedure:
@@ -196,6 +219,8 @@ func NewScorecardsSupportHandler(svc ScorecardsSupportHandler, opts ...connect_g
 			scorecardsSupportDeleteAutoEvaluationByOrgIdHandler.ServeHTTP(w, r)
 		case ScorecardsSupportListScorecardsByOrgIdProcedure:
 			scorecardsSupportListScorecardsByOrgIdHandler.ServeHTTP(w, r)
+		case ScorecardsSupportListCategoriesByOrgIdProcedure:
+			scorecardsSupportListCategoriesByOrgIdHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -223,4 +248,8 @@ func (UnimplementedScorecardsSupportHandler) DeleteAutoEvaluationByOrgId(context
 
 func (UnimplementedScorecardsSupportHandler) ListScorecardsByOrgId(context.Context, *connect_go.Request[scorecards.ListScorecardsByOrgIdRequest]) (*connect_go.Response[scorecards.ListScorecardsResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.scorecards.ScorecardsSupport.ListScorecardsByOrgId is not implemented"))
+}
+
+func (UnimplementedScorecardsSupportHandler) ListCategoriesByOrgId(context.Context, *connect_go.Request[scorecards.ListCategoriesByOrgIdRequest]) (*connect_go.Response[scorecards.ListCategoriesResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.scorecards.ScorecardsSupport.ListCategoriesByOrgId is not implemented"))
 }

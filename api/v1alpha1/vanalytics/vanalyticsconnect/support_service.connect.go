@@ -36,12 +36,17 @@ const (
 	// VanalyticsSupportDeleteFlagTranscriptProcedure is the fully-qualified name of the
 	// VanalyticsSupport's DeleteFlagTranscript RPC.
 	VanalyticsSupportDeleteFlagTranscriptProcedure = "/api.v1alpha1.vanalytics.VanalyticsSupport/DeleteFlagTranscript"
+	// VanalyticsSupportSearchByOrgIdProcedure is the fully-qualified name of the VanalyticsSupport's
+	// SearchByOrgId RPC.
+	VanalyticsSupportSearchByOrgIdProcedure = "/api.v1alpha1.vanalytics.VanalyticsSupport/SearchByOrgId"
 )
 
 // VanalyticsSupportClient is a client for the api.v1alpha1.vanalytics.VanalyticsSupport service.
 type VanalyticsSupportClient interface {
 	// DeleteFlagTranscript deletes a flag transcript.
 	DeleteFlagTranscript(context.Context, *connect_go.Request[vanalytics.DeleteFlagTranscriptRequest]) (*connect_go.Response[vanalytics.DeleteFlagTranscriptResponse], error)
+	// SearchByOrgId searches transcripts for a specific org.
+	SearchByOrgId(context.Context, *connect_go.Request[vanalytics.SearchByOrgIdRequest]) (*connect_go.Response[vanalytics.SearchResponse], error)
 }
 
 // NewVanalyticsSupportClient constructs a client for the api.v1alpha1.vanalytics.VanalyticsSupport
@@ -59,12 +64,18 @@ func NewVanalyticsSupportClient(httpClient connect_go.HTTPClient, baseURL string
 			baseURL+VanalyticsSupportDeleteFlagTranscriptProcedure,
 			opts...,
 		),
+		searchByOrgId: connect_go.NewClient[vanalytics.SearchByOrgIdRequest, vanalytics.SearchResponse](
+			httpClient,
+			baseURL+VanalyticsSupportSearchByOrgIdProcedure,
+			opts...,
+		),
 	}
 }
 
 // vanalyticsSupportClient implements VanalyticsSupportClient.
 type vanalyticsSupportClient struct {
 	deleteFlagTranscript *connect_go.Client[vanalytics.DeleteFlagTranscriptRequest, vanalytics.DeleteFlagTranscriptResponse]
+	searchByOrgId        *connect_go.Client[vanalytics.SearchByOrgIdRequest, vanalytics.SearchResponse]
 }
 
 // DeleteFlagTranscript calls api.v1alpha1.vanalytics.VanalyticsSupport.DeleteFlagTranscript.
@@ -72,11 +83,18 @@ func (c *vanalyticsSupportClient) DeleteFlagTranscript(ctx context.Context, req 
 	return c.deleteFlagTranscript.CallUnary(ctx, req)
 }
 
+// SearchByOrgId calls api.v1alpha1.vanalytics.VanalyticsSupport.SearchByOrgId.
+func (c *vanalyticsSupportClient) SearchByOrgId(ctx context.Context, req *connect_go.Request[vanalytics.SearchByOrgIdRequest]) (*connect_go.Response[vanalytics.SearchResponse], error) {
+	return c.searchByOrgId.CallUnary(ctx, req)
+}
+
 // VanalyticsSupportHandler is an implementation of the api.v1alpha1.vanalytics.VanalyticsSupport
 // service.
 type VanalyticsSupportHandler interface {
 	// DeleteFlagTranscript deletes a flag transcript.
 	DeleteFlagTranscript(context.Context, *connect_go.Request[vanalytics.DeleteFlagTranscriptRequest]) (*connect_go.Response[vanalytics.DeleteFlagTranscriptResponse], error)
+	// SearchByOrgId searches transcripts for a specific org.
+	SearchByOrgId(context.Context, *connect_go.Request[vanalytics.SearchByOrgIdRequest]) (*connect_go.Response[vanalytics.SearchResponse], error)
 }
 
 // NewVanalyticsSupportHandler builds an HTTP handler from the service implementation. It returns
@@ -90,10 +108,17 @@ func NewVanalyticsSupportHandler(svc VanalyticsSupportHandler, opts ...connect_g
 		svc.DeleteFlagTranscript,
 		opts...,
 	)
+	vanalyticsSupportSearchByOrgIdHandler := connect_go.NewUnaryHandler(
+		VanalyticsSupportSearchByOrgIdProcedure,
+		svc.SearchByOrgId,
+		opts...,
+	)
 	return "/api.v1alpha1.vanalytics.VanalyticsSupport/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case VanalyticsSupportDeleteFlagTranscriptProcedure:
 			vanalyticsSupportDeleteFlagTranscriptHandler.ServeHTTP(w, r)
+		case VanalyticsSupportSearchByOrgIdProcedure:
+			vanalyticsSupportSearchByOrgIdHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -105,4 +130,8 @@ type UnimplementedVanalyticsSupportHandler struct{}
 
 func (UnimplementedVanalyticsSupportHandler) DeleteFlagTranscript(context.Context, *connect_go.Request[vanalytics.DeleteFlagTranscriptRequest]) (*connect_go.Response[vanalytics.DeleteFlagTranscriptResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.vanalytics.VanalyticsSupport.DeleteFlagTranscript is not implemented"))
+}
+
+func (UnimplementedVanalyticsSupportHandler) SearchByOrgId(context.Context, *connect_go.Request[vanalytics.SearchByOrgIdRequest]) (*connect_go.Response[vanalytics.SearchResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.vanalytics.VanalyticsSupport.SearchByOrgId is not implemented"))
 }

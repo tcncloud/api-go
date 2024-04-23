@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion7
 
 const (
 	VanalyticsSupport_DeleteFlagTranscript_FullMethodName = "/api.v1alpha1.vanalytics.VanalyticsSupport/DeleteFlagTranscript"
+	VanalyticsSupport_SearchByOrgId_FullMethodName        = "/api.v1alpha1.vanalytics.VanalyticsSupport/SearchByOrgId"
 )
 
 // VanalyticsSupportClient is the client API for VanalyticsSupport service.
@@ -28,6 +29,8 @@ const (
 type VanalyticsSupportClient interface {
 	// DeleteFlagTranscript deletes a flag transcript.
 	DeleteFlagTranscript(ctx context.Context, in *DeleteFlagTranscriptRequest, opts ...grpc.CallOption) (*DeleteFlagTranscriptResponse, error)
+	// SearchByOrgId searches transcripts for a specific org.
+	SearchByOrgId(ctx context.Context, in *SearchByOrgIdRequest, opts ...grpc.CallOption) (*SearchResponse, error)
 }
 
 type vanalyticsSupportClient struct {
@@ -47,12 +50,23 @@ func (c *vanalyticsSupportClient) DeleteFlagTranscript(ctx context.Context, in *
 	return out, nil
 }
 
+func (c *vanalyticsSupportClient) SearchByOrgId(ctx context.Context, in *SearchByOrgIdRequest, opts ...grpc.CallOption) (*SearchResponse, error) {
+	out := new(SearchResponse)
+	err := c.cc.Invoke(ctx, VanalyticsSupport_SearchByOrgId_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // VanalyticsSupportServer is the server API for VanalyticsSupport service.
 // All implementations must embed UnimplementedVanalyticsSupportServer
 // for forward compatibility
 type VanalyticsSupportServer interface {
 	// DeleteFlagTranscript deletes a flag transcript.
 	DeleteFlagTranscript(context.Context, *DeleteFlagTranscriptRequest) (*DeleteFlagTranscriptResponse, error)
+	// SearchByOrgId searches transcripts for a specific org.
+	SearchByOrgId(context.Context, *SearchByOrgIdRequest) (*SearchResponse, error)
 	mustEmbedUnimplementedVanalyticsSupportServer()
 }
 
@@ -62,6 +76,9 @@ type UnimplementedVanalyticsSupportServer struct {
 
 func (UnimplementedVanalyticsSupportServer) DeleteFlagTranscript(context.Context, *DeleteFlagTranscriptRequest) (*DeleteFlagTranscriptResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteFlagTranscript not implemented")
+}
+func (UnimplementedVanalyticsSupportServer) SearchByOrgId(context.Context, *SearchByOrgIdRequest) (*SearchResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SearchByOrgId not implemented")
 }
 func (UnimplementedVanalyticsSupportServer) mustEmbedUnimplementedVanalyticsSupportServer() {}
 
@@ -94,6 +111,24 @@ func _VanalyticsSupport_DeleteFlagTranscript_Handler(srv interface{}, ctx contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _VanalyticsSupport_SearchByOrgId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SearchByOrgIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VanalyticsSupportServer).SearchByOrgId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: VanalyticsSupport_SearchByOrgId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VanalyticsSupportServer).SearchByOrgId(ctx, req.(*SearchByOrgIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // VanalyticsSupport_ServiceDesc is the grpc.ServiceDesc for VanalyticsSupport service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -104,6 +139,10 @@ var VanalyticsSupport_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteFlagTranscript",
 			Handler:    _VanalyticsSupport_DeleteFlagTranscript_Handler,
+		},
+		{
+			MethodName: "SearchByOrgId",
+			Handler:    _VanalyticsSupport_SearchByOrgId_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

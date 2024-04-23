@@ -24,6 +24,7 @@ const (
 	ScorecardsSupport_DeleteEvaluationByOrgId_FullMethodName     = "/api.v1alpha1.scorecards.ScorecardsSupport/DeleteEvaluationByOrgId"
 	ScorecardsSupport_DeleteAutoEvaluationByOrgId_FullMethodName = "/api.v1alpha1.scorecards.ScorecardsSupport/DeleteAutoEvaluationByOrgId"
 	ScorecardsSupport_ListScorecardsByOrgId_FullMethodName       = "/api.v1alpha1.scorecards.ScorecardsSupport/ListScorecardsByOrgId"
+	ScorecardsSupport_ListCategoriesByOrgId_FullMethodName       = "/api.v1alpha1.scorecards.ScorecardsSupport/ListCategoriesByOrgId"
 )
 
 // ScorecardsSupportClient is the client API for ScorecardsSupport service.
@@ -40,6 +41,8 @@ type ScorecardsSupportClient interface {
 	DeleteAutoEvaluationByOrgId(ctx context.Context, in *DeleteAutoEvaluationByOrgIdRequest, opts ...grpc.CallOption) (*DeleteAutoEvaluationResponse, error)
 	// ListScorecardsByOrgId lists scorecards
 	ListScorecardsByOrgId(ctx context.Context, in *ListScorecardsByOrgIdRequest, opts ...grpc.CallOption) (*ListScorecardsResponse, error)
+	// ListCategoriesByOrgId lists categories
+	ListCategoriesByOrgId(ctx context.Context, in *ListCategoriesByOrgIdRequest, opts ...grpc.CallOption) (*ListCategoriesResponse, error)
 }
 
 type scorecardsSupportClient struct {
@@ -95,6 +98,15 @@ func (c *scorecardsSupportClient) ListScorecardsByOrgId(ctx context.Context, in 
 	return out, nil
 }
 
+func (c *scorecardsSupportClient) ListCategoriesByOrgId(ctx context.Context, in *ListCategoriesByOrgIdRequest, opts ...grpc.CallOption) (*ListCategoriesResponse, error) {
+	out := new(ListCategoriesResponse)
+	err := c.cc.Invoke(ctx, ScorecardsSupport_ListCategoriesByOrgId_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ScorecardsSupportServer is the server API for ScorecardsSupport service.
 // All implementations must embed UnimplementedScorecardsSupportServer
 // for forward compatibility
@@ -109,6 +121,8 @@ type ScorecardsSupportServer interface {
 	DeleteAutoEvaluationByOrgId(context.Context, *DeleteAutoEvaluationByOrgIdRequest) (*DeleteAutoEvaluationResponse, error)
 	// ListScorecardsByOrgId lists scorecards
 	ListScorecardsByOrgId(context.Context, *ListScorecardsByOrgIdRequest) (*ListScorecardsResponse, error)
+	// ListCategoriesByOrgId lists categories
+	ListCategoriesByOrgId(context.Context, *ListCategoriesByOrgIdRequest) (*ListCategoriesResponse, error)
 	mustEmbedUnimplementedScorecardsSupportServer()
 }
 
@@ -130,6 +144,9 @@ func (UnimplementedScorecardsSupportServer) DeleteAutoEvaluationByOrgId(context.
 }
 func (UnimplementedScorecardsSupportServer) ListScorecardsByOrgId(context.Context, *ListScorecardsByOrgIdRequest) (*ListScorecardsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListScorecardsByOrgId not implemented")
+}
+func (UnimplementedScorecardsSupportServer) ListCategoriesByOrgId(context.Context, *ListCategoriesByOrgIdRequest) (*ListCategoriesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListCategoriesByOrgId not implemented")
 }
 func (UnimplementedScorecardsSupportServer) mustEmbedUnimplementedScorecardsSupportServer() {}
 
@@ -234,6 +251,24 @@ func _ScorecardsSupport_ListScorecardsByOrgId_Handler(srv interface{}, ctx conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ScorecardsSupport_ListCategoriesByOrgId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListCategoriesByOrgIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ScorecardsSupportServer).ListCategoriesByOrgId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ScorecardsSupport_ListCategoriesByOrgId_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ScorecardsSupportServer).ListCategoriesByOrgId(ctx, req.(*ListCategoriesByOrgIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ScorecardsSupport_ServiceDesc is the grpc.ServiceDesc for ScorecardsSupport service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -260,6 +295,10 @@ var ScorecardsSupport_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListScorecardsByOrgId",
 			Handler:    _ScorecardsSupport_ListScorecardsByOrgId_Handler,
+		},
+		{
+			MethodName: "ListCategoriesByOrgId",
+			Handler:    _ScorecardsSupport_ListCategoriesByOrgId_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

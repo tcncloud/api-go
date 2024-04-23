@@ -1960,6 +1960,93 @@ func (x *AgentResponse) GetValues() []string {
 	return nil
 }
 
+// SearchByOrgIdRequest is a support-only request for searching transcripts by org id.
+type SearchByOrgIdRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Required. The organization id to search by.
+	OrgId string `protobuf:"bytes,1,opt,name=org_id,json=orgId,proto3" json:"org_id,omitempty"`
+	// Optional. The number of hits included in response.
+	// Will default to 10 if not provided
+	PageSize uint32 `protobuf:"varint,2,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	// Optional. The sort order.
+	Sort *Sort `protobuf:"bytes,3,opt,name=sort,proto3" json:"sort,omitempty"`
+	// Optional. Transcript mask contains a list of transcript fields to be returned.
+	// If no transcript mask is provided it defaults to returning all fields.
+	TranscriptMask *fieldmaskpb.FieldMask `protobuf:"bytes,4,opt,name=transcript_mask,json=transcriptMask,proto3" json:"transcript_mask,omitempty"`
+	// Optional. Defines a query on flag summary.
+	FlagSummary *SearchQuery_FlagSummary `protobuf:"bytes,5,opt,name=flag_summary,json=flagSummary,proto3" json:"flag_summary,omitempty"`
+}
+
+func (x *SearchByOrgIdRequest) Reset() {
+	*x = SearchByOrgIdRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[24]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SearchByOrgIdRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SearchByOrgIdRequest) ProtoMessage() {}
+
+func (x *SearchByOrgIdRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[24]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SearchByOrgIdRequest.ProtoReflect.Descriptor instead.
+func (*SearchByOrgIdRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_vanalytics_transcript_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *SearchByOrgIdRequest) GetOrgId() string {
+	if x != nil {
+		return x.OrgId
+	}
+	return ""
+}
+
+func (x *SearchByOrgIdRequest) GetPageSize() uint32 {
+	if x != nil {
+		return x.PageSize
+	}
+	return 0
+}
+
+func (x *SearchByOrgIdRequest) GetSort() *Sort {
+	if x != nil {
+		return x.Sort
+	}
+	return nil
+}
+
+func (x *SearchByOrgIdRequest) GetTranscriptMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.TranscriptMask
+	}
+	return nil
+}
+
+func (x *SearchByOrgIdRequest) GetFlagSummary() *SearchQuery_FlagSummary {
+	if x != nil {
+		return x.FlagSummary
+	}
+	return nil
+}
+
 type SearchRequest_Phrase struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2000,7 +2087,7 @@ type SearchRequest_Phrase struct {
 func (x *SearchRequest_Phrase) Reset() {
 	*x = SearchRequest_Phrase{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[24]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[25]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2013,7 +2100,7 @@ func (x *SearchRequest_Phrase) String() string {
 func (*SearchRequest_Phrase) ProtoMessage() {}
 
 func (x *SearchRequest_Phrase) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[24]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[25]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2097,7 +2184,7 @@ type SearchRequest_PositionOffset struct {
 func (x *SearchRequest_PositionOffset) Reset() {
 	*x = SearchRequest_PositionOffset{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[25]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[26]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2110,7 +2197,7 @@ func (x *SearchRequest_PositionOffset) String() string {
 func (*SearchRequest_PositionOffset) ProtoMessage() {}
 
 func (x *SearchRequest_PositionOffset) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[25]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[26]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2158,7 +2245,7 @@ type SearchRequest_Silence struct {
 func (x *SearchRequest_Silence) Reset() {
 	*x = SearchRequest_Silence{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[26]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[27]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2171,7 +2258,7 @@ func (x *SearchRequest_Silence) String() string {
 func (*SearchRequest_Silence) ProtoMessage() {}
 
 func (x *SearchRequest_Silence) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[26]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[27]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2233,7 +2320,7 @@ type SearchRequest_TalkOver struct {
 func (x *SearchRequest_TalkOver) Reset() {
 	*x = SearchRequest_TalkOver{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[27]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[28]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2246,7 +2333,7 @@ func (x *SearchRequest_TalkOver) String() string {
 func (*SearchRequest_TalkOver) ProtoMessage() {}
 
 func (x *SearchRequest_TalkOver) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[27]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[28]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2324,7 +2411,7 @@ type SearchRequest_Terms struct {
 func (x *SearchRequest_Terms) Reset() {
 	*x = SearchRequest_Terms{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[28]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[29]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2337,7 +2424,7 @@ func (x *SearchRequest_Terms) String() string {
 func (*SearchRequest_Terms) ProtoMessage() {}
 
 func (x *SearchRequest_Terms) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[28]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[29]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2406,7 +2493,7 @@ type SearchRequest_Agent struct {
 func (x *SearchRequest_Agent) Reset() {
 	*x = SearchRequest_Agent{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[29]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[30]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2419,7 +2506,7 @@ func (x *SearchRequest_Agent) String() string {
 func (*SearchRequest_Agent) ProtoMessage() {}
 
 func (x *SearchRequest_Agent) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[29]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[30]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2459,7 +2546,7 @@ type SearchRequest_Phrase_Word struct {
 func (x *SearchRequest_Phrase_Word) Reset() {
 	*x = SearchRequest_Phrase_Word{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[30]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[31]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2472,7 +2559,7 @@ func (x *SearchRequest_Phrase_Word) String() string {
 func (*SearchRequest_Phrase_Word) ProtoMessage() {}
 
 func (x *SearchRequest_Phrase_Word) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[30]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[31]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2518,7 +2605,7 @@ type SearchRequest_Phrase_Highlight struct {
 func (x *SearchRequest_Phrase_Highlight) Reset() {
 	*x = SearchRequest_Phrase_Highlight{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[31]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[32]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2531,7 +2618,7 @@ func (x *SearchRequest_Phrase_Highlight) String() string {
 func (*SearchRequest_Phrase_Highlight) ProtoMessage() {}
 
 func (x *SearchRequest_Phrase_Highlight) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[31]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[32]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2575,7 +2662,7 @@ type SearchRequest_Agent_UserName struct {
 func (x *SearchRequest_Agent_UserName) Reset() {
 	*x = SearchRequest_Agent_UserName{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[32]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[33]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2588,7 +2675,7 @@ func (x *SearchRequest_Agent_UserName) String() string {
 func (*SearchRequest_Agent_UserName) ProtoMessage() {}
 
 func (x *SearchRequest_Agent_UserName) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[32]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[33]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2651,7 +2738,7 @@ type SearchQuery_Phone struct {
 func (x *SearchQuery_Phone) Reset() {
 	*x = SearchQuery_Phone{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[33]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[34]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2664,7 +2751,7 @@ func (x *SearchQuery_Phone) String() string {
 func (*SearchQuery_Phone) ProtoMessage() {}
 
 func (x *SearchQuery_Phone) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[33]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[34]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2770,7 +2857,7 @@ type SearchQuery_Cc struct {
 func (x *SearchQuery_Cc) Reset() {
 	*x = SearchQuery_Cc{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[34]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[35]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2783,7 +2870,7 @@ func (x *SearchQuery_Cc) String() string {
 func (*SearchQuery_Cc) ProtoMessage() {}
 
 func (x *SearchQuery_Cc) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[34]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[35]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2819,7 +2906,7 @@ type SearchQuery_Ndc struct {
 func (x *SearchQuery_Ndc) Reset() {
 	*x = SearchQuery_Ndc{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[35]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[36]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2832,7 +2919,7 @@ func (x *SearchQuery_Ndc) String() string {
 func (*SearchQuery_Ndc) ProtoMessage() {}
 
 func (x *SearchQuery_Ndc) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[35]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[36]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2868,7 +2955,7 @@ type SearchQuery_Prefix struct {
 func (x *SearchQuery_Prefix) Reset() {
 	*x = SearchQuery_Prefix{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[36]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[37]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2881,7 +2968,7 @@ func (x *SearchQuery_Prefix) String() string {
 func (*SearchQuery_Prefix) ProtoMessage() {}
 
 func (x *SearchQuery_Prefix) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[36]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[37]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2917,7 +3004,7 @@ type SearchQuery_City struct {
 func (x *SearchQuery_City) Reset() {
 	*x = SearchQuery_City{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[37]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[38]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2930,7 +3017,7 @@ func (x *SearchQuery_City) String() string {
 func (*SearchQuery_City) ProtoMessage() {}
 
 func (x *SearchQuery_City) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[37]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[38]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2966,7 +3053,7 @@ type SearchQuery_Iso2 struct {
 func (x *SearchQuery_Iso2) Reset() {
 	*x = SearchQuery_Iso2{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[38]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[39]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2979,7 +3066,7 @@ func (x *SearchQuery_Iso2) String() string {
 func (*SearchQuery_Iso2) ProtoMessage() {}
 
 func (x *SearchQuery_Iso2) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[38]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[39]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3015,7 +3102,7 @@ type SearchQuery_RegionCode struct {
 func (x *SearchQuery_RegionCode) Reset() {
 	*x = SearchQuery_RegionCode{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[39]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[40]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3028,7 +3115,7 @@ func (x *SearchQuery_RegionCode) String() string {
 func (*SearchQuery_RegionCode) ProtoMessage() {}
 
 func (x *SearchQuery_RegionCode) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[39]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[40]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3064,7 +3151,7 @@ type SearchQuery_RegionName struct {
 func (x *SearchQuery_RegionName) Reset() {
 	*x = SearchQuery_RegionName{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[40]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[41]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3077,7 +3164,7 @@ func (x *SearchQuery_RegionName) String() string {
 func (*SearchQuery_RegionName) ProtoMessage() {}
 
 func (x *SearchQuery_RegionName) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[40]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[41]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3113,7 +3200,7 @@ type SearchQuery_TimeZone struct {
 func (x *SearchQuery_TimeZone) Reset() {
 	*x = SearchQuery_TimeZone{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[41]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[42]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3126,7 +3213,7 @@ func (x *SearchQuery_TimeZone) String() string {
 func (*SearchQuery_TimeZone) ProtoMessage() {}
 
 func (x *SearchQuery_TimeZone) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[41]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[42]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3162,7 +3249,7 @@ type SearchQuery_Type struct {
 func (x *SearchQuery_Type) Reset() {
 	*x = SearchQuery_Type{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[42]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[43]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3175,7 +3262,7 @@ func (x *SearchQuery_Type) String() string {
 func (*SearchQuery_Type) ProtoMessage() {}
 
 func (x *SearchQuery_Type) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[42]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[43]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3211,7 +3298,7 @@ type SearchQuery_Utc struct {
 func (x *SearchQuery_Utc) Reset() {
 	*x = SearchQuery_Utc{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[43]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[44]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3224,7 +3311,7 @@ func (x *SearchQuery_Utc) String() string {
 func (*SearchQuery_Utc) ProtoMessage() {}
 
 func (x *SearchQuery_Utc) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[43]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[44]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3259,7 +3346,7 @@ type SearchQuery_Location struct {
 func (x *SearchQuery_Location) Reset() {
 	*x = SearchQuery_Location{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[44]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[45]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3272,7 +3359,7 @@ func (x *SearchQuery_Location) String() string {
 func (*SearchQuery_Location) ProtoMessage() {}
 
 func (x *SearchQuery_Location) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[44]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[45]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3310,7 +3397,7 @@ type SearchQuery_AgentCallLog struct {
 func (x *SearchQuery_AgentCallLog) Reset() {
 	*x = SearchQuery_AgentCallLog{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[45]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[46]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3323,7 +3410,7 @@ func (x *SearchQuery_AgentCallLog) String() string {
 func (*SearchQuery_AgentCallLog) ProtoMessage() {}
 
 func (x *SearchQuery_AgentCallLog) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[45]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[46]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3366,7 +3453,7 @@ type SearchQuery_CallEnded struct {
 func (x *SearchQuery_CallEnded) Reset() {
 	*x = SearchQuery_CallEnded{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[46]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[47]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3379,7 +3466,7 @@ func (x *SearchQuery_CallEnded) String() string {
 func (*SearchQuery_CallEnded) ProtoMessage() {}
 
 func (x *SearchQuery_CallEnded) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[46]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[47]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3417,7 +3504,7 @@ type SearchQuery_CallSkillsInitial struct {
 func (x *SearchQuery_CallSkillsInitial) Reset() {
 	*x = SearchQuery_CallSkillsInitial{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[47]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[48]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3430,7 +3517,7 @@ func (x *SearchQuery_CallSkillsInitial) String() string {
 func (*SearchQuery_CallSkillsInitial) ProtoMessage() {}
 
 func (x *SearchQuery_CallSkillsInitial) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[47]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[48]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3478,7 +3565,7 @@ type SearchQuery_AgentResponse struct {
 func (x *SearchQuery_AgentResponse) Reset() {
 	*x = SearchQuery_AgentResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[48]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[49]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3491,7 +3578,7 @@ func (x *SearchQuery_AgentResponse) String() string {
 func (*SearchQuery_AgentResponse) ProtoMessage() {}
 
 func (x *SearchQuery_AgentResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[48]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[49]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3541,7 +3628,7 @@ type SearchQuery_Results struct {
 func (x *SearchQuery_Results) Reset() {
 	*x = SearchQuery_Results{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[49]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[50]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3554,7 +3641,7 @@ func (x *SearchQuery_Results) String() string {
 func (*SearchQuery_Results) ProtoMessage() {}
 
 func (x *SearchQuery_Results) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[49]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[50]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3606,7 +3693,7 @@ type SearchQuery_DeleteTime struct {
 func (x *SearchQuery_DeleteTime) Reset() {
 	*x = SearchQuery_DeleteTime{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[50]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[51]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3619,7 +3706,7 @@ func (x *SearchQuery_DeleteTime) String() string {
 func (*SearchQuery_DeleteTime) ProtoMessage() {}
 
 func (x *SearchQuery_DeleteTime) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[50]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[51]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3657,7 +3744,7 @@ type SearchQuery_TranscriptSid struct {
 func (x *SearchQuery_TranscriptSid) Reset() {
 	*x = SearchQuery_TranscriptSid{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[51]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[52]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3670,7 +3757,7 @@ func (x *SearchQuery_TranscriptSid) String() string {
 func (*SearchQuery_TranscriptSid) ProtoMessage() {}
 
 func (x *SearchQuery_TranscriptSid) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[51]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[52]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3719,7 +3806,7 @@ type SearchQuery_AudioTime struct {
 func (x *SearchQuery_AudioTime) Reset() {
 	*x = SearchQuery_AudioTime{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[52]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[53]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3732,7 +3819,7 @@ func (x *SearchQuery_AudioTime) String() string {
 func (*SearchQuery_AudioTime) ProtoMessage() {}
 
 func (x *SearchQuery_AudioTime) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[52]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[53]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3795,7 +3882,7 @@ type SearchQuery_FlagSummary struct {
 func (x *SearchQuery_FlagSummary) Reset() {
 	*x = SearchQuery_FlagSummary{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[53]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[54]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3808,7 +3895,7 @@ func (x *SearchQuery_FlagSummary) String() string {
 func (*SearchQuery_FlagSummary) ProtoMessage() {}
 
 func (x *SearchQuery_FlagSummary) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[53]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[54]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3868,7 +3955,7 @@ type SearchQuery_Location_ZipCodeProximity struct {
 func (x *SearchQuery_Location_ZipCodeProximity) Reset() {
 	*x = SearchQuery_Location_ZipCodeProximity{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[54]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[55]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3881,7 +3968,7 @@ func (x *SearchQuery_Location_ZipCodeProximity) String() string {
 func (*SearchQuery_Location_ZipCodeProximity) ProtoMessage() {}
 
 func (x *SearchQuery_Location_ZipCodeProximity) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[54]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[55]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3935,7 +4022,7 @@ type SearchQuery_AgentResponse_Values struct {
 func (x *SearchQuery_AgentResponse_Values) Reset() {
 	*x = SearchQuery_AgentResponse_Values{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[55]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[56]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3948,7 +4035,7 @@ func (x *SearchQuery_AgentResponse_Values) String() string {
 func (*SearchQuery_AgentResponse_Values) ProtoMessage() {}
 
 func (x *SearchQuery_AgentResponse_Values) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[55]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[56]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4008,7 +4095,7 @@ type SearchQuery_AgentResponse_Numbers struct {
 func (x *SearchQuery_AgentResponse_Numbers) Reset() {
 	*x = SearchQuery_AgentResponse_Numbers{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[56]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[57]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4021,7 +4108,7 @@ func (x *SearchQuery_AgentResponse_Numbers) String() string {
 func (*SearchQuery_AgentResponse_Numbers) ProtoMessage() {}
 
 func (x *SearchQuery_AgentResponse_Numbers) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[56]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[57]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4096,7 +4183,7 @@ type SearchQuery_AgentResponse_Key struct {
 func (x *SearchQuery_AgentResponse_Key) Reset() {
 	*x = SearchQuery_AgentResponse_Key{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[57]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[58]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4109,7 +4196,7 @@ func (x *SearchQuery_AgentResponse_Key) String() string {
 func (*SearchQuery_AgentResponse_Key) ProtoMessage() {}
 
 func (x *SearchQuery_AgentResponse_Key) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[57]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[58]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4157,7 +4244,7 @@ type SearchQuery_Results_Channel struct {
 func (x *SearchQuery_Results_Channel) Reset() {
 	*x = SearchQuery_Results_Channel{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[58]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[59]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4170,7 +4257,7 @@ func (x *SearchQuery_Results_Channel) String() string {
 func (*SearchQuery_Results_Channel) ProtoMessage() {}
 
 func (x *SearchQuery_Results_Channel) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[58]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[59]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4205,7 +4292,7 @@ type SearchQuery_Results_AgentUserName struct {
 func (x *SearchQuery_Results_AgentUserName) Reset() {
 	*x = SearchQuery_Results_AgentUserName{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[59]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[60]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4218,7 +4305,7 @@ func (x *SearchQuery_Results_AgentUserName) String() string {
 func (*SearchQuery_Results_AgentUserName) ProtoMessage() {}
 
 func (x *SearchQuery_Results_AgentUserName) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[59]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[60]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4259,7 +4346,7 @@ type SearchQuery_Results_Segments struct {
 func (x *SearchQuery_Results_Segments) Reset() {
 	*x = SearchQuery_Results_Segments{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[60]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[61]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4272,7 +4359,7 @@ func (x *SearchQuery_Results_Segments) String() string {
 func (*SearchQuery_Results_Segments) ProtoMessage() {}
 
 func (x *SearchQuery_Results_Segments) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[60]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[61]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4306,7 +4393,7 @@ type SearchQuery_Results_Segments_Text struct {
 func (x *SearchQuery_Results_Segments_Text) Reset() {
 	*x = SearchQuery_Results_Segments_Text{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[61]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[62]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4319,7 +4406,7 @@ func (x *SearchQuery_Results_Segments_Text) String() string {
 func (*SearchQuery_Results_Segments_Text) ProtoMessage() {}
 
 func (x *SearchQuery_Results_Segments_Text) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[61]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[62]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4355,7 +4442,7 @@ type SearchQuery_Results_Segments_Text_Phrase struct {
 func (x *SearchQuery_Results_Segments_Text_Phrase) Reset() {
 	*x = SearchQuery_Results_Segments_Text_Phrase{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[62]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[63]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4368,7 +4455,7 @@ func (x *SearchQuery_Results_Segments_Text_Phrase) String() string {
 func (*SearchQuery_Results_Segments_Text_Phrase) ProtoMessage() {}
 
 func (x *SearchQuery_Results_Segments_Text_Phrase) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[62]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[63]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4417,7 +4504,7 @@ type SearchQuery_Results_Segments_Text_Phrase_Word struct {
 func (x *SearchQuery_Results_Segments_Text_Phrase_Word) Reset() {
 	*x = SearchQuery_Results_Segments_Text_Phrase_Word{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[63]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[64]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4430,7 +4517,7 @@ func (x *SearchQuery_Results_Segments_Text_Phrase_Word) String() string {
 func (*SearchQuery_Results_Segments_Text_Phrase_Word) ProtoMessage() {}
 
 func (x *SearchQuery_Results_Segments_Text_Phrase_Word) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[63]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[64]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4474,7 +4561,7 @@ type SearchQuery_FlagSummary_NeedReview struct {
 func (x *SearchQuery_FlagSummary_NeedReview) Reset() {
 	*x = SearchQuery_FlagSummary_NeedReview{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[64]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[65]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4487,7 +4574,7 @@ func (x *SearchQuery_FlagSummary_NeedReview) String() string {
 func (*SearchQuery_FlagSummary_NeedReview) ProtoMessage() {}
 
 func (x *SearchQuery_FlagSummary_NeedReview) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[64]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[65]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4523,7 +4610,7 @@ type SearchQuery_FlagSummary_ReviewStatus struct {
 func (x *SearchQuery_FlagSummary_ReviewStatus) Reset() {
 	*x = SearchQuery_FlagSummary_ReviewStatus{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[65]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[66]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4536,7 +4623,7 @@ func (x *SearchQuery_FlagSummary_ReviewStatus) String() string {
 func (*SearchQuery_FlagSummary_ReviewStatus) ProtoMessage() {}
 
 func (x *SearchQuery_FlagSummary_ReviewStatus) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[65]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[66]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4572,7 +4659,7 @@ type SearchQuery_FlagSummary_Flags struct {
 func (x *SearchQuery_FlagSummary_Flags) Reset() {
 	*x = SearchQuery_FlagSummary_Flags{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[66]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[67]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4585,7 +4672,7 @@ func (x *SearchQuery_FlagSummary_Flags) String() string {
 func (*SearchQuery_FlagSummary_Flags) ProtoMessage() {}
 
 func (x *SearchQuery_FlagSummary_Flags) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[66]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[67]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4629,7 +4716,7 @@ type SearchQuery_FlagSummary_Count struct {
 func (x *SearchQuery_FlagSummary_Count) Reset() {
 	*x = SearchQuery_FlagSummary_Count{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[67]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[68]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4642,7 +4729,7 @@ func (x *SearchQuery_FlagSummary_Count) String() string {
 func (*SearchQuery_FlagSummary_Count) ProtoMessage() {}
 
 func (x *SearchQuery_FlagSummary_Count) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[67]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[68]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4706,7 +4793,7 @@ type SearchQuery_FlagSummary_NeedReview_FlagSids struct {
 func (x *SearchQuery_FlagSummary_NeedReview_FlagSids) Reset() {
 	*x = SearchQuery_FlagSummary_NeedReview_FlagSids{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[68]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[69]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4719,7 +4806,7 @@ func (x *SearchQuery_FlagSummary_NeedReview_FlagSids) String() string {
 func (*SearchQuery_FlagSummary_NeedReview_FlagSids) ProtoMessage() {}
 
 func (x *SearchQuery_FlagSummary_NeedReview_FlagSids) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[68]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[69]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4757,7 +4844,7 @@ type SearchQuery_FlagSummary_Flags_FlagSid struct {
 func (x *SearchQuery_FlagSummary_Flags_FlagSid) Reset() {
 	*x = SearchQuery_FlagSummary_Flags_FlagSid{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[69]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[70]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4770,7 +4857,7 @@ func (x *SearchQuery_FlagSummary_Flags_FlagSid) String() string {
 func (*SearchQuery_FlagSummary_Flags_FlagSid) ProtoMessage() {}
 
 func (x *SearchQuery_FlagSummary_Flags_FlagSid) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[69]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[70]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4811,7 +4898,7 @@ type SearchResponse_Hit struct {
 func (x *SearchResponse_Hit) Reset() {
 	*x = SearchResponse_Hit{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[70]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[71]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4824,7 +4911,7 @@ func (x *SearchResponse_Hit) String() string {
 func (*SearchResponse_Hit) ProtoMessage() {}
 
 func (x *SearchResponse_Hit) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[70]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[71]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4859,7 +4946,7 @@ type Sort_Field struct {
 func (x *Sort_Field) Reset() {
 	*x = Sort_Field{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[71]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[72]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4872,7 +4959,7 @@ func (x *Sort_Field) String() string {
 func (*Sort_Field) ProtoMessage() {}
 
 func (x *Sort_Field) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[71]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[72]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4918,7 +5005,7 @@ type Silence_Duration struct {
 func (x *Silence_Duration) Reset() {
 	*x = Silence_Duration{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[73]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[74]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4931,7 +5018,7 @@ func (x *Silence_Duration) String() string {
 func (*Silence_Duration) ProtoMessage() {}
 
 func (x *Silence_Duration) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[73]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[74]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4982,7 +5069,7 @@ type Silence_Segment struct {
 func (x *Silence_Segment) Reset() {
 	*x = Silence_Segment{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[74]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[75]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4995,7 +5082,7 @@ func (x *Silence_Segment) String() string {
 func (*Silence_Segment) ProtoMessage() {}
 
 func (x *Silence_Segment) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[74]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[75]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5037,7 +5124,7 @@ type Silence_Occurrence struct {
 func (x *Silence_Occurrence) Reset() {
 	*x = Silence_Occurrence{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[75]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[76]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5050,7 +5137,7 @@ func (x *Silence_Occurrence) String() string {
 func (*Silence_Occurrence) ProtoMessage() {}
 
 func (x *Silence_Occurrence) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[75]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[76]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5089,7 +5176,7 @@ type TalkOver_Duration struct {
 func (x *TalkOver_Duration) Reset() {
 	*x = TalkOver_Duration{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[76]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[77]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5102,7 +5189,7 @@ func (x *TalkOver_Duration) String() string {
 func (*TalkOver_Duration) ProtoMessage() {}
 
 func (x *TalkOver_Duration) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[76]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[77]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5155,7 +5242,7 @@ type TalkOver_Result struct {
 func (x *TalkOver_Result) Reset() {
 	*x = TalkOver_Result{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[77]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[78]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5168,7 +5255,7 @@ func (x *TalkOver_Result) String() string {
 func (*TalkOver_Result) ProtoMessage() {}
 
 func (x *TalkOver_Result) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[77]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[78]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5240,7 +5327,7 @@ type TalkOver_Segment struct {
 func (x *TalkOver_Segment) Reset() {
 	*x = TalkOver_Segment{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[78]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[79]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5253,7 +5340,7 @@ func (x *TalkOver_Segment) String() string {
 func (*TalkOver_Segment) ProtoMessage() {}
 
 func (x *TalkOver_Segment) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[78]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[79]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5295,7 +5382,7 @@ type TalkOver_Occurrence struct {
 func (x *TalkOver_Occurrence) Reset() {
 	*x = TalkOver_Occurrence{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[79]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[80]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5308,7 +5395,7 @@ func (x *TalkOver_Occurrence) String() string {
 func (*TalkOver_Occurrence) ProtoMessage() {}
 
 func (x *TalkOver_Occurrence) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[79]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[80]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5350,7 +5437,7 @@ type FlagSummary_NeedReview struct {
 func (x *FlagSummary_NeedReview) Reset() {
 	*x = FlagSummary_NeedReview{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[80]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[81]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5363,7 +5450,7 @@ func (x *FlagSummary_NeedReview) String() string {
 func (*FlagSummary_NeedReview) ProtoMessage() {}
 
 func (x *FlagSummary_NeedReview) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[80]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[81]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5435,7 +5522,7 @@ type FlagSummary_Flag struct {
 func (x *FlagSummary_Flag) Reset() {
 	*x = FlagSummary_Flag{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[81]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[82]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5448,7 +5535,7 @@ func (x *FlagSummary_Flag) String() string {
 func (*FlagSummary_Flag) ProtoMessage() {}
 
 func (x *FlagSummary_Flag) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[81]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[82]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5541,7 +5628,7 @@ type FlagSummary_Filter struct {
 func (x *FlagSummary_Filter) Reset() {
 	*x = FlagSummary_Filter{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[82]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[83]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5554,7 +5641,7 @@ func (x *FlagSummary_Filter) String() string {
 func (*FlagSummary_Filter) ProtoMessage() {}
 
 func (x *FlagSummary_Filter) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[82]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[83]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5622,7 +5709,7 @@ type FlagSummary_Review struct {
 func (x *FlagSummary_Review) Reset() {
 	*x = FlagSummary_Review{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[83]
+		mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[84]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5635,7 +5722,7 @@ func (x *FlagSummary_Review) String() string {
 func (*FlagSummary_Review) ProtoMessage() {}
 
 func (x *FlagSummary_Review) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[83]
+	mi := &file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[84]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6551,30 +6638,48 @@ var file_api_v1alpha1_vanalytics_transcript_proto_rawDesc = []byte{
 	0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65,
 	0x72, 0x49, 0x64, 0x22, 0x27, 0x0a, 0x0d, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70,
 	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x73, 0x18, 0x01,
-	0x20, 0x03, 0x28, 0x09, 0x52, 0x06, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x73, 0x2a, 0x81, 0x01, 0x0a,
-	0x16, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x52, 0x65, 0x76, 0x69, 0x65,
-	0x77, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x21, 0x0a, 0x1d, 0x54, 0x52, 0x41, 0x4e, 0x53,
+	0x20, 0x03, 0x28, 0x09, 0x52, 0x06, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x73, 0x22, 0x97, 0x02, 0x0a,
+	0x14, 0x53, 0x65, 0x61, 0x72, 0x63, 0x68, 0x42, 0x79, 0x4f, 0x72, 0x67, 0x49, 0x64, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x15, 0x0a, 0x06, 0x6f, 0x72, 0x67, 0x5f, 0x69, 0x64, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x6f, 0x72, 0x67, 0x49, 0x64, 0x12, 0x1b, 0x0a, 0x09,
+	0x70, 0x61, 0x67, 0x65, 0x5f, 0x73, 0x69, 0x7a, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0d, 0x52,
+	0x08, 0x70, 0x61, 0x67, 0x65, 0x53, 0x69, 0x7a, 0x65, 0x12, 0x31, 0x0a, 0x04, 0x73, 0x6f, 0x72,
+	0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31,
+	0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x76, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69, 0x63,
+	0x73, 0x2e, 0x53, 0x6f, 0x72, 0x74, 0x52, 0x04, 0x73, 0x6f, 0x72, 0x74, 0x12, 0x43, 0x0a, 0x0f,
+	0x74, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x5f, 0x6d, 0x61, 0x73, 0x6b, 0x18,
+	0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x4d, 0x61, 0x73,
+	0x6b, 0x52, 0x0e, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x4d, 0x61, 0x73,
+	0x6b, 0x12, 0x53, 0x0a, 0x0c, 0x66, 0x6c, 0x61, 0x67, 0x5f, 0x73, 0x75, 0x6d, 0x6d, 0x61, 0x72,
+	0x79, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x30, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31,
+	0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x76, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69, 0x63,
+	0x73, 0x2e, 0x53, 0x65, 0x61, 0x72, 0x63, 0x68, 0x51, 0x75, 0x65, 0x72, 0x79, 0x2e, 0x46, 0x6c,
+	0x61, 0x67, 0x53, 0x75, 0x6d, 0x6d, 0x61, 0x72, 0x79, 0x52, 0x0b, 0x66, 0x6c, 0x61, 0x67, 0x53,
+	0x75, 0x6d, 0x6d, 0x61, 0x72, 0x79, 0x2a, 0x81, 0x01, 0x0a, 0x16, 0x54, 0x72, 0x61, 0x6e, 0x73,
+	0x63, 0x72, 0x69, 0x70, 0x74, 0x52, 0x65, 0x76, 0x69, 0x65, 0x77, 0x53, 0x74, 0x61, 0x74, 0x75,
+	0x73, 0x12, 0x21, 0x0a, 0x1d, 0x54, 0x52, 0x41, 0x4e, 0x53, 0x43, 0x52, 0x49, 0x50, 0x54, 0x5f,
+	0x52, 0x45, 0x56, 0x49, 0x45, 0x57, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x54, 0x4f,
+	0x44, 0x4f, 0x10, 0x00, 0x12, 0x21, 0x0a, 0x1d, 0x54, 0x52, 0x41, 0x4e, 0x53, 0x43, 0x52, 0x49,
+	0x50, 0x54, 0x5f, 0x52, 0x45, 0x56, 0x49, 0x45, 0x57, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53,
+	0x5f, 0x44, 0x4f, 0x4e, 0x45, 0x10, 0x01, 0x12, 0x21, 0x0a, 0x1d, 0x54, 0x52, 0x41, 0x4e, 0x53,
 	0x43, 0x52, 0x49, 0x50, 0x54, 0x5f, 0x52, 0x45, 0x56, 0x49, 0x45, 0x57, 0x5f, 0x53, 0x54, 0x41,
-	0x54, 0x55, 0x53, 0x5f, 0x54, 0x4f, 0x44, 0x4f, 0x10, 0x00, 0x12, 0x21, 0x0a, 0x1d, 0x54, 0x52,
-	0x41, 0x4e, 0x53, 0x43, 0x52, 0x49, 0x50, 0x54, 0x5f, 0x52, 0x45, 0x56, 0x49, 0x45, 0x57, 0x5f,
-	0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x44, 0x4f, 0x4e, 0x45, 0x10, 0x01, 0x12, 0x21, 0x0a,
-	0x1d, 0x54, 0x52, 0x41, 0x4e, 0x53, 0x43, 0x52, 0x49, 0x50, 0x54, 0x5f, 0x52, 0x45, 0x56, 0x49,
-	0x45, 0x57, 0x5f, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x4e, 0x4f, 0x4e, 0x45, 0x10, 0x02,
-	0x42, 0xe0, 0x01, 0x0a, 0x1b, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61,
-	0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x76, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69, 0x63, 0x73,
-	0x42, 0x0f, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x50, 0x72, 0x6f, 0x74,
-	0x6f, 0x50, 0x01, 0x5a, 0x32, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f,
-	0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f,
-	0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x76, 0x61, 0x6e,
-	0x61, 0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0xa2, 0x02, 0x03, 0x41, 0x56, 0x56, 0xaa, 0x02, 0x17,
-	0x41, 0x70, 0x69, 0x2e, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x56, 0x61, 0x6e,
-	0x61, 0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0xca, 0x02, 0x17, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31,
-	0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x56, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69, 0x63,
-	0x73, 0xe2, 0x02, 0x23, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31,
-	0x5c, 0x56, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d,
-	0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x19, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x56,
-	0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x3a, 0x3a, 0x56, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74,
-	0x69, 0x63, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x54, 0x55, 0x53, 0x5f, 0x4e, 0x4f, 0x4e, 0x45, 0x10, 0x02, 0x42, 0xe0, 0x01, 0x0a, 0x1b, 0x63,
+	0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e,
+	0x76, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x42, 0x0f, 0x54, 0x72, 0x61, 0x6e,
+	0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x32, 0x67,
+	0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f,
+	0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31,
+	0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x76, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69, 0x63,
+	0x73, 0xa2, 0x02, 0x03, 0x41, 0x56, 0x56, 0xaa, 0x02, 0x17, 0x41, 0x70, 0x69, 0x2e, 0x56, 0x31,
+	0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x56, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69, 0x63,
+	0x73, 0xca, 0x02, 0x17, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31,
+	0x5c, 0x56, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0xe2, 0x02, 0x23, 0x41, 0x70,
+	0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x56, 0x61, 0x6e, 0x61, 0x6c,
+	0x79, 0x74, 0x69, 0x63, 0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74,
+	0x61, 0xea, 0x02, 0x19, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61,
+	0x31, 0x3a, 0x3a, 0x56, 0x61, 0x6e, 0x61, 0x6c, 0x79, 0x74, 0x69, 0x63, 0x73, 0x62, 0x06, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -6590,7 +6695,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_rawDescGZIP() []byte {
 }
 
 var file_api_v1alpha1_vanalytics_transcript_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_api_v1alpha1_vanalytics_transcript_proto_msgTypes = make([]protoimpl.MessageInfo, 84)
+var file_api_v1alpha1_vanalytics_transcript_proto_msgTypes = make([]protoimpl.MessageInfo, 85)
 var file_api_v1alpha1_vanalytics_transcript_proto_goTypes = []interface{}{
 	(TranscriptReviewStatus)(0),                           // 0: api.v1alpha1.vanalytics.TranscriptReviewStatus
 	(*BulkDeleteTranscriptsRequest)(nil),                  // 1: api.v1alpha1.vanalytics.BulkDeleteTranscriptsRequest
@@ -6617,214 +6722,218 @@ var file_api_v1alpha1_vanalytics_transcript_proto_goTypes = []interface{}{
 	(*TalkOver)(nil),                                      // 22: api.v1alpha1.vanalytics.TalkOver
 	(*FlagSummary)(nil),                                   // 23: api.v1alpha1.vanalytics.FlagSummary
 	(*AgentResponse)(nil),                                 // 24: api.v1alpha1.vanalytics.AgentResponse
-	(*SearchRequest_Phrase)(nil),                          // 25: api.v1alpha1.vanalytics.SearchRequest.Phrase
-	(*SearchRequest_PositionOffset)(nil),                  // 26: api.v1alpha1.vanalytics.SearchRequest.PositionOffset
-	(*SearchRequest_Silence)(nil),                         // 27: api.v1alpha1.vanalytics.SearchRequest.Silence
-	(*SearchRequest_TalkOver)(nil),                        // 28: api.v1alpha1.vanalytics.SearchRequest.TalkOver
-	(*SearchRequest_Terms)(nil),                           // 29: api.v1alpha1.vanalytics.SearchRequest.Terms
-	(*SearchRequest_Agent)(nil),                           // 30: api.v1alpha1.vanalytics.SearchRequest.Agent
-	(*SearchRequest_Phrase_Word)(nil),                     // 31: api.v1alpha1.vanalytics.SearchRequest.Phrase.Word
-	(*SearchRequest_Phrase_Highlight)(nil),                // 32: api.v1alpha1.vanalytics.SearchRequest.Phrase.Highlight
-	(*SearchRequest_Agent_UserName)(nil),                  // 33: api.v1alpha1.vanalytics.SearchRequest.Agent.UserName
-	(*SearchQuery_Phone)(nil),                             // 34: api.v1alpha1.vanalytics.SearchQuery.Phone
-	(*SearchQuery_Cc)(nil),                                // 35: api.v1alpha1.vanalytics.SearchQuery.Cc
-	(*SearchQuery_Ndc)(nil),                               // 36: api.v1alpha1.vanalytics.SearchQuery.Ndc
-	(*SearchQuery_Prefix)(nil),                            // 37: api.v1alpha1.vanalytics.SearchQuery.Prefix
-	(*SearchQuery_City)(nil),                              // 38: api.v1alpha1.vanalytics.SearchQuery.City
-	(*SearchQuery_Iso2)(nil),                              // 39: api.v1alpha1.vanalytics.SearchQuery.Iso2
-	(*SearchQuery_RegionCode)(nil),                        // 40: api.v1alpha1.vanalytics.SearchQuery.RegionCode
-	(*SearchQuery_RegionName)(nil),                        // 41: api.v1alpha1.vanalytics.SearchQuery.RegionName
-	(*SearchQuery_TimeZone)(nil),                          // 42: api.v1alpha1.vanalytics.SearchQuery.TimeZone
-	(*SearchQuery_Type)(nil),                              // 43: api.v1alpha1.vanalytics.SearchQuery.Type
-	(*SearchQuery_Utc)(nil),                               // 44: api.v1alpha1.vanalytics.SearchQuery.Utc
-	(*SearchQuery_Location)(nil),                          // 45: api.v1alpha1.vanalytics.SearchQuery.Location
-	(*SearchQuery_AgentCallLog)(nil),                      // 46: api.v1alpha1.vanalytics.SearchQuery.AgentCallLog
-	(*SearchQuery_CallEnded)(nil),                         // 47: api.v1alpha1.vanalytics.SearchQuery.CallEnded
-	(*SearchQuery_CallSkillsInitial)(nil),                 // 48: api.v1alpha1.vanalytics.SearchQuery.CallSkillsInitial
-	(*SearchQuery_AgentResponse)(nil),                     // 49: api.v1alpha1.vanalytics.SearchQuery.AgentResponse
-	(*SearchQuery_Results)(nil),                           // 50: api.v1alpha1.vanalytics.SearchQuery.Results
-	(*SearchQuery_DeleteTime)(nil),                        // 51: api.v1alpha1.vanalytics.SearchQuery.DeleteTime
-	(*SearchQuery_TranscriptSid)(nil),                     // 52: api.v1alpha1.vanalytics.SearchQuery.TranscriptSid
-	(*SearchQuery_AudioTime)(nil),                         // 53: api.v1alpha1.vanalytics.SearchQuery.AudioTime
-	(*SearchQuery_FlagSummary)(nil),                       // 54: api.v1alpha1.vanalytics.SearchQuery.FlagSummary
-	(*SearchQuery_Location_ZipCodeProximity)(nil),         // 55: api.v1alpha1.vanalytics.SearchQuery.Location.ZipCodeProximity
-	(*SearchQuery_AgentResponse_Values)(nil),              // 56: api.v1alpha1.vanalytics.SearchQuery.AgentResponse.Values
-	(*SearchQuery_AgentResponse_Numbers)(nil),             // 57: api.v1alpha1.vanalytics.SearchQuery.AgentResponse.Numbers
-	(*SearchQuery_AgentResponse_Key)(nil),                 // 58: api.v1alpha1.vanalytics.SearchQuery.AgentResponse.Key
-	(*SearchQuery_Results_Channel)(nil),                   // 59: api.v1alpha1.vanalytics.SearchQuery.Results.Channel
-	(*SearchQuery_Results_AgentUserName)(nil),             // 60: api.v1alpha1.vanalytics.SearchQuery.Results.AgentUserName
-	(*SearchQuery_Results_Segments)(nil),                  // 61: api.v1alpha1.vanalytics.SearchQuery.Results.Segments
-	(*SearchQuery_Results_Segments_Text)(nil),             // 62: api.v1alpha1.vanalytics.SearchQuery.Results.Segments.Text
-	(*SearchQuery_Results_Segments_Text_Phrase)(nil),      // 63: api.v1alpha1.vanalytics.SearchQuery.Results.Segments.Text.Phrase
-	(*SearchQuery_Results_Segments_Text_Phrase_Word)(nil), // 64: api.v1alpha1.vanalytics.SearchQuery.Results.Segments.Text.Phrase.Word
-	(*SearchQuery_FlagSummary_NeedReview)(nil),            // 65: api.v1alpha1.vanalytics.SearchQuery.FlagSummary.NeedReview
-	(*SearchQuery_FlagSummary_ReviewStatus)(nil),          // 66: api.v1alpha1.vanalytics.SearchQuery.FlagSummary.ReviewStatus
-	(*SearchQuery_FlagSummary_Flags)(nil),                 // 67: api.v1alpha1.vanalytics.SearchQuery.FlagSummary.Flags
-	(*SearchQuery_FlagSummary_Count)(nil),                 // 68: api.v1alpha1.vanalytics.SearchQuery.FlagSummary.Count
-	(*SearchQuery_FlagSummary_NeedReview_FlagSids)(nil),   // 69: api.v1alpha1.vanalytics.SearchQuery.FlagSummary.NeedReview.FlagSids
-	(*SearchQuery_FlagSummary_Flags_FlagSid)(nil),         // 70: api.v1alpha1.vanalytics.SearchQuery.FlagSummary.Flags.FlagSid
-	(*SearchResponse_Hit)(nil),                            // 71: api.v1alpha1.vanalytics.SearchResponse.Hit
-	(*Sort_Field)(nil),                                    // 72: api.v1alpha1.vanalytics.Sort.Field
-	nil,                                                   // 73: api.v1alpha1.vanalytics.Transcript.AgentResponseEntry
-	(*Silence_Duration)(nil),                              // 74: api.v1alpha1.vanalytics.Silence.Duration
-	(*Silence_Segment)(nil),                               // 75: api.v1alpha1.vanalytics.Silence.Segment
-	(*Silence_Occurrence)(nil),                            // 76: api.v1alpha1.vanalytics.Silence.Occurrence
-	(*TalkOver_Duration)(nil),                             // 77: api.v1alpha1.vanalytics.TalkOver.Duration
-	(*TalkOver_Result)(nil),                               // 78: api.v1alpha1.vanalytics.TalkOver.Result
-	(*TalkOver_Segment)(nil),                              // 79: api.v1alpha1.vanalytics.TalkOver.Segment
-	(*TalkOver_Occurrence)(nil),                           // 80: api.v1alpha1.vanalytics.TalkOver.Occurrence
-	(*FlagSummary_NeedReview)(nil),                        // 81: api.v1alpha1.vanalytics.FlagSummary.NeedReview
-	(*FlagSummary_Flag)(nil),                              // 82: api.v1alpha1.vanalytics.FlagSummary.Flag
-	(*FlagSummary_Filter)(nil),                            // 83: api.v1alpha1.vanalytics.FlagSummary.Filter
-	(*FlagSummary_Review)(nil),                            // 84: api.v1alpha1.vanalytics.FlagSummary.Review
-	(*Uint32Expr)(nil),                                    // 85: api.v1alpha1.vanalytics.Uint32Expr
-	(*TimestampExpr)(nil),                                 // 86: api.v1alpha1.vanalytics.TimestampExpr
-	(*fieldmaskpb.FieldMask)(nil),                         // 87: google.protobuf.FieldMask
-	(commons.CallType_Enum)(0),                            // 88: api.commons.CallType.Enum
-	(*Uint32Range)(nil),                                   // 89: api.v1alpha1.vanalytics.Uint32Range
-	(*timestamppb.Timestamp)(nil),                         // 90: google.protobuf.Timestamp
-	(*aclpb.AgentCallLog)(nil),                            // 91: api.v1alpha1.vanalytics.aclpb.AgentCallLog
-	(*TranscriptSummary)(nil),                             // 92: api.v1alpha1.vanalytics.TranscriptSummary
-	(*durationpb.Duration)(nil),                           // 93: google.protobuf.Duration
-	(commons.AgentCallLogCallEnded)(0),                    // 94: api.commons.AgentCallLogCallEnded
-	(*wrapperspb.BoolValue)(nil),                          // 95: google.protobuf.BoolValue
-	(*wrapperspb.Int64Value)(nil),                         // 96: google.protobuf.Int64Value
-	(*wrapperspb.Int32Value)(nil),                         // 97: google.protobuf.Int32Value
-	(*wrapperspb.DoubleValue)(nil),                        // 98: google.protobuf.DoubleValue
+	(*SearchByOrgIdRequest)(nil),                          // 25: api.v1alpha1.vanalytics.SearchByOrgIdRequest
+	(*SearchRequest_Phrase)(nil),                          // 26: api.v1alpha1.vanalytics.SearchRequest.Phrase
+	(*SearchRequest_PositionOffset)(nil),                  // 27: api.v1alpha1.vanalytics.SearchRequest.PositionOffset
+	(*SearchRequest_Silence)(nil),                         // 28: api.v1alpha1.vanalytics.SearchRequest.Silence
+	(*SearchRequest_TalkOver)(nil),                        // 29: api.v1alpha1.vanalytics.SearchRequest.TalkOver
+	(*SearchRequest_Terms)(nil),                           // 30: api.v1alpha1.vanalytics.SearchRequest.Terms
+	(*SearchRequest_Agent)(nil),                           // 31: api.v1alpha1.vanalytics.SearchRequest.Agent
+	(*SearchRequest_Phrase_Word)(nil),                     // 32: api.v1alpha1.vanalytics.SearchRequest.Phrase.Word
+	(*SearchRequest_Phrase_Highlight)(nil),                // 33: api.v1alpha1.vanalytics.SearchRequest.Phrase.Highlight
+	(*SearchRequest_Agent_UserName)(nil),                  // 34: api.v1alpha1.vanalytics.SearchRequest.Agent.UserName
+	(*SearchQuery_Phone)(nil),                             // 35: api.v1alpha1.vanalytics.SearchQuery.Phone
+	(*SearchQuery_Cc)(nil),                                // 36: api.v1alpha1.vanalytics.SearchQuery.Cc
+	(*SearchQuery_Ndc)(nil),                               // 37: api.v1alpha1.vanalytics.SearchQuery.Ndc
+	(*SearchQuery_Prefix)(nil),                            // 38: api.v1alpha1.vanalytics.SearchQuery.Prefix
+	(*SearchQuery_City)(nil),                              // 39: api.v1alpha1.vanalytics.SearchQuery.City
+	(*SearchQuery_Iso2)(nil),                              // 40: api.v1alpha1.vanalytics.SearchQuery.Iso2
+	(*SearchQuery_RegionCode)(nil),                        // 41: api.v1alpha1.vanalytics.SearchQuery.RegionCode
+	(*SearchQuery_RegionName)(nil),                        // 42: api.v1alpha1.vanalytics.SearchQuery.RegionName
+	(*SearchQuery_TimeZone)(nil),                          // 43: api.v1alpha1.vanalytics.SearchQuery.TimeZone
+	(*SearchQuery_Type)(nil),                              // 44: api.v1alpha1.vanalytics.SearchQuery.Type
+	(*SearchQuery_Utc)(nil),                               // 45: api.v1alpha1.vanalytics.SearchQuery.Utc
+	(*SearchQuery_Location)(nil),                          // 46: api.v1alpha1.vanalytics.SearchQuery.Location
+	(*SearchQuery_AgentCallLog)(nil),                      // 47: api.v1alpha1.vanalytics.SearchQuery.AgentCallLog
+	(*SearchQuery_CallEnded)(nil),                         // 48: api.v1alpha1.vanalytics.SearchQuery.CallEnded
+	(*SearchQuery_CallSkillsInitial)(nil),                 // 49: api.v1alpha1.vanalytics.SearchQuery.CallSkillsInitial
+	(*SearchQuery_AgentResponse)(nil),                     // 50: api.v1alpha1.vanalytics.SearchQuery.AgentResponse
+	(*SearchQuery_Results)(nil),                           // 51: api.v1alpha1.vanalytics.SearchQuery.Results
+	(*SearchQuery_DeleteTime)(nil),                        // 52: api.v1alpha1.vanalytics.SearchQuery.DeleteTime
+	(*SearchQuery_TranscriptSid)(nil),                     // 53: api.v1alpha1.vanalytics.SearchQuery.TranscriptSid
+	(*SearchQuery_AudioTime)(nil),                         // 54: api.v1alpha1.vanalytics.SearchQuery.AudioTime
+	(*SearchQuery_FlagSummary)(nil),                       // 55: api.v1alpha1.vanalytics.SearchQuery.FlagSummary
+	(*SearchQuery_Location_ZipCodeProximity)(nil),         // 56: api.v1alpha1.vanalytics.SearchQuery.Location.ZipCodeProximity
+	(*SearchQuery_AgentResponse_Values)(nil),              // 57: api.v1alpha1.vanalytics.SearchQuery.AgentResponse.Values
+	(*SearchQuery_AgentResponse_Numbers)(nil),             // 58: api.v1alpha1.vanalytics.SearchQuery.AgentResponse.Numbers
+	(*SearchQuery_AgentResponse_Key)(nil),                 // 59: api.v1alpha1.vanalytics.SearchQuery.AgentResponse.Key
+	(*SearchQuery_Results_Channel)(nil),                   // 60: api.v1alpha1.vanalytics.SearchQuery.Results.Channel
+	(*SearchQuery_Results_AgentUserName)(nil),             // 61: api.v1alpha1.vanalytics.SearchQuery.Results.AgentUserName
+	(*SearchQuery_Results_Segments)(nil),                  // 62: api.v1alpha1.vanalytics.SearchQuery.Results.Segments
+	(*SearchQuery_Results_Segments_Text)(nil),             // 63: api.v1alpha1.vanalytics.SearchQuery.Results.Segments.Text
+	(*SearchQuery_Results_Segments_Text_Phrase)(nil),      // 64: api.v1alpha1.vanalytics.SearchQuery.Results.Segments.Text.Phrase
+	(*SearchQuery_Results_Segments_Text_Phrase_Word)(nil), // 65: api.v1alpha1.vanalytics.SearchQuery.Results.Segments.Text.Phrase.Word
+	(*SearchQuery_FlagSummary_NeedReview)(nil),            // 66: api.v1alpha1.vanalytics.SearchQuery.FlagSummary.NeedReview
+	(*SearchQuery_FlagSummary_ReviewStatus)(nil),          // 67: api.v1alpha1.vanalytics.SearchQuery.FlagSummary.ReviewStatus
+	(*SearchQuery_FlagSummary_Flags)(nil),                 // 68: api.v1alpha1.vanalytics.SearchQuery.FlagSummary.Flags
+	(*SearchQuery_FlagSummary_Count)(nil),                 // 69: api.v1alpha1.vanalytics.SearchQuery.FlagSummary.Count
+	(*SearchQuery_FlagSummary_NeedReview_FlagSids)(nil),   // 70: api.v1alpha1.vanalytics.SearchQuery.FlagSummary.NeedReview.FlagSids
+	(*SearchQuery_FlagSummary_Flags_FlagSid)(nil),         // 71: api.v1alpha1.vanalytics.SearchQuery.FlagSummary.Flags.FlagSid
+	(*SearchResponse_Hit)(nil),                            // 72: api.v1alpha1.vanalytics.SearchResponse.Hit
+	(*Sort_Field)(nil),                                    // 73: api.v1alpha1.vanalytics.Sort.Field
+	nil,                                                   // 74: api.v1alpha1.vanalytics.Transcript.AgentResponseEntry
+	(*Silence_Duration)(nil),                              // 75: api.v1alpha1.vanalytics.Silence.Duration
+	(*Silence_Segment)(nil),                               // 76: api.v1alpha1.vanalytics.Silence.Segment
+	(*Silence_Occurrence)(nil),                            // 77: api.v1alpha1.vanalytics.Silence.Occurrence
+	(*TalkOver_Duration)(nil),                             // 78: api.v1alpha1.vanalytics.TalkOver.Duration
+	(*TalkOver_Result)(nil),                               // 79: api.v1alpha1.vanalytics.TalkOver.Result
+	(*TalkOver_Segment)(nil),                              // 80: api.v1alpha1.vanalytics.TalkOver.Segment
+	(*TalkOver_Occurrence)(nil),                           // 81: api.v1alpha1.vanalytics.TalkOver.Occurrence
+	(*FlagSummary_NeedReview)(nil),                        // 82: api.v1alpha1.vanalytics.FlagSummary.NeedReview
+	(*FlagSummary_Flag)(nil),                              // 83: api.v1alpha1.vanalytics.FlagSummary.Flag
+	(*FlagSummary_Filter)(nil),                            // 84: api.v1alpha1.vanalytics.FlagSummary.Filter
+	(*FlagSummary_Review)(nil),                            // 85: api.v1alpha1.vanalytics.FlagSummary.Review
+	(*Uint32Expr)(nil),                                    // 86: api.v1alpha1.vanalytics.Uint32Expr
+	(*TimestampExpr)(nil),                                 // 87: api.v1alpha1.vanalytics.TimestampExpr
+	(*fieldmaskpb.FieldMask)(nil),                         // 88: google.protobuf.FieldMask
+	(commons.CallType_Enum)(0),                            // 89: api.commons.CallType.Enum
+	(*Uint32Range)(nil),                                   // 90: api.v1alpha1.vanalytics.Uint32Range
+	(*timestamppb.Timestamp)(nil),                         // 91: google.protobuf.Timestamp
+	(*aclpb.AgentCallLog)(nil),                            // 92: api.v1alpha1.vanalytics.aclpb.AgentCallLog
+	(*TranscriptSummary)(nil),                             // 93: api.v1alpha1.vanalytics.TranscriptSummary
+	(*durationpb.Duration)(nil),                           // 94: google.protobuf.Duration
+	(commons.AgentCallLogCallEnded)(0),                    // 95: api.commons.AgentCallLogCallEnded
+	(*wrapperspb.BoolValue)(nil),                          // 96: google.protobuf.BoolValue
+	(*wrapperspb.Int64Value)(nil),                         // 97: google.protobuf.Int64Value
+	(*wrapperspb.Int32Value)(nil),                         // 98: google.protobuf.Int32Value
+	(*wrapperspb.DoubleValue)(nil),                        // 99: google.protobuf.DoubleValue
 }
 var file_api_v1alpha1_vanalytics_transcript_proto_depIdxs = []int32{
 	5,   // 0: api.v1alpha1.vanalytics.BulkDeleteTranscriptsRequest.query:type_name -> api.v1alpha1.vanalytics.SearchRequest
 	5,   // 1: api.v1alpha1.vanalytics.BulkRestoreTranscriptsRequest.query:type_name -> api.v1alpha1.vanalytics.SearchRequest
-	27,  // 2: api.v1alpha1.vanalytics.SearchRequest.silence:type_name -> api.v1alpha1.vanalytics.SearchRequest.Silence
-	85,  // 3: api.v1alpha1.vanalytics.SearchRequest.talk_time:type_name -> api.v1alpha1.vanalytics.Uint32Expr
-	30,  // 4: api.v1alpha1.vanalytics.SearchRequest.agent:type_name -> api.v1alpha1.vanalytics.SearchRequest.Agent
+	28,  // 2: api.v1alpha1.vanalytics.SearchRequest.silence:type_name -> api.v1alpha1.vanalytics.SearchRequest.Silence
+	86,  // 3: api.v1alpha1.vanalytics.SearchRequest.talk_time:type_name -> api.v1alpha1.vanalytics.Uint32Expr
+	31,  // 4: api.v1alpha1.vanalytics.SearchRequest.agent:type_name -> api.v1alpha1.vanalytics.SearchRequest.Agent
 	11,  // 5: api.v1alpha1.vanalytics.SearchRequest.sort:type_name -> api.v1alpha1.vanalytics.Sort
-	86,  // 6: api.v1alpha1.vanalytics.SearchRequest.create_time:type_name -> api.v1alpha1.vanalytics.TimestampExpr
-	28,  // 7: api.v1alpha1.vanalytics.SearchRequest.talk_over:type_name -> api.v1alpha1.vanalytics.SearchRequest.TalkOver
-	29,  // 8: api.v1alpha1.vanalytics.SearchRequest.terms:type_name -> api.v1alpha1.vanalytics.SearchRequest.Terms
-	25,  // 9: api.v1alpha1.vanalytics.SearchRequest.phrase:type_name -> api.v1alpha1.vanalytics.SearchRequest.Phrase
-	87,  // 10: api.v1alpha1.vanalytics.SearchRequest.transcript_mask:type_name -> google.protobuf.FieldMask
-	86,  // 11: api.v1alpha1.vanalytics.SearchRequest.call_start_time:type_name -> api.v1alpha1.vanalytics.TimestampExpr
-	88,  // 12: api.v1alpha1.vanalytics.SearchRequest.call_types:type_name -> api.commons.CallType.Enum
+	87,  // 6: api.v1alpha1.vanalytics.SearchRequest.create_time:type_name -> api.v1alpha1.vanalytics.TimestampExpr
+	29,  // 7: api.v1alpha1.vanalytics.SearchRequest.talk_over:type_name -> api.v1alpha1.vanalytics.SearchRequest.TalkOver
+	30,  // 8: api.v1alpha1.vanalytics.SearchRequest.terms:type_name -> api.v1alpha1.vanalytics.SearchRequest.Terms
+	26,  // 9: api.v1alpha1.vanalytics.SearchRequest.phrase:type_name -> api.v1alpha1.vanalytics.SearchRequest.Phrase
+	88,  // 10: api.v1alpha1.vanalytics.SearchRequest.transcript_mask:type_name -> google.protobuf.FieldMask
+	87,  // 11: api.v1alpha1.vanalytics.SearchRequest.call_start_time:type_name -> api.v1alpha1.vanalytics.TimestampExpr
+	89,  // 12: api.v1alpha1.vanalytics.SearchRequest.call_types:type_name -> api.commons.CallType.Enum
 	8,   // 13: api.v1alpha1.vanalytics.SearchRequest.agent_call_log:type_name -> api.v1alpha1.vanalytics.AgentCallLogQuery
 	6,   // 14: api.v1alpha1.vanalytics.SearchRequest.where:type_name -> api.v1alpha1.vanalytics.SearchQuery
-	89,  // 15: api.v1alpha1.vanalytics.SearchRequest.time_frame:type_name -> api.v1alpha1.vanalytics.Uint32Range
-	52,  // 16: api.v1alpha1.vanalytics.SearchQuery.transcript_sid:type_name -> api.v1alpha1.vanalytics.SearchQuery.TranscriptSid
-	54,  // 17: api.v1alpha1.vanalytics.SearchQuery.flag_summary:type_name -> api.v1alpha1.vanalytics.SearchQuery.FlagSummary
+	90,  // 15: api.v1alpha1.vanalytics.SearchRequest.time_frame:type_name -> api.v1alpha1.vanalytics.Uint32Range
+	53,  // 16: api.v1alpha1.vanalytics.SearchQuery.transcript_sid:type_name -> api.v1alpha1.vanalytics.SearchQuery.TranscriptSid
+	55,  // 17: api.v1alpha1.vanalytics.SearchQuery.flag_summary:type_name -> api.v1alpha1.vanalytics.SearchQuery.FlagSummary
 	6,   // 18: api.v1alpha1.vanalytics.SearchQuery.or:type_name -> api.v1alpha1.vanalytics.SearchQuery
 	6,   // 19: api.v1alpha1.vanalytics.SearchQuery.and:type_name -> api.v1alpha1.vanalytics.SearchQuery
-	53,  // 20: api.v1alpha1.vanalytics.SearchQuery.audio_time:type_name -> api.v1alpha1.vanalytics.SearchQuery.AudioTime
-	51,  // 21: api.v1alpha1.vanalytics.SearchQuery.delete_time:type_name -> api.v1alpha1.vanalytics.SearchQuery.DeleteTime
+	54,  // 20: api.v1alpha1.vanalytics.SearchQuery.audio_time:type_name -> api.v1alpha1.vanalytics.SearchQuery.AudioTime
+	52,  // 21: api.v1alpha1.vanalytics.SearchQuery.delete_time:type_name -> api.v1alpha1.vanalytics.SearchQuery.DeleteTime
 	6,   // 22: api.v1alpha1.vanalytics.SearchQuery.not:type_name -> api.v1alpha1.vanalytics.SearchQuery
-	50,  // 23: api.v1alpha1.vanalytics.SearchQuery.results:type_name -> api.v1alpha1.vanalytics.SearchQuery.Results
-	49,  // 24: api.v1alpha1.vanalytics.SearchQuery.agent_response:type_name -> api.v1alpha1.vanalytics.SearchQuery.AgentResponse
-	46,  // 25: api.v1alpha1.vanalytics.SearchQuery.agent_call_log:type_name -> api.v1alpha1.vanalytics.SearchQuery.AgentCallLog
-	34,  // 26: api.v1alpha1.vanalytics.SearchQuery.phone:type_name -> api.v1alpha1.vanalytics.SearchQuery.Phone
-	71,  // 27: api.v1alpha1.vanalytics.SearchResponse.hits:type_name -> api.v1alpha1.vanalytics.SearchResponse.Hit
+	51,  // 23: api.v1alpha1.vanalytics.SearchQuery.results:type_name -> api.v1alpha1.vanalytics.SearchQuery.Results
+	50,  // 24: api.v1alpha1.vanalytics.SearchQuery.agent_response:type_name -> api.v1alpha1.vanalytics.SearchQuery.AgentResponse
+	47,  // 25: api.v1alpha1.vanalytics.SearchQuery.agent_call_log:type_name -> api.v1alpha1.vanalytics.SearchQuery.AgentCallLog
+	35,  // 26: api.v1alpha1.vanalytics.SearchQuery.phone:type_name -> api.v1alpha1.vanalytics.SearchQuery.Phone
+	72,  // 27: api.v1alpha1.vanalytics.SearchResponse.hits:type_name -> api.v1alpha1.vanalytics.SearchResponse.Hit
 	11,  // 28: api.v1alpha1.vanalytics.SearchResponse.sort:type_name -> api.v1alpha1.vanalytics.Sort
 	9,   // 29: api.v1alpha1.vanalytics.AgentCallLogQuery.call_skills_initial:type_name -> api.v1alpha1.vanalytics.CallSkillsInitialQuery
 	10,  // 30: api.v1alpha1.vanalytics.CallSkillsInitialQuery.need:type_name -> api.v1alpha1.vanalytics.VanaTermsQuery
 	10,  // 31: api.v1alpha1.vanalytics.CallSkillsInitialQuery.want:type_name -> api.v1alpha1.vanalytics.VanaTermsQuery
-	72,  // 32: api.v1alpha1.vanalytics.Sort.fields:type_name -> api.v1alpha1.vanalytics.Sort.Field
+	73,  // 32: api.v1alpha1.vanalytics.Sort.fields:type_name -> api.v1alpha1.vanalytics.Sort.Field
 	14,  // 33: api.v1alpha1.vanalytics.ListTranscriptGroupNamesResponse.group_names:type_name -> api.v1alpha1.vanalytics.TranscriptGroupName
-	88,  // 34: api.v1alpha1.vanalytics.Transcript.call_type:type_name -> api.commons.CallType.Enum
+	89,  // 34: api.v1alpha1.vanalytics.Transcript.call_type:type_name -> api.commons.CallType.Enum
 	18,  // 35: api.v1alpha1.vanalytics.Transcript.results:type_name -> api.v1alpha1.vanalytics.Result
 	21,  // 36: api.v1alpha1.vanalytics.Transcript.silence:type_name -> api.v1alpha1.vanalytics.Silence
-	90,  // 37: api.v1alpha1.vanalytics.Transcript.create_time:type_name -> google.protobuf.Timestamp
-	90,  // 38: api.v1alpha1.vanalytics.Transcript.call_start_time:type_name -> google.protobuf.Timestamp
+	91,  // 37: api.v1alpha1.vanalytics.Transcript.create_time:type_name -> google.protobuf.Timestamp
+	91,  // 38: api.v1alpha1.vanalytics.Transcript.call_start_time:type_name -> google.protobuf.Timestamp
 	22,  // 39: api.v1alpha1.vanalytics.Transcript.talk_over:type_name -> api.v1alpha1.vanalytics.TalkOver
-	91,  // 40: api.v1alpha1.vanalytics.Transcript.agent_call_log:type_name -> api.v1alpha1.vanalytics.aclpb.AgentCallLog
+	92,  // 40: api.v1alpha1.vanalytics.Transcript.agent_call_log:type_name -> api.v1alpha1.vanalytics.aclpb.AgentCallLog
 	23,  // 41: api.v1alpha1.vanalytics.Transcript.flag_summary:type_name -> api.v1alpha1.vanalytics.FlagSummary
-	90,  // 42: api.v1alpha1.vanalytics.Transcript.delete_time:type_name -> google.protobuf.Timestamp
-	73,  // 43: api.v1alpha1.vanalytics.Transcript.agent_response:type_name -> api.v1alpha1.vanalytics.Transcript.AgentResponseEntry
-	92,  // 44: api.v1alpha1.vanalytics.Transcript.summary:type_name -> api.v1alpha1.vanalytics.TranscriptSummary
+	91,  // 42: api.v1alpha1.vanalytics.Transcript.delete_time:type_name -> google.protobuf.Timestamp
+	74,  // 43: api.v1alpha1.vanalytics.Transcript.agent_response:type_name -> api.v1alpha1.vanalytics.Transcript.AgentResponseEntry
+	93,  // 44: api.v1alpha1.vanalytics.Transcript.summary:type_name -> api.v1alpha1.vanalytics.TranscriptSummary
 	19,  // 45: api.v1alpha1.vanalytics.Result.segments:type_name -> api.v1alpha1.vanalytics.Segment
 	20,  // 46: api.v1alpha1.vanalytics.Segment.words:type_name -> api.v1alpha1.vanalytics.Word
-	74,  // 47: api.v1alpha1.vanalytics.Silence.duration:type_name -> api.v1alpha1.vanalytics.Silence.Duration
-	75,  // 48: api.v1alpha1.vanalytics.Silence.segments:type_name -> api.v1alpha1.vanalytics.Silence.Segment
-	76,  // 49: api.v1alpha1.vanalytics.Silence.occurrence:type_name -> api.v1alpha1.vanalytics.Silence.Occurrence
-	80,  // 50: api.v1alpha1.vanalytics.TalkOver.occurrence:type_name -> api.v1alpha1.vanalytics.TalkOver.Occurrence
-	77,  // 51: api.v1alpha1.vanalytics.TalkOver.duration:type_name -> api.v1alpha1.vanalytics.TalkOver.Duration
-	78,  // 52: api.v1alpha1.vanalytics.TalkOver.results:type_name -> api.v1alpha1.vanalytics.TalkOver.Result
-	81,  // 53: api.v1alpha1.vanalytics.FlagSummary.need_review:type_name -> api.v1alpha1.vanalytics.FlagSummary.NeedReview
-	82,  // 54: api.v1alpha1.vanalytics.FlagSummary.flags:type_name -> api.v1alpha1.vanalytics.FlagSummary.Flag
+	75,  // 47: api.v1alpha1.vanalytics.Silence.duration:type_name -> api.v1alpha1.vanalytics.Silence.Duration
+	76,  // 48: api.v1alpha1.vanalytics.Silence.segments:type_name -> api.v1alpha1.vanalytics.Silence.Segment
+	77,  // 49: api.v1alpha1.vanalytics.Silence.occurrence:type_name -> api.v1alpha1.vanalytics.Silence.Occurrence
+	81,  // 50: api.v1alpha1.vanalytics.TalkOver.occurrence:type_name -> api.v1alpha1.vanalytics.TalkOver.Occurrence
+	78,  // 51: api.v1alpha1.vanalytics.TalkOver.duration:type_name -> api.v1alpha1.vanalytics.TalkOver.Duration
+	79,  // 52: api.v1alpha1.vanalytics.TalkOver.results:type_name -> api.v1alpha1.vanalytics.TalkOver.Result
+	82,  // 53: api.v1alpha1.vanalytics.FlagSummary.need_review:type_name -> api.v1alpha1.vanalytics.FlagSummary.NeedReview
+	83,  // 54: api.v1alpha1.vanalytics.FlagSummary.flags:type_name -> api.v1alpha1.vanalytics.FlagSummary.Flag
 	0,   // 55: api.v1alpha1.vanalytics.FlagSummary.review_status:type_name -> api.v1alpha1.vanalytics.TranscriptReviewStatus
-	31,  // 56: api.v1alpha1.vanalytics.SearchRequest.Phrase.words:type_name -> api.v1alpha1.vanalytics.SearchRequest.Phrase.Word
-	32,  // 57: api.v1alpha1.vanalytics.SearchRequest.Phrase.highlight:type_name -> api.v1alpha1.vanalytics.SearchRequest.Phrase.Highlight
-	30,  // 58: api.v1alpha1.vanalytics.SearchRequest.Phrase.agent:type_name -> api.v1alpha1.vanalytics.SearchRequest.Agent
-	26,  // 59: api.v1alpha1.vanalytics.SearchRequest.Phrase.position_offset:type_name -> api.v1alpha1.vanalytics.SearchRequest.PositionOffset
-	93,  // 60: api.v1alpha1.vanalytics.SearchRequest.PositionOffset.start:type_name -> google.protobuf.Duration
-	93,  // 61: api.v1alpha1.vanalytics.SearchRequest.PositionOffset.stop:type_name -> google.protobuf.Duration
-	85,  // 62: api.v1alpha1.vanalytics.SearchRequest.Silence.duration_total:type_name -> api.v1alpha1.vanalytics.Uint32Expr
-	85,  // 63: api.v1alpha1.vanalytics.SearchRequest.Silence.duration_max:type_name -> api.v1alpha1.vanalytics.Uint32Expr
-	85,  // 64: api.v1alpha1.vanalytics.SearchRequest.Silence.occurrence_total:type_name -> api.v1alpha1.vanalytics.Uint32Expr
-	85,  // 65: api.v1alpha1.vanalytics.SearchRequest.Silence.duration_percentage:type_name -> api.v1alpha1.vanalytics.Uint32Expr
-	85,  // 66: api.v1alpha1.vanalytics.SearchRequest.TalkOver.duration_total:type_name -> api.v1alpha1.vanalytics.Uint32Expr
-	85,  // 67: api.v1alpha1.vanalytics.SearchRequest.TalkOver.duration_max:type_name -> api.v1alpha1.vanalytics.Uint32Expr
-	85,  // 68: api.v1alpha1.vanalytics.SearchRequest.TalkOver.occurrence_total:type_name -> api.v1alpha1.vanalytics.Uint32Expr
-	85,  // 69: api.v1alpha1.vanalytics.SearchRequest.TalkOver.duration_percentage:type_name -> api.v1alpha1.vanalytics.Uint32Expr
-	30,  // 70: api.v1alpha1.vanalytics.SearchRequest.Terms.agent:type_name -> api.v1alpha1.vanalytics.SearchRequest.Agent
-	26,  // 71: api.v1alpha1.vanalytics.SearchRequest.Terms.position_offset:type_name -> api.v1alpha1.vanalytics.SearchRequest.PositionOffset
-	33,  // 72: api.v1alpha1.vanalytics.SearchRequest.Agent.user_name:type_name -> api.v1alpha1.vanalytics.SearchRequest.Agent.UserName
-	35,  // 73: api.v1alpha1.vanalytics.SearchQuery.Phone.cc:type_name -> api.v1alpha1.vanalytics.SearchQuery.Cc
-	36,  // 74: api.v1alpha1.vanalytics.SearchQuery.Phone.ndc:type_name -> api.v1alpha1.vanalytics.SearchQuery.Ndc
-	37,  // 75: api.v1alpha1.vanalytics.SearchQuery.Phone.prefix:type_name -> api.v1alpha1.vanalytics.SearchQuery.Prefix
-	38,  // 76: api.v1alpha1.vanalytics.SearchQuery.Phone.city:type_name -> api.v1alpha1.vanalytics.SearchQuery.City
-	39,  // 77: api.v1alpha1.vanalytics.SearchQuery.Phone.iso2:type_name -> api.v1alpha1.vanalytics.SearchQuery.Iso2
-	40,  // 78: api.v1alpha1.vanalytics.SearchQuery.Phone.region_code:type_name -> api.v1alpha1.vanalytics.SearchQuery.RegionCode
-	41,  // 79: api.v1alpha1.vanalytics.SearchQuery.Phone.region_name:type_name -> api.v1alpha1.vanalytics.SearchQuery.RegionName
-	42,  // 80: api.v1alpha1.vanalytics.SearchQuery.Phone.time_zone:type_name -> api.v1alpha1.vanalytics.SearchQuery.TimeZone
-	43,  // 81: api.v1alpha1.vanalytics.SearchQuery.Phone.type:type_name -> api.v1alpha1.vanalytics.SearchQuery.Type
-	44,  // 82: api.v1alpha1.vanalytics.SearchQuery.Phone.utc:type_name -> api.v1alpha1.vanalytics.SearchQuery.Utc
-	45,  // 83: api.v1alpha1.vanalytics.SearchQuery.Phone.location:type_name -> api.v1alpha1.vanalytics.SearchQuery.Location
-	55,  // 84: api.v1alpha1.vanalytics.SearchQuery.Location.zip_code_proximity:type_name -> api.v1alpha1.vanalytics.SearchQuery.Location.ZipCodeProximity
-	48,  // 85: api.v1alpha1.vanalytics.SearchQuery.AgentCallLog.call_skills_initial:type_name -> api.v1alpha1.vanalytics.SearchQuery.CallSkillsInitial
-	47,  // 86: api.v1alpha1.vanalytics.SearchQuery.AgentCallLog.call_ended:type_name -> api.v1alpha1.vanalytics.SearchQuery.CallEnded
-	94,  // 87: api.v1alpha1.vanalytics.SearchQuery.CallEnded.reasons:type_name -> api.commons.AgentCallLogCallEnded
-	58,  // 88: api.v1alpha1.vanalytics.SearchQuery.AgentResponse.key:type_name -> api.v1alpha1.vanalytics.SearchQuery.AgentResponse.Key
-	56,  // 89: api.v1alpha1.vanalytics.SearchQuery.AgentResponse.values:type_name -> api.v1alpha1.vanalytics.SearchQuery.AgentResponse.Values
-	57,  // 90: api.v1alpha1.vanalytics.SearchQuery.AgentResponse.numbers:type_name -> api.v1alpha1.vanalytics.SearchQuery.AgentResponse.Numbers
-	59,  // 91: api.v1alpha1.vanalytics.SearchQuery.Results.channel:type_name -> api.v1alpha1.vanalytics.SearchQuery.Results.Channel
-	60,  // 92: api.v1alpha1.vanalytics.SearchQuery.Results.agent_user_name:type_name -> api.v1alpha1.vanalytics.SearchQuery.Results.AgentUserName
-	61,  // 93: api.v1alpha1.vanalytics.SearchQuery.Results.segments:type_name -> api.v1alpha1.vanalytics.SearchQuery.Results.Segments
-	95,  // 94: api.v1alpha1.vanalytics.SearchQuery.DeleteTime.exists:type_name -> google.protobuf.BoolValue
-	96,  // 95: api.v1alpha1.vanalytics.SearchQuery.TranscriptSid.gte:type_name -> google.protobuf.Int64Value
-	97,  // 96: api.v1alpha1.vanalytics.SearchQuery.AudioTime.gte:type_name -> google.protobuf.Int32Value
-	97,  // 97: api.v1alpha1.vanalytics.SearchQuery.AudioTime.lte:type_name -> google.protobuf.Int32Value
-	97,  // 98: api.v1alpha1.vanalytics.SearchQuery.AudioTime.gt:type_name -> google.protobuf.Int32Value
-	97,  // 99: api.v1alpha1.vanalytics.SearchQuery.AudioTime.lt:type_name -> google.protobuf.Int32Value
-	65,  // 100: api.v1alpha1.vanalytics.SearchQuery.FlagSummary.need_review:type_name -> api.v1alpha1.vanalytics.SearchQuery.FlagSummary.NeedReview
-	66,  // 101: api.v1alpha1.vanalytics.SearchQuery.FlagSummary.review_status:type_name -> api.v1alpha1.vanalytics.SearchQuery.FlagSummary.ReviewStatus
-	67,  // 102: api.v1alpha1.vanalytics.SearchQuery.FlagSummary.flags:type_name -> api.v1alpha1.vanalytics.SearchQuery.FlagSummary.Flags
-	68,  // 103: api.v1alpha1.vanalytics.SearchQuery.FlagSummary.count:type_name -> api.v1alpha1.vanalytics.SearchQuery.FlagSummary.Count
-	98,  // 104: api.v1alpha1.vanalytics.SearchQuery.AgentResponse.Numbers.gte:type_name -> google.protobuf.DoubleValue
-	98,  // 105: api.v1alpha1.vanalytics.SearchQuery.AgentResponse.Numbers.lte:type_name -> google.protobuf.DoubleValue
-	98,  // 106: api.v1alpha1.vanalytics.SearchQuery.AgentResponse.Numbers.gt:type_name -> google.protobuf.DoubleValue
-	98,  // 107: api.v1alpha1.vanalytics.SearchQuery.AgentResponse.Numbers.lt:type_name -> google.protobuf.DoubleValue
-	98,  // 108: api.v1alpha1.vanalytics.SearchQuery.AgentResponse.Numbers.eq:type_name -> google.protobuf.DoubleValue
-	62,  // 109: api.v1alpha1.vanalytics.SearchQuery.Results.Segments.text:type_name -> api.v1alpha1.vanalytics.SearchQuery.Results.Segments.Text
-	63,  // 110: api.v1alpha1.vanalytics.SearchQuery.Results.Segments.Text.phrase:type_name -> api.v1alpha1.vanalytics.SearchQuery.Results.Segments.Text.Phrase
-	64,  // 111: api.v1alpha1.vanalytics.SearchQuery.Results.Segments.Text.Phrase.words:type_name -> api.v1alpha1.vanalytics.SearchQuery.Results.Segments.Text.Phrase.Word
-	69,  // 112: api.v1alpha1.vanalytics.SearchQuery.FlagSummary.NeedReview.flag_sids:type_name -> api.v1alpha1.vanalytics.SearchQuery.FlagSummary.NeedReview.FlagSids
-	0,   // 113: api.v1alpha1.vanalytics.SearchQuery.FlagSummary.ReviewStatus.any:type_name -> api.v1alpha1.vanalytics.TranscriptReviewStatus
-	70,  // 114: api.v1alpha1.vanalytics.SearchQuery.FlagSummary.Flags.flag_sid:type_name -> api.v1alpha1.vanalytics.SearchQuery.FlagSummary.Flags.FlagSid
-	97,  // 115: api.v1alpha1.vanalytics.SearchQuery.FlagSummary.Count.gte:type_name -> google.protobuf.Int32Value
-	97,  // 116: api.v1alpha1.vanalytics.SearchQuery.FlagSummary.Count.lte:type_name -> google.protobuf.Int32Value
-	97,  // 117: api.v1alpha1.vanalytics.SearchQuery.FlagSummary.Count.gt:type_name -> google.protobuf.Int32Value
-	97,  // 118: api.v1alpha1.vanalytics.SearchQuery.FlagSummary.Count.lt:type_name -> google.protobuf.Int32Value
-	97,  // 119: api.v1alpha1.vanalytics.SearchQuery.FlagSummary.Count.eq:type_name -> google.protobuf.Int32Value
-	17,  // 120: api.v1alpha1.vanalytics.SearchResponse.Hit.transcript:type_name -> api.v1alpha1.vanalytics.Transcript
-	24,  // 121: api.v1alpha1.vanalytics.Transcript.AgentResponseEntry.value:type_name -> api.v1alpha1.vanalytics.AgentResponse
-	80,  // 122: api.v1alpha1.vanalytics.TalkOver.Result.occurrence:type_name -> api.v1alpha1.vanalytics.TalkOver.Occurrence
-	77,  // 123: api.v1alpha1.vanalytics.TalkOver.Result.duration:type_name -> api.v1alpha1.vanalytics.TalkOver.Duration
-	79,  // 124: api.v1alpha1.vanalytics.TalkOver.Result.segments:type_name -> api.v1alpha1.vanalytics.TalkOver.Segment
-	83,  // 125: api.v1alpha1.vanalytics.FlagSummary.Flag.filters:type_name -> api.v1alpha1.vanalytics.FlagSummary.Filter
-	84,  // 126: api.v1alpha1.vanalytics.FlagSummary.Flag.reviews:type_name -> api.v1alpha1.vanalytics.FlagSummary.Review
-	127, // [127:127] is the sub-list for method output_type
-	127, // [127:127] is the sub-list for method input_type
-	127, // [127:127] is the sub-list for extension type_name
-	127, // [127:127] is the sub-list for extension extendee
-	0,   // [0:127] is the sub-list for field type_name
+	11,  // 56: api.v1alpha1.vanalytics.SearchByOrgIdRequest.sort:type_name -> api.v1alpha1.vanalytics.Sort
+	88,  // 57: api.v1alpha1.vanalytics.SearchByOrgIdRequest.transcript_mask:type_name -> google.protobuf.FieldMask
+	55,  // 58: api.v1alpha1.vanalytics.SearchByOrgIdRequest.flag_summary:type_name -> api.v1alpha1.vanalytics.SearchQuery.FlagSummary
+	32,  // 59: api.v1alpha1.vanalytics.SearchRequest.Phrase.words:type_name -> api.v1alpha1.vanalytics.SearchRequest.Phrase.Word
+	33,  // 60: api.v1alpha1.vanalytics.SearchRequest.Phrase.highlight:type_name -> api.v1alpha1.vanalytics.SearchRequest.Phrase.Highlight
+	31,  // 61: api.v1alpha1.vanalytics.SearchRequest.Phrase.agent:type_name -> api.v1alpha1.vanalytics.SearchRequest.Agent
+	27,  // 62: api.v1alpha1.vanalytics.SearchRequest.Phrase.position_offset:type_name -> api.v1alpha1.vanalytics.SearchRequest.PositionOffset
+	94,  // 63: api.v1alpha1.vanalytics.SearchRequest.PositionOffset.start:type_name -> google.protobuf.Duration
+	94,  // 64: api.v1alpha1.vanalytics.SearchRequest.PositionOffset.stop:type_name -> google.protobuf.Duration
+	86,  // 65: api.v1alpha1.vanalytics.SearchRequest.Silence.duration_total:type_name -> api.v1alpha1.vanalytics.Uint32Expr
+	86,  // 66: api.v1alpha1.vanalytics.SearchRequest.Silence.duration_max:type_name -> api.v1alpha1.vanalytics.Uint32Expr
+	86,  // 67: api.v1alpha1.vanalytics.SearchRequest.Silence.occurrence_total:type_name -> api.v1alpha1.vanalytics.Uint32Expr
+	86,  // 68: api.v1alpha1.vanalytics.SearchRequest.Silence.duration_percentage:type_name -> api.v1alpha1.vanalytics.Uint32Expr
+	86,  // 69: api.v1alpha1.vanalytics.SearchRequest.TalkOver.duration_total:type_name -> api.v1alpha1.vanalytics.Uint32Expr
+	86,  // 70: api.v1alpha1.vanalytics.SearchRequest.TalkOver.duration_max:type_name -> api.v1alpha1.vanalytics.Uint32Expr
+	86,  // 71: api.v1alpha1.vanalytics.SearchRequest.TalkOver.occurrence_total:type_name -> api.v1alpha1.vanalytics.Uint32Expr
+	86,  // 72: api.v1alpha1.vanalytics.SearchRequest.TalkOver.duration_percentage:type_name -> api.v1alpha1.vanalytics.Uint32Expr
+	31,  // 73: api.v1alpha1.vanalytics.SearchRequest.Terms.agent:type_name -> api.v1alpha1.vanalytics.SearchRequest.Agent
+	27,  // 74: api.v1alpha1.vanalytics.SearchRequest.Terms.position_offset:type_name -> api.v1alpha1.vanalytics.SearchRequest.PositionOffset
+	34,  // 75: api.v1alpha1.vanalytics.SearchRequest.Agent.user_name:type_name -> api.v1alpha1.vanalytics.SearchRequest.Agent.UserName
+	36,  // 76: api.v1alpha1.vanalytics.SearchQuery.Phone.cc:type_name -> api.v1alpha1.vanalytics.SearchQuery.Cc
+	37,  // 77: api.v1alpha1.vanalytics.SearchQuery.Phone.ndc:type_name -> api.v1alpha1.vanalytics.SearchQuery.Ndc
+	38,  // 78: api.v1alpha1.vanalytics.SearchQuery.Phone.prefix:type_name -> api.v1alpha1.vanalytics.SearchQuery.Prefix
+	39,  // 79: api.v1alpha1.vanalytics.SearchQuery.Phone.city:type_name -> api.v1alpha1.vanalytics.SearchQuery.City
+	40,  // 80: api.v1alpha1.vanalytics.SearchQuery.Phone.iso2:type_name -> api.v1alpha1.vanalytics.SearchQuery.Iso2
+	41,  // 81: api.v1alpha1.vanalytics.SearchQuery.Phone.region_code:type_name -> api.v1alpha1.vanalytics.SearchQuery.RegionCode
+	42,  // 82: api.v1alpha1.vanalytics.SearchQuery.Phone.region_name:type_name -> api.v1alpha1.vanalytics.SearchQuery.RegionName
+	43,  // 83: api.v1alpha1.vanalytics.SearchQuery.Phone.time_zone:type_name -> api.v1alpha1.vanalytics.SearchQuery.TimeZone
+	44,  // 84: api.v1alpha1.vanalytics.SearchQuery.Phone.type:type_name -> api.v1alpha1.vanalytics.SearchQuery.Type
+	45,  // 85: api.v1alpha1.vanalytics.SearchQuery.Phone.utc:type_name -> api.v1alpha1.vanalytics.SearchQuery.Utc
+	46,  // 86: api.v1alpha1.vanalytics.SearchQuery.Phone.location:type_name -> api.v1alpha1.vanalytics.SearchQuery.Location
+	56,  // 87: api.v1alpha1.vanalytics.SearchQuery.Location.zip_code_proximity:type_name -> api.v1alpha1.vanalytics.SearchQuery.Location.ZipCodeProximity
+	49,  // 88: api.v1alpha1.vanalytics.SearchQuery.AgentCallLog.call_skills_initial:type_name -> api.v1alpha1.vanalytics.SearchQuery.CallSkillsInitial
+	48,  // 89: api.v1alpha1.vanalytics.SearchQuery.AgentCallLog.call_ended:type_name -> api.v1alpha1.vanalytics.SearchQuery.CallEnded
+	95,  // 90: api.v1alpha1.vanalytics.SearchQuery.CallEnded.reasons:type_name -> api.commons.AgentCallLogCallEnded
+	59,  // 91: api.v1alpha1.vanalytics.SearchQuery.AgentResponse.key:type_name -> api.v1alpha1.vanalytics.SearchQuery.AgentResponse.Key
+	57,  // 92: api.v1alpha1.vanalytics.SearchQuery.AgentResponse.values:type_name -> api.v1alpha1.vanalytics.SearchQuery.AgentResponse.Values
+	58,  // 93: api.v1alpha1.vanalytics.SearchQuery.AgentResponse.numbers:type_name -> api.v1alpha1.vanalytics.SearchQuery.AgentResponse.Numbers
+	60,  // 94: api.v1alpha1.vanalytics.SearchQuery.Results.channel:type_name -> api.v1alpha1.vanalytics.SearchQuery.Results.Channel
+	61,  // 95: api.v1alpha1.vanalytics.SearchQuery.Results.agent_user_name:type_name -> api.v1alpha1.vanalytics.SearchQuery.Results.AgentUserName
+	62,  // 96: api.v1alpha1.vanalytics.SearchQuery.Results.segments:type_name -> api.v1alpha1.vanalytics.SearchQuery.Results.Segments
+	96,  // 97: api.v1alpha1.vanalytics.SearchQuery.DeleteTime.exists:type_name -> google.protobuf.BoolValue
+	97,  // 98: api.v1alpha1.vanalytics.SearchQuery.TranscriptSid.gte:type_name -> google.protobuf.Int64Value
+	98,  // 99: api.v1alpha1.vanalytics.SearchQuery.AudioTime.gte:type_name -> google.protobuf.Int32Value
+	98,  // 100: api.v1alpha1.vanalytics.SearchQuery.AudioTime.lte:type_name -> google.protobuf.Int32Value
+	98,  // 101: api.v1alpha1.vanalytics.SearchQuery.AudioTime.gt:type_name -> google.protobuf.Int32Value
+	98,  // 102: api.v1alpha1.vanalytics.SearchQuery.AudioTime.lt:type_name -> google.protobuf.Int32Value
+	66,  // 103: api.v1alpha1.vanalytics.SearchQuery.FlagSummary.need_review:type_name -> api.v1alpha1.vanalytics.SearchQuery.FlagSummary.NeedReview
+	67,  // 104: api.v1alpha1.vanalytics.SearchQuery.FlagSummary.review_status:type_name -> api.v1alpha1.vanalytics.SearchQuery.FlagSummary.ReviewStatus
+	68,  // 105: api.v1alpha1.vanalytics.SearchQuery.FlagSummary.flags:type_name -> api.v1alpha1.vanalytics.SearchQuery.FlagSummary.Flags
+	69,  // 106: api.v1alpha1.vanalytics.SearchQuery.FlagSummary.count:type_name -> api.v1alpha1.vanalytics.SearchQuery.FlagSummary.Count
+	99,  // 107: api.v1alpha1.vanalytics.SearchQuery.AgentResponse.Numbers.gte:type_name -> google.protobuf.DoubleValue
+	99,  // 108: api.v1alpha1.vanalytics.SearchQuery.AgentResponse.Numbers.lte:type_name -> google.protobuf.DoubleValue
+	99,  // 109: api.v1alpha1.vanalytics.SearchQuery.AgentResponse.Numbers.gt:type_name -> google.protobuf.DoubleValue
+	99,  // 110: api.v1alpha1.vanalytics.SearchQuery.AgentResponse.Numbers.lt:type_name -> google.protobuf.DoubleValue
+	99,  // 111: api.v1alpha1.vanalytics.SearchQuery.AgentResponse.Numbers.eq:type_name -> google.protobuf.DoubleValue
+	63,  // 112: api.v1alpha1.vanalytics.SearchQuery.Results.Segments.text:type_name -> api.v1alpha1.vanalytics.SearchQuery.Results.Segments.Text
+	64,  // 113: api.v1alpha1.vanalytics.SearchQuery.Results.Segments.Text.phrase:type_name -> api.v1alpha1.vanalytics.SearchQuery.Results.Segments.Text.Phrase
+	65,  // 114: api.v1alpha1.vanalytics.SearchQuery.Results.Segments.Text.Phrase.words:type_name -> api.v1alpha1.vanalytics.SearchQuery.Results.Segments.Text.Phrase.Word
+	70,  // 115: api.v1alpha1.vanalytics.SearchQuery.FlagSummary.NeedReview.flag_sids:type_name -> api.v1alpha1.vanalytics.SearchQuery.FlagSummary.NeedReview.FlagSids
+	0,   // 116: api.v1alpha1.vanalytics.SearchQuery.FlagSummary.ReviewStatus.any:type_name -> api.v1alpha1.vanalytics.TranscriptReviewStatus
+	71,  // 117: api.v1alpha1.vanalytics.SearchQuery.FlagSummary.Flags.flag_sid:type_name -> api.v1alpha1.vanalytics.SearchQuery.FlagSummary.Flags.FlagSid
+	98,  // 118: api.v1alpha1.vanalytics.SearchQuery.FlagSummary.Count.gte:type_name -> google.protobuf.Int32Value
+	98,  // 119: api.v1alpha1.vanalytics.SearchQuery.FlagSummary.Count.lte:type_name -> google.protobuf.Int32Value
+	98,  // 120: api.v1alpha1.vanalytics.SearchQuery.FlagSummary.Count.gt:type_name -> google.protobuf.Int32Value
+	98,  // 121: api.v1alpha1.vanalytics.SearchQuery.FlagSummary.Count.lt:type_name -> google.protobuf.Int32Value
+	98,  // 122: api.v1alpha1.vanalytics.SearchQuery.FlagSummary.Count.eq:type_name -> google.protobuf.Int32Value
+	17,  // 123: api.v1alpha1.vanalytics.SearchResponse.Hit.transcript:type_name -> api.v1alpha1.vanalytics.Transcript
+	24,  // 124: api.v1alpha1.vanalytics.Transcript.AgentResponseEntry.value:type_name -> api.v1alpha1.vanalytics.AgentResponse
+	81,  // 125: api.v1alpha1.vanalytics.TalkOver.Result.occurrence:type_name -> api.v1alpha1.vanalytics.TalkOver.Occurrence
+	78,  // 126: api.v1alpha1.vanalytics.TalkOver.Result.duration:type_name -> api.v1alpha1.vanalytics.TalkOver.Duration
+	80,  // 127: api.v1alpha1.vanalytics.TalkOver.Result.segments:type_name -> api.v1alpha1.vanalytics.TalkOver.Segment
+	84,  // 128: api.v1alpha1.vanalytics.FlagSummary.Flag.filters:type_name -> api.v1alpha1.vanalytics.FlagSummary.Filter
+	85,  // 129: api.v1alpha1.vanalytics.FlagSummary.Flag.reviews:type_name -> api.v1alpha1.vanalytics.FlagSummary.Review
+	130, // [130:130] is the sub-list for method output_type
+	130, // [130:130] is the sub-list for method input_type
+	130, // [130:130] is the sub-list for extension type_name
+	130, // [130:130] is the sub-list for extension extendee
+	0,   // [0:130] is the sub-list for field type_name
 }
 
 func init() { file_api_v1alpha1_vanalytics_transcript_proto_init() }
@@ -7124,7 +7233,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchRequest_Phrase); i {
+			switch v := v.(*SearchByOrgIdRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7136,7 +7245,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[25].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchRequest_PositionOffset); i {
+			switch v := v.(*SearchRequest_Phrase); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7148,7 +7257,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[26].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchRequest_Silence); i {
+			switch v := v.(*SearchRequest_PositionOffset); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7160,7 +7269,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[27].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchRequest_TalkOver); i {
+			switch v := v.(*SearchRequest_Silence); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7172,7 +7281,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[28].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchRequest_Terms); i {
+			switch v := v.(*SearchRequest_TalkOver); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7184,7 +7293,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[29].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchRequest_Agent); i {
+			switch v := v.(*SearchRequest_Terms); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7196,7 +7305,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[30].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchRequest_Phrase_Word); i {
+			switch v := v.(*SearchRequest_Agent); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7208,7 +7317,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[31].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchRequest_Phrase_Highlight); i {
+			switch v := v.(*SearchRequest_Phrase_Word); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7220,7 +7329,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[32].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchRequest_Agent_UserName); i {
+			switch v := v.(*SearchRequest_Phrase_Highlight); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7232,7 +7341,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[33].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchQuery_Phone); i {
+			switch v := v.(*SearchRequest_Agent_UserName); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7244,7 +7353,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[34].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchQuery_Cc); i {
+			switch v := v.(*SearchQuery_Phone); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7256,7 +7365,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[35].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchQuery_Ndc); i {
+			switch v := v.(*SearchQuery_Cc); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7268,7 +7377,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[36].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchQuery_Prefix); i {
+			switch v := v.(*SearchQuery_Ndc); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7280,7 +7389,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[37].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchQuery_City); i {
+			switch v := v.(*SearchQuery_Prefix); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7292,7 +7401,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[38].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchQuery_Iso2); i {
+			switch v := v.(*SearchQuery_City); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7304,7 +7413,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[39].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchQuery_RegionCode); i {
+			switch v := v.(*SearchQuery_Iso2); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7316,7 +7425,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[40].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchQuery_RegionName); i {
+			switch v := v.(*SearchQuery_RegionCode); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7328,7 +7437,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[41].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchQuery_TimeZone); i {
+			switch v := v.(*SearchQuery_RegionName); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7340,7 +7449,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[42].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchQuery_Type); i {
+			switch v := v.(*SearchQuery_TimeZone); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7352,7 +7461,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[43].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchQuery_Utc); i {
+			switch v := v.(*SearchQuery_Type); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7364,7 +7473,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[44].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchQuery_Location); i {
+			switch v := v.(*SearchQuery_Utc); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7376,7 +7485,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[45].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchQuery_AgentCallLog); i {
+			switch v := v.(*SearchQuery_Location); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7388,7 +7497,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[46].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchQuery_CallEnded); i {
+			switch v := v.(*SearchQuery_AgentCallLog); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7400,7 +7509,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[47].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchQuery_CallSkillsInitial); i {
+			switch v := v.(*SearchQuery_CallEnded); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7412,7 +7521,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[48].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchQuery_AgentResponse); i {
+			switch v := v.(*SearchQuery_CallSkillsInitial); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7424,7 +7533,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[49].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchQuery_Results); i {
+			switch v := v.(*SearchQuery_AgentResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7436,7 +7545,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[50].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchQuery_DeleteTime); i {
+			switch v := v.(*SearchQuery_Results); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7448,7 +7557,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[51].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchQuery_TranscriptSid); i {
+			switch v := v.(*SearchQuery_DeleteTime); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7460,7 +7569,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[52].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchQuery_AudioTime); i {
+			switch v := v.(*SearchQuery_TranscriptSid); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7472,7 +7581,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[53].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchQuery_FlagSummary); i {
+			switch v := v.(*SearchQuery_AudioTime); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7484,7 +7593,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[54].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchQuery_Location_ZipCodeProximity); i {
+			switch v := v.(*SearchQuery_FlagSummary); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7496,7 +7605,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[55].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchQuery_AgentResponse_Values); i {
+			switch v := v.(*SearchQuery_Location_ZipCodeProximity); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7508,7 +7617,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[56].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchQuery_AgentResponse_Numbers); i {
+			switch v := v.(*SearchQuery_AgentResponse_Values); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7520,7 +7629,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[57].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchQuery_AgentResponse_Key); i {
+			switch v := v.(*SearchQuery_AgentResponse_Numbers); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7532,7 +7641,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[58].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchQuery_Results_Channel); i {
+			switch v := v.(*SearchQuery_AgentResponse_Key); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7544,7 +7653,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[59].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchQuery_Results_AgentUserName); i {
+			switch v := v.(*SearchQuery_Results_Channel); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7556,7 +7665,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[60].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchQuery_Results_Segments); i {
+			switch v := v.(*SearchQuery_Results_AgentUserName); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7568,7 +7677,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[61].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchQuery_Results_Segments_Text); i {
+			switch v := v.(*SearchQuery_Results_Segments); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7580,7 +7689,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[62].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchQuery_Results_Segments_Text_Phrase); i {
+			switch v := v.(*SearchQuery_Results_Segments_Text); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7592,7 +7701,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[63].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchQuery_Results_Segments_Text_Phrase_Word); i {
+			switch v := v.(*SearchQuery_Results_Segments_Text_Phrase); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7604,7 +7713,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[64].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchQuery_FlagSummary_NeedReview); i {
+			switch v := v.(*SearchQuery_Results_Segments_Text_Phrase_Word); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7616,7 +7725,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[65].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchQuery_FlagSummary_ReviewStatus); i {
+			switch v := v.(*SearchQuery_FlagSummary_NeedReview); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7628,7 +7737,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[66].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchQuery_FlagSummary_Flags); i {
+			switch v := v.(*SearchQuery_FlagSummary_ReviewStatus); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7640,7 +7749,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[67].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchQuery_FlagSummary_Count); i {
+			switch v := v.(*SearchQuery_FlagSummary_Flags); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7652,7 +7761,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[68].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchQuery_FlagSummary_NeedReview_FlagSids); i {
+			switch v := v.(*SearchQuery_FlagSummary_Count); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7664,7 +7773,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[69].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchQuery_FlagSummary_Flags_FlagSid); i {
+			switch v := v.(*SearchQuery_FlagSummary_NeedReview_FlagSids); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7676,7 +7785,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[70].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SearchResponse_Hit); i {
+			switch v := v.(*SearchQuery_FlagSummary_Flags_FlagSid); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -7688,6 +7797,18 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			}
 		}
 		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[71].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*SearchResponse_Hit); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[72].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Sort_Field); i {
 			case 0:
 				return &v.state
@@ -7699,7 +7820,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 				return nil
 			}
 		}
-		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[73].Exporter = func(v interface{}, i int) interface{} {
+		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[74].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Silence_Duration); i {
 			case 0:
 				return &v.state
@@ -7711,7 +7832,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 				return nil
 			}
 		}
-		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[74].Exporter = func(v interface{}, i int) interface{} {
+		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[75].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Silence_Segment); i {
 			case 0:
 				return &v.state
@@ -7723,7 +7844,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 				return nil
 			}
 		}
-		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[75].Exporter = func(v interface{}, i int) interface{} {
+		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[76].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Silence_Occurrence); i {
 			case 0:
 				return &v.state
@@ -7735,7 +7856,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 				return nil
 			}
 		}
-		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[76].Exporter = func(v interface{}, i int) interface{} {
+		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[77].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*TalkOver_Duration); i {
 			case 0:
 				return &v.state
@@ -7747,7 +7868,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 				return nil
 			}
 		}
-		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[77].Exporter = func(v interface{}, i int) interface{} {
+		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[78].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*TalkOver_Result); i {
 			case 0:
 				return &v.state
@@ -7759,7 +7880,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 				return nil
 			}
 		}
-		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[78].Exporter = func(v interface{}, i int) interface{} {
+		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[79].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*TalkOver_Segment); i {
 			case 0:
 				return &v.state
@@ -7771,7 +7892,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 				return nil
 			}
 		}
-		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[79].Exporter = func(v interface{}, i int) interface{} {
+		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[80].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*TalkOver_Occurrence); i {
 			case 0:
 				return &v.state
@@ -7783,7 +7904,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 				return nil
 			}
 		}
-		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[80].Exporter = func(v interface{}, i int) interface{} {
+		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[81].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*FlagSummary_NeedReview); i {
 			case 0:
 				return &v.state
@@ -7795,7 +7916,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 				return nil
 			}
 		}
-		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[81].Exporter = func(v interface{}, i int) interface{} {
+		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[82].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*FlagSummary_Flag); i {
 			case 0:
 				return &v.state
@@ -7807,7 +7928,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 				return nil
 			}
 		}
-		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[82].Exporter = func(v interface{}, i int) interface{} {
+		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[83].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*FlagSummary_Filter); i {
 			case 0:
 				return &v.state
@@ -7819,7 +7940,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 				return nil
 			}
 		}
-		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[83].Exporter = func(v interface{}, i int) interface{} {
+		file_api_v1alpha1_vanalytics_transcript_proto_msgTypes[84].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*FlagSummary_Review); i {
 			case 0:
 				return &v.state
@@ -7838,7 +7959,7 @@ func file_api_v1alpha1_vanalytics_transcript_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_v1alpha1_vanalytics_transcript_proto_rawDesc,
 			NumEnums:      1,
-			NumMessages:   84,
+			NumMessages:   85,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
