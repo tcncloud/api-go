@@ -53,6 +53,7 @@ const (
 	Learn_ListSearchResultsByVersion_FullMethodName = "/api.v0alpha.Learn/ListSearchResultsByVersion"
 	Learn_ReviewFileVersions_FullMethodName         = "/api.v0alpha.Learn/ReviewFileVersions"
 	Learn_ReviewVersion_FullMethodName              = "/api.v0alpha.Learn/ReviewVersion"
+	Learn_ExportManyStream_FullMethodName           = "/api.v0alpha.Learn/ExportManyStream"
 )
 
 // LearnClient is the client API for Learn service.
@@ -104,6 +105,8 @@ type LearnClient interface {
 	ReviewFileVersions(ctx context.Context, in *ReviewFileVersionsReq, opts ...grpc.CallOption) (*ReviewFileVersionsRes, error)
 	// returns list of file details after comparing different versions
 	ReviewVersion(ctx context.Context, in *ReviewVersionReq, opts ...grpc.CallOption) (*ReviewVersionRes, error)
+	// exports multiple pages of the learning center markdown as PDF file stream
+	ExportManyStream(ctx context.Context, in *ExportManyReq, opts ...grpc.CallOption) (Learn_ExportManyStreamClient, error)
 }
 
 type learnClient struct {
@@ -340,6 +343,38 @@ func (c *learnClient) ReviewVersion(ctx context.Context, in *ReviewVersionReq, o
 	return out, nil
 }
 
+func (c *learnClient) ExportManyStream(ctx context.Context, in *ExportManyReq, opts ...grpc.CallOption) (Learn_ExportManyStreamClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Learn_ServiceDesc.Streams[2], Learn_ExportManyStream_FullMethodName, opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &learnExportManyStreamClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type Learn_ExportManyStreamClient interface {
+	Recv() (*ExportRes, error)
+	grpc.ClientStream
+}
+
+type learnExportManyStreamClient struct {
+	grpc.ClientStream
+}
+
+func (x *learnExportManyStreamClient) Recv() (*ExportRes, error) {
+	m := new(ExportRes)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // LearnServer is the server API for Learn service.
 // All implementations must embed UnimplementedLearnServer
 // for forward compatibility
@@ -389,6 +424,8 @@ type LearnServer interface {
 	ReviewFileVersions(context.Context, *ReviewFileVersionsReq) (*ReviewFileVersionsRes, error)
 	// returns list of file details after comparing different versions
 	ReviewVersion(context.Context, *ReviewVersionReq) (*ReviewVersionRes, error)
+	// exports multiple pages of the learning center markdown as PDF file stream
+	ExportManyStream(*ExportManyReq, Learn_ExportManyStreamServer) error
 	mustEmbedUnimplementedLearnServer()
 }
 
@@ -455,6 +492,9 @@ func (UnimplementedLearnServer) ReviewFileVersions(context.Context, *ReviewFileV
 }
 func (UnimplementedLearnServer) ReviewVersion(context.Context, *ReviewVersionReq) (*ReviewVersionRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ReviewVersion not implemented")
+}
+func (UnimplementedLearnServer) ExportManyStream(*ExportManyReq, Learn_ExportManyStreamServer) error {
+	return status.Errorf(codes.Unimplemented, "method ExportManyStream not implemented")
 }
 func (UnimplementedLearnServer) mustEmbedUnimplementedLearnServer() {}
 
@@ -835,6 +875,27 @@ func _Learn_ReviewVersion_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Learn_ExportManyStream_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(ExportManyReq)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(LearnServer).ExportManyStream(m, &learnExportManyStreamServer{stream})
+}
+
+type Learn_ExportManyStreamServer interface {
+	Send(*ExportRes) error
+	grpc.ServerStream
+}
+
+type learnExportManyStreamServer struct {
+	grpc.ServerStream
+}
+
+func (x *learnExportManyStreamServer) Send(m *ExportRes) error {
+	return x.ServerStream.SendMsg(m)
+}
+
 // Learn_ServiceDesc is the grpc.ServiceDesc for Learn service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -924,6 +985,11 @@ var Learn_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "ListSearchResultsByVersion",
 			Handler:       _Learn_ListSearchResultsByVersion_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "ExportManyStream",
+			Handler:       _Learn_ExportManyStream_Handler,
 			ServerStreams: true,
 		},
 	},
