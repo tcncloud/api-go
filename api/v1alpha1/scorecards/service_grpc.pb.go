@@ -65,6 +65,7 @@ const (
 	Scorecards_StreamAutoEvaluations_FullMethodName    = "/api.v1alpha1.scorecards.Scorecards/StreamAutoEvaluations"
 	Scorecards_DeleteAutoEvaluation_FullMethodName     = "/api.v1alpha1.scorecards.Scorecards/DeleteAutoEvaluation"
 	Scorecards_PreviewEvaluationScore_FullMethodName   = "/api.v1alpha1.scorecards.Scorecards/PreviewEvaluationScore"
+	Scorecards_RestoreEvaluation_FullMethodName        = "/api.v1alpha1.scorecards.Scorecards/RestoreEvaluation"
 )
 
 // ScorecardsClient is the client API for Scorecards service.
@@ -164,6 +165,8 @@ type ScorecardsClient interface {
 	DeleteAutoEvaluation(ctx context.Context, in *DeleteAutoEvaluationRequest, opts ...grpc.CallOption) (*DeleteAutoEvaluationResponse, error)
 	// PreviewEvaluationScore previews the score for an evaluation
 	PreviewEvaluationScore(ctx context.Context, in *PreviewEvaluationScoreRequest, opts ...grpc.CallOption) (*PreviewEvaluationScoreResponse, error)
+	// RestoreEvaluation restores an evaluation previously deleted.
+	RestoreEvaluation(ctx context.Context, in *RestoreEvaluationRequest, opts ...grpc.CallOption) (*RestoreEvaluationResponse, error)
 }
 
 type scorecardsClient struct {
@@ -612,6 +615,15 @@ func (c *scorecardsClient) PreviewEvaluationScore(ctx context.Context, in *Previ
 	return out, nil
 }
 
+func (c *scorecardsClient) RestoreEvaluation(ctx context.Context, in *RestoreEvaluationRequest, opts ...grpc.CallOption) (*RestoreEvaluationResponse, error) {
+	out := new(RestoreEvaluationResponse)
+	err := c.cc.Invoke(ctx, Scorecards_RestoreEvaluation_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ScorecardsServer is the server API for Scorecards service.
 // All implementations must embed UnimplementedScorecardsServer
 // for forward compatibility
@@ -709,6 +721,8 @@ type ScorecardsServer interface {
 	DeleteAutoEvaluation(context.Context, *DeleteAutoEvaluationRequest) (*DeleteAutoEvaluationResponse, error)
 	// PreviewEvaluationScore previews the score for an evaluation
 	PreviewEvaluationScore(context.Context, *PreviewEvaluationScoreRequest) (*PreviewEvaluationScoreResponse, error)
+	// RestoreEvaluation restores an evaluation previously deleted.
+	RestoreEvaluation(context.Context, *RestoreEvaluationRequest) (*RestoreEvaluationResponse, error)
 	mustEmbedUnimplementedScorecardsServer()
 }
 
@@ -853,6 +867,9 @@ func (UnimplementedScorecardsServer) DeleteAutoEvaluation(context.Context, *Dele
 }
 func (UnimplementedScorecardsServer) PreviewEvaluationScore(context.Context, *PreviewEvaluationScoreRequest) (*PreviewEvaluationScoreResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PreviewEvaluationScore not implemented")
+}
+func (UnimplementedScorecardsServer) RestoreEvaluation(context.Context, *RestoreEvaluationRequest) (*RestoreEvaluationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RestoreEvaluation not implemented")
 }
 func (UnimplementedScorecardsServer) mustEmbedUnimplementedScorecardsServer() {}
 
@@ -1698,6 +1715,24 @@ func _Scorecards_PreviewEvaluationScore_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Scorecards_RestoreEvaluation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RestoreEvaluationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ScorecardsServer).RestoreEvaluation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Scorecards_RestoreEvaluation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ScorecardsServer).RestoreEvaluation(ctx, req.(*RestoreEvaluationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Scorecards_ServiceDesc is the grpc.ServiceDesc for Scorecards service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1884,6 +1919,10 @@ var Scorecards_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "PreviewEvaluationScore",
 			Handler:    _Scorecards_PreviewEvaluationScore_Handler,
+		},
+		{
+			MethodName: "RestoreEvaluation",
+			Handler:    _Scorecards_RestoreEvaluation_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

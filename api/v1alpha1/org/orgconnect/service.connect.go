@@ -454,6 +454,9 @@ const (
 	// OrgListHuntGroupScriptsProcedure is the fully-qualified name of the Org's ListHuntGroupScripts
 	// RPC.
 	OrgListHuntGroupScriptsProcedure = "/api.v1alpha1.org.Org/ListHuntGroupScripts"
+	// OrgListOrgHuntGroupScriptsProcedure is the fully-qualified name of the Org's
+	// ListOrgHuntGroupScripts RPC.
+	OrgListOrgHuntGroupScriptsProcedure = "/api.v1alpha1.org.Org/ListOrgHuntGroupScripts"
 	// OrgGetHuntGroupScriptProcedure is the fully-qualified name of the Org's GetHuntGroupScript RPC.
 	OrgGetHuntGroupScriptProcedure = "/api.v1alpha1.org.Org/GetHuntGroupScript"
 	// OrgCreateHuntGroupScriptProcedure is the fully-qualified name of the Org's CreateHuntGroupScript
@@ -987,7 +990,12 @@ type OrgClient interface {
 	// UpdateAgentTriggers updates all agent triggers for the given hunt group.
 	UpdateAgentTriggers(context.Context, *connect_go.Request[org.UpdateAgentTriggersRequest]) (*connect_go.Response[org.UpdateAgentTriggersResponse], error)
 	// ListHuntGroupScripts lists all hunt group scripts for the current organization.
+	// DEPRECATED. Use ListOrgHuntGroupScripts instead
+	//
+	// Deprecated: do not use.
 	ListHuntGroupScripts(context.Context, *connect_go.Request[org.ListHuntGroupScriptsRequest]) (*connect_go.Response[org.ListHuntGroupScriptsResponse], error)
+	// ListOrgHuntGroupScripts lists all hunt group scripts for the current organization with a streamed response.
+	ListOrgHuntGroupScripts(context.Context, *connect_go.Request[org.ListHuntGroupScriptsRequest]) (*connect_go.ServerStreamForClient[org.ListHuntGroupScriptsResponse], error)
 	// GetHuntGroupScript gets the specified script from the given script sid
 	GetHuntGroupScript(context.Context, *connect_go.Request[org.GetHuntGroupScriptRequest]) (*connect_go.Response[org.GetHuntGroupScriptResponse], error)
 	// CreateHuntGroupScript adds a creates a new hunt group script
@@ -1935,6 +1943,11 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgListHuntGroupScriptsProcedure,
 			opts...,
 		),
+		listOrgHuntGroupScripts: connect_go.NewClient[org.ListHuntGroupScriptsRequest, org.ListHuntGroupScriptsResponse](
+			httpClient,
+			baseURL+OrgListOrgHuntGroupScriptsProcedure,
+			opts...,
+		),
 		getHuntGroupScript: connect_go.NewClient[org.GetHuntGroupScriptRequest, org.GetHuntGroupScriptResponse](
 			httpClient,
 			baseURL+OrgGetHuntGroupScriptProcedure,
@@ -2426,6 +2439,7 @@ type orgClient struct {
 	copyAgentTrigger                         *connect_go.Client[org.CopyAgentTriggerRequest, org.CopyAgentTriggerResponse]
 	updateAgentTriggers                      *connect_go.Client[org.UpdateAgentTriggersRequest, org.UpdateAgentTriggersResponse]
 	listHuntGroupScripts                     *connect_go.Client[org.ListHuntGroupScriptsRequest, org.ListHuntGroupScriptsResponse]
+	listOrgHuntGroupScripts                  *connect_go.Client[org.ListHuntGroupScriptsRequest, org.ListHuntGroupScriptsResponse]
 	getHuntGroupScript                       *connect_go.Client[org.GetHuntGroupScriptRequest, org.GetHuntGroupScriptResponse]
 	createHuntGroupScript                    *connect_go.Client[org.CreateHuntGroupScriptRequest, org.CreateHuntGroupScriptResponse]
 	updateHuntGroupScript                    *connect_go.Client[org.UpdateHuntGroupScriptRequest, org.UpdateHuntGroupScriptResponse]
@@ -3296,8 +3310,15 @@ func (c *orgClient) UpdateAgentTriggers(ctx context.Context, req *connect_go.Req
 }
 
 // ListHuntGroupScripts calls api.v1alpha1.org.Org.ListHuntGroupScripts.
+//
+// Deprecated: do not use.
 func (c *orgClient) ListHuntGroupScripts(ctx context.Context, req *connect_go.Request[org.ListHuntGroupScriptsRequest]) (*connect_go.Response[org.ListHuntGroupScriptsResponse], error) {
 	return c.listHuntGroupScripts.CallUnary(ctx, req)
+}
+
+// ListOrgHuntGroupScripts calls api.v1alpha1.org.Org.ListOrgHuntGroupScripts.
+func (c *orgClient) ListOrgHuntGroupScripts(ctx context.Context, req *connect_go.Request[org.ListHuntGroupScriptsRequest]) (*connect_go.ServerStreamForClient[org.ListHuntGroupScriptsResponse], error) {
+	return c.listOrgHuntGroupScripts.CallServerStream(ctx, req)
 }
 
 // GetHuntGroupScript calls api.v1alpha1.org.Org.GetHuntGroupScript.
@@ -4005,7 +4026,12 @@ type OrgHandler interface {
 	// UpdateAgentTriggers updates all agent triggers for the given hunt group.
 	UpdateAgentTriggers(context.Context, *connect_go.Request[org.UpdateAgentTriggersRequest]) (*connect_go.Response[org.UpdateAgentTriggersResponse], error)
 	// ListHuntGroupScripts lists all hunt group scripts for the current organization.
+	// DEPRECATED. Use ListOrgHuntGroupScripts instead
+	//
+	// Deprecated: do not use.
 	ListHuntGroupScripts(context.Context, *connect_go.Request[org.ListHuntGroupScriptsRequest]) (*connect_go.Response[org.ListHuntGroupScriptsResponse], error)
+	// ListOrgHuntGroupScripts lists all hunt group scripts for the current organization with a streamed response.
+	ListOrgHuntGroupScripts(context.Context, *connect_go.Request[org.ListHuntGroupScriptsRequest], *connect_go.ServerStream[org.ListHuntGroupScriptsResponse]) error
 	// GetHuntGroupScript gets the specified script from the given script sid
 	GetHuntGroupScript(context.Context, *connect_go.Request[org.GetHuntGroupScriptRequest]) (*connect_go.Response[org.GetHuntGroupScriptResponse], error)
 	// CreateHuntGroupScript adds a creates a new hunt group script
@@ -4949,6 +4975,11 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.ListHuntGroupScripts,
 		opts...,
 	)
+	orgListOrgHuntGroupScriptsHandler := connect_go.NewServerStreamHandler(
+		OrgListOrgHuntGroupScriptsProcedure,
+		svc.ListOrgHuntGroupScripts,
+		opts...,
+	)
 	orgGetHuntGroupScriptHandler := connect_go.NewUnaryHandler(
 		OrgGetHuntGroupScriptProcedure,
 		svc.GetHuntGroupScript,
@@ -5593,6 +5624,8 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 			orgUpdateAgentTriggersHandler.ServeHTTP(w, r)
 		case OrgListHuntGroupScriptsProcedure:
 			orgListHuntGroupScriptsHandler.ServeHTTP(w, r)
+		case OrgListOrgHuntGroupScriptsProcedure:
+			orgListOrgHuntGroupScriptsHandler.ServeHTTP(w, r)
 		case OrgGetHuntGroupScriptProcedure:
 			orgGetHuntGroupScriptHandler.ServeHTTP(w, r)
 		case OrgCreateHuntGroupScriptProcedure:
@@ -6356,6 +6389,10 @@ func (UnimplementedOrgHandler) UpdateAgentTriggers(context.Context, *connect_go.
 
 func (UnimplementedOrgHandler) ListHuntGroupScripts(context.Context, *connect_go.Request[org.ListHuntGroupScriptsRequest]) (*connect_go.Response[org.ListHuntGroupScriptsResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.ListHuntGroupScripts is not implemented"))
+}
+
+func (UnimplementedOrgHandler) ListOrgHuntGroupScripts(context.Context, *connect_go.Request[org.ListHuntGroupScriptsRequest], *connect_go.ServerStream[org.ListHuntGroupScriptsResponse]) error {
+	return connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.ListOrgHuntGroupScripts is not implemented"))
 }
 
 func (UnimplementedOrgHandler) GetHuntGroupScript(context.Context, *connect_go.Request[org.GetHuntGroupScriptRequest]) (*connect_go.Response[org.GetHuntGroupScriptResponse], error) {

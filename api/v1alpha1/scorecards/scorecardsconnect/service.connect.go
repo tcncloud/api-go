@@ -166,6 +166,9 @@ const (
 	// ScorecardsPreviewEvaluationScoreProcedure is the fully-qualified name of the Scorecards's
 	// PreviewEvaluationScore RPC.
 	ScorecardsPreviewEvaluationScoreProcedure = "/api.v1alpha1.scorecards.Scorecards/PreviewEvaluationScore"
+	// ScorecardsRestoreEvaluationProcedure is the fully-qualified name of the Scorecards's
+	// RestoreEvaluation RPC.
+	ScorecardsRestoreEvaluationProcedure = "/api.v1alpha1.scorecards.Scorecards/RestoreEvaluation"
 )
 
 // ScorecardsClient is a client for the api.v1alpha1.scorecards.Scorecards service.
@@ -264,6 +267,8 @@ type ScorecardsClient interface {
 	DeleteAutoEvaluation(context.Context, *connect_go.Request[scorecards.DeleteAutoEvaluationRequest]) (*connect_go.Response[scorecards.DeleteAutoEvaluationResponse], error)
 	// PreviewEvaluationScore previews the score for an evaluation
 	PreviewEvaluationScore(context.Context, *connect_go.Request[scorecards.PreviewEvaluationScoreRequest]) (*connect_go.Response[scorecards.PreviewEvaluationScoreResponse], error)
+	// RestoreEvaluation restores an evaluation previously deleted.
+	RestoreEvaluation(context.Context, *connect_go.Request[scorecards.RestoreEvaluationRequest]) (*connect_go.Response[scorecards.RestoreEvaluationResponse], error)
 }
 
 // NewScorecardsClient constructs a client for the api.v1alpha1.scorecards.Scorecards service. By
@@ -506,6 +511,11 @@ func NewScorecardsClient(httpClient connect_go.HTTPClient, baseURL string, opts 
 			baseURL+ScorecardsPreviewEvaluationScoreProcedure,
 			opts...,
 		),
+		restoreEvaluation: connect_go.NewClient[scorecards.RestoreEvaluationRequest, scorecards.RestoreEvaluationResponse](
+			httpClient,
+			baseURL+ScorecardsRestoreEvaluationProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -557,6 +567,7 @@ type scorecardsClient struct {
 	streamAutoEvaluations    *connect_go.Client[scorecards.StreamAutoEvaluationsRequest, scorecards.StreamAutoEvaluationsResponse]
 	deleteAutoEvaluation     *connect_go.Client[scorecards.DeleteAutoEvaluationRequest, scorecards.DeleteAutoEvaluationResponse]
 	previewEvaluationScore   *connect_go.Client[scorecards.PreviewEvaluationScoreRequest, scorecards.PreviewEvaluationScoreResponse]
+	restoreEvaluation        *connect_go.Client[scorecards.RestoreEvaluationRequest, scorecards.RestoreEvaluationResponse]
 }
 
 // CreateScorecard calls api.v1alpha1.scorecards.Scorecards.CreateScorecard.
@@ -791,6 +802,11 @@ func (c *scorecardsClient) PreviewEvaluationScore(ctx context.Context, req *conn
 	return c.previewEvaluationScore.CallUnary(ctx, req)
 }
 
+// RestoreEvaluation calls api.v1alpha1.scorecards.Scorecards.RestoreEvaluation.
+func (c *scorecardsClient) RestoreEvaluation(ctx context.Context, req *connect_go.Request[scorecards.RestoreEvaluationRequest]) (*connect_go.Response[scorecards.RestoreEvaluationResponse], error) {
+	return c.restoreEvaluation.CallUnary(ctx, req)
+}
+
 // ScorecardsHandler is an implementation of the api.v1alpha1.scorecards.Scorecards service.
 type ScorecardsHandler interface {
 	// CreateScorecard creates a new scorecard
@@ -887,6 +903,8 @@ type ScorecardsHandler interface {
 	DeleteAutoEvaluation(context.Context, *connect_go.Request[scorecards.DeleteAutoEvaluationRequest]) (*connect_go.Response[scorecards.DeleteAutoEvaluationResponse], error)
 	// PreviewEvaluationScore previews the score for an evaluation
 	PreviewEvaluationScore(context.Context, *connect_go.Request[scorecards.PreviewEvaluationScoreRequest]) (*connect_go.Response[scorecards.PreviewEvaluationScoreResponse], error)
+	// RestoreEvaluation restores an evaluation previously deleted.
+	RestoreEvaluation(context.Context, *connect_go.Request[scorecards.RestoreEvaluationRequest]) (*connect_go.Response[scorecards.RestoreEvaluationResponse], error)
 }
 
 // NewScorecardsHandler builds an HTTP handler from the service implementation. It returns the path
@@ -1125,6 +1143,11 @@ func NewScorecardsHandler(svc ScorecardsHandler, opts ...connect_go.HandlerOptio
 		svc.PreviewEvaluationScore,
 		opts...,
 	)
+	scorecardsRestoreEvaluationHandler := connect_go.NewUnaryHandler(
+		ScorecardsRestoreEvaluationProcedure,
+		svc.RestoreEvaluation,
+		opts...,
+	)
 	return "/api.v1alpha1.scorecards.Scorecards/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case ScorecardsCreateScorecardProcedure:
@@ -1219,6 +1242,8 @@ func NewScorecardsHandler(svc ScorecardsHandler, opts ...connect_go.HandlerOptio
 			scorecardsDeleteAutoEvaluationHandler.ServeHTTP(w, r)
 		case ScorecardsPreviewEvaluationScoreProcedure:
 			scorecardsPreviewEvaluationScoreHandler.ServeHTTP(w, r)
+		case ScorecardsRestoreEvaluationProcedure:
+			scorecardsRestoreEvaluationHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -1410,4 +1435,8 @@ func (UnimplementedScorecardsHandler) DeleteAutoEvaluation(context.Context, *con
 
 func (UnimplementedScorecardsHandler) PreviewEvaluationScore(context.Context, *connect_go.Request[scorecards.PreviewEvaluationScoreRequest]) (*connect_go.Response[scorecards.PreviewEvaluationScoreResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.scorecards.Scorecards.PreviewEvaluationScore is not implemented"))
+}
+
+func (UnimplementedScorecardsHandler) RestoreEvaluation(context.Context, *connect_go.Request[scorecards.RestoreEvaluationRequest]) (*connect_go.Response[scorecards.RestoreEvaluationResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.scorecards.Scorecards.RestoreEvaluation is not implemented"))
 }

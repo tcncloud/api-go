@@ -56,7 +56,7 @@ var file_api_v1alpha1_scorecards_service_proto_rawDesc = []byte{
 	0x65, 0x63, 0x61, 0x72, 0x64, 0x73, 0x2f, 0x73, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x70,
 	0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1c, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x61, 0x70, 0x69,
 	0x2f, 0x61, 0x6e, 0x6e, 0x6f, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x2e, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x32, 0x8a, 0x48, 0x0a, 0x0a, 0x53, 0x63, 0x6f, 0x72, 0x65, 0x63, 0x61, 0x72, 0x64,
+	0x74, 0x6f, 0x32, 0xd3, 0x49, 0x0a, 0x0a, 0x53, 0x63, 0x6f, 0x72, 0x65, 0x63, 0x61, 0x72, 0x64,
 	0x73, 0x12, 0xbe, 0x01, 0x0a, 0x0f, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x53, 0x63, 0x6f, 0x72,
 	0x65, 0x63, 0x61, 0x72, 0x64, 0x12, 0x2f, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c,
 	0x70, 0x68, 0x61, 0x31, 0x2e, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x63, 0x61, 0x72, 0x64, 0x73, 0x2e,
@@ -632,22 +632,34 @@ var file_api_v1alpha1_scorecards_service_proto_rawDesc = []byte{
 	0x3a, 0x01, 0x2a, 0x22, 0x3a, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68,
 	0x61, 0x31, 0x2f, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x63, 0x61, 0x72, 0x64, 0x73, 0x2f, 0x73, 0x63,
 	0x6f, 0x72, 0x65, 0x63, 0x61, 0x72, 0x64, 0x73, 0x2f, 0x70, 0x72, 0x65, 0x76, 0x69, 0x65, 0x77,
-	0x65, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x42,
-	0xdd, 0x01, 0x0a, 0x1b, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c,
-	0x70, 0x68, 0x61, 0x31, 0x2e, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x63, 0x61, 0x72, 0x64, 0x73, 0x42,
-	0x0c, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a,
-	0x32, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63,
-	0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f,
-	0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x63, 0x61,
-	0x72, 0x64, 0x73, 0xa2, 0x02, 0x03, 0x41, 0x56, 0x53, 0xaa, 0x02, 0x17, 0x41, 0x70, 0x69, 0x2e,
-	0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x53, 0x63, 0x6f, 0x72, 0x65, 0x63, 0x61,
-	0x72, 0x64, 0x73, 0xca, 0x02, 0x17, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68,
-	0x61, 0x31, 0x5c, 0x53, 0x63, 0x6f, 0x72, 0x65, 0x63, 0x61, 0x72, 0x64, 0x73, 0xe2, 0x02, 0x23,
-	0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x53, 0x63, 0x6f,
-	0x72, 0x65, 0x63, 0x61, 0x72, 0x64, 0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64,
-	0x61, 0x74, 0x61, 0xea, 0x02, 0x19, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x56, 0x31, 0x61, 0x6c, 0x70,
-	0x68, 0x61, 0x31, 0x3a, 0x3a, 0x53, 0x63, 0x6f, 0x72, 0x65, 0x63, 0x61, 0x72, 0x64, 0x73, 0x62,
-	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x65, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x12,
+	0xc6, 0x01, 0x0a, 0x11, 0x52, 0x65, 0x73, 0x74, 0x6f, 0x72, 0x65, 0x45, 0x76, 0x61, 0x6c, 0x75,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x31, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c,
+	0x70, 0x68, 0x61, 0x31, 0x2e, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x63, 0x61, 0x72, 0x64, 0x73, 0x2e,
+	0x52, 0x65, 0x73, 0x74, 0x6f, 0x72, 0x65, 0x45, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x69, 0x6f,
+	0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x32, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76,
+	0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x63, 0x61, 0x72,
+	0x64, 0x73, 0x2e, 0x52, 0x65, 0x73, 0x74, 0x6f, 0x72, 0x65, 0x45, 0x76, 0x61, 0x6c, 0x75, 0x61,
+	0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x4a, 0xba, 0xb8,
+	0x91, 0x02, 0x05, 0x0a, 0x03, 0x08, 0xc2, 0x0c, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x3a, 0x3a, 0x01,
+	0x2a, 0x22, 0x35, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31,
+	0x2f, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x63, 0x61, 0x72, 0x64, 0x73, 0x2f, 0x73, 0x63, 0x6f, 0x72,
+	0x65, 0x63, 0x61, 0x72, 0x64, 0x73, 0x2f, 0x72, 0x65, 0x73, 0x74, 0x6f, 0x72, 0x65, 0x65, 0x76,
+	0x61, 0x6c, 0x75, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x42, 0xdd, 0x01, 0x0a, 0x1b, 0x63, 0x6f, 0x6d,
+	0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x73, 0x63,
+	0x6f, 0x72, 0x65, 0x63, 0x61, 0x72, 0x64, 0x73, 0x42, 0x0c, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63,
+	0x65, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x32, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62,
+	0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70,
+	0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61,
+	0x31, 0x2f, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x63, 0x61, 0x72, 0x64, 0x73, 0xa2, 0x02, 0x03, 0x41,
+	0x56, 0x53, 0xaa, 0x02, 0x17, 0x41, 0x70, 0x69, 0x2e, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61,
+	0x31, 0x2e, 0x53, 0x63, 0x6f, 0x72, 0x65, 0x63, 0x61, 0x72, 0x64, 0x73, 0xca, 0x02, 0x17, 0x41,
+	0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x53, 0x63, 0x6f, 0x72,
+	0x65, 0x63, 0x61, 0x72, 0x64, 0x73, 0xe2, 0x02, 0x23, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61,
+	0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x53, 0x63, 0x6f, 0x72, 0x65, 0x63, 0x61, 0x72, 0x64, 0x73,
+	0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x19, 0x41,
+	0x70, 0x69, 0x3a, 0x3a, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x3a, 0x3a, 0x53, 0x63,
+	0x6f, 0x72, 0x65, 0x63, 0x61, 0x72, 0x64, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var file_api_v1alpha1_scorecards_service_proto_goTypes = []interface{}{
@@ -697,52 +709,54 @@ var file_api_v1alpha1_scorecards_service_proto_goTypes = []interface{}{
 	(*StreamAutoEvaluationsRequest)(nil),     // 43: api.v1alpha1.scorecards.StreamAutoEvaluationsRequest
 	(*DeleteAutoEvaluationRequest)(nil),      // 44: api.v1alpha1.scorecards.DeleteAutoEvaluationRequest
 	(*PreviewEvaluationScoreRequest)(nil),    // 45: api.v1alpha1.scorecards.PreviewEvaluationScoreRequest
-	(*CreateScorecardResponse)(nil),          // 46: api.v1alpha1.scorecards.CreateScorecardResponse
-	(*ListScorecardsResponse)(nil),           // 47: api.v1alpha1.scorecards.ListScorecardsResponse
-	(*UpdateScorecardResponse)(nil),          // 48: api.v1alpha1.scorecards.UpdateScorecardResponse
-	(*DeleteScorecardResponse)(nil),          // 49: api.v1alpha1.scorecards.DeleteScorecardResponse
-	(*GetScorecardResponse)(nil),             // 50: api.v1alpha1.scorecards.GetScorecardResponse
-	(*CreateQuestionResponse)(nil),           // 51: api.v1alpha1.scorecards.CreateQuestionResponse
-	(*ListQuestionsResponse)(nil),            // 52: api.v1alpha1.scorecards.ListQuestionsResponse
-	(*UpdateQuestionResponse)(nil),           // 53: api.v1alpha1.scorecards.UpdateQuestionResponse
-	(*DeleteQuestionResponse)(nil),           // 54: api.v1alpha1.scorecards.DeleteQuestionResponse
-	(*GetQuestionResponse)(nil),              // 55: api.v1alpha1.scorecards.GetQuestionResponse
-	(*BulkCreateQuestionsResponse)(nil),      // 56: api.v1alpha1.scorecards.BulkCreateQuestionsResponse
-	(*CreateCategoryResponse)(nil),           // 57: api.v1alpha1.scorecards.CreateCategoryResponse
-	(*ListCategoriesResponse)(nil),           // 58: api.v1alpha1.scorecards.ListCategoriesResponse
-	(*UpdateCategoryResponse)(nil),           // 59: api.v1alpha1.scorecards.UpdateCategoryResponse
-	(*DeleteCategoryResponse)(nil),           // 60: api.v1alpha1.scorecards.DeleteCategoryResponse
-	(*GetCategoryResponse)(nil),              // 61: api.v1alpha1.scorecards.GetCategoryResponse
-	(*CreateScorecardQuestionResponse)(nil),  // 62: api.v1alpha1.scorecards.CreateScorecardQuestionResponse
-	(*UpdateScorecardQuestionResponse)(nil),  // 63: api.v1alpha1.scorecards.UpdateScorecardQuestionResponse
-	(*DeleteScorecardQuestionResponse)(nil),  // 64: api.v1alpha1.scorecards.DeleteScorecardQuestionResponse
-	(*GetScorecardQuestionResponse)(nil),     // 65: api.v1alpha1.scorecards.GetScorecardQuestionResponse
-	(*CreateSectionResponse)(nil),            // 66: api.v1alpha1.scorecards.CreateSectionResponse
-	(*ListSectionsResponse)(nil),             // 67: api.v1alpha1.scorecards.ListSectionsResponse
-	(*UpdateSectionResponse)(nil),            // 68: api.v1alpha1.scorecards.UpdateSectionResponse
-	(*GetSectionResponse)(nil),               // 69: api.v1alpha1.scorecards.GetSectionResponse
-	(*DeleteSectionResponse)(nil),            // 70: api.v1alpha1.scorecards.DeleteSectionResponse
-	(*CreateQuestionCategoryResponse)(nil),   // 71: api.v1alpha1.scorecards.CreateQuestionCategoryResponse
-	(*DeleteQuestionCategoryResponse)(nil),   // 72: api.v1alpha1.scorecards.DeleteQuestionCategoryResponse
-	(*CreateEvaluationResponse)(nil),         // 73: api.v1alpha1.scorecards.CreateEvaluationResponse
-	(*DeleteEvaluationResponse)(nil),         // 74: api.v1alpha1.scorecards.DeleteEvaluationResponse
-	(*ScoreEvaluationResponse)(nil),          // 75: api.v1alpha1.scorecards.ScoreEvaluationResponse
-	(*UpdateEvaluationResponse)(nil),         // 76: api.v1alpha1.scorecards.UpdateEvaluationResponse
-	(*GetEvaluationResponse)(nil),            // 77: api.v1alpha1.scorecards.GetEvaluationResponse
-	(*ListEvaluationsResponse)(nil),          // 78: api.v1alpha1.scorecards.ListEvaluationsResponse
-	(*CreateEvaluationQuestionResponse)(nil), // 79: api.v1alpha1.scorecards.CreateEvaluationQuestionResponse
-	(*UpdateEvaluationQuestionResponse)(nil), // 80: api.v1alpha1.scorecards.UpdateEvaluationQuestionResponse
-	(*DeleteEvaluationQuestionResponse)(nil), // 81: api.v1alpha1.scorecards.DeleteEvaluationQuestionResponse
-	(*SampleCallsByCategoryResponse)(nil),    // 82: api.v1alpha1.scorecards.SampleCallsByCategoryResponse
-	(*CreateAutoQuestionResponse)(nil),       // 83: api.v1alpha1.scorecards.CreateAutoQuestionResponse
-	(*UpdateAutoQuestionResponse)(nil),       // 84: api.v1alpha1.scorecards.UpdateAutoQuestionResponse
-	(*DeleteAutoQuestionResponse)(nil),       // 85: api.v1alpha1.scorecards.DeleteAutoQuestionResponse
-	(*GetAutoQuestionResponse)(nil),          // 86: api.v1alpha1.scorecards.GetAutoQuestionResponse
-	(*GetAutoEvaluationResponse)(nil),        // 87: api.v1alpha1.scorecards.GetAutoEvaluationResponse
-	(*ListAutoEvaluationsResponse)(nil),      // 88: api.v1alpha1.scorecards.ListAutoEvaluationsResponse
-	(*StreamAutoEvaluationsResponse)(nil),    // 89: api.v1alpha1.scorecards.StreamAutoEvaluationsResponse
-	(*DeleteAutoEvaluationResponse)(nil),     // 90: api.v1alpha1.scorecards.DeleteAutoEvaluationResponse
-	(*PreviewEvaluationScoreResponse)(nil),   // 91: api.v1alpha1.scorecards.PreviewEvaluationScoreResponse
+	(*RestoreEvaluationRequest)(nil),         // 46: api.v1alpha1.scorecards.RestoreEvaluationRequest
+	(*CreateScorecardResponse)(nil),          // 47: api.v1alpha1.scorecards.CreateScorecardResponse
+	(*ListScorecardsResponse)(nil),           // 48: api.v1alpha1.scorecards.ListScorecardsResponse
+	(*UpdateScorecardResponse)(nil),          // 49: api.v1alpha1.scorecards.UpdateScorecardResponse
+	(*DeleteScorecardResponse)(nil),          // 50: api.v1alpha1.scorecards.DeleteScorecardResponse
+	(*GetScorecardResponse)(nil),             // 51: api.v1alpha1.scorecards.GetScorecardResponse
+	(*CreateQuestionResponse)(nil),           // 52: api.v1alpha1.scorecards.CreateQuestionResponse
+	(*ListQuestionsResponse)(nil),            // 53: api.v1alpha1.scorecards.ListQuestionsResponse
+	(*UpdateQuestionResponse)(nil),           // 54: api.v1alpha1.scorecards.UpdateQuestionResponse
+	(*DeleteQuestionResponse)(nil),           // 55: api.v1alpha1.scorecards.DeleteQuestionResponse
+	(*GetQuestionResponse)(nil),              // 56: api.v1alpha1.scorecards.GetQuestionResponse
+	(*BulkCreateQuestionsResponse)(nil),      // 57: api.v1alpha1.scorecards.BulkCreateQuestionsResponse
+	(*CreateCategoryResponse)(nil),           // 58: api.v1alpha1.scorecards.CreateCategoryResponse
+	(*ListCategoriesResponse)(nil),           // 59: api.v1alpha1.scorecards.ListCategoriesResponse
+	(*UpdateCategoryResponse)(nil),           // 60: api.v1alpha1.scorecards.UpdateCategoryResponse
+	(*DeleteCategoryResponse)(nil),           // 61: api.v1alpha1.scorecards.DeleteCategoryResponse
+	(*GetCategoryResponse)(nil),              // 62: api.v1alpha1.scorecards.GetCategoryResponse
+	(*CreateScorecardQuestionResponse)(nil),  // 63: api.v1alpha1.scorecards.CreateScorecardQuestionResponse
+	(*UpdateScorecardQuestionResponse)(nil),  // 64: api.v1alpha1.scorecards.UpdateScorecardQuestionResponse
+	(*DeleteScorecardQuestionResponse)(nil),  // 65: api.v1alpha1.scorecards.DeleteScorecardQuestionResponse
+	(*GetScorecardQuestionResponse)(nil),     // 66: api.v1alpha1.scorecards.GetScorecardQuestionResponse
+	(*CreateSectionResponse)(nil),            // 67: api.v1alpha1.scorecards.CreateSectionResponse
+	(*ListSectionsResponse)(nil),             // 68: api.v1alpha1.scorecards.ListSectionsResponse
+	(*UpdateSectionResponse)(nil),            // 69: api.v1alpha1.scorecards.UpdateSectionResponse
+	(*GetSectionResponse)(nil),               // 70: api.v1alpha1.scorecards.GetSectionResponse
+	(*DeleteSectionResponse)(nil),            // 71: api.v1alpha1.scorecards.DeleteSectionResponse
+	(*CreateQuestionCategoryResponse)(nil),   // 72: api.v1alpha1.scorecards.CreateQuestionCategoryResponse
+	(*DeleteQuestionCategoryResponse)(nil),   // 73: api.v1alpha1.scorecards.DeleteQuestionCategoryResponse
+	(*CreateEvaluationResponse)(nil),         // 74: api.v1alpha1.scorecards.CreateEvaluationResponse
+	(*DeleteEvaluationResponse)(nil),         // 75: api.v1alpha1.scorecards.DeleteEvaluationResponse
+	(*ScoreEvaluationResponse)(nil),          // 76: api.v1alpha1.scorecards.ScoreEvaluationResponse
+	(*UpdateEvaluationResponse)(nil),         // 77: api.v1alpha1.scorecards.UpdateEvaluationResponse
+	(*GetEvaluationResponse)(nil),            // 78: api.v1alpha1.scorecards.GetEvaluationResponse
+	(*ListEvaluationsResponse)(nil),          // 79: api.v1alpha1.scorecards.ListEvaluationsResponse
+	(*CreateEvaluationQuestionResponse)(nil), // 80: api.v1alpha1.scorecards.CreateEvaluationQuestionResponse
+	(*UpdateEvaluationQuestionResponse)(nil), // 81: api.v1alpha1.scorecards.UpdateEvaluationQuestionResponse
+	(*DeleteEvaluationQuestionResponse)(nil), // 82: api.v1alpha1.scorecards.DeleteEvaluationQuestionResponse
+	(*SampleCallsByCategoryResponse)(nil),    // 83: api.v1alpha1.scorecards.SampleCallsByCategoryResponse
+	(*CreateAutoQuestionResponse)(nil),       // 84: api.v1alpha1.scorecards.CreateAutoQuestionResponse
+	(*UpdateAutoQuestionResponse)(nil),       // 85: api.v1alpha1.scorecards.UpdateAutoQuestionResponse
+	(*DeleteAutoQuestionResponse)(nil),       // 86: api.v1alpha1.scorecards.DeleteAutoQuestionResponse
+	(*GetAutoQuestionResponse)(nil),          // 87: api.v1alpha1.scorecards.GetAutoQuestionResponse
+	(*GetAutoEvaluationResponse)(nil),        // 88: api.v1alpha1.scorecards.GetAutoEvaluationResponse
+	(*ListAutoEvaluationsResponse)(nil),      // 89: api.v1alpha1.scorecards.ListAutoEvaluationsResponse
+	(*StreamAutoEvaluationsResponse)(nil),    // 90: api.v1alpha1.scorecards.StreamAutoEvaluationsResponse
+	(*DeleteAutoEvaluationResponse)(nil),     // 91: api.v1alpha1.scorecards.DeleteAutoEvaluationResponse
+	(*PreviewEvaluationScoreResponse)(nil),   // 92: api.v1alpha1.scorecards.PreviewEvaluationScoreResponse
+	(*RestoreEvaluationResponse)(nil),        // 93: api.v1alpha1.scorecards.RestoreEvaluationResponse
 }
 var file_api_v1alpha1_scorecards_service_proto_depIdxs = []int32{
 	0,  // 0: api.v1alpha1.scorecards.Scorecards.CreateScorecard:input_type -> api.v1alpha1.scorecards.CreateScorecardRequest
@@ -791,54 +805,56 @@ var file_api_v1alpha1_scorecards_service_proto_depIdxs = []int32{
 	43, // 43: api.v1alpha1.scorecards.Scorecards.StreamAutoEvaluations:input_type -> api.v1alpha1.scorecards.StreamAutoEvaluationsRequest
 	44, // 44: api.v1alpha1.scorecards.Scorecards.DeleteAutoEvaluation:input_type -> api.v1alpha1.scorecards.DeleteAutoEvaluationRequest
 	45, // 45: api.v1alpha1.scorecards.Scorecards.PreviewEvaluationScore:input_type -> api.v1alpha1.scorecards.PreviewEvaluationScoreRequest
-	46, // 46: api.v1alpha1.scorecards.Scorecards.CreateScorecard:output_type -> api.v1alpha1.scorecards.CreateScorecardResponse
-	47, // 47: api.v1alpha1.scorecards.Scorecards.ListScorecards:output_type -> api.v1alpha1.scorecards.ListScorecardsResponse
-	48, // 48: api.v1alpha1.scorecards.Scorecards.UpdateScorecard:output_type -> api.v1alpha1.scorecards.UpdateScorecardResponse
-	49, // 49: api.v1alpha1.scorecards.Scorecards.DeleteScorecard:output_type -> api.v1alpha1.scorecards.DeleteScorecardResponse
-	50, // 50: api.v1alpha1.scorecards.Scorecards.GetScorecard:output_type -> api.v1alpha1.scorecards.GetScorecardResponse
-	51, // 51: api.v1alpha1.scorecards.Scorecards.CreateQuestion:output_type -> api.v1alpha1.scorecards.CreateQuestionResponse
-	52, // 52: api.v1alpha1.scorecards.Scorecards.ListQuestions:output_type -> api.v1alpha1.scorecards.ListQuestionsResponse
-	53, // 53: api.v1alpha1.scorecards.Scorecards.UpdateQuestion:output_type -> api.v1alpha1.scorecards.UpdateQuestionResponse
-	54, // 54: api.v1alpha1.scorecards.Scorecards.DeleteQuestion:output_type -> api.v1alpha1.scorecards.DeleteQuestionResponse
-	55, // 55: api.v1alpha1.scorecards.Scorecards.GetQuestion:output_type -> api.v1alpha1.scorecards.GetQuestionResponse
-	56, // 56: api.v1alpha1.scorecards.Scorecards.BulkCreateQuestions:output_type -> api.v1alpha1.scorecards.BulkCreateQuestionsResponse
-	57, // 57: api.v1alpha1.scorecards.Scorecards.CreateCategory:output_type -> api.v1alpha1.scorecards.CreateCategoryResponse
-	58, // 58: api.v1alpha1.scorecards.Scorecards.ListCategories:output_type -> api.v1alpha1.scorecards.ListCategoriesResponse
-	59, // 59: api.v1alpha1.scorecards.Scorecards.UpdateCategory:output_type -> api.v1alpha1.scorecards.UpdateCategoryResponse
-	60, // 60: api.v1alpha1.scorecards.Scorecards.DeleteCategory:output_type -> api.v1alpha1.scorecards.DeleteCategoryResponse
-	61, // 61: api.v1alpha1.scorecards.Scorecards.GetCategory:output_type -> api.v1alpha1.scorecards.GetCategoryResponse
-	62, // 62: api.v1alpha1.scorecards.Scorecards.CreateScorecardQuestion:output_type -> api.v1alpha1.scorecards.CreateScorecardQuestionResponse
-	63, // 63: api.v1alpha1.scorecards.Scorecards.UpdateScorecardQuestion:output_type -> api.v1alpha1.scorecards.UpdateScorecardQuestionResponse
-	64, // 64: api.v1alpha1.scorecards.Scorecards.DeleteScorecardQuestion:output_type -> api.v1alpha1.scorecards.DeleteScorecardQuestionResponse
-	65, // 65: api.v1alpha1.scorecards.Scorecards.GetScorecardQuestion:output_type -> api.v1alpha1.scorecards.GetScorecardQuestionResponse
-	66, // 66: api.v1alpha1.scorecards.Scorecards.CreateSection:output_type -> api.v1alpha1.scorecards.CreateSectionResponse
-	67, // 67: api.v1alpha1.scorecards.Scorecards.ListSections:output_type -> api.v1alpha1.scorecards.ListSectionsResponse
-	68, // 68: api.v1alpha1.scorecards.Scorecards.UpdateSection:output_type -> api.v1alpha1.scorecards.UpdateSectionResponse
-	69, // 69: api.v1alpha1.scorecards.Scorecards.GetSection:output_type -> api.v1alpha1.scorecards.GetSectionResponse
-	70, // 70: api.v1alpha1.scorecards.Scorecards.DeleteSection:output_type -> api.v1alpha1.scorecards.DeleteSectionResponse
-	71, // 71: api.v1alpha1.scorecards.Scorecards.CreateQuestionCategory:output_type -> api.v1alpha1.scorecards.CreateQuestionCategoryResponse
-	72, // 72: api.v1alpha1.scorecards.Scorecards.DeleteQuestionCategory:output_type -> api.v1alpha1.scorecards.DeleteQuestionCategoryResponse
-	73, // 73: api.v1alpha1.scorecards.Scorecards.CreateEvaluation:output_type -> api.v1alpha1.scorecards.CreateEvaluationResponse
-	74, // 74: api.v1alpha1.scorecards.Scorecards.DeleteEvaluation:output_type -> api.v1alpha1.scorecards.DeleteEvaluationResponse
-	75, // 75: api.v1alpha1.scorecards.Scorecards.ScoreEvaluation:output_type -> api.v1alpha1.scorecards.ScoreEvaluationResponse
-	76, // 76: api.v1alpha1.scorecards.Scorecards.UpdateEvaluation:output_type -> api.v1alpha1.scorecards.UpdateEvaluationResponse
-	77, // 77: api.v1alpha1.scorecards.Scorecards.GetEvaluation:output_type -> api.v1alpha1.scorecards.GetEvaluationResponse
-	78, // 78: api.v1alpha1.scorecards.Scorecards.ListEvaluations:output_type -> api.v1alpha1.scorecards.ListEvaluationsResponse
-	79, // 79: api.v1alpha1.scorecards.Scorecards.CreateEvaluationQuestion:output_type -> api.v1alpha1.scorecards.CreateEvaluationQuestionResponse
-	80, // 80: api.v1alpha1.scorecards.Scorecards.UpdateEvaluationQuestion:output_type -> api.v1alpha1.scorecards.UpdateEvaluationQuestionResponse
-	81, // 81: api.v1alpha1.scorecards.Scorecards.DeleteEvaluationQuestion:output_type -> api.v1alpha1.scorecards.DeleteEvaluationQuestionResponse
-	82, // 82: api.v1alpha1.scorecards.Scorecards.SampleCallsByCategory:output_type -> api.v1alpha1.scorecards.SampleCallsByCategoryResponse
-	83, // 83: api.v1alpha1.scorecards.Scorecards.CreateAutoQuestion:output_type -> api.v1alpha1.scorecards.CreateAutoQuestionResponse
-	84, // 84: api.v1alpha1.scorecards.Scorecards.UpdateAutoQuestion:output_type -> api.v1alpha1.scorecards.UpdateAutoQuestionResponse
-	85, // 85: api.v1alpha1.scorecards.Scorecards.DeleteAutoQuestion:output_type -> api.v1alpha1.scorecards.DeleteAutoQuestionResponse
-	86, // 86: api.v1alpha1.scorecards.Scorecards.GetAutoQuestion:output_type -> api.v1alpha1.scorecards.GetAutoQuestionResponse
-	87, // 87: api.v1alpha1.scorecards.Scorecards.GetAutoEvaluation:output_type -> api.v1alpha1.scorecards.GetAutoEvaluationResponse
-	88, // 88: api.v1alpha1.scorecards.Scorecards.ListAutoEvaluations:output_type -> api.v1alpha1.scorecards.ListAutoEvaluationsResponse
-	89, // 89: api.v1alpha1.scorecards.Scorecards.StreamAutoEvaluations:output_type -> api.v1alpha1.scorecards.StreamAutoEvaluationsResponse
-	90, // 90: api.v1alpha1.scorecards.Scorecards.DeleteAutoEvaluation:output_type -> api.v1alpha1.scorecards.DeleteAutoEvaluationResponse
-	91, // 91: api.v1alpha1.scorecards.Scorecards.PreviewEvaluationScore:output_type -> api.v1alpha1.scorecards.PreviewEvaluationScoreResponse
-	46, // [46:92] is the sub-list for method output_type
-	0,  // [0:46] is the sub-list for method input_type
+	46, // 46: api.v1alpha1.scorecards.Scorecards.RestoreEvaluation:input_type -> api.v1alpha1.scorecards.RestoreEvaluationRequest
+	47, // 47: api.v1alpha1.scorecards.Scorecards.CreateScorecard:output_type -> api.v1alpha1.scorecards.CreateScorecardResponse
+	48, // 48: api.v1alpha1.scorecards.Scorecards.ListScorecards:output_type -> api.v1alpha1.scorecards.ListScorecardsResponse
+	49, // 49: api.v1alpha1.scorecards.Scorecards.UpdateScorecard:output_type -> api.v1alpha1.scorecards.UpdateScorecardResponse
+	50, // 50: api.v1alpha1.scorecards.Scorecards.DeleteScorecard:output_type -> api.v1alpha1.scorecards.DeleteScorecardResponse
+	51, // 51: api.v1alpha1.scorecards.Scorecards.GetScorecard:output_type -> api.v1alpha1.scorecards.GetScorecardResponse
+	52, // 52: api.v1alpha1.scorecards.Scorecards.CreateQuestion:output_type -> api.v1alpha1.scorecards.CreateQuestionResponse
+	53, // 53: api.v1alpha1.scorecards.Scorecards.ListQuestions:output_type -> api.v1alpha1.scorecards.ListQuestionsResponse
+	54, // 54: api.v1alpha1.scorecards.Scorecards.UpdateQuestion:output_type -> api.v1alpha1.scorecards.UpdateQuestionResponse
+	55, // 55: api.v1alpha1.scorecards.Scorecards.DeleteQuestion:output_type -> api.v1alpha1.scorecards.DeleteQuestionResponse
+	56, // 56: api.v1alpha1.scorecards.Scorecards.GetQuestion:output_type -> api.v1alpha1.scorecards.GetQuestionResponse
+	57, // 57: api.v1alpha1.scorecards.Scorecards.BulkCreateQuestions:output_type -> api.v1alpha1.scorecards.BulkCreateQuestionsResponse
+	58, // 58: api.v1alpha1.scorecards.Scorecards.CreateCategory:output_type -> api.v1alpha1.scorecards.CreateCategoryResponse
+	59, // 59: api.v1alpha1.scorecards.Scorecards.ListCategories:output_type -> api.v1alpha1.scorecards.ListCategoriesResponse
+	60, // 60: api.v1alpha1.scorecards.Scorecards.UpdateCategory:output_type -> api.v1alpha1.scorecards.UpdateCategoryResponse
+	61, // 61: api.v1alpha1.scorecards.Scorecards.DeleteCategory:output_type -> api.v1alpha1.scorecards.DeleteCategoryResponse
+	62, // 62: api.v1alpha1.scorecards.Scorecards.GetCategory:output_type -> api.v1alpha1.scorecards.GetCategoryResponse
+	63, // 63: api.v1alpha1.scorecards.Scorecards.CreateScorecardQuestion:output_type -> api.v1alpha1.scorecards.CreateScorecardQuestionResponse
+	64, // 64: api.v1alpha1.scorecards.Scorecards.UpdateScorecardQuestion:output_type -> api.v1alpha1.scorecards.UpdateScorecardQuestionResponse
+	65, // 65: api.v1alpha1.scorecards.Scorecards.DeleteScorecardQuestion:output_type -> api.v1alpha1.scorecards.DeleteScorecardQuestionResponse
+	66, // 66: api.v1alpha1.scorecards.Scorecards.GetScorecardQuestion:output_type -> api.v1alpha1.scorecards.GetScorecardQuestionResponse
+	67, // 67: api.v1alpha1.scorecards.Scorecards.CreateSection:output_type -> api.v1alpha1.scorecards.CreateSectionResponse
+	68, // 68: api.v1alpha1.scorecards.Scorecards.ListSections:output_type -> api.v1alpha1.scorecards.ListSectionsResponse
+	69, // 69: api.v1alpha1.scorecards.Scorecards.UpdateSection:output_type -> api.v1alpha1.scorecards.UpdateSectionResponse
+	70, // 70: api.v1alpha1.scorecards.Scorecards.GetSection:output_type -> api.v1alpha1.scorecards.GetSectionResponse
+	71, // 71: api.v1alpha1.scorecards.Scorecards.DeleteSection:output_type -> api.v1alpha1.scorecards.DeleteSectionResponse
+	72, // 72: api.v1alpha1.scorecards.Scorecards.CreateQuestionCategory:output_type -> api.v1alpha1.scorecards.CreateQuestionCategoryResponse
+	73, // 73: api.v1alpha1.scorecards.Scorecards.DeleteQuestionCategory:output_type -> api.v1alpha1.scorecards.DeleteQuestionCategoryResponse
+	74, // 74: api.v1alpha1.scorecards.Scorecards.CreateEvaluation:output_type -> api.v1alpha1.scorecards.CreateEvaluationResponse
+	75, // 75: api.v1alpha1.scorecards.Scorecards.DeleteEvaluation:output_type -> api.v1alpha1.scorecards.DeleteEvaluationResponse
+	76, // 76: api.v1alpha1.scorecards.Scorecards.ScoreEvaluation:output_type -> api.v1alpha1.scorecards.ScoreEvaluationResponse
+	77, // 77: api.v1alpha1.scorecards.Scorecards.UpdateEvaluation:output_type -> api.v1alpha1.scorecards.UpdateEvaluationResponse
+	78, // 78: api.v1alpha1.scorecards.Scorecards.GetEvaluation:output_type -> api.v1alpha1.scorecards.GetEvaluationResponse
+	79, // 79: api.v1alpha1.scorecards.Scorecards.ListEvaluations:output_type -> api.v1alpha1.scorecards.ListEvaluationsResponse
+	80, // 80: api.v1alpha1.scorecards.Scorecards.CreateEvaluationQuestion:output_type -> api.v1alpha1.scorecards.CreateEvaluationQuestionResponse
+	81, // 81: api.v1alpha1.scorecards.Scorecards.UpdateEvaluationQuestion:output_type -> api.v1alpha1.scorecards.UpdateEvaluationQuestionResponse
+	82, // 82: api.v1alpha1.scorecards.Scorecards.DeleteEvaluationQuestion:output_type -> api.v1alpha1.scorecards.DeleteEvaluationQuestionResponse
+	83, // 83: api.v1alpha1.scorecards.Scorecards.SampleCallsByCategory:output_type -> api.v1alpha1.scorecards.SampleCallsByCategoryResponse
+	84, // 84: api.v1alpha1.scorecards.Scorecards.CreateAutoQuestion:output_type -> api.v1alpha1.scorecards.CreateAutoQuestionResponse
+	85, // 85: api.v1alpha1.scorecards.Scorecards.UpdateAutoQuestion:output_type -> api.v1alpha1.scorecards.UpdateAutoQuestionResponse
+	86, // 86: api.v1alpha1.scorecards.Scorecards.DeleteAutoQuestion:output_type -> api.v1alpha1.scorecards.DeleteAutoQuestionResponse
+	87, // 87: api.v1alpha1.scorecards.Scorecards.GetAutoQuestion:output_type -> api.v1alpha1.scorecards.GetAutoQuestionResponse
+	88, // 88: api.v1alpha1.scorecards.Scorecards.GetAutoEvaluation:output_type -> api.v1alpha1.scorecards.GetAutoEvaluationResponse
+	89, // 89: api.v1alpha1.scorecards.Scorecards.ListAutoEvaluations:output_type -> api.v1alpha1.scorecards.ListAutoEvaluationsResponse
+	90, // 90: api.v1alpha1.scorecards.Scorecards.StreamAutoEvaluations:output_type -> api.v1alpha1.scorecards.StreamAutoEvaluationsResponse
+	91, // 91: api.v1alpha1.scorecards.Scorecards.DeleteAutoEvaluation:output_type -> api.v1alpha1.scorecards.DeleteAutoEvaluationResponse
+	92, // 92: api.v1alpha1.scorecards.Scorecards.PreviewEvaluationScore:output_type -> api.v1alpha1.scorecards.PreviewEvaluationScoreResponse
+	93, // 93: api.v1alpha1.scorecards.Scorecards.RestoreEvaluation:output_type -> api.v1alpha1.scorecards.RestoreEvaluationResponse
+	47, // [47:94] is the sub-list for method output_type
+	0,  // [0:47] is the sub-list for method input_type
 	0,  // [0:0] is the sub-list for extension type_name
 	0,  // [0:0] is the sub-list for extension extendee
 	0,  // [0:0] is the sub-list for field type_name

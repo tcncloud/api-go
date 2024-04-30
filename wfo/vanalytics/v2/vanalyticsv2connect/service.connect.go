@@ -36,6 +36,9 @@ const (
 	// VanalyticsSearchTranscriptsProcedure is the fully-qualified name of the Vanalytics's
 	// SearchTranscripts RPC.
 	VanalyticsSearchTranscriptsProcedure = "/wfo.vanalytics.v2.Vanalytics/SearchTranscripts"
+	// VanalyticsBulkDeleteTranscriptsProcedure is the fully-qualified name of the Vanalytics's
+	// BulkDeleteTranscripts RPC.
+	VanalyticsBulkDeleteTranscriptsProcedure = "/wfo.vanalytics.v2.Vanalytics/BulkDeleteTranscripts"
 	// VanalyticsCreateFilterProcedure is the fully-qualified name of the Vanalytics's CreateFilter RPC.
 	VanalyticsCreateFilterProcedure = "/wfo.vanalytics.v2.Vanalytics/CreateFilter"
 	// VanalyticsListFiltersProcedure is the fully-qualified name of the Vanalytics's ListFilters RPC.
@@ -60,6 +63,8 @@ type VanalyticsClient interface {
 	// contains one page of transcript hits. Traversing the paginated hits is
 	// achieved by making use of the given page token.
 	SearchTranscripts(context.Context, *connect_go.Request[v2.SearchTranscriptsRequest]) (*connect_go.Response[v2.SearchTranscriptsResponse], error)
+	// BulkDeleteTranscripts bulk deletes transcripts matching the provided query.
+	BulkDeleteTranscripts(context.Context, *connect_go.Request[v2.BulkDeleteTranscriptsRequest]) (*connect_go.Response[v2.BulkDeleteTranscriptsResponse], error)
 	// CreateFilter creates a new filter. The filter contains a transcript query
 	// to filter transcripts.
 	CreateFilter(context.Context, *connect_go.Request[v2.CreateFilterRequest]) (*connect_go.Response[v2.Filter], error)
@@ -90,6 +95,11 @@ func NewVanalyticsClient(httpClient connect_go.HTTPClient, baseURL string, opts 
 		searchTranscripts: connect_go.NewClient[v2.SearchTranscriptsRequest, v2.SearchTranscriptsResponse](
 			httpClient,
 			baseURL+VanalyticsSearchTranscriptsProcedure,
+			opts...,
+		),
+		bulkDeleteTranscripts: connect_go.NewClient[v2.BulkDeleteTranscriptsRequest, v2.BulkDeleteTranscriptsResponse](
+			httpClient,
+			baseURL+VanalyticsBulkDeleteTranscriptsProcedure,
 			opts...,
 		),
 		createFilter: connect_go.NewClient[v2.CreateFilterRequest, v2.Filter](
@@ -133,6 +143,7 @@ func NewVanalyticsClient(httpClient connect_go.HTTPClient, baseURL string, opts 
 // vanalyticsClient implements VanalyticsClient.
 type vanalyticsClient struct {
 	searchTranscripts         *connect_go.Client[v2.SearchTranscriptsRequest, v2.SearchTranscriptsResponse]
+	bulkDeleteTranscripts     *connect_go.Client[v2.BulkDeleteTranscriptsRequest, v2.BulkDeleteTranscriptsResponse]
 	createFilter              *connect_go.Client[v2.CreateFilterRequest, v2.Filter]
 	listFilters               *connect_go.Client[v2.ListFiltersRequest, v2.ListFiltersResponse]
 	updateFilter              *connect_go.Client[v2.UpdateFilterRequest, v2.Filter]
@@ -145,6 +156,11 @@ type vanalyticsClient struct {
 // SearchTranscripts calls wfo.vanalytics.v2.Vanalytics.SearchTranscripts.
 func (c *vanalyticsClient) SearchTranscripts(ctx context.Context, req *connect_go.Request[v2.SearchTranscriptsRequest]) (*connect_go.Response[v2.SearchTranscriptsResponse], error) {
 	return c.searchTranscripts.CallUnary(ctx, req)
+}
+
+// BulkDeleteTranscripts calls wfo.vanalytics.v2.Vanalytics.BulkDeleteTranscripts.
+func (c *vanalyticsClient) BulkDeleteTranscripts(ctx context.Context, req *connect_go.Request[v2.BulkDeleteTranscriptsRequest]) (*connect_go.Response[v2.BulkDeleteTranscriptsResponse], error) {
+	return c.bulkDeleteTranscripts.CallUnary(ctx, req)
 }
 
 // CreateFilter calls wfo.vanalytics.v2.Vanalytics.CreateFilter.
@@ -188,6 +204,8 @@ type VanalyticsHandler interface {
 	// contains one page of transcript hits. Traversing the paginated hits is
 	// achieved by making use of the given page token.
 	SearchTranscripts(context.Context, *connect_go.Request[v2.SearchTranscriptsRequest]) (*connect_go.Response[v2.SearchTranscriptsResponse], error)
+	// BulkDeleteTranscripts bulk deletes transcripts matching the provided query.
+	BulkDeleteTranscripts(context.Context, *connect_go.Request[v2.BulkDeleteTranscriptsRequest]) (*connect_go.Response[v2.BulkDeleteTranscriptsResponse], error)
 	// CreateFilter creates a new filter. The filter contains a transcript query
 	// to filter transcripts.
 	CreateFilter(context.Context, *connect_go.Request[v2.CreateFilterRequest]) (*connect_go.Response[v2.Filter], error)
@@ -214,6 +232,11 @@ func NewVanalyticsHandler(svc VanalyticsHandler, opts ...connect_go.HandlerOptio
 	vanalyticsSearchTranscriptsHandler := connect_go.NewUnaryHandler(
 		VanalyticsSearchTranscriptsProcedure,
 		svc.SearchTranscripts,
+		opts...,
+	)
+	vanalyticsBulkDeleteTranscriptsHandler := connect_go.NewUnaryHandler(
+		VanalyticsBulkDeleteTranscriptsProcedure,
+		svc.BulkDeleteTranscripts,
 		opts...,
 	)
 	vanalyticsCreateFilterHandler := connect_go.NewUnaryHandler(
@@ -255,6 +278,8 @@ func NewVanalyticsHandler(svc VanalyticsHandler, opts ...connect_go.HandlerOptio
 		switch r.URL.Path {
 		case VanalyticsSearchTranscriptsProcedure:
 			vanalyticsSearchTranscriptsHandler.ServeHTTP(w, r)
+		case VanalyticsBulkDeleteTranscriptsProcedure:
+			vanalyticsBulkDeleteTranscriptsHandler.ServeHTTP(w, r)
 		case VanalyticsCreateFilterProcedure:
 			vanalyticsCreateFilterHandler.ServeHTTP(w, r)
 		case VanalyticsListFiltersProcedure:
@@ -280,6 +305,10 @@ type UnimplementedVanalyticsHandler struct{}
 
 func (UnimplementedVanalyticsHandler) SearchTranscripts(context.Context, *connect_go.Request[v2.SearchTranscriptsRequest]) (*connect_go.Response[v2.SearchTranscriptsResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("wfo.vanalytics.v2.Vanalytics.SearchTranscripts is not implemented"))
+}
+
+func (UnimplementedVanalyticsHandler) BulkDeleteTranscripts(context.Context, *connect_go.Request[v2.BulkDeleteTranscriptsRequest]) (*connect_go.Response[v2.BulkDeleteTranscriptsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("wfo.vanalytics.v2.Vanalytics.BulkDeleteTranscripts is not implemented"))
 }
 
 func (UnimplementedVanalyticsHandler) CreateFilter(context.Context, *connect_go.Request[v2.CreateFilterRequest]) (*connect_go.Response[v2.Filter], error) {

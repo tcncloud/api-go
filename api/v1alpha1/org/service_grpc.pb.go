@@ -175,6 +175,7 @@ const (
 	Org_CopyAgentTrigger_FullMethodName                         = "/api.v1alpha1.org.Org/CopyAgentTrigger"
 	Org_UpdateAgentTriggers_FullMethodName                      = "/api.v1alpha1.org.Org/UpdateAgentTriggers"
 	Org_ListHuntGroupScripts_FullMethodName                     = "/api.v1alpha1.org.Org/ListHuntGroupScripts"
+	Org_ListOrgHuntGroupScripts_FullMethodName                  = "/api.v1alpha1.org.Org/ListOrgHuntGroupScripts"
 	Org_GetHuntGroupScript_FullMethodName                       = "/api.v1alpha1.org.Org/GetHuntGroupScript"
 	Org_CreateHuntGroupScript_FullMethodName                    = "/api.v1alpha1.org.Org/CreateHuntGroupScript"
 	Org_UpdateHuntGroupScript_FullMethodName                    = "/api.v1alpha1.org.Org/UpdateHuntGroupScript"
@@ -605,8 +606,12 @@ type OrgClient interface {
 	CopyAgentTrigger(ctx context.Context, in *CopyAgentTriggerRequest, opts ...grpc.CallOption) (*CopyAgentTriggerResponse, error)
 	// UpdateAgentTriggers updates all agent triggers for the given hunt group.
 	UpdateAgentTriggers(ctx context.Context, in *UpdateAgentTriggersRequest, opts ...grpc.CallOption) (*UpdateAgentTriggersResponse, error)
+	// Deprecated: Do not use.
 	// ListHuntGroupScripts lists all hunt group scripts for the current organization.
+	// DEPRECATED. Use ListOrgHuntGroupScripts instead
 	ListHuntGroupScripts(ctx context.Context, in *ListHuntGroupScriptsRequest, opts ...grpc.CallOption) (*ListHuntGroupScriptsResponse, error)
+	// ListOrgHuntGroupScripts lists all hunt group scripts for the current organization with a streamed response.
+	ListOrgHuntGroupScripts(ctx context.Context, in *ListHuntGroupScriptsRequest, opts ...grpc.CallOption) (Org_ListOrgHuntGroupScriptsClient, error)
 	// GetHuntGroupScript gets the specified script from the given script sid
 	GetHuntGroupScript(ctx context.Context, in *GetHuntGroupScriptRequest, opts ...grpc.CallOption) (*GetHuntGroupScriptResponse, error)
 	// CreateHuntGroupScript adds a creates a new hunt group script
@@ -2380,6 +2385,7 @@ func (c *orgClient) UpdateAgentTriggers(ctx context.Context, in *UpdateAgentTrig
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *orgClient) ListHuntGroupScripts(ctx context.Context, in *ListHuntGroupScriptsRequest, opts ...grpc.CallOption) (*ListHuntGroupScriptsResponse, error) {
 	out := new(ListHuntGroupScriptsResponse)
 	err := c.cc.Invoke(ctx, Org_ListHuntGroupScripts_FullMethodName, in, out, opts...)
@@ -2387,6 +2393,38 @@ func (c *orgClient) ListHuntGroupScripts(ctx context.Context, in *ListHuntGroupS
 		return nil, err
 	}
 	return out, nil
+}
+
+func (c *orgClient) ListOrgHuntGroupScripts(ctx context.Context, in *ListHuntGroupScriptsRequest, opts ...grpc.CallOption) (Org_ListOrgHuntGroupScriptsClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Org_ServiceDesc.Streams[9], Org_ListOrgHuntGroupScripts_FullMethodName, opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &orgListOrgHuntGroupScriptsClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type Org_ListOrgHuntGroupScriptsClient interface {
+	Recv() (*ListHuntGroupScriptsResponse, error)
+	grpc.ClientStream
+}
+
+type orgListOrgHuntGroupScriptsClient struct {
+	grpc.ClientStream
+}
+
+func (x *orgListOrgHuntGroupScriptsClient) Recv() (*ListHuntGroupScriptsResponse, error) {
+	m := new(ListHuntGroupScriptsResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
 }
 
 func (c *orgClient) GetHuntGroupScript(ctx context.Context, in *GetHuntGroupScriptRequest, opts ...grpc.CallOption) (*GetHuntGroupScriptResponse, error) {
@@ -3347,8 +3385,12 @@ type OrgServer interface {
 	CopyAgentTrigger(context.Context, *CopyAgentTriggerRequest) (*CopyAgentTriggerResponse, error)
 	// UpdateAgentTriggers updates all agent triggers for the given hunt group.
 	UpdateAgentTriggers(context.Context, *UpdateAgentTriggersRequest) (*UpdateAgentTriggersResponse, error)
+	// Deprecated: Do not use.
 	// ListHuntGroupScripts lists all hunt group scripts for the current organization.
+	// DEPRECATED. Use ListOrgHuntGroupScripts instead
 	ListHuntGroupScripts(context.Context, *ListHuntGroupScriptsRequest) (*ListHuntGroupScriptsResponse, error)
+	// ListOrgHuntGroupScripts lists all hunt group scripts for the current organization with a streamed response.
+	ListOrgHuntGroupScripts(*ListHuntGroupScriptsRequest, Org_ListOrgHuntGroupScriptsServer) error
 	// GetHuntGroupScript gets the specified script from the given script sid
 	GetHuntGroupScript(context.Context, *GetHuntGroupScriptRequest) (*GetHuntGroupScriptResponse, error)
 	// CreateHuntGroupScript adds a creates a new hunt group script
@@ -3976,6 +4018,9 @@ func (UnimplementedOrgServer) UpdateAgentTriggers(context.Context, *UpdateAgentT
 }
 func (UnimplementedOrgServer) ListHuntGroupScripts(context.Context, *ListHuntGroupScriptsRequest) (*ListHuntGroupScriptsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListHuntGroupScripts not implemented")
+}
+func (UnimplementedOrgServer) ListOrgHuntGroupScripts(*ListHuntGroupScriptsRequest, Org_ListOrgHuntGroupScriptsServer) error {
+	return status.Errorf(codes.Unimplemented, "method ListOrgHuntGroupScripts not implemented")
 }
 func (UnimplementedOrgServer) GetHuntGroupScript(context.Context, *GetHuntGroupScriptRequest) (*GetHuntGroupScriptResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetHuntGroupScript not implemented")
@@ -7023,6 +7068,27 @@ func _Org_ListHuntGroupScripts_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Org_ListOrgHuntGroupScripts_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(ListHuntGroupScriptsRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(OrgServer).ListOrgHuntGroupScripts(m, &orgListOrgHuntGroupScriptsServer{stream})
+}
+
+type Org_ListOrgHuntGroupScriptsServer interface {
+	Send(*ListHuntGroupScriptsResponse) error
+	grpc.ServerStream
+}
+
+type orgListOrgHuntGroupScriptsServer struct {
+	grpc.ServerStream
+}
+
+func (x *orgListOrgHuntGroupScriptsServer) Send(m *ListHuntGroupScriptsResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
 func _Org_GetHuntGroupScript_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetHuntGroupScriptRequest)
 	if err := dec(in); err != nil {
@@ -9115,6 +9181,11 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "ListUsersByRegion",
 			Handler:       _Org_ListUsersByRegion_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "ListOrgHuntGroupScripts",
+			Handler:       _Org_ListOrgHuntGroupScripts_Handler,
 			ServerStreams: true,
 		},
 	},

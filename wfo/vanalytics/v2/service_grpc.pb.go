@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion7
 
 const (
 	Vanalytics_SearchTranscripts_FullMethodName         = "/wfo.vanalytics.v2.Vanalytics/SearchTranscripts"
+	Vanalytics_BulkDeleteTranscripts_FullMethodName     = "/wfo.vanalytics.v2.Vanalytics/BulkDeleteTranscripts"
 	Vanalytics_CreateFilter_FullMethodName              = "/wfo.vanalytics.v2.Vanalytics/CreateFilter"
 	Vanalytics_ListFilters_FullMethodName               = "/wfo.vanalytics.v2.Vanalytics/ListFilters"
 	Vanalytics_UpdateFilter_FullMethodName              = "/wfo.vanalytics.v2.Vanalytics/UpdateFilter"
@@ -37,6 +38,8 @@ type VanalyticsClient interface {
 	// contains one page of transcript hits. Traversing the paginated hits is
 	// achieved by making use of the given page token.
 	SearchTranscripts(ctx context.Context, in *SearchTranscriptsRequest, opts ...grpc.CallOption) (*SearchTranscriptsResponse, error)
+	// BulkDeleteTranscripts bulk deletes transcripts matching the provided query.
+	BulkDeleteTranscripts(ctx context.Context, in *BulkDeleteTranscriptsRequest, opts ...grpc.CallOption) (*BulkDeleteTranscriptsResponse, error)
 	// CreateFilter creates a new filter. The filter contains a transcript query
 	// to filter transcripts.
 	CreateFilter(ctx context.Context, in *CreateFilterRequest, opts ...grpc.CallOption) (*Filter, error)
@@ -65,6 +68,15 @@ func NewVanalyticsClient(cc grpc.ClientConnInterface) VanalyticsClient {
 func (c *vanalyticsClient) SearchTranscripts(ctx context.Context, in *SearchTranscriptsRequest, opts ...grpc.CallOption) (*SearchTranscriptsResponse, error) {
 	out := new(SearchTranscriptsResponse)
 	err := c.cc.Invoke(ctx, Vanalytics_SearchTranscripts_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *vanalyticsClient) BulkDeleteTranscripts(ctx context.Context, in *BulkDeleteTranscriptsRequest, opts ...grpc.CallOption) (*BulkDeleteTranscriptsResponse, error) {
+	out := new(BulkDeleteTranscriptsResponse)
+	err := c.cc.Invoke(ctx, Vanalytics_BulkDeleteTranscripts_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -142,6 +154,8 @@ type VanalyticsServer interface {
 	// contains one page of transcript hits. Traversing the paginated hits is
 	// achieved by making use of the given page token.
 	SearchTranscripts(context.Context, *SearchTranscriptsRequest) (*SearchTranscriptsResponse, error)
+	// BulkDeleteTranscripts bulk deletes transcripts matching the provided query.
+	BulkDeleteTranscripts(context.Context, *BulkDeleteTranscriptsRequest) (*BulkDeleteTranscriptsResponse, error)
 	// CreateFilter creates a new filter. The filter contains a transcript query
 	// to filter transcripts.
 	CreateFilter(context.Context, *CreateFilterRequest) (*Filter, error)
@@ -166,6 +180,9 @@ type UnimplementedVanalyticsServer struct {
 
 func (UnimplementedVanalyticsServer) SearchTranscripts(context.Context, *SearchTranscriptsRequest) (*SearchTranscriptsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SearchTranscripts not implemented")
+}
+func (UnimplementedVanalyticsServer) BulkDeleteTranscripts(context.Context, *BulkDeleteTranscriptsRequest) (*BulkDeleteTranscriptsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BulkDeleteTranscripts not implemented")
 }
 func (UnimplementedVanalyticsServer) CreateFilter(context.Context, *CreateFilterRequest) (*Filter, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateFilter not implemented")
@@ -215,6 +232,24 @@ func _Vanalytics_SearchTranscripts_Handler(srv interface{}, ctx context.Context,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(VanalyticsServer).SearchTranscripts(ctx, req.(*SearchTranscriptsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Vanalytics_BulkDeleteTranscripts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BulkDeleteTranscriptsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VanalyticsServer).BulkDeleteTranscripts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Vanalytics_BulkDeleteTranscripts_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VanalyticsServer).BulkDeleteTranscripts(ctx, req.(*BulkDeleteTranscriptsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -355,6 +390,10 @@ var Vanalytics_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SearchTranscripts",
 			Handler:    _Vanalytics_SearchTranscripts_Handler,
+		},
+		{
+			MethodName: "BulkDeleteTranscripts",
+			Handler:    _Vanalytics_BulkDeleteTranscripts_Handler,
 		},
 		{
 			MethodName: "CreateFilter",
