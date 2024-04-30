@@ -535,6 +535,10 @@ const (
 	// OrgRevokeUsersPermissionGroupProcedure is the fully-qualified name of the Org's
 	// RevokeUsersPermissionGroup RPC.
 	OrgRevokeUsersPermissionGroupProcedure = "/api.v1alpha1.org.Org/RevokeUsersPermissionGroup"
+	// OrgAssignLabelsProcedure is the fully-qualified name of the Org's AssignLabels RPC.
+	OrgAssignLabelsProcedure = "/api.v1alpha1.org.Org/AssignLabels"
+	// OrgRevokeLabelsProcedure is the fully-qualified name of the Org's RevokeLabels RPC.
+	OrgRevokeLabelsProcedure = "/api.v1alpha1.org.Org/RevokeLabels"
 	// OrgAssignAccountOwnerPermissionToUserProcedure is the fully-qualified name of the Org's
 	// AssignAccountOwnerPermissionToUser RPC.
 	OrgAssignAccountOwnerPermissionToUserProcedure = "/api.v1alpha1.org.Org/AssignAccountOwnerPermissionToUser"
@@ -1059,6 +1063,10 @@ type OrgClient interface {
 	AssignUsersPermissionGroup(context.Context, *connect_go.Request[org.AssignUsersPermissionGroupRequest]) (*connect_go.Response[org.AssignUsersPermissionGroupResponse], error)
 	// RevokeUsersPermissionGroup returns a user a permission group.
 	RevokeUsersPermissionGroup(context.Context, *connect_go.Request[org.RevokeUsersPermissionGroupRequest]) (*connect_go.Response[org.RevokeUsersPermissionGroupResponse], error)
+	// AssignLabels assigns labels to a given permission group
+	AssignLabels(context.Context, *connect_go.Request[org.AssignLabelsRequest]) (*connect_go.Response[org.AssignLabelsResponse], error)
+	// RevokeLabels revokes labels from a given permission group
+	RevokeLabels(context.Context, *connect_go.Request[org.RevokeLabelsRequest]) (*connect_go.Response[org.RevokeLabelsResponse], error)
 	// AssignAccountOwnerPermissionToUser returns a user a permission group.
 	AssignAccountOwnerPermissionToUser(context.Context, *connect_go.Request[org.AssignAccountOwnerPermissionToUserRequest]) (*connect_go.Response[org.AssignAccountOwnerPermissionToUserResponse], error)
 	// RevokeAccountOwnerPermissionFromUser returns a user a permission group.
@@ -2097,6 +2105,16 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgRevokeUsersPermissionGroupProcedure,
 			opts...,
 		),
+		assignLabels: connect_go.NewClient[org.AssignLabelsRequest, org.AssignLabelsResponse](
+			httpClient,
+			baseURL+OrgAssignLabelsProcedure,
+			opts...,
+		),
+		revokeLabels: connect_go.NewClient[org.RevokeLabelsRequest, org.RevokeLabelsResponse](
+			httpClient,
+			baseURL+OrgRevokeLabelsProcedure,
+			opts...,
+		),
 		assignAccountOwnerPermissionToUser: connect_go.NewClient[org.AssignAccountOwnerPermissionToUserRequest, org.AssignAccountOwnerPermissionToUserResponse](
 			httpClient,
 			baseURL+OrgAssignAccountOwnerPermissionToUserProcedure,
@@ -2442,6 +2460,8 @@ type orgClient struct {
 	listPermissionGroupsByOrgId              *connect_go.Client[org.ListPermissionGroupsByOrgIdRequest, org.ListPermissionGroupsByOrgIdResponse]
 	assignUsersPermissionGroup               *connect_go.Client[org.AssignUsersPermissionGroupRequest, org.AssignUsersPermissionGroupResponse]
 	revokeUsersPermissionGroup               *connect_go.Client[org.RevokeUsersPermissionGroupRequest, org.RevokeUsersPermissionGroupResponse]
+	assignLabels                             *connect_go.Client[org.AssignLabelsRequest, org.AssignLabelsResponse]
+	revokeLabels                             *connect_go.Client[org.RevokeLabelsRequest, org.RevokeLabelsResponse]
 	assignAccountOwnerPermissionToUser       *connect_go.Client[org.AssignAccountOwnerPermissionToUserRequest, org.AssignAccountOwnerPermissionToUserResponse]
 	revokeAccountOwnerPermissionFromUser     *connect_go.Client[org.RevokeAccountOwnerPermissionFromUserRequest, org.RevokeAccountOwnerPermissionFromUserResponse]
 	initDefaultPermissionGroups              *connect_go.Client[org.InitDefaultPermissionGroupsRequest, org.InitDefaultPermissionGroupsResponse]
@@ -3450,6 +3470,16 @@ func (c *orgClient) RevokeUsersPermissionGroup(ctx context.Context, req *connect
 	return c.revokeUsersPermissionGroup.CallUnary(ctx, req)
 }
 
+// AssignLabels calls api.v1alpha1.org.Org.AssignLabels.
+func (c *orgClient) AssignLabels(ctx context.Context, req *connect_go.Request[org.AssignLabelsRequest]) (*connect_go.Response[org.AssignLabelsResponse], error) {
+	return c.assignLabels.CallUnary(ctx, req)
+}
+
+// RevokeLabels calls api.v1alpha1.org.Org.RevokeLabels.
+func (c *orgClient) RevokeLabels(ctx context.Context, req *connect_go.Request[org.RevokeLabelsRequest]) (*connect_go.Response[org.RevokeLabelsResponse], error) {
+	return c.revokeLabels.CallUnary(ctx, req)
+}
+
 // AssignAccountOwnerPermissionToUser calls api.v1alpha1.org.Org.AssignAccountOwnerPermissionToUser.
 func (c *orgClient) AssignAccountOwnerPermissionToUser(ctx context.Context, req *connect_go.Request[org.AssignAccountOwnerPermissionToUserRequest]) (*connect_go.Response[org.AssignAccountOwnerPermissionToUserResponse], error) {
 	return c.assignAccountOwnerPermissionToUser.CallUnary(ctx, req)
@@ -4051,6 +4081,10 @@ type OrgHandler interface {
 	AssignUsersPermissionGroup(context.Context, *connect_go.Request[org.AssignUsersPermissionGroupRequest]) (*connect_go.Response[org.AssignUsersPermissionGroupResponse], error)
 	// RevokeUsersPermissionGroup returns a user a permission group.
 	RevokeUsersPermissionGroup(context.Context, *connect_go.Request[org.RevokeUsersPermissionGroupRequest]) (*connect_go.Response[org.RevokeUsersPermissionGroupResponse], error)
+	// AssignLabels assigns labels to a given permission group
+	AssignLabels(context.Context, *connect_go.Request[org.AssignLabelsRequest]) (*connect_go.Response[org.AssignLabelsResponse], error)
+	// RevokeLabels revokes labels from a given permission group
+	RevokeLabels(context.Context, *connect_go.Request[org.RevokeLabelsRequest]) (*connect_go.Response[org.RevokeLabelsResponse], error)
 	// AssignAccountOwnerPermissionToUser returns a user a permission group.
 	AssignAccountOwnerPermissionToUser(context.Context, *connect_go.Request[org.AssignAccountOwnerPermissionToUserRequest]) (*connect_go.Response[org.AssignAccountOwnerPermissionToUserResponse], error)
 	// RevokeAccountOwnerPermissionFromUser returns a user a permission group.
@@ -5085,6 +5119,16 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.RevokeUsersPermissionGroup,
 		opts...,
 	)
+	orgAssignLabelsHandler := connect_go.NewUnaryHandler(
+		OrgAssignLabelsProcedure,
+		svc.AssignLabels,
+		opts...,
+	)
+	orgRevokeLabelsHandler := connect_go.NewUnaryHandler(
+		OrgRevokeLabelsProcedure,
+		svc.RevokeLabels,
+		opts...,
+	)
 	orgAssignAccountOwnerPermissionToUserHandler := connect_go.NewUnaryHandler(
 		OrgAssignAccountOwnerPermissionToUserProcedure,
 		svc.AssignAccountOwnerPermissionToUser,
@@ -5617,6 +5661,10 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 			orgAssignUsersPermissionGroupHandler.ServeHTTP(w, r)
 		case OrgRevokeUsersPermissionGroupProcedure:
 			orgRevokeUsersPermissionGroupHandler.ServeHTTP(w, r)
+		case OrgAssignLabelsProcedure:
+			orgAssignLabelsHandler.ServeHTTP(w, r)
+		case OrgRevokeLabelsProcedure:
+			orgRevokeLabelsHandler.ServeHTTP(w, r)
 		case OrgAssignAccountOwnerPermissionToUserProcedure:
 			orgAssignAccountOwnerPermissionToUserHandler.ServeHTTP(w, r)
 		case OrgRevokeAccountOwnerPermissionFromUserProcedure:
@@ -6444,6 +6492,14 @@ func (UnimplementedOrgHandler) AssignUsersPermissionGroup(context.Context, *conn
 
 func (UnimplementedOrgHandler) RevokeUsersPermissionGroup(context.Context, *connect_go.Request[org.RevokeUsersPermissionGroupRequest]) (*connect_go.Response[org.RevokeUsersPermissionGroupResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.RevokeUsersPermissionGroup is not implemented"))
+}
+
+func (UnimplementedOrgHandler) AssignLabels(context.Context, *connect_go.Request[org.AssignLabelsRequest]) (*connect_go.Response[org.AssignLabelsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.AssignLabels is not implemented"))
+}
+
+func (UnimplementedOrgHandler) RevokeLabels(context.Context, *connect_go.Request[org.RevokeLabelsRequest]) (*connect_go.Response[org.RevokeLabelsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.RevokeLabels is not implemented"))
 }
 
 func (UnimplementedOrgHandler) AssignAccountOwnerPermissionToUser(context.Context, *connect_go.Request[org.AssignAccountOwnerPermissionToUserRequest]) (*connect_go.Response[org.AssignAccountOwnerPermissionToUserResponse], error) {

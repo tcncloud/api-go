@@ -1703,6 +1703,200 @@ func (*RemovePermissionFromAllPermissionGroupsResponse) Descriptor() ([]byte, []
 	return file_api_v1alpha1_org_permissions_proto_rawDescGZIP(), []int{33}
 }
 
+// Request message for the AssignLabelsRequest RPC.
+type AssignLabelsRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Ids of labels getting assigned to a permission group
+	LabelIds []string `protobuf:"bytes,1,rep,name=label_ids,json=labelIds,proto3" json:"label_ids,omitempty"`
+	// Id of the permission group to be assigned labels.
+	PermissionGroupId string `protobuf:"bytes,2,opt,name=permission_group_id,json=permissionGroupId,proto3" json:"permission_group_id,omitempty"`
+}
+
+func (x *AssignLabelsRequest) Reset() {
+	*x = AssignLabelsRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_org_permissions_proto_msgTypes[34]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AssignLabelsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AssignLabelsRequest) ProtoMessage() {}
+
+func (x *AssignLabelsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_org_permissions_proto_msgTypes[34]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AssignLabelsRequest.ProtoReflect.Descriptor instead.
+func (*AssignLabelsRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_org_permissions_proto_rawDescGZIP(), []int{34}
+}
+
+func (x *AssignLabelsRequest) GetLabelIds() []string {
+	if x != nil {
+		return x.LabelIds
+	}
+	return nil
+}
+
+func (x *AssignLabelsRequest) GetPermissionGroupId() string {
+	if x != nil {
+		return x.PermissionGroupId
+	}
+	return ""
+}
+
+// Response message for the AssignLabelsResponse RPC.
+type AssignLabelsResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *AssignLabelsResponse) Reset() {
+	*x = AssignLabelsResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_org_permissions_proto_msgTypes[35]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AssignLabelsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AssignLabelsResponse) ProtoMessage() {}
+
+func (x *AssignLabelsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_org_permissions_proto_msgTypes[35]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AssignLabelsResponse.ProtoReflect.Descriptor instead.
+func (*AssignLabelsResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_org_permissions_proto_rawDescGZIP(), []int{35}
+}
+
+// Request message for the RevokeLabelsRequest RPC.
+type RevokeLabelsRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Ids of labels getting revoked from a permission group
+	LabelIds []string `protobuf:"bytes,1,rep,name=label_ids,json=labelIds,proto3" json:"label_ids,omitempty"`
+	// Id of the permission group to have labels revoked.
+	PermissionGroupId string `protobuf:"bytes,2,opt,name=permission_group_id,json=permissionGroupId,proto3" json:"permission_group_id,omitempty"`
+}
+
+func (x *RevokeLabelsRequest) Reset() {
+	*x = RevokeLabelsRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_org_permissions_proto_msgTypes[36]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RevokeLabelsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RevokeLabelsRequest) ProtoMessage() {}
+
+func (x *RevokeLabelsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_org_permissions_proto_msgTypes[36]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RevokeLabelsRequest.ProtoReflect.Descriptor instead.
+func (*RevokeLabelsRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_org_permissions_proto_rawDescGZIP(), []int{36}
+}
+
+func (x *RevokeLabelsRequest) GetLabelIds() []string {
+	if x != nil {
+		return x.LabelIds
+	}
+	return nil
+}
+
+func (x *RevokeLabelsRequest) GetPermissionGroupId() string {
+	if x != nil {
+		return x.PermissionGroupId
+	}
+	return ""
+}
+
+// Response message for the RevokeLabelsResponse RPC.
+type RevokeLabelsResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RevokeLabelsResponse) Reset() {
+	*x = RevokeLabelsResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_org_permissions_proto_msgTypes[37]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RevokeLabelsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RevokeLabelsResponse) ProtoMessage() {}
+
+func (x *RevokeLabelsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_org_permissions_proto_msgTypes[37]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RevokeLabelsResponse.ProtoReflect.Descriptor instead.
+func (*RevokeLabelsResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_org_permissions_proto_rawDescGZIP(), []int{37}
+}
+
 var File_api_v1alpha1_org_permissions_proto protoreflect.FileDescriptor
 
 var file_api_v1alpha1_org_permissions_proto_rawDesc = []byte{
@@ -1906,19 +2100,35 @@ var file_api_v1alpha1_org_permissions_proto_rawDesc = []byte{
 	0x0a, 0x70, 0x65, 0x72, 0x6d, 0x69, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x22, 0x31, 0x0a, 0x2f, 0x52,
 	0x65, 0x6d, 0x6f, 0x76, 0x65, 0x50, 0x65, 0x72, 0x6d, 0x69, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x46,
 	0x72, 0x6f, 0x6d, 0x41, 0x6c, 0x6c, 0x50, 0x65, 0x72, 0x6d, 0x69, 0x73, 0x73, 0x69, 0x6f, 0x6e,
-	0x47, 0x72, 0x6f, 0x75, 0x70, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0xb7,
-	0x01, 0x0a, 0x14, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70,
-	0x68, 0x61, 0x31, 0x2e, 0x6f, 0x72, 0x67, 0x42, 0x10, 0x50, 0x65, 0x72, 0x6d, 0x69, 0x73, 0x73,
-	0x69, 0x6f, 0x6e, 0x73, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x2b, 0x67, 0x69, 0x74,
-	0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64,
-	0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c,
-	0x70, 0x68, 0x61, 0x31, 0x2f, 0x6f, 0x72, 0x67, 0xa2, 0x02, 0x03, 0x41, 0x56, 0x4f, 0xaa, 0x02,
-	0x10, 0x41, 0x70, 0x69, 0x2e, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x4f, 0x72,
-	0x67, 0xca, 0x02, 0x10, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31,
-	0x5c, 0x4f, 0x72, 0x67, 0xe2, 0x02, 0x1c, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70,
-	0x68, 0x61, 0x31, 0x5c, 0x4f, 0x72, 0x67, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64,
-	0x61, 0x74, 0x61, 0xea, 0x02, 0x12, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x56, 0x31, 0x61, 0x6c, 0x70,
-	0x68, 0x61, 0x31, 0x3a, 0x3a, 0x4f, 0x72, 0x67, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x47, 0x72, 0x6f, 0x75, 0x70, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x62,
+	0x0a, 0x13, 0x41, 0x73, 0x73, 0x69, 0x67, 0x6e, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1b, 0x0a, 0x09, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x5f, 0x69,
+	0x64, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x08, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x49,
+	0x64, 0x73, 0x12, 0x2e, 0x0a, 0x13, 0x70, 0x65, 0x72, 0x6d, 0x69, 0x73, 0x73, 0x69, 0x6f, 0x6e,
+	0x5f, 0x67, 0x72, 0x6f, 0x75, 0x70, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x11, 0x70, 0x65, 0x72, 0x6d, 0x69, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x47, 0x72, 0x6f, 0x75, 0x70,
+	0x49, 0x64, 0x22, 0x16, 0x0a, 0x14, 0x41, 0x73, 0x73, 0x69, 0x67, 0x6e, 0x4c, 0x61, 0x62, 0x65,
+	0x6c, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x62, 0x0a, 0x13, 0x52, 0x65,
+	0x76, 0x6f, 0x6b, 0x65, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x12, 0x1b, 0x0a, 0x09, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x5f, 0x69, 0x64, 0x73, 0x18, 0x01,
+	0x20, 0x03, 0x28, 0x09, 0x52, 0x08, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x49, 0x64, 0x73, 0x12, 0x2e,
+	0x0a, 0x13, 0x70, 0x65, 0x72, 0x6d, 0x69, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x5f, 0x67, 0x72, 0x6f,
+	0x75, 0x70, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x70, 0x65, 0x72,
+	0x6d, 0x69, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x49, 0x64, 0x22, 0x16,
+	0x0a, 0x14, 0x52, 0x65, 0x76, 0x6f, 0x6b, 0x65, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0xb7, 0x01, 0x0a, 0x14, 0x63, 0x6f, 0x6d, 0x2e, 0x61,
+	0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x6f, 0x72, 0x67, 0x42,
+	0x10, 0x50, 0x65, 0x72, 0x6d, 0x69, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x73, 0x50, 0x72, 0x6f, 0x74,
+	0x6f, 0x50, 0x01, 0x5a, 0x2b, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f,
+	0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f,
+	0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x6f, 0x72, 0x67,
+	0xa2, 0x02, 0x03, 0x41, 0x56, 0x4f, 0xaa, 0x02, 0x10, 0x41, 0x70, 0x69, 0x2e, 0x56, 0x31, 0x61,
+	0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x4f, 0x72, 0x67, 0xca, 0x02, 0x10, 0x41, 0x70, 0x69, 0x5c,
+	0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x4f, 0x72, 0x67, 0xe2, 0x02, 0x1c, 0x41,
+	0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x4f, 0x72, 0x67, 0x5c,
+	0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x12, 0x41, 0x70,
+	0x69, 0x3a, 0x3a, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x3a, 0x3a, 0x4f, 0x72, 0x67,
+	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1933,7 +2143,7 @@ func file_api_v1alpha1_org_permissions_proto_rawDescGZIP() []byte {
 	return file_api_v1alpha1_org_permissions_proto_rawDescData
 }
 
-var file_api_v1alpha1_org_permissions_proto_msgTypes = make([]protoimpl.MessageInfo, 34)
+var file_api_v1alpha1_org_permissions_proto_msgTypes = make([]protoimpl.MessageInfo, 38)
 var file_api_v1alpha1_org_permissions_proto_goTypes = []interface{}{
 	(*GetPermissionsRequest)(nil),                           // 0: api.v1alpha1.org.GetPermissionsRequest
 	(*GetPermissionsResponse)(nil),                          // 1: api.v1alpha1.org.GetPermissionsResponse
@@ -1969,33 +2179,37 @@ var file_api_v1alpha1_org_permissions_proto_goTypes = []interface{}{
 	(*UpdateLicensesResponse)(nil),                          // 31: api.v1alpha1.org.UpdateLicensesResponse
 	(*RemovePermissionFromAllPermissionGroupsRequest)(nil),  // 32: api.v1alpha1.org.RemovePermissionFromAllPermissionGroupsRequest
 	(*RemovePermissionFromAllPermissionGroupsResponse)(nil), // 33: api.v1alpha1.org.RemovePermissionFromAllPermissionGroupsResponse
-	(auth.Permission)(0),                                    // 34: api.commons.auth.Permission
-	(commons.Permission)(0),                                 // 35: api.commons.Permission
-	(*org.User)(nil),                                        // 36: api.commons.org.User
-	(commons.OperatorApplications)(0),                       // 37: api.commons.OperatorApplications
-	(*org.Label)(nil),                                       // 38: api.commons.org.Label
-	(*org.PermissionGroup)(nil),                             // 39: api.commons.org.PermissionGroup
-	(*org.License)(nil),                                     // 40: api.commons.org.License
+	(*AssignLabelsRequest)(nil),                             // 34: api.v1alpha1.org.AssignLabelsRequest
+	(*AssignLabelsResponse)(nil),                            // 35: api.v1alpha1.org.AssignLabelsResponse
+	(*RevokeLabelsRequest)(nil),                             // 36: api.v1alpha1.org.RevokeLabelsRequest
+	(*RevokeLabelsResponse)(nil),                            // 37: api.v1alpha1.org.RevokeLabelsResponse
+	(auth.Permission)(0),                                    // 38: api.commons.auth.Permission
+	(commons.Permission)(0),                                 // 39: api.commons.Permission
+	(*org.User)(nil),                                        // 40: api.commons.org.User
+	(commons.OperatorApplications)(0),                       // 41: api.commons.OperatorApplications
+	(*org.Label)(nil),                                       // 42: api.commons.org.Label
+	(*org.PermissionGroup)(nil),                             // 43: api.commons.org.PermissionGroup
+	(*org.License)(nil),                                     // 44: api.commons.org.License
 }
 var file_api_v1alpha1_org_permissions_proto_depIdxs = []int32{
-	34, // 0: api.v1alpha1.org.GetPermissionsResponse.permissions:type_name -> api.commons.auth.Permission
-	35, // 1: api.v1alpha1.org.GetPermissionsResponse.p3_permissions:type_name -> api.commons.Permission
-	36, // 2: api.v1alpha1.org.GetPermissionsResponse.user:type_name -> api.commons.org.User
-	37, // 3: api.v1alpha1.org.GetPermissionsResponse.default_app:type_name -> api.commons.OperatorApplications
-	34, // 4: api.v1alpha1.org.GetUserPermissionsResponse.permissions:type_name -> api.commons.auth.Permission
-	38, // 5: api.v1alpha1.org.GetUserPermissionsResponse.labels:type_name -> api.commons.org.Label
-	34, // 6: api.v1alpha1.org.CreatePermissionGroupRequest.permissions:type_name -> api.commons.auth.Permission
-	34, // 7: api.v1alpha1.org.UpdatePermissionGroupRequest.permissions:type_name -> api.commons.auth.Permission
-	39, // 8: api.v1alpha1.org.UpdatePermissionGroupResponse.permission_group:type_name -> api.commons.org.PermissionGroup
-	39, // 9: api.v1alpha1.org.ListPermissionGroupsResponse.permission_groups:type_name -> api.commons.org.PermissionGroup
-	39, // 10: api.v1alpha1.org.ListPermissionGroupsByOrgIdResponse.permission_groups:type_name -> api.commons.org.PermissionGroup
-	39, // 11: api.v1alpha1.org.InitDefaultPermissionGroupsResponse.default_permission_groups:type_name -> api.commons.org.PermissionGroup
-	39, // 12: api.v1alpha1.org.GetAccountOwnerGroupResponse.permission_group:type_name -> api.commons.org.PermissionGroup
-	40, // 13: api.v1alpha1.org.GetLicensesResponse.licenses:type_name -> api.commons.org.License
-	40, // 14: api.v1alpha1.org.GetOrgLicensesResponse.licenses:type_name -> api.commons.org.License
-	34, // 15: api.v1alpha1.org.UpdateLicensesRequest.added_licenses:type_name -> api.commons.auth.Permission
-	34, // 16: api.v1alpha1.org.UpdateLicensesRequest.revoked_licenses:type_name -> api.commons.auth.Permission
-	34, // 17: api.v1alpha1.org.RemovePermissionFromAllPermissionGroupsRequest.permission:type_name -> api.commons.auth.Permission
+	38, // 0: api.v1alpha1.org.GetPermissionsResponse.permissions:type_name -> api.commons.auth.Permission
+	39, // 1: api.v1alpha1.org.GetPermissionsResponse.p3_permissions:type_name -> api.commons.Permission
+	40, // 2: api.v1alpha1.org.GetPermissionsResponse.user:type_name -> api.commons.org.User
+	41, // 3: api.v1alpha1.org.GetPermissionsResponse.default_app:type_name -> api.commons.OperatorApplications
+	38, // 4: api.v1alpha1.org.GetUserPermissionsResponse.permissions:type_name -> api.commons.auth.Permission
+	42, // 5: api.v1alpha1.org.GetUserPermissionsResponse.labels:type_name -> api.commons.org.Label
+	38, // 6: api.v1alpha1.org.CreatePermissionGroupRequest.permissions:type_name -> api.commons.auth.Permission
+	38, // 7: api.v1alpha1.org.UpdatePermissionGroupRequest.permissions:type_name -> api.commons.auth.Permission
+	43, // 8: api.v1alpha1.org.UpdatePermissionGroupResponse.permission_group:type_name -> api.commons.org.PermissionGroup
+	43, // 9: api.v1alpha1.org.ListPermissionGroupsResponse.permission_groups:type_name -> api.commons.org.PermissionGroup
+	43, // 10: api.v1alpha1.org.ListPermissionGroupsByOrgIdResponse.permission_groups:type_name -> api.commons.org.PermissionGroup
+	43, // 11: api.v1alpha1.org.InitDefaultPermissionGroupsResponse.default_permission_groups:type_name -> api.commons.org.PermissionGroup
+	43, // 12: api.v1alpha1.org.GetAccountOwnerGroupResponse.permission_group:type_name -> api.commons.org.PermissionGroup
+	44, // 13: api.v1alpha1.org.GetLicensesResponse.licenses:type_name -> api.commons.org.License
+	44, // 14: api.v1alpha1.org.GetOrgLicensesResponse.licenses:type_name -> api.commons.org.License
+	38, // 15: api.v1alpha1.org.UpdateLicensesRequest.added_licenses:type_name -> api.commons.auth.Permission
+	38, // 16: api.v1alpha1.org.UpdateLicensesRequest.revoked_licenses:type_name -> api.commons.auth.Permission
+	38, // 17: api.v1alpha1.org.RemovePermissionFromAllPermissionGroupsRequest.permission:type_name -> api.commons.auth.Permission
 	18, // [18:18] is the sub-list for method output_type
 	18, // [18:18] is the sub-list for method input_type
 	18, // [18:18] is the sub-list for extension type_name
@@ -2417,6 +2631,54 @@ func file_api_v1alpha1_org_permissions_proto_init() {
 				return nil
 			}
 		}
+		file_api_v1alpha1_org_permissions_proto_msgTypes[34].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AssignLabelsRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_org_permissions_proto_msgTypes[35].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AssignLabelsResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_org_permissions_proto_msgTypes[36].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RevokeLabelsRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_org_permissions_proto_msgTypes[37].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RevokeLabelsResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -2424,7 +2686,7 @@ func file_api_v1alpha1_org_permissions_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_v1alpha1_org_permissions_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   34,
+			NumMessages:   38,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

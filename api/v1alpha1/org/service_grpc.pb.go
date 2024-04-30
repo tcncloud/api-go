@@ -209,6 +209,8 @@ const (
 	Org_ListPermissionGroupsByOrgId_FullMethodName              = "/api.v1alpha1.org.Org/ListPermissionGroupsByOrgId"
 	Org_AssignUsersPermissionGroup_FullMethodName               = "/api.v1alpha1.org.Org/AssignUsersPermissionGroup"
 	Org_RevokeUsersPermissionGroup_FullMethodName               = "/api.v1alpha1.org.Org/RevokeUsersPermissionGroup"
+	Org_AssignLabels_FullMethodName                             = "/api.v1alpha1.org.Org/AssignLabels"
+	Org_RevokeLabels_FullMethodName                             = "/api.v1alpha1.org.Org/RevokeLabels"
 	Org_AssignAccountOwnerPermissionToUser_FullMethodName       = "/api.v1alpha1.org.Org/AssignAccountOwnerPermissionToUser"
 	Org_RevokeAccountOwnerPermissionFromUser_FullMethodName     = "/api.v1alpha1.org.Org/RevokeAccountOwnerPermissionFromUser"
 	Org_InitDefaultPermissionGroups_FullMethodName              = "/api.v1alpha1.org.Org/InitDefaultPermissionGroups"
@@ -680,6 +682,10 @@ type OrgClient interface {
 	AssignUsersPermissionGroup(ctx context.Context, in *AssignUsersPermissionGroupRequest, opts ...grpc.CallOption) (*AssignUsersPermissionGroupResponse, error)
 	// RevokeUsersPermissionGroup returns a user a permission group.
 	RevokeUsersPermissionGroup(ctx context.Context, in *RevokeUsersPermissionGroupRequest, opts ...grpc.CallOption) (*RevokeUsersPermissionGroupResponse, error)
+	// AssignLabels assigns labels to a given permission group
+	AssignLabels(ctx context.Context, in *AssignLabelsRequest, opts ...grpc.CallOption) (*AssignLabelsResponse, error)
+	// RevokeLabels revokes labels from a given permission group
+	RevokeLabels(ctx context.Context, in *RevokeLabelsRequest, opts ...grpc.CallOption) (*RevokeLabelsResponse, error)
 	// AssignAccountOwnerPermissionToUser returns a user a permission group.
 	AssignAccountOwnerPermissionToUser(ctx context.Context, in *AssignAccountOwnerPermissionToUserRequest, opts ...grpc.CallOption) (*AssignAccountOwnerPermissionToUserResponse, error)
 	// RevokeAccountOwnerPermissionFromUser returns a user a permission group.
@@ -2689,6 +2695,24 @@ func (c *orgClient) RevokeUsersPermissionGroup(ctx context.Context, in *RevokeUs
 	return out, nil
 }
 
+func (c *orgClient) AssignLabels(ctx context.Context, in *AssignLabelsRequest, opts ...grpc.CallOption) (*AssignLabelsResponse, error) {
+	out := new(AssignLabelsResponse)
+	err := c.cc.Invoke(ctx, Org_AssignLabels_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) RevokeLabels(ctx context.Context, in *RevokeLabelsRequest, opts ...grpc.CallOption) (*RevokeLabelsResponse, error) {
+	out := new(RevokeLabelsResponse)
+	err := c.cc.Invoke(ctx, Org_RevokeLabels_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *orgClient) AssignAccountOwnerPermissionToUser(ctx context.Context, in *AssignAccountOwnerPermissionToUserRequest, opts ...grpc.CallOption) (*AssignAccountOwnerPermissionToUserResponse, error) {
 	out := new(AssignAccountOwnerPermissionToUserResponse)
 	err := c.cc.Invoke(ctx, Org_AssignAccountOwnerPermissionToUser_FullMethodName, in, out, opts...)
@@ -3400,6 +3424,10 @@ type OrgServer interface {
 	AssignUsersPermissionGroup(context.Context, *AssignUsersPermissionGroupRequest) (*AssignUsersPermissionGroupResponse, error)
 	// RevokeUsersPermissionGroup returns a user a permission group.
 	RevokeUsersPermissionGroup(context.Context, *RevokeUsersPermissionGroupRequest) (*RevokeUsersPermissionGroupResponse, error)
+	// AssignLabels assigns labels to a given permission group
+	AssignLabels(context.Context, *AssignLabelsRequest) (*AssignLabelsResponse, error)
+	// RevokeLabels revokes labels from a given permission group
+	RevokeLabels(context.Context, *RevokeLabelsRequest) (*RevokeLabelsResponse, error)
 	// AssignAccountOwnerPermissionToUser returns a user a permission group.
 	AssignAccountOwnerPermissionToUser(context.Context, *AssignAccountOwnerPermissionToUserRequest) (*AssignAccountOwnerPermissionToUserResponse, error)
 	// RevokeAccountOwnerPermissionFromUser returns a user a permission group.
@@ -4050,6 +4078,12 @@ func (UnimplementedOrgServer) AssignUsersPermissionGroup(context.Context, *Assig
 }
 func (UnimplementedOrgServer) RevokeUsersPermissionGroup(context.Context, *RevokeUsersPermissionGroupRequest) (*RevokeUsersPermissionGroupResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RevokeUsersPermissionGroup not implemented")
+}
+func (UnimplementedOrgServer) AssignLabels(context.Context, *AssignLabelsRequest) (*AssignLabelsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AssignLabels not implemented")
+}
+func (UnimplementedOrgServer) RevokeLabels(context.Context, *RevokeLabelsRequest) (*RevokeLabelsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RevokeLabels not implemented")
 }
 func (UnimplementedOrgServer) AssignAccountOwnerPermissionToUser(context.Context, *AssignAccountOwnerPermissionToUserRequest) (*AssignAccountOwnerPermissionToUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AssignAccountOwnerPermissionToUser not implemented")
@@ -7601,6 +7635,42 @@ func _Org_RevokeUsersPermissionGroup_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Org_AssignLabels_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AssignLabelsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).AssignLabels(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_AssignLabels_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).AssignLabels(ctx, req.(*AssignLabelsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_RevokeLabels_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RevokeLabelsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).RevokeLabels(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_RevokeLabels_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).RevokeLabels(ctx, req.(*RevokeLabelsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Org_AssignAccountOwnerPermissionToUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AssignAccountOwnerPermissionToUserRequest)
 	if err := dec(in); err != nil {
@@ -8871,6 +8941,14 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RevokeUsersPermissionGroup",
 			Handler:    _Org_RevokeUsersPermissionGroup_Handler,
+		},
+		{
+			MethodName: "AssignLabels",
+			Handler:    _Org_AssignLabels_Handler,
+		},
+		{
+			MethodName: "RevokeLabels",
+			Handler:    _Org_RevokeLabels_Handler,
 		},
 		{
 			MethodName: "AssignAccountOwnerPermissionToUser",
