@@ -48,6 +48,8 @@ const (
 	// AsmServiceListAsmUserDetailsProcedure is the fully-qualified name of the AsmService's
 	// ListAsmUserDetails RPC.
 	AsmServiceListAsmUserDetailsProcedure = "/services.omnichannel.asm.v1alpha1.AsmService/ListAsmUserDetails"
+	// AsmServicePushEventsProcedure is the fully-qualified name of the AsmService's PushEvents RPC.
+	AsmServicePushEventsProcedure = "/services.omnichannel.asm.v1alpha1.AsmService/PushEvents"
 )
 
 // AsmServiceClient is a client for the services.omnichannel.asm.v1alpha1.AsmService service.
@@ -63,6 +65,8 @@ type AsmServiceClient interface {
 	DisableVoice(context.Context, *connect_go.Request[v1alpha1.DisableVoiceRequest]) (*connect_go.Response[v1alpha1.DisableVoiceResponse], error)
 	// List all Sessions for the given user. Contains statistical enrichments for each agent and their conversations.
 	ListAsmUserDetails(context.Context, *connect_go.Request[v1alpha1.ListAsmUserDetailsRequest]) (*connect_go.Response[v1alpha1.ListAsmUserDetailsResponse], error)
+	// puah events push a list of events
+	PushEvents(context.Context, *connect_go.Request[v1alpha1.PushEventsRequest]) (*connect_go.Response[v1alpha1.PushEventResponse], error)
 }
 
 // NewAsmServiceClient constructs a client for the services.omnichannel.asm.v1alpha1.AsmService
@@ -105,6 +109,11 @@ func NewAsmServiceClient(httpClient connect_go.HTTPClient, baseURL string, opts 
 			baseURL+AsmServiceListAsmUserDetailsProcedure,
 			opts...,
 		),
+		pushEvents: connect_go.NewClient[v1alpha1.PushEventsRequest, v1alpha1.PushEventResponse](
+			httpClient,
+			baseURL+AsmServicePushEventsProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -116,6 +125,7 @@ type asmServiceClient struct {
 	enableVoice        *connect_go.Client[v1alpha1.EnableVoiceRequest, v1alpha1.EnableVoiceResponse]
 	disableVoice       *connect_go.Client[v1alpha1.DisableVoiceRequest, v1alpha1.DisableVoiceResponse]
 	listAsmUserDetails *connect_go.Client[v1alpha1.ListAsmUserDetailsRequest, v1alpha1.ListAsmUserDetailsResponse]
+	pushEvents         *connect_go.Client[v1alpha1.PushEventsRequest, v1alpha1.PushEventResponse]
 }
 
 // CreateSession calls services.omnichannel.asm.v1alpha1.AsmService.CreateSession.
@@ -148,6 +158,11 @@ func (c *asmServiceClient) ListAsmUserDetails(ctx context.Context, req *connect_
 	return c.listAsmUserDetails.CallUnary(ctx, req)
 }
 
+// PushEvents calls services.omnichannel.asm.v1alpha1.AsmService.PushEvents.
+func (c *asmServiceClient) PushEvents(ctx context.Context, req *connect_go.Request[v1alpha1.PushEventsRequest]) (*connect_go.Response[v1alpha1.PushEventResponse], error) {
+	return c.pushEvents.CallUnary(ctx, req)
+}
+
 // AsmServiceHandler is an implementation of the services.omnichannel.asm.v1alpha1.AsmService
 // service.
 type AsmServiceHandler interface {
@@ -162,6 +177,8 @@ type AsmServiceHandler interface {
 	DisableVoice(context.Context, *connect_go.Request[v1alpha1.DisableVoiceRequest]) (*connect_go.Response[v1alpha1.DisableVoiceResponse], error)
 	// List all Sessions for the given user. Contains statistical enrichments for each agent and their conversations.
 	ListAsmUserDetails(context.Context, *connect_go.Request[v1alpha1.ListAsmUserDetailsRequest]) (*connect_go.Response[v1alpha1.ListAsmUserDetailsResponse], error)
+	// puah events push a list of events
+	PushEvents(context.Context, *connect_go.Request[v1alpha1.PushEventsRequest]) (*connect_go.Response[v1alpha1.PushEventResponse], error)
 }
 
 // NewAsmServiceHandler builds an HTTP handler from the service implementation. It returns the path
@@ -200,6 +217,11 @@ func NewAsmServiceHandler(svc AsmServiceHandler, opts ...connect_go.HandlerOptio
 		svc.ListAsmUserDetails,
 		opts...,
 	)
+	asmServicePushEventsHandler := connect_go.NewUnaryHandler(
+		AsmServicePushEventsProcedure,
+		svc.PushEvents,
+		opts...,
+	)
 	return "/services.omnichannel.asm.v1alpha1.AsmService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case AsmServiceCreateSessionProcedure:
@@ -214,6 +236,8 @@ func NewAsmServiceHandler(svc AsmServiceHandler, opts ...connect_go.HandlerOptio
 			asmServiceDisableVoiceHandler.ServeHTTP(w, r)
 		case AsmServiceListAsmUserDetailsProcedure:
 			asmServiceListAsmUserDetailsHandler.ServeHTTP(w, r)
+		case AsmServicePushEventsProcedure:
+			asmServicePushEventsHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -245,4 +269,8 @@ func (UnimplementedAsmServiceHandler) DisableVoice(context.Context, *connect_go.
 
 func (UnimplementedAsmServiceHandler) ListAsmUserDetails(context.Context, *connect_go.Request[v1alpha1.ListAsmUserDetailsRequest]) (*connect_go.Response[v1alpha1.ListAsmUserDetailsResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.omnichannel.asm.v1alpha1.AsmService.ListAsmUserDetails is not implemented"))
+}
+
+func (UnimplementedAsmServiceHandler) PushEvents(context.Context, *connect_go.Request[v1alpha1.PushEventsRequest]) (*connect_go.Response[v1alpha1.PushEventResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.omnichannel.asm.v1alpha1.AsmService.PushEvents is not implemented"))
 }

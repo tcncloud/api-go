@@ -25,6 +25,7 @@ const (
 	AsmService_EnableVoice_FullMethodName        = "/services.omnichannel.asm.v1alpha1.AsmService/EnableVoice"
 	AsmService_DisableVoice_FullMethodName       = "/services.omnichannel.asm.v1alpha1.AsmService/DisableVoice"
 	AsmService_ListAsmUserDetails_FullMethodName = "/services.omnichannel.asm.v1alpha1.AsmService/ListAsmUserDetails"
+	AsmService_PushEvents_FullMethodName         = "/services.omnichannel.asm.v1alpha1.AsmService/PushEvents"
 )
 
 // AsmServiceClient is the client API for AsmService service.
@@ -42,6 +43,8 @@ type AsmServiceClient interface {
 	DisableVoice(ctx context.Context, in *DisableVoiceRequest, opts ...grpc.CallOption) (*DisableVoiceResponse, error)
 	// List all Sessions for the given user. Contains statistical enrichments for each agent and their conversations.
 	ListAsmUserDetails(ctx context.Context, in *ListAsmUserDetailsRequest, opts ...grpc.CallOption) (*ListAsmUserDetailsResponse, error)
+	// puah events push a list of events
+	PushEvents(ctx context.Context, in *PushEventsRequest, opts ...grpc.CallOption) (*PushEventResponse, error)
 }
 
 type asmServiceClient struct {
@@ -106,6 +109,15 @@ func (c *asmServiceClient) ListAsmUserDetails(ctx context.Context, in *ListAsmUs
 	return out, nil
 }
 
+func (c *asmServiceClient) PushEvents(ctx context.Context, in *PushEventsRequest, opts ...grpc.CallOption) (*PushEventResponse, error) {
+	out := new(PushEventResponse)
+	err := c.cc.Invoke(ctx, AsmService_PushEvents_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AsmServiceServer is the server API for AsmService service.
 // All implementations must embed UnimplementedAsmServiceServer
 // for forward compatibility
@@ -121,6 +133,8 @@ type AsmServiceServer interface {
 	DisableVoice(context.Context, *DisableVoiceRequest) (*DisableVoiceResponse, error)
 	// List all Sessions for the given user. Contains statistical enrichments for each agent and their conversations.
 	ListAsmUserDetails(context.Context, *ListAsmUserDetailsRequest) (*ListAsmUserDetailsResponse, error)
+	// puah events push a list of events
+	PushEvents(context.Context, *PushEventsRequest) (*PushEventResponse, error)
 	mustEmbedUnimplementedAsmServiceServer()
 }
 
@@ -145,6 +159,9 @@ func (UnimplementedAsmServiceServer) DisableVoice(context.Context, *DisableVoice
 }
 func (UnimplementedAsmServiceServer) ListAsmUserDetails(context.Context, *ListAsmUserDetailsRequest) (*ListAsmUserDetailsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAsmUserDetails not implemented")
+}
+func (UnimplementedAsmServiceServer) PushEvents(context.Context, *PushEventsRequest) (*PushEventResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PushEvents not implemented")
 }
 func (UnimplementedAsmServiceServer) mustEmbedUnimplementedAsmServiceServer() {}
 
@@ -267,6 +284,24 @@ func _AsmService_ListAsmUserDetails_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AsmService_PushEvents_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PushEventsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AsmServiceServer).PushEvents(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AsmService_PushEvents_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AsmServiceServer).PushEvents(ctx, req.(*PushEventsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AsmService_ServiceDesc is the grpc.ServiceDesc for AsmService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -297,6 +332,10 @@ var AsmService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListAsmUserDetails",
 			Handler:    _AsmService_ListAsmUserDetails_Handler,
+		},
+		{
+			MethodName: "PushEvents",
+			Handler:    _AsmService_PushEvents_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
