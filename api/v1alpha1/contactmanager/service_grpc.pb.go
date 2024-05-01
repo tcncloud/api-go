@@ -25,6 +25,7 @@ const (
 	ContactManager_GetKYCEncContactEntry_FullMethodName = "/api.v1alpha1.contactmanager.ContactManager/GetKYCEncContactEntry"
 	ContactManager_GetKYCKeys_FullMethodName            = "/api.v1alpha1.contactmanager.ContactManager/GetKYCKeys"
 	ContactManager_AddContactEntry_FullMethodName       = "/api.v1alpha1.contactmanager.ContactManager/AddContactEntry"
+	ContactManager_EditContactEntry_FullMethodName      = "/api.v1alpha1.contactmanager.ContactManager/EditContactEntry"
 )
 
 // ContactManagerClient is the client API for ContactManager service.
@@ -39,6 +40,9 @@ type ContactManagerClient interface {
 	// *
 	// Adds a new contact entry based on the provided request.
 	AddContactEntry(ctx context.Context, in *AddContactEntryRequest, opts ...grpc.CallOption) (*AddContactEntryResponse, error)
+	// *
+	// Edits the fields of an existing contact entry...
+	EditContactEntry(ctx context.Context, in *EditContactEntryRequest, opts ...grpc.CallOption) (*EditContactEntryResponse, error)
 }
 
 type contactManagerClient struct {
@@ -103,6 +107,15 @@ func (c *contactManagerClient) AddContactEntry(ctx context.Context, in *AddConta
 	return out, nil
 }
 
+func (c *contactManagerClient) EditContactEntry(ctx context.Context, in *EditContactEntryRequest, opts ...grpc.CallOption) (*EditContactEntryResponse, error) {
+	out := new(EditContactEntryResponse)
+	err := c.cc.Invoke(ctx, ContactManager_EditContactEntry_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ContactManagerServer is the server API for ContactManager service.
 // All implementations must embed UnimplementedContactManagerServer
 // for forward compatibility
@@ -115,6 +128,9 @@ type ContactManagerServer interface {
 	// *
 	// Adds a new contact entry based on the provided request.
 	AddContactEntry(context.Context, *AddContactEntryRequest) (*AddContactEntryResponse, error)
+	// *
+	// Edits the fields of an existing contact entry...
+	EditContactEntry(context.Context, *EditContactEntryRequest) (*EditContactEntryResponse, error)
 	mustEmbedUnimplementedContactManagerServer()
 }
 
@@ -139,6 +155,9 @@ func (UnimplementedContactManagerServer) GetKYCKeys(context.Context, *GetKYCKeys
 }
 func (UnimplementedContactManagerServer) AddContactEntry(context.Context, *AddContactEntryRequest) (*AddContactEntryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddContactEntry not implemented")
+}
+func (UnimplementedContactManagerServer) EditContactEntry(context.Context, *EditContactEntryRequest) (*EditContactEntryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EditContactEntry not implemented")
 }
 func (UnimplementedContactManagerServer) mustEmbedUnimplementedContactManagerServer() {}
 
@@ -261,6 +280,24 @@ func _ContactManager_AddContactEntry_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ContactManager_EditContactEntry_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EditContactEntryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ContactManagerServer).EditContactEntry(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ContactManager_EditContactEntry_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ContactManagerServer).EditContactEntry(ctx, req.(*EditContactEntryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ContactManager_ServiceDesc is the grpc.ServiceDesc for ContactManager service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -291,6 +328,10 @@ var ContactManager_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AddContactEntry",
 			Handler:    _ContactManager_AddContactEntry_Handler,
+		},
+		{
+			MethodName: "EditContactEntry",
+			Handler:    _ContactManager_EditContactEntry_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
