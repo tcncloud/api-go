@@ -50,6 +50,9 @@ const (
 	// LabelsServiceAttachLabelProcedure is the fully-qualified name of the LabelsService's AttachLabel
 	// RPC.
 	LabelsServiceAttachLabelProcedure = "/api.v1alpha1.org.labels.LabelsService/AttachLabel"
+	// LabelsServiceDetachLabelProcedure is the fully-qualified name of the LabelsService's DetachLabel
+	// RPC.
+	LabelsServiceDetachLabelProcedure = "/api.v1alpha1.org.labels.LabelsService/DetachLabel"
 	// LabelsServiceGetLabeledEntityMapProcedure is the fully-qualified name of the LabelsService's
 	// GetLabeledEntityMap RPC.
 	LabelsServiceGetLabeledEntityMapProcedure = "/api.v1alpha1.org.labels.LabelsService/GetLabeledEntityMap"
@@ -69,6 +72,8 @@ type LabelsServiceClient interface {
 	DeleteLabel(context.Context, *connect_go.Request[labels.DeleteLabelRequest]) (*connect_go.Response[labels.DeleteLabelResponse], error)
 	// AttachLabel attaches a label to a given entity type
 	AttachLabel(context.Context, *connect_go.Request[labels.AttachLabelRequest]) (*connect_go.Response[labels.AttachLabelResponse], error)
+	// DetachLabel detaches a label from an entity based on an entity type
+	DetachLabel(context.Context, *connect_go.Request[labels.DetachLabelRequest]) (*connect_go.Response[labels.DetachLabelResponse], error)
 	// GetLabeledEntityMap gives back a map of entity Id to attached labels. The Entity type is specified on the request
 	GetLabeledEntityMap(context.Context, *connect_go.Request[labels.GetLabeledEntityMapRequest]) (*connect_go.Response[labels.GetLabeledEntityMapResponse], error)
 }
@@ -113,6 +118,11 @@ func NewLabelsServiceClient(httpClient connect_go.HTTPClient, baseURL string, op
 			baseURL+LabelsServiceAttachLabelProcedure,
 			opts...,
 		),
+		detachLabel: connect_go.NewClient[labels.DetachLabelRequest, labels.DetachLabelResponse](
+			httpClient,
+			baseURL+LabelsServiceDetachLabelProcedure,
+			opts...,
+		),
 		getLabeledEntityMap: connect_go.NewClient[labels.GetLabeledEntityMapRequest, labels.GetLabeledEntityMapResponse](
 			httpClient,
 			baseURL+LabelsServiceGetLabeledEntityMapProcedure,
@@ -129,6 +139,7 @@ type labelsServiceClient struct {
 	listLabels          *connect_go.Client[labels.ListLabelsRequest, labels.ListLabelsResponse]
 	deleteLabel         *connect_go.Client[labels.DeleteLabelRequest, labels.DeleteLabelResponse]
 	attachLabel         *connect_go.Client[labels.AttachLabelRequest, labels.AttachLabelResponse]
+	detachLabel         *connect_go.Client[labels.DetachLabelRequest, labels.DetachLabelResponse]
 	getLabeledEntityMap *connect_go.Client[labels.GetLabeledEntityMapRequest, labels.GetLabeledEntityMapResponse]
 }
 
@@ -162,6 +173,11 @@ func (c *labelsServiceClient) AttachLabel(ctx context.Context, req *connect_go.R
 	return c.attachLabel.CallUnary(ctx, req)
 }
 
+// DetachLabel calls api.v1alpha1.org.labels.LabelsService.DetachLabel.
+func (c *labelsServiceClient) DetachLabel(ctx context.Context, req *connect_go.Request[labels.DetachLabelRequest]) (*connect_go.Response[labels.DetachLabelResponse], error) {
+	return c.detachLabel.CallUnary(ctx, req)
+}
+
 // GetLabeledEntityMap calls api.v1alpha1.org.labels.LabelsService.GetLabeledEntityMap.
 func (c *labelsServiceClient) GetLabeledEntityMap(ctx context.Context, req *connect_go.Request[labels.GetLabeledEntityMapRequest]) (*connect_go.Response[labels.GetLabeledEntityMapResponse], error) {
 	return c.getLabeledEntityMap.CallUnary(ctx, req)
@@ -181,6 +197,8 @@ type LabelsServiceHandler interface {
 	DeleteLabel(context.Context, *connect_go.Request[labels.DeleteLabelRequest]) (*connect_go.Response[labels.DeleteLabelResponse], error)
 	// AttachLabel attaches a label to a given entity type
 	AttachLabel(context.Context, *connect_go.Request[labels.AttachLabelRequest]) (*connect_go.Response[labels.AttachLabelResponse], error)
+	// DetachLabel detaches a label from an entity based on an entity type
+	DetachLabel(context.Context, *connect_go.Request[labels.DetachLabelRequest]) (*connect_go.Response[labels.DetachLabelResponse], error)
 	// GetLabeledEntityMap gives back a map of entity Id to attached labels. The Entity type is specified on the request
 	GetLabeledEntityMap(context.Context, *connect_go.Request[labels.GetLabeledEntityMapRequest]) (*connect_go.Response[labels.GetLabeledEntityMapResponse], error)
 }
@@ -221,6 +239,11 @@ func NewLabelsServiceHandler(svc LabelsServiceHandler, opts ...connect_go.Handle
 		svc.AttachLabel,
 		opts...,
 	)
+	labelsServiceDetachLabelHandler := connect_go.NewUnaryHandler(
+		LabelsServiceDetachLabelProcedure,
+		svc.DetachLabel,
+		opts...,
+	)
 	labelsServiceGetLabeledEntityMapHandler := connect_go.NewUnaryHandler(
 		LabelsServiceGetLabeledEntityMapProcedure,
 		svc.GetLabeledEntityMap,
@@ -240,6 +263,8 @@ func NewLabelsServiceHandler(svc LabelsServiceHandler, opts ...connect_go.Handle
 			labelsServiceDeleteLabelHandler.ServeHTTP(w, r)
 		case LabelsServiceAttachLabelProcedure:
 			labelsServiceAttachLabelHandler.ServeHTTP(w, r)
+		case LabelsServiceDetachLabelProcedure:
+			labelsServiceDetachLabelHandler.ServeHTTP(w, r)
 		case LabelsServiceGetLabeledEntityMapProcedure:
 			labelsServiceGetLabeledEntityMapHandler.ServeHTTP(w, r)
 		default:
@@ -273,6 +298,10 @@ func (UnimplementedLabelsServiceHandler) DeleteLabel(context.Context, *connect_g
 
 func (UnimplementedLabelsServiceHandler) AttachLabel(context.Context, *connect_go.Request[labels.AttachLabelRequest]) (*connect_go.Response[labels.AttachLabelResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.labels.LabelsService.AttachLabel is not implemented"))
+}
+
+func (UnimplementedLabelsServiceHandler) DetachLabel(context.Context, *connect_go.Request[labels.DetachLabelRequest]) (*connect_go.Response[labels.DetachLabelResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.labels.LabelsService.DetachLabel is not implemented"))
 }
 
 func (UnimplementedLabelsServiceHandler) GetLabeledEntityMap(context.Context, *connect_go.Request[labels.GetLabeledEntityMapRequest]) (*connect_go.Response[labels.GetLabeledEntityMapResponse], error) {

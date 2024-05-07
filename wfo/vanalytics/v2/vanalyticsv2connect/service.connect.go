@@ -33,12 +33,32 @@ const (
 // reflection-formatted method names, remove the leading slash and convert the remaining slash to a
 // period.
 const (
+	// VanalyticsAuditProcedure is the fully-qualified name of the Vanalytics's Audit RPC.
+	VanalyticsAuditProcedure = "/wfo.vanalytics.v2.Vanalytics/Audit"
+	// VanalyticsGetRecordingUrlProcedure is the fully-qualified name of the Vanalytics's
+	// GetRecordingUrl RPC.
+	VanalyticsGetRecordingUrlProcedure = "/wfo.vanalytics.v2.Vanalytics/GetRecordingUrl"
+	// VanalyticsListBillingSpanProcedure is the fully-qualified name of the Vanalytics's
+	// ListBillingSpan RPC.
+	VanalyticsListBillingSpanProcedure = "/wfo.vanalytics.v2.Vanalytics/ListBillingSpan"
 	// VanalyticsSearchTranscriptsProcedure is the fully-qualified name of the Vanalytics's
 	// SearchTranscripts RPC.
 	VanalyticsSearchTranscriptsProcedure = "/wfo.vanalytics.v2.Vanalytics/SearchTranscripts"
 	// VanalyticsBulkDeleteTranscriptsProcedure is the fully-qualified name of the Vanalytics's
 	// BulkDeleteTranscripts RPC.
 	VanalyticsBulkDeleteTranscriptsProcedure = "/wfo.vanalytics.v2.Vanalytics/BulkDeleteTranscripts"
+	// VanalyticsBulkRestoreTranscriptsProcedure is the fully-qualified name of the Vanalytics's
+	// BulkRestoreTranscripts RPC.
+	VanalyticsBulkRestoreTranscriptsProcedure = "/wfo.vanalytics.v2.Vanalytics/BulkRestoreTranscripts"
+	// VanalyticsListTranscriptGroupNamesProcedure is the fully-qualified name of the Vanalytics's
+	// ListTranscriptGroupNames RPC.
+	VanalyticsListTranscriptGroupNamesProcedure = "/wfo.vanalytics.v2.Vanalytics/ListTranscriptGroupNames"
+	// VanalyticsListAgentResponseValuesProcedure is the fully-qualified name of the Vanalytics's
+	// ListAgentResponseValues RPC.
+	VanalyticsListAgentResponseValuesProcedure = "/wfo.vanalytics.v2.Vanalytics/ListAgentResponseValues"
+	// VanalyticsGetTranscriptSummaryProcedure is the fully-qualified name of the Vanalytics's
+	// GetTranscriptSummary RPC.
+	VanalyticsGetTranscriptSummaryProcedure = "/wfo.vanalytics.v2.Vanalytics/GetTranscriptSummary"
 	// VanalyticsCreateFilterProcedure is the fully-qualified name of the Vanalytics's CreateFilter RPC.
 	VanalyticsCreateFilterProcedure = "/wfo.vanalytics.v2.Vanalytics/CreateFilter"
 	// VanalyticsListFiltersProcedure is the fully-qualified name of the Vanalytics's ListFilters RPC.
@@ -55,16 +75,72 @@ const (
 	// VanalyticsListFlagFiltersProcedure is the fully-qualified name of the Vanalytics's
 	// ListFlagFilters RPC.
 	VanalyticsListFlagFiltersProcedure = "/wfo.vanalytics.v2.Vanalytics/ListFlagFilters"
+	// VanalyticsGetFlagProcedure is the fully-qualified name of the Vanalytics's GetFlag RPC.
+	VanalyticsGetFlagProcedure = "/wfo.vanalytics.v2.Vanalytics/GetFlag"
+	// VanalyticsCreateFlagProcedure is the fully-qualified name of the Vanalytics's CreateFlag RPC.
+	VanalyticsCreateFlagProcedure = "/wfo.vanalytics.v2.Vanalytics/CreateFlag"
+	// VanalyticsListFlagsProcedure is the fully-qualified name of the Vanalytics's ListFlags RPC.
+	VanalyticsListFlagsProcedure = "/wfo.vanalytics.v2.Vanalytics/ListFlags"
+	// VanalyticsUpdateFlagProcedure is the fully-qualified name of the Vanalytics's UpdateFlag RPC.
+	VanalyticsUpdateFlagProcedure = "/wfo.vanalytics.v2.Vanalytics/UpdateFlag"
+	// VanalyticsDeleteFlagProcedure is the fully-qualified name of the Vanalytics's DeleteFlag RPC.
+	VanalyticsDeleteFlagProcedure = "/wfo.vanalytics.v2.Vanalytics/DeleteFlag"
+	// VanalyticsCreateFlagReviewProcedure is the fully-qualified name of the Vanalytics's
+	// CreateFlagReview RPC.
+	VanalyticsCreateFlagReviewProcedure = "/wfo.vanalytics.v2.Vanalytics/CreateFlagReview"
+	// VanalyticsBulkCreateFlagReviewProcedure is the fully-qualified name of the Vanalytics's
+	// BulkCreateFlagReview RPC.
+	VanalyticsBulkCreateFlagReviewProcedure = "/wfo.vanalytics.v2.Vanalytics/BulkCreateFlagReview"
+	// VanalyticsListFlagReviewsProcedure is the fully-qualified name of the Vanalytics's
+	// ListFlagReviews RPC.
+	VanalyticsListFlagReviewsProcedure = "/wfo.vanalytics.v2.Vanalytics/ListFlagReviews"
+	// VanalyticsCreateFlagTranscriptProcedure is the fully-qualified name of the Vanalytics's
+	// CreateFlagTranscript RPC.
+	VanalyticsCreateFlagTranscriptProcedure = "/wfo.vanalytics.v2.Vanalytics/CreateFlagTranscript"
+	// VanalyticsListFlagSnapshotsProcedure is the fully-qualified name of the Vanalytics's
+	// ListFlagSnapshots RPC.
+	VanalyticsListFlagSnapshotsProcedure = "/wfo.vanalytics.v2.Vanalytics/ListFlagSnapshots"
+	// VanalyticsCreateCorrectionProcedure is the fully-qualified name of the Vanalytics's
+	// CreateCorrection RPC.
+	VanalyticsCreateCorrectionProcedure = "/wfo.vanalytics.v2.Vanalytics/CreateCorrection"
+	// VanalyticsGetCorrectionProcedure is the fully-qualified name of the Vanalytics's GetCorrection
+	// RPC.
+	VanalyticsGetCorrectionProcedure = "/wfo.vanalytics.v2.Vanalytics/GetCorrection"
+	// VanalyticsDeleteCorrectionProcedure is the fully-qualified name of the Vanalytics's
+	// DeleteCorrection RPC.
+	VanalyticsDeleteCorrectionProcedure = "/wfo.vanalytics.v2.Vanalytics/DeleteCorrection"
+	// VanalyticsListCorrectionsProcedure is the fully-qualified name of the Vanalytics's
+	// ListCorrections RPC.
+	VanalyticsListCorrectionsProcedure = "/wfo.vanalytics.v2.Vanalytics/ListCorrections"
+	// VanalyticsUpdateCorrectionProcedure is the fully-qualified name of the Vanalytics's
+	// UpdateCorrection RPC.
+	VanalyticsUpdateCorrectionProcedure = "/wfo.vanalytics.v2.Vanalytics/UpdateCorrection"
 )
 
 // VanalyticsClient is a client for the wfo.vanalytics.v2.Vanalytics service.
 type VanalyticsClient interface {
+	// Audit audits the used transcription audio time for a client. The window
+	// of time to audit can be widened or narrowed using the request since and
+	// until fields.
+	Audit(context.Context, *connect_go.Request[v2.AuditRequest]) (*connect_go.Response[v2.AuditResponse], error)
+	// GetRecordingUrl gets a signed url to download a transcript recording.
+	GetRecordingUrl(context.Context, *connect_go.Request[v2.GetRecordingUrlRequest]) (*connect_go.Response[v2.GetRecordingUrlResponse], error)
+	// ListBillingSpan lists billing spans.
+	ListBillingSpan(context.Context, *connect_go.Request[v2.ListBillingSpanRequest]) (*connect_go.Response[v2.ListBillingSpanResponse], error)
 	// SearchTranscripts searches transcripts by search criteria. The search response
 	// contains one page of transcript hits. Traversing the paginated hits is
 	// achieved by making use of the given page token.
 	SearchTranscripts(context.Context, *connect_go.Request[v2.SearchTranscriptsRequest]) (*connect_go.Response[v2.SearchTranscriptsResponse], error)
 	// BulkDeleteTranscripts bulk deletes transcripts matching the provided query.
 	BulkDeleteTranscripts(context.Context, *connect_go.Request[v2.BulkDeleteTranscriptsRequest]) (*connect_go.Response[v2.BulkDeleteTranscriptsResponse], error)
+	// BulkRestoreTranscripts bulk restores transcripts matching the provided query.
+	BulkRestoreTranscripts(context.Context, *connect_go.Request[v2.BulkRestoreTranscriptsRequest]) (*connect_go.Response[v2.BulkRestoreTranscriptsResponse], error)
+	// ListTranscriptGroupNames lists transcript group names.
+	ListTranscriptGroupNames(context.Context, *connect_go.Request[v2.ListTranscriptGroupNamesRequest]) (*connect_go.Response[v2.ListTranscriptGroupNamesResponse], error)
+	// ListAgentResponseValues lists transcript agent response values.
+	ListAgentResponseValues(context.Context, *connect_go.Request[v2.ListAgentResponseValuesRequest]) (*connect_go.Response[v2.ListAgentResponseValuesResponse], error)
+	// GetTranscriptSummary gets a transcript summary for a provided transcript.
+	GetTranscriptSummary(context.Context, *connect_go.Request[v2.GetTranscriptSummaryRequest]) (*connect_go.Response[v2.GetTranscriptSummaryResponse], error)
 	// CreateFilter creates a new filter. The filter contains a transcript query
 	// to filter transcripts.
 	CreateFilter(context.Context, *connect_go.Request[v2.CreateFilterRequest]) (*connect_go.Response[v2.Filter], error)
@@ -80,6 +156,36 @@ type VanalyticsClient interface {
 	ListFlagTranscriptFilters(context.Context, *connect_go.Request[v2.ListFlagTranscriptFiltersRequest]) (*connect_go.Response[v2.ListFlagTranscriptFiltersResponse], error)
 	// ListFlagFilters lists flag filter associations.
 	ListFlagFilters(context.Context, *connect_go.Request[v2.ListFlagFiltersRequest]) (*connect_go.Response[v2.ListFlagFiltersResponse], error)
+	// GetFlag gets a flag.
+	GetFlag(context.Context, *connect_go.Request[v2.GetFlagRequest]) (*connect_go.Response[v2.Flag], error)
+	// CreateFlag creates a new flag.
+	CreateFlag(context.Context, *connect_go.Request[v2.CreateFlagRequest]) (*connect_go.Response[v2.Flag], error)
+	// ListFlags lists flags in an organization.
+	ListFlags(context.Context, *connect_go.Request[v2.ListFlagsRequest]) (*connect_go.Response[v2.ListFlagsResponse], error)
+	// UpdateFlag updates a flag.
+	UpdateFlag(context.Context, *connect_go.Request[v2.UpdateFlagRequest]) (*connect_go.Response[v2.Flag], error)
+	// DeleteFlag deletes the flag identified by the given flag_sid.
+	DeleteFlag(context.Context, *connect_go.Request[v2.DeleteFlagRequest]) (*connect_go.Response[v2.DeleteFlagResponse], error)
+	// CreateFlagReview creates a flag review.
+	CreateFlagReview(context.Context, *connect_go.Request[v2.CreateFlagReviewRequest]) (*connect_go.Response[v2.FlagReview], error)
+	// BulkCreateFlagReview creates flag reviews.
+	BulkCreateFlagReview(context.Context, *connect_go.Request[v2.BulkCreateFlagReviewRequest]) (*connect_go.Response[v2.BulkCreateFlagReviewResponse], error)
+	// ListFlagReviews lists reviews in an organization.
+	ListFlagReviews(context.Context, *connect_go.Request[v2.ListFlagReviewsRequest]) (*connect_go.Response[v2.ListFlagReviewsResponse], error)
+	// CreateFlagTranscript creates a flag transcript.
+	CreateFlagTranscript(context.Context, *connect_go.Request[v2.CreateFlagTranscriptRequest]) (*connect_go.Response[v2.CreateFlagTranscriptResponse], error)
+	// ListFlagSnapshots lists flag snapshots in an organization.
+	ListFlagSnapshots(context.Context, *connect_go.Request[v2.ListFlagSnapshotsRequest]) (*connect_go.Response[v2.ListFlagSnapshotsResponse], error)
+	// CreateCorrection creates a correction.
+	CreateCorrection(context.Context, *connect_go.Request[v2.CreateCorrectionRequest]) (*connect_go.Response[v2.CreateCorrectionResponse], error)
+	// GetCorrection gets a correction.
+	GetCorrection(context.Context, *connect_go.Request[v2.GetCorrectionRequest]) (*connect_go.Response[v2.Correction], error)
+	// DeleteCorrection deletes a correction.
+	DeleteCorrection(context.Context, *connect_go.Request[v2.DeleteCorrectionRequest]) (*connect_go.Response[v2.DeleteCorrectionResponse], error)
+	// ListCorrections lists corrections.
+	ListCorrections(context.Context, *connect_go.Request[v2.ListCorrectionsRequest]) (*connect_go.Response[v2.ListCorrectionsResponse], error)
+	// UpdateCorrection updates a correction.
+	UpdateCorrection(context.Context, *connect_go.Request[v2.UpdateCorrectionRequest]) (*connect_go.Response[v2.UpdateCorrectionResponse], error)
 }
 
 // NewVanalyticsClient constructs a client for the wfo.vanalytics.v2.Vanalytics service. By default,
@@ -92,6 +198,21 @@ type VanalyticsClient interface {
 func NewVanalyticsClient(httpClient connect_go.HTTPClient, baseURL string, opts ...connect_go.ClientOption) VanalyticsClient {
 	baseURL = strings.TrimRight(baseURL, "/")
 	return &vanalyticsClient{
+		audit: connect_go.NewClient[v2.AuditRequest, v2.AuditResponse](
+			httpClient,
+			baseURL+VanalyticsAuditProcedure,
+			opts...,
+		),
+		getRecordingUrl: connect_go.NewClient[v2.GetRecordingUrlRequest, v2.GetRecordingUrlResponse](
+			httpClient,
+			baseURL+VanalyticsGetRecordingUrlProcedure,
+			opts...,
+		),
+		listBillingSpan: connect_go.NewClient[v2.ListBillingSpanRequest, v2.ListBillingSpanResponse](
+			httpClient,
+			baseURL+VanalyticsListBillingSpanProcedure,
+			opts...,
+		),
 		searchTranscripts: connect_go.NewClient[v2.SearchTranscriptsRequest, v2.SearchTranscriptsResponse](
 			httpClient,
 			baseURL+VanalyticsSearchTranscriptsProcedure,
@@ -100,6 +221,26 @@ func NewVanalyticsClient(httpClient connect_go.HTTPClient, baseURL string, opts 
 		bulkDeleteTranscripts: connect_go.NewClient[v2.BulkDeleteTranscriptsRequest, v2.BulkDeleteTranscriptsResponse](
 			httpClient,
 			baseURL+VanalyticsBulkDeleteTranscriptsProcedure,
+			opts...,
+		),
+		bulkRestoreTranscripts: connect_go.NewClient[v2.BulkRestoreTranscriptsRequest, v2.BulkRestoreTranscriptsResponse](
+			httpClient,
+			baseURL+VanalyticsBulkRestoreTranscriptsProcedure,
+			opts...,
+		),
+		listTranscriptGroupNames: connect_go.NewClient[v2.ListTranscriptGroupNamesRequest, v2.ListTranscriptGroupNamesResponse](
+			httpClient,
+			baseURL+VanalyticsListTranscriptGroupNamesProcedure,
+			opts...,
+		),
+		listAgentResponseValues: connect_go.NewClient[v2.ListAgentResponseValuesRequest, v2.ListAgentResponseValuesResponse](
+			httpClient,
+			baseURL+VanalyticsListAgentResponseValuesProcedure,
+			opts...,
+		),
+		getTranscriptSummary: connect_go.NewClient[v2.GetTranscriptSummaryRequest, v2.GetTranscriptSummaryResponse](
+			httpClient,
+			baseURL+VanalyticsGetTranscriptSummaryProcedure,
 			opts...,
 		),
 		createFilter: connect_go.NewClient[v2.CreateFilterRequest, v2.Filter](
@@ -137,13 +278,95 @@ func NewVanalyticsClient(httpClient connect_go.HTTPClient, baseURL string, opts 
 			baseURL+VanalyticsListFlagFiltersProcedure,
 			opts...,
 		),
+		getFlag: connect_go.NewClient[v2.GetFlagRequest, v2.Flag](
+			httpClient,
+			baseURL+VanalyticsGetFlagProcedure,
+			opts...,
+		),
+		createFlag: connect_go.NewClient[v2.CreateFlagRequest, v2.Flag](
+			httpClient,
+			baseURL+VanalyticsCreateFlagProcedure,
+			opts...,
+		),
+		listFlags: connect_go.NewClient[v2.ListFlagsRequest, v2.ListFlagsResponse](
+			httpClient,
+			baseURL+VanalyticsListFlagsProcedure,
+			opts...,
+		),
+		updateFlag: connect_go.NewClient[v2.UpdateFlagRequest, v2.Flag](
+			httpClient,
+			baseURL+VanalyticsUpdateFlagProcedure,
+			opts...,
+		),
+		deleteFlag: connect_go.NewClient[v2.DeleteFlagRequest, v2.DeleteFlagResponse](
+			httpClient,
+			baseURL+VanalyticsDeleteFlagProcedure,
+			opts...,
+		),
+		createFlagReview: connect_go.NewClient[v2.CreateFlagReviewRequest, v2.FlagReview](
+			httpClient,
+			baseURL+VanalyticsCreateFlagReviewProcedure,
+			opts...,
+		),
+		bulkCreateFlagReview: connect_go.NewClient[v2.BulkCreateFlagReviewRequest, v2.BulkCreateFlagReviewResponse](
+			httpClient,
+			baseURL+VanalyticsBulkCreateFlagReviewProcedure,
+			opts...,
+		),
+		listFlagReviews: connect_go.NewClient[v2.ListFlagReviewsRequest, v2.ListFlagReviewsResponse](
+			httpClient,
+			baseURL+VanalyticsListFlagReviewsProcedure,
+			opts...,
+		),
+		createFlagTranscript: connect_go.NewClient[v2.CreateFlagTranscriptRequest, v2.CreateFlagTranscriptResponse](
+			httpClient,
+			baseURL+VanalyticsCreateFlagTranscriptProcedure,
+			opts...,
+		),
+		listFlagSnapshots: connect_go.NewClient[v2.ListFlagSnapshotsRequest, v2.ListFlagSnapshotsResponse](
+			httpClient,
+			baseURL+VanalyticsListFlagSnapshotsProcedure,
+			opts...,
+		),
+		createCorrection: connect_go.NewClient[v2.CreateCorrectionRequest, v2.CreateCorrectionResponse](
+			httpClient,
+			baseURL+VanalyticsCreateCorrectionProcedure,
+			opts...,
+		),
+		getCorrection: connect_go.NewClient[v2.GetCorrectionRequest, v2.Correction](
+			httpClient,
+			baseURL+VanalyticsGetCorrectionProcedure,
+			opts...,
+		),
+		deleteCorrection: connect_go.NewClient[v2.DeleteCorrectionRequest, v2.DeleteCorrectionResponse](
+			httpClient,
+			baseURL+VanalyticsDeleteCorrectionProcedure,
+			opts...,
+		),
+		listCorrections: connect_go.NewClient[v2.ListCorrectionsRequest, v2.ListCorrectionsResponse](
+			httpClient,
+			baseURL+VanalyticsListCorrectionsProcedure,
+			opts...,
+		),
+		updateCorrection: connect_go.NewClient[v2.UpdateCorrectionRequest, v2.UpdateCorrectionResponse](
+			httpClient,
+			baseURL+VanalyticsUpdateCorrectionProcedure,
+			opts...,
+		),
 	}
 }
 
 // vanalyticsClient implements VanalyticsClient.
 type vanalyticsClient struct {
+	audit                     *connect_go.Client[v2.AuditRequest, v2.AuditResponse]
+	getRecordingUrl           *connect_go.Client[v2.GetRecordingUrlRequest, v2.GetRecordingUrlResponse]
+	listBillingSpan           *connect_go.Client[v2.ListBillingSpanRequest, v2.ListBillingSpanResponse]
 	searchTranscripts         *connect_go.Client[v2.SearchTranscriptsRequest, v2.SearchTranscriptsResponse]
 	bulkDeleteTranscripts     *connect_go.Client[v2.BulkDeleteTranscriptsRequest, v2.BulkDeleteTranscriptsResponse]
+	bulkRestoreTranscripts    *connect_go.Client[v2.BulkRestoreTranscriptsRequest, v2.BulkRestoreTranscriptsResponse]
+	listTranscriptGroupNames  *connect_go.Client[v2.ListTranscriptGroupNamesRequest, v2.ListTranscriptGroupNamesResponse]
+	listAgentResponseValues   *connect_go.Client[v2.ListAgentResponseValuesRequest, v2.ListAgentResponseValuesResponse]
+	getTranscriptSummary      *connect_go.Client[v2.GetTranscriptSummaryRequest, v2.GetTranscriptSummaryResponse]
 	createFilter              *connect_go.Client[v2.CreateFilterRequest, v2.Filter]
 	listFilters               *connect_go.Client[v2.ListFiltersRequest, v2.ListFiltersResponse]
 	updateFilter              *connect_go.Client[v2.UpdateFilterRequest, v2.Filter]
@@ -151,6 +374,36 @@ type vanalyticsClient struct {
 	getFilter                 *connect_go.Client[v2.GetFilterRequest, v2.Filter]
 	listFlagTranscriptFilters *connect_go.Client[v2.ListFlagTranscriptFiltersRequest, v2.ListFlagTranscriptFiltersResponse]
 	listFlagFilters           *connect_go.Client[v2.ListFlagFiltersRequest, v2.ListFlagFiltersResponse]
+	getFlag                   *connect_go.Client[v2.GetFlagRequest, v2.Flag]
+	createFlag                *connect_go.Client[v2.CreateFlagRequest, v2.Flag]
+	listFlags                 *connect_go.Client[v2.ListFlagsRequest, v2.ListFlagsResponse]
+	updateFlag                *connect_go.Client[v2.UpdateFlagRequest, v2.Flag]
+	deleteFlag                *connect_go.Client[v2.DeleteFlagRequest, v2.DeleteFlagResponse]
+	createFlagReview          *connect_go.Client[v2.CreateFlagReviewRequest, v2.FlagReview]
+	bulkCreateFlagReview      *connect_go.Client[v2.BulkCreateFlagReviewRequest, v2.BulkCreateFlagReviewResponse]
+	listFlagReviews           *connect_go.Client[v2.ListFlagReviewsRequest, v2.ListFlagReviewsResponse]
+	createFlagTranscript      *connect_go.Client[v2.CreateFlagTranscriptRequest, v2.CreateFlagTranscriptResponse]
+	listFlagSnapshots         *connect_go.Client[v2.ListFlagSnapshotsRequest, v2.ListFlagSnapshotsResponse]
+	createCorrection          *connect_go.Client[v2.CreateCorrectionRequest, v2.CreateCorrectionResponse]
+	getCorrection             *connect_go.Client[v2.GetCorrectionRequest, v2.Correction]
+	deleteCorrection          *connect_go.Client[v2.DeleteCorrectionRequest, v2.DeleteCorrectionResponse]
+	listCorrections           *connect_go.Client[v2.ListCorrectionsRequest, v2.ListCorrectionsResponse]
+	updateCorrection          *connect_go.Client[v2.UpdateCorrectionRequest, v2.UpdateCorrectionResponse]
+}
+
+// Audit calls wfo.vanalytics.v2.Vanalytics.Audit.
+func (c *vanalyticsClient) Audit(ctx context.Context, req *connect_go.Request[v2.AuditRequest]) (*connect_go.Response[v2.AuditResponse], error) {
+	return c.audit.CallUnary(ctx, req)
+}
+
+// GetRecordingUrl calls wfo.vanalytics.v2.Vanalytics.GetRecordingUrl.
+func (c *vanalyticsClient) GetRecordingUrl(ctx context.Context, req *connect_go.Request[v2.GetRecordingUrlRequest]) (*connect_go.Response[v2.GetRecordingUrlResponse], error) {
+	return c.getRecordingUrl.CallUnary(ctx, req)
+}
+
+// ListBillingSpan calls wfo.vanalytics.v2.Vanalytics.ListBillingSpan.
+func (c *vanalyticsClient) ListBillingSpan(ctx context.Context, req *connect_go.Request[v2.ListBillingSpanRequest]) (*connect_go.Response[v2.ListBillingSpanResponse], error) {
+	return c.listBillingSpan.CallUnary(ctx, req)
 }
 
 // SearchTranscripts calls wfo.vanalytics.v2.Vanalytics.SearchTranscripts.
@@ -161,6 +414,26 @@ func (c *vanalyticsClient) SearchTranscripts(ctx context.Context, req *connect_g
 // BulkDeleteTranscripts calls wfo.vanalytics.v2.Vanalytics.BulkDeleteTranscripts.
 func (c *vanalyticsClient) BulkDeleteTranscripts(ctx context.Context, req *connect_go.Request[v2.BulkDeleteTranscriptsRequest]) (*connect_go.Response[v2.BulkDeleteTranscriptsResponse], error) {
 	return c.bulkDeleteTranscripts.CallUnary(ctx, req)
+}
+
+// BulkRestoreTranscripts calls wfo.vanalytics.v2.Vanalytics.BulkRestoreTranscripts.
+func (c *vanalyticsClient) BulkRestoreTranscripts(ctx context.Context, req *connect_go.Request[v2.BulkRestoreTranscriptsRequest]) (*connect_go.Response[v2.BulkRestoreTranscriptsResponse], error) {
+	return c.bulkRestoreTranscripts.CallUnary(ctx, req)
+}
+
+// ListTranscriptGroupNames calls wfo.vanalytics.v2.Vanalytics.ListTranscriptGroupNames.
+func (c *vanalyticsClient) ListTranscriptGroupNames(ctx context.Context, req *connect_go.Request[v2.ListTranscriptGroupNamesRequest]) (*connect_go.Response[v2.ListTranscriptGroupNamesResponse], error) {
+	return c.listTranscriptGroupNames.CallUnary(ctx, req)
+}
+
+// ListAgentResponseValues calls wfo.vanalytics.v2.Vanalytics.ListAgentResponseValues.
+func (c *vanalyticsClient) ListAgentResponseValues(ctx context.Context, req *connect_go.Request[v2.ListAgentResponseValuesRequest]) (*connect_go.Response[v2.ListAgentResponseValuesResponse], error) {
+	return c.listAgentResponseValues.CallUnary(ctx, req)
+}
+
+// GetTranscriptSummary calls wfo.vanalytics.v2.Vanalytics.GetTranscriptSummary.
+func (c *vanalyticsClient) GetTranscriptSummary(ctx context.Context, req *connect_go.Request[v2.GetTranscriptSummaryRequest]) (*connect_go.Response[v2.GetTranscriptSummaryResponse], error) {
+	return c.getTranscriptSummary.CallUnary(ctx, req)
 }
 
 // CreateFilter calls wfo.vanalytics.v2.Vanalytics.CreateFilter.
@@ -198,14 +471,105 @@ func (c *vanalyticsClient) ListFlagFilters(ctx context.Context, req *connect_go.
 	return c.listFlagFilters.CallUnary(ctx, req)
 }
 
+// GetFlag calls wfo.vanalytics.v2.Vanalytics.GetFlag.
+func (c *vanalyticsClient) GetFlag(ctx context.Context, req *connect_go.Request[v2.GetFlagRequest]) (*connect_go.Response[v2.Flag], error) {
+	return c.getFlag.CallUnary(ctx, req)
+}
+
+// CreateFlag calls wfo.vanalytics.v2.Vanalytics.CreateFlag.
+func (c *vanalyticsClient) CreateFlag(ctx context.Context, req *connect_go.Request[v2.CreateFlagRequest]) (*connect_go.Response[v2.Flag], error) {
+	return c.createFlag.CallUnary(ctx, req)
+}
+
+// ListFlags calls wfo.vanalytics.v2.Vanalytics.ListFlags.
+func (c *vanalyticsClient) ListFlags(ctx context.Context, req *connect_go.Request[v2.ListFlagsRequest]) (*connect_go.Response[v2.ListFlagsResponse], error) {
+	return c.listFlags.CallUnary(ctx, req)
+}
+
+// UpdateFlag calls wfo.vanalytics.v2.Vanalytics.UpdateFlag.
+func (c *vanalyticsClient) UpdateFlag(ctx context.Context, req *connect_go.Request[v2.UpdateFlagRequest]) (*connect_go.Response[v2.Flag], error) {
+	return c.updateFlag.CallUnary(ctx, req)
+}
+
+// DeleteFlag calls wfo.vanalytics.v2.Vanalytics.DeleteFlag.
+func (c *vanalyticsClient) DeleteFlag(ctx context.Context, req *connect_go.Request[v2.DeleteFlagRequest]) (*connect_go.Response[v2.DeleteFlagResponse], error) {
+	return c.deleteFlag.CallUnary(ctx, req)
+}
+
+// CreateFlagReview calls wfo.vanalytics.v2.Vanalytics.CreateFlagReview.
+func (c *vanalyticsClient) CreateFlagReview(ctx context.Context, req *connect_go.Request[v2.CreateFlagReviewRequest]) (*connect_go.Response[v2.FlagReview], error) {
+	return c.createFlagReview.CallUnary(ctx, req)
+}
+
+// BulkCreateFlagReview calls wfo.vanalytics.v2.Vanalytics.BulkCreateFlagReview.
+func (c *vanalyticsClient) BulkCreateFlagReview(ctx context.Context, req *connect_go.Request[v2.BulkCreateFlagReviewRequest]) (*connect_go.Response[v2.BulkCreateFlagReviewResponse], error) {
+	return c.bulkCreateFlagReview.CallUnary(ctx, req)
+}
+
+// ListFlagReviews calls wfo.vanalytics.v2.Vanalytics.ListFlagReviews.
+func (c *vanalyticsClient) ListFlagReviews(ctx context.Context, req *connect_go.Request[v2.ListFlagReviewsRequest]) (*connect_go.Response[v2.ListFlagReviewsResponse], error) {
+	return c.listFlagReviews.CallUnary(ctx, req)
+}
+
+// CreateFlagTranscript calls wfo.vanalytics.v2.Vanalytics.CreateFlagTranscript.
+func (c *vanalyticsClient) CreateFlagTranscript(ctx context.Context, req *connect_go.Request[v2.CreateFlagTranscriptRequest]) (*connect_go.Response[v2.CreateFlagTranscriptResponse], error) {
+	return c.createFlagTranscript.CallUnary(ctx, req)
+}
+
+// ListFlagSnapshots calls wfo.vanalytics.v2.Vanalytics.ListFlagSnapshots.
+func (c *vanalyticsClient) ListFlagSnapshots(ctx context.Context, req *connect_go.Request[v2.ListFlagSnapshotsRequest]) (*connect_go.Response[v2.ListFlagSnapshotsResponse], error) {
+	return c.listFlagSnapshots.CallUnary(ctx, req)
+}
+
+// CreateCorrection calls wfo.vanalytics.v2.Vanalytics.CreateCorrection.
+func (c *vanalyticsClient) CreateCorrection(ctx context.Context, req *connect_go.Request[v2.CreateCorrectionRequest]) (*connect_go.Response[v2.CreateCorrectionResponse], error) {
+	return c.createCorrection.CallUnary(ctx, req)
+}
+
+// GetCorrection calls wfo.vanalytics.v2.Vanalytics.GetCorrection.
+func (c *vanalyticsClient) GetCorrection(ctx context.Context, req *connect_go.Request[v2.GetCorrectionRequest]) (*connect_go.Response[v2.Correction], error) {
+	return c.getCorrection.CallUnary(ctx, req)
+}
+
+// DeleteCorrection calls wfo.vanalytics.v2.Vanalytics.DeleteCorrection.
+func (c *vanalyticsClient) DeleteCorrection(ctx context.Context, req *connect_go.Request[v2.DeleteCorrectionRequest]) (*connect_go.Response[v2.DeleteCorrectionResponse], error) {
+	return c.deleteCorrection.CallUnary(ctx, req)
+}
+
+// ListCorrections calls wfo.vanalytics.v2.Vanalytics.ListCorrections.
+func (c *vanalyticsClient) ListCorrections(ctx context.Context, req *connect_go.Request[v2.ListCorrectionsRequest]) (*connect_go.Response[v2.ListCorrectionsResponse], error) {
+	return c.listCorrections.CallUnary(ctx, req)
+}
+
+// UpdateCorrection calls wfo.vanalytics.v2.Vanalytics.UpdateCorrection.
+func (c *vanalyticsClient) UpdateCorrection(ctx context.Context, req *connect_go.Request[v2.UpdateCorrectionRequest]) (*connect_go.Response[v2.UpdateCorrectionResponse], error) {
+	return c.updateCorrection.CallUnary(ctx, req)
+}
+
 // VanalyticsHandler is an implementation of the wfo.vanalytics.v2.Vanalytics service.
 type VanalyticsHandler interface {
+	// Audit audits the used transcription audio time for a client. The window
+	// of time to audit can be widened or narrowed using the request since and
+	// until fields.
+	Audit(context.Context, *connect_go.Request[v2.AuditRequest]) (*connect_go.Response[v2.AuditResponse], error)
+	// GetRecordingUrl gets a signed url to download a transcript recording.
+	GetRecordingUrl(context.Context, *connect_go.Request[v2.GetRecordingUrlRequest]) (*connect_go.Response[v2.GetRecordingUrlResponse], error)
+	// ListBillingSpan lists billing spans.
+	ListBillingSpan(context.Context, *connect_go.Request[v2.ListBillingSpanRequest]) (*connect_go.Response[v2.ListBillingSpanResponse], error)
 	// SearchTranscripts searches transcripts by search criteria. The search response
 	// contains one page of transcript hits. Traversing the paginated hits is
 	// achieved by making use of the given page token.
 	SearchTranscripts(context.Context, *connect_go.Request[v2.SearchTranscriptsRequest]) (*connect_go.Response[v2.SearchTranscriptsResponse], error)
 	// BulkDeleteTranscripts bulk deletes transcripts matching the provided query.
 	BulkDeleteTranscripts(context.Context, *connect_go.Request[v2.BulkDeleteTranscriptsRequest]) (*connect_go.Response[v2.BulkDeleteTranscriptsResponse], error)
+	// BulkRestoreTranscripts bulk restores transcripts matching the provided query.
+	BulkRestoreTranscripts(context.Context, *connect_go.Request[v2.BulkRestoreTranscriptsRequest]) (*connect_go.Response[v2.BulkRestoreTranscriptsResponse], error)
+	// ListTranscriptGroupNames lists transcript group names.
+	ListTranscriptGroupNames(context.Context, *connect_go.Request[v2.ListTranscriptGroupNamesRequest]) (*connect_go.Response[v2.ListTranscriptGroupNamesResponse], error)
+	// ListAgentResponseValues lists transcript agent response values.
+	ListAgentResponseValues(context.Context, *connect_go.Request[v2.ListAgentResponseValuesRequest]) (*connect_go.Response[v2.ListAgentResponseValuesResponse], error)
+	// GetTranscriptSummary gets a transcript summary for a provided transcript.
+	GetTranscriptSummary(context.Context, *connect_go.Request[v2.GetTranscriptSummaryRequest]) (*connect_go.Response[v2.GetTranscriptSummaryResponse], error)
 	// CreateFilter creates a new filter. The filter contains a transcript query
 	// to filter transcripts.
 	CreateFilter(context.Context, *connect_go.Request[v2.CreateFilterRequest]) (*connect_go.Response[v2.Filter], error)
@@ -221,6 +585,36 @@ type VanalyticsHandler interface {
 	ListFlagTranscriptFilters(context.Context, *connect_go.Request[v2.ListFlagTranscriptFiltersRequest]) (*connect_go.Response[v2.ListFlagTranscriptFiltersResponse], error)
 	// ListFlagFilters lists flag filter associations.
 	ListFlagFilters(context.Context, *connect_go.Request[v2.ListFlagFiltersRequest]) (*connect_go.Response[v2.ListFlagFiltersResponse], error)
+	// GetFlag gets a flag.
+	GetFlag(context.Context, *connect_go.Request[v2.GetFlagRequest]) (*connect_go.Response[v2.Flag], error)
+	// CreateFlag creates a new flag.
+	CreateFlag(context.Context, *connect_go.Request[v2.CreateFlagRequest]) (*connect_go.Response[v2.Flag], error)
+	// ListFlags lists flags in an organization.
+	ListFlags(context.Context, *connect_go.Request[v2.ListFlagsRequest]) (*connect_go.Response[v2.ListFlagsResponse], error)
+	// UpdateFlag updates a flag.
+	UpdateFlag(context.Context, *connect_go.Request[v2.UpdateFlagRequest]) (*connect_go.Response[v2.Flag], error)
+	// DeleteFlag deletes the flag identified by the given flag_sid.
+	DeleteFlag(context.Context, *connect_go.Request[v2.DeleteFlagRequest]) (*connect_go.Response[v2.DeleteFlagResponse], error)
+	// CreateFlagReview creates a flag review.
+	CreateFlagReview(context.Context, *connect_go.Request[v2.CreateFlagReviewRequest]) (*connect_go.Response[v2.FlagReview], error)
+	// BulkCreateFlagReview creates flag reviews.
+	BulkCreateFlagReview(context.Context, *connect_go.Request[v2.BulkCreateFlagReviewRequest]) (*connect_go.Response[v2.BulkCreateFlagReviewResponse], error)
+	// ListFlagReviews lists reviews in an organization.
+	ListFlagReviews(context.Context, *connect_go.Request[v2.ListFlagReviewsRequest]) (*connect_go.Response[v2.ListFlagReviewsResponse], error)
+	// CreateFlagTranscript creates a flag transcript.
+	CreateFlagTranscript(context.Context, *connect_go.Request[v2.CreateFlagTranscriptRequest]) (*connect_go.Response[v2.CreateFlagTranscriptResponse], error)
+	// ListFlagSnapshots lists flag snapshots in an organization.
+	ListFlagSnapshots(context.Context, *connect_go.Request[v2.ListFlagSnapshotsRequest]) (*connect_go.Response[v2.ListFlagSnapshotsResponse], error)
+	// CreateCorrection creates a correction.
+	CreateCorrection(context.Context, *connect_go.Request[v2.CreateCorrectionRequest]) (*connect_go.Response[v2.CreateCorrectionResponse], error)
+	// GetCorrection gets a correction.
+	GetCorrection(context.Context, *connect_go.Request[v2.GetCorrectionRequest]) (*connect_go.Response[v2.Correction], error)
+	// DeleteCorrection deletes a correction.
+	DeleteCorrection(context.Context, *connect_go.Request[v2.DeleteCorrectionRequest]) (*connect_go.Response[v2.DeleteCorrectionResponse], error)
+	// ListCorrections lists corrections.
+	ListCorrections(context.Context, *connect_go.Request[v2.ListCorrectionsRequest]) (*connect_go.Response[v2.ListCorrectionsResponse], error)
+	// UpdateCorrection updates a correction.
+	UpdateCorrection(context.Context, *connect_go.Request[v2.UpdateCorrectionRequest]) (*connect_go.Response[v2.UpdateCorrectionResponse], error)
 }
 
 // NewVanalyticsHandler builds an HTTP handler from the service implementation. It returns the path
@@ -229,6 +623,21 @@ type VanalyticsHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewVanalyticsHandler(svc VanalyticsHandler, opts ...connect_go.HandlerOption) (string, http.Handler) {
+	vanalyticsAuditHandler := connect_go.NewUnaryHandler(
+		VanalyticsAuditProcedure,
+		svc.Audit,
+		opts...,
+	)
+	vanalyticsGetRecordingUrlHandler := connect_go.NewUnaryHandler(
+		VanalyticsGetRecordingUrlProcedure,
+		svc.GetRecordingUrl,
+		opts...,
+	)
+	vanalyticsListBillingSpanHandler := connect_go.NewUnaryHandler(
+		VanalyticsListBillingSpanProcedure,
+		svc.ListBillingSpan,
+		opts...,
+	)
 	vanalyticsSearchTranscriptsHandler := connect_go.NewUnaryHandler(
 		VanalyticsSearchTranscriptsProcedure,
 		svc.SearchTranscripts,
@@ -237,6 +646,26 @@ func NewVanalyticsHandler(svc VanalyticsHandler, opts ...connect_go.HandlerOptio
 	vanalyticsBulkDeleteTranscriptsHandler := connect_go.NewUnaryHandler(
 		VanalyticsBulkDeleteTranscriptsProcedure,
 		svc.BulkDeleteTranscripts,
+		opts...,
+	)
+	vanalyticsBulkRestoreTranscriptsHandler := connect_go.NewUnaryHandler(
+		VanalyticsBulkRestoreTranscriptsProcedure,
+		svc.BulkRestoreTranscripts,
+		opts...,
+	)
+	vanalyticsListTranscriptGroupNamesHandler := connect_go.NewUnaryHandler(
+		VanalyticsListTranscriptGroupNamesProcedure,
+		svc.ListTranscriptGroupNames,
+		opts...,
+	)
+	vanalyticsListAgentResponseValuesHandler := connect_go.NewUnaryHandler(
+		VanalyticsListAgentResponseValuesProcedure,
+		svc.ListAgentResponseValues,
+		opts...,
+	)
+	vanalyticsGetTranscriptSummaryHandler := connect_go.NewUnaryHandler(
+		VanalyticsGetTranscriptSummaryProcedure,
+		svc.GetTranscriptSummary,
 		opts...,
 	)
 	vanalyticsCreateFilterHandler := connect_go.NewUnaryHandler(
@@ -274,12 +703,101 @@ func NewVanalyticsHandler(svc VanalyticsHandler, opts ...connect_go.HandlerOptio
 		svc.ListFlagFilters,
 		opts...,
 	)
+	vanalyticsGetFlagHandler := connect_go.NewUnaryHandler(
+		VanalyticsGetFlagProcedure,
+		svc.GetFlag,
+		opts...,
+	)
+	vanalyticsCreateFlagHandler := connect_go.NewUnaryHandler(
+		VanalyticsCreateFlagProcedure,
+		svc.CreateFlag,
+		opts...,
+	)
+	vanalyticsListFlagsHandler := connect_go.NewUnaryHandler(
+		VanalyticsListFlagsProcedure,
+		svc.ListFlags,
+		opts...,
+	)
+	vanalyticsUpdateFlagHandler := connect_go.NewUnaryHandler(
+		VanalyticsUpdateFlagProcedure,
+		svc.UpdateFlag,
+		opts...,
+	)
+	vanalyticsDeleteFlagHandler := connect_go.NewUnaryHandler(
+		VanalyticsDeleteFlagProcedure,
+		svc.DeleteFlag,
+		opts...,
+	)
+	vanalyticsCreateFlagReviewHandler := connect_go.NewUnaryHandler(
+		VanalyticsCreateFlagReviewProcedure,
+		svc.CreateFlagReview,
+		opts...,
+	)
+	vanalyticsBulkCreateFlagReviewHandler := connect_go.NewUnaryHandler(
+		VanalyticsBulkCreateFlagReviewProcedure,
+		svc.BulkCreateFlagReview,
+		opts...,
+	)
+	vanalyticsListFlagReviewsHandler := connect_go.NewUnaryHandler(
+		VanalyticsListFlagReviewsProcedure,
+		svc.ListFlagReviews,
+		opts...,
+	)
+	vanalyticsCreateFlagTranscriptHandler := connect_go.NewUnaryHandler(
+		VanalyticsCreateFlagTranscriptProcedure,
+		svc.CreateFlagTranscript,
+		opts...,
+	)
+	vanalyticsListFlagSnapshotsHandler := connect_go.NewUnaryHandler(
+		VanalyticsListFlagSnapshotsProcedure,
+		svc.ListFlagSnapshots,
+		opts...,
+	)
+	vanalyticsCreateCorrectionHandler := connect_go.NewUnaryHandler(
+		VanalyticsCreateCorrectionProcedure,
+		svc.CreateCorrection,
+		opts...,
+	)
+	vanalyticsGetCorrectionHandler := connect_go.NewUnaryHandler(
+		VanalyticsGetCorrectionProcedure,
+		svc.GetCorrection,
+		opts...,
+	)
+	vanalyticsDeleteCorrectionHandler := connect_go.NewUnaryHandler(
+		VanalyticsDeleteCorrectionProcedure,
+		svc.DeleteCorrection,
+		opts...,
+	)
+	vanalyticsListCorrectionsHandler := connect_go.NewUnaryHandler(
+		VanalyticsListCorrectionsProcedure,
+		svc.ListCorrections,
+		opts...,
+	)
+	vanalyticsUpdateCorrectionHandler := connect_go.NewUnaryHandler(
+		VanalyticsUpdateCorrectionProcedure,
+		svc.UpdateCorrection,
+		opts...,
+	)
 	return "/wfo.vanalytics.v2.Vanalytics/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
+		case VanalyticsAuditProcedure:
+			vanalyticsAuditHandler.ServeHTTP(w, r)
+		case VanalyticsGetRecordingUrlProcedure:
+			vanalyticsGetRecordingUrlHandler.ServeHTTP(w, r)
+		case VanalyticsListBillingSpanProcedure:
+			vanalyticsListBillingSpanHandler.ServeHTTP(w, r)
 		case VanalyticsSearchTranscriptsProcedure:
 			vanalyticsSearchTranscriptsHandler.ServeHTTP(w, r)
 		case VanalyticsBulkDeleteTranscriptsProcedure:
 			vanalyticsBulkDeleteTranscriptsHandler.ServeHTTP(w, r)
+		case VanalyticsBulkRestoreTranscriptsProcedure:
+			vanalyticsBulkRestoreTranscriptsHandler.ServeHTTP(w, r)
+		case VanalyticsListTranscriptGroupNamesProcedure:
+			vanalyticsListTranscriptGroupNamesHandler.ServeHTTP(w, r)
+		case VanalyticsListAgentResponseValuesProcedure:
+			vanalyticsListAgentResponseValuesHandler.ServeHTTP(w, r)
+		case VanalyticsGetTranscriptSummaryProcedure:
+			vanalyticsGetTranscriptSummaryHandler.ServeHTTP(w, r)
 		case VanalyticsCreateFilterProcedure:
 			vanalyticsCreateFilterHandler.ServeHTTP(w, r)
 		case VanalyticsListFiltersProcedure:
@@ -294,6 +812,36 @@ func NewVanalyticsHandler(svc VanalyticsHandler, opts ...connect_go.HandlerOptio
 			vanalyticsListFlagTranscriptFiltersHandler.ServeHTTP(w, r)
 		case VanalyticsListFlagFiltersProcedure:
 			vanalyticsListFlagFiltersHandler.ServeHTTP(w, r)
+		case VanalyticsGetFlagProcedure:
+			vanalyticsGetFlagHandler.ServeHTTP(w, r)
+		case VanalyticsCreateFlagProcedure:
+			vanalyticsCreateFlagHandler.ServeHTTP(w, r)
+		case VanalyticsListFlagsProcedure:
+			vanalyticsListFlagsHandler.ServeHTTP(w, r)
+		case VanalyticsUpdateFlagProcedure:
+			vanalyticsUpdateFlagHandler.ServeHTTP(w, r)
+		case VanalyticsDeleteFlagProcedure:
+			vanalyticsDeleteFlagHandler.ServeHTTP(w, r)
+		case VanalyticsCreateFlagReviewProcedure:
+			vanalyticsCreateFlagReviewHandler.ServeHTTP(w, r)
+		case VanalyticsBulkCreateFlagReviewProcedure:
+			vanalyticsBulkCreateFlagReviewHandler.ServeHTTP(w, r)
+		case VanalyticsListFlagReviewsProcedure:
+			vanalyticsListFlagReviewsHandler.ServeHTTP(w, r)
+		case VanalyticsCreateFlagTranscriptProcedure:
+			vanalyticsCreateFlagTranscriptHandler.ServeHTTP(w, r)
+		case VanalyticsListFlagSnapshotsProcedure:
+			vanalyticsListFlagSnapshotsHandler.ServeHTTP(w, r)
+		case VanalyticsCreateCorrectionProcedure:
+			vanalyticsCreateCorrectionHandler.ServeHTTP(w, r)
+		case VanalyticsGetCorrectionProcedure:
+			vanalyticsGetCorrectionHandler.ServeHTTP(w, r)
+		case VanalyticsDeleteCorrectionProcedure:
+			vanalyticsDeleteCorrectionHandler.ServeHTTP(w, r)
+		case VanalyticsListCorrectionsProcedure:
+			vanalyticsListCorrectionsHandler.ServeHTTP(w, r)
+		case VanalyticsUpdateCorrectionProcedure:
+			vanalyticsUpdateCorrectionHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -303,12 +851,40 @@ func NewVanalyticsHandler(svc VanalyticsHandler, opts ...connect_go.HandlerOptio
 // UnimplementedVanalyticsHandler returns CodeUnimplemented from all methods.
 type UnimplementedVanalyticsHandler struct{}
 
+func (UnimplementedVanalyticsHandler) Audit(context.Context, *connect_go.Request[v2.AuditRequest]) (*connect_go.Response[v2.AuditResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("wfo.vanalytics.v2.Vanalytics.Audit is not implemented"))
+}
+
+func (UnimplementedVanalyticsHandler) GetRecordingUrl(context.Context, *connect_go.Request[v2.GetRecordingUrlRequest]) (*connect_go.Response[v2.GetRecordingUrlResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("wfo.vanalytics.v2.Vanalytics.GetRecordingUrl is not implemented"))
+}
+
+func (UnimplementedVanalyticsHandler) ListBillingSpan(context.Context, *connect_go.Request[v2.ListBillingSpanRequest]) (*connect_go.Response[v2.ListBillingSpanResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("wfo.vanalytics.v2.Vanalytics.ListBillingSpan is not implemented"))
+}
+
 func (UnimplementedVanalyticsHandler) SearchTranscripts(context.Context, *connect_go.Request[v2.SearchTranscriptsRequest]) (*connect_go.Response[v2.SearchTranscriptsResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("wfo.vanalytics.v2.Vanalytics.SearchTranscripts is not implemented"))
 }
 
 func (UnimplementedVanalyticsHandler) BulkDeleteTranscripts(context.Context, *connect_go.Request[v2.BulkDeleteTranscriptsRequest]) (*connect_go.Response[v2.BulkDeleteTranscriptsResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("wfo.vanalytics.v2.Vanalytics.BulkDeleteTranscripts is not implemented"))
+}
+
+func (UnimplementedVanalyticsHandler) BulkRestoreTranscripts(context.Context, *connect_go.Request[v2.BulkRestoreTranscriptsRequest]) (*connect_go.Response[v2.BulkRestoreTranscriptsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("wfo.vanalytics.v2.Vanalytics.BulkRestoreTranscripts is not implemented"))
+}
+
+func (UnimplementedVanalyticsHandler) ListTranscriptGroupNames(context.Context, *connect_go.Request[v2.ListTranscriptGroupNamesRequest]) (*connect_go.Response[v2.ListTranscriptGroupNamesResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("wfo.vanalytics.v2.Vanalytics.ListTranscriptGroupNames is not implemented"))
+}
+
+func (UnimplementedVanalyticsHandler) ListAgentResponseValues(context.Context, *connect_go.Request[v2.ListAgentResponseValuesRequest]) (*connect_go.Response[v2.ListAgentResponseValuesResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("wfo.vanalytics.v2.Vanalytics.ListAgentResponseValues is not implemented"))
+}
+
+func (UnimplementedVanalyticsHandler) GetTranscriptSummary(context.Context, *connect_go.Request[v2.GetTranscriptSummaryRequest]) (*connect_go.Response[v2.GetTranscriptSummaryResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("wfo.vanalytics.v2.Vanalytics.GetTranscriptSummary is not implemented"))
 }
 
 func (UnimplementedVanalyticsHandler) CreateFilter(context.Context, *connect_go.Request[v2.CreateFilterRequest]) (*connect_go.Response[v2.Filter], error) {
@@ -337,4 +913,64 @@ func (UnimplementedVanalyticsHandler) ListFlagTranscriptFilters(context.Context,
 
 func (UnimplementedVanalyticsHandler) ListFlagFilters(context.Context, *connect_go.Request[v2.ListFlagFiltersRequest]) (*connect_go.Response[v2.ListFlagFiltersResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("wfo.vanalytics.v2.Vanalytics.ListFlagFilters is not implemented"))
+}
+
+func (UnimplementedVanalyticsHandler) GetFlag(context.Context, *connect_go.Request[v2.GetFlagRequest]) (*connect_go.Response[v2.Flag], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("wfo.vanalytics.v2.Vanalytics.GetFlag is not implemented"))
+}
+
+func (UnimplementedVanalyticsHandler) CreateFlag(context.Context, *connect_go.Request[v2.CreateFlagRequest]) (*connect_go.Response[v2.Flag], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("wfo.vanalytics.v2.Vanalytics.CreateFlag is not implemented"))
+}
+
+func (UnimplementedVanalyticsHandler) ListFlags(context.Context, *connect_go.Request[v2.ListFlagsRequest]) (*connect_go.Response[v2.ListFlagsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("wfo.vanalytics.v2.Vanalytics.ListFlags is not implemented"))
+}
+
+func (UnimplementedVanalyticsHandler) UpdateFlag(context.Context, *connect_go.Request[v2.UpdateFlagRequest]) (*connect_go.Response[v2.Flag], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("wfo.vanalytics.v2.Vanalytics.UpdateFlag is not implemented"))
+}
+
+func (UnimplementedVanalyticsHandler) DeleteFlag(context.Context, *connect_go.Request[v2.DeleteFlagRequest]) (*connect_go.Response[v2.DeleteFlagResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("wfo.vanalytics.v2.Vanalytics.DeleteFlag is not implemented"))
+}
+
+func (UnimplementedVanalyticsHandler) CreateFlagReview(context.Context, *connect_go.Request[v2.CreateFlagReviewRequest]) (*connect_go.Response[v2.FlagReview], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("wfo.vanalytics.v2.Vanalytics.CreateFlagReview is not implemented"))
+}
+
+func (UnimplementedVanalyticsHandler) BulkCreateFlagReview(context.Context, *connect_go.Request[v2.BulkCreateFlagReviewRequest]) (*connect_go.Response[v2.BulkCreateFlagReviewResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("wfo.vanalytics.v2.Vanalytics.BulkCreateFlagReview is not implemented"))
+}
+
+func (UnimplementedVanalyticsHandler) ListFlagReviews(context.Context, *connect_go.Request[v2.ListFlagReviewsRequest]) (*connect_go.Response[v2.ListFlagReviewsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("wfo.vanalytics.v2.Vanalytics.ListFlagReviews is not implemented"))
+}
+
+func (UnimplementedVanalyticsHandler) CreateFlagTranscript(context.Context, *connect_go.Request[v2.CreateFlagTranscriptRequest]) (*connect_go.Response[v2.CreateFlagTranscriptResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("wfo.vanalytics.v2.Vanalytics.CreateFlagTranscript is not implemented"))
+}
+
+func (UnimplementedVanalyticsHandler) ListFlagSnapshots(context.Context, *connect_go.Request[v2.ListFlagSnapshotsRequest]) (*connect_go.Response[v2.ListFlagSnapshotsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("wfo.vanalytics.v2.Vanalytics.ListFlagSnapshots is not implemented"))
+}
+
+func (UnimplementedVanalyticsHandler) CreateCorrection(context.Context, *connect_go.Request[v2.CreateCorrectionRequest]) (*connect_go.Response[v2.CreateCorrectionResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("wfo.vanalytics.v2.Vanalytics.CreateCorrection is not implemented"))
+}
+
+func (UnimplementedVanalyticsHandler) GetCorrection(context.Context, *connect_go.Request[v2.GetCorrectionRequest]) (*connect_go.Response[v2.Correction], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("wfo.vanalytics.v2.Vanalytics.GetCorrection is not implemented"))
+}
+
+func (UnimplementedVanalyticsHandler) DeleteCorrection(context.Context, *connect_go.Request[v2.DeleteCorrectionRequest]) (*connect_go.Response[v2.DeleteCorrectionResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("wfo.vanalytics.v2.Vanalytics.DeleteCorrection is not implemented"))
+}
+
+func (UnimplementedVanalyticsHandler) ListCorrections(context.Context, *connect_go.Request[v2.ListCorrectionsRequest]) (*connect_go.Response[v2.ListCorrectionsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("wfo.vanalytics.v2.Vanalytics.ListCorrections is not implemented"))
+}
+
+func (UnimplementedVanalyticsHandler) UpdateCorrection(context.Context, *connect_go.Request[v2.UpdateCorrectionRequest]) (*connect_go.Response[v2.UpdateCorrectionResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("wfo.vanalytics.v2.Vanalytics.UpdateCorrection is not implemented"))
 }

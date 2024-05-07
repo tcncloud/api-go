@@ -19,8 +19,15 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
+	Vanalytics_Audit_FullMethodName                     = "/wfo.vanalytics.v2.Vanalytics/Audit"
+	Vanalytics_GetRecordingUrl_FullMethodName           = "/wfo.vanalytics.v2.Vanalytics/GetRecordingUrl"
+	Vanalytics_ListBillingSpan_FullMethodName           = "/wfo.vanalytics.v2.Vanalytics/ListBillingSpan"
 	Vanalytics_SearchTranscripts_FullMethodName         = "/wfo.vanalytics.v2.Vanalytics/SearchTranscripts"
 	Vanalytics_BulkDeleteTranscripts_FullMethodName     = "/wfo.vanalytics.v2.Vanalytics/BulkDeleteTranscripts"
+	Vanalytics_BulkRestoreTranscripts_FullMethodName    = "/wfo.vanalytics.v2.Vanalytics/BulkRestoreTranscripts"
+	Vanalytics_ListTranscriptGroupNames_FullMethodName  = "/wfo.vanalytics.v2.Vanalytics/ListTranscriptGroupNames"
+	Vanalytics_ListAgentResponseValues_FullMethodName   = "/wfo.vanalytics.v2.Vanalytics/ListAgentResponseValues"
+	Vanalytics_GetTranscriptSummary_FullMethodName      = "/wfo.vanalytics.v2.Vanalytics/GetTranscriptSummary"
 	Vanalytics_CreateFilter_FullMethodName              = "/wfo.vanalytics.v2.Vanalytics/CreateFilter"
 	Vanalytics_ListFilters_FullMethodName               = "/wfo.vanalytics.v2.Vanalytics/ListFilters"
 	Vanalytics_UpdateFilter_FullMethodName              = "/wfo.vanalytics.v2.Vanalytics/UpdateFilter"
@@ -28,18 +35,49 @@ const (
 	Vanalytics_GetFilter_FullMethodName                 = "/wfo.vanalytics.v2.Vanalytics/GetFilter"
 	Vanalytics_ListFlagTranscriptFilters_FullMethodName = "/wfo.vanalytics.v2.Vanalytics/ListFlagTranscriptFilters"
 	Vanalytics_ListFlagFilters_FullMethodName           = "/wfo.vanalytics.v2.Vanalytics/ListFlagFilters"
+	Vanalytics_GetFlag_FullMethodName                   = "/wfo.vanalytics.v2.Vanalytics/GetFlag"
+	Vanalytics_CreateFlag_FullMethodName                = "/wfo.vanalytics.v2.Vanalytics/CreateFlag"
+	Vanalytics_ListFlags_FullMethodName                 = "/wfo.vanalytics.v2.Vanalytics/ListFlags"
+	Vanalytics_UpdateFlag_FullMethodName                = "/wfo.vanalytics.v2.Vanalytics/UpdateFlag"
+	Vanalytics_DeleteFlag_FullMethodName                = "/wfo.vanalytics.v2.Vanalytics/DeleteFlag"
+	Vanalytics_CreateFlagReview_FullMethodName          = "/wfo.vanalytics.v2.Vanalytics/CreateFlagReview"
+	Vanalytics_BulkCreateFlagReview_FullMethodName      = "/wfo.vanalytics.v2.Vanalytics/BulkCreateFlagReview"
+	Vanalytics_ListFlagReviews_FullMethodName           = "/wfo.vanalytics.v2.Vanalytics/ListFlagReviews"
+	Vanalytics_CreateFlagTranscript_FullMethodName      = "/wfo.vanalytics.v2.Vanalytics/CreateFlagTranscript"
+	Vanalytics_ListFlagSnapshots_FullMethodName         = "/wfo.vanalytics.v2.Vanalytics/ListFlagSnapshots"
+	Vanalytics_CreateCorrection_FullMethodName          = "/wfo.vanalytics.v2.Vanalytics/CreateCorrection"
+	Vanalytics_GetCorrection_FullMethodName             = "/wfo.vanalytics.v2.Vanalytics/GetCorrection"
+	Vanalytics_DeleteCorrection_FullMethodName          = "/wfo.vanalytics.v2.Vanalytics/DeleteCorrection"
+	Vanalytics_ListCorrections_FullMethodName           = "/wfo.vanalytics.v2.Vanalytics/ListCorrections"
+	Vanalytics_UpdateCorrection_FullMethodName          = "/wfo.vanalytics.v2.Vanalytics/UpdateCorrection"
 )
 
 // VanalyticsClient is the client API for Vanalytics service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type VanalyticsClient interface {
+	// Audit audits the used transcription audio time for a client. The window
+	// of time to audit can be widened or narrowed using the request since and
+	// until fields.
+	Audit(ctx context.Context, in *AuditRequest, opts ...grpc.CallOption) (*AuditResponse, error)
+	// GetRecordingUrl gets a signed url to download a transcript recording.
+	GetRecordingUrl(ctx context.Context, in *GetRecordingUrlRequest, opts ...grpc.CallOption) (*GetRecordingUrlResponse, error)
+	// ListBillingSpan lists billing spans.
+	ListBillingSpan(ctx context.Context, in *ListBillingSpanRequest, opts ...grpc.CallOption) (*ListBillingSpanResponse, error)
 	// SearchTranscripts searches transcripts by search criteria. The search response
 	// contains one page of transcript hits. Traversing the paginated hits is
 	// achieved by making use of the given page token.
 	SearchTranscripts(ctx context.Context, in *SearchTranscriptsRequest, opts ...grpc.CallOption) (*SearchTranscriptsResponse, error)
 	// BulkDeleteTranscripts bulk deletes transcripts matching the provided query.
 	BulkDeleteTranscripts(ctx context.Context, in *BulkDeleteTranscriptsRequest, opts ...grpc.CallOption) (*BulkDeleteTranscriptsResponse, error)
+	// BulkRestoreTranscripts bulk restores transcripts matching the provided query.
+	BulkRestoreTranscripts(ctx context.Context, in *BulkRestoreTranscriptsRequest, opts ...grpc.CallOption) (*BulkRestoreTranscriptsResponse, error)
+	// ListTranscriptGroupNames lists transcript group names.
+	ListTranscriptGroupNames(ctx context.Context, in *ListTranscriptGroupNamesRequest, opts ...grpc.CallOption) (*ListTranscriptGroupNamesResponse, error)
+	// ListAgentResponseValues lists transcript agent response values.
+	ListAgentResponseValues(ctx context.Context, in *ListAgentResponseValuesRequest, opts ...grpc.CallOption) (*ListAgentResponseValuesResponse, error)
+	// GetTranscriptSummary gets a transcript summary for a provided transcript.
+	GetTranscriptSummary(ctx context.Context, in *GetTranscriptSummaryRequest, opts ...grpc.CallOption) (*GetTranscriptSummaryResponse, error)
 	// CreateFilter creates a new filter. The filter contains a transcript query
 	// to filter transcripts.
 	CreateFilter(ctx context.Context, in *CreateFilterRequest, opts ...grpc.CallOption) (*Filter, error)
@@ -55,6 +93,36 @@ type VanalyticsClient interface {
 	ListFlagTranscriptFilters(ctx context.Context, in *ListFlagTranscriptFiltersRequest, opts ...grpc.CallOption) (*ListFlagTranscriptFiltersResponse, error)
 	// ListFlagFilters lists flag filter associations.
 	ListFlagFilters(ctx context.Context, in *ListFlagFiltersRequest, opts ...grpc.CallOption) (*ListFlagFiltersResponse, error)
+	// GetFlag gets a flag.
+	GetFlag(ctx context.Context, in *GetFlagRequest, opts ...grpc.CallOption) (*Flag, error)
+	// CreateFlag creates a new flag.
+	CreateFlag(ctx context.Context, in *CreateFlagRequest, opts ...grpc.CallOption) (*Flag, error)
+	// ListFlags lists flags in an organization.
+	ListFlags(ctx context.Context, in *ListFlagsRequest, opts ...grpc.CallOption) (*ListFlagsResponse, error)
+	// UpdateFlag updates a flag.
+	UpdateFlag(ctx context.Context, in *UpdateFlagRequest, opts ...grpc.CallOption) (*Flag, error)
+	// DeleteFlag deletes the flag identified by the given flag_sid.
+	DeleteFlag(ctx context.Context, in *DeleteFlagRequest, opts ...grpc.CallOption) (*DeleteFlagResponse, error)
+	// CreateFlagReview creates a flag review.
+	CreateFlagReview(ctx context.Context, in *CreateFlagReviewRequest, opts ...grpc.CallOption) (*FlagReview, error)
+	// BulkCreateFlagReview creates flag reviews.
+	BulkCreateFlagReview(ctx context.Context, in *BulkCreateFlagReviewRequest, opts ...grpc.CallOption) (*BulkCreateFlagReviewResponse, error)
+	// ListFlagReviews lists reviews in an organization.
+	ListFlagReviews(ctx context.Context, in *ListFlagReviewsRequest, opts ...grpc.CallOption) (*ListFlagReviewsResponse, error)
+	// CreateFlagTranscript creates a flag transcript.
+	CreateFlagTranscript(ctx context.Context, in *CreateFlagTranscriptRequest, opts ...grpc.CallOption) (*CreateFlagTranscriptResponse, error)
+	// ListFlagSnapshots lists flag snapshots in an organization.
+	ListFlagSnapshots(ctx context.Context, in *ListFlagSnapshotsRequest, opts ...grpc.CallOption) (*ListFlagSnapshotsResponse, error)
+	// CreateCorrection creates a correction.
+	CreateCorrection(ctx context.Context, in *CreateCorrectionRequest, opts ...grpc.CallOption) (*CreateCorrectionResponse, error)
+	// GetCorrection gets a correction.
+	GetCorrection(ctx context.Context, in *GetCorrectionRequest, opts ...grpc.CallOption) (*Correction, error)
+	// DeleteCorrection deletes a correction.
+	DeleteCorrection(ctx context.Context, in *DeleteCorrectionRequest, opts ...grpc.CallOption) (*DeleteCorrectionResponse, error)
+	// ListCorrections lists corrections.
+	ListCorrections(ctx context.Context, in *ListCorrectionsRequest, opts ...grpc.CallOption) (*ListCorrectionsResponse, error)
+	// UpdateCorrection updates a correction.
+	UpdateCorrection(ctx context.Context, in *UpdateCorrectionRequest, opts ...grpc.CallOption) (*UpdateCorrectionResponse, error)
 }
 
 type vanalyticsClient struct {
@@ -63,6 +131,33 @@ type vanalyticsClient struct {
 
 func NewVanalyticsClient(cc grpc.ClientConnInterface) VanalyticsClient {
 	return &vanalyticsClient{cc}
+}
+
+func (c *vanalyticsClient) Audit(ctx context.Context, in *AuditRequest, opts ...grpc.CallOption) (*AuditResponse, error) {
+	out := new(AuditResponse)
+	err := c.cc.Invoke(ctx, Vanalytics_Audit_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *vanalyticsClient) GetRecordingUrl(ctx context.Context, in *GetRecordingUrlRequest, opts ...grpc.CallOption) (*GetRecordingUrlResponse, error) {
+	out := new(GetRecordingUrlResponse)
+	err := c.cc.Invoke(ctx, Vanalytics_GetRecordingUrl_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *vanalyticsClient) ListBillingSpan(ctx context.Context, in *ListBillingSpanRequest, opts ...grpc.CallOption) (*ListBillingSpanResponse, error) {
+	out := new(ListBillingSpanResponse)
+	err := c.cc.Invoke(ctx, Vanalytics_ListBillingSpan_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *vanalyticsClient) SearchTranscripts(ctx context.Context, in *SearchTranscriptsRequest, opts ...grpc.CallOption) (*SearchTranscriptsResponse, error) {
@@ -77,6 +172,42 @@ func (c *vanalyticsClient) SearchTranscripts(ctx context.Context, in *SearchTran
 func (c *vanalyticsClient) BulkDeleteTranscripts(ctx context.Context, in *BulkDeleteTranscriptsRequest, opts ...grpc.CallOption) (*BulkDeleteTranscriptsResponse, error) {
 	out := new(BulkDeleteTranscriptsResponse)
 	err := c.cc.Invoke(ctx, Vanalytics_BulkDeleteTranscripts_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *vanalyticsClient) BulkRestoreTranscripts(ctx context.Context, in *BulkRestoreTranscriptsRequest, opts ...grpc.CallOption) (*BulkRestoreTranscriptsResponse, error) {
+	out := new(BulkRestoreTranscriptsResponse)
+	err := c.cc.Invoke(ctx, Vanalytics_BulkRestoreTranscripts_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *vanalyticsClient) ListTranscriptGroupNames(ctx context.Context, in *ListTranscriptGroupNamesRequest, opts ...grpc.CallOption) (*ListTranscriptGroupNamesResponse, error) {
+	out := new(ListTranscriptGroupNamesResponse)
+	err := c.cc.Invoke(ctx, Vanalytics_ListTranscriptGroupNames_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *vanalyticsClient) ListAgentResponseValues(ctx context.Context, in *ListAgentResponseValuesRequest, opts ...grpc.CallOption) (*ListAgentResponseValuesResponse, error) {
+	out := new(ListAgentResponseValuesResponse)
+	err := c.cc.Invoke(ctx, Vanalytics_ListAgentResponseValues_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *vanalyticsClient) GetTranscriptSummary(ctx context.Context, in *GetTranscriptSummaryRequest, opts ...grpc.CallOption) (*GetTranscriptSummaryResponse, error) {
+	out := new(GetTranscriptSummaryResponse)
+	err := c.cc.Invoke(ctx, Vanalytics_GetTranscriptSummary_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -146,16 +277,167 @@ func (c *vanalyticsClient) ListFlagFilters(ctx context.Context, in *ListFlagFilt
 	return out, nil
 }
 
+func (c *vanalyticsClient) GetFlag(ctx context.Context, in *GetFlagRequest, opts ...grpc.CallOption) (*Flag, error) {
+	out := new(Flag)
+	err := c.cc.Invoke(ctx, Vanalytics_GetFlag_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *vanalyticsClient) CreateFlag(ctx context.Context, in *CreateFlagRequest, opts ...grpc.CallOption) (*Flag, error) {
+	out := new(Flag)
+	err := c.cc.Invoke(ctx, Vanalytics_CreateFlag_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *vanalyticsClient) ListFlags(ctx context.Context, in *ListFlagsRequest, opts ...grpc.CallOption) (*ListFlagsResponse, error) {
+	out := new(ListFlagsResponse)
+	err := c.cc.Invoke(ctx, Vanalytics_ListFlags_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *vanalyticsClient) UpdateFlag(ctx context.Context, in *UpdateFlagRequest, opts ...grpc.CallOption) (*Flag, error) {
+	out := new(Flag)
+	err := c.cc.Invoke(ctx, Vanalytics_UpdateFlag_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *vanalyticsClient) DeleteFlag(ctx context.Context, in *DeleteFlagRequest, opts ...grpc.CallOption) (*DeleteFlagResponse, error) {
+	out := new(DeleteFlagResponse)
+	err := c.cc.Invoke(ctx, Vanalytics_DeleteFlag_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *vanalyticsClient) CreateFlagReview(ctx context.Context, in *CreateFlagReviewRequest, opts ...grpc.CallOption) (*FlagReview, error) {
+	out := new(FlagReview)
+	err := c.cc.Invoke(ctx, Vanalytics_CreateFlagReview_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *vanalyticsClient) BulkCreateFlagReview(ctx context.Context, in *BulkCreateFlagReviewRequest, opts ...grpc.CallOption) (*BulkCreateFlagReviewResponse, error) {
+	out := new(BulkCreateFlagReviewResponse)
+	err := c.cc.Invoke(ctx, Vanalytics_BulkCreateFlagReview_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *vanalyticsClient) ListFlagReviews(ctx context.Context, in *ListFlagReviewsRequest, opts ...grpc.CallOption) (*ListFlagReviewsResponse, error) {
+	out := new(ListFlagReviewsResponse)
+	err := c.cc.Invoke(ctx, Vanalytics_ListFlagReviews_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *vanalyticsClient) CreateFlagTranscript(ctx context.Context, in *CreateFlagTranscriptRequest, opts ...grpc.CallOption) (*CreateFlagTranscriptResponse, error) {
+	out := new(CreateFlagTranscriptResponse)
+	err := c.cc.Invoke(ctx, Vanalytics_CreateFlagTranscript_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *vanalyticsClient) ListFlagSnapshots(ctx context.Context, in *ListFlagSnapshotsRequest, opts ...grpc.CallOption) (*ListFlagSnapshotsResponse, error) {
+	out := new(ListFlagSnapshotsResponse)
+	err := c.cc.Invoke(ctx, Vanalytics_ListFlagSnapshots_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *vanalyticsClient) CreateCorrection(ctx context.Context, in *CreateCorrectionRequest, opts ...grpc.CallOption) (*CreateCorrectionResponse, error) {
+	out := new(CreateCorrectionResponse)
+	err := c.cc.Invoke(ctx, Vanalytics_CreateCorrection_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *vanalyticsClient) GetCorrection(ctx context.Context, in *GetCorrectionRequest, opts ...grpc.CallOption) (*Correction, error) {
+	out := new(Correction)
+	err := c.cc.Invoke(ctx, Vanalytics_GetCorrection_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *vanalyticsClient) DeleteCorrection(ctx context.Context, in *DeleteCorrectionRequest, opts ...grpc.CallOption) (*DeleteCorrectionResponse, error) {
+	out := new(DeleteCorrectionResponse)
+	err := c.cc.Invoke(ctx, Vanalytics_DeleteCorrection_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *vanalyticsClient) ListCorrections(ctx context.Context, in *ListCorrectionsRequest, opts ...grpc.CallOption) (*ListCorrectionsResponse, error) {
+	out := new(ListCorrectionsResponse)
+	err := c.cc.Invoke(ctx, Vanalytics_ListCorrections_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *vanalyticsClient) UpdateCorrection(ctx context.Context, in *UpdateCorrectionRequest, opts ...grpc.CallOption) (*UpdateCorrectionResponse, error) {
+	out := new(UpdateCorrectionResponse)
+	err := c.cc.Invoke(ctx, Vanalytics_UpdateCorrection_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // VanalyticsServer is the server API for Vanalytics service.
 // All implementations must embed UnimplementedVanalyticsServer
 // for forward compatibility
 type VanalyticsServer interface {
+	// Audit audits the used transcription audio time for a client. The window
+	// of time to audit can be widened or narrowed using the request since and
+	// until fields.
+	Audit(context.Context, *AuditRequest) (*AuditResponse, error)
+	// GetRecordingUrl gets a signed url to download a transcript recording.
+	GetRecordingUrl(context.Context, *GetRecordingUrlRequest) (*GetRecordingUrlResponse, error)
+	// ListBillingSpan lists billing spans.
+	ListBillingSpan(context.Context, *ListBillingSpanRequest) (*ListBillingSpanResponse, error)
 	// SearchTranscripts searches transcripts by search criteria. The search response
 	// contains one page of transcript hits. Traversing the paginated hits is
 	// achieved by making use of the given page token.
 	SearchTranscripts(context.Context, *SearchTranscriptsRequest) (*SearchTranscriptsResponse, error)
 	// BulkDeleteTranscripts bulk deletes transcripts matching the provided query.
 	BulkDeleteTranscripts(context.Context, *BulkDeleteTranscriptsRequest) (*BulkDeleteTranscriptsResponse, error)
+	// BulkRestoreTranscripts bulk restores transcripts matching the provided query.
+	BulkRestoreTranscripts(context.Context, *BulkRestoreTranscriptsRequest) (*BulkRestoreTranscriptsResponse, error)
+	// ListTranscriptGroupNames lists transcript group names.
+	ListTranscriptGroupNames(context.Context, *ListTranscriptGroupNamesRequest) (*ListTranscriptGroupNamesResponse, error)
+	// ListAgentResponseValues lists transcript agent response values.
+	ListAgentResponseValues(context.Context, *ListAgentResponseValuesRequest) (*ListAgentResponseValuesResponse, error)
+	// GetTranscriptSummary gets a transcript summary for a provided transcript.
+	GetTranscriptSummary(context.Context, *GetTranscriptSummaryRequest) (*GetTranscriptSummaryResponse, error)
 	// CreateFilter creates a new filter. The filter contains a transcript query
 	// to filter transcripts.
 	CreateFilter(context.Context, *CreateFilterRequest) (*Filter, error)
@@ -171,6 +453,36 @@ type VanalyticsServer interface {
 	ListFlagTranscriptFilters(context.Context, *ListFlagTranscriptFiltersRequest) (*ListFlagTranscriptFiltersResponse, error)
 	// ListFlagFilters lists flag filter associations.
 	ListFlagFilters(context.Context, *ListFlagFiltersRequest) (*ListFlagFiltersResponse, error)
+	// GetFlag gets a flag.
+	GetFlag(context.Context, *GetFlagRequest) (*Flag, error)
+	// CreateFlag creates a new flag.
+	CreateFlag(context.Context, *CreateFlagRequest) (*Flag, error)
+	// ListFlags lists flags in an organization.
+	ListFlags(context.Context, *ListFlagsRequest) (*ListFlagsResponse, error)
+	// UpdateFlag updates a flag.
+	UpdateFlag(context.Context, *UpdateFlagRequest) (*Flag, error)
+	// DeleteFlag deletes the flag identified by the given flag_sid.
+	DeleteFlag(context.Context, *DeleteFlagRequest) (*DeleteFlagResponse, error)
+	// CreateFlagReview creates a flag review.
+	CreateFlagReview(context.Context, *CreateFlagReviewRequest) (*FlagReview, error)
+	// BulkCreateFlagReview creates flag reviews.
+	BulkCreateFlagReview(context.Context, *BulkCreateFlagReviewRequest) (*BulkCreateFlagReviewResponse, error)
+	// ListFlagReviews lists reviews in an organization.
+	ListFlagReviews(context.Context, *ListFlagReviewsRequest) (*ListFlagReviewsResponse, error)
+	// CreateFlagTranscript creates a flag transcript.
+	CreateFlagTranscript(context.Context, *CreateFlagTranscriptRequest) (*CreateFlagTranscriptResponse, error)
+	// ListFlagSnapshots lists flag snapshots in an organization.
+	ListFlagSnapshots(context.Context, *ListFlagSnapshotsRequest) (*ListFlagSnapshotsResponse, error)
+	// CreateCorrection creates a correction.
+	CreateCorrection(context.Context, *CreateCorrectionRequest) (*CreateCorrectionResponse, error)
+	// GetCorrection gets a correction.
+	GetCorrection(context.Context, *GetCorrectionRequest) (*Correction, error)
+	// DeleteCorrection deletes a correction.
+	DeleteCorrection(context.Context, *DeleteCorrectionRequest) (*DeleteCorrectionResponse, error)
+	// ListCorrections lists corrections.
+	ListCorrections(context.Context, *ListCorrectionsRequest) (*ListCorrectionsResponse, error)
+	// UpdateCorrection updates a correction.
+	UpdateCorrection(context.Context, *UpdateCorrectionRequest) (*UpdateCorrectionResponse, error)
 	mustEmbedUnimplementedVanalyticsServer()
 }
 
@@ -178,11 +490,32 @@ type VanalyticsServer interface {
 type UnimplementedVanalyticsServer struct {
 }
 
+func (UnimplementedVanalyticsServer) Audit(context.Context, *AuditRequest) (*AuditResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Audit not implemented")
+}
+func (UnimplementedVanalyticsServer) GetRecordingUrl(context.Context, *GetRecordingUrlRequest) (*GetRecordingUrlResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRecordingUrl not implemented")
+}
+func (UnimplementedVanalyticsServer) ListBillingSpan(context.Context, *ListBillingSpanRequest) (*ListBillingSpanResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListBillingSpan not implemented")
+}
 func (UnimplementedVanalyticsServer) SearchTranscripts(context.Context, *SearchTranscriptsRequest) (*SearchTranscriptsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SearchTranscripts not implemented")
 }
 func (UnimplementedVanalyticsServer) BulkDeleteTranscripts(context.Context, *BulkDeleteTranscriptsRequest) (*BulkDeleteTranscriptsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BulkDeleteTranscripts not implemented")
+}
+func (UnimplementedVanalyticsServer) BulkRestoreTranscripts(context.Context, *BulkRestoreTranscriptsRequest) (*BulkRestoreTranscriptsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BulkRestoreTranscripts not implemented")
+}
+func (UnimplementedVanalyticsServer) ListTranscriptGroupNames(context.Context, *ListTranscriptGroupNamesRequest) (*ListTranscriptGroupNamesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListTranscriptGroupNames not implemented")
+}
+func (UnimplementedVanalyticsServer) ListAgentResponseValues(context.Context, *ListAgentResponseValuesRequest) (*ListAgentResponseValuesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListAgentResponseValues not implemented")
+}
+func (UnimplementedVanalyticsServer) GetTranscriptSummary(context.Context, *GetTranscriptSummaryRequest) (*GetTranscriptSummaryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTranscriptSummary not implemented")
 }
 func (UnimplementedVanalyticsServer) CreateFilter(context.Context, *CreateFilterRequest) (*Filter, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateFilter not implemented")
@@ -205,6 +538,51 @@ func (UnimplementedVanalyticsServer) ListFlagTranscriptFilters(context.Context, 
 func (UnimplementedVanalyticsServer) ListFlagFilters(context.Context, *ListFlagFiltersRequest) (*ListFlagFiltersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListFlagFilters not implemented")
 }
+func (UnimplementedVanalyticsServer) GetFlag(context.Context, *GetFlagRequest) (*Flag, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFlag not implemented")
+}
+func (UnimplementedVanalyticsServer) CreateFlag(context.Context, *CreateFlagRequest) (*Flag, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateFlag not implemented")
+}
+func (UnimplementedVanalyticsServer) ListFlags(context.Context, *ListFlagsRequest) (*ListFlagsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListFlags not implemented")
+}
+func (UnimplementedVanalyticsServer) UpdateFlag(context.Context, *UpdateFlagRequest) (*Flag, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateFlag not implemented")
+}
+func (UnimplementedVanalyticsServer) DeleteFlag(context.Context, *DeleteFlagRequest) (*DeleteFlagResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteFlag not implemented")
+}
+func (UnimplementedVanalyticsServer) CreateFlagReview(context.Context, *CreateFlagReviewRequest) (*FlagReview, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateFlagReview not implemented")
+}
+func (UnimplementedVanalyticsServer) BulkCreateFlagReview(context.Context, *BulkCreateFlagReviewRequest) (*BulkCreateFlagReviewResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BulkCreateFlagReview not implemented")
+}
+func (UnimplementedVanalyticsServer) ListFlagReviews(context.Context, *ListFlagReviewsRequest) (*ListFlagReviewsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListFlagReviews not implemented")
+}
+func (UnimplementedVanalyticsServer) CreateFlagTranscript(context.Context, *CreateFlagTranscriptRequest) (*CreateFlagTranscriptResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateFlagTranscript not implemented")
+}
+func (UnimplementedVanalyticsServer) ListFlagSnapshots(context.Context, *ListFlagSnapshotsRequest) (*ListFlagSnapshotsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListFlagSnapshots not implemented")
+}
+func (UnimplementedVanalyticsServer) CreateCorrection(context.Context, *CreateCorrectionRequest) (*CreateCorrectionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateCorrection not implemented")
+}
+func (UnimplementedVanalyticsServer) GetCorrection(context.Context, *GetCorrectionRequest) (*Correction, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCorrection not implemented")
+}
+func (UnimplementedVanalyticsServer) DeleteCorrection(context.Context, *DeleteCorrectionRequest) (*DeleteCorrectionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteCorrection not implemented")
+}
+func (UnimplementedVanalyticsServer) ListCorrections(context.Context, *ListCorrectionsRequest) (*ListCorrectionsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListCorrections not implemented")
+}
+func (UnimplementedVanalyticsServer) UpdateCorrection(context.Context, *UpdateCorrectionRequest) (*UpdateCorrectionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateCorrection not implemented")
+}
 func (UnimplementedVanalyticsServer) mustEmbedUnimplementedVanalyticsServer() {}
 
 // UnsafeVanalyticsServer may be embedded to opt out of forward compatibility for this service.
@@ -216,6 +594,60 @@ type UnsafeVanalyticsServer interface {
 
 func RegisterVanalyticsServer(s grpc.ServiceRegistrar, srv VanalyticsServer) {
 	s.RegisterService(&Vanalytics_ServiceDesc, srv)
+}
+
+func _Vanalytics_Audit_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AuditRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VanalyticsServer).Audit(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Vanalytics_Audit_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VanalyticsServer).Audit(ctx, req.(*AuditRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Vanalytics_GetRecordingUrl_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRecordingUrlRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VanalyticsServer).GetRecordingUrl(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Vanalytics_GetRecordingUrl_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VanalyticsServer).GetRecordingUrl(ctx, req.(*GetRecordingUrlRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Vanalytics_ListBillingSpan_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListBillingSpanRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VanalyticsServer).ListBillingSpan(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Vanalytics_ListBillingSpan_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VanalyticsServer).ListBillingSpan(ctx, req.(*ListBillingSpanRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _Vanalytics_SearchTranscripts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -250,6 +682,78 @@ func _Vanalytics_BulkDeleteTranscripts_Handler(srv interface{}, ctx context.Cont
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(VanalyticsServer).BulkDeleteTranscripts(ctx, req.(*BulkDeleteTranscriptsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Vanalytics_BulkRestoreTranscripts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BulkRestoreTranscriptsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VanalyticsServer).BulkRestoreTranscripts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Vanalytics_BulkRestoreTranscripts_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VanalyticsServer).BulkRestoreTranscripts(ctx, req.(*BulkRestoreTranscriptsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Vanalytics_ListTranscriptGroupNames_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListTranscriptGroupNamesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VanalyticsServer).ListTranscriptGroupNames(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Vanalytics_ListTranscriptGroupNames_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VanalyticsServer).ListTranscriptGroupNames(ctx, req.(*ListTranscriptGroupNamesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Vanalytics_ListAgentResponseValues_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListAgentResponseValuesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VanalyticsServer).ListAgentResponseValues(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Vanalytics_ListAgentResponseValues_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VanalyticsServer).ListAgentResponseValues(ctx, req.(*ListAgentResponseValuesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Vanalytics_GetTranscriptSummary_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTranscriptSummaryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VanalyticsServer).GetTranscriptSummary(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Vanalytics_GetTranscriptSummary_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VanalyticsServer).GetTranscriptSummary(ctx, req.(*GetTranscriptSummaryRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -380,6 +884,276 @@ func _Vanalytics_ListFlagFilters_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Vanalytics_GetFlag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetFlagRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VanalyticsServer).GetFlag(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Vanalytics_GetFlag_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VanalyticsServer).GetFlag(ctx, req.(*GetFlagRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Vanalytics_CreateFlag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateFlagRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VanalyticsServer).CreateFlag(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Vanalytics_CreateFlag_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VanalyticsServer).CreateFlag(ctx, req.(*CreateFlagRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Vanalytics_ListFlags_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListFlagsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VanalyticsServer).ListFlags(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Vanalytics_ListFlags_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VanalyticsServer).ListFlags(ctx, req.(*ListFlagsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Vanalytics_UpdateFlag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateFlagRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VanalyticsServer).UpdateFlag(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Vanalytics_UpdateFlag_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VanalyticsServer).UpdateFlag(ctx, req.(*UpdateFlagRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Vanalytics_DeleteFlag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteFlagRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VanalyticsServer).DeleteFlag(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Vanalytics_DeleteFlag_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VanalyticsServer).DeleteFlag(ctx, req.(*DeleteFlagRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Vanalytics_CreateFlagReview_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateFlagReviewRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VanalyticsServer).CreateFlagReview(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Vanalytics_CreateFlagReview_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VanalyticsServer).CreateFlagReview(ctx, req.(*CreateFlagReviewRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Vanalytics_BulkCreateFlagReview_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BulkCreateFlagReviewRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VanalyticsServer).BulkCreateFlagReview(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Vanalytics_BulkCreateFlagReview_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VanalyticsServer).BulkCreateFlagReview(ctx, req.(*BulkCreateFlagReviewRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Vanalytics_ListFlagReviews_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListFlagReviewsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VanalyticsServer).ListFlagReviews(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Vanalytics_ListFlagReviews_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VanalyticsServer).ListFlagReviews(ctx, req.(*ListFlagReviewsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Vanalytics_CreateFlagTranscript_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateFlagTranscriptRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VanalyticsServer).CreateFlagTranscript(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Vanalytics_CreateFlagTranscript_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VanalyticsServer).CreateFlagTranscript(ctx, req.(*CreateFlagTranscriptRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Vanalytics_ListFlagSnapshots_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListFlagSnapshotsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VanalyticsServer).ListFlagSnapshots(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Vanalytics_ListFlagSnapshots_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VanalyticsServer).ListFlagSnapshots(ctx, req.(*ListFlagSnapshotsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Vanalytics_CreateCorrection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateCorrectionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VanalyticsServer).CreateCorrection(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Vanalytics_CreateCorrection_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VanalyticsServer).CreateCorrection(ctx, req.(*CreateCorrectionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Vanalytics_GetCorrection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCorrectionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VanalyticsServer).GetCorrection(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Vanalytics_GetCorrection_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VanalyticsServer).GetCorrection(ctx, req.(*GetCorrectionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Vanalytics_DeleteCorrection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteCorrectionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VanalyticsServer).DeleteCorrection(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Vanalytics_DeleteCorrection_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VanalyticsServer).DeleteCorrection(ctx, req.(*DeleteCorrectionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Vanalytics_ListCorrections_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListCorrectionsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VanalyticsServer).ListCorrections(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Vanalytics_ListCorrections_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VanalyticsServer).ListCorrections(ctx, req.(*ListCorrectionsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Vanalytics_UpdateCorrection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateCorrectionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VanalyticsServer).UpdateCorrection(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Vanalytics_UpdateCorrection_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VanalyticsServer).UpdateCorrection(ctx, req.(*UpdateCorrectionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Vanalytics_ServiceDesc is the grpc.ServiceDesc for Vanalytics service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -388,12 +1162,40 @@ var Vanalytics_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*VanalyticsServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
+			MethodName: "Audit",
+			Handler:    _Vanalytics_Audit_Handler,
+		},
+		{
+			MethodName: "GetRecordingUrl",
+			Handler:    _Vanalytics_GetRecordingUrl_Handler,
+		},
+		{
+			MethodName: "ListBillingSpan",
+			Handler:    _Vanalytics_ListBillingSpan_Handler,
+		},
+		{
 			MethodName: "SearchTranscripts",
 			Handler:    _Vanalytics_SearchTranscripts_Handler,
 		},
 		{
 			MethodName: "BulkDeleteTranscripts",
 			Handler:    _Vanalytics_BulkDeleteTranscripts_Handler,
+		},
+		{
+			MethodName: "BulkRestoreTranscripts",
+			Handler:    _Vanalytics_BulkRestoreTranscripts_Handler,
+		},
+		{
+			MethodName: "ListTranscriptGroupNames",
+			Handler:    _Vanalytics_ListTranscriptGroupNames_Handler,
+		},
+		{
+			MethodName: "ListAgentResponseValues",
+			Handler:    _Vanalytics_ListAgentResponseValues_Handler,
+		},
+		{
+			MethodName: "GetTranscriptSummary",
+			Handler:    _Vanalytics_GetTranscriptSummary_Handler,
 		},
 		{
 			MethodName: "CreateFilter",
@@ -422,6 +1224,66 @@ var Vanalytics_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListFlagFilters",
 			Handler:    _Vanalytics_ListFlagFilters_Handler,
+		},
+		{
+			MethodName: "GetFlag",
+			Handler:    _Vanalytics_GetFlag_Handler,
+		},
+		{
+			MethodName: "CreateFlag",
+			Handler:    _Vanalytics_CreateFlag_Handler,
+		},
+		{
+			MethodName: "ListFlags",
+			Handler:    _Vanalytics_ListFlags_Handler,
+		},
+		{
+			MethodName: "UpdateFlag",
+			Handler:    _Vanalytics_UpdateFlag_Handler,
+		},
+		{
+			MethodName: "DeleteFlag",
+			Handler:    _Vanalytics_DeleteFlag_Handler,
+		},
+		{
+			MethodName: "CreateFlagReview",
+			Handler:    _Vanalytics_CreateFlagReview_Handler,
+		},
+		{
+			MethodName: "BulkCreateFlagReview",
+			Handler:    _Vanalytics_BulkCreateFlagReview_Handler,
+		},
+		{
+			MethodName: "ListFlagReviews",
+			Handler:    _Vanalytics_ListFlagReviews_Handler,
+		},
+		{
+			MethodName: "CreateFlagTranscript",
+			Handler:    _Vanalytics_CreateFlagTranscript_Handler,
+		},
+		{
+			MethodName: "ListFlagSnapshots",
+			Handler:    _Vanalytics_ListFlagSnapshots_Handler,
+		},
+		{
+			MethodName: "CreateCorrection",
+			Handler:    _Vanalytics_CreateCorrection_Handler,
+		},
+		{
+			MethodName: "GetCorrection",
+			Handler:    _Vanalytics_GetCorrection_Handler,
+		},
+		{
+			MethodName: "DeleteCorrection",
+			Handler:    _Vanalytics_DeleteCorrection_Handler,
+		},
+		{
+			MethodName: "ListCorrections",
+			Handler:    _Vanalytics_ListCorrections_Handler,
+		},
+		{
+			MethodName: "UpdateCorrection",
+			Handler:    _Vanalytics_UpdateCorrection_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

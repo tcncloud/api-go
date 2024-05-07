@@ -25,6 +25,7 @@ const (
 	LabelsService_ListLabels_FullMethodName          = "/api.v1alpha1.org.labels.LabelsService/ListLabels"
 	LabelsService_DeleteLabel_FullMethodName         = "/api.v1alpha1.org.labels.LabelsService/DeleteLabel"
 	LabelsService_AttachLabel_FullMethodName         = "/api.v1alpha1.org.labels.LabelsService/AttachLabel"
+	LabelsService_DetachLabel_FullMethodName         = "/api.v1alpha1.org.labels.LabelsService/DetachLabel"
 	LabelsService_GetLabeledEntityMap_FullMethodName = "/api.v1alpha1.org.labels.LabelsService/GetLabeledEntityMap"
 )
 
@@ -44,6 +45,8 @@ type LabelsServiceClient interface {
 	DeleteLabel(ctx context.Context, in *DeleteLabelRequest, opts ...grpc.CallOption) (*DeleteLabelResponse, error)
 	// AttachLabel attaches a label to a given entity type
 	AttachLabel(ctx context.Context, in *AttachLabelRequest, opts ...grpc.CallOption) (*AttachLabelResponse, error)
+	// DetachLabel detaches a label from an entity based on an entity type
+	DetachLabel(ctx context.Context, in *DetachLabelRequest, opts ...grpc.CallOption) (*DetachLabelResponse, error)
 	// GetLabeledEntityMap gives back a map of entity Id to attached labels. The Entity type is specified on the request
 	GetLabeledEntityMap(ctx context.Context, in *GetLabeledEntityMapRequest, opts ...grpc.CallOption) (*GetLabeledEntityMapResponse, error)
 }
@@ -110,6 +113,15 @@ func (c *labelsServiceClient) AttachLabel(ctx context.Context, in *AttachLabelRe
 	return out, nil
 }
 
+func (c *labelsServiceClient) DetachLabel(ctx context.Context, in *DetachLabelRequest, opts ...grpc.CallOption) (*DetachLabelResponse, error) {
+	out := new(DetachLabelResponse)
+	err := c.cc.Invoke(ctx, LabelsService_DetachLabel_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *labelsServiceClient) GetLabeledEntityMap(ctx context.Context, in *GetLabeledEntityMapRequest, opts ...grpc.CallOption) (*GetLabeledEntityMapResponse, error) {
 	out := new(GetLabeledEntityMapResponse)
 	err := c.cc.Invoke(ctx, LabelsService_GetLabeledEntityMap_FullMethodName, in, out, opts...)
@@ -135,6 +147,8 @@ type LabelsServiceServer interface {
 	DeleteLabel(context.Context, *DeleteLabelRequest) (*DeleteLabelResponse, error)
 	// AttachLabel attaches a label to a given entity type
 	AttachLabel(context.Context, *AttachLabelRequest) (*AttachLabelResponse, error)
+	// DetachLabel detaches a label from an entity based on an entity type
+	DetachLabel(context.Context, *DetachLabelRequest) (*DetachLabelResponse, error)
 	// GetLabeledEntityMap gives back a map of entity Id to attached labels. The Entity type is specified on the request
 	GetLabeledEntityMap(context.Context, *GetLabeledEntityMapRequest) (*GetLabeledEntityMapResponse, error)
 	mustEmbedUnimplementedLabelsServiceServer()
@@ -161,6 +175,9 @@ func (UnimplementedLabelsServiceServer) DeleteLabel(context.Context, *DeleteLabe
 }
 func (UnimplementedLabelsServiceServer) AttachLabel(context.Context, *AttachLabelRequest) (*AttachLabelResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AttachLabel not implemented")
+}
+func (UnimplementedLabelsServiceServer) DetachLabel(context.Context, *DetachLabelRequest) (*DetachLabelResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DetachLabel not implemented")
 }
 func (UnimplementedLabelsServiceServer) GetLabeledEntityMap(context.Context, *GetLabeledEntityMapRequest) (*GetLabeledEntityMapResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLabeledEntityMap not implemented")
@@ -286,6 +303,24 @@ func _LabelsService_AttachLabel_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LabelsService_DetachLabel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DetachLabelRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LabelsServiceServer).DetachLabel(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LabelsService_DetachLabel_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LabelsServiceServer).DetachLabel(ctx, req.(*DetachLabelRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _LabelsService_GetLabeledEntityMap_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetLabeledEntityMapRequest)
 	if err := dec(in); err != nil {
@@ -334,6 +369,10 @@ var LabelsService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AttachLabel",
 			Handler:    _LabelsService_AttachLabel_Handler,
+		},
+		{
+			MethodName: "DetachLabel",
+			Handler:    _LabelsService_DetachLabel_Handler,
 		},
 		{
 			MethodName: "GetLabeledEntityMap",
