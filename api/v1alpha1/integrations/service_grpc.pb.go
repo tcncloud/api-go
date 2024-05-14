@@ -48,6 +48,7 @@ const (
 	Integrations_CallEpicPatient_FullMethodName                     = "/api.v1alpha1.integrations.Integrations/CallEpicPatient"
 	Integrations_HangUpEpicPatientCall_FullMethodName               = "/api.v1alpha1.integrations.Integrations/HangUpEpicPatientCall"
 	Integrations_GenerateEpicKeyPairs_FullMethodName                = "/api.v1alpha1.integrations.Integrations/GenerateEpicKeyPairs"
+	Integrations_PopulateIntegrationLink_FullMethodName             = "/api.v1alpha1.integrations.Integrations/PopulateIntegrationLink"
 )
 
 // IntegrationsClient is the client API for Integrations service.
@@ -112,6 +113,7 @@ type IntegrationsClient interface {
 	HangUpEpicPatientCall(ctx context.Context, in *HangUpEpicPatientCallReq, opts ...grpc.CallOption) (*Empty, error)
 	// GenerateEpicKeyPairs creates 2 key pairs, stores the private keys, and returns the public keys
 	GenerateEpicKeyPairs(ctx context.Context, in *GenerateEpicKeyPairReq, opts ...grpc.CallOption) (*GenerateEpicKeyPairRes, error)
+	PopulateIntegrationLink(ctx context.Context, in *PopulateIntegrationLinkReq, opts ...grpc.CallOption) (*PopulateIntegrationLinkRes, error)
 }
 
 type integrationsClient struct {
@@ -383,6 +385,15 @@ func (c *integrationsClient) GenerateEpicKeyPairs(ctx context.Context, in *Gener
 	return out, nil
 }
 
+func (c *integrationsClient) PopulateIntegrationLink(ctx context.Context, in *PopulateIntegrationLinkReq, opts ...grpc.CallOption) (*PopulateIntegrationLinkRes, error) {
+	out := new(PopulateIntegrationLinkRes)
+	err := c.cc.Invoke(ctx, Integrations_PopulateIntegrationLink_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // IntegrationsServer is the server API for Integrations service.
 // All implementations must embed UnimplementedIntegrationsServer
 // for forward compatibility
@@ -445,6 +456,7 @@ type IntegrationsServer interface {
 	HangUpEpicPatientCall(context.Context, *HangUpEpicPatientCallReq) (*Empty, error)
 	// GenerateEpicKeyPairs creates 2 key pairs, stores the private keys, and returns the public keys
 	GenerateEpicKeyPairs(context.Context, *GenerateEpicKeyPairReq) (*GenerateEpicKeyPairRes, error)
+	PopulateIntegrationLink(context.Context, *PopulateIntegrationLinkReq) (*PopulateIntegrationLinkRes, error)
 	mustEmbedUnimplementedIntegrationsServer()
 }
 
@@ -538,6 +550,9 @@ func (UnimplementedIntegrationsServer) HangUpEpicPatientCall(context.Context, *H
 }
 func (UnimplementedIntegrationsServer) GenerateEpicKeyPairs(context.Context, *GenerateEpicKeyPairReq) (*GenerateEpicKeyPairRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GenerateEpicKeyPairs not implemented")
+}
+func (UnimplementedIntegrationsServer) PopulateIntegrationLink(context.Context, *PopulateIntegrationLinkReq) (*PopulateIntegrationLinkRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PopulateIntegrationLink not implemented")
 }
 func (UnimplementedIntegrationsServer) mustEmbedUnimplementedIntegrationsServer() {}
 
@@ -1074,6 +1089,24 @@ func _Integrations_GenerateEpicKeyPairs_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Integrations_PopulateIntegrationLink_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PopulateIntegrationLinkReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IntegrationsServer).PopulateIntegrationLink(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Integrations_PopulateIntegrationLink_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IntegrationsServer).PopulateIntegrationLink(ctx, req.(*PopulateIntegrationLinkReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Integrations_ServiceDesc is the grpc.ServiceDesc for Integrations service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1196,6 +1229,10 @@ var Integrations_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GenerateEpicKeyPairs",
 			Handler:    _Integrations_GenerateEpicKeyPairs_Handler,
+		},
+		{
+			MethodName: "PopulateIntegrationLink",
+			Handler:    _Integrations_PopulateIntegrationLink_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

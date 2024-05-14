@@ -118,6 +118,9 @@ const (
 	// IntegrationsGenerateEpicKeyPairsProcedure is the fully-qualified name of the Integrations's
 	// GenerateEpicKeyPairs RPC.
 	IntegrationsGenerateEpicKeyPairsProcedure = "/api.v1alpha1.integrations.Integrations/GenerateEpicKeyPairs"
+	// IntegrationsPopulateIntegrationLinkProcedure is the fully-qualified name of the Integrations's
+	// PopulateIntegrationLink RPC.
+	IntegrationsPopulateIntegrationLinkProcedure = "/api.v1alpha1.integrations.Integrations/PopulateIntegrationLink"
 )
 
 // IntegrationsClient is a client for the api.v1alpha1.integrations.Integrations service.
@@ -180,6 +183,7 @@ type IntegrationsClient interface {
 	HangUpEpicPatientCall(context.Context, *connect_go.Request[integrations.HangUpEpicPatientCallReq]) (*connect_go.Response[integrations.Empty], error)
 	// GenerateEpicKeyPairs creates 2 key pairs, stores the private keys, and returns the public keys
 	GenerateEpicKeyPairs(context.Context, *connect_go.Request[integrations.GenerateEpicKeyPairReq]) (*connect_go.Response[integrations.GenerateEpicKeyPairRes], error)
+	PopulateIntegrationLink(context.Context, *connect_go.Request[integrations.PopulateIntegrationLinkReq]) (*connect_go.Response[integrations.PopulateIntegrationLinkRes], error)
 }
 
 // NewIntegrationsClient constructs a client for the api.v1alpha1.integrations.Integrations service.
@@ -337,6 +341,11 @@ func NewIntegrationsClient(httpClient connect_go.HTTPClient, baseURL string, opt
 			baseURL+IntegrationsGenerateEpicKeyPairsProcedure,
 			opts...,
 		),
+		populateIntegrationLink: connect_go.NewClient[integrations.PopulateIntegrationLinkReq, integrations.PopulateIntegrationLinkRes](
+			httpClient,
+			baseURL+IntegrationsPopulateIntegrationLinkProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -371,6 +380,7 @@ type integrationsClient struct {
 	callEpicPatient                     *connect_go.Client[integrations.CallEpicPatientReq, integrations.CallEpicPatientRes]
 	hangUpEpicPatientCall               *connect_go.Client[integrations.HangUpEpicPatientCallReq, integrations.Empty]
 	generateEpicKeyPairs                *connect_go.Client[integrations.GenerateEpicKeyPairReq, integrations.GenerateEpicKeyPairRes]
+	populateIntegrationLink             *connect_go.Client[integrations.PopulateIntegrationLinkReq, integrations.PopulateIntegrationLinkRes]
 }
 
 // Process calls api.v1alpha1.integrations.Integrations.Process.
@@ -522,6 +532,11 @@ func (c *integrationsClient) GenerateEpicKeyPairs(ctx context.Context, req *conn
 	return c.generateEpicKeyPairs.CallUnary(ctx, req)
 }
 
+// PopulateIntegrationLink calls api.v1alpha1.integrations.Integrations.PopulateIntegrationLink.
+func (c *integrationsClient) PopulateIntegrationLink(ctx context.Context, req *connect_go.Request[integrations.PopulateIntegrationLinkReq]) (*connect_go.Response[integrations.PopulateIntegrationLinkRes], error) {
+	return c.populateIntegrationLink.CallUnary(ctx, req)
+}
+
 // IntegrationsHandler is an implementation of the api.v1alpha1.integrations.Integrations service.
 type IntegrationsHandler interface {
 	// combine rquest parameters with the config parameters and run the integration method
@@ -582,6 +597,7 @@ type IntegrationsHandler interface {
 	HangUpEpicPatientCall(context.Context, *connect_go.Request[integrations.HangUpEpicPatientCallReq]) (*connect_go.Response[integrations.Empty], error)
 	// GenerateEpicKeyPairs creates 2 key pairs, stores the private keys, and returns the public keys
 	GenerateEpicKeyPairs(context.Context, *connect_go.Request[integrations.GenerateEpicKeyPairReq]) (*connect_go.Response[integrations.GenerateEpicKeyPairRes], error)
+	PopulateIntegrationLink(context.Context, *connect_go.Request[integrations.PopulateIntegrationLinkReq]) (*connect_go.Response[integrations.PopulateIntegrationLinkRes], error)
 }
 
 // NewIntegrationsHandler builds an HTTP handler from the service implementation. It returns the
@@ -735,6 +751,11 @@ func NewIntegrationsHandler(svc IntegrationsHandler, opts ...connect_go.HandlerO
 		svc.GenerateEpicKeyPairs,
 		opts...,
 	)
+	integrationsPopulateIntegrationLinkHandler := connect_go.NewUnaryHandler(
+		IntegrationsPopulateIntegrationLinkProcedure,
+		svc.PopulateIntegrationLink,
+		opts...,
+	)
 	return "/api.v1alpha1.integrations.Integrations/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case IntegrationsProcessProcedure:
@@ -795,6 +816,8 @@ func NewIntegrationsHandler(svc IntegrationsHandler, opts ...connect_go.HandlerO
 			integrationsHangUpEpicPatientCallHandler.ServeHTTP(w, r)
 		case IntegrationsGenerateEpicKeyPairsProcedure:
 			integrationsGenerateEpicKeyPairsHandler.ServeHTTP(w, r)
+		case IntegrationsPopulateIntegrationLinkProcedure:
+			integrationsPopulateIntegrationLinkHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -918,4 +941,8 @@ func (UnimplementedIntegrationsHandler) HangUpEpicPatientCall(context.Context, *
 
 func (UnimplementedIntegrationsHandler) GenerateEpicKeyPairs(context.Context, *connect_go.Request[integrations.GenerateEpicKeyPairReq]) (*connect_go.Response[integrations.GenerateEpicKeyPairRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.integrations.Integrations.GenerateEpicKeyPairs is not implemented"))
+}
+
+func (UnimplementedIntegrationsHandler) PopulateIntegrationLink(context.Context, *connect_go.Request[integrations.PopulateIntegrationLinkReq]) (*connect_go.Response[integrations.PopulateIntegrationLinkRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.integrations.Integrations.PopulateIntegrationLink is not implemented"))
 }
