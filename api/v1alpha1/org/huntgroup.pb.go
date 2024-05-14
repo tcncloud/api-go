@@ -4383,6 +4383,477 @@ func (*UnassignScriptFromHuntGroupsResponse) Descriptor() ([]byte, []int) {
 	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{83}
 }
 
+// Request for the ListResponseEvaluators RPC.
+type ListResponseEvaluatorsRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *ListResponseEvaluatorsRequest) Reset() {
+	*x = ListResponseEvaluatorsRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[84]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ListResponseEvaluatorsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListResponseEvaluatorsRequest) ProtoMessage() {}
+
+func (x *ListResponseEvaluatorsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[84]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListResponseEvaluatorsRequest.ProtoReflect.Descriptor instead.
+func (*ListResponseEvaluatorsRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{84}
+}
+
+// Response for the ListResponseEvaluators RPC.
+type ListResponseEvaluatorsResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// List of response evaluators for the organization.
+	Evaluators []*org.ResponseEvaluator `protobuf:"bytes,1,rep,name=evaluators,proto3" json:"evaluators,omitempty"`
+}
+
+func (x *ListResponseEvaluatorsResponse) Reset() {
+	*x = ListResponseEvaluatorsResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[85]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ListResponseEvaluatorsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListResponseEvaluatorsResponse) ProtoMessage() {}
+
+func (x *ListResponseEvaluatorsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[85]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListResponseEvaluatorsResponse.ProtoReflect.Descriptor instead.
+func (*ListResponseEvaluatorsResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{85}
+}
+
+func (x *ListResponseEvaluatorsResponse) GetEvaluators() []*org.ResponseEvaluator {
+	if x != nil {
+		return x.Evaluators
+	}
+	return nil
+}
+
+// Request for the GetResponseEvaluator RPC.
+type GetResponseEvaluatorRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// ID of the requested response evaluator.
+	EvaluatorId string `protobuf:"bytes,1,opt,name=evaluator_id,json=evaluatorId,proto3" json:"evaluator_id,omitempty"`
+}
+
+func (x *GetResponseEvaluatorRequest) Reset() {
+	*x = GetResponseEvaluatorRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[86]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetResponseEvaluatorRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetResponseEvaluatorRequest) ProtoMessage() {}
+
+func (x *GetResponseEvaluatorRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[86]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetResponseEvaluatorRequest.ProtoReflect.Descriptor instead.
+func (*GetResponseEvaluatorRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{86}
+}
+
+func (x *GetResponseEvaluatorRequest) GetEvaluatorId() string {
+	if x != nil {
+		return x.EvaluatorId
+	}
+	return ""
+}
+
+// Response for the GetResponseEvaluator RPC.
+type GetResponseEvaluatorResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Requested evaluator.
+	Evaluator *org.ResponseEvaluator `protobuf:"bytes,1,opt,name=evaluator,proto3" json:"evaluator,omitempty"`
+}
+
+func (x *GetResponseEvaluatorResponse) Reset() {
+	*x = GetResponseEvaluatorResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[87]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetResponseEvaluatorResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetResponseEvaluatorResponse) ProtoMessage() {}
+
+func (x *GetResponseEvaluatorResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[87]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetResponseEvaluatorResponse.ProtoReflect.Descriptor instead.
+func (*GetResponseEvaluatorResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{87}
+}
+
+func (x *GetResponseEvaluatorResponse) GetEvaluator() *org.ResponseEvaluator {
+	if x != nil {
+		return x.Evaluator
+	}
+	return nil
+}
+
+// Request for the CreateResponseEvaluator RPC.
+type CreateResponseEvaluatorRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Response evaluator to create. response_evaluator_id
+	// will be generated
+	Evaluator *org.ResponseEvaluator `protobuf:"bytes,1,opt,name=evaluator,proto3" json:"evaluator,omitempty"`
+}
+
+func (x *CreateResponseEvaluatorRequest) Reset() {
+	*x = CreateResponseEvaluatorRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[88]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CreateResponseEvaluatorRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateResponseEvaluatorRequest) ProtoMessage() {}
+
+func (x *CreateResponseEvaluatorRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[88]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateResponseEvaluatorRequest.ProtoReflect.Descriptor instead.
+func (*CreateResponseEvaluatorRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{88}
+}
+
+func (x *CreateResponseEvaluatorRequest) GetEvaluator() *org.ResponseEvaluator {
+	if x != nil {
+		return x.Evaluator
+	}
+	return nil
+}
+
+// Response for the CreateResponseEvaluator RPC.
+type CreateResponseEvaluatorResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Created response evaluator.
+	Evaluator *org.ResponseEvaluator `protobuf:"bytes,1,opt,name=evaluator,proto3" json:"evaluator,omitempty"`
+}
+
+func (x *CreateResponseEvaluatorResponse) Reset() {
+	*x = CreateResponseEvaluatorResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[89]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CreateResponseEvaluatorResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateResponseEvaluatorResponse) ProtoMessage() {}
+
+func (x *CreateResponseEvaluatorResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[89]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateResponseEvaluatorResponse.ProtoReflect.Descriptor instead.
+func (*CreateResponseEvaluatorResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{89}
+}
+
+func (x *CreateResponseEvaluatorResponse) GetEvaluator() *org.ResponseEvaluator {
+	if x != nil {
+		return x.Evaluator
+	}
+	return nil
+}
+
+// Request for the UpdateResponseEvaluator RPC.
+type UpdateResponseEvaluatorRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Response evaluator to update, must provide full entity.
+	Evaluator *org.ResponseEvaluator `protobuf:"bytes,1,opt,name=evaluator,proto3" json:"evaluator,omitempty"`
+}
+
+func (x *UpdateResponseEvaluatorRequest) Reset() {
+	*x = UpdateResponseEvaluatorRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[90]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UpdateResponseEvaluatorRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateResponseEvaluatorRequest) ProtoMessage() {}
+
+func (x *UpdateResponseEvaluatorRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[90]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateResponseEvaluatorRequest.ProtoReflect.Descriptor instead.
+func (*UpdateResponseEvaluatorRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{90}
+}
+
+func (x *UpdateResponseEvaluatorRequest) GetEvaluator() *org.ResponseEvaluator {
+	if x != nil {
+		return x.Evaluator
+	}
+	return nil
+}
+
+// Response for the UpdateResponseEvaluator RPC.
+type UpdateResponseEvaluatorResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Updated response evaluator.
+	Evaluator *org.ResponseEvaluator `protobuf:"bytes,1,opt,name=evaluator,proto3" json:"evaluator,omitempty"`
+}
+
+func (x *UpdateResponseEvaluatorResponse) Reset() {
+	*x = UpdateResponseEvaluatorResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[91]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UpdateResponseEvaluatorResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateResponseEvaluatorResponse) ProtoMessage() {}
+
+func (x *UpdateResponseEvaluatorResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[91]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateResponseEvaluatorResponse.ProtoReflect.Descriptor instead.
+func (*UpdateResponseEvaluatorResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{91}
+}
+
+func (x *UpdateResponseEvaluatorResponse) GetEvaluator() *org.ResponseEvaluator {
+	if x != nil {
+		return x.Evaluator
+	}
+	return nil
+}
+
+// Request for the DeleteResponseEvaluator RPC.
+type DeleteResponseEvaluatorRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// ID of the evaluator to delete. Will be hard deleted.
+	EvaluatorId string `protobuf:"bytes,1,opt,name=evaluator_id,json=evaluatorId,proto3" json:"evaluator_id,omitempty"`
+}
+
+func (x *DeleteResponseEvaluatorRequest) Reset() {
+	*x = DeleteResponseEvaluatorRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[92]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DeleteResponseEvaluatorRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteResponseEvaluatorRequest) ProtoMessage() {}
+
+func (x *DeleteResponseEvaluatorRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[92]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteResponseEvaluatorRequest.ProtoReflect.Descriptor instead.
+func (*DeleteResponseEvaluatorRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{92}
+}
+
+func (x *DeleteResponseEvaluatorRequest) GetEvaluatorId() string {
+	if x != nil {
+		return x.EvaluatorId
+	}
+	return ""
+}
+
+// Response for the DeleteResponseEvaluator RPC.
+type DeleteResponseEvaluatorResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *DeleteResponseEvaluatorResponse) Reset() {
+	*x = DeleteResponseEvaluatorResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[93]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DeleteResponseEvaluatorResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteResponseEvaluatorResponse) ProtoMessage() {}
+
+func (x *DeleteResponseEvaluatorResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[93]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteResponseEvaluatorResponse.ProtoReflect.Descriptor instead.
+func (*DeleteResponseEvaluatorResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP(), []int{93}
+}
+
 type ListBroadcastTemplateGeneralDetailsResponse_Data struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -4401,7 +4872,7 @@ type ListBroadcastTemplateGeneralDetailsResponse_Data struct {
 func (x *ListBroadcastTemplateGeneralDetailsResponse_Data) Reset() {
 	*x = ListBroadcastTemplateGeneralDetailsResponse_Data{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[84]
+		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[94]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4414,7 +4885,7 @@ func (x *ListBroadcastTemplateGeneralDetailsResponse_Data) String() string {
 func (*ListBroadcastTemplateGeneralDetailsResponse_Data) ProtoMessage() {}
 
 func (x *ListBroadcastTemplateGeneralDetailsResponse_Data) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[84]
+	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[94]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4477,7 +4948,7 @@ type GetHuntGroupScriptResponse_HuntGroupScriptDetails struct {
 func (x *GetHuntGroupScriptResponse_HuntGroupScriptDetails) Reset() {
 	*x = GetHuntGroupScriptResponse_HuntGroupScriptDetails{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[85]
+		mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[95]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4490,7 +4961,7 @@ func (x *GetHuntGroupScriptResponse_HuntGroupScriptDetails) String() string {
 func (*GetHuntGroupScriptResponse_HuntGroupScriptDetails) ProtoMessage() {}
 
 func (x *GetHuntGroupScriptResponse_HuntGroupScriptDetails) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[85]
+	mi := &file_api_v1alpha1_org_huntgroup_proto_msgTypes[95]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5150,19 +5621,69 @@ var file_api_v1alpha1_org_huntgroup_proto_rawDesc = []byte{
 	0x47, 0x72, 0x6f, 0x75, 0x70, 0x53, 0x69, 0x64, 0x73, 0x22, 0x26, 0x0a, 0x24, 0x55, 0x6e, 0x61,
 	0x73, 0x73, 0x69, 0x67, 0x6e, 0x53, 0x63, 0x72, 0x69, 0x70, 0x74, 0x46, 0x72, 0x6f, 0x6d, 0x48,
 	0x75, 0x6e, 0x74, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
-	0x65, 0x42, 0xb5, 0x01, 0x0a, 0x14, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31,
-	0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x6f, 0x72, 0x67, 0x42, 0x0e, 0x48, 0x75, 0x6e, 0x74,
-	0x67, 0x72, 0x6f, 0x75, 0x70, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x2b, 0x67, 0x69,
-	0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75,
-	0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61,
-	0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x6f, 0x72, 0x67, 0xa2, 0x02, 0x03, 0x41, 0x56, 0x4f, 0xaa,
-	0x02, 0x10, 0x41, 0x70, 0x69, 0x2e, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x4f,
-	0x72, 0x67, 0xca, 0x02, 0x10, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61,
-	0x31, 0x5c, 0x4f, 0x72, 0x67, 0xe2, 0x02, 0x1c, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c,
-	0x70, 0x68, 0x61, 0x31, 0x5c, 0x4f, 0x72, 0x67, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61,
-	0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x12, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x56, 0x31, 0x61, 0x6c,
-	0x70, 0x68, 0x61, 0x31, 0x3a, 0x3a, 0x4f, 0x72, 0x67, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x33,
+	0x65, 0x22, 0x1f, 0x0a, 0x1d, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x45, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x6f, 0x72, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x22, 0x64, 0x0a, 0x1e, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x45, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x6f, 0x72, 0x73, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x42, 0x0a, 0x0a, 0x65, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x6f,
+	0x72, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x22, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63,
+	0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x45, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x6f, 0x72, 0x52, 0x0a, 0x65, 0x76,
+	0x61, 0x6c, 0x75, 0x61, 0x74, 0x6f, 0x72, 0x73, 0x22, 0x40, 0x0a, 0x1b, 0x47, 0x65, 0x74, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x45, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x6f, 0x72,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x21, 0x0a, 0x0c, 0x65, 0x76, 0x61, 0x6c, 0x75,
+	0x61, 0x74, 0x6f, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x65,
+	0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x6f, 0x72, 0x49, 0x64, 0x22, 0x60, 0x0a, 0x1c, 0x47, 0x65,
+	0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x45, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74,
+	0x6f, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x40, 0x0a, 0x09, 0x65, 0x76,
+	0x61, 0x6c, 0x75, 0x61, 0x74, 0x6f, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x22, 0x2e,
+	0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x6f, 0x72, 0x67, 0x2e,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x45, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x6f,
+	0x72, 0x52, 0x09, 0x65, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x6f, 0x72, 0x22, 0x62, 0x0a, 0x1e,
+	0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x45, 0x76,
+	0x61, 0x6c, 0x75, 0x61, 0x74, 0x6f, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x40,
+	0x0a, 0x09, 0x65, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x6f, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x0b, 0x32, 0x22, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e,
+	0x6f, 0x72, 0x67, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x45, 0x76, 0x61, 0x6c,
+	0x75, 0x61, 0x74, 0x6f, 0x72, 0x52, 0x09, 0x65, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x6f, 0x72,
+	0x22, 0x63, 0x0a, 0x1f, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x45, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x6f, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x12, 0x40, 0x0a, 0x09, 0x65, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x6f, 0x72,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x22, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d,
+	0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x45, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x6f, 0x72, 0x52, 0x09, 0x65, 0x76, 0x61, 0x6c,
+	0x75, 0x61, 0x74, 0x6f, 0x72, 0x22, 0x62, 0x0a, 0x1e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x45, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x6f, 0x72,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x40, 0x0a, 0x09, 0x65, 0x76, 0x61, 0x6c, 0x75,
+	0x61, 0x74, 0x6f, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x22, 0x2e, 0x61, 0x70, 0x69,
+	0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x45, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x6f, 0x72, 0x52, 0x09,
+	0x65, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x6f, 0x72, 0x22, 0x63, 0x0a, 0x1f, 0x55, 0x70, 0x64,
+	0x61, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x45, 0x76, 0x61, 0x6c, 0x75,
+	0x61, 0x74, 0x6f, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x40, 0x0a, 0x09,
+	0x65, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x6f, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x22, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x6f, 0x72,
+	0x67, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x45, 0x76, 0x61, 0x6c, 0x75, 0x61,
+	0x74, 0x6f, 0x72, 0x52, 0x09, 0x65, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x6f, 0x72, 0x22, 0x43,
+	0x0a, 0x1e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x45, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x6f, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x12, 0x21, 0x0a, 0x0c, 0x65, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x6f, 0x72, 0x5f, 0x69, 0x64,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x65, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x6f,
+	0x72, 0x49, 0x64, 0x22, 0x21, 0x0a, 0x1f, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x45, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x6f, 0x72, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0xb5, 0x01, 0x0a, 0x14, 0x63, 0x6f, 0x6d, 0x2e, 0x61,
+	0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x6f, 0x72, 0x67, 0x42,
+	0x0e, 0x48, 0x75, 0x6e, 0x74, 0x67, 0x72, 0x6f, 0x75, 0x70, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50,
+	0x01, 0x5a, 0x2b, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63,
+	0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70,
+	0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x6f, 0x72, 0x67, 0xa2, 0x02,
+	0x03, 0x41, 0x56, 0x4f, 0xaa, 0x02, 0x10, 0x41, 0x70, 0x69, 0x2e, 0x56, 0x31, 0x61, 0x6c, 0x70,
+	0x68, 0x61, 0x31, 0x2e, 0x4f, 0x72, 0x67, 0xca, 0x02, 0x10, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31,
+	0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x4f, 0x72, 0x67, 0xe2, 0x02, 0x1c, 0x41, 0x70, 0x69,
+	0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x4f, 0x72, 0x67, 0x5c, 0x47, 0x50,
+	0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x12, 0x41, 0x70, 0x69, 0x3a,
+	0x3a, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x3a, 0x3a, 0x4f, 0x72, 0x67, 0x62, 0x06,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -5178,7 +5699,7 @@ func file_api_v1alpha1_org_huntgroup_proto_rawDescGZIP() []byte {
 }
 
 var file_api_v1alpha1_org_huntgroup_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_api_v1alpha1_org_huntgroup_proto_msgTypes = make([]protoimpl.MessageInfo, 86)
+var file_api_v1alpha1_org_huntgroup_proto_msgTypes = make([]protoimpl.MessageInfo, 96)
 var file_api_v1alpha1_org_huntgroup_proto_goTypes = []interface{}{
 	(ListHuntGroupsWithClientInfoTemplateDataRequest_Filter)(0), // 0: api.v1alpha1.org.ListHuntGroupsWithClientInfoTemplateDataRequest.Filter
 	(*GetHuntGroupSettingsRequest)(nil),                         // 1: api.v1alpha1.org.GetHuntGroupSettingsRequest
@@ -5265,90 +5786,107 @@ var file_api_v1alpha1_org_huntgroup_proto_goTypes = []interface{}{
 	(*AssignScriptToHuntGroupsResponse)(nil),                    // 82: api.v1alpha1.org.AssignScriptToHuntGroupsResponse
 	(*UnassignScriptFromHuntGroupsRequest)(nil),                 // 83: api.v1alpha1.org.UnassignScriptFromHuntGroupsRequest
 	(*UnassignScriptFromHuntGroupsResponse)(nil),                // 84: api.v1alpha1.org.UnassignScriptFromHuntGroupsResponse
-	(*ListBroadcastTemplateGeneralDetailsResponse_Data)(nil),    // 85: api.v1alpha1.org.ListBroadcastTemplateGeneralDetailsResponse.Data
-	(*GetHuntGroupScriptResponse_HuntGroupScriptDetails)(nil),   // 86: api.v1alpha1.org.GetHuntGroupScriptResponse.HuntGroupScriptDetails
-	(*fieldmaskpb.FieldMask)(nil),                               // 87: google.protobuf.FieldMask
-	(*org.GeneralSettings)(nil),                                 // 88: api.commons.org.GeneralSettings
-	(*org.CommunicationSettings)(nil),                           // 89: api.commons.org.CommunicationSettings
-	(*org.CallbackSettings)(nil),                                // 90: api.commons.org.CallbackSettings
-	(*org.PreviewDialSettings)(nil),                             // 91: api.commons.org.PreviewDialSettings
-	(*org.ManualDialSettings)(nil),                              // 92: api.commons.org.ManualDialSettings
-	(*org.TransferCallSettings)(nil),                            // 93: api.commons.org.TransferCallSettings
-	(*org.NumberHistorySettings)(nil),                           // 94: api.commons.org.NumberHistorySettings
-	(org.HuntGroupType)(0),                                      // 95: api.commons.org.HuntGroupType
-	(*org.HuntGroupDetails)(nil),                                // 96: api.commons.org.HuntGroupDetails
-	(*org.CallerIdBucketData)(nil),                              // 97: api.commons.org.CallerIdBucketData
-	(*org.DataDipConfig)(nil),                                   // 98: api.commons.org.DataDipConfig
-	(commons.DataDipTemplateFilterType)(0),                      // 99: api.commons.DataDipTemplateFilterType
-	(*org.AgentResponseAutoRuleSet)(nil),                        // 100: api.commons.org.AgentResponseAutoRuleSet
-	(*org.ClientInfoDisplayTemplate)(nil),                       // 101: api.commons.org.ClientInfoDisplayTemplate
-	(*org.HuntGroupWithClientInfoTemplateData)(nil),             // 102: api.commons.org.HuntGroupWithClientInfoTemplateData
-	(*org.WebLink)(nil),                                         // 103: api.commons.org.WebLink
-	(*org.IntegrationLink)(nil),                                 // 104: api.commons.org.IntegrationLink
-	(*org.AgentTrigger)(nil),                                    // 105: api.commons.org.AgentTrigger
-	(*org.HuntGroupScript)(nil),                                 // 106: api.commons.org.HuntGroupScript
-	(commons.BroadcastType)(0),                                  // 107: api.commons.BroadcastType
-	(*timestamppb.Timestamp)(nil),                               // 108: google.protobuf.Timestamp
+	(*ListResponseEvaluatorsRequest)(nil),                       // 85: api.v1alpha1.org.ListResponseEvaluatorsRequest
+	(*ListResponseEvaluatorsResponse)(nil),                      // 86: api.v1alpha1.org.ListResponseEvaluatorsResponse
+	(*GetResponseEvaluatorRequest)(nil),                         // 87: api.v1alpha1.org.GetResponseEvaluatorRequest
+	(*GetResponseEvaluatorResponse)(nil),                        // 88: api.v1alpha1.org.GetResponseEvaluatorResponse
+	(*CreateResponseEvaluatorRequest)(nil),                      // 89: api.v1alpha1.org.CreateResponseEvaluatorRequest
+	(*CreateResponseEvaluatorResponse)(nil),                     // 90: api.v1alpha1.org.CreateResponseEvaluatorResponse
+	(*UpdateResponseEvaluatorRequest)(nil),                      // 91: api.v1alpha1.org.UpdateResponseEvaluatorRequest
+	(*UpdateResponseEvaluatorResponse)(nil),                     // 92: api.v1alpha1.org.UpdateResponseEvaluatorResponse
+	(*DeleteResponseEvaluatorRequest)(nil),                      // 93: api.v1alpha1.org.DeleteResponseEvaluatorRequest
+	(*DeleteResponseEvaluatorResponse)(nil),                     // 94: api.v1alpha1.org.DeleteResponseEvaluatorResponse
+	(*ListBroadcastTemplateGeneralDetailsResponse_Data)(nil),    // 95: api.v1alpha1.org.ListBroadcastTemplateGeneralDetailsResponse.Data
+	(*GetHuntGroupScriptResponse_HuntGroupScriptDetails)(nil),   // 96: api.v1alpha1.org.GetHuntGroupScriptResponse.HuntGroupScriptDetails
+	(*fieldmaskpb.FieldMask)(nil),                               // 97: google.protobuf.FieldMask
+	(*org.GeneralSettings)(nil),                                 // 98: api.commons.org.GeneralSettings
+	(*org.CommunicationSettings)(nil),                           // 99: api.commons.org.CommunicationSettings
+	(*org.CallbackSettings)(nil),                                // 100: api.commons.org.CallbackSettings
+	(*org.PreviewDialSettings)(nil),                             // 101: api.commons.org.PreviewDialSettings
+	(*org.ManualDialSettings)(nil),                              // 102: api.commons.org.ManualDialSettings
+	(*org.TransferCallSettings)(nil),                            // 103: api.commons.org.TransferCallSettings
+	(*org.NumberHistorySettings)(nil),                           // 104: api.commons.org.NumberHistorySettings
+	(org.HuntGroupType)(0),                                      // 105: api.commons.org.HuntGroupType
+	(*org.HuntGroupDetails)(nil),                                // 106: api.commons.org.HuntGroupDetails
+	(*org.CallerIdBucketData)(nil),                              // 107: api.commons.org.CallerIdBucketData
+	(*org.DataDipConfig)(nil),                                   // 108: api.commons.org.DataDipConfig
+	(commons.DataDipTemplateFilterType)(0),                      // 109: api.commons.DataDipTemplateFilterType
+	(*org.AgentResponseAutoRuleSet)(nil),                        // 110: api.commons.org.AgentResponseAutoRuleSet
+	(*org.ClientInfoDisplayTemplate)(nil),                       // 111: api.commons.org.ClientInfoDisplayTemplate
+	(*org.HuntGroupWithClientInfoTemplateData)(nil),             // 112: api.commons.org.HuntGroupWithClientInfoTemplateData
+	(*org.WebLink)(nil),                                         // 113: api.commons.org.WebLink
+	(*org.IntegrationLink)(nil),                                 // 114: api.commons.org.IntegrationLink
+	(*org.AgentTrigger)(nil),                                    // 115: api.commons.org.AgentTrigger
+	(*org.HuntGroupScript)(nil),                                 // 116: api.commons.org.HuntGroupScript
+	(*org.ResponseEvaluator)(nil),                               // 117: api.commons.org.ResponseEvaluator
+	(commons.BroadcastType)(0),                                  // 118: api.commons.BroadcastType
+	(*timestamppb.Timestamp)(nil),                               // 119: google.protobuf.Timestamp
 }
 var file_api_v1alpha1_org_huntgroup_proto_depIdxs = []int32{
-	87,  // 0: api.v1alpha1.org.GetHuntGroupSettingsRequest.field_mask:type_name -> google.protobuf.FieldMask
-	88,  // 1: api.v1alpha1.org.GetHuntGroupSettingsResponse.general_settings:type_name -> api.commons.org.GeneralSettings
-	89,  // 2: api.v1alpha1.org.GetHuntGroupSettingsResponse.communication_settings:type_name -> api.commons.org.CommunicationSettings
-	90,  // 3: api.v1alpha1.org.GetHuntGroupSettingsResponse.callback_settings:type_name -> api.commons.org.CallbackSettings
-	91,  // 4: api.v1alpha1.org.GetHuntGroupSettingsResponse.preview_dial_settings:type_name -> api.commons.org.PreviewDialSettings
-	92,  // 5: api.v1alpha1.org.GetHuntGroupSettingsResponse.manual_dial_settings:type_name -> api.commons.org.ManualDialSettings
-	93,  // 6: api.v1alpha1.org.GetHuntGroupSettingsResponse.transfer_call_settings:type_name -> api.commons.org.TransferCallSettings
-	94,  // 7: api.v1alpha1.org.GetHuntGroupSettingsResponse.number_history_settings:type_name -> api.commons.org.NumberHistorySettings
-	88,  // 8: api.v1alpha1.org.UpdateHuntGroupSettingsRequest.general_settings:type_name -> api.commons.org.GeneralSettings
-	89,  // 9: api.v1alpha1.org.UpdateHuntGroupSettingsRequest.communication_settings:type_name -> api.commons.org.CommunicationSettings
-	90,  // 10: api.v1alpha1.org.UpdateHuntGroupSettingsRequest.callback_settings:type_name -> api.commons.org.CallbackSettings
-	91,  // 11: api.v1alpha1.org.UpdateHuntGroupSettingsRequest.preview_dial_settings:type_name -> api.commons.org.PreviewDialSettings
-	92,  // 12: api.v1alpha1.org.UpdateHuntGroupSettingsRequest.manual_dial_settings:type_name -> api.commons.org.ManualDialSettings
-	93,  // 13: api.v1alpha1.org.UpdateHuntGroupSettingsRequest.transfer_call_settings:type_name -> api.commons.org.TransferCallSettings
-	94,  // 14: api.v1alpha1.org.UpdateHuntGroupSettingsRequest.number_history_settings:type_name -> api.commons.org.NumberHistorySettings
-	87,  // 15: api.v1alpha1.org.UpdateHuntGroupSettingsRequest.field_mask:type_name -> google.protobuf.FieldMask
-	95,  // 16: api.v1alpha1.org.CreateHuntGroupRequest.type:type_name -> api.commons.org.HuntGroupType
-	95,  // 17: api.v1alpha1.org.UpdateHuntGroupGeneralDetailsRequest.type:type_name -> api.commons.org.HuntGroupType
-	96,  // 18: api.v1alpha1.org.GetHuntGroupDetailsResponse.hunt_group_details:type_name -> api.commons.org.HuntGroupDetails
-	97,  // 19: api.v1alpha1.org.ListCallerIdBucketsResponse.caller_id_bucket_data:type_name -> api.commons.org.CallerIdBucketData
-	98,  // 20: api.v1alpha1.org.GetDataDipTemplateResponse.template:type_name -> api.commons.org.DataDipConfig
-	99,  // 21: api.v1alpha1.org.ListDataDipTemplatesRequest.filter:type_name -> api.commons.DataDipTemplateFilterType
-	98,  // 22: api.v1alpha1.org.ListDataDipTemplatesResponse.templates:type_name -> api.commons.org.DataDipConfig
-	98,  // 23: api.v1alpha1.org.CreateDataDipTemplateRequest.template:type_name -> api.commons.org.DataDipConfig
-	98,  // 24: api.v1alpha1.org.UpdateDataDipTemplateRequest.template:type_name -> api.commons.org.DataDipConfig
-	85,  // 25: api.v1alpha1.org.ListBroadcastTemplateGeneralDetailsResponse.templates:type_name -> api.v1alpha1.org.ListBroadcastTemplateGeneralDetailsResponse.Data
-	100, // 26: api.v1alpha1.org.ListAgentResponseAutoRulesResponse.rulesets:type_name -> api.commons.org.AgentResponseAutoRuleSet
-	100, // 27: api.v1alpha1.org.CreateAgentResponseAutoRulesRequest.ruleset:type_name -> api.commons.org.AgentResponseAutoRuleSet
-	100, // 28: api.v1alpha1.org.UpdateAgentResponseAutoRulesRequest.ruleset:type_name -> api.commons.org.AgentResponseAutoRuleSet
-	101, // 29: api.v1alpha1.org.GetHuntGroupClientInfoDisplayTemplateResponse.template:type_name -> api.commons.org.ClientInfoDisplayTemplate
-	101, // 30: api.v1alpha1.org.CreateHuntGroupClientInfoDisplayTemplateRequest.template:type_name -> api.commons.org.ClientInfoDisplayTemplate
-	101, // 31: api.v1alpha1.org.UpdateHuntGroupClientInfoDisplayTemplateRequest.template:type_name -> api.commons.org.ClientInfoDisplayTemplate
-	101, // 32: api.v1alpha1.org.CopyHuntGroupClientInfoDisplayTemplateRequest.template:type_name -> api.commons.org.ClientInfoDisplayTemplate
-	101, // 33: api.v1alpha1.org.CreateCampaignClientInfoDisplayTemplateRequest.template:type_name -> api.commons.org.ClientInfoDisplayTemplate
+	97,  // 0: api.v1alpha1.org.GetHuntGroupSettingsRequest.field_mask:type_name -> google.protobuf.FieldMask
+	98,  // 1: api.v1alpha1.org.GetHuntGroupSettingsResponse.general_settings:type_name -> api.commons.org.GeneralSettings
+	99,  // 2: api.v1alpha1.org.GetHuntGroupSettingsResponse.communication_settings:type_name -> api.commons.org.CommunicationSettings
+	100, // 3: api.v1alpha1.org.GetHuntGroupSettingsResponse.callback_settings:type_name -> api.commons.org.CallbackSettings
+	101, // 4: api.v1alpha1.org.GetHuntGroupSettingsResponse.preview_dial_settings:type_name -> api.commons.org.PreviewDialSettings
+	102, // 5: api.v1alpha1.org.GetHuntGroupSettingsResponse.manual_dial_settings:type_name -> api.commons.org.ManualDialSettings
+	103, // 6: api.v1alpha1.org.GetHuntGroupSettingsResponse.transfer_call_settings:type_name -> api.commons.org.TransferCallSettings
+	104, // 7: api.v1alpha1.org.GetHuntGroupSettingsResponse.number_history_settings:type_name -> api.commons.org.NumberHistorySettings
+	98,  // 8: api.v1alpha1.org.UpdateHuntGroupSettingsRequest.general_settings:type_name -> api.commons.org.GeneralSettings
+	99,  // 9: api.v1alpha1.org.UpdateHuntGroupSettingsRequest.communication_settings:type_name -> api.commons.org.CommunicationSettings
+	100, // 10: api.v1alpha1.org.UpdateHuntGroupSettingsRequest.callback_settings:type_name -> api.commons.org.CallbackSettings
+	101, // 11: api.v1alpha1.org.UpdateHuntGroupSettingsRequest.preview_dial_settings:type_name -> api.commons.org.PreviewDialSettings
+	102, // 12: api.v1alpha1.org.UpdateHuntGroupSettingsRequest.manual_dial_settings:type_name -> api.commons.org.ManualDialSettings
+	103, // 13: api.v1alpha1.org.UpdateHuntGroupSettingsRequest.transfer_call_settings:type_name -> api.commons.org.TransferCallSettings
+	104, // 14: api.v1alpha1.org.UpdateHuntGroupSettingsRequest.number_history_settings:type_name -> api.commons.org.NumberHistorySettings
+	97,  // 15: api.v1alpha1.org.UpdateHuntGroupSettingsRequest.field_mask:type_name -> google.protobuf.FieldMask
+	105, // 16: api.v1alpha1.org.CreateHuntGroupRequest.type:type_name -> api.commons.org.HuntGroupType
+	105, // 17: api.v1alpha1.org.UpdateHuntGroupGeneralDetailsRequest.type:type_name -> api.commons.org.HuntGroupType
+	106, // 18: api.v1alpha1.org.GetHuntGroupDetailsResponse.hunt_group_details:type_name -> api.commons.org.HuntGroupDetails
+	107, // 19: api.v1alpha1.org.ListCallerIdBucketsResponse.caller_id_bucket_data:type_name -> api.commons.org.CallerIdBucketData
+	108, // 20: api.v1alpha1.org.GetDataDipTemplateResponse.template:type_name -> api.commons.org.DataDipConfig
+	109, // 21: api.v1alpha1.org.ListDataDipTemplatesRequest.filter:type_name -> api.commons.DataDipTemplateFilterType
+	108, // 22: api.v1alpha1.org.ListDataDipTemplatesResponse.templates:type_name -> api.commons.org.DataDipConfig
+	108, // 23: api.v1alpha1.org.CreateDataDipTemplateRequest.template:type_name -> api.commons.org.DataDipConfig
+	108, // 24: api.v1alpha1.org.UpdateDataDipTemplateRequest.template:type_name -> api.commons.org.DataDipConfig
+	95,  // 25: api.v1alpha1.org.ListBroadcastTemplateGeneralDetailsResponse.templates:type_name -> api.v1alpha1.org.ListBroadcastTemplateGeneralDetailsResponse.Data
+	110, // 26: api.v1alpha1.org.ListAgentResponseAutoRulesResponse.rulesets:type_name -> api.commons.org.AgentResponseAutoRuleSet
+	110, // 27: api.v1alpha1.org.CreateAgentResponseAutoRulesRequest.ruleset:type_name -> api.commons.org.AgentResponseAutoRuleSet
+	110, // 28: api.v1alpha1.org.UpdateAgentResponseAutoRulesRequest.ruleset:type_name -> api.commons.org.AgentResponseAutoRuleSet
+	111, // 29: api.v1alpha1.org.GetHuntGroupClientInfoDisplayTemplateResponse.template:type_name -> api.commons.org.ClientInfoDisplayTemplate
+	111, // 30: api.v1alpha1.org.CreateHuntGroupClientInfoDisplayTemplateRequest.template:type_name -> api.commons.org.ClientInfoDisplayTemplate
+	111, // 31: api.v1alpha1.org.UpdateHuntGroupClientInfoDisplayTemplateRequest.template:type_name -> api.commons.org.ClientInfoDisplayTemplate
+	111, // 32: api.v1alpha1.org.CopyHuntGroupClientInfoDisplayTemplateRequest.template:type_name -> api.commons.org.ClientInfoDisplayTemplate
+	111, // 33: api.v1alpha1.org.CreateCampaignClientInfoDisplayTemplateRequest.template:type_name -> api.commons.org.ClientInfoDisplayTemplate
 	0,   // 34: api.v1alpha1.org.ListHuntGroupsWithClientInfoTemplateDataRequest.filter:type_name -> api.v1alpha1.org.ListHuntGroupsWithClientInfoTemplateDataRequest.Filter
-	102, // 35: api.v1alpha1.org.ListHuntGroupsWithClientInfoTemplateDataResponse.hunt_groups_with_template_data:type_name -> api.commons.org.HuntGroupWithClientInfoTemplateData
-	103, // 36: api.v1alpha1.org.ListHuntGroupWebLinksResponse.web_links:type_name -> api.commons.org.WebLink
-	103, // 37: api.v1alpha1.org.CopyHuntGroupWebLinkRequest.web_link:type_name -> api.commons.org.WebLink
-	103, // 38: api.v1alpha1.org.UpdateHuntGroupWebLinksRequest.web_links:type_name -> api.commons.org.WebLink
-	104, // 39: api.v1alpha1.org.ListHuntGroupIntegrationLinksResponse.links:type_name -> api.commons.org.IntegrationLink
-	104, // 40: api.v1alpha1.org.CopyHuntGroupIntegrationLinkRequest.link:type_name -> api.commons.org.IntegrationLink
-	104, // 41: api.v1alpha1.org.UpdateHuntGroupIntegrationLinksRequest.links:type_name -> api.commons.org.IntegrationLink
-	105, // 42: api.v1alpha1.org.ListAgentTriggersResponse.agent_triggers:type_name -> api.commons.org.AgentTrigger
-	105, // 43: api.v1alpha1.org.CopyAgentTriggerRequest.agent_trigger:type_name -> api.commons.org.AgentTrigger
-	105, // 44: api.v1alpha1.org.UpdateAgentTriggersRequest.agent_triggers:type_name -> api.commons.org.AgentTrigger
-	106, // 45: api.v1alpha1.org.ListHuntGroupScriptsResponse.scripts:type_name -> api.commons.org.HuntGroupScript
-	106, // 46: api.v1alpha1.org.GetHuntGroupScriptResponse.hunt_group_script:type_name -> api.commons.org.HuntGroupScript
-	86,  // 47: api.v1alpha1.org.GetHuntGroupScriptResponse.script_details:type_name -> api.v1alpha1.org.GetHuntGroupScriptResponse.HuntGroupScriptDetails
-	106, // 48: api.v1alpha1.org.CreateHuntGroupScriptRequest.hunt_group_script:type_name -> api.commons.org.HuntGroupScript
-	106, // 49: api.v1alpha1.org.UpdateHuntGroupScriptRequest.hunt_group_script:type_name -> api.commons.org.HuntGroupScript
-	107, // 50: api.v1alpha1.org.ListBroadcastTemplateGeneralDetailsResponse.Data.broadcast_type:type_name -> api.commons.BroadcastType
-	108, // 51: api.v1alpha1.org.ListBroadcastTemplateGeneralDetailsResponse.Data.last_scheduled_date:type_name -> google.protobuf.Timestamp
-	106, // 52: api.v1alpha1.org.GetHuntGroupScriptResponse.HuntGroupScriptDetails.script:type_name -> api.commons.org.HuntGroupScript
-	53,  // [53:53] is the sub-list for method output_type
-	53,  // [53:53] is the sub-list for method input_type
-	53,  // [53:53] is the sub-list for extension type_name
-	53,  // [53:53] is the sub-list for extension extendee
-	0,   // [0:53] is the sub-list for field type_name
+	112, // 35: api.v1alpha1.org.ListHuntGroupsWithClientInfoTemplateDataResponse.hunt_groups_with_template_data:type_name -> api.commons.org.HuntGroupWithClientInfoTemplateData
+	113, // 36: api.v1alpha1.org.ListHuntGroupWebLinksResponse.web_links:type_name -> api.commons.org.WebLink
+	113, // 37: api.v1alpha1.org.CopyHuntGroupWebLinkRequest.web_link:type_name -> api.commons.org.WebLink
+	113, // 38: api.v1alpha1.org.UpdateHuntGroupWebLinksRequest.web_links:type_name -> api.commons.org.WebLink
+	114, // 39: api.v1alpha1.org.ListHuntGroupIntegrationLinksResponse.links:type_name -> api.commons.org.IntegrationLink
+	114, // 40: api.v1alpha1.org.CopyHuntGroupIntegrationLinkRequest.link:type_name -> api.commons.org.IntegrationLink
+	114, // 41: api.v1alpha1.org.UpdateHuntGroupIntegrationLinksRequest.links:type_name -> api.commons.org.IntegrationLink
+	115, // 42: api.v1alpha1.org.ListAgentTriggersResponse.agent_triggers:type_name -> api.commons.org.AgentTrigger
+	115, // 43: api.v1alpha1.org.CopyAgentTriggerRequest.agent_trigger:type_name -> api.commons.org.AgentTrigger
+	115, // 44: api.v1alpha1.org.UpdateAgentTriggersRequest.agent_triggers:type_name -> api.commons.org.AgentTrigger
+	116, // 45: api.v1alpha1.org.ListHuntGroupScriptsResponse.scripts:type_name -> api.commons.org.HuntGroupScript
+	116, // 46: api.v1alpha1.org.GetHuntGroupScriptResponse.hunt_group_script:type_name -> api.commons.org.HuntGroupScript
+	96,  // 47: api.v1alpha1.org.GetHuntGroupScriptResponse.script_details:type_name -> api.v1alpha1.org.GetHuntGroupScriptResponse.HuntGroupScriptDetails
+	116, // 48: api.v1alpha1.org.CreateHuntGroupScriptRequest.hunt_group_script:type_name -> api.commons.org.HuntGroupScript
+	116, // 49: api.v1alpha1.org.UpdateHuntGroupScriptRequest.hunt_group_script:type_name -> api.commons.org.HuntGroupScript
+	117, // 50: api.v1alpha1.org.ListResponseEvaluatorsResponse.evaluators:type_name -> api.commons.org.ResponseEvaluator
+	117, // 51: api.v1alpha1.org.GetResponseEvaluatorResponse.evaluator:type_name -> api.commons.org.ResponseEvaluator
+	117, // 52: api.v1alpha1.org.CreateResponseEvaluatorRequest.evaluator:type_name -> api.commons.org.ResponseEvaluator
+	117, // 53: api.v1alpha1.org.CreateResponseEvaluatorResponse.evaluator:type_name -> api.commons.org.ResponseEvaluator
+	117, // 54: api.v1alpha1.org.UpdateResponseEvaluatorRequest.evaluator:type_name -> api.commons.org.ResponseEvaluator
+	117, // 55: api.v1alpha1.org.UpdateResponseEvaluatorResponse.evaluator:type_name -> api.commons.org.ResponseEvaluator
+	118, // 56: api.v1alpha1.org.ListBroadcastTemplateGeneralDetailsResponse.Data.broadcast_type:type_name -> api.commons.BroadcastType
+	119, // 57: api.v1alpha1.org.ListBroadcastTemplateGeneralDetailsResponse.Data.last_scheduled_date:type_name -> google.protobuf.Timestamp
+	116, // 58: api.v1alpha1.org.GetHuntGroupScriptResponse.HuntGroupScriptDetails.script:type_name -> api.commons.org.HuntGroupScript
+	59,  // [59:59] is the sub-list for method output_type
+	59,  // [59:59] is the sub-list for method input_type
+	59,  // [59:59] is the sub-list for extension type_name
+	59,  // [59:59] is the sub-list for extension extendee
+	0,   // [0:59] is the sub-list for field type_name
 }
 
 func init() { file_api_v1alpha1_org_huntgroup_proto_init() }
@@ -6366,7 +6904,7 @@ func file_api_v1alpha1_org_huntgroup_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_huntgroup_proto_msgTypes[84].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListBroadcastTemplateGeneralDetailsResponse_Data); i {
+			switch v := v.(*ListResponseEvaluatorsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -6378,6 +6916,126 @@ func file_api_v1alpha1_org_huntgroup_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_huntgroup_proto_msgTypes[85].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListResponseEvaluatorsResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_org_huntgroup_proto_msgTypes[86].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetResponseEvaluatorRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_org_huntgroup_proto_msgTypes[87].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetResponseEvaluatorResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_org_huntgroup_proto_msgTypes[88].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*CreateResponseEvaluatorRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_org_huntgroup_proto_msgTypes[89].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*CreateResponseEvaluatorResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_org_huntgroup_proto_msgTypes[90].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UpdateResponseEvaluatorRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_org_huntgroup_proto_msgTypes[91].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UpdateResponseEvaluatorResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_org_huntgroup_proto_msgTypes[92].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DeleteResponseEvaluatorRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_org_huntgroup_proto_msgTypes[93].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DeleteResponseEvaluatorResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_org_huntgroup_proto_msgTypes[94].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListBroadcastTemplateGeneralDetailsResponse_Data); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_org_huntgroup_proto_msgTypes[95].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetHuntGroupScriptResponse_HuntGroupScriptDetails); i {
 			case 0:
 				return &v.state
@@ -6396,7 +7054,7 @@ func file_api_v1alpha1_org_huntgroup_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_v1alpha1_org_huntgroup_proto_rawDesc,
 			NumEnums:      1,
-			NumMessages:   86,
+			NumMessages:   96,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

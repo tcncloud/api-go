@@ -619,6 +619,21 @@ const (
 	OrgRemoveGroupedUserIPRestrictionsProcedure = "/api.v1alpha1.org.Org/RemoveGroupedUserIPRestrictions"
 	// OrgListUsersAllowedIpsProcedure is the fully-qualified name of the Org's ListUsersAllowedIps RPC.
 	OrgListUsersAllowedIpsProcedure = "/api.v1alpha1.org.Org/ListUsersAllowedIps"
+	// OrgListResponseEvaluatorsProcedure is the fully-qualified name of the Org's
+	// ListResponseEvaluators RPC.
+	OrgListResponseEvaluatorsProcedure = "/api.v1alpha1.org.Org/ListResponseEvaluators"
+	// OrgGetResponseEvaluatorProcedure is the fully-qualified name of the Org's GetResponseEvaluator
+	// RPC.
+	OrgGetResponseEvaluatorProcedure = "/api.v1alpha1.org.Org/GetResponseEvaluator"
+	// OrgCreateResponseEvaluatorProcedure is the fully-qualified name of the Org's
+	// CreateResponseEvaluator RPC.
+	OrgCreateResponseEvaluatorProcedure = "/api.v1alpha1.org.Org/CreateResponseEvaluator"
+	// OrgUpdateResponseEvaluatorProcedure is the fully-qualified name of the Org's
+	// UpdateResponseEvaluator RPC.
+	OrgUpdateResponseEvaluatorProcedure = "/api.v1alpha1.org.Org/UpdateResponseEvaluator"
+	// OrgDeleteResponseEvaluatorProcedure is the fully-qualified name of the Org's
+	// DeleteResponseEvaluator RPC.
+	OrgDeleteResponseEvaluatorProcedure = "/api.v1alpha1.org.Org/DeleteResponseEvaluator"
 )
 
 // OrgClient is a client for the api.v1alpha1.org.Org service.
@@ -1151,6 +1166,11 @@ type OrgClient interface {
 	RemoveGroupedUserIPRestrictions(context.Context, *connect_go.Request[org.RemoveGroupedUserIPRestrictionsRequest]) (*connect_go.Response[org.RemoveGroupedUserIPRestrictionsResponse], error)
 	// ListUsersAllowedIps -
 	ListUsersAllowedIps(context.Context, *connect_go.Request[org.ListUsersAllowedIpsRequest]) (*connect_go.Response[org.ListUsersAllowedIpsResponse], error)
+	ListResponseEvaluators(context.Context, *connect_go.Request[org.ListResponseEvaluatorsRequest]) (*connect_go.Response[org.ListResponseEvaluatorsResponse], error)
+	GetResponseEvaluator(context.Context, *connect_go.Request[org.GetResponseEvaluatorRequest]) (*connect_go.Response[org.GetResponseEvaluatorResponse], error)
+	CreateResponseEvaluator(context.Context, *connect_go.Request[org.CreateResponseEvaluatorRequest]) (*connect_go.Response[org.CreateResponseEvaluatorResponse], error)
+	UpdateResponseEvaluator(context.Context, *connect_go.Request[org.UpdateResponseEvaluatorRequest]) (*connect_go.Response[org.UpdateResponseEvaluatorResponse], error)
+	DeleteResponseEvaluator(context.Context, *connect_go.Request[org.DeleteResponseEvaluatorRequest]) (*connect_go.Response[org.DeleteResponseEvaluatorResponse], error)
 }
 
 // NewOrgClient constructs a client for the api.v1alpha1.org.Org service. By default, it uses the
@@ -2278,6 +2298,31 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgListUsersAllowedIpsProcedure,
 			opts...,
 		),
+		listResponseEvaluators: connect_go.NewClient[org.ListResponseEvaluatorsRequest, org.ListResponseEvaluatorsResponse](
+			httpClient,
+			baseURL+OrgListResponseEvaluatorsProcedure,
+			opts...,
+		),
+		getResponseEvaluator: connect_go.NewClient[org.GetResponseEvaluatorRequest, org.GetResponseEvaluatorResponse](
+			httpClient,
+			baseURL+OrgGetResponseEvaluatorProcedure,
+			opts...,
+		),
+		createResponseEvaluator: connect_go.NewClient[org.CreateResponseEvaluatorRequest, org.CreateResponseEvaluatorResponse](
+			httpClient,
+			baseURL+OrgCreateResponseEvaluatorProcedure,
+			opts...,
+		),
+		updateResponseEvaluator: connect_go.NewClient[org.UpdateResponseEvaluatorRequest, org.UpdateResponseEvaluatorResponse](
+			httpClient,
+			baseURL+OrgUpdateResponseEvaluatorProcedure,
+			opts...,
+		),
+		deleteResponseEvaluator: connect_go.NewClient[org.DeleteResponseEvaluatorRequest, org.DeleteResponseEvaluatorResponse](
+			httpClient,
+			baseURL+OrgDeleteResponseEvaluatorProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -2506,6 +2551,11 @@ type orgClient struct {
 	addGroupedUserIPRestrictions             *connect_go.Client[org.AddGroupedUserIPRestrictionsRequest, org.AddGroupedUserIPRestrictionsResponse]
 	removeGroupedUserIPRestrictions          *connect_go.Client[org.RemoveGroupedUserIPRestrictionsRequest, org.RemoveGroupedUserIPRestrictionsResponse]
 	listUsersAllowedIps                      *connect_go.Client[org.ListUsersAllowedIpsRequest, org.ListUsersAllowedIpsResponse]
+	listResponseEvaluators                   *connect_go.Client[org.ListResponseEvaluatorsRequest, org.ListResponseEvaluatorsResponse]
+	getResponseEvaluator                     *connect_go.Client[org.GetResponseEvaluatorRequest, org.GetResponseEvaluatorResponse]
+	createResponseEvaluator                  *connect_go.Client[org.CreateResponseEvaluatorRequest, org.CreateResponseEvaluatorResponse]
+	updateResponseEvaluator                  *connect_go.Client[org.UpdateResponseEvaluatorRequest, org.UpdateResponseEvaluatorResponse]
+	deleteResponseEvaluator                  *connect_go.Client[org.DeleteResponseEvaluatorRequest, org.DeleteResponseEvaluatorResponse]
 }
 
 // CreateOrganization calls api.v1alpha1.org.Org.CreateOrganization.
@@ -3657,6 +3707,31 @@ func (c *orgClient) ListUsersAllowedIps(ctx context.Context, req *connect_go.Req
 	return c.listUsersAllowedIps.CallUnary(ctx, req)
 }
 
+// ListResponseEvaluators calls api.v1alpha1.org.Org.ListResponseEvaluators.
+func (c *orgClient) ListResponseEvaluators(ctx context.Context, req *connect_go.Request[org.ListResponseEvaluatorsRequest]) (*connect_go.Response[org.ListResponseEvaluatorsResponse], error) {
+	return c.listResponseEvaluators.CallUnary(ctx, req)
+}
+
+// GetResponseEvaluator calls api.v1alpha1.org.Org.GetResponseEvaluator.
+func (c *orgClient) GetResponseEvaluator(ctx context.Context, req *connect_go.Request[org.GetResponseEvaluatorRequest]) (*connect_go.Response[org.GetResponseEvaluatorResponse], error) {
+	return c.getResponseEvaluator.CallUnary(ctx, req)
+}
+
+// CreateResponseEvaluator calls api.v1alpha1.org.Org.CreateResponseEvaluator.
+func (c *orgClient) CreateResponseEvaluator(ctx context.Context, req *connect_go.Request[org.CreateResponseEvaluatorRequest]) (*connect_go.Response[org.CreateResponseEvaluatorResponse], error) {
+	return c.createResponseEvaluator.CallUnary(ctx, req)
+}
+
+// UpdateResponseEvaluator calls api.v1alpha1.org.Org.UpdateResponseEvaluator.
+func (c *orgClient) UpdateResponseEvaluator(ctx context.Context, req *connect_go.Request[org.UpdateResponseEvaluatorRequest]) (*connect_go.Response[org.UpdateResponseEvaluatorResponse], error) {
+	return c.updateResponseEvaluator.CallUnary(ctx, req)
+}
+
+// DeleteResponseEvaluator calls api.v1alpha1.org.Org.DeleteResponseEvaluator.
+func (c *orgClient) DeleteResponseEvaluator(ctx context.Context, req *connect_go.Request[org.DeleteResponseEvaluatorRequest]) (*connect_go.Response[org.DeleteResponseEvaluatorResponse], error) {
+	return c.deleteResponseEvaluator.CallUnary(ctx, req)
+}
+
 // OrgHandler is an implementation of the api.v1alpha1.org.Org service.
 type OrgHandler interface {
 	// CreateOrganization creates a new organization entity and enables it for the
@@ -4187,6 +4262,11 @@ type OrgHandler interface {
 	RemoveGroupedUserIPRestrictions(context.Context, *connect_go.Request[org.RemoveGroupedUserIPRestrictionsRequest]) (*connect_go.Response[org.RemoveGroupedUserIPRestrictionsResponse], error)
 	// ListUsersAllowedIps -
 	ListUsersAllowedIps(context.Context, *connect_go.Request[org.ListUsersAllowedIpsRequest]) (*connect_go.Response[org.ListUsersAllowedIpsResponse], error)
+	ListResponseEvaluators(context.Context, *connect_go.Request[org.ListResponseEvaluatorsRequest]) (*connect_go.Response[org.ListResponseEvaluatorsResponse], error)
+	GetResponseEvaluator(context.Context, *connect_go.Request[org.GetResponseEvaluatorRequest]) (*connect_go.Response[org.GetResponseEvaluatorResponse], error)
+	CreateResponseEvaluator(context.Context, *connect_go.Request[org.CreateResponseEvaluatorRequest]) (*connect_go.Response[org.CreateResponseEvaluatorResponse], error)
+	UpdateResponseEvaluator(context.Context, *connect_go.Request[org.UpdateResponseEvaluatorRequest]) (*connect_go.Response[org.UpdateResponseEvaluatorResponse], error)
+	DeleteResponseEvaluator(context.Context, *connect_go.Request[org.DeleteResponseEvaluatorRequest]) (*connect_go.Response[org.DeleteResponseEvaluatorResponse], error)
 }
 
 // NewOrgHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -5310,6 +5390,31 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.ListUsersAllowedIps,
 		opts...,
 	)
+	orgListResponseEvaluatorsHandler := connect_go.NewUnaryHandler(
+		OrgListResponseEvaluatorsProcedure,
+		svc.ListResponseEvaluators,
+		opts...,
+	)
+	orgGetResponseEvaluatorHandler := connect_go.NewUnaryHandler(
+		OrgGetResponseEvaluatorProcedure,
+		svc.GetResponseEvaluator,
+		opts...,
+	)
+	orgCreateResponseEvaluatorHandler := connect_go.NewUnaryHandler(
+		OrgCreateResponseEvaluatorProcedure,
+		svc.CreateResponseEvaluator,
+		opts...,
+	)
+	orgUpdateResponseEvaluatorHandler := connect_go.NewUnaryHandler(
+		OrgUpdateResponseEvaluatorProcedure,
+		svc.UpdateResponseEvaluator,
+		opts...,
+	)
+	orgDeleteResponseEvaluatorHandler := connect_go.NewUnaryHandler(
+		OrgDeleteResponseEvaluatorProcedure,
+		svc.DeleteResponseEvaluator,
+		opts...,
+	)
 	return "/api.v1alpha1.org.Org/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case OrgCreateOrganizationProcedure:
@@ -5758,6 +5863,16 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 			orgRemoveGroupedUserIPRestrictionsHandler.ServeHTTP(w, r)
 		case OrgListUsersAllowedIpsProcedure:
 			orgListUsersAllowedIpsHandler.ServeHTTP(w, r)
+		case OrgListResponseEvaluatorsProcedure:
+			orgListResponseEvaluatorsHandler.ServeHTTP(w, r)
+		case OrgGetResponseEvaluatorProcedure:
+			orgGetResponseEvaluatorHandler.ServeHTTP(w, r)
+		case OrgCreateResponseEvaluatorProcedure:
+			orgCreateResponseEvaluatorHandler.ServeHTTP(w, r)
+		case OrgUpdateResponseEvaluatorProcedure:
+			orgUpdateResponseEvaluatorHandler.ServeHTTP(w, r)
+		case OrgDeleteResponseEvaluatorProcedure:
+			orgDeleteResponseEvaluatorHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -6657,4 +6772,24 @@ func (UnimplementedOrgHandler) RemoveGroupedUserIPRestrictions(context.Context, 
 
 func (UnimplementedOrgHandler) ListUsersAllowedIps(context.Context, *connect_go.Request[org.ListUsersAllowedIpsRequest]) (*connect_go.Response[org.ListUsersAllowedIpsResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.ListUsersAllowedIps is not implemented"))
+}
+
+func (UnimplementedOrgHandler) ListResponseEvaluators(context.Context, *connect_go.Request[org.ListResponseEvaluatorsRequest]) (*connect_go.Response[org.ListResponseEvaluatorsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.ListResponseEvaluators is not implemented"))
+}
+
+func (UnimplementedOrgHandler) GetResponseEvaluator(context.Context, *connect_go.Request[org.GetResponseEvaluatorRequest]) (*connect_go.Response[org.GetResponseEvaluatorResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.GetResponseEvaluator is not implemented"))
+}
+
+func (UnimplementedOrgHandler) CreateResponseEvaluator(context.Context, *connect_go.Request[org.CreateResponseEvaluatorRequest]) (*connect_go.Response[org.CreateResponseEvaluatorResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.CreateResponseEvaluator is not implemented"))
+}
+
+func (UnimplementedOrgHandler) UpdateResponseEvaluator(context.Context, *connect_go.Request[org.UpdateResponseEvaluatorRequest]) (*connect_go.Response[org.UpdateResponseEvaluatorResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.UpdateResponseEvaluator is not implemented"))
+}
+
+func (UnimplementedOrgHandler) DeleteResponseEvaluator(context.Context, *connect_go.Request[org.DeleteResponseEvaluatorRequest]) (*connect_go.Response[org.DeleteResponseEvaluatorResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.DeleteResponseEvaluator is not implemented"))
 }
