@@ -1575,6 +1575,8 @@ type HuntGroupDetails struct {
 	TriggerDetails []*HuntGroupDetails_TriggerDetails `protobuf:"bytes,4,rep,name=trigger_details,json=triggerDetails,proto3" json:"trigger_details,omitempty"`
 	// A list of hunt group integration link details.
 	IntegrationLinkDetails []*HuntGroupDetails_IntegrationLinkDetails `protobuf:"bytes,5,rep,name=integration_link_details,json=integrationLinkDetails,proto3" json:"integration_link_details,omitempty"`
+	// The assigned script details.
+	ScriptDetails *HuntGroupDetails_ScriptDetails `protobuf:"bytes,6,opt,name=script_details,json=scriptDetails,proto3" json:"script_details,omitempty"`
 }
 
 func (x *HuntGroupDetails) Reset() {
@@ -1640,6 +1642,13 @@ func (x *HuntGroupDetails) GetTriggerDetails() []*HuntGroupDetails_TriggerDetail
 func (x *HuntGroupDetails) GetIntegrationLinkDetails() []*HuntGroupDetails_IntegrationLinkDetails {
 	if x != nil {
 		return x.IntegrationLinkDetails
+	}
+	return nil
+}
+
+func (x *HuntGroupDetails) GetScriptDetails() *HuntGroupDetails_ScriptDetails {
+	if x != nil {
+		return x.ScriptDetails
 	}
 	return nil
 }
@@ -6205,6 +6214,100 @@ func (x *HuntGroupDetails_IntegrationLinkDetails) GetDescription() string {
 	return ""
 }
 
+// ScriptDetails is the entity to describe the features of a script assigned to the hunt group.
+type HuntGroupDetails_ScriptDetails struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The sid of the script assigned to the hunt group.
+	ScriptSid int64 `protobuf:"varint,1,opt,name=script_sid,json=scriptSid,proto3" json:"script_sid,omitempty"`
+	// The name of the script.
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	// The desciption of the script.
+	Description string `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	// The number of acts that the script contains.
+	ActCount int64 `protobuf:"varint,4,opt,name=act_count,json=actCount,proto3" json:"act_count,omitempty"`
+	// The number of dispositions that the script contains.
+	DispositionCount int64 `protobuf:"varint,5,opt,name=disposition_count,json=dispositionCount,proto3" json:"disposition_count,omitempty"`
+	// The number of verbiages that the script contains.
+	VerbiageCount int64 `protobuf:"varint,6,opt,name=verbiage_count,json=verbiageCount,proto3" json:"verbiage_count,omitempty"`
+}
+
+func (x *HuntGroupDetails_ScriptDetails) Reset() {
+	*x = HuntGroupDetails_ScriptDetails{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_commons_org_huntgroup_proto_msgTypes[58]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *HuntGroupDetails_ScriptDetails) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*HuntGroupDetails_ScriptDetails) ProtoMessage() {}
+
+func (x *HuntGroupDetails_ScriptDetails) ProtoReflect() protoreflect.Message {
+	mi := &file_api_commons_org_huntgroup_proto_msgTypes[58]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use HuntGroupDetails_ScriptDetails.ProtoReflect.Descriptor instead.
+func (*HuntGroupDetails_ScriptDetails) Descriptor() ([]byte, []int) {
+	return file_api_commons_org_huntgroup_proto_rawDescGZIP(), []int{2, 5}
+}
+
+func (x *HuntGroupDetails_ScriptDetails) GetScriptSid() int64 {
+	if x != nil {
+		return x.ScriptSid
+	}
+	return 0
+}
+
+func (x *HuntGroupDetails_ScriptDetails) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *HuntGroupDetails_ScriptDetails) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *HuntGroupDetails_ScriptDetails) GetActCount() int64 {
+	if x != nil {
+		return x.ActCount
+	}
+	return 0
+}
+
+func (x *HuntGroupDetails_ScriptDetails) GetDispositionCount() int64 {
+	if x != nil {
+		return x.DispositionCount
+	}
+	return 0
+}
+
+func (x *HuntGroupDetails_ScriptDetails) GetVerbiageCount() int64 {
+	if x != nil {
+		return x.VerbiageCount
+	}
+	return 0
+}
+
 // Scrub list expiration properties.
 type CommunicationSettings_ScrubListExpiration struct {
 	state         protoimpl.MessageState
@@ -6222,7 +6325,7 @@ type CommunicationSettings_ScrubListExpiration struct {
 func (x *CommunicationSettings_ScrubListExpiration) Reset() {
 	*x = CommunicationSettings_ScrubListExpiration{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_org_huntgroup_proto_msgTypes[58]
+		mi := &file_api_commons_org_huntgroup_proto_msgTypes[59]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6235,7 +6338,7 @@ func (x *CommunicationSettings_ScrubListExpiration) String() string {
 func (*CommunicationSettings_ScrubListExpiration) ProtoMessage() {}
 
 func (x *CommunicationSettings_ScrubListExpiration) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_org_huntgroup_proto_msgTypes[58]
+	mi := &file_api_commons_org_huntgroup_proto_msgTypes[59]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6289,7 +6392,7 @@ type CommunicationSettings_AutomateResponseRules struct {
 func (x *CommunicationSettings_AutomateResponseRules) Reset() {
 	*x = CommunicationSettings_AutomateResponseRules{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_org_huntgroup_proto_msgTypes[59]
+		mi := &file_api_commons_org_huntgroup_proto_msgTypes[60]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6302,7 +6405,7 @@ func (x *CommunicationSettings_AutomateResponseRules) String() string {
 func (*CommunicationSettings_AutomateResponseRules) ProtoMessage() {}
 
 func (x *CommunicationSettings_AutomateResponseRules) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_org_huntgroup_proto_msgTypes[59]
+	mi := &file_api_commons_org_huntgroup_proto_msgTypes[60]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6347,7 +6450,7 @@ type CommunicationSettings_AutomateScrubListCallData struct {
 func (x *CommunicationSettings_AutomateScrubListCallData) Reset() {
 	*x = CommunicationSettings_AutomateScrubListCallData{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_org_huntgroup_proto_msgTypes[60]
+		mi := &file_api_commons_org_huntgroup_proto_msgTypes[61]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6360,7 +6463,7 @@ func (x *CommunicationSettings_AutomateScrubListCallData) String() string {
 func (*CommunicationSettings_AutomateScrubListCallData) ProtoMessage() {}
 
 func (x *CommunicationSettings_AutomateScrubListCallData) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_org_huntgroup_proto_msgTypes[60]
+	mi := &file_api_commons_org_huntgroup_proto_msgTypes[61]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6405,7 +6508,7 @@ type CommunicationSettings_AutomateScrubListCallData_ScrubListDataField struct {
 func (x *CommunicationSettings_AutomateScrubListCallData_ScrubListDataField) Reset() {
 	*x = CommunicationSettings_AutomateScrubListCallData_ScrubListDataField{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_org_huntgroup_proto_msgTypes[61]
+		mi := &file_api_commons_org_huntgroup_proto_msgTypes[62]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6418,7 +6521,7 @@ func (x *CommunicationSettings_AutomateScrubListCallData_ScrubListDataField) Str
 func (*CommunicationSettings_AutomateScrubListCallData_ScrubListDataField) ProtoMessage() {}
 
 func (x *CommunicationSettings_AutomateScrubListCallData_ScrubListDataField) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_org_huntgroup_proto_msgTypes[61]
+	mi := &file_api_commons_org_huntgroup_proto_msgTypes[62]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6467,7 +6570,7 @@ type CallbackSettings_DefaultRouting struct {
 func (x *CallbackSettings_DefaultRouting) Reset() {
 	*x = CallbackSettings_DefaultRouting{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_org_huntgroup_proto_msgTypes[62]
+		mi := &file_api_commons_org_huntgroup_proto_msgTypes[63]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6480,7 +6583,7 @@ func (x *CallbackSettings_DefaultRouting) String() string {
 func (*CallbackSettings_DefaultRouting) ProtoMessage() {}
 
 func (x *CallbackSettings_DefaultRouting) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_org_huntgroup_proto_msgTypes[62]
+	mi := &file_api_commons_org_huntgroup_proto_msgTypes[63]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6543,7 +6646,7 @@ type CallbackSettings_CallbackRoutingDisallowed struct {
 func (x *CallbackSettings_CallbackRoutingDisallowed) Reset() {
 	*x = CallbackSettings_CallbackRoutingDisallowed{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_org_huntgroup_proto_msgTypes[63]
+		mi := &file_api_commons_org_huntgroup_proto_msgTypes[64]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6556,7 +6659,7 @@ func (x *CallbackSettings_CallbackRoutingDisallowed) String() string {
 func (*CallbackSettings_CallbackRoutingDisallowed) ProtoMessage() {}
 
 func (x *CallbackSettings_CallbackRoutingDisallowed) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_org_huntgroup_proto_msgTypes[63]
+	mi := &file_api_commons_org_huntgroup_proto_msgTypes[64]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6619,7 +6722,7 @@ type ManualDialSettings_ScrubOverride struct {
 func (x *ManualDialSettings_ScrubOverride) Reset() {
 	*x = ManualDialSettings_ScrubOverride{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_org_huntgroup_proto_msgTypes[64]
+		mi := &file_api_commons_org_huntgroup_proto_msgTypes[65]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6632,7 +6735,7 @@ func (x *ManualDialSettings_ScrubOverride) String() string {
 func (*ManualDialSettings_ScrubOverride) ProtoMessage() {}
 
 func (x *ManualDialSettings_ScrubOverride) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_org_huntgroup_proto_msgTypes[64]
+	mi := &file_api_commons_org_huntgroup_proto_msgTypes[65]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6691,7 +6794,7 @@ type ManualDialSettings_DefaultCallerId struct {
 func (x *ManualDialSettings_DefaultCallerId) Reset() {
 	*x = ManualDialSettings_DefaultCallerId{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_org_huntgroup_proto_msgTypes[65]
+		mi := &file_api_commons_org_huntgroup_proto_msgTypes[66]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6704,7 +6807,7 @@ func (x *ManualDialSettings_DefaultCallerId) String() string {
 func (*ManualDialSettings_DefaultCallerId) ProtoMessage() {}
 
 func (x *ManualDialSettings_DefaultCallerId) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_org_huntgroup_proto_msgTypes[65]
+	mi := &file_api_commons_org_huntgroup_proto_msgTypes[66]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6751,7 +6854,7 @@ type ManualDialSettings_DataDipIntegrationMapping struct {
 func (x *ManualDialSettings_DataDipIntegrationMapping) Reset() {
 	*x = ManualDialSettings_DataDipIntegrationMapping{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_org_huntgroup_proto_msgTypes[66]
+		mi := &file_api_commons_org_huntgroup_proto_msgTypes[67]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6764,7 +6867,7 @@ func (x *ManualDialSettings_DataDipIntegrationMapping) String() string {
 func (*ManualDialSettings_DataDipIntegrationMapping) ProtoMessage() {}
 
 func (x *ManualDialSettings_DataDipIntegrationMapping) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_org_huntgroup_proto_msgTypes[66]
+	mi := &file_api_commons_org_huntgroup_proto_msgTypes[67]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6815,7 +6918,7 @@ type TransferCallSettings_HandOffTypes struct {
 func (x *TransferCallSettings_HandOffTypes) Reset() {
 	*x = TransferCallSettings_HandOffTypes{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_org_huntgroup_proto_msgTypes[67]
+		mi := &file_api_commons_org_huntgroup_proto_msgTypes[68]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6828,7 +6931,7 @@ func (x *TransferCallSettings_HandOffTypes) String() string {
 func (*TransferCallSettings_HandOffTypes) ProtoMessage() {}
 
 func (x *TransferCallSettings_HandOffTypes) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_org_huntgroup_proto_msgTypes[67]
+	mi := &file_api_commons_org_huntgroup_proto_msgTypes[68]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6881,7 +6984,7 @@ type TransferCallSettings_TransferTypes struct {
 func (x *TransferCallSettings_TransferTypes) Reset() {
 	*x = TransferCallSettings_TransferTypes{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_org_huntgroup_proto_msgTypes[68]
+		mi := &file_api_commons_org_huntgroup_proto_msgTypes[69]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6894,7 +6997,7 @@ func (x *TransferCallSettings_TransferTypes) String() string {
 func (*TransferCallSettings_TransferTypes) ProtoMessage() {}
 
 func (x *TransferCallSettings_TransferTypes) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_org_huntgroup_proto_msgTypes[68]
+	mi := &file_api_commons_org_huntgroup_proto_msgTypes[69]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6959,7 +7062,7 @@ type TransferCallSettings_RequeueTransferDisallowed struct {
 func (x *TransferCallSettings_RequeueTransferDisallowed) Reset() {
 	*x = TransferCallSettings_RequeueTransferDisallowed{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_org_huntgroup_proto_msgTypes[69]
+		mi := &file_api_commons_org_huntgroup_proto_msgTypes[70]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6972,7 +7075,7 @@ func (x *TransferCallSettings_RequeueTransferDisallowed) String() string {
 func (*TransferCallSettings_RequeueTransferDisallowed) ProtoMessage() {}
 
 func (x *TransferCallSettings_RequeueTransferDisallowed) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_org_huntgroup_proto_msgTypes[69]
+	mi := &file_api_commons_org_huntgroup_proto_msgTypes[70]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7022,7 +7125,7 @@ type TransferCallSettings_PbxTransferDisallowed struct {
 func (x *TransferCallSettings_PbxTransferDisallowed) Reset() {
 	*x = TransferCallSettings_PbxTransferDisallowed{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_org_huntgroup_proto_msgTypes[70]
+		mi := &file_api_commons_org_huntgroup_proto_msgTypes[71]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7035,7 +7138,7 @@ func (x *TransferCallSettings_PbxTransferDisallowed) String() string {
 func (*TransferCallSettings_PbxTransferDisallowed) ProtoMessage() {}
 
 func (x *TransferCallSettings_PbxTransferDisallowed) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_org_huntgroup_proto_msgTypes[70]
+	mi := &file_api_commons_org_huntgroup_proto_msgTypes[71]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7078,7 +7181,7 @@ type TransferCallSettings_RequeueQueueConfiguration struct {
 func (x *TransferCallSettings_RequeueQueueConfiguration) Reset() {
 	*x = TransferCallSettings_RequeueQueueConfiguration{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_org_huntgroup_proto_msgTypes[71]
+		mi := &file_api_commons_org_huntgroup_proto_msgTypes[72]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7091,7 +7194,7 @@ func (x *TransferCallSettings_RequeueQueueConfiguration) String() string {
 func (*TransferCallSettings_RequeueQueueConfiguration) ProtoMessage() {}
 
 func (x *TransferCallSettings_RequeueQueueConfiguration) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_org_huntgroup_proto_msgTypes[71]
+	mi := &file_api_commons_org_huntgroup_proto_msgTypes[72]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7134,7 +7237,7 @@ type TransferCallSettings_DefaultCallerId struct {
 func (x *TransferCallSettings_DefaultCallerId) Reset() {
 	*x = TransferCallSettings_DefaultCallerId{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_org_huntgroup_proto_msgTypes[72]
+		mi := &file_api_commons_org_huntgroup_proto_msgTypes[73]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7147,7 +7250,7 @@ func (x *TransferCallSettings_DefaultCallerId) String() string {
 func (*TransferCallSettings_DefaultCallerId) ProtoMessage() {}
 
 func (x *TransferCallSettings_DefaultCallerId) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_org_huntgroup_proto_msgTypes[72]
+	mi := &file_api_commons_org_huntgroup_proto_msgTypes[73]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7194,7 +7297,7 @@ type HuntGroupWithClientInfoTemplateData_HuntGroup struct {
 func (x *HuntGroupWithClientInfoTemplateData_HuntGroup) Reset() {
 	*x = HuntGroupWithClientInfoTemplateData_HuntGroup{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_org_huntgroup_proto_msgTypes[73]
+		mi := &file_api_commons_org_huntgroup_proto_msgTypes[74]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7207,7 +7310,7 @@ func (x *HuntGroupWithClientInfoTemplateData_HuntGroup) String() string {
 func (*HuntGroupWithClientInfoTemplateData_HuntGroup) ProtoMessage() {}
 
 func (x *HuntGroupWithClientInfoTemplateData_HuntGroup) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_org_huntgroup_proto_msgTypes[73]
+	mi := &file_api_commons_org_huntgroup_proto_msgTypes[74]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7258,7 +7361,7 @@ type DataDipConfig_Param struct {
 func (x *DataDipConfig_Param) Reset() {
 	*x = DataDipConfig_Param{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_org_huntgroup_proto_msgTypes[74]
+		mi := &file_api_commons_org_huntgroup_proto_msgTypes[75]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7271,7 +7374,7 @@ func (x *DataDipConfig_Param) String() string {
 func (*DataDipConfig_Param) ProtoMessage() {}
 
 func (x *DataDipConfig_Param) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_org_huntgroup_proto_msgTypes[74]
+	mi := &file_api_commons_org_huntgroup_proto_msgTypes[75]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7327,7 +7430,7 @@ type DataDipConfig_ParamTypeValueTuple struct {
 func (x *DataDipConfig_ParamTypeValueTuple) Reset() {
 	*x = DataDipConfig_ParamTypeValueTuple{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_org_huntgroup_proto_msgTypes[75]
+		mi := &file_api_commons_org_huntgroup_proto_msgTypes[76]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7340,7 +7443,7 @@ func (x *DataDipConfig_ParamTypeValueTuple) String() string {
 func (*DataDipConfig_ParamTypeValueTuple) ProtoMessage() {}
 
 func (x *DataDipConfig_ParamTypeValueTuple) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_org_huntgroup_proto_msgTypes[75]
+	mi := &file_api_commons_org_huntgroup_proto_msgTypes[76]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7382,7 +7485,7 @@ type DataDipConfig_ReturnData struct {
 func (x *DataDipConfig_ReturnData) Reset() {
 	*x = DataDipConfig_ReturnData{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_org_huntgroup_proto_msgTypes[76]
+		mi := &file_api_commons_org_huntgroup_proto_msgTypes[77]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7395,7 +7498,7 @@ func (x *DataDipConfig_ReturnData) String() string {
 func (*DataDipConfig_ReturnData) ProtoMessage() {}
 
 func (x *DataDipConfig_ReturnData) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_org_huntgroup_proto_msgTypes[76]
+	mi := &file_api_commons_org_huntgroup_proto_msgTypes[77]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7439,7 +7542,7 @@ type DataDipConfig_Header struct {
 func (x *DataDipConfig_Header) Reset() {
 	*x = DataDipConfig_Header{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_commons_org_huntgroup_proto_msgTypes[77]
+		mi := &file_api_commons_org_huntgroup_proto_msgTypes[78]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7452,7 +7555,7 @@ func (x *DataDipConfig_Header) String() string {
 func (*DataDipConfig_Header) ProtoMessage() {}
 
 func (x *DataDipConfig_Header) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_org_huntgroup_proto_msgTypes[77]
+	mi := &file_api_commons_org_huntgroup_proto_msgTypes[78]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7858,7 +7961,7 @@ var file_api_commons_org_huntgroup_proto_rawDesc = []byte{
 	0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0a, 0x6d, 0x61, 0x6e, 0x75, 0x61, 0x6c, 0x44,
 	0x69, 0x61, 0x6c, 0x12, 0x21, 0x0a, 0x0c, 0x70, 0x72, 0x65, 0x76, 0x69, 0x65, 0x77, 0x5f, 0x64,
 	0x69, 0x61, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0b, 0x70, 0x72, 0x65, 0x76, 0x69,
-	0x65, 0x77, 0x44, 0x69, 0x61, 0x6c, 0x22, 0xb7, 0x0a, 0x0a, 0x10, 0x48, 0x75, 0x6e, 0x74, 0x47,
+	0x65, 0x77, 0x44, 0x69, 0x61, 0x6c, 0x22, 0xe7, 0x0c, 0x0a, 0x10, 0x48, 0x75, 0x6e, 0x74, 0x47,
 	0x72, 0x6f, 0x75, 0x70, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x12, 0x59, 0x0a, 0x0f, 0x67,
 	0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x5f, 0x64, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x18, 0x01,
 	0x20, 0x01, 0x28, 0x0b, 0x32, 0x30, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f,
@@ -7891,57 +7994,76 @@ var file_api_commons_org_huntgroup_proto_rawDesc = []byte{
 	0x73, 0x2e, 0x49, 0x6e, 0x74, 0x65, 0x67, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x4c, 0x69, 0x6e,
 	0x6b, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x52, 0x16, 0x69, 0x6e, 0x74, 0x65, 0x67, 0x72,
 	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x4c, 0x69, 0x6e, 0x6b, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73,
-	0x1a, 0xd8, 0x01, 0x0a, 0x0e, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x6c, 0x44, 0x65, 0x74, 0x61,
-	0x69, 0x6c, 0x73, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x64, 0x65, 0x73, 0x63, 0x72,
-	0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x64, 0x65,
-	0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x32, 0x0a, 0x04, 0x74, 0x79, 0x70,
-	0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x1e, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f,
-	0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x48, 0x75, 0x6e, 0x74, 0x47, 0x72,
-	0x6f, 0x75, 0x70, 0x54, 0x79, 0x70, 0x65, 0x52, 0x04, 0x74, 0x79, 0x70, 0x65, 0x12, 0x3b, 0x0a,
-	0x0b, 0x6d, 0x6f, 0x64, 0x69, 0x66, 0x79, 0x5f, 0x64, 0x61, 0x74, 0x65, 0x18, 0x04, 0x20, 0x01,
-	0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x0a,
-	0x6d, 0x6f, 0x64, 0x69, 0x66, 0x79, 0x44, 0x61, 0x74, 0x65, 0x12, 0x1f, 0x0a, 0x0b, 0x61, 0x67,
-	0x65, 0x6e, 0x74, 0x5f, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x03, 0x52,
-	0x0a, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x1a, 0xb6, 0x01, 0x0a, 0x20,
-	0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x49, 0x6e, 0x66, 0x6f, 0x44, 0x69, 0x73, 0x70, 0x6c, 0x61,
-	0x79, 0x54, 0x65, 0x6d, 0x70, 0x6c, 0x61, 0x74, 0x65, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73,
-	0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04,
-	0x6e, 0x61, 0x6d, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74,
-	0x69, 0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x64, 0x65, 0x73, 0x63, 0x72,
-	0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x2c, 0x0a, 0x12, 0x64, 0x69, 0x73, 0x70, 0x6c, 0x61,
-	0x79, 0x5f, 0x61, 0x6c, 0x6c, 0x5f, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x73, 0x18, 0x03, 0x20, 0x01,
-	0x28, 0x08, 0x52, 0x10, 0x64, 0x69, 0x73, 0x70, 0x6c, 0x61, 0x79, 0x41, 0x6c, 0x6c, 0x46, 0x69,
-	0x65, 0x6c, 0x64, 0x73, 0x12, 0x2e, 0x0a, 0x13, 0x64, 0x65, 0x66, 0x69, 0x6e, 0x65, 0x64, 0x5f,
-	0x66, 0x69, 0x65, 0x6c, 0x64, 0x5f, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x04, 0x20, 0x01, 0x28,
-	0x03, 0x52, 0x11, 0x64, 0x65, 0x66, 0x69, 0x6e, 0x65, 0x64, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x43,
-	0x6f, 0x75, 0x6e, 0x74, 0x1a, 0x8a, 0x01, 0x0a, 0x0e, 0x57, 0x65, 0x62, 0x4c, 0x69, 0x6e, 0x6b,
-	0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x64,
-	0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x0b, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x19, 0x0a,
-	0x08, 0x62, 0x61, 0x73, 0x65, 0x5f, 0x75, 0x72, 0x6c, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x07, 0x62, 0x61, 0x73, 0x65, 0x55, 0x72, 0x6c, 0x12, 0x27, 0x0a, 0x0f, 0x70, 0x61, 0x72, 0x61,
-	0x6d, 0x65, 0x74, 0x65, 0x72, 0x5f, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x04, 0x20, 0x01, 0x28,
-	0x03, 0x52, 0x0e, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x65, 0x74, 0x65, 0x72, 0x43, 0x6f, 0x75, 0x6e,
-	0x74, 0x1a, 0xbc, 0x01, 0x0a, 0x0e, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x44, 0x65, 0x74,
-	0x61, 0x69, 0x6c, 0x73, 0x12, 0x20, 0x0a, 0x0b, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74,
-	0x69, 0x6f, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x64, 0x65, 0x73, 0x63, 0x72,
-	0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x34, 0x0a, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73,
-	0x18, 0x02, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x1c, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d,
-	0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x53, 0x74,
-	0x61, 0x74, 0x75, 0x73, 0x52, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x1a, 0x0a, 0x08,
-	0x64, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x08,
-	0x64, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x36, 0x0a, 0x06, 0x61, 0x63, 0x74, 0x69,
-	0x6f, 0x6e, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x1e, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63,
-	0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x54, 0x72, 0x69, 0x67, 0x67,
-	0x65, 0x72, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x06, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e,
-	0x1a, 0x4e, 0x0a, 0x16, 0x49, 0x6e, 0x74, 0x65, 0x67, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x4c,
-	0x69, 0x6e, 0x6b, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61,
-	0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x20,
-	0x0a, 0x0b, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x02, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x0b, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e,
+	0x12, 0x56, 0x0a, 0x0e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x5f, 0x64, 0x65, 0x74, 0x61, 0x69,
+	0x6c, 0x73, 0x18, 0x06, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2f, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63,
+	0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x48, 0x75, 0x6e, 0x74, 0x47,
+	0x72, 0x6f, 0x75, 0x70, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x2e, 0x53, 0x63, 0x72, 0x69,
+	0x70, 0x74, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x52, 0x0d, 0x73, 0x63, 0x72, 0x69, 0x70,
+	0x74, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x1a, 0xd8, 0x01, 0x0a, 0x0e, 0x47, 0x65, 0x6e,
+	0x65, 0x72, 0x61, 0x6c, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x12, 0x12, 0x0a, 0x04, 0x6e,
+	0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12,
+	0x20, 0x0a, 0x0b, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f,
+	0x6e, 0x12, 0x32, 0x0a, 0x04, 0x74, 0x79, 0x70, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0e, 0x32,
+	0x1e, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x6f, 0x72,
+	0x67, 0x2e, 0x48, 0x75, 0x6e, 0x74, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x54, 0x79, 0x70, 0x65, 0x52,
+	0x04, 0x74, 0x79, 0x70, 0x65, 0x12, 0x3b, 0x0a, 0x0b, 0x6d, 0x6f, 0x64, 0x69, 0x66, 0x79, 0x5f,
+	0x64, 0x61, 0x74, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f,
+	0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d,
+	0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x0a, 0x6d, 0x6f, 0x64, 0x69, 0x66, 0x79, 0x44, 0x61,
+	0x74, 0x65, 0x12, 0x1f, 0x0a, 0x0b, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x5f, 0x63, 0x6f, 0x75, 0x6e,
+	0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0a, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x43, 0x6f,
+	0x75, 0x6e, 0x74, 0x1a, 0xb6, 0x01, 0x0a, 0x20, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x49, 0x6e,
+	0x66, 0x6f, 0x44, 0x69, 0x73, 0x70, 0x6c, 0x61, 0x79, 0x54, 0x65, 0x6d, 0x70, 0x6c, 0x61, 0x74,
+	0x65, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x20, 0x0a, 0x0b,
+	0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x0b, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x2c,
+	0x0a, 0x12, 0x64, 0x69, 0x73, 0x70, 0x6c, 0x61, 0x79, 0x5f, 0x61, 0x6c, 0x6c, 0x5f, 0x66, 0x69,
+	0x65, 0x6c, 0x64, 0x73, 0x18, 0x03, 0x20, 0x01, 0x28, 0x08, 0x52, 0x10, 0x64, 0x69, 0x73, 0x70,
+	0x6c, 0x61, 0x79, 0x41, 0x6c, 0x6c, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x73, 0x12, 0x2e, 0x0a, 0x13,
+	0x64, 0x65, 0x66, 0x69, 0x6e, 0x65, 0x64, 0x5f, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x5f, 0x63, 0x6f,
+	0x75, 0x6e, 0x74, 0x18, 0x04, 0x20, 0x01, 0x28, 0x03, 0x52, 0x11, 0x64, 0x65, 0x66, 0x69, 0x6e,
+	0x65, 0x64, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x1a, 0x8a, 0x01, 0x0a,
+	0x0e, 0x57, 0x65, 0x62, 0x4c, 0x69, 0x6e, 0x6b, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x12,
+	0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e,
+	0x61, 0x6d, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69,
+	0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69,
+	0x70, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x19, 0x0a, 0x08, 0x62, 0x61, 0x73, 0x65, 0x5f, 0x75, 0x72,
+	0x6c, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x62, 0x61, 0x73, 0x65, 0x55, 0x72, 0x6c,
+	0x12, 0x27, 0x0a, 0x0f, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x65, 0x74, 0x65, 0x72, 0x5f, 0x63, 0x6f,
+	0x75, 0x6e, 0x74, 0x18, 0x04, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0e, 0x70, 0x61, 0x72, 0x61, 0x6d,
+	0x65, 0x74, 0x65, 0x72, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x1a, 0xbc, 0x01, 0x0a, 0x0e, 0x54, 0x72,
+	0x69, 0x67, 0x67, 0x65, 0x72, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x12, 0x20, 0x0a, 0x0b,
+	0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x0b, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x34,
+	0x0a, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x1c,
+	0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x6f, 0x72, 0x67,
+	0x2e, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x06, 0x73, 0x74,
+	0x61, 0x74, 0x75, 0x73, 0x12, 0x1a, 0x0a, 0x08, 0x64, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x08, 0x64, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e,
+	0x12, 0x36, 0x0a, 0x06, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0e,
+	0x32, 0x1e, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x6f,
+	0x72, 0x67, 0x2e, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e,
+	0x52, 0x06, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x1a, 0x4e, 0x0a, 0x16, 0x49, 0x6e, 0x74, 0x65,
+	0x67, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x4c, 0x69, 0x6e, 0x6b, 0x44, 0x65, 0x74, 0x61, 0x69,
+	0x6c, 0x73, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69,
+	0x70, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x64, 0x65, 0x73,
+	0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x1a, 0xd5, 0x01, 0x0a, 0x0d, 0x53, 0x63, 0x72,
+	0x69, 0x70, 0x74, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x12, 0x1d, 0x0a, 0x0a, 0x73, 0x63,
+	0x72, 0x69, 0x70, 0x74, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x09,
+	0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x53, 0x69, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d,
+	0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x20, 0x0a,
+	0x0b, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x03, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x0b, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x12,
+	0x1b, 0x0a, 0x09, 0x61, 0x63, 0x74, 0x5f, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x04, 0x20, 0x01,
+	0x28, 0x03, 0x52, 0x08, 0x61, 0x63, 0x74, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x2b, 0x0a, 0x11,
+	0x64, 0x69, 0x73, 0x70, 0x6f, 0x73, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x63, 0x6f, 0x75, 0x6e,
+	0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x03, 0x52, 0x10, 0x64, 0x69, 0x73, 0x70, 0x6f, 0x73, 0x69,
+	0x74, 0x69, 0x6f, 0x6e, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x25, 0x0a, 0x0e, 0x76, 0x65, 0x72,
+	0x62, 0x69, 0x61, 0x67, 0x65, 0x5f, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x06, 0x20, 0x01, 0x28,
+	0x03, 0x52, 0x0d, 0x76, 0x65, 0x72, 0x62, 0x69, 0x61, 0x67, 0x65, 0x43, 0x6f, 0x75, 0x6e, 0x74,
 	0x22, 0xec, 0x0e, 0x0a, 0x15, 0x43, 0x6f, 0x6d, 0x6d, 0x75, 0x6e, 0x69, 0x63, 0x61, 0x74, 0x69,
 	0x6f, 0x6e, 0x53, 0x65, 0x74, 0x74, 0x69, 0x6e, 0x67, 0x73, 0x12, 0x37, 0x0a, 0x18, 0x65, 0x6e,
 	0x61, 0x62, 0x6c, 0x65, 0x5f, 0x73, 0x63, 0x72, 0x75, 0x62, 0x5f, 0x6c, 0x69, 0x73, 0x74, 0x5f,
@@ -9469,7 +9591,7 @@ func file_api_commons_org_huntgroup_proto_rawDescGZIP() []byte {
 }
 
 var file_api_commons_org_huntgroup_proto_enumTypes = make([]protoimpl.EnumInfo, 11)
-var file_api_commons_org_huntgroup_proto_msgTypes = make([]protoimpl.MessageInfo, 78)
+var file_api_commons_org_huntgroup_proto_msgTypes = make([]protoimpl.MessageInfo, 79)
 var file_api_commons_org_huntgroup_proto_goTypes = []interface{}{
 	(HuntGroupType)(0),                                        // 0: api.commons.org.HuntGroupType
 	(TemplateCategory)(0),                                     // 1: api.commons.org.TemplateCategory
@@ -9540,44 +9662,45 @@ var file_api_commons_org_huntgroup_proto_goTypes = []interface{}{
 	(*HuntGroupDetails_WebLinkDetails)(nil),                   // 66: api.commons.org.HuntGroupDetails.WebLinkDetails
 	(*HuntGroupDetails_TriggerDetails)(nil),                   // 67: api.commons.org.HuntGroupDetails.TriggerDetails
 	(*HuntGroupDetails_IntegrationLinkDetails)(nil),           // 68: api.commons.org.HuntGroupDetails.IntegrationLinkDetails
-	(*CommunicationSettings_ScrubListExpiration)(nil),         // 69: api.commons.org.CommunicationSettings.ScrubListExpiration
-	(*CommunicationSettings_AutomateResponseRules)(nil),       // 70: api.commons.org.CommunicationSettings.AutomateResponseRules
-	(*CommunicationSettings_AutomateScrubListCallData)(nil),   // 71: api.commons.org.CommunicationSettings.AutomateScrubListCallData
-	(*CommunicationSettings_AutomateScrubListCallData_ScrubListDataField)(nil), // 72: api.commons.org.CommunicationSettings.AutomateScrubListCallData.ScrubListDataField
-	(*CallbackSettings_DefaultRouting)(nil),                                    // 73: api.commons.org.CallbackSettings.DefaultRouting
-	(*CallbackSettings_CallbackRoutingDisallowed)(nil),                         // 74: api.commons.org.CallbackSettings.CallbackRoutingDisallowed
-	(*ManualDialSettings_ScrubOverride)(nil),                                   // 75: api.commons.org.ManualDialSettings.ScrubOverride
-	(*ManualDialSettings_DefaultCallerId)(nil),                                 // 76: api.commons.org.ManualDialSettings.DefaultCallerId
-	(*ManualDialSettings_DataDipIntegrationMapping)(nil),                       // 77: api.commons.org.ManualDialSettings.DataDipIntegrationMapping
-	(*TransferCallSettings_HandOffTypes)(nil),                                  // 78: api.commons.org.TransferCallSettings.HandOffTypes
-	(*TransferCallSettings_TransferTypes)(nil),                                 // 79: api.commons.org.TransferCallSettings.TransferTypes
-	(*TransferCallSettings_RequeueTransferDisallowed)(nil),                     // 80: api.commons.org.TransferCallSettings.RequeueTransferDisallowed
-	(*TransferCallSettings_PbxTransferDisallowed)(nil),                         // 81: api.commons.org.TransferCallSettings.PbxTransferDisallowed
-	(*TransferCallSettings_RequeueQueueConfiguration)(nil),                     // 82: api.commons.org.TransferCallSettings.RequeueQueueConfiguration
-	(*TransferCallSettings_DefaultCallerId)(nil),                               // 83: api.commons.org.TransferCallSettings.DefaultCallerId
-	(*HuntGroupWithClientInfoTemplateData_HuntGroup)(nil),                      // 84: api.commons.org.HuntGroupWithClientInfoTemplateData.HuntGroup
-	(*DataDipConfig_Param)(nil),                                                // 85: api.commons.org.DataDipConfig.Param
-	(*DataDipConfig_ParamTypeValueTuple)(nil),                                  // 86: api.commons.org.DataDipConfig.ParamTypeValueTuple
-	(*DataDipConfig_ReturnData)(nil),                                           // 87: api.commons.org.DataDipConfig.ReturnData
-	(*DataDipConfig_Header)(nil),                                               // 88: api.commons.org.DataDipConfig.Header
-	(commons.InitialAgentStatus)(0),                                            // 89: api.commons.InitialAgentStatus
-	(commons.AgentCallHistoryScope)(0),                                         // 90: api.commons.AgentCallHistoryScope
-	(commons.Country)(0),                                                       // 91: api.commons.Country
-	(commons.HuntGroupOrgDefaultCustom)(0),                                     // 92: api.commons.HuntGroupOrgDefaultCustom
-	(commons.ManualDialTimeZoneValidation)(0),                                  // 93: api.commons.ManualDialTimeZoneValidation
-	(commons.ManualDialDataDipScope)(0),                                        // 94: api.commons.ManualDialDataDipScope
-	(commons.ManualDialDataDipHandling)(0),                                     // 95: api.commons.ManualDialDataDipHandling
-	(commons.TransferRecordingStatus)(0),                                       // 96: api.commons.TransferRecordingStatus
-	(commons.AgentRouting)(0),                                                  // 97: api.commons.AgentRouting
-	(commons.PhonePostalDisplayOptions)(0),                                     // 98: api.commons.PhonePostalDisplayOptions
-	(commons.AlphanumericKeypadDelimiter)(0),                                   // 99: api.commons.AlphanumericKeypadDelimiter
-	(*timestamppb.Timestamp)(nil),                                              // 100: google.protobuf.Timestamp
-	(commons.CommunicationExpiration)(0),                                       // 101: api.commons.CommunicationExpiration
-	(commons.DefaultCallbackRouting)(0),                                        // 102: api.commons.DefaultCallbackRouting
-	(commons.DefaultManualDialCallerId)(0),                                     // 103: api.commons.DefaultManualDialCallerId
-	(commons.ManualDialDataDipIntegration)(0),                                  // 104: api.commons.ManualDialDataDipIntegration
-	(commons.RequeueTransferQueueConfig)(0),                                    // 105: api.commons.RequeueTransferQueueConfig
-	(commons.DefaultTransferCallerId)(0),                                       // 106: api.commons.DefaultTransferCallerId
+	(*HuntGroupDetails_ScriptDetails)(nil),                    // 69: api.commons.org.HuntGroupDetails.ScriptDetails
+	(*CommunicationSettings_ScrubListExpiration)(nil),         // 70: api.commons.org.CommunicationSettings.ScrubListExpiration
+	(*CommunicationSettings_AutomateResponseRules)(nil),       // 71: api.commons.org.CommunicationSettings.AutomateResponseRules
+	(*CommunicationSettings_AutomateScrubListCallData)(nil),   // 72: api.commons.org.CommunicationSettings.AutomateScrubListCallData
+	(*CommunicationSettings_AutomateScrubListCallData_ScrubListDataField)(nil), // 73: api.commons.org.CommunicationSettings.AutomateScrubListCallData.ScrubListDataField
+	(*CallbackSettings_DefaultRouting)(nil),                                    // 74: api.commons.org.CallbackSettings.DefaultRouting
+	(*CallbackSettings_CallbackRoutingDisallowed)(nil),                         // 75: api.commons.org.CallbackSettings.CallbackRoutingDisallowed
+	(*ManualDialSettings_ScrubOverride)(nil),                                   // 76: api.commons.org.ManualDialSettings.ScrubOverride
+	(*ManualDialSettings_DefaultCallerId)(nil),                                 // 77: api.commons.org.ManualDialSettings.DefaultCallerId
+	(*ManualDialSettings_DataDipIntegrationMapping)(nil),                       // 78: api.commons.org.ManualDialSettings.DataDipIntegrationMapping
+	(*TransferCallSettings_HandOffTypes)(nil),                                  // 79: api.commons.org.TransferCallSettings.HandOffTypes
+	(*TransferCallSettings_TransferTypes)(nil),                                 // 80: api.commons.org.TransferCallSettings.TransferTypes
+	(*TransferCallSettings_RequeueTransferDisallowed)(nil),                     // 81: api.commons.org.TransferCallSettings.RequeueTransferDisallowed
+	(*TransferCallSettings_PbxTransferDisallowed)(nil),                         // 82: api.commons.org.TransferCallSettings.PbxTransferDisallowed
+	(*TransferCallSettings_RequeueQueueConfiguration)(nil),                     // 83: api.commons.org.TransferCallSettings.RequeueQueueConfiguration
+	(*TransferCallSettings_DefaultCallerId)(nil),                               // 84: api.commons.org.TransferCallSettings.DefaultCallerId
+	(*HuntGroupWithClientInfoTemplateData_HuntGroup)(nil),                      // 85: api.commons.org.HuntGroupWithClientInfoTemplateData.HuntGroup
+	(*DataDipConfig_Param)(nil),                                                // 86: api.commons.org.DataDipConfig.Param
+	(*DataDipConfig_ParamTypeValueTuple)(nil),                                  // 87: api.commons.org.DataDipConfig.ParamTypeValueTuple
+	(*DataDipConfig_ReturnData)(nil),                                           // 88: api.commons.org.DataDipConfig.ReturnData
+	(*DataDipConfig_Header)(nil),                                               // 89: api.commons.org.DataDipConfig.Header
+	(commons.InitialAgentStatus)(0),                                            // 90: api.commons.InitialAgentStatus
+	(commons.AgentCallHistoryScope)(0),                                         // 91: api.commons.AgentCallHistoryScope
+	(commons.Country)(0),                                                       // 92: api.commons.Country
+	(commons.HuntGroupOrgDefaultCustom)(0),                                     // 93: api.commons.HuntGroupOrgDefaultCustom
+	(commons.ManualDialTimeZoneValidation)(0),                                  // 94: api.commons.ManualDialTimeZoneValidation
+	(commons.ManualDialDataDipScope)(0),                                        // 95: api.commons.ManualDialDataDipScope
+	(commons.ManualDialDataDipHandling)(0),                                     // 96: api.commons.ManualDialDataDipHandling
+	(commons.TransferRecordingStatus)(0),                                       // 97: api.commons.TransferRecordingStatus
+	(commons.AgentRouting)(0),                                                  // 98: api.commons.AgentRouting
+	(commons.PhonePostalDisplayOptions)(0),                                     // 99: api.commons.PhonePostalDisplayOptions
+	(commons.AlphanumericKeypadDelimiter)(0),                                   // 100: api.commons.AlphanumericKeypadDelimiter
+	(*timestamppb.Timestamp)(nil),                                              // 101: google.protobuf.Timestamp
+	(commons.CommunicationExpiration)(0),                                       // 102: api.commons.CommunicationExpiration
+	(commons.DefaultCallbackRouting)(0),                                        // 103: api.commons.DefaultCallbackRouting
+	(commons.DefaultManualDialCallerId)(0),                                     // 104: api.commons.DefaultManualDialCallerId
+	(commons.ManualDialDataDipIntegration)(0),                                  // 105: api.commons.ManualDialDataDipIntegration
+	(commons.RequeueTransferQueueConfig)(0),                                    // 106: api.commons.RequeueTransferQueueConfig
+	(commons.DefaultTransferCallerId)(0),                                       // 107: api.commons.DefaultTransferCallerId
 }
 var file_api_commons_org_huntgroup_proto_depIdxs = []int32{
 	12,  // 0: api.commons.org.HuntGroupSettings.general_settings:type_name -> api.commons.org.GeneralSettings
@@ -9587,13 +9710,13 @@ var file_api_commons_org_huntgroup_proto_depIdxs = []int32{
 	17,  // 4: api.commons.org.HuntGroupSettings.manual_dial_settings:type_name -> api.commons.org.ManualDialSettings
 	21,  // 5: api.commons.org.HuntGroupSettings.transfer_call_settings:type_name -> api.commons.org.TransferCallSettings
 	22,  // 6: api.commons.org.HuntGroupSettings.number_history_settings:type_name -> api.commons.org.NumberHistorySettings
-	89,  // 7: api.commons.org.GeneralSettings.initial_agent_status:type_name -> api.commons.InitialAgentStatus
+	90,  // 7: api.commons.org.GeneralSettings.initial_agent_status:type_name -> api.commons.InitialAgentStatus
 	53,  // 8: api.commons.org.GeneralSettings.agent_pause_option_set:type_name -> api.commons.org.GeneralSettings.PauseOptionSet
 	54,  // 9: api.commons.org.GeneralSettings.hold_queue_monitoring:type_name -> api.commons.org.GeneralSettings.HoldQueueMonitoring
 	55,  // 10: api.commons.org.GeneralSettings.display_data_dipped_data:type_name -> api.commons.org.GeneralSettings.DataDipDataDisplay
 	56,  // 11: api.commons.org.GeneralSettings.integration_data_display:type_name -> api.commons.org.GeneralSettings.IntegrationDataDisplay
 	57,  // 12: api.commons.org.GeneralSettings.journey_data_display:type_name -> api.commons.org.GeneralSettings.JourneyDataDisplay
-	90,  // 13: api.commons.org.GeneralSettings.agent_call_history_scope:type_name -> api.commons.AgentCallHistoryScope
+	91,  // 13: api.commons.org.GeneralSettings.agent_call_history_scope:type_name -> api.commons.AgentCallHistoryScope
 	58,  // 14: api.commons.org.GeneralSettings.agent_login_gui_statistics_display:type_name -> api.commons.org.GeneralSettings.AgentLoginGuiStatisticsDisplay
 	59,  // 15: api.commons.org.GeneralSettings.phone_zip_metadata_display:type_name -> api.commons.org.GeneralSettings.PhoneZipMetadataDisplay
 	60,  // 16: api.commons.org.GeneralSettings.disallowed_hunt_groups:type_name -> api.commons.org.GeneralSettings.DisallowedHuntGroups
@@ -9605,105 +9728,106 @@ var file_api_commons_org_huntgroup_proto_depIdxs = []int32{
 	66,  // 22: api.commons.org.HuntGroupDetails.web_link_details:type_name -> api.commons.org.HuntGroupDetails.WebLinkDetails
 	67,  // 23: api.commons.org.HuntGroupDetails.trigger_details:type_name -> api.commons.org.HuntGroupDetails.TriggerDetails
 	68,  // 24: api.commons.org.HuntGroupDetails.integration_link_details:type_name -> api.commons.org.HuntGroupDetails.IntegrationLinkDetails
-	91,  // 25: api.commons.org.CommunicationSettings.compliance_default_country:type_name -> api.commons.Country
-	69,  // 26: api.commons.org.CommunicationSettings.inbound_scrub_list_expiration:type_name -> api.commons.org.CommunicationSettings.ScrubListExpiration
-	69,  // 27: api.commons.org.CommunicationSettings.manual_scrub_list_expiration:type_name -> api.commons.org.CommunicationSettings.ScrubListExpiration
-	69,  // 28: api.commons.org.CommunicationSettings.outbound_scrub_list_expiration:type_name -> api.commons.org.CommunicationSettings.ScrubListExpiration
-	69,  // 29: api.commons.org.CommunicationSettings.preview_scrub_list_expiration:type_name -> api.commons.org.CommunicationSettings.ScrubListExpiration
-	70,  // 30: api.commons.org.CommunicationSettings.automate_response_rules:type_name -> api.commons.org.CommunicationSettings.AutomateResponseRules
-	71,  // 31: api.commons.org.CommunicationSettings.automate_scrub_list_call_data:type_name -> api.commons.org.CommunicationSettings.AutomateScrubListCallData
-	73,  // 32: api.commons.org.CallbackSettings.default_callback_routing:type_name -> api.commons.org.CallbackSettings.DefaultRouting
-	74,  // 33: api.commons.org.CallbackSettings.callback_routing_disallowed:type_name -> api.commons.org.CallbackSettings.CallbackRoutingDisallowed
-	92,  // 34: api.commons.org.ManualDialSettings.default_call_recording:type_name -> api.commons.HuntGroupOrgDefaultCustom
-	92,  // 35: api.commons.org.ManualDialSettings.cell_phone_scrub:type_name -> api.commons.HuntGroupOrgDefaultCustom
-	92,  // 36: api.commons.org.ManualDialSettings.time_zone_restriction:type_name -> api.commons.HuntGroupOrgDefaultCustom
-	93,  // 37: api.commons.org.ManualDialSettings.time_zone_validation_postal_code:type_name -> api.commons.ManualDialTimeZoneValidation
-	18,  // 38: api.commons.org.ManualDialSettings.natural_compliance_scrub:type_name -> api.commons.org.NaturalLanguageComplianceScrub
-	75,  // 39: api.commons.org.ManualDialSettings.scrub_override:type_name -> api.commons.org.ManualDialSettings.ScrubOverride
-	91,  // 40: api.commons.org.ManualDialSettings.default_outbound_country:type_name -> api.commons.Country
-	91,  // 41: api.commons.org.ManualDialSettings.default_caller_id_country:type_name -> api.commons.Country
-	76,  // 42: api.commons.org.ManualDialSettings.default_caller_id:type_name -> api.commons.org.ManualDialSettings.DefaultCallerId
-	19,  // 43: api.commons.org.ManualDialSettings.natural_language_compliance_metadata:type_name -> api.commons.org.NaturalLanguageComplianceMetadata
-	94,  // 44: api.commons.org.ManualDialSettings.data_dip_scope:type_name -> api.commons.ManualDialDataDipScope
-	95,  // 45: api.commons.org.ManualDialSettings.data_dip_result_handling:type_name -> api.commons.ManualDialDataDipHandling
-	77,  // 46: api.commons.org.ManualDialSettings.data_dip_integration_mappings:type_name -> api.commons.org.ManualDialSettings.DataDipIntegrationMapping
-	95,  // 47: api.commons.org.ManualDialSettings.data_dip_integration_handling:type_name -> api.commons.ManualDialDataDipHandling
-	92,  // 48: api.commons.org.NaturalLanguageComplianceScrub.compliance_scrub:type_name -> api.commons.HuntGroupOrgDefaultCustom
-	78,  // 49: api.commons.org.TransferCallSettings.hand_off_types:type_name -> api.commons.org.TransferCallSettings.HandOffTypes
-	96,  // 50: api.commons.org.TransferCallSettings.recording_status:type_name -> api.commons.TransferRecordingStatus
-	79,  // 51: api.commons.org.TransferCallSettings.transfer_types:type_name -> api.commons.org.TransferCallSettings.TransferTypes
-	91,  // 52: api.commons.org.TransferCallSettings.transfer_number_country:type_name -> api.commons.Country
-	83,  // 53: api.commons.org.TransferCallSettings.default_caller_id:type_name -> api.commons.org.TransferCallSettings.DefaultCallerId
-	91,  // 54: api.commons.org.TransferCallSettings.caller_id_country:type_name -> api.commons.Country
-	82,  // 55: api.commons.org.TransferCallSettings.requeue_queue_config:type_name -> api.commons.org.TransferCallSettings.RequeueQueueConfiguration
-	80,  // 56: api.commons.org.TransferCallSettings.requeue_transfer_disallowed:type_name -> api.commons.org.TransferCallSettings.RequeueTransferDisallowed
-	81,  // 57: api.commons.org.TransferCallSettings.pbx_transfer_disallowed:type_name -> api.commons.org.TransferCallSettings.PbxTransferDisallowed
-	18,  // 58: api.commons.org.TransferCallSettings.natural_compliance_scrub:type_name -> api.commons.org.NaturalLanguageComplianceScrub
-	19,  // 59: api.commons.org.TransferCallSettings.natural_language_compliance_metadata:type_name -> api.commons.org.NaturalLanguageComplianceMetadata
-	91,  // 60: api.commons.org.AgentResponseAutoRuleSet.country:type_name -> api.commons.Country
-	24,  // 61: api.commons.org.AgentResponseAutoRuleSet.responses:type_name -> api.commons.org.AutoResponseChoice
-	25,  // 62: api.commons.org.AutoResponseChoice.comparitors:type_name -> api.commons.org.AgentResponseComparitors
-	29,  // 63: api.commons.org.ClientInfoDisplayTemplate.dialed_number_field_style:type_name -> api.commons.org.DialedNumberFieldStyle
-	28,  // 64: api.commons.org.ClientInfoDisplayTemplate.contact_field_styles:type_name -> api.commons.org.ContactFieldStyle
-	1,   // 65: api.commons.org.ClientInfoDisplayTemplate.template_category:type_name -> api.commons.org.TemplateCategory
-	27,  // 66: api.commons.org.ContactFieldStyle.field_style:type_name -> api.commons.org.FieldStyle
-	27,  // 67: api.commons.org.DialedNumberFieldStyle.field_style:type_name -> api.commons.org.FieldStyle
-	84,  // 68: api.commons.org.HuntGroupWithClientInfoTemplateData.hunt_group:type_name -> api.commons.org.HuntGroupWithClientInfoTemplateData.HuntGroup
-	26,  // 69: api.commons.org.HuntGroupWithClientInfoTemplateData.template:type_name -> api.commons.org.ClientInfoDisplayTemplate
-	2,   // 70: api.commons.org.WebLink.link_type:type_name -> api.commons.org.WebLinkType
-	32,  // 71: api.commons.org.WebLink.base_url:type_name -> api.commons.org.WebLinkComponent
-	33,  // 72: api.commons.org.WebLink.parameters:type_name -> api.commons.org.WebLinkParameter
-	3,   // 73: api.commons.org.WebLinkComponent.key_type:type_name -> api.commons.org.WebLinkComponentKeyType
-	32,  // 74: api.commons.org.WebLinkParameter.components:type_name -> api.commons.org.WebLinkComponent
-	86,  // 75: api.commons.org.DataDipConfig.param_type_value_tuples:type_name -> api.commons.org.DataDipConfig.ParamTypeValueTuple
-	85,  // 76: api.commons.org.DataDipConfig.params:type_name -> api.commons.org.DataDipConfig.Param
-	87,  // 77: api.commons.org.DataDipConfig.data:type_name -> api.commons.org.DataDipConfig.ReturnData
-	88,  // 78: api.commons.org.DataDipConfig.headers:type_name -> api.commons.org.DataDipConfig.Header
-	36,  // 79: api.commons.org.IntegrationLink.parameters:type_name -> api.commons.org.IntegrationLinkParameter
-	37,  // 80: api.commons.org.IntegrationLinkParameter.sub_parameters:type_name -> api.commons.org.IntegrationLinkSubParameter
-	38,  // 81: api.commons.org.IntegrationLinkSubParameter.parts:type_name -> api.commons.org.IntegrationLinkSubParameterPart
-	4,   // 82: api.commons.org.IntegrationLinkSubParameterPart.parameter_source_type:type_name -> api.commons.org.ParameterSourceType
-	40,  // 83: api.commons.org.AgentTrigger.agent_status_option:type_name -> api.commons.org.AgentStatusOption
-	43,  // 84: api.commons.org.AgentTrigger.trigger_action_option:type_name -> api.commons.org.TriggerActionOption
-	5,   // 85: api.commons.org.AgentStatusOption.agent_status:type_name -> api.commons.org.AgentStatus
-	41,  // 86: api.commons.org.AgentStatusOption.pause_code:type_name -> api.commons.org.TriggerPauseCode
-	42,  // 87: api.commons.org.AgentStatusOption.call_types:type_name -> api.commons.org.TriggerCallTypes
-	6,   // 88: api.commons.org.TriggerPauseCode.system_pause_code:type_name -> api.commons.org.SystemPauseCode
-	7,   // 89: api.commons.org.TriggerActionOption.action:type_name -> api.commons.org.TriggerAction
-	5,   // 90: api.commons.org.TriggerActionOption.advance_to_status:type_name -> api.commons.org.AgentStatus
-	8,   // 91: api.commons.org.HuntGroupScript.script_category:type_name -> api.commons.org.ScriptCategory
-	45,  // 92: api.commons.org.HuntGroupScript.acts:type_name -> api.commons.org.Act
-	46,  // 93: api.commons.org.Act.dispositions:type_name -> api.commons.org.Disposition
-	47,  // 94: api.commons.org.Act.verbiages:type_name -> api.commons.org.Verbiage
-	48,  // 95: api.commons.org.Act.conditional_navigations:type_name -> api.commons.org.ConditionalNavigation
-	9,   // 96: api.commons.org.Disposition.response_type:type_name -> api.commons.org.ScriptResponseType
-	49,  // 97: api.commons.org.ConditionalNavigation.complex_boolean_expression_list:type_name -> api.commons.org.ComplexBooleanExpressionList
-	50,  // 98: api.commons.org.ComplexBooleanExpressionList.complex_boolean_expressions:type_name -> api.commons.org.ComplexBooleanExpression
-	51,  // 99: api.commons.org.ComplexBooleanExpression.compare_expression_list:type_name -> api.commons.org.CompareExpressionList
-	52,  // 100: api.commons.org.CompareExpressionList.simple_compare_expression:type_name -> api.commons.org.SimpleCompareExpression
-	10,  // 101: api.commons.org.SimpleCompareExpression.operator_type:type_name -> api.commons.org.CompareOperatorType
-	97,  // 102: api.commons.org.GeneralSettings.HoldQueueMonitoring.agent_routing:type_name -> api.commons.AgentRouting
-	98,  // 103: api.commons.org.GeneralSettings.PhoneZipMetadataDisplay.phone_zip_metadata_keys:type_name -> api.commons.PhonePostalDisplayOptions
-	99,  // 104: api.commons.org.GeneralSettings.AlphanumericKeypad.delimiter:type_name -> api.commons.AlphanumericKeypadDelimiter
-	0,   // 105: api.commons.org.HuntGroupDetails.GeneralDetails.type:type_name -> api.commons.org.HuntGroupType
-	100, // 106: api.commons.org.HuntGroupDetails.GeneralDetails.modify_date:type_name -> google.protobuf.Timestamp
-	5,   // 107: api.commons.org.HuntGroupDetails.TriggerDetails.status:type_name -> api.commons.org.AgentStatus
-	7,   // 108: api.commons.org.HuntGroupDetails.TriggerDetails.action:type_name -> api.commons.org.TriggerAction
-	101, // 109: api.commons.org.CommunicationSettings.ScrubListExpiration.default_expiration:type_name -> api.commons.CommunicationExpiration
-	101, // 110: api.commons.org.CommunicationSettings.ScrubListExpiration.limited_expirations:type_name -> api.commons.CommunicationExpiration
-	72,  // 111: api.commons.org.CommunicationSettings.AutomateScrubListCallData.scrub_list_data_fields:type_name -> api.commons.org.CommunicationSettings.AutomateScrubListCallData.ScrubListDataField
-	102, // 112: api.commons.org.CallbackSettings.DefaultRouting.routing_mode:type_name -> api.commons.DefaultCallbackRouting
-	103, // 113: api.commons.org.ManualDialSettings.DefaultCallerId.usage:type_name -> api.commons.DefaultManualDialCallerId
-	104, // 114: api.commons.org.ManualDialSettings.DataDipIntegrationMapping.mapping_type:type_name -> api.commons.ManualDialDataDipIntegration
-	105, // 115: api.commons.org.TransferCallSettings.RequeueQueueConfiguration.usage:type_name -> api.commons.RequeueTransferQueueConfig
-	106, // 116: api.commons.org.TransferCallSettings.DefaultCallerId.usage:type_name -> api.commons.DefaultTransferCallerId
-	86,  // 117: api.commons.org.DataDipConfig.Param.composite_value:type_name -> api.commons.org.DataDipConfig.ParamTypeValueTuple
-	86,  // 118: api.commons.org.DataDipConfig.Header.param_type_value_tuples:type_name -> api.commons.org.DataDipConfig.ParamTypeValueTuple
-	119, // [119:119] is the sub-list for method output_type
-	119, // [119:119] is the sub-list for method input_type
-	119, // [119:119] is the sub-list for extension type_name
-	119, // [119:119] is the sub-list for extension extendee
-	0,   // [0:119] is the sub-list for field type_name
+	69,  // 25: api.commons.org.HuntGroupDetails.script_details:type_name -> api.commons.org.HuntGroupDetails.ScriptDetails
+	92,  // 26: api.commons.org.CommunicationSettings.compliance_default_country:type_name -> api.commons.Country
+	70,  // 27: api.commons.org.CommunicationSettings.inbound_scrub_list_expiration:type_name -> api.commons.org.CommunicationSettings.ScrubListExpiration
+	70,  // 28: api.commons.org.CommunicationSettings.manual_scrub_list_expiration:type_name -> api.commons.org.CommunicationSettings.ScrubListExpiration
+	70,  // 29: api.commons.org.CommunicationSettings.outbound_scrub_list_expiration:type_name -> api.commons.org.CommunicationSettings.ScrubListExpiration
+	70,  // 30: api.commons.org.CommunicationSettings.preview_scrub_list_expiration:type_name -> api.commons.org.CommunicationSettings.ScrubListExpiration
+	71,  // 31: api.commons.org.CommunicationSettings.automate_response_rules:type_name -> api.commons.org.CommunicationSettings.AutomateResponseRules
+	72,  // 32: api.commons.org.CommunicationSettings.automate_scrub_list_call_data:type_name -> api.commons.org.CommunicationSettings.AutomateScrubListCallData
+	74,  // 33: api.commons.org.CallbackSettings.default_callback_routing:type_name -> api.commons.org.CallbackSettings.DefaultRouting
+	75,  // 34: api.commons.org.CallbackSettings.callback_routing_disallowed:type_name -> api.commons.org.CallbackSettings.CallbackRoutingDisallowed
+	93,  // 35: api.commons.org.ManualDialSettings.default_call_recording:type_name -> api.commons.HuntGroupOrgDefaultCustom
+	93,  // 36: api.commons.org.ManualDialSettings.cell_phone_scrub:type_name -> api.commons.HuntGroupOrgDefaultCustom
+	93,  // 37: api.commons.org.ManualDialSettings.time_zone_restriction:type_name -> api.commons.HuntGroupOrgDefaultCustom
+	94,  // 38: api.commons.org.ManualDialSettings.time_zone_validation_postal_code:type_name -> api.commons.ManualDialTimeZoneValidation
+	18,  // 39: api.commons.org.ManualDialSettings.natural_compliance_scrub:type_name -> api.commons.org.NaturalLanguageComplianceScrub
+	76,  // 40: api.commons.org.ManualDialSettings.scrub_override:type_name -> api.commons.org.ManualDialSettings.ScrubOverride
+	92,  // 41: api.commons.org.ManualDialSettings.default_outbound_country:type_name -> api.commons.Country
+	92,  // 42: api.commons.org.ManualDialSettings.default_caller_id_country:type_name -> api.commons.Country
+	77,  // 43: api.commons.org.ManualDialSettings.default_caller_id:type_name -> api.commons.org.ManualDialSettings.DefaultCallerId
+	19,  // 44: api.commons.org.ManualDialSettings.natural_language_compliance_metadata:type_name -> api.commons.org.NaturalLanguageComplianceMetadata
+	95,  // 45: api.commons.org.ManualDialSettings.data_dip_scope:type_name -> api.commons.ManualDialDataDipScope
+	96,  // 46: api.commons.org.ManualDialSettings.data_dip_result_handling:type_name -> api.commons.ManualDialDataDipHandling
+	78,  // 47: api.commons.org.ManualDialSettings.data_dip_integration_mappings:type_name -> api.commons.org.ManualDialSettings.DataDipIntegrationMapping
+	96,  // 48: api.commons.org.ManualDialSettings.data_dip_integration_handling:type_name -> api.commons.ManualDialDataDipHandling
+	93,  // 49: api.commons.org.NaturalLanguageComplianceScrub.compliance_scrub:type_name -> api.commons.HuntGroupOrgDefaultCustom
+	79,  // 50: api.commons.org.TransferCallSettings.hand_off_types:type_name -> api.commons.org.TransferCallSettings.HandOffTypes
+	97,  // 51: api.commons.org.TransferCallSettings.recording_status:type_name -> api.commons.TransferRecordingStatus
+	80,  // 52: api.commons.org.TransferCallSettings.transfer_types:type_name -> api.commons.org.TransferCallSettings.TransferTypes
+	92,  // 53: api.commons.org.TransferCallSettings.transfer_number_country:type_name -> api.commons.Country
+	84,  // 54: api.commons.org.TransferCallSettings.default_caller_id:type_name -> api.commons.org.TransferCallSettings.DefaultCallerId
+	92,  // 55: api.commons.org.TransferCallSettings.caller_id_country:type_name -> api.commons.Country
+	83,  // 56: api.commons.org.TransferCallSettings.requeue_queue_config:type_name -> api.commons.org.TransferCallSettings.RequeueQueueConfiguration
+	81,  // 57: api.commons.org.TransferCallSettings.requeue_transfer_disallowed:type_name -> api.commons.org.TransferCallSettings.RequeueTransferDisallowed
+	82,  // 58: api.commons.org.TransferCallSettings.pbx_transfer_disallowed:type_name -> api.commons.org.TransferCallSettings.PbxTransferDisallowed
+	18,  // 59: api.commons.org.TransferCallSettings.natural_compliance_scrub:type_name -> api.commons.org.NaturalLanguageComplianceScrub
+	19,  // 60: api.commons.org.TransferCallSettings.natural_language_compliance_metadata:type_name -> api.commons.org.NaturalLanguageComplianceMetadata
+	92,  // 61: api.commons.org.AgentResponseAutoRuleSet.country:type_name -> api.commons.Country
+	24,  // 62: api.commons.org.AgentResponseAutoRuleSet.responses:type_name -> api.commons.org.AutoResponseChoice
+	25,  // 63: api.commons.org.AutoResponseChoice.comparitors:type_name -> api.commons.org.AgentResponseComparitors
+	29,  // 64: api.commons.org.ClientInfoDisplayTemplate.dialed_number_field_style:type_name -> api.commons.org.DialedNumberFieldStyle
+	28,  // 65: api.commons.org.ClientInfoDisplayTemplate.contact_field_styles:type_name -> api.commons.org.ContactFieldStyle
+	1,   // 66: api.commons.org.ClientInfoDisplayTemplate.template_category:type_name -> api.commons.org.TemplateCategory
+	27,  // 67: api.commons.org.ContactFieldStyle.field_style:type_name -> api.commons.org.FieldStyle
+	27,  // 68: api.commons.org.DialedNumberFieldStyle.field_style:type_name -> api.commons.org.FieldStyle
+	85,  // 69: api.commons.org.HuntGroupWithClientInfoTemplateData.hunt_group:type_name -> api.commons.org.HuntGroupWithClientInfoTemplateData.HuntGroup
+	26,  // 70: api.commons.org.HuntGroupWithClientInfoTemplateData.template:type_name -> api.commons.org.ClientInfoDisplayTemplate
+	2,   // 71: api.commons.org.WebLink.link_type:type_name -> api.commons.org.WebLinkType
+	32,  // 72: api.commons.org.WebLink.base_url:type_name -> api.commons.org.WebLinkComponent
+	33,  // 73: api.commons.org.WebLink.parameters:type_name -> api.commons.org.WebLinkParameter
+	3,   // 74: api.commons.org.WebLinkComponent.key_type:type_name -> api.commons.org.WebLinkComponentKeyType
+	32,  // 75: api.commons.org.WebLinkParameter.components:type_name -> api.commons.org.WebLinkComponent
+	87,  // 76: api.commons.org.DataDipConfig.param_type_value_tuples:type_name -> api.commons.org.DataDipConfig.ParamTypeValueTuple
+	86,  // 77: api.commons.org.DataDipConfig.params:type_name -> api.commons.org.DataDipConfig.Param
+	88,  // 78: api.commons.org.DataDipConfig.data:type_name -> api.commons.org.DataDipConfig.ReturnData
+	89,  // 79: api.commons.org.DataDipConfig.headers:type_name -> api.commons.org.DataDipConfig.Header
+	36,  // 80: api.commons.org.IntegrationLink.parameters:type_name -> api.commons.org.IntegrationLinkParameter
+	37,  // 81: api.commons.org.IntegrationLinkParameter.sub_parameters:type_name -> api.commons.org.IntegrationLinkSubParameter
+	38,  // 82: api.commons.org.IntegrationLinkSubParameter.parts:type_name -> api.commons.org.IntegrationLinkSubParameterPart
+	4,   // 83: api.commons.org.IntegrationLinkSubParameterPart.parameter_source_type:type_name -> api.commons.org.ParameterSourceType
+	40,  // 84: api.commons.org.AgentTrigger.agent_status_option:type_name -> api.commons.org.AgentStatusOption
+	43,  // 85: api.commons.org.AgentTrigger.trigger_action_option:type_name -> api.commons.org.TriggerActionOption
+	5,   // 86: api.commons.org.AgentStatusOption.agent_status:type_name -> api.commons.org.AgentStatus
+	41,  // 87: api.commons.org.AgentStatusOption.pause_code:type_name -> api.commons.org.TriggerPauseCode
+	42,  // 88: api.commons.org.AgentStatusOption.call_types:type_name -> api.commons.org.TriggerCallTypes
+	6,   // 89: api.commons.org.TriggerPauseCode.system_pause_code:type_name -> api.commons.org.SystemPauseCode
+	7,   // 90: api.commons.org.TriggerActionOption.action:type_name -> api.commons.org.TriggerAction
+	5,   // 91: api.commons.org.TriggerActionOption.advance_to_status:type_name -> api.commons.org.AgentStatus
+	8,   // 92: api.commons.org.HuntGroupScript.script_category:type_name -> api.commons.org.ScriptCategory
+	45,  // 93: api.commons.org.HuntGroupScript.acts:type_name -> api.commons.org.Act
+	46,  // 94: api.commons.org.Act.dispositions:type_name -> api.commons.org.Disposition
+	47,  // 95: api.commons.org.Act.verbiages:type_name -> api.commons.org.Verbiage
+	48,  // 96: api.commons.org.Act.conditional_navigations:type_name -> api.commons.org.ConditionalNavigation
+	9,   // 97: api.commons.org.Disposition.response_type:type_name -> api.commons.org.ScriptResponseType
+	49,  // 98: api.commons.org.ConditionalNavigation.complex_boolean_expression_list:type_name -> api.commons.org.ComplexBooleanExpressionList
+	50,  // 99: api.commons.org.ComplexBooleanExpressionList.complex_boolean_expressions:type_name -> api.commons.org.ComplexBooleanExpression
+	51,  // 100: api.commons.org.ComplexBooleanExpression.compare_expression_list:type_name -> api.commons.org.CompareExpressionList
+	52,  // 101: api.commons.org.CompareExpressionList.simple_compare_expression:type_name -> api.commons.org.SimpleCompareExpression
+	10,  // 102: api.commons.org.SimpleCompareExpression.operator_type:type_name -> api.commons.org.CompareOperatorType
+	98,  // 103: api.commons.org.GeneralSettings.HoldQueueMonitoring.agent_routing:type_name -> api.commons.AgentRouting
+	99,  // 104: api.commons.org.GeneralSettings.PhoneZipMetadataDisplay.phone_zip_metadata_keys:type_name -> api.commons.PhonePostalDisplayOptions
+	100, // 105: api.commons.org.GeneralSettings.AlphanumericKeypad.delimiter:type_name -> api.commons.AlphanumericKeypadDelimiter
+	0,   // 106: api.commons.org.HuntGroupDetails.GeneralDetails.type:type_name -> api.commons.org.HuntGroupType
+	101, // 107: api.commons.org.HuntGroupDetails.GeneralDetails.modify_date:type_name -> google.protobuf.Timestamp
+	5,   // 108: api.commons.org.HuntGroupDetails.TriggerDetails.status:type_name -> api.commons.org.AgentStatus
+	7,   // 109: api.commons.org.HuntGroupDetails.TriggerDetails.action:type_name -> api.commons.org.TriggerAction
+	102, // 110: api.commons.org.CommunicationSettings.ScrubListExpiration.default_expiration:type_name -> api.commons.CommunicationExpiration
+	102, // 111: api.commons.org.CommunicationSettings.ScrubListExpiration.limited_expirations:type_name -> api.commons.CommunicationExpiration
+	73,  // 112: api.commons.org.CommunicationSettings.AutomateScrubListCallData.scrub_list_data_fields:type_name -> api.commons.org.CommunicationSettings.AutomateScrubListCallData.ScrubListDataField
+	103, // 113: api.commons.org.CallbackSettings.DefaultRouting.routing_mode:type_name -> api.commons.DefaultCallbackRouting
+	104, // 114: api.commons.org.ManualDialSettings.DefaultCallerId.usage:type_name -> api.commons.DefaultManualDialCallerId
+	105, // 115: api.commons.org.ManualDialSettings.DataDipIntegrationMapping.mapping_type:type_name -> api.commons.ManualDialDataDipIntegration
+	106, // 116: api.commons.org.TransferCallSettings.RequeueQueueConfiguration.usage:type_name -> api.commons.RequeueTransferQueueConfig
+	107, // 117: api.commons.org.TransferCallSettings.DefaultCallerId.usage:type_name -> api.commons.DefaultTransferCallerId
+	87,  // 118: api.commons.org.DataDipConfig.Param.composite_value:type_name -> api.commons.org.DataDipConfig.ParamTypeValueTuple
+	87,  // 119: api.commons.org.DataDipConfig.Header.param_type_value_tuples:type_name -> api.commons.org.DataDipConfig.ParamTypeValueTuple
+	120, // [120:120] is the sub-list for method output_type
+	120, // [120:120] is the sub-list for method input_type
+	120, // [120:120] is the sub-list for extension type_name
+	120, // [120:120] is the sub-list for extension extendee
+	0,   // [0:120] is the sub-list for field type_name
 }
 
 func init() { file_api_commons_org_huntgroup_proto_init() }
@@ -10409,7 +10533,7 @@ func file_api_commons_org_huntgroup_proto_init() {
 			}
 		}
 		file_api_commons_org_huntgroup_proto_msgTypes[58].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CommunicationSettings_ScrubListExpiration); i {
+			switch v := v.(*HuntGroupDetails_ScriptDetails); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10421,7 +10545,7 @@ func file_api_commons_org_huntgroup_proto_init() {
 			}
 		}
 		file_api_commons_org_huntgroup_proto_msgTypes[59].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CommunicationSettings_AutomateResponseRules); i {
+			switch v := v.(*CommunicationSettings_ScrubListExpiration); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10433,7 +10557,7 @@ func file_api_commons_org_huntgroup_proto_init() {
 			}
 		}
 		file_api_commons_org_huntgroup_proto_msgTypes[60].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CommunicationSettings_AutomateScrubListCallData); i {
+			switch v := v.(*CommunicationSettings_AutomateResponseRules); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10445,7 +10569,7 @@ func file_api_commons_org_huntgroup_proto_init() {
 			}
 		}
 		file_api_commons_org_huntgroup_proto_msgTypes[61].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CommunicationSettings_AutomateScrubListCallData_ScrubListDataField); i {
+			switch v := v.(*CommunicationSettings_AutomateScrubListCallData); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10457,7 +10581,7 @@ func file_api_commons_org_huntgroup_proto_init() {
 			}
 		}
 		file_api_commons_org_huntgroup_proto_msgTypes[62].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CallbackSettings_DefaultRouting); i {
+			switch v := v.(*CommunicationSettings_AutomateScrubListCallData_ScrubListDataField); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10469,7 +10593,7 @@ func file_api_commons_org_huntgroup_proto_init() {
 			}
 		}
 		file_api_commons_org_huntgroup_proto_msgTypes[63].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CallbackSettings_CallbackRoutingDisallowed); i {
+			switch v := v.(*CallbackSettings_DefaultRouting); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10481,7 +10605,7 @@ func file_api_commons_org_huntgroup_proto_init() {
 			}
 		}
 		file_api_commons_org_huntgroup_proto_msgTypes[64].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ManualDialSettings_ScrubOverride); i {
+			switch v := v.(*CallbackSettings_CallbackRoutingDisallowed); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10493,7 +10617,7 @@ func file_api_commons_org_huntgroup_proto_init() {
 			}
 		}
 		file_api_commons_org_huntgroup_proto_msgTypes[65].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ManualDialSettings_DefaultCallerId); i {
+			switch v := v.(*ManualDialSettings_ScrubOverride); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10505,7 +10629,7 @@ func file_api_commons_org_huntgroup_proto_init() {
 			}
 		}
 		file_api_commons_org_huntgroup_proto_msgTypes[66].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ManualDialSettings_DataDipIntegrationMapping); i {
+			switch v := v.(*ManualDialSettings_DefaultCallerId); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10517,7 +10641,7 @@ func file_api_commons_org_huntgroup_proto_init() {
 			}
 		}
 		file_api_commons_org_huntgroup_proto_msgTypes[67].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*TransferCallSettings_HandOffTypes); i {
+			switch v := v.(*ManualDialSettings_DataDipIntegrationMapping); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10529,7 +10653,7 @@ func file_api_commons_org_huntgroup_proto_init() {
 			}
 		}
 		file_api_commons_org_huntgroup_proto_msgTypes[68].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*TransferCallSettings_TransferTypes); i {
+			switch v := v.(*TransferCallSettings_HandOffTypes); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10541,7 +10665,7 @@ func file_api_commons_org_huntgroup_proto_init() {
 			}
 		}
 		file_api_commons_org_huntgroup_proto_msgTypes[69].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*TransferCallSettings_RequeueTransferDisallowed); i {
+			switch v := v.(*TransferCallSettings_TransferTypes); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10553,7 +10677,7 @@ func file_api_commons_org_huntgroup_proto_init() {
 			}
 		}
 		file_api_commons_org_huntgroup_proto_msgTypes[70].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*TransferCallSettings_PbxTransferDisallowed); i {
+			switch v := v.(*TransferCallSettings_RequeueTransferDisallowed); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10565,7 +10689,7 @@ func file_api_commons_org_huntgroup_proto_init() {
 			}
 		}
 		file_api_commons_org_huntgroup_proto_msgTypes[71].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*TransferCallSettings_RequeueQueueConfiguration); i {
+			switch v := v.(*TransferCallSettings_PbxTransferDisallowed); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10577,7 +10701,7 @@ func file_api_commons_org_huntgroup_proto_init() {
 			}
 		}
 		file_api_commons_org_huntgroup_proto_msgTypes[72].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*TransferCallSettings_DefaultCallerId); i {
+			switch v := v.(*TransferCallSettings_RequeueQueueConfiguration); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10589,7 +10713,7 @@ func file_api_commons_org_huntgroup_proto_init() {
 			}
 		}
 		file_api_commons_org_huntgroup_proto_msgTypes[73].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*HuntGroupWithClientInfoTemplateData_HuntGroup); i {
+			switch v := v.(*TransferCallSettings_DefaultCallerId); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10601,7 +10725,7 @@ func file_api_commons_org_huntgroup_proto_init() {
 			}
 		}
 		file_api_commons_org_huntgroup_proto_msgTypes[74].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DataDipConfig_Param); i {
+			switch v := v.(*HuntGroupWithClientInfoTemplateData_HuntGroup); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10613,7 +10737,7 @@ func file_api_commons_org_huntgroup_proto_init() {
 			}
 		}
 		file_api_commons_org_huntgroup_proto_msgTypes[75].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DataDipConfig_ParamTypeValueTuple); i {
+			switch v := v.(*DataDipConfig_Param); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10625,7 +10749,7 @@ func file_api_commons_org_huntgroup_proto_init() {
 			}
 		}
 		file_api_commons_org_huntgroup_proto_msgTypes[76].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DataDipConfig_ReturnData); i {
+			switch v := v.(*DataDipConfig_ParamTypeValueTuple); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10637,6 +10761,18 @@ func file_api_commons_org_huntgroup_proto_init() {
 			}
 		}
 		file_api_commons_org_huntgroup_proto_msgTypes[77].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DataDipConfig_ReturnData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_commons_org_huntgroup_proto_msgTypes[78].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DataDipConfig_Header); i {
 			case 0:
 				return &v.state
@@ -10659,7 +10795,7 @@ func file_api_commons_org_huntgroup_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_commons_org_huntgroup_proto_rawDesc,
 			NumEnums:      11,
-			NumMessages:   78,
+			NumMessages:   79,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
