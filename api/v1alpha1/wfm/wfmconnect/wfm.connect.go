@@ -1420,6 +1420,7 @@ type WFMClient interface {
 	// The @schedule_scenario_scheduling_range field is optional. If not set, the draft schedule will be obtained with it's default range from it's start to end time.
 	// @include parameters are used when retrieving the resulting draft schedule, and work in the same way as for GetDraftSchedule.
 	// Will return diagnostics for the newly built schedule, or just diagnostics if the schedule cannot be built successfully due to diagnostic error.
+	// If @auto_generate_agents is set to true, unassigned agents will automatically be generated to meet the requirements of the shift templates min and max agents.
 	BuildDraftSchedule(context.Context, *connect_go.Request[wfm.BuildDraftScheduleReq]) (*connect_go.Response[wfm.BuildDraftScheduleRes], error)
 	// Publishes the shift instances of the given @draft_schedule_sid to the published schedule of the org sending the request.
 	// Overlapping shift instances that aren't locked will be replaced with the instances from the draft schedule.
@@ -4707,6 +4708,7 @@ type WFMHandler interface {
 	// The @schedule_scenario_scheduling_range field is optional. If not set, the draft schedule will be obtained with it's default range from it's start to end time.
 	// @include parameters are used when retrieving the resulting draft schedule, and work in the same way as for GetDraftSchedule.
 	// Will return diagnostics for the newly built schedule, or just diagnostics if the schedule cannot be built successfully due to diagnostic error.
+	// If @auto_generate_agents is set to true, unassigned agents will automatically be generated to meet the requirements of the shift templates min and max agents.
 	BuildDraftSchedule(context.Context, *connect_go.Request[wfm.BuildDraftScheduleReq]) (*connect_go.Response[wfm.BuildDraftScheduleRes], error)
 	// Publishes the shift instances of the given @draft_schedule_sid to the published schedule of the org sending the request.
 	// Overlapping shift instances that aren't locked will be replaced with the instances from the draft schedule.
