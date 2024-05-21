@@ -56,6 +56,12 @@ const (
 	// LabelsServiceGetLabeledEntityMapProcedure is the fully-qualified name of the LabelsService's
 	// GetLabeledEntityMap RPC.
 	LabelsServiceGetLabeledEntityMapProcedure = "/api.v1alpha1.org.labels.LabelsService/GetLabeledEntityMap"
+	// LabelsServiceAssignLabelsProcedure is the fully-qualified name of the LabelsService's
+	// AssignLabels RPC.
+	LabelsServiceAssignLabelsProcedure = "/api.v1alpha1.org.labels.LabelsService/AssignLabels"
+	// LabelsServiceRevokeLabelsProcedure is the fully-qualified name of the LabelsService's
+	// RevokeLabels RPC.
+	LabelsServiceRevokeLabelsProcedure = "/api.v1alpha1.org.labels.LabelsService/RevokeLabels"
 )
 
 // LabelsServiceClient is a client for the api.v1alpha1.org.labels.LabelsService service.
@@ -76,6 +82,10 @@ type LabelsServiceClient interface {
 	DetachLabel(context.Context, *connect_go.Request[labels.DetachLabelRequest]) (*connect_go.Response[labels.DetachLabelResponse], error)
 	// GetLabeledEntityMap gives back a map of entity Id to attached labels. The Entity type is specified on the request
 	GetLabeledEntityMap(context.Context, *connect_go.Request[labels.GetLabeledEntityMapRequest]) (*connect_go.Response[labels.GetLabeledEntityMapResponse], error)
+	// AssignLabels assigns labels to a specific permission group.
+	AssignLabels(context.Context, *connect_go.Request[labels.AssignLabelsRequest]) (*connect_go.Response[labels.AssignLabelsResponse], error)
+	// RevokeLabels revokes labels from a specific permission group.
+	RevokeLabels(context.Context, *connect_go.Request[labels.RevokeLabelsRequest]) (*connect_go.Response[labels.RevokeLabelsResponse], error)
 }
 
 // NewLabelsServiceClient constructs a client for the api.v1alpha1.org.labels.LabelsService service.
@@ -128,6 +138,16 @@ func NewLabelsServiceClient(httpClient connect_go.HTTPClient, baseURL string, op
 			baseURL+LabelsServiceGetLabeledEntityMapProcedure,
 			opts...,
 		),
+		assignLabels: connect_go.NewClient[labels.AssignLabelsRequest, labels.AssignLabelsResponse](
+			httpClient,
+			baseURL+LabelsServiceAssignLabelsProcedure,
+			opts...,
+		),
+		revokeLabels: connect_go.NewClient[labels.RevokeLabelsRequest, labels.RevokeLabelsResponse](
+			httpClient,
+			baseURL+LabelsServiceRevokeLabelsProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -141,6 +161,8 @@ type labelsServiceClient struct {
 	attachLabel         *connect_go.Client[labels.AttachLabelRequest, labels.AttachLabelResponse]
 	detachLabel         *connect_go.Client[labels.DetachLabelRequest, labels.DetachLabelResponse]
 	getLabeledEntityMap *connect_go.Client[labels.GetLabeledEntityMapRequest, labels.GetLabeledEntityMapResponse]
+	assignLabels        *connect_go.Client[labels.AssignLabelsRequest, labels.AssignLabelsResponse]
+	revokeLabels        *connect_go.Client[labels.RevokeLabelsRequest, labels.RevokeLabelsResponse]
 }
 
 // CreateLabel calls api.v1alpha1.org.labels.LabelsService.CreateLabel.
@@ -183,6 +205,16 @@ func (c *labelsServiceClient) GetLabeledEntityMap(ctx context.Context, req *conn
 	return c.getLabeledEntityMap.CallUnary(ctx, req)
 }
 
+// AssignLabels calls api.v1alpha1.org.labels.LabelsService.AssignLabels.
+func (c *labelsServiceClient) AssignLabels(ctx context.Context, req *connect_go.Request[labels.AssignLabelsRequest]) (*connect_go.Response[labels.AssignLabelsResponse], error) {
+	return c.assignLabels.CallUnary(ctx, req)
+}
+
+// RevokeLabels calls api.v1alpha1.org.labels.LabelsService.RevokeLabels.
+func (c *labelsServiceClient) RevokeLabels(ctx context.Context, req *connect_go.Request[labels.RevokeLabelsRequest]) (*connect_go.Response[labels.RevokeLabelsResponse], error) {
+	return c.revokeLabels.CallUnary(ctx, req)
+}
+
 // LabelsServiceHandler is an implementation of the api.v1alpha1.org.labels.LabelsService service.
 type LabelsServiceHandler interface {
 	// CreateLabel creates a new label.
@@ -201,6 +233,10 @@ type LabelsServiceHandler interface {
 	DetachLabel(context.Context, *connect_go.Request[labels.DetachLabelRequest]) (*connect_go.Response[labels.DetachLabelResponse], error)
 	// GetLabeledEntityMap gives back a map of entity Id to attached labels. The Entity type is specified on the request
 	GetLabeledEntityMap(context.Context, *connect_go.Request[labels.GetLabeledEntityMapRequest]) (*connect_go.Response[labels.GetLabeledEntityMapResponse], error)
+	// AssignLabels assigns labels to a specific permission group.
+	AssignLabels(context.Context, *connect_go.Request[labels.AssignLabelsRequest]) (*connect_go.Response[labels.AssignLabelsResponse], error)
+	// RevokeLabels revokes labels from a specific permission group.
+	RevokeLabels(context.Context, *connect_go.Request[labels.RevokeLabelsRequest]) (*connect_go.Response[labels.RevokeLabelsResponse], error)
 }
 
 // NewLabelsServiceHandler builds an HTTP handler from the service implementation. It returns the
@@ -249,6 +285,16 @@ func NewLabelsServiceHandler(svc LabelsServiceHandler, opts ...connect_go.Handle
 		svc.GetLabeledEntityMap,
 		opts...,
 	)
+	labelsServiceAssignLabelsHandler := connect_go.NewUnaryHandler(
+		LabelsServiceAssignLabelsProcedure,
+		svc.AssignLabels,
+		opts...,
+	)
+	labelsServiceRevokeLabelsHandler := connect_go.NewUnaryHandler(
+		LabelsServiceRevokeLabelsProcedure,
+		svc.RevokeLabels,
+		opts...,
+	)
 	return "/api.v1alpha1.org.labels.LabelsService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case LabelsServiceCreateLabelProcedure:
@@ -267,6 +313,10 @@ func NewLabelsServiceHandler(svc LabelsServiceHandler, opts ...connect_go.Handle
 			labelsServiceDetachLabelHandler.ServeHTTP(w, r)
 		case LabelsServiceGetLabeledEntityMapProcedure:
 			labelsServiceGetLabeledEntityMapHandler.ServeHTTP(w, r)
+		case LabelsServiceAssignLabelsProcedure:
+			labelsServiceAssignLabelsHandler.ServeHTTP(w, r)
+		case LabelsServiceRevokeLabelsProcedure:
+			labelsServiceRevokeLabelsHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -306,4 +356,12 @@ func (UnimplementedLabelsServiceHandler) DetachLabel(context.Context, *connect_g
 
 func (UnimplementedLabelsServiceHandler) GetLabeledEntityMap(context.Context, *connect_go.Request[labels.GetLabeledEntityMapRequest]) (*connect_go.Response[labels.GetLabeledEntityMapResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.labels.LabelsService.GetLabeledEntityMap is not implemented"))
+}
+
+func (UnimplementedLabelsServiceHandler) AssignLabels(context.Context, *connect_go.Request[labels.AssignLabelsRequest]) (*connect_go.Response[labels.AssignLabelsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.labels.LabelsService.AssignLabels is not implemented"))
+}
+
+func (UnimplementedLabelsServiceHandler) RevokeLabels(context.Context, *connect_go.Request[labels.RevokeLabelsRequest]) (*connect_go.Response[labels.RevokeLabelsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.labels.LabelsService.RevokeLabels is not implemented"))
 }

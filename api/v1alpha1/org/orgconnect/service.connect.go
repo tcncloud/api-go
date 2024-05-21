@@ -1087,8 +1087,12 @@ type OrgClient interface {
 	// RevokeUsersPermissionGroup returns a user a permission group.
 	RevokeUsersPermissionGroup(context.Context, *connect_go.Request[org.RevokeUsersPermissionGroupRequest]) (*connect_go.Response[org.RevokeUsersPermissionGroupResponse], error)
 	// AssignLabels assigns labels to a given permission group
+	//
+	// Deprecated: do not use.
 	AssignLabels(context.Context, *connect_go.Request[org.AssignLabelsRequest]) (*connect_go.Response[org.AssignLabelsResponse], error)
 	// RevokeLabels revokes labels from a given permission group
+	//
+	// Deprecated: do not use.
 	RevokeLabels(context.Context, *connect_go.Request[org.RevokeLabelsRequest]) (*connect_go.Response[org.RevokeLabelsResponse], error)
 	// AssignAccountOwnerPermissionToUser returns a user a permission group.
 	AssignAccountOwnerPermissionToUser(context.Context, *connect_go.Request[org.AssignAccountOwnerPermissionToUserRequest]) (*connect_go.Response[org.AssignAccountOwnerPermissionToUserResponse], error)
@@ -3542,11 +3546,15 @@ func (c *orgClient) RevokeUsersPermissionGroup(ctx context.Context, req *connect
 }
 
 // AssignLabels calls api.v1alpha1.org.Org.AssignLabels.
+//
+// Deprecated: do not use.
 func (c *orgClient) AssignLabels(ctx context.Context, req *connect_go.Request[org.AssignLabelsRequest]) (*connect_go.Response[org.AssignLabelsResponse], error) {
 	return c.assignLabels.CallUnary(ctx, req)
 }
 
 // RevokeLabels calls api.v1alpha1.org.Org.RevokeLabels.
+//
+// Deprecated: do not use.
 func (c *orgClient) RevokeLabels(ctx context.Context, req *connect_go.Request[org.RevokeLabelsRequest]) (*connect_go.Response[org.RevokeLabelsResponse], error) {
 	return c.revokeLabels.CallUnary(ctx, req)
 }
@@ -4183,8 +4191,12 @@ type OrgHandler interface {
 	// RevokeUsersPermissionGroup returns a user a permission group.
 	RevokeUsersPermissionGroup(context.Context, *connect_go.Request[org.RevokeUsersPermissionGroupRequest]) (*connect_go.Response[org.RevokeUsersPermissionGroupResponse], error)
 	// AssignLabels assigns labels to a given permission group
+	//
+	// Deprecated: do not use.
 	AssignLabels(context.Context, *connect_go.Request[org.AssignLabelsRequest]) (*connect_go.Response[org.AssignLabelsResponse], error)
 	// RevokeLabels revokes labels from a given permission group
+	//
+	// Deprecated: do not use.
 	RevokeLabels(context.Context, *connect_go.Request[org.RevokeLabelsRequest]) (*connect_go.Response[org.RevokeLabelsResponse], error)
 	// AssignAccountOwnerPermissionToUser returns a user a permission group.
 	AssignAccountOwnerPermissionToUser(context.Context, *connect_go.Request[org.AssignAccountOwnerPermissionToUserRequest]) (*connect_go.Response[org.AssignAccountOwnerPermissionToUserResponse], error)

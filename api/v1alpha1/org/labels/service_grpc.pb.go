@@ -27,6 +27,8 @@ const (
 	LabelsService_AttachLabel_FullMethodName         = "/api.v1alpha1.org.labels.LabelsService/AttachLabel"
 	LabelsService_DetachLabel_FullMethodName         = "/api.v1alpha1.org.labels.LabelsService/DetachLabel"
 	LabelsService_GetLabeledEntityMap_FullMethodName = "/api.v1alpha1.org.labels.LabelsService/GetLabeledEntityMap"
+	LabelsService_AssignLabels_FullMethodName        = "/api.v1alpha1.org.labels.LabelsService/AssignLabels"
+	LabelsService_RevokeLabels_FullMethodName        = "/api.v1alpha1.org.labels.LabelsService/RevokeLabels"
 )
 
 // LabelsServiceClient is the client API for LabelsService service.
@@ -49,6 +51,10 @@ type LabelsServiceClient interface {
 	DetachLabel(ctx context.Context, in *DetachLabelRequest, opts ...grpc.CallOption) (*DetachLabelResponse, error)
 	// GetLabeledEntityMap gives back a map of entity Id to attached labels. The Entity type is specified on the request
 	GetLabeledEntityMap(ctx context.Context, in *GetLabeledEntityMapRequest, opts ...grpc.CallOption) (*GetLabeledEntityMapResponse, error)
+	// AssignLabels assigns labels to a specific permission group.
+	AssignLabels(ctx context.Context, in *AssignLabelsRequest, opts ...grpc.CallOption) (*AssignLabelsResponse, error)
+	// RevokeLabels revokes labels from a specific permission group.
+	RevokeLabels(ctx context.Context, in *RevokeLabelsRequest, opts ...grpc.CallOption) (*RevokeLabelsResponse, error)
 }
 
 type labelsServiceClient struct {
@@ -131,6 +137,24 @@ func (c *labelsServiceClient) GetLabeledEntityMap(ctx context.Context, in *GetLa
 	return out, nil
 }
 
+func (c *labelsServiceClient) AssignLabels(ctx context.Context, in *AssignLabelsRequest, opts ...grpc.CallOption) (*AssignLabelsResponse, error) {
+	out := new(AssignLabelsResponse)
+	err := c.cc.Invoke(ctx, LabelsService_AssignLabels_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *labelsServiceClient) RevokeLabels(ctx context.Context, in *RevokeLabelsRequest, opts ...grpc.CallOption) (*RevokeLabelsResponse, error) {
+	out := new(RevokeLabelsResponse)
+	err := c.cc.Invoke(ctx, LabelsService_RevokeLabels_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LabelsServiceServer is the server API for LabelsService service.
 // All implementations must embed UnimplementedLabelsServiceServer
 // for forward compatibility
@@ -151,6 +175,10 @@ type LabelsServiceServer interface {
 	DetachLabel(context.Context, *DetachLabelRequest) (*DetachLabelResponse, error)
 	// GetLabeledEntityMap gives back a map of entity Id to attached labels. The Entity type is specified on the request
 	GetLabeledEntityMap(context.Context, *GetLabeledEntityMapRequest) (*GetLabeledEntityMapResponse, error)
+	// AssignLabels assigns labels to a specific permission group.
+	AssignLabels(context.Context, *AssignLabelsRequest) (*AssignLabelsResponse, error)
+	// RevokeLabels revokes labels from a specific permission group.
+	RevokeLabels(context.Context, *RevokeLabelsRequest) (*RevokeLabelsResponse, error)
 	mustEmbedUnimplementedLabelsServiceServer()
 }
 
@@ -181,6 +209,12 @@ func (UnimplementedLabelsServiceServer) DetachLabel(context.Context, *DetachLabe
 }
 func (UnimplementedLabelsServiceServer) GetLabeledEntityMap(context.Context, *GetLabeledEntityMapRequest) (*GetLabeledEntityMapResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLabeledEntityMap not implemented")
+}
+func (UnimplementedLabelsServiceServer) AssignLabels(context.Context, *AssignLabelsRequest) (*AssignLabelsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AssignLabels not implemented")
+}
+func (UnimplementedLabelsServiceServer) RevokeLabels(context.Context, *RevokeLabelsRequest) (*RevokeLabelsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RevokeLabels not implemented")
 }
 func (UnimplementedLabelsServiceServer) mustEmbedUnimplementedLabelsServiceServer() {}
 
@@ -339,6 +373,42 @@ func _LabelsService_GetLabeledEntityMap_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LabelsService_AssignLabels_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AssignLabelsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LabelsServiceServer).AssignLabels(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LabelsService_AssignLabels_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LabelsServiceServer).AssignLabels(ctx, req.(*AssignLabelsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LabelsService_RevokeLabels_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RevokeLabelsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LabelsServiceServer).RevokeLabels(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LabelsService_RevokeLabels_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LabelsServiceServer).RevokeLabels(ctx, req.(*RevokeLabelsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // LabelsService_ServiceDesc is the grpc.ServiceDesc for LabelsService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -377,6 +447,14 @@ var LabelsService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetLabeledEntityMap",
 			Handler:    _LabelsService_GetLabeledEntityMap_Handler,
+		},
+		{
+			MethodName: "AssignLabels",
+			Handler:    _LabelsService_AssignLabels_Handler,
+		},
+		{
+			MethodName: "RevokeLabels",
+			Handler:    _LabelsService_RevokeLabels_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

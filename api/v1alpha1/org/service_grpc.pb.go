@@ -692,8 +692,10 @@ type OrgClient interface {
 	AssignUsersPermissionGroup(ctx context.Context, in *AssignUsersPermissionGroupRequest, opts ...grpc.CallOption) (*AssignUsersPermissionGroupResponse, error)
 	// RevokeUsersPermissionGroup returns a user a permission group.
 	RevokeUsersPermissionGroup(ctx context.Context, in *RevokeUsersPermissionGroupRequest, opts ...grpc.CallOption) (*RevokeUsersPermissionGroupResponse, error)
+	// Deprecated: Do not use.
 	// AssignLabels assigns labels to a given permission group
 	AssignLabels(ctx context.Context, in *AssignLabelsRequest, opts ...grpc.CallOption) (*AssignLabelsResponse, error)
+	// Deprecated: Do not use.
 	// RevokeLabels revokes labels from a given permission group
 	RevokeLabels(ctx context.Context, in *RevokeLabelsRequest, opts ...grpc.CallOption) (*RevokeLabelsResponse, error)
 	// AssignAccountOwnerPermissionToUser returns a user a permission group.
@@ -2743,6 +2745,7 @@ func (c *orgClient) RevokeUsersPermissionGroup(ctx context.Context, in *RevokeUs
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *orgClient) AssignLabels(ctx context.Context, in *AssignLabelsRequest, opts ...grpc.CallOption) (*AssignLabelsResponse, error) {
 	out := new(AssignLabelsResponse)
 	err := c.cc.Invoke(ctx, Org_AssignLabels_FullMethodName, in, out, opts...)
@@ -2752,6 +2755,7 @@ func (c *orgClient) AssignLabels(ctx context.Context, in *AssignLabelsRequest, o
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *orgClient) RevokeLabels(ctx context.Context, in *RevokeLabelsRequest, opts ...grpc.CallOption) (*RevokeLabelsResponse, error) {
 	out := new(RevokeLabelsResponse)
 	err := c.cc.Invoke(ctx, Org_RevokeLabels_FullMethodName, in, out, opts...)
@@ -3521,8 +3525,10 @@ type OrgServer interface {
 	AssignUsersPermissionGroup(context.Context, *AssignUsersPermissionGroupRequest) (*AssignUsersPermissionGroupResponse, error)
 	// RevokeUsersPermissionGroup returns a user a permission group.
 	RevokeUsersPermissionGroup(context.Context, *RevokeUsersPermissionGroupRequest) (*RevokeUsersPermissionGroupResponse, error)
+	// Deprecated: Do not use.
 	// AssignLabels assigns labels to a given permission group
 	AssignLabels(context.Context, *AssignLabelsRequest) (*AssignLabelsResponse, error)
+	// Deprecated: Do not use.
 	// RevokeLabels revokes labels from a given permission group
 	RevokeLabels(context.Context, *RevokeLabelsRequest) (*RevokeLabelsResponse, error)
 	// AssignAccountOwnerPermissionToUser returns a user a permission group.

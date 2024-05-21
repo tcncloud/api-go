@@ -812,6 +812,200 @@ func (x *GetLabeledEntityMapResponse) GetEntityMap() map[string]*GetLabeledEntit
 	return nil
 }
 
+// AssignLabelsRequest is the message for the AssignLabelsRequest RPC.
+type AssignLabelsRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Ids of labels getting assigned to a permission group.
+	LabelIds []string `protobuf:"bytes,1,rep,name=label_ids,json=labelIds,proto3" json:"label_ids,omitempty"`
+	// Id of the permission group to be assigned labels.
+	PermissionGroupId string `protobuf:"bytes,2,opt,name=permission_group_id,json=permissionGroupId,proto3" json:"permission_group_id,omitempty"`
+}
+
+func (x *AssignLabelsRequest) Reset() {
+	*x = AssignLabelsRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_org_labels_entities_proto_msgTypes[16]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AssignLabelsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AssignLabelsRequest) ProtoMessage() {}
+
+func (x *AssignLabelsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_org_labels_entities_proto_msgTypes[16]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AssignLabelsRequest.ProtoReflect.Descriptor instead.
+func (*AssignLabelsRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_org_labels_entities_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *AssignLabelsRequest) GetLabelIds() []string {
+	if x != nil {
+		return x.LabelIds
+	}
+	return nil
+}
+
+func (x *AssignLabelsRequest) GetPermissionGroupId() string {
+	if x != nil {
+		return x.PermissionGroupId
+	}
+	return ""
+}
+
+// Response message for the AssignLabelsResponse RPC.
+type AssignLabelsResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *AssignLabelsResponse) Reset() {
+	*x = AssignLabelsResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_org_labels_entities_proto_msgTypes[17]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AssignLabelsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AssignLabelsResponse) ProtoMessage() {}
+
+func (x *AssignLabelsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_org_labels_entities_proto_msgTypes[17]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AssignLabelsResponse.ProtoReflect.Descriptor instead.
+func (*AssignLabelsResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_org_labels_entities_proto_rawDescGZIP(), []int{17}
+}
+
+// Request message for the RevokeLabelsRequest RPC.
+type RevokeLabelsRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Ids of labels getting revoked from a permission group.
+	LabelIds []string `protobuf:"bytes,1,rep,name=label_ids,json=labelIds,proto3" json:"label_ids,omitempty"`
+	// Id of the permission group to have labels revoked.
+	PermissionGroupId string `protobuf:"bytes,2,opt,name=permission_group_id,json=permissionGroupId,proto3" json:"permission_group_id,omitempty"`
+}
+
+func (x *RevokeLabelsRequest) Reset() {
+	*x = RevokeLabelsRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_org_labels_entities_proto_msgTypes[18]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RevokeLabelsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RevokeLabelsRequest) ProtoMessage() {}
+
+func (x *RevokeLabelsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_org_labels_entities_proto_msgTypes[18]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RevokeLabelsRequest.ProtoReflect.Descriptor instead.
+func (*RevokeLabelsRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_org_labels_entities_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *RevokeLabelsRequest) GetLabelIds() []string {
+	if x != nil {
+		return x.LabelIds
+	}
+	return nil
+}
+
+func (x *RevokeLabelsRequest) GetPermissionGroupId() string {
+	if x != nil {
+		return x.PermissionGroupId
+	}
+	return ""
+}
+
+// Response message for the RevokeLabelsResponse RPC.
+type RevokeLabelsResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *RevokeLabelsResponse) Reset() {
+	*x = RevokeLabelsResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_org_labels_entities_proto_msgTypes[19]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RevokeLabelsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RevokeLabelsResponse) ProtoMessage() {}
+
+func (x *RevokeLabelsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_org_labels_entities_proto_msgTypes[19]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RevokeLabelsResponse.ProtoReflect.Descriptor instead.
+func (*RevokeLabelsResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_org_labels_entities_proto_rawDescGZIP(), []int{19}
+}
+
 type GetLabeledEntityMapResponse_EntityLabels struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -824,7 +1018,7 @@ type GetLabeledEntityMapResponse_EntityLabels struct {
 func (x *GetLabeledEntityMapResponse_EntityLabels) Reset() {
 	*x = GetLabeledEntityMapResponse_EntityLabels{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_labels_entities_proto_msgTypes[17]
+		mi := &file_api_v1alpha1_org_labels_entities_proto_msgTypes[21]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -837,7 +1031,7 @@ func (x *GetLabeledEntityMapResponse_EntityLabels) String() string {
 func (*GetLabeledEntityMapResponse_EntityLabels) ProtoMessage() {}
 
 func (x *GetLabeledEntityMapResponse_EntityLabels) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_labels_entities_proto_msgTypes[17]
+	mi := &file_api_v1alpha1_org_labels_entities_proto_msgTypes[21]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -955,22 +1149,37 @@ var file_api_v1alpha1_org_labels_entities_proto_rawDesc = []byte{
 	0x45, 0x6e, 0x74, 0x69, 0x74, 0x79, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x12, 0x2e, 0x0a, 0x06,
 	0x6c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x61,
 	0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x4c,
-	0x61, 0x62, 0x65, 0x6c, 0x52, 0x06, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x42, 0xe0, 0x01, 0x0a,
-	0x1b, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61,
-	0x31, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x42, 0x0d, 0x45, 0x6e,
-	0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x32, 0x67,
-	0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f,
-	0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31,
-	0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x6f, 0x72, 0x67, 0x2f, 0x6c, 0x61, 0x62, 0x65, 0x6c,
-	0x73, 0xa2, 0x02, 0x04, 0x41, 0x56, 0x4f, 0x4c, 0xaa, 0x02, 0x17, 0x41, 0x70, 0x69, 0x2e, 0x56,
-	0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x4f, 0x72, 0x67, 0x2e, 0x4c, 0x61, 0x62, 0x65,
-	0x6c, 0x73, 0xca, 0x02, 0x17, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61,
-	0x31, 0x5c, 0x4f, 0x72, 0x67, 0x5c, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0xe2, 0x02, 0x23, 0x41,
-	0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x4f, 0x72, 0x67, 0x5c,
-	0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61,
-	0x74, 0x61, 0xea, 0x02, 0x1a, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68,
-	0x61, 0x31, 0x3a, 0x3a, 0x4f, 0x72, 0x67, 0x3a, 0x3a, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x62,
-	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x61, 0x62, 0x65, 0x6c, 0x52, 0x06, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x22, 0x62, 0x0a, 0x13,
+	0x41, 0x73, 0x73, 0x69, 0x67, 0x6e, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x12, 0x1b, 0x0a, 0x09, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x5f, 0x69, 0x64, 0x73,
+	0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x08, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x49, 0x64, 0x73,
+	0x12, 0x2e, 0x0a, 0x13, 0x70, 0x65, 0x72, 0x6d, 0x69, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x5f, 0x67,
+	0x72, 0x6f, 0x75, 0x70, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x70,
+	0x65, 0x72, 0x6d, 0x69, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x49, 0x64,
+	0x22, 0x16, 0x0a, 0x14, 0x41, 0x73, 0x73, 0x69, 0x67, 0x6e, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x62, 0x0a, 0x13, 0x52, 0x65, 0x76, 0x6f,
+	0x6b, 0x65, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12,
+	0x1b, 0x0a, 0x09, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x5f, 0x69, 0x64, 0x73, 0x18, 0x01, 0x20, 0x03,
+	0x28, 0x09, 0x52, 0x08, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x49, 0x64, 0x73, 0x12, 0x2e, 0x0a, 0x13,
+	0x70, 0x65, 0x72, 0x6d, 0x69, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x5f, 0x67, 0x72, 0x6f, 0x75, 0x70,
+	0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x70, 0x65, 0x72, 0x6d, 0x69,
+	0x73, 0x73, 0x69, 0x6f, 0x6e, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x49, 0x64, 0x22, 0x16, 0x0a, 0x14,
+	0x52, 0x65, 0x76, 0x6f, 0x6b, 0x65, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x42, 0xe0, 0x01, 0x0a, 0x1b, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69,
+	0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x6c, 0x61,
+	0x62, 0x65, 0x6c, 0x73, 0x42, 0x0d, 0x45, 0x6e, 0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x50, 0x72,
+	0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x32, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f,
+	0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67,
+	0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x6f,
+	0x72, 0x67, 0x2f, 0x6c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0xa2, 0x02, 0x04, 0x41, 0x56, 0x4f, 0x4c,
+	0xaa, 0x02, 0x17, 0x41, 0x70, 0x69, 0x2e, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e,
+	0x4f, 0x72, 0x67, 0x2e, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0xca, 0x02, 0x17, 0x41, 0x70, 0x69,
+	0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x4f, 0x72, 0x67, 0x5c, 0x4c, 0x61,
+	0x62, 0x65, 0x6c, 0x73, 0xe2, 0x02, 0x23, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70,
+	0x68, 0x61, 0x31, 0x5c, 0x4f, 0x72, 0x67, 0x5c, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x5c, 0x47,
+	0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x1a, 0x41, 0x70, 0x69,
+	0x3a, 0x3a, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x3a, 0x3a, 0x4f, 0x72, 0x67, 0x3a,
+	0x3a, 0x4c, 0x61, 0x62, 0x65, 0x6c, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -985,7 +1194,7 @@ func file_api_v1alpha1_org_labels_entities_proto_rawDescGZIP() []byte {
 	return file_api_v1alpha1_org_labels_entities_proto_rawDescData
 }
 
-var file_api_v1alpha1_org_labels_entities_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
+var file_api_v1alpha1_org_labels_entities_proto_msgTypes = make([]protoimpl.MessageInfo, 22)
 var file_api_v1alpha1_org_labels_entities_proto_goTypes = []interface{}{
 	(*CreateLabelRequest)(nil),                       // 0: api.v1alpha1.org.labels.CreateLabelRequest
 	(*CreateLabelResponse)(nil),                      // 1: api.v1alpha1.org.labels.CreateLabelResponse
@@ -1003,25 +1212,29 @@ var file_api_v1alpha1_org_labels_entities_proto_goTypes = []interface{}{
 	(*DetachLabelResponse)(nil),                      // 13: api.v1alpha1.org.labels.DetachLabelResponse
 	(*GetLabeledEntityMapRequest)(nil),               // 14: api.v1alpha1.org.labels.GetLabeledEntityMapRequest
 	(*GetLabeledEntityMapResponse)(nil),              // 15: api.v1alpha1.org.labels.GetLabeledEntityMapResponse
-	nil,                                              // 16: api.v1alpha1.org.labels.GetLabeledEntityMapResponse.EntityMapEntry
-	(*GetLabeledEntityMapResponse_EntityLabels)(nil), // 17: api.v1alpha1.org.labels.GetLabeledEntityMapResponse.EntityLabels
-	(*org.Label)(nil),                                // 18: api.commons.org.Label
-	(*fieldmaskpb.FieldMask)(nil),                    // 19: google.protobuf.FieldMask
-	(commons.LabeledEntity)(0),                       // 20: api.commons.LabeledEntity
+	(*AssignLabelsRequest)(nil),                      // 16: api.v1alpha1.org.labels.AssignLabelsRequest
+	(*AssignLabelsResponse)(nil),                     // 17: api.v1alpha1.org.labels.AssignLabelsResponse
+	(*RevokeLabelsRequest)(nil),                      // 18: api.v1alpha1.org.labels.RevokeLabelsRequest
+	(*RevokeLabelsResponse)(nil),                     // 19: api.v1alpha1.org.labels.RevokeLabelsResponse
+	nil,                                              // 20: api.v1alpha1.org.labels.GetLabeledEntityMapResponse.EntityMapEntry
+	(*GetLabeledEntityMapResponse_EntityLabels)(nil), // 21: api.v1alpha1.org.labels.GetLabeledEntityMapResponse.EntityLabels
+	(*org.Label)(nil),                                // 22: api.commons.org.Label
+	(*fieldmaskpb.FieldMask)(nil),                    // 23: google.protobuf.FieldMask
+	(commons.LabeledEntity)(0),                       // 24: api.commons.LabeledEntity
 }
 var file_api_v1alpha1_org_labels_entities_proto_depIdxs = []int32{
-	18, // 0: api.v1alpha1.org.labels.CreateLabelRequest.label:type_name -> api.commons.org.Label
-	18, // 1: api.v1alpha1.org.labels.UpdateLabelRequest.label:type_name -> api.commons.org.Label
-	19, // 2: api.v1alpha1.org.labels.UpdateLabelRequest.field_mask:type_name -> google.protobuf.FieldMask
-	18, // 3: api.v1alpha1.org.labels.UpdateLabelResponse.label:type_name -> api.commons.org.Label
-	18, // 4: api.v1alpha1.org.labels.GetLabelResponse.label:type_name -> api.commons.org.Label
-	18, // 5: api.v1alpha1.org.labels.ListLabelsResponse.label:type_name -> api.commons.org.Label
-	20, // 6: api.v1alpha1.org.labels.AttachLabelRequest.entity_type:type_name -> api.commons.LabeledEntity
-	20, // 7: api.v1alpha1.org.labels.DetachLabelRequest.entity_type:type_name -> api.commons.LabeledEntity
-	20, // 8: api.v1alpha1.org.labels.GetLabeledEntityMapRequest.entity_type:type_name -> api.commons.LabeledEntity
-	16, // 9: api.v1alpha1.org.labels.GetLabeledEntityMapResponse.entity_map:type_name -> api.v1alpha1.org.labels.GetLabeledEntityMapResponse.EntityMapEntry
-	17, // 10: api.v1alpha1.org.labels.GetLabeledEntityMapResponse.EntityMapEntry.value:type_name -> api.v1alpha1.org.labels.GetLabeledEntityMapResponse.EntityLabels
-	18, // 11: api.v1alpha1.org.labels.GetLabeledEntityMapResponse.EntityLabels.labels:type_name -> api.commons.org.Label
+	22, // 0: api.v1alpha1.org.labels.CreateLabelRequest.label:type_name -> api.commons.org.Label
+	22, // 1: api.v1alpha1.org.labels.UpdateLabelRequest.label:type_name -> api.commons.org.Label
+	23, // 2: api.v1alpha1.org.labels.UpdateLabelRequest.field_mask:type_name -> google.protobuf.FieldMask
+	22, // 3: api.v1alpha1.org.labels.UpdateLabelResponse.label:type_name -> api.commons.org.Label
+	22, // 4: api.v1alpha1.org.labels.GetLabelResponse.label:type_name -> api.commons.org.Label
+	22, // 5: api.v1alpha1.org.labels.ListLabelsResponse.label:type_name -> api.commons.org.Label
+	24, // 6: api.v1alpha1.org.labels.AttachLabelRequest.entity_type:type_name -> api.commons.LabeledEntity
+	24, // 7: api.v1alpha1.org.labels.DetachLabelRequest.entity_type:type_name -> api.commons.LabeledEntity
+	24, // 8: api.v1alpha1.org.labels.GetLabeledEntityMapRequest.entity_type:type_name -> api.commons.LabeledEntity
+	20, // 9: api.v1alpha1.org.labels.GetLabeledEntityMapResponse.entity_map:type_name -> api.v1alpha1.org.labels.GetLabeledEntityMapResponse.EntityMapEntry
+	21, // 10: api.v1alpha1.org.labels.GetLabeledEntityMapResponse.EntityMapEntry.value:type_name -> api.v1alpha1.org.labels.GetLabeledEntityMapResponse.EntityLabels
+	22, // 11: api.v1alpha1.org.labels.GetLabeledEntityMapResponse.EntityLabels.labels:type_name -> api.commons.org.Label
 	12, // [12:12] is the sub-list for method output_type
 	12, // [12:12] is the sub-list for method input_type
 	12, // [12:12] is the sub-list for extension type_name
@@ -1227,7 +1440,55 @@ func file_api_v1alpha1_org_labels_entities_proto_init() {
 				return nil
 			}
 		}
+		file_api_v1alpha1_org_labels_entities_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AssignLabelsRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 		file_api_v1alpha1_org_labels_entities_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AssignLabelsResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_org_labels_entities_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RevokeLabelsRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_org_labels_entities_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RevokeLabelsResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_org_labels_entities_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetLabeledEntityMapResponse_EntityLabels); i {
 			case 0:
 				return &v.state
@@ -1246,7 +1507,7 @@ func file_api_v1alpha1_org_labels_entities_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_v1alpha1_org_labels_entities_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   18,
+			NumMessages:   22,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
