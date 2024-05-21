@@ -94,6 +94,9 @@ const (
 	// ComplianceProcessScrubListUploadProcedure is the fully-qualified name of the Compliance's
 	// ProcessScrubListUpload RPC.
 	ComplianceProcessScrubListUploadProcedure = "/api.v0alpha.Compliance/ProcessScrubListUpload"
+	// ComplianceScrubListDownloadProcedure is the fully-qualified name of the Compliance's
+	// ScrubListDownload RPC.
+	ComplianceScrubListDownloadProcedure = "/api.v0alpha.Compliance/ScrubListDownload"
 	// ComplianceProcessScrubListDeleteUploadProcedure is the fully-qualified name of the Compliance's
 	// ProcessScrubListDeleteUpload RPC.
 	ComplianceProcessScrubListDeleteUploadProcedure = "/api.v0alpha.Compliance/ProcessScrubListDeleteUpload"
@@ -182,6 +185,9 @@ const (
 	// ComplianceProcessConsentListDeleteUploadProcedure is the fully-qualified name of the Compliance's
 	// ProcessConsentListDeleteUpload RPC.
 	ComplianceProcessConsentListDeleteUploadProcedure = "/api.v0alpha.Compliance/ProcessConsentListDeleteUpload"
+	// ComplianceConsentListDownloadProcedure is the fully-qualified name of the Compliance's
+	// ConsentListDownload RPC.
+	ComplianceConsentListDownloadProcedure = "/api.v0alpha.Compliance/ConsentListDownload"
 	// ComplianceEnableConsentProfileProcedure is the fully-qualified name of the Compliance's
 	// EnableConsentProfile RPC.
 	ComplianceEnableConsentProfileProcedure = "/api.v0alpha.Compliance/EnableConsentProfile"
@@ -241,13 +247,13 @@ type ComplianceClient interface {
 	// contain the results.
 	// Required permissions:
 	//
-	//	EXECUTE_DO_NOT_CALL_LIST
+	//	PERMISSION_COMPLIANCE or PERMISSION_AGENT_COMPLIANCE_SCRUBLIST_OPTIONS
 	AddScrubListEntries(context.Context, *connect_go.Request[v0alpha.AddScrubListEntriesReq]) (*connect_go.Response[v0alpha.ScrubListRes], error)
 	// Update scrub list entry defined by UpdateScrubEntryReq message.
 	// The method will update a scrub list entry with the specified fields
 	// Required permissions:
 	//
-	//	EXECUTE_DO_NOT_CALL_LIST
+	//	PERMISSION_COMPLIANCE
 	UpdateScrubEntry(context.Context, *connect_go.Request[v0alpha.UpdateScrubEntryReq]) (*connect_go.Response[v0alpha.UpdateScrubEntryRes], error)
 	DeleteScrubListEntries(context.Context, *connect_go.Request[v0alpha.DeleteScrubListEntriesReq]) (*connect_go.Response[v0alpha.ScrubListRes], error)
 	GetScrubList(context.Context, *connect_go.Request[v0alpha.GetScrubListReq]) (*connect_go.Response[v0alpha.ScrubListRes], error)
@@ -257,12 +263,17 @@ type ComplianceClient interface {
 	SearchScrubList(context.Context, *connect_go.Request[v0alpha.SearchScrubListReq]) (*connect_go.Response[v0alpha.ScrubList], error)
 	GetScrubListUploadUrl(context.Context, *connect_go.Request[v0alpha.GetScrubListUploadUrlReq]) (*connect_go.Response[v0alpha.GetScrubListUploadUrlRes], error)
 	ProcessScrubListUpload(context.Context, *connect_go.Request[v0alpha.ProcessScrubListUploadReq]) (*connect_go.Response[longrunningpb.Operation], error)
+	// Download a scrub list defined by ScrubListDownloadRequest message.
+	// Required permissions:
+	//
+	//	PERMISSION_COMPLIANCE
+	ScrubListDownload(context.Context, *connect_go.Request[v0alpha.ScrubListDownloadRequest]) (*connect_go.Response[longrunningpb.Operation], error)
 	ProcessScrubListDeleteUpload(context.Context, *connect_go.Request[v0alpha.ProcessScrubListDeleteUploadReq]) (*connect_go.Response[longrunningpb.Operation], error)
 	ExportScrubList(context.Context, *connect_go.Request[v0alpha.ExportScrubListReq]) (*connect_go.Response[v0alpha.ExportScrubListRes], error)
 	// Purge entries from a scrub list defined by PurgeScrubListReq message.
 	// Required permissions:
 	//
-	//	EXECUTE_DO_NOT_CALL_LIST
+	//	PERMISSION_COMPLIANCE
 	PurgeScrubList(context.Context, *connect_go.Request[v0alpha.PurgeScrubListReq]) (*connect_go.Response[v0alpha.PurgeScrubListRes], error)
 	// Creates a new Scenario
 	CreateScenario(context.Context, *connect_go.Request[v0alpha.CreateScenarioReq]) (*connect_go.Response[v0alpha.CreateScenarioRes], error)
@@ -384,15 +395,21 @@ type ComplianceClient interface {
 	// The method will return a google.protobuf.Empty message
 	// Required permissions:
 	//
-	//	EXECUTE_DO_NOT_CALL_LIST
+	//	PERMISSION_COMPLIANCE_CONSENT
 	ProcessConsentListDeleteUpload(context.Context, *connect_go.Request[v0alpha.ProcessConsentListDeleteUploadReq]) (*connect_go.Response[longrunningpb.Operation], error)
+	// Download a consent list defined by ConsentListDownloadRequest message
+	// The method will return a google.longrunning.Operation message
+	// Required permissions:
+	//
+	//	PERMISSION_COMPLIANCE_CONSENT
+	ConsentListDownload(context.Context, *connect_go.Request[v0alpha.ConsentListDownloadRequest]) (*connect_go.Response[longrunningpb.Operation], error)
 	// Enable a consent profile defined by EnableConsentProfileReq message.
 	// Set the disabled field to false for the specified
 	// consent_profile_id field.
 	// The method will return a google.protobuf.Empty message.
 	// Required permissions:
 	//
-	//	EXECUTE_DO_NOT_CALL_LIST
+	//	PERMISSION_COMPLIANCE_CONSENT
 	EnableConsentProfile(context.Context, *connect_go.Request[v0alpha.EnableConsentProfileReq]) (*connect_go.Response[emptypb.Empty], error)
 	// Disable a consent profile defined by DisableConsentProfileReq message.
 	// Set the disabled field to true for the specified
@@ -400,7 +417,7 @@ type ComplianceClient interface {
 	// The method will return a google.protobuf.Empty message.
 	// Required permissions:
 	//
-	//	EXECUTE_DO_NOT_CALL_LIST
+	//	PERMISSION_COMPLIANCE_CONSENT
 	DisableConsentProfile(context.Context, *connect_go.Request[v0alpha.DisableConsentProfileReq]) (*connect_go.Response[emptypb.Empty], error)
 	// List consent profiles defined by ListConsentProfilesReq message.
 	// Gets all of the unique consent profiles.
@@ -409,20 +426,20 @@ type ComplianceClient interface {
 	// belonging to the profile, and disabled.
 	// Required permissions:
 	//
-	//	EXECUTE_DO_NOT_CALL_LIST
+	//	PERMISSION_COMPLIANCE_CONSENT
 	ListConsentProfiles(context.Context, *connect_go.Request[v0alpha.ListConsentProfilesReq]) (*connect_go.Response[v0alpha.ListConsentProfilesRes], error)
 	// Get consent upload url defined by GetConsentUploadUrlReq message.
 	// The method will return a GetConsentUploadUrlRes messages
 	// containing a url with which to upload an import file.
 	// Required permissions:
 	//
-	//	EXECUTE_DO_NOT_CALL_LIST
+	//	PERMISSION_COMPLIANCE_CONSENT
 	GetConsentUploadUrl(context.Context, *connect_go.Request[v0alpha.GetConsentUploadUrlReq]) (*connect_go.Response[v0alpha.GetConsentUploadUrlRes], error)
 	// Process consent upload defined by ProcessConsentUploadReq message.
 	// The method will process an uploaded consent file.
 	// Required permissions:
 	//
-	//	EXECUTE_DO_NOT_CALL_LIST
+	//	PERMISSION_COMPLIANCE_CONSENT
 	ProcessConsentUpload(context.Context, *connect_go.Request[v0alpha.ProcessConsentUploadReq]) (*connect_go.Response[longrunningpb.Operation], error)
 	// Export consent list defined by ExportConsentListRequest message.
 	// The method will create a consent download file in CSV format and return a URL for download.
@@ -433,32 +450,32 @@ type ComplianceClient interface {
 	// containing topic, org_id, and deleted.
 	// Required permissions:
 	//
-	//	EXECUTE_DO_NOT_CALL_LIST
+	//	PERMISSION_COMPLIANCE_CONSENT
 	ListConsentTopics(context.Context, *connect_go.Request[v0alpha.ListConsentTopicsReq]) (*connect_go.Response[v0alpha.ListConsentTopicsRes], error)
 	// Gets a consent topic defined by GetConsentTopicReq message
 	// for the specified topic and org_id.
 	// The method will return a ConsentTopic message/entity.
 	// Required permissions:
 	//
-	//	EXECUTE_DO_NOT_CALL_LIST
+	//	PERMISSION_COMPLIANCE_CONSENT
 	GetConsentTopic(context.Context, *connect_go.Request[v0alpha.GetConsentTopicReq]) (*connect_go.Response[v0alpha.ConsentTopic], error)
 	// Create a consent topic defined by ConsentTopic
 	// message.  The method will return an Empty message.
 	// Required permissions:
 	//
-	//	EXECUTE_DO_NOT_CALL_LIST
+	//	PERMISSION_COMPLIANCE_CONSENT
 	CreateConsentTopic(context.Context, *connect_go.Request[v0alpha.ConsentTopic]) (*connect_go.Response[v0alpha.Empty], error)
 	// Delete a consent topic defined by ConsentTopic message.
 	// The method will return an Empty message.
 	// Required permissions:
 	//
-	//	EXECUTE_DO_NOT_CALL_LIST
+	//	PERMISSION_COMPLIANCE_CONSENT
 	DeleteConsentTopic(context.Context, *connect_go.Request[v0alpha.ConsentTopic]) (*connect_go.Response[v0alpha.Empty], error)
 	// Update a consent topic defined by UpdateConsentTopicReq message.
 	// The method will return an Empty message.
 	// Required permissions:
 	//
-	//	EXECUTE_DO_NOT_CALL_LIST
+	//	PERMISSION_COMPLIANCE_CONSENT
 	UpdateConsentTopic(context.Context, *connect_go.Request[v0alpha.UpdateConsentTopicReq]) (*connect_go.Response[v0alpha.Empty], error)
 	// Process and Outbound Phone Number against a rule set.
 	// The method will return a response indicating
@@ -589,6 +606,11 @@ func NewComplianceClient(httpClient connect_go.HTTPClient, baseURL string, opts 
 		processScrubListUpload: connect_go.NewClient[v0alpha.ProcessScrubListUploadReq, longrunningpb.Operation](
 			httpClient,
 			baseURL+ComplianceProcessScrubListUploadProcedure,
+			opts...,
+		),
+		scrubListDownload: connect_go.NewClient[v0alpha.ScrubListDownloadRequest, longrunningpb.Operation](
+			httpClient,
+			baseURL+ComplianceScrubListDownloadProcedure,
 			opts...,
 		),
 		processScrubListDeleteUpload: connect_go.NewClient[v0alpha.ProcessScrubListDeleteUploadReq, longrunningpb.Operation](
@@ -741,6 +763,11 @@ func NewComplianceClient(httpClient connect_go.HTTPClient, baseURL string, opts 
 			baseURL+ComplianceProcessConsentListDeleteUploadProcedure,
 			opts...,
 		),
+		consentListDownload: connect_go.NewClient[v0alpha.ConsentListDownloadRequest, longrunningpb.Operation](
+			httpClient,
+			baseURL+ComplianceConsentListDownloadProcedure,
+			opts...,
+		),
 		enableConsentProfile: connect_go.NewClient[v0alpha.EnableConsentProfileReq, emptypb.Empty](
 			httpClient,
 			baseURL+ComplianceEnableConsentProfileProcedure,
@@ -832,6 +859,7 @@ type complianceClient struct {
 	searchScrubList                *connect_go.Client[v0alpha.SearchScrubListReq, v0alpha.ScrubList]
 	getScrubListUploadUrl          *connect_go.Client[v0alpha.GetScrubListUploadUrlReq, v0alpha.GetScrubListUploadUrlRes]
 	processScrubListUpload         *connect_go.Client[v0alpha.ProcessScrubListUploadReq, longrunningpb.Operation]
+	scrubListDownload              *connect_go.Client[v0alpha.ScrubListDownloadRequest, longrunningpb.Operation]
 	processScrubListDeleteUpload   *connect_go.Client[v0alpha.ProcessScrubListDeleteUploadReq, longrunningpb.Operation]
 	exportScrubList                *connect_go.Client[v0alpha.ExportScrubListReq, v0alpha.ExportScrubListRes]
 	purgeScrubList                 *connect_go.Client[v0alpha.PurgeScrubListReq, v0alpha.PurgeScrubListRes]
@@ -862,6 +890,7 @@ type complianceClient struct {
 	revokeConsent                  *connect_go.Client[v0alpha.RevokeConsentReq, emptypb.Empty]
 	deleteConsent                  *connect_go.Client[v0alpha.DeleteConsentReq, emptypb.Empty]
 	processConsentListDeleteUpload *connect_go.Client[v0alpha.ProcessConsentListDeleteUploadReq, longrunningpb.Operation]
+	consentListDownload            *connect_go.Client[v0alpha.ConsentListDownloadRequest, longrunningpb.Operation]
 	enableConsentProfile           *connect_go.Client[v0alpha.EnableConsentProfileReq, emptypb.Empty]
 	disableConsentProfile          *connect_go.Client[v0alpha.DisableConsentProfileReq, emptypb.Empty]
 	listConsentProfiles            *connect_go.Client[v0alpha.ListConsentProfilesReq, v0alpha.ListConsentProfilesRes]
@@ -980,6 +1009,11 @@ func (c *complianceClient) GetScrubListUploadUrl(ctx context.Context, req *conne
 // ProcessScrubListUpload calls api.v0alpha.Compliance.ProcessScrubListUpload.
 func (c *complianceClient) ProcessScrubListUpload(ctx context.Context, req *connect_go.Request[v0alpha.ProcessScrubListUploadReq]) (*connect_go.Response[longrunningpb.Operation], error) {
 	return c.processScrubListUpload.CallUnary(ctx, req)
+}
+
+// ScrubListDownload calls api.v0alpha.Compliance.ScrubListDownload.
+func (c *complianceClient) ScrubListDownload(ctx context.Context, req *connect_go.Request[v0alpha.ScrubListDownloadRequest]) (*connect_go.Response[longrunningpb.Operation], error) {
+	return c.scrubListDownload.CallUnary(ctx, req)
 }
 
 // ProcessScrubListDeleteUpload calls api.v0alpha.Compliance.ProcessScrubListDeleteUpload.
@@ -1132,6 +1166,11 @@ func (c *complianceClient) ProcessConsentListDeleteUpload(ctx context.Context, r
 	return c.processConsentListDeleteUpload.CallUnary(ctx, req)
 }
 
+// ConsentListDownload calls api.v0alpha.Compliance.ConsentListDownload.
+func (c *complianceClient) ConsentListDownload(ctx context.Context, req *connect_go.Request[v0alpha.ConsentListDownloadRequest]) (*connect_go.Response[longrunningpb.Operation], error) {
+	return c.consentListDownload.CallUnary(ctx, req)
+}
+
 // EnableConsentProfile calls api.v0alpha.Compliance.EnableConsentProfile.
 func (c *complianceClient) EnableConsentProfile(ctx context.Context, req *connect_go.Request[v0alpha.EnableConsentProfileReq]) (*connect_go.Response[emptypb.Empty], error) {
 	return c.enableConsentProfile.CallUnary(ctx, req)
@@ -1215,13 +1254,13 @@ type ComplianceHandler interface {
 	// contain the results.
 	// Required permissions:
 	//
-	//	EXECUTE_DO_NOT_CALL_LIST
+	//	PERMISSION_COMPLIANCE or PERMISSION_AGENT_COMPLIANCE_SCRUBLIST_OPTIONS
 	AddScrubListEntries(context.Context, *connect_go.Request[v0alpha.AddScrubListEntriesReq]) (*connect_go.Response[v0alpha.ScrubListRes], error)
 	// Update scrub list entry defined by UpdateScrubEntryReq message.
 	// The method will update a scrub list entry with the specified fields
 	// Required permissions:
 	//
-	//	EXECUTE_DO_NOT_CALL_LIST
+	//	PERMISSION_COMPLIANCE
 	UpdateScrubEntry(context.Context, *connect_go.Request[v0alpha.UpdateScrubEntryReq]) (*connect_go.Response[v0alpha.UpdateScrubEntryRes], error)
 	DeleteScrubListEntries(context.Context, *connect_go.Request[v0alpha.DeleteScrubListEntriesReq]) (*connect_go.Response[v0alpha.ScrubListRes], error)
 	GetScrubList(context.Context, *connect_go.Request[v0alpha.GetScrubListReq]) (*connect_go.Response[v0alpha.ScrubListRes], error)
@@ -1231,12 +1270,17 @@ type ComplianceHandler interface {
 	SearchScrubList(context.Context, *connect_go.Request[v0alpha.SearchScrubListReq]) (*connect_go.Response[v0alpha.ScrubList], error)
 	GetScrubListUploadUrl(context.Context, *connect_go.Request[v0alpha.GetScrubListUploadUrlReq]) (*connect_go.Response[v0alpha.GetScrubListUploadUrlRes], error)
 	ProcessScrubListUpload(context.Context, *connect_go.Request[v0alpha.ProcessScrubListUploadReq]) (*connect_go.Response[longrunningpb.Operation], error)
+	// Download a scrub list defined by ScrubListDownloadRequest message.
+	// Required permissions:
+	//
+	//	PERMISSION_COMPLIANCE
+	ScrubListDownload(context.Context, *connect_go.Request[v0alpha.ScrubListDownloadRequest]) (*connect_go.Response[longrunningpb.Operation], error)
 	ProcessScrubListDeleteUpload(context.Context, *connect_go.Request[v0alpha.ProcessScrubListDeleteUploadReq]) (*connect_go.Response[longrunningpb.Operation], error)
 	ExportScrubList(context.Context, *connect_go.Request[v0alpha.ExportScrubListReq]) (*connect_go.Response[v0alpha.ExportScrubListRes], error)
 	// Purge entries from a scrub list defined by PurgeScrubListReq message.
 	// Required permissions:
 	//
-	//	EXECUTE_DO_NOT_CALL_LIST
+	//	PERMISSION_COMPLIANCE
 	PurgeScrubList(context.Context, *connect_go.Request[v0alpha.PurgeScrubListReq]) (*connect_go.Response[v0alpha.PurgeScrubListRes], error)
 	// Creates a new Scenario
 	CreateScenario(context.Context, *connect_go.Request[v0alpha.CreateScenarioReq]) (*connect_go.Response[v0alpha.CreateScenarioRes], error)
@@ -1358,15 +1402,21 @@ type ComplianceHandler interface {
 	// The method will return a google.protobuf.Empty message
 	// Required permissions:
 	//
-	//	EXECUTE_DO_NOT_CALL_LIST
+	//	PERMISSION_COMPLIANCE_CONSENT
 	ProcessConsentListDeleteUpload(context.Context, *connect_go.Request[v0alpha.ProcessConsentListDeleteUploadReq]) (*connect_go.Response[longrunningpb.Operation], error)
+	// Download a consent list defined by ConsentListDownloadRequest message
+	// The method will return a google.longrunning.Operation message
+	// Required permissions:
+	//
+	//	PERMISSION_COMPLIANCE_CONSENT
+	ConsentListDownload(context.Context, *connect_go.Request[v0alpha.ConsentListDownloadRequest]) (*connect_go.Response[longrunningpb.Operation], error)
 	// Enable a consent profile defined by EnableConsentProfileReq message.
 	// Set the disabled field to false for the specified
 	// consent_profile_id field.
 	// The method will return a google.protobuf.Empty message.
 	// Required permissions:
 	//
-	//	EXECUTE_DO_NOT_CALL_LIST
+	//	PERMISSION_COMPLIANCE_CONSENT
 	EnableConsentProfile(context.Context, *connect_go.Request[v0alpha.EnableConsentProfileReq]) (*connect_go.Response[emptypb.Empty], error)
 	// Disable a consent profile defined by DisableConsentProfileReq message.
 	// Set the disabled field to true for the specified
@@ -1374,7 +1424,7 @@ type ComplianceHandler interface {
 	// The method will return a google.protobuf.Empty message.
 	// Required permissions:
 	//
-	//	EXECUTE_DO_NOT_CALL_LIST
+	//	PERMISSION_COMPLIANCE_CONSENT
 	DisableConsentProfile(context.Context, *connect_go.Request[v0alpha.DisableConsentProfileReq]) (*connect_go.Response[emptypb.Empty], error)
 	// List consent profiles defined by ListConsentProfilesReq message.
 	// Gets all of the unique consent profiles.
@@ -1383,20 +1433,20 @@ type ComplianceHandler interface {
 	// belonging to the profile, and disabled.
 	// Required permissions:
 	//
-	//	EXECUTE_DO_NOT_CALL_LIST
+	//	PERMISSION_COMPLIANCE_CONSENT
 	ListConsentProfiles(context.Context, *connect_go.Request[v0alpha.ListConsentProfilesReq]) (*connect_go.Response[v0alpha.ListConsentProfilesRes], error)
 	// Get consent upload url defined by GetConsentUploadUrlReq message.
 	// The method will return a GetConsentUploadUrlRes messages
 	// containing a url with which to upload an import file.
 	// Required permissions:
 	//
-	//	EXECUTE_DO_NOT_CALL_LIST
+	//	PERMISSION_COMPLIANCE_CONSENT
 	GetConsentUploadUrl(context.Context, *connect_go.Request[v0alpha.GetConsentUploadUrlReq]) (*connect_go.Response[v0alpha.GetConsentUploadUrlRes], error)
 	// Process consent upload defined by ProcessConsentUploadReq message.
 	// The method will process an uploaded consent file.
 	// Required permissions:
 	//
-	//	EXECUTE_DO_NOT_CALL_LIST
+	//	PERMISSION_COMPLIANCE_CONSENT
 	ProcessConsentUpload(context.Context, *connect_go.Request[v0alpha.ProcessConsentUploadReq]) (*connect_go.Response[longrunningpb.Operation], error)
 	// Export consent list defined by ExportConsentListRequest message.
 	// The method will create a consent download file in CSV format and return a URL for download.
@@ -1407,32 +1457,32 @@ type ComplianceHandler interface {
 	// containing topic, org_id, and deleted.
 	// Required permissions:
 	//
-	//	EXECUTE_DO_NOT_CALL_LIST
+	//	PERMISSION_COMPLIANCE_CONSENT
 	ListConsentTopics(context.Context, *connect_go.Request[v0alpha.ListConsentTopicsReq]) (*connect_go.Response[v0alpha.ListConsentTopicsRes], error)
 	// Gets a consent topic defined by GetConsentTopicReq message
 	// for the specified topic and org_id.
 	// The method will return a ConsentTopic message/entity.
 	// Required permissions:
 	//
-	//	EXECUTE_DO_NOT_CALL_LIST
+	//	PERMISSION_COMPLIANCE_CONSENT
 	GetConsentTopic(context.Context, *connect_go.Request[v0alpha.GetConsentTopicReq]) (*connect_go.Response[v0alpha.ConsentTopic], error)
 	// Create a consent topic defined by ConsentTopic
 	// message.  The method will return an Empty message.
 	// Required permissions:
 	//
-	//	EXECUTE_DO_NOT_CALL_LIST
+	//	PERMISSION_COMPLIANCE_CONSENT
 	CreateConsentTopic(context.Context, *connect_go.Request[v0alpha.ConsentTopic]) (*connect_go.Response[v0alpha.Empty], error)
 	// Delete a consent topic defined by ConsentTopic message.
 	// The method will return an Empty message.
 	// Required permissions:
 	//
-	//	EXECUTE_DO_NOT_CALL_LIST
+	//	PERMISSION_COMPLIANCE_CONSENT
 	DeleteConsentTopic(context.Context, *connect_go.Request[v0alpha.ConsentTopic]) (*connect_go.Response[v0alpha.Empty], error)
 	// Update a consent topic defined by UpdateConsentTopicReq message.
 	// The method will return an Empty message.
 	// Required permissions:
 	//
-	//	EXECUTE_DO_NOT_CALL_LIST
+	//	PERMISSION_COMPLIANCE_CONSENT
 	UpdateConsentTopic(context.Context, *connect_go.Request[v0alpha.UpdateConsentTopicReq]) (*connect_go.Response[v0alpha.Empty], error)
 	// Process and Outbound Phone Number against a rule set.
 	// The method will return a response indicating
@@ -1559,6 +1609,11 @@ func NewComplianceHandler(svc ComplianceHandler, opts ...connect_go.HandlerOptio
 	complianceProcessScrubListUploadHandler := connect_go.NewUnaryHandler(
 		ComplianceProcessScrubListUploadProcedure,
 		svc.ProcessScrubListUpload,
+		opts...,
+	)
+	complianceScrubListDownloadHandler := connect_go.NewUnaryHandler(
+		ComplianceScrubListDownloadProcedure,
+		svc.ScrubListDownload,
 		opts...,
 	)
 	complianceProcessScrubListDeleteUploadHandler := connect_go.NewUnaryHandler(
@@ -1711,6 +1766,11 @@ func NewComplianceHandler(svc ComplianceHandler, opts ...connect_go.HandlerOptio
 		svc.ProcessConsentListDeleteUpload,
 		opts...,
 	)
+	complianceConsentListDownloadHandler := connect_go.NewUnaryHandler(
+		ComplianceConsentListDownloadProcedure,
+		svc.ConsentListDownload,
+		opts...,
+	)
 	complianceEnableConsentProfileHandler := connect_go.NewUnaryHandler(
 		ComplianceEnableConsentProfileProcedure,
 		svc.EnableConsentProfile,
@@ -1820,6 +1880,8 @@ func NewComplianceHandler(svc ComplianceHandler, opts ...connect_go.HandlerOptio
 			complianceGetScrubListUploadUrlHandler.ServeHTTP(w, r)
 		case ComplianceProcessScrubListUploadProcedure:
 			complianceProcessScrubListUploadHandler.ServeHTTP(w, r)
+		case ComplianceScrubListDownloadProcedure:
+			complianceScrubListDownloadHandler.ServeHTTP(w, r)
 		case ComplianceProcessScrubListDeleteUploadProcedure:
 			complianceProcessScrubListDeleteUploadHandler.ServeHTTP(w, r)
 		case ComplianceExportScrubListProcedure:
@@ -1880,6 +1942,8 @@ func NewComplianceHandler(svc ComplianceHandler, opts ...connect_go.HandlerOptio
 			complianceDeleteConsentHandler.ServeHTTP(w, r)
 		case ComplianceProcessConsentListDeleteUploadProcedure:
 			complianceProcessConsentListDeleteUploadHandler.ServeHTTP(w, r)
+		case ComplianceConsentListDownloadProcedure:
+			complianceConsentListDownloadHandler.ServeHTTP(w, r)
 		case ComplianceEnableConsentProfileProcedure:
 			complianceEnableConsentProfileHandler.ServeHTTP(w, r)
 		case ComplianceDisableConsentProfileProcedure:
@@ -1997,6 +2061,10 @@ func (UnimplementedComplianceHandler) GetScrubListUploadUrl(context.Context, *co
 
 func (UnimplementedComplianceHandler) ProcessScrubListUpload(context.Context, *connect_go.Request[v0alpha.ProcessScrubListUploadReq]) (*connect_go.Response[longrunningpb.Operation], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Compliance.ProcessScrubListUpload is not implemented"))
+}
+
+func (UnimplementedComplianceHandler) ScrubListDownload(context.Context, *connect_go.Request[v0alpha.ScrubListDownloadRequest]) (*connect_go.Response[longrunningpb.Operation], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Compliance.ScrubListDownload is not implemented"))
 }
 
 func (UnimplementedComplianceHandler) ProcessScrubListDeleteUpload(context.Context, *connect_go.Request[v0alpha.ProcessScrubListDeleteUploadReq]) (*connect_go.Response[longrunningpb.Operation], error) {
@@ -2117,6 +2185,10 @@ func (UnimplementedComplianceHandler) DeleteConsent(context.Context, *connect_go
 
 func (UnimplementedComplianceHandler) ProcessConsentListDeleteUpload(context.Context, *connect_go.Request[v0alpha.ProcessConsentListDeleteUploadReq]) (*connect_go.Response[longrunningpb.Operation], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Compliance.ProcessConsentListDeleteUpload is not implemented"))
+}
+
+func (UnimplementedComplianceHandler) ConsentListDownload(context.Context, *connect_go.Request[v0alpha.ConsentListDownloadRequest]) (*connect_go.Response[longrunningpb.Operation], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Compliance.ConsentListDownload is not implemented"))
 }
 
 func (UnimplementedComplianceHandler) EnableConsentProfile(context.Context, *connect_go.Request[v0alpha.EnableConsentProfileReq]) (*connect_go.Response[emptypb.Empty], error) {
