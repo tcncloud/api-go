@@ -6145,7 +6145,6 @@ type TranscriptQuery_Threads_Text struct {
 	// +------+------+-------------------------------------------+
 	// | head | tail |              description                  |
 	// +------+------+-------------------------------------------+
-	// |    0 |    0 | match anywhere                            |
 	// |  +30 |  +60 | match between (head + 30) and (head + 60) |
 	// |    0 |  +30 | match between (head +  0) and (head + 30) |
 	// |    0 |  -30 | match between (head +  0) and (tail - 30) |
