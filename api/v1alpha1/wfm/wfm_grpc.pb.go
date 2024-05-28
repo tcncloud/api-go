@@ -201,6 +201,8 @@ const (
 	WFM_ReplaceAgentOnSchedule_FullMethodName                        = "/api.v1alpha1.wfm.WFM/ReplaceAgentOnSchedule"
 	WFM_ReplaceAgentOnScheduleV1_FullMethodName                      = "/api.v1alpha1.wfm.WFM/ReplaceAgentOnScheduleV1"
 	WFM_RemoveAgentFromSchedule_FullMethodName                       = "/api.v1alpha1.wfm.WFM/RemoveAgentFromSchedule"
+	WFM_CreateAgentLeavePetition_FullMethodName                      = "/api.v1alpha1.wfm.WFM/CreateAgentLeavePetition"
+	WFM_ListAgentLeavePetitions_FullMethodName                       = "/api.v1alpha1.wfm.WFM/ListAgentLeavePetitions"
 	WFM_HelloWorldWFMAdherence_FullMethodName                        = "/api.v1alpha1.wfm.WFM/HelloWorldWFMAdherence"
 	WFM_ListAgentStatesForDay_FullMethodName                         = "/api.v1alpha1.wfm.WFM/ListAgentStatesForDay"
 	WFM_ListRealTimeManagementStates_FullMethodName                  = "/api.v1alpha1.wfm.WFM/ListRealTimeManagementStates"
@@ -1535,6 +1537,22 @@ type WFMClient interface {
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when creating the unassigned agent or updating the shifts.
 	RemoveAgentFromSchedule(ctx context.Context, in *RemoveAgentFromScheduleRequest, opts ...grpc.CallOption) (*RemoveAgentFromScheduleResponse, error)
+	// Creates an agent leave petition to request time off for the @wfm_agent_sid over the @requested_datetime_ranges for the org sending the request.
+	// The @petition_comment must be set with a value.
+	// The @requested_datetime_ranges may not overlap each other.
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when creating the time off request.
+	//   - grpc.NotFound: the @wfm_agent_sid does not exist for the org sending the request.
+	CreateAgentLeavePetition(ctx context.Context, in *CreateAgentLeavePetitionRequest, opts ...grpc.CallOption) (*CreateAgentLeavePetitionResponse, error)
+	// Lists agent leave petitions for the @wfm_agent_sids over @datetime_range for the org sending the request.
+	// If no @wfm_agent_sids are provided, all agent leave petitions overlapping @datetime_range for the org sending the request will be returned.
+	// If @include_archived is true, archived agent leave petitions will be returned as well, otherwise archived requests will not be included.
+	// If no agent leave petitions are found for the given parameters, an empty slice will be returned.
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when listing the agent leave petitions.
+	ListAgentLeavePetitions(ctx context.Context, in *ListAgentLeavePetitionsRequest, opts ...grpc.CallOption) (*ListAgentLeavePetitionsResponse, error)
 	// A hello world endpoint to test the WFM Adherence App.
 	// Returns a string with a hello world message.
 	HelloWorldWFMAdherence(ctx context.Context, in *HelloWorldWFMAdherenceRequest, opts ...grpc.CallOption) (*HelloWorldWFMAdherenceResponse, error)
@@ -3221,6 +3239,24 @@ func (c *wFMClient) RemoveAgentFromSchedule(ctx context.Context, in *RemoveAgent
 	return out, nil
 }
 
+func (c *wFMClient) CreateAgentLeavePetition(ctx context.Context, in *CreateAgentLeavePetitionRequest, opts ...grpc.CallOption) (*CreateAgentLeavePetitionResponse, error) {
+	out := new(CreateAgentLeavePetitionResponse)
+	err := c.cc.Invoke(ctx, WFM_CreateAgentLeavePetition_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) ListAgentLeavePetitions(ctx context.Context, in *ListAgentLeavePetitionsRequest, opts ...grpc.CallOption) (*ListAgentLeavePetitionsResponse, error) {
+	out := new(ListAgentLeavePetitionsResponse)
+	err := c.cc.Invoke(ctx, WFM_ListAgentLeavePetitions_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) HelloWorldWFMAdherence(ctx context.Context, in *HelloWorldWFMAdherenceRequest, opts ...grpc.CallOption) (*HelloWorldWFMAdherenceResponse, error) {
 	out := new(HelloWorldWFMAdherenceResponse)
 	err := c.cc.Invoke(ctx, WFM_HelloWorldWFMAdherence_FullMethodName, in, out, opts...)
@@ -4585,6 +4621,22 @@ type WFMServer interface {
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when creating the unassigned agent or updating the shifts.
 	RemoveAgentFromSchedule(context.Context, *RemoveAgentFromScheduleRequest) (*RemoveAgentFromScheduleResponse, error)
+	// Creates an agent leave petition to request time off for the @wfm_agent_sid over the @requested_datetime_ranges for the org sending the request.
+	// The @petition_comment must be set with a value.
+	// The @requested_datetime_ranges may not overlap each other.
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when creating the time off request.
+	//   - grpc.NotFound: the @wfm_agent_sid does not exist for the org sending the request.
+	CreateAgentLeavePetition(context.Context, *CreateAgentLeavePetitionRequest) (*CreateAgentLeavePetitionResponse, error)
+	// Lists agent leave petitions for the @wfm_agent_sids over @datetime_range for the org sending the request.
+	// If no @wfm_agent_sids are provided, all agent leave petitions overlapping @datetime_range for the org sending the request will be returned.
+	// If @include_archived is true, archived agent leave petitions will be returned as well, otherwise archived requests will not be included.
+	// If no agent leave petitions are found for the given parameters, an empty slice will be returned.
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when listing the agent leave petitions.
+	ListAgentLeavePetitions(context.Context, *ListAgentLeavePetitionsRequest) (*ListAgentLeavePetitionsResponse, error)
 	// A hello world endpoint to test the WFM Adherence App.
 	// Returns a string with a hello world message.
 	HelloWorldWFMAdherence(context.Context, *HelloWorldWFMAdherenceRequest) (*HelloWorldWFMAdherenceResponse, error)
@@ -5115,6 +5167,12 @@ func (UnimplementedWFMServer) ReplaceAgentOnScheduleV1(context.Context, *Replace
 }
 func (UnimplementedWFMServer) RemoveAgentFromSchedule(context.Context, *RemoveAgentFromScheduleRequest) (*RemoveAgentFromScheduleResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RemoveAgentFromSchedule not implemented")
+}
+func (UnimplementedWFMServer) CreateAgentLeavePetition(context.Context, *CreateAgentLeavePetitionRequest) (*CreateAgentLeavePetitionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateAgentLeavePetition not implemented")
+}
+func (UnimplementedWFMServer) ListAgentLeavePetitions(context.Context, *ListAgentLeavePetitionsRequest) (*ListAgentLeavePetitionsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListAgentLeavePetitions not implemented")
 }
 func (UnimplementedWFMServer) HelloWorldWFMAdherence(context.Context, *HelloWorldWFMAdherenceRequest) (*HelloWorldWFMAdherenceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HelloWorldWFMAdherence not implemented")
@@ -8183,6 +8241,42 @@ func _WFM_RemoveAgentFromSchedule_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_CreateAgentLeavePetition_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateAgentLeavePetitionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).CreateAgentLeavePetition(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_CreateAgentLeavePetition_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).CreateAgentLeavePetition(ctx, req.(*CreateAgentLeavePetitionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_ListAgentLeavePetitions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListAgentLeavePetitionsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).ListAgentLeavePetitions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_ListAgentLeavePetitions_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).ListAgentLeavePetitions(ctx, req.(*ListAgentLeavePetitionsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WFM_HelloWorldWFMAdherence_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(HelloWorldWFMAdherenceRequest)
 	if err := dec(in); err != nil {
@@ -8909,6 +9003,14 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RemoveAgentFromSchedule",
 			Handler:    _WFM_RemoveAgentFromSchedule_Handler,
+		},
+		{
+			MethodName: "CreateAgentLeavePetition",
+			Handler:    _WFM_CreateAgentLeavePetition_Handler,
+		},
+		{
+			MethodName: "ListAgentLeavePetitions",
+			Handler:    _WFM_ListAgentLeavePetitions_Handler,
 		},
 		{
 			MethodName: "HelloWorldWFMAdherence",
