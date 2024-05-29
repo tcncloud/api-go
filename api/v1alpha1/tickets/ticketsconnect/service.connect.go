@@ -76,6 +76,9 @@ const (
 	// TicketsListAvailableAgentTicketsProcedure is the fully-qualified name of the Tickets's
 	// ListAvailableAgentTickets RPC.
 	TicketsListAvailableAgentTicketsProcedure = "/api.v1alpha1.tickets.Tickets/ListAvailableAgentTickets"
+	// TicketsListAgentTicketsProcedure is the fully-qualified name of the Tickets's ListAgentTickets
+	// RPC.
+	TicketsListAgentTicketsProcedure = "/api.v1alpha1.tickets.Tickets/ListAgentTickets"
 	// TicketsListSkillsProcedure is the fully-qualified name of the Tickets's ListSkills RPC.
 	TicketsListSkillsProcedure = "/api.v1alpha1.tickets.Tickets/ListSkills"
 	// TicketsListUsersProcedure is the fully-qualified name of the Tickets's ListUsers RPC.
@@ -163,6 +166,8 @@ type TicketsClient interface {
 	ListAllocatedTickets(context.Context, *connect_go.Request[tickets.ListAllocatedTicketReq]) (*connect_go.Response[tickets.ListAllocatedTicketRes], error)
 	// public method - to return list of available tickets to pick for an Agent
 	ListAvailableAgentTickets(context.Context, *connect_go.Request[tickets.ListAvailableAgentTicketsRequest]) (*connect_go.Response[tickets.ListAvailableAgentTicketsResponse], error)
+	// public method - to return list of available tickets to pick for an Agent
+	ListAgentTickets(context.Context, *connect_go.Request[tickets.ListAgentTicketsRequest]) (*connect_go.Response[tickets.ListAgentTicketsResponse], error)
 	// public method to fetch list of skills for a tickets user
 	ListSkills(context.Context, *connect_go.Request[tickets.ListSkillsRequest]) (*connect_go.Response[tickets.ListSkillsResponse], error)
 	// public method to fetch list of users for a tickets user
@@ -300,6 +305,11 @@ func NewTicketsClient(httpClient connect_go.HTTPClient, baseURL string, opts ...
 			baseURL+TicketsListAvailableAgentTicketsProcedure,
 			opts...,
 		),
+		listAgentTickets: connect_go.NewClient[tickets.ListAgentTicketsRequest, tickets.ListAgentTicketsResponse](
+			httpClient,
+			baseURL+TicketsListAgentTicketsProcedure,
+			opts...,
+		),
 		listSkills: connect_go.NewClient[tickets.ListSkillsRequest, tickets.ListSkillsResponse](
 			httpClient,
 			baseURL+TicketsListSkillsProcedure,
@@ -399,6 +409,7 @@ type ticketsClient struct {
 	editMaskTicket            *connect_go.Client[tickets.EditMaskTicketReq, tickets.EditMaskTicketRes]
 	listAllocatedTickets      *connect_go.Client[tickets.ListAllocatedTicketReq, tickets.ListAllocatedTicketRes]
 	listAvailableAgentTickets *connect_go.Client[tickets.ListAvailableAgentTicketsRequest, tickets.ListAvailableAgentTicketsResponse]
+	listAgentTickets          *connect_go.Client[tickets.ListAgentTicketsRequest, tickets.ListAgentTicketsResponse]
 	listSkills                *connect_go.Client[tickets.ListSkillsRequest, tickets.ListSkillsResponse]
 	listUsers                 *connect_go.Client[tickets.ListUsersRequest, tickets.ListUsersResponse]
 	closeTicketAction         *connect_go.Client[tickets.CloseTicketActionRequest, tickets.CloseTicketActionResponse]
@@ -511,6 +522,11 @@ func (c *ticketsClient) ListAllocatedTickets(ctx context.Context, req *connect_g
 // ListAvailableAgentTickets calls api.v1alpha1.tickets.Tickets.ListAvailableAgentTickets.
 func (c *ticketsClient) ListAvailableAgentTickets(ctx context.Context, req *connect_go.Request[tickets.ListAvailableAgentTicketsRequest]) (*connect_go.Response[tickets.ListAvailableAgentTicketsResponse], error) {
 	return c.listAvailableAgentTickets.CallUnary(ctx, req)
+}
+
+// ListAgentTickets calls api.v1alpha1.tickets.Tickets.ListAgentTickets.
+func (c *ticketsClient) ListAgentTickets(ctx context.Context, req *connect_go.Request[tickets.ListAgentTicketsRequest]) (*connect_go.Response[tickets.ListAgentTicketsResponse], error) {
+	return c.listAgentTickets.CallUnary(ctx, req)
 }
 
 // ListSkills calls api.v1alpha1.tickets.Tickets.ListSkills.
@@ -631,6 +647,8 @@ type TicketsHandler interface {
 	ListAllocatedTickets(context.Context, *connect_go.Request[tickets.ListAllocatedTicketReq]) (*connect_go.Response[tickets.ListAllocatedTicketRes], error)
 	// public method - to return list of available tickets to pick for an Agent
 	ListAvailableAgentTickets(context.Context, *connect_go.Request[tickets.ListAvailableAgentTicketsRequest]) (*connect_go.Response[tickets.ListAvailableAgentTicketsResponse], error)
+	// public method - to return list of available tickets to pick for an Agent
+	ListAgentTickets(context.Context, *connect_go.Request[tickets.ListAgentTicketsRequest]) (*connect_go.Response[tickets.ListAgentTicketsResponse], error)
 	// public method to fetch list of skills for a tickets user
 	ListSkills(context.Context, *connect_go.Request[tickets.ListSkillsRequest]) (*connect_go.Response[tickets.ListSkillsResponse], error)
 	// public method to fetch list of users for a tickets user
@@ -764,6 +782,11 @@ func NewTicketsHandler(svc TicketsHandler, opts ...connect_go.HandlerOption) (st
 		svc.ListAvailableAgentTickets,
 		opts...,
 	)
+	ticketsListAgentTicketsHandler := connect_go.NewUnaryHandler(
+		TicketsListAgentTicketsProcedure,
+		svc.ListAgentTickets,
+		opts...,
+	)
 	ticketsListSkillsHandler := connect_go.NewUnaryHandler(
 		TicketsListSkillsProcedure,
 		svc.ListSkills,
@@ -879,6 +902,8 @@ func NewTicketsHandler(svc TicketsHandler, opts ...connect_go.HandlerOption) (st
 			ticketsListAllocatedTicketsHandler.ServeHTTP(w, r)
 		case TicketsListAvailableAgentTicketsProcedure:
 			ticketsListAvailableAgentTicketsHandler.ServeHTTP(w, r)
+		case TicketsListAgentTicketsProcedure:
+			ticketsListAgentTicketsHandler.ServeHTTP(w, r)
 		case TicketsListSkillsProcedure:
 			ticketsListSkillsHandler.ServeHTTP(w, r)
 		case TicketsListUsersProcedure:
@@ -992,6 +1017,10 @@ func (UnimplementedTicketsHandler) ListAllocatedTickets(context.Context, *connec
 
 func (UnimplementedTicketsHandler) ListAvailableAgentTickets(context.Context, *connect_go.Request[tickets.ListAvailableAgentTicketsRequest]) (*connect_go.Response[tickets.ListAvailableAgentTicketsResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.tickets.Tickets.ListAvailableAgentTickets is not implemented"))
+}
+
+func (UnimplementedTicketsHandler) ListAgentTickets(context.Context, *connect_go.Request[tickets.ListAgentTicketsRequest]) (*connect_go.Response[tickets.ListAgentTicketsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.tickets.Tickets.ListAgentTickets is not implemented"))
 }
 
 func (UnimplementedTicketsHandler) ListSkills(context.Context, *connect_go.Request[tickets.ListSkillsRequest]) (*connect_go.Response[tickets.ListSkillsResponse], error) {

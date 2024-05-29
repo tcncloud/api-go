@@ -38,6 +38,7 @@ const (
 	Tickets_EditMaskTicket_FullMethodName            = "/api.v1alpha1.tickets.Tickets/EditMaskTicket"
 	Tickets_ListAllocatedTickets_FullMethodName      = "/api.v1alpha1.tickets.Tickets/ListAllocatedTickets"
 	Tickets_ListAvailableAgentTickets_FullMethodName = "/api.v1alpha1.tickets.Tickets/ListAvailableAgentTickets"
+	Tickets_ListAgentTickets_FullMethodName          = "/api.v1alpha1.tickets.Tickets/ListAgentTickets"
 	Tickets_ListSkills_FullMethodName                = "/api.v1alpha1.tickets.Tickets/ListSkills"
 	Tickets_ListUsers_FullMethodName                 = "/api.v1alpha1.tickets.Tickets/ListUsers"
 	Tickets_CloseTicketAction_FullMethodName         = "/api.v1alpha1.tickets.Tickets/CloseTicketAction"
@@ -100,6 +101,8 @@ type TicketsClient interface {
 	ListAllocatedTickets(ctx context.Context, in *ListAllocatedTicketReq, opts ...grpc.CallOption) (*ListAllocatedTicketRes, error)
 	// public method - to return list of available tickets to pick for an Agent
 	ListAvailableAgentTickets(ctx context.Context, in *ListAvailableAgentTicketsRequest, opts ...grpc.CallOption) (*ListAvailableAgentTicketsResponse, error)
+	// public method - to return list of available tickets to pick for an Agent
+	ListAgentTickets(ctx context.Context, in *ListAgentTicketsRequest, opts ...grpc.CallOption) (*ListAgentTicketsResponse, error)
 	// public method to fetch list of skills for a tickets user
 	ListSkills(ctx context.Context, in *ListSkillsRequest, opts ...grpc.CallOption) (*ListSkillsResponse, error)
 	// public method to fetch list of users for a tickets user
@@ -312,6 +315,15 @@ func (c *ticketsClient) ListAvailableAgentTickets(ctx context.Context, in *ListA
 	return out, nil
 }
 
+func (c *ticketsClient) ListAgentTickets(ctx context.Context, in *ListAgentTicketsRequest, opts ...grpc.CallOption) (*ListAgentTicketsResponse, error) {
+	out := new(ListAgentTicketsResponse)
+	err := c.cc.Invoke(ctx, Tickets_ListAgentTickets_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *ticketsClient) ListSkills(ctx context.Context, in *ListSkillsRequest, opts ...grpc.CallOption) (*ListSkillsResponse, error) {
 	out := new(ListSkillsResponse)
 	err := c.cc.Invoke(ctx, Tickets_ListSkills_FullMethodName, in, out, opts...)
@@ -492,6 +504,8 @@ type TicketsServer interface {
 	ListAllocatedTickets(context.Context, *ListAllocatedTicketReq) (*ListAllocatedTicketRes, error)
 	// public method - to return list of available tickets to pick for an Agent
 	ListAvailableAgentTickets(context.Context, *ListAvailableAgentTicketsRequest) (*ListAvailableAgentTicketsResponse, error)
+	// public method - to return list of available tickets to pick for an Agent
+	ListAgentTickets(context.Context, *ListAgentTicketsRequest) (*ListAgentTicketsResponse, error)
 	// public method to fetch list of skills for a tickets user
 	ListSkills(context.Context, *ListSkillsRequest) (*ListSkillsResponse, error)
 	// public method to fetch list of users for a tickets user
@@ -585,6 +599,9 @@ func (UnimplementedTicketsServer) ListAllocatedTickets(context.Context, *ListAll
 }
 func (UnimplementedTicketsServer) ListAvailableAgentTickets(context.Context, *ListAvailableAgentTicketsRequest) (*ListAvailableAgentTicketsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAvailableAgentTickets not implemented")
+}
+func (UnimplementedTicketsServer) ListAgentTickets(context.Context, *ListAgentTicketsRequest) (*ListAgentTicketsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListAgentTickets not implemented")
 }
 func (UnimplementedTicketsServer) ListSkills(context.Context, *ListSkillsRequest) (*ListSkillsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListSkills not implemented")
@@ -986,6 +1003,24 @@ func _Tickets_ListAvailableAgentTickets_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Tickets_ListAgentTickets_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListAgentTicketsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TicketsServer).ListAgentTickets(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Tickets_ListAgentTickets_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TicketsServer).ListAgentTickets(ctx, req.(*ListAgentTicketsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Tickets_ListSkills_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListSkillsRequest)
 	if err := dec(in); err != nil {
@@ -1338,6 +1373,10 @@ var Tickets_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListAvailableAgentTickets",
 			Handler:    _Tickets_ListAvailableAgentTickets_Handler,
+		},
+		{
+			MethodName: "ListAgentTickets",
+			Handler:    _Tickets_ListAgentTickets_Handler,
 		},
 		{
 			MethodName: "ListSkills",
