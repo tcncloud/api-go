@@ -108,6 +108,9 @@ const (
 	// PortalManagerApiListPortalWorkflowsProcedure is the fully-qualified name of the
 	// PortalManagerApi's ListPortalWorkflows RPC.
 	PortalManagerApiListPortalWorkflowsProcedure = "/api.v1alpha1.integrations.PortalManagerApi/ListPortalWorkflows"
+	// PortalManagerApiListAllActionDefinitionsProcedure is the fully-qualified name of the
+	// PortalManagerApi's ListAllActionDefinitions RPC.
+	PortalManagerApiListAllActionDefinitionsProcedure = "/api.v1alpha1.integrations.PortalManagerApi/ListAllActionDefinitions"
 )
 
 // PortalManagerApiClient is a client for the api.v1alpha1.integrations.PortalManagerApi service.
@@ -142,6 +145,7 @@ type PortalManagerApiClient interface {
 	ListAvailablePaymentFields(context.Context, *connect_go.Request[integrations.ListAvailablePaymentFieldsReq]) (*connect_go.Response[integrations.ListAvailablePaymentFieldsRes], error)
 	ListPortalTypes(context.Context, *connect_go.Request[integrations.ListPortalTypesReq]) (*connect_go.Response[integrations.ListPortalTypesResponse], error)
 	ListPortalWorkflows(context.Context, *connect_go.Request[integrations.ListPortalWorkflowsReq]) (*connect_go.Response[integrations.ListPortalWorkflowsResponse], error)
+	ListAllActionDefinitions(context.Context, *connect_go.Request[integrations.ListAllActionDefinitionsReq]) (*connect_go.Response[integrations.ListAllActionDefinitionsResponse], error)
 }
 
 // NewPortalManagerApiClient constructs a client for the api.v1alpha1.integrations.PortalManagerApi
@@ -279,6 +283,11 @@ func NewPortalManagerApiClient(httpClient connect_go.HTTPClient, baseURL string,
 			baseURL+PortalManagerApiListPortalWorkflowsProcedure,
 			opts...,
 		),
+		listAllActionDefinitions: connect_go.NewClient[integrations.ListAllActionDefinitionsReq, integrations.ListAllActionDefinitionsResponse](
+			httpClient,
+			baseURL+PortalManagerApiListAllActionDefinitionsProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -309,6 +318,7 @@ type portalManagerApiClient struct {
 	listAvailablePaymentFields      *connect_go.Client[integrations.ListAvailablePaymentFieldsReq, integrations.ListAvailablePaymentFieldsRes]
 	listPortalTypes                 *connect_go.Client[integrations.ListPortalTypesReq, integrations.ListPortalTypesResponse]
 	listPortalWorkflows             *connect_go.Client[integrations.ListPortalWorkflowsReq, integrations.ListPortalWorkflowsResponse]
+	listAllActionDefinitions        *connect_go.Client[integrations.ListAllActionDefinitionsReq, integrations.ListAllActionDefinitionsResponse]
 }
 
 // UpsertPortalConfig calls api.v1alpha1.integrations.PortalManagerApi.UpsertPortalConfig.
@@ -438,6 +448,12 @@ func (c *portalManagerApiClient) ListPortalWorkflows(ctx context.Context, req *c
 	return c.listPortalWorkflows.CallUnary(ctx, req)
 }
 
+// ListAllActionDefinitions calls
+// api.v1alpha1.integrations.PortalManagerApi.ListAllActionDefinitions.
+func (c *portalManagerApiClient) ListAllActionDefinitions(ctx context.Context, req *connect_go.Request[integrations.ListAllActionDefinitionsReq]) (*connect_go.Response[integrations.ListAllActionDefinitionsResponse], error) {
+	return c.listAllActionDefinitions.CallUnary(ctx, req)
+}
+
 // PortalManagerApiHandler is an implementation of the api.v1alpha1.integrations.PortalManagerApi
 // service.
 type PortalManagerApiHandler interface {
@@ -471,6 +487,7 @@ type PortalManagerApiHandler interface {
 	ListAvailablePaymentFields(context.Context, *connect_go.Request[integrations.ListAvailablePaymentFieldsReq]) (*connect_go.Response[integrations.ListAvailablePaymentFieldsRes], error)
 	ListPortalTypes(context.Context, *connect_go.Request[integrations.ListPortalTypesReq]) (*connect_go.Response[integrations.ListPortalTypesResponse], error)
 	ListPortalWorkflows(context.Context, *connect_go.Request[integrations.ListPortalWorkflowsReq]) (*connect_go.Response[integrations.ListPortalWorkflowsResponse], error)
+	ListAllActionDefinitions(context.Context, *connect_go.Request[integrations.ListAllActionDefinitionsReq]) (*connect_go.Response[integrations.ListAllActionDefinitionsResponse], error)
 }
 
 // NewPortalManagerApiHandler builds an HTTP handler from the service implementation. It returns the
@@ -604,6 +621,11 @@ func NewPortalManagerApiHandler(svc PortalManagerApiHandler, opts ...connect_go.
 		svc.ListPortalWorkflows,
 		opts...,
 	)
+	portalManagerApiListAllActionDefinitionsHandler := connect_go.NewUnaryHandler(
+		PortalManagerApiListAllActionDefinitionsProcedure,
+		svc.ListAllActionDefinitions,
+		opts...,
+	)
 	return "/api.v1alpha1.integrations.PortalManagerApi/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case PortalManagerApiUpsertPortalConfigProcedure:
@@ -656,6 +678,8 @@ func NewPortalManagerApiHandler(svc PortalManagerApiHandler, opts ...connect_go.
 			portalManagerApiListPortalTypesHandler.ServeHTTP(w, r)
 		case PortalManagerApiListPortalWorkflowsProcedure:
 			portalManagerApiListPortalWorkflowsHandler.ServeHTTP(w, r)
+		case PortalManagerApiListAllActionDefinitionsProcedure:
+			portalManagerApiListAllActionDefinitionsHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -763,4 +787,8 @@ func (UnimplementedPortalManagerApiHandler) ListPortalTypes(context.Context, *co
 
 func (UnimplementedPortalManagerApiHandler) ListPortalWorkflows(context.Context, *connect_go.Request[integrations.ListPortalWorkflowsReq]) (*connect_go.Response[integrations.ListPortalWorkflowsResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.integrations.PortalManagerApi.ListPortalWorkflows is not implemented"))
+}
+
+func (UnimplementedPortalManagerApiHandler) ListAllActionDefinitions(context.Context, *connect_go.Request[integrations.ListAllActionDefinitionsReq]) (*connect_go.Response[integrations.ListAllActionDefinitionsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.integrations.PortalManagerApi.ListAllActionDefinitions is not implemented"))
 }

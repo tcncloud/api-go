@@ -44,6 +44,7 @@ const (
 	PortalManagerApi_ListAvailablePaymentFields_FullMethodName      = "/api.v1alpha1.integrations.PortalManagerApi/ListAvailablePaymentFields"
 	PortalManagerApi_ListPortalTypes_FullMethodName                 = "/api.v1alpha1.integrations.PortalManagerApi/ListPortalTypes"
 	PortalManagerApi_ListPortalWorkflows_FullMethodName             = "/api.v1alpha1.integrations.PortalManagerApi/ListPortalWorkflows"
+	PortalManagerApi_ListAllActionDefinitions_FullMethodName        = "/api.v1alpha1.integrations.PortalManagerApi/ListAllActionDefinitions"
 )
 
 // PortalManagerApiClient is the client API for PortalManagerApi service.
@@ -80,6 +81,7 @@ type PortalManagerApiClient interface {
 	ListAvailablePaymentFields(ctx context.Context, in *ListAvailablePaymentFieldsReq, opts ...grpc.CallOption) (*ListAvailablePaymentFieldsRes, error)
 	ListPortalTypes(ctx context.Context, in *ListPortalTypesReq, opts ...grpc.CallOption) (*ListPortalTypesResponse, error)
 	ListPortalWorkflows(ctx context.Context, in *ListPortalWorkflowsReq, opts ...grpc.CallOption) (*ListPortalWorkflowsResponse, error)
+	ListAllActionDefinitions(ctx context.Context, in *ListAllActionDefinitionsReq, opts ...grpc.CallOption) (*ListAllActionDefinitionsResponse, error)
 }
 
 type portalManagerApiClient struct {
@@ -340,6 +342,16 @@ func (c *portalManagerApiClient) ListPortalWorkflows(ctx context.Context, in *Li
 	return out, nil
 }
 
+func (c *portalManagerApiClient) ListAllActionDefinitions(ctx context.Context, in *ListAllActionDefinitionsReq, opts ...grpc.CallOption) (*ListAllActionDefinitionsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListAllActionDefinitionsResponse)
+	err := c.cc.Invoke(ctx, PortalManagerApi_ListAllActionDefinitions_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PortalManagerApiServer is the server API for PortalManagerApi service.
 // All implementations must embed UnimplementedPortalManagerApiServer
 // for forward compatibility
@@ -374,6 +386,7 @@ type PortalManagerApiServer interface {
 	ListAvailablePaymentFields(context.Context, *ListAvailablePaymentFieldsReq) (*ListAvailablePaymentFieldsRes, error)
 	ListPortalTypes(context.Context, *ListPortalTypesReq) (*ListPortalTypesResponse, error)
 	ListPortalWorkflows(context.Context, *ListPortalWorkflowsReq) (*ListPortalWorkflowsResponse, error)
+	ListAllActionDefinitions(context.Context, *ListAllActionDefinitionsReq) (*ListAllActionDefinitionsResponse, error)
 	mustEmbedUnimplementedPortalManagerApiServer()
 }
 
@@ -455,6 +468,9 @@ func (UnimplementedPortalManagerApiServer) ListPortalTypes(context.Context, *Lis
 }
 func (UnimplementedPortalManagerApiServer) ListPortalWorkflows(context.Context, *ListPortalWorkflowsReq) (*ListPortalWorkflowsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListPortalWorkflows not implemented")
+}
+func (UnimplementedPortalManagerApiServer) ListAllActionDefinitions(context.Context, *ListAllActionDefinitionsReq) (*ListAllActionDefinitionsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListAllActionDefinitions not implemented")
 }
 func (UnimplementedPortalManagerApiServer) mustEmbedUnimplementedPortalManagerApiServer() {}
 
@@ -919,6 +935,24 @@ func _PortalManagerApi_ListPortalWorkflows_Handler(srv interface{}, ctx context.
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PortalManagerApi_ListAllActionDefinitions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListAllActionDefinitionsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PortalManagerApiServer).ListAllActionDefinitions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PortalManagerApi_ListAllActionDefinitions_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PortalManagerApiServer).ListAllActionDefinitions(ctx, req.(*ListAllActionDefinitionsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // PortalManagerApi_ServiceDesc is the grpc.ServiceDesc for PortalManagerApi service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1025,6 +1059,10 @@ var PortalManagerApi_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListPortalWorkflows",
 			Handler:    _PortalManagerApi_ListPortalWorkflows_Handler,
+		},
+		{
+			MethodName: "ListAllActionDefinitions",
+			Handler:    _PortalManagerApi_ListAllActionDefinitions_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
