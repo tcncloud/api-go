@@ -92,6 +92,8 @@ const (
 	LearnReviewVersionProcedure = "/api.v0alpha.Learn/ReviewVersion"
 	// LearnExportManyStreamProcedure is the fully-qualified name of the Learn's ExportManyStream RPC.
 	LearnExportManyStreamProcedure = "/api.v0alpha.Learn/ExportManyStream"
+	// LearnListVersionsProcedure is the fully-qualified name of the Learn's ListVersions RPC.
+	LearnListVersionsProcedure = "/api.v0alpha.Learn/ListVersions"
 )
 
 // LearnClient is a client for the api.v0alpha.Learn service.
@@ -143,6 +145,8 @@ type LearnClient interface {
 	ReviewVersion(context.Context, *connect_go.Request[v0alpha.ReviewVersionReq]) (*connect_go.Response[v0alpha.ReviewVersionRes], error)
 	// exports multiple pages of the learning center markdown as PDF file stream
 	ExportManyStream(context.Context, *connect_go.Request[v0alpha.ExportManyReq]) (*connect_go.ServerStreamForClient[v0alpha.ExportRes], error)
+	// list all the different versions
+	ListVersions(context.Context, *connect_go.Request[v0alpha.ListVersionsReq]) (*connect_go.Response[v0alpha.ListVersionsRes], error)
 }
 
 // NewLearnClient constructs a client for the api.v0alpha.Learn service. By default, it uses the
@@ -260,6 +264,11 @@ func NewLearnClient(httpClient connect_go.HTTPClient, baseURL string, opts ...co
 			baseURL+LearnExportManyStreamProcedure,
 			opts...,
 		),
+		listVersions: connect_go.NewClient[v0alpha.ListVersionsReq, v0alpha.ListVersionsRes](
+			httpClient,
+			baseURL+LearnListVersionsProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -286,6 +295,7 @@ type learnClient struct {
 	reviewFileVersions         *connect_go.Client[v0alpha.ReviewFileVersionsReq, v0alpha.ReviewFileVersionsRes]
 	reviewVersion              *connect_go.Client[v0alpha.ReviewVersionReq, v0alpha.ReviewVersionRes]
 	exportManyStream           *connect_go.Client[v0alpha.ExportManyReq, v0alpha.ExportRes]
+	listVersions               *connect_go.Client[v0alpha.ListVersionsReq, v0alpha.ListVersionsRes]
 }
 
 // Exist calls api.v0alpha.Learn.Exist.
@@ -393,6 +403,11 @@ func (c *learnClient) ExportManyStream(ctx context.Context, req *connect_go.Requ
 	return c.exportManyStream.CallServerStream(ctx, req)
 }
 
+// ListVersions calls api.v0alpha.Learn.ListVersions.
+func (c *learnClient) ListVersions(ctx context.Context, req *connect_go.Request[v0alpha.ListVersionsReq]) (*connect_go.Response[v0alpha.ListVersionsRes], error) {
+	return c.listVersions.CallUnary(ctx, req)
+}
+
 // LearnHandler is an implementation of the api.v0alpha.Learn service.
 type LearnHandler interface {
 	// check if learning page already exists
@@ -442,6 +457,8 @@ type LearnHandler interface {
 	ReviewVersion(context.Context, *connect_go.Request[v0alpha.ReviewVersionReq]) (*connect_go.Response[v0alpha.ReviewVersionRes], error)
 	// exports multiple pages of the learning center markdown as PDF file stream
 	ExportManyStream(context.Context, *connect_go.Request[v0alpha.ExportManyReq], *connect_go.ServerStream[v0alpha.ExportRes]) error
+	// list all the different versions
+	ListVersions(context.Context, *connect_go.Request[v0alpha.ListVersionsReq]) (*connect_go.Response[v0alpha.ListVersionsRes], error)
 }
 
 // NewLearnHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -555,6 +572,11 @@ func NewLearnHandler(svc LearnHandler, opts ...connect_go.HandlerOption) (string
 		svc.ExportManyStream,
 		opts...,
 	)
+	learnListVersionsHandler := connect_go.NewUnaryHandler(
+		LearnListVersionsProcedure,
+		svc.ListVersions,
+		opts...,
+	)
 	return "/api.v0alpha.Learn/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case LearnExistProcedure:
@@ -599,6 +621,8 @@ func NewLearnHandler(svc LearnHandler, opts ...connect_go.HandlerOption) (string
 			learnReviewVersionHandler.ServeHTTP(w, r)
 		case LearnExportManyStreamProcedure:
 			learnExportManyStreamHandler.ServeHTTP(w, r)
+		case LearnListVersionsProcedure:
+			learnListVersionsHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -690,4 +714,8 @@ func (UnimplementedLearnHandler) ReviewVersion(context.Context, *connect_go.Requ
 
 func (UnimplementedLearnHandler) ExportManyStream(context.Context, *connect_go.Request[v0alpha.ExportManyReq], *connect_go.ServerStream[v0alpha.ExportRes]) error {
 	return connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.ExportManyStream is not implemented"))
+}
+
+func (UnimplementedLearnHandler) ListVersions(context.Context, *connect_go.Request[v0alpha.ListVersionsReq]) (*connect_go.Response[v0alpha.ListVersionsRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.ListVersions is not implemented"))
 }

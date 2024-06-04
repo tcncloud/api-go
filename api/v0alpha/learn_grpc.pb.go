@@ -54,6 +54,7 @@ const (
 	Learn_ReviewFileVersions_FullMethodName         = "/api.v0alpha.Learn/ReviewFileVersions"
 	Learn_ReviewVersion_FullMethodName              = "/api.v0alpha.Learn/ReviewVersion"
 	Learn_ExportManyStream_FullMethodName           = "/api.v0alpha.Learn/ExportManyStream"
+	Learn_ListVersions_FullMethodName               = "/api.v0alpha.Learn/ListVersions"
 )
 
 // LearnClient is the client API for Learn service.
@@ -109,6 +110,8 @@ type LearnClient interface {
 	ReviewVersion(ctx context.Context, in *ReviewVersionReq, opts ...grpc.CallOption) (*ReviewVersionRes, error)
 	// exports multiple pages of the learning center markdown as PDF file stream
 	ExportManyStream(ctx context.Context, in *ExportManyReq, opts ...grpc.CallOption) (Learn_ExportManyStreamClient, error)
+	// list all the different versions
+	ListVersions(ctx context.Context, in *ListVersionsReq, opts ...grpc.CallOption) (*ListVersionsRes, error)
 }
 
 type learnClient struct {
@@ -398,6 +401,16 @@ func (x *learnExportManyStreamClient) Recv() (*ExportRes, error) {
 	return m, nil
 }
 
+func (c *learnClient) ListVersions(ctx context.Context, in *ListVersionsReq, opts ...grpc.CallOption) (*ListVersionsRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListVersionsRes)
+	err := c.cc.Invoke(ctx, Learn_ListVersions_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LearnServer is the server API for Learn service.
 // All implementations must embed UnimplementedLearnServer
 // for forward compatibility
@@ -451,6 +464,8 @@ type LearnServer interface {
 	ReviewVersion(context.Context, *ReviewVersionReq) (*ReviewVersionRes, error)
 	// exports multiple pages of the learning center markdown as PDF file stream
 	ExportManyStream(*ExportManyReq, Learn_ExportManyStreamServer) error
+	// list all the different versions
+	ListVersions(context.Context, *ListVersionsReq) (*ListVersionsRes, error)
 	mustEmbedUnimplementedLearnServer()
 }
 
@@ -520,6 +535,9 @@ func (UnimplementedLearnServer) ReviewVersion(context.Context, *ReviewVersionReq
 }
 func (UnimplementedLearnServer) ExportManyStream(*ExportManyReq, Learn_ExportManyStreamServer) error {
 	return status.Errorf(codes.Unimplemented, "method ExportManyStream not implemented")
+}
+func (UnimplementedLearnServer) ListVersions(context.Context, *ListVersionsReq) (*ListVersionsRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListVersions not implemented")
 }
 func (UnimplementedLearnServer) mustEmbedUnimplementedLearnServer() {}
 
@@ -921,6 +939,24 @@ func (x *learnExportManyStreamServer) Send(m *ExportRes) error {
 	return x.ServerStream.SendMsg(m)
 }
 
+func _Learn_ListVersions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListVersionsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LearnServer).ListVersions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Learn_ListVersions_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LearnServer).ListVersions(ctx, req.(*ListVersionsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Learn_ServiceDesc is the grpc.ServiceDesc for Learn service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -999,6 +1035,10 @@ var Learn_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ReviewVersion",
 			Handler:    _Learn_ReviewVersion_Handler,
+		},
+		{
+			MethodName: "ListVersions",
+			Handler:    _Learn_ListVersions_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
