@@ -669,6 +669,101 @@ func (x *DeleteAutoEvaluationByOrgIdRequest) GetAutoEvaluationId() int64 {
 	return 0
 }
 
+// BulkDeleteAutoEvaluationsRequest is a request to delete auto evaluations
+type BulkDeleteAutoEvaluationsRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	OrgId             string  `protobuf:"bytes,1,opt,name=org_id,json=orgId,proto3" json:"org_id,omitempty"`                                               // Required. Specifies the org in which to delete the evaluation.
+	AutoEvaluationIds []int64 `protobuf:"varint,2,rep,packed,name=auto_evaluation_ids,json=autoEvaluationIds,proto3" json:"auto_evaluation_ids,omitempty"` // Required - unique id of evaluation to get
+}
+
+func (x *BulkDeleteAutoEvaluationsRequest) Reset() {
+	*x = BulkDeleteAutoEvaluationsRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_scorecards_auto_evaluation_proto_msgTypes[10]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *BulkDeleteAutoEvaluationsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BulkDeleteAutoEvaluationsRequest) ProtoMessage() {}
+
+func (x *BulkDeleteAutoEvaluationsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_scorecards_auto_evaluation_proto_msgTypes[10]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BulkDeleteAutoEvaluationsRequest.ProtoReflect.Descriptor instead.
+func (*BulkDeleteAutoEvaluationsRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_scorecards_auto_evaluation_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *BulkDeleteAutoEvaluationsRequest) GetOrgId() string {
+	if x != nil {
+		return x.OrgId
+	}
+	return ""
+}
+
+func (x *BulkDeleteAutoEvaluationsRequest) GetAutoEvaluationIds() []int64 {
+	if x != nil {
+		return x.AutoEvaluationIds
+	}
+	return nil
+}
+
+// BulkDeleteAutoEvaluationsResponse is a response with deleted evaluations
+type BulkDeleteAutoEvaluationsResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *BulkDeleteAutoEvaluationsResponse) Reset() {
+	*x = BulkDeleteAutoEvaluationsResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_scorecards_auto_evaluation_proto_msgTypes[11]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *BulkDeleteAutoEvaluationsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BulkDeleteAutoEvaluationsResponse) ProtoMessage() {}
+
+func (x *BulkDeleteAutoEvaluationsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_scorecards_auto_evaluation_proto_msgTypes[11]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BulkDeleteAutoEvaluationsResponse.ProtoReflect.Descriptor instead.
+func (*BulkDeleteAutoEvaluationsResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_scorecards_auto_evaluation_proto_rawDescGZIP(), []int{11}
+}
+
 type ListAutoEvaluationsRequest_CallSidFilter struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -686,7 +781,7 @@ type ListAutoEvaluationsRequest_CallSidFilter struct {
 func (x *ListAutoEvaluationsRequest_CallSidFilter) Reset() {
 	*x = ListAutoEvaluationsRequest_CallSidFilter{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_scorecards_auto_evaluation_proto_msgTypes[10]
+		mi := &file_api_v1alpha1_scorecards_auto_evaluation_proto_msgTypes[12]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -699,7 +794,7 @@ func (x *ListAutoEvaluationsRequest_CallSidFilter) String() string {
 func (*ListAutoEvaluationsRequest_CallSidFilter) ProtoMessage() {}
 
 func (x *ListAutoEvaluationsRequest_CallSidFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_scorecards_auto_evaluation_proto_msgTypes[10]
+	mi := &file_api_v1alpha1_scorecards_auto_evaluation_proto_msgTypes[12]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -774,7 +869,7 @@ type ListAutoEvaluationsByOrgIdRequest_CallSidFilter struct {
 func (x *ListAutoEvaluationsByOrgIdRequest_CallSidFilter) Reset() {
 	*x = ListAutoEvaluationsByOrgIdRequest_CallSidFilter{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_scorecards_auto_evaluation_proto_msgTypes[11]
+		mi := &file_api_v1alpha1_scorecards_auto_evaluation_proto_msgTypes[13]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -787,7 +882,7 @@ func (x *ListAutoEvaluationsByOrgIdRequest_CallSidFilter) String() string {
 func (*ListAutoEvaluationsByOrgIdRequest_CallSidFilter) ProtoMessage() {}
 
 func (x *ListAutoEvaluationsByOrgIdRequest_CallSidFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_scorecards_auto_evaluation_proto_msgTypes[11]
+	mi := &file_api_v1alpha1_scorecards_auto_evaluation_proto_msgTypes[13]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -979,7 +1074,16 @@ var file_api_v1alpha1_scorecards_auto_evaluation_proto_rawDesc = []byte{
 	0x05, 0x6f, 0x72, 0x67, 0x49, 0x64, 0x12, 0x2c, 0x0a, 0x12, 0x61, 0x75, 0x74, 0x6f, 0x5f, 0x65,
 	0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01,
 	0x28, 0x03, 0x52, 0x10, 0x61, 0x75, 0x74, 0x6f, 0x45, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x69,
-	0x6f, 0x6e, 0x49, 0x64, 0x42, 0xe4, 0x01, 0x0a, 0x1b, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69,
+	0x6f, 0x6e, 0x49, 0x64, 0x22, 0x69, 0x0a, 0x20, 0x42, 0x75, 0x6c, 0x6b, 0x44, 0x65, 0x6c, 0x65,
+	0x74, 0x65, 0x41, 0x75, 0x74, 0x6f, 0x45, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x69, 0x6f, 0x6e,
+	0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x15, 0x0a, 0x06, 0x6f, 0x72, 0x67, 0x5f,
+	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x6f, 0x72, 0x67, 0x49, 0x64, 0x12,
+	0x2e, 0x0a, 0x13, 0x61, 0x75, 0x74, 0x6f, 0x5f, 0x65, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x69,
+	0x6f, 0x6e, 0x5f, 0x69, 0x64, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x03, 0x52, 0x11, 0x61, 0x75,
+	0x74, 0x6f, 0x45, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x49, 0x64, 0x73, 0x22,
+	0x23, 0x0a, 0x21, 0x42, 0x75, 0x6c, 0x6b, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x41, 0x75, 0x74,
+	0x6f, 0x45, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x42, 0xe4, 0x01, 0x0a, 0x1b, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69,
 	0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x63,
 	0x61, 0x72, 0x64, 0x73, 0x42, 0x13, 0x41, 0x75, 0x74, 0x6f, 0x45, 0x76, 0x61, 0x6c, 0x75, 0x61,
 	0x74, 0x69, 0x6f, 0x6e, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x32, 0x67, 0x69, 0x74,
@@ -1009,7 +1113,7 @@ func file_api_v1alpha1_scorecards_auto_evaluation_proto_rawDescGZIP() []byte {
 	return file_api_v1alpha1_scorecards_auto_evaluation_proto_rawDescData
 }
 
-var file_api_v1alpha1_scorecards_auto_evaluation_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
+var file_api_v1alpha1_scorecards_auto_evaluation_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
 var file_api_v1alpha1_scorecards_auto_evaluation_proto_goTypes = []interface{}{
 	(*GetAutoEvaluationRequest)(nil),                        // 0: api.v1alpha1.scorecards.GetAutoEvaluationRequest
 	(*GetAutoEvaluationResponse)(nil),                       // 1: api.v1alpha1.scorecards.GetAutoEvaluationResponse
@@ -1021,24 +1125,26 @@ var file_api_v1alpha1_scorecards_auto_evaluation_proto_goTypes = []interface{}{
 	(*StreamAutoEvaluationsResponse)(nil),                   // 7: api.v1alpha1.scorecards.StreamAutoEvaluationsResponse
 	(*ListAutoEvaluationsByOrgIdRequest)(nil),               // 8: api.v1alpha1.scorecards.ListAutoEvaluationsByOrgIdRequest
 	(*DeleteAutoEvaluationByOrgIdRequest)(nil),              // 9: api.v1alpha1.scorecards.DeleteAutoEvaluationByOrgIdRequest
-	(*ListAutoEvaluationsRequest_CallSidFilter)(nil),        // 10: api.v1alpha1.scorecards.ListAutoEvaluationsRequest.CallSidFilter
-	(*ListAutoEvaluationsByOrgIdRequest_CallSidFilter)(nil), // 11: api.v1alpha1.scorecards.ListAutoEvaluationsByOrgIdRequest.CallSidFilter
-	(*commons.AutoEvaluation)(nil),                          // 12: api.commons.AutoEvaluation
-	(*commons.TimeFilter)(nil),                              // 13: api.commons.TimeFilter
-	(commons.RiskLevel)(0),                                  // 14: api.commons.RiskLevel
+	(*BulkDeleteAutoEvaluationsRequest)(nil),                // 10: api.v1alpha1.scorecards.BulkDeleteAutoEvaluationsRequest
+	(*BulkDeleteAutoEvaluationsResponse)(nil),               // 11: api.v1alpha1.scorecards.BulkDeleteAutoEvaluationsResponse
+	(*ListAutoEvaluationsRequest_CallSidFilter)(nil),        // 12: api.v1alpha1.scorecards.ListAutoEvaluationsRequest.CallSidFilter
+	(*ListAutoEvaluationsByOrgIdRequest_CallSidFilter)(nil), // 13: api.v1alpha1.scorecards.ListAutoEvaluationsByOrgIdRequest.CallSidFilter
+	(*commons.AutoEvaluation)(nil),                          // 14: api.commons.AutoEvaluation
+	(*commons.TimeFilter)(nil),                              // 15: api.commons.TimeFilter
+	(commons.RiskLevel)(0),                                  // 16: api.commons.RiskLevel
 }
 var file_api_v1alpha1_scorecards_auto_evaluation_proto_depIdxs = []int32{
-	12, // 0: api.v1alpha1.scorecards.GetAutoEvaluationResponse.auto_evaluation:type_name -> api.commons.AutoEvaluation
-	13, // 1: api.v1alpha1.scorecards.ListAutoEvaluationsRequest.completed_at:type_name -> api.commons.TimeFilter
-	10, // 2: api.v1alpha1.scorecards.ListAutoEvaluationsRequest.call_sid:type_name -> api.v1alpha1.scorecards.ListAutoEvaluationsRequest.CallSidFilter
-	14, // 3: api.v1alpha1.scorecards.ListAutoEvaluationsRequest.risk_levels:type_name -> api.commons.RiskLevel
-	12, // 4: api.v1alpha1.scorecards.ListAutoEvaluationsResponse.auto_evaluations:type_name -> api.commons.AutoEvaluation
-	12, // 5: api.v1alpha1.scorecards.DeleteAutoEvaluationResponse.auto_evaluation:type_name -> api.commons.AutoEvaluation
-	13, // 6: api.v1alpha1.scorecards.StreamAutoEvaluationsRequest.completed_at:type_name -> api.commons.TimeFilter
-	12, // 7: api.v1alpha1.scorecards.StreamAutoEvaluationsResponse.auto_evaluation:type_name -> api.commons.AutoEvaluation
-	13, // 8: api.v1alpha1.scorecards.ListAutoEvaluationsByOrgIdRequest.completed_at:type_name -> api.commons.TimeFilter
-	11, // 9: api.v1alpha1.scorecards.ListAutoEvaluationsByOrgIdRequest.call_sid:type_name -> api.v1alpha1.scorecards.ListAutoEvaluationsByOrgIdRequest.CallSidFilter
-	14, // 10: api.v1alpha1.scorecards.ListAutoEvaluationsByOrgIdRequest.risk_levels:type_name -> api.commons.RiskLevel
+	14, // 0: api.v1alpha1.scorecards.GetAutoEvaluationResponse.auto_evaluation:type_name -> api.commons.AutoEvaluation
+	15, // 1: api.v1alpha1.scorecards.ListAutoEvaluationsRequest.completed_at:type_name -> api.commons.TimeFilter
+	12, // 2: api.v1alpha1.scorecards.ListAutoEvaluationsRequest.call_sid:type_name -> api.v1alpha1.scorecards.ListAutoEvaluationsRequest.CallSidFilter
+	16, // 3: api.v1alpha1.scorecards.ListAutoEvaluationsRequest.risk_levels:type_name -> api.commons.RiskLevel
+	14, // 4: api.v1alpha1.scorecards.ListAutoEvaluationsResponse.auto_evaluations:type_name -> api.commons.AutoEvaluation
+	14, // 5: api.v1alpha1.scorecards.DeleteAutoEvaluationResponse.auto_evaluation:type_name -> api.commons.AutoEvaluation
+	15, // 6: api.v1alpha1.scorecards.StreamAutoEvaluationsRequest.completed_at:type_name -> api.commons.TimeFilter
+	14, // 7: api.v1alpha1.scorecards.StreamAutoEvaluationsResponse.auto_evaluation:type_name -> api.commons.AutoEvaluation
+	15, // 8: api.v1alpha1.scorecards.ListAutoEvaluationsByOrgIdRequest.completed_at:type_name -> api.commons.TimeFilter
+	13, // 9: api.v1alpha1.scorecards.ListAutoEvaluationsByOrgIdRequest.call_sid:type_name -> api.v1alpha1.scorecards.ListAutoEvaluationsByOrgIdRequest.CallSidFilter
+	16, // 10: api.v1alpha1.scorecards.ListAutoEvaluationsByOrgIdRequest.risk_levels:type_name -> api.commons.RiskLevel
 	11, // [11:11] is the sub-list for method output_type
 	11, // [11:11] is the sub-list for method input_type
 	11, // [11:11] is the sub-list for extension type_name
@@ -1173,7 +1279,7 @@ func file_api_v1alpha1_scorecards_auto_evaluation_proto_init() {
 			}
 		}
 		file_api_v1alpha1_scorecards_auto_evaluation_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListAutoEvaluationsRequest_CallSidFilter); i {
+			switch v := v.(*BulkDeleteAutoEvaluationsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1185,6 +1291,30 @@ func file_api_v1alpha1_scorecards_auto_evaluation_proto_init() {
 			}
 		}
 		file_api_v1alpha1_scorecards_auto_evaluation_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*BulkDeleteAutoEvaluationsResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_scorecards_auto_evaluation_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListAutoEvaluationsRequest_CallSidFilter); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_scorecards_auto_evaluation_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ListAutoEvaluationsByOrgIdRequest_CallSidFilter); i {
 			case 0:
 				return &v.state
@@ -1203,7 +1333,7 @@ func file_api_v1alpha1_scorecards_auto_evaluation_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_v1alpha1_scorecards_auto_evaluation_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   12,
+			NumMessages:   14,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

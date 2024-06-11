@@ -21,6 +21,8 @@ const _ = grpc.SupportPackageIsVersion8
 const (
 	ScorecardsSupport_ListEvaluationsByOrgId_FullMethodName      = "/api.v1alpha1.scorecards.ScorecardsSupport/ListEvaluationsByOrgId"
 	ScorecardsSupport_ListAutoEvaluationsByOrgId_FullMethodName  = "/api.v1alpha1.scorecards.ScorecardsSupport/ListAutoEvaluationsByOrgId"
+	ScorecardsSupport_BulkDeleteEvaluations_FullMethodName       = "/api.v1alpha1.scorecards.ScorecardsSupport/BulkDeleteEvaluations"
+	ScorecardsSupport_BulkDeleteAutoEvaluations_FullMethodName   = "/api.v1alpha1.scorecards.ScorecardsSupport/BulkDeleteAutoEvaluations"
 	ScorecardsSupport_DeleteEvaluationByOrgId_FullMethodName     = "/api.v1alpha1.scorecards.ScorecardsSupport/DeleteEvaluationByOrgId"
 	ScorecardsSupport_DeleteAutoEvaluationByOrgId_FullMethodName = "/api.v1alpha1.scorecards.ScorecardsSupport/DeleteAutoEvaluationByOrgId"
 	ScorecardsSupport_ListScorecardsByOrgId_FullMethodName       = "/api.v1alpha1.scorecards.ScorecardsSupport/ListScorecardsByOrgId"
@@ -38,6 +40,10 @@ type ScorecardsSupportClient interface {
 	ListEvaluationsByOrgId(ctx context.Context, in *ListEvaluationsByOrgIdRequest, opts ...grpc.CallOption) (*ListEvaluationsResponse, error)
 	// ListAutoEvaluationsByOrgId gets a list of auto evaluations
 	ListAutoEvaluationsByOrgId(ctx context.Context, in *ListAutoEvaluationsByOrgIdRequest, opts ...grpc.CallOption) (*ListAutoEvaluationsResponse, error)
+	// BulkDeleteEvaluations deletes a set of evaluations in a given org.
+	BulkDeleteEvaluations(ctx context.Context, in *BulkDeleteEvaluationsRequest, opts ...grpc.CallOption) (*BulkDeleteEvaluationsResponse, error)
+	// BulkDeleteAutoEvaluations deletes a set of auto evaluations in a given org.
+	BulkDeleteAutoEvaluations(ctx context.Context, in *BulkDeleteAutoEvaluationsRequest, opts ...grpc.CallOption) (*BulkDeleteAutoEvaluationsResponse, error)
 	// DeleteEvaluationByOrgId delete an evaluation in a specific org
 	DeleteEvaluationByOrgId(ctx context.Context, in *DeleteEvaluationByOrgIdRequest, opts ...grpc.CallOption) (*DeleteEvaluationResponse, error)
 	// DeleteAutoEvaluationByOrgId deletes an auto evaluations
@@ -70,6 +76,26 @@ func (c *scorecardsSupportClient) ListAutoEvaluationsByOrgId(ctx context.Context
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListAutoEvaluationsResponse)
 	err := c.cc.Invoke(ctx, ScorecardsSupport_ListAutoEvaluationsByOrgId_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *scorecardsSupportClient) BulkDeleteEvaluations(ctx context.Context, in *BulkDeleteEvaluationsRequest, opts ...grpc.CallOption) (*BulkDeleteEvaluationsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(BulkDeleteEvaluationsResponse)
+	err := c.cc.Invoke(ctx, ScorecardsSupport_BulkDeleteEvaluations_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *scorecardsSupportClient) BulkDeleteAutoEvaluations(ctx context.Context, in *BulkDeleteAutoEvaluationsRequest, opts ...grpc.CallOption) (*BulkDeleteAutoEvaluationsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(BulkDeleteAutoEvaluationsResponse)
+	err := c.cc.Invoke(ctx, ScorecardsSupport_BulkDeleteAutoEvaluations_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -127,6 +153,10 @@ type ScorecardsSupportServer interface {
 	ListEvaluationsByOrgId(context.Context, *ListEvaluationsByOrgIdRequest) (*ListEvaluationsResponse, error)
 	// ListAutoEvaluationsByOrgId gets a list of auto evaluations
 	ListAutoEvaluationsByOrgId(context.Context, *ListAutoEvaluationsByOrgIdRequest) (*ListAutoEvaluationsResponse, error)
+	// BulkDeleteEvaluations deletes a set of evaluations in a given org.
+	BulkDeleteEvaluations(context.Context, *BulkDeleteEvaluationsRequest) (*BulkDeleteEvaluationsResponse, error)
+	// BulkDeleteAutoEvaluations deletes a set of auto evaluations in a given org.
+	BulkDeleteAutoEvaluations(context.Context, *BulkDeleteAutoEvaluationsRequest) (*BulkDeleteAutoEvaluationsResponse, error)
 	// DeleteEvaluationByOrgId delete an evaluation in a specific org
 	DeleteEvaluationByOrgId(context.Context, *DeleteEvaluationByOrgIdRequest) (*DeleteEvaluationResponse, error)
 	// DeleteAutoEvaluationByOrgId deletes an auto evaluations
@@ -147,6 +177,12 @@ func (UnimplementedScorecardsSupportServer) ListEvaluationsByOrgId(context.Conte
 }
 func (UnimplementedScorecardsSupportServer) ListAutoEvaluationsByOrgId(context.Context, *ListAutoEvaluationsByOrgIdRequest) (*ListAutoEvaluationsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAutoEvaluationsByOrgId not implemented")
+}
+func (UnimplementedScorecardsSupportServer) BulkDeleteEvaluations(context.Context, *BulkDeleteEvaluationsRequest) (*BulkDeleteEvaluationsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BulkDeleteEvaluations not implemented")
+}
+func (UnimplementedScorecardsSupportServer) BulkDeleteAutoEvaluations(context.Context, *BulkDeleteAutoEvaluationsRequest) (*BulkDeleteAutoEvaluationsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BulkDeleteAutoEvaluations not implemented")
 }
 func (UnimplementedScorecardsSupportServer) DeleteEvaluationByOrgId(context.Context, *DeleteEvaluationByOrgIdRequest) (*DeleteEvaluationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteEvaluationByOrgId not implemented")
@@ -205,6 +241,42 @@ func _ScorecardsSupport_ListAutoEvaluationsByOrgId_Handler(srv interface{}, ctx 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ScorecardsSupportServer).ListAutoEvaluationsByOrgId(ctx, req.(*ListAutoEvaluationsByOrgIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ScorecardsSupport_BulkDeleteEvaluations_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BulkDeleteEvaluationsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ScorecardsSupportServer).BulkDeleteEvaluations(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ScorecardsSupport_BulkDeleteEvaluations_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ScorecardsSupportServer).BulkDeleteEvaluations(ctx, req.(*BulkDeleteEvaluationsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ScorecardsSupport_BulkDeleteAutoEvaluations_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BulkDeleteAutoEvaluationsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ScorecardsSupportServer).BulkDeleteAutoEvaluations(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ScorecardsSupport_BulkDeleteAutoEvaluations_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ScorecardsSupportServer).BulkDeleteAutoEvaluations(ctx, req.(*BulkDeleteAutoEvaluationsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -295,6 +367,14 @@ var ScorecardsSupport_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListAutoEvaluationsByOrgId",
 			Handler:    _ScorecardsSupport_ListAutoEvaluationsByOrgId_Handler,
+		},
+		{
+			MethodName: "BulkDeleteEvaluations",
+			Handler:    _ScorecardsSupport_BulkDeleteEvaluations_Handler,
+		},
+		{
+			MethodName: "BulkDeleteAutoEvaluations",
+			Handler:    _ScorecardsSupport_BulkDeleteAutoEvaluations_Handler,
 		},
 		{
 			MethodName: "DeleteEvaluationByOrgId",

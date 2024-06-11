@@ -39,6 +39,12 @@ const (
 	// ScorecardsSupportListAutoEvaluationsByOrgIdProcedure is the fully-qualified name of the
 	// ScorecardsSupport's ListAutoEvaluationsByOrgId RPC.
 	ScorecardsSupportListAutoEvaluationsByOrgIdProcedure = "/api.v1alpha1.scorecards.ScorecardsSupport/ListAutoEvaluationsByOrgId"
+	// ScorecardsSupportBulkDeleteEvaluationsProcedure is the fully-qualified name of the
+	// ScorecardsSupport's BulkDeleteEvaluations RPC.
+	ScorecardsSupportBulkDeleteEvaluationsProcedure = "/api.v1alpha1.scorecards.ScorecardsSupport/BulkDeleteEvaluations"
+	// ScorecardsSupportBulkDeleteAutoEvaluationsProcedure is the fully-qualified name of the
+	// ScorecardsSupport's BulkDeleteAutoEvaluations RPC.
+	ScorecardsSupportBulkDeleteAutoEvaluationsProcedure = "/api.v1alpha1.scorecards.ScorecardsSupport/BulkDeleteAutoEvaluations"
 	// ScorecardsSupportDeleteEvaluationByOrgIdProcedure is the fully-qualified name of the
 	// ScorecardsSupport's DeleteEvaluationByOrgId RPC.
 	ScorecardsSupportDeleteEvaluationByOrgIdProcedure = "/api.v1alpha1.scorecards.ScorecardsSupport/DeleteEvaluationByOrgId"
@@ -59,6 +65,10 @@ type ScorecardsSupportClient interface {
 	ListEvaluationsByOrgId(context.Context, *connect_go.Request[scorecards.ListEvaluationsByOrgIdRequest]) (*connect_go.Response[scorecards.ListEvaluationsResponse], error)
 	// ListAutoEvaluationsByOrgId gets a list of auto evaluations
 	ListAutoEvaluationsByOrgId(context.Context, *connect_go.Request[scorecards.ListAutoEvaluationsByOrgIdRequest]) (*connect_go.Response[scorecards.ListAutoEvaluationsResponse], error)
+	// BulkDeleteEvaluations deletes a set of evaluations in a given org.
+	BulkDeleteEvaluations(context.Context, *connect_go.Request[scorecards.BulkDeleteEvaluationsRequest]) (*connect_go.Response[scorecards.BulkDeleteEvaluationsResponse], error)
+	// BulkDeleteAutoEvaluations deletes a set of auto evaluations in a given org.
+	BulkDeleteAutoEvaluations(context.Context, *connect_go.Request[scorecards.BulkDeleteAutoEvaluationsRequest]) (*connect_go.Response[scorecards.BulkDeleteAutoEvaluationsResponse], error)
 	// DeleteEvaluationByOrgId delete an evaluation in a specific org
 	DeleteEvaluationByOrgId(context.Context, *connect_go.Request[scorecards.DeleteEvaluationByOrgIdRequest]) (*connect_go.Response[scorecards.DeleteEvaluationResponse], error)
 	// DeleteAutoEvaluationByOrgId deletes an auto evaluations
@@ -89,6 +99,16 @@ func NewScorecardsSupportClient(httpClient connect_go.HTTPClient, baseURL string
 			baseURL+ScorecardsSupportListAutoEvaluationsByOrgIdProcedure,
 			opts...,
 		),
+		bulkDeleteEvaluations: connect_go.NewClient[scorecards.BulkDeleteEvaluationsRequest, scorecards.BulkDeleteEvaluationsResponse](
+			httpClient,
+			baseURL+ScorecardsSupportBulkDeleteEvaluationsProcedure,
+			opts...,
+		),
+		bulkDeleteAutoEvaluations: connect_go.NewClient[scorecards.BulkDeleteAutoEvaluationsRequest, scorecards.BulkDeleteAutoEvaluationsResponse](
+			httpClient,
+			baseURL+ScorecardsSupportBulkDeleteAutoEvaluationsProcedure,
+			opts...,
+		),
 		deleteEvaluationByOrgId: connect_go.NewClient[scorecards.DeleteEvaluationByOrgIdRequest, scorecards.DeleteEvaluationResponse](
 			httpClient,
 			baseURL+ScorecardsSupportDeleteEvaluationByOrgIdProcedure,
@@ -116,6 +136,8 @@ func NewScorecardsSupportClient(httpClient connect_go.HTTPClient, baseURL string
 type scorecardsSupportClient struct {
 	listEvaluationsByOrgId      *connect_go.Client[scorecards.ListEvaluationsByOrgIdRequest, scorecards.ListEvaluationsResponse]
 	listAutoEvaluationsByOrgId  *connect_go.Client[scorecards.ListAutoEvaluationsByOrgIdRequest, scorecards.ListAutoEvaluationsResponse]
+	bulkDeleteEvaluations       *connect_go.Client[scorecards.BulkDeleteEvaluationsRequest, scorecards.BulkDeleteEvaluationsResponse]
+	bulkDeleteAutoEvaluations   *connect_go.Client[scorecards.BulkDeleteAutoEvaluationsRequest, scorecards.BulkDeleteAutoEvaluationsResponse]
 	deleteEvaluationByOrgId     *connect_go.Client[scorecards.DeleteEvaluationByOrgIdRequest, scorecards.DeleteEvaluationResponse]
 	deleteAutoEvaluationByOrgId *connect_go.Client[scorecards.DeleteAutoEvaluationByOrgIdRequest, scorecards.DeleteAutoEvaluationResponse]
 	listScorecardsByOrgId       *connect_go.Client[scorecards.ListScorecardsByOrgIdRequest, scorecards.ListScorecardsResponse]
@@ -131,6 +153,17 @@ func (c *scorecardsSupportClient) ListEvaluationsByOrgId(ctx context.Context, re
 // api.v1alpha1.scorecards.ScorecardsSupport.ListAutoEvaluationsByOrgId.
 func (c *scorecardsSupportClient) ListAutoEvaluationsByOrgId(ctx context.Context, req *connect_go.Request[scorecards.ListAutoEvaluationsByOrgIdRequest]) (*connect_go.Response[scorecards.ListAutoEvaluationsResponse], error) {
 	return c.listAutoEvaluationsByOrgId.CallUnary(ctx, req)
+}
+
+// BulkDeleteEvaluations calls api.v1alpha1.scorecards.ScorecardsSupport.BulkDeleteEvaluations.
+func (c *scorecardsSupportClient) BulkDeleteEvaluations(ctx context.Context, req *connect_go.Request[scorecards.BulkDeleteEvaluationsRequest]) (*connect_go.Response[scorecards.BulkDeleteEvaluationsResponse], error) {
+	return c.bulkDeleteEvaluations.CallUnary(ctx, req)
+}
+
+// BulkDeleteAutoEvaluations calls
+// api.v1alpha1.scorecards.ScorecardsSupport.BulkDeleteAutoEvaluations.
+func (c *scorecardsSupportClient) BulkDeleteAutoEvaluations(ctx context.Context, req *connect_go.Request[scorecards.BulkDeleteAutoEvaluationsRequest]) (*connect_go.Response[scorecards.BulkDeleteAutoEvaluationsResponse], error) {
+	return c.bulkDeleteAutoEvaluations.CallUnary(ctx, req)
 }
 
 // DeleteEvaluationByOrgId calls api.v1alpha1.scorecards.ScorecardsSupport.DeleteEvaluationByOrgId.
@@ -161,6 +194,10 @@ type ScorecardsSupportHandler interface {
 	ListEvaluationsByOrgId(context.Context, *connect_go.Request[scorecards.ListEvaluationsByOrgIdRequest]) (*connect_go.Response[scorecards.ListEvaluationsResponse], error)
 	// ListAutoEvaluationsByOrgId gets a list of auto evaluations
 	ListAutoEvaluationsByOrgId(context.Context, *connect_go.Request[scorecards.ListAutoEvaluationsByOrgIdRequest]) (*connect_go.Response[scorecards.ListAutoEvaluationsResponse], error)
+	// BulkDeleteEvaluations deletes a set of evaluations in a given org.
+	BulkDeleteEvaluations(context.Context, *connect_go.Request[scorecards.BulkDeleteEvaluationsRequest]) (*connect_go.Response[scorecards.BulkDeleteEvaluationsResponse], error)
+	// BulkDeleteAutoEvaluations deletes a set of auto evaluations in a given org.
+	BulkDeleteAutoEvaluations(context.Context, *connect_go.Request[scorecards.BulkDeleteAutoEvaluationsRequest]) (*connect_go.Response[scorecards.BulkDeleteAutoEvaluationsResponse], error)
 	// DeleteEvaluationByOrgId delete an evaluation in a specific org
 	DeleteEvaluationByOrgId(context.Context, *connect_go.Request[scorecards.DeleteEvaluationByOrgIdRequest]) (*connect_go.Response[scorecards.DeleteEvaluationResponse], error)
 	// DeleteAutoEvaluationByOrgId deletes an auto evaluations
@@ -185,6 +222,16 @@ func NewScorecardsSupportHandler(svc ScorecardsSupportHandler, opts ...connect_g
 	scorecardsSupportListAutoEvaluationsByOrgIdHandler := connect_go.NewUnaryHandler(
 		ScorecardsSupportListAutoEvaluationsByOrgIdProcedure,
 		svc.ListAutoEvaluationsByOrgId,
+		opts...,
+	)
+	scorecardsSupportBulkDeleteEvaluationsHandler := connect_go.NewUnaryHandler(
+		ScorecardsSupportBulkDeleteEvaluationsProcedure,
+		svc.BulkDeleteEvaluations,
+		opts...,
+	)
+	scorecardsSupportBulkDeleteAutoEvaluationsHandler := connect_go.NewUnaryHandler(
+		ScorecardsSupportBulkDeleteAutoEvaluationsProcedure,
+		svc.BulkDeleteAutoEvaluations,
 		opts...,
 	)
 	scorecardsSupportDeleteEvaluationByOrgIdHandler := connect_go.NewUnaryHandler(
@@ -213,6 +260,10 @@ func NewScorecardsSupportHandler(svc ScorecardsSupportHandler, opts ...connect_g
 			scorecardsSupportListEvaluationsByOrgIdHandler.ServeHTTP(w, r)
 		case ScorecardsSupportListAutoEvaluationsByOrgIdProcedure:
 			scorecardsSupportListAutoEvaluationsByOrgIdHandler.ServeHTTP(w, r)
+		case ScorecardsSupportBulkDeleteEvaluationsProcedure:
+			scorecardsSupportBulkDeleteEvaluationsHandler.ServeHTTP(w, r)
+		case ScorecardsSupportBulkDeleteAutoEvaluationsProcedure:
+			scorecardsSupportBulkDeleteAutoEvaluationsHandler.ServeHTTP(w, r)
 		case ScorecardsSupportDeleteEvaluationByOrgIdProcedure:
 			scorecardsSupportDeleteEvaluationByOrgIdHandler.ServeHTTP(w, r)
 		case ScorecardsSupportDeleteAutoEvaluationByOrgIdProcedure:
@@ -236,6 +287,14 @@ func (UnimplementedScorecardsSupportHandler) ListEvaluationsByOrgId(context.Cont
 
 func (UnimplementedScorecardsSupportHandler) ListAutoEvaluationsByOrgId(context.Context, *connect_go.Request[scorecards.ListAutoEvaluationsByOrgIdRequest]) (*connect_go.Response[scorecards.ListAutoEvaluationsResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.scorecards.ScorecardsSupport.ListAutoEvaluationsByOrgId is not implemented"))
+}
+
+func (UnimplementedScorecardsSupportHandler) BulkDeleteEvaluations(context.Context, *connect_go.Request[scorecards.BulkDeleteEvaluationsRequest]) (*connect_go.Response[scorecards.BulkDeleteEvaluationsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.scorecards.ScorecardsSupport.BulkDeleteEvaluations is not implemented"))
+}
+
+func (UnimplementedScorecardsSupportHandler) BulkDeleteAutoEvaluations(context.Context, *connect_go.Request[scorecards.BulkDeleteAutoEvaluationsRequest]) (*connect_go.Response[scorecards.BulkDeleteAutoEvaluationsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.scorecards.ScorecardsSupport.BulkDeleteAutoEvaluations is not implemented"))
 }
 
 func (UnimplementedScorecardsSupportHandler) DeleteEvaluationByOrgId(context.Context, *connect_go.Request[scorecards.DeleteEvaluationByOrgIdRequest]) (*connect_go.Response[scorecards.DeleteEvaluationResponse], error) {
