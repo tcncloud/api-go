@@ -34,6 +34,9 @@ const (
 	SkillsService_ListSkillGroupsMembers_FullMethodName    = "/api.v1alpha1.org.skills.SkillsService/ListSkillGroupsMembers"
 	SkillsService_GetAgentSkills_FullMethodName            = "/api.v1alpha1.org.skills.SkillsService/GetAgentSkills"
 	SkillsService_ListSkillsForCurrentAgent_FullMethodName = "/api.v1alpha1.org.skills.SkillsService/ListSkillsForCurrentAgent"
+	SkillsService_ListAssignedSkillGroups_FullMethodName   = "/api.v1alpha1.org.skills.SkillsService/ListAssignedSkillGroups"
+	SkillsService_AssignOwnSkillGroups_FullMethodName      = "/api.v1alpha1.org.skills.SkillsService/AssignOwnSkillGroups"
+	SkillsService_RevokeOwnSkillGroups_FullMethodName      = "/api.v1alpha1.org.skills.SkillsService/RevokeOwnSkillGroups"
 )
 
 // SkillsServiceClient is the client API for SkillsService service.
@@ -81,6 +84,12 @@ type SkillsServiceClient interface {
 	GetAgentSkills(ctx context.Context, in *GetAgentSkillsRequest, opts ...grpc.CallOption) (*GetAgentSkillsResponse, error)
 	// Returns a list of skills for the current agent.
 	ListSkillsForCurrentAgent(ctx context.Context, in *ListSkillsForCurrentAgentRequest, opts ...grpc.CallOption) (*ListSkillsForCurrentAgentResponse, error)
+	// Returns a list of skills for the current user.
+	ListAssignedSkillGroups(ctx context.Context, in *ListAssignedSkillGroupsRequest, opts ...grpc.CallOption) (*ListAssignedSkillGroupsResponse, error)
+	// AssignOwnSkillGroups updates the current users skill groups
+	AssignOwnSkillGroups(ctx context.Context, in *AssignOwnSkillGroupsRequest, opts ...grpc.CallOption) (*AssignOwnSkillGroupsResponse, error)
+	// RevokeOwnSkillGroups updates the current users skill groups
+	RevokeOwnSkillGroups(ctx context.Context, in *RevokeOwnSkillGroupsRequest, opts ...grpc.CallOption) (*RevokeOwnSkillGroupsResponse, error)
 }
 
 type skillsServiceClient struct {
@@ -241,6 +250,36 @@ func (c *skillsServiceClient) ListSkillsForCurrentAgent(ctx context.Context, in 
 	return out, nil
 }
 
+func (c *skillsServiceClient) ListAssignedSkillGroups(ctx context.Context, in *ListAssignedSkillGroupsRequest, opts ...grpc.CallOption) (*ListAssignedSkillGroupsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListAssignedSkillGroupsResponse)
+	err := c.cc.Invoke(ctx, SkillsService_ListAssignedSkillGroups_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *skillsServiceClient) AssignOwnSkillGroups(ctx context.Context, in *AssignOwnSkillGroupsRequest, opts ...grpc.CallOption) (*AssignOwnSkillGroupsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AssignOwnSkillGroupsResponse)
+	err := c.cc.Invoke(ctx, SkillsService_AssignOwnSkillGroups_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *skillsServiceClient) RevokeOwnSkillGroups(ctx context.Context, in *RevokeOwnSkillGroupsRequest, opts ...grpc.CallOption) (*RevokeOwnSkillGroupsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RevokeOwnSkillGroupsResponse)
+	err := c.cc.Invoke(ctx, SkillsService_RevokeOwnSkillGroups_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SkillsServiceServer is the server API for SkillsService service.
 // All implementations must embed UnimplementedSkillsServiceServer
 // for forward compatibility
@@ -286,6 +325,12 @@ type SkillsServiceServer interface {
 	GetAgentSkills(context.Context, *GetAgentSkillsRequest) (*GetAgentSkillsResponse, error)
 	// Returns a list of skills for the current agent.
 	ListSkillsForCurrentAgent(context.Context, *ListSkillsForCurrentAgentRequest) (*ListSkillsForCurrentAgentResponse, error)
+	// Returns a list of skills for the current user.
+	ListAssignedSkillGroups(context.Context, *ListAssignedSkillGroupsRequest) (*ListAssignedSkillGroupsResponse, error)
+	// AssignOwnSkillGroups updates the current users skill groups
+	AssignOwnSkillGroups(context.Context, *AssignOwnSkillGroupsRequest) (*AssignOwnSkillGroupsResponse, error)
+	// RevokeOwnSkillGroups updates the current users skill groups
+	RevokeOwnSkillGroups(context.Context, *RevokeOwnSkillGroupsRequest) (*RevokeOwnSkillGroupsResponse, error)
 	mustEmbedUnimplementedSkillsServiceServer()
 }
 
@@ -337,6 +382,15 @@ func (UnimplementedSkillsServiceServer) GetAgentSkills(context.Context, *GetAgen
 }
 func (UnimplementedSkillsServiceServer) ListSkillsForCurrentAgent(context.Context, *ListSkillsForCurrentAgentRequest) (*ListSkillsForCurrentAgentResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListSkillsForCurrentAgent not implemented")
+}
+func (UnimplementedSkillsServiceServer) ListAssignedSkillGroups(context.Context, *ListAssignedSkillGroupsRequest) (*ListAssignedSkillGroupsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListAssignedSkillGroups not implemented")
+}
+func (UnimplementedSkillsServiceServer) AssignOwnSkillGroups(context.Context, *AssignOwnSkillGroupsRequest) (*AssignOwnSkillGroupsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AssignOwnSkillGroups not implemented")
+}
+func (UnimplementedSkillsServiceServer) RevokeOwnSkillGroups(context.Context, *RevokeOwnSkillGroupsRequest) (*RevokeOwnSkillGroupsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RevokeOwnSkillGroups not implemented")
 }
 func (UnimplementedSkillsServiceServer) mustEmbedUnimplementedSkillsServiceServer() {}
 
@@ -621,6 +675,60 @@ func _SkillsService_ListSkillsForCurrentAgent_Handler(srv interface{}, ctx conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SkillsService_ListAssignedSkillGroups_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListAssignedSkillGroupsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SkillsServiceServer).ListAssignedSkillGroups(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SkillsService_ListAssignedSkillGroups_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SkillsServiceServer).ListAssignedSkillGroups(ctx, req.(*ListAssignedSkillGroupsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SkillsService_AssignOwnSkillGroups_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AssignOwnSkillGroupsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SkillsServiceServer).AssignOwnSkillGroups(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SkillsService_AssignOwnSkillGroups_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SkillsServiceServer).AssignOwnSkillGroups(ctx, req.(*AssignOwnSkillGroupsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SkillsService_RevokeOwnSkillGroups_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RevokeOwnSkillGroupsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SkillsServiceServer).RevokeOwnSkillGroups(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SkillsService_RevokeOwnSkillGroups_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SkillsServiceServer).RevokeOwnSkillGroups(ctx, req.(*RevokeOwnSkillGroupsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SkillsService_ServiceDesc is the grpc.ServiceDesc for SkillsService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -687,6 +795,18 @@ var SkillsService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListSkillsForCurrentAgent",
 			Handler:    _SkillsService_ListSkillsForCurrentAgent_Handler,
+		},
+		{
+			MethodName: "ListAssignedSkillGroups",
+			Handler:    _SkillsService_ListAssignedSkillGroups_Handler,
+		},
+		{
+			MethodName: "AssignOwnSkillGroups",
+			Handler:    _SkillsService_AssignOwnSkillGroups_Handler,
+		},
+		{
+			MethodName: "RevokeOwnSkillGroups",
+			Handler:    _SkillsService_RevokeOwnSkillGroups_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
