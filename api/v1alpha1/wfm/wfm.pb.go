@@ -24926,6 +24926,94 @@ func (x *ListAgentLeavePetitionsResponse) GetAgentLeavePetitions() []*commons.Ag
 	return nil
 }
 
+// Request message for the ArchiveAgentLeavePetition.
+type ArchiveAgentLeavePetitionRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// ID of the agent leave petition to archive.
+	AgentLeavePetitionId int64 `protobuf:"varint,1,opt,name=agent_leave_petition_id,json=agentLeavePetitionId,proto3" json:"agent_leave_petition_id,omitempty"`
+}
+
+func (x *ArchiveAgentLeavePetitionRequest) Reset() {
+	*x = ArchiveAgentLeavePetitionRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[394]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ArchiveAgentLeavePetitionRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ArchiveAgentLeavePetitionRequest) ProtoMessage() {}
+
+func (x *ArchiveAgentLeavePetitionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[394]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ArchiveAgentLeavePetitionRequest.ProtoReflect.Descriptor instead.
+func (*ArchiveAgentLeavePetitionRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{394}
+}
+
+func (x *ArchiveAgentLeavePetitionRequest) GetAgentLeavePetitionId() int64 {
+	if x != nil {
+		return x.AgentLeavePetitionId
+	}
+	return 0
+}
+
+// Response message for the ArchiveAgentLeavePetition.
+type ArchiveAgentLeavePetitionResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *ArchiveAgentLeavePetitionResponse) Reset() {
+	*x = ArchiveAgentLeavePetitionResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[395]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ArchiveAgentLeavePetitionResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ArchiveAgentLeavePetitionResponse) ProtoMessage() {}
+
+func (x *ArchiveAgentLeavePetitionResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[395]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ArchiveAgentLeavePetitionResponse.ProtoReflect.Descriptor instead.
+func (*ArchiveAgentLeavePetitionResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP(), []int{395}
+}
+
 type UpdateSkillProfileProficienciesReq_Proficiency struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -24942,7 +25030,7 @@ type UpdateSkillProfileProficienciesReq_Proficiency struct {
 func (x *UpdateSkillProfileProficienciesReq_Proficiency) Reset() {
 	*x = UpdateSkillProfileProficienciesReq_Proficiency{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[394]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[396]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -24955,7 +25043,7 @@ func (x *UpdateSkillProfileProficienciesReq_Proficiency) String() string {
 func (*UpdateSkillProfileProficienciesReq_Proficiency) ProtoMessage() {}
 
 func (x *UpdateSkillProfileProficienciesReq_Proficiency) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[394]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[396]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -25006,7 +25094,7 @@ type GetSkillProfileRes_Mapping struct {
 func (x *GetSkillProfileRes_Mapping) Reset() {
 	*x = GetSkillProfileRes_Mapping{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[395]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[397]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -25019,7 +25107,7 @@ func (x *GetSkillProfileRes_Mapping) String() string {
 func (*GetSkillProfileRes_Mapping) ProtoMessage() {}
 
 func (x *GetSkillProfileRes_Mapping) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[395]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[397]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -25062,7 +25150,7 @@ type DeleteForecastIntervalsReq_IntervalSids struct {
 func (x *DeleteForecastIntervalsReq_IntervalSids) Reset() {
 	*x = DeleteForecastIntervalsReq_IntervalSids{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[396]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[398]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -25075,7 +25163,7 @@ func (x *DeleteForecastIntervalsReq_IntervalSids) String() string {
 func (*DeleteForecastIntervalsReq_IntervalSids) ProtoMessage() {}
 
 func (x *DeleteForecastIntervalsReq_IntervalSids) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[396]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[398]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -25110,7 +25198,7 @@ type ListAllWFMAgentsRes_AgentGroupsByAgent struct {
 func (x *ListAllWFMAgentsRes_AgentGroupsByAgent) Reset() {
 	*x = ListAllWFMAgentsRes_AgentGroupsByAgent{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[397]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[399]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -25123,7 +25211,7 @@ func (x *ListAllWFMAgentsRes_AgentGroupsByAgent) String() string {
 func (*ListAllWFMAgentsRes_AgentGroupsByAgent) ProtoMessage() {}
 
 func (x *ListAllWFMAgentsRes_AgentGroupsByAgent) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[397]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[399]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -25160,7 +25248,7 @@ type DatetimePattern_WeekMap struct {
 func (x *DatetimePattern_WeekMap) Reset() {
 	*x = DatetimePattern_WeekMap{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[399]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[401]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -25173,7 +25261,7 @@ func (x *DatetimePattern_WeekMap) String() string {
 func (*DatetimePattern_WeekMap) ProtoMessage() {}
 
 func (x *DatetimePattern_WeekMap) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[399]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[401]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -25217,7 +25305,7 @@ type DatetimePattern_CalendarItem struct {
 func (x *DatetimePattern_CalendarItem) Reset() {
 	*x = DatetimePattern_CalendarItem{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[400]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[402]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -25230,7 +25318,7 @@ func (x *DatetimePattern_CalendarItem) String() string {
 func (*DatetimePattern_CalendarItem) ProtoMessage() {}
 
 func (x *DatetimePattern_CalendarItem) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[400]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[402]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -25278,7 +25366,7 @@ type DatetimePattern_WeekMap_WeekMapDOW struct {
 func (x *DatetimePattern_WeekMap_WeekMapDOW) Reset() {
 	*x = DatetimePattern_WeekMap_WeekMapDOW{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[401]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[403]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -25291,7 +25379,7 @@ func (x *DatetimePattern_WeekMap_WeekMapDOW) String() string {
 func (*DatetimePattern_WeekMap_WeekMapDOW) ProtoMessage() {}
 
 func (x *DatetimePattern_WeekMap_WeekMapDOW) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[401]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[403]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -25350,7 +25438,7 @@ type UpsertNonSkillActivityAssociationRes_EntityMapping struct {
 func (x *UpsertNonSkillActivityAssociationRes_EntityMapping) Reset() {
 	*x = UpsertNonSkillActivityAssociationRes_EntityMapping{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[402]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[404]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -25363,7 +25451,7 @@ func (x *UpsertNonSkillActivityAssociationRes_EntityMapping) String() string {
 func (*UpsertNonSkillActivityAssociationRes_EntityMapping) ProtoMessage() {}
 
 func (x *UpsertNonSkillActivityAssociationRes_EntityMapping) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[402]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[404]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -25406,7 +25494,7 @@ type ListConfigEntitiesRes_ClientNodeEntities struct {
 func (x *ListConfigEntitiesRes_ClientNodeEntities) Reset() {
 	*x = ListConfigEntitiesRes_ClientNodeEntities{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[403]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[405]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -25419,7 +25507,7 @@ func (x *ListConfigEntitiesRes_ClientNodeEntities) String() string {
 func (*ListConfigEntitiesRes_ClientNodeEntities) ProtoMessage() {}
 
 func (x *ListConfigEntitiesRes_ClientNodeEntities) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[403]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[405]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -25455,7 +25543,7 @@ type ListConfigEntitiesRes_LocationNodeEntities struct {
 func (x *ListConfigEntitiesRes_LocationNodeEntities) Reset() {
 	*x = ListConfigEntitiesRes_LocationNodeEntities{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[404]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[406]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -25468,7 +25556,7 @@ func (x *ListConfigEntitiesRes_LocationNodeEntities) String() string {
 func (*ListConfigEntitiesRes_LocationNodeEntities) ProtoMessage() {}
 
 func (x *ListConfigEntitiesRes_LocationNodeEntities) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[404]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[406]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -25504,7 +25592,7 @@ type ListConfigEntitiesRes_ProgramNodeEntities struct {
 func (x *ListConfigEntitiesRes_ProgramNodeEntities) Reset() {
 	*x = ListConfigEntitiesRes_ProgramNodeEntities{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[405]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[407]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -25517,7 +25605,7 @@ func (x *ListConfigEntitiesRes_ProgramNodeEntities) String() string {
 func (*ListConfigEntitiesRes_ProgramNodeEntities) ProtoMessage() {}
 
 func (x *ListConfigEntitiesRes_ProgramNodeEntities) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[405]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[407]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -25553,7 +25641,7 @@ type ListConfigEntitiesRes_AgentGroupEntities struct {
 func (x *ListConfigEntitiesRes_AgentGroupEntities) Reset() {
 	*x = ListConfigEntitiesRes_AgentGroupEntities{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[406]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[408]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -25566,7 +25654,7 @@ func (x *ListConfigEntitiesRes_AgentGroupEntities) String() string {
 func (*ListConfigEntitiesRes_AgentGroupEntities) ProtoMessage() {}
 
 func (x *ListConfigEntitiesRes_AgentGroupEntities) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[406]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[408]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -25602,7 +25690,7 @@ type ListConfigEntitiesRes_ShiftTemplateEntities struct {
 func (x *ListConfigEntitiesRes_ShiftTemplateEntities) Reset() {
 	*x = ListConfigEntitiesRes_ShiftTemplateEntities{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[407]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[409]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -25615,7 +25703,7 @@ func (x *ListConfigEntitiesRes_ShiftTemplateEntities) String() string {
 func (*ListConfigEntitiesRes_ShiftTemplateEntities) ProtoMessage() {}
 
 func (x *ListConfigEntitiesRes_ShiftTemplateEntities) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[407]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[409]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -25651,7 +25739,7 @@ type ListConfigEntitiesRes_WFMAgentEntities struct {
 func (x *ListConfigEntitiesRes_WFMAgentEntities) Reset() {
 	*x = ListConfigEntitiesRes_WFMAgentEntities{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[408]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[410]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -25664,7 +25752,7 @@ func (x *ListConfigEntitiesRes_WFMAgentEntities) String() string {
 func (*ListConfigEntitiesRes_WFMAgentEntities) ProtoMessage() {}
 
 func (x *ListConfigEntitiesRes_WFMAgentEntities) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[408]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[410]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -25700,7 +25788,7 @@ type ListConfigEntitiesRes_PlacementRuleEntities struct {
 func (x *ListConfigEntitiesRes_PlacementRuleEntities) Reset() {
 	*x = ListConfigEntitiesRes_PlacementRuleEntities{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[409]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[411]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -25713,7 +25801,7 @@ func (x *ListConfigEntitiesRes_PlacementRuleEntities) String() string {
 func (*ListConfigEntitiesRes_PlacementRuleEntities) ProtoMessage() {}
 
 func (x *ListConfigEntitiesRes_PlacementRuleEntities) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[409]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[411]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -25749,7 +25837,7 @@ type ListConfigEntitiesRes_ConstraintRuleEntities struct {
 func (x *ListConfigEntitiesRes_ConstraintRuleEntities) Reset() {
 	*x = ListConfigEntitiesRes_ConstraintRuleEntities{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[410]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[412]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -25762,7 +25850,7 @@ func (x *ListConfigEntitiesRes_ConstraintRuleEntities) String() string {
 func (*ListConfigEntitiesRes_ConstraintRuleEntities) ProtoMessage() {}
 
 func (x *ListConfigEntitiesRes_ConstraintRuleEntities) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[410]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[412]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -25798,7 +25886,7 @@ type ListConfigEntitiesRes_NonSkillActivityEntities struct {
 func (x *ListConfigEntitiesRes_NonSkillActivityEntities) Reset() {
 	*x = ListConfigEntitiesRes_NonSkillActivityEntities{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[411]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[413]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -25811,7 +25899,7 @@ func (x *ListConfigEntitiesRes_NonSkillActivityEntities) String() string {
 func (*ListConfigEntitiesRes_NonSkillActivityEntities) ProtoMessage() {}
 
 func (x *ListConfigEntitiesRes_NonSkillActivityEntities) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[411]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[413]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -25847,7 +25935,7 @@ type ListConfigEntitiesRes_AgentAvailabilityPatternEntities struct {
 func (x *ListConfigEntitiesRes_AgentAvailabilityPatternEntities) Reset() {
 	*x = ListConfigEntitiesRes_AgentAvailabilityPatternEntities{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[412]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[414]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -25860,7 +25948,7 @@ func (x *ListConfigEntitiesRes_AgentAvailabilityPatternEntities) String() string
 func (*ListConfigEntitiesRes_AgentAvailabilityPatternEntities) ProtoMessage() {}
 
 func (x *ListConfigEntitiesRes_AgentAvailabilityPatternEntities) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[412]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[414]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -25896,7 +25984,7 @@ type ListConfigEntitiesRes_OpenTimesPatternEntities struct {
 func (x *ListConfigEntitiesRes_OpenTimesPatternEntities) Reset() {
 	*x = ListConfigEntitiesRes_OpenTimesPatternEntities{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[413]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[415]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -25909,7 +25997,7 @@ func (x *ListConfigEntitiesRes_OpenTimesPatternEntities) String() string {
 func (*ListConfigEntitiesRes_OpenTimesPatternEntities) ProtoMessage() {}
 
 func (x *ListConfigEntitiesRes_OpenTimesPatternEntities) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[413]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[415]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -25945,7 +26033,7 @@ type ListConfigEntitiesRes_SkillProficiencyEntities struct {
 func (x *ListConfigEntitiesRes_SkillProficiencyEntities) Reset() {
 	*x = ListConfigEntitiesRes_SkillProficiencyEntities{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[414]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[416]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -25958,7 +26046,7 @@ func (x *ListConfigEntitiesRes_SkillProficiencyEntities) String() string {
 func (*ListConfigEntitiesRes_SkillProficiencyEntities) ProtoMessage() {}
 
 func (x *ListConfigEntitiesRes_SkillProficiencyEntities) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[414]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[416]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -25994,7 +26082,7 @@ type ListConfigEntitiesRes_ScheduleScenarioEntities struct {
 func (x *ListConfigEntitiesRes_ScheduleScenarioEntities) Reset() {
 	*x = ListConfigEntitiesRes_ScheduleScenarioEntities{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[415]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[417]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -26007,7 +26095,7 @@ func (x *ListConfigEntitiesRes_ScheduleScenarioEntities) String() string {
 func (*ListConfigEntitiesRes_ScheduleScenarioEntities) ProtoMessage() {}
 
 func (x *ListConfigEntitiesRes_ScheduleScenarioEntities) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[415]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[417]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -26045,7 +26133,7 @@ type ListTourAgentCollectionWFMAgentsRes_SidMapping struct {
 func (x *ListTourAgentCollectionWFMAgentsRes_SidMapping) Reset() {
 	*x = ListTourAgentCollectionWFMAgentsRes_SidMapping{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[416]
+		mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[418]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -26058,7 +26146,7 @@ func (x *ListTourAgentCollectionWFMAgentsRes_SidMapping) String() string {
 func (*ListTourAgentCollectionWFMAgentsRes_SidMapping) ProtoMessage() {}
 
 func (x *ListTourAgentCollectionWFMAgentsRes_SidMapping) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[416]
+	mi := &file_api_v1alpha1_wfm_wfm_proto_msgTypes[418]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -30803,7 +30891,15 @@ var file_api_v1alpha1_wfm_wfm_proto_rawDesc = []byte{
 	0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x4c, 0x65,
 	0x61, 0x76, 0x65, 0x50, 0x65, 0x74, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x13, 0x61, 0x67, 0x65,
 	0x6e, 0x74, 0x4c, 0x65, 0x61, 0x76, 0x65, 0x50, 0x65, 0x74, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x73,
-	0x32, 0xd0, 0x82, 0x02, 0x0a, 0x03, 0x57, 0x46, 0x4d, 0x12, 0xcb, 0x01, 0x0a, 0x19, 0x50, 0x65,
+	0x22, 0x59, 0x0a, 0x20, 0x41, 0x72, 0x63, 0x68, 0x69, 0x76, 0x65, 0x41, 0x67, 0x65, 0x6e, 0x74,
+	0x4c, 0x65, 0x61, 0x76, 0x65, 0x50, 0x65, 0x74, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x12, 0x35, 0x0a, 0x17, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x5f, 0x6c, 0x65,
+	0x61, 0x76, 0x65, 0x5f, 0x70, 0x65, 0x74, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x69, 0x64, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x14, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x4c, 0x65, 0x61, 0x76,
+	0x65, 0x50, 0x65, 0x74, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x49, 0x64, 0x22, 0x23, 0x0a, 0x21, 0x41,
+	0x72, 0x63, 0x68, 0x69, 0x76, 0x65, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x4c, 0x65, 0x61, 0x76, 0x65,
+	0x50, 0x65, 0x74, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x32, 0x99, 0x84, 0x02, 0x0a, 0x03, 0x57, 0x46, 0x4d, 0x12, 0xcb, 0x01, 0x0a, 0x19, 0x50, 0x65,
 	0x72, 0x66, 0x6f, 0x72, 0x6d, 0x49, 0x6e, 0x69, 0x74, 0x69, 0x61, 0x6c, 0x43, 0x6c, 0x69, 0x65,
 	0x6e, 0x74, 0x53, 0x65, 0x74, 0x75, 0x70, 0x12, 0x32, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31,
 	0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x50, 0x65, 0x72, 0x66, 0x6f,
@@ -32818,72 +32914,85 @@ var file_api_v1alpha1_wfm_wfm_proto_rawDesc = []byte{
 	0x03, 0x08, 0xdc, 0x0b, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x2e, 0x3a, 0x01, 0x2a, 0x22, 0x29, 0x2f,
 	0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x77, 0x66, 0x6d,
 	0x2f, 0x6c, 0x69, 0x73, 0x74, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x6c, 0x65, 0x61, 0x76, 0x65, 0x70,
-	0x65, 0x74, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x12, 0xc4, 0x01, 0x0a, 0x16, 0x48, 0x65, 0x6c,
-	0x6c, 0x6f, 0x57, 0x6f, 0x72, 0x6c, 0x64, 0x57, 0x46, 0x4d, 0x41, 0x64, 0x68, 0x65, 0x72, 0x65,
-	0x6e, 0x63, 0x65, 0x12, 0x2f, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68,
-	0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x57, 0x6f, 0x72, 0x6c,
-	0x64, 0x57, 0x46, 0x4d, 0x41, 0x64, 0x68, 0x65, 0x72, 0x65, 0x6e, 0x63, 0x65, 0x52, 0x65, 0x71,
-	0x75, 0x65, 0x73, 0x74, 0x1a, 0x30, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70,
-	0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x57, 0x6f, 0x72,
-	0x6c, 0x64, 0x57, 0x46, 0x4d, 0x41, 0x64, 0x68, 0x65, 0x72, 0x65, 0x6e, 0x63, 0x65, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x47, 0xba, 0xb8, 0x91, 0x02, 0x0f, 0x0a, 0x03, 0x08,
-	0xde, 0x0b, 0x0a, 0x03, 0x08, 0xdf, 0x0b, 0x0a, 0x03, 0x08, 0xe0, 0x0b, 0x82, 0xd3, 0xe4, 0x93,
-	0x02, 0x2d, 0x3a, 0x01, 0x2a, 0x22, 0x28, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c,
-	0x70, 0x68, 0x61, 0x31, 0x2f, 0x77, 0x66, 0x6d, 0x2f, 0x68, 0x65, 0x6c, 0x6c, 0x6f, 0x77, 0x6f,
-	0x72, 0x6c, 0x64, 0x77, 0x66, 0x6d, 0x61, 0x64, 0x68, 0x65, 0x72, 0x65, 0x6e, 0x63, 0x65, 0x12,
-	0xc0, 0x01, 0x0a, 0x15, 0x4c, 0x69, 0x73, 0x74, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x61,
-	0x74, 0x65, 0x73, 0x46, 0x6f, 0x72, 0x44, 0x61, 0x79, 0x12, 0x2e, 0x2e, 0x61, 0x70, 0x69, 0x2e,
-	0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x4c, 0x69, 0x73,
+	0x65, 0x74, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x12, 0xc6, 0x01, 0x0a, 0x19, 0x41, 0x72, 0x63,
+	0x68, 0x69, 0x76, 0x65, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x4c, 0x65, 0x61, 0x76, 0x65, 0x50, 0x65,
+	0x74, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x32, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61,
+	0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x41, 0x72, 0x63, 0x68, 0x69, 0x76,
+	0x65, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x4c, 0x65, 0x61, 0x76, 0x65, 0x50, 0x65, 0x74, 0x69, 0x74,
+	0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x33, 0x2e, 0x61, 0x70, 0x69,
+	0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x41, 0x72,
+	0x63, 0x68, 0x69, 0x76, 0x65, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x4c, 0x65, 0x61, 0x76, 0x65, 0x50,
+	0x65, 0x74, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22,
+	0x40, 0xba, 0xb8, 0x91, 0x02, 0x05, 0x0a, 0x03, 0x08, 0xdc, 0x0b, 0x82, 0xd3, 0xe4, 0x93, 0x02,
+	0x30, 0x3a, 0x01, 0x2a, 0x22, 0x2b, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70,
+	0x68, 0x61, 0x31, 0x2f, 0x77, 0x66, 0x6d, 0x2f, 0x61, 0x72, 0x63, 0x68, 0x69, 0x76, 0x65, 0x61,
+	0x67, 0x65, 0x6e, 0x74, 0x6c, 0x65, 0x61, 0x76, 0x65, 0x70, 0x65, 0x74, 0x69, 0x74, 0x69, 0x6f,
+	0x6e, 0x12, 0xc4, 0x01, 0x0a, 0x16, 0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x57, 0x6f, 0x72, 0x6c, 0x64,
+	0x57, 0x46, 0x4d, 0x41, 0x64, 0x68, 0x65, 0x72, 0x65, 0x6e, 0x63, 0x65, 0x12, 0x2f, 0x2e, 0x61,
+	0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e,
+	0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x57, 0x6f, 0x72, 0x6c, 0x64, 0x57, 0x46, 0x4d, 0x41, 0x64, 0x68,
+	0x65, 0x72, 0x65, 0x6e, 0x63, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x30, 0x2e,
+	0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d,
+	0x2e, 0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x57, 0x6f, 0x72, 0x6c, 0x64, 0x57, 0x46, 0x4d, 0x41, 0x64,
+	0x68, 0x65, 0x72, 0x65, 0x6e, 0x63, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22,
+	0x47, 0xba, 0xb8, 0x91, 0x02, 0x0f, 0x0a, 0x03, 0x08, 0xde, 0x0b, 0x0a, 0x03, 0x08, 0xdf, 0x0b,
+	0x0a, 0x03, 0x08, 0xe0, 0x0b, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x2d, 0x3a, 0x01, 0x2a, 0x22, 0x28,
+	0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x77, 0x66,
+	0x6d, 0x2f, 0x68, 0x65, 0x6c, 0x6c, 0x6f, 0x77, 0x6f, 0x72, 0x6c, 0x64, 0x77, 0x66, 0x6d, 0x61,
+	0x64, 0x68, 0x65, 0x72, 0x65, 0x6e, 0x63, 0x65, 0x12, 0xc0, 0x01, 0x0a, 0x15, 0x4c, 0x69, 0x73,
 	0x74, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x73, 0x46, 0x6f, 0x72, 0x44,
-	0x61, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2f, 0x2e, 0x61, 0x70, 0x69, 0x2e,
-	0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x4c, 0x69, 0x73,
-	0x74, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x73, 0x46, 0x6f, 0x72, 0x44,
-	0x61, 0x79, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x46, 0xba, 0xb8, 0x91, 0x02,
-	0x0f, 0x0a, 0x03, 0x08, 0xde, 0x0b, 0x0a, 0x03, 0x08, 0xdf, 0x0b, 0x0a, 0x03, 0x08, 0xe0, 0x0b,
-	0x82, 0xd3, 0xe4, 0x93, 0x02, 0x2c, 0x3a, 0x01, 0x2a, 0x22, 0x27, 0x2f, 0x61, 0x70, 0x69, 0x2f,
-	0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x77, 0x66, 0x6d, 0x2f, 0x6c, 0x69, 0x73,
-	0x74, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x73, 0x74, 0x61, 0x74, 0x65, 0x73, 0x66, 0x6f, 0x72, 0x64,
-	0x61, 0x79, 0x12, 0xdc, 0x01, 0x0a, 0x1c, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x61, 0x6c, 0x54,
-	0x69, 0x6d, 0x65, 0x4d, 0x61, 0x6e, 0x61, 0x67, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x61,
-	0x74, 0x65, 0x73, 0x12, 0x35, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68,
+	0x61, 0x79, 0x12, 0x2e, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61,
+	0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x53,
+	0x74, 0x61, 0x74, 0x65, 0x73, 0x46, 0x6f, 0x72, 0x44, 0x61, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x1a, 0x2f, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61,
+	0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x53,
+	0x74, 0x61, 0x74, 0x65, 0x73, 0x46, 0x6f, 0x72, 0x44, 0x61, 0x79, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x22, 0x46, 0xba, 0xb8, 0x91, 0x02, 0x0f, 0x0a, 0x03, 0x08, 0xde, 0x0b, 0x0a,
+	0x03, 0x08, 0xdf, 0x0b, 0x0a, 0x03, 0x08, 0xe0, 0x0b, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x2c, 0x3a,
+	0x01, 0x2a, 0x22, 0x27, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61,
+	0x31, 0x2f, 0x77, 0x66, 0x6d, 0x2f, 0x6c, 0x69, 0x73, 0x74, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x73,
+	0x74, 0x61, 0x74, 0x65, 0x73, 0x66, 0x6f, 0x72, 0x64, 0x61, 0x79, 0x12, 0xdc, 0x01, 0x0a, 0x1c,
+	0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x61, 0x6c, 0x54, 0x69, 0x6d, 0x65, 0x4d, 0x61, 0x6e, 0x61,
+	0x67, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x73, 0x12, 0x35, 0x2e, 0x61,
+	0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e,
+	0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x61, 0x6c, 0x54, 0x69, 0x6d, 0x65, 0x4d, 0x61, 0x6e, 0x61,
+	0x67, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x73, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x1a, 0x36, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68,
 	0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x61, 0x6c, 0x54,
 	0x69, 0x6d, 0x65, 0x4d, 0x61, 0x6e, 0x61, 0x67, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x61,
-	0x74, 0x65, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x36, 0x2e, 0x61, 0x70, 0x69,
-	0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x4c, 0x69,
-	0x73, 0x74, 0x52, 0x65, 0x61, 0x6c, 0x54, 0x69, 0x6d, 0x65, 0x4d, 0x61, 0x6e, 0x61, 0x67, 0x65,
-	0x6d, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
-	0x73, 0x65, 0x22, 0x4d, 0xba, 0xb8, 0x91, 0x02, 0x0f, 0x0a, 0x03, 0x08, 0xde, 0x0b, 0x0a, 0x03,
-	0x08, 0xdf, 0x0b, 0x0a, 0x03, 0x08, 0xe0, 0x0b, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x33, 0x3a, 0x01,
-	0x2a, 0x22, 0x2e, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31,
-	0x2f, 0x77, 0x66, 0x6d, 0x2f, 0x6c, 0x69, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6c, 0x74, 0x69, 0x6d,
-	0x65, 0x6d, 0x61, 0x6e, 0x61, 0x67, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x74, 0x61, 0x74, 0x65,
-	0x73, 0x12, 0xf0, 0x01, 0x0a, 0x21, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x61, 0x6c, 0x54, 0x69,
-	0x6d, 0x65, 0x4d, 0x61, 0x6e, 0x61, 0x67, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x61, 0x74,
-	0x65, 0x43, 0x6f, 0x6c, 0x6f, 0x72, 0x73, 0x12, 0x3a, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31,
-	0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x52,
-	0x65, 0x61, 0x6c, 0x54, 0x69, 0x6d, 0x65, 0x4d, 0x61, 0x6e, 0x61, 0x67, 0x65, 0x6d, 0x65, 0x6e,
-	0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x43, 0x6f, 0x6c, 0x6f, 0x72, 0x73, 0x52, 0x65, 0x71, 0x75,
-	0x65, 0x73, 0x74, 0x1a, 0x3b, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68,
-	0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x61, 0x6c, 0x54,
-	0x69, 0x6d, 0x65, 0x4d, 0x61, 0x6e, 0x61, 0x67, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x61,
-	0x74, 0x65, 0x43, 0x6f, 0x6c, 0x6f, 0x72, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
-	0x22, 0x52, 0xba, 0xb8, 0x91, 0x02, 0x0f, 0x0a, 0x03, 0x08, 0xde, 0x0b, 0x0a, 0x03, 0x08, 0xdf,
-	0x0b, 0x0a, 0x03, 0x08, 0xe0, 0x0b, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x38, 0x3a, 0x01, 0x2a, 0x22,
-	0x33, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x77,
-	0x66, 0x6d, 0x2f, 0x6c, 0x69, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6c, 0x74, 0x69, 0x6d, 0x65, 0x6d,
-	0x61, 0x6e, 0x61, 0x67, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x74, 0x61, 0x74, 0x65, 0x63, 0x6f,
-	0x6c, 0x6f, 0x72, 0x73, 0x42, 0xaf, 0x01, 0x0a, 0x14, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69,
-	0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x42, 0x08, 0x57,
-	0x66, 0x6d, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x2b, 0x67, 0x69, 0x74, 0x68, 0x75,
-	0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61,
-	0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68,
-	0x61, 0x31, 0x2f, 0x77, 0x66, 0x6d, 0xa2, 0x02, 0x03, 0x41, 0x56, 0x57, 0xaa, 0x02, 0x10, 0x41,
-	0x70, 0x69, 0x2e, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x57, 0x66, 0x6d, 0xca,
-	0x02, 0x10, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x57,
-	0x66, 0x6d, 0xe2, 0x02, 0x1c, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61,
-	0x31, 0x5c, 0x57, 0x66, 0x6d, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74,
-	0x61, 0xea, 0x02, 0x12, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61,
-	0x31, 0x3a, 0x3a, 0x57, 0x66, 0x6d, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x74, 0x65, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x4d, 0xba, 0xb8, 0x91,
+	0x02, 0x0f, 0x0a, 0x03, 0x08, 0xde, 0x0b, 0x0a, 0x03, 0x08, 0xdf, 0x0b, 0x0a, 0x03, 0x08, 0xe0,
+	0x0b, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x33, 0x3a, 0x01, 0x2a, 0x22, 0x2e, 0x2f, 0x61, 0x70, 0x69,
+	0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x77, 0x66, 0x6d, 0x2f, 0x6c, 0x69,
+	0x73, 0x74, 0x72, 0x65, 0x61, 0x6c, 0x74, 0x69, 0x6d, 0x65, 0x6d, 0x61, 0x6e, 0x61, 0x67, 0x65,
+	0x6d, 0x65, 0x6e, 0x74, 0x73, 0x74, 0x61, 0x74, 0x65, 0x73, 0x12, 0xf0, 0x01, 0x0a, 0x21, 0x4c,
+	0x69, 0x73, 0x74, 0x52, 0x65, 0x61, 0x6c, 0x54, 0x69, 0x6d, 0x65, 0x4d, 0x61, 0x6e, 0x61, 0x67,
+	0x65, 0x6d, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x43, 0x6f, 0x6c, 0x6f, 0x72, 0x73,
+	0x12, 0x3a, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e,
+	0x77, 0x66, 0x6d, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x61, 0x6c, 0x54, 0x69, 0x6d, 0x65,
+	0x4d, 0x61, 0x6e, 0x61, 0x67, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x43,
+	0x6f, 0x6c, 0x6f, 0x72, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x3b, 0x2e, 0x61,
+	0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x2e,
+	0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x61, 0x6c, 0x54, 0x69, 0x6d, 0x65, 0x4d, 0x61, 0x6e, 0x61,
+	0x67, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x43, 0x6f, 0x6c, 0x6f, 0x72,
+	0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x52, 0xba, 0xb8, 0x91, 0x02, 0x0f,
+	0x0a, 0x03, 0x08, 0xde, 0x0b, 0x0a, 0x03, 0x08, 0xdf, 0x0b, 0x0a, 0x03, 0x08, 0xe0, 0x0b, 0x82,
+	0xd3, 0xe4, 0x93, 0x02, 0x38, 0x3a, 0x01, 0x2a, 0x22, 0x33, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76,
+	0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x77, 0x66, 0x6d, 0x2f, 0x6c, 0x69, 0x73, 0x74,
+	0x72, 0x65, 0x61, 0x6c, 0x74, 0x69, 0x6d, 0x65, 0x6d, 0x61, 0x6e, 0x61, 0x67, 0x65, 0x6d, 0x65,
+	0x6e, 0x74, 0x73, 0x74, 0x61, 0x74, 0x65, 0x63, 0x6f, 0x6c, 0x6f, 0x72, 0x73, 0x42, 0xaf, 0x01,
+	0x0a, 0x14, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68,
+	0x61, 0x31, 0x2e, 0x77, 0x66, 0x6d, 0x42, 0x08, 0x57, 0x66, 0x6d, 0x50, 0x72, 0x6f, 0x74, 0x6f,
+	0x50, 0x01, 0x5a, 0x2b, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74,
+	0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61,
+	0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x77, 0x66, 0x6d, 0xa2,
+	0x02, 0x03, 0x41, 0x56, 0x57, 0xaa, 0x02, 0x10, 0x41, 0x70, 0x69, 0x2e, 0x56, 0x31, 0x61, 0x6c,
+	0x70, 0x68, 0x61, 0x31, 0x2e, 0x57, 0x66, 0x6d, 0xca, 0x02, 0x10, 0x41, 0x70, 0x69, 0x5c, 0x56,
+	0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x57, 0x66, 0x6d, 0xe2, 0x02, 0x1c, 0x41, 0x70,
+	0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x57, 0x66, 0x6d, 0x5c, 0x47,
+	0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x12, 0x41, 0x70, 0x69,
+	0x3a, 0x3a, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x3a, 0x3a, 0x57, 0x66, 0x6d, 0x62,
+	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -32899,7 +33008,7 @@ func file_api_v1alpha1_wfm_wfm_proto_rawDescGZIP() []byte {
 }
 
 var file_api_v1alpha1_wfm_wfm_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_api_v1alpha1_wfm_wfm_proto_msgTypes = make([]protoimpl.MessageInfo, 417)
+var file_api_v1alpha1_wfm_wfm_proto_msgTypes = make([]protoimpl.MessageInfo, 419)
 var file_api_v1alpha1_wfm_wfm_proto_goTypes = []interface{}{
 	(DeleteForecastIntervalsReq_ForecastIntervalDeleteType)(0), // 0: api.v1alpha1.wfm.DeleteForecastIntervalsReq.ForecastIntervalDeleteType
 	(*PerformInitialClientSetupRequest)(nil),                   // 1: api.v1alpha1.wfm.PerformInitialClientSetupRequest
@@ -33296,129 +33405,131 @@ var file_api_v1alpha1_wfm_wfm_proto_goTypes = []interface{}{
 	(*CreateAgentLeavePetitionResponse)(nil),                  // 392: api.v1alpha1.wfm.CreateAgentLeavePetitionResponse
 	(*ListAgentLeavePetitionsRequest)(nil),                    // 393: api.v1alpha1.wfm.ListAgentLeavePetitionsRequest
 	(*ListAgentLeavePetitionsResponse)(nil),                   // 394: api.v1alpha1.wfm.ListAgentLeavePetitionsResponse
-	(*UpdateSkillProfileProficienciesReq_Proficiency)(nil),    // 395: api.v1alpha1.wfm.UpdateSkillProfileProficienciesReq.Proficiency
-	(*GetSkillProfileRes_Mapping)(nil),                        // 396: api.v1alpha1.wfm.GetSkillProfileRes.Mapping
-	(*DeleteForecastIntervalsReq_IntervalSids)(nil),           // 397: api.v1alpha1.wfm.DeleteForecastIntervalsReq.IntervalSids
-	(*ListAllWFMAgentsRes_AgentGroupsByAgent)(nil),            // 398: api.v1alpha1.wfm.ListAllWFMAgentsRes.AgentGroupsByAgent
-	nil,                                  // 399: api.v1alpha1.wfm.ListWFMAgentSidsRes.SidsEntry
-	(*DatetimePattern_WeekMap)(nil),      // 400: api.v1alpha1.wfm.DatetimePattern.WeekMap
-	(*DatetimePattern_CalendarItem)(nil), // 401: api.v1alpha1.wfm.DatetimePattern.CalendarItem
-	(*DatetimePattern_WeekMap_WeekMapDOW)(nil),                     // 402: api.v1alpha1.wfm.DatetimePattern.WeekMap.WeekMapDOW
-	(*UpsertNonSkillActivityAssociationRes_EntityMapping)(nil),     // 403: api.v1alpha1.wfm.UpsertNonSkillActivityAssociationRes.EntityMapping
-	(*ListConfigEntitiesRes_ClientNodeEntities)(nil),               // 404: api.v1alpha1.wfm.ListConfigEntitiesRes.ClientNodeEntities
-	(*ListConfigEntitiesRes_LocationNodeEntities)(nil),             // 405: api.v1alpha1.wfm.ListConfigEntitiesRes.LocationNodeEntities
-	(*ListConfigEntitiesRes_ProgramNodeEntities)(nil),              // 406: api.v1alpha1.wfm.ListConfigEntitiesRes.ProgramNodeEntities
-	(*ListConfigEntitiesRes_AgentGroupEntities)(nil),               // 407: api.v1alpha1.wfm.ListConfigEntitiesRes.AgentGroupEntities
-	(*ListConfigEntitiesRes_ShiftTemplateEntities)(nil),            // 408: api.v1alpha1.wfm.ListConfigEntitiesRes.ShiftTemplateEntities
-	(*ListConfigEntitiesRes_WFMAgentEntities)(nil),                 // 409: api.v1alpha1.wfm.ListConfigEntitiesRes.WFMAgentEntities
-	(*ListConfigEntitiesRes_PlacementRuleEntities)(nil),            // 410: api.v1alpha1.wfm.ListConfigEntitiesRes.PlacementRuleEntities
-	(*ListConfigEntitiesRes_ConstraintRuleEntities)(nil),           // 411: api.v1alpha1.wfm.ListConfigEntitiesRes.ConstraintRuleEntities
-	(*ListConfigEntitiesRes_NonSkillActivityEntities)(nil),         // 412: api.v1alpha1.wfm.ListConfigEntitiesRes.NonSkillActivityEntities
-	(*ListConfigEntitiesRes_AgentAvailabilityPatternEntities)(nil), // 413: api.v1alpha1.wfm.ListConfigEntitiesRes.AgentAvailabilityPatternEntities
-	(*ListConfigEntitiesRes_OpenTimesPatternEntities)(nil),         // 414: api.v1alpha1.wfm.ListConfigEntitiesRes.OpenTimesPatternEntities
-	(*ListConfigEntitiesRes_SkillProficiencyEntities)(nil),         // 415: api.v1alpha1.wfm.ListConfigEntitiesRes.SkillProficiencyEntities
-	(*ListConfigEntitiesRes_ScheduleScenarioEntities)(nil),         // 416: api.v1alpha1.wfm.ListConfigEntitiesRes.ScheduleScenarioEntities
-	(*ListTourAgentCollectionWFMAgentsRes_SidMapping)(nil),         // 417: api.v1alpha1.wfm.ListTourAgentCollectionWFMAgentsRes.SidMapping
-	(*commons.InitialSetupStatus)(nil),                             // 418: api.commons.InitialSetupStatus
-	(commons.SkillType_Enum)(0),                                    // 419: api.commons.SkillType.Enum
-	(*timestamppb.Timestamp)(nil),                                  // 420: google.protobuf.Timestamp
-	(*commons.ForecastingParameters)(nil),                          // 421: api.commons.ForecastingParameters
-	(*wrapperspb.FloatValue)(nil),                                  // 422: google.protobuf.FloatValue
-	(*commons.SkillProfileCategory)(nil),                           // 423: api.commons.SkillProfileCategory
-	(*commons.ClientHistoryCacheInfo)(nil),                         // 424: api.commons.ClientHistoryCacheInfo
-	(*commons.CallProfileGroupCalls)(nil),                          // 425: api.commons.CallProfileGroupCalls
-	(*commons.CallProfileGroupAvgs)(nil),                           // 426: api.commons.CallProfileGroupAvgs
-	(commons.RegressionForecasterModelTypes)(0),                    // 427: api.commons.RegressionForecasterModelTypes
-	(commons.RegressionForecasterAvgsProcessingType)(0),            // 428: api.commons.RegressionForecasterAvgsProcessingType
-	(*commons.ProfileTOD)(nil),                                     // 429: api.commons.ProfileTOD
-	(*commons.ProfileWOMS)(nil),                                    // 430: api.commons.ProfileWOMS
-	(*commons.ProfileDOW)(nil),                                     // 431: api.commons.ProfileDOW
-	(*commons.ProfileMOY)(nil),                                     // 432: api.commons.ProfileMOY
-	(*commons.DatetimeRange)(nil),                                  // 433: api.commons.DatetimeRange
-	(commons.TimeZone)(0),                                          // 434: api.commons.TimeZone
-	(*wrapperspb.Int64Value)(nil),                                  // 435: google.protobuf.Int64Value
-	(commons.ConfigEntityType)(0),                                  // 436: api.commons.ConfigEntityType
-	(commons.ConstraintTimeUnit)(0),                                // 437: api.commons.ConstraintTimeUnit
-	(commons.ConstraintRuleType)(0),                                // 438: api.commons.ConstraintRuleType
-	(commons.ConfigRelationshipType)(0),                            // 439: api.commons.ConfigRelationshipType
-	(commons.DOWPlacementType)(0),                                  // 440: api.commons.DOWPlacementType
-	(commons.DayOfWeek)(0),                                         // 441: api.commons.DayOfWeek
-	(commons.BitmapType)(0),                                        // 442: api.commons.BitmapType
-	(commons.OpenTimesOption)(0),                                   // 443: api.commons.OpenTimesOption
-	(commons.AvailabilityOption)(0),                                // 444: api.commons.AvailabilityOption
-	(commons.DiagnosticLevel)(0),                                   // 445: api.commons.DiagnosticLevel
-	(commons.DiagnosticCode)(0),                                    // 446: api.commons.DiagnosticCode
-	(commons.PerformanceMetricType)(0),                             // 447: api.commons.PerformanceMetricType
-	(commons.ScheduleType)(0),                                      // 448: api.commons.ScheduleType
-	(*commons.SchedulingResultMetric)(nil),                         // 449: api.commons.SchedulingResultMetric
-	(*commons.ScheduleSelector)(nil),                               // 450: api.commons.ScheduleSelector
-	(commons.SchedulingTargetType)(0),                              // 451: api.commons.SchedulingTargetType
-	(*commons.AgentStateSequence)(nil),                             // 452: api.commons.AgentStateSequence
-	(commons.RealTimeManagementState)(0),                           // 453: api.commons.RealTimeManagementState
-	(*commons.AgentLeavePetition)(nil),                             // 454: api.commons.AgentLeavePetition
-	(*commons.OptionTypes)(nil),                                    // 455: api.commons.OptionTypes
+	(*ArchiveAgentLeavePetitionRequest)(nil),                  // 395: api.v1alpha1.wfm.ArchiveAgentLeavePetitionRequest
+	(*ArchiveAgentLeavePetitionResponse)(nil),                 // 396: api.v1alpha1.wfm.ArchiveAgentLeavePetitionResponse
+	(*UpdateSkillProfileProficienciesReq_Proficiency)(nil),    // 397: api.v1alpha1.wfm.UpdateSkillProfileProficienciesReq.Proficiency
+	(*GetSkillProfileRes_Mapping)(nil),                        // 398: api.v1alpha1.wfm.GetSkillProfileRes.Mapping
+	(*DeleteForecastIntervalsReq_IntervalSids)(nil),           // 399: api.v1alpha1.wfm.DeleteForecastIntervalsReq.IntervalSids
+	(*ListAllWFMAgentsRes_AgentGroupsByAgent)(nil),            // 400: api.v1alpha1.wfm.ListAllWFMAgentsRes.AgentGroupsByAgent
+	nil,                                  // 401: api.v1alpha1.wfm.ListWFMAgentSidsRes.SidsEntry
+	(*DatetimePattern_WeekMap)(nil),      // 402: api.v1alpha1.wfm.DatetimePattern.WeekMap
+	(*DatetimePattern_CalendarItem)(nil), // 403: api.v1alpha1.wfm.DatetimePattern.CalendarItem
+	(*DatetimePattern_WeekMap_WeekMapDOW)(nil),                     // 404: api.v1alpha1.wfm.DatetimePattern.WeekMap.WeekMapDOW
+	(*UpsertNonSkillActivityAssociationRes_EntityMapping)(nil),     // 405: api.v1alpha1.wfm.UpsertNonSkillActivityAssociationRes.EntityMapping
+	(*ListConfigEntitiesRes_ClientNodeEntities)(nil),               // 406: api.v1alpha1.wfm.ListConfigEntitiesRes.ClientNodeEntities
+	(*ListConfigEntitiesRes_LocationNodeEntities)(nil),             // 407: api.v1alpha1.wfm.ListConfigEntitiesRes.LocationNodeEntities
+	(*ListConfigEntitiesRes_ProgramNodeEntities)(nil),              // 408: api.v1alpha1.wfm.ListConfigEntitiesRes.ProgramNodeEntities
+	(*ListConfigEntitiesRes_AgentGroupEntities)(nil),               // 409: api.v1alpha1.wfm.ListConfigEntitiesRes.AgentGroupEntities
+	(*ListConfigEntitiesRes_ShiftTemplateEntities)(nil),            // 410: api.v1alpha1.wfm.ListConfigEntitiesRes.ShiftTemplateEntities
+	(*ListConfigEntitiesRes_WFMAgentEntities)(nil),                 // 411: api.v1alpha1.wfm.ListConfigEntitiesRes.WFMAgentEntities
+	(*ListConfigEntitiesRes_PlacementRuleEntities)(nil),            // 412: api.v1alpha1.wfm.ListConfigEntitiesRes.PlacementRuleEntities
+	(*ListConfigEntitiesRes_ConstraintRuleEntities)(nil),           // 413: api.v1alpha1.wfm.ListConfigEntitiesRes.ConstraintRuleEntities
+	(*ListConfigEntitiesRes_NonSkillActivityEntities)(nil),         // 414: api.v1alpha1.wfm.ListConfigEntitiesRes.NonSkillActivityEntities
+	(*ListConfigEntitiesRes_AgentAvailabilityPatternEntities)(nil), // 415: api.v1alpha1.wfm.ListConfigEntitiesRes.AgentAvailabilityPatternEntities
+	(*ListConfigEntitiesRes_OpenTimesPatternEntities)(nil),         // 416: api.v1alpha1.wfm.ListConfigEntitiesRes.OpenTimesPatternEntities
+	(*ListConfigEntitiesRes_SkillProficiencyEntities)(nil),         // 417: api.v1alpha1.wfm.ListConfigEntitiesRes.SkillProficiencyEntities
+	(*ListConfigEntitiesRes_ScheduleScenarioEntities)(nil),         // 418: api.v1alpha1.wfm.ListConfigEntitiesRes.ScheduleScenarioEntities
+	(*ListTourAgentCollectionWFMAgentsRes_SidMapping)(nil),         // 419: api.v1alpha1.wfm.ListTourAgentCollectionWFMAgentsRes.SidMapping
+	(*commons.InitialSetupStatus)(nil),                             // 420: api.commons.InitialSetupStatus
+	(commons.SkillType_Enum)(0),                                    // 421: api.commons.SkillType.Enum
+	(*timestamppb.Timestamp)(nil),                                  // 422: google.protobuf.Timestamp
+	(*commons.ForecastingParameters)(nil),                          // 423: api.commons.ForecastingParameters
+	(*wrapperspb.FloatValue)(nil),                                  // 424: google.protobuf.FloatValue
+	(*commons.SkillProfileCategory)(nil),                           // 425: api.commons.SkillProfileCategory
+	(*commons.ClientHistoryCacheInfo)(nil),                         // 426: api.commons.ClientHistoryCacheInfo
+	(*commons.CallProfileGroupCalls)(nil),                          // 427: api.commons.CallProfileGroupCalls
+	(*commons.CallProfileGroupAvgs)(nil),                           // 428: api.commons.CallProfileGroupAvgs
+	(commons.RegressionForecasterModelTypes)(0),                    // 429: api.commons.RegressionForecasterModelTypes
+	(commons.RegressionForecasterAvgsProcessingType)(0),            // 430: api.commons.RegressionForecasterAvgsProcessingType
+	(*commons.ProfileTOD)(nil),                                     // 431: api.commons.ProfileTOD
+	(*commons.ProfileWOMS)(nil),                                    // 432: api.commons.ProfileWOMS
+	(*commons.ProfileDOW)(nil),                                     // 433: api.commons.ProfileDOW
+	(*commons.ProfileMOY)(nil),                                     // 434: api.commons.ProfileMOY
+	(*commons.DatetimeRange)(nil),                                  // 435: api.commons.DatetimeRange
+	(commons.TimeZone)(0),                                          // 436: api.commons.TimeZone
+	(*wrapperspb.Int64Value)(nil),                                  // 437: google.protobuf.Int64Value
+	(commons.ConfigEntityType)(0),                                  // 438: api.commons.ConfigEntityType
+	(commons.ConstraintTimeUnit)(0),                                // 439: api.commons.ConstraintTimeUnit
+	(commons.ConstraintRuleType)(0),                                // 440: api.commons.ConstraintRuleType
+	(commons.ConfigRelationshipType)(0),                            // 441: api.commons.ConfigRelationshipType
+	(commons.DOWPlacementType)(0),                                  // 442: api.commons.DOWPlacementType
+	(commons.DayOfWeek)(0),                                         // 443: api.commons.DayOfWeek
+	(commons.BitmapType)(0),                                        // 444: api.commons.BitmapType
+	(commons.OpenTimesOption)(0),                                   // 445: api.commons.OpenTimesOption
+	(commons.AvailabilityOption)(0),                                // 446: api.commons.AvailabilityOption
+	(commons.DiagnosticLevel)(0),                                   // 447: api.commons.DiagnosticLevel
+	(commons.DiagnosticCode)(0),                                    // 448: api.commons.DiagnosticCode
+	(commons.PerformanceMetricType)(0),                             // 449: api.commons.PerformanceMetricType
+	(commons.ScheduleType)(0),                                      // 450: api.commons.ScheduleType
+	(*commons.SchedulingResultMetric)(nil),                         // 451: api.commons.SchedulingResultMetric
+	(*commons.ScheduleSelector)(nil),                               // 452: api.commons.ScheduleSelector
+	(commons.SchedulingTargetType)(0),                              // 453: api.commons.SchedulingTargetType
+	(*commons.AgentStateSequence)(nil),                             // 454: api.commons.AgentStateSequence
+	(commons.RealTimeManagementState)(0),                           // 455: api.commons.RealTimeManagementState
+	(*commons.AgentLeavePetition)(nil),                             // 456: api.commons.AgentLeavePetition
+	(*commons.OptionTypes)(nil),                                    // 457: api.commons.OptionTypes
 }
 var file_api_v1alpha1_wfm_wfm_proto_depIdxs = []int32{
-	418, // 0: api.v1alpha1.wfm.PerformInitialClientSetupResponse.setup_status:type_name -> api.commons.InitialSetupStatus
-	419, // 1: api.v1alpha1.wfm.Skill.client_skill_type:type_name -> api.commons.SkillType.Enum
-	420, // 2: api.v1alpha1.wfm.Skill.delete_date:type_name -> google.protobuf.Timestamp
-	420, // 3: api.v1alpha1.wfm.SkillProfile.create_date:type_name -> google.protobuf.Timestamp
-	420, // 4: api.v1alpha1.wfm.SkillProfile.inactive_as_of_date:type_name -> google.protobuf.Timestamp
+	420, // 0: api.v1alpha1.wfm.PerformInitialClientSetupResponse.setup_status:type_name -> api.commons.InitialSetupStatus
+	421, // 1: api.v1alpha1.wfm.Skill.client_skill_type:type_name -> api.commons.SkillType.Enum
+	422, // 2: api.v1alpha1.wfm.Skill.delete_date:type_name -> google.protobuf.Timestamp
+	422, // 3: api.v1alpha1.wfm.SkillProfile.create_date:type_name -> google.protobuf.Timestamp
+	422, // 4: api.v1alpha1.wfm.SkillProfile.inactive_as_of_date:type_name -> google.protobuf.Timestamp
 	3,   // 5: api.v1alpha1.wfm.SkillProfile.skills:type_name -> api.v1alpha1.wfm.Skill
-	420, // 6: api.v1alpha1.wfm.SkillProfileGroup.create_time:type_name -> google.protobuf.Timestamp
-	420, // 7: api.v1alpha1.wfm.SkillProfileGroup.datetime_set_to_inactive:type_name -> google.protobuf.Timestamp
+	422, // 6: api.v1alpha1.wfm.SkillProfileGroup.create_time:type_name -> google.protobuf.Timestamp
+	422, // 7: api.v1alpha1.wfm.SkillProfileGroup.datetime_set_to_inactive:type_name -> google.protobuf.Timestamp
 	4,   // 8: api.v1alpha1.wfm.ListSkillProfilesRes.skill_profiles:type_name -> api.v1alpha1.wfm.SkillProfile
-	395, // 9: api.v1alpha1.wfm.UpdateSkillProfileProficienciesReq.proficiencies:type_name -> api.v1alpha1.wfm.UpdateSkillProfileProficienciesReq.Proficiency
+	397, // 9: api.v1alpha1.wfm.UpdateSkillProfileProficienciesReq.proficiencies:type_name -> api.v1alpha1.wfm.UpdateSkillProfileProficienciesReq.Proficiency
 	4,   // 10: api.v1alpha1.wfm.GetSkillProfileRes.skill_profile:type_name -> api.v1alpha1.wfm.SkillProfile
-	396, // 11: api.v1alpha1.wfm.GetSkillProfileRes.mappings:type_name -> api.v1alpha1.wfm.GetSkillProfileRes.Mapping
-	420, // 12: api.v1alpha1.wfm.GetLastSkillProfileResyncDateRes.resync_date:type_name -> google.protobuf.Timestamp
-	421, // 13: api.v1alpha1.wfm.UpsertForecastingParametersReq.forecasting_parameters:type_name -> api.commons.ForecastingParameters
-	421, // 14: api.v1alpha1.wfm.GetForecastingParametersRes.forecasting_parameters:type_name -> api.commons.ForecastingParameters
-	420, // 15: api.v1alpha1.wfm.HistoricalDataInterval.start_datetime:type_name -> google.protobuf.Timestamp
-	422, // 16: api.v1alpha1.wfm.HistoricalDataInterval.average_speed_of_answer_in_seconds:type_name -> google.protobuf.FloatValue
-	422, // 17: api.v1alpha1.wfm.HistoricalDataInterval.average_handle_time_in_seconds:type_name -> google.protobuf.FloatValue
-	422, // 18: api.v1alpha1.wfm.HistoricalDataInterval.average_after_call_work_in_seconds:type_name -> google.protobuf.FloatValue
-	422, // 19: api.v1alpha1.wfm.HistoricalDataInterval.average_time_to_abort_in_seconds:type_name -> google.protobuf.FloatValue
-	422, // 20: api.v1alpha1.wfm.HistoricalDataInterval.original_average_speed_of_answer_in_seconds:type_name -> google.protobuf.FloatValue
-	422, // 21: api.v1alpha1.wfm.HistoricalDataInterval.original_average_handle_time_in_seconds:type_name -> google.protobuf.FloatValue
-	422, // 22: api.v1alpha1.wfm.HistoricalDataInterval.original_average_after_call_work_in_seconds:type_name -> google.protobuf.FloatValue
-	422, // 23: api.v1alpha1.wfm.HistoricalDataInterval.original_average_time_to_abort_in_seconds:type_name -> google.protobuf.FloatValue
-	423, // 24: api.v1alpha1.wfm.HistoricalDataInterval.skill_profile_category:type_name -> api.commons.SkillProfileCategory
-	424, // 25: api.v1alpha1.wfm.GetClientHistoryCacheInfoRes.cache_info:type_name -> api.commons.ClientHistoryCacheInfo
-	423, // 26: api.v1alpha1.wfm.ListHistoricalDataReq.skill_profile_category:type_name -> api.commons.SkillProfileCategory
+	398, // 11: api.v1alpha1.wfm.GetSkillProfileRes.mappings:type_name -> api.v1alpha1.wfm.GetSkillProfileRes.Mapping
+	422, // 12: api.v1alpha1.wfm.GetLastSkillProfileResyncDateRes.resync_date:type_name -> google.protobuf.Timestamp
+	423, // 13: api.v1alpha1.wfm.UpsertForecastingParametersReq.forecasting_parameters:type_name -> api.commons.ForecastingParameters
+	423, // 14: api.v1alpha1.wfm.GetForecastingParametersRes.forecasting_parameters:type_name -> api.commons.ForecastingParameters
+	422, // 15: api.v1alpha1.wfm.HistoricalDataInterval.start_datetime:type_name -> google.protobuf.Timestamp
+	424, // 16: api.v1alpha1.wfm.HistoricalDataInterval.average_speed_of_answer_in_seconds:type_name -> google.protobuf.FloatValue
+	424, // 17: api.v1alpha1.wfm.HistoricalDataInterval.average_handle_time_in_seconds:type_name -> google.protobuf.FloatValue
+	424, // 18: api.v1alpha1.wfm.HistoricalDataInterval.average_after_call_work_in_seconds:type_name -> google.protobuf.FloatValue
+	424, // 19: api.v1alpha1.wfm.HistoricalDataInterval.average_time_to_abort_in_seconds:type_name -> google.protobuf.FloatValue
+	424, // 20: api.v1alpha1.wfm.HistoricalDataInterval.original_average_speed_of_answer_in_seconds:type_name -> google.protobuf.FloatValue
+	424, // 21: api.v1alpha1.wfm.HistoricalDataInterval.original_average_handle_time_in_seconds:type_name -> google.protobuf.FloatValue
+	424, // 22: api.v1alpha1.wfm.HistoricalDataInterval.original_average_after_call_work_in_seconds:type_name -> google.protobuf.FloatValue
+	424, // 23: api.v1alpha1.wfm.HistoricalDataInterval.original_average_time_to_abort_in_seconds:type_name -> google.protobuf.FloatValue
+	425, // 24: api.v1alpha1.wfm.HistoricalDataInterval.skill_profile_category:type_name -> api.commons.SkillProfileCategory
+	426, // 25: api.v1alpha1.wfm.GetClientHistoryCacheInfoRes.cache_info:type_name -> api.commons.ClientHistoryCacheInfo
+	425, // 26: api.v1alpha1.wfm.ListHistoricalDataReq.skill_profile_category:type_name -> api.commons.SkillProfileCategory
 	22,  // 27: api.v1alpha1.wfm.ListHistoricalDataRes.historical_data_intervals:type_name -> api.v1alpha1.wfm.HistoricalDataInterval
 	22,  // 28: api.v1alpha1.wfm.UpsertHistoricalDataDeltaReq.delta:type_name -> api.v1alpha1.wfm.HistoricalDataInterval
 	22,  // 29: api.v1alpha1.wfm.UpsertHistoricalDataDeltaRes.delta:type_name -> api.v1alpha1.wfm.HistoricalDataInterval
 	22,  // 30: api.v1alpha1.wfm.UpsertHistoricalDataDeltasReq.deltas:type_name -> api.v1alpha1.wfm.HistoricalDataInterval
 	3,   // 31: api.v1alpha1.wfm.ListSkillsRes.skills:type_name -> api.v1alpha1.wfm.Skill
-	425, // 32: api.v1alpha1.wfm.CallProfileTemplate.total_calls_profile:type_name -> api.commons.CallProfileGroupCalls
-	425, // 33: api.v1alpha1.wfm.CallProfileTemplate.total_abandoned_calls_profile:type_name -> api.commons.CallProfileGroupCalls
-	426, // 34: api.v1alpha1.wfm.CallProfileTemplate.average_speed_of_answer_profile:type_name -> api.commons.CallProfileGroupAvgs
-	426, // 35: api.v1alpha1.wfm.CallProfileTemplate.average_handle_time_profile:type_name -> api.commons.CallProfileGroupAvgs
-	426, // 36: api.v1alpha1.wfm.CallProfileTemplate.average_after_call_work_profile:type_name -> api.commons.CallProfileGroupAvgs
-	426, // 37: api.v1alpha1.wfm.CallProfileTemplate.average_time_to_abort_profile:type_name -> api.commons.CallProfileGroupAvgs
+	427, // 32: api.v1alpha1.wfm.CallProfileTemplate.total_calls_profile:type_name -> api.commons.CallProfileGroupCalls
+	427, // 33: api.v1alpha1.wfm.CallProfileTemplate.total_abandoned_calls_profile:type_name -> api.commons.CallProfileGroupCalls
+	428, // 34: api.v1alpha1.wfm.CallProfileTemplate.average_speed_of_answer_profile:type_name -> api.commons.CallProfileGroupAvgs
+	428, // 35: api.v1alpha1.wfm.CallProfileTemplate.average_handle_time_profile:type_name -> api.commons.CallProfileGroupAvgs
+	428, // 36: api.v1alpha1.wfm.CallProfileTemplate.average_after_call_work_profile:type_name -> api.commons.CallProfileGroupAvgs
+	428, // 37: api.v1alpha1.wfm.CallProfileTemplate.average_time_to_abort_profile:type_name -> api.commons.CallProfileGroupAvgs
 	33,  // 38: api.v1alpha1.wfm.BuildCallProfileTemplateForSkillProfileRes.call_profile_template:type_name -> api.v1alpha1.wfm.CallProfileTemplate
-	423, // 39: api.v1alpha1.wfm.BuildCallProfileTemplateReq.skill_profile_category:type_name -> api.commons.SkillProfileCategory
+	425, // 39: api.v1alpha1.wfm.BuildCallProfileTemplateReq.skill_profile_category:type_name -> api.commons.SkillProfileCategory
 	33,  // 40: api.v1alpha1.wfm.BuildCallProfileTemplateRes.call_profile_template:type_name -> api.v1alpha1.wfm.CallProfileTemplate
-	427, // 41: api.v1alpha1.wfm.GetAvailableRegressionForecasterModelTypesRes.model_types:type_name -> api.commons.RegressionForecasterModelTypes
+	429, // 41: api.v1alpha1.wfm.GetAvailableRegressionForecasterModelTypesRes.model_types:type_name -> api.commons.RegressionForecasterModelTypes
 	5,   // 42: api.v1alpha1.wfm.CreateSkillProfileGroupReq.skill_profile_group:type_name -> api.v1alpha1.wfm.SkillProfileGroup
 	5,   // 43: api.v1alpha1.wfm.UpdateSkillProfileGroupReq.skill_profile_group:type_name -> api.v1alpha1.wfm.SkillProfileGroup
 	5,   // 44: api.v1alpha1.wfm.ListSkillProfileGroupsRes.skill_profile_groups:type_name -> api.v1alpha1.wfm.SkillProfileGroup
-	420, // 45: api.v1alpha1.wfm.DeleteHistoricalDataDeltasReq.start_datetimes:type_name -> google.protobuf.Timestamp
+	422, // 45: api.v1alpha1.wfm.DeleteHistoricalDataDeltasReq.start_datetimes:type_name -> google.protobuf.Timestamp
 	4,   // 46: api.v1alpha1.wfm.ListTopSkillProfilesRes.skill_profiles:type_name -> api.v1alpha1.wfm.SkillProfile
 	33,  // 47: api.v1alpha1.wfm.BuildProfileForecastByIntervalReq.call_profile_template:type_name -> api.v1alpha1.wfm.CallProfileTemplate
-	423, // 48: api.v1alpha1.wfm.BuildProfileForecastByIntervalReq.skill_profile_category:type_name -> api.commons.SkillProfileCategory
-	420, // 49: api.v1alpha1.wfm.CallDataByInterval.start_datetime:type_name -> google.protobuf.Timestamp
-	423, // 50: api.v1alpha1.wfm.CallDataByInterval.skill_profile_category:type_name -> api.commons.SkillProfileCategory
+	425, // 48: api.v1alpha1.wfm.BuildProfileForecastByIntervalReq.skill_profile_category:type_name -> api.commons.SkillProfileCategory
+	422, // 49: api.v1alpha1.wfm.CallDataByInterval.start_datetime:type_name -> google.protobuf.Timestamp
+	425, // 50: api.v1alpha1.wfm.CallDataByInterval.skill_profile_category:type_name -> api.commons.SkillProfileCategory
 	33,  // 51: api.v1alpha1.wfm.BuildProfileForecastByIntervalWithStatsReq.call_profile_template:type_name -> api.v1alpha1.wfm.CallProfileTemplate
-	423, // 52: api.v1alpha1.wfm.BuildProfileForecastByIntervalWithStatsReq.skill_profile_category:type_name -> api.commons.SkillProfileCategory
+	425, // 52: api.v1alpha1.wfm.BuildProfileForecastByIntervalWithStatsReq.skill_profile_category:type_name -> api.commons.SkillProfileCategory
 	59,  // 53: api.v1alpha1.wfm.BuildProfileForecastByIntervalWithStatsRes.call_data:type_name -> api.v1alpha1.wfm.CallDataByInterval
 	77,  // 54: api.v1alpha1.wfm.BuildProfileForecastByIntervalWithStatsRes.forecast_stats:type_name -> api.v1alpha1.wfm.GetForecastStatisticsRes
 	33,  // 55: api.v1alpha1.wfm.UpsertProfileForecastReq.call_profile_template:type_name -> api.v1alpha1.wfm.CallProfileTemplate
-	423, // 56: api.v1alpha1.wfm.UpsertProfileForecastReq.skill_profile_category:type_name -> api.commons.SkillProfileCategory
+	425, // 56: api.v1alpha1.wfm.UpsertProfileForecastReq.skill_profile_category:type_name -> api.commons.SkillProfileCategory
 	33,  // 57: api.v1alpha1.wfm.CreateCallProfileTemplateReq.call_profile_template:type_name -> api.v1alpha1.wfm.CallProfileTemplate
-	427, // 58: api.v1alpha1.wfm.RegressionTemplate.model_type:type_name -> api.commons.RegressionForecasterModelTypes
-	428, // 59: api.v1alpha1.wfm.RegressionTemplate.avgs_processing_type:type_name -> api.commons.RegressionForecasterAvgsProcessingType
+	429, // 58: api.v1alpha1.wfm.RegressionTemplate.model_type:type_name -> api.commons.RegressionForecasterModelTypes
+	430, // 59: api.v1alpha1.wfm.RegressionTemplate.avgs_processing_type:type_name -> api.commons.RegressionForecasterAvgsProcessingType
 	68,  // 60: api.v1alpha1.wfm.CreateRegressionTemplateReq.regression_template:type_name -> api.v1alpha1.wfm.RegressionTemplate
 	68,  // 61: api.v1alpha1.wfm.ListRegressionTemplatesRes.regression_templates:type_name -> api.v1alpha1.wfm.RegressionTemplate
 	68,  // 62: api.v1alpha1.wfm.BuildRegressionForecastByIntervalReq.regression_template:type_name -> api.v1alpha1.wfm.RegressionTemplate
@@ -33426,56 +33537,56 @@ var file_api_v1alpha1_wfm_wfm_proto_depIdxs = []int32{
 	59,  // 64: api.v1alpha1.wfm.BuildRegressionForecastByIntervalWithStatsRes.call_data:type_name -> api.v1alpha1.wfm.CallDataByInterval
 	77,  // 65: api.v1alpha1.wfm.BuildRegressionForecastByIntervalWithStatsRes.forecast_stats:type_name -> api.v1alpha1.wfm.GetForecastStatisticsRes
 	33,  // 66: api.v1alpha1.wfm.ListCallProfileTemplatesRes.call_profile_templates:type_name -> api.v1alpha1.wfm.CallProfileTemplate
-	423, // 67: api.v1alpha1.wfm.ListForecastIntervalsReq.skill_profile_category:type_name -> api.commons.SkillProfileCategory
+	425, // 67: api.v1alpha1.wfm.ListForecastIntervalsReq.skill_profile_category:type_name -> api.commons.SkillProfileCategory
 	68,  // 68: api.v1alpha1.wfm.UpsertRegressionForecastReq.regression_template:type_name -> api.v1alpha1.wfm.RegressionTemplate
 	59,  // 69: api.v1alpha1.wfm.UpsertForecastDataDeltaReq.delta:type_name -> api.v1alpha1.wfm.CallDataByInterval
 	59,  // 70: api.v1alpha1.wfm.UpsertForecastDataDeltaRes.delta:type_name -> api.v1alpha1.wfm.CallDataByInterval
 	59,  // 71: api.v1alpha1.wfm.UpsertForecastDataDeltasReq.deltas:type_name -> api.v1alpha1.wfm.CallDataByInterval
-	397, // 72: api.v1alpha1.wfm.DeleteForecastIntervalsReq.forecast_interval_sids:type_name -> api.v1alpha1.wfm.DeleteForecastIntervalsReq.IntervalSids
-	423, // 73: api.v1alpha1.wfm.DeleteForecastIntervalsReq.skill_profile_category:type_name -> api.commons.SkillProfileCategory
+	399, // 72: api.v1alpha1.wfm.DeleteForecastIntervalsReq.forecast_interval_sids:type_name -> api.v1alpha1.wfm.DeleteForecastIntervalsReq.IntervalSids
+	425, // 73: api.v1alpha1.wfm.DeleteForecastIntervalsReq.skill_profile_category:type_name -> api.commons.SkillProfileCategory
 	0,   // 74: api.v1alpha1.wfm.DeleteForecastIntervalsReq.forecast_interval_delete_type:type_name -> api.v1alpha1.wfm.DeleteForecastIntervalsReq.ForecastIntervalDeleteType
 	22,  // 75: api.v1alpha1.wfm.ListHistoricalDataForAllSkillProfilesRes.history:type_name -> api.v1alpha1.wfm.HistoricalDataInterval
-	429, // 76: api.v1alpha1.wfm.BuildDOWAndMOYProfilesReq.profile_tod:type_name -> api.commons.ProfileTOD
-	430, // 77: api.v1alpha1.wfm.BuildDOWAndMOYProfilesReq.profile_woms:type_name -> api.commons.ProfileWOMS
-	431, // 78: api.v1alpha1.wfm.BuildDOWAndMOYProfilesRes.profile_dow:type_name -> api.commons.ProfileDOW
-	432, // 79: api.v1alpha1.wfm.BuildDOWAndMOYProfilesRes.profile_moy:type_name -> api.commons.ProfileMOY
-	433, // 80: api.v1alpha1.wfm.UpdateSkillProfileAveragesUsingHistoricalDataReq.datetime_range:type_name -> api.commons.DatetimeRange
-	420, // 81: api.v1alpha1.wfm.CallCenterNode.datetime_set_to_inactive:type_name -> google.protobuf.Timestamp
-	434, // 82: api.v1alpha1.wfm.CallCenterNode.time_zone_val:type_name -> api.commons.TimeZone
+	431, // 76: api.v1alpha1.wfm.BuildDOWAndMOYProfilesReq.profile_tod:type_name -> api.commons.ProfileTOD
+	432, // 77: api.v1alpha1.wfm.BuildDOWAndMOYProfilesReq.profile_woms:type_name -> api.commons.ProfileWOMS
+	433, // 78: api.v1alpha1.wfm.BuildDOWAndMOYProfilesRes.profile_dow:type_name -> api.commons.ProfileDOW
+	434, // 79: api.v1alpha1.wfm.BuildDOWAndMOYProfilesRes.profile_moy:type_name -> api.commons.ProfileMOY
+	435, // 80: api.v1alpha1.wfm.UpdateSkillProfileAveragesUsingHistoricalDataReq.datetime_range:type_name -> api.commons.DatetimeRange
+	422, // 81: api.v1alpha1.wfm.CallCenterNode.datetime_set_to_inactive:type_name -> google.protobuf.Timestamp
+	436, // 82: api.v1alpha1.wfm.CallCenterNode.time_zone_val:type_name -> api.commons.TimeZone
 	103, // 83: api.v1alpha1.wfm.CallCenterNode.member_client_nodes:type_name -> api.v1alpha1.wfm.ClientNode
 	128, // 84: api.v1alpha1.wfm.CallCenterNode.member_non_skill_activities:type_name -> api.v1alpha1.wfm.NonSkillActivity
 	194, // 85: api.v1alpha1.wfm.CallCenterNode.member_open_times_patterns:type_name -> api.v1alpha1.wfm.OpenTimesPattern
 	205, // 86: api.v1alpha1.wfm.CallCenterNode.member_agent_availability_patterns:type_name -> api.v1alpha1.wfm.AgentAvailabilityPattern
 	121, // 87: api.v1alpha1.wfm.CallCenterNode.member_constraint_rules:type_name -> api.v1alpha1.wfm.ConstraintRule
 	140, // 88: api.v1alpha1.wfm.CallCenterNode.member_agent_groups:type_name -> api.v1alpha1.wfm.AgentGroup
-	435, // 89: api.v1alpha1.wfm.CallCenterNode.origin_sid:type_name -> google.protobuf.Int64Value
-	422, // 90: api.v1alpha1.wfm.CallCenterNode.shrinkage:type_name -> google.protobuf.FloatValue
+	437, // 89: api.v1alpha1.wfm.CallCenterNode.origin_sid:type_name -> google.protobuf.Int64Value
+	424, // 90: api.v1alpha1.wfm.CallCenterNode.shrinkage:type_name -> google.protobuf.FloatValue
 	100, // 91: api.v1alpha1.wfm.UpdateCallCenterNodeReq.node:type_name -> api.v1alpha1.wfm.CallCenterNode
-	420, // 92: api.v1alpha1.wfm.ClientNode.datetime_set_to_inactive:type_name -> google.protobuf.Timestamp
-	434, // 93: api.v1alpha1.wfm.ClientNode.time_zone_val:type_name -> api.commons.TimeZone
+	422, // 92: api.v1alpha1.wfm.ClientNode.datetime_set_to_inactive:type_name -> google.protobuf.Timestamp
+	436, // 93: api.v1alpha1.wfm.ClientNode.time_zone_val:type_name -> api.commons.TimeZone
 	108, // 94: api.v1alpha1.wfm.ClientNode.member_location_nodes:type_name -> api.v1alpha1.wfm.LocationNode
 	128, // 95: api.v1alpha1.wfm.ClientNode.member_non_skill_activities:type_name -> api.v1alpha1.wfm.NonSkillActivity
 	194, // 96: api.v1alpha1.wfm.ClientNode.member_open_times_patterns:type_name -> api.v1alpha1.wfm.OpenTimesPattern
 	205, // 97: api.v1alpha1.wfm.ClientNode.member_agent_availability_patterns:type_name -> api.v1alpha1.wfm.AgentAvailabilityPattern
 	121, // 98: api.v1alpha1.wfm.ClientNode.member_constraint_rules:type_name -> api.v1alpha1.wfm.ConstraintRule
 	140, // 99: api.v1alpha1.wfm.ClientNode.member_agent_groups:type_name -> api.v1alpha1.wfm.AgentGroup
-	435, // 100: api.v1alpha1.wfm.ClientNode.origin_sid:type_name -> google.protobuf.Int64Value
-	422, // 101: api.v1alpha1.wfm.ClientNode.shrinkage:type_name -> google.protobuf.FloatValue
+	437, // 100: api.v1alpha1.wfm.ClientNode.origin_sid:type_name -> google.protobuf.Int64Value
+	424, // 101: api.v1alpha1.wfm.ClientNode.shrinkage:type_name -> google.protobuf.FloatValue
 	103, // 102: api.v1alpha1.wfm.CreateClientNodeReq.node:type_name -> api.v1alpha1.wfm.ClientNode
 	103, // 103: api.v1alpha1.wfm.UpdateClientNodeReq.node:type_name -> api.v1alpha1.wfm.ClientNode
-	420, // 104: api.v1alpha1.wfm.LocationNode.datetime_set_to_inactive:type_name -> google.protobuf.Timestamp
-	434, // 105: api.v1alpha1.wfm.LocationNode.time_zone_val:type_name -> api.commons.TimeZone
+	422, // 104: api.v1alpha1.wfm.LocationNode.datetime_set_to_inactive:type_name -> google.protobuf.Timestamp
+	436, // 105: api.v1alpha1.wfm.LocationNode.time_zone_val:type_name -> api.commons.TimeZone
 	113, // 106: api.v1alpha1.wfm.LocationNode.member_program_nodes:type_name -> api.v1alpha1.wfm.ProgramNode
 	128, // 107: api.v1alpha1.wfm.LocationNode.member_non_skill_activities:type_name -> api.v1alpha1.wfm.NonSkillActivity
 	194, // 108: api.v1alpha1.wfm.LocationNode.member_open_times_patterns:type_name -> api.v1alpha1.wfm.OpenTimesPattern
 	205, // 109: api.v1alpha1.wfm.LocationNode.member_agent_availability_patterns:type_name -> api.v1alpha1.wfm.AgentAvailabilityPattern
 	121, // 110: api.v1alpha1.wfm.LocationNode.member_constraint_rules:type_name -> api.v1alpha1.wfm.ConstraintRule
 	140, // 111: api.v1alpha1.wfm.LocationNode.member_agent_groups:type_name -> api.v1alpha1.wfm.AgentGroup
-	435, // 112: api.v1alpha1.wfm.LocationNode.origin_sid:type_name -> google.protobuf.Int64Value
-	422, // 113: api.v1alpha1.wfm.LocationNode.shrinkage:type_name -> google.protobuf.FloatValue
+	437, // 112: api.v1alpha1.wfm.LocationNode.origin_sid:type_name -> google.protobuf.Int64Value
+	424, // 113: api.v1alpha1.wfm.LocationNode.shrinkage:type_name -> google.protobuf.FloatValue
 	108, // 114: api.v1alpha1.wfm.CreateLocationNodeReq.node:type_name -> api.v1alpha1.wfm.LocationNode
 	108, // 115: api.v1alpha1.wfm.UpdateLocationNodeReq.location_node:type_name -> api.v1alpha1.wfm.LocationNode
-	420, // 116: api.v1alpha1.wfm.ProgramNode.datetime_set_to_inactive:type_name -> google.protobuf.Timestamp
+	422, // 116: api.v1alpha1.wfm.ProgramNode.datetime_set_to_inactive:type_name -> google.protobuf.Timestamp
 	177, // 117: api.v1alpha1.wfm.ProgramNode.member_shift_templates:type_name -> api.v1alpha1.wfm.ShiftTemplate
 	128, // 118: api.v1alpha1.wfm.ProgramNode.member_non_skill_activities:type_name -> api.v1alpha1.wfm.NonSkillActivity
 	194, // 119: api.v1alpha1.wfm.ProgramNode.member_open_times_patterns:type_name -> api.v1alpha1.wfm.OpenTimesPattern
@@ -33483,34 +33594,34 @@ var file_api_v1alpha1_wfm_wfm_proto_depIdxs = []int32{
 	121, // 121: api.v1alpha1.wfm.ProgramNode.member_constraint_rules:type_name -> api.v1alpha1.wfm.ConstraintRule
 	140, // 122: api.v1alpha1.wfm.ProgramNode.member_agent_groups:type_name -> api.v1alpha1.wfm.AgentGroup
 	217, // 123: api.v1alpha1.wfm.ProgramNode.member_skill_proficiencies:type_name -> api.v1alpha1.wfm.SkillProficiency
-	435, // 124: api.v1alpha1.wfm.ProgramNode.origin_sid:type_name -> google.protobuf.Int64Value
-	423, // 125: api.v1alpha1.wfm.ProgramNode.skill_profile_category:type_name -> api.commons.SkillProfileCategory
-	422, // 126: api.v1alpha1.wfm.ProgramNode.shrinkage:type_name -> google.protobuf.FloatValue
+	437, // 124: api.v1alpha1.wfm.ProgramNode.origin_sid:type_name -> google.protobuf.Int64Value
+	425, // 125: api.v1alpha1.wfm.ProgramNode.skill_profile_category:type_name -> api.commons.SkillProfileCategory
+	424, // 126: api.v1alpha1.wfm.ProgramNode.shrinkage:type_name -> google.protobuf.FloatValue
 	113, // 127: api.v1alpha1.wfm.CreateProgramNodeReq.node:type_name -> api.v1alpha1.wfm.ProgramNode
 	113, // 128: api.v1alpha1.wfm.UpdateProgramNodeReq.program_node:type_name -> api.v1alpha1.wfm.ProgramNode
 	113, // 129: api.v1alpha1.wfm.ListProgramNodesBySidRes.program_nodes:type_name -> api.v1alpha1.wfm.ProgramNode
-	436, // 130: api.v1alpha1.wfm.ParentEntity.parent_type:type_name -> api.commons.ConfigEntityType
+	438, // 130: api.v1alpha1.wfm.ParentEntity.parent_type:type_name -> api.commons.ConfigEntityType
 	120, // 131: api.v1alpha1.wfm.ConstraintRule.parent_entity:type_name -> api.v1alpha1.wfm.ParentEntity
-	437, // 132: api.v1alpha1.wfm.ConstraintRule.val_unit:type_name -> api.commons.ConstraintTimeUnit
-	437, // 133: api.v1alpha1.wfm.ConstraintRule.per_unit:type_name -> api.commons.ConstraintTimeUnit
-	438, // 134: api.v1alpha1.wfm.ConstraintRule.rule_type:type_name -> api.commons.ConstraintRuleType
+	439, // 132: api.v1alpha1.wfm.ConstraintRule.val_unit:type_name -> api.commons.ConstraintTimeUnit
+	439, // 133: api.v1alpha1.wfm.ConstraintRule.per_unit:type_name -> api.commons.ConstraintTimeUnit
+	440, // 134: api.v1alpha1.wfm.ConstraintRule.rule_type:type_name -> api.commons.ConstraintRuleType
 	137, // 135: api.v1alpha1.wfm.ConstraintRule.scheduling_activity:type_name -> api.v1alpha1.wfm.SchedulingActivity
 	217, // 136: api.v1alpha1.wfm.ConstraintRule.skill_proficiency:type_name -> api.v1alpha1.wfm.SkillProficiency
 	121, // 137: api.v1alpha1.wfm.CreateConstraintRuleReq.constraint_rule:type_name -> api.v1alpha1.wfm.ConstraintRule
 	121, // 138: api.v1alpha1.wfm.UpdateConstraintRuleReq.constraint_rule:type_name -> api.v1alpha1.wfm.ConstraintRule
-	420, // 139: api.v1alpha1.wfm.NonSkillActivity.datetime_set_to_inactive:type_name -> google.protobuf.Timestamp
+	422, // 139: api.v1alpha1.wfm.NonSkillActivity.datetime_set_to_inactive:type_name -> google.protobuf.Timestamp
 	120, // 140: api.v1alpha1.wfm.NonSkillActivity.inherited_from_entity:type_name -> api.v1alpha1.wfm.ParentEntity
 	128, // 141: api.v1alpha1.wfm.CreateNonSkillActivityReq.non_skill_activity:type_name -> api.v1alpha1.wfm.NonSkillActivity
 	128, // 142: api.v1alpha1.wfm.UpdateNonSkillActivityReq.non_skill_activity:type_name -> api.v1alpha1.wfm.NonSkillActivity
 	128, // 143: api.v1alpha1.wfm.ListNonSkillActivitiesRes.non_skill_activities:type_name -> api.v1alpha1.wfm.NonSkillActivity
 	120, // 144: api.v1alpha1.wfm.ListNonSkillActivityAssociationsReq.associated_entity:type_name -> api.v1alpha1.wfm.ParentEntity
-	439, // 145: api.v1alpha1.wfm.ListNonSkillActivityAssociationsReq.relationship_type:type_name -> api.commons.ConfigRelationshipType
-	435, // 146: api.v1alpha1.wfm.SchedulingActivity.activity_sid:type_name -> google.protobuf.Int64Value
+	441, // 145: api.v1alpha1.wfm.ListNonSkillActivityAssociationsReq.relationship_type:type_name -> api.commons.ConfigRelationshipType
+	437, // 146: api.v1alpha1.wfm.SchedulingActivity.activity_sid:type_name -> google.protobuf.Int64Value
 	128, // 147: api.v1alpha1.wfm.SchedulingActivity.member_non_skill_activity:type_name -> api.v1alpha1.wfm.NonSkillActivity
 	120, // 148: api.v1alpha1.wfm.ListCandidateSchedulingActivitiesReq.parent_of_rule:type_name -> api.v1alpha1.wfm.ParentEntity
 	137, // 149: api.v1alpha1.wfm.ListCandidateSchedulingActivitiesRes.scheduling_activities:type_name -> api.v1alpha1.wfm.SchedulingActivity
 	120, // 150: api.v1alpha1.wfm.AgentGroup.parent_entity:type_name -> api.v1alpha1.wfm.ParentEntity
-	420, // 151: api.v1alpha1.wfm.AgentGroup.datetime_set_to_inactive:type_name -> google.protobuf.Timestamp
+	422, // 151: api.v1alpha1.wfm.AgentGroup.datetime_set_to_inactive:type_name -> google.protobuf.Timestamp
 	121, // 152: api.v1alpha1.wfm.AgentGroup.member_constraint_rules:type_name -> api.v1alpha1.wfm.ConstraintRule
 	147, // 153: api.v1alpha1.wfm.AgentGroup.member_wfm_agents:type_name -> api.v1alpha1.wfm.WFMAgent
 	217, // 154: api.v1alpha1.wfm.AgentGroup.member_skill_proficiencies:type_name -> api.v1alpha1.wfm.SkillProficiency
@@ -33519,26 +33630,26 @@ var file_api_v1alpha1_wfm_wfm_proto_depIdxs = []int32{
 	120, // 157: api.v1alpha1.wfm.ListAgentScheduleGroupsRequest.entity:type_name -> api.v1alpha1.wfm.ParentEntity
 	140, // 158: api.v1alpha1.wfm.ListAgentScheduleGroupsResponse.agent_groups:type_name -> api.v1alpha1.wfm.AgentGroup
 	140, // 159: api.v1alpha1.wfm.UpdateAgentGroupReq.agent_group:type_name -> api.v1alpha1.wfm.AgentGroup
-	435, // 160: api.v1alpha1.wfm.WFMAgent.tcn_agent_sid:type_name -> google.protobuf.Int64Value
-	420, // 161: api.v1alpha1.wfm.WFMAgent.datetime_set_to_inactive:type_name -> google.protobuf.Timestamp
+	437, // 160: api.v1alpha1.wfm.WFMAgent.tcn_agent_sid:type_name -> google.protobuf.Int64Value
+	422, // 161: api.v1alpha1.wfm.WFMAgent.datetime_set_to_inactive:type_name -> google.protobuf.Timestamp
 	121, // 162: api.v1alpha1.wfm.WFMAgent.member_constraint_rules:type_name -> api.v1alpha1.wfm.ConstraintRule
 	217, // 163: api.v1alpha1.wfm.WFMAgent.member_skill_proficiencies:type_name -> api.v1alpha1.wfm.SkillProficiency
 	205, // 164: api.v1alpha1.wfm.WFMAgent.member_agent_availability_patterns:type_name -> api.v1alpha1.wfm.AgentAvailabilityPattern
-	420, // 165: api.v1alpha1.wfm.WFMAgent.created_at:type_name -> google.protobuf.Timestamp
-	435, // 166: api.v1alpha1.wfm.CreateUnassignedWFMAgentRequest.wfm_agent_sid_to_copy_agent_group_associations:type_name -> google.protobuf.Int64Value
+	422, // 165: api.v1alpha1.wfm.WFMAgent.created_at:type_name -> google.protobuf.Timestamp
+	437, // 166: api.v1alpha1.wfm.CreateUnassignedWFMAgentRequest.wfm_agent_sid_to_copy_agent_group_associations:type_name -> google.protobuf.Int64Value
 	147, // 167: api.v1alpha1.wfm.UpdateWFMAgentReq.wfm_agent:type_name -> api.v1alpha1.wfm.WFMAgent
 	147, // 168: api.v1alpha1.wfm.ListAllWFMAgentsRes.wfm_agents:type_name -> api.v1alpha1.wfm.WFMAgent
-	398, // 169: api.v1alpha1.wfm.ListAllWFMAgentsRes.agent_groups_by_agent:type_name -> api.v1alpha1.wfm.ListAllWFMAgentsRes.AgentGroupsByAgent
+	400, // 169: api.v1alpha1.wfm.ListAllWFMAgentsRes.agent_groups_by_agent:type_name -> api.v1alpha1.wfm.ListAllWFMAgentsRes.AgentGroupsByAgent
 	147, // 170: api.v1alpha1.wfm.ListCandidateWFMAgentsRes.wfm_agents:type_name -> api.v1alpha1.wfm.WFMAgent
-	420, // 171: api.v1alpha1.wfm.ListUngroupedWFMAgentsReq.created_after_datetime:type_name -> google.protobuf.Timestamp
+	422, // 171: api.v1alpha1.wfm.ListUngroupedWFMAgentsReq.created_after_datetime:type_name -> google.protobuf.Timestamp
 	147, // 172: api.v1alpha1.wfm.ListUngroupedWFMAgentsRes.wfm_agents:type_name -> api.v1alpha1.wfm.WFMAgent
-	399, // 173: api.v1alpha1.wfm.ListWFMAgentSidsRes.sids:type_name -> api.v1alpha1.wfm.ListWFMAgentSidsRes.SidsEntry
+	401, // 173: api.v1alpha1.wfm.ListWFMAgentSidsRes.sids:type_name -> api.v1alpha1.wfm.ListWFMAgentSidsRes.SidsEntry
 	147, // 174: api.v1alpha1.wfm.ListUnassignedWFMAgentsResponse.wfm_agents:type_name -> api.v1alpha1.wfm.WFMAgent
 	234, // 175: api.v1alpha1.wfm.BuildAgentDiagnosticsRes.diagnostics:type_name -> api.v1alpha1.wfm.Diagnostics
-	435, // 176: api.v1alpha1.wfm.RemoveAgentFromFutureShiftsResponse.unassigned_agent_sid:type_name -> google.protobuf.Int64Value
-	440, // 177: api.v1alpha1.wfm.DOWPlacement.placement_type:type_name -> api.commons.DOWPlacementType
-	441, // 178: api.v1alpha1.wfm.DOWPlacement.day_of_week:type_name -> api.commons.DayOfWeek
-	420, // 179: api.v1alpha1.wfm.ShiftTemplate.datetime_set_to_inactive:type_name -> google.protobuf.Timestamp
+	437, // 176: api.v1alpha1.wfm.RemoveAgentFromFutureShiftsResponse.unassigned_agent_sid:type_name -> google.protobuf.Int64Value
+	442, // 177: api.v1alpha1.wfm.DOWPlacement.placement_type:type_name -> api.commons.DOWPlacementType
+	443, // 178: api.v1alpha1.wfm.DOWPlacement.day_of_week:type_name -> api.commons.DayOfWeek
+	422, // 179: api.v1alpha1.wfm.ShiftTemplate.datetime_set_to_inactive:type_name -> google.protobuf.Timestamp
 	186, // 180: api.v1alpha1.wfm.ShiftTemplate.member_placement_rules:type_name -> api.v1alpha1.wfm.PlacementRule
 	176, // 181: api.v1alpha1.wfm.ShiftTemplate.DOW_placements:type_name -> api.v1alpha1.wfm.DOWPlacement
 	140, // 182: api.v1alpha1.wfm.ShiftTemplate.member_agent_groups:type_name -> api.v1alpha1.wfm.AgentGroup
@@ -33549,69 +33660,69 @@ var file_api_v1alpha1_wfm_wfm_proto_depIdxs = []int32{
 	137, // 187: api.v1alpha1.wfm.PlacementRule.member_scheduling_activity:type_name -> api.v1alpha1.wfm.SchedulingActivity
 	186, // 188: api.v1alpha1.wfm.CreatePlacementRuleReq.placement_rule:type_name -> api.v1alpha1.wfm.PlacementRule
 	186, // 189: api.v1alpha1.wfm.UpdatePlacementRuleReq.placement_rule:type_name -> api.v1alpha1.wfm.PlacementRule
-	400, // 190: api.v1alpha1.wfm.DatetimePattern.week_maps:type_name -> api.v1alpha1.wfm.DatetimePattern.WeekMap
-	401, // 191: api.v1alpha1.wfm.DatetimePattern.calendar_items:type_name -> api.v1alpha1.wfm.DatetimePattern.CalendarItem
+	402, // 190: api.v1alpha1.wfm.DatetimePattern.week_maps:type_name -> api.v1alpha1.wfm.DatetimePattern.WeekMap
+	403, // 191: api.v1alpha1.wfm.DatetimePattern.calendar_items:type_name -> api.v1alpha1.wfm.DatetimePattern.CalendarItem
 	120, // 192: api.v1alpha1.wfm.OpenTimesPattern.parent_entity:type_name -> api.v1alpha1.wfm.ParentEntity
 	193, // 193: api.v1alpha1.wfm.OpenTimesPattern.datetime_pattern:type_name -> api.v1alpha1.wfm.DatetimePattern
 	194, // 194: api.v1alpha1.wfm.CreateOpenTimesPatternReq.open_times_pattern:type_name -> api.v1alpha1.wfm.OpenTimesPattern
 	194, // 195: api.v1alpha1.wfm.UpdateOpenTimesPatternReq.open_times_pattern:type_name -> api.v1alpha1.wfm.OpenTimesPattern
 	120, // 196: api.v1alpha1.wfm.GetOpenTimesBitmapsReq.node_to_check:type_name -> api.v1alpha1.wfm.ParentEntity
-	433, // 197: api.v1alpha1.wfm.GetOpenTimesBitmapsReq.datetime_range:type_name -> api.commons.DatetimeRange
-	442, // 198: api.v1alpha1.wfm.GetOpenTimesBitmapsReq.bitmap_type:type_name -> api.commons.BitmapType
-	443, // 199: api.v1alpha1.wfm.GetOpenTimesBitmapsRes.inherited_bitmap:type_name -> api.commons.OpenTimesOption
-	443, // 200: api.v1alpha1.wfm.GetOpenTimesBitmapsRes.own_bitmap:type_name -> api.commons.OpenTimesOption
-	443, // 201: api.v1alpha1.wfm.GetOpenTimesBitmapsRes.resulting_bitmap:type_name -> api.commons.OpenTimesOption
-	433, // 202: api.v1alpha1.wfm.ListOpenDateRangesForNodeOpenTimesBitmapsRequest.datetime_range:type_name -> api.commons.DatetimeRange
+	435, // 197: api.v1alpha1.wfm.GetOpenTimesBitmapsReq.datetime_range:type_name -> api.commons.DatetimeRange
+	444, // 198: api.v1alpha1.wfm.GetOpenTimesBitmapsReq.bitmap_type:type_name -> api.commons.BitmapType
+	445, // 199: api.v1alpha1.wfm.GetOpenTimesBitmapsRes.inherited_bitmap:type_name -> api.commons.OpenTimesOption
+	445, // 200: api.v1alpha1.wfm.GetOpenTimesBitmapsRes.own_bitmap:type_name -> api.commons.OpenTimesOption
+	445, // 201: api.v1alpha1.wfm.GetOpenTimesBitmapsRes.resulting_bitmap:type_name -> api.commons.OpenTimesOption
+	435, // 202: api.v1alpha1.wfm.ListOpenDateRangesForNodeOpenTimesBitmapsRequest.datetime_range:type_name -> api.commons.DatetimeRange
 	120, // 203: api.v1alpha1.wfm.ListOpenDateRangesForNodeOpenTimesBitmapsRequest.node_selector:type_name -> api.v1alpha1.wfm.ParentEntity
-	433, // 204: api.v1alpha1.wfm.ListOpenDateRangesForNodeOpenTimesBitmapsResponse.open_close_ranges:type_name -> api.commons.DatetimeRange
+	435, // 204: api.v1alpha1.wfm.ListOpenDateRangesForNodeOpenTimesBitmapsResponse.open_close_ranges:type_name -> api.commons.DatetimeRange
 	120, // 205: api.v1alpha1.wfm.AgentAvailabilityPattern.parent_entity:type_name -> api.v1alpha1.wfm.ParentEntity
 	193, // 206: api.v1alpha1.wfm.AgentAvailabilityPattern.datetime_pattern:type_name -> api.v1alpha1.wfm.DatetimePattern
 	205, // 207: api.v1alpha1.wfm.CreateAgentAvailabilityPatternReq.agent_availability_pattern:type_name -> api.v1alpha1.wfm.AgentAvailabilityPattern
 	205, // 208: api.v1alpha1.wfm.UpdateAgentAvailabilityPatternReq.agent_availability_pattern:type_name -> api.v1alpha1.wfm.AgentAvailabilityPattern
-	444, // 209: api.v1alpha1.wfm.AvailabilityBitmapSet.own_bitmap:type_name -> api.commons.AvailabilityOption
-	444, // 210: api.v1alpha1.wfm.AvailabilityBitmapSet.inherited_bitmap:type_name -> api.commons.AvailabilityOption
-	444, // 211: api.v1alpha1.wfm.AvailabilityBitmapSet.resulting_bitmap:type_name -> api.commons.AvailabilityOption
+	446, // 209: api.v1alpha1.wfm.AvailabilityBitmapSet.own_bitmap:type_name -> api.commons.AvailabilityOption
+	446, // 210: api.v1alpha1.wfm.AvailabilityBitmapSet.inherited_bitmap:type_name -> api.commons.AvailabilityOption
+	446, // 211: api.v1alpha1.wfm.AvailabilityBitmapSet.resulting_bitmap:type_name -> api.commons.AvailabilityOption
 	120, // 212: api.v1alpha1.wfm.AvailabilityBitmapSet.parent_entity:type_name -> api.v1alpha1.wfm.ParentEntity
 	120, // 213: api.v1alpha1.wfm.GetAvailabilityBitmapsReq.entities_to_check:type_name -> api.v1alpha1.wfm.ParentEntity
-	433, // 214: api.v1alpha1.wfm.GetAvailabilityBitmapsReq.datetime_range:type_name -> api.commons.DatetimeRange
-	442, // 215: api.v1alpha1.wfm.GetAvailabilityBitmapsReq.bitmap_type:type_name -> api.commons.BitmapType
+	435, // 214: api.v1alpha1.wfm.GetAvailabilityBitmapsReq.datetime_range:type_name -> api.commons.DatetimeRange
+	444, // 215: api.v1alpha1.wfm.GetAvailabilityBitmapsReq.bitmap_type:type_name -> api.commons.BitmapType
 	212, // 216: api.v1alpha1.wfm.GetAvailabilityBitmapsRes.bitmaps:type_name -> api.v1alpha1.wfm.AvailabilityBitmapSet
 	120, // 217: api.v1alpha1.wfm.UpsertNonSkillActivityAssociationReq.node:type_name -> api.v1alpha1.wfm.ParentEntity
-	439, // 218: api.v1alpha1.wfm.UpsertNonSkillActivityAssociationReq.association_type:type_name -> api.commons.ConfigRelationshipType
+	441, // 218: api.v1alpha1.wfm.UpsertNonSkillActivityAssociationReq.association_type:type_name -> api.commons.ConfigRelationshipType
 	120, // 219: api.v1alpha1.wfm.UpsertNonSkillActivityAssociationRes.nodes_affected:type_name -> api.v1alpha1.wfm.ParentEntity
-	403, // 220: api.v1alpha1.wfm.UpsertNonSkillActivityAssociationRes.rules_using_activity:type_name -> api.v1alpha1.wfm.UpsertNonSkillActivityAssociationRes.EntityMapping
-	435, // 221: api.v1alpha1.wfm.SkillProficiency.preferred_skill_profile_sid:type_name -> google.protobuf.Int64Value
+	405, // 220: api.v1alpha1.wfm.UpsertNonSkillActivityAssociationRes.rules_using_activity:type_name -> api.v1alpha1.wfm.UpsertNonSkillActivityAssociationRes.EntityMapping
+	437, // 221: api.v1alpha1.wfm.SkillProficiency.preferred_skill_profile_sid:type_name -> google.protobuf.Int64Value
 	120, // 222: api.v1alpha1.wfm.SkillProficiency.parent_entity:type_name -> api.v1alpha1.wfm.ParentEntity
 	217, // 223: api.v1alpha1.wfm.CreateSkillProficienciesReq.proficiencies:type_name -> api.v1alpha1.wfm.SkillProficiency
 	217, // 224: api.v1alpha1.wfm.UpdateSkillProficienciesReq.skill_proficiencies:type_name -> api.v1alpha1.wfm.SkillProficiency
-	420, // 225: api.v1alpha1.wfm.ScheduleScenario.creation_datetime:type_name -> google.protobuf.Timestamp
-	435, // 226: api.v1alpha1.wfm.ScheduleScenario.copied_from_scenario_sid:type_name -> google.protobuf.Int64Value
-	433, // 227: api.v1alpha1.wfm.ScheduleScenario.schedule_range:type_name -> api.commons.DatetimeRange
-	420, // 228: api.v1alpha1.wfm.ScheduleScenario.datetime_set_to_inactive:type_name -> google.protobuf.Timestamp
-	433, // 229: api.v1alpha1.wfm.CopyScenarioReq.schedule_range:type_name -> api.commons.DatetimeRange
+	422, // 225: api.v1alpha1.wfm.ScheduleScenario.creation_datetime:type_name -> google.protobuf.Timestamp
+	437, // 226: api.v1alpha1.wfm.ScheduleScenario.copied_from_scenario_sid:type_name -> google.protobuf.Int64Value
+	435, // 227: api.v1alpha1.wfm.ScheduleScenario.schedule_range:type_name -> api.commons.DatetimeRange
+	422, // 228: api.v1alpha1.wfm.ScheduleScenario.datetime_set_to_inactive:type_name -> google.protobuf.Timestamp
+	435, // 229: api.v1alpha1.wfm.CopyScenarioReq.schedule_range:type_name -> api.commons.DatetimeRange
 	224, // 230: api.v1alpha1.wfm.CreateScheduleScenarioWithNodesReq.schedule_scenario:type_name -> api.v1alpha1.wfm.ScheduleScenario
-	434, // 231: api.v1alpha1.wfm.CreateScheduleScenarioWithNodesReq.time_zone_val:type_name -> api.commons.TimeZone
-	423, // 232: api.v1alpha1.wfm.CreateScheduleScenarioWithNodesReq.skill_profile_category:type_name -> api.commons.SkillProfileCategory
+	436, // 231: api.v1alpha1.wfm.CreateScheduleScenarioWithNodesReq.time_zone_val:type_name -> api.commons.TimeZone
+	425, // 232: api.v1alpha1.wfm.CreateScheduleScenarioWithNodesReq.skill_profile_category:type_name -> api.commons.SkillProfileCategory
 	224, // 233: api.v1alpha1.wfm.UpdateScheduleScenarioReq.scheduleScenario:type_name -> api.v1alpha1.wfm.ScheduleScenario
-	436, // 234: api.v1alpha1.wfm.ListConfigEntitiesReq.entity_type:type_name -> api.commons.ConfigEntityType
+	438, // 234: api.v1alpha1.wfm.ListConfigEntitiesReq.entity_type:type_name -> api.commons.ConfigEntityType
 	120, // 235: api.v1alpha1.wfm.ListConfigEntitiesReq.belongs_to_entity:type_name -> api.v1alpha1.wfm.ParentEntity
 	100, // 236: api.v1alpha1.wfm.ListConfigEntitiesRes.call_center_node:type_name -> api.v1alpha1.wfm.CallCenterNode
-	404, // 237: api.v1alpha1.wfm.ListConfigEntitiesRes.client_nodes:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.ClientNodeEntities
-	405, // 238: api.v1alpha1.wfm.ListConfigEntitiesRes.location_nodes:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.LocationNodeEntities
-	406, // 239: api.v1alpha1.wfm.ListConfigEntitiesRes.program_nodes:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.ProgramNodeEntities
-	407, // 240: api.v1alpha1.wfm.ListConfigEntitiesRes.agent_groups:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.AgentGroupEntities
-	408, // 241: api.v1alpha1.wfm.ListConfigEntitiesRes.shift_templates:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.ShiftTemplateEntities
-	409, // 242: api.v1alpha1.wfm.ListConfigEntitiesRes.wfm_agents:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.WFMAgentEntities
-	410, // 243: api.v1alpha1.wfm.ListConfigEntitiesRes.placement_rules:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.PlacementRuleEntities
-	411, // 244: api.v1alpha1.wfm.ListConfigEntitiesRes.constraint_rules:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.ConstraintRuleEntities
-	412, // 245: api.v1alpha1.wfm.ListConfigEntitiesRes.non_skill_activities:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.NonSkillActivityEntities
-	413, // 246: api.v1alpha1.wfm.ListConfigEntitiesRes.agent_availability_patterns:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.AgentAvailabilityPatternEntities
-	414, // 247: api.v1alpha1.wfm.ListConfigEntitiesRes.open_times_patterns:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.OpenTimesPatternEntities
+	406, // 237: api.v1alpha1.wfm.ListConfigEntitiesRes.client_nodes:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.ClientNodeEntities
+	407, // 238: api.v1alpha1.wfm.ListConfigEntitiesRes.location_nodes:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.LocationNodeEntities
+	408, // 239: api.v1alpha1.wfm.ListConfigEntitiesRes.program_nodes:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.ProgramNodeEntities
+	409, // 240: api.v1alpha1.wfm.ListConfigEntitiesRes.agent_groups:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.AgentGroupEntities
+	410, // 241: api.v1alpha1.wfm.ListConfigEntitiesRes.shift_templates:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.ShiftTemplateEntities
+	411, // 242: api.v1alpha1.wfm.ListConfigEntitiesRes.wfm_agents:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.WFMAgentEntities
+	412, // 243: api.v1alpha1.wfm.ListConfigEntitiesRes.placement_rules:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.PlacementRuleEntities
+	413, // 244: api.v1alpha1.wfm.ListConfigEntitiesRes.constraint_rules:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.ConstraintRuleEntities
+	414, // 245: api.v1alpha1.wfm.ListConfigEntitiesRes.non_skill_activities:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.NonSkillActivityEntities
+	415, // 246: api.v1alpha1.wfm.ListConfigEntitiesRes.agent_availability_patterns:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.AgentAvailabilityPatternEntities
+	416, // 247: api.v1alpha1.wfm.ListConfigEntitiesRes.open_times_patterns:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.OpenTimesPatternEntities
 	137, // 248: api.v1alpha1.wfm.ListConfigEntitiesRes.scheduling_activity:type_name -> api.v1alpha1.wfm.SchedulingActivity
-	415, // 249: api.v1alpha1.wfm.ListConfigEntitiesRes.skill_proficiencies:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.SkillProficiencyEntities
-	416, // 250: api.v1alpha1.wfm.ListConfigEntitiesRes.schedule_scenarios:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.ScheduleScenarioEntities
-	445, // 251: api.v1alpha1.wfm.Diagnostic.level:type_name -> api.commons.DiagnosticLevel
-	446, // 252: api.v1alpha1.wfm.Diagnostic.code:type_name -> api.commons.DiagnosticCode
+	417, // 249: api.v1alpha1.wfm.ListConfigEntitiesRes.skill_proficiencies:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.SkillProficiencyEntities
+	418, // 250: api.v1alpha1.wfm.ListConfigEntitiesRes.schedule_scenarios:type_name -> api.v1alpha1.wfm.ListConfigEntitiesRes.ScheduleScenarioEntities
+	447, // 251: api.v1alpha1.wfm.Diagnostic.level:type_name -> api.commons.DiagnosticLevel
+	448, // 252: api.v1alpha1.wfm.Diagnostic.code:type_name -> api.commons.DiagnosticCode
 	120, // 253: api.v1alpha1.wfm.Diagnostic.source_entity:type_name -> api.v1alpha1.wfm.ParentEntity
 	120, // 254: api.v1alpha1.wfm.Diagnostics.source_entity:type_name -> api.v1alpha1.wfm.ParentEntity
 	233, // 255: api.v1alpha1.wfm.Diagnostics.diagnostics:type_name -> api.v1alpha1.wfm.Diagnostic
@@ -33620,123 +33731,123 @@ var file_api_v1alpha1_wfm_wfm_proto_depIdxs = []int32{
 	120, // 258: api.v1alpha1.wfm.BuildNodeDiagnosticsRes.nodes_checked:type_name -> api.v1alpha1.wfm.ParentEntity
 	233, // 259: api.v1alpha1.wfm.BuildGlobalDiagnosticsRes.diagnostics:type_name -> api.v1alpha1.wfm.Diagnostic
 	120, // 260: api.v1alpha1.wfm.BuildGlobalDiagnosticsRes.nodes_checked:type_name -> api.v1alpha1.wfm.ParentEntity
-	420, // 261: api.v1alpha1.wfm.PublishedSchedule.created_at:type_name -> google.protobuf.Timestamp
-	420, // 262: api.v1alpha1.wfm.PublishedSchedule.last_updated_at:type_name -> google.protobuf.Timestamp
+	422, // 261: api.v1alpha1.wfm.PublishedSchedule.created_at:type_name -> google.protobuf.Timestamp
+	422, // 262: api.v1alpha1.wfm.PublishedSchedule.last_updated_at:type_name -> google.protobuf.Timestamp
 	251, // 263: api.v1alpha1.wfm.PublishedSchedule.shift_instances:type_name -> api.v1alpha1.wfm.ShiftInstance
 	244, // 264: api.v1alpha1.wfm.PublishedSchedule.performance_metrics:type_name -> api.v1alpha1.wfm.PerformanceMetric
-	420, // 265: api.v1alpha1.wfm.DraftSchedule.created_at:type_name -> google.protobuf.Timestamp
-	420, // 266: api.v1alpha1.wfm.DraftSchedule.last_updated_at:type_name -> google.protobuf.Timestamp
-	433, // 267: api.v1alpha1.wfm.DraftSchedule.datetime_range:type_name -> api.commons.DatetimeRange
+	422, // 265: api.v1alpha1.wfm.DraftSchedule.created_at:type_name -> google.protobuf.Timestamp
+	422, // 266: api.v1alpha1.wfm.DraftSchedule.last_updated_at:type_name -> google.protobuf.Timestamp
+	435, // 267: api.v1alpha1.wfm.DraftSchedule.datetime_range:type_name -> api.commons.DatetimeRange
 	251, // 268: api.v1alpha1.wfm.DraftSchedule.shift_instances:type_name -> api.v1alpha1.wfm.ShiftInstance
 	244, // 269: api.v1alpha1.wfm.DraftSchedule.performance_metrics:type_name -> api.v1alpha1.wfm.PerformanceMetric
-	433, // 270: api.v1alpha1.wfm.PerformanceMetricForSkillCollection.date_range:type_name -> api.commons.DatetimeRange
-	447, // 271: api.v1alpha1.wfm.PerformanceMetricForSkillCollection.metric_type:type_name -> api.commons.PerformanceMetricType
+	435, // 270: api.v1alpha1.wfm.PerformanceMetricForSkillCollection.date_range:type_name -> api.commons.DatetimeRange
+	449, // 271: api.v1alpha1.wfm.PerformanceMetricForSkillCollection.metric_type:type_name -> api.commons.PerformanceMetricType
 	248, // 272: api.v1alpha1.wfm.PerformanceMetricForSkillCollection.fte_intervals:type_name -> api.v1alpha1.wfm.FTERequiredVsAchievedInterval
 	247, // 273: api.v1alpha1.wfm.PerformanceMetricForSkillCollection.service_level_intervals:type_name -> api.v1alpha1.wfm.ServiceLevelInterval
-	423, // 274: api.v1alpha1.wfm.PerformanceMetricForSkillCollection.skill_collection:type_name -> api.commons.SkillProfileCategory
-	433, // 275: api.v1alpha1.wfm.PerformanceMetric.date_range:type_name -> api.commons.DatetimeRange
-	447, // 276: api.v1alpha1.wfm.PerformanceMetric.metric_type:type_name -> api.commons.PerformanceMetricType
+	425, // 274: api.v1alpha1.wfm.PerformanceMetricForSkillCollection.skill_collection:type_name -> api.commons.SkillProfileCategory
+	435, // 275: api.v1alpha1.wfm.PerformanceMetric.date_range:type_name -> api.commons.DatetimeRange
+	449, // 276: api.v1alpha1.wfm.PerformanceMetric.metric_type:type_name -> api.commons.PerformanceMetricType
 	248, // 277: api.v1alpha1.wfm.PerformanceMetric.fte_intervals:type_name -> api.v1alpha1.wfm.FTERequiredVsAchievedInterval
 	247, // 278: api.v1alpha1.wfm.PerformanceMetric.service_level_intervals:type_name -> api.v1alpha1.wfm.ServiceLevelInterval
 	243, // 279: api.v1alpha1.wfm.PerformanceMetric.metrics_by_skill_collection:type_name -> api.v1alpha1.wfm.PerformanceMetricForSkillCollection
-	433, // 280: api.v1alpha1.wfm.PerformanceMetricForSkillCollectionV2.date_range:type_name -> api.commons.DatetimeRange
-	447, // 281: api.v1alpha1.wfm.PerformanceMetricForSkillCollectionV2.metric_type:type_name -> api.commons.PerformanceMetricType
+	435, // 280: api.v1alpha1.wfm.PerformanceMetricForSkillCollectionV2.date_range:type_name -> api.commons.DatetimeRange
+	449, // 281: api.v1alpha1.wfm.PerformanceMetricForSkillCollectionV2.metric_type:type_name -> api.commons.PerformanceMetricType
 	249, // 282: api.v1alpha1.wfm.PerformanceMetricForSkillCollectionV2.fte_occupancy_intervals:type_name -> api.v1alpha1.wfm.FTERequiredVsAchievedOccupancyInterval
 	247, // 283: api.v1alpha1.wfm.PerformanceMetricForSkillCollectionV2.service_level_intervals:type_name -> api.v1alpha1.wfm.ServiceLevelInterval
-	423, // 284: api.v1alpha1.wfm.PerformanceMetricForSkillCollectionV2.skill_collection:type_name -> api.commons.SkillProfileCategory
-	433, // 285: api.v1alpha1.wfm.PerformanceMetricV2.date_range:type_name -> api.commons.DatetimeRange
-	447, // 286: api.v1alpha1.wfm.PerformanceMetricV2.metric_type:type_name -> api.commons.PerformanceMetricType
+	425, // 284: api.v1alpha1.wfm.PerformanceMetricForSkillCollectionV2.skill_collection:type_name -> api.commons.SkillProfileCategory
+	435, // 285: api.v1alpha1.wfm.PerformanceMetricV2.date_range:type_name -> api.commons.DatetimeRange
+	449, // 286: api.v1alpha1.wfm.PerformanceMetricV2.metric_type:type_name -> api.commons.PerformanceMetricType
 	249, // 287: api.v1alpha1.wfm.PerformanceMetricV2.fte_occupancy_intervals:type_name -> api.v1alpha1.wfm.FTERequiredVsAchievedOccupancyInterval
 	247, // 288: api.v1alpha1.wfm.PerformanceMetricV2.service_level_intervals:type_name -> api.v1alpha1.wfm.ServiceLevelInterval
 	245, // 289: api.v1alpha1.wfm.PerformanceMetricV2.metrics_by_skill_collection:type_name -> api.v1alpha1.wfm.PerformanceMetricForSkillCollectionV2
-	420, // 290: api.v1alpha1.wfm.ServiceLevelInterval.start_datetime:type_name -> google.protobuf.Timestamp
-	420, // 291: api.v1alpha1.wfm.FTERequiredVsAchievedInterval.start_datetime:type_name -> google.protobuf.Timestamp
-	420, // 292: api.v1alpha1.wfm.FTERequiredVsAchievedOccupancyInterval.start_datetime:type_name -> google.protobuf.Timestamp
-	420, // 293: api.v1alpha1.wfm.RequiredCallsInterval.start_datetime:type_name -> google.protobuf.Timestamp
-	420, // 294: api.v1alpha1.wfm.ShiftInstance.start_datetime:type_name -> google.protobuf.Timestamp
-	448, // 295: api.v1alpha1.wfm.ShiftInstance.schedule_type:type_name -> api.commons.ScheduleType
+	422, // 290: api.v1alpha1.wfm.ServiceLevelInterval.start_datetime:type_name -> google.protobuf.Timestamp
+	422, // 291: api.v1alpha1.wfm.FTERequiredVsAchievedInterval.start_datetime:type_name -> google.protobuf.Timestamp
+	422, // 292: api.v1alpha1.wfm.FTERequiredVsAchievedOccupancyInterval.start_datetime:type_name -> google.protobuf.Timestamp
+	422, // 293: api.v1alpha1.wfm.RequiredCallsInterval.start_datetime:type_name -> google.protobuf.Timestamp
+	422, // 294: api.v1alpha1.wfm.ShiftInstance.start_datetime:type_name -> google.protobuf.Timestamp
+	450, // 295: api.v1alpha1.wfm.ShiftInstance.schedule_type:type_name -> api.commons.ScheduleType
 	253, // 296: api.v1alpha1.wfm.ShiftInstance.shift_segments:type_name -> api.v1alpha1.wfm.ShiftSegment
 	177, // 297: api.v1alpha1.wfm.ShiftInstance.shift_template:type_name -> api.v1alpha1.wfm.ShiftTemplate
-	423, // 298: api.v1alpha1.wfm.ShiftSegmentCallStat.skill_collection:type_name -> api.commons.SkillProfileCategory
+	425, // 298: api.v1alpha1.wfm.ShiftSegmentCallStat.skill_collection:type_name -> api.commons.SkillProfileCategory
 	137, // 299: api.v1alpha1.wfm.ShiftSegment.scheduling_activity:type_name -> api.v1alpha1.wfm.SchedulingActivity
 	252, // 300: api.v1alpha1.wfm.ShiftSegment.call_stats_by_skill_collection:type_name -> api.v1alpha1.wfm.ShiftSegmentCallStat
-	433, // 301: api.v1alpha1.wfm.GetPublishedScheduleReq.datetime_range:type_name -> api.commons.DatetimeRange
+	435, // 301: api.v1alpha1.wfm.GetPublishedScheduleReq.datetime_range:type_name -> api.commons.DatetimeRange
 	120, // 302: api.v1alpha1.wfm.GetPublishedScheduleReq.node_selector:type_name -> api.v1alpha1.wfm.ParentEntity
 	241, // 303: api.v1alpha1.wfm.GetPublishedScheduleRes.published_schedule:type_name -> api.v1alpha1.wfm.PublishedSchedule
-	433, // 304: api.v1alpha1.wfm.GetPublishedScheduleRequiredCallsReq.viewing_range:type_name -> api.commons.DatetimeRange
+	435, // 304: api.v1alpha1.wfm.GetPublishedScheduleRequiredCallsReq.viewing_range:type_name -> api.commons.DatetimeRange
 	250, // 305: api.v1alpha1.wfm.GetPublishedScheduleRequiredCallsRes.required_calls_intervals:type_name -> api.v1alpha1.wfm.RequiredCallsInterval
-	433, // 306: api.v1alpha1.wfm.GetDraftScheduleRequiredCallsReq.viewing_range:type_name -> api.commons.DatetimeRange
+	435, // 306: api.v1alpha1.wfm.GetDraftScheduleRequiredCallsReq.viewing_range:type_name -> api.commons.DatetimeRange
 	250, // 307: api.v1alpha1.wfm.GetDraftScheduleRequiredCallsRes.required_calls_intervals:type_name -> api.v1alpha1.wfm.RequiredCallsInterval
-	433, // 308: api.v1alpha1.wfm.CreateDraftScheduleReq.scheduling_range:type_name -> api.commons.DatetimeRange
-	433, // 309: api.v1alpha1.wfm.UpdateDraftScheduleReq.datetime_range:type_name -> api.commons.DatetimeRange
+	435, // 308: api.v1alpha1.wfm.CreateDraftScheduleReq.scheduling_range:type_name -> api.commons.DatetimeRange
+	435, // 309: api.v1alpha1.wfm.UpdateDraftScheduleReq.datetime_range:type_name -> api.commons.DatetimeRange
 	242, // 310: api.v1alpha1.wfm.UpdateDraftScheduleRes.draft_schedule:type_name -> api.v1alpha1.wfm.DraftSchedule
-	433, // 311: api.v1alpha1.wfm.BuildDraftScheduleReq.schedule_scenario_scheduling_range:type_name -> api.commons.DatetimeRange
+	435, // 311: api.v1alpha1.wfm.BuildDraftScheduleReq.schedule_scenario_scheduling_range:type_name -> api.commons.DatetimeRange
 	120, // 312: api.v1alpha1.wfm.BuildDraftScheduleReq.node_selector:type_name -> api.v1alpha1.wfm.ParentEntity
 	242, // 313: api.v1alpha1.wfm.BuildDraftScheduleRes.draft_schedule:type_name -> api.v1alpha1.wfm.DraftSchedule
 	233, // 314: api.v1alpha1.wfm.BuildDraftScheduleRes.diagnostics:type_name -> api.v1alpha1.wfm.Diagnostic
-	449, // 315: api.v1alpha1.wfm.BuildDraftScheduleRes.scheduling_result_metric:type_name -> api.commons.SchedulingResultMetric
+	451, // 315: api.v1alpha1.wfm.BuildDraftScheduleRes.scheduling_result_metric:type_name -> api.commons.SchedulingResultMetric
 	120, // 316: api.v1alpha1.wfm.PublishDraftScheduleReq.node_selector:type_name -> api.v1alpha1.wfm.ParentEntity
-	433, // 317: api.v1alpha1.wfm.PublishDraftScheduleReq.datetime_range:type_name -> api.commons.DatetimeRange
+	435, // 317: api.v1alpha1.wfm.PublishDraftScheduleReq.datetime_range:type_name -> api.commons.DatetimeRange
 	241, // 318: api.v1alpha1.wfm.PublishDraftScheduleRes.published_schedule:type_name -> api.v1alpha1.wfm.PublishedSchedule
 	233, // 319: api.v1alpha1.wfm.PublishDraftScheduleRes.diagnostics:type_name -> api.v1alpha1.wfm.Diagnostic
-	433, // 320: api.v1alpha1.wfm.ResetDraftScheduleReq.datetime_range:type_name -> api.commons.DatetimeRange
+	435, // 320: api.v1alpha1.wfm.ResetDraftScheduleReq.datetime_range:type_name -> api.commons.DatetimeRange
 	233, // 321: api.v1alpha1.wfm.ResetDraftScheduleRes.diagnostics:type_name -> api.v1alpha1.wfm.Diagnostic
-	433, // 322: api.v1alpha1.wfm.GetDraftScheduleReq.datetime_range:type_name -> api.commons.DatetimeRange
+	435, // 322: api.v1alpha1.wfm.GetDraftScheduleReq.datetime_range:type_name -> api.commons.DatetimeRange
 	120, // 323: api.v1alpha1.wfm.GetDraftScheduleReq.node_selector:type_name -> api.v1alpha1.wfm.ParentEntity
 	242, // 324: api.v1alpha1.wfm.GetDraftScheduleRes.draft_schedule:type_name -> api.v1alpha1.wfm.DraftSchedule
-	433, // 325: api.v1alpha1.wfm.ListDraftSchedulesReq.datetime_range:type_name -> api.commons.DatetimeRange
+	435, // 325: api.v1alpha1.wfm.ListDraftSchedulesReq.datetime_range:type_name -> api.commons.DatetimeRange
 	242, // 326: api.v1alpha1.wfm.ListDraftSchedulesRes.draft_schedules:type_name -> api.v1alpha1.wfm.DraftSchedule
-	450, // 327: api.v1alpha1.wfm.ClearScheduleReq.schedule_selector:type_name -> api.commons.ScheduleSelector
+	452, // 327: api.v1alpha1.wfm.ClearScheduleReq.schedule_selector:type_name -> api.commons.ScheduleSelector
 	120, // 328: api.v1alpha1.wfm.ClearScheduleReq.node_selector:type_name -> api.v1alpha1.wfm.ParentEntity
-	433, // 329: api.v1alpha1.wfm.ClearScheduleReq.datetime_range:type_name -> api.commons.DatetimeRange
+	435, // 329: api.v1alpha1.wfm.ClearScheduleReq.datetime_range:type_name -> api.commons.DatetimeRange
 	233, // 330: api.v1alpha1.wfm.ClearScheduleRes.diagnostics:type_name -> api.v1alpha1.wfm.Diagnostic
 	251, // 331: api.v1alpha1.wfm.ListShiftInstancesBySidRes.shift_instances:type_name -> api.v1alpha1.wfm.ShiftInstance
-	450, // 332: api.v1alpha1.wfm.CopyScheduleToScheduleReq.source_schedule_selector:type_name -> api.commons.ScheduleSelector
-	450, // 333: api.v1alpha1.wfm.CopyScheduleToScheduleReq.destination_schedule_selector:type_name -> api.commons.ScheduleSelector
+	452, // 332: api.v1alpha1.wfm.CopyScheduleToScheduleReq.source_schedule_selector:type_name -> api.commons.ScheduleSelector
+	452, // 333: api.v1alpha1.wfm.CopyScheduleToScheduleReq.destination_schedule_selector:type_name -> api.commons.ScheduleSelector
 	120, // 334: api.v1alpha1.wfm.CopyScheduleToScheduleReq.node_selector:type_name -> api.v1alpha1.wfm.ParentEntity
-	433, // 335: api.v1alpha1.wfm.CopyScheduleToScheduleReq.datetime_range:type_name -> api.commons.DatetimeRange
+	435, // 335: api.v1alpha1.wfm.CopyScheduleToScheduleReq.datetime_range:type_name -> api.commons.DatetimeRange
 	233, // 336: api.v1alpha1.wfm.CopyScheduleToScheduleRes.diagnostics:type_name -> api.v1alpha1.wfm.Diagnostic
-	420, // 337: api.v1alpha1.wfm.CreateShiftInstanceReq.start_datetime:type_name -> google.protobuf.Timestamp
-	435, // 338: api.v1alpha1.wfm.CreateShiftInstanceReq.wfm_agent_sid:type_name -> google.protobuf.Int64Value
-	447, // 339: api.v1alpha1.wfm.CreateShiftInstanceReq.metric_types:type_name -> api.commons.PerformanceMetricType
+	422, // 337: api.v1alpha1.wfm.CreateShiftInstanceReq.start_datetime:type_name -> google.protobuf.Timestamp
+	437, // 338: api.v1alpha1.wfm.CreateShiftInstanceReq.wfm_agent_sid:type_name -> google.protobuf.Int64Value
+	449, // 339: api.v1alpha1.wfm.CreateShiftInstanceReq.metric_types:type_name -> api.commons.PerformanceMetricType
 	251, // 340: api.v1alpha1.wfm.CreateShiftInstanceRes.shift_instance:type_name -> api.v1alpha1.wfm.ShiftInstance
 	244, // 341: api.v1alpha1.wfm.CreateShiftInstanceRes.performance_metrics:type_name -> api.v1alpha1.wfm.PerformanceMetric
-	420, // 342: api.v1alpha1.wfm.CreateShiftInstanceV2Req.start_datetime:type_name -> google.protobuf.Timestamp
+	422, // 342: api.v1alpha1.wfm.CreateShiftInstanceV2Req.start_datetime:type_name -> google.protobuf.Timestamp
 	251, // 343: api.v1alpha1.wfm.CreateShiftInstanceV2Res.shift_instances:type_name -> api.v1alpha1.wfm.ShiftInstance
 	233, // 344: api.v1alpha1.wfm.CreateShiftInstanceV2Res.diagnostics:type_name -> api.v1alpha1.wfm.Diagnostic
 	251, // 345: api.v1alpha1.wfm.CreateShiftInstanceWithSegmentsRequest.shift_instance:type_name -> api.v1alpha1.wfm.ShiftInstance
 	251, // 346: api.v1alpha1.wfm.CreateShiftInstanceWithSegmentsResponse.shift_instance:type_name -> api.v1alpha1.wfm.ShiftInstance
 	233, // 347: api.v1alpha1.wfm.CreateShiftInstanceWithSegmentsResponse.diagnostics:type_name -> api.v1alpha1.wfm.Diagnostic
-	420, // 348: api.v1alpha1.wfm.SplitShiftInstanceReq.time_to_split:type_name -> google.protobuf.Timestamp
+	422, // 348: api.v1alpha1.wfm.SplitShiftInstanceReq.time_to_split:type_name -> google.protobuf.Timestamp
 	251, // 349: api.v1alpha1.wfm.SplitShiftInstanceRes.shift_instances:type_name -> api.v1alpha1.wfm.ShiftInstance
 	233, // 350: api.v1alpha1.wfm.SplitShiftInstanceRes.diagnostics:type_name -> api.v1alpha1.wfm.Diagnostic
 	251, // 351: api.v1alpha1.wfm.SwapShiftInstancesRes.shift_instances:type_name -> api.v1alpha1.wfm.ShiftInstance
 	233, // 352: api.v1alpha1.wfm.SwapShiftInstancesRes.diagnostics:type_name -> api.v1alpha1.wfm.Diagnostic
-	420, // 353: api.v1alpha1.wfm.UpdateShiftInstanceReq.start_datetime:type_name -> google.protobuf.Timestamp
-	435, // 354: api.v1alpha1.wfm.UpdateShiftInstanceReq.wfm_agent_sid:type_name -> google.protobuf.Int64Value
-	447, // 355: api.v1alpha1.wfm.UpdateShiftInstanceReq.metric_types:type_name -> api.commons.PerformanceMetricType
+	422, // 353: api.v1alpha1.wfm.UpdateShiftInstanceReq.start_datetime:type_name -> google.protobuf.Timestamp
+	437, // 354: api.v1alpha1.wfm.UpdateShiftInstanceReq.wfm_agent_sid:type_name -> google.protobuf.Int64Value
+	449, // 355: api.v1alpha1.wfm.UpdateShiftInstanceReq.metric_types:type_name -> api.commons.PerformanceMetricType
 	251, // 356: api.v1alpha1.wfm.UpdateShiftInstanceRes.shift_instance:type_name -> api.v1alpha1.wfm.ShiftInstance
 	244, // 357: api.v1alpha1.wfm.UpdateShiftInstanceRes.performance_metrics:type_name -> api.v1alpha1.wfm.PerformanceMetric
-	420, // 358: api.v1alpha1.wfm.UpdateShiftInstanceV2Req.start_datetime:type_name -> google.protobuf.Timestamp
+	422, // 358: api.v1alpha1.wfm.UpdateShiftInstanceV2Req.start_datetime:type_name -> google.protobuf.Timestamp
 	251, // 359: api.v1alpha1.wfm.UpdateShiftInstanceV2Res.shift_instance:type_name -> api.v1alpha1.wfm.ShiftInstance
 	233, // 360: api.v1alpha1.wfm.UpdateShiftInstanceV2Res.diagnostics:type_name -> api.v1alpha1.wfm.Diagnostic
 	251, // 361: api.v1alpha1.wfm.UpdateShiftInstanceWithSegmentsRequest.shift_instance:type_name -> api.v1alpha1.wfm.ShiftInstance
 	251, // 362: api.v1alpha1.wfm.UpdateShiftInstanceWithSegmentsResponse.shift_instance:type_name -> api.v1alpha1.wfm.ShiftInstance
 	233, // 363: api.v1alpha1.wfm.UpdateShiftInstanceWithSegmentsResponse.diagnostics:type_name -> api.v1alpha1.wfm.Diagnostic
-	450, // 364: api.v1alpha1.wfm.CopyShiftInstancesToScheduleReq.destination_schedule:type_name -> api.commons.ScheduleSelector
+	452, // 364: api.v1alpha1.wfm.CopyShiftInstancesToScheduleReq.destination_schedule:type_name -> api.commons.ScheduleSelector
 	233, // 365: api.v1alpha1.wfm.CopyShiftInstancesToScheduleRes.diagnostics:type_name -> api.v1alpha1.wfm.Diagnostic
-	450, // 366: api.v1alpha1.wfm.ListShiftInstanceSidsForAgentReq.schedule_selector:type_name -> api.commons.ScheduleSelector
-	433, // 367: api.v1alpha1.wfm.ListShiftInstanceSidsForAgentReq.datetime_range:type_name -> api.commons.DatetimeRange
+	452, // 366: api.v1alpha1.wfm.ListShiftInstanceSidsForAgentReq.schedule_selector:type_name -> api.commons.ScheduleSelector
+	435, // 367: api.v1alpha1.wfm.ListShiftInstanceSidsForAgentReq.datetime_range:type_name -> api.commons.DatetimeRange
 	253, // 368: api.v1alpha1.wfm.ListShiftSegmentsByShiftInstanceSidsRes.shift_segments:type_name -> api.v1alpha1.wfm.ShiftSegment
-	447, // 369: api.v1alpha1.wfm.PerformanceMetricParameter.metric_type:type_name -> api.commons.PerformanceMetricType
-	435, // 370: api.v1alpha1.wfm.PerformanceMetricParameter.service_level_target_duration_seconds:type_name -> google.protobuf.Int64Value
-	450, // 371: api.v1alpha1.wfm.GetPerformanceMetricsReq.schedule_selector:type_name -> api.commons.ScheduleSelector
+	449, // 369: api.v1alpha1.wfm.PerformanceMetricParameter.metric_type:type_name -> api.commons.PerformanceMetricType
+	437, // 370: api.v1alpha1.wfm.PerformanceMetricParameter.service_level_target_duration_seconds:type_name -> google.protobuf.Int64Value
+	452, // 371: api.v1alpha1.wfm.GetPerformanceMetricsReq.schedule_selector:type_name -> api.commons.ScheduleSelector
 	120, // 372: api.v1alpha1.wfm.GetPerformanceMetricsReq.node_selector:type_name -> api.v1alpha1.wfm.ParentEntity
-	433, // 373: api.v1alpha1.wfm.GetPerformanceMetricsReq.datetime_range:type_name -> api.commons.DatetimeRange
+	435, // 373: api.v1alpha1.wfm.GetPerformanceMetricsReq.datetime_range:type_name -> api.commons.DatetimeRange
 	304, // 374: api.v1alpha1.wfm.GetPerformanceMetricsReq.metric_params:type_name -> api.v1alpha1.wfm.PerformanceMetricParameter
 	244, // 375: api.v1alpha1.wfm.GetPerformanceMetricsRes.performance_metrics:type_name -> api.v1alpha1.wfm.PerformanceMetric
-	451, // 376: api.v1alpha1.wfm.SchedulingTarget.scheduling_target_type:type_name -> api.commons.SchedulingTargetType
-	435, // 377: api.v1alpha1.wfm.SchedulingTarget.service_level_target_duration_seconds:type_name -> google.protobuf.Int64Value
+	453, // 376: api.v1alpha1.wfm.SchedulingTarget.scheduling_target_type:type_name -> api.commons.SchedulingTargetType
+	437, // 377: api.v1alpha1.wfm.SchedulingTarget.service_level_target_duration_seconds:type_name -> google.protobuf.Int64Value
 	120, // 378: api.v1alpha1.wfm.SchedulingTarget.node_entity:type_name -> api.v1alpha1.wfm.ParentEntity
 	307, // 379: api.v1alpha1.wfm.SetSchedulingTargetReq.scheduling_target:type_name -> api.v1alpha1.wfm.SchedulingTarget
 	120, // 380: api.v1alpha1.wfm.GetSchedulingTargetReq.node_selector:type_name -> api.v1alpha1.wfm.ParentEntity
@@ -33747,7 +33858,7 @@ var file_api_v1alpha1_wfm_wfm_proto_depIdxs = []int32{
 	307, // 385: api.v1alpha1.wfm.GetDefaultSchedulingTargetRes.scheduling_target:type_name -> api.v1alpha1.wfm.SchedulingTarget
 	307, // 386: api.v1alpha1.wfm.SetDefaultSchedulingTargetReq.scheduling_target:type_name -> api.v1alpha1.wfm.SchedulingTarget
 	120, // 387: api.v1alpha1.wfm.ListRequiredCallsIntervalsReq.node_selector:type_name -> api.v1alpha1.wfm.ParentEntity
-	433, // 388: api.v1alpha1.wfm.ListRequiredCallsIntervalsReq.datetime_range:type_name -> api.commons.DatetimeRange
+	435, // 388: api.v1alpha1.wfm.ListRequiredCallsIntervalsReq.datetime_range:type_name -> api.commons.DatetimeRange
 	250, // 389: api.v1alpha1.wfm.ListRequiredCallsIntervalsRes.required_calls_intervals:type_name -> api.v1alpha1.wfm.RequiredCallsInterval
 	320, // 390: api.v1alpha1.wfm.TourShiftInstanceConfig.member_tour_shift_segment_configs:type_name -> api.v1alpha1.wfm.TourShiftSegmentConfig
 	321, // 391: api.v1alpha1.wfm.TourWeekPattern.member_tour_shift_instance_configs:type_name -> api.v1alpha1.wfm.TourShiftInstanceConfig
@@ -33770,39 +33881,39 @@ var file_api_v1alpha1_wfm_wfm_proto_depIdxs = []int32{
 	323, // 408: api.v1alpha1.wfm.CreateTourAgentCollectionReq.tour_agent_collection:type_name -> api.v1alpha1.wfm.TourAgentCollection
 	323, // 409: api.v1alpha1.wfm.UpdateTourAgentCollectionReq.tour_agent_collection:type_name -> api.v1alpha1.wfm.TourAgentCollection
 	323, // 410: api.v1alpha1.wfm.ListTourAgentCollectionsRes.tour_agent_collections:type_name -> api.v1alpha1.wfm.TourAgentCollection
-	417, // 411: api.v1alpha1.wfm.ListTourAgentCollectionWFMAgentsRes.wfm_agent_pairings:type_name -> api.v1alpha1.wfm.ListTourAgentCollectionWFMAgentsRes.SidMapping
+	419, // 411: api.v1alpha1.wfm.ListTourAgentCollectionWFMAgentsRes.wfm_agent_pairings:type_name -> api.v1alpha1.wfm.ListTourAgentCollectionWFMAgentsRes.SidMapping
 	322, // 412: api.v1alpha1.wfm.GenerateTourWeekPatternsRes.tour_week_patterns:type_name -> api.v1alpha1.wfm.TourWeekPattern
 	233, // 413: api.v1alpha1.wfm.GenerateTourWeekPatternsRes.diagnostics:type_name -> api.v1alpha1.wfm.Diagnostic
-	433, // 414: api.v1alpha1.wfm.RemoveAgentFromScheduleRequest.datetime_range:type_name -> api.commons.DatetimeRange
-	450, // 415: api.v1alpha1.wfm.RemoveAgentFromScheduleRequest.schedule_selector:type_name -> api.commons.ScheduleSelector
+	435, // 414: api.v1alpha1.wfm.RemoveAgentFromScheduleRequest.datetime_range:type_name -> api.commons.DatetimeRange
+	452, // 415: api.v1alpha1.wfm.RemoveAgentFromScheduleRequest.schedule_selector:type_name -> api.commons.ScheduleSelector
 	120, // 416: api.v1alpha1.wfm.RemoveAgentFromScheduleRequest.node_selector:type_name -> api.v1alpha1.wfm.ParentEntity
 	251, // 417: api.v1alpha1.wfm.RemoveAgentFromScheduleResponse.updated_shifts:type_name -> api.v1alpha1.wfm.ShiftInstance
-	433, // 418: api.v1alpha1.wfm.ListValidAgentsForReplacementReq.datetime_range:type_name -> api.commons.DatetimeRange
-	450, // 419: api.v1alpha1.wfm.ListValidAgentsForReplacementReq.schedule_selector:type_name -> api.commons.ScheduleSelector
+	435, // 418: api.v1alpha1.wfm.ListValidAgentsForReplacementReq.datetime_range:type_name -> api.commons.DatetimeRange
+	452, // 419: api.v1alpha1.wfm.ListValidAgentsForReplacementReq.schedule_selector:type_name -> api.commons.ScheduleSelector
 	120, // 420: api.v1alpha1.wfm.ListValidAgentsForReplacementReq.node_selector:type_name -> api.v1alpha1.wfm.ParentEntity
-	433, // 421: api.v1alpha1.wfm.ReplaceAgentOnScheduleReq.datetime_range:type_name -> api.commons.DatetimeRange
-	450, // 422: api.v1alpha1.wfm.ReplaceAgentOnScheduleReq.schedule_selector:type_name -> api.commons.ScheduleSelector
+	435, // 421: api.v1alpha1.wfm.ReplaceAgentOnScheduleReq.datetime_range:type_name -> api.commons.DatetimeRange
+	452, // 422: api.v1alpha1.wfm.ReplaceAgentOnScheduleReq.schedule_selector:type_name -> api.commons.ScheduleSelector
 	120, // 423: api.v1alpha1.wfm.ReplaceAgentOnScheduleReq.node_selector:type_name -> api.v1alpha1.wfm.ParentEntity
 	251, // 424: api.v1alpha1.wfm.ReplaceAgentOnScheduleRes.updated_shift_instances:type_name -> api.v1alpha1.wfm.ShiftInstance
 	233, // 425: api.v1alpha1.wfm.ReplaceAgentOnScheduleRes.diagnostics:type_name -> api.v1alpha1.wfm.Diagnostic
-	420, // 426: api.v1alpha1.wfm.ListAgentStatesForDayRequest.start_datetime:type_name -> google.protobuf.Timestamp
-	420, // 427: api.v1alpha1.wfm.ListAgentStatesForDayRequest.end_datetime:type_name -> google.protobuf.Timestamp
-	452, // 428: api.v1alpha1.wfm.ListAgentStatesForDayResponse.agent_states:type_name -> api.commons.AgentStateSequence
-	453, // 429: api.v1alpha1.wfm.ListRealTimeManagementStatesResponse.states:type_name -> api.commons.RealTimeManagementState
-	453, // 430: api.v1alpha1.wfm.RealTimeManagementStateColor.state:type_name -> api.commons.RealTimeManagementState
+	422, // 426: api.v1alpha1.wfm.ListAgentStatesForDayRequest.start_datetime:type_name -> google.protobuf.Timestamp
+	422, // 427: api.v1alpha1.wfm.ListAgentStatesForDayRequest.end_datetime:type_name -> google.protobuf.Timestamp
+	454, // 428: api.v1alpha1.wfm.ListAgentStatesForDayResponse.agent_states:type_name -> api.commons.AgentStateSequence
+	455, // 429: api.v1alpha1.wfm.ListRealTimeManagementStatesResponse.states:type_name -> api.commons.RealTimeManagementState
+	455, // 430: api.v1alpha1.wfm.RealTimeManagementStateColor.state:type_name -> api.commons.RealTimeManagementState
 	381, // 431: api.v1alpha1.wfm.RealTimeManagementStateColor.color:type_name -> api.v1alpha1.wfm.RgbaColor
 	388, // 432: api.v1alpha1.wfm.ListRealTimeManagementStateColorsResponse.state_colors:type_name -> api.v1alpha1.wfm.RealTimeManagementStateColor
-	433, // 433: api.v1alpha1.wfm.CreateAgentLeavePetitionRequest.requested_datetime_ranges:type_name -> api.commons.DatetimeRange
-	454, // 434: api.v1alpha1.wfm.CreateAgentLeavePetitionResponse.agent_leave_petition:type_name -> api.commons.AgentLeavePetition
-	433, // 435: api.v1alpha1.wfm.ListAgentLeavePetitionsRequest.datetime_range:type_name -> api.commons.DatetimeRange
-	454, // 436: api.v1alpha1.wfm.ListAgentLeavePetitionsResponse.agent_leave_petitions:type_name -> api.commons.AgentLeavePetition
+	435, // 433: api.v1alpha1.wfm.CreateAgentLeavePetitionRequest.requested_datetime_ranges:type_name -> api.commons.DatetimeRange
+	456, // 434: api.v1alpha1.wfm.CreateAgentLeavePetitionResponse.agent_leave_petition:type_name -> api.commons.AgentLeavePetition
+	435, // 435: api.v1alpha1.wfm.ListAgentLeavePetitionsRequest.datetime_range:type_name -> api.commons.DatetimeRange
+	456, // 436: api.v1alpha1.wfm.ListAgentLeavePetitionsResponse.agent_leave_petitions:type_name -> api.commons.AgentLeavePetition
 	140, // 437: api.v1alpha1.wfm.ListAllWFMAgentsRes.AgentGroupsByAgent.agent_groups:type_name -> api.v1alpha1.wfm.AgentGroup
-	433, // 438: api.v1alpha1.wfm.DatetimePattern.WeekMap.datetime_range:type_name -> api.commons.DatetimeRange
-	402, // 439: api.v1alpha1.wfm.DatetimePattern.WeekMap.day_maps:type_name -> api.v1alpha1.wfm.DatetimePattern.WeekMap.WeekMapDOW
-	433, // 440: api.v1alpha1.wfm.DatetimePattern.CalendarItem.datetime_range:type_name -> api.commons.DatetimeRange
-	455, // 441: api.v1alpha1.wfm.DatetimePattern.CalendarItem.value:type_name -> api.commons.OptionTypes
-	441, // 442: api.v1alpha1.wfm.DatetimePattern.WeekMap.WeekMapDOW.day_of_week:type_name -> api.commons.DayOfWeek
-	455, // 443: api.v1alpha1.wfm.DatetimePattern.WeekMap.WeekMapDOW.value:type_name -> api.commons.OptionTypes
+	435, // 438: api.v1alpha1.wfm.DatetimePattern.WeekMap.datetime_range:type_name -> api.commons.DatetimeRange
+	404, // 439: api.v1alpha1.wfm.DatetimePattern.WeekMap.day_maps:type_name -> api.v1alpha1.wfm.DatetimePattern.WeekMap.WeekMapDOW
+	435, // 440: api.v1alpha1.wfm.DatetimePattern.CalendarItem.datetime_range:type_name -> api.commons.DatetimeRange
+	457, // 441: api.v1alpha1.wfm.DatetimePattern.CalendarItem.value:type_name -> api.commons.OptionTypes
+	443, // 442: api.v1alpha1.wfm.DatetimePattern.WeekMap.WeekMapDOW.day_of_week:type_name -> api.commons.DayOfWeek
+	457, // 443: api.v1alpha1.wfm.DatetimePattern.WeekMap.WeekMapDOW.value:type_name -> api.commons.OptionTypes
 	120, // 444: api.v1alpha1.wfm.UpsertNonSkillActivityAssociationRes.EntityMapping.left_entity:type_name -> api.v1alpha1.wfm.ParentEntity
 	120, // 445: api.v1alpha1.wfm.UpsertNonSkillActivityAssociationRes.EntityMapping.right_entity:type_name -> api.v1alpha1.wfm.ParentEntity
 	103, // 446: api.v1alpha1.wfm.ListConfigEntitiesRes.ClientNodeEntities.entities:type_name -> api.v1alpha1.wfm.ClientNode
@@ -33988,186 +34099,188 @@ var file_api_v1alpha1_wfm_wfm_proto_depIdxs = []int32{
 	375, // 626: api.v1alpha1.wfm.WFM.RemoveAgentFromSchedule:input_type -> api.v1alpha1.wfm.RemoveAgentFromScheduleRequest
 	391, // 627: api.v1alpha1.wfm.WFM.CreateAgentLeavePetition:input_type -> api.v1alpha1.wfm.CreateAgentLeavePetitionRequest
 	393, // 628: api.v1alpha1.wfm.WFM.ListAgentLeavePetitions:input_type -> api.v1alpha1.wfm.ListAgentLeavePetitionsRequest
-	382, // 629: api.v1alpha1.wfm.WFM.HelloWorldWFMAdherence:input_type -> api.v1alpha1.wfm.HelloWorldWFMAdherenceRequest
-	384, // 630: api.v1alpha1.wfm.WFM.ListAgentStatesForDay:input_type -> api.v1alpha1.wfm.ListAgentStatesForDayRequest
-	386, // 631: api.v1alpha1.wfm.WFM.ListRealTimeManagementStates:input_type -> api.v1alpha1.wfm.ListRealTimeManagementStatesRequest
-	389, // 632: api.v1alpha1.wfm.WFM.ListRealTimeManagementStateColors:input_type -> api.v1alpha1.wfm.ListRealTimeManagementStateColorsRequest
-	2,   // 633: api.v1alpha1.wfm.WFM.PerformInitialClientSetup:output_type -> api.v1alpha1.wfm.PerformInitialClientSetupResponse
-	7,   // 634: api.v1alpha1.wfm.WFM.ListSkillProfiles:output_type -> api.v1alpha1.wfm.ListSkillProfilesRes
-	9,   // 635: api.v1alpha1.wfm.WFM.UpdateSkillProfile:output_type -> api.v1alpha1.wfm.UpdateSkillProfileRes
-	11,  // 636: api.v1alpha1.wfm.WFM.UpdateSkillProfileProficiencies:output_type -> api.v1alpha1.wfm.UpdateSkillProfileProficienciesRes
-	13,  // 637: api.v1alpha1.wfm.WFM.GetSkillProfile:output_type -> api.v1alpha1.wfm.GetSkillProfileRes
-	15,  // 638: api.v1alpha1.wfm.WFM.ResyncSkillProfiles:output_type -> api.v1alpha1.wfm.ResyncSkillProfilesRes
-	17,  // 639: api.v1alpha1.wfm.WFM.GetLastSkillProfileResyncDate:output_type -> api.v1alpha1.wfm.GetLastSkillProfileResyncDateRes
-	19,  // 640: api.v1alpha1.wfm.WFM.UpsertForecastingParameters:output_type -> api.v1alpha1.wfm.UpsertForecastingParametersRes
-	21,  // 641: api.v1alpha1.wfm.WFM.GetForecastingParameters:output_type -> api.v1alpha1.wfm.GetForecastingParametersRes
-	24,  // 642: api.v1alpha1.wfm.WFM.GetClientHistoryCacheInfo:output_type -> api.v1alpha1.wfm.GetClientHistoryCacheInfoRes
-	26,  // 643: api.v1alpha1.wfm.WFM.ListHistoricalData:output_type -> api.v1alpha1.wfm.ListHistoricalDataRes
-	28,  // 644: api.v1alpha1.wfm.WFM.UpsertHistoricalDataDelta:output_type -> api.v1alpha1.wfm.UpsertHistoricalDataDeltaRes
-	30,  // 645: api.v1alpha1.wfm.WFM.UpsertHistoricalDataDeltas:output_type -> api.v1alpha1.wfm.UpsertHistoricalDataDeltasRes
-	32,  // 646: api.v1alpha1.wfm.WFM.ListSkills:output_type -> api.v1alpha1.wfm.ListSkillsRes
-	35,  // 647: api.v1alpha1.wfm.WFM.BuildCallProfileTemplateForSkillProfile:output_type -> api.v1alpha1.wfm.BuildCallProfileTemplateForSkillProfileRes
-	37,  // 648: api.v1alpha1.wfm.WFM.BuildCallProfileTemplate:output_type -> api.v1alpha1.wfm.BuildCallProfileTemplateRes
-	39,  // 649: api.v1alpha1.wfm.WFM.CreateInactiveSkillProfileMapping:output_type -> api.v1alpha1.wfm.CreateInactiveSkillProfileMappingRes
-	41,  // 650: api.v1alpha1.wfm.WFM.GetAvailableRegressionForecasterModelTypes:output_type -> api.v1alpha1.wfm.GetAvailableRegressionForecasterModelTypesRes
-	43,  // 651: api.v1alpha1.wfm.WFM.DisconnectInactiveSkillProfileMapping:output_type -> api.v1alpha1.wfm.DisconnectInactiveSkillProfileMappingRes
-	45,  // 652: api.v1alpha1.wfm.WFM.CreateSkillProfileGroup:output_type -> api.v1alpha1.wfm.CreateSkillProfileGroupRes
-	47,  // 653: api.v1alpha1.wfm.WFM.UpdateSkillProfileGroup:output_type -> api.v1alpha1.wfm.UpdateSkillProfileGroupRes
-	49,  // 654: api.v1alpha1.wfm.WFM.ListSkillProfileGroups:output_type -> api.v1alpha1.wfm.ListSkillProfileGroupsRes
-	51,  // 655: api.v1alpha1.wfm.WFM.UpdateSkillProfileGroupAssociations:output_type -> api.v1alpha1.wfm.UpdateSkillProfileGroupAssociationsRes
-	53,  // 656: api.v1alpha1.wfm.WFM.DeleteHistoricalDataDeltas:output_type -> api.v1alpha1.wfm.DeleteHistoricalDataDeltasRes
-	55,  // 657: api.v1alpha1.wfm.WFM.ListTopSkillProfiles:output_type -> api.v1alpha1.wfm.ListTopSkillProfilesRes
-	57,  // 658: api.v1alpha1.wfm.WFM.GetSkillProfilesCount:output_type -> api.v1alpha1.wfm.GetSkillProfilesCountRes
-	59,  // 659: api.v1alpha1.wfm.WFM.BuildProfileForecastByInterval:output_type -> api.v1alpha1.wfm.CallDataByInterval
-	61,  // 660: api.v1alpha1.wfm.WFM.BuildProfileForecastByIntervalWithStats:output_type -> api.v1alpha1.wfm.BuildProfileForecastByIntervalWithStatsRes
-	63,  // 661: api.v1alpha1.wfm.WFM.UpsertProfileForecast:output_type -> api.v1alpha1.wfm.UpsertProfileForecastRes
-	65,  // 662: api.v1alpha1.wfm.WFM.CreateCallProfileTemplate:output_type -> api.v1alpha1.wfm.CreateCallProfileTemplateRes
-	67,  // 663: api.v1alpha1.wfm.WFM.DeleteCallProfileTemplate:output_type -> api.v1alpha1.wfm.DeleteCallProfileTemplateRes
-	70,  // 664: api.v1alpha1.wfm.WFM.CreateRegressionTemplate:output_type -> api.v1alpha1.wfm.CreateRegressionTemplateRes
-	72,  // 665: api.v1alpha1.wfm.WFM.DeleteRegressionTemplate:output_type -> api.v1alpha1.wfm.DeleteRegressionTemplateRes
-	74,  // 666: api.v1alpha1.wfm.WFM.ListRegressionTemplates:output_type -> api.v1alpha1.wfm.ListRegressionTemplatesRes
-	59,  // 667: api.v1alpha1.wfm.WFM.ListForecastIntervalsForSkillProfile:output_type -> api.v1alpha1.wfm.CallDataByInterval
-	59,  // 668: api.v1alpha1.wfm.WFM.ListForecastIntervals:output_type -> api.v1alpha1.wfm.CallDataByInterval
-	59,  // 669: api.v1alpha1.wfm.WFM.BuildRegressionForecastByInterval:output_type -> api.v1alpha1.wfm.CallDataByInterval
-	78,  // 670: api.v1alpha1.wfm.WFM.BuildRegressionForecastByIntervalWithStats:output_type -> api.v1alpha1.wfm.BuildRegressionForecastByIntervalWithStatsRes
-	80,  // 671: api.v1alpha1.wfm.WFM.ListCallProfileTemplates:output_type -> api.v1alpha1.wfm.ListCallProfileTemplatesRes
-	84,  // 672: api.v1alpha1.wfm.WFM.UpsertRegressionForecast:output_type -> api.v1alpha1.wfm.UpsertRegressionForecastRes
-	86,  // 673: api.v1alpha1.wfm.WFM.UpsertForecastDataDelta:output_type -> api.v1alpha1.wfm.UpsertForecastDataDeltaRes
-	88,  // 674: api.v1alpha1.wfm.WFM.UpsertForecastDataDeltas:output_type -> api.v1alpha1.wfm.UpsertForecastDataDeltasRes
-	90,  // 675: api.v1alpha1.wfm.WFM.DeleteForecastIntervals:output_type -> api.v1alpha1.wfm.DeleteForecastIntervalsRes
-	92,  // 676: api.v1alpha1.wfm.WFM.ListHistoricalDataForAllSkillProfiles:output_type -> api.v1alpha1.wfm.ListHistoricalDataForAllSkillProfilesRes
-	94,  // 677: api.v1alpha1.wfm.WFM.BuildDOWAndMOYProfiles:output_type -> api.v1alpha1.wfm.BuildDOWAndMOYProfilesRes
-	96,  // 678: api.v1alpha1.wfm.WFM.CalculateTrainingDataAveragesForSkillProfile:output_type -> api.v1alpha1.wfm.CalculateTrainingDataAveragesForSkillProfileRes
-	98,  // 679: api.v1alpha1.wfm.WFM.UpdateSkillProfileAveragesUsingHistoricalData:output_type -> api.v1alpha1.wfm.UpdateSkillProfileAveragesUsingHistoricalDataRes
-	102, // 680: api.v1alpha1.wfm.WFM.UpdateCallCenterNode:output_type -> api.v1alpha1.wfm.UpdateCallCenterNodeRes
-	105, // 681: api.v1alpha1.wfm.WFM.CreateClientNode:output_type -> api.v1alpha1.wfm.CreateClientNodeRes
-	107, // 682: api.v1alpha1.wfm.WFM.UpdateClientNode:output_type -> api.v1alpha1.wfm.UpdateClientNodeRes
-	110, // 683: api.v1alpha1.wfm.WFM.CreateLocationNode:output_type -> api.v1alpha1.wfm.CreateLocationNodeRes
-	112, // 684: api.v1alpha1.wfm.WFM.UpdateLocationNode:output_type -> api.v1alpha1.wfm.UpdateLocationNodeRes
-	115, // 685: api.v1alpha1.wfm.WFM.CreateProgramNode:output_type -> api.v1alpha1.wfm.CreateProgramNodeRes
-	117, // 686: api.v1alpha1.wfm.WFM.UpdateProgramNode:output_type -> api.v1alpha1.wfm.UpdateProgramNodeRes
-	119, // 687: api.v1alpha1.wfm.WFM.ListProgramNodesBySid:output_type -> api.v1alpha1.wfm.ListProgramNodesBySidRes
-	123, // 688: api.v1alpha1.wfm.WFM.CreateConstraintRule:output_type -> api.v1alpha1.wfm.CreateConstraintRuleRes
-	125, // 689: api.v1alpha1.wfm.WFM.UpdateConstraintRule:output_type -> api.v1alpha1.wfm.UpdateConstraintRuleRes
-	127, // 690: api.v1alpha1.wfm.WFM.DeleteConstraintRule:output_type -> api.v1alpha1.wfm.DeleteConstraintRuleRes
-	130, // 691: api.v1alpha1.wfm.WFM.CreateNonSkillActivity:output_type -> api.v1alpha1.wfm.CreateNonSkillActivityRes
-	132, // 692: api.v1alpha1.wfm.WFM.UpdateNonSkillActivity:output_type -> api.v1alpha1.wfm.UpdateNonSkillActivityRes
-	134, // 693: api.v1alpha1.wfm.WFM.ListNonSkillActivities:output_type -> api.v1alpha1.wfm.ListNonSkillActivitiesRes
-	136, // 694: api.v1alpha1.wfm.WFM.ListNonSkillActivityAssociations:output_type -> api.v1alpha1.wfm.ListNonSkillActivityAssociationsRes
-	139, // 695: api.v1alpha1.wfm.WFM.ListCandidateSchedulingActivities:output_type -> api.v1alpha1.wfm.ListCandidateSchedulingActivitiesRes
-	142, // 696: api.v1alpha1.wfm.WFM.CreateAgentGroup:output_type -> api.v1alpha1.wfm.CreateAgentGroupRes
-	144, // 697: api.v1alpha1.wfm.WFM.ListAgentScheduleGroups:output_type -> api.v1alpha1.wfm.ListAgentScheduleGroupsResponse
-	146, // 698: api.v1alpha1.wfm.WFM.UpdateAgentGroup:output_type -> api.v1alpha1.wfm.UpdateAgentGroupRes
-	149, // 699: api.v1alpha1.wfm.WFM.CreateUnassignedWFMAgent:output_type -> api.v1alpha1.wfm.CreateUnassignedWFMAgentResponse
-	151, // 700: api.v1alpha1.wfm.WFM.UpdateWFMAgent:output_type -> api.v1alpha1.wfm.UpdateWFMAgentRes
-	153, // 701: api.v1alpha1.wfm.WFM.ListAllWFMAgents:output_type -> api.v1alpha1.wfm.ListAllWFMAgentsRes
-	155, // 702: api.v1alpha1.wfm.WFM.ListCandidateWFMAgents:output_type -> api.v1alpha1.wfm.ListCandidateWFMAgentsRes
-	157, // 703: api.v1alpha1.wfm.WFM.ListUngroupedWFMAgents:output_type -> api.v1alpha1.wfm.ListUngroupedWFMAgentsRes
-	159, // 704: api.v1alpha1.wfm.WFM.ListWFMAgentSids:output_type -> api.v1alpha1.wfm.ListWFMAgentSidsRes
-	161, // 705: api.v1alpha1.wfm.WFM.ListUnassignedWFMAgents:output_type -> api.v1alpha1.wfm.ListUnassignedWFMAgentsResponse
-	163, // 706: api.v1alpha1.wfm.WFM.ListWFMAgentsAssociatedWithAgentGroup:output_type -> api.v1alpha1.wfm.ListWFMAgentsAssociatedWithAgentGroupRes
-	167, // 707: api.v1alpha1.wfm.WFM.CreateWFMAgentMemberships:output_type -> api.v1alpha1.wfm.CreateWFMAgentMembershipsRes
-	169, // 708: api.v1alpha1.wfm.WFM.CopyWFMAgentMemberships:output_type -> api.v1alpha1.wfm.CopyWFMAgentMembershipsResponse
-	171, // 709: api.v1alpha1.wfm.WFM.DeleteWFMAgentMemberships:output_type -> api.v1alpha1.wfm.DeleteWFMAgentMembershipsRes
-	173, // 710: api.v1alpha1.wfm.WFM.DeleteWFMAgentsMemberships:output_type -> api.v1alpha1.wfm.DeleteWFMAgentsMembershipsRes
-	175, // 711: api.v1alpha1.wfm.WFM.RemoveAgentFromFutureShifts:output_type -> api.v1alpha1.wfm.RemoveAgentFromFutureShiftsResponse
-	165, // 712: api.v1alpha1.wfm.WFM.BuildAgentDiagnostics:output_type -> api.v1alpha1.wfm.BuildAgentDiagnosticsRes
-	179, // 713: api.v1alpha1.wfm.WFM.CreateShiftTemplate:output_type -> api.v1alpha1.wfm.CreateShiftTemplateRes
-	181, // 714: api.v1alpha1.wfm.WFM.UpdateShiftTemplate:output_type -> api.v1alpha1.wfm.UpdateShiftTemplateRes
-	183, // 715: api.v1alpha1.wfm.WFM.ListShiftTemplatesBySids:output_type -> api.v1alpha1.wfm.ListShiftTemplatesBySidsRes
-	185, // 716: api.v1alpha1.wfm.WFM.BuildShiftTemplateDiagnostics:output_type -> api.v1alpha1.wfm.BuildShiftTemplateDiagnosticsRes
-	188, // 717: api.v1alpha1.wfm.WFM.CreatePlacementRule:output_type -> api.v1alpha1.wfm.CreatePlacementRuleRes
-	190, // 718: api.v1alpha1.wfm.WFM.UpdatePlacementRule:output_type -> api.v1alpha1.wfm.UpdatePlacementRuleRes
-	192, // 719: api.v1alpha1.wfm.WFM.DeletePlacementRule:output_type -> api.v1alpha1.wfm.DeletePlacementRuleRes
-	196, // 720: api.v1alpha1.wfm.WFM.CreateOpenTimesPattern:output_type -> api.v1alpha1.wfm.CreateOpenTimesPatternRes
-	198, // 721: api.v1alpha1.wfm.WFM.UpdateOpenTimesPattern:output_type -> api.v1alpha1.wfm.UpdateOpenTimesPatternRes
-	200, // 722: api.v1alpha1.wfm.WFM.DeleteOpenTimesPattern:output_type -> api.v1alpha1.wfm.DeleteOpenTimesPatternRes
-	202, // 723: api.v1alpha1.wfm.WFM.GetOpenTimesBitmaps:output_type -> api.v1alpha1.wfm.GetOpenTimesBitmapsRes
-	204, // 724: api.v1alpha1.wfm.WFM.ListOpenDateRangesForNodeOpenTimesBitmaps:output_type -> api.v1alpha1.wfm.ListOpenDateRangesForNodeOpenTimesBitmapsResponse
-	207, // 725: api.v1alpha1.wfm.WFM.CreateAgentAvailabilityPattern:output_type -> api.v1alpha1.wfm.CreateAgentAvailabilityPatternRes
-	209, // 726: api.v1alpha1.wfm.WFM.UpdateAgentAvailabilityPattern:output_type -> api.v1alpha1.wfm.UpdateAgentAvailabilityPatternRes
-	211, // 727: api.v1alpha1.wfm.WFM.DeleteAgentAvailabilityPattern:output_type -> api.v1alpha1.wfm.DeleteAgentAvailabilityPatternRes
-	214, // 728: api.v1alpha1.wfm.WFM.GetAvailabilityBitmaps:output_type -> api.v1alpha1.wfm.GetAvailabilityBitmapsRes
-	216, // 729: api.v1alpha1.wfm.WFM.UpsertNonSkillActivityAssociation:output_type -> api.v1alpha1.wfm.UpsertNonSkillActivityAssociationRes
-	219, // 730: api.v1alpha1.wfm.WFM.CreateSkillProficiencies:output_type -> api.v1alpha1.wfm.CreateSkillProficienciesRes
-	221, // 731: api.v1alpha1.wfm.WFM.UpdateSkillProficiencies:output_type -> api.v1alpha1.wfm.UpdateSkillProficienciesRes
-	223, // 732: api.v1alpha1.wfm.WFM.DeleteSkillProficiency:output_type -> api.v1alpha1.wfm.DeleteSkillProficiencyRes
-	226, // 733: api.v1alpha1.wfm.WFM.CopyScenario:output_type -> api.v1alpha1.wfm.CopyScenarioRes
-	228, // 734: api.v1alpha1.wfm.WFM.CreateScheduleScenarioWithNodes:output_type -> api.v1alpha1.wfm.CreateScheduleScenarioWithNodesRes
-	230, // 735: api.v1alpha1.wfm.WFM.UpdateScheduleScenario:output_type -> api.v1alpha1.wfm.UpdateScheduleScenarioRes
-	232, // 736: api.v1alpha1.wfm.WFM.ListConfigEntities:output_type -> api.v1alpha1.wfm.ListConfigEntitiesRes
-	236, // 737: api.v1alpha1.wfm.WFM.DeleteShiftInstances:output_type -> api.v1alpha1.wfm.DeleteShiftInstancesRes
-	238, // 738: api.v1alpha1.wfm.WFM.BuildNodeDiagnostics:output_type -> api.v1alpha1.wfm.BuildNodeDiagnosticsRes
-	240, // 739: api.v1alpha1.wfm.WFM.BuildGlobalDiagnostics:output_type -> api.v1alpha1.wfm.BuildGlobalDiagnosticsRes
-	255, // 740: api.v1alpha1.wfm.WFM.GetPublishedSchedule:output_type -> api.v1alpha1.wfm.GetPublishedScheduleRes
-	257, // 741: api.v1alpha1.wfm.WFM.GetPublishedScheduleRequiredCalls:output_type -> api.v1alpha1.wfm.GetPublishedScheduleRequiredCallsRes
-	259, // 742: api.v1alpha1.wfm.WFM.GetDraftScheduleRequiredCalls:output_type -> api.v1alpha1.wfm.GetDraftScheduleRequiredCallsRes
-	261, // 743: api.v1alpha1.wfm.WFM.CreateDraftSchedule:output_type -> api.v1alpha1.wfm.CreateDraftScheduleRes
-	263, // 744: api.v1alpha1.wfm.WFM.UpdateDraftSchedule:output_type -> api.v1alpha1.wfm.UpdateDraftScheduleRes
-	265, // 745: api.v1alpha1.wfm.WFM.BuildDraftSchedule:output_type -> api.v1alpha1.wfm.BuildDraftScheduleRes
-	267, // 746: api.v1alpha1.wfm.WFM.PublishDraftSchedule:output_type -> api.v1alpha1.wfm.PublishDraftScheduleRes
-	269, // 747: api.v1alpha1.wfm.WFM.ResetDraftSchedule:output_type -> api.v1alpha1.wfm.ResetDraftScheduleRes
-	271, // 748: api.v1alpha1.wfm.WFM.GetDraftSchedule:output_type -> api.v1alpha1.wfm.GetDraftScheduleRes
-	273, // 749: api.v1alpha1.wfm.WFM.ListDraftSchedules:output_type -> api.v1alpha1.wfm.ListDraftSchedulesRes
-	275, // 750: api.v1alpha1.wfm.WFM.ClearSchedule:output_type -> api.v1alpha1.wfm.ClearScheduleRes
-	277, // 751: api.v1alpha1.wfm.WFM.DeleteDraftSchedule:output_type -> api.v1alpha1.wfm.DeleteDraftScheduleRes
-	279, // 752: api.v1alpha1.wfm.WFM.ListShiftInstancesBySid:output_type -> api.v1alpha1.wfm.ListShiftInstancesBySidRes
-	281, // 753: api.v1alpha1.wfm.WFM.CopyScheduleToSchedule:output_type -> api.v1alpha1.wfm.CopyScheduleToScheduleRes
-	283, // 754: api.v1alpha1.wfm.WFM.CreateShiftInstance:output_type -> api.v1alpha1.wfm.CreateShiftInstanceRes
-	285, // 755: api.v1alpha1.wfm.WFM.CreateShiftInstanceV2:output_type -> api.v1alpha1.wfm.CreateShiftInstanceV2Res
-	287, // 756: api.v1alpha1.wfm.WFM.CreateShiftInstanceWithSegments:output_type -> api.v1alpha1.wfm.CreateShiftInstanceWithSegmentsResponse
-	289, // 757: api.v1alpha1.wfm.WFM.SplitShiftInstance:output_type -> api.v1alpha1.wfm.SplitShiftInstanceRes
-	291, // 758: api.v1alpha1.wfm.WFM.SwapShiftInstances:output_type -> api.v1alpha1.wfm.SwapShiftInstancesRes
-	293, // 759: api.v1alpha1.wfm.WFM.UpdateShiftInstance:output_type -> api.v1alpha1.wfm.UpdateShiftInstanceRes
-	295, // 760: api.v1alpha1.wfm.WFM.UpdateShiftInstanceV2:output_type -> api.v1alpha1.wfm.UpdateShiftInstanceV2Res
-	297, // 761: api.v1alpha1.wfm.WFM.UpdateShiftInstanceWithSegments:output_type -> api.v1alpha1.wfm.UpdateShiftInstanceWithSegmentsResponse
-	299, // 762: api.v1alpha1.wfm.WFM.CopyShiftInstancesToSchedule:output_type -> api.v1alpha1.wfm.CopyShiftInstancesToScheduleRes
-	301, // 763: api.v1alpha1.wfm.WFM.ListShiftInstanceSidsForAgent:output_type -> api.v1alpha1.wfm.ListShiftInstanceSidsForAgentRes
-	303, // 764: api.v1alpha1.wfm.WFM.ListShiftSegmentsByShiftInstanceSids:output_type -> api.v1alpha1.wfm.ListShiftSegmentsByShiftInstanceSidsRes
-	309, // 765: api.v1alpha1.wfm.WFM.SetSchedulingTarget:output_type -> api.v1alpha1.wfm.SetSchedulingTargetRes
-	311, // 766: api.v1alpha1.wfm.WFM.GetSchedulingTarget:output_type -> api.v1alpha1.wfm.GetSchedulingTargetRes
-	313, // 767: api.v1alpha1.wfm.WFM.DeleteSchedulingTarget:output_type -> api.v1alpha1.wfm.DeleteSchedulingTargetRes
-	315, // 768: api.v1alpha1.wfm.WFM.GetDefaultSchedulingTarget:output_type -> api.v1alpha1.wfm.GetDefaultSchedulingTargetRes
-	317, // 769: api.v1alpha1.wfm.WFM.SetDefaultSchedulingTarget:output_type -> api.v1alpha1.wfm.SetDefaultSchedulingTargetRes
-	306, // 770: api.v1alpha1.wfm.WFM.GetPerformanceMetrics:output_type -> api.v1alpha1.wfm.GetPerformanceMetricsRes
-	319, // 771: api.v1alpha1.wfm.WFM.ListRequiredCallsIntervals:output_type -> api.v1alpha1.wfm.ListRequiredCallsIntervalsRes
-	326, // 772: api.v1alpha1.wfm.WFM.CreateTourPattern:output_type -> api.v1alpha1.wfm.CreateTourPatternRes
-	328, // 773: api.v1alpha1.wfm.WFM.GetTourPatternDiagnostics:output_type -> api.v1alpha1.wfm.GetTourPatternDiagnosticsRes
-	330, // 774: api.v1alpha1.wfm.WFM.UpsertTourPatternWithMembers:output_type -> api.v1alpha1.wfm.UpsertTourPatternWithMembersRes
-	332, // 775: api.v1alpha1.wfm.WFM.GetTourPattern:output_type -> api.v1alpha1.wfm.GetTourPatternRes
-	334, // 776: api.v1alpha1.wfm.WFM.GetTourPatternWithMembers:output_type -> api.v1alpha1.wfm.GetTourPatternWithMembersRes
-	336, // 777: api.v1alpha1.wfm.WFM.DeleteTourPattern:output_type -> api.v1alpha1.wfm.DeleteTourPatternRes
-	338, // 778: api.v1alpha1.wfm.WFM.CreateTourWeekPattern:output_type -> api.v1alpha1.wfm.CreateTourWeekPatternRes
-	340, // 779: api.v1alpha1.wfm.WFM.ListTourWeekPatterns:output_type -> api.v1alpha1.wfm.ListTourWeekPatternsRes
-	342, // 780: api.v1alpha1.wfm.WFM.DeleteTourWeekPatterns:output_type -> api.v1alpha1.wfm.DeleteTourWeekPatternsRes
-	344, // 781: api.v1alpha1.wfm.WFM.CreateTourShiftInstanceConfig:output_type -> api.v1alpha1.wfm.CreateTourShiftInstanceConfigRes
-	346, // 782: api.v1alpha1.wfm.WFM.UpdateTourShiftInstanceConfig:output_type -> api.v1alpha1.wfm.UpdateTourShiftInstanceConfigRes
-	348, // 783: api.v1alpha1.wfm.WFM.ListTourShiftInstanceConfigs:output_type -> api.v1alpha1.wfm.ListTourShiftInstanceConfigsRes
-	350, // 784: api.v1alpha1.wfm.WFM.DeleteTourShiftInstanceConfigs:output_type -> api.v1alpha1.wfm.DeleteTourShiftInstanceConfigsRes
-	352, // 785: api.v1alpha1.wfm.WFM.CreateTourShiftSegmentConfig:output_type -> api.v1alpha1.wfm.CreateTourShiftSegmentConfigRes
-	354, // 786: api.v1alpha1.wfm.WFM.UpdateTourShiftSegmentConfig:output_type -> api.v1alpha1.wfm.UpdateTourShiftSegmentConfigRes
-	356, // 787: api.v1alpha1.wfm.WFM.ListTourShiftSegmentConfigs:output_type -> api.v1alpha1.wfm.ListTourShiftSegmentConfigsRes
-	358, // 788: api.v1alpha1.wfm.WFM.DeleteTourShiftSegmentConfigs:output_type -> api.v1alpha1.wfm.DeleteTourShiftSegmentConfigsRes
-	360, // 789: api.v1alpha1.wfm.WFM.CreateTourAgentCollection:output_type -> api.v1alpha1.wfm.CreateTourAgentCollectionRes
-	362, // 790: api.v1alpha1.wfm.WFM.UpdateTourAgentCollection:output_type -> api.v1alpha1.wfm.UpdateTourAgentCollectionRes
-	364, // 791: api.v1alpha1.wfm.WFM.ListTourAgentCollections:output_type -> api.v1alpha1.wfm.ListTourAgentCollectionsRes
-	366, // 792: api.v1alpha1.wfm.WFM.DeleteTourAgentCollections:output_type -> api.v1alpha1.wfm.DeleteTourAgentCollectionsRes
-	368, // 793: api.v1alpha1.wfm.WFM.CreateTourAgentCollectionWFMAgents:output_type -> api.v1alpha1.wfm.CreateTourAgentCollectionWFMAgentsRes
-	370, // 794: api.v1alpha1.wfm.WFM.ListTourAgentCollectionWFMAgents:output_type -> api.v1alpha1.wfm.ListTourAgentCollectionWFMAgentsRes
-	372, // 795: api.v1alpha1.wfm.WFM.DeleteTourAgentCollectionWFMAgents:output_type -> api.v1alpha1.wfm.DeleteTourAgentCollectionWFMAgentsRes
-	374, // 796: api.v1alpha1.wfm.WFM.GenerateTourWeekPatterns:output_type -> api.v1alpha1.wfm.GenerateTourWeekPatternsRes
-	378, // 797: api.v1alpha1.wfm.WFM.ListValidAgentsForReplacement:output_type -> api.v1alpha1.wfm.ListValidAgentsForReplacementRes
-	380, // 798: api.v1alpha1.wfm.WFM.ReplaceAgentOnSchedule:output_type -> api.v1alpha1.wfm.ReplaceAgentOnScheduleRes
-	380, // 799: api.v1alpha1.wfm.WFM.ReplaceAgentOnScheduleV1:output_type -> api.v1alpha1.wfm.ReplaceAgentOnScheduleRes
-	376, // 800: api.v1alpha1.wfm.WFM.RemoveAgentFromSchedule:output_type -> api.v1alpha1.wfm.RemoveAgentFromScheduleResponse
-	392, // 801: api.v1alpha1.wfm.WFM.CreateAgentLeavePetition:output_type -> api.v1alpha1.wfm.CreateAgentLeavePetitionResponse
-	394, // 802: api.v1alpha1.wfm.WFM.ListAgentLeavePetitions:output_type -> api.v1alpha1.wfm.ListAgentLeavePetitionsResponse
-	383, // 803: api.v1alpha1.wfm.WFM.HelloWorldWFMAdherence:output_type -> api.v1alpha1.wfm.HelloWorldWFMAdherenceResponse
-	385, // 804: api.v1alpha1.wfm.WFM.ListAgentStatesForDay:output_type -> api.v1alpha1.wfm.ListAgentStatesForDayResponse
-	387, // 805: api.v1alpha1.wfm.WFM.ListRealTimeManagementStates:output_type -> api.v1alpha1.wfm.ListRealTimeManagementStatesResponse
-	390, // 806: api.v1alpha1.wfm.WFM.ListRealTimeManagementStateColors:output_type -> api.v1alpha1.wfm.ListRealTimeManagementStateColorsResponse
-	633, // [633:807] is the sub-list for method output_type
-	459, // [459:633] is the sub-list for method input_type
+	395, // 629: api.v1alpha1.wfm.WFM.ArchiveAgentLeavePetition:input_type -> api.v1alpha1.wfm.ArchiveAgentLeavePetitionRequest
+	382, // 630: api.v1alpha1.wfm.WFM.HelloWorldWFMAdherence:input_type -> api.v1alpha1.wfm.HelloWorldWFMAdherenceRequest
+	384, // 631: api.v1alpha1.wfm.WFM.ListAgentStatesForDay:input_type -> api.v1alpha1.wfm.ListAgentStatesForDayRequest
+	386, // 632: api.v1alpha1.wfm.WFM.ListRealTimeManagementStates:input_type -> api.v1alpha1.wfm.ListRealTimeManagementStatesRequest
+	389, // 633: api.v1alpha1.wfm.WFM.ListRealTimeManagementStateColors:input_type -> api.v1alpha1.wfm.ListRealTimeManagementStateColorsRequest
+	2,   // 634: api.v1alpha1.wfm.WFM.PerformInitialClientSetup:output_type -> api.v1alpha1.wfm.PerformInitialClientSetupResponse
+	7,   // 635: api.v1alpha1.wfm.WFM.ListSkillProfiles:output_type -> api.v1alpha1.wfm.ListSkillProfilesRes
+	9,   // 636: api.v1alpha1.wfm.WFM.UpdateSkillProfile:output_type -> api.v1alpha1.wfm.UpdateSkillProfileRes
+	11,  // 637: api.v1alpha1.wfm.WFM.UpdateSkillProfileProficiencies:output_type -> api.v1alpha1.wfm.UpdateSkillProfileProficienciesRes
+	13,  // 638: api.v1alpha1.wfm.WFM.GetSkillProfile:output_type -> api.v1alpha1.wfm.GetSkillProfileRes
+	15,  // 639: api.v1alpha1.wfm.WFM.ResyncSkillProfiles:output_type -> api.v1alpha1.wfm.ResyncSkillProfilesRes
+	17,  // 640: api.v1alpha1.wfm.WFM.GetLastSkillProfileResyncDate:output_type -> api.v1alpha1.wfm.GetLastSkillProfileResyncDateRes
+	19,  // 641: api.v1alpha1.wfm.WFM.UpsertForecastingParameters:output_type -> api.v1alpha1.wfm.UpsertForecastingParametersRes
+	21,  // 642: api.v1alpha1.wfm.WFM.GetForecastingParameters:output_type -> api.v1alpha1.wfm.GetForecastingParametersRes
+	24,  // 643: api.v1alpha1.wfm.WFM.GetClientHistoryCacheInfo:output_type -> api.v1alpha1.wfm.GetClientHistoryCacheInfoRes
+	26,  // 644: api.v1alpha1.wfm.WFM.ListHistoricalData:output_type -> api.v1alpha1.wfm.ListHistoricalDataRes
+	28,  // 645: api.v1alpha1.wfm.WFM.UpsertHistoricalDataDelta:output_type -> api.v1alpha1.wfm.UpsertHistoricalDataDeltaRes
+	30,  // 646: api.v1alpha1.wfm.WFM.UpsertHistoricalDataDeltas:output_type -> api.v1alpha1.wfm.UpsertHistoricalDataDeltasRes
+	32,  // 647: api.v1alpha1.wfm.WFM.ListSkills:output_type -> api.v1alpha1.wfm.ListSkillsRes
+	35,  // 648: api.v1alpha1.wfm.WFM.BuildCallProfileTemplateForSkillProfile:output_type -> api.v1alpha1.wfm.BuildCallProfileTemplateForSkillProfileRes
+	37,  // 649: api.v1alpha1.wfm.WFM.BuildCallProfileTemplate:output_type -> api.v1alpha1.wfm.BuildCallProfileTemplateRes
+	39,  // 650: api.v1alpha1.wfm.WFM.CreateInactiveSkillProfileMapping:output_type -> api.v1alpha1.wfm.CreateInactiveSkillProfileMappingRes
+	41,  // 651: api.v1alpha1.wfm.WFM.GetAvailableRegressionForecasterModelTypes:output_type -> api.v1alpha1.wfm.GetAvailableRegressionForecasterModelTypesRes
+	43,  // 652: api.v1alpha1.wfm.WFM.DisconnectInactiveSkillProfileMapping:output_type -> api.v1alpha1.wfm.DisconnectInactiveSkillProfileMappingRes
+	45,  // 653: api.v1alpha1.wfm.WFM.CreateSkillProfileGroup:output_type -> api.v1alpha1.wfm.CreateSkillProfileGroupRes
+	47,  // 654: api.v1alpha1.wfm.WFM.UpdateSkillProfileGroup:output_type -> api.v1alpha1.wfm.UpdateSkillProfileGroupRes
+	49,  // 655: api.v1alpha1.wfm.WFM.ListSkillProfileGroups:output_type -> api.v1alpha1.wfm.ListSkillProfileGroupsRes
+	51,  // 656: api.v1alpha1.wfm.WFM.UpdateSkillProfileGroupAssociations:output_type -> api.v1alpha1.wfm.UpdateSkillProfileGroupAssociationsRes
+	53,  // 657: api.v1alpha1.wfm.WFM.DeleteHistoricalDataDeltas:output_type -> api.v1alpha1.wfm.DeleteHistoricalDataDeltasRes
+	55,  // 658: api.v1alpha1.wfm.WFM.ListTopSkillProfiles:output_type -> api.v1alpha1.wfm.ListTopSkillProfilesRes
+	57,  // 659: api.v1alpha1.wfm.WFM.GetSkillProfilesCount:output_type -> api.v1alpha1.wfm.GetSkillProfilesCountRes
+	59,  // 660: api.v1alpha1.wfm.WFM.BuildProfileForecastByInterval:output_type -> api.v1alpha1.wfm.CallDataByInterval
+	61,  // 661: api.v1alpha1.wfm.WFM.BuildProfileForecastByIntervalWithStats:output_type -> api.v1alpha1.wfm.BuildProfileForecastByIntervalWithStatsRes
+	63,  // 662: api.v1alpha1.wfm.WFM.UpsertProfileForecast:output_type -> api.v1alpha1.wfm.UpsertProfileForecastRes
+	65,  // 663: api.v1alpha1.wfm.WFM.CreateCallProfileTemplate:output_type -> api.v1alpha1.wfm.CreateCallProfileTemplateRes
+	67,  // 664: api.v1alpha1.wfm.WFM.DeleteCallProfileTemplate:output_type -> api.v1alpha1.wfm.DeleteCallProfileTemplateRes
+	70,  // 665: api.v1alpha1.wfm.WFM.CreateRegressionTemplate:output_type -> api.v1alpha1.wfm.CreateRegressionTemplateRes
+	72,  // 666: api.v1alpha1.wfm.WFM.DeleteRegressionTemplate:output_type -> api.v1alpha1.wfm.DeleteRegressionTemplateRes
+	74,  // 667: api.v1alpha1.wfm.WFM.ListRegressionTemplates:output_type -> api.v1alpha1.wfm.ListRegressionTemplatesRes
+	59,  // 668: api.v1alpha1.wfm.WFM.ListForecastIntervalsForSkillProfile:output_type -> api.v1alpha1.wfm.CallDataByInterval
+	59,  // 669: api.v1alpha1.wfm.WFM.ListForecastIntervals:output_type -> api.v1alpha1.wfm.CallDataByInterval
+	59,  // 670: api.v1alpha1.wfm.WFM.BuildRegressionForecastByInterval:output_type -> api.v1alpha1.wfm.CallDataByInterval
+	78,  // 671: api.v1alpha1.wfm.WFM.BuildRegressionForecastByIntervalWithStats:output_type -> api.v1alpha1.wfm.BuildRegressionForecastByIntervalWithStatsRes
+	80,  // 672: api.v1alpha1.wfm.WFM.ListCallProfileTemplates:output_type -> api.v1alpha1.wfm.ListCallProfileTemplatesRes
+	84,  // 673: api.v1alpha1.wfm.WFM.UpsertRegressionForecast:output_type -> api.v1alpha1.wfm.UpsertRegressionForecastRes
+	86,  // 674: api.v1alpha1.wfm.WFM.UpsertForecastDataDelta:output_type -> api.v1alpha1.wfm.UpsertForecastDataDeltaRes
+	88,  // 675: api.v1alpha1.wfm.WFM.UpsertForecastDataDeltas:output_type -> api.v1alpha1.wfm.UpsertForecastDataDeltasRes
+	90,  // 676: api.v1alpha1.wfm.WFM.DeleteForecastIntervals:output_type -> api.v1alpha1.wfm.DeleteForecastIntervalsRes
+	92,  // 677: api.v1alpha1.wfm.WFM.ListHistoricalDataForAllSkillProfiles:output_type -> api.v1alpha1.wfm.ListHistoricalDataForAllSkillProfilesRes
+	94,  // 678: api.v1alpha1.wfm.WFM.BuildDOWAndMOYProfiles:output_type -> api.v1alpha1.wfm.BuildDOWAndMOYProfilesRes
+	96,  // 679: api.v1alpha1.wfm.WFM.CalculateTrainingDataAveragesForSkillProfile:output_type -> api.v1alpha1.wfm.CalculateTrainingDataAveragesForSkillProfileRes
+	98,  // 680: api.v1alpha1.wfm.WFM.UpdateSkillProfileAveragesUsingHistoricalData:output_type -> api.v1alpha1.wfm.UpdateSkillProfileAveragesUsingHistoricalDataRes
+	102, // 681: api.v1alpha1.wfm.WFM.UpdateCallCenterNode:output_type -> api.v1alpha1.wfm.UpdateCallCenterNodeRes
+	105, // 682: api.v1alpha1.wfm.WFM.CreateClientNode:output_type -> api.v1alpha1.wfm.CreateClientNodeRes
+	107, // 683: api.v1alpha1.wfm.WFM.UpdateClientNode:output_type -> api.v1alpha1.wfm.UpdateClientNodeRes
+	110, // 684: api.v1alpha1.wfm.WFM.CreateLocationNode:output_type -> api.v1alpha1.wfm.CreateLocationNodeRes
+	112, // 685: api.v1alpha1.wfm.WFM.UpdateLocationNode:output_type -> api.v1alpha1.wfm.UpdateLocationNodeRes
+	115, // 686: api.v1alpha1.wfm.WFM.CreateProgramNode:output_type -> api.v1alpha1.wfm.CreateProgramNodeRes
+	117, // 687: api.v1alpha1.wfm.WFM.UpdateProgramNode:output_type -> api.v1alpha1.wfm.UpdateProgramNodeRes
+	119, // 688: api.v1alpha1.wfm.WFM.ListProgramNodesBySid:output_type -> api.v1alpha1.wfm.ListProgramNodesBySidRes
+	123, // 689: api.v1alpha1.wfm.WFM.CreateConstraintRule:output_type -> api.v1alpha1.wfm.CreateConstraintRuleRes
+	125, // 690: api.v1alpha1.wfm.WFM.UpdateConstraintRule:output_type -> api.v1alpha1.wfm.UpdateConstraintRuleRes
+	127, // 691: api.v1alpha1.wfm.WFM.DeleteConstraintRule:output_type -> api.v1alpha1.wfm.DeleteConstraintRuleRes
+	130, // 692: api.v1alpha1.wfm.WFM.CreateNonSkillActivity:output_type -> api.v1alpha1.wfm.CreateNonSkillActivityRes
+	132, // 693: api.v1alpha1.wfm.WFM.UpdateNonSkillActivity:output_type -> api.v1alpha1.wfm.UpdateNonSkillActivityRes
+	134, // 694: api.v1alpha1.wfm.WFM.ListNonSkillActivities:output_type -> api.v1alpha1.wfm.ListNonSkillActivitiesRes
+	136, // 695: api.v1alpha1.wfm.WFM.ListNonSkillActivityAssociations:output_type -> api.v1alpha1.wfm.ListNonSkillActivityAssociationsRes
+	139, // 696: api.v1alpha1.wfm.WFM.ListCandidateSchedulingActivities:output_type -> api.v1alpha1.wfm.ListCandidateSchedulingActivitiesRes
+	142, // 697: api.v1alpha1.wfm.WFM.CreateAgentGroup:output_type -> api.v1alpha1.wfm.CreateAgentGroupRes
+	144, // 698: api.v1alpha1.wfm.WFM.ListAgentScheduleGroups:output_type -> api.v1alpha1.wfm.ListAgentScheduleGroupsResponse
+	146, // 699: api.v1alpha1.wfm.WFM.UpdateAgentGroup:output_type -> api.v1alpha1.wfm.UpdateAgentGroupRes
+	149, // 700: api.v1alpha1.wfm.WFM.CreateUnassignedWFMAgent:output_type -> api.v1alpha1.wfm.CreateUnassignedWFMAgentResponse
+	151, // 701: api.v1alpha1.wfm.WFM.UpdateWFMAgent:output_type -> api.v1alpha1.wfm.UpdateWFMAgentRes
+	153, // 702: api.v1alpha1.wfm.WFM.ListAllWFMAgents:output_type -> api.v1alpha1.wfm.ListAllWFMAgentsRes
+	155, // 703: api.v1alpha1.wfm.WFM.ListCandidateWFMAgents:output_type -> api.v1alpha1.wfm.ListCandidateWFMAgentsRes
+	157, // 704: api.v1alpha1.wfm.WFM.ListUngroupedWFMAgents:output_type -> api.v1alpha1.wfm.ListUngroupedWFMAgentsRes
+	159, // 705: api.v1alpha1.wfm.WFM.ListWFMAgentSids:output_type -> api.v1alpha1.wfm.ListWFMAgentSidsRes
+	161, // 706: api.v1alpha1.wfm.WFM.ListUnassignedWFMAgents:output_type -> api.v1alpha1.wfm.ListUnassignedWFMAgentsResponse
+	163, // 707: api.v1alpha1.wfm.WFM.ListWFMAgentsAssociatedWithAgentGroup:output_type -> api.v1alpha1.wfm.ListWFMAgentsAssociatedWithAgentGroupRes
+	167, // 708: api.v1alpha1.wfm.WFM.CreateWFMAgentMemberships:output_type -> api.v1alpha1.wfm.CreateWFMAgentMembershipsRes
+	169, // 709: api.v1alpha1.wfm.WFM.CopyWFMAgentMemberships:output_type -> api.v1alpha1.wfm.CopyWFMAgentMembershipsResponse
+	171, // 710: api.v1alpha1.wfm.WFM.DeleteWFMAgentMemberships:output_type -> api.v1alpha1.wfm.DeleteWFMAgentMembershipsRes
+	173, // 711: api.v1alpha1.wfm.WFM.DeleteWFMAgentsMemberships:output_type -> api.v1alpha1.wfm.DeleteWFMAgentsMembershipsRes
+	175, // 712: api.v1alpha1.wfm.WFM.RemoveAgentFromFutureShifts:output_type -> api.v1alpha1.wfm.RemoveAgentFromFutureShiftsResponse
+	165, // 713: api.v1alpha1.wfm.WFM.BuildAgentDiagnostics:output_type -> api.v1alpha1.wfm.BuildAgentDiagnosticsRes
+	179, // 714: api.v1alpha1.wfm.WFM.CreateShiftTemplate:output_type -> api.v1alpha1.wfm.CreateShiftTemplateRes
+	181, // 715: api.v1alpha1.wfm.WFM.UpdateShiftTemplate:output_type -> api.v1alpha1.wfm.UpdateShiftTemplateRes
+	183, // 716: api.v1alpha1.wfm.WFM.ListShiftTemplatesBySids:output_type -> api.v1alpha1.wfm.ListShiftTemplatesBySidsRes
+	185, // 717: api.v1alpha1.wfm.WFM.BuildShiftTemplateDiagnostics:output_type -> api.v1alpha1.wfm.BuildShiftTemplateDiagnosticsRes
+	188, // 718: api.v1alpha1.wfm.WFM.CreatePlacementRule:output_type -> api.v1alpha1.wfm.CreatePlacementRuleRes
+	190, // 719: api.v1alpha1.wfm.WFM.UpdatePlacementRule:output_type -> api.v1alpha1.wfm.UpdatePlacementRuleRes
+	192, // 720: api.v1alpha1.wfm.WFM.DeletePlacementRule:output_type -> api.v1alpha1.wfm.DeletePlacementRuleRes
+	196, // 721: api.v1alpha1.wfm.WFM.CreateOpenTimesPattern:output_type -> api.v1alpha1.wfm.CreateOpenTimesPatternRes
+	198, // 722: api.v1alpha1.wfm.WFM.UpdateOpenTimesPattern:output_type -> api.v1alpha1.wfm.UpdateOpenTimesPatternRes
+	200, // 723: api.v1alpha1.wfm.WFM.DeleteOpenTimesPattern:output_type -> api.v1alpha1.wfm.DeleteOpenTimesPatternRes
+	202, // 724: api.v1alpha1.wfm.WFM.GetOpenTimesBitmaps:output_type -> api.v1alpha1.wfm.GetOpenTimesBitmapsRes
+	204, // 725: api.v1alpha1.wfm.WFM.ListOpenDateRangesForNodeOpenTimesBitmaps:output_type -> api.v1alpha1.wfm.ListOpenDateRangesForNodeOpenTimesBitmapsResponse
+	207, // 726: api.v1alpha1.wfm.WFM.CreateAgentAvailabilityPattern:output_type -> api.v1alpha1.wfm.CreateAgentAvailabilityPatternRes
+	209, // 727: api.v1alpha1.wfm.WFM.UpdateAgentAvailabilityPattern:output_type -> api.v1alpha1.wfm.UpdateAgentAvailabilityPatternRes
+	211, // 728: api.v1alpha1.wfm.WFM.DeleteAgentAvailabilityPattern:output_type -> api.v1alpha1.wfm.DeleteAgentAvailabilityPatternRes
+	214, // 729: api.v1alpha1.wfm.WFM.GetAvailabilityBitmaps:output_type -> api.v1alpha1.wfm.GetAvailabilityBitmapsRes
+	216, // 730: api.v1alpha1.wfm.WFM.UpsertNonSkillActivityAssociation:output_type -> api.v1alpha1.wfm.UpsertNonSkillActivityAssociationRes
+	219, // 731: api.v1alpha1.wfm.WFM.CreateSkillProficiencies:output_type -> api.v1alpha1.wfm.CreateSkillProficienciesRes
+	221, // 732: api.v1alpha1.wfm.WFM.UpdateSkillProficiencies:output_type -> api.v1alpha1.wfm.UpdateSkillProficienciesRes
+	223, // 733: api.v1alpha1.wfm.WFM.DeleteSkillProficiency:output_type -> api.v1alpha1.wfm.DeleteSkillProficiencyRes
+	226, // 734: api.v1alpha1.wfm.WFM.CopyScenario:output_type -> api.v1alpha1.wfm.CopyScenarioRes
+	228, // 735: api.v1alpha1.wfm.WFM.CreateScheduleScenarioWithNodes:output_type -> api.v1alpha1.wfm.CreateScheduleScenarioWithNodesRes
+	230, // 736: api.v1alpha1.wfm.WFM.UpdateScheduleScenario:output_type -> api.v1alpha1.wfm.UpdateScheduleScenarioRes
+	232, // 737: api.v1alpha1.wfm.WFM.ListConfigEntities:output_type -> api.v1alpha1.wfm.ListConfigEntitiesRes
+	236, // 738: api.v1alpha1.wfm.WFM.DeleteShiftInstances:output_type -> api.v1alpha1.wfm.DeleteShiftInstancesRes
+	238, // 739: api.v1alpha1.wfm.WFM.BuildNodeDiagnostics:output_type -> api.v1alpha1.wfm.BuildNodeDiagnosticsRes
+	240, // 740: api.v1alpha1.wfm.WFM.BuildGlobalDiagnostics:output_type -> api.v1alpha1.wfm.BuildGlobalDiagnosticsRes
+	255, // 741: api.v1alpha1.wfm.WFM.GetPublishedSchedule:output_type -> api.v1alpha1.wfm.GetPublishedScheduleRes
+	257, // 742: api.v1alpha1.wfm.WFM.GetPublishedScheduleRequiredCalls:output_type -> api.v1alpha1.wfm.GetPublishedScheduleRequiredCallsRes
+	259, // 743: api.v1alpha1.wfm.WFM.GetDraftScheduleRequiredCalls:output_type -> api.v1alpha1.wfm.GetDraftScheduleRequiredCallsRes
+	261, // 744: api.v1alpha1.wfm.WFM.CreateDraftSchedule:output_type -> api.v1alpha1.wfm.CreateDraftScheduleRes
+	263, // 745: api.v1alpha1.wfm.WFM.UpdateDraftSchedule:output_type -> api.v1alpha1.wfm.UpdateDraftScheduleRes
+	265, // 746: api.v1alpha1.wfm.WFM.BuildDraftSchedule:output_type -> api.v1alpha1.wfm.BuildDraftScheduleRes
+	267, // 747: api.v1alpha1.wfm.WFM.PublishDraftSchedule:output_type -> api.v1alpha1.wfm.PublishDraftScheduleRes
+	269, // 748: api.v1alpha1.wfm.WFM.ResetDraftSchedule:output_type -> api.v1alpha1.wfm.ResetDraftScheduleRes
+	271, // 749: api.v1alpha1.wfm.WFM.GetDraftSchedule:output_type -> api.v1alpha1.wfm.GetDraftScheduleRes
+	273, // 750: api.v1alpha1.wfm.WFM.ListDraftSchedules:output_type -> api.v1alpha1.wfm.ListDraftSchedulesRes
+	275, // 751: api.v1alpha1.wfm.WFM.ClearSchedule:output_type -> api.v1alpha1.wfm.ClearScheduleRes
+	277, // 752: api.v1alpha1.wfm.WFM.DeleteDraftSchedule:output_type -> api.v1alpha1.wfm.DeleteDraftScheduleRes
+	279, // 753: api.v1alpha1.wfm.WFM.ListShiftInstancesBySid:output_type -> api.v1alpha1.wfm.ListShiftInstancesBySidRes
+	281, // 754: api.v1alpha1.wfm.WFM.CopyScheduleToSchedule:output_type -> api.v1alpha1.wfm.CopyScheduleToScheduleRes
+	283, // 755: api.v1alpha1.wfm.WFM.CreateShiftInstance:output_type -> api.v1alpha1.wfm.CreateShiftInstanceRes
+	285, // 756: api.v1alpha1.wfm.WFM.CreateShiftInstanceV2:output_type -> api.v1alpha1.wfm.CreateShiftInstanceV2Res
+	287, // 757: api.v1alpha1.wfm.WFM.CreateShiftInstanceWithSegments:output_type -> api.v1alpha1.wfm.CreateShiftInstanceWithSegmentsResponse
+	289, // 758: api.v1alpha1.wfm.WFM.SplitShiftInstance:output_type -> api.v1alpha1.wfm.SplitShiftInstanceRes
+	291, // 759: api.v1alpha1.wfm.WFM.SwapShiftInstances:output_type -> api.v1alpha1.wfm.SwapShiftInstancesRes
+	293, // 760: api.v1alpha1.wfm.WFM.UpdateShiftInstance:output_type -> api.v1alpha1.wfm.UpdateShiftInstanceRes
+	295, // 761: api.v1alpha1.wfm.WFM.UpdateShiftInstanceV2:output_type -> api.v1alpha1.wfm.UpdateShiftInstanceV2Res
+	297, // 762: api.v1alpha1.wfm.WFM.UpdateShiftInstanceWithSegments:output_type -> api.v1alpha1.wfm.UpdateShiftInstanceWithSegmentsResponse
+	299, // 763: api.v1alpha1.wfm.WFM.CopyShiftInstancesToSchedule:output_type -> api.v1alpha1.wfm.CopyShiftInstancesToScheduleRes
+	301, // 764: api.v1alpha1.wfm.WFM.ListShiftInstanceSidsForAgent:output_type -> api.v1alpha1.wfm.ListShiftInstanceSidsForAgentRes
+	303, // 765: api.v1alpha1.wfm.WFM.ListShiftSegmentsByShiftInstanceSids:output_type -> api.v1alpha1.wfm.ListShiftSegmentsByShiftInstanceSidsRes
+	309, // 766: api.v1alpha1.wfm.WFM.SetSchedulingTarget:output_type -> api.v1alpha1.wfm.SetSchedulingTargetRes
+	311, // 767: api.v1alpha1.wfm.WFM.GetSchedulingTarget:output_type -> api.v1alpha1.wfm.GetSchedulingTargetRes
+	313, // 768: api.v1alpha1.wfm.WFM.DeleteSchedulingTarget:output_type -> api.v1alpha1.wfm.DeleteSchedulingTargetRes
+	315, // 769: api.v1alpha1.wfm.WFM.GetDefaultSchedulingTarget:output_type -> api.v1alpha1.wfm.GetDefaultSchedulingTargetRes
+	317, // 770: api.v1alpha1.wfm.WFM.SetDefaultSchedulingTarget:output_type -> api.v1alpha1.wfm.SetDefaultSchedulingTargetRes
+	306, // 771: api.v1alpha1.wfm.WFM.GetPerformanceMetrics:output_type -> api.v1alpha1.wfm.GetPerformanceMetricsRes
+	319, // 772: api.v1alpha1.wfm.WFM.ListRequiredCallsIntervals:output_type -> api.v1alpha1.wfm.ListRequiredCallsIntervalsRes
+	326, // 773: api.v1alpha1.wfm.WFM.CreateTourPattern:output_type -> api.v1alpha1.wfm.CreateTourPatternRes
+	328, // 774: api.v1alpha1.wfm.WFM.GetTourPatternDiagnostics:output_type -> api.v1alpha1.wfm.GetTourPatternDiagnosticsRes
+	330, // 775: api.v1alpha1.wfm.WFM.UpsertTourPatternWithMembers:output_type -> api.v1alpha1.wfm.UpsertTourPatternWithMembersRes
+	332, // 776: api.v1alpha1.wfm.WFM.GetTourPattern:output_type -> api.v1alpha1.wfm.GetTourPatternRes
+	334, // 777: api.v1alpha1.wfm.WFM.GetTourPatternWithMembers:output_type -> api.v1alpha1.wfm.GetTourPatternWithMembersRes
+	336, // 778: api.v1alpha1.wfm.WFM.DeleteTourPattern:output_type -> api.v1alpha1.wfm.DeleteTourPatternRes
+	338, // 779: api.v1alpha1.wfm.WFM.CreateTourWeekPattern:output_type -> api.v1alpha1.wfm.CreateTourWeekPatternRes
+	340, // 780: api.v1alpha1.wfm.WFM.ListTourWeekPatterns:output_type -> api.v1alpha1.wfm.ListTourWeekPatternsRes
+	342, // 781: api.v1alpha1.wfm.WFM.DeleteTourWeekPatterns:output_type -> api.v1alpha1.wfm.DeleteTourWeekPatternsRes
+	344, // 782: api.v1alpha1.wfm.WFM.CreateTourShiftInstanceConfig:output_type -> api.v1alpha1.wfm.CreateTourShiftInstanceConfigRes
+	346, // 783: api.v1alpha1.wfm.WFM.UpdateTourShiftInstanceConfig:output_type -> api.v1alpha1.wfm.UpdateTourShiftInstanceConfigRes
+	348, // 784: api.v1alpha1.wfm.WFM.ListTourShiftInstanceConfigs:output_type -> api.v1alpha1.wfm.ListTourShiftInstanceConfigsRes
+	350, // 785: api.v1alpha1.wfm.WFM.DeleteTourShiftInstanceConfigs:output_type -> api.v1alpha1.wfm.DeleteTourShiftInstanceConfigsRes
+	352, // 786: api.v1alpha1.wfm.WFM.CreateTourShiftSegmentConfig:output_type -> api.v1alpha1.wfm.CreateTourShiftSegmentConfigRes
+	354, // 787: api.v1alpha1.wfm.WFM.UpdateTourShiftSegmentConfig:output_type -> api.v1alpha1.wfm.UpdateTourShiftSegmentConfigRes
+	356, // 788: api.v1alpha1.wfm.WFM.ListTourShiftSegmentConfigs:output_type -> api.v1alpha1.wfm.ListTourShiftSegmentConfigsRes
+	358, // 789: api.v1alpha1.wfm.WFM.DeleteTourShiftSegmentConfigs:output_type -> api.v1alpha1.wfm.DeleteTourShiftSegmentConfigsRes
+	360, // 790: api.v1alpha1.wfm.WFM.CreateTourAgentCollection:output_type -> api.v1alpha1.wfm.CreateTourAgentCollectionRes
+	362, // 791: api.v1alpha1.wfm.WFM.UpdateTourAgentCollection:output_type -> api.v1alpha1.wfm.UpdateTourAgentCollectionRes
+	364, // 792: api.v1alpha1.wfm.WFM.ListTourAgentCollections:output_type -> api.v1alpha1.wfm.ListTourAgentCollectionsRes
+	366, // 793: api.v1alpha1.wfm.WFM.DeleteTourAgentCollections:output_type -> api.v1alpha1.wfm.DeleteTourAgentCollectionsRes
+	368, // 794: api.v1alpha1.wfm.WFM.CreateTourAgentCollectionWFMAgents:output_type -> api.v1alpha1.wfm.CreateTourAgentCollectionWFMAgentsRes
+	370, // 795: api.v1alpha1.wfm.WFM.ListTourAgentCollectionWFMAgents:output_type -> api.v1alpha1.wfm.ListTourAgentCollectionWFMAgentsRes
+	372, // 796: api.v1alpha1.wfm.WFM.DeleteTourAgentCollectionWFMAgents:output_type -> api.v1alpha1.wfm.DeleteTourAgentCollectionWFMAgentsRes
+	374, // 797: api.v1alpha1.wfm.WFM.GenerateTourWeekPatterns:output_type -> api.v1alpha1.wfm.GenerateTourWeekPatternsRes
+	378, // 798: api.v1alpha1.wfm.WFM.ListValidAgentsForReplacement:output_type -> api.v1alpha1.wfm.ListValidAgentsForReplacementRes
+	380, // 799: api.v1alpha1.wfm.WFM.ReplaceAgentOnSchedule:output_type -> api.v1alpha1.wfm.ReplaceAgentOnScheduleRes
+	380, // 800: api.v1alpha1.wfm.WFM.ReplaceAgentOnScheduleV1:output_type -> api.v1alpha1.wfm.ReplaceAgentOnScheduleRes
+	376, // 801: api.v1alpha1.wfm.WFM.RemoveAgentFromSchedule:output_type -> api.v1alpha1.wfm.RemoveAgentFromScheduleResponse
+	392, // 802: api.v1alpha1.wfm.WFM.CreateAgentLeavePetition:output_type -> api.v1alpha1.wfm.CreateAgentLeavePetitionResponse
+	394, // 803: api.v1alpha1.wfm.WFM.ListAgentLeavePetitions:output_type -> api.v1alpha1.wfm.ListAgentLeavePetitionsResponse
+	396, // 804: api.v1alpha1.wfm.WFM.ArchiveAgentLeavePetition:output_type -> api.v1alpha1.wfm.ArchiveAgentLeavePetitionResponse
+	383, // 805: api.v1alpha1.wfm.WFM.HelloWorldWFMAdherence:output_type -> api.v1alpha1.wfm.HelloWorldWFMAdherenceResponse
+	385, // 806: api.v1alpha1.wfm.WFM.ListAgentStatesForDay:output_type -> api.v1alpha1.wfm.ListAgentStatesForDayResponse
+	387, // 807: api.v1alpha1.wfm.WFM.ListRealTimeManagementStates:output_type -> api.v1alpha1.wfm.ListRealTimeManagementStatesResponse
+	390, // 808: api.v1alpha1.wfm.WFM.ListRealTimeManagementStateColors:output_type -> api.v1alpha1.wfm.ListRealTimeManagementStateColorsResponse
+	634, // [634:809] is the sub-list for method output_type
+	459, // [459:634] is the sub-list for method input_type
 	459, // [459:459] is the sub-list for extension type_name
 	459, // [459:459] is the sub-list for extension extendee
 	0,   // [0:459] is the sub-list for field type_name
@@ -38908,7 +39021,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[394].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpdateSkillProfileProficienciesReq_Proficiency); i {
+			switch v := v.(*ArchiveAgentLeavePetitionRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -38920,7 +39033,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[395].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetSkillProfileRes_Mapping); i {
+			switch v := v.(*ArchiveAgentLeavePetitionResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -38932,7 +39045,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[396].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DeleteForecastIntervalsReq_IntervalSids); i {
+			switch v := v.(*UpdateSkillProfileProficienciesReq_Proficiency); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -38944,7 +39057,19 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[397].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListAllWFMAgentsRes_AgentGroupsByAgent); i {
+			switch v := v.(*GetSkillProfileRes_Mapping); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[398].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DeleteForecastIntervalsReq_IntervalSids); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -38956,19 +39081,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[399].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DatetimePattern_WeekMap); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_api_v1alpha1_wfm_wfm_proto_msgTypes[400].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DatetimePattern_CalendarItem); i {
+			switch v := v.(*ListAllWFMAgentsRes_AgentGroupsByAgent); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -38980,7 +39093,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[401].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DatetimePattern_WeekMap_WeekMapDOW); i {
+			switch v := v.(*DatetimePattern_WeekMap); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -38992,7 +39105,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[402].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpsertNonSkillActivityAssociationRes_EntityMapping); i {
+			switch v := v.(*DatetimePattern_CalendarItem); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -39004,7 +39117,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[403].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListConfigEntitiesRes_ClientNodeEntities); i {
+			switch v := v.(*DatetimePattern_WeekMap_WeekMapDOW); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -39016,7 +39129,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[404].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListConfigEntitiesRes_LocationNodeEntities); i {
+			switch v := v.(*UpsertNonSkillActivityAssociationRes_EntityMapping); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -39028,7 +39141,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[405].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListConfigEntitiesRes_ProgramNodeEntities); i {
+			switch v := v.(*ListConfigEntitiesRes_ClientNodeEntities); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -39040,7 +39153,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[406].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListConfigEntitiesRes_AgentGroupEntities); i {
+			switch v := v.(*ListConfigEntitiesRes_LocationNodeEntities); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -39052,7 +39165,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[407].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListConfigEntitiesRes_ShiftTemplateEntities); i {
+			switch v := v.(*ListConfigEntitiesRes_ProgramNodeEntities); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -39064,7 +39177,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[408].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListConfigEntitiesRes_WFMAgentEntities); i {
+			switch v := v.(*ListConfigEntitiesRes_AgentGroupEntities); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -39076,7 +39189,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[409].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListConfigEntitiesRes_PlacementRuleEntities); i {
+			switch v := v.(*ListConfigEntitiesRes_ShiftTemplateEntities); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -39088,7 +39201,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[410].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListConfigEntitiesRes_ConstraintRuleEntities); i {
+			switch v := v.(*ListConfigEntitiesRes_WFMAgentEntities); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -39100,7 +39213,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[411].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListConfigEntitiesRes_NonSkillActivityEntities); i {
+			switch v := v.(*ListConfigEntitiesRes_PlacementRuleEntities); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -39112,7 +39225,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[412].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListConfigEntitiesRes_AgentAvailabilityPatternEntities); i {
+			switch v := v.(*ListConfigEntitiesRes_ConstraintRuleEntities); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -39124,7 +39237,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[413].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListConfigEntitiesRes_OpenTimesPatternEntities); i {
+			switch v := v.(*ListConfigEntitiesRes_NonSkillActivityEntities); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -39136,7 +39249,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[414].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListConfigEntitiesRes_SkillProficiencyEntities); i {
+			switch v := v.(*ListConfigEntitiesRes_AgentAvailabilityPatternEntities); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -39148,7 +39261,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[415].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListConfigEntitiesRes_ScheduleScenarioEntities); i {
+			switch v := v.(*ListConfigEntitiesRes_OpenTimesPatternEntities); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -39160,6 +39273,30 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			}
 		}
 		file_api_v1alpha1_wfm_wfm_proto_msgTypes[416].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListConfigEntitiesRes_SkillProficiencyEntities); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[417].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListConfigEntitiesRes_ScheduleScenarioEntities); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_wfm_wfm_proto_msgTypes[418].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ListTourAgentCollectionWFMAgentsRes_SidMapping); i {
 			case 0:
 				return &v.state
@@ -39212,7 +39349,7 @@ func file_api_v1alpha1_wfm_wfm_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_v1alpha1_wfm_wfm_proto_rawDesc,
 			NumEnums:      1,
-			NumMessages:   417,
+			NumMessages:   419,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

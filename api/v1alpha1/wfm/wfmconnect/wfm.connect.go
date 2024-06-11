@@ -515,6 +515,9 @@ const (
 	// WFMListAgentLeavePetitionsProcedure is the fully-qualified name of the WFM's
 	// ListAgentLeavePetitions RPC.
 	WFMListAgentLeavePetitionsProcedure = "/api.v1alpha1.wfm.WFM/ListAgentLeavePetitions"
+	// WFMArchiveAgentLeavePetitionProcedure is the fully-qualified name of the WFM's
+	// ArchiveAgentLeavePetition RPC.
+	WFMArchiveAgentLeavePetitionProcedure = "/api.v1alpha1.wfm.WFM/ArchiveAgentLeavePetition"
 	// WFMHelloWorldWFMAdherenceProcedure is the fully-qualified name of the WFM's
 	// HelloWorldWFMAdherence RPC.
 	WFMHelloWorldWFMAdherenceProcedure = "/api.v1alpha1.wfm.WFM/HelloWorldWFMAdherence"
@@ -1871,12 +1874,24 @@ type WFMClient interface {
 	CreateAgentLeavePetition(context.Context, *connect_go.Request[wfm.CreateAgentLeavePetitionRequest]) (*connect_go.Response[wfm.CreateAgentLeavePetitionResponse], error)
 	// Lists agent leave petitions for the @wfm_agent_sids over @datetime_range for the org sending the request.
 	// If no @wfm_agent_sids are provided, all agent leave petitions overlapping @datetime_range for the org sending the request will be returned.
+	// If no @datetime_range is provided, petitions will be returned across all datetimes.
 	// If @include_archived is true, archived agent leave petitions will be returned as well, otherwise archived requests will not be included.
 	// If no agent leave petitions are found for the given parameters, an empty slice will be returned.
 	// Errors:
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when listing the agent leave petitions.
 	ListAgentLeavePetitions(context.Context, *connect_go.Request[wfm.ListAgentLeavePetitionsRequest]) (*connect_go.Response[wfm.ListAgentLeavePetitionsResponse], error)
+	// Archives an agent leave petition with the given @agent_leave_petition_id for the org sending the request.
+	// If the leave petition has the status of PENDING_PETITION, the petition must be resolved first, or the request will error.
+	// If the petition has a status of APPROVED_PETITION and a portion of the petitions @requested_datetime_ranges lies in the future,
+	//
+	//	the petition may not be archived without being cancelled.
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid, the agent leave petition is approved for a future datetime, still pending, or is already archived.
+	//   - grpc.Internal: error occurs when archiving the agent leave petition.
+	//   - grpc.NotFound: the @agent_leave_petition_id does not exist for the org sending the request.
+	ArchiveAgentLeavePetition(context.Context, *connect_go.Request[wfm.ArchiveAgentLeavePetitionRequest]) (*connect_go.Response[wfm.ArchiveAgentLeavePetitionResponse], error)
 	// A hello world endpoint to test the WFM Adherence App.
 	// Returns a string with a hello world message.
 	HelloWorldWFMAdherence(context.Context, *connect_go.Request[wfm.HelloWorldWFMAdherenceRequest]) (*connect_go.Response[wfm.HelloWorldWFMAdherenceResponse], error)
@@ -2759,6 +2774,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMListAgentLeavePetitionsProcedure,
 			opts...,
 		),
+		archiveAgentLeavePetition: connect_go.NewClient[wfm.ArchiveAgentLeavePetitionRequest, wfm.ArchiveAgentLeavePetitionResponse](
+			httpClient,
+			baseURL+WFMArchiveAgentLeavePetitionProcedure,
+			opts...,
+		),
 		helloWorldWFMAdherence: connect_go.NewClient[wfm.HelloWorldWFMAdherenceRequest, wfm.HelloWorldWFMAdherenceResponse](
 			httpClient,
 			baseURL+WFMHelloWorldWFMAdherenceProcedure,
@@ -2954,6 +2974,7 @@ type wFMClient struct {
 	removeAgentFromSchedule                       *connect_go.Client[wfm.RemoveAgentFromScheduleRequest, wfm.RemoveAgentFromScheduleResponse]
 	createAgentLeavePetition                      *connect_go.Client[wfm.CreateAgentLeavePetitionRequest, wfm.CreateAgentLeavePetitionResponse]
 	listAgentLeavePetitions                       *connect_go.Client[wfm.ListAgentLeavePetitionsRequest, wfm.ListAgentLeavePetitionsResponse]
+	archiveAgentLeavePetition                     *connect_go.Client[wfm.ArchiveAgentLeavePetitionRequest, wfm.ArchiveAgentLeavePetitionResponse]
 	helloWorldWFMAdherence                        *connect_go.Client[wfm.HelloWorldWFMAdherenceRequest, wfm.HelloWorldWFMAdherenceResponse]
 	listAgentStatesForDay                         *connect_go.Client[wfm.ListAgentStatesForDayRequest, wfm.ListAgentStatesForDayResponse]
 	listRealTimeManagementStates                  *connect_go.Client[wfm.ListRealTimeManagementStatesRequest, wfm.ListRealTimeManagementStatesResponse]
@@ -3833,6 +3854,11 @@ func (c *wFMClient) CreateAgentLeavePetition(ctx context.Context, req *connect_g
 // ListAgentLeavePetitions calls api.v1alpha1.wfm.WFM.ListAgentLeavePetitions.
 func (c *wFMClient) ListAgentLeavePetitions(ctx context.Context, req *connect_go.Request[wfm.ListAgentLeavePetitionsRequest]) (*connect_go.Response[wfm.ListAgentLeavePetitionsResponse], error) {
 	return c.listAgentLeavePetitions.CallUnary(ctx, req)
+}
+
+// ArchiveAgentLeavePetition calls api.v1alpha1.wfm.WFM.ArchiveAgentLeavePetition.
+func (c *wFMClient) ArchiveAgentLeavePetition(ctx context.Context, req *connect_go.Request[wfm.ArchiveAgentLeavePetitionRequest]) (*connect_go.Response[wfm.ArchiveAgentLeavePetitionResponse], error) {
+	return c.archiveAgentLeavePetition.CallUnary(ctx, req)
 }
 
 // HelloWorldWFMAdherence calls api.v1alpha1.wfm.WFM.HelloWorldWFMAdherence.
@@ -5197,12 +5223,24 @@ type WFMHandler interface {
 	CreateAgentLeavePetition(context.Context, *connect_go.Request[wfm.CreateAgentLeavePetitionRequest]) (*connect_go.Response[wfm.CreateAgentLeavePetitionResponse], error)
 	// Lists agent leave petitions for the @wfm_agent_sids over @datetime_range for the org sending the request.
 	// If no @wfm_agent_sids are provided, all agent leave petitions overlapping @datetime_range for the org sending the request will be returned.
+	// If no @datetime_range is provided, petitions will be returned across all datetimes.
 	// If @include_archived is true, archived agent leave petitions will be returned as well, otherwise archived requests will not be included.
 	// If no agent leave petitions are found for the given parameters, an empty slice will be returned.
 	// Errors:
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when listing the agent leave petitions.
 	ListAgentLeavePetitions(context.Context, *connect_go.Request[wfm.ListAgentLeavePetitionsRequest]) (*connect_go.Response[wfm.ListAgentLeavePetitionsResponse], error)
+	// Archives an agent leave petition with the given @agent_leave_petition_id for the org sending the request.
+	// If the leave petition has the status of PENDING_PETITION, the petition must be resolved first, or the request will error.
+	// If the petition has a status of APPROVED_PETITION and a portion of the petitions @requested_datetime_ranges lies in the future,
+	//
+	//	the petition may not be archived without being cancelled.
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid, the agent leave petition is approved for a future datetime, still pending, or is already archived.
+	//   - grpc.Internal: error occurs when archiving the agent leave petition.
+	//   - grpc.NotFound: the @agent_leave_petition_id does not exist for the org sending the request.
+	ArchiveAgentLeavePetition(context.Context, *connect_go.Request[wfm.ArchiveAgentLeavePetitionRequest]) (*connect_go.Response[wfm.ArchiveAgentLeavePetitionResponse], error)
 	// A hello world endpoint to test the WFM Adherence App.
 	// Returns a string with a hello world message.
 	HelloWorldWFMAdherence(context.Context, *connect_go.Request[wfm.HelloWorldWFMAdherenceRequest]) (*connect_go.Response[wfm.HelloWorldWFMAdherenceResponse], error)
@@ -6081,6 +6119,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.ListAgentLeavePetitions,
 		opts...,
 	)
+	wFMArchiveAgentLeavePetitionHandler := connect_go.NewUnaryHandler(
+		WFMArchiveAgentLeavePetitionProcedure,
+		svc.ArchiveAgentLeavePetition,
+		opts...,
+	)
 	wFMHelloWorldWFMAdherenceHandler := connect_go.NewUnaryHandler(
 		WFMHelloWorldWFMAdherenceProcedure,
 		svc.HelloWorldWFMAdherence,
@@ -6443,6 +6486,8 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMCreateAgentLeavePetitionHandler.ServeHTTP(w, r)
 		case WFMListAgentLeavePetitionsProcedure:
 			wFMListAgentLeavePetitionsHandler.ServeHTTP(w, r)
+		case WFMArchiveAgentLeavePetitionProcedure:
+			wFMArchiveAgentLeavePetitionHandler.ServeHTTP(w, r)
 		case WFMHelloWorldWFMAdherenceProcedure:
 			wFMHelloWorldWFMAdherenceHandler.ServeHTTP(w, r)
 		case WFMListAgentStatesForDayProcedure:
@@ -7138,6 +7183,10 @@ func (UnimplementedWFMHandler) CreateAgentLeavePetition(context.Context, *connec
 
 func (UnimplementedWFMHandler) ListAgentLeavePetitions(context.Context, *connect_go.Request[wfm.ListAgentLeavePetitionsRequest]) (*connect_go.Response[wfm.ListAgentLeavePetitionsResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListAgentLeavePetitions is not implemented"))
+}
+
+func (UnimplementedWFMHandler) ArchiveAgentLeavePetition(context.Context, *connect_go.Request[wfm.ArchiveAgentLeavePetitionRequest]) (*connect_go.Response[wfm.ArchiveAgentLeavePetitionResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ArchiveAgentLeavePetition is not implemented"))
 }
 
 func (UnimplementedWFMHandler) HelloWorldWFMAdherence(context.Context, *connect_go.Request[wfm.HelloWorldWFMAdherenceRequest]) (*connect_go.Response[wfm.HelloWorldWFMAdherenceResponse], error) {

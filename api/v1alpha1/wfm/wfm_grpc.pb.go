@@ -203,6 +203,7 @@ const (
 	WFM_RemoveAgentFromSchedule_FullMethodName                       = "/api.v1alpha1.wfm.WFM/RemoveAgentFromSchedule"
 	WFM_CreateAgentLeavePetition_FullMethodName                      = "/api.v1alpha1.wfm.WFM/CreateAgentLeavePetition"
 	WFM_ListAgentLeavePetitions_FullMethodName                       = "/api.v1alpha1.wfm.WFM/ListAgentLeavePetitions"
+	WFM_ArchiveAgentLeavePetition_FullMethodName                     = "/api.v1alpha1.wfm.WFM/ArchiveAgentLeavePetition"
 	WFM_HelloWorldWFMAdherence_FullMethodName                        = "/api.v1alpha1.wfm.WFM/HelloWorldWFMAdherence"
 	WFM_ListAgentStatesForDay_FullMethodName                         = "/api.v1alpha1.wfm.WFM/ListAgentStatesForDay"
 	WFM_ListRealTimeManagementStates_FullMethodName                  = "/api.v1alpha1.wfm.WFM/ListRealTimeManagementStates"
@@ -1549,12 +1550,24 @@ type WFMClient interface {
 	CreateAgentLeavePetition(ctx context.Context, in *CreateAgentLeavePetitionRequest, opts ...grpc.CallOption) (*CreateAgentLeavePetitionResponse, error)
 	// Lists agent leave petitions for the @wfm_agent_sids over @datetime_range for the org sending the request.
 	// If no @wfm_agent_sids are provided, all agent leave petitions overlapping @datetime_range for the org sending the request will be returned.
+	// If no @datetime_range is provided, petitions will be returned across all datetimes.
 	// If @include_archived is true, archived agent leave petitions will be returned as well, otherwise archived requests will not be included.
 	// If no agent leave petitions are found for the given parameters, an empty slice will be returned.
 	// Errors:
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when listing the agent leave petitions.
 	ListAgentLeavePetitions(ctx context.Context, in *ListAgentLeavePetitionsRequest, opts ...grpc.CallOption) (*ListAgentLeavePetitionsResponse, error)
+	// Archives an agent leave petition with the given @agent_leave_petition_id for the org sending the request.
+	// If the leave petition has the status of PENDING_PETITION, the petition must be resolved first, or the request will error.
+	// If the petition has a status of APPROVED_PETITION and a portion of the petitions @requested_datetime_ranges lies in the future,
+	//
+	//	the petition may not be archived without being cancelled.
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid, the agent leave petition is approved for a future datetime, still pending, or is already archived.
+	//   - grpc.Internal: error occurs when archiving the agent leave petition.
+	//   - grpc.NotFound: the @agent_leave_petition_id does not exist for the org sending the request.
+	ArchiveAgentLeavePetition(ctx context.Context, in *ArchiveAgentLeavePetitionRequest, opts ...grpc.CallOption) (*ArchiveAgentLeavePetitionResponse, error)
 	// A hello world endpoint to test the WFM Adherence App.
 	// Returns a string with a hello world message.
 	HelloWorldWFMAdherence(ctx context.Context, in *HelloWorldWFMAdherenceRequest, opts ...grpc.CallOption) (*HelloWorldWFMAdherenceResponse, error)
@@ -3429,6 +3442,16 @@ func (c *wFMClient) ListAgentLeavePetitions(ctx context.Context, in *ListAgentLe
 	return out, nil
 }
 
+func (c *wFMClient) ArchiveAgentLeavePetition(ctx context.Context, in *ArchiveAgentLeavePetitionRequest, opts ...grpc.CallOption) (*ArchiveAgentLeavePetitionResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ArchiveAgentLeavePetitionResponse)
+	err := c.cc.Invoke(ctx, WFM_ArchiveAgentLeavePetition_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) HelloWorldWFMAdherence(ctx context.Context, in *HelloWorldWFMAdherenceRequest, opts ...grpc.CallOption) (*HelloWorldWFMAdherenceResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(HelloWorldWFMAdherenceResponse)
@@ -4809,12 +4832,24 @@ type WFMServer interface {
 	CreateAgentLeavePetition(context.Context, *CreateAgentLeavePetitionRequest) (*CreateAgentLeavePetitionResponse, error)
 	// Lists agent leave petitions for the @wfm_agent_sids over @datetime_range for the org sending the request.
 	// If no @wfm_agent_sids are provided, all agent leave petitions overlapping @datetime_range for the org sending the request will be returned.
+	// If no @datetime_range is provided, petitions will be returned across all datetimes.
 	// If @include_archived is true, archived agent leave petitions will be returned as well, otherwise archived requests will not be included.
 	// If no agent leave petitions are found for the given parameters, an empty slice will be returned.
 	// Errors:
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when listing the agent leave petitions.
 	ListAgentLeavePetitions(context.Context, *ListAgentLeavePetitionsRequest) (*ListAgentLeavePetitionsResponse, error)
+	// Archives an agent leave petition with the given @agent_leave_petition_id for the org sending the request.
+	// If the leave petition has the status of PENDING_PETITION, the petition must be resolved first, or the request will error.
+	// If the petition has a status of APPROVED_PETITION and a portion of the petitions @requested_datetime_ranges lies in the future,
+	//
+	//	the petition may not be archived without being cancelled.
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid, the agent leave petition is approved for a future datetime, still pending, or is already archived.
+	//   - grpc.Internal: error occurs when archiving the agent leave petition.
+	//   - grpc.NotFound: the @agent_leave_petition_id does not exist for the org sending the request.
+	ArchiveAgentLeavePetition(context.Context, *ArchiveAgentLeavePetitionRequest) (*ArchiveAgentLeavePetitionResponse, error)
 	// A hello world endpoint to test the WFM Adherence App.
 	// Returns a string with a hello world message.
 	HelloWorldWFMAdherence(context.Context, *HelloWorldWFMAdherenceRequest) (*HelloWorldWFMAdherenceResponse, error)
@@ -5351,6 +5386,9 @@ func (UnimplementedWFMServer) CreateAgentLeavePetition(context.Context, *CreateA
 }
 func (UnimplementedWFMServer) ListAgentLeavePetitions(context.Context, *ListAgentLeavePetitionsRequest) (*ListAgentLeavePetitionsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAgentLeavePetitions not implemented")
+}
+func (UnimplementedWFMServer) ArchiveAgentLeavePetition(context.Context, *ArchiveAgentLeavePetitionRequest) (*ArchiveAgentLeavePetitionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ArchiveAgentLeavePetition not implemented")
 }
 func (UnimplementedWFMServer) HelloWorldWFMAdherence(context.Context, *HelloWorldWFMAdherenceRequest) (*HelloWorldWFMAdherenceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HelloWorldWFMAdherence not implemented")
@@ -8455,6 +8493,24 @@ func _WFM_ListAgentLeavePetitions_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_ArchiveAgentLeavePetition_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ArchiveAgentLeavePetitionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).ArchiveAgentLeavePetition(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_ArchiveAgentLeavePetition_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).ArchiveAgentLeavePetition(ctx, req.(*ArchiveAgentLeavePetitionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WFM_HelloWorldWFMAdherence_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(HelloWorldWFMAdherenceRequest)
 	if err := dec(in); err != nil {
@@ -9189,6 +9245,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListAgentLeavePetitions",
 			Handler:    _WFM_ListAgentLeavePetitions_Handler,
+		},
+		{
+			MethodName: "ArchiveAgentLeavePetition",
+			Handler:    _WFM_ArchiveAgentLeavePetition_Handler,
 		},
 		{
 			MethodName: "HelloWorldWFMAdherence",
