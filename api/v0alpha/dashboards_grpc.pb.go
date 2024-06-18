@@ -32,6 +32,9 @@ const (
 	Dashboards_UpdateDashboardView_FullMethodName                = "/api.v0alpha.Dashboards/UpdateDashboardView"
 	Dashboards_UpdateDashboardLayout_FullMethodName              = "/api.v0alpha.Dashboards/UpdateDashboardLayout"
 	Dashboards_PublishDashboard_FullMethodName                   = "/api.v0alpha.Dashboards/PublishDashboard"
+	Dashboards_CreateApplicationDashboard_FullMethodName         = "/api.v0alpha.Dashboards/CreateApplicationDashboard"
+	Dashboards_ListApplicationsDashboards_FullMethodName         = "/api.v0alpha.Dashboards/ListApplicationsDashboards"
+	Dashboards_DeleteApplicationDashboard_FullMethodName         = "/api.v0alpha.Dashboards/DeleteApplicationDashboard"
 )
 
 // DashboardsClient is the client API for Dashboards service.
@@ -60,6 +63,12 @@ type DashboardsClient interface {
 	UpdateDashboardLayout(ctx context.Context, in *UpdateDashboardLayoutRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// PublishDashboard publishes a dashboard
 	PublishDashboard(ctx context.Context, in *PublishDashboardRequest, opts ...grpc.CallOption) (*PublishDashboardResponse, error)
+	// CreateApplicationDashboard assigns a dashboard to an application
+	CreateApplicationDashboard(ctx context.Context, in *CreateApplicationDashboardRequest, opts ...grpc.CallOption) (*CreateApplicationDashboardResponse, error)
+	// ListApplicationDashboards lists applications and their assigned dashboards
+	ListApplicationsDashboards(ctx context.Context, in *ListApplicationsDashboardsRequest, opts ...grpc.CallOption) (*ListApplicationsDashboardsResponse, error)
+	// DeleteApplicationDashboard removes a dashboard from an application
+	DeleteApplicationDashboard(ctx context.Context, in *DeleteApplicationDashboardRequest, opts ...grpc.CallOption) (*DeleteApplicationDashboardResponse, error)
 }
 
 type dashboardsClient struct {
@@ -190,6 +199,36 @@ func (c *dashboardsClient) PublishDashboard(ctx context.Context, in *PublishDash
 	return out, nil
 }
 
+func (c *dashboardsClient) CreateApplicationDashboard(ctx context.Context, in *CreateApplicationDashboardRequest, opts ...grpc.CallOption) (*CreateApplicationDashboardResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateApplicationDashboardResponse)
+	err := c.cc.Invoke(ctx, Dashboards_CreateApplicationDashboard_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *dashboardsClient) ListApplicationsDashboards(ctx context.Context, in *ListApplicationsDashboardsRequest, opts ...grpc.CallOption) (*ListApplicationsDashboardsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListApplicationsDashboardsResponse)
+	err := c.cc.Invoke(ctx, Dashboards_ListApplicationsDashboards_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *dashboardsClient) DeleteApplicationDashboard(ctx context.Context, in *DeleteApplicationDashboardRequest, opts ...grpc.CallOption) (*DeleteApplicationDashboardResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteApplicationDashboardResponse)
+	err := c.cc.Invoke(ctx, Dashboards_DeleteApplicationDashboard_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DashboardsServer is the server API for Dashboards service.
 // All implementations must embed UnimplementedDashboardsServer
 // for forward compatibility
@@ -216,6 +255,12 @@ type DashboardsServer interface {
 	UpdateDashboardLayout(context.Context, *UpdateDashboardLayoutRequest) (*emptypb.Empty, error)
 	// PublishDashboard publishes a dashboard
 	PublishDashboard(context.Context, *PublishDashboardRequest) (*PublishDashboardResponse, error)
+	// CreateApplicationDashboard assigns a dashboard to an application
+	CreateApplicationDashboard(context.Context, *CreateApplicationDashboardRequest) (*CreateApplicationDashboardResponse, error)
+	// ListApplicationDashboards lists applications and their assigned dashboards
+	ListApplicationsDashboards(context.Context, *ListApplicationsDashboardsRequest) (*ListApplicationsDashboardsResponse, error)
+	// DeleteApplicationDashboard removes a dashboard from an application
+	DeleteApplicationDashboard(context.Context, *DeleteApplicationDashboardRequest) (*DeleteApplicationDashboardResponse, error)
 	mustEmbedUnimplementedDashboardsServer()
 }
 
@@ -258,6 +303,15 @@ func (UnimplementedDashboardsServer) UpdateDashboardLayout(context.Context, *Upd
 }
 func (UnimplementedDashboardsServer) PublishDashboard(context.Context, *PublishDashboardRequest) (*PublishDashboardResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PublishDashboard not implemented")
+}
+func (UnimplementedDashboardsServer) CreateApplicationDashboard(context.Context, *CreateApplicationDashboardRequest) (*CreateApplicationDashboardResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateApplicationDashboard not implemented")
+}
+func (UnimplementedDashboardsServer) ListApplicationsDashboards(context.Context, *ListApplicationsDashboardsRequest) (*ListApplicationsDashboardsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListApplicationsDashboards not implemented")
+}
+func (UnimplementedDashboardsServer) DeleteApplicationDashboard(context.Context, *DeleteApplicationDashboardRequest) (*DeleteApplicationDashboardResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteApplicationDashboard not implemented")
 }
 func (UnimplementedDashboardsServer) mustEmbedUnimplementedDashboardsServer() {}
 
@@ -488,6 +542,60 @@ func _Dashboards_PublishDashboard_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Dashboards_CreateApplicationDashboard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateApplicationDashboardRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DashboardsServer).CreateApplicationDashboard(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Dashboards_CreateApplicationDashboard_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DashboardsServer).CreateApplicationDashboard(ctx, req.(*CreateApplicationDashboardRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Dashboards_ListApplicationsDashboards_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListApplicationsDashboardsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DashboardsServer).ListApplicationsDashboards(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Dashboards_ListApplicationsDashboards_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DashboardsServer).ListApplicationsDashboards(ctx, req.(*ListApplicationsDashboardsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Dashboards_DeleteApplicationDashboard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteApplicationDashboardRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DashboardsServer).DeleteApplicationDashboard(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Dashboards_DeleteApplicationDashboard_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DashboardsServer).DeleteApplicationDashboard(ctx, req.(*DeleteApplicationDashboardRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Dashboards_ServiceDesc is the grpc.ServiceDesc for Dashboards service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -542,6 +650,18 @@ var Dashboards_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "PublishDashboard",
 			Handler:    _Dashboards_PublishDashboard_Handler,
+		},
+		{
+			MethodName: "CreateApplicationDashboard",
+			Handler:    _Dashboards_CreateApplicationDashboard_Handler,
+		},
+		{
+			MethodName: "ListApplicationsDashboards",
+			Handler:    _Dashboards_ListApplicationsDashboards_Handler,
+		},
+		{
+			MethodName: "DeleteApplicationDashboard",
+			Handler:    _Dashboards_DeleteApplicationDashboard_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

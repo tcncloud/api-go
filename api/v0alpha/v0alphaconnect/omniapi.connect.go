@@ -94,6 +94,12 @@ const (
 	// OmniApiGetAvailableHeadersProcedure is the fully-qualified name of the OmniApi's
 	// GetAvailableHeaders RPC.
 	OmniApiGetAvailableHeadersProcedure = "/api.v0alpha.OmniApi/GetAvailableHeaders"
+	// OmniApiGetOmniExchangeElementsProcedure is the fully-qualified name of the OmniApi's
+	// GetOmniExchangeElements RPC.
+	OmniApiGetOmniExchangeElementsProcedure = "/api.v0alpha.OmniApi/GetOmniExchangeElements"
+	// OmniApiGetFieldsForElementProcedure is the fully-qualified name of the OmniApi's
+	// GetFieldsForElement RPC.
+	OmniApiGetFieldsForElementProcedure = "/api.v0alpha.OmniApi/GetFieldsForElement"
 	// OmniApiApproveTaskProcedure is the fully-qualified name of the OmniApi's ApproveTask RPC.
 	OmniApiApproveTaskProcedure = "/api.v0alpha.OmniApi/ApproveTask"
 	// OmniApiGetNextQueuedTaskProcedure is the fully-qualified name of the OmniApi's GetNextQueuedTask
@@ -296,6 +302,10 @@ type OmniApiClient interface {
 	//
 	//	OMNI_BOSS
 	GetAvailableHeaders(context.Context, *connect_go.Request[v0alpha.GetAvailableHeadersReq]) (*connect_go.Response[v0alpha.GetAvailableHeadersRes], error)
+	// GetOmniExchangeElements - retrieves all omni exchange elements from lms service
+	GetOmniExchangeElements(context.Context, *connect_go.Request[v0alpha.GetOmniExchangeElementsRequest]) (*connect_go.Response[v0alpha.GetOmniExchangeElementsResult], error)
+	// GetFieldsForElement - takes an omni exchange element and returns fields for it
+	GetFieldsForElement(context.Context, *connect_go.Request[v0alpha.GetFieldsForElementRequest]) (*connect_go.Response[v0alpha.GetFieldsForElementResult], error)
 	// ApproveTask approves a task.
 	ApproveTask(context.Context, *connect_go.Request[v0alpha.ApproveTaskRequest]) (*connect_go.Response[v0alpha.ApproveTaskResponse], error)
 	// GetNextQueuedTask retrieves the next queued task for the agent.
@@ -683,6 +693,16 @@ func NewOmniApiClient(httpClient connect_go.HTTPClient, baseURL string, opts ...
 			baseURL+OmniApiGetAvailableHeadersProcedure,
 			opts...,
 		),
+		getOmniExchangeElements: connect_go.NewClient[v0alpha.GetOmniExchangeElementsRequest, v0alpha.GetOmniExchangeElementsResult](
+			httpClient,
+			baseURL+OmniApiGetOmniExchangeElementsProcedure,
+			opts...,
+		),
+		getFieldsForElement: connect_go.NewClient[v0alpha.GetFieldsForElementRequest, v0alpha.GetFieldsForElementResult](
+			httpClient,
+			baseURL+OmniApiGetFieldsForElementProcedure,
+			opts...,
+		),
 		approveTask: connect_go.NewClient[v0alpha.ApproveTaskRequest, v0alpha.ApproveTaskResponse](
 			httpClient,
 			baseURL+OmniApiApproveTaskProcedure,
@@ -961,6 +981,8 @@ type omniApiClient struct {
 	managerListConversations     *connect_go.Client[v0alpha.ListConversationsReq, v0alpha.ListConversationsRes]
 	listContactLists             *connect_go.Client[v0alpha.ListContactListsReq, v0alpha.ListContactListsRes]
 	getAvailableHeaders          *connect_go.Client[v0alpha.GetAvailableHeadersReq, v0alpha.GetAvailableHeadersRes]
+	getOmniExchangeElements      *connect_go.Client[v0alpha.GetOmniExchangeElementsRequest, v0alpha.GetOmniExchangeElementsResult]
+	getFieldsForElement          *connect_go.Client[v0alpha.GetFieldsForElementRequest, v0alpha.GetFieldsForElementResult]
 	approveTask                  *connect_go.Client[v0alpha.ApproveTaskRequest, v0alpha.ApproveTaskResponse]
 	getNextQueuedTask            *connect_go.Client[v0alpha.GetNextQueuedTaskRequest, v0alpha.GetNextQueuedTaskResponse]
 	getTask                      *connect_go.Client[v0alpha.GetTaskReq, commons.OmniTask]
@@ -1126,6 +1148,16 @@ func (c *omniApiClient) ListContactLists(ctx context.Context, req *connect_go.Re
 // GetAvailableHeaders calls api.v0alpha.OmniApi.GetAvailableHeaders.
 func (c *omniApiClient) GetAvailableHeaders(ctx context.Context, req *connect_go.Request[v0alpha.GetAvailableHeadersReq]) (*connect_go.Response[v0alpha.GetAvailableHeadersRes], error) {
 	return c.getAvailableHeaders.CallUnary(ctx, req)
+}
+
+// GetOmniExchangeElements calls api.v0alpha.OmniApi.GetOmniExchangeElements.
+func (c *omniApiClient) GetOmniExchangeElements(ctx context.Context, req *connect_go.Request[v0alpha.GetOmniExchangeElementsRequest]) (*connect_go.Response[v0alpha.GetOmniExchangeElementsResult], error) {
+	return c.getOmniExchangeElements.CallUnary(ctx, req)
+}
+
+// GetFieldsForElement calls api.v0alpha.OmniApi.GetFieldsForElement.
+func (c *omniApiClient) GetFieldsForElement(ctx context.Context, req *connect_go.Request[v0alpha.GetFieldsForElementRequest]) (*connect_go.Response[v0alpha.GetFieldsForElementResult], error) {
+	return c.getFieldsForElement.CallUnary(ctx, req)
 }
 
 // ApproveTask calls api.v0alpha.OmniApi.ApproveTask.
@@ -1444,6 +1476,10 @@ type OmniApiHandler interface {
 	//
 	//	OMNI_BOSS
 	GetAvailableHeaders(context.Context, *connect_go.Request[v0alpha.GetAvailableHeadersReq]) (*connect_go.Response[v0alpha.GetAvailableHeadersRes], error)
+	// GetOmniExchangeElements - retrieves all omni exchange elements from lms service
+	GetOmniExchangeElements(context.Context, *connect_go.Request[v0alpha.GetOmniExchangeElementsRequest]) (*connect_go.Response[v0alpha.GetOmniExchangeElementsResult], error)
+	// GetFieldsForElement - takes an omni exchange element and returns fields for it
+	GetFieldsForElement(context.Context, *connect_go.Request[v0alpha.GetFieldsForElementRequest]) (*connect_go.Response[v0alpha.GetFieldsForElementResult], error)
 	// ApproveTask approves a task.
 	ApproveTask(context.Context, *connect_go.Request[v0alpha.ApproveTaskRequest]) (*connect_go.Response[v0alpha.ApproveTaskResponse], error)
 	// GetNextQueuedTask retrieves the next queued task for the agent.
@@ -1827,6 +1863,16 @@ func NewOmniApiHandler(svc OmniApiHandler, opts ...connect_go.HandlerOption) (st
 		svc.GetAvailableHeaders,
 		opts...,
 	)
+	omniApiGetOmniExchangeElementsHandler := connect_go.NewUnaryHandler(
+		OmniApiGetOmniExchangeElementsProcedure,
+		svc.GetOmniExchangeElements,
+		opts...,
+	)
+	omniApiGetFieldsForElementHandler := connect_go.NewUnaryHandler(
+		OmniApiGetFieldsForElementProcedure,
+		svc.GetFieldsForElement,
+		opts...,
+	)
 	omniApiApproveTaskHandler := connect_go.NewUnaryHandler(
 		OmniApiApproveTaskProcedure,
 		svc.ApproveTask,
@@ -2125,6 +2171,10 @@ func NewOmniApiHandler(svc OmniApiHandler, opts ...connect_go.HandlerOption) (st
 			omniApiListContactListsHandler.ServeHTTP(w, r)
 		case OmniApiGetAvailableHeadersProcedure:
 			omniApiGetAvailableHeadersHandler.ServeHTTP(w, r)
+		case OmniApiGetOmniExchangeElementsProcedure:
+			omniApiGetOmniExchangeElementsHandler.ServeHTTP(w, r)
+		case OmniApiGetFieldsForElementProcedure:
+			omniApiGetFieldsForElementHandler.ServeHTTP(w, r)
 		case OmniApiApproveTaskProcedure:
 			omniApiApproveTaskHandler.ServeHTTP(w, r)
 		case OmniApiGetNextQueuedTaskProcedure:
@@ -2324,6 +2374,14 @@ func (UnimplementedOmniApiHandler) ListContactLists(context.Context, *connect_go
 
 func (UnimplementedOmniApiHandler) GetAvailableHeaders(context.Context, *connect_go.Request[v0alpha.GetAvailableHeadersReq]) (*connect_go.Response[v0alpha.GetAvailableHeadersRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.GetAvailableHeaders is not implemented"))
+}
+
+func (UnimplementedOmniApiHandler) GetOmniExchangeElements(context.Context, *connect_go.Request[v0alpha.GetOmniExchangeElementsRequest]) (*connect_go.Response[v0alpha.GetOmniExchangeElementsResult], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.GetOmniExchangeElements is not implemented"))
+}
+
+func (UnimplementedOmniApiHandler) GetFieldsForElement(context.Context, *connect_go.Request[v0alpha.GetFieldsForElementRequest]) (*connect_go.Response[v0alpha.GetFieldsForElementResult], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.OmniApi.GetFieldsForElement is not implemented"))
 }
 
 func (UnimplementedOmniApiHandler) ApproveTask(context.Context, *connect_go.Request[v0alpha.ApproveTaskRequest]) (*connect_go.Response[v0alpha.ApproveTaskResponse], error) {

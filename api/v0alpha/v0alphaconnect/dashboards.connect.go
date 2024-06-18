@@ -69,6 +69,15 @@ const (
 	// DashboardsPublishDashboardProcedure is the fully-qualified name of the Dashboards's
 	// PublishDashboard RPC.
 	DashboardsPublishDashboardProcedure = "/api.v0alpha.Dashboards/PublishDashboard"
+	// DashboardsCreateApplicationDashboardProcedure is the fully-qualified name of the Dashboards's
+	// CreateApplicationDashboard RPC.
+	DashboardsCreateApplicationDashboardProcedure = "/api.v0alpha.Dashboards/CreateApplicationDashboard"
+	// DashboardsListApplicationsDashboardsProcedure is the fully-qualified name of the Dashboards's
+	// ListApplicationsDashboards RPC.
+	DashboardsListApplicationsDashboardsProcedure = "/api.v0alpha.Dashboards/ListApplicationsDashboards"
+	// DashboardsDeleteApplicationDashboardProcedure is the fully-qualified name of the Dashboards's
+	// DeleteApplicationDashboard RPC.
+	DashboardsDeleteApplicationDashboardProcedure = "/api.v0alpha.Dashboards/DeleteApplicationDashboard"
 )
 
 // DashboardsClient is a client for the api.v0alpha.Dashboards service.
@@ -95,6 +104,12 @@ type DashboardsClient interface {
 	UpdateDashboardLayout(context.Context, *connect_go.Request[v0alpha.UpdateDashboardLayoutRequest]) (*connect_go.Response[emptypb.Empty], error)
 	// PublishDashboard publishes a dashboard
 	PublishDashboard(context.Context, *connect_go.Request[v0alpha.PublishDashboardRequest]) (*connect_go.Response[v0alpha.PublishDashboardResponse], error)
+	// CreateApplicationDashboard assigns a dashboard to an application
+	CreateApplicationDashboard(context.Context, *connect_go.Request[v0alpha.CreateApplicationDashboardRequest]) (*connect_go.Response[v0alpha.CreateApplicationDashboardResponse], error)
+	// ListApplicationDashboards lists applications and their assigned dashboards
+	ListApplicationsDashboards(context.Context, *connect_go.Request[v0alpha.ListApplicationsDashboardsRequest]) (*connect_go.Response[v0alpha.ListApplicationsDashboardsResponse], error)
+	// DeleteApplicationDashboard removes a dashboard from an application
+	DeleteApplicationDashboard(context.Context, *connect_go.Request[v0alpha.DeleteApplicationDashboardRequest]) (*connect_go.Response[v0alpha.DeleteApplicationDashboardResponse], error)
 }
 
 // NewDashboardsClient constructs a client for the api.v0alpha.Dashboards service. By default, it
@@ -167,6 +182,21 @@ func NewDashboardsClient(httpClient connect_go.HTTPClient, baseURL string, opts 
 			baseURL+DashboardsPublishDashboardProcedure,
 			opts...,
 		),
+		createApplicationDashboard: connect_go.NewClient[v0alpha.CreateApplicationDashboardRequest, v0alpha.CreateApplicationDashboardResponse](
+			httpClient,
+			baseURL+DashboardsCreateApplicationDashboardProcedure,
+			opts...,
+		),
+		listApplicationsDashboards: connect_go.NewClient[v0alpha.ListApplicationsDashboardsRequest, v0alpha.ListApplicationsDashboardsResponse](
+			httpClient,
+			baseURL+DashboardsListApplicationsDashboardsProcedure,
+			opts...,
+		),
+		deleteApplicationDashboard: connect_go.NewClient[v0alpha.DeleteApplicationDashboardRequest, v0alpha.DeleteApplicationDashboardResponse](
+			httpClient,
+			baseURL+DashboardsDeleteApplicationDashboardProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -184,6 +214,9 @@ type dashboardsClient struct {
 	updateDashboardView                *connect_go.Client[v0alpha.UpdateDashboardViewRequest, emptypb.Empty]
 	updateDashboardLayout              *connect_go.Client[v0alpha.UpdateDashboardLayoutRequest, emptypb.Empty]
 	publishDashboard                   *connect_go.Client[v0alpha.PublishDashboardRequest, v0alpha.PublishDashboardResponse]
+	createApplicationDashboard         *connect_go.Client[v0alpha.CreateApplicationDashboardRequest, v0alpha.CreateApplicationDashboardResponse]
+	listApplicationsDashboards         *connect_go.Client[v0alpha.ListApplicationsDashboardsRequest, v0alpha.ListApplicationsDashboardsResponse]
+	deleteApplicationDashboard         *connect_go.Client[v0alpha.DeleteApplicationDashboardRequest, v0alpha.DeleteApplicationDashboardResponse]
 }
 
 // CreateDashboard calls api.v0alpha.Dashboards.CreateDashboard.
@@ -247,6 +280,21 @@ func (c *dashboardsClient) PublishDashboard(ctx context.Context, req *connect_go
 	return c.publishDashboard.CallUnary(ctx, req)
 }
 
+// CreateApplicationDashboard calls api.v0alpha.Dashboards.CreateApplicationDashboard.
+func (c *dashboardsClient) CreateApplicationDashboard(ctx context.Context, req *connect_go.Request[v0alpha.CreateApplicationDashboardRequest]) (*connect_go.Response[v0alpha.CreateApplicationDashboardResponse], error) {
+	return c.createApplicationDashboard.CallUnary(ctx, req)
+}
+
+// ListApplicationsDashboards calls api.v0alpha.Dashboards.ListApplicationsDashboards.
+func (c *dashboardsClient) ListApplicationsDashboards(ctx context.Context, req *connect_go.Request[v0alpha.ListApplicationsDashboardsRequest]) (*connect_go.Response[v0alpha.ListApplicationsDashboardsResponse], error) {
+	return c.listApplicationsDashboards.CallUnary(ctx, req)
+}
+
+// DeleteApplicationDashboard calls api.v0alpha.Dashboards.DeleteApplicationDashboard.
+func (c *dashboardsClient) DeleteApplicationDashboard(ctx context.Context, req *connect_go.Request[v0alpha.DeleteApplicationDashboardRequest]) (*connect_go.Response[v0alpha.DeleteApplicationDashboardResponse], error) {
+	return c.deleteApplicationDashboard.CallUnary(ctx, req)
+}
+
 // DashboardsHandler is an implementation of the api.v0alpha.Dashboards service.
 type DashboardsHandler interface {
 	// CreateDashboard creates a dashboard and associated panels
@@ -271,6 +319,12 @@ type DashboardsHandler interface {
 	UpdateDashboardLayout(context.Context, *connect_go.Request[v0alpha.UpdateDashboardLayoutRequest]) (*connect_go.Response[emptypb.Empty], error)
 	// PublishDashboard publishes a dashboard
 	PublishDashboard(context.Context, *connect_go.Request[v0alpha.PublishDashboardRequest]) (*connect_go.Response[v0alpha.PublishDashboardResponse], error)
+	// CreateApplicationDashboard assigns a dashboard to an application
+	CreateApplicationDashboard(context.Context, *connect_go.Request[v0alpha.CreateApplicationDashboardRequest]) (*connect_go.Response[v0alpha.CreateApplicationDashboardResponse], error)
+	// ListApplicationDashboards lists applications and their assigned dashboards
+	ListApplicationsDashboards(context.Context, *connect_go.Request[v0alpha.ListApplicationsDashboardsRequest]) (*connect_go.Response[v0alpha.ListApplicationsDashboardsResponse], error)
+	// DeleteApplicationDashboard removes a dashboard from an application
+	DeleteApplicationDashboard(context.Context, *connect_go.Request[v0alpha.DeleteApplicationDashboardRequest]) (*connect_go.Response[v0alpha.DeleteApplicationDashboardResponse], error)
 }
 
 // NewDashboardsHandler builds an HTTP handler from the service implementation. It returns the path
@@ -339,6 +393,21 @@ func NewDashboardsHandler(svc DashboardsHandler, opts ...connect_go.HandlerOptio
 		svc.PublishDashboard,
 		opts...,
 	)
+	dashboardsCreateApplicationDashboardHandler := connect_go.NewUnaryHandler(
+		DashboardsCreateApplicationDashboardProcedure,
+		svc.CreateApplicationDashboard,
+		opts...,
+	)
+	dashboardsListApplicationsDashboardsHandler := connect_go.NewUnaryHandler(
+		DashboardsListApplicationsDashboardsProcedure,
+		svc.ListApplicationsDashboards,
+		opts...,
+	)
+	dashboardsDeleteApplicationDashboardHandler := connect_go.NewUnaryHandler(
+		DashboardsDeleteApplicationDashboardProcedure,
+		svc.DeleteApplicationDashboard,
+		opts...,
+	)
 	return "/api.v0alpha.Dashboards/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case DashboardsCreateDashboardProcedure:
@@ -365,6 +434,12 @@ func NewDashboardsHandler(svc DashboardsHandler, opts ...connect_go.HandlerOptio
 			dashboardsUpdateDashboardLayoutHandler.ServeHTTP(w, r)
 		case DashboardsPublishDashboardProcedure:
 			dashboardsPublishDashboardHandler.ServeHTTP(w, r)
+		case DashboardsCreateApplicationDashboardProcedure:
+			dashboardsCreateApplicationDashboardHandler.ServeHTTP(w, r)
+		case DashboardsListApplicationsDashboardsProcedure:
+			dashboardsListApplicationsDashboardsHandler.ServeHTTP(w, r)
+		case DashboardsDeleteApplicationDashboardProcedure:
+			dashboardsDeleteApplicationDashboardHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -420,4 +495,16 @@ func (UnimplementedDashboardsHandler) UpdateDashboardLayout(context.Context, *co
 
 func (UnimplementedDashboardsHandler) PublishDashboard(context.Context, *connect_go.Request[v0alpha.PublishDashboardRequest]) (*connect_go.Response[v0alpha.PublishDashboardResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Dashboards.PublishDashboard is not implemented"))
+}
+
+func (UnimplementedDashboardsHandler) CreateApplicationDashboard(context.Context, *connect_go.Request[v0alpha.CreateApplicationDashboardRequest]) (*connect_go.Response[v0alpha.CreateApplicationDashboardResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Dashboards.CreateApplicationDashboard is not implemented"))
+}
+
+func (UnimplementedDashboardsHandler) ListApplicationsDashboards(context.Context, *connect_go.Request[v0alpha.ListApplicationsDashboardsRequest]) (*connect_go.Response[v0alpha.ListApplicationsDashboardsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Dashboards.ListApplicationsDashboards is not implemented"))
+}
+
+func (UnimplementedDashboardsHandler) DeleteApplicationDashboard(context.Context, *connect_go.Request[v0alpha.DeleteApplicationDashboardRequest]) (*connect_go.Response[v0alpha.DeleteApplicationDashboardResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Dashboards.DeleteApplicationDashboard is not implemented"))
 }

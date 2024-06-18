@@ -43,6 +43,8 @@ const (
 	OmniApi_ManagerListConversations_FullMethodName     = "/api.v0alpha.OmniApi/ManagerListConversations"
 	OmniApi_ListContactLists_FullMethodName             = "/api.v0alpha.OmniApi/ListContactLists"
 	OmniApi_GetAvailableHeaders_FullMethodName          = "/api.v0alpha.OmniApi/GetAvailableHeaders"
+	OmniApi_GetOmniExchangeElements_FullMethodName      = "/api.v0alpha.OmniApi/GetOmniExchangeElements"
+	OmniApi_GetFieldsForElement_FullMethodName          = "/api.v0alpha.OmniApi/GetFieldsForElement"
 	OmniApi_ApproveTask_FullMethodName                  = "/api.v0alpha.OmniApi/ApproveTask"
 	OmniApi_GetNextQueuedTask_FullMethodName            = "/api.v0alpha.OmniApi/GetNextQueuedTask"
 	OmniApi_GetTask_FullMethodName                      = "/api.v0alpha.OmniApi/GetTask"
@@ -167,6 +169,10 @@ type OmniApiClient interface {
 	//
 	//	OMNI_BOSS
 	GetAvailableHeaders(ctx context.Context, in *GetAvailableHeadersReq, opts ...grpc.CallOption) (*GetAvailableHeadersRes, error)
+	// GetOmniExchangeElements - retrieves all omni exchange elements from lms service
+	GetOmniExchangeElements(ctx context.Context, in *GetOmniExchangeElementsRequest, opts ...grpc.CallOption) (*GetOmniExchangeElementsResult, error)
+	// GetFieldsForElement - takes an omni exchange element and returns fields for it
+	GetFieldsForElement(ctx context.Context, in *GetFieldsForElementRequest, opts ...grpc.CallOption) (*GetFieldsForElementResult, error)
 	// ApproveTask approves a task.
 	ApproveTask(ctx context.Context, in *ApproveTaskRequest, opts ...grpc.CallOption) (*ApproveTaskResponse, error)
 	// GetNextQueuedTask retrieves the next queued task for the agent.
@@ -707,6 +713,26 @@ func (c *omniApiClient) GetAvailableHeaders(ctx context.Context, in *GetAvailabl
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetAvailableHeadersRes)
 	err := c.cc.Invoke(ctx, OmniApi_GetAvailableHeaders_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *omniApiClient) GetOmniExchangeElements(ctx context.Context, in *GetOmniExchangeElementsRequest, opts ...grpc.CallOption) (*GetOmniExchangeElementsResult, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetOmniExchangeElementsResult)
+	err := c.cc.Invoke(ctx, OmniApi_GetOmniExchangeElements_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *omniApiClient) GetFieldsForElement(ctx context.Context, in *GetFieldsForElementRequest, opts ...grpc.CallOption) (*GetFieldsForElementResult, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetFieldsForElementResult)
+	err := c.cc.Invoke(ctx, OmniApi_GetFieldsForElement_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1285,6 +1311,10 @@ type OmniApiServer interface {
 	//
 	//	OMNI_BOSS
 	GetAvailableHeaders(context.Context, *GetAvailableHeadersReq) (*GetAvailableHeadersRes, error)
+	// GetOmniExchangeElements - retrieves all omni exchange elements from lms service
+	GetOmniExchangeElements(context.Context, *GetOmniExchangeElementsRequest) (*GetOmniExchangeElementsResult, error)
+	// GetFieldsForElement - takes an omni exchange element and returns fields for it
+	GetFieldsForElement(context.Context, *GetFieldsForElementRequest) (*GetFieldsForElementResult, error)
 	// ApproveTask approves a task.
 	ApproveTask(context.Context, *ApproveTaskRequest) (*ApproveTaskResponse, error)
 	// GetNextQueuedTask retrieves the next queued task for the agent.
@@ -1620,6 +1650,12 @@ func (UnimplementedOmniApiServer) ListContactLists(context.Context, *ListContact
 }
 func (UnimplementedOmniApiServer) GetAvailableHeaders(context.Context, *GetAvailableHeadersReq) (*GetAvailableHeadersRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAvailableHeaders not implemented")
+}
+func (UnimplementedOmniApiServer) GetOmniExchangeElements(context.Context, *GetOmniExchangeElementsRequest) (*GetOmniExchangeElementsResult, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetOmniExchangeElements not implemented")
+}
+func (UnimplementedOmniApiServer) GetFieldsForElement(context.Context, *GetFieldsForElementRequest) (*GetFieldsForElementResult, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFieldsForElement not implemented")
 }
 func (UnimplementedOmniApiServer) ApproveTask(context.Context, *ApproveTaskRequest) (*ApproveTaskResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ApproveTask not implemented")
@@ -2200,6 +2236,42 @@ func _OmniApi_GetAvailableHeaders_Handler(srv interface{}, ctx context.Context, 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OmniApiServer).GetAvailableHeaders(ctx, req.(*GetAvailableHeadersReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OmniApi_GetOmniExchangeElements_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetOmniExchangeElementsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmniApiServer).GetOmniExchangeElements(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OmniApi_GetOmniExchangeElements_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmniApiServer).GetOmniExchangeElements(ctx, req.(*GetOmniExchangeElementsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OmniApi_GetFieldsForElement_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetFieldsForElementRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OmniApiServer).GetFieldsForElement(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OmniApi_GetFieldsForElement_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OmniApiServer).GetFieldsForElement(ctx, req.(*GetFieldsForElementRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -3194,6 +3266,14 @@ var OmniApi_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAvailableHeaders",
 			Handler:    _OmniApi_GetAvailableHeaders_Handler,
+		},
+		{
+			MethodName: "GetOmniExchangeElements",
+			Handler:    _OmniApi_GetOmniExchangeElements_Handler,
+		},
+		{
+			MethodName: "GetFieldsForElement",
+			Handler:    _OmniApi_GetFieldsForElement_Handler,
 		},
 		{
 			MethodName: "ApproveTask",
