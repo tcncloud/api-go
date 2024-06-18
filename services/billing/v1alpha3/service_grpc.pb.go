@@ -23,8 +23,8 @@ const (
 	BillingService_ApplyBillingPlanDraft_FullMethodName        = "/services.billing.v1alpha3.BillingService/ApplyBillingPlanDraft"
 	BillingService_CreateBillingPlan_FullMethodName            = "/services.billing.v1alpha3.BillingService/CreateBillingPlan"
 	BillingService_DeleteBillingPlan_FullMethodName            = "/services.billing.v1alpha3.BillingService/DeleteBillingPlan"
-	BillingService_GetOrgBillingPlan_FullMethodName            = "/services.billing.v1alpha3.BillingService/GetOrgBillingPlan"
-	BillingService_ListOrgBillingPlans_FullMethodName          = "/services.billing.v1alpha3.BillingService/ListOrgBillingPlans"
+	BillingService_GetBillingPlan_FullMethodName               = "/services.billing.v1alpha3.BillingService/GetBillingPlan"
+	BillingService_ListBillingPlans_FullMethodName             = "/services.billing.v1alpha3.BillingService/ListBillingPlans"
 	BillingService_UpdateBillingPlan_FullMethodName            = "/services.billing.v1alpha3.BillingService/UpdateBillingPlan"
 	BillingService_ApplyDefaultBillingPlanDraft_FullMethodName = "/services.billing.v1alpha3.BillingService/ApplyDefaultBillingPlanDraft"
 	BillingService_CreateDefaultBillingPlan_FullMethodName     = "/services.billing.v1alpha3.BillingService/CreateDefaultBillingPlan"
@@ -96,7 +96,7 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: The caller does not have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
 	DeleteBillingPlan(ctx context.Context, in *DeleteBillingPlanRequest, opts ...grpc.CallOption) (*DeleteBillingPlanResponse, error)
-	// Gets a billing plan for an ORG.
+	// Gets a billing plan.
 	// Required permissions:
 	//
 	//	CUSTOMER_SUPPORT
@@ -107,8 +107,8 @@ type BillingServiceClient interface {
 	//   - grpc.NotFound: The billing plan was not found.
 	//   - grpc.PermissionDenied: The caller does not have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
-	GetOrgBillingPlan(ctx context.Context, in *GetOrgBillingPlanRequest, opts ...grpc.CallOption) (*GetOrgBillingPlanResponse, error)
-	// Lists billing plans for ORGs.
+	GetBillingPlan(ctx context.Context, in *GetBillingPlanRequest, opts ...grpc.CallOption) (*GetBillingPlanResponse, error)
+	// Lists billing plans.
 	// Required permissions:
 	//
 	//	CUSTOMER_SUPPORT
@@ -118,7 +118,7 @@ type BillingServiceClient interface {
 	//   - grpc.InvalidArgument: The request is invalid.
 	//   - grpc.PermissionDenied: The caller does not have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
-	ListOrgBillingPlans(ctx context.Context, in *ListOrgBillingPlansRequest, opts ...grpc.CallOption) (*ListOrgBillingPlansResponse, error)
+	ListBillingPlans(ctx context.Context, in *ListBillingPlansRequest, opts ...grpc.CallOption) (*ListBillingPlansResponse, error)
 	// Updates a billing plan.
 	// Required permissions:
 	//
@@ -396,20 +396,20 @@ func (c *billingServiceClient) DeleteBillingPlan(ctx context.Context, in *Delete
 	return out, nil
 }
 
-func (c *billingServiceClient) GetOrgBillingPlan(ctx context.Context, in *GetOrgBillingPlanRequest, opts ...grpc.CallOption) (*GetOrgBillingPlanResponse, error) {
+func (c *billingServiceClient) GetBillingPlan(ctx context.Context, in *GetBillingPlanRequest, opts ...grpc.CallOption) (*GetBillingPlanResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetOrgBillingPlanResponse)
-	err := c.cc.Invoke(ctx, BillingService_GetOrgBillingPlan_FullMethodName, in, out, cOpts...)
+	out := new(GetBillingPlanResponse)
+	err := c.cc.Invoke(ctx, BillingService_GetBillingPlan_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *billingServiceClient) ListOrgBillingPlans(ctx context.Context, in *ListOrgBillingPlansRequest, opts ...grpc.CallOption) (*ListOrgBillingPlansResponse, error) {
+func (c *billingServiceClient) ListBillingPlans(ctx context.Context, in *ListBillingPlansRequest, opts ...grpc.CallOption) (*ListBillingPlansResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ListOrgBillingPlansResponse)
-	err := c.cc.Invoke(ctx, BillingService_ListOrgBillingPlans_FullMethodName, in, out, cOpts...)
+	out := new(ListBillingPlansResponse)
+	err := c.cc.Invoke(ctx, BillingService_ListBillingPlans_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -647,7 +647,7 @@ type BillingServiceServer interface {
 	//   - grpc.PermissionDenied: The caller does not have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
 	DeleteBillingPlan(context.Context, *DeleteBillingPlanRequest) (*DeleteBillingPlanResponse, error)
-	// Gets a billing plan for an ORG.
+	// Gets a billing plan.
 	// Required permissions:
 	//
 	//	CUSTOMER_SUPPORT
@@ -658,8 +658,8 @@ type BillingServiceServer interface {
 	//   - grpc.NotFound: The billing plan was not found.
 	//   - grpc.PermissionDenied: The caller does not have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
-	GetOrgBillingPlan(context.Context, *GetOrgBillingPlanRequest) (*GetOrgBillingPlanResponse, error)
-	// Lists billing plans for ORGs.
+	GetBillingPlan(context.Context, *GetBillingPlanRequest) (*GetBillingPlanResponse, error)
+	// Lists billing plans.
 	// Required permissions:
 	//
 	//	CUSTOMER_SUPPORT
@@ -669,7 +669,7 @@ type BillingServiceServer interface {
 	//   - grpc.InvalidArgument: The request is invalid.
 	//   - grpc.PermissionDenied: The caller does not have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
-	ListOrgBillingPlans(context.Context, *ListOrgBillingPlansRequest) (*ListOrgBillingPlansResponse, error)
+	ListBillingPlans(context.Context, *ListBillingPlansRequest) (*ListBillingPlansResponse, error)
 	// Updates a billing plan.
 	// Required permissions:
 	//
@@ -916,11 +916,11 @@ func (UnimplementedBillingServiceServer) CreateBillingPlan(context.Context, *Cre
 func (UnimplementedBillingServiceServer) DeleteBillingPlan(context.Context, *DeleteBillingPlanRequest) (*DeleteBillingPlanResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteBillingPlan not implemented")
 }
-func (UnimplementedBillingServiceServer) GetOrgBillingPlan(context.Context, *GetOrgBillingPlanRequest) (*GetOrgBillingPlanResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetOrgBillingPlan not implemented")
+func (UnimplementedBillingServiceServer) GetBillingPlan(context.Context, *GetBillingPlanRequest) (*GetBillingPlanResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetBillingPlan not implemented")
 }
-func (UnimplementedBillingServiceServer) ListOrgBillingPlans(context.Context, *ListOrgBillingPlansRequest) (*ListOrgBillingPlansResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListOrgBillingPlans not implemented")
+func (UnimplementedBillingServiceServer) ListBillingPlans(context.Context, *ListBillingPlansRequest) (*ListBillingPlansResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListBillingPlans not implemented")
 }
 func (UnimplementedBillingServiceServer) UpdateBillingPlan(context.Context, *UpdateBillingPlanRequest) (*UpdateBillingPlanResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateBillingPlan not implemented")
@@ -1061,38 +1061,38 @@ func _BillingService_DeleteBillingPlan_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BillingService_GetOrgBillingPlan_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetOrgBillingPlanRequest)
+func _BillingService_GetBillingPlan_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetBillingPlanRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BillingServiceServer).GetOrgBillingPlan(ctx, in)
+		return srv.(BillingServiceServer).GetBillingPlan(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: BillingService_GetOrgBillingPlan_FullMethodName,
+		FullMethod: BillingService_GetBillingPlan_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BillingServiceServer).GetOrgBillingPlan(ctx, req.(*GetOrgBillingPlanRequest))
+		return srv.(BillingServiceServer).GetBillingPlan(ctx, req.(*GetBillingPlanRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BillingService_ListOrgBillingPlans_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListOrgBillingPlansRequest)
+func _BillingService_ListBillingPlans_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListBillingPlansRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BillingServiceServer).ListOrgBillingPlans(ctx, in)
+		return srv.(BillingServiceServer).ListBillingPlans(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: BillingService_ListOrgBillingPlans_FullMethodName,
+		FullMethod: BillingService_ListBillingPlans_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BillingServiceServer).ListOrgBillingPlans(ctx, req.(*ListOrgBillingPlansRequest))
+		return srv.(BillingServiceServer).ListBillingPlans(ctx, req.(*ListBillingPlansRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1445,12 +1445,12 @@ var BillingService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _BillingService_DeleteBillingPlan_Handler,
 		},
 		{
-			MethodName: "GetOrgBillingPlan",
-			Handler:    _BillingService_GetOrgBillingPlan_Handler,
+			MethodName: "GetBillingPlan",
+			Handler:    _BillingService_GetBillingPlan_Handler,
 		},
 		{
-			MethodName: "ListOrgBillingPlans",
-			Handler:    _BillingService_ListOrgBillingPlans_Handler,
+			MethodName: "ListBillingPlans",
+			Handler:    _BillingService_ListBillingPlans_Handler,
 		},
 		{
 			MethodName: "UpdateBillingPlan",

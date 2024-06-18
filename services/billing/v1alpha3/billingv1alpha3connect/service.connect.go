@@ -45,12 +45,12 @@ const (
 	// BillingServiceDeleteBillingPlanProcedure is the fully-qualified name of the BillingService's
 	// DeleteBillingPlan RPC.
 	BillingServiceDeleteBillingPlanProcedure = "/services.billing.v1alpha3.BillingService/DeleteBillingPlan"
-	// BillingServiceGetOrgBillingPlanProcedure is the fully-qualified name of the BillingService's
-	// GetOrgBillingPlan RPC.
-	BillingServiceGetOrgBillingPlanProcedure = "/services.billing.v1alpha3.BillingService/GetOrgBillingPlan"
-	// BillingServiceListOrgBillingPlansProcedure is the fully-qualified name of the BillingService's
-	// ListOrgBillingPlans RPC.
-	BillingServiceListOrgBillingPlansProcedure = "/services.billing.v1alpha3.BillingService/ListOrgBillingPlans"
+	// BillingServiceGetBillingPlanProcedure is the fully-qualified name of the BillingService's
+	// GetBillingPlan RPC.
+	BillingServiceGetBillingPlanProcedure = "/services.billing.v1alpha3.BillingService/GetBillingPlan"
+	// BillingServiceListBillingPlansProcedure is the fully-qualified name of the BillingService's
+	// ListBillingPlans RPC.
+	BillingServiceListBillingPlansProcedure = "/services.billing.v1alpha3.BillingService/ListBillingPlans"
 	// BillingServiceUpdateBillingPlanProcedure is the fully-qualified name of the BillingService's
 	// UpdateBillingPlan RPC.
 	BillingServiceUpdateBillingPlanProcedure = "/services.billing.v1alpha3.BillingService/UpdateBillingPlan"
@@ -156,7 +156,7 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: The caller does not have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
 	DeleteBillingPlan(context.Context, *connect_go.Request[v1alpha3.DeleteBillingPlanRequest]) (*connect_go.Response[v1alpha3.DeleteBillingPlanResponse], error)
-	// Gets a billing plan for an ORG.
+	// Gets a billing plan.
 	// Required permissions:
 	//
 	//	CUSTOMER_SUPPORT
@@ -167,8 +167,8 @@ type BillingServiceClient interface {
 	//   - grpc.NotFound: The billing plan was not found.
 	//   - grpc.PermissionDenied: The caller does not have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
-	GetOrgBillingPlan(context.Context, *connect_go.Request[v1alpha3.GetOrgBillingPlanRequest]) (*connect_go.Response[v1alpha3.GetOrgBillingPlanResponse], error)
-	// Lists billing plans for ORGs.
+	GetBillingPlan(context.Context, *connect_go.Request[v1alpha3.GetBillingPlanRequest]) (*connect_go.Response[v1alpha3.GetBillingPlanResponse], error)
+	// Lists billing plans.
 	// Required permissions:
 	//
 	//	CUSTOMER_SUPPORT
@@ -178,7 +178,7 @@ type BillingServiceClient interface {
 	//   - grpc.InvalidArgument: The request is invalid.
 	//   - grpc.PermissionDenied: The caller does not have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
-	ListOrgBillingPlans(context.Context, *connect_go.Request[v1alpha3.ListOrgBillingPlansRequest]) (*connect_go.Response[v1alpha3.ListOrgBillingPlansResponse], error)
+	ListBillingPlans(context.Context, *connect_go.Request[v1alpha3.ListBillingPlansRequest]) (*connect_go.Response[v1alpha3.ListBillingPlansResponse], error)
 	// Updates a billing plan.
 	// Required permissions:
 	//
@@ -438,14 +438,14 @@ func NewBillingServiceClient(httpClient connect_go.HTTPClient, baseURL string, o
 			baseURL+BillingServiceDeleteBillingPlanProcedure,
 			opts...,
 		),
-		getOrgBillingPlan: connect_go.NewClient[v1alpha3.GetOrgBillingPlanRequest, v1alpha3.GetOrgBillingPlanResponse](
+		getBillingPlan: connect_go.NewClient[v1alpha3.GetBillingPlanRequest, v1alpha3.GetBillingPlanResponse](
 			httpClient,
-			baseURL+BillingServiceGetOrgBillingPlanProcedure,
+			baseURL+BillingServiceGetBillingPlanProcedure,
 			opts...,
 		),
-		listOrgBillingPlans: connect_go.NewClient[v1alpha3.ListOrgBillingPlansRequest, v1alpha3.ListOrgBillingPlansResponse](
+		listBillingPlans: connect_go.NewClient[v1alpha3.ListBillingPlansRequest, v1alpha3.ListBillingPlansResponse](
 			httpClient,
-			baseURL+BillingServiceListOrgBillingPlansProcedure,
+			baseURL+BillingServiceListBillingPlansProcedure,
 			opts...,
 		),
 		updateBillingPlan: connect_go.NewClient[v1alpha3.UpdateBillingPlanRequest, v1alpha3.UpdateBillingPlanResponse](
@@ -547,8 +547,8 @@ type billingServiceClient struct {
 	applyBillingPlanDraft        *connect_go.Client[v1alpha3.ApplyBillingPlanDraftRequest, v1alpha3.ApplyBillingPlanDraftResponse]
 	createBillingPlan            *connect_go.Client[v1alpha3.CreateBillingPlanRequest, v1alpha3.CreateBillingPlanResponse]
 	deleteBillingPlan            *connect_go.Client[v1alpha3.DeleteBillingPlanRequest, v1alpha3.DeleteBillingPlanResponse]
-	getOrgBillingPlan            *connect_go.Client[v1alpha3.GetOrgBillingPlanRequest, v1alpha3.GetOrgBillingPlanResponse]
-	listOrgBillingPlans          *connect_go.Client[v1alpha3.ListOrgBillingPlansRequest, v1alpha3.ListOrgBillingPlansResponse]
+	getBillingPlan               *connect_go.Client[v1alpha3.GetBillingPlanRequest, v1alpha3.GetBillingPlanResponse]
+	listBillingPlans             *connect_go.Client[v1alpha3.ListBillingPlansRequest, v1alpha3.ListBillingPlansResponse]
 	updateBillingPlan            *connect_go.Client[v1alpha3.UpdateBillingPlanRequest, v1alpha3.UpdateBillingPlanResponse]
 	applyDefaultBillingPlanDraft *connect_go.Client[v1alpha3.ApplyDefaultBillingPlanDraftRequest, v1alpha3.ApplyDefaultBillingPlanDraftResponse]
 	createDefaultBillingPlan     *connect_go.Client[v1alpha3.CreateDefaultBillingPlanRequest, v1alpha3.CreateDefaultBillingPlanResponse]
@@ -589,14 +589,14 @@ func (c *billingServiceClient) DeleteBillingPlan(ctx context.Context, req *conne
 	return c.deleteBillingPlan.CallUnary(ctx, req)
 }
 
-// GetOrgBillingPlan calls services.billing.v1alpha3.BillingService.GetOrgBillingPlan.
-func (c *billingServiceClient) GetOrgBillingPlan(ctx context.Context, req *connect_go.Request[v1alpha3.GetOrgBillingPlanRequest]) (*connect_go.Response[v1alpha3.GetOrgBillingPlanResponse], error) {
-	return c.getOrgBillingPlan.CallUnary(ctx, req)
+// GetBillingPlan calls services.billing.v1alpha3.BillingService.GetBillingPlan.
+func (c *billingServiceClient) GetBillingPlan(ctx context.Context, req *connect_go.Request[v1alpha3.GetBillingPlanRequest]) (*connect_go.Response[v1alpha3.GetBillingPlanResponse], error) {
+	return c.getBillingPlan.CallUnary(ctx, req)
 }
 
-// ListOrgBillingPlans calls services.billing.v1alpha3.BillingService.ListOrgBillingPlans.
-func (c *billingServiceClient) ListOrgBillingPlans(ctx context.Context, req *connect_go.Request[v1alpha3.ListOrgBillingPlansRequest]) (*connect_go.Response[v1alpha3.ListOrgBillingPlansResponse], error) {
-	return c.listOrgBillingPlans.CallUnary(ctx, req)
+// ListBillingPlans calls services.billing.v1alpha3.BillingService.ListBillingPlans.
+func (c *billingServiceClient) ListBillingPlans(ctx context.Context, req *connect_go.Request[v1alpha3.ListBillingPlansRequest]) (*connect_go.Response[v1alpha3.ListBillingPlansResponse], error) {
+	return c.listBillingPlans.CallUnary(ctx, req)
 }
 
 // UpdateBillingPlan calls services.billing.v1alpha3.BillingService.UpdateBillingPlan.
@@ -744,7 +744,7 @@ type BillingServiceHandler interface {
 	//   - grpc.PermissionDenied: The caller does not have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
 	DeleteBillingPlan(context.Context, *connect_go.Request[v1alpha3.DeleteBillingPlanRequest]) (*connect_go.Response[v1alpha3.DeleteBillingPlanResponse], error)
-	// Gets a billing plan for an ORG.
+	// Gets a billing plan.
 	// Required permissions:
 	//
 	//	CUSTOMER_SUPPORT
@@ -755,8 +755,8 @@ type BillingServiceHandler interface {
 	//   - grpc.NotFound: The billing plan was not found.
 	//   - grpc.PermissionDenied: The caller does not have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
-	GetOrgBillingPlan(context.Context, *connect_go.Request[v1alpha3.GetOrgBillingPlanRequest]) (*connect_go.Response[v1alpha3.GetOrgBillingPlanResponse], error)
-	// Lists billing plans for ORGs.
+	GetBillingPlan(context.Context, *connect_go.Request[v1alpha3.GetBillingPlanRequest]) (*connect_go.Response[v1alpha3.GetBillingPlanResponse], error)
+	// Lists billing plans.
 	// Required permissions:
 	//
 	//	CUSTOMER_SUPPORT
@@ -766,7 +766,7 @@ type BillingServiceHandler interface {
 	//   - grpc.InvalidArgument: The request is invalid.
 	//   - grpc.PermissionDenied: The caller does not have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
-	ListOrgBillingPlans(context.Context, *connect_go.Request[v1alpha3.ListOrgBillingPlansRequest]) (*connect_go.Response[v1alpha3.ListOrgBillingPlansResponse], error)
+	ListBillingPlans(context.Context, *connect_go.Request[v1alpha3.ListBillingPlansRequest]) (*connect_go.Response[v1alpha3.ListBillingPlansResponse], error)
 	// Updates a billing plan.
 	// Required permissions:
 	//
@@ -1022,14 +1022,14 @@ func NewBillingServiceHandler(svc BillingServiceHandler, opts ...connect_go.Hand
 		svc.DeleteBillingPlan,
 		opts...,
 	)
-	billingServiceGetOrgBillingPlanHandler := connect_go.NewUnaryHandler(
-		BillingServiceGetOrgBillingPlanProcedure,
-		svc.GetOrgBillingPlan,
+	billingServiceGetBillingPlanHandler := connect_go.NewUnaryHandler(
+		BillingServiceGetBillingPlanProcedure,
+		svc.GetBillingPlan,
 		opts...,
 	)
-	billingServiceListOrgBillingPlansHandler := connect_go.NewUnaryHandler(
-		BillingServiceListOrgBillingPlansProcedure,
-		svc.ListOrgBillingPlans,
+	billingServiceListBillingPlansHandler := connect_go.NewUnaryHandler(
+		BillingServiceListBillingPlansProcedure,
+		svc.ListBillingPlans,
 		opts...,
 	)
 	billingServiceUpdateBillingPlanHandler := connect_go.NewUnaryHandler(
@@ -1132,10 +1132,10 @@ func NewBillingServiceHandler(svc BillingServiceHandler, opts ...connect_go.Hand
 			billingServiceCreateBillingPlanHandler.ServeHTTP(w, r)
 		case BillingServiceDeleteBillingPlanProcedure:
 			billingServiceDeleteBillingPlanHandler.ServeHTTP(w, r)
-		case BillingServiceGetOrgBillingPlanProcedure:
-			billingServiceGetOrgBillingPlanHandler.ServeHTTP(w, r)
-		case BillingServiceListOrgBillingPlansProcedure:
-			billingServiceListOrgBillingPlansHandler.ServeHTTP(w, r)
+		case BillingServiceGetBillingPlanProcedure:
+			billingServiceGetBillingPlanHandler.ServeHTTP(w, r)
+		case BillingServiceListBillingPlansProcedure:
+			billingServiceListBillingPlansHandler.ServeHTTP(w, r)
 		case BillingServiceUpdateBillingPlanProcedure:
 			billingServiceUpdateBillingPlanHandler.ServeHTTP(w, r)
 		case BillingServiceApplyDefaultBillingPlanDraftProcedure:
@@ -1197,12 +1197,12 @@ func (UnimplementedBillingServiceHandler) DeleteBillingPlan(context.Context, *co
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.billing.v1alpha3.BillingService.DeleteBillingPlan is not implemented"))
 }
 
-func (UnimplementedBillingServiceHandler) GetOrgBillingPlan(context.Context, *connect_go.Request[v1alpha3.GetOrgBillingPlanRequest]) (*connect_go.Response[v1alpha3.GetOrgBillingPlanResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.billing.v1alpha3.BillingService.GetOrgBillingPlan is not implemented"))
+func (UnimplementedBillingServiceHandler) GetBillingPlan(context.Context, *connect_go.Request[v1alpha3.GetBillingPlanRequest]) (*connect_go.Response[v1alpha3.GetBillingPlanResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.billing.v1alpha3.BillingService.GetBillingPlan is not implemented"))
 }
 
-func (UnimplementedBillingServiceHandler) ListOrgBillingPlans(context.Context, *connect_go.Request[v1alpha3.ListOrgBillingPlansRequest]) (*connect_go.Response[v1alpha3.ListOrgBillingPlansResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.billing.v1alpha3.BillingService.ListOrgBillingPlans is not implemented"))
+func (UnimplementedBillingServiceHandler) ListBillingPlans(context.Context, *connect_go.Request[v1alpha3.ListBillingPlansRequest]) (*connect_go.Response[v1alpha3.ListBillingPlansResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.billing.v1alpha3.BillingService.ListBillingPlans is not implemented"))
 }
 
 func (UnimplementedBillingServiceHandler) UpdateBillingPlan(context.Context, *connect_go.Request[v1alpha3.UpdateBillingPlanRequest]) (*connect_go.Response[v1alpha3.UpdateBillingPlanResponse], error) {
