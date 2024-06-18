@@ -607,6 +607,8 @@ const (
 	// OrgGetMyAllowedMfaMethodsProcedure is the fully-qualified name of the Org's
 	// GetMyAllowedMfaMethods RPC.
 	OrgGetMyAllowedMfaMethodsProcedure = "/api.v1alpha1.org.Org/GetMyAllowedMfaMethods"
+	// OrgGenerateTOTPSecretProcedure is the fully-qualified name of the Org's GenerateTOTPSecret RPC.
+	OrgGenerateTOTPSecretProcedure = "/api.v1alpha1.org.Org/GenerateTOTPSecret"
 	// OrgCreateBusinessHoursProcedure is the fully-qualified name of the Org's CreateBusinessHours RPC.
 	OrgCreateBusinessHoursProcedure = "/api.v1alpha1.org.Org/CreateBusinessHours"
 	// OrgUpdateBusinessHoursProcedure is the fully-qualified name of the Org's UpdateBusinessHours RPC.
@@ -1154,6 +1156,10 @@ type OrgClient interface {
 	GetMyUserMfaInfo(context.Context, *connect_go.Request[org.GetMyUserMfaInfoRequest]) (*connect_go.Response[org.GetMyUserMfaInfoResponse], error)
 	// GetMyAllowedMfaMethods returns the mfa methods allowed to the current user.
 	GetMyAllowedMfaMethods(context.Context, *connect_go.Request[org.GetMyAllowedMfaMethodsRequest]) (*connect_go.Response[org.GetMyAllowedMfaMethodsResponse], error)
+	// GenerateTOTPSecret generates a new TOTP secret key for the current user and
+	// returns it with a url to be displayed as a QR code that can be scanned
+	// by an authenticator app.
+	GenerateTOTPSecret(context.Context, *connect_go.Request[org.GenerateTOTPSecretRequest]) (*connect_go.Response[org.GenerateTOTPSecretResponse], error)
 	// CreateBusinessHours persists times businesses are available.
 	//
 	// Deprecated: do not use.
@@ -2277,6 +2283,11 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgGetMyAllowedMfaMethodsProcedure,
 			opts...,
 		),
+		generateTOTPSecret: connect_go.NewClient[org.GenerateTOTPSecretRequest, org.GenerateTOTPSecretResponse](
+			httpClient,
+			baseURL+OrgGenerateTOTPSecretProcedure,
+			opts...,
+		),
 		createBusinessHours: connect_go.NewClient[org.CreateBusinessHoursRequest, org.CreateBusinessHoursResponse](
 			httpClient,
 			baseURL+OrgCreateBusinessHoursProcedure,
@@ -2550,6 +2561,7 @@ type orgClient struct {
 	getUserMfaInfo                           *connect_go.Client[org.GetUserMfaInfoRequest, org.GetUserMfaInfoResponse]
 	getMyUserMfaInfo                         *connect_go.Client[org.GetMyUserMfaInfoRequest, org.GetMyUserMfaInfoResponse]
 	getMyAllowedMfaMethods                   *connect_go.Client[org.GetMyAllowedMfaMethodsRequest, org.GetMyAllowedMfaMethodsResponse]
+	generateTOTPSecret                       *connect_go.Client[org.GenerateTOTPSecretRequest, org.GenerateTOTPSecretResponse]
 	createBusinessHours                      *connect_go.Client[org.CreateBusinessHoursRequest, org.CreateBusinessHoursResponse]
 	updateBusinessHours                      *connect_go.Client[org.UpdateBusinessHoursRequest, org.UpdateBusinessHoursResponse]
 	addGroupedUserIPRestrictions             *connect_go.Client[org.AddGroupedUserIPRestrictionsRequest, org.AddGroupedUserIPRestrictionsResponse]
@@ -3686,6 +3698,11 @@ func (c *orgClient) GetMyAllowedMfaMethods(ctx context.Context, req *connect_go.
 	return c.getMyAllowedMfaMethods.CallUnary(ctx, req)
 }
 
+// GenerateTOTPSecret calls api.v1alpha1.org.Org.GenerateTOTPSecret.
+func (c *orgClient) GenerateTOTPSecret(ctx context.Context, req *connect_go.Request[org.GenerateTOTPSecretRequest]) (*connect_go.Response[org.GenerateTOTPSecretResponse], error) {
+	return c.generateTOTPSecret.CallUnary(ctx, req)
+}
+
 // CreateBusinessHours calls api.v1alpha1.org.Org.CreateBusinessHours.
 //
 // Deprecated: do not use.
@@ -4258,6 +4275,10 @@ type OrgHandler interface {
 	GetMyUserMfaInfo(context.Context, *connect_go.Request[org.GetMyUserMfaInfoRequest]) (*connect_go.Response[org.GetMyUserMfaInfoResponse], error)
 	// GetMyAllowedMfaMethods returns the mfa methods allowed to the current user.
 	GetMyAllowedMfaMethods(context.Context, *connect_go.Request[org.GetMyAllowedMfaMethodsRequest]) (*connect_go.Response[org.GetMyAllowedMfaMethodsResponse], error)
+	// GenerateTOTPSecret generates a new TOTP secret key for the current user and
+	// returns it with a url to be displayed as a QR code that can be scanned
+	// by an authenticator app.
+	GenerateTOTPSecret(context.Context, *connect_go.Request[org.GenerateTOTPSecretRequest]) (*connect_go.Response[org.GenerateTOTPSecretResponse], error)
 	// CreateBusinessHours persists times businesses are available.
 	//
 	// Deprecated: do not use.
@@ -5377,6 +5398,11 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.GetMyAllowedMfaMethods,
 		opts...,
 	)
+	orgGenerateTOTPSecretHandler := connect_go.NewUnaryHandler(
+		OrgGenerateTOTPSecretProcedure,
+		svc.GenerateTOTPSecret,
+		opts...,
+	)
 	orgCreateBusinessHoursHandler := connect_go.NewUnaryHandler(
 		OrgCreateBusinessHoursProcedure,
 		svc.CreateBusinessHours,
@@ -5865,6 +5891,8 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 			orgGetMyUserMfaInfoHandler.ServeHTTP(w, r)
 		case OrgGetMyAllowedMfaMethodsProcedure:
 			orgGetMyAllowedMfaMethodsHandler.ServeHTTP(w, r)
+		case OrgGenerateTOTPSecretProcedure:
+			orgGenerateTOTPSecretHandler.ServeHTTP(w, r)
 		case OrgCreateBusinessHoursProcedure:
 			orgCreateBusinessHoursHandler.ServeHTTP(w, r)
 		case OrgUpdateBusinessHoursProcedure:
@@ -6764,6 +6792,10 @@ func (UnimplementedOrgHandler) GetMyUserMfaInfo(context.Context, *connect_go.Req
 
 func (UnimplementedOrgHandler) GetMyAllowedMfaMethods(context.Context, *connect_go.Request[org.GetMyAllowedMfaMethodsRequest]) (*connect_go.Response[org.GetMyAllowedMfaMethodsResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.GetMyAllowedMfaMethods is not implemented"))
+}
+
+func (UnimplementedOrgHandler) GenerateTOTPSecret(context.Context, *connect_go.Request[org.GenerateTOTPSecretRequest]) (*connect_go.Response[org.GenerateTOTPSecretResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.GenerateTOTPSecret is not implemented"))
 }
 
 func (UnimplementedOrgHandler) CreateBusinessHours(context.Context, *connect_go.Request[org.CreateBusinessHoursRequest]) (*connect_go.Response[org.CreateBusinessHoursResponse], error) {

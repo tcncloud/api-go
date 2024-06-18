@@ -55,6 +55,8 @@ const (
 	Learn_ReviewVersion_FullMethodName              = "/api.v0alpha.Learn/ReviewVersion"
 	Learn_ExportManyStream_FullMethodName           = "/api.v0alpha.Learn/ExportManyStream"
 	Learn_ListVersions_FullMethodName               = "/api.v0alpha.Learn/ListVersions"
+	Learn_ReviewVersionStream_FullMethodName        = "/api.v0alpha.Learn/ReviewVersionStream"
+	Learn_DeleteVersion_FullMethodName              = "/api.v0alpha.Learn/DeleteVersion"
 )
 
 // LearnClient is the client API for Learn service.
@@ -112,6 +114,10 @@ type LearnClient interface {
 	ExportManyStream(ctx context.Context, in *ExportManyReq, opts ...grpc.CallOption) (Learn_ExportManyStreamClient, error)
 	// list all the different versions
 	ListVersions(ctx context.Context, in *ListVersionsReq, opts ...grpc.CallOption) (*ListVersionsRes, error)
+	// returns urls as a stream after comparing version contents between both versions
+	ReviewVersionStream(ctx context.Context, in *ReviewVersionReq, opts ...grpc.CallOption) (Learn_ReviewVersionStreamClient, error)
+	// delete version from learn
+	DeleteVersion(ctx context.Context, in *DeleteVersionReq, opts ...grpc.CallOption) (*DeleteVersionRes, error)
 }
 
 type learnClient struct {
@@ -411,6 +417,49 @@ func (c *learnClient) ListVersions(ctx context.Context, in *ListVersionsReq, opt
 	return out, nil
 }
 
+func (c *learnClient) ReviewVersionStream(ctx context.Context, in *ReviewVersionReq, opts ...grpc.CallOption) (Learn_ReviewVersionStreamClient, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &Learn_ServiceDesc.Streams[3], Learn_ReviewVersionStream_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &learnReviewVersionStreamClient{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type Learn_ReviewVersionStreamClient interface {
+	Recv() (*ReviewVersionRes, error)
+	grpc.ClientStream
+}
+
+type learnReviewVersionStreamClient struct {
+	grpc.ClientStream
+}
+
+func (x *learnReviewVersionStreamClient) Recv() (*ReviewVersionRes, error) {
+	m := new(ReviewVersionRes)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *learnClient) DeleteVersion(ctx context.Context, in *DeleteVersionReq, opts ...grpc.CallOption) (*DeleteVersionRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteVersionRes)
+	err := c.cc.Invoke(ctx, Learn_DeleteVersion_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LearnServer is the server API for Learn service.
 // All implementations must embed UnimplementedLearnServer
 // for forward compatibility
@@ -466,6 +515,10 @@ type LearnServer interface {
 	ExportManyStream(*ExportManyReq, Learn_ExportManyStreamServer) error
 	// list all the different versions
 	ListVersions(context.Context, *ListVersionsReq) (*ListVersionsRes, error)
+	// returns urls as a stream after comparing version contents between both versions
+	ReviewVersionStream(*ReviewVersionReq, Learn_ReviewVersionStreamServer) error
+	// delete version from learn
+	DeleteVersion(context.Context, *DeleteVersionReq) (*DeleteVersionRes, error)
 	mustEmbedUnimplementedLearnServer()
 }
 
@@ -538,6 +591,12 @@ func (UnimplementedLearnServer) ExportManyStream(*ExportManyReq, Learn_ExportMan
 }
 func (UnimplementedLearnServer) ListVersions(context.Context, *ListVersionsReq) (*ListVersionsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListVersions not implemented")
+}
+func (UnimplementedLearnServer) ReviewVersionStream(*ReviewVersionReq, Learn_ReviewVersionStreamServer) error {
+	return status.Errorf(codes.Unimplemented, "method ReviewVersionStream not implemented")
+}
+func (UnimplementedLearnServer) DeleteVersion(context.Context, *DeleteVersionReq) (*DeleteVersionRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteVersion not implemented")
 }
 func (UnimplementedLearnServer) mustEmbedUnimplementedLearnServer() {}
 
@@ -957,6 +1016,45 @@ func _Learn_ListVersions_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Learn_ReviewVersionStream_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(ReviewVersionReq)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(LearnServer).ReviewVersionStream(m, &learnReviewVersionStreamServer{ServerStream: stream})
+}
+
+type Learn_ReviewVersionStreamServer interface {
+	Send(*ReviewVersionRes) error
+	grpc.ServerStream
+}
+
+type learnReviewVersionStreamServer struct {
+	grpc.ServerStream
+}
+
+func (x *learnReviewVersionStreamServer) Send(m *ReviewVersionRes) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func _Learn_DeleteVersion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteVersionReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LearnServer).DeleteVersion(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Learn_DeleteVersion_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LearnServer).DeleteVersion(ctx, req.(*DeleteVersionReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Learn_ServiceDesc is the grpc.ServiceDesc for Learn service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1040,6 +1138,10 @@ var Learn_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "ListVersions",
 			Handler:    _Learn_ListVersions_Handler,
 		},
+		{
+			MethodName: "DeleteVersion",
+			Handler:    _Learn_DeleteVersion_Handler,
+		},
 	},
 	Streams: []grpc.StreamDesc{
 		{
@@ -1055,6 +1157,11 @@ var Learn_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "ExportManyStream",
 			Handler:       _Learn_ExportManyStream_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "ReviewVersionStream",
+			Handler:       _Learn_ReviewVersionStream_Handler,
 			ServerStreams: true,
 		},
 	},

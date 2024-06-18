@@ -94,6 +94,11 @@ const (
 	LearnExportManyStreamProcedure = "/api.v0alpha.Learn/ExportManyStream"
 	// LearnListVersionsProcedure is the fully-qualified name of the Learn's ListVersions RPC.
 	LearnListVersionsProcedure = "/api.v0alpha.Learn/ListVersions"
+	// LearnReviewVersionStreamProcedure is the fully-qualified name of the Learn's ReviewVersionStream
+	// RPC.
+	LearnReviewVersionStreamProcedure = "/api.v0alpha.Learn/ReviewVersionStream"
+	// LearnDeleteVersionProcedure is the fully-qualified name of the Learn's DeleteVersion RPC.
+	LearnDeleteVersionProcedure = "/api.v0alpha.Learn/DeleteVersion"
 )
 
 // LearnClient is a client for the api.v0alpha.Learn service.
@@ -147,6 +152,10 @@ type LearnClient interface {
 	ExportManyStream(context.Context, *connect_go.Request[v0alpha.ExportManyReq]) (*connect_go.ServerStreamForClient[v0alpha.ExportRes], error)
 	// list all the different versions
 	ListVersions(context.Context, *connect_go.Request[v0alpha.ListVersionsReq]) (*connect_go.Response[v0alpha.ListVersionsRes], error)
+	// returns urls as a stream after comparing version contents between both versions
+	ReviewVersionStream(context.Context, *connect_go.Request[v0alpha.ReviewVersionReq]) (*connect_go.ServerStreamForClient[v0alpha.ReviewVersionRes], error)
+	// delete version from learn
+	DeleteVersion(context.Context, *connect_go.Request[v0alpha.DeleteVersionReq]) (*connect_go.Response[v0alpha.DeleteVersionRes], error)
 }
 
 // NewLearnClient constructs a client for the api.v0alpha.Learn service. By default, it uses the
@@ -269,6 +278,16 @@ func NewLearnClient(httpClient connect_go.HTTPClient, baseURL string, opts ...co
 			baseURL+LearnListVersionsProcedure,
 			opts...,
 		),
+		reviewVersionStream: connect_go.NewClient[v0alpha.ReviewVersionReq, v0alpha.ReviewVersionRes](
+			httpClient,
+			baseURL+LearnReviewVersionStreamProcedure,
+			opts...,
+		),
+		deleteVersion: connect_go.NewClient[v0alpha.DeleteVersionReq, v0alpha.DeleteVersionRes](
+			httpClient,
+			baseURL+LearnDeleteVersionProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -296,6 +315,8 @@ type learnClient struct {
 	reviewVersion              *connect_go.Client[v0alpha.ReviewVersionReq, v0alpha.ReviewVersionRes]
 	exportManyStream           *connect_go.Client[v0alpha.ExportManyReq, v0alpha.ExportRes]
 	listVersions               *connect_go.Client[v0alpha.ListVersionsReq, v0alpha.ListVersionsRes]
+	reviewVersionStream        *connect_go.Client[v0alpha.ReviewVersionReq, v0alpha.ReviewVersionRes]
+	deleteVersion              *connect_go.Client[v0alpha.DeleteVersionReq, v0alpha.DeleteVersionRes]
 }
 
 // Exist calls api.v0alpha.Learn.Exist.
@@ -408,6 +429,16 @@ func (c *learnClient) ListVersions(ctx context.Context, req *connect_go.Request[
 	return c.listVersions.CallUnary(ctx, req)
 }
 
+// ReviewVersionStream calls api.v0alpha.Learn.ReviewVersionStream.
+func (c *learnClient) ReviewVersionStream(ctx context.Context, req *connect_go.Request[v0alpha.ReviewVersionReq]) (*connect_go.ServerStreamForClient[v0alpha.ReviewVersionRes], error) {
+	return c.reviewVersionStream.CallServerStream(ctx, req)
+}
+
+// DeleteVersion calls api.v0alpha.Learn.DeleteVersion.
+func (c *learnClient) DeleteVersion(ctx context.Context, req *connect_go.Request[v0alpha.DeleteVersionReq]) (*connect_go.Response[v0alpha.DeleteVersionRes], error) {
+	return c.deleteVersion.CallUnary(ctx, req)
+}
+
 // LearnHandler is an implementation of the api.v0alpha.Learn service.
 type LearnHandler interface {
 	// check if learning page already exists
@@ -459,6 +490,10 @@ type LearnHandler interface {
 	ExportManyStream(context.Context, *connect_go.Request[v0alpha.ExportManyReq], *connect_go.ServerStream[v0alpha.ExportRes]) error
 	// list all the different versions
 	ListVersions(context.Context, *connect_go.Request[v0alpha.ListVersionsReq]) (*connect_go.Response[v0alpha.ListVersionsRes], error)
+	// returns urls as a stream after comparing version contents between both versions
+	ReviewVersionStream(context.Context, *connect_go.Request[v0alpha.ReviewVersionReq], *connect_go.ServerStream[v0alpha.ReviewVersionRes]) error
+	// delete version from learn
+	DeleteVersion(context.Context, *connect_go.Request[v0alpha.DeleteVersionReq]) (*connect_go.Response[v0alpha.DeleteVersionRes], error)
 }
 
 // NewLearnHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -577,6 +612,16 @@ func NewLearnHandler(svc LearnHandler, opts ...connect_go.HandlerOption) (string
 		svc.ListVersions,
 		opts...,
 	)
+	learnReviewVersionStreamHandler := connect_go.NewServerStreamHandler(
+		LearnReviewVersionStreamProcedure,
+		svc.ReviewVersionStream,
+		opts...,
+	)
+	learnDeleteVersionHandler := connect_go.NewUnaryHandler(
+		LearnDeleteVersionProcedure,
+		svc.DeleteVersion,
+		opts...,
+	)
 	return "/api.v0alpha.Learn/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case LearnExistProcedure:
@@ -623,6 +668,10 @@ func NewLearnHandler(svc LearnHandler, opts ...connect_go.HandlerOption) (string
 			learnExportManyStreamHandler.ServeHTTP(w, r)
 		case LearnListVersionsProcedure:
 			learnListVersionsHandler.ServeHTTP(w, r)
+		case LearnReviewVersionStreamProcedure:
+			learnReviewVersionStreamHandler.ServeHTTP(w, r)
+		case LearnDeleteVersionProcedure:
+			learnDeleteVersionHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -718,4 +767,12 @@ func (UnimplementedLearnHandler) ExportManyStream(context.Context, *connect_go.R
 
 func (UnimplementedLearnHandler) ListVersions(context.Context, *connect_go.Request[v0alpha.ListVersionsReq]) (*connect_go.Response[v0alpha.ListVersionsRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.ListVersions is not implemented"))
+}
+
+func (UnimplementedLearnHandler) ReviewVersionStream(context.Context, *connect_go.Request[v0alpha.ReviewVersionReq], *connect_go.ServerStream[v0alpha.ReviewVersionRes]) error {
+	return connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.ReviewVersionStream is not implemented"))
+}
+
+func (UnimplementedLearnHandler) DeleteVersion(context.Context, *connect_go.Request[v0alpha.DeleteVersionReq]) (*connect_go.Response[v0alpha.DeleteVersionRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.DeleteVersion is not implemented"))
 }
