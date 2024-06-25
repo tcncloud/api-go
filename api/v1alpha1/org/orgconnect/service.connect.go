@@ -609,8 +609,6 @@ const (
 	OrgGetMyAllowedMfaMethodsProcedure = "/api.v1alpha1.org.Org/GetMyAllowedMfaMethods"
 	// OrgGenerateTOTPSecretProcedure is the fully-qualified name of the Org's GenerateTOTPSecret RPC.
 	OrgGenerateTOTPSecretProcedure = "/api.v1alpha1.org.Org/GenerateTOTPSecret"
-	// OrgVerifyTOTPCodeProcedure is the fully-qualified name of the Org's VerifyTOTPCode RPC.
-	OrgVerifyTOTPCodeProcedure = "/api.v1alpha1.org.Org/VerifyTOTPCode"
 	// OrgCreateBusinessHoursProcedure is the fully-qualified name of the Org's CreateBusinessHours RPC.
 	OrgCreateBusinessHoursProcedure = "/api.v1alpha1.org.Org/CreateBusinessHours"
 	// OrgUpdateBusinessHoursProcedure is the fully-qualified name of the Org's UpdateBusinessHours RPC.
@@ -1162,8 +1160,6 @@ type OrgClient interface {
 	// returns it with a url to be displayed as a QR code that can be scanned
 	// by an authenticator app.
 	GenerateTOTPSecret(context.Context, *connect_go.Request[org.GenerateTOTPSecretRequest]) (*connect_go.Response[org.GenerateTOTPSecretResponse], error)
-	// VerifyTOTPCode validates that the given TOTP code and verifies that the user has setup TOTP correctly.
-	VerifyTOTPCode(context.Context, *connect_go.Request[org.VerifyTOTPCodeRequest]) (*connect_go.Response[org.VerifyTOTPCodeResponse], error)
 	// CreateBusinessHours persists times businesses are available.
 	//
 	// Deprecated: do not use.
@@ -2292,11 +2288,6 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgGenerateTOTPSecretProcedure,
 			opts...,
 		),
-		verifyTOTPCode: connect_go.NewClient[org.VerifyTOTPCodeRequest, org.VerifyTOTPCodeResponse](
-			httpClient,
-			baseURL+OrgVerifyTOTPCodeProcedure,
-			opts...,
-		),
 		createBusinessHours: connect_go.NewClient[org.CreateBusinessHoursRequest, org.CreateBusinessHoursResponse](
 			httpClient,
 			baseURL+OrgCreateBusinessHoursProcedure,
@@ -2571,7 +2562,6 @@ type orgClient struct {
 	getMyUserMfaInfo                         *connect_go.Client[org.GetMyUserMfaInfoRequest, org.GetMyUserMfaInfoResponse]
 	getMyAllowedMfaMethods                   *connect_go.Client[org.GetMyAllowedMfaMethodsRequest, org.GetMyAllowedMfaMethodsResponse]
 	generateTOTPSecret                       *connect_go.Client[org.GenerateTOTPSecretRequest, org.GenerateTOTPSecretResponse]
-	verifyTOTPCode                           *connect_go.Client[org.VerifyTOTPCodeRequest, org.VerifyTOTPCodeResponse]
 	createBusinessHours                      *connect_go.Client[org.CreateBusinessHoursRequest, org.CreateBusinessHoursResponse]
 	updateBusinessHours                      *connect_go.Client[org.UpdateBusinessHoursRequest, org.UpdateBusinessHoursResponse]
 	addGroupedUserIPRestrictions             *connect_go.Client[org.AddGroupedUserIPRestrictionsRequest, org.AddGroupedUserIPRestrictionsResponse]
@@ -3713,11 +3703,6 @@ func (c *orgClient) GenerateTOTPSecret(ctx context.Context, req *connect_go.Requ
 	return c.generateTOTPSecret.CallUnary(ctx, req)
 }
 
-// VerifyTOTPCode calls api.v1alpha1.org.Org.VerifyTOTPCode.
-func (c *orgClient) VerifyTOTPCode(ctx context.Context, req *connect_go.Request[org.VerifyTOTPCodeRequest]) (*connect_go.Response[org.VerifyTOTPCodeResponse], error) {
-	return c.verifyTOTPCode.CallUnary(ctx, req)
-}
-
 // CreateBusinessHours calls api.v1alpha1.org.Org.CreateBusinessHours.
 //
 // Deprecated: do not use.
@@ -4294,8 +4279,6 @@ type OrgHandler interface {
 	// returns it with a url to be displayed as a QR code that can be scanned
 	// by an authenticator app.
 	GenerateTOTPSecret(context.Context, *connect_go.Request[org.GenerateTOTPSecretRequest]) (*connect_go.Response[org.GenerateTOTPSecretResponse], error)
-	// VerifyTOTPCode validates that the given TOTP code and verifies that the user has setup TOTP correctly.
-	VerifyTOTPCode(context.Context, *connect_go.Request[org.VerifyTOTPCodeRequest]) (*connect_go.Response[org.VerifyTOTPCodeResponse], error)
 	// CreateBusinessHours persists times businesses are available.
 	//
 	// Deprecated: do not use.
@@ -5420,11 +5403,6 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.GenerateTOTPSecret,
 		opts...,
 	)
-	orgVerifyTOTPCodeHandler := connect_go.NewUnaryHandler(
-		OrgVerifyTOTPCodeProcedure,
-		svc.VerifyTOTPCode,
-		opts...,
-	)
 	orgCreateBusinessHoursHandler := connect_go.NewUnaryHandler(
 		OrgCreateBusinessHoursProcedure,
 		svc.CreateBusinessHours,
@@ -5915,8 +5893,6 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 			orgGetMyAllowedMfaMethodsHandler.ServeHTTP(w, r)
 		case OrgGenerateTOTPSecretProcedure:
 			orgGenerateTOTPSecretHandler.ServeHTTP(w, r)
-		case OrgVerifyTOTPCodeProcedure:
-			orgVerifyTOTPCodeHandler.ServeHTTP(w, r)
 		case OrgCreateBusinessHoursProcedure:
 			orgCreateBusinessHoursHandler.ServeHTTP(w, r)
 		case OrgUpdateBusinessHoursProcedure:
@@ -6820,10 +6796,6 @@ func (UnimplementedOrgHandler) GetMyAllowedMfaMethods(context.Context, *connect_
 
 func (UnimplementedOrgHandler) GenerateTOTPSecret(context.Context, *connect_go.Request[org.GenerateTOTPSecretRequest]) (*connect_go.Response[org.GenerateTOTPSecretResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.GenerateTOTPSecret is not implemented"))
-}
-
-func (UnimplementedOrgHandler) VerifyTOTPCode(context.Context, *connect_go.Request[org.VerifyTOTPCodeRequest]) (*connect_go.Response[org.VerifyTOTPCodeResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.VerifyTOTPCode is not implemented"))
 }
 
 func (UnimplementedOrgHandler) CreateBusinessHours(context.Context, *connect_go.Request[org.CreateBusinessHoursRequest]) (*connect_go.Response[org.CreateBusinessHoursResponse], error) {

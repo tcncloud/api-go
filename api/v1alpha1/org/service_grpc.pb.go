@@ -238,7 +238,6 @@ const (
 	Org_GetMyUserMfaInfo_FullMethodName                         = "/api.v1alpha1.org.Org/GetMyUserMfaInfo"
 	Org_GetMyAllowedMfaMethods_FullMethodName                   = "/api.v1alpha1.org.Org/GetMyAllowedMfaMethods"
 	Org_GenerateTOTPSecret_FullMethodName                       = "/api.v1alpha1.org.Org/GenerateTOTPSecret"
-	Org_VerifyTOTPCode_FullMethodName                           = "/api.v1alpha1.org.Org/VerifyTOTPCode"
 	Org_CreateBusinessHours_FullMethodName                      = "/api.v1alpha1.org.Org/CreateBusinessHours"
 	Org_UpdateBusinessHours_FullMethodName                      = "/api.v1alpha1.org.Org/UpdateBusinessHours"
 	Org_AddGroupedUserIPRestrictions_FullMethodName             = "/api.v1alpha1.org.Org/AddGroupedUserIPRestrictions"
@@ -764,8 +763,6 @@ type OrgClient interface {
 	// returns it with a url to be displayed as a QR code that can be scanned
 	// by an authenticator app.
 	GenerateTOTPSecret(ctx context.Context, in *GenerateTOTPSecretRequest, opts ...grpc.CallOption) (*GenerateTOTPSecretResponse, error)
-	// VerifyTOTPCode validates that the given TOTP code and verifies that the user has setup TOTP correctly.
-	VerifyTOTPCode(ctx context.Context, in *VerifyTOTPCodeRequest, opts ...grpc.CallOption) (*VerifyTOTPCodeResponse, error)
 	// Deprecated: Do not use.
 	// CreateBusinessHours persists times businesses are available.
 	CreateBusinessHours(ctx context.Context, in *CreateBusinessHoursRequest, opts ...grpc.CallOption) (*CreateBusinessHoursResponse, error)
@@ -3226,16 +3223,6 @@ func (c *orgClient) GenerateTOTPSecret(ctx context.Context, in *GenerateTOTPSecr
 	return out, nil
 }
 
-func (c *orgClient) VerifyTOTPCode(ctx context.Context, in *VerifyTOTPCodeRequest, opts ...grpc.CallOption) (*VerifyTOTPCodeResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(VerifyTOTPCodeResponse)
-	err := c.cc.Invoke(ctx, Org_VerifyTOTPCode_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // Deprecated: Do not use.
 func (c *orgClient) CreateBusinessHours(ctx context.Context, in *CreateBusinessHoursRequest, opts ...grpc.CallOption) (*CreateBusinessHoursResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -3851,8 +3838,6 @@ type OrgServer interface {
 	// returns it with a url to be displayed as a QR code that can be scanned
 	// by an authenticator app.
 	GenerateTOTPSecret(context.Context, *GenerateTOTPSecretRequest) (*GenerateTOTPSecretResponse, error)
-	// VerifyTOTPCode validates that the given TOTP code and verifies that the user has setup TOTP correctly.
-	VerifyTOTPCode(context.Context, *VerifyTOTPCodeRequest) (*VerifyTOTPCodeResponse, error)
 	// Deprecated: Do not use.
 	// CreateBusinessHours persists times businesses are available.
 	CreateBusinessHours(context.Context, *CreateBusinessHoursRequest) (*CreateBusinessHoursResponse, error)
@@ -4535,9 +4520,6 @@ func (UnimplementedOrgServer) GetMyAllowedMfaMethods(context.Context, *GetMyAllo
 }
 func (UnimplementedOrgServer) GenerateTOTPSecret(context.Context, *GenerateTOTPSecretRequest) (*GenerateTOTPSecretResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GenerateTOTPSecret not implemented")
-}
-func (UnimplementedOrgServer) VerifyTOTPCode(context.Context, *VerifyTOTPCodeRequest) (*VerifyTOTPCodeResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method VerifyTOTPCode not implemented")
 }
 func (UnimplementedOrgServer) CreateBusinessHours(context.Context, *CreateBusinessHoursRequest) (*CreateBusinessHoursResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateBusinessHours not implemented")
@@ -8554,24 +8536,6 @@ func _Org_GenerateTOTPSecret_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Org_VerifyTOTPCode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(VerifyTOTPCodeRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(OrgServer).VerifyTOTPCode(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Org_VerifyTOTPCode_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrgServer).VerifyTOTPCode(ctx, req.(*VerifyTOTPCodeRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _Org_CreateBusinessHours_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateBusinessHoursRequest)
 	if err := dec(in); err != nil {
@@ -9594,10 +9558,6 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GenerateTOTPSecret",
 			Handler:    _Org_GenerateTOTPSecret_Handler,
-		},
-		{
-			MethodName: "VerifyTOTPCode",
-			Handler:    _Org_VerifyTOTPCode_Handler,
 		},
 		{
 			MethodName: "CreateBusinessHours",

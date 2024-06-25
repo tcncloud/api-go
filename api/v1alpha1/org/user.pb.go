@@ -5184,94 +5184,6 @@ func (x *GenerateTOTPSecretResponse) GetQrCodeUrl() string {
 	return ""
 }
 
-// VerifyTOTPCodeRequest is the request message for the VerifyTOTPCode rpc.
-type VerifyTOTPCodeRequest struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	// The TOTP code the user has entered.
-	Code string `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
-}
-
-func (x *VerifyTOTPCodeRequest) Reset() {
-	*x = VerifyTOTPCodeRequest{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_user_proto_msgTypes[84]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *VerifyTOTPCodeRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*VerifyTOTPCodeRequest) ProtoMessage() {}
-
-func (x *VerifyTOTPCodeRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_user_proto_msgTypes[84]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use VerifyTOTPCodeRequest.ProtoReflect.Descriptor instead.
-func (*VerifyTOTPCodeRequest) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_org_user_proto_rawDescGZIP(), []int{84}
-}
-
-func (x *VerifyTOTPCodeRequest) GetCode() string {
-	if x != nil {
-		return x.Code
-	}
-	return ""
-}
-
-// VerifyTOTPCodeResponse is the response message for the VerifyTOTPCode rpc.
-type VerifyTOTPCodeResponse struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-}
-
-func (x *VerifyTOTPCodeResponse) Reset() {
-	*x = VerifyTOTPCodeResponse{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_user_proto_msgTypes[85]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *VerifyTOTPCodeResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*VerifyTOTPCodeResponse) ProtoMessage() {}
-
-func (x *VerifyTOTPCodeResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_user_proto_msgTypes[85]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use VerifyTOTPCodeResponse.ProtoReflect.Descriptor instead.
-func (*VerifyTOTPCodeResponse) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_org_user_proto_rawDescGZIP(), []int{85}
-}
-
 // Request message for the AddGroupedUserIPRestrictions rpc.
 type AddGroupedUserIPRestrictionsRequest struct {
 	state         protoimpl.MessageState
@@ -5287,7 +5199,7 @@ type AddGroupedUserIPRestrictionsRequest struct {
 func (x *AddGroupedUserIPRestrictionsRequest) Reset() {
 	*x = AddGroupedUserIPRestrictionsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_user_proto_msgTypes[86]
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[84]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5300,7 +5212,7 @@ func (x *AddGroupedUserIPRestrictionsRequest) String() string {
 func (*AddGroupedUserIPRestrictionsRequest) ProtoMessage() {}
 
 func (x *AddGroupedUserIPRestrictionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_user_proto_msgTypes[86]
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[84]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5313,7 +5225,7 @@ func (x *AddGroupedUserIPRestrictionsRequest) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use AddGroupedUserIPRestrictionsRequest.ProtoReflect.Descriptor instead.
 func (*AddGroupedUserIPRestrictionsRequest) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_org_user_proto_rawDescGZIP(), []int{86}
+	return file_api_v1alpha1_org_user_proto_rawDescGZIP(), []int{84}
 }
 
 func (x *AddGroupedUserIPRestrictionsRequest) GetUserIds() []string {
@@ -5340,7 +5252,7 @@ type AddGroupedUserIPRestrictionsResponse struct {
 func (x *AddGroupedUserIPRestrictionsResponse) Reset() {
 	*x = AddGroupedUserIPRestrictionsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_user_proto_msgTypes[87]
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[85]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5353,7 +5265,7 @@ func (x *AddGroupedUserIPRestrictionsResponse) String() string {
 func (*AddGroupedUserIPRestrictionsResponse) ProtoMessage() {}
 
 func (x *AddGroupedUserIPRestrictionsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_user_proto_msgTypes[87]
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[85]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5366,7 +5278,7 @@ func (x *AddGroupedUserIPRestrictionsResponse) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use AddGroupedUserIPRestrictionsResponse.ProtoReflect.Descriptor instead.
 func (*AddGroupedUserIPRestrictionsResponse) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_org_user_proto_rawDescGZIP(), []int{87}
+	return file_api_v1alpha1_org_user_proto_rawDescGZIP(), []int{85}
 }
 
 // Request message for the RemoveGroupedUserIPRestrictions rpc.
@@ -5384,7 +5296,7 @@ type RemoveGroupedUserIPRestrictionsRequest struct {
 func (x *RemoveGroupedUserIPRestrictionsRequest) Reset() {
 	*x = RemoveGroupedUserIPRestrictionsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_user_proto_msgTypes[88]
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[86]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5397,7 +5309,7 @@ func (x *RemoveGroupedUserIPRestrictionsRequest) String() string {
 func (*RemoveGroupedUserIPRestrictionsRequest) ProtoMessage() {}
 
 func (x *RemoveGroupedUserIPRestrictionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_user_proto_msgTypes[88]
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[86]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5410,7 +5322,7 @@ func (x *RemoveGroupedUserIPRestrictionsRequest) ProtoReflect() protoreflect.Mes
 
 // Deprecated: Use RemoveGroupedUserIPRestrictionsRequest.ProtoReflect.Descriptor instead.
 func (*RemoveGroupedUserIPRestrictionsRequest) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_org_user_proto_rawDescGZIP(), []int{88}
+	return file_api_v1alpha1_org_user_proto_rawDescGZIP(), []int{86}
 }
 
 func (x *RemoveGroupedUserIPRestrictionsRequest) GetUserIds() []string {
@@ -5437,7 +5349,7 @@ type RemoveGroupedUserIPRestrictionsResponse struct {
 func (x *RemoveGroupedUserIPRestrictionsResponse) Reset() {
 	*x = RemoveGroupedUserIPRestrictionsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_user_proto_msgTypes[89]
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[87]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5450,7 +5362,7 @@ func (x *RemoveGroupedUserIPRestrictionsResponse) String() string {
 func (*RemoveGroupedUserIPRestrictionsResponse) ProtoMessage() {}
 
 func (x *RemoveGroupedUserIPRestrictionsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_user_proto_msgTypes[89]
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[87]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5463,7 +5375,7 @@ func (x *RemoveGroupedUserIPRestrictionsResponse) ProtoReflect() protoreflect.Me
 
 // Deprecated: Use RemoveGroupedUserIPRestrictionsResponse.ProtoReflect.Descriptor instead.
 func (*RemoveGroupedUserIPRestrictionsResponse) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_org_user_proto_rawDescGZIP(), []int{89}
+	return file_api_v1alpha1_org_user_proto_rawDescGZIP(), []int{87}
 }
 
 type ListUsersAllowedIpsRequest struct {
@@ -5478,7 +5390,7 @@ type ListUsersAllowedIpsRequest struct {
 func (x *ListUsersAllowedIpsRequest) Reset() {
 	*x = ListUsersAllowedIpsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_user_proto_msgTypes[90]
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[88]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5491,7 +5403,7 @@ func (x *ListUsersAllowedIpsRequest) String() string {
 func (*ListUsersAllowedIpsRequest) ProtoMessage() {}
 
 func (x *ListUsersAllowedIpsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_user_proto_msgTypes[90]
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[88]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5504,7 +5416,7 @@ func (x *ListUsersAllowedIpsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListUsersAllowedIpsRequest.ProtoReflect.Descriptor instead.
 func (*ListUsersAllowedIpsRequest) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_org_user_proto_rawDescGZIP(), []int{90}
+	return file_api_v1alpha1_org_user_proto_rawDescGZIP(), []int{88}
 }
 
 func (x *ListUsersAllowedIpsRequest) GetUserIds() []string {
@@ -5526,7 +5438,7 @@ type ListUsersAllowedIpsResponse struct {
 func (x *ListUsersAllowedIpsResponse) Reset() {
 	*x = ListUsersAllowedIpsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_user_proto_msgTypes[91]
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[89]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5539,7 +5451,7 @@ func (x *ListUsersAllowedIpsResponse) String() string {
 func (*ListUsersAllowedIpsResponse) ProtoMessage() {}
 
 func (x *ListUsersAllowedIpsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_user_proto_msgTypes[91]
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[89]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5552,7 +5464,7 @@ func (x *ListUsersAllowedIpsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListUsersAllowedIpsResponse.ProtoReflect.Descriptor instead.
 func (*ListUsersAllowedIpsResponse) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_org_user_proto_rawDescGZIP(), []int{91}
+	return file_api_v1alpha1_org_user_proto_rawDescGZIP(), []int{89}
 }
 
 func (x *ListUsersAllowedIpsResponse) GetUserAllowedIpsMap() map[string]*ListUsersAllowedIpsResponse_AllowedIps {
@@ -5577,7 +5489,7 @@ type GetMyUserResponse_HuntGroup struct {
 func (x *GetMyUserResponse_HuntGroup) Reset() {
 	*x = GetMyUserResponse_HuntGroup{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_user_proto_msgTypes[92]
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[90]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5590,7 +5502,7 @@ func (x *GetMyUserResponse_HuntGroup) String() string {
 func (*GetMyUserResponse_HuntGroup) ProtoMessage() {}
 
 func (x *GetMyUserResponse_HuntGroup) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_user_proto_msgTypes[92]
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[90]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5635,7 +5547,7 @@ type GetMyUserResponse_AgentProfileGroup struct {
 func (x *GetMyUserResponse_AgentProfileGroup) Reset() {
 	*x = GetMyUserResponse_AgentProfileGroup{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_user_proto_msgTypes[93]
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[91]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5648,7 +5560,7 @@ func (x *GetMyUserResponse_AgentProfileGroup) String() string {
 func (*GetMyUserResponse_AgentProfileGroup) ProtoMessage() {}
 
 func (x *GetMyUserResponse_AgentProfileGroup) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_user_proto_msgTypes[93]
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[91]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5693,7 +5605,7 @@ type GetUserResponse_HuntGroup struct {
 func (x *GetUserResponse_HuntGroup) Reset() {
 	*x = GetUserResponse_HuntGroup{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_user_proto_msgTypes[94]
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[92]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5706,7 +5618,7 @@ func (x *GetUserResponse_HuntGroup) String() string {
 func (*GetUserResponse_HuntGroup) ProtoMessage() {}
 
 func (x *GetUserResponse_HuntGroup) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_user_proto_msgTypes[94]
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[92]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5751,7 +5663,7 @@ type GetUserResponse_AgentProfileGroup struct {
 func (x *GetUserResponse_AgentProfileGroup) Reset() {
 	*x = GetUserResponse_AgentProfileGroup{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_user_proto_msgTypes[95]
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[93]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5764,7 +5676,7 @@ func (x *GetUserResponse_AgentProfileGroup) String() string {
 func (*GetUserResponse_AgentProfileGroup) ProtoMessage() {}
 
 func (x *GetUserResponse_AgentProfileGroup) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_user_proto_msgTypes[95]
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[93]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5809,7 +5721,7 @@ type GetUserByOrgIdResponse_HuntGroup struct {
 func (x *GetUserByOrgIdResponse_HuntGroup) Reset() {
 	*x = GetUserByOrgIdResponse_HuntGroup{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_user_proto_msgTypes[96]
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[94]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5822,7 +5734,7 @@ func (x *GetUserByOrgIdResponse_HuntGroup) String() string {
 func (*GetUserByOrgIdResponse_HuntGroup) ProtoMessage() {}
 
 func (x *GetUserByOrgIdResponse_HuntGroup) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_user_proto_msgTypes[96]
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[94]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5867,7 +5779,7 @@ type GetUserByOrgIdResponse_AgentProfileGroup struct {
 func (x *GetUserByOrgIdResponse_AgentProfileGroup) Reset() {
 	*x = GetUserByOrgIdResponse_AgentProfileGroup{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_user_proto_msgTypes[97]
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[95]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5880,7 +5792,7 @@ func (x *GetUserByOrgIdResponse_AgentProfileGroup) String() string {
 func (*GetUserByOrgIdResponse_AgentProfileGroup) ProtoMessage() {}
 
 func (x *GetUserByOrgIdResponse_AgentProfileGroup) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_user_proto_msgTypes[97]
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[95]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5969,7 +5881,7 @@ type ListAgentsResponse_AgentDetails struct {
 func (x *ListAgentsResponse_AgentDetails) Reset() {
 	*x = ListAgentsResponse_AgentDetails{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_user_proto_msgTypes[98]
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[96]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5982,7 +5894,7 @@ func (x *ListAgentsResponse_AgentDetails) String() string {
 func (*ListAgentsResponse_AgentDetails) ProtoMessage() {}
 
 func (x *ListAgentsResponse_AgentDetails) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_user_proto_msgTypes[98]
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[96]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6181,7 +6093,7 @@ type ListAgentsResponse_AgentDetails_HuntGroup struct {
 func (x *ListAgentsResponse_AgentDetails_HuntGroup) Reset() {
 	*x = ListAgentsResponse_AgentDetails_HuntGroup{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_user_proto_msgTypes[99]
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[97]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6194,7 +6106,7 @@ func (x *ListAgentsResponse_AgentDetails_HuntGroup) String() string {
 func (*ListAgentsResponse_AgentDetails_HuntGroup) ProtoMessage() {}
 
 func (x *ListAgentsResponse_AgentDetails_HuntGroup) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_user_proto_msgTypes[99]
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[97]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6239,7 +6151,7 @@ type ListAgentsResponse_AgentDetails_AgentProfileGroup struct {
 func (x *ListAgentsResponse_AgentDetails_AgentProfileGroup) Reset() {
 	*x = ListAgentsResponse_AgentDetails_AgentProfileGroup{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_user_proto_msgTypes[100]
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[98]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6252,7 +6164,7 @@ func (x *ListAgentsResponse_AgentDetails_AgentProfileGroup) String() string {
 func (*ListAgentsResponse_AgentDetails_AgentProfileGroup) ProtoMessage() {}
 
 func (x *ListAgentsResponse_AgentDetails_AgentProfileGroup) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_user_proto_msgTypes[100]
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[98]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6300,7 +6212,7 @@ type ListPublicUsersResponse_User struct {
 func (x *ListPublicUsersResponse_User) Reset() {
 	*x = ListPublicUsersResponse_User{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_user_proto_msgTypes[101]
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[99]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6313,7 +6225,7 @@ func (x *ListPublicUsersResponse_User) String() string {
 func (*ListPublicUsersResponse_User) ProtoMessage() {}
 
 func (x *ListPublicUsersResponse_User) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_user_proto_msgTypes[101]
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[99]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6394,7 +6306,7 @@ type ListUsersResponse_UserDetails struct {
 func (x *ListUsersResponse_UserDetails) Reset() {
 	*x = ListUsersResponse_UserDetails{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_user_proto_msgTypes[102]
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[100]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6407,7 +6319,7 @@ func (x *ListUsersResponse_UserDetails) String() string {
 func (*ListUsersResponse_UserDetails) ProtoMessage() {}
 
 func (x *ListUsersResponse_UserDetails) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_user_proto_msgTypes[102]
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[100]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6553,7 +6465,7 @@ type ListUsersByOrgIdResponse_UserDetails struct {
 func (x *ListUsersByOrgIdResponse_UserDetails) Reset() {
 	*x = ListUsersByOrgIdResponse_UserDetails{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_user_proto_msgTypes[103]
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[101]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6566,7 +6478,7 @@ func (x *ListUsersByOrgIdResponse_UserDetails) String() string {
 func (*ListUsersByOrgIdResponse_UserDetails) ProtoMessage() {}
 
 func (x *ListUsersByOrgIdResponse_UserDetails) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_user_proto_msgTypes[103]
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[101]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6717,7 +6629,7 @@ type ListUsersByRegionResponse_UserDetails struct {
 func (x *ListUsersByRegionResponse_UserDetails) Reset() {
 	*x = ListUsersByRegionResponse_UserDetails{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_user_proto_msgTypes[104]
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[102]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6730,7 +6642,7 @@ func (x *ListUsersByRegionResponse_UserDetails) String() string {
 func (*ListUsersByRegionResponse_UserDetails) ProtoMessage() {}
 
 func (x *ListUsersByRegionResponse_UserDetails) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_user_proto_msgTypes[104]
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[102]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6906,7 +6818,7 @@ type GetUserSessionDataResponse_User struct {
 func (x *GetUserSessionDataResponse_User) Reset() {
 	*x = GetUserSessionDataResponse_User{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_user_proto_msgTypes[105]
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[103]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6919,7 +6831,7 @@ func (x *GetUserSessionDataResponse_User) String() string {
 func (*GetUserSessionDataResponse_User) ProtoMessage() {}
 
 func (x *GetUserSessionDataResponse_User) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_user_proto_msgTypes[105]
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[103]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7155,7 +7067,7 @@ type GetUserSessionDataResponse_User_RegionSids struct {
 func (x *GetUserSessionDataResponse_User_RegionSids) Reset() {
 	*x = GetUserSessionDataResponse_User_RegionSids{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_user_proto_msgTypes[106]
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[104]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7168,7 +7080,7 @@ func (x *GetUserSessionDataResponse_User_RegionSids) String() string {
 func (*GetUserSessionDataResponse_User_RegionSids) ProtoMessage() {}
 
 func (x *GetUserSessionDataResponse_User_RegionSids) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_user_proto_msgTypes[106]
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[104]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7217,7 +7129,7 @@ type ListUsersAllowedIpsResponse_AllowedIps struct {
 func (x *ListUsersAllowedIpsResponse_AllowedIps) Reset() {
 	*x = ListUsersAllowedIpsResponse_AllowedIps{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_org_user_proto_msgTypes[109]
+		mi := &file_api_v1alpha1_org_user_proto_msgTypes[107]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7230,7 +7142,7 @@ func (x *ListUsersAllowedIpsResponse_AllowedIps) String() string {
 func (*ListUsersAllowedIpsResponse_AllowedIps) ProtoMessage() {}
 
 func (x *ListUsersAllowedIpsResponse_AllowedIps) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_org_user_proto_msgTypes[109]
+	mi := &file_api_v1alpha1_org_user_proto_msgTypes[107]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7243,7 +7155,7 @@ func (x *ListUsersAllowedIpsResponse_AllowedIps) ProtoReflect() protoreflect.Mes
 
 // Deprecated: Use ListUsersAllowedIpsResponse_AllowedIps.ProtoReflect.Descriptor instead.
 func (*ListUsersAllowedIpsResponse_AllowedIps) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_org_user_proto_rawDescGZIP(), []int{91, 1}
+	return file_api_v1alpha1_org_user_proto_rawDescGZIP(), []int{89, 1}
 }
 
 func (x *ListUsersAllowedIpsResponse_AllowedIps) GetIps() []string {
@@ -8262,62 +8174,57 @@ var file_api_v1alpha1_org_user_proto_rawDesc = []byte{
 	0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x73, 0x65, 0x63, 0x72, 0x65,
 	0x74, 0x4b, 0x65, 0x79, 0x12, 0x1e, 0x0a, 0x0b, 0x71, 0x72, 0x5f, 0x63, 0x6f, 0x64, 0x65, 0x5f,
 	0x75, 0x72, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x71, 0x72, 0x43, 0x6f, 0x64,
-	0x65, 0x55, 0x72, 0x6c, 0x22, 0x2b, 0x0a, 0x15, 0x56, 0x65, 0x72, 0x69, 0x66, 0x79, 0x54, 0x4f,
-	0x54, 0x50, 0x43, 0x6f, 0x64, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x12, 0x0a,
-	0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x63, 0x6f, 0x64,
-	0x65, 0x22, 0x18, 0x0a, 0x16, 0x56, 0x65, 0x72, 0x69, 0x66, 0x79, 0x54, 0x4f, 0x54, 0x50, 0x43,
-	0x6f, 0x64, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x52, 0x0a, 0x23, 0x41,
-	0x64, 0x64, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x65, 0x64, 0x55, 0x73, 0x65, 0x72, 0x49, 0x50, 0x52,
-	0x65, 0x73, 0x74, 0x72, 0x69, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65,
-	0x73, 0x74, 0x12, 0x19, 0x0a, 0x08, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x73, 0x18, 0x01,
-	0x20, 0x03, 0x28, 0x09, 0x52, 0x07, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x73, 0x12, 0x10, 0x0a,
-	0x03, 0x69, 0x70, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x09, 0x52, 0x03, 0x69, 0x70, 0x73, 0x22,
-	0x26, 0x0a, 0x24, 0x41, 0x64, 0x64, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x65, 0x64, 0x55, 0x73, 0x65,
-	0x72, 0x49, 0x50, 0x52, 0x65, 0x73, 0x74, 0x72, 0x69, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x52,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x55, 0x0a, 0x26, 0x52, 0x65, 0x6d, 0x6f, 0x76,
+	0x65, 0x55, 0x72, 0x6c, 0x22, 0x52, 0x0a, 0x23, 0x41, 0x64, 0x64, 0x47, 0x72, 0x6f, 0x75, 0x70,
+	0x65, 0x64, 0x55, 0x73, 0x65, 0x72, 0x49, 0x50, 0x52, 0x65, 0x73, 0x74, 0x72, 0x69, 0x63, 0x74,
+	0x69, 0x6f, 0x6e, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x19, 0x0a, 0x08, 0x75,
+	0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x07, 0x75,
+	0x73, 0x65, 0x72, 0x49, 0x64, 0x73, 0x12, 0x10, 0x0a, 0x03, 0x69, 0x70, 0x73, 0x18, 0x02, 0x20,
+	0x03, 0x28, 0x09, 0x52, 0x03, 0x69, 0x70, 0x73, 0x22, 0x26, 0x0a, 0x24, 0x41, 0x64, 0x64, 0x47,
+	0x72, 0x6f, 0x75, 0x70, 0x65, 0x64, 0x55, 0x73, 0x65, 0x72, 0x49, 0x50, 0x52, 0x65, 0x73, 0x74,
+	0x72, 0x69, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x22, 0x55, 0x0a, 0x26, 0x52, 0x65, 0x6d, 0x6f, 0x76, 0x65, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x65,
+	0x64, 0x55, 0x73, 0x65, 0x72, 0x49, 0x50, 0x52, 0x65, 0x73, 0x74, 0x72, 0x69, 0x63, 0x74, 0x69,
+	0x6f, 0x6e, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x19, 0x0a, 0x08, 0x75, 0x73,
+	0x65, 0x72, 0x5f, 0x69, 0x64, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x07, 0x75, 0x73,
+	0x65, 0x72, 0x49, 0x64, 0x73, 0x12, 0x10, 0x0a, 0x03, 0x69, 0x70, 0x73, 0x18, 0x02, 0x20, 0x03,
+	0x28, 0x09, 0x52, 0x03, 0x69, 0x70, 0x73, 0x22, 0x29, 0x0a, 0x27, 0x52, 0x65, 0x6d, 0x6f, 0x76,
 	0x65, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x65, 0x64, 0x55, 0x73, 0x65, 0x72, 0x49, 0x50, 0x52, 0x65,
-	0x73, 0x74, 0x72, 0x69, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
-	0x74, 0x12, 0x19, 0x0a, 0x08, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x73, 0x18, 0x01, 0x20,
-	0x03, 0x28, 0x09, 0x52, 0x07, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x73, 0x12, 0x10, 0x0a, 0x03,
-	0x69, 0x70, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x09, 0x52, 0x03, 0x69, 0x70, 0x73, 0x22, 0x29,
-	0x0a, 0x27, 0x52, 0x65, 0x6d, 0x6f, 0x76, 0x65, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x65, 0x64, 0x55,
-	0x73, 0x65, 0x72, 0x49, 0x50, 0x52, 0x65, 0x73, 0x74, 0x72, 0x69, 0x63, 0x74, 0x69, 0x6f, 0x6e,
-	0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x37, 0x0a, 0x1a, 0x4c, 0x69, 0x73,
+	0x73, 0x74, 0x72, 0x69, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x22, 0x37, 0x0a, 0x1a, 0x4c, 0x69, 0x73, 0x74, 0x55, 0x73, 0x65, 0x72, 0x73, 0x41,
+	0x6c, 0x6c, 0x6f, 0x77, 0x65, 0x64, 0x49, 0x70, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x12, 0x19, 0x0a, 0x08, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x73, 0x18, 0x01, 0x20, 0x03,
+	0x28, 0x09, 0x52, 0x07, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x73, 0x22, 0xb4, 0x02, 0x0a, 0x1b,
+	0x4c, 0x69, 0x73, 0x74, 0x55, 0x73, 0x65, 0x72, 0x73, 0x41, 0x6c, 0x6c, 0x6f, 0x77, 0x65, 0x64,
+	0x49, 0x70, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x75, 0x0a, 0x14, 0x75,
+	0x73, 0x65, 0x72, 0x5f, 0x61, 0x6c, 0x6c, 0x6f, 0x77, 0x65, 0x64, 0x5f, 0x69, 0x70, 0x73, 0x5f,
+	0x6d, 0x61, 0x70, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x44, 0x2e, 0x61, 0x70, 0x69, 0x2e,
+	0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x4c, 0x69, 0x73,
 	0x74, 0x55, 0x73, 0x65, 0x72, 0x73, 0x41, 0x6c, 0x6c, 0x6f, 0x77, 0x65, 0x64, 0x49, 0x70, 0x73,
-	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x19, 0x0a, 0x08, 0x75, 0x73, 0x65, 0x72, 0x5f,
-	0x69, 0x64, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x07, 0x75, 0x73, 0x65, 0x72, 0x49,
-	0x64, 0x73, 0x22, 0xb4, 0x02, 0x0a, 0x1b, 0x4c, 0x69, 0x73, 0x74, 0x55, 0x73, 0x65, 0x72, 0x73,
-	0x41, 0x6c, 0x6c, 0x6f, 0x77, 0x65, 0x64, 0x49, 0x70, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
-	0x73, 0x65, 0x12, 0x75, 0x0a, 0x14, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x61, 0x6c, 0x6c, 0x6f, 0x77,
-	0x65, 0x64, 0x5f, 0x69, 0x70, 0x73, 0x5f, 0x6d, 0x61, 0x70, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b,
-	0x32, 0x44, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e,
-	0x6f, 0x72, 0x67, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x55, 0x73, 0x65, 0x72, 0x73, 0x41, 0x6c, 0x6c,
-	0x6f, 0x77, 0x65, 0x64, 0x49, 0x70, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x2e,
-	0x55, 0x73, 0x65, 0x72, 0x41, 0x6c, 0x6c, 0x6f, 0x77, 0x65, 0x64, 0x49, 0x70, 0x73, 0x4d, 0x61,
-	0x70, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x52, 0x11, 0x75, 0x73, 0x65, 0x72, 0x41, 0x6c, 0x6c, 0x6f,
-	0x77, 0x65, 0x64, 0x49, 0x70, 0x73, 0x4d, 0x61, 0x70, 0x1a, 0x7e, 0x0a, 0x16, 0x55, 0x73, 0x65,
-	0x72, 0x41, 0x6c, 0x6c, 0x6f, 0x77, 0x65, 0x64, 0x49, 0x70, 0x73, 0x4d, 0x61, 0x70, 0x45, 0x6e,
-	0x74, 0x72, 0x79, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x4e, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02,
-	0x20, 0x01, 0x28, 0x0b, 0x32, 0x38, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70,
-	0x68, 0x61, 0x31, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x55, 0x73, 0x65, 0x72,
-	0x73, 0x41, 0x6c, 0x6c, 0x6f, 0x77, 0x65, 0x64, 0x49, 0x70, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x2e, 0x41, 0x6c, 0x6c, 0x6f, 0x77, 0x65, 0x64, 0x49, 0x70, 0x73, 0x52, 0x05,
-	0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x1a, 0x1e, 0x0a, 0x0a, 0x41, 0x6c, 0x6c,
-	0x6f, 0x77, 0x65, 0x64, 0x49, 0x70, 0x73, 0x12, 0x10, 0x0a, 0x03, 0x69, 0x70, 0x73, 0x18, 0x01,
-	0x20, 0x03, 0x28, 0x09, 0x52, 0x03, 0x69, 0x70, 0x73, 0x42, 0xb0, 0x01, 0x0a, 0x14, 0x63, 0x6f,
-	0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x6f,
-	0x72, 0x67, 0x42, 0x09, 0x55, 0x73, 0x65, 0x72, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a,
-	0x2b, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63,
-	0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f,
-	0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x6f, 0x72, 0x67, 0xa2, 0x02, 0x03, 0x41,
-	0x56, 0x4f, 0xaa, 0x02, 0x10, 0x41, 0x70, 0x69, 0x2e, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61,
-	0x31, 0x2e, 0x4f, 0x72, 0x67, 0xca, 0x02, 0x10, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c,
-	0x70, 0x68, 0x61, 0x31, 0x5c, 0x4f, 0x72, 0x67, 0xe2, 0x02, 0x1c, 0x41, 0x70, 0x69, 0x5c, 0x56,
-	0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x4f, 0x72, 0x67, 0x5c, 0x47, 0x50, 0x42, 0x4d,
-	0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x12, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x56,
-	0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x3a, 0x3a, 0x4f, 0x72, 0x67, 0x62, 0x06, 0x70, 0x72,
-	0x6f, 0x74, 0x6f, 0x33,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x2e, 0x55, 0x73, 0x65, 0x72, 0x41, 0x6c, 0x6c,
+	0x6f, 0x77, 0x65, 0x64, 0x49, 0x70, 0x73, 0x4d, 0x61, 0x70, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x52,
+	0x11, 0x75, 0x73, 0x65, 0x72, 0x41, 0x6c, 0x6c, 0x6f, 0x77, 0x65, 0x64, 0x49, 0x70, 0x73, 0x4d,
+	0x61, 0x70, 0x1a, 0x7e, 0x0a, 0x16, 0x55, 0x73, 0x65, 0x72, 0x41, 0x6c, 0x6c, 0x6f, 0x77, 0x65,
+	0x64, 0x49, 0x70, 0x73, 0x4d, 0x61, 0x70, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x10, 0x0a, 0x03,
+	0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x4e,
+	0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x38, 0x2e,
+	0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x6f, 0x72, 0x67,
+	0x2e, 0x4c, 0x69, 0x73, 0x74, 0x55, 0x73, 0x65, 0x72, 0x73, 0x41, 0x6c, 0x6c, 0x6f, 0x77, 0x65,
+	0x64, 0x49, 0x70, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x2e, 0x41, 0x6c, 0x6c,
+	0x6f, 0x77, 0x65, 0x64, 0x49, 0x70, 0x73, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02,
+	0x38, 0x01, 0x1a, 0x1e, 0x0a, 0x0a, 0x41, 0x6c, 0x6c, 0x6f, 0x77, 0x65, 0x64, 0x49, 0x70, 0x73,
+	0x12, 0x10, 0x0a, 0x03, 0x69, 0x70, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x03, 0x69,
+	0x70, 0x73, 0x42, 0xb0, 0x01, 0x0a, 0x14, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76,
+	0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x6f, 0x72, 0x67, 0x42, 0x09, 0x55, 0x73, 0x65,
+	0x72, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x2b, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62,
+	0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70,
+	0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61,
+	0x31, 0x2f, 0x6f, 0x72, 0x67, 0xa2, 0x02, 0x03, 0x41, 0x56, 0x4f, 0xaa, 0x02, 0x10, 0x41, 0x70,
+	0x69, 0x2e, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x4f, 0x72, 0x67, 0xca, 0x02,
+	0x10, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x4f, 0x72,
+	0x67, 0xe2, 0x02, 0x1c, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31,
+	0x5c, 0x4f, 0x72, 0x67, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
+	0xea, 0x02, 0x12, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31,
+	0x3a, 0x3a, 0x4f, 0x72, 0x67, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -8332,7 +8239,7 @@ func file_api_v1alpha1_org_user_proto_rawDescGZIP() []byte {
 	return file_api_v1alpha1_org_user_proto_rawDescData
 }
 
-var file_api_v1alpha1_org_user_proto_msgTypes = make([]protoimpl.MessageInfo, 110)
+var file_api_v1alpha1_org_user_proto_msgTypes = make([]protoimpl.MessageInfo, 108)
 var file_api_v1alpha1_org_user_proto_goTypes = []any{
 	(*CreateUserRequest)(nil),                                 // 0: api.v1alpha1.org.CreateUserRequest
 	(*CreateUserResponse)(nil),                                // 1: api.v1alpha1.org.CreateUserResponse
@@ -8418,128 +8325,126 @@ var file_api_v1alpha1_org_user_proto_goTypes = []any{
 	(*GetMyAllowedMfaMethodsResponse)(nil),                    // 81: api.v1alpha1.org.GetMyAllowedMfaMethodsResponse
 	(*GenerateTOTPSecretRequest)(nil),                         // 82: api.v1alpha1.org.GenerateTOTPSecretRequest
 	(*GenerateTOTPSecretResponse)(nil),                        // 83: api.v1alpha1.org.GenerateTOTPSecretResponse
-	(*VerifyTOTPCodeRequest)(nil),                             // 84: api.v1alpha1.org.VerifyTOTPCodeRequest
-	(*VerifyTOTPCodeResponse)(nil),                            // 85: api.v1alpha1.org.VerifyTOTPCodeResponse
-	(*AddGroupedUserIPRestrictionsRequest)(nil),               // 86: api.v1alpha1.org.AddGroupedUserIPRestrictionsRequest
-	(*AddGroupedUserIPRestrictionsResponse)(nil),              // 87: api.v1alpha1.org.AddGroupedUserIPRestrictionsResponse
-	(*RemoveGroupedUserIPRestrictionsRequest)(nil),            // 88: api.v1alpha1.org.RemoveGroupedUserIPRestrictionsRequest
-	(*RemoveGroupedUserIPRestrictionsResponse)(nil),           // 89: api.v1alpha1.org.RemoveGroupedUserIPRestrictionsResponse
-	(*ListUsersAllowedIpsRequest)(nil),                        // 90: api.v1alpha1.org.ListUsersAllowedIpsRequest
-	(*ListUsersAllowedIpsResponse)(nil),                       // 91: api.v1alpha1.org.ListUsersAllowedIpsResponse
-	(*GetMyUserResponse_HuntGroup)(nil),                       // 92: api.v1alpha1.org.GetMyUserResponse.HuntGroup
-	(*GetMyUserResponse_AgentProfileGroup)(nil),               // 93: api.v1alpha1.org.GetMyUserResponse.AgentProfileGroup
-	(*GetUserResponse_HuntGroup)(nil),                         // 94: api.v1alpha1.org.GetUserResponse.HuntGroup
-	(*GetUserResponse_AgentProfileGroup)(nil),                 // 95: api.v1alpha1.org.GetUserResponse.AgentProfileGroup
-	(*GetUserByOrgIdResponse_HuntGroup)(nil),                  // 96: api.v1alpha1.org.GetUserByOrgIdResponse.HuntGroup
-	(*GetUserByOrgIdResponse_AgentProfileGroup)(nil),          // 97: api.v1alpha1.org.GetUserByOrgIdResponse.AgentProfileGroup
-	(*ListAgentsResponse_AgentDetails)(nil),                   // 98: api.v1alpha1.org.ListAgentsResponse.AgentDetails
-	(*ListAgentsResponse_AgentDetails_HuntGroup)(nil),         // 99: api.v1alpha1.org.ListAgentsResponse.AgentDetails.HuntGroup
-	(*ListAgentsResponse_AgentDetails_AgentProfileGroup)(nil), // 100: api.v1alpha1.org.ListAgentsResponse.AgentDetails.AgentProfileGroup
-	(*ListPublicUsersResponse_User)(nil),                      // 101: api.v1alpha1.org.ListPublicUsersResponse.User
-	(*ListUsersResponse_UserDetails)(nil),                     // 102: api.v1alpha1.org.ListUsersResponse.UserDetails
-	(*ListUsersByOrgIdResponse_UserDetails)(nil),              // 103: api.v1alpha1.org.ListUsersByOrgIdResponse.UserDetails
-	(*ListUsersByRegionResponse_UserDetails)(nil),             // 104: api.v1alpha1.org.ListUsersByRegionResponse.UserDetails
-	(*GetUserSessionDataResponse_User)(nil),                   // 105: api.v1alpha1.org.GetUserSessionDataResponse.User
-	(*GetUserSessionDataResponse_User_RegionSids)(nil),        // 106: api.v1alpha1.org.GetUserSessionDataResponse.User.RegionSids
-	nil, // 107: api.v1alpha1.org.GetUserSessionDataResponse.User.RegionSidMapEntry
-	nil, // 108: api.v1alpha1.org.ListUsersAllowedIpsResponse.UserAllowedIpsMapEntry
-	(*ListUsersAllowedIpsResponse_AllowedIps)(nil), // 109: api.v1alpha1.org.ListUsersAllowedIpsResponse.AllowedIps
-	(commons.OperatorApplications)(0),              // 110: api.commons.OperatorApplications
-	(*commons.TimeZoneWrapper)(nil),                // 111: api.commons.TimeZoneWrapper
-	(*org.Label)(nil),                              // 112: api.commons.org.Label
-	(*org.Skill)(nil),                              // 113: api.commons.org.Skill
-	(*org.PermissionGroup)(nil),                    // 114: api.commons.org.PermissionGroup
-	(*org.P3PermissionGroup)(nil),                  // 115: api.commons.org.P3PermissionGroup
-	(*org.Trust)(nil),                              // 116: api.commons.org.Trust
-	(*timestamppb.Timestamp)(nil),                  // 117: google.protobuf.Timestamp
-	(commons.UserArchivedStateFilter)(0),           // 118: api.commons.UserArchivedStateFilter
-	(commons.Permission)(0),                        // 119: api.commons.Permission
-	(*commons.LocalePreferences)(nil),              // 120: api.commons.LocalePreferences
-	(*org.MfaInfo)(nil),                            // 121: api.commons.org.MfaInfo
-	(*wrapperspb.StringValue)(nil),                 // 122: google.protobuf.StringValue
+	(*AddGroupedUserIPRestrictionsRequest)(nil),               // 84: api.v1alpha1.org.AddGroupedUserIPRestrictionsRequest
+	(*AddGroupedUserIPRestrictionsResponse)(nil),              // 85: api.v1alpha1.org.AddGroupedUserIPRestrictionsResponse
+	(*RemoveGroupedUserIPRestrictionsRequest)(nil),            // 86: api.v1alpha1.org.RemoveGroupedUserIPRestrictionsRequest
+	(*RemoveGroupedUserIPRestrictionsResponse)(nil),           // 87: api.v1alpha1.org.RemoveGroupedUserIPRestrictionsResponse
+	(*ListUsersAllowedIpsRequest)(nil),                        // 88: api.v1alpha1.org.ListUsersAllowedIpsRequest
+	(*ListUsersAllowedIpsResponse)(nil),                       // 89: api.v1alpha1.org.ListUsersAllowedIpsResponse
+	(*GetMyUserResponse_HuntGroup)(nil),                       // 90: api.v1alpha1.org.GetMyUserResponse.HuntGroup
+	(*GetMyUserResponse_AgentProfileGroup)(nil),               // 91: api.v1alpha1.org.GetMyUserResponse.AgentProfileGroup
+	(*GetUserResponse_HuntGroup)(nil),                         // 92: api.v1alpha1.org.GetUserResponse.HuntGroup
+	(*GetUserResponse_AgentProfileGroup)(nil),                 // 93: api.v1alpha1.org.GetUserResponse.AgentProfileGroup
+	(*GetUserByOrgIdResponse_HuntGroup)(nil),                  // 94: api.v1alpha1.org.GetUserByOrgIdResponse.HuntGroup
+	(*GetUserByOrgIdResponse_AgentProfileGroup)(nil),          // 95: api.v1alpha1.org.GetUserByOrgIdResponse.AgentProfileGroup
+	(*ListAgentsResponse_AgentDetails)(nil),                   // 96: api.v1alpha1.org.ListAgentsResponse.AgentDetails
+	(*ListAgentsResponse_AgentDetails_HuntGroup)(nil),         // 97: api.v1alpha1.org.ListAgentsResponse.AgentDetails.HuntGroup
+	(*ListAgentsResponse_AgentDetails_AgentProfileGroup)(nil), // 98: api.v1alpha1.org.ListAgentsResponse.AgentDetails.AgentProfileGroup
+	(*ListPublicUsersResponse_User)(nil),                      // 99: api.v1alpha1.org.ListPublicUsersResponse.User
+	(*ListUsersResponse_UserDetails)(nil),                     // 100: api.v1alpha1.org.ListUsersResponse.UserDetails
+	(*ListUsersByOrgIdResponse_UserDetails)(nil),              // 101: api.v1alpha1.org.ListUsersByOrgIdResponse.UserDetails
+	(*ListUsersByRegionResponse_UserDetails)(nil),             // 102: api.v1alpha1.org.ListUsersByRegionResponse.UserDetails
+	(*GetUserSessionDataResponse_User)(nil),                   // 103: api.v1alpha1.org.GetUserSessionDataResponse.User
+	(*GetUserSessionDataResponse_User_RegionSids)(nil),        // 104: api.v1alpha1.org.GetUserSessionDataResponse.User.RegionSids
+	nil, // 105: api.v1alpha1.org.GetUserSessionDataResponse.User.RegionSidMapEntry
+	nil, // 106: api.v1alpha1.org.ListUsersAllowedIpsResponse.UserAllowedIpsMapEntry
+	(*ListUsersAllowedIpsResponse_AllowedIps)(nil), // 107: api.v1alpha1.org.ListUsersAllowedIpsResponse.AllowedIps
+	(commons.OperatorApplications)(0),              // 108: api.commons.OperatorApplications
+	(*commons.TimeZoneWrapper)(nil),                // 109: api.commons.TimeZoneWrapper
+	(*org.Label)(nil),                              // 110: api.commons.org.Label
+	(*org.Skill)(nil),                              // 111: api.commons.org.Skill
+	(*org.PermissionGroup)(nil),                    // 112: api.commons.org.PermissionGroup
+	(*org.P3PermissionGroup)(nil),                  // 113: api.commons.org.P3PermissionGroup
+	(*org.Trust)(nil),                              // 114: api.commons.org.Trust
+	(*timestamppb.Timestamp)(nil),                  // 115: google.protobuf.Timestamp
+	(commons.UserArchivedStateFilter)(0),           // 116: api.commons.UserArchivedStateFilter
+	(commons.Permission)(0),                        // 117: api.commons.Permission
+	(*commons.LocalePreferences)(nil),              // 118: api.commons.LocalePreferences
+	(*org.MfaInfo)(nil),                            // 119: api.commons.org.MfaInfo
+	(*wrapperspb.StringValue)(nil),                 // 120: google.protobuf.StringValue
 }
 var file_api_v1alpha1_org_user_proto_depIdxs = []int32{
-	110, // 0: api.v1alpha1.org.CreateUserRequest.default_app:type_name -> api.commons.OperatorApplications
-	111, // 1: api.v1alpha1.org.CreateUserRequest.time_zone_override:type_name -> api.commons.TimeZoneWrapper
-	92,  // 2: api.v1alpha1.org.GetMyUserResponse.hunt_group:type_name -> api.v1alpha1.org.GetMyUserResponse.HuntGroup
-	112, // 3: api.v1alpha1.org.GetMyUserResponse.labels:type_name -> api.commons.org.Label
-	113, // 4: api.v1alpha1.org.GetMyUserResponse.skills:type_name -> api.commons.org.Skill
-	114, // 5: api.v1alpha1.org.GetMyUserResponse.permission_groups:type_name -> api.commons.org.PermissionGroup
-	115, // 6: api.v1alpha1.org.GetMyUserResponse.p3_permission_group:type_name -> api.commons.org.P3PermissionGroup
-	93,  // 7: api.v1alpha1.org.GetMyUserResponse.agent_profile_group:type_name -> api.v1alpha1.org.GetMyUserResponse.AgentProfileGroup
-	116, // 8: api.v1alpha1.org.GetMyUserResponse.trusts:type_name -> api.commons.org.Trust
-	111, // 9: api.v1alpha1.org.GetUserResponse.time_zone_override:type_name -> api.commons.TimeZoneWrapper
-	94,  // 10: api.v1alpha1.org.GetUserResponse.hunt_group:type_name -> api.v1alpha1.org.GetUserResponse.HuntGroup
-	112, // 11: api.v1alpha1.org.GetUserResponse.labels:type_name -> api.commons.org.Label
-	113, // 12: api.v1alpha1.org.GetUserResponse.skills:type_name -> api.commons.org.Skill
-	114, // 13: api.v1alpha1.org.GetUserResponse.permission_groups:type_name -> api.commons.org.PermissionGroup
-	115, // 14: api.v1alpha1.org.GetUserResponse.p3_permission_group:type_name -> api.commons.org.P3PermissionGroup
-	95,  // 15: api.v1alpha1.org.GetUserResponse.agent_profile_group:type_name -> api.v1alpha1.org.GetUserResponse.AgentProfileGroup
-	110, // 16: api.v1alpha1.org.GetUserResponse.default_app:type_name -> api.commons.OperatorApplications
-	116, // 17: api.v1alpha1.org.GetUserResponse.trusts:type_name -> api.commons.org.Trust
-	117, // 18: api.v1alpha1.org.GetUserResponse.created_at:type_name -> google.protobuf.Timestamp
-	117, // 19: api.v1alpha1.org.GetUserResponse.last_updated:type_name -> google.protobuf.Timestamp
-	96,  // 20: api.v1alpha1.org.GetUserByOrgIdResponse.hunt_group:type_name -> api.v1alpha1.org.GetUserByOrgIdResponse.HuntGroup
-	112, // 21: api.v1alpha1.org.GetUserByOrgIdResponse.labels:type_name -> api.commons.org.Label
-	113, // 22: api.v1alpha1.org.GetUserByOrgIdResponse.skills:type_name -> api.commons.org.Skill
-	114, // 23: api.v1alpha1.org.GetUserByOrgIdResponse.permission_groups:type_name -> api.commons.org.PermissionGroup
-	115, // 24: api.v1alpha1.org.GetUserByOrgIdResponse.p3_permission_group:type_name -> api.commons.org.P3PermissionGroup
-	97,  // 25: api.v1alpha1.org.GetUserByOrgIdResponse.agent_profile_group:type_name -> api.v1alpha1.org.GetUserByOrgIdResponse.AgentProfileGroup
-	116, // 26: api.v1alpha1.org.GetUserByOrgIdResponse.trusts:type_name -> api.commons.org.Trust
-	98,  // 27: api.v1alpha1.org.ListAgentsResponse.agents:type_name -> api.v1alpha1.org.ListAgentsResponse.AgentDetails
-	118, // 28: api.v1alpha1.org.ListPublicUsersRequest.archived_filter:type_name -> api.commons.UserArchivedStateFilter
-	101, // 29: api.v1alpha1.org.ListPublicUsersResponse.users:type_name -> api.v1alpha1.org.ListPublicUsersResponse.User
-	102, // 30: api.v1alpha1.org.ListUsersResponse.users:type_name -> api.v1alpha1.org.ListUsersResponse.UserDetails
-	118, // 31: api.v1alpha1.org.ListUsersByOrgIdRequest.archived_filter:type_name -> api.commons.UserArchivedStateFilter
-	103, // 32: api.v1alpha1.org.ListUsersByOrgIdResponse.users:type_name -> api.v1alpha1.org.ListUsersByOrgIdResponse.UserDetails
-	118, // 33: api.v1alpha1.org.ListUsersByRegionRequest.archived_filter:type_name -> api.commons.UserArchivedStateFilter
-	104, // 34: api.v1alpha1.org.ListUsersByRegionResponse.users:type_name -> api.v1alpha1.org.ListUsersByRegionResponse.UserDetails
-	111, // 35: api.v1alpha1.org.UpdateMyUserRequest.time_zone_override:type_name -> api.commons.TimeZoneWrapper
-	110, // 36: api.v1alpha1.org.UpdateMyUserRequest.default_app:type_name -> api.commons.OperatorApplications
-	111, // 37: api.v1alpha1.org.UpdateUserRequest.time_zone_override:type_name -> api.commons.TimeZoneWrapper
-	110, // 38: api.v1alpha1.org.UpdateUserRequest.default_app:type_name -> api.commons.OperatorApplications
-	117, // 39: api.v1alpha1.org.CreatePasswordResetLinkRequest.expiration:type_name -> google.protobuf.Timestamp
-	117, // 40: api.v1alpha1.org.GetUserLoginInfoResponse.last_login:type_name -> google.protobuf.Timestamp
-	117, // 41: api.v1alpha1.org.GetUserLoginInfoResponse.last_password_reset:type_name -> google.protobuf.Timestamp
-	117, // 42: api.v1alpha1.org.GetUserLoginInfoResponse.created_at:type_name -> google.protobuf.Timestamp
-	117, // 43: api.v1alpha1.org.GetUserLoginInfoResponse.updated_at:type_name -> google.protobuf.Timestamp
-	105, // 44: api.v1alpha1.org.GetUserSessionDataResponse.user:type_name -> api.v1alpha1.org.GetUserSessionDataResponse.User
-	119, // 45: api.v1alpha1.org.GetUserSessionDataResponse.p3_permissions:type_name -> api.commons.Permission
-	114, // 46: api.v1alpha1.org.GetUserSessionDataResponse.permission_groups:type_name -> api.commons.org.PermissionGroup
-	112, // 47: api.v1alpha1.org.GetUserSessionDataResponse.labels:type_name -> api.commons.org.Label
-	120, // 48: api.v1alpha1.org.GetUserSessionDataResponse.locale_preferences:type_name -> api.commons.LocalePreferences
-	117, // 49: api.v1alpha1.org.RefreshMfaLockoutResponse.timeout:type_name -> google.protobuf.Timestamp
-	117, // 50: api.v1alpha1.org.RefreshMfaLockoutByOrgIdResponse.timeout:type_name -> google.protobuf.Timestamp
-	121, // 51: api.v1alpha1.org.SetMfaTypeRequest.info:type_name -> api.commons.org.MfaInfo
-	121, // 52: api.v1alpha1.org.SetMyMfaTypeRequest.info:type_name -> api.commons.org.MfaInfo
-	121, // 53: api.v1alpha1.org.GetUserMfaInfoResponse.info:type_name -> api.commons.org.MfaInfo
-	121, // 54: api.v1alpha1.org.GetMyUserMfaInfoResponse.info:type_name -> api.commons.org.MfaInfo
-	108, // 55: api.v1alpha1.org.ListUsersAllowedIpsResponse.user_allowed_ips_map:type_name -> api.v1alpha1.org.ListUsersAllowedIpsResponse.UserAllowedIpsMapEntry
-	113, // 56: api.v1alpha1.org.ListAgentsResponse.AgentDetails.skills:type_name -> api.commons.org.Skill
-	99,  // 57: api.v1alpha1.org.ListAgentsResponse.AgentDetails.hunt_group:type_name -> api.v1alpha1.org.ListAgentsResponse.AgentDetails.HuntGroup
-	112, // 58: api.v1alpha1.org.ListAgentsResponse.AgentDetails.labels:type_name -> api.commons.org.Label
-	114, // 59: api.v1alpha1.org.ListAgentsResponse.AgentDetails.permission_groups:type_name -> api.commons.org.PermissionGroup
-	117, // 60: api.v1alpha1.org.ListAgentsResponse.AgentDetails.created:type_name -> google.protobuf.Timestamp
-	117, // 61: api.v1alpha1.org.ListAgentsResponse.AgentDetails.last_updated:type_name -> google.protobuf.Timestamp
-	100, // 62: api.v1alpha1.org.ListAgentsResponse.AgentDetails.agent_profile_group:type_name -> api.v1alpha1.org.ListAgentsResponse.AgentDetails.AgentProfileGroup
-	111, // 63: api.v1alpha1.org.ListAgentsResponse.AgentDetails.time_zone_override:type_name -> api.commons.TimeZoneWrapper
-	121, // 64: api.v1alpha1.org.ListAgentsResponse.AgentDetails.mfa_info:type_name -> api.commons.org.MfaInfo
-	112, // 65: api.v1alpha1.org.ListUsersResponse.UserDetails.labels:type_name -> api.commons.org.Label
-	121, // 66: api.v1alpha1.org.ListUsersResponse.UserDetails.mfa_info:type_name -> api.commons.org.MfaInfo
-	112, // 67: api.v1alpha1.org.ListUsersByOrgIdResponse.UserDetails.labels:type_name -> api.commons.org.Label
-	121, // 68: api.v1alpha1.org.ListUsersByOrgIdResponse.UserDetails.mfa_info:type_name -> api.commons.org.MfaInfo
-	112, // 69: api.v1alpha1.org.ListUsersByRegionResponse.UserDetails.labels:type_name -> api.commons.org.Label
-	121, // 70: api.v1alpha1.org.ListUsersByRegionResponse.UserDetails.mfa_info:type_name -> api.commons.org.MfaInfo
-	107, // 71: api.v1alpha1.org.GetUserSessionDataResponse.User.region_sid_map:type_name -> api.v1alpha1.org.GetUserSessionDataResponse.User.RegionSidMapEntry
-	117, // 72: api.v1alpha1.org.GetUserSessionDataResponse.User.created:type_name -> google.protobuf.Timestamp
-	117, // 73: api.v1alpha1.org.GetUserSessionDataResponse.User.last_updated:type_name -> google.protobuf.Timestamp
-	122, // 74: api.v1alpha1.org.GetUserSessionDataResponse.User.connection_id:type_name -> google.protobuf.StringValue
-	111, // 75: api.v1alpha1.org.GetUserSessionDataResponse.User.time_zone_override:type_name -> api.commons.TimeZoneWrapper
-	110, // 76: api.v1alpha1.org.GetUserSessionDataResponse.User.default_application:type_name -> api.commons.OperatorApplications
-	117, // 77: api.v1alpha1.org.GetUserSessionDataResponse.User.mfa_timestamp:type_name -> google.protobuf.Timestamp
-	117, // 78: api.v1alpha1.org.GetUserSessionDataResponse.User.password_reset_date:type_name -> google.protobuf.Timestamp
-	106, // 79: api.v1alpha1.org.GetUserSessionDataResponse.User.RegionSidMapEntry.value:type_name -> api.v1alpha1.org.GetUserSessionDataResponse.User.RegionSids
-	109, // 80: api.v1alpha1.org.ListUsersAllowedIpsResponse.UserAllowedIpsMapEntry.value:type_name -> api.v1alpha1.org.ListUsersAllowedIpsResponse.AllowedIps
+	108, // 0: api.v1alpha1.org.CreateUserRequest.default_app:type_name -> api.commons.OperatorApplications
+	109, // 1: api.v1alpha1.org.CreateUserRequest.time_zone_override:type_name -> api.commons.TimeZoneWrapper
+	90,  // 2: api.v1alpha1.org.GetMyUserResponse.hunt_group:type_name -> api.v1alpha1.org.GetMyUserResponse.HuntGroup
+	110, // 3: api.v1alpha1.org.GetMyUserResponse.labels:type_name -> api.commons.org.Label
+	111, // 4: api.v1alpha1.org.GetMyUserResponse.skills:type_name -> api.commons.org.Skill
+	112, // 5: api.v1alpha1.org.GetMyUserResponse.permission_groups:type_name -> api.commons.org.PermissionGroup
+	113, // 6: api.v1alpha1.org.GetMyUserResponse.p3_permission_group:type_name -> api.commons.org.P3PermissionGroup
+	91,  // 7: api.v1alpha1.org.GetMyUserResponse.agent_profile_group:type_name -> api.v1alpha1.org.GetMyUserResponse.AgentProfileGroup
+	114, // 8: api.v1alpha1.org.GetMyUserResponse.trusts:type_name -> api.commons.org.Trust
+	109, // 9: api.v1alpha1.org.GetUserResponse.time_zone_override:type_name -> api.commons.TimeZoneWrapper
+	92,  // 10: api.v1alpha1.org.GetUserResponse.hunt_group:type_name -> api.v1alpha1.org.GetUserResponse.HuntGroup
+	110, // 11: api.v1alpha1.org.GetUserResponse.labels:type_name -> api.commons.org.Label
+	111, // 12: api.v1alpha1.org.GetUserResponse.skills:type_name -> api.commons.org.Skill
+	112, // 13: api.v1alpha1.org.GetUserResponse.permission_groups:type_name -> api.commons.org.PermissionGroup
+	113, // 14: api.v1alpha1.org.GetUserResponse.p3_permission_group:type_name -> api.commons.org.P3PermissionGroup
+	93,  // 15: api.v1alpha1.org.GetUserResponse.agent_profile_group:type_name -> api.v1alpha1.org.GetUserResponse.AgentProfileGroup
+	108, // 16: api.v1alpha1.org.GetUserResponse.default_app:type_name -> api.commons.OperatorApplications
+	114, // 17: api.v1alpha1.org.GetUserResponse.trusts:type_name -> api.commons.org.Trust
+	115, // 18: api.v1alpha1.org.GetUserResponse.created_at:type_name -> google.protobuf.Timestamp
+	115, // 19: api.v1alpha1.org.GetUserResponse.last_updated:type_name -> google.protobuf.Timestamp
+	94,  // 20: api.v1alpha1.org.GetUserByOrgIdResponse.hunt_group:type_name -> api.v1alpha1.org.GetUserByOrgIdResponse.HuntGroup
+	110, // 21: api.v1alpha1.org.GetUserByOrgIdResponse.labels:type_name -> api.commons.org.Label
+	111, // 22: api.v1alpha1.org.GetUserByOrgIdResponse.skills:type_name -> api.commons.org.Skill
+	112, // 23: api.v1alpha1.org.GetUserByOrgIdResponse.permission_groups:type_name -> api.commons.org.PermissionGroup
+	113, // 24: api.v1alpha1.org.GetUserByOrgIdResponse.p3_permission_group:type_name -> api.commons.org.P3PermissionGroup
+	95,  // 25: api.v1alpha1.org.GetUserByOrgIdResponse.agent_profile_group:type_name -> api.v1alpha1.org.GetUserByOrgIdResponse.AgentProfileGroup
+	114, // 26: api.v1alpha1.org.GetUserByOrgIdResponse.trusts:type_name -> api.commons.org.Trust
+	96,  // 27: api.v1alpha1.org.ListAgentsResponse.agents:type_name -> api.v1alpha1.org.ListAgentsResponse.AgentDetails
+	116, // 28: api.v1alpha1.org.ListPublicUsersRequest.archived_filter:type_name -> api.commons.UserArchivedStateFilter
+	99,  // 29: api.v1alpha1.org.ListPublicUsersResponse.users:type_name -> api.v1alpha1.org.ListPublicUsersResponse.User
+	100, // 30: api.v1alpha1.org.ListUsersResponse.users:type_name -> api.v1alpha1.org.ListUsersResponse.UserDetails
+	116, // 31: api.v1alpha1.org.ListUsersByOrgIdRequest.archived_filter:type_name -> api.commons.UserArchivedStateFilter
+	101, // 32: api.v1alpha1.org.ListUsersByOrgIdResponse.users:type_name -> api.v1alpha1.org.ListUsersByOrgIdResponse.UserDetails
+	116, // 33: api.v1alpha1.org.ListUsersByRegionRequest.archived_filter:type_name -> api.commons.UserArchivedStateFilter
+	102, // 34: api.v1alpha1.org.ListUsersByRegionResponse.users:type_name -> api.v1alpha1.org.ListUsersByRegionResponse.UserDetails
+	109, // 35: api.v1alpha1.org.UpdateMyUserRequest.time_zone_override:type_name -> api.commons.TimeZoneWrapper
+	108, // 36: api.v1alpha1.org.UpdateMyUserRequest.default_app:type_name -> api.commons.OperatorApplications
+	109, // 37: api.v1alpha1.org.UpdateUserRequest.time_zone_override:type_name -> api.commons.TimeZoneWrapper
+	108, // 38: api.v1alpha1.org.UpdateUserRequest.default_app:type_name -> api.commons.OperatorApplications
+	115, // 39: api.v1alpha1.org.CreatePasswordResetLinkRequest.expiration:type_name -> google.protobuf.Timestamp
+	115, // 40: api.v1alpha1.org.GetUserLoginInfoResponse.last_login:type_name -> google.protobuf.Timestamp
+	115, // 41: api.v1alpha1.org.GetUserLoginInfoResponse.last_password_reset:type_name -> google.protobuf.Timestamp
+	115, // 42: api.v1alpha1.org.GetUserLoginInfoResponse.created_at:type_name -> google.protobuf.Timestamp
+	115, // 43: api.v1alpha1.org.GetUserLoginInfoResponse.updated_at:type_name -> google.protobuf.Timestamp
+	103, // 44: api.v1alpha1.org.GetUserSessionDataResponse.user:type_name -> api.v1alpha1.org.GetUserSessionDataResponse.User
+	117, // 45: api.v1alpha1.org.GetUserSessionDataResponse.p3_permissions:type_name -> api.commons.Permission
+	112, // 46: api.v1alpha1.org.GetUserSessionDataResponse.permission_groups:type_name -> api.commons.org.PermissionGroup
+	110, // 47: api.v1alpha1.org.GetUserSessionDataResponse.labels:type_name -> api.commons.org.Label
+	118, // 48: api.v1alpha1.org.GetUserSessionDataResponse.locale_preferences:type_name -> api.commons.LocalePreferences
+	115, // 49: api.v1alpha1.org.RefreshMfaLockoutResponse.timeout:type_name -> google.protobuf.Timestamp
+	115, // 50: api.v1alpha1.org.RefreshMfaLockoutByOrgIdResponse.timeout:type_name -> google.protobuf.Timestamp
+	119, // 51: api.v1alpha1.org.SetMfaTypeRequest.info:type_name -> api.commons.org.MfaInfo
+	119, // 52: api.v1alpha1.org.SetMyMfaTypeRequest.info:type_name -> api.commons.org.MfaInfo
+	119, // 53: api.v1alpha1.org.GetUserMfaInfoResponse.info:type_name -> api.commons.org.MfaInfo
+	119, // 54: api.v1alpha1.org.GetMyUserMfaInfoResponse.info:type_name -> api.commons.org.MfaInfo
+	106, // 55: api.v1alpha1.org.ListUsersAllowedIpsResponse.user_allowed_ips_map:type_name -> api.v1alpha1.org.ListUsersAllowedIpsResponse.UserAllowedIpsMapEntry
+	111, // 56: api.v1alpha1.org.ListAgentsResponse.AgentDetails.skills:type_name -> api.commons.org.Skill
+	97,  // 57: api.v1alpha1.org.ListAgentsResponse.AgentDetails.hunt_group:type_name -> api.v1alpha1.org.ListAgentsResponse.AgentDetails.HuntGroup
+	110, // 58: api.v1alpha1.org.ListAgentsResponse.AgentDetails.labels:type_name -> api.commons.org.Label
+	112, // 59: api.v1alpha1.org.ListAgentsResponse.AgentDetails.permission_groups:type_name -> api.commons.org.PermissionGroup
+	115, // 60: api.v1alpha1.org.ListAgentsResponse.AgentDetails.created:type_name -> google.protobuf.Timestamp
+	115, // 61: api.v1alpha1.org.ListAgentsResponse.AgentDetails.last_updated:type_name -> google.protobuf.Timestamp
+	98,  // 62: api.v1alpha1.org.ListAgentsResponse.AgentDetails.agent_profile_group:type_name -> api.v1alpha1.org.ListAgentsResponse.AgentDetails.AgentProfileGroup
+	109, // 63: api.v1alpha1.org.ListAgentsResponse.AgentDetails.time_zone_override:type_name -> api.commons.TimeZoneWrapper
+	119, // 64: api.v1alpha1.org.ListAgentsResponse.AgentDetails.mfa_info:type_name -> api.commons.org.MfaInfo
+	110, // 65: api.v1alpha1.org.ListUsersResponse.UserDetails.labels:type_name -> api.commons.org.Label
+	119, // 66: api.v1alpha1.org.ListUsersResponse.UserDetails.mfa_info:type_name -> api.commons.org.MfaInfo
+	110, // 67: api.v1alpha1.org.ListUsersByOrgIdResponse.UserDetails.labels:type_name -> api.commons.org.Label
+	119, // 68: api.v1alpha1.org.ListUsersByOrgIdResponse.UserDetails.mfa_info:type_name -> api.commons.org.MfaInfo
+	110, // 69: api.v1alpha1.org.ListUsersByRegionResponse.UserDetails.labels:type_name -> api.commons.org.Label
+	119, // 70: api.v1alpha1.org.ListUsersByRegionResponse.UserDetails.mfa_info:type_name -> api.commons.org.MfaInfo
+	105, // 71: api.v1alpha1.org.GetUserSessionDataResponse.User.region_sid_map:type_name -> api.v1alpha1.org.GetUserSessionDataResponse.User.RegionSidMapEntry
+	115, // 72: api.v1alpha1.org.GetUserSessionDataResponse.User.created:type_name -> google.protobuf.Timestamp
+	115, // 73: api.v1alpha1.org.GetUserSessionDataResponse.User.last_updated:type_name -> google.protobuf.Timestamp
+	120, // 74: api.v1alpha1.org.GetUserSessionDataResponse.User.connection_id:type_name -> google.protobuf.StringValue
+	109, // 75: api.v1alpha1.org.GetUserSessionDataResponse.User.time_zone_override:type_name -> api.commons.TimeZoneWrapper
+	108, // 76: api.v1alpha1.org.GetUserSessionDataResponse.User.default_application:type_name -> api.commons.OperatorApplications
+	115, // 77: api.v1alpha1.org.GetUserSessionDataResponse.User.mfa_timestamp:type_name -> google.protobuf.Timestamp
+	115, // 78: api.v1alpha1.org.GetUserSessionDataResponse.User.password_reset_date:type_name -> google.protobuf.Timestamp
+	104, // 79: api.v1alpha1.org.GetUserSessionDataResponse.User.RegionSidMapEntry.value:type_name -> api.v1alpha1.org.GetUserSessionDataResponse.User.RegionSids
+	107, // 80: api.v1alpha1.org.ListUsersAllowedIpsResponse.UserAllowedIpsMapEntry.value:type_name -> api.v1alpha1.org.ListUsersAllowedIpsResponse.AllowedIps
 	81,  // [81:81] is the sub-list for method output_type
 	81,  // [81:81] is the sub-list for method input_type
 	81,  // [81:81] is the sub-list for extension type_name
@@ -9562,30 +9467,6 @@ func file_api_v1alpha1_org_user_proto_init() {
 			}
 		}
 		file_api_v1alpha1_org_user_proto_msgTypes[84].Exporter = func(v any, i int) any {
-			switch v := v.(*VerifyTOTPCodeRequest); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_api_v1alpha1_org_user_proto_msgTypes[85].Exporter = func(v any, i int) any {
-			switch v := v.(*VerifyTOTPCodeResponse); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_api_v1alpha1_org_user_proto_msgTypes[86].Exporter = func(v any, i int) any {
 			switch v := v.(*AddGroupedUserIPRestrictionsRequest); i {
 			case 0:
 				return &v.state
@@ -9597,7 +9478,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 				return nil
 			}
 		}
-		file_api_v1alpha1_org_user_proto_msgTypes[87].Exporter = func(v any, i int) any {
+		file_api_v1alpha1_org_user_proto_msgTypes[85].Exporter = func(v any, i int) any {
 			switch v := v.(*AddGroupedUserIPRestrictionsResponse); i {
 			case 0:
 				return &v.state
@@ -9609,7 +9490,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 				return nil
 			}
 		}
-		file_api_v1alpha1_org_user_proto_msgTypes[88].Exporter = func(v any, i int) any {
+		file_api_v1alpha1_org_user_proto_msgTypes[86].Exporter = func(v any, i int) any {
 			switch v := v.(*RemoveGroupedUserIPRestrictionsRequest); i {
 			case 0:
 				return &v.state
@@ -9621,7 +9502,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 				return nil
 			}
 		}
-		file_api_v1alpha1_org_user_proto_msgTypes[89].Exporter = func(v any, i int) any {
+		file_api_v1alpha1_org_user_proto_msgTypes[87].Exporter = func(v any, i int) any {
 			switch v := v.(*RemoveGroupedUserIPRestrictionsResponse); i {
 			case 0:
 				return &v.state
@@ -9633,7 +9514,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 				return nil
 			}
 		}
-		file_api_v1alpha1_org_user_proto_msgTypes[90].Exporter = func(v any, i int) any {
+		file_api_v1alpha1_org_user_proto_msgTypes[88].Exporter = func(v any, i int) any {
 			switch v := v.(*ListUsersAllowedIpsRequest); i {
 			case 0:
 				return &v.state
@@ -9645,7 +9526,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 				return nil
 			}
 		}
-		file_api_v1alpha1_org_user_proto_msgTypes[91].Exporter = func(v any, i int) any {
+		file_api_v1alpha1_org_user_proto_msgTypes[89].Exporter = func(v any, i int) any {
 			switch v := v.(*ListUsersAllowedIpsResponse); i {
 			case 0:
 				return &v.state
@@ -9657,7 +9538,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 				return nil
 			}
 		}
-		file_api_v1alpha1_org_user_proto_msgTypes[92].Exporter = func(v any, i int) any {
+		file_api_v1alpha1_org_user_proto_msgTypes[90].Exporter = func(v any, i int) any {
 			switch v := v.(*GetMyUserResponse_HuntGroup); i {
 			case 0:
 				return &v.state
@@ -9669,7 +9550,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 				return nil
 			}
 		}
-		file_api_v1alpha1_org_user_proto_msgTypes[93].Exporter = func(v any, i int) any {
+		file_api_v1alpha1_org_user_proto_msgTypes[91].Exporter = func(v any, i int) any {
 			switch v := v.(*GetMyUserResponse_AgentProfileGroup); i {
 			case 0:
 				return &v.state
@@ -9681,7 +9562,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 				return nil
 			}
 		}
-		file_api_v1alpha1_org_user_proto_msgTypes[94].Exporter = func(v any, i int) any {
+		file_api_v1alpha1_org_user_proto_msgTypes[92].Exporter = func(v any, i int) any {
 			switch v := v.(*GetUserResponse_HuntGroup); i {
 			case 0:
 				return &v.state
@@ -9693,7 +9574,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 				return nil
 			}
 		}
-		file_api_v1alpha1_org_user_proto_msgTypes[95].Exporter = func(v any, i int) any {
+		file_api_v1alpha1_org_user_proto_msgTypes[93].Exporter = func(v any, i int) any {
 			switch v := v.(*GetUserResponse_AgentProfileGroup); i {
 			case 0:
 				return &v.state
@@ -9705,7 +9586,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 				return nil
 			}
 		}
-		file_api_v1alpha1_org_user_proto_msgTypes[96].Exporter = func(v any, i int) any {
+		file_api_v1alpha1_org_user_proto_msgTypes[94].Exporter = func(v any, i int) any {
 			switch v := v.(*GetUserByOrgIdResponse_HuntGroup); i {
 			case 0:
 				return &v.state
@@ -9717,7 +9598,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 				return nil
 			}
 		}
-		file_api_v1alpha1_org_user_proto_msgTypes[97].Exporter = func(v any, i int) any {
+		file_api_v1alpha1_org_user_proto_msgTypes[95].Exporter = func(v any, i int) any {
 			switch v := v.(*GetUserByOrgIdResponse_AgentProfileGroup); i {
 			case 0:
 				return &v.state
@@ -9729,7 +9610,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 				return nil
 			}
 		}
-		file_api_v1alpha1_org_user_proto_msgTypes[98].Exporter = func(v any, i int) any {
+		file_api_v1alpha1_org_user_proto_msgTypes[96].Exporter = func(v any, i int) any {
 			switch v := v.(*ListAgentsResponse_AgentDetails); i {
 			case 0:
 				return &v.state
@@ -9741,7 +9622,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 				return nil
 			}
 		}
-		file_api_v1alpha1_org_user_proto_msgTypes[99].Exporter = func(v any, i int) any {
+		file_api_v1alpha1_org_user_proto_msgTypes[97].Exporter = func(v any, i int) any {
 			switch v := v.(*ListAgentsResponse_AgentDetails_HuntGroup); i {
 			case 0:
 				return &v.state
@@ -9753,7 +9634,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 				return nil
 			}
 		}
-		file_api_v1alpha1_org_user_proto_msgTypes[100].Exporter = func(v any, i int) any {
+		file_api_v1alpha1_org_user_proto_msgTypes[98].Exporter = func(v any, i int) any {
 			switch v := v.(*ListAgentsResponse_AgentDetails_AgentProfileGroup); i {
 			case 0:
 				return &v.state
@@ -9765,7 +9646,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 				return nil
 			}
 		}
-		file_api_v1alpha1_org_user_proto_msgTypes[101].Exporter = func(v any, i int) any {
+		file_api_v1alpha1_org_user_proto_msgTypes[99].Exporter = func(v any, i int) any {
 			switch v := v.(*ListPublicUsersResponse_User); i {
 			case 0:
 				return &v.state
@@ -9777,7 +9658,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 				return nil
 			}
 		}
-		file_api_v1alpha1_org_user_proto_msgTypes[102].Exporter = func(v any, i int) any {
+		file_api_v1alpha1_org_user_proto_msgTypes[100].Exporter = func(v any, i int) any {
 			switch v := v.(*ListUsersResponse_UserDetails); i {
 			case 0:
 				return &v.state
@@ -9789,7 +9670,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 				return nil
 			}
 		}
-		file_api_v1alpha1_org_user_proto_msgTypes[103].Exporter = func(v any, i int) any {
+		file_api_v1alpha1_org_user_proto_msgTypes[101].Exporter = func(v any, i int) any {
 			switch v := v.(*ListUsersByOrgIdResponse_UserDetails); i {
 			case 0:
 				return &v.state
@@ -9801,7 +9682,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 				return nil
 			}
 		}
-		file_api_v1alpha1_org_user_proto_msgTypes[104].Exporter = func(v any, i int) any {
+		file_api_v1alpha1_org_user_proto_msgTypes[102].Exporter = func(v any, i int) any {
 			switch v := v.(*ListUsersByRegionResponse_UserDetails); i {
 			case 0:
 				return &v.state
@@ -9813,7 +9694,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 				return nil
 			}
 		}
-		file_api_v1alpha1_org_user_proto_msgTypes[105].Exporter = func(v any, i int) any {
+		file_api_v1alpha1_org_user_proto_msgTypes[103].Exporter = func(v any, i int) any {
 			switch v := v.(*GetUserSessionDataResponse_User); i {
 			case 0:
 				return &v.state
@@ -9825,7 +9706,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 				return nil
 			}
 		}
-		file_api_v1alpha1_org_user_proto_msgTypes[106].Exporter = func(v any, i int) any {
+		file_api_v1alpha1_org_user_proto_msgTypes[104].Exporter = func(v any, i int) any {
 			switch v := v.(*GetUserSessionDataResponse_User_RegionSids); i {
 			case 0:
 				return &v.state
@@ -9837,7 +9718,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 				return nil
 			}
 		}
-		file_api_v1alpha1_org_user_proto_msgTypes[109].Exporter = func(v any, i int) any {
+		file_api_v1alpha1_org_user_proto_msgTypes[107].Exporter = func(v any, i int) any {
 			switch v := v.(*ListUsersAllowedIpsResponse_AllowedIps); i {
 			case 0:
 				return &v.state
@@ -9856,7 +9737,7 @@ func file_api_v1alpha1_org_user_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_v1alpha1_org_user_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   110,
+			NumMessages:   108,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
