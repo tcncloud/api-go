@@ -241,6 +241,9 @@ const (
 	Org_VerifyTOTPCode_FullMethodName                           = "/api.v1alpha1.org.Org/VerifyTOTPCode"
 	Org_CreateBusinessHours_FullMethodName                      = "/api.v1alpha1.org.Org/CreateBusinessHours"
 	Org_UpdateBusinessHours_FullMethodName                      = "/api.v1alpha1.org.Org/UpdateBusinessHours"
+	Org_CreateCertificateInfo_FullMethodName                    = "/api.v1alpha1.org.Org/CreateCertificateInfo"
+	Org_DeleteCertificateInfo_FullMethodName                    = "/api.v1alpha1.org.Org/DeleteCertificateInfo"
+	Org_ListCertificateInfo_FullMethodName                      = "/api.v1alpha1.org.Org/ListCertificateInfo"
 	Org_AddGroupedUserIPRestrictions_FullMethodName             = "/api.v1alpha1.org.Org/AddGroupedUserIPRestrictions"
 	Org_RemoveGroupedUserIPRestrictions_FullMethodName          = "/api.v1alpha1.org.Org/RemoveGroupedUserIPRestrictions"
 	Org_ListUsersAllowedIps_FullMethodName                      = "/api.v1alpha1.org.Org/ListUsersAllowedIps"
@@ -772,6 +775,13 @@ type OrgClient interface {
 	// Deprecated: Do not use.
 	// UpdateBusinessHours persists changes to times businesses are available.
 	UpdateBusinessHours(ctx context.Context, in *UpdateBusinessHoursRequest, opts ...grpc.CallOption) (*UpdateBusinessHoursResponse, error)
+	// CreateCertificateInfo creates a new TLS certificate and
+	// returns the certificate info for the current organization.
+	CreateCertificateInfo(ctx context.Context, in *CreateCertificateInfoRequest, opts ...grpc.CallOption) (*CreateCertificateInfoResponse, error)
+	// DeleteCertificateInfo deletes a certificate info for the current organization.
+	DeleteCertificateInfo(ctx context.Context, in *DeleteCertificateInfoRequest, opts ...grpc.CallOption) (*DeleteCertificateInfoResponse, error)
+	// ListCertificateInfo returns a list of certificate info for the current organization.
+	ListCertificateInfo(ctx context.Context, in *ListCertificateInfoRequest, opts ...grpc.CallOption) (*ListCertificateInfoResponse, error)
 	// AddGroupedUserIPRestrictions adds a user or list of user's IPs they
 	// are required to authenticate with
 	AddGroupedUserIPRestrictions(ctx context.Context, in *AddGroupedUserIPRestrictionsRequest, opts ...grpc.CallOption) (*AddGroupedUserIPRestrictionsResponse, error)
@@ -3258,6 +3268,36 @@ func (c *orgClient) UpdateBusinessHours(ctx context.Context, in *UpdateBusinessH
 	return out, nil
 }
 
+func (c *orgClient) CreateCertificateInfo(ctx context.Context, in *CreateCertificateInfoRequest, opts ...grpc.CallOption) (*CreateCertificateInfoResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateCertificateInfoResponse)
+	err := c.cc.Invoke(ctx, Org_CreateCertificateInfo_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) DeleteCertificateInfo(ctx context.Context, in *DeleteCertificateInfoRequest, opts ...grpc.CallOption) (*DeleteCertificateInfoResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteCertificateInfoResponse)
+	err := c.cc.Invoke(ctx, Org_DeleteCertificateInfo_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orgClient) ListCertificateInfo(ctx context.Context, in *ListCertificateInfoRequest, opts ...grpc.CallOption) (*ListCertificateInfoResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListCertificateInfoResponse)
+	err := c.cc.Invoke(ctx, Org_ListCertificateInfo_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *orgClient) AddGroupedUserIPRestrictions(ctx context.Context, in *AddGroupedUserIPRestrictionsRequest, opts ...grpc.CallOption) (*AddGroupedUserIPRestrictionsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(AddGroupedUserIPRestrictionsResponse)
@@ -3859,6 +3899,13 @@ type OrgServer interface {
 	// Deprecated: Do not use.
 	// UpdateBusinessHours persists changes to times businesses are available.
 	UpdateBusinessHours(context.Context, *UpdateBusinessHoursRequest) (*UpdateBusinessHoursResponse, error)
+	// CreateCertificateInfo creates a new TLS certificate and
+	// returns the certificate info for the current organization.
+	CreateCertificateInfo(context.Context, *CreateCertificateInfoRequest) (*CreateCertificateInfoResponse, error)
+	// DeleteCertificateInfo deletes a certificate info for the current organization.
+	DeleteCertificateInfo(context.Context, *DeleteCertificateInfoRequest) (*DeleteCertificateInfoResponse, error)
+	// ListCertificateInfo returns a list of certificate info for the current organization.
+	ListCertificateInfo(context.Context, *ListCertificateInfoRequest) (*ListCertificateInfoResponse, error)
 	// AddGroupedUserIPRestrictions adds a user or list of user's IPs they
 	// are required to authenticate with
 	AddGroupedUserIPRestrictions(context.Context, *AddGroupedUserIPRestrictionsRequest) (*AddGroupedUserIPRestrictionsResponse, error)
@@ -4544,6 +4591,15 @@ func (UnimplementedOrgServer) CreateBusinessHours(context.Context, *CreateBusine
 }
 func (UnimplementedOrgServer) UpdateBusinessHours(context.Context, *UpdateBusinessHoursRequest) (*UpdateBusinessHoursResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateBusinessHours not implemented")
+}
+func (UnimplementedOrgServer) CreateCertificateInfo(context.Context, *CreateCertificateInfoRequest) (*CreateCertificateInfoResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateCertificateInfo not implemented")
+}
+func (UnimplementedOrgServer) DeleteCertificateInfo(context.Context, *DeleteCertificateInfoRequest) (*DeleteCertificateInfoResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteCertificateInfo not implemented")
+}
+func (UnimplementedOrgServer) ListCertificateInfo(context.Context, *ListCertificateInfoRequest) (*ListCertificateInfoResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListCertificateInfo not implemented")
 }
 func (UnimplementedOrgServer) AddGroupedUserIPRestrictions(context.Context, *AddGroupedUserIPRestrictionsRequest) (*AddGroupedUserIPRestrictionsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddGroupedUserIPRestrictions not implemented")
@@ -8608,6 +8664,60 @@ func _Org_UpdateBusinessHours_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Org_CreateCertificateInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateCertificateInfoRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).CreateCertificateInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_CreateCertificateInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).CreateCertificateInfo(ctx, req.(*CreateCertificateInfoRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_DeleteCertificateInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteCertificateInfoRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).DeleteCertificateInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_DeleteCertificateInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).DeleteCertificateInfo(ctx, req.(*DeleteCertificateInfoRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Org_ListCertificateInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListCertificateInfoRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).ListCertificateInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_ListCertificateInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).ListCertificateInfo(ctx, req.(*ListCertificateInfoRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Org_AddGroupedUserIPRestrictions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AddGroupedUserIPRestrictionsRequest)
 	if err := dec(in); err != nil {
@@ -9606,6 +9716,18 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateBusinessHours",
 			Handler:    _Org_UpdateBusinessHours_Handler,
+		},
+		{
+			MethodName: "CreateCertificateInfo",
+			Handler:    _Org_CreateCertificateInfo_Handler,
+		},
+		{
+			MethodName: "DeleteCertificateInfo",
+			Handler:    _Org_DeleteCertificateInfo_Handler,
+		},
+		{
+			MethodName: "ListCertificateInfo",
+			Handler:    _Org_ListCertificateInfo_Handler,
 		},
 		{
 			MethodName: "AddGroupedUserIPRestrictions",

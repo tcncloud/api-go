@@ -49,6 +49,7 @@ const (
 	Integrations_HangUpEpicPatientCall_FullMethodName               = "/api.v1alpha1.integrations.Integrations/HangUpEpicPatientCall"
 	Integrations_GenerateEpicKeyPairs_FullMethodName                = "/api.v1alpha1.integrations.Integrations/GenerateEpicKeyPairs"
 	Integrations_PopulateIntegrationLink_FullMethodName             = "/api.v1alpha1.integrations.Integrations/PopulateIntegrationLink"
+	Integrations_ProcessWorkflow_FullMethodName                     = "/api.v1alpha1.integrations.Integrations/ProcessWorkflow"
 )
 
 // IntegrationsClient is the client API for Integrations service.
@@ -114,6 +115,7 @@ type IntegrationsClient interface {
 	// GenerateEpicKeyPairs creates 2 key pairs, stores the private keys, and returns the public keys
 	GenerateEpicKeyPairs(ctx context.Context, in *GenerateEpicKeyPairReq, opts ...grpc.CallOption) (*GenerateEpicKeyPairRes, error)
 	PopulateIntegrationLink(ctx context.Context, in *PopulateIntegrationLinkReq, opts ...grpc.CallOption) (*PopulateIntegrationLinkRes, error)
+	ProcessWorkflow(ctx context.Context, in *ProcessWorkflowReq, opts ...grpc.CallOption) (*ProcessWorkflowRes, error)
 }
 
 type integrationsClient struct {
@@ -424,6 +426,16 @@ func (c *integrationsClient) PopulateIntegrationLink(ctx context.Context, in *Po
 	return out, nil
 }
 
+func (c *integrationsClient) ProcessWorkflow(ctx context.Context, in *ProcessWorkflowReq, opts ...grpc.CallOption) (*ProcessWorkflowRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ProcessWorkflowRes)
+	err := c.cc.Invoke(ctx, Integrations_ProcessWorkflow_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // IntegrationsServer is the server API for Integrations service.
 // All implementations must embed UnimplementedIntegrationsServer
 // for forward compatibility
@@ -487,6 +499,7 @@ type IntegrationsServer interface {
 	// GenerateEpicKeyPairs creates 2 key pairs, stores the private keys, and returns the public keys
 	GenerateEpicKeyPairs(context.Context, *GenerateEpicKeyPairReq) (*GenerateEpicKeyPairRes, error)
 	PopulateIntegrationLink(context.Context, *PopulateIntegrationLinkReq) (*PopulateIntegrationLinkRes, error)
+	ProcessWorkflow(context.Context, *ProcessWorkflowReq) (*ProcessWorkflowRes, error)
 	mustEmbedUnimplementedIntegrationsServer()
 }
 
@@ -583,6 +596,9 @@ func (UnimplementedIntegrationsServer) GenerateEpicKeyPairs(context.Context, *Ge
 }
 func (UnimplementedIntegrationsServer) PopulateIntegrationLink(context.Context, *PopulateIntegrationLinkReq) (*PopulateIntegrationLinkRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PopulateIntegrationLink not implemented")
+}
+func (UnimplementedIntegrationsServer) ProcessWorkflow(context.Context, *ProcessWorkflowReq) (*ProcessWorkflowRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ProcessWorkflow not implemented")
 }
 func (UnimplementedIntegrationsServer) mustEmbedUnimplementedIntegrationsServer() {}
 
@@ -1137,6 +1153,24 @@ func _Integrations_PopulateIntegrationLink_Handler(srv interface{}, ctx context.
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Integrations_ProcessWorkflow_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProcessWorkflowReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IntegrationsServer).ProcessWorkflow(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Integrations_ProcessWorkflow_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IntegrationsServer).ProcessWorkflow(ctx, req.(*ProcessWorkflowReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Integrations_ServiceDesc is the grpc.ServiceDesc for Integrations service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1263,6 +1297,10 @@ var Integrations_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "PopulateIntegrationLink",
 			Handler:    _Integrations_PopulateIntegrationLink_Handler,
+		},
+		{
+			MethodName: "ProcessWorkflow",
+			Handler:    _Integrations_ProcessWorkflow_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

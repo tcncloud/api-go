@@ -121,6 +121,9 @@ const (
 	// IntegrationsPopulateIntegrationLinkProcedure is the fully-qualified name of the Integrations's
 	// PopulateIntegrationLink RPC.
 	IntegrationsPopulateIntegrationLinkProcedure = "/api.v1alpha1.integrations.Integrations/PopulateIntegrationLink"
+	// IntegrationsProcessWorkflowProcedure is the fully-qualified name of the Integrations's
+	// ProcessWorkflow RPC.
+	IntegrationsProcessWorkflowProcedure = "/api.v1alpha1.integrations.Integrations/ProcessWorkflow"
 )
 
 // IntegrationsClient is a client for the api.v1alpha1.integrations.Integrations service.
@@ -184,6 +187,7 @@ type IntegrationsClient interface {
 	// GenerateEpicKeyPairs creates 2 key pairs, stores the private keys, and returns the public keys
 	GenerateEpicKeyPairs(context.Context, *connect_go.Request[integrations.GenerateEpicKeyPairReq]) (*connect_go.Response[integrations.GenerateEpicKeyPairRes], error)
 	PopulateIntegrationLink(context.Context, *connect_go.Request[integrations.PopulateIntegrationLinkReq]) (*connect_go.Response[integrations.PopulateIntegrationLinkRes], error)
+	ProcessWorkflow(context.Context, *connect_go.Request[integrations.ProcessWorkflowReq]) (*connect_go.Response[integrations.ProcessWorkflowRes], error)
 }
 
 // NewIntegrationsClient constructs a client for the api.v1alpha1.integrations.Integrations service.
@@ -346,6 +350,11 @@ func NewIntegrationsClient(httpClient connect_go.HTTPClient, baseURL string, opt
 			baseURL+IntegrationsPopulateIntegrationLinkProcedure,
 			opts...,
 		),
+		processWorkflow: connect_go.NewClient[integrations.ProcessWorkflowReq, integrations.ProcessWorkflowRes](
+			httpClient,
+			baseURL+IntegrationsProcessWorkflowProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -381,6 +390,7 @@ type integrationsClient struct {
 	hangUpEpicPatientCall               *connect_go.Client[integrations.HangUpEpicPatientCallReq, integrations.Empty]
 	generateEpicKeyPairs                *connect_go.Client[integrations.GenerateEpicKeyPairReq, integrations.GenerateEpicKeyPairRes]
 	populateIntegrationLink             *connect_go.Client[integrations.PopulateIntegrationLinkReq, integrations.PopulateIntegrationLinkRes]
+	processWorkflow                     *connect_go.Client[integrations.ProcessWorkflowReq, integrations.ProcessWorkflowRes]
 }
 
 // Process calls api.v1alpha1.integrations.Integrations.Process.
@@ -537,6 +547,11 @@ func (c *integrationsClient) PopulateIntegrationLink(ctx context.Context, req *c
 	return c.populateIntegrationLink.CallUnary(ctx, req)
 }
 
+// ProcessWorkflow calls api.v1alpha1.integrations.Integrations.ProcessWorkflow.
+func (c *integrationsClient) ProcessWorkflow(ctx context.Context, req *connect_go.Request[integrations.ProcessWorkflowReq]) (*connect_go.Response[integrations.ProcessWorkflowRes], error) {
+	return c.processWorkflow.CallUnary(ctx, req)
+}
+
 // IntegrationsHandler is an implementation of the api.v1alpha1.integrations.Integrations service.
 type IntegrationsHandler interface {
 	// combine rquest parameters with the config parameters and run the integration method
@@ -598,6 +613,7 @@ type IntegrationsHandler interface {
 	// GenerateEpicKeyPairs creates 2 key pairs, stores the private keys, and returns the public keys
 	GenerateEpicKeyPairs(context.Context, *connect_go.Request[integrations.GenerateEpicKeyPairReq]) (*connect_go.Response[integrations.GenerateEpicKeyPairRes], error)
 	PopulateIntegrationLink(context.Context, *connect_go.Request[integrations.PopulateIntegrationLinkReq]) (*connect_go.Response[integrations.PopulateIntegrationLinkRes], error)
+	ProcessWorkflow(context.Context, *connect_go.Request[integrations.ProcessWorkflowReq]) (*connect_go.Response[integrations.ProcessWorkflowRes], error)
 }
 
 // NewIntegrationsHandler builds an HTTP handler from the service implementation. It returns the
@@ -756,6 +772,11 @@ func NewIntegrationsHandler(svc IntegrationsHandler, opts ...connect_go.HandlerO
 		svc.PopulateIntegrationLink,
 		opts...,
 	)
+	integrationsProcessWorkflowHandler := connect_go.NewUnaryHandler(
+		IntegrationsProcessWorkflowProcedure,
+		svc.ProcessWorkflow,
+		opts...,
+	)
 	return "/api.v1alpha1.integrations.Integrations/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case IntegrationsProcessProcedure:
@@ -818,6 +839,8 @@ func NewIntegrationsHandler(svc IntegrationsHandler, opts ...connect_go.HandlerO
 			integrationsGenerateEpicKeyPairsHandler.ServeHTTP(w, r)
 		case IntegrationsPopulateIntegrationLinkProcedure:
 			integrationsPopulateIntegrationLinkHandler.ServeHTTP(w, r)
+		case IntegrationsProcessWorkflowProcedure:
+			integrationsProcessWorkflowHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -945,4 +968,8 @@ func (UnimplementedIntegrationsHandler) GenerateEpicKeyPairs(context.Context, *c
 
 func (UnimplementedIntegrationsHandler) PopulateIntegrationLink(context.Context, *connect_go.Request[integrations.PopulateIntegrationLinkReq]) (*connect_go.Response[integrations.PopulateIntegrationLinkRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.integrations.Integrations.PopulateIntegrationLink is not implemented"))
+}
+
+func (UnimplementedIntegrationsHandler) ProcessWorkflow(context.Context, *connect_go.Request[integrations.ProcessWorkflowReq]) (*connect_go.Response[integrations.ProcessWorkflowRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.integrations.Integrations.ProcessWorkflow is not implemented"))
 }

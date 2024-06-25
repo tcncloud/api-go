@@ -615,6 +615,14 @@ const (
 	OrgCreateBusinessHoursProcedure = "/api.v1alpha1.org.Org/CreateBusinessHours"
 	// OrgUpdateBusinessHoursProcedure is the fully-qualified name of the Org's UpdateBusinessHours RPC.
 	OrgUpdateBusinessHoursProcedure = "/api.v1alpha1.org.Org/UpdateBusinessHours"
+	// OrgCreateCertificateInfoProcedure is the fully-qualified name of the Org's CreateCertificateInfo
+	// RPC.
+	OrgCreateCertificateInfoProcedure = "/api.v1alpha1.org.Org/CreateCertificateInfo"
+	// OrgDeleteCertificateInfoProcedure is the fully-qualified name of the Org's DeleteCertificateInfo
+	// RPC.
+	OrgDeleteCertificateInfoProcedure = "/api.v1alpha1.org.Org/DeleteCertificateInfo"
+	// OrgListCertificateInfoProcedure is the fully-qualified name of the Org's ListCertificateInfo RPC.
+	OrgListCertificateInfoProcedure = "/api.v1alpha1.org.Org/ListCertificateInfo"
 	// OrgAddGroupedUserIPRestrictionsProcedure is the fully-qualified name of the Org's
 	// AddGroupedUserIPRestrictions RPC.
 	OrgAddGroupedUserIPRestrictionsProcedure = "/api.v1alpha1.org.Org/AddGroupedUserIPRestrictions"
@@ -1172,6 +1180,13 @@ type OrgClient interface {
 	//
 	// Deprecated: do not use.
 	UpdateBusinessHours(context.Context, *connect_go.Request[org.UpdateBusinessHoursRequest]) (*connect_go.Response[org.UpdateBusinessHoursResponse], error)
+	// CreateCertificateInfo creates a new TLS certificate and
+	// returns the certificate info for the current organization.
+	CreateCertificateInfo(context.Context, *connect_go.Request[org.CreateCertificateInfoRequest]) (*connect_go.Response[org.CreateCertificateInfoResponse], error)
+	// DeleteCertificateInfo deletes a certificate info for the current organization.
+	DeleteCertificateInfo(context.Context, *connect_go.Request[org.DeleteCertificateInfoRequest]) (*connect_go.Response[org.DeleteCertificateInfoResponse], error)
+	// ListCertificateInfo returns a list of certificate info for the current organization.
+	ListCertificateInfo(context.Context, *connect_go.Request[org.ListCertificateInfoRequest]) (*connect_go.Response[org.ListCertificateInfoResponse], error)
 	// AddGroupedUserIPRestrictions adds a user or list of user's IPs they
 	// are required to authenticate with
 	AddGroupedUserIPRestrictions(context.Context, *connect_go.Request[org.AddGroupedUserIPRestrictionsRequest]) (*connect_go.Response[org.AddGroupedUserIPRestrictionsResponse], error)
@@ -2307,6 +2322,21 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgUpdateBusinessHoursProcedure,
 			opts...,
 		),
+		createCertificateInfo: connect_go.NewClient[org.CreateCertificateInfoRequest, org.CreateCertificateInfoResponse](
+			httpClient,
+			baseURL+OrgCreateCertificateInfoProcedure,
+			opts...,
+		),
+		deleteCertificateInfo: connect_go.NewClient[org.DeleteCertificateInfoRequest, org.DeleteCertificateInfoResponse](
+			httpClient,
+			baseURL+OrgDeleteCertificateInfoProcedure,
+			opts...,
+		),
+		listCertificateInfo: connect_go.NewClient[org.ListCertificateInfoRequest, org.ListCertificateInfoResponse](
+			httpClient,
+			baseURL+OrgListCertificateInfoProcedure,
+			opts...,
+		),
 		addGroupedUserIPRestrictions: connect_go.NewClient[org.AddGroupedUserIPRestrictionsRequest, org.AddGroupedUserIPRestrictionsResponse](
 			httpClient,
 			baseURL+OrgAddGroupedUserIPRestrictionsProcedure,
@@ -2574,6 +2604,9 @@ type orgClient struct {
 	verifyTOTPCode                           *connect_go.Client[org.VerifyTOTPCodeRequest, org.VerifyTOTPCodeResponse]
 	createBusinessHours                      *connect_go.Client[org.CreateBusinessHoursRequest, org.CreateBusinessHoursResponse]
 	updateBusinessHours                      *connect_go.Client[org.UpdateBusinessHoursRequest, org.UpdateBusinessHoursResponse]
+	createCertificateInfo                    *connect_go.Client[org.CreateCertificateInfoRequest, org.CreateCertificateInfoResponse]
+	deleteCertificateInfo                    *connect_go.Client[org.DeleteCertificateInfoRequest, org.DeleteCertificateInfoResponse]
+	listCertificateInfo                      *connect_go.Client[org.ListCertificateInfoRequest, org.ListCertificateInfoResponse]
 	addGroupedUserIPRestrictions             *connect_go.Client[org.AddGroupedUserIPRestrictionsRequest, org.AddGroupedUserIPRestrictionsResponse]
 	removeGroupedUserIPRestrictions          *connect_go.Client[org.RemoveGroupedUserIPRestrictionsRequest, org.RemoveGroupedUserIPRestrictionsResponse]
 	listUsersAllowedIps                      *connect_go.Client[org.ListUsersAllowedIpsRequest, org.ListUsersAllowedIpsResponse]
@@ -3732,6 +3765,21 @@ func (c *orgClient) UpdateBusinessHours(ctx context.Context, req *connect_go.Req
 	return c.updateBusinessHours.CallUnary(ctx, req)
 }
 
+// CreateCertificateInfo calls api.v1alpha1.org.Org.CreateCertificateInfo.
+func (c *orgClient) CreateCertificateInfo(ctx context.Context, req *connect_go.Request[org.CreateCertificateInfoRequest]) (*connect_go.Response[org.CreateCertificateInfoResponse], error) {
+	return c.createCertificateInfo.CallUnary(ctx, req)
+}
+
+// DeleteCertificateInfo calls api.v1alpha1.org.Org.DeleteCertificateInfo.
+func (c *orgClient) DeleteCertificateInfo(ctx context.Context, req *connect_go.Request[org.DeleteCertificateInfoRequest]) (*connect_go.Response[org.DeleteCertificateInfoResponse], error) {
+	return c.deleteCertificateInfo.CallUnary(ctx, req)
+}
+
+// ListCertificateInfo calls api.v1alpha1.org.Org.ListCertificateInfo.
+func (c *orgClient) ListCertificateInfo(ctx context.Context, req *connect_go.Request[org.ListCertificateInfoRequest]) (*connect_go.Response[org.ListCertificateInfoResponse], error) {
+	return c.listCertificateInfo.CallUnary(ctx, req)
+}
+
 // AddGroupedUserIPRestrictions calls api.v1alpha1.org.Org.AddGroupedUserIPRestrictions.
 func (c *orgClient) AddGroupedUserIPRestrictions(ctx context.Context, req *connect_go.Request[org.AddGroupedUserIPRestrictionsRequest]) (*connect_go.Response[org.AddGroupedUserIPRestrictionsResponse], error) {
 	return c.addGroupedUserIPRestrictions.CallUnary(ctx, req)
@@ -4304,6 +4352,13 @@ type OrgHandler interface {
 	//
 	// Deprecated: do not use.
 	UpdateBusinessHours(context.Context, *connect_go.Request[org.UpdateBusinessHoursRequest]) (*connect_go.Response[org.UpdateBusinessHoursResponse], error)
+	// CreateCertificateInfo creates a new TLS certificate and
+	// returns the certificate info for the current organization.
+	CreateCertificateInfo(context.Context, *connect_go.Request[org.CreateCertificateInfoRequest]) (*connect_go.Response[org.CreateCertificateInfoResponse], error)
+	// DeleteCertificateInfo deletes a certificate info for the current organization.
+	DeleteCertificateInfo(context.Context, *connect_go.Request[org.DeleteCertificateInfoRequest]) (*connect_go.Response[org.DeleteCertificateInfoResponse], error)
+	// ListCertificateInfo returns a list of certificate info for the current organization.
+	ListCertificateInfo(context.Context, *connect_go.Request[org.ListCertificateInfoRequest]) (*connect_go.Response[org.ListCertificateInfoResponse], error)
 	// AddGroupedUserIPRestrictions adds a user or list of user's IPs they
 	// are required to authenticate with
 	AddGroupedUserIPRestrictions(context.Context, *connect_go.Request[org.AddGroupedUserIPRestrictionsRequest]) (*connect_go.Response[org.AddGroupedUserIPRestrictionsResponse], error)
@@ -5435,6 +5490,21 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.UpdateBusinessHours,
 		opts...,
 	)
+	orgCreateCertificateInfoHandler := connect_go.NewUnaryHandler(
+		OrgCreateCertificateInfoProcedure,
+		svc.CreateCertificateInfo,
+		opts...,
+	)
+	orgDeleteCertificateInfoHandler := connect_go.NewUnaryHandler(
+		OrgDeleteCertificateInfoProcedure,
+		svc.DeleteCertificateInfo,
+		opts...,
+	)
+	orgListCertificateInfoHandler := connect_go.NewUnaryHandler(
+		OrgListCertificateInfoProcedure,
+		svc.ListCertificateInfo,
+		opts...,
+	)
 	orgAddGroupedUserIPRestrictionsHandler := connect_go.NewUnaryHandler(
 		OrgAddGroupedUserIPRestrictionsProcedure,
 		svc.AddGroupedUserIPRestrictions,
@@ -5921,6 +5991,12 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 			orgCreateBusinessHoursHandler.ServeHTTP(w, r)
 		case OrgUpdateBusinessHoursProcedure:
 			orgUpdateBusinessHoursHandler.ServeHTTP(w, r)
+		case OrgCreateCertificateInfoProcedure:
+			orgCreateCertificateInfoHandler.ServeHTTP(w, r)
+		case OrgDeleteCertificateInfoProcedure:
+			orgDeleteCertificateInfoHandler.ServeHTTP(w, r)
+		case OrgListCertificateInfoProcedure:
+			orgListCertificateInfoHandler.ServeHTTP(w, r)
 		case OrgAddGroupedUserIPRestrictionsProcedure:
 			orgAddGroupedUserIPRestrictionsHandler.ServeHTTP(w, r)
 		case OrgRemoveGroupedUserIPRestrictionsProcedure:
@@ -6832,6 +6908,18 @@ func (UnimplementedOrgHandler) CreateBusinessHours(context.Context, *connect_go.
 
 func (UnimplementedOrgHandler) UpdateBusinessHours(context.Context, *connect_go.Request[org.UpdateBusinessHoursRequest]) (*connect_go.Response[org.UpdateBusinessHoursResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.UpdateBusinessHours is not implemented"))
+}
+
+func (UnimplementedOrgHandler) CreateCertificateInfo(context.Context, *connect_go.Request[org.CreateCertificateInfoRequest]) (*connect_go.Response[org.CreateCertificateInfoResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.CreateCertificateInfo is not implemented"))
+}
+
+func (UnimplementedOrgHandler) DeleteCertificateInfo(context.Context, *connect_go.Request[org.DeleteCertificateInfoRequest]) (*connect_go.Response[org.DeleteCertificateInfoResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.DeleteCertificateInfo is not implemented"))
+}
+
+func (UnimplementedOrgHandler) ListCertificateInfo(context.Context, *connect_go.Request[org.ListCertificateInfoRequest]) (*connect_go.Response[org.ListCertificateInfoResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.ListCertificateInfo is not implemented"))
 }
 
 func (UnimplementedOrgHandler) AddGroupedUserIPRestrictions(context.Context, *connect_go.Request[org.AddGroupedUserIPRestrictionsRequest]) (*connect_go.Response[org.AddGroupedUserIPRestrictionsResponse], error) {
