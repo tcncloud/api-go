@@ -25,7 +25,6 @@ const (
 	IntegrationsPublic_GetInvoice_FullMethodName         = "/api.v1alpha1.integrationspublic.IntegrationsPublic/GetInvoice"
 	IntegrationsPublic_SubmitPayment_FullMethodName      = "/api.v1alpha1.integrationspublic.IntegrationsPublic/SubmitPayment"
 	IntegrationsPublic_GetReceipt_FullMethodName         = "/api.v1alpha1.integrationspublic.IntegrationsPublic/GetReceipt"
-	IntegrationsPublic_ProcessWorkflow_FullMethodName    = "/api.v1alpha1.integrationspublic.IntegrationsPublic/ProcessWorkflow"
 )
 
 // IntegrationsPublicClient is the client API for IntegrationsPublic service.
@@ -38,7 +37,6 @@ type IntegrationsPublicClient interface {
 	GetInvoice(ctx context.Context, in *GetInvoiceReq, opts ...grpc.CallOption) (*GetInvoiceRes, error)
 	SubmitPayment(ctx context.Context, in *SubmitPaymentReq, opts ...grpc.CallOption) (*SubmitPaymentRes, error)
 	GetReceipt(ctx context.Context, in *GetReceiptReq, opts ...grpc.CallOption) (*GetReceiptRes, error)
-	ProcessWorkflow(ctx context.Context, in *ProcessWorkflowReq, opts ...grpc.CallOption) (*ProcessWorkflowRes, error)
 }
 
 type integrationsPublicClient struct {
@@ -109,16 +107,6 @@ func (c *integrationsPublicClient) GetReceipt(ctx context.Context, in *GetReceip
 	return out, nil
 }
 
-func (c *integrationsPublicClient) ProcessWorkflow(ctx context.Context, in *ProcessWorkflowReq, opts ...grpc.CallOption) (*ProcessWorkflowRes, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ProcessWorkflowRes)
-	err := c.cc.Invoke(ctx, IntegrationsPublic_ProcessWorkflow_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // IntegrationsPublicServer is the server API for IntegrationsPublic service.
 // All implementations must embed UnimplementedIntegrationsPublicServer
 // for forward compatibility
@@ -129,7 +117,6 @@ type IntegrationsPublicServer interface {
 	GetInvoice(context.Context, *GetInvoiceReq) (*GetInvoiceRes, error)
 	SubmitPayment(context.Context, *SubmitPaymentReq) (*SubmitPaymentRes, error)
 	GetReceipt(context.Context, *GetReceiptReq) (*GetReceiptRes, error)
-	ProcessWorkflow(context.Context, *ProcessWorkflowReq) (*ProcessWorkflowRes, error)
 	mustEmbedUnimplementedIntegrationsPublicServer()
 }
 
@@ -154,9 +141,6 @@ func (UnimplementedIntegrationsPublicServer) SubmitPayment(context.Context, *Sub
 }
 func (UnimplementedIntegrationsPublicServer) GetReceipt(context.Context, *GetReceiptReq) (*GetReceiptRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetReceipt not implemented")
-}
-func (UnimplementedIntegrationsPublicServer) ProcessWorkflow(context.Context, *ProcessWorkflowReq) (*ProcessWorkflowRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ProcessWorkflow not implemented")
 }
 func (UnimplementedIntegrationsPublicServer) mustEmbedUnimplementedIntegrationsPublicServer() {}
 
@@ -279,24 +263,6 @@ func _IntegrationsPublic_GetReceipt_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
-func _IntegrationsPublic_ProcessWorkflow_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ProcessWorkflowReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(IntegrationsPublicServer).ProcessWorkflow(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: IntegrationsPublic_ProcessWorkflow_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(IntegrationsPublicServer).ProcessWorkflow(ctx, req.(*ProcessWorkflowReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // IntegrationsPublic_ServiceDesc is the grpc.ServiceDesc for IntegrationsPublic service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -327,10 +293,6 @@ var IntegrationsPublic_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetReceipt",
 			Handler:    _IntegrationsPublic_GetReceipt_Handler,
-		},
-		{
-			MethodName: "ProcessWorkflow",
-			Handler:    _IntegrationsPublic_ProcessWorkflow_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
