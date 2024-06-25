@@ -96,6 +96,7 @@ const (
 	WFM_ListNonSkillActivities_FullMethodName                        = "/api.v1alpha1.wfm.WFM/ListNonSkillActivities"
 	WFM_ListNonSkillActivityAssociations_FullMethodName              = "/api.v1alpha1.wfm.WFM/ListNonSkillActivityAssociations"
 	WFM_ListCandidateSchedulingActivities_FullMethodName             = "/api.v1alpha1.wfm.WFM/ListCandidateSchedulingActivities"
+	WFM_GetOnCallSchedulingActivity_FullMethodName                   = "/api.v1alpha1.wfm.WFM/GetOnCallSchedulingActivity"
 	WFM_CreateAgentGroup_FullMethodName                              = "/api.v1alpha1.wfm.WFM/CreateAgentGroup"
 	WFM_ListAgentScheduleGroups_FullMethodName                       = "/api.v1alpha1.wfm.WFM/ListAgentScheduleGroups"
 	WFM_UpdateAgentGroup_FullMethodName                              = "/api.v1alpha1.wfm.WFM/UpdateAgentGroup"
@@ -688,6 +689,16 @@ type WFMClient interface {
 	//   - grpc.NotFound: @parent_of_rule doesn't exist
 	//   - grpc.Internal: error occurs when applying inheritance or getting the nodes from @parent_of_rule.
 	ListCandidateSchedulingActivities(ctx context.Context, in *ListCandidateSchedulingActivitiesReq, opts ...grpc.CallOption) (*ListCandidateSchedulingActivitiesRes, error)
+	// Gets the on call scheduling activity for the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//
+	//	-grpc.NotFound: the on call scheduling activity for the org is not found.
+	//	-grpc.Internal: error occurs when getting on call scheduling activity.
+	GetOnCallSchedulingActivity(ctx context.Context, in *GetOnCallSchedulingActivityReq, opts ...grpc.CallOption) (*GetOnCallSchedulingActivityRes, error)
 	// Creates an agent group with the provided parameters.
 	// A successful response should contain the @agent_group_sid of the newly created entity.
 	// The @schedule_scenario_sid must match the scenario of the @parent_entity.
@@ -2371,6 +2382,16 @@ func (c *wFMClient) ListCandidateSchedulingActivities(ctx context.Context, in *L
 	return out, nil
 }
 
+func (c *wFMClient) GetOnCallSchedulingActivity(ctx context.Context, in *GetOnCallSchedulingActivityReq, opts ...grpc.CallOption) (*GetOnCallSchedulingActivityRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetOnCallSchedulingActivityRes)
+	err := c.cc.Invoke(ctx, WFM_GetOnCallSchedulingActivity_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) CreateAgentGroup(ctx context.Context, in *CreateAgentGroupReq, opts ...grpc.CallOption) (*CreateAgentGroupRes, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(CreateAgentGroupRes)
@@ -3970,6 +3991,16 @@ type WFMServer interface {
 	//   - grpc.NotFound: @parent_of_rule doesn't exist
 	//   - grpc.Internal: error occurs when applying inheritance or getting the nodes from @parent_of_rule.
 	ListCandidateSchedulingActivities(context.Context, *ListCandidateSchedulingActivitiesReq) (*ListCandidateSchedulingActivitiesRes, error)
+	// Gets the on call scheduling activity for the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//
+	//	-grpc.NotFound: the on call scheduling activity for the org is not found.
+	//	-grpc.Internal: error occurs when getting on call scheduling activity.
+	GetOnCallSchedulingActivity(context.Context, *GetOnCallSchedulingActivityReq) (*GetOnCallSchedulingActivityRes, error)
 	// Creates an agent group with the provided parameters.
 	// A successful response should contain the @agent_group_sid of the newly created entity.
 	// The @schedule_scenario_sid must match the scenario of the @parent_entity.
@@ -5065,6 +5096,9 @@ func (UnimplementedWFMServer) ListNonSkillActivityAssociations(context.Context, 
 }
 func (UnimplementedWFMServer) ListCandidateSchedulingActivities(context.Context, *ListCandidateSchedulingActivitiesReq) (*ListCandidateSchedulingActivitiesRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListCandidateSchedulingActivities not implemented")
+}
+func (UnimplementedWFMServer) GetOnCallSchedulingActivity(context.Context, *GetOnCallSchedulingActivityReq) (*GetOnCallSchedulingActivityRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetOnCallSchedulingActivity not implemented")
 }
 func (UnimplementedWFMServer) CreateAgentGroup(context.Context, *CreateAgentGroupReq) (*CreateAgentGroupRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateAgentGroup not implemented")
@@ -6563,6 +6597,24 @@ func _WFM_ListCandidateSchedulingActivities_Handler(srv interface{}, ctx context
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WFMServer).ListCandidateSchedulingActivities(ctx, req.(*ListCandidateSchedulingActivitiesReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_GetOnCallSchedulingActivity_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetOnCallSchedulingActivityReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).GetOnCallSchedulingActivity(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_GetOnCallSchedulingActivity_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).GetOnCallSchedulingActivity(ctx, req.(*GetOnCallSchedulingActivityReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -8817,6 +8869,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListCandidateSchedulingActivities",
 			Handler:    _WFM_ListCandidateSchedulingActivities_Handler,
+		},
+		{
+			MethodName: "GetOnCallSchedulingActivity",
+			Handler:    _WFM_GetOnCallSchedulingActivity_Handler,
 		},
 		{
 			MethodName: "CreateAgentGroup",
