@@ -224,9 +224,6 @@ const (
 	// WFMListCandidateSchedulingActivitiesProcedure is the fully-qualified name of the WFM's
 	// ListCandidateSchedulingActivities RPC.
 	WFMListCandidateSchedulingActivitiesProcedure = "/api.v1alpha1.wfm.WFM/ListCandidateSchedulingActivities"
-	// WFMGetOnCallSchedulingActivityProcedure is the fully-qualified name of the WFM's
-	// GetOnCallSchedulingActivity RPC.
-	WFMGetOnCallSchedulingActivityProcedure = "/api.v1alpha1.wfm.WFM/GetOnCallSchedulingActivity"
 	// WFMCreateAgentGroupProcedure is the fully-qualified name of the WFM's CreateAgentGroup RPC.
 	WFMCreateAgentGroupProcedure = "/api.v1alpha1.wfm.WFM/CreateAgentGroup"
 	// WFMListAgentScheduleGroupsProcedure is the fully-qualified name of the WFM's
@@ -1014,16 +1011,6 @@ type WFMClient interface {
 	//   - grpc.NotFound: @parent_of_rule doesn't exist
 	//   - grpc.Internal: error occurs when applying inheritance or getting the nodes from @parent_of_rule.
 	ListCandidateSchedulingActivities(context.Context, *connect_go.Request[wfm.ListCandidateSchedulingActivitiesReq]) (*connect_go.Response[wfm.ListCandidateSchedulingActivitiesRes], error)
-	// Gets the on call scheduling activity for the org sending the request.
-	// Required permissions:
-	//
-	//	NONE
-	//
-	// Errors:
-	//
-	//	-grpc.NotFound: the on call scheduling activity for the org is not found.
-	//	-grpc.Internal: error occurs when getting on call scheduling activity.
-	GetOnCallSchedulingActivity(context.Context, *connect_go.Request[wfm.GetOnCallSchedulingActivityReq]) (*connect_go.Response[wfm.GetOnCallSchedulingActivityRes], error)
 	// Creates an agent group with the provided parameters.
 	// A successful response should contain the @agent_group_sid of the newly created entity.
 	// The @schedule_scenario_sid must match the scenario of the @parent_entity.
@@ -2252,11 +2239,6 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMListCandidateSchedulingActivitiesProcedure,
 			opts...,
 		),
-		getOnCallSchedulingActivity: connect_go.NewClient[wfm.GetOnCallSchedulingActivityReq, wfm.GetOnCallSchedulingActivityRes](
-			httpClient,
-			baseURL+WFMGetOnCallSchedulingActivityProcedure,
-			opts...,
-		),
 		createAgentGroup: connect_go.NewClient[wfm.CreateAgentGroupReq, wfm.CreateAgentGroupRes](
 			httpClient,
 			baseURL+WFMCreateAgentGroupProcedure,
@@ -2885,7 +2867,6 @@ type wFMClient struct {
 	listNonSkillActivities                        *connect_go.Client[wfm.ListNonSkillActivitiesReq, wfm.ListNonSkillActivitiesRes]
 	listNonSkillActivityAssociations              *connect_go.Client[wfm.ListNonSkillActivityAssociationsReq, wfm.ListNonSkillActivityAssociationsRes]
 	listCandidateSchedulingActivities             *connect_go.Client[wfm.ListCandidateSchedulingActivitiesReq, wfm.ListCandidateSchedulingActivitiesRes]
-	getOnCallSchedulingActivity                   *connect_go.Client[wfm.GetOnCallSchedulingActivityReq, wfm.GetOnCallSchedulingActivityRes]
 	createAgentGroup                              *connect_go.Client[wfm.CreateAgentGroupReq, wfm.CreateAgentGroupRes]
 	listAgentScheduleGroups                       *connect_go.Client[wfm.ListAgentScheduleGroupsRequest, wfm.ListAgentScheduleGroupsResponse]
 	updateAgentGroup                              *connect_go.Client[wfm.UpdateAgentGroupReq, wfm.UpdateAgentGroupRes]
@@ -3333,11 +3314,6 @@ func (c *wFMClient) ListNonSkillActivityAssociations(ctx context.Context, req *c
 // ListCandidateSchedulingActivities calls api.v1alpha1.wfm.WFM.ListCandidateSchedulingActivities.
 func (c *wFMClient) ListCandidateSchedulingActivities(ctx context.Context, req *connect_go.Request[wfm.ListCandidateSchedulingActivitiesReq]) (*connect_go.Response[wfm.ListCandidateSchedulingActivitiesRes], error) {
 	return c.listCandidateSchedulingActivities.CallUnary(ctx, req)
-}
-
-// GetOnCallSchedulingActivity calls api.v1alpha1.wfm.WFM.GetOnCallSchedulingActivity.
-func (c *wFMClient) GetOnCallSchedulingActivity(ctx context.Context, req *connect_go.Request[wfm.GetOnCallSchedulingActivityReq]) (*connect_go.Response[wfm.GetOnCallSchedulingActivityRes], error) {
-	return c.getOnCallSchedulingActivity.CallUnary(ctx, req)
 }
 
 // CreateAgentGroup calls api.v1alpha1.wfm.WFM.CreateAgentGroup.
@@ -4384,16 +4360,6 @@ type WFMHandler interface {
 	//   - grpc.NotFound: @parent_of_rule doesn't exist
 	//   - grpc.Internal: error occurs when applying inheritance or getting the nodes from @parent_of_rule.
 	ListCandidateSchedulingActivities(context.Context, *connect_go.Request[wfm.ListCandidateSchedulingActivitiesReq]) (*connect_go.Response[wfm.ListCandidateSchedulingActivitiesRes], error)
-	// Gets the on call scheduling activity for the org sending the request.
-	// Required permissions:
-	//
-	//	NONE
-	//
-	// Errors:
-	//
-	//	-grpc.NotFound: the on call scheduling activity for the org is not found.
-	//	-grpc.Internal: error occurs when getting on call scheduling activity.
-	GetOnCallSchedulingActivity(context.Context, *connect_go.Request[wfm.GetOnCallSchedulingActivityReq]) (*connect_go.Response[wfm.GetOnCallSchedulingActivityRes], error)
 	// Creates an agent group with the provided parameters.
 	// A successful response should contain the @agent_group_sid of the newly created entity.
 	// The @schedule_scenario_sid must match the scenario of the @parent_entity.
@@ -5618,11 +5584,6 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.ListCandidateSchedulingActivities,
 		opts...,
 	)
-	wFMGetOnCallSchedulingActivityHandler := connect_go.NewUnaryHandler(
-		WFMGetOnCallSchedulingActivityProcedure,
-		svc.GetOnCallSchedulingActivity,
-		opts...,
-	)
 	wFMCreateAgentGroupHandler := connect_go.NewUnaryHandler(
 		WFMCreateAgentGroupProcedure,
 		svc.CreateAgentGroup,
@@ -6311,8 +6272,6 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMListNonSkillActivityAssociationsHandler.ServeHTTP(w, r)
 		case WFMListCandidateSchedulingActivitiesProcedure:
 			wFMListCandidateSchedulingActivitiesHandler.ServeHTTP(w, r)
-		case WFMGetOnCallSchedulingActivityProcedure:
-			wFMGetOnCallSchedulingActivityHandler.ServeHTTP(w, r)
 		case WFMCreateAgentGroupProcedure:
 			wFMCreateAgentGroupHandler.ServeHTTP(w, r)
 		case WFMListAgentScheduleGroupsProcedure:
@@ -6796,10 +6755,6 @@ func (UnimplementedWFMHandler) ListNonSkillActivityAssociations(context.Context,
 
 func (UnimplementedWFMHandler) ListCandidateSchedulingActivities(context.Context, *connect_go.Request[wfm.ListCandidateSchedulingActivitiesReq]) (*connect_go.Response[wfm.ListCandidateSchedulingActivitiesRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListCandidateSchedulingActivities is not implemented"))
-}
-
-func (UnimplementedWFMHandler) GetOnCallSchedulingActivity(context.Context, *connect_go.Request[wfm.GetOnCallSchedulingActivityReq]) (*connect_go.Response[wfm.GetOnCallSchedulingActivityRes], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.GetOnCallSchedulingActivity is not implemented"))
 }
 
 func (UnimplementedWFMHandler) CreateAgentGroup(context.Context, *connect_go.Request[wfm.CreateAgentGroupReq]) (*connect_go.Response[wfm.CreateAgentGroupRes], error) {
