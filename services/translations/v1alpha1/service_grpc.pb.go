@@ -19,22 +19,73 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	TranslationsService_TranslateTemplate_FullMethodName = "/services.translations.v1alpha1.TranslationsService/TranslateTemplate"
+	TranslationsService_TranslateTemplate_FullMethodName      = "/services.translations.v1alpha1.TranslationsService/TranslateTemplate"
+	TranslationsService_ListTranslations_FullMethodName       = "/services.translations.v1alpha1.TranslationsService/ListTranslations"
+	TranslationsService_UpdateTranslation_FullMethodName      = "/services.translations.v1alpha1.TranslationsService/UpdateTranslation"
+	TranslationsService_TriggerLLMTranslation_FullMethodName  = "/services.translations.v1alpha1.TranslationsService/TriggerLLMTranslation"
+	TranslationsService_TriggerLLMTranslations_FullMethodName = "/services.translations.v1alpha1.TranslationsService/TriggerLLMTranslations"
+	TranslationsService_SetSystemMessage_FullMethodName       = "/services.translations.v1alpha1.TranslationsService/SetSystemMessage"
+	TranslationsService_GetSystemMessage_FullMethodName       = "/services.translations.v1alpha1.TranslationsService/GetSystemMessage"
+	TranslationsService_TestSystemMessage_FullMethodName      = "/services.translations.v1alpha1.TranslationsService/TestSystemMessage"
 )
 
 // TranslationsServiceClient is the client API for TranslationsService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type TranslationsServiceClient interface {
+	// Translate a template for a given context and language.
 	// Required permissions:
 	//
 	//	Any Authenticated User (TODO: Validate this assumption)
 	//
 	// Errors:
-	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.AlreadyExists : This template is already translated for the given context and language.
 	//   - grpc.InvalidArgument: The request is not valid.
 	TranslateTemplate(ctx context.Context, in *TranslateTemplateRequest, opts ...grpc.CallOption) (*TranslateTemplateResponse, error)
+	// Lists translations by context/language
+	// Required permissions:
+	//   - PERMISSION_CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is not valid.
+	//   - grpc.NotFound: No templates found for the given context and language.
+	ListTranslations(ctx context.Context, in *ListTranslationsRequest, opts ...grpc.CallOption) (*ListTranslationsResponse, error)
+	// Overrides the translation for a given translationID
+	// Required permissions:
+	//   - PERMISSION_CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is not valid.
+	UpdateTranslation(ctx context.Context, in *UpdateTranslationRequest, opts ...grpc.CallOption) (*UpdateTranslationResponse, error)
+	// Re-run the LLM translation for a given translationID
+	// Required permissions:
+	//   - PERMISSION_CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is not valid.
+	TriggerLLMTranslation(ctx context.Context, in *TriggerLLMTranslationRequest, opts ...grpc.CallOption) (*TriggerLLMTranslationResponse, error)
+	// re-run all translations for a given context (WARNING - this should be ran sparingly as it is a heavy operation and costs money)
+	// Required permissions:
+	//   - PERMISSION_CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is not valid.
+	TriggerLLMTranslations(ctx context.Context, in *TriggerLLMTranslationsRequest, opts ...grpc.CallOption) (*TriggerLLMTranslationsResponse, error)
+	// set/get context system message to give more tuned LLMs when translating for that context (WARNING - this overrides the previous system message for the context if exists)
+	// Required permissions:
+	//   - PERMISSION_CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is not valid.
+	SetSystemMessage(ctx context.Context, in *SetSystemMessageRequest, opts ...grpc.CallOption) (*SetSystemMessageResponse, error)
+	GetSystemMessage(ctx context.Context, in *GetSystemMessageRequest, opts ...grpc.CallOption) (*GetSystemMessageResponse, error)
+	// Gives a translation for a system message, template and language with no side effects (Used for testing system messages)
+	// Required permissions:
+	//   - PERMISSION_CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is not valid.
+	TestSystemMessage(ctx context.Context, in *TestSystemMessageRequest, opts ...grpc.CallOption) (*TestSystemMessageResponse, error)
 }
 
 type translationsServiceClient struct {
@@ -55,19 +106,133 @@ func (c *translationsServiceClient) TranslateTemplate(ctx context.Context, in *T
 	return out, nil
 }
 
+func (c *translationsServiceClient) ListTranslations(ctx context.Context, in *ListTranslationsRequest, opts ...grpc.CallOption) (*ListTranslationsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListTranslationsResponse)
+	err := c.cc.Invoke(ctx, TranslationsService_ListTranslations_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *translationsServiceClient) UpdateTranslation(ctx context.Context, in *UpdateTranslationRequest, opts ...grpc.CallOption) (*UpdateTranslationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateTranslationResponse)
+	err := c.cc.Invoke(ctx, TranslationsService_UpdateTranslation_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *translationsServiceClient) TriggerLLMTranslation(ctx context.Context, in *TriggerLLMTranslationRequest, opts ...grpc.CallOption) (*TriggerLLMTranslationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(TriggerLLMTranslationResponse)
+	err := c.cc.Invoke(ctx, TranslationsService_TriggerLLMTranslation_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *translationsServiceClient) TriggerLLMTranslations(ctx context.Context, in *TriggerLLMTranslationsRequest, opts ...grpc.CallOption) (*TriggerLLMTranslationsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(TriggerLLMTranslationsResponse)
+	err := c.cc.Invoke(ctx, TranslationsService_TriggerLLMTranslations_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *translationsServiceClient) SetSystemMessage(ctx context.Context, in *SetSystemMessageRequest, opts ...grpc.CallOption) (*SetSystemMessageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SetSystemMessageResponse)
+	err := c.cc.Invoke(ctx, TranslationsService_SetSystemMessage_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *translationsServiceClient) GetSystemMessage(ctx context.Context, in *GetSystemMessageRequest, opts ...grpc.CallOption) (*GetSystemMessageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetSystemMessageResponse)
+	err := c.cc.Invoke(ctx, TranslationsService_GetSystemMessage_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *translationsServiceClient) TestSystemMessage(ctx context.Context, in *TestSystemMessageRequest, opts ...grpc.CallOption) (*TestSystemMessageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(TestSystemMessageResponse)
+	err := c.cc.Invoke(ctx, TranslationsService_TestSystemMessage_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TranslationsServiceServer is the server API for TranslationsService service.
 // All implementations must embed UnimplementedTranslationsServiceServer
 // for forward compatibility
 type TranslationsServiceServer interface {
+	// Translate a template for a given context and language.
 	// Required permissions:
 	//
 	//	Any Authenticated User (TODO: Validate this assumption)
 	//
 	// Errors:
-	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.AlreadyExists : This template is already translated for the given context and language.
 	//   - grpc.InvalidArgument: The request is not valid.
 	TranslateTemplate(context.Context, *TranslateTemplateRequest) (*TranslateTemplateResponse, error)
+	// Lists translations by context/language
+	// Required permissions:
+	//   - PERMISSION_CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is not valid.
+	//   - grpc.NotFound: No templates found for the given context and language.
+	ListTranslations(context.Context, *ListTranslationsRequest) (*ListTranslationsResponse, error)
+	// Overrides the translation for a given translationID
+	// Required permissions:
+	//   - PERMISSION_CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is not valid.
+	UpdateTranslation(context.Context, *UpdateTranslationRequest) (*UpdateTranslationResponse, error)
+	// Re-run the LLM translation for a given translationID
+	// Required permissions:
+	//   - PERMISSION_CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is not valid.
+	TriggerLLMTranslation(context.Context, *TriggerLLMTranslationRequest) (*TriggerLLMTranslationResponse, error)
+	// re-run all translations for a given context (WARNING - this should be ran sparingly as it is a heavy operation and costs money)
+	// Required permissions:
+	//   - PERMISSION_CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is not valid.
+	TriggerLLMTranslations(context.Context, *TriggerLLMTranslationsRequest) (*TriggerLLMTranslationsResponse, error)
+	// set/get context system message to give more tuned LLMs when translating for that context (WARNING - this overrides the previous system message for the context if exists)
+	// Required permissions:
+	//   - PERMISSION_CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is not valid.
+	SetSystemMessage(context.Context, *SetSystemMessageRequest) (*SetSystemMessageResponse, error)
+	GetSystemMessage(context.Context, *GetSystemMessageRequest) (*GetSystemMessageResponse, error)
+	// Gives a translation for a system message, template and language with no side effects (Used for testing system messages)
+	// Required permissions:
+	//   - PERMISSION_CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is not valid.
+	TestSystemMessage(context.Context, *TestSystemMessageRequest) (*TestSystemMessageResponse, error)
 	mustEmbedUnimplementedTranslationsServiceServer()
 }
 
@@ -77,6 +242,27 @@ type UnimplementedTranslationsServiceServer struct {
 
 func (UnimplementedTranslationsServiceServer) TranslateTemplate(context.Context, *TranslateTemplateRequest) (*TranslateTemplateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TranslateTemplate not implemented")
+}
+func (UnimplementedTranslationsServiceServer) ListTranslations(context.Context, *ListTranslationsRequest) (*ListTranslationsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListTranslations not implemented")
+}
+func (UnimplementedTranslationsServiceServer) UpdateTranslation(context.Context, *UpdateTranslationRequest) (*UpdateTranslationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateTranslation not implemented")
+}
+func (UnimplementedTranslationsServiceServer) TriggerLLMTranslation(context.Context, *TriggerLLMTranslationRequest) (*TriggerLLMTranslationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TriggerLLMTranslation not implemented")
+}
+func (UnimplementedTranslationsServiceServer) TriggerLLMTranslations(context.Context, *TriggerLLMTranslationsRequest) (*TriggerLLMTranslationsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TriggerLLMTranslations not implemented")
+}
+func (UnimplementedTranslationsServiceServer) SetSystemMessage(context.Context, *SetSystemMessageRequest) (*SetSystemMessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetSystemMessage not implemented")
+}
+func (UnimplementedTranslationsServiceServer) GetSystemMessage(context.Context, *GetSystemMessageRequest) (*GetSystemMessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSystemMessage not implemented")
+}
+func (UnimplementedTranslationsServiceServer) TestSystemMessage(context.Context, *TestSystemMessageRequest) (*TestSystemMessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TestSystemMessage not implemented")
 }
 func (UnimplementedTranslationsServiceServer) mustEmbedUnimplementedTranslationsServiceServer() {}
 
@@ -109,6 +295,132 @@ func _TranslationsService_TranslateTemplate_Handler(srv interface{}, ctx context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _TranslationsService_ListTranslations_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListTranslationsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TranslationsServiceServer).ListTranslations(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TranslationsService_ListTranslations_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TranslationsServiceServer).ListTranslations(ctx, req.(*ListTranslationsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TranslationsService_UpdateTranslation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateTranslationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TranslationsServiceServer).UpdateTranslation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TranslationsService_UpdateTranslation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TranslationsServiceServer).UpdateTranslation(ctx, req.(*UpdateTranslationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TranslationsService_TriggerLLMTranslation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TriggerLLMTranslationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TranslationsServiceServer).TriggerLLMTranslation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TranslationsService_TriggerLLMTranslation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TranslationsServiceServer).TriggerLLMTranslation(ctx, req.(*TriggerLLMTranslationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TranslationsService_TriggerLLMTranslations_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TriggerLLMTranslationsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TranslationsServiceServer).TriggerLLMTranslations(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TranslationsService_TriggerLLMTranslations_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TranslationsServiceServer).TriggerLLMTranslations(ctx, req.(*TriggerLLMTranslationsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TranslationsService_SetSystemMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetSystemMessageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TranslationsServiceServer).SetSystemMessage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TranslationsService_SetSystemMessage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TranslationsServiceServer).SetSystemMessage(ctx, req.(*SetSystemMessageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TranslationsService_GetSystemMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetSystemMessageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TranslationsServiceServer).GetSystemMessage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TranslationsService_GetSystemMessage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TranslationsServiceServer).GetSystemMessage(ctx, req.(*GetSystemMessageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TranslationsService_TestSystemMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TestSystemMessageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TranslationsServiceServer).TestSystemMessage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TranslationsService_TestSystemMessage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TranslationsServiceServer).TestSystemMessage(ctx, req.(*TestSystemMessageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // TranslationsService_ServiceDesc is the grpc.ServiceDesc for TranslationsService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -119,6 +431,34 @@ var TranslationsService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "TranslateTemplate",
 			Handler:    _TranslationsService_TranslateTemplate_Handler,
+		},
+		{
+			MethodName: "ListTranslations",
+			Handler:    _TranslationsService_ListTranslations_Handler,
+		},
+		{
+			MethodName: "UpdateTranslation",
+			Handler:    _TranslationsService_UpdateTranslation_Handler,
+		},
+		{
+			MethodName: "TriggerLLMTranslation",
+			Handler:    _TranslationsService_TriggerLLMTranslation_Handler,
+		},
+		{
+			MethodName: "TriggerLLMTranslations",
+			Handler:    _TranslationsService_TriggerLLMTranslations_Handler,
+		},
+		{
+			MethodName: "SetSystemMessage",
+			Handler:    _TranslationsService_SetSystemMessage_Handler,
+		},
+		{
+			MethodName: "GetSystemMessage",
+			Handler:    _TranslationsService_GetSystemMessage_Handler,
+		},
+		{
+			MethodName: "TestSystemMessage",
+			Handler:    _TranslationsService_TestSystemMessage_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

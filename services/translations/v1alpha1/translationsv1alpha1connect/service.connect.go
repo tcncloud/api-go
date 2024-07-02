@@ -36,20 +36,85 @@ const (
 	// TranslationsServiceTranslateTemplateProcedure is the fully-qualified name of the
 	// TranslationsService's TranslateTemplate RPC.
 	TranslationsServiceTranslateTemplateProcedure = "/services.translations.v1alpha1.TranslationsService/TranslateTemplate"
+	// TranslationsServiceListTranslationsProcedure is the fully-qualified name of the
+	// TranslationsService's ListTranslations RPC.
+	TranslationsServiceListTranslationsProcedure = "/services.translations.v1alpha1.TranslationsService/ListTranslations"
+	// TranslationsServiceUpdateTranslationProcedure is the fully-qualified name of the
+	// TranslationsService's UpdateTranslation RPC.
+	TranslationsServiceUpdateTranslationProcedure = "/services.translations.v1alpha1.TranslationsService/UpdateTranslation"
+	// TranslationsServiceTriggerLLMTranslationProcedure is the fully-qualified name of the
+	// TranslationsService's TriggerLLMTranslation RPC.
+	TranslationsServiceTriggerLLMTranslationProcedure = "/services.translations.v1alpha1.TranslationsService/TriggerLLMTranslation"
+	// TranslationsServiceTriggerLLMTranslationsProcedure is the fully-qualified name of the
+	// TranslationsService's TriggerLLMTranslations RPC.
+	TranslationsServiceTriggerLLMTranslationsProcedure = "/services.translations.v1alpha1.TranslationsService/TriggerLLMTranslations"
+	// TranslationsServiceSetSystemMessageProcedure is the fully-qualified name of the
+	// TranslationsService's SetSystemMessage RPC.
+	TranslationsServiceSetSystemMessageProcedure = "/services.translations.v1alpha1.TranslationsService/SetSystemMessage"
+	// TranslationsServiceGetSystemMessageProcedure is the fully-qualified name of the
+	// TranslationsService's GetSystemMessage RPC.
+	TranslationsServiceGetSystemMessageProcedure = "/services.translations.v1alpha1.TranslationsService/GetSystemMessage"
+	// TranslationsServiceTestSystemMessageProcedure is the fully-qualified name of the
+	// TranslationsService's TestSystemMessage RPC.
+	TranslationsServiceTestSystemMessageProcedure = "/services.translations.v1alpha1.TranslationsService/TestSystemMessage"
 )
 
 // TranslationsServiceClient is a client for the services.translations.v1alpha1.TranslationsService
 // service.
 type TranslationsServiceClient interface {
+	// Translate a template for a given context and language.
 	// Required permissions:
 	//
 	//	Any Authenticated User (TODO: Validate this assumption)
 	//
 	// Errors:
-	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.AlreadyExists : This template is already translated for the given context and language.
 	//   - grpc.InvalidArgument: The request is not valid.
 	TranslateTemplate(context.Context, *connect_go.Request[v1alpha1.TranslateTemplateRequest]) (*connect_go.Response[v1alpha1.TranslateTemplateResponse], error)
+	// Lists translations by context/language
+	// Required permissions:
+	//   - PERMISSION_CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is not valid.
+	//   - grpc.NotFound: No templates found for the given context and language.
+	ListTranslations(context.Context, *connect_go.Request[v1alpha1.ListTranslationsRequest]) (*connect_go.Response[v1alpha1.ListTranslationsResponse], error)
+	// Overrides the translation for a given translationID
+	// Required permissions:
+	//   - PERMISSION_CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is not valid.
+	UpdateTranslation(context.Context, *connect_go.Request[v1alpha1.UpdateTranslationRequest]) (*connect_go.Response[v1alpha1.UpdateTranslationResponse], error)
+	// Re-run the LLM translation for a given translationID
+	// Required permissions:
+	//   - PERMISSION_CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is not valid.
+	TriggerLLMTranslation(context.Context, *connect_go.Request[v1alpha1.TriggerLLMTranslationRequest]) (*connect_go.Response[v1alpha1.TriggerLLMTranslationResponse], error)
+	// re-run all translations for a given context (WARNING - this should be ran sparingly as it is a heavy operation and costs money)
+	// Required permissions:
+	//   - PERMISSION_CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is not valid.
+	TriggerLLMTranslations(context.Context, *connect_go.Request[v1alpha1.TriggerLLMTranslationsRequest]) (*connect_go.Response[v1alpha1.TriggerLLMTranslationsResponse], error)
+	// set/get context system message to give more tuned LLMs when translating for that context (WARNING - this overrides the previous system message for the context if exists)
+	// Required permissions:
+	//   - PERMISSION_CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is not valid.
+	SetSystemMessage(context.Context, *connect_go.Request[v1alpha1.SetSystemMessageRequest]) (*connect_go.Response[v1alpha1.SetSystemMessageResponse], error)
+	GetSystemMessage(context.Context, *connect_go.Request[v1alpha1.GetSystemMessageRequest]) (*connect_go.Response[v1alpha1.GetSystemMessageResponse], error)
+	// Gives a translation for a system message, template and language with no side effects (Used for testing system messages)
+	// Required permissions:
+	//   - PERMISSION_CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is not valid.
+	TestSystemMessage(context.Context, *connect_go.Request[v1alpha1.TestSystemMessageRequest]) (*connect_go.Response[v1alpha1.TestSystemMessageResponse], error)
 }
 
 // NewTranslationsServiceClient constructs a client for the
@@ -68,12 +133,54 @@ func NewTranslationsServiceClient(httpClient connect_go.HTTPClient, baseURL stri
 			baseURL+TranslationsServiceTranslateTemplateProcedure,
 			opts...,
 		),
+		listTranslations: connect_go.NewClient[v1alpha1.ListTranslationsRequest, v1alpha1.ListTranslationsResponse](
+			httpClient,
+			baseURL+TranslationsServiceListTranslationsProcedure,
+			opts...,
+		),
+		updateTranslation: connect_go.NewClient[v1alpha1.UpdateTranslationRequest, v1alpha1.UpdateTranslationResponse](
+			httpClient,
+			baseURL+TranslationsServiceUpdateTranslationProcedure,
+			opts...,
+		),
+		triggerLLMTranslation: connect_go.NewClient[v1alpha1.TriggerLLMTranslationRequest, v1alpha1.TriggerLLMTranslationResponse](
+			httpClient,
+			baseURL+TranslationsServiceTriggerLLMTranslationProcedure,
+			opts...,
+		),
+		triggerLLMTranslations: connect_go.NewClient[v1alpha1.TriggerLLMTranslationsRequest, v1alpha1.TriggerLLMTranslationsResponse](
+			httpClient,
+			baseURL+TranslationsServiceTriggerLLMTranslationsProcedure,
+			opts...,
+		),
+		setSystemMessage: connect_go.NewClient[v1alpha1.SetSystemMessageRequest, v1alpha1.SetSystemMessageResponse](
+			httpClient,
+			baseURL+TranslationsServiceSetSystemMessageProcedure,
+			opts...,
+		),
+		getSystemMessage: connect_go.NewClient[v1alpha1.GetSystemMessageRequest, v1alpha1.GetSystemMessageResponse](
+			httpClient,
+			baseURL+TranslationsServiceGetSystemMessageProcedure,
+			opts...,
+		),
+		testSystemMessage: connect_go.NewClient[v1alpha1.TestSystemMessageRequest, v1alpha1.TestSystemMessageResponse](
+			httpClient,
+			baseURL+TranslationsServiceTestSystemMessageProcedure,
+			opts...,
+		),
 	}
 }
 
 // translationsServiceClient implements TranslationsServiceClient.
 type translationsServiceClient struct {
-	translateTemplate *connect_go.Client[v1alpha1.TranslateTemplateRequest, v1alpha1.TranslateTemplateResponse]
+	translateTemplate      *connect_go.Client[v1alpha1.TranslateTemplateRequest, v1alpha1.TranslateTemplateResponse]
+	listTranslations       *connect_go.Client[v1alpha1.ListTranslationsRequest, v1alpha1.ListTranslationsResponse]
+	updateTranslation      *connect_go.Client[v1alpha1.UpdateTranslationRequest, v1alpha1.UpdateTranslationResponse]
+	triggerLLMTranslation  *connect_go.Client[v1alpha1.TriggerLLMTranslationRequest, v1alpha1.TriggerLLMTranslationResponse]
+	triggerLLMTranslations *connect_go.Client[v1alpha1.TriggerLLMTranslationsRequest, v1alpha1.TriggerLLMTranslationsResponse]
+	setSystemMessage       *connect_go.Client[v1alpha1.SetSystemMessageRequest, v1alpha1.SetSystemMessageResponse]
+	getSystemMessage       *connect_go.Client[v1alpha1.GetSystemMessageRequest, v1alpha1.GetSystemMessageResponse]
+	testSystemMessage      *connect_go.Client[v1alpha1.TestSystemMessageRequest, v1alpha1.TestSystemMessageResponse]
 }
 
 // TranslateTemplate calls services.translations.v1alpha1.TranslationsService.TranslateTemplate.
@@ -81,18 +188,99 @@ func (c *translationsServiceClient) TranslateTemplate(ctx context.Context, req *
 	return c.translateTemplate.CallUnary(ctx, req)
 }
 
+// ListTranslations calls services.translations.v1alpha1.TranslationsService.ListTranslations.
+func (c *translationsServiceClient) ListTranslations(ctx context.Context, req *connect_go.Request[v1alpha1.ListTranslationsRequest]) (*connect_go.Response[v1alpha1.ListTranslationsResponse], error) {
+	return c.listTranslations.CallUnary(ctx, req)
+}
+
+// UpdateTranslation calls services.translations.v1alpha1.TranslationsService.UpdateTranslation.
+func (c *translationsServiceClient) UpdateTranslation(ctx context.Context, req *connect_go.Request[v1alpha1.UpdateTranslationRequest]) (*connect_go.Response[v1alpha1.UpdateTranslationResponse], error) {
+	return c.updateTranslation.CallUnary(ctx, req)
+}
+
+// TriggerLLMTranslation calls
+// services.translations.v1alpha1.TranslationsService.TriggerLLMTranslation.
+func (c *translationsServiceClient) TriggerLLMTranslation(ctx context.Context, req *connect_go.Request[v1alpha1.TriggerLLMTranslationRequest]) (*connect_go.Response[v1alpha1.TriggerLLMTranslationResponse], error) {
+	return c.triggerLLMTranslation.CallUnary(ctx, req)
+}
+
+// TriggerLLMTranslations calls
+// services.translations.v1alpha1.TranslationsService.TriggerLLMTranslations.
+func (c *translationsServiceClient) TriggerLLMTranslations(ctx context.Context, req *connect_go.Request[v1alpha1.TriggerLLMTranslationsRequest]) (*connect_go.Response[v1alpha1.TriggerLLMTranslationsResponse], error) {
+	return c.triggerLLMTranslations.CallUnary(ctx, req)
+}
+
+// SetSystemMessage calls services.translations.v1alpha1.TranslationsService.SetSystemMessage.
+func (c *translationsServiceClient) SetSystemMessage(ctx context.Context, req *connect_go.Request[v1alpha1.SetSystemMessageRequest]) (*connect_go.Response[v1alpha1.SetSystemMessageResponse], error) {
+	return c.setSystemMessage.CallUnary(ctx, req)
+}
+
+// GetSystemMessage calls services.translations.v1alpha1.TranslationsService.GetSystemMessage.
+func (c *translationsServiceClient) GetSystemMessage(ctx context.Context, req *connect_go.Request[v1alpha1.GetSystemMessageRequest]) (*connect_go.Response[v1alpha1.GetSystemMessageResponse], error) {
+	return c.getSystemMessage.CallUnary(ctx, req)
+}
+
+// TestSystemMessage calls services.translations.v1alpha1.TranslationsService.TestSystemMessage.
+func (c *translationsServiceClient) TestSystemMessage(ctx context.Context, req *connect_go.Request[v1alpha1.TestSystemMessageRequest]) (*connect_go.Response[v1alpha1.TestSystemMessageResponse], error) {
+	return c.testSystemMessage.CallUnary(ctx, req)
+}
+
 // TranslationsServiceHandler is an implementation of the
 // services.translations.v1alpha1.TranslationsService service.
 type TranslationsServiceHandler interface {
+	// Translate a template for a given context and language.
 	// Required permissions:
 	//
 	//	Any Authenticated User (TODO: Validate this assumption)
 	//
 	// Errors:
-	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.AlreadyExists : This template is already translated for the given context and language.
 	//   - grpc.InvalidArgument: The request is not valid.
 	TranslateTemplate(context.Context, *connect_go.Request[v1alpha1.TranslateTemplateRequest]) (*connect_go.Response[v1alpha1.TranslateTemplateResponse], error)
+	// Lists translations by context/language
+	// Required permissions:
+	//   - PERMISSION_CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is not valid.
+	//   - grpc.NotFound: No templates found for the given context and language.
+	ListTranslations(context.Context, *connect_go.Request[v1alpha1.ListTranslationsRequest]) (*connect_go.Response[v1alpha1.ListTranslationsResponse], error)
+	// Overrides the translation for a given translationID
+	// Required permissions:
+	//   - PERMISSION_CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is not valid.
+	UpdateTranslation(context.Context, *connect_go.Request[v1alpha1.UpdateTranslationRequest]) (*connect_go.Response[v1alpha1.UpdateTranslationResponse], error)
+	// Re-run the LLM translation for a given translationID
+	// Required permissions:
+	//   - PERMISSION_CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is not valid.
+	TriggerLLMTranslation(context.Context, *connect_go.Request[v1alpha1.TriggerLLMTranslationRequest]) (*connect_go.Response[v1alpha1.TriggerLLMTranslationResponse], error)
+	// re-run all translations for a given context (WARNING - this should be ran sparingly as it is a heavy operation and costs money)
+	// Required permissions:
+	//   - PERMISSION_CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is not valid.
+	TriggerLLMTranslations(context.Context, *connect_go.Request[v1alpha1.TriggerLLMTranslationsRequest]) (*connect_go.Response[v1alpha1.TriggerLLMTranslationsResponse], error)
+	// set/get context system message to give more tuned LLMs when translating for that context (WARNING - this overrides the previous system message for the context if exists)
+	// Required permissions:
+	//   - PERMISSION_CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is not valid.
+	SetSystemMessage(context.Context, *connect_go.Request[v1alpha1.SetSystemMessageRequest]) (*connect_go.Response[v1alpha1.SetSystemMessageResponse], error)
+	GetSystemMessage(context.Context, *connect_go.Request[v1alpha1.GetSystemMessageRequest]) (*connect_go.Response[v1alpha1.GetSystemMessageResponse], error)
+	// Gives a translation for a system message, template and language with no side effects (Used for testing system messages)
+	// Required permissions:
+	//   - PERMISSION_CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is not valid.
+	TestSystemMessage(context.Context, *connect_go.Request[v1alpha1.TestSystemMessageRequest]) (*connect_go.Response[v1alpha1.TestSystemMessageResponse], error)
 }
 
 // NewTranslationsServiceHandler builds an HTTP handler from the service implementation. It returns
@@ -106,10 +294,59 @@ func NewTranslationsServiceHandler(svc TranslationsServiceHandler, opts ...conne
 		svc.TranslateTemplate,
 		opts...,
 	)
+	translationsServiceListTranslationsHandler := connect_go.NewUnaryHandler(
+		TranslationsServiceListTranslationsProcedure,
+		svc.ListTranslations,
+		opts...,
+	)
+	translationsServiceUpdateTranslationHandler := connect_go.NewUnaryHandler(
+		TranslationsServiceUpdateTranslationProcedure,
+		svc.UpdateTranslation,
+		opts...,
+	)
+	translationsServiceTriggerLLMTranslationHandler := connect_go.NewUnaryHandler(
+		TranslationsServiceTriggerLLMTranslationProcedure,
+		svc.TriggerLLMTranslation,
+		opts...,
+	)
+	translationsServiceTriggerLLMTranslationsHandler := connect_go.NewUnaryHandler(
+		TranslationsServiceTriggerLLMTranslationsProcedure,
+		svc.TriggerLLMTranslations,
+		opts...,
+	)
+	translationsServiceSetSystemMessageHandler := connect_go.NewUnaryHandler(
+		TranslationsServiceSetSystemMessageProcedure,
+		svc.SetSystemMessage,
+		opts...,
+	)
+	translationsServiceGetSystemMessageHandler := connect_go.NewUnaryHandler(
+		TranslationsServiceGetSystemMessageProcedure,
+		svc.GetSystemMessage,
+		opts...,
+	)
+	translationsServiceTestSystemMessageHandler := connect_go.NewUnaryHandler(
+		TranslationsServiceTestSystemMessageProcedure,
+		svc.TestSystemMessage,
+		opts...,
+	)
 	return "/services.translations.v1alpha1.TranslationsService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case TranslationsServiceTranslateTemplateProcedure:
 			translationsServiceTranslateTemplateHandler.ServeHTTP(w, r)
+		case TranslationsServiceListTranslationsProcedure:
+			translationsServiceListTranslationsHandler.ServeHTTP(w, r)
+		case TranslationsServiceUpdateTranslationProcedure:
+			translationsServiceUpdateTranslationHandler.ServeHTTP(w, r)
+		case TranslationsServiceTriggerLLMTranslationProcedure:
+			translationsServiceTriggerLLMTranslationHandler.ServeHTTP(w, r)
+		case TranslationsServiceTriggerLLMTranslationsProcedure:
+			translationsServiceTriggerLLMTranslationsHandler.ServeHTTP(w, r)
+		case TranslationsServiceSetSystemMessageProcedure:
+			translationsServiceSetSystemMessageHandler.ServeHTTP(w, r)
+		case TranslationsServiceGetSystemMessageProcedure:
+			translationsServiceGetSystemMessageHandler.ServeHTTP(w, r)
+		case TranslationsServiceTestSystemMessageProcedure:
+			translationsServiceTestSystemMessageHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -121,4 +358,32 @@ type UnimplementedTranslationsServiceHandler struct{}
 
 func (UnimplementedTranslationsServiceHandler) TranslateTemplate(context.Context, *connect_go.Request[v1alpha1.TranslateTemplateRequest]) (*connect_go.Response[v1alpha1.TranslateTemplateResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.translations.v1alpha1.TranslationsService.TranslateTemplate is not implemented"))
+}
+
+func (UnimplementedTranslationsServiceHandler) ListTranslations(context.Context, *connect_go.Request[v1alpha1.ListTranslationsRequest]) (*connect_go.Response[v1alpha1.ListTranslationsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.translations.v1alpha1.TranslationsService.ListTranslations is not implemented"))
+}
+
+func (UnimplementedTranslationsServiceHandler) UpdateTranslation(context.Context, *connect_go.Request[v1alpha1.UpdateTranslationRequest]) (*connect_go.Response[v1alpha1.UpdateTranslationResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.translations.v1alpha1.TranslationsService.UpdateTranslation is not implemented"))
+}
+
+func (UnimplementedTranslationsServiceHandler) TriggerLLMTranslation(context.Context, *connect_go.Request[v1alpha1.TriggerLLMTranslationRequest]) (*connect_go.Response[v1alpha1.TriggerLLMTranslationResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.translations.v1alpha1.TranslationsService.TriggerLLMTranslation is not implemented"))
+}
+
+func (UnimplementedTranslationsServiceHandler) TriggerLLMTranslations(context.Context, *connect_go.Request[v1alpha1.TriggerLLMTranslationsRequest]) (*connect_go.Response[v1alpha1.TriggerLLMTranslationsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.translations.v1alpha1.TranslationsService.TriggerLLMTranslations is not implemented"))
+}
+
+func (UnimplementedTranslationsServiceHandler) SetSystemMessage(context.Context, *connect_go.Request[v1alpha1.SetSystemMessageRequest]) (*connect_go.Response[v1alpha1.SetSystemMessageResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.translations.v1alpha1.TranslationsService.SetSystemMessage is not implemented"))
+}
+
+func (UnimplementedTranslationsServiceHandler) GetSystemMessage(context.Context, *connect_go.Request[v1alpha1.GetSystemMessageRequest]) (*connect_go.Response[v1alpha1.GetSystemMessageResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.translations.v1alpha1.TranslationsService.GetSystemMessage is not implemented"))
+}
+
+func (UnimplementedTranslationsServiceHandler) TestSystemMessage(context.Context, *connect_go.Request[v1alpha1.TestSystemMessageRequest]) (*connect_go.Response[v1alpha1.TestSystemMessageResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.translations.v1alpha1.TranslationsService.TestSystemMessage is not implemented"))
 }

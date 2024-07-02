@@ -20,113 +20,6 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// TranslateTemplateRequest is the request message for the Translate method.
-// Takes a template, context, and language to translate to.
-type TranslateTemplateRequest struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	// The template to translate.
-	Template string `protobuf:"bytes,1,opt,name=template,proto3" json:"template,omitempty"`
-	// The context of the template.
-	Context string `protobuf:"bytes,2,opt,name=context,proto3" json:"context,omitempty"`
-}
-
-func (x *TranslateTemplateRequest) Reset() {
-	*x = TranslateTemplateRequest{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[0]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *TranslateTemplateRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*TranslateTemplateRequest) ProtoMessage() {}
-
-func (x *TranslateTemplateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[0]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use TranslateTemplateRequest.ProtoReflect.Descriptor instead.
-func (*TranslateTemplateRequest) Descriptor() ([]byte, []int) {
-	return file_services_translations_v1alpha1_entities_proto_rawDescGZIP(), []int{0}
-}
-
-func (x *TranslateTemplateRequest) GetTemplate() string {
-	if x != nil {
-		return x.Template
-	}
-	return ""
-}
-
-func (x *TranslateTemplateRequest) GetContext() string {
-	if x != nil {
-		return x.Context
-	}
-	return ""
-}
-
-// TranslateTemplateResponse is the response message for the Translate method.
-type TranslateTemplateResponse struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Translations []*Translation `protobuf:"bytes,1,rep,name=translations,proto3" json:"translations,omitempty"`
-}
-
-func (x *TranslateTemplateResponse) Reset() {
-	*x = TranslateTemplateResponse{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[1]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *TranslateTemplateResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*TranslateTemplateResponse) ProtoMessage() {}
-
-func (x *TranslateTemplateResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[1]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use TranslateTemplateResponse.ProtoReflect.Descriptor instead.
-func (*TranslateTemplateResponse) Descriptor() ([]byte, []int) {
-	return file_services_translations_v1alpha1_entities_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *TranslateTemplateResponse) GetTranslations() []*Translation {
-	if x != nil {
-		return x.Translations
-	}
-	return nil
-}
-
 // Translation is the core entity of the translation service.
 type Translation struct {
 	state         protoimpl.MessageState
@@ -150,7 +43,7 @@ type Translation struct {
 func (x *Translation) Reset() {
 	*x = Translation{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[2]
+		mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -163,7 +56,7 @@ func (x *Translation) String() string {
 func (*Translation) ProtoMessage() {}
 
 func (x *Translation) ProtoReflect() protoreflect.Message {
-	mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[2]
+	mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -176,7 +69,7 @@ func (x *Translation) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Translation.ProtoReflect.Descriptor instead.
 func (*Translation) Descriptor() ([]byte, []int) {
-	return file_services_translations_v1alpha1_entities_proto_rawDescGZIP(), []int{2}
+	return file_services_translations_v1alpha1_entities_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *Translation) GetTranslationId() string {
@@ -221,6 +114,828 @@ func (x *Translation) GetManualTranslation() string {
 	return ""
 }
 
+// TranslateTemplateRequest is the request message for the Translate method.
+// Takes a template, context, and translates to all available languages.
+type TranslateTemplateRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The template to translate.
+	Template string `protobuf:"bytes,1,opt,name=template,proto3" json:"template,omitempty"`
+	// The context of the template.
+	Context string `protobuf:"bytes,2,opt,name=context,proto3" json:"context,omitempty"`
+}
+
+func (x *TranslateTemplateRequest) Reset() {
+	*x = TranslateTemplateRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TranslateTemplateRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TranslateTemplateRequest) ProtoMessage() {}
+
+func (x *TranslateTemplateRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TranslateTemplateRequest.ProtoReflect.Descriptor instead.
+func (*TranslateTemplateRequest) Descriptor() ([]byte, []int) {
+	return file_services_translations_v1alpha1_entities_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *TranslateTemplateRequest) GetTemplate() string {
+	if x != nil {
+		return x.Template
+	}
+	return ""
+}
+
+func (x *TranslateTemplateRequest) GetContext() string {
+	if x != nil {
+		return x.Context
+	}
+	return ""
+}
+
+// TranslateTemplateResponse is the response message for the Translate method.
+type TranslateTemplateResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Translations []*Translation `protobuf:"bytes,1,rep,name=translations,proto3" json:"translations,omitempty"`
+}
+
+func (x *TranslateTemplateResponse) Reset() {
+	*x = TranslateTemplateResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TranslateTemplateResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TranslateTemplateResponse) ProtoMessage() {}
+
+func (x *TranslateTemplateResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TranslateTemplateResponse.ProtoReflect.Descriptor instead.
+func (*TranslateTemplateResponse) Descriptor() ([]byte, []int) {
+	return file_services_translations_v1alpha1_entities_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *TranslateTemplateResponse) GetTranslations() []*Translation {
+	if x != nil {
+		return x.Translations
+	}
+	return nil
+}
+
+// ListTranslationsRequest is the request message for the ListTranslations method.
+// Takes a context and language tag and returns all translations.
+type ListTranslationsRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The context of the translations.
+	Context string `protobuf:"bytes,1,opt,name=context,proto3" json:"context,omitempty"`
+	// The BCP 47 language tag of the translations.
+	LanguageTag string `protobuf:"bytes,2,opt,name=language_tag,json=languageTag,proto3" json:"language_tag,omitempty"`
+}
+
+func (x *ListTranslationsRequest) Reset() {
+	*x = ListTranslationsRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ListTranslationsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTranslationsRequest) ProtoMessage() {}
+
+func (x *ListTranslationsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTranslationsRequest.ProtoReflect.Descriptor instead.
+func (*ListTranslationsRequest) Descriptor() ([]byte, []int) {
+	return file_services_translations_v1alpha1_entities_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *ListTranslationsRequest) GetContext() string {
+	if x != nil {
+		return x.Context
+	}
+	return ""
+}
+
+func (x *ListTranslationsRequest) GetLanguageTag() string {
+	if x != nil {
+		return x.LanguageTag
+	}
+	return ""
+}
+
+// ListTranslationsResponse is the response message for the ListTranslations method.
+type ListTranslationsResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Translations []*Translation `protobuf:"bytes,1,rep,name=translations,proto3" json:"translations,omitempty"`
+}
+
+func (x *ListTranslationsResponse) Reset() {
+	*x = ListTranslationsResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ListTranslationsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTranslationsResponse) ProtoMessage() {}
+
+func (x *ListTranslationsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTranslationsResponse.ProtoReflect.Descriptor instead.
+func (*ListTranslationsResponse) Descriptor() ([]byte, []int) {
+	return file_services_translations_v1alpha1_entities_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *ListTranslationsResponse) GetTranslations() []*Translation {
+	if x != nil {
+		return x.Translations
+	}
+	return nil
+}
+
+// UpdateTranslationRequest is the request message for the UpdateTranslation method.
+// Takes a translation ID and a new translation.
+type UpdateTranslationRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The ID of the translation to update.
+	TranslationId string `protobuf:"bytes,1,opt,name=translation_id,json=translationId,proto3" json:"translation_id,omitempty"`
+	// The new translation.
+	Translation string `protobuf:"bytes,2,opt,name=translation,proto3" json:"translation,omitempty"`
+}
+
+func (x *UpdateTranslationRequest) Reset() {
+	*x = UpdateTranslationRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UpdateTranslationRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateTranslationRequest) ProtoMessage() {}
+
+func (x *UpdateTranslationRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateTranslationRequest.ProtoReflect.Descriptor instead.
+func (*UpdateTranslationRequest) Descriptor() ([]byte, []int) {
+	return file_services_translations_v1alpha1_entities_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *UpdateTranslationRequest) GetTranslationId() string {
+	if x != nil {
+		return x.TranslationId
+	}
+	return ""
+}
+
+func (x *UpdateTranslationRequest) GetTranslation() string {
+	if x != nil {
+		return x.Translation
+	}
+	return ""
+}
+
+// UpdateTranslationResponse is the response message for the UpdateTranslation method.
+type UpdateTranslationResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The updated translation.
+	Translation *Translation `protobuf:"bytes,1,opt,name=translation,proto3" json:"translation,omitempty"`
+}
+
+func (x *UpdateTranslationResponse) Reset() {
+	*x = UpdateTranslationResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UpdateTranslationResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateTranslationResponse) ProtoMessage() {}
+
+func (x *UpdateTranslationResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateTranslationResponse.ProtoReflect.Descriptor instead.
+func (*UpdateTranslationResponse) Descriptor() ([]byte, []int) {
+	return file_services_translations_v1alpha1_entities_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *UpdateTranslationResponse) GetTranslation() *Translation {
+	if x != nil {
+		return x.Translation
+	}
+	return nil
+}
+
+// TriggerLLMTranslationRequest is the request message for the TriggerLLMTranslation method.
+// Takes a translation ID and triggers the LLM translation.
+type TriggerLLMTranslationRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The ID of the translation to trigger the LLM translation.
+	TranslationId string `protobuf:"bytes,1,opt,name=translation_id,json=translationId,proto3" json:"translation_id,omitempty"`
+}
+
+func (x *TriggerLLMTranslationRequest) Reset() {
+	*x = TriggerLLMTranslationRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[7]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TriggerLLMTranslationRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TriggerLLMTranslationRequest) ProtoMessage() {}
+
+func (x *TriggerLLMTranslationRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[7]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TriggerLLMTranslationRequest.ProtoReflect.Descriptor instead.
+func (*TriggerLLMTranslationRequest) Descriptor() ([]byte, []int) {
+	return file_services_translations_v1alpha1_entities_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *TriggerLLMTranslationRequest) GetTranslationId() string {
+	if x != nil {
+		return x.TranslationId
+	}
+	return ""
+}
+
+// TriggerLLMTranslationResponse is the response message for the TriggerLLMTranslation method.
+type TriggerLLMTranslationResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The updated translation.
+	Translation *Translation `protobuf:"bytes,1,opt,name=translation,proto3" json:"translation,omitempty"`
+}
+
+func (x *TriggerLLMTranslationResponse) Reset() {
+	*x = TriggerLLMTranslationResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[8]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TriggerLLMTranslationResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TriggerLLMTranslationResponse) ProtoMessage() {}
+
+func (x *TriggerLLMTranslationResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[8]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TriggerLLMTranslationResponse.ProtoReflect.Descriptor instead.
+func (*TriggerLLMTranslationResponse) Descriptor() ([]byte, []int) {
+	return file_services_translations_v1alpha1_entities_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *TriggerLLMTranslationResponse) GetTranslation() *Translation {
+	if x != nil {
+		return x.Translation
+	}
+	return nil
+}
+
+// SetSystemMessageRequest is the request message for the SetSystemMessage method.
+// Takes a context and a system message.
+type SetSystemMessageRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The context to set the system message for.
+	Context string `protobuf:"bytes,1,opt,name=context,proto3" json:"context,omitempty"`
+	// The system message.
+	SystemMessage string `protobuf:"bytes,2,opt,name=system_message,json=systemMessage,proto3" json:"system_message,omitempty"`
+}
+
+func (x *SetSystemMessageRequest) Reset() {
+	*x = SetSystemMessageRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[9]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SetSystemMessageRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SetSystemMessageRequest) ProtoMessage() {}
+
+func (x *SetSystemMessageRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[9]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SetSystemMessageRequest.ProtoReflect.Descriptor instead.
+func (*SetSystemMessageRequest) Descriptor() ([]byte, []int) {
+	return file_services_translations_v1alpha1_entities_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *SetSystemMessageRequest) GetContext() string {
+	if x != nil {
+		return x.Context
+	}
+	return ""
+}
+
+func (x *SetSystemMessageRequest) GetSystemMessage() string {
+	if x != nil {
+		return x.SystemMessage
+	}
+	return ""
+}
+
+// SetSystemMessageResponse is the response message for the SetSystemMessage method.
+type SetSystemMessageResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *SetSystemMessageResponse) Reset() {
+	*x = SetSystemMessageResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[10]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SetSystemMessageResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SetSystemMessageResponse) ProtoMessage() {}
+
+func (x *SetSystemMessageResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[10]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SetSystemMessageResponse.ProtoReflect.Descriptor instead.
+func (*SetSystemMessageResponse) Descriptor() ([]byte, []int) {
+	return file_services_translations_v1alpha1_entities_proto_rawDescGZIP(), []int{10}
+}
+
+// GetSystemMessageRequest is the request message for the GetSystemMessage method.
+// Takes a context and returns the system message.
+type GetSystemMessageRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The context to get the system message for.
+	Context string `protobuf:"bytes,1,opt,name=context,proto3" json:"context,omitempty"`
+}
+
+func (x *GetSystemMessageRequest) Reset() {
+	*x = GetSystemMessageRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[11]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetSystemMessageRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSystemMessageRequest) ProtoMessage() {}
+
+func (x *GetSystemMessageRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[11]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSystemMessageRequest.ProtoReflect.Descriptor instead.
+func (*GetSystemMessageRequest) Descriptor() ([]byte, []int) {
+	return file_services_translations_v1alpha1_entities_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *GetSystemMessageRequest) GetContext() string {
+	if x != nil {
+		return x.Context
+	}
+	return ""
+}
+
+// GetSystemMessageResponse is the response message for the GetSystemMessage method.
+type GetSystemMessageResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The system message.
+	SystemMessage string `protobuf:"bytes,1,opt,name=system_message,json=systemMessage,proto3" json:"system_message,omitempty"`
+}
+
+func (x *GetSystemMessageResponse) Reset() {
+	*x = GetSystemMessageResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[12]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetSystemMessageResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSystemMessageResponse) ProtoMessage() {}
+
+func (x *GetSystemMessageResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[12]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSystemMessageResponse.ProtoReflect.Descriptor instead.
+func (*GetSystemMessageResponse) Descriptor() ([]byte, []int) {
+	return file_services_translations_v1alpha1_entities_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *GetSystemMessageResponse) GetSystemMessage() string {
+	if x != nil {
+		return x.SystemMessage
+	}
+	return ""
+}
+
+// TestSystemMessageRequest is the request message for the TestSystemMessage method.
+// Takes a system message, template, and language tag and returns the translation.
+type TestSystemMessageRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The system message to test.
+	SystemMessage string `protobuf:"bytes,1,opt,name=system_message,json=systemMessage,proto3" json:"system_message,omitempty"`
+	// The template to test.
+	Template string `protobuf:"bytes,2,opt,name=template,proto3" json:"template,omitempty"`
+	// The BCP 47 language tag of the translation.
+	LanguageTag string `protobuf:"bytes,3,opt,name=language_tag,json=languageTag,proto3" json:"language_tag,omitempty"`
+}
+
+func (x *TestSystemMessageRequest) Reset() {
+	*x = TestSystemMessageRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[13]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TestSystemMessageRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TestSystemMessageRequest) ProtoMessage() {}
+
+func (x *TestSystemMessageRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[13]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TestSystemMessageRequest.ProtoReflect.Descriptor instead.
+func (*TestSystemMessageRequest) Descriptor() ([]byte, []int) {
+	return file_services_translations_v1alpha1_entities_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *TestSystemMessageRequest) GetSystemMessage() string {
+	if x != nil {
+		return x.SystemMessage
+	}
+	return ""
+}
+
+func (x *TestSystemMessageRequest) GetTemplate() string {
+	if x != nil {
+		return x.Template
+	}
+	return ""
+}
+
+func (x *TestSystemMessageRequest) GetLanguageTag() string {
+	if x != nil {
+		return x.LanguageTag
+	}
+	return ""
+}
+
+// TestSystemMessageResponse is the response message for the TestSystemMessage method.
+type TestSystemMessageResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The translation.
+	Translation string `protobuf:"bytes,1,opt,name=translation,proto3" json:"translation,omitempty"`
+}
+
+func (x *TestSystemMessageResponse) Reset() {
+	*x = TestSystemMessageResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[14]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TestSystemMessageResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TestSystemMessageResponse) ProtoMessage() {}
+
+func (x *TestSystemMessageResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[14]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TestSystemMessageResponse.ProtoReflect.Descriptor instead.
+func (*TestSystemMessageResponse) Descriptor() ([]byte, []int) {
+	return file_services_translations_v1alpha1_entities_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *TestSystemMessageResponse) GetTranslation() string {
+	if x != nil {
+		return x.Translation
+	}
+	return ""
+}
+
+// TriggerLLMTranslationsRequest is the request message for the TriggerLLMTranslations method.
+type TriggerLLMTranslationsRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The context to trigger the LLM translations for.
+	Context string `protobuf:"bytes,1,opt,name=context,proto3" json:"context,omitempty"`
+}
+
+func (x *TriggerLLMTranslationsRequest) Reset() {
+	*x = TriggerLLMTranslationsRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[15]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TriggerLLMTranslationsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TriggerLLMTranslationsRequest) ProtoMessage() {}
+
+func (x *TriggerLLMTranslationsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[15]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TriggerLLMTranslationsRequest.ProtoReflect.Descriptor instead.
+func (*TriggerLLMTranslationsRequest) Descriptor() ([]byte, []int) {
+	return file_services_translations_v1alpha1_entities_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *TriggerLLMTranslationsRequest) GetContext() string {
+	if x != nil {
+		return x.Context
+	}
+	return ""
+}
+
+type TriggerLLMTranslationsResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *TriggerLLMTranslationsResponse) Reset() {
+	*x = TriggerLLMTranslationsResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[16]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TriggerLLMTranslationsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TriggerLLMTranslationsResponse) ProtoMessage() {}
+
+func (x *TriggerLLMTranslationsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[16]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TriggerLLMTranslationsResponse.ProtoReflect.Descriptor instead.
+func (*TriggerLLMTranslationsResponse) Descriptor() ([]byte, []int) {
+	return file_services_translations_v1alpha1_entities_proto_rawDescGZIP(), []int{16}
+}
+
 var File_services_translations_v1alpha1_entities_proto protoreflect.FileDescriptor
 
 var file_services_translations_v1alpha1_entities_proto_rawDesc = []byte{
@@ -229,18 +944,6 @@ var file_services_translations_v1alpha1_entities_proto_rawDesc = []byte{
 	0x2f, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12,
 	0x1e, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x73, 0x2e, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x6c,
 	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x22,
-	0x50, 0x0a, 0x18, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x65, 0x54, 0x65, 0x6d, 0x70,
-	0x6c, 0x61, 0x74, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1a, 0x0a, 0x08, 0x74,
-	0x65, 0x6d, 0x70, 0x6c, 0x61, 0x74, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x74,
-	0x65, 0x6d, 0x70, 0x6c, 0x61, 0x74, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x63, 0x6f, 0x6e, 0x74, 0x65,
-	0x78, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x63, 0x6f, 0x6e, 0x74, 0x65, 0x78,
-	0x74, 0x22, 0x6c, 0x0a, 0x19, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x65, 0x54, 0x65,
-	0x6d, 0x70, 0x6c, 0x61, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x4f,
-	0x0a, 0x0c, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x18, 0x01,
-	0x20, 0x03, 0x28, 0x0b, 0x32, 0x2b, 0x2e, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x73, 0x2e,
-	0x74, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x2e, 0x76, 0x31, 0x61,
-	0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f,
-	0x6e, 0x52, 0x0c, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x22,
 	0xe5, 0x01, 0x0a, 0x0b, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12,
 	0x25, 0x0a, 0x0e, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x69,
 	0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61,
@@ -255,25 +958,107 @@ var file_services_translations_v1alpha1_entities_proto_rawDesc = []byte{
 	0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x2d, 0x0a, 0x12, 0x6d, 0x61, 0x6e, 0x75,
 	0x61, 0x6c, 0x5f, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x06,
 	0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x6d, 0x61, 0x6e, 0x75, 0x61, 0x6c, 0x54, 0x72, 0x61, 0x6e,
-	0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x42, 0x9d, 0x02, 0x0a, 0x22, 0x63, 0x6f, 0x6d, 0x2e,
-	0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x73, 0x2e, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61,
-	0x74, 0x69, 0x6f, 0x6e, 0x73, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x42, 0x0d,
-	0x45, 0x6e, 0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a,
-	0x4e, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63,
-	0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x73, 0x65, 0x72, 0x76,
-	0x69, 0x63, 0x65, 0x73, 0x2f, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e,
-	0x73, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x3b, 0x74, 0x72, 0x61, 0x6e, 0x73,
-	0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0xa2,
-	0x02, 0x03, 0x53, 0x54, 0x58, 0xaa, 0x02, 0x1e, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x73,
-	0x2e, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x2e, 0x56, 0x31,
-	0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0xca, 0x02, 0x1e, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65,
-	0x73, 0x5c, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x5c, 0x56,
-	0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0xe2, 0x02, 0x2a, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63,
-	0x65, 0x73, 0x5c, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x5c,
-	0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61,
-	0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x20, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x73, 0x3a,
-	0x3a, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x3a, 0x3a, 0x56,
-	0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0x50, 0x0a, 0x18, 0x54, 0x72, 0x61, 0x6e, 0x73,
+	0x6c, 0x61, 0x74, 0x65, 0x54, 0x65, 0x6d, 0x70, 0x6c, 0x61, 0x74, 0x65, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x12, 0x1a, 0x0a, 0x08, 0x74, 0x65, 0x6d, 0x70, 0x6c, 0x61, 0x74, 0x65, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x74, 0x65, 0x6d, 0x70, 0x6c, 0x61, 0x74, 0x65, 0x12,
+	0x18, 0x0a, 0x07, 0x63, 0x6f, 0x6e, 0x74, 0x65, 0x78, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x07, 0x63, 0x6f, 0x6e, 0x74, 0x65, 0x78, 0x74, 0x22, 0x6c, 0x0a, 0x19, 0x54, 0x72, 0x61,
+	0x6e, 0x73, 0x6c, 0x61, 0x74, 0x65, 0x54, 0x65, 0x6d, 0x70, 0x6c, 0x61, 0x74, 0x65, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x4f, 0x0a, 0x0c, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x6c,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x2b, 0x2e, 0x73,
+	0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x73, 0x2e, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74,
+	0x69, 0x6f, 0x6e, 0x73, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x54, 0x72,
+	0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x0c, 0x74, 0x72, 0x61, 0x6e, 0x73,
+	0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x22, 0x56, 0x0a, 0x17, 0x4c, 0x69, 0x73, 0x74, 0x54,
+	0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x63, 0x6f, 0x6e, 0x74, 0x65, 0x78, 0x74, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x07, 0x63, 0x6f, 0x6e, 0x74, 0x65, 0x78, 0x74, 0x12, 0x21, 0x0a, 0x0c,
+	0x6c, 0x61, 0x6e, 0x67, 0x75, 0x61, 0x67, 0x65, 0x5f, 0x74, 0x61, 0x67, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x0b, 0x6c, 0x61, 0x6e, 0x67, 0x75, 0x61, 0x67, 0x65, 0x54, 0x61, 0x67, 0x22,
+	0x6b, 0x0a, 0x18, 0x4c, 0x69, 0x73, 0x74, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69,
+	0x6f, 0x6e, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x4f, 0x0a, 0x0c, 0x74,
+	0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28,
+	0x0b, 0x32, 0x2b, 0x2e, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x73, 0x2e, 0x74, 0x72, 0x61,
+	0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68,
+	0x61, 0x31, 0x2e, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x0c,
+	0x74, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x22, 0x63, 0x0a, 0x18,
+	0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f,
+	0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x25, 0x0a, 0x0e, 0x74, 0x72, 0x61, 0x6e,
+	0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x0d, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x49, 0x64, 0x12,
+	0x20, 0x0a, 0x0b, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f,
+	0x6e, 0x22, 0x6a, 0x0a, 0x19, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x54, 0x72, 0x61, 0x6e, 0x73,
+	0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x4d,
+	0x0a, 0x0b, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x2b, 0x2e, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x73, 0x2e, 0x74,
+	0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x2e, 0x76, 0x31, 0x61, 0x6c,
+	0x70, 0x68, 0x61, 0x31, 0x2e, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e,
+	0x52, 0x0b, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0x45, 0x0a,
+	0x1c, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x4c, 0x4c, 0x4d, 0x54, 0x72, 0x61, 0x6e, 0x73,
+	0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x25, 0x0a,
+	0x0e, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x69, 0x64, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69,
+	0x6f, 0x6e, 0x49, 0x64, 0x22, 0x6e, 0x0a, 0x1d, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x4c,
+	0x4c, 0x4d, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x4d, 0x0a, 0x0b, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61,
+	0x74, 0x69, 0x6f, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2b, 0x2e, 0x73, 0x65, 0x72,
+	0x76, 0x69, 0x63, 0x65, 0x73, 0x2e, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f,
+	0x6e, 0x73, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x54, 0x72, 0x61, 0x6e,
+	0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x0b, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61,
+	0x74, 0x69, 0x6f, 0x6e, 0x22, 0x5a, 0x0a, 0x17, 0x53, 0x65, 0x74, 0x53, 0x79, 0x73, 0x74, 0x65,
+	0x6d, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12,
+	0x18, 0x0a, 0x07, 0x63, 0x6f, 0x6e, 0x74, 0x65, 0x78, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x07, 0x63, 0x6f, 0x6e, 0x74, 0x65, 0x78, 0x74, 0x12, 0x25, 0x0a, 0x0e, 0x73, 0x79, 0x73,
+	0x74, 0x65, 0x6d, 0x5f, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x0d, 0x73, 0x79, 0x73, 0x74, 0x65, 0x6d, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65,
+	0x22, 0x1a, 0x0a, 0x18, 0x53, 0x65, 0x74, 0x53, 0x79, 0x73, 0x74, 0x65, 0x6d, 0x4d, 0x65, 0x73,
+	0x73, 0x61, 0x67, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x33, 0x0a, 0x17,
+	0x47, 0x65, 0x74, 0x53, 0x79, 0x73, 0x74, 0x65, 0x6d, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x63, 0x6f, 0x6e, 0x74, 0x65,
+	0x78, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x63, 0x6f, 0x6e, 0x74, 0x65, 0x78,
+	0x74, 0x22, 0x41, 0x0a, 0x18, 0x47, 0x65, 0x74, 0x53, 0x79, 0x73, 0x74, 0x65, 0x6d, 0x4d, 0x65,
+	0x73, 0x73, 0x61, 0x67, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x25, 0x0a,
+	0x0e, 0x73, 0x79, 0x73, 0x74, 0x65, 0x6d, 0x5f, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x73, 0x79, 0x73, 0x74, 0x65, 0x6d, 0x4d, 0x65, 0x73,
+	0x73, 0x61, 0x67, 0x65, 0x22, 0x80, 0x01, 0x0a, 0x18, 0x54, 0x65, 0x73, 0x74, 0x53, 0x79, 0x73,
+	0x74, 0x65, 0x6d, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x12, 0x25, 0x0a, 0x0e, 0x73, 0x79, 0x73, 0x74, 0x65, 0x6d, 0x5f, 0x6d, 0x65, 0x73, 0x73,
+	0x61, 0x67, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x73, 0x79, 0x73, 0x74, 0x65,
+	0x6d, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x74, 0x65, 0x6d, 0x70,
+	0x6c, 0x61, 0x74, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x74, 0x65, 0x6d, 0x70,
+	0x6c, 0x61, 0x74, 0x65, 0x12, 0x21, 0x0a, 0x0c, 0x6c, 0x61, 0x6e, 0x67, 0x75, 0x61, 0x67, 0x65,
+	0x5f, 0x74, 0x61, 0x67, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x6c, 0x61, 0x6e, 0x67,
+	0x75, 0x61, 0x67, 0x65, 0x54, 0x61, 0x67, 0x22, 0x3d, 0x0a, 0x19, 0x54, 0x65, 0x73, 0x74, 0x53,
+	0x79, 0x73, 0x74, 0x65, 0x6d, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74,
+	0x69, 0x6f, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x74, 0x72, 0x61, 0x6e, 0x73,
+	0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0x39, 0x0a, 0x1d, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65,
+	0x72, 0x4c, 0x4c, 0x4d, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x63, 0x6f, 0x6e, 0x74, 0x65,
+	0x78, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x63, 0x6f, 0x6e, 0x74, 0x65, 0x78,
+	0x74, 0x22, 0x20, 0x0a, 0x1e, 0x54, 0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x4c, 0x4c, 0x4d, 0x54,
+	0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x42, 0x9d, 0x02, 0x0a, 0x22, 0x63, 0x6f, 0x6d, 0x2e, 0x73, 0x65, 0x72, 0x76,
+	0x69, 0x63, 0x65, 0x73, 0x2e, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e,
+	0x73, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x42, 0x0d, 0x45, 0x6e, 0x74, 0x69,
+	0x74, 0x69, 0x65, 0x73, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x4e, 0x67, 0x69, 0x74,
+	0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64,
+	0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x73,
+	0x2f, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x2f, 0x76, 0x31,
+	0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x3b, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69,
+	0x6f, 0x6e, 0x73, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0xa2, 0x02, 0x03, 0x53, 0x54,
+	0x58, 0xaa, 0x02, 0x1e, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x73, 0x2e, 0x54, 0x72, 0x61,
+	0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x2e, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68,
+	0x61, 0x31, 0xca, 0x02, 0x1e, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x73, 0x5c, 0x54, 0x72,
+	0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70,
+	0x68, 0x61, 0x31, 0xe2, 0x02, 0x2a, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x73, 0x5c, 0x54,
+	0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x5c, 0x56, 0x31, 0x61, 0x6c,
+	0x70, 0x68, 0x61, 0x31, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
+	0xea, 0x02, 0x20, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x73, 0x3a, 0x3a, 0x54, 0x72, 0x61,
+	0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x3a, 0x3a, 0x56, 0x31, 0x61, 0x6c, 0x70,
+	0x68, 0x61, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -288,19 +1073,36 @@ func file_services_translations_v1alpha1_entities_proto_rawDescGZIP() []byte {
 	return file_services_translations_v1alpha1_entities_proto_rawDescData
 }
 
-var file_services_translations_v1alpha1_entities_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_services_translations_v1alpha1_entities_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
 var file_services_translations_v1alpha1_entities_proto_goTypes = []any{
-	(*TranslateTemplateRequest)(nil),  // 0: services.translations.v1alpha1.TranslateTemplateRequest
-	(*TranslateTemplateResponse)(nil), // 1: services.translations.v1alpha1.TranslateTemplateResponse
-	(*Translation)(nil),               // 2: services.translations.v1alpha1.Translation
+	(*Translation)(nil),                    // 0: services.translations.v1alpha1.Translation
+	(*TranslateTemplateRequest)(nil),       // 1: services.translations.v1alpha1.TranslateTemplateRequest
+	(*TranslateTemplateResponse)(nil),      // 2: services.translations.v1alpha1.TranslateTemplateResponse
+	(*ListTranslationsRequest)(nil),        // 3: services.translations.v1alpha1.ListTranslationsRequest
+	(*ListTranslationsResponse)(nil),       // 4: services.translations.v1alpha1.ListTranslationsResponse
+	(*UpdateTranslationRequest)(nil),       // 5: services.translations.v1alpha1.UpdateTranslationRequest
+	(*UpdateTranslationResponse)(nil),      // 6: services.translations.v1alpha1.UpdateTranslationResponse
+	(*TriggerLLMTranslationRequest)(nil),   // 7: services.translations.v1alpha1.TriggerLLMTranslationRequest
+	(*TriggerLLMTranslationResponse)(nil),  // 8: services.translations.v1alpha1.TriggerLLMTranslationResponse
+	(*SetSystemMessageRequest)(nil),        // 9: services.translations.v1alpha1.SetSystemMessageRequest
+	(*SetSystemMessageResponse)(nil),       // 10: services.translations.v1alpha1.SetSystemMessageResponse
+	(*GetSystemMessageRequest)(nil),        // 11: services.translations.v1alpha1.GetSystemMessageRequest
+	(*GetSystemMessageResponse)(nil),       // 12: services.translations.v1alpha1.GetSystemMessageResponse
+	(*TestSystemMessageRequest)(nil),       // 13: services.translations.v1alpha1.TestSystemMessageRequest
+	(*TestSystemMessageResponse)(nil),      // 14: services.translations.v1alpha1.TestSystemMessageResponse
+	(*TriggerLLMTranslationsRequest)(nil),  // 15: services.translations.v1alpha1.TriggerLLMTranslationsRequest
+	(*TriggerLLMTranslationsResponse)(nil), // 16: services.translations.v1alpha1.TriggerLLMTranslationsResponse
 }
 var file_services_translations_v1alpha1_entities_proto_depIdxs = []int32{
-	2, // 0: services.translations.v1alpha1.TranslateTemplateResponse.translations:type_name -> services.translations.v1alpha1.Translation
-	1, // [1:1] is the sub-list for method output_type
-	1, // [1:1] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	0, // 0: services.translations.v1alpha1.TranslateTemplateResponse.translations:type_name -> services.translations.v1alpha1.Translation
+	0, // 1: services.translations.v1alpha1.ListTranslationsResponse.translations:type_name -> services.translations.v1alpha1.Translation
+	0, // 2: services.translations.v1alpha1.UpdateTranslationResponse.translation:type_name -> services.translations.v1alpha1.Translation
+	0, // 3: services.translations.v1alpha1.TriggerLLMTranslationResponse.translation:type_name -> services.translations.v1alpha1.Translation
+	4, // [4:4] is the sub-list for method output_type
+	4, // [4:4] is the sub-list for method input_type
+	4, // [4:4] is the sub-list for extension type_name
+	4, // [4:4] is the sub-list for extension extendee
+	0, // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_services_translations_v1alpha1_entities_proto_init() }
@@ -310,7 +1112,7 @@ func file_services_translations_v1alpha1_entities_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_services_translations_v1alpha1_entities_proto_msgTypes[0].Exporter = func(v any, i int) any {
-			switch v := v.(*TranslateTemplateRequest); i {
+			switch v := v.(*Translation); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -322,7 +1124,7 @@ func file_services_translations_v1alpha1_entities_proto_init() {
 			}
 		}
 		file_services_translations_v1alpha1_entities_proto_msgTypes[1].Exporter = func(v any, i int) any {
-			switch v := v.(*TranslateTemplateResponse); i {
+			switch v := v.(*TranslateTemplateRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -334,7 +1136,175 @@ func file_services_translations_v1alpha1_entities_proto_init() {
 			}
 		}
 		file_services_translations_v1alpha1_entities_proto_msgTypes[2].Exporter = func(v any, i int) any {
-			switch v := v.(*Translation); i {
+			switch v := v.(*TranslateTemplateResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_services_translations_v1alpha1_entities_proto_msgTypes[3].Exporter = func(v any, i int) any {
+			switch v := v.(*ListTranslationsRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_services_translations_v1alpha1_entities_proto_msgTypes[4].Exporter = func(v any, i int) any {
+			switch v := v.(*ListTranslationsResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_services_translations_v1alpha1_entities_proto_msgTypes[5].Exporter = func(v any, i int) any {
+			switch v := v.(*UpdateTranslationRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_services_translations_v1alpha1_entities_proto_msgTypes[6].Exporter = func(v any, i int) any {
+			switch v := v.(*UpdateTranslationResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_services_translations_v1alpha1_entities_proto_msgTypes[7].Exporter = func(v any, i int) any {
+			switch v := v.(*TriggerLLMTranslationRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_services_translations_v1alpha1_entities_proto_msgTypes[8].Exporter = func(v any, i int) any {
+			switch v := v.(*TriggerLLMTranslationResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_services_translations_v1alpha1_entities_proto_msgTypes[9].Exporter = func(v any, i int) any {
+			switch v := v.(*SetSystemMessageRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_services_translations_v1alpha1_entities_proto_msgTypes[10].Exporter = func(v any, i int) any {
+			switch v := v.(*SetSystemMessageResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_services_translations_v1alpha1_entities_proto_msgTypes[11].Exporter = func(v any, i int) any {
+			switch v := v.(*GetSystemMessageRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_services_translations_v1alpha1_entities_proto_msgTypes[12].Exporter = func(v any, i int) any {
+			switch v := v.(*GetSystemMessageResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_services_translations_v1alpha1_entities_proto_msgTypes[13].Exporter = func(v any, i int) any {
+			switch v := v.(*TestSystemMessageRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_services_translations_v1alpha1_entities_proto_msgTypes[14].Exporter = func(v any, i int) any {
+			switch v := v.(*TestSystemMessageResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_services_translations_v1alpha1_entities_proto_msgTypes[15].Exporter = func(v any, i int) any {
+			switch v := v.(*TriggerLLMTranslationsRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_services_translations_v1alpha1_entities_proto_msgTypes[16].Exporter = func(v any, i int) any {
+			switch v := v.(*TriggerLLMTranslationsResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -352,7 +1322,7 @@ func file_services_translations_v1alpha1_entities_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_services_translations_v1alpha1_entities_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   3,
+			NumMessages:   17,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
