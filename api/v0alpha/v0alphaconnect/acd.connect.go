@@ -175,6 +175,22 @@ const (
 	AcdAgentMuteProcedure = "/api.v0alpha.Acd/AgentMute"
 	// AcdAgentUnmuteProcedure is the fully-qualified name of the Acd's AgentUnmute RPC.
 	AcdAgentUnmuteProcedure = "/api.v0alpha.Acd/AgentUnmute"
+	// AcdStartSecureFormProcedure is the fully-qualified name of the Acd's StartSecureForm RPC.
+	AcdStartSecureFormProcedure = "/api.v0alpha.Acd/StartSecureForm"
+	// AcdCollectSecureFormFieldProcedure is the fully-qualified name of the Acd's
+	// CollectSecureFormField RPC.
+	AcdCollectSecureFormFieldProcedure = "/api.v0alpha.Acd/CollectSecureFormField"
+	// AcdResetSecureFormFieldProcedure is the fully-qualified name of the Acd's ResetSecureFormField
+	// RPC.
+	AcdResetSecureFormFieldProcedure = "/api.v0alpha.Acd/ResetSecureFormField"
+	// AcdAcceptSecureFormFieldProcedure is the fully-qualified name of the Acd's AcceptSecureFormField
+	// RPC.
+	AcdAcceptSecureFormFieldProcedure = "/api.v0alpha.Acd/AcceptSecureFormField"
+	// AcdProcessSecureFormProcedure is the fully-qualified name of the Acd's ProcessSecureForm RPC.
+	AcdProcessSecureFormProcedure = "/api.v0alpha.Acd/ProcessSecureForm"
+	// AcdFinishSecureFormHandlingProcedure is the fully-qualified name of the Acd's
+	// FinishSecureFormHandling RPC.
+	AcdFinishSecureFormHandlingProcedure = "/api.v0alpha.Acd/FinishSecureFormHandling"
 )
 
 // AcdClient is a client for the api.v0alpha.Acd service.
@@ -242,6 +258,12 @@ type AcdClient interface {
 	AgentMute(context.Context, *connect_go.Request[v0alpha.AgentMuteRequest]) (*connect_go.Response[v0alpha.AgentMuteReply], error)
 	// endpoint used to unmute and agent's mic
 	AgentUnmute(context.Context, *connect_go.Request[v0alpha.AgentUnmuteRequest]) (*connect_go.Response[v0alpha.AgentUnmuteReply], error)
+	StartSecureForm(context.Context, *connect_go.Request[v0alpha.StartSecureFormReq]) (*connect_go.Response[v0alpha.StartSecureFormRes], error)
+	CollectSecureFormField(context.Context, *connect_go.Request[v0alpha.CollectSecureFormFieldReq]) (*connect_go.ServerStreamForClient[v0alpha.CollectSecureFormFieldRes], error)
+	ResetSecureFormField(context.Context, *connect_go.Request[v0alpha.ResetSecureFormFieldReq]) (*connect_go.Response[v0alpha.ResetSecureFormFieldRes], error)
+	AcceptSecureFormField(context.Context, *connect_go.Request[v0alpha.AcceptSecureFormFieldReq]) (*connect_go.Response[v0alpha.AcceptSecureFormFieldRes], error)
+	ProcessSecureForm(context.Context, *connect_go.Request[v0alpha.ProcessSecureFormReq]) (*connect_go.Response[v0alpha.ProcessSecureFormRes], error)
+	FinishSecureFormHandling(context.Context, *connect_go.Request[v0alpha.FinishSecureFormHandlingReq]) (*connect_go.Response[v0alpha.FinishSecureFormHandlingRes], error)
 }
 
 // NewAcdClient constructs a client for the api.v0alpha.Acd service. By default, it uses the Connect
@@ -514,6 +536,36 @@ func NewAcdClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+AcdAgentUnmuteProcedure,
 			opts...,
 		),
+		startSecureForm: connect_go.NewClient[v0alpha.StartSecureFormReq, v0alpha.StartSecureFormRes](
+			httpClient,
+			baseURL+AcdStartSecureFormProcedure,
+			opts...,
+		),
+		collectSecureFormField: connect_go.NewClient[v0alpha.CollectSecureFormFieldReq, v0alpha.CollectSecureFormFieldRes](
+			httpClient,
+			baseURL+AcdCollectSecureFormFieldProcedure,
+			opts...,
+		),
+		resetSecureFormField: connect_go.NewClient[v0alpha.ResetSecureFormFieldReq, v0alpha.ResetSecureFormFieldRes](
+			httpClient,
+			baseURL+AcdResetSecureFormFieldProcedure,
+			opts...,
+		),
+		acceptSecureFormField: connect_go.NewClient[v0alpha.AcceptSecureFormFieldReq, v0alpha.AcceptSecureFormFieldRes](
+			httpClient,
+			baseURL+AcdAcceptSecureFormFieldProcedure,
+			opts...,
+		),
+		processSecureForm: connect_go.NewClient[v0alpha.ProcessSecureFormReq, v0alpha.ProcessSecureFormRes](
+			httpClient,
+			baseURL+AcdProcessSecureFormProcedure,
+			opts...,
+		),
+		finishSecureFormHandling: connect_go.NewClient[v0alpha.FinishSecureFormHandlingReq, v0alpha.FinishSecureFormHandlingRes](
+			httpClient,
+			baseURL+AcdFinishSecureFormHandlingProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -571,6 +623,12 @@ type acdClient struct {
 	playDTMF                              *connect_go.Client[v0alpha.PlayDTMFRequest, v0alpha.PlayDTMFReply]
 	agentMute                             *connect_go.Client[v0alpha.AgentMuteRequest, v0alpha.AgentMuteReply]
 	agentUnmute                           *connect_go.Client[v0alpha.AgentUnmuteRequest, v0alpha.AgentUnmuteReply]
+	startSecureForm                       *connect_go.Client[v0alpha.StartSecureFormReq, v0alpha.StartSecureFormRes]
+	collectSecureFormField                *connect_go.Client[v0alpha.CollectSecureFormFieldReq, v0alpha.CollectSecureFormFieldRes]
+	resetSecureFormField                  *connect_go.Client[v0alpha.ResetSecureFormFieldReq, v0alpha.ResetSecureFormFieldRes]
+	acceptSecureFormField                 *connect_go.Client[v0alpha.AcceptSecureFormFieldReq, v0alpha.AcceptSecureFormFieldRes]
+	processSecureForm                     *connect_go.Client[v0alpha.ProcessSecureFormReq, v0alpha.ProcessSecureFormRes]
+	finishSecureFormHandling              *connect_go.Client[v0alpha.FinishSecureFormHandlingReq, v0alpha.FinishSecureFormHandlingRes]
 }
 
 // AgentGetStatusStream calls api.v0alpha.Acd.AgentGetStatusStream.
@@ -834,6 +892,36 @@ func (c *acdClient) AgentUnmute(ctx context.Context, req *connect_go.Request[v0a
 	return c.agentUnmute.CallUnary(ctx, req)
 }
 
+// StartSecureForm calls api.v0alpha.Acd.StartSecureForm.
+func (c *acdClient) StartSecureForm(ctx context.Context, req *connect_go.Request[v0alpha.StartSecureFormReq]) (*connect_go.Response[v0alpha.StartSecureFormRes], error) {
+	return c.startSecureForm.CallUnary(ctx, req)
+}
+
+// CollectSecureFormField calls api.v0alpha.Acd.CollectSecureFormField.
+func (c *acdClient) CollectSecureFormField(ctx context.Context, req *connect_go.Request[v0alpha.CollectSecureFormFieldReq]) (*connect_go.ServerStreamForClient[v0alpha.CollectSecureFormFieldRes], error) {
+	return c.collectSecureFormField.CallServerStream(ctx, req)
+}
+
+// ResetSecureFormField calls api.v0alpha.Acd.ResetSecureFormField.
+func (c *acdClient) ResetSecureFormField(ctx context.Context, req *connect_go.Request[v0alpha.ResetSecureFormFieldReq]) (*connect_go.Response[v0alpha.ResetSecureFormFieldRes], error) {
+	return c.resetSecureFormField.CallUnary(ctx, req)
+}
+
+// AcceptSecureFormField calls api.v0alpha.Acd.AcceptSecureFormField.
+func (c *acdClient) AcceptSecureFormField(ctx context.Context, req *connect_go.Request[v0alpha.AcceptSecureFormFieldReq]) (*connect_go.Response[v0alpha.AcceptSecureFormFieldRes], error) {
+	return c.acceptSecureFormField.CallUnary(ctx, req)
+}
+
+// ProcessSecureForm calls api.v0alpha.Acd.ProcessSecureForm.
+func (c *acdClient) ProcessSecureForm(ctx context.Context, req *connect_go.Request[v0alpha.ProcessSecureFormReq]) (*connect_go.Response[v0alpha.ProcessSecureFormRes], error) {
+	return c.processSecureForm.CallUnary(ctx, req)
+}
+
+// FinishSecureFormHandling calls api.v0alpha.Acd.FinishSecureFormHandling.
+func (c *acdClient) FinishSecureFormHandling(ctx context.Context, req *connect_go.Request[v0alpha.FinishSecureFormHandlingReq]) (*connect_go.Response[v0alpha.FinishSecureFormHandlingRes], error) {
+	return c.finishSecureFormHandling.CallUnary(ctx, req)
+}
+
 // AcdHandler is an implementation of the api.v0alpha.Acd service.
 type AcdHandler interface {
 	AgentGetStatusStream(context.Context, *connect_go.Request[v0alpha.AgentGetStatusRequest], *connect_go.ServerStream[v0alpha.AgentGetStatusReply]) error
@@ -899,6 +987,12 @@ type AcdHandler interface {
 	AgentMute(context.Context, *connect_go.Request[v0alpha.AgentMuteRequest]) (*connect_go.Response[v0alpha.AgentMuteReply], error)
 	// endpoint used to unmute and agent's mic
 	AgentUnmute(context.Context, *connect_go.Request[v0alpha.AgentUnmuteRequest]) (*connect_go.Response[v0alpha.AgentUnmuteReply], error)
+	StartSecureForm(context.Context, *connect_go.Request[v0alpha.StartSecureFormReq]) (*connect_go.Response[v0alpha.StartSecureFormRes], error)
+	CollectSecureFormField(context.Context, *connect_go.Request[v0alpha.CollectSecureFormFieldReq], *connect_go.ServerStream[v0alpha.CollectSecureFormFieldRes]) error
+	ResetSecureFormField(context.Context, *connect_go.Request[v0alpha.ResetSecureFormFieldReq]) (*connect_go.Response[v0alpha.ResetSecureFormFieldRes], error)
+	AcceptSecureFormField(context.Context, *connect_go.Request[v0alpha.AcceptSecureFormFieldReq]) (*connect_go.Response[v0alpha.AcceptSecureFormFieldRes], error)
+	ProcessSecureForm(context.Context, *connect_go.Request[v0alpha.ProcessSecureFormReq]) (*connect_go.Response[v0alpha.ProcessSecureFormRes], error)
+	FinishSecureFormHandling(context.Context, *connect_go.Request[v0alpha.FinishSecureFormHandlingReq]) (*connect_go.Response[v0alpha.FinishSecureFormHandlingRes], error)
 }
 
 // NewAcdHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -1167,6 +1261,36 @@ func NewAcdHandler(svc AcdHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.AgentUnmute,
 		opts...,
 	)
+	acdStartSecureFormHandler := connect_go.NewUnaryHandler(
+		AcdStartSecureFormProcedure,
+		svc.StartSecureForm,
+		opts...,
+	)
+	acdCollectSecureFormFieldHandler := connect_go.NewServerStreamHandler(
+		AcdCollectSecureFormFieldProcedure,
+		svc.CollectSecureFormField,
+		opts...,
+	)
+	acdResetSecureFormFieldHandler := connect_go.NewUnaryHandler(
+		AcdResetSecureFormFieldProcedure,
+		svc.ResetSecureFormField,
+		opts...,
+	)
+	acdAcceptSecureFormFieldHandler := connect_go.NewUnaryHandler(
+		AcdAcceptSecureFormFieldProcedure,
+		svc.AcceptSecureFormField,
+		opts...,
+	)
+	acdProcessSecureFormHandler := connect_go.NewUnaryHandler(
+		AcdProcessSecureFormProcedure,
+		svc.ProcessSecureForm,
+		opts...,
+	)
+	acdFinishSecureFormHandlingHandler := connect_go.NewUnaryHandler(
+		AcdFinishSecureFormHandlingProcedure,
+		svc.FinishSecureFormHandling,
+		opts...,
+	)
 	return "/api.v0alpha.Acd/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case AcdAgentGetStatusStreamProcedure:
@@ -1273,6 +1397,18 @@ func NewAcdHandler(svc AcdHandler, opts ...connect_go.HandlerOption) (string, ht
 			acdAgentMuteHandler.ServeHTTP(w, r)
 		case AcdAgentUnmuteProcedure:
 			acdAgentUnmuteHandler.ServeHTTP(w, r)
+		case AcdStartSecureFormProcedure:
+			acdStartSecureFormHandler.ServeHTTP(w, r)
+		case AcdCollectSecureFormFieldProcedure:
+			acdCollectSecureFormFieldHandler.ServeHTTP(w, r)
+		case AcdResetSecureFormFieldProcedure:
+			acdResetSecureFormFieldHandler.ServeHTTP(w, r)
+		case AcdAcceptSecureFormFieldProcedure:
+			acdAcceptSecureFormFieldHandler.ServeHTTP(w, r)
+		case AcdProcessSecureFormProcedure:
+			acdProcessSecureFormHandler.ServeHTTP(w, r)
+		case AcdFinishSecureFormHandlingProcedure:
+			acdFinishSecureFormHandlingHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -1488,4 +1624,28 @@ func (UnimplementedAcdHandler) AgentMute(context.Context, *connect_go.Request[v0
 
 func (UnimplementedAcdHandler) AgentUnmute(context.Context, *connect_go.Request[v0alpha.AgentUnmuteRequest]) (*connect_go.Response[v0alpha.AgentUnmuteReply], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Acd.AgentUnmute is not implemented"))
+}
+
+func (UnimplementedAcdHandler) StartSecureForm(context.Context, *connect_go.Request[v0alpha.StartSecureFormReq]) (*connect_go.Response[v0alpha.StartSecureFormRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Acd.StartSecureForm is not implemented"))
+}
+
+func (UnimplementedAcdHandler) CollectSecureFormField(context.Context, *connect_go.Request[v0alpha.CollectSecureFormFieldReq], *connect_go.ServerStream[v0alpha.CollectSecureFormFieldRes]) error {
+	return connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Acd.CollectSecureFormField is not implemented"))
+}
+
+func (UnimplementedAcdHandler) ResetSecureFormField(context.Context, *connect_go.Request[v0alpha.ResetSecureFormFieldReq]) (*connect_go.Response[v0alpha.ResetSecureFormFieldRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Acd.ResetSecureFormField is not implemented"))
+}
+
+func (UnimplementedAcdHandler) AcceptSecureFormField(context.Context, *connect_go.Request[v0alpha.AcceptSecureFormFieldReq]) (*connect_go.Response[v0alpha.AcceptSecureFormFieldRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Acd.AcceptSecureFormField is not implemented"))
+}
+
+func (UnimplementedAcdHandler) ProcessSecureForm(context.Context, *connect_go.Request[v0alpha.ProcessSecureFormReq]) (*connect_go.Response[v0alpha.ProcessSecureFormRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Acd.ProcessSecureForm is not implemented"))
+}
+
+func (UnimplementedAcdHandler) FinishSecureFormHandling(context.Context, *connect_go.Request[v0alpha.FinishSecureFormHandlingReq]) (*connect_go.Response[v0alpha.FinishSecureFormHandlingRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Acd.FinishSecureFormHandling is not implemented"))
 }

@@ -85,6 +85,12 @@ const (
 	Acd_PlayDTMF_FullMethodName                              = "/api.v0alpha.Acd/PlayDTMF"
 	Acd_AgentMute_FullMethodName                             = "/api.v0alpha.Acd/AgentMute"
 	Acd_AgentUnmute_FullMethodName                           = "/api.v0alpha.Acd/AgentUnmute"
+	Acd_StartSecureForm_FullMethodName                       = "/api.v0alpha.Acd/StartSecureForm"
+	Acd_CollectSecureFormField_FullMethodName                = "/api.v0alpha.Acd/CollectSecureFormField"
+	Acd_ResetSecureFormField_FullMethodName                  = "/api.v0alpha.Acd/ResetSecureFormField"
+	Acd_AcceptSecureFormField_FullMethodName                 = "/api.v0alpha.Acd/AcceptSecureFormField"
+	Acd_ProcessSecureForm_FullMethodName                     = "/api.v0alpha.Acd/ProcessSecureForm"
+	Acd_FinishSecureFormHandling_FullMethodName              = "/api.v0alpha.Acd/FinishSecureFormHandling"
 )
 
 // AcdClient is the client API for Acd service.
@@ -158,6 +164,12 @@ type AcdClient interface {
 	AgentMute(ctx context.Context, in *AgentMuteRequest, opts ...grpc.CallOption) (*AgentMuteReply, error)
 	// endpoint used to unmute and agent's mic
 	AgentUnmute(ctx context.Context, in *AgentUnmuteRequest, opts ...grpc.CallOption) (*AgentUnmuteReply, error)
+	StartSecureForm(ctx context.Context, in *StartSecureFormReq, opts ...grpc.CallOption) (*StartSecureFormRes, error)
+	CollectSecureFormField(ctx context.Context, in *CollectSecureFormFieldReq, opts ...grpc.CallOption) (Acd_CollectSecureFormFieldClient, error)
+	ResetSecureFormField(ctx context.Context, in *ResetSecureFormFieldReq, opts ...grpc.CallOption) (*ResetSecureFormFieldRes, error)
+	AcceptSecureFormField(ctx context.Context, in *AcceptSecureFormFieldReq, opts ...grpc.CallOption) (*AcceptSecureFormFieldRes, error)
+	ProcessSecureForm(ctx context.Context, in *ProcessSecureFormReq, opts ...grpc.CallOption) (*ProcessSecureFormRes, error)
+	FinishSecureFormHandling(ctx context.Context, in *FinishSecureFormHandlingReq, opts ...grpc.CallOption) (*FinishSecureFormHandlingRes, error)
 }
 
 type acdClient struct {
@@ -711,6 +723,89 @@ func (c *acdClient) AgentUnmute(ctx context.Context, in *AgentUnmuteRequest, opt
 	return out, nil
 }
 
+func (c *acdClient) StartSecureForm(ctx context.Context, in *StartSecureFormReq, opts ...grpc.CallOption) (*StartSecureFormRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StartSecureFormRes)
+	err := c.cc.Invoke(ctx, Acd_StartSecureForm_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *acdClient) CollectSecureFormField(ctx context.Context, in *CollectSecureFormFieldReq, opts ...grpc.CallOption) (Acd_CollectSecureFormFieldClient, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &Acd_ServiceDesc.Streams[1], Acd_CollectSecureFormField_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &acdCollectSecureFormFieldClient{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type Acd_CollectSecureFormFieldClient interface {
+	Recv() (*CollectSecureFormFieldRes, error)
+	grpc.ClientStream
+}
+
+type acdCollectSecureFormFieldClient struct {
+	grpc.ClientStream
+}
+
+func (x *acdCollectSecureFormFieldClient) Recv() (*CollectSecureFormFieldRes, error) {
+	m := new(CollectSecureFormFieldRes)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *acdClient) ResetSecureFormField(ctx context.Context, in *ResetSecureFormFieldReq, opts ...grpc.CallOption) (*ResetSecureFormFieldRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ResetSecureFormFieldRes)
+	err := c.cc.Invoke(ctx, Acd_ResetSecureFormField_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *acdClient) AcceptSecureFormField(ctx context.Context, in *AcceptSecureFormFieldReq, opts ...grpc.CallOption) (*AcceptSecureFormFieldRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AcceptSecureFormFieldRes)
+	err := c.cc.Invoke(ctx, Acd_AcceptSecureFormField_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *acdClient) ProcessSecureForm(ctx context.Context, in *ProcessSecureFormReq, opts ...grpc.CallOption) (*ProcessSecureFormRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ProcessSecureFormRes)
+	err := c.cc.Invoke(ctx, Acd_ProcessSecureForm_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *acdClient) FinishSecureFormHandling(ctx context.Context, in *FinishSecureFormHandlingReq, opts ...grpc.CallOption) (*FinishSecureFormHandlingRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(FinishSecureFormHandlingRes)
+	err := c.cc.Invoke(ctx, Acd_FinishSecureFormHandling_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AcdServer is the server API for Acd service.
 // All implementations must embed UnimplementedAcdServer
 // for forward compatibility
@@ -782,6 +877,12 @@ type AcdServer interface {
 	AgentMute(context.Context, *AgentMuteRequest) (*AgentMuteReply, error)
 	// endpoint used to unmute and agent's mic
 	AgentUnmute(context.Context, *AgentUnmuteRequest) (*AgentUnmuteReply, error)
+	StartSecureForm(context.Context, *StartSecureFormReq) (*StartSecureFormRes, error)
+	CollectSecureFormField(*CollectSecureFormFieldReq, Acd_CollectSecureFormFieldServer) error
+	ResetSecureFormField(context.Context, *ResetSecureFormFieldReq) (*ResetSecureFormFieldRes, error)
+	AcceptSecureFormField(context.Context, *AcceptSecureFormFieldReq) (*AcceptSecureFormFieldRes, error)
+	ProcessSecureForm(context.Context, *ProcessSecureFormReq) (*ProcessSecureFormRes, error)
+	FinishSecureFormHandling(context.Context, *FinishSecureFormHandlingReq) (*FinishSecureFormHandlingRes, error)
 	mustEmbedUnimplementedAcdServer()
 }
 
@@ -944,6 +1045,24 @@ func (UnimplementedAcdServer) AgentMute(context.Context, *AgentMuteRequest) (*Ag
 }
 func (UnimplementedAcdServer) AgentUnmute(context.Context, *AgentUnmuteRequest) (*AgentUnmuteReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AgentUnmute not implemented")
+}
+func (UnimplementedAcdServer) StartSecureForm(context.Context, *StartSecureFormReq) (*StartSecureFormRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StartSecureForm not implemented")
+}
+func (UnimplementedAcdServer) CollectSecureFormField(*CollectSecureFormFieldReq, Acd_CollectSecureFormFieldServer) error {
+	return status.Errorf(codes.Unimplemented, "method CollectSecureFormField not implemented")
+}
+func (UnimplementedAcdServer) ResetSecureFormField(context.Context, *ResetSecureFormFieldReq) (*ResetSecureFormFieldRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ResetSecureFormField not implemented")
+}
+func (UnimplementedAcdServer) AcceptSecureFormField(context.Context, *AcceptSecureFormFieldReq) (*AcceptSecureFormFieldRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AcceptSecureFormField not implemented")
+}
+func (UnimplementedAcdServer) ProcessSecureForm(context.Context, *ProcessSecureFormReq) (*ProcessSecureFormRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ProcessSecureForm not implemented")
+}
+func (UnimplementedAcdServer) FinishSecureFormHandling(context.Context, *FinishSecureFormHandlingReq) (*FinishSecureFormHandlingRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FinishSecureFormHandling not implemented")
 }
 func (UnimplementedAcdServer) mustEmbedUnimplementedAcdServer() {}
 
@@ -1897,6 +2016,117 @@ func _Acd_AgentUnmute_Handler(srv interface{}, ctx context.Context, dec func(int
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Acd_StartSecureForm_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StartSecureFormReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AcdServer).StartSecureForm(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Acd_StartSecureForm_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AcdServer).StartSecureForm(ctx, req.(*StartSecureFormReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Acd_CollectSecureFormField_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(CollectSecureFormFieldReq)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(AcdServer).CollectSecureFormField(m, &acdCollectSecureFormFieldServer{ServerStream: stream})
+}
+
+type Acd_CollectSecureFormFieldServer interface {
+	Send(*CollectSecureFormFieldRes) error
+	grpc.ServerStream
+}
+
+type acdCollectSecureFormFieldServer struct {
+	grpc.ServerStream
+}
+
+func (x *acdCollectSecureFormFieldServer) Send(m *CollectSecureFormFieldRes) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func _Acd_ResetSecureFormField_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ResetSecureFormFieldReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AcdServer).ResetSecureFormField(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Acd_ResetSecureFormField_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AcdServer).ResetSecureFormField(ctx, req.(*ResetSecureFormFieldReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Acd_AcceptSecureFormField_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AcceptSecureFormFieldReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AcdServer).AcceptSecureFormField(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Acd_AcceptSecureFormField_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AcdServer).AcceptSecureFormField(ctx, req.(*AcceptSecureFormFieldReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Acd_ProcessSecureForm_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProcessSecureFormReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AcdServer).ProcessSecureForm(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Acd_ProcessSecureForm_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AcdServer).ProcessSecureForm(ctx, req.(*ProcessSecureFormReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Acd_FinishSecureFormHandling_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FinishSecureFormHandlingReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AcdServer).FinishSecureFormHandling(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Acd_FinishSecureFormHandling_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AcdServer).FinishSecureFormHandling(ctx, req.(*FinishSecureFormHandlingReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Acd_ServiceDesc is the grpc.ServiceDesc for Acd service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -2108,11 +2338,36 @@ var Acd_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "AgentUnmute",
 			Handler:    _Acd_AgentUnmute_Handler,
 		},
+		{
+			MethodName: "StartSecureForm",
+			Handler:    _Acd_StartSecureForm_Handler,
+		},
+		{
+			MethodName: "ResetSecureFormField",
+			Handler:    _Acd_ResetSecureFormField_Handler,
+		},
+		{
+			MethodName: "AcceptSecureFormField",
+			Handler:    _Acd_AcceptSecureFormField_Handler,
+		},
+		{
+			MethodName: "ProcessSecureForm",
+			Handler:    _Acd_ProcessSecureForm_Handler,
+		},
+		{
+			MethodName: "FinishSecureFormHandling",
+			Handler:    _Acd_FinishSecureFormHandling_Handler,
+		},
 	},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "AgentGetStatusStream",
 			Handler:       _Acd_AgentGetStatusStream_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "CollectSecureFormField",
+			Handler:       _Acd_CollectSecureFormField_Handler,
 			ServerStreams: true,
 		},
 	},
