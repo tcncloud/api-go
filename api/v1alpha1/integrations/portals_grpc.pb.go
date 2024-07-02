@@ -45,7 +45,6 @@ const (
 	PortalManagerApi_ListPortalTypes_FullMethodName                 = "/api.v1alpha1.integrations.PortalManagerApi/ListPortalTypes"
 	PortalManagerApi_ListPortalWorkflows_FullMethodName             = "/api.v1alpha1.integrations.PortalManagerApi/ListPortalWorkflows"
 	PortalManagerApi_ListAllActionDefinitions_FullMethodName        = "/api.v1alpha1.integrations.PortalManagerApi/ListAllActionDefinitions"
-	PortalManagerApi_ListPluginsByMethod_FullMethodName             = "/api.v1alpha1.integrations.PortalManagerApi/ListPluginsByMethod"
 )
 
 // PortalManagerApiClient is the client API for PortalManagerApi service.
@@ -83,7 +82,6 @@ type PortalManagerApiClient interface {
 	ListPortalTypes(ctx context.Context, in *ListPortalTypesReq, opts ...grpc.CallOption) (*ListPortalTypesResponse, error)
 	ListPortalWorkflows(ctx context.Context, in *ListPortalWorkflowsReq, opts ...grpc.CallOption) (*ListPortalWorkflowsResponse, error)
 	ListAllActionDefinitions(ctx context.Context, in *ListAllActionDefinitionsReq, opts ...grpc.CallOption) (*ListAllActionDefinitionsResponse, error)
-	ListPluginsByMethod(ctx context.Context, in *ListPluginsByMethodReq, opts ...grpc.CallOption) (*ListPluginsByMethodRes, error)
 }
 
 type portalManagerApiClient struct {
@@ -354,16 +352,6 @@ func (c *portalManagerApiClient) ListAllActionDefinitions(ctx context.Context, i
 	return out, nil
 }
 
-func (c *portalManagerApiClient) ListPluginsByMethod(ctx context.Context, in *ListPluginsByMethodReq, opts ...grpc.CallOption) (*ListPluginsByMethodRes, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ListPluginsByMethodRes)
-	err := c.cc.Invoke(ctx, PortalManagerApi_ListPluginsByMethod_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // PortalManagerApiServer is the server API for PortalManagerApi service.
 // All implementations must embed UnimplementedPortalManagerApiServer
 // for forward compatibility
@@ -399,7 +387,6 @@ type PortalManagerApiServer interface {
 	ListPortalTypes(context.Context, *ListPortalTypesReq) (*ListPortalTypesResponse, error)
 	ListPortalWorkflows(context.Context, *ListPortalWorkflowsReq) (*ListPortalWorkflowsResponse, error)
 	ListAllActionDefinitions(context.Context, *ListAllActionDefinitionsReq) (*ListAllActionDefinitionsResponse, error)
-	ListPluginsByMethod(context.Context, *ListPluginsByMethodReq) (*ListPluginsByMethodRes, error)
 	mustEmbedUnimplementedPortalManagerApiServer()
 }
 
@@ -484,9 +471,6 @@ func (UnimplementedPortalManagerApiServer) ListPortalWorkflows(context.Context, 
 }
 func (UnimplementedPortalManagerApiServer) ListAllActionDefinitions(context.Context, *ListAllActionDefinitionsReq) (*ListAllActionDefinitionsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAllActionDefinitions not implemented")
-}
-func (UnimplementedPortalManagerApiServer) ListPluginsByMethod(context.Context, *ListPluginsByMethodReq) (*ListPluginsByMethodRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListPluginsByMethod not implemented")
 }
 func (UnimplementedPortalManagerApiServer) mustEmbedUnimplementedPortalManagerApiServer() {}
 
@@ -969,24 +953,6 @@ func _PortalManagerApi_ListAllActionDefinitions_Handler(srv interface{}, ctx con
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PortalManagerApi_ListPluginsByMethod_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListPluginsByMethodReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(PortalManagerApiServer).ListPluginsByMethod(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: PortalManagerApi_ListPluginsByMethod_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PortalManagerApiServer).ListPluginsByMethod(ctx, req.(*ListPluginsByMethodReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // PortalManagerApi_ServiceDesc is the grpc.ServiceDesc for PortalManagerApi service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1097,10 +1063,6 @@ var PortalManagerApi_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListAllActionDefinitions",
 			Handler:    _PortalManagerApi_ListAllActionDefinitions_Handler,
-		},
-		{
-			MethodName: "ListPluginsByMethod",
-			Handler:    _PortalManagerApi_ListPluginsByMethod_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
