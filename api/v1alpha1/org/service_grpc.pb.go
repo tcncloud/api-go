@@ -243,6 +243,7 @@ const (
 	Org_UpdateBusinessHours_FullMethodName                      = "/api.v1alpha1.org.Org/UpdateBusinessHours"
 	Org_CreateCertificateInfo_FullMethodName                    = "/api.v1alpha1.org.Org/CreateCertificateInfo"
 	Org_DeleteCertificateInfo_FullMethodName                    = "/api.v1alpha1.org.Org/DeleteCertificateInfo"
+	Org_RevokeCertificateInfo_FullMethodName                    = "/api.v1alpha1.org.Org/RevokeCertificateInfo"
 	Org_ListCertificateInfo_FullMethodName                      = "/api.v1alpha1.org.Org/ListCertificateInfo"
 	Org_AddGroupedUserIPRestrictions_FullMethodName             = "/api.v1alpha1.org.Org/AddGroupedUserIPRestrictions"
 	Org_RemoveGroupedUserIPRestrictions_FullMethodName          = "/api.v1alpha1.org.Org/RemoveGroupedUserIPRestrictions"
@@ -780,6 +781,8 @@ type OrgClient interface {
 	CreateCertificateInfo(ctx context.Context, in *CreateCertificateInfoRequest, opts ...grpc.CallOption) (*CreateCertificateInfoResponse, error)
 	// DeleteCertificateInfo deletes a certificate info for the current organization.
 	DeleteCertificateInfo(ctx context.Context, in *DeleteCertificateInfoRequest, opts ...grpc.CallOption) (*DeleteCertificateInfoResponse, error)
+	// RevokeCertificateInfo deletes a certificate info for the current organization.
+	RevokeCertificateInfo(ctx context.Context, in *RevokeCertificateInfoRequest, opts ...grpc.CallOption) (*RevokeCertificateInfoResponse, error)
 	// ListCertificateInfo returns a list of certificate info for the current organization.
 	ListCertificateInfo(ctx context.Context, in *ListCertificateInfoRequest, opts ...grpc.CallOption) (*ListCertificateInfoResponse, error)
 	// AddGroupedUserIPRestrictions adds a user or list of user's IPs they
@@ -3288,6 +3291,16 @@ func (c *orgClient) DeleteCertificateInfo(ctx context.Context, in *DeleteCertifi
 	return out, nil
 }
 
+func (c *orgClient) RevokeCertificateInfo(ctx context.Context, in *RevokeCertificateInfoRequest, opts ...grpc.CallOption) (*RevokeCertificateInfoResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RevokeCertificateInfoResponse)
+	err := c.cc.Invoke(ctx, Org_RevokeCertificateInfo_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *orgClient) ListCertificateInfo(ctx context.Context, in *ListCertificateInfoRequest, opts ...grpc.CallOption) (*ListCertificateInfoResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListCertificateInfoResponse)
@@ -3904,6 +3917,8 @@ type OrgServer interface {
 	CreateCertificateInfo(context.Context, *CreateCertificateInfoRequest) (*CreateCertificateInfoResponse, error)
 	// DeleteCertificateInfo deletes a certificate info for the current organization.
 	DeleteCertificateInfo(context.Context, *DeleteCertificateInfoRequest) (*DeleteCertificateInfoResponse, error)
+	// RevokeCertificateInfo deletes a certificate info for the current organization.
+	RevokeCertificateInfo(context.Context, *RevokeCertificateInfoRequest) (*RevokeCertificateInfoResponse, error)
 	// ListCertificateInfo returns a list of certificate info for the current organization.
 	ListCertificateInfo(context.Context, *ListCertificateInfoRequest) (*ListCertificateInfoResponse, error)
 	// AddGroupedUserIPRestrictions adds a user or list of user's IPs they
@@ -4597,6 +4612,9 @@ func (UnimplementedOrgServer) CreateCertificateInfo(context.Context, *CreateCert
 }
 func (UnimplementedOrgServer) DeleteCertificateInfo(context.Context, *DeleteCertificateInfoRequest) (*DeleteCertificateInfoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteCertificateInfo not implemented")
+}
+func (UnimplementedOrgServer) RevokeCertificateInfo(context.Context, *RevokeCertificateInfoRequest) (*RevokeCertificateInfoResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RevokeCertificateInfo not implemented")
 }
 func (UnimplementedOrgServer) ListCertificateInfo(context.Context, *ListCertificateInfoRequest) (*ListCertificateInfoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListCertificateInfo not implemented")
@@ -8700,6 +8718,24 @@ func _Org_DeleteCertificateInfo_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Org_RevokeCertificateInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RevokeCertificateInfoRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrgServer).RevokeCertificateInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Org_RevokeCertificateInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrgServer).RevokeCertificateInfo(ctx, req.(*RevokeCertificateInfoRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Org_ListCertificateInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListCertificateInfoRequest)
 	if err := dec(in); err != nil {
@@ -9724,6 +9760,10 @@ var Org_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteCertificateInfo",
 			Handler:    _Org_DeleteCertificateInfo_Handler,
+		},
+		{
+			MethodName: "RevokeCertificateInfo",
+			Handler:    _Org_RevokeCertificateInfo_Handler,
 		},
 		{
 			MethodName: "ListCertificateInfo",

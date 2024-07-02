@@ -621,6 +621,9 @@ const (
 	// OrgDeleteCertificateInfoProcedure is the fully-qualified name of the Org's DeleteCertificateInfo
 	// RPC.
 	OrgDeleteCertificateInfoProcedure = "/api.v1alpha1.org.Org/DeleteCertificateInfo"
+	// OrgRevokeCertificateInfoProcedure is the fully-qualified name of the Org's RevokeCertificateInfo
+	// RPC.
+	OrgRevokeCertificateInfoProcedure = "/api.v1alpha1.org.Org/RevokeCertificateInfo"
 	// OrgListCertificateInfoProcedure is the fully-qualified name of the Org's ListCertificateInfo RPC.
 	OrgListCertificateInfoProcedure = "/api.v1alpha1.org.Org/ListCertificateInfo"
 	// OrgAddGroupedUserIPRestrictionsProcedure is the fully-qualified name of the Org's
@@ -1185,6 +1188,8 @@ type OrgClient interface {
 	CreateCertificateInfo(context.Context, *connect_go.Request[org.CreateCertificateInfoRequest]) (*connect_go.Response[org.CreateCertificateInfoResponse], error)
 	// DeleteCertificateInfo deletes a certificate info for the current organization.
 	DeleteCertificateInfo(context.Context, *connect_go.Request[org.DeleteCertificateInfoRequest]) (*connect_go.Response[org.DeleteCertificateInfoResponse], error)
+	// RevokeCertificateInfo deletes a certificate info for the current organization.
+	RevokeCertificateInfo(context.Context, *connect_go.Request[org.RevokeCertificateInfoRequest]) (*connect_go.Response[org.RevokeCertificateInfoResponse], error)
 	// ListCertificateInfo returns a list of certificate info for the current organization.
 	ListCertificateInfo(context.Context, *connect_go.Request[org.ListCertificateInfoRequest]) (*connect_go.Response[org.ListCertificateInfoResponse], error)
 	// AddGroupedUserIPRestrictions adds a user or list of user's IPs they
@@ -2332,6 +2337,11 @@ func NewOrgClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+OrgDeleteCertificateInfoProcedure,
 			opts...,
 		),
+		revokeCertificateInfo: connect_go.NewClient[org.RevokeCertificateInfoRequest, org.RevokeCertificateInfoResponse](
+			httpClient,
+			baseURL+OrgRevokeCertificateInfoProcedure,
+			opts...,
+		),
 		listCertificateInfo: connect_go.NewClient[org.ListCertificateInfoRequest, org.ListCertificateInfoResponse](
 			httpClient,
 			baseURL+OrgListCertificateInfoProcedure,
@@ -2606,6 +2616,7 @@ type orgClient struct {
 	updateBusinessHours                      *connect_go.Client[org.UpdateBusinessHoursRequest, org.UpdateBusinessHoursResponse]
 	createCertificateInfo                    *connect_go.Client[org.CreateCertificateInfoRequest, org.CreateCertificateInfoResponse]
 	deleteCertificateInfo                    *connect_go.Client[org.DeleteCertificateInfoRequest, org.DeleteCertificateInfoResponse]
+	revokeCertificateInfo                    *connect_go.Client[org.RevokeCertificateInfoRequest, org.RevokeCertificateInfoResponse]
 	listCertificateInfo                      *connect_go.Client[org.ListCertificateInfoRequest, org.ListCertificateInfoResponse]
 	addGroupedUserIPRestrictions             *connect_go.Client[org.AddGroupedUserIPRestrictionsRequest, org.AddGroupedUserIPRestrictionsResponse]
 	removeGroupedUserIPRestrictions          *connect_go.Client[org.RemoveGroupedUserIPRestrictionsRequest, org.RemoveGroupedUserIPRestrictionsResponse]
@@ -3775,6 +3786,11 @@ func (c *orgClient) DeleteCertificateInfo(ctx context.Context, req *connect_go.R
 	return c.deleteCertificateInfo.CallUnary(ctx, req)
 }
 
+// RevokeCertificateInfo calls api.v1alpha1.org.Org.RevokeCertificateInfo.
+func (c *orgClient) RevokeCertificateInfo(ctx context.Context, req *connect_go.Request[org.RevokeCertificateInfoRequest]) (*connect_go.Response[org.RevokeCertificateInfoResponse], error) {
+	return c.revokeCertificateInfo.CallUnary(ctx, req)
+}
+
 // ListCertificateInfo calls api.v1alpha1.org.Org.ListCertificateInfo.
 func (c *orgClient) ListCertificateInfo(ctx context.Context, req *connect_go.Request[org.ListCertificateInfoRequest]) (*connect_go.Response[org.ListCertificateInfoResponse], error) {
 	return c.listCertificateInfo.CallUnary(ctx, req)
@@ -4357,6 +4373,8 @@ type OrgHandler interface {
 	CreateCertificateInfo(context.Context, *connect_go.Request[org.CreateCertificateInfoRequest]) (*connect_go.Response[org.CreateCertificateInfoResponse], error)
 	// DeleteCertificateInfo deletes a certificate info for the current organization.
 	DeleteCertificateInfo(context.Context, *connect_go.Request[org.DeleteCertificateInfoRequest]) (*connect_go.Response[org.DeleteCertificateInfoResponse], error)
+	// RevokeCertificateInfo deletes a certificate info for the current organization.
+	RevokeCertificateInfo(context.Context, *connect_go.Request[org.RevokeCertificateInfoRequest]) (*connect_go.Response[org.RevokeCertificateInfoResponse], error)
 	// ListCertificateInfo returns a list of certificate info for the current organization.
 	ListCertificateInfo(context.Context, *connect_go.Request[org.ListCertificateInfoRequest]) (*connect_go.Response[org.ListCertificateInfoResponse], error)
 	// AddGroupedUserIPRestrictions adds a user or list of user's IPs they
@@ -5500,6 +5518,11 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.DeleteCertificateInfo,
 		opts...,
 	)
+	orgRevokeCertificateInfoHandler := connect_go.NewUnaryHandler(
+		OrgRevokeCertificateInfoProcedure,
+		svc.RevokeCertificateInfo,
+		opts...,
+	)
 	orgListCertificateInfoHandler := connect_go.NewUnaryHandler(
 		OrgListCertificateInfoProcedure,
 		svc.ListCertificateInfo,
@@ -5995,6 +6018,8 @@ func NewOrgHandler(svc OrgHandler, opts ...connect_go.HandlerOption) (string, ht
 			orgCreateCertificateInfoHandler.ServeHTTP(w, r)
 		case OrgDeleteCertificateInfoProcedure:
 			orgDeleteCertificateInfoHandler.ServeHTTP(w, r)
+		case OrgRevokeCertificateInfoProcedure:
+			orgRevokeCertificateInfoHandler.ServeHTTP(w, r)
 		case OrgListCertificateInfoProcedure:
 			orgListCertificateInfoHandler.ServeHTTP(w, r)
 		case OrgAddGroupedUserIPRestrictionsProcedure:
@@ -6916,6 +6941,10 @@ func (UnimplementedOrgHandler) CreateCertificateInfo(context.Context, *connect_g
 
 func (UnimplementedOrgHandler) DeleteCertificateInfo(context.Context, *connect_go.Request[org.DeleteCertificateInfoRequest]) (*connect_go.Response[org.DeleteCertificateInfoResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.DeleteCertificateInfo is not implemented"))
+}
+
+func (UnimplementedOrgHandler) RevokeCertificateInfo(context.Context, *connect_go.Request[org.RevokeCertificateInfoRequest]) (*connect_go.Response[org.RevokeCertificateInfoResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.org.Org.RevokeCertificateInfo is not implemented"))
 }
 
 func (UnimplementedOrgHandler) ListCertificateInfo(context.Context, *connect_go.Request[org.ListCertificateInfoRequest]) (*connect_go.Response[org.ListCertificateInfoResponse], error) {
