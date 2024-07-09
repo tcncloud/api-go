@@ -36,11 +36,15 @@ const (
 	// TasksServiceCancelTasksProcedure is the fully-qualified name of the TasksService's CancelTasks
 	// RPC.
 	TasksServiceCancelTasksProcedure = "/services.omnichannel.tasks.v1alpha1.TasksService/CancelTasks"
+	// TasksServiceBulkCancelTasksProcedure is the fully-qualified name of the TasksService's
+	// BulkCancelTasks RPC.
+	TasksServiceBulkCancelTasksProcedure = "/services.omnichannel.tasks.v1alpha1.TasksService/BulkCancelTasks"
 )
 
 // TasksServiceClient is a client for the services.omnichannel.tasks.v1alpha1.TasksService service.
 type TasksServiceClient interface {
 	CancelTasks(context.Context, *connect_go.Request[v1alpha1.CancelTasksRequest]) (*connect_go.Response[v1alpha1.CancelTasksResponse], error)
+	BulkCancelTasks(context.Context, *connect_go.Request[v1alpha1.BulkCancelTasksRequest]) (*connect_go.Response[v1alpha1.BulkCancelTasksResponse], error)
 }
 
 // NewTasksServiceClient constructs a client for the
@@ -59,12 +63,18 @@ func NewTasksServiceClient(httpClient connect_go.HTTPClient, baseURL string, opt
 			baseURL+TasksServiceCancelTasksProcedure,
 			opts...,
 		),
+		bulkCancelTasks: connect_go.NewClient[v1alpha1.BulkCancelTasksRequest, v1alpha1.BulkCancelTasksResponse](
+			httpClient,
+			baseURL+TasksServiceBulkCancelTasksProcedure,
+			opts...,
+		),
 	}
 }
 
 // tasksServiceClient implements TasksServiceClient.
 type tasksServiceClient struct {
-	cancelTasks *connect_go.Client[v1alpha1.CancelTasksRequest, v1alpha1.CancelTasksResponse]
+	cancelTasks     *connect_go.Client[v1alpha1.CancelTasksRequest, v1alpha1.CancelTasksResponse]
+	bulkCancelTasks *connect_go.Client[v1alpha1.BulkCancelTasksRequest, v1alpha1.BulkCancelTasksResponse]
 }
 
 // CancelTasks calls services.omnichannel.tasks.v1alpha1.TasksService.CancelTasks.
@@ -72,10 +82,16 @@ func (c *tasksServiceClient) CancelTasks(ctx context.Context, req *connect_go.Re
 	return c.cancelTasks.CallUnary(ctx, req)
 }
 
+// BulkCancelTasks calls services.omnichannel.tasks.v1alpha1.TasksService.BulkCancelTasks.
+func (c *tasksServiceClient) BulkCancelTasks(ctx context.Context, req *connect_go.Request[v1alpha1.BulkCancelTasksRequest]) (*connect_go.Response[v1alpha1.BulkCancelTasksResponse], error) {
+	return c.bulkCancelTasks.CallUnary(ctx, req)
+}
+
 // TasksServiceHandler is an implementation of the services.omnichannel.tasks.v1alpha1.TasksService
 // service.
 type TasksServiceHandler interface {
 	CancelTasks(context.Context, *connect_go.Request[v1alpha1.CancelTasksRequest]) (*connect_go.Response[v1alpha1.CancelTasksResponse], error)
+	BulkCancelTasks(context.Context, *connect_go.Request[v1alpha1.BulkCancelTasksRequest]) (*connect_go.Response[v1alpha1.BulkCancelTasksResponse], error)
 }
 
 // NewTasksServiceHandler builds an HTTP handler from the service implementation. It returns the
@@ -89,10 +105,17 @@ func NewTasksServiceHandler(svc TasksServiceHandler, opts ...connect_go.HandlerO
 		svc.CancelTasks,
 		opts...,
 	)
+	tasksServiceBulkCancelTasksHandler := connect_go.NewUnaryHandler(
+		TasksServiceBulkCancelTasksProcedure,
+		svc.BulkCancelTasks,
+		opts...,
+	)
 	return "/services.omnichannel.tasks.v1alpha1.TasksService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case TasksServiceCancelTasksProcedure:
 			tasksServiceCancelTasksHandler.ServeHTTP(w, r)
+		case TasksServiceBulkCancelTasksProcedure:
+			tasksServiceBulkCancelTasksHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -104,4 +127,8 @@ type UnimplementedTasksServiceHandler struct{}
 
 func (UnimplementedTasksServiceHandler) CancelTasks(context.Context, *connect_go.Request[v1alpha1.CancelTasksRequest]) (*connect_go.Response[v1alpha1.CancelTasksResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.omnichannel.tasks.v1alpha1.TasksService.CancelTasks is not implemented"))
+}
+
+func (UnimplementedTasksServiceHandler) BulkCancelTasks(context.Context, *connect_go.Request[v1alpha1.BulkCancelTasksRequest]) (*connect_go.Response[v1alpha1.BulkCancelTasksResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.omnichannel.tasks.v1alpha1.TasksService.BulkCancelTasks is not implemented"))
 }

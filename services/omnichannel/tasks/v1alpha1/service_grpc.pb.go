@@ -19,7 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	TasksService_CancelTasks_FullMethodName = "/services.omnichannel.tasks.v1alpha1.TasksService/CancelTasks"
+	TasksService_CancelTasks_FullMethodName     = "/services.omnichannel.tasks.v1alpha1.TasksService/CancelTasks"
+	TasksService_BulkCancelTasks_FullMethodName = "/services.omnichannel.tasks.v1alpha1.TasksService/BulkCancelTasks"
 )
 
 // TasksServiceClient is the client API for TasksService service.
@@ -27,6 +28,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type TasksServiceClient interface {
 	CancelTasks(ctx context.Context, in *CancelTasksRequest, opts ...grpc.CallOption) (*CancelTasksResponse, error)
+	BulkCancelTasks(ctx context.Context, in *BulkCancelTasksRequest, opts ...grpc.CallOption) (*BulkCancelTasksResponse, error)
 }
 
 type tasksServiceClient struct {
@@ -47,11 +49,22 @@ func (c *tasksServiceClient) CancelTasks(ctx context.Context, in *CancelTasksReq
 	return out, nil
 }
 
+func (c *tasksServiceClient) BulkCancelTasks(ctx context.Context, in *BulkCancelTasksRequest, opts ...grpc.CallOption) (*BulkCancelTasksResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(BulkCancelTasksResponse)
+	err := c.cc.Invoke(ctx, TasksService_BulkCancelTasks_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TasksServiceServer is the server API for TasksService service.
 // All implementations must embed UnimplementedTasksServiceServer
 // for forward compatibility
 type TasksServiceServer interface {
 	CancelTasks(context.Context, *CancelTasksRequest) (*CancelTasksResponse, error)
+	BulkCancelTasks(context.Context, *BulkCancelTasksRequest) (*BulkCancelTasksResponse, error)
 	mustEmbedUnimplementedTasksServiceServer()
 }
 
@@ -61,6 +74,9 @@ type UnimplementedTasksServiceServer struct {
 
 func (UnimplementedTasksServiceServer) CancelTasks(context.Context, *CancelTasksRequest) (*CancelTasksResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CancelTasks not implemented")
+}
+func (UnimplementedTasksServiceServer) BulkCancelTasks(context.Context, *BulkCancelTasksRequest) (*BulkCancelTasksResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BulkCancelTasks not implemented")
 }
 func (UnimplementedTasksServiceServer) mustEmbedUnimplementedTasksServiceServer() {}
 
@@ -93,6 +109,24 @@ func _TasksService_CancelTasks_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _TasksService_BulkCancelTasks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BulkCancelTasksRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TasksServiceServer).BulkCancelTasks(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TasksService_BulkCancelTasks_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TasksServiceServer).BulkCancelTasks(ctx, req.(*BulkCancelTasksRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // TasksService_ServiceDesc is the grpc.ServiceDesc for TasksService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -103,6 +137,10 @@ var TasksService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CancelTasks",
 			Handler:    _TasksService_CancelTasks_Handler,
+		},
+		{
+			MethodName: "BulkCancelTasks",
+			Handler:    _TasksService_BulkCancelTasks_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
