@@ -23,6 +23,7 @@ const (
 	AgentTrainingService_ListLearningOpportunities_FullMethodName        = "/api.v1alpha1.agenttraining.AgentTrainingService/ListLearningOpportunities"
 	AgentTrainingService_ListAgentLearningOpportunities_FullMethodName   = "/api.v1alpha1.agenttraining.AgentTrainingService/ListAgentLearningOpportunities"
 	AgentTrainingService_CompleteAgentLearningOpportunity_FullMethodName = "/api.v1alpha1.agenttraining.AgentTrainingService/CompleteAgentLearningOpportunity"
+	AgentTrainingService_ListDashboards_FullMethodName                   = "/api.v1alpha1.agenttraining.AgentTrainingService/ListDashboards"
 	AgentTrainingService_UpdateLearningOpportunity_FullMethodName        = "/api.v1alpha1.agenttraining.AgentTrainingService/UpdateLearningOpportunity"
 	AgentTrainingService_DeleteLearningOpportunity_FullMethodName        = "/api.v1alpha1.agenttraining.AgentTrainingService/DeleteLearningOpportunity"
 	AgentTrainingService_GetLearningOpportunity_FullMethodName           = "/api.v1alpha1.agenttraining.AgentTrainingService/GetLearningOpportunity"
@@ -40,6 +41,8 @@ type AgentTrainingServiceClient interface {
 	ListAgentLearningOpportunities(ctx context.Context, in *ListAgentLearningOpportunitiesRequest, opts ...grpc.CallOption) (*ListAgentLearningOpportunitiesResponse, error)
 	// CompleteAgentLearningOpportunity completes an agent's learning opportunity.
 	CompleteAgentLearningOpportunity(ctx context.Context, in *CompleteAgentLearningOpportunityRequest, opts ...grpc.CallOption) (*CompleteAgentLearningOpportunityResponse, error)
+	// ListDashboards lists dashboards.
+	ListDashboards(ctx context.Context, in *ListDashboardsRequest, opts ...grpc.CallOption) (*ListDashboardsResponse, error)
 	// UpdateLearningOpportunity updates a learning opportunity.
 	UpdateLearningOpportunity(ctx context.Context, in *UpdateLearningOpportunityRequest, opts ...grpc.CallOption) (*UpdateLearningOpportunityResponse, error)
 	// DeleteLearningOpportunity deletes a learning opportunity.
@@ -96,6 +99,16 @@ func (c *agentTrainingServiceClient) CompleteAgentLearningOpportunity(ctx contex
 	return out, nil
 }
 
+func (c *agentTrainingServiceClient) ListDashboards(ctx context.Context, in *ListDashboardsRequest, opts ...grpc.CallOption) (*ListDashboardsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListDashboardsResponse)
+	err := c.cc.Invoke(ctx, AgentTrainingService_ListDashboards_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *agentTrainingServiceClient) UpdateLearningOpportunity(ctx context.Context, in *UpdateLearningOpportunityRequest, opts ...grpc.CallOption) (*UpdateLearningOpportunityResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(UpdateLearningOpportunityResponse)
@@ -138,6 +151,8 @@ type AgentTrainingServiceServer interface {
 	ListAgentLearningOpportunities(context.Context, *ListAgentLearningOpportunitiesRequest) (*ListAgentLearningOpportunitiesResponse, error)
 	// CompleteAgentLearningOpportunity completes an agent's learning opportunity.
 	CompleteAgentLearningOpportunity(context.Context, *CompleteAgentLearningOpportunityRequest) (*CompleteAgentLearningOpportunityResponse, error)
+	// ListDashboards lists dashboards.
+	ListDashboards(context.Context, *ListDashboardsRequest) (*ListDashboardsResponse, error)
 	// UpdateLearningOpportunity updates a learning opportunity.
 	UpdateLearningOpportunity(context.Context, *UpdateLearningOpportunityRequest) (*UpdateLearningOpportunityResponse, error)
 	// DeleteLearningOpportunity deletes a learning opportunity.
@@ -162,6 +177,9 @@ func (UnimplementedAgentTrainingServiceServer) ListAgentLearningOpportunities(co
 }
 func (UnimplementedAgentTrainingServiceServer) CompleteAgentLearningOpportunity(context.Context, *CompleteAgentLearningOpportunityRequest) (*CompleteAgentLearningOpportunityResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CompleteAgentLearningOpportunity not implemented")
+}
+func (UnimplementedAgentTrainingServiceServer) ListDashboards(context.Context, *ListDashboardsRequest) (*ListDashboardsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListDashboards not implemented")
 }
 func (UnimplementedAgentTrainingServiceServer) UpdateLearningOpportunity(context.Context, *UpdateLearningOpportunityRequest) (*UpdateLearningOpportunityResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateLearningOpportunity not implemented")
@@ -257,6 +275,24 @@ func _AgentTrainingService_CompleteAgentLearningOpportunity_Handler(srv interfac
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AgentTrainingService_ListDashboards_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListDashboardsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AgentTrainingServiceServer).ListDashboards(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AgentTrainingService_ListDashboards_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AgentTrainingServiceServer).ListDashboards(ctx, req.(*ListDashboardsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _AgentTrainingService_UpdateLearningOpportunity_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateLearningOpportunityRequest)
 	if err := dec(in); err != nil {
@@ -333,6 +369,10 @@ var AgentTrainingService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CompleteAgentLearningOpportunity",
 			Handler:    _AgentTrainingService_CompleteAgentLearningOpportunity_Handler,
+		},
+		{
+			MethodName: "ListDashboards",
+			Handler:    _AgentTrainingService_ListDashboards_Handler,
 		},
 		{
 			MethodName: "UpdateLearningOpportunity",
