@@ -1673,6 +1673,59 @@ func (AgentLeavePetitionStatus) EnumDescriptor() ([]byte, []int) {
 	return file_api_commons_wfm_proto_rawDescGZIP(), []int{20}
 }
 
+// The SchedulingActivityClassification, which is used to distinguish use cases for the Scheduling Activity.
+type SchedulingActivityClassification int32
+
+const (
+	// This wraps a generic Skill or Non Skill Activity.
+	SchedulingActivityClassification_STANDARD_SCHEDULING_ACTIVITY SchedulingActivityClassification = 0
+	// This wraps the On Call Skill Activity.
+	SchedulingActivityClassification_ON_CALL_ACTIVITY SchedulingActivityClassification = 1
+	// The wraps the Time Off Non Skill Activity.
+	SchedulingActivityClassification_TIME_OFF_ACTIVITY SchedulingActivityClassification = 2
+)
+
+// Enum value maps for SchedulingActivityClassification.
+var (
+	SchedulingActivityClassification_name = map[int32]string{
+		0: "STANDARD_SCHEDULING_ACTIVITY",
+		1: "ON_CALL_ACTIVITY",
+		2: "TIME_OFF_ACTIVITY",
+	}
+	SchedulingActivityClassification_value = map[string]int32{
+		"STANDARD_SCHEDULING_ACTIVITY": 0,
+		"ON_CALL_ACTIVITY":             1,
+		"TIME_OFF_ACTIVITY":            2,
+	}
+)
+
+func (x SchedulingActivityClassification) Enum() *SchedulingActivityClassification {
+	p := new(SchedulingActivityClassification)
+	*p = x
+	return p
+}
+
+func (x SchedulingActivityClassification) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (SchedulingActivityClassification) Descriptor() protoreflect.EnumDescriptor {
+	return file_api_commons_wfm_proto_enumTypes[21].Descriptor()
+}
+
+func (SchedulingActivityClassification) Type() protoreflect.EnumType {
+	return &file_api_commons_wfm_proto_enumTypes[21]
+}
+
+func (x SchedulingActivityClassification) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use SchedulingActivityClassification.Descriptor instead.
+func (SchedulingActivityClassification) EnumDescriptor() ([]byte, []int) {
+	return file_api_commons_wfm_proto_rawDescGZIP(), []int{21}
+}
+
 type SkillType_Enum int32
 
 const (
@@ -1715,11 +1768,11 @@ func (x SkillType_Enum) String() string {
 }
 
 func (SkillType_Enum) Descriptor() protoreflect.EnumDescriptor {
-	return file_api_commons_wfm_proto_enumTypes[21].Descriptor()
+	return file_api_commons_wfm_proto_enumTypes[22].Descriptor()
 }
 
 func (SkillType_Enum) Type() protoreflect.EnumType {
-	return &file_api_commons_wfm_proto_enumTypes[21]
+	return &file_api_commons_wfm_proto_enumTypes[22]
 }
 
 func (x SkillType_Enum) Number() protoreflect.EnumNumber {
@@ -1764,11 +1817,11 @@ func (x SkillProfileCategory_CategoryType) String() string {
 }
 
 func (SkillProfileCategory_CategoryType) Descriptor() protoreflect.EnumDescriptor {
-	return file_api_commons_wfm_proto_enumTypes[22].Descriptor()
+	return file_api_commons_wfm_proto_enumTypes[23].Descriptor()
 }
 
 func (SkillProfileCategory_CategoryType) Type() protoreflect.EnumType {
-	return &file_api_commons_wfm_proto_enumTypes[22]
+	return &file_api_commons_wfm_proto_enumTypes[23]
 }
 
 func (x SkillProfileCategory_CategoryType) Number() protoreflect.EnumNumber {
@@ -3520,6 +3573,10 @@ type AgentLeavePetition struct {
 	// The user ID of the manager who approved or denied the request.
 	// This field is null by default.
 	ResolvedByUserId string `protobuf:"bytes,10,opt,name=resolved_by_user_id,json=resolvedByUserId,proto3" json:"resolved_by_user_id,omitempty"`
+	// The number of working hours requested off.
+	// This does not need to relate directly to the datetime range being requested off,
+	// For example in the case where a 14 hour schedulable range is being taken off but 8 hours of work will be paid out with PTO.
+	RequestedHoursOff float32 `protobuf:"fixed32,11,opt,name=requested_hours_off,json=requestedHoursOff,proto3" json:"requested_hours_off,omitempty"`
 }
 
 func (x *AgentLeavePetition) Reset() {
@@ -3622,6 +3679,13 @@ func (x *AgentLeavePetition) GetResolvedByUserId() string {
 		return x.ResolvedByUserId
 	}
 	return ""
+}
+
+func (x *AgentLeavePetition) GetRequestedHoursOff() float32 {
+	if x != nil {
+		return x.RequestedHoursOff
+	}
+	return 0
 }
 
 var File_api_commons_wfm_proto protoreflect.FileDescriptor
@@ -3935,7 +3999,7 @@ var file_api_commons_wfm_proto_rawDesc = []byte{
 	0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1e, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d,
 	0x6f, 0x6e, 0x73, 0x2e, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x53, 0x65,
 	0x67, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x0d, 0x73, 0x74, 0x61, 0x74, 0x65, 0x53, 0x65, 0x67, 0x6d,
-	0x65, 0x6e, 0x74, 0x73, 0x22, 0xdd, 0x04, 0x0a, 0x12, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x4c, 0x65,
+	0x65, 0x6e, 0x74, 0x73, 0x22, 0x8d, 0x05, 0x0a, 0x12, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x4c, 0x65,
 	0x61, 0x76, 0x65, 0x50, 0x65, 0x74, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x35, 0x0a, 0x17, 0x61,
 	0x67, 0x65, 0x6e, 0x74, 0x5f, 0x6c, 0x65, 0x61, 0x76, 0x65, 0x5f, 0x70, 0x65, 0x74, 0x69, 0x74,
 	0x69, 0x6f, 0x6e, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x14, 0x61, 0x67,
@@ -3973,7 +4037,10 @@ var file_api_commons_wfm_proto_rawDesc = []byte{
 	0x64, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x2d, 0x0a, 0x13, 0x72, 0x65, 0x73, 0x6f, 0x6c, 0x76, 0x65,
 	0x64, 0x5f, 0x62, 0x79, 0x5f, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x0a, 0x20, 0x01,
 	0x28, 0x09, 0x52, 0x10, 0x72, 0x65, 0x73, 0x6f, 0x6c, 0x76, 0x65, 0x64, 0x42, 0x79, 0x55, 0x73,
-	0x65, 0x72, 0x49, 0x64, 0x2a, 0xa8, 0x01, 0x0a, 0x1e, 0x52, 0x65, 0x67, 0x72, 0x65, 0x73, 0x73,
+	0x65, 0x72, 0x49, 0x64, 0x12, 0x2e, 0x0a, 0x13, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x65,
+	0x64, 0x5f, 0x68, 0x6f, 0x75, 0x72, 0x73, 0x5f, 0x6f, 0x66, 0x66, 0x18, 0x0b, 0x20, 0x01, 0x28,
+	0x02, 0x52, 0x11, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x65, 0x64, 0x48, 0x6f, 0x75, 0x72,
+	0x73, 0x4f, 0x66, 0x66, 0x2a, 0xa8, 0x01, 0x0a, 0x1e, 0x52, 0x65, 0x67, 0x72, 0x65, 0x73, 0x73,
 	0x69, 0x6f, 0x6e, 0x46, 0x6f, 0x72, 0x65, 0x63, 0x61, 0x73, 0x74, 0x65, 0x72, 0x4d, 0x6f, 0x64,
 	0x65, 0x6c, 0x54, 0x79, 0x70, 0x65, 0x73, 0x12, 0x11, 0x0a, 0x0d, 0x52, 0x41, 0x4e, 0x44, 0x4f,
 	0x4d, 0x5f, 0x46, 0x4f, 0x52, 0x45, 0x53, 0x54, 0x10, 0x00, 0x12, 0x0c, 0x0a, 0x08, 0x41, 0x44,
@@ -4327,17 +4394,24 @@ var file_api_commons_wfm_proto_rawDesc = []byte{
 	0x4f, 0x56, 0x45, 0x44, 0x5f, 0x50, 0x45, 0x54, 0x49, 0x54, 0x49, 0x4f, 0x4e, 0x10, 0x02, 0x12,
 	0x13, 0x0a, 0x0f, 0x44, 0x45, 0x4e, 0x49, 0x45, 0x44, 0x5f, 0x50, 0x45, 0x54, 0x49, 0x54, 0x49,
 	0x4f, 0x4e, 0x10, 0x03, 0x12, 0x16, 0x0a, 0x12, 0x43, 0x41, 0x4e, 0x43, 0x45, 0x4c, 0x4c, 0x45,
-	0x44, 0x5f, 0x50, 0x45, 0x54, 0x49, 0x54, 0x49, 0x4f, 0x4e, 0x10, 0x04, 0x42, 0x90, 0x01, 0x0a,
-	0x0f, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73,
-	0x42, 0x08, 0x57, 0x66, 0x6d, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x26, 0x67, 0x69,
-	0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75,
-	0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x63, 0x6f, 0x6d,
-	0x6d, 0x6f, 0x6e, 0x73, 0xa2, 0x02, 0x03, 0x41, 0x43, 0x58, 0xaa, 0x02, 0x0b, 0x41, 0x70, 0x69,
-	0x2e, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0xca, 0x02, 0x0b, 0x41, 0x70, 0x69, 0x5c, 0x43,
-	0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0xe2, 0x02, 0x17, 0x41, 0x70, 0x69, 0x5c, 0x43, 0x6f, 0x6d,
-	0x6d, 0x6f, 0x6e, 0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
-	0xea, 0x02, 0x0c, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x62,
-	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x44, 0x5f, 0x50, 0x45, 0x54, 0x49, 0x54, 0x49, 0x4f, 0x4e, 0x10, 0x04, 0x2a, 0x71, 0x0a, 0x20,
+	0x53, 0x63, 0x68, 0x65, 0x64, 0x75, 0x6c, 0x69, 0x6e, 0x67, 0x41, 0x63, 0x74, 0x69, 0x76, 0x69,
+	0x74, 0x79, 0x43, 0x6c, 0x61, 0x73, 0x73, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e,
+	0x12, 0x20, 0x0a, 0x1c, 0x53, 0x54, 0x41, 0x4e, 0x44, 0x41, 0x52, 0x44, 0x5f, 0x53, 0x43, 0x48,
+	0x45, 0x44, 0x55, 0x4c, 0x49, 0x4e, 0x47, 0x5f, 0x41, 0x43, 0x54, 0x49, 0x56, 0x49, 0x54, 0x59,
+	0x10, 0x00, 0x12, 0x14, 0x0a, 0x10, 0x4f, 0x4e, 0x5f, 0x43, 0x41, 0x4c, 0x4c, 0x5f, 0x41, 0x43,
+	0x54, 0x49, 0x56, 0x49, 0x54, 0x59, 0x10, 0x01, 0x12, 0x15, 0x0a, 0x11, 0x54, 0x49, 0x4d, 0x45,
+	0x5f, 0x4f, 0x46, 0x46, 0x5f, 0x41, 0x43, 0x54, 0x49, 0x56, 0x49, 0x54, 0x59, 0x10, 0x02, 0x42,
+	0x90, 0x01, 0x0a, 0x0f, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d,
+	0x6f, 0x6e, 0x73, 0x42, 0x08, 0x57, 0x66, 0x6d, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a,
+	0x26, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63,
+	0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f,
+	0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0xa2, 0x02, 0x03, 0x41, 0x43, 0x58, 0xaa, 0x02, 0x0b,
+	0x41, 0x70, 0x69, 0x2e, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0xca, 0x02, 0x0b, 0x41, 0x70,
+	0x69, 0x5c, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0xe2, 0x02, 0x17, 0x41, 0x70, 0x69, 0x5c,
+	0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64,
+	0x61, 0x74, 0x61, 0xea, 0x02, 0x0c, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x43, 0x6f, 0x6d, 0x6d, 0x6f,
+	0x6e, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -4352,7 +4426,7 @@ func file_api_commons_wfm_proto_rawDescGZIP() []byte {
 	return file_api_commons_wfm_proto_rawDescData
 }
 
-var file_api_commons_wfm_proto_enumTypes = make([]protoimpl.EnumInfo, 23)
+var file_api_commons_wfm_proto_enumTypes = make([]protoimpl.EnumInfo, 24)
 var file_api_commons_wfm_proto_msgTypes = make([]protoimpl.MessageInfo, 21)
 var file_api_commons_wfm_proto_goTypes = []any{
 	(RegressionForecasterModelTypes)(0),              // 0: api.commons.RegressionForecasterModelTypes
@@ -4376,59 +4450,60 @@ var file_api_commons_wfm_proto_goTypes = []any{
 	(InitialSetupState)(0),                           // 18: api.commons.InitialSetupState
 	(RealTimeManagementState)(0),                     // 19: api.commons.RealTimeManagementState
 	(AgentLeavePetitionStatus)(0),                    // 20: api.commons.AgentLeavePetitionStatus
-	(SkillType_Enum)(0),                              // 21: api.commons.SkillType.Enum
-	(SkillProfileCategory_CategoryType)(0),           // 22: api.commons.SkillProfileCategory.CategoryType
-	(*SkillType)(nil),                                // 23: api.commons.SkillType
-	(*DatetimeRange)(nil),                            // 24: api.commons.DatetimeRange
-	(*ForecastingParameters)(nil),                    // 25: api.commons.ForecastingParameters
-	(*ProfileTOD)(nil),                               // 26: api.commons.ProfileTOD
-	(*ProfileWOMS)(nil),                              // 27: api.commons.ProfileWOMS
-	(*ProfileDOW)(nil),                               // 28: api.commons.ProfileDOW
-	(*ProfileMOY)(nil),                               // 29: api.commons.ProfileMOY
-	(*DistributionProfile)(nil),                      // 30: api.commons.DistributionProfile
-	(*CallProfileGroupCalls)(nil),                    // 31: api.commons.CallProfileGroupCalls
-	(*CallProfileGroupAvgs)(nil),                     // 32: api.commons.CallProfileGroupAvgs
-	(*OptionTypes)(nil),                              // 33: api.commons.OptionTypes
-	(*ScheduleSelector)(nil),                         // 34: api.commons.ScheduleSelector
-	(*SkillProfileCategory)(nil),                     // 35: api.commons.SkillProfileCategory
-	(*SchedulingResultMetricForSkillCollection)(nil), // 36: api.commons.SchedulingResultMetricForSkillCollection
-	(*SchedulingResultMetric)(nil),                   // 37: api.commons.SchedulingResultMetric
-	(*ClientHistoryCacheInfo)(nil),                   // 38: api.commons.ClientHistoryCacheInfo
-	(*ErrorTrace)(nil),                               // 39: api.commons.ErrorTrace
-	(*InitialSetupStatus)(nil),                       // 40: api.commons.InitialSetupStatus
-	(*AgentStateSegment)(nil),                        // 41: api.commons.AgentStateSegment
-	(*AgentStateSequence)(nil),                       // 42: api.commons.AgentStateSequence
-	(*AgentLeavePetition)(nil),                       // 43: api.commons.AgentLeavePetition
-	(*timestamppb.Timestamp)(nil),                    // 44: google.protobuf.Timestamp
+	(SchedulingActivityClassification)(0),            // 21: api.commons.SchedulingActivityClassification
+	(SkillType_Enum)(0),                              // 22: api.commons.SkillType.Enum
+	(SkillProfileCategory_CategoryType)(0),           // 23: api.commons.SkillProfileCategory.CategoryType
+	(*SkillType)(nil),                                // 24: api.commons.SkillType
+	(*DatetimeRange)(nil),                            // 25: api.commons.DatetimeRange
+	(*ForecastingParameters)(nil),                    // 26: api.commons.ForecastingParameters
+	(*ProfileTOD)(nil),                               // 27: api.commons.ProfileTOD
+	(*ProfileWOMS)(nil),                              // 28: api.commons.ProfileWOMS
+	(*ProfileDOW)(nil),                               // 29: api.commons.ProfileDOW
+	(*ProfileMOY)(nil),                               // 30: api.commons.ProfileMOY
+	(*DistributionProfile)(nil),                      // 31: api.commons.DistributionProfile
+	(*CallProfileGroupCalls)(nil),                    // 32: api.commons.CallProfileGroupCalls
+	(*CallProfileGroupAvgs)(nil),                     // 33: api.commons.CallProfileGroupAvgs
+	(*OptionTypes)(nil),                              // 34: api.commons.OptionTypes
+	(*ScheduleSelector)(nil),                         // 35: api.commons.ScheduleSelector
+	(*SkillProfileCategory)(nil),                     // 36: api.commons.SkillProfileCategory
+	(*SchedulingResultMetricForSkillCollection)(nil), // 37: api.commons.SchedulingResultMetricForSkillCollection
+	(*SchedulingResultMetric)(nil),                   // 38: api.commons.SchedulingResultMetric
+	(*ClientHistoryCacheInfo)(nil),                   // 39: api.commons.ClientHistoryCacheInfo
+	(*ErrorTrace)(nil),                               // 40: api.commons.ErrorTrace
+	(*InitialSetupStatus)(nil),                       // 41: api.commons.InitialSetupStatus
+	(*AgentStateSegment)(nil),                        // 42: api.commons.AgentStateSegment
+	(*AgentStateSequence)(nil),                       // 43: api.commons.AgentStateSequence
+	(*AgentLeavePetition)(nil),                       // 44: api.commons.AgentLeavePetition
+	(*timestamppb.Timestamp)(nil),                    // 45: google.protobuf.Timestamp
 }
 var file_api_commons_wfm_proto_depIdxs = []int32{
-	44, // 0: api.commons.DatetimeRange.start_datetime:type_name -> google.protobuf.Timestamp
-	44, // 1: api.commons.DatetimeRange.end_datetime:type_name -> google.protobuf.Timestamp
-	44, // 2: api.commons.ForecastingParameters.historical_data_range_start_datetime:type_name -> google.protobuf.Timestamp
-	24, // 3: api.commons.ForecastingParameters.forecast_datetime_range:type_name -> api.commons.DatetimeRange
-	24, // 4: api.commons.ForecastingParameters.training_data_datetime_range:type_name -> api.commons.DatetimeRange
-	26, // 5: api.commons.DistributionProfile.profile_tod:type_name -> api.commons.ProfileTOD
-	27, // 6: api.commons.DistributionProfile.profile_woms:type_name -> api.commons.ProfileWOMS
-	28, // 7: api.commons.DistributionProfile.profile_dow:type_name -> api.commons.ProfileDOW
-	29, // 8: api.commons.DistributionProfile.profile_moy:type_name -> api.commons.ProfileMOY
-	30, // 9: api.commons.CallProfileGroupCalls.distribution_profile:type_name -> api.commons.DistributionProfile
-	30, // 10: api.commons.CallProfileGroupAvgs.distribution_profile:type_name -> api.commons.DistributionProfile
+	45, // 0: api.commons.DatetimeRange.start_datetime:type_name -> google.protobuf.Timestamp
+	45, // 1: api.commons.DatetimeRange.end_datetime:type_name -> google.protobuf.Timestamp
+	45, // 2: api.commons.ForecastingParameters.historical_data_range_start_datetime:type_name -> google.protobuf.Timestamp
+	25, // 3: api.commons.ForecastingParameters.forecast_datetime_range:type_name -> api.commons.DatetimeRange
+	25, // 4: api.commons.ForecastingParameters.training_data_datetime_range:type_name -> api.commons.DatetimeRange
+	27, // 5: api.commons.DistributionProfile.profile_tod:type_name -> api.commons.ProfileTOD
+	28, // 6: api.commons.DistributionProfile.profile_woms:type_name -> api.commons.ProfileWOMS
+	29, // 7: api.commons.DistributionProfile.profile_dow:type_name -> api.commons.ProfileDOW
+	30, // 8: api.commons.DistributionProfile.profile_moy:type_name -> api.commons.ProfileMOY
+	31, // 9: api.commons.CallProfileGroupCalls.distribution_profile:type_name -> api.commons.DistributionProfile
+	31, // 10: api.commons.CallProfileGroupAvgs.distribution_profile:type_name -> api.commons.DistributionProfile
 	6,  // 11: api.commons.OptionTypes.open_times_option:type_name -> api.commons.OpenTimesOption
 	7,  // 12: api.commons.OptionTypes.availability_option:type_name -> api.commons.AvailabilityOption
 	14, // 13: api.commons.ScheduleSelector.schedule_type:type_name -> api.commons.ScheduleType
-	22, // 14: api.commons.SkillProfileCategory.skill_profile_category_type:type_name -> api.commons.SkillProfileCategory.CategoryType
-	35, // 15: api.commons.SchedulingResultMetricForSkillCollection.skill_collection:type_name -> api.commons.SkillProfileCategory
-	36, // 16: api.commons.SchedulingResultMetric.metrics_by_skill_collection:type_name -> api.commons.SchedulingResultMetricForSkillCollection
+	23, // 14: api.commons.SkillProfileCategory.skill_profile_category_type:type_name -> api.commons.SkillProfileCategory.CategoryType
+	36, // 15: api.commons.SchedulingResultMetricForSkillCollection.skill_collection:type_name -> api.commons.SkillProfileCategory
+	37, // 16: api.commons.SchedulingResultMetric.metrics_by_skill_collection:type_name -> api.commons.SchedulingResultMetricForSkillCollection
 	17, // 17: api.commons.ClientHistoryCacheInfo.state:type_name -> api.commons.HistoryCacheState
 	18, // 18: api.commons.InitialSetupStatus.state:type_name -> api.commons.InitialSetupState
 	19, // 19: api.commons.AgentStateSegment.states:type_name -> api.commons.RealTimeManagementState
-	44, // 20: api.commons.AgentStateSequence.start_datetime:type_name -> google.protobuf.Timestamp
-	41, // 21: api.commons.AgentStateSequence.state_segments:type_name -> api.commons.AgentStateSegment
+	45, // 20: api.commons.AgentStateSequence.start_datetime:type_name -> google.protobuf.Timestamp
+	42, // 21: api.commons.AgentStateSequence.state_segments:type_name -> api.commons.AgentStateSegment
 	20, // 22: api.commons.AgentLeavePetition.petition_status:type_name -> api.commons.AgentLeavePetitionStatus
-	24, // 23: api.commons.AgentLeavePetition.requested_datetime_ranges:type_name -> api.commons.DatetimeRange
-	44, // 24: api.commons.AgentLeavePetition.created_time:type_name -> google.protobuf.Timestamp
-	44, // 25: api.commons.AgentLeavePetition.archived_time:type_name -> google.protobuf.Timestamp
-	44, // 26: api.commons.AgentLeavePetition.resolved_time:type_name -> google.protobuf.Timestamp
+	25, // 23: api.commons.AgentLeavePetition.requested_datetime_ranges:type_name -> api.commons.DatetimeRange
+	45, // 24: api.commons.AgentLeavePetition.created_time:type_name -> google.protobuf.Timestamp
+	45, // 25: api.commons.AgentLeavePetition.archived_time:type_name -> google.protobuf.Timestamp
+	45, // 26: api.commons.AgentLeavePetition.resolved_time:type_name -> google.protobuf.Timestamp
 	27, // [27:27] is the sub-list for method output_type
 	27, // [27:27] is the sub-list for method input_type
 	27, // [27:27] is the sub-list for extension type_name
@@ -4712,7 +4787,7 @@ func file_api_commons_wfm_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_commons_wfm_proto_rawDesc,
-			NumEnums:      23,
+			NumEnums:      24,
 			NumMessages:   21,
 			NumExtensions: 0,
 			NumServices:   0,
