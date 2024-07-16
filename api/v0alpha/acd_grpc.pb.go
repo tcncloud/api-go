@@ -91,6 +91,7 @@ const (
 	Acd_AcceptSecureFormField_FullMethodName                 = "/api.v0alpha.Acd/AcceptSecureFormField"
 	Acd_ProcessSecureForm_FullMethodName                     = "/api.v0alpha.Acd/ProcessSecureForm"
 	Acd_FinishSecureFormHandling_FullMethodName              = "/api.v0alpha.Acd/FinishSecureFormHandling"
+	Acd_PopulateWorkflowFields_FullMethodName                = "/api.v0alpha.Acd/PopulateWorkflowFields"
 )
 
 // AcdClient is the client API for Acd service.
@@ -170,6 +171,7 @@ type AcdClient interface {
 	AcceptSecureFormField(ctx context.Context, in *AcceptSecureFormFieldReq, opts ...grpc.CallOption) (*AcceptSecureFormFieldRes, error)
 	ProcessSecureForm(ctx context.Context, in *ProcessSecureFormReq, opts ...grpc.CallOption) (*ProcessSecureFormRes, error)
 	FinishSecureFormHandling(ctx context.Context, in *FinishSecureFormHandlingReq, opts ...grpc.CallOption) (*FinishSecureFormHandlingRes, error)
+	PopulateWorkflowFields(ctx context.Context, in *PopulateWorkflowFieldsReq, opts ...grpc.CallOption) (*PopulateWorkflowFieldsRes, error)
 }
 
 type acdClient struct {
@@ -806,6 +808,16 @@ func (c *acdClient) FinishSecureFormHandling(ctx context.Context, in *FinishSecu
 	return out, nil
 }
 
+func (c *acdClient) PopulateWorkflowFields(ctx context.Context, in *PopulateWorkflowFieldsReq, opts ...grpc.CallOption) (*PopulateWorkflowFieldsRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(PopulateWorkflowFieldsRes)
+	err := c.cc.Invoke(ctx, Acd_PopulateWorkflowFields_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AcdServer is the server API for Acd service.
 // All implementations must embed UnimplementedAcdServer
 // for forward compatibility
@@ -883,6 +895,7 @@ type AcdServer interface {
 	AcceptSecureFormField(context.Context, *AcceptSecureFormFieldReq) (*AcceptSecureFormFieldRes, error)
 	ProcessSecureForm(context.Context, *ProcessSecureFormReq) (*ProcessSecureFormRes, error)
 	FinishSecureFormHandling(context.Context, *FinishSecureFormHandlingReq) (*FinishSecureFormHandlingRes, error)
+	PopulateWorkflowFields(context.Context, *PopulateWorkflowFieldsReq) (*PopulateWorkflowFieldsRes, error)
 	mustEmbedUnimplementedAcdServer()
 }
 
@@ -1063,6 +1076,9 @@ func (UnimplementedAcdServer) ProcessSecureForm(context.Context, *ProcessSecureF
 }
 func (UnimplementedAcdServer) FinishSecureFormHandling(context.Context, *FinishSecureFormHandlingReq) (*FinishSecureFormHandlingRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FinishSecureFormHandling not implemented")
+}
+func (UnimplementedAcdServer) PopulateWorkflowFields(context.Context, *PopulateWorkflowFieldsReq) (*PopulateWorkflowFieldsRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PopulateWorkflowFields not implemented")
 }
 func (UnimplementedAcdServer) mustEmbedUnimplementedAcdServer() {}
 
@@ -2127,6 +2143,24 @@ func _Acd_FinishSecureFormHandling_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Acd_PopulateWorkflowFields_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PopulateWorkflowFieldsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AcdServer).PopulateWorkflowFields(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Acd_PopulateWorkflowFields_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AcdServer).PopulateWorkflowFields(ctx, req.(*PopulateWorkflowFieldsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Acd_ServiceDesc is the grpc.ServiceDesc for Acd service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -2357,6 +2391,10 @@ var Acd_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "FinishSecureFormHandling",
 			Handler:    _Acd_FinishSecureFormHandling_Handler,
+		},
+		{
+			MethodName: "PopulateWorkflowFields",
+			Handler:    _Acd_PopulateWorkflowFields_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
