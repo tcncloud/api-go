@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion8
 const (
 	TranslationsService_TranslateTemplate_FullMethodName      = "/services.translations.v1alpha1.TranslationsService/TranslateTemplate"
 	TranslationsService_ListTranslations_FullMethodName       = "/services.translations.v1alpha1.TranslationsService/ListTranslations"
+	TranslationsService_ListLanguages_FullMethodName          = "/services.translations.v1alpha1.TranslationsService/ListLanguages"
 	TranslationsService_UpdateTranslation_FullMethodName      = "/services.translations.v1alpha1.TranslationsService/UpdateTranslation"
 	TranslationsService_TriggerLLMTranslation_FullMethodName  = "/services.translations.v1alpha1.TranslationsService/TriggerLLMTranslation"
 	TranslationsService_TriggerLLMTranslations_FullMethodName = "/services.translations.v1alpha1.TranslationsService/TriggerLLMTranslations"
@@ -50,6 +51,10 @@ type TranslationsServiceClient interface {
 	//   - grpc.InvalidArgument: The request is not valid.
 	//   - grpc.NotFound: No templates found for the given context and language.
 	ListTranslations(ctx context.Context, in *ListTranslationsRequest, opts ...grpc.CallOption) (*ListTranslationsResponse, error)
+	// Lists localization languages
+	// Required permissions:
+	//   - PERMISSION_CUSTOMER_SUPPORT
+	ListLanguages(ctx context.Context, in *ListLanguagesRequest, opts ...grpc.CallOption) (*ListLanguagesResponse, error)
 	// Overrides the translation for a given translationID
 	// Required permissions:
 	//   - PERMISSION_CUSTOMER_SUPPORT
@@ -110,6 +115,16 @@ func (c *translationsServiceClient) ListTranslations(ctx context.Context, in *Li
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListTranslationsResponse)
 	err := c.cc.Invoke(ctx, TranslationsService_ListTranslations_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *translationsServiceClient) ListLanguages(ctx context.Context, in *ListLanguagesRequest, opts ...grpc.CallOption) (*ListLanguagesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListLanguagesResponse)
+	err := c.cc.Invoke(ctx, TranslationsService_ListLanguages_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -197,6 +212,10 @@ type TranslationsServiceServer interface {
 	//   - grpc.InvalidArgument: The request is not valid.
 	//   - grpc.NotFound: No templates found for the given context and language.
 	ListTranslations(context.Context, *ListTranslationsRequest) (*ListTranslationsResponse, error)
+	// Lists localization languages
+	// Required permissions:
+	//   - PERMISSION_CUSTOMER_SUPPORT
+	ListLanguages(context.Context, *ListLanguagesRequest) (*ListLanguagesResponse, error)
 	// Overrides the translation for a given translationID
 	// Required permissions:
 	//   - PERMISSION_CUSTOMER_SUPPORT
@@ -245,6 +264,9 @@ func (UnimplementedTranslationsServiceServer) TranslateTemplate(context.Context,
 }
 func (UnimplementedTranslationsServiceServer) ListTranslations(context.Context, *ListTranslationsRequest) (*ListTranslationsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListTranslations not implemented")
+}
+func (UnimplementedTranslationsServiceServer) ListLanguages(context.Context, *ListLanguagesRequest) (*ListLanguagesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListLanguages not implemented")
 }
 func (UnimplementedTranslationsServiceServer) UpdateTranslation(context.Context, *UpdateTranslationRequest) (*UpdateTranslationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateTranslation not implemented")
@@ -309,6 +331,24 @@ func _TranslationsService_ListTranslations_Handler(srv interface{}, ctx context.
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TranslationsServiceServer).ListTranslations(ctx, req.(*ListTranslationsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TranslationsService_ListLanguages_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListLanguagesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TranslationsServiceServer).ListLanguages(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TranslationsService_ListLanguages_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TranslationsServiceServer).ListLanguages(ctx, req.(*ListLanguagesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -435,6 +475,10 @@ var TranslationsService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListTranslations",
 			Handler:    _TranslationsService_ListTranslations_Handler,
+		},
+		{
+			MethodName: "ListLanguages",
+			Handler:    _TranslationsService_ListLanguages_Handler,
 		},
 		{
 			MethodName: "UpdateTranslation",

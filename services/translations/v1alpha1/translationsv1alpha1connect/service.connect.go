@@ -39,6 +39,9 @@ const (
 	// TranslationsServiceListTranslationsProcedure is the fully-qualified name of the
 	// TranslationsService's ListTranslations RPC.
 	TranslationsServiceListTranslationsProcedure = "/services.translations.v1alpha1.TranslationsService/ListTranslations"
+	// TranslationsServiceListLanguagesProcedure is the fully-qualified name of the
+	// TranslationsService's ListLanguages RPC.
+	TranslationsServiceListLanguagesProcedure = "/services.translations.v1alpha1.TranslationsService/ListLanguages"
 	// TranslationsServiceUpdateTranslationProcedure is the fully-qualified name of the
 	// TranslationsService's UpdateTranslation RPC.
 	TranslationsServiceUpdateTranslationProcedure = "/services.translations.v1alpha1.TranslationsService/UpdateTranslation"
@@ -79,6 +82,10 @@ type TranslationsServiceClient interface {
 	//   - grpc.InvalidArgument: The request is not valid.
 	//   - grpc.NotFound: No templates found for the given context and language.
 	ListTranslations(context.Context, *connect_go.Request[v1alpha1.ListTranslationsRequest]) (*connect_go.Response[v1alpha1.ListTranslationsResponse], error)
+	// Lists localization languages
+	// Required permissions:
+	//   - PERMISSION_CUSTOMER_SUPPORT
+	ListLanguages(context.Context, *connect_go.Request[v1alpha1.ListLanguagesRequest]) (*connect_go.Response[v1alpha1.ListLanguagesResponse], error)
 	// Overrides the translation for a given translationID
 	// Required permissions:
 	//   - PERMISSION_CUSTOMER_SUPPORT
@@ -138,6 +145,11 @@ func NewTranslationsServiceClient(httpClient connect_go.HTTPClient, baseURL stri
 			baseURL+TranslationsServiceListTranslationsProcedure,
 			opts...,
 		),
+		listLanguages: connect_go.NewClient[v1alpha1.ListLanguagesRequest, v1alpha1.ListLanguagesResponse](
+			httpClient,
+			baseURL+TranslationsServiceListLanguagesProcedure,
+			opts...,
+		),
 		updateTranslation: connect_go.NewClient[v1alpha1.UpdateTranslationRequest, v1alpha1.UpdateTranslationResponse](
 			httpClient,
 			baseURL+TranslationsServiceUpdateTranslationProcedure,
@@ -175,6 +187,7 @@ func NewTranslationsServiceClient(httpClient connect_go.HTTPClient, baseURL stri
 type translationsServiceClient struct {
 	translateTemplate      *connect_go.Client[v1alpha1.TranslateTemplateRequest, v1alpha1.TranslateTemplateResponse]
 	listTranslations       *connect_go.Client[v1alpha1.ListTranslationsRequest, v1alpha1.ListTranslationsResponse]
+	listLanguages          *connect_go.Client[v1alpha1.ListLanguagesRequest, v1alpha1.ListLanguagesResponse]
 	updateTranslation      *connect_go.Client[v1alpha1.UpdateTranslationRequest, v1alpha1.UpdateTranslationResponse]
 	triggerLLMTranslation  *connect_go.Client[v1alpha1.TriggerLLMTranslationRequest, v1alpha1.TriggerLLMTranslationResponse]
 	triggerLLMTranslations *connect_go.Client[v1alpha1.TriggerLLMTranslationsRequest, v1alpha1.TriggerLLMTranslationsResponse]
@@ -191,6 +204,11 @@ func (c *translationsServiceClient) TranslateTemplate(ctx context.Context, req *
 // ListTranslations calls services.translations.v1alpha1.TranslationsService.ListTranslations.
 func (c *translationsServiceClient) ListTranslations(ctx context.Context, req *connect_go.Request[v1alpha1.ListTranslationsRequest]) (*connect_go.Response[v1alpha1.ListTranslationsResponse], error) {
 	return c.listTranslations.CallUnary(ctx, req)
+}
+
+// ListLanguages calls services.translations.v1alpha1.TranslationsService.ListLanguages.
+func (c *translationsServiceClient) ListLanguages(ctx context.Context, req *connect_go.Request[v1alpha1.ListLanguagesRequest]) (*connect_go.Response[v1alpha1.ListLanguagesResponse], error) {
+	return c.listLanguages.CallUnary(ctx, req)
 }
 
 // UpdateTranslation calls services.translations.v1alpha1.TranslationsService.UpdateTranslation.
@@ -245,6 +263,10 @@ type TranslationsServiceHandler interface {
 	//   - grpc.InvalidArgument: The request is not valid.
 	//   - grpc.NotFound: No templates found for the given context and language.
 	ListTranslations(context.Context, *connect_go.Request[v1alpha1.ListTranslationsRequest]) (*connect_go.Response[v1alpha1.ListTranslationsResponse], error)
+	// Lists localization languages
+	// Required permissions:
+	//   - PERMISSION_CUSTOMER_SUPPORT
+	ListLanguages(context.Context, *connect_go.Request[v1alpha1.ListLanguagesRequest]) (*connect_go.Response[v1alpha1.ListLanguagesResponse], error)
 	// Overrides the translation for a given translationID
 	// Required permissions:
 	//   - PERMISSION_CUSTOMER_SUPPORT
@@ -299,6 +321,11 @@ func NewTranslationsServiceHandler(svc TranslationsServiceHandler, opts ...conne
 		svc.ListTranslations,
 		opts...,
 	)
+	translationsServiceListLanguagesHandler := connect_go.NewUnaryHandler(
+		TranslationsServiceListLanguagesProcedure,
+		svc.ListLanguages,
+		opts...,
+	)
 	translationsServiceUpdateTranslationHandler := connect_go.NewUnaryHandler(
 		TranslationsServiceUpdateTranslationProcedure,
 		svc.UpdateTranslation,
@@ -335,6 +362,8 @@ func NewTranslationsServiceHandler(svc TranslationsServiceHandler, opts ...conne
 			translationsServiceTranslateTemplateHandler.ServeHTTP(w, r)
 		case TranslationsServiceListTranslationsProcedure:
 			translationsServiceListTranslationsHandler.ServeHTTP(w, r)
+		case TranslationsServiceListLanguagesProcedure:
+			translationsServiceListLanguagesHandler.ServeHTTP(w, r)
 		case TranslationsServiceUpdateTranslationProcedure:
 			translationsServiceUpdateTranslationHandler.ServeHTTP(w, r)
 		case TranslationsServiceTriggerLLMTranslationProcedure:
@@ -362,6 +391,10 @@ func (UnimplementedTranslationsServiceHandler) TranslateTemplate(context.Context
 
 func (UnimplementedTranslationsServiceHandler) ListTranslations(context.Context, *connect_go.Request[v1alpha1.ListTranslationsRequest]) (*connect_go.Response[v1alpha1.ListTranslationsResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.translations.v1alpha1.TranslationsService.ListTranslations is not implemented"))
+}
+
+func (UnimplementedTranslationsServiceHandler) ListLanguages(context.Context, *connect_go.Request[v1alpha1.ListLanguagesRequest]) (*connect_go.Response[v1alpha1.ListLanguagesResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.translations.v1alpha1.TranslationsService.ListLanguages is not implemented"))
 }
 
 func (UnimplementedTranslationsServiceHandler) UpdateTranslation(context.Context, *connect_go.Request[v1alpha1.UpdateTranslationRequest]) (*connect_go.Response[v1alpha1.UpdateTranslationResponse], error) {
