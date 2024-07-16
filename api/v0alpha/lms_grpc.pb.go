@@ -78,6 +78,7 @@ const (
 	LMS_SampleEndpoint_FullMethodName                   = "/api.v0alpha.LMS/SampleEndpoint"
 	LMS_GetAvailableEHRFields_FullMethodName            = "/api.v0alpha.LMS/GetAvailableEHRFields"
 	LMS_GetQueuedEventsStatusByElementId_FullMethodName = "/api.v0alpha.LMS/GetQueuedEventsStatusByElementId"
+	LMS_ListPools_FullMethodName                        = "/api.v0alpha.LMS/ListPools"
 )
 
 // LMSClient is the client API for LMS service.
@@ -164,6 +165,8 @@ type LMSClient interface {
 	// returns all fields possible that an ehr entity type could return (that we know of)
 	GetAvailableEHRFields(ctx context.Context, in *EHREntityType, opts ...grpc.CallOption) (*Fields, error)
 	GetQueuedEventsStatusByElementId(ctx context.Context, in *ElementPK, opts ...grpc.CallOption) (*Events, error)
+	// List pools is a unary call to show finvi pools through exile
+	ListPools(ctx context.Context, in *ListPoolsRequest, opts ...grpc.CallOption) (*ListPoolsResponse, error)
 }
 
 type lMSClient struct {
@@ -894,6 +897,16 @@ func (c *lMSClient) GetQueuedEventsStatusByElementId(ctx context.Context, in *El
 	return out, nil
 }
 
+func (c *lMSClient) ListPools(ctx context.Context, in *ListPoolsRequest, opts ...grpc.CallOption) (*ListPoolsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListPoolsResponse)
+	err := c.cc.Invoke(ctx, LMS_ListPools_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LMSServer is the server API for LMS service.
 // All implementations must embed UnimplementedLMSServer
 // for forward compatibility
@@ -978,6 +991,8 @@ type LMSServer interface {
 	// returns all fields possible that an ehr entity type could return (that we know of)
 	GetAvailableEHRFields(context.Context, *EHREntityType) (*Fields, error)
 	GetQueuedEventsStatusByElementId(context.Context, *ElementPK) (*Events, error)
+	// List pools is a unary call to show finvi pools through exile
+	ListPools(context.Context, *ListPoolsRequest) (*ListPoolsResponse, error)
 	mustEmbedUnimplementedLMSServer()
 }
 
@@ -1158,6 +1173,9 @@ func (UnimplementedLMSServer) GetAvailableEHRFields(context.Context, *EHREntityT
 }
 func (UnimplementedLMSServer) GetQueuedEventsStatusByElementId(context.Context, *ElementPK) (*Events, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetQueuedEventsStatusByElementId not implemented")
+}
+func (UnimplementedLMSServer) ListPools(context.Context, *ListPoolsRequest) (*ListPoolsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListPools not implemented")
 }
 func (UnimplementedLMSServer) mustEmbedUnimplementedLMSServer() {}
 
@@ -2239,6 +2257,24 @@ func _LMS_GetQueuedEventsStatusByElementId_Handler(srv interface{}, ctx context.
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LMS_ListPools_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListPoolsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LMSServer).ListPools(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LMS_ListPools_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LMSServer).ListPools(ctx, req.(*ListPoolsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // LMS_ServiceDesc is the grpc.ServiceDesc for LMS service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -2453,6 +2489,10 @@ var LMS_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetQueuedEventsStatusByElementId",
 			Handler:    _LMS_GetQueuedEventsStatusByElementId_Handler,
+		},
+		{
+			MethodName: "ListPools",
+			Handler:    _LMS_ListPools_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

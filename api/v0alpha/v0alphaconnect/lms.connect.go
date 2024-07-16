@@ -171,6 +171,8 @@ const (
 	// LMSGetQueuedEventsStatusByElementIdProcedure is the fully-qualified name of the LMS's
 	// GetQueuedEventsStatusByElementId RPC.
 	LMSGetQueuedEventsStatusByElementIdProcedure = "/api.v0alpha.LMS/GetQueuedEventsStatusByElementId"
+	// LMSListPoolsProcedure is the fully-qualified name of the LMS's ListPools RPC.
+	LMSListPoolsProcedure = "/api.v0alpha.LMS/ListPools"
 )
 
 // LMSClient is a client for the api.v0alpha.LMS service.
@@ -255,6 +257,8 @@ type LMSClient interface {
 	// returns all fields possible that an ehr entity type could return (that we know of)
 	GetAvailableEHRFields(context.Context, *connect_go.Request[v0alpha.EHREntityType]) (*connect_go.Response[v0alpha.Fields], error)
 	GetQueuedEventsStatusByElementId(context.Context, *connect_go.Request[v0alpha.ElementPK]) (*connect_go.Response[v0alpha.Events], error)
+	// List pools is a unary call to show finvi pools through exile
+	ListPools(context.Context, *connect_go.Request[v0alpha.ListPoolsRequest]) (*connect_go.Response[v0alpha.ListPoolsResponse], error)
 }
 
 // NewLMSClient constructs a client for the api.v0alpha.LMS service. By default, it uses the Connect
@@ -557,6 +561,11 @@ func NewLMSClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+LMSGetQueuedEventsStatusByElementIdProcedure,
 			opts...,
 		),
+		listPools: connect_go.NewClient[v0alpha.ListPoolsRequest, v0alpha.ListPoolsResponse](
+			httpClient,
+			baseURL+LMSListPoolsProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -620,6 +629,7 @@ type lMSClient struct {
 	sampleEndpoint                   *connect_go.Client[v0alpha.SampleRequest, emptypb.Empty]
 	getAvailableEHRFields            *connect_go.Client[v0alpha.EHREntityType, v0alpha.Fields]
 	getQueuedEventsStatusByElementId *connect_go.Client[v0alpha.ElementPK, v0alpha.Events]
+	listPools                        *connect_go.Client[v0alpha.ListPoolsRequest, v0alpha.ListPoolsResponse]
 }
 
 // GetPublicKey calls api.v0alpha.LMS.GetPublicKey.
@@ -912,6 +922,11 @@ func (c *lMSClient) GetQueuedEventsStatusByElementId(ctx context.Context, req *c
 	return c.getQueuedEventsStatusByElementId.CallUnary(ctx, req)
 }
 
+// ListPools calls api.v0alpha.LMS.ListPools.
+func (c *lMSClient) ListPools(ctx context.Context, req *connect_go.Request[v0alpha.ListPoolsRequest]) (*connect_go.Response[v0alpha.ListPoolsResponse], error) {
+	return c.listPools.CallUnary(ctx, req)
+}
+
 // LMSHandler is an implementation of the api.v0alpha.LMS service.
 type LMSHandler interface {
 	GetPublicKey(context.Context, *connect_go.Request[v0alpha.GetPublicKeyReq]) (*connect_go.Response[v0alpha.PublicKey], error)
@@ -994,6 +1009,8 @@ type LMSHandler interface {
 	// returns all fields possible that an ehr entity type could return (that we know of)
 	GetAvailableEHRFields(context.Context, *connect_go.Request[v0alpha.EHREntityType]) (*connect_go.Response[v0alpha.Fields], error)
 	GetQueuedEventsStatusByElementId(context.Context, *connect_go.Request[v0alpha.ElementPK]) (*connect_go.Response[v0alpha.Events], error)
+	// List pools is a unary call to show finvi pools through exile
+	ListPools(context.Context, *connect_go.Request[v0alpha.ListPoolsRequest]) (*connect_go.Response[v0alpha.ListPoolsResponse], error)
 }
 
 // NewLMSHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -1292,6 +1309,11 @@ func NewLMSHandler(svc LMSHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.GetQueuedEventsStatusByElementId,
 		opts...,
 	)
+	lMSListPoolsHandler := connect_go.NewUnaryHandler(
+		LMSListPoolsProcedure,
+		svc.ListPools,
+		opts...,
+	)
 	return "/api.v0alpha.LMS/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case LMSGetPublicKeyProcedure:
@@ -1410,6 +1432,8 @@ func NewLMSHandler(svc LMSHandler, opts ...connect_go.HandlerOption) (string, ht
 			lMSGetAvailableEHRFieldsHandler.ServeHTTP(w, r)
 		case LMSGetQueuedEventsStatusByElementIdProcedure:
 			lMSGetQueuedEventsStatusByElementIdHandler.ServeHTTP(w, r)
+		case LMSListPoolsProcedure:
+			lMSListPoolsHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -1649,4 +1673,8 @@ func (UnimplementedLMSHandler) GetAvailableEHRFields(context.Context, *connect_g
 
 func (UnimplementedLMSHandler) GetQueuedEventsStatusByElementId(context.Context, *connect_go.Request[v0alpha.ElementPK]) (*connect_go.Response[v0alpha.Events], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.LMS.GetQueuedEventsStatusByElementId is not implemented"))
+}
+
+func (UnimplementedLMSHandler) ListPools(context.Context, *connect_go.Request[v0alpha.ListPoolsRequest]) (*connect_go.Response[v0alpha.ListPoolsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.LMS.ListPools is not implemented"))
 }
