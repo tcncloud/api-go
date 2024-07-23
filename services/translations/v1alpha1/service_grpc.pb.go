@@ -22,6 +22,7 @@ const (
 	TranslationsService_TranslateTemplate_FullMethodName      = "/services.translations.v1alpha1.TranslationsService/TranslateTemplate"
 	TranslationsService_ListTranslations_FullMethodName       = "/services.translations.v1alpha1.TranslationsService/ListTranslations"
 	TranslationsService_ListLanguages_FullMethodName          = "/services.translations.v1alpha1.TranslationsService/ListLanguages"
+	TranslationsService_ListContexts_FullMethodName           = "/services.translations.v1alpha1.TranslationsService/ListContexts"
 	TranslationsService_UpdateTranslation_FullMethodName      = "/services.translations.v1alpha1.TranslationsService/UpdateTranslation"
 	TranslationsService_TriggerLLMTranslation_FullMethodName  = "/services.translations.v1alpha1.TranslationsService/TriggerLLMTranslation"
 	TranslationsService_TriggerLLMTranslations_FullMethodName = "/services.translations.v1alpha1.TranslationsService/TriggerLLMTranslations"
@@ -37,7 +38,7 @@ type TranslationsServiceClient interface {
 	// Translate a template for a given context and language.
 	// Required permissions:
 	//
-	//	Any Authenticated User (TODO: Validate this assumption)
+	//	Any Authenticated User
 	//
 	// Errors:
 	//   - grpc.AlreadyExists : This template is already translated for the given context and language.
@@ -53,8 +54,12 @@ type TranslationsServiceClient interface {
 	ListTranslations(ctx context.Context, in *ListTranslationsRequest, opts ...grpc.CallOption) (*ListTranslationsResponse, error)
 	// Lists localization languages
 	// Required permissions:
-	//   - PERMISSION_CUSTOMER_SUPPORT
+	//   - Any Authenticated User
 	ListLanguages(ctx context.Context, in *ListLanguagesRequest, opts ...grpc.CallOption) (*ListLanguagesResponse, error)
+	// Lists localization contexts
+	// Required permissions:
+	//   - PERMISSION_CUSTOMER_SUPPORT
+	ListContexts(ctx context.Context, in *ListContextsRequest, opts ...grpc.CallOption) (*ListContextsResponse, error)
 	// Overrides the translation for a given translationID
 	// Required permissions:
 	//   - PERMISSION_CUSTOMER_SUPPORT
@@ -131,6 +136,16 @@ func (c *translationsServiceClient) ListLanguages(ctx context.Context, in *ListL
 	return out, nil
 }
 
+func (c *translationsServiceClient) ListContexts(ctx context.Context, in *ListContextsRequest, opts ...grpc.CallOption) (*ListContextsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListContextsResponse)
+	err := c.cc.Invoke(ctx, TranslationsService_ListContexts_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *translationsServiceClient) UpdateTranslation(ctx context.Context, in *UpdateTranslationRequest, opts ...grpc.CallOption) (*UpdateTranslationResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(UpdateTranslationResponse)
@@ -198,7 +213,7 @@ type TranslationsServiceServer interface {
 	// Translate a template for a given context and language.
 	// Required permissions:
 	//
-	//	Any Authenticated User (TODO: Validate this assumption)
+	//	Any Authenticated User
 	//
 	// Errors:
 	//   - grpc.AlreadyExists : This template is already translated for the given context and language.
@@ -214,8 +229,12 @@ type TranslationsServiceServer interface {
 	ListTranslations(context.Context, *ListTranslationsRequest) (*ListTranslationsResponse, error)
 	// Lists localization languages
 	// Required permissions:
-	//   - PERMISSION_CUSTOMER_SUPPORT
+	//   - Any Authenticated User
 	ListLanguages(context.Context, *ListLanguagesRequest) (*ListLanguagesResponse, error)
+	// Lists localization contexts
+	// Required permissions:
+	//   - PERMISSION_CUSTOMER_SUPPORT
+	ListContexts(context.Context, *ListContextsRequest) (*ListContextsResponse, error)
 	// Overrides the translation for a given translationID
 	// Required permissions:
 	//   - PERMISSION_CUSTOMER_SUPPORT
@@ -267,6 +286,9 @@ func (UnimplementedTranslationsServiceServer) ListTranslations(context.Context, 
 }
 func (UnimplementedTranslationsServiceServer) ListLanguages(context.Context, *ListLanguagesRequest) (*ListLanguagesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListLanguages not implemented")
+}
+func (UnimplementedTranslationsServiceServer) ListContexts(context.Context, *ListContextsRequest) (*ListContextsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListContexts not implemented")
 }
 func (UnimplementedTranslationsServiceServer) UpdateTranslation(context.Context, *UpdateTranslationRequest) (*UpdateTranslationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateTranslation not implemented")
@@ -349,6 +371,24 @@ func _TranslationsService_ListLanguages_Handler(srv interface{}, ctx context.Con
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TranslationsServiceServer).ListLanguages(ctx, req.(*ListLanguagesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TranslationsService_ListContexts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListContextsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TranslationsServiceServer).ListContexts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TranslationsService_ListContexts_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TranslationsServiceServer).ListContexts(ctx, req.(*ListContextsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -479,6 +519,10 @@ var TranslationsService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListLanguages",
 			Handler:    _TranslationsService_ListLanguages_Handler,
+		},
+		{
+			MethodName: "ListContexts",
+			Handler:    _TranslationsService_ListContexts_Handler,
 		},
 		{
 			MethodName: "UpdateTranslation",
