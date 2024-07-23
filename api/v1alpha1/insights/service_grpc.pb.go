@@ -74,7 +74,7 @@ type InsightsClient interface {
 	// CreateOutputConfiguration creates an output configuration
 	CreateOutputConfiguration(ctx context.Context, in *CreateOutputConfigurationRequest, opts ...grpc.CallOption) (*CreateOutputConfigurationResponse, error)
 	// ListOutputConfigurations lists output configurations for an insight
-	ListOutputConfigurations(ctx context.Context, in *ListOutputConfigurationsRequest, opts ...grpc.CallOption) (Insights_ListOutputConfigurationsClient, error)
+	ListOutputConfigurations(ctx context.Context, in *ListOutputConfigurationsRequest, opts ...grpc.CallOption) (*ListOutputConfigurationsResponse, error)
 	// UpdateOutputConfiguration updates an output configuration
 	UpdateOutputConfiguration(ctx context.Context, in *UpdateOutputConfigurationRequest, opts ...grpc.CallOption) (*UpdateOutputConfigurationResponse, error)
 	// DeleteOutputConfiguration deletes an output configuration
@@ -235,37 +235,14 @@ func (c *insightsClient) CreateOutputConfiguration(ctx context.Context, in *Crea
 	return out, nil
 }
 
-func (c *insightsClient) ListOutputConfigurations(ctx context.Context, in *ListOutputConfigurationsRequest, opts ...grpc.CallOption) (Insights_ListOutputConfigurationsClient, error) {
+func (c *insightsClient) ListOutputConfigurations(ctx context.Context, in *ListOutputConfigurationsRequest, opts ...grpc.CallOption) (*ListOutputConfigurationsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &Insights_ServiceDesc.Streams[0], Insights_ListOutputConfigurations_FullMethodName, cOpts...)
+	out := new(ListOutputConfigurationsResponse)
+	err := c.cc.Invoke(ctx, Insights_ListOutputConfigurations_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &insightsListOutputConfigurationsClient{ClientStream: stream}
-	if err := x.ClientStream.SendMsg(in); err != nil {
-		return nil, err
-	}
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	return x, nil
-}
-
-type Insights_ListOutputConfigurationsClient interface {
-	Recv() (*ListOutputConfigurationsResponse, error)
-	grpc.ClientStream
-}
-
-type insightsListOutputConfigurationsClient struct {
-	grpc.ClientStream
-}
-
-func (x *insightsListOutputConfigurationsClient) Recv() (*ListOutputConfigurationsResponse, error) {
-	m := new(ListOutputConfigurationsResponse)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
+	return out, nil
 }
 
 func (c *insightsClient) UpdateOutputConfiguration(ctx context.Context, in *UpdateOutputConfigurationRequest, opts ...grpc.CallOption) (*UpdateOutputConfigurationResponse, error) {
@@ -351,7 +328,7 @@ type InsightsServer interface {
 	// CreateOutputConfiguration creates an output configuration
 	CreateOutputConfiguration(context.Context, *CreateOutputConfigurationRequest) (*CreateOutputConfigurationResponse, error)
 	// ListOutputConfigurations lists output configurations for an insight
-	ListOutputConfigurations(*ListOutputConfigurationsRequest, Insights_ListOutputConfigurationsServer) error
+	ListOutputConfigurations(context.Context, *ListOutputConfigurationsRequest) (*ListOutputConfigurationsResponse, error)
 	// UpdateOutputConfiguration updates an output configuration
 	UpdateOutputConfiguration(context.Context, *UpdateOutputConfigurationRequest) (*UpdateOutputConfigurationResponse, error)
 	// DeleteOutputConfiguration deletes an output configuration
@@ -411,8 +388,8 @@ func (UnimplementedInsightsServer) PublishInsight(context.Context, *PublishInsig
 func (UnimplementedInsightsServer) CreateOutputConfiguration(context.Context, *CreateOutputConfigurationRequest) (*CreateOutputConfigurationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateOutputConfiguration not implemented")
 }
-func (UnimplementedInsightsServer) ListOutputConfigurations(*ListOutputConfigurationsRequest, Insights_ListOutputConfigurationsServer) error {
-	return status.Errorf(codes.Unimplemented, "method ListOutputConfigurations not implemented")
+func (UnimplementedInsightsServer) ListOutputConfigurations(context.Context, *ListOutputConfigurationsRequest) (*ListOutputConfigurationsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListOutputConfigurations not implemented")
 }
 func (UnimplementedInsightsServer) UpdateOutputConfiguration(context.Context, *UpdateOutputConfigurationRequest) (*UpdateOutputConfigurationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateOutputConfiguration not implemented")
@@ -694,25 +671,22 @@ func _Insights_CreateOutputConfiguration_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Insights_ListOutputConfigurations_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(ListOutputConfigurationsRequest)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
+func _Insights_ListOutputConfigurations_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListOutputConfigurationsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
 	}
-	return srv.(InsightsServer).ListOutputConfigurations(m, &insightsListOutputConfigurationsServer{ServerStream: stream})
-}
-
-type Insights_ListOutputConfigurationsServer interface {
-	Send(*ListOutputConfigurationsResponse) error
-	grpc.ServerStream
-}
-
-type insightsListOutputConfigurationsServer struct {
-	grpc.ServerStream
-}
-
-func (x *insightsListOutputConfigurationsServer) Send(m *ListOutputConfigurationsResponse) error {
-	return x.ServerStream.SendMsg(m)
+	if interceptor == nil {
+		return srv.(InsightsServer).ListOutputConfigurations(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Insights_ListOutputConfigurations_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InsightsServer).ListOutputConfigurations(ctx, req.(*ListOutputConfigurationsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _Insights_UpdateOutputConfiguration_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -869,6 +843,10 @@ var Insights_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Insights_CreateOutputConfiguration_Handler,
 		},
 		{
+			MethodName: "ListOutputConfigurations",
+			Handler:    _Insights_ListOutputConfigurations_Handler,
+		},
+		{
 			MethodName: "UpdateOutputConfiguration",
 			Handler:    _Insights_UpdateOutputConfiguration_Handler,
 		},
@@ -889,12 +867,6 @@ var Insights_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Insights_GetDefaultOutputConfiguration_Handler,
 		},
 	},
-	Streams: []grpc.StreamDesc{
-		{
-			StreamName:    "ListOutputConfigurations",
-			Handler:       _Insights_ListOutputConfigurations_Handler,
-			ServerStreams: true,
-		},
-	},
+	Streams:  []grpc.StreamDesc{},
 	Metadata: "api/v1alpha1/insights/service.proto",
 }

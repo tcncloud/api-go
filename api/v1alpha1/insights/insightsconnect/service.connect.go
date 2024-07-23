@@ -117,7 +117,7 @@ type InsightsClient interface {
 	// CreateOutputConfiguration creates an output configuration
 	CreateOutputConfiguration(context.Context, *connect_go.Request[insights.CreateOutputConfigurationRequest]) (*connect_go.Response[insights.CreateOutputConfigurationResponse], error)
 	// ListOutputConfigurations lists output configurations for an insight
-	ListOutputConfigurations(context.Context, *connect_go.Request[insights.ListOutputConfigurationsRequest]) (*connect_go.ServerStreamForClient[insights.ListOutputConfigurationsResponse], error)
+	ListOutputConfigurations(context.Context, *connect_go.Request[insights.ListOutputConfigurationsRequest]) (*connect_go.Response[insights.ListOutputConfigurationsResponse], error)
 	// UpdateOutputConfiguration updates an output configuration
 	UpdateOutputConfiguration(context.Context, *connect_go.Request[insights.UpdateOutputConfigurationRequest]) (*connect_go.Response[insights.UpdateOutputConfigurationResponse], error)
 	// DeleteOutputConfiguration deletes an output configuration
@@ -338,8 +338,8 @@ func (c *insightsClient) CreateOutputConfiguration(ctx context.Context, req *con
 }
 
 // ListOutputConfigurations calls api.v1alpha1.insights.Insights.ListOutputConfigurations.
-func (c *insightsClient) ListOutputConfigurations(ctx context.Context, req *connect_go.Request[insights.ListOutputConfigurationsRequest]) (*connect_go.ServerStreamForClient[insights.ListOutputConfigurationsResponse], error) {
-	return c.listOutputConfigurations.CallServerStream(ctx, req)
+func (c *insightsClient) ListOutputConfigurations(ctx context.Context, req *connect_go.Request[insights.ListOutputConfigurationsRequest]) (*connect_go.Response[insights.ListOutputConfigurationsResponse], error) {
+	return c.listOutputConfigurations.CallUnary(ctx, req)
 }
 
 // UpdateOutputConfiguration calls api.v1alpha1.insights.Insights.UpdateOutputConfiguration.
@@ -398,7 +398,7 @@ type InsightsHandler interface {
 	// CreateOutputConfiguration creates an output configuration
 	CreateOutputConfiguration(context.Context, *connect_go.Request[insights.CreateOutputConfigurationRequest]) (*connect_go.Response[insights.CreateOutputConfigurationResponse], error)
 	// ListOutputConfigurations lists output configurations for an insight
-	ListOutputConfigurations(context.Context, *connect_go.Request[insights.ListOutputConfigurationsRequest], *connect_go.ServerStream[insights.ListOutputConfigurationsResponse]) error
+	ListOutputConfigurations(context.Context, *connect_go.Request[insights.ListOutputConfigurationsRequest]) (*connect_go.Response[insights.ListOutputConfigurationsResponse], error)
 	// UpdateOutputConfiguration updates an output configuration
 	UpdateOutputConfiguration(context.Context, *connect_go.Request[insights.UpdateOutputConfigurationRequest]) (*connect_go.Response[insights.UpdateOutputConfigurationResponse], error)
 	// DeleteOutputConfiguration deletes an output configuration
@@ -487,7 +487,7 @@ func NewInsightsHandler(svc InsightsHandler, opts ...connect_go.HandlerOption) (
 		svc.CreateOutputConfiguration,
 		opts...,
 	)
-	insightsListOutputConfigurationsHandler := connect_go.NewServerStreamHandler(
+	insightsListOutputConfigurationsHandler := connect_go.NewUnaryHandler(
 		InsightsListOutputConfigurationsProcedure,
 		svc.ListOutputConfigurations,
 		opts...,
@@ -624,8 +624,8 @@ func (UnimplementedInsightsHandler) CreateOutputConfiguration(context.Context, *
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.insights.Insights.CreateOutputConfiguration is not implemented"))
 }
 
-func (UnimplementedInsightsHandler) ListOutputConfigurations(context.Context, *connect_go.Request[insights.ListOutputConfigurationsRequest], *connect_go.ServerStream[insights.ListOutputConfigurationsResponse]) error {
-	return connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.insights.Insights.ListOutputConfigurations is not implemented"))
+func (UnimplementedInsightsHandler) ListOutputConfigurations(context.Context, *connect_go.Request[insights.ListOutputConfigurationsRequest]) (*connect_go.Response[insights.ListOutputConfigurationsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.insights.Insights.ListOutputConfigurations is not implemented"))
 }
 
 func (UnimplementedInsightsHandler) UpdateOutputConfiguration(context.Context, *connect_go.Request[insights.UpdateOutputConfigurationRequest]) (*connect_go.Response[insights.UpdateOutputConfigurationResponse], error) {
