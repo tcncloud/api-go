@@ -211,6 +211,10 @@ const (
 	WFM_ListAgentStatesForDay_FullMethodName                         = "/api.v1alpha1.wfm.WFM/ListAgentStatesForDay"
 	WFM_ListRealTimeManagementStates_FullMethodName                  = "/api.v1alpha1.wfm.WFM/ListRealTimeManagementStates"
 	WFM_ListRealTimeManagementStateColors_FullMethodName             = "/api.v1alpha1.wfm.WFM/ListRealTimeManagementStateColors"
+	WFM_CreateRgbaColor_FullMethodName                               = "/api.v1alpha1.wfm.WFM/CreateRgbaColor"
+	WFM_ListRgbaColors_FullMethodName                                = "/api.v1alpha1.wfm.WFM/ListRgbaColors"
+	WFM_UpdateRgbaColor_FullMethodName                               = "/api.v1alpha1.wfm.WFM/UpdateRgbaColor"
+	WFM_DeleteRgbaColor_FullMethodName                               = "/api.v1alpha1.wfm.WFM/DeleteRgbaColor"
 )
 
 // WFMClient is the client API for WFM service.
@@ -1633,6 +1637,27 @@ type WFMClient interface {
 	//   - grpc.Invalid: on invalid input.
 	//   - grpc.Internal: on unexpected error.
 	ListRealTimeManagementStateColors(ctx context.Context, in *ListRealTimeManagementStateColorsRequest, opts ...grpc.CallOption) (*ListRealTimeManagementStateColorsResponse, error)
+	// Creates the given @color for the org sending the request.
+	// Errors:
+	//   - grpc.Invalid: the values on the given @color are invalid.
+	//   - grpc.Internal: error occurs when creating the given @color or an rgba with @color.name already exists.
+	CreateRgbaColor(ctx context.Context, in *CreateRgbaColorRequest, opts ...grpc.CallOption) (*CreateRgbaColorResponse, error)
+	// Lists all rbga colors for the org sending the request.
+	// Errors:
+	//   - grpc.Internal: error occurs when listing the @colors.
+	ListRgbaColors(ctx context.Context, in *ListRgbaColorsRequest, opts ...grpc.CallOption) (*ListRgbaColorsResponse, error)
+	// Updates the given @color for the org sending the request.
+	// Returns the updated rgba color after it has been updated.
+	// Errors:
+	//   - grpc.Internal: error occurs when updating the rgba color, or getting the updated color.
+	//   - grpc.NotFound: the color with @color.rgba_color_id does not exist.
+	UpdateRgbaColor(ctx context.Context, in *UpdateRgbaColorRequest, opts ...grpc.CallOption) (*UpdateRgbaColorResponse, error)
+	// Delete the rgba color with the @rgba_color_id for the org sending the request.
+	// Deletes any real time management state colors that are using @rgba_color_id, leaving them with their default colors.option
+	// Errors:
+	//   - grpc.Invalid: the @rgba_color_id is invalid or does not exist.
+	//   - grpc.Internal: error occurs when deleting the rgba color or real time management state colors.
+	DeleteRgbaColor(ctx context.Context, in *DeleteRgbaColorRequest, opts ...grpc.CallOption) (*DeleteRgbaColorResponse, error)
 }
 
 type wFMClient struct {
@@ -3567,6 +3592,46 @@ func (c *wFMClient) ListRealTimeManagementStateColors(ctx context.Context, in *L
 	return out, nil
 }
 
+func (c *wFMClient) CreateRgbaColor(ctx context.Context, in *CreateRgbaColorRequest, opts ...grpc.CallOption) (*CreateRgbaColorResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateRgbaColorResponse)
+	err := c.cc.Invoke(ctx, WFM_CreateRgbaColor_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) ListRgbaColors(ctx context.Context, in *ListRgbaColorsRequest, opts ...grpc.CallOption) (*ListRgbaColorsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListRgbaColorsResponse)
+	err := c.cc.Invoke(ctx, WFM_ListRgbaColors_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) UpdateRgbaColor(ctx context.Context, in *UpdateRgbaColorRequest, opts ...grpc.CallOption) (*UpdateRgbaColorResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateRgbaColorResponse)
+	err := c.cc.Invoke(ctx, WFM_UpdateRgbaColor_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) DeleteRgbaColor(ctx context.Context, in *DeleteRgbaColorRequest, opts ...grpc.CallOption) (*DeleteRgbaColorResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteRgbaColorResponse)
+	err := c.cc.Invoke(ctx, WFM_DeleteRgbaColor_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WFMServer is the server API for WFM service.
 // All implementations must embed UnimplementedWFMServer
 // for forward compatibility
@@ -4987,6 +5052,27 @@ type WFMServer interface {
 	//   - grpc.Invalid: on invalid input.
 	//   - grpc.Internal: on unexpected error.
 	ListRealTimeManagementStateColors(context.Context, *ListRealTimeManagementStateColorsRequest) (*ListRealTimeManagementStateColorsResponse, error)
+	// Creates the given @color for the org sending the request.
+	// Errors:
+	//   - grpc.Invalid: the values on the given @color are invalid.
+	//   - grpc.Internal: error occurs when creating the given @color or an rgba with @color.name already exists.
+	CreateRgbaColor(context.Context, *CreateRgbaColorRequest) (*CreateRgbaColorResponse, error)
+	// Lists all rbga colors for the org sending the request.
+	// Errors:
+	//   - grpc.Internal: error occurs when listing the @colors.
+	ListRgbaColors(context.Context, *ListRgbaColorsRequest) (*ListRgbaColorsResponse, error)
+	// Updates the given @color for the org sending the request.
+	// Returns the updated rgba color after it has been updated.
+	// Errors:
+	//   - grpc.Internal: error occurs when updating the rgba color, or getting the updated color.
+	//   - grpc.NotFound: the color with @color.rgba_color_id does not exist.
+	UpdateRgbaColor(context.Context, *UpdateRgbaColorRequest) (*UpdateRgbaColorResponse, error)
+	// Delete the rgba color with the @rgba_color_id for the org sending the request.
+	// Deletes any real time management state colors that are using @rgba_color_id, leaving them with their default colors.option
+	// Errors:
+	//   - grpc.Invalid: the @rgba_color_id is invalid or does not exist.
+	//   - grpc.Internal: error occurs when deleting the rgba color or real time management state colors.
+	DeleteRgbaColor(context.Context, *DeleteRgbaColorRequest) (*DeleteRgbaColorResponse, error)
 	mustEmbedUnimplementedWFMServer()
 }
 
@@ -5527,6 +5613,18 @@ func (UnimplementedWFMServer) ListRealTimeManagementStates(context.Context, *Lis
 }
 func (UnimplementedWFMServer) ListRealTimeManagementStateColors(context.Context, *ListRealTimeManagementStateColorsRequest) (*ListRealTimeManagementStateColorsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListRealTimeManagementStateColors not implemented")
+}
+func (UnimplementedWFMServer) CreateRgbaColor(context.Context, *CreateRgbaColorRequest) (*CreateRgbaColorResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateRgbaColor not implemented")
+}
+func (UnimplementedWFMServer) ListRgbaColors(context.Context, *ListRgbaColorsRequest) (*ListRgbaColorsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListRgbaColors not implemented")
+}
+func (UnimplementedWFMServer) UpdateRgbaColor(context.Context, *UpdateRgbaColorRequest) (*UpdateRgbaColorResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateRgbaColor not implemented")
+}
+func (UnimplementedWFMServer) DeleteRgbaColor(context.Context, *DeleteRgbaColorRequest) (*DeleteRgbaColorResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteRgbaColor not implemented")
 }
 func (UnimplementedWFMServer) mustEmbedUnimplementedWFMServer() {}
 
@@ -8763,6 +8861,78 @@ func _WFM_ListRealTimeManagementStateColors_Handler(srv interface{}, ctx context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_CreateRgbaColor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateRgbaColorRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).CreateRgbaColor(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_CreateRgbaColor_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).CreateRgbaColor(ctx, req.(*CreateRgbaColorRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_ListRgbaColors_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListRgbaColorsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).ListRgbaColors(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_ListRgbaColors_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).ListRgbaColors(ctx, req.(*ListRgbaColorsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_UpdateRgbaColor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateRgbaColorRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).UpdateRgbaColor(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_UpdateRgbaColor_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).UpdateRgbaColor(ctx, req.(*UpdateRgbaColorRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_DeleteRgbaColor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteRgbaColorRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).DeleteRgbaColor(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_DeleteRgbaColor_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).DeleteRgbaColor(ctx, req.(*DeleteRgbaColorRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WFM_ServiceDesc is the grpc.ServiceDesc for WFM service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -9457,6 +9627,22 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListRealTimeManagementStateColors",
 			Handler:    _WFM_ListRealTimeManagementStateColors_Handler,
+		},
+		{
+			MethodName: "CreateRgbaColor",
+			Handler:    _WFM_CreateRgbaColor_Handler,
+		},
+		{
+			MethodName: "ListRgbaColors",
+			Handler:    _WFM_ListRgbaColors_Handler,
+		},
+		{
+			MethodName: "UpdateRgbaColor",
+			Handler:    _WFM_UpdateRgbaColor_Handler,
+		},
+		{
+			MethodName: "DeleteRgbaColor",
+			Handler:    _WFM_DeleteRgbaColor_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

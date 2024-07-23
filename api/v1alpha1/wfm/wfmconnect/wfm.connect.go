@@ -539,6 +539,14 @@ const (
 	// WFMListRealTimeManagementStateColorsProcedure is the fully-qualified name of the WFM's
 	// ListRealTimeManagementStateColors RPC.
 	WFMListRealTimeManagementStateColorsProcedure = "/api.v1alpha1.wfm.WFM/ListRealTimeManagementStateColors"
+	// WFMCreateRgbaColorProcedure is the fully-qualified name of the WFM's CreateRgbaColor RPC.
+	WFMCreateRgbaColorProcedure = "/api.v1alpha1.wfm.WFM/CreateRgbaColor"
+	// WFMListRgbaColorsProcedure is the fully-qualified name of the WFM's ListRgbaColors RPC.
+	WFMListRgbaColorsProcedure = "/api.v1alpha1.wfm.WFM/ListRgbaColors"
+	// WFMUpdateRgbaColorProcedure is the fully-qualified name of the WFM's UpdateRgbaColor RPC.
+	WFMUpdateRgbaColorProcedure = "/api.v1alpha1.wfm.WFM/UpdateRgbaColor"
+	// WFMDeleteRgbaColorProcedure is the fully-qualified name of the WFM's DeleteRgbaColor RPC.
+	WFMDeleteRgbaColorProcedure = "/api.v1alpha1.wfm.WFM/DeleteRgbaColor"
 )
 
 // WFMClient is a client for the api.v1alpha1.wfm.WFM service.
@@ -1963,6 +1971,27 @@ type WFMClient interface {
 	//   - grpc.Invalid: on invalid input.
 	//   - grpc.Internal: on unexpected error.
 	ListRealTimeManagementStateColors(context.Context, *connect_go.Request[wfm.ListRealTimeManagementStateColorsRequest]) (*connect_go.Response[wfm.ListRealTimeManagementStateColorsResponse], error)
+	// Creates the given @color for the org sending the request.
+	// Errors:
+	//   - grpc.Invalid: the values on the given @color are invalid.
+	//   - grpc.Internal: error occurs when creating the given @color or an rgba with @color.name already exists.
+	CreateRgbaColor(context.Context, *connect_go.Request[wfm.CreateRgbaColorRequest]) (*connect_go.Response[wfm.CreateRgbaColorResponse], error)
+	// Lists all rbga colors for the org sending the request.
+	// Errors:
+	//   - grpc.Internal: error occurs when listing the @colors.
+	ListRgbaColors(context.Context, *connect_go.Request[wfm.ListRgbaColorsRequest]) (*connect_go.Response[wfm.ListRgbaColorsResponse], error)
+	// Updates the given @color for the org sending the request.
+	// Returns the updated rgba color after it has been updated.
+	// Errors:
+	//   - grpc.Internal: error occurs when updating the rgba color, or getting the updated color.
+	//   - grpc.NotFound: the color with @color.rgba_color_id does not exist.
+	UpdateRgbaColor(context.Context, *connect_go.Request[wfm.UpdateRgbaColorRequest]) (*connect_go.Response[wfm.UpdateRgbaColorResponse], error)
+	// Delete the rgba color with the @rgba_color_id for the org sending the request.
+	// Deletes any real time management state colors that are using @rgba_color_id, leaving them with their default colors.option
+	// Errors:
+	//   - grpc.Invalid: the @rgba_color_id is invalid or does not exist.
+	//   - grpc.Internal: error occurs when deleting the rgba color or real time management state colors.
+	DeleteRgbaColor(context.Context, *connect_go.Request[wfm.DeleteRgbaColorRequest]) (*connect_go.Response[wfm.DeleteRgbaColorResponse], error)
 }
 
 // NewWFMClient constructs a client for the api.v1alpha1.wfm.WFM service. By default, it uses the
@@ -2865,6 +2894,26 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMListRealTimeManagementStateColorsProcedure,
 			opts...,
 		),
+		createRgbaColor: connect_go.NewClient[wfm.CreateRgbaColorRequest, wfm.CreateRgbaColorResponse](
+			httpClient,
+			baseURL+WFMCreateRgbaColorProcedure,
+			opts...,
+		),
+		listRgbaColors: connect_go.NewClient[wfm.ListRgbaColorsRequest, wfm.ListRgbaColorsResponse](
+			httpClient,
+			baseURL+WFMListRgbaColorsProcedure,
+			opts...,
+		),
+		updateRgbaColor: connect_go.NewClient[wfm.UpdateRgbaColorRequest, wfm.UpdateRgbaColorResponse](
+			httpClient,
+			baseURL+WFMUpdateRgbaColorProcedure,
+			opts...,
+		),
+		deleteRgbaColor: connect_go.NewClient[wfm.DeleteRgbaColorRequest, wfm.DeleteRgbaColorResponse](
+			httpClient,
+			baseURL+WFMDeleteRgbaColorProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -3048,6 +3097,10 @@ type wFMClient struct {
 	listAgentStatesForDay                         *connect_go.Client[wfm.ListAgentStatesForDayRequest, wfm.ListAgentStatesForDayResponse]
 	listRealTimeManagementStates                  *connect_go.Client[wfm.ListRealTimeManagementStatesRequest, wfm.ListRealTimeManagementStatesResponse]
 	listRealTimeManagementStateColors             *connect_go.Client[wfm.ListRealTimeManagementStateColorsRequest, wfm.ListRealTimeManagementStateColorsResponse]
+	createRgbaColor                               *connect_go.Client[wfm.CreateRgbaColorRequest, wfm.CreateRgbaColorResponse]
+	listRgbaColors                                *connect_go.Client[wfm.ListRgbaColorsRequest, wfm.ListRgbaColorsResponse]
+	updateRgbaColor                               *connect_go.Client[wfm.UpdateRgbaColorRequest, wfm.UpdateRgbaColorResponse]
+	deleteRgbaColor                               *connect_go.Client[wfm.DeleteRgbaColorRequest, wfm.DeleteRgbaColorResponse]
 }
 
 // PerformInitialClientSetup calls api.v1alpha1.wfm.WFM.PerformInitialClientSetup.
@@ -3963,6 +4016,26 @@ func (c *wFMClient) ListRealTimeManagementStates(ctx context.Context, req *conne
 // ListRealTimeManagementStateColors calls api.v1alpha1.wfm.WFM.ListRealTimeManagementStateColors.
 func (c *wFMClient) ListRealTimeManagementStateColors(ctx context.Context, req *connect_go.Request[wfm.ListRealTimeManagementStateColorsRequest]) (*connect_go.Response[wfm.ListRealTimeManagementStateColorsResponse], error) {
 	return c.listRealTimeManagementStateColors.CallUnary(ctx, req)
+}
+
+// CreateRgbaColor calls api.v1alpha1.wfm.WFM.CreateRgbaColor.
+func (c *wFMClient) CreateRgbaColor(ctx context.Context, req *connect_go.Request[wfm.CreateRgbaColorRequest]) (*connect_go.Response[wfm.CreateRgbaColorResponse], error) {
+	return c.createRgbaColor.CallUnary(ctx, req)
+}
+
+// ListRgbaColors calls api.v1alpha1.wfm.WFM.ListRgbaColors.
+func (c *wFMClient) ListRgbaColors(ctx context.Context, req *connect_go.Request[wfm.ListRgbaColorsRequest]) (*connect_go.Response[wfm.ListRgbaColorsResponse], error) {
+	return c.listRgbaColors.CallUnary(ctx, req)
+}
+
+// UpdateRgbaColor calls api.v1alpha1.wfm.WFM.UpdateRgbaColor.
+func (c *wFMClient) UpdateRgbaColor(ctx context.Context, req *connect_go.Request[wfm.UpdateRgbaColorRequest]) (*connect_go.Response[wfm.UpdateRgbaColorResponse], error) {
+	return c.updateRgbaColor.CallUnary(ctx, req)
+}
+
+// DeleteRgbaColor calls api.v1alpha1.wfm.WFM.DeleteRgbaColor.
+func (c *wFMClient) DeleteRgbaColor(ctx context.Context, req *connect_go.Request[wfm.DeleteRgbaColorRequest]) (*connect_go.Response[wfm.DeleteRgbaColorResponse], error) {
+	return c.deleteRgbaColor.CallUnary(ctx, req)
 }
 
 // WFMHandler is an implementation of the api.v1alpha1.wfm.WFM service.
@@ -5387,6 +5460,27 @@ type WFMHandler interface {
 	//   - grpc.Invalid: on invalid input.
 	//   - grpc.Internal: on unexpected error.
 	ListRealTimeManagementStateColors(context.Context, *connect_go.Request[wfm.ListRealTimeManagementStateColorsRequest]) (*connect_go.Response[wfm.ListRealTimeManagementStateColorsResponse], error)
+	// Creates the given @color for the org sending the request.
+	// Errors:
+	//   - grpc.Invalid: the values on the given @color are invalid.
+	//   - grpc.Internal: error occurs when creating the given @color or an rgba with @color.name already exists.
+	CreateRgbaColor(context.Context, *connect_go.Request[wfm.CreateRgbaColorRequest]) (*connect_go.Response[wfm.CreateRgbaColorResponse], error)
+	// Lists all rbga colors for the org sending the request.
+	// Errors:
+	//   - grpc.Internal: error occurs when listing the @colors.
+	ListRgbaColors(context.Context, *connect_go.Request[wfm.ListRgbaColorsRequest]) (*connect_go.Response[wfm.ListRgbaColorsResponse], error)
+	// Updates the given @color for the org sending the request.
+	// Returns the updated rgba color after it has been updated.
+	// Errors:
+	//   - grpc.Internal: error occurs when updating the rgba color, or getting the updated color.
+	//   - grpc.NotFound: the color with @color.rgba_color_id does not exist.
+	UpdateRgbaColor(context.Context, *connect_go.Request[wfm.UpdateRgbaColorRequest]) (*connect_go.Response[wfm.UpdateRgbaColorResponse], error)
+	// Delete the rgba color with the @rgba_color_id for the org sending the request.
+	// Deletes any real time management state colors that are using @rgba_color_id, leaving them with their default colors.option
+	// Errors:
+	//   - grpc.Invalid: the @rgba_color_id is invalid or does not exist.
+	//   - grpc.Internal: error occurs when deleting the rgba color or real time management state colors.
+	DeleteRgbaColor(context.Context, *connect_go.Request[wfm.DeleteRgbaColorRequest]) (*connect_go.Response[wfm.DeleteRgbaColorResponse], error)
 }
 
 // NewWFMHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -6285,6 +6379,26 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.ListRealTimeManagementStateColors,
 		opts...,
 	)
+	wFMCreateRgbaColorHandler := connect_go.NewUnaryHandler(
+		WFMCreateRgbaColorProcedure,
+		svc.CreateRgbaColor,
+		opts...,
+	)
+	wFMListRgbaColorsHandler := connect_go.NewUnaryHandler(
+		WFMListRgbaColorsProcedure,
+		svc.ListRgbaColors,
+		opts...,
+	)
+	wFMUpdateRgbaColorHandler := connect_go.NewUnaryHandler(
+		WFMUpdateRgbaColorProcedure,
+		svc.UpdateRgbaColor,
+		opts...,
+	)
+	wFMDeleteRgbaColorHandler := connect_go.NewUnaryHandler(
+		WFMDeleteRgbaColorProcedure,
+		svc.DeleteRgbaColor,
+		opts...,
+	)
 	return "/api.v1alpha1.wfm.WFM/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case WFMPerformInitialClientSetupProcedure:
@@ -6643,6 +6757,14 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMListRealTimeManagementStatesHandler.ServeHTTP(w, r)
 		case WFMListRealTimeManagementStateColorsProcedure:
 			wFMListRealTimeManagementStateColorsHandler.ServeHTTP(w, r)
+		case WFMCreateRgbaColorProcedure:
+			wFMCreateRgbaColorHandler.ServeHTTP(w, r)
+		case WFMListRgbaColorsProcedure:
+			wFMListRgbaColorsHandler.ServeHTTP(w, r)
+		case WFMUpdateRgbaColorProcedure:
+			wFMUpdateRgbaColorHandler.ServeHTTP(w, r)
+		case WFMDeleteRgbaColorProcedure:
+			wFMDeleteRgbaColorHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -7362,4 +7484,20 @@ func (UnimplementedWFMHandler) ListRealTimeManagementStates(context.Context, *co
 
 func (UnimplementedWFMHandler) ListRealTimeManagementStateColors(context.Context, *connect_go.Request[wfm.ListRealTimeManagementStateColorsRequest]) (*connect_go.Response[wfm.ListRealTimeManagementStateColorsResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListRealTimeManagementStateColors is not implemented"))
+}
+
+func (UnimplementedWFMHandler) CreateRgbaColor(context.Context, *connect_go.Request[wfm.CreateRgbaColorRequest]) (*connect_go.Response[wfm.CreateRgbaColorResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.CreateRgbaColor is not implemented"))
+}
+
+func (UnimplementedWFMHandler) ListRgbaColors(context.Context, *connect_go.Request[wfm.ListRgbaColorsRequest]) (*connect_go.Response[wfm.ListRgbaColorsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListRgbaColors is not implemented"))
+}
+
+func (UnimplementedWFMHandler) UpdateRgbaColor(context.Context, *connect_go.Request[wfm.UpdateRgbaColorRequest]) (*connect_go.Response[wfm.UpdateRgbaColorResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.UpdateRgbaColor is not implemented"))
+}
+
+func (UnimplementedWFMHandler) DeleteRgbaColor(context.Context, *connect_go.Request[wfm.DeleteRgbaColorRequest]) (*connect_go.Response[wfm.DeleteRgbaColorResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.DeleteRgbaColor is not implemented"))
 }
