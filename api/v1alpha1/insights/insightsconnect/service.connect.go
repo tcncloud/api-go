@@ -63,6 +63,27 @@ const (
 	InsightsListVfsSchemasProcedure = "/api.v1alpha1.insights.Insights/ListVfsSchemas"
 	// InsightsPublishInsightProcedure is the fully-qualified name of the Insights's PublishInsight RPC.
 	InsightsPublishInsightProcedure = "/api.v1alpha1.insights.Insights/PublishInsight"
+	// InsightsCreateOutputConfigurationProcedure is the fully-qualified name of the Insights's
+	// CreateOutputConfiguration RPC.
+	InsightsCreateOutputConfigurationProcedure = "/api.v1alpha1.insights.Insights/CreateOutputConfiguration"
+	// InsightsListOutputConfigurationsProcedure is the fully-qualified name of the Insights's
+	// ListOutputConfigurations RPC.
+	InsightsListOutputConfigurationsProcedure = "/api.v1alpha1.insights.Insights/ListOutputConfigurations"
+	// InsightsUpdateOutputConfigurationProcedure is the fully-qualified name of the Insights's
+	// UpdateOutputConfiguration RPC.
+	InsightsUpdateOutputConfigurationProcedure = "/api.v1alpha1.insights.Insights/UpdateOutputConfiguration"
+	// InsightsDeleteOutputConfigurationProcedure is the fully-qualified name of the Insights's
+	// DeleteOutputConfiguration RPC.
+	InsightsDeleteOutputConfigurationProcedure = "/api.v1alpha1.insights.Insights/DeleteOutputConfiguration"
+	// InsightsGetOutputConfigurationProcedure is the fully-qualified name of the Insights's
+	// GetOutputConfiguration RPC.
+	InsightsGetOutputConfigurationProcedure = "/api.v1alpha1.insights.Insights/GetOutputConfiguration"
+	// InsightsSetDefaultOutputConfigurationProcedure is the fully-qualified name of the Insights's
+	// SetDefaultOutputConfiguration RPC.
+	InsightsSetDefaultOutputConfigurationProcedure = "/api.v1alpha1.insights.Insights/SetDefaultOutputConfiguration"
+	// InsightsGetDefaultOutputConfigurationProcedure is the fully-qualified name of the Insights's
+	// GetDefaultOutputConfiguration RPC.
+	InsightsGetDefaultOutputConfigurationProcedure = "/api.v1alpha1.insights.Insights/GetDefaultOutputConfiguration"
 )
 
 // InsightsClient is a client for the api.v1alpha1.insights.Insights service.
@@ -93,6 +114,20 @@ type InsightsClient interface {
 	ListVfsSchemas(context.Context, *connect_go.Request[insights.ListVfsSchemasRequest]) (*connect_go.Response[insights.ListVfsSchemasResponse], error)
 	// PublishInsight publishes an insight
 	PublishInsight(context.Context, *connect_go.Request[insights.PublishInsightRequest]) (*connect_go.Response[insights.PublishInsightResponse], error)
+	// CreateOutputConfiguration creates an output configuration
+	CreateOutputConfiguration(context.Context, *connect_go.Request[insights.CreateOutputConfigurationRequest]) (*connect_go.Response[insights.CreateOutputConfigurationResponse], error)
+	// ListOutputConfigurations lists output configurations for an insight
+	ListOutputConfigurations(context.Context, *connect_go.Request[insights.ListOutputConfigurationsRequest]) (*connect_go.ServerStreamForClient[insights.ListOutputConfigurationsResponse], error)
+	// UpdateOutputConfiguration updates an output configuration
+	UpdateOutputConfiguration(context.Context, *connect_go.Request[insights.UpdateOutputConfigurationRequest]) (*connect_go.Response[insights.UpdateOutputConfigurationResponse], error)
+	// DeleteOutputConfiguration deletes an output configuration
+	DeleteOutputConfiguration(context.Context, *connect_go.Request[insights.DeleteOutputConfigurationRequest]) (*connect_go.Response[insights.DeleteOutputConfigurationResponse], error)
+	// GetOutputConfiguration gets an output configuration
+	GetOutputConfiguration(context.Context, *connect_go.Request[insights.GetOutputConfigurationRequest]) (*connect_go.Response[insights.GetOutputConfigurationResponse], error)
+	// SetDefaultOutputConfiguration sets the specified output configuration to default
+	SetDefaultOutputConfiguration(context.Context, *connect_go.Request[insights.SetDefaultOutputConfigurationRequest]) (*connect_go.Response[insights.SetDefaultOutputConfigurationResponse], error)
+	// GetDefaultOutputConfiguration gets the default output configuration for an insight
+	GetDefaultOutputConfiguration(context.Context, *connect_go.Request[insights.GetDefaultOutputConfigurationRequest]) (*connect_go.Response[insights.GetDefaultOutputConfigurationResponse], error)
 }
 
 // NewInsightsClient constructs a client for the api.v1alpha1.insights.Insights service. By default,
@@ -170,24 +205,66 @@ func NewInsightsClient(httpClient connect_go.HTTPClient, baseURL string, opts ..
 			baseURL+InsightsPublishInsightProcedure,
 			opts...,
 		),
+		createOutputConfiguration: connect_go.NewClient[insights.CreateOutputConfigurationRequest, insights.CreateOutputConfigurationResponse](
+			httpClient,
+			baseURL+InsightsCreateOutputConfigurationProcedure,
+			opts...,
+		),
+		listOutputConfigurations: connect_go.NewClient[insights.ListOutputConfigurationsRequest, insights.ListOutputConfigurationsResponse](
+			httpClient,
+			baseURL+InsightsListOutputConfigurationsProcedure,
+			opts...,
+		),
+		updateOutputConfiguration: connect_go.NewClient[insights.UpdateOutputConfigurationRequest, insights.UpdateOutputConfigurationResponse](
+			httpClient,
+			baseURL+InsightsUpdateOutputConfigurationProcedure,
+			opts...,
+		),
+		deleteOutputConfiguration: connect_go.NewClient[insights.DeleteOutputConfigurationRequest, insights.DeleteOutputConfigurationResponse](
+			httpClient,
+			baseURL+InsightsDeleteOutputConfigurationProcedure,
+			opts...,
+		),
+		getOutputConfiguration: connect_go.NewClient[insights.GetOutputConfigurationRequest, insights.GetOutputConfigurationResponse](
+			httpClient,
+			baseURL+InsightsGetOutputConfigurationProcedure,
+			opts...,
+		),
+		setDefaultOutputConfiguration: connect_go.NewClient[insights.SetDefaultOutputConfigurationRequest, insights.SetDefaultOutputConfigurationResponse](
+			httpClient,
+			baseURL+InsightsSetDefaultOutputConfigurationProcedure,
+			opts...,
+		),
+		getDefaultOutputConfiguration: connect_go.NewClient[insights.GetDefaultOutputConfigurationRequest, insights.GetDefaultOutputConfigurationResponse](
+			httpClient,
+			baseURL+InsightsGetDefaultOutputConfigurationProcedure,
+			opts...,
+		),
 	}
 }
 
 // insightsClient implements InsightsClient.
 type insightsClient struct {
-	createInsight        *connect_go.Client[insights.CreateInsightRequest, insights.CreateInsightResponse]
-	listInsights         *connect_go.Client[insights.ListInsightsRequest, insights.ListInsightsResponse]
-	listOrgInsights      *connect_go.Client[insights.ListOrgInsightsRequest, insights.ListOrgInsightsResponse]
-	updateInsight        *connect_go.Client[insights.UpdateInsightRequest, insights.UpdateInsightResponse]
-	deleteInsight        *connect_go.Client[insights.DeleteInsightRequest, insights.DeleteInsightResponse]
-	getInsight           *connect_go.Client[insights.GetInsightRequest, insights.GetInsightResponse]
-	createCommonsInsight *connect_go.Client[insights.CreateInsightRequest, insights.CreateInsightResponse]
-	updateCommonsInsight *connect_go.Client[insights.UpdateInsightRequest, insights.UpdateInsightResponse]
-	deleteCommonsInsight *connect_go.Client[insights.DeleteInsightRequest, insights.DeleteInsightResponse]
-	getVfsSchema         *connect_go.Client[insights.GetVfsSchemaRequest, insights.GetVfsSchemaResponse]
-	listVfses            *connect_go.Client[insights.ListVfsesRequest, insights.ListVfsesResponse]
-	listVfsSchemas       *connect_go.Client[insights.ListVfsSchemasRequest, insights.ListVfsSchemasResponse]
-	publishInsight       *connect_go.Client[insights.PublishInsightRequest, insights.PublishInsightResponse]
+	createInsight                 *connect_go.Client[insights.CreateInsightRequest, insights.CreateInsightResponse]
+	listInsights                  *connect_go.Client[insights.ListInsightsRequest, insights.ListInsightsResponse]
+	listOrgInsights               *connect_go.Client[insights.ListOrgInsightsRequest, insights.ListOrgInsightsResponse]
+	updateInsight                 *connect_go.Client[insights.UpdateInsightRequest, insights.UpdateInsightResponse]
+	deleteInsight                 *connect_go.Client[insights.DeleteInsightRequest, insights.DeleteInsightResponse]
+	getInsight                    *connect_go.Client[insights.GetInsightRequest, insights.GetInsightResponse]
+	createCommonsInsight          *connect_go.Client[insights.CreateInsightRequest, insights.CreateInsightResponse]
+	updateCommonsInsight          *connect_go.Client[insights.UpdateInsightRequest, insights.UpdateInsightResponse]
+	deleteCommonsInsight          *connect_go.Client[insights.DeleteInsightRequest, insights.DeleteInsightResponse]
+	getVfsSchema                  *connect_go.Client[insights.GetVfsSchemaRequest, insights.GetVfsSchemaResponse]
+	listVfses                     *connect_go.Client[insights.ListVfsesRequest, insights.ListVfsesResponse]
+	listVfsSchemas                *connect_go.Client[insights.ListVfsSchemasRequest, insights.ListVfsSchemasResponse]
+	publishInsight                *connect_go.Client[insights.PublishInsightRequest, insights.PublishInsightResponse]
+	createOutputConfiguration     *connect_go.Client[insights.CreateOutputConfigurationRequest, insights.CreateOutputConfigurationResponse]
+	listOutputConfigurations      *connect_go.Client[insights.ListOutputConfigurationsRequest, insights.ListOutputConfigurationsResponse]
+	updateOutputConfiguration     *connect_go.Client[insights.UpdateOutputConfigurationRequest, insights.UpdateOutputConfigurationResponse]
+	deleteOutputConfiguration     *connect_go.Client[insights.DeleteOutputConfigurationRequest, insights.DeleteOutputConfigurationResponse]
+	getOutputConfiguration        *connect_go.Client[insights.GetOutputConfigurationRequest, insights.GetOutputConfigurationResponse]
+	setDefaultOutputConfiguration *connect_go.Client[insights.SetDefaultOutputConfigurationRequest, insights.SetDefaultOutputConfigurationResponse]
+	getDefaultOutputConfiguration *connect_go.Client[insights.GetDefaultOutputConfigurationRequest, insights.GetDefaultOutputConfigurationResponse]
 }
 
 // CreateInsight calls api.v1alpha1.insights.Insights.CreateInsight.
@@ -255,6 +332,41 @@ func (c *insightsClient) PublishInsight(ctx context.Context, req *connect_go.Req
 	return c.publishInsight.CallUnary(ctx, req)
 }
 
+// CreateOutputConfiguration calls api.v1alpha1.insights.Insights.CreateOutputConfiguration.
+func (c *insightsClient) CreateOutputConfiguration(ctx context.Context, req *connect_go.Request[insights.CreateOutputConfigurationRequest]) (*connect_go.Response[insights.CreateOutputConfigurationResponse], error) {
+	return c.createOutputConfiguration.CallUnary(ctx, req)
+}
+
+// ListOutputConfigurations calls api.v1alpha1.insights.Insights.ListOutputConfigurations.
+func (c *insightsClient) ListOutputConfigurations(ctx context.Context, req *connect_go.Request[insights.ListOutputConfigurationsRequest]) (*connect_go.ServerStreamForClient[insights.ListOutputConfigurationsResponse], error) {
+	return c.listOutputConfigurations.CallServerStream(ctx, req)
+}
+
+// UpdateOutputConfiguration calls api.v1alpha1.insights.Insights.UpdateOutputConfiguration.
+func (c *insightsClient) UpdateOutputConfiguration(ctx context.Context, req *connect_go.Request[insights.UpdateOutputConfigurationRequest]) (*connect_go.Response[insights.UpdateOutputConfigurationResponse], error) {
+	return c.updateOutputConfiguration.CallUnary(ctx, req)
+}
+
+// DeleteOutputConfiguration calls api.v1alpha1.insights.Insights.DeleteOutputConfiguration.
+func (c *insightsClient) DeleteOutputConfiguration(ctx context.Context, req *connect_go.Request[insights.DeleteOutputConfigurationRequest]) (*connect_go.Response[insights.DeleteOutputConfigurationResponse], error) {
+	return c.deleteOutputConfiguration.CallUnary(ctx, req)
+}
+
+// GetOutputConfiguration calls api.v1alpha1.insights.Insights.GetOutputConfiguration.
+func (c *insightsClient) GetOutputConfiguration(ctx context.Context, req *connect_go.Request[insights.GetOutputConfigurationRequest]) (*connect_go.Response[insights.GetOutputConfigurationResponse], error) {
+	return c.getOutputConfiguration.CallUnary(ctx, req)
+}
+
+// SetDefaultOutputConfiguration calls api.v1alpha1.insights.Insights.SetDefaultOutputConfiguration.
+func (c *insightsClient) SetDefaultOutputConfiguration(ctx context.Context, req *connect_go.Request[insights.SetDefaultOutputConfigurationRequest]) (*connect_go.Response[insights.SetDefaultOutputConfigurationResponse], error) {
+	return c.setDefaultOutputConfiguration.CallUnary(ctx, req)
+}
+
+// GetDefaultOutputConfiguration calls api.v1alpha1.insights.Insights.GetDefaultOutputConfiguration.
+func (c *insightsClient) GetDefaultOutputConfiguration(ctx context.Context, req *connect_go.Request[insights.GetDefaultOutputConfigurationRequest]) (*connect_go.Response[insights.GetDefaultOutputConfigurationResponse], error) {
+	return c.getDefaultOutputConfiguration.CallUnary(ctx, req)
+}
+
 // InsightsHandler is an implementation of the api.v1alpha1.insights.Insights service.
 type InsightsHandler interface {
 	// CreateInsight creates a new insight
@@ -283,6 +395,20 @@ type InsightsHandler interface {
 	ListVfsSchemas(context.Context, *connect_go.Request[insights.ListVfsSchemasRequest]) (*connect_go.Response[insights.ListVfsSchemasResponse], error)
 	// PublishInsight publishes an insight
 	PublishInsight(context.Context, *connect_go.Request[insights.PublishInsightRequest]) (*connect_go.Response[insights.PublishInsightResponse], error)
+	// CreateOutputConfiguration creates an output configuration
+	CreateOutputConfiguration(context.Context, *connect_go.Request[insights.CreateOutputConfigurationRequest]) (*connect_go.Response[insights.CreateOutputConfigurationResponse], error)
+	// ListOutputConfigurations lists output configurations for an insight
+	ListOutputConfigurations(context.Context, *connect_go.Request[insights.ListOutputConfigurationsRequest], *connect_go.ServerStream[insights.ListOutputConfigurationsResponse]) error
+	// UpdateOutputConfiguration updates an output configuration
+	UpdateOutputConfiguration(context.Context, *connect_go.Request[insights.UpdateOutputConfigurationRequest]) (*connect_go.Response[insights.UpdateOutputConfigurationResponse], error)
+	// DeleteOutputConfiguration deletes an output configuration
+	DeleteOutputConfiguration(context.Context, *connect_go.Request[insights.DeleteOutputConfigurationRequest]) (*connect_go.Response[insights.DeleteOutputConfigurationResponse], error)
+	// GetOutputConfiguration gets an output configuration
+	GetOutputConfiguration(context.Context, *connect_go.Request[insights.GetOutputConfigurationRequest]) (*connect_go.Response[insights.GetOutputConfigurationResponse], error)
+	// SetDefaultOutputConfiguration sets the specified output configuration to default
+	SetDefaultOutputConfiguration(context.Context, *connect_go.Request[insights.SetDefaultOutputConfigurationRequest]) (*connect_go.Response[insights.SetDefaultOutputConfigurationResponse], error)
+	// GetDefaultOutputConfiguration gets the default output configuration for an insight
+	GetDefaultOutputConfiguration(context.Context, *connect_go.Request[insights.GetDefaultOutputConfigurationRequest]) (*connect_go.Response[insights.GetDefaultOutputConfigurationResponse], error)
 }
 
 // NewInsightsHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -356,6 +482,41 @@ func NewInsightsHandler(svc InsightsHandler, opts ...connect_go.HandlerOption) (
 		svc.PublishInsight,
 		opts...,
 	)
+	insightsCreateOutputConfigurationHandler := connect_go.NewUnaryHandler(
+		InsightsCreateOutputConfigurationProcedure,
+		svc.CreateOutputConfiguration,
+		opts...,
+	)
+	insightsListOutputConfigurationsHandler := connect_go.NewServerStreamHandler(
+		InsightsListOutputConfigurationsProcedure,
+		svc.ListOutputConfigurations,
+		opts...,
+	)
+	insightsUpdateOutputConfigurationHandler := connect_go.NewUnaryHandler(
+		InsightsUpdateOutputConfigurationProcedure,
+		svc.UpdateOutputConfiguration,
+		opts...,
+	)
+	insightsDeleteOutputConfigurationHandler := connect_go.NewUnaryHandler(
+		InsightsDeleteOutputConfigurationProcedure,
+		svc.DeleteOutputConfiguration,
+		opts...,
+	)
+	insightsGetOutputConfigurationHandler := connect_go.NewUnaryHandler(
+		InsightsGetOutputConfigurationProcedure,
+		svc.GetOutputConfiguration,
+		opts...,
+	)
+	insightsSetDefaultOutputConfigurationHandler := connect_go.NewUnaryHandler(
+		InsightsSetDefaultOutputConfigurationProcedure,
+		svc.SetDefaultOutputConfiguration,
+		opts...,
+	)
+	insightsGetDefaultOutputConfigurationHandler := connect_go.NewUnaryHandler(
+		InsightsGetDefaultOutputConfigurationProcedure,
+		svc.GetDefaultOutputConfiguration,
+		opts...,
+	)
 	return "/api.v1alpha1.insights.Insights/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case InsightsCreateInsightProcedure:
@@ -384,6 +545,20 @@ func NewInsightsHandler(svc InsightsHandler, opts ...connect_go.HandlerOption) (
 			insightsListVfsSchemasHandler.ServeHTTP(w, r)
 		case InsightsPublishInsightProcedure:
 			insightsPublishInsightHandler.ServeHTTP(w, r)
+		case InsightsCreateOutputConfigurationProcedure:
+			insightsCreateOutputConfigurationHandler.ServeHTTP(w, r)
+		case InsightsListOutputConfigurationsProcedure:
+			insightsListOutputConfigurationsHandler.ServeHTTP(w, r)
+		case InsightsUpdateOutputConfigurationProcedure:
+			insightsUpdateOutputConfigurationHandler.ServeHTTP(w, r)
+		case InsightsDeleteOutputConfigurationProcedure:
+			insightsDeleteOutputConfigurationHandler.ServeHTTP(w, r)
+		case InsightsGetOutputConfigurationProcedure:
+			insightsGetOutputConfigurationHandler.ServeHTTP(w, r)
+		case InsightsSetDefaultOutputConfigurationProcedure:
+			insightsSetDefaultOutputConfigurationHandler.ServeHTTP(w, r)
+		case InsightsGetDefaultOutputConfigurationProcedure:
+			insightsGetDefaultOutputConfigurationHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -443,4 +618,32 @@ func (UnimplementedInsightsHandler) ListVfsSchemas(context.Context, *connect_go.
 
 func (UnimplementedInsightsHandler) PublishInsight(context.Context, *connect_go.Request[insights.PublishInsightRequest]) (*connect_go.Response[insights.PublishInsightResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.insights.Insights.PublishInsight is not implemented"))
+}
+
+func (UnimplementedInsightsHandler) CreateOutputConfiguration(context.Context, *connect_go.Request[insights.CreateOutputConfigurationRequest]) (*connect_go.Response[insights.CreateOutputConfigurationResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.insights.Insights.CreateOutputConfiguration is not implemented"))
+}
+
+func (UnimplementedInsightsHandler) ListOutputConfigurations(context.Context, *connect_go.Request[insights.ListOutputConfigurationsRequest], *connect_go.ServerStream[insights.ListOutputConfigurationsResponse]) error {
+	return connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.insights.Insights.ListOutputConfigurations is not implemented"))
+}
+
+func (UnimplementedInsightsHandler) UpdateOutputConfiguration(context.Context, *connect_go.Request[insights.UpdateOutputConfigurationRequest]) (*connect_go.Response[insights.UpdateOutputConfigurationResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.insights.Insights.UpdateOutputConfiguration is not implemented"))
+}
+
+func (UnimplementedInsightsHandler) DeleteOutputConfiguration(context.Context, *connect_go.Request[insights.DeleteOutputConfigurationRequest]) (*connect_go.Response[insights.DeleteOutputConfigurationResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.insights.Insights.DeleteOutputConfiguration is not implemented"))
+}
+
+func (UnimplementedInsightsHandler) GetOutputConfiguration(context.Context, *connect_go.Request[insights.GetOutputConfigurationRequest]) (*connect_go.Response[insights.GetOutputConfigurationResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.insights.Insights.GetOutputConfiguration is not implemented"))
+}
+
+func (UnimplementedInsightsHandler) SetDefaultOutputConfiguration(context.Context, *connect_go.Request[insights.SetDefaultOutputConfigurationRequest]) (*connect_go.Response[insights.SetDefaultOutputConfigurationResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.insights.Insights.SetDefaultOutputConfiguration is not implemented"))
+}
+
+func (UnimplementedInsightsHandler) GetDefaultOutputConfiguration(context.Context, *connect_go.Request[insights.GetDefaultOutputConfigurationRequest]) (*connect_go.Response[insights.GetDefaultOutputConfigurationResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.insights.Insights.GetDefaultOutputConfiguration is not implemented"))
 }

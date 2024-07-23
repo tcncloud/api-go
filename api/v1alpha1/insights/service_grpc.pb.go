@@ -19,19 +19,26 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	Insights_CreateInsight_FullMethodName        = "/api.v1alpha1.insights.Insights/CreateInsight"
-	Insights_ListInsights_FullMethodName         = "/api.v1alpha1.insights.Insights/ListInsights"
-	Insights_ListOrgInsights_FullMethodName      = "/api.v1alpha1.insights.Insights/ListOrgInsights"
-	Insights_UpdateInsight_FullMethodName        = "/api.v1alpha1.insights.Insights/UpdateInsight"
-	Insights_DeleteInsight_FullMethodName        = "/api.v1alpha1.insights.Insights/DeleteInsight"
-	Insights_GetInsight_FullMethodName           = "/api.v1alpha1.insights.Insights/GetInsight"
-	Insights_CreateCommonsInsight_FullMethodName = "/api.v1alpha1.insights.Insights/CreateCommonsInsight"
-	Insights_UpdateCommonsInsight_FullMethodName = "/api.v1alpha1.insights.Insights/UpdateCommonsInsight"
-	Insights_DeleteCommonsInsight_FullMethodName = "/api.v1alpha1.insights.Insights/DeleteCommonsInsight"
-	Insights_GetVfsSchema_FullMethodName         = "/api.v1alpha1.insights.Insights/GetVfsSchema"
-	Insights_ListVfses_FullMethodName            = "/api.v1alpha1.insights.Insights/ListVfses"
-	Insights_ListVfsSchemas_FullMethodName       = "/api.v1alpha1.insights.Insights/ListVfsSchemas"
-	Insights_PublishInsight_FullMethodName       = "/api.v1alpha1.insights.Insights/PublishInsight"
+	Insights_CreateInsight_FullMethodName                 = "/api.v1alpha1.insights.Insights/CreateInsight"
+	Insights_ListInsights_FullMethodName                  = "/api.v1alpha1.insights.Insights/ListInsights"
+	Insights_ListOrgInsights_FullMethodName               = "/api.v1alpha1.insights.Insights/ListOrgInsights"
+	Insights_UpdateInsight_FullMethodName                 = "/api.v1alpha1.insights.Insights/UpdateInsight"
+	Insights_DeleteInsight_FullMethodName                 = "/api.v1alpha1.insights.Insights/DeleteInsight"
+	Insights_GetInsight_FullMethodName                    = "/api.v1alpha1.insights.Insights/GetInsight"
+	Insights_CreateCommonsInsight_FullMethodName          = "/api.v1alpha1.insights.Insights/CreateCommonsInsight"
+	Insights_UpdateCommonsInsight_FullMethodName          = "/api.v1alpha1.insights.Insights/UpdateCommonsInsight"
+	Insights_DeleteCommonsInsight_FullMethodName          = "/api.v1alpha1.insights.Insights/DeleteCommonsInsight"
+	Insights_GetVfsSchema_FullMethodName                  = "/api.v1alpha1.insights.Insights/GetVfsSchema"
+	Insights_ListVfses_FullMethodName                     = "/api.v1alpha1.insights.Insights/ListVfses"
+	Insights_ListVfsSchemas_FullMethodName                = "/api.v1alpha1.insights.Insights/ListVfsSchemas"
+	Insights_PublishInsight_FullMethodName                = "/api.v1alpha1.insights.Insights/PublishInsight"
+	Insights_CreateOutputConfiguration_FullMethodName     = "/api.v1alpha1.insights.Insights/CreateOutputConfiguration"
+	Insights_ListOutputConfigurations_FullMethodName      = "/api.v1alpha1.insights.Insights/ListOutputConfigurations"
+	Insights_UpdateOutputConfiguration_FullMethodName     = "/api.v1alpha1.insights.Insights/UpdateOutputConfiguration"
+	Insights_DeleteOutputConfiguration_FullMethodName     = "/api.v1alpha1.insights.Insights/DeleteOutputConfiguration"
+	Insights_GetOutputConfiguration_FullMethodName        = "/api.v1alpha1.insights.Insights/GetOutputConfiguration"
+	Insights_SetDefaultOutputConfiguration_FullMethodName = "/api.v1alpha1.insights.Insights/SetDefaultOutputConfiguration"
+	Insights_GetDefaultOutputConfiguration_FullMethodName = "/api.v1alpha1.insights.Insights/GetDefaultOutputConfiguration"
 )
 
 // InsightsClient is the client API for Insights service.
@@ -64,6 +71,20 @@ type InsightsClient interface {
 	ListVfsSchemas(ctx context.Context, in *ListVfsSchemasRequest, opts ...grpc.CallOption) (*ListVfsSchemasResponse, error)
 	// PublishInsight publishes an insight
 	PublishInsight(ctx context.Context, in *PublishInsightRequest, opts ...grpc.CallOption) (*PublishInsightResponse, error)
+	// CreateOutputConfiguration creates an output configuration
+	CreateOutputConfiguration(ctx context.Context, in *CreateOutputConfigurationRequest, opts ...grpc.CallOption) (*CreateOutputConfigurationResponse, error)
+	// ListOutputConfigurations lists output configurations for an insight
+	ListOutputConfigurations(ctx context.Context, in *ListOutputConfigurationsRequest, opts ...grpc.CallOption) (Insights_ListOutputConfigurationsClient, error)
+	// UpdateOutputConfiguration updates an output configuration
+	UpdateOutputConfiguration(ctx context.Context, in *UpdateOutputConfigurationRequest, opts ...grpc.CallOption) (*UpdateOutputConfigurationResponse, error)
+	// DeleteOutputConfiguration deletes an output configuration
+	DeleteOutputConfiguration(ctx context.Context, in *DeleteOutputConfigurationRequest, opts ...grpc.CallOption) (*DeleteOutputConfigurationResponse, error)
+	// GetOutputConfiguration gets an output configuration
+	GetOutputConfiguration(ctx context.Context, in *GetOutputConfigurationRequest, opts ...grpc.CallOption) (*GetOutputConfigurationResponse, error)
+	// SetDefaultOutputConfiguration sets the specified output configuration to default
+	SetDefaultOutputConfiguration(ctx context.Context, in *SetDefaultOutputConfigurationRequest, opts ...grpc.CallOption) (*SetDefaultOutputConfigurationResponse, error)
+	// GetDefaultOutputConfiguration gets the default output configuration for an insight
+	GetDefaultOutputConfiguration(ctx context.Context, in *GetDefaultOutputConfigurationRequest, opts ...grpc.CallOption) (*GetDefaultOutputConfigurationResponse, error)
 }
 
 type insightsClient struct {
@@ -204,6 +225,99 @@ func (c *insightsClient) PublishInsight(ctx context.Context, in *PublishInsightR
 	return out, nil
 }
 
+func (c *insightsClient) CreateOutputConfiguration(ctx context.Context, in *CreateOutputConfigurationRequest, opts ...grpc.CallOption) (*CreateOutputConfigurationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateOutputConfigurationResponse)
+	err := c.cc.Invoke(ctx, Insights_CreateOutputConfiguration_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *insightsClient) ListOutputConfigurations(ctx context.Context, in *ListOutputConfigurationsRequest, opts ...grpc.CallOption) (Insights_ListOutputConfigurationsClient, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &Insights_ServiceDesc.Streams[0], Insights_ListOutputConfigurations_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &insightsListOutputConfigurationsClient{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type Insights_ListOutputConfigurationsClient interface {
+	Recv() (*ListOutputConfigurationsResponse, error)
+	grpc.ClientStream
+}
+
+type insightsListOutputConfigurationsClient struct {
+	grpc.ClientStream
+}
+
+func (x *insightsListOutputConfigurationsClient) Recv() (*ListOutputConfigurationsResponse, error) {
+	m := new(ListOutputConfigurationsResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *insightsClient) UpdateOutputConfiguration(ctx context.Context, in *UpdateOutputConfigurationRequest, opts ...grpc.CallOption) (*UpdateOutputConfigurationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateOutputConfigurationResponse)
+	err := c.cc.Invoke(ctx, Insights_UpdateOutputConfiguration_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *insightsClient) DeleteOutputConfiguration(ctx context.Context, in *DeleteOutputConfigurationRequest, opts ...grpc.CallOption) (*DeleteOutputConfigurationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteOutputConfigurationResponse)
+	err := c.cc.Invoke(ctx, Insights_DeleteOutputConfiguration_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *insightsClient) GetOutputConfiguration(ctx context.Context, in *GetOutputConfigurationRequest, opts ...grpc.CallOption) (*GetOutputConfigurationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetOutputConfigurationResponse)
+	err := c.cc.Invoke(ctx, Insights_GetOutputConfiguration_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *insightsClient) SetDefaultOutputConfiguration(ctx context.Context, in *SetDefaultOutputConfigurationRequest, opts ...grpc.CallOption) (*SetDefaultOutputConfigurationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SetDefaultOutputConfigurationResponse)
+	err := c.cc.Invoke(ctx, Insights_SetDefaultOutputConfiguration_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *insightsClient) GetDefaultOutputConfiguration(ctx context.Context, in *GetDefaultOutputConfigurationRequest, opts ...grpc.CallOption) (*GetDefaultOutputConfigurationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetDefaultOutputConfigurationResponse)
+	err := c.cc.Invoke(ctx, Insights_GetDefaultOutputConfiguration_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // InsightsServer is the server API for Insights service.
 // All implementations must embed UnimplementedInsightsServer
 // for forward compatibility
@@ -234,6 +348,20 @@ type InsightsServer interface {
 	ListVfsSchemas(context.Context, *ListVfsSchemasRequest) (*ListVfsSchemasResponse, error)
 	// PublishInsight publishes an insight
 	PublishInsight(context.Context, *PublishInsightRequest) (*PublishInsightResponse, error)
+	// CreateOutputConfiguration creates an output configuration
+	CreateOutputConfiguration(context.Context, *CreateOutputConfigurationRequest) (*CreateOutputConfigurationResponse, error)
+	// ListOutputConfigurations lists output configurations for an insight
+	ListOutputConfigurations(*ListOutputConfigurationsRequest, Insights_ListOutputConfigurationsServer) error
+	// UpdateOutputConfiguration updates an output configuration
+	UpdateOutputConfiguration(context.Context, *UpdateOutputConfigurationRequest) (*UpdateOutputConfigurationResponse, error)
+	// DeleteOutputConfiguration deletes an output configuration
+	DeleteOutputConfiguration(context.Context, *DeleteOutputConfigurationRequest) (*DeleteOutputConfigurationResponse, error)
+	// GetOutputConfiguration gets an output configuration
+	GetOutputConfiguration(context.Context, *GetOutputConfigurationRequest) (*GetOutputConfigurationResponse, error)
+	// SetDefaultOutputConfiguration sets the specified output configuration to default
+	SetDefaultOutputConfiguration(context.Context, *SetDefaultOutputConfigurationRequest) (*SetDefaultOutputConfigurationResponse, error)
+	// GetDefaultOutputConfiguration gets the default output configuration for an insight
+	GetDefaultOutputConfiguration(context.Context, *GetDefaultOutputConfigurationRequest) (*GetDefaultOutputConfigurationResponse, error)
 	mustEmbedUnimplementedInsightsServer()
 }
 
@@ -279,6 +407,27 @@ func (UnimplementedInsightsServer) ListVfsSchemas(context.Context, *ListVfsSchem
 }
 func (UnimplementedInsightsServer) PublishInsight(context.Context, *PublishInsightRequest) (*PublishInsightResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PublishInsight not implemented")
+}
+func (UnimplementedInsightsServer) CreateOutputConfiguration(context.Context, *CreateOutputConfigurationRequest) (*CreateOutputConfigurationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateOutputConfiguration not implemented")
+}
+func (UnimplementedInsightsServer) ListOutputConfigurations(*ListOutputConfigurationsRequest, Insights_ListOutputConfigurationsServer) error {
+	return status.Errorf(codes.Unimplemented, "method ListOutputConfigurations not implemented")
+}
+func (UnimplementedInsightsServer) UpdateOutputConfiguration(context.Context, *UpdateOutputConfigurationRequest) (*UpdateOutputConfigurationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateOutputConfiguration not implemented")
+}
+func (UnimplementedInsightsServer) DeleteOutputConfiguration(context.Context, *DeleteOutputConfigurationRequest) (*DeleteOutputConfigurationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteOutputConfiguration not implemented")
+}
+func (UnimplementedInsightsServer) GetOutputConfiguration(context.Context, *GetOutputConfigurationRequest) (*GetOutputConfigurationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetOutputConfiguration not implemented")
+}
+func (UnimplementedInsightsServer) SetDefaultOutputConfiguration(context.Context, *SetDefaultOutputConfigurationRequest) (*SetDefaultOutputConfigurationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetDefaultOutputConfiguration not implemented")
+}
+func (UnimplementedInsightsServer) GetDefaultOutputConfiguration(context.Context, *GetDefaultOutputConfigurationRequest) (*GetDefaultOutputConfigurationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDefaultOutputConfiguration not implemented")
 }
 func (UnimplementedInsightsServer) mustEmbedUnimplementedInsightsServer() {}
 
@@ -527,6 +676,135 @@ func _Insights_PublishInsight_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Insights_CreateOutputConfiguration_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateOutputConfigurationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InsightsServer).CreateOutputConfiguration(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Insights_CreateOutputConfiguration_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InsightsServer).CreateOutputConfiguration(ctx, req.(*CreateOutputConfigurationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Insights_ListOutputConfigurations_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(ListOutputConfigurationsRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(InsightsServer).ListOutputConfigurations(m, &insightsListOutputConfigurationsServer{ServerStream: stream})
+}
+
+type Insights_ListOutputConfigurationsServer interface {
+	Send(*ListOutputConfigurationsResponse) error
+	grpc.ServerStream
+}
+
+type insightsListOutputConfigurationsServer struct {
+	grpc.ServerStream
+}
+
+func (x *insightsListOutputConfigurationsServer) Send(m *ListOutputConfigurationsResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func _Insights_UpdateOutputConfiguration_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateOutputConfigurationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InsightsServer).UpdateOutputConfiguration(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Insights_UpdateOutputConfiguration_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InsightsServer).UpdateOutputConfiguration(ctx, req.(*UpdateOutputConfigurationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Insights_DeleteOutputConfiguration_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteOutputConfigurationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InsightsServer).DeleteOutputConfiguration(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Insights_DeleteOutputConfiguration_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InsightsServer).DeleteOutputConfiguration(ctx, req.(*DeleteOutputConfigurationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Insights_GetOutputConfiguration_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetOutputConfigurationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InsightsServer).GetOutputConfiguration(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Insights_GetOutputConfiguration_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InsightsServer).GetOutputConfiguration(ctx, req.(*GetOutputConfigurationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Insights_SetDefaultOutputConfiguration_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetDefaultOutputConfigurationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InsightsServer).SetDefaultOutputConfiguration(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Insights_SetDefaultOutputConfiguration_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InsightsServer).SetDefaultOutputConfiguration(ctx, req.(*SetDefaultOutputConfigurationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Insights_GetDefaultOutputConfiguration_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetDefaultOutputConfigurationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InsightsServer).GetDefaultOutputConfiguration(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Insights_GetDefaultOutputConfiguration_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InsightsServer).GetDefaultOutputConfiguration(ctx, req.(*GetDefaultOutputConfigurationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Insights_ServiceDesc is the grpc.ServiceDesc for Insights service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -586,7 +864,37 @@ var Insights_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "PublishInsight",
 			Handler:    _Insights_PublishInsight_Handler,
 		},
+		{
+			MethodName: "CreateOutputConfiguration",
+			Handler:    _Insights_CreateOutputConfiguration_Handler,
+		},
+		{
+			MethodName: "UpdateOutputConfiguration",
+			Handler:    _Insights_UpdateOutputConfiguration_Handler,
+		},
+		{
+			MethodName: "DeleteOutputConfiguration",
+			Handler:    _Insights_DeleteOutputConfiguration_Handler,
+		},
+		{
+			MethodName: "GetOutputConfiguration",
+			Handler:    _Insights_GetOutputConfiguration_Handler,
+		},
+		{
+			MethodName: "SetDefaultOutputConfiguration",
+			Handler:    _Insights_SetDefaultOutputConfiguration_Handler,
+		},
+		{
+			MethodName: "GetDefaultOutputConfiguration",
+			Handler:    _Insights_GetDefaultOutputConfiguration_Handler,
+		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "ListOutputConfigurations",
+			Handler:       _Insights_ListOutputConfigurations_Handler,
+			ServerStreams: true,
+		},
+	},
 	Metadata: "api/v1alpha1/insights/service.proto",
 }

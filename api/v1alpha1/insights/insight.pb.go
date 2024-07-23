@@ -22,6 +22,262 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// Enum for different types of output configurations
+type OutputConfigurationType int32
+
+const (
+	// Unspecified type
+	OutputConfigurationType_OUTPUT_CONFIGURATION_TYPE_UNSPECIFIED OutputConfigurationType = 0
+	// Output configuration for table format
+	OutputConfigurationType_OUTPUT_CONFIGURATION_TYPE_TABLE OutputConfigurationType = 1
+	// Output configuration for multi-series format
+	OutputConfigurationType_OUTPUT_CONFIGURATION_TYPE_MULTI_SERIES OutputConfigurationType = 2
+	// Output configuration for pie chart format
+	OutputConfigurationType_OUTPUT_CONFIGURATION_TYPE_PIE_CHART OutputConfigurationType = 3
+)
+
+// Enum value maps for OutputConfigurationType.
+var (
+	OutputConfigurationType_name = map[int32]string{
+		0: "OUTPUT_CONFIGURATION_TYPE_UNSPECIFIED",
+		1: "OUTPUT_CONFIGURATION_TYPE_TABLE",
+		2: "OUTPUT_CONFIGURATION_TYPE_MULTI_SERIES",
+		3: "OUTPUT_CONFIGURATION_TYPE_PIE_CHART",
+	}
+	OutputConfigurationType_value = map[string]int32{
+		"OUTPUT_CONFIGURATION_TYPE_UNSPECIFIED":  0,
+		"OUTPUT_CONFIGURATION_TYPE_TABLE":        1,
+		"OUTPUT_CONFIGURATION_TYPE_MULTI_SERIES": 2,
+		"OUTPUT_CONFIGURATION_TYPE_PIE_CHART":    3,
+	}
+)
+
+func (x OutputConfigurationType) Enum() *OutputConfigurationType {
+	p := new(OutputConfigurationType)
+	*p = x
+	return p
+}
+
+func (x OutputConfigurationType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (OutputConfigurationType) Descriptor() protoreflect.EnumDescriptor {
+	return file_api_v1alpha1_insights_insight_proto_enumTypes[0].Descriptor()
+}
+
+func (OutputConfigurationType) Type() protoreflect.EnumType {
+	return &file_api_v1alpha1_insights_insight_proto_enumTypes[0]
+}
+
+func (x OutputConfigurationType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use OutputConfigurationType.Descriptor instead.
+func (OutputConfigurationType) EnumDescriptor() ([]byte, []int) {
+	return file_api_v1alpha1_insights_insight_proto_rawDescGZIP(), []int{0}
+}
+
+// Enum for Column Format Type
+type OperationType int32
+
+const (
+	// Unspecified
+	OperationType_OPERATION_TYPE_UNSPECIFIED OperationType = 0
+	// Date format type
+	OperationType_OPERATION_TYPE_DATE OperationType = 1
+	// Prefix format type
+	OperationType_OPERATION_TYPE_PREFIX OperationType = 2
+	// Suffix format type
+	OperationType_OPERATION_TYPE_SUFFIX OperationType = 3
+	// Duration format type
+	OperationType_OPERATION_TYPE_DURATION OperationType = 4
+	// Add operation
+	OperationType_OPERATION_TYPE_ADD OperationType = 5
+	// Subract operation
+	OperationType_OPERATION_TYPE_SUBTRACT OperationType = 6
+	// Multiply operation
+	OperationType_OPERATION_TYPE_MULTIPLY OperationType = 7
+	// Divide operation
+	OperationType_OPERATION_TYPE_DIVIDE OperationType = 8
+	// Format number operation
+	OperationType_OPERATION_TYPE_FORMAT_NUMBER OperationType = 9
+	// Precision operation
+	OperationType_OPERATION_TYPE_PRECISION OperationType = 10
+)
+
+// Enum value maps for OperationType.
+var (
+	OperationType_name = map[int32]string{
+		0:  "OPERATION_TYPE_UNSPECIFIED",
+		1:  "OPERATION_TYPE_DATE",
+		2:  "OPERATION_TYPE_PREFIX",
+		3:  "OPERATION_TYPE_SUFFIX",
+		4:  "OPERATION_TYPE_DURATION",
+		5:  "OPERATION_TYPE_ADD",
+		6:  "OPERATION_TYPE_SUBTRACT",
+		7:  "OPERATION_TYPE_MULTIPLY",
+		8:  "OPERATION_TYPE_DIVIDE",
+		9:  "OPERATION_TYPE_FORMAT_NUMBER",
+		10: "OPERATION_TYPE_PRECISION",
+	}
+	OperationType_value = map[string]int32{
+		"OPERATION_TYPE_UNSPECIFIED":   0,
+		"OPERATION_TYPE_DATE":          1,
+		"OPERATION_TYPE_PREFIX":        2,
+		"OPERATION_TYPE_SUFFIX":        3,
+		"OPERATION_TYPE_DURATION":      4,
+		"OPERATION_TYPE_ADD":           5,
+		"OPERATION_TYPE_SUBTRACT":      6,
+		"OPERATION_TYPE_MULTIPLY":      7,
+		"OPERATION_TYPE_DIVIDE":        8,
+		"OPERATION_TYPE_FORMAT_NUMBER": 9,
+		"OPERATION_TYPE_PRECISION":     10,
+	}
+)
+
+func (x OperationType) Enum() *OperationType {
+	p := new(OperationType)
+	*p = x
+	return p
+}
+
+func (x OperationType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (OperationType) Descriptor() protoreflect.EnumDescriptor {
+	return file_api_v1alpha1_insights_insight_proto_enumTypes[1].Descriptor()
+}
+
+func (OperationType) Type() protoreflect.EnumType {
+	return &file_api_v1alpha1_insights_insight_proto_enumTypes[1]
+}
+
+func (x OperationType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use OperationType.Descriptor instead.
+func (OperationType) EnumDescriptor() ([]byte, []int) {
+	return file_api_v1alpha1_insights_insight_proto_rawDescGZIP(), []int{1}
+}
+
+// ColumnSort specifies how a column should be sorted
+type ColumnSort int32
+
+const (
+	// Unspecified
+	ColumnSort_COLUMN_SORT_UNSPECIFIED ColumnSort = 0
+	// Ascending order
+	ColumnSort_COLUMN_SORT_ASCENDING ColumnSort = 1
+	// Descending order
+	ColumnSort_COLUMN_SORT_DESCENDING ColumnSort = 2
+)
+
+// Enum value maps for ColumnSort.
+var (
+	ColumnSort_name = map[int32]string{
+		0: "COLUMN_SORT_UNSPECIFIED",
+		1: "COLUMN_SORT_ASCENDING",
+		2: "COLUMN_SORT_DESCENDING",
+	}
+	ColumnSort_value = map[string]int32{
+		"COLUMN_SORT_UNSPECIFIED": 0,
+		"COLUMN_SORT_ASCENDING":   1,
+		"COLUMN_SORT_DESCENDING":  2,
+	}
+)
+
+func (x ColumnSort) Enum() *ColumnSort {
+	p := new(ColumnSort)
+	*p = x
+	return p
+}
+
+func (x ColumnSort) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (ColumnSort) Descriptor() protoreflect.EnumDescriptor {
+	return file_api_v1alpha1_insights_insight_proto_enumTypes[2].Descriptor()
+}
+
+func (ColumnSort) Type() protoreflect.EnumType {
+	return &file_api_v1alpha1_insights_insight_proto_enumTypes[2]
+}
+
+func (x ColumnSort) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use ColumnSort.Descriptor instead.
+func (ColumnSort) EnumDescriptor() ([]byte, []int) {
+	return file_api_v1alpha1_insights_insight_proto_rawDescGZIP(), []int{2}
+}
+
+// Enum for Column Summary Type
+type OutputConfigurationColumnSummaryType int32
+
+const (
+	// Unspecified
+	OutputConfigurationColumnSummaryType_OUTPUT_CONFIGURATION_COLUMN_SUMMARY_TYPE_UNSPECIFIED OutputConfigurationColumnSummaryType = 0
+	// Sumamry type Average
+	OutputConfigurationColumnSummaryType_OUTPUT_CONFIGURATION_COLUMN_SUMMARY_TYPE_AVG OutputConfigurationColumnSummaryType = 1
+	// Summary type Summation
+	OutputConfigurationColumnSummaryType_OUTPUT_CONFIGURATION_COLUMN_SUMMARY_TYPE_SUM OutputConfigurationColumnSummaryType = 2
+	// Summary type Minimum
+	OutputConfigurationColumnSummaryType_OUTPUT_CONFIGURATION_COLUMN_SUMMARY_TYPE_MIN OutputConfigurationColumnSummaryType = 3
+	// Summary type Maximum
+	OutputConfigurationColumnSummaryType_OUTPUT_CONFIGURATION_COLUMN_SUMMARY_TYPE_MAX OutputConfigurationColumnSummaryType = 4
+)
+
+// Enum value maps for OutputConfigurationColumnSummaryType.
+var (
+	OutputConfigurationColumnSummaryType_name = map[int32]string{
+		0: "OUTPUT_CONFIGURATION_COLUMN_SUMMARY_TYPE_UNSPECIFIED",
+		1: "OUTPUT_CONFIGURATION_COLUMN_SUMMARY_TYPE_AVG",
+		2: "OUTPUT_CONFIGURATION_COLUMN_SUMMARY_TYPE_SUM",
+		3: "OUTPUT_CONFIGURATION_COLUMN_SUMMARY_TYPE_MIN",
+		4: "OUTPUT_CONFIGURATION_COLUMN_SUMMARY_TYPE_MAX",
+	}
+	OutputConfigurationColumnSummaryType_value = map[string]int32{
+		"OUTPUT_CONFIGURATION_COLUMN_SUMMARY_TYPE_UNSPECIFIED": 0,
+		"OUTPUT_CONFIGURATION_COLUMN_SUMMARY_TYPE_AVG":         1,
+		"OUTPUT_CONFIGURATION_COLUMN_SUMMARY_TYPE_SUM":         2,
+		"OUTPUT_CONFIGURATION_COLUMN_SUMMARY_TYPE_MIN":         3,
+		"OUTPUT_CONFIGURATION_COLUMN_SUMMARY_TYPE_MAX":         4,
+	}
+)
+
+func (x OutputConfigurationColumnSummaryType) Enum() *OutputConfigurationColumnSummaryType {
+	p := new(OutputConfigurationColumnSummaryType)
+	*p = x
+	return p
+}
+
+func (x OutputConfigurationColumnSummaryType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (OutputConfigurationColumnSummaryType) Descriptor() protoreflect.EnumDescriptor {
+	return file_api_v1alpha1_insights_insight_proto_enumTypes[3].Descriptor()
+}
+
+func (OutputConfigurationColumnSummaryType) Type() protoreflect.EnumType {
+	return &file_api_v1alpha1_insights_insight_proto_enumTypes[3]
+}
+
+func (x OutputConfigurationColumnSummaryType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use OutputConfigurationColumnSummaryType.Descriptor instead.
+func (OutputConfigurationColumnSummaryType) EnumDescriptor() ([]byte, []int) {
+	return file_api_v1alpha1_insights_insight_proto_rawDescGZIP(), []int{3}
+}
+
 // Insight is a data handling entity used to process data
 // Insight can represent an object that belongs to the user
 // Insight can represent an object inside the common lib
@@ -1129,6 +1385,1124 @@ func (x *ListVfsSchemasResponse) GetVfsSchemas() []*GetVfsSchemaResponse {
 	return nil
 }
 
+// Message for Table Visualization
+type TableVisualization struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Map of table column details
+	TableColumnDetails []*TableColumnConfig `protobuf:"bytes,1,rep,name=table_column_details,json=tableColumnDetails,proto3" json:"table_column_details,omitempty"`
+}
+
+func (x *TableVisualization) Reset() {
+	*x = TableVisualization{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[21]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TableVisualization) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TableVisualization) ProtoMessage() {}
+
+func (x *TableVisualization) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[21]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TableVisualization.ProtoReflect.Descriptor instead.
+func (*TableVisualization) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_insights_insight_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *TableVisualization) GetTableColumnDetails() []*TableColumnConfig {
+	if x != nil {
+		return x.TableColumnDetails
+	}
+	return nil
+}
+
+// Message for Table Column Configuration
+type TableColumnConfig struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Name for the table column
+	ColumnName string `protobuf:"bytes,1,opt,name=column_name,json=columnName,proto3" json:"column_name,omitempty"`
+	// Width of the column
+	ColumnWidth int64 `protobuf:"varint,2,opt,name=column_width,json=columnWidth,proto3" json:"column_width,omitempty"`
+	// Flag to hide the column
+	HideColumn bool `protobuf:"varint,3,opt,name=hide_column,json=hideColumn,proto3" json:"hide_column,omitempty"`
+	// Renames the column name
+	RenamedAs string `protobuf:"bytes,4,opt,name=renamed_as,json=renamedAs,proto3" json:"renamed_as,omitempty"`
+	// Operations to be performed on the column
+	Operations []*ColumnOperation `protobuf:"bytes,5,rep,name=operations,proto3" json:"operations,omitempty"`
+	// Summary for the column (AVG, SUM, MIN, MAX)
+	ColumnSummary OutputConfigurationColumnSummaryType `protobuf:"varint,6,opt,name=column_summary,json=columnSummary,proto3,enum=api.v1alpha1.insights.OutputConfigurationColumnSummaryType" json:"column_summary,omitempty"`
+	// Description of the column
+	Description string `protobuf:"bytes,7,opt,name=description,proto3" json:"description,omitempty"`
+	// The sorting direction of the column
+	SortDirection ColumnSort `protobuf:"varint,8,opt,name=sort_direction,json=sortDirection,proto3,enum=api.v1alpha1.insights.ColumnSort" json:"sort_direction,omitempty"`
+}
+
+func (x *TableColumnConfig) Reset() {
+	*x = TableColumnConfig{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[22]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TableColumnConfig) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TableColumnConfig) ProtoMessage() {}
+
+func (x *TableColumnConfig) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[22]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TableColumnConfig.ProtoReflect.Descriptor instead.
+func (*TableColumnConfig) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_insights_insight_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *TableColumnConfig) GetColumnName() string {
+	if x != nil {
+		return x.ColumnName
+	}
+	return ""
+}
+
+func (x *TableColumnConfig) GetColumnWidth() int64 {
+	if x != nil {
+		return x.ColumnWidth
+	}
+	return 0
+}
+
+func (x *TableColumnConfig) GetHideColumn() bool {
+	if x != nil {
+		return x.HideColumn
+	}
+	return false
+}
+
+func (x *TableColumnConfig) GetRenamedAs() string {
+	if x != nil {
+		return x.RenamedAs
+	}
+	return ""
+}
+
+func (x *TableColumnConfig) GetOperations() []*ColumnOperation {
+	if x != nil {
+		return x.Operations
+	}
+	return nil
+}
+
+func (x *TableColumnConfig) GetColumnSummary() OutputConfigurationColumnSummaryType {
+	if x != nil {
+		return x.ColumnSummary
+	}
+	return OutputConfigurationColumnSummaryType_OUTPUT_CONFIGURATION_COLUMN_SUMMARY_TYPE_UNSPECIFIED
+}
+
+func (x *TableColumnConfig) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *TableColumnConfig) GetSortDirection() ColumnSort {
+	if x != nil {
+		return x.SortDirection
+	}
+	return ColumnSort_COLUMN_SORT_UNSPECIFIED
+}
+
+// FormatSeries contains the series of operations for a column operation
+type FormatSeries struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The series of format parts
+	FormatParts []string `protobuf:"bytes,1,rep,name=format_parts,json=formatParts,proto3" json:"format_parts,omitempty"`
+}
+
+func (x *FormatSeries) Reset() {
+	*x = FormatSeries{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[23]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *FormatSeries) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FormatSeries) ProtoMessage() {}
+
+func (x *FormatSeries) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[23]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FormatSeries.ProtoReflect.Descriptor instead.
+func (*FormatSeries) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_insights_insight_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *FormatSeries) GetFormatParts() []string {
+	if x != nil {
+		return x.FormatParts
+	}
+	return nil
+}
+
+// Message for ColumnOperation
+type ColumnOperation struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Operation type
+	OperationType OperationType `protobuf:"varint,1,opt,name=operation_type,json=operationType,proto3,enum=api.v1alpha1.insights.OperationType" json:"operation_type,omitempty"`
+	// Types that are assignable to OperationValue:
+	//
+	//	*ColumnOperation_FloatValue
+	//	*ColumnOperation_FormatSeries
+	OperationValue isColumnOperation_OperationValue `protobuf_oneof:"operation_value"`
+}
+
+func (x *ColumnOperation) Reset() {
+	*x = ColumnOperation{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[24]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ColumnOperation) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ColumnOperation) ProtoMessage() {}
+
+func (x *ColumnOperation) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[24]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ColumnOperation.ProtoReflect.Descriptor instead.
+func (*ColumnOperation) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_insights_insight_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *ColumnOperation) GetOperationType() OperationType {
+	if x != nil {
+		return x.OperationType
+	}
+	return OperationType_OPERATION_TYPE_UNSPECIFIED
+}
+
+func (m *ColumnOperation) GetOperationValue() isColumnOperation_OperationValue {
+	if m != nil {
+		return m.OperationValue
+	}
+	return nil
+}
+
+func (x *ColumnOperation) GetFloatValue() float64 {
+	if x, ok := x.GetOperationValue().(*ColumnOperation_FloatValue); ok {
+		return x.FloatValue
+	}
+	return 0
+}
+
+func (x *ColumnOperation) GetFormatSeries() *FormatSeries {
+	if x, ok := x.GetOperationValue().(*ColumnOperation_FormatSeries); ok {
+		return x.FormatSeries
+	}
+	return nil
+}
+
+type isColumnOperation_OperationValue interface {
+	isColumnOperation_OperationValue()
+}
+
+type ColumnOperation_FloatValue struct {
+	// Float value for operation
+	FloatValue float64 `protobuf:"fixed64,2,opt,name=float_value,json=floatValue,proto3,oneof"`
+}
+
+type ColumnOperation_FormatSeries struct {
+	// Series values for operation
+	FormatSeries *FormatSeries `protobuf:"bytes,3,opt,name=format_series,json=formatSeries,proto3,oneof"`
+}
+
+func (*ColumnOperation_FloatValue) isColumnOperation_OperationValue() {}
+
+func (*ColumnOperation_FormatSeries) isColumnOperation_OperationValue() {}
+
+// Output configuration provides formatting options in post processing
+type OutputConfiguration struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Unique identifier for the output configuration
+	ResourceId string `protobuf:"bytes,1,opt,name=resource_id,json=resourceId,proto3" json:"resource_id,omitempty"`
+	// Title of the output configuration
+	OutputConfigurationTitle string `protobuf:"bytes,3,opt,name=output_configuration_title,json=outputConfigurationTitle,proto3" json:"output_configuration_title,omitempty"`
+	// Type of the output configuration
+	OutputConfigurationType OutputConfigurationType `protobuf:"varint,4,opt,name=output_configuration_type,json=outputConfigurationType,proto3,enum=api.v1alpha1.insights.OutputConfigurationType" json:"output_configuration_type,omitempty"`
+	// Insight resource ID associated with the output configuration
+	InsightResourceId string `protobuf:"bytes,5,opt,name=insight_resource_id,json=insightResourceId,proto3" json:"insight_resource_id,omitempty"`
+	// is_default flag for the output configuration
+	IsDefault bool `protobuf:"varint,6,opt,name=is_default,json=isDefault,proto3" json:"is_default,omitempty"`
+	// Body of the output configuration
+	//
+	// Types that are assignable to Body:
+	//
+	//	*OutputConfiguration_Blob
+	//	*OutputConfiguration_TableVisualization
+	Body isOutputConfiguration_Body `protobuf_oneof:"body"`
+}
+
+func (x *OutputConfiguration) Reset() {
+	*x = OutputConfiguration{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[25]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OutputConfiguration) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OutputConfiguration) ProtoMessage() {}
+
+func (x *OutputConfiguration) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[25]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OutputConfiguration.ProtoReflect.Descriptor instead.
+func (*OutputConfiguration) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_insights_insight_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *OutputConfiguration) GetResourceId() string {
+	if x != nil {
+		return x.ResourceId
+	}
+	return ""
+}
+
+func (x *OutputConfiguration) GetOutputConfigurationTitle() string {
+	if x != nil {
+		return x.OutputConfigurationTitle
+	}
+	return ""
+}
+
+func (x *OutputConfiguration) GetOutputConfigurationType() OutputConfigurationType {
+	if x != nil {
+		return x.OutputConfigurationType
+	}
+	return OutputConfigurationType_OUTPUT_CONFIGURATION_TYPE_UNSPECIFIED
+}
+
+func (x *OutputConfiguration) GetInsightResourceId() string {
+	if x != nil {
+		return x.InsightResourceId
+	}
+	return ""
+}
+
+func (x *OutputConfiguration) GetIsDefault() bool {
+	if x != nil {
+		return x.IsDefault
+	}
+	return false
+}
+
+func (m *OutputConfiguration) GetBody() isOutputConfiguration_Body {
+	if m != nil {
+		return m.Body
+	}
+	return nil
+}
+
+func (x *OutputConfiguration) GetBlob() string {
+	if x, ok := x.GetBody().(*OutputConfiguration_Blob); ok {
+		return x.Blob
+	}
+	return ""
+}
+
+func (x *OutputConfiguration) GetTableVisualization() *TableVisualization {
+	if x, ok := x.GetBody().(*OutputConfiguration_TableVisualization); ok {
+		return x.TableVisualization
+	}
+	return nil
+}
+
+type isOutputConfiguration_Body interface {
+	isOutputConfiguration_Body()
+}
+
+type OutputConfiguration_Blob struct {
+	// Blob data for the output configuration
+	Blob string `protobuf:"bytes,7,opt,name=blob,proto3,oneof"`
+}
+
+type OutputConfiguration_TableVisualization struct {
+	// Table visualization data for the output configuration
+	TableVisualization *TableVisualization `protobuf:"bytes,8,opt,name=table_visualization,json=tableVisualization,proto3,oneof"`
+}
+
+func (*OutputConfiguration_Blob) isOutputConfiguration_Body() {}
+
+func (*OutputConfiguration_TableVisualization) isOutputConfiguration_Body() {}
+
+// Request for creating a new output configuration
+type CreateOutputConfigurationRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Output configuration to be create
+	OutputConfiguration *OutputConfiguration `protobuf:"bytes,1,opt,name=output_configuration,json=outputConfiguration,proto3" json:"output_configuration,omitempty"`
+}
+
+func (x *CreateOutputConfigurationRequest) Reset() {
+	*x = CreateOutputConfigurationRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[26]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CreateOutputConfigurationRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateOutputConfigurationRequest) ProtoMessage() {}
+
+func (x *CreateOutputConfigurationRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[26]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateOutputConfigurationRequest.ProtoReflect.Descriptor instead.
+func (*CreateOutputConfigurationRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_insights_insight_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *CreateOutputConfigurationRequest) GetOutputConfiguration() *OutputConfiguration {
+	if x != nil {
+		return x.OutputConfiguration
+	}
+	return nil
+}
+
+// Response for creating a new output configuration
+type CreateOutputConfigurationResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The created output configuration
+	OutputConfiguration *OutputConfiguration `protobuf:"bytes,1,opt,name=output_configuration,json=outputConfiguration,proto3" json:"output_configuration,omitempty"`
+}
+
+func (x *CreateOutputConfigurationResponse) Reset() {
+	*x = CreateOutputConfigurationResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[27]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CreateOutputConfigurationResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateOutputConfigurationResponse) ProtoMessage() {}
+
+func (x *CreateOutputConfigurationResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[27]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateOutputConfigurationResponse.ProtoReflect.Descriptor instead.
+func (*CreateOutputConfigurationResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_insights_insight_proto_rawDescGZIP(), []int{27}
+}
+
+func (x *CreateOutputConfigurationResponse) GetOutputConfiguration() *OutputConfiguration {
+	if x != nil {
+		return x.OutputConfiguration
+	}
+	return nil
+}
+
+// Request for listing output configurations
+type ListOutputConfigurationsRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Insight resource id to get output configurations for
+	InsightResourceId string `protobuf:"bytes,1,opt,name=insight_resource_id,json=insightResourceId,proto3" json:"insight_resource_id,omitempty"`
+}
+
+func (x *ListOutputConfigurationsRequest) Reset() {
+	*x = ListOutputConfigurationsRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[28]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ListOutputConfigurationsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListOutputConfigurationsRequest) ProtoMessage() {}
+
+func (x *ListOutputConfigurationsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[28]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListOutputConfigurationsRequest.ProtoReflect.Descriptor instead.
+func (*ListOutputConfigurationsRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_insights_insight_proto_rawDescGZIP(), []int{28}
+}
+
+func (x *ListOutputConfigurationsRequest) GetInsightResourceId() string {
+	if x != nil {
+		return x.InsightResourceId
+	}
+	return ""
+}
+
+// Response for listing output configurations
+type ListOutputConfigurationsResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The requested output configurations
+	OutputConfigurations []*OutputConfiguration `protobuf:"bytes,1,rep,name=output_configurations,json=outputConfigurations,proto3" json:"output_configurations,omitempty"`
+}
+
+func (x *ListOutputConfigurationsResponse) Reset() {
+	*x = ListOutputConfigurationsResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[29]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ListOutputConfigurationsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListOutputConfigurationsResponse) ProtoMessage() {}
+
+func (x *ListOutputConfigurationsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[29]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListOutputConfigurationsResponse.ProtoReflect.Descriptor instead.
+func (*ListOutputConfigurationsResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_insights_insight_proto_rawDescGZIP(), []int{29}
+}
+
+func (x *ListOutputConfigurationsResponse) GetOutputConfigurations() []*OutputConfiguration {
+	if x != nil {
+		return x.OutputConfigurations
+	}
+	return nil
+}
+
+// Request for updating an existing output configuration
+type UpdateOutputConfigurationRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Field mask to update specified fields
+	UpdateMask *fieldmaskpb.FieldMask `protobuf:"bytes,2,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	// Updated output configuration
+	OutputConfiguration *OutputConfiguration `protobuf:"bytes,3,opt,name=output_configuration,json=outputConfiguration,proto3" json:"output_configuration,omitempty"`
+}
+
+func (x *UpdateOutputConfigurationRequest) Reset() {
+	*x = UpdateOutputConfigurationRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[30]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UpdateOutputConfigurationRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateOutputConfigurationRequest) ProtoMessage() {}
+
+func (x *UpdateOutputConfigurationRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[30]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateOutputConfigurationRequest.ProtoReflect.Descriptor instead.
+func (*UpdateOutputConfigurationRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_insights_insight_proto_rawDescGZIP(), []int{30}
+}
+
+func (x *UpdateOutputConfigurationRequest) GetUpdateMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.UpdateMask
+	}
+	return nil
+}
+
+func (x *UpdateOutputConfigurationRequest) GetOutputConfiguration() *OutputConfiguration {
+	if x != nil {
+		return x.OutputConfiguration
+	}
+	return nil
+}
+
+// Response for updating an existing output configuration
+type UpdateOutputConfigurationResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Updated output configuration
+	OutputConfiguration *OutputConfiguration `protobuf:"bytes,1,opt,name=output_configuration,json=outputConfiguration,proto3" json:"output_configuration,omitempty"`
+}
+
+func (x *UpdateOutputConfigurationResponse) Reset() {
+	*x = UpdateOutputConfigurationResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[31]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UpdateOutputConfigurationResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateOutputConfigurationResponse) ProtoMessage() {}
+
+func (x *UpdateOutputConfigurationResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[31]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateOutputConfigurationResponse.ProtoReflect.Descriptor instead.
+func (*UpdateOutputConfigurationResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_insights_insight_proto_rawDescGZIP(), []int{31}
+}
+
+func (x *UpdateOutputConfigurationResponse) GetOutputConfiguration() *OutputConfiguration {
+	if x != nil {
+		return x.OutputConfiguration
+	}
+	return nil
+}
+
+// Request for deleting an output configuration
+type DeleteOutputConfigurationRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Resource Id of the output configuration to delete
+	ResourceId string `protobuf:"bytes,1,opt,name=resource_id,json=resourceId,proto3" json:"resource_id,omitempty"`
+}
+
+func (x *DeleteOutputConfigurationRequest) Reset() {
+	*x = DeleteOutputConfigurationRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[32]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DeleteOutputConfigurationRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteOutputConfigurationRequest) ProtoMessage() {}
+
+func (x *DeleteOutputConfigurationRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[32]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteOutputConfigurationRequest.ProtoReflect.Descriptor instead.
+func (*DeleteOutputConfigurationRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_insights_insight_proto_rawDescGZIP(), []int{32}
+}
+
+func (x *DeleteOutputConfigurationRequest) GetResourceId() string {
+	if x != nil {
+		return x.ResourceId
+	}
+	return ""
+}
+
+// Response for deleting an output configuration
+type DeleteOutputConfigurationResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *DeleteOutputConfigurationResponse) Reset() {
+	*x = DeleteOutputConfigurationResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[33]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DeleteOutputConfigurationResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteOutputConfigurationResponse) ProtoMessage() {}
+
+func (x *DeleteOutputConfigurationResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[33]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteOutputConfigurationResponse.ProtoReflect.Descriptor instead.
+func (*DeleteOutputConfigurationResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_insights_insight_proto_rawDescGZIP(), []int{33}
+}
+
+// Request for getting a specific output configuration
+type GetOutputConfigurationRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Resource Id of the output configuration
+	ResourceId string `protobuf:"bytes,1,opt,name=resource_id,json=resourceId,proto3" json:"resource_id,omitempty"`
+}
+
+func (x *GetOutputConfigurationRequest) Reset() {
+	*x = GetOutputConfigurationRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[34]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetOutputConfigurationRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetOutputConfigurationRequest) ProtoMessage() {}
+
+func (x *GetOutputConfigurationRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[34]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetOutputConfigurationRequest.ProtoReflect.Descriptor instead.
+func (*GetOutputConfigurationRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_insights_insight_proto_rawDescGZIP(), []int{34}
+}
+
+func (x *GetOutputConfigurationRequest) GetResourceId() string {
+	if x != nil {
+		return x.ResourceId
+	}
+	return ""
+}
+
+// Response for getting a specific output configuration
+type GetOutputConfigurationResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The requested output configuration
+	OutputConfiguration *OutputConfiguration `protobuf:"bytes,1,opt,name=output_configuration,json=outputConfiguration,proto3" json:"output_configuration,omitempty"`
+}
+
+func (x *GetOutputConfigurationResponse) Reset() {
+	*x = GetOutputConfigurationResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[35]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetOutputConfigurationResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetOutputConfigurationResponse) ProtoMessage() {}
+
+func (x *GetOutputConfigurationResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[35]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetOutputConfigurationResponse.ProtoReflect.Descriptor instead.
+func (*GetOutputConfigurationResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_insights_insight_proto_rawDescGZIP(), []int{35}
+}
+
+func (x *GetOutputConfigurationResponse) GetOutputConfiguration() *OutputConfiguration {
+	if x != nil {
+		return x.OutputConfiguration
+	}
+	return nil
+}
+
+// Request message for SetDefaultOutputConfiguration
+type SetDefaultOutputConfigurationRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// resource id of the output configuration
+	ResourceId string `protobuf:"bytes,1,opt,name=resource_id,json=resourceId,proto3" json:"resource_id,omitempty"`
+	// Insight resource id
+	InsightResourceId string `protobuf:"bytes,2,opt,name=insight_resource_id,json=insightResourceId,proto3" json:"insight_resource_id,omitempty"`
+}
+
+func (x *SetDefaultOutputConfigurationRequest) Reset() {
+	*x = SetDefaultOutputConfigurationRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[36]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SetDefaultOutputConfigurationRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SetDefaultOutputConfigurationRequest) ProtoMessage() {}
+
+func (x *SetDefaultOutputConfigurationRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[36]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SetDefaultOutputConfigurationRequest.ProtoReflect.Descriptor instead.
+func (*SetDefaultOutputConfigurationRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_insights_insight_proto_rawDescGZIP(), []int{36}
+}
+
+func (x *SetDefaultOutputConfigurationRequest) GetResourceId() string {
+	if x != nil {
+		return x.ResourceId
+	}
+	return ""
+}
+
+func (x *SetDefaultOutputConfigurationRequest) GetInsightResourceId() string {
+	if x != nil {
+		return x.InsightResourceId
+	}
+	return ""
+}
+
+// Response message for SetDefaultOutputConfiguration
+type SetDefaultOutputConfigurationResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *SetDefaultOutputConfigurationResponse) Reset() {
+	*x = SetDefaultOutputConfigurationResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[37]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SetDefaultOutputConfigurationResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SetDefaultOutputConfigurationResponse) ProtoMessage() {}
+
+func (x *SetDefaultOutputConfigurationResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[37]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SetDefaultOutputConfigurationResponse.ProtoReflect.Descriptor instead.
+func (*SetDefaultOutputConfigurationResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_insights_insight_proto_rawDescGZIP(), []int{37}
+}
+
+// Request message for GetDefaultOutputConfiguration
+type GetDefaultOutputConfigurationRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Insight resource id of default output configuration
+	InsightResourceId string `protobuf:"bytes,1,opt,name=insight_resource_id,json=insightResourceId,proto3" json:"insight_resource_id,omitempty"`
+}
+
+func (x *GetDefaultOutputConfigurationRequest) Reset() {
+	*x = GetDefaultOutputConfigurationRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[38]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetDefaultOutputConfigurationRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetDefaultOutputConfigurationRequest) ProtoMessage() {}
+
+func (x *GetDefaultOutputConfigurationRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[38]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetDefaultOutputConfigurationRequest.ProtoReflect.Descriptor instead.
+func (*GetDefaultOutputConfigurationRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_insights_insight_proto_rawDescGZIP(), []int{38}
+}
+
+func (x *GetDefaultOutputConfigurationRequest) GetInsightResourceId() string {
+	if x != nil {
+		return x.InsightResourceId
+	}
+	return ""
+}
+
+// Response message for GetDefaultOutputConfiguration
+type GetDefaultOutputConfigurationResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Default ouptut configuration
+	OutputConfiguration *OutputConfiguration `protobuf:"bytes,1,opt,name=output_configuration,json=outputConfiguration,proto3" json:"output_configuration,omitempty"`
+}
+
+func (x *GetDefaultOutputConfigurationResponse) Reset() {
+	*x = GetDefaultOutputConfigurationResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[39]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetDefaultOutputConfigurationResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetDefaultOutputConfigurationResponse) ProtoMessage() {}
+
+func (x *GetDefaultOutputConfigurationResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[39]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetDefaultOutputConfigurationResponse.ProtoReflect.Descriptor instead.
+func (*GetDefaultOutputConfigurationResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_insights_insight_proto_rawDescGZIP(), []int{39}
+}
+
+func (x *GetDefaultOutputConfigurationResponse) GetOutputConfiguration() *OutputConfiguration {
+	if x != nil {
+		return x.OutputConfiguration
+	}
+	return nil
+}
+
 // Field represents a column in a dataframe
 type GetVfsSchemaResponse_Field struct {
 	state         protoimpl.MessageState
@@ -1143,7 +2517,7 @@ type GetVfsSchemaResponse_Field struct {
 func (x *GetVfsSchemaResponse_Field) Reset() {
 	*x = GetVfsSchemaResponse_Field{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[21]
+		mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[40]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1156,7 +2530,7 @@ func (x *GetVfsSchemaResponse_Field) String() string {
 func (*GetVfsSchemaResponse_Field) ProtoMessage() {}
 
 func (x *GetVfsSchemaResponse_Field) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[21]
+	mi := &file_api_v1alpha1_insights_insight_proto_msgTypes[40]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1343,21 +2717,251 @@ var file_api_v1alpha1_insights_insight_proto_rawDesc = []byte{
 	0x03, 0x28, 0x0b, 0x32, 0x2b, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68,
 	0x61, 0x31, 0x2e, 0x69, 0x6e, 0x73, 0x69, 0x67, 0x68, 0x74, 0x73, 0x2e, 0x47, 0x65, 0x74, 0x56,
 	0x66, 0x73, 0x53, 0x63, 0x68, 0x65, 0x6d, 0x61, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
-	0x52, 0x0a, 0x76, 0x66, 0x73, 0x53, 0x63, 0x68, 0x65, 0x6d, 0x61, 0x73, 0x42, 0xd1, 0x01, 0x0a,
-	0x19, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61,
-	0x31, 0x2e, 0x69, 0x6e, 0x73, 0x69, 0x67, 0x68, 0x74, 0x73, 0x42, 0x0c, 0x49, 0x6e, 0x73, 0x69,
-	0x67, 0x68, 0x74, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x30, 0x67, 0x69, 0x74, 0x68,
-	0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f,
-	0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70,
-	0x68, 0x61, 0x31, 0x2f, 0x69, 0x6e, 0x73, 0x69, 0x67, 0x68, 0x74, 0x73, 0xa2, 0x02, 0x03, 0x41,
-	0x56, 0x49, 0xaa, 0x02, 0x15, 0x41, 0x70, 0x69, 0x2e, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61,
-	0x31, 0x2e, 0x49, 0x6e, 0x73, 0x69, 0x67, 0x68, 0x74, 0x73, 0xca, 0x02, 0x15, 0x41, 0x70, 0x69,
-	0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x49, 0x6e, 0x73, 0x69, 0x67, 0x68,
-	0x74, 0x73, 0xe2, 0x02, 0x21, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61,
-	0x31, 0x5c, 0x49, 0x6e, 0x73, 0x69, 0x67, 0x68, 0x74, 0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65,
-	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x17, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x56, 0x31,
-	0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x3a, 0x3a, 0x49, 0x6e, 0x73, 0x69, 0x67, 0x68, 0x74, 0x73,
-	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x52, 0x0a, 0x76, 0x66, 0x73, 0x53, 0x63, 0x68, 0x65, 0x6d, 0x61, 0x73, 0x22, 0x70, 0x0a, 0x12,
+	0x54, 0x61, 0x62, 0x6c, 0x65, 0x56, 0x69, 0x73, 0x75, 0x61, 0x6c, 0x69, 0x7a, 0x61, 0x74, 0x69,
+	0x6f, 0x6e, 0x12, 0x5a, 0x0a, 0x14, 0x74, 0x61, 0x62, 0x6c, 0x65, 0x5f, 0x63, 0x6f, 0x6c, 0x75,
+	0x6d, 0x6e, 0x5f, 0x64, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b,
+	0x32, 0x28, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e,
+	0x69, 0x6e, 0x73, 0x69, 0x67, 0x68, 0x74, 0x73, 0x2e, 0x54, 0x61, 0x62, 0x6c, 0x65, 0x43, 0x6f,
+	0x6c, 0x75, 0x6d, 0x6e, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52, 0x12, 0x74, 0x61, 0x62, 0x6c,
+	0x65, 0x43, 0x6f, 0x6c, 0x75, 0x6d, 0x6e, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x22, 0xaf,
+	0x03, 0x0a, 0x11, 0x54, 0x61, 0x62, 0x6c, 0x65, 0x43, 0x6f, 0x6c, 0x75, 0x6d, 0x6e, 0x43, 0x6f,
+	0x6e, 0x66, 0x69, 0x67, 0x12, 0x1f, 0x0a, 0x0b, 0x63, 0x6f, 0x6c, 0x75, 0x6d, 0x6e, 0x5f, 0x6e,
+	0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x63, 0x6f, 0x6c, 0x75, 0x6d,
+	0x6e, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x21, 0x0a, 0x0c, 0x63, 0x6f, 0x6c, 0x75, 0x6d, 0x6e, 0x5f,
+	0x77, 0x69, 0x64, 0x74, 0x68, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0b, 0x63, 0x6f, 0x6c,
+	0x75, 0x6d, 0x6e, 0x57, 0x69, 0x64, 0x74, 0x68, 0x12, 0x1f, 0x0a, 0x0b, 0x68, 0x69, 0x64, 0x65,
+	0x5f, 0x63, 0x6f, 0x6c, 0x75, 0x6d, 0x6e, 0x18, 0x03, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0a, 0x68,
+	0x69, 0x64, 0x65, 0x43, 0x6f, 0x6c, 0x75, 0x6d, 0x6e, 0x12, 0x1d, 0x0a, 0x0a, 0x72, 0x65, 0x6e,
+	0x61, 0x6d, 0x65, 0x64, 0x5f, 0x61, 0x73, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x72,
+	0x65, 0x6e, 0x61, 0x6d, 0x65, 0x64, 0x41, 0x73, 0x12, 0x46, 0x0a, 0x0a, 0x6f, 0x70, 0x65, 0x72,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x18, 0x05, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x26, 0x2e, 0x61,
+	0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x69, 0x6e, 0x73, 0x69,
+	0x67, 0x68, 0x74, 0x73, 0x2e, 0x43, 0x6f, 0x6c, 0x75, 0x6d, 0x6e, 0x4f, 0x70, 0x65, 0x72, 0x61,
+	0x74, 0x69, 0x6f, 0x6e, 0x52, 0x0a, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73,
+	0x12, 0x62, 0x0a, 0x0e, 0x63, 0x6f, 0x6c, 0x75, 0x6d, 0x6e, 0x5f, 0x73, 0x75, 0x6d, 0x6d, 0x61,
+	0x72, 0x79, 0x18, 0x06, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x3b, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76,
+	0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x69, 0x6e, 0x73, 0x69, 0x67, 0x68, 0x74, 0x73,
+	0x2e, 0x4f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61,
+	0x74, 0x69, 0x6f, 0x6e, 0x43, 0x6f, 0x6c, 0x75, 0x6d, 0x6e, 0x53, 0x75, 0x6d, 0x6d, 0x61, 0x72,
+	0x79, 0x54, 0x79, 0x70, 0x65, 0x52, 0x0d, 0x63, 0x6f, 0x6c, 0x75, 0x6d, 0x6e, 0x53, 0x75, 0x6d,
+	0x6d, 0x61, 0x72, 0x79, 0x12, 0x20, 0x0a, 0x0b, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74,
+	0x69, 0x6f, 0x6e, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x64, 0x65, 0x73, 0x63, 0x72,
+	0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x48, 0x0a, 0x0e, 0x73, 0x6f, 0x72, 0x74, 0x5f, 0x64,
+	0x69, 0x72, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x08, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x21,
+	0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x69, 0x6e,
+	0x73, 0x69, 0x67, 0x68, 0x74, 0x73, 0x2e, 0x43, 0x6f, 0x6c, 0x75, 0x6d, 0x6e, 0x53, 0x6f, 0x72,
+	0x74, 0x52, 0x0d, 0x73, 0x6f, 0x72, 0x74, 0x44, 0x69, 0x72, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e,
+	0x22, 0x31, 0x0a, 0x0c, 0x46, 0x6f, 0x72, 0x6d, 0x61, 0x74, 0x53, 0x65, 0x72, 0x69, 0x65, 0x73,
+	0x12, 0x21, 0x0a, 0x0c, 0x66, 0x6f, 0x72, 0x6d, 0x61, 0x74, 0x5f, 0x70, 0x61, 0x72, 0x74, 0x73,
+	0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x0b, 0x66, 0x6f, 0x72, 0x6d, 0x61, 0x74, 0x50, 0x61,
+	0x72, 0x74, 0x73, 0x22, 0xe0, 0x01, 0x0a, 0x0f, 0x43, 0x6f, 0x6c, 0x75, 0x6d, 0x6e, 0x4f, 0x70,
+	0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x4b, 0x0a, 0x0e, 0x6f, 0x70, 0x65, 0x72, 0x61,
+	0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0e, 0x32,
+	0x24, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x69,
+	0x6e, 0x73, 0x69, 0x67, 0x68, 0x74, 0x73, 0x2e, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f,
+	0x6e, 0x54, 0x79, 0x70, 0x65, 0x52, 0x0d, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e,
+	0x54, 0x79, 0x70, 0x65, 0x12, 0x21, 0x0a, 0x0b, 0x66, 0x6c, 0x6f, 0x61, 0x74, 0x5f, 0x76, 0x61,
+	0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x01, 0x48, 0x00, 0x52, 0x0a, 0x66, 0x6c, 0x6f,
+	0x61, 0x74, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x12, 0x4a, 0x0a, 0x0d, 0x66, 0x6f, 0x72, 0x6d, 0x61,
+	0x74, 0x5f, 0x73, 0x65, 0x72, 0x69, 0x65, 0x73, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x23,
+	0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x69, 0x6e,
+	0x73, 0x69, 0x67, 0x68, 0x74, 0x73, 0x2e, 0x46, 0x6f, 0x72, 0x6d, 0x61, 0x74, 0x53, 0x65, 0x72,
+	0x69, 0x65, 0x73, 0x48, 0x00, 0x52, 0x0c, 0x66, 0x6f, 0x72, 0x6d, 0x61, 0x74, 0x53, 0x65, 0x72,
+	0x69, 0x65, 0x73, 0x42, 0x11, 0x0a, 0x0f, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e,
+	0x5f, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x22, 0xab, 0x03, 0x0a, 0x13, 0x4f, 0x75, 0x74, 0x70, 0x75,
+	0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x1f,
+	0x0a, 0x0b, 0x72, 0x65, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x0a, 0x72, 0x65, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x49, 0x64, 0x12,
+	0x3c, 0x0a, 0x1a, 0x6f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x5f, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67,
+	0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x74, 0x69, 0x74, 0x6c, 0x65, 0x18, 0x03, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x18, 0x6f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69,
+	0x67, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x69, 0x74, 0x6c, 0x65, 0x12, 0x6a, 0x0a,
+	0x19, 0x6f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x5f, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0e,
+	0x32, 0x2e, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e,
+	0x69, 0x6e, 0x73, 0x69, 0x67, 0x68, 0x74, 0x73, 0x2e, 0x4f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x43,
+	0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x79, 0x70, 0x65,
+	0x52, 0x17, 0x6f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x12, 0x2e, 0x0a, 0x13, 0x69, 0x6e, 0x73,
+	0x69, 0x67, 0x68, 0x74, 0x5f, 0x72, 0x65, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x5f, 0x69, 0x64,
+	0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x69, 0x6e, 0x73, 0x69, 0x67, 0x68, 0x74, 0x52,
+	0x65, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x49, 0x64, 0x12, 0x1d, 0x0a, 0x0a, 0x69, 0x73, 0x5f,
+	0x64, 0x65, 0x66, 0x61, 0x75, 0x6c, 0x74, 0x18, 0x06, 0x20, 0x01, 0x28, 0x08, 0x52, 0x09, 0x69,
+	0x73, 0x44, 0x65, 0x66, 0x61, 0x75, 0x6c, 0x74, 0x12, 0x14, 0x0a, 0x04, 0x62, 0x6c, 0x6f, 0x62,
+	0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x48, 0x00, 0x52, 0x04, 0x62, 0x6c, 0x6f, 0x62, 0x12, 0x5c,
+	0x0a, 0x13, 0x74, 0x61, 0x62, 0x6c, 0x65, 0x5f, 0x76, 0x69, 0x73, 0x75, 0x61, 0x6c, 0x69, 0x7a,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x08, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x29, 0x2e, 0x61, 0x70,
+	0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x69, 0x6e, 0x73, 0x69, 0x67,
+	0x68, 0x74, 0x73, 0x2e, 0x54, 0x61, 0x62, 0x6c, 0x65, 0x56, 0x69, 0x73, 0x75, 0x61, 0x6c, 0x69,
+	0x7a, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x48, 0x00, 0x52, 0x12, 0x74, 0x61, 0x62, 0x6c, 0x65, 0x56,
+	0x69, 0x73, 0x75, 0x61, 0x6c, 0x69, 0x7a, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x42, 0x06, 0x0a, 0x04,
+	0x62, 0x6f, 0x64, 0x79, 0x22, 0x81, 0x01, 0x0a, 0x20, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x4f,
+	0x75, 0x74, 0x70, 0x75, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61, 0x74, 0x69,
+	0x6f, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x5d, 0x0a, 0x14, 0x6f, 0x75, 0x74,
+	0x70, 0x75, 0x74, 0x5f, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f,
+	0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2a, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31,
+	0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x69, 0x6e, 0x73, 0x69, 0x67, 0x68, 0x74, 0x73, 0x2e,
+	0x4f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61, 0x74,
+	0x69, 0x6f, 0x6e, 0x52, 0x13, 0x6f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69,
+	0x67, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0x82, 0x01, 0x0a, 0x21, 0x43, 0x72, 0x65,
+	0x61, 0x74, 0x65, 0x4f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75,
+	0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x5d,
+	0x0a, 0x14, 0x6f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x5f, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75,
+	0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2a, 0x2e, 0x61,
+	0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x69, 0x6e, 0x73, 0x69,
+	0x67, 0x68, 0x74, 0x73, 0x2e, 0x4f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69,
+	0x67, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x13, 0x6f, 0x75, 0x74, 0x70, 0x75, 0x74,
+	0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0x51, 0x0a,
+	0x1f, 0x4c, 0x69, 0x73, 0x74, 0x4f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69,
+	0x67, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x12, 0x2e, 0x0a, 0x13, 0x69, 0x6e, 0x73, 0x69, 0x67, 0x68, 0x74, 0x5f, 0x72, 0x65, 0x73, 0x6f,
+	0x75, 0x72, 0x63, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x69,
+	0x6e, 0x73, 0x69, 0x67, 0x68, 0x74, 0x52, 0x65, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x49, 0x64,
+	0x22, 0x83, 0x01, 0x0a, 0x20, 0x4c, 0x69, 0x73, 0x74, 0x4f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x43,
+	0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x5f, 0x0a, 0x15, 0x6f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x5f,
+	0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x18, 0x01,
+	0x20, 0x03, 0x28, 0x0b, 0x32, 0x2a, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70,
+	0x68, 0x61, 0x31, 0x2e, 0x69, 0x6e, 0x73, 0x69, 0x67, 0x68, 0x74, 0x73, 0x2e, 0x4f, 0x75, 0x74,
+	0x70, 0x75, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e,
+	0x52, 0x14, 0x6f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x22, 0xbe, 0x01, 0x0a, 0x20, 0x55, 0x70, 0x64, 0x61, 0x74,
+	0x65, 0x4f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61,
+	0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x3b, 0x0a, 0x0b, 0x75,
+	0x70, 0x64, 0x61, 0x74, 0x65, 0x5f, 0x6d, 0x61, 0x73, 0x6b, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62,
+	0x75, 0x66, 0x2e, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x4d, 0x61, 0x73, 0x6b, 0x52, 0x0a, 0x75, 0x70,
+	0x64, 0x61, 0x74, 0x65, 0x4d, 0x61, 0x73, 0x6b, 0x12, 0x5d, 0x0a, 0x14, 0x6f, 0x75, 0x74, 0x70,
+	0x75, 0x74, 0x5f, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2a, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61,
+	0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x69, 0x6e, 0x73, 0x69, 0x67, 0x68, 0x74, 0x73, 0x2e, 0x4f,
+	0x75, 0x74, 0x70, 0x75, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61, 0x74, 0x69,
+	0x6f, 0x6e, 0x52, 0x13, 0x6f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67,
+	0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0x82, 0x01, 0x0a, 0x21, 0x55, 0x70, 0x64, 0x61,
+	0x74, 0x65, 0x4f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x5d, 0x0a,
+	0x14, 0x6f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x5f, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2a, 0x2e, 0x61, 0x70,
+	0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x69, 0x6e, 0x73, 0x69, 0x67,
+	0x68, 0x74, 0x73, 0x2e, 0x4f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67,
+	0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x13, 0x6f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x43,
+	0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0x43, 0x0a, 0x20,
+	0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x4f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x43, 0x6f, 0x6e, 0x66,
+	0x69, 0x67, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x12, 0x1f, 0x0a, 0x0b, 0x72, 0x65, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x5f, 0x69, 0x64, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x72, 0x65, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x49,
+	0x64, 0x22, 0x23, 0x0a, 0x21, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x4f, 0x75, 0x74, 0x70, 0x75,
+	0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x40, 0x0a, 0x1d, 0x47, 0x65, 0x74, 0x4f, 0x75, 0x74,
+	0x70, 0x75, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1f, 0x0a, 0x0b, 0x72, 0x65, 0x73, 0x6f, 0x75,
+	0x72, 0x63, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x72, 0x65,
+	0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x49, 0x64, 0x22, 0x7f, 0x0a, 0x1e, 0x47, 0x65, 0x74, 0x4f,
+	0x75, 0x74, 0x70, 0x75, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61, 0x74, 0x69,
+	0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x5d, 0x0a, 0x14, 0x6f, 0x75,
+	0x74, 0x70, 0x75, 0x74, 0x5f, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61, 0x74, 0x69,
+	0x6f, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2a, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76,
+	0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x69, 0x6e, 0x73, 0x69, 0x67, 0x68, 0x74, 0x73,
+	0x2e, 0x4f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61,
+	0x74, 0x69, 0x6f, 0x6e, 0x52, 0x13, 0x6f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x43, 0x6f, 0x6e, 0x66,
+	0x69, 0x67, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0x77, 0x0a, 0x24, 0x53, 0x65, 0x74,
+	0x44, 0x65, 0x66, 0x61, 0x75, 0x6c, 0x74, 0x4f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x43, 0x6f, 0x6e,
+	0x66, 0x69, 0x67, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x12, 0x1f, 0x0a, 0x0b, 0x72, 0x65, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x5f, 0x69, 0x64,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x72, 0x65, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65,
+	0x49, 0x64, 0x12, 0x2e, 0x0a, 0x13, 0x69, 0x6e, 0x73, 0x69, 0x67, 0x68, 0x74, 0x5f, 0x72, 0x65,
+	0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x11, 0x69, 0x6e, 0x73, 0x69, 0x67, 0x68, 0x74, 0x52, 0x65, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65,
+	0x49, 0x64, 0x22, 0x27, 0x0a, 0x25, 0x53, 0x65, 0x74, 0x44, 0x65, 0x66, 0x61, 0x75, 0x6c, 0x74,
+	0x4f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61, 0x74,
+	0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x56, 0x0a, 0x24, 0x47,
+	0x65, 0x74, 0x44, 0x65, 0x66, 0x61, 0x75, 0x6c, 0x74, 0x4f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x43,
+	0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x12, 0x2e, 0x0a, 0x13, 0x69, 0x6e, 0x73, 0x69, 0x67, 0x68, 0x74, 0x5f, 0x72,
+	0x65, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x11, 0x69, 0x6e, 0x73, 0x69, 0x67, 0x68, 0x74, 0x52, 0x65, 0x73, 0x6f, 0x75, 0x72, 0x63,
+	0x65, 0x49, 0x64, 0x22, 0x86, 0x01, 0x0a, 0x25, 0x47, 0x65, 0x74, 0x44, 0x65, 0x66, 0x61, 0x75,
+	0x6c, 0x74, 0x4f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x5d, 0x0a,
+	0x14, 0x6f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x5f, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2a, 0x2e, 0x61, 0x70,
+	0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x69, 0x6e, 0x73, 0x69, 0x67,
+	0x68, 0x74, 0x73, 0x2e, 0x4f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67,
+	0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x13, 0x6f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x43,
+	0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2a, 0xbe, 0x01, 0x0a,
+	0x17, 0x4f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61,
+	0x74, 0x69, 0x6f, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x12, 0x29, 0x0a, 0x25, 0x4f, 0x55, 0x54, 0x50,
+	0x55, 0x54, 0x5f, 0x43, 0x4f, 0x4e, 0x46, 0x49, 0x47, 0x55, 0x52, 0x41, 0x54, 0x49, 0x4f, 0x4e,
+	0x5f, 0x54, 0x59, 0x50, 0x45, 0x5f, 0x55, 0x4e, 0x53, 0x50, 0x45, 0x43, 0x49, 0x46, 0x49, 0x45,
+	0x44, 0x10, 0x00, 0x12, 0x23, 0x0a, 0x1f, 0x4f, 0x55, 0x54, 0x50, 0x55, 0x54, 0x5f, 0x43, 0x4f,
+	0x4e, 0x46, 0x49, 0x47, 0x55, 0x52, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x54, 0x59, 0x50, 0x45,
+	0x5f, 0x54, 0x41, 0x42, 0x4c, 0x45, 0x10, 0x01, 0x12, 0x2a, 0x0a, 0x26, 0x4f, 0x55, 0x54, 0x50,
+	0x55, 0x54, 0x5f, 0x43, 0x4f, 0x4e, 0x46, 0x49, 0x47, 0x55, 0x52, 0x41, 0x54, 0x49, 0x4f, 0x4e,
+	0x5f, 0x54, 0x59, 0x50, 0x45, 0x5f, 0x4d, 0x55, 0x4c, 0x54, 0x49, 0x5f, 0x53, 0x45, 0x52, 0x49,
+	0x45, 0x53, 0x10, 0x02, 0x12, 0x27, 0x0a, 0x23, 0x4f, 0x55, 0x54, 0x50, 0x55, 0x54, 0x5f, 0x43,
+	0x4f, 0x4e, 0x46, 0x49, 0x47, 0x55, 0x52, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x54, 0x59, 0x50,
+	0x45, 0x5f, 0x50, 0x49, 0x45, 0x5f, 0x43, 0x48, 0x41, 0x52, 0x54, 0x10, 0x03, 0x2a, 0xc8, 0x02,
+	0x0a, 0x0d, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x12,
+	0x1e, 0x0a, 0x1a, 0x4f, 0x50, 0x45, 0x52, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x54, 0x59, 0x50,
+	0x45, 0x5f, 0x55, 0x4e, 0x53, 0x50, 0x45, 0x43, 0x49, 0x46, 0x49, 0x45, 0x44, 0x10, 0x00, 0x12,
+	0x17, 0x0a, 0x13, 0x4f, 0x50, 0x45, 0x52, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x54, 0x59, 0x50,
+	0x45, 0x5f, 0x44, 0x41, 0x54, 0x45, 0x10, 0x01, 0x12, 0x19, 0x0a, 0x15, 0x4f, 0x50, 0x45, 0x52,
+	0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x54, 0x59, 0x50, 0x45, 0x5f, 0x50, 0x52, 0x45, 0x46, 0x49,
+	0x58, 0x10, 0x02, 0x12, 0x19, 0x0a, 0x15, 0x4f, 0x50, 0x45, 0x52, 0x41, 0x54, 0x49, 0x4f, 0x4e,
+	0x5f, 0x54, 0x59, 0x50, 0x45, 0x5f, 0x53, 0x55, 0x46, 0x46, 0x49, 0x58, 0x10, 0x03, 0x12, 0x1b,
+	0x0a, 0x17, 0x4f, 0x50, 0x45, 0x52, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x54, 0x59, 0x50, 0x45,
+	0x5f, 0x44, 0x55, 0x52, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x10, 0x04, 0x12, 0x16, 0x0a, 0x12, 0x4f,
+	0x50, 0x45, 0x52, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x54, 0x59, 0x50, 0x45, 0x5f, 0x41, 0x44,
+	0x44, 0x10, 0x05, 0x12, 0x1b, 0x0a, 0x17, 0x4f, 0x50, 0x45, 0x52, 0x41, 0x54, 0x49, 0x4f, 0x4e,
+	0x5f, 0x54, 0x59, 0x50, 0x45, 0x5f, 0x53, 0x55, 0x42, 0x54, 0x52, 0x41, 0x43, 0x54, 0x10, 0x06,
+	0x12, 0x1b, 0x0a, 0x17, 0x4f, 0x50, 0x45, 0x52, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x54, 0x59,
+	0x50, 0x45, 0x5f, 0x4d, 0x55, 0x4c, 0x54, 0x49, 0x50, 0x4c, 0x59, 0x10, 0x07, 0x12, 0x19, 0x0a,
+	0x15, 0x4f, 0x50, 0x45, 0x52, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x54, 0x59, 0x50, 0x45, 0x5f,
+	0x44, 0x49, 0x56, 0x49, 0x44, 0x45, 0x10, 0x08, 0x12, 0x20, 0x0a, 0x1c, 0x4f, 0x50, 0x45, 0x52,
+	0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x54, 0x59, 0x50, 0x45, 0x5f, 0x46, 0x4f, 0x52, 0x4d, 0x41,
+	0x54, 0x5f, 0x4e, 0x55, 0x4d, 0x42, 0x45, 0x52, 0x10, 0x09, 0x12, 0x1c, 0x0a, 0x18, 0x4f, 0x50,
+	0x45, 0x52, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x54, 0x59, 0x50, 0x45, 0x5f, 0x50, 0x52, 0x45,
+	0x43, 0x49, 0x53, 0x49, 0x4f, 0x4e, 0x10, 0x0a, 0x2a, 0x60, 0x0a, 0x0a, 0x43, 0x6f, 0x6c, 0x75,
+	0x6d, 0x6e, 0x53, 0x6f, 0x72, 0x74, 0x12, 0x1b, 0x0a, 0x17, 0x43, 0x4f, 0x4c, 0x55, 0x4d, 0x4e,
+	0x5f, 0x53, 0x4f, 0x52, 0x54, 0x5f, 0x55, 0x4e, 0x53, 0x50, 0x45, 0x43, 0x49, 0x46, 0x49, 0x45,
+	0x44, 0x10, 0x00, 0x12, 0x19, 0x0a, 0x15, 0x43, 0x4f, 0x4c, 0x55, 0x4d, 0x4e, 0x5f, 0x53, 0x4f,
+	0x52, 0x54, 0x5f, 0x41, 0x53, 0x43, 0x45, 0x4e, 0x44, 0x49, 0x4e, 0x47, 0x10, 0x01, 0x12, 0x1a,
+	0x0a, 0x16, 0x43, 0x4f, 0x4c, 0x55, 0x4d, 0x4e, 0x5f, 0x53, 0x4f, 0x52, 0x54, 0x5f, 0x44, 0x45,
+	0x53, 0x43, 0x45, 0x4e, 0x44, 0x49, 0x4e, 0x47, 0x10, 0x02, 0x2a, 0xa8, 0x02, 0x0a, 0x24, 0x4f,
+	0x75, 0x74, 0x70, 0x75, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61, 0x74, 0x69,
+	0x6f, 0x6e, 0x43, 0x6f, 0x6c, 0x75, 0x6d, 0x6e, 0x53, 0x75, 0x6d, 0x6d, 0x61, 0x72, 0x79, 0x54,
+	0x79, 0x70, 0x65, 0x12, 0x38, 0x0a, 0x34, 0x4f, 0x55, 0x54, 0x50, 0x55, 0x54, 0x5f, 0x43, 0x4f,
+	0x4e, 0x46, 0x49, 0x47, 0x55, 0x52, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x43, 0x4f, 0x4c, 0x55,
+	0x4d, 0x4e, 0x5f, 0x53, 0x55, 0x4d, 0x4d, 0x41, 0x52, 0x59, 0x5f, 0x54, 0x59, 0x50, 0x45, 0x5f,
+	0x55, 0x4e, 0x53, 0x50, 0x45, 0x43, 0x49, 0x46, 0x49, 0x45, 0x44, 0x10, 0x00, 0x12, 0x30, 0x0a,
+	0x2c, 0x4f, 0x55, 0x54, 0x50, 0x55, 0x54, 0x5f, 0x43, 0x4f, 0x4e, 0x46, 0x49, 0x47, 0x55, 0x52,
+	0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x43, 0x4f, 0x4c, 0x55, 0x4d, 0x4e, 0x5f, 0x53, 0x55, 0x4d,
+	0x4d, 0x41, 0x52, 0x59, 0x5f, 0x54, 0x59, 0x50, 0x45, 0x5f, 0x41, 0x56, 0x47, 0x10, 0x01, 0x12,
+	0x30, 0x0a, 0x2c, 0x4f, 0x55, 0x54, 0x50, 0x55, 0x54, 0x5f, 0x43, 0x4f, 0x4e, 0x46, 0x49, 0x47,
+	0x55, 0x52, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x43, 0x4f, 0x4c, 0x55, 0x4d, 0x4e, 0x5f, 0x53,
+	0x55, 0x4d, 0x4d, 0x41, 0x52, 0x59, 0x5f, 0x54, 0x59, 0x50, 0x45, 0x5f, 0x53, 0x55, 0x4d, 0x10,
+	0x02, 0x12, 0x30, 0x0a, 0x2c, 0x4f, 0x55, 0x54, 0x50, 0x55, 0x54, 0x5f, 0x43, 0x4f, 0x4e, 0x46,
+	0x49, 0x47, 0x55, 0x52, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x43, 0x4f, 0x4c, 0x55, 0x4d, 0x4e,
+	0x5f, 0x53, 0x55, 0x4d, 0x4d, 0x41, 0x52, 0x59, 0x5f, 0x54, 0x59, 0x50, 0x45, 0x5f, 0x4d, 0x49,
+	0x4e, 0x10, 0x03, 0x12, 0x30, 0x0a, 0x2c, 0x4f, 0x55, 0x54, 0x50, 0x55, 0x54, 0x5f, 0x43, 0x4f,
+	0x4e, 0x46, 0x49, 0x47, 0x55, 0x52, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x43, 0x4f, 0x4c, 0x55,
+	0x4d, 0x4e, 0x5f, 0x53, 0x55, 0x4d, 0x4d, 0x41, 0x52, 0x59, 0x5f, 0x54, 0x59, 0x50, 0x45, 0x5f,
+	0x4d, 0x41, 0x58, 0x10, 0x04, 0x42, 0xd1, 0x01, 0x0a, 0x19, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70,
+	0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x69, 0x6e, 0x73, 0x69, 0x67,
+	0x68, 0x74, 0x73, 0x42, 0x0c, 0x49, 0x6e, 0x73, 0x69, 0x67, 0x68, 0x74, 0x50, 0x72, 0x6f, 0x74,
+	0x6f, 0x50, 0x01, 0x5a, 0x30, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f,
+	0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f,
+	0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x69, 0x6e, 0x73,
+	0x69, 0x67, 0x68, 0x74, 0x73, 0xa2, 0x02, 0x03, 0x41, 0x56, 0x49, 0xaa, 0x02, 0x15, 0x41, 0x70,
+	0x69, 0x2e, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x49, 0x6e, 0x73, 0x69, 0x67,
+	0x68, 0x74, 0x73, 0xca, 0x02, 0x15, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68,
+	0x61, 0x31, 0x5c, 0x49, 0x6e, 0x73, 0x69, 0x67, 0x68, 0x74, 0x73, 0xe2, 0x02, 0x21, 0x41, 0x70,
+	0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x49, 0x6e, 0x73, 0x69, 0x67,
+	0x68, 0x74, 0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea,
+	0x02, 0x17, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x3a,
+	0x3a, 0x49, 0x6e, 0x73, 0x69, 0x67, 0x68, 0x74, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
+	0x33,
 }
 
 var (
@@ -1372,57 +2976,97 @@ func file_api_v1alpha1_insights_insight_proto_rawDescGZIP() []byte {
 	return file_api_v1alpha1_insights_insight_proto_rawDescData
 }
 
-var file_api_v1alpha1_insights_insight_proto_msgTypes = make([]protoimpl.MessageInfo, 22)
+var file_api_v1alpha1_insights_insight_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
+var file_api_v1alpha1_insights_insight_proto_msgTypes = make([]protoimpl.MessageInfo, 41)
 var file_api_v1alpha1_insights_insight_proto_goTypes = []any{
-	(*Insight)(nil),                    // 0: api.v1alpha1.insights.Insight
-	(*PublishInsightRequest)(nil),      // 1: api.v1alpha1.insights.PublishInsightRequest
-	(*PublishInsightResponse)(nil),     // 2: api.v1alpha1.insights.PublishInsightResponse
-	(*CreateInsightRequest)(nil),       // 3: api.v1alpha1.insights.CreateInsightRequest
-	(*CreateInsightResponse)(nil),      // 4: api.v1alpha1.insights.CreateInsightResponse
-	(*ListInsightsRequest)(nil),        // 5: api.v1alpha1.insights.ListInsightsRequest
-	(*ListInsightsResponse)(nil),       // 6: api.v1alpha1.insights.ListInsightsResponse
-	(*ListOrgInsightsRequest)(nil),     // 7: api.v1alpha1.insights.ListOrgInsightsRequest
-	(*ListOrgInsightsResponse)(nil),    // 8: api.v1alpha1.insights.ListOrgInsightsResponse
-	(*UpdateInsightRequest)(nil),       // 9: api.v1alpha1.insights.UpdateInsightRequest
-	(*UpdateInsightResponse)(nil),      // 10: api.v1alpha1.insights.UpdateInsightResponse
-	(*DeleteInsightRequest)(nil),       // 11: api.v1alpha1.insights.DeleteInsightRequest
-	(*DeleteInsightResponse)(nil),      // 12: api.v1alpha1.insights.DeleteInsightResponse
-	(*GetInsightRequest)(nil),          // 13: api.v1alpha1.insights.GetInsightRequest
-	(*GetInsightResponse)(nil),         // 14: api.v1alpha1.insights.GetInsightResponse
-	(*GetVfsSchemaRequest)(nil),        // 15: api.v1alpha1.insights.GetVfsSchemaRequest
-	(*GetVfsSchemaResponse)(nil),       // 16: api.v1alpha1.insights.GetVfsSchemaResponse
-	(*ListVfsesRequest)(nil),           // 17: api.v1alpha1.insights.ListVfsesRequest
-	(*ListVfsesResponse)(nil),          // 18: api.v1alpha1.insights.ListVfsesResponse
-	(*ListVfsSchemasRequest)(nil),      // 19: api.v1alpha1.insights.ListVfsSchemasRequest
-	(*ListVfsSchemasResponse)(nil),     // 20: api.v1alpha1.insights.ListVfsSchemasResponse
-	(*GetVfsSchemaResponse_Field)(nil), // 21: api.v1alpha1.insights.GetVfsSchemaResponse.Field
-	(commons.InsightType)(0),           // 22: api.commons.InsightType
-	(commons.InsightPermissionType)(0), // 23: api.commons.InsightPermissionType
-	(*fieldmaskpb.FieldMask)(nil),      // 24: google.protobuf.FieldMask
-	(commons.InsightVfsSchemaType)(0),  // 25: api.commons.InsightVfsSchemaType
+	(OutputConfigurationType)(0),                  // 0: api.v1alpha1.insights.OutputConfigurationType
+	(OperationType)(0),                            // 1: api.v1alpha1.insights.OperationType
+	(ColumnSort)(0),                               // 2: api.v1alpha1.insights.ColumnSort
+	(OutputConfigurationColumnSummaryType)(0),     // 3: api.v1alpha1.insights.OutputConfigurationColumnSummaryType
+	(*Insight)(nil),                               // 4: api.v1alpha1.insights.Insight
+	(*PublishInsightRequest)(nil),                 // 5: api.v1alpha1.insights.PublishInsightRequest
+	(*PublishInsightResponse)(nil),                // 6: api.v1alpha1.insights.PublishInsightResponse
+	(*CreateInsightRequest)(nil),                  // 7: api.v1alpha1.insights.CreateInsightRequest
+	(*CreateInsightResponse)(nil),                 // 8: api.v1alpha1.insights.CreateInsightResponse
+	(*ListInsightsRequest)(nil),                   // 9: api.v1alpha1.insights.ListInsightsRequest
+	(*ListInsightsResponse)(nil),                  // 10: api.v1alpha1.insights.ListInsightsResponse
+	(*ListOrgInsightsRequest)(nil),                // 11: api.v1alpha1.insights.ListOrgInsightsRequest
+	(*ListOrgInsightsResponse)(nil),               // 12: api.v1alpha1.insights.ListOrgInsightsResponse
+	(*UpdateInsightRequest)(nil),                  // 13: api.v1alpha1.insights.UpdateInsightRequest
+	(*UpdateInsightResponse)(nil),                 // 14: api.v1alpha1.insights.UpdateInsightResponse
+	(*DeleteInsightRequest)(nil),                  // 15: api.v1alpha1.insights.DeleteInsightRequest
+	(*DeleteInsightResponse)(nil),                 // 16: api.v1alpha1.insights.DeleteInsightResponse
+	(*GetInsightRequest)(nil),                     // 17: api.v1alpha1.insights.GetInsightRequest
+	(*GetInsightResponse)(nil),                    // 18: api.v1alpha1.insights.GetInsightResponse
+	(*GetVfsSchemaRequest)(nil),                   // 19: api.v1alpha1.insights.GetVfsSchemaRequest
+	(*GetVfsSchemaResponse)(nil),                  // 20: api.v1alpha1.insights.GetVfsSchemaResponse
+	(*ListVfsesRequest)(nil),                      // 21: api.v1alpha1.insights.ListVfsesRequest
+	(*ListVfsesResponse)(nil),                     // 22: api.v1alpha1.insights.ListVfsesResponse
+	(*ListVfsSchemasRequest)(nil),                 // 23: api.v1alpha1.insights.ListVfsSchemasRequest
+	(*ListVfsSchemasResponse)(nil),                // 24: api.v1alpha1.insights.ListVfsSchemasResponse
+	(*TableVisualization)(nil),                    // 25: api.v1alpha1.insights.TableVisualization
+	(*TableColumnConfig)(nil),                     // 26: api.v1alpha1.insights.TableColumnConfig
+	(*FormatSeries)(nil),                          // 27: api.v1alpha1.insights.FormatSeries
+	(*ColumnOperation)(nil),                       // 28: api.v1alpha1.insights.ColumnOperation
+	(*OutputConfiguration)(nil),                   // 29: api.v1alpha1.insights.OutputConfiguration
+	(*CreateOutputConfigurationRequest)(nil),      // 30: api.v1alpha1.insights.CreateOutputConfigurationRequest
+	(*CreateOutputConfigurationResponse)(nil),     // 31: api.v1alpha1.insights.CreateOutputConfigurationResponse
+	(*ListOutputConfigurationsRequest)(nil),       // 32: api.v1alpha1.insights.ListOutputConfigurationsRequest
+	(*ListOutputConfigurationsResponse)(nil),      // 33: api.v1alpha1.insights.ListOutputConfigurationsResponse
+	(*UpdateOutputConfigurationRequest)(nil),      // 34: api.v1alpha1.insights.UpdateOutputConfigurationRequest
+	(*UpdateOutputConfigurationResponse)(nil),     // 35: api.v1alpha1.insights.UpdateOutputConfigurationResponse
+	(*DeleteOutputConfigurationRequest)(nil),      // 36: api.v1alpha1.insights.DeleteOutputConfigurationRequest
+	(*DeleteOutputConfigurationResponse)(nil),     // 37: api.v1alpha1.insights.DeleteOutputConfigurationResponse
+	(*GetOutputConfigurationRequest)(nil),         // 38: api.v1alpha1.insights.GetOutputConfigurationRequest
+	(*GetOutputConfigurationResponse)(nil),        // 39: api.v1alpha1.insights.GetOutputConfigurationResponse
+	(*SetDefaultOutputConfigurationRequest)(nil),  // 40: api.v1alpha1.insights.SetDefaultOutputConfigurationRequest
+	(*SetDefaultOutputConfigurationResponse)(nil), // 41: api.v1alpha1.insights.SetDefaultOutputConfigurationResponse
+	(*GetDefaultOutputConfigurationRequest)(nil),  // 42: api.v1alpha1.insights.GetDefaultOutputConfigurationRequest
+	(*GetDefaultOutputConfigurationResponse)(nil), // 43: api.v1alpha1.insights.GetDefaultOutputConfigurationResponse
+	(*GetVfsSchemaResponse_Field)(nil),            // 44: api.v1alpha1.insights.GetVfsSchemaResponse.Field
+	(commons.InsightType)(0),                      // 45: api.commons.InsightType
+	(commons.InsightPermissionType)(0),            // 46: api.commons.InsightPermissionType
+	(*fieldmaskpb.FieldMask)(nil),                 // 47: google.protobuf.FieldMask
+	(commons.InsightVfsSchemaType)(0),             // 48: api.commons.InsightVfsSchemaType
 }
 var file_api_v1alpha1_insights_insight_proto_depIdxs = []int32{
-	22, // 0: api.v1alpha1.insights.Insight.insight_type:type_name -> api.commons.InsightType
-	23, // 1: api.v1alpha1.insights.Insight.insight_permission_type:type_name -> api.commons.InsightPermissionType
-	0,  // 2: api.v1alpha1.insights.PublishInsightResponse.insight:type_name -> api.v1alpha1.insights.Insight
-	0,  // 3: api.v1alpha1.insights.CreateInsightRequest.insight:type_name -> api.v1alpha1.insights.Insight
-	0,  // 4: api.v1alpha1.insights.CreateInsightResponse.insight:type_name -> api.v1alpha1.insights.Insight
-	23, // 5: api.v1alpha1.insights.ListInsightsRequest.insight_permission_types:type_name -> api.commons.InsightPermissionType
-	0,  // 6: api.v1alpha1.insights.ListInsightsResponse.insights:type_name -> api.v1alpha1.insights.Insight
-	0,  // 7: api.v1alpha1.insights.ListOrgInsightsResponse.insights:type_name -> api.v1alpha1.insights.Insight
-	0,  // 8: api.v1alpha1.insights.UpdateInsightRequest.insight:type_name -> api.v1alpha1.insights.Insight
-	24, // 9: api.v1alpha1.insights.UpdateInsightRequest.update_mask:type_name -> google.protobuf.FieldMask
-	0,  // 10: api.v1alpha1.insights.UpdateInsightResponse.insight:type_name -> api.v1alpha1.insights.Insight
-	0,  // 11: api.v1alpha1.insights.DeleteInsightResponse.insight:type_name -> api.v1alpha1.insights.Insight
-	0,  // 12: api.v1alpha1.insights.GetInsightResponse.insight:type_name -> api.v1alpha1.insights.Insight
-	21, // 13: api.v1alpha1.insights.GetVfsSchemaResponse.fields:type_name -> api.v1alpha1.insights.GetVfsSchemaResponse.Field
-	16, // 14: api.v1alpha1.insights.ListVfsSchemasResponse.vfs_schemas:type_name -> api.v1alpha1.insights.GetVfsSchemaResponse
-	25, // 15: api.v1alpha1.insights.GetVfsSchemaResponse.Field.column_type:type_name -> api.commons.InsightVfsSchemaType
-	16, // [16:16] is the sub-list for method output_type
-	16, // [16:16] is the sub-list for method input_type
-	16, // [16:16] is the sub-list for extension type_name
-	16, // [16:16] is the sub-list for extension extendee
-	0,  // [0:16] is the sub-list for field type_name
+	45, // 0: api.v1alpha1.insights.Insight.insight_type:type_name -> api.commons.InsightType
+	46, // 1: api.v1alpha1.insights.Insight.insight_permission_type:type_name -> api.commons.InsightPermissionType
+	4,  // 2: api.v1alpha1.insights.PublishInsightResponse.insight:type_name -> api.v1alpha1.insights.Insight
+	4,  // 3: api.v1alpha1.insights.CreateInsightRequest.insight:type_name -> api.v1alpha1.insights.Insight
+	4,  // 4: api.v1alpha1.insights.CreateInsightResponse.insight:type_name -> api.v1alpha1.insights.Insight
+	46, // 5: api.v1alpha1.insights.ListInsightsRequest.insight_permission_types:type_name -> api.commons.InsightPermissionType
+	4,  // 6: api.v1alpha1.insights.ListInsightsResponse.insights:type_name -> api.v1alpha1.insights.Insight
+	4,  // 7: api.v1alpha1.insights.ListOrgInsightsResponse.insights:type_name -> api.v1alpha1.insights.Insight
+	4,  // 8: api.v1alpha1.insights.UpdateInsightRequest.insight:type_name -> api.v1alpha1.insights.Insight
+	47, // 9: api.v1alpha1.insights.UpdateInsightRequest.update_mask:type_name -> google.protobuf.FieldMask
+	4,  // 10: api.v1alpha1.insights.UpdateInsightResponse.insight:type_name -> api.v1alpha1.insights.Insight
+	4,  // 11: api.v1alpha1.insights.DeleteInsightResponse.insight:type_name -> api.v1alpha1.insights.Insight
+	4,  // 12: api.v1alpha1.insights.GetInsightResponse.insight:type_name -> api.v1alpha1.insights.Insight
+	44, // 13: api.v1alpha1.insights.GetVfsSchemaResponse.fields:type_name -> api.v1alpha1.insights.GetVfsSchemaResponse.Field
+	20, // 14: api.v1alpha1.insights.ListVfsSchemasResponse.vfs_schemas:type_name -> api.v1alpha1.insights.GetVfsSchemaResponse
+	26, // 15: api.v1alpha1.insights.TableVisualization.table_column_details:type_name -> api.v1alpha1.insights.TableColumnConfig
+	28, // 16: api.v1alpha1.insights.TableColumnConfig.operations:type_name -> api.v1alpha1.insights.ColumnOperation
+	3,  // 17: api.v1alpha1.insights.TableColumnConfig.column_summary:type_name -> api.v1alpha1.insights.OutputConfigurationColumnSummaryType
+	2,  // 18: api.v1alpha1.insights.TableColumnConfig.sort_direction:type_name -> api.v1alpha1.insights.ColumnSort
+	1,  // 19: api.v1alpha1.insights.ColumnOperation.operation_type:type_name -> api.v1alpha1.insights.OperationType
+	27, // 20: api.v1alpha1.insights.ColumnOperation.format_series:type_name -> api.v1alpha1.insights.FormatSeries
+	0,  // 21: api.v1alpha1.insights.OutputConfiguration.output_configuration_type:type_name -> api.v1alpha1.insights.OutputConfigurationType
+	25, // 22: api.v1alpha1.insights.OutputConfiguration.table_visualization:type_name -> api.v1alpha1.insights.TableVisualization
+	29, // 23: api.v1alpha1.insights.CreateOutputConfigurationRequest.output_configuration:type_name -> api.v1alpha1.insights.OutputConfiguration
+	29, // 24: api.v1alpha1.insights.CreateOutputConfigurationResponse.output_configuration:type_name -> api.v1alpha1.insights.OutputConfiguration
+	29, // 25: api.v1alpha1.insights.ListOutputConfigurationsResponse.output_configurations:type_name -> api.v1alpha1.insights.OutputConfiguration
+	47, // 26: api.v1alpha1.insights.UpdateOutputConfigurationRequest.update_mask:type_name -> google.protobuf.FieldMask
+	29, // 27: api.v1alpha1.insights.UpdateOutputConfigurationRequest.output_configuration:type_name -> api.v1alpha1.insights.OutputConfiguration
+	29, // 28: api.v1alpha1.insights.UpdateOutputConfigurationResponse.output_configuration:type_name -> api.v1alpha1.insights.OutputConfiguration
+	29, // 29: api.v1alpha1.insights.GetOutputConfigurationResponse.output_configuration:type_name -> api.v1alpha1.insights.OutputConfiguration
+	29, // 30: api.v1alpha1.insights.GetDefaultOutputConfigurationResponse.output_configuration:type_name -> api.v1alpha1.insights.OutputConfiguration
+	48, // 31: api.v1alpha1.insights.GetVfsSchemaResponse.Field.column_type:type_name -> api.commons.InsightVfsSchemaType
+	32, // [32:32] is the sub-list for method output_type
+	32, // [32:32] is the sub-list for method input_type
+	32, // [32:32] is the sub-list for extension type_name
+	32, // [32:32] is the sub-list for extension extendee
+	0,  // [0:32] is the sub-list for field type_name
 }
 
 func init() { file_api_v1alpha1_insights_insight_proto_init() }
@@ -1684,6 +3328,234 @@ func file_api_v1alpha1_insights_insight_proto_init() {
 			}
 		}
 		file_api_v1alpha1_insights_insight_proto_msgTypes[21].Exporter = func(v any, i int) any {
+			switch v := v.(*TableVisualization); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_insights_insight_proto_msgTypes[22].Exporter = func(v any, i int) any {
+			switch v := v.(*TableColumnConfig); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_insights_insight_proto_msgTypes[23].Exporter = func(v any, i int) any {
+			switch v := v.(*FormatSeries); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_insights_insight_proto_msgTypes[24].Exporter = func(v any, i int) any {
+			switch v := v.(*ColumnOperation); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_insights_insight_proto_msgTypes[25].Exporter = func(v any, i int) any {
+			switch v := v.(*OutputConfiguration); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_insights_insight_proto_msgTypes[26].Exporter = func(v any, i int) any {
+			switch v := v.(*CreateOutputConfigurationRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_insights_insight_proto_msgTypes[27].Exporter = func(v any, i int) any {
+			switch v := v.(*CreateOutputConfigurationResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_insights_insight_proto_msgTypes[28].Exporter = func(v any, i int) any {
+			switch v := v.(*ListOutputConfigurationsRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_insights_insight_proto_msgTypes[29].Exporter = func(v any, i int) any {
+			switch v := v.(*ListOutputConfigurationsResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_insights_insight_proto_msgTypes[30].Exporter = func(v any, i int) any {
+			switch v := v.(*UpdateOutputConfigurationRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_insights_insight_proto_msgTypes[31].Exporter = func(v any, i int) any {
+			switch v := v.(*UpdateOutputConfigurationResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_insights_insight_proto_msgTypes[32].Exporter = func(v any, i int) any {
+			switch v := v.(*DeleteOutputConfigurationRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_insights_insight_proto_msgTypes[33].Exporter = func(v any, i int) any {
+			switch v := v.(*DeleteOutputConfigurationResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_insights_insight_proto_msgTypes[34].Exporter = func(v any, i int) any {
+			switch v := v.(*GetOutputConfigurationRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_insights_insight_proto_msgTypes[35].Exporter = func(v any, i int) any {
+			switch v := v.(*GetOutputConfigurationResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_insights_insight_proto_msgTypes[36].Exporter = func(v any, i int) any {
+			switch v := v.(*SetDefaultOutputConfigurationRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_insights_insight_proto_msgTypes[37].Exporter = func(v any, i int) any {
+			switch v := v.(*SetDefaultOutputConfigurationResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_insights_insight_proto_msgTypes[38].Exporter = func(v any, i int) any {
+			switch v := v.(*GetDefaultOutputConfigurationRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_insights_insight_proto_msgTypes[39].Exporter = func(v any, i int) any {
+			switch v := v.(*GetDefaultOutputConfigurationResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_v1alpha1_insights_insight_proto_msgTypes[40].Exporter = func(v any, i int) any {
 			switch v := v.(*GetVfsSchemaResponse_Field); i {
 			case 0:
 				return &v.state
@@ -1696,18 +3568,27 @@ func file_api_v1alpha1_insights_insight_proto_init() {
 			}
 		}
 	}
+	file_api_v1alpha1_insights_insight_proto_msgTypes[24].OneofWrappers = []any{
+		(*ColumnOperation_FloatValue)(nil),
+		(*ColumnOperation_FormatSeries)(nil),
+	}
+	file_api_v1alpha1_insights_insight_proto_msgTypes[25].OneofWrappers = []any{
+		(*OutputConfiguration_Blob)(nil),
+		(*OutputConfiguration_TableVisualization)(nil),
+	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_v1alpha1_insights_insight_proto_rawDesc,
-			NumEnums:      0,
-			NumMessages:   22,
+			NumEnums:      4,
+			NumMessages:   41,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_api_v1alpha1_insights_insight_proto_goTypes,
 		DependencyIndexes: file_api_v1alpha1_insights_insight_proto_depIdxs,
+		EnumInfos:         file_api_v1alpha1_insights_insight_proto_enumTypes,
 		MessageInfos:      file_api_v1alpha1_insights_insight_proto_msgTypes,
 	}.Build()
 	File_api_v1alpha1_insights_insight_proto = out.File
