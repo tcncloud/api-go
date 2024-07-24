@@ -64,10 +64,12 @@ const (
 type TicketsClient interface {
 	// Public Method to create a ticket.
 	CreateTicket(ctx context.Context, in *CreateTicketReq, opts ...grpc.CallOption) (*CreateTicketRes, error)
+	// Deprecated: Do not use.
 	// Public Method to edit a ticket.
 	EditTicket(ctx context.Context, in *EditTicketReq, opts ...grpc.CallOption) (*EditTicketRes, error)
 	// Public method to list tickets
 	ListTickets(ctx context.Context, in *ListTicketsReq, opts ...grpc.CallOption) (*ListTicketsRes, error)
+	// Deprecated: Do not use.
 	// Public method to assign ticket
 	// Would be deprecated
 	AssignTicket(ctx context.Context, in *AssignTicketReq, opts ...grpc.CallOption) (*AssignTicketRes, error)
@@ -94,6 +96,7 @@ type TicketsClient interface {
 	ReplyComment(ctx context.Context, in *ReplyCommentReq, opts ...grpc.CallOption) (*ReplyCommentRes, error)
 	// Public method to List audit log for Ticketing system
 	ListTicketAuditLog(ctx context.Context, in *ListTicketAuditLogReq, opts ...grpc.CallOption) (*ListTicketAuditLogRes, error)
+	// Deprecated: Do not use.
 	// Public method to assign a ticket
 	AssignSelf(ctx context.Context, in *CreateSelfAssignReq, opts ...grpc.CallOption) (*CreateSelfAssignRes, error)
 	// Public Method to edit a ticket.
@@ -111,10 +114,12 @@ type TicketsClient interface {
 	ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (*ListUsersResponse, error)
 	// Any agent can close the ticket. No BE validation required
 	CloseTicketAction(ctx context.Context, in *CloseTicketActionRequest, opts ...grpc.CallOption) (*CloseTicketActionResponse, error)
+	// Deprecated: Do not use.
 	// Public method to assign a ticket action
 	AssignTicketAction(ctx context.Context, in *AssignTicketActionRequest, opts ...grpc.CallOption) (*AssignTicketActionResponse, error)
 	// Public method to assign a ticket
 	CreateTicketAction(ctx context.Context, in *CreateTicketActionRequest, opts ...grpc.CallOption) (*CreateTicketActionResponse, error)
+	// Deprecated: Do not use.
 	// Public method to change the Status of a ticket
 	ChangeTicketStatus(ctx context.Context, in *ChangeTicketStatusRequest, opts ...grpc.CallOption) (*ChangeTicketStatusResponse, error)
 	// Public method to create a Ticket Template
@@ -127,6 +132,7 @@ type TicketsClient interface {
 	AssignTicketTemplate(ctx context.Context, in *AssignProjectTemplateRequest, opts ...grpc.CallOption) (*AssignProjectTemplateResponse, error)
 	// Public method to list all Action Types
 	GetAllActionType(ctx context.Context, in *GetActionTypeRequest, opts ...grpc.CallOption) (*GetActionTypeResponse, error)
+	// Deprecated: Do not use.
 	// Public method to list all Action Types
 	GetPhoneNumberType(ctx context.Context, in *GetPhoneNumberTypeRequest, opts ...grpc.CallOption) (*GetPhoneNumberTypeResponse, error)
 	// Public method to addEntityRef
@@ -155,6 +161,7 @@ func (c *ticketsClient) CreateTicket(ctx context.Context, in *CreateTicketReq, o
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *ticketsClient) EditTicket(ctx context.Context, in *EditTicketReq, opts ...grpc.CallOption) (*EditTicketRes, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(EditTicketRes)
@@ -175,6 +182,7 @@ func (c *ticketsClient) ListTickets(ctx context.Context, in *ListTicketsReq, opt
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *ticketsClient) AssignTicket(ctx context.Context, in *AssignTicketReq, opts ...grpc.CallOption) (*AssignTicketRes, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(AssignTicketRes)
@@ -295,6 +303,7 @@ func (c *ticketsClient) ListTicketAuditLog(ctx context.Context, in *ListTicketAu
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *ticketsClient) AssignSelf(ctx context.Context, in *CreateSelfAssignReq, opts ...grpc.CallOption) (*CreateSelfAssignRes, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(CreateSelfAssignRes)
@@ -376,6 +385,7 @@ func (c *ticketsClient) CloseTicketAction(ctx context.Context, in *CloseTicketAc
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *ticketsClient) AssignTicketAction(ctx context.Context, in *AssignTicketActionRequest, opts ...grpc.CallOption) (*AssignTicketActionResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(AssignTicketActionResponse)
@@ -396,6 +406,7 @@ func (c *ticketsClient) CreateTicketAction(ctx context.Context, in *CreateTicket
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *ticketsClient) ChangeTicketStatus(ctx context.Context, in *ChangeTicketStatusRequest, opts ...grpc.CallOption) (*ChangeTicketStatusResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ChangeTicketStatusResponse)
@@ -456,6 +467,7 @@ func (c *ticketsClient) GetAllActionType(ctx context.Context, in *GetActionTypeR
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *ticketsClient) GetPhoneNumberType(ctx context.Context, in *GetPhoneNumberTypeRequest, opts ...grpc.CallOption) (*GetPhoneNumberTypeResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetPhoneNumberTypeResponse)
@@ -504,10 +516,12 @@ func (c *ticketsClient) ListEntityRefsByTicket(ctx context.Context, in *ListEnti
 type TicketsServer interface {
 	// Public Method to create a ticket.
 	CreateTicket(context.Context, *CreateTicketReq) (*CreateTicketRes, error)
+	// Deprecated: Do not use.
 	// Public Method to edit a ticket.
 	EditTicket(context.Context, *EditTicketReq) (*EditTicketRes, error)
 	// Public method to list tickets
 	ListTickets(context.Context, *ListTicketsReq) (*ListTicketsRes, error)
+	// Deprecated: Do not use.
 	// Public method to assign ticket
 	// Would be deprecated
 	AssignTicket(context.Context, *AssignTicketReq) (*AssignTicketRes, error)
@@ -534,6 +548,7 @@ type TicketsServer interface {
 	ReplyComment(context.Context, *ReplyCommentReq) (*ReplyCommentRes, error)
 	// Public method to List audit log for Ticketing system
 	ListTicketAuditLog(context.Context, *ListTicketAuditLogReq) (*ListTicketAuditLogRes, error)
+	// Deprecated: Do not use.
 	// Public method to assign a ticket
 	AssignSelf(context.Context, *CreateSelfAssignReq) (*CreateSelfAssignRes, error)
 	// Public Method to edit a ticket.
@@ -551,10 +566,12 @@ type TicketsServer interface {
 	ListUsers(context.Context, *ListUsersRequest) (*ListUsersResponse, error)
 	// Any agent can close the ticket. No BE validation required
 	CloseTicketAction(context.Context, *CloseTicketActionRequest) (*CloseTicketActionResponse, error)
+	// Deprecated: Do not use.
 	// Public method to assign a ticket action
 	AssignTicketAction(context.Context, *AssignTicketActionRequest) (*AssignTicketActionResponse, error)
 	// Public method to assign a ticket
 	CreateTicketAction(context.Context, *CreateTicketActionRequest) (*CreateTicketActionResponse, error)
+	// Deprecated: Do not use.
 	// Public method to change the Status of a ticket
 	ChangeTicketStatus(context.Context, *ChangeTicketStatusRequest) (*ChangeTicketStatusResponse, error)
 	// Public method to create a Ticket Template
@@ -567,6 +584,7 @@ type TicketsServer interface {
 	AssignTicketTemplate(context.Context, *AssignProjectTemplateRequest) (*AssignProjectTemplateResponse, error)
 	// Public method to list all Action Types
 	GetAllActionType(context.Context, *GetActionTypeRequest) (*GetActionTypeResponse, error)
+	// Deprecated: Do not use.
 	// Public method to list all Action Types
 	GetPhoneNumberType(context.Context, *GetPhoneNumberTypeRequest) (*GetPhoneNumberTypeResponse, error)
 	// Public method to addEntityRef

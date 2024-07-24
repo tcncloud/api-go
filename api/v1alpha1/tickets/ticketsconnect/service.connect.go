@@ -128,11 +128,15 @@ type TicketsClient interface {
 	// Public Method to create a ticket.
 	CreateTicket(context.Context, *connect_go.Request[tickets.CreateTicketReq]) (*connect_go.Response[tickets.CreateTicketRes], error)
 	// Public Method to edit a ticket.
+	//
+	// Deprecated: do not use.
 	EditTicket(context.Context, *connect_go.Request[tickets.EditTicketReq]) (*connect_go.Response[tickets.EditTicketRes], error)
 	// Public method to list tickets
 	ListTickets(context.Context, *connect_go.Request[tickets.ListTicketsReq]) (*connect_go.Response[tickets.ListTicketsRes], error)
 	// Public method to assign ticket
 	// Would be deprecated
+	//
+	// Deprecated: do not use.
 	AssignTicket(context.Context, *connect_go.Request[tickets.AssignTicketReq]) (*connect_go.Response[tickets.AssignTicketRes], error)
 	// Public Method to Close a ticket
 	// Any agent can close the ticket. No BE validation required
@@ -158,6 +162,8 @@ type TicketsClient interface {
 	// Public method to List audit log for Ticketing system
 	ListTicketAuditLog(context.Context, *connect_go.Request[tickets.ListTicketAuditLogReq]) (*connect_go.Response[tickets.ListTicketAuditLogRes], error)
 	// Public method to assign a ticket
+	//
+	// Deprecated: do not use.
 	AssignSelf(context.Context, *connect_go.Request[tickets.CreateSelfAssignReq]) (*connect_go.Response[tickets.CreateSelfAssignRes], error)
 	// Public Method to edit a ticket.
 	// EditTicket would be deprecated
@@ -175,10 +181,14 @@ type TicketsClient interface {
 	// Any agent can close the ticket. No BE validation required
 	CloseTicketAction(context.Context, *connect_go.Request[tickets.CloseTicketActionRequest]) (*connect_go.Response[tickets.CloseTicketActionResponse], error)
 	// Public method to assign a ticket action
+	//
+	// Deprecated: do not use.
 	AssignTicketAction(context.Context, *connect_go.Request[tickets.AssignTicketActionRequest]) (*connect_go.Response[tickets.AssignTicketActionResponse], error)
 	// Public method to assign a ticket
 	CreateTicketAction(context.Context, *connect_go.Request[tickets.CreateTicketActionRequest]) (*connect_go.Response[tickets.CreateTicketActionResponse], error)
 	// Public method to change the Status of a ticket
+	//
+	// Deprecated: do not use.
 	ChangeTicketStatus(context.Context, *connect_go.Request[tickets.ChangeTicketStatusRequest]) (*connect_go.Response[tickets.ChangeTicketStatusResponse], error)
 	// Public method to create a Ticket Template
 	CreateTicketTemplate(context.Context, *connect_go.Request[tickets.CreateTicketTemplateRequest]) (*connect_go.Response[tickets.CreateTicketTemplateResponse], error)
@@ -191,6 +201,8 @@ type TicketsClient interface {
 	// Public method to list all Action Types
 	GetAllActionType(context.Context, *connect_go.Request[tickets.GetActionTypeRequest]) (*connect_go.Response[tickets.GetActionTypeResponse], error)
 	// Public method to list all Action Types
+	//
+	// Deprecated: do not use.
 	GetPhoneNumberType(context.Context, *connect_go.Request[tickets.GetPhoneNumberTypeRequest]) (*connect_go.Response[tickets.GetPhoneNumberTypeResponse], error)
 	// Public method to addEntityRef
 	AddEntityRef(context.Context, *connect_go.Request[tickets.AddEntityRefRequest]) (*connect_go.Response[tickets.AddEntityRefResponse], error)
@@ -433,6 +445,8 @@ func (c *ticketsClient) CreateTicket(ctx context.Context, req *connect_go.Reques
 }
 
 // EditTicket calls api.v1alpha1.tickets.Tickets.EditTicket.
+//
+// Deprecated: do not use.
 func (c *ticketsClient) EditTicket(ctx context.Context, req *connect_go.Request[tickets.EditTicketReq]) (*connect_go.Response[tickets.EditTicketRes], error) {
 	return c.editTicket.CallUnary(ctx, req)
 }
@@ -443,6 +457,8 @@ func (c *ticketsClient) ListTickets(ctx context.Context, req *connect_go.Request
 }
 
 // AssignTicket calls api.v1alpha1.tickets.Tickets.AssignTicket.
+//
+// Deprecated: do not use.
 func (c *ticketsClient) AssignTicket(ctx context.Context, req *connect_go.Request[tickets.AssignTicketReq]) (*connect_go.Response[tickets.AssignTicketRes], error) {
 	return c.assignTicket.CallUnary(ctx, req)
 }
@@ -503,6 +519,8 @@ func (c *ticketsClient) ListTicketAuditLog(ctx context.Context, req *connect_go.
 }
 
 // AssignSelf calls api.v1alpha1.tickets.Tickets.AssignSelf.
+//
+// Deprecated: do not use.
 func (c *ticketsClient) AssignSelf(ctx context.Context, req *connect_go.Request[tickets.CreateSelfAssignReq]) (*connect_go.Response[tickets.CreateSelfAssignRes], error) {
 	return c.assignSelf.CallUnary(ctx, req)
 }
@@ -545,6 +563,8 @@ func (c *ticketsClient) CloseTicketAction(ctx context.Context, req *connect_go.R
 }
 
 // AssignTicketAction calls api.v1alpha1.tickets.Tickets.AssignTicketAction.
+//
+// Deprecated: do not use.
 func (c *ticketsClient) AssignTicketAction(ctx context.Context, req *connect_go.Request[tickets.AssignTicketActionRequest]) (*connect_go.Response[tickets.AssignTicketActionResponse], error) {
 	return c.assignTicketAction.CallUnary(ctx, req)
 }
@@ -555,6 +575,8 @@ func (c *ticketsClient) CreateTicketAction(ctx context.Context, req *connect_go.
 }
 
 // ChangeTicketStatus calls api.v1alpha1.tickets.Tickets.ChangeTicketStatus.
+//
+// Deprecated: do not use.
 func (c *ticketsClient) ChangeTicketStatus(ctx context.Context, req *connect_go.Request[tickets.ChangeTicketStatusRequest]) (*connect_go.Response[tickets.ChangeTicketStatusResponse], error) {
 	return c.changeTicketStatus.CallUnary(ctx, req)
 }
@@ -585,6 +607,8 @@ func (c *ticketsClient) GetAllActionType(ctx context.Context, req *connect_go.Re
 }
 
 // GetPhoneNumberType calls api.v1alpha1.tickets.Tickets.GetPhoneNumberType.
+//
+// Deprecated: do not use.
 func (c *ticketsClient) GetPhoneNumberType(ctx context.Context, req *connect_go.Request[tickets.GetPhoneNumberTypeRequest]) (*connect_go.Response[tickets.GetPhoneNumberTypeResponse], error) {
 	return c.getPhoneNumberType.CallUnary(ctx, req)
 }
@@ -609,11 +633,15 @@ type TicketsHandler interface {
 	// Public Method to create a ticket.
 	CreateTicket(context.Context, *connect_go.Request[tickets.CreateTicketReq]) (*connect_go.Response[tickets.CreateTicketRes], error)
 	// Public Method to edit a ticket.
+	//
+	// Deprecated: do not use.
 	EditTicket(context.Context, *connect_go.Request[tickets.EditTicketReq]) (*connect_go.Response[tickets.EditTicketRes], error)
 	// Public method to list tickets
 	ListTickets(context.Context, *connect_go.Request[tickets.ListTicketsReq]) (*connect_go.Response[tickets.ListTicketsRes], error)
 	// Public method to assign ticket
 	// Would be deprecated
+	//
+	// Deprecated: do not use.
 	AssignTicket(context.Context, *connect_go.Request[tickets.AssignTicketReq]) (*connect_go.Response[tickets.AssignTicketRes], error)
 	// Public Method to Close a ticket
 	// Any agent can close the ticket. No BE validation required
@@ -639,6 +667,8 @@ type TicketsHandler interface {
 	// Public method to List audit log for Ticketing system
 	ListTicketAuditLog(context.Context, *connect_go.Request[tickets.ListTicketAuditLogReq]) (*connect_go.Response[tickets.ListTicketAuditLogRes], error)
 	// Public method to assign a ticket
+	//
+	// Deprecated: do not use.
 	AssignSelf(context.Context, *connect_go.Request[tickets.CreateSelfAssignReq]) (*connect_go.Response[tickets.CreateSelfAssignRes], error)
 	// Public Method to edit a ticket.
 	// EditTicket would be deprecated
@@ -656,10 +686,14 @@ type TicketsHandler interface {
 	// Any agent can close the ticket. No BE validation required
 	CloseTicketAction(context.Context, *connect_go.Request[tickets.CloseTicketActionRequest]) (*connect_go.Response[tickets.CloseTicketActionResponse], error)
 	// Public method to assign a ticket action
+	//
+	// Deprecated: do not use.
 	AssignTicketAction(context.Context, *connect_go.Request[tickets.AssignTicketActionRequest]) (*connect_go.Response[tickets.AssignTicketActionResponse], error)
 	// Public method to assign a ticket
 	CreateTicketAction(context.Context, *connect_go.Request[tickets.CreateTicketActionRequest]) (*connect_go.Response[tickets.CreateTicketActionResponse], error)
 	// Public method to change the Status of a ticket
+	//
+	// Deprecated: do not use.
 	ChangeTicketStatus(context.Context, *connect_go.Request[tickets.ChangeTicketStatusRequest]) (*connect_go.Response[tickets.ChangeTicketStatusResponse], error)
 	// Public method to create a Ticket Template
 	CreateTicketTemplate(context.Context, *connect_go.Request[tickets.CreateTicketTemplateRequest]) (*connect_go.Response[tickets.CreateTicketTemplateResponse], error)
@@ -672,6 +706,8 @@ type TicketsHandler interface {
 	// Public method to list all Action Types
 	GetAllActionType(context.Context, *connect_go.Request[tickets.GetActionTypeRequest]) (*connect_go.Response[tickets.GetActionTypeResponse], error)
 	// Public method to list all Action Types
+	//
+	// Deprecated: do not use.
 	GetPhoneNumberType(context.Context, *connect_go.Request[tickets.GetPhoneNumberTypeRequest]) (*connect_go.Response[tickets.GetPhoneNumberTypeResponse], error)
 	// Public method to addEntityRef
 	AddEntityRef(context.Context, *connect_go.Request[tickets.AddEntityRefRequest]) (*connect_go.Response[tickets.AddEntityRefResponse], error)
