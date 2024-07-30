@@ -66,6 +66,9 @@ const (
 	// NewsroomAPIListImagesForNewsArticleProcedure is the fully-qualified name of the NewsroomAPI's
 	// ListImagesForNewsArticle RPC.
 	NewsroomAPIListImagesForNewsArticleProcedure = "/api.v1alpha1.newsroom.NewsroomAPI/ListImagesForNewsArticle"
+	// NewsroomAPIUploadNewsArticleImageProcedure is the fully-qualified name of the NewsroomAPI's
+	// UploadNewsArticleImage RPC.
+	NewsroomAPIUploadNewsArticleImageProcedure = "/api.v1alpha1.newsroom.NewsroomAPI/UploadNewsArticleImage"
 )
 
 // NewsroomAPIClient is a client for the api.v1alpha1.newsroom.NewsroomAPI service.
@@ -92,6 +95,8 @@ type NewsroomAPIClient interface {
 	StoreNewsArticleImage(context.Context, *connect_go.Request[newsroom.StoreNewsArticleImageRequest]) (*connect_go.Response[newsroom.StoreNewsArticleImageResponse], error)
 	// list newsroom images
 	ListImagesForNewsArticle(context.Context, *connect_go.Request[newsroom.ListImagesForNewsArticleRequest]) (*connect_go.Response[newsroom.ListImagesForNewsArticleResponse], error)
+	// upload newsroom image for the news article
+	UploadNewsArticleImage(context.Context, *connect_go.Request[newsroom.UploadNewsArticleImageRequest]) (*connect_go.Response[newsroom.UploadNewsArticleImageResponse], error)
 }
 
 // NewNewsroomAPIClient constructs a client for the api.v1alpha1.newsroom.NewsroomAPI service. By
@@ -159,6 +164,11 @@ func NewNewsroomAPIClient(httpClient connect_go.HTTPClient, baseURL string, opts
 			baseURL+NewsroomAPIListImagesForNewsArticleProcedure,
 			opts...,
 		),
+		uploadNewsArticleImage: connect_go.NewClient[newsroom.UploadNewsArticleImageRequest, newsroom.UploadNewsArticleImageResponse](
+			httpClient,
+			baseURL+NewsroomAPIUploadNewsArticleImageProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -175,6 +185,7 @@ type newsroomAPIClient struct {
 	getNewsForUser           *connect_go.Client[newsroom.GetNewsForUserRequest, newsroom.GetNewsForUserResponse]
 	storeNewsArticleImage    *connect_go.Client[newsroom.StoreNewsArticleImageRequest, newsroom.StoreNewsArticleImageResponse]
 	listImagesForNewsArticle *connect_go.Client[newsroom.ListImagesForNewsArticleRequest, newsroom.ListImagesForNewsArticleResponse]
+	uploadNewsArticleImage   *connect_go.Client[newsroom.UploadNewsArticleImageRequest, newsroom.UploadNewsArticleImageResponse]
 }
 
 // CreateNewsArticle calls api.v1alpha1.newsroom.NewsroomAPI.CreateNewsArticle.
@@ -232,6 +243,11 @@ func (c *newsroomAPIClient) ListImagesForNewsArticle(ctx context.Context, req *c
 	return c.listImagesForNewsArticle.CallUnary(ctx, req)
 }
 
+// UploadNewsArticleImage calls api.v1alpha1.newsroom.NewsroomAPI.UploadNewsArticleImage.
+func (c *newsroomAPIClient) UploadNewsArticleImage(ctx context.Context, req *connect_go.Request[newsroom.UploadNewsArticleImageRequest]) (*connect_go.Response[newsroom.UploadNewsArticleImageResponse], error) {
+	return c.uploadNewsArticleImage.CallUnary(ctx, req)
+}
+
 // NewsroomAPIHandler is an implementation of the api.v1alpha1.newsroom.NewsroomAPI service.
 type NewsroomAPIHandler interface {
 	// create news article
@@ -256,6 +272,8 @@ type NewsroomAPIHandler interface {
 	StoreNewsArticleImage(context.Context, *connect_go.Request[newsroom.StoreNewsArticleImageRequest]) (*connect_go.Response[newsroom.StoreNewsArticleImageResponse], error)
 	// list newsroom images
 	ListImagesForNewsArticle(context.Context, *connect_go.Request[newsroom.ListImagesForNewsArticleRequest]) (*connect_go.Response[newsroom.ListImagesForNewsArticleResponse], error)
+	// upload newsroom image for the news article
+	UploadNewsArticleImage(context.Context, *connect_go.Request[newsroom.UploadNewsArticleImageRequest]) (*connect_go.Response[newsroom.UploadNewsArticleImageResponse], error)
 }
 
 // NewNewsroomAPIHandler builds an HTTP handler from the service implementation. It returns the path
@@ -319,6 +337,11 @@ func NewNewsroomAPIHandler(svc NewsroomAPIHandler, opts ...connect_go.HandlerOpt
 		svc.ListImagesForNewsArticle,
 		opts...,
 	)
+	newsroomAPIUploadNewsArticleImageHandler := connect_go.NewUnaryHandler(
+		NewsroomAPIUploadNewsArticleImageProcedure,
+		svc.UploadNewsArticleImage,
+		opts...,
+	)
 	return "/api.v1alpha1.newsroom.NewsroomAPI/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case NewsroomAPICreateNewsArticleProcedure:
@@ -343,6 +366,8 @@ func NewNewsroomAPIHandler(svc NewsroomAPIHandler, opts ...connect_go.HandlerOpt
 			newsroomAPIStoreNewsArticleImageHandler.ServeHTTP(w, r)
 		case NewsroomAPIListImagesForNewsArticleProcedure:
 			newsroomAPIListImagesForNewsArticleHandler.ServeHTTP(w, r)
+		case NewsroomAPIUploadNewsArticleImageProcedure:
+			newsroomAPIUploadNewsArticleImageHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -394,4 +419,8 @@ func (UnimplementedNewsroomAPIHandler) StoreNewsArticleImage(context.Context, *c
 
 func (UnimplementedNewsroomAPIHandler) ListImagesForNewsArticle(context.Context, *connect_go.Request[newsroom.ListImagesForNewsArticleRequest]) (*connect_go.Response[newsroom.ListImagesForNewsArticleResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.newsroom.NewsroomAPI.ListImagesForNewsArticle is not implemented"))
+}
+
+func (UnimplementedNewsroomAPIHandler) UploadNewsArticleImage(context.Context, *connect_go.Request[newsroom.UploadNewsArticleImageRequest]) (*connect_go.Response[newsroom.UploadNewsArticleImageResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.newsroom.NewsroomAPI.UploadNewsArticleImage is not implemented"))
 }

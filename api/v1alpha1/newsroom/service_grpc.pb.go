@@ -30,6 +30,7 @@ const (
 	NewsroomAPI_GetNewsForUser_FullMethodName           = "/api.v1alpha1.newsroom.NewsroomAPI/GetNewsForUser"
 	NewsroomAPI_StoreNewsArticleImage_FullMethodName    = "/api.v1alpha1.newsroom.NewsroomAPI/StoreNewsArticleImage"
 	NewsroomAPI_ListImagesForNewsArticle_FullMethodName = "/api.v1alpha1.newsroom.NewsroomAPI/ListImagesForNewsArticle"
+	NewsroomAPI_UploadNewsArticleImage_FullMethodName   = "/api.v1alpha1.newsroom.NewsroomAPI/UploadNewsArticleImage"
 )
 
 // NewsroomAPIClient is the client API for NewsroomAPI service.
@@ -62,6 +63,8 @@ type NewsroomAPIClient interface {
 	StoreNewsArticleImage(ctx context.Context, in *StoreNewsArticleImageRequest, opts ...grpc.CallOption) (*StoreNewsArticleImageResponse, error)
 	// list newsroom images
 	ListImagesForNewsArticle(ctx context.Context, in *ListImagesForNewsArticleRequest, opts ...grpc.CallOption) (*ListImagesForNewsArticleResponse, error)
+	// upload newsroom image for the news article
+	UploadNewsArticleImage(ctx context.Context, in *UploadNewsArticleImageRequest, opts ...grpc.CallOption) (*UploadNewsArticleImageResponse, error)
 }
 
 type newsroomAPIClient struct {
@@ -182,6 +185,16 @@ func (c *newsroomAPIClient) ListImagesForNewsArticle(ctx context.Context, in *Li
 	return out, nil
 }
 
+func (c *newsroomAPIClient) UploadNewsArticleImage(ctx context.Context, in *UploadNewsArticleImageRequest, opts ...grpc.CallOption) (*UploadNewsArticleImageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UploadNewsArticleImageResponse)
+	err := c.cc.Invoke(ctx, NewsroomAPI_UploadNewsArticleImage_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // NewsroomAPIServer is the server API for NewsroomAPI service.
 // All implementations must embed UnimplementedNewsroomAPIServer
 // for forward compatibility
@@ -212,6 +225,8 @@ type NewsroomAPIServer interface {
 	StoreNewsArticleImage(context.Context, *StoreNewsArticleImageRequest) (*StoreNewsArticleImageResponse, error)
 	// list newsroom images
 	ListImagesForNewsArticle(context.Context, *ListImagesForNewsArticleRequest) (*ListImagesForNewsArticleResponse, error)
+	// upload newsroom image for the news article
+	UploadNewsArticleImage(context.Context, *UploadNewsArticleImageRequest) (*UploadNewsArticleImageResponse, error)
 	mustEmbedUnimplementedNewsroomAPIServer()
 }
 
@@ -251,6 +266,9 @@ func (UnimplementedNewsroomAPIServer) StoreNewsArticleImage(context.Context, *St
 }
 func (UnimplementedNewsroomAPIServer) ListImagesForNewsArticle(context.Context, *ListImagesForNewsArticleRequest) (*ListImagesForNewsArticleResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListImagesForNewsArticle not implemented")
+}
+func (UnimplementedNewsroomAPIServer) UploadNewsArticleImage(context.Context, *UploadNewsArticleImageRequest) (*UploadNewsArticleImageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UploadNewsArticleImage not implemented")
 }
 func (UnimplementedNewsroomAPIServer) mustEmbedUnimplementedNewsroomAPIServer() {}
 
@@ -463,6 +481,24 @@ func _NewsroomAPI_ListImagesForNewsArticle_Handler(srv interface{}, ctx context.
 	return interceptor(ctx, in, info, handler)
 }
 
+func _NewsroomAPI_UploadNewsArticleImage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UploadNewsArticleImageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NewsroomAPIServer).UploadNewsArticleImage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NewsroomAPI_UploadNewsArticleImage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NewsroomAPIServer).UploadNewsArticleImage(ctx, req.(*UploadNewsArticleImageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // NewsroomAPI_ServiceDesc is the grpc.ServiceDesc for NewsroomAPI service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -513,6 +549,10 @@ var NewsroomAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListImagesForNewsArticle",
 			Handler:    _NewsroomAPI_ListImagesForNewsArticle_Handler,
+		},
+		{
+			MethodName: "UploadNewsArticleImage",
+			Handler:    _NewsroomAPI_UploadNewsArticleImage_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
