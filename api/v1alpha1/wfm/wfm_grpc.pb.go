@@ -210,7 +210,9 @@ const (
 	WFM_HelloWorldWFMAdherence_FullMethodName                        = "/api.v1alpha1.wfm.WFM/HelloWorldWFMAdherence"
 	WFM_ListAgentStatesForDay_FullMethodName                         = "/api.v1alpha1.wfm.WFM/ListAgentStatesForDay"
 	WFM_ListRealTimeManagementStates_FullMethodName                  = "/api.v1alpha1.wfm.WFM/ListRealTimeManagementStates"
+	WFM_UpsertRealTimeManagementStateColor_FullMethodName            = "/api.v1alpha1.wfm.WFM/UpsertRealTimeManagementStateColor"
 	WFM_ListRealTimeManagementStateColors_FullMethodName             = "/api.v1alpha1.wfm.WFM/ListRealTimeManagementStateColors"
+	WFM_DeleteRealTimeManagementStateColor_FullMethodName            = "/api.v1alpha1.wfm.WFM/DeleteRealTimeManagementStateColor"
 	WFM_CreateRgbaColor_FullMethodName                               = "/api.v1alpha1.wfm.WFM/CreateRgbaColor"
 	WFM_ListRgbaColors_FullMethodName                                = "/api.v1alpha1.wfm.WFM/ListRgbaColors"
 	WFM_UpdateRgbaColor_FullMethodName                               = "/api.v1alpha1.wfm.WFM/UpdateRgbaColor"
@@ -1632,11 +1634,22 @@ type WFMClient interface {
 	//   - grpc.Invalid: on invalid input.
 	//   - grpc.Internal: on unexpected error.
 	ListRealTimeManagementStates(ctx context.Context, in *ListRealTimeManagementStatesRequest, opts ...grpc.CallOption) (*ListRealTimeManagementStatesResponse, error)
-	// List org-level RealTimeManagementStateColors.
+	// Sets the given @state to be associated with the given @rgba_color_id for the org sending the request.
 	// Errors:
-	//   - grpc.Invalid: on invalid input.
-	//   - grpc.Internal: on unexpected error.
+	//   - grpc.Internal: error upserting the real time management state color or returning the newly created state color.
+	//   - grpc.NotFound: the given @rgba_color_id does not exist.
+	UpsertRealTimeManagementStateColor(ctx context.Context, in *UpsertRealTimeManagementStateColorRequest, opts ...grpc.CallOption) (*UpsertRealTimeManagementStateColorResponse, error)
+	// List org assigned colors for real-time management states.
+	// Any states that do not have an assigned state color will have their system default state color returned instead.
+	// Errors:
+	//   - grpc.Internal: error occurs when listing the real-time management state colors.
 	ListRealTimeManagementStateColors(ctx context.Context, in *ListRealTimeManagementStateColorsRequest, opts ...grpc.CallOption) (*ListRealTimeManagementStateColorsResponse, error)
+	// Deletes the state color for the given @state for the org sending the request.
+	// The state will be associated with the system default color.
+	// Errors:
+	//   - grpc.Invalid: the @state is invalid or is not associated with an @rbg_color_id.
+	//   - grpc.Internal: error occurs when deleting the state color fails.
+	DeleteRealTimeManagementStateColor(ctx context.Context, in *DeleteRealTimeManagementStateColorRequest, opts ...grpc.CallOption) (*DeleteRealTimeManagementStateColorResponse, error)
 	// Creates the given @color for the org sending the request.
 	// Errors:
 	//   - grpc.Invalid: the values on the given @color are invalid.
@@ -3582,10 +3595,30 @@ func (c *wFMClient) ListRealTimeManagementStates(ctx context.Context, in *ListRe
 	return out, nil
 }
 
+func (c *wFMClient) UpsertRealTimeManagementStateColor(ctx context.Context, in *UpsertRealTimeManagementStateColorRequest, opts ...grpc.CallOption) (*UpsertRealTimeManagementStateColorResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpsertRealTimeManagementStateColorResponse)
+	err := c.cc.Invoke(ctx, WFM_UpsertRealTimeManagementStateColor_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) ListRealTimeManagementStateColors(ctx context.Context, in *ListRealTimeManagementStateColorsRequest, opts ...grpc.CallOption) (*ListRealTimeManagementStateColorsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListRealTimeManagementStateColorsResponse)
 	err := c.cc.Invoke(ctx, WFM_ListRealTimeManagementStateColors_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) DeleteRealTimeManagementStateColor(ctx context.Context, in *DeleteRealTimeManagementStateColorRequest, opts ...grpc.CallOption) (*DeleteRealTimeManagementStateColorResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteRealTimeManagementStateColorResponse)
+	err := c.cc.Invoke(ctx, WFM_DeleteRealTimeManagementStateColor_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -5047,11 +5080,22 @@ type WFMServer interface {
 	//   - grpc.Invalid: on invalid input.
 	//   - grpc.Internal: on unexpected error.
 	ListRealTimeManagementStates(context.Context, *ListRealTimeManagementStatesRequest) (*ListRealTimeManagementStatesResponse, error)
-	// List org-level RealTimeManagementStateColors.
+	// Sets the given @state to be associated with the given @rgba_color_id for the org sending the request.
 	// Errors:
-	//   - grpc.Invalid: on invalid input.
-	//   - grpc.Internal: on unexpected error.
+	//   - grpc.Internal: error upserting the real time management state color or returning the newly created state color.
+	//   - grpc.NotFound: the given @rgba_color_id does not exist.
+	UpsertRealTimeManagementStateColor(context.Context, *UpsertRealTimeManagementStateColorRequest) (*UpsertRealTimeManagementStateColorResponse, error)
+	// List org assigned colors for real-time management states.
+	// Any states that do not have an assigned state color will have their system default state color returned instead.
+	// Errors:
+	//   - grpc.Internal: error occurs when listing the real-time management state colors.
 	ListRealTimeManagementStateColors(context.Context, *ListRealTimeManagementStateColorsRequest) (*ListRealTimeManagementStateColorsResponse, error)
+	// Deletes the state color for the given @state for the org sending the request.
+	// The state will be associated with the system default color.
+	// Errors:
+	//   - grpc.Invalid: the @state is invalid or is not associated with an @rbg_color_id.
+	//   - grpc.Internal: error occurs when deleting the state color fails.
+	DeleteRealTimeManagementStateColor(context.Context, *DeleteRealTimeManagementStateColorRequest) (*DeleteRealTimeManagementStateColorResponse, error)
 	// Creates the given @color for the org sending the request.
 	// Errors:
 	//   - grpc.Invalid: the values on the given @color are invalid.
@@ -5611,8 +5655,14 @@ func (UnimplementedWFMServer) ListAgentStatesForDay(context.Context, *ListAgentS
 func (UnimplementedWFMServer) ListRealTimeManagementStates(context.Context, *ListRealTimeManagementStatesRequest) (*ListRealTimeManagementStatesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListRealTimeManagementStates not implemented")
 }
+func (UnimplementedWFMServer) UpsertRealTimeManagementStateColor(context.Context, *UpsertRealTimeManagementStateColorRequest) (*UpsertRealTimeManagementStateColorResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpsertRealTimeManagementStateColor not implemented")
+}
 func (UnimplementedWFMServer) ListRealTimeManagementStateColors(context.Context, *ListRealTimeManagementStateColorsRequest) (*ListRealTimeManagementStateColorsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListRealTimeManagementStateColors not implemented")
+}
+func (UnimplementedWFMServer) DeleteRealTimeManagementStateColor(context.Context, *DeleteRealTimeManagementStateColorRequest) (*DeleteRealTimeManagementStateColorResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteRealTimeManagementStateColor not implemented")
 }
 func (UnimplementedWFMServer) CreateRgbaColor(context.Context, *CreateRgbaColorRequest) (*CreateRgbaColorResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateRgbaColor not implemented")
@@ -8843,6 +8893,24 @@ func _WFM_ListRealTimeManagementStates_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_UpsertRealTimeManagementStateColor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpsertRealTimeManagementStateColorRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).UpsertRealTimeManagementStateColor(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_UpsertRealTimeManagementStateColor_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).UpsertRealTimeManagementStateColor(ctx, req.(*UpsertRealTimeManagementStateColorRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WFM_ListRealTimeManagementStateColors_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListRealTimeManagementStateColorsRequest)
 	if err := dec(in); err != nil {
@@ -8857,6 +8925,24 @@ func _WFM_ListRealTimeManagementStateColors_Handler(srv interface{}, ctx context
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WFMServer).ListRealTimeManagementStateColors(ctx, req.(*ListRealTimeManagementStateColorsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_DeleteRealTimeManagementStateColor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteRealTimeManagementStateColorRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).DeleteRealTimeManagementStateColor(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_DeleteRealTimeManagementStateColor_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).DeleteRealTimeManagementStateColor(ctx, req.(*DeleteRealTimeManagementStateColorRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -9625,8 +9711,16 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _WFM_ListRealTimeManagementStates_Handler,
 		},
 		{
+			MethodName: "UpsertRealTimeManagementStateColor",
+			Handler:    _WFM_UpsertRealTimeManagementStateColor_Handler,
+		},
+		{
 			MethodName: "ListRealTimeManagementStateColors",
 			Handler:    _WFM_ListRealTimeManagementStateColors_Handler,
+		},
+		{
+			MethodName: "DeleteRealTimeManagementStateColor",
+			Handler:    _WFM_DeleteRealTimeManagementStateColor_Handler,
 		},
 		{
 			MethodName: "CreateRgbaColor",
