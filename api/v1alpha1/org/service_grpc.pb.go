@@ -776,14 +776,22 @@ type OrgClient interface {
 	// Deprecated: Do not use.
 	// UpdateBusinessHours persists changes to times businesses are available.
 	UpdateBusinessHours(ctx context.Context, in *UpdateBusinessHoursRequest, opts ...grpc.CallOption) (*UpdateBusinessHoursResponse, error)
+	// Deprecated: Do not use.
 	// CreateCertificateInfo creates a new TLS certificate and
 	// returns the certificate info for the current organization.
+	// DEPRECATED: Use services.org.exile_certificate_manager.v1alpha1.CreateCertificateInfo instead
 	CreateCertificateInfo(ctx context.Context, in *CreateCertificateInfoRequest, opts ...grpc.CallOption) (*CreateCertificateInfoResponse, error)
+	// Deprecated: Do not use.
 	// DeleteCertificateInfo deletes a certificate info for the current organization.
+	// DEPRECATED: Use services.org.exile_certificate_manager.v1alpha1.DeleteCertificateInfo instead
 	DeleteCertificateInfo(ctx context.Context, in *DeleteCertificateInfoRequest, opts ...grpc.CallOption) (*DeleteCertificateInfoResponse, error)
+	// Deprecated: Do not use.
 	// RevokeCertificateInfo deletes a certificate info for the current organization.
+	// DEPRECATED: Use services.org.exile_certificate_manager.v1alpha1.RevokeCertificateInfo instead
 	RevokeCertificateInfo(ctx context.Context, in *RevokeCertificateInfoRequest, opts ...grpc.CallOption) (*RevokeCertificateInfoResponse, error)
+	// Deprecated: Do not use.
 	// ListCertificateInfo returns a list of certificate info for the current organization.
+	// DEPRECATED: Use services.org.exile_certificate_manager.v1alpha1.ListCertificateInfo instead
 	ListCertificateInfo(ctx context.Context, in *ListCertificateInfoRequest, opts ...grpc.CallOption) (*ListCertificateInfoResponse, error)
 	// AddGroupedUserIPRestrictions adds a user or list of user's IPs they
 	// are required to authenticate with
@@ -3271,6 +3279,7 @@ func (c *orgClient) UpdateBusinessHours(ctx context.Context, in *UpdateBusinessH
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *orgClient) CreateCertificateInfo(ctx context.Context, in *CreateCertificateInfoRequest, opts ...grpc.CallOption) (*CreateCertificateInfoResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(CreateCertificateInfoResponse)
@@ -3281,6 +3290,7 @@ func (c *orgClient) CreateCertificateInfo(ctx context.Context, in *CreateCertifi
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *orgClient) DeleteCertificateInfo(ctx context.Context, in *DeleteCertificateInfoRequest, opts ...grpc.CallOption) (*DeleteCertificateInfoResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(DeleteCertificateInfoResponse)
@@ -3291,6 +3301,7 @@ func (c *orgClient) DeleteCertificateInfo(ctx context.Context, in *DeleteCertifi
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *orgClient) RevokeCertificateInfo(ctx context.Context, in *RevokeCertificateInfoRequest, opts ...grpc.CallOption) (*RevokeCertificateInfoResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(RevokeCertificateInfoResponse)
@@ -3301,6 +3312,7 @@ func (c *orgClient) RevokeCertificateInfo(ctx context.Context, in *RevokeCertifi
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *orgClient) ListCertificateInfo(ctx context.Context, in *ListCertificateInfoRequest, opts ...grpc.CallOption) (*ListCertificateInfoResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListCertificateInfoResponse)
@@ -3912,14 +3924,22 @@ type OrgServer interface {
 	// Deprecated: Do not use.
 	// UpdateBusinessHours persists changes to times businesses are available.
 	UpdateBusinessHours(context.Context, *UpdateBusinessHoursRequest) (*UpdateBusinessHoursResponse, error)
+	// Deprecated: Do not use.
 	// CreateCertificateInfo creates a new TLS certificate and
 	// returns the certificate info for the current organization.
+	// DEPRECATED: Use services.org.exile_certificate_manager.v1alpha1.CreateCertificateInfo instead
 	CreateCertificateInfo(context.Context, *CreateCertificateInfoRequest) (*CreateCertificateInfoResponse, error)
+	// Deprecated: Do not use.
 	// DeleteCertificateInfo deletes a certificate info for the current organization.
+	// DEPRECATED: Use services.org.exile_certificate_manager.v1alpha1.DeleteCertificateInfo instead
 	DeleteCertificateInfo(context.Context, *DeleteCertificateInfoRequest) (*DeleteCertificateInfoResponse, error)
+	// Deprecated: Do not use.
 	// RevokeCertificateInfo deletes a certificate info for the current organization.
+	// DEPRECATED: Use services.org.exile_certificate_manager.v1alpha1.RevokeCertificateInfo instead
 	RevokeCertificateInfo(context.Context, *RevokeCertificateInfoRequest) (*RevokeCertificateInfoResponse, error)
+	// Deprecated: Do not use.
 	// ListCertificateInfo returns a list of certificate info for the current organization.
+	// DEPRECATED: Use services.org.exile_certificate_manager.v1alpha1.ListCertificateInfo instead
 	ListCertificateInfo(context.Context, *ListCertificateInfoRequest) (*ListCertificateInfoResponse, error)
 	// AddGroupedUserIPRestrictions adds a user or list of user's IPs they
 	// are required to authenticate with

@@ -1185,12 +1185,24 @@ type OrgClient interface {
 	UpdateBusinessHours(context.Context, *connect_go.Request[org.UpdateBusinessHoursRequest]) (*connect_go.Response[org.UpdateBusinessHoursResponse], error)
 	// CreateCertificateInfo creates a new TLS certificate and
 	// returns the certificate info for the current organization.
+	// DEPRECATED: Use services.org.exile_certificate_manager.v1alpha1.CreateCertificateInfo instead
+	//
+	// Deprecated: do not use.
 	CreateCertificateInfo(context.Context, *connect_go.Request[org.CreateCertificateInfoRequest]) (*connect_go.Response[org.CreateCertificateInfoResponse], error)
 	// DeleteCertificateInfo deletes a certificate info for the current organization.
+	// DEPRECATED: Use services.org.exile_certificate_manager.v1alpha1.DeleteCertificateInfo instead
+	//
+	// Deprecated: do not use.
 	DeleteCertificateInfo(context.Context, *connect_go.Request[org.DeleteCertificateInfoRequest]) (*connect_go.Response[org.DeleteCertificateInfoResponse], error)
 	// RevokeCertificateInfo deletes a certificate info for the current organization.
+	// DEPRECATED: Use services.org.exile_certificate_manager.v1alpha1.RevokeCertificateInfo instead
+	//
+	// Deprecated: do not use.
 	RevokeCertificateInfo(context.Context, *connect_go.Request[org.RevokeCertificateInfoRequest]) (*connect_go.Response[org.RevokeCertificateInfoResponse], error)
 	// ListCertificateInfo returns a list of certificate info for the current organization.
+	// DEPRECATED: Use services.org.exile_certificate_manager.v1alpha1.ListCertificateInfo instead
+	//
+	// Deprecated: do not use.
 	ListCertificateInfo(context.Context, *connect_go.Request[org.ListCertificateInfoRequest]) (*connect_go.Response[org.ListCertificateInfoResponse], error)
 	// AddGroupedUserIPRestrictions adds a user or list of user's IPs they
 	// are required to authenticate with
@@ -3777,21 +3789,29 @@ func (c *orgClient) UpdateBusinessHours(ctx context.Context, req *connect_go.Req
 }
 
 // CreateCertificateInfo calls api.v1alpha1.org.Org.CreateCertificateInfo.
+//
+// Deprecated: do not use.
 func (c *orgClient) CreateCertificateInfo(ctx context.Context, req *connect_go.Request[org.CreateCertificateInfoRequest]) (*connect_go.Response[org.CreateCertificateInfoResponse], error) {
 	return c.createCertificateInfo.CallUnary(ctx, req)
 }
 
 // DeleteCertificateInfo calls api.v1alpha1.org.Org.DeleteCertificateInfo.
+//
+// Deprecated: do not use.
 func (c *orgClient) DeleteCertificateInfo(ctx context.Context, req *connect_go.Request[org.DeleteCertificateInfoRequest]) (*connect_go.Response[org.DeleteCertificateInfoResponse], error) {
 	return c.deleteCertificateInfo.CallUnary(ctx, req)
 }
 
 // RevokeCertificateInfo calls api.v1alpha1.org.Org.RevokeCertificateInfo.
+//
+// Deprecated: do not use.
 func (c *orgClient) RevokeCertificateInfo(ctx context.Context, req *connect_go.Request[org.RevokeCertificateInfoRequest]) (*connect_go.Response[org.RevokeCertificateInfoResponse], error) {
 	return c.revokeCertificateInfo.CallUnary(ctx, req)
 }
 
 // ListCertificateInfo calls api.v1alpha1.org.Org.ListCertificateInfo.
+//
+// Deprecated: do not use.
 func (c *orgClient) ListCertificateInfo(ctx context.Context, req *connect_go.Request[org.ListCertificateInfoRequest]) (*connect_go.Response[org.ListCertificateInfoResponse], error) {
 	return c.listCertificateInfo.CallUnary(ctx, req)
 }
@@ -4370,12 +4390,24 @@ type OrgHandler interface {
 	UpdateBusinessHours(context.Context, *connect_go.Request[org.UpdateBusinessHoursRequest]) (*connect_go.Response[org.UpdateBusinessHoursResponse], error)
 	// CreateCertificateInfo creates a new TLS certificate and
 	// returns the certificate info for the current organization.
+	// DEPRECATED: Use services.org.exile_certificate_manager.v1alpha1.CreateCertificateInfo instead
+	//
+	// Deprecated: do not use.
 	CreateCertificateInfo(context.Context, *connect_go.Request[org.CreateCertificateInfoRequest]) (*connect_go.Response[org.CreateCertificateInfoResponse], error)
 	// DeleteCertificateInfo deletes a certificate info for the current organization.
+	// DEPRECATED: Use services.org.exile_certificate_manager.v1alpha1.DeleteCertificateInfo instead
+	//
+	// Deprecated: do not use.
 	DeleteCertificateInfo(context.Context, *connect_go.Request[org.DeleteCertificateInfoRequest]) (*connect_go.Response[org.DeleteCertificateInfoResponse], error)
 	// RevokeCertificateInfo deletes a certificate info for the current organization.
+	// DEPRECATED: Use services.org.exile_certificate_manager.v1alpha1.RevokeCertificateInfo instead
+	//
+	// Deprecated: do not use.
 	RevokeCertificateInfo(context.Context, *connect_go.Request[org.RevokeCertificateInfoRequest]) (*connect_go.Response[org.RevokeCertificateInfoResponse], error)
 	// ListCertificateInfo returns a list of certificate info for the current organization.
+	// DEPRECATED: Use services.org.exile_certificate_manager.v1alpha1.ListCertificateInfo instead
+	//
+	// Deprecated: do not use.
 	ListCertificateInfo(context.Context, *connect_go.Request[org.ListCertificateInfoRequest]) (*connect_go.Response[org.ListCertificateInfoResponse], error)
 	// AddGroupedUserIPRestrictions adds a user or list of user's IPs they
 	// are required to authenticate with
