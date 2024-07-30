@@ -57,6 +57,7 @@ const (
 	Learn_ListVersions_FullMethodName               = "/api.v0alpha.Learn/ListVersions"
 	Learn_ReviewVersionStream_FullMethodName        = "/api.v0alpha.Learn/ReviewVersionStream"
 	Learn_DeleteVersion_FullMethodName              = "/api.v0alpha.Learn/DeleteVersion"
+	Learn_UploadStaticImage_FullMethodName          = "/api.v0alpha.Learn/UploadStaticImage"
 )
 
 // LearnClient is the client API for Learn service.
@@ -118,6 +119,8 @@ type LearnClient interface {
 	ReviewVersionStream(ctx context.Context, in *ReviewVersionReq, opts ...grpc.CallOption) (Learn_ReviewVersionStreamClient, error)
 	// delete version from learn
 	DeleteVersion(ctx context.Context, in *DeleteVersionReq, opts ...grpc.CallOption) (*DeleteVersionRes, error)
+	// upload image for learning articles
+	UploadStaticImage(ctx context.Context, in *UploadStaticImageReq, opts ...grpc.CallOption) (*UploadStaticImageRes, error)
 }
 
 type learnClient struct {
@@ -460,6 +463,16 @@ func (c *learnClient) DeleteVersion(ctx context.Context, in *DeleteVersionReq, o
 	return out, nil
 }
 
+func (c *learnClient) UploadStaticImage(ctx context.Context, in *UploadStaticImageReq, opts ...grpc.CallOption) (*UploadStaticImageRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UploadStaticImageRes)
+	err := c.cc.Invoke(ctx, Learn_UploadStaticImage_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LearnServer is the server API for Learn service.
 // All implementations must embed UnimplementedLearnServer
 // for forward compatibility
@@ -519,6 +532,8 @@ type LearnServer interface {
 	ReviewVersionStream(*ReviewVersionReq, Learn_ReviewVersionStreamServer) error
 	// delete version from learn
 	DeleteVersion(context.Context, *DeleteVersionReq) (*DeleteVersionRes, error)
+	// upload image for learning articles
+	UploadStaticImage(context.Context, *UploadStaticImageReq) (*UploadStaticImageRes, error)
 	mustEmbedUnimplementedLearnServer()
 }
 
@@ -597,6 +612,9 @@ func (UnimplementedLearnServer) ReviewVersionStream(*ReviewVersionReq, Learn_Rev
 }
 func (UnimplementedLearnServer) DeleteVersion(context.Context, *DeleteVersionReq) (*DeleteVersionRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteVersion not implemented")
+}
+func (UnimplementedLearnServer) UploadStaticImage(context.Context, *UploadStaticImageReq) (*UploadStaticImageRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UploadStaticImage not implemented")
 }
 func (UnimplementedLearnServer) mustEmbedUnimplementedLearnServer() {}
 
@@ -1055,6 +1073,24 @@ func _Learn_DeleteVersion_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Learn_UploadStaticImage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UploadStaticImageReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LearnServer).UploadStaticImage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Learn_UploadStaticImage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LearnServer).UploadStaticImage(ctx, req.(*UploadStaticImageReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Learn_ServiceDesc is the grpc.ServiceDesc for Learn service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1141,6 +1177,10 @@ var Learn_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteVersion",
 			Handler:    _Learn_DeleteVersion_Handler,
+		},
+		{
+			MethodName: "UploadStaticImage",
+			Handler:    _Learn_UploadStaticImage_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
