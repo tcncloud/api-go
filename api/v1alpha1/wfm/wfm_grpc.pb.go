@@ -165,6 +165,7 @@ const (
 	WFM_UpdateShiftInstanceWithSegments_FullMethodName               = "/api.v1alpha1.wfm.WFM/UpdateShiftInstanceWithSegments"
 	WFM_CopyShiftInstancesToSchedule_FullMethodName                  = "/api.v1alpha1.wfm.WFM/CopyShiftInstancesToSchedule"
 	WFM_ListShiftInstanceSidsForAgent_FullMethodName                 = "/api.v1alpha1.wfm.WFM/ListShiftInstanceSidsForAgent"
+	WFM_ListShiftInstanceSidsForSchedule_FullMethodName              = "/api.v1alpha1.wfm.WFM/ListShiftInstanceSidsForSchedule"
 	WFM_ListShiftSegmentsByShiftInstanceSids_FullMethodName          = "/api.v1alpha1.wfm.WFM/ListShiftSegmentsByShiftInstanceSids"
 	WFM_SetSchedulingTarget_FullMethodName                           = "/api.v1alpha1.wfm.WFM/SetSchedulingTarget"
 	WFM_GetSchedulingTarget_FullMethodName                           = "/api.v1alpha1.wfm.WFM/GetSchedulingTarget"
@@ -1298,6 +1299,14 @@ type WFMClient interface {
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when getting the data.
 	ListShiftInstanceSidsForAgent(ctx context.Context, in *ListShiftInstanceSidsForAgentReq, opts ...grpc.CallOption) (*ListShiftInstanceSidsForAgentRes, error)
+	// Lists the shift_instance_sids for the Shift Instances associated with the given @datetime_range and @schedule_selector.
+	// If @node_selector is set, only shifts sids related to the given @node_selector will be listed.
+	// If @node_selector is not set, all shifts on the @schedule_selector may be cleared, regardless of the node they are associated with.
+	// If @node_selector is set, the @schedule_scenario_sid must be set to match @node_selector.
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when getting the data.
+	ListShiftInstanceSidsForSchedule(ctx context.Context, in *ListShiftInstanceSidsForScheduleRequest, opts ...grpc.CallOption) (*ListShiftInstanceSidsForScheduleResponse, error)
 	// Lists shift segments for the specified shift instances for the org sending the request.
 	// If @include_scheduling_activity is set to true then the related scheduling activity for the shift segment will be returned in the scheduling activity field.
 	// If @include_activity is set to true then the related non skill activity for the scheduling activity will be returned in the scheduling activities member non skill activity field.
@@ -3060,6 +3069,16 @@ func (c *wFMClient) ListShiftInstanceSidsForAgent(ctx context.Context, in *ListS
 	return out, nil
 }
 
+func (c *wFMClient) ListShiftInstanceSidsForSchedule(ctx context.Context, in *ListShiftInstanceSidsForScheduleRequest, opts ...grpc.CallOption) (*ListShiftInstanceSidsForScheduleResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListShiftInstanceSidsForScheduleResponse)
+	err := c.cc.Invoke(ctx, WFM_ListShiftInstanceSidsForSchedule_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) ListShiftSegmentsByShiftInstanceSids(ctx context.Context, in *ListShiftSegmentsByShiftInstanceSidsReq, opts ...grpc.CallOption) (*ListShiftSegmentsByShiftInstanceSidsRes, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListShiftSegmentsByShiftInstanceSidsRes)
@@ -4660,6 +4679,14 @@ type WFMServer interface {
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when getting the data.
 	ListShiftInstanceSidsForAgent(context.Context, *ListShiftInstanceSidsForAgentReq) (*ListShiftInstanceSidsForAgentRes, error)
+	// Lists the shift_instance_sids for the Shift Instances associated with the given @datetime_range and @schedule_selector.
+	// If @node_selector is set, only shifts sids related to the given @node_selector will be listed.
+	// If @node_selector is not set, all shifts on the @schedule_selector may be cleared, regardless of the node they are associated with.
+	// If @node_selector is set, the @schedule_scenario_sid must be set to match @node_selector.
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when getting the data.
+	ListShiftInstanceSidsForSchedule(context.Context, *ListShiftInstanceSidsForScheduleRequest) (*ListShiftInstanceSidsForScheduleResponse, error)
 	// Lists shift segments for the specified shift instances for the org sending the request.
 	// If @include_scheduling_activity is set to true then the related scheduling activity for the shift segment will be returned in the scheduling activity field.
 	// If @include_activity is set to true then the related non skill activity for the scheduling activity will be returned in the scheduling activities member non skill activity field.
@@ -5438,6 +5465,9 @@ func (UnimplementedWFMServer) CopyShiftInstancesToSchedule(context.Context, *Cop
 }
 func (UnimplementedWFMServer) ListShiftInstanceSidsForAgent(context.Context, *ListShiftInstanceSidsForAgentReq) (*ListShiftInstanceSidsForAgentRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListShiftInstanceSidsForAgent not implemented")
+}
+func (UnimplementedWFMServer) ListShiftInstanceSidsForSchedule(context.Context, *ListShiftInstanceSidsForScheduleRequest) (*ListShiftInstanceSidsForScheduleResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListShiftInstanceSidsForSchedule not implemented")
 }
 func (UnimplementedWFMServer) ListShiftSegmentsByShiftInstanceSids(context.Context, *ListShiftSegmentsByShiftInstanceSidsReq) (*ListShiftSegmentsByShiftInstanceSidsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListShiftSegmentsByShiftInstanceSids not implemented")
@@ -7950,6 +7980,24 @@ func _WFM_ListShiftInstanceSidsForAgent_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_ListShiftInstanceSidsForSchedule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListShiftInstanceSidsForScheduleRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).ListShiftInstanceSidsForSchedule(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_ListShiftInstanceSidsForSchedule_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).ListShiftInstanceSidsForSchedule(ctx, req.(*ListShiftInstanceSidsForScheduleRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WFM_ListShiftSegmentsByShiftInstanceSids_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListShiftSegmentsByShiftInstanceSidsReq)
 	if err := dec(in); err != nil {
@@ -9396,6 +9444,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListShiftInstanceSidsForAgent",
 			Handler:    _WFM_ListShiftInstanceSidsForAgent_Handler,
+		},
+		{
+			MethodName: "ListShiftInstanceSidsForSchedule",
+			Handler:    _WFM_ListShiftInstanceSidsForSchedule_Handler,
 		},
 		{
 			MethodName: "ListShiftSegmentsByShiftInstanceSids",

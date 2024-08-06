@@ -406,6 +406,9 @@ const (
 	// WFMListShiftInstanceSidsForAgentProcedure is the fully-qualified name of the WFM's
 	// ListShiftInstanceSidsForAgent RPC.
 	WFMListShiftInstanceSidsForAgentProcedure = "/api.v1alpha1.wfm.WFM/ListShiftInstanceSidsForAgent"
+	// WFMListShiftInstanceSidsForScheduleProcedure is the fully-qualified name of the WFM's
+	// ListShiftInstanceSidsForSchedule RPC.
+	WFMListShiftInstanceSidsForScheduleProcedure = "/api.v1alpha1.wfm.WFM/ListShiftInstanceSidsForSchedule"
 	// WFMListShiftSegmentsByShiftInstanceSidsProcedure is the fully-qualified name of the WFM's
 	// ListShiftSegmentsByShiftInstanceSids RPC.
 	WFMListShiftSegmentsByShiftInstanceSidsProcedure = "/api.v1alpha1.wfm.WFM/ListShiftSegmentsByShiftInstanceSids"
@@ -1635,6 +1638,14 @@ type WFMClient interface {
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when getting the data.
 	ListShiftInstanceSidsForAgent(context.Context, *connect_go.Request[wfm.ListShiftInstanceSidsForAgentReq]) (*connect_go.Response[wfm.ListShiftInstanceSidsForAgentRes], error)
+	// Lists the shift_instance_sids for the Shift Instances associated with the given @datetime_range and @schedule_selector.
+	// If @node_selector is set, only shifts sids related to the given @node_selector will be listed.
+	// If @node_selector is not set, all shifts on the @schedule_selector may be cleared, regardless of the node they are associated with.
+	// If @node_selector is set, the @schedule_scenario_sid must be set to match @node_selector.
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when getting the data.
+	ListShiftInstanceSidsForSchedule(context.Context, *connect_go.Request[wfm.ListShiftInstanceSidsForScheduleRequest]) (*connect_go.Response[wfm.ListShiftInstanceSidsForScheduleResponse], error)
 	// Lists shift segments for the specified shift instances for the org sending the request.
 	// If @include_scheduling_activity is set to true then the related scheduling activity for the shift segment will be returned in the scheduling activity field.
 	// If @include_activity is set to true then the related non skill activity for the scheduling activity will be returned in the scheduling activities member non skill activity field.
@@ -2681,6 +2692,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMListShiftInstanceSidsForAgentProcedure,
 			opts...,
 		),
+		listShiftInstanceSidsForSchedule: connect_go.NewClient[wfm.ListShiftInstanceSidsForScheduleRequest, wfm.ListShiftInstanceSidsForScheduleResponse](
+			httpClient,
+			baseURL+WFMListShiftInstanceSidsForScheduleProcedure,
+			opts...,
+		),
 		listShiftSegmentsByShiftInstanceSids: connect_go.NewClient[wfm.ListShiftSegmentsByShiftInstanceSidsReq, wfm.ListShiftSegmentsByShiftInstanceSidsRes](
 			httpClient,
 			baseURL+WFMListShiftSegmentsByShiftInstanceSidsProcedure,
@@ -3078,6 +3094,7 @@ type wFMClient struct {
 	updateShiftInstanceWithSegments               *connect_go.Client[wfm.UpdateShiftInstanceWithSegmentsRequest, wfm.UpdateShiftInstanceWithSegmentsResponse]
 	copyShiftInstancesToSchedule                  *connect_go.Client[wfm.CopyShiftInstancesToScheduleReq, wfm.CopyShiftInstancesToScheduleRes]
 	listShiftInstanceSidsForAgent                 *connect_go.Client[wfm.ListShiftInstanceSidsForAgentReq, wfm.ListShiftInstanceSidsForAgentRes]
+	listShiftInstanceSidsForSchedule              *connect_go.Client[wfm.ListShiftInstanceSidsForScheduleRequest, wfm.ListShiftInstanceSidsForScheduleResponse]
 	listShiftSegmentsByShiftInstanceSids          *connect_go.Client[wfm.ListShiftSegmentsByShiftInstanceSidsReq, wfm.ListShiftSegmentsByShiftInstanceSidsRes]
 	setSchedulingTarget                           *connect_go.Client[wfm.SetSchedulingTargetReq, wfm.SetSchedulingTargetRes]
 	getSchedulingTarget                           *connect_go.Client[wfm.GetSchedulingTargetReq, wfm.GetSchedulingTargetRes]
@@ -3812,6 +3829,11 @@ func (c *wFMClient) CopyShiftInstancesToSchedule(ctx context.Context, req *conne
 // ListShiftInstanceSidsForAgent calls api.v1alpha1.wfm.WFM.ListShiftInstanceSidsForAgent.
 func (c *wFMClient) ListShiftInstanceSidsForAgent(ctx context.Context, req *connect_go.Request[wfm.ListShiftInstanceSidsForAgentReq]) (*connect_go.Response[wfm.ListShiftInstanceSidsForAgentRes], error) {
 	return c.listShiftInstanceSidsForAgent.CallUnary(ctx, req)
+}
+
+// ListShiftInstanceSidsForSchedule calls api.v1alpha1.wfm.WFM.ListShiftInstanceSidsForSchedule.
+func (c *wFMClient) ListShiftInstanceSidsForSchedule(ctx context.Context, req *connect_go.Request[wfm.ListShiftInstanceSidsForScheduleRequest]) (*connect_go.Response[wfm.ListShiftInstanceSidsForScheduleResponse], error) {
+	return c.listShiftInstanceSidsForSchedule.CallUnary(ctx, req)
 }
 
 // ListShiftSegmentsByShiftInstanceSids calls
@@ -5157,6 +5179,14 @@ type WFMHandler interface {
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when getting the data.
 	ListShiftInstanceSidsForAgent(context.Context, *connect_go.Request[wfm.ListShiftInstanceSidsForAgentReq]) (*connect_go.Response[wfm.ListShiftInstanceSidsForAgentRes], error)
+	// Lists the shift_instance_sids for the Shift Instances associated with the given @datetime_range and @schedule_selector.
+	// If @node_selector is set, only shifts sids related to the given @node_selector will be listed.
+	// If @node_selector is not set, all shifts on the @schedule_selector may be cleared, regardless of the node they are associated with.
+	// If @node_selector is set, the @schedule_scenario_sid must be set to match @node_selector.
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when getting the data.
+	ListShiftInstanceSidsForSchedule(context.Context, *connect_go.Request[wfm.ListShiftInstanceSidsForScheduleRequest]) (*connect_go.Response[wfm.ListShiftInstanceSidsForScheduleResponse], error)
 	// Lists shift segments for the specified shift instances for the org sending the request.
 	// If @include_scheduling_activity is set to true then the related scheduling activity for the shift segment will be returned in the scheduling activity field.
 	// If @include_activity is set to true then the related non skill activity for the scheduling activity will be returned in the scheduling activities member non skill activity field.
@@ -6199,6 +6229,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.ListShiftInstanceSidsForAgent,
 		opts...,
 	)
+	wFMListShiftInstanceSidsForScheduleHandler := connect_go.NewUnaryHandler(
+		WFMListShiftInstanceSidsForScheduleProcedure,
+		svc.ListShiftInstanceSidsForSchedule,
+		opts...,
+	)
 	wFMListShiftSegmentsByShiftInstanceSidsHandler := connect_go.NewUnaryHandler(
 		WFMListShiftSegmentsByShiftInstanceSidsProcedure,
 		svc.ListShiftSegmentsByShiftInstanceSids,
@@ -6725,6 +6760,8 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMCopyShiftInstancesToScheduleHandler.ServeHTTP(w, r)
 		case WFMListShiftInstanceSidsForAgentProcedure:
 			wFMListShiftInstanceSidsForAgentHandler.ServeHTTP(w, r)
+		case WFMListShiftInstanceSidsForScheduleProcedure:
+			wFMListShiftInstanceSidsForScheduleHandler.ServeHTTP(w, r)
 		case WFMListShiftSegmentsByShiftInstanceSidsProcedure:
 			wFMListShiftSegmentsByShiftInstanceSidsHandler.ServeHTTP(w, r)
 		case WFMSetSchedulingTargetProcedure:
@@ -7364,6 +7401,10 @@ func (UnimplementedWFMHandler) CopyShiftInstancesToSchedule(context.Context, *co
 
 func (UnimplementedWFMHandler) ListShiftInstanceSidsForAgent(context.Context, *connect_go.Request[wfm.ListShiftInstanceSidsForAgentReq]) (*connect_go.Response[wfm.ListShiftInstanceSidsForAgentRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListShiftInstanceSidsForAgent is not implemented"))
+}
+
+func (UnimplementedWFMHandler) ListShiftInstanceSidsForSchedule(context.Context, *connect_go.Request[wfm.ListShiftInstanceSidsForScheduleRequest]) (*connect_go.Response[wfm.ListShiftInstanceSidsForScheduleResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListShiftInstanceSidsForSchedule is not implemented"))
 }
 
 func (UnimplementedWFMHandler) ListShiftSegmentsByShiftInstanceSids(context.Context, *connect_go.Request[wfm.ListShiftSegmentsByShiftInstanceSidsReq]) (*connect_go.Response[wfm.ListShiftSegmentsByShiftInstanceSidsRes], error) {
