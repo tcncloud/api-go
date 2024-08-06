@@ -1533,6 +1533,7 @@ type WFMClient interface {
 	// Lists the shift instances with the corresponding @shift_instance_sids for the org sending the request.
 	// If @include_shift_template is set to true then the related shift template for the shift instances will be returned in the shift template field.
 	// If @include_shift_segments is set to true then the related shift segments for the shift instances will be returned in the shift segments field.
+	// If @include_shift_segment_call_stats is set to true then the related shift segment call stats for the shift segments will be returned in the call stats by skill collection field on the shift segments.
 	// If @include_scheduling_activity is set to true then the related scheduling activity for the shift segment will be returned in the scheduling activity field.
 	// @include_shift_segments must be true to take effect.
 	// If @include_activity is set to true then the related non skill activity for the scheduling activity will be returned in the scheduling
@@ -5074,6 +5075,7 @@ type WFMHandler interface {
 	// Lists the shift instances with the corresponding @shift_instance_sids for the org sending the request.
 	// If @include_shift_template is set to true then the related shift template for the shift instances will be returned in the shift template field.
 	// If @include_shift_segments is set to true then the related shift segments for the shift instances will be returned in the shift segments field.
+	// If @include_shift_segment_call_stats is set to true then the related shift segment call stats for the shift segments will be returned in the call stats by skill collection field on the shift segments.
 	// If @include_scheduling_activity is set to true then the related scheduling activity for the shift segment will be returned in the scheduling activity field.
 	// @include_shift_segments must be true to take effect.
 	// If @include_activity is set to true then the related non skill activity for the scheduling activity will be returned in the scheduling
