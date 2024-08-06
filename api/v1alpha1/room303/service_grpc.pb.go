@@ -16,8 +16,8 @@ import (
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
-// Requires gRPC-Go v1.64.0 or later.
-const _ = grpc.SupportPackageIsVersion9
+// Requires gRPC-Go v1.62.0 or later.
+const _ = grpc.SupportPackageIsVersion8
 
 const (
 	Room303API_AddRoomMember_FullMethodName         = "/api.v1alpha1.room303.Room303API/AddRoomMember"
@@ -70,7 +70,7 @@ type Room303APIClient interface {
 	EditMessage(ctx context.Context, in *EditMessageRequest, opts ...grpc.CallOption) (*EditMessageResponse, error)
 	DeleteMessage(ctx context.Context, in *DeleteMessageRequest, opts ...grpc.CallOption) (*DeleteMessageResponse, error)
 	GetMessages(ctx context.Context, in *GetMessagesRequest, opts ...grpc.CallOption) (*GetMessagesResponse, error)
-	StreamMessageUpdates(ctx context.Context, in *StreamMessageUpdatesRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[StreamMessageUpdatesResponse], error)
+	StreamMessageUpdates(ctx context.Context, in *StreamMessageUpdatesRequest, opts ...grpc.CallOption) (Room303API_StreamMessageUpdatesClient, error)
 	GetUnreadStats(ctx context.Context, in *GetUnreadStatsRequest, opts ...grpc.CallOption) (*GetUnreadStatsResponse, error)
 	MarkMessageRead(ctx context.Context, in *MarkMessageReadRequest, opts ...grpc.CallOption) (*MarkMessageReadResponse, error)
 	MarkAllMessagesRead(ctx context.Context, in *MarkAllMessagesReadRequest, opts ...grpc.CallOption) (*MarkAllMessagesReadResponse, error)
@@ -82,7 +82,7 @@ type Room303APIClient interface {
 	ListRoomsForMember(ctx context.Context, in *ListRoomsForMemberRequest, opts ...grpc.CallOption) (*ListRoomsResponse, error)
 	ArchiveRoom(ctx context.Context, in *ArchiveRoomRequest, opts ...grpc.CallOption) (*commons.Room, error)
 	// ListUsersNames returns a list of users with names and ids
-	ListUsersNames(ctx context.Context, in *ListUsersNamesRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListUsersNamesResponse], error)
+	ListUsersNames(ctx context.Context, in *ListUsersNamesRequest, opts ...grpc.CallOption) (Room303API_ListUsersNamesClient, error)
 	// allow room configurations to be updated
 	UpdateRoomConfig(ctx context.Context, in *UpdateRoomConfigRequest, opts ...grpc.CallOption) (*commons.Room, error)
 	// update global configuration
@@ -201,13 +201,13 @@ func (c *room303APIClient) GetMessages(ctx context.Context, in *GetMessagesReque
 	return out, nil
 }
 
-func (c *room303APIClient) StreamMessageUpdates(ctx context.Context, in *StreamMessageUpdatesRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[StreamMessageUpdatesResponse], error) {
+func (c *room303APIClient) StreamMessageUpdates(ctx context.Context, in *StreamMessageUpdatesRequest, opts ...grpc.CallOption) (Room303API_StreamMessageUpdatesClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &Room303API_ServiceDesc.Streams[0], Room303API_StreamMessageUpdates_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[StreamMessageUpdatesRequest, StreamMessageUpdatesResponse]{ClientStream: stream}
+	x := &room303APIStreamMessageUpdatesClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -217,8 +217,22 @@ func (c *room303APIClient) StreamMessageUpdates(ctx context.Context, in *StreamM
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Room303API_StreamMessageUpdatesClient = grpc.ServerStreamingClient[StreamMessageUpdatesResponse]
+type Room303API_StreamMessageUpdatesClient interface {
+	Recv() (*StreamMessageUpdatesResponse, error)
+	grpc.ClientStream
+}
+
+type room303APIStreamMessageUpdatesClient struct {
+	grpc.ClientStream
+}
+
+func (x *room303APIStreamMessageUpdatesClient) Recv() (*StreamMessageUpdatesResponse, error) {
+	m := new(StreamMessageUpdatesResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
 
 func (c *room303APIClient) GetUnreadStats(ctx context.Context, in *GetUnreadStatsRequest, opts ...grpc.CallOption) (*GetUnreadStatsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -310,13 +324,13 @@ func (c *room303APIClient) ArchiveRoom(ctx context.Context, in *ArchiveRoomReque
 	return out, nil
 }
 
-func (c *room303APIClient) ListUsersNames(ctx context.Context, in *ListUsersNamesRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListUsersNamesResponse], error) {
+func (c *room303APIClient) ListUsersNames(ctx context.Context, in *ListUsersNamesRequest, opts ...grpc.CallOption) (Room303API_ListUsersNamesClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &Room303API_ServiceDesc.Streams[1], Room303API_ListUsersNames_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[ListUsersNamesRequest, ListUsersNamesResponse]{ClientStream: stream}
+	x := &room303APIListUsersNamesClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -326,8 +340,22 @@ func (c *room303APIClient) ListUsersNames(ctx context.Context, in *ListUsersName
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Room303API_ListUsersNamesClient = grpc.ServerStreamingClient[ListUsersNamesResponse]
+type Room303API_ListUsersNamesClient interface {
+	Recv() (*ListUsersNamesResponse, error)
+	grpc.ClientStream
+}
+
+type room303APIListUsersNamesClient struct {
+	grpc.ClientStream
+}
+
+func (x *room303APIListUsersNamesClient) Recv() (*ListUsersNamesResponse, error) {
+	m := new(ListUsersNamesResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
 
 func (c *room303APIClient) UpdateRoomConfig(ctx context.Context, in *UpdateRoomConfigRequest, opts ...grpc.CallOption) (*commons.Room, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -392,7 +420,7 @@ type Room303APIServer interface {
 	EditMessage(context.Context, *EditMessageRequest) (*EditMessageResponse, error)
 	DeleteMessage(context.Context, *DeleteMessageRequest) (*DeleteMessageResponse, error)
 	GetMessages(context.Context, *GetMessagesRequest) (*GetMessagesResponse, error)
-	StreamMessageUpdates(*StreamMessageUpdatesRequest, grpc.ServerStreamingServer[StreamMessageUpdatesResponse]) error
+	StreamMessageUpdates(*StreamMessageUpdatesRequest, Room303API_StreamMessageUpdatesServer) error
 	GetUnreadStats(context.Context, *GetUnreadStatsRequest) (*GetUnreadStatsResponse, error)
 	MarkMessageRead(context.Context, *MarkMessageReadRequest) (*MarkMessageReadResponse, error)
 	MarkAllMessagesRead(context.Context, *MarkAllMessagesReadRequest) (*MarkAllMessagesReadResponse, error)
@@ -404,7 +432,7 @@ type Room303APIServer interface {
 	ListRoomsForMember(context.Context, *ListRoomsForMemberRequest) (*ListRoomsResponse, error)
 	ArchiveRoom(context.Context, *ArchiveRoomRequest) (*commons.Room, error)
 	// ListUsersNames returns a list of users with names and ids
-	ListUsersNames(*ListUsersNamesRequest, grpc.ServerStreamingServer[ListUsersNamesResponse]) error
+	ListUsersNames(*ListUsersNamesRequest, Room303API_ListUsersNamesServer) error
 	// allow room configurations to be updated
 	UpdateRoomConfig(context.Context, *UpdateRoomConfigRequest) (*commons.Room, error)
 	// update global configuration
@@ -453,7 +481,7 @@ func (UnimplementedRoom303APIServer) DeleteMessage(context.Context, *DeleteMessa
 func (UnimplementedRoom303APIServer) GetMessages(context.Context, *GetMessagesRequest) (*GetMessagesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMessages not implemented")
 }
-func (UnimplementedRoom303APIServer) StreamMessageUpdates(*StreamMessageUpdatesRequest, grpc.ServerStreamingServer[StreamMessageUpdatesResponse]) error {
+func (UnimplementedRoom303APIServer) StreamMessageUpdates(*StreamMessageUpdatesRequest, Room303API_StreamMessageUpdatesServer) error {
 	return status.Errorf(codes.Unimplemented, "method StreamMessageUpdates not implemented")
 }
 func (UnimplementedRoom303APIServer) GetUnreadStats(context.Context, *GetUnreadStatsRequest) (*GetUnreadStatsResponse, error) {
@@ -483,7 +511,7 @@ func (UnimplementedRoom303APIServer) ListRoomsForMember(context.Context, *ListRo
 func (UnimplementedRoom303APIServer) ArchiveRoom(context.Context, *ArchiveRoomRequest) (*commons.Room, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ArchiveRoom not implemented")
 }
-func (UnimplementedRoom303APIServer) ListUsersNames(*ListUsersNamesRequest, grpc.ServerStreamingServer[ListUsersNamesResponse]) error {
+func (UnimplementedRoom303APIServer) ListUsersNames(*ListUsersNamesRequest, Room303API_ListUsersNamesServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListUsersNames not implemented")
 }
 func (UnimplementedRoom303APIServer) UpdateRoomConfig(context.Context, *UpdateRoomConfigRequest) (*commons.Room, error) {
@@ -704,11 +732,21 @@ func _Room303API_StreamMessageUpdates_Handler(srv interface{}, stream grpc.Serve
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(Room303APIServer).StreamMessageUpdates(m, &grpc.GenericServerStream[StreamMessageUpdatesRequest, StreamMessageUpdatesResponse]{ServerStream: stream})
+	return srv.(Room303APIServer).StreamMessageUpdates(m, &room303APIStreamMessageUpdatesServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Room303API_StreamMessageUpdatesServer = grpc.ServerStreamingServer[StreamMessageUpdatesResponse]
+type Room303API_StreamMessageUpdatesServer interface {
+	Send(*StreamMessageUpdatesResponse) error
+	grpc.ServerStream
+}
+
+type room303APIStreamMessageUpdatesServer struct {
+	grpc.ServerStream
+}
+
+func (x *room303APIStreamMessageUpdatesServer) Send(m *StreamMessageUpdatesResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _Room303API_GetUnreadStats_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetUnreadStatsRequest)
@@ -877,11 +915,21 @@ func _Room303API_ListUsersNames_Handler(srv interface{}, stream grpc.ServerStrea
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(Room303APIServer).ListUsersNames(m, &grpc.GenericServerStream[ListUsersNamesRequest, ListUsersNamesResponse]{ServerStream: stream})
+	return srv.(Room303APIServer).ListUsersNames(m, &room303APIListUsersNamesServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Room303API_ListUsersNamesServer = grpc.ServerStreamingServer[ListUsersNamesResponse]
+type Room303API_ListUsersNamesServer interface {
+	Send(*ListUsersNamesResponse) error
+	grpc.ServerStream
+}
+
+type room303APIListUsersNamesServer struct {
+	grpc.ServerStream
+}
+
+func (x *room303APIListUsersNamesServer) Send(m *ListUsersNamesResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _Room303API_UpdateRoomConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateRoomConfigRequest)

@@ -30,8 +30,8 @@ import (
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
-// Requires gRPC-Go v1.64.0 or later.
-const _ = grpc.SupportPackageIsVersion9
+// Requires gRPC-Go v1.62.0 or later.
+const _ = grpc.SupportPackageIsVersion8
 
 const (
 	Asm_StreamAgentState_FullMethodName             = "/api.v1alpha1.asm.Asm/StreamAgentState"
@@ -55,9 +55,9 @@ const (
 type AsmClient interface {
 	// Streams back status updates for the given asm session
 	// only the asm session sid filter is allowed
-	StreamAgentState(ctx context.Context, in *StreamAgentStateReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[commons.StreamAgentStateRes], error)
+	StreamAgentState(ctx context.Context, in *StreamAgentStateReq, opts ...grpc.CallOption) (Asm_StreamAgentStateClient, error)
 	// Streams back statuses for the desired filter
-	ManagerStreamAgentState(ctx context.Context, in *ManagerStreamAgentStateReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[commons.ManagerStreamAgentStateRes], error)
+	ManagerStreamAgentState(ctx context.Context, in *ManagerStreamAgentStateReq, opts ...grpc.CallOption) (Asm_ManagerStreamAgentStateClient, error)
 	PushEvents(ctx context.Context, in *PushEventsReq, opts ...grpc.CallOption) (*PushEventsRes, error)
 	// Creates an agent session and enables the voice channel
 	CreateSession(ctx context.Context, in *CreateSessionReq, opts ...grpc.CallOption) (*CreateSessionRes, error)
@@ -88,13 +88,13 @@ func NewAsmClient(cc grpc.ClientConnInterface) AsmClient {
 	return &asmClient{cc}
 }
 
-func (c *asmClient) StreamAgentState(ctx context.Context, in *StreamAgentStateReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[commons.StreamAgentStateRes], error) {
+func (c *asmClient) StreamAgentState(ctx context.Context, in *StreamAgentStateReq, opts ...grpc.CallOption) (Asm_StreamAgentStateClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &Asm_ServiceDesc.Streams[0], Asm_StreamAgentState_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[StreamAgentStateReq, commons.StreamAgentStateRes]{ClientStream: stream}
+	x := &asmStreamAgentStateClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -104,16 +104,30 @@ func (c *asmClient) StreamAgentState(ctx context.Context, in *StreamAgentStateRe
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Asm_StreamAgentStateClient = grpc.ServerStreamingClient[commons.StreamAgentStateRes]
+type Asm_StreamAgentStateClient interface {
+	Recv() (*commons.StreamAgentStateRes, error)
+	grpc.ClientStream
+}
 
-func (c *asmClient) ManagerStreamAgentState(ctx context.Context, in *ManagerStreamAgentStateReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[commons.ManagerStreamAgentStateRes], error) {
+type asmStreamAgentStateClient struct {
+	grpc.ClientStream
+}
+
+func (x *asmStreamAgentStateClient) Recv() (*commons.StreamAgentStateRes, error) {
+	m := new(commons.StreamAgentStateRes)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *asmClient) ManagerStreamAgentState(ctx context.Context, in *ManagerStreamAgentStateReq, opts ...grpc.CallOption) (Asm_ManagerStreamAgentStateClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &Asm_ServiceDesc.Streams[1], Asm_ManagerStreamAgentState_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[ManagerStreamAgentStateReq, commons.ManagerStreamAgentStateRes]{ClientStream: stream}
+	x := &asmManagerStreamAgentStateClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -123,8 +137,22 @@ func (c *asmClient) ManagerStreamAgentState(ctx context.Context, in *ManagerStre
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Asm_ManagerStreamAgentStateClient = grpc.ServerStreamingClient[commons.ManagerStreamAgentStateRes]
+type Asm_ManagerStreamAgentStateClient interface {
+	Recv() (*commons.ManagerStreamAgentStateRes, error)
+	grpc.ClientStream
+}
+
+type asmManagerStreamAgentStateClient struct {
+	grpc.ClientStream
+}
+
+func (x *asmManagerStreamAgentStateClient) Recv() (*commons.ManagerStreamAgentStateRes, error) {
+	m := new(commons.ManagerStreamAgentStateRes)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
 
 func (c *asmClient) PushEvents(ctx context.Context, in *PushEventsReq, opts ...grpc.CallOption) (*PushEventsRes, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -242,9 +270,9 @@ func (c *asmClient) GetQueuesDetails(ctx context.Context, in *GetQueuesDetailsRe
 type AsmServer interface {
 	// Streams back status updates for the given asm session
 	// only the asm session sid filter is allowed
-	StreamAgentState(*StreamAgentStateReq, grpc.ServerStreamingServer[commons.StreamAgentStateRes]) error
+	StreamAgentState(*StreamAgentStateReq, Asm_StreamAgentStateServer) error
 	// Streams back statuses for the desired filter
-	ManagerStreamAgentState(*ManagerStreamAgentStateReq, grpc.ServerStreamingServer[commons.ManagerStreamAgentStateRes]) error
+	ManagerStreamAgentState(*ManagerStreamAgentStateReq, Asm_ManagerStreamAgentStateServer) error
 	PushEvents(context.Context, *PushEventsReq) (*PushEventsRes, error)
 	// Creates an agent session and enables the voice channel
 	CreateSession(context.Context, *CreateSessionReq) (*CreateSessionRes, error)
@@ -275,10 +303,10 @@ type AsmServer interface {
 // pointer dereference when methods are called.
 type UnimplementedAsmServer struct{}
 
-func (UnimplementedAsmServer) StreamAgentState(*StreamAgentStateReq, grpc.ServerStreamingServer[commons.StreamAgentStateRes]) error {
+func (UnimplementedAsmServer) StreamAgentState(*StreamAgentStateReq, Asm_StreamAgentStateServer) error {
 	return status.Errorf(codes.Unimplemented, "method StreamAgentState not implemented")
 }
-func (UnimplementedAsmServer) ManagerStreamAgentState(*ManagerStreamAgentStateReq, grpc.ServerStreamingServer[commons.ManagerStreamAgentStateRes]) error {
+func (UnimplementedAsmServer) ManagerStreamAgentState(*ManagerStreamAgentStateReq, Asm_ManagerStreamAgentStateServer) error {
 	return status.Errorf(codes.Unimplemented, "method ManagerStreamAgentState not implemented")
 }
 func (UnimplementedAsmServer) PushEvents(context.Context, *PushEventsReq) (*PushEventsRes, error) {
@@ -340,22 +368,42 @@ func _Asm_StreamAgentState_Handler(srv interface{}, stream grpc.ServerStream) er
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(AsmServer).StreamAgentState(m, &grpc.GenericServerStream[StreamAgentStateReq, commons.StreamAgentStateRes]{ServerStream: stream})
+	return srv.(AsmServer).StreamAgentState(m, &asmStreamAgentStateServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Asm_StreamAgentStateServer = grpc.ServerStreamingServer[commons.StreamAgentStateRes]
+type Asm_StreamAgentStateServer interface {
+	Send(*commons.StreamAgentStateRes) error
+	grpc.ServerStream
+}
+
+type asmStreamAgentStateServer struct {
+	grpc.ServerStream
+}
+
+func (x *asmStreamAgentStateServer) Send(m *commons.StreamAgentStateRes) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _Asm_ManagerStreamAgentState_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(ManagerStreamAgentStateReq)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(AsmServer).ManagerStreamAgentState(m, &grpc.GenericServerStream[ManagerStreamAgentStateReq, commons.ManagerStreamAgentStateRes]{ServerStream: stream})
+	return srv.(AsmServer).ManagerStreamAgentState(m, &asmManagerStreamAgentStateServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Asm_ManagerStreamAgentStateServer = grpc.ServerStreamingServer[commons.ManagerStreamAgentStateRes]
+type Asm_ManagerStreamAgentStateServer interface {
+	Send(*commons.ManagerStreamAgentStateRes) error
+	grpc.ServerStream
+}
+
+type asmManagerStreamAgentStateServer struct {
+	grpc.ServerStream
+}
+
+func (x *asmManagerStreamAgentStateServer) Send(m *commons.ManagerStreamAgentStateRes) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _Asm_PushEvents_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(PushEventsReq)

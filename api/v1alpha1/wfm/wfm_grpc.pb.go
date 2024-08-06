@@ -29,8 +29,8 @@ import (
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
-// Requires gRPC-Go v1.64.0 or later.
-const _ = grpc.SupportPackageIsVersion9
+// Requires gRPC-Go v1.62.0 or later.
+const _ = grpc.SupportPackageIsVersion8
 
 const (
 	WFM_PerformInitialClientSetup_FullMethodName                     = "/api.v1alpha1.wfm.WFM/PerformInitialClientSetup"
@@ -414,7 +414,7 @@ type WFMClient interface {
 	// Errors:
 	//   - grpc.Invalid: the @skill_profile_category or @call_profile_template in the request is invalid.
 	//   - grpc.Internal: error occurs during the building of the profile forecast.
-	BuildProfileForecastByInterval(ctx context.Context, in *BuildProfileForecastByIntervalReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[CallDataByInterval], error)
+	BuildProfileForecastByInterval(ctx context.Context, in *BuildProfileForecastByIntervalReq, opts ...grpc.CallOption) (WFM_BuildProfileForecastByIntervalClient, error)
 	// Builds a profile forecast using the provided @call_profile_template.
 	// The forecaster will produce intervals from the following range using the client's saved forecasting parameters:
 	// (@training_data_range_end_datetime - @forecast_test_range_in_weeks) to @forecast_range_end_datetime.
@@ -424,7 +424,7 @@ type WFMClient interface {
 	// Errors:
 	//   - grpc.Invalid: the @skill_profile_category or @call_profile_template in the request is invalid.
 	//   - grpc.Internal: error occurs during the building of the profile forecast.
-	BuildProfileForecastByIntervalWithStats(ctx context.Context, in *BuildProfileForecastByIntervalWithStatsReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[BuildProfileForecastByIntervalWithStatsRes], error)
+	BuildProfileForecastByIntervalWithStats(ctx context.Context, in *BuildProfileForecastByIntervalWithStatsReq, opts ...grpc.CallOption) (WFM_BuildProfileForecastByIntervalWithStatsClient, error)
 	// Builds a profile forecast for the given @skill_profile_sid and org sending the request using the given @call_profile_template.
 	// The forecaster will produce intervals from the following range using the client's saved forecasting parameters:
 	// @forecast_range_start_datetime to @forecast_range_end_datetime.
@@ -466,12 +466,12 @@ type WFMClient interface {
 	// Errors:
 	//   - grpc.Invalid: the @skill_profile_sid in the request is invalid.
 	//   - grpc.Internal: error occurs when getting the forecast data intervals.
-	ListForecastIntervalsForSkillProfile(ctx context.Context, in *ListForecastIntervalsForSkillProfileReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[CallDataByInterval], error)
+	ListForecastIntervalsForSkillProfile(ctx context.Context, in *ListForecastIntervalsForSkillProfileReq, opts ...grpc.CallOption) (WFM_ListForecastIntervalsForSkillProfileClient, error)
 	// Gets the forecast data intervals for the given @skill_profile_category.
 	// Errors:
 	//   - grpc.Invalid: the @skill_profile_category in the request is invalid.
 	//   - grpc.Internal: error occurs when getting the forecast data intervals.
-	ListForecastIntervals(ctx context.Context, in *ListForecastIntervalsReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[CallDataByInterval], error)
+	ListForecastIntervals(ctx context.Context, in *ListForecastIntervalsReq, opts ...grpc.CallOption) (WFM_ListForecastIntervalsClient, error)
 	// Generates a regression forecast using the provided @regression_template.
 	// It will generate forecast intervals for the skill profiles sids in @skill_profile_sids_to_forecast.
 	// It will use the client's saved forecasting test range as the start datetime and the forecast range as the end datetime of the forecasted data.
@@ -479,7 +479,7 @@ type WFMClient interface {
 	// Errors:
 	//   - grpc.Invalid: no @skill_profile_sids_to_forecast are given or the @regression_template in the request is invalid.
 	//   - grpc.Internal: error occurs during the building of the regression forecast.
-	BuildRegressionForecastByInterval(ctx context.Context, in *BuildRegressionForecastByIntervalReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[CallDataByInterval], error)
+	BuildRegressionForecastByInterval(ctx context.Context, in *BuildRegressionForecastByIntervalReq, opts ...grpc.CallOption) (WFM_BuildRegressionForecastByIntervalClient, error)
 	// Generates a regression forecast and calculates forecast statistics using the provided @regression_template.
 	// It will generate forecast intervals for the skill profiles sids in @skill_profile_sids_to_forecast.
 	// It will use the client's saved forecasting test range as the start datetime and the forecast range as the end datetime of the forecasted data.
@@ -489,7 +489,7 @@ type WFMClient interface {
 	// Errors:
 	//   - grpc.Invalid: no @skill_profile_sids_to_forecast are given or the @regression_template in the request is invalid.
 	//   - grpc.Internal: error occurs either during the when building the forecast or calculating the stats.
-	BuildRegressionForecastByIntervalWithStats(ctx context.Context, in *BuildRegressionForecastByIntervalWithStatsReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[BuildRegressionForecastByIntervalWithStatsRes], error)
+	BuildRegressionForecastByIntervalWithStats(ctx context.Context, in *BuildRegressionForecastByIntervalWithStatsReq, opts ...grpc.CallOption) (WFM_BuildRegressionForecastByIntervalWithStatsClient, error)
 	// Gets the call profile templates that the org sending the request has.
 	// Errors:
 	//   - grpc.Internal: error occurs when getting the templates.
@@ -1955,13 +1955,13 @@ func (c *wFMClient) GetSkillProfilesCount(ctx context.Context, in *GetSkillProfi
 	return out, nil
 }
 
-func (c *wFMClient) BuildProfileForecastByInterval(ctx context.Context, in *BuildProfileForecastByIntervalReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[CallDataByInterval], error) {
+func (c *wFMClient) BuildProfileForecastByInterval(ctx context.Context, in *BuildProfileForecastByIntervalReq, opts ...grpc.CallOption) (WFM_BuildProfileForecastByIntervalClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &WFM_ServiceDesc.Streams[0], WFM_BuildProfileForecastByInterval_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[BuildProfileForecastByIntervalReq, CallDataByInterval]{ClientStream: stream}
+	x := &wFMBuildProfileForecastByIntervalClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -1971,16 +1971,30 @@ func (c *wFMClient) BuildProfileForecastByInterval(ctx context.Context, in *Buil
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type WFM_BuildProfileForecastByIntervalClient = grpc.ServerStreamingClient[CallDataByInterval]
+type WFM_BuildProfileForecastByIntervalClient interface {
+	Recv() (*CallDataByInterval, error)
+	grpc.ClientStream
+}
 
-func (c *wFMClient) BuildProfileForecastByIntervalWithStats(ctx context.Context, in *BuildProfileForecastByIntervalWithStatsReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[BuildProfileForecastByIntervalWithStatsRes], error) {
+type wFMBuildProfileForecastByIntervalClient struct {
+	grpc.ClientStream
+}
+
+func (x *wFMBuildProfileForecastByIntervalClient) Recv() (*CallDataByInterval, error) {
+	m := new(CallDataByInterval)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *wFMClient) BuildProfileForecastByIntervalWithStats(ctx context.Context, in *BuildProfileForecastByIntervalWithStatsReq, opts ...grpc.CallOption) (WFM_BuildProfileForecastByIntervalWithStatsClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &WFM_ServiceDesc.Streams[1], WFM_BuildProfileForecastByIntervalWithStats_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[BuildProfileForecastByIntervalWithStatsReq, BuildProfileForecastByIntervalWithStatsRes]{ClientStream: stream}
+	x := &wFMBuildProfileForecastByIntervalWithStatsClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -1990,8 +2004,22 @@ func (c *wFMClient) BuildProfileForecastByIntervalWithStats(ctx context.Context,
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type WFM_BuildProfileForecastByIntervalWithStatsClient = grpc.ServerStreamingClient[BuildProfileForecastByIntervalWithStatsRes]
+type WFM_BuildProfileForecastByIntervalWithStatsClient interface {
+	Recv() (*BuildProfileForecastByIntervalWithStatsRes, error)
+	grpc.ClientStream
+}
+
+type wFMBuildProfileForecastByIntervalWithStatsClient struct {
+	grpc.ClientStream
+}
+
+func (x *wFMBuildProfileForecastByIntervalWithStatsClient) Recv() (*BuildProfileForecastByIntervalWithStatsRes, error) {
+	m := new(BuildProfileForecastByIntervalWithStatsRes)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
 
 func (c *wFMClient) UpsertProfileForecast(ctx context.Context, in *UpsertProfileForecastReq, opts ...grpc.CallOption) (*UpsertProfileForecastRes, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -2054,13 +2082,13 @@ func (c *wFMClient) ListRegressionTemplates(ctx context.Context, in *ListRegress
 }
 
 // Deprecated: Do not use.
-func (c *wFMClient) ListForecastIntervalsForSkillProfile(ctx context.Context, in *ListForecastIntervalsForSkillProfileReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[CallDataByInterval], error) {
+func (c *wFMClient) ListForecastIntervalsForSkillProfile(ctx context.Context, in *ListForecastIntervalsForSkillProfileReq, opts ...grpc.CallOption) (WFM_ListForecastIntervalsForSkillProfileClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &WFM_ServiceDesc.Streams[2], WFM_ListForecastIntervalsForSkillProfile_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[ListForecastIntervalsForSkillProfileReq, CallDataByInterval]{ClientStream: stream}
+	x := &wFMListForecastIntervalsForSkillProfileClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -2070,16 +2098,30 @@ func (c *wFMClient) ListForecastIntervalsForSkillProfile(ctx context.Context, in
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type WFM_ListForecastIntervalsForSkillProfileClient = grpc.ServerStreamingClient[CallDataByInterval]
+type WFM_ListForecastIntervalsForSkillProfileClient interface {
+	Recv() (*CallDataByInterval, error)
+	grpc.ClientStream
+}
 
-func (c *wFMClient) ListForecastIntervals(ctx context.Context, in *ListForecastIntervalsReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[CallDataByInterval], error) {
+type wFMListForecastIntervalsForSkillProfileClient struct {
+	grpc.ClientStream
+}
+
+func (x *wFMListForecastIntervalsForSkillProfileClient) Recv() (*CallDataByInterval, error) {
+	m := new(CallDataByInterval)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *wFMClient) ListForecastIntervals(ctx context.Context, in *ListForecastIntervalsReq, opts ...grpc.CallOption) (WFM_ListForecastIntervalsClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &WFM_ServiceDesc.Streams[3], WFM_ListForecastIntervals_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[ListForecastIntervalsReq, CallDataByInterval]{ClientStream: stream}
+	x := &wFMListForecastIntervalsClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -2089,16 +2131,30 @@ func (c *wFMClient) ListForecastIntervals(ctx context.Context, in *ListForecastI
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type WFM_ListForecastIntervalsClient = grpc.ServerStreamingClient[CallDataByInterval]
+type WFM_ListForecastIntervalsClient interface {
+	Recv() (*CallDataByInterval, error)
+	grpc.ClientStream
+}
 
-func (c *wFMClient) BuildRegressionForecastByInterval(ctx context.Context, in *BuildRegressionForecastByIntervalReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[CallDataByInterval], error) {
+type wFMListForecastIntervalsClient struct {
+	grpc.ClientStream
+}
+
+func (x *wFMListForecastIntervalsClient) Recv() (*CallDataByInterval, error) {
+	m := new(CallDataByInterval)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *wFMClient) BuildRegressionForecastByInterval(ctx context.Context, in *BuildRegressionForecastByIntervalReq, opts ...grpc.CallOption) (WFM_BuildRegressionForecastByIntervalClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &WFM_ServiceDesc.Streams[4], WFM_BuildRegressionForecastByInterval_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[BuildRegressionForecastByIntervalReq, CallDataByInterval]{ClientStream: stream}
+	x := &wFMBuildRegressionForecastByIntervalClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -2108,16 +2164,30 @@ func (c *wFMClient) BuildRegressionForecastByInterval(ctx context.Context, in *B
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type WFM_BuildRegressionForecastByIntervalClient = grpc.ServerStreamingClient[CallDataByInterval]
+type WFM_BuildRegressionForecastByIntervalClient interface {
+	Recv() (*CallDataByInterval, error)
+	grpc.ClientStream
+}
 
-func (c *wFMClient) BuildRegressionForecastByIntervalWithStats(ctx context.Context, in *BuildRegressionForecastByIntervalWithStatsReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[BuildRegressionForecastByIntervalWithStatsRes], error) {
+type wFMBuildRegressionForecastByIntervalClient struct {
+	grpc.ClientStream
+}
+
+func (x *wFMBuildRegressionForecastByIntervalClient) Recv() (*CallDataByInterval, error) {
+	m := new(CallDataByInterval)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *wFMClient) BuildRegressionForecastByIntervalWithStats(ctx context.Context, in *BuildRegressionForecastByIntervalWithStatsReq, opts ...grpc.CallOption) (WFM_BuildRegressionForecastByIntervalWithStatsClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &WFM_ServiceDesc.Streams[5], WFM_BuildRegressionForecastByIntervalWithStats_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[BuildRegressionForecastByIntervalWithStatsReq, BuildRegressionForecastByIntervalWithStatsRes]{ClientStream: stream}
+	x := &wFMBuildRegressionForecastByIntervalWithStatsClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -2127,8 +2197,22 @@ func (c *wFMClient) BuildRegressionForecastByIntervalWithStats(ctx context.Conte
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type WFM_BuildRegressionForecastByIntervalWithStatsClient = grpc.ServerStreamingClient[BuildRegressionForecastByIntervalWithStatsRes]
+type WFM_BuildRegressionForecastByIntervalWithStatsClient interface {
+	Recv() (*BuildRegressionForecastByIntervalWithStatsRes, error)
+	grpc.ClientStream
+}
+
+type wFMBuildRegressionForecastByIntervalWithStatsClient struct {
+	grpc.ClientStream
+}
+
+func (x *wFMBuildRegressionForecastByIntervalWithStatsClient) Recv() (*BuildRegressionForecastByIntervalWithStatsRes, error) {
+	m := new(BuildRegressionForecastByIntervalWithStatsRes)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
 
 func (c *wFMClient) ListCallProfileTemplates(ctx context.Context, in *ListCallProfileTemplatesReq, opts ...grpc.CallOption) (*ListCallProfileTemplatesRes, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -3795,7 +3879,7 @@ type WFMServer interface {
 	// Errors:
 	//   - grpc.Invalid: the @skill_profile_category or @call_profile_template in the request is invalid.
 	//   - grpc.Internal: error occurs during the building of the profile forecast.
-	BuildProfileForecastByInterval(*BuildProfileForecastByIntervalReq, grpc.ServerStreamingServer[CallDataByInterval]) error
+	BuildProfileForecastByInterval(*BuildProfileForecastByIntervalReq, WFM_BuildProfileForecastByIntervalServer) error
 	// Builds a profile forecast using the provided @call_profile_template.
 	// The forecaster will produce intervals from the following range using the client's saved forecasting parameters:
 	// (@training_data_range_end_datetime - @forecast_test_range_in_weeks) to @forecast_range_end_datetime.
@@ -3805,7 +3889,7 @@ type WFMServer interface {
 	// Errors:
 	//   - grpc.Invalid: the @skill_profile_category or @call_profile_template in the request is invalid.
 	//   - grpc.Internal: error occurs during the building of the profile forecast.
-	BuildProfileForecastByIntervalWithStats(*BuildProfileForecastByIntervalWithStatsReq, grpc.ServerStreamingServer[BuildProfileForecastByIntervalWithStatsRes]) error
+	BuildProfileForecastByIntervalWithStats(*BuildProfileForecastByIntervalWithStatsReq, WFM_BuildProfileForecastByIntervalWithStatsServer) error
 	// Builds a profile forecast for the given @skill_profile_sid and org sending the request using the given @call_profile_template.
 	// The forecaster will produce intervals from the following range using the client's saved forecasting parameters:
 	// @forecast_range_start_datetime to @forecast_range_end_datetime.
@@ -3847,12 +3931,12 @@ type WFMServer interface {
 	// Errors:
 	//   - grpc.Invalid: the @skill_profile_sid in the request is invalid.
 	//   - grpc.Internal: error occurs when getting the forecast data intervals.
-	ListForecastIntervalsForSkillProfile(*ListForecastIntervalsForSkillProfileReq, grpc.ServerStreamingServer[CallDataByInterval]) error
+	ListForecastIntervalsForSkillProfile(*ListForecastIntervalsForSkillProfileReq, WFM_ListForecastIntervalsForSkillProfileServer) error
 	// Gets the forecast data intervals for the given @skill_profile_category.
 	// Errors:
 	//   - grpc.Invalid: the @skill_profile_category in the request is invalid.
 	//   - grpc.Internal: error occurs when getting the forecast data intervals.
-	ListForecastIntervals(*ListForecastIntervalsReq, grpc.ServerStreamingServer[CallDataByInterval]) error
+	ListForecastIntervals(*ListForecastIntervalsReq, WFM_ListForecastIntervalsServer) error
 	// Generates a regression forecast using the provided @regression_template.
 	// It will generate forecast intervals for the skill profiles sids in @skill_profile_sids_to_forecast.
 	// It will use the client's saved forecasting test range as the start datetime and the forecast range as the end datetime of the forecasted data.
@@ -3860,7 +3944,7 @@ type WFMServer interface {
 	// Errors:
 	//   - grpc.Invalid: no @skill_profile_sids_to_forecast are given or the @regression_template in the request is invalid.
 	//   - grpc.Internal: error occurs during the building of the regression forecast.
-	BuildRegressionForecastByInterval(*BuildRegressionForecastByIntervalReq, grpc.ServerStreamingServer[CallDataByInterval]) error
+	BuildRegressionForecastByInterval(*BuildRegressionForecastByIntervalReq, WFM_BuildRegressionForecastByIntervalServer) error
 	// Generates a regression forecast and calculates forecast statistics using the provided @regression_template.
 	// It will generate forecast intervals for the skill profiles sids in @skill_profile_sids_to_forecast.
 	// It will use the client's saved forecasting test range as the start datetime and the forecast range as the end datetime of the forecasted data.
@@ -3870,7 +3954,7 @@ type WFMServer interface {
 	// Errors:
 	//   - grpc.Invalid: no @skill_profile_sids_to_forecast are given or the @regression_template in the request is invalid.
 	//   - grpc.Internal: error occurs either during the when building the forecast or calculating the stats.
-	BuildRegressionForecastByIntervalWithStats(*BuildRegressionForecastByIntervalWithStatsReq, grpc.ServerStreamingServer[BuildRegressionForecastByIntervalWithStatsRes]) error
+	BuildRegressionForecastByIntervalWithStats(*BuildRegressionForecastByIntervalWithStatsReq, WFM_BuildRegressionForecastByIntervalWithStatsServer) error
 	// Gets the call profile templates that the org sending the request has.
 	// Errors:
 	//   - grpc.Internal: error occurs when getting the templates.
@@ -5150,10 +5234,10 @@ func (UnimplementedWFMServer) ListTopSkillProfiles(context.Context, *ListTopSkil
 func (UnimplementedWFMServer) GetSkillProfilesCount(context.Context, *GetSkillProfilesCountReq) (*GetSkillProfilesCountRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSkillProfilesCount not implemented")
 }
-func (UnimplementedWFMServer) BuildProfileForecastByInterval(*BuildProfileForecastByIntervalReq, grpc.ServerStreamingServer[CallDataByInterval]) error {
+func (UnimplementedWFMServer) BuildProfileForecastByInterval(*BuildProfileForecastByIntervalReq, WFM_BuildProfileForecastByIntervalServer) error {
 	return status.Errorf(codes.Unimplemented, "method BuildProfileForecastByInterval not implemented")
 }
-func (UnimplementedWFMServer) BuildProfileForecastByIntervalWithStats(*BuildProfileForecastByIntervalWithStatsReq, grpc.ServerStreamingServer[BuildProfileForecastByIntervalWithStatsRes]) error {
+func (UnimplementedWFMServer) BuildProfileForecastByIntervalWithStats(*BuildProfileForecastByIntervalWithStatsReq, WFM_BuildProfileForecastByIntervalWithStatsServer) error {
 	return status.Errorf(codes.Unimplemented, "method BuildProfileForecastByIntervalWithStats not implemented")
 }
 func (UnimplementedWFMServer) UpsertProfileForecast(context.Context, *UpsertProfileForecastReq) (*UpsertProfileForecastRes, error) {
@@ -5174,16 +5258,16 @@ func (UnimplementedWFMServer) DeleteRegressionTemplate(context.Context, *DeleteR
 func (UnimplementedWFMServer) ListRegressionTemplates(context.Context, *ListRegressionTemplatesReq) (*ListRegressionTemplatesRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListRegressionTemplates not implemented")
 }
-func (UnimplementedWFMServer) ListForecastIntervalsForSkillProfile(*ListForecastIntervalsForSkillProfileReq, grpc.ServerStreamingServer[CallDataByInterval]) error {
+func (UnimplementedWFMServer) ListForecastIntervalsForSkillProfile(*ListForecastIntervalsForSkillProfileReq, WFM_ListForecastIntervalsForSkillProfileServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListForecastIntervalsForSkillProfile not implemented")
 }
-func (UnimplementedWFMServer) ListForecastIntervals(*ListForecastIntervalsReq, grpc.ServerStreamingServer[CallDataByInterval]) error {
+func (UnimplementedWFMServer) ListForecastIntervals(*ListForecastIntervalsReq, WFM_ListForecastIntervalsServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListForecastIntervals not implemented")
 }
-func (UnimplementedWFMServer) BuildRegressionForecastByInterval(*BuildRegressionForecastByIntervalReq, grpc.ServerStreamingServer[CallDataByInterval]) error {
+func (UnimplementedWFMServer) BuildRegressionForecastByInterval(*BuildRegressionForecastByIntervalReq, WFM_BuildRegressionForecastByIntervalServer) error {
 	return status.Errorf(codes.Unimplemented, "method BuildRegressionForecastByInterval not implemented")
 }
-func (UnimplementedWFMServer) BuildRegressionForecastByIntervalWithStats(*BuildRegressionForecastByIntervalWithStatsReq, grpc.ServerStreamingServer[BuildRegressionForecastByIntervalWithStatsRes]) error {
+func (UnimplementedWFMServer) BuildRegressionForecastByIntervalWithStats(*BuildRegressionForecastByIntervalWithStatsReq, WFM_BuildRegressionForecastByIntervalWithStatsServer) error {
 	return status.Errorf(codes.Unimplemented, "method BuildRegressionForecastByIntervalWithStats not implemented")
 }
 func (UnimplementedWFMServer) ListCallProfileTemplates(context.Context, *ListCallProfileTemplatesReq) (*ListCallProfileTemplatesRes, error) {
@@ -6121,22 +6205,42 @@ func _WFM_BuildProfileForecastByInterval_Handler(srv interface{}, stream grpc.Se
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(WFMServer).BuildProfileForecastByInterval(m, &grpc.GenericServerStream[BuildProfileForecastByIntervalReq, CallDataByInterval]{ServerStream: stream})
+	return srv.(WFMServer).BuildProfileForecastByInterval(m, &wFMBuildProfileForecastByIntervalServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type WFM_BuildProfileForecastByIntervalServer = grpc.ServerStreamingServer[CallDataByInterval]
+type WFM_BuildProfileForecastByIntervalServer interface {
+	Send(*CallDataByInterval) error
+	grpc.ServerStream
+}
+
+type wFMBuildProfileForecastByIntervalServer struct {
+	grpc.ServerStream
+}
+
+func (x *wFMBuildProfileForecastByIntervalServer) Send(m *CallDataByInterval) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _WFM_BuildProfileForecastByIntervalWithStats_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(BuildProfileForecastByIntervalWithStatsReq)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(WFMServer).BuildProfileForecastByIntervalWithStats(m, &grpc.GenericServerStream[BuildProfileForecastByIntervalWithStatsReq, BuildProfileForecastByIntervalWithStatsRes]{ServerStream: stream})
+	return srv.(WFMServer).BuildProfileForecastByIntervalWithStats(m, &wFMBuildProfileForecastByIntervalWithStatsServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type WFM_BuildProfileForecastByIntervalWithStatsServer = grpc.ServerStreamingServer[BuildProfileForecastByIntervalWithStatsRes]
+type WFM_BuildProfileForecastByIntervalWithStatsServer interface {
+	Send(*BuildProfileForecastByIntervalWithStatsRes) error
+	grpc.ServerStream
+}
+
+type wFMBuildProfileForecastByIntervalWithStatsServer struct {
+	grpc.ServerStream
+}
+
+func (x *wFMBuildProfileForecastByIntervalWithStatsServer) Send(m *BuildProfileForecastByIntervalWithStatsRes) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _WFM_UpsertProfileForecast_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpsertProfileForecastReq)
@@ -6251,44 +6355,84 @@ func _WFM_ListForecastIntervalsForSkillProfile_Handler(srv interface{}, stream g
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(WFMServer).ListForecastIntervalsForSkillProfile(m, &grpc.GenericServerStream[ListForecastIntervalsForSkillProfileReq, CallDataByInterval]{ServerStream: stream})
+	return srv.(WFMServer).ListForecastIntervalsForSkillProfile(m, &wFMListForecastIntervalsForSkillProfileServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type WFM_ListForecastIntervalsForSkillProfileServer = grpc.ServerStreamingServer[CallDataByInterval]
+type WFM_ListForecastIntervalsForSkillProfileServer interface {
+	Send(*CallDataByInterval) error
+	grpc.ServerStream
+}
+
+type wFMListForecastIntervalsForSkillProfileServer struct {
+	grpc.ServerStream
+}
+
+func (x *wFMListForecastIntervalsForSkillProfileServer) Send(m *CallDataByInterval) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _WFM_ListForecastIntervals_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(ListForecastIntervalsReq)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(WFMServer).ListForecastIntervals(m, &grpc.GenericServerStream[ListForecastIntervalsReq, CallDataByInterval]{ServerStream: stream})
+	return srv.(WFMServer).ListForecastIntervals(m, &wFMListForecastIntervalsServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type WFM_ListForecastIntervalsServer = grpc.ServerStreamingServer[CallDataByInterval]
+type WFM_ListForecastIntervalsServer interface {
+	Send(*CallDataByInterval) error
+	grpc.ServerStream
+}
+
+type wFMListForecastIntervalsServer struct {
+	grpc.ServerStream
+}
+
+func (x *wFMListForecastIntervalsServer) Send(m *CallDataByInterval) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _WFM_BuildRegressionForecastByInterval_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(BuildRegressionForecastByIntervalReq)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(WFMServer).BuildRegressionForecastByInterval(m, &grpc.GenericServerStream[BuildRegressionForecastByIntervalReq, CallDataByInterval]{ServerStream: stream})
+	return srv.(WFMServer).BuildRegressionForecastByInterval(m, &wFMBuildRegressionForecastByIntervalServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type WFM_BuildRegressionForecastByIntervalServer = grpc.ServerStreamingServer[CallDataByInterval]
+type WFM_BuildRegressionForecastByIntervalServer interface {
+	Send(*CallDataByInterval) error
+	grpc.ServerStream
+}
+
+type wFMBuildRegressionForecastByIntervalServer struct {
+	grpc.ServerStream
+}
+
+func (x *wFMBuildRegressionForecastByIntervalServer) Send(m *CallDataByInterval) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _WFM_BuildRegressionForecastByIntervalWithStats_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(BuildRegressionForecastByIntervalWithStatsReq)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(WFMServer).BuildRegressionForecastByIntervalWithStats(m, &grpc.GenericServerStream[BuildRegressionForecastByIntervalWithStatsReq, BuildRegressionForecastByIntervalWithStatsRes]{ServerStream: stream})
+	return srv.(WFMServer).BuildRegressionForecastByIntervalWithStats(m, &wFMBuildRegressionForecastByIntervalWithStatsServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type WFM_BuildRegressionForecastByIntervalWithStatsServer = grpc.ServerStreamingServer[BuildRegressionForecastByIntervalWithStatsRes]
+type WFM_BuildRegressionForecastByIntervalWithStatsServer interface {
+	Send(*BuildRegressionForecastByIntervalWithStatsRes) error
+	grpc.ServerStream
+}
+
+type wFMBuildRegressionForecastByIntervalWithStatsServer struct {
+	grpc.ServerStream
+}
+
+func (x *wFMBuildRegressionForecastByIntervalWithStatsServer) Send(m *BuildRegressionForecastByIntervalWithStatsRes) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _WFM_ListCallProfileTemplates_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListCallProfileTemplatesReq)

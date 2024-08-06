@@ -15,8 +15,8 @@ import (
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
-// Requires gRPC-Go v1.64.0 or later.
-const _ = grpc.SupportPackageIsVersion9
+// Requires gRPC-Go v1.62.0 or later.
+const _ = grpc.SupportPackageIsVersion8
 
 const (
 	Scorecards_CreateScorecard_FullMethodName          = "/api.v1alpha1.scorecards.Scorecards/CreateScorecard"
@@ -160,7 +160,7 @@ type ScorecardsClient interface {
 	// ListAutoEvaluations gets a list of auto evaluations
 	ListAutoEvaluations(ctx context.Context, in *ListAutoEvaluationsRequest, opts ...grpc.CallOption) (*ListAutoEvaluationsResponse, error)
 	// StreamAutoEvaluations streams a list of auto evaluations
-	StreamAutoEvaluations(ctx context.Context, in *StreamAutoEvaluationsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[StreamAutoEvaluationsResponse], error)
+	StreamAutoEvaluations(ctx context.Context, in *StreamAutoEvaluationsRequest, opts ...grpc.CallOption) (Scorecards_StreamAutoEvaluationsClient, error)
 	// DeleteAutoEvaluation deletes an auto evaluations
 	DeleteAutoEvaluation(ctx context.Context, in *DeleteAutoEvaluationRequest, opts ...grpc.CallOption) (*DeleteAutoEvaluationResponse, error)
 	// PreviewEvaluationScore previews the score for an evaluation
@@ -608,13 +608,13 @@ func (c *scorecardsClient) ListAutoEvaluations(ctx context.Context, in *ListAuto
 	return out, nil
 }
 
-func (c *scorecardsClient) StreamAutoEvaluations(ctx context.Context, in *StreamAutoEvaluationsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[StreamAutoEvaluationsResponse], error) {
+func (c *scorecardsClient) StreamAutoEvaluations(ctx context.Context, in *StreamAutoEvaluationsRequest, opts ...grpc.CallOption) (Scorecards_StreamAutoEvaluationsClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &Scorecards_ServiceDesc.Streams[0], Scorecards_StreamAutoEvaluations_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[StreamAutoEvaluationsRequest, StreamAutoEvaluationsResponse]{ClientStream: stream}
+	x := &scorecardsStreamAutoEvaluationsClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -624,8 +624,22 @@ func (c *scorecardsClient) StreamAutoEvaluations(ctx context.Context, in *Stream
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Scorecards_StreamAutoEvaluationsClient = grpc.ServerStreamingClient[StreamAutoEvaluationsResponse]
+type Scorecards_StreamAutoEvaluationsClient interface {
+	Recv() (*StreamAutoEvaluationsResponse, error)
+	grpc.ClientStream
+}
+
+type scorecardsStreamAutoEvaluationsClient struct {
+	grpc.ClientStream
+}
+
+func (x *scorecardsStreamAutoEvaluationsClient) Recv() (*StreamAutoEvaluationsResponse, error) {
+	m := new(StreamAutoEvaluationsResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
 
 func (c *scorecardsClient) DeleteAutoEvaluation(ctx context.Context, in *DeleteAutoEvaluationRequest, opts ...grpc.CallOption) (*DeleteAutoEvaluationResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -749,7 +763,7 @@ type ScorecardsServer interface {
 	// ListAutoEvaluations gets a list of auto evaluations
 	ListAutoEvaluations(context.Context, *ListAutoEvaluationsRequest) (*ListAutoEvaluationsResponse, error)
 	// StreamAutoEvaluations streams a list of auto evaluations
-	StreamAutoEvaluations(*StreamAutoEvaluationsRequest, grpc.ServerStreamingServer[StreamAutoEvaluationsResponse]) error
+	StreamAutoEvaluations(*StreamAutoEvaluationsRequest, Scorecards_StreamAutoEvaluationsServer) error
 	// DeleteAutoEvaluation deletes an auto evaluations
 	DeleteAutoEvaluation(context.Context, *DeleteAutoEvaluationRequest) (*DeleteAutoEvaluationResponse, error)
 	// PreviewEvaluationScore previews the score for an evaluation
@@ -895,7 +909,7 @@ func (UnimplementedScorecardsServer) GetAutoEvaluation(context.Context, *GetAuto
 func (UnimplementedScorecardsServer) ListAutoEvaluations(context.Context, *ListAutoEvaluationsRequest) (*ListAutoEvaluationsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAutoEvaluations not implemented")
 }
-func (UnimplementedScorecardsServer) StreamAutoEvaluations(*StreamAutoEvaluationsRequest, grpc.ServerStreamingServer[StreamAutoEvaluationsResponse]) error {
+func (UnimplementedScorecardsServer) StreamAutoEvaluations(*StreamAutoEvaluationsRequest, Scorecards_StreamAutoEvaluationsServer) error {
 	return status.Errorf(codes.Unimplemented, "method StreamAutoEvaluations not implemented")
 }
 func (UnimplementedScorecardsServer) DeleteAutoEvaluation(context.Context, *DeleteAutoEvaluationRequest) (*DeleteAutoEvaluationResponse, error) {
@@ -1707,11 +1721,21 @@ func _Scorecards_StreamAutoEvaluations_Handler(srv interface{}, stream grpc.Serv
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(ScorecardsServer).StreamAutoEvaluations(m, &grpc.GenericServerStream[StreamAutoEvaluationsRequest, StreamAutoEvaluationsResponse]{ServerStream: stream})
+	return srv.(ScorecardsServer).StreamAutoEvaluations(m, &scorecardsStreamAutoEvaluationsServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Scorecards_StreamAutoEvaluationsServer = grpc.ServerStreamingServer[StreamAutoEvaluationsResponse]
+type Scorecards_StreamAutoEvaluationsServer interface {
+	Send(*StreamAutoEvaluationsResponse) error
+	grpc.ServerStream
+}
+
+type scorecardsStreamAutoEvaluationsServer struct {
+	grpc.ServerStream
+}
+
+func (x *scorecardsStreamAutoEvaluationsServer) Send(m *StreamAutoEvaluationsResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _Scorecards_DeleteAutoEvaluation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteAutoEvaluationRequest)

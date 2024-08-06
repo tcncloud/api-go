@@ -16,8 +16,8 @@ import (
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
-// Requires gRPC-Go v1.64.0 or later.
-const _ = grpc.SupportPackageIsVersion9
+// Requires gRPC-Go v1.62.0 or later.
+const _ = grpc.SupportPackageIsVersion8
 
 const (
 	OmniApi_ArchiveCampaign_FullMethodName              = "/api.v0alpha.OmniApi/ArchiveCampaign"
@@ -153,10 +153,10 @@ type OmniApiClient interface {
 	ListCampaigns(ctx context.Context, in *ListCampaignsReq, opts ...grpc.CallOption) (*ListCampaignsRes, error)
 	// Get a stream of new conversation message for a given conversation. Used
 	// only for managers. It is not for customers.
-	ManagerListMessages(ctx context.Context, in *ManagerListMessagesReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[commons.OmniMessage], error)
+	ManagerListMessages(ctx context.Context, in *ManagerListMessagesReq, opts ...grpc.CallOption) (OmniApi_ManagerListMessagesClient, error)
 	// Get a stream of conversation message for a given conversation. Used
 	// only for agents/users. It is not for customers.
-	ListMessages(ctx context.Context, in *ListMessagesReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[commons.OmniMessage], error)
+	ListMessages(ctx context.Context, in *ListMessagesReq, opts ...grpc.CallOption) (OmniApi_ListMessagesClient, error)
 	// lists all conversation and assigned users for a given date range.
 	// Required permissions:
 	//
@@ -623,13 +623,13 @@ func (c *omniApiClient) ListCampaigns(ctx context.Context, in *ListCampaignsReq,
 	return out, nil
 }
 
-func (c *omniApiClient) ManagerListMessages(ctx context.Context, in *ManagerListMessagesReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[commons.OmniMessage], error) {
+func (c *omniApiClient) ManagerListMessages(ctx context.Context, in *ManagerListMessagesReq, opts ...grpc.CallOption) (OmniApi_ManagerListMessagesClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &OmniApi_ServiceDesc.Streams[0], OmniApi_ManagerListMessages_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[ManagerListMessagesReq, commons.OmniMessage]{ClientStream: stream}
+	x := &omniApiManagerListMessagesClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -639,16 +639,30 @@ func (c *omniApiClient) ManagerListMessages(ctx context.Context, in *ManagerList
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type OmniApi_ManagerListMessagesClient = grpc.ServerStreamingClient[commons.OmniMessage]
+type OmniApi_ManagerListMessagesClient interface {
+	Recv() (*commons.OmniMessage, error)
+	grpc.ClientStream
+}
 
-func (c *omniApiClient) ListMessages(ctx context.Context, in *ListMessagesReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[commons.OmniMessage], error) {
+type omniApiManagerListMessagesClient struct {
+	grpc.ClientStream
+}
+
+func (x *omniApiManagerListMessagesClient) Recv() (*commons.OmniMessage, error) {
+	m := new(commons.OmniMessage)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *omniApiClient) ListMessages(ctx context.Context, in *ListMessagesReq, opts ...grpc.CallOption) (OmniApi_ListMessagesClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &OmniApi_ServiceDesc.Streams[1], OmniApi_ListMessages_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[ListMessagesReq, commons.OmniMessage]{ClientStream: stream}
+	x := &omniApiListMessagesClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -658,8 +672,22 @@ func (c *omniApiClient) ListMessages(ctx context.Context, in *ListMessagesReq, o
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type OmniApi_ListMessagesClient = grpc.ServerStreamingClient[commons.OmniMessage]
+type OmniApi_ListMessagesClient interface {
+	Recv() (*commons.OmniMessage, error)
+	grpc.ClientStream
+}
+
+type omniApiListMessagesClient struct {
+	grpc.ClientStream
+}
+
+func (x *omniApiListMessagesClient) Recv() (*commons.OmniMessage, error) {
+	m := new(commons.OmniMessage)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
 
 func (c *omniApiClient) ManagerListConversations(ctx context.Context, in *ListConversationsReq, opts ...grpc.CallOption) (*ListConversationsRes, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -1267,10 +1295,10 @@ type OmniApiServer interface {
 	ListCampaigns(context.Context, *ListCampaignsReq) (*ListCampaignsRes, error)
 	// Get a stream of new conversation message for a given conversation. Used
 	// only for managers. It is not for customers.
-	ManagerListMessages(*ManagerListMessagesReq, grpc.ServerStreamingServer[commons.OmniMessage]) error
+	ManagerListMessages(*ManagerListMessagesReq, OmniApi_ManagerListMessagesServer) error
 	// Get a stream of conversation message for a given conversation. Used
 	// only for agents/users. It is not for customers.
-	ListMessages(*ListMessagesReq, grpc.ServerStreamingServer[commons.OmniMessage]) error
+	ListMessages(*ListMessagesReq, OmniApi_ListMessagesServer) error
 	// lists all conversation and assigned users for a given date range.
 	// Required permissions:
 	//
@@ -1611,10 +1639,10 @@ func (UnimplementedOmniApiServer) DeleteCustomUnsubscribeLink(context.Context, *
 func (UnimplementedOmniApiServer) ListCampaigns(context.Context, *ListCampaignsReq) (*ListCampaignsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListCampaigns not implemented")
 }
-func (UnimplementedOmniApiServer) ManagerListMessages(*ManagerListMessagesReq, grpc.ServerStreamingServer[commons.OmniMessage]) error {
+func (UnimplementedOmniApiServer) ManagerListMessages(*ManagerListMessagesReq, OmniApi_ManagerListMessagesServer) error {
 	return status.Errorf(codes.Unimplemented, "method ManagerListMessages not implemented")
 }
-func (UnimplementedOmniApiServer) ListMessages(*ListMessagesReq, grpc.ServerStreamingServer[commons.OmniMessage]) error {
+func (UnimplementedOmniApiServer) ListMessages(*ListMessagesReq, OmniApi_ListMessagesServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListMessages not implemented")
 }
 func (UnimplementedOmniApiServer) ManagerListConversations(context.Context, *ListConversationsReq) (*ListConversationsRes, error) {
@@ -2132,22 +2160,42 @@ func _OmniApi_ManagerListMessages_Handler(srv interface{}, stream grpc.ServerStr
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(OmniApiServer).ManagerListMessages(m, &grpc.GenericServerStream[ManagerListMessagesReq, commons.OmniMessage]{ServerStream: stream})
+	return srv.(OmniApiServer).ManagerListMessages(m, &omniApiManagerListMessagesServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type OmniApi_ManagerListMessagesServer = grpc.ServerStreamingServer[commons.OmniMessage]
+type OmniApi_ManagerListMessagesServer interface {
+	Send(*commons.OmniMessage) error
+	grpc.ServerStream
+}
+
+type omniApiManagerListMessagesServer struct {
+	grpc.ServerStream
+}
+
+func (x *omniApiManagerListMessagesServer) Send(m *commons.OmniMessage) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _OmniApi_ListMessages_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(ListMessagesReq)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(OmniApiServer).ListMessages(m, &grpc.GenericServerStream[ListMessagesReq, commons.OmniMessage]{ServerStream: stream})
+	return srv.(OmniApiServer).ListMessages(m, &omniApiListMessagesServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type OmniApi_ListMessagesServer = grpc.ServerStreamingServer[commons.OmniMessage]
+type OmniApi_ListMessagesServer interface {
+	Send(*commons.OmniMessage) error
+	grpc.ServerStream
+}
+
+type omniApiListMessagesServer struct {
+	grpc.ServerStream
+}
+
+func (x *omniApiListMessagesServer) Send(m *commons.OmniMessage) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _OmniApi_ManagerListConversations_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListConversationsReq)

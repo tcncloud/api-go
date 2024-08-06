@@ -15,8 +15,8 @@ import (
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
-// Requires gRPC-Go v1.64.0 or later.
-const _ = grpc.SupportPackageIsVersion9
+// Requires gRPC-Go v1.62.0 or later.
+const _ = grpc.SupportPackageIsVersion8
 
 const (
 	Org_CreateOrganization_FullMethodName                       = "/api.v1alpha1.org.Org/CreateOrganization"
@@ -274,15 +274,15 @@ type OrgClient interface {
 	// Unarchives an organization. An archived organization effectively disappears, but isn't deleted.
 	UnArchiveOrganization(ctx context.Context, in *UnArchiveOrganizationRequest, opts ...grpc.CallOption) (*UnArchiveOrganizationResponse, error)
 	// ListAllOrganizationsGlobally lists all organizations globally (archived and unarchived).
-	ListAllOrganizationsGlobally(ctx context.Context, in *ListAllOrganizationsGloballyRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListAllOrganizationsGloballyResponse], error)
+	ListAllOrganizationsGlobally(ctx context.Context, in *ListAllOrganizationsGloballyRequest, opts ...grpc.CallOption) (Org_ListAllOrganizationsGloballyClient, error)
 	// ListOrganizationsByRegion lists organizations in the given region (unarchived).
-	ListOrganizationsByRegion(ctx context.Context, in *ListOrganizationsByRegionRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListOrganizationsByRegionResponse], error)
+	ListOrganizationsByRegion(ctx context.Context, in *ListOrganizationsByRegionRequest, opts ...grpc.CallOption) (Org_ListOrganizationsByRegionClient, error)
 	// ListArchivedOrganizations lists all archived organizations in the current region.
-	ListArchivedOrganizations(ctx context.Context, in *ListArchivedOrganizationsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListArchivedOrganizationsResponse], error)
+	ListArchivedOrganizations(ctx context.Context, in *ListArchivedOrganizationsRequest, opts ...grpc.CallOption) (Org_ListArchivedOrganizationsClient, error)
 	// ConvertOrgToManual converts an organization to manual only by org id.
 	ConvertOrgToManual(ctx context.Context, in *ConvertOrgToManualRequest, opts ...grpc.CallOption) (*ConvertOrgToManualResponse, error)
 	// Lists all orgs under the p3 hierarchy
-	ListOwnedOrgs(ctx context.Context, in *ListOwnedOrgsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListOwnedOrgsResponse], error)
+	ListOwnedOrgs(ctx context.Context, in *ListOwnedOrgsRequest, opts ...grpc.CallOption) (Org_ListOwnedOrgsClient, error)
 	// GetOrganizationPreferences returns general preferences controlling basic
 	// organization related properties.
 	GetOrganizationPreferences(ctx context.Context, in *GetOrganizationPreferencesRequest, opts ...grpc.CallOption) (*GetOrganizationPreferencesResponse, error)
@@ -429,15 +429,15 @@ type OrgClient interface {
 	// Requires Customer Support permission and allows cross Org requests.
 	GetUserByOrgId(ctx context.Context, in *GetUserByOrgIdRequest, opts ...grpc.CallOption) (*GetUserByOrgIdResponse, error)
 	// ListAgents returns a list of Agents.
-	ListAgents(ctx context.Context, in *ListAgentsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListAgentsResponse], error)
+	ListAgents(ctx context.Context, in *ListAgentsRequest, opts ...grpc.CallOption) (Org_ListAgentsClient, error)
 	// ListPublicUsers returns a list of users with limited data for most applications.
-	ListPublicUsers(ctx context.Context, in *ListPublicUsersRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListPublicUsersResponse], error)
+	ListPublicUsers(ctx context.Context, in *ListPublicUsersRequest, opts ...grpc.CallOption) (Org_ListPublicUsersClient, error)
 	// ListUsers returns a list of users.
-	ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListUsersResponse], error)
+	ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (Org_ListUsersClient, error)
 	// ListUsersByOrgId returns a list of users.
-	ListUsersByOrgId(ctx context.Context, in *ListUsersByOrgIdRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListUsersByOrgIdResponse], error)
+	ListUsersByOrgId(ctx context.Context, in *ListUsersByOrgIdRequest, opts ...grpc.CallOption) (Org_ListUsersByOrgIdClient, error)
 	// ListUsersByRegion returns a list of usersByRegion.
-	ListUsersByRegion(ctx context.Context, in *ListUsersByRegionRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListUsersByRegionResponse], error)
+	ListUsersByRegion(ctx context.Context, in *ListUsersByRegionRequest, opts ...grpc.CallOption) (Org_ListUsersByRegionClient, error)
 	// UpdateMyUser updates a user.
 	UpdateMyUser(ctx context.Context, in *UpdateMyUserRequest, opts ...grpc.CallOption) (*UpdateMyUserResponse, error)
 	// UpdateUser updates a user.
@@ -622,7 +622,7 @@ type OrgClient interface {
 	// DEPRECATED. Use ListOrgHuntGroupScripts instead
 	ListHuntGroupScripts(ctx context.Context, in *ListHuntGroupScriptsRequest, opts ...grpc.CallOption) (*ListHuntGroupScriptsResponse, error)
 	// ListOrgHuntGroupScripts lists all hunt group scripts for the current organization with a streamed response.
-	ListOrgHuntGroupScripts(ctx context.Context, in *ListHuntGroupScriptsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListHuntGroupScriptsResponse], error)
+	ListOrgHuntGroupScripts(ctx context.Context, in *ListHuntGroupScriptsRequest, opts ...grpc.CallOption) (Org_ListOrgHuntGroupScriptsClient, error)
 	// GetHuntGroupScript gets the specified script from the given script sid
 	GetHuntGroupScript(ctx context.Context, in *GetHuntGroupScriptRequest, opts ...grpc.CallOption) (*GetHuntGroupScriptResponse, error)
 	// CreateHuntGroupScript adds a creates a new hunt group script
@@ -876,13 +876,13 @@ func (c *orgClient) UnArchiveOrganization(ctx context.Context, in *UnArchiveOrga
 	return out, nil
 }
 
-func (c *orgClient) ListAllOrganizationsGlobally(ctx context.Context, in *ListAllOrganizationsGloballyRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListAllOrganizationsGloballyResponse], error) {
+func (c *orgClient) ListAllOrganizationsGlobally(ctx context.Context, in *ListAllOrganizationsGloballyRequest, opts ...grpc.CallOption) (Org_ListAllOrganizationsGloballyClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &Org_ServiceDesc.Streams[0], Org_ListAllOrganizationsGlobally_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[ListAllOrganizationsGloballyRequest, ListAllOrganizationsGloballyResponse]{ClientStream: stream}
+	x := &orgListAllOrganizationsGloballyClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -892,16 +892,30 @@ func (c *orgClient) ListAllOrganizationsGlobally(ctx context.Context, in *ListAl
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Org_ListAllOrganizationsGloballyClient = grpc.ServerStreamingClient[ListAllOrganizationsGloballyResponse]
+type Org_ListAllOrganizationsGloballyClient interface {
+	Recv() (*ListAllOrganizationsGloballyResponse, error)
+	grpc.ClientStream
+}
 
-func (c *orgClient) ListOrganizationsByRegion(ctx context.Context, in *ListOrganizationsByRegionRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListOrganizationsByRegionResponse], error) {
+type orgListAllOrganizationsGloballyClient struct {
+	grpc.ClientStream
+}
+
+func (x *orgListAllOrganizationsGloballyClient) Recv() (*ListAllOrganizationsGloballyResponse, error) {
+	m := new(ListAllOrganizationsGloballyResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *orgClient) ListOrganizationsByRegion(ctx context.Context, in *ListOrganizationsByRegionRequest, opts ...grpc.CallOption) (Org_ListOrganizationsByRegionClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &Org_ServiceDesc.Streams[1], Org_ListOrganizationsByRegion_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[ListOrganizationsByRegionRequest, ListOrganizationsByRegionResponse]{ClientStream: stream}
+	x := &orgListOrganizationsByRegionClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -911,16 +925,30 @@ func (c *orgClient) ListOrganizationsByRegion(ctx context.Context, in *ListOrgan
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Org_ListOrganizationsByRegionClient = grpc.ServerStreamingClient[ListOrganizationsByRegionResponse]
+type Org_ListOrganizationsByRegionClient interface {
+	Recv() (*ListOrganizationsByRegionResponse, error)
+	grpc.ClientStream
+}
 
-func (c *orgClient) ListArchivedOrganizations(ctx context.Context, in *ListArchivedOrganizationsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListArchivedOrganizationsResponse], error) {
+type orgListOrganizationsByRegionClient struct {
+	grpc.ClientStream
+}
+
+func (x *orgListOrganizationsByRegionClient) Recv() (*ListOrganizationsByRegionResponse, error) {
+	m := new(ListOrganizationsByRegionResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *orgClient) ListArchivedOrganizations(ctx context.Context, in *ListArchivedOrganizationsRequest, opts ...grpc.CallOption) (Org_ListArchivedOrganizationsClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &Org_ServiceDesc.Streams[2], Org_ListArchivedOrganizations_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[ListArchivedOrganizationsRequest, ListArchivedOrganizationsResponse]{ClientStream: stream}
+	x := &orgListArchivedOrganizationsClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -930,8 +958,22 @@ func (c *orgClient) ListArchivedOrganizations(ctx context.Context, in *ListArchi
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Org_ListArchivedOrganizationsClient = grpc.ServerStreamingClient[ListArchivedOrganizationsResponse]
+type Org_ListArchivedOrganizationsClient interface {
+	Recv() (*ListArchivedOrganizationsResponse, error)
+	grpc.ClientStream
+}
+
+type orgListArchivedOrganizationsClient struct {
+	grpc.ClientStream
+}
+
+func (x *orgListArchivedOrganizationsClient) Recv() (*ListArchivedOrganizationsResponse, error) {
+	m := new(ListArchivedOrganizationsResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
 
 func (c *orgClient) ConvertOrgToManual(ctx context.Context, in *ConvertOrgToManualRequest, opts ...grpc.CallOption) (*ConvertOrgToManualResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -943,13 +985,13 @@ func (c *orgClient) ConvertOrgToManual(ctx context.Context, in *ConvertOrgToManu
 	return out, nil
 }
 
-func (c *orgClient) ListOwnedOrgs(ctx context.Context, in *ListOwnedOrgsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListOwnedOrgsResponse], error) {
+func (c *orgClient) ListOwnedOrgs(ctx context.Context, in *ListOwnedOrgsRequest, opts ...grpc.CallOption) (Org_ListOwnedOrgsClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &Org_ServiceDesc.Streams[3], Org_ListOwnedOrgs_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[ListOwnedOrgsRequest, ListOwnedOrgsResponse]{ClientStream: stream}
+	x := &orgListOwnedOrgsClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -959,8 +1001,22 @@ func (c *orgClient) ListOwnedOrgs(ctx context.Context, in *ListOwnedOrgsRequest,
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Org_ListOwnedOrgsClient = grpc.ServerStreamingClient[ListOwnedOrgsResponse]
+type Org_ListOwnedOrgsClient interface {
+	Recv() (*ListOwnedOrgsResponse, error)
+	grpc.ClientStream
+}
+
+type orgListOwnedOrgsClient struct {
+	grpc.ClientStream
+}
+
+func (x *orgListOwnedOrgsClient) Recv() (*ListOwnedOrgsResponse, error) {
+	m := new(ListOwnedOrgsResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
 
 func (c *orgClient) GetOrganizationPreferences(ctx context.Context, in *GetOrganizationPreferencesRequest, opts ...grpc.CallOption) (*GetOrganizationPreferencesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -1540,13 +1596,13 @@ func (c *orgClient) GetUserByOrgId(ctx context.Context, in *GetUserByOrgIdReques
 	return out, nil
 }
 
-func (c *orgClient) ListAgents(ctx context.Context, in *ListAgentsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListAgentsResponse], error) {
+func (c *orgClient) ListAgents(ctx context.Context, in *ListAgentsRequest, opts ...grpc.CallOption) (Org_ListAgentsClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &Org_ServiceDesc.Streams[4], Org_ListAgents_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[ListAgentsRequest, ListAgentsResponse]{ClientStream: stream}
+	x := &orgListAgentsClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -1556,16 +1612,30 @@ func (c *orgClient) ListAgents(ctx context.Context, in *ListAgentsRequest, opts 
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Org_ListAgentsClient = grpc.ServerStreamingClient[ListAgentsResponse]
+type Org_ListAgentsClient interface {
+	Recv() (*ListAgentsResponse, error)
+	grpc.ClientStream
+}
 
-func (c *orgClient) ListPublicUsers(ctx context.Context, in *ListPublicUsersRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListPublicUsersResponse], error) {
+type orgListAgentsClient struct {
+	grpc.ClientStream
+}
+
+func (x *orgListAgentsClient) Recv() (*ListAgentsResponse, error) {
+	m := new(ListAgentsResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *orgClient) ListPublicUsers(ctx context.Context, in *ListPublicUsersRequest, opts ...grpc.CallOption) (Org_ListPublicUsersClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &Org_ServiceDesc.Streams[5], Org_ListPublicUsers_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[ListPublicUsersRequest, ListPublicUsersResponse]{ClientStream: stream}
+	x := &orgListPublicUsersClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -1575,16 +1645,30 @@ func (c *orgClient) ListPublicUsers(ctx context.Context, in *ListPublicUsersRequ
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Org_ListPublicUsersClient = grpc.ServerStreamingClient[ListPublicUsersResponse]
+type Org_ListPublicUsersClient interface {
+	Recv() (*ListPublicUsersResponse, error)
+	grpc.ClientStream
+}
 
-func (c *orgClient) ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListUsersResponse], error) {
+type orgListPublicUsersClient struct {
+	grpc.ClientStream
+}
+
+func (x *orgListPublicUsersClient) Recv() (*ListPublicUsersResponse, error) {
+	m := new(ListPublicUsersResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *orgClient) ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (Org_ListUsersClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &Org_ServiceDesc.Streams[6], Org_ListUsers_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[ListUsersRequest, ListUsersResponse]{ClientStream: stream}
+	x := &orgListUsersClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -1594,16 +1678,30 @@ func (c *orgClient) ListUsers(ctx context.Context, in *ListUsersRequest, opts ..
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Org_ListUsersClient = grpc.ServerStreamingClient[ListUsersResponse]
+type Org_ListUsersClient interface {
+	Recv() (*ListUsersResponse, error)
+	grpc.ClientStream
+}
 
-func (c *orgClient) ListUsersByOrgId(ctx context.Context, in *ListUsersByOrgIdRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListUsersByOrgIdResponse], error) {
+type orgListUsersClient struct {
+	grpc.ClientStream
+}
+
+func (x *orgListUsersClient) Recv() (*ListUsersResponse, error) {
+	m := new(ListUsersResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *orgClient) ListUsersByOrgId(ctx context.Context, in *ListUsersByOrgIdRequest, opts ...grpc.CallOption) (Org_ListUsersByOrgIdClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &Org_ServiceDesc.Streams[7], Org_ListUsersByOrgId_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[ListUsersByOrgIdRequest, ListUsersByOrgIdResponse]{ClientStream: stream}
+	x := &orgListUsersByOrgIdClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -1613,16 +1711,30 @@ func (c *orgClient) ListUsersByOrgId(ctx context.Context, in *ListUsersByOrgIdRe
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Org_ListUsersByOrgIdClient = grpc.ServerStreamingClient[ListUsersByOrgIdResponse]
+type Org_ListUsersByOrgIdClient interface {
+	Recv() (*ListUsersByOrgIdResponse, error)
+	grpc.ClientStream
+}
 
-func (c *orgClient) ListUsersByRegion(ctx context.Context, in *ListUsersByRegionRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListUsersByRegionResponse], error) {
+type orgListUsersByOrgIdClient struct {
+	grpc.ClientStream
+}
+
+func (x *orgListUsersByOrgIdClient) Recv() (*ListUsersByOrgIdResponse, error) {
+	m := new(ListUsersByOrgIdResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *orgClient) ListUsersByRegion(ctx context.Context, in *ListUsersByRegionRequest, opts ...grpc.CallOption) (Org_ListUsersByRegionClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &Org_ServiceDesc.Streams[8], Org_ListUsersByRegion_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[ListUsersByRegionRequest, ListUsersByRegionResponse]{ClientStream: stream}
+	x := &orgListUsersByRegionClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -1632,8 +1744,22 @@ func (c *orgClient) ListUsersByRegion(ctx context.Context, in *ListUsersByRegion
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Org_ListUsersByRegionClient = grpc.ServerStreamingClient[ListUsersByRegionResponse]
+type Org_ListUsersByRegionClient interface {
+	Recv() (*ListUsersByRegionResponse, error)
+	grpc.ClientStream
+}
+
+type orgListUsersByRegionClient struct {
+	grpc.ClientStream
+}
+
+func (x *orgListUsersByRegionClient) Recv() (*ListUsersByRegionResponse, error) {
+	m := new(ListUsersByRegionResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
 
 func (c *orgClient) UpdateMyUser(ctx context.Context, in *UpdateMyUserRequest, opts ...grpc.CallOption) (*UpdateMyUserResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -2466,13 +2592,13 @@ func (c *orgClient) ListHuntGroupScripts(ctx context.Context, in *ListHuntGroupS
 	return out, nil
 }
 
-func (c *orgClient) ListOrgHuntGroupScripts(ctx context.Context, in *ListHuntGroupScriptsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListHuntGroupScriptsResponse], error) {
+func (c *orgClient) ListOrgHuntGroupScripts(ctx context.Context, in *ListHuntGroupScriptsRequest, opts ...grpc.CallOption) (Org_ListOrgHuntGroupScriptsClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &Org_ServiceDesc.Streams[9], Org_ListOrgHuntGroupScripts_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[ListHuntGroupScriptsRequest, ListHuntGroupScriptsResponse]{ClientStream: stream}
+	x := &orgListOrgHuntGroupScriptsClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -2482,8 +2608,22 @@ func (c *orgClient) ListOrgHuntGroupScripts(ctx context.Context, in *ListHuntGro
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Org_ListOrgHuntGroupScriptsClient = grpc.ServerStreamingClient[ListHuntGroupScriptsResponse]
+type Org_ListOrgHuntGroupScriptsClient interface {
+	Recv() (*ListHuntGroupScriptsResponse, error)
+	grpc.ClientStream
+}
+
+type orgListOrgHuntGroupScriptsClient struct {
+	grpc.ClientStream
+}
+
+func (x *orgListOrgHuntGroupScriptsClient) Recv() (*ListHuntGroupScriptsResponse, error) {
+	m := new(ListHuntGroupScriptsResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
 
 func (c *orgClient) GetHuntGroupScript(ctx context.Context, in *GetHuntGroupScriptRequest, opts ...grpc.CallOption) (*GetHuntGroupScriptResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -3282,15 +3422,15 @@ type OrgServer interface {
 	// Unarchives an organization. An archived organization effectively disappears, but isn't deleted.
 	UnArchiveOrganization(context.Context, *UnArchiveOrganizationRequest) (*UnArchiveOrganizationResponse, error)
 	// ListAllOrganizationsGlobally lists all organizations globally (archived and unarchived).
-	ListAllOrganizationsGlobally(*ListAllOrganizationsGloballyRequest, grpc.ServerStreamingServer[ListAllOrganizationsGloballyResponse]) error
+	ListAllOrganizationsGlobally(*ListAllOrganizationsGloballyRequest, Org_ListAllOrganizationsGloballyServer) error
 	// ListOrganizationsByRegion lists organizations in the given region (unarchived).
-	ListOrganizationsByRegion(*ListOrganizationsByRegionRequest, grpc.ServerStreamingServer[ListOrganizationsByRegionResponse]) error
+	ListOrganizationsByRegion(*ListOrganizationsByRegionRequest, Org_ListOrganizationsByRegionServer) error
 	// ListArchivedOrganizations lists all archived organizations in the current region.
-	ListArchivedOrganizations(*ListArchivedOrganizationsRequest, grpc.ServerStreamingServer[ListArchivedOrganizationsResponse]) error
+	ListArchivedOrganizations(*ListArchivedOrganizationsRequest, Org_ListArchivedOrganizationsServer) error
 	// ConvertOrgToManual converts an organization to manual only by org id.
 	ConvertOrgToManual(context.Context, *ConvertOrgToManualRequest) (*ConvertOrgToManualResponse, error)
 	// Lists all orgs under the p3 hierarchy
-	ListOwnedOrgs(*ListOwnedOrgsRequest, grpc.ServerStreamingServer[ListOwnedOrgsResponse]) error
+	ListOwnedOrgs(*ListOwnedOrgsRequest, Org_ListOwnedOrgsServer) error
 	// GetOrganizationPreferences returns general preferences controlling basic
 	// organization related properties.
 	GetOrganizationPreferences(context.Context, *GetOrganizationPreferencesRequest) (*GetOrganizationPreferencesResponse, error)
@@ -3437,15 +3577,15 @@ type OrgServer interface {
 	// Requires Customer Support permission and allows cross Org requests.
 	GetUserByOrgId(context.Context, *GetUserByOrgIdRequest) (*GetUserByOrgIdResponse, error)
 	// ListAgents returns a list of Agents.
-	ListAgents(*ListAgentsRequest, grpc.ServerStreamingServer[ListAgentsResponse]) error
+	ListAgents(*ListAgentsRequest, Org_ListAgentsServer) error
 	// ListPublicUsers returns a list of users with limited data for most applications.
-	ListPublicUsers(*ListPublicUsersRequest, grpc.ServerStreamingServer[ListPublicUsersResponse]) error
+	ListPublicUsers(*ListPublicUsersRequest, Org_ListPublicUsersServer) error
 	// ListUsers returns a list of users.
-	ListUsers(*ListUsersRequest, grpc.ServerStreamingServer[ListUsersResponse]) error
+	ListUsers(*ListUsersRequest, Org_ListUsersServer) error
 	// ListUsersByOrgId returns a list of users.
-	ListUsersByOrgId(*ListUsersByOrgIdRequest, grpc.ServerStreamingServer[ListUsersByOrgIdResponse]) error
+	ListUsersByOrgId(*ListUsersByOrgIdRequest, Org_ListUsersByOrgIdServer) error
 	// ListUsersByRegion returns a list of usersByRegion.
-	ListUsersByRegion(*ListUsersByRegionRequest, grpc.ServerStreamingServer[ListUsersByRegionResponse]) error
+	ListUsersByRegion(*ListUsersByRegionRequest, Org_ListUsersByRegionServer) error
 	// UpdateMyUser updates a user.
 	UpdateMyUser(context.Context, *UpdateMyUserRequest) (*UpdateMyUserResponse, error)
 	// UpdateUser updates a user.
@@ -3630,7 +3770,7 @@ type OrgServer interface {
 	// DEPRECATED. Use ListOrgHuntGroupScripts instead
 	ListHuntGroupScripts(context.Context, *ListHuntGroupScriptsRequest) (*ListHuntGroupScriptsResponse, error)
 	// ListOrgHuntGroupScripts lists all hunt group scripts for the current organization with a streamed response.
-	ListOrgHuntGroupScripts(*ListHuntGroupScriptsRequest, grpc.ServerStreamingServer[ListHuntGroupScriptsResponse]) error
+	ListOrgHuntGroupScripts(*ListHuntGroupScriptsRequest, Org_ListOrgHuntGroupScriptsServer) error
 	// GetHuntGroupScript gets the specified script from the given script sid
 	GetHuntGroupScript(context.Context, *GetHuntGroupScriptRequest) (*GetHuntGroupScriptResponse, error)
 	// CreateHuntGroupScript adds a creates a new hunt group script
@@ -3842,19 +3982,19 @@ func (UnimplementedOrgServer) ArchiveOrganization(context.Context, *ArchiveOrgan
 func (UnimplementedOrgServer) UnArchiveOrganization(context.Context, *UnArchiveOrganizationRequest) (*UnArchiveOrganizationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UnArchiveOrganization not implemented")
 }
-func (UnimplementedOrgServer) ListAllOrganizationsGlobally(*ListAllOrganizationsGloballyRequest, grpc.ServerStreamingServer[ListAllOrganizationsGloballyResponse]) error {
+func (UnimplementedOrgServer) ListAllOrganizationsGlobally(*ListAllOrganizationsGloballyRequest, Org_ListAllOrganizationsGloballyServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListAllOrganizationsGlobally not implemented")
 }
-func (UnimplementedOrgServer) ListOrganizationsByRegion(*ListOrganizationsByRegionRequest, grpc.ServerStreamingServer[ListOrganizationsByRegionResponse]) error {
+func (UnimplementedOrgServer) ListOrganizationsByRegion(*ListOrganizationsByRegionRequest, Org_ListOrganizationsByRegionServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListOrganizationsByRegion not implemented")
 }
-func (UnimplementedOrgServer) ListArchivedOrganizations(*ListArchivedOrganizationsRequest, grpc.ServerStreamingServer[ListArchivedOrganizationsResponse]) error {
+func (UnimplementedOrgServer) ListArchivedOrganizations(*ListArchivedOrganizationsRequest, Org_ListArchivedOrganizationsServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListArchivedOrganizations not implemented")
 }
 func (UnimplementedOrgServer) ConvertOrgToManual(context.Context, *ConvertOrgToManualRequest) (*ConvertOrgToManualResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ConvertOrgToManual not implemented")
 }
-func (UnimplementedOrgServer) ListOwnedOrgs(*ListOwnedOrgsRequest, grpc.ServerStreamingServer[ListOwnedOrgsResponse]) error {
+func (UnimplementedOrgServer) ListOwnedOrgs(*ListOwnedOrgsRequest, Org_ListOwnedOrgsServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListOwnedOrgs not implemented")
 }
 func (UnimplementedOrgServer) GetOrganizationPreferences(context.Context, *GetOrganizationPreferencesRequest) (*GetOrganizationPreferencesResponse, error) {
@@ -4028,19 +4168,19 @@ func (UnimplementedOrgServer) GetUser(context.Context, *GetUserRequest) (*GetUse
 func (UnimplementedOrgServer) GetUserByOrgId(context.Context, *GetUserByOrgIdRequest) (*GetUserByOrgIdResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserByOrgId not implemented")
 }
-func (UnimplementedOrgServer) ListAgents(*ListAgentsRequest, grpc.ServerStreamingServer[ListAgentsResponse]) error {
+func (UnimplementedOrgServer) ListAgents(*ListAgentsRequest, Org_ListAgentsServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListAgents not implemented")
 }
-func (UnimplementedOrgServer) ListPublicUsers(*ListPublicUsersRequest, grpc.ServerStreamingServer[ListPublicUsersResponse]) error {
+func (UnimplementedOrgServer) ListPublicUsers(*ListPublicUsersRequest, Org_ListPublicUsersServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListPublicUsers not implemented")
 }
-func (UnimplementedOrgServer) ListUsers(*ListUsersRequest, grpc.ServerStreamingServer[ListUsersResponse]) error {
+func (UnimplementedOrgServer) ListUsers(*ListUsersRequest, Org_ListUsersServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListUsers not implemented")
 }
-func (UnimplementedOrgServer) ListUsersByOrgId(*ListUsersByOrgIdRequest, grpc.ServerStreamingServer[ListUsersByOrgIdResponse]) error {
+func (UnimplementedOrgServer) ListUsersByOrgId(*ListUsersByOrgIdRequest, Org_ListUsersByOrgIdServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListUsersByOrgId not implemented")
 }
-func (UnimplementedOrgServer) ListUsersByRegion(*ListUsersByRegionRequest, grpc.ServerStreamingServer[ListUsersByRegionResponse]) error {
+func (UnimplementedOrgServer) ListUsersByRegion(*ListUsersByRegionRequest, Org_ListUsersByRegionServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListUsersByRegion not implemented")
 }
 func (UnimplementedOrgServer) UpdateMyUser(context.Context, *UpdateMyUserRequest) (*UpdateMyUserResponse, error) {
@@ -4292,7 +4432,7 @@ func (UnimplementedOrgServer) UpdateAgentTriggers(context.Context, *UpdateAgentT
 func (UnimplementedOrgServer) ListHuntGroupScripts(context.Context, *ListHuntGroupScriptsRequest) (*ListHuntGroupScriptsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListHuntGroupScripts not implemented")
 }
-func (UnimplementedOrgServer) ListOrgHuntGroupScripts(*ListHuntGroupScriptsRequest, grpc.ServerStreamingServer[ListHuntGroupScriptsResponse]) error {
+func (UnimplementedOrgServer) ListOrgHuntGroupScripts(*ListHuntGroupScriptsRequest, Org_ListOrgHuntGroupScriptsServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListOrgHuntGroupScripts not implemented")
 }
 func (UnimplementedOrgServer) GetHuntGroupScript(context.Context, *GetHuntGroupScriptRequest) (*GetHuntGroupScriptResponse, error) {
@@ -4660,33 +4800,63 @@ func _Org_ListAllOrganizationsGlobally_Handler(srv interface{}, stream grpc.Serv
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(OrgServer).ListAllOrganizationsGlobally(m, &grpc.GenericServerStream[ListAllOrganizationsGloballyRequest, ListAllOrganizationsGloballyResponse]{ServerStream: stream})
+	return srv.(OrgServer).ListAllOrganizationsGlobally(m, &orgListAllOrganizationsGloballyServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Org_ListAllOrganizationsGloballyServer = grpc.ServerStreamingServer[ListAllOrganizationsGloballyResponse]
+type Org_ListAllOrganizationsGloballyServer interface {
+	Send(*ListAllOrganizationsGloballyResponse) error
+	grpc.ServerStream
+}
+
+type orgListAllOrganizationsGloballyServer struct {
+	grpc.ServerStream
+}
+
+func (x *orgListAllOrganizationsGloballyServer) Send(m *ListAllOrganizationsGloballyResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _Org_ListOrganizationsByRegion_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(ListOrganizationsByRegionRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(OrgServer).ListOrganizationsByRegion(m, &grpc.GenericServerStream[ListOrganizationsByRegionRequest, ListOrganizationsByRegionResponse]{ServerStream: stream})
+	return srv.(OrgServer).ListOrganizationsByRegion(m, &orgListOrganizationsByRegionServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Org_ListOrganizationsByRegionServer = grpc.ServerStreamingServer[ListOrganizationsByRegionResponse]
+type Org_ListOrganizationsByRegionServer interface {
+	Send(*ListOrganizationsByRegionResponse) error
+	grpc.ServerStream
+}
+
+type orgListOrganizationsByRegionServer struct {
+	grpc.ServerStream
+}
+
+func (x *orgListOrganizationsByRegionServer) Send(m *ListOrganizationsByRegionResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _Org_ListArchivedOrganizations_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(ListArchivedOrganizationsRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(OrgServer).ListArchivedOrganizations(m, &grpc.GenericServerStream[ListArchivedOrganizationsRequest, ListArchivedOrganizationsResponse]{ServerStream: stream})
+	return srv.(OrgServer).ListArchivedOrganizations(m, &orgListArchivedOrganizationsServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Org_ListArchivedOrganizationsServer = grpc.ServerStreamingServer[ListArchivedOrganizationsResponse]
+type Org_ListArchivedOrganizationsServer interface {
+	Send(*ListArchivedOrganizationsResponse) error
+	grpc.ServerStream
+}
+
+type orgListArchivedOrganizationsServer struct {
+	grpc.ServerStream
+}
+
+func (x *orgListArchivedOrganizationsServer) Send(m *ListArchivedOrganizationsResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _Org_ConvertOrgToManual_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ConvertOrgToManualRequest)
@@ -4711,11 +4881,21 @@ func _Org_ListOwnedOrgs_Handler(srv interface{}, stream grpc.ServerStream) error
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(OrgServer).ListOwnedOrgs(m, &grpc.GenericServerStream[ListOwnedOrgsRequest, ListOwnedOrgsResponse]{ServerStream: stream})
+	return srv.(OrgServer).ListOwnedOrgs(m, &orgListOwnedOrgsServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Org_ListOwnedOrgsServer = grpc.ServerStreamingServer[ListOwnedOrgsResponse]
+type Org_ListOwnedOrgsServer interface {
+	Send(*ListOwnedOrgsResponse) error
+	grpc.ServerStream
+}
+
+type orgListOwnedOrgsServer struct {
+	grpc.ServerStream
+}
+
+func (x *orgListOwnedOrgsServer) Send(m *ListOwnedOrgsResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _Org_GetOrganizationPreferences_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetOrganizationPreferencesRequest)
@@ -5748,55 +5928,105 @@ func _Org_ListAgents_Handler(srv interface{}, stream grpc.ServerStream) error {
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(OrgServer).ListAgents(m, &grpc.GenericServerStream[ListAgentsRequest, ListAgentsResponse]{ServerStream: stream})
+	return srv.(OrgServer).ListAgents(m, &orgListAgentsServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Org_ListAgentsServer = grpc.ServerStreamingServer[ListAgentsResponse]
+type Org_ListAgentsServer interface {
+	Send(*ListAgentsResponse) error
+	grpc.ServerStream
+}
+
+type orgListAgentsServer struct {
+	grpc.ServerStream
+}
+
+func (x *orgListAgentsServer) Send(m *ListAgentsResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _Org_ListPublicUsers_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(ListPublicUsersRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(OrgServer).ListPublicUsers(m, &grpc.GenericServerStream[ListPublicUsersRequest, ListPublicUsersResponse]{ServerStream: stream})
+	return srv.(OrgServer).ListPublicUsers(m, &orgListPublicUsersServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Org_ListPublicUsersServer = grpc.ServerStreamingServer[ListPublicUsersResponse]
+type Org_ListPublicUsersServer interface {
+	Send(*ListPublicUsersResponse) error
+	grpc.ServerStream
+}
+
+type orgListPublicUsersServer struct {
+	grpc.ServerStream
+}
+
+func (x *orgListPublicUsersServer) Send(m *ListPublicUsersResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _Org_ListUsers_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(ListUsersRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(OrgServer).ListUsers(m, &grpc.GenericServerStream[ListUsersRequest, ListUsersResponse]{ServerStream: stream})
+	return srv.(OrgServer).ListUsers(m, &orgListUsersServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Org_ListUsersServer = grpc.ServerStreamingServer[ListUsersResponse]
+type Org_ListUsersServer interface {
+	Send(*ListUsersResponse) error
+	grpc.ServerStream
+}
+
+type orgListUsersServer struct {
+	grpc.ServerStream
+}
+
+func (x *orgListUsersServer) Send(m *ListUsersResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _Org_ListUsersByOrgId_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(ListUsersByOrgIdRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(OrgServer).ListUsersByOrgId(m, &grpc.GenericServerStream[ListUsersByOrgIdRequest, ListUsersByOrgIdResponse]{ServerStream: stream})
+	return srv.(OrgServer).ListUsersByOrgId(m, &orgListUsersByOrgIdServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Org_ListUsersByOrgIdServer = grpc.ServerStreamingServer[ListUsersByOrgIdResponse]
+type Org_ListUsersByOrgIdServer interface {
+	Send(*ListUsersByOrgIdResponse) error
+	grpc.ServerStream
+}
+
+type orgListUsersByOrgIdServer struct {
+	grpc.ServerStream
+}
+
+func (x *orgListUsersByOrgIdServer) Send(m *ListUsersByOrgIdResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _Org_ListUsersByRegion_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(ListUsersByRegionRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(OrgServer).ListUsersByRegion(m, &grpc.GenericServerStream[ListUsersByRegionRequest, ListUsersByRegionResponse]{ServerStream: stream})
+	return srv.(OrgServer).ListUsersByRegion(m, &orgListUsersByRegionServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Org_ListUsersByRegionServer = grpc.ServerStreamingServer[ListUsersByRegionResponse]
+type Org_ListUsersByRegionServer interface {
+	Send(*ListUsersByRegionResponse) error
+	grpc.ServerStream
+}
+
+type orgListUsersByRegionServer struct {
+	grpc.ServerStream
+}
+
+func (x *orgListUsersByRegionServer) Send(m *ListUsersByRegionResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _Org_UpdateMyUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateMyUserRequest)
@@ -7297,11 +7527,21 @@ func _Org_ListOrgHuntGroupScripts_Handler(srv interface{}, stream grpc.ServerStr
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(OrgServer).ListOrgHuntGroupScripts(m, &grpc.GenericServerStream[ListHuntGroupScriptsRequest, ListHuntGroupScriptsResponse]{ServerStream: stream})
+	return srv.(OrgServer).ListOrgHuntGroupScripts(m, &orgListOrgHuntGroupScriptsServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Org_ListOrgHuntGroupScriptsServer = grpc.ServerStreamingServer[ListHuntGroupScriptsResponse]
+type Org_ListOrgHuntGroupScriptsServer interface {
+	Send(*ListHuntGroupScriptsResponse) error
+	grpc.ServerStream
+}
+
+type orgListOrgHuntGroupScriptsServer struct {
+	grpc.ServerStream
+}
+
+func (x *orgListOrgHuntGroupScriptsServer) Send(m *ListHuntGroupScriptsResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _Org_GetHuntGroupScript_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetHuntGroupScriptRequest)

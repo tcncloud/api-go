@@ -29,8 +29,8 @@ import (
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
-// Requires gRPC-Go v1.64.0 or later.
-const _ = grpc.SupportPackageIsVersion9
+// Requires gRPC-Go v1.62.0 or later.
+const _ = grpc.SupportPackageIsVersion8
 
 const (
 	WorkflowDefinitionPersistService_CreateWorkflowDefinition_FullMethodName   = "/api.v1alpha1.workflows.WorkflowDefinitionPersistService/CreateWorkflowDefinition"
@@ -54,7 +54,7 @@ type WorkflowDefinitionPersistServiceClient interface {
 	GetWorkflowDefinition(ctx context.Context, in *GetWorkflowDefinitionRequest, opts ...grpc.CallOption) (*GetWorkflowDefinitionResponse, error)
 	// ListWorkflowDefinitions retrieves a list of flow definitions from the database optionally filtered by the owning application
 	// if application is not specified, all flow definitions for the org are returned
-	ListWorkflowDefinitions(ctx context.Context, in *ListWorkflowDefinitionsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListWorkflowDefinitionsResponse], error)
+	ListWorkflowDefinitions(ctx context.Context, in *ListWorkflowDefinitionsRequest, opts ...grpc.CallOption) (WorkflowDefinitionPersistService_ListWorkflowDefinitionsClient, error)
 	// UpdateWorkflowDefinition updates a flow definition in the database. Only the name, description and definition graph itself are updated
 	UpdateWorkflowDefinition(ctx context.Context, in *UpdateWorkflowDefinitionRequest, opts ...grpc.CallOption) (*UpdateWorkflowDefinitionResponse, error)
 	// DeleteWorkflowDefinition deletes a flow definition from the database
@@ -91,13 +91,13 @@ func (c *workflowDefinitionPersistServiceClient) GetWorkflowDefinition(ctx conte
 	return out, nil
 }
 
-func (c *workflowDefinitionPersistServiceClient) ListWorkflowDefinitions(ctx context.Context, in *ListWorkflowDefinitionsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListWorkflowDefinitionsResponse], error) {
+func (c *workflowDefinitionPersistServiceClient) ListWorkflowDefinitions(ctx context.Context, in *ListWorkflowDefinitionsRequest, opts ...grpc.CallOption) (WorkflowDefinitionPersistService_ListWorkflowDefinitionsClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &WorkflowDefinitionPersistService_ServiceDesc.Streams[0], WorkflowDefinitionPersistService_ListWorkflowDefinitions_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[ListWorkflowDefinitionsRequest, ListWorkflowDefinitionsResponse]{ClientStream: stream}
+	x := &workflowDefinitionPersistServiceListWorkflowDefinitionsClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -107,8 +107,22 @@ func (c *workflowDefinitionPersistServiceClient) ListWorkflowDefinitions(ctx con
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type WorkflowDefinitionPersistService_ListWorkflowDefinitionsClient = grpc.ServerStreamingClient[ListWorkflowDefinitionsResponse]
+type WorkflowDefinitionPersistService_ListWorkflowDefinitionsClient interface {
+	Recv() (*ListWorkflowDefinitionsResponse, error)
+	grpc.ClientStream
+}
+
+type workflowDefinitionPersistServiceListWorkflowDefinitionsClient struct {
+	grpc.ClientStream
+}
+
+func (x *workflowDefinitionPersistServiceListWorkflowDefinitionsClient) Recv() (*ListWorkflowDefinitionsResponse, error) {
+	m := new(ListWorkflowDefinitionsResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
 
 func (c *workflowDefinitionPersistServiceClient) UpdateWorkflowDefinition(ctx context.Context, in *UpdateWorkflowDefinitionRequest, opts ...grpc.CallOption) (*UpdateWorkflowDefinitionResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -153,7 +167,7 @@ type WorkflowDefinitionPersistServiceServer interface {
 	GetWorkflowDefinition(context.Context, *GetWorkflowDefinitionRequest) (*GetWorkflowDefinitionResponse, error)
 	// ListWorkflowDefinitions retrieves a list of flow definitions from the database optionally filtered by the owning application
 	// if application is not specified, all flow definitions for the org are returned
-	ListWorkflowDefinitions(*ListWorkflowDefinitionsRequest, grpc.ServerStreamingServer[ListWorkflowDefinitionsResponse]) error
+	ListWorkflowDefinitions(*ListWorkflowDefinitionsRequest, WorkflowDefinitionPersistService_ListWorkflowDefinitionsServer) error
 	// UpdateWorkflowDefinition updates a flow definition in the database. Only the name, description and definition graph itself are updated
 	UpdateWorkflowDefinition(context.Context, *UpdateWorkflowDefinitionRequest) (*UpdateWorkflowDefinitionResponse, error)
 	// DeleteWorkflowDefinition deletes a flow definition from the database
@@ -176,7 +190,7 @@ func (UnimplementedWorkflowDefinitionPersistServiceServer) CreateWorkflowDefinit
 func (UnimplementedWorkflowDefinitionPersistServiceServer) GetWorkflowDefinition(context.Context, *GetWorkflowDefinitionRequest) (*GetWorkflowDefinitionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetWorkflowDefinition not implemented")
 }
-func (UnimplementedWorkflowDefinitionPersistServiceServer) ListWorkflowDefinitions(*ListWorkflowDefinitionsRequest, grpc.ServerStreamingServer[ListWorkflowDefinitionsResponse]) error {
+func (UnimplementedWorkflowDefinitionPersistServiceServer) ListWorkflowDefinitions(*ListWorkflowDefinitionsRequest, WorkflowDefinitionPersistService_ListWorkflowDefinitionsServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListWorkflowDefinitions not implemented")
 }
 func (UnimplementedWorkflowDefinitionPersistServiceServer) UpdateWorkflowDefinition(context.Context, *UpdateWorkflowDefinitionRequest) (*UpdateWorkflowDefinitionResponse, error) {
@@ -251,11 +265,21 @@ func _WorkflowDefinitionPersistService_ListWorkflowDefinitions_Handler(srv inter
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(WorkflowDefinitionPersistServiceServer).ListWorkflowDefinitions(m, &grpc.GenericServerStream[ListWorkflowDefinitionsRequest, ListWorkflowDefinitionsResponse]{ServerStream: stream})
+	return srv.(WorkflowDefinitionPersistServiceServer).ListWorkflowDefinitions(m, &workflowDefinitionPersistServiceListWorkflowDefinitionsServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type WorkflowDefinitionPersistService_ListWorkflowDefinitionsServer = grpc.ServerStreamingServer[ListWorkflowDefinitionsResponse]
+type WorkflowDefinitionPersistService_ListWorkflowDefinitionsServer interface {
+	Send(*ListWorkflowDefinitionsResponse) error
+	grpc.ServerStream
+}
+
+type workflowDefinitionPersistServiceListWorkflowDefinitionsServer struct {
+	grpc.ServerStream
+}
+
+func (x *workflowDefinitionPersistServiceListWorkflowDefinitionsServer) Send(m *ListWorkflowDefinitionsResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _WorkflowDefinitionPersistService_UpdateWorkflowDefinition_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateWorkflowDefinitionRequest)

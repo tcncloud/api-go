@@ -17,8 +17,8 @@ import (
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
-// Requires gRPC-Go v1.64.0 or later.
-const _ = grpc.SupportPackageIsVersion9
+// Requires gRPC-Go v1.62.0 or later.
+const _ = grpc.SupportPackageIsVersion8
 
 const (
 	Compliance_RuleAutoComplete_FullMethodName               = "/api.v0alpha.Compliance/RuleAutoComplete"
@@ -96,7 +96,7 @@ type ComplianceClient interface {
 	RuleAutoComplete(ctx context.Context, in *RuleAutoCompleteReq, opts ...grpc.CallOption) (*RuleAutoCompleteRes, error)
 	CheckRuleSet(ctx context.Context, in *CheckRuleSetReq, opts ...grpc.CallOption) (*CheckRuleSetRes, error)
 	AssignRuleSet(ctx context.Context, in *AssignRuleSetReq, opts ...grpc.CallOption) (*AssignRuleSetRes, error)
-	ListRuleSets(ctx context.Context, in *ListRuleSetsReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListRuleSetsRes], error)
+	ListRuleSets(ctx context.Context, in *ListRuleSetsReq, opts ...grpc.CallOption) (Compliance_ListRuleSetsClient, error)
 	GetRuleSet(ctx context.Context, in *GetRuleSetReq, opts ...grpc.CallOption) (*RuleSet, error)
 	GetRuleSetByName(ctx context.Context, in *GetRuleSetByNameReq, opts ...grpc.CallOption) (*RuleSet, error)
 	CreateRuleSet(ctx context.Context, in *CreateRuleSetReq, opts ...grpc.CallOption) (*RuleSet, error)
@@ -393,13 +393,13 @@ func (c *complianceClient) AssignRuleSet(ctx context.Context, in *AssignRuleSetR
 	return out, nil
 }
 
-func (c *complianceClient) ListRuleSets(ctx context.Context, in *ListRuleSetsReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListRuleSetsRes], error) {
+func (c *complianceClient) ListRuleSets(ctx context.Context, in *ListRuleSetsReq, opts ...grpc.CallOption) (Compliance_ListRuleSetsClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &Compliance_ServiceDesc.Streams[0], Compliance_ListRuleSets_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[ListRuleSetsReq, ListRuleSetsRes]{ClientStream: stream}
+	x := &complianceListRuleSetsClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -409,8 +409,22 @@ func (c *complianceClient) ListRuleSets(ctx context.Context, in *ListRuleSetsReq
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Compliance_ListRuleSetsClient = grpc.ServerStreamingClient[ListRuleSetsRes]
+type Compliance_ListRuleSetsClient interface {
+	Recv() (*ListRuleSetsRes, error)
+	grpc.ClientStream
+}
+
+type complianceListRuleSetsClient struct {
+	grpc.ClientStream
+}
+
+func (x *complianceListRuleSetsClient) Recv() (*ListRuleSetsRes, error) {
+	m := new(ListRuleSetsRes)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
 
 func (c *complianceClient) GetRuleSet(ctx context.Context, in *GetRuleSetReq, opts ...grpc.CallOption) (*RuleSet, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -1039,7 +1053,7 @@ type ComplianceServer interface {
 	RuleAutoComplete(context.Context, *RuleAutoCompleteReq) (*RuleAutoCompleteRes, error)
 	CheckRuleSet(context.Context, *CheckRuleSetReq) (*CheckRuleSetRes, error)
 	AssignRuleSet(context.Context, *AssignRuleSetReq) (*AssignRuleSetRes, error)
-	ListRuleSets(*ListRuleSetsReq, grpc.ServerStreamingServer[ListRuleSetsRes]) error
+	ListRuleSets(*ListRuleSetsReq, Compliance_ListRuleSetsServer) error
 	GetRuleSet(context.Context, *GetRuleSetReq) (*RuleSet, error)
 	GetRuleSetByName(context.Context, *GetRuleSetByNameReq) (*RuleSet, error)
 	CreateRuleSet(context.Context, *CreateRuleSetReq) (*RuleSet, error)
@@ -1315,7 +1329,7 @@ func (UnimplementedComplianceServer) CheckRuleSet(context.Context, *CheckRuleSet
 func (UnimplementedComplianceServer) AssignRuleSet(context.Context, *AssignRuleSetReq) (*AssignRuleSetRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AssignRuleSet not implemented")
 }
-func (UnimplementedComplianceServer) ListRuleSets(*ListRuleSetsReq, grpc.ServerStreamingServer[ListRuleSetsRes]) error {
+func (UnimplementedComplianceServer) ListRuleSets(*ListRuleSetsReq, Compliance_ListRuleSetsServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListRuleSets not implemented")
 }
 func (UnimplementedComplianceServer) GetRuleSet(context.Context, *GetRuleSetReq) (*RuleSet, error) {
@@ -1584,11 +1598,21 @@ func _Compliance_ListRuleSets_Handler(srv interface{}, stream grpc.ServerStream)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(ComplianceServer).ListRuleSets(m, &grpc.GenericServerStream[ListRuleSetsReq, ListRuleSetsRes]{ServerStream: stream})
+	return srv.(ComplianceServer).ListRuleSets(m, &complianceListRuleSetsServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Compliance_ListRuleSetsServer = grpc.ServerStreamingServer[ListRuleSetsRes]
+type Compliance_ListRuleSetsServer interface {
+	Send(*ListRuleSetsRes) error
+	grpc.ServerStream
+}
+
+type complianceListRuleSetsServer struct {
+	grpc.ServerStream
+}
+
+func (x *complianceListRuleSetsServer) Send(m *ListRuleSetsRes) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _Compliance_GetRuleSet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetRuleSetReq)

@@ -29,8 +29,8 @@ import (
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
-// Requires gRPC-Go v1.64.0 or later.
-const _ = grpc.SupportPackageIsVersion9
+// Requires gRPC-Go v1.62.0 or later.
+const _ = grpc.SupportPackageIsVersion8
 
 const (
 	Learn_Exist_FullMethodName                      = "/api.v0alpha.Learn/Exist"
@@ -77,7 +77,7 @@ type LearnClient interface {
 	SearchContent(ctx context.Context, in *SearchContentReq, opts ...grpc.CallOption) (*SearchRes, error)
 	// stream search content results in learning pages
 	// we allow all the logged in agents/admins to view search content
-	ListSearchResults(ctx context.Context, in *SearchContentReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[SearchRes], error)
+	ListSearchResults(ctx context.Context, in *SearchContentReq, opts ...grpc.CallOption) (Learn_ListSearchResultsClient, error)
 	// get standalone articles from learning pages
 	// we allow all the logged in agents/admins to view standalone articles
 	Standalone(ctx context.Context, in *StandaloneReq, opts ...grpc.CallOption) (*StandaloneRes, error)
@@ -106,17 +106,17 @@ type LearnClient interface {
 	UpdateByVersion(ctx context.Context, in *UpdateByVersionReq, opts ...grpc.CallOption) (*UpdateRes, error)
 	// stream search content results in learning pages by version
 	// we allow all the logged in agents/admins to view search content
-	ListSearchResultsByVersion(ctx context.Context, in *SearchContentByVersionReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[SearchRes], error)
+	ListSearchResultsByVersion(ctx context.Context, in *SearchContentByVersionReq, opts ...grpc.CallOption) (Learn_ListSearchResultsByVersionClient, error)
 	// return diff by comparing file contens from any version
 	ReviewFileVersions(ctx context.Context, in *ReviewFileVersionsReq, opts ...grpc.CallOption) (*ReviewFileVersionsRes, error)
 	// returns list of file details after comparing different versions
 	ReviewVersion(ctx context.Context, in *ReviewVersionReq, opts ...grpc.CallOption) (*ReviewVersionRes, error)
 	// exports multiple pages of the learning center markdown as PDF file stream
-	ExportManyStream(ctx context.Context, in *ExportManyReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ExportRes], error)
+	ExportManyStream(ctx context.Context, in *ExportManyReq, opts ...grpc.CallOption) (Learn_ExportManyStreamClient, error)
 	// list all the different versions
 	ListVersions(ctx context.Context, in *ListVersionsReq, opts ...grpc.CallOption) (*ListVersionsRes, error)
 	// returns urls as a stream after comparing version contents between both versions
-	ReviewVersionStream(ctx context.Context, in *ReviewVersionReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ReviewVersionRes], error)
+	ReviewVersionStream(ctx context.Context, in *ReviewVersionReq, opts ...grpc.CallOption) (Learn_ReviewVersionStreamClient, error)
 	// delete version from learn
 	DeleteVersion(ctx context.Context, in *DeleteVersionReq, opts ...grpc.CallOption) (*DeleteVersionRes, error)
 	// upload image for learning articles
@@ -171,13 +171,13 @@ func (c *learnClient) SearchContent(ctx context.Context, in *SearchContentReq, o
 	return out, nil
 }
 
-func (c *learnClient) ListSearchResults(ctx context.Context, in *SearchContentReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[SearchRes], error) {
+func (c *learnClient) ListSearchResults(ctx context.Context, in *SearchContentReq, opts ...grpc.CallOption) (Learn_ListSearchResultsClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &Learn_ServiceDesc.Streams[0], Learn_ListSearchResults_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[SearchContentReq, SearchRes]{ClientStream: stream}
+	x := &learnListSearchResultsClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -187,8 +187,22 @@ func (c *learnClient) ListSearchResults(ctx context.Context, in *SearchContentRe
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Learn_ListSearchResultsClient = grpc.ServerStreamingClient[SearchRes]
+type Learn_ListSearchResultsClient interface {
+	Recv() (*SearchRes, error)
+	grpc.ClientStream
+}
+
+type learnListSearchResultsClient struct {
+	grpc.ClientStream
+}
+
+func (x *learnListSearchResultsClient) Recv() (*SearchRes, error) {
+	m := new(SearchRes)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
 
 func (c *learnClient) Standalone(ctx context.Context, in *StandaloneReq, opts ...grpc.CallOption) (*StandaloneRes, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -310,13 +324,13 @@ func (c *learnClient) UpdateByVersion(ctx context.Context, in *UpdateByVersionRe
 	return out, nil
 }
 
-func (c *learnClient) ListSearchResultsByVersion(ctx context.Context, in *SearchContentByVersionReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[SearchRes], error) {
+func (c *learnClient) ListSearchResultsByVersion(ctx context.Context, in *SearchContentByVersionReq, opts ...grpc.CallOption) (Learn_ListSearchResultsByVersionClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &Learn_ServiceDesc.Streams[1], Learn_ListSearchResultsByVersion_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[SearchContentByVersionReq, SearchRes]{ClientStream: stream}
+	x := &learnListSearchResultsByVersionClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -326,8 +340,22 @@ func (c *learnClient) ListSearchResultsByVersion(ctx context.Context, in *Search
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Learn_ListSearchResultsByVersionClient = grpc.ServerStreamingClient[SearchRes]
+type Learn_ListSearchResultsByVersionClient interface {
+	Recv() (*SearchRes, error)
+	grpc.ClientStream
+}
+
+type learnListSearchResultsByVersionClient struct {
+	grpc.ClientStream
+}
+
+func (x *learnListSearchResultsByVersionClient) Recv() (*SearchRes, error) {
+	m := new(SearchRes)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
 
 func (c *learnClient) ReviewFileVersions(ctx context.Context, in *ReviewFileVersionsReq, opts ...grpc.CallOption) (*ReviewFileVersionsRes, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -349,13 +377,13 @@ func (c *learnClient) ReviewVersion(ctx context.Context, in *ReviewVersionReq, o
 	return out, nil
 }
 
-func (c *learnClient) ExportManyStream(ctx context.Context, in *ExportManyReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ExportRes], error) {
+func (c *learnClient) ExportManyStream(ctx context.Context, in *ExportManyReq, opts ...grpc.CallOption) (Learn_ExportManyStreamClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &Learn_ServiceDesc.Streams[2], Learn_ExportManyStream_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[ExportManyReq, ExportRes]{ClientStream: stream}
+	x := &learnExportManyStreamClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -365,8 +393,22 @@ func (c *learnClient) ExportManyStream(ctx context.Context, in *ExportManyReq, o
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Learn_ExportManyStreamClient = grpc.ServerStreamingClient[ExportRes]
+type Learn_ExportManyStreamClient interface {
+	Recv() (*ExportRes, error)
+	grpc.ClientStream
+}
+
+type learnExportManyStreamClient struct {
+	grpc.ClientStream
+}
+
+func (x *learnExportManyStreamClient) Recv() (*ExportRes, error) {
+	m := new(ExportRes)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
 
 func (c *learnClient) ListVersions(ctx context.Context, in *ListVersionsReq, opts ...grpc.CallOption) (*ListVersionsRes, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -378,13 +420,13 @@ func (c *learnClient) ListVersions(ctx context.Context, in *ListVersionsReq, opt
 	return out, nil
 }
 
-func (c *learnClient) ReviewVersionStream(ctx context.Context, in *ReviewVersionReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ReviewVersionRes], error) {
+func (c *learnClient) ReviewVersionStream(ctx context.Context, in *ReviewVersionReq, opts ...grpc.CallOption) (Learn_ReviewVersionStreamClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &Learn_ServiceDesc.Streams[3], Learn_ReviewVersionStream_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[ReviewVersionReq, ReviewVersionRes]{ClientStream: stream}
+	x := &learnReviewVersionStreamClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -394,8 +436,22 @@ func (c *learnClient) ReviewVersionStream(ctx context.Context, in *ReviewVersion
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Learn_ReviewVersionStreamClient = grpc.ServerStreamingClient[ReviewVersionRes]
+type Learn_ReviewVersionStreamClient interface {
+	Recv() (*ReviewVersionRes, error)
+	grpc.ClientStream
+}
+
+type learnReviewVersionStreamClient struct {
+	grpc.ClientStream
+}
+
+func (x *learnReviewVersionStreamClient) Recv() (*ReviewVersionRes, error) {
+	m := new(ReviewVersionRes)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
 
 func (c *learnClient) DeleteVersion(ctx context.Context, in *DeleteVersionReq, opts ...grpc.CallOption) (*DeleteVersionRes, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -434,7 +490,7 @@ type LearnServer interface {
 	SearchContent(context.Context, *SearchContentReq) (*SearchRes, error)
 	// stream search content results in learning pages
 	// we allow all the logged in agents/admins to view search content
-	ListSearchResults(*SearchContentReq, grpc.ServerStreamingServer[SearchRes]) error
+	ListSearchResults(*SearchContentReq, Learn_ListSearchResultsServer) error
 	// get standalone articles from learning pages
 	// we allow all the logged in agents/admins to view standalone articles
 	Standalone(context.Context, *StandaloneReq) (*StandaloneRes, error)
@@ -463,17 +519,17 @@ type LearnServer interface {
 	UpdateByVersion(context.Context, *UpdateByVersionReq) (*UpdateRes, error)
 	// stream search content results in learning pages by version
 	// we allow all the logged in agents/admins to view search content
-	ListSearchResultsByVersion(*SearchContentByVersionReq, grpc.ServerStreamingServer[SearchRes]) error
+	ListSearchResultsByVersion(*SearchContentByVersionReq, Learn_ListSearchResultsByVersionServer) error
 	// return diff by comparing file contens from any version
 	ReviewFileVersions(context.Context, *ReviewFileVersionsReq) (*ReviewFileVersionsRes, error)
 	// returns list of file details after comparing different versions
 	ReviewVersion(context.Context, *ReviewVersionReq) (*ReviewVersionRes, error)
 	// exports multiple pages of the learning center markdown as PDF file stream
-	ExportManyStream(*ExportManyReq, grpc.ServerStreamingServer[ExportRes]) error
+	ExportManyStream(*ExportManyReq, Learn_ExportManyStreamServer) error
 	// list all the different versions
 	ListVersions(context.Context, *ListVersionsReq) (*ListVersionsRes, error)
 	// returns urls as a stream after comparing version contents between both versions
-	ReviewVersionStream(*ReviewVersionReq, grpc.ServerStreamingServer[ReviewVersionRes]) error
+	ReviewVersionStream(*ReviewVersionReq, Learn_ReviewVersionStreamServer) error
 	// delete version from learn
 	DeleteVersion(context.Context, *DeleteVersionReq) (*DeleteVersionRes, error)
 	// upload image for learning articles
@@ -500,7 +556,7 @@ func (UnimplementedLearnServer) ExportMany(context.Context, *ExportManyReq) (*Ex
 func (UnimplementedLearnServer) SearchContent(context.Context, *SearchContentReq) (*SearchRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SearchContent not implemented")
 }
-func (UnimplementedLearnServer) ListSearchResults(*SearchContentReq, grpc.ServerStreamingServer[SearchRes]) error {
+func (UnimplementedLearnServer) ListSearchResults(*SearchContentReq, Learn_ListSearchResultsServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListSearchResults not implemented")
 }
 func (UnimplementedLearnServer) Standalone(context.Context, *StandaloneReq) (*StandaloneRes, error) {
@@ -539,7 +595,7 @@ func (UnimplementedLearnServer) ContentByVersion(context.Context, *ContentByVers
 func (UnimplementedLearnServer) UpdateByVersion(context.Context, *UpdateByVersionReq) (*UpdateRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateByVersion not implemented")
 }
-func (UnimplementedLearnServer) ListSearchResultsByVersion(*SearchContentByVersionReq, grpc.ServerStreamingServer[SearchRes]) error {
+func (UnimplementedLearnServer) ListSearchResultsByVersion(*SearchContentByVersionReq, Learn_ListSearchResultsByVersionServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListSearchResultsByVersion not implemented")
 }
 func (UnimplementedLearnServer) ReviewFileVersions(context.Context, *ReviewFileVersionsReq) (*ReviewFileVersionsRes, error) {
@@ -548,13 +604,13 @@ func (UnimplementedLearnServer) ReviewFileVersions(context.Context, *ReviewFileV
 func (UnimplementedLearnServer) ReviewVersion(context.Context, *ReviewVersionReq) (*ReviewVersionRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ReviewVersion not implemented")
 }
-func (UnimplementedLearnServer) ExportManyStream(*ExportManyReq, grpc.ServerStreamingServer[ExportRes]) error {
+func (UnimplementedLearnServer) ExportManyStream(*ExportManyReq, Learn_ExportManyStreamServer) error {
 	return status.Errorf(codes.Unimplemented, "method ExportManyStream not implemented")
 }
 func (UnimplementedLearnServer) ListVersions(context.Context, *ListVersionsReq) (*ListVersionsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListVersions not implemented")
 }
-func (UnimplementedLearnServer) ReviewVersionStream(*ReviewVersionReq, grpc.ServerStreamingServer[ReviewVersionRes]) error {
+func (UnimplementedLearnServer) ReviewVersionStream(*ReviewVersionReq, Learn_ReviewVersionStreamServer) error {
 	return status.Errorf(codes.Unimplemented, "method ReviewVersionStream not implemented")
 }
 func (UnimplementedLearnServer) DeleteVersion(context.Context, *DeleteVersionReq) (*DeleteVersionRes, error) {
@@ -661,11 +717,21 @@ func _Learn_ListSearchResults_Handler(srv interface{}, stream grpc.ServerStream)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(LearnServer).ListSearchResults(m, &grpc.GenericServerStream[SearchContentReq, SearchRes]{ServerStream: stream})
+	return srv.(LearnServer).ListSearchResults(m, &learnListSearchResultsServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Learn_ListSearchResultsServer = grpc.ServerStreamingServer[SearchRes]
+type Learn_ListSearchResultsServer interface {
+	Send(*SearchRes) error
+	grpc.ServerStream
+}
+
+type learnListSearchResultsServer struct {
+	grpc.ServerStream
+}
+
+func (x *learnListSearchResultsServer) Send(m *SearchRes) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _Learn_Standalone_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(StandaloneReq)
@@ -888,11 +954,21 @@ func _Learn_ListSearchResultsByVersion_Handler(srv interface{}, stream grpc.Serv
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(LearnServer).ListSearchResultsByVersion(m, &grpc.GenericServerStream[SearchContentByVersionReq, SearchRes]{ServerStream: stream})
+	return srv.(LearnServer).ListSearchResultsByVersion(m, &learnListSearchResultsByVersionServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Learn_ListSearchResultsByVersionServer = grpc.ServerStreamingServer[SearchRes]
+type Learn_ListSearchResultsByVersionServer interface {
+	Send(*SearchRes) error
+	grpc.ServerStream
+}
+
+type learnListSearchResultsByVersionServer struct {
+	grpc.ServerStream
+}
+
+func (x *learnListSearchResultsByVersionServer) Send(m *SearchRes) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _Learn_ReviewFileVersions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ReviewFileVersionsReq)
@@ -935,11 +1011,21 @@ func _Learn_ExportManyStream_Handler(srv interface{}, stream grpc.ServerStream) 
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(LearnServer).ExportManyStream(m, &grpc.GenericServerStream[ExportManyReq, ExportRes]{ServerStream: stream})
+	return srv.(LearnServer).ExportManyStream(m, &learnExportManyStreamServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Learn_ExportManyStreamServer = grpc.ServerStreamingServer[ExportRes]
+type Learn_ExportManyStreamServer interface {
+	Send(*ExportRes) error
+	grpc.ServerStream
+}
+
+type learnExportManyStreamServer struct {
+	grpc.ServerStream
+}
+
+func (x *learnExportManyStreamServer) Send(m *ExportRes) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _Learn_ListVersions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListVersionsReq)
@@ -964,11 +1050,21 @@ func _Learn_ReviewVersionStream_Handler(srv interface{}, stream grpc.ServerStrea
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(LearnServer).ReviewVersionStream(m, &grpc.GenericServerStream[ReviewVersionReq, ReviewVersionRes]{ServerStream: stream})
+	return srv.(LearnServer).ReviewVersionStream(m, &learnReviewVersionStreamServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Learn_ReviewVersionStreamServer = grpc.ServerStreamingServer[ReviewVersionRes]
+type Learn_ReviewVersionStreamServer interface {
+	Send(*ReviewVersionRes) error
+	grpc.ServerStream
+}
+
+type learnReviewVersionStreamServer struct {
+	grpc.ServerStream
+}
+
+func (x *learnReviewVersionStreamServer) Send(m *ReviewVersionRes) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _Learn_DeleteVersion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteVersionReq)

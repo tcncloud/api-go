@@ -15,8 +15,8 @@ import (
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
-// Requires gRPC-Go v1.64.0 or later.
-const _ = grpc.SupportPackageIsVersion9
+// Requires gRPC-Go v1.62.0 or later.
+const _ = grpc.SupportPackageIsVersion8
 
 const (
 	AgentSmith_FollowAgent_FullMethodName = "/api.v1alpha1.agentsmith.AgentSmith/FollowAgent"
@@ -34,7 +34,7 @@ type AgentSmithClient interface {
 	// using the omni interface or neo interface.
 	// When the agent is in a voice session one of the first messages received will be AgentVoiceStartEvent that
 	// contains a sip dial url that can be used to connect to the agent's voice session.
-	FollowAgent(ctx context.Context, in *FollowAgentReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[FollowAgentRes], error)
+	FollowAgent(ctx context.Context, in *FollowAgentReq, opts ...grpc.CallOption) (AgentSmith_FollowAgentClient, error)
 }
 
 type agentSmithClient struct {
@@ -45,13 +45,13 @@ func NewAgentSmithClient(cc grpc.ClientConnInterface) AgentSmithClient {
 	return &agentSmithClient{cc}
 }
 
-func (c *agentSmithClient) FollowAgent(ctx context.Context, in *FollowAgentReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[FollowAgentRes], error) {
+func (c *agentSmithClient) FollowAgent(ctx context.Context, in *FollowAgentReq, opts ...grpc.CallOption) (AgentSmith_FollowAgentClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &AgentSmith_ServiceDesc.Streams[0], AgentSmith_FollowAgent_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[FollowAgentReq, FollowAgentRes]{ClientStream: stream}
+	x := &agentSmithFollowAgentClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -61,8 +61,22 @@ func (c *agentSmithClient) FollowAgent(ctx context.Context, in *FollowAgentReq, 
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type AgentSmith_FollowAgentClient = grpc.ServerStreamingClient[FollowAgentRes]
+type AgentSmith_FollowAgentClient interface {
+	Recv() (*FollowAgentRes, error)
+	grpc.ClientStream
+}
+
+type agentSmithFollowAgentClient struct {
+	grpc.ClientStream
+}
+
+func (x *agentSmithFollowAgentClient) Recv() (*FollowAgentRes, error) {
+	m := new(FollowAgentRes)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
 
 // AgentSmithServer is the server API for AgentSmith service.
 // All implementations must embed UnimplementedAgentSmithServer
@@ -76,7 +90,7 @@ type AgentSmithServer interface {
 	// using the omni interface or neo interface.
 	// When the agent is in a voice session one of the first messages received will be AgentVoiceStartEvent that
 	// contains a sip dial url that can be used to connect to the agent's voice session.
-	FollowAgent(*FollowAgentReq, grpc.ServerStreamingServer[FollowAgentRes]) error
+	FollowAgent(*FollowAgentReq, AgentSmith_FollowAgentServer) error
 	mustEmbedUnimplementedAgentSmithServer()
 }
 
@@ -87,7 +101,7 @@ type AgentSmithServer interface {
 // pointer dereference when methods are called.
 type UnimplementedAgentSmithServer struct{}
 
-func (UnimplementedAgentSmithServer) FollowAgent(*FollowAgentReq, grpc.ServerStreamingServer[FollowAgentRes]) error {
+func (UnimplementedAgentSmithServer) FollowAgent(*FollowAgentReq, AgentSmith_FollowAgentServer) error {
 	return status.Errorf(codes.Unimplemented, "method FollowAgent not implemented")
 }
 func (UnimplementedAgentSmithServer) mustEmbedUnimplementedAgentSmithServer() {}
@@ -116,11 +130,21 @@ func _AgentSmith_FollowAgent_Handler(srv interface{}, stream grpc.ServerStream) 
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(AgentSmithServer).FollowAgent(m, &grpc.GenericServerStream[FollowAgentReq, FollowAgentRes]{ServerStream: stream})
+	return srv.(AgentSmithServer).FollowAgent(m, &agentSmithFollowAgentServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type AgentSmith_FollowAgentServer = grpc.ServerStreamingServer[FollowAgentRes]
+type AgentSmith_FollowAgentServer interface {
+	Send(*FollowAgentRes) error
+	grpc.ServerStream
+}
+
+type agentSmithFollowAgentServer struct {
+	grpc.ServerStream
+}
+
+func (x *agentSmithFollowAgentServer) Send(m *FollowAgentRes) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 // AgentSmith_ServiceDesc is the grpc.ServiceDesc for AgentSmith service.
 // It's only intended for direct use with grpc.RegisterService,

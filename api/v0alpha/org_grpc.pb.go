@@ -15,8 +15,8 @@ import (
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
-// Requires gRPC-Go v1.64.0 or later.
-const _ = grpc.SupportPackageIsVersion9
+// Requires gRPC-Go v1.62.0 or later.
+const _ = grpc.SupportPackageIsVersion8
 
 const (
 	Org_RegisterOrganization_FullMethodName                          = "/api.v0alpha.Org/RegisterOrganization"
@@ -257,8 +257,8 @@ type OrgClient interface {
 	//	CUSTOMER_SUPPORT
 	GetP3OwningOrg(ctx context.Context, in *GetP3OwningOrgRequest, opts ...grpc.CallOption) (*GetP3OwningOrgResponse, error)
 	ListOrganizationUserDescriptions(ctx context.Context, in *ListOrganizationUserDescriptionsRequest, opts ...grpc.CallOption) (*ListOrganizationUserDescriptionsResponse, error)
-	AdminListUserDescriptions(ctx context.Context, in *AdminListUserDescriptionsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[AdminListUserDescriptionsResponse], error)
-	ListUserDescriptions(ctx context.Context, in *ListUserDescriptionsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListUserDescriptionsResponse], error)
+	AdminListUserDescriptions(ctx context.Context, in *AdminListUserDescriptionsRequest, opts ...grpc.CallOption) (Org_AdminListUserDescriptionsClient, error)
+	ListUserDescriptions(ctx context.Context, in *ListUserDescriptionsRequest, opts ...grpc.CallOption) (Org_ListUserDescriptionsClient, error)
 	GetUserDirectory(ctx context.Context, in *GetUserDirectoryRequest, opts ...grpc.CallOption) (*GetUserDirectoryResponse, error)
 	// GetRegions takes nothing in the request and returns a list of all region names
 	GetRegions(ctx context.Context, in *GetRegionsRequest, opts ...grpc.CallOption) (*GetRegionsResponse, error)
@@ -1153,13 +1153,13 @@ func (c *orgClient) ListOrganizationUserDescriptions(ctx context.Context, in *Li
 	return out, nil
 }
 
-func (c *orgClient) AdminListUserDescriptions(ctx context.Context, in *AdminListUserDescriptionsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[AdminListUserDescriptionsResponse], error) {
+func (c *orgClient) AdminListUserDescriptions(ctx context.Context, in *AdminListUserDescriptionsRequest, opts ...grpc.CallOption) (Org_AdminListUserDescriptionsClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &Org_ServiceDesc.Streams[0], Org_AdminListUserDescriptions_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[AdminListUserDescriptionsRequest, AdminListUserDescriptionsResponse]{ClientStream: stream}
+	x := &orgAdminListUserDescriptionsClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -1169,16 +1169,30 @@ func (c *orgClient) AdminListUserDescriptions(ctx context.Context, in *AdminList
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Org_AdminListUserDescriptionsClient = grpc.ServerStreamingClient[AdminListUserDescriptionsResponse]
+type Org_AdminListUserDescriptionsClient interface {
+	Recv() (*AdminListUserDescriptionsResponse, error)
+	grpc.ClientStream
+}
 
-func (c *orgClient) ListUserDescriptions(ctx context.Context, in *ListUserDescriptionsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListUserDescriptionsResponse], error) {
+type orgAdminListUserDescriptionsClient struct {
+	grpc.ClientStream
+}
+
+func (x *orgAdminListUserDescriptionsClient) Recv() (*AdminListUserDescriptionsResponse, error) {
+	m := new(AdminListUserDescriptionsResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *orgClient) ListUserDescriptions(ctx context.Context, in *ListUserDescriptionsRequest, opts ...grpc.CallOption) (Org_ListUserDescriptionsClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &Org_ServiceDesc.Streams[1], Org_ListUserDescriptions_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[ListUserDescriptionsRequest, ListUserDescriptionsResponse]{ClientStream: stream}
+	x := &orgListUserDescriptionsClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -1188,8 +1202,22 @@ func (c *orgClient) ListUserDescriptions(ctx context.Context, in *ListUserDescri
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Org_ListUserDescriptionsClient = grpc.ServerStreamingClient[ListUserDescriptionsResponse]
+type Org_ListUserDescriptionsClient interface {
+	Recv() (*ListUserDescriptionsResponse, error)
+	grpc.ClientStream
+}
+
+type orgListUserDescriptionsClient struct {
+	grpc.ClientStream
+}
+
+func (x *orgListUserDescriptionsClient) Recv() (*ListUserDescriptionsResponse, error) {
+	m := new(ListUserDescriptionsResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
 
 func (c *orgClient) GetUserDirectory(ctx context.Context, in *GetUserDirectoryRequest, opts ...grpc.CallOption) (*GetUserDirectoryResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -3113,8 +3141,8 @@ type OrgServer interface {
 	//	CUSTOMER_SUPPORT
 	GetP3OwningOrg(context.Context, *GetP3OwningOrgRequest) (*GetP3OwningOrgResponse, error)
 	ListOrganizationUserDescriptions(context.Context, *ListOrganizationUserDescriptionsRequest) (*ListOrganizationUserDescriptionsResponse, error)
-	AdminListUserDescriptions(*AdminListUserDescriptionsRequest, grpc.ServerStreamingServer[AdminListUserDescriptionsResponse]) error
-	ListUserDescriptions(*ListUserDescriptionsRequest, grpc.ServerStreamingServer[ListUserDescriptionsResponse]) error
+	AdminListUserDescriptions(*AdminListUserDescriptionsRequest, Org_AdminListUserDescriptionsServer) error
+	ListUserDescriptions(*ListUserDescriptionsRequest, Org_ListUserDescriptionsServer) error
 	GetUserDirectory(context.Context, *GetUserDirectoryRequest) (*GetUserDirectoryResponse, error)
 	// GetRegions takes nothing in the request and returns a list of all region names
 	GetRegions(context.Context, *GetRegionsRequest) (*GetRegionsResponse, error)
@@ -3918,10 +3946,10 @@ func (UnimplementedOrgServer) GetP3OwningOrg(context.Context, *GetP3OwningOrgReq
 func (UnimplementedOrgServer) ListOrganizationUserDescriptions(context.Context, *ListOrganizationUserDescriptionsRequest) (*ListOrganizationUserDescriptionsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListOrganizationUserDescriptions not implemented")
 }
-func (UnimplementedOrgServer) AdminListUserDescriptions(*AdminListUserDescriptionsRequest, grpc.ServerStreamingServer[AdminListUserDescriptionsResponse]) error {
+func (UnimplementedOrgServer) AdminListUserDescriptions(*AdminListUserDescriptionsRequest, Org_AdminListUserDescriptionsServer) error {
 	return status.Errorf(codes.Unimplemented, "method AdminListUserDescriptions not implemented")
 }
-func (UnimplementedOrgServer) ListUserDescriptions(*ListUserDescriptionsRequest, grpc.ServerStreamingServer[ListUserDescriptionsResponse]) error {
+func (UnimplementedOrgServer) ListUserDescriptions(*ListUserDescriptionsRequest, Org_ListUserDescriptionsServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListUserDescriptions not implemented")
 }
 func (UnimplementedOrgServer) GetUserDirectory(context.Context, *GetUserDirectoryRequest) (*GetUserDirectoryResponse, error) {
@@ -4751,22 +4779,42 @@ func _Org_AdminListUserDescriptions_Handler(srv interface{}, stream grpc.ServerS
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(OrgServer).AdminListUserDescriptions(m, &grpc.GenericServerStream[AdminListUserDescriptionsRequest, AdminListUserDescriptionsResponse]{ServerStream: stream})
+	return srv.(OrgServer).AdminListUserDescriptions(m, &orgAdminListUserDescriptionsServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Org_AdminListUserDescriptionsServer = grpc.ServerStreamingServer[AdminListUserDescriptionsResponse]
+type Org_AdminListUserDescriptionsServer interface {
+	Send(*AdminListUserDescriptionsResponse) error
+	grpc.ServerStream
+}
+
+type orgAdminListUserDescriptionsServer struct {
+	grpc.ServerStream
+}
+
+func (x *orgAdminListUserDescriptionsServer) Send(m *AdminListUserDescriptionsResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _Org_ListUserDescriptions_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(ListUserDescriptionsRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(OrgServer).ListUserDescriptions(m, &grpc.GenericServerStream[ListUserDescriptionsRequest, ListUserDescriptionsResponse]{ServerStream: stream})
+	return srv.(OrgServer).ListUserDescriptions(m, &orgListUserDescriptionsServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Org_ListUserDescriptionsServer = grpc.ServerStreamingServer[ListUserDescriptionsResponse]
+type Org_ListUserDescriptionsServer interface {
+	Send(*ListUserDescriptionsResponse) error
+	grpc.ServerStream
+}
+
+type orgListUserDescriptionsServer struct {
+	grpc.ServerStream
+}
+
+func (x *orgListUserDescriptionsServer) Send(m *ListUserDescriptionsResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _Org_GetUserDirectory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetUserDirectoryRequest)

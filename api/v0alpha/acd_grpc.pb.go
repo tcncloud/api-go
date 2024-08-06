@@ -29,8 +29,8 @@ import (
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
-// Requires gRPC-Go v1.64.0 or later.
-const _ = grpc.SupportPackageIsVersion9
+// Requires gRPC-Go v1.62.0 or later.
+const _ = grpc.SupportPackageIsVersion8
 
 const (
 	Acd_AgentGetStatusStream_FullMethodName                  = "/api.v0alpha.Acd/AgentGetStatusStream"
@@ -102,7 +102,7 @@ const (
 // Accessing all of the methods require an authenticated user with the correct
 // permissions.
 type AcdClient interface {
-	AgentGetStatusStream(ctx context.Context, in *AgentGetStatusRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[AgentGetStatusReply], error)
+	AgentGetStatusStream(ctx context.Context, in *AgentGetStatusRequest, opts ...grpc.CallOption) (Acd_AgentGetStatusStreamClient, error)
 	AgentGetStatus(ctx context.Context, in *AgentGetStatusRequest, opts ...grpc.CallOption) (*AgentGetStatusReply, error)
 	AgentGetConnectedParty(ctx context.Context, in *AgentGetConnectedPartyRequest, opts ...grpc.CallOption) (*AgentGetConnectedPartyReply, error)
 	ManagerAgentGetConnectedParty(ctx context.Context, in *ManagerAgentGetConnectedPartyRequest, opts ...grpc.CallOption) (*ManagerAgentGetConnectedPartyReply, error)
@@ -166,7 +166,7 @@ type AcdClient interface {
 	// endpoint used to unmute and agent's mic
 	AgentUnmute(ctx context.Context, in *AgentUnmuteRequest, opts ...grpc.CallOption) (*AgentUnmuteReply, error)
 	StartSecureForm(ctx context.Context, in *StartSecureFormReq, opts ...grpc.CallOption) (*StartSecureFormRes, error)
-	CollectSecureFormField(ctx context.Context, in *CollectSecureFormFieldReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[CollectSecureFormFieldRes], error)
+	CollectSecureFormField(ctx context.Context, in *CollectSecureFormFieldReq, opts ...grpc.CallOption) (Acd_CollectSecureFormFieldClient, error)
 	ResetSecureFormField(ctx context.Context, in *ResetSecureFormFieldReq, opts ...grpc.CallOption) (*ResetSecureFormFieldRes, error)
 	AcceptSecureFormField(ctx context.Context, in *AcceptSecureFormFieldReq, opts ...grpc.CallOption) (*AcceptSecureFormFieldRes, error)
 	ProcessSecureForm(ctx context.Context, in *ProcessSecureFormReq, opts ...grpc.CallOption) (*ProcessSecureFormRes, error)
@@ -182,13 +182,13 @@ func NewAcdClient(cc grpc.ClientConnInterface) AcdClient {
 	return &acdClient{cc}
 }
 
-func (c *acdClient) AgentGetStatusStream(ctx context.Context, in *AgentGetStatusRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[AgentGetStatusReply], error) {
+func (c *acdClient) AgentGetStatusStream(ctx context.Context, in *AgentGetStatusRequest, opts ...grpc.CallOption) (Acd_AgentGetStatusStreamClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &Acd_ServiceDesc.Streams[0], Acd_AgentGetStatusStream_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[AgentGetStatusRequest, AgentGetStatusReply]{ClientStream: stream}
+	x := &acdAgentGetStatusStreamClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -198,8 +198,22 @@ func (c *acdClient) AgentGetStatusStream(ctx context.Context, in *AgentGetStatus
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Acd_AgentGetStatusStreamClient = grpc.ServerStreamingClient[AgentGetStatusReply]
+type Acd_AgentGetStatusStreamClient interface {
+	Recv() (*AgentGetStatusReply, error)
+	grpc.ClientStream
+}
+
+type acdAgentGetStatusStreamClient struct {
+	grpc.ClientStream
+}
+
+func (x *acdAgentGetStatusStreamClient) Recv() (*AgentGetStatusReply, error) {
+	m := new(AgentGetStatusReply)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
 
 func (c *acdClient) AgentGetStatus(ctx context.Context, in *AgentGetStatusRequest, opts ...grpc.CallOption) (*AgentGetStatusReply, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -721,13 +735,13 @@ func (c *acdClient) StartSecureForm(ctx context.Context, in *StartSecureFormReq,
 	return out, nil
 }
 
-func (c *acdClient) CollectSecureFormField(ctx context.Context, in *CollectSecureFormFieldReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[CollectSecureFormFieldRes], error) {
+func (c *acdClient) CollectSecureFormField(ctx context.Context, in *CollectSecureFormFieldReq, opts ...grpc.CallOption) (Acd_CollectSecureFormFieldClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &Acd_ServiceDesc.Streams[1], Acd_CollectSecureFormField_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[CollectSecureFormFieldReq, CollectSecureFormFieldRes]{ClientStream: stream}
+	x := &acdCollectSecureFormFieldClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -737,8 +751,22 @@ func (c *acdClient) CollectSecureFormField(ctx context.Context, in *CollectSecur
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Acd_CollectSecureFormFieldClient = grpc.ServerStreamingClient[CollectSecureFormFieldRes]
+type Acd_CollectSecureFormFieldClient interface {
+	Recv() (*CollectSecureFormFieldRes, error)
+	grpc.ClientStream
+}
+
+type acdCollectSecureFormFieldClient struct {
+	grpc.ClientStream
+}
+
+func (x *acdCollectSecureFormFieldClient) Recv() (*CollectSecureFormFieldRes, error) {
+	m := new(CollectSecureFormFieldRes)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
 
 func (c *acdClient) ResetSecureFormField(ctx context.Context, in *ResetSecureFormFieldReq, opts ...grpc.CallOption) (*ResetSecureFormFieldRes, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -798,7 +826,7 @@ func (c *acdClient) PopulateWorkflowFields(ctx context.Context, in *PopulateWork
 // Accessing all of the methods require an authenticated user with the correct
 // permissions.
 type AcdServer interface {
-	AgentGetStatusStream(*AgentGetStatusRequest, grpc.ServerStreamingServer[AgentGetStatusReply]) error
+	AgentGetStatusStream(*AgentGetStatusRequest, Acd_AgentGetStatusStreamServer) error
 	AgentGetStatus(context.Context, *AgentGetStatusRequest) (*AgentGetStatusReply, error)
 	AgentGetConnectedParty(context.Context, *AgentGetConnectedPartyRequest) (*AgentGetConnectedPartyReply, error)
 	ManagerAgentGetConnectedParty(context.Context, *ManagerAgentGetConnectedPartyRequest) (*ManagerAgentGetConnectedPartyReply, error)
@@ -862,7 +890,7 @@ type AcdServer interface {
 	// endpoint used to unmute and agent's mic
 	AgentUnmute(context.Context, *AgentUnmuteRequest) (*AgentUnmuteReply, error)
 	StartSecureForm(context.Context, *StartSecureFormReq) (*StartSecureFormRes, error)
-	CollectSecureFormField(*CollectSecureFormFieldReq, grpc.ServerStreamingServer[CollectSecureFormFieldRes]) error
+	CollectSecureFormField(*CollectSecureFormFieldReq, Acd_CollectSecureFormFieldServer) error
 	ResetSecureFormField(context.Context, *ResetSecureFormFieldReq) (*ResetSecureFormFieldRes, error)
 	AcceptSecureFormField(context.Context, *AcceptSecureFormFieldReq) (*AcceptSecureFormFieldRes, error)
 	ProcessSecureForm(context.Context, *ProcessSecureFormReq) (*ProcessSecureFormRes, error)
@@ -878,7 +906,7 @@ type AcdServer interface {
 // pointer dereference when methods are called.
 type UnimplementedAcdServer struct{}
 
-func (UnimplementedAcdServer) AgentGetStatusStream(*AgentGetStatusRequest, grpc.ServerStreamingServer[AgentGetStatusReply]) error {
+func (UnimplementedAcdServer) AgentGetStatusStream(*AgentGetStatusRequest, Acd_AgentGetStatusStreamServer) error {
 	return status.Errorf(codes.Unimplemented, "method AgentGetStatusStream not implemented")
 }
 func (UnimplementedAcdServer) AgentGetStatus(context.Context, *AgentGetStatusRequest) (*AgentGetStatusReply, error) {
@@ -1037,7 +1065,7 @@ func (UnimplementedAcdServer) AgentUnmute(context.Context, *AgentUnmuteRequest) 
 func (UnimplementedAcdServer) StartSecureForm(context.Context, *StartSecureFormReq) (*StartSecureFormRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StartSecureForm not implemented")
 }
-func (UnimplementedAcdServer) CollectSecureFormField(*CollectSecureFormFieldReq, grpc.ServerStreamingServer[CollectSecureFormFieldRes]) error {
+func (UnimplementedAcdServer) CollectSecureFormField(*CollectSecureFormFieldReq, Acd_CollectSecureFormFieldServer) error {
 	return status.Errorf(codes.Unimplemented, "method CollectSecureFormField not implemented")
 }
 func (UnimplementedAcdServer) ResetSecureFormField(context.Context, *ResetSecureFormFieldReq) (*ResetSecureFormFieldRes, error) {
@@ -1081,11 +1109,21 @@ func _Acd_AgentGetStatusStream_Handler(srv interface{}, stream grpc.ServerStream
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(AcdServer).AgentGetStatusStream(m, &grpc.GenericServerStream[AgentGetStatusRequest, AgentGetStatusReply]{ServerStream: stream})
+	return srv.(AcdServer).AgentGetStatusStream(m, &acdAgentGetStatusStreamServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Acd_AgentGetStatusStreamServer = grpc.ServerStreamingServer[AgentGetStatusReply]
+type Acd_AgentGetStatusStreamServer interface {
+	Send(*AgentGetStatusReply) error
+	grpc.ServerStream
+}
+
+type acdAgentGetStatusStreamServer struct {
+	grpc.ServerStream
+}
+
+func (x *acdAgentGetStatusStreamServer) Send(m *AgentGetStatusReply) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _Acd_AgentGetStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AgentGetStatusRequest)
@@ -2028,11 +2066,21 @@ func _Acd_CollectSecureFormField_Handler(srv interface{}, stream grpc.ServerStre
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(AcdServer).CollectSecureFormField(m, &grpc.GenericServerStream[CollectSecureFormFieldReq, CollectSecureFormFieldRes]{ServerStream: stream})
+	return srv.(AcdServer).CollectSecureFormField(m, &acdCollectSecureFormFieldServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Acd_CollectSecureFormFieldServer = grpc.ServerStreamingServer[CollectSecureFormFieldRes]
+type Acd_CollectSecureFormFieldServer interface {
+	Send(*CollectSecureFormFieldRes) error
+	grpc.ServerStream
+}
+
+type acdCollectSecureFormFieldServer struct {
+	grpc.ServerStream
+}
+
+func (x *acdCollectSecureFormFieldServer) Send(m *CollectSecureFormFieldRes) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _Acd_ResetSecureFormField_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ResetSecureFormFieldReq)

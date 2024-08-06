@@ -15,8 +15,8 @@ import (
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
-// Requires gRPC-Go v1.64.0 or later.
-const _ = grpc.SupportPackageIsVersion9
+// Requires gRPC-Go v1.62.0 or later.
+const _ = grpc.SupportPackageIsVersion8
 
 const (
 	P3Api_GetAgentHuntGroup_FullMethodName                   = "/api.v0alpha.P3Api/GetAgentHuntGroup"
@@ -322,7 +322,7 @@ type P3ApiClient interface {
 	// responses or scripts
 	GetConditionalDNCLRules(ctx context.Context, in *GetConditionalDNCLRulesReq, opts ...grpc.CallOption) (*GetConditionalDNCLRulesRes, error)
 	ManualDialStart(ctx context.Context, in *ManualDialStartReq, opts ...grpc.CallOption) (*ManualDialStartRes, error)
-	ListExtendedCallHistory(ctx context.Context, in *ListExtendedCallHistoryReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListExtendedCallHistoryRes], error)
+	ListExtendedCallHistory(ctx context.Context, in *ListExtendedCallHistoryReq, opts ...grpc.CallOption) (P3Api_ListExtendedCallHistoryClient, error)
 	ListWhiteListPhoneBooks(ctx context.Context, in *ListWhiteListPhoneBooksReq, opts ...grpc.CallOption) (*ListWhiteListPhoneBooksRes, error)
 	DownloadCallRecording(ctx context.Context, in *DownloadCallRecordingReq, opts ...grpc.CallOption) (*DownloadRecordingRes, error)
 	DownloadCallRecordings(ctx context.Context, in *DownloadCallRecordingsReq, opts ...grpc.CallOption) (*DownloadRecordingRes, error)
@@ -489,7 +489,7 @@ type P3ApiClient interface {
 	// Required Permissions;
 	//
 	//	CUSTOMER_SUPPORT
-	GetActivityLogHistory(ctx context.Context, in *GetActivityLogHistoryReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[GetActivityLogHistoryRes], error)
+	GetActivityLogHistory(ctx context.Context, in *GetActivityLogHistoryReq, opts ...grpc.CallOption) (P3Api_GetActivityLogHistoryClient, error)
 	// List agent and queue table template properties by client sid
 	ListTableTemplateProperties(ctx context.Context, in *ListTableTemplatePropertiesReq, opts ...grpc.CallOption) (*ListTableTemplatePropertiesRes, error)
 	// List agent skills filters by client sid
@@ -980,13 +980,13 @@ func (c *p3ApiClient) ManualDialStart(ctx context.Context, in *ManualDialStartRe
 	return out, nil
 }
 
-func (c *p3ApiClient) ListExtendedCallHistory(ctx context.Context, in *ListExtendedCallHistoryReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListExtendedCallHistoryRes], error) {
+func (c *p3ApiClient) ListExtendedCallHistory(ctx context.Context, in *ListExtendedCallHistoryReq, opts ...grpc.CallOption) (P3Api_ListExtendedCallHistoryClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &P3Api_ServiceDesc.Streams[0], P3Api_ListExtendedCallHistory_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[ListExtendedCallHistoryReq, ListExtendedCallHistoryRes]{ClientStream: stream}
+	x := &p3ApiListExtendedCallHistoryClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -996,8 +996,22 @@ func (c *p3ApiClient) ListExtendedCallHistory(ctx context.Context, in *ListExten
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type P3Api_ListExtendedCallHistoryClient = grpc.ServerStreamingClient[ListExtendedCallHistoryRes]
+type P3Api_ListExtendedCallHistoryClient interface {
+	Recv() (*ListExtendedCallHistoryRes, error)
+	grpc.ClientStream
+}
+
+type p3ApiListExtendedCallHistoryClient struct {
+	grpc.ClientStream
+}
+
+func (x *p3ApiListExtendedCallHistoryClient) Recv() (*ListExtendedCallHistoryRes, error) {
+	m := new(ListExtendedCallHistoryRes)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
 
 func (c *p3ApiClient) ListWhiteListPhoneBooks(ctx context.Context, in *ListWhiteListPhoneBooksReq, opts ...grpc.CallOption) (*ListWhiteListPhoneBooksRes, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -1439,13 +1453,13 @@ func (c *p3ApiClient) UpdateCustomDataKey(ctx context.Context, in *UpdateCustomD
 	return out, nil
 }
 
-func (c *p3ApiClient) GetActivityLogHistory(ctx context.Context, in *GetActivityLogHistoryReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[GetActivityLogHistoryRes], error) {
+func (c *p3ApiClient) GetActivityLogHistory(ctx context.Context, in *GetActivityLogHistoryReq, opts ...grpc.CallOption) (P3Api_GetActivityLogHistoryClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &P3Api_ServiceDesc.Streams[1], P3Api_GetActivityLogHistory_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[GetActivityLogHistoryReq, GetActivityLogHistoryRes]{ClientStream: stream}
+	x := &p3ApiGetActivityLogHistoryClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -1455,8 +1469,22 @@ func (c *p3ApiClient) GetActivityLogHistory(ctx context.Context, in *GetActivity
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type P3Api_GetActivityLogHistoryClient = grpc.ServerStreamingClient[GetActivityLogHistoryRes]
+type P3Api_GetActivityLogHistoryClient interface {
+	Recv() (*GetActivityLogHistoryRes, error)
+	grpc.ClientStream
+}
+
+type p3ApiGetActivityLogHistoryClient struct {
+	grpc.ClientStream
+}
+
+func (x *p3ApiGetActivityLogHistoryClient) Recv() (*GetActivityLogHistoryRes, error) {
+	m := new(GetActivityLogHistoryRes)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
 
 func (c *p3ApiClient) ListTableTemplateProperties(ctx context.Context, in *ListTableTemplatePropertiesReq, opts ...grpc.CallOption) (*ListTableTemplatePropertiesRes, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -1711,7 +1739,7 @@ type P3ApiServer interface {
 	// responses or scripts
 	GetConditionalDNCLRules(context.Context, *GetConditionalDNCLRulesReq) (*GetConditionalDNCLRulesRes, error)
 	ManualDialStart(context.Context, *ManualDialStartReq) (*ManualDialStartRes, error)
-	ListExtendedCallHistory(*ListExtendedCallHistoryReq, grpc.ServerStreamingServer[ListExtendedCallHistoryRes]) error
+	ListExtendedCallHistory(*ListExtendedCallHistoryReq, P3Api_ListExtendedCallHistoryServer) error
 	ListWhiteListPhoneBooks(context.Context, *ListWhiteListPhoneBooksReq) (*ListWhiteListPhoneBooksRes, error)
 	DownloadCallRecording(context.Context, *DownloadCallRecordingReq) (*DownloadRecordingRes, error)
 	DownloadCallRecordings(context.Context, *DownloadCallRecordingsReq) (*DownloadRecordingRes, error)
@@ -1878,7 +1906,7 @@ type P3ApiServer interface {
 	// Required Permissions;
 	//
 	//	CUSTOMER_SUPPORT
-	GetActivityLogHistory(*GetActivityLogHistoryReq, grpc.ServerStreamingServer[GetActivityLogHistoryRes]) error
+	GetActivityLogHistory(*GetActivityLogHistoryReq, P3Api_GetActivityLogHistoryServer) error
 	// List agent and queue table template properties by client sid
 	ListTableTemplateProperties(context.Context, *ListTableTemplatePropertiesReq) (*ListTableTemplatePropertiesRes, error)
 	// List agent skills filters by client sid
@@ -2040,7 +2068,7 @@ func (UnimplementedP3ApiServer) GetConditionalDNCLRules(context.Context, *GetCon
 func (UnimplementedP3ApiServer) ManualDialStart(context.Context, *ManualDialStartReq) (*ManualDialStartRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ManualDialStart not implemented")
 }
-func (UnimplementedP3ApiServer) ListExtendedCallHistory(*ListExtendedCallHistoryReq, grpc.ServerStreamingServer[ListExtendedCallHistoryRes]) error {
+func (UnimplementedP3ApiServer) ListExtendedCallHistory(*ListExtendedCallHistoryReq, P3Api_ListExtendedCallHistoryServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListExtendedCallHistory not implemented")
 }
 func (UnimplementedP3ApiServer) ListWhiteListPhoneBooks(context.Context, *ListWhiteListPhoneBooksReq) (*ListWhiteListPhoneBooksRes, error) {
@@ -2175,7 +2203,7 @@ func (UnimplementedP3ApiServer) DeleteCustomDataKey(context.Context, *DeleteCust
 func (UnimplementedP3ApiServer) UpdateCustomDataKey(context.Context, *UpdateCustomDataKeyReq) (*UpdateCustomDataKeyRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateCustomDataKey not implemented")
 }
-func (UnimplementedP3ApiServer) GetActivityLogHistory(*GetActivityLogHistoryReq, grpc.ServerStreamingServer[GetActivityLogHistoryRes]) error {
+func (UnimplementedP3ApiServer) GetActivityLogHistory(*GetActivityLogHistoryReq, P3Api_GetActivityLogHistoryServer) error {
 	return status.Errorf(codes.Unimplemented, "method GetActivityLogHistory not implemented")
 }
 func (UnimplementedP3ApiServer) ListTableTemplateProperties(context.Context, *ListTableTemplatePropertiesReq) (*ListTableTemplatePropertiesRes, error) {
@@ -3065,11 +3093,21 @@ func _P3Api_ListExtendedCallHistory_Handler(srv interface{}, stream grpc.ServerS
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(P3ApiServer).ListExtendedCallHistory(m, &grpc.GenericServerStream[ListExtendedCallHistoryReq, ListExtendedCallHistoryRes]{ServerStream: stream})
+	return srv.(P3ApiServer).ListExtendedCallHistory(m, &p3ApiListExtendedCallHistoryServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type P3Api_ListExtendedCallHistoryServer = grpc.ServerStreamingServer[ListExtendedCallHistoryRes]
+type P3Api_ListExtendedCallHistoryServer interface {
+	Send(*ListExtendedCallHistoryRes) error
+	grpc.ServerStream
+}
+
+type p3ApiListExtendedCallHistoryServer struct {
+	grpc.ServerStream
+}
+
+func (x *p3ApiListExtendedCallHistoryServer) Send(m *ListExtendedCallHistoryRes) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _P3Api_ListWhiteListPhoneBooks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListWhiteListPhoneBooksReq)
@@ -3868,11 +3906,21 @@ func _P3Api_GetActivityLogHistory_Handler(srv interface{}, stream grpc.ServerStr
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(P3ApiServer).GetActivityLogHistory(m, &grpc.GenericServerStream[GetActivityLogHistoryReq, GetActivityLogHistoryRes]{ServerStream: stream})
+	return srv.(P3ApiServer).GetActivityLogHistory(m, &p3ApiGetActivityLogHistoryServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type P3Api_GetActivityLogHistoryServer = grpc.ServerStreamingServer[GetActivityLogHistoryRes]
+type P3Api_GetActivityLogHistoryServer interface {
+	Send(*GetActivityLogHistoryRes) error
+	grpc.ServerStream
+}
+
+type p3ApiGetActivityLogHistoryServer struct {
+	grpc.ServerStream
+}
+
+func (x *p3ApiGetActivityLogHistoryServer) Send(m *GetActivityLogHistoryRes) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _P3Api_ListTableTemplateProperties_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListTableTemplatePropertiesReq)

@@ -15,8 +15,8 @@ import (
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
-// Requires gRPC-Go v1.64.0 or later.
-const _ = grpc.SupportPackageIsVersion9
+// Requires gRPC-Go v1.62.0 or later.
+const _ = grpc.SupportPackageIsVersion8
 
 const (
 	UsersService_CreateUser_FullMethodName                       = "/api.v1alpha1.org.users.UsersService/CreateUser"
@@ -105,15 +105,15 @@ type UsersServiceClient interface {
 	// Requires Customer Support permission and allows cross Org requests.
 	GetUserByOrgId(ctx context.Context, in *GetUserByOrgIdRequest, opts ...grpc.CallOption) (*GetUserByOrgIdResponse, error)
 	// ListAgents returns a list of Agents.
-	ListAgents(ctx context.Context, in *ListAgentsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListAgentsResponse], error)
+	ListAgents(ctx context.Context, in *ListAgentsRequest, opts ...grpc.CallOption) (UsersService_ListAgentsClient, error)
 	// ListPublicUsers returns a list of users with limited data for most applications.
-	ListPublicUsers(ctx context.Context, in *ListPublicUsersRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListPublicUsersResponse], error)
+	ListPublicUsers(ctx context.Context, in *ListPublicUsersRequest, opts ...grpc.CallOption) (UsersService_ListPublicUsersClient, error)
 	// ListUsers returns a list of users.
-	ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListUsersResponse], error)
+	ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (UsersService_ListUsersClient, error)
 	// ListUsersByOrgId returns a list of users.
-	ListUsersByOrgId(ctx context.Context, in *ListUsersByOrgIdRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListUsersByOrgIdResponse], error)
+	ListUsersByOrgId(ctx context.Context, in *ListUsersByOrgIdRequest, opts ...grpc.CallOption) (UsersService_ListUsersByOrgIdClient, error)
 	// ListUsersByRegion returns a list of usersByRegion.
-	ListUsersByRegion(ctx context.Context, in *ListUsersByRegionRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListUsersByRegionResponse], error)
+	ListUsersByRegion(ctx context.Context, in *ListUsersByRegionRequest, opts ...grpc.CallOption) (UsersService_ListUsersByRegionClient, error)
 	// UpdateMyUser updates a user.
 	UpdateMyUser(ctx context.Context, in *UpdateMyUserRequest, opts ...grpc.CallOption) (*UpdateMyUserResponse, error)
 	// UpdateUser updates a user.
@@ -294,13 +294,13 @@ func (c *usersServiceClient) GetUserByOrgId(ctx context.Context, in *GetUserByOr
 	return out, nil
 }
 
-func (c *usersServiceClient) ListAgents(ctx context.Context, in *ListAgentsRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListAgentsResponse], error) {
+func (c *usersServiceClient) ListAgents(ctx context.Context, in *ListAgentsRequest, opts ...grpc.CallOption) (UsersService_ListAgentsClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &UsersService_ServiceDesc.Streams[0], UsersService_ListAgents_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[ListAgentsRequest, ListAgentsResponse]{ClientStream: stream}
+	x := &usersServiceListAgentsClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -310,16 +310,30 @@ func (c *usersServiceClient) ListAgents(ctx context.Context, in *ListAgentsReque
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type UsersService_ListAgentsClient = grpc.ServerStreamingClient[ListAgentsResponse]
+type UsersService_ListAgentsClient interface {
+	Recv() (*ListAgentsResponse, error)
+	grpc.ClientStream
+}
 
-func (c *usersServiceClient) ListPublicUsers(ctx context.Context, in *ListPublicUsersRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListPublicUsersResponse], error) {
+type usersServiceListAgentsClient struct {
+	grpc.ClientStream
+}
+
+func (x *usersServiceListAgentsClient) Recv() (*ListAgentsResponse, error) {
+	m := new(ListAgentsResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *usersServiceClient) ListPublicUsers(ctx context.Context, in *ListPublicUsersRequest, opts ...grpc.CallOption) (UsersService_ListPublicUsersClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &UsersService_ServiceDesc.Streams[1], UsersService_ListPublicUsers_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[ListPublicUsersRequest, ListPublicUsersResponse]{ClientStream: stream}
+	x := &usersServiceListPublicUsersClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -329,16 +343,30 @@ func (c *usersServiceClient) ListPublicUsers(ctx context.Context, in *ListPublic
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type UsersService_ListPublicUsersClient = grpc.ServerStreamingClient[ListPublicUsersResponse]
+type UsersService_ListPublicUsersClient interface {
+	Recv() (*ListPublicUsersResponse, error)
+	grpc.ClientStream
+}
 
-func (c *usersServiceClient) ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListUsersResponse], error) {
+type usersServiceListPublicUsersClient struct {
+	grpc.ClientStream
+}
+
+func (x *usersServiceListPublicUsersClient) Recv() (*ListPublicUsersResponse, error) {
+	m := new(ListPublicUsersResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *usersServiceClient) ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (UsersService_ListUsersClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &UsersService_ServiceDesc.Streams[2], UsersService_ListUsers_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[ListUsersRequest, ListUsersResponse]{ClientStream: stream}
+	x := &usersServiceListUsersClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -348,16 +376,30 @@ func (c *usersServiceClient) ListUsers(ctx context.Context, in *ListUsersRequest
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type UsersService_ListUsersClient = grpc.ServerStreamingClient[ListUsersResponse]
+type UsersService_ListUsersClient interface {
+	Recv() (*ListUsersResponse, error)
+	grpc.ClientStream
+}
 
-func (c *usersServiceClient) ListUsersByOrgId(ctx context.Context, in *ListUsersByOrgIdRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListUsersByOrgIdResponse], error) {
+type usersServiceListUsersClient struct {
+	grpc.ClientStream
+}
+
+func (x *usersServiceListUsersClient) Recv() (*ListUsersResponse, error) {
+	m := new(ListUsersResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *usersServiceClient) ListUsersByOrgId(ctx context.Context, in *ListUsersByOrgIdRequest, opts ...grpc.CallOption) (UsersService_ListUsersByOrgIdClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &UsersService_ServiceDesc.Streams[3], UsersService_ListUsersByOrgId_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[ListUsersByOrgIdRequest, ListUsersByOrgIdResponse]{ClientStream: stream}
+	x := &usersServiceListUsersByOrgIdClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -367,16 +409,30 @@ func (c *usersServiceClient) ListUsersByOrgId(ctx context.Context, in *ListUsers
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type UsersService_ListUsersByOrgIdClient = grpc.ServerStreamingClient[ListUsersByOrgIdResponse]
+type UsersService_ListUsersByOrgIdClient interface {
+	Recv() (*ListUsersByOrgIdResponse, error)
+	grpc.ClientStream
+}
 
-func (c *usersServiceClient) ListUsersByRegion(ctx context.Context, in *ListUsersByRegionRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListUsersByRegionResponse], error) {
+type usersServiceListUsersByOrgIdClient struct {
+	grpc.ClientStream
+}
+
+func (x *usersServiceListUsersByOrgIdClient) Recv() (*ListUsersByOrgIdResponse, error) {
+	m := new(ListUsersByOrgIdResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *usersServiceClient) ListUsersByRegion(ctx context.Context, in *ListUsersByRegionRequest, opts ...grpc.CallOption) (UsersService_ListUsersByRegionClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &UsersService_ServiceDesc.Streams[4], UsersService_ListUsersByRegion_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[ListUsersByRegionRequest, ListUsersByRegionResponse]{ClientStream: stream}
+	x := &usersServiceListUsersByRegionClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -386,8 +442,22 @@ func (c *usersServiceClient) ListUsersByRegion(ctx context.Context, in *ListUser
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type UsersService_ListUsersByRegionClient = grpc.ServerStreamingClient[ListUsersByRegionResponse]
+type UsersService_ListUsersByRegionClient interface {
+	Recv() (*ListUsersByRegionResponse, error)
+	grpc.ClientStream
+}
+
+type usersServiceListUsersByRegionClient struct {
+	grpc.ClientStream
+}
+
+func (x *usersServiceListUsersByRegionClient) Recv() (*ListUsersByRegionResponse, error) {
+	m := new(ListUsersByRegionResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
 
 func (c *usersServiceClient) UpdateMyUser(ctx context.Context, in *UpdateMyUserRequest, opts ...grpc.CallOption) (*UpdateMyUserResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -985,15 +1055,15 @@ type UsersServiceServer interface {
 	// Requires Customer Support permission and allows cross Org requests.
 	GetUserByOrgId(context.Context, *GetUserByOrgIdRequest) (*GetUserByOrgIdResponse, error)
 	// ListAgents returns a list of Agents.
-	ListAgents(*ListAgentsRequest, grpc.ServerStreamingServer[ListAgentsResponse]) error
+	ListAgents(*ListAgentsRequest, UsersService_ListAgentsServer) error
 	// ListPublicUsers returns a list of users with limited data for most applications.
-	ListPublicUsers(*ListPublicUsersRequest, grpc.ServerStreamingServer[ListPublicUsersResponse]) error
+	ListPublicUsers(*ListPublicUsersRequest, UsersService_ListPublicUsersServer) error
 	// ListUsers returns a list of users.
-	ListUsers(*ListUsersRequest, grpc.ServerStreamingServer[ListUsersResponse]) error
+	ListUsers(*ListUsersRequest, UsersService_ListUsersServer) error
 	// ListUsersByOrgId returns a list of users.
-	ListUsersByOrgId(*ListUsersByOrgIdRequest, grpc.ServerStreamingServer[ListUsersByOrgIdResponse]) error
+	ListUsersByOrgId(*ListUsersByOrgIdRequest, UsersService_ListUsersByOrgIdServer) error
 	// ListUsersByRegion returns a list of usersByRegion.
-	ListUsersByRegion(*ListUsersByRegionRequest, grpc.ServerStreamingServer[ListUsersByRegionResponse]) error
+	ListUsersByRegion(*ListUsersByRegionRequest, UsersService_ListUsersByRegionServer) error
 	// UpdateMyUser updates a user.
 	UpdateMyUser(context.Context, *UpdateMyUserRequest) (*UpdateMyUserResponse, error)
 	// UpdateUser updates a user.
@@ -1139,19 +1209,19 @@ func (UnimplementedUsersServiceServer) GetUser(context.Context, *GetUserRequest)
 func (UnimplementedUsersServiceServer) GetUserByOrgId(context.Context, *GetUserByOrgIdRequest) (*GetUserByOrgIdResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserByOrgId not implemented")
 }
-func (UnimplementedUsersServiceServer) ListAgents(*ListAgentsRequest, grpc.ServerStreamingServer[ListAgentsResponse]) error {
+func (UnimplementedUsersServiceServer) ListAgents(*ListAgentsRequest, UsersService_ListAgentsServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListAgents not implemented")
 }
-func (UnimplementedUsersServiceServer) ListPublicUsers(*ListPublicUsersRequest, grpc.ServerStreamingServer[ListPublicUsersResponse]) error {
+func (UnimplementedUsersServiceServer) ListPublicUsers(*ListPublicUsersRequest, UsersService_ListPublicUsersServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListPublicUsers not implemented")
 }
-func (UnimplementedUsersServiceServer) ListUsers(*ListUsersRequest, grpc.ServerStreamingServer[ListUsersResponse]) error {
+func (UnimplementedUsersServiceServer) ListUsers(*ListUsersRequest, UsersService_ListUsersServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListUsers not implemented")
 }
-func (UnimplementedUsersServiceServer) ListUsersByOrgId(*ListUsersByOrgIdRequest, grpc.ServerStreamingServer[ListUsersByOrgIdResponse]) error {
+func (UnimplementedUsersServiceServer) ListUsersByOrgId(*ListUsersByOrgIdRequest, UsersService_ListUsersByOrgIdServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListUsersByOrgId not implemented")
 }
-func (UnimplementedUsersServiceServer) ListUsersByRegion(*ListUsersByRegionRequest, grpc.ServerStreamingServer[ListUsersByRegionResponse]) error {
+func (UnimplementedUsersServiceServer) ListUsersByRegion(*ListUsersByRegionRequest, UsersService_ListUsersByRegionServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListUsersByRegion not implemented")
 }
 func (UnimplementedUsersServiceServer) UpdateMyUser(context.Context, *UpdateMyUserRequest) (*UpdateMyUserResponse, error) {
@@ -1444,55 +1514,105 @@ func _UsersService_ListAgents_Handler(srv interface{}, stream grpc.ServerStream)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(UsersServiceServer).ListAgents(m, &grpc.GenericServerStream[ListAgentsRequest, ListAgentsResponse]{ServerStream: stream})
+	return srv.(UsersServiceServer).ListAgents(m, &usersServiceListAgentsServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type UsersService_ListAgentsServer = grpc.ServerStreamingServer[ListAgentsResponse]
+type UsersService_ListAgentsServer interface {
+	Send(*ListAgentsResponse) error
+	grpc.ServerStream
+}
+
+type usersServiceListAgentsServer struct {
+	grpc.ServerStream
+}
+
+func (x *usersServiceListAgentsServer) Send(m *ListAgentsResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _UsersService_ListPublicUsers_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(ListPublicUsersRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(UsersServiceServer).ListPublicUsers(m, &grpc.GenericServerStream[ListPublicUsersRequest, ListPublicUsersResponse]{ServerStream: stream})
+	return srv.(UsersServiceServer).ListPublicUsers(m, &usersServiceListPublicUsersServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type UsersService_ListPublicUsersServer = grpc.ServerStreamingServer[ListPublicUsersResponse]
+type UsersService_ListPublicUsersServer interface {
+	Send(*ListPublicUsersResponse) error
+	grpc.ServerStream
+}
+
+type usersServiceListPublicUsersServer struct {
+	grpc.ServerStream
+}
+
+func (x *usersServiceListPublicUsersServer) Send(m *ListPublicUsersResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _UsersService_ListUsers_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(ListUsersRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(UsersServiceServer).ListUsers(m, &grpc.GenericServerStream[ListUsersRequest, ListUsersResponse]{ServerStream: stream})
+	return srv.(UsersServiceServer).ListUsers(m, &usersServiceListUsersServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type UsersService_ListUsersServer = grpc.ServerStreamingServer[ListUsersResponse]
+type UsersService_ListUsersServer interface {
+	Send(*ListUsersResponse) error
+	grpc.ServerStream
+}
+
+type usersServiceListUsersServer struct {
+	grpc.ServerStream
+}
+
+func (x *usersServiceListUsersServer) Send(m *ListUsersResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _UsersService_ListUsersByOrgId_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(ListUsersByOrgIdRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(UsersServiceServer).ListUsersByOrgId(m, &grpc.GenericServerStream[ListUsersByOrgIdRequest, ListUsersByOrgIdResponse]{ServerStream: stream})
+	return srv.(UsersServiceServer).ListUsersByOrgId(m, &usersServiceListUsersByOrgIdServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type UsersService_ListUsersByOrgIdServer = grpc.ServerStreamingServer[ListUsersByOrgIdResponse]
+type UsersService_ListUsersByOrgIdServer interface {
+	Send(*ListUsersByOrgIdResponse) error
+	grpc.ServerStream
+}
+
+type usersServiceListUsersByOrgIdServer struct {
+	grpc.ServerStream
+}
+
+func (x *usersServiceListUsersByOrgIdServer) Send(m *ListUsersByOrgIdResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _UsersService_ListUsersByRegion_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(ListUsersByRegionRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(UsersServiceServer).ListUsersByRegion(m, &grpc.GenericServerStream[ListUsersByRegionRequest, ListUsersByRegionResponse]{ServerStream: stream})
+	return srv.(UsersServiceServer).ListUsersByRegion(m, &usersServiceListUsersByRegionServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type UsersService_ListUsersByRegionServer = grpc.ServerStreamingServer[ListUsersByRegionResponse]
+type UsersService_ListUsersByRegionServer interface {
+	Send(*ListUsersByRegionResponse) error
+	grpc.ServerStream
+}
+
+type usersServiceListUsersByRegionServer struct {
+	grpc.ServerStream
+}
+
+func (x *usersServiceListUsersByRegionServer) Send(m *ListUsersByRegionResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _UsersService_UpdateMyUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateMyUserRequest)

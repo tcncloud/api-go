@@ -15,8 +15,8 @@ import (
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
-// Requires gRPC-Go v1.64.0 or later.
-const _ = grpc.SupportPackageIsVersion9
+// Requires gRPC-Go v1.62.0 or later.
+const _ = grpc.SupportPackageIsVersion8
 
 const (
 	Vmds_GetVoicemailMetadata_FullMethodName         = "/api.v0alpha.Vmds/GetVoicemailMetadata"
@@ -39,7 +39,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type VmdsClient interface {
-	GetVoicemailMetadata(ctx context.Context, in *GetVoicemailMetadataReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[GetVoicemailMetadataRes], error)
+	GetVoicemailMetadata(ctx context.Context, in *GetVoicemailMetadataReq, opts ...grpc.CallOption) (Vmds_GetVoicemailMetadataClient, error)
 	GetVoicemailMessageCount(ctx context.Context, in *GetVoicemailCountReq, opts ...grpc.CallOption) (*GetVoicemailCountRes, error)
 	DeleteVoicemail(ctx context.Context, in *DeleteVoicemailReq, opts ...grpc.CallOption) (*DeleteVoicemailRes, error)
 	DeleteGreeting(ctx context.Context, in *DeleteGreetingReq, opts ...grpc.CallOption) (*DeleteGreetingRes, error)
@@ -63,13 +63,13 @@ func NewVmdsClient(cc grpc.ClientConnInterface) VmdsClient {
 	return &vmdsClient{cc}
 }
 
-func (c *vmdsClient) GetVoicemailMetadata(ctx context.Context, in *GetVoicemailMetadataReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[GetVoicemailMetadataRes], error) {
+func (c *vmdsClient) GetVoicemailMetadata(ctx context.Context, in *GetVoicemailMetadataReq, opts ...grpc.CallOption) (Vmds_GetVoicemailMetadataClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &Vmds_ServiceDesc.Streams[0], Vmds_GetVoicemailMetadata_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[GetVoicemailMetadataReq, GetVoicemailMetadataRes]{ClientStream: stream}
+	x := &vmdsGetVoicemailMetadataClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -79,8 +79,22 @@ func (c *vmdsClient) GetVoicemailMetadata(ctx context.Context, in *GetVoicemailM
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Vmds_GetVoicemailMetadataClient = grpc.ServerStreamingClient[GetVoicemailMetadataRes]
+type Vmds_GetVoicemailMetadataClient interface {
+	Recv() (*GetVoicemailMetadataRes, error)
+	grpc.ClientStream
+}
+
+type vmdsGetVoicemailMetadataClient struct {
+	grpc.ClientStream
+}
+
+func (x *vmdsGetVoicemailMetadataClient) Recv() (*GetVoicemailMetadataRes, error) {
+	m := new(GetVoicemailMetadataRes)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
 
 func (c *vmdsClient) GetVoicemailMessageCount(ctx context.Context, in *GetVoicemailCountReq, opts ...grpc.CallOption) (*GetVoicemailCountRes, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -216,7 +230,7 @@ func (c *vmdsClient) ListAvailableGreetings(ctx context.Context, in *ListAvailab
 // All implementations must embed UnimplementedVmdsServer
 // for forward compatibility.
 type VmdsServer interface {
-	GetVoicemailMetadata(*GetVoicemailMetadataReq, grpc.ServerStreamingServer[GetVoicemailMetadataRes]) error
+	GetVoicemailMetadata(*GetVoicemailMetadataReq, Vmds_GetVoicemailMetadataServer) error
 	GetVoicemailMessageCount(context.Context, *GetVoicemailCountReq) (*GetVoicemailCountRes, error)
 	DeleteVoicemail(context.Context, *DeleteVoicemailReq) (*DeleteVoicemailRes, error)
 	DeleteGreeting(context.Context, *DeleteGreetingReq) (*DeleteGreetingRes, error)
@@ -240,7 +254,7 @@ type VmdsServer interface {
 // pointer dereference when methods are called.
 type UnimplementedVmdsServer struct{}
 
-func (UnimplementedVmdsServer) GetVoicemailMetadata(*GetVoicemailMetadataReq, grpc.ServerStreamingServer[GetVoicemailMetadataRes]) error {
+func (UnimplementedVmdsServer) GetVoicemailMetadata(*GetVoicemailMetadataReq, Vmds_GetVoicemailMetadataServer) error {
 	return status.Errorf(codes.Unimplemented, "method GetVoicemailMetadata not implemented")
 }
 func (UnimplementedVmdsServer) GetVoicemailMessageCount(context.Context, *GetVoicemailCountReq) (*GetVoicemailCountRes, error) {
@@ -308,11 +322,21 @@ func _Vmds_GetVoicemailMetadata_Handler(srv interface{}, stream grpc.ServerStrea
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(VmdsServer).GetVoicemailMetadata(m, &grpc.GenericServerStream[GetVoicemailMetadataReq, GetVoicemailMetadataRes]{ServerStream: stream})
+	return srv.(VmdsServer).GetVoicemailMetadata(m, &vmdsGetVoicemailMetadataServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Vmds_GetVoicemailMetadataServer = grpc.ServerStreamingServer[GetVoicemailMetadataRes]
+type Vmds_GetVoicemailMetadataServer interface {
+	Send(*GetVoicemailMetadataRes) error
+	grpc.ServerStream
+}
+
+type vmdsGetVoicemailMetadataServer struct {
+	grpc.ServerStream
+}
+
+func (x *vmdsGetVoicemailMetadataServer) Send(m *GetVoicemailMetadataRes) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _Vmds_GetVoicemailMessageCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetVoicemailCountReq)

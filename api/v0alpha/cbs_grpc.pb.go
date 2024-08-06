@@ -15,8 +15,8 @@ import (
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
-// Requires gRPC-Go v1.64.0 or later.
-const _ = grpc.SupportPackageIsVersion9
+// Requires gRPC-Go v1.62.0 or later.
+const _ = grpc.SupportPackageIsVersion8
 
 const (
 	CBS_CreateServiceId_FullMethodName                           = "/api.v0alpha.CBS/CreateServiceId"
@@ -56,7 +56,7 @@ type CBSClient interface {
 	// Gets a scheduled callback's info and it's details for the given scheduled_callback_id.
 	GetScheduledCallbackWithDetails(ctx context.Context, in *GetScheduledCallbackWithDetailsReq, opts ...grpc.CallOption) (*GetScheduledCallbackWithDetailsRes, error)
 	// Lists callbacks by phone number, caller id, or time range
-	ListScheduledCallbacksWithDetails(ctx context.Context, in *ListScheduledCallbacksWithDetailsReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListScheduledCallbacksWithDetailsRes], error)
+	ListScheduledCallbacksWithDetails(ctx context.Context, in *ListScheduledCallbacksWithDetailsReq, opts ...grpc.CallOption) (CBS_ListScheduledCallbacksWithDetailsClient, error)
 	// List callbacks by skills
 	ListScheduledCallbacksWithDetailsBySkills(ctx context.Context, in *ListScheduledCallbacksWithDetailsBySkillsReq, opts ...grpc.CallOption) (*ListScheduledCallbacksWithDetailsRes, error)
 }
@@ -149,13 +149,13 @@ func (c *cBSClient) GetScheduledCallbackWithDetails(ctx context.Context, in *Get
 	return out, nil
 }
 
-func (c *cBSClient) ListScheduledCallbacksWithDetails(ctx context.Context, in *ListScheduledCallbacksWithDetailsReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ListScheduledCallbacksWithDetailsRes], error) {
+func (c *cBSClient) ListScheduledCallbacksWithDetails(ctx context.Context, in *ListScheduledCallbacksWithDetailsReq, opts ...grpc.CallOption) (CBS_ListScheduledCallbacksWithDetailsClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &CBS_ServiceDesc.Streams[0], CBS_ListScheduledCallbacksWithDetails_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[ListScheduledCallbacksWithDetailsReq, ListScheduledCallbacksWithDetailsRes]{ClientStream: stream}
+	x := &cBSListScheduledCallbacksWithDetailsClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -165,8 +165,22 @@ func (c *cBSClient) ListScheduledCallbacksWithDetails(ctx context.Context, in *L
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type CBS_ListScheduledCallbacksWithDetailsClient = grpc.ServerStreamingClient[ListScheduledCallbacksWithDetailsRes]
+type CBS_ListScheduledCallbacksWithDetailsClient interface {
+	Recv() (*ListScheduledCallbacksWithDetailsRes, error)
+	grpc.ClientStream
+}
+
+type cBSListScheduledCallbacksWithDetailsClient struct {
+	grpc.ClientStream
+}
+
+func (x *cBSListScheduledCallbacksWithDetailsClient) Recv() (*ListScheduledCallbacksWithDetailsRes, error) {
+	m := new(ListScheduledCallbacksWithDetailsRes)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
 
 func (c *cBSClient) ListScheduledCallbacksWithDetailsBySkills(ctx context.Context, in *ListScheduledCallbacksWithDetailsBySkillsReq, opts ...grpc.CallOption) (*ListScheduledCallbacksWithDetailsRes, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -203,7 +217,7 @@ type CBSServer interface {
 	// Gets a scheduled callback's info and it's details for the given scheduled_callback_id.
 	GetScheduledCallbackWithDetails(context.Context, *GetScheduledCallbackWithDetailsReq) (*GetScheduledCallbackWithDetailsRes, error)
 	// Lists callbacks by phone number, caller id, or time range
-	ListScheduledCallbacksWithDetails(*ListScheduledCallbacksWithDetailsReq, grpc.ServerStreamingServer[ListScheduledCallbacksWithDetailsRes]) error
+	ListScheduledCallbacksWithDetails(*ListScheduledCallbacksWithDetailsReq, CBS_ListScheduledCallbacksWithDetailsServer) error
 	// List callbacks by skills
 	ListScheduledCallbacksWithDetailsBySkills(context.Context, *ListScheduledCallbacksWithDetailsBySkillsReq) (*ListScheduledCallbacksWithDetailsRes, error)
 	mustEmbedUnimplementedCBSServer()
@@ -240,7 +254,7 @@ func (UnimplementedCBSServer) UpdateScheduledCallback(context.Context, *UpdateSc
 func (UnimplementedCBSServer) GetScheduledCallbackWithDetails(context.Context, *GetScheduledCallbackWithDetailsReq) (*GetScheduledCallbackWithDetailsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetScheduledCallbackWithDetails not implemented")
 }
-func (UnimplementedCBSServer) ListScheduledCallbacksWithDetails(*ListScheduledCallbacksWithDetailsReq, grpc.ServerStreamingServer[ListScheduledCallbacksWithDetailsRes]) error {
+func (UnimplementedCBSServer) ListScheduledCallbacksWithDetails(*ListScheduledCallbacksWithDetailsReq, CBS_ListScheduledCallbacksWithDetailsServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListScheduledCallbacksWithDetails not implemented")
 }
 func (UnimplementedCBSServer) ListScheduledCallbacksWithDetailsBySkills(context.Context, *ListScheduledCallbacksWithDetailsBySkillsReq) (*ListScheduledCallbacksWithDetailsRes, error) {
@@ -416,11 +430,21 @@ func _CBS_ListScheduledCallbacksWithDetails_Handler(srv interface{}, stream grpc
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(CBSServer).ListScheduledCallbacksWithDetails(m, &grpc.GenericServerStream[ListScheduledCallbacksWithDetailsReq, ListScheduledCallbacksWithDetailsRes]{ServerStream: stream})
+	return srv.(CBSServer).ListScheduledCallbacksWithDetails(m, &cBSListScheduledCallbacksWithDetailsServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type CBS_ListScheduledCallbacksWithDetailsServer = grpc.ServerStreamingServer[ListScheduledCallbacksWithDetailsRes]
+type CBS_ListScheduledCallbacksWithDetailsServer interface {
+	Send(*ListScheduledCallbacksWithDetailsRes) error
+	grpc.ServerStream
+}
+
+type cBSListScheduledCallbacksWithDetailsServer struct {
+	grpc.ServerStream
+}
+
+func (x *cBSListScheduledCallbacksWithDetailsServer) Send(m *ListScheduledCallbacksWithDetailsRes) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _CBS_ListScheduledCallbacksWithDetailsBySkills_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListScheduledCallbacksWithDetailsBySkillsReq)

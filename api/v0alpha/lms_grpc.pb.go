@@ -16,8 +16,8 @@ import (
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
-// Requires gRPC-Go v1.64.0 or later.
-const _ = grpc.SupportPackageIsVersion9
+// Requires gRPC-Go v1.62.0 or later.
+const _ = grpc.SupportPackageIsVersion8
 
 const (
 	LMS_GetPublicKey_FullMethodName                     = "/api.v0alpha.LMS/GetPublicKey"
@@ -87,7 +87,7 @@ const (
 type LMSClient interface {
 	GetPublicKey(ctx context.Context, in *GetPublicKeyReq, opts ...grpc.CallOption) (*PublicKey, error)
 	CreateFileTemplate(ctx context.Context, in *FileTemplate, opts ...grpc.CallOption) (*FileTemplate, error)
-	ListFileTemplates(ctx context.Context, in *GetFileTemplatesReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[FileTemplate], error)
+	ListFileTemplates(ctx context.Context, in *GetFileTemplatesReq, opts ...grpc.CallOption) (LMS_ListFileTemplatesClient, error)
 	UpdateFileTemplate(ctx context.Context, in *FileTemplate, opts ...grpc.CallOption) (*FileTemplate, error)
 	DeleteFileTemplate(ctx context.Context, in *FileTemplate, opts ...grpc.CallOption) (*FileTemplate, error)
 	GetFileTemplate(ctx context.Context, in *FileTemplate, opts ...grpc.CallOption) (*FileTemplate, error)
@@ -104,17 +104,17 @@ type LMSClient interface {
 	PeekList(ctx context.Context, in *PeekListReq, opts ...grpc.CallOption) (*PeekListRes, error)
 	GetHistory(ctx context.Context, in *GetHistoryReq, opts ...grpc.CallOption) (*GetHistoryRes, error)
 	CreateElement(ctx context.Context, in *Element, opts ...grpc.CallOption) (*Element, error)
-	ListElements(ctx context.Context, in *ListElementsReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[Element], error)
+	ListElements(ctx context.Context, in *ListElementsReq, opts ...grpc.CallOption) (LMS_ListElementsClient, error)
 	GetElement(ctx context.Context, in *ElementPK, opts ...grpc.CallOption) (*Element, error)
 	UpdateElement(ctx context.Context, in *Element, opts ...grpc.CallOption) (*Element, error)
 	DeleteElement(ctx context.Context, in *Element, opts ...grpc.CallOption) (*Element, error)
 	// CopyPipelineUpstream copies an Element and all of its' parents
-	CopyPipelineUpstream(ctx context.Context, in *Element, opts ...grpc.CallOption) (grpc.ServerStreamingClient[Element], error)
+	CopyPipelineUpstream(ctx context.Context, in *Element, opts ...grpc.CallOption) (LMS_CopyPipelineUpstreamClient, error)
 	// CopyPipelineDownstream copies an Element and all of its' children
-	CopyPipelineDownstream(ctx context.Context, in *Element, opts ...grpc.CallOption) (grpc.ServerStreamingClient[Element], error)
+	CopyPipelineDownstream(ctx context.Context, in *Element, opts ...grpc.CallOption) (LMS_CopyPipelineDownstreamClient, error)
 	ProcessElement(ctx context.Context, in *ProcessElementReq, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	ProcessList(ctx context.Context, in *ProcessListRequest, opts ...grpc.CallOption) (*ProcessListResponse, error)
-	StreamList(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[StreamListRequest, StreamListResponse], error)
+	StreamList(ctx context.Context, opts ...grpc.CallOption) (LMS_StreamListClient, error)
 	GetAvailableFields(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ProcessFields, error)
 	// returns queue events for the last 30 minutes
 	ListNewEvents(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*Events, error)
@@ -135,7 +135,7 @@ type LMSClient interface {
 	UpdateCollectionEntry(ctx context.Context, in *CollectionEntry, opts ...grpc.CallOption) (*CollectionEntry, error)
 	// StreamCollection needs to be used in conjunction with GetCollection
 	// to have the metadata associated with it
-	StreamCollection(ctx context.Context, in *StreamCollectionReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[CollectionEntry], error)
+	StreamCollection(ctx context.Context, in *StreamCollectionReq, opts ...grpc.CallOption) (LMS_StreamCollectionClient, error)
 	// SearchCollectionsWithQueryPaginated needs to be used in conjunction with GetCollection
 	// to have the metadata associated with it
 	SearchCollectionsPaginated(ctx context.Context, in *SearchCollectionsPaginatedReq, opts ...grpc.CallOption) (*PaginatedSearchRes, error)
@@ -197,13 +197,13 @@ func (c *lMSClient) CreateFileTemplate(ctx context.Context, in *FileTemplate, op
 	return out, nil
 }
 
-func (c *lMSClient) ListFileTemplates(ctx context.Context, in *GetFileTemplatesReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[FileTemplate], error) {
+func (c *lMSClient) ListFileTemplates(ctx context.Context, in *GetFileTemplatesReq, opts ...grpc.CallOption) (LMS_ListFileTemplatesClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &LMS_ServiceDesc.Streams[0], LMS_ListFileTemplates_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[GetFileTemplatesReq, FileTemplate]{ClientStream: stream}
+	x := &lMSListFileTemplatesClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -213,8 +213,22 @@ func (c *lMSClient) ListFileTemplates(ctx context.Context, in *GetFileTemplatesR
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type LMS_ListFileTemplatesClient = grpc.ServerStreamingClient[FileTemplate]
+type LMS_ListFileTemplatesClient interface {
+	Recv() (*FileTemplate, error)
+	grpc.ClientStream
+}
+
+type lMSListFileTemplatesClient struct {
+	grpc.ClientStream
+}
+
+func (x *lMSListFileTemplatesClient) Recv() (*FileTemplate, error) {
+	m := new(FileTemplate)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
 
 func (c *lMSClient) UpdateFileTemplate(ctx context.Context, in *FileTemplate, opts ...grpc.CallOption) (*FileTemplate, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -366,13 +380,13 @@ func (c *lMSClient) CreateElement(ctx context.Context, in *Element, opts ...grpc
 	return out, nil
 }
 
-func (c *lMSClient) ListElements(ctx context.Context, in *ListElementsReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[Element], error) {
+func (c *lMSClient) ListElements(ctx context.Context, in *ListElementsReq, opts ...grpc.CallOption) (LMS_ListElementsClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &LMS_ServiceDesc.Streams[1], LMS_ListElements_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[ListElementsReq, Element]{ClientStream: stream}
+	x := &lMSListElementsClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -382,8 +396,22 @@ func (c *lMSClient) ListElements(ctx context.Context, in *ListElementsReq, opts 
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type LMS_ListElementsClient = grpc.ServerStreamingClient[Element]
+type LMS_ListElementsClient interface {
+	Recv() (*Element, error)
+	grpc.ClientStream
+}
+
+type lMSListElementsClient struct {
+	grpc.ClientStream
+}
+
+func (x *lMSListElementsClient) Recv() (*Element, error) {
+	m := new(Element)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
 
 func (c *lMSClient) GetElement(ctx context.Context, in *ElementPK, opts ...grpc.CallOption) (*Element, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -415,13 +443,13 @@ func (c *lMSClient) DeleteElement(ctx context.Context, in *Element, opts ...grpc
 	return out, nil
 }
 
-func (c *lMSClient) CopyPipelineUpstream(ctx context.Context, in *Element, opts ...grpc.CallOption) (grpc.ServerStreamingClient[Element], error) {
+func (c *lMSClient) CopyPipelineUpstream(ctx context.Context, in *Element, opts ...grpc.CallOption) (LMS_CopyPipelineUpstreamClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &LMS_ServiceDesc.Streams[2], LMS_CopyPipelineUpstream_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[Element, Element]{ClientStream: stream}
+	x := &lMSCopyPipelineUpstreamClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -431,16 +459,30 @@ func (c *lMSClient) CopyPipelineUpstream(ctx context.Context, in *Element, opts 
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type LMS_CopyPipelineUpstreamClient = grpc.ServerStreamingClient[Element]
+type LMS_CopyPipelineUpstreamClient interface {
+	Recv() (*Element, error)
+	grpc.ClientStream
+}
 
-func (c *lMSClient) CopyPipelineDownstream(ctx context.Context, in *Element, opts ...grpc.CallOption) (grpc.ServerStreamingClient[Element], error) {
+type lMSCopyPipelineUpstreamClient struct {
+	grpc.ClientStream
+}
+
+func (x *lMSCopyPipelineUpstreamClient) Recv() (*Element, error) {
+	m := new(Element)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *lMSClient) CopyPipelineDownstream(ctx context.Context, in *Element, opts ...grpc.CallOption) (LMS_CopyPipelineDownstreamClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &LMS_ServiceDesc.Streams[3], LMS_CopyPipelineDownstream_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[Element, Element]{ClientStream: stream}
+	x := &lMSCopyPipelineDownstreamClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -450,8 +492,22 @@ func (c *lMSClient) CopyPipelineDownstream(ctx context.Context, in *Element, opt
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type LMS_CopyPipelineDownstreamClient = grpc.ServerStreamingClient[Element]
+type LMS_CopyPipelineDownstreamClient interface {
+	Recv() (*Element, error)
+	grpc.ClientStream
+}
+
+type lMSCopyPipelineDownstreamClient struct {
+	grpc.ClientStream
+}
+
+func (x *lMSCopyPipelineDownstreamClient) Recv() (*Element, error) {
+	m := new(Element)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
 
 func (c *lMSClient) ProcessElement(ctx context.Context, in *ProcessElementReq, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -473,18 +529,40 @@ func (c *lMSClient) ProcessList(ctx context.Context, in *ProcessListRequest, opt
 	return out, nil
 }
 
-func (c *lMSClient) StreamList(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[StreamListRequest, StreamListResponse], error) {
+func (c *lMSClient) StreamList(ctx context.Context, opts ...grpc.CallOption) (LMS_StreamListClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &LMS_ServiceDesc.Streams[4], LMS_StreamList_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[StreamListRequest, StreamListResponse]{ClientStream: stream}
+	x := &lMSStreamListClient{ClientStream: stream}
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type LMS_StreamListClient = grpc.ClientStreamingClient[StreamListRequest, StreamListResponse]
+type LMS_StreamListClient interface {
+	Send(*StreamListRequest) error
+	CloseAndRecv() (*StreamListResponse, error)
+	grpc.ClientStream
+}
+
+type lMSStreamListClient struct {
+	grpc.ClientStream
+}
+
+func (x *lMSStreamListClient) Send(m *StreamListRequest) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *lMSStreamListClient) CloseAndRecv() (*StreamListResponse, error) {
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	m := new(StreamListResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
 
 func (c *lMSClient) GetAvailableFields(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ProcessFields, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -646,13 +724,13 @@ func (c *lMSClient) UpdateCollectionEntry(ctx context.Context, in *CollectionEnt
 	return out, nil
 }
 
-func (c *lMSClient) StreamCollection(ctx context.Context, in *StreamCollectionReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[CollectionEntry], error) {
+func (c *lMSClient) StreamCollection(ctx context.Context, in *StreamCollectionReq, opts ...grpc.CallOption) (LMS_StreamCollectionClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &LMS_ServiceDesc.Streams[5], LMS_StreamCollection_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[StreamCollectionReq, CollectionEntry]{ClientStream: stream}
+	x := &lMSStreamCollectionClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -662,8 +740,22 @@ func (c *lMSClient) StreamCollection(ctx context.Context, in *StreamCollectionRe
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type LMS_StreamCollectionClient = grpc.ServerStreamingClient[CollectionEntry]
+type LMS_StreamCollectionClient interface {
+	Recv() (*CollectionEntry, error)
+	grpc.ClientStream
+}
+
+type lMSStreamCollectionClient struct {
+	grpc.ClientStream
+}
+
+func (x *lMSStreamCollectionClient) Recv() (*CollectionEntry, error) {
+	m := new(CollectionEntry)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
 
 func (c *lMSClient) SearchCollectionsPaginated(ctx context.Context, in *SearchCollectionsPaginatedReq, opts ...grpc.CallOption) (*PaginatedSearchRes, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -821,7 +913,7 @@ func (c *lMSClient) ListPools(ctx context.Context, in *ListPoolsRequest, opts ..
 type LMSServer interface {
 	GetPublicKey(context.Context, *GetPublicKeyReq) (*PublicKey, error)
 	CreateFileTemplate(context.Context, *FileTemplate) (*FileTemplate, error)
-	ListFileTemplates(*GetFileTemplatesReq, grpc.ServerStreamingServer[FileTemplate]) error
+	ListFileTemplates(*GetFileTemplatesReq, LMS_ListFileTemplatesServer) error
 	UpdateFileTemplate(context.Context, *FileTemplate) (*FileTemplate, error)
 	DeleteFileTemplate(context.Context, *FileTemplate) (*FileTemplate, error)
 	GetFileTemplate(context.Context, *FileTemplate) (*FileTemplate, error)
@@ -838,17 +930,17 @@ type LMSServer interface {
 	PeekList(context.Context, *PeekListReq) (*PeekListRes, error)
 	GetHistory(context.Context, *GetHistoryReq) (*GetHistoryRes, error)
 	CreateElement(context.Context, *Element) (*Element, error)
-	ListElements(*ListElementsReq, grpc.ServerStreamingServer[Element]) error
+	ListElements(*ListElementsReq, LMS_ListElementsServer) error
 	GetElement(context.Context, *ElementPK) (*Element, error)
 	UpdateElement(context.Context, *Element) (*Element, error)
 	DeleteElement(context.Context, *Element) (*Element, error)
 	// CopyPipelineUpstream copies an Element and all of its' parents
-	CopyPipelineUpstream(*Element, grpc.ServerStreamingServer[Element]) error
+	CopyPipelineUpstream(*Element, LMS_CopyPipelineUpstreamServer) error
 	// CopyPipelineDownstream copies an Element and all of its' children
-	CopyPipelineDownstream(*Element, grpc.ServerStreamingServer[Element]) error
+	CopyPipelineDownstream(*Element, LMS_CopyPipelineDownstreamServer) error
 	ProcessElement(context.Context, *ProcessElementReq) (*emptypb.Empty, error)
 	ProcessList(context.Context, *ProcessListRequest) (*ProcessListResponse, error)
-	StreamList(grpc.ClientStreamingServer[StreamListRequest, StreamListResponse]) error
+	StreamList(LMS_StreamListServer) error
 	GetAvailableFields(context.Context, *emptypb.Empty) (*ProcessFields, error)
 	// returns queue events for the last 30 minutes
 	ListNewEvents(context.Context, *emptypb.Empty) (*Events, error)
@@ -869,7 +961,7 @@ type LMSServer interface {
 	UpdateCollectionEntry(context.Context, *CollectionEntry) (*CollectionEntry, error)
 	// StreamCollection needs to be used in conjunction with GetCollection
 	// to have the metadata associated with it
-	StreamCollection(*StreamCollectionReq, grpc.ServerStreamingServer[CollectionEntry]) error
+	StreamCollection(*StreamCollectionReq, LMS_StreamCollectionServer) error
 	// SearchCollectionsWithQueryPaginated needs to be used in conjunction with GetCollection
 	// to have the metadata associated with it
 	SearchCollectionsPaginated(context.Context, *SearchCollectionsPaginatedReq) (*PaginatedSearchRes, error)
@@ -917,7 +1009,7 @@ func (UnimplementedLMSServer) GetPublicKey(context.Context, *GetPublicKeyReq) (*
 func (UnimplementedLMSServer) CreateFileTemplate(context.Context, *FileTemplate) (*FileTemplate, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateFileTemplate not implemented")
 }
-func (UnimplementedLMSServer) ListFileTemplates(*GetFileTemplatesReq, grpc.ServerStreamingServer[FileTemplate]) error {
+func (UnimplementedLMSServer) ListFileTemplates(*GetFileTemplatesReq, LMS_ListFileTemplatesServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListFileTemplates not implemented")
 }
 func (UnimplementedLMSServer) UpdateFileTemplate(context.Context, *FileTemplate) (*FileTemplate, error) {
@@ -965,7 +1057,7 @@ func (UnimplementedLMSServer) GetHistory(context.Context, *GetHistoryReq) (*GetH
 func (UnimplementedLMSServer) CreateElement(context.Context, *Element) (*Element, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateElement not implemented")
 }
-func (UnimplementedLMSServer) ListElements(*ListElementsReq, grpc.ServerStreamingServer[Element]) error {
+func (UnimplementedLMSServer) ListElements(*ListElementsReq, LMS_ListElementsServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListElements not implemented")
 }
 func (UnimplementedLMSServer) GetElement(context.Context, *ElementPK) (*Element, error) {
@@ -977,10 +1069,10 @@ func (UnimplementedLMSServer) UpdateElement(context.Context, *Element) (*Element
 func (UnimplementedLMSServer) DeleteElement(context.Context, *Element) (*Element, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteElement not implemented")
 }
-func (UnimplementedLMSServer) CopyPipelineUpstream(*Element, grpc.ServerStreamingServer[Element]) error {
+func (UnimplementedLMSServer) CopyPipelineUpstream(*Element, LMS_CopyPipelineUpstreamServer) error {
 	return status.Errorf(codes.Unimplemented, "method CopyPipelineUpstream not implemented")
 }
-func (UnimplementedLMSServer) CopyPipelineDownstream(*Element, grpc.ServerStreamingServer[Element]) error {
+func (UnimplementedLMSServer) CopyPipelineDownstream(*Element, LMS_CopyPipelineDownstreamServer) error {
 	return status.Errorf(codes.Unimplemented, "method CopyPipelineDownstream not implemented")
 }
 func (UnimplementedLMSServer) ProcessElement(context.Context, *ProcessElementReq) (*emptypb.Empty, error) {
@@ -989,7 +1081,7 @@ func (UnimplementedLMSServer) ProcessElement(context.Context, *ProcessElementReq
 func (UnimplementedLMSServer) ProcessList(context.Context, *ProcessListRequest) (*ProcessListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ProcessList not implemented")
 }
-func (UnimplementedLMSServer) StreamList(grpc.ClientStreamingServer[StreamListRequest, StreamListResponse]) error {
+func (UnimplementedLMSServer) StreamList(LMS_StreamListServer) error {
 	return status.Errorf(codes.Unimplemented, "method StreamList not implemented")
 }
 func (UnimplementedLMSServer) GetAvailableFields(context.Context, *emptypb.Empty) (*ProcessFields, error) {
@@ -1040,7 +1132,7 @@ func (UnimplementedLMSServer) DeleteCollectionEntry(context.Context, *DeleteColl
 func (UnimplementedLMSServer) UpdateCollectionEntry(context.Context, *CollectionEntry) (*CollectionEntry, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateCollectionEntry not implemented")
 }
-func (UnimplementedLMSServer) StreamCollection(*StreamCollectionReq, grpc.ServerStreamingServer[CollectionEntry]) error {
+func (UnimplementedLMSServer) StreamCollection(*StreamCollectionReq, LMS_StreamCollectionServer) error {
 	return status.Errorf(codes.Unimplemented, "method StreamCollection not implemented")
 }
 func (UnimplementedLMSServer) SearchCollectionsPaginated(context.Context, *SearchCollectionsPaginatedReq) (*PaginatedSearchRes, error) {
@@ -1150,11 +1242,21 @@ func _LMS_ListFileTemplates_Handler(srv interface{}, stream grpc.ServerStream) e
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(LMSServer).ListFileTemplates(m, &grpc.GenericServerStream[GetFileTemplatesReq, FileTemplate]{ServerStream: stream})
+	return srv.(LMSServer).ListFileTemplates(m, &lMSListFileTemplatesServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type LMS_ListFileTemplatesServer = grpc.ServerStreamingServer[FileTemplate]
+type LMS_ListFileTemplatesServer interface {
+	Send(*FileTemplate) error
+	grpc.ServerStream
+}
+
+type lMSListFileTemplatesServer struct {
+	grpc.ServerStream
+}
+
+func (x *lMSListFileTemplatesServer) Send(m *FileTemplate) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _LMS_UpdateFileTemplate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(FileTemplate)
@@ -1431,11 +1533,21 @@ func _LMS_ListElements_Handler(srv interface{}, stream grpc.ServerStream) error 
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(LMSServer).ListElements(m, &grpc.GenericServerStream[ListElementsReq, Element]{ServerStream: stream})
+	return srv.(LMSServer).ListElements(m, &lMSListElementsServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type LMS_ListElementsServer = grpc.ServerStreamingServer[Element]
+type LMS_ListElementsServer interface {
+	Send(*Element) error
+	grpc.ServerStream
+}
+
+type lMSListElementsServer struct {
+	grpc.ServerStream
+}
+
+func (x *lMSListElementsServer) Send(m *Element) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _LMS_GetElement_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ElementPK)
@@ -1496,22 +1608,42 @@ func _LMS_CopyPipelineUpstream_Handler(srv interface{}, stream grpc.ServerStream
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(LMSServer).CopyPipelineUpstream(m, &grpc.GenericServerStream[Element, Element]{ServerStream: stream})
+	return srv.(LMSServer).CopyPipelineUpstream(m, &lMSCopyPipelineUpstreamServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type LMS_CopyPipelineUpstreamServer = grpc.ServerStreamingServer[Element]
+type LMS_CopyPipelineUpstreamServer interface {
+	Send(*Element) error
+	grpc.ServerStream
+}
+
+type lMSCopyPipelineUpstreamServer struct {
+	grpc.ServerStream
+}
+
+func (x *lMSCopyPipelineUpstreamServer) Send(m *Element) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _LMS_CopyPipelineDownstream_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(Element)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(LMSServer).CopyPipelineDownstream(m, &grpc.GenericServerStream[Element, Element]{ServerStream: stream})
+	return srv.(LMSServer).CopyPipelineDownstream(m, &lMSCopyPipelineDownstreamServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type LMS_CopyPipelineDownstreamServer = grpc.ServerStreamingServer[Element]
+type LMS_CopyPipelineDownstreamServer interface {
+	Send(*Element) error
+	grpc.ServerStream
+}
+
+type lMSCopyPipelineDownstreamServer struct {
+	grpc.ServerStream
+}
+
+func (x *lMSCopyPipelineDownstreamServer) Send(m *Element) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _LMS_ProcessElement_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ProcessElementReq)
@@ -1550,11 +1682,30 @@ func _LMS_ProcessList_Handler(srv interface{}, ctx context.Context, dec func(int
 }
 
 func _LMS_StreamList_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(LMSServer).StreamList(&grpc.GenericServerStream[StreamListRequest, StreamListResponse]{ServerStream: stream})
+	return srv.(LMSServer).StreamList(&lMSStreamListServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type LMS_StreamListServer = grpc.ClientStreamingServer[StreamListRequest, StreamListResponse]
+type LMS_StreamListServer interface {
+	SendAndClose(*StreamListResponse) error
+	Recv() (*StreamListRequest, error)
+	grpc.ServerStream
+}
+
+type lMSStreamListServer struct {
+	grpc.ServerStream
+}
+
+func (x *lMSStreamListServer) SendAndClose(m *StreamListResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *lMSStreamListServer) Recv() (*StreamListRequest, error) {
+	m := new(StreamListRequest)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
 
 func _LMS_GetAvailableFields_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(emptypb.Empty)
@@ -1849,11 +2000,21 @@ func _LMS_StreamCollection_Handler(srv interface{}, stream grpc.ServerStream) er
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(LMSServer).StreamCollection(m, &grpc.GenericServerStream[StreamCollectionReq, CollectionEntry]{ServerStream: stream})
+	return srv.(LMSServer).StreamCollection(m, &lMSStreamCollectionServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type LMS_StreamCollectionServer = grpc.ServerStreamingServer[CollectionEntry]
+type LMS_StreamCollectionServer interface {
+	Send(*CollectionEntry) error
+	grpc.ServerStream
+}
+
+type lMSStreamCollectionServer struct {
+	grpc.ServerStream
+}
+
+func (x *lMSStreamCollectionServer) Send(m *CollectionEntry) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _LMS_SearchCollectionsPaginated_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SearchCollectionsPaginatedReq)

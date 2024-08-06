@@ -30,8 +30,8 @@ import (
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
-// Requires gRPC-Go v1.64.0 or later.
-const _ = grpc.SupportPackageIsVersion9
+// Requires gRPC-Go v1.62.0 or later.
+const _ = grpc.SupportPackageIsVersion8
 
 const (
 	GhostNotifierApi_ListNotifications_FullMethodName = "/api.v1alpha1.ghostnotifier.GhostNotifierApi/ListNotifications"
@@ -42,7 +42,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type GhostNotifierApiClient interface {
 	// Opens a server side stream that will forward and ghost notifications to the client for the given user
-	ListNotifications(ctx context.Context, in *ListNotificationsReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[commons.GhostNotification], error)
+	ListNotifications(ctx context.Context, in *ListNotificationsReq, opts ...grpc.CallOption) (GhostNotifierApi_ListNotificationsClient, error)
 }
 
 type ghostNotifierApiClient struct {
@@ -53,13 +53,13 @@ func NewGhostNotifierApiClient(cc grpc.ClientConnInterface) GhostNotifierApiClie
 	return &ghostNotifierApiClient{cc}
 }
 
-func (c *ghostNotifierApiClient) ListNotifications(ctx context.Context, in *ListNotificationsReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[commons.GhostNotification], error) {
+func (c *ghostNotifierApiClient) ListNotifications(ctx context.Context, in *ListNotificationsReq, opts ...grpc.CallOption) (GhostNotifierApi_ListNotificationsClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &GhostNotifierApi_ServiceDesc.Streams[0], GhostNotifierApi_ListNotifications_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[ListNotificationsReq, commons.GhostNotification]{ClientStream: stream}
+	x := &ghostNotifierApiListNotificationsClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -69,15 +69,29 @@ func (c *ghostNotifierApiClient) ListNotifications(ctx context.Context, in *List
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type GhostNotifierApi_ListNotificationsClient = grpc.ServerStreamingClient[commons.GhostNotification]
+type GhostNotifierApi_ListNotificationsClient interface {
+	Recv() (*commons.GhostNotification, error)
+	grpc.ClientStream
+}
+
+type ghostNotifierApiListNotificationsClient struct {
+	grpc.ClientStream
+}
+
+func (x *ghostNotifierApiListNotificationsClient) Recv() (*commons.GhostNotification, error) {
+	m := new(commons.GhostNotification)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
 
 // GhostNotifierApiServer is the server API for GhostNotifierApi service.
 // All implementations must embed UnimplementedGhostNotifierApiServer
 // for forward compatibility.
 type GhostNotifierApiServer interface {
 	// Opens a server side stream that will forward and ghost notifications to the client for the given user
-	ListNotifications(*ListNotificationsReq, grpc.ServerStreamingServer[commons.GhostNotification]) error
+	ListNotifications(*ListNotificationsReq, GhostNotifierApi_ListNotificationsServer) error
 	mustEmbedUnimplementedGhostNotifierApiServer()
 }
 
@@ -88,7 +102,7 @@ type GhostNotifierApiServer interface {
 // pointer dereference when methods are called.
 type UnimplementedGhostNotifierApiServer struct{}
 
-func (UnimplementedGhostNotifierApiServer) ListNotifications(*ListNotificationsReq, grpc.ServerStreamingServer[commons.GhostNotification]) error {
+func (UnimplementedGhostNotifierApiServer) ListNotifications(*ListNotificationsReq, GhostNotifierApi_ListNotificationsServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListNotifications not implemented")
 }
 func (UnimplementedGhostNotifierApiServer) mustEmbedUnimplementedGhostNotifierApiServer() {}
@@ -117,11 +131,21 @@ func _GhostNotifierApi_ListNotifications_Handler(srv interface{}, stream grpc.Se
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(GhostNotifierApiServer).ListNotifications(m, &grpc.GenericServerStream[ListNotificationsReq, commons.GhostNotification]{ServerStream: stream})
+	return srv.(GhostNotifierApiServer).ListNotifications(m, &ghostNotifierApiListNotificationsServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type GhostNotifierApi_ListNotificationsServer = grpc.ServerStreamingServer[commons.GhostNotification]
+type GhostNotifierApi_ListNotificationsServer interface {
+	Send(*commons.GhostNotification) error
+	grpc.ServerStream
+}
+
+type ghostNotifierApiListNotificationsServer struct {
+	grpc.ServerStream
+}
+
+func (x *ghostNotifierApiListNotificationsServer) Send(m *commons.GhostNotification) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 // GhostNotifierApi_ServiceDesc is the grpc.ServiceDesc for GhostNotifierApi service.
 // It's only intended for direct use with grpc.RegisterService,

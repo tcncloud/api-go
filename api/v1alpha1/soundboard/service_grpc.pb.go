@@ -15,8 +15,8 @@ import (
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
-// Requires gRPC-Go v1.64.0 or later.
-const _ = grpc.SupportPackageIsVersion9
+// Requires gRPC-Go v1.62.0 or later.
+const _ = grpc.SupportPackageIsVersion8
 
 const (
 	Soundboard_GetSoundboardFile_FullMethodName = "/api.v1alpha1.soundboard.Soundboard/GetSoundboardFile"
@@ -32,7 +32,7 @@ const (
 type SoundboardClient interface {
 	// GetSoundboardFile streams back segments of the audio file stored in rec
 	// corresponding to the provided soundboard id and org id.
-	GetSoundboardFile(ctx context.Context, in *GetSoundboardFileReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[GetSoundboardFileRes], error)
+	GetSoundboardFile(ctx context.Context, in *GetSoundboardFileReq, opts ...grpc.CallOption) (Soundboard_GetSoundboardFileClient, error)
 	// CreateSoundboard takes in a stream of metadata and audio file segments.
 	// The first expected message should contain SoundboardDetails, then following
 	// messages will be chunks of audio file data, which is then aggregated and put
@@ -55,13 +55,13 @@ func NewSoundboardClient(cc grpc.ClientConnInterface) SoundboardClient {
 	return &soundboardClient{cc}
 }
 
-func (c *soundboardClient) GetSoundboardFile(ctx context.Context, in *GetSoundboardFileReq, opts ...grpc.CallOption) (grpc.ServerStreamingClient[GetSoundboardFileRes], error) {
+func (c *soundboardClient) GetSoundboardFile(ctx context.Context, in *GetSoundboardFileReq, opts ...grpc.CallOption) (Soundboard_GetSoundboardFileClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &Soundboard_ServiceDesc.Streams[0], Soundboard_GetSoundboardFile_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[GetSoundboardFileReq, GetSoundboardFileRes]{ClientStream: stream}
+	x := &soundboardGetSoundboardFileClient{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -71,8 +71,22 @@ func (c *soundboardClient) GetSoundboardFile(ctx context.Context, in *GetSoundbo
 	return x, nil
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Soundboard_GetSoundboardFileClient = grpc.ServerStreamingClient[GetSoundboardFileRes]
+type Soundboard_GetSoundboardFileClient interface {
+	Recv() (*GetSoundboardFileRes, error)
+	grpc.ClientStream
+}
+
+type soundboardGetSoundboardFileClient struct {
+	grpc.ClientStream
+}
+
+func (x *soundboardGetSoundboardFileClient) Recv() (*GetSoundboardFileRes, error) {
+	m := new(GetSoundboardFileRes)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
 
 func (c *soundboardClient) CreateSoundboard(ctx context.Context, in *CreateSoundboardReq, opts ...grpc.CallOption) (*CreateSoundboardRes, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -120,7 +134,7 @@ func (c *soundboardClient) DeleteSoundboard(ctx context.Context, in *DeleteSound
 type SoundboardServer interface {
 	// GetSoundboardFile streams back segments of the audio file stored in rec
 	// corresponding to the provided soundboard id and org id.
-	GetSoundboardFile(*GetSoundboardFileReq, grpc.ServerStreamingServer[GetSoundboardFileRes]) error
+	GetSoundboardFile(*GetSoundboardFileReq, Soundboard_GetSoundboardFileServer) error
 	// CreateSoundboard takes in a stream of metadata and audio file segments.
 	// The first expected message should contain SoundboardDetails, then following
 	// messages will be chunks of audio file data, which is then aggregated and put
@@ -143,7 +157,7 @@ type SoundboardServer interface {
 // pointer dereference when methods are called.
 type UnimplementedSoundboardServer struct{}
 
-func (UnimplementedSoundboardServer) GetSoundboardFile(*GetSoundboardFileReq, grpc.ServerStreamingServer[GetSoundboardFileRes]) error {
+func (UnimplementedSoundboardServer) GetSoundboardFile(*GetSoundboardFileReq, Soundboard_GetSoundboardFileServer) error {
 	return status.Errorf(codes.Unimplemented, "method GetSoundboardFile not implemented")
 }
 func (UnimplementedSoundboardServer) CreateSoundboard(context.Context, *CreateSoundboardReq) (*CreateSoundboardRes, error) {
@@ -184,11 +198,21 @@ func _Soundboard_GetSoundboardFile_Handler(srv interface{}, stream grpc.ServerSt
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(SoundboardServer).GetSoundboardFile(m, &grpc.GenericServerStream[GetSoundboardFileReq, GetSoundboardFileRes]{ServerStream: stream})
+	return srv.(SoundboardServer).GetSoundboardFile(m, &soundboardGetSoundboardFileServer{ServerStream: stream})
 }
 
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type Soundboard_GetSoundboardFileServer = grpc.ServerStreamingServer[GetSoundboardFileRes]
+type Soundboard_GetSoundboardFileServer interface {
+	Send(*GetSoundboardFileRes) error
+	grpc.ServerStream
+}
+
+type soundboardGetSoundboardFileServer struct {
+	grpc.ServerStream
+}
+
+func (x *soundboardGetSoundboardFileServer) Send(m *GetSoundboardFileRes) error {
+	return x.ServerStream.SendMsg(m)
+}
 
 func _Soundboard_CreateSoundboard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateSoundboardReq)
