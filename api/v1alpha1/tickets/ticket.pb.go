@@ -23,6 +23,114 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type ActionTypes int32
+
+const (
+	// NA
+	ActionTypes_NA ActionTypes = 0
+	// CALLBACK
+	ActionTypes_Callback ActionTypes = 1
+	// EMAIBACK
+	ActionTypes_Emailback ActionTypes = 2
+	// SMSBACK
+	ActionTypes_Smsback ActionTypes = 3
+)
+
+// Enum value maps for ActionTypes.
+var (
+	ActionTypes_name = map[int32]string{
+		0: "NA",
+		1: "Callback",
+		2: "Emailback",
+		3: "Smsback",
+	}
+	ActionTypes_value = map[string]int32{
+		"NA":        0,
+		"Callback":  1,
+		"Emailback": 2,
+		"Smsback":   3,
+	}
+)
+
+func (x ActionTypes) Enum() *ActionTypes {
+	p := new(ActionTypes)
+	*p = x
+	return p
+}
+
+func (x ActionTypes) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (ActionTypes) Descriptor() protoreflect.EnumDescriptor {
+	return file_api_v1alpha1_tickets_ticket_proto_enumTypes[0].Descriptor()
+}
+
+func (ActionTypes) Type() protoreflect.EnumType {
+	return &file_api_v1alpha1_tickets_ticket_proto_enumTypes[0]
+}
+
+func (x ActionTypes) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use ActionTypes.Descriptor instead.
+func (ActionTypes) EnumDescriptor() ([]byte, []int) {
+	return file_api_v1alpha1_tickets_ticket_proto_rawDescGZIP(), []int{0}
+}
+
+type SLAConditions int32
+
+const (
+	// NA
+	SLAConditions_None SLAConditions = 0
+	// Respond
+	SLAConditions_Respond SLAConditions = 1
+	// Resolve
+	SLAConditions_Resolve SLAConditions = 2
+)
+
+// Enum value maps for SLAConditions.
+var (
+	SLAConditions_name = map[int32]string{
+		0: "None",
+		1: "Respond",
+		2: "Resolve",
+	}
+	SLAConditions_value = map[string]int32{
+		"None":    0,
+		"Respond": 1,
+		"Resolve": 2,
+	}
+)
+
+func (x SLAConditions) Enum() *SLAConditions {
+	p := new(SLAConditions)
+	*p = x
+	return p
+}
+
+func (x SLAConditions) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (SLAConditions) Descriptor() protoreflect.EnumDescriptor {
+	return file_api_v1alpha1_tickets_ticket_proto_enumTypes[1].Descriptor()
+}
+
+func (SLAConditions) Type() protoreflect.EnumType {
+	return &file_api_v1alpha1_tickets_ticket_proto_enumTypes[1]
+}
+
+func (x SLAConditions) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use SLAConditions.Descriptor instead.
+func (SLAConditions) EnumDescriptor() ([]byte, []int) {
+	return file_api_v1alpha1_tickets_ticket_proto_rawDescGZIP(), []int{1}
+}
+
 type PingReq struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -4315,20 +4423,27 @@ var file_api_v1alpha1_tickets_ticket_proto_rawDesc = []byte{
 	0x12, 0x1f, 0x0a, 0x0b, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x5f, 0x63, 0x6f, 0x64, 0x65, 0x18,
 	0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x43, 0x6f, 0x64,
 	0x65, 0x12, 0x10, 0x0a, 0x03, 0x75, 0x72, 0x69, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03,
-	0x75, 0x72, 0x69, 0x42, 0xca, 0x01, 0x0a, 0x18, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e,
-	0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73,
-	0x42, 0x0b, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a,
-	0x2f, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63,
-	0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f,
-	0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73,
-	0xa2, 0x02, 0x03, 0x41, 0x56, 0x54, 0xaa, 0x02, 0x14, 0x41, 0x70, 0x69, 0x2e, 0x56, 0x31, 0x61,
-	0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0xca, 0x02, 0x14,
-	0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x54, 0x69, 0x63,
-	0x6b, 0x65, 0x74, 0x73, 0xe2, 0x02, 0x20, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70,
-	0x68, 0x61, 0x31, 0x5c, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d,
-	0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x16, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x56,
-	0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x3a, 0x3a, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73,
-	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x75, 0x72, 0x69, 0x2a, 0x3f, 0x0a, 0x0b, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x79, 0x70,
+	0x65, 0x73, 0x12, 0x06, 0x0a, 0x02, 0x4e, 0x41, 0x10, 0x00, 0x12, 0x0c, 0x0a, 0x08, 0x43, 0x61,
+	0x6c, 0x6c, 0x62, 0x61, 0x63, 0x6b, 0x10, 0x01, 0x12, 0x0d, 0x0a, 0x09, 0x45, 0x6d, 0x61, 0x69,
+	0x6c, 0x62, 0x61, 0x63, 0x6b, 0x10, 0x02, 0x12, 0x0b, 0x0a, 0x07, 0x53, 0x6d, 0x73, 0x62, 0x61,
+	0x63, 0x6b, 0x10, 0x03, 0x2a, 0x33, 0x0a, 0x0d, 0x53, 0x4c, 0x41, 0x43, 0x6f, 0x6e, 0x64, 0x69,
+	0x74, 0x69, 0x6f, 0x6e, 0x73, 0x12, 0x08, 0x0a, 0x04, 0x4e, 0x6f, 0x6e, 0x65, 0x10, 0x00, 0x12,
+	0x0b, 0x0a, 0x07, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x64, 0x10, 0x01, 0x12, 0x0b, 0x0a, 0x07,
+	0x52, 0x65, 0x73, 0x6f, 0x6c, 0x76, 0x65, 0x10, 0x02, 0x42, 0xca, 0x01, 0x0a, 0x18, 0x63, 0x6f,
+	0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x74,
+	0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x42, 0x0b, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x50, 0x72,
+	0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x2f, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f,
+	0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67,
+	0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x74,
+	0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0xa2, 0x02, 0x03, 0x41, 0x56, 0x54, 0xaa, 0x02, 0x14, 0x41,
+	0x70, 0x69, 0x2e, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x54, 0x69, 0x63, 0x6b,
+	0x65, 0x74, 0x73, 0xca, 0x02, 0x14, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68,
+	0x61, 0x31, 0x5c, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0xe2, 0x02, 0x20, 0x41, 0x70, 0x69,
+	0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74,
+	0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x16,
+	0x41, 0x70, 0x69, 0x3a, 0x3a, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x3a, 0x3a, 0x54,
+	0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -4343,147 +4458,150 @@ func file_api_v1alpha1_tickets_ticket_proto_rawDescGZIP() []byte {
 	return file_api_v1alpha1_tickets_ticket_proto_rawDescData
 }
 
+var file_api_v1alpha1_tickets_ticket_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
 var file_api_v1alpha1_tickets_ticket_proto_msgTypes = make([]protoimpl.MessageInfo, 70)
 var file_api_v1alpha1_tickets_ticket_proto_goTypes = []any{
-	(*PingReq)(nil),                           // 0: api.v1alpha1.tickets.PingReq
-	(*PingRes)(nil),                           // 1: api.v1alpha1.tickets.PingRes
-	(*CreateTicketReq)(nil),                   // 2: api.v1alpha1.tickets.CreateTicketReq
-	(*CreateTicketTemplateRequest)(nil),       // 3: api.v1alpha1.tickets.CreateTicketTemplateRequest
-	(*CreateTicketTemplateResponse)(nil),      // 4: api.v1alpha1.tickets.CreateTicketTemplateResponse
-	(*EditTicketTemplateRequest)(nil),         // 5: api.v1alpha1.tickets.EditTicketTemplateRequest
-	(*EditTicketTemplateResponse)(nil),        // 6: api.v1alpha1.tickets.EditTicketTemplateResponse
-	(*ListTicketTemplateRequest)(nil),         // 7: api.v1alpha1.tickets.ListTicketTemplateRequest
-	(*ListTicketTemplateResponse)(nil),        // 8: api.v1alpha1.tickets.ListTicketTemplateResponse
-	(*AssignProjectTemplateRequest)(nil),      // 9: api.v1alpha1.tickets.AssignProjectTemplateRequest
-	(*AssignProjectTemplateResponse)(nil),     // 10: api.v1alpha1.tickets.AssignProjectTemplateResponse
-	(*CreateTicketRes)(nil),                   // 11: api.v1alpha1.tickets.CreateTicketRes
-	(*GetActionTypeRequest)(nil),              // 12: api.v1alpha1.tickets.GetActionTypeRequest
-	(*GetActionTypeResponse)(nil),             // 13: api.v1alpha1.tickets.GetActionTypeResponse
-	(*GetPhoneNumberTypeRequest)(nil),         // 14: api.v1alpha1.tickets.GetPhoneNumberTypeRequest
-	(*GetPhoneNumberTypeResponse)(nil),        // 15: api.v1alpha1.tickets.GetPhoneNumberTypeResponse
-	(*EditTicketReq)(nil),                     // 16: api.v1alpha1.tickets.EditTicketReq
-	(*EditMaskTicketReq)(nil),                 // 17: api.v1alpha1.tickets.EditMaskTicketReq
-	(*EditMaskTicketRes)(nil),                 // 18: api.v1alpha1.tickets.EditMaskTicketRes
-	(*ListAllocatedTicketRes)(nil),            // 19: api.v1alpha1.tickets.ListAllocatedTicketRes
-	(*ListAllocatedTicketReq)(nil),            // 20: api.v1alpha1.tickets.ListAllocatedTicketReq
-	(*ListAgentTicketsResponse)(nil),          // 21: api.v1alpha1.tickets.ListAgentTicketsResponse
-	(*ListAgentTicketsRequest)(nil),           // 22: api.v1alpha1.tickets.ListAgentTicketsRequest
-	(*ListAvailableAgentTicketsResponse)(nil), // 23: api.v1alpha1.tickets.ListAvailableAgentTicketsResponse
-	(*ListAvailableAgentTicketsRequest)(nil),  // 24: api.v1alpha1.tickets.ListAvailableAgentTicketsRequest
-	(*AvailableTicketsFilter)(nil),            // 25: api.v1alpha1.tickets.AvailableTicketsFilter
-	(*EditTicketRes)(nil),                     // 26: api.v1alpha1.tickets.EditTicketRes
-	(*ListTicketsReq)(nil),                    // 27: api.v1alpha1.tickets.ListTicketsReq
-	(*ListTicketsRes)(nil),                    // 28: api.v1alpha1.tickets.ListTicketsRes
-	(*AssignTicketReq)(nil),                   // 29: api.v1alpha1.tickets.AssignTicketReq
-	(*AssignTicketRes)(nil),                   // 30: api.v1alpha1.tickets.AssignTicketRes
-	(*ViewTicketReq)(nil),                     // 31: api.v1alpha1.tickets.ViewTicketReq
-	(*ViewTicketRes)(nil),                     // 32: api.v1alpha1.tickets.ViewTicketRes
-	(*CreateCommentReq)(nil),                  // 33: api.v1alpha1.tickets.CreateCommentReq
-	(*CreateCommentRes)(nil),                  // 34: api.v1alpha1.tickets.CreateCommentRes
-	(*CloseTicketReq)(nil),                    // 35: api.v1alpha1.tickets.CloseTicketReq
-	(*CloseTicketRes)(nil),                    // 36: api.v1alpha1.tickets.CloseTicketRes
-	(*CreateSlaReq)(nil),                      // 37: api.v1alpha1.tickets.CreateSlaReq
-	(*CreateSlaRes)(nil),                      // 38: api.v1alpha1.tickets.CreateSlaRes
-	(*ListSlaReq)(nil),                        // 39: api.v1alpha1.tickets.ListSlaReq
-	(*ListSlaRes)(nil),                        // 40: api.v1alpha1.tickets.ListSlaRes
-	(*UpdateSlaReq)(nil),                      // 41: api.v1alpha1.tickets.UpdateSlaReq
-	(*UpdateSlaRes)(nil),                      // 42: api.v1alpha1.tickets.UpdateSlaRes
-	(*ListSlaConditionReq)(nil),               // 43: api.v1alpha1.tickets.ListSlaConditionReq
-	(*ListSlaConditionRes)(nil),               // 44: api.v1alpha1.tickets.ListSlaConditionRes
-	(*ReplyCommentReq)(nil),                   // 45: api.v1alpha1.tickets.ReplyCommentReq
-	(*ReplyCommentRes)(nil),                   // 46: api.v1alpha1.tickets.ReplyCommentRes
-	(*CreateSelfAssignReq)(nil),               // 47: api.v1alpha1.tickets.CreateSelfAssignReq
-	(*CreateSelfAssignRes)(nil),               // 48: api.v1alpha1.tickets.CreateSelfAssignRes
-	(*ListSkillsRequest)(nil),                 // 49: api.v1alpha1.tickets.ListSkillsRequest
-	(*ListSkillsResponse)(nil),                // 50: api.v1alpha1.tickets.ListSkillsResponse
-	(*Skill)(nil),                             // 51: api.v1alpha1.tickets.Skill
-	(*ListUsersRequest)(nil),                  // 52: api.v1alpha1.tickets.ListUsersRequest
-	(*ListUsersResponse)(nil),                 // 53: api.v1alpha1.tickets.ListUsersResponse
-	(*User)(nil),                              // 54: api.v1alpha1.tickets.User
-	(*CreateTicketActionRequest)(nil),         // 55: api.v1alpha1.tickets.CreateTicketActionRequest
-	(*CreateTicketActionResponse)(nil),        // 56: api.v1alpha1.tickets.CreateTicketActionResponse
-	(*CloseTicketActionRequest)(nil),          // 57: api.v1alpha1.tickets.CloseTicketActionRequest
-	(*CloseTicketActionResponse)(nil),         // 58: api.v1alpha1.tickets.CloseTicketActionResponse
-	(*AssignTicketActionRequest)(nil),         // 59: api.v1alpha1.tickets.AssignTicketActionRequest
-	(*AssignTicketActionResponse)(nil),        // 60: api.v1alpha1.tickets.AssignTicketActionResponse
-	(*ChangeTicketStatusRequest)(nil),         // 61: api.v1alpha1.tickets.ChangeTicketStatusRequest
-	(*ChangeTicketStatusResponse)(nil),        // 62: api.v1alpha1.tickets.ChangeTicketStatusResponse
-	(*AddEntityRefRequest)(nil),               // 63: api.v1alpha1.tickets.AddEntityRefRequest
-	(*AddEntityRefResponse)(nil),              // 64: api.v1alpha1.tickets.AddEntityRefResponse
-	(*ListEntityRefsByTicketRequest)(nil),     // 65: api.v1alpha1.tickets.ListEntityRefsByTicketRequest
-	(*ListEntityRefsByTicketResponse)(nil),    // 66: api.v1alpha1.tickets.ListEntityRefsByTicketResponse
-	(*ListTicketsByEntityRefRequest)(nil),     // 67: api.v1alpha1.tickets.ListTicketsByEntityRefRequest
-	(*ListTicketsByEntityRefResponse)(nil),    // 68: api.v1alpha1.tickets.ListTicketsByEntityRefResponse
-	(*EntityRef)(nil),                         // 69: api.v1alpha1.tickets.EntityRef
-	(*timestamppb.Timestamp)(nil),             // 70: google.protobuf.Timestamp
-	(*commons.Metadata)(nil),                  // 71: api.commons.Metadata
-	(*commons.Skills)(nil),                    // 72: api.commons.Skills
-	(*commons.Sla)(nil),                       // 73: api.commons.Sla
-	(*commons.TicketAction)(nil),              // 74: api.commons.TicketAction
-	(*commons.TicketTemplate)(nil),            // 75: api.commons.TicketTemplate
-	(*fieldmaskpb.FieldMask)(nil),             // 76: google.protobuf.FieldMask
-	(*commons.ListTemplate)(nil),              // 77: api.commons.ListTemplate
-	(*commons.TicketProjectTemplate)(nil),     // 78: api.commons.TicketProjectTemplate
-	(*commons.AssignProjectTemplate)(nil),     // 79: api.commons.AssignProjectTemplate
-	(*commons.TemplateDescription)(nil),       // 80: api.commons.TemplateDescription
-	(*commons.Ticket)(nil),                    // 81: api.commons.Ticket
-	(*commons.ActionType)(nil),                // 82: api.commons.ActionType
-	(commons.PhoneNumberType)(0),              // 83: api.commons.PhoneNumberType
-	(*commons.EditAttribute)(nil),             // 84: api.commons.EditAttribute
-	(*commons.Comment)(nil),                   // 85: api.commons.Comment
-	(*commons.ReplyComment)(nil),              // 86: api.commons.ReplyComment
-	(*commons.Duration)(nil),                  // 87: api.commons.Duration
-	(*commons.TicketSla)(nil),                 // 88: api.commons.TicketSla
-	(*commons.SlaConditions)(nil),             // 89: api.commons.SlaConditions
-	(*commons.ConfirmReplyComment)(nil),       // 90: api.commons.ConfirmReplyComment
-	(commons.TicketStatus)(0),                 // 91: api.commons.TicketStatus
+	(ActionTypes)(0),                          // 0: api.v1alpha1.tickets.ActionTypes
+	(SLAConditions)(0),                        // 1: api.v1alpha1.tickets.SLAConditions
+	(*PingReq)(nil),                           // 2: api.v1alpha1.tickets.PingReq
+	(*PingRes)(nil),                           // 3: api.v1alpha1.tickets.PingRes
+	(*CreateTicketReq)(nil),                   // 4: api.v1alpha1.tickets.CreateTicketReq
+	(*CreateTicketTemplateRequest)(nil),       // 5: api.v1alpha1.tickets.CreateTicketTemplateRequest
+	(*CreateTicketTemplateResponse)(nil),      // 6: api.v1alpha1.tickets.CreateTicketTemplateResponse
+	(*EditTicketTemplateRequest)(nil),         // 7: api.v1alpha1.tickets.EditTicketTemplateRequest
+	(*EditTicketTemplateResponse)(nil),        // 8: api.v1alpha1.tickets.EditTicketTemplateResponse
+	(*ListTicketTemplateRequest)(nil),         // 9: api.v1alpha1.tickets.ListTicketTemplateRequest
+	(*ListTicketTemplateResponse)(nil),        // 10: api.v1alpha1.tickets.ListTicketTemplateResponse
+	(*AssignProjectTemplateRequest)(nil),      // 11: api.v1alpha1.tickets.AssignProjectTemplateRequest
+	(*AssignProjectTemplateResponse)(nil),     // 12: api.v1alpha1.tickets.AssignProjectTemplateResponse
+	(*CreateTicketRes)(nil),                   // 13: api.v1alpha1.tickets.CreateTicketRes
+	(*GetActionTypeRequest)(nil),              // 14: api.v1alpha1.tickets.GetActionTypeRequest
+	(*GetActionTypeResponse)(nil),             // 15: api.v1alpha1.tickets.GetActionTypeResponse
+	(*GetPhoneNumberTypeRequest)(nil),         // 16: api.v1alpha1.tickets.GetPhoneNumberTypeRequest
+	(*GetPhoneNumberTypeResponse)(nil),        // 17: api.v1alpha1.tickets.GetPhoneNumberTypeResponse
+	(*EditTicketReq)(nil),                     // 18: api.v1alpha1.tickets.EditTicketReq
+	(*EditMaskTicketReq)(nil),                 // 19: api.v1alpha1.tickets.EditMaskTicketReq
+	(*EditMaskTicketRes)(nil),                 // 20: api.v1alpha1.tickets.EditMaskTicketRes
+	(*ListAllocatedTicketRes)(nil),            // 21: api.v1alpha1.tickets.ListAllocatedTicketRes
+	(*ListAllocatedTicketReq)(nil),            // 22: api.v1alpha1.tickets.ListAllocatedTicketReq
+	(*ListAgentTicketsResponse)(nil),          // 23: api.v1alpha1.tickets.ListAgentTicketsResponse
+	(*ListAgentTicketsRequest)(nil),           // 24: api.v1alpha1.tickets.ListAgentTicketsRequest
+	(*ListAvailableAgentTicketsResponse)(nil), // 25: api.v1alpha1.tickets.ListAvailableAgentTicketsResponse
+	(*ListAvailableAgentTicketsRequest)(nil),  // 26: api.v1alpha1.tickets.ListAvailableAgentTicketsRequest
+	(*AvailableTicketsFilter)(nil),            // 27: api.v1alpha1.tickets.AvailableTicketsFilter
+	(*EditTicketRes)(nil),                     // 28: api.v1alpha1.tickets.EditTicketRes
+	(*ListTicketsReq)(nil),                    // 29: api.v1alpha1.tickets.ListTicketsReq
+	(*ListTicketsRes)(nil),                    // 30: api.v1alpha1.tickets.ListTicketsRes
+	(*AssignTicketReq)(nil),                   // 31: api.v1alpha1.tickets.AssignTicketReq
+	(*AssignTicketRes)(nil),                   // 32: api.v1alpha1.tickets.AssignTicketRes
+	(*ViewTicketReq)(nil),                     // 33: api.v1alpha1.tickets.ViewTicketReq
+	(*ViewTicketRes)(nil),                     // 34: api.v1alpha1.tickets.ViewTicketRes
+	(*CreateCommentReq)(nil),                  // 35: api.v1alpha1.tickets.CreateCommentReq
+	(*CreateCommentRes)(nil),                  // 36: api.v1alpha1.tickets.CreateCommentRes
+	(*CloseTicketReq)(nil),                    // 37: api.v1alpha1.tickets.CloseTicketReq
+	(*CloseTicketRes)(nil),                    // 38: api.v1alpha1.tickets.CloseTicketRes
+	(*CreateSlaReq)(nil),                      // 39: api.v1alpha1.tickets.CreateSlaReq
+	(*CreateSlaRes)(nil),                      // 40: api.v1alpha1.tickets.CreateSlaRes
+	(*ListSlaReq)(nil),                        // 41: api.v1alpha1.tickets.ListSlaReq
+	(*ListSlaRes)(nil),                        // 42: api.v1alpha1.tickets.ListSlaRes
+	(*UpdateSlaReq)(nil),                      // 43: api.v1alpha1.tickets.UpdateSlaReq
+	(*UpdateSlaRes)(nil),                      // 44: api.v1alpha1.tickets.UpdateSlaRes
+	(*ListSlaConditionReq)(nil),               // 45: api.v1alpha1.tickets.ListSlaConditionReq
+	(*ListSlaConditionRes)(nil),               // 46: api.v1alpha1.tickets.ListSlaConditionRes
+	(*ReplyCommentReq)(nil),                   // 47: api.v1alpha1.tickets.ReplyCommentReq
+	(*ReplyCommentRes)(nil),                   // 48: api.v1alpha1.tickets.ReplyCommentRes
+	(*CreateSelfAssignReq)(nil),               // 49: api.v1alpha1.tickets.CreateSelfAssignReq
+	(*CreateSelfAssignRes)(nil),               // 50: api.v1alpha1.tickets.CreateSelfAssignRes
+	(*ListSkillsRequest)(nil),                 // 51: api.v1alpha1.tickets.ListSkillsRequest
+	(*ListSkillsResponse)(nil),                // 52: api.v1alpha1.tickets.ListSkillsResponse
+	(*Skill)(nil),                             // 53: api.v1alpha1.tickets.Skill
+	(*ListUsersRequest)(nil),                  // 54: api.v1alpha1.tickets.ListUsersRequest
+	(*ListUsersResponse)(nil),                 // 55: api.v1alpha1.tickets.ListUsersResponse
+	(*User)(nil),                              // 56: api.v1alpha1.tickets.User
+	(*CreateTicketActionRequest)(nil),         // 57: api.v1alpha1.tickets.CreateTicketActionRequest
+	(*CreateTicketActionResponse)(nil),        // 58: api.v1alpha1.tickets.CreateTicketActionResponse
+	(*CloseTicketActionRequest)(nil),          // 59: api.v1alpha1.tickets.CloseTicketActionRequest
+	(*CloseTicketActionResponse)(nil),         // 60: api.v1alpha1.tickets.CloseTicketActionResponse
+	(*AssignTicketActionRequest)(nil),         // 61: api.v1alpha1.tickets.AssignTicketActionRequest
+	(*AssignTicketActionResponse)(nil),        // 62: api.v1alpha1.tickets.AssignTicketActionResponse
+	(*ChangeTicketStatusRequest)(nil),         // 63: api.v1alpha1.tickets.ChangeTicketStatusRequest
+	(*ChangeTicketStatusResponse)(nil),        // 64: api.v1alpha1.tickets.ChangeTicketStatusResponse
+	(*AddEntityRefRequest)(nil),               // 65: api.v1alpha1.tickets.AddEntityRefRequest
+	(*AddEntityRefResponse)(nil),              // 66: api.v1alpha1.tickets.AddEntityRefResponse
+	(*ListEntityRefsByTicketRequest)(nil),     // 67: api.v1alpha1.tickets.ListEntityRefsByTicketRequest
+	(*ListEntityRefsByTicketResponse)(nil),    // 68: api.v1alpha1.tickets.ListEntityRefsByTicketResponse
+	(*ListTicketsByEntityRefRequest)(nil),     // 69: api.v1alpha1.tickets.ListTicketsByEntityRefRequest
+	(*ListTicketsByEntityRefResponse)(nil),    // 70: api.v1alpha1.tickets.ListTicketsByEntityRefResponse
+	(*EntityRef)(nil),                         // 71: api.v1alpha1.tickets.EntityRef
+	(*timestamppb.Timestamp)(nil),             // 72: google.protobuf.Timestamp
+	(*commons.Metadata)(nil),                  // 73: api.commons.Metadata
+	(*commons.Skills)(nil),                    // 74: api.commons.Skills
+	(*commons.Sla)(nil),                       // 75: api.commons.Sla
+	(*commons.TicketAction)(nil),              // 76: api.commons.TicketAction
+	(*commons.TicketTemplate)(nil),            // 77: api.commons.TicketTemplate
+	(*fieldmaskpb.FieldMask)(nil),             // 78: google.protobuf.FieldMask
+	(*commons.ListTemplate)(nil),              // 79: api.commons.ListTemplate
+	(*commons.TicketProjectTemplate)(nil),     // 80: api.commons.TicketProjectTemplate
+	(*commons.AssignProjectTemplate)(nil),     // 81: api.commons.AssignProjectTemplate
+	(*commons.TemplateDescription)(nil),       // 82: api.commons.TemplateDescription
+	(*commons.Ticket)(nil),                    // 83: api.commons.Ticket
+	(*commons.ActionType)(nil),                // 84: api.commons.ActionType
+	(commons.PhoneNumberType)(0),              // 85: api.commons.PhoneNumberType
+	(*commons.EditAttribute)(nil),             // 86: api.commons.EditAttribute
+	(*commons.Comment)(nil),                   // 87: api.commons.Comment
+	(*commons.ReplyComment)(nil),              // 88: api.commons.ReplyComment
+	(*commons.Duration)(nil),                  // 89: api.commons.Duration
+	(*commons.TicketSla)(nil),                 // 90: api.commons.TicketSla
+	(*commons.SlaConditions)(nil),             // 91: api.commons.SlaConditions
+	(*commons.ConfirmReplyComment)(nil),       // 92: api.commons.ConfirmReplyComment
+	(commons.TicketStatus)(0),                 // 93: api.commons.TicketStatus
 }
 var file_api_v1alpha1_tickets_ticket_proto_depIdxs = []int32{
-	70, // 0: api.v1alpha1.tickets.CreateTicketReq.due_date:type_name -> google.protobuf.Timestamp
-	71, // 1: api.v1alpha1.tickets.CreateTicketReq.metadata:type_name -> api.commons.Metadata
-	72, // 2: api.v1alpha1.tickets.CreateTicketReq.ticket_skills:type_name -> api.commons.Skills
-	73, // 3: api.v1alpha1.tickets.CreateTicketReq.ticket_sla:type_name -> api.commons.Sla
-	74, // 4: api.v1alpha1.tickets.CreateTicketReq.ticket_action:type_name -> api.commons.TicketAction
-	75, // 5: api.v1alpha1.tickets.CreateTicketTemplateRequest.ticket_template:type_name -> api.commons.TicketTemplate
-	75, // 6: api.v1alpha1.tickets.CreateTicketTemplateResponse.ticket_template:type_name -> api.commons.TicketTemplate
-	75, // 7: api.v1alpha1.tickets.EditTicketTemplateRequest.edit_value:type_name -> api.commons.TicketTemplate
-	76, // 8: api.v1alpha1.tickets.EditTicketTemplateRequest.edited_fields_mask:type_name -> google.protobuf.FieldMask
-	76, // 9: api.v1alpha1.tickets.ListTicketTemplateRequest.request_mask:type_name -> google.protobuf.FieldMask
-	77, // 10: api.v1alpha1.tickets.ListTicketTemplateResponse.enabled_templates:type_name -> api.commons.ListTemplate
-	78, // 11: api.v1alpha1.tickets.ListTicketTemplateResponse.ticket_project_template:type_name -> api.commons.TicketProjectTemplate
-	79, // 12: api.v1alpha1.tickets.AssignProjectTemplateRequest.project_template:type_name -> api.commons.AssignProjectTemplate
-	80, // 13: api.v1alpha1.tickets.AssignProjectTemplateRequest.template_description:type_name -> api.commons.TemplateDescription
-	81, // 14: api.v1alpha1.tickets.CreateTicketRes.ticket:type_name -> api.commons.Ticket
-	82, // 15: api.v1alpha1.tickets.GetActionTypeResponse.action_type:type_name -> api.commons.ActionType
-	83, // 16: api.v1alpha1.tickets.GetPhoneNumberTypeResponse.phone_type:type_name -> api.commons.PhoneNumberType
-	84, // 17: api.v1alpha1.tickets.EditTicketReq.edit_value:type_name -> api.commons.EditAttribute
-	81, // 18: api.v1alpha1.tickets.EditMaskTicketReq.edit_value:type_name -> api.commons.Ticket
-	76, // 19: api.v1alpha1.tickets.EditMaskTicketReq.edited_fields_mask:type_name -> google.protobuf.FieldMask
-	81, // 20: api.v1alpha1.tickets.ListAgentTicketsResponse.ticket:type_name -> api.commons.Ticket
-	76, // 21: api.v1alpha1.tickets.ListAgentTicketsRequest.select_field_mask:type_name -> google.protobuf.FieldMask
-	76, // 22: api.v1alpha1.tickets.ListAgentTicketsRequest.filter_mask:type_name -> google.protobuf.FieldMask
-	81, // 23: api.v1alpha1.tickets.ListAvailableAgentTicketsResponse.ticket:type_name -> api.commons.Ticket
-	76, // 24: api.v1alpha1.tickets.ListAvailableAgentTicketsRequest.select_field_mask:type_name -> google.protobuf.FieldMask
-	25, // 25: api.v1alpha1.tickets.ListAvailableAgentTicketsRequest.available_filter:type_name -> api.v1alpha1.tickets.AvailableTicketsFilter
-	81, // 26: api.v1alpha1.tickets.ListTicketsRes.tickets:type_name -> api.commons.Ticket
-	81, // 27: api.v1alpha1.tickets.ViewTicketRes.ticket:type_name -> api.commons.Ticket
-	85, // 28: api.v1alpha1.tickets.ViewTicketRes.comments:type_name -> api.commons.Comment
-	86, // 29: api.v1alpha1.tickets.ViewTicketRes.reply_comment:type_name -> api.commons.ReplyComment
-	85, // 30: api.v1alpha1.tickets.CreateCommentRes.comment:type_name -> api.commons.Comment
-	87, // 31: api.v1alpha1.tickets.CreateSlaReq.duration:type_name -> api.commons.Duration
-	88, // 32: api.v1alpha1.tickets.CreateSlaRes.sla:type_name -> api.commons.TicketSla
-	88, // 33: api.v1alpha1.tickets.ListSlaRes.ticketsSla:type_name -> api.commons.TicketSla
-	88, // 34: api.v1alpha1.tickets.UpdateSlaRes.ticketsSla:type_name -> api.commons.TicketSla
-	89, // 35: api.v1alpha1.tickets.ListSlaConditionRes.slaCondition:type_name -> api.commons.SlaConditions
-	90, // 36: api.v1alpha1.tickets.ReplyCommentRes.is_created:type_name -> api.commons.ConfirmReplyComment
-	51, // 37: api.v1alpha1.tickets.ListSkillsResponse.skills:type_name -> api.v1alpha1.tickets.Skill
-	54, // 38: api.v1alpha1.tickets.ListUsersResponse.users:type_name -> api.v1alpha1.tickets.User
-	74, // 39: api.v1alpha1.tickets.CreateTicketActionRequest.ticket_action:type_name -> api.commons.TicketAction
-	74, // 40: api.v1alpha1.tickets.CreateTicketActionResponse.ticket_action:type_name -> api.commons.TicketAction
-	91, // 41: api.v1alpha1.tickets.ChangeTicketStatusRequest.ticket_status:type_name -> api.commons.TicketStatus
-	69, // 42: api.v1alpha1.tickets.AddEntityRefRequest.entity_ref:type_name -> api.v1alpha1.tickets.EntityRef
-	69, // 43: api.v1alpha1.tickets.ListEntityRefsByTicketResponse.entity_ref:type_name -> api.v1alpha1.tickets.EntityRef
-	81, // 44: api.v1alpha1.tickets.ListTicketsByEntityRefResponse.tickets:type_name -> api.commons.Ticket
+	72, // 0: api.v1alpha1.tickets.CreateTicketReq.due_date:type_name -> google.protobuf.Timestamp
+	73, // 1: api.v1alpha1.tickets.CreateTicketReq.metadata:type_name -> api.commons.Metadata
+	74, // 2: api.v1alpha1.tickets.CreateTicketReq.ticket_skills:type_name -> api.commons.Skills
+	75, // 3: api.v1alpha1.tickets.CreateTicketReq.ticket_sla:type_name -> api.commons.Sla
+	76, // 4: api.v1alpha1.tickets.CreateTicketReq.ticket_action:type_name -> api.commons.TicketAction
+	77, // 5: api.v1alpha1.tickets.CreateTicketTemplateRequest.ticket_template:type_name -> api.commons.TicketTemplate
+	77, // 6: api.v1alpha1.tickets.CreateTicketTemplateResponse.ticket_template:type_name -> api.commons.TicketTemplate
+	77, // 7: api.v1alpha1.tickets.EditTicketTemplateRequest.edit_value:type_name -> api.commons.TicketTemplate
+	78, // 8: api.v1alpha1.tickets.EditTicketTemplateRequest.edited_fields_mask:type_name -> google.protobuf.FieldMask
+	78, // 9: api.v1alpha1.tickets.ListTicketTemplateRequest.request_mask:type_name -> google.protobuf.FieldMask
+	79, // 10: api.v1alpha1.tickets.ListTicketTemplateResponse.enabled_templates:type_name -> api.commons.ListTemplate
+	80, // 11: api.v1alpha1.tickets.ListTicketTemplateResponse.ticket_project_template:type_name -> api.commons.TicketProjectTemplate
+	81, // 12: api.v1alpha1.tickets.AssignProjectTemplateRequest.project_template:type_name -> api.commons.AssignProjectTemplate
+	82, // 13: api.v1alpha1.tickets.AssignProjectTemplateRequest.template_description:type_name -> api.commons.TemplateDescription
+	83, // 14: api.v1alpha1.tickets.CreateTicketRes.ticket:type_name -> api.commons.Ticket
+	84, // 15: api.v1alpha1.tickets.GetActionTypeResponse.action_type:type_name -> api.commons.ActionType
+	85, // 16: api.v1alpha1.tickets.GetPhoneNumberTypeResponse.phone_type:type_name -> api.commons.PhoneNumberType
+	86, // 17: api.v1alpha1.tickets.EditTicketReq.edit_value:type_name -> api.commons.EditAttribute
+	83, // 18: api.v1alpha1.tickets.EditMaskTicketReq.edit_value:type_name -> api.commons.Ticket
+	78, // 19: api.v1alpha1.tickets.EditMaskTicketReq.edited_fields_mask:type_name -> google.protobuf.FieldMask
+	83, // 20: api.v1alpha1.tickets.ListAgentTicketsResponse.ticket:type_name -> api.commons.Ticket
+	78, // 21: api.v1alpha1.tickets.ListAgentTicketsRequest.select_field_mask:type_name -> google.protobuf.FieldMask
+	78, // 22: api.v1alpha1.tickets.ListAgentTicketsRequest.filter_mask:type_name -> google.protobuf.FieldMask
+	83, // 23: api.v1alpha1.tickets.ListAvailableAgentTicketsResponse.ticket:type_name -> api.commons.Ticket
+	78, // 24: api.v1alpha1.tickets.ListAvailableAgentTicketsRequest.select_field_mask:type_name -> google.protobuf.FieldMask
+	27, // 25: api.v1alpha1.tickets.ListAvailableAgentTicketsRequest.available_filter:type_name -> api.v1alpha1.tickets.AvailableTicketsFilter
+	83, // 26: api.v1alpha1.tickets.ListTicketsRes.tickets:type_name -> api.commons.Ticket
+	83, // 27: api.v1alpha1.tickets.ViewTicketRes.ticket:type_name -> api.commons.Ticket
+	87, // 28: api.v1alpha1.tickets.ViewTicketRes.comments:type_name -> api.commons.Comment
+	88, // 29: api.v1alpha1.tickets.ViewTicketRes.reply_comment:type_name -> api.commons.ReplyComment
+	87, // 30: api.v1alpha1.tickets.CreateCommentRes.comment:type_name -> api.commons.Comment
+	89, // 31: api.v1alpha1.tickets.CreateSlaReq.duration:type_name -> api.commons.Duration
+	90, // 32: api.v1alpha1.tickets.CreateSlaRes.sla:type_name -> api.commons.TicketSla
+	90, // 33: api.v1alpha1.tickets.ListSlaRes.ticketsSla:type_name -> api.commons.TicketSla
+	90, // 34: api.v1alpha1.tickets.UpdateSlaRes.ticketsSla:type_name -> api.commons.TicketSla
+	91, // 35: api.v1alpha1.tickets.ListSlaConditionRes.slaCondition:type_name -> api.commons.SlaConditions
+	92, // 36: api.v1alpha1.tickets.ReplyCommentRes.is_created:type_name -> api.commons.ConfirmReplyComment
+	53, // 37: api.v1alpha1.tickets.ListSkillsResponse.skills:type_name -> api.v1alpha1.tickets.Skill
+	56, // 38: api.v1alpha1.tickets.ListUsersResponse.users:type_name -> api.v1alpha1.tickets.User
+	76, // 39: api.v1alpha1.tickets.CreateTicketActionRequest.ticket_action:type_name -> api.commons.TicketAction
+	76, // 40: api.v1alpha1.tickets.CreateTicketActionResponse.ticket_action:type_name -> api.commons.TicketAction
+	93, // 41: api.v1alpha1.tickets.ChangeTicketStatusRequest.ticket_status:type_name -> api.commons.TicketStatus
+	71, // 42: api.v1alpha1.tickets.AddEntityRefRequest.entity_ref:type_name -> api.v1alpha1.tickets.EntityRef
+	71, // 43: api.v1alpha1.tickets.ListEntityRefsByTicketResponse.entity_ref:type_name -> api.v1alpha1.tickets.EntityRef
+	83, // 44: api.v1alpha1.tickets.ListTicketsByEntityRefResponse.tickets:type_name -> api.commons.Ticket
 	45, // [45:45] is the sub-list for method output_type
 	45, // [45:45] is the sub-list for method input_type
 	45, // [45:45] is the sub-list for extension type_name
@@ -5343,13 +5461,14 @@ func file_api_v1alpha1_tickets_ticket_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_v1alpha1_tickets_ticket_proto_rawDesc,
-			NumEnums:      0,
+			NumEnums:      2,
 			NumMessages:   70,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_api_v1alpha1_tickets_ticket_proto_goTypes,
 		DependencyIndexes: file_api_v1alpha1_tickets_ticket_proto_depIdxs,
+		EnumInfos:         file_api_v1alpha1_tickets_ticket_proto_enumTypes,
 		MessageInfos:      file_api_v1alpha1_tickets_ticket_proto_msgTypes,
 	}.Build()
 	File_api_v1alpha1_tickets_ticket_proto = out.File
