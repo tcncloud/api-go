@@ -42,7 +42,9 @@ const (
 
 // ExplorerServiceClient is a client for the api.v1alpha1.explorer.ExplorerService service.
 type ExplorerServiceClient interface {
+	// ListDatasourceSchemas lists all accessible datasources and their schemas.
 	ListDatasourceSchemas(context.Context, *connect_go.Request[explorer.ListDatasourceSchemasRequest]) (*connect_go.Response[explorer.ListDatasourceSchemasResponse], error)
+	// Query queries a datasource.
 	Query(context.Context, *connect_go.Request[explorer.QueryRequest]) (*connect_go.Response[explorer.QueryResponse], error)
 }
 
@@ -87,7 +89,9 @@ func (c *explorerServiceClient) Query(ctx context.Context, req *connect_go.Reque
 
 // ExplorerServiceHandler is an implementation of the api.v1alpha1.explorer.ExplorerService service.
 type ExplorerServiceHandler interface {
+	// ListDatasourceSchemas lists all accessible datasources and their schemas.
 	ListDatasourceSchemas(context.Context, *connect_go.Request[explorer.ListDatasourceSchemasRequest]) (*connect_go.Response[explorer.ListDatasourceSchemasResponse], error)
+	// Query queries a datasource.
 	Query(context.Context, *connect_go.Request[explorer.QueryRequest]) (*connect_go.Response[explorer.QueryResponse], error)
 }
 

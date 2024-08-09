@@ -29,6 +29,9 @@ const (
 	TranslationsService_SetSystemMessage_FullMethodName       = "/services.translations.v1alpha1.TranslationsService/SetSystemMessage"
 	TranslationsService_GetSystemMessage_FullMethodName       = "/services.translations.v1alpha1.TranslationsService/GetSystemMessage"
 	TranslationsService_TestSystemMessage_FullMethodName      = "/services.translations.v1alpha1.TranslationsService/TestSystemMessage"
+	TranslationsService_EnableContext_FullMethodName          = "/services.translations.v1alpha1.TranslationsService/EnableContext"
+	TranslationsService_DisableContext_FullMethodName         = "/services.translations.v1alpha1.TranslationsService/DisableContext"
+	TranslationsService_BulkDeleteTranslations_FullMethodName = "/services.translations.v1alpha1.TranslationsService/BulkDeleteTranslations"
 )
 
 // TranslationsServiceClient is the client API for TranslationsService service.
@@ -96,6 +99,28 @@ type TranslationsServiceClient interface {
 	// Errors:
 	//   - grpc.InvalidArgument: The request is not valid.
 	TestSystemMessage(ctx context.Context, in *TestSystemMessageRequest, opts ...grpc.CallOption) (*TestSystemMessageResponse, error)
+	// enable a context for LLM translations
+	// Required permissions:
+	//   - PERMISSION_CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is not valid.
+	//   - grpc.NotFound: No context found
+	EnableContext(ctx context.Context, in *EnableContextRequest, opts ...grpc.CallOption) (*EnableContextResponse, error)
+	// disable a context for LLM translations
+	// Required permissions:
+	//   - PERMISSION_CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is not valid.
+	DisableContext(ctx context.Context, in *DisableContextRequest, opts ...grpc.CallOption) (*DisableContextResponse, error)
+	// Bulk delete translations
+	// Required permissions:
+	//   - PERMISSION_CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is not valid.
+	BulkDeleteTranslations(ctx context.Context, in *BulkDeleteTranslationsRequest, opts ...grpc.CallOption) (*BulkDeleteTranslationsResponse, error)
 }
 
 type translationsServiceClient struct {
@@ -206,6 +231,36 @@ func (c *translationsServiceClient) TestSystemMessage(ctx context.Context, in *T
 	return out, nil
 }
 
+func (c *translationsServiceClient) EnableContext(ctx context.Context, in *EnableContextRequest, opts ...grpc.CallOption) (*EnableContextResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(EnableContextResponse)
+	err := c.cc.Invoke(ctx, TranslationsService_EnableContext_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *translationsServiceClient) DisableContext(ctx context.Context, in *DisableContextRequest, opts ...grpc.CallOption) (*DisableContextResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DisableContextResponse)
+	err := c.cc.Invoke(ctx, TranslationsService_DisableContext_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *translationsServiceClient) BulkDeleteTranslations(ctx context.Context, in *BulkDeleteTranslationsRequest, opts ...grpc.CallOption) (*BulkDeleteTranslationsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(BulkDeleteTranslationsResponse)
+	err := c.cc.Invoke(ctx, TranslationsService_BulkDeleteTranslations_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TranslationsServiceServer is the server API for TranslationsService service.
 // All implementations must embed UnimplementedTranslationsServiceServer
 // for forward compatibility.
@@ -271,6 +326,28 @@ type TranslationsServiceServer interface {
 	// Errors:
 	//   - grpc.InvalidArgument: The request is not valid.
 	TestSystemMessage(context.Context, *TestSystemMessageRequest) (*TestSystemMessageResponse, error)
+	// enable a context for LLM translations
+	// Required permissions:
+	//   - PERMISSION_CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is not valid.
+	//   - grpc.NotFound: No context found
+	EnableContext(context.Context, *EnableContextRequest) (*EnableContextResponse, error)
+	// disable a context for LLM translations
+	// Required permissions:
+	//   - PERMISSION_CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is not valid.
+	DisableContext(context.Context, *DisableContextRequest) (*DisableContextResponse, error)
+	// Bulk delete translations
+	// Required permissions:
+	//   - PERMISSION_CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is not valid.
+	BulkDeleteTranslations(context.Context, *BulkDeleteTranslationsRequest) (*BulkDeleteTranslationsResponse, error)
 	mustEmbedUnimplementedTranslationsServiceServer()
 }
 
@@ -310,6 +387,15 @@ func (UnimplementedTranslationsServiceServer) GetSystemMessage(context.Context, 
 }
 func (UnimplementedTranslationsServiceServer) TestSystemMessage(context.Context, *TestSystemMessageRequest) (*TestSystemMessageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TestSystemMessage not implemented")
+}
+func (UnimplementedTranslationsServiceServer) EnableContext(context.Context, *EnableContextRequest) (*EnableContextResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EnableContext not implemented")
+}
+func (UnimplementedTranslationsServiceServer) DisableContext(context.Context, *DisableContextRequest) (*DisableContextResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DisableContext not implemented")
+}
+func (UnimplementedTranslationsServiceServer) BulkDeleteTranslations(context.Context, *BulkDeleteTranslationsRequest) (*BulkDeleteTranslationsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BulkDeleteTranslations not implemented")
 }
 func (UnimplementedTranslationsServiceServer) mustEmbedUnimplementedTranslationsServiceServer() {}
 func (UnimplementedTranslationsServiceServer) testEmbeddedByValue()                             {}
@@ -512,6 +598,60 @@ func _TranslationsService_TestSystemMessage_Handler(srv interface{}, ctx context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _TranslationsService_EnableContext_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EnableContextRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TranslationsServiceServer).EnableContext(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TranslationsService_EnableContext_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TranslationsServiceServer).EnableContext(ctx, req.(*EnableContextRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TranslationsService_DisableContext_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DisableContextRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TranslationsServiceServer).DisableContext(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TranslationsService_DisableContext_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TranslationsServiceServer).DisableContext(ctx, req.(*DisableContextRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TranslationsService_BulkDeleteTranslations_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BulkDeleteTranslationsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TranslationsServiceServer).BulkDeleteTranslations(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TranslationsService_BulkDeleteTranslations_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TranslationsServiceServer).BulkDeleteTranslations(ctx, req.(*BulkDeleteTranslationsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // TranslationsService_ServiceDesc is the grpc.ServiceDesc for TranslationsService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -558,6 +698,18 @@ var TranslationsService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "TestSystemMessage",
 			Handler:    _TranslationsService_TestSystemMessage_Handler,
+		},
+		{
+			MethodName: "EnableContext",
+			Handler:    _TranslationsService_EnableContext_Handler,
+		},
+		{
+			MethodName: "DisableContext",
+			Handler:    _TranslationsService_DisableContext_Handler,
+		},
+		{
+			MethodName: "BulkDeleteTranslations",
+			Handler:    _TranslationsService_BulkDeleteTranslations_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

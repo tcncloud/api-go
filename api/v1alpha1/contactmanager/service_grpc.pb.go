@@ -26,6 +26,7 @@ const (
 	ContactManager_GetKYCKeys_FullMethodName            = "/api.v1alpha1.contactmanager.ContactManager/GetKYCKeys"
 	ContactManager_AddContactEntry_FullMethodName       = "/api.v1alpha1.contactmanager.ContactManager/AddContactEntry"
 	ContactManager_EditContactEntry_FullMethodName      = "/api.v1alpha1.contactmanager.ContactManager/EditContactEntry"
+	ContactManager_ListContactsByEntity_FullMethodName  = "/api.v1alpha1.contactmanager.ContactManager/ListContactsByEntity"
 )
 
 // ContactManagerClient is the client API for ContactManager service.
@@ -43,6 +44,9 @@ type ContactManagerClient interface {
 	// *
 	// Edits the fields of an existing contact entry...
 	EditContactEntry(ctx context.Context, in *EditContactEntryRequest, opts ...grpc.CallOption) (*EditContactEntryResponse, error)
+	// *
+	// List contacts for entity
+	ListContactsByEntity(ctx context.Context, in *ListContactsByEntityRequest, opts ...grpc.CallOption) (*ListContactsByEntityResponse, error)
 }
 
 type contactManagerClient struct {
@@ -123,6 +127,16 @@ func (c *contactManagerClient) EditContactEntry(ctx context.Context, in *EditCon
 	return out, nil
 }
 
+func (c *contactManagerClient) ListContactsByEntity(ctx context.Context, in *ListContactsByEntityRequest, opts ...grpc.CallOption) (*ListContactsByEntityResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListContactsByEntityResponse)
+	err := c.cc.Invoke(ctx, ContactManager_ListContactsByEntity_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ContactManagerServer is the server API for ContactManager service.
 // All implementations must embed UnimplementedContactManagerServer
 // for forward compatibility.
@@ -138,6 +152,9 @@ type ContactManagerServer interface {
 	// *
 	// Edits the fields of an existing contact entry...
 	EditContactEntry(context.Context, *EditContactEntryRequest) (*EditContactEntryResponse, error)
+	// *
+	// List contacts for entity
+	ListContactsByEntity(context.Context, *ListContactsByEntityRequest) (*ListContactsByEntityResponse, error)
 	mustEmbedUnimplementedContactManagerServer()
 }
 
@@ -168,6 +185,9 @@ func (UnimplementedContactManagerServer) AddContactEntry(context.Context, *AddCo
 }
 func (UnimplementedContactManagerServer) EditContactEntry(context.Context, *EditContactEntryRequest) (*EditContactEntryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method EditContactEntry not implemented")
+}
+func (UnimplementedContactManagerServer) ListContactsByEntity(context.Context, *ListContactsByEntityRequest) (*ListContactsByEntityResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListContactsByEntity not implemented")
 }
 func (UnimplementedContactManagerServer) mustEmbedUnimplementedContactManagerServer() {}
 func (UnimplementedContactManagerServer) testEmbeddedByValue()                        {}
@@ -316,6 +336,24 @@ func _ContactManager_EditContactEntry_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ContactManager_ListContactsByEntity_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListContactsByEntityRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ContactManagerServer).ListContactsByEntity(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ContactManager_ListContactsByEntity_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ContactManagerServer).ListContactsByEntity(ctx, req.(*ListContactsByEntityRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ContactManager_ServiceDesc is the grpc.ServiceDesc for ContactManager service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -350,6 +388,10 @@ var ContactManager_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "EditContactEntry",
 			Handler:    _ContactManager_EditContactEntry_Handler,
+		},
+		{
+			MethodName: "ListContactsByEntity",
+			Handler:    _ContactManager_ListContactsByEntity_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

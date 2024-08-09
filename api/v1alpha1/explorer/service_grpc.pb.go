@@ -29,7 +29,9 @@ const (
 //
 // ExplorerService is the service for the explorer API.
 type ExplorerServiceClient interface {
+	// ListDatasourceSchemas lists all accessible datasources and their schemas.
 	ListDatasourceSchemas(ctx context.Context, in *ListDatasourceSchemasRequest, opts ...grpc.CallOption) (*ListDatasourceSchemasResponse, error)
+	// Query queries a datasource.
 	Query(ctx context.Context, in *QueryRequest, opts ...grpc.CallOption) (*QueryResponse, error)
 }
 
@@ -67,7 +69,9 @@ func (c *explorerServiceClient) Query(ctx context.Context, in *QueryRequest, opt
 //
 // ExplorerService is the service for the explorer API.
 type ExplorerServiceServer interface {
+	// ListDatasourceSchemas lists all accessible datasources and their schemas.
 	ListDatasourceSchemas(context.Context, *ListDatasourceSchemasRequest) (*ListDatasourceSchemasResponse, error)
+	// Query queries a datasource.
 	Query(context.Context, *QueryRequest) (*QueryResponse, error)
 	mustEmbedUnimplementedExplorerServiceServer()
 }
