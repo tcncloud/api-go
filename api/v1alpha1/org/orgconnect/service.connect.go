@@ -1014,10 +1014,19 @@ type OrgClient interface {
 	// with their client info display template data based on the filter.
 	ListHuntGroupsWithClientInfoTemplateData(context.Context, *connect_go.Request[org.ListHuntGroupsWithClientInfoTemplateDataRequest]) (*connect_go.Response[org.ListHuntGroupsWithClientInfoTemplateDataResponse], error)
 	// ListAgentTriggers returns a list of agent triggers for the given hunt group.
+	// DEPRECATED: Use services.org.hunt_groups.v1alpha1.ListHuntGroupAgentTriggers instead
+	//
+	// Deprecated: do not use.
 	ListAgentTriggers(context.Context, *connect_go.Request[org.ListAgentTriggersRequest]) (*connect_go.Response[org.ListAgentTriggersResponse], error)
 	// CopyAgentTrigger copys an agent trigger to the given hunt group in the same org.
+	// DEPRECATED: Use services.org.hunt_groups.v1alpha1.CopyHuntGroupAgentTrigger instead
+	//
+	// Deprecated: do not use.
 	CopyAgentTrigger(context.Context, *connect_go.Request[org.CopyAgentTriggerRequest]) (*connect_go.Response[org.CopyAgentTriggerResponse], error)
 	// UpdateAgentTriggers updates all agent triggers for the given hunt group.
+	// DEPRECATED: Use services.org.hunt_groups.v1alpha1.UpdateHuntGroupAgentTriggers instead
+	//
+	// Deprecated: do not use.
 	UpdateAgentTriggers(context.Context, *connect_go.Request[org.UpdateAgentTriggersRequest]) (*connect_go.Response[org.UpdateAgentTriggersResponse], error)
 	// ListHuntGroupScripts lists all hunt group scripts for the current organization.
 	// DEPRECATED. Use ListOrgHuntGroupScripts instead
@@ -3427,16 +3436,22 @@ func (c *orgClient) ListHuntGroupsWithClientInfoTemplateData(ctx context.Context
 }
 
 // ListAgentTriggers calls api.v1alpha1.org.Org.ListAgentTriggers.
+//
+// Deprecated: do not use.
 func (c *orgClient) ListAgentTriggers(ctx context.Context, req *connect_go.Request[org.ListAgentTriggersRequest]) (*connect_go.Response[org.ListAgentTriggersResponse], error) {
 	return c.listAgentTriggers.CallUnary(ctx, req)
 }
 
 // CopyAgentTrigger calls api.v1alpha1.org.Org.CopyAgentTrigger.
+//
+// Deprecated: do not use.
 func (c *orgClient) CopyAgentTrigger(ctx context.Context, req *connect_go.Request[org.CopyAgentTriggerRequest]) (*connect_go.Response[org.CopyAgentTriggerResponse], error) {
 	return c.copyAgentTrigger.CallUnary(ctx, req)
 }
 
 // UpdateAgentTriggers calls api.v1alpha1.org.Org.UpdateAgentTriggers.
+//
+// Deprecated: do not use.
 func (c *orgClient) UpdateAgentTriggers(ctx context.Context, req *connect_go.Request[org.UpdateAgentTriggersRequest]) (*connect_go.Response[org.UpdateAgentTriggersResponse], error) {
 	return c.updateAgentTriggers.CallUnary(ctx, req)
 }
@@ -4219,10 +4234,19 @@ type OrgHandler interface {
 	// with their client info display template data based on the filter.
 	ListHuntGroupsWithClientInfoTemplateData(context.Context, *connect_go.Request[org.ListHuntGroupsWithClientInfoTemplateDataRequest]) (*connect_go.Response[org.ListHuntGroupsWithClientInfoTemplateDataResponse], error)
 	// ListAgentTriggers returns a list of agent triggers for the given hunt group.
+	// DEPRECATED: Use services.org.hunt_groups.v1alpha1.ListHuntGroupAgentTriggers instead
+	//
+	// Deprecated: do not use.
 	ListAgentTriggers(context.Context, *connect_go.Request[org.ListAgentTriggersRequest]) (*connect_go.Response[org.ListAgentTriggersResponse], error)
 	// CopyAgentTrigger copys an agent trigger to the given hunt group in the same org.
+	// DEPRECATED: Use services.org.hunt_groups.v1alpha1.CopyHuntGroupAgentTrigger instead
+	//
+	// Deprecated: do not use.
 	CopyAgentTrigger(context.Context, *connect_go.Request[org.CopyAgentTriggerRequest]) (*connect_go.Response[org.CopyAgentTriggerResponse], error)
 	// UpdateAgentTriggers updates all agent triggers for the given hunt group.
+	// DEPRECATED: Use services.org.hunt_groups.v1alpha1.UpdateHuntGroupAgentTriggers instead
+	//
+	// Deprecated: do not use.
 	UpdateAgentTriggers(context.Context, *connect_go.Request[org.UpdateAgentTriggersRequest]) (*connect_go.Response[org.UpdateAgentTriggersResponse], error)
 	// ListHuntGroupScripts lists all hunt group scripts for the current organization.
 	// DEPRECATED. Use ListOrgHuntGroupScripts instead

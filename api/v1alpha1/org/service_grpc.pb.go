@@ -611,11 +611,17 @@ type OrgClient interface {
 	// ListHuntGroupsWithClientInfoTemplateData lists the hunt groups in an organization
 	// with their client info display template data based on the filter.
 	ListHuntGroupsWithClientInfoTemplateData(ctx context.Context, in *ListHuntGroupsWithClientInfoTemplateDataRequest, opts ...grpc.CallOption) (*ListHuntGroupsWithClientInfoTemplateDataResponse, error)
+	// Deprecated: Do not use.
 	// ListAgentTriggers returns a list of agent triggers for the given hunt group.
+	// DEPRECATED: Use services.org.hunt_groups.v1alpha1.ListHuntGroupAgentTriggers instead
 	ListAgentTriggers(ctx context.Context, in *ListAgentTriggersRequest, opts ...grpc.CallOption) (*ListAgentTriggersResponse, error)
+	// Deprecated: Do not use.
 	// CopyAgentTrigger copys an agent trigger to the given hunt group in the same org.
+	// DEPRECATED: Use services.org.hunt_groups.v1alpha1.CopyHuntGroupAgentTrigger instead
 	CopyAgentTrigger(ctx context.Context, in *CopyAgentTriggerRequest, opts ...grpc.CallOption) (*CopyAgentTriggerResponse, error)
+	// Deprecated: Do not use.
 	// UpdateAgentTriggers updates all agent triggers for the given hunt group.
+	// DEPRECATED: Use services.org.hunt_groups.v1alpha1.UpdateHuntGroupAgentTriggers instead
 	UpdateAgentTriggers(ctx context.Context, in *UpdateAgentTriggersRequest, opts ...grpc.CallOption) (*UpdateAgentTriggersResponse, error)
 	// Deprecated: Do not use.
 	// ListHuntGroupScripts lists all hunt group scripts for the current organization.
@@ -2551,6 +2557,7 @@ func (c *orgClient) ListHuntGroupsWithClientInfoTemplateData(ctx context.Context
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *orgClient) ListAgentTriggers(ctx context.Context, in *ListAgentTriggersRequest, opts ...grpc.CallOption) (*ListAgentTriggersResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListAgentTriggersResponse)
@@ -2561,6 +2568,7 @@ func (c *orgClient) ListAgentTriggers(ctx context.Context, in *ListAgentTriggers
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *orgClient) CopyAgentTrigger(ctx context.Context, in *CopyAgentTriggerRequest, opts ...grpc.CallOption) (*CopyAgentTriggerResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(CopyAgentTriggerResponse)
@@ -2571,6 +2579,7 @@ func (c *orgClient) CopyAgentTrigger(ctx context.Context, in *CopyAgentTriggerRe
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *orgClient) UpdateAgentTriggers(ctx context.Context, in *UpdateAgentTriggersRequest, opts ...grpc.CallOption) (*UpdateAgentTriggersResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(UpdateAgentTriggersResponse)
@@ -3759,11 +3768,17 @@ type OrgServer interface {
 	// ListHuntGroupsWithClientInfoTemplateData lists the hunt groups in an organization
 	// with their client info display template data based on the filter.
 	ListHuntGroupsWithClientInfoTemplateData(context.Context, *ListHuntGroupsWithClientInfoTemplateDataRequest) (*ListHuntGroupsWithClientInfoTemplateDataResponse, error)
+	// Deprecated: Do not use.
 	// ListAgentTriggers returns a list of agent triggers for the given hunt group.
+	// DEPRECATED: Use services.org.hunt_groups.v1alpha1.ListHuntGroupAgentTriggers instead
 	ListAgentTriggers(context.Context, *ListAgentTriggersRequest) (*ListAgentTriggersResponse, error)
+	// Deprecated: Do not use.
 	// CopyAgentTrigger copys an agent trigger to the given hunt group in the same org.
+	// DEPRECATED: Use services.org.hunt_groups.v1alpha1.CopyHuntGroupAgentTrigger instead
 	CopyAgentTrigger(context.Context, *CopyAgentTriggerRequest) (*CopyAgentTriggerResponse, error)
+	// Deprecated: Do not use.
 	// UpdateAgentTriggers updates all agent triggers for the given hunt group.
+	// DEPRECATED: Use services.org.hunt_groups.v1alpha1.UpdateHuntGroupAgentTriggers instead
 	UpdateAgentTriggers(context.Context, *UpdateAgentTriggersRequest) (*UpdateAgentTriggersResponse, error)
 	// Deprecated: Do not use.
 	// ListHuntGroupScripts lists all hunt group scripts for the current organization.

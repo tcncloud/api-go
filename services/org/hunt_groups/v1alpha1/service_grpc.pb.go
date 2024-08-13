@@ -19,16 +19,19 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	HuntGroupsService_ListHuntGroupExileLinks_FullMethodName   = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/ListHuntGroupExileLinks"
-	HuntGroupsService_CopyHuntGroupExileLink_FullMethodName    = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/CopyHuntGroupExileLink"
-	HuntGroupsService_UpdateHuntGroupExileLinks_FullMethodName = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/UpdateHuntGroupExileLinks"
+	HuntGroupsService_ListHuntGroupExileLinks_FullMethodName      = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/ListHuntGroupExileLinks"
+	HuntGroupsService_CopyHuntGroupExileLink_FullMethodName       = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/CopyHuntGroupExileLink"
+	HuntGroupsService_UpdateHuntGroupExileLinks_FullMethodName    = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/UpdateHuntGroupExileLinks"
+	HuntGroupsService_ListHuntGroupAgentTriggers_FullMethodName   = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/ListHuntGroupAgentTriggers"
+	HuntGroupsService_CopyHuntGroupAgentTrigger_FullMethodName    = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/CopyHuntGroupAgentTrigger"
+	HuntGroupsService_UpdateHuntGroupAgentTriggers_FullMethodName = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/UpdateHuntGroupAgentTriggers"
 )
 
 // HuntGroupsServiceClient is the client API for HuntGroupsService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// HuntGroupsService
+// HuntGroupsService is the service for managing hunt groups and their related entities.
 type HuntGroupsServiceClient interface {
 	// ListHuntGroupExileLinks returns a list of Exile links for a given hunt group.
 	ListHuntGroupExileLinks(ctx context.Context, in *ListHuntGroupExileLinksRequest, opts ...grpc.CallOption) (*ListHuntGroupExileLinksResponse, error)
@@ -41,6 +44,12 @@ type HuntGroupsServiceClient interface {
 	// update any existing exile links with the new settings/parameters, and
 	// delete any exile links that are not in the request.
 	UpdateHuntGroupExileLinks(ctx context.Context, in *UpdateHuntGroupExileLinksRequest, opts ...grpc.CallOption) (*UpdateHuntGroupExileLinksResponse, error)
+	// ListHuntGroupAgentTriggers returns a list of agent triggers for the given hunt group.
+	ListHuntGroupAgentTriggers(ctx context.Context, in *ListHuntGroupAgentTriggersRequest, opts ...grpc.CallOption) (*ListHuntGroupAgentTriggersResponse, error)
+	// CopyHuntGroupAgentTrigger copys an agent trigger to the given hunt group in the same org.
+	CopyHuntGroupAgentTrigger(ctx context.Context, in *CopyHuntGroupAgentTriggerRequest, opts ...grpc.CallOption) (*CopyHuntGroupAgentTriggerResponse, error)
+	// UpdateHuntGroupAgentTriggers updates all agent triggers for the given hunt group.
+	UpdateHuntGroupAgentTriggers(ctx context.Context, in *UpdateHuntGroupAgentTriggersRequest, opts ...grpc.CallOption) (*UpdateHuntGroupAgentTriggersResponse, error)
 }
 
 type huntGroupsServiceClient struct {
@@ -81,11 +90,41 @@ func (c *huntGroupsServiceClient) UpdateHuntGroupExileLinks(ctx context.Context,
 	return out, nil
 }
 
+func (c *huntGroupsServiceClient) ListHuntGroupAgentTriggers(ctx context.Context, in *ListHuntGroupAgentTriggersRequest, opts ...grpc.CallOption) (*ListHuntGroupAgentTriggersResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListHuntGroupAgentTriggersResponse)
+	err := c.cc.Invoke(ctx, HuntGroupsService_ListHuntGroupAgentTriggers_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *huntGroupsServiceClient) CopyHuntGroupAgentTrigger(ctx context.Context, in *CopyHuntGroupAgentTriggerRequest, opts ...grpc.CallOption) (*CopyHuntGroupAgentTriggerResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CopyHuntGroupAgentTriggerResponse)
+	err := c.cc.Invoke(ctx, HuntGroupsService_CopyHuntGroupAgentTrigger_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *huntGroupsServiceClient) UpdateHuntGroupAgentTriggers(ctx context.Context, in *UpdateHuntGroupAgentTriggersRequest, opts ...grpc.CallOption) (*UpdateHuntGroupAgentTriggersResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateHuntGroupAgentTriggersResponse)
+	err := c.cc.Invoke(ctx, HuntGroupsService_UpdateHuntGroupAgentTriggers_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // HuntGroupsServiceServer is the server API for HuntGroupsService service.
 // All implementations must embed UnimplementedHuntGroupsServiceServer
 // for forward compatibility.
 //
-// HuntGroupsService
+// HuntGroupsService is the service for managing hunt groups and their related entities.
 type HuntGroupsServiceServer interface {
 	// ListHuntGroupExileLinks returns a list of Exile links for a given hunt group.
 	ListHuntGroupExileLinks(context.Context, *ListHuntGroupExileLinksRequest) (*ListHuntGroupExileLinksResponse, error)
@@ -98,6 +137,12 @@ type HuntGroupsServiceServer interface {
 	// update any existing exile links with the new settings/parameters, and
 	// delete any exile links that are not in the request.
 	UpdateHuntGroupExileLinks(context.Context, *UpdateHuntGroupExileLinksRequest) (*UpdateHuntGroupExileLinksResponse, error)
+	// ListHuntGroupAgentTriggers returns a list of agent triggers for the given hunt group.
+	ListHuntGroupAgentTriggers(context.Context, *ListHuntGroupAgentTriggersRequest) (*ListHuntGroupAgentTriggersResponse, error)
+	// CopyHuntGroupAgentTrigger copys an agent trigger to the given hunt group in the same org.
+	CopyHuntGroupAgentTrigger(context.Context, *CopyHuntGroupAgentTriggerRequest) (*CopyHuntGroupAgentTriggerResponse, error)
+	// UpdateHuntGroupAgentTriggers updates all agent triggers for the given hunt group.
+	UpdateHuntGroupAgentTriggers(context.Context, *UpdateHuntGroupAgentTriggersRequest) (*UpdateHuntGroupAgentTriggersResponse, error)
 	mustEmbedUnimplementedHuntGroupsServiceServer()
 }
 
@@ -116,6 +161,15 @@ func (UnimplementedHuntGroupsServiceServer) CopyHuntGroupExileLink(context.Conte
 }
 func (UnimplementedHuntGroupsServiceServer) UpdateHuntGroupExileLinks(context.Context, *UpdateHuntGroupExileLinksRequest) (*UpdateHuntGroupExileLinksResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateHuntGroupExileLinks not implemented")
+}
+func (UnimplementedHuntGroupsServiceServer) ListHuntGroupAgentTriggers(context.Context, *ListHuntGroupAgentTriggersRequest) (*ListHuntGroupAgentTriggersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListHuntGroupAgentTriggers not implemented")
+}
+func (UnimplementedHuntGroupsServiceServer) CopyHuntGroupAgentTrigger(context.Context, *CopyHuntGroupAgentTriggerRequest) (*CopyHuntGroupAgentTriggerResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CopyHuntGroupAgentTrigger not implemented")
+}
+func (UnimplementedHuntGroupsServiceServer) UpdateHuntGroupAgentTriggers(context.Context, *UpdateHuntGroupAgentTriggersRequest) (*UpdateHuntGroupAgentTriggersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateHuntGroupAgentTriggers not implemented")
 }
 func (UnimplementedHuntGroupsServiceServer) mustEmbedUnimplementedHuntGroupsServiceServer() {}
 func (UnimplementedHuntGroupsServiceServer) testEmbeddedByValue()                           {}
@@ -192,6 +246,60 @@ func _HuntGroupsService_UpdateHuntGroupExileLinks_Handler(srv interface{}, ctx c
 	return interceptor(ctx, in, info, handler)
 }
 
+func _HuntGroupsService_ListHuntGroupAgentTriggers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListHuntGroupAgentTriggersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HuntGroupsServiceServer).ListHuntGroupAgentTriggers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HuntGroupsService_ListHuntGroupAgentTriggers_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HuntGroupsServiceServer).ListHuntGroupAgentTriggers(ctx, req.(*ListHuntGroupAgentTriggersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HuntGroupsService_CopyHuntGroupAgentTrigger_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CopyHuntGroupAgentTriggerRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HuntGroupsServiceServer).CopyHuntGroupAgentTrigger(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HuntGroupsService_CopyHuntGroupAgentTrigger_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HuntGroupsServiceServer).CopyHuntGroupAgentTrigger(ctx, req.(*CopyHuntGroupAgentTriggerRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HuntGroupsService_UpdateHuntGroupAgentTriggers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateHuntGroupAgentTriggersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HuntGroupsServiceServer).UpdateHuntGroupAgentTriggers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HuntGroupsService_UpdateHuntGroupAgentTriggers_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HuntGroupsServiceServer).UpdateHuntGroupAgentTriggers(ctx, req.(*UpdateHuntGroupAgentTriggersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // HuntGroupsService_ServiceDesc is the grpc.ServiceDesc for HuntGroupsService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -210,6 +318,18 @@ var HuntGroupsService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateHuntGroupExileLinks",
 			Handler:    _HuntGroupsService_UpdateHuntGroupExileLinks_Handler,
+		},
+		{
+			MethodName: "ListHuntGroupAgentTriggers",
+			Handler:    _HuntGroupsService_ListHuntGroupAgentTriggers_Handler,
+		},
+		{
+			MethodName: "CopyHuntGroupAgentTrigger",
+			Handler:    _HuntGroupsService_CopyHuntGroupAgentTrigger_Handler,
+		},
+		{
+			MethodName: "UpdateHuntGroupAgentTriggers",
+			Handler:    _HuntGroupsService_UpdateHuntGroupAgentTriggers_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
