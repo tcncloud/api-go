@@ -36,12 +36,28 @@ const (
 	// HuntGroupsServiceListHuntGroupExileLinksProcedure is the fully-qualified name of the
 	// HuntGroupsService's ListHuntGroupExileLinks RPC.
 	HuntGroupsServiceListHuntGroupExileLinksProcedure = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/ListHuntGroupExileLinks"
+	// HuntGroupsServiceCopyHuntGroupExileLinkProcedure is the fully-qualified name of the
+	// HuntGroupsService's CopyHuntGroupExileLink RPC.
+	HuntGroupsServiceCopyHuntGroupExileLinkProcedure = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/CopyHuntGroupExileLink"
+	// HuntGroupsServiceUpdateHuntGroupExileLinksProcedure is the fully-qualified name of the
+	// HuntGroupsService's UpdateHuntGroupExileLinks RPC.
+	HuntGroupsServiceUpdateHuntGroupExileLinksProcedure = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/UpdateHuntGroupExileLinks"
 )
 
 // HuntGroupsServiceClient is a client for the services.org.hunt_groups.v1alpha1.HuntGroupsService
 // service.
 type HuntGroupsServiceClient interface {
+	// ListHuntGroupExileLinks returns a list of Exile links for a given hunt group.
 	ListHuntGroupExileLinks(context.Context, *connect_go.Request[v1alpha1.ListHuntGroupExileLinksRequest]) (*connect_go.Response[v1alpha1.ListHuntGroupExileLinksResponse], error)
+	// CopyHuntGroupExileLink copies an exile link from one hunt group to another.
+	// It will create a new exile link in the destination hunt group with the same
+	// settings/parameters as the source exile link.
+	CopyHuntGroupExileLink(context.Context, *connect_go.Request[v1alpha1.CopyHuntGroupExileLinkRequest]) (*connect_go.Response[v1alpha1.CopyHuntGroupExileLinkResponse], error)
+	// UpdateHuntGroupExileLinks updates the exile links for a hunt group.
+	// It will create any new exile links that do not already exist in the hunt group,
+	// update any existing exile links with the new settings/parameters, and
+	// delete any exile links that are not in the request.
+	UpdateHuntGroupExileLinks(context.Context, *connect_go.Request[v1alpha1.UpdateHuntGroupExileLinksRequest]) (*connect_go.Response[v1alpha1.UpdateHuntGroupExileLinksResponse], error)
 }
 
 // NewHuntGroupsServiceClient constructs a client for the
@@ -60,12 +76,24 @@ func NewHuntGroupsServiceClient(httpClient connect_go.HTTPClient, baseURL string
 			baseURL+HuntGroupsServiceListHuntGroupExileLinksProcedure,
 			opts...,
 		),
+		copyHuntGroupExileLink: connect_go.NewClient[v1alpha1.CopyHuntGroupExileLinkRequest, v1alpha1.CopyHuntGroupExileLinkResponse](
+			httpClient,
+			baseURL+HuntGroupsServiceCopyHuntGroupExileLinkProcedure,
+			opts...,
+		),
+		updateHuntGroupExileLinks: connect_go.NewClient[v1alpha1.UpdateHuntGroupExileLinksRequest, v1alpha1.UpdateHuntGroupExileLinksResponse](
+			httpClient,
+			baseURL+HuntGroupsServiceUpdateHuntGroupExileLinksProcedure,
+			opts...,
+		),
 	}
 }
 
 // huntGroupsServiceClient implements HuntGroupsServiceClient.
 type huntGroupsServiceClient struct {
-	listHuntGroupExileLinks *connect_go.Client[v1alpha1.ListHuntGroupExileLinksRequest, v1alpha1.ListHuntGroupExileLinksResponse]
+	listHuntGroupExileLinks   *connect_go.Client[v1alpha1.ListHuntGroupExileLinksRequest, v1alpha1.ListHuntGroupExileLinksResponse]
+	copyHuntGroupExileLink    *connect_go.Client[v1alpha1.CopyHuntGroupExileLinkRequest, v1alpha1.CopyHuntGroupExileLinkResponse]
+	updateHuntGroupExileLinks *connect_go.Client[v1alpha1.UpdateHuntGroupExileLinksRequest, v1alpha1.UpdateHuntGroupExileLinksResponse]
 }
 
 // ListHuntGroupExileLinks calls
@@ -74,10 +102,32 @@ func (c *huntGroupsServiceClient) ListHuntGroupExileLinks(ctx context.Context, r
 	return c.listHuntGroupExileLinks.CallUnary(ctx, req)
 }
 
+// CopyHuntGroupExileLink calls
+// services.org.hunt_groups.v1alpha1.HuntGroupsService.CopyHuntGroupExileLink.
+func (c *huntGroupsServiceClient) CopyHuntGroupExileLink(ctx context.Context, req *connect_go.Request[v1alpha1.CopyHuntGroupExileLinkRequest]) (*connect_go.Response[v1alpha1.CopyHuntGroupExileLinkResponse], error) {
+	return c.copyHuntGroupExileLink.CallUnary(ctx, req)
+}
+
+// UpdateHuntGroupExileLinks calls
+// services.org.hunt_groups.v1alpha1.HuntGroupsService.UpdateHuntGroupExileLinks.
+func (c *huntGroupsServiceClient) UpdateHuntGroupExileLinks(ctx context.Context, req *connect_go.Request[v1alpha1.UpdateHuntGroupExileLinksRequest]) (*connect_go.Response[v1alpha1.UpdateHuntGroupExileLinksResponse], error) {
+	return c.updateHuntGroupExileLinks.CallUnary(ctx, req)
+}
+
 // HuntGroupsServiceHandler is an implementation of the
 // services.org.hunt_groups.v1alpha1.HuntGroupsService service.
 type HuntGroupsServiceHandler interface {
+	// ListHuntGroupExileLinks returns a list of Exile links for a given hunt group.
 	ListHuntGroupExileLinks(context.Context, *connect_go.Request[v1alpha1.ListHuntGroupExileLinksRequest]) (*connect_go.Response[v1alpha1.ListHuntGroupExileLinksResponse], error)
+	// CopyHuntGroupExileLink copies an exile link from one hunt group to another.
+	// It will create a new exile link in the destination hunt group with the same
+	// settings/parameters as the source exile link.
+	CopyHuntGroupExileLink(context.Context, *connect_go.Request[v1alpha1.CopyHuntGroupExileLinkRequest]) (*connect_go.Response[v1alpha1.CopyHuntGroupExileLinkResponse], error)
+	// UpdateHuntGroupExileLinks updates the exile links for a hunt group.
+	// It will create any new exile links that do not already exist in the hunt group,
+	// update any existing exile links with the new settings/parameters, and
+	// delete any exile links that are not in the request.
+	UpdateHuntGroupExileLinks(context.Context, *connect_go.Request[v1alpha1.UpdateHuntGroupExileLinksRequest]) (*connect_go.Response[v1alpha1.UpdateHuntGroupExileLinksResponse], error)
 }
 
 // NewHuntGroupsServiceHandler builds an HTTP handler from the service implementation. It returns
@@ -91,10 +141,24 @@ func NewHuntGroupsServiceHandler(svc HuntGroupsServiceHandler, opts ...connect_g
 		svc.ListHuntGroupExileLinks,
 		opts...,
 	)
+	huntGroupsServiceCopyHuntGroupExileLinkHandler := connect_go.NewUnaryHandler(
+		HuntGroupsServiceCopyHuntGroupExileLinkProcedure,
+		svc.CopyHuntGroupExileLink,
+		opts...,
+	)
+	huntGroupsServiceUpdateHuntGroupExileLinksHandler := connect_go.NewUnaryHandler(
+		HuntGroupsServiceUpdateHuntGroupExileLinksProcedure,
+		svc.UpdateHuntGroupExileLinks,
+		opts...,
+	)
 	return "/services.org.hunt_groups.v1alpha1.HuntGroupsService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case HuntGroupsServiceListHuntGroupExileLinksProcedure:
 			huntGroupsServiceListHuntGroupExileLinksHandler.ServeHTTP(w, r)
+		case HuntGroupsServiceCopyHuntGroupExileLinkProcedure:
+			huntGroupsServiceCopyHuntGroupExileLinkHandler.ServeHTTP(w, r)
+		case HuntGroupsServiceUpdateHuntGroupExileLinksProcedure:
+			huntGroupsServiceUpdateHuntGroupExileLinksHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -106,4 +170,12 @@ type UnimplementedHuntGroupsServiceHandler struct{}
 
 func (UnimplementedHuntGroupsServiceHandler) ListHuntGroupExileLinks(context.Context, *connect_go.Request[v1alpha1.ListHuntGroupExileLinksRequest]) (*connect_go.Response[v1alpha1.ListHuntGroupExileLinksResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.org.hunt_groups.v1alpha1.HuntGroupsService.ListHuntGroupExileLinks is not implemented"))
+}
+
+func (UnimplementedHuntGroupsServiceHandler) CopyHuntGroupExileLink(context.Context, *connect_go.Request[v1alpha1.CopyHuntGroupExileLinkRequest]) (*connect_go.Response[v1alpha1.CopyHuntGroupExileLinkResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.org.hunt_groups.v1alpha1.HuntGroupsService.CopyHuntGroupExileLink is not implemented"))
+}
+
+func (UnimplementedHuntGroupsServiceHandler) UpdateHuntGroupExileLinks(context.Context, *connect_go.Request[v1alpha1.UpdateHuntGroupExileLinksRequest]) (*connect_go.Response[v1alpha1.UpdateHuntGroupExileLinksResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.org.hunt_groups.v1alpha1.HuntGroupsService.UpdateHuntGroupExileLinks is not implemented"))
 }
