@@ -20,12 +20,14 @@ const _ = grpc.SupportPackageIsVersion8
 
 const (
 	BillingService_ApplyBillingPlanDraft_FullMethodName        = "/services.billing.v1alpha4.BillingService/ApplyBillingPlanDraft"
+	BillingService_CloneBillingPlan_FullMethodName             = "/services.billing.v1alpha4.BillingService/CloneBillingPlan"
 	BillingService_CreateBillingPlan_FullMethodName            = "/services.billing.v1alpha4.BillingService/CreateBillingPlan"
 	BillingService_DeleteBillingPlan_FullMethodName            = "/services.billing.v1alpha4.BillingService/DeleteBillingPlan"
 	BillingService_GetBillingPlan_FullMethodName               = "/services.billing.v1alpha4.BillingService/GetBillingPlan"
 	BillingService_ListBillingPlans_FullMethodName             = "/services.billing.v1alpha4.BillingService/ListBillingPlans"
 	BillingService_UpdateBillingPlan_FullMethodName            = "/services.billing.v1alpha4.BillingService/UpdateBillingPlan"
 	BillingService_ApplyDefaultBillingPlanDraft_FullMethodName = "/services.billing.v1alpha4.BillingService/ApplyDefaultBillingPlanDraft"
+	BillingService_CloneDefaultBillingPlan_FullMethodName      = "/services.billing.v1alpha4.BillingService/CloneDefaultBillingPlan"
 	BillingService_CreateDefaultBillingPlan_FullMethodName     = "/services.billing.v1alpha4.BillingService/CreateDefaultBillingPlan"
 	BillingService_DeleteDefaultBillingPlan_FullMethodName     = "/services.billing.v1alpha4.BillingService/DeleteDefaultBillingPlan"
 	BillingService_GetDefaultBillingPlan_FullMethodName        = "/services.billing.v1alpha4.BillingService/GetDefaultBillingPlan"
@@ -70,6 +72,18 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: The caller does not have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
 	ApplyBillingPlanDraft(ctx context.Context, in *ApplyBillingPlanDraftRequest, opts ...grpc.CallOption) (*ApplyBillingPlanDraftResponse, error)
+	// Clones a billing plan
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The billing plan was not found.
+	//   - grpc.PermissionDenied: The caller does not have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable.
+	CloneBillingPlan(ctx context.Context, in *CloneBillingPlanRequest, opts ...grpc.CallOption) (*CloneBillingPlanResponse, error)
 	// Creates a new billing plan.
 	// Required permissions:
 	//
@@ -141,6 +155,19 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: The caller does not have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
 	ApplyDefaultBillingPlanDraft(ctx context.Context, in *ApplyDefaultBillingPlanDraftRequest, opts ...grpc.CallOption) (*ApplyDefaultBillingPlanDraftResponse, error)
+	// Clones a default billing plan.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//	TCN_BILLING_ADMIN
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The billing plan was not found.
+	//   - grpc.PermissionDenied: The caller does not have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable.
+	CloneDefaultBillingPlan(ctx context.Context, in *CloneDefaultBillingPlanRequest, opts ...grpc.CallOption) (*CloneDefaultBillingPlanResponse, error)
 	// Creates a new default billing plan.
 	// Required permissions:
 	//
@@ -489,6 +516,16 @@ func (c *billingServiceClient) ApplyBillingPlanDraft(ctx context.Context, in *Ap
 	return out, nil
 }
 
+func (c *billingServiceClient) CloneBillingPlan(ctx context.Context, in *CloneBillingPlanRequest, opts ...grpc.CallOption) (*CloneBillingPlanResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CloneBillingPlanResponse)
+	err := c.cc.Invoke(ctx, BillingService_CloneBillingPlan_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *billingServiceClient) CreateBillingPlan(ctx context.Context, in *CreateBillingPlanRequest, opts ...grpc.CallOption) (*CreateBillingPlanResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(CreateBillingPlanResponse)
@@ -543,6 +580,16 @@ func (c *billingServiceClient) ApplyDefaultBillingPlanDraft(ctx context.Context,
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ApplyDefaultBillingPlanDraftResponse)
 	err := c.cc.Invoke(ctx, BillingService_ApplyDefaultBillingPlanDraft_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *billingServiceClient) CloneDefaultBillingPlan(ctx context.Context, in *CloneDefaultBillingPlanRequest, opts ...grpc.CallOption) (*CloneDefaultBillingPlanResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CloneDefaultBillingPlanResponse)
+	err := c.cc.Invoke(ctx, BillingService_CloneDefaultBillingPlan_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -825,6 +872,18 @@ type BillingServiceServer interface {
 	//   - grpc.PermissionDenied: The caller does not have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
 	ApplyBillingPlanDraft(context.Context, *ApplyBillingPlanDraftRequest) (*ApplyBillingPlanDraftResponse, error)
+	// Clones a billing plan
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The billing plan was not found.
+	//   - grpc.PermissionDenied: The caller does not have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable.
+	CloneBillingPlan(context.Context, *CloneBillingPlanRequest) (*CloneBillingPlanResponse, error)
 	// Creates a new billing plan.
 	// Required permissions:
 	//
@@ -896,6 +955,19 @@ type BillingServiceServer interface {
 	//   - grpc.PermissionDenied: The caller does not have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
 	ApplyDefaultBillingPlanDraft(context.Context, *ApplyDefaultBillingPlanDraftRequest) (*ApplyDefaultBillingPlanDraftResponse, error)
+	// Clones a default billing plan.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//	TCN_BILLING_ADMIN
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The billing plan was not found.
+	//   - grpc.PermissionDenied: The caller does not have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable.
+	CloneDefaultBillingPlan(context.Context, *CloneDefaultBillingPlanRequest) (*CloneDefaultBillingPlanResponse, error)
 	// Creates a new default billing plan.
 	// Required permissions:
 	//
@@ -1237,6 +1309,9 @@ type UnimplementedBillingServiceServer struct{}
 func (UnimplementedBillingServiceServer) ApplyBillingPlanDraft(context.Context, *ApplyBillingPlanDraftRequest) (*ApplyBillingPlanDraftResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ApplyBillingPlanDraft not implemented")
 }
+func (UnimplementedBillingServiceServer) CloneBillingPlan(context.Context, *CloneBillingPlanRequest) (*CloneBillingPlanResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CloneBillingPlan not implemented")
+}
 func (UnimplementedBillingServiceServer) CreateBillingPlan(context.Context, *CreateBillingPlanRequest) (*CreateBillingPlanResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateBillingPlan not implemented")
 }
@@ -1254,6 +1329,9 @@ func (UnimplementedBillingServiceServer) UpdateBillingPlan(context.Context, *Upd
 }
 func (UnimplementedBillingServiceServer) ApplyDefaultBillingPlanDraft(context.Context, *ApplyDefaultBillingPlanDraftRequest) (*ApplyDefaultBillingPlanDraftResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ApplyDefaultBillingPlanDraft not implemented")
+}
+func (UnimplementedBillingServiceServer) CloneDefaultBillingPlan(context.Context, *CloneDefaultBillingPlanRequest) (*CloneDefaultBillingPlanResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CloneDefaultBillingPlan not implemented")
 }
 func (UnimplementedBillingServiceServer) CreateDefaultBillingPlan(context.Context, *CreateDefaultBillingPlanRequest) (*CreateDefaultBillingPlanResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateDefaultBillingPlan not implemented")
@@ -1372,6 +1450,24 @@ func _BillingService_ApplyBillingPlanDraft_Handler(srv interface{}, ctx context.
 	return interceptor(ctx, in, info, handler)
 }
 
+func _BillingService_CloneBillingPlan_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CloneBillingPlanRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).CloneBillingPlan(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_CloneBillingPlan_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).CloneBillingPlan(ctx, req.(*CloneBillingPlanRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _BillingService_CreateBillingPlan_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateBillingPlanRequest)
 	if err := dec(in); err != nil {
@@ -1476,6 +1572,24 @@ func _BillingService_ApplyDefaultBillingPlanDraft_Handler(srv interface{}, ctx c
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BillingServiceServer).ApplyDefaultBillingPlanDraft(ctx, req.(*ApplyDefaultBillingPlanDraftRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BillingService_CloneDefaultBillingPlan_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CloneDefaultBillingPlanRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BillingServiceServer).CloneDefaultBillingPlan(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BillingService_CloneDefaultBillingPlan_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BillingServiceServer).CloneDefaultBillingPlan(ctx, req.(*CloneDefaultBillingPlanRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1960,6 +2074,10 @@ var BillingService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _BillingService_ApplyBillingPlanDraft_Handler,
 		},
 		{
+			MethodName: "CloneBillingPlan",
+			Handler:    _BillingService_CloneBillingPlan_Handler,
+		},
+		{
 			MethodName: "CreateBillingPlan",
 			Handler:    _BillingService_CreateBillingPlan_Handler,
 		},
@@ -1982,6 +2100,10 @@ var BillingService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ApplyDefaultBillingPlanDraft",
 			Handler:    _BillingService_ApplyDefaultBillingPlanDraft_Handler,
+		},
+		{
+			MethodName: "CloneDefaultBillingPlan",
+			Handler:    _BillingService_CloneDefaultBillingPlan_Handler,
 		},
 		{
 			MethodName: "CreateDefaultBillingPlan",

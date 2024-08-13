@@ -36,6 +36,9 @@ const (
 	// BillingServiceApplyBillingPlanDraftProcedure is the fully-qualified name of the BillingService's
 	// ApplyBillingPlanDraft RPC.
 	BillingServiceApplyBillingPlanDraftProcedure = "/services.billing.v1alpha4.BillingService/ApplyBillingPlanDraft"
+	// BillingServiceCloneBillingPlanProcedure is the fully-qualified name of the BillingService's
+	// CloneBillingPlan RPC.
+	BillingServiceCloneBillingPlanProcedure = "/services.billing.v1alpha4.BillingService/CloneBillingPlan"
 	// BillingServiceCreateBillingPlanProcedure is the fully-qualified name of the BillingService's
 	// CreateBillingPlan RPC.
 	BillingServiceCreateBillingPlanProcedure = "/services.billing.v1alpha4.BillingService/CreateBillingPlan"
@@ -54,6 +57,9 @@ const (
 	// BillingServiceApplyDefaultBillingPlanDraftProcedure is the fully-qualified name of the
 	// BillingService's ApplyDefaultBillingPlanDraft RPC.
 	BillingServiceApplyDefaultBillingPlanDraftProcedure = "/services.billing.v1alpha4.BillingService/ApplyDefaultBillingPlanDraft"
+	// BillingServiceCloneDefaultBillingPlanProcedure is the fully-qualified name of the
+	// BillingService's CloneDefaultBillingPlan RPC.
+	BillingServiceCloneDefaultBillingPlanProcedure = "/services.billing.v1alpha4.BillingService/CloneDefaultBillingPlan"
 	// BillingServiceCreateDefaultBillingPlanProcedure is the fully-qualified name of the
 	// BillingService's CreateDefaultBillingPlan RPC.
 	BillingServiceCreateDefaultBillingPlanProcedure = "/services.billing.v1alpha4.BillingService/CreateDefaultBillingPlan"
@@ -148,6 +154,18 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: The caller does not have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
 	ApplyBillingPlanDraft(context.Context, *connect_go.Request[v1alpha4.ApplyBillingPlanDraftRequest]) (*connect_go.Response[v1alpha4.ApplyBillingPlanDraftResponse], error)
+	// Clones a billing plan
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The billing plan was not found.
+	//   - grpc.PermissionDenied: The caller does not have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable.
+	CloneBillingPlan(context.Context, *connect_go.Request[v1alpha4.CloneBillingPlanRequest]) (*connect_go.Response[v1alpha4.CloneBillingPlanResponse], error)
 	// Creates a new billing plan.
 	// Required permissions:
 	//
@@ -219,6 +237,19 @@ type BillingServiceClient interface {
 	//   - grpc.PermissionDenied: The caller does not have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
 	ApplyDefaultBillingPlanDraft(context.Context, *connect_go.Request[v1alpha4.ApplyDefaultBillingPlanDraftRequest]) (*connect_go.Response[v1alpha4.ApplyDefaultBillingPlanDraftResponse], error)
+	// Clones a default billing plan.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//	TCN_BILLING_ADMIN
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The billing plan was not found.
+	//   - grpc.PermissionDenied: The caller does not have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable.
+	CloneDefaultBillingPlan(context.Context, *connect_go.Request[v1alpha4.CloneDefaultBillingPlanRequest]) (*connect_go.Response[v1alpha4.CloneDefaultBillingPlanResponse], error)
 	// Creates a new default billing plan.
 	// Required permissions:
 	//
@@ -564,6 +595,11 @@ func NewBillingServiceClient(httpClient connect_go.HTTPClient, baseURL string, o
 			baseURL+BillingServiceApplyBillingPlanDraftProcedure,
 			opts...,
 		),
+		cloneBillingPlan: connect_go.NewClient[v1alpha4.CloneBillingPlanRequest, v1alpha4.CloneBillingPlanResponse](
+			httpClient,
+			baseURL+BillingServiceCloneBillingPlanProcedure,
+			opts...,
+		),
 		createBillingPlan: connect_go.NewClient[v1alpha4.CreateBillingPlanRequest, v1alpha4.CreateBillingPlanResponse](
 			httpClient,
 			baseURL+BillingServiceCreateBillingPlanProcedure,
@@ -592,6 +628,11 @@ func NewBillingServiceClient(httpClient connect_go.HTTPClient, baseURL string, o
 		applyDefaultBillingPlanDraft: connect_go.NewClient[v1alpha4.ApplyDefaultBillingPlanDraftRequest, v1alpha4.ApplyDefaultBillingPlanDraftResponse](
 			httpClient,
 			baseURL+BillingServiceApplyDefaultBillingPlanDraftProcedure,
+			opts...,
+		),
+		cloneDefaultBillingPlan: connect_go.NewClient[v1alpha4.CloneDefaultBillingPlanRequest, v1alpha4.CloneDefaultBillingPlanResponse](
+			httpClient,
+			baseURL+BillingServiceCloneDefaultBillingPlanProcedure,
 			opts...,
 		),
 		createDefaultBillingPlan: connect_go.NewClient[v1alpha4.CreateDefaultBillingPlanRequest, v1alpha4.CreateDefaultBillingPlanResponse](
@@ -730,12 +771,14 @@ func NewBillingServiceClient(httpClient connect_go.HTTPClient, baseURL string, o
 // billingServiceClient implements BillingServiceClient.
 type billingServiceClient struct {
 	applyBillingPlanDraft        *connect_go.Client[v1alpha4.ApplyBillingPlanDraftRequest, v1alpha4.ApplyBillingPlanDraftResponse]
+	cloneBillingPlan             *connect_go.Client[v1alpha4.CloneBillingPlanRequest, v1alpha4.CloneBillingPlanResponse]
 	createBillingPlan            *connect_go.Client[v1alpha4.CreateBillingPlanRequest, v1alpha4.CreateBillingPlanResponse]
 	deleteBillingPlan            *connect_go.Client[v1alpha4.DeleteBillingPlanRequest, v1alpha4.DeleteBillingPlanResponse]
 	getBillingPlan               *connect_go.Client[v1alpha4.GetBillingPlanRequest, v1alpha4.GetBillingPlanResponse]
 	listBillingPlans             *connect_go.Client[v1alpha4.ListBillingPlansRequest, v1alpha4.ListBillingPlansResponse]
 	updateBillingPlan            *connect_go.Client[v1alpha4.UpdateBillingPlanRequest, v1alpha4.UpdateBillingPlanResponse]
 	applyDefaultBillingPlanDraft *connect_go.Client[v1alpha4.ApplyDefaultBillingPlanDraftRequest, v1alpha4.ApplyDefaultBillingPlanDraftResponse]
+	cloneDefaultBillingPlan      *connect_go.Client[v1alpha4.CloneDefaultBillingPlanRequest, v1alpha4.CloneDefaultBillingPlanResponse]
 	createDefaultBillingPlan     *connect_go.Client[v1alpha4.CreateDefaultBillingPlanRequest, v1alpha4.CreateDefaultBillingPlanResponse]
 	deleteDefaultBillingPlan     *connect_go.Client[v1alpha4.DeleteDefaultBillingPlanRequest, v1alpha4.DeleteDefaultBillingPlanResponse]
 	getDefaultBillingPlan        *connect_go.Client[v1alpha4.GetDefaultBillingPlanRequest, v1alpha4.GetDefaultBillingPlanResponse]
@@ -769,6 +812,11 @@ func (c *billingServiceClient) ApplyBillingPlanDraft(ctx context.Context, req *c
 	return c.applyBillingPlanDraft.CallUnary(ctx, req)
 }
 
+// CloneBillingPlan calls services.billing.v1alpha4.BillingService.CloneBillingPlan.
+func (c *billingServiceClient) CloneBillingPlan(ctx context.Context, req *connect_go.Request[v1alpha4.CloneBillingPlanRequest]) (*connect_go.Response[v1alpha4.CloneBillingPlanResponse], error) {
+	return c.cloneBillingPlan.CallUnary(ctx, req)
+}
+
 // CreateBillingPlan calls services.billing.v1alpha4.BillingService.CreateBillingPlan.
 func (c *billingServiceClient) CreateBillingPlan(ctx context.Context, req *connect_go.Request[v1alpha4.CreateBillingPlanRequest]) (*connect_go.Response[v1alpha4.CreateBillingPlanResponse], error) {
 	return c.createBillingPlan.CallUnary(ctx, req)
@@ -798,6 +846,11 @@ func (c *billingServiceClient) UpdateBillingPlan(ctx context.Context, req *conne
 // services.billing.v1alpha4.BillingService.ApplyDefaultBillingPlanDraft.
 func (c *billingServiceClient) ApplyDefaultBillingPlanDraft(ctx context.Context, req *connect_go.Request[v1alpha4.ApplyDefaultBillingPlanDraftRequest]) (*connect_go.Response[v1alpha4.ApplyDefaultBillingPlanDraftResponse], error) {
 	return c.applyDefaultBillingPlanDraft.CallUnary(ctx, req)
+}
+
+// CloneDefaultBillingPlan calls services.billing.v1alpha4.BillingService.CloneDefaultBillingPlan.
+func (c *billingServiceClient) CloneDefaultBillingPlan(ctx context.Context, req *connect_go.Request[v1alpha4.CloneDefaultBillingPlanRequest]) (*connect_go.Response[v1alpha4.CloneDefaultBillingPlanResponse], error) {
+	return c.cloneDefaultBillingPlan.CallUnary(ctx, req)
 }
 
 // CreateDefaultBillingPlan calls services.billing.v1alpha4.BillingService.CreateDefaultBillingPlan.
@@ -949,6 +1002,18 @@ type BillingServiceHandler interface {
 	//   - grpc.PermissionDenied: The caller does not have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
 	ApplyBillingPlanDraft(context.Context, *connect_go.Request[v1alpha4.ApplyBillingPlanDraftRequest]) (*connect_go.Response[v1alpha4.ApplyBillingPlanDraftResponse], error)
+	// Clones a billing plan
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The billing plan was not found.
+	//   - grpc.PermissionDenied: The caller does not have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable.
+	CloneBillingPlan(context.Context, *connect_go.Request[v1alpha4.CloneBillingPlanRequest]) (*connect_go.Response[v1alpha4.CloneBillingPlanResponse], error)
 	// Creates a new billing plan.
 	// Required permissions:
 	//
@@ -1020,6 +1085,19 @@ type BillingServiceHandler interface {
 	//   - grpc.PermissionDenied: The caller does not have the required permissions.
 	//   - grpc.Unavailable: The operation is currently unavailable.
 	ApplyDefaultBillingPlanDraft(context.Context, *connect_go.Request[v1alpha4.ApplyDefaultBillingPlanDraftRequest]) (*connect_go.Response[v1alpha4.ApplyDefaultBillingPlanDraftResponse], error)
+	// Clones a default billing plan.
+	// Required permissions:
+	//
+	//	CUSTOMER_SUPPORT
+	//	TCN_BILLING_ADMIN
+	//
+	// Errors:
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.NotFound: The billing plan was not found.
+	//   - grpc.PermissionDenied: The caller does not have the required permissions.
+	//   - grpc.Unavailable: The operation is currently unavailable.
+	CloneDefaultBillingPlan(context.Context, *connect_go.Request[v1alpha4.CloneDefaultBillingPlanRequest]) (*connect_go.Response[v1alpha4.CloneDefaultBillingPlanResponse], error)
 	// Creates a new default billing plan.
 	// Required permissions:
 	//
@@ -1361,6 +1439,11 @@ func NewBillingServiceHandler(svc BillingServiceHandler, opts ...connect_go.Hand
 		svc.ApplyBillingPlanDraft,
 		opts...,
 	)
+	billingServiceCloneBillingPlanHandler := connect_go.NewUnaryHandler(
+		BillingServiceCloneBillingPlanProcedure,
+		svc.CloneBillingPlan,
+		opts...,
+	)
 	billingServiceCreateBillingPlanHandler := connect_go.NewUnaryHandler(
 		BillingServiceCreateBillingPlanProcedure,
 		svc.CreateBillingPlan,
@@ -1389,6 +1472,11 @@ func NewBillingServiceHandler(svc BillingServiceHandler, opts ...connect_go.Hand
 	billingServiceApplyDefaultBillingPlanDraftHandler := connect_go.NewUnaryHandler(
 		BillingServiceApplyDefaultBillingPlanDraftProcedure,
 		svc.ApplyDefaultBillingPlanDraft,
+		opts...,
+	)
+	billingServiceCloneDefaultBillingPlanHandler := connect_go.NewUnaryHandler(
+		BillingServiceCloneDefaultBillingPlanProcedure,
+		svc.CloneDefaultBillingPlan,
 		opts...,
 	)
 	billingServiceCreateDefaultBillingPlanHandler := connect_go.NewUnaryHandler(
@@ -1525,6 +1613,8 @@ func NewBillingServiceHandler(svc BillingServiceHandler, opts ...connect_go.Hand
 		switch r.URL.Path {
 		case BillingServiceApplyBillingPlanDraftProcedure:
 			billingServiceApplyBillingPlanDraftHandler.ServeHTTP(w, r)
+		case BillingServiceCloneBillingPlanProcedure:
+			billingServiceCloneBillingPlanHandler.ServeHTTP(w, r)
 		case BillingServiceCreateBillingPlanProcedure:
 			billingServiceCreateBillingPlanHandler.ServeHTTP(w, r)
 		case BillingServiceDeleteBillingPlanProcedure:
@@ -1537,6 +1627,8 @@ func NewBillingServiceHandler(svc BillingServiceHandler, opts ...connect_go.Hand
 			billingServiceUpdateBillingPlanHandler.ServeHTTP(w, r)
 		case BillingServiceApplyDefaultBillingPlanDraftProcedure:
 			billingServiceApplyDefaultBillingPlanDraftHandler.ServeHTTP(w, r)
+		case BillingServiceCloneDefaultBillingPlanProcedure:
+			billingServiceCloneDefaultBillingPlanHandler.ServeHTTP(w, r)
 		case BillingServiceCreateDefaultBillingPlanProcedure:
 			billingServiceCreateDefaultBillingPlanHandler.ServeHTTP(w, r)
 		case BillingServiceDeleteDefaultBillingPlanProcedure:
@@ -1602,6 +1694,10 @@ func (UnimplementedBillingServiceHandler) ApplyBillingPlanDraft(context.Context,
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.billing.v1alpha4.BillingService.ApplyBillingPlanDraft is not implemented"))
 }
 
+func (UnimplementedBillingServiceHandler) CloneBillingPlan(context.Context, *connect_go.Request[v1alpha4.CloneBillingPlanRequest]) (*connect_go.Response[v1alpha4.CloneBillingPlanResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.billing.v1alpha4.BillingService.CloneBillingPlan is not implemented"))
+}
+
 func (UnimplementedBillingServiceHandler) CreateBillingPlan(context.Context, *connect_go.Request[v1alpha4.CreateBillingPlanRequest]) (*connect_go.Response[v1alpha4.CreateBillingPlanResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.billing.v1alpha4.BillingService.CreateBillingPlan is not implemented"))
 }
@@ -1624,6 +1720,10 @@ func (UnimplementedBillingServiceHandler) UpdateBillingPlan(context.Context, *co
 
 func (UnimplementedBillingServiceHandler) ApplyDefaultBillingPlanDraft(context.Context, *connect_go.Request[v1alpha4.ApplyDefaultBillingPlanDraftRequest]) (*connect_go.Response[v1alpha4.ApplyDefaultBillingPlanDraftResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.billing.v1alpha4.BillingService.ApplyDefaultBillingPlanDraft is not implemented"))
+}
+
+func (UnimplementedBillingServiceHandler) CloneDefaultBillingPlan(context.Context, *connect_go.Request[v1alpha4.CloneDefaultBillingPlanRequest]) (*connect_go.Response[v1alpha4.CloneDefaultBillingPlanResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.billing.v1alpha4.BillingService.CloneDefaultBillingPlan is not implemented"))
 }
 
 func (UnimplementedBillingServiceHandler) CreateDefaultBillingPlan(context.Context, *connect_go.Request[v1alpha4.CreateDefaultBillingPlanRequest]) (*connect_go.Response[v1alpha4.CreateDefaultBillingPlanResponse], error) {
