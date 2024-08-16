@@ -297,6 +297,8 @@ const (
 	P3ApiListCustomReportFiltersProcedure = "/api.v0alpha.P3Api/ListCustomReportFilters"
 	// P3ApiListSmsNumbersProcedure is the fully-qualified name of the P3Api's ListSmsNumbers RPC.
 	P3ApiListSmsNumbersProcedure = "/api.v0alpha.P3Api/ListSmsNumbers"
+	// P3ApiGetMailMergeProcedure is the fully-qualified name of the P3Api's GetMailMerge RPC.
+	P3ApiGetMailMergeProcedure = "/api.v0alpha.P3Api/GetMailMerge"
 )
 
 // P3ApiClient is a client for the api.v0alpha.P3Api service.
@@ -678,6 +680,7 @@ type P3ApiClient interface {
 	ListCustomReportFilters(context.Context, *connect_go.Request[v0alpha.ListCustomReportFiltersReq]) (*connect_go.Response[v0alpha.ListCustomReportFiltersRes], error)
 	// List sms numbers by client sid
 	ListSmsNumbers(context.Context, *connect_go.Request[v0alpha.ListSmsNumbersReq]) (*connect_go.Response[v0alpha.ListSmsNumbersRes], error)
+	GetMailMerge(context.Context, *connect_go.Request[v0alpha.GetMailMergeReq]) (*connect_go.Response[v0alpha.GetMailMergeRes], error)
 }
 
 // NewP3ApiClient constructs a client for the api.v0alpha.P3Api service. By default, it uses the
@@ -1180,6 +1183,11 @@ func NewP3ApiClient(httpClient connect_go.HTTPClient, baseURL string, opts ...co
 			baseURL+P3ApiListSmsNumbersProcedure,
 			opts...,
 		),
+		getMailMerge: connect_go.NewClient[v0alpha.GetMailMergeReq, v0alpha.GetMailMergeRes](
+			httpClient,
+			baseURL+P3ApiGetMailMergeProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -1283,6 +1291,7 @@ type p3ApiClient struct {
 	listScheduleRules                   *connect_go.Client[v0alpha.ListScheduleRulesRequest, v0alpha.ListScheduleRulesResult]
 	listCustomReportFilters             *connect_go.Client[v0alpha.ListCustomReportFiltersReq, v0alpha.ListCustomReportFiltersRes]
 	listSmsNumbers                      *connect_go.Client[v0alpha.ListSmsNumbersReq, v0alpha.ListSmsNumbersRes]
+	getMailMerge                        *connect_go.Client[v0alpha.GetMailMergeReq, v0alpha.GetMailMergeRes]
 }
 
 // GetAgentHuntGroup calls api.v0alpha.P3Api.GetAgentHuntGroup.
@@ -1775,6 +1784,11 @@ func (c *p3ApiClient) ListSmsNumbers(ctx context.Context, req *connect_go.Reques
 	return c.listSmsNumbers.CallUnary(ctx, req)
 }
 
+// GetMailMerge calls api.v0alpha.P3Api.GetMailMerge.
+func (c *p3ApiClient) GetMailMerge(ctx context.Context, req *connect_go.Request[v0alpha.GetMailMergeReq]) (*connect_go.Response[v0alpha.GetMailMergeRes], error) {
+	return c.getMailMerge.CallUnary(ctx, req)
+}
+
 // P3ApiHandler is an implementation of the api.v0alpha.P3Api service.
 type P3ApiHandler interface {
 	GetAgentHuntGroup(context.Context, *connect_go.Request[v0alpha.GetAgentHuntGroupReq]) (*connect_go.Response[v0alpha.HuntGroup], error)
@@ -2154,6 +2168,7 @@ type P3ApiHandler interface {
 	ListCustomReportFilters(context.Context, *connect_go.Request[v0alpha.ListCustomReportFiltersReq]) (*connect_go.Response[v0alpha.ListCustomReportFiltersRes], error)
 	// List sms numbers by client sid
 	ListSmsNumbers(context.Context, *connect_go.Request[v0alpha.ListSmsNumbersReq]) (*connect_go.Response[v0alpha.ListSmsNumbersRes], error)
+	GetMailMerge(context.Context, *connect_go.Request[v0alpha.GetMailMergeReq]) (*connect_go.Response[v0alpha.GetMailMergeRes], error)
 }
 
 // NewP3ApiHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -2652,6 +2667,11 @@ func NewP3ApiHandler(svc P3ApiHandler, opts ...connect_go.HandlerOption) (string
 		svc.ListSmsNumbers,
 		opts...,
 	)
+	p3ApiGetMailMergeHandler := connect_go.NewUnaryHandler(
+		P3ApiGetMailMergeProcedure,
+		svc.GetMailMerge,
+		opts...,
+	)
 	return "/api.v0alpha.P3Api/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case P3ApiGetAgentHuntGroupProcedure:
@@ -2850,6 +2870,8 @@ func NewP3ApiHandler(svc P3ApiHandler, opts ...connect_go.HandlerOption) (string
 			p3ApiListCustomReportFiltersHandler.ServeHTTP(w, r)
 		case P3ApiListSmsNumbersProcedure:
 			p3ApiListSmsNumbersHandler.ServeHTTP(w, r)
+		case P3ApiGetMailMergeProcedure:
+			p3ApiGetMailMergeHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -3249,4 +3271,8 @@ func (UnimplementedP3ApiHandler) ListCustomReportFilters(context.Context, *conne
 
 func (UnimplementedP3ApiHandler) ListSmsNumbers(context.Context, *connect_go.Request[v0alpha.ListSmsNumbersReq]) (*connect_go.Response[v0alpha.ListSmsNumbersRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.P3Api.ListSmsNumbers is not implemented"))
+}
+
+func (UnimplementedP3ApiHandler) GetMailMerge(context.Context, *connect_go.Request[v0alpha.GetMailMergeReq]) (*connect_go.Response[v0alpha.GetMailMergeRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.P3Api.GetMailMerge is not implemented"))
 }

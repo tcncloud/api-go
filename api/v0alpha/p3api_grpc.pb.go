@@ -117,6 +117,7 @@ const (
 	P3Api_ListScheduleRules_FullMethodName                   = "/api.v0alpha.P3Api/ListScheduleRules"
 	P3Api_ListCustomReportFilters_FullMethodName             = "/api.v0alpha.P3Api/ListCustomReportFilters"
 	P3Api_ListSmsNumbers_FullMethodName                      = "/api.v0alpha.P3Api/ListSmsNumbers"
+	P3Api_GetMailMerge_FullMethodName                        = "/api.v0alpha.P3Api/GetMailMerge"
 )
 
 // P3ApiClient is the client API for P3Api service.
@@ -500,6 +501,7 @@ type P3ApiClient interface {
 	ListCustomReportFilters(ctx context.Context, in *ListCustomReportFiltersReq, opts ...grpc.CallOption) (*ListCustomReportFiltersRes, error)
 	// List sms numbers by client sid
 	ListSmsNumbers(ctx context.Context, in *ListSmsNumbersReq, opts ...grpc.CallOption) (*ListSmsNumbersRes, error)
+	GetMailMerge(ctx context.Context, in *GetMailMergeReq, opts ...grpc.CallOption) (*GetMailMergeRes, error)
 }
 
 type p3ApiClient struct {
@@ -1536,6 +1538,16 @@ func (c *p3ApiClient) ListSmsNumbers(ctx context.Context, in *ListSmsNumbersReq,
 	return out, nil
 }
 
+func (c *p3ApiClient) GetMailMerge(ctx context.Context, in *GetMailMergeReq, opts ...grpc.CallOption) (*GetMailMergeRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetMailMergeRes)
+	err := c.cc.Invoke(ctx, P3Api_GetMailMerge_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // P3ApiServer is the server API for P3Api service.
 // All implementations must embed UnimplementedP3ApiServer
 // for forward compatibility.
@@ -1917,6 +1929,7 @@ type P3ApiServer interface {
 	ListCustomReportFilters(context.Context, *ListCustomReportFiltersReq) (*ListCustomReportFiltersRes, error)
 	// List sms numbers by client sid
 	ListSmsNumbers(context.Context, *ListSmsNumbersReq) (*ListSmsNumbersRes, error)
+	GetMailMerge(context.Context, *GetMailMergeReq) (*GetMailMergeRes, error)
 	mustEmbedUnimplementedP3ApiServer()
 }
 
@@ -2220,6 +2233,9 @@ func (UnimplementedP3ApiServer) ListCustomReportFilters(context.Context, *ListCu
 }
 func (UnimplementedP3ApiServer) ListSmsNumbers(context.Context, *ListSmsNumbersReq) (*ListSmsNumbersRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListSmsNumbers not implemented")
+}
+func (UnimplementedP3ApiServer) GetMailMerge(context.Context, *GetMailMergeReq) (*GetMailMergeRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMailMerge not implemented")
 }
 func (UnimplementedP3ApiServer) mustEmbedUnimplementedP3ApiServer() {}
 func (UnimplementedP3ApiServer) testEmbeddedByValue()               {}
@@ -4012,6 +4028,24 @@ func _P3Api_ListSmsNumbers_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _P3Api_GetMailMerge_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetMailMergeReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(P3ApiServer).GetMailMerge(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: P3Api_GetMailMerge_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(P3ApiServer).GetMailMerge(ctx, req.(*GetMailMergeReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // P3Api_ServiceDesc is the grpc.ServiceDesc for P3Api service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -4402,6 +4436,10 @@ var P3Api_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListSmsNumbers",
 			Handler:    _P3Api_ListSmsNumbers_Handler,
+		},
+		{
+			MethodName: "GetMailMerge",
+			Handler:    _P3Api_GetMailMerge_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
