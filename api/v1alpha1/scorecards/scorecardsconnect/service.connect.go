@@ -169,6 +169,9 @@ const (
 	// ScorecardsRestoreEvaluationProcedure is the fully-qualified name of the Scorecards's
 	// RestoreEvaluation RPC.
 	ScorecardsRestoreEvaluationProcedure = "/api.v1alpha1.scorecards.Scorecards/RestoreEvaluation"
+	// ScorecardsCreateSmartQuestionProcedure is the fully-qualified name of the Scorecards's
+	// CreateSmartQuestion RPC.
+	ScorecardsCreateSmartQuestionProcedure = "/api.v1alpha1.scorecards.Scorecards/CreateSmartQuestion"
 )
 
 // ScorecardsClient is a client for the api.v1alpha1.scorecards.Scorecards service.
@@ -269,6 +272,8 @@ type ScorecardsClient interface {
 	PreviewEvaluationScore(context.Context, *connect_go.Request[scorecards.PreviewEvaluationScoreRequest]) (*connect_go.Response[scorecards.PreviewEvaluationScoreResponse], error)
 	// RestoreEvaluation restores an evaluation previously deleted.
 	RestoreEvaluation(context.Context, *connect_go.Request[scorecards.RestoreEvaluationRequest]) (*connect_go.Response[scorecards.RestoreEvaluationResponse], error)
+	// CreateSmartQuestion creates a scorecard smart question.
+	CreateSmartQuestion(context.Context, *connect_go.Request[scorecards.CreateSmartQuestionRequest]) (*connect_go.Response[scorecards.CreateSmartQuestionResponse], error)
 }
 
 // NewScorecardsClient constructs a client for the api.v1alpha1.scorecards.Scorecards service. By
@@ -516,6 +521,11 @@ func NewScorecardsClient(httpClient connect_go.HTTPClient, baseURL string, opts 
 			baseURL+ScorecardsRestoreEvaluationProcedure,
 			opts...,
 		),
+		createSmartQuestion: connect_go.NewClient[scorecards.CreateSmartQuestionRequest, scorecards.CreateSmartQuestionResponse](
+			httpClient,
+			baseURL+ScorecardsCreateSmartQuestionProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -568,6 +578,7 @@ type scorecardsClient struct {
 	deleteAutoEvaluation     *connect_go.Client[scorecards.DeleteAutoEvaluationRequest, scorecards.DeleteAutoEvaluationResponse]
 	previewEvaluationScore   *connect_go.Client[scorecards.PreviewEvaluationScoreRequest, scorecards.PreviewEvaluationScoreResponse]
 	restoreEvaluation        *connect_go.Client[scorecards.RestoreEvaluationRequest, scorecards.RestoreEvaluationResponse]
+	createSmartQuestion      *connect_go.Client[scorecards.CreateSmartQuestionRequest, scorecards.CreateSmartQuestionResponse]
 }
 
 // CreateScorecard calls api.v1alpha1.scorecards.Scorecards.CreateScorecard.
@@ -807,6 +818,11 @@ func (c *scorecardsClient) RestoreEvaluation(ctx context.Context, req *connect_g
 	return c.restoreEvaluation.CallUnary(ctx, req)
 }
 
+// CreateSmartQuestion calls api.v1alpha1.scorecards.Scorecards.CreateSmartQuestion.
+func (c *scorecardsClient) CreateSmartQuestion(ctx context.Context, req *connect_go.Request[scorecards.CreateSmartQuestionRequest]) (*connect_go.Response[scorecards.CreateSmartQuestionResponse], error) {
+	return c.createSmartQuestion.CallUnary(ctx, req)
+}
+
 // ScorecardsHandler is an implementation of the api.v1alpha1.scorecards.Scorecards service.
 type ScorecardsHandler interface {
 	// CreateScorecard creates a new scorecard
@@ -905,6 +921,8 @@ type ScorecardsHandler interface {
 	PreviewEvaluationScore(context.Context, *connect_go.Request[scorecards.PreviewEvaluationScoreRequest]) (*connect_go.Response[scorecards.PreviewEvaluationScoreResponse], error)
 	// RestoreEvaluation restores an evaluation previously deleted.
 	RestoreEvaluation(context.Context, *connect_go.Request[scorecards.RestoreEvaluationRequest]) (*connect_go.Response[scorecards.RestoreEvaluationResponse], error)
+	// CreateSmartQuestion creates a scorecard smart question.
+	CreateSmartQuestion(context.Context, *connect_go.Request[scorecards.CreateSmartQuestionRequest]) (*connect_go.Response[scorecards.CreateSmartQuestionResponse], error)
 }
 
 // NewScorecardsHandler builds an HTTP handler from the service implementation. It returns the path
@@ -1148,6 +1166,11 @@ func NewScorecardsHandler(svc ScorecardsHandler, opts ...connect_go.HandlerOptio
 		svc.RestoreEvaluation,
 		opts...,
 	)
+	scorecardsCreateSmartQuestionHandler := connect_go.NewUnaryHandler(
+		ScorecardsCreateSmartQuestionProcedure,
+		svc.CreateSmartQuestion,
+		opts...,
+	)
 	return "/api.v1alpha1.scorecards.Scorecards/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case ScorecardsCreateScorecardProcedure:
@@ -1244,6 +1267,8 @@ func NewScorecardsHandler(svc ScorecardsHandler, opts ...connect_go.HandlerOptio
 			scorecardsPreviewEvaluationScoreHandler.ServeHTTP(w, r)
 		case ScorecardsRestoreEvaluationProcedure:
 			scorecardsRestoreEvaluationHandler.ServeHTTP(w, r)
+		case ScorecardsCreateSmartQuestionProcedure:
+			scorecardsCreateSmartQuestionHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -1439,4 +1464,8 @@ func (UnimplementedScorecardsHandler) PreviewEvaluationScore(context.Context, *c
 
 func (UnimplementedScorecardsHandler) RestoreEvaluation(context.Context, *connect_go.Request[scorecards.RestoreEvaluationRequest]) (*connect_go.Response[scorecards.RestoreEvaluationResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.scorecards.Scorecards.RestoreEvaluation is not implemented"))
+}
+
+func (UnimplementedScorecardsHandler) CreateSmartQuestion(context.Context, *connect_go.Request[scorecards.CreateSmartQuestionRequest]) (*connect_go.Response[scorecards.CreateSmartQuestionResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.scorecards.Scorecards.CreateSmartQuestion is not implemented"))
 }

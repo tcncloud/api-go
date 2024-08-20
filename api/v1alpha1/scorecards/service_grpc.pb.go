@@ -66,6 +66,7 @@ const (
 	Scorecards_DeleteAutoEvaluation_FullMethodName     = "/api.v1alpha1.scorecards.Scorecards/DeleteAutoEvaluation"
 	Scorecards_PreviewEvaluationScore_FullMethodName   = "/api.v1alpha1.scorecards.Scorecards/PreviewEvaluationScore"
 	Scorecards_RestoreEvaluation_FullMethodName        = "/api.v1alpha1.scorecards.Scorecards/RestoreEvaluation"
+	Scorecards_CreateSmartQuestion_FullMethodName      = "/api.v1alpha1.scorecards.Scorecards/CreateSmartQuestion"
 )
 
 // ScorecardsClient is the client API for Scorecards service.
@@ -167,6 +168,8 @@ type ScorecardsClient interface {
 	PreviewEvaluationScore(ctx context.Context, in *PreviewEvaluationScoreRequest, opts ...grpc.CallOption) (*PreviewEvaluationScoreResponse, error)
 	// RestoreEvaluation restores an evaluation previously deleted.
 	RestoreEvaluation(ctx context.Context, in *RestoreEvaluationRequest, opts ...grpc.CallOption) (*RestoreEvaluationResponse, error)
+	// CreateSmartQuestion creates a scorecard smart question.
+	CreateSmartQuestion(ctx context.Context, in *CreateSmartQuestionRequest, opts ...grpc.CallOption) (*CreateSmartQuestionResponse, error)
 }
 
 type scorecardsClient struct {
@@ -671,6 +674,16 @@ func (c *scorecardsClient) RestoreEvaluation(ctx context.Context, in *RestoreEva
 	return out, nil
 }
 
+func (c *scorecardsClient) CreateSmartQuestion(ctx context.Context, in *CreateSmartQuestionRequest, opts ...grpc.CallOption) (*CreateSmartQuestionResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateSmartQuestionResponse)
+	err := c.cc.Invoke(ctx, Scorecards_CreateSmartQuestion_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ScorecardsServer is the server API for Scorecards service.
 // All implementations must embed UnimplementedScorecardsServer
 // for forward compatibility.
@@ -770,6 +783,8 @@ type ScorecardsServer interface {
 	PreviewEvaluationScore(context.Context, *PreviewEvaluationScoreRequest) (*PreviewEvaluationScoreResponse, error)
 	// RestoreEvaluation restores an evaluation previously deleted.
 	RestoreEvaluation(context.Context, *RestoreEvaluationRequest) (*RestoreEvaluationResponse, error)
+	// CreateSmartQuestion creates a scorecard smart question.
+	CreateSmartQuestion(context.Context, *CreateSmartQuestionRequest) (*CreateSmartQuestionResponse, error)
 	mustEmbedUnimplementedScorecardsServer()
 }
 
@@ -920,6 +935,9 @@ func (UnimplementedScorecardsServer) PreviewEvaluationScore(context.Context, *Pr
 }
 func (UnimplementedScorecardsServer) RestoreEvaluation(context.Context, *RestoreEvaluationRequest) (*RestoreEvaluationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RestoreEvaluation not implemented")
+}
+func (UnimplementedScorecardsServer) CreateSmartQuestion(context.Context, *CreateSmartQuestionRequest) (*CreateSmartQuestionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateSmartQuestion not implemented")
 }
 func (UnimplementedScorecardsServer) mustEmbedUnimplementedScorecardsServer() {}
 func (UnimplementedScorecardsServer) testEmbeddedByValue()                    {}
@@ -1791,6 +1809,24 @@ func _Scorecards_RestoreEvaluation_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Scorecards_CreateSmartQuestion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateSmartQuestionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ScorecardsServer).CreateSmartQuestion(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Scorecards_CreateSmartQuestion_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ScorecardsServer).CreateSmartQuestion(ctx, req.(*CreateSmartQuestionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Scorecards_ServiceDesc is the grpc.ServiceDesc for Scorecards service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1981,6 +2017,10 @@ var Scorecards_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RestoreEvaluation",
 			Handler:    _Scorecards_RestoreEvaluation_Handler,
+		},
+		{
+			MethodName: "CreateSmartQuestion",
+			Handler:    _Scorecards_CreateSmartQuestion_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
