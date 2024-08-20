@@ -34,6 +34,7 @@ const _ = grpc.SupportPackageIsVersion8
 
 const (
 	WFM_PerformInitialClientSetup_FullMethodName                     = "/api.v1alpha1.wfm.WFM/PerformInitialClientSetup"
+	WFM_CreateInitialDemoActivities_FullMethodName                   = "/api.v1alpha1.wfm.WFM/CreateInitialDemoActivities"
 	WFM_ListSkillProfiles_FullMethodName                             = "/api.v1alpha1.wfm.WFM/ListSkillProfiles"
 	WFM_UpdateSkillProfile_FullMethodName                            = "/api.v1alpha1.wfm.WFM/UpdateSkillProfile"
 	WFM_UpdateSkillProfileProficiencies_FullMethodName               = "/api.v1alpha1.wfm.WFM/UpdateSkillProfileProficiencies"
@@ -238,6 +239,15 @@ type WFMClient interface {
 	// Errors:
 	//   - grpc.Internal: error occurs when performing the initial setup.
 	PerformInitialClientSetup(ctx context.Context, in *PerformInitialClientSetupRequest, opts ...grpc.CallOption) (*PerformInitialClientSetupResponse, error)
+	// Create an initial set of demo activities for the org sending the requests.
+	// If any non skill activities already exist matching the names of the demo non skill activities, a second copy will not be created.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Internal: error occurs when creating the activities or checking if they already exist.
+	CreateInitialDemoActivities(ctx context.Context, in *CreateInitialDemoActivitiesRequest, opts ...grpc.CallOption) (*CreateInitialDemoActivitiesResponse, error)
 	// Retrieves all the skill profiles of the org sending the request.
 	// Also it can return the skills of each of the returned profiles.
 	// Errors:
@@ -1734,6 +1744,16 @@ func (c *wFMClient) PerformInitialClientSetup(ctx context.Context, in *PerformIn
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(PerformInitialClientSetupResponse)
 	err := c.cc.Invoke(ctx, WFM_PerformInitialClientSetup_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) CreateInitialDemoActivities(ctx context.Context, in *CreateInitialDemoActivitiesRequest, opts ...grpc.CallOption) (*CreateInitialDemoActivitiesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateInitialDemoActivitiesResponse)
+	err := c.cc.Invoke(ctx, WFM_CreateInitialDemoActivities_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -3796,6 +3816,15 @@ type WFMServer interface {
 	// Errors:
 	//   - grpc.Internal: error occurs when performing the initial setup.
 	PerformInitialClientSetup(context.Context, *PerformInitialClientSetupRequest) (*PerformInitialClientSetupResponse, error)
+	// Create an initial set of demo activities for the org sending the requests.
+	// If any non skill activities already exist matching the names of the demo non skill activities, a second copy will not be created.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Internal: error occurs when creating the activities or checking if they already exist.
+	CreateInitialDemoActivities(context.Context, *CreateInitialDemoActivitiesRequest) (*CreateInitialDemoActivitiesResponse, error)
 	// Retrieves all the skill profiles of the org sending the request.
 	// Also it can return the skills of each of the returned profiles.
 	// Errors:
@@ -5291,6 +5320,9 @@ type UnimplementedWFMServer struct{}
 func (UnimplementedWFMServer) PerformInitialClientSetup(context.Context, *PerformInitialClientSetupRequest) (*PerformInitialClientSetupResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PerformInitialClientSetup not implemented")
 }
+func (UnimplementedWFMServer) CreateInitialDemoActivities(context.Context, *CreateInitialDemoActivitiesRequest) (*CreateInitialDemoActivitiesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateInitialDemoActivities not implemented")
+}
 func (UnimplementedWFMServer) ListSkillProfiles(context.Context, *ListSkillProfilesReq) (*ListSkillProfilesRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListSkillProfiles not implemented")
 }
@@ -5896,6 +5928,24 @@ func _WFM_PerformInitialClientSetup_Handler(srv interface{}, ctx context.Context
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WFMServer).PerformInitialClientSetup(ctx, req.(*PerformInitialClientSetupRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_CreateInitialDemoActivities_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateInitialDemoActivitiesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).CreateInitialDemoActivities(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_CreateInitialDemoActivities_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).CreateInitialDemoActivities(ctx, req.(*CreateInitialDemoActivitiesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -9348,6 +9398,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "PerformInitialClientSetup",
 			Handler:    _WFM_PerformInitialClientSetup_Handler,
+		},
+		{
+			MethodName: "CreateInitialDemoActivities",
+			Handler:    _WFM_CreateInitialDemoActivities_Handler,
 		},
 		{
 			MethodName: "ListSkillProfiles",

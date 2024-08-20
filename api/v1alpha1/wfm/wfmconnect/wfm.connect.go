@@ -50,6 +50,9 @@ const (
 	// WFMPerformInitialClientSetupProcedure is the fully-qualified name of the WFM's
 	// PerformInitialClientSetup RPC.
 	WFMPerformInitialClientSetupProcedure = "/api.v1alpha1.wfm.WFM/PerformInitialClientSetup"
+	// WFMCreateInitialDemoActivitiesProcedure is the fully-qualified name of the WFM's
+	// CreateInitialDemoActivities RPC.
+	WFMCreateInitialDemoActivitiesProcedure = "/api.v1alpha1.wfm.WFM/CreateInitialDemoActivities"
 	// WFMListSkillProfilesProcedure is the fully-qualified name of the WFM's ListSkillProfiles RPC.
 	WFMListSkillProfilesProcedure = "/api.v1alpha1.wfm.WFM/ListSkillProfiles"
 	// WFMUpdateSkillProfileProcedure is the fully-qualified name of the WFM's UpdateSkillProfile RPC.
@@ -584,6 +587,15 @@ type WFMClient interface {
 	// Errors:
 	//   - grpc.Internal: error occurs when performing the initial setup.
 	PerformInitialClientSetup(context.Context, *connect_go.Request[wfm.PerformInitialClientSetupRequest]) (*connect_go.Response[wfm.PerformInitialClientSetupResponse], error)
+	// Create an initial set of demo activities for the org sending the requests.
+	// If any non skill activities already exist matching the names of the demo non skill activities, a second copy will not be created.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Internal: error occurs when creating the activities or checking if they already exist.
+	CreateInitialDemoActivities(context.Context, *connect_go.Request[wfm.CreateInitialDemoActivitiesRequest]) (*connect_go.Response[wfm.CreateInitialDemoActivitiesResponse], error)
 	// Retrieves all the skill profiles of the org sending the request.
 	// Also it can return the skills of each of the returned profiles.
 	// Errors:
@@ -2089,6 +2101,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMPerformInitialClientSetupProcedure,
 			opts...,
 		),
+		createInitialDemoActivities: connect_go.NewClient[wfm.CreateInitialDemoActivitiesRequest, wfm.CreateInitialDemoActivitiesResponse](
+			httpClient,
+			baseURL+WFMCreateInitialDemoActivitiesProcedure,
+			opts...,
+		),
 		listSkillProfiles: connect_go.NewClient[wfm.ListSkillProfilesReq, wfm.ListSkillProfilesRes](
 			httpClient,
 			baseURL+WFMListSkillProfilesProcedure,
@@ -3045,6 +3062,7 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 // wFMClient implements WFMClient.
 type wFMClient struct {
 	performInitialClientSetup                     *connect_go.Client[wfm.PerformInitialClientSetupRequest, wfm.PerformInitialClientSetupResponse]
+	createInitialDemoActivities                   *connect_go.Client[wfm.CreateInitialDemoActivitiesRequest, wfm.CreateInitialDemoActivitiesResponse]
 	listSkillProfiles                             *connect_go.Client[wfm.ListSkillProfilesReq, wfm.ListSkillProfilesRes]
 	updateSkillProfile                            *connect_go.Client[wfm.UpdateSkillProfileReq, wfm.UpdateSkillProfileRes]
 	updateSkillProfileProficiencies               *connect_go.Client[wfm.UpdateSkillProfileProficienciesReq, wfm.UpdateSkillProfileProficienciesRes]
@@ -3240,6 +3258,11 @@ type wFMClient struct {
 // PerformInitialClientSetup calls api.v1alpha1.wfm.WFM.PerformInitialClientSetup.
 func (c *wFMClient) PerformInitialClientSetup(ctx context.Context, req *connect_go.Request[wfm.PerformInitialClientSetupRequest]) (*connect_go.Response[wfm.PerformInitialClientSetupResponse], error) {
 	return c.performInitialClientSetup.CallUnary(ctx, req)
+}
+
+// CreateInitialDemoActivities calls api.v1alpha1.wfm.WFM.CreateInitialDemoActivities.
+func (c *wFMClient) CreateInitialDemoActivities(ctx context.Context, req *connect_go.Request[wfm.CreateInitialDemoActivitiesRequest]) (*connect_go.Response[wfm.CreateInitialDemoActivitiesResponse], error) {
+	return c.createInitialDemoActivities.CallUnary(ctx, req)
 }
 
 // ListSkillProfiles calls api.v1alpha1.wfm.WFM.ListSkillProfiles.
@@ -4228,6 +4251,15 @@ type WFMHandler interface {
 	// Errors:
 	//   - grpc.Internal: error occurs when performing the initial setup.
 	PerformInitialClientSetup(context.Context, *connect_go.Request[wfm.PerformInitialClientSetupRequest]) (*connect_go.Response[wfm.PerformInitialClientSetupResponse], error)
+	// Create an initial set of demo activities for the org sending the requests.
+	// If any non skill activities already exist matching the names of the demo non skill activities, a second copy will not be created.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Internal: error occurs when creating the activities or checking if they already exist.
+	CreateInitialDemoActivities(context.Context, *connect_go.Request[wfm.CreateInitialDemoActivitiesRequest]) (*connect_go.Response[wfm.CreateInitialDemoActivitiesResponse], error)
 	// Retrieves all the skill profiles of the org sending the request.
 	// Also it can return the skills of each of the returned profiles.
 	// Errors:
@@ -5729,6 +5761,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.PerformInitialClientSetup,
 		opts...,
 	)
+	wFMCreateInitialDemoActivitiesHandler := connect_go.NewUnaryHandler(
+		WFMCreateInitialDemoActivitiesProcedure,
+		svc.CreateInitialDemoActivities,
+		opts...,
+	)
 	wFMListSkillProfilesHandler := connect_go.NewUnaryHandler(
 		WFMListSkillProfilesProcedure,
 		svc.ListSkillProfiles,
@@ -6683,6 +6720,8 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		switch r.URL.Path {
 		case WFMPerformInitialClientSetupProcedure:
 			wFMPerformInitialClientSetupHandler.ServeHTTP(w, r)
+		case WFMCreateInitialDemoActivitiesProcedure:
+			wFMCreateInitialDemoActivitiesHandler.ServeHTTP(w, r)
 		case WFMListSkillProfilesProcedure:
 			wFMListSkillProfilesHandler.ServeHTTP(w, r)
 		case WFMUpdateSkillProfileProcedure:
@@ -7074,6 +7113,10 @@ type UnimplementedWFMHandler struct{}
 
 func (UnimplementedWFMHandler) PerformInitialClientSetup(context.Context, *connect_go.Request[wfm.PerformInitialClientSetupRequest]) (*connect_go.Response[wfm.PerformInitialClientSetupResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.PerformInitialClientSetup is not implemented"))
+}
+
+func (UnimplementedWFMHandler) CreateInitialDemoActivities(context.Context, *connect_go.Request[wfm.CreateInitialDemoActivitiesRequest]) (*connect_go.Response[wfm.CreateInitialDemoActivitiesResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.CreateInitialDemoActivities is not implemented"))
 }
 
 func (UnimplementedWFMHandler) ListSkillProfiles(context.Context, *connect_go.Request[wfm.ListSkillProfilesReq]) (*connect_go.Response[wfm.ListSkillProfilesRes], error) {
