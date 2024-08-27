@@ -69,6 +69,9 @@ const (
 	Scorecards_CreateSmartQuestion_FullMethodName      = "/api.v1alpha1.scorecards.Scorecards/CreateSmartQuestion"
 	Scorecards_UpdateSmartQuestion_FullMethodName      = "/api.v1alpha1.scorecards.Scorecards/UpdateSmartQuestion"
 	Scorecards_DeleteSmartQuestion_FullMethodName      = "/api.v1alpha1.scorecards.Scorecards/DeleteSmartQuestion"
+	Scorecards_ListSmartEvaluations_FullMethodName     = "/api.v1alpha1.scorecards.Scorecards/ListSmartEvaluations"
+	Scorecards_DeleteSmartEvaluation_FullMethodName    = "/api.v1alpha1.scorecards.Scorecards/DeleteSmartEvaluation"
+	Scorecards_GetSmartEvaluation_FullMethodName       = "/api.v1alpha1.scorecards.Scorecards/GetSmartEvaluation"
 )
 
 // ScorecardsClient is the client API for Scorecards service.
@@ -176,6 +179,12 @@ type ScorecardsClient interface {
 	UpdateSmartQuestion(ctx context.Context, in *UpdateSmartQuestionRequest, opts ...grpc.CallOption) (*UpdateSmartQuestionResponse, error)
 	// DeleteSmartQuestion deletes a smart question.
 	DeleteSmartQuestion(ctx context.Context, in *DeleteSmartQuestionRequest, opts ...grpc.CallOption) (*DeleteSmartQuestionResponse, error)
+	// ListSmartEvaluations lists smart evaluations
+	ListSmartEvaluations(ctx context.Context, in *ListSmartEvaluationsRequest, opts ...grpc.CallOption) (*ListSmartEvaluationsResponse, error)
+	// DeleteSmartEvaluation deletes a smart evaluation
+	DeleteSmartEvaluation(ctx context.Context, in *DeleteSmartEvaluationRequest, opts ...grpc.CallOption) (*DeleteSmartEvaluationResponse, error)
+	// GetSmartEvaluation gets a smart evaluation
+	GetSmartEvaluation(ctx context.Context, in *GetSmartEvaluationRequest, opts ...grpc.CallOption) (*GetSmartEvaluationResponse, error)
 }
 
 type scorecardsClient struct {
@@ -710,6 +719,36 @@ func (c *scorecardsClient) DeleteSmartQuestion(ctx context.Context, in *DeleteSm
 	return out, nil
 }
 
+func (c *scorecardsClient) ListSmartEvaluations(ctx context.Context, in *ListSmartEvaluationsRequest, opts ...grpc.CallOption) (*ListSmartEvaluationsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListSmartEvaluationsResponse)
+	err := c.cc.Invoke(ctx, Scorecards_ListSmartEvaluations_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *scorecardsClient) DeleteSmartEvaluation(ctx context.Context, in *DeleteSmartEvaluationRequest, opts ...grpc.CallOption) (*DeleteSmartEvaluationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteSmartEvaluationResponse)
+	err := c.cc.Invoke(ctx, Scorecards_DeleteSmartEvaluation_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *scorecardsClient) GetSmartEvaluation(ctx context.Context, in *GetSmartEvaluationRequest, opts ...grpc.CallOption) (*GetSmartEvaluationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetSmartEvaluationResponse)
+	err := c.cc.Invoke(ctx, Scorecards_GetSmartEvaluation_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ScorecardsServer is the server API for Scorecards service.
 // All implementations must embed UnimplementedScorecardsServer
 // for forward compatibility.
@@ -815,6 +854,12 @@ type ScorecardsServer interface {
 	UpdateSmartQuestion(context.Context, *UpdateSmartQuestionRequest) (*UpdateSmartQuestionResponse, error)
 	// DeleteSmartQuestion deletes a smart question.
 	DeleteSmartQuestion(context.Context, *DeleteSmartQuestionRequest) (*DeleteSmartQuestionResponse, error)
+	// ListSmartEvaluations lists smart evaluations
+	ListSmartEvaluations(context.Context, *ListSmartEvaluationsRequest) (*ListSmartEvaluationsResponse, error)
+	// DeleteSmartEvaluation deletes a smart evaluation
+	DeleteSmartEvaluation(context.Context, *DeleteSmartEvaluationRequest) (*DeleteSmartEvaluationResponse, error)
+	// GetSmartEvaluation gets a smart evaluation
+	GetSmartEvaluation(context.Context, *GetSmartEvaluationRequest) (*GetSmartEvaluationResponse, error)
 	mustEmbedUnimplementedScorecardsServer()
 }
 
@@ -974,6 +1019,15 @@ func (UnimplementedScorecardsServer) UpdateSmartQuestion(context.Context, *Updat
 }
 func (UnimplementedScorecardsServer) DeleteSmartQuestion(context.Context, *DeleteSmartQuestionRequest) (*DeleteSmartQuestionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteSmartQuestion not implemented")
+}
+func (UnimplementedScorecardsServer) ListSmartEvaluations(context.Context, *ListSmartEvaluationsRequest) (*ListSmartEvaluationsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListSmartEvaluations not implemented")
+}
+func (UnimplementedScorecardsServer) DeleteSmartEvaluation(context.Context, *DeleteSmartEvaluationRequest) (*DeleteSmartEvaluationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteSmartEvaluation not implemented")
+}
+func (UnimplementedScorecardsServer) GetSmartEvaluation(context.Context, *GetSmartEvaluationRequest) (*GetSmartEvaluationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSmartEvaluation not implemented")
 }
 func (UnimplementedScorecardsServer) mustEmbedUnimplementedScorecardsServer() {}
 func (UnimplementedScorecardsServer) testEmbeddedByValue()                    {}
@@ -1899,6 +1953,60 @@ func _Scorecards_DeleteSmartQuestion_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Scorecards_ListSmartEvaluations_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListSmartEvaluationsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ScorecardsServer).ListSmartEvaluations(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Scorecards_ListSmartEvaluations_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ScorecardsServer).ListSmartEvaluations(ctx, req.(*ListSmartEvaluationsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Scorecards_DeleteSmartEvaluation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteSmartEvaluationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ScorecardsServer).DeleteSmartEvaluation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Scorecards_DeleteSmartEvaluation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ScorecardsServer).DeleteSmartEvaluation(ctx, req.(*DeleteSmartEvaluationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Scorecards_GetSmartEvaluation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetSmartEvaluationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ScorecardsServer).GetSmartEvaluation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Scorecards_GetSmartEvaluation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ScorecardsServer).GetSmartEvaluation(ctx, req.(*GetSmartEvaluationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Scorecards_ServiceDesc is the grpc.ServiceDesc for Scorecards service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -2101,6 +2209,18 @@ var Scorecards_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteSmartQuestion",
 			Handler:    _Scorecards_DeleteSmartQuestion_Handler,
+		},
+		{
+			MethodName: "ListSmartEvaluations",
+			Handler:    _Scorecards_ListSmartEvaluations_Handler,
+		},
+		{
+			MethodName: "DeleteSmartEvaluation",
+			Handler:    _Scorecards_DeleteSmartEvaluation_Handler,
+		},
+		{
+			MethodName: "GetSmartEvaluation",
+			Handler:    _Scorecards_GetSmartEvaluation_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

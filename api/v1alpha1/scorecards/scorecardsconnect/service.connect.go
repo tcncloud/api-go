@@ -178,6 +178,15 @@ const (
 	// ScorecardsDeleteSmartQuestionProcedure is the fully-qualified name of the Scorecards's
 	// DeleteSmartQuestion RPC.
 	ScorecardsDeleteSmartQuestionProcedure = "/api.v1alpha1.scorecards.Scorecards/DeleteSmartQuestion"
+	// ScorecardsListSmartEvaluationsProcedure is the fully-qualified name of the Scorecards's
+	// ListSmartEvaluations RPC.
+	ScorecardsListSmartEvaluationsProcedure = "/api.v1alpha1.scorecards.Scorecards/ListSmartEvaluations"
+	// ScorecardsDeleteSmartEvaluationProcedure is the fully-qualified name of the Scorecards's
+	// DeleteSmartEvaluation RPC.
+	ScorecardsDeleteSmartEvaluationProcedure = "/api.v1alpha1.scorecards.Scorecards/DeleteSmartEvaluation"
+	// ScorecardsGetSmartEvaluationProcedure is the fully-qualified name of the Scorecards's
+	// GetSmartEvaluation RPC.
+	ScorecardsGetSmartEvaluationProcedure = "/api.v1alpha1.scorecards.Scorecards/GetSmartEvaluation"
 )
 
 // ScorecardsClient is a client for the api.v1alpha1.scorecards.Scorecards service.
@@ -284,6 +293,12 @@ type ScorecardsClient interface {
 	UpdateSmartQuestion(context.Context, *connect_go.Request[scorecards.UpdateSmartQuestionRequest]) (*connect_go.Response[scorecards.UpdateSmartQuestionResponse], error)
 	// DeleteSmartQuestion deletes a smart question.
 	DeleteSmartQuestion(context.Context, *connect_go.Request[scorecards.DeleteSmartQuestionRequest]) (*connect_go.Response[scorecards.DeleteSmartQuestionResponse], error)
+	// ListSmartEvaluations lists smart evaluations
+	ListSmartEvaluations(context.Context, *connect_go.Request[scorecards.ListSmartEvaluationsRequest]) (*connect_go.Response[scorecards.ListSmartEvaluationsResponse], error)
+	// DeleteSmartEvaluation deletes a smart evaluation
+	DeleteSmartEvaluation(context.Context, *connect_go.Request[scorecards.DeleteSmartEvaluationRequest]) (*connect_go.Response[scorecards.DeleteSmartEvaluationResponse], error)
+	// GetSmartEvaluation gets a smart evaluation
+	GetSmartEvaluation(context.Context, *connect_go.Request[scorecards.GetSmartEvaluationRequest]) (*connect_go.Response[scorecards.GetSmartEvaluationResponse], error)
 }
 
 // NewScorecardsClient constructs a client for the api.v1alpha1.scorecards.Scorecards service. By
@@ -546,6 +561,21 @@ func NewScorecardsClient(httpClient connect_go.HTTPClient, baseURL string, opts 
 			baseURL+ScorecardsDeleteSmartQuestionProcedure,
 			opts...,
 		),
+		listSmartEvaluations: connect_go.NewClient[scorecards.ListSmartEvaluationsRequest, scorecards.ListSmartEvaluationsResponse](
+			httpClient,
+			baseURL+ScorecardsListSmartEvaluationsProcedure,
+			opts...,
+		),
+		deleteSmartEvaluation: connect_go.NewClient[scorecards.DeleteSmartEvaluationRequest, scorecards.DeleteSmartEvaluationResponse](
+			httpClient,
+			baseURL+ScorecardsDeleteSmartEvaluationProcedure,
+			opts...,
+		),
+		getSmartEvaluation: connect_go.NewClient[scorecards.GetSmartEvaluationRequest, scorecards.GetSmartEvaluationResponse](
+			httpClient,
+			baseURL+ScorecardsGetSmartEvaluationProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -601,6 +631,9 @@ type scorecardsClient struct {
 	createSmartQuestion      *connect_go.Client[scorecards.CreateSmartQuestionRequest, scorecards.CreateSmartQuestionResponse]
 	updateSmartQuestion      *connect_go.Client[scorecards.UpdateSmartQuestionRequest, scorecards.UpdateSmartQuestionResponse]
 	deleteSmartQuestion      *connect_go.Client[scorecards.DeleteSmartQuestionRequest, scorecards.DeleteSmartQuestionResponse]
+	listSmartEvaluations     *connect_go.Client[scorecards.ListSmartEvaluationsRequest, scorecards.ListSmartEvaluationsResponse]
+	deleteSmartEvaluation    *connect_go.Client[scorecards.DeleteSmartEvaluationRequest, scorecards.DeleteSmartEvaluationResponse]
+	getSmartEvaluation       *connect_go.Client[scorecards.GetSmartEvaluationRequest, scorecards.GetSmartEvaluationResponse]
 }
 
 // CreateScorecard calls api.v1alpha1.scorecards.Scorecards.CreateScorecard.
@@ -855,6 +888,21 @@ func (c *scorecardsClient) DeleteSmartQuestion(ctx context.Context, req *connect
 	return c.deleteSmartQuestion.CallUnary(ctx, req)
 }
 
+// ListSmartEvaluations calls api.v1alpha1.scorecards.Scorecards.ListSmartEvaluations.
+func (c *scorecardsClient) ListSmartEvaluations(ctx context.Context, req *connect_go.Request[scorecards.ListSmartEvaluationsRequest]) (*connect_go.Response[scorecards.ListSmartEvaluationsResponse], error) {
+	return c.listSmartEvaluations.CallUnary(ctx, req)
+}
+
+// DeleteSmartEvaluation calls api.v1alpha1.scorecards.Scorecards.DeleteSmartEvaluation.
+func (c *scorecardsClient) DeleteSmartEvaluation(ctx context.Context, req *connect_go.Request[scorecards.DeleteSmartEvaluationRequest]) (*connect_go.Response[scorecards.DeleteSmartEvaluationResponse], error) {
+	return c.deleteSmartEvaluation.CallUnary(ctx, req)
+}
+
+// GetSmartEvaluation calls api.v1alpha1.scorecards.Scorecards.GetSmartEvaluation.
+func (c *scorecardsClient) GetSmartEvaluation(ctx context.Context, req *connect_go.Request[scorecards.GetSmartEvaluationRequest]) (*connect_go.Response[scorecards.GetSmartEvaluationResponse], error) {
+	return c.getSmartEvaluation.CallUnary(ctx, req)
+}
+
 // ScorecardsHandler is an implementation of the api.v1alpha1.scorecards.Scorecards service.
 type ScorecardsHandler interface {
 	// CreateScorecard creates a new scorecard
@@ -959,6 +1007,12 @@ type ScorecardsHandler interface {
 	UpdateSmartQuestion(context.Context, *connect_go.Request[scorecards.UpdateSmartQuestionRequest]) (*connect_go.Response[scorecards.UpdateSmartQuestionResponse], error)
 	// DeleteSmartQuestion deletes a smart question.
 	DeleteSmartQuestion(context.Context, *connect_go.Request[scorecards.DeleteSmartQuestionRequest]) (*connect_go.Response[scorecards.DeleteSmartQuestionResponse], error)
+	// ListSmartEvaluations lists smart evaluations
+	ListSmartEvaluations(context.Context, *connect_go.Request[scorecards.ListSmartEvaluationsRequest]) (*connect_go.Response[scorecards.ListSmartEvaluationsResponse], error)
+	// DeleteSmartEvaluation deletes a smart evaluation
+	DeleteSmartEvaluation(context.Context, *connect_go.Request[scorecards.DeleteSmartEvaluationRequest]) (*connect_go.Response[scorecards.DeleteSmartEvaluationResponse], error)
+	// GetSmartEvaluation gets a smart evaluation
+	GetSmartEvaluation(context.Context, *connect_go.Request[scorecards.GetSmartEvaluationRequest]) (*connect_go.Response[scorecards.GetSmartEvaluationResponse], error)
 }
 
 // NewScorecardsHandler builds an HTTP handler from the service implementation. It returns the path
@@ -1217,6 +1271,21 @@ func NewScorecardsHandler(svc ScorecardsHandler, opts ...connect_go.HandlerOptio
 		svc.DeleteSmartQuestion,
 		opts...,
 	)
+	scorecardsListSmartEvaluationsHandler := connect_go.NewUnaryHandler(
+		ScorecardsListSmartEvaluationsProcedure,
+		svc.ListSmartEvaluations,
+		opts...,
+	)
+	scorecardsDeleteSmartEvaluationHandler := connect_go.NewUnaryHandler(
+		ScorecardsDeleteSmartEvaluationProcedure,
+		svc.DeleteSmartEvaluation,
+		opts...,
+	)
+	scorecardsGetSmartEvaluationHandler := connect_go.NewUnaryHandler(
+		ScorecardsGetSmartEvaluationProcedure,
+		svc.GetSmartEvaluation,
+		opts...,
+	)
 	return "/api.v1alpha1.scorecards.Scorecards/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case ScorecardsCreateScorecardProcedure:
@@ -1319,6 +1388,12 @@ func NewScorecardsHandler(svc ScorecardsHandler, opts ...connect_go.HandlerOptio
 			scorecardsUpdateSmartQuestionHandler.ServeHTTP(w, r)
 		case ScorecardsDeleteSmartQuestionProcedure:
 			scorecardsDeleteSmartQuestionHandler.ServeHTTP(w, r)
+		case ScorecardsListSmartEvaluationsProcedure:
+			scorecardsListSmartEvaluationsHandler.ServeHTTP(w, r)
+		case ScorecardsDeleteSmartEvaluationProcedure:
+			scorecardsDeleteSmartEvaluationHandler.ServeHTTP(w, r)
+		case ScorecardsGetSmartEvaluationProcedure:
+			scorecardsGetSmartEvaluationHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -1526,4 +1601,16 @@ func (UnimplementedScorecardsHandler) UpdateSmartQuestion(context.Context, *conn
 
 func (UnimplementedScorecardsHandler) DeleteSmartQuestion(context.Context, *connect_go.Request[scorecards.DeleteSmartQuestionRequest]) (*connect_go.Response[scorecards.DeleteSmartQuestionResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.scorecards.Scorecards.DeleteSmartQuestion is not implemented"))
+}
+
+func (UnimplementedScorecardsHandler) ListSmartEvaluations(context.Context, *connect_go.Request[scorecards.ListSmartEvaluationsRequest]) (*connect_go.Response[scorecards.ListSmartEvaluationsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.scorecards.Scorecards.ListSmartEvaluations is not implemented"))
+}
+
+func (UnimplementedScorecardsHandler) DeleteSmartEvaluation(context.Context, *connect_go.Request[scorecards.DeleteSmartEvaluationRequest]) (*connect_go.Response[scorecards.DeleteSmartEvaluationResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.scorecards.Scorecards.DeleteSmartEvaluation is not implemented"))
+}
+
+func (UnimplementedScorecardsHandler) GetSmartEvaluation(context.Context, *connect_go.Request[scorecards.GetSmartEvaluationRequest]) (*connect_go.Response[scorecards.GetSmartEvaluationResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.scorecards.Scorecards.GetSmartEvaluation is not implemented"))
 }
