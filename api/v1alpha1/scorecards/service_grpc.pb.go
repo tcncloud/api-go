@@ -67,6 +67,8 @@ const (
 	Scorecards_PreviewEvaluationScore_FullMethodName   = "/api.v1alpha1.scorecards.Scorecards/PreviewEvaluationScore"
 	Scorecards_RestoreEvaluation_FullMethodName        = "/api.v1alpha1.scorecards.Scorecards/RestoreEvaluation"
 	Scorecards_CreateSmartQuestion_FullMethodName      = "/api.v1alpha1.scorecards.Scorecards/CreateSmartQuestion"
+	Scorecards_UpdateSmartQuestion_FullMethodName      = "/api.v1alpha1.scorecards.Scorecards/UpdateSmartQuestion"
+	Scorecards_DeleteSmartQuestion_FullMethodName      = "/api.v1alpha1.scorecards.Scorecards/DeleteSmartQuestion"
 )
 
 // ScorecardsClient is the client API for Scorecards service.
@@ -170,6 +172,10 @@ type ScorecardsClient interface {
 	RestoreEvaluation(ctx context.Context, in *RestoreEvaluationRequest, opts ...grpc.CallOption) (*RestoreEvaluationResponse, error)
 	// CreateSmartQuestion creates a scorecard smart question.
 	CreateSmartQuestion(ctx context.Context, in *CreateSmartQuestionRequest, opts ...grpc.CallOption) (*CreateSmartQuestionResponse, error)
+	// UpdateSmartQuestion updates a smart question.
+	UpdateSmartQuestion(ctx context.Context, in *UpdateSmartQuestionRequest, opts ...grpc.CallOption) (*UpdateSmartQuestionResponse, error)
+	// DeleteSmartQuestion deletes a smart question.
+	DeleteSmartQuestion(ctx context.Context, in *DeleteSmartQuestionRequest, opts ...grpc.CallOption) (*DeleteSmartQuestionResponse, error)
 }
 
 type scorecardsClient struct {
@@ -684,6 +690,26 @@ func (c *scorecardsClient) CreateSmartQuestion(ctx context.Context, in *CreateSm
 	return out, nil
 }
 
+func (c *scorecardsClient) UpdateSmartQuestion(ctx context.Context, in *UpdateSmartQuestionRequest, opts ...grpc.CallOption) (*UpdateSmartQuestionResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateSmartQuestionResponse)
+	err := c.cc.Invoke(ctx, Scorecards_UpdateSmartQuestion_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *scorecardsClient) DeleteSmartQuestion(ctx context.Context, in *DeleteSmartQuestionRequest, opts ...grpc.CallOption) (*DeleteSmartQuestionResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteSmartQuestionResponse)
+	err := c.cc.Invoke(ctx, Scorecards_DeleteSmartQuestion_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ScorecardsServer is the server API for Scorecards service.
 // All implementations must embed UnimplementedScorecardsServer
 // for forward compatibility.
@@ -785,6 +811,10 @@ type ScorecardsServer interface {
 	RestoreEvaluation(context.Context, *RestoreEvaluationRequest) (*RestoreEvaluationResponse, error)
 	// CreateSmartQuestion creates a scorecard smart question.
 	CreateSmartQuestion(context.Context, *CreateSmartQuestionRequest) (*CreateSmartQuestionResponse, error)
+	// UpdateSmartQuestion updates a smart question.
+	UpdateSmartQuestion(context.Context, *UpdateSmartQuestionRequest) (*UpdateSmartQuestionResponse, error)
+	// DeleteSmartQuestion deletes a smart question.
+	DeleteSmartQuestion(context.Context, *DeleteSmartQuestionRequest) (*DeleteSmartQuestionResponse, error)
 	mustEmbedUnimplementedScorecardsServer()
 }
 
@@ -938,6 +968,12 @@ func (UnimplementedScorecardsServer) RestoreEvaluation(context.Context, *Restore
 }
 func (UnimplementedScorecardsServer) CreateSmartQuestion(context.Context, *CreateSmartQuestionRequest) (*CreateSmartQuestionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateSmartQuestion not implemented")
+}
+func (UnimplementedScorecardsServer) UpdateSmartQuestion(context.Context, *UpdateSmartQuestionRequest) (*UpdateSmartQuestionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateSmartQuestion not implemented")
+}
+func (UnimplementedScorecardsServer) DeleteSmartQuestion(context.Context, *DeleteSmartQuestionRequest) (*DeleteSmartQuestionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteSmartQuestion not implemented")
 }
 func (UnimplementedScorecardsServer) mustEmbedUnimplementedScorecardsServer() {}
 func (UnimplementedScorecardsServer) testEmbeddedByValue()                    {}
@@ -1827,6 +1863,42 @@ func _Scorecards_CreateSmartQuestion_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Scorecards_UpdateSmartQuestion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateSmartQuestionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ScorecardsServer).UpdateSmartQuestion(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Scorecards_UpdateSmartQuestion_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ScorecardsServer).UpdateSmartQuestion(ctx, req.(*UpdateSmartQuestionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Scorecards_DeleteSmartQuestion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteSmartQuestionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ScorecardsServer).DeleteSmartQuestion(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Scorecards_DeleteSmartQuestion_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ScorecardsServer).DeleteSmartQuestion(ctx, req.(*DeleteSmartQuestionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Scorecards_ServiceDesc is the grpc.ServiceDesc for Scorecards service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -2021,6 +2093,14 @@ var Scorecards_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateSmartQuestion",
 			Handler:    _Scorecards_CreateSmartQuestion_Handler,
+		},
+		{
+			MethodName: "UpdateSmartQuestion",
+			Handler:    _Scorecards_UpdateSmartQuestion_Handler,
+		},
+		{
+			MethodName: "DeleteSmartQuestion",
+			Handler:    _Scorecards_DeleteSmartQuestion_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
