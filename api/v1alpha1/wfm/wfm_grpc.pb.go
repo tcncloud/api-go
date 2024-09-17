@@ -221,13 +221,16 @@ const (
 	WFM_DeleteRgbaColor_FullMethodName                               = "/api.v1alpha1.wfm.WFM/DeleteRgbaColor"
 	WFM_CreateAdherenceRuleNotificationConfig_FullMethodName         = "/api.v1alpha1.wfm.WFM/CreateAdherenceRuleNotificationConfig"
 	WFM_CreateAdherenceRuleNotificationConfigEntry_FullMethodName    = "/api.v1alpha1.wfm.WFM/CreateAdherenceRuleNotificationConfigEntry"
+	WFM_DeleteAdherenceRuleNotificationConfigEntry_FullMethodName    = "/api.v1alpha1.wfm.WFM/DeleteAdherenceRuleNotificationConfigEntry"
 	WFM_ListAdherenceRuleNotificationConfigs_FullMethodName          = "/api.v1alpha1.wfm.WFM/ListAdherenceRuleNotificationConfigs"
 	WFM_CreateAdherenceDepartmentalRule_FullMethodName               = "/api.v1alpha1.wfm.WFM/CreateAdherenceDepartmentalRule"
 	WFM_CreateAdherenceDepartmentalRuleClause_FullMethodName         = "/api.v1alpha1.wfm.WFM/CreateAdherenceDepartmentalRuleClause"
+	WFM_DeleteAdherenceDepartmentalRuleClause_FullMethodName         = "/api.v1alpha1.wfm.WFM/DeleteAdherenceDepartmentalRuleClause"
 	WFM_ListAdherenceDepartmentalRules_FullMethodName                = "/api.v1alpha1.wfm.WFM/ListAdherenceDepartmentalRules"
 	WFM_CreateAdherenceAgentRule_FullMethodName                      = "/api.v1alpha1.wfm.WFM/CreateAdherenceAgentRule"
 	WFM_CreateAdherenceAgentRuleClause_FullMethodName                = "/api.v1alpha1.wfm.WFM/CreateAdherenceAgentRuleClause"
 	WFM_ListAdherenceAgentRules_FullMethodName                       = "/api.v1alpha1.wfm.WFM/ListAdherenceAgentRules"
+	WFM_DeleteAdherenceAgentRuleClause_FullMethodName                = "/api.v1alpha1.wfm.WFM/DeleteAdherenceAgentRuleClause"
 )
 
 // WFMClient is the client API for WFM service.
@@ -1711,6 +1714,12 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when creating the given @notification_config_entry.
 	//   - grpc.NotFound: notification config with the @notification_config_sid does not exist.
 	CreateAdherenceRuleNotificationConfigEntry(ctx context.Context, in *CreateAdherenceRuleNotificationConfigEntryRequest, opts ...grpc.CallOption) (*CreateAdherenceRuleNotificationConfigEntryResponse, error)
+	// Deletes the notification config entry that has the given @adherence_rule_notification_config_entry_id for the org sending the request.
+	// Errors:
+	//   - grpc.Invalid: the given @adherence_rule_notification_config_entry_id is invalid.
+	//   - grpc.Internal: error occurs when deleting the given @adherence_rule_notification_config_entry_id.
+	//   - grpc.NotFound: notification config with the @adherence_rule_notification_config_entry_id does not exist.
+	DeleteAdherenceRuleNotificationConfigEntry(ctx context.Context, in *DeleteAdherenceRuleNotificationConfigEntryRequest, opts ...grpc.CallOption) (*DeleteAdherenceRuleNotificationConfigEntryResponse, error)
 	// Gets all adherence rule @notification_configs for the org sending the request.
 	// Configs will include their respective entries.
 	// Errors:
@@ -1728,6 +1737,12 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when creating the given @clause.
 	//   - grpc.NotFound: departmental rule with the @departmetal_rule_sid does not exist.
 	CreateAdherenceDepartmentalRuleClause(ctx context.Context, in *CreateAdherenceDepartmentalRuleClauseRequest, opts ...grpc.CallOption) (*CreateAdherenceDepartmentalRuleClauseResponse, error)
+	// Deletes the departmental rule clause that has the given @adherence_departmental_rule_clause_id for the org sending the request.
+	// Errors:
+	//   - grpc.Invalid: the value of the given @adherence_departmental_rule_clause_id is invalid.
+	//   - grpc.Internal: error occurs when deleting the given @adherence_departmental_rule_clause_id.
+	//   - grpc.NotFound: departmental rule with the @adherence_departmental_rule_clause_id does not exist.
+	DeleteAdherenceDepartmentalRuleClause(ctx context.Context, in *DeleteAdherenceDepartmentalRuleClauseRequest, opts ...grpc.CallOption) (*DeleteAdherenceDepartmentalRuleClauseResponse, error)
 	// Gets all adherence departmental @rules for the org sending the request.
 	// Rules will include their respective clauses.
 	// Errors:
@@ -1751,6 +1766,12 @@ type WFMClient interface {
 	//   - grpc.Invalid: the request arguments are invalid.
 	//   - grpc.Internal: error occurs when getting the rules.
 	ListAdherenceAgentRules(ctx context.Context, in *ListAdherenceAgentRulesRequest, opts ...grpc.CallOption) (*ListAdherenceAgentRulesResponse, error)
+	// Deletes the agent rule clause that has the given @adherence_agent_rule_clause_id for the org sending the request.
+	// Errors:
+	//   - grpc.Invalid: the value of the given @adherence_agent_rule_clause_id is invalid.
+	//   - grpc.Internal: error occurs when deleting the given @adherence_agent_rule_clause_id.
+	//   - grpc.NotFound: departmental rule with the @adherence_agent_rule_clause_id does not exist.
+	DeleteAdherenceAgentRuleClause(ctx context.Context, in *DeleteAdherenceAgentRuleClauseRequest, opts ...grpc.CallOption) (*DeleteAdherenceAgentRuleClauseResponse, error)
 }
 
 type wFMClient struct {
@@ -3785,6 +3806,16 @@ func (c *wFMClient) CreateAdherenceRuleNotificationConfigEntry(ctx context.Conte
 	return out, nil
 }
 
+func (c *wFMClient) DeleteAdherenceRuleNotificationConfigEntry(ctx context.Context, in *DeleteAdherenceRuleNotificationConfigEntryRequest, opts ...grpc.CallOption) (*DeleteAdherenceRuleNotificationConfigEntryResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteAdherenceRuleNotificationConfigEntryResponse)
+	err := c.cc.Invoke(ctx, WFM_DeleteAdherenceRuleNotificationConfigEntry_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) ListAdherenceRuleNotificationConfigs(ctx context.Context, in *ListAdherenceRuleNotificationConfigsRequest, opts ...grpc.CallOption) (*ListAdherenceRuleNotificationConfigsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListAdherenceRuleNotificationConfigsResponse)
@@ -3809,6 +3840,16 @@ func (c *wFMClient) CreateAdherenceDepartmentalRuleClause(ctx context.Context, i
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(CreateAdherenceDepartmentalRuleClauseResponse)
 	err := c.cc.Invoke(ctx, WFM_CreateAdherenceDepartmentalRuleClause_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) DeleteAdherenceDepartmentalRuleClause(ctx context.Context, in *DeleteAdherenceDepartmentalRuleClauseRequest, opts ...grpc.CallOption) (*DeleteAdherenceDepartmentalRuleClauseResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteAdherenceDepartmentalRuleClauseResponse)
+	err := c.cc.Invoke(ctx, WFM_DeleteAdherenceDepartmentalRuleClause_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -3849,6 +3890,16 @@ func (c *wFMClient) ListAdherenceAgentRules(ctx context.Context, in *ListAdheren
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListAdherenceAgentRulesResponse)
 	err := c.cc.Invoke(ctx, WFM_ListAdherenceAgentRules_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) DeleteAdherenceAgentRuleClause(ctx context.Context, in *DeleteAdherenceAgentRuleClauseRequest, opts ...grpc.CallOption) (*DeleteAdherenceAgentRuleClauseResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteAdherenceAgentRuleClauseResponse)
+	err := c.cc.Invoke(ctx, WFM_DeleteAdherenceAgentRuleClause_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -5336,6 +5387,12 @@ type WFMServer interface {
 	//   - grpc.Internal: error occurs when creating the given @notification_config_entry.
 	//   - grpc.NotFound: notification config with the @notification_config_sid does not exist.
 	CreateAdherenceRuleNotificationConfigEntry(context.Context, *CreateAdherenceRuleNotificationConfigEntryRequest) (*CreateAdherenceRuleNotificationConfigEntryResponse, error)
+	// Deletes the notification config entry that has the given @adherence_rule_notification_config_entry_id for the org sending the request.
+	// Errors:
+	//   - grpc.Invalid: the given @adherence_rule_notification_config_entry_id is invalid.
+	//   - grpc.Internal: error occurs when deleting the given @adherence_rule_notification_config_entry_id.
+	//   - grpc.NotFound: notification config with the @adherence_rule_notification_config_entry_id does not exist.
+	DeleteAdherenceRuleNotificationConfigEntry(context.Context, *DeleteAdherenceRuleNotificationConfigEntryRequest) (*DeleteAdherenceRuleNotificationConfigEntryResponse, error)
 	// Gets all adherence rule @notification_configs for the org sending the request.
 	// Configs will include their respective entries.
 	// Errors:
@@ -5353,6 +5410,12 @@ type WFMServer interface {
 	//   - grpc.Internal: error occurs when creating the given @clause.
 	//   - grpc.NotFound: departmental rule with the @departmetal_rule_sid does not exist.
 	CreateAdherenceDepartmentalRuleClause(context.Context, *CreateAdherenceDepartmentalRuleClauseRequest) (*CreateAdherenceDepartmentalRuleClauseResponse, error)
+	// Deletes the departmental rule clause that has the given @adherence_departmental_rule_clause_id for the org sending the request.
+	// Errors:
+	//   - grpc.Invalid: the value of the given @adherence_departmental_rule_clause_id is invalid.
+	//   - grpc.Internal: error occurs when deleting the given @adherence_departmental_rule_clause_id.
+	//   - grpc.NotFound: departmental rule with the @adherence_departmental_rule_clause_id does not exist.
+	DeleteAdherenceDepartmentalRuleClause(context.Context, *DeleteAdherenceDepartmentalRuleClauseRequest) (*DeleteAdherenceDepartmentalRuleClauseResponse, error)
 	// Gets all adherence departmental @rules for the org sending the request.
 	// Rules will include their respective clauses.
 	// Errors:
@@ -5376,6 +5439,12 @@ type WFMServer interface {
 	//   - grpc.Invalid: the request arguments are invalid.
 	//   - grpc.Internal: error occurs when getting the rules.
 	ListAdherenceAgentRules(context.Context, *ListAdherenceAgentRulesRequest) (*ListAdherenceAgentRulesResponse, error)
+	// Deletes the agent rule clause that has the given @adherence_agent_rule_clause_id for the org sending the request.
+	// Errors:
+	//   - grpc.Invalid: the value of the given @adherence_agent_rule_clause_id is invalid.
+	//   - grpc.Internal: error occurs when deleting the given @adherence_agent_rule_clause_id.
+	//   - grpc.NotFound: departmental rule with the @adherence_agent_rule_clause_id does not exist.
+	DeleteAdherenceAgentRuleClause(context.Context, *DeleteAdherenceAgentRuleClauseRequest) (*DeleteAdherenceAgentRuleClauseResponse, error)
 	mustEmbedUnimplementedWFMServer()
 }
 
@@ -5950,6 +6019,9 @@ func (UnimplementedWFMServer) CreateAdherenceRuleNotificationConfig(context.Cont
 func (UnimplementedWFMServer) CreateAdherenceRuleNotificationConfigEntry(context.Context, *CreateAdherenceRuleNotificationConfigEntryRequest) (*CreateAdherenceRuleNotificationConfigEntryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateAdherenceRuleNotificationConfigEntry not implemented")
 }
+func (UnimplementedWFMServer) DeleteAdherenceRuleNotificationConfigEntry(context.Context, *DeleteAdherenceRuleNotificationConfigEntryRequest) (*DeleteAdherenceRuleNotificationConfigEntryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteAdherenceRuleNotificationConfigEntry not implemented")
+}
 func (UnimplementedWFMServer) ListAdherenceRuleNotificationConfigs(context.Context, *ListAdherenceRuleNotificationConfigsRequest) (*ListAdherenceRuleNotificationConfigsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAdherenceRuleNotificationConfigs not implemented")
 }
@@ -5958,6 +6030,9 @@ func (UnimplementedWFMServer) CreateAdherenceDepartmentalRule(context.Context, *
 }
 func (UnimplementedWFMServer) CreateAdherenceDepartmentalRuleClause(context.Context, *CreateAdherenceDepartmentalRuleClauseRequest) (*CreateAdherenceDepartmentalRuleClauseResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateAdherenceDepartmentalRuleClause not implemented")
+}
+func (UnimplementedWFMServer) DeleteAdherenceDepartmentalRuleClause(context.Context, *DeleteAdherenceDepartmentalRuleClauseRequest) (*DeleteAdherenceDepartmentalRuleClauseResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteAdherenceDepartmentalRuleClause not implemented")
 }
 func (UnimplementedWFMServer) ListAdherenceDepartmentalRules(context.Context, *ListAdherenceDepartmentalRulesRequest) (*ListAdherenceDepartmentalRulesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAdherenceDepartmentalRules not implemented")
@@ -5970,6 +6045,9 @@ func (UnimplementedWFMServer) CreateAdherenceAgentRuleClause(context.Context, *C
 }
 func (UnimplementedWFMServer) ListAdherenceAgentRules(context.Context, *ListAdherenceAgentRulesRequest) (*ListAdherenceAgentRulesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAdherenceAgentRules not implemented")
+}
+func (UnimplementedWFMServer) DeleteAdherenceAgentRuleClause(context.Context, *DeleteAdherenceAgentRuleClauseRequest) (*DeleteAdherenceAgentRuleClauseResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteAdherenceAgentRuleClause not implemented")
 }
 func (UnimplementedWFMServer) mustEmbedUnimplementedWFMServer() {}
 func (UnimplementedWFMServer) testEmbeddedByValue()             {}
@@ -9394,6 +9472,24 @@ func _WFM_CreateAdherenceRuleNotificationConfigEntry_Handler(srv interface{}, ct
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_DeleteAdherenceRuleNotificationConfigEntry_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteAdherenceRuleNotificationConfigEntryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).DeleteAdherenceRuleNotificationConfigEntry(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_DeleteAdherenceRuleNotificationConfigEntry_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).DeleteAdherenceRuleNotificationConfigEntry(ctx, req.(*DeleteAdherenceRuleNotificationConfigEntryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WFM_ListAdherenceRuleNotificationConfigs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListAdherenceRuleNotificationConfigsRequest)
 	if err := dec(in); err != nil {
@@ -9444,6 +9540,24 @@ func _WFM_CreateAdherenceDepartmentalRuleClause_Handler(srv interface{}, ctx con
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WFMServer).CreateAdherenceDepartmentalRuleClause(ctx, req.(*CreateAdherenceDepartmentalRuleClauseRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_DeleteAdherenceDepartmentalRuleClause_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteAdherenceDepartmentalRuleClauseRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).DeleteAdherenceDepartmentalRuleClause(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_DeleteAdherenceDepartmentalRuleClause_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).DeleteAdherenceDepartmentalRuleClause(ctx, req.(*DeleteAdherenceDepartmentalRuleClauseRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -9516,6 +9630,24 @@ func _WFM_ListAdherenceAgentRules_Handler(srv interface{}, ctx context.Context, 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WFMServer).ListAdherenceAgentRules(ctx, req.(*ListAdherenceAgentRulesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_DeleteAdherenceAgentRuleClause_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteAdherenceAgentRuleClauseRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).DeleteAdherenceAgentRuleClause(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_DeleteAdherenceAgentRuleClause_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).DeleteAdherenceAgentRuleClause(ctx, req.(*DeleteAdherenceAgentRuleClauseRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -10256,6 +10388,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _WFM_CreateAdherenceRuleNotificationConfigEntry_Handler,
 		},
 		{
+			MethodName: "DeleteAdherenceRuleNotificationConfigEntry",
+			Handler:    _WFM_DeleteAdherenceRuleNotificationConfigEntry_Handler,
+		},
+		{
 			MethodName: "ListAdherenceRuleNotificationConfigs",
 			Handler:    _WFM_ListAdherenceRuleNotificationConfigs_Handler,
 		},
@@ -10266,6 +10402,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateAdherenceDepartmentalRuleClause",
 			Handler:    _WFM_CreateAdherenceDepartmentalRuleClause_Handler,
+		},
+		{
+			MethodName: "DeleteAdherenceDepartmentalRuleClause",
+			Handler:    _WFM_DeleteAdherenceDepartmentalRuleClause_Handler,
 		},
 		{
 			MethodName: "ListAdherenceDepartmentalRules",
@@ -10282,6 +10422,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListAdherenceAgentRules",
 			Handler:    _WFM_ListAdherenceAgentRules_Handler,
+		},
+		{
+			MethodName: "DeleteAdherenceAgentRuleClause",
+			Handler:    _WFM_DeleteAdherenceAgentRuleClause_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

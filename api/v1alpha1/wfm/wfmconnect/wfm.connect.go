@@ -565,6 +565,9 @@ const (
 	// WFMCreateAdherenceRuleNotificationConfigEntryProcedure is the fully-qualified name of the WFM's
 	// CreateAdherenceRuleNotificationConfigEntry RPC.
 	WFMCreateAdherenceRuleNotificationConfigEntryProcedure = "/api.v1alpha1.wfm.WFM/CreateAdherenceRuleNotificationConfigEntry"
+	// WFMDeleteAdherenceRuleNotificationConfigEntryProcedure is the fully-qualified name of the WFM's
+	// DeleteAdherenceRuleNotificationConfigEntry RPC.
+	WFMDeleteAdherenceRuleNotificationConfigEntryProcedure = "/api.v1alpha1.wfm.WFM/DeleteAdherenceRuleNotificationConfigEntry"
 	// WFMListAdherenceRuleNotificationConfigsProcedure is the fully-qualified name of the WFM's
 	// ListAdherenceRuleNotificationConfigs RPC.
 	WFMListAdherenceRuleNotificationConfigsProcedure = "/api.v1alpha1.wfm.WFM/ListAdherenceRuleNotificationConfigs"
@@ -574,6 +577,9 @@ const (
 	// WFMCreateAdherenceDepartmentalRuleClauseProcedure is the fully-qualified name of the WFM's
 	// CreateAdherenceDepartmentalRuleClause RPC.
 	WFMCreateAdherenceDepartmentalRuleClauseProcedure = "/api.v1alpha1.wfm.WFM/CreateAdherenceDepartmentalRuleClause"
+	// WFMDeleteAdherenceDepartmentalRuleClauseProcedure is the fully-qualified name of the WFM's
+	// DeleteAdherenceDepartmentalRuleClause RPC.
+	WFMDeleteAdherenceDepartmentalRuleClauseProcedure = "/api.v1alpha1.wfm.WFM/DeleteAdherenceDepartmentalRuleClause"
 	// WFMListAdherenceDepartmentalRulesProcedure is the fully-qualified name of the WFM's
 	// ListAdherenceDepartmentalRules RPC.
 	WFMListAdherenceDepartmentalRulesProcedure = "/api.v1alpha1.wfm.WFM/ListAdherenceDepartmentalRules"
@@ -586,6 +592,9 @@ const (
 	// WFMListAdherenceAgentRulesProcedure is the fully-qualified name of the WFM's
 	// ListAdherenceAgentRules RPC.
 	WFMListAdherenceAgentRulesProcedure = "/api.v1alpha1.wfm.WFM/ListAdherenceAgentRules"
+	// WFMDeleteAdherenceAgentRuleClauseProcedure is the fully-qualified name of the WFM's
+	// DeleteAdherenceAgentRuleClause RPC.
+	WFMDeleteAdherenceAgentRuleClauseProcedure = "/api.v1alpha1.wfm.WFM/DeleteAdherenceAgentRuleClause"
 )
 
 // WFMClient is a client for the api.v1alpha1.wfm.WFM service.
@@ -2071,6 +2080,12 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when creating the given @notification_config_entry.
 	//   - grpc.NotFound: notification config with the @notification_config_sid does not exist.
 	CreateAdherenceRuleNotificationConfigEntry(context.Context, *connect_go.Request[wfm.CreateAdherenceRuleNotificationConfigEntryRequest]) (*connect_go.Response[wfm.CreateAdherenceRuleNotificationConfigEntryResponse], error)
+	// Deletes the notification config entry that has the given @adherence_rule_notification_config_entry_id for the org sending the request.
+	// Errors:
+	//   - grpc.Invalid: the given @adherence_rule_notification_config_entry_id is invalid.
+	//   - grpc.Internal: error occurs when deleting the given @adherence_rule_notification_config_entry_id.
+	//   - grpc.NotFound: notification config with the @adherence_rule_notification_config_entry_id does not exist.
+	DeleteAdherenceRuleNotificationConfigEntry(context.Context, *connect_go.Request[wfm.DeleteAdherenceRuleNotificationConfigEntryRequest]) (*connect_go.Response[wfm.DeleteAdherenceRuleNotificationConfigEntryResponse], error)
 	// Gets all adherence rule @notification_configs for the org sending the request.
 	// Configs will include their respective entries.
 	// Errors:
@@ -2088,6 +2103,12 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when creating the given @clause.
 	//   - grpc.NotFound: departmental rule with the @departmetal_rule_sid does not exist.
 	CreateAdherenceDepartmentalRuleClause(context.Context, *connect_go.Request[wfm.CreateAdherenceDepartmentalRuleClauseRequest]) (*connect_go.Response[wfm.CreateAdherenceDepartmentalRuleClauseResponse], error)
+	// Deletes the departmental rule clause that has the given @adherence_departmental_rule_clause_id for the org sending the request.
+	// Errors:
+	//   - grpc.Invalid: the value of the given @adherence_departmental_rule_clause_id is invalid.
+	//   - grpc.Internal: error occurs when deleting the given @adherence_departmental_rule_clause_id.
+	//   - grpc.NotFound: departmental rule with the @adherence_departmental_rule_clause_id does not exist.
+	DeleteAdherenceDepartmentalRuleClause(context.Context, *connect_go.Request[wfm.DeleteAdherenceDepartmentalRuleClauseRequest]) (*connect_go.Response[wfm.DeleteAdherenceDepartmentalRuleClauseResponse], error)
 	// Gets all adherence departmental @rules for the org sending the request.
 	// Rules will include their respective clauses.
 	// Errors:
@@ -2111,6 +2132,12 @@ type WFMClient interface {
 	//   - grpc.Invalid: the request arguments are invalid.
 	//   - grpc.Internal: error occurs when getting the rules.
 	ListAdherenceAgentRules(context.Context, *connect_go.Request[wfm.ListAdherenceAgentRulesRequest]) (*connect_go.Response[wfm.ListAdherenceAgentRulesResponse], error)
+	// Deletes the agent rule clause that has the given @adherence_agent_rule_clause_id for the org sending the request.
+	// Errors:
+	//   - grpc.Invalid: the value of the given @adherence_agent_rule_clause_id is invalid.
+	//   - grpc.Internal: error occurs when deleting the given @adherence_agent_rule_clause_id.
+	//   - grpc.NotFound: departmental rule with the @adherence_agent_rule_clause_id does not exist.
+	DeleteAdherenceAgentRuleClause(context.Context, *connect_go.Request[wfm.DeleteAdherenceAgentRuleClauseRequest]) (*connect_go.Response[wfm.DeleteAdherenceAgentRuleClauseResponse], error)
 }
 
 // NewWFMClient constructs a client for the api.v1alpha1.wfm.WFM service. By default, it uses the
@@ -3063,6 +3090,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMCreateAdherenceRuleNotificationConfigEntryProcedure,
 			opts...,
 		),
+		deleteAdherenceRuleNotificationConfigEntry: connect_go.NewClient[wfm.DeleteAdherenceRuleNotificationConfigEntryRequest, wfm.DeleteAdherenceRuleNotificationConfigEntryResponse](
+			httpClient,
+			baseURL+WFMDeleteAdherenceRuleNotificationConfigEntryProcedure,
+			opts...,
+		),
 		listAdherenceRuleNotificationConfigs: connect_go.NewClient[wfm.ListAdherenceRuleNotificationConfigsRequest, wfm.ListAdherenceRuleNotificationConfigsResponse](
 			httpClient,
 			baseURL+WFMListAdherenceRuleNotificationConfigsProcedure,
@@ -3076,6 +3108,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 		createAdherenceDepartmentalRuleClause: connect_go.NewClient[wfm.CreateAdherenceDepartmentalRuleClauseRequest, wfm.CreateAdherenceDepartmentalRuleClauseResponse](
 			httpClient,
 			baseURL+WFMCreateAdherenceDepartmentalRuleClauseProcedure,
+			opts...,
+		),
+		deleteAdherenceDepartmentalRuleClause: connect_go.NewClient[wfm.DeleteAdherenceDepartmentalRuleClauseRequest, wfm.DeleteAdherenceDepartmentalRuleClauseResponse](
+			httpClient,
+			baseURL+WFMDeleteAdherenceDepartmentalRuleClauseProcedure,
 			opts...,
 		),
 		listAdherenceDepartmentalRules: connect_go.NewClient[wfm.ListAdherenceDepartmentalRulesRequest, wfm.ListAdherenceDepartmentalRulesResponse](
@@ -3096,6 +3133,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 		listAdherenceAgentRules: connect_go.NewClient[wfm.ListAdherenceAgentRulesRequest, wfm.ListAdherenceAgentRulesResponse](
 			httpClient,
 			baseURL+WFMListAdherenceAgentRulesProcedure,
+			opts...,
+		),
+		deleteAdherenceAgentRuleClause: connect_go.NewClient[wfm.DeleteAdherenceAgentRuleClauseRequest, wfm.DeleteAdherenceAgentRuleClauseResponse](
+			httpClient,
+			baseURL+WFMDeleteAdherenceAgentRuleClauseProcedure,
 			opts...,
 		),
 	}
@@ -3291,13 +3333,16 @@ type wFMClient struct {
 	deleteRgbaColor                               *connect_go.Client[wfm.DeleteRgbaColorRequest, wfm.DeleteRgbaColorResponse]
 	createAdherenceRuleNotificationConfig         *connect_go.Client[wfm.CreateAdherenceRuleNotificationConfigRequest, wfm.CreateAdherenceRuleNotificationConfigResponse]
 	createAdherenceRuleNotificationConfigEntry    *connect_go.Client[wfm.CreateAdherenceRuleNotificationConfigEntryRequest, wfm.CreateAdherenceRuleNotificationConfigEntryResponse]
+	deleteAdherenceRuleNotificationConfigEntry    *connect_go.Client[wfm.DeleteAdherenceRuleNotificationConfigEntryRequest, wfm.DeleteAdherenceRuleNotificationConfigEntryResponse]
 	listAdherenceRuleNotificationConfigs          *connect_go.Client[wfm.ListAdherenceRuleNotificationConfigsRequest, wfm.ListAdherenceRuleNotificationConfigsResponse]
 	createAdherenceDepartmentalRule               *connect_go.Client[wfm.CreateAdherenceDepartmentalRuleRequest, wfm.CreateAdherenceDepartmentalRuleResponse]
 	createAdherenceDepartmentalRuleClause         *connect_go.Client[wfm.CreateAdherenceDepartmentalRuleClauseRequest, wfm.CreateAdherenceDepartmentalRuleClauseResponse]
+	deleteAdherenceDepartmentalRuleClause         *connect_go.Client[wfm.DeleteAdherenceDepartmentalRuleClauseRequest, wfm.DeleteAdherenceDepartmentalRuleClauseResponse]
 	listAdherenceDepartmentalRules                *connect_go.Client[wfm.ListAdherenceDepartmentalRulesRequest, wfm.ListAdherenceDepartmentalRulesResponse]
 	createAdherenceAgentRule                      *connect_go.Client[wfm.CreateAdherenceAgentRuleRequest, wfm.CreateAdherenceAgentRuleResponse]
 	createAdherenceAgentRuleClause                *connect_go.Client[wfm.CreateAdherenceAgentRuleClauseRequest, wfm.CreateAdherenceAgentRuleClauseResponse]
 	listAdherenceAgentRules                       *connect_go.Client[wfm.ListAdherenceAgentRulesRequest, wfm.ListAdherenceAgentRulesResponse]
+	deleteAdherenceAgentRuleClause                *connect_go.Client[wfm.DeleteAdherenceAgentRuleClauseRequest, wfm.DeleteAdherenceAgentRuleClauseResponse]
 }
 
 // PerformInitialClientSetup calls api.v1alpha1.wfm.WFM.PerformInitialClientSetup.
@@ -4267,6 +4312,12 @@ func (c *wFMClient) CreateAdherenceRuleNotificationConfigEntry(ctx context.Conte
 	return c.createAdherenceRuleNotificationConfigEntry.CallUnary(ctx, req)
 }
 
+// DeleteAdherenceRuleNotificationConfigEntry calls
+// api.v1alpha1.wfm.WFM.DeleteAdherenceRuleNotificationConfigEntry.
+func (c *wFMClient) DeleteAdherenceRuleNotificationConfigEntry(ctx context.Context, req *connect_go.Request[wfm.DeleteAdherenceRuleNotificationConfigEntryRequest]) (*connect_go.Response[wfm.DeleteAdherenceRuleNotificationConfigEntryResponse], error) {
+	return c.deleteAdherenceRuleNotificationConfigEntry.CallUnary(ctx, req)
+}
+
 // ListAdherenceRuleNotificationConfigs calls
 // api.v1alpha1.wfm.WFM.ListAdherenceRuleNotificationConfigs.
 func (c *wFMClient) ListAdherenceRuleNotificationConfigs(ctx context.Context, req *connect_go.Request[wfm.ListAdherenceRuleNotificationConfigsRequest]) (*connect_go.Response[wfm.ListAdherenceRuleNotificationConfigsResponse], error) {
@@ -4282,6 +4333,12 @@ func (c *wFMClient) CreateAdherenceDepartmentalRule(ctx context.Context, req *co
 // api.v1alpha1.wfm.WFM.CreateAdherenceDepartmentalRuleClause.
 func (c *wFMClient) CreateAdherenceDepartmentalRuleClause(ctx context.Context, req *connect_go.Request[wfm.CreateAdherenceDepartmentalRuleClauseRequest]) (*connect_go.Response[wfm.CreateAdherenceDepartmentalRuleClauseResponse], error) {
 	return c.createAdherenceDepartmentalRuleClause.CallUnary(ctx, req)
+}
+
+// DeleteAdherenceDepartmentalRuleClause calls
+// api.v1alpha1.wfm.WFM.DeleteAdherenceDepartmentalRuleClause.
+func (c *wFMClient) DeleteAdherenceDepartmentalRuleClause(ctx context.Context, req *connect_go.Request[wfm.DeleteAdherenceDepartmentalRuleClauseRequest]) (*connect_go.Response[wfm.DeleteAdherenceDepartmentalRuleClauseResponse], error) {
+	return c.deleteAdherenceDepartmentalRuleClause.CallUnary(ctx, req)
 }
 
 // ListAdherenceDepartmentalRules calls api.v1alpha1.wfm.WFM.ListAdherenceDepartmentalRules.
@@ -4302,6 +4359,11 @@ func (c *wFMClient) CreateAdherenceAgentRuleClause(ctx context.Context, req *con
 // ListAdherenceAgentRules calls api.v1alpha1.wfm.WFM.ListAdherenceAgentRules.
 func (c *wFMClient) ListAdherenceAgentRules(ctx context.Context, req *connect_go.Request[wfm.ListAdherenceAgentRulesRequest]) (*connect_go.Response[wfm.ListAdherenceAgentRulesResponse], error) {
 	return c.listAdherenceAgentRules.CallUnary(ctx, req)
+}
+
+// DeleteAdherenceAgentRuleClause calls api.v1alpha1.wfm.WFM.DeleteAdherenceAgentRuleClause.
+func (c *wFMClient) DeleteAdherenceAgentRuleClause(ctx context.Context, req *connect_go.Request[wfm.DeleteAdherenceAgentRuleClauseRequest]) (*connect_go.Response[wfm.DeleteAdherenceAgentRuleClauseResponse], error) {
+	return c.deleteAdherenceAgentRuleClause.CallUnary(ctx, req)
 }
 
 // WFMHandler is an implementation of the api.v1alpha1.wfm.WFM service.
@@ -5787,6 +5849,12 @@ type WFMHandler interface {
 	//   - grpc.Internal: error occurs when creating the given @notification_config_entry.
 	//   - grpc.NotFound: notification config with the @notification_config_sid does not exist.
 	CreateAdherenceRuleNotificationConfigEntry(context.Context, *connect_go.Request[wfm.CreateAdherenceRuleNotificationConfigEntryRequest]) (*connect_go.Response[wfm.CreateAdherenceRuleNotificationConfigEntryResponse], error)
+	// Deletes the notification config entry that has the given @adherence_rule_notification_config_entry_id for the org sending the request.
+	// Errors:
+	//   - grpc.Invalid: the given @adherence_rule_notification_config_entry_id is invalid.
+	//   - grpc.Internal: error occurs when deleting the given @adherence_rule_notification_config_entry_id.
+	//   - grpc.NotFound: notification config with the @adherence_rule_notification_config_entry_id does not exist.
+	DeleteAdherenceRuleNotificationConfigEntry(context.Context, *connect_go.Request[wfm.DeleteAdherenceRuleNotificationConfigEntryRequest]) (*connect_go.Response[wfm.DeleteAdherenceRuleNotificationConfigEntryResponse], error)
 	// Gets all adherence rule @notification_configs for the org sending the request.
 	// Configs will include their respective entries.
 	// Errors:
@@ -5804,6 +5872,12 @@ type WFMHandler interface {
 	//   - grpc.Internal: error occurs when creating the given @clause.
 	//   - grpc.NotFound: departmental rule with the @departmetal_rule_sid does not exist.
 	CreateAdherenceDepartmentalRuleClause(context.Context, *connect_go.Request[wfm.CreateAdherenceDepartmentalRuleClauseRequest]) (*connect_go.Response[wfm.CreateAdherenceDepartmentalRuleClauseResponse], error)
+	// Deletes the departmental rule clause that has the given @adherence_departmental_rule_clause_id for the org sending the request.
+	// Errors:
+	//   - grpc.Invalid: the value of the given @adherence_departmental_rule_clause_id is invalid.
+	//   - grpc.Internal: error occurs when deleting the given @adherence_departmental_rule_clause_id.
+	//   - grpc.NotFound: departmental rule with the @adherence_departmental_rule_clause_id does not exist.
+	DeleteAdherenceDepartmentalRuleClause(context.Context, *connect_go.Request[wfm.DeleteAdherenceDepartmentalRuleClauseRequest]) (*connect_go.Response[wfm.DeleteAdherenceDepartmentalRuleClauseResponse], error)
 	// Gets all adherence departmental @rules for the org sending the request.
 	// Rules will include their respective clauses.
 	// Errors:
@@ -5827,6 +5901,12 @@ type WFMHandler interface {
 	//   - grpc.Invalid: the request arguments are invalid.
 	//   - grpc.Internal: error occurs when getting the rules.
 	ListAdherenceAgentRules(context.Context, *connect_go.Request[wfm.ListAdherenceAgentRulesRequest]) (*connect_go.Response[wfm.ListAdherenceAgentRulesResponse], error)
+	// Deletes the agent rule clause that has the given @adherence_agent_rule_clause_id for the org sending the request.
+	// Errors:
+	//   - grpc.Invalid: the value of the given @adherence_agent_rule_clause_id is invalid.
+	//   - grpc.Internal: error occurs when deleting the given @adherence_agent_rule_clause_id.
+	//   - grpc.NotFound: departmental rule with the @adherence_agent_rule_clause_id does not exist.
+	DeleteAdherenceAgentRuleClause(context.Context, *connect_go.Request[wfm.DeleteAdherenceAgentRuleClauseRequest]) (*connect_go.Response[wfm.DeleteAdherenceAgentRuleClauseResponse], error)
 }
 
 // NewWFMHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -6775,6 +6855,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.CreateAdherenceRuleNotificationConfigEntry,
 		opts...,
 	)
+	wFMDeleteAdherenceRuleNotificationConfigEntryHandler := connect_go.NewUnaryHandler(
+		WFMDeleteAdherenceRuleNotificationConfigEntryProcedure,
+		svc.DeleteAdherenceRuleNotificationConfigEntry,
+		opts...,
+	)
 	wFMListAdherenceRuleNotificationConfigsHandler := connect_go.NewUnaryHandler(
 		WFMListAdherenceRuleNotificationConfigsProcedure,
 		svc.ListAdherenceRuleNotificationConfigs,
@@ -6788,6 +6873,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 	wFMCreateAdherenceDepartmentalRuleClauseHandler := connect_go.NewUnaryHandler(
 		WFMCreateAdherenceDepartmentalRuleClauseProcedure,
 		svc.CreateAdherenceDepartmentalRuleClause,
+		opts...,
+	)
+	wFMDeleteAdherenceDepartmentalRuleClauseHandler := connect_go.NewUnaryHandler(
+		WFMDeleteAdherenceDepartmentalRuleClauseProcedure,
+		svc.DeleteAdherenceDepartmentalRuleClause,
 		opts...,
 	)
 	wFMListAdherenceDepartmentalRulesHandler := connect_go.NewUnaryHandler(
@@ -6808,6 +6898,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 	wFMListAdherenceAgentRulesHandler := connect_go.NewUnaryHandler(
 		WFMListAdherenceAgentRulesProcedure,
 		svc.ListAdherenceAgentRules,
+		opts...,
+	)
+	wFMDeleteAdherenceAgentRuleClauseHandler := connect_go.NewUnaryHandler(
+		WFMDeleteAdherenceAgentRuleClauseProcedure,
+		svc.DeleteAdherenceAgentRuleClause,
 		opts...,
 	)
 	return "/api.v1alpha1.wfm.WFM/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -7188,12 +7283,16 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMCreateAdherenceRuleNotificationConfigHandler.ServeHTTP(w, r)
 		case WFMCreateAdherenceRuleNotificationConfigEntryProcedure:
 			wFMCreateAdherenceRuleNotificationConfigEntryHandler.ServeHTTP(w, r)
+		case WFMDeleteAdherenceRuleNotificationConfigEntryProcedure:
+			wFMDeleteAdherenceRuleNotificationConfigEntryHandler.ServeHTTP(w, r)
 		case WFMListAdherenceRuleNotificationConfigsProcedure:
 			wFMListAdherenceRuleNotificationConfigsHandler.ServeHTTP(w, r)
 		case WFMCreateAdherenceDepartmentalRuleProcedure:
 			wFMCreateAdherenceDepartmentalRuleHandler.ServeHTTP(w, r)
 		case WFMCreateAdherenceDepartmentalRuleClauseProcedure:
 			wFMCreateAdherenceDepartmentalRuleClauseHandler.ServeHTTP(w, r)
+		case WFMDeleteAdherenceDepartmentalRuleClauseProcedure:
+			wFMDeleteAdherenceDepartmentalRuleClauseHandler.ServeHTTP(w, r)
 		case WFMListAdherenceDepartmentalRulesProcedure:
 			wFMListAdherenceDepartmentalRulesHandler.ServeHTTP(w, r)
 		case WFMCreateAdherenceAgentRuleProcedure:
@@ -7202,6 +7301,8 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMCreateAdherenceAgentRuleClauseHandler.ServeHTTP(w, r)
 		case WFMListAdherenceAgentRulesProcedure:
 			wFMListAdherenceAgentRulesHandler.ServeHTTP(w, r)
+		case WFMDeleteAdherenceAgentRuleClauseProcedure:
+			wFMDeleteAdherenceAgentRuleClauseHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -7963,6 +8064,10 @@ func (UnimplementedWFMHandler) CreateAdherenceRuleNotificationConfigEntry(contex
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.CreateAdherenceRuleNotificationConfigEntry is not implemented"))
 }
 
+func (UnimplementedWFMHandler) DeleteAdherenceRuleNotificationConfigEntry(context.Context, *connect_go.Request[wfm.DeleteAdherenceRuleNotificationConfigEntryRequest]) (*connect_go.Response[wfm.DeleteAdherenceRuleNotificationConfigEntryResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.DeleteAdherenceRuleNotificationConfigEntry is not implemented"))
+}
+
 func (UnimplementedWFMHandler) ListAdherenceRuleNotificationConfigs(context.Context, *connect_go.Request[wfm.ListAdherenceRuleNotificationConfigsRequest]) (*connect_go.Response[wfm.ListAdherenceRuleNotificationConfigsResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListAdherenceRuleNotificationConfigs is not implemented"))
 }
@@ -7973,6 +8078,10 @@ func (UnimplementedWFMHandler) CreateAdherenceDepartmentalRule(context.Context, 
 
 func (UnimplementedWFMHandler) CreateAdherenceDepartmentalRuleClause(context.Context, *connect_go.Request[wfm.CreateAdherenceDepartmentalRuleClauseRequest]) (*connect_go.Response[wfm.CreateAdherenceDepartmentalRuleClauseResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.CreateAdherenceDepartmentalRuleClause is not implemented"))
+}
+
+func (UnimplementedWFMHandler) DeleteAdherenceDepartmentalRuleClause(context.Context, *connect_go.Request[wfm.DeleteAdherenceDepartmentalRuleClauseRequest]) (*connect_go.Response[wfm.DeleteAdherenceDepartmentalRuleClauseResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.DeleteAdherenceDepartmentalRuleClause is not implemented"))
 }
 
 func (UnimplementedWFMHandler) ListAdherenceDepartmentalRules(context.Context, *connect_go.Request[wfm.ListAdherenceDepartmentalRulesRequest]) (*connect_go.Response[wfm.ListAdherenceDepartmentalRulesResponse], error) {
@@ -7989,4 +8098,8 @@ func (UnimplementedWFMHandler) CreateAdherenceAgentRuleClause(context.Context, *
 
 func (UnimplementedWFMHandler) ListAdherenceAgentRules(context.Context, *connect_go.Request[wfm.ListAdherenceAgentRulesRequest]) (*connect_go.Response[wfm.ListAdherenceAgentRulesResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListAdherenceAgentRules is not implemented"))
+}
+
+func (UnimplementedWFMHandler) DeleteAdherenceAgentRuleClause(context.Context, *connect_go.Request[wfm.DeleteAdherenceAgentRuleClauseRequest]) (*connect_go.Response[wfm.DeleteAdherenceAgentRuleClauseResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.DeleteAdherenceAgentRuleClause is not implemented"))
 }
