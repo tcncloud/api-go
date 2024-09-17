@@ -194,6 +194,8 @@ const (
 	// AcdPopulateWorkflowFieldsProcedure is the fully-qualified name of the Acd's
 	// PopulateWorkflowFields RPC.
 	AcdPopulateWorkflowFieldsProcedure = "/api.v0alpha.Acd/PopulateWorkflowFields"
+	// AcdValidateFieldProcedure is the fully-qualified name of the Acd's ValidateField RPC.
+	AcdValidateFieldProcedure = "/api.v0alpha.Acd/ValidateField"
 )
 
 // AcdClient is a client for the api.v0alpha.Acd service.
@@ -268,6 +270,7 @@ type AcdClient interface {
 	ProcessSecureForm(context.Context, *connect_go.Request[v0alpha.ProcessSecureFormReq]) (*connect_go.Response[v0alpha.ProcessSecureFormRes], error)
 	FinishSecureFormHandling(context.Context, *connect_go.Request[v0alpha.FinishSecureFormHandlingReq]) (*connect_go.Response[v0alpha.FinishSecureFormHandlingRes], error)
 	PopulateWorkflowFields(context.Context, *connect_go.Request[v0alpha.PopulateWorkflowFieldsReq]) (*connect_go.Response[v0alpha.PopulateWorkflowFieldsRes], error)
+	ValidateField(context.Context, *connect_go.Request[v0alpha.ValidateFieldReq]) (*connect_go.Response[v0alpha.ValidateFieldRes], error)
 }
 
 // NewAcdClient constructs a client for the api.v0alpha.Acd service. By default, it uses the Connect
@@ -575,6 +578,11 @@ func NewAcdClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+AcdPopulateWorkflowFieldsProcedure,
 			opts...,
 		),
+		validateField: connect_go.NewClient[v0alpha.ValidateFieldReq, v0alpha.ValidateFieldRes](
+			httpClient,
+			baseURL+AcdValidateFieldProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -639,6 +647,7 @@ type acdClient struct {
 	processSecureForm                     *connect_go.Client[v0alpha.ProcessSecureFormReq, v0alpha.ProcessSecureFormRes]
 	finishSecureFormHandling              *connect_go.Client[v0alpha.FinishSecureFormHandlingReq, v0alpha.FinishSecureFormHandlingRes]
 	populateWorkflowFields                *connect_go.Client[v0alpha.PopulateWorkflowFieldsReq, v0alpha.PopulateWorkflowFieldsRes]
+	validateField                         *connect_go.Client[v0alpha.ValidateFieldReq, v0alpha.ValidateFieldRes]
 }
 
 // AgentGetStatusStream calls api.v0alpha.Acd.AgentGetStatusStream.
@@ -937,6 +946,11 @@ func (c *acdClient) PopulateWorkflowFields(ctx context.Context, req *connect_go.
 	return c.populateWorkflowFields.CallUnary(ctx, req)
 }
 
+// ValidateField calls api.v0alpha.Acd.ValidateField.
+func (c *acdClient) ValidateField(ctx context.Context, req *connect_go.Request[v0alpha.ValidateFieldReq]) (*connect_go.Response[v0alpha.ValidateFieldRes], error) {
+	return c.validateField.CallUnary(ctx, req)
+}
+
 // AcdHandler is an implementation of the api.v0alpha.Acd service.
 type AcdHandler interface {
 	AgentGetStatusStream(context.Context, *connect_go.Request[v0alpha.AgentGetStatusRequest], *connect_go.ServerStream[v0alpha.AgentGetStatusReply]) error
@@ -1009,6 +1023,7 @@ type AcdHandler interface {
 	ProcessSecureForm(context.Context, *connect_go.Request[v0alpha.ProcessSecureFormReq]) (*connect_go.Response[v0alpha.ProcessSecureFormRes], error)
 	FinishSecureFormHandling(context.Context, *connect_go.Request[v0alpha.FinishSecureFormHandlingReq]) (*connect_go.Response[v0alpha.FinishSecureFormHandlingRes], error)
 	PopulateWorkflowFields(context.Context, *connect_go.Request[v0alpha.PopulateWorkflowFieldsReq]) (*connect_go.Response[v0alpha.PopulateWorkflowFieldsRes], error)
+	ValidateField(context.Context, *connect_go.Request[v0alpha.ValidateFieldReq]) (*connect_go.Response[v0alpha.ValidateFieldRes], error)
 }
 
 // NewAcdHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -1312,6 +1327,11 @@ func NewAcdHandler(svc AcdHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.PopulateWorkflowFields,
 		opts...,
 	)
+	acdValidateFieldHandler := connect_go.NewUnaryHandler(
+		AcdValidateFieldProcedure,
+		svc.ValidateField,
+		opts...,
+	)
 	return "/api.v0alpha.Acd/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case AcdAgentGetStatusStreamProcedure:
@@ -1432,6 +1452,8 @@ func NewAcdHandler(svc AcdHandler, opts ...connect_go.HandlerOption) (string, ht
 			acdFinishSecureFormHandlingHandler.ServeHTTP(w, r)
 		case AcdPopulateWorkflowFieldsProcedure:
 			acdPopulateWorkflowFieldsHandler.ServeHTTP(w, r)
+		case AcdValidateFieldProcedure:
+			acdValidateFieldHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -1675,4 +1697,8 @@ func (UnimplementedAcdHandler) FinishSecureFormHandling(context.Context, *connec
 
 func (UnimplementedAcdHandler) PopulateWorkflowFields(context.Context, *connect_go.Request[v0alpha.PopulateWorkflowFieldsReq]) (*connect_go.Response[v0alpha.PopulateWorkflowFieldsRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Acd.PopulateWorkflowFields is not implemented"))
+}
+
+func (UnimplementedAcdHandler) ValidateField(context.Context, *connect_go.Request[v0alpha.ValidateFieldReq]) (*connect_go.Response[v0alpha.ValidateFieldRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Acd.ValidateField is not implemented"))
 }

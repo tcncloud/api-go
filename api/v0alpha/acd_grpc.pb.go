@@ -92,6 +92,7 @@ const (
 	Acd_ProcessSecureForm_FullMethodName                     = "/api.v0alpha.Acd/ProcessSecureForm"
 	Acd_FinishSecureFormHandling_FullMethodName              = "/api.v0alpha.Acd/FinishSecureFormHandling"
 	Acd_PopulateWorkflowFields_FullMethodName                = "/api.v0alpha.Acd/PopulateWorkflowFields"
+	Acd_ValidateField_FullMethodName                         = "/api.v0alpha.Acd/ValidateField"
 )
 
 // AcdClient is the client API for Acd service.
@@ -172,6 +173,7 @@ type AcdClient interface {
 	ProcessSecureForm(ctx context.Context, in *ProcessSecureFormReq, opts ...grpc.CallOption) (*ProcessSecureFormRes, error)
 	FinishSecureFormHandling(ctx context.Context, in *FinishSecureFormHandlingReq, opts ...grpc.CallOption) (*FinishSecureFormHandlingRes, error)
 	PopulateWorkflowFields(ctx context.Context, in *PopulateWorkflowFieldsReq, opts ...grpc.CallOption) (*PopulateWorkflowFieldsRes, error)
+	ValidateField(ctx context.Context, in *ValidateFieldReq, opts ...grpc.CallOption) (*ValidateFieldRes, error)
 }
 
 type acdClient struct {
@@ -818,6 +820,16 @@ func (c *acdClient) PopulateWorkflowFields(ctx context.Context, in *PopulateWork
 	return out, nil
 }
 
+func (c *acdClient) ValidateField(ctx context.Context, in *ValidateFieldReq, opts ...grpc.CallOption) (*ValidateFieldRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ValidateFieldRes)
+	err := c.cc.Invoke(ctx, Acd_ValidateField_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AcdServer is the server API for Acd service.
 // All implementations must embed UnimplementedAcdServer
 // for forward compatibility.
@@ -896,6 +908,7 @@ type AcdServer interface {
 	ProcessSecureForm(context.Context, *ProcessSecureFormReq) (*ProcessSecureFormRes, error)
 	FinishSecureFormHandling(context.Context, *FinishSecureFormHandlingReq) (*FinishSecureFormHandlingRes, error)
 	PopulateWorkflowFields(context.Context, *PopulateWorkflowFieldsReq) (*PopulateWorkflowFieldsRes, error)
+	ValidateField(context.Context, *ValidateFieldReq) (*ValidateFieldRes, error)
 	mustEmbedUnimplementedAcdServer()
 }
 
@@ -1082,6 +1095,9 @@ func (UnimplementedAcdServer) FinishSecureFormHandling(context.Context, *FinishS
 }
 func (UnimplementedAcdServer) PopulateWorkflowFields(context.Context, *PopulateWorkflowFieldsReq) (*PopulateWorkflowFieldsRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PopulateWorkflowFields not implemented")
+}
+func (UnimplementedAcdServer) ValidateField(context.Context, *ValidateFieldReq) (*ValidateFieldRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ValidateField not implemented")
 }
 func (UnimplementedAcdServer) mustEmbedUnimplementedAcdServer() {}
 func (UnimplementedAcdServer) testEmbeddedByValue()             {}
@@ -2172,6 +2188,24 @@ func _Acd_PopulateWorkflowFields_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Acd_ValidateField_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ValidateFieldReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AcdServer).ValidateField(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Acd_ValidateField_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AcdServer).ValidateField(ctx, req.(*ValidateFieldReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Acd_ServiceDesc is the grpc.ServiceDesc for Acd service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -2406,6 +2440,10 @@ var Acd_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "PopulateWorkflowFields",
 			Handler:    _Acd_PopulateWorkflowFields_Handler,
+		},
+		{
+			MethodName: "ValidateField",
+			Handler:    _Acd_ValidateField_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
