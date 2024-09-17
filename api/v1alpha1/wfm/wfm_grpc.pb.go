@@ -33,204 +33,206 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	WFM_PerformInitialClientSetup_FullMethodName                     = "/api.v1alpha1.wfm.WFM/PerformInitialClientSetup"
-	WFM_CreateInitialDemoActivities_FullMethodName                   = "/api.v1alpha1.wfm.WFM/CreateInitialDemoActivities"
-	WFM_ListSkillProfiles_FullMethodName                             = "/api.v1alpha1.wfm.WFM/ListSkillProfiles"
-	WFM_UpdateSkillProfile_FullMethodName                            = "/api.v1alpha1.wfm.WFM/UpdateSkillProfile"
-	WFM_UpdateSkillProfileProficiencies_FullMethodName               = "/api.v1alpha1.wfm.WFM/UpdateSkillProfileProficiencies"
-	WFM_GetSkillProfile_FullMethodName                               = "/api.v1alpha1.wfm.WFM/GetSkillProfile"
-	WFM_ResyncSkillProfiles_FullMethodName                           = "/api.v1alpha1.wfm.WFM/ResyncSkillProfiles"
-	WFM_GetLastSkillProfileResyncDate_FullMethodName                 = "/api.v1alpha1.wfm.WFM/GetLastSkillProfileResyncDate"
-	WFM_UpsertForecastingParameters_FullMethodName                   = "/api.v1alpha1.wfm.WFM/UpsertForecastingParameters"
-	WFM_GetForecastingParameters_FullMethodName                      = "/api.v1alpha1.wfm.WFM/GetForecastingParameters"
-	WFM_GetClientHistoryCacheInfo_FullMethodName                     = "/api.v1alpha1.wfm.WFM/GetClientHistoryCacheInfo"
-	WFM_ListHistoricalData_FullMethodName                            = "/api.v1alpha1.wfm.WFM/ListHistoricalData"
-	WFM_UpsertHistoricalDataDelta_FullMethodName                     = "/api.v1alpha1.wfm.WFM/UpsertHistoricalDataDelta"
-	WFM_UpsertHistoricalDataDeltas_FullMethodName                    = "/api.v1alpha1.wfm.WFM/UpsertHistoricalDataDeltas"
-	WFM_ListSkills_FullMethodName                                    = "/api.v1alpha1.wfm.WFM/ListSkills"
-	WFM_BuildCallProfileTemplateForSkillProfile_FullMethodName       = "/api.v1alpha1.wfm.WFM/BuildCallProfileTemplateForSkillProfile"
-	WFM_BuildCallProfileTemplate_FullMethodName                      = "/api.v1alpha1.wfm.WFM/BuildCallProfileTemplate"
-	WFM_CreateInactiveSkillProfileMapping_FullMethodName             = "/api.v1alpha1.wfm.WFM/CreateInactiveSkillProfileMapping"
-	WFM_GetAvailableRegressionForecasterModelTypes_FullMethodName    = "/api.v1alpha1.wfm.WFM/GetAvailableRegressionForecasterModelTypes"
-	WFM_DisconnectInactiveSkillProfileMapping_FullMethodName         = "/api.v1alpha1.wfm.WFM/DisconnectInactiveSkillProfileMapping"
-	WFM_CreateSkillProfileGroup_FullMethodName                       = "/api.v1alpha1.wfm.WFM/CreateSkillProfileGroup"
-	WFM_UpdateSkillProfileGroup_FullMethodName                       = "/api.v1alpha1.wfm.WFM/UpdateSkillProfileGroup"
-	WFM_ListSkillProfileGroups_FullMethodName                        = "/api.v1alpha1.wfm.WFM/ListSkillProfileGroups"
-	WFM_UpdateSkillProfileGroupAssociations_FullMethodName           = "/api.v1alpha1.wfm.WFM/UpdateSkillProfileGroupAssociations"
-	WFM_DeleteHistoricalDataDeltas_FullMethodName                    = "/api.v1alpha1.wfm.WFM/DeleteHistoricalDataDeltas"
-	WFM_ListTopSkillProfiles_FullMethodName                          = "/api.v1alpha1.wfm.WFM/ListTopSkillProfiles"
-	WFM_GetSkillProfilesCount_FullMethodName                         = "/api.v1alpha1.wfm.WFM/GetSkillProfilesCount"
-	WFM_BuildProfileForecastByInterval_FullMethodName                = "/api.v1alpha1.wfm.WFM/BuildProfileForecastByInterval"
-	WFM_BuildProfileForecastByIntervalWithStats_FullMethodName       = "/api.v1alpha1.wfm.WFM/BuildProfileForecastByIntervalWithStats"
-	WFM_UpsertProfileForecast_FullMethodName                         = "/api.v1alpha1.wfm.WFM/UpsertProfileForecast"
-	WFM_CreateCallProfileTemplate_FullMethodName                     = "/api.v1alpha1.wfm.WFM/CreateCallProfileTemplate"
-	WFM_DeleteCallProfileTemplate_FullMethodName                     = "/api.v1alpha1.wfm.WFM/DeleteCallProfileTemplate"
-	WFM_CreateRegressionTemplate_FullMethodName                      = "/api.v1alpha1.wfm.WFM/CreateRegressionTemplate"
-	WFM_DeleteRegressionTemplate_FullMethodName                      = "/api.v1alpha1.wfm.WFM/DeleteRegressionTemplate"
-	WFM_ListRegressionTemplates_FullMethodName                       = "/api.v1alpha1.wfm.WFM/ListRegressionTemplates"
-	WFM_ListForecastIntervalsForSkillProfile_FullMethodName          = "/api.v1alpha1.wfm.WFM/ListForecastIntervalsForSkillProfile"
-	WFM_ListForecastIntervals_FullMethodName                         = "/api.v1alpha1.wfm.WFM/ListForecastIntervals"
-	WFM_BuildRegressionForecastByInterval_FullMethodName             = "/api.v1alpha1.wfm.WFM/BuildRegressionForecastByInterval"
-	WFM_BuildRegressionForecastByIntervalWithStats_FullMethodName    = "/api.v1alpha1.wfm.WFM/BuildRegressionForecastByIntervalWithStats"
-	WFM_ListCallProfileTemplates_FullMethodName                      = "/api.v1alpha1.wfm.WFM/ListCallProfileTemplates"
-	WFM_UpsertRegressionForecast_FullMethodName                      = "/api.v1alpha1.wfm.WFM/UpsertRegressionForecast"
-	WFM_UpsertForecastDataDelta_FullMethodName                       = "/api.v1alpha1.wfm.WFM/UpsertForecastDataDelta"
-	WFM_UpsertForecastDataDeltas_FullMethodName                      = "/api.v1alpha1.wfm.WFM/UpsertForecastDataDeltas"
-	WFM_DeleteForecastIntervals_FullMethodName                       = "/api.v1alpha1.wfm.WFM/DeleteForecastIntervals"
-	WFM_ListHistoricalDataForAllSkillProfiles_FullMethodName         = "/api.v1alpha1.wfm.WFM/ListHistoricalDataForAllSkillProfiles"
-	WFM_BuildDOWAndMOYProfiles_FullMethodName                        = "/api.v1alpha1.wfm.WFM/BuildDOWAndMOYProfiles"
-	WFM_CalculateTrainingDataAveragesForSkillProfile_FullMethodName  = "/api.v1alpha1.wfm.WFM/CalculateTrainingDataAveragesForSkillProfile"
-	WFM_UpdateSkillProfileAveragesUsingHistoricalData_FullMethodName = "/api.v1alpha1.wfm.WFM/UpdateSkillProfileAveragesUsingHistoricalData"
-	WFM_UpdateCallCenterNode_FullMethodName                          = "/api.v1alpha1.wfm.WFM/UpdateCallCenterNode"
-	WFM_CreateClientNode_FullMethodName                              = "/api.v1alpha1.wfm.WFM/CreateClientNode"
-	WFM_UpdateClientNode_FullMethodName                              = "/api.v1alpha1.wfm.WFM/UpdateClientNode"
-	WFM_CreateLocationNode_FullMethodName                            = "/api.v1alpha1.wfm.WFM/CreateLocationNode"
-	WFM_UpdateLocationNode_FullMethodName                            = "/api.v1alpha1.wfm.WFM/UpdateLocationNode"
-	WFM_CreateProgramNode_FullMethodName                             = "/api.v1alpha1.wfm.WFM/CreateProgramNode"
-	WFM_UpdateProgramNode_FullMethodName                             = "/api.v1alpha1.wfm.WFM/UpdateProgramNode"
-	WFM_ListProgramNodesBySid_FullMethodName                         = "/api.v1alpha1.wfm.WFM/ListProgramNodesBySid"
-	WFM_CreateConstraintRule_FullMethodName                          = "/api.v1alpha1.wfm.WFM/CreateConstraintRule"
-	WFM_UpdateConstraintRule_FullMethodName                          = "/api.v1alpha1.wfm.WFM/UpdateConstraintRule"
-	WFM_DeleteConstraintRule_FullMethodName                          = "/api.v1alpha1.wfm.WFM/DeleteConstraintRule"
-	WFM_CreateNonSkillActivity_FullMethodName                        = "/api.v1alpha1.wfm.WFM/CreateNonSkillActivity"
-	WFM_UpdateNonSkillActivity_FullMethodName                        = "/api.v1alpha1.wfm.WFM/UpdateNonSkillActivity"
-	WFM_ListNonSkillActivities_FullMethodName                        = "/api.v1alpha1.wfm.WFM/ListNonSkillActivities"
-	WFM_ListNonSkillActivityAssociations_FullMethodName              = "/api.v1alpha1.wfm.WFM/ListNonSkillActivityAssociations"
-	WFM_ListCandidateSchedulingActivities_FullMethodName             = "/api.v1alpha1.wfm.WFM/ListCandidateSchedulingActivities"
-	WFM_GetOnCallSchedulingActivity_FullMethodName                   = "/api.v1alpha1.wfm.WFM/GetOnCallSchedulingActivity"
-	WFM_CreateAgentGroup_FullMethodName                              = "/api.v1alpha1.wfm.WFM/CreateAgentGroup"
-	WFM_ListAgentScheduleGroups_FullMethodName                       = "/api.v1alpha1.wfm.WFM/ListAgentScheduleGroups"
-	WFM_UpdateAgentGroup_FullMethodName                              = "/api.v1alpha1.wfm.WFM/UpdateAgentGroup"
-	WFM_CreateUnassignedWFMAgent_FullMethodName                      = "/api.v1alpha1.wfm.WFM/CreateUnassignedWFMAgent"
-	WFM_UpdateWFMAgent_FullMethodName                                = "/api.v1alpha1.wfm.WFM/UpdateWFMAgent"
-	WFM_ListAllWFMAgents_FullMethodName                              = "/api.v1alpha1.wfm.WFM/ListAllWFMAgents"
-	WFM_ListCandidateWFMAgents_FullMethodName                        = "/api.v1alpha1.wfm.WFM/ListCandidateWFMAgents"
-	WFM_ListUngroupedWFMAgents_FullMethodName                        = "/api.v1alpha1.wfm.WFM/ListUngroupedWFMAgents"
-	WFM_ListWFMAgentSids_FullMethodName                              = "/api.v1alpha1.wfm.WFM/ListWFMAgentSids"
-	WFM_ListUnassignedWFMAgents_FullMethodName                       = "/api.v1alpha1.wfm.WFM/ListUnassignedWFMAgents"
-	WFM_ListWFMAgentsAssociatedWithAgentGroup_FullMethodName         = "/api.v1alpha1.wfm.WFM/ListWFMAgentsAssociatedWithAgentGroup"
-	WFM_CreateWFMAgentMemberships_FullMethodName                     = "/api.v1alpha1.wfm.WFM/CreateWFMAgentMemberships"
-	WFM_CopyWFMAgentMemberships_FullMethodName                       = "/api.v1alpha1.wfm.WFM/CopyWFMAgentMemberships"
-	WFM_DeleteWFMAgentMemberships_FullMethodName                     = "/api.v1alpha1.wfm.WFM/DeleteWFMAgentMemberships"
-	WFM_DeleteWFMAgentsMemberships_FullMethodName                    = "/api.v1alpha1.wfm.WFM/DeleteWFMAgentsMemberships"
-	WFM_RemoveAgentFromFutureShifts_FullMethodName                   = "/api.v1alpha1.wfm.WFM/RemoveAgentFromFutureShifts"
-	WFM_BuildAgentDiagnostics_FullMethodName                         = "/api.v1alpha1.wfm.WFM/BuildAgentDiagnostics"
-	WFM_CreateShiftTemplate_FullMethodName                           = "/api.v1alpha1.wfm.WFM/CreateShiftTemplate"
-	WFM_UpdateShiftTemplate_FullMethodName                           = "/api.v1alpha1.wfm.WFM/UpdateShiftTemplate"
-	WFM_ListShiftTemplatesBySids_FullMethodName                      = "/api.v1alpha1.wfm.WFM/ListShiftTemplatesBySids"
-	WFM_BuildShiftTemplateDiagnostics_FullMethodName                 = "/api.v1alpha1.wfm.WFM/BuildShiftTemplateDiagnostics"
-	WFM_CreatePlacementRule_FullMethodName                           = "/api.v1alpha1.wfm.WFM/CreatePlacementRule"
-	WFM_UpdatePlacementRule_FullMethodName                           = "/api.v1alpha1.wfm.WFM/UpdatePlacementRule"
-	WFM_DeletePlacementRule_FullMethodName                           = "/api.v1alpha1.wfm.WFM/DeletePlacementRule"
-	WFM_CreateOpenTimesPattern_FullMethodName                        = "/api.v1alpha1.wfm.WFM/CreateOpenTimesPattern"
-	WFM_UpdateOpenTimesPattern_FullMethodName                        = "/api.v1alpha1.wfm.WFM/UpdateOpenTimesPattern"
-	WFM_DeleteOpenTimesPattern_FullMethodName                        = "/api.v1alpha1.wfm.WFM/DeleteOpenTimesPattern"
-	WFM_GetOpenTimesBitmaps_FullMethodName                           = "/api.v1alpha1.wfm.WFM/GetOpenTimesBitmaps"
-	WFM_ListOpenDateRangesForNodeOpenTimesBitmaps_FullMethodName     = "/api.v1alpha1.wfm.WFM/ListOpenDateRangesForNodeOpenTimesBitmaps"
-	WFM_CreateAgentAvailabilityPattern_FullMethodName                = "/api.v1alpha1.wfm.WFM/CreateAgentAvailabilityPattern"
-	WFM_UpdateAgentAvailabilityPattern_FullMethodName                = "/api.v1alpha1.wfm.WFM/UpdateAgentAvailabilityPattern"
-	WFM_DeleteAgentAvailabilityPattern_FullMethodName                = "/api.v1alpha1.wfm.WFM/DeleteAgentAvailabilityPattern"
-	WFM_GetAvailabilityBitmaps_FullMethodName                        = "/api.v1alpha1.wfm.WFM/GetAvailabilityBitmaps"
-	WFM_UpsertNonSkillActivityAssociation_FullMethodName             = "/api.v1alpha1.wfm.WFM/UpsertNonSkillActivityAssociation"
-	WFM_CreateSkillProficiencies_FullMethodName                      = "/api.v1alpha1.wfm.WFM/CreateSkillProficiencies"
-	WFM_UpdateSkillProficiencies_FullMethodName                      = "/api.v1alpha1.wfm.WFM/UpdateSkillProficiencies"
-	WFM_DeleteSkillProficiency_FullMethodName                        = "/api.v1alpha1.wfm.WFM/DeleteSkillProficiency"
-	WFM_CopyScenario_FullMethodName                                  = "/api.v1alpha1.wfm.WFM/CopyScenario"
-	WFM_CreateScheduleScenarioWithNodes_FullMethodName               = "/api.v1alpha1.wfm.WFM/CreateScheduleScenarioWithNodes"
-	WFM_UpdateScheduleScenario_FullMethodName                        = "/api.v1alpha1.wfm.WFM/UpdateScheduleScenario"
-	WFM_ListConfigEntities_FullMethodName                            = "/api.v1alpha1.wfm.WFM/ListConfigEntities"
-	WFM_DeleteShiftInstances_FullMethodName                          = "/api.v1alpha1.wfm.WFM/DeleteShiftInstances"
-	WFM_BuildNodeDiagnostics_FullMethodName                          = "/api.v1alpha1.wfm.WFM/BuildNodeDiagnostics"
-	WFM_BuildGlobalDiagnostics_FullMethodName                        = "/api.v1alpha1.wfm.WFM/BuildGlobalDiagnostics"
-	WFM_GetPublishedSchedule_FullMethodName                          = "/api.v1alpha1.wfm.WFM/GetPublishedSchedule"
-	WFM_GetPublishedScheduleRequiredCalls_FullMethodName             = "/api.v1alpha1.wfm.WFM/GetPublishedScheduleRequiredCalls"
-	WFM_GetDraftScheduleRequiredCalls_FullMethodName                 = "/api.v1alpha1.wfm.WFM/GetDraftScheduleRequiredCalls"
-	WFM_CreateDraftSchedule_FullMethodName                           = "/api.v1alpha1.wfm.WFM/CreateDraftSchedule"
-	WFM_UpdateDraftSchedule_FullMethodName                           = "/api.v1alpha1.wfm.WFM/UpdateDraftSchedule"
-	WFM_BuildDraftSchedule_FullMethodName                            = "/api.v1alpha1.wfm.WFM/BuildDraftSchedule"
-	WFM_PublishDraftSchedule_FullMethodName                          = "/api.v1alpha1.wfm.WFM/PublishDraftSchedule"
-	WFM_ResetDraftSchedule_FullMethodName                            = "/api.v1alpha1.wfm.WFM/ResetDraftSchedule"
-	WFM_GetDraftSchedule_FullMethodName                              = "/api.v1alpha1.wfm.WFM/GetDraftSchedule"
-	WFM_ListDraftSchedules_FullMethodName                            = "/api.v1alpha1.wfm.WFM/ListDraftSchedules"
-	WFM_ClearSchedule_FullMethodName                                 = "/api.v1alpha1.wfm.WFM/ClearSchedule"
-	WFM_DeleteDraftSchedule_FullMethodName                           = "/api.v1alpha1.wfm.WFM/DeleteDraftSchedule"
-	WFM_ListShiftInstancesBySid_FullMethodName                       = "/api.v1alpha1.wfm.WFM/ListShiftInstancesBySid"
-	WFM_CopyScheduleToSchedule_FullMethodName                        = "/api.v1alpha1.wfm.WFM/CopyScheduleToSchedule"
-	WFM_CreateShiftInstance_FullMethodName                           = "/api.v1alpha1.wfm.WFM/CreateShiftInstance"
-	WFM_CreateShiftInstanceV2_FullMethodName                         = "/api.v1alpha1.wfm.WFM/CreateShiftInstanceV2"
-	WFM_CreateShiftInstanceWithSegments_FullMethodName               = "/api.v1alpha1.wfm.WFM/CreateShiftInstanceWithSegments"
-	WFM_SplitShiftInstance_FullMethodName                            = "/api.v1alpha1.wfm.WFM/SplitShiftInstance"
-	WFM_SwapShiftInstances_FullMethodName                            = "/api.v1alpha1.wfm.WFM/SwapShiftInstances"
-	WFM_UpdateShiftInstance_FullMethodName                           = "/api.v1alpha1.wfm.WFM/UpdateShiftInstance"
-	WFM_UpdateShiftInstanceV2_FullMethodName                         = "/api.v1alpha1.wfm.WFM/UpdateShiftInstanceV2"
-	WFM_UpdateShiftInstanceWithSegments_FullMethodName               = "/api.v1alpha1.wfm.WFM/UpdateShiftInstanceWithSegments"
-	WFM_CopyShiftInstancesToSchedule_FullMethodName                  = "/api.v1alpha1.wfm.WFM/CopyShiftInstancesToSchedule"
-	WFM_ListShiftInstanceSidsForAgent_FullMethodName                 = "/api.v1alpha1.wfm.WFM/ListShiftInstanceSidsForAgent"
-	WFM_ListShiftInstanceSidsForSchedule_FullMethodName              = "/api.v1alpha1.wfm.WFM/ListShiftInstanceSidsForSchedule"
-	WFM_ListShiftSegmentsByShiftInstanceSids_FullMethodName          = "/api.v1alpha1.wfm.WFM/ListShiftSegmentsByShiftInstanceSids"
-	WFM_SetSchedulingTarget_FullMethodName                           = "/api.v1alpha1.wfm.WFM/SetSchedulingTarget"
-	WFM_GetSchedulingTarget_FullMethodName                           = "/api.v1alpha1.wfm.WFM/GetSchedulingTarget"
-	WFM_DeleteSchedulingTarget_FullMethodName                        = "/api.v1alpha1.wfm.WFM/DeleteSchedulingTarget"
-	WFM_GetDefaultSchedulingTarget_FullMethodName                    = "/api.v1alpha1.wfm.WFM/GetDefaultSchedulingTarget"
-	WFM_SetDefaultSchedulingTarget_FullMethodName                    = "/api.v1alpha1.wfm.WFM/SetDefaultSchedulingTarget"
-	WFM_GetPerformanceMetrics_FullMethodName                         = "/api.v1alpha1.wfm.WFM/GetPerformanceMetrics"
-	WFM_ListRequiredCallsIntervals_FullMethodName                    = "/api.v1alpha1.wfm.WFM/ListRequiredCallsIntervals"
-	WFM_CreateTourPattern_FullMethodName                             = "/api.v1alpha1.wfm.WFM/CreateTourPattern"
-	WFM_GetTourPatternDiagnostics_FullMethodName                     = "/api.v1alpha1.wfm.WFM/GetTourPatternDiagnostics"
-	WFM_UpsertTourPatternWithMembers_FullMethodName                  = "/api.v1alpha1.wfm.WFM/UpsertTourPatternWithMembers"
-	WFM_GetTourPattern_FullMethodName                                = "/api.v1alpha1.wfm.WFM/GetTourPattern"
-	WFM_GetTourPatternWithMembers_FullMethodName                     = "/api.v1alpha1.wfm.WFM/GetTourPatternWithMembers"
-	WFM_DeleteTourPattern_FullMethodName                             = "/api.v1alpha1.wfm.WFM/DeleteTourPattern"
-	WFM_CreateTourWeekPattern_FullMethodName                         = "/api.v1alpha1.wfm.WFM/CreateTourWeekPattern"
-	WFM_ListTourWeekPatterns_FullMethodName                          = "/api.v1alpha1.wfm.WFM/ListTourWeekPatterns"
-	WFM_DeleteTourWeekPatterns_FullMethodName                        = "/api.v1alpha1.wfm.WFM/DeleteTourWeekPatterns"
-	WFM_CreateTourShiftInstanceConfig_FullMethodName                 = "/api.v1alpha1.wfm.WFM/CreateTourShiftInstanceConfig"
-	WFM_UpdateTourShiftInstanceConfig_FullMethodName                 = "/api.v1alpha1.wfm.WFM/UpdateTourShiftInstanceConfig"
-	WFM_ListTourShiftInstanceConfigs_FullMethodName                  = "/api.v1alpha1.wfm.WFM/ListTourShiftInstanceConfigs"
-	WFM_DeleteTourShiftInstanceConfigs_FullMethodName                = "/api.v1alpha1.wfm.WFM/DeleteTourShiftInstanceConfigs"
-	WFM_CreateTourShiftSegmentConfig_FullMethodName                  = "/api.v1alpha1.wfm.WFM/CreateTourShiftSegmentConfig"
-	WFM_UpdateTourShiftSegmentConfig_FullMethodName                  = "/api.v1alpha1.wfm.WFM/UpdateTourShiftSegmentConfig"
-	WFM_ListTourShiftSegmentConfigs_FullMethodName                   = "/api.v1alpha1.wfm.WFM/ListTourShiftSegmentConfigs"
-	WFM_DeleteTourShiftSegmentConfigs_FullMethodName                 = "/api.v1alpha1.wfm.WFM/DeleteTourShiftSegmentConfigs"
-	WFM_CreateTourAgentCollection_FullMethodName                     = "/api.v1alpha1.wfm.WFM/CreateTourAgentCollection"
-	WFM_UpdateTourAgentCollection_FullMethodName                     = "/api.v1alpha1.wfm.WFM/UpdateTourAgentCollection"
-	WFM_ListTourAgentCollections_FullMethodName                      = "/api.v1alpha1.wfm.WFM/ListTourAgentCollections"
-	WFM_DeleteTourAgentCollections_FullMethodName                    = "/api.v1alpha1.wfm.WFM/DeleteTourAgentCollections"
-	WFM_CreateTourAgentCollectionWFMAgents_FullMethodName            = "/api.v1alpha1.wfm.WFM/CreateTourAgentCollectionWFMAgents"
-	WFM_ListTourAgentCollectionWFMAgents_FullMethodName              = "/api.v1alpha1.wfm.WFM/ListTourAgentCollectionWFMAgents"
-	WFM_DeleteTourAgentCollectionWFMAgents_FullMethodName            = "/api.v1alpha1.wfm.WFM/DeleteTourAgentCollectionWFMAgents"
-	WFM_GenerateTourWeekPatterns_FullMethodName                      = "/api.v1alpha1.wfm.WFM/GenerateTourWeekPatterns"
-	WFM_ListValidAgentsForReplacement_FullMethodName                 = "/api.v1alpha1.wfm.WFM/ListValidAgentsForReplacement"
-	WFM_ReplaceAgentOnSchedule_FullMethodName                        = "/api.v1alpha1.wfm.WFM/ReplaceAgentOnSchedule"
-	WFM_ReplaceAgentOnScheduleV1_FullMethodName                      = "/api.v1alpha1.wfm.WFM/ReplaceAgentOnScheduleV1"
-	WFM_RemoveAgentFromSchedule_FullMethodName                       = "/api.v1alpha1.wfm.WFM/RemoveAgentFromSchedule"
-	WFM_CreateAgentLeavePetition_FullMethodName                      = "/api.v1alpha1.wfm.WFM/CreateAgentLeavePetition"
-	WFM_ListAgentLeavePetitions_FullMethodName                       = "/api.v1alpha1.wfm.WFM/ListAgentLeavePetitions"
-	WFM_ArchiveAgentLeavePetition_FullMethodName                     = "/api.v1alpha1.wfm.WFM/ArchiveAgentLeavePetition"
-	WFM_ResolveAgentLeavePetition_FullMethodName                     = "/api.v1alpha1.wfm.WFM/ResolveAgentLeavePetition"
-	WFM_CancelAgentLeavePetition_FullMethodName                      = "/api.v1alpha1.wfm.WFM/CancelAgentLeavePetition"
-	WFM_HelloWorldWFMAdherence_FullMethodName                        = "/api.v1alpha1.wfm.WFM/HelloWorldWFMAdherence"
-	WFM_ListAgentStatesForDay_FullMethodName                         = "/api.v1alpha1.wfm.WFM/ListAgentStatesForDay"
-	WFM_ListRealTimeManagementStates_FullMethodName                  = "/api.v1alpha1.wfm.WFM/ListRealTimeManagementStates"
-	WFM_UpsertRealTimeManagementStateColor_FullMethodName            = "/api.v1alpha1.wfm.WFM/UpsertRealTimeManagementStateColor"
-	WFM_ListRealTimeManagementStateColors_FullMethodName             = "/api.v1alpha1.wfm.WFM/ListRealTimeManagementStateColors"
-	WFM_DeleteRealTimeManagementStateColor_FullMethodName            = "/api.v1alpha1.wfm.WFM/DeleteRealTimeManagementStateColor"
-	WFM_CreateRgbaColor_FullMethodName                               = "/api.v1alpha1.wfm.WFM/CreateRgbaColor"
-	WFM_ListRgbaColors_FullMethodName                                = "/api.v1alpha1.wfm.WFM/ListRgbaColors"
-	WFM_UpdateRgbaColor_FullMethodName                               = "/api.v1alpha1.wfm.WFM/UpdateRgbaColor"
-	WFM_DeleteRgbaColor_FullMethodName                               = "/api.v1alpha1.wfm.WFM/DeleteRgbaColor"
-	WFM_CreateAdherenceRuleNotificationConfig_FullMethodName         = "/api.v1alpha1.wfm.WFM/CreateAdherenceRuleNotificationConfig"
-	WFM_CreateAdherenceRuleNotificationConfigEntry_FullMethodName    = "/api.v1alpha1.wfm.WFM/CreateAdherenceRuleNotificationConfigEntry"
-	WFM_DeleteAdherenceRuleNotificationConfigEntry_FullMethodName    = "/api.v1alpha1.wfm.WFM/DeleteAdherenceRuleNotificationConfigEntry"
-	WFM_ListAdherenceRuleNotificationConfigs_FullMethodName          = "/api.v1alpha1.wfm.WFM/ListAdherenceRuleNotificationConfigs"
-	WFM_CreateAdherenceDepartmentalRule_FullMethodName               = "/api.v1alpha1.wfm.WFM/CreateAdherenceDepartmentalRule"
-	WFM_CreateAdherenceDepartmentalRuleClause_FullMethodName         = "/api.v1alpha1.wfm.WFM/CreateAdherenceDepartmentalRuleClause"
-	WFM_DeleteAdherenceDepartmentalRuleClause_FullMethodName         = "/api.v1alpha1.wfm.WFM/DeleteAdherenceDepartmentalRuleClause"
-	WFM_ListAdherenceDepartmentalRules_FullMethodName                = "/api.v1alpha1.wfm.WFM/ListAdherenceDepartmentalRules"
-	WFM_CreateAdherenceAgentRule_FullMethodName                      = "/api.v1alpha1.wfm.WFM/CreateAdherenceAgentRule"
-	WFM_CreateAdherenceAgentRuleClause_FullMethodName                = "/api.v1alpha1.wfm.WFM/CreateAdherenceAgentRuleClause"
-	WFM_ListAdherenceAgentRules_FullMethodName                       = "/api.v1alpha1.wfm.WFM/ListAdherenceAgentRules"
-	WFM_DeleteAdherenceAgentRuleClause_FullMethodName                = "/api.v1alpha1.wfm.WFM/DeleteAdherenceAgentRuleClause"
+	WFM_PerformInitialClientSetup_FullMethodName                        = "/api.v1alpha1.wfm.WFM/PerformInitialClientSetup"
+	WFM_CreateInitialDemoActivities_FullMethodName                      = "/api.v1alpha1.wfm.WFM/CreateInitialDemoActivities"
+	WFM_ListSkillProfiles_FullMethodName                                = "/api.v1alpha1.wfm.WFM/ListSkillProfiles"
+	WFM_UpdateSkillProfile_FullMethodName                               = "/api.v1alpha1.wfm.WFM/UpdateSkillProfile"
+	WFM_UpdateSkillProfileProficiencies_FullMethodName                  = "/api.v1alpha1.wfm.WFM/UpdateSkillProfileProficiencies"
+	WFM_GetSkillProfile_FullMethodName                                  = "/api.v1alpha1.wfm.WFM/GetSkillProfile"
+	WFM_ResyncSkillProfiles_FullMethodName                              = "/api.v1alpha1.wfm.WFM/ResyncSkillProfiles"
+	WFM_GetLastSkillProfileResyncDate_FullMethodName                    = "/api.v1alpha1.wfm.WFM/GetLastSkillProfileResyncDate"
+	WFM_UpsertForecastingParameters_FullMethodName                      = "/api.v1alpha1.wfm.WFM/UpsertForecastingParameters"
+	WFM_GetForecastingParameters_FullMethodName                         = "/api.v1alpha1.wfm.WFM/GetForecastingParameters"
+	WFM_GetClientHistoryCacheInfo_FullMethodName                        = "/api.v1alpha1.wfm.WFM/GetClientHistoryCacheInfo"
+	WFM_ListHistoricalData_FullMethodName                               = "/api.v1alpha1.wfm.WFM/ListHistoricalData"
+	WFM_UpsertHistoricalDataDelta_FullMethodName                        = "/api.v1alpha1.wfm.WFM/UpsertHistoricalDataDelta"
+	WFM_UpsertHistoricalDataDeltas_FullMethodName                       = "/api.v1alpha1.wfm.WFM/UpsertHistoricalDataDeltas"
+	WFM_ListSkills_FullMethodName                                       = "/api.v1alpha1.wfm.WFM/ListSkills"
+	WFM_BuildCallProfileTemplateForSkillProfile_FullMethodName          = "/api.v1alpha1.wfm.WFM/BuildCallProfileTemplateForSkillProfile"
+	WFM_BuildCallProfileTemplate_FullMethodName                         = "/api.v1alpha1.wfm.WFM/BuildCallProfileTemplate"
+	WFM_CreateInactiveSkillProfileMapping_FullMethodName                = "/api.v1alpha1.wfm.WFM/CreateInactiveSkillProfileMapping"
+	WFM_GetAvailableRegressionForecasterModelTypes_FullMethodName       = "/api.v1alpha1.wfm.WFM/GetAvailableRegressionForecasterModelTypes"
+	WFM_DisconnectInactiveSkillProfileMapping_FullMethodName            = "/api.v1alpha1.wfm.WFM/DisconnectInactiveSkillProfileMapping"
+	WFM_CreateSkillProfileGroup_FullMethodName                          = "/api.v1alpha1.wfm.WFM/CreateSkillProfileGroup"
+	WFM_UpdateSkillProfileGroup_FullMethodName                          = "/api.v1alpha1.wfm.WFM/UpdateSkillProfileGroup"
+	WFM_ListSkillProfileGroups_FullMethodName                           = "/api.v1alpha1.wfm.WFM/ListSkillProfileGroups"
+	WFM_UpdateSkillProfileGroupAssociations_FullMethodName              = "/api.v1alpha1.wfm.WFM/UpdateSkillProfileGroupAssociations"
+	WFM_DeleteHistoricalDataDeltas_FullMethodName                       = "/api.v1alpha1.wfm.WFM/DeleteHistoricalDataDeltas"
+	WFM_ListTopSkillProfiles_FullMethodName                             = "/api.v1alpha1.wfm.WFM/ListTopSkillProfiles"
+	WFM_GetSkillProfilesCount_FullMethodName                            = "/api.v1alpha1.wfm.WFM/GetSkillProfilesCount"
+	WFM_BuildProfileForecastByInterval_FullMethodName                   = "/api.v1alpha1.wfm.WFM/BuildProfileForecastByInterval"
+	WFM_BuildProfileForecastByIntervalWithStats_FullMethodName          = "/api.v1alpha1.wfm.WFM/BuildProfileForecastByIntervalWithStats"
+	WFM_UpsertProfileForecast_FullMethodName                            = "/api.v1alpha1.wfm.WFM/UpsertProfileForecast"
+	WFM_CreateCallProfileTemplate_FullMethodName                        = "/api.v1alpha1.wfm.WFM/CreateCallProfileTemplate"
+	WFM_DeleteCallProfileTemplate_FullMethodName                        = "/api.v1alpha1.wfm.WFM/DeleteCallProfileTemplate"
+	WFM_CreateRegressionTemplate_FullMethodName                         = "/api.v1alpha1.wfm.WFM/CreateRegressionTemplate"
+	WFM_DeleteRegressionTemplate_FullMethodName                         = "/api.v1alpha1.wfm.WFM/DeleteRegressionTemplate"
+	WFM_ListRegressionTemplates_FullMethodName                          = "/api.v1alpha1.wfm.WFM/ListRegressionTemplates"
+	WFM_ListForecastIntervalsForSkillProfile_FullMethodName             = "/api.v1alpha1.wfm.WFM/ListForecastIntervalsForSkillProfile"
+	WFM_ListForecastIntervals_FullMethodName                            = "/api.v1alpha1.wfm.WFM/ListForecastIntervals"
+	WFM_BuildRegressionForecastByInterval_FullMethodName                = "/api.v1alpha1.wfm.WFM/BuildRegressionForecastByInterval"
+	WFM_BuildRegressionForecastByIntervalWithStats_FullMethodName       = "/api.v1alpha1.wfm.WFM/BuildRegressionForecastByIntervalWithStats"
+	WFM_ListCallProfileTemplates_FullMethodName                         = "/api.v1alpha1.wfm.WFM/ListCallProfileTemplates"
+	WFM_UpsertRegressionForecast_FullMethodName                         = "/api.v1alpha1.wfm.WFM/UpsertRegressionForecast"
+	WFM_UpsertForecastDataDelta_FullMethodName                          = "/api.v1alpha1.wfm.WFM/UpsertForecastDataDelta"
+	WFM_UpsertForecastDataDeltas_FullMethodName                         = "/api.v1alpha1.wfm.WFM/UpsertForecastDataDeltas"
+	WFM_DeleteForecastIntervals_FullMethodName                          = "/api.v1alpha1.wfm.WFM/DeleteForecastIntervals"
+	WFM_ListHistoricalDataForAllSkillProfiles_FullMethodName            = "/api.v1alpha1.wfm.WFM/ListHistoricalDataForAllSkillProfiles"
+	WFM_BuildDOWAndMOYProfiles_FullMethodName                           = "/api.v1alpha1.wfm.WFM/BuildDOWAndMOYProfiles"
+	WFM_CalculateTrainingDataAveragesForSkillProfile_FullMethodName     = "/api.v1alpha1.wfm.WFM/CalculateTrainingDataAveragesForSkillProfile"
+	WFM_UpdateSkillProfileAveragesUsingHistoricalData_FullMethodName    = "/api.v1alpha1.wfm.WFM/UpdateSkillProfileAveragesUsingHistoricalData"
+	WFM_UpdateCallCenterNode_FullMethodName                             = "/api.v1alpha1.wfm.WFM/UpdateCallCenterNode"
+	WFM_CreateClientNode_FullMethodName                                 = "/api.v1alpha1.wfm.WFM/CreateClientNode"
+	WFM_UpdateClientNode_FullMethodName                                 = "/api.v1alpha1.wfm.WFM/UpdateClientNode"
+	WFM_CreateLocationNode_FullMethodName                               = "/api.v1alpha1.wfm.WFM/CreateLocationNode"
+	WFM_UpdateLocationNode_FullMethodName                               = "/api.v1alpha1.wfm.WFM/UpdateLocationNode"
+	WFM_CreateProgramNode_FullMethodName                                = "/api.v1alpha1.wfm.WFM/CreateProgramNode"
+	WFM_UpdateProgramNode_FullMethodName                                = "/api.v1alpha1.wfm.WFM/UpdateProgramNode"
+	WFM_ListProgramNodesBySid_FullMethodName                            = "/api.v1alpha1.wfm.WFM/ListProgramNodesBySid"
+	WFM_CreateConstraintRule_FullMethodName                             = "/api.v1alpha1.wfm.WFM/CreateConstraintRule"
+	WFM_UpdateConstraintRule_FullMethodName                             = "/api.v1alpha1.wfm.WFM/UpdateConstraintRule"
+	WFM_DeleteConstraintRule_FullMethodName                             = "/api.v1alpha1.wfm.WFM/DeleteConstraintRule"
+	WFM_CreateNonSkillActivity_FullMethodName                           = "/api.v1alpha1.wfm.WFM/CreateNonSkillActivity"
+	WFM_UpdateNonSkillActivity_FullMethodName                           = "/api.v1alpha1.wfm.WFM/UpdateNonSkillActivity"
+	WFM_ListNonSkillActivities_FullMethodName                           = "/api.v1alpha1.wfm.WFM/ListNonSkillActivities"
+	WFM_ListNonSkillActivityAssociations_FullMethodName                 = "/api.v1alpha1.wfm.WFM/ListNonSkillActivityAssociations"
+	WFM_ListCandidateSchedulingActivities_FullMethodName                = "/api.v1alpha1.wfm.WFM/ListCandidateSchedulingActivities"
+	WFM_GetOnCallSchedulingActivity_FullMethodName                      = "/api.v1alpha1.wfm.WFM/GetOnCallSchedulingActivity"
+	WFM_ListPatternsForSchedulingActivityClassifications_FullMethodName = "/api.v1alpha1.wfm.WFM/ListPatternsForSchedulingActivityClassifications"
+	WFM_GetTimeOffSchedulingActivity_FullMethodName                     = "/api.v1alpha1.wfm.WFM/GetTimeOffSchedulingActivity"
+	WFM_CreateAgentGroup_FullMethodName                                 = "/api.v1alpha1.wfm.WFM/CreateAgentGroup"
+	WFM_ListAgentScheduleGroups_FullMethodName                          = "/api.v1alpha1.wfm.WFM/ListAgentScheduleGroups"
+	WFM_UpdateAgentGroup_FullMethodName                                 = "/api.v1alpha1.wfm.WFM/UpdateAgentGroup"
+	WFM_CreateUnassignedWFMAgent_FullMethodName                         = "/api.v1alpha1.wfm.WFM/CreateUnassignedWFMAgent"
+	WFM_UpdateWFMAgent_FullMethodName                                   = "/api.v1alpha1.wfm.WFM/UpdateWFMAgent"
+	WFM_ListAllWFMAgents_FullMethodName                                 = "/api.v1alpha1.wfm.WFM/ListAllWFMAgents"
+	WFM_ListCandidateWFMAgents_FullMethodName                           = "/api.v1alpha1.wfm.WFM/ListCandidateWFMAgents"
+	WFM_ListUngroupedWFMAgents_FullMethodName                           = "/api.v1alpha1.wfm.WFM/ListUngroupedWFMAgents"
+	WFM_ListWFMAgentSids_FullMethodName                                 = "/api.v1alpha1.wfm.WFM/ListWFMAgentSids"
+	WFM_ListUnassignedWFMAgents_FullMethodName                          = "/api.v1alpha1.wfm.WFM/ListUnassignedWFMAgents"
+	WFM_ListWFMAgentsAssociatedWithAgentGroup_FullMethodName            = "/api.v1alpha1.wfm.WFM/ListWFMAgentsAssociatedWithAgentGroup"
+	WFM_CreateWFMAgentMemberships_FullMethodName                        = "/api.v1alpha1.wfm.WFM/CreateWFMAgentMemberships"
+	WFM_CopyWFMAgentMemberships_FullMethodName                          = "/api.v1alpha1.wfm.WFM/CopyWFMAgentMemberships"
+	WFM_DeleteWFMAgentMemberships_FullMethodName                        = "/api.v1alpha1.wfm.WFM/DeleteWFMAgentMemberships"
+	WFM_DeleteWFMAgentsMemberships_FullMethodName                       = "/api.v1alpha1.wfm.WFM/DeleteWFMAgentsMemberships"
+	WFM_RemoveAgentFromFutureShifts_FullMethodName                      = "/api.v1alpha1.wfm.WFM/RemoveAgentFromFutureShifts"
+	WFM_BuildAgentDiagnostics_FullMethodName                            = "/api.v1alpha1.wfm.WFM/BuildAgentDiagnostics"
+	WFM_CreateShiftTemplate_FullMethodName                              = "/api.v1alpha1.wfm.WFM/CreateShiftTemplate"
+	WFM_UpdateShiftTemplate_FullMethodName                              = "/api.v1alpha1.wfm.WFM/UpdateShiftTemplate"
+	WFM_ListShiftTemplatesBySids_FullMethodName                         = "/api.v1alpha1.wfm.WFM/ListShiftTemplatesBySids"
+	WFM_BuildShiftTemplateDiagnostics_FullMethodName                    = "/api.v1alpha1.wfm.WFM/BuildShiftTemplateDiagnostics"
+	WFM_CreatePlacementRule_FullMethodName                              = "/api.v1alpha1.wfm.WFM/CreatePlacementRule"
+	WFM_UpdatePlacementRule_FullMethodName                              = "/api.v1alpha1.wfm.WFM/UpdatePlacementRule"
+	WFM_DeletePlacementRule_FullMethodName                              = "/api.v1alpha1.wfm.WFM/DeletePlacementRule"
+	WFM_CreateOpenTimesPattern_FullMethodName                           = "/api.v1alpha1.wfm.WFM/CreateOpenTimesPattern"
+	WFM_UpdateOpenTimesPattern_FullMethodName                           = "/api.v1alpha1.wfm.WFM/UpdateOpenTimesPattern"
+	WFM_DeleteOpenTimesPattern_FullMethodName                           = "/api.v1alpha1.wfm.WFM/DeleteOpenTimesPattern"
+	WFM_GetOpenTimesBitmaps_FullMethodName                              = "/api.v1alpha1.wfm.WFM/GetOpenTimesBitmaps"
+	WFM_ListOpenDateRangesForNodeOpenTimesBitmaps_FullMethodName        = "/api.v1alpha1.wfm.WFM/ListOpenDateRangesForNodeOpenTimesBitmaps"
+	WFM_CreateAgentAvailabilityPattern_FullMethodName                   = "/api.v1alpha1.wfm.WFM/CreateAgentAvailabilityPattern"
+	WFM_UpdateAgentAvailabilityPattern_FullMethodName                   = "/api.v1alpha1.wfm.WFM/UpdateAgentAvailabilityPattern"
+	WFM_DeleteAgentAvailabilityPattern_FullMethodName                   = "/api.v1alpha1.wfm.WFM/DeleteAgentAvailabilityPattern"
+	WFM_GetAvailabilityBitmaps_FullMethodName                           = "/api.v1alpha1.wfm.WFM/GetAvailabilityBitmaps"
+	WFM_UpsertNonSkillActivityAssociation_FullMethodName                = "/api.v1alpha1.wfm.WFM/UpsertNonSkillActivityAssociation"
+	WFM_CreateSkillProficiencies_FullMethodName                         = "/api.v1alpha1.wfm.WFM/CreateSkillProficiencies"
+	WFM_UpdateSkillProficiencies_FullMethodName                         = "/api.v1alpha1.wfm.WFM/UpdateSkillProficiencies"
+	WFM_DeleteSkillProficiency_FullMethodName                           = "/api.v1alpha1.wfm.WFM/DeleteSkillProficiency"
+	WFM_CopyScenario_FullMethodName                                     = "/api.v1alpha1.wfm.WFM/CopyScenario"
+	WFM_CreateScheduleScenarioWithNodes_FullMethodName                  = "/api.v1alpha1.wfm.WFM/CreateScheduleScenarioWithNodes"
+	WFM_UpdateScheduleScenario_FullMethodName                           = "/api.v1alpha1.wfm.WFM/UpdateScheduleScenario"
+	WFM_ListConfigEntities_FullMethodName                               = "/api.v1alpha1.wfm.WFM/ListConfigEntities"
+	WFM_DeleteShiftInstances_FullMethodName                             = "/api.v1alpha1.wfm.WFM/DeleteShiftInstances"
+	WFM_BuildNodeDiagnostics_FullMethodName                             = "/api.v1alpha1.wfm.WFM/BuildNodeDiagnostics"
+	WFM_BuildGlobalDiagnostics_FullMethodName                           = "/api.v1alpha1.wfm.WFM/BuildGlobalDiagnostics"
+	WFM_GetPublishedSchedule_FullMethodName                             = "/api.v1alpha1.wfm.WFM/GetPublishedSchedule"
+	WFM_GetPublishedScheduleRequiredCalls_FullMethodName                = "/api.v1alpha1.wfm.WFM/GetPublishedScheduleRequiredCalls"
+	WFM_GetDraftScheduleRequiredCalls_FullMethodName                    = "/api.v1alpha1.wfm.WFM/GetDraftScheduleRequiredCalls"
+	WFM_CreateDraftSchedule_FullMethodName                              = "/api.v1alpha1.wfm.WFM/CreateDraftSchedule"
+	WFM_UpdateDraftSchedule_FullMethodName                              = "/api.v1alpha1.wfm.WFM/UpdateDraftSchedule"
+	WFM_BuildDraftSchedule_FullMethodName                               = "/api.v1alpha1.wfm.WFM/BuildDraftSchedule"
+	WFM_PublishDraftSchedule_FullMethodName                             = "/api.v1alpha1.wfm.WFM/PublishDraftSchedule"
+	WFM_ResetDraftSchedule_FullMethodName                               = "/api.v1alpha1.wfm.WFM/ResetDraftSchedule"
+	WFM_GetDraftSchedule_FullMethodName                                 = "/api.v1alpha1.wfm.WFM/GetDraftSchedule"
+	WFM_ListDraftSchedules_FullMethodName                               = "/api.v1alpha1.wfm.WFM/ListDraftSchedules"
+	WFM_ClearSchedule_FullMethodName                                    = "/api.v1alpha1.wfm.WFM/ClearSchedule"
+	WFM_DeleteDraftSchedule_FullMethodName                              = "/api.v1alpha1.wfm.WFM/DeleteDraftSchedule"
+	WFM_ListShiftInstancesBySid_FullMethodName                          = "/api.v1alpha1.wfm.WFM/ListShiftInstancesBySid"
+	WFM_CopyScheduleToSchedule_FullMethodName                           = "/api.v1alpha1.wfm.WFM/CopyScheduleToSchedule"
+	WFM_CreateShiftInstance_FullMethodName                              = "/api.v1alpha1.wfm.WFM/CreateShiftInstance"
+	WFM_CreateShiftInstanceV2_FullMethodName                            = "/api.v1alpha1.wfm.WFM/CreateShiftInstanceV2"
+	WFM_CreateShiftInstanceWithSegments_FullMethodName                  = "/api.v1alpha1.wfm.WFM/CreateShiftInstanceWithSegments"
+	WFM_SplitShiftInstance_FullMethodName                               = "/api.v1alpha1.wfm.WFM/SplitShiftInstance"
+	WFM_SwapShiftInstances_FullMethodName                               = "/api.v1alpha1.wfm.WFM/SwapShiftInstances"
+	WFM_UpdateShiftInstance_FullMethodName                              = "/api.v1alpha1.wfm.WFM/UpdateShiftInstance"
+	WFM_UpdateShiftInstanceV2_FullMethodName                            = "/api.v1alpha1.wfm.WFM/UpdateShiftInstanceV2"
+	WFM_UpdateShiftInstanceWithSegments_FullMethodName                  = "/api.v1alpha1.wfm.WFM/UpdateShiftInstanceWithSegments"
+	WFM_CopyShiftInstancesToSchedule_FullMethodName                     = "/api.v1alpha1.wfm.WFM/CopyShiftInstancesToSchedule"
+	WFM_ListShiftInstanceSidsForAgent_FullMethodName                    = "/api.v1alpha1.wfm.WFM/ListShiftInstanceSidsForAgent"
+	WFM_ListShiftInstanceSidsForSchedule_FullMethodName                 = "/api.v1alpha1.wfm.WFM/ListShiftInstanceSidsForSchedule"
+	WFM_ListShiftSegmentsByShiftInstanceSids_FullMethodName             = "/api.v1alpha1.wfm.WFM/ListShiftSegmentsByShiftInstanceSids"
+	WFM_SetSchedulingTarget_FullMethodName                              = "/api.v1alpha1.wfm.WFM/SetSchedulingTarget"
+	WFM_GetSchedulingTarget_FullMethodName                              = "/api.v1alpha1.wfm.WFM/GetSchedulingTarget"
+	WFM_DeleteSchedulingTarget_FullMethodName                           = "/api.v1alpha1.wfm.WFM/DeleteSchedulingTarget"
+	WFM_GetDefaultSchedulingTarget_FullMethodName                       = "/api.v1alpha1.wfm.WFM/GetDefaultSchedulingTarget"
+	WFM_SetDefaultSchedulingTarget_FullMethodName                       = "/api.v1alpha1.wfm.WFM/SetDefaultSchedulingTarget"
+	WFM_GetPerformanceMetrics_FullMethodName                            = "/api.v1alpha1.wfm.WFM/GetPerformanceMetrics"
+	WFM_ListRequiredCallsIntervals_FullMethodName                       = "/api.v1alpha1.wfm.WFM/ListRequiredCallsIntervals"
+	WFM_CreateTourPattern_FullMethodName                                = "/api.v1alpha1.wfm.WFM/CreateTourPattern"
+	WFM_GetTourPatternDiagnostics_FullMethodName                        = "/api.v1alpha1.wfm.WFM/GetTourPatternDiagnostics"
+	WFM_UpsertTourPatternWithMembers_FullMethodName                     = "/api.v1alpha1.wfm.WFM/UpsertTourPatternWithMembers"
+	WFM_GetTourPattern_FullMethodName                                   = "/api.v1alpha1.wfm.WFM/GetTourPattern"
+	WFM_GetTourPatternWithMembers_FullMethodName                        = "/api.v1alpha1.wfm.WFM/GetTourPatternWithMembers"
+	WFM_DeleteTourPattern_FullMethodName                                = "/api.v1alpha1.wfm.WFM/DeleteTourPattern"
+	WFM_CreateTourWeekPattern_FullMethodName                            = "/api.v1alpha1.wfm.WFM/CreateTourWeekPattern"
+	WFM_ListTourWeekPatterns_FullMethodName                             = "/api.v1alpha1.wfm.WFM/ListTourWeekPatterns"
+	WFM_DeleteTourWeekPatterns_FullMethodName                           = "/api.v1alpha1.wfm.WFM/DeleteTourWeekPatterns"
+	WFM_CreateTourShiftInstanceConfig_FullMethodName                    = "/api.v1alpha1.wfm.WFM/CreateTourShiftInstanceConfig"
+	WFM_UpdateTourShiftInstanceConfig_FullMethodName                    = "/api.v1alpha1.wfm.WFM/UpdateTourShiftInstanceConfig"
+	WFM_ListTourShiftInstanceConfigs_FullMethodName                     = "/api.v1alpha1.wfm.WFM/ListTourShiftInstanceConfigs"
+	WFM_DeleteTourShiftInstanceConfigs_FullMethodName                   = "/api.v1alpha1.wfm.WFM/DeleteTourShiftInstanceConfigs"
+	WFM_CreateTourShiftSegmentConfig_FullMethodName                     = "/api.v1alpha1.wfm.WFM/CreateTourShiftSegmentConfig"
+	WFM_UpdateTourShiftSegmentConfig_FullMethodName                     = "/api.v1alpha1.wfm.WFM/UpdateTourShiftSegmentConfig"
+	WFM_ListTourShiftSegmentConfigs_FullMethodName                      = "/api.v1alpha1.wfm.WFM/ListTourShiftSegmentConfigs"
+	WFM_DeleteTourShiftSegmentConfigs_FullMethodName                    = "/api.v1alpha1.wfm.WFM/DeleteTourShiftSegmentConfigs"
+	WFM_CreateTourAgentCollection_FullMethodName                        = "/api.v1alpha1.wfm.WFM/CreateTourAgentCollection"
+	WFM_UpdateTourAgentCollection_FullMethodName                        = "/api.v1alpha1.wfm.WFM/UpdateTourAgentCollection"
+	WFM_ListTourAgentCollections_FullMethodName                         = "/api.v1alpha1.wfm.WFM/ListTourAgentCollections"
+	WFM_DeleteTourAgentCollections_FullMethodName                       = "/api.v1alpha1.wfm.WFM/DeleteTourAgentCollections"
+	WFM_CreateTourAgentCollectionWFMAgents_FullMethodName               = "/api.v1alpha1.wfm.WFM/CreateTourAgentCollectionWFMAgents"
+	WFM_ListTourAgentCollectionWFMAgents_FullMethodName                 = "/api.v1alpha1.wfm.WFM/ListTourAgentCollectionWFMAgents"
+	WFM_DeleteTourAgentCollectionWFMAgents_FullMethodName               = "/api.v1alpha1.wfm.WFM/DeleteTourAgentCollectionWFMAgents"
+	WFM_GenerateTourWeekPatterns_FullMethodName                         = "/api.v1alpha1.wfm.WFM/GenerateTourWeekPatterns"
+	WFM_ListValidAgentsForReplacement_FullMethodName                    = "/api.v1alpha1.wfm.WFM/ListValidAgentsForReplacement"
+	WFM_ReplaceAgentOnSchedule_FullMethodName                           = "/api.v1alpha1.wfm.WFM/ReplaceAgentOnSchedule"
+	WFM_ReplaceAgentOnScheduleV1_FullMethodName                         = "/api.v1alpha1.wfm.WFM/ReplaceAgentOnScheduleV1"
+	WFM_RemoveAgentFromSchedule_FullMethodName                          = "/api.v1alpha1.wfm.WFM/RemoveAgentFromSchedule"
+	WFM_CreateAgentLeavePetition_FullMethodName                         = "/api.v1alpha1.wfm.WFM/CreateAgentLeavePetition"
+	WFM_ListAgentLeavePetitions_FullMethodName                          = "/api.v1alpha1.wfm.WFM/ListAgentLeavePetitions"
+	WFM_ArchiveAgentLeavePetition_FullMethodName                        = "/api.v1alpha1.wfm.WFM/ArchiveAgentLeavePetition"
+	WFM_ResolveAgentLeavePetition_FullMethodName                        = "/api.v1alpha1.wfm.WFM/ResolveAgentLeavePetition"
+	WFM_CancelAgentLeavePetition_FullMethodName                         = "/api.v1alpha1.wfm.WFM/CancelAgentLeavePetition"
+	WFM_HelloWorldWFMAdherence_FullMethodName                           = "/api.v1alpha1.wfm.WFM/HelloWorldWFMAdherence"
+	WFM_ListAgentStatesForDay_FullMethodName                            = "/api.v1alpha1.wfm.WFM/ListAgentStatesForDay"
+	WFM_ListRealTimeManagementStates_FullMethodName                     = "/api.v1alpha1.wfm.WFM/ListRealTimeManagementStates"
+	WFM_UpsertRealTimeManagementStateColor_FullMethodName               = "/api.v1alpha1.wfm.WFM/UpsertRealTimeManagementStateColor"
+	WFM_ListRealTimeManagementStateColors_FullMethodName                = "/api.v1alpha1.wfm.WFM/ListRealTimeManagementStateColors"
+	WFM_DeleteRealTimeManagementStateColor_FullMethodName               = "/api.v1alpha1.wfm.WFM/DeleteRealTimeManagementStateColor"
+	WFM_CreateRgbaColor_FullMethodName                                  = "/api.v1alpha1.wfm.WFM/CreateRgbaColor"
+	WFM_ListRgbaColors_FullMethodName                                   = "/api.v1alpha1.wfm.WFM/ListRgbaColors"
+	WFM_UpdateRgbaColor_FullMethodName                                  = "/api.v1alpha1.wfm.WFM/UpdateRgbaColor"
+	WFM_DeleteRgbaColor_FullMethodName                                  = "/api.v1alpha1.wfm.WFM/DeleteRgbaColor"
+	WFM_CreateAdherenceRuleNotificationConfig_FullMethodName            = "/api.v1alpha1.wfm.WFM/CreateAdherenceRuleNotificationConfig"
+	WFM_CreateAdherenceRuleNotificationConfigEntry_FullMethodName       = "/api.v1alpha1.wfm.WFM/CreateAdherenceRuleNotificationConfigEntry"
+	WFM_DeleteAdherenceRuleNotificationConfigEntry_FullMethodName       = "/api.v1alpha1.wfm.WFM/DeleteAdherenceRuleNotificationConfigEntry"
+	WFM_ListAdherenceRuleNotificationConfigs_FullMethodName             = "/api.v1alpha1.wfm.WFM/ListAdherenceRuleNotificationConfigs"
+	WFM_CreateAdherenceDepartmentalRule_FullMethodName                  = "/api.v1alpha1.wfm.WFM/CreateAdherenceDepartmentalRule"
+	WFM_CreateAdherenceDepartmentalRuleClause_FullMethodName            = "/api.v1alpha1.wfm.WFM/CreateAdherenceDepartmentalRuleClause"
+	WFM_DeleteAdherenceDepartmentalRuleClause_FullMethodName            = "/api.v1alpha1.wfm.WFM/DeleteAdherenceDepartmentalRuleClause"
+	WFM_ListAdherenceDepartmentalRules_FullMethodName                   = "/api.v1alpha1.wfm.WFM/ListAdherenceDepartmentalRules"
+	WFM_CreateAdherenceAgentRule_FullMethodName                         = "/api.v1alpha1.wfm.WFM/CreateAdherenceAgentRule"
+	WFM_CreateAdherenceAgentRuleClause_FullMethodName                   = "/api.v1alpha1.wfm.WFM/CreateAdherenceAgentRuleClause"
+	WFM_ListAdherenceAgentRules_FullMethodName                          = "/api.v1alpha1.wfm.WFM/ListAdherenceAgentRules"
+	WFM_DeleteAdherenceAgentRuleClause_FullMethodName                   = "/api.v1alpha1.wfm.WFM/DeleteAdherenceAgentRuleClause"
 )
 
 // WFMClient is the client API for WFM service.
@@ -730,6 +732,25 @@ type WFMClient interface {
 	//	-grpc.NotFound: the on call scheduling activity for the org is not found.
 	//	-grpc.Internal: error occurs when getting on call scheduling activity.
 	GetOnCallSchedulingActivity(ctx context.Context, in *GetOnCallSchedulingActivityReq, opts ...grpc.CallOption) (*GetOnCallSchedulingActivityRes, error)
+	// Lists the Open Time and Agent Availability patterns for the given @parent_entity and @scheduling_activity_classifications, for the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the arguments in the request are invalid.
+	//   - grpc.Internal: error occurs getting the patterns or their scheduling activity sids.
+	ListPatternsForSchedulingActivityClassifications(ctx context.Context, in *ListPatternsForSchedulingActivityClassificationsRequest, opts ...grpc.CallOption) (*ListPatternsForSchedulingActivityClassificationsResponse, error)
+	// Gets the time off scheduling activity for the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//
+	//	-grpc.NotFound: the time off scheduling activity for the org is not found.
+	//	-grpc.Internal: error occurs when getting time off scheduling activity.
+	GetTimeOffSchedulingActivity(ctx context.Context, in *GetTimeOffSchedulingActivityRequest, opts ...grpc.CallOption) (*GetTimeOffSchedulingActivityResponse, error)
 	// Creates an agent group with the provided parameters.
 	// A successful response should contain the @agent_group_sid of the newly created entity.
 	// The @schedule_scenario_sid must match the scenario of the @parent_entity.
@@ -2575,6 +2596,26 @@ func (c *wFMClient) GetOnCallSchedulingActivity(ctx context.Context, in *GetOnCa
 	return out, nil
 }
 
+func (c *wFMClient) ListPatternsForSchedulingActivityClassifications(ctx context.Context, in *ListPatternsForSchedulingActivityClassificationsRequest, opts ...grpc.CallOption) (*ListPatternsForSchedulingActivityClassificationsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListPatternsForSchedulingActivityClassificationsResponse)
+	err := c.cc.Invoke(ctx, WFM_ListPatternsForSchedulingActivityClassifications_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) GetTimeOffSchedulingActivity(ctx context.Context, in *GetTimeOffSchedulingActivityRequest, opts ...grpc.CallOption) (*GetTimeOffSchedulingActivityResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetTimeOffSchedulingActivityResponse)
+	err := c.cc.Invoke(ctx, WFM_GetTimeOffSchedulingActivity_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) CreateAgentGroup(ctx context.Context, in *CreateAgentGroupReq, opts ...grpc.CallOption) (*CreateAgentGroupRes, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(CreateAgentGroupRes)
@@ -4403,6 +4444,25 @@ type WFMServer interface {
 	//	-grpc.NotFound: the on call scheduling activity for the org is not found.
 	//	-grpc.Internal: error occurs when getting on call scheduling activity.
 	GetOnCallSchedulingActivity(context.Context, *GetOnCallSchedulingActivityReq) (*GetOnCallSchedulingActivityRes, error)
+	// Lists the Open Time and Agent Availability patterns for the given @parent_entity and @scheduling_activity_classifications, for the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the arguments in the request are invalid.
+	//   - grpc.Internal: error occurs getting the patterns or their scheduling activity sids.
+	ListPatternsForSchedulingActivityClassifications(context.Context, *ListPatternsForSchedulingActivityClassificationsRequest) (*ListPatternsForSchedulingActivityClassificationsResponse, error)
+	// Gets the time off scheduling activity for the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//
+	//	-grpc.NotFound: the time off scheduling activity for the org is not found.
+	//	-grpc.Internal: error occurs when getting time off scheduling activity.
+	GetTimeOffSchedulingActivity(context.Context, *GetTimeOffSchedulingActivityRequest) (*GetTimeOffSchedulingActivityResponse, error)
 	// Creates an agent group with the provided parameters.
 	// A successful response should contain the @agent_group_sid of the newly created entity.
 	// The @schedule_scenario_sid must match the scenario of the @parent_entity.
@@ -5649,6 +5709,12 @@ func (UnimplementedWFMServer) ListCandidateSchedulingActivities(context.Context,
 }
 func (UnimplementedWFMServer) GetOnCallSchedulingActivity(context.Context, *GetOnCallSchedulingActivityReq) (*GetOnCallSchedulingActivityRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOnCallSchedulingActivity not implemented")
+}
+func (UnimplementedWFMServer) ListPatternsForSchedulingActivityClassifications(context.Context, *ListPatternsForSchedulingActivityClassificationsRequest) (*ListPatternsForSchedulingActivityClassificationsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListPatternsForSchedulingActivityClassifications not implemented")
+}
+func (UnimplementedWFMServer) GetTimeOffSchedulingActivity(context.Context, *GetTimeOffSchedulingActivityRequest) (*GetTimeOffSchedulingActivityResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTimeOffSchedulingActivity not implemented")
 }
 func (UnimplementedWFMServer) CreateAgentGroup(context.Context, *CreateAgentGroupReq) (*CreateAgentGroupRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateAgentGroup not implemented")
@@ -7254,6 +7320,42 @@ func _WFM_GetOnCallSchedulingActivity_Handler(srv interface{}, ctx context.Conte
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WFMServer).GetOnCallSchedulingActivity(ctx, req.(*GetOnCallSchedulingActivityReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_ListPatternsForSchedulingActivityClassifications_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListPatternsForSchedulingActivityClassificationsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).ListPatternsForSchedulingActivityClassifications(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_ListPatternsForSchedulingActivityClassifications_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).ListPatternsForSchedulingActivityClassifications(ctx, req.(*ListPatternsForSchedulingActivityClassificationsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_GetTimeOffSchedulingActivity_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTimeOffSchedulingActivityRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).GetTimeOffSchedulingActivity(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_GetTimeOffSchedulingActivity_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).GetTimeOffSchedulingActivity(ctx, req.(*GetTimeOffSchedulingActivityRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -9894,6 +9996,14 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetOnCallSchedulingActivity",
 			Handler:    _WFM_GetOnCallSchedulingActivity_Handler,
+		},
+		{
+			MethodName: "ListPatternsForSchedulingActivityClassifications",
+			Handler:    _WFM_ListPatternsForSchedulingActivityClassifications_Handler,
+		},
+		{
+			MethodName: "GetTimeOffSchedulingActivity",
+			Handler:    _WFM_GetTimeOffSchedulingActivity_Handler,
 		},
 		{
 			MethodName: "CreateAgentGroup",

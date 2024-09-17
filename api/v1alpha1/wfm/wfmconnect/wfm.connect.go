@@ -230,6 +230,12 @@ const (
 	// WFMGetOnCallSchedulingActivityProcedure is the fully-qualified name of the WFM's
 	// GetOnCallSchedulingActivity RPC.
 	WFMGetOnCallSchedulingActivityProcedure = "/api.v1alpha1.wfm.WFM/GetOnCallSchedulingActivity"
+	// WFMListPatternsForSchedulingActivityClassificationsProcedure is the fully-qualified name of the
+	// WFM's ListPatternsForSchedulingActivityClassifications RPC.
+	WFMListPatternsForSchedulingActivityClassificationsProcedure = "/api.v1alpha1.wfm.WFM/ListPatternsForSchedulingActivityClassifications"
+	// WFMGetTimeOffSchedulingActivityProcedure is the fully-qualified name of the WFM's
+	// GetTimeOffSchedulingActivity RPC.
+	WFMGetTimeOffSchedulingActivityProcedure = "/api.v1alpha1.wfm.WFM/GetTimeOffSchedulingActivity"
 	// WFMCreateAgentGroupProcedure is the fully-qualified name of the WFM's CreateAgentGroup RPC.
 	WFMCreateAgentGroupProcedure = "/api.v1alpha1.wfm.WFM/CreateAgentGroup"
 	// WFMListAgentScheduleGroupsProcedure is the fully-qualified name of the WFM's
@@ -1095,6 +1101,25 @@ type WFMClient interface {
 	//	-grpc.NotFound: the on call scheduling activity for the org is not found.
 	//	-grpc.Internal: error occurs when getting on call scheduling activity.
 	GetOnCallSchedulingActivity(context.Context, *connect_go.Request[wfm.GetOnCallSchedulingActivityReq]) (*connect_go.Response[wfm.GetOnCallSchedulingActivityRes], error)
+	// Lists the Open Time and Agent Availability patterns for the given @parent_entity and @scheduling_activity_classifications, for the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the arguments in the request are invalid.
+	//   - grpc.Internal: error occurs getting the patterns or their scheduling activity sids.
+	ListPatternsForSchedulingActivityClassifications(context.Context, *connect_go.Request[wfm.ListPatternsForSchedulingActivityClassificationsRequest]) (*connect_go.Response[wfm.ListPatternsForSchedulingActivityClassificationsResponse], error)
+	// Gets the time off scheduling activity for the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//
+	//	-grpc.NotFound: the time off scheduling activity for the org is not found.
+	//	-grpc.Internal: error occurs when getting time off scheduling activity.
+	GetTimeOffSchedulingActivity(context.Context, *connect_go.Request[wfm.GetTimeOffSchedulingActivityRequest]) (*connect_go.Response[wfm.GetTimeOffSchedulingActivityResponse], error)
 	// Creates an agent group with the provided parameters.
 	// A successful response should contain the @agent_group_sid of the newly created entity.
 	// The @schedule_scenario_sid must match the scenario of the @parent_entity.
@@ -2475,6 +2500,16 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMGetOnCallSchedulingActivityProcedure,
 			opts...,
 		),
+		listPatternsForSchedulingActivityClassifications: connect_go.NewClient[wfm.ListPatternsForSchedulingActivityClassificationsRequest, wfm.ListPatternsForSchedulingActivityClassificationsResponse](
+			httpClient,
+			baseURL+WFMListPatternsForSchedulingActivityClassificationsProcedure,
+			opts...,
+		),
+		getTimeOffSchedulingActivity: connect_go.NewClient[wfm.GetTimeOffSchedulingActivityRequest, wfm.GetTimeOffSchedulingActivityResponse](
+			httpClient,
+			baseURL+WFMGetTimeOffSchedulingActivityProcedure,
+			opts...,
+		),
 		createAgentGroup: connect_go.NewClient[wfm.CreateAgentGroupReq, wfm.CreateAgentGroupRes](
 			httpClient,
 			baseURL+WFMCreateAgentGroupProcedure,
@@ -3145,204 +3180,206 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 
 // wFMClient implements WFMClient.
 type wFMClient struct {
-	performInitialClientSetup                     *connect_go.Client[wfm.PerformInitialClientSetupRequest, wfm.PerformInitialClientSetupResponse]
-	createInitialDemoActivities                   *connect_go.Client[wfm.CreateInitialDemoActivitiesRequest, wfm.CreateInitialDemoActivitiesResponse]
-	listSkillProfiles                             *connect_go.Client[wfm.ListSkillProfilesReq, wfm.ListSkillProfilesRes]
-	updateSkillProfile                            *connect_go.Client[wfm.UpdateSkillProfileReq, wfm.UpdateSkillProfileRes]
-	updateSkillProfileProficiencies               *connect_go.Client[wfm.UpdateSkillProfileProficienciesReq, wfm.UpdateSkillProfileProficienciesRes]
-	getSkillProfile                               *connect_go.Client[wfm.GetSkillProfileReq, wfm.GetSkillProfileRes]
-	resyncSkillProfiles                           *connect_go.Client[wfm.ResyncSkillProfilesReq, wfm.ResyncSkillProfilesRes]
-	getLastSkillProfileResyncDate                 *connect_go.Client[wfm.GetLastSkillProfileResyncDateReq, wfm.GetLastSkillProfileResyncDateRes]
-	upsertForecastingParameters                   *connect_go.Client[wfm.UpsertForecastingParametersReq, wfm.UpsertForecastingParametersRes]
-	getForecastingParameters                      *connect_go.Client[wfm.GetForecastingParametersReq, wfm.GetForecastingParametersRes]
-	getClientHistoryCacheInfo                     *connect_go.Client[wfm.GetClientHistoryCacheInfoReq, wfm.GetClientHistoryCacheInfoRes]
-	listHistoricalData                            *connect_go.Client[wfm.ListHistoricalDataReq, wfm.ListHistoricalDataRes]
-	upsertHistoricalDataDelta                     *connect_go.Client[wfm.UpsertHistoricalDataDeltaReq, wfm.UpsertHistoricalDataDeltaRes]
-	upsertHistoricalDataDeltas                    *connect_go.Client[wfm.UpsertHistoricalDataDeltasReq, wfm.UpsertHistoricalDataDeltasRes]
-	listSkills                                    *connect_go.Client[wfm.ListSkillsReq, wfm.ListSkillsRes]
-	buildCallProfileTemplateForSkillProfile       *connect_go.Client[wfm.BuildCallProfileTemplateForSkillProfileReq, wfm.BuildCallProfileTemplateForSkillProfileRes]
-	buildCallProfileTemplate                      *connect_go.Client[wfm.BuildCallProfileTemplateReq, wfm.BuildCallProfileTemplateRes]
-	createInactiveSkillProfileMapping             *connect_go.Client[wfm.CreateInactiveSkillProfileMappingReq, wfm.CreateInactiveSkillProfileMappingRes]
-	getAvailableRegressionForecasterModelTypes    *connect_go.Client[wfm.GetAvailableRegressionForecasterModelTypesReq, wfm.GetAvailableRegressionForecasterModelTypesRes]
-	disconnectInactiveSkillProfileMapping         *connect_go.Client[wfm.DisconnectInactiveSkillProfileMappingReq, wfm.DisconnectInactiveSkillProfileMappingRes]
-	createSkillProfileGroup                       *connect_go.Client[wfm.CreateSkillProfileGroupReq, wfm.CreateSkillProfileGroupRes]
-	updateSkillProfileGroup                       *connect_go.Client[wfm.UpdateSkillProfileGroupReq, wfm.UpdateSkillProfileGroupRes]
-	listSkillProfileGroups                        *connect_go.Client[wfm.ListSkillProfileGroupsReq, wfm.ListSkillProfileGroupsRes]
-	updateSkillProfileGroupAssociations           *connect_go.Client[wfm.UpdateSkillProfileGroupAssociationsReq, wfm.UpdateSkillProfileGroupAssociationsRes]
-	deleteHistoricalDataDeltas                    *connect_go.Client[wfm.DeleteHistoricalDataDeltasReq, wfm.DeleteHistoricalDataDeltasRes]
-	listTopSkillProfiles                          *connect_go.Client[wfm.ListTopSkillProfilesReq, wfm.ListTopSkillProfilesRes]
-	getSkillProfilesCount                         *connect_go.Client[wfm.GetSkillProfilesCountReq, wfm.GetSkillProfilesCountRes]
-	buildProfileForecastByInterval                *connect_go.Client[wfm.BuildProfileForecastByIntervalReq, wfm.CallDataByInterval]
-	buildProfileForecastByIntervalWithStats       *connect_go.Client[wfm.BuildProfileForecastByIntervalWithStatsReq, wfm.BuildProfileForecastByIntervalWithStatsRes]
-	upsertProfileForecast                         *connect_go.Client[wfm.UpsertProfileForecastReq, wfm.UpsertProfileForecastRes]
-	createCallProfileTemplate                     *connect_go.Client[wfm.CreateCallProfileTemplateReq, wfm.CreateCallProfileTemplateRes]
-	deleteCallProfileTemplate                     *connect_go.Client[wfm.DeleteCallProfileTemplateReq, wfm.DeleteCallProfileTemplateRes]
-	createRegressionTemplate                      *connect_go.Client[wfm.CreateRegressionTemplateReq, wfm.CreateRegressionTemplateRes]
-	deleteRegressionTemplate                      *connect_go.Client[wfm.DeleteRegressionTemplateReq, wfm.DeleteRegressionTemplateRes]
-	listRegressionTemplates                       *connect_go.Client[wfm.ListRegressionTemplatesReq, wfm.ListRegressionTemplatesRes]
-	listForecastIntervalsForSkillProfile          *connect_go.Client[wfm.ListForecastIntervalsForSkillProfileReq, wfm.CallDataByInterval]
-	listForecastIntervals                         *connect_go.Client[wfm.ListForecastIntervalsReq, wfm.CallDataByInterval]
-	buildRegressionForecastByInterval             *connect_go.Client[wfm.BuildRegressionForecastByIntervalReq, wfm.CallDataByInterval]
-	buildRegressionForecastByIntervalWithStats    *connect_go.Client[wfm.BuildRegressionForecastByIntervalWithStatsReq, wfm.BuildRegressionForecastByIntervalWithStatsRes]
-	listCallProfileTemplates                      *connect_go.Client[wfm.ListCallProfileTemplatesReq, wfm.ListCallProfileTemplatesRes]
-	upsertRegressionForecast                      *connect_go.Client[wfm.UpsertRegressionForecastReq, wfm.UpsertRegressionForecastRes]
-	upsertForecastDataDelta                       *connect_go.Client[wfm.UpsertForecastDataDeltaReq, wfm.UpsertForecastDataDeltaRes]
-	upsertForecastDataDeltas                      *connect_go.Client[wfm.UpsertForecastDataDeltasReq, wfm.UpsertForecastDataDeltasRes]
-	deleteForecastIntervals                       *connect_go.Client[wfm.DeleteForecastIntervalsReq, wfm.DeleteForecastIntervalsRes]
-	listHistoricalDataForAllSkillProfiles         *connect_go.Client[wfm.ListHistoricalDataForAllSkillProfilesReq, wfm.ListHistoricalDataForAllSkillProfilesRes]
-	buildDOWAndMOYProfiles                        *connect_go.Client[wfm.BuildDOWAndMOYProfilesReq, wfm.BuildDOWAndMOYProfilesRes]
-	calculateTrainingDataAveragesForSkillProfile  *connect_go.Client[wfm.CalculateTrainingDataAveragesForSkillProfileReq, wfm.CalculateTrainingDataAveragesForSkillProfileRes]
-	updateSkillProfileAveragesUsingHistoricalData *connect_go.Client[wfm.UpdateSkillProfileAveragesUsingHistoricalDataReq, wfm.UpdateSkillProfileAveragesUsingHistoricalDataRes]
-	updateCallCenterNode                          *connect_go.Client[wfm.UpdateCallCenterNodeReq, wfm.UpdateCallCenterNodeRes]
-	createClientNode                              *connect_go.Client[wfm.CreateClientNodeReq, wfm.CreateClientNodeRes]
-	updateClientNode                              *connect_go.Client[wfm.UpdateClientNodeReq, wfm.UpdateClientNodeRes]
-	createLocationNode                            *connect_go.Client[wfm.CreateLocationNodeReq, wfm.CreateLocationNodeRes]
-	updateLocationNode                            *connect_go.Client[wfm.UpdateLocationNodeReq, wfm.UpdateLocationNodeRes]
-	createProgramNode                             *connect_go.Client[wfm.CreateProgramNodeReq, wfm.CreateProgramNodeRes]
-	updateProgramNode                             *connect_go.Client[wfm.UpdateProgramNodeReq, wfm.UpdateProgramNodeRes]
-	listProgramNodesBySid                         *connect_go.Client[wfm.ListProgramNodesBySidReq, wfm.ListProgramNodesBySidRes]
-	createConstraintRule                          *connect_go.Client[wfm.CreateConstraintRuleReq, wfm.CreateConstraintRuleRes]
-	updateConstraintRule                          *connect_go.Client[wfm.UpdateConstraintRuleReq, wfm.UpdateConstraintRuleRes]
-	deleteConstraintRule                          *connect_go.Client[wfm.DeleteConstraintRuleReq, wfm.DeleteConstraintRuleRes]
-	createNonSkillActivity                        *connect_go.Client[wfm.CreateNonSkillActivityReq, wfm.CreateNonSkillActivityRes]
-	updateNonSkillActivity                        *connect_go.Client[wfm.UpdateNonSkillActivityReq, wfm.UpdateNonSkillActivityRes]
-	listNonSkillActivities                        *connect_go.Client[wfm.ListNonSkillActivitiesReq, wfm.ListNonSkillActivitiesRes]
-	listNonSkillActivityAssociations              *connect_go.Client[wfm.ListNonSkillActivityAssociationsReq, wfm.ListNonSkillActivityAssociationsRes]
-	listCandidateSchedulingActivities             *connect_go.Client[wfm.ListCandidateSchedulingActivitiesReq, wfm.ListCandidateSchedulingActivitiesRes]
-	getOnCallSchedulingActivity                   *connect_go.Client[wfm.GetOnCallSchedulingActivityReq, wfm.GetOnCallSchedulingActivityRes]
-	createAgentGroup                              *connect_go.Client[wfm.CreateAgentGroupReq, wfm.CreateAgentGroupRes]
-	listAgentScheduleGroups                       *connect_go.Client[wfm.ListAgentScheduleGroupsRequest, wfm.ListAgentScheduleGroupsResponse]
-	updateAgentGroup                              *connect_go.Client[wfm.UpdateAgentGroupReq, wfm.UpdateAgentGroupRes]
-	createUnassignedWFMAgent                      *connect_go.Client[wfm.CreateUnassignedWFMAgentRequest, wfm.CreateUnassignedWFMAgentResponse]
-	updateWFMAgent                                *connect_go.Client[wfm.UpdateWFMAgentReq, wfm.UpdateWFMAgentRes]
-	listAllWFMAgents                              *connect_go.Client[wfm.ListAllWFMAgentsReq, wfm.ListAllWFMAgentsRes]
-	listCandidateWFMAgents                        *connect_go.Client[wfm.ListCandidateWFMAgentsReq, wfm.ListCandidateWFMAgentsRes]
-	listUngroupedWFMAgents                        *connect_go.Client[wfm.ListUngroupedWFMAgentsReq, wfm.ListUngroupedWFMAgentsRes]
-	listWFMAgentSids                              *connect_go.Client[wfm.ListWFMAgentSidsReq, wfm.ListWFMAgentSidsRes]
-	listUnassignedWFMAgents                       *connect_go.Client[wfm.ListUnassignedWFMAgentsRequest, wfm.ListUnassignedWFMAgentsResponse]
-	listWFMAgentsAssociatedWithAgentGroup         *connect_go.Client[wfm.ListWFMAgentsAssociatedWithAgentGroupReq, wfm.ListWFMAgentsAssociatedWithAgentGroupRes]
-	createWFMAgentMemberships                     *connect_go.Client[wfm.CreateWFMAgentMembershipsReq, wfm.CreateWFMAgentMembershipsRes]
-	copyWFMAgentMemberships                       *connect_go.Client[wfm.CopyWFMAgentMembershipsRequest, wfm.CopyWFMAgentMembershipsResponse]
-	deleteWFMAgentMemberships                     *connect_go.Client[wfm.DeleteWFMAgentMembershipsReq, wfm.DeleteWFMAgentMembershipsRes]
-	deleteWFMAgentsMemberships                    *connect_go.Client[wfm.DeleteWFMAgentsMembershipsReq, wfm.DeleteWFMAgentsMembershipsRes]
-	removeAgentFromFutureShifts                   *connect_go.Client[wfm.RemoveAgentFromFutureShiftsRequest, wfm.RemoveAgentFromFutureShiftsResponse]
-	buildAgentDiagnostics                         *connect_go.Client[wfm.BuildAgentDiagnosticsReq, wfm.BuildAgentDiagnosticsRes]
-	createShiftTemplate                           *connect_go.Client[wfm.CreateShiftTemplateReq, wfm.CreateShiftTemplateRes]
-	updateShiftTemplate                           *connect_go.Client[wfm.UpdateShiftTemplateReq, wfm.UpdateShiftTemplateRes]
-	listShiftTemplatesBySids                      *connect_go.Client[wfm.ListShiftTemplatesBySidsReq, wfm.ListShiftTemplatesBySidsRes]
-	buildShiftTemplateDiagnostics                 *connect_go.Client[wfm.BuildShiftTemplateDiagnosticsReq, wfm.BuildShiftTemplateDiagnosticsRes]
-	createPlacementRule                           *connect_go.Client[wfm.CreatePlacementRuleReq, wfm.CreatePlacementRuleRes]
-	updatePlacementRule                           *connect_go.Client[wfm.UpdatePlacementRuleReq, wfm.UpdatePlacementRuleRes]
-	deletePlacementRule                           *connect_go.Client[wfm.DeletePlacementRuleReq, wfm.DeletePlacementRuleRes]
-	createOpenTimesPattern                        *connect_go.Client[wfm.CreateOpenTimesPatternReq, wfm.CreateOpenTimesPatternRes]
-	updateOpenTimesPattern                        *connect_go.Client[wfm.UpdateOpenTimesPatternReq, wfm.UpdateOpenTimesPatternRes]
-	deleteOpenTimesPattern                        *connect_go.Client[wfm.DeleteOpenTimesPatternReq, wfm.DeleteOpenTimesPatternRes]
-	getOpenTimesBitmaps                           *connect_go.Client[wfm.GetOpenTimesBitmapsReq, wfm.GetOpenTimesBitmapsRes]
-	listOpenDateRangesForNodeOpenTimesBitmaps     *connect_go.Client[wfm.ListOpenDateRangesForNodeOpenTimesBitmapsRequest, wfm.ListOpenDateRangesForNodeOpenTimesBitmapsResponse]
-	createAgentAvailabilityPattern                *connect_go.Client[wfm.CreateAgentAvailabilityPatternReq, wfm.CreateAgentAvailabilityPatternRes]
-	updateAgentAvailabilityPattern                *connect_go.Client[wfm.UpdateAgentAvailabilityPatternReq, wfm.UpdateAgentAvailabilityPatternRes]
-	deleteAgentAvailabilityPattern                *connect_go.Client[wfm.DeleteAgentAvailabilityPatternReq, wfm.DeleteAgentAvailabilityPatternRes]
-	getAvailabilityBitmaps                        *connect_go.Client[wfm.GetAvailabilityBitmapsReq, wfm.GetAvailabilityBitmapsRes]
-	upsertNonSkillActivityAssociation             *connect_go.Client[wfm.UpsertNonSkillActivityAssociationReq, wfm.UpsertNonSkillActivityAssociationRes]
-	createSkillProficiencies                      *connect_go.Client[wfm.CreateSkillProficienciesReq, wfm.CreateSkillProficienciesRes]
-	updateSkillProficiencies                      *connect_go.Client[wfm.UpdateSkillProficienciesReq, wfm.UpdateSkillProficienciesRes]
-	deleteSkillProficiency                        *connect_go.Client[wfm.DeleteSkillProficiencyReq, wfm.DeleteSkillProficiencyRes]
-	copyScenario                                  *connect_go.Client[wfm.CopyScenarioReq, wfm.CopyScenarioRes]
-	createScheduleScenarioWithNodes               *connect_go.Client[wfm.CreateScheduleScenarioWithNodesReq, wfm.CreateScheduleScenarioWithNodesRes]
-	updateScheduleScenario                        *connect_go.Client[wfm.UpdateScheduleScenarioReq, wfm.UpdateScheduleScenarioRes]
-	listConfigEntities                            *connect_go.Client[wfm.ListConfigEntitiesReq, wfm.ListConfigEntitiesRes]
-	deleteShiftInstances                          *connect_go.Client[wfm.DeleteShiftInstancesReq, wfm.DeleteShiftInstancesRes]
-	buildNodeDiagnostics                          *connect_go.Client[wfm.BuildNodeDiagnosticsReq, wfm.BuildNodeDiagnosticsRes]
-	buildGlobalDiagnostics                        *connect_go.Client[wfm.BuildGlobalDiagnosticsReq, wfm.BuildGlobalDiagnosticsRes]
-	getPublishedSchedule                          *connect_go.Client[wfm.GetPublishedScheduleReq, wfm.GetPublishedScheduleRes]
-	getPublishedScheduleRequiredCalls             *connect_go.Client[wfm.GetPublishedScheduleRequiredCallsReq, wfm.GetPublishedScheduleRequiredCallsRes]
-	getDraftScheduleRequiredCalls                 *connect_go.Client[wfm.GetDraftScheduleRequiredCallsReq, wfm.GetDraftScheduleRequiredCallsRes]
-	createDraftSchedule                           *connect_go.Client[wfm.CreateDraftScheduleReq, wfm.CreateDraftScheduleRes]
-	updateDraftSchedule                           *connect_go.Client[wfm.UpdateDraftScheduleReq, wfm.UpdateDraftScheduleRes]
-	buildDraftSchedule                            *connect_go.Client[wfm.BuildDraftScheduleReq, wfm.BuildDraftScheduleRes]
-	publishDraftSchedule                          *connect_go.Client[wfm.PublishDraftScheduleReq, wfm.PublishDraftScheduleRes]
-	resetDraftSchedule                            *connect_go.Client[wfm.ResetDraftScheduleReq, wfm.ResetDraftScheduleRes]
-	getDraftSchedule                              *connect_go.Client[wfm.GetDraftScheduleReq, wfm.GetDraftScheduleRes]
-	listDraftSchedules                            *connect_go.Client[wfm.ListDraftSchedulesReq, wfm.ListDraftSchedulesRes]
-	clearSchedule                                 *connect_go.Client[wfm.ClearScheduleReq, wfm.ClearScheduleRes]
-	deleteDraftSchedule                           *connect_go.Client[wfm.DeleteDraftScheduleReq, wfm.DeleteDraftScheduleRes]
-	listShiftInstancesBySid                       *connect_go.Client[wfm.ListShiftInstancesBySidReq, wfm.ListShiftInstancesBySidRes]
-	copyScheduleToSchedule                        *connect_go.Client[wfm.CopyScheduleToScheduleReq, wfm.CopyScheduleToScheduleRes]
-	createShiftInstance                           *connect_go.Client[wfm.CreateShiftInstanceReq, wfm.CreateShiftInstanceRes]
-	createShiftInstanceV2                         *connect_go.Client[wfm.CreateShiftInstanceV2Req, wfm.CreateShiftInstanceV2Res]
-	createShiftInstanceWithSegments               *connect_go.Client[wfm.CreateShiftInstanceWithSegmentsRequest, wfm.CreateShiftInstanceWithSegmentsResponse]
-	splitShiftInstance                            *connect_go.Client[wfm.SplitShiftInstanceReq, wfm.SplitShiftInstanceRes]
-	swapShiftInstances                            *connect_go.Client[wfm.SwapShiftInstancesReq, wfm.SwapShiftInstancesRes]
-	updateShiftInstance                           *connect_go.Client[wfm.UpdateShiftInstanceReq, wfm.UpdateShiftInstanceRes]
-	updateShiftInstanceV2                         *connect_go.Client[wfm.UpdateShiftInstanceV2Req, wfm.UpdateShiftInstanceV2Res]
-	updateShiftInstanceWithSegments               *connect_go.Client[wfm.UpdateShiftInstanceWithSegmentsRequest, wfm.UpdateShiftInstanceWithSegmentsResponse]
-	copyShiftInstancesToSchedule                  *connect_go.Client[wfm.CopyShiftInstancesToScheduleReq, wfm.CopyShiftInstancesToScheduleRes]
-	listShiftInstanceSidsForAgent                 *connect_go.Client[wfm.ListShiftInstanceSidsForAgentReq, wfm.ListShiftInstanceSidsForAgentRes]
-	listShiftInstanceSidsForSchedule              *connect_go.Client[wfm.ListShiftInstanceSidsForScheduleRequest, wfm.ListShiftInstanceSidsForScheduleResponse]
-	listShiftSegmentsByShiftInstanceSids          *connect_go.Client[wfm.ListShiftSegmentsByShiftInstanceSidsReq, wfm.ListShiftSegmentsByShiftInstanceSidsRes]
-	setSchedulingTarget                           *connect_go.Client[wfm.SetSchedulingTargetReq, wfm.SetSchedulingTargetRes]
-	getSchedulingTarget                           *connect_go.Client[wfm.GetSchedulingTargetReq, wfm.GetSchedulingTargetRes]
-	deleteSchedulingTarget                        *connect_go.Client[wfm.DeleteSchedulingTargetReq, wfm.DeleteSchedulingTargetRes]
-	getDefaultSchedulingTarget                    *connect_go.Client[wfm.GetDefaultSchedulingTargetReq, wfm.GetDefaultSchedulingTargetRes]
-	setDefaultSchedulingTarget                    *connect_go.Client[wfm.SetDefaultSchedulingTargetReq, wfm.SetDefaultSchedulingTargetRes]
-	getPerformanceMetrics                         *connect_go.Client[wfm.GetPerformanceMetricsReq, wfm.GetPerformanceMetricsRes]
-	listRequiredCallsIntervals                    *connect_go.Client[wfm.ListRequiredCallsIntervalsReq, wfm.ListRequiredCallsIntervalsRes]
-	createTourPattern                             *connect_go.Client[wfm.CreateTourPatternReq, wfm.CreateTourPatternRes]
-	getTourPatternDiagnostics                     *connect_go.Client[wfm.GetTourPatternDiagnosticsReq, wfm.GetTourPatternDiagnosticsRes]
-	upsertTourPatternWithMembers                  *connect_go.Client[wfm.UpsertTourPatternWithMembersReq, wfm.UpsertTourPatternWithMembersRes]
-	getTourPattern                                *connect_go.Client[wfm.GetTourPatternReq, wfm.GetTourPatternRes]
-	getTourPatternWithMembers                     *connect_go.Client[wfm.GetTourPatternWithMembersReq, wfm.GetTourPatternWithMembersRes]
-	deleteTourPattern                             *connect_go.Client[wfm.DeleteTourPatternReq, wfm.DeleteTourPatternRes]
-	createTourWeekPattern                         *connect_go.Client[wfm.CreateTourWeekPatternReq, wfm.CreateTourWeekPatternRes]
-	listTourWeekPatterns                          *connect_go.Client[wfm.ListTourWeekPatternsReq, wfm.ListTourWeekPatternsRes]
-	deleteTourWeekPatterns                        *connect_go.Client[wfm.DeleteTourWeekPatternsReq, wfm.DeleteTourWeekPatternsRes]
-	createTourShiftInstanceConfig                 *connect_go.Client[wfm.CreateTourShiftInstanceConfigReq, wfm.CreateTourShiftInstanceConfigRes]
-	updateTourShiftInstanceConfig                 *connect_go.Client[wfm.UpdateTourShiftInstanceConfigReq, wfm.UpdateTourShiftInstanceConfigRes]
-	listTourShiftInstanceConfigs                  *connect_go.Client[wfm.ListTourShiftInstanceConfigsReq, wfm.ListTourShiftInstanceConfigsRes]
-	deleteTourShiftInstanceConfigs                *connect_go.Client[wfm.DeleteTourShiftInstanceConfigsReq, wfm.DeleteTourShiftInstanceConfigsRes]
-	createTourShiftSegmentConfig                  *connect_go.Client[wfm.CreateTourShiftSegmentConfigReq, wfm.CreateTourShiftSegmentConfigRes]
-	updateTourShiftSegmentConfig                  *connect_go.Client[wfm.UpdateTourShiftSegmentConfigReq, wfm.UpdateTourShiftSegmentConfigRes]
-	listTourShiftSegmentConfigs                   *connect_go.Client[wfm.ListTourShiftSegmentConfigsReq, wfm.ListTourShiftSegmentConfigsRes]
-	deleteTourShiftSegmentConfigs                 *connect_go.Client[wfm.DeleteTourShiftSegmentConfigsReq, wfm.DeleteTourShiftSegmentConfigsRes]
-	createTourAgentCollection                     *connect_go.Client[wfm.CreateTourAgentCollectionReq, wfm.CreateTourAgentCollectionRes]
-	updateTourAgentCollection                     *connect_go.Client[wfm.UpdateTourAgentCollectionReq, wfm.UpdateTourAgentCollectionRes]
-	listTourAgentCollections                      *connect_go.Client[wfm.ListTourAgentCollectionsReq, wfm.ListTourAgentCollectionsRes]
-	deleteTourAgentCollections                    *connect_go.Client[wfm.DeleteTourAgentCollectionsReq, wfm.DeleteTourAgentCollectionsRes]
-	createTourAgentCollectionWFMAgents            *connect_go.Client[wfm.CreateTourAgentCollectionWFMAgentsReq, wfm.CreateTourAgentCollectionWFMAgentsRes]
-	listTourAgentCollectionWFMAgents              *connect_go.Client[wfm.ListTourAgentCollectionWFMAgentsReq, wfm.ListTourAgentCollectionWFMAgentsRes]
-	deleteTourAgentCollectionWFMAgents            *connect_go.Client[wfm.DeleteTourAgentCollectionWFMAgentsReq, wfm.DeleteTourAgentCollectionWFMAgentsRes]
-	generateTourWeekPatterns                      *connect_go.Client[wfm.GenerateTourWeekPatternsReq, wfm.GenerateTourWeekPatternsRes]
-	listValidAgentsForReplacement                 *connect_go.Client[wfm.ListValidAgentsForReplacementReq, wfm.ListValidAgentsForReplacementRes]
-	replaceAgentOnSchedule                        *connect_go.Client[wfm.ReplaceAgentOnScheduleRes, wfm.ReplaceAgentOnScheduleRes]
-	replaceAgentOnScheduleV1                      *connect_go.Client[wfm.ReplaceAgentOnScheduleReq, wfm.ReplaceAgentOnScheduleRes]
-	removeAgentFromSchedule                       *connect_go.Client[wfm.RemoveAgentFromScheduleRequest, wfm.RemoveAgentFromScheduleResponse]
-	createAgentLeavePetition                      *connect_go.Client[wfm.CreateAgentLeavePetitionRequest, wfm.CreateAgentLeavePetitionResponse]
-	listAgentLeavePetitions                       *connect_go.Client[wfm.ListAgentLeavePetitionsRequest, wfm.ListAgentLeavePetitionsResponse]
-	archiveAgentLeavePetition                     *connect_go.Client[wfm.ArchiveAgentLeavePetitionRequest, wfm.ArchiveAgentLeavePetitionResponse]
-	resolveAgentLeavePetition                     *connect_go.Client[wfm.ResolveAgentLeavePetitionRequest, wfm.ResolveAgentLeavePetitionResponse]
-	cancelAgentLeavePetition                      *connect_go.Client[wfm.CancelAgentLeavePetitionRequest, wfm.CancelAgentLeavePetitionResponse]
-	helloWorldWFMAdherence                        *connect_go.Client[wfm.HelloWorldWFMAdherenceRequest, wfm.HelloWorldWFMAdherenceResponse]
-	listAgentStatesForDay                         *connect_go.Client[wfm.ListAgentStatesForDayRequest, wfm.ListAgentStatesForDayResponse]
-	listRealTimeManagementStates                  *connect_go.Client[wfm.ListRealTimeManagementStatesRequest, wfm.ListRealTimeManagementStatesResponse]
-	upsertRealTimeManagementStateColor            *connect_go.Client[wfm.UpsertRealTimeManagementStateColorRequest, wfm.UpsertRealTimeManagementStateColorResponse]
-	listRealTimeManagementStateColors             *connect_go.Client[wfm.ListRealTimeManagementStateColorsRequest, wfm.ListRealTimeManagementStateColorsResponse]
-	deleteRealTimeManagementStateColor            *connect_go.Client[wfm.DeleteRealTimeManagementStateColorRequest, wfm.DeleteRealTimeManagementStateColorResponse]
-	createRgbaColor                               *connect_go.Client[wfm.CreateRgbaColorRequest, wfm.CreateRgbaColorResponse]
-	listRgbaColors                                *connect_go.Client[wfm.ListRgbaColorsRequest, wfm.ListRgbaColorsResponse]
-	updateRgbaColor                               *connect_go.Client[wfm.UpdateRgbaColorRequest, wfm.UpdateRgbaColorResponse]
-	deleteRgbaColor                               *connect_go.Client[wfm.DeleteRgbaColorRequest, wfm.DeleteRgbaColorResponse]
-	createAdherenceRuleNotificationConfig         *connect_go.Client[wfm.CreateAdherenceRuleNotificationConfigRequest, wfm.CreateAdherenceRuleNotificationConfigResponse]
-	createAdherenceRuleNotificationConfigEntry    *connect_go.Client[wfm.CreateAdherenceRuleNotificationConfigEntryRequest, wfm.CreateAdherenceRuleNotificationConfigEntryResponse]
-	deleteAdherenceRuleNotificationConfigEntry    *connect_go.Client[wfm.DeleteAdherenceRuleNotificationConfigEntryRequest, wfm.DeleteAdherenceRuleNotificationConfigEntryResponse]
-	listAdherenceRuleNotificationConfigs          *connect_go.Client[wfm.ListAdherenceRuleNotificationConfigsRequest, wfm.ListAdherenceRuleNotificationConfigsResponse]
-	createAdherenceDepartmentalRule               *connect_go.Client[wfm.CreateAdherenceDepartmentalRuleRequest, wfm.CreateAdherenceDepartmentalRuleResponse]
-	createAdherenceDepartmentalRuleClause         *connect_go.Client[wfm.CreateAdherenceDepartmentalRuleClauseRequest, wfm.CreateAdherenceDepartmentalRuleClauseResponse]
-	deleteAdherenceDepartmentalRuleClause         *connect_go.Client[wfm.DeleteAdherenceDepartmentalRuleClauseRequest, wfm.DeleteAdherenceDepartmentalRuleClauseResponse]
-	listAdherenceDepartmentalRules                *connect_go.Client[wfm.ListAdherenceDepartmentalRulesRequest, wfm.ListAdherenceDepartmentalRulesResponse]
-	createAdherenceAgentRule                      *connect_go.Client[wfm.CreateAdherenceAgentRuleRequest, wfm.CreateAdherenceAgentRuleResponse]
-	createAdherenceAgentRuleClause                *connect_go.Client[wfm.CreateAdherenceAgentRuleClauseRequest, wfm.CreateAdherenceAgentRuleClauseResponse]
-	listAdherenceAgentRules                       *connect_go.Client[wfm.ListAdherenceAgentRulesRequest, wfm.ListAdherenceAgentRulesResponse]
-	deleteAdherenceAgentRuleClause                *connect_go.Client[wfm.DeleteAdherenceAgentRuleClauseRequest, wfm.DeleteAdherenceAgentRuleClauseResponse]
+	performInitialClientSetup                        *connect_go.Client[wfm.PerformInitialClientSetupRequest, wfm.PerformInitialClientSetupResponse]
+	createInitialDemoActivities                      *connect_go.Client[wfm.CreateInitialDemoActivitiesRequest, wfm.CreateInitialDemoActivitiesResponse]
+	listSkillProfiles                                *connect_go.Client[wfm.ListSkillProfilesReq, wfm.ListSkillProfilesRes]
+	updateSkillProfile                               *connect_go.Client[wfm.UpdateSkillProfileReq, wfm.UpdateSkillProfileRes]
+	updateSkillProfileProficiencies                  *connect_go.Client[wfm.UpdateSkillProfileProficienciesReq, wfm.UpdateSkillProfileProficienciesRes]
+	getSkillProfile                                  *connect_go.Client[wfm.GetSkillProfileReq, wfm.GetSkillProfileRes]
+	resyncSkillProfiles                              *connect_go.Client[wfm.ResyncSkillProfilesReq, wfm.ResyncSkillProfilesRes]
+	getLastSkillProfileResyncDate                    *connect_go.Client[wfm.GetLastSkillProfileResyncDateReq, wfm.GetLastSkillProfileResyncDateRes]
+	upsertForecastingParameters                      *connect_go.Client[wfm.UpsertForecastingParametersReq, wfm.UpsertForecastingParametersRes]
+	getForecastingParameters                         *connect_go.Client[wfm.GetForecastingParametersReq, wfm.GetForecastingParametersRes]
+	getClientHistoryCacheInfo                        *connect_go.Client[wfm.GetClientHistoryCacheInfoReq, wfm.GetClientHistoryCacheInfoRes]
+	listHistoricalData                               *connect_go.Client[wfm.ListHistoricalDataReq, wfm.ListHistoricalDataRes]
+	upsertHistoricalDataDelta                        *connect_go.Client[wfm.UpsertHistoricalDataDeltaReq, wfm.UpsertHistoricalDataDeltaRes]
+	upsertHistoricalDataDeltas                       *connect_go.Client[wfm.UpsertHistoricalDataDeltasReq, wfm.UpsertHistoricalDataDeltasRes]
+	listSkills                                       *connect_go.Client[wfm.ListSkillsReq, wfm.ListSkillsRes]
+	buildCallProfileTemplateForSkillProfile          *connect_go.Client[wfm.BuildCallProfileTemplateForSkillProfileReq, wfm.BuildCallProfileTemplateForSkillProfileRes]
+	buildCallProfileTemplate                         *connect_go.Client[wfm.BuildCallProfileTemplateReq, wfm.BuildCallProfileTemplateRes]
+	createInactiveSkillProfileMapping                *connect_go.Client[wfm.CreateInactiveSkillProfileMappingReq, wfm.CreateInactiveSkillProfileMappingRes]
+	getAvailableRegressionForecasterModelTypes       *connect_go.Client[wfm.GetAvailableRegressionForecasterModelTypesReq, wfm.GetAvailableRegressionForecasterModelTypesRes]
+	disconnectInactiveSkillProfileMapping            *connect_go.Client[wfm.DisconnectInactiveSkillProfileMappingReq, wfm.DisconnectInactiveSkillProfileMappingRes]
+	createSkillProfileGroup                          *connect_go.Client[wfm.CreateSkillProfileGroupReq, wfm.CreateSkillProfileGroupRes]
+	updateSkillProfileGroup                          *connect_go.Client[wfm.UpdateSkillProfileGroupReq, wfm.UpdateSkillProfileGroupRes]
+	listSkillProfileGroups                           *connect_go.Client[wfm.ListSkillProfileGroupsReq, wfm.ListSkillProfileGroupsRes]
+	updateSkillProfileGroupAssociations              *connect_go.Client[wfm.UpdateSkillProfileGroupAssociationsReq, wfm.UpdateSkillProfileGroupAssociationsRes]
+	deleteHistoricalDataDeltas                       *connect_go.Client[wfm.DeleteHistoricalDataDeltasReq, wfm.DeleteHistoricalDataDeltasRes]
+	listTopSkillProfiles                             *connect_go.Client[wfm.ListTopSkillProfilesReq, wfm.ListTopSkillProfilesRes]
+	getSkillProfilesCount                            *connect_go.Client[wfm.GetSkillProfilesCountReq, wfm.GetSkillProfilesCountRes]
+	buildProfileForecastByInterval                   *connect_go.Client[wfm.BuildProfileForecastByIntervalReq, wfm.CallDataByInterval]
+	buildProfileForecastByIntervalWithStats          *connect_go.Client[wfm.BuildProfileForecastByIntervalWithStatsReq, wfm.BuildProfileForecastByIntervalWithStatsRes]
+	upsertProfileForecast                            *connect_go.Client[wfm.UpsertProfileForecastReq, wfm.UpsertProfileForecastRes]
+	createCallProfileTemplate                        *connect_go.Client[wfm.CreateCallProfileTemplateReq, wfm.CreateCallProfileTemplateRes]
+	deleteCallProfileTemplate                        *connect_go.Client[wfm.DeleteCallProfileTemplateReq, wfm.DeleteCallProfileTemplateRes]
+	createRegressionTemplate                         *connect_go.Client[wfm.CreateRegressionTemplateReq, wfm.CreateRegressionTemplateRes]
+	deleteRegressionTemplate                         *connect_go.Client[wfm.DeleteRegressionTemplateReq, wfm.DeleteRegressionTemplateRes]
+	listRegressionTemplates                          *connect_go.Client[wfm.ListRegressionTemplatesReq, wfm.ListRegressionTemplatesRes]
+	listForecastIntervalsForSkillProfile             *connect_go.Client[wfm.ListForecastIntervalsForSkillProfileReq, wfm.CallDataByInterval]
+	listForecastIntervals                            *connect_go.Client[wfm.ListForecastIntervalsReq, wfm.CallDataByInterval]
+	buildRegressionForecastByInterval                *connect_go.Client[wfm.BuildRegressionForecastByIntervalReq, wfm.CallDataByInterval]
+	buildRegressionForecastByIntervalWithStats       *connect_go.Client[wfm.BuildRegressionForecastByIntervalWithStatsReq, wfm.BuildRegressionForecastByIntervalWithStatsRes]
+	listCallProfileTemplates                         *connect_go.Client[wfm.ListCallProfileTemplatesReq, wfm.ListCallProfileTemplatesRes]
+	upsertRegressionForecast                         *connect_go.Client[wfm.UpsertRegressionForecastReq, wfm.UpsertRegressionForecastRes]
+	upsertForecastDataDelta                          *connect_go.Client[wfm.UpsertForecastDataDeltaReq, wfm.UpsertForecastDataDeltaRes]
+	upsertForecastDataDeltas                         *connect_go.Client[wfm.UpsertForecastDataDeltasReq, wfm.UpsertForecastDataDeltasRes]
+	deleteForecastIntervals                          *connect_go.Client[wfm.DeleteForecastIntervalsReq, wfm.DeleteForecastIntervalsRes]
+	listHistoricalDataForAllSkillProfiles            *connect_go.Client[wfm.ListHistoricalDataForAllSkillProfilesReq, wfm.ListHistoricalDataForAllSkillProfilesRes]
+	buildDOWAndMOYProfiles                           *connect_go.Client[wfm.BuildDOWAndMOYProfilesReq, wfm.BuildDOWAndMOYProfilesRes]
+	calculateTrainingDataAveragesForSkillProfile     *connect_go.Client[wfm.CalculateTrainingDataAveragesForSkillProfileReq, wfm.CalculateTrainingDataAveragesForSkillProfileRes]
+	updateSkillProfileAveragesUsingHistoricalData    *connect_go.Client[wfm.UpdateSkillProfileAveragesUsingHistoricalDataReq, wfm.UpdateSkillProfileAveragesUsingHistoricalDataRes]
+	updateCallCenterNode                             *connect_go.Client[wfm.UpdateCallCenterNodeReq, wfm.UpdateCallCenterNodeRes]
+	createClientNode                                 *connect_go.Client[wfm.CreateClientNodeReq, wfm.CreateClientNodeRes]
+	updateClientNode                                 *connect_go.Client[wfm.UpdateClientNodeReq, wfm.UpdateClientNodeRes]
+	createLocationNode                               *connect_go.Client[wfm.CreateLocationNodeReq, wfm.CreateLocationNodeRes]
+	updateLocationNode                               *connect_go.Client[wfm.UpdateLocationNodeReq, wfm.UpdateLocationNodeRes]
+	createProgramNode                                *connect_go.Client[wfm.CreateProgramNodeReq, wfm.CreateProgramNodeRes]
+	updateProgramNode                                *connect_go.Client[wfm.UpdateProgramNodeReq, wfm.UpdateProgramNodeRes]
+	listProgramNodesBySid                            *connect_go.Client[wfm.ListProgramNodesBySidReq, wfm.ListProgramNodesBySidRes]
+	createConstraintRule                             *connect_go.Client[wfm.CreateConstraintRuleReq, wfm.CreateConstraintRuleRes]
+	updateConstraintRule                             *connect_go.Client[wfm.UpdateConstraintRuleReq, wfm.UpdateConstraintRuleRes]
+	deleteConstraintRule                             *connect_go.Client[wfm.DeleteConstraintRuleReq, wfm.DeleteConstraintRuleRes]
+	createNonSkillActivity                           *connect_go.Client[wfm.CreateNonSkillActivityReq, wfm.CreateNonSkillActivityRes]
+	updateNonSkillActivity                           *connect_go.Client[wfm.UpdateNonSkillActivityReq, wfm.UpdateNonSkillActivityRes]
+	listNonSkillActivities                           *connect_go.Client[wfm.ListNonSkillActivitiesReq, wfm.ListNonSkillActivitiesRes]
+	listNonSkillActivityAssociations                 *connect_go.Client[wfm.ListNonSkillActivityAssociationsReq, wfm.ListNonSkillActivityAssociationsRes]
+	listCandidateSchedulingActivities                *connect_go.Client[wfm.ListCandidateSchedulingActivitiesReq, wfm.ListCandidateSchedulingActivitiesRes]
+	getOnCallSchedulingActivity                      *connect_go.Client[wfm.GetOnCallSchedulingActivityReq, wfm.GetOnCallSchedulingActivityRes]
+	listPatternsForSchedulingActivityClassifications *connect_go.Client[wfm.ListPatternsForSchedulingActivityClassificationsRequest, wfm.ListPatternsForSchedulingActivityClassificationsResponse]
+	getTimeOffSchedulingActivity                     *connect_go.Client[wfm.GetTimeOffSchedulingActivityRequest, wfm.GetTimeOffSchedulingActivityResponse]
+	createAgentGroup                                 *connect_go.Client[wfm.CreateAgentGroupReq, wfm.CreateAgentGroupRes]
+	listAgentScheduleGroups                          *connect_go.Client[wfm.ListAgentScheduleGroupsRequest, wfm.ListAgentScheduleGroupsResponse]
+	updateAgentGroup                                 *connect_go.Client[wfm.UpdateAgentGroupReq, wfm.UpdateAgentGroupRes]
+	createUnassignedWFMAgent                         *connect_go.Client[wfm.CreateUnassignedWFMAgentRequest, wfm.CreateUnassignedWFMAgentResponse]
+	updateWFMAgent                                   *connect_go.Client[wfm.UpdateWFMAgentReq, wfm.UpdateWFMAgentRes]
+	listAllWFMAgents                                 *connect_go.Client[wfm.ListAllWFMAgentsReq, wfm.ListAllWFMAgentsRes]
+	listCandidateWFMAgents                           *connect_go.Client[wfm.ListCandidateWFMAgentsReq, wfm.ListCandidateWFMAgentsRes]
+	listUngroupedWFMAgents                           *connect_go.Client[wfm.ListUngroupedWFMAgentsReq, wfm.ListUngroupedWFMAgentsRes]
+	listWFMAgentSids                                 *connect_go.Client[wfm.ListWFMAgentSidsReq, wfm.ListWFMAgentSidsRes]
+	listUnassignedWFMAgents                          *connect_go.Client[wfm.ListUnassignedWFMAgentsRequest, wfm.ListUnassignedWFMAgentsResponse]
+	listWFMAgentsAssociatedWithAgentGroup            *connect_go.Client[wfm.ListWFMAgentsAssociatedWithAgentGroupReq, wfm.ListWFMAgentsAssociatedWithAgentGroupRes]
+	createWFMAgentMemberships                        *connect_go.Client[wfm.CreateWFMAgentMembershipsReq, wfm.CreateWFMAgentMembershipsRes]
+	copyWFMAgentMemberships                          *connect_go.Client[wfm.CopyWFMAgentMembershipsRequest, wfm.CopyWFMAgentMembershipsResponse]
+	deleteWFMAgentMemberships                        *connect_go.Client[wfm.DeleteWFMAgentMembershipsReq, wfm.DeleteWFMAgentMembershipsRes]
+	deleteWFMAgentsMemberships                       *connect_go.Client[wfm.DeleteWFMAgentsMembershipsReq, wfm.DeleteWFMAgentsMembershipsRes]
+	removeAgentFromFutureShifts                      *connect_go.Client[wfm.RemoveAgentFromFutureShiftsRequest, wfm.RemoveAgentFromFutureShiftsResponse]
+	buildAgentDiagnostics                            *connect_go.Client[wfm.BuildAgentDiagnosticsReq, wfm.BuildAgentDiagnosticsRes]
+	createShiftTemplate                              *connect_go.Client[wfm.CreateShiftTemplateReq, wfm.CreateShiftTemplateRes]
+	updateShiftTemplate                              *connect_go.Client[wfm.UpdateShiftTemplateReq, wfm.UpdateShiftTemplateRes]
+	listShiftTemplatesBySids                         *connect_go.Client[wfm.ListShiftTemplatesBySidsReq, wfm.ListShiftTemplatesBySidsRes]
+	buildShiftTemplateDiagnostics                    *connect_go.Client[wfm.BuildShiftTemplateDiagnosticsReq, wfm.BuildShiftTemplateDiagnosticsRes]
+	createPlacementRule                              *connect_go.Client[wfm.CreatePlacementRuleReq, wfm.CreatePlacementRuleRes]
+	updatePlacementRule                              *connect_go.Client[wfm.UpdatePlacementRuleReq, wfm.UpdatePlacementRuleRes]
+	deletePlacementRule                              *connect_go.Client[wfm.DeletePlacementRuleReq, wfm.DeletePlacementRuleRes]
+	createOpenTimesPattern                           *connect_go.Client[wfm.CreateOpenTimesPatternReq, wfm.CreateOpenTimesPatternRes]
+	updateOpenTimesPattern                           *connect_go.Client[wfm.UpdateOpenTimesPatternReq, wfm.UpdateOpenTimesPatternRes]
+	deleteOpenTimesPattern                           *connect_go.Client[wfm.DeleteOpenTimesPatternReq, wfm.DeleteOpenTimesPatternRes]
+	getOpenTimesBitmaps                              *connect_go.Client[wfm.GetOpenTimesBitmapsReq, wfm.GetOpenTimesBitmapsRes]
+	listOpenDateRangesForNodeOpenTimesBitmaps        *connect_go.Client[wfm.ListOpenDateRangesForNodeOpenTimesBitmapsRequest, wfm.ListOpenDateRangesForNodeOpenTimesBitmapsResponse]
+	createAgentAvailabilityPattern                   *connect_go.Client[wfm.CreateAgentAvailabilityPatternReq, wfm.CreateAgentAvailabilityPatternRes]
+	updateAgentAvailabilityPattern                   *connect_go.Client[wfm.UpdateAgentAvailabilityPatternReq, wfm.UpdateAgentAvailabilityPatternRes]
+	deleteAgentAvailabilityPattern                   *connect_go.Client[wfm.DeleteAgentAvailabilityPatternReq, wfm.DeleteAgentAvailabilityPatternRes]
+	getAvailabilityBitmaps                           *connect_go.Client[wfm.GetAvailabilityBitmapsReq, wfm.GetAvailabilityBitmapsRes]
+	upsertNonSkillActivityAssociation                *connect_go.Client[wfm.UpsertNonSkillActivityAssociationReq, wfm.UpsertNonSkillActivityAssociationRes]
+	createSkillProficiencies                         *connect_go.Client[wfm.CreateSkillProficienciesReq, wfm.CreateSkillProficienciesRes]
+	updateSkillProficiencies                         *connect_go.Client[wfm.UpdateSkillProficienciesReq, wfm.UpdateSkillProficienciesRes]
+	deleteSkillProficiency                           *connect_go.Client[wfm.DeleteSkillProficiencyReq, wfm.DeleteSkillProficiencyRes]
+	copyScenario                                     *connect_go.Client[wfm.CopyScenarioReq, wfm.CopyScenarioRes]
+	createScheduleScenarioWithNodes                  *connect_go.Client[wfm.CreateScheduleScenarioWithNodesReq, wfm.CreateScheduleScenarioWithNodesRes]
+	updateScheduleScenario                           *connect_go.Client[wfm.UpdateScheduleScenarioReq, wfm.UpdateScheduleScenarioRes]
+	listConfigEntities                               *connect_go.Client[wfm.ListConfigEntitiesReq, wfm.ListConfigEntitiesRes]
+	deleteShiftInstances                             *connect_go.Client[wfm.DeleteShiftInstancesReq, wfm.DeleteShiftInstancesRes]
+	buildNodeDiagnostics                             *connect_go.Client[wfm.BuildNodeDiagnosticsReq, wfm.BuildNodeDiagnosticsRes]
+	buildGlobalDiagnostics                           *connect_go.Client[wfm.BuildGlobalDiagnosticsReq, wfm.BuildGlobalDiagnosticsRes]
+	getPublishedSchedule                             *connect_go.Client[wfm.GetPublishedScheduleReq, wfm.GetPublishedScheduleRes]
+	getPublishedScheduleRequiredCalls                *connect_go.Client[wfm.GetPublishedScheduleRequiredCallsReq, wfm.GetPublishedScheduleRequiredCallsRes]
+	getDraftScheduleRequiredCalls                    *connect_go.Client[wfm.GetDraftScheduleRequiredCallsReq, wfm.GetDraftScheduleRequiredCallsRes]
+	createDraftSchedule                              *connect_go.Client[wfm.CreateDraftScheduleReq, wfm.CreateDraftScheduleRes]
+	updateDraftSchedule                              *connect_go.Client[wfm.UpdateDraftScheduleReq, wfm.UpdateDraftScheduleRes]
+	buildDraftSchedule                               *connect_go.Client[wfm.BuildDraftScheduleReq, wfm.BuildDraftScheduleRes]
+	publishDraftSchedule                             *connect_go.Client[wfm.PublishDraftScheduleReq, wfm.PublishDraftScheduleRes]
+	resetDraftSchedule                               *connect_go.Client[wfm.ResetDraftScheduleReq, wfm.ResetDraftScheduleRes]
+	getDraftSchedule                                 *connect_go.Client[wfm.GetDraftScheduleReq, wfm.GetDraftScheduleRes]
+	listDraftSchedules                               *connect_go.Client[wfm.ListDraftSchedulesReq, wfm.ListDraftSchedulesRes]
+	clearSchedule                                    *connect_go.Client[wfm.ClearScheduleReq, wfm.ClearScheduleRes]
+	deleteDraftSchedule                              *connect_go.Client[wfm.DeleteDraftScheduleReq, wfm.DeleteDraftScheduleRes]
+	listShiftInstancesBySid                          *connect_go.Client[wfm.ListShiftInstancesBySidReq, wfm.ListShiftInstancesBySidRes]
+	copyScheduleToSchedule                           *connect_go.Client[wfm.CopyScheduleToScheduleReq, wfm.CopyScheduleToScheduleRes]
+	createShiftInstance                              *connect_go.Client[wfm.CreateShiftInstanceReq, wfm.CreateShiftInstanceRes]
+	createShiftInstanceV2                            *connect_go.Client[wfm.CreateShiftInstanceV2Req, wfm.CreateShiftInstanceV2Res]
+	createShiftInstanceWithSegments                  *connect_go.Client[wfm.CreateShiftInstanceWithSegmentsRequest, wfm.CreateShiftInstanceWithSegmentsResponse]
+	splitShiftInstance                               *connect_go.Client[wfm.SplitShiftInstanceReq, wfm.SplitShiftInstanceRes]
+	swapShiftInstances                               *connect_go.Client[wfm.SwapShiftInstancesReq, wfm.SwapShiftInstancesRes]
+	updateShiftInstance                              *connect_go.Client[wfm.UpdateShiftInstanceReq, wfm.UpdateShiftInstanceRes]
+	updateShiftInstanceV2                            *connect_go.Client[wfm.UpdateShiftInstanceV2Req, wfm.UpdateShiftInstanceV2Res]
+	updateShiftInstanceWithSegments                  *connect_go.Client[wfm.UpdateShiftInstanceWithSegmentsRequest, wfm.UpdateShiftInstanceWithSegmentsResponse]
+	copyShiftInstancesToSchedule                     *connect_go.Client[wfm.CopyShiftInstancesToScheduleReq, wfm.CopyShiftInstancesToScheduleRes]
+	listShiftInstanceSidsForAgent                    *connect_go.Client[wfm.ListShiftInstanceSidsForAgentReq, wfm.ListShiftInstanceSidsForAgentRes]
+	listShiftInstanceSidsForSchedule                 *connect_go.Client[wfm.ListShiftInstanceSidsForScheduleRequest, wfm.ListShiftInstanceSidsForScheduleResponse]
+	listShiftSegmentsByShiftInstanceSids             *connect_go.Client[wfm.ListShiftSegmentsByShiftInstanceSidsReq, wfm.ListShiftSegmentsByShiftInstanceSidsRes]
+	setSchedulingTarget                              *connect_go.Client[wfm.SetSchedulingTargetReq, wfm.SetSchedulingTargetRes]
+	getSchedulingTarget                              *connect_go.Client[wfm.GetSchedulingTargetReq, wfm.GetSchedulingTargetRes]
+	deleteSchedulingTarget                           *connect_go.Client[wfm.DeleteSchedulingTargetReq, wfm.DeleteSchedulingTargetRes]
+	getDefaultSchedulingTarget                       *connect_go.Client[wfm.GetDefaultSchedulingTargetReq, wfm.GetDefaultSchedulingTargetRes]
+	setDefaultSchedulingTarget                       *connect_go.Client[wfm.SetDefaultSchedulingTargetReq, wfm.SetDefaultSchedulingTargetRes]
+	getPerformanceMetrics                            *connect_go.Client[wfm.GetPerformanceMetricsReq, wfm.GetPerformanceMetricsRes]
+	listRequiredCallsIntervals                       *connect_go.Client[wfm.ListRequiredCallsIntervalsReq, wfm.ListRequiredCallsIntervalsRes]
+	createTourPattern                                *connect_go.Client[wfm.CreateTourPatternReq, wfm.CreateTourPatternRes]
+	getTourPatternDiagnostics                        *connect_go.Client[wfm.GetTourPatternDiagnosticsReq, wfm.GetTourPatternDiagnosticsRes]
+	upsertTourPatternWithMembers                     *connect_go.Client[wfm.UpsertTourPatternWithMembersReq, wfm.UpsertTourPatternWithMembersRes]
+	getTourPattern                                   *connect_go.Client[wfm.GetTourPatternReq, wfm.GetTourPatternRes]
+	getTourPatternWithMembers                        *connect_go.Client[wfm.GetTourPatternWithMembersReq, wfm.GetTourPatternWithMembersRes]
+	deleteTourPattern                                *connect_go.Client[wfm.DeleteTourPatternReq, wfm.DeleteTourPatternRes]
+	createTourWeekPattern                            *connect_go.Client[wfm.CreateTourWeekPatternReq, wfm.CreateTourWeekPatternRes]
+	listTourWeekPatterns                             *connect_go.Client[wfm.ListTourWeekPatternsReq, wfm.ListTourWeekPatternsRes]
+	deleteTourWeekPatterns                           *connect_go.Client[wfm.DeleteTourWeekPatternsReq, wfm.DeleteTourWeekPatternsRes]
+	createTourShiftInstanceConfig                    *connect_go.Client[wfm.CreateTourShiftInstanceConfigReq, wfm.CreateTourShiftInstanceConfigRes]
+	updateTourShiftInstanceConfig                    *connect_go.Client[wfm.UpdateTourShiftInstanceConfigReq, wfm.UpdateTourShiftInstanceConfigRes]
+	listTourShiftInstanceConfigs                     *connect_go.Client[wfm.ListTourShiftInstanceConfigsReq, wfm.ListTourShiftInstanceConfigsRes]
+	deleteTourShiftInstanceConfigs                   *connect_go.Client[wfm.DeleteTourShiftInstanceConfigsReq, wfm.DeleteTourShiftInstanceConfigsRes]
+	createTourShiftSegmentConfig                     *connect_go.Client[wfm.CreateTourShiftSegmentConfigReq, wfm.CreateTourShiftSegmentConfigRes]
+	updateTourShiftSegmentConfig                     *connect_go.Client[wfm.UpdateTourShiftSegmentConfigReq, wfm.UpdateTourShiftSegmentConfigRes]
+	listTourShiftSegmentConfigs                      *connect_go.Client[wfm.ListTourShiftSegmentConfigsReq, wfm.ListTourShiftSegmentConfigsRes]
+	deleteTourShiftSegmentConfigs                    *connect_go.Client[wfm.DeleteTourShiftSegmentConfigsReq, wfm.DeleteTourShiftSegmentConfigsRes]
+	createTourAgentCollection                        *connect_go.Client[wfm.CreateTourAgentCollectionReq, wfm.CreateTourAgentCollectionRes]
+	updateTourAgentCollection                        *connect_go.Client[wfm.UpdateTourAgentCollectionReq, wfm.UpdateTourAgentCollectionRes]
+	listTourAgentCollections                         *connect_go.Client[wfm.ListTourAgentCollectionsReq, wfm.ListTourAgentCollectionsRes]
+	deleteTourAgentCollections                       *connect_go.Client[wfm.DeleteTourAgentCollectionsReq, wfm.DeleteTourAgentCollectionsRes]
+	createTourAgentCollectionWFMAgents               *connect_go.Client[wfm.CreateTourAgentCollectionWFMAgentsReq, wfm.CreateTourAgentCollectionWFMAgentsRes]
+	listTourAgentCollectionWFMAgents                 *connect_go.Client[wfm.ListTourAgentCollectionWFMAgentsReq, wfm.ListTourAgentCollectionWFMAgentsRes]
+	deleteTourAgentCollectionWFMAgents               *connect_go.Client[wfm.DeleteTourAgentCollectionWFMAgentsReq, wfm.DeleteTourAgentCollectionWFMAgentsRes]
+	generateTourWeekPatterns                         *connect_go.Client[wfm.GenerateTourWeekPatternsReq, wfm.GenerateTourWeekPatternsRes]
+	listValidAgentsForReplacement                    *connect_go.Client[wfm.ListValidAgentsForReplacementReq, wfm.ListValidAgentsForReplacementRes]
+	replaceAgentOnSchedule                           *connect_go.Client[wfm.ReplaceAgentOnScheduleRes, wfm.ReplaceAgentOnScheduleRes]
+	replaceAgentOnScheduleV1                         *connect_go.Client[wfm.ReplaceAgentOnScheduleReq, wfm.ReplaceAgentOnScheduleRes]
+	removeAgentFromSchedule                          *connect_go.Client[wfm.RemoveAgentFromScheduleRequest, wfm.RemoveAgentFromScheduleResponse]
+	createAgentLeavePetition                         *connect_go.Client[wfm.CreateAgentLeavePetitionRequest, wfm.CreateAgentLeavePetitionResponse]
+	listAgentLeavePetitions                          *connect_go.Client[wfm.ListAgentLeavePetitionsRequest, wfm.ListAgentLeavePetitionsResponse]
+	archiveAgentLeavePetition                        *connect_go.Client[wfm.ArchiveAgentLeavePetitionRequest, wfm.ArchiveAgentLeavePetitionResponse]
+	resolveAgentLeavePetition                        *connect_go.Client[wfm.ResolveAgentLeavePetitionRequest, wfm.ResolveAgentLeavePetitionResponse]
+	cancelAgentLeavePetition                         *connect_go.Client[wfm.CancelAgentLeavePetitionRequest, wfm.CancelAgentLeavePetitionResponse]
+	helloWorldWFMAdherence                           *connect_go.Client[wfm.HelloWorldWFMAdherenceRequest, wfm.HelloWorldWFMAdherenceResponse]
+	listAgentStatesForDay                            *connect_go.Client[wfm.ListAgentStatesForDayRequest, wfm.ListAgentStatesForDayResponse]
+	listRealTimeManagementStates                     *connect_go.Client[wfm.ListRealTimeManagementStatesRequest, wfm.ListRealTimeManagementStatesResponse]
+	upsertRealTimeManagementStateColor               *connect_go.Client[wfm.UpsertRealTimeManagementStateColorRequest, wfm.UpsertRealTimeManagementStateColorResponse]
+	listRealTimeManagementStateColors                *connect_go.Client[wfm.ListRealTimeManagementStateColorsRequest, wfm.ListRealTimeManagementStateColorsResponse]
+	deleteRealTimeManagementStateColor               *connect_go.Client[wfm.DeleteRealTimeManagementStateColorRequest, wfm.DeleteRealTimeManagementStateColorResponse]
+	createRgbaColor                                  *connect_go.Client[wfm.CreateRgbaColorRequest, wfm.CreateRgbaColorResponse]
+	listRgbaColors                                   *connect_go.Client[wfm.ListRgbaColorsRequest, wfm.ListRgbaColorsResponse]
+	updateRgbaColor                                  *connect_go.Client[wfm.UpdateRgbaColorRequest, wfm.UpdateRgbaColorResponse]
+	deleteRgbaColor                                  *connect_go.Client[wfm.DeleteRgbaColorRequest, wfm.DeleteRgbaColorResponse]
+	createAdherenceRuleNotificationConfig            *connect_go.Client[wfm.CreateAdherenceRuleNotificationConfigRequest, wfm.CreateAdherenceRuleNotificationConfigResponse]
+	createAdherenceRuleNotificationConfigEntry       *connect_go.Client[wfm.CreateAdherenceRuleNotificationConfigEntryRequest, wfm.CreateAdherenceRuleNotificationConfigEntryResponse]
+	deleteAdherenceRuleNotificationConfigEntry       *connect_go.Client[wfm.DeleteAdherenceRuleNotificationConfigEntryRequest, wfm.DeleteAdherenceRuleNotificationConfigEntryResponse]
+	listAdherenceRuleNotificationConfigs             *connect_go.Client[wfm.ListAdherenceRuleNotificationConfigsRequest, wfm.ListAdherenceRuleNotificationConfigsResponse]
+	createAdherenceDepartmentalRule                  *connect_go.Client[wfm.CreateAdherenceDepartmentalRuleRequest, wfm.CreateAdherenceDepartmentalRuleResponse]
+	createAdherenceDepartmentalRuleClause            *connect_go.Client[wfm.CreateAdherenceDepartmentalRuleClauseRequest, wfm.CreateAdherenceDepartmentalRuleClauseResponse]
+	deleteAdherenceDepartmentalRuleClause            *connect_go.Client[wfm.DeleteAdherenceDepartmentalRuleClauseRequest, wfm.DeleteAdherenceDepartmentalRuleClauseResponse]
+	listAdherenceDepartmentalRules                   *connect_go.Client[wfm.ListAdherenceDepartmentalRulesRequest, wfm.ListAdherenceDepartmentalRulesResponse]
+	createAdherenceAgentRule                         *connect_go.Client[wfm.CreateAdherenceAgentRuleRequest, wfm.CreateAdherenceAgentRuleResponse]
+	createAdherenceAgentRuleClause                   *connect_go.Client[wfm.CreateAdherenceAgentRuleClauseRequest, wfm.CreateAdherenceAgentRuleClauseResponse]
+	listAdherenceAgentRules                          *connect_go.Client[wfm.ListAdherenceAgentRulesRequest, wfm.ListAdherenceAgentRulesResponse]
+	deleteAdherenceAgentRuleClause                   *connect_go.Client[wfm.DeleteAdherenceAgentRuleClauseRequest, wfm.DeleteAdherenceAgentRuleClauseResponse]
 }
 
 // PerformInitialClientSetup calls api.v1alpha1.wfm.WFM.PerformInitialClientSetup.
@@ -3688,6 +3725,17 @@ func (c *wFMClient) ListCandidateSchedulingActivities(ctx context.Context, req *
 // GetOnCallSchedulingActivity calls api.v1alpha1.wfm.WFM.GetOnCallSchedulingActivity.
 func (c *wFMClient) GetOnCallSchedulingActivity(ctx context.Context, req *connect_go.Request[wfm.GetOnCallSchedulingActivityReq]) (*connect_go.Response[wfm.GetOnCallSchedulingActivityRes], error) {
 	return c.getOnCallSchedulingActivity.CallUnary(ctx, req)
+}
+
+// ListPatternsForSchedulingActivityClassifications calls
+// api.v1alpha1.wfm.WFM.ListPatternsForSchedulingActivityClassifications.
+func (c *wFMClient) ListPatternsForSchedulingActivityClassifications(ctx context.Context, req *connect_go.Request[wfm.ListPatternsForSchedulingActivityClassificationsRequest]) (*connect_go.Response[wfm.ListPatternsForSchedulingActivityClassificationsResponse], error) {
+	return c.listPatternsForSchedulingActivityClassifications.CallUnary(ctx, req)
+}
+
+// GetTimeOffSchedulingActivity calls api.v1alpha1.wfm.WFM.GetTimeOffSchedulingActivity.
+func (c *wFMClient) GetTimeOffSchedulingActivity(ctx context.Context, req *connect_go.Request[wfm.GetTimeOffSchedulingActivityRequest]) (*connect_go.Response[wfm.GetTimeOffSchedulingActivityResponse], error) {
+	return c.getTimeOffSchedulingActivity.CallUnary(ctx, req)
 }
 
 // CreateAgentGroup calls api.v1alpha1.wfm.WFM.CreateAgentGroup.
@@ -4864,6 +4912,25 @@ type WFMHandler interface {
 	//	-grpc.NotFound: the on call scheduling activity for the org is not found.
 	//	-grpc.Internal: error occurs when getting on call scheduling activity.
 	GetOnCallSchedulingActivity(context.Context, *connect_go.Request[wfm.GetOnCallSchedulingActivityReq]) (*connect_go.Response[wfm.GetOnCallSchedulingActivityRes], error)
+	// Lists the Open Time and Agent Availability patterns for the given @parent_entity and @scheduling_activity_classifications, for the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the arguments in the request are invalid.
+	//   - grpc.Internal: error occurs getting the patterns or their scheduling activity sids.
+	ListPatternsForSchedulingActivityClassifications(context.Context, *connect_go.Request[wfm.ListPatternsForSchedulingActivityClassificationsRequest]) (*connect_go.Response[wfm.ListPatternsForSchedulingActivityClassificationsResponse], error)
+	// Gets the time off scheduling activity for the org sending the request.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//
+	//	-grpc.NotFound: the time off scheduling activity for the org is not found.
+	//	-grpc.Internal: error occurs when getting time off scheduling activity.
+	GetTimeOffSchedulingActivity(context.Context, *connect_go.Request[wfm.GetTimeOffSchedulingActivityRequest]) (*connect_go.Response[wfm.GetTimeOffSchedulingActivityResponse], error)
 	// Creates an agent group with the provided parameters.
 	// A successful response should contain the @agent_group_sid of the newly created entity.
 	// The @schedule_scenario_sid must match the scenario of the @parent_entity.
@@ -6240,6 +6307,16 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.GetOnCallSchedulingActivity,
 		opts...,
 	)
+	wFMListPatternsForSchedulingActivityClassificationsHandler := connect_go.NewUnaryHandler(
+		WFMListPatternsForSchedulingActivityClassificationsProcedure,
+		svc.ListPatternsForSchedulingActivityClassifications,
+		opts...,
+	)
+	wFMGetTimeOffSchedulingActivityHandler := connect_go.NewUnaryHandler(
+		WFMGetTimeOffSchedulingActivityProcedure,
+		svc.GetTimeOffSchedulingActivity,
+		opts...,
+	)
 	wFMCreateAgentGroupHandler := connect_go.NewUnaryHandler(
 		WFMCreateAgentGroupProcedure,
 		svc.CreateAgentGroup,
@@ -7037,6 +7114,10 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMListCandidateSchedulingActivitiesHandler.ServeHTTP(w, r)
 		case WFMGetOnCallSchedulingActivityProcedure:
 			wFMGetOnCallSchedulingActivityHandler.ServeHTTP(w, r)
+		case WFMListPatternsForSchedulingActivityClassificationsProcedure:
+			wFMListPatternsForSchedulingActivityClassificationsHandler.ServeHTTP(w, r)
+		case WFMGetTimeOffSchedulingActivityProcedure:
+			wFMGetTimeOffSchedulingActivityHandler.ServeHTTP(w, r)
 		case WFMCreateAgentGroupProcedure:
 			wFMCreateAgentGroupHandler.ServeHTTP(w, r)
 		case WFMListAgentScheduleGroupsProcedure:
@@ -7570,6 +7651,14 @@ func (UnimplementedWFMHandler) ListCandidateSchedulingActivities(context.Context
 
 func (UnimplementedWFMHandler) GetOnCallSchedulingActivity(context.Context, *connect_go.Request[wfm.GetOnCallSchedulingActivityReq]) (*connect_go.Response[wfm.GetOnCallSchedulingActivityRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.GetOnCallSchedulingActivity is not implemented"))
+}
+
+func (UnimplementedWFMHandler) ListPatternsForSchedulingActivityClassifications(context.Context, *connect_go.Request[wfm.ListPatternsForSchedulingActivityClassificationsRequest]) (*connect_go.Response[wfm.ListPatternsForSchedulingActivityClassificationsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListPatternsForSchedulingActivityClassifications is not implemented"))
+}
+
+func (UnimplementedWFMHandler) GetTimeOffSchedulingActivity(context.Context, *connect_go.Request[wfm.GetTimeOffSchedulingActivityRequest]) (*connect_go.Response[wfm.GetTimeOffSchedulingActivityResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.GetTimeOffSchedulingActivity is not implemented"))
 }
 
 func (UnimplementedWFMHandler) CreateAgentGroup(context.Context, *connect_go.Request[wfm.CreateAgentGroupReq]) (*connect_go.Response[wfm.CreateAgentGroupRes], error) {
