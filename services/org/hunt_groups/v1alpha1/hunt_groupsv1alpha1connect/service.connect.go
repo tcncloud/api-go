@@ -54,6 +54,9 @@ const (
 	// HuntGroupsServiceAdminCopyHuntGroupToOrganizationProcedure is the fully-qualified name of the
 	// HuntGroupsService's AdminCopyHuntGroupToOrganization RPC.
 	HuntGroupsServiceAdminCopyHuntGroupToOrganizationProcedure = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/AdminCopyHuntGroupToOrganization"
+	// HuntGroupsServiceAdminListHuntGroupsProcedure is the fully-qualified name of the
+	// HuntGroupsService's AdminListHuntGroups RPC.
+	HuntGroupsServiceAdminListHuntGroupsProcedure = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/AdminListHuntGroups"
 )
 
 // HuntGroupsServiceClient is a client for the services.org.hunt_groups.v1alpha1.HuntGroupsService
@@ -80,6 +83,8 @@ type HuntGroupsServiceClient interface {
 	// This will create a new hunt group in the destination organization with the same
 	// settings/parameters and all associated data (skill, call-queue config) as the source hunt group.
 	AdminCopyHuntGroupToOrganization(context.Context, *connect_go.Request[v1alpha1.AdminCopyHuntGroupToOrganizationRequest]) (*connect_go.Response[v1alpha1.AdminCopyHuntGroupToOrganizationResponse], error)
+	// AdminListHuntGroups returns a list of hunt groups for the given organization.
+	AdminListHuntGroups(context.Context, *connect_go.Request[v1alpha1.AdminListHuntGroupsRequest]) (*connect_go.Response[v1alpha1.AdminListHuntGroupsResponse], error)
 }
 
 // NewHuntGroupsServiceClient constructs a client for the
@@ -128,6 +133,11 @@ func NewHuntGroupsServiceClient(httpClient connect_go.HTTPClient, baseURL string
 			baseURL+HuntGroupsServiceAdminCopyHuntGroupToOrganizationProcedure,
 			opts...,
 		),
+		adminListHuntGroups: connect_go.NewClient[v1alpha1.AdminListHuntGroupsRequest, v1alpha1.AdminListHuntGroupsResponse](
+			httpClient,
+			baseURL+HuntGroupsServiceAdminListHuntGroupsProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -140,6 +150,7 @@ type huntGroupsServiceClient struct {
 	copyHuntGroupAgentTrigger        *connect_go.Client[v1alpha1.CopyHuntGroupAgentTriggerRequest, v1alpha1.CopyHuntGroupAgentTriggerResponse]
 	updateHuntGroupAgentTriggers     *connect_go.Client[v1alpha1.UpdateHuntGroupAgentTriggersRequest, v1alpha1.UpdateHuntGroupAgentTriggersResponse]
 	adminCopyHuntGroupToOrganization *connect_go.Client[v1alpha1.AdminCopyHuntGroupToOrganizationRequest, v1alpha1.AdminCopyHuntGroupToOrganizationResponse]
+	adminListHuntGroups              *connect_go.Client[v1alpha1.AdminListHuntGroupsRequest, v1alpha1.AdminListHuntGroupsResponse]
 }
 
 // ListHuntGroupExileLinks calls
@@ -184,6 +195,12 @@ func (c *huntGroupsServiceClient) AdminCopyHuntGroupToOrganization(ctx context.C
 	return c.adminCopyHuntGroupToOrganization.CallUnary(ctx, req)
 }
 
+// AdminListHuntGroups calls
+// services.org.hunt_groups.v1alpha1.HuntGroupsService.AdminListHuntGroups.
+func (c *huntGroupsServiceClient) AdminListHuntGroups(ctx context.Context, req *connect_go.Request[v1alpha1.AdminListHuntGroupsRequest]) (*connect_go.Response[v1alpha1.AdminListHuntGroupsResponse], error) {
+	return c.adminListHuntGroups.CallUnary(ctx, req)
+}
+
 // HuntGroupsServiceHandler is an implementation of the
 // services.org.hunt_groups.v1alpha1.HuntGroupsService service.
 type HuntGroupsServiceHandler interface {
@@ -208,6 +225,8 @@ type HuntGroupsServiceHandler interface {
 	// This will create a new hunt group in the destination organization with the same
 	// settings/parameters and all associated data (skill, call-queue config) as the source hunt group.
 	AdminCopyHuntGroupToOrganization(context.Context, *connect_go.Request[v1alpha1.AdminCopyHuntGroupToOrganizationRequest]) (*connect_go.Response[v1alpha1.AdminCopyHuntGroupToOrganizationResponse], error)
+	// AdminListHuntGroups returns a list of hunt groups for the given organization.
+	AdminListHuntGroups(context.Context, *connect_go.Request[v1alpha1.AdminListHuntGroupsRequest]) (*connect_go.Response[v1alpha1.AdminListHuntGroupsResponse], error)
 }
 
 // NewHuntGroupsServiceHandler builds an HTTP handler from the service implementation. It returns
@@ -251,6 +270,11 @@ func NewHuntGroupsServiceHandler(svc HuntGroupsServiceHandler, opts ...connect_g
 		svc.AdminCopyHuntGroupToOrganization,
 		opts...,
 	)
+	huntGroupsServiceAdminListHuntGroupsHandler := connect_go.NewUnaryHandler(
+		HuntGroupsServiceAdminListHuntGroupsProcedure,
+		svc.AdminListHuntGroups,
+		opts...,
+	)
 	return "/services.org.hunt_groups.v1alpha1.HuntGroupsService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case HuntGroupsServiceListHuntGroupExileLinksProcedure:
@@ -267,6 +291,8 @@ func NewHuntGroupsServiceHandler(svc HuntGroupsServiceHandler, opts ...connect_g
 			huntGroupsServiceUpdateHuntGroupAgentTriggersHandler.ServeHTTP(w, r)
 		case HuntGroupsServiceAdminCopyHuntGroupToOrganizationProcedure:
 			huntGroupsServiceAdminCopyHuntGroupToOrganizationHandler.ServeHTTP(w, r)
+		case HuntGroupsServiceAdminListHuntGroupsProcedure:
+			huntGroupsServiceAdminListHuntGroupsHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -302,4 +328,8 @@ func (UnimplementedHuntGroupsServiceHandler) UpdateHuntGroupAgentTriggers(contex
 
 func (UnimplementedHuntGroupsServiceHandler) AdminCopyHuntGroupToOrganization(context.Context, *connect_go.Request[v1alpha1.AdminCopyHuntGroupToOrganizationRequest]) (*connect_go.Response[v1alpha1.AdminCopyHuntGroupToOrganizationResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.org.hunt_groups.v1alpha1.HuntGroupsService.AdminCopyHuntGroupToOrganization is not implemented"))
+}
+
+func (UnimplementedHuntGroupsServiceHandler) AdminListHuntGroups(context.Context, *connect_go.Request[v1alpha1.AdminListHuntGroupsRequest]) (*connect_go.Response[v1alpha1.AdminListHuntGroupsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.org.hunt_groups.v1alpha1.HuntGroupsService.AdminListHuntGroups is not implemented"))
 }

@@ -26,6 +26,7 @@ const (
 	HuntGroupsService_CopyHuntGroupAgentTrigger_FullMethodName        = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/CopyHuntGroupAgentTrigger"
 	HuntGroupsService_UpdateHuntGroupAgentTriggers_FullMethodName     = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/UpdateHuntGroupAgentTriggers"
 	HuntGroupsService_AdminCopyHuntGroupToOrganization_FullMethodName = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/AdminCopyHuntGroupToOrganization"
+	HuntGroupsService_AdminListHuntGroups_FullMethodName              = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/AdminListHuntGroups"
 )
 
 // HuntGroupsServiceClient is the client API for HuntGroupsService service.
@@ -55,6 +56,8 @@ type HuntGroupsServiceClient interface {
 	// This will create a new hunt group in the destination organization with the same
 	// settings/parameters and all associated data (skill, call-queue config) as the source hunt group.
 	AdminCopyHuntGroupToOrganization(ctx context.Context, in *AdminCopyHuntGroupToOrganizationRequest, opts ...grpc.CallOption) (*AdminCopyHuntGroupToOrganizationResponse, error)
+	// AdminListHuntGroups returns a list of hunt groups for the given organization.
+	AdminListHuntGroups(ctx context.Context, in *AdminListHuntGroupsRequest, opts ...grpc.CallOption) (*AdminListHuntGroupsResponse, error)
 }
 
 type huntGroupsServiceClient struct {
@@ -135,6 +138,16 @@ func (c *huntGroupsServiceClient) AdminCopyHuntGroupToOrganization(ctx context.C
 	return out, nil
 }
 
+func (c *huntGroupsServiceClient) AdminListHuntGroups(ctx context.Context, in *AdminListHuntGroupsRequest, opts ...grpc.CallOption) (*AdminListHuntGroupsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AdminListHuntGroupsResponse)
+	err := c.cc.Invoke(ctx, HuntGroupsService_AdminListHuntGroups_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // HuntGroupsServiceServer is the server API for HuntGroupsService service.
 // All implementations must embed UnimplementedHuntGroupsServiceServer
 // for forward compatibility.
@@ -162,6 +175,8 @@ type HuntGroupsServiceServer interface {
 	// This will create a new hunt group in the destination organization with the same
 	// settings/parameters and all associated data (skill, call-queue config) as the source hunt group.
 	AdminCopyHuntGroupToOrganization(context.Context, *AdminCopyHuntGroupToOrganizationRequest) (*AdminCopyHuntGroupToOrganizationResponse, error)
+	// AdminListHuntGroups returns a list of hunt groups for the given organization.
+	AdminListHuntGroups(context.Context, *AdminListHuntGroupsRequest) (*AdminListHuntGroupsResponse, error)
 	mustEmbedUnimplementedHuntGroupsServiceServer()
 }
 
@@ -192,6 +207,9 @@ func (UnimplementedHuntGroupsServiceServer) UpdateHuntGroupAgentTriggers(context
 }
 func (UnimplementedHuntGroupsServiceServer) AdminCopyHuntGroupToOrganization(context.Context, *AdminCopyHuntGroupToOrganizationRequest) (*AdminCopyHuntGroupToOrganizationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AdminCopyHuntGroupToOrganization not implemented")
+}
+func (UnimplementedHuntGroupsServiceServer) AdminListHuntGroups(context.Context, *AdminListHuntGroupsRequest) (*AdminListHuntGroupsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AdminListHuntGroups not implemented")
 }
 func (UnimplementedHuntGroupsServiceServer) mustEmbedUnimplementedHuntGroupsServiceServer() {}
 func (UnimplementedHuntGroupsServiceServer) testEmbeddedByValue()                           {}
@@ -340,6 +358,24 @@ func _HuntGroupsService_AdminCopyHuntGroupToOrganization_Handler(srv interface{}
 	return interceptor(ctx, in, info, handler)
 }
 
+func _HuntGroupsService_AdminListHuntGroups_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdminListHuntGroupsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HuntGroupsServiceServer).AdminListHuntGroups(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HuntGroupsService_AdminListHuntGroups_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HuntGroupsServiceServer).AdminListHuntGroups(ctx, req.(*AdminListHuntGroupsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // HuntGroupsService_ServiceDesc is the grpc.ServiceDesc for HuntGroupsService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -374,6 +410,10 @@ var HuntGroupsService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AdminCopyHuntGroupToOrganization",
 			Handler:    _HuntGroupsService_AdminCopyHuntGroupToOrganization_Handler,
+		},
+		{
+			MethodName: "AdminListHuntGroups",
+			Handler:    _HuntGroupsService_AdminListHuntGroups_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
