@@ -124,6 +124,9 @@ const (
 	// IntegrationsProcessWorkflowProcedure is the fully-qualified name of the Integrations's
 	// ProcessWorkflow RPC.
 	IntegrationsProcessWorkflowProcedure = "/api.v1alpha1.integrations.Integrations/ProcessWorkflow"
+	// IntegrationsInsertPrivateFieldProcedure is the fully-qualified name of the Integrations's
+	// InsertPrivateField RPC.
+	IntegrationsInsertPrivateFieldProcedure = "/api.v1alpha1.integrations.Integrations/InsertPrivateField"
 )
 
 // IntegrationsClient is a client for the api.v1alpha1.integrations.Integrations service.
@@ -188,6 +191,7 @@ type IntegrationsClient interface {
 	GenerateEpicKeyPairs(context.Context, *connect_go.Request[integrations.GenerateEpicKeyPairReq]) (*connect_go.Response[integrations.GenerateEpicKeyPairRes], error)
 	PopulateIntegrationLink(context.Context, *connect_go.Request[integrations.PopulateIntegrationLinkReq]) (*connect_go.Response[integrations.PopulateIntegrationLinkRes], error)
 	ProcessWorkflow(context.Context, *connect_go.Request[integrations.ProcessWorkflowReq]) (*connect_go.Response[integrations.ProcessWorkflowRes], error)
+	InsertPrivateField(context.Context, *connect_go.Request[integrations.InsertPrivateFieldReq]) (*connect_go.Response[integrations.InsertPrivateFieldRes], error)
 }
 
 // NewIntegrationsClient constructs a client for the api.v1alpha1.integrations.Integrations service.
@@ -355,6 +359,11 @@ func NewIntegrationsClient(httpClient connect_go.HTTPClient, baseURL string, opt
 			baseURL+IntegrationsProcessWorkflowProcedure,
 			opts...,
 		),
+		insertPrivateField: connect_go.NewClient[integrations.InsertPrivateFieldReq, integrations.InsertPrivateFieldRes](
+			httpClient,
+			baseURL+IntegrationsInsertPrivateFieldProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -391,6 +400,7 @@ type integrationsClient struct {
 	generateEpicKeyPairs                *connect_go.Client[integrations.GenerateEpicKeyPairReq, integrations.GenerateEpicKeyPairRes]
 	populateIntegrationLink             *connect_go.Client[integrations.PopulateIntegrationLinkReq, integrations.PopulateIntegrationLinkRes]
 	processWorkflow                     *connect_go.Client[integrations.ProcessWorkflowReq, integrations.ProcessWorkflowRes]
+	insertPrivateField                  *connect_go.Client[integrations.InsertPrivateFieldReq, integrations.InsertPrivateFieldRes]
 }
 
 // Process calls api.v1alpha1.integrations.Integrations.Process.
@@ -552,6 +562,11 @@ func (c *integrationsClient) ProcessWorkflow(ctx context.Context, req *connect_g
 	return c.processWorkflow.CallUnary(ctx, req)
 }
 
+// InsertPrivateField calls api.v1alpha1.integrations.Integrations.InsertPrivateField.
+func (c *integrationsClient) InsertPrivateField(ctx context.Context, req *connect_go.Request[integrations.InsertPrivateFieldReq]) (*connect_go.Response[integrations.InsertPrivateFieldRes], error) {
+	return c.insertPrivateField.CallUnary(ctx, req)
+}
+
 // IntegrationsHandler is an implementation of the api.v1alpha1.integrations.Integrations service.
 type IntegrationsHandler interface {
 	// combine rquest parameters with the config parameters and run the integration method
@@ -614,6 +629,7 @@ type IntegrationsHandler interface {
 	GenerateEpicKeyPairs(context.Context, *connect_go.Request[integrations.GenerateEpicKeyPairReq]) (*connect_go.Response[integrations.GenerateEpicKeyPairRes], error)
 	PopulateIntegrationLink(context.Context, *connect_go.Request[integrations.PopulateIntegrationLinkReq]) (*connect_go.Response[integrations.PopulateIntegrationLinkRes], error)
 	ProcessWorkflow(context.Context, *connect_go.Request[integrations.ProcessWorkflowReq]) (*connect_go.Response[integrations.ProcessWorkflowRes], error)
+	InsertPrivateField(context.Context, *connect_go.Request[integrations.InsertPrivateFieldReq]) (*connect_go.Response[integrations.InsertPrivateFieldRes], error)
 }
 
 // NewIntegrationsHandler builds an HTTP handler from the service implementation. It returns the
@@ -777,6 +793,11 @@ func NewIntegrationsHandler(svc IntegrationsHandler, opts ...connect_go.HandlerO
 		svc.ProcessWorkflow,
 		opts...,
 	)
+	integrationsInsertPrivateFieldHandler := connect_go.NewUnaryHandler(
+		IntegrationsInsertPrivateFieldProcedure,
+		svc.InsertPrivateField,
+		opts...,
+	)
 	return "/api.v1alpha1.integrations.Integrations/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case IntegrationsProcessProcedure:
@@ -841,6 +862,8 @@ func NewIntegrationsHandler(svc IntegrationsHandler, opts ...connect_go.HandlerO
 			integrationsPopulateIntegrationLinkHandler.ServeHTTP(w, r)
 		case IntegrationsProcessWorkflowProcedure:
 			integrationsProcessWorkflowHandler.ServeHTTP(w, r)
+		case IntegrationsInsertPrivateFieldProcedure:
+			integrationsInsertPrivateFieldHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -972,4 +995,8 @@ func (UnimplementedIntegrationsHandler) PopulateIntegrationLink(context.Context,
 
 func (UnimplementedIntegrationsHandler) ProcessWorkflow(context.Context, *connect_go.Request[integrations.ProcessWorkflowReq]) (*connect_go.Response[integrations.ProcessWorkflowRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.integrations.Integrations.ProcessWorkflow is not implemented"))
+}
+
+func (UnimplementedIntegrationsHandler) InsertPrivateField(context.Context, *connect_go.Request[integrations.InsertPrivateFieldReq]) (*connect_go.Response[integrations.InsertPrivateFieldRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.integrations.Integrations.InsertPrivateField is not implemented"))
 }

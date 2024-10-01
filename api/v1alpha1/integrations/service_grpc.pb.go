@@ -50,6 +50,7 @@ const (
 	Integrations_GenerateEpicKeyPairs_FullMethodName                = "/api.v1alpha1.integrations.Integrations/GenerateEpicKeyPairs"
 	Integrations_PopulateIntegrationLink_FullMethodName             = "/api.v1alpha1.integrations.Integrations/PopulateIntegrationLink"
 	Integrations_ProcessWorkflow_FullMethodName                     = "/api.v1alpha1.integrations.Integrations/ProcessWorkflow"
+	Integrations_InsertPrivateField_FullMethodName                  = "/api.v1alpha1.integrations.Integrations/InsertPrivateField"
 )
 
 // IntegrationsClient is the client API for Integrations service.
@@ -116,6 +117,7 @@ type IntegrationsClient interface {
 	GenerateEpicKeyPairs(ctx context.Context, in *GenerateEpicKeyPairReq, opts ...grpc.CallOption) (*GenerateEpicKeyPairRes, error)
 	PopulateIntegrationLink(ctx context.Context, in *PopulateIntegrationLinkReq, opts ...grpc.CallOption) (*PopulateIntegrationLinkRes, error)
 	ProcessWorkflow(ctx context.Context, in *ProcessWorkflowReq, opts ...grpc.CallOption) (*ProcessWorkflowRes, error)
+	InsertPrivateField(ctx context.Context, in *InsertPrivateFieldReq, opts ...grpc.CallOption) (*InsertPrivateFieldRes, error)
 }
 
 type integrationsClient struct {
@@ -436,6 +438,16 @@ func (c *integrationsClient) ProcessWorkflow(ctx context.Context, in *ProcessWor
 	return out, nil
 }
 
+func (c *integrationsClient) InsertPrivateField(ctx context.Context, in *InsertPrivateFieldReq, opts ...grpc.CallOption) (*InsertPrivateFieldRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InsertPrivateFieldRes)
+	err := c.cc.Invoke(ctx, Integrations_InsertPrivateField_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // IntegrationsServer is the server API for Integrations service.
 // All implementations must embed UnimplementedIntegrationsServer
 // for forward compatibility.
@@ -500,6 +512,7 @@ type IntegrationsServer interface {
 	GenerateEpicKeyPairs(context.Context, *GenerateEpicKeyPairReq) (*GenerateEpicKeyPairRes, error)
 	PopulateIntegrationLink(context.Context, *PopulateIntegrationLinkReq) (*PopulateIntegrationLinkRes, error)
 	ProcessWorkflow(context.Context, *ProcessWorkflowReq) (*ProcessWorkflowRes, error)
+	InsertPrivateField(context.Context, *InsertPrivateFieldReq) (*InsertPrivateFieldRes, error)
 	mustEmbedUnimplementedIntegrationsServer()
 }
 
@@ -602,6 +615,9 @@ func (UnimplementedIntegrationsServer) PopulateIntegrationLink(context.Context, 
 }
 func (UnimplementedIntegrationsServer) ProcessWorkflow(context.Context, *ProcessWorkflowReq) (*ProcessWorkflowRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ProcessWorkflow not implemented")
+}
+func (UnimplementedIntegrationsServer) InsertPrivateField(context.Context, *InsertPrivateFieldReq) (*InsertPrivateFieldRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InsertPrivateField not implemented")
 }
 func (UnimplementedIntegrationsServer) mustEmbedUnimplementedIntegrationsServer() {}
 func (UnimplementedIntegrationsServer) testEmbeddedByValue()                      {}
@@ -1182,6 +1198,24 @@ func _Integrations_ProcessWorkflow_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Integrations_InsertPrivateField_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InsertPrivateFieldReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IntegrationsServer).InsertPrivateField(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Integrations_InsertPrivateField_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IntegrationsServer).InsertPrivateField(ctx, req.(*InsertPrivateFieldReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Integrations_ServiceDesc is the grpc.ServiceDesc for Integrations service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1312,6 +1346,10 @@ var Integrations_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ProcessWorkflow",
 			Handler:    _Integrations_ProcessWorkflow_Handler,
+		},
+		{
+			MethodName: "InsertPrivateField",
+			Handler:    _Integrations_InsertPrivateField_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
