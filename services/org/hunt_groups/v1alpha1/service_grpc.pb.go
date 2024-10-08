@@ -25,6 +25,7 @@ const (
 	HuntGroupsService_ListHuntGroupAgentTriggers_FullMethodName       = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/ListHuntGroupAgentTriggers"
 	HuntGroupsService_CopyHuntGroupAgentTrigger_FullMethodName        = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/CopyHuntGroupAgentTrigger"
 	HuntGroupsService_UpdateHuntGroupAgentTriggers_FullMethodName     = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/UpdateHuntGroupAgentTriggers"
+	HuntGroupsService_CopyHuntGroupToOrganization_FullMethodName      = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/CopyHuntGroupToOrganization"
 	HuntGroupsService_AdminCopyHuntGroupToOrganization_FullMethodName = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/AdminCopyHuntGroupToOrganization"
 	HuntGroupsService_AdminListHuntGroups_FullMethodName              = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/AdminListHuntGroups"
 )
@@ -52,6 +53,11 @@ type HuntGroupsServiceClient interface {
 	CopyHuntGroupAgentTrigger(ctx context.Context, in *CopyHuntGroupAgentTriggerRequest, opts ...grpc.CallOption) (*CopyHuntGroupAgentTriggerResponse, error)
 	// UpdateHuntGroupAgentTriggers updates all agent triggers for the given hunt group.
 	UpdateHuntGroupAgentTriggers(ctx context.Context, in *UpdateHuntGroupAgentTriggersRequest, opts ...grpc.CallOption) (*UpdateHuntGroupAgentTriggersResponse, error)
+	// CopyHuntGroupToOrganization copies a hunt group to a different organization.
+	// The destination organization must be a child of the source organization.
+	// This would create a new hunt group in the destination organization with the same
+	// settings/parameters and all associated data (skill, call-queue config) as the source hunt group.
+	CopyHuntGroupToOrganization(ctx context.Context, in *CopyHuntGroupToOrganizationRequest, opts ...grpc.CallOption) (*CopyHuntGroupToOrganizationResponse, error)
 	// AdminCopyHuntGroupToOrganization copies a hunt group to a different organization.
 	// This will create a new hunt group in the destination organization with the same
 	// settings/parameters and all associated data (skill, call-queue config) as the source hunt group.
@@ -128,6 +134,16 @@ func (c *huntGroupsServiceClient) UpdateHuntGroupAgentTriggers(ctx context.Conte
 	return out, nil
 }
 
+func (c *huntGroupsServiceClient) CopyHuntGroupToOrganization(ctx context.Context, in *CopyHuntGroupToOrganizationRequest, opts ...grpc.CallOption) (*CopyHuntGroupToOrganizationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CopyHuntGroupToOrganizationResponse)
+	err := c.cc.Invoke(ctx, HuntGroupsService_CopyHuntGroupToOrganization_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *huntGroupsServiceClient) AdminCopyHuntGroupToOrganization(ctx context.Context, in *AdminCopyHuntGroupToOrganizationRequest, opts ...grpc.CallOption) (*AdminCopyHuntGroupToOrganizationResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(AdminCopyHuntGroupToOrganizationResponse)
@@ -171,6 +187,11 @@ type HuntGroupsServiceServer interface {
 	CopyHuntGroupAgentTrigger(context.Context, *CopyHuntGroupAgentTriggerRequest) (*CopyHuntGroupAgentTriggerResponse, error)
 	// UpdateHuntGroupAgentTriggers updates all agent triggers for the given hunt group.
 	UpdateHuntGroupAgentTriggers(context.Context, *UpdateHuntGroupAgentTriggersRequest) (*UpdateHuntGroupAgentTriggersResponse, error)
+	// CopyHuntGroupToOrganization copies a hunt group to a different organization.
+	// The destination organization must be a child of the source organization.
+	// This would create a new hunt group in the destination organization with the same
+	// settings/parameters and all associated data (skill, call-queue config) as the source hunt group.
+	CopyHuntGroupToOrganization(context.Context, *CopyHuntGroupToOrganizationRequest) (*CopyHuntGroupToOrganizationResponse, error)
 	// AdminCopyHuntGroupToOrganization copies a hunt group to a different organization.
 	// This will create a new hunt group in the destination organization with the same
 	// settings/parameters and all associated data (skill, call-queue config) as the source hunt group.
@@ -204,6 +225,9 @@ func (UnimplementedHuntGroupsServiceServer) CopyHuntGroupAgentTrigger(context.Co
 }
 func (UnimplementedHuntGroupsServiceServer) UpdateHuntGroupAgentTriggers(context.Context, *UpdateHuntGroupAgentTriggersRequest) (*UpdateHuntGroupAgentTriggersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateHuntGroupAgentTriggers not implemented")
+}
+func (UnimplementedHuntGroupsServiceServer) CopyHuntGroupToOrganization(context.Context, *CopyHuntGroupToOrganizationRequest) (*CopyHuntGroupToOrganizationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CopyHuntGroupToOrganization not implemented")
 }
 func (UnimplementedHuntGroupsServiceServer) AdminCopyHuntGroupToOrganization(context.Context, *AdminCopyHuntGroupToOrganizationRequest) (*AdminCopyHuntGroupToOrganizationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AdminCopyHuntGroupToOrganization not implemented")
@@ -340,6 +364,24 @@ func _HuntGroupsService_UpdateHuntGroupAgentTriggers_Handler(srv interface{}, ct
 	return interceptor(ctx, in, info, handler)
 }
 
+func _HuntGroupsService_CopyHuntGroupToOrganization_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CopyHuntGroupToOrganizationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HuntGroupsServiceServer).CopyHuntGroupToOrganization(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HuntGroupsService_CopyHuntGroupToOrganization_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HuntGroupsServiceServer).CopyHuntGroupToOrganization(ctx, req.(*CopyHuntGroupToOrganizationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _HuntGroupsService_AdminCopyHuntGroupToOrganization_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AdminCopyHuntGroupToOrganizationRequest)
 	if err := dec(in); err != nil {
@@ -406,6 +448,10 @@ var HuntGroupsService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateHuntGroupAgentTriggers",
 			Handler:    _HuntGroupsService_UpdateHuntGroupAgentTriggers_Handler,
+		},
+		{
+			MethodName: "CopyHuntGroupToOrganization",
+			Handler:    _HuntGroupsService_CopyHuntGroupToOrganization_Handler,
 		},
 		{
 			MethodName: "AdminCopyHuntGroupToOrganization",

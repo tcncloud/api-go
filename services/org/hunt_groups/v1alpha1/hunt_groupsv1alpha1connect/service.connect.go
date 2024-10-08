@@ -51,6 +51,9 @@ const (
 	// HuntGroupsServiceUpdateHuntGroupAgentTriggersProcedure is the fully-qualified name of the
 	// HuntGroupsService's UpdateHuntGroupAgentTriggers RPC.
 	HuntGroupsServiceUpdateHuntGroupAgentTriggersProcedure = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/UpdateHuntGroupAgentTriggers"
+	// HuntGroupsServiceCopyHuntGroupToOrganizationProcedure is the fully-qualified name of the
+	// HuntGroupsService's CopyHuntGroupToOrganization RPC.
+	HuntGroupsServiceCopyHuntGroupToOrganizationProcedure = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/CopyHuntGroupToOrganization"
 	// HuntGroupsServiceAdminCopyHuntGroupToOrganizationProcedure is the fully-qualified name of the
 	// HuntGroupsService's AdminCopyHuntGroupToOrganization RPC.
 	HuntGroupsServiceAdminCopyHuntGroupToOrganizationProcedure = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/AdminCopyHuntGroupToOrganization"
@@ -79,6 +82,11 @@ type HuntGroupsServiceClient interface {
 	CopyHuntGroupAgentTrigger(context.Context, *connect_go.Request[v1alpha1.CopyHuntGroupAgentTriggerRequest]) (*connect_go.Response[v1alpha1.CopyHuntGroupAgentTriggerResponse], error)
 	// UpdateHuntGroupAgentTriggers updates all agent triggers for the given hunt group.
 	UpdateHuntGroupAgentTriggers(context.Context, *connect_go.Request[v1alpha1.UpdateHuntGroupAgentTriggersRequest]) (*connect_go.Response[v1alpha1.UpdateHuntGroupAgentTriggersResponse], error)
+	// CopyHuntGroupToOrganization copies a hunt group to a different organization.
+	// The destination organization must be a child of the source organization.
+	// This would create a new hunt group in the destination organization with the same
+	// settings/parameters and all associated data (skill, call-queue config) as the source hunt group.
+	CopyHuntGroupToOrganization(context.Context, *connect_go.Request[v1alpha1.CopyHuntGroupToOrganizationRequest]) (*connect_go.Response[v1alpha1.CopyHuntGroupToOrganizationResponse], error)
 	// AdminCopyHuntGroupToOrganization copies a hunt group to a different organization.
 	// This will create a new hunt group in the destination organization with the same
 	// settings/parameters and all associated data (skill, call-queue config) as the source hunt group.
@@ -128,6 +136,11 @@ func NewHuntGroupsServiceClient(httpClient connect_go.HTTPClient, baseURL string
 			baseURL+HuntGroupsServiceUpdateHuntGroupAgentTriggersProcedure,
 			opts...,
 		),
+		copyHuntGroupToOrganization: connect_go.NewClient[v1alpha1.CopyHuntGroupToOrganizationRequest, v1alpha1.CopyHuntGroupToOrganizationResponse](
+			httpClient,
+			baseURL+HuntGroupsServiceCopyHuntGroupToOrganizationProcedure,
+			opts...,
+		),
 		adminCopyHuntGroupToOrganization: connect_go.NewClient[v1alpha1.AdminCopyHuntGroupToOrganizationRequest, v1alpha1.AdminCopyHuntGroupToOrganizationResponse](
 			httpClient,
 			baseURL+HuntGroupsServiceAdminCopyHuntGroupToOrganizationProcedure,
@@ -149,6 +162,7 @@ type huntGroupsServiceClient struct {
 	listHuntGroupAgentTriggers       *connect_go.Client[v1alpha1.ListHuntGroupAgentTriggersRequest, v1alpha1.ListHuntGroupAgentTriggersResponse]
 	copyHuntGroupAgentTrigger        *connect_go.Client[v1alpha1.CopyHuntGroupAgentTriggerRequest, v1alpha1.CopyHuntGroupAgentTriggerResponse]
 	updateHuntGroupAgentTriggers     *connect_go.Client[v1alpha1.UpdateHuntGroupAgentTriggersRequest, v1alpha1.UpdateHuntGroupAgentTriggersResponse]
+	copyHuntGroupToOrganization      *connect_go.Client[v1alpha1.CopyHuntGroupToOrganizationRequest, v1alpha1.CopyHuntGroupToOrganizationResponse]
 	adminCopyHuntGroupToOrganization *connect_go.Client[v1alpha1.AdminCopyHuntGroupToOrganizationRequest, v1alpha1.AdminCopyHuntGroupToOrganizationResponse]
 	adminListHuntGroups              *connect_go.Client[v1alpha1.AdminListHuntGroupsRequest, v1alpha1.AdminListHuntGroupsResponse]
 }
@@ -189,6 +203,12 @@ func (c *huntGroupsServiceClient) UpdateHuntGroupAgentTriggers(ctx context.Conte
 	return c.updateHuntGroupAgentTriggers.CallUnary(ctx, req)
 }
 
+// CopyHuntGroupToOrganization calls
+// services.org.hunt_groups.v1alpha1.HuntGroupsService.CopyHuntGroupToOrganization.
+func (c *huntGroupsServiceClient) CopyHuntGroupToOrganization(ctx context.Context, req *connect_go.Request[v1alpha1.CopyHuntGroupToOrganizationRequest]) (*connect_go.Response[v1alpha1.CopyHuntGroupToOrganizationResponse], error) {
+	return c.copyHuntGroupToOrganization.CallUnary(ctx, req)
+}
+
 // AdminCopyHuntGroupToOrganization calls
 // services.org.hunt_groups.v1alpha1.HuntGroupsService.AdminCopyHuntGroupToOrganization.
 func (c *huntGroupsServiceClient) AdminCopyHuntGroupToOrganization(ctx context.Context, req *connect_go.Request[v1alpha1.AdminCopyHuntGroupToOrganizationRequest]) (*connect_go.Response[v1alpha1.AdminCopyHuntGroupToOrganizationResponse], error) {
@@ -221,6 +241,11 @@ type HuntGroupsServiceHandler interface {
 	CopyHuntGroupAgentTrigger(context.Context, *connect_go.Request[v1alpha1.CopyHuntGroupAgentTriggerRequest]) (*connect_go.Response[v1alpha1.CopyHuntGroupAgentTriggerResponse], error)
 	// UpdateHuntGroupAgentTriggers updates all agent triggers for the given hunt group.
 	UpdateHuntGroupAgentTriggers(context.Context, *connect_go.Request[v1alpha1.UpdateHuntGroupAgentTriggersRequest]) (*connect_go.Response[v1alpha1.UpdateHuntGroupAgentTriggersResponse], error)
+	// CopyHuntGroupToOrganization copies a hunt group to a different organization.
+	// The destination organization must be a child of the source organization.
+	// This would create a new hunt group in the destination organization with the same
+	// settings/parameters and all associated data (skill, call-queue config) as the source hunt group.
+	CopyHuntGroupToOrganization(context.Context, *connect_go.Request[v1alpha1.CopyHuntGroupToOrganizationRequest]) (*connect_go.Response[v1alpha1.CopyHuntGroupToOrganizationResponse], error)
 	// AdminCopyHuntGroupToOrganization copies a hunt group to a different organization.
 	// This will create a new hunt group in the destination organization with the same
 	// settings/parameters and all associated data (skill, call-queue config) as the source hunt group.
@@ -265,6 +290,11 @@ func NewHuntGroupsServiceHandler(svc HuntGroupsServiceHandler, opts ...connect_g
 		svc.UpdateHuntGroupAgentTriggers,
 		opts...,
 	)
+	huntGroupsServiceCopyHuntGroupToOrganizationHandler := connect_go.NewUnaryHandler(
+		HuntGroupsServiceCopyHuntGroupToOrganizationProcedure,
+		svc.CopyHuntGroupToOrganization,
+		opts...,
+	)
 	huntGroupsServiceAdminCopyHuntGroupToOrganizationHandler := connect_go.NewUnaryHandler(
 		HuntGroupsServiceAdminCopyHuntGroupToOrganizationProcedure,
 		svc.AdminCopyHuntGroupToOrganization,
@@ -289,6 +319,8 @@ func NewHuntGroupsServiceHandler(svc HuntGroupsServiceHandler, opts ...connect_g
 			huntGroupsServiceCopyHuntGroupAgentTriggerHandler.ServeHTTP(w, r)
 		case HuntGroupsServiceUpdateHuntGroupAgentTriggersProcedure:
 			huntGroupsServiceUpdateHuntGroupAgentTriggersHandler.ServeHTTP(w, r)
+		case HuntGroupsServiceCopyHuntGroupToOrganizationProcedure:
+			huntGroupsServiceCopyHuntGroupToOrganizationHandler.ServeHTTP(w, r)
 		case HuntGroupsServiceAdminCopyHuntGroupToOrganizationProcedure:
 			huntGroupsServiceAdminCopyHuntGroupToOrganizationHandler.ServeHTTP(w, r)
 		case HuntGroupsServiceAdminListHuntGroupsProcedure:
@@ -324,6 +356,10 @@ func (UnimplementedHuntGroupsServiceHandler) CopyHuntGroupAgentTrigger(context.C
 
 func (UnimplementedHuntGroupsServiceHandler) UpdateHuntGroupAgentTriggers(context.Context, *connect_go.Request[v1alpha1.UpdateHuntGroupAgentTriggersRequest]) (*connect_go.Response[v1alpha1.UpdateHuntGroupAgentTriggersResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.org.hunt_groups.v1alpha1.HuntGroupsService.UpdateHuntGroupAgentTriggers is not implemented"))
+}
+
+func (UnimplementedHuntGroupsServiceHandler) CopyHuntGroupToOrganization(context.Context, *connect_go.Request[v1alpha1.CopyHuntGroupToOrganizationRequest]) (*connect_go.Response[v1alpha1.CopyHuntGroupToOrganizationResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.org.hunt_groups.v1alpha1.HuntGroupsService.CopyHuntGroupToOrganization is not implemented"))
 }
 
 func (UnimplementedHuntGroupsServiceHandler) AdminCopyHuntGroupToOrganization(context.Context, *connect_go.Request[v1alpha1.AdminCopyHuntGroupToOrganizationRequest]) (*connect_go.Response[v1alpha1.AdminCopyHuntGroupToOrganizationResponse], error) {
