@@ -57,6 +57,7 @@ const (
 	LMS_CreateCollection_FullMethodName                 = "/api.v0alpha.LMS/CreateCollection"
 	LMS_GetCollection_FullMethodName                    = "/api.v0alpha.LMS/GetCollection"
 	LMS_UpdateCollection_FullMethodName                 = "/api.v0alpha.LMS/UpdateCollection"
+	LMS_RetypeCollection_FullMethodName                 = "/api.v0alpha.LMS/RetypeCollection"
 	LMS_DeleteCollection_FullMethodName                 = "/api.v0alpha.LMS/DeleteCollection"
 	LMS_ListCollections_FullMethodName                  = "/api.v0alpha.LMS/ListCollections"
 	LMS_ResetCollection_FullMethodName                  = "/api.v0alpha.LMS/ResetCollection"
@@ -127,6 +128,7 @@ type LMSClient interface {
 	CreateCollection(ctx context.Context, in *CollectionMetadata, opts ...grpc.CallOption) (*CollectionMetadata, error)
 	GetCollection(ctx context.Context, in *GetCollectionReq, opts ...grpc.CallOption) (*CollectionMetadata, error)
 	UpdateCollection(ctx context.Context, in *CollectionMetadata, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	RetypeCollection(ctx context.Context, in *RetypeCollectionReq, opts ...grpc.CallOption) (*RetypeCollectionRes, error)
 	DeleteCollection(ctx context.Context, in *DeleteCollectionReq, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	ListCollections(ctx context.Context, in *ListCollectionsReq, opts ...grpc.CallOption) (*ListCollectionsRes, error)
 	ResetCollection(ctx context.Context, in *ResetCollectionReq, opts ...grpc.CallOption) (*emptypb.Empty, error)
@@ -664,6 +666,16 @@ func (c *lMSClient) UpdateCollection(ctx context.Context, in *CollectionMetadata
 	return out, nil
 }
 
+func (c *lMSClient) RetypeCollection(ctx context.Context, in *RetypeCollectionReq, opts ...grpc.CallOption) (*RetypeCollectionRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RetypeCollectionRes)
+	err := c.cc.Invoke(ctx, LMS_RetypeCollection_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *lMSClient) DeleteCollection(ctx context.Context, in *DeleteCollectionReq, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(emptypb.Empty)
@@ -953,6 +965,7 @@ type LMSServer interface {
 	CreateCollection(context.Context, *CollectionMetadata) (*CollectionMetadata, error)
 	GetCollection(context.Context, *GetCollectionReq) (*CollectionMetadata, error)
 	UpdateCollection(context.Context, *CollectionMetadata) (*emptypb.Empty, error)
+	RetypeCollection(context.Context, *RetypeCollectionReq) (*RetypeCollectionRes, error)
 	DeleteCollection(context.Context, *DeleteCollectionReq) (*emptypb.Empty, error)
 	ListCollections(context.Context, *ListCollectionsReq) (*ListCollectionsRes, error)
 	ResetCollection(context.Context, *ResetCollectionReq) (*emptypb.Empty, error)
@@ -1113,6 +1126,9 @@ func (UnimplementedLMSServer) GetCollection(context.Context, *GetCollectionReq) 
 }
 func (UnimplementedLMSServer) UpdateCollection(context.Context, *CollectionMetadata) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateCollection not implemented")
+}
+func (UnimplementedLMSServer) RetypeCollection(context.Context, *RetypeCollectionReq) (*RetypeCollectionRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RetypeCollection not implemented")
 }
 func (UnimplementedLMSServer) DeleteCollection(context.Context, *DeleteCollectionReq) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteCollection not implemented")
@@ -1887,6 +1903,24 @@ func _LMS_UpdateCollection_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LMS_RetypeCollection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RetypeCollectionReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LMSServer).RetypeCollection(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LMS_RetypeCollection_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LMSServer).RetypeCollection(ctx, req.(*RetypeCollectionReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _LMS_DeleteCollection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteCollectionReq)
 	if err := dec(in); err != nil {
@@ -2420,6 +2454,10 @@ var LMS_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateCollection",
 			Handler:    _LMS_UpdateCollection_Handler,
+		},
+		{
+			MethodName: "RetypeCollection",
+			Handler:    _LMS_RetypeCollection_Handler,
 		},
 		{
 			MethodName: "DeleteCollection",

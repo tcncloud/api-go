@@ -114,6 +114,8 @@ const (
 	LMSGetCollectionProcedure = "/api.v0alpha.LMS/GetCollection"
 	// LMSUpdateCollectionProcedure is the fully-qualified name of the LMS's UpdateCollection RPC.
 	LMSUpdateCollectionProcedure = "/api.v0alpha.LMS/UpdateCollection"
+	// LMSRetypeCollectionProcedure is the fully-qualified name of the LMS's RetypeCollection RPC.
+	LMSRetypeCollectionProcedure = "/api.v0alpha.LMS/RetypeCollection"
 	// LMSDeleteCollectionProcedure is the fully-qualified name of the LMS's DeleteCollection RPC.
 	LMSDeleteCollectionProcedure = "/api.v0alpha.LMS/DeleteCollection"
 	// LMSListCollectionsProcedure is the fully-qualified name of the LMS's ListCollections RPC.
@@ -219,6 +221,7 @@ type LMSClient interface {
 	CreateCollection(context.Context, *connect_go.Request[v0alpha.CollectionMetadata]) (*connect_go.Response[v0alpha.CollectionMetadata], error)
 	GetCollection(context.Context, *connect_go.Request[v0alpha.GetCollectionReq]) (*connect_go.Response[v0alpha.CollectionMetadata], error)
 	UpdateCollection(context.Context, *connect_go.Request[v0alpha.CollectionMetadata]) (*connect_go.Response[emptypb.Empty], error)
+	RetypeCollection(context.Context, *connect_go.Request[v0alpha.RetypeCollectionReq]) (*connect_go.Response[v0alpha.RetypeCollectionRes], error)
 	DeleteCollection(context.Context, *connect_go.Request[v0alpha.DeleteCollectionReq]) (*connect_go.Response[emptypb.Empty], error)
 	ListCollections(context.Context, *connect_go.Request[v0alpha.ListCollectionsReq]) (*connect_go.Response[v0alpha.ListCollectionsRes], error)
 	ResetCollection(context.Context, *connect_go.Request[v0alpha.ResetCollectionReq]) (*connect_go.Response[emptypb.Empty], error)
@@ -456,6 +459,11 @@ func NewLMSClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+LMSUpdateCollectionProcedure,
 			opts...,
 		),
+		retypeCollection: connect_go.NewClient[v0alpha.RetypeCollectionReq, v0alpha.RetypeCollectionRes](
+			httpClient,
+			baseURL+LMSRetypeCollectionProcedure,
+			opts...,
+		),
 		deleteCollection: connect_go.NewClient[v0alpha.DeleteCollectionReq, emptypb.Empty](
 			httpClient,
 			baseURL+LMSDeleteCollectionProcedure,
@@ -608,6 +616,7 @@ type lMSClient struct {
 	createCollection                 *connect_go.Client[v0alpha.CollectionMetadata, v0alpha.CollectionMetadata]
 	getCollection                    *connect_go.Client[v0alpha.GetCollectionReq, v0alpha.CollectionMetadata]
 	updateCollection                 *connect_go.Client[v0alpha.CollectionMetadata, emptypb.Empty]
+	retypeCollection                 *connect_go.Client[v0alpha.RetypeCollectionReq, v0alpha.RetypeCollectionRes]
 	deleteCollection                 *connect_go.Client[v0alpha.DeleteCollectionReq, emptypb.Empty]
 	listCollections                  *connect_go.Client[v0alpha.ListCollectionsReq, v0alpha.ListCollectionsRes]
 	resetCollection                  *connect_go.Client[v0alpha.ResetCollectionReq, emptypb.Empty]
@@ -817,6 +826,11 @@ func (c *lMSClient) UpdateCollection(ctx context.Context, req *connect_go.Reques
 	return c.updateCollection.CallUnary(ctx, req)
 }
 
+// RetypeCollection calls api.v0alpha.LMS.RetypeCollection.
+func (c *lMSClient) RetypeCollection(ctx context.Context, req *connect_go.Request[v0alpha.RetypeCollectionReq]) (*connect_go.Response[v0alpha.RetypeCollectionRes], error) {
+	return c.retypeCollection.CallUnary(ctx, req)
+}
+
 // DeleteCollection calls api.v0alpha.LMS.DeleteCollection.
 func (c *lMSClient) DeleteCollection(ctx context.Context, req *connect_go.Request[v0alpha.DeleteCollectionReq]) (*connect_go.Response[emptypb.Empty], error) {
 	return c.deleteCollection.CallUnary(ctx, req)
@@ -971,6 +985,7 @@ type LMSHandler interface {
 	CreateCollection(context.Context, *connect_go.Request[v0alpha.CollectionMetadata]) (*connect_go.Response[v0alpha.CollectionMetadata], error)
 	GetCollection(context.Context, *connect_go.Request[v0alpha.GetCollectionReq]) (*connect_go.Response[v0alpha.CollectionMetadata], error)
 	UpdateCollection(context.Context, *connect_go.Request[v0alpha.CollectionMetadata]) (*connect_go.Response[emptypb.Empty], error)
+	RetypeCollection(context.Context, *connect_go.Request[v0alpha.RetypeCollectionReq]) (*connect_go.Response[v0alpha.RetypeCollectionRes], error)
 	DeleteCollection(context.Context, *connect_go.Request[v0alpha.DeleteCollectionReq]) (*connect_go.Response[emptypb.Empty], error)
 	ListCollections(context.Context, *connect_go.Request[v0alpha.ListCollectionsReq]) (*connect_go.Response[v0alpha.ListCollectionsRes], error)
 	ResetCollection(context.Context, *connect_go.Request[v0alpha.ResetCollectionReq]) (*connect_go.Response[emptypb.Empty], error)
@@ -1204,6 +1219,11 @@ func NewLMSHandler(svc LMSHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.UpdateCollection,
 		opts...,
 	)
+	lMSRetypeCollectionHandler := connect_go.NewUnaryHandler(
+		LMSRetypeCollectionProcedure,
+		svc.RetypeCollection,
+		opts...,
+	)
 	lMSDeleteCollectionHandler := connect_go.NewUnaryHandler(
 		LMSDeleteCollectionProcedure,
 		svc.DeleteCollection,
@@ -1390,6 +1410,8 @@ func NewLMSHandler(svc LMSHandler, opts ...connect_go.HandlerOption) (string, ht
 			lMSGetCollectionHandler.ServeHTTP(w, r)
 		case LMSUpdateCollectionProcedure:
 			lMSUpdateCollectionHandler.ServeHTTP(w, r)
+		case LMSRetypeCollectionProcedure:
+			lMSRetypeCollectionHandler.ServeHTTP(w, r)
 		case LMSDeleteCollectionProcedure:
 			lMSDeleteCollectionHandler.ServeHTTP(w, r)
 		case LMSListCollectionsProcedure:
@@ -1589,6 +1611,10 @@ func (UnimplementedLMSHandler) GetCollection(context.Context, *connect_go.Reques
 
 func (UnimplementedLMSHandler) UpdateCollection(context.Context, *connect_go.Request[v0alpha.CollectionMetadata]) (*connect_go.Response[emptypb.Empty], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.LMS.UpdateCollection is not implemented"))
+}
+
+func (UnimplementedLMSHandler) RetypeCollection(context.Context, *connect_go.Request[v0alpha.RetypeCollectionReq]) (*connect_go.Response[v0alpha.RetypeCollectionRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.LMS.RetypeCollection is not implemented"))
 }
 
 func (UnimplementedLMSHandler) DeleteCollection(context.Context, *connect_go.Request[v0alpha.DeleteCollectionReq]) (*connect_go.Response[emptypb.Empty], error) {
