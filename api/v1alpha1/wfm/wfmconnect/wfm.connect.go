@@ -370,6 +370,11 @@ const (
 	WFMUpdateDraftScheduleProcedure = "/api.v1alpha1.wfm.WFM/UpdateDraftSchedule"
 	// WFMBuildDraftScheduleProcedure is the fully-qualified name of the WFM's BuildDraftSchedule RPC.
 	WFMBuildDraftScheduleProcedure = "/api.v1alpha1.wfm.WFM/BuildDraftSchedule"
+	// WFMPollBuildInProgressProcedure is the fully-qualified name of the WFM's PollBuildInProgress RPC.
+	WFMPollBuildInProgressProcedure = "/api.v1alpha1.wfm.WFM/PollBuildInProgress"
+	// WFMCancelBuildInProgressProcedure is the fully-qualified name of the WFM's CancelBuildInProgress
+	// RPC.
+	WFMCancelBuildInProgressProcedure = "/api.v1alpha1.wfm.WFM/CancelBuildInProgress"
 	// WFMPublishDraftScheduleProcedure is the fully-qualified name of the WFM's PublishDraftSchedule
 	// RPC.
 	WFMPublishDraftScheduleProcedure = "/api.v1alpha1.wfm.WFM/PublishDraftSchedule"
@@ -1568,6 +1573,19 @@ type WFMClient interface {
 	// Will return diagnostics for the newly built schedule, or just diagnostics if the schedule cannot be built successfully due to diagnostic error.
 	// If @auto_generate_agents is set to true, unassigned agents will automatically be generated to meet the requirements of the shift templates min and max agents.
 	BuildDraftSchedule(context.Context, *connect_go.Request[wfm.BuildDraftScheduleReq]) (*connect_go.Response[wfm.BuildDraftScheduleRes], error)
+	// Polls the scheduler to check if there is currently a build in progress for the given @draft_schedule_sid.
+	// If there is a build in progress @build_in_progress will be true and the @build_start_datetime will be set with the time that the build process started.
+	// Errors:
+	//   - grpc.Invalid: the @draft_schedule_sid is invalid.
+	//   - grpc.NotFound: the @draft_schedule_sid does not exist for the org sending the request.
+	//   - grpc.Internal: error chceking for the build in progress.
+	PollBuildInProgress(context.Context, *connect_go.Request[wfm.PollBuildInProgressRequest]) (*connect_go.Response[wfm.PollBuildInProgressResponse], error)
+	// Cancels the build in progress for the given @draft_schedule_sid.
+	// Errors:
+	//   - grpc.Invalid: the @draft_schedule_sid is invalid.
+	//   - grpc.NotFound: there is no build in progress to be cancelled for the org sending the request.
+	//   - grpc.Internal: error when cancelling the build or updating the build in progress table.
+	CancelBuildInProgress(context.Context, *connect_go.Request[wfm.CancelBuildInProgressRequest]) (*connect_go.Response[wfm.CancelBuildInProgressResponse], error)
 	// Publishes the shift instances of the given @draft_schedule_sid to the published schedule of the org sending the request.
 	// Overlapping shift instances that aren't locked will be replaced with the instances from the draft schedule.
 	// If @ignore_diagnostics_errors is set to true, it will publish the schedule regardless of any diagnostics errors,
@@ -2868,6 +2886,16 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMBuildDraftScheduleProcedure,
 			opts...,
 		),
+		pollBuildInProgress: connect_go.NewClient[wfm.PollBuildInProgressRequest, wfm.PollBuildInProgressResponse](
+			httpClient,
+			baseURL+WFMPollBuildInProgressProcedure,
+			opts...,
+		),
+		cancelBuildInProgress: connect_go.NewClient[wfm.CancelBuildInProgressRequest, wfm.CancelBuildInProgressResponse](
+			httpClient,
+			baseURL+WFMCancelBuildInProgressProcedure,
+			opts...,
+		),
 		publishDraftSchedule: connect_go.NewClient[wfm.PublishDraftScheduleReq, wfm.PublishDraftScheduleRes](
 			httpClient,
 			baseURL+WFMPublishDraftScheduleProcedure,
@@ -3455,6 +3483,8 @@ type wFMClient struct {
 	createDraftSchedule                              *connect_go.Client[wfm.CreateDraftScheduleReq, wfm.CreateDraftScheduleRes]
 	updateDraftSchedule                              *connect_go.Client[wfm.UpdateDraftScheduleReq, wfm.UpdateDraftScheduleRes]
 	buildDraftSchedule                               *connect_go.Client[wfm.BuildDraftScheduleReq, wfm.BuildDraftScheduleRes]
+	pollBuildInProgress                              *connect_go.Client[wfm.PollBuildInProgressRequest, wfm.PollBuildInProgressResponse]
+	cancelBuildInProgress                            *connect_go.Client[wfm.CancelBuildInProgressRequest, wfm.CancelBuildInProgressResponse]
 	publishDraftSchedule                             *connect_go.Client[wfm.PublishDraftScheduleReq, wfm.PublishDraftScheduleRes]
 	resetDraftSchedule                               *connect_go.Client[wfm.ResetDraftScheduleReq, wfm.ResetDraftScheduleRes]
 	getDraftSchedule                                 *connect_go.Client[wfm.GetDraftScheduleReq, wfm.GetDraftScheduleRes]
@@ -4156,6 +4186,16 @@ func (c *wFMClient) UpdateDraftSchedule(ctx context.Context, req *connect_go.Req
 // BuildDraftSchedule calls api.v1alpha1.wfm.WFM.BuildDraftSchedule.
 func (c *wFMClient) BuildDraftSchedule(ctx context.Context, req *connect_go.Request[wfm.BuildDraftScheduleReq]) (*connect_go.Response[wfm.BuildDraftScheduleRes], error) {
 	return c.buildDraftSchedule.CallUnary(ctx, req)
+}
+
+// PollBuildInProgress calls api.v1alpha1.wfm.WFM.PollBuildInProgress.
+func (c *wFMClient) PollBuildInProgress(ctx context.Context, req *connect_go.Request[wfm.PollBuildInProgressRequest]) (*connect_go.Response[wfm.PollBuildInProgressResponse], error) {
+	return c.pollBuildInProgress.CallUnary(ctx, req)
+}
+
+// CancelBuildInProgress calls api.v1alpha1.wfm.WFM.CancelBuildInProgress.
+func (c *wFMClient) CancelBuildInProgress(ctx context.Context, req *connect_go.Request[wfm.CancelBuildInProgressRequest]) (*connect_go.Response[wfm.CancelBuildInProgressResponse], error) {
+	return c.cancelBuildInProgress.CallUnary(ctx, req)
 }
 
 // PublishDraftSchedule calls api.v1alpha1.wfm.WFM.PublishDraftSchedule.
@@ -5571,6 +5611,19 @@ type WFMHandler interface {
 	// Will return diagnostics for the newly built schedule, or just diagnostics if the schedule cannot be built successfully due to diagnostic error.
 	// If @auto_generate_agents is set to true, unassigned agents will automatically be generated to meet the requirements of the shift templates min and max agents.
 	BuildDraftSchedule(context.Context, *connect_go.Request[wfm.BuildDraftScheduleReq]) (*connect_go.Response[wfm.BuildDraftScheduleRes], error)
+	// Polls the scheduler to check if there is currently a build in progress for the given @draft_schedule_sid.
+	// If there is a build in progress @build_in_progress will be true and the @build_start_datetime will be set with the time that the build process started.
+	// Errors:
+	//   - grpc.Invalid: the @draft_schedule_sid is invalid.
+	//   - grpc.NotFound: the @draft_schedule_sid does not exist for the org sending the request.
+	//   - grpc.Internal: error chceking for the build in progress.
+	PollBuildInProgress(context.Context, *connect_go.Request[wfm.PollBuildInProgressRequest]) (*connect_go.Response[wfm.PollBuildInProgressResponse], error)
+	// Cancels the build in progress for the given @draft_schedule_sid.
+	// Errors:
+	//   - grpc.Invalid: the @draft_schedule_sid is invalid.
+	//   - grpc.NotFound: there is no build in progress to be cancelled for the org sending the request.
+	//   - grpc.Internal: error when cancelling the build or updating the build in progress table.
+	CancelBuildInProgress(context.Context, *connect_go.Request[wfm.CancelBuildInProgressRequest]) (*connect_go.Response[wfm.CancelBuildInProgressResponse], error)
 	// Publishes the shift instances of the given @draft_schedule_sid to the published schedule of the org sending the request.
 	// Overlapping shift instances that aren't locked will be replaced with the instances from the draft schedule.
 	// If @ignore_diagnostics_errors is set to true, it will publish the schedule regardless of any diagnostics errors,
@@ -6867,6 +6920,16 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.BuildDraftSchedule,
 		opts...,
 	)
+	wFMPollBuildInProgressHandler := connect_go.NewUnaryHandler(
+		WFMPollBuildInProgressProcedure,
+		svc.PollBuildInProgress,
+		opts...,
+	)
+	wFMCancelBuildInProgressHandler := connect_go.NewUnaryHandler(
+		WFMCancelBuildInProgressProcedure,
+		svc.CancelBuildInProgress,
+		opts...,
+	)
 	wFMPublishDraftScheduleHandler := connect_go.NewUnaryHandler(
 		WFMPublishDraftScheduleProcedure,
 		svc.PublishDraftSchedule,
@@ -7568,6 +7631,10 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMUpdateDraftScheduleHandler.ServeHTTP(w, r)
 		case WFMBuildDraftScheduleProcedure:
 			wFMBuildDraftScheduleHandler.ServeHTTP(w, r)
+		case WFMPollBuildInProgressProcedure:
+			wFMPollBuildInProgressHandler.ServeHTTP(w, r)
+		case WFMCancelBuildInProgressProcedure:
+			wFMCancelBuildInProgressHandler.ServeHTTP(w, r)
 		case WFMPublishDraftScheduleProcedure:
 			wFMPublishDraftScheduleHandler.ServeHTTP(w, r)
 		case WFMResetDraftScheduleProcedure:
@@ -8229,6 +8296,14 @@ func (UnimplementedWFMHandler) UpdateDraftSchedule(context.Context, *connect_go.
 
 func (UnimplementedWFMHandler) BuildDraftSchedule(context.Context, *connect_go.Request[wfm.BuildDraftScheduleReq]) (*connect_go.Response[wfm.BuildDraftScheduleRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.BuildDraftSchedule is not implemented"))
+}
+
+func (UnimplementedWFMHandler) PollBuildInProgress(context.Context, *connect_go.Request[wfm.PollBuildInProgressRequest]) (*connect_go.Response[wfm.PollBuildInProgressResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.PollBuildInProgress is not implemented"))
+}
+
+func (UnimplementedWFMHandler) CancelBuildInProgress(context.Context, *connect_go.Request[wfm.CancelBuildInProgressRequest]) (*connect_go.Response[wfm.CancelBuildInProgressResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.CancelBuildInProgress is not implemented"))
 }
 
 func (UnimplementedWFMHandler) PublishDraftSchedule(context.Context, *connect_go.Request[wfm.PublishDraftScheduleReq]) (*connect_go.Response[wfm.PublishDraftScheduleRes], error) {

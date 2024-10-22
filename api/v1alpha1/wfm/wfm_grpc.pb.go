@@ -150,6 +150,8 @@ const (
 	WFM_CreateDraftSchedule_FullMethodName                              = "/api.v1alpha1.wfm.WFM/CreateDraftSchedule"
 	WFM_UpdateDraftSchedule_FullMethodName                              = "/api.v1alpha1.wfm.WFM/UpdateDraftSchedule"
 	WFM_BuildDraftSchedule_FullMethodName                               = "/api.v1alpha1.wfm.WFM/BuildDraftSchedule"
+	WFM_PollBuildInProgress_FullMethodName                              = "/api.v1alpha1.wfm.WFM/PollBuildInProgress"
+	WFM_CancelBuildInProgress_FullMethodName                            = "/api.v1alpha1.wfm.WFM/CancelBuildInProgress"
 	WFM_PublishDraftSchedule_FullMethodName                             = "/api.v1alpha1.wfm.WFM/PublishDraftSchedule"
 	WFM_ResetDraftSchedule_FullMethodName                               = "/api.v1alpha1.wfm.WFM/ResetDraftSchedule"
 	WFM_GetDraftSchedule_FullMethodName                                 = "/api.v1alpha1.wfm.WFM/GetDraftSchedule"
@@ -1180,6 +1182,19 @@ type WFMClient interface {
 	// Will return diagnostics for the newly built schedule, or just diagnostics if the schedule cannot be built successfully due to diagnostic error.
 	// If @auto_generate_agents is set to true, unassigned agents will automatically be generated to meet the requirements of the shift templates min and max agents.
 	BuildDraftSchedule(ctx context.Context, in *BuildDraftScheduleReq, opts ...grpc.CallOption) (*BuildDraftScheduleRes, error)
+	// Polls the scheduler to check if there is currently a build in progress for the given @draft_schedule_sid.
+	// If there is a build in progress @build_in_progress will be true and the @build_start_datetime will be set with the time that the build process started.
+	// Errors:
+	//   - grpc.Invalid: the @draft_schedule_sid is invalid.
+	//   - grpc.NotFound: the @draft_schedule_sid does not exist for the org sending the request.
+	//   - grpc.Internal: error chceking for the build in progress.
+	PollBuildInProgress(ctx context.Context, in *PollBuildInProgressRequest, opts ...grpc.CallOption) (*PollBuildInProgressResponse, error)
+	// Cancels the build in progress for the given @draft_schedule_sid.
+	// Errors:
+	//   - grpc.Invalid: the @draft_schedule_sid is invalid.
+	//   - grpc.NotFound: there is no build in progress to be cancelled for the org sending the request.
+	//   - grpc.Internal: error when cancelling the build or updating the build in progress table.
+	CancelBuildInProgress(ctx context.Context, in *CancelBuildInProgressRequest, opts ...grpc.CallOption) (*CancelBuildInProgressResponse, error)
 	// Publishes the shift instances of the given @draft_schedule_sid to the published schedule of the org sending the request.
 	// Overlapping shift instances that aren't locked will be replaced with the instances from the draft schedule.
 	// If @ignore_diagnostics_errors is set to true, it will publish the schedule regardless of any diagnostics errors,
@@ -3205,6 +3220,26 @@ func (c *wFMClient) BuildDraftSchedule(ctx context.Context, in *BuildDraftSchedu
 	return out, nil
 }
 
+func (c *wFMClient) PollBuildInProgress(ctx context.Context, in *PollBuildInProgressRequest, opts ...grpc.CallOption) (*PollBuildInProgressResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(PollBuildInProgressResponse)
+	err := c.cc.Invoke(ctx, WFM_PollBuildInProgress_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) CancelBuildInProgress(ctx context.Context, in *CancelBuildInProgressRequest, opts ...grpc.CallOption) (*CancelBuildInProgressResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CancelBuildInProgressResponse)
+	err := c.cc.Invoke(ctx, WFM_CancelBuildInProgress_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) PublishDraftSchedule(ctx context.Context, in *PublishDraftScheduleReq, opts ...grpc.CallOption) (*PublishDraftScheduleRes, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(PublishDraftScheduleRes)
@@ -5071,6 +5106,19 @@ type WFMServer interface {
 	// Will return diagnostics for the newly built schedule, or just diagnostics if the schedule cannot be built successfully due to diagnostic error.
 	// If @auto_generate_agents is set to true, unassigned agents will automatically be generated to meet the requirements of the shift templates min and max agents.
 	BuildDraftSchedule(context.Context, *BuildDraftScheduleReq) (*BuildDraftScheduleRes, error)
+	// Polls the scheduler to check if there is currently a build in progress for the given @draft_schedule_sid.
+	// If there is a build in progress @build_in_progress will be true and the @build_start_datetime will be set with the time that the build process started.
+	// Errors:
+	//   - grpc.Invalid: the @draft_schedule_sid is invalid.
+	//   - grpc.NotFound: the @draft_schedule_sid does not exist for the org sending the request.
+	//   - grpc.Internal: error chceking for the build in progress.
+	PollBuildInProgress(context.Context, *PollBuildInProgressRequest) (*PollBuildInProgressResponse, error)
+	// Cancels the build in progress for the given @draft_schedule_sid.
+	// Errors:
+	//   - grpc.Invalid: the @draft_schedule_sid is invalid.
+	//   - grpc.NotFound: there is no build in progress to be cancelled for the org sending the request.
+	//   - grpc.Internal: error when cancelling the build or updating the build in progress table.
+	CancelBuildInProgress(context.Context, *CancelBuildInProgressRequest) (*CancelBuildInProgressResponse, error)
 	// Publishes the shift instances of the given @draft_schedule_sid to the published schedule of the org sending the request.
 	// Overlapping shift instances that aren't locked will be replaced with the instances from the draft schedule.
 	// If @ignore_diagnostics_errors is set to true, it will publish the schedule regardless of any diagnostics errors,
@@ -6133,6 +6181,12 @@ func (UnimplementedWFMServer) UpdateDraftSchedule(context.Context, *UpdateDraftS
 }
 func (UnimplementedWFMServer) BuildDraftSchedule(context.Context, *BuildDraftScheduleReq) (*BuildDraftScheduleRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BuildDraftSchedule not implemented")
+}
+func (UnimplementedWFMServer) PollBuildInProgress(context.Context, *PollBuildInProgressRequest) (*PollBuildInProgressResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PollBuildInProgress not implemented")
+}
+func (UnimplementedWFMServer) CancelBuildInProgress(context.Context, *CancelBuildInProgressRequest) (*CancelBuildInProgressResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CancelBuildInProgress not implemented")
 }
 func (UnimplementedWFMServer) PublishDraftSchedule(context.Context, *PublishDraftScheduleReq) (*PublishDraftScheduleRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PublishDraftSchedule not implemented")
@@ -8558,6 +8612,42 @@ func _WFM_BuildDraftSchedule_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_PollBuildInProgress_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PollBuildInProgressRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).PollBuildInProgress(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_PollBuildInProgress_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).PollBuildInProgress(ctx, req.(*PollBuildInProgressRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_CancelBuildInProgress_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CancelBuildInProgressRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).CancelBuildInProgress(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_CancelBuildInProgress_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).CancelBuildInProgress(ctx, req.(*CancelBuildInProgressRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WFM_PublishDraftSchedule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(PublishDraftScheduleReq)
 	if err := dec(in); err != nil {
@@ -10682,6 +10772,14 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "BuildDraftSchedule",
 			Handler:    _WFM_BuildDraftSchedule_Handler,
+		},
+		{
+			MethodName: "PollBuildInProgress",
+			Handler:    _WFM_PollBuildInProgress_Handler,
+		},
+		{
+			MethodName: "CancelBuildInProgress",
+			Handler:    _WFM_CancelBuildInProgress_Handler,
 		},
 		{
 			MethodName: "PublishDraftSchedule",
