@@ -239,6 +239,10 @@ const (
 	WFM_UpdateAdherenceAgentRuleClause_FullMethodName                   = "/api.v1alpha1.wfm.WFM/UpdateAdherenceAgentRuleClause"
 	WFM_ListAdherenceAgentRules_FullMethodName                          = "/api.v1alpha1.wfm.WFM/ListAdherenceAgentRules"
 	WFM_DeleteAdherenceAgentRuleClause_FullMethodName                   = "/api.v1alpha1.wfm.WFM/DeleteAdherenceAgentRuleClause"
+	WFM_AgentGetSchedule_FullMethodName                                 = "/api.v1alpha1.wfm.WFM/AgentGetSchedule"
+	WFM_AgentListLeavePetitions_FullMethodName                          = "/api.v1alpha1.wfm.WFM/AgentListLeavePetitions"
+	WFM_AgentCreateLeavePetition_FullMethodName                         = "/api.v1alpha1.wfm.WFM/AgentCreateLeavePetition"
+	WFM_AgentCancelLeavePetition_FullMethodName                         = "/api.v1alpha1.wfm.WFM/AgentCancelLeavePetition"
 )
 
 // WFMClient is the client API for WFM service.
@@ -1842,6 +1846,42 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when deleting the given @adherence_agent_rule_clause_id.
 	//   - grpc.NotFound: departmental rule with the @adherence_agent_rule_clause_id does not exist.
 	DeleteAdherenceAgentRuleClause(ctx context.Context, in *DeleteAdherenceAgentRuleClauseRequest, opts ...grpc.CallOption) (*DeleteAdherenceAgentRuleClauseResponse, error)
+	// Gets the published schedule for the corresponding @datetime_range for the agent and org sending the request.
+	// Errors:
+	//   - grpc.Invalid: the @datetime_range, @metric_types are invalid.
+	//   - grpc.Internal: error occurs when getting the published schedule.
+	AgentGetSchedule(ctx context.Context, in *AgentGetScheduleRequest, opts ...grpc.CallOption) (*AgentGetScheduleResponse, error)
+	// Lists agent leave petitions over the @datetime_range for the agent and org sending the request.
+	// If no @datetime_range is provided, petitions will be returned across all datetimes.
+	// If @include_archived is true, archived agent leave petitions will be returned as well, otherwise archived requests will not be included.
+	// If no agent leave petitions are found for the given parameters, an empty list will be returned.
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when listing the agent leave petitions.
+	AgentListLeavePetitions(ctx context.Context, in *AgentListLeavePetitionsRequest, opts ...grpc.CallOption) (*AgentListLeavePetitionsResponse, error)
+	// Creates an agent leave petition to request time off over the @requested_datetime_ranges for the agent and org sending the request.
+	// The @petition_comment must be set with a value.
+	// The @requested_datetime_ranges may not overlap each other.
+	// The number of working hours requested off should be set in @requested_hours_off.
+	// The @requested_hours_off does not need to relate directly to the datetime range being requested off,
+	//
+	//	for example in the case where a 14 hour schedulable range is being taken off but 8 hours of work will be paid out with PTO.
+	//
+	// The usage of @requested_hours_off hours will depend on org policy, but is not yet implemented.
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when creating the time off request.
+	AgentCreateLeavePetition(ctx context.Context, in *AgentCreateLeavePetitionRequest, opts ...grpc.CallOption) (*AgentCreateLeavePetitionResponse, error)
+	// Cancels the given @agent_leave_petition_id for the agent and organization sending the request.
+	// If @agent_leave_petition_id has a status of APPROVED_PETITION, the agent's schedule will have time off blocks removed,
+	//
+	//	but any desired shifts must be added by the user after that leave is canceled.
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid, the @agent_leave_petition_id is already canceled.
+	//   - grpc.Internal: error occurs when canceling the agent leave petition, or removing time off shifts from the agent's schedule.
+	//   - grpc.NotFound: the @agent_leave_petition_id does not exist for the org sending the request.
+	AgentCancelLeavePetition(ctx context.Context, in *AgentCancelLeavePetitionRequest, opts ...grpc.CallOption) (*AgentCancelLeavePetitionResponse, error)
 }
 
 type wFMClient struct {
@@ -4056,6 +4096,46 @@ func (c *wFMClient) DeleteAdherenceAgentRuleClause(ctx context.Context, in *Dele
 	return out, nil
 }
 
+func (c *wFMClient) AgentGetSchedule(ctx context.Context, in *AgentGetScheduleRequest, opts ...grpc.CallOption) (*AgentGetScheduleResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AgentGetScheduleResponse)
+	err := c.cc.Invoke(ctx, WFM_AgentGetSchedule_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) AgentListLeavePetitions(ctx context.Context, in *AgentListLeavePetitionsRequest, opts ...grpc.CallOption) (*AgentListLeavePetitionsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AgentListLeavePetitionsResponse)
+	err := c.cc.Invoke(ctx, WFM_AgentListLeavePetitions_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) AgentCreateLeavePetition(ctx context.Context, in *AgentCreateLeavePetitionRequest, opts ...grpc.CallOption) (*AgentCreateLeavePetitionResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AgentCreateLeavePetitionResponse)
+	err := c.cc.Invoke(ctx, WFM_AgentCreateLeavePetition_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) AgentCancelLeavePetition(ctx context.Context, in *AgentCancelLeavePetitionRequest, opts ...grpc.CallOption) (*AgentCancelLeavePetitionResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AgentCancelLeavePetitionResponse)
+	err := c.cc.Invoke(ctx, WFM_AgentCancelLeavePetition_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WFMServer is the server API for WFM service.
 // All implementations must embed UnimplementedWFMServer
 // for forward compatibility.
@@ -5657,6 +5737,42 @@ type WFMServer interface {
 	//   - grpc.Internal: error occurs when deleting the given @adherence_agent_rule_clause_id.
 	//   - grpc.NotFound: departmental rule with the @adherence_agent_rule_clause_id does not exist.
 	DeleteAdherenceAgentRuleClause(context.Context, *DeleteAdherenceAgentRuleClauseRequest) (*DeleteAdherenceAgentRuleClauseResponse, error)
+	// Gets the published schedule for the corresponding @datetime_range for the agent and org sending the request.
+	// Errors:
+	//   - grpc.Invalid: the @datetime_range, @metric_types are invalid.
+	//   - grpc.Internal: error occurs when getting the published schedule.
+	AgentGetSchedule(context.Context, *AgentGetScheduleRequest) (*AgentGetScheduleResponse, error)
+	// Lists agent leave petitions over the @datetime_range for the agent and org sending the request.
+	// If no @datetime_range is provided, petitions will be returned across all datetimes.
+	// If @include_archived is true, archived agent leave petitions will be returned as well, otherwise archived requests will not be included.
+	// If no agent leave petitions are found for the given parameters, an empty list will be returned.
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when listing the agent leave petitions.
+	AgentListLeavePetitions(context.Context, *AgentListLeavePetitionsRequest) (*AgentListLeavePetitionsResponse, error)
+	// Creates an agent leave petition to request time off over the @requested_datetime_ranges for the agent and org sending the request.
+	// The @petition_comment must be set with a value.
+	// The @requested_datetime_ranges may not overlap each other.
+	// The number of working hours requested off should be set in @requested_hours_off.
+	// The @requested_hours_off does not need to relate directly to the datetime range being requested off,
+	//
+	//	for example in the case where a 14 hour schedulable range is being taken off but 8 hours of work will be paid out with PTO.
+	//
+	// The usage of @requested_hours_off hours will depend on org policy, but is not yet implemented.
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when creating the time off request.
+	AgentCreateLeavePetition(context.Context, *AgentCreateLeavePetitionRequest) (*AgentCreateLeavePetitionResponse, error)
+	// Cancels the given @agent_leave_petition_id for the agent and organization sending the request.
+	// If @agent_leave_petition_id has a status of APPROVED_PETITION, the agent's schedule will have time off blocks removed,
+	//
+	//	but any desired shifts must be added by the user after that leave is canceled.
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid, the @agent_leave_petition_id is already canceled.
+	//   - grpc.Internal: error occurs when canceling the agent leave petition, or removing time off shifts from the agent's schedule.
+	//   - grpc.NotFound: the @agent_leave_petition_id does not exist for the org sending the request.
+	AgentCancelLeavePetition(context.Context, *AgentCancelLeavePetitionRequest) (*AgentCancelLeavePetitionResponse, error)
 	mustEmbedUnimplementedWFMServer()
 }
 
@@ -6284,6 +6400,18 @@ func (UnimplementedWFMServer) ListAdherenceAgentRules(context.Context, *ListAdhe
 }
 func (UnimplementedWFMServer) DeleteAdherenceAgentRuleClause(context.Context, *DeleteAdherenceAgentRuleClauseRequest) (*DeleteAdherenceAgentRuleClauseResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteAdherenceAgentRuleClause not implemented")
+}
+func (UnimplementedWFMServer) AgentGetSchedule(context.Context, *AgentGetScheduleRequest) (*AgentGetScheduleResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AgentGetSchedule not implemented")
+}
+func (UnimplementedWFMServer) AgentListLeavePetitions(context.Context, *AgentListLeavePetitionsRequest) (*AgentListLeavePetitionsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AgentListLeavePetitions not implemented")
+}
+func (UnimplementedWFMServer) AgentCreateLeavePetition(context.Context, *AgentCreateLeavePetitionRequest) (*AgentCreateLeavePetitionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AgentCreateLeavePetition not implemented")
+}
+func (UnimplementedWFMServer) AgentCancelLeavePetition(context.Context, *AgentCancelLeavePetitionRequest) (*AgentCancelLeavePetitionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AgentCancelLeavePetition not implemented")
 }
 func (UnimplementedWFMServer) mustEmbedUnimplementedWFMServer() {}
 func (UnimplementedWFMServer) testEmbeddedByValue()             {}
@@ -10032,6 +10160,78 @@ func _WFM_DeleteAdherenceAgentRuleClause_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_AgentGetSchedule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AgentGetScheduleRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).AgentGetSchedule(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_AgentGetSchedule_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).AgentGetSchedule(ctx, req.(*AgentGetScheduleRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_AgentListLeavePetitions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AgentListLeavePetitionsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).AgentListLeavePetitions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_AgentListLeavePetitions_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).AgentListLeavePetitions(ctx, req.(*AgentListLeavePetitionsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_AgentCreateLeavePetition_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AgentCreateLeavePetitionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).AgentCreateLeavePetition(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_AgentCreateLeavePetition_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).AgentCreateLeavePetition(ctx, req.(*AgentCreateLeavePetitionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_AgentCancelLeavePetition_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AgentCancelLeavePetitionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).AgentCancelLeavePetition(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_AgentCancelLeavePetition_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).AgentCancelLeavePetition(ctx, req.(*AgentCancelLeavePetitionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WFM_ServiceDesc is the grpc.ServiceDesc for WFM service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -10838,6 +11038,22 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteAdherenceAgentRuleClause",
 			Handler:    _WFM_DeleteAdherenceAgentRuleClause_Handler,
+		},
+		{
+			MethodName: "AgentGetSchedule",
+			Handler:    _WFM_AgentGetSchedule_Handler,
+		},
+		{
+			MethodName: "AgentListLeavePetitions",
+			Handler:    _WFM_AgentListLeavePetitions_Handler,
+		},
+		{
+			MethodName: "AgentCreateLeavePetition",
+			Handler:    _WFM_AgentCreateLeavePetition_Handler,
+		},
+		{
+			MethodName: "AgentCancelLeavePetition",
+			Handler:    _WFM_AgentCancelLeavePetition_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

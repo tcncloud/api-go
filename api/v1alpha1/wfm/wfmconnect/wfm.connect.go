@@ -619,6 +619,17 @@ const (
 	// WFMDeleteAdherenceAgentRuleClauseProcedure is the fully-qualified name of the WFM's
 	// DeleteAdherenceAgentRuleClause RPC.
 	WFMDeleteAdherenceAgentRuleClauseProcedure = "/api.v1alpha1.wfm.WFM/DeleteAdherenceAgentRuleClause"
+	// WFMAgentGetScheduleProcedure is the fully-qualified name of the WFM's AgentGetSchedule RPC.
+	WFMAgentGetScheduleProcedure = "/api.v1alpha1.wfm.WFM/AgentGetSchedule"
+	// WFMAgentListLeavePetitionsProcedure is the fully-qualified name of the WFM's
+	// AgentListLeavePetitions RPC.
+	WFMAgentListLeavePetitionsProcedure = "/api.v1alpha1.wfm.WFM/AgentListLeavePetitions"
+	// WFMAgentCreateLeavePetitionProcedure is the fully-qualified name of the WFM's
+	// AgentCreateLeavePetition RPC.
+	WFMAgentCreateLeavePetitionProcedure = "/api.v1alpha1.wfm.WFM/AgentCreateLeavePetition"
+	// WFMAgentCancelLeavePetitionProcedure is the fully-qualified name of the WFM's
+	// AgentCancelLeavePetition RPC.
+	WFMAgentCancelLeavePetitionProcedure = "/api.v1alpha1.wfm.WFM/AgentCancelLeavePetition"
 )
 
 // WFMClient is a client for the api.v1alpha1.wfm.WFM service.
@@ -2224,6 +2235,42 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when deleting the given @adherence_agent_rule_clause_id.
 	//   - grpc.NotFound: departmental rule with the @adherence_agent_rule_clause_id does not exist.
 	DeleteAdherenceAgentRuleClause(context.Context, *connect_go.Request[wfm.DeleteAdherenceAgentRuleClauseRequest]) (*connect_go.Response[wfm.DeleteAdherenceAgentRuleClauseResponse], error)
+	// Gets the published schedule for the corresponding @datetime_range for the agent and org sending the request.
+	// Errors:
+	//   - grpc.Invalid: the @datetime_range, @metric_types are invalid.
+	//   - grpc.Internal: error occurs when getting the published schedule.
+	AgentGetSchedule(context.Context, *connect_go.Request[wfm.AgentGetScheduleRequest]) (*connect_go.Response[wfm.AgentGetScheduleResponse], error)
+	// Lists agent leave petitions over the @datetime_range for the agent and org sending the request.
+	// If no @datetime_range is provided, petitions will be returned across all datetimes.
+	// If @include_archived is true, archived agent leave petitions will be returned as well, otherwise archived requests will not be included.
+	// If no agent leave petitions are found for the given parameters, an empty list will be returned.
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when listing the agent leave petitions.
+	AgentListLeavePetitions(context.Context, *connect_go.Request[wfm.AgentListLeavePetitionsRequest]) (*connect_go.Response[wfm.AgentListLeavePetitionsResponse], error)
+	// Creates an agent leave petition to request time off over the @requested_datetime_ranges for the agent and org sending the request.
+	// The @petition_comment must be set with a value.
+	// The @requested_datetime_ranges may not overlap each other.
+	// The number of working hours requested off should be set in @requested_hours_off.
+	// The @requested_hours_off does not need to relate directly to the datetime range being requested off,
+	//
+	//	for example in the case where a 14 hour schedulable range is being taken off but 8 hours of work will be paid out with PTO.
+	//
+	// The usage of @requested_hours_off hours will depend on org policy, but is not yet implemented.
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when creating the time off request.
+	AgentCreateLeavePetition(context.Context, *connect_go.Request[wfm.AgentCreateLeavePetitionRequest]) (*connect_go.Response[wfm.AgentCreateLeavePetitionResponse], error)
+	// Cancels the given @agent_leave_petition_id for the agent and organization sending the request.
+	// If @agent_leave_petition_id has a status of APPROVED_PETITION, the agent's schedule will have time off blocks removed,
+	//
+	//	but any desired shifts must be added by the user after that leave is canceled.
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid, the @agent_leave_petition_id is already canceled.
+	//   - grpc.Internal: error occurs when canceling the agent leave petition, or removing time off shifts from the agent's schedule.
+	//   - grpc.NotFound: the @agent_leave_petition_id does not exist for the org sending the request.
+	AgentCancelLeavePetition(context.Context, *connect_go.Request[wfm.AgentCancelLeavePetitionRequest]) (*connect_go.Response[wfm.AgentCancelLeavePetitionResponse], error)
 }
 
 // NewWFMClient constructs a client for the api.v1alpha1.wfm.WFM service. By default, it uses the
@@ -3266,6 +3313,26 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMDeleteAdherenceAgentRuleClauseProcedure,
 			opts...,
 		),
+		agentGetSchedule: connect_go.NewClient[wfm.AgentGetScheduleRequest, wfm.AgentGetScheduleResponse](
+			httpClient,
+			baseURL+WFMAgentGetScheduleProcedure,
+			opts...,
+		),
+		agentListLeavePetitions: connect_go.NewClient[wfm.AgentListLeavePetitionsRequest, wfm.AgentListLeavePetitionsResponse](
+			httpClient,
+			baseURL+WFMAgentListLeavePetitionsProcedure,
+			opts...,
+		),
+		agentCreateLeavePetition: connect_go.NewClient[wfm.AgentCreateLeavePetitionRequest, wfm.AgentCreateLeavePetitionResponse](
+			httpClient,
+			baseURL+WFMAgentCreateLeavePetitionProcedure,
+			opts...,
+		),
+		agentCancelLeavePetition: connect_go.NewClient[wfm.AgentCancelLeavePetitionRequest, wfm.AgentCancelLeavePetitionResponse](
+			httpClient,
+			baseURL+WFMAgentCancelLeavePetitionProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -3477,6 +3544,10 @@ type wFMClient struct {
 	updateAdherenceAgentRuleClause                   *connect_go.Client[wfm.UpdateAdherenceAgentRuleClauseRequest, wfm.UpdateAdherenceAgentRuleClauseResponse]
 	listAdherenceAgentRules                          *connect_go.Client[wfm.ListAdherenceAgentRulesRequest, wfm.ListAdherenceAgentRulesResponse]
 	deleteAdherenceAgentRuleClause                   *connect_go.Client[wfm.DeleteAdherenceAgentRuleClauseRequest, wfm.DeleteAdherenceAgentRuleClauseResponse]
+	agentGetSchedule                                 *connect_go.Client[wfm.AgentGetScheduleRequest, wfm.AgentGetScheduleResponse]
+	agentListLeavePetitions                          *connect_go.Client[wfm.AgentListLeavePetitionsRequest, wfm.AgentListLeavePetitionsResponse]
+	agentCreateLeavePetition                         *connect_go.Client[wfm.AgentCreateLeavePetitionRequest, wfm.AgentCreateLeavePetitionResponse]
+	agentCancelLeavePetition                         *connect_go.Client[wfm.AgentCancelLeavePetitionRequest, wfm.AgentCancelLeavePetitionResponse]
 }
 
 // PerformInitialClientSetup calls api.v1alpha1.wfm.WFM.PerformInitialClientSetup.
@@ -4542,6 +4613,26 @@ func (c *wFMClient) ListAdherenceAgentRules(ctx context.Context, req *connect_go
 // DeleteAdherenceAgentRuleClause calls api.v1alpha1.wfm.WFM.DeleteAdherenceAgentRuleClause.
 func (c *wFMClient) DeleteAdherenceAgentRuleClause(ctx context.Context, req *connect_go.Request[wfm.DeleteAdherenceAgentRuleClauseRequest]) (*connect_go.Response[wfm.DeleteAdherenceAgentRuleClauseResponse], error) {
 	return c.deleteAdherenceAgentRuleClause.CallUnary(ctx, req)
+}
+
+// AgentGetSchedule calls api.v1alpha1.wfm.WFM.AgentGetSchedule.
+func (c *wFMClient) AgentGetSchedule(ctx context.Context, req *connect_go.Request[wfm.AgentGetScheduleRequest]) (*connect_go.Response[wfm.AgentGetScheduleResponse], error) {
+	return c.agentGetSchedule.CallUnary(ctx, req)
+}
+
+// AgentListLeavePetitions calls api.v1alpha1.wfm.WFM.AgentListLeavePetitions.
+func (c *wFMClient) AgentListLeavePetitions(ctx context.Context, req *connect_go.Request[wfm.AgentListLeavePetitionsRequest]) (*connect_go.Response[wfm.AgentListLeavePetitionsResponse], error) {
+	return c.agentListLeavePetitions.CallUnary(ctx, req)
+}
+
+// AgentCreateLeavePetition calls api.v1alpha1.wfm.WFM.AgentCreateLeavePetition.
+func (c *wFMClient) AgentCreateLeavePetition(ctx context.Context, req *connect_go.Request[wfm.AgentCreateLeavePetitionRequest]) (*connect_go.Response[wfm.AgentCreateLeavePetitionResponse], error) {
+	return c.agentCreateLeavePetition.CallUnary(ctx, req)
+}
+
+// AgentCancelLeavePetition calls api.v1alpha1.wfm.WFM.AgentCancelLeavePetition.
+func (c *wFMClient) AgentCancelLeavePetition(ctx context.Context, req *connect_go.Request[wfm.AgentCancelLeavePetitionRequest]) (*connect_go.Response[wfm.AgentCancelLeavePetitionResponse], error) {
+	return c.agentCancelLeavePetition.CallUnary(ctx, req)
 }
 
 // WFMHandler is an implementation of the api.v1alpha1.wfm.WFM service.
@@ -6147,6 +6238,42 @@ type WFMHandler interface {
 	//   - grpc.Internal: error occurs when deleting the given @adherence_agent_rule_clause_id.
 	//   - grpc.NotFound: departmental rule with the @adherence_agent_rule_clause_id does not exist.
 	DeleteAdherenceAgentRuleClause(context.Context, *connect_go.Request[wfm.DeleteAdherenceAgentRuleClauseRequest]) (*connect_go.Response[wfm.DeleteAdherenceAgentRuleClauseResponse], error)
+	// Gets the published schedule for the corresponding @datetime_range for the agent and org sending the request.
+	// Errors:
+	//   - grpc.Invalid: the @datetime_range, @metric_types are invalid.
+	//   - grpc.Internal: error occurs when getting the published schedule.
+	AgentGetSchedule(context.Context, *connect_go.Request[wfm.AgentGetScheduleRequest]) (*connect_go.Response[wfm.AgentGetScheduleResponse], error)
+	// Lists agent leave petitions over the @datetime_range for the agent and org sending the request.
+	// If no @datetime_range is provided, petitions will be returned across all datetimes.
+	// If @include_archived is true, archived agent leave petitions will be returned as well, otherwise archived requests will not be included.
+	// If no agent leave petitions are found for the given parameters, an empty list will be returned.
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when listing the agent leave petitions.
+	AgentListLeavePetitions(context.Context, *connect_go.Request[wfm.AgentListLeavePetitionsRequest]) (*connect_go.Response[wfm.AgentListLeavePetitionsResponse], error)
+	// Creates an agent leave petition to request time off over the @requested_datetime_ranges for the agent and org sending the request.
+	// The @petition_comment must be set with a value.
+	// The @requested_datetime_ranges may not overlap each other.
+	// The number of working hours requested off should be set in @requested_hours_off.
+	// The @requested_hours_off does not need to relate directly to the datetime range being requested off,
+	//
+	//	for example in the case where a 14 hour schedulable range is being taken off but 8 hours of work will be paid out with PTO.
+	//
+	// The usage of @requested_hours_off hours will depend on org policy, but is not yet implemented.
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when creating the time off request.
+	AgentCreateLeavePetition(context.Context, *connect_go.Request[wfm.AgentCreateLeavePetitionRequest]) (*connect_go.Response[wfm.AgentCreateLeavePetitionResponse], error)
+	// Cancels the given @agent_leave_petition_id for the agent and organization sending the request.
+	// If @agent_leave_petition_id has a status of APPROVED_PETITION, the agent's schedule will have time off blocks removed,
+	//
+	//	but any desired shifts must be added by the user after that leave is canceled.
+	//
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid, the @agent_leave_petition_id is already canceled.
+	//   - grpc.Internal: error occurs when canceling the agent leave petition, or removing time off shifts from the agent's schedule.
+	//   - grpc.NotFound: the @agent_leave_petition_id does not exist for the org sending the request.
+	AgentCancelLeavePetition(context.Context, *connect_go.Request[wfm.AgentCancelLeavePetitionRequest]) (*connect_go.Response[wfm.AgentCancelLeavePetitionResponse], error)
 }
 
 // NewWFMHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -7185,6 +7312,26 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.DeleteAdherenceAgentRuleClause,
 		opts...,
 	)
+	wFMAgentGetScheduleHandler := connect_go.NewUnaryHandler(
+		WFMAgentGetScheduleProcedure,
+		svc.AgentGetSchedule,
+		opts...,
+	)
+	wFMAgentListLeavePetitionsHandler := connect_go.NewUnaryHandler(
+		WFMAgentListLeavePetitionsProcedure,
+		svc.AgentListLeavePetitions,
+		opts...,
+	)
+	wFMAgentCreateLeavePetitionHandler := connect_go.NewUnaryHandler(
+		WFMAgentCreateLeavePetitionProcedure,
+		svc.AgentCreateLeavePetition,
+		opts...,
+	)
+	wFMAgentCancelLeavePetitionHandler := connect_go.NewUnaryHandler(
+		WFMAgentCancelLeavePetitionProcedure,
+		svc.AgentCancelLeavePetition,
+		opts...,
+	)
 	return "/api.v1alpha1.wfm.WFM/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case WFMPerformInitialClientSetupProcedure:
@@ -7599,6 +7746,14 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMListAdherenceAgentRulesHandler.ServeHTTP(w, r)
 		case WFMDeleteAdherenceAgentRuleClauseProcedure:
 			wFMDeleteAdherenceAgentRuleClauseHandler.ServeHTTP(w, r)
+		case WFMAgentGetScheduleProcedure:
+			wFMAgentGetScheduleHandler.ServeHTTP(w, r)
+		case WFMAgentListLeavePetitionsProcedure:
+			wFMAgentListLeavePetitionsHandler.ServeHTTP(w, r)
+		case WFMAgentCreateLeavePetitionProcedure:
+			wFMAgentCreateLeavePetitionHandler.ServeHTTP(w, r)
+		case WFMAgentCancelLeavePetitionProcedure:
+			wFMAgentCancelLeavePetitionHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -8430,4 +8585,20 @@ func (UnimplementedWFMHandler) ListAdherenceAgentRules(context.Context, *connect
 
 func (UnimplementedWFMHandler) DeleteAdherenceAgentRuleClause(context.Context, *connect_go.Request[wfm.DeleteAdherenceAgentRuleClauseRequest]) (*connect_go.Response[wfm.DeleteAdherenceAgentRuleClauseResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.DeleteAdherenceAgentRuleClause is not implemented"))
+}
+
+func (UnimplementedWFMHandler) AgentGetSchedule(context.Context, *connect_go.Request[wfm.AgentGetScheduleRequest]) (*connect_go.Response[wfm.AgentGetScheduleResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.AgentGetSchedule is not implemented"))
+}
+
+func (UnimplementedWFMHandler) AgentListLeavePetitions(context.Context, *connect_go.Request[wfm.AgentListLeavePetitionsRequest]) (*connect_go.Response[wfm.AgentListLeavePetitionsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.AgentListLeavePetitions is not implemented"))
+}
+
+func (UnimplementedWFMHandler) AgentCreateLeavePetition(context.Context, *connect_go.Request[wfm.AgentCreateLeavePetitionRequest]) (*connect_go.Response[wfm.AgentCreateLeavePetitionResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.AgentCreateLeavePetition is not implemented"))
+}
+
+func (UnimplementedWFMHandler) AgentCancelLeavePetition(context.Context, *connect_go.Request[wfm.AgentCancelLeavePetitionRequest]) (*connect_go.Response[wfm.AgentCancelLeavePetitionResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.AgentCancelLeavePetition is not implemented"))
 }
