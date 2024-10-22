@@ -72,6 +72,9 @@ const (
 	// TranslationsServiceDisableContextProcedure is the fully-qualified name of the
 	// TranslationsService's DisableContext RPC.
 	TranslationsServiceDisableContextProcedure = "/services.translations.v1alpha1.TranslationsService/DisableContext"
+	// TranslationsServiceDeleteTranslationsByTemplateProcedure is the fully-qualified name of the
+	// TranslationsService's DeleteTranslationsByTemplate RPC.
+	TranslationsServiceDeleteTranslationsByTemplateProcedure = "/services.translations.v1alpha1.TranslationsService/DeleteTranslationsByTemplate"
 	// TranslationsServiceBulkDeleteTranslationsProcedure is the fully-qualified name of the
 	// TranslationsService's BulkDeleteTranslations RPC.
 	TranslationsServiceBulkDeleteTranslationsProcedure = "/services.translations.v1alpha1.TranslationsService/BulkDeleteTranslations"
@@ -164,6 +167,14 @@ type TranslationsServiceClient interface {
 	// Errors:
 	//   - grpc.InvalidArgument: The request is not valid.
 	DisableContext(context.Context, *connect_go.Request[v1alpha1.DisableContextRequest]) (*connect_go.Response[v1alpha1.DisableContextResponse], error)
+	// Delete translations by template and context
+	// Required permissions:
+	//   - PERMISSION_CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is not valid.
+	//   - grpc.NotFound: No translations found for the given template and context.
+	DeleteTranslationsByTemplate(context.Context, *connect_go.Request[v1alpha1.DeleteTranslationsByTemplateRequest]) (*connect_go.Response[v1alpha1.DeleteTranslationsByTemplateResponse], error)
 	// Bulk delete translations
 	// Required permissions:
 	//   - PERMISSION_CUSTOMER_SUPPORT
@@ -249,6 +260,11 @@ func NewTranslationsServiceClient(httpClient connect_go.HTTPClient, baseURL stri
 			baseURL+TranslationsServiceDisableContextProcedure,
 			opts...,
 		),
+		deleteTranslationsByTemplate: connect_go.NewClient[v1alpha1.DeleteTranslationsByTemplateRequest, v1alpha1.DeleteTranslationsByTemplateResponse](
+			httpClient,
+			baseURL+TranslationsServiceDeleteTranslationsByTemplateProcedure,
+			opts...,
+		),
 		bulkDeleteTranslations: connect_go.NewClient[v1alpha1.BulkDeleteTranslationsRequest, v1alpha1.BulkDeleteTranslationsResponse](
 			httpClient,
 			baseURL+TranslationsServiceBulkDeleteTranslationsProcedure,
@@ -259,20 +275,21 @@ func NewTranslationsServiceClient(httpClient connect_go.HTTPClient, baseURL stri
 
 // translationsServiceClient implements TranslationsServiceClient.
 type translationsServiceClient struct {
-	translateTemplate      *connect_go.Client[v1alpha1.TranslateTemplateRequest, v1alpha1.TranslateTemplateResponse]
-	listTranslations       *connect_go.Client[v1alpha1.ListTranslationsRequest, v1alpha1.ListTranslationsResponse]
-	listLanguages          *connect_go.Client[v1alpha1.ListLanguagesRequest, v1alpha1.ListLanguagesResponse]
-	listContexts           *connect_go.Client[v1alpha1.ListContextsRequest, v1alpha1.ListContextsResponse]
-	createTranslation      *connect_go.Client[v1alpha1.CreateTranslationRequest, v1alpha1.CreateTranslationResponse]
-	updateTranslation      *connect_go.Client[v1alpha1.UpdateTranslationRequest, v1alpha1.UpdateTranslationResponse]
-	triggerLLMTranslation  *connect_go.Client[v1alpha1.TriggerLLMTranslationRequest, v1alpha1.TriggerLLMTranslationResponse]
-	triggerLLMTranslations *connect_go.Client[v1alpha1.TriggerLLMTranslationsRequest, v1alpha1.TriggerLLMTranslationsResponse]
-	setSystemMessage       *connect_go.Client[v1alpha1.SetSystemMessageRequest, v1alpha1.SetSystemMessageResponse]
-	getSystemMessage       *connect_go.Client[v1alpha1.GetSystemMessageRequest, v1alpha1.GetSystemMessageResponse]
-	testSystemMessage      *connect_go.Client[v1alpha1.TestSystemMessageRequest, v1alpha1.TestSystemMessageResponse]
-	enableContext          *connect_go.Client[v1alpha1.EnableContextRequest, v1alpha1.EnableContextResponse]
-	disableContext         *connect_go.Client[v1alpha1.DisableContextRequest, v1alpha1.DisableContextResponse]
-	bulkDeleteTranslations *connect_go.Client[v1alpha1.BulkDeleteTranslationsRequest, v1alpha1.BulkDeleteTranslationsResponse]
+	translateTemplate            *connect_go.Client[v1alpha1.TranslateTemplateRequest, v1alpha1.TranslateTemplateResponse]
+	listTranslations             *connect_go.Client[v1alpha1.ListTranslationsRequest, v1alpha1.ListTranslationsResponse]
+	listLanguages                *connect_go.Client[v1alpha1.ListLanguagesRequest, v1alpha1.ListLanguagesResponse]
+	listContexts                 *connect_go.Client[v1alpha1.ListContextsRequest, v1alpha1.ListContextsResponse]
+	createTranslation            *connect_go.Client[v1alpha1.CreateTranslationRequest, v1alpha1.CreateTranslationResponse]
+	updateTranslation            *connect_go.Client[v1alpha1.UpdateTranslationRequest, v1alpha1.UpdateTranslationResponse]
+	triggerLLMTranslation        *connect_go.Client[v1alpha1.TriggerLLMTranslationRequest, v1alpha1.TriggerLLMTranslationResponse]
+	triggerLLMTranslations       *connect_go.Client[v1alpha1.TriggerLLMTranslationsRequest, v1alpha1.TriggerLLMTranslationsResponse]
+	setSystemMessage             *connect_go.Client[v1alpha1.SetSystemMessageRequest, v1alpha1.SetSystemMessageResponse]
+	getSystemMessage             *connect_go.Client[v1alpha1.GetSystemMessageRequest, v1alpha1.GetSystemMessageResponse]
+	testSystemMessage            *connect_go.Client[v1alpha1.TestSystemMessageRequest, v1alpha1.TestSystemMessageResponse]
+	enableContext                *connect_go.Client[v1alpha1.EnableContextRequest, v1alpha1.EnableContextResponse]
+	disableContext               *connect_go.Client[v1alpha1.DisableContextRequest, v1alpha1.DisableContextResponse]
+	deleteTranslationsByTemplate *connect_go.Client[v1alpha1.DeleteTranslationsByTemplateRequest, v1alpha1.DeleteTranslationsByTemplateResponse]
+	bulkDeleteTranslations       *connect_go.Client[v1alpha1.BulkDeleteTranslationsRequest, v1alpha1.BulkDeleteTranslationsResponse]
 }
 
 // TranslateTemplate calls services.translations.v1alpha1.TranslationsService.TranslateTemplate.
@@ -340,6 +357,12 @@ func (c *translationsServiceClient) EnableContext(ctx context.Context, req *conn
 // DisableContext calls services.translations.v1alpha1.TranslationsService.DisableContext.
 func (c *translationsServiceClient) DisableContext(ctx context.Context, req *connect_go.Request[v1alpha1.DisableContextRequest]) (*connect_go.Response[v1alpha1.DisableContextResponse], error) {
 	return c.disableContext.CallUnary(ctx, req)
+}
+
+// DeleteTranslationsByTemplate calls
+// services.translations.v1alpha1.TranslationsService.DeleteTranslationsByTemplate.
+func (c *translationsServiceClient) DeleteTranslationsByTemplate(ctx context.Context, req *connect_go.Request[v1alpha1.DeleteTranslationsByTemplateRequest]) (*connect_go.Response[v1alpha1.DeleteTranslationsByTemplateResponse], error) {
+	return c.deleteTranslationsByTemplate.CallUnary(ctx, req)
 }
 
 // BulkDeleteTranslations calls
@@ -435,6 +458,14 @@ type TranslationsServiceHandler interface {
 	// Errors:
 	//   - grpc.InvalidArgument: The request is not valid.
 	DisableContext(context.Context, *connect_go.Request[v1alpha1.DisableContextRequest]) (*connect_go.Response[v1alpha1.DisableContextResponse], error)
+	// Delete translations by template and context
+	// Required permissions:
+	//   - PERMISSION_CUSTOMER_SUPPORT
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is not valid.
+	//   - grpc.NotFound: No translations found for the given template and context.
+	DeleteTranslationsByTemplate(context.Context, *connect_go.Request[v1alpha1.DeleteTranslationsByTemplateRequest]) (*connect_go.Response[v1alpha1.DeleteTranslationsByTemplateResponse], error)
 	// Bulk delete translations
 	// Required permissions:
 	//   - PERMISSION_CUSTOMER_SUPPORT
@@ -515,6 +546,11 @@ func NewTranslationsServiceHandler(svc TranslationsServiceHandler, opts ...conne
 		svc.DisableContext,
 		opts...,
 	)
+	translationsServiceDeleteTranslationsByTemplateHandler := connect_go.NewUnaryHandler(
+		TranslationsServiceDeleteTranslationsByTemplateProcedure,
+		svc.DeleteTranslationsByTemplate,
+		opts...,
+	)
 	translationsServiceBulkDeleteTranslationsHandler := connect_go.NewUnaryHandler(
 		TranslationsServiceBulkDeleteTranslationsProcedure,
 		svc.BulkDeleteTranslations,
@@ -548,6 +584,8 @@ func NewTranslationsServiceHandler(svc TranslationsServiceHandler, opts ...conne
 			translationsServiceEnableContextHandler.ServeHTTP(w, r)
 		case TranslationsServiceDisableContextProcedure:
 			translationsServiceDisableContextHandler.ServeHTTP(w, r)
+		case TranslationsServiceDeleteTranslationsByTemplateProcedure:
+			translationsServiceDeleteTranslationsByTemplateHandler.ServeHTTP(w, r)
 		case TranslationsServiceBulkDeleteTranslationsProcedure:
 			translationsServiceBulkDeleteTranslationsHandler.ServeHTTP(w, r)
 		default:
@@ -609,6 +647,10 @@ func (UnimplementedTranslationsServiceHandler) EnableContext(context.Context, *c
 
 func (UnimplementedTranslationsServiceHandler) DisableContext(context.Context, *connect_go.Request[v1alpha1.DisableContextRequest]) (*connect_go.Response[v1alpha1.DisableContextResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.translations.v1alpha1.TranslationsService.DisableContext is not implemented"))
+}
+
+func (UnimplementedTranslationsServiceHandler) DeleteTranslationsByTemplate(context.Context, *connect_go.Request[v1alpha1.DeleteTranslationsByTemplateRequest]) (*connect_go.Response[v1alpha1.DeleteTranslationsByTemplateResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.translations.v1alpha1.TranslationsService.DeleteTranslationsByTemplate is not implemented"))
 }
 
 func (UnimplementedTranslationsServiceHandler) BulkDeleteTranslations(context.Context, *connect_go.Request[v1alpha1.BulkDeleteTranslationsRequest]) (*connect_go.Response[v1alpha1.BulkDeleteTranslationsResponse], error) {

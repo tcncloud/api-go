@@ -1492,6 +1492,98 @@ func (*DisableContextResponse) Descriptor() ([]byte, []int) {
 	return file_services_translations_v1alpha1_entities_proto_rawDescGZIP(), []int{28}
 }
 
+// Req/Res for deleting translations by template and context
+type DeleteTranslationsByTemplateRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The original template for the translations.
+	Template string `protobuf:"bytes,1,opt,name=template,proto3" json:"template,omitempty"`
+	// The context of the translation.
+	Context string `protobuf:"bytes,2,opt,name=context,proto3" json:"context,omitempty"`
+}
+
+func (x *DeleteTranslationsByTemplateRequest) Reset() {
+	*x = DeleteTranslationsByTemplateRequest{}
+	mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[29]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteTranslationsByTemplateRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteTranslationsByTemplateRequest) ProtoMessage() {}
+
+func (x *DeleteTranslationsByTemplateRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[29]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteTranslationsByTemplateRequest.ProtoReflect.Descriptor instead.
+func (*DeleteTranslationsByTemplateRequest) Descriptor() ([]byte, []int) {
+	return file_services_translations_v1alpha1_entities_proto_rawDescGZIP(), []int{29}
+}
+
+func (x *DeleteTranslationsByTemplateRequest) GetTemplate() string {
+	if x != nil {
+		return x.Template
+	}
+	return ""
+}
+
+func (x *DeleteTranslationsByTemplateRequest) GetContext() string {
+	if x != nil {
+		return x.Context
+	}
+	return ""
+}
+
+type DeleteTranslationsByTemplateResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *DeleteTranslationsByTemplateResponse) Reset() {
+	*x = DeleteTranslationsByTemplateResponse{}
+	mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[30]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteTranslationsByTemplateResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteTranslationsByTemplateResponse) ProtoMessage() {}
+
+func (x *DeleteTranslationsByTemplateResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[30]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteTranslationsByTemplateResponse.ProtoReflect.Descriptor instead.
+func (*DeleteTranslationsByTemplateResponse) Descriptor() ([]byte, []int) {
+	return file_services_translations_v1alpha1_entities_proto_rawDescGZIP(), []int{30}
+}
+
 // Req/Res for bulk deleting translations
 type BulkDeleteTranslationsRequest struct {
 	state         protoimpl.MessageState
@@ -1503,7 +1595,7 @@ type BulkDeleteTranslationsRequest struct {
 
 func (x *BulkDeleteTranslationsRequest) Reset() {
 	*x = BulkDeleteTranslationsRequest{}
-	mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[29]
+	mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1515,7 +1607,7 @@ func (x *BulkDeleteTranslationsRequest) String() string {
 func (*BulkDeleteTranslationsRequest) ProtoMessage() {}
 
 func (x *BulkDeleteTranslationsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[29]
+	mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1528,7 +1620,7 @@ func (x *BulkDeleteTranslationsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BulkDeleteTranslationsRequest.ProtoReflect.Descriptor instead.
 func (*BulkDeleteTranslationsRequest) Descriptor() ([]byte, []int) {
-	return file_services_translations_v1alpha1_entities_proto_rawDescGZIP(), []int{29}
+	return file_services_translations_v1alpha1_entities_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *BulkDeleteTranslationsRequest) GetTranslationIds() []string {
@@ -1546,7 +1638,7 @@ type BulkDeleteTranslationsResponse struct {
 
 func (x *BulkDeleteTranslationsResponse) Reset() {
 	*x = BulkDeleteTranslationsResponse{}
-	mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[30]
+	mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[32]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1558,7 +1650,7 @@ func (x *BulkDeleteTranslationsResponse) String() string {
 func (*BulkDeleteTranslationsResponse) ProtoMessage() {}
 
 func (x *BulkDeleteTranslationsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[30]
+	mi := &file_services_translations_v1alpha1_entities_proto_msgTypes[32]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1571,7 +1663,7 @@ func (x *BulkDeleteTranslationsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BulkDeleteTranslationsResponse.ProtoReflect.Descriptor instead.
 func (*BulkDeleteTranslationsResponse) Descriptor() ([]byte, []int) {
-	return file_services_translations_v1alpha1_entities_proto_rawDescGZIP(), []int{30}
+	return file_services_translations_v1alpha1_entities_proto_rawDescGZIP(), []int{32}
 }
 
 var File_services_translations_v1alpha1_entities_proto protoreflect.FileDescriptor
@@ -1742,32 +1834,41 @@ var file_services_translations_v1alpha1_entities_proto_rawDesc = []byte{
 	0x75, 0x65, 0x73, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x63, 0x6f, 0x6e, 0x74, 0x65, 0x78, 0x74, 0x18,
 	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x63, 0x6f, 0x6e, 0x74, 0x65, 0x78, 0x74, 0x22, 0x18,
 	0x0a, 0x16, 0x44, 0x69, 0x73, 0x61, 0x62, 0x6c, 0x65, 0x43, 0x6f, 0x6e, 0x74, 0x65, 0x78, 0x74,
-	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x48, 0x0a, 0x1d, 0x42, 0x75, 0x6c, 0x6b,
-	0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f,
-	0x6e, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x27, 0x0a, 0x0f, 0x74, 0x72, 0x61,
-	0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x69, 0x64, 0x73, 0x18, 0x01, 0x20, 0x03,
-	0x28, 0x09, 0x52, 0x0e, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x49,
-	0x64, 0x73, 0x22, 0x20, 0x0a, 0x1e, 0x42, 0x75, 0x6c, 0x6b, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65,
-	0x54, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x42, 0x9d, 0x02, 0x0a, 0x22, 0x63, 0x6f, 0x6d, 0x2e, 0x73, 0x65, 0x72,
-	0x76, 0x69, 0x63, 0x65, 0x73, 0x2e, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f,
-	0x6e, 0x73, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x42, 0x0d, 0x45, 0x6e, 0x74,
-	0x69, 0x74, 0x69, 0x65, 0x73, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x4e, 0x67, 0x69,
-	0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75,
-	0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65,
-	0x73, 0x2f, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x2f, 0x76,
-	0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x3b, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74,
-	0x69, 0x6f, 0x6e, 0x73, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0xa2, 0x02, 0x03, 0x53,
-	0x54, 0x58, 0xaa, 0x02, 0x1e, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x73, 0x2e, 0x54, 0x72,
-	0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x2e, 0x56, 0x31, 0x61, 0x6c, 0x70,
-	0x68, 0x61, 0x31, 0xca, 0x02, 0x1e, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x73, 0x5c, 0x54,
-	0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x5c, 0x56, 0x31, 0x61, 0x6c,
-	0x70, 0x68, 0x61, 0x31, 0xe2, 0x02, 0x2a, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x73, 0x5c,
-	0x54, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x5c, 0x56, 0x31, 0x61,
-	0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74,
-	0x61, 0xea, 0x02, 0x20, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x73, 0x3a, 0x3a, 0x54, 0x72,
-	0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x3a, 0x3a, 0x56, 0x31, 0x61, 0x6c,
-	0x70, 0x68, 0x61, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x5b, 0x0a, 0x23, 0x44, 0x65, 0x6c, 0x65,
+	0x74, 0x65, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x42, 0x79,
+	0x54, 0x65, 0x6d, 0x70, 0x6c, 0x61, 0x74, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12,
+	0x1a, 0x0a, 0x08, 0x74, 0x65, 0x6d, 0x70, 0x6c, 0x61, 0x74, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x08, 0x74, 0x65, 0x6d, 0x70, 0x6c, 0x61, 0x74, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x63,
+	0x6f, 0x6e, 0x74, 0x65, 0x78, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x63, 0x6f,
+	0x6e, 0x74, 0x65, 0x78, 0x74, 0x22, 0x26, 0x0a, 0x24, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x54,
+	0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x42, 0x79, 0x54, 0x65, 0x6d,
+	0x70, 0x6c, 0x61, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x48, 0x0a,
+	0x1d, 0x42, 0x75, 0x6c, 0x6b, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x54, 0x72, 0x61, 0x6e, 0x73,
+	0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x27,
+	0x0a, 0x0f, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x69, 0x64,
+	0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x0e, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61,
+	0x74, 0x69, 0x6f, 0x6e, 0x49, 0x64, 0x73, 0x22, 0x20, 0x0a, 0x1e, 0x42, 0x75, 0x6c, 0x6b, 0x44,
+	0x65, 0x6c, 0x65, 0x74, 0x65, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e,
+	0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0x9d, 0x02, 0x0a, 0x22, 0x63, 0x6f,
+	0x6d, 0x2e, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x73, 0x2e, 0x74, 0x72, 0x61, 0x6e, 0x73,
+	0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31,
+	0x42, 0x0d, 0x45, 0x6e, 0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50,
+	0x01, 0x5a, 0x4e, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63,
+	0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x73, 0x65,
+	0x72, 0x76, 0x69, 0x63, 0x65, 0x73, 0x2f, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69,
+	0x6f, 0x6e, 0x73, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x3b, 0x74, 0x72, 0x61,
+	0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61,
+	0x31, 0xa2, 0x02, 0x03, 0x53, 0x54, 0x58, 0xaa, 0x02, 0x1e, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63,
+	0x65, 0x73, 0x2e, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x2e,
+	0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0xca, 0x02, 0x1e, 0x53, 0x65, 0x72, 0x76, 0x69,
+	0x63, 0x65, 0x73, 0x5c, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73,
+	0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0xe2, 0x02, 0x2a, 0x53, 0x65, 0x72, 0x76,
+	0x69, 0x63, 0x65, 0x73, 0x5c, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e,
+	0x73, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65,
+	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x20, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65,
+	0x73, 0x3a, 0x3a, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x3a,
+	0x3a, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
+	0x33,
 }
 
 var (
@@ -1782,43 +1883,45 @@ func file_services_translations_v1alpha1_entities_proto_rawDescGZIP() []byte {
 	return file_services_translations_v1alpha1_entities_proto_rawDescData
 }
 
-var file_services_translations_v1alpha1_entities_proto_msgTypes = make([]protoimpl.MessageInfo, 31)
+var file_services_translations_v1alpha1_entities_proto_msgTypes = make([]protoimpl.MessageInfo, 33)
 var file_services_translations_v1alpha1_entities_proto_goTypes = []any{
-	(*Translation)(nil),                    // 0: services.translations.v1alpha1.Translation
-	(*LocalizationLanguage)(nil),           // 1: services.translations.v1alpha1.LocalizationLanguage
-	(*LocalizationContext)(nil),            // 2: services.translations.v1alpha1.LocalizationContext
-	(*TranslateTemplateRequest)(nil),       // 3: services.translations.v1alpha1.TranslateTemplateRequest
-	(*TranslateTemplateResponse)(nil),      // 4: services.translations.v1alpha1.TranslateTemplateResponse
-	(*ListTranslationsRequest)(nil),        // 5: services.translations.v1alpha1.ListTranslationsRequest
-	(*ListTranslationsResponse)(nil),       // 6: services.translations.v1alpha1.ListTranslationsResponse
-	(*CreateTranslationRequest)(nil),       // 7: services.translations.v1alpha1.CreateTranslationRequest
-	(*CreateTranslationResponse)(nil),      // 8: services.translations.v1alpha1.CreateTranslationResponse
-	(*UpdateTranslationRequest)(nil),       // 9: services.translations.v1alpha1.UpdateTranslationRequest
-	(*UpdateTranslationResponse)(nil),      // 10: services.translations.v1alpha1.UpdateTranslationResponse
-	(*TriggerLLMTranslationRequest)(nil),   // 11: services.translations.v1alpha1.TriggerLLMTranslationRequest
-	(*TriggerLLMTranslationResponse)(nil),  // 12: services.translations.v1alpha1.TriggerLLMTranslationResponse
-	(*SetSystemMessageRequest)(nil),        // 13: services.translations.v1alpha1.SetSystemMessageRequest
-	(*SetSystemMessageResponse)(nil),       // 14: services.translations.v1alpha1.SetSystemMessageResponse
-	(*GetSystemMessageRequest)(nil),        // 15: services.translations.v1alpha1.GetSystemMessageRequest
-	(*GetSystemMessageResponse)(nil),       // 16: services.translations.v1alpha1.GetSystemMessageResponse
-	(*TestSystemMessageRequest)(nil),       // 17: services.translations.v1alpha1.TestSystemMessageRequest
-	(*TestSystemMessageResponse)(nil),      // 18: services.translations.v1alpha1.TestSystemMessageResponse
-	(*TriggerLLMTranslationsRequest)(nil),  // 19: services.translations.v1alpha1.TriggerLLMTranslationsRequest
-	(*TriggerLLMTranslationsResponse)(nil), // 20: services.translations.v1alpha1.TriggerLLMTranslationsResponse
-	(*ListLanguagesRequest)(nil),           // 21: services.translations.v1alpha1.ListLanguagesRequest
-	(*ListLanguagesResponse)(nil),          // 22: services.translations.v1alpha1.ListLanguagesResponse
-	(*ListContextsRequest)(nil),            // 23: services.translations.v1alpha1.ListContextsRequest
-	(*ListContextsResponse)(nil),           // 24: services.translations.v1alpha1.ListContextsResponse
-	(*EnableContextRequest)(nil),           // 25: services.translations.v1alpha1.EnableContextRequest
-	(*EnableContextResponse)(nil),          // 26: services.translations.v1alpha1.EnableContextResponse
-	(*DisableContextRequest)(nil),          // 27: services.translations.v1alpha1.DisableContextRequest
-	(*DisableContextResponse)(nil),         // 28: services.translations.v1alpha1.DisableContextResponse
-	(*BulkDeleteTranslationsRequest)(nil),  // 29: services.translations.v1alpha1.BulkDeleteTranslationsRequest
-	(*BulkDeleteTranslationsResponse)(nil), // 30: services.translations.v1alpha1.BulkDeleteTranslationsResponse
-	(*timestamppb.Timestamp)(nil),          // 31: google.protobuf.Timestamp
+	(*Translation)(nil),                          // 0: services.translations.v1alpha1.Translation
+	(*LocalizationLanguage)(nil),                 // 1: services.translations.v1alpha1.LocalizationLanguage
+	(*LocalizationContext)(nil),                  // 2: services.translations.v1alpha1.LocalizationContext
+	(*TranslateTemplateRequest)(nil),             // 3: services.translations.v1alpha1.TranslateTemplateRequest
+	(*TranslateTemplateResponse)(nil),            // 4: services.translations.v1alpha1.TranslateTemplateResponse
+	(*ListTranslationsRequest)(nil),              // 5: services.translations.v1alpha1.ListTranslationsRequest
+	(*ListTranslationsResponse)(nil),             // 6: services.translations.v1alpha1.ListTranslationsResponse
+	(*CreateTranslationRequest)(nil),             // 7: services.translations.v1alpha1.CreateTranslationRequest
+	(*CreateTranslationResponse)(nil),            // 8: services.translations.v1alpha1.CreateTranslationResponse
+	(*UpdateTranslationRequest)(nil),             // 9: services.translations.v1alpha1.UpdateTranslationRequest
+	(*UpdateTranslationResponse)(nil),            // 10: services.translations.v1alpha1.UpdateTranslationResponse
+	(*TriggerLLMTranslationRequest)(nil),         // 11: services.translations.v1alpha1.TriggerLLMTranslationRequest
+	(*TriggerLLMTranslationResponse)(nil),        // 12: services.translations.v1alpha1.TriggerLLMTranslationResponse
+	(*SetSystemMessageRequest)(nil),              // 13: services.translations.v1alpha1.SetSystemMessageRequest
+	(*SetSystemMessageResponse)(nil),             // 14: services.translations.v1alpha1.SetSystemMessageResponse
+	(*GetSystemMessageRequest)(nil),              // 15: services.translations.v1alpha1.GetSystemMessageRequest
+	(*GetSystemMessageResponse)(nil),             // 16: services.translations.v1alpha1.GetSystemMessageResponse
+	(*TestSystemMessageRequest)(nil),             // 17: services.translations.v1alpha1.TestSystemMessageRequest
+	(*TestSystemMessageResponse)(nil),            // 18: services.translations.v1alpha1.TestSystemMessageResponse
+	(*TriggerLLMTranslationsRequest)(nil),        // 19: services.translations.v1alpha1.TriggerLLMTranslationsRequest
+	(*TriggerLLMTranslationsResponse)(nil),       // 20: services.translations.v1alpha1.TriggerLLMTranslationsResponse
+	(*ListLanguagesRequest)(nil),                 // 21: services.translations.v1alpha1.ListLanguagesRequest
+	(*ListLanguagesResponse)(nil),                // 22: services.translations.v1alpha1.ListLanguagesResponse
+	(*ListContextsRequest)(nil),                  // 23: services.translations.v1alpha1.ListContextsRequest
+	(*ListContextsResponse)(nil),                 // 24: services.translations.v1alpha1.ListContextsResponse
+	(*EnableContextRequest)(nil),                 // 25: services.translations.v1alpha1.EnableContextRequest
+	(*EnableContextResponse)(nil),                // 26: services.translations.v1alpha1.EnableContextResponse
+	(*DisableContextRequest)(nil),                // 27: services.translations.v1alpha1.DisableContextRequest
+	(*DisableContextResponse)(nil),               // 28: services.translations.v1alpha1.DisableContextResponse
+	(*DeleteTranslationsByTemplateRequest)(nil),  // 29: services.translations.v1alpha1.DeleteTranslationsByTemplateRequest
+	(*DeleteTranslationsByTemplateResponse)(nil), // 30: services.translations.v1alpha1.DeleteTranslationsByTemplateResponse
+	(*BulkDeleteTranslationsRequest)(nil),        // 31: services.translations.v1alpha1.BulkDeleteTranslationsRequest
+	(*BulkDeleteTranslationsResponse)(nil),       // 32: services.translations.v1alpha1.BulkDeleteTranslationsResponse
+	(*timestamppb.Timestamp)(nil),                // 33: google.protobuf.Timestamp
 }
 var file_services_translations_v1alpha1_entities_proto_depIdxs = []int32{
-	31, // 0: services.translations.v1alpha1.Translation.create_time:type_name -> google.protobuf.Timestamp
+	33, // 0: services.translations.v1alpha1.Translation.create_time:type_name -> google.protobuf.Timestamp
 	0,  // 1: services.translations.v1alpha1.TranslateTemplateResponse.translations:type_name -> services.translations.v1alpha1.Translation
 	0,  // 2: services.translations.v1alpha1.ListTranslationsResponse.translations:type_name -> services.translations.v1alpha1.Translation
 	0,  // 3: services.translations.v1alpha1.CreateTranslationResponse.translation:type_name -> services.translations.v1alpha1.Translation
@@ -1844,7 +1947,7 @@ func file_services_translations_v1alpha1_entities_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_services_translations_v1alpha1_entities_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   31,
+			NumMessages:   33,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
