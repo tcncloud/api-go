@@ -56,6 +56,7 @@ const (
 	Scorecards_UpdateEvaluationQuestion_FullMethodName = "/api.v1alpha1.scorecards.Scorecards/UpdateEvaluationQuestion"
 	Scorecards_DeleteEvaluationQuestion_FullMethodName = "/api.v1alpha1.scorecards.Scorecards/DeleteEvaluationQuestion"
 	Scorecards_SampleCallsByCategory_FullMethodName    = "/api.v1alpha1.scorecards.Scorecards/SampleCallsByCategory"
+	Scorecards_SampleAgentConversations_FullMethodName = "/api.v1alpha1.scorecards.Scorecards/SampleAgentConversations"
 	Scorecards_CreateAutoQuestion_FullMethodName       = "/api.v1alpha1.scorecards.Scorecards/CreateAutoQuestion"
 	Scorecards_UpdateAutoQuestion_FullMethodName       = "/api.v1alpha1.scorecards.Scorecards/UpdateAutoQuestion"
 	Scorecards_DeleteAutoQuestion_FullMethodName       = "/api.v1alpha1.scorecards.Scorecards/DeleteAutoQuestion"
@@ -153,6 +154,8 @@ type ScorecardsClient interface {
 	DeleteEvaluationQuestion(ctx context.Context, in *DeleteEvaluationQuestionRequest, opts ...grpc.CallOption) (*DeleteEvaluationQuestionResponse, error)
 	// SampleCallsByCategory
 	SampleCallsByCategory(ctx context.Context, in *SampleCallsByCategoryRequest, opts ...grpc.CallOption) (*SampleCallsByCategoryResponse, error)
+	// SampleAgentConversations
+	SampleAgentConversations(ctx context.Context, in *SampleAgentConversationsRequest, opts ...grpc.CallOption) (*SampleAgentConversationsResponse, error)
 	// CreateAutoQuestion creates an auto question
 	CreateAutoQuestion(ctx context.Context, in *CreateAutoQuestionRequest, opts ...grpc.CallOption) (*CreateAutoQuestionResponse, error)
 	// UpdateAutoQuestion updates an auto question
@@ -566,6 +569,16 @@ func (c *scorecardsClient) SampleCallsByCategory(ctx context.Context, in *Sample
 	return out, nil
 }
 
+func (c *scorecardsClient) SampleAgentConversations(ctx context.Context, in *SampleAgentConversationsRequest, opts ...grpc.CallOption) (*SampleAgentConversationsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SampleAgentConversationsResponse)
+	err := c.cc.Invoke(ctx, Scorecards_SampleAgentConversations_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *scorecardsClient) CreateAutoQuestion(ctx context.Context, in *CreateAutoQuestionRequest, opts ...grpc.CallOption) (*CreateAutoQuestionResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(CreateAutoQuestionResponse)
@@ -828,6 +841,8 @@ type ScorecardsServer interface {
 	DeleteEvaluationQuestion(context.Context, *DeleteEvaluationQuestionRequest) (*DeleteEvaluationQuestionResponse, error)
 	// SampleCallsByCategory
 	SampleCallsByCategory(context.Context, *SampleCallsByCategoryRequest) (*SampleCallsByCategoryResponse, error)
+	// SampleAgentConversations
+	SampleAgentConversations(context.Context, *SampleAgentConversationsRequest) (*SampleAgentConversationsResponse, error)
 	// CreateAutoQuestion creates an auto question
 	CreateAutoQuestion(context.Context, *CreateAutoQuestionRequest) (*CreateAutoQuestionResponse, error)
 	// UpdateAutoQuestion updates an auto question
@@ -980,6 +995,9 @@ func (UnimplementedScorecardsServer) DeleteEvaluationQuestion(context.Context, *
 }
 func (UnimplementedScorecardsServer) SampleCallsByCategory(context.Context, *SampleCallsByCategoryRequest) (*SampleCallsByCategoryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SampleCallsByCategory not implemented")
+}
+func (UnimplementedScorecardsServer) SampleAgentConversations(context.Context, *SampleAgentConversationsRequest) (*SampleAgentConversationsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SampleAgentConversations not implemented")
 }
 func (UnimplementedScorecardsServer) CreateAutoQuestion(context.Context, *CreateAutoQuestionRequest) (*CreateAutoQuestionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateAutoQuestion not implemented")
@@ -1716,6 +1734,24 @@ func _Scorecards_SampleCallsByCategory_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Scorecards_SampleAgentConversations_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SampleAgentConversationsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ScorecardsServer).SampleAgentConversations(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Scorecards_SampleAgentConversations_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ScorecardsServer).SampleAgentConversations(ctx, req.(*SampleAgentConversationsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Scorecards_CreateAutoQuestion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateAutoQuestionRequest)
 	if err := dec(in); err != nil {
@@ -2161,6 +2197,10 @@ var Scorecards_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SampleCallsByCategory",
 			Handler:    _Scorecards_SampleCallsByCategory_Handler,
+		},
+		{
+			MethodName: "SampleAgentConversations",
+			Handler:    _Scorecards_SampleAgentConversations_Handler,
 		},
 		{
 			MethodName: "CreateAutoQuestion",

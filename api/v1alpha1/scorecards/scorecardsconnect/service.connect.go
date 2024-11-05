@@ -139,6 +139,9 @@ const (
 	// ScorecardsSampleCallsByCategoryProcedure is the fully-qualified name of the Scorecards's
 	// SampleCallsByCategory RPC.
 	ScorecardsSampleCallsByCategoryProcedure = "/api.v1alpha1.scorecards.Scorecards/SampleCallsByCategory"
+	// ScorecardsSampleAgentConversationsProcedure is the fully-qualified name of the Scorecards's
+	// SampleAgentConversations RPC.
+	ScorecardsSampleAgentConversationsProcedure = "/api.v1alpha1.scorecards.Scorecards/SampleAgentConversations"
 	// ScorecardsCreateAutoQuestionProcedure is the fully-qualified name of the Scorecards's
 	// CreateAutoQuestion RPC.
 	ScorecardsCreateAutoQuestionProcedure = "/api.v1alpha1.scorecards.Scorecards/CreateAutoQuestion"
@@ -267,6 +270,8 @@ type ScorecardsClient interface {
 	DeleteEvaluationQuestion(context.Context, *connect_go.Request[scorecards.DeleteEvaluationQuestionRequest]) (*connect_go.Response[scorecards.DeleteEvaluationQuestionResponse], error)
 	// SampleCallsByCategory
 	SampleCallsByCategory(context.Context, *connect_go.Request[scorecards.SampleCallsByCategoryRequest]) (*connect_go.Response[scorecards.SampleCallsByCategoryResponse], error)
+	// SampleAgentConversations
+	SampleAgentConversations(context.Context, *connect_go.Request[scorecards.SampleAgentConversationsRequest]) (*connect_go.Response[scorecards.SampleAgentConversationsResponse], error)
 	// CreateAutoQuestion creates an auto question
 	CreateAutoQuestion(context.Context, *connect_go.Request[scorecards.CreateAutoQuestionRequest]) (*connect_go.Response[scorecards.CreateAutoQuestionResponse], error)
 	// UpdateAutoQuestion updates an auto question
@@ -496,6 +501,11 @@ func NewScorecardsClient(httpClient connect_go.HTTPClient, baseURL string, opts 
 			baseURL+ScorecardsSampleCallsByCategoryProcedure,
 			opts...,
 		),
+		sampleAgentConversations: connect_go.NewClient[scorecards.SampleAgentConversationsRequest, scorecards.SampleAgentConversationsResponse](
+			httpClient,
+			baseURL+ScorecardsSampleAgentConversationsProcedure,
+			opts...,
+		),
 		createAutoQuestion: connect_go.NewClient[scorecards.CreateAutoQuestionRequest, scorecards.CreateAutoQuestionResponse](
 			httpClient,
 			baseURL+ScorecardsCreateAutoQuestionProcedure,
@@ -618,6 +628,7 @@ type scorecardsClient struct {
 	updateEvaluationQuestion *connect_go.Client[scorecards.UpdateEvaluationQuestionRequest, scorecards.UpdateEvaluationQuestionResponse]
 	deleteEvaluationQuestion *connect_go.Client[scorecards.DeleteEvaluationQuestionRequest, scorecards.DeleteEvaluationQuestionResponse]
 	sampleCallsByCategory    *connect_go.Client[scorecards.SampleCallsByCategoryRequest, scorecards.SampleCallsByCategoryResponse]
+	sampleAgentConversations *connect_go.Client[scorecards.SampleAgentConversationsRequest, scorecards.SampleAgentConversationsResponse]
 	createAutoQuestion       *connect_go.Client[scorecards.CreateAutoQuestionRequest, scorecards.CreateAutoQuestionResponse]
 	updateAutoQuestion       *connect_go.Client[scorecards.UpdateAutoQuestionRequest, scorecards.UpdateAutoQuestionResponse]
 	deleteAutoQuestion       *connect_go.Client[scorecards.DeleteAutoQuestionRequest, scorecards.DeleteAutoQuestionResponse]
@@ -823,6 +834,11 @@ func (c *scorecardsClient) SampleCallsByCategory(ctx context.Context, req *conne
 	return c.sampleCallsByCategory.CallUnary(ctx, req)
 }
 
+// SampleAgentConversations calls api.v1alpha1.scorecards.Scorecards.SampleAgentConversations.
+func (c *scorecardsClient) SampleAgentConversations(ctx context.Context, req *connect_go.Request[scorecards.SampleAgentConversationsRequest]) (*connect_go.Response[scorecards.SampleAgentConversationsResponse], error) {
+	return c.sampleAgentConversations.CallUnary(ctx, req)
+}
+
 // CreateAutoQuestion calls api.v1alpha1.scorecards.Scorecards.CreateAutoQuestion.
 func (c *scorecardsClient) CreateAutoQuestion(ctx context.Context, req *connect_go.Request[scorecards.CreateAutoQuestionRequest]) (*connect_go.Response[scorecards.CreateAutoQuestionResponse], error) {
 	return c.createAutoQuestion.CallUnary(ctx, req)
@@ -981,6 +997,8 @@ type ScorecardsHandler interface {
 	DeleteEvaluationQuestion(context.Context, *connect_go.Request[scorecards.DeleteEvaluationQuestionRequest]) (*connect_go.Response[scorecards.DeleteEvaluationQuestionResponse], error)
 	// SampleCallsByCategory
 	SampleCallsByCategory(context.Context, *connect_go.Request[scorecards.SampleCallsByCategoryRequest]) (*connect_go.Response[scorecards.SampleCallsByCategoryResponse], error)
+	// SampleAgentConversations
+	SampleAgentConversations(context.Context, *connect_go.Request[scorecards.SampleAgentConversationsRequest]) (*connect_go.Response[scorecards.SampleAgentConversationsResponse], error)
 	// CreateAutoQuestion creates an auto question
 	CreateAutoQuestion(context.Context, *connect_go.Request[scorecards.CreateAutoQuestionRequest]) (*connect_go.Response[scorecards.CreateAutoQuestionResponse], error)
 	// UpdateAutoQuestion updates an auto question
@@ -1206,6 +1224,11 @@ func NewScorecardsHandler(svc ScorecardsHandler, opts ...connect_go.HandlerOptio
 		svc.SampleCallsByCategory,
 		opts...,
 	)
+	scorecardsSampleAgentConversationsHandler := connect_go.NewUnaryHandler(
+		ScorecardsSampleAgentConversationsProcedure,
+		svc.SampleAgentConversations,
+		opts...,
+	)
 	scorecardsCreateAutoQuestionHandler := connect_go.NewUnaryHandler(
 		ScorecardsCreateAutoQuestionProcedure,
 		svc.CreateAutoQuestion,
@@ -1362,6 +1385,8 @@ func NewScorecardsHandler(svc ScorecardsHandler, opts ...connect_go.HandlerOptio
 			scorecardsDeleteEvaluationQuestionHandler.ServeHTTP(w, r)
 		case ScorecardsSampleCallsByCategoryProcedure:
 			scorecardsSampleCallsByCategoryHandler.ServeHTTP(w, r)
+		case ScorecardsSampleAgentConversationsProcedure:
+			scorecardsSampleAgentConversationsHandler.ServeHTTP(w, r)
 		case ScorecardsCreateAutoQuestionProcedure:
 			scorecardsCreateAutoQuestionHandler.ServeHTTP(w, r)
 		case ScorecardsUpdateAutoQuestionProcedure:
@@ -1549,6 +1574,10 @@ func (UnimplementedScorecardsHandler) DeleteEvaluationQuestion(context.Context, 
 
 func (UnimplementedScorecardsHandler) SampleCallsByCategory(context.Context, *connect_go.Request[scorecards.SampleCallsByCategoryRequest]) (*connect_go.Response[scorecards.SampleCallsByCategoryResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.scorecards.Scorecards.SampleCallsByCategory is not implemented"))
+}
+
+func (UnimplementedScorecardsHandler) SampleAgentConversations(context.Context, *connect_go.Request[scorecards.SampleAgentConversationsRequest]) (*connect_go.Response[scorecards.SampleAgentConversationsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.scorecards.Scorecards.SampleAgentConversations is not implemented"))
 }
 
 func (UnimplementedScorecardsHandler) CreateAutoQuestion(context.Context, *connect_go.Request[scorecards.CreateAutoQuestionRequest]) (*connect_go.Response[scorecards.CreateAutoQuestionResponse], error) {
