@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion8
 const (
 	Insights_CreateInsight_FullMethodName                 = "/api.v1alpha1.insights.Insights/CreateInsight"
 	Insights_ListInsights_FullMethodName                  = "/api.v1alpha1.insights.Insights/ListInsights"
+	Insights_ListInsightsStream_FullMethodName            = "/api.v1alpha1.insights.Insights/ListInsightsStream"
 	Insights_ListOrgInsights_FullMethodName               = "/api.v1alpha1.insights.Insights/ListOrgInsights"
 	Insights_UpdateInsight_FullMethodName                 = "/api.v1alpha1.insights.Insights/UpdateInsight"
 	Insights_DeleteInsight_FullMethodName                 = "/api.v1alpha1.insights.Insights/DeleteInsight"
@@ -49,6 +50,8 @@ type InsightsClient interface {
 	CreateInsight(ctx context.Context, in *CreateInsightRequest, opts ...grpc.CallOption) (*CreateInsightResponse, error)
 	// ListInsights lists insights
 	ListInsights(ctx context.Context, in *ListInsightsRequest, opts ...grpc.CallOption) (*ListInsightsResponse, error)
+	// ListInsightsStream lists insights with streaming
+	ListInsightsStream(ctx context.Context, in *ListInsightsRequest, opts ...grpc.CallOption) (Insights_ListInsightsStreamClient, error)
 	// ListOrgInsights lists insights for an org. Used for support app.
 	ListOrgInsights(ctx context.Context, in *ListOrgInsightsRequest, opts ...grpc.CallOption) (*ListOrgInsightsResponse, error)
 	// UpdateInsight updates an existing insight
@@ -113,6 +116,39 @@ func (c *insightsClient) ListInsights(ctx context.Context, in *ListInsightsReque
 		return nil, err
 	}
 	return out, nil
+}
+
+func (c *insightsClient) ListInsightsStream(ctx context.Context, in *ListInsightsRequest, opts ...grpc.CallOption) (Insights_ListInsightsStreamClient, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &Insights_ServiceDesc.Streams[0], Insights_ListInsightsStream_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &insightsListInsightsStreamClient{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type Insights_ListInsightsStreamClient interface {
+	Recv() (*ListInsightsStreamResponse, error)
+	grpc.ClientStream
+}
+
+type insightsListInsightsStreamClient struct {
+	grpc.ClientStream
+}
+
+func (x *insightsListInsightsStreamClient) Recv() (*ListInsightsStreamResponse, error) {
+	m := new(ListInsightsStreamResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
 }
 
 func (c *insightsClient) ListOrgInsights(ctx context.Context, in *ListOrgInsightsRequest, opts ...grpc.CallOption) (*ListOrgInsightsResponse, error) {
@@ -303,6 +339,8 @@ type InsightsServer interface {
 	CreateInsight(context.Context, *CreateInsightRequest) (*CreateInsightResponse, error)
 	// ListInsights lists insights
 	ListInsights(context.Context, *ListInsightsRequest) (*ListInsightsResponse, error)
+	// ListInsightsStream lists insights with streaming
+	ListInsightsStream(*ListInsightsRequest, Insights_ListInsightsStreamServer) error
 	// ListOrgInsights lists insights for an org. Used for support app.
 	ListOrgInsights(context.Context, *ListOrgInsightsRequest) (*ListOrgInsightsResponse, error)
 	// UpdateInsight updates an existing insight
@@ -354,6 +392,9 @@ func (UnimplementedInsightsServer) CreateInsight(context.Context, *CreateInsight
 }
 func (UnimplementedInsightsServer) ListInsights(context.Context, *ListInsightsRequest) (*ListInsightsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListInsights not implemented")
+}
+func (UnimplementedInsightsServer) ListInsightsStream(*ListInsightsRequest, Insights_ListInsightsStreamServer) error {
+	return status.Errorf(codes.Unimplemented, "method ListInsightsStream not implemented")
 }
 func (UnimplementedInsightsServer) ListOrgInsights(context.Context, *ListOrgInsightsRequest) (*ListOrgInsightsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListOrgInsights not implemented")
@@ -464,6 +505,27 @@ func _Insights_ListInsights_Handler(srv interface{}, ctx context.Context, dec fu
 		return srv.(InsightsServer).ListInsights(ctx, req.(*ListInsightsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
+}
+
+func _Insights_ListInsightsStream_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(ListInsightsRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(InsightsServer).ListInsightsStream(m, &insightsListInsightsStreamServer{ServerStream: stream})
+}
+
+type Insights_ListInsightsStreamServer interface {
+	Send(*ListInsightsStreamResponse) error
+	grpc.ServerStream
+}
+
+type insightsListInsightsStreamServer struct {
+	grpc.ServerStream
+}
+
+func (x *insightsListInsightsStreamServer) Send(m *ListInsightsStreamResponse) error {
+	return x.ServerStream.SendMsg(m)
 }
 
 func _Insights_ListOrgInsights_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -878,6 +940,12 @@ var Insights_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Insights_GetDefaultOutputConfiguration_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "ListInsightsStream",
+			Handler:       _Insights_ListInsightsStream_Handler,
+			ServerStreams: true,
+		},
+	},
 	Metadata: "api/v1alpha1/insights/service.proto",
 }
