@@ -45,6 +45,9 @@ const (
 	// PBXServiceGetSIPAccountProcedure is the fully-qualified name of the PBXService's GetSIPAccount
 	// RPC.
 	PBXServiceGetSIPAccountProcedure = "/services.pbx.v2.PBXService/GetSIPAccount"
+	// PBXServiceGetSIPAccountByUserIdProcedure is the fully-qualified name of the PBXService's
+	// GetSIPAccountByUserId RPC.
+	PBXServiceGetSIPAccountByUserIdProcedure = "/services.pbx.v2.PBXService/GetSIPAccountByUserId"
 	// PBXServiceListSIPAccountsProcedure is the fully-qualified name of the PBXService's
 	// ListSIPAccounts RPC.
 	PBXServiceListSIPAccountsProcedure = "/services.pbx.v2.PBXService/ListSIPAccounts"
@@ -123,6 +126,18 @@ type PBXServiceClient interface {
 	//   - grpc.NotFound: The group does not exist or is not in the caller's ORG.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	GetSIPAccount(context.Context, *connect_go.Request[v2.GetSIPAccountRequest]) (*connect_go.Response[v2.GetSIPAccountResponse], error)
+	// Returns details of the SIP Account associated with the org_user_id
+	// Required permissions:
+	//
+	//	PBX-MANAGER
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.NotFound: The group does not exist or is not in the caller's ORG.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	GetSIPAccountByUserId(context.Context, *connect_go.Request[v2.GetSIPAccountByUserIdRequest]) (*connect_go.Response[v2.GetSIPAccountByUserIdResponse], error)
 	// Returns details of all SIP Accounts associated with the authenticated callers ORG
 	// Required permissions:
 	//
@@ -235,6 +250,11 @@ func NewPBXServiceClient(httpClient connect_go.HTTPClient, baseURL string, opts 
 			baseURL+PBXServiceGetSIPAccountProcedure,
 			opts...,
 		),
+		getSIPAccountByUserId: connect_go.NewClient[v2.GetSIPAccountByUserIdRequest, v2.GetSIPAccountByUserIdResponse](
+			httpClient,
+			baseURL+PBXServiceGetSIPAccountByUserIdProcedure,
+			opts...,
+		),
 		listSIPAccounts: connect_go.NewClient[v2.ListSIPAccountsRequest, v2.ListSIPAccountsResponse](
 			httpClient,
 			baseURL+PBXServiceListSIPAccountsProcedure,
@@ -275,6 +295,7 @@ type pBXServiceClient struct {
 	listRingGroups        *connect_go.Client[v2.ListRingGroupsRequest, v2.ListRingGroupsResponse]
 	getRingGroup          *connect_go.Client[v2.GetRingGroupRequest, v2.GetRingGroupResponse]
 	getSIPAccount         *connect_go.Client[v2.GetSIPAccountRequest, v2.GetSIPAccountResponse]
+	getSIPAccountByUserId *connect_go.Client[v2.GetSIPAccountByUserIdRequest, v2.GetSIPAccountByUserIdResponse]
 	listSIPAccounts       *connect_go.Client[v2.ListSIPAccountsRequest, v2.ListSIPAccountsResponse]
 	updateSIPAccount      *connect_go.Client[v2.UpdateSIPAccountRequest, v2.UpdateSIPAccountResponse]
 	updateRingGroup       *connect_go.Client[v2.UpdateRingGroupRequest, v2.UpdateRingGroupResponse]
@@ -306,6 +327,11 @@ func (c *pBXServiceClient) GetRingGroup(ctx context.Context, req *connect_go.Req
 // GetSIPAccount calls services.pbx.v2.PBXService.GetSIPAccount.
 func (c *pBXServiceClient) GetSIPAccount(ctx context.Context, req *connect_go.Request[v2.GetSIPAccountRequest]) (*connect_go.Response[v2.GetSIPAccountResponse], error) {
 	return c.getSIPAccount.CallUnary(ctx, req)
+}
+
+// GetSIPAccountByUserId calls services.pbx.v2.PBXService.GetSIPAccountByUserId.
+func (c *pBXServiceClient) GetSIPAccountByUserId(ctx context.Context, req *connect_go.Request[v2.GetSIPAccountByUserIdRequest]) (*connect_go.Response[v2.GetSIPAccountByUserIdResponse], error) {
+	return c.getSIPAccountByUserId.CallUnary(ctx, req)
 }
 
 // ListSIPAccounts calls services.pbx.v2.PBXService.ListSIPAccounts.
@@ -396,6 +422,18 @@ type PBXServiceHandler interface {
 	//   - grpc.NotFound: The group does not exist or is not in the caller's ORG.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	GetSIPAccount(context.Context, *connect_go.Request[v2.GetSIPAccountRequest]) (*connect_go.Response[v2.GetSIPAccountResponse], error)
+	// Returns details of the SIP Account associated with the org_user_id
+	// Required permissions:
+	//
+	//	PBX-MANAGER
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.NotFound: The group does not exist or is not in the caller's ORG.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	GetSIPAccountByUserId(context.Context, *connect_go.Request[v2.GetSIPAccountByUserIdRequest]) (*connect_go.Response[v2.GetSIPAccountByUserIdResponse], error)
 	// Returns details of all SIP Accounts associated with the authenticated callers ORG
 	// Required permissions:
 	//
@@ -504,6 +542,11 @@ func NewPBXServiceHandler(svc PBXServiceHandler, opts ...connect_go.HandlerOptio
 		svc.GetSIPAccount,
 		opts...,
 	)
+	pBXServiceGetSIPAccountByUserIdHandler := connect_go.NewUnaryHandler(
+		PBXServiceGetSIPAccountByUserIdProcedure,
+		svc.GetSIPAccountByUserId,
+		opts...,
+	)
 	pBXServiceListSIPAccountsHandler := connect_go.NewUnaryHandler(
 		PBXServiceListSIPAccountsProcedure,
 		svc.ListSIPAccounts,
@@ -546,6 +589,8 @@ func NewPBXServiceHandler(svc PBXServiceHandler, opts ...connect_go.HandlerOptio
 			pBXServiceGetRingGroupHandler.ServeHTTP(w, r)
 		case PBXServiceGetSIPAccountProcedure:
 			pBXServiceGetSIPAccountHandler.ServeHTTP(w, r)
+		case PBXServiceGetSIPAccountByUserIdProcedure:
+			pBXServiceGetSIPAccountByUserIdHandler.ServeHTTP(w, r)
 		case PBXServiceListSIPAccountsProcedure:
 			pBXServiceListSIPAccountsHandler.ServeHTTP(w, r)
 		case PBXServiceUpdateSIPAccountProcedure:
@@ -585,6 +630,10 @@ func (UnimplementedPBXServiceHandler) GetRingGroup(context.Context, *connect_go.
 
 func (UnimplementedPBXServiceHandler) GetSIPAccount(context.Context, *connect_go.Request[v2.GetSIPAccountRequest]) (*connect_go.Response[v2.GetSIPAccountResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.pbx.v2.PBXService.GetSIPAccount is not implemented"))
+}
+
+func (UnimplementedPBXServiceHandler) GetSIPAccountByUserId(context.Context, *connect_go.Request[v2.GetSIPAccountByUserIdRequest]) (*connect_go.Response[v2.GetSIPAccountByUserIdResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.pbx.v2.PBXService.GetSIPAccountByUserId is not implemented"))
 }
 
 func (UnimplementedPBXServiceHandler) ListSIPAccounts(context.Context, *connect_go.Request[v2.ListSIPAccountsRequest]) (*connect_go.Response[v2.ListSIPAccountsResponse], error) {
