@@ -227,6 +227,9 @@ const (
 	// WFMListCandidateSchedulingActivitiesProcedure is the fully-qualified name of the WFM's
 	// ListCandidateSchedulingActivities RPC.
 	WFMListCandidateSchedulingActivitiesProcedure = "/api.v1alpha1.wfm.WFM/ListCandidateSchedulingActivities"
+	// WFMListSchedulingActivitiesProcedure is the fully-qualified name of the WFM's
+	// ListSchedulingActivities RPC.
+	WFMListSchedulingActivitiesProcedure = "/api.v1alpha1.wfm.WFM/ListSchedulingActivities"
 	// WFMGetOnCallSchedulingActivityProcedure is the fully-qualified name of the WFM's
 	// GetOnCallSchedulingActivity RPC.
 	WFMGetOnCallSchedulingActivityProcedure = "/api.v1alpha1.wfm.WFM/GetOnCallSchedulingActivity"
@@ -1125,6 +1128,11 @@ type WFMClient interface {
 	//   - grpc.NotFound: @parent_of_rule doesn't exist
 	//   - grpc.Internal: error occurs when applying inheritance or getting the nodes from @parent_of_rule.
 	ListCandidateSchedulingActivities(context.Context, *connect_go.Request[wfm.ListCandidateSchedulingActivitiesReq]) (*connect_go.Response[wfm.ListCandidateSchedulingActivitiesRes], error)
+	// Lists all the scheduling activities for the org making the request.
+	// Their member non skill activities and pause codes will always be included.
+	// Errors:
+	//   - grpc.Internal: error occurs when getting the activities or its members.
+	ListSchedulingActivities(context.Context, *connect_go.Request[wfm.ListSchedulingActivitiesRequest]) (*connect_go.Response[wfm.ListSchedulingActivitiesResponse], error)
 	// Gets the on call scheduling activity for the org sending the request.
 	// Required permissions:
 	//
@@ -2621,6 +2629,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMListCandidateSchedulingActivitiesProcedure,
 			opts...,
 		),
+		listSchedulingActivities: connect_go.NewClient[wfm.ListSchedulingActivitiesRequest, wfm.ListSchedulingActivitiesResponse](
+			httpClient,
+			baseURL+WFMListSchedulingActivitiesProcedure,
+			opts...,
+		),
 		getOnCallSchedulingActivity: connect_go.NewClient[wfm.GetOnCallSchedulingActivityReq, wfm.GetOnCallSchedulingActivityRes](
 			httpClient,
 			baseURL+WFMGetOnCallSchedulingActivityProcedure,
@@ -3430,6 +3443,7 @@ type wFMClient struct {
 	listNonSkillActivities                           *connect_go.Client[wfm.ListNonSkillActivitiesReq, wfm.ListNonSkillActivitiesRes]
 	listNonSkillActivityAssociations                 *connect_go.Client[wfm.ListNonSkillActivityAssociationsReq, wfm.ListNonSkillActivityAssociationsRes]
 	listCandidateSchedulingActivities                *connect_go.Client[wfm.ListCandidateSchedulingActivitiesReq, wfm.ListCandidateSchedulingActivitiesRes]
+	listSchedulingActivities                         *connect_go.Client[wfm.ListSchedulingActivitiesRequest, wfm.ListSchedulingActivitiesResponse]
 	getOnCallSchedulingActivity                      *connect_go.Client[wfm.GetOnCallSchedulingActivityReq, wfm.GetOnCallSchedulingActivityRes]
 	listPatternsForSchedulingActivityClassifications *connect_go.Client[wfm.ListPatternsForSchedulingActivityClassificationsRequest, wfm.ListPatternsForSchedulingActivityClassificationsResponse]
 	getTimeOffSchedulingActivity                     *connect_go.Client[wfm.GetTimeOffSchedulingActivityRequest, wfm.GetTimeOffSchedulingActivityResponse]
@@ -3918,6 +3932,11 @@ func (c *wFMClient) ListNonSkillActivityAssociations(ctx context.Context, req *c
 // ListCandidateSchedulingActivities calls api.v1alpha1.wfm.WFM.ListCandidateSchedulingActivities.
 func (c *wFMClient) ListCandidateSchedulingActivities(ctx context.Context, req *connect_go.Request[wfm.ListCandidateSchedulingActivitiesReq]) (*connect_go.Response[wfm.ListCandidateSchedulingActivitiesRes], error) {
 	return c.listCandidateSchedulingActivities.CallUnary(ctx, req)
+}
+
+// ListSchedulingActivities calls api.v1alpha1.wfm.WFM.ListSchedulingActivities.
+func (c *wFMClient) ListSchedulingActivities(ctx context.Context, req *connect_go.Request[wfm.ListSchedulingActivitiesRequest]) (*connect_go.Response[wfm.ListSchedulingActivitiesResponse], error) {
+	return c.listSchedulingActivities.CallUnary(ctx, req)
 }
 
 // GetOnCallSchedulingActivity calls api.v1alpha1.wfm.WFM.GetOnCallSchedulingActivity.
@@ -5163,6 +5182,11 @@ type WFMHandler interface {
 	//   - grpc.NotFound: @parent_of_rule doesn't exist
 	//   - grpc.Internal: error occurs when applying inheritance or getting the nodes from @parent_of_rule.
 	ListCandidateSchedulingActivities(context.Context, *connect_go.Request[wfm.ListCandidateSchedulingActivitiesReq]) (*connect_go.Response[wfm.ListCandidateSchedulingActivitiesRes], error)
+	// Lists all the scheduling activities for the org making the request.
+	// Their member non skill activities and pause codes will always be included.
+	// Errors:
+	//   - grpc.Internal: error occurs when getting the activities or its members.
+	ListSchedulingActivities(context.Context, *connect_go.Request[wfm.ListSchedulingActivitiesRequest]) (*connect_go.Response[wfm.ListSchedulingActivitiesResponse], error)
 	// Gets the on call scheduling activity for the org sending the request.
 	// Required permissions:
 	//
@@ -6655,6 +6679,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.ListCandidateSchedulingActivities,
 		opts...,
 	)
+	wFMListSchedulingActivitiesHandler := connect_go.NewUnaryHandler(
+		WFMListSchedulingActivitiesProcedure,
+		svc.ListSchedulingActivities,
+		opts...,
+	)
 	wFMGetOnCallSchedulingActivityHandler := connect_go.NewUnaryHandler(
 		WFMGetOnCallSchedulingActivityProcedure,
 		svc.GetOnCallSchedulingActivity,
@@ -7525,6 +7554,8 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMListNonSkillActivityAssociationsHandler.ServeHTTP(w, r)
 		case WFMListCandidateSchedulingActivitiesProcedure:
 			wFMListCandidateSchedulingActivitiesHandler.ServeHTTP(w, r)
+		case WFMListSchedulingActivitiesProcedure:
+			wFMListSchedulingActivitiesHandler.ServeHTTP(w, r)
 		case WFMGetOnCallSchedulingActivityProcedure:
 			wFMGetOnCallSchedulingActivityHandler.ServeHTTP(w, r)
 		case WFMListPatternsForSchedulingActivityClassificationsProcedure:
@@ -8084,6 +8115,10 @@ func (UnimplementedWFMHandler) ListNonSkillActivityAssociations(context.Context,
 
 func (UnimplementedWFMHandler) ListCandidateSchedulingActivities(context.Context, *connect_go.Request[wfm.ListCandidateSchedulingActivitiesReq]) (*connect_go.Response[wfm.ListCandidateSchedulingActivitiesRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListCandidateSchedulingActivities is not implemented"))
+}
+
+func (UnimplementedWFMHandler) ListSchedulingActivities(context.Context, *connect_go.Request[wfm.ListSchedulingActivitiesRequest]) (*connect_go.Response[wfm.ListSchedulingActivitiesResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListSchedulingActivities is not implemented"))
 }
 
 func (UnimplementedWFMHandler) GetOnCallSchedulingActivity(context.Context, *connect_go.Request[wfm.GetOnCallSchedulingActivityReq]) (*connect_go.Response[wfm.GetOnCallSchedulingActivityRes], error) {

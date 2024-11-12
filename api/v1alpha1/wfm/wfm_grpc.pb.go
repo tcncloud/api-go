@@ -97,6 +97,7 @@ const (
 	WFM_ListNonSkillActivities_FullMethodName                           = "/api.v1alpha1.wfm.WFM/ListNonSkillActivities"
 	WFM_ListNonSkillActivityAssociations_FullMethodName                 = "/api.v1alpha1.wfm.WFM/ListNonSkillActivityAssociations"
 	WFM_ListCandidateSchedulingActivities_FullMethodName                = "/api.v1alpha1.wfm.WFM/ListCandidateSchedulingActivities"
+	WFM_ListSchedulingActivities_FullMethodName                         = "/api.v1alpha1.wfm.WFM/ListSchedulingActivities"
 	WFM_GetOnCallSchedulingActivity_FullMethodName                      = "/api.v1alpha1.wfm.WFM/GetOnCallSchedulingActivity"
 	WFM_ListPatternsForSchedulingActivityClassifications_FullMethodName = "/api.v1alpha1.wfm.WFM/ListPatternsForSchedulingActivityClassifications"
 	WFM_GetTimeOffSchedulingActivity_FullMethodName                     = "/api.v1alpha1.wfm.WFM/GetTimeOffSchedulingActivity"
@@ -734,6 +735,11 @@ type WFMClient interface {
 	//   - grpc.NotFound: @parent_of_rule doesn't exist
 	//   - grpc.Internal: error occurs when applying inheritance or getting the nodes from @parent_of_rule.
 	ListCandidateSchedulingActivities(ctx context.Context, in *ListCandidateSchedulingActivitiesReq, opts ...grpc.CallOption) (*ListCandidateSchedulingActivitiesRes, error)
+	// Lists all the scheduling activities for the org making the request.
+	// Their member non skill activities and pause codes will always be included.
+	// Errors:
+	//   - grpc.Internal: error occurs when getting the activities or its members.
+	ListSchedulingActivities(ctx context.Context, in *ListSchedulingActivitiesRequest, opts ...grpc.CallOption) (*ListSchedulingActivitiesResponse, error)
 	// Gets the on call scheduling activity for the org sending the request.
 	// Required permissions:
 	//
@@ -2684,6 +2690,16 @@ func (c *wFMClient) ListCandidateSchedulingActivities(ctx context.Context, in *L
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListCandidateSchedulingActivitiesRes)
 	err := c.cc.Invoke(ctx, WFM_ListCandidateSchedulingActivities_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) ListSchedulingActivities(ctx context.Context, in *ListSchedulingActivitiesRequest, opts ...grpc.CallOption) (*ListSchedulingActivitiesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListSchedulingActivitiesResponse)
+	err := c.cc.Invoke(ctx, WFM_ListSchedulingActivities_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4658,6 +4674,11 @@ type WFMServer interface {
 	//   - grpc.NotFound: @parent_of_rule doesn't exist
 	//   - grpc.Internal: error occurs when applying inheritance or getting the nodes from @parent_of_rule.
 	ListCandidateSchedulingActivities(context.Context, *ListCandidateSchedulingActivitiesReq) (*ListCandidateSchedulingActivitiesRes, error)
+	// Lists all the scheduling activities for the org making the request.
+	// Their member non skill activities and pause codes will always be included.
+	// Errors:
+	//   - grpc.Internal: error occurs when getting the activities or its members.
+	ListSchedulingActivities(context.Context, *ListSchedulingActivitiesRequest) (*ListSchedulingActivitiesResponse, error)
 	// Gets the on call scheduling activity for the org sending the request.
 	// Required permissions:
 	//
@@ -6022,6 +6043,9 @@ func (UnimplementedWFMServer) ListNonSkillActivityAssociations(context.Context, 
 }
 func (UnimplementedWFMServer) ListCandidateSchedulingActivities(context.Context, *ListCandidateSchedulingActivitiesReq) (*ListCandidateSchedulingActivitiesRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListCandidateSchedulingActivities not implemented")
+}
+func (UnimplementedWFMServer) ListSchedulingActivities(context.Context, *ListSchedulingActivitiesRequest) (*ListSchedulingActivitiesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListSchedulingActivities not implemented")
 }
 func (UnimplementedWFMServer) GetOnCallSchedulingActivity(context.Context, *GetOnCallSchedulingActivityReq) (*GetOnCallSchedulingActivityRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOnCallSchedulingActivity not implemented")
@@ -7654,6 +7678,24 @@ func _WFM_ListCandidateSchedulingActivities_Handler(srv interface{}, ctx context
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WFMServer).ListCandidateSchedulingActivities(ctx, req.(*ListCandidateSchedulingActivitiesReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_ListSchedulingActivities_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListSchedulingActivitiesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).ListSchedulingActivities(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_ListSchedulingActivities_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).ListSchedulingActivities(ctx, req.(*ListSchedulingActivitiesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -10560,6 +10602,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListCandidateSchedulingActivities",
 			Handler:    _WFM_ListCandidateSchedulingActivities_Handler,
+		},
+		{
+			MethodName: "ListSchedulingActivities",
+			Handler:    _WFM_ListSchedulingActivities_Handler,
 		},
 		{
 			MethodName: "GetOnCallSchedulingActivity",
