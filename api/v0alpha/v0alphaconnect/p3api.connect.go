@@ -299,6 +299,9 @@ const (
 	P3ApiListSmsNumbersProcedure = "/api.v0alpha.P3Api/ListSmsNumbers"
 	// P3ApiGetMailMergeProcedure is the fully-qualified name of the P3Api's GetMailMerge RPC.
 	P3ApiGetMailMergeProcedure = "/api.v0alpha.P3Api/GetMailMerge"
+	// P3ApiListDistinctPauseCodesProcedure is the fully-qualified name of the P3Api's
+	// ListDistinctPauseCodes RPC.
+	P3ApiListDistinctPauseCodesProcedure = "/api.v0alpha.P3Api/ListDistinctPauseCodes"
 )
 
 // P3ApiClient is a client for the api.v0alpha.P3Api service.
@@ -681,6 +684,12 @@ type P3ApiClient interface {
 	// List sms numbers by client sid
 	ListSmsNumbers(context.Context, *connect_go.Request[v0alpha.ListSmsNumbersReq]) (*connect_go.Response[v0alpha.ListSmsNumbersRes], error)
 	GetMailMerge(context.Context, *connect_go.Request[v0alpha.GetMailMergeReq]) (*connect_go.Response[v0alpha.GetMailMergeRes], error)
+	// Retrieves the pause codes from all the sets of the org sending the request.
+	// Duplicates codes between sets will be removed and only one copy kept.
+	// Resulting pause codes will be sorted alphabetically in ascending order.
+	// Errors:
+	//   - grpc.Internal: error occurs when getting the pause codes.
+	ListDistinctPauseCodes(context.Context, *connect_go.Request[v0alpha.ListDistinctPauseCodesRequest]) (*connect_go.Response[v0alpha.ListDistinctPauseCodesResponse], error)
 }
 
 // NewP3ApiClient constructs a client for the api.v0alpha.P3Api service. By default, it uses the
@@ -1188,6 +1197,11 @@ func NewP3ApiClient(httpClient connect_go.HTTPClient, baseURL string, opts ...co
 			baseURL+P3ApiGetMailMergeProcedure,
 			opts...,
 		),
+		listDistinctPauseCodes: connect_go.NewClient[v0alpha.ListDistinctPauseCodesRequest, v0alpha.ListDistinctPauseCodesResponse](
+			httpClient,
+			baseURL+P3ApiListDistinctPauseCodesProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -1292,6 +1306,7 @@ type p3ApiClient struct {
 	listCustomReportFilters             *connect_go.Client[v0alpha.ListCustomReportFiltersReq, v0alpha.ListCustomReportFiltersRes]
 	listSmsNumbers                      *connect_go.Client[v0alpha.ListSmsNumbersReq, v0alpha.ListSmsNumbersRes]
 	getMailMerge                        *connect_go.Client[v0alpha.GetMailMergeReq, v0alpha.GetMailMergeRes]
+	listDistinctPauseCodes              *connect_go.Client[v0alpha.ListDistinctPauseCodesRequest, v0alpha.ListDistinctPauseCodesResponse]
 }
 
 // GetAgentHuntGroup calls api.v0alpha.P3Api.GetAgentHuntGroup.
@@ -1789,6 +1804,11 @@ func (c *p3ApiClient) GetMailMerge(ctx context.Context, req *connect_go.Request[
 	return c.getMailMerge.CallUnary(ctx, req)
 }
 
+// ListDistinctPauseCodes calls api.v0alpha.P3Api.ListDistinctPauseCodes.
+func (c *p3ApiClient) ListDistinctPauseCodes(ctx context.Context, req *connect_go.Request[v0alpha.ListDistinctPauseCodesRequest]) (*connect_go.Response[v0alpha.ListDistinctPauseCodesResponse], error) {
+	return c.listDistinctPauseCodes.CallUnary(ctx, req)
+}
+
 // P3ApiHandler is an implementation of the api.v0alpha.P3Api service.
 type P3ApiHandler interface {
 	GetAgentHuntGroup(context.Context, *connect_go.Request[v0alpha.GetAgentHuntGroupReq]) (*connect_go.Response[v0alpha.HuntGroup], error)
@@ -2169,6 +2189,12 @@ type P3ApiHandler interface {
 	// List sms numbers by client sid
 	ListSmsNumbers(context.Context, *connect_go.Request[v0alpha.ListSmsNumbersReq]) (*connect_go.Response[v0alpha.ListSmsNumbersRes], error)
 	GetMailMerge(context.Context, *connect_go.Request[v0alpha.GetMailMergeReq]) (*connect_go.Response[v0alpha.GetMailMergeRes], error)
+	// Retrieves the pause codes from all the sets of the org sending the request.
+	// Duplicates codes between sets will be removed and only one copy kept.
+	// Resulting pause codes will be sorted alphabetically in ascending order.
+	// Errors:
+	//   - grpc.Internal: error occurs when getting the pause codes.
+	ListDistinctPauseCodes(context.Context, *connect_go.Request[v0alpha.ListDistinctPauseCodesRequest]) (*connect_go.Response[v0alpha.ListDistinctPauseCodesResponse], error)
 }
 
 // NewP3ApiHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -2672,6 +2698,11 @@ func NewP3ApiHandler(svc P3ApiHandler, opts ...connect_go.HandlerOption) (string
 		svc.GetMailMerge,
 		opts...,
 	)
+	p3ApiListDistinctPauseCodesHandler := connect_go.NewUnaryHandler(
+		P3ApiListDistinctPauseCodesProcedure,
+		svc.ListDistinctPauseCodes,
+		opts...,
+	)
 	return "/api.v0alpha.P3Api/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case P3ApiGetAgentHuntGroupProcedure:
@@ -2872,6 +2903,8 @@ func NewP3ApiHandler(svc P3ApiHandler, opts ...connect_go.HandlerOption) (string
 			p3ApiListSmsNumbersHandler.ServeHTTP(w, r)
 		case P3ApiGetMailMergeProcedure:
 			p3ApiGetMailMergeHandler.ServeHTTP(w, r)
+		case P3ApiListDistinctPauseCodesProcedure:
+			p3ApiListDistinctPauseCodesHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -3275,4 +3308,8 @@ func (UnimplementedP3ApiHandler) ListSmsNumbers(context.Context, *connect_go.Req
 
 func (UnimplementedP3ApiHandler) GetMailMerge(context.Context, *connect_go.Request[v0alpha.GetMailMergeReq]) (*connect_go.Response[v0alpha.GetMailMergeRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.P3Api.GetMailMerge is not implemented"))
+}
+
+func (UnimplementedP3ApiHandler) ListDistinctPauseCodes(context.Context, *connect_go.Request[v0alpha.ListDistinctPauseCodesRequest]) (*connect_go.Response[v0alpha.ListDistinctPauseCodesResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.P3Api.ListDistinctPauseCodes is not implemented"))
 }

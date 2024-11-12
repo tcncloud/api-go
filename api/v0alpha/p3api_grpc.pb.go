@@ -118,6 +118,7 @@ const (
 	P3Api_ListCustomReportFilters_FullMethodName             = "/api.v0alpha.P3Api/ListCustomReportFilters"
 	P3Api_ListSmsNumbers_FullMethodName                      = "/api.v0alpha.P3Api/ListSmsNumbers"
 	P3Api_GetMailMerge_FullMethodName                        = "/api.v0alpha.P3Api/GetMailMerge"
+	P3Api_ListDistinctPauseCodes_FullMethodName              = "/api.v0alpha.P3Api/ListDistinctPauseCodes"
 )
 
 // P3ApiClient is the client API for P3Api service.
@@ -502,6 +503,12 @@ type P3ApiClient interface {
 	// List sms numbers by client sid
 	ListSmsNumbers(ctx context.Context, in *ListSmsNumbersReq, opts ...grpc.CallOption) (*ListSmsNumbersRes, error)
 	GetMailMerge(ctx context.Context, in *GetMailMergeReq, opts ...grpc.CallOption) (*GetMailMergeRes, error)
+	// Retrieves the pause codes from all the sets of the org sending the request.
+	// Duplicates codes between sets will be removed and only one copy kept.
+	// Resulting pause codes will be sorted alphabetically in ascending order.
+	// Errors:
+	//   - grpc.Internal: error occurs when getting the pause codes.
+	ListDistinctPauseCodes(ctx context.Context, in *ListDistinctPauseCodesRequest, opts ...grpc.CallOption) (*ListDistinctPauseCodesResponse, error)
 }
 
 type p3ApiClient struct {
@@ -1548,6 +1555,16 @@ func (c *p3ApiClient) GetMailMerge(ctx context.Context, in *GetMailMergeReq, opt
 	return out, nil
 }
 
+func (c *p3ApiClient) ListDistinctPauseCodes(ctx context.Context, in *ListDistinctPauseCodesRequest, opts ...grpc.CallOption) (*ListDistinctPauseCodesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListDistinctPauseCodesResponse)
+	err := c.cc.Invoke(ctx, P3Api_ListDistinctPauseCodes_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // P3ApiServer is the server API for P3Api service.
 // All implementations must embed UnimplementedP3ApiServer
 // for forward compatibility.
@@ -1930,6 +1947,12 @@ type P3ApiServer interface {
 	// List sms numbers by client sid
 	ListSmsNumbers(context.Context, *ListSmsNumbersReq) (*ListSmsNumbersRes, error)
 	GetMailMerge(context.Context, *GetMailMergeReq) (*GetMailMergeRes, error)
+	// Retrieves the pause codes from all the sets of the org sending the request.
+	// Duplicates codes between sets will be removed and only one copy kept.
+	// Resulting pause codes will be sorted alphabetically in ascending order.
+	// Errors:
+	//   - grpc.Internal: error occurs when getting the pause codes.
+	ListDistinctPauseCodes(context.Context, *ListDistinctPauseCodesRequest) (*ListDistinctPauseCodesResponse, error)
 	mustEmbedUnimplementedP3ApiServer()
 }
 
@@ -2236,6 +2259,9 @@ func (UnimplementedP3ApiServer) ListSmsNumbers(context.Context, *ListSmsNumbersR
 }
 func (UnimplementedP3ApiServer) GetMailMerge(context.Context, *GetMailMergeReq) (*GetMailMergeRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMailMerge not implemented")
+}
+func (UnimplementedP3ApiServer) ListDistinctPauseCodes(context.Context, *ListDistinctPauseCodesRequest) (*ListDistinctPauseCodesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListDistinctPauseCodes not implemented")
 }
 func (UnimplementedP3ApiServer) mustEmbedUnimplementedP3ApiServer() {}
 func (UnimplementedP3ApiServer) testEmbeddedByValue()               {}
@@ -4046,6 +4072,24 @@ func _P3Api_GetMailMerge_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _P3Api_ListDistinctPauseCodes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListDistinctPauseCodesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(P3ApiServer).ListDistinctPauseCodes(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: P3Api_ListDistinctPauseCodes_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(P3ApiServer).ListDistinctPauseCodes(ctx, req.(*ListDistinctPauseCodesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // P3Api_ServiceDesc is the grpc.ServiceDesc for P3Api service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -4440,6 +4484,10 @@ var P3Api_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetMailMerge",
 			Handler:    _P3Api_GetMailMerge_Handler,
+		},
+		{
+			MethodName: "ListDistinctPauseCodes",
+			Handler:    _P3Api_ListDistinctPauseCodes_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
