@@ -28,6 +28,7 @@ const (
 	HuntGroupsService_CopyHuntGroupToOrganization_FullMethodName      = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/CopyHuntGroupToOrganization"
 	HuntGroupsService_AdminCopyHuntGroupToOrganization_FullMethodName = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/AdminCopyHuntGroupToOrganization"
 	HuntGroupsService_AdminListHuntGroups_FullMethodName              = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/AdminListHuntGroups"
+	HuntGroupsService_ListAgentScripts_FullMethodName                 = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/ListAgentScripts"
 )
 
 // HuntGroupsServiceClient is the client API for HuntGroupsService service.
@@ -64,6 +65,8 @@ type HuntGroupsServiceClient interface {
 	AdminCopyHuntGroupToOrganization(ctx context.Context, in *AdminCopyHuntGroupToOrganizationRequest, opts ...grpc.CallOption) (*AdminCopyHuntGroupToOrganizationResponse, error)
 	// AdminListHuntGroups returns a list of hunt groups for the given organization.
 	AdminListHuntGroups(ctx context.Context, in *AdminListHuntGroupsRequest, opts ...grpc.CallOption) (*AdminListHuntGroupsResponse, error)
+	// ListAgentScripts returns a list of agent scripts for the given organization.
+	ListAgentScripts(ctx context.Context, in *ListAgentScriptsRequest, opts ...grpc.CallOption) (HuntGroupsService_ListAgentScriptsClient, error)
 }
 
 type huntGroupsServiceClient struct {
@@ -164,6 +167,39 @@ func (c *huntGroupsServiceClient) AdminListHuntGroups(ctx context.Context, in *A
 	return out, nil
 }
 
+func (c *huntGroupsServiceClient) ListAgentScripts(ctx context.Context, in *ListAgentScriptsRequest, opts ...grpc.CallOption) (HuntGroupsService_ListAgentScriptsClient, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &HuntGroupsService_ServiceDesc.Streams[0], HuntGroupsService_ListAgentScripts_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &huntGroupsServiceListAgentScriptsClient{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type HuntGroupsService_ListAgentScriptsClient interface {
+	Recv() (*ListAgentScriptsResponse, error)
+	grpc.ClientStream
+}
+
+type huntGroupsServiceListAgentScriptsClient struct {
+	grpc.ClientStream
+}
+
+func (x *huntGroupsServiceListAgentScriptsClient) Recv() (*ListAgentScriptsResponse, error) {
+	m := new(ListAgentScriptsResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // HuntGroupsServiceServer is the server API for HuntGroupsService service.
 // All implementations must embed UnimplementedHuntGroupsServiceServer
 // for forward compatibility.
@@ -198,6 +234,8 @@ type HuntGroupsServiceServer interface {
 	AdminCopyHuntGroupToOrganization(context.Context, *AdminCopyHuntGroupToOrganizationRequest) (*AdminCopyHuntGroupToOrganizationResponse, error)
 	// AdminListHuntGroups returns a list of hunt groups for the given organization.
 	AdminListHuntGroups(context.Context, *AdminListHuntGroupsRequest) (*AdminListHuntGroupsResponse, error)
+	// ListAgentScripts returns a list of agent scripts for the given organization.
+	ListAgentScripts(*ListAgentScriptsRequest, HuntGroupsService_ListAgentScriptsServer) error
 	mustEmbedUnimplementedHuntGroupsServiceServer()
 }
 
@@ -234,6 +272,9 @@ func (UnimplementedHuntGroupsServiceServer) AdminCopyHuntGroupToOrganization(con
 }
 func (UnimplementedHuntGroupsServiceServer) AdminListHuntGroups(context.Context, *AdminListHuntGroupsRequest) (*AdminListHuntGroupsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AdminListHuntGroups not implemented")
+}
+func (UnimplementedHuntGroupsServiceServer) ListAgentScripts(*ListAgentScriptsRequest, HuntGroupsService_ListAgentScriptsServer) error {
+	return status.Errorf(codes.Unimplemented, "method ListAgentScripts not implemented")
 }
 func (UnimplementedHuntGroupsServiceServer) mustEmbedUnimplementedHuntGroupsServiceServer() {}
 func (UnimplementedHuntGroupsServiceServer) testEmbeddedByValue()                           {}
@@ -418,6 +459,27 @@ func _HuntGroupsService_AdminListHuntGroups_Handler(srv interface{}, ctx context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _HuntGroupsService_ListAgentScripts_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(ListAgentScriptsRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(HuntGroupsServiceServer).ListAgentScripts(m, &huntGroupsServiceListAgentScriptsServer{ServerStream: stream})
+}
+
+type HuntGroupsService_ListAgentScriptsServer interface {
+	Send(*ListAgentScriptsResponse) error
+	grpc.ServerStream
+}
+
+type huntGroupsServiceListAgentScriptsServer struct {
+	grpc.ServerStream
+}
+
+func (x *huntGroupsServiceListAgentScriptsServer) Send(m *ListAgentScriptsResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
 // HuntGroupsService_ServiceDesc is the grpc.ServiceDesc for HuntGroupsService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -462,6 +524,12 @@ var HuntGroupsService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _HuntGroupsService_AdminListHuntGroups_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "ListAgentScripts",
+			Handler:       _HuntGroupsService_ListAgentScripts_Handler,
+			ServerStreams: true,
+		},
+	},
 	Metadata: "services/org/hunt_groups/v1alpha1/service.proto",
 }
