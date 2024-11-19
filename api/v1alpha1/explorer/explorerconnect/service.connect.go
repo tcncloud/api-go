@@ -38,6 +38,12 @@ const (
 	ExplorerServiceListDatasourceSchemasProcedure = "/api.v1alpha1.explorer.ExplorerService/ListDatasourceSchemas"
 	// ExplorerServiceQueryProcedure is the fully-qualified name of the ExplorerService's Query RPC.
 	ExplorerServiceQueryProcedure = "/api.v1alpha1.explorer.ExplorerService/Query"
+	// ExplorerServiceGetSupportQueryProcedure is the fully-qualified name of the ExplorerService's
+	// GetSupportQuery RPC.
+	ExplorerServiceGetSupportQueryProcedure = "/api.v1alpha1.explorer.ExplorerService/GetSupportQuery"
+	// ExplorerServiceGetQueryExplainProcedure is the fully-qualified name of the ExplorerService's
+	// GetQueryExplain RPC.
+	ExplorerServiceGetQueryExplainProcedure = "/api.v1alpha1.explorer.ExplorerService/GetQueryExplain"
 )
 
 // ExplorerServiceClient is a client for the api.v1alpha1.explorer.ExplorerService service.
@@ -46,6 +52,8 @@ type ExplorerServiceClient interface {
 	ListDatasourceSchemas(context.Context, *connect_go.Request[explorer.ListDatasourceSchemasRequest]) (*connect_go.Response[explorer.ListDatasourceSchemasResponse], error)
 	// Query queries a datasource.
 	Query(context.Context, *connect_go.Request[explorer.QueryRequest]) (*connect_go.Response[explorer.QueryResponse], error)
+	GetSupportQuery(context.Context, *connect_go.Request[explorer.SupportQueryRequest]) (*connect_go.Response[explorer.SupportQueryResponse], error)
+	GetQueryExplain(context.Context, *connect_go.Request[explorer.QueryExplainRequest]) (*connect_go.Response[explorer.QueryExplainResponse], error)
 }
 
 // NewExplorerServiceClient constructs a client for the api.v1alpha1.explorer.ExplorerService
@@ -68,6 +76,16 @@ func NewExplorerServiceClient(httpClient connect_go.HTTPClient, baseURL string, 
 			baseURL+ExplorerServiceQueryProcedure,
 			opts...,
 		),
+		getSupportQuery: connect_go.NewClient[explorer.SupportQueryRequest, explorer.SupportQueryResponse](
+			httpClient,
+			baseURL+ExplorerServiceGetSupportQueryProcedure,
+			opts...,
+		),
+		getQueryExplain: connect_go.NewClient[explorer.QueryExplainRequest, explorer.QueryExplainResponse](
+			httpClient,
+			baseURL+ExplorerServiceGetQueryExplainProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -75,6 +93,8 @@ func NewExplorerServiceClient(httpClient connect_go.HTTPClient, baseURL string, 
 type explorerServiceClient struct {
 	listDatasourceSchemas *connect_go.Client[explorer.ListDatasourceSchemasRequest, explorer.ListDatasourceSchemasResponse]
 	query                 *connect_go.Client[explorer.QueryRequest, explorer.QueryResponse]
+	getSupportQuery       *connect_go.Client[explorer.SupportQueryRequest, explorer.SupportQueryResponse]
+	getQueryExplain       *connect_go.Client[explorer.QueryExplainRequest, explorer.QueryExplainResponse]
 }
 
 // ListDatasourceSchemas calls api.v1alpha1.explorer.ExplorerService.ListDatasourceSchemas.
@@ -87,12 +107,24 @@ func (c *explorerServiceClient) Query(ctx context.Context, req *connect_go.Reque
 	return c.query.CallUnary(ctx, req)
 }
 
+// GetSupportQuery calls api.v1alpha1.explorer.ExplorerService.GetSupportQuery.
+func (c *explorerServiceClient) GetSupportQuery(ctx context.Context, req *connect_go.Request[explorer.SupportQueryRequest]) (*connect_go.Response[explorer.SupportQueryResponse], error) {
+	return c.getSupportQuery.CallUnary(ctx, req)
+}
+
+// GetQueryExplain calls api.v1alpha1.explorer.ExplorerService.GetQueryExplain.
+func (c *explorerServiceClient) GetQueryExplain(ctx context.Context, req *connect_go.Request[explorer.QueryExplainRequest]) (*connect_go.Response[explorer.QueryExplainResponse], error) {
+	return c.getQueryExplain.CallUnary(ctx, req)
+}
+
 // ExplorerServiceHandler is an implementation of the api.v1alpha1.explorer.ExplorerService service.
 type ExplorerServiceHandler interface {
 	// ListDatasourceSchemas lists all accessible datasources and their schemas.
 	ListDatasourceSchemas(context.Context, *connect_go.Request[explorer.ListDatasourceSchemasRequest]) (*connect_go.Response[explorer.ListDatasourceSchemasResponse], error)
 	// Query queries a datasource.
 	Query(context.Context, *connect_go.Request[explorer.QueryRequest]) (*connect_go.Response[explorer.QueryResponse], error)
+	GetSupportQuery(context.Context, *connect_go.Request[explorer.SupportQueryRequest]) (*connect_go.Response[explorer.SupportQueryResponse], error)
+	GetQueryExplain(context.Context, *connect_go.Request[explorer.QueryExplainRequest]) (*connect_go.Response[explorer.QueryExplainResponse], error)
 }
 
 // NewExplorerServiceHandler builds an HTTP handler from the service implementation. It returns the
@@ -111,12 +143,26 @@ func NewExplorerServiceHandler(svc ExplorerServiceHandler, opts ...connect_go.Ha
 		svc.Query,
 		opts...,
 	)
+	explorerServiceGetSupportQueryHandler := connect_go.NewUnaryHandler(
+		ExplorerServiceGetSupportQueryProcedure,
+		svc.GetSupportQuery,
+		opts...,
+	)
+	explorerServiceGetQueryExplainHandler := connect_go.NewUnaryHandler(
+		ExplorerServiceGetQueryExplainProcedure,
+		svc.GetQueryExplain,
+		opts...,
+	)
 	return "/api.v1alpha1.explorer.ExplorerService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case ExplorerServiceListDatasourceSchemasProcedure:
 			explorerServiceListDatasourceSchemasHandler.ServeHTTP(w, r)
 		case ExplorerServiceQueryProcedure:
 			explorerServiceQueryHandler.ServeHTTP(w, r)
+		case ExplorerServiceGetSupportQueryProcedure:
+			explorerServiceGetSupportQueryHandler.ServeHTTP(w, r)
+		case ExplorerServiceGetQueryExplainProcedure:
+			explorerServiceGetQueryExplainHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -132,4 +178,12 @@ func (UnimplementedExplorerServiceHandler) ListDatasourceSchemas(context.Context
 
 func (UnimplementedExplorerServiceHandler) Query(context.Context, *connect_go.Request[explorer.QueryRequest]) (*connect_go.Response[explorer.QueryResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.explorer.ExplorerService.Query is not implemented"))
+}
+
+func (UnimplementedExplorerServiceHandler) GetSupportQuery(context.Context, *connect_go.Request[explorer.SupportQueryRequest]) (*connect_go.Response[explorer.SupportQueryResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.explorer.ExplorerService.GetSupportQuery is not implemented"))
+}
+
+func (UnimplementedExplorerServiceHandler) GetQueryExplain(context.Context, *connect_go.Request[explorer.QueryExplainRequest]) (*connect_go.Response[explorer.QueryExplainResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.explorer.ExplorerService.GetQueryExplain is not implemented"))
 }

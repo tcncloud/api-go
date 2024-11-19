@@ -21,6 +21,8 @@ const _ = grpc.SupportPackageIsVersion8
 const (
 	ExplorerService_ListDatasourceSchemas_FullMethodName = "/api.v1alpha1.explorer.ExplorerService/ListDatasourceSchemas"
 	ExplorerService_Query_FullMethodName                 = "/api.v1alpha1.explorer.ExplorerService/Query"
+	ExplorerService_GetSupportQuery_FullMethodName       = "/api.v1alpha1.explorer.ExplorerService/GetSupportQuery"
+	ExplorerService_GetQueryExplain_FullMethodName       = "/api.v1alpha1.explorer.ExplorerService/GetQueryExplain"
 )
 
 // ExplorerServiceClient is the client API for ExplorerService service.
@@ -33,6 +35,8 @@ type ExplorerServiceClient interface {
 	ListDatasourceSchemas(ctx context.Context, in *ListDatasourceSchemasRequest, opts ...grpc.CallOption) (*ListDatasourceSchemasResponse, error)
 	// Query queries a datasource.
 	Query(ctx context.Context, in *QueryRequest, opts ...grpc.CallOption) (*QueryResponse, error)
+	GetSupportQuery(ctx context.Context, in *SupportQueryRequest, opts ...grpc.CallOption) (*SupportQueryResponse, error)
+	GetQueryExplain(ctx context.Context, in *QueryExplainRequest, opts ...grpc.CallOption) (*QueryExplainResponse, error)
 }
 
 type explorerServiceClient struct {
@@ -63,6 +67,26 @@ func (c *explorerServiceClient) Query(ctx context.Context, in *QueryRequest, opt
 	return out, nil
 }
 
+func (c *explorerServiceClient) GetSupportQuery(ctx context.Context, in *SupportQueryRequest, opts ...grpc.CallOption) (*SupportQueryResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SupportQueryResponse)
+	err := c.cc.Invoke(ctx, ExplorerService_GetSupportQuery_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *explorerServiceClient) GetQueryExplain(ctx context.Context, in *QueryExplainRequest, opts ...grpc.CallOption) (*QueryExplainResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(QueryExplainResponse)
+	err := c.cc.Invoke(ctx, ExplorerService_GetQueryExplain_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ExplorerServiceServer is the server API for ExplorerService service.
 // All implementations must embed UnimplementedExplorerServiceServer
 // for forward compatibility.
@@ -73,6 +97,8 @@ type ExplorerServiceServer interface {
 	ListDatasourceSchemas(context.Context, *ListDatasourceSchemasRequest) (*ListDatasourceSchemasResponse, error)
 	// Query queries a datasource.
 	Query(context.Context, *QueryRequest) (*QueryResponse, error)
+	GetSupportQuery(context.Context, *SupportQueryRequest) (*SupportQueryResponse, error)
+	GetQueryExplain(context.Context, *QueryExplainRequest) (*QueryExplainResponse, error)
 	mustEmbedUnimplementedExplorerServiceServer()
 }
 
@@ -88,6 +114,12 @@ func (UnimplementedExplorerServiceServer) ListDatasourceSchemas(context.Context,
 }
 func (UnimplementedExplorerServiceServer) Query(context.Context, *QueryRequest) (*QueryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Query not implemented")
+}
+func (UnimplementedExplorerServiceServer) GetSupportQuery(context.Context, *SupportQueryRequest) (*SupportQueryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSupportQuery not implemented")
+}
+func (UnimplementedExplorerServiceServer) GetQueryExplain(context.Context, *QueryExplainRequest) (*QueryExplainResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetQueryExplain not implemented")
 }
 func (UnimplementedExplorerServiceServer) mustEmbedUnimplementedExplorerServiceServer() {}
 func (UnimplementedExplorerServiceServer) testEmbeddedByValue()                         {}
@@ -146,6 +178,42 @@ func _ExplorerService_Query_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ExplorerService_GetSupportQuery_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SupportQueryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExplorerServiceServer).GetSupportQuery(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ExplorerService_GetSupportQuery_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExplorerServiceServer).GetSupportQuery(ctx, req.(*SupportQueryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ExplorerService_GetQueryExplain_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryExplainRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExplorerServiceServer).GetQueryExplain(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ExplorerService_GetQueryExplain_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExplorerServiceServer).GetQueryExplain(ctx, req.(*QueryExplainRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ExplorerService_ServiceDesc is the grpc.ServiceDesc for ExplorerService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -160,6 +228,14 @@ var ExplorerService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Query",
 			Handler:    _ExplorerService_Query_Handler,
+		},
+		{
+			MethodName: "GetSupportQuery",
+			Handler:    _ExplorerService_GetSupportQuery_Handler,
+		},
+		{
+			MethodName: "GetQueryExplain",
+			Handler:    _ExplorerService_GetQueryExplain_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
