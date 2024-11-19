@@ -1535,11 +1535,7 @@ type WFMClient interface {
 	BuildGlobalDiagnostics(context.Context, *connect_go.Request[wfm.BuildGlobalDiagnosticsReq]) (*connect_go.Response[wfm.BuildGlobalDiagnosticsRes], error)
 	// Gets the published schedule for the corresponding @datetime_range for the org sending the request.
 	// Will create a published schedule if it does not exist already for the org sending the request.
-	// if @include_shift_instances is true, the shift instances associated within @datetime_range for the published schedule will be returned in the published schedules shift_instances field.
-	// if @include_shift_template is true, any returned shift instances will have their orginating shift template returned in their origin_shift_template field.
-	// if @include_shift_segments is true, any returned shift instances will have their shift_segments field set, otherwise the field will be left nil.
-	// if @include_scheduling_activity is true, any returned shift segments will have their scheduling_activity field set, otherwise the field will be left nil.
-	// if @include_activity is true, any returned scheduling activities will have their member_non_skill_activity field set, otherwise the field will be left nil.
+	// Returns the published schedule without any shift instances.
 	// Errors:
 	//   - grpc.Invalid: the @datetime_range, @metric_types are invalid.
 	//   - grpc.NotFound: the @node_selector doesn't exist.
@@ -1570,14 +1566,14 @@ type WFMClient interface {
 	// If @delete_shifts_not_in_range if true, then any instances outside of the @datetime_range will be permenantly deleted with no recovery option.
 	// If @delete_shifts_not_in_range is false, instances outside of the new @datetime_range will be retained, for use if the datetime range is expanded to cover the instances in the future.
 	// If @copy_shifts_into_new_range time is true, then new the portion of an expanded @datetime_range which has no instances will copy the instances from the published schedule. If false, no instances will be created for an expanded @scheduling_range.
-	// If @get_updated_shifts is true, then the returned draft schedule will also contain the shift instances and segments in the given @datetime_range.
+	// Returns the updated schedule without any shift instances.
 	// Errors:
 	//   - grpc.Invalid: the @name, @description or @datetime_range are invalid.
 	//   - grpc.Internal: error occurs when updating the schedule or its instances.
 	UpdateDraftSchedule(context.Context, *connect_go.Request[wfm.UpdateDraftScheduleReq]) (*connect_go.Response[wfm.UpdateDraftScheduleRes], error)
 	// Builds a draft schedule for the given @node_selector in @schedule_scenario_sid over @schedule_scenario_scheduling_range for @draft_schedule_sid and the org making the request.
 	// The @schedule_scenario_scheduling_range field is optional. If not set, the draft schedule will be obtained with it's default range from it's start to end time.
-	// @include parameters are used when retrieving the resulting draft schedule, and work in the same way as for GetDraftSchedule.
+	// Returns the draft schedule without any shift instances.
 	// Will return diagnostics for the newly built schedule, or just diagnostics if the schedule cannot be built successfully due to diagnostic error.
 	// If @auto_generate_agents is set to true, unassigned agents will automatically be generated to meet the requirements of the shift templates min and max agents.
 	BuildDraftSchedule(context.Context, *connect_go.Request[wfm.BuildDraftScheduleReq]) (*connect_go.Response[wfm.BuildDraftScheduleRes], error)
@@ -1603,7 +1599,7 @@ type WFMClient interface {
 	// Overlapping shift instances that aren't locked will be replaced with the instances from the draft schedule.
 	// If @ignore_diagnostics_errors is set to true, it will publish the schedule regardless of any diagnostics errors,
 	// otherwise it will return those diagnostic errors and not publish the schedule.
-	// @include parameters are used when retrieving the resulting published schedule, and work in the same way as for GetDraftSchedule.
+	// does not return any shift instances on the published schedule.
 	// Errors:
 	//   - grpc.Invalid: the parameters in the @req are invalid..
 	//   - grpc.NotFound: @draft_schedule_sid doesn't exist.
@@ -1623,12 +1619,7 @@ type WFMClient interface {
 	ResetDraftSchedule(context.Context, *connect_go.Request[wfm.ResetDraftScheduleReq]) (*connect_go.Response[wfm.ResetDraftScheduleRes], error)
 	// Gets the draft schedule with @draft_schedule_sid for the corresponding @datetime_range for the org sending the request.
 	// The @datetime_range field is optional. If not set, the draft schedule will be obtained with it's default range from it's start to end time.
-	// if @include_shift_instances is true, the shift instances associated within @datetime_range for the draft schedule will be returned in the draft schedules shift_instances field.
-	// @node_selector must be for a node that belongs to the same schedule scenario as @draft_schedule_sid.
-	// if @include_shift_template is true, any returned shift instances will have their orginating shift template returned in their origin_shift_template field.
-	// if @include_shift_segments is true, any returned shift instances will have their shift_segments field set, otherwise the field will be left nil.
-	// if @include_scheduling_activity is true, any returned shift segments will have their scheduling_activity field set, otherwise the field will be left nil.
-	// if @include_activity is true, any returned scheduling activities will have their member_non_skill_activity field set, otherwise the field will be left nil.
+	// Does not return any shift instances on the draft schedule.
 	// Errors:
 	//   - grpc.Invalid: the @datetime_range or @draft_schedule_sid are invalid.
 	//   - grpc.NotFound: the @node_selector or @draft_schedule_sid doesn't exist.
@@ -5594,11 +5585,7 @@ type WFMHandler interface {
 	BuildGlobalDiagnostics(context.Context, *connect_go.Request[wfm.BuildGlobalDiagnosticsReq]) (*connect_go.Response[wfm.BuildGlobalDiagnosticsRes], error)
 	// Gets the published schedule for the corresponding @datetime_range for the org sending the request.
 	// Will create a published schedule if it does not exist already for the org sending the request.
-	// if @include_shift_instances is true, the shift instances associated within @datetime_range for the published schedule will be returned in the published schedules shift_instances field.
-	// if @include_shift_template is true, any returned shift instances will have their orginating shift template returned in their origin_shift_template field.
-	// if @include_shift_segments is true, any returned shift instances will have their shift_segments field set, otherwise the field will be left nil.
-	// if @include_scheduling_activity is true, any returned shift segments will have their scheduling_activity field set, otherwise the field will be left nil.
-	// if @include_activity is true, any returned scheduling activities will have their member_non_skill_activity field set, otherwise the field will be left nil.
+	// Returns the published schedule without any shift instances.
 	// Errors:
 	//   - grpc.Invalid: the @datetime_range, @metric_types are invalid.
 	//   - grpc.NotFound: the @node_selector doesn't exist.
@@ -5629,14 +5616,14 @@ type WFMHandler interface {
 	// If @delete_shifts_not_in_range if true, then any instances outside of the @datetime_range will be permenantly deleted with no recovery option.
 	// If @delete_shifts_not_in_range is false, instances outside of the new @datetime_range will be retained, for use if the datetime range is expanded to cover the instances in the future.
 	// If @copy_shifts_into_new_range time is true, then new the portion of an expanded @datetime_range which has no instances will copy the instances from the published schedule. If false, no instances will be created for an expanded @scheduling_range.
-	// If @get_updated_shifts is true, then the returned draft schedule will also contain the shift instances and segments in the given @datetime_range.
+	// Returns the updated schedule without any shift instances.
 	// Errors:
 	//   - grpc.Invalid: the @name, @description or @datetime_range are invalid.
 	//   - grpc.Internal: error occurs when updating the schedule or its instances.
 	UpdateDraftSchedule(context.Context, *connect_go.Request[wfm.UpdateDraftScheduleReq]) (*connect_go.Response[wfm.UpdateDraftScheduleRes], error)
 	// Builds a draft schedule for the given @node_selector in @schedule_scenario_sid over @schedule_scenario_scheduling_range for @draft_schedule_sid and the org making the request.
 	// The @schedule_scenario_scheduling_range field is optional. If not set, the draft schedule will be obtained with it's default range from it's start to end time.
-	// @include parameters are used when retrieving the resulting draft schedule, and work in the same way as for GetDraftSchedule.
+	// Returns the draft schedule without any shift instances.
 	// Will return diagnostics for the newly built schedule, or just diagnostics if the schedule cannot be built successfully due to diagnostic error.
 	// If @auto_generate_agents is set to true, unassigned agents will automatically be generated to meet the requirements of the shift templates min and max agents.
 	BuildDraftSchedule(context.Context, *connect_go.Request[wfm.BuildDraftScheduleReq]) (*connect_go.Response[wfm.BuildDraftScheduleRes], error)
@@ -5662,7 +5649,7 @@ type WFMHandler interface {
 	// Overlapping shift instances that aren't locked will be replaced with the instances from the draft schedule.
 	// If @ignore_diagnostics_errors is set to true, it will publish the schedule regardless of any diagnostics errors,
 	// otherwise it will return those diagnostic errors and not publish the schedule.
-	// @include parameters are used when retrieving the resulting published schedule, and work in the same way as for GetDraftSchedule.
+	// does not return any shift instances on the published schedule.
 	// Errors:
 	//   - grpc.Invalid: the parameters in the @req are invalid..
 	//   - grpc.NotFound: @draft_schedule_sid doesn't exist.
@@ -5682,12 +5669,7 @@ type WFMHandler interface {
 	ResetDraftSchedule(context.Context, *connect_go.Request[wfm.ResetDraftScheduleReq]) (*connect_go.Response[wfm.ResetDraftScheduleRes], error)
 	// Gets the draft schedule with @draft_schedule_sid for the corresponding @datetime_range for the org sending the request.
 	// The @datetime_range field is optional. If not set, the draft schedule will be obtained with it's default range from it's start to end time.
-	// if @include_shift_instances is true, the shift instances associated within @datetime_range for the draft schedule will be returned in the draft schedules shift_instances field.
-	// @node_selector must be for a node that belongs to the same schedule scenario as @draft_schedule_sid.
-	// if @include_shift_template is true, any returned shift instances will have their orginating shift template returned in their origin_shift_template field.
-	// if @include_shift_segments is true, any returned shift instances will have their shift_segments field set, otherwise the field will be left nil.
-	// if @include_scheduling_activity is true, any returned shift segments will have their scheduling_activity field set, otherwise the field will be left nil.
-	// if @include_activity is true, any returned scheduling activities will have their member_non_skill_activity field set, otherwise the field will be left nil.
+	// Does not return any shift instances on the draft schedule.
 	// Errors:
 	//   - grpc.Invalid: the @datetime_range or @draft_schedule_sid are invalid.
 	//   - grpc.NotFound: the @node_selector or @draft_schedule_sid doesn't exist.
