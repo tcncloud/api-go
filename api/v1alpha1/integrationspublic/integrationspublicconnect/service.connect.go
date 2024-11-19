@@ -54,6 +54,9 @@ const (
 	// IntegrationsPublicProcessWorkflowProcedure is the fully-qualified name of the
 	// IntegrationsPublic's ProcessWorkflow RPC.
 	IntegrationsPublicProcessWorkflowProcedure = "/api.v1alpha1.integrationspublic.IntegrationsPublic/ProcessWorkflow"
+	// IntegrationsPublicGetLinkDetailsProcedure is the fully-qualified name of the IntegrationsPublic's
+	// GetLinkDetails RPC.
+	IntegrationsPublicGetLinkDetailsProcedure = "/api.v1alpha1.integrationspublic.IntegrationsPublic/GetLinkDetails"
 )
 
 // IntegrationsPublicClient is a client for the api.v1alpha1.integrationspublic.IntegrationsPublic
@@ -66,6 +69,7 @@ type IntegrationsPublicClient interface {
 	SubmitPayment(context.Context, *connect_go.Request[integrationspublic.SubmitPaymentReq]) (*connect_go.Response[integrationspublic.SubmitPaymentRes], error)
 	GetReceipt(context.Context, *connect_go.Request[integrationspublic.GetReceiptReq]) (*connect_go.Response[integrationspublic.GetReceiptRes], error)
 	ProcessWorkflow(context.Context, *connect_go.Request[integrationspublic.ProcessWorkflowReq]) (*connect_go.Response[integrationspublic.ProcessWorkflowRes], error)
+	GetLinkDetails(context.Context, *connect_go.Request[integrationspublic.GetLinkDetailsReq]) (*connect_go.Response[integrationspublic.GetLinkDetailsRes], error)
 }
 
 // NewIntegrationsPublicClient constructs a client for the
@@ -114,6 +118,11 @@ func NewIntegrationsPublicClient(httpClient connect_go.HTTPClient, baseURL strin
 			baseURL+IntegrationsPublicProcessWorkflowProcedure,
 			opts...,
 		),
+		getLinkDetails: connect_go.NewClient[integrationspublic.GetLinkDetailsReq, integrationspublic.GetLinkDetailsRes](
+			httpClient,
+			baseURL+IntegrationsPublicGetLinkDetailsProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -126,6 +135,7 @@ type integrationsPublicClient struct {
 	submitPayment      *connect_go.Client[integrationspublic.SubmitPaymentReq, integrationspublic.SubmitPaymentRes]
 	getReceipt         *connect_go.Client[integrationspublic.GetReceiptReq, integrationspublic.GetReceiptRes]
 	processWorkflow    *connect_go.Client[integrationspublic.ProcessWorkflowReq, integrationspublic.ProcessWorkflowRes]
+	getLinkDetails     *connect_go.Client[integrationspublic.GetLinkDetailsReq, integrationspublic.GetLinkDetailsRes]
 }
 
 // GetLinkData calls api.v1alpha1.integrationspublic.IntegrationsPublic.GetLinkData.
@@ -163,6 +173,11 @@ func (c *integrationsPublicClient) ProcessWorkflow(ctx context.Context, req *con
 	return c.processWorkflow.CallUnary(ctx, req)
 }
 
+// GetLinkDetails calls api.v1alpha1.integrationspublic.IntegrationsPublic.GetLinkDetails.
+func (c *integrationsPublicClient) GetLinkDetails(ctx context.Context, req *connect_go.Request[integrationspublic.GetLinkDetailsReq]) (*connect_go.Response[integrationspublic.GetLinkDetailsRes], error) {
+	return c.getLinkDetails.CallUnary(ctx, req)
+}
+
 // IntegrationsPublicHandler is an implementation of the
 // api.v1alpha1.integrationspublic.IntegrationsPublic service.
 type IntegrationsPublicHandler interface {
@@ -173,6 +188,7 @@ type IntegrationsPublicHandler interface {
 	SubmitPayment(context.Context, *connect_go.Request[integrationspublic.SubmitPaymentReq]) (*connect_go.Response[integrationspublic.SubmitPaymentRes], error)
 	GetReceipt(context.Context, *connect_go.Request[integrationspublic.GetReceiptReq]) (*connect_go.Response[integrationspublic.GetReceiptRes], error)
 	ProcessWorkflow(context.Context, *connect_go.Request[integrationspublic.ProcessWorkflowReq]) (*connect_go.Response[integrationspublic.ProcessWorkflowRes], error)
+	GetLinkDetails(context.Context, *connect_go.Request[integrationspublic.GetLinkDetailsReq]) (*connect_go.Response[integrationspublic.GetLinkDetailsRes], error)
 }
 
 // NewIntegrationsPublicHandler builds an HTTP handler from the service implementation. It returns
@@ -216,6 +232,11 @@ func NewIntegrationsPublicHandler(svc IntegrationsPublicHandler, opts ...connect
 		svc.ProcessWorkflow,
 		opts...,
 	)
+	integrationsPublicGetLinkDetailsHandler := connect_go.NewUnaryHandler(
+		IntegrationsPublicGetLinkDetailsProcedure,
+		svc.GetLinkDetails,
+		opts...,
+	)
 	return "/api.v1alpha1.integrationspublic.IntegrationsPublic/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case IntegrationsPublicGetLinkDataProcedure:
@@ -232,6 +253,8 @@ func NewIntegrationsPublicHandler(svc IntegrationsPublicHandler, opts ...connect
 			integrationsPublicGetReceiptHandler.ServeHTTP(w, r)
 		case IntegrationsPublicProcessWorkflowProcedure:
 			integrationsPublicProcessWorkflowHandler.ServeHTTP(w, r)
+		case IntegrationsPublicGetLinkDetailsProcedure:
+			integrationsPublicGetLinkDetailsHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -267,4 +290,8 @@ func (UnimplementedIntegrationsPublicHandler) GetReceipt(context.Context, *conne
 
 func (UnimplementedIntegrationsPublicHandler) ProcessWorkflow(context.Context, *connect_go.Request[integrationspublic.ProcessWorkflowReq]) (*connect_go.Response[integrationspublic.ProcessWorkflowRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.integrationspublic.IntegrationsPublic.ProcessWorkflow is not implemented"))
+}
+
+func (UnimplementedIntegrationsPublicHandler) GetLinkDetails(context.Context, *connect_go.Request[integrationspublic.GetLinkDetailsReq]) (*connect_go.Response[integrationspublic.GetLinkDetailsRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.integrationspublic.IntegrationsPublic.GetLinkDetails is not implemented"))
 }
