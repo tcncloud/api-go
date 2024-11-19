@@ -217,7 +217,6 @@ const (
 	WFM_HelloWorldWFMAdherence_FullMethodName                           = "/api.v1alpha1.wfm.WFM/HelloWorldWFMAdherence"
 	WFM_ListAgentStatesForDay_FullMethodName                            = "/api.v1alpha1.wfm.WFM/ListAgentStatesForDay"
 	WFM_ListRealTimeManagementStates_FullMethodName                     = "/api.v1alpha1.wfm.WFM/ListRealTimeManagementStates"
-	WFM_ListAdherenceAgentStates_FullMethodName                         = "/api.v1alpha1.wfm.WFM/ListAdherenceAgentStates"
 	WFM_UpsertRealTimeManagementStateColor_FullMethodName               = "/api.v1alpha1.wfm.WFM/UpsertRealTimeManagementStateColor"
 	WFM_ListRealTimeManagementStateColors_FullMethodName                = "/api.v1alpha1.wfm.WFM/ListRealTimeManagementStateColors"
 	WFM_DeleteRealTimeManagementStateColor_FullMethodName               = "/api.v1alpha1.wfm.WFM/DeleteRealTimeManagementStateColor"
@@ -1715,14 +1714,6 @@ type WFMClient interface {
 	//   - grpc.Invalid: on invalid input.
 	//   - grpc.Internal: on unexpected error.
 	ListRealTimeManagementStates(ctx context.Context, in *ListRealTimeManagementStatesRequest, opts ...grpc.CallOption) (*ListRealTimeManagementStatesResponse, error)
-	// Gets the agent states for the given @wfm_agent_sids from the given @start_datetime to the @end_datetime
-	// or the current time if not set (start time not inclusive, end time inclusive).
-	// Agent states will be grouped by wfm_agent_sid and ordered by date in ascending order.
-	// If zero states are found for a given agent, it will not be included in the resulting map.
-	// Errors:
-	//   - grpc.Invalid: arguments in the request are invalid.
-	//   - grpc.Internal: error occurs when getting the states.
-	ListAdherenceAgentStates(ctx context.Context, in *ListAdherenceAgentStatesRequest, opts ...grpc.CallOption) (*ListAdherenceAgentStatesResponse, error)
 	// Sets the given @state to be associated with the given @rgba_color_id for the org sending the request.
 	// Errors:
 	//   - grpc.Internal: error upserting the real time management state color or returning the newly created state color.
@@ -3902,16 +3893,6 @@ func (c *wFMClient) ListRealTimeManagementStates(ctx context.Context, in *ListRe
 	return out, nil
 }
 
-func (c *wFMClient) ListAdherenceAgentStates(ctx context.Context, in *ListAdherenceAgentStatesRequest, opts ...grpc.CallOption) (*ListAdherenceAgentStatesResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ListAdherenceAgentStatesResponse)
-	err := c.cc.Invoke(ctx, WFM_ListAdherenceAgentStates_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *wFMClient) UpsertRealTimeManagementStateColor(ctx context.Context, in *UpsertRealTimeManagementStateColorRequest, opts ...grpc.CallOption) (*UpsertRealTimeManagementStateColorResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(UpsertRealTimeManagementStateColorResponse)
@@ -5668,14 +5649,6 @@ type WFMServer interface {
 	//   - grpc.Invalid: on invalid input.
 	//   - grpc.Internal: on unexpected error.
 	ListRealTimeManagementStates(context.Context, *ListRealTimeManagementStatesRequest) (*ListRealTimeManagementStatesResponse, error)
-	// Gets the agent states for the given @wfm_agent_sids from the given @start_datetime to the @end_datetime
-	// or the current time if not set (start time not inclusive, end time inclusive).
-	// Agent states will be grouped by wfm_agent_sid and ordered by date in ascending order.
-	// If zero states are found for a given agent, it will not be included in the resulting map.
-	// Errors:
-	//   - grpc.Invalid: arguments in the request are invalid.
-	//   - grpc.Internal: error occurs when getting the states.
-	ListAdherenceAgentStates(context.Context, *ListAdherenceAgentStatesRequest) (*ListAdherenceAgentStatesResponse, error)
 	// Sets the given @state to be associated with the given @rgba_color_id for the org sending the request.
 	// Errors:
 	//   - grpc.Internal: error upserting the real time management state color or returning the newly created state color.
@@ -6422,9 +6395,6 @@ func (UnimplementedWFMServer) ListAgentStatesForDay(context.Context, *ListAgentS
 }
 func (UnimplementedWFMServer) ListRealTimeManagementStates(context.Context, *ListRealTimeManagementStatesRequest) (*ListRealTimeManagementStatesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListRealTimeManagementStates not implemented")
-}
-func (UnimplementedWFMServer) ListAdherenceAgentStates(context.Context, *ListAdherenceAgentStatesRequest) (*ListAdherenceAgentStatesResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListAdherenceAgentStates not implemented")
 }
 func (UnimplementedWFMServer) UpsertRealTimeManagementStateColor(context.Context, *UpsertRealTimeManagementStateColorRequest) (*UpsertRealTimeManagementStateColorResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpsertRealTimeManagementStateColor not implemented")
@@ -9864,24 +9834,6 @@ func _WFM_ListRealTimeManagementStates_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
-func _WFM_ListAdherenceAgentStates_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListAdherenceAgentStatesRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(WFMServer).ListAdherenceAgentStates(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: WFM_ListAdherenceAgentStates_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WFMServer).ListAdherenceAgentStates(ctx, req.(*ListAdherenceAgentStatesRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _WFM_UpsertRealTimeManagementStateColor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpsertRealTimeManagementStateColorRequest)
 	if err := dec(in); err != nil {
@@ -11122,10 +11074,6 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListRealTimeManagementStates",
 			Handler:    _WFM_ListRealTimeManagementStates_Handler,
-		},
-		{
-			MethodName: "ListAdherenceAgentStates",
-			Handler:    _WFM_ListAdherenceAgentStates_Handler,
 		},
 		{
 			MethodName: "UpsertRealTimeManagementStateColor",

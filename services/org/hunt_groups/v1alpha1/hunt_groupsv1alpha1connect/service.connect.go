@@ -63,21 +63,6 @@ const (
 	// HuntGroupsServiceListAgentScriptsProcedure is the fully-qualified name of the HuntGroupsService's
 	// ListAgentScripts RPC.
 	HuntGroupsServiceListAgentScriptsProcedure = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/ListAgentScripts"
-	// HuntGroupsServiceCreateAgentClientInfoDisplayTemplateProcedure is the fully-qualified name of the
-	// HuntGroupsService's CreateAgentClientInfoDisplayTemplate RPC.
-	HuntGroupsServiceCreateAgentClientInfoDisplayTemplateProcedure = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/CreateAgentClientInfoDisplayTemplate"
-	// HuntGroupsServiceUpdateAgentClientInfoDisplayTemplateProcedure is the fully-qualified name of the
-	// HuntGroupsService's UpdateAgentClientInfoDisplayTemplate RPC.
-	HuntGroupsServiceUpdateAgentClientInfoDisplayTemplateProcedure = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/UpdateAgentClientInfoDisplayTemplate"
-	// HuntGroupsServiceGetAgentClientInfoDisplayTemplateProcedure is the fully-qualified name of the
-	// HuntGroupsService's GetAgentClientInfoDisplayTemplate RPC.
-	HuntGroupsServiceGetAgentClientInfoDisplayTemplateProcedure = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/GetAgentClientInfoDisplayTemplate"
-	// HuntGroupsServiceListAgentClientInfoDisplayTemplatesProcedure is the fully-qualified name of the
-	// HuntGroupsService's ListAgentClientInfoDisplayTemplates RPC.
-	HuntGroupsServiceListAgentClientInfoDisplayTemplatesProcedure = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/ListAgentClientInfoDisplayTemplates"
-	// HuntGroupsServiceDeleteAgentClientInfoDisplayTemplateProcedure is the fully-qualified name of the
-	// HuntGroupsService's DeleteAgentClientInfoDisplayTemplate RPC.
-	HuntGroupsServiceDeleteAgentClientInfoDisplayTemplateProcedure = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/DeleteAgentClientInfoDisplayTemplate"
 )
 
 // HuntGroupsServiceClient is a client for the services.org.hunt_groups.v1alpha1.HuntGroupsService
@@ -113,16 +98,6 @@ type HuntGroupsServiceClient interface {
 	AdminListHuntGroups(context.Context, *connect_go.Request[v1alpha1.AdminListHuntGroupsRequest]) (*connect_go.Response[v1alpha1.AdminListHuntGroupsResponse], error)
 	// ListAgentScripts returns a list of agent scripts for the given organization.
 	ListAgentScripts(context.Context, *connect_go.Request[v1alpha1.ListAgentScriptsRequest]) (*connect_go.ServerStreamForClient[v1alpha1.ListAgentScriptsResponse], error)
-	// CreateAgentClientInfoDisplayTemplate persists the given template.
-	CreateAgentClientInfoDisplayTemplate(context.Context, *connect_go.Request[v1alpha1.CreateAgentClientInfoDisplayTemplateRequest]) (*connect_go.Response[v1alpha1.CreateAgentClientInfoDisplayTemplateResponse], error)
-	// UpdateAgentClientInfoDisplayTemplate persists changes to the given template.
-	UpdateAgentClientInfoDisplayTemplate(context.Context, *connect_go.Request[v1alpha1.UpdateAgentClientInfoDisplayTemplateRequest]) (*connect_go.Response[v1alpha1.UpdateAgentClientInfoDisplayTemplateResponse], error)
-	// GetAgentClientInfoDisplayTemplate returns requested template.
-	GetAgentClientInfoDisplayTemplate(context.Context, *connect_go.Request[v1alpha1.GetAgentClientInfoDisplayTemplateRequest]) (*connect_go.Response[v1alpha1.GetAgentClientInfoDisplayTemplateResponse], error)
-	// ListAgentClientInfoDisplayTemplates returns org related templates.
-	ListAgentClientInfoDisplayTemplates(context.Context, *connect_go.Request[v1alpha1.ListAgentClientInfoDisplayTemplatesRequest]) (*connect_go.Response[v1alpha1.ListAgentClientInfoDisplayTemplatesResponse], error)
-	// DeleteAgentClientInfoDisplayTemplate removes the requested template.
-	DeleteAgentClientInfoDisplayTemplate(context.Context, *connect_go.Request[v1alpha1.DeleteAgentClientInfoDisplayTemplateRequest]) (*connect_go.Response[v1alpha1.DeleteAgentClientInfoDisplayTemplateResponse], error)
 }
 
 // NewHuntGroupsServiceClient constructs a client for the
@@ -186,51 +161,21 @@ func NewHuntGroupsServiceClient(httpClient connect_go.HTTPClient, baseURL string
 			baseURL+HuntGroupsServiceListAgentScriptsProcedure,
 			opts...,
 		),
-		createAgentClientInfoDisplayTemplate: connect_go.NewClient[v1alpha1.CreateAgentClientInfoDisplayTemplateRequest, v1alpha1.CreateAgentClientInfoDisplayTemplateResponse](
-			httpClient,
-			baseURL+HuntGroupsServiceCreateAgentClientInfoDisplayTemplateProcedure,
-			opts...,
-		),
-		updateAgentClientInfoDisplayTemplate: connect_go.NewClient[v1alpha1.UpdateAgentClientInfoDisplayTemplateRequest, v1alpha1.UpdateAgentClientInfoDisplayTemplateResponse](
-			httpClient,
-			baseURL+HuntGroupsServiceUpdateAgentClientInfoDisplayTemplateProcedure,
-			opts...,
-		),
-		getAgentClientInfoDisplayTemplate: connect_go.NewClient[v1alpha1.GetAgentClientInfoDisplayTemplateRequest, v1alpha1.GetAgentClientInfoDisplayTemplateResponse](
-			httpClient,
-			baseURL+HuntGroupsServiceGetAgentClientInfoDisplayTemplateProcedure,
-			opts...,
-		),
-		listAgentClientInfoDisplayTemplates: connect_go.NewClient[v1alpha1.ListAgentClientInfoDisplayTemplatesRequest, v1alpha1.ListAgentClientInfoDisplayTemplatesResponse](
-			httpClient,
-			baseURL+HuntGroupsServiceListAgentClientInfoDisplayTemplatesProcedure,
-			opts...,
-		),
-		deleteAgentClientInfoDisplayTemplate: connect_go.NewClient[v1alpha1.DeleteAgentClientInfoDisplayTemplateRequest, v1alpha1.DeleteAgentClientInfoDisplayTemplateResponse](
-			httpClient,
-			baseURL+HuntGroupsServiceDeleteAgentClientInfoDisplayTemplateProcedure,
-			opts...,
-		),
 	}
 }
 
 // huntGroupsServiceClient implements HuntGroupsServiceClient.
 type huntGroupsServiceClient struct {
-	listHuntGroupExileLinks              *connect_go.Client[v1alpha1.ListHuntGroupExileLinksRequest, v1alpha1.ListHuntGroupExileLinksResponse]
-	copyHuntGroupExileLink               *connect_go.Client[v1alpha1.CopyHuntGroupExileLinkRequest, v1alpha1.CopyHuntGroupExileLinkResponse]
-	updateHuntGroupExileLinks            *connect_go.Client[v1alpha1.UpdateHuntGroupExileLinksRequest, v1alpha1.UpdateHuntGroupExileLinksResponse]
-	listHuntGroupAgentTriggers           *connect_go.Client[v1alpha1.ListHuntGroupAgentTriggersRequest, v1alpha1.ListHuntGroupAgentTriggersResponse]
-	copyHuntGroupAgentTrigger            *connect_go.Client[v1alpha1.CopyHuntGroupAgentTriggerRequest, v1alpha1.CopyHuntGroupAgentTriggerResponse]
-	updateHuntGroupAgentTriggers         *connect_go.Client[v1alpha1.UpdateHuntGroupAgentTriggersRequest, v1alpha1.UpdateHuntGroupAgentTriggersResponse]
-	copyHuntGroupToOrganization          *connect_go.Client[v1alpha1.CopyHuntGroupToOrganizationRequest, v1alpha1.CopyHuntGroupToOrganizationResponse]
-	adminCopyHuntGroupToOrganization     *connect_go.Client[v1alpha1.AdminCopyHuntGroupToOrganizationRequest, v1alpha1.AdminCopyHuntGroupToOrganizationResponse]
-	adminListHuntGroups                  *connect_go.Client[v1alpha1.AdminListHuntGroupsRequest, v1alpha1.AdminListHuntGroupsResponse]
-	listAgentScripts                     *connect_go.Client[v1alpha1.ListAgentScriptsRequest, v1alpha1.ListAgentScriptsResponse]
-	createAgentClientInfoDisplayTemplate *connect_go.Client[v1alpha1.CreateAgentClientInfoDisplayTemplateRequest, v1alpha1.CreateAgentClientInfoDisplayTemplateResponse]
-	updateAgentClientInfoDisplayTemplate *connect_go.Client[v1alpha1.UpdateAgentClientInfoDisplayTemplateRequest, v1alpha1.UpdateAgentClientInfoDisplayTemplateResponse]
-	getAgentClientInfoDisplayTemplate    *connect_go.Client[v1alpha1.GetAgentClientInfoDisplayTemplateRequest, v1alpha1.GetAgentClientInfoDisplayTemplateResponse]
-	listAgentClientInfoDisplayTemplates  *connect_go.Client[v1alpha1.ListAgentClientInfoDisplayTemplatesRequest, v1alpha1.ListAgentClientInfoDisplayTemplatesResponse]
-	deleteAgentClientInfoDisplayTemplate *connect_go.Client[v1alpha1.DeleteAgentClientInfoDisplayTemplateRequest, v1alpha1.DeleteAgentClientInfoDisplayTemplateResponse]
+	listHuntGroupExileLinks          *connect_go.Client[v1alpha1.ListHuntGroupExileLinksRequest, v1alpha1.ListHuntGroupExileLinksResponse]
+	copyHuntGroupExileLink           *connect_go.Client[v1alpha1.CopyHuntGroupExileLinkRequest, v1alpha1.CopyHuntGroupExileLinkResponse]
+	updateHuntGroupExileLinks        *connect_go.Client[v1alpha1.UpdateHuntGroupExileLinksRequest, v1alpha1.UpdateHuntGroupExileLinksResponse]
+	listHuntGroupAgentTriggers       *connect_go.Client[v1alpha1.ListHuntGroupAgentTriggersRequest, v1alpha1.ListHuntGroupAgentTriggersResponse]
+	copyHuntGroupAgentTrigger        *connect_go.Client[v1alpha1.CopyHuntGroupAgentTriggerRequest, v1alpha1.CopyHuntGroupAgentTriggerResponse]
+	updateHuntGroupAgentTriggers     *connect_go.Client[v1alpha1.UpdateHuntGroupAgentTriggersRequest, v1alpha1.UpdateHuntGroupAgentTriggersResponse]
+	copyHuntGroupToOrganization      *connect_go.Client[v1alpha1.CopyHuntGroupToOrganizationRequest, v1alpha1.CopyHuntGroupToOrganizationResponse]
+	adminCopyHuntGroupToOrganization *connect_go.Client[v1alpha1.AdminCopyHuntGroupToOrganizationRequest, v1alpha1.AdminCopyHuntGroupToOrganizationResponse]
+	adminListHuntGroups              *connect_go.Client[v1alpha1.AdminListHuntGroupsRequest, v1alpha1.AdminListHuntGroupsResponse]
+	listAgentScripts                 *connect_go.Client[v1alpha1.ListAgentScriptsRequest, v1alpha1.ListAgentScriptsResponse]
 }
 
 // ListHuntGroupExileLinks calls
@@ -292,36 +237,6 @@ func (c *huntGroupsServiceClient) ListAgentScripts(ctx context.Context, req *con
 	return c.listAgentScripts.CallServerStream(ctx, req)
 }
 
-// CreateAgentClientInfoDisplayTemplate calls
-// services.org.hunt_groups.v1alpha1.HuntGroupsService.CreateAgentClientInfoDisplayTemplate.
-func (c *huntGroupsServiceClient) CreateAgentClientInfoDisplayTemplate(ctx context.Context, req *connect_go.Request[v1alpha1.CreateAgentClientInfoDisplayTemplateRequest]) (*connect_go.Response[v1alpha1.CreateAgentClientInfoDisplayTemplateResponse], error) {
-	return c.createAgentClientInfoDisplayTemplate.CallUnary(ctx, req)
-}
-
-// UpdateAgentClientInfoDisplayTemplate calls
-// services.org.hunt_groups.v1alpha1.HuntGroupsService.UpdateAgentClientInfoDisplayTemplate.
-func (c *huntGroupsServiceClient) UpdateAgentClientInfoDisplayTemplate(ctx context.Context, req *connect_go.Request[v1alpha1.UpdateAgentClientInfoDisplayTemplateRequest]) (*connect_go.Response[v1alpha1.UpdateAgentClientInfoDisplayTemplateResponse], error) {
-	return c.updateAgentClientInfoDisplayTemplate.CallUnary(ctx, req)
-}
-
-// GetAgentClientInfoDisplayTemplate calls
-// services.org.hunt_groups.v1alpha1.HuntGroupsService.GetAgentClientInfoDisplayTemplate.
-func (c *huntGroupsServiceClient) GetAgentClientInfoDisplayTemplate(ctx context.Context, req *connect_go.Request[v1alpha1.GetAgentClientInfoDisplayTemplateRequest]) (*connect_go.Response[v1alpha1.GetAgentClientInfoDisplayTemplateResponse], error) {
-	return c.getAgentClientInfoDisplayTemplate.CallUnary(ctx, req)
-}
-
-// ListAgentClientInfoDisplayTemplates calls
-// services.org.hunt_groups.v1alpha1.HuntGroupsService.ListAgentClientInfoDisplayTemplates.
-func (c *huntGroupsServiceClient) ListAgentClientInfoDisplayTemplates(ctx context.Context, req *connect_go.Request[v1alpha1.ListAgentClientInfoDisplayTemplatesRequest]) (*connect_go.Response[v1alpha1.ListAgentClientInfoDisplayTemplatesResponse], error) {
-	return c.listAgentClientInfoDisplayTemplates.CallUnary(ctx, req)
-}
-
-// DeleteAgentClientInfoDisplayTemplate calls
-// services.org.hunt_groups.v1alpha1.HuntGroupsService.DeleteAgentClientInfoDisplayTemplate.
-func (c *huntGroupsServiceClient) DeleteAgentClientInfoDisplayTemplate(ctx context.Context, req *connect_go.Request[v1alpha1.DeleteAgentClientInfoDisplayTemplateRequest]) (*connect_go.Response[v1alpha1.DeleteAgentClientInfoDisplayTemplateResponse], error) {
-	return c.deleteAgentClientInfoDisplayTemplate.CallUnary(ctx, req)
-}
-
 // HuntGroupsServiceHandler is an implementation of the
 // services.org.hunt_groups.v1alpha1.HuntGroupsService service.
 type HuntGroupsServiceHandler interface {
@@ -355,16 +270,6 @@ type HuntGroupsServiceHandler interface {
 	AdminListHuntGroups(context.Context, *connect_go.Request[v1alpha1.AdminListHuntGroupsRequest]) (*connect_go.Response[v1alpha1.AdminListHuntGroupsResponse], error)
 	// ListAgentScripts returns a list of agent scripts for the given organization.
 	ListAgentScripts(context.Context, *connect_go.Request[v1alpha1.ListAgentScriptsRequest], *connect_go.ServerStream[v1alpha1.ListAgentScriptsResponse]) error
-	// CreateAgentClientInfoDisplayTemplate persists the given template.
-	CreateAgentClientInfoDisplayTemplate(context.Context, *connect_go.Request[v1alpha1.CreateAgentClientInfoDisplayTemplateRequest]) (*connect_go.Response[v1alpha1.CreateAgentClientInfoDisplayTemplateResponse], error)
-	// UpdateAgentClientInfoDisplayTemplate persists changes to the given template.
-	UpdateAgentClientInfoDisplayTemplate(context.Context, *connect_go.Request[v1alpha1.UpdateAgentClientInfoDisplayTemplateRequest]) (*connect_go.Response[v1alpha1.UpdateAgentClientInfoDisplayTemplateResponse], error)
-	// GetAgentClientInfoDisplayTemplate returns requested template.
-	GetAgentClientInfoDisplayTemplate(context.Context, *connect_go.Request[v1alpha1.GetAgentClientInfoDisplayTemplateRequest]) (*connect_go.Response[v1alpha1.GetAgentClientInfoDisplayTemplateResponse], error)
-	// ListAgentClientInfoDisplayTemplates returns org related templates.
-	ListAgentClientInfoDisplayTemplates(context.Context, *connect_go.Request[v1alpha1.ListAgentClientInfoDisplayTemplatesRequest]) (*connect_go.Response[v1alpha1.ListAgentClientInfoDisplayTemplatesResponse], error)
-	// DeleteAgentClientInfoDisplayTemplate removes the requested template.
-	DeleteAgentClientInfoDisplayTemplate(context.Context, *connect_go.Request[v1alpha1.DeleteAgentClientInfoDisplayTemplateRequest]) (*connect_go.Response[v1alpha1.DeleteAgentClientInfoDisplayTemplateResponse], error)
 }
 
 // NewHuntGroupsServiceHandler builds an HTTP handler from the service implementation. It returns
@@ -423,31 +328,6 @@ func NewHuntGroupsServiceHandler(svc HuntGroupsServiceHandler, opts ...connect_g
 		svc.ListAgentScripts,
 		opts...,
 	)
-	huntGroupsServiceCreateAgentClientInfoDisplayTemplateHandler := connect_go.NewUnaryHandler(
-		HuntGroupsServiceCreateAgentClientInfoDisplayTemplateProcedure,
-		svc.CreateAgentClientInfoDisplayTemplate,
-		opts...,
-	)
-	huntGroupsServiceUpdateAgentClientInfoDisplayTemplateHandler := connect_go.NewUnaryHandler(
-		HuntGroupsServiceUpdateAgentClientInfoDisplayTemplateProcedure,
-		svc.UpdateAgentClientInfoDisplayTemplate,
-		opts...,
-	)
-	huntGroupsServiceGetAgentClientInfoDisplayTemplateHandler := connect_go.NewUnaryHandler(
-		HuntGroupsServiceGetAgentClientInfoDisplayTemplateProcedure,
-		svc.GetAgentClientInfoDisplayTemplate,
-		opts...,
-	)
-	huntGroupsServiceListAgentClientInfoDisplayTemplatesHandler := connect_go.NewUnaryHandler(
-		HuntGroupsServiceListAgentClientInfoDisplayTemplatesProcedure,
-		svc.ListAgentClientInfoDisplayTemplates,
-		opts...,
-	)
-	huntGroupsServiceDeleteAgentClientInfoDisplayTemplateHandler := connect_go.NewUnaryHandler(
-		HuntGroupsServiceDeleteAgentClientInfoDisplayTemplateProcedure,
-		svc.DeleteAgentClientInfoDisplayTemplate,
-		opts...,
-	)
 	return "/services.org.hunt_groups.v1alpha1.HuntGroupsService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case HuntGroupsServiceListHuntGroupExileLinksProcedure:
@@ -470,16 +350,6 @@ func NewHuntGroupsServiceHandler(svc HuntGroupsServiceHandler, opts ...connect_g
 			huntGroupsServiceAdminListHuntGroupsHandler.ServeHTTP(w, r)
 		case HuntGroupsServiceListAgentScriptsProcedure:
 			huntGroupsServiceListAgentScriptsHandler.ServeHTTP(w, r)
-		case HuntGroupsServiceCreateAgentClientInfoDisplayTemplateProcedure:
-			huntGroupsServiceCreateAgentClientInfoDisplayTemplateHandler.ServeHTTP(w, r)
-		case HuntGroupsServiceUpdateAgentClientInfoDisplayTemplateProcedure:
-			huntGroupsServiceUpdateAgentClientInfoDisplayTemplateHandler.ServeHTTP(w, r)
-		case HuntGroupsServiceGetAgentClientInfoDisplayTemplateProcedure:
-			huntGroupsServiceGetAgentClientInfoDisplayTemplateHandler.ServeHTTP(w, r)
-		case HuntGroupsServiceListAgentClientInfoDisplayTemplatesProcedure:
-			huntGroupsServiceListAgentClientInfoDisplayTemplatesHandler.ServeHTTP(w, r)
-		case HuntGroupsServiceDeleteAgentClientInfoDisplayTemplateProcedure:
-			huntGroupsServiceDeleteAgentClientInfoDisplayTemplateHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -527,24 +397,4 @@ func (UnimplementedHuntGroupsServiceHandler) AdminListHuntGroups(context.Context
 
 func (UnimplementedHuntGroupsServiceHandler) ListAgentScripts(context.Context, *connect_go.Request[v1alpha1.ListAgentScriptsRequest], *connect_go.ServerStream[v1alpha1.ListAgentScriptsResponse]) error {
 	return connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.org.hunt_groups.v1alpha1.HuntGroupsService.ListAgentScripts is not implemented"))
-}
-
-func (UnimplementedHuntGroupsServiceHandler) CreateAgentClientInfoDisplayTemplate(context.Context, *connect_go.Request[v1alpha1.CreateAgentClientInfoDisplayTemplateRequest]) (*connect_go.Response[v1alpha1.CreateAgentClientInfoDisplayTemplateResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.org.hunt_groups.v1alpha1.HuntGroupsService.CreateAgentClientInfoDisplayTemplate is not implemented"))
-}
-
-func (UnimplementedHuntGroupsServiceHandler) UpdateAgentClientInfoDisplayTemplate(context.Context, *connect_go.Request[v1alpha1.UpdateAgentClientInfoDisplayTemplateRequest]) (*connect_go.Response[v1alpha1.UpdateAgentClientInfoDisplayTemplateResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.org.hunt_groups.v1alpha1.HuntGroupsService.UpdateAgentClientInfoDisplayTemplate is not implemented"))
-}
-
-func (UnimplementedHuntGroupsServiceHandler) GetAgentClientInfoDisplayTemplate(context.Context, *connect_go.Request[v1alpha1.GetAgentClientInfoDisplayTemplateRequest]) (*connect_go.Response[v1alpha1.GetAgentClientInfoDisplayTemplateResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.org.hunt_groups.v1alpha1.HuntGroupsService.GetAgentClientInfoDisplayTemplate is not implemented"))
-}
-
-func (UnimplementedHuntGroupsServiceHandler) ListAgentClientInfoDisplayTemplates(context.Context, *connect_go.Request[v1alpha1.ListAgentClientInfoDisplayTemplatesRequest]) (*connect_go.Response[v1alpha1.ListAgentClientInfoDisplayTemplatesResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.org.hunt_groups.v1alpha1.HuntGroupsService.ListAgentClientInfoDisplayTemplates is not implemented"))
-}
-
-func (UnimplementedHuntGroupsServiceHandler) DeleteAgentClientInfoDisplayTemplate(context.Context, *connect_go.Request[v1alpha1.DeleteAgentClientInfoDisplayTemplateRequest]) (*connect_go.Response[v1alpha1.DeleteAgentClientInfoDisplayTemplateResponse], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.org.hunt_groups.v1alpha1.HuntGroupsService.DeleteAgentClientInfoDisplayTemplate is not implemented"))
 }
