@@ -3979,126 +3979,6 @@ func (x *AgentStateSequence) GetStateSegments() []*AgentStateSegment {
 	return nil
 }
 
-// Represents a single agent's state at a given point in time.
-type AdherenceAgentState struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	// WFM agent sid that the state belongs to.
-	WfmAgentSid int64 `protobuf:"varint,1,opt,name=wfm_agent_sid,json=wfmAgentSid,proto3" json:"wfm_agent_sid,omitempty"`
-	// The datetime that the agent state starts.
-	StartDatetime *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=start_datetime,json=startDatetime,proto3" json:"start_datetime,omitempty"`
-	// The adherence states of the agent at this point in time.
-	AdmStates []RealTimeManagementState `protobuf:"varint,3,rep,packed,name=adm_states,json=admStates,proto3,enum=api.commons.RealTimeManagementState" json:"adm_states,omitempty"`
-	// Pause Code that the agent is using for this state. Only set when @adm_states contains PAUSED.
-	PauseCode string `protobuf:"bytes,4,opt,name=pause_code,json=pauseCode,proto3" json:"pause_code,omitempty"`
-}
-
-func (x *AdherenceAgentState) Reset() {
-	*x = AdherenceAgentState{}
-	mi := &file_api_commons_wfm_proto_msgTypes[20]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *AdherenceAgentState) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*AdherenceAgentState) ProtoMessage() {}
-
-func (x *AdherenceAgentState) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_wfm_proto_msgTypes[20]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use AdherenceAgentState.ProtoReflect.Descriptor instead.
-func (*AdherenceAgentState) Descriptor() ([]byte, []int) {
-	return file_api_commons_wfm_proto_rawDescGZIP(), []int{20}
-}
-
-func (x *AdherenceAgentState) GetWfmAgentSid() int64 {
-	if x != nil {
-		return x.WfmAgentSid
-	}
-	return 0
-}
-
-func (x *AdherenceAgentState) GetStartDatetime() *timestamppb.Timestamp {
-	if x != nil {
-		return x.StartDatetime
-	}
-	return nil
-}
-
-func (x *AdherenceAgentState) GetAdmStates() []RealTimeManagementState {
-	if x != nil {
-		return x.AdmStates
-	}
-	return nil
-}
-
-func (x *AdherenceAgentState) GetPauseCode() string {
-	if x != nil {
-		return x.PauseCode
-	}
-	return ""
-}
-
-// Bundle of agent states, used when returned as a bundle in a map.
-type AdherenceAgentStates struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	AgentStates []*AdherenceAgentState `protobuf:"bytes,1,rep,name=agent_states,json=agentStates,proto3" json:"agent_states,omitempty"`
-}
-
-func (x *AdherenceAgentStates) Reset() {
-	*x = AdherenceAgentStates{}
-	mi := &file_api_commons_wfm_proto_msgTypes[21]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *AdherenceAgentStates) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*AdherenceAgentStates) ProtoMessage() {}
-
-func (x *AdherenceAgentStates) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_wfm_proto_msgTypes[21]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use AdherenceAgentStates.ProtoReflect.Descriptor instead.
-func (*AdherenceAgentStates) Descriptor() ([]byte, []int) {
-	return file_api_commons_wfm_proto_rawDescGZIP(), []int{21}
-}
-
-func (x *AdherenceAgentStates) GetAgentStates() []*AdherenceAgentState {
-	if x != nil {
-		return x.AgentStates
-	}
-	return nil
-}
-
 // Represents an agent's request for time off.
 type AgentLeavePetition struct {
 	state         protoimpl.MessageState
@@ -4138,7 +4018,7 @@ type AgentLeavePetition struct {
 
 func (x *AgentLeavePetition) Reset() {
 	*x = AgentLeavePetition{}
-	mi := &file_api_commons_wfm_proto_msgTypes[22]
+	mi := &file_api_commons_wfm_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4150,7 +4030,7 @@ func (x *AgentLeavePetition) String() string {
 func (*AgentLeavePetition) ProtoMessage() {}
 
 func (x *AgentLeavePetition) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_wfm_proto_msgTypes[22]
+	mi := &file_api_commons_wfm_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4163,7 +4043,7 @@ func (x *AgentLeavePetition) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AgentLeavePetition.ProtoReflect.Descriptor instead.
 func (*AgentLeavePetition) Descriptor() ([]byte, []int) {
-	return file_api_commons_wfm_proto_rawDescGZIP(), []int{22}
+	return file_api_commons_wfm_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *AgentLeavePetition) GetAgentLeavePetitionId() int64 {
@@ -4257,7 +4137,7 @@ type ConfigEntity struct {
 
 func (x *ConfigEntity) Reset() {
 	*x = ConfigEntity{}
-	mi := &file_api_commons_wfm_proto_msgTypes[23]
+	mi := &file_api_commons_wfm_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4269,7 +4149,7 @@ func (x *ConfigEntity) String() string {
 func (*ConfigEntity) ProtoMessage() {}
 
 func (x *ConfigEntity) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_wfm_proto_msgTypes[23]
+	mi := &file_api_commons_wfm_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4282,7 +4162,7 @@ func (x *ConfigEntity) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ConfigEntity.ProtoReflect.Descriptor instead.
 func (*ConfigEntity) Descriptor() ([]byte, []int) {
-	return file_api_commons_wfm_proto_rawDescGZIP(), []int{23}
+	return file_api_commons_wfm_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *ConfigEntity) GetEntitySid() int64 {
@@ -4315,7 +4195,7 @@ type AdherenceRuleNotificationConfig struct {
 
 func (x *AdherenceRuleNotificationConfig) Reset() {
 	*x = AdherenceRuleNotificationConfig{}
-	mi := &file_api_commons_wfm_proto_msgTypes[24]
+	mi := &file_api_commons_wfm_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4327,7 +4207,7 @@ func (x *AdherenceRuleNotificationConfig) String() string {
 func (*AdherenceRuleNotificationConfig) ProtoMessage() {}
 
 func (x *AdherenceRuleNotificationConfig) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_wfm_proto_msgTypes[24]
+	mi := &file_api_commons_wfm_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4340,7 +4220,7 @@ func (x *AdherenceRuleNotificationConfig) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdherenceRuleNotificationConfig.ProtoReflect.Descriptor instead.
 func (*AdherenceRuleNotificationConfig) Descriptor() ([]byte, []int) {
-	return file_api_commons_wfm_proto_rawDescGZIP(), []int{24}
+	return file_api_commons_wfm_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *AdherenceRuleNotificationConfig) GetAdherenceRuleNotificationConfigId() int64 {
@@ -4384,7 +4264,7 @@ type AdherenceRuleNotificationConfigEntry struct {
 
 func (x *AdherenceRuleNotificationConfigEntry) Reset() {
 	*x = AdherenceRuleNotificationConfigEntry{}
-	mi := &file_api_commons_wfm_proto_msgTypes[25]
+	mi := &file_api_commons_wfm_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4396,7 +4276,7 @@ func (x *AdherenceRuleNotificationConfigEntry) String() string {
 func (*AdherenceRuleNotificationConfigEntry) ProtoMessage() {}
 
 func (x *AdherenceRuleNotificationConfigEntry) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_wfm_proto_msgTypes[25]
+	mi := &file_api_commons_wfm_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4409,7 +4289,7 @@ func (x *AdherenceRuleNotificationConfigEntry) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use AdherenceRuleNotificationConfigEntry.ProtoReflect.Descriptor instead.
 func (*AdherenceRuleNotificationConfigEntry) Descriptor() ([]byte, []int) {
-	return file_api_commons_wfm_proto_rawDescGZIP(), []int{25}
+	return file_api_commons_wfm_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *AdherenceRuleNotificationConfigEntry) GetAdherenceRuleNotificationConfigEntryId() int64 {
@@ -4459,7 +4339,7 @@ type AdherenceDepartmentalRuleAction struct {
 
 func (x *AdherenceDepartmentalRuleAction) Reset() {
 	*x = AdherenceDepartmentalRuleAction{}
-	mi := &file_api_commons_wfm_proto_msgTypes[26]
+	mi := &file_api_commons_wfm_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4471,7 +4351,7 @@ func (x *AdherenceDepartmentalRuleAction) String() string {
 func (*AdherenceDepartmentalRuleAction) ProtoMessage() {}
 
 func (x *AdherenceDepartmentalRuleAction) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_wfm_proto_msgTypes[26]
+	mi := &file_api_commons_wfm_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4484,7 +4364,7 @@ func (x *AdherenceDepartmentalRuleAction) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdherenceDepartmentalRuleAction.ProtoReflect.Descriptor instead.
 func (*AdherenceDepartmentalRuleAction) Descriptor() ([]byte, []int) {
-	return file_api_commons_wfm_proto_rawDescGZIP(), []int{26}
+	return file_api_commons_wfm_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *AdherenceDepartmentalRuleAction) GetActionType() AdherenceDepartmentalRuleActionType {
@@ -4521,7 +4401,7 @@ type AdherenceDepartmentalRule struct {
 
 func (x *AdherenceDepartmentalRule) Reset() {
 	*x = AdherenceDepartmentalRule{}
-	mi := &file_api_commons_wfm_proto_msgTypes[27]
+	mi := &file_api_commons_wfm_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4533,7 +4413,7 @@ func (x *AdherenceDepartmentalRule) String() string {
 func (*AdherenceDepartmentalRule) ProtoMessage() {}
 
 func (x *AdherenceDepartmentalRule) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_wfm_proto_msgTypes[27]
+	mi := &file_api_commons_wfm_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4546,7 +4426,7 @@ func (x *AdherenceDepartmentalRule) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdherenceDepartmentalRule.ProtoReflect.Descriptor instead.
 func (*AdherenceDepartmentalRule) Descriptor() ([]byte, []int) {
-	return file_api_commons_wfm_proto_rawDescGZIP(), []int{27}
+	return file_api_commons_wfm_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *AdherenceDepartmentalRule) GetAdherenceDepartmentalRuleId() int64 {
@@ -4632,7 +4512,7 @@ type AdherenceDepartmentalRuleClause struct {
 
 func (x *AdherenceDepartmentalRuleClause) Reset() {
 	*x = AdherenceDepartmentalRuleClause{}
-	mi := &file_api_commons_wfm_proto_msgTypes[28]
+	mi := &file_api_commons_wfm_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4644,7 +4524,7 @@ func (x *AdherenceDepartmentalRuleClause) String() string {
 func (*AdherenceDepartmentalRuleClause) ProtoMessage() {}
 
 func (x *AdherenceDepartmentalRuleClause) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_wfm_proto_msgTypes[28]
+	mi := &file_api_commons_wfm_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4657,7 +4537,7 @@ func (x *AdherenceDepartmentalRuleClause) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdherenceDepartmentalRuleClause.ProtoReflect.Descriptor instead.
 func (*AdherenceDepartmentalRuleClause) Descriptor() ([]byte, []int) {
-	return file_api_commons_wfm_proto_rawDescGZIP(), []int{28}
+	return file_api_commons_wfm_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *AdherenceDepartmentalRuleClause) GetAdherenceDepartmentalRuleClauseId() int64 {
@@ -4739,7 +4619,7 @@ type AdherenceAgentRule struct {
 
 func (x *AdherenceAgentRule) Reset() {
 	*x = AdherenceAgentRule{}
-	mi := &file_api_commons_wfm_proto_msgTypes[29]
+	mi := &file_api_commons_wfm_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4751,7 +4631,7 @@ func (x *AdherenceAgentRule) String() string {
 func (*AdherenceAgentRule) ProtoMessage() {}
 
 func (x *AdherenceAgentRule) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_wfm_proto_msgTypes[29]
+	mi := &file_api_commons_wfm_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4764,7 +4644,7 @@ func (x *AdherenceAgentRule) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdherenceAgentRule.ProtoReflect.Descriptor instead.
 func (*AdherenceAgentRule) Descriptor() ([]byte, []int) {
-	return file_api_commons_wfm_proto_rawDescGZIP(), []int{29}
+	return file_api_commons_wfm_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *AdherenceAgentRule) GetAdherenceAgentRuleId() int64 {
@@ -4821,7 +4701,7 @@ type AdherenceAgentRuleAction struct {
 
 func (x *AdherenceAgentRuleAction) Reset() {
 	*x = AdherenceAgentRuleAction{}
-	mi := &file_api_commons_wfm_proto_msgTypes[30]
+	mi := &file_api_commons_wfm_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4833,7 +4713,7 @@ func (x *AdherenceAgentRuleAction) String() string {
 func (*AdherenceAgentRuleAction) ProtoMessage() {}
 
 func (x *AdherenceAgentRuleAction) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_wfm_proto_msgTypes[30]
+	mi := &file_api_commons_wfm_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4846,7 +4726,7 @@ func (x *AdherenceAgentRuleAction) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdherenceAgentRuleAction.ProtoReflect.Descriptor instead.
 func (*AdherenceAgentRuleAction) Descriptor() ([]byte, []int) {
-	return file_api_commons_wfm_proto_rawDescGZIP(), []int{30}
+	return file_api_commons_wfm_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *AdherenceAgentRuleAction) GetActionType() AdherenceAgentRuleActionType {
@@ -4878,7 +4758,7 @@ type AdherenceAgentRuleClause struct {
 
 func (x *AdherenceAgentRuleClause) Reset() {
 	*x = AdherenceAgentRuleClause{}
-	mi := &file_api_commons_wfm_proto_msgTypes[31]
+	mi := &file_api_commons_wfm_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4890,7 +4770,7 @@ func (x *AdherenceAgentRuleClause) String() string {
 func (*AdherenceAgentRuleClause) ProtoMessage() {}
 
 func (x *AdherenceAgentRuleClause) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_wfm_proto_msgTypes[31]
+	mi := &file_api_commons_wfm_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4903,7 +4783,7 @@ func (x *AdherenceAgentRuleClause) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AdherenceAgentRuleClause.ProtoReflect.Descriptor instead.
 func (*AdherenceAgentRuleClause) Descriptor() ([]byte, []int) {
-	return file_api_commons_wfm_proto_rawDescGZIP(), []int{31}
+	return file_api_commons_wfm_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *AdherenceAgentRuleClause) GetAdherenceAgentRuleClauseId() int64 {
@@ -5261,27 +5141,7 @@ var file_api_commons_wfm_proto_rawDesc = []byte{
 	0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1e, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d,
 	0x6f, 0x6e, 0x73, 0x2e, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x53, 0x65,
 	0x67, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x0d, 0x73, 0x74, 0x61, 0x74, 0x65, 0x53, 0x65, 0x67, 0x6d,
-	0x65, 0x6e, 0x74, 0x73, 0x22, 0xe0, 0x01, 0x0a, 0x13, 0x41, 0x64, 0x68, 0x65, 0x72, 0x65, 0x6e,
-	0x63, 0x65, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x12, 0x22, 0x0a, 0x0d,
-	0x77, 0x66, 0x6d, 0x5f, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x03, 0x52, 0x0b, 0x77, 0x66, 0x6d, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x53, 0x69, 0x64,
-	0x12, 0x41, 0x0a, 0x0e, 0x73, 0x74, 0x61, 0x72, 0x74, 0x5f, 0x64, 0x61, 0x74, 0x65, 0x74, 0x69,
-	0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c,
-	0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73,
-	0x74, 0x61, 0x6d, 0x70, 0x52, 0x0d, 0x73, 0x74, 0x61, 0x72, 0x74, 0x44, 0x61, 0x74, 0x65, 0x74,
-	0x69, 0x6d, 0x65, 0x12, 0x43, 0x0a, 0x0a, 0x61, 0x64, 0x6d, 0x5f, 0x73, 0x74, 0x61, 0x74, 0x65,
-	0x73, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0e, 0x32, 0x24, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f,
-	0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x52, 0x65, 0x61, 0x6c, 0x54, 0x69, 0x6d, 0x65, 0x4d, 0x61,
-	0x6e, 0x61, 0x67, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x09, 0x61,
-	0x64, 0x6d, 0x53, 0x74, 0x61, 0x74, 0x65, 0x73, 0x12, 0x1d, 0x0a, 0x0a, 0x70, 0x61, 0x75, 0x73,
-	0x65, 0x5f, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x70, 0x61,
-	0x75, 0x73, 0x65, 0x43, 0x6f, 0x64, 0x65, 0x22, 0x5b, 0x0a, 0x14, 0x41, 0x64, 0x68, 0x65, 0x72,
-	0x65, 0x6e, 0x63, 0x65, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x73, 0x12,
-	0x43, 0x0a, 0x0c, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x5f, 0x73, 0x74, 0x61, 0x74, 0x65, 0x73, 0x18,
-	0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x20, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d,
-	0x6f, 0x6e, 0x73, 0x2e, 0x41, 0x64, 0x68, 0x65, 0x72, 0x65, 0x6e, 0x63, 0x65, 0x41, 0x67, 0x65,
-	0x6e, 0x74, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x0b, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x53, 0x74,
-	0x61, 0x74, 0x65, 0x73, 0x22, 0x91, 0x05, 0x0a, 0x12, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x4c, 0x65,
+	0x65, 0x6e, 0x74, 0x73, 0x22, 0x91, 0x05, 0x0a, 0x12, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x4c, 0x65,
 	0x61, 0x76, 0x65, 0x50, 0x65, 0x74, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x39, 0x0a, 0x17, 0x61,
 	0x67, 0x65, 0x6e, 0x74, 0x5f, 0x6c, 0x65, 0x61, 0x76, 0x65, 0x5f, 0x70, 0x65, 0x74, 0x69, 0x74,
 	0x69, 0x6f, 0x6e, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x42, 0x02, 0x30, 0x01,
@@ -5997,7 +5857,7 @@ func file_api_commons_wfm_proto_rawDescGZIP() []byte {
 }
 
 var file_api_commons_wfm_proto_enumTypes = make([]protoimpl.EnumInfo, 32)
-var file_api_commons_wfm_proto_msgTypes = make([]protoimpl.MessageInfo, 32)
+var file_api_commons_wfm_proto_msgTypes = make([]protoimpl.MessageInfo, 30)
 var file_api_commons_wfm_proto_goTypes = []any{
 	(RegressionForecasterModelTypes)(0),              // 0: api.commons.RegressionForecasterModelTypes
 	(RegressionForecasterAvgsProcessingType)(0),      // 1: api.commons.RegressionForecasterAvgsProcessingType
@@ -6051,25 +5911,23 @@ var file_api_commons_wfm_proto_goTypes = []any{
 	(*InitialSetupStatus)(nil),                       // 49: api.commons.InitialSetupStatus
 	(*AgentStateSegment)(nil),                        // 50: api.commons.AgentStateSegment
 	(*AgentStateSequence)(nil),                       // 51: api.commons.AgentStateSequence
-	(*AdherenceAgentState)(nil),                      // 52: api.commons.AdherenceAgentState
-	(*AdherenceAgentStates)(nil),                     // 53: api.commons.AdherenceAgentStates
-	(*AgentLeavePetition)(nil),                       // 54: api.commons.AgentLeavePetition
-	(*ConfigEntity)(nil),                             // 55: api.commons.ConfigEntity
-	(*AdherenceRuleNotificationConfig)(nil),          // 56: api.commons.AdherenceRuleNotificationConfig
-	(*AdherenceRuleNotificationConfigEntry)(nil),     // 57: api.commons.AdherenceRuleNotificationConfigEntry
-	(*AdherenceDepartmentalRuleAction)(nil),          // 58: api.commons.AdherenceDepartmentalRuleAction
-	(*AdherenceDepartmentalRule)(nil),                // 59: api.commons.AdherenceDepartmentalRule
-	(*AdherenceDepartmentalRuleClause)(nil),          // 60: api.commons.AdherenceDepartmentalRuleClause
-	(*AdherenceAgentRule)(nil),                       // 61: api.commons.AdherenceAgentRule
-	(*AdherenceAgentRuleAction)(nil),                 // 62: api.commons.AdherenceAgentRuleAction
-	(*AdherenceAgentRuleClause)(nil),                 // 63: api.commons.AdherenceAgentRuleClause
-	(*timestamppb.Timestamp)(nil),                    // 64: google.protobuf.Timestamp
-	(*wrapperspb.Int32Value)(nil),                    // 65: google.protobuf.Int32Value
+	(*AgentLeavePetition)(nil),                       // 52: api.commons.AgentLeavePetition
+	(*ConfigEntity)(nil),                             // 53: api.commons.ConfigEntity
+	(*AdherenceRuleNotificationConfig)(nil),          // 54: api.commons.AdherenceRuleNotificationConfig
+	(*AdherenceRuleNotificationConfigEntry)(nil),     // 55: api.commons.AdherenceRuleNotificationConfigEntry
+	(*AdherenceDepartmentalRuleAction)(nil),          // 56: api.commons.AdherenceDepartmentalRuleAction
+	(*AdherenceDepartmentalRule)(nil),                // 57: api.commons.AdherenceDepartmentalRule
+	(*AdherenceDepartmentalRuleClause)(nil),          // 58: api.commons.AdherenceDepartmentalRuleClause
+	(*AdherenceAgentRule)(nil),                       // 59: api.commons.AdherenceAgentRule
+	(*AdherenceAgentRuleAction)(nil),                 // 60: api.commons.AdherenceAgentRuleAction
+	(*AdherenceAgentRuleClause)(nil),                 // 61: api.commons.AdherenceAgentRuleClause
+	(*timestamppb.Timestamp)(nil),                    // 62: google.protobuf.Timestamp
+	(*wrapperspb.Int32Value)(nil),                    // 63: google.protobuf.Int32Value
 }
 var file_api_commons_wfm_proto_depIdxs = []int32{
-	64, // 0: api.commons.DatetimeRange.start_datetime:type_name -> google.protobuf.Timestamp
-	64, // 1: api.commons.DatetimeRange.end_datetime:type_name -> google.protobuf.Timestamp
-	64, // 2: api.commons.ForecastingParameters.historical_data_range_start_datetime:type_name -> google.protobuf.Timestamp
+	62, // 0: api.commons.DatetimeRange.start_datetime:type_name -> google.protobuf.Timestamp
+	62, // 1: api.commons.DatetimeRange.end_datetime:type_name -> google.protobuf.Timestamp
+	62, // 2: api.commons.ForecastingParameters.historical_data_range_start_datetime:type_name -> google.protobuf.Timestamp
 	33, // 3: api.commons.ForecastingParameters.forecast_datetime_range:type_name -> api.commons.DatetimeRange
 	33, // 4: api.commons.ForecastingParameters.training_data_datetime_range:type_name -> api.commons.DatetimeRange
 	35, // 5: api.commons.DistributionProfile.profile_tod:type_name -> api.commons.ProfileTOD
@@ -6087,42 +5945,39 @@ var file_api_commons_wfm_proto_depIdxs = []int32{
 	18, // 17: api.commons.ClientHistoryCacheInfo.state:type_name -> api.commons.HistoryCacheState
 	19, // 18: api.commons.InitialSetupStatus.state:type_name -> api.commons.InitialSetupState
 	20, // 19: api.commons.AgentStateSegment.states:type_name -> api.commons.RealTimeManagementState
-	64, // 20: api.commons.AgentStateSequence.start_datetime:type_name -> google.protobuf.Timestamp
+	62, // 20: api.commons.AgentStateSequence.start_datetime:type_name -> google.protobuf.Timestamp
 	50, // 21: api.commons.AgentStateSequence.state_segments:type_name -> api.commons.AgentStateSegment
-	64, // 22: api.commons.AdherenceAgentState.start_datetime:type_name -> google.protobuf.Timestamp
-	20, // 23: api.commons.AdherenceAgentState.adm_states:type_name -> api.commons.RealTimeManagementState
-	52, // 24: api.commons.AdherenceAgentStates.agent_states:type_name -> api.commons.AdherenceAgentState
-	21, // 25: api.commons.AgentLeavePetition.petition_status:type_name -> api.commons.AgentLeavePetitionStatus
-	33, // 26: api.commons.AgentLeavePetition.requested_datetime_ranges:type_name -> api.commons.DatetimeRange
-	64, // 27: api.commons.AgentLeavePetition.created_time:type_name -> google.protobuf.Timestamp
-	64, // 28: api.commons.AgentLeavePetition.archived_time:type_name -> google.protobuf.Timestamp
-	64, // 29: api.commons.AgentLeavePetition.resolved_time:type_name -> google.protobuf.Timestamp
-	3,  // 30: api.commons.ConfigEntity.entity_type:type_name -> api.commons.ConfigEntityType
-	57, // 31: api.commons.AdherenceRuleNotificationConfig.entries:type_name -> api.commons.AdherenceRuleNotificationConfigEntry
-	23, // 32: api.commons.AdherenceRuleNotificationConfigEntry.notification_medium:type_name -> api.commons.AdherenceRuleNotificationMedium
-	26, // 33: api.commons.AdherenceDepartmentalRuleAction.action_type:type_name -> api.commons.AdherenceDepartmentalRuleActionType
-	55, // 34: api.commons.AdherenceDepartmentalRule.selected_entity:type_name -> api.commons.ConfigEntity
-	24, // 35: api.commons.AdherenceDepartmentalRule.rule_requirement_type:type_name -> api.commons.AdherenceRuleRequirementType
-	25, // 36: api.commons.AdherenceDepartmentalRule.rule_range:type_name -> api.commons.AdherenceRuleRange
-	33, // 37: api.commons.AdherenceDepartmentalRule.custom_range:type_name -> api.commons.DatetimeRange
-	60, // 38: api.commons.AdherenceDepartmentalRule.rule_clauses:type_name -> api.commons.AdherenceDepartmentalRuleClause
-	58, // 39: api.commons.AdherenceDepartmentalRuleClause.action:type_name -> api.commons.AdherenceDepartmentalRuleAction
-	27, // 40: api.commons.AdherenceDepartmentalRuleClause.condition:type_name -> api.commons.AdherenceRuleCondition
-	28, // 41: api.commons.AdherenceDepartmentalRuleClause.unit:type_name -> api.commons.AdherenceRuleUnit
-	65, // 42: api.commons.AdherenceDepartmentalRuleClause.per_amount:type_name -> google.protobuf.Int32Value
-	28, // 43: api.commons.AdherenceDepartmentalRuleClause.per_unit:type_name -> api.commons.AdherenceRuleUnit
-	55, // 44: api.commons.AdherenceAgentRule.selected_entity:type_name -> api.commons.ConfigEntity
-	24, // 45: api.commons.AdherenceAgentRule.rule_requirement_type:type_name -> api.commons.AdherenceRuleRequirementType
-	63, // 46: api.commons.AdherenceAgentRule.rule_clauses:type_name -> api.commons.AdherenceAgentRuleClause
-	29, // 47: api.commons.AdherenceAgentRuleAction.action_type:type_name -> api.commons.AdherenceAgentRuleActionType
-	62, // 48: api.commons.AdherenceAgentRuleClause.action:type_name -> api.commons.AdherenceAgentRuleAction
-	27, // 49: api.commons.AdherenceAgentRuleClause.condition:type_name -> api.commons.AdherenceRuleCondition
-	28, // 50: api.commons.AdherenceAgentRuleClause.unit:type_name -> api.commons.AdherenceRuleUnit
-	51, // [51:51] is the sub-list for method output_type
-	51, // [51:51] is the sub-list for method input_type
-	51, // [51:51] is the sub-list for extension type_name
-	51, // [51:51] is the sub-list for extension extendee
-	0,  // [0:51] is the sub-list for field type_name
+	21, // 22: api.commons.AgentLeavePetition.petition_status:type_name -> api.commons.AgentLeavePetitionStatus
+	33, // 23: api.commons.AgentLeavePetition.requested_datetime_ranges:type_name -> api.commons.DatetimeRange
+	62, // 24: api.commons.AgentLeavePetition.created_time:type_name -> google.protobuf.Timestamp
+	62, // 25: api.commons.AgentLeavePetition.archived_time:type_name -> google.protobuf.Timestamp
+	62, // 26: api.commons.AgentLeavePetition.resolved_time:type_name -> google.protobuf.Timestamp
+	3,  // 27: api.commons.ConfigEntity.entity_type:type_name -> api.commons.ConfigEntityType
+	55, // 28: api.commons.AdherenceRuleNotificationConfig.entries:type_name -> api.commons.AdherenceRuleNotificationConfigEntry
+	23, // 29: api.commons.AdherenceRuleNotificationConfigEntry.notification_medium:type_name -> api.commons.AdherenceRuleNotificationMedium
+	26, // 30: api.commons.AdherenceDepartmentalRuleAction.action_type:type_name -> api.commons.AdherenceDepartmentalRuleActionType
+	53, // 31: api.commons.AdherenceDepartmentalRule.selected_entity:type_name -> api.commons.ConfigEntity
+	24, // 32: api.commons.AdherenceDepartmentalRule.rule_requirement_type:type_name -> api.commons.AdherenceRuleRequirementType
+	25, // 33: api.commons.AdherenceDepartmentalRule.rule_range:type_name -> api.commons.AdherenceRuleRange
+	33, // 34: api.commons.AdherenceDepartmentalRule.custom_range:type_name -> api.commons.DatetimeRange
+	58, // 35: api.commons.AdherenceDepartmentalRule.rule_clauses:type_name -> api.commons.AdherenceDepartmentalRuleClause
+	56, // 36: api.commons.AdherenceDepartmentalRuleClause.action:type_name -> api.commons.AdherenceDepartmentalRuleAction
+	27, // 37: api.commons.AdherenceDepartmentalRuleClause.condition:type_name -> api.commons.AdherenceRuleCondition
+	28, // 38: api.commons.AdherenceDepartmentalRuleClause.unit:type_name -> api.commons.AdherenceRuleUnit
+	63, // 39: api.commons.AdherenceDepartmentalRuleClause.per_amount:type_name -> google.protobuf.Int32Value
+	28, // 40: api.commons.AdherenceDepartmentalRuleClause.per_unit:type_name -> api.commons.AdherenceRuleUnit
+	53, // 41: api.commons.AdherenceAgentRule.selected_entity:type_name -> api.commons.ConfigEntity
+	24, // 42: api.commons.AdherenceAgentRule.rule_requirement_type:type_name -> api.commons.AdherenceRuleRequirementType
+	61, // 43: api.commons.AdherenceAgentRule.rule_clauses:type_name -> api.commons.AdherenceAgentRuleClause
+	29, // 44: api.commons.AdherenceAgentRuleAction.action_type:type_name -> api.commons.AdherenceAgentRuleActionType
+	60, // 45: api.commons.AdherenceAgentRuleClause.action:type_name -> api.commons.AdherenceAgentRuleAction
+	27, // 46: api.commons.AdherenceAgentRuleClause.condition:type_name -> api.commons.AdherenceRuleCondition
+	28, // 47: api.commons.AdherenceAgentRuleClause.unit:type_name -> api.commons.AdherenceRuleUnit
+	48, // [48:48] is the sub-list for method output_type
+	48, // [48:48] is the sub-list for method input_type
+	48, // [48:48] is the sub-list for extension type_name
+	48, // [48:48] is the sub-list for extension extendee
+	0,  // [0:48] is the sub-list for field type_name
 }
 
 func init() { file_api_commons_wfm_proto_init() }
@@ -6148,7 +6003,7 @@ func file_api_commons_wfm_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_commons_wfm_proto_rawDesc,
 			NumEnums:      32,
-			NumMessages:   32,
+			NumMessages:   30,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
