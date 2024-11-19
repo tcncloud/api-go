@@ -36,6 +36,12 @@ const (
 	// ClassifierFileTemplatesParseFileProcedure is the fully-qualified name of the
 	// ClassifierFileTemplates's ParseFile RPC.
 	ClassifierFileTemplatesParseFileProcedure = "/api.v1alpha1.classifier.ClassifierFileTemplates/ParseFile"
+	// ClassifierFileTemplatesListEventsProcedure is the fully-qualified name of the
+	// ClassifierFileTemplates's ListEvents RPC.
+	ClassifierFileTemplatesListEventsProcedure = "/api.v1alpha1.classifier.ClassifierFileTemplates/ListEvents"
+	// ClassifierFileTemplatesPeekListProcedure is the fully-qualified name of the
+	// ClassifierFileTemplates's PeekList RPC.
+	ClassifierFileTemplatesPeekListProcedure = "/api.v1alpha1.classifier.ClassifierFileTemplates/PeekList"
 	// ClassifierFileTemplatesUpdateFileTemplateProcedure is the fully-qualified name of the
 	// ClassifierFileTemplates's UpdateFileTemplate RPC.
 	ClassifierFileTemplatesUpdateFileTemplateProcedure = "/api.v1alpha1.classifier.ClassifierFileTemplates/UpdateFileTemplate"
@@ -54,6 +60,8 @@ const (
 // service.
 type ClassifierFileTemplatesClient interface {
 	ParseFile(context.Context, *connect_go.Request[classifier.ParseFileRequest]) (*connect_go.Response[classifier.ParseFileResponse], error)
+	ListEvents(context.Context, *connect_go.Request[classifier.ListEventsRequest]) (*connect_go.Response[classifier.ListEventsResponse], error)
+	PeekList(context.Context, *connect_go.Request[classifier.PeekListRequest]) (*connect_go.Response[classifier.PeekListResponse], error)
 	UpdateFileTemplate(context.Context, *connect_go.Request[classifier.UpdateFileTemplateRequest]) (*connect_go.Response[classifier.UpdateFileTemplateResponse], error)
 	DeleteFileTemplate(context.Context, *connect_go.Request[classifier.DeleteFileTemplateRequest]) (*connect_go.Response[classifier.DeleteFileTemplateResponse], error)
 	ListFileTemplates(context.Context, *connect_go.Request[classifier.ListFileTemplatesRequest]) (*connect_go.Response[classifier.ListFileTemplatesResponse], error)
@@ -74,6 +82,16 @@ func NewClassifierFileTemplatesClient(httpClient connect_go.HTTPClient, baseURL 
 		parseFile: connect_go.NewClient[classifier.ParseFileRequest, classifier.ParseFileResponse](
 			httpClient,
 			baseURL+ClassifierFileTemplatesParseFileProcedure,
+			opts...,
+		),
+		listEvents: connect_go.NewClient[classifier.ListEventsRequest, classifier.ListEventsResponse](
+			httpClient,
+			baseURL+ClassifierFileTemplatesListEventsProcedure,
+			opts...,
+		),
+		peekList: connect_go.NewClient[classifier.PeekListRequest, classifier.PeekListResponse](
+			httpClient,
+			baseURL+ClassifierFileTemplatesPeekListProcedure,
 			opts...,
 		),
 		updateFileTemplate: connect_go.NewClient[classifier.UpdateFileTemplateRequest, classifier.UpdateFileTemplateResponse](
@@ -102,6 +120,8 @@ func NewClassifierFileTemplatesClient(httpClient connect_go.HTTPClient, baseURL 
 // classifierFileTemplatesClient implements ClassifierFileTemplatesClient.
 type classifierFileTemplatesClient struct {
 	parseFile          *connect_go.Client[classifier.ParseFileRequest, classifier.ParseFileResponse]
+	listEvents         *connect_go.Client[classifier.ListEventsRequest, classifier.ListEventsResponse]
+	peekList           *connect_go.Client[classifier.PeekListRequest, classifier.PeekListResponse]
 	updateFileTemplate *connect_go.Client[classifier.UpdateFileTemplateRequest, classifier.UpdateFileTemplateResponse]
 	deleteFileTemplate *connect_go.Client[classifier.DeleteFileTemplateRequest, classifier.DeleteFileTemplateResponse]
 	listFileTemplates  *connect_go.Client[classifier.ListFileTemplatesRequest, classifier.ListFileTemplatesResponse]
@@ -111,6 +131,16 @@ type classifierFileTemplatesClient struct {
 // ParseFile calls api.v1alpha1.classifier.ClassifierFileTemplates.ParseFile.
 func (c *classifierFileTemplatesClient) ParseFile(ctx context.Context, req *connect_go.Request[classifier.ParseFileRequest]) (*connect_go.Response[classifier.ParseFileResponse], error) {
 	return c.parseFile.CallUnary(ctx, req)
+}
+
+// ListEvents calls api.v1alpha1.classifier.ClassifierFileTemplates.ListEvents.
+func (c *classifierFileTemplatesClient) ListEvents(ctx context.Context, req *connect_go.Request[classifier.ListEventsRequest]) (*connect_go.Response[classifier.ListEventsResponse], error) {
+	return c.listEvents.CallUnary(ctx, req)
+}
+
+// PeekList calls api.v1alpha1.classifier.ClassifierFileTemplates.PeekList.
+func (c *classifierFileTemplatesClient) PeekList(ctx context.Context, req *connect_go.Request[classifier.PeekListRequest]) (*connect_go.Response[classifier.PeekListResponse], error) {
+	return c.peekList.CallUnary(ctx, req)
 }
 
 // UpdateFileTemplate calls api.v1alpha1.classifier.ClassifierFileTemplates.UpdateFileTemplate.
@@ -137,6 +167,8 @@ func (c *classifierFileTemplatesClient) GetFileTemplate(ctx context.Context, req
 // api.v1alpha1.classifier.ClassifierFileTemplates service.
 type ClassifierFileTemplatesHandler interface {
 	ParseFile(context.Context, *connect_go.Request[classifier.ParseFileRequest]) (*connect_go.Response[classifier.ParseFileResponse], error)
+	ListEvents(context.Context, *connect_go.Request[classifier.ListEventsRequest]) (*connect_go.Response[classifier.ListEventsResponse], error)
+	PeekList(context.Context, *connect_go.Request[classifier.PeekListRequest]) (*connect_go.Response[classifier.PeekListResponse], error)
 	UpdateFileTemplate(context.Context, *connect_go.Request[classifier.UpdateFileTemplateRequest]) (*connect_go.Response[classifier.UpdateFileTemplateResponse], error)
 	DeleteFileTemplate(context.Context, *connect_go.Request[classifier.DeleteFileTemplateRequest]) (*connect_go.Response[classifier.DeleteFileTemplateResponse], error)
 	ListFileTemplates(context.Context, *connect_go.Request[classifier.ListFileTemplatesRequest]) (*connect_go.Response[classifier.ListFileTemplatesResponse], error)
@@ -152,6 +184,16 @@ func NewClassifierFileTemplatesHandler(svc ClassifierFileTemplatesHandler, opts 
 	classifierFileTemplatesParseFileHandler := connect_go.NewUnaryHandler(
 		ClassifierFileTemplatesParseFileProcedure,
 		svc.ParseFile,
+		opts...,
+	)
+	classifierFileTemplatesListEventsHandler := connect_go.NewUnaryHandler(
+		ClassifierFileTemplatesListEventsProcedure,
+		svc.ListEvents,
+		opts...,
+	)
+	classifierFileTemplatesPeekListHandler := connect_go.NewUnaryHandler(
+		ClassifierFileTemplatesPeekListProcedure,
+		svc.PeekList,
 		opts...,
 	)
 	classifierFileTemplatesUpdateFileTemplateHandler := connect_go.NewUnaryHandler(
@@ -178,6 +220,10 @@ func NewClassifierFileTemplatesHandler(svc ClassifierFileTemplatesHandler, opts 
 		switch r.URL.Path {
 		case ClassifierFileTemplatesParseFileProcedure:
 			classifierFileTemplatesParseFileHandler.ServeHTTP(w, r)
+		case ClassifierFileTemplatesListEventsProcedure:
+			classifierFileTemplatesListEventsHandler.ServeHTTP(w, r)
+		case ClassifierFileTemplatesPeekListProcedure:
+			classifierFileTemplatesPeekListHandler.ServeHTTP(w, r)
 		case ClassifierFileTemplatesUpdateFileTemplateProcedure:
 			classifierFileTemplatesUpdateFileTemplateHandler.ServeHTTP(w, r)
 		case ClassifierFileTemplatesDeleteFileTemplateProcedure:
@@ -197,6 +243,14 @@ type UnimplementedClassifierFileTemplatesHandler struct{}
 
 func (UnimplementedClassifierFileTemplatesHandler) ParseFile(context.Context, *connect_go.Request[classifier.ParseFileRequest]) (*connect_go.Response[classifier.ParseFileResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.classifier.ClassifierFileTemplates.ParseFile is not implemented"))
+}
+
+func (UnimplementedClassifierFileTemplatesHandler) ListEvents(context.Context, *connect_go.Request[classifier.ListEventsRequest]) (*connect_go.Response[classifier.ListEventsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.classifier.ClassifierFileTemplates.ListEvents is not implemented"))
+}
+
+func (UnimplementedClassifierFileTemplatesHandler) PeekList(context.Context, *connect_go.Request[classifier.PeekListRequest]) (*connect_go.Response[classifier.PeekListResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.classifier.ClassifierFileTemplates.PeekList is not implemented"))
 }
 
 func (UnimplementedClassifierFileTemplatesHandler) UpdateFileTemplate(context.Context, *connect_go.Request[classifier.UpdateFileTemplateRequest]) (*connect_go.Response[classifier.UpdateFileTemplateResponse], error) {

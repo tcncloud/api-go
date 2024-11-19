@@ -20,6 +20,8 @@ const _ = grpc.SupportPackageIsVersion8
 
 const (
 	ClassifierFileTemplates_ParseFile_FullMethodName          = "/api.v1alpha1.classifier.ClassifierFileTemplates/ParseFile"
+	ClassifierFileTemplates_ListEvents_FullMethodName         = "/api.v1alpha1.classifier.ClassifierFileTemplates/ListEvents"
+	ClassifierFileTemplates_PeekList_FullMethodName           = "/api.v1alpha1.classifier.ClassifierFileTemplates/PeekList"
 	ClassifierFileTemplates_UpdateFileTemplate_FullMethodName = "/api.v1alpha1.classifier.ClassifierFileTemplates/UpdateFileTemplate"
 	ClassifierFileTemplates_DeleteFileTemplate_FullMethodName = "/api.v1alpha1.classifier.ClassifierFileTemplates/DeleteFileTemplate"
 	ClassifierFileTemplates_ListFileTemplates_FullMethodName  = "/api.v1alpha1.classifier.ClassifierFileTemplates/ListFileTemplates"
@@ -31,6 +33,8 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ClassifierFileTemplatesClient interface {
 	ParseFile(ctx context.Context, in *ParseFileRequest, opts ...grpc.CallOption) (*ParseFileResponse, error)
+	ListEvents(ctx context.Context, in *ListEventsRequest, opts ...grpc.CallOption) (*ListEventsResponse, error)
+	PeekList(ctx context.Context, in *PeekListRequest, opts ...grpc.CallOption) (*PeekListResponse, error)
 	UpdateFileTemplate(ctx context.Context, in *UpdateFileTemplateRequest, opts ...grpc.CallOption) (*UpdateFileTemplateResponse, error)
 	DeleteFileTemplate(ctx context.Context, in *DeleteFileTemplateRequest, opts ...grpc.CallOption) (*DeleteFileTemplateResponse, error)
 	ListFileTemplates(ctx context.Context, in *ListFileTemplatesRequest, opts ...grpc.CallOption) (*ListFileTemplatesResponse, error)
@@ -49,6 +53,26 @@ func (c *classifierFileTemplatesClient) ParseFile(ctx context.Context, in *Parse
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ParseFileResponse)
 	err := c.cc.Invoke(ctx, ClassifierFileTemplates_ParseFile_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *classifierFileTemplatesClient) ListEvents(ctx context.Context, in *ListEventsRequest, opts ...grpc.CallOption) (*ListEventsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListEventsResponse)
+	err := c.cc.Invoke(ctx, ClassifierFileTemplates_ListEvents_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *classifierFileTemplatesClient) PeekList(ctx context.Context, in *PeekListRequest, opts ...grpc.CallOption) (*PeekListResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(PeekListResponse)
+	err := c.cc.Invoke(ctx, ClassifierFileTemplates_PeekList_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -100,6 +124,8 @@ func (c *classifierFileTemplatesClient) GetFileTemplate(ctx context.Context, in 
 // for forward compatibility.
 type ClassifierFileTemplatesServer interface {
 	ParseFile(context.Context, *ParseFileRequest) (*ParseFileResponse, error)
+	ListEvents(context.Context, *ListEventsRequest) (*ListEventsResponse, error)
+	PeekList(context.Context, *PeekListRequest) (*PeekListResponse, error)
 	UpdateFileTemplate(context.Context, *UpdateFileTemplateRequest) (*UpdateFileTemplateResponse, error)
 	DeleteFileTemplate(context.Context, *DeleteFileTemplateRequest) (*DeleteFileTemplateResponse, error)
 	ListFileTemplates(context.Context, *ListFileTemplatesRequest) (*ListFileTemplatesResponse, error)
@@ -116,6 +142,12 @@ type UnimplementedClassifierFileTemplatesServer struct{}
 
 func (UnimplementedClassifierFileTemplatesServer) ParseFile(context.Context, *ParseFileRequest) (*ParseFileResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ParseFile not implemented")
+}
+func (UnimplementedClassifierFileTemplatesServer) ListEvents(context.Context, *ListEventsRequest) (*ListEventsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListEvents not implemented")
+}
+func (UnimplementedClassifierFileTemplatesServer) PeekList(context.Context, *PeekListRequest) (*PeekListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PeekList not implemented")
 }
 func (UnimplementedClassifierFileTemplatesServer) UpdateFileTemplate(context.Context, *UpdateFileTemplateRequest) (*UpdateFileTemplateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateFileTemplate not implemented")
@@ -165,6 +197,42 @@ func _ClassifierFileTemplates_ParseFile_Handler(srv interface{}, ctx context.Con
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClassifierFileTemplatesServer).ParseFile(ctx, req.(*ParseFileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ClassifierFileTemplates_ListEvents_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListEventsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ClassifierFileTemplatesServer).ListEvents(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ClassifierFileTemplates_ListEvents_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ClassifierFileTemplatesServer).ListEvents(ctx, req.(*ListEventsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ClassifierFileTemplates_PeekList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PeekListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ClassifierFileTemplatesServer).PeekList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ClassifierFileTemplates_PeekList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ClassifierFileTemplatesServer).PeekList(ctx, req.(*PeekListRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -251,6 +319,14 @@ var ClassifierFileTemplates_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ParseFile",
 			Handler:    _ClassifierFileTemplates_ParseFile_Handler,
+		},
+		{
+			MethodName: "ListEvents",
+			Handler:    _ClassifierFileTemplates_ListEvents_Handler,
+		},
+		{
+			MethodName: "PeekList",
+			Handler:    _ClassifierFileTemplates_PeekList_Handler,
 		},
 		{
 			MethodName: "UpdateFileTemplate",
