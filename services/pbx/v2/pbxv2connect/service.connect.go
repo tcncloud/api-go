@@ -40,6 +40,9 @@ const (
 	// PBXServiceListRingGroupsProcedure is the fully-qualified name of the PBXService's ListRingGroups
 	// RPC.
 	PBXServiceListRingGroupsProcedure = "/services.pbx.v2.PBXService/ListRingGroups"
+	// PBXServiceListRingGroupsBySipIdProcedure is the fully-qualified name of the PBXService's
+	// ListRingGroupsBySipId RPC.
+	PBXServiceListRingGroupsBySipIdProcedure = "/services.pbx.v2.PBXService/ListRingGroupsBySipId"
 	// PBXServiceGetRingGroupProcedure is the fully-qualified name of the PBXService's GetRingGroup RPC.
 	PBXServiceGetRingGroupProcedure = "/services.pbx.v2.PBXService/GetRingGroup"
 	// PBXServiceGetSIPAccountProcedure is the fully-qualified name of the PBXService's GetSIPAccount
@@ -51,6 +54,9 @@ const (
 	// PBXServiceListSIPAccountsProcedure is the fully-qualified name of the PBXService's
 	// ListSIPAccounts RPC.
 	PBXServiceListSIPAccountsProcedure = "/services.pbx.v2.PBXService/ListSIPAccounts"
+	// PBXServiceListSIPAccountsByRingGroupIdProcedure is the fully-qualified name of the PBXService's
+	// ListSIPAccountsByRingGroupId RPC.
+	PBXServiceListSIPAccountsByRingGroupIdProcedure = "/services.pbx.v2.PBXService/ListSIPAccountsByRingGroupId"
 	// PBXServiceUpdateSIPAccountProcedure is the fully-qualified name of the PBXService's
 	// UpdateSIPAccount RPC.
 	PBXServiceUpdateSIPAccountProcedure = "/services.pbx.v2.PBXService/UpdateSIPAccount"
@@ -102,6 +108,18 @@ type PBXServiceClient interface {
 	//   - grpc.Internal: An internal error occurred.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	ListRingGroups(context.Context, *connect_go.Request[v2.ListRingGroupsRequest]) (*connect_go.Response[v2.ListRingGroupsResponse], error)
+	// Returns details of all Ring Groups associated with a specific sip account
+	// Required permissions:
+	//
+	//	PBX-MANAGER
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.NotFound: The sip account does not exist or is not in the caller's ORG.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	ListRingGroupsBySipId(context.Context, *connect_go.Request[v2.ListRingGroupsBySipIdRequest]) (*connect_go.Response[v2.ListRingGroupsBySipIdResponse], error)
 	// Returns details of the Ring Group associated with the ring_group_id
 	// Required permissions:
 	//
@@ -148,6 +166,18 @@ type PBXServiceClient interface {
 	//   - grpc.Internal: An internal error occurred.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	ListSIPAccounts(context.Context, *connect_go.Request[v2.ListSIPAccountsRequest]) (*connect_go.Response[v2.ListSIPAccountsResponse], error)
+	// Returns details of all SIP Accounts associated with a specific ring group
+	// Required permissions:
+	//
+	//	PBX-MANAGER
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.NotFound: The group does not exist or is not in the caller's ORG.
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	ListSIPAccountsByRingGroupId(context.Context, *connect_go.Request[v2.ListSIPAccountsByRingGroupIdRequest]) (*connect_go.Response[v2.ListSIPAccountsByRingGroupIdResponse], error)
 	// Updates details of the SIP Account for the specific SIP Account within the authenticated callers ORG.
 	// Allows for updating, activating, and deactivating a user.
 	// Required permissions:
@@ -240,6 +270,11 @@ func NewPBXServiceClient(httpClient connect_go.HTTPClient, baseURL string, opts 
 			baseURL+PBXServiceListRingGroupsProcedure,
 			opts...,
 		),
+		listRingGroupsBySipId: connect_go.NewClient[v2.ListRingGroupsBySipIdRequest, v2.ListRingGroupsBySipIdResponse](
+			httpClient,
+			baseURL+PBXServiceListRingGroupsBySipIdProcedure,
+			opts...,
+		),
 		getRingGroup: connect_go.NewClient[v2.GetRingGroupRequest, v2.GetRingGroupResponse](
 			httpClient,
 			baseURL+PBXServiceGetRingGroupProcedure,
@@ -258,6 +293,11 @@ func NewPBXServiceClient(httpClient connect_go.HTTPClient, baseURL string, opts 
 		listSIPAccounts: connect_go.NewClient[v2.ListSIPAccountsRequest, v2.ListSIPAccountsResponse](
 			httpClient,
 			baseURL+PBXServiceListSIPAccountsProcedure,
+			opts...,
+		),
+		listSIPAccountsByRingGroupId: connect_go.NewClient[v2.ListSIPAccountsByRingGroupIdRequest, v2.ListSIPAccountsByRingGroupIdResponse](
+			httpClient,
+			baseURL+PBXServiceListSIPAccountsByRingGroupIdProcedure,
 			opts...,
 		),
 		updateSIPAccount: connect_go.NewClient[v2.UpdateSIPAccountRequest, v2.UpdateSIPAccountResponse](
@@ -290,18 +330,20 @@ func NewPBXServiceClient(httpClient connect_go.HTTPClient, baseURL string, opts 
 
 // pBXServiceClient implements PBXServiceClient.
 type pBXServiceClient struct {
-	listPBXUsers          *connect_go.Client[v2.ListPBXUsersRequest, v2.ListPBXUsersResponse]
-	getPBXUser            *connect_go.Client[v2.GetPBXUserRequest, v2.GetPBXUserResponse]
-	listRingGroups        *connect_go.Client[v2.ListRingGroupsRequest, v2.ListRingGroupsResponse]
-	getRingGroup          *connect_go.Client[v2.GetRingGroupRequest, v2.GetRingGroupResponse]
-	getSIPAccount         *connect_go.Client[v2.GetSIPAccountRequest, v2.GetSIPAccountResponse]
-	getSIPAccountByUserId *connect_go.Client[v2.GetSIPAccountByUserIdRequest, v2.GetSIPAccountByUserIdResponse]
-	listSIPAccounts       *connect_go.Client[v2.ListSIPAccountsRequest, v2.ListSIPAccountsResponse]
-	updateSIPAccount      *connect_go.Client[v2.UpdateSIPAccountRequest, v2.UpdateSIPAccountResponse]
-	updateRingGroup       *connect_go.Client[v2.UpdateRingGroupRequest, v2.UpdateRingGroupResponse]
-	createRingGroup       *connect_go.Client[v2.CreateRingGroupRequest, v2.CreateRingGroupResponse]
-	deleteRingGroup       *connect_go.Client[v2.DeleteRingGroupRequest, v2.DeleteRingGroupResponse]
-	assignRandomExtension *connect_go.Client[v2.AssignRandomExtensionRequest, v2.AssignRandomExtensionResponse]
+	listPBXUsers                 *connect_go.Client[v2.ListPBXUsersRequest, v2.ListPBXUsersResponse]
+	getPBXUser                   *connect_go.Client[v2.GetPBXUserRequest, v2.GetPBXUserResponse]
+	listRingGroups               *connect_go.Client[v2.ListRingGroupsRequest, v2.ListRingGroupsResponse]
+	listRingGroupsBySipId        *connect_go.Client[v2.ListRingGroupsBySipIdRequest, v2.ListRingGroupsBySipIdResponse]
+	getRingGroup                 *connect_go.Client[v2.GetRingGroupRequest, v2.GetRingGroupResponse]
+	getSIPAccount                *connect_go.Client[v2.GetSIPAccountRequest, v2.GetSIPAccountResponse]
+	getSIPAccountByUserId        *connect_go.Client[v2.GetSIPAccountByUserIdRequest, v2.GetSIPAccountByUserIdResponse]
+	listSIPAccounts              *connect_go.Client[v2.ListSIPAccountsRequest, v2.ListSIPAccountsResponse]
+	listSIPAccountsByRingGroupId *connect_go.Client[v2.ListSIPAccountsByRingGroupIdRequest, v2.ListSIPAccountsByRingGroupIdResponse]
+	updateSIPAccount             *connect_go.Client[v2.UpdateSIPAccountRequest, v2.UpdateSIPAccountResponse]
+	updateRingGroup              *connect_go.Client[v2.UpdateRingGroupRequest, v2.UpdateRingGroupResponse]
+	createRingGroup              *connect_go.Client[v2.CreateRingGroupRequest, v2.CreateRingGroupResponse]
+	deleteRingGroup              *connect_go.Client[v2.DeleteRingGroupRequest, v2.DeleteRingGroupResponse]
+	assignRandomExtension        *connect_go.Client[v2.AssignRandomExtensionRequest, v2.AssignRandomExtensionResponse]
 }
 
 // ListPBXUsers calls services.pbx.v2.PBXService.ListPBXUsers.
@@ -317,6 +359,11 @@ func (c *pBXServiceClient) GetPBXUser(ctx context.Context, req *connect_go.Reque
 // ListRingGroups calls services.pbx.v2.PBXService.ListRingGroups.
 func (c *pBXServiceClient) ListRingGroups(ctx context.Context, req *connect_go.Request[v2.ListRingGroupsRequest]) (*connect_go.Response[v2.ListRingGroupsResponse], error) {
 	return c.listRingGroups.CallUnary(ctx, req)
+}
+
+// ListRingGroupsBySipId calls services.pbx.v2.PBXService.ListRingGroupsBySipId.
+func (c *pBXServiceClient) ListRingGroupsBySipId(ctx context.Context, req *connect_go.Request[v2.ListRingGroupsBySipIdRequest]) (*connect_go.Response[v2.ListRingGroupsBySipIdResponse], error) {
+	return c.listRingGroupsBySipId.CallUnary(ctx, req)
 }
 
 // GetRingGroup calls services.pbx.v2.PBXService.GetRingGroup.
@@ -337,6 +384,11 @@ func (c *pBXServiceClient) GetSIPAccountByUserId(ctx context.Context, req *conne
 // ListSIPAccounts calls services.pbx.v2.PBXService.ListSIPAccounts.
 func (c *pBXServiceClient) ListSIPAccounts(ctx context.Context, req *connect_go.Request[v2.ListSIPAccountsRequest]) (*connect_go.Response[v2.ListSIPAccountsResponse], error) {
 	return c.listSIPAccounts.CallUnary(ctx, req)
+}
+
+// ListSIPAccountsByRingGroupId calls services.pbx.v2.PBXService.ListSIPAccountsByRingGroupId.
+func (c *pBXServiceClient) ListSIPAccountsByRingGroupId(ctx context.Context, req *connect_go.Request[v2.ListSIPAccountsByRingGroupIdRequest]) (*connect_go.Response[v2.ListSIPAccountsByRingGroupIdResponse], error) {
+	return c.listSIPAccountsByRingGroupId.CallUnary(ctx, req)
 }
 
 // UpdateSIPAccount calls services.pbx.v2.PBXService.UpdateSIPAccount.
@@ -398,6 +450,18 @@ type PBXServiceHandler interface {
 	//   - grpc.Internal: An internal error occurred.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	ListRingGroups(context.Context, *connect_go.Request[v2.ListRingGroupsRequest]) (*connect_go.Response[v2.ListRingGroupsResponse], error)
+	// Returns details of all Ring Groups associated with a specific sip account
+	// Required permissions:
+	//
+	//	PBX-MANAGER
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.NotFound: The sip account does not exist or is not in the caller's ORG.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	ListRingGroupsBySipId(context.Context, *connect_go.Request[v2.ListRingGroupsBySipIdRequest]) (*connect_go.Response[v2.ListRingGroupsBySipIdResponse], error)
 	// Returns details of the Ring Group associated with the ring_group_id
 	// Required permissions:
 	//
@@ -444,6 +508,18 @@ type PBXServiceHandler interface {
 	//   - grpc.Internal: An internal error occurred.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	ListSIPAccounts(context.Context, *connect_go.Request[v2.ListSIPAccountsRequest]) (*connect_go.Response[v2.ListSIPAccountsResponse], error)
+	// Returns details of all SIP Accounts associated with a specific ring group
+	// Required permissions:
+	//
+	//	PBX-MANAGER
+	//
+	// Errors:
+	//   - grpc.InvalidArgument: The request is invalid.
+	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
+	//   - grpc.NotFound: The group does not exist or is not in the caller's ORG.
+	//   - grpc.Internal: An internal error occurred.
+	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	ListSIPAccountsByRingGroupId(context.Context, *connect_go.Request[v2.ListSIPAccountsByRingGroupIdRequest]) (*connect_go.Response[v2.ListSIPAccountsByRingGroupIdResponse], error)
 	// Updates details of the SIP Account for the specific SIP Account within the authenticated callers ORG.
 	// Allows for updating, activating, and deactivating a user.
 	// Required permissions:
@@ -532,6 +608,11 @@ func NewPBXServiceHandler(svc PBXServiceHandler, opts ...connect_go.HandlerOptio
 		svc.ListRingGroups,
 		opts...,
 	)
+	pBXServiceListRingGroupsBySipIdHandler := connect_go.NewUnaryHandler(
+		PBXServiceListRingGroupsBySipIdProcedure,
+		svc.ListRingGroupsBySipId,
+		opts...,
+	)
 	pBXServiceGetRingGroupHandler := connect_go.NewUnaryHandler(
 		PBXServiceGetRingGroupProcedure,
 		svc.GetRingGroup,
@@ -550,6 +631,11 @@ func NewPBXServiceHandler(svc PBXServiceHandler, opts ...connect_go.HandlerOptio
 	pBXServiceListSIPAccountsHandler := connect_go.NewUnaryHandler(
 		PBXServiceListSIPAccountsProcedure,
 		svc.ListSIPAccounts,
+		opts...,
+	)
+	pBXServiceListSIPAccountsByRingGroupIdHandler := connect_go.NewUnaryHandler(
+		PBXServiceListSIPAccountsByRingGroupIdProcedure,
+		svc.ListSIPAccountsByRingGroupId,
 		opts...,
 	)
 	pBXServiceUpdateSIPAccountHandler := connect_go.NewUnaryHandler(
@@ -585,6 +671,8 @@ func NewPBXServiceHandler(svc PBXServiceHandler, opts ...connect_go.HandlerOptio
 			pBXServiceGetPBXUserHandler.ServeHTTP(w, r)
 		case PBXServiceListRingGroupsProcedure:
 			pBXServiceListRingGroupsHandler.ServeHTTP(w, r)
+		case PBXServiceListRingGroupsBySipIdProcedure:
+			pBXServiceListRingGroupsBySipIdHandler.ServeHTTP(w, r)
 		case PBXServiceGetRingGroupProcedure:
 			pBXServiceGetRingGroupHandler.ServeHTTP(w, r)
 		case PBXServiceGetSIPAccountProcedure:
@@ -593,6 +681,8 @@ func NewPBXServiceHandler(svc PBXServiceHandler, opts ...connect_go.HandlerOptio
 			pBXServiceGetSIPAccountByUserIdHandler.ServeHTTP(w, r)
 		case PBXServiceListSIPAccountsProcedure:
 			pBXServiceListSIPAccountsHandler.ServeHTTP(w, r)
+		case PBXServiceListSIPAccountsByRingGroupIdProcedure:
+			pBXServiceListSIPAccountsByRingGroupIdHandler.ServeHTTP(w, r)
 		case PBXServiceUpdateSIPAccountProcedure:
 			pBXServiceUpdateSIPAccountHandler.ServeHTTP(w, r)
 		case PBXServiceUpdateRingGroupProcedure:
@@ -624,6 +714,10 @@ func (UnimplementedPBXServiceHandler) ListRingGroups(context.Context, *connect_g
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.pbx.v2.PBXService.ListRingGroups is not implemented"))
 }
 
+func (UnimplementedPBXServiceHandler) ListRingGroupsBySipId(context.Context, *connect_go.Request[v2.ListRingGroupsBySipIdRequest]) (*connect_go.Response[v2.ListRingGroupsBySipIdResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.pbx.v2.PBXService.ListRingGroupsBySipId is not implemented"))
+}
+
 func (UnimplementedPBXServiceHandler) GetRingGroup(context.Context, *connect_go.Request[v2.GetRingGroupRequest]) (*connect_go.Response[v2.GetRingGroupResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.pbx.v2.PBXService.GetRingGroup is not implemented"))
 }
@@ -638,6 +732,10 @@ func (UnimplementedPBXServiceHandler) GetSIPAccountByUserId(context.Context, *co
 
 func (UnimplementedPBXServiceHandler) ListSIPAccounts(context.Context, *connect_go.Request[v2.ListSIPAccountsRequest]) (*connect_go.Response[v2.ListSIPAccountsResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.pbx.v2.PBXService.ListSIPAccounts is not implemented"))
+}
+
+func (UnimplementedPBXServiceHandler) ListSIPAccountsByRingGroupId(context.Context, *connect_go.Request[v2.ListSIPAccountsByRingGroupIdRequest]) (*connect_go.Response[v2.ListSIPAccountsByRingGroupIdResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("services.pbx.v2.PBXService.ListSIPAccountsByRingGroupId is not implemented"))
 }
 
 func (UnimplementedPBXServiceHandler) UpdateSIPAccount(context.Context, *connect_go.Request[v2.UpdateSIPAccountRequest]) (*connect_go.Response[v2.UpdateSIPAccountResponse], error) {
