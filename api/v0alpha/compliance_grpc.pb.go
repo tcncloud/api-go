@@ -32,6 +32,7 @@ const (
 	Compliance_EnableRuleSet_FullMethodName                  = "/api.v0alpha.Compliance/EnableRuleSet"
 	Compliance_DisableRuleSet_FullMethodName                 = "/api.v0alpha.Compliance/DisableRuleSet"
 	Compliance_CreateScrubList_FullMethodName                = "/api.v0alpha.Compliance/CreateScrubList"
+	Compliance_UpdateScrubList_FullMethodName                = "/api.v0alpha.Compliance/UpdateScrubList"
 	Compliance_AddScrubListEntries_FullMethodName            = "/api.v0alpha.Compliance/AddScrubListEntries"
 	Compliance_UpdateScrubEntry_FullMethodName               = "/api.v0alpha.Compliance/UpdateScrubEntry"
 	Compliance_DeleteScrubListEntries_FullMethodName         = "/api.v0alpha.Compliance/DeleteScrubListEntries"
@@ -104,6 +105,12 @@ type ComplianceClient interface {
 	EnableRuleSet(ctx context.Context, in *EnableRuleSetReq, opts ...grpc.CallOption) (*EnableRuleSetRes, error)
 	DisableRuleSet(ctx context.Context, in *DisableRuleSetReq, opts ...grpc.CallOption) (*DisableRuleSetRes, error)
 	CreateScrubList(ctx context.Context, in *CreateScrubListReq, opts ...grpc.CallOption) (*ScrubListRes, error)
+	// Updates a scrub list metadata
+	// The method will return an UpdateScrubListResponse.
+	// Required permissions:
+	//
+	//	PERMISSION_COMPLIANCE
+	UpdateScrubList(ctx context.Context, in *UpdateScrubListRequest, opts ...grpc.CallOption) (*UpdateScrubListResponse, error)
 	// Add entries to an existing scrub list defined by AddScrubListEntriesReq message.
 	// The method will return a ScrubListRes message that will
 	// contain the results.
@@ -490,6 +497,16 @@ func (c *complianceClient) CreateScrubList(ctx context.Context, in *CreateScrubL
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ScrubListRes)
 	err := c.cc.Invoke(ctx, Compliance_CreateScrubList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *complianceClient) UpdateScrubList(ctx context.Context, in *UpdateScrubListRequest, opts ...grpc.CallOption) (*UpdateScrubListResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateScrubListResponse)
+	err := c.cc.Invoke(ctx, Compliance_UpdateScrubList_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1061,6 +1078,12 @@ type ComplianceServer interface {
 	EnableRuleSet(context.Context, *EnableRuleSetReq) (*EnableRuleSetRes, error)
 	DisableRuleSet(context.Context, *DisableRuleSetReq) (*DisableRuleSetRes, error)
 	CreateScrubList(context.Context, *CreateScrubListReq) (*ScrubListRes, error)
+	// Updates a scrub list metadata
+	// The method will return an UpdateScrubListResponse.
+	// Required permissions:
+	//
+	//	PERMISSION_COMPLIANCE
+	UpdateScrubList(context.Context, *UpdateScrubListRequest) (*UpdateScrubListResponse, error)
 	// Add entries to an existing scrub list defined by AddScrubListEntriesReq message.
 	// The method will return a ScrubListRes message that will
 	// contain the results.
@@ -1352,6 +1375,9 @@ func (UnimplementedComplianceServer) DisableRuleSet(context.Context, *DisableRul
 }
 func (UnimplementedComplianceServer) CreateScrubList(context.Context, *CreateScrubListReq) (*ScrubListRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateScrubList not implemented")
+}
+func (UnimplementedComplianceServer) UpdateScrubList(context.Context, *UpdateScrubListRequest) (*UpdateScrubListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateScrubList not implemented")
 }
 func (UnimplementedComplianceServer) AddScrubListEntries(context.Context, *AddScrubListEntriesReq) (*ScrubListRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddScrubListEntries not implemented")
@@ -1736,6 +1762,24 @@ func _Compliance_CreateScrubList_Handler(srv interface{}, ctx context.Context, d
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ComplianceServer).CreateScrubList(ctx, req.(*CreateScrubListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Compliance_UpdateScrubList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateScrubListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ComplianceServer).UpdateScrubList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Compliance_UpdateScrubList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ComplianceServer).UpdateScrubList(ctx, req.(*UpdateScrubListRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -2776,6 +2820,10 @@ var Compliance_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateScrubList",
 			Handler:    _Compliance_CreateScrubList_Handler,
+		},
+		{
+			MethodName: "UpdateScrubList",
+			Handler:    _Compliance_UpdateScrubList_Handler,
 		},
 		{
 			MethodName: "AddScrubListEntries",

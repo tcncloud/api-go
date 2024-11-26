@@ -65,6 +65,9 @@ const (
 	// ComplianceCreateScrubListProcedure is the fully-qualified name of the Compliance's
 	// CreateScrubList RPC.
 	ComplianceCreateScrubListProcedure = "/api.v0alpha.Compliance/CreateScrubList"
+	// ComplianceUpdateScrubListProcedure is the fully-qualified name of the Compliance's
+	// UpdateScrubList RPC.
+	ComplianceUpdateScrubListProcedure = "/api.v0alpha.Compliance/UpdateScrubList"
 	// ComplianceAddScrubListEntriesProcedure is the fully-qualified name of the Compliance's
 	// AddScrubListEntries RPC.
 	ComplianceAddScrubListEntriesProcedure = "/api.v0alpha.Compliance/AddScrubListEntries"
@@ -242,6 +245,12 @@ type ComplianceClient interface {
 	EnableRuleSet(context.Context, *connect_go.Request[v0alpha.EnableRuleSetReq]) (*connect_go.Response[v0alpha.EnableRuleSetRes], error)
 	DisableRuleSet(context.Context, *connect_go.Request[v0alpha.DisableRuleSetReq]) (*connect_go.Response[v0alpha.DisableRuleSetRes], error)
 	CreateScrubList(context.Context, *connect_go.Request[v0alpha.CreateScrubListReq]) (*connect_go.Response[v0alpha.ScrubListRes], error)
+	// Updates a scrub list metadata
+	// The method will return an UpdateScrubListResponse.
+	// Required permissions:
+	//
+	//	PERMISSION_COMPLIANCE
+	UpdateScrubList(context.Context, *connect_go.Request[v0alpha.UpdateScrubListRequest]) (*connect_go.Response[v0alpha.UpdateScrubListResponse], error)
 	// Add entries to an existing scrub list defined by AddScrubListEntriesReq message.
 	// The method will return a ScrubListRes message that will
 	// contain the results.
@@ -558,6 +567,11 @@ func NewComplianceClient(httpClient connect_go.HTTPClient, baseURL string, opts 
 			baseURL+ComplianceCreateScrubListProcedure,
 			opts...,
 		),
+		updateScrubList: connect_go.NewClient[v0alpha.UpdateScrubListRequest, v0alpha.UpdateScrubListResponse](
+			httpClient,
+			baseURL+ComplianceUpdateScrubListProcedure,
+			opts...,
+		),
 		addScrubListEntries: connect_go.NewClient[v0alpha.AddScrubListEntriesReq, v0alpha.ScrubListRes](
 			httpClient,
 			baseURL+ComplianceAddScrubListEntriesProcedure,
@@ -849,6 +863,7 @@ type complianceClient struct {
 	enableRuleSet                  *connect_go.Client[v0alpha.EnableRuleSetReq, v0alpha.EnableRuleSetRes]
 	disableRuleSet                 *connect_go.Client[v0alpha.DisableRuleSetReq, v0alpha.DisableRuleSetRes]
 	createScrubList                *connect_go.Client[v0alpha.CreateScrubListReq, v0alpha.ScrubListRes]
+	updateScrubList                *connect_go.Client[v0alpha.UpdateScrubListRequest, v0alpha.UpdateScrubListResponse]
 	addScrubListEntries            *connect_go.Client[v0alpha.AddScrubListEntriesReq, v0alpha.ScrubListRes]
 	updateScrubEntry               *connect_go.Client[v0alpha.UpdateScrubEntryReq, v0alpha.UpdateScrubEntryRes]
 	deleteScrubListEntries         *connect_go.Client[v0alpha.DeleteScrubListEntriesReq, v0alpha.ScrubListRes]
@@ -959,6 +974,11 @@ func (c *complianceClient) DisableRuleSet(ctx context.Context, req *connect_go.R
 // CreateScrubList calls api.v0alpha.Compliance.CreateScrubList.
 func (c *complianceClient) CreateScrubList(ctx context.Context, req *connect_go.Request[v0alpha.CreateScrubListReq]) (*connect_go.Response[v0alpha.ScrubListRes], error) {
 	return c.createScrubList.CallUnary(ctx, req)
+}
+
+// UpdateScrubList calls api.v0alpha.Compliance.UpdateScrubList.
+func (c *complianceClient) UpdateScrubList(ctx context.Context, req *connect_go.Request[v0alpha.UpdateScrubListRequest]) (*connect_go.Response[v0alpha.UpdateScrubListResponse], error) {
+	return c.updateScrubList.CallUnary(ctx, req)
 }
 
 // AddScrubListEntries calls api.v0alpha.Compliance.AddScrubListEntries.
@@ -1249,6 +1269,12 @@ type ComplianceHandler interface {
 	EnableRuleSet(context.Context, *connect_go.Request[v0alpha.EnableRuleSetReq]) (*connect_go.Response[v0alpha.EnableRuleSetRes], error)
 	DisableRuleSet(context.Context, *connect_go.Request[v0alpha.DisableRuleSetReq]) (*connect_go.Response[v0alpha.DisableRuleSetRes], error)
 	CreateScrubList(context.Context, *connect_go.Request[v0alpha.CreateScrubListReq]) (*connect_go.Response[v0alpha.ScrubListRes], error)
+	// Updates a scrub list metadata
+	// The method will return an UpdateScrubListResponse.
+	// Required permissions:
+	//
+	//	PERMISSION_COMPLIANCE
+	UpdateScrubList(context.Context, *connect_go.Request[v0alpha.UpdateScrubListRequest]) (*connect_go.Response[v0alpha.UpdateScrubListResponse], error)
 	// Add entries to an existing scrub list defined by AddScrubListEntriesReq message.
 	// The method will return a ScrubListRes message that will
 	// contain the results.
@@ -1561,6 +1587,11 @@ func NewComplianceHandler(svc ComplianceHandler, opts ...connect_go.HandlerOptio
 		svc.CreateScrubList,
 		opts...,
 	)
+	complianceUpdateScrubListHandler := connect_go.NewUnaryHandler(
+		ComplianceUpdateScrubListProcedure,
+		svc.UpdateScrubList,
+		opts...,
+	)
 	complianceAddScrubListEntriesHandler := connect_go.NewUnaryHandler(
 		ComplianceAddScrubListEntriesProcedure,
 		svc.AddScrubListEntries,
@@ -1860,6 +1891,8 @@ func NewComplianceHandler(svc ComplianceHandler, opts ...connect_go.HandlerOptio
 			complianceDisableRuleSetHandler.ServeHTTP(w, r)
 		case ComplianceCreateScrubListProcedure:
 			complianceCreateScrubListHandler.ServeHTTP(w, r)
+		case ComplianceUpdateScrubListProcedure:
+			complianceUpdateScrubListHandler.ServeHTTP(w, r)
 		case ComplianceAddScrubListEntriesProcedure:
 			complianceAddScrubListEntriesHandler.ServeHTTP(w, r)
 		case ComplianceUpdateScrubEntryProcedure:
@@ -2021,6 +2054,10 @@ func (UnimplementedComplianceHandler) DisableRuleSet(context.Context, *connect_g
 
 func (UnimplementedComplianceHandler) CreateScrubList(context.Context, *connect_go.Request[v0alpha.CreateScrubListReq]) (*connect_go.Response[v0alpha.ScrubListRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Compliance.CreateScrubList is not implemented"))
+}
+
+func (UnimplementedComplianceHandler) UpdateScrubList(context.Context, *connect_go.Request[v0alpha.UpdateScrubListRequest]) (*connect_go.Response[v0alpha.UpdateScrubListResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Compliance.UpdateScrubList is not implemented"))
 }
 
 func (UnimplementedComplianceHandler) AddScrubListEntries(context.Context, *connect_go.Request[v0alpha.AddScrubListEntriesReq]) (*connect_go.Response[v0alpha.ScrubListRes], error) {
