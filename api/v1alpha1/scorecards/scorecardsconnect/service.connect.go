@@ -284,7 +284,9 @@ type ScorecardsClient interface {
 	GetAutoEvaluation(context.Context, *connect_go.Request[scorecards.GetAutoEvaluationRequest]) (*connect_go.Response[scorecards.GetAutoEvaluationResponse], error)
 	// ListAutoEvaluations gets a list of auto evaluations
 	ListAutoEvaluations(context.Context, *connect_go.Request[scorecards.ListAutoEvaluationsRequest]) (*connect_go.Response[scorecards.ListAutoEvaluationsResponse], error)
-	// StreamAutoEvaluations streams a list of auto evaluations
+	// DEPRECATED. Use ListAutoEvaluations.
+	//
+	// Deprecated: do not use.
 	StreamAutoEvaluations(context.Context, *connect_go.Request[scorecards.StreamAutoEvaluationsRequest]) (*connect_go.ServerStreamForClient[scorecards.StreamAutoEvaluationsResponse], error)
 	// DeleteAutoEvaluation deletes an auto evaluations
 	DeleteAutoEvaluation(context.Context, *connect_go.Request[scorecards.DeleteAutoEvaluationRequest]) (*connect_go.Response[scorecards.DeleteAutoEvaluationResponse], error)
@@ -870,6 +872,8 @@ func (c *scorecardsClient) ListAutoEvaluations(ctx context.Context, req *connect
 }
 
 // StreamAutoEvaluations calls api.v1alpha1.scorecards.Scorecards.StreamAutoEvaluations.
+//
+// Deprecated: do not use.
 func (c *scorecardsClient) StreamAutoEvaluations(ctx context.Context, req *connect_go.Request[scorecards.StreamAutoEvaluationsRequest]) (*connect_go.ServerStreamForClient[scorecards.StreamAutoEvaluationsResponse], error) {
 	return c.streamAutoEvaluations.CallServerStream(ctx, req)
 }
@@ -1011,7 +1015,9 @@ type ScorecardsHandler interface {
 	GetAutoEvaluation(context.Context, *connect_go.Request[scorecards.GetAutoEvaluationRequest]) (*connect_go.Response[scorecards.GetAutoEvaluationResponse], error)
 	// ListAutoEvaluations gets a list of auto evaluations
 	ListAutoEvaluations(context.Context, *connect_go.Request[scorecards.ListAutoEvaluationsRequest]) (*connect_go.Response[scorecards.ListAutoEvaluationsResponse], error)
-	// StreamAutoEvaluations streams a list of auto evaluations
+	// DEPRECATED. Use ListAutoEvaluations.
+	//
+	// Deprecated: do not use.
 	StreamAutoEvaluations(context.Context, *connect_go.Request[scorecards.StreamAutoEvaluationsRequest], *connect_go.ServerStream[scorecards.StreamAutoEvaluationsResponse]) error
 	// DeleteAutoEvaluation deletes an auto evaluations
 	DeleteAutoEvaluation(context.Context, *connect_go.Request[scorecards.DeleteAutoEvaluationRequest]) (*connect_go.Response[scorecards.DeleteAutoEvaluationResponse], error)

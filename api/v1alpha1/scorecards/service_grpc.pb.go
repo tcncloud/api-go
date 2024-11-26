@@ -168,7 +168,8 @@ type ScorecardsClient interface {
 	GetAutoEvaluation(ctx context.Context, in *GetAutoEvaluationRequest, opts ...grpc.CallOption) (*GetAutoEvaluationResponse, error)
 	// ListAutoEvaluations gets a list of auto evaluations
 	ListAutoEvaluations(ctx context.Context, in *ListAutoEvaluationsRequest, opts ...grpc.CallOption) (*ListAutoEvaluationsResponse, error)
-	// StreamAutoEvaluations streams a list of auto evaluations
+	// Deprecated: Do not use.
+	// DEPRECATED. Use ListAutoEvaluations.
 	StreamAutoEvaluations(ctx context.Context, in *StreamAutoEvaluationsRequest, opts ...grpc.CallOption) (Scorecards_StreamAutoEvaluationsClient, error)
 	// DeleteAutoEvaluation deletes an auto evaluations
 	DeleteAutoEvaluation(ctx context.Context, in *DeleteAutoEvaluationRequest, opts ...grpc.CallOption) (*DeleteAutoEvaluationResponse, error)
@@ -639,6 +640,7 @@ func (c *scorecardsClient) ListAutoEvaluations(ctx context.Context, in *ListAuto
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *scorecardsClient) StreamAutoEvaluations(ctx context.Context, in *StreamAutoEvaluationsRequest, opts ...grpc.CallOption) (Scorecards_StreamAutoEvaluationsClient, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &Scorecards_ServiceDesc.Streams[0], Scorecards_StreamAutoEvaluations_FullMethodName, cOpts...)
@@ -855,7 +857,8 @@ type ScorecardsServer interface {
 	GetAutoEvaluation(context.Context, *GetAutoEvaluationRequest) (*GetAutoEvaluationResponse, error)
 	// ListAutoEvaluations gets a list of auto evaluations
 	ListAutoEvaluations(context.Context, *ListAutoEvaluationsRequest) (*ListAutoEvaluationsResponse, error)
-	// StreamAutoEvaluations streams a list of auto evaluations
+	// Deprecated: Do not use.
+	// DEPRECATED. Use ListAutoEvaluations.
 	StreamAutoEvaluations(*StreamAutoEvaluationsRequest, Scorecards_StreamAutoEvaluationsServer) error
 	// DeleteAutoEvaluation deletes an auto evaluations
 	DeleteAutoEvaluation(context.Context, *DeleteAutoEvaluationRequest) (*DeleteAutoEvaluationResponse, error)

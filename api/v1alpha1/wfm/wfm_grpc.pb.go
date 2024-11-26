@@ -70,6 +70,7 @@ const (
 	WFM_ListRegressionTemplates_FullMethodName                          = "/api.v1alpha1.wfm.WFM/ListRegressionTemplates"
 	WFM_ListForecastIntervalsForSkillProfile_FullMethodName             = "/api.v1alpha1.wfm.WFM/ListForecastIntervalsForSkillProfile"
 	WFM_ListForecastIntervals_FullMethodName                            = "/api.v1alpha1.wfm.WFM/ListForecastIntervals"
+	WFM_ListForecastIntervalsV2_FullMethodName                          = "/api.v1alpha1.wfm.WFM/ListForecastIntervalsV2"
 	WFM_BuildRegressionForecastByInterval_FullMethodName                = "/api.v1alpha1.wfm.WFM/BuildRegressionForecastByInterval"
 	WFM_BuildRegressionForecastByIntervalWithStats_FullMethodName       = "/api.v1alpha1.wfm.WFM/BuildRegressionForecastByIntervalWithStats"
 	WFM_ListCallProfileTemplates_FullMethodName                         = "/api.v1alpha1.wfm.WFM/ListCallProfileTemplates"
@@ -512,6 +513,11 @@ type WFMClient interface {
 	//   - grpc.Invalid: the @skill_profile_category in the request is invalid.
 	//   - grpc.Internal: error occurs when getting the forecast data intervals.
 	ListForecastIntervals(ctx context.Context, in *ListForecastIntervalsReq, opts ...grpc.CallOption) (WFM_ListForecastIntervalsClient, error)
+	// Gets the forecast data intervals for the given @skill_profile_category.
+	// Errors:
+	//   - grpc.Invalid: the @skill_profile_category in the request is invalid.
+	//   - grpc.Internal: error occurs when getting the forecast data intervals.
+	ListForecastIntervalsV2(ctx context.Context, in *ListForecastIntervalsV2Request, opts ...grpc.CallOption) (*ListForecastIntervalsV2Response, error)
 	// Generates a regression forecast using the provided @regression_template.
 	// It will generate forecast intervals for the skill profiles sids in @skill_profile_sids_to_forecast.
 	// It will use the client's saved forecasting test range as the start datetime and the forecast range as the end datetime of the forecasted data.
@@ -2407,6 +2413,16 @@ func (x *wFMListForecastIntervalsClient) Recv() (*CallDataByInterval, error) {
 		return nil, err
 	}
 	return m, nil
+}
+
+func (c *wFMClient) ListForecastIntervalsV2(ctx context.Context, in *ListForecastIntervalsV2Request, opts ...grpc.CallOption) (*ListForecastIntervalsV2Response, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListForecastIntervalsV2Response)
+	err := c.cc.Invoke(ctx, WFM_ListForecastIntervalsV2_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *wFMClient) BuildRegressionForecastByInterval(ctx context.Context, in *BuildRegressionForecastByIntervalReq, opts ...grpc.CallOption) (WFM_BuildRegressionForecastByIntervalClient, error) {
@@ -4507,6 +4523,11 @@ type WFMServer interface {
 	//   - grpc.Invalid: the @skill_profile_category in the request is invalid.
 	//   - grpc.Internal: error occurs when getting the forecast data intervals.
 	ListForecastIntervals(*ListForecastIntervalsReq, WFM_ListForecastIntervalsServer) error
+	// Gets the forecast data intervals for the given @skill_profile_category.
+	// Errors:
+	//   - grpc.Invalid: the @skill_profile_category in the request is invalid.
+	//   - grpc.Internal: error occurs when getting the forecast data intervals.
+	ListForecastIntervalsV2(context.Context, *ListForecastIntervalsV2Request) (*ListForecastIntervalsV2Response, error)
 	// Generates a regression forecast using the provided @regression_template.
 	// It will generate forecast intervals for the skill profiles sids in @skill_profile_sids_to_forecast.
 	// It will use the client's saved forecasting test range as the start datetime and the forecast range as the end datetime of the forecasted data.
@@ -6048,6 +6069,9 @@ func (UnimplementedWFMServer) ListForecastIntervalsForSkillProfile(*ListForecast
 func (UnimplementedWFMServer) ListForecastIntervals(*ListForecastIntervalsReq, WFM_ListForecastIntervalsServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListForecastIntervals not implemented")
 }
+func (UnimplementedWFMServer) ListForecastIntervalsV2(context.Context, *ListForecastIntervalsV2Request) (*ListForecastIntervalsV2Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListForecastIntervalsV2 not implemented")
+}
 func (UnimplementedWFMServer) BuildRegressionForecastByInterval(*BuildRegressionForecastByIntervalReq, WFM_BuildRegressionForecastByIntervalServer) error {
 	return status.Errorf(codes.Unimplemented, "method BuildRegressionForecastByInterval not implemented")
 }
@@ -7282,6 +7306,24 @@ type wFMListForecastIntervalsServer struct {
 
 func (x *wFMListForecastIntervalsServer) Send(m *CallDataByInterval) error {
 	return x.ServerStream.SendMsg(m)
+}
+
+func _WFM_ListForecastIntervalsV2_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListForecastIntervalsV2Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).ListForecastIntervalsV2(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_ListForecastIntervalsV2_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).ListForecastIntervalsV2(ctx, req.(*ListForecastIntervalsV2Request))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _WFM_BuildRegressionForecastByInterval_Handler(srv interface{}, stream grpc.ServerStream) error {
@@ -10650,6 +10692,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListRegressionTemplates",
 			Handler:    _WFM_ListRegressionTemplates_Handler,
+		},
+		{
+			MethodName: "ListForecastIntervalsV2",
+			Handler:    _WFM_ListForecastIntervalsV2_Handler,
 		},
 		{
 			MethodName: "ListCallProfileTemplates",

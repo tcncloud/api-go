@@ -152,6 +152,9 @@ const (
 	// WFMListForecastIntervalsProcedure is the fully-qualified name of the WFM's ListForecastIntervals
 	// RPC.
 	WFMListForecastIntervalsProcedure = "/api.v1alpha1.wfm.WFM/ListForecastIntervals"
+	// WFMListForecastIntervalsV2Procedure is the fully-qualified name of the WFM's
+	// ListForecastIntervalsV2 RPC.
+	WFMListForecastIntervalsV2Procedure = "/api.v1alpha1.wfm.WFM/ListForecastIntervalsV2"
 	// WFMBuildRegressionForecastByIntervalProcedure is the fully-qualified name of the WFM's
 	// BuildRegressionForecastByInterval RPC.
 	WFMBuildRegressionForecastByIntervalProcedure = "/api.v1alpha1.wfm.WFM/BuildRegressionForecastByInterval"
@@ -911,6 +914,11 @@ type WFMClient interface {
 	//   - grpc.Invalid: the @skill_profile_category in the request is invalid.
 	//   - grpc.Internal: error occurs when getting the forecast data intervals.
 	ListForecastIntervals(context.Context, *connect_go.Request[wfm.ListForecastIntervalsReq]) (*connect_go.ServerStreamForClient[wfm.CallDataByInterval], error)
+	// Gets the forecast data intervals for the given @skill_profile_category.
+	// Errors:
+	//   - grpc.Invalid: the @skill_profile_category in the request is invalid.
+	//   - grpc.Internal: error occurs when getting the forecast data intervals.
+	ListForecastIntervalsV2(context.Context, *connect_go.Request[wfm.ListForecastIntervalsV2Request]) (*connect_go.Response[wfm.ListForecastIntervalsV2Response], error)
 	// Generates a regression forecast using the provided @regression_template.
 	// It will generate forecast intervals for the skill profiles sids in @skill_profile_sids_to_forecast.
 	// It will use the client's saved forecasting test range as the start datetime and the forecast range as the end datetime of the forecasted data.
@@ -2529,6 +2537,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMListForecastIntervalsProcedure,
 			opts...,
 		),
+		listForecastIntervalsV2: connect_go.NewClient[wfm.ListForecastIntervalsV2Request, wfm.ListForecastIntervalsV2Response](
+			httpClient,
+			baseURL+WFMListForecastIntervalsV2Procedure,
+			opts...,
+		),
 		buildRegressionForecastByInterval: connect_go.NewClient[wfm.BuildRegressionForecastByIntervalReq, wfm.CallDataByInterval](
 			httpClient,
 			baseURL+WFMBuildRegressionForecastByIntervalProcedure,
@@ -3466,6 +3479,7 @@ type wFMClient struct {
 	listRegressionTemplates                          *connect_go.Client[wfm.ListRegressionTemplatesReq, wfm.ListRegressionTemplatesRes]
 	listForecastIntervalsForSkillProfile             *connect_go.Client[wfm.ListForecastIntervalsForSkillProfileReq, wfm.CallDataByInterval]
 	listForecastIntervals                            *connect_go.Client[wfm.ListForecastIntervalsReq, wfm.CallDataByInterval]
+	listForecastIntervalsV2                          *connect_go.Client[wfm.ListForecastIntervalsV2Request, wfm.ListForecastIntervalsV2Response]
 	buildRegressionForecastByInterval                *connect_go.Client[wfm.BuildRegressionForecastByIntervalReq, wfm.CallDataByInterval]
 	buildRegressionForecastByIntervalWithStats       *connect_go.Client[wfm.BuildRegressionForecastByIntervalWithStatsReq, wfm.BuildRegressionForecastByIntervalWithStatsRes]
 	listCallProfileTemplates                         *connect_go.Client[wfm.ListCallProfileTemplatesReq, wfm.ListCallProfileTemplatesRes]
@@ -3846,6 +3860,11 @@ func (c *wFMClient) ListForecastIntervalsForSkillProfile(ctx context.Context, re
 // ListForecastIntervals calls api.v1alpha1.wfm.WFM.ListForecastIntervals.
 func (c *wFMClient) ListForecastIntervals(ctx context.Context, req *connect_go.Request[wfm.ListForecastIntervalsReq]) (*connect_go.ServerStreamForClient[wfm.CallDataByInterval], error) {
 	return c.listForecastIntervals.CallServerStream(ctx, req)
+}
+
+// ListForecastIntervalsV2 calls api.v1alpha1.wfm.WFM.ListForecastIntervalsV2.
+func (c *wFMClient) ListForecastIntervalsV2(ctx context.Context, req *connect_go.Request[wfm.ListForecastIntervalsV2Request]) (*connect_go.Response[wfm.ListForecastIntervalsV2Response], error) {
+	return c.listForecastIntervalsV2.CallUnary(ctx, req)
 }
 
 // BuildRegressionForecastByInterval calls api.v1alpha1.wfm.WFM.BuildRegressionForecastByInterval.
@@ -5024,6 +5043,11 @@ type WFMHandler interface {
 	//   - grpc.Invalid: the @skill_profile_category in the request is invalid.
 	//   - grpc.Internal: error occurs when getting the forecast data intervals.
 	ListForecastIntervals(context.Context, *connect_go.Request[wfm.ListForecastIntervalsReq], *connect_go.ServerStream[wfm.CallDataByInterval]) error
+	// Gets the forecast data intervals for the given @skill_profile_category.
+	// Errors:
+	//   - grpc.Invalid: the @skill_profile_category in the request is invalid.
+	//   - grpc.Internal: error occurs when getting the forecast data intervals.
+	ListForecastIntervalsV2(context.Context, *connect_go.Request[wfm.ListForecastIntervalsV2Request]) (*connect_go.Response[wfm.ListForecastIntervalsV2Response], error)
 	// Generates a regression forecast using the provided @regression_template.
 	// It will generate forecast intervals for the skill profiles sids in @skill_profile_sids_to_forecast.
 	// It will use the client's saved forecasting test range as the start datetime and the forecast range as the end datetime of the forecasted data.
@@ -6638,6 +6662,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.ListForecastIntervals,
 		opts...,
 	)
+	wFMListForecastIntervalsV2Handler := connect_go.NewUnaryHandler(
+		WFMListForecastIntervalsV2Procedure,
+		svc.ListForecastIntervalsV2,
+		opts...,
+	)
 	wFMBuildRegressionForecastByIntervalHandler := connect_go.NewServerStreamHandler(
 		WFMBuildRegressionForecastByIntervalProcedure,
 		svc.BuildRegressionForecastByInterval,
@@ -7609,6 +7638,8 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMListForecastIntervalsForSkillProfileHandler.ServeHTTP(w, r)
 		case WFMListForecastIntervalsProcedure:
 			wFMListForecastIntervalsHandler.ServeHTTP(w, r)
+		case WFMListForecastIntervalsV2Procedure:
+			wFMListForecastIntervalsV2Handler.ServeHTTP(w, r)
 		case WFMBuildRegressionForecastByIntervalProcedure:
 			wFMBuildRegressionForecastByIntervalHandler.ServeHTTP(w, r)
 		case WFMBuildRegressionForecastByIntervalWithStatsProcedure:
@@ -8122,6 +8153,10 @@ func (UnimplementedWFMHandler) ListForecastIntervalsForSkillProfile(context.Cont
 
 func (UnimplementedWFMHandler) ListForecastIntervals(context.Context, *connect_go.Request[wfm.ListForecastIntervalsReq], *connect_go.ServerStream[wfm.CallDataByInterval]) error {
 	return connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListForecastIntervals is not implemented"))
+}
+
+func (UnimplementedWFMHandler) ListForecastIntervalsV2(context.Context, *connect_go.Request[wfm.ListForecastIntervalsV2Request]) (*connect_go.Response[wfm.ListForecastIntervalsV2Response], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListForecastIntervalsV2 is not implemented"))
 }
 
 func (UnimplementedWFMHandler) BuildRegressionForecastByInterval(context.Context, *connect_go.Request[wfm.BuildRegressionForecastByIntervalReq], *connect_go.ServerStream[wfm.CallDataByInterval]) error {
