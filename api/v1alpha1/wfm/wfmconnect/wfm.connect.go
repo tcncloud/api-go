@@ -556,6 +556,9 @@ const (
 	// WFMListRealTimeManagementStatesProcedure is the fully-qualified name of the WFM's
 	// ListRealTimeManagementStates RPC.
 	WFMListRealTimeManagementStatesProcedure = "/api.v1alpha1.wfm.WFM/ListRealTimeManagementStates"
+	// WFMListAdherenceAgentStatesProcedure is the fully-qualified name of the WFM's
+	// ListAdherenceAgentStates RPC.
+	WFMListAdherenceAgentStatesProcedure = "/api.v1alpha1.wfm.WFM/ListAdherenceAgentStates"
 	// WFMUpsertRealTimeManagementStateColorProcedure is the fully-qualified name of the WFM's
 	// UpsertRealTimeManagementStateColor RPC.
 	WFMUpsertRealTimeManagementStateColorProcedure = "/api.v1alpha1.wfm.WFM/UpsertRealTimeManagementStateColor"
@@ -2108,6 +2111,14 @@ type WFMClient interface {
 	//   - grpc.Invalid: on invalid input.
 	//   - grpc.Internal: on unexpected error.
 	ListRealTimeManagementStates(context.Context, *connect_go.Request[wfm.ListRealTimeManagementStatesRequest]) (*connect_go.Response[wfm.ListRealTimeManagementStatesResponse], error)
+	// Gets the agent states for the given @wfm_agent_sids from the given @start_datetime to the @end_datetime
+	// or the current time if not set (start time not inclusive, end time inclusive).
+	// Agent states will be grouped by wfm_agent_sid and ordered by date in ascending order.
+	// If zero states are found for a given agent, it will not be included in the resulting map.
+	// Errors:
+	//   - grpc.Invalid: arguments in the request are invalid.
+	//   - grpc.Internal: error occurs when getting the states.
+	ListAdherenceAgentStates(context.Context, *connect_go.Request[wfm.ListAdherenceAgentStatesRequest]) (*connect_go.Response[wfm.ListAdherenceAgentStatesResponse], error)
 	// Sets the given @state to be associated with the given @rgba_color_id for the org sending the request.
 	// Errors:
 	//   - grpc.Internal: error upserting the real time management state color or returning the newly created state color.
@@ -3225,6 +3236,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMListRealTimeManagementStatesProcedure,
 			opts...,
 		),
+		listAdherenceAgentStates: connect_go.NewClient[wfm.ListAdherenceAgentStatesRequest, wfm.ListAdherenceAgentStatesResponse](
+			httpClient,
+			baseURL+WFMListAdherenceAgentStatesProcedure,
+			opts...,
+		),
 		upsertRealTimeManagementStateColor: connect_go.NewClient[wfm.UpsertRealTimeManagementStateColorRequest, wfm.UpsertRealTimeManagementStateColorResponse](
 			httpClient,
 			baseURL+WFMUpsertRealTimeManagementStateColorProcedure,
@@ -3559,6 +3575,7 @@ type wFMClient struct {
 	helloWorldWFMAdherence                           *connect_go.Client[wfm.HelloWorldWFMAdherenceRequest, wfm.HelloWorldWFMAdherenceResponse]
 	listAgentStatesForDay                            *connect_go.Client[wfm.ListAgentStatesForDayRequest, wfm.ListAgentStatesForDayResponse]
 	listRealTimeManagementStates                     *connect_go.Client[wfm.ListRealTimeManagementStatesRequest, wfm.ListRealTimeManagementStatesResponse]
+	listAdherenceAgentStates                         *connect_go.Client[wfm.ListAdherenceAgentStatesRequest, wfm.ListAdherenceAgentStatesResponse]
 	upsertRealTimeManagementStateColor               *connect_go.Client[wfm.UpsertRealTimeManagementStateColorRequest, wfm.UpsertRealTimeManagementStateColorResponse]
 	listRealTimeManagementStateColors                *connect_go.Client[wfm.ListRealTimeManagementStateColorsRequest, wfm.ListRealTimeManagementStateColorsResponse]
 	deleteRealTimeManagementStateColor               *connect_go.Client[wfm.DeleteRealTimeManagementStateColorRequest, wfm.DeleteRealTimeManagementStateColorResponse]
@@ -4534,6 +4551,11 @@ func (c *wFMClient) ListAgentStatesForDay(ctx context.Context, req *connect_go.R
 // ListRealTimeManagementStates calls api.v1alpha1.wfm.WFM.ListRealTimeManagementStates.
 func (c *wFMClient) ListRealTimeManagementStates(ctx context.Context, req *connect_go.Request[wfm.ListRealTimeManagementStatesRequest]) (*connect_go.Response[wfm.ListRealTimeManagementStatesResponse], error) {
 	return c.listRealTimeManagementStates.CallUnary(ctx, req)
+}
+
+// ListAdherenceAgentStates calls api.v1alpha1.wfm.WFM.ListAdherenceAgentStates.
+func (c *wFMClient) ListAdherenceAgentStates(ctx context.Context, req *connect_go.Request[wfm.ListAdherenceAgentStatesRequest]) (*connect_go.Response[wfm.ListAdherenceAgentStatesResponse], error) {
+	return c.listAdherenceAgentStates.CallUnary(ctx, req)
 }
 
 // UpsertRealTimeManagementStateColor calls api.v1alpha1.wfm.WFM.UpsertRealTimeManagementStateColor.
@@ -6158,6 +6180,14 @@ type WFMHandler interface {
 	//   - grpc.Invalid: on invalid input.
 	//   - grpc.Internal: on unexpected error.
 	ListRealTimeManagementStates(context.Context, *connect_go.Request[wfm.ListRealTimeManagementStatesRequest]) (*connect_go.Response[wfm.ListRealTimeManagementStatesResponse], error)
+	// Gets the agent states for the given @wfm_agent_sids from the given @start_datetime to the @end_datetime
+	// or the current time if not set (start time not inclusive, end time inclusive).
+	// Agent states will be grouped by wfm_agent_sid and ordered by date in ascending order.
+	// If zero states are found for a given agent, it will not be included in the resulting map.
+	// Errors:
+	//   - grpc.Invalid: arguments in the request are invalid.
+	//   - grpc.Internal: error occurs when getting the states.
+	ListAdherenceAgentStates(context.Context, *connect_go.Request[wfm.ListAdherenceAgentStatesRequest]) (*connect_go.Response[wfm.ListAdherenceAgentStatesResponse], error)
 	// Sets the given @state to be associated with the given @rgba_color_id for the org sending the request.
 	// Errors:
 	//   - grpc.Internal: error upserting the real time management state color or returning the newly created state color.
@@ -7271,6 +7301,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.ListRealTimeManagementStates,
 		opts...,
 	)
+	wFMListAdherenceAgentStatesHandler := connect_go.NewUnaryHandler(
+		WFMListAdherenceAgentStatesProcedure,
+		svc.ListAdherenceAgentStates,
+		opts...,
+	)
 	wFMUpsertRealTimeManagementStateColorHandler := connect_go.NewUnaryHandler(
 		WFMUpsertRealTimeManagementStateColorProcedure,
 		svc.UpsertRealTimeManagementStateColor,
@@ -7786,6 +7821,8 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMListAgentStatesForDayHandler.ServeHTTP(w, r)
 		case WFMListRealTimeManagementStatesProcedure:
 			wFMListRealTimeManagementStatesHandler.ServeHTTP(w, r)
+		case WFMListAdherenceAgentStatesProcedure:
+			wFMListAdherenceAgentStatesHandler.ServeHTTP(w, r)
 		case WFMUpsertRealTimeManagementStateColorProcedure:
 			wFMUpsertRealTimeManagementStateColorHandler.ServeHTTP(w, r)
 		case WFMListRealTimeManagementStateColorsProcedure:
@@ -8587,6 +8624,10 @@ func (UnimplementedWFMHandler) ListAgentStatesForDay(context.Context, *connect_g
 
 func (UnimplementedWFMHandler) ListRealTimeManagementStates(context.Context, *connect_go.Request[wfm.ListRealTimeManagementStatesRequest]) (*connect_go.Response[wfm.ListRealTimeManagementStatesResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListRealTimeManagementStates is not implemented"))
+}
+
+func (UnimplementedWFMHandler) ListAdherenceAgentStates(context.Context, *connect_go.Request[wfm.ListAdherenceAgentStatesRequest]) (*connect_go.Response[wfm.ListAdherenceAgentStatesResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListAdherenceAgentStates is not implemented"))
 }
 
 func (UnimplementedWFMHandler) UpsertRealTimeManagementStateColor(context.Context, *connect_go.Request[wfm.UpsertRealTimeManagementStateColorRequest]) (*connect_go.Response[wfm.UpsertRealTimeManagementStateColorResponse], error) {
