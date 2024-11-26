@@ -99,6 +99,8 @@ const (
 	WFM_ListCandidateSchedulingActivities_FullMethodName                = "/api.v1alpha1.wfm.WFM/ListCandidateSchedulingActivities"
 	WFM_ListSchedulingActivities_FullMethodName                         = "/api.v1alpha1.wfm.WFM/ListSchedulingActivities"
 	WFM_GetOnCallSchedulingActivity_FullMethodName                      = "/api.v1alpha1.wfm.WFM/GetOnCallSchedulingActivity"
+	WFM_CreateSchedulingActivityPauseCodes_FullMethodName               = "/api.v1alpha1.wfm.WFM/CreateSchedulingActivityPauseCodes"
+	WFM_DeleteSchedulingActivityPauseCodes_FullMethodName               = "/api.v1alpha1.wfm.WFM/DeleteSchedulingActivityPauseCodes"
 	WFM_ListPatternsForSchedulingActivityClassifications_FullMethodName = "/api.v1alpha1.wfm.WFM/ListPatternsForSchedulingActivityClassifications"
 	WFM_GetTimeOffSchedulingActivity_FullMethodName                     = "/api.v1alpha1.wfm.WFM/GetTimeOffSchedulingActivity"
 	WFM_CreateAgentGroup_FullMethodName                                 = "/api.v1alpha1.wfm.WFM/CreateAgentGroup"
@@ -751,6 +753,27 @@ type WFMClient interface {
 	//	-grpc.NotFound: the on call scheduling activity for the org is not found.
 	//	-grpc.Internal: error occurs when getting on call scheduling activity.
 	GetOnCallSchedulingActivity(ctx context.Context, in *GetOnCallSchedulingActivityReq, opts ...grpc.CallOption) (*GetOnCallSchedulingActivityRes, error)
+	// Creates the given @pause_codes for the given @scheduling_activity_sid.
+	// If a pause code already exists for that scheduling activity a new one won't be created.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the paremeters in the request are invalid.
+	//   - grpc.NotFound: the scheduling activity for the org is not found.
+	//   - grpc.Internal: error occurs when creating the pause codes.
+	CreateSchedulingActivityPauseCodes(ctx context.Context, in *CreateSchedulingActivityPauseCodesRequest, opts ...grpc.CallOption) (*CreateSchedulingActivityPauseCodesResponse, error)
+	// Deletes the given @pause_codes from the given @scheduling_activity_sid.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the paremeters in the request are invalid.
+	//   - grpc.NotFound: the scheduling activity for the org is not found.
+	//   - grpc.Internal: error occurs when deleting the pause codes.
+	DeleteSchedulingActivityPauseCodes(ctx context.Context, in *DeleteSchedulingActivityPauseCodesRequest, opts ...grpc.CallOption) (*DeleteSchedulingActivityPauseCodesResponse, error)
 	// Lists the Open Time and Agent Availability patterns for the given @parent_entity and @scheduling_activity_classifications for the org sending the request.
 	// Required permissions:
 	//
@@ -1719,6 +1742,7 @@ type WFMClient interface {
 	// or the current time if not set (start time not inclusive, end time inclusive).
 	// Agent states will be grouped by wfm_agent_sid and ordered by date in ascending order.
 	// If zero states are found for a given agent, it will not be included in the resulting map.
+	// It also returns the latest datetime amongst all the states returned.
 	// Errors:
 	//   - grpc.Invalid: arguments in the request are invalid.
 	//   - grpc.Internal: error occurs when getting the states.
@@ -2715,6 +2739,26 @@ func (c *wFMClient) GetOnCallSchedulingActivity(ctx context.Context, in *GetOnCa
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetOnCallSchedulingActivityRes)
 	err := c.cc.Invoke(ctx, WFM_GetOnCallSchedulingActivity_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) CreateSchedulingActivityPauseCodes(ctx context.Context, in *CreateSchedulingActivityPauseCodesRequest, opts ...grpc.CallOption) (*CreateSchedulingActivityPauseCodesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateSchedulingActivityPauseCodesResponse)
+	err := c.cc.Invoke(ctx, WFM_CreateSchedulingActivityPauseCodes_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) DeleteSchedulingActivityPauseCodes(ctx context.Context, in *DeleteSchedulingActivityPauseCodesRequest, opts ...grpc.CallOption) (*DeleteSchedulingActivityPauseCodesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteSchedulingActivityPauseCodesResponse)
+	err := c.cc.Invoke(ctx, WFM_DeleteSchedulingActivityPauseCodes_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -4704,6 +4748,27 @@ type WFMServer interface {
 	//	-grpc.NotFound: the on call scheduling activity for the org is not found.
 	//	-grpc.Internal: error occurs when getting on call scheduling activity.
 	GetOnCallSchedulingActivity(context.Context, *GetOnCallSchedulingActivityReq) (*GetOnCallSchedulingActivityRes, error)
+	// Creates the given @pause_codes for the given @scheduling_activity_sid.
+	// If a pause code already exists for that scheduling activity a new one won't be created.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the paremeters in the request are invalid.
+	//   - grpc.NotFound: the scheduling activity for the org is not found.
+	//   - grpc.Internal: error occurs when creating the pause codes.
+	CreateSchedulingActivityPauseCodes(context.Context, *CreateSchedulingActivityPauseCodesRequest) (*CreateSchedulingActivityPauseCodesResponse, error)
+	// Deletes the given @pause_codes from the given @scheduling_activity_sid.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Invalid: the paremeters in the request are invalid.
+	//   - grpc.NotFound: the scheduling activity for the org is not found.
+	//   - grpc.Internal: error occurs when deleting the pause codes.
+	DeleteSchedulingActivityPauseCodes(context.Context, *DeleteSchedulingActivityPauseCodesRequest) (*DeleteSchedulingActivityPauseCodesResponse, error)
 	// Lists the Open Time and Agent Availability patterns for the given @parent_entity and @scheduling_activity_classifications for the org sending the request.
 	// Required permissions:
 	//
@@ -5672,6 +5737,7 @@ type WFMServer interface {
 	// or the current time if not set (start time not inclusive, end time inclusive).
 	// Agent states will be grouped by wfm_agent_sid and ordered by date in ascending order.
 	// If zero states are found for a given agent, it will not be included in the resulting map.
+	// It also returns the latest datetime amongst all the states returned.
 	// Errors:
 	//   - grpc.Invalid: arguments in the request are invalid.
 	//   - grpc.Internal: error occurs when getting the states.
@@ -6068,6 +6134,12 @@ func (UnimplementedWFMServer) ListSchedulingActivities(context.Context, *ListSch
 }
 func (UnimplementedWFMServer) GetOnCallSchedulingActivity(context.Context, *GetOnCallSchedulingActivityReq) (*GetOnCallSchedulingActivityRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOnCallSchedulingActivity not implemented")
+}
+func (UnimplementedWFMServer) CreateSchedulingActivityPauseCodes(context.Context, *CreateSchedulingActivityPauseCodesRequest) (*CreateSchedulingActivityPauseCodesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateSchedulingActivityPauseCodes not implemented")
+}
+func (UnimplementedWFMServer) DeleteSchedulingActivityPauseCodes(context.Context, *DeleteSchedulingActivityPauseCodesRequest) (*DeleteSchedulingActivityPauseCodesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteSchedulingActivityPauseCodes not implemented")
 }
 func (UnimplementedWFMServer) ListPatternsForSchedulingActivityClassifications(context.Context, *ListPatternsForSchedulingActivityClassificationsRequest) (*ListPatternsForSchedulingActivityClassificationsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListPatternsForSchedulingActivityClassifications not implemented")
@@ -7736,6 +7808,42 @@ func _WFM_GetOnCallSchedulingActivity_Handler(srv interface{}, ctx context.Conte
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WFMServer).GetOnCallSchedulingActivity(ctx, req.(*GetOnCallSchedulingActivityReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_CreateSchedulingActivityPauseCodes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateSchedulingActivityPauseCodesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).CreateSchedulingActivityPauseCodes(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_CreateSchedulingActivityPauseCodes_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).CreateSchedulingActivityPauseCodes(ctx, req.(*CreateSchedulingActivityPauseCodesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_DeleteSchedulingActivityPauseCodes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteSchedulingActivityPauseCodesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).DeleteSchedulingActivityPauseCodes(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_DeleteSchedulingActivityPauseCodes_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).DeleteSchedulingActivityPauseCodes(ctx, req.(*DeleteSchedulingActivityPauseCodesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -10650,6 +10758,14 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetOnCallSchedulingActivity",
 			Handler:    _WFM_GetOnCallSchedulingActivity_Handler,
+		},
+		{
+			MethodName: "CreateSchedulingActivityPauseCodes",
+			Handler:    _WFM_CreateSchedulingActivityPauseCodes_Handler,
+		},
+		{
+			MethodName: "DeleteSchedulingActivityPauseCodes",
+			Handler:    _WFM_DeleteSchedulingActivityPauseCodes_Handler,
 		},
 		{
 			MethodName: "ListPatternsForSchedulingActivityClassifications",
