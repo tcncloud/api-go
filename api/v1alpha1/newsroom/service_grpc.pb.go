@@ -19,18 +19,27 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	NewsroomAPI_CreateNewsArticle_FullMethodName        = "/api.v1alpha1.newsroom.NewsroomAPI/CreateNewsArticle"
-	NewsroomAPI_ListNewsArticles_FullMethodName         = "/api.v1alpha1.newsroom.NewsroomAPI/ListNewsArticles"
-	NewsroomAPI_GetNewsArticleById_FullMethodName       = "/api.v1alpha1.newsroom.NewsroomAPI/GetNewsArticleById"
-	NewsroomAPI_UpdateNewsArticle_FullMethodName        = "/api.v1alpha1.newsroom.NewsroomAPI/UpdateNewsArticle"
-	NewsroomAPI_CreatePublishedArticle_FullMethodName   = "/api.v1alpha1.newsroom.NewsroomAPI/CreatePublishedArticle"
-	NewsroomAPI_ListPublishedArticles_FullMethodName    = "/api.v1alpha1.newsroom.NewsroomAPI/ListPublishedArticles"
-	NewsroomAPI_GetPublishedArticleById_FullMethodName  = "/api.v1alpha1.newsroom.NewsroomAPI/GetPublishedArticleById"
-	NewsroomAPI_UserActivity_FullMethodName             = "/api.v1alpha1.newsroom.NewsroomAPI/UserActivity"
-	NewsroomAPI_GetNewsForUser_FullMethodName           = "/api.v1alpha1.newsroom.NewsroomAPI/GetNewsForUser"
-	NewsroomAPI_StoreNewsArticleImage_FullMethodName    = "/api.v1alpha1.newsroom.NewsroomAPI/StoreNewsArticleImage"
-	NewsroomAPI_ListImagesForNewsArticle_FullMethodName = "/api.v1alpha1.newsroom.NewsroomAPI/ListImagesForNewsArticle"
-	NewsroomAPI_UploadNewsArticleImage_FullMethodName   = "/api.v1alpha1.newsroom.NewsroomAPI/UploadNewsArticleImage"
+	NewsroomAPI_CreateNewsArticle_FullMethodName             = "/api.v1alpha1.newsroom.NewsroomAPI/CreateNewsArticle"
+	NewsroomAPI_ListNewsArticles_FullMethodName              = "/api.v1alpha1.newsroom.NewsroomAPI/ListNewsArticles"
+	NewsroomAPI_GetNewsArticleById_FullMethodName            = "/api.v1alpha1.newsroom.NewsroomAPI/GetNewsArticleById"
+	NewsroomAPI_UpdateNewsArticle_FullMethodName             = "/api.v1alpha1.newsroom.NewsroomAPI/UpdateNewsArticle"
+	NewsroomAPI_CreatePublishedArticle_FullMethodName        = "/api.v1alpha1.newsroom.NewsroomAPI/CreatePublishedArticle"
+	NewsroomAPI_ListPublishedArticles_FullMethodName         = "/api.v1alpha1.newsroom.NewsroomAPI/ListPublishedArticles"
+	NewsroomAPI_GetPublishedArticleById_FullMethodName       = "/api.v1alpha1.newsroom.NewsroomAPI/GetPublishedArticleById"
+	NewsroomAPI_UserActivity_FullMethodName                  = "/api.v1alpha1.newsroom.NewsroomAPI/UserActivity"
+	NewsroomAPI_GetNewsForUser_FullMethodName                = "/api.v1alpha1.newsroom.NewsroomAPI/GetNewsForUser"
+	NewsroomAPI_StoreNewsArticleImage_FullMethodName         = "/api.v1alpha1.newsroom.NewsroomAPI/StoreNewsArticleImage"
+	NewsroomAPI_ListImagesForNewsArticle_FullMethodName      = "/api.v1alpha1.newsroom.NewsroomAPI/ListImagesForNewsArticle"
+	NewsroomAPI_UploadNewsArticleImage_FullMethodName        = "/api.v1alpha1.newsroom.NewsroomAPI/UploadNewsArticleImage"
+	NewsroomAPI_CreateClientArticle_FullMethodName           = "/api.v1alpha1.newsroom.NewsroomAPI/CreateClientArticle"
+	NewsroomAPI_UpdateClientArticle_FullMethodName           = "/api.v1alpha1.newsroom.NewsroomAPI/UpdateClientArticle"
+	NewsroomAPI_ListClientArticles_FullMethodName            = "/api.v1alpha1.newsroom.NewsroomAPI/ListClientArticles"
+	NewsroomAPI_CreatePublishedClientArticle_FullMethodName  = "/api.v1alpha1.newsroom.NewsroomAPI/CreatePublishedClientArticle"
+	NewsroomAPI_GetPublishedClientArticleById_FullMethodName = "/api.v1alpha1.newsroom.NewsroomAPI/GetPublishedClientArticleById"
+	NewsroomAPI_StoreClientArticleImage_FullMethodName       = "/api.v1alpha1.newsroom.NewsroomAPI/StoreClientArticleImage"
+	NewsroomAPI_ListImagesForClientArticle_FullMethodName    = "/api.v1alpha1.newsroom.NewsroomAPI/ListImagesForClientArticle"
+	NewsroomAPI_UploadClientArticleImage_FullMethodName      = "/api.v1alpha1.newsroom.NewsroomAPI/UploadClientArticleImage"
+	NewsroomAPI_ListPublishedClientArticles_FullMethodName   = "/api.v1alpha1.newsroom.NewsroomAPI/ListPublishedClientArticles"
 )
 
 // NewsroomAPIClient is the client API for NewsroomAPI service.
@@ -65,6 +74,24 @@ type NewsroomAPIClient interface {
 	ListImagesForNewsArticle(ctx context.Context, in *ListImagesForNewsArticleRequest, opts ...grpc.CallOption) (*ListImagesForNewsArticleResponse, error)
 	// upload newsroom image for the news article
 	UploadNewsArticleImage(ctx context.Context, in *UploadNewsArticleImageRequest, opts ...grpc.CallOption) (*UploadNewsArticleImageResponse, error)
+	// create a client managed news article
+	CreateClientArticle(ctx context.Context, in *CreateClientArticleRequest, opts ...grpc.CallOption) (*CreateClientArticleResponse, error)
+	// update a client managed news article
+	UpdateClientArticle(ctx context.Context, in *UpdateClientArticleRequest, opts ...grpc.CallOption) (*UpdateClientArticleResponse, error)
+	// list client managed news articles
+	ListClientArticles(ctx context.Context, in *ListClientArticlesRequest, opts ...grpc.CallOption) (*ListClientArticlesResponse, error)
+	// create published client article
+	CreatePublishedClientArticle(ctx context.Context, in *CreatePublishedClientArticleRequest, opts ...grpc.CallOption) (*CreatePublishedClientArticleResponse, error)
+	// get published client article details by the id
+	GetPublishedClientArticleById(ctx context.Context, in *GetPublishedClientArticleByIdRequest, opts ...grpc.CallOption) (*GetPublishedClientArticleByIdResponse, error)
+	// upload newsroom image for the client news article
+	StoreClientArticleImage(ctx context.Context, in *StoreClientArticleImageRequest, opts ...grpc.CallOption) (*StoreClientArticleImageResponse, error)
+	// list newsroom client images
+	ListImagesForClientArticle(ctx context.Context, in *ListImagesForClientArticleRequest, opts ...grpc.CallOption) (*ListImagesForClientArticleResponse, error)
+	// upload newsroom image for the client article
+	UploadClientArticleImage(ctx context.Context, in *UploadClientArticleImageRequest, opts ...grpc.CallOption) (*UploadClientArticleImageResponse, error)
+	// list published client articles
+	ListPublishedClientArticles(ctx context.Context, in *ListPublishedClientArticlesRequest, opts ...grpc.CallOption) (*ListPublishedClientArticlesResponse, error)
 }
 
 type newsroomAPIClient struct {
@@ -195,6 +222,96 @@ func (c *newsroomAPIClient) UploadNewsArticleImage(ctx context.Context, in *Uplo
 	return out, nil
 }
 
+func (c *newsroomAPIClient) CreateClientArticle(ctx context.Context, in *CreateClientArticleRequest, opts ...grpc.CallOption) (*CreateClientArticleResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateClientArticleResponse)
+	err := c.cc.Invoke(ctx, NewsroomAPI_CreateClientArticle_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *newsroomAPIClient) UpdateClientArticle(ctx context.Context, in *UpdateClientArticleRequest, opts ...grpc.CallOption) (*UpdateClientArticleResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateClientArticleResponse)
+	err := c.cc.Invoke(ctx, NewsroomAPI_UpdateClientArticle_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *newsroomAPIClient) ListClientArticles(ctx context.Context, in *ListClientArticlesRequest, opts ...grpc.CallOption) (*ListClientArticlesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListClientArticlesResponse)
+	err := c.cc.Invoke(ctx, NewsroomAPI_ListClientArticles_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *newsroomAPIClient) CreatePublishedClientArticle(ctx context.Context, in *CreatePublishedClientArticleRequest, opts ...grpc.CallOption) (*CreatePublishedClientArticleResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreatePublishedClientArticleResponse)
+	err := c.cc.Invoke(ctx, NewsroomAPI_CreatePublishedClientArticle_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *newsroomAPIClient) GetPublishedClientArticleById(ctx context.Context, in *GetPublishedClientArticleByIdRequest, opts ...grpc.CallOption) (*GetPublishedClientArticleByIdResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetPublishedClientArticleByIdResponse)
+	err := c.cc.Invoke(ctx, NewsroomAPI_GetPublishedClientArticleById_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *newsroomAPIClient) StoreClientArticleImage(ctx context.Context, in *StoreClientArticleImageRequest, opts ...grpc.CallOption) (*StoreClientArticleImageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(StoreClientArticleImageResponse)
+	err := c.cc.Invoke(ctx, NewsroomAPI_StoreClientArticleImage_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *newsroomAPIClient) ListImagesForClientArticle(ctx context.Context, in *ListImagesForClientArticleRequest, opts ...grpc.CallOption) (*ListImagesForClientArticleResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListImagesForClientArticleResponse)
+	err := c.cc.Invoke(ctx, NewsroomAPI_ListImagesForClientArticle_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *newsroomAPIClient) UploadClientArticleImage(ctx context.Context, in *UploadClientArticleImageRequest, opts ...grpc.CallOption) (*UploadClientArticleImageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UploadClientArticleImageResponse)
+	err := c.cc.Invoke(ctx, NewsroomAPI_UploadClientArticleImage_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *newsroomAPIClient) ListPublishedClientArticles(ctx context.Context, in *ListPublishedClientArticlesRequest, opts ...grpc.CallOption) (*ListPublishedClientArticlesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListPublishedClientArticlesResponse)
+	err := c.cc.Invoke(ctx, NewsroomAPI_ListPublishedClientArticles_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // NewsroomAPIServer is the server API for NewsroomAPI service.
 // All implementations must embed UnimplementedNewsroomAPIServer
 // for forward compatibility.
@@ -227,6 +344,24 @@ type NewsroomAPIServer interface {
 	ListImagesForNewsArticle(context.Context, *ListImagesForNewsArticleRequest) (*ListImagesForNewsArticleResponse, error)
 	// upload newsroom image for the news article
 	UploadNewsArticleImage(context.Context, *UploadNewsArticleImageRequest) (*UploadNewsArticleImageResponse, error)
+	// create a client managed news article
+	CreateClientArticle(context.Context, *CreateClientArticleRequest) (*CreateClientArticleResponse, error)
+	// update a client managed news article
+	UpdateClientArticle(context.Context, *UpdateClientArticleRequest) (*UpdateClientArticleResponse, error)
+	// list client managed news articles
+	ListClientArticles(context.Context, *ListClientArticlesRequest) (*ListClientArticlesResponse, error)
+	// create published client article
+	CreatePublishedClientArticle(context.Context, *CreatePublishedClientArticleRequest) (*CreatePublishedClientArticleResponse, error)
+	// get published client article details by the id
+	GetPublishedClientArticleById(context.Context, *GetPublishedClientArticleByIdRequest) (*GetPublishedClientArticleByIdResponse, error)
+	// upload newsroom image for the client news article
+	StoreClientArticleImage(context.Context, *StoreClientArticleImageRequest) (*StoreClientArticleImageResponse, error)
+	// list newsroom client images
+	ListImagesForClientArticle(context.Context, *ListImagesForClientArticleRequest) (*ListImagesForClientArticleResponse, error)
+	// upload newsroom image for the client article
+	UploadClientArticleImage(context.Context, *UploadClientArticleImageRequest) (*UploadClientArticleImageResponse, error)
+	// list published client articles
+	ListPublishedClientArticles(context.Context, *ListPublishedClientArticlesRequest) (*ListPublishedClientArticlesResponse, error)
 	mustEmbedUnimplementedNewsroomAPIServer()
 }
 
@@ -272,6 +407,33 @@ func (UnimplementedNewsroomAPIServer) ListImagesForNewsArticle(context.Context, 
 }
 func (UnimplementedNewsroomAPIServer) UploadNewsArticleImage(context.Context, *UploadNewsArticleImageRequest) (*UploadNewsArticleImageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UploadNewsArticleImage not implemented")
+}
+func (UnimplementedNewsroomAPIServer) CreateClientArticle(context.Context, *CreateClientArticleRequest) (*CreateClientArticleResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateClientArticle not implemented")
+}
+func (UnimplementedNewsroomAPIServer) UpdateClientArticle(context.Context, *UpdateClientArticleRequest) (*UpdateClientArticleResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateClientArticle not implemented")
+}
+func (UnimplementedNewsroomAPIServer) ListClientArticles(context.Context, *ListClientArticlesRequest) (*ListClientArticlesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListClientArticles not implemented")
+}
+func (UnimplementedNewsroomAPIServer) CreatePublishedClientArticle(context.Context, *CreatePublishedClientArticleRequest) (*CreatePublishedClientArticleResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreatePublishedClientArticle not implemented")
+}
+func (UnimplementedNewsroomAPIServer) GetPublishedClientArticleById(context.Context, *GetPublishedClientArticleByIdRequest) (*GetPublishedClientArticleByIdResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPublishedClientArticleById not implemented")
+}
+func (UnimplementedNewsroomAPIServer) StoreClientArticleImage(context.Context, *StoreClientArticleImageRequest) (*StoreClientArticleImageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StoreClientArticleImage not implemented")
+}
+func (UnimplementedNewsroomAPIServer) ListImagesForClientArticle(context.Context, *ListImagesForClientArticleRequest) (*ListImagesForClientArticleResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListImagesForClientArticle not implemented")
+}
+func (UnimplementedNewsroomAPIServer) UploadClientArticleImage(context.Context, *UploadClientArticleImageRequest) (*UploadClientArticleImageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UploadClientArticleImage not implemented")
+}
+func (UnimplementedNewsroomAPIServer) ListPublishedClientArticles(context.Context, *ListPublishedClientArticlesRequest) (*ListPublishedClientArticlesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListPublishedClientArticles not implemented")
 }
 func (UnimplementedNewsroomAPIServer) mustEmbedUnimplementedNewsroomAPIServer() {}
 func (UnimplementedNewsroomAPIServer) testEmbeddedByValue()                     {}
@@ -510,6 +672,168 @@ func _NewsroomAPI_UploadNewsArticleImage_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _NewsroomAPI_CreateClientArticle_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateClientArticleRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NewsroomAPIServer).CreateClientArticle(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NewsroomAPI_CreateClientArticle_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NewsroomAPIServer).CreateClientArticle(ctx, req.(*CreateClientArticleRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _NewsroomAPI_UpdateClientArticle_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateClientArticleRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NewsroomAPIServer).UpdateClientArticle(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NewsroomAPI_UpdateClientArticle_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NewsroomAPIServer).UpdateClientArticle(ctx, req.(*UpdateClientArticleRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _NewsroomAPI_ListClientArticles_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListClientArticlesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NewsroomAPIServer).ListClientArticles(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NewsroomAPI_ListClientArticles_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NewsroomAPIServer).ListClientArticles(ctx, req.(*ListClientArticlesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _NewsroomAPI_CreatePublishedClientArticle_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreatePublishedClientArticleRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NewsroomAPIServer).CreatePublishedClientArticle(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NewsroomAPI_CreatePublishedClientArticle_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NewsroomAPIServer).CreatePublishedClientArticle(ctx, req.(*CreatePublishedClientArticleRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _NewsroomAPI_GetPublishedClientArticleById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPublishedClientArticleByIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NewsroomAPIServer).GetPublishedClientArticleById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NewsroomAPI_GetPublishedClientArticleById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NewsroomAPIServer).GetPublishedClientArticleById(ctx, req.(*GetPublishedClientArticleByIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _NewsroomAPI_StoreClientArticleImage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StoreClientArticleImageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NewsroomAPIServer).StoreClientArticleImage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NewsroomAPI_StoreClientArticleImage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NewsroomAPIServer).StoreClientArticleImage(ctx, req.(*StoreClientArticleImageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _NewsroomAPI_ListImagesForClientArticle_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListImagesForClientArticleRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NewsroomAPIServer).ListImagesForClientArticle(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NewsroomAPI_ListImagesForClientArticle_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NewsroomAPIServer).ListImagesForClientArticle(ctx, req.(*ListImagesForClientArticleRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _NewsroomAPI_UploadClientArticleImage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UploadClientArticleImageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NewsroomAPIServer).UploadClientArticleImage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NewsroomAPI_UploadClientArticleImage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NewsroomAPIServer).UploadClientArticleImage(ctx, req.(*UploadClientArticleImageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _NewsroomAPI_ListPublishedClientArticles_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListPublishedClientArticlesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NewsroomAPIServer).ListPublishedClientArticles(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NewsroomAPI_ListPublishedClientArticles_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NewsroomAPIServer).ListPublishedClientArticles(ctx, req.(*ListPublishedClientArticlesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // NewsroomAPI_ServiceDesc is the grpc.ServiceDesc for NewsroomAPI service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -564,6 +888,42 @@ var NewsroomAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UploadNewsArticleImage",
 			Handler:    _NewsroomAPI_UploadNewsArticleImage_Handler,
+		},
+		{
+			MethodName: "CreateClientArticle",
+			Handler:    _NewsroomAPI_CreateClientArticle_Handler,
+		},
+		{
+			MethodName: "UpdateClientArticle",
+			Handler:    _NewsroomAPI_UpdateClientArticle_Handler,
+		},
+		{
+			MethodName: "ListClientArticles",
+			Handler:    _NewsroomAPI_ListClientArticles_Handler,
+		},
+		{
+			MethodName: "CreatePublishedClientArticle",
+			Handler:    _NewsroomAPI_CreatePublishedClientArticle_Handler,
+		},
+		{
+			MethodName: "GetPublishedClientArticleById",
+			Handler:    _NewsroomAPI_GetPublishedClientArticleById_Handler,
+		},
+		{
+			MethodName: "StoreClientArticleImage",
+			Handler:    _NewsroomAPI_StoreClientArticleImage_Handler,
+		},
+		{
+			MethodName: "ListImagesForClientArticle",
+			Handler:    _NewsroomAPI_ListImagesForClientArticle_Handler,
+		},
+		{
+			MethodName: "UploadClientArticleImage",
+			Handler:    _NewsroomAPI_UploadClientArticleImage_Handler,
+		},
+		{
+			MethodName: "ListPublishedClientArticles",
+			Handler:    _NewsroomAPI_ListPublishedClientArticles_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
