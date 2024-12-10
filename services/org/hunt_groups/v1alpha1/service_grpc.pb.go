@@ -19,21 +19,23 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	HuntGroupsService_ListHuntGroupExileLinks_FullMethodName              = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/ListHuntGroupExileLinks"
-	HuntGroupsService_CopyHuntGroupExileLink_FullMethodName               = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/CopyHuntGroupExileLink"
-	HuntGroupsService_UpdateHuntGroupExileLinks_FullMethodName            = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/UpdateHuntGroupExileLinks"
-	HuntGroupsService_ListHuntGroupAgentTriggers_FullMethodName           = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/ListHuntGroupAgentTriggers"
-	HuntGroupsService_CopyHuntGroupAgentTrigger_FullMethodName            = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/CopyHuntGroupAgentTrigger"
-	HuntGroupsService_UpdateHuntGroupAgentTriggers_FullMethodName         = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/UpdateHuntGroupAgentTriggers"
-	HuntGroupsService_CopyHuntGroupToOrganization_FullMethodName          = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/CopyHuntGroupToOrganization"
-	HuntGroupsService_AdminCopyHuntGroupToOrganization_FullMethodName     = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/AdminCopyHuntGroupToOrganization"
-	HuntGroupsService_AdminListHuntGroups_FullMethodName                  = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/AdminListHuntGroups"
-	HuntGroupsService_ListAgentScripts_FullMethodName                     = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/ListAgentScripts"
-	HuntGroupsService_CreateAgentClientInfoDisplayTemplate_FullMethodName = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/CreateAgentClientInfoDisplayTemplate"
-	HuntGroupsService_UpdateAgentClientInfoDisplayTemplate_FullMethodName = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/UpdateAgentClientInfoDisplayTemplate"
-	HuntGroupsService_GetAgentClientInfoDisplayTemplate_FullMethodName    = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/GetAgentClientInfoDisplayTemplate"
-	HuntGroupsService_ListAgentClientInfoDisplayTemplates_FullMethodName  = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/ListAgentClientInfoDisplayTemplates"
-	HuntGroupsService_DeleteAgentClientInfoDisplayTemplate_FullMethodName = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/DeleteAgentClientInfoDisplayTemplate"
+	HuntGroupsService_ListHuntGroupExileLinks_FullMethodName                              = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/ListHuntGroupExileLinks"
+	HuntGroupsService_CopyHuntGroupExileLink_FullMethodName                               = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/CopyHuntGroupExileLink"
+	HuntGroupsService_UpdateHuntGroupExileLinks_FullMethodName                            = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/UpdateHuntGroupExileLinks"
+	HuntGroupsService_ListHuntGroupAgentTriggers_FullMethodName                           = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/ListHuntGroupAgentTriggers"
+	HuntGroupsService_CopyHuntGroupAgentTrigger_FullMethodName                            = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/CopyHuntGroupAgentTrigger"
+	HuntGroupsService_UpdateHuntGroupAgentTriggers_FullMethodName                         = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/UpdateHuntGroupAgentTriggers"
+	HuntGroupsService_CopyHuntGroupToOrganization_FullMethodName                          = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/CopyHuntGroupToOrganization"
+	HuntGroupsService_AdminCopyHuntGroupToOrganization_FullMethodName                     = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/AdminCopyHuntGroupToOrganization"
+	HuntGroupsService_AdminListHuntGroups_FullMethodName                                  = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/AdminListHuntGroups"
+	HuntGroupsService_ListAgentScripts_FullMethodName                                     = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/ListAgentScripts"
+	HuntGroupsService_CreateAgentClientInfoDisplayTemplate_FullMethodName                 = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/CreateAgentClientInfoDisplayTemplate"
+	HuntGroupsService_UpdateAgentClientInfoDisplayTemplate_FullMethodName                 = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/UpdateAgentClientInfoDisplayTemplate"
+	HuntGroupsService_GetAgentClientInfoDisplayTemplate_FullMethodName                    = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/GetAgentClientInfoDisplayTemplate"
+	HuntGroupsService_ListAgentClientInfoDisplayTemplates_FullMethodName                  = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/ListAgentClientInfoDisplayTemplates"
+	HuntGroupsService_DeleteAgentClientInfoDisplayTemplate_FullMethodName                 = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/DeleteAgentClientInfoDisplayTemplate"
+	HuntGroupsService_AssignAgentClientInfoDisplayTemplateToHuntGroups_FullMethodName     = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/AssignAgentClientInfoDisplayTemplateToHuntGroups"
+	HuntGroupsService_UnassignAgentClientInfoDisplayTemplateFromHuntGroups_FullMethodName = "/services.org.hunt_groups.v1alpha1.HuntGroupsService/UnassignAgentClientInfoDisplayTemplateFromHuntGroups"
 )
 
 // HuntGroupsServiceClient is the client API for HuntGroupsService service.
@@ -82,6 +84,10 @@ type HuntGroupsServiceClient interface {
 	ListAgentClientInfoDisplayTemplates(ctx context.Context, in *ListAgentClientInfoDisplayTemplatesRequest, opts ...grpc.CallOption) (*ListAgentClientInfoDisplayTemplatesResponse, error)
 	// DeleteAgentClientInfoDisplayTemplate removes the requested template.
 	DeleteAgentClientInfoDisplayTemplate(ctx context.Context, in *DeleteAgentClientInfoDisplayTemplateRequest, opts ...grpc.CallOption) (*DeleteAgentClientInfoDisplayTemplateResponse, error)
+	// AssignAgentClientInfoDisplayTemplateToHuntGroups assigns a display template to the specified groups.
+	AssignAgentClientInfoDisplayTemplateToHuntGroups(ctx context.Context, in *AssignAgentClientInfoDisplayTemplateToHuntGroupsRequest, opts ...grpc.CallOption) (*AssignAgentClientInfoDisplayTemplateToHuntGroupsResponse, error)
+	// UnassignAgentClientInfoDisplayTemplateFromHuntGroups removes display templates from the specified groups.
+	UnassignAgentClientInfoDisplayTemplateFromHuntGroups(ctx context.Context, in *UnassignAgentClientInfoDisplayTemplateFromHuntGroupsRequest, opts ...grpc.CallOption) (*UnassignAgentClientInfoDisplayTemplateFromHuntGroupsResponse, error)
 }
 
 type huntGroupsServiceClient struct {
@@ -265,6 +271,26 @@ func (c *huntGroupsServiceClient) DeleteAgentClientInfoDisplayTemplate(ctx conte
 	return out, nil
 }
 
+func (c *huntGroupsServiceClient) AssignAgentClientInfoDisplayTemplateToHuntGroups(ctx context.Context, in *AssignAgentClientInfoDisplayTemplateToHuntGroupsRequest, opts ...grpc.CallOption) (*AssignAgentClientInfoDisplayTemplateToHuntGroupsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AssignAgentClientInfoDisplayTemplateToHuntGroupsResponse)
+	err := c.cc.Invoke(ctx, HuntGroupsService_AssignAgentClientInfoDisplayTemplateToHuntGroups_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *huntGroupsServiceClient) UnassignAgentClientInfoDisplayTemplateFromHuntGroups(ctx context.Context, in *UnassignAgentClientInfoDisplayTemplateFromHuntGroupsRequest, opts ...grpc.CallOption) (*UnassignAgentClientInfoDisplayTemplateFromHuntGroupsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UnassignAgentClientInfoDisplayTemplateFromHuntGroupsResponse)
+	err := c.cc.Invoke(ctx, HuntGroupsService_UnassignAgentClientInfoDisplayTemplateFromHuntGroups_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // HuntGroupsServiceServer is the server API for HuntGroupsService service.
 // All implementations must embed UnimplementedHuntGroupsServiceServer
 // for forward compatibility.
@@ -311,6 +337,10 @@ type HuntGroupsServiceServer interface {
 	ListAgentClientInfoDisplayTemplates(context.Context, *ListAgentClientInfoDisplayTemplatesRequest) (*ListAgentClientInfoDisplayTemplatesResponse, error)
 	// DeleteAgentClientInfoDisplayTemplate removes the requested template.
 	DeleteAgentClientInfoDisplayTemplate(context.Context, *DeleteAgentClientInfoDisplayTemplateRequest) (*DeleteAgentClientInfoDisplayTemplateResponse, error)
+	// AssignAgentClientInfoDisplayTemplateToHuntGroups assigns a display template to the specified groups.
+	AssignAgentClientInfoDisplayTemplateToHuntGroups(context.Context, *AssignAgentClientInfoDisplayTemplateToHuntGroupsRequest) (*AssignAgentClientInfoDisplayTemplateToHuntGroupsResponse, error)
+	// UnassignAgentClientInfoDisplayTemplateFromHuntGroups removes display templates from the specified groups.
+	UnassignAgentClientInfoDisplayTemplateFromHuntGroups(context.Context, *UnassignAgentClientInfoDisplayTemplateFromHuntGroupsRequest) (*UnassignAgentClientInfoDisplayTemplateFromHuntGroupsResponse, error)
 	mustEmbedUnimplementedHuntGroupsServiceServer()
 }
 
@@ -365,6 +395,12 @@ func (UnimplementedHuntGroupsServiceServer) ListAgentClientInfoDisplayTemplates(
 }
 func (UnimplementedHuntGroupsServiceServer) DeleteAgentClientInfoDisplayTemplate(context.Context, *DeleteAgentClientInfoDisplayTemplateRequest) (*DeleteAgentClientInfoDisplayTemplateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteAgentClientInfoDisplayTemplate not implemented")
+}
+func (UnimplementedHuntGroupsServiceServer) AssignAgentClientInfoDisplayTemplateToHuntGroups(context.Context, *AssignAgentClientInfoDisplayTemplateToHuntGroupsRequest) (*AssignAgentClientInfoDisplayTemplateToHuntGroupsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AssignAgentClientInfoDisplayTemplateToHuntGroups not implemented")
+}
+func (UnimplementedHuntGroupsServiceServer) UnassignAgentClientInfoDisplayTemplateFromHuntGroups(context.Context, *UnassignAgentClientInfoDisplayTemplateFromHuntGroupsRequest) (*UnassignAgentClientInfoDisplayTemplateFromHuntGroupsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UnassignAgentClientInfoDisplayTemplateFromHuntGroups not implemented")
 }
 func (UnimplementedHuntGroupsServiceServer) mustEmbedUnimplementedHuntGroupsServiceServer() {}
 func (UnimplementedHuntGroupsServiceServer) testEmbeddedByValue()                           {}
@@ -660,6 +696,42 @@ func _HuntGroupsService_DeleteAgentClientInfoDisplayTemplate_Handler(srv interfa
 	return interceptor(ctx, in, info, handler)
 }
 
+func _HuntGroupsService_AssignAgentClientInfoDisplayTemplateToHuntGroups_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AssignAgentClientInfoDisplayTemplateToHuntGroupsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HuntGroupsServiceServer).AssignAgentClientInfoDisplayTemplateToHuntGroups(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HuntGroupsService_AssignAgentClientInfoDisplayTemplateToHuntGroups_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HuntGroupsServiceServer).AssignAgentClientInfoDisplayTemplateToHuntGroups(ctx, req.(*AssignAgentClientInfoDisplayTemplateToHuntGroupsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HuntGroupsService_UnassignAgentClientInfoDisplayTemplateFromHuntGroups_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UnassignAgentClientInfoDisplayTemplateFromHuntGroupsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HuntGroupsServiceServer).UnassignAgentClientInfoDisplayTemplateFromHuntGroups(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HuntGroupsService_UnassignAgentClientInfoDisplayTemplateFromHuntGroups_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HuntGroupsServiceServer).UnassignAgentClientInfoDisplayTemplateFromHuntGroups(ctx, req.(*UnassignAgentClientInfoDisplayTemplateFromHuntGroupsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // HuntGroupsService_ServiceDesc is the grpc.ServiceDesc for HuntGroupsService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -722,6 +794,14 @@ var HuntGroupsService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteAgentClientInfoDisplayTemplate",
 			Handler:    _HuntGroupsService_DeleteAgentClientInfoDisplayTemplate_Handler,
+		},
+		{
+			MethodName: "AssignAgentClientInfoDisplayTemplateToHuntGroups",
+			Handler:    _HuntGroupsService_AssignAgentClientInfoDisplayTemplateToHuntGroups_Handler,
+		},
+		{
+			MethodName: "UnassignAgentClientInfoDisplayTemplateFromHuntGroups",
+			Handler:    _HuntGroupsService_UnassignAgentClientInfoDisplayTemplateFromHuntGroups_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
