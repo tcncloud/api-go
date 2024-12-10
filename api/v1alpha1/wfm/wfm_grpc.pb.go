@@ -1732,9 +1732,11 @@ type WFMClient interface {
 	// A hello world endpoint to test the WFM Adherence App.
 	// Returns a string with a hello world message.
 	HelloWorldWFMAdherence(ctx context.Context, in *HelloWorldWFMAdherenceRequest, opts ...grpc.CallOption) (*HelloWorldWFMAdherenceResponse, error)
+	// Deprecated: Do not use.
 	// List the real time agent states for published schedule and the org sending the request, starting on the given @start_datetime.
 	// If the @end_datetime is set, all agent state sequences will be returned for the range between @start_datetime and @end_datetime.
 	// If @end_datetime is not set, the agent state sequences will be returned over a 24 hour period or until the current time, whichever is shorter.
+	// DEPRECATED as of Dec/10/2024 - Use ListRealTimeManagementStates instead.
 	// Errors:
 	//   - grpc.Invalid: the @start_datetime is invalid or beyond the current datetime.
 	//   - grpc.Internal: error occurs when listing the agent states.
@@ -3942,6 +3944,7 @@ func (c *wFMClient) HelloWorldWFMAdherence(ctx context.Context, in *HelloWorldWF
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *wFMClient) ListAgentStatesForDay(ctx context.Context, in *ListAgentStatesForDayRequest, opts ...grpc.CallOption) (*ListAgentStatesForDayResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListAgentStatesForDayResponse)
@@ -5742,9 +5745,11 @@ type WFMServer interface {
 	// A hello world endpoint to test the WFM Adherence App.
 	// Returns a string with a hello world message.
 	HelloWorldWFMAdherence(context.Context, *HelloWorldWFMAdherenceRequest) (*HelloWorldWFMAdherenceResponse, error)
+	// Deprecated: Do not use.
 	// List the real time agent states for published schedule and the org sending the request, starting on the given @start_datetime.
 	// If the @end_datetime is set, all agent state sequences will be returned for the range between @start_datetime and @end_datetime.
 	// If @end_datetime is not set, the agent state sequences will be returned over a 24 hour period or until the current time, whichever is shorter.
+	// DEPRECATED as of Dec/10/2024 - Use ListRealTimeManagementStates instead.
 	// Errors:
 	//   - grpc.Invalid: the @start_datetime is invalid or beyond the current datetime.
 	//   - grpc.Internal: error occurs when listing the agent states.

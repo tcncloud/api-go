@@ -2137,9 +2137,12 @@ type WFMClient interface {
 	// List the real time agent states for published schedule and the org sending the request, starting on the given @start_datetime.
 	// If the @end_datetime is set, all agent state sequences will be returned for the range between @start_datetime and @end_datetime.
 	// If @end_datetime is not set, the agent state sequences will be returned over a 24 hour period or until the current time, whichever is shorter.
+	// DEPRECATED as of Dec/10/2024 - Use ListRealTimeManagementStates instead.
 	// Errors:
 	//   - grpc.Invalid: the @start_datetime is invalid or beyond the current datetime.
 	//   - grpc.Internal: error occurs when listing the agent states.
+	//
+	// Deprecated: do not use.
 	ListAgentStatesForDay(context.Context, *connect_go.Request[wfm.ListAgentStatesForDayRequest]) (*connect_go.Response[wfm.ListAgentStatesForDayResponse], error)
 	// List org-level RealTimeManagementStates.
 	// Errors:
@@ -4613,6 +4616,8 @@ func (c *wFMClient) HelloWorldWFMAdherence(ctx context.Context, req *connect_go.
 }
 
 // ListAgentStatesForDay calls api.v1alpha1.wfm.WFM.ListAgentStatesForDay.
+//
+// Deprecated: do not use.
 func (c *wFMClient) ListAgentStatesForDay(ctx context.Context, req *connect_go.Request[wfm.ListAgentStatesForDayRequest]) (*connect_go.Response[wfm.ListAgentStatesForDayResponse], error) {
 	return c.listAgentStatesForDay.CallUnary(ctx, req)
 }
@@ -6266,9 +6271,12 @@ type WFMHandler interface {
 	// List the real time agent states for published schedule and the org sending the request, starting on the given @start_datetime.
 	// If the @end_datetime is set, all agent state sequences will be returned for the range between @start_datetime and @end_datetime.
 	// If @end_datetime is not set, the agent state sequences will be returned over a 24 hour period or until the current time, whichever is shorter.
+	// DEPRECATED as of Dec/10/2024 - Use ListRealTimeManagementStates instead.
 	// Errors:
 	//   - grpc.Invalid: the @start_datetime is invalid or beyond the current datetime.
 	//   - grpc.Internal: error occurs when listing the agent states.
+	//
+	// Deprecated: do not use.
 	ListAgentStatesForDay(context.Context, *connect_go.Request[wfm.ListAgentStatesForDayRequest]) (*connect_go.Response[wfm.ListAgentStatesForDayResponse], error)
 	// List org-level RealTimeManagementStates.
 	// Errors:
