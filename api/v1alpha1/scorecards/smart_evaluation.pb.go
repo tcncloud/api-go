@@ -151,6 +151,7 @@ type ListSmartEvaluationsRequest struct {
 	// |              agent_user_id |    string |               = |       any |
 	// |             transcript_sid |   integer | =, >=, <=, >, < |           |
 	// |              complete_time | timestamp | =, >=, <=, >, < |           |
+	// |               channel_type |   integer |               = |       any |
 	// +----------------------------+-----------+-----------------+-----------+
 	//
 	// Examples:
