@@ -23,6 +23,7 @@ const (
 	ExplorerService_Query_FullMethodName                 = "/api.v1alpha1.explorer.ExplorerService/Query"
 	ExplorerService_GetSupportQuery_FullMethodName       = "/api.v1alpha1.explorer.ExplorerService/GetSupportQuery"
 	ExplorerService_GetQueryExplain_FullMethodName       = "/api.v1alpha1.explorer.ExplorerService/GetQueryExplain"
+	ExplorerService_GetWeeksOfData_FullMethodName        = "/api.v1alpha1.explorer.ExplorerService/GetWeeksOfData"
 )
 
 // ExplorerServiceClient is the client API for ExplorerService service.
@@ -37,6 +38,8 @@ type ExplorerServiceClient interface {
 	Query(ctx context.Context, in *QueryRequest, opts ...grpc.CallOption) (*QueryResponse, error)
 	GetSupportQuery(ctx context.Context, in *SupportQueryRequest, opts ...grpc.CallOption) (*SupportQueryResponse, error)
 	GetQueryExplain(ctx context.Context, in *QueryExplainRequest, opts ...grpc.CallOption) (*QueryExplainResponse, error)
+	// GetWeeksOfData returns the number of weeks of data an org is limited to and the cutoff date.
+	GetWeeksOfData(ctx context.Context, in *GetWeeksOfDataRequest, opts ...grpc.CallOption) (*GetWeeksOfDataResponse, error)
 }
 
 type explorerServiceClient struct {
@@ -87,6 +90,16 @@ func (c *explorerServiceClient) GetQueryExplain(ctx context.Context, in *QueryEx
 	return out, nil
 }
 
+func (c *explorerServiceClient) GetWeeksOfData(ctx context.Context, in *GetWeeksOfDataRequest, opts ...grpc.CallOption) (*GetWeeksOfDataResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetWeeksOfDataResponse)
+	err := c.cc.Invoke(ctx, ExplorerService_GetWeeksOfData_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ExplorerServiceServer is the server API for ExplorerService service.
 // All implementations must embed UnimplementedExplorerServiceServer
 // for forward compatibility.
@@ -99,6 +112,8 @@ type ExplorerServiceServer interface {
 	Query(context.Context, *QueryRequest) (*QueryResponse, error)
 	GetSupportQuery(context.Context, *SupportQueryRequest) (*SupportQueryResponse, error)
 	GetQueryExplain(context.Context, *QueryExplainRequest) (*QueryExplainResponse, error)
+	// GetWeeksOfData returns the number of weeks of data an org is limited to and the cutoff date.
+	GetWeeksOfData(context.Context, *GetWeeksOfDataRequest) (*GetWeeksOfDataResponse, error)
 	mustEmbedUnimplementedExplorerServiceServer()
 }
 
@@ -120,6 +135,9 @@ func (UnimplementedExplorerServiceServer) GetSupportQuery(context.Context, *Supp
 }
 func (UnimplementedExplorerServiceServer) GetQueryExplain(context.Context, *QueryExplainRequest) (*QueryExplainResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetQueryExplain not implemented")
+}
+func (UnimplementedExplorerServiceServer) GetWeeksOfData(context.Context, *GetWeeksOfDataRequest) (*GetWeeksOfDataResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetWeeksOfData not implemented")
 }
 func (UnimplementedExplorerServiceServer) mustEmbedUnimplementedExplorerServiceServer() {}
 func (UnimplementedExplorerServiceServer) testEmbeddedByValue()                         {}
@@ -214,6 +232,24 @@ func _ExplorerService_GetQueryExplain_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ExplorerService_GetWeeksOfData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetWeeksOfDataRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExplorerServiceServer).GetWeeksOfData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ExplorerService_GetWeeksOfData_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExplorerServiceServer).GetWeeksOfData(ctx, req.(*GetWeeksOfDataRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ExplorerService_ServiceDesc is the grpc.ServiceDesc for ExplorerService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -236,6 +272,10 @@ var ExplorerService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetQueryExplain",
 			Handler:    _ExplorerService_GetQueryExplain_Handler,
+		},
+		{
+			MethodName: "GetWeeksOfData",
+			Handler:    _ExplorerService_GetWeeksOfData_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

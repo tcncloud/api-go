@@ -44,6 +44,9 @@ const (
 	// ExplorerServiceGetQueryExplainProcedure is the fully-qualified name of the ExplorerService's
 	// GetQueryExplain RPC.
 	ExplorerServiceGetQueryExplainProcedure = "/api.v1alpha1.explorer.ExplorerService/GetQueryExplain"
+	// ExplorerServiceGetWeeksOfDataProcedure is the fully-qualified name of the ExplorerService's
+	// GetWeeksOfData RPC.
+	ExplorerServiceGetWeeksOfDataProcedure = "/api.v1alpha1.explorer.ExplorerService/GetWeeksOfData"
 )
 
 // ExplorerServiceClient is a client for the api.v1alpha1.explorer.ExplorerService service.
@@ -54,6 +57,8 @@ type ExplorerServiceClient interface {
 	Query(context.Context, *connect_go.Request[explorer.QueryRequest]) (*connect_go.Response[explorer.QueryResponse], error)
 	GetSupportQuery(context.Context, *connect_go.Request[explorer.SupportQueryRequest]) (*connect_go.Response[explorer.SupportQueryResponse], error)
 	GetQueryExplain(context.Context, *connect_go.Request[explorer.QueryExplainRequest]) (*connect_go.Response[explorer.QueryExplainResponse], error)
+	// GetWeeksOfData returns the number of weeks of data an org is limited to and the cutoff date.
+	GetWeeksOfData(context.Context, *connect_go.Request[explorer.GetWeeksOfDataRequest]) (*connect_go.Response[explorer.GetWeeksOfDataResponse], error)
 }
 
 // NewExplorerServiceClient constructs a client for the api.v1alpha1.explorer.ExplorerService
@@ -86,6 +91,11 @@ func NewExplorerServiceClient(httpClient connect_go.HTTPClient, baseURL string, 
 			baseURL+ExplorerServiceGetQueryExplainProcedure,
 			opts...,
 		),
+		getWeeksOfData: connect_go.NewClient[explorer.GetWeeksOfDataRequest, explorer.GetWeeksOfDataResponse](
+			httpClient,
+			baseURL+ExplorerServiceGetWeeksOfDataProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -95,6 +105,7 @@ type explorerServiceClient struct {
 	query                 *connect_go.Client[explorer.QueryRequest, explorer.QueryResponse]
 	getSupportQuery       *connect_go.Client[explorer.SupportQueryRequest, explorer.SupportQueryResponse]
 	getQueryExplain       *connect_go.Client[explorer.QueryExplainRequest, explorer.QueryExplainResponse]
+	getWeeksOfData        *connect_go.Client[explorer.GetWeeksOfDataRequest, explorer.GetWeeksOfDataResponse]
 }
 
 // ListDatasourceSchemas calls api.v1alpha1.explorer.ExplorerService.ListDatasourceSchemas.
@@ -117,6 +128,11 @@ func (c *explorerServiceClient) GetQueryExplain(ctx context.Context, req *connec
 	return c.getQueryExplain.CallUnary(ctx, req)
 }
 
+// GetWeeksOfData calls api.v1alpha1.explorer.ExplorerService.GetWeeksOfData.
+func (c *explorerServiceClient) GetWeeksOfData(ctx context.Context, req *connect_go.Request[explorer.GetWeeksOfDataRequest]) (*connect_go.Response[explorer.GetWeeksOfDataResponse], error) {
+	return c.getWeeksOfData.CallUnary(ctx, req)
+}
+
 // ExplorerServiceHandler is an implementation of the api.v1alpha1.explorer.ExplorerService service.
 type ExplorerServiceHandler interface {
 	// ListDatasourceSchemas lists all accessible datasources and their schemas.
@@ -125,6 +141,8 @@ type ExplorerServiceHandler interface {
 	Query(context.Context, *connect_go.Request[explorer.QueryRequest]) (*connect_go.Response[explorer.QueryResponse], error)
 	GetSupportQuery(context.Context, *connect_go.Request[explorer.SupportQueryRequest]) (*connect_go.Response[explorer.SupportQueryResponse], error)
 	GetQueryExplain(context.Context, *connect_go.Request[explorer.QueryExplainRequest]) (*connect_go.Response[explorer.QueryExplainResponse], error)
+	// GetWeeksOfData returns the number of weeks of data an org is limited to and the cutoff date.
+	GetWeeksOfData(context.Context, *connect_go.Request[explorer.GetWeeksOfDataRequest]) (*connect_go.Response[explorer.GetWeeksOfDataResponse], error)
 }
 
 // NewExplorerServiceHandler builds an HTTP handler from the service implementation. It returns the
@@ -153,6 +171,11 @@ func NewExplorerServiceHandler(svc ExplorerServiceHandler, opts ...connect_go.Ha
 		svc.GetQueryExplain,
 		opts...,
 	)
+	explorerServiceGetWeeksOfDataHandler := connect_go.NewUnaryHandler(
+		ExplorerServiceGetWeeksOfDataProcedure,
+		svc.GetWeeksOfData,
+		opts...,
+	)
 	return "/api.v1alpha1.explorer.ExplorerService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case ExplorerServiceListDatasourceSchemasProcedure:
@@ -163,6 +186,8 @@ func NewExplorerServiceHandler(svc ExplorerServiceHandler, opts ...connect_go.Ha
 			explorerServiceGetSupportQueryHandler.ServeHTTP(w, r)
 		case ExplorerServiceGetQueryExplainProcedure:
 			explorerServiceGetQueryExplainHandler.ServeHTTP(w, r)
+		case ExplorerServiceGetWeeksOfDataProcedure:
+			explorerServiceGetWeeksOfDataHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -186,4 +211,8 @@ func (UnimplementedExplorerServiceHandler) GetSupportQuery(context.Context, *con
 
 func (UnimplementedExplorerServiceHandler) GetQueryExplain(context.Context, *connect_go.Request[explorer.QueryExplainRequest]) (*connect_go.Response[explorer.QueryExplainResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.explorer.ExplorerService.GetQueryExplain is not implemented"))
+}
+
+func (UnimplementedExplorerServiceHandler) GetWeeksOfData(context.Context, *connect_go.Request[explorer.GetWeeksOfDataRequest]) (*connect_go.Response[explorer.GetWeeksOfDataResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.explorer.ExplorerService.GetWeeksOfData is not implemented"))
 }
