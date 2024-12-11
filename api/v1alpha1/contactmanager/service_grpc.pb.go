@@ -19,15 +19,16 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	ContactManager_GetContactList_FullMethodName        = "/api.v1alpha1.contactmanager.ContactManager/GetContactList"
-	ContactManager_ListContactEntryList_FullMethodName  = "/api.v1alpha1.contactmanager.ContactManager/ListContactEntryList"
-	ContactManager_GetEncContactEntry_FullMethodName    = "/api.v1alpha1.contactmanager.ContactManager/GetEncContactEntry"
-	ContactManager_GetKYCEncContactEntry_FullMethodName = "/api.v1alpha1.contactmanager.ContactManager/GetKYCEncContactEntry"
-	ContactManager_GetKYCKeys_FullMethodName            = "/api.v1alpha1.contactmanager.ContactManager/GetKYCKeys"
-	ContactManager_AddContactEntry_FullMethodName       = "/api.v1alpha1.contactmanager.ContactManager/AddContactEntry"
-	ContactManager_EditContactEntry_FullMethodName      = "/api.v1alpha1.contactmanager.ContactManager/EditContactEntry"
-	ContactManager_ListContactsByEntity_FullMethodName  = "/api.v1alpha1.contactmanager.ContactManager/ListContactsByEntity"
-	ContactManager_GetContactFieldType_FullMethodName   = "/api.v1alpha1.contactmanager.ContactManager/GetContactFieldType"
+	ContactManager_GetContactList_FullMethodName         = "/api.v1alpha1.contactmanager.ContactManager/GetContactList"
+	ContactManager_ListContactEntryList_FullMethodName   = "/api.v1alpha1.contactmanager.ContactManager/ListContactEntryList"
+	ContactManager_GetEncContactEntry_FullMethodName     = "/api.v1alpha1.contactmanager.ContactManager/GetEncContactEntry"
+	ContactManager_GetKYCEncContactEntry_FullMethodName  = "/api.v1alpha1.contactmanager.ContactManager/GetKYCEncContactEntry"
+	ContactManager_GetKYCKeys_FullMethodName             = "/api.v1alpha1.contactmanager.ContactManager/GetKYCKeys"
+	ContactManager_AddContactEntry_FullMethodName        = "/api.v1alpha1.contactmanager.ContactManager/AddContactEntry"
+	ContactManager_EditContactEntry_FullMethodName       = "/api.v1alpha1.contactmanager.ContactManager/EditContactEntry"
+	ContactManager_ListContactsByEntity_FullMethodName   = "/api.v1alpha1.contactmanager.ContactManager/ListContactsByEntity"
+	ContactManager_GetContactFieldType_FullMethodName    = "/api.v1alpha1.contactmanager.ContactManager/GetContactFieldType"
+	ContactManager_ListContactActivityLog_FullMethodName = "/api.v1alpha1.contactmanager.ContactManager/ListContactActivityLog"
 )
 
 // ContactManagerClient is the client API for ContactManager service.
@@ -51,6 +52,9 @@ type ContactManagerClient interface {
 	// *
 	// Get Contact Field Type
 	GetContactFieldType(ctx context.Context, in *GetContactFieldTypeRequest, opts ...grpc.CallOption) (*GetContactFieldTypeResponse, error)
+	// *
+	// List Audit history for a Contact
+	ListContactActivityLog(ctx context.Context, in *ListContactActivityLogRequest, opts ...grpc.CallOption) (*ListContactActivityLogResponse, error)
 }
 
 type contactManagerClient struct {
@@ -151,6 +155,16 @@ func (c *contactManagerClient) GetContactFieldType(ctx context.Context, in *GetC
 	return out, nil
 }
 
+func (c *contactManagerClient) ListContactActivityLog(ctx context.Context, in *ListContactActivityLogRequest, opts ...grpc.CallOption) (*ListContactActivityLogResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListContactActivityLogResponse)
+	err := c.cc.Invoke(ctx, ContactManager_ListContactActivityLog_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ContactManagerServer is the server API for ContactManager service.
 // All implementations must embed UnimplementedContactManagerServer
 // for forward compatibility.
@@ -172,6 +186,9 @@ type ContactManagerServer interface {
 	// *
 	// Get Contact Field Type
 	GetContactFieldType(context.Context, *GetContactFieldTypeRequest) (*GetContactFieldTypeResponse, error)
+	// *
+	// List Audit history for a Contact
+	ListContactActivityLog(context.Context, *ListContactActivityLogRequest) (*ListContactActivityLogResponse, error)
 	mustEmbedUnimplementedContactManagerServer()
 }
 
@@ -208,6 +225,9 @@ func (UnimplementedContactManagerServer) ListContactsByEntity(context.Context, *
 }
 func (UnimplementedContactManagerServer) GetContactFieldType(context.Context, *GetContactFieldTypeRequest) (*GetContactFieldTypeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetContactFieldType not implemented")
+}
+func (UnimplementedContactManagerServer) ListContactActivityLog(context.Context, *ListContactActivityLogRequest) (*ListContactActivityLogResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListContactActivityLog not implemented")
 }
 func (UnimplementedContactManagerServer) mustEmbedUnimplementedContactManagerServer() {}
 func (UnimplementedContactManagerServer) testEmbeddedByValue()                        {}
@@ -392,6 +412,24 @@ func _ContactManager_GetContactFieldType_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ContactManager_ListContactActivityLog_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListContactActivityLogRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ContactManagerServer).ListContactActivityLog(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ContactManager_ListContactActivityLog_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ContactManagerServer).ListContactActivityLog(ctx, req.(*ListContactActivityLogRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ContactManager_ServiceDesc is the grpc.ServiceDesc for ContactManager service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -434,6 +472,10 @@ var ContactManager_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetContactFieldType",
 			Handler:    _ContactManager_GetContactFieldType_Handler,
+		},
+		{
+			MethodName: "ListContactActivityLog",
+			Handler:    _ContactManager_ListContactActivityLog_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -60,6 +60,9 @@ const (
 	// ContactManagerGetContactFieldTypeProcedure is the fully-qualified name of the ContactManager's
 	// GetContactFieldType RPC.
 	ContactManagerGetContactFieldTypeProcedure = "/api.v1alpha1.contactmanager.ContactManager/GetContactFieldType"
+	// ContactManagerListContactActivityLogProcedure is the fully-qualified name of the ContactManager's
+	// ListContactActivityLog RPC.
+	ContactManagerListContactActivityLogProcedure = "/api.v1alpha1.contactmanager.ContactManager/ListContactActivityLog"
 )
 
 // ContactManagerClient is a client for the api.v1alpha1.contactmanager.ContactManager service.
@@ -81,6 +84,9 @@ type ContactManagerClient interface {
 	// *
 	// Get Contact Field Type
 	GetContactFieldType(context.Context, *connect_go.Request[contactmanager.GetContactFieldTypeRequest]) (*connect_go.Response[contactmanager.GetContactFieldTypeResponse], error)
+	// *
+	// List Audit history for a Contact
+	ListContactActivityLog(context.Context, *connect_go.Request[contactmanager.ListContactActivityLogRequest]) (*connect_go.Response[contactmanager.ListContactActivityLogResponse], error)
 }
 
 // NewContactManagerClient constructs a client for the api.v1alpha1.contactmanager.ContactManager
@@ -138,20 +144,26 @@ func NewContactManagerClient(httpClient connect_go.HTTPClient, baseURL string, o
 			baseURL+ContactManagerGetContactFieldTypeProcedure,
 			opts...,
 		),
+		listContactActivityLog: connect_go.NewClient[contactmanager.ListContactActivityLogRequest, contactmanager.ListContactActivityLogResponse](
+			httpClient,
+			baseURL+ContactManagerListContactActivityLogProcedure,
+			opts...,
+		),
 	}
 }
 
 // contactManagerClient implements ContactManagerClient.
 type contactManagerClient struct {
-	getContactList        *connect_go.Client[contactmanager.GetContactListRequest, contactmanager.GetContactListResponse]
-	listContactEntryList  *connect_go.Client[contactmanager.ListContactEntryListRequest, contactmanager.ListContactEntryListResponse]
-	getEncContactEntry    *connect_go.Client[contactmanager.GetEncContactEntryRequest, contactmanager.GetEncContactEntryResponse]
-	getKYCEncContactEntry *connect_go.Client[contactmanager.GetKYCEncContactEntryRequest, contactmanager.GetKYCEncContactEntryResponse]
-	getKYCKeys            *connect_go.Client[contactmanager.GetKYCKeysRequest, contactmanager.GetKYCKeysResponse]
-	addContactEntry       *connect_go.Client[contactmanager.AddContactEntryRequest, contactmanager.AddContactEntryResponse]
-	editContactEntry      *connect_go.Client[contactmanager.EditContactEntryRequest, contactmanager.EditContactEntryResponse]
-	listContactsByEntity  *connect_go.Client[contactmanager.ListContactsByEntityRequest, contactmanager.ListContactsByEntityResponse]
-	getContactFieldType   *connect_go.Client[contactmanager.GetContactFieldTypeRequest, contactmanager.GetContactFieldTypeResponse]
+	getContactList         *connect_go.Client[contactmanager.GetContactListRequest, contactmanager.GetContactListResponse]
+	listContactEntryList   *connect_go.Client[contactmanager.ListContactEntryListRequest, contactmanager.ListContactEntryListResponse]
+	getEncContactEntry     *connect_go.Client[contactmanager.GetEncContactEntryRequest, contactmanager.GetEncContactEntryResponse]
+	getKYCEncContactEntry  *connect_go.Client[contactmanager.GetKYCEncContactEntryRequest, contactmanager.GetKYCEncContactEntryResponse]
+	getKYCKeys             *connect_go.Client[contactmanager.GetKYCKeysRequest, contactmanager.GetKYCKeysResponse]
+	addContactEntry        *connect_go.Client[contactmanager.AddContactEntryRequest, contactmanager.AddContactEntryResponse]
+	editContactEntry       *connect_go.Client[contactmanager.EditContactEntryRequest, contactmanager.EditContactEntryResponse]
+	listContactsByEntity   *connect_go.Client[contactmanager.ListContactsByEntityRequest, contactmanager.ListContactsByEntityResponse]
+	getContactFieldType    *connect_go.Client[contactmanager.GetContactFieldTypeRequest, contactmanager.GetContactFieldTypeResponse]
+	listContactActivityLog *connect_go.Client[contactmanager.ListContactActivityLogRequest, contactmanager.ListContactActivityLogResponse]
 }
 
 // GetContactList calls api.v1alpha1.contactmanager.ContactManager.GetContactList.
@@ -199,6 +211,11 @@ func (c *contactManagerClient) GetContactFieldType(ctx context.Context, req *con
 	return c.getContactFieldType.CallUnary(ctx, req)
 }
 
+// ListContactActivityLog calls api.v1alpha1.contactmanager.ContactManager.ListContactActivityLog.
+func (c *contactManagerClient) ListContactActivityLog(ctx context.Context, req *connect_go.Request[contactmanager.ListContactActivityLogRequest]) (*connect_go.Response[contactmanager.ListContactActivityLogResponse], error) {
+	return c.listContactActivityLog.CallUnary(ctx, req)
+}
+
 // ContactManagerHandler is an implementation of the api.v1alpha1.contactmanager.ContactManager
 // service.
 type ContactManagerHandler interface {
@@ -219,6 +236,9 @@ type ContactManagerHandler interface {
 	// *
 	// Get Contact Field Type
 	GetContactFieldType(context.Context, *connect_go.Request[contactmanager.GetContactFieldTypeRequest]) (*connect_go.Response[contactmanager.GetContactFieldTypeResponse], error)
+	// *
+	// List Audit history for a Contact
+	ListContactActivityLog(context.Context, *connect_go.Request[contactmanager.ListContactActivityLogRequest]) (*connect_go.Response[contactmanager.ListContactActivityLogResponse], error)
 }
 
 // NewContactManagerHandler builds an HTTP handler from the service implementation. It returns the
@@ -272,6 +292,11 @@ func NewContactManagerHandler(svc ContactManagerHandler, opts ...connect_go.Hand
 		svc.GetContactFieldType,
 		opts...,
 	)
+	contactManagerListContactActivityLogHandler := connect_go.NewUnaryHandler(
+		ContactManagerListContactActivityLogProcedure,
+		svc.ListContactActivityLog,
+		opts...,
+	)
 	return "/api.v1alpha1.contactmanager.ContactManager/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case ContactManagerGetContactListProcedure:
@@ -292,6 +317,8 @@ func NewContactManagerHandler(svc ContactManagerHandler, opts ...connect_go.Hand
 			contactManagerListContactsByEntityHandler.ServeHTTP(w, r)
 		case ContactManagerGetContactFieldTypeProcedure:
 			contactManagerGetContactFieldTypeHandler.ServeHTTP(w, r)
+		case ContactManagerListContactActivityLogProcedure:
+			contactManagerListContactActivityLogHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -335,4 +362,8 @@ func (UnimplementedContactManagerHandler) ListContactsByEntity(context.Context, 
 
 func (UnimplementedContactManagerHandler) GetContactFieldType(context.Context, *connect_go.Request[contactmanager.GetContactFieldTypeRequest]) (*connect_go.Response[contactmanager.GetContactFieldTypeResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.contactmanager.ContactManager.GetContactFieldType is not implemented"))
+}
+
+func (UnimplementedContactManagerHandler) ListContactActivityLog(context.Context, *connect_go.Request[contactmanager.ListContactActivityLogRequest]) (*connect_go.Response[contactmanager.ListContactActivityLogResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.contactmanager.ContactManager.ListContactActivityLog is not implemented"))
 }
