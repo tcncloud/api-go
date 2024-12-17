@@ -541,6 +541,34 @@ const (
 	// WFMRemoveAgentFromScheduleProcedure is the fully-qualified name of the WFM's
 	// RemoveAgentFromSchedule RPC.
 	WFMRemoveAgentFromScheduleProcedure = "/api.v1alpha1.wfm.WFM/RemoveAgentFromSchedule"
+	// WFMCreatePublishedShiftProcedure is the fully-qualified name of the WFM's CreatePublishedShift
+	// RPC.
+	WFMCreatePublishedShiftProcedure = "/api.v1alpha1.wfm.WFM/CreatePublishedShift"
+	// WFMCreatePublishedShiftWithSegmentsProcedure is the fully-qualified name of the WFM's
+	// CreatePublishedShiftWithSegments RPC.
+	WFMCreatePublishedShiftWithSegmentsProcedure = "/api.v1alpha1.wfm.WFM/CreatePublishedShiftWithSegments"
+	// WFMUpdatePublishedShiftProcedure is the fully-qualified name of the WFM's UpdatePublishedShift
+	// RPC.
+	WFMUpdatePublishedShiftProcedure = "/api.v1alpha1.wfm.WFM/UpdatePublishedShift"
+	// WFMUpdatePublishedShiftWithSegmentsProcedure is the fully-qualified name of the WFM's
+	// UpdatePublishedShiftWithSegments RPC.
+	WFMUpdatePublishedShiftWithSegmentsProcedure = "/api.v1alpha1.wfm.WFM/UpdatePublishedShiftWithSegments"
+	// WFMSplitPublishedShiftProcedure is the fully-qualified name of the WFM's SplitPublishedShift RPC.
+	WFMSplitPublishedShiftProcedure = "/api.v1alpha1.wfm.WFM/SplitPublishedShift"
+	// WFMSwapPublishedShiftsProcedure is the fully-qualified name of the WFM's SwapPublishedShifts RPC.
+	WFMSwapPublishedShiftsProcedure = "/api.v1alpha1.wfm.WFM/SwapPublishedShifts"
+	// WFMDeletePublishedShiftsProcedure is the fully-qualified name of the WFM's DeletePublishedShifts
+	// RPC.
+	WFMDeletePublishedShiftsProcedure = "/api.v1alpha1.wfm.WFM/DeletePublishedShifts"
+	// WFMReplaceAgentOnPublishedScheduleProcedure is the fully-qualified name of the WFM's
+	// ReplaceAgentOnPublishedSchedule RPC.
+	WFMReplaceAgentOnPublishedScheduleProcedure = "/api.v1alpha1.wfm.WFM/ReplaceAgentOnPublishedSchedule"
+	// WFMRemoveAgentFromPublishedScheduleProcedure is the fully-qualified name of the WFM's
+	// RemoveAgentFromPublishedSchedule RPC.
+	WFMRemoveAgentFromPublishedScheduleProcedure = "/api.v1alpha1.wfm.WFM/RemoveAgentFromPublishedSchedule"
+	// WFMCopyShiftsToPublishedScheduleProcedure is the fully-qualified name of the WFM's
+	// CopyShiftsToPublishedSchedule RPC.
+	WFMCopyShiftsToPublishedScheduleProcedure = "/api.v1alpha1.wfm.WFM/CopyShiftsToPublishedSchedule"
 	// WFMCreateAgentLeavePetitionProcedure is the fully-qualified name of the WFM's
 	// CreateAgentLeavePetition RPC.
 	WFMCreateAgentLeavePetitionProcedure = "/api.v1alpha1.wfm.WFM/CreateAgentLeavePetition"
@@ -1552,6 +1580,7 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when getting the config entities.
 	ListConfigEntities(context.Context, *connect_go.Request[wfm.ListConfigEntitiesReq]) (*connect_go.Response[wfm.ListConfigEntitiesRes], error)
 	// Deletes shift instances with the corresponding @shift_instance_sids for the org sending the request.
+	// Only deletes draft shifts. To delete published shifts use the DeletePublishedShifts endpoint.
 	// Errors:
 	//
 	//	-grpc.Invalid: the @shift_instance_sids are invalid for the org making the request.
@@ -1726,6 +1755,7 @@ type WFMClient interface {
 	// Creates a shift instance for the org sending the request with the provided parameters.
 	// If @wfm_agent_sids is empty, then the shift instance will be created for a newly created unassigned agent.
 	// A shift instance will be created for each wfm agent sid provided.
+	// Can only create shifts for the draft schedule. Published shifts require the CreatePublishedShift endpoint.
 	// Errors:
 	//   - grpc.Invalid: one or more fields in the request have invalid values.
 	//   - grpc.Internal: error occurs when creating the shift instance.
@@ -1736,6 +1766,7 @@ type WFMClient interface {
 	//
 	//	Otherwise, any diagnostics triggered by the given @shift_instance will be returned and the shift will not be created.
 	//
+	// Can only create shifts for the draft schedule. Published shifts with segments require the CreatePublishedShiftWithSegments endpoint.
 	// Errors:
 	//
 	//	-grpc.Invalid: one or more fields in the request have invalid values.
@@ -1748,6 +1779,7 @@ type WFMClient interface {
 	//
 	//	warning diagnostics will be returned and the instance will still be split.
 	//
+	// Can only split a shift on the draft schedule. To split a published shift use the SplitPublishedShift endpoint.
 	// Errors:
 	//
 	//	-grpc.Invalid: one or more fields in the request have invalid values, or @time_to_split is not at least 5 minutes from the start or end of @shift_instance_sid.
@@ -1758,9 +1790,11 @@ type WFMClient interface {
 	// Returns the swapped @shift_instances after they are succesfully updated.
 	// If there are other shifts for the given @wfm_agent_sids with an overlap conflict, diagnostics will be returned instead.
 	// All @shift_instance_sids must belong to the same schedule, and be from a draft schedule.
+	// Is only capable of swapping shifts on the draft schedule. To include shifts on the published schedule use the SwapPublishedShifts endpoint.
+	// If there is an overlap conflict with the swap, a diagnostic will be returned and the shifts will not be updated.
 	// Errors:
-	//   - grpc.Invalid: one or more fields in the request have invalid values.
-	//   - grpc.NotFound: wfm_agent_sid_1, wfm_agent_sid_2, or shift_instance_sids do not exist for the org sending the request.
+	//   - grpc.Invalid: one or more fields in the request have invalid values, or one of the @shift_instance_sids does not belong to either @wfm_agent_sid_1 nor @wfm_agent_sid_2 or is on a published schedule.
+	//   - grpc.NotFound: @wfm_agent_sid_1, @wfm_agent_sid_2, or @shift_instance_sids do not exist for the org sending the request.
 	//   - grpc.Internal: error occurs when swapping the shift instances.
 	SwapShiftInstances(context.Context, *connect_go.Request[wfm.SwapShiftInstancesReq]) (*connect_go.Response[wfm.SwapShiftInstancesRes], error)
 	// Updates a shift instance for the org sending the request with the provided parameters.
@@ -1770,9 +1804,12 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when updating the shift instance.
 	UpdateShiftInstance(context.Context, *connect_go.Request[wfm.UpdateShiftInstanceReq]) (*connect_go.Response[wfm.UpdateShiftInstanceRes], error)
 	// Updates a shift instance for the org sending the request with the provided parameters.
+	// Can only update a shift on the draft schedule. To update a published shift use the UpdatePublishedShift endpoint.
+	// If the width of the shift is changed, the lengths of the shift segments will be adjusted proportionally.
 	// Errors:
 	//   - grpc.Invalid: one or more fields in the request have invalid values.
 	//   - grpc.Internal: error occurs when updating the shift instance.
+	//   - grpc.NotFound: @shift_instance_sid does not exist for the org sending the request.
 	UpdateShiftInstanceV2(context.Context, *connect_go.Request[wfm.UpdateShiftInstanceV2Req]) (*connect_go.Response[wfm.UpdateShiftInstanceV2Res], error)
 	// Runs diagnostics on the given @shift_instance for the org sending the request.
 	// If @ignore_diagnostics_errors is True, the shift will be updated regardless of diagnostic errors and any diagnostics will be returned as warnings.
@@ -1781,9 +1818,11 @@ type WFMClient interface {
 	//
 	// Any existing shift segments belonging to @shift_instance will be deleted and replaced with the ones in the given @shift_instance.
 	// If no segments are provided, the existing segments will still be deleted and the instances will be left without any.
+	// Can only update a shift on the draft schedule. To update a published shift use the UpdatePublishedShiftWithSegments endpoint.
 	// Errors:
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when updating the @shift_instance or replacing their member shift segments.
+	//   - grpc.NotFound: @shift_instance_sid does not exist for the org sending the request.
 	UpdateShiftInstanceWithSegments(context.Context, *connect_go.Request[wfm.UpdateShiftInstanceWithSegmentsRequest]) (*connect_go.Response[wfm.UpdateShiftInstanceWithSegmentsResponse], error)
 	// Copies the given @shift_instance_sids to @destination_schedule for the org sending the request.
 	// If there are any overlap conflicts on @destination_schedule and @overlap_as_warning is set to false,
@@ -1791,6 +1830,7 @@ type WFMClient interface {
 	//	then @shift_instance_sids will not be copied, and a list of diagnostics detailing the overlaps will be returned.
 	//
 	// If @overlap_as_warning is set to true, overlap conflicts will not prevent the shifts from being copied, and the overlap diagnostics will be returned after as warning messages instead.
+	// This endpoint can only copy shifts to a draft schedule. To copy shifts to the published schedule use the CopyShiftsToPublishedSchedule endpoint.
 	// Errors:
 	//   - grpc.Invalid: one or more fields in the request have invalid values.
 	//   - grpc.NotFound: the @shift_instance_sids or @destination_schedule does not exist for the org sending the request.
@@ -2059,6 +2099,7 @@ type WFMClient interface {
 	// Replaces @wfm_agent_sid_to_remove with @wfm_agent_sid_to_add for the given parameters and the org sending the request.
 	// If @skip_overlapping_shifts, shifts with an overlap conflict will be skipped, otherwise overlap conflicts will cause a diagnostic to be returned.
 	// Does not enforce skill proficiencies. To check skill proficiencies for shift replacement use ListValidAgentsForReplacement.
+	// Only replaces the agent on the draft schedule. To replace the agent on a published schedule use the ReplaceAgentOnPublishedSchedule endpoint.
 	// Errors:
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when replacing the @wfm_agent_sid_to_remove.
@@ -2066,10 +2107,112 @@ type WFMClient interface {
 	// Removes the @wfm_agent_sid from @schedule_selector over @datetime_range for the org sending the request.
 	// Creates a new unassigned agent with the same active agent group associations as @wfm_agent_sid for @schedule_scenario_sid.
 	// The unassigned agent will be assigned to shifts belonging to @wfm_agent_sid, returning newly created unassigned agent's SID and the updated shifts.
+	// Only removes agents from a draft schedule. To remove agents from the published schedule use the RemoveAgentFromPublishedSchedule endpoint.
 	// Errors:
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when creating the unassigned agent or updating the shifts.
 	RemoveAgentFromSchedule(context.Context, *connect_go.Request[wfm.RemoveAgentFromScheduleRequest]) (*connect_go.Response[wfm.RemoveAgentFromScheduleResponse], error)
+	// Creates a published shift instance for the org sending the request with the provided parameters, with shift segments matching @shift_template_sid.
+	// If @wfm_agent_sids is empty, then the shift instance will be created for a newly created unassigned agent.
+	// A shift instance will be created for each wfm agent sid provided.
+	// Can only create shifts for the published schedule. Draft shifts require the CreateShiftInstanceV2 endpoint.
+	// Errors:
+	//   - grpc.Invalid: one or more fields in the request have invalid values.
+	//   - grpc.Internal: error occurs when creating the shift instance.
+	//   - grpc.NotFound: the @shift_template_sid, or @wfm_agent_sids do not exist for the org sending the request.
+	CreatePublishedShift(context.Context, *connect_go.Request[wfm.CreatePublishedShiftRequest]) (*connect_go.Response[wfm.CreatePublishedShiftResponse], error)
+	// Creates the @shift_instance with any member shift segments and shift segment call stats for the org sending the request.
+	// If @ignore_diagnostics_errors any diagnostics encountered will be returned as warnings, and the shift will still be created.
+	//
+	//	Otherwise, any diagnostics triggered by the given @shift_instance will be returned and the shift will not be created.
+	//
+	// Can only create shifts for the published schedule. Draft shifts with segments require the CreateShiftInstanceWithSegments endpoint.
+	// Errors:
+	//   - grpc.Invalid: one or more fields in the request have invalid values.
+	//   - grpc.NotFound: the fields referenced in @shift_instance or its member shift segments don't exist for the org.
+	//   - grpc.Internal: error occurs when creating the shift instance or its members.
+	CreatePublishedShiftWithSegments(context.Context, *connect_go.Request[wfm.CreatePublishedShiftWithSegmentsRequest]) (*connect_go.Response[wfm.CreatePublishedShiftWithSegmentsResponse], error)
+	// Updates a shift instance on the published schedule for the org sending the request with the provided parameters.
+	// Can only update a shift on the published schedule. To update a draft shift use the UpdateShiftInstanceV2 endpoint.
+	// If the width of the shift is changed, the lengths of the shift segments will be adjusted proportionally.
+	// Errors:
+	//   - grpc.Invalid: one or more fields in the request have invalid values.
+	//   - grpc.Internal: error occurs when updating the shift instance.
+	//   - grpc.NotFound: @shift_instance_sid does not exist for the org sending the request.
+	UpdatePublishedShift(context.Context, *connect_go.Request[wfm.UpdatePublishedShiftRequest]) (*connect_go.Response[wfm.UpdatePublishedShiftResponse], error)
+	// Runs diagnostics on the given published @shift_instance for the org sending the request.
+	// If @ignore_diagnostics_errors is True, the shift will be updated regardless of diagnostic errors and any diagnostics will be returned as warnings.
+	// Otherwise, the shift will only be updated if there are no diagnostic errors.
+	// Only the @start_datetime, @is_locked, @width_in_minutes and @wfm_agent_sid fields of the shift will be updated.
+	//
+	// Any existing shift segments belonging to @shift_instance will be deleted and replaced with the ones in the given @shift_instance.
+	// If no segments are provided, the existing segments will still be deleted and the instances will be left without any.
+	// Can only update a shift on the published schedule. To update a draft shift use the UpdateShiftInstanceWithSegments endpoint.
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when updating the @shift_instance or replacing their member shift segments.
+	//   - grpc.NotFound: @shift_instance_sid does not exist for the org sending the request.
+	UpdatePublishedShiftWithSegments(context.Context, *connect_go.Request[wfm.UpdatePublishedShiftWithSegmentsRequest]) (*connect_go.Response[wfm.UpdatePublishedShiftWithSegmentsResponse], error)
+	// Splits the published @shift_instance_sid into two, at the given @time_to_split, returning the updated and new @shift_instances.
+	// Any shift segments will be split between the two shift instances at @time_to_split.
+	// If the @time_to_split creates instances shorter then the minimum length specified by the shift template,
+	//
+	//	warning diagnostics will be returned and the instance will still be split.
+	//
+	// Can only split a shift on the published schedule. To split a draft shift use the SplitShiftInstance endpoint.
+	// Errors:
+	//
+	//	-grpc.Invalid: one or more fields in the request have invalid values, or @time_to_split is not at least 5 minutes from the start or end of @shift_instance_sid.
+	//	-grpc.NotFound: the @shift_instance_sid does't exist for the org sending the request.
+	//	-grpc.Internal: error occurs when creating or updating the shift instances.
+	SplitPublishedShift(context.Context, *connect_go.Request[wfm.SplitPublishedShiftRequest]) (*connect_go.Response[wfm.SplitPublishedShiftResponse], error)
+	// Swaps shift instances with the given @shift_instance_sids that belong to @wfm_agent_sid1 to belong to @wfm_agent_sid2 (and viceversa).
+	// Returns the swapped @shift_instances after they are succesfully updated.
+	// If there are other shifts for the given @wfm_agent_sids with an overlap conflict, diagnostics will be returned instead.
+	// All @shift_instance_sids must belong to the same schedule, and be from a draft schedule.
+	// Is capable of swapping shifts on the published schedule, but is not restricted from swapping shifts on the draft schedule as well.
+	// Users without permissions to swap published shifts can swap draft shifts with the SwapShiftInstances endpoint.
+	// If there is an overlap conflict with the swap, a diagnostic will be returned and the shifts will not be updated.
+	// Errors:
+	//   - grpc.Invalid: one or more fields in the request have invalid values, or one of the @shift_instance_sids does not belong to either @wfm_agent_sid_1 nor @wfm_agent_sid_2.
+	//   - grpc.NotFound: @wfm_agent_sid_1, @wfm_agent_sid_2, or @shift_instance_sids do not exist for the org sending the request.
+	//   - grpc.Internal: error occurs when swapping the shift instances.
+	SwapPublishedShifts(context.Context, *connect_go.Request[wfm.SwapPublishedShiftsRequest]) (*connect_go.Response[wfm.SwapPublishedShiftsResponse], error)
+	// Deletes the published shift instances with the corresponding @shift_instance_sids for the org sending the request.
+	// Only deletes published shifts. To delete draft shifts use the DeleteShiftInstances endpoint.
+	// Errors:
+	//
+	//	-grpc.Invalid: the @shift_instance_sids are invalid for the org making the request.
+	//	-grpc.NotFound: the shift instances with the given @shift_instance_sids don't exist.
+	//	-grpc.Internal: error occurs when removing the shift instances.
+	DeletePublishedShifts(context.Context, *connect_go.Request[wfm.DeletePublishedShiftsRequest]) (*connect_go.Response[wfm.DeletePublishedShiftsResponse], error)
+	// Replaces @wfm_agent_sid_to_remove with @wfm_agent_sid_to_add on the shifts for the given parameters on the published schedule for the org sending the request.
+	// If @skip_overlapping_shifts, shifts with an overlap conflict will be skipped, otherwise overlap conflicts will cause a diagnostic to be returned.
+	// Does not enforce skill proficiencies. To check skill proficiencies for shift replacement use ListValidAgentsForReplacement.
+	// Only replaces the agent on the published schedule. To replace the agent on a draft schedule use the ReplaceAgentOnScheduleV1 endpoint.
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when replacing the @wfm_agent_sid_to_remove.
+	ReplaceAgentOnPublishedSchedule(context.Context, *connect_go.Request[wfm.ReplaceAgentOnPublishedScheduleRequest]) (*connect_go.Response[wfm.ReplaceAgentOnPublishedScheduleResponse], error)
+	// Removes the @wfm_agent_sid from published schedule over @datetime_range for the org sending the request.
+	// Creates a new unassigned agent with the same active agent group associations as @wfm_agent_sid for @schedule_scenario_sid.
+	// The unassigned agent will be assigned to shifts belonging to @wfm_agent_sid, returning newly created unassigned agent's SID and the updated shifts.
+	// Only removes agents from the published schedule. To remove agents from a draft schedule use the RemoveAgentFromSchedule endpoint.
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when creating the unassigned agent or updating the shifts.
+	RemoveAgentFromPublishedSchedule(context.Context, *connect_go.Request[wfm.RemoveAgentFromPublishedScheduleRequest]) (*connect_go.Response[wfm.RemoveAgentFromPublishedScheduleResponse], error)
+	// Copies the given @shift_instance_sids to published schedule for the org sending the request.
+	// If there are any overlap conflicts on published schedule and @overlap_as_warning is set to false,
+	//
+	//	then @shift_instance_sids will not be copied, and a list of diagnostics detailing the overlaps will be returned.
+	//
+	// This endpoint can only copy shifts to the published schedule. To copy shifts to a draft schedule use the CopyShiftInstancesToSchedule endpoint.
+	// Errors:
+	//   - grpc.Invalid: one or more fields in the request have invalid values.
+	//   - grpc.NotFound: the @shift_instance_sids do not exist for the org sending the request.
+	//   - grpc.Internal: error occurs when copying the shift instances.
+	CopyShiftsToPublishedSchedule(context.Context, *connect_go.Request[wfm.CopyShiftsToPublishedScheduleRequest]) (*connect_go.Response[wfm.CopyShiftsToPublishedScheduleResponse], error)
 	// Creates an agent leave petition to request time off for the @wfm_agent_sid over the @requested_datetime_ranges for the org sending the request.
 	// The @petition_comment must be set with a value.
 	// The @requested_datetime_ranges may not overlap each other.
@@ -3250,6 +3393,56 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMRemoveAgentFromScheduleProcedure,
 			opts...,
 		),
+		createPublishedShift: connect_go.NewClient[wfm.CreatePublishedShiftRequest, wfm.CreatePublishedShiftResponse](
+			httpClient,
+			baseURL+WFMCreatePublishedShiftProcedure,
+			opts...,
+		),
+		createPublishedShiftWithSegments: connect_go.NewClient[wfm.CreatePublishedShiftWithSegmentsRequest, wfm.CreatePublishedShiftWithSegmentsResponse](
+			httpClient,
+			baseURL+WFMCreatePublishedShiftWithSegmentsProcedure,
+			opts...,
+		),
+		updatePublishedShift: connect_go.NewClient[wfm.UpdatePublishedShiftRequest, wfm.UpdatePublishedShiftResponse](
+			httpClient,
+			baseURL+WFMUpdatePublishedShiftProcedure,
+			opts...,
+		),
+		updatePublishedShiftWithSegments: connect_go.NewClient[wfm.UpdatePublishedShiftWithSegmentsRequest, wfm.UpdatePublishedShiftWithSegmentsResponse](
+			httpClient,
+			baseURL+WFMUpdatePublishedShiftWithSegmentsProcedure,
+			opts...,
+		),
+		splitPublishedShift: connect_go.NewClient[wfm.SplitPublishedShiftRequest, wfm.SplitPublishedShiftResponse](
+			httpClient,
+			baseURL+WFMSplitPublishedShiftProcedure,
+			opts...,
+		),
+		swapPublishedShifts: connect_go.NewClient[wfm.SwapPublishedShiftsRequest, wfm.SwapPublishedShiftsResponse](
+			httpClient,
+			baseURL+WFMSwapPublishedShiftsProcedure,
+			opts...,
+		),
+		deletePublishedShifts: connect_go.NewClient[wfm.DeletePublishedShiftsRequest, wfm.DeletePublishedShiftsResponse](
+			httpClient,
+			baseURL+WFMDeletePublishedShiftsProcedure,
+			opts...,
+		),
+		replaceAgentOnPublishedSchedule: connect_go.NewClient[wfm.ReplaceAgentOnPublishedScheduleRequest, wfm.ReplaceAgentOnPublishedScheduleResponse](
+			httpClient,
+			baseURL+WFMReplaceAgentOnPublishedScheduleProcedure,
+			opts...,
+		),
+		removeAgentFromPublishedSchedule: connect_go.NewClient[wfm.RemoveAgentFromPublishedScheduleRequest, wfm.RemoveAgentFromPublishedScheduleResponse](
+			httpClient,
+			baseURL+WFMRemoveAgentFromPublishedScheduleProcedure,
+			opts...,
+		),
+		copyShiftsToPublishedSchedule: connect_go.NewClient[wfm.CopyShiftsToPublishedScheduleRequest, wfm.CopyShiftsToPublishedScheduleResponse](
+			httpClient,
+			baseURL+WFMCopyShiftsToPublishedScheduleProcedure,
+			opts...,
+		),
 		createAgentLeavePetition: connect_go.NewClient[wfm.CreateAgentLeavePetitionRequest, wfm.CreateAgentLeavePetitionResponse](
 			httpClient,
 			baseURL+WFMCreateAgentLeavePetitionProcedure,
@@ -3624,6 +3817,16 @@ type wFMClient struct {
 	replaceAgentOnSchedule                           *connect_go.Client[wfm.ReplaceAgentOnScheduleRes, wfm.ReplaceAgentOnScheduleRes]
 	replaceAgentOnScheduleV1                         *connect_go.Client[wfm.ReplaceAgentOnScheduleReq, wfm.ReplaceAgentOnScheduleRes]
 	removeAgentFromSchedule                          *connect_go.Client[wfm.RemoveAgentFromScheduleRequest, wfm.RemoveAgentFromScheduleResponse]
+	createPublishedShift                             *connect_go.Client[wfm.CreatePublishedShiftRequest, wfm.CreatePublishedShiftResponse]
+	createPublishedShiftWithSegments                 *connect_go.Client[wfm.CreatePublishedShiftWithSegmentsRequest, wfm.CreatePublishedShiftWithSegmentsResponse]
+	updatePublishedShift                             *connect_go.Client[wfm.UpdatePublishedShiftRequest, wfm.UpdatePublishedShiftResponse]
+	updatePublishedShiftWithSegments                 *connect_go.Client[wfm.UpdatePublishedShiftWithSegmentsRequest, wfm.UpdatePublishedShiftWithSegmentsResponse]
+	splitPublishedShift                              *connect_go.Client[wfm.SplitPublishedShiftRequest, wfm.SplitPublishedShiftResponse]
+	swapPublishedShifts                              *connect_go.Client[wfm.SwapPublishedShiftsRequest, wfm.SwapPublishedShiftsResponse]
+	deletePublishedShifts                            *connect_go.Client[wfm.DeletePublishedShiftsRequest, wfm.DeletePublishedShiftsResponse]
+	replaceAgentOnPublishedSchedule                  *connect_go.Client[wfm.ReplaceAgentOnPublishedScheduleRequest, wfm.ReplaceAgentOnPublishedScheduleResponse]
+	removeAgentFromPublishedSchedule                 *connect_go.Client[wfm.RemoveAgentFromPublishedScheduleRequest, wfm.RemoveAgentFromPublishedScheduleResponse]
+	copyShiftsToPublishedSchedule                    *connect_go.Client[wfm.CopyShiftsToPublishedScheduleRequest, wfm.CopyShiftsToPublishedScheduleResponse]
 	createAgentLeavePetition                         *connect_go.Client[wfm.CreateAgentLeavePetitionRequest, wfm.CreateAgentLeavePetitionResponse]
 	listAgentLeavePetitions                          *connect_go.Client[wfm.ListAgentLeavePetitionsRequest, wfm.ListAgentLeavePetitionsResponse]
 	archiveAgentLeavePetition                        *connect_go.Client[wfm.ArchiveAgentLeavePetitionRequest, wfm.ArchiveAgentLeavePetitionResponse]
@@ -4583,6 +4786,56 @@ func (c *wFMClient) ReplaceAgentOnScheduleV1(ctx context.Context, req *connect_g
 // RemoveAgentFromSchedule calls api.v1alpha1.wfm.WFM.RemoveAgentFromSchedule.
 func (c *wFMClient) RemoveAgentFromSchedule(ctx context.Context, req *connect_go.Request[wfm.RemoveAgentFromScheduleRequest]) (*connect_go.Response[wfm.RemoveAgentFromScheduleResponse], error) {
 	return c.removeAgentFromSchedule.CallUnary(ctx, req)
+}
+
+// CreatePublishedShift calls api.v1alpha1.wfm.WFM.CreatePublishedShift.
+func (c *wFMClient) CreatePublishedShift(ctx context.Context, req *connect_go.Request[wfm.CreatePublishedShiftRequest]) (*connect_go.Response[wfm.CreatePublishedShiftResponse], error) {
+	return c.createPublishedShift.CallUnary(ctx, req)
+}
+
+// CreatePublishedShiftWithSegments calls api.v1alpha1.wfm.WFM.CreatePublishedShiftWithSegments.
+func (c *wFMClient) CreatePublishedShiftWithSegments(ctx context.Context, req *connect_go.Request[wfm.CreatePublishedShiftWithSegmentsRequest]) (*connect_go.Response[wfm.CreatePublishedShiftWithSegmentsResponse], error) {
+	return c.createPublishedShiftWithSegments.CallUnary(ctx, req)
+}
+
+// UpdatePublishedShift calls api.v1alpha1.wfm.WFM.UpdatePublishedShift.
+func (c *wFMClient) UpdatePublishedShift(ctx context.Context, req *connect_go.Request[wfm.UpdatePublishedShiftRequest]) (*connect_go.Response[wfm.UpdatePublishedShiftResponse], error) {
+	return c.updatePublishedShift.CallUnary(ctx, req)
+}
+
+// UpdatePublishedShiftWithSegments calls api.v1alpha1.wfm.WFM.UpdatePublishedShiftWithSegments.
+func (c *wFMClient) UpdatePublishedShiftWithSegments(ctx context.Context, req *connect_go.Request[wfm.UpdatePublishedShiftWithSegmentsRequest]) (*connect_go.Response[wfm.UpdatePublishedShiftWithSegmentsResponse], error) {
+	return c.updatePublishedShiftWithSegments.CallUnary(ctx, req)
+}
+
+// SplitPublishedShift calls api.v1alpha1.wfm.WFM.SplitPublishedShift.
+func (c *wFMClient) SplitPublishedShift(ctx context.Context, req *connect_go.Request[wfm.SplitPublishedShiftRequest]) (*connect_go.Response[wfm.SplitPublishedShiftResponse], error) {
+	return c.splitPublishedShift.CallUnary(ctx, req)
+}
+
+// SwapPublishedShifts calls api.v1alpha1.wfm.WFM.SwapPublishedShifts.
+func (c *wFMClient) SwapPublishedShifts(ctx context.Context, req *connect_go.Request[wfm.SwapPublishedShiftsRequest]) (*connect_go.Response[wfm.SwapPublishedShiftsResponse], error) {
+	return c.swapPublishedShifts.CallUnary(ctx, req)
+}
+
+// DeletePublishedShifts calls api.v1alpha1.wfm.WFM.DeletePublishedShifts.
+func (c *wFMClient) DeletePublishedShifts(ctx context.Context, req *connect_go.Request[wfm.DeletePublishedShiftsRequest]) (*connect_go.Response[wfm.DeletePublishedShiftsResponse], error) {
+	return c.deletePublishedShifts.CallUnary(ctx, req)
+}
+
+// ReplaceAgentOnPublishedSchedule calls api.v1alpha1.wfm.WFM.ReplaceAgentOnPublishedSchedule.
+func (c *wFMClient) ReplaceAgentOnPublishedSchedule(ctx context.Context, req *connect_go.Request[wfm.ReplaceAgentOnPublishedScheduleRequest]) (*connect_go.Response[wfm.ReplaceAgentOnPublishedScheduleResponse], error) {
+	return c.replaceAgentOnPublishedSchedule.CallUnary(ctx, req)
+}
+
+// RemoveAgentFromPublishedSchedule calls api.v1alpha1.wfm.WFM.RemoveAgentFromPublishedSchedule.
+func (c *wFMClient) RemoveAgentFromPublishedSchedule(ctx context.Context, req *connect_go.Request[wfm.RemoveAgentFromPublishedScheduleRequest]) (*connect_go.Response[wfm.RemoveAgentFromPublishedScheduleResponse], error) {
+	return c.removeAgentFromPublishedSchedule.CallUnary(ctx, req)
+}
+
+// CopyShiftsToPublishedSchedule calls api.v1alpha1.wfm.WFM.CopyShiftsToPublishedSchedule.
+func (c *wFMClient) CopyShiftsToPublishedSchedule(ctx context.Context, req *connect_go.Request[wfm.CopyShiftsToPublishedScheduleRequest]) (*connect_go.Response[wfm.CopyShiftsToPublishedScheduleResponse], error) {
+	return c.copyShiftsToPublishedSchedule.CallUnary(ctx, req)
 }
 
 // CreateAgentLeavePetition calls api.v1alpha1.wfm.WFM.CreateAgentLeavePetition.
@@ -5686,6 +5939,7 @@ type WFMHandler interface {
 	//   - grpc.Internal: error occurs when getting the config entities.
 	ListConfigEntities(context.Context, *connect_go.Request[wfm.ListConfigEntitiesReq]) (*connect_go.Response[wfm.ListConfigEntitiesRes], error)
 	// Deletes shift instances with the corresponding @shift_instance_sids for the org sending the request.
+	// Only deletes draft shifts. To delete published shifts use the DeletePublishedShifts endpoint.
 	// Errors:
 	//
 	//	-grpc.Invalid: the @shift_instance_sids are invalid for the org making the request.
@@ -5860,6 +6114,7 @@ type WFMHandler interface {
 	// Creates a shift instance for the org sending the request with the provided parameters.
 	// If @wfm_agent_sids is empty, then the shift instance will be created for a newly created unassigned agent.
 	// A shift instance will be created for each wfm agent sid provided.
+	// Can only create shifts for the draft schedule. Published shifts require the CreatePublishedShift endpoint.
 	// Errors:
 	//   - grpc.Invalid: one or more fields in the request have invalid values.
 	//   - grpc.Internal: error occurs when creating the shift instance.
@@ -5870,6 +6125,7 @@ type WFMHandler interface {
 	//
 	//	Otherwise, any diagnostics triggered by the given @shift_instance will be returned and the shift will not be created.
 	//
+	// Can only create shifts for the draft schedule. Published shifts with segments require the CreatePublishedShiftWithSegments endpoint.
 	// Errors:
 	//
 	//	-grpc.Invalid: one or more fields in the request have invalid values.
@@ -5882,6 +6138,7 @@ type WFMHandler interface {
 	//
 	//	warning diagnostics will be returned and the instance will still be split.
 	//
+	// Can only split a shift on the draft schedule. To split a published shift use the SplitPublishedShift endpoint.
 	// Errors:
 	//
 	//	-grpc.Invalid: one or more fields in the request have invalid values, or @time_to_split is not at least 5 minutes from the start or end of @shift_instance_sid.
@@ -5892,9 +6149,11 @@ type WFMHandler interface {
 	// Returns the swapped @shift_instances after they are succesfully updated.
 	// If there are other shifts for the given @wfm_agent_sids with an overlap conflict, diagnostics will be returned instead.
 	// All @shift_instance_sids must belong to the same schedule, and be from a draft schedule.
+	// Is only capable of swapping shifts on the draft schedule. To include shifts on the published schedule use the SwapPublishedShifts endpoint.
+	// If there is an overlap conflict with the swap, a diagnostic will be returned and the shifts will not be updated.
 	// Errors:
-	//   - grpc.Invalid: one or more fields in the request have invalid values.
-	//   - grpc.NotFound: wfm_agent_sid_1, wfm_agent_sid_2, or shift_instance_sids do not exist for the org sending the request.
+	//   - grpc.Invalid: one or more fields in the request have invalid values, or one of the @shift_instance_sids does not belong to either @wfm_agent_sid_1 nor @wfm_agent_sid_2 or is on a published schedule.
+	//   - grpc.NotFound: @wfm_agent_sid_1, @wfm_agent_sid_2, or @shift_instance_sids do not exist for the org sending the request.
 	//   - grpc.Internal: error occurs when swapping the shift instances.
 	SwapShiftInstances(context.Context, *connect_go.Request[wfm.SwapShiftInstancesReq]) (*connect_go.Response[wfm.SwapShiftInstancesRes], error)
 	// Updates a shift instance for the org sending the request with the provided parameters.
@@ -5904,9 +6163,12 @@ type WFMHandler interface {
 	//   - grpc.Internal: error occurs when updating the shift instance.
 	UpdateShiftInstance(context.Context, *connect_go.Request[wfm.UpdateShiftInstanceReq]) (*connect_go.Response[wfm.UpdateShiftInstanceRes], error)
 	// Updates a shift instance for the org sending the request with the provided parameters.
+	// Can only update a shift on the draft schedule. To update a published shift use the UpdatePublishedShift endpoint.
+	// If the width of the shift is changed, the lengths of the shift segments will be adjusted proportionally.
 	// Errors:
 	//   - grpc.Invalid: one or more fields in the request have invalid values.
 	//   - grpc.Internal: error occurs when updating the shift instance.
+	//   - grpc.NotFound: @shift_instance_sid does not exist for the org sending the request.
 	UpdateShiftInstanceV2(context.Context, *connect_go.Request[wfm.UpdateShiftInstanceV2Req]) (*connect_go.Response[wfm.UpdateShiftInstanceV2Res], error)
 	// Runs diagnostics on the given @shift_instance for the org sending the request.
 	// If @ignore_diagnostics_errors is True, the shift will be updated regardless of diagnostic errors and any diagnostics will be returned as warnings.
@@ -5915,9 +6177,11 @@ type WFMHandler interface {
 	//
 	// Any existing shift segments belonging to @shift_instance will be deleted and replaced with the ones in the given @shift_instance.
 	// If no segments are provided, the existing segments will still be deleted and the instances will be left without any.
+	// Can only update a shift on the draft schedule. To update a published shift use the UpdatePublishedShiftWithSegments endpoint.
 	// Errors:
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when updating the @shift_instance or replacing their member shift segments.
+	//   - grpc.NotFound: @shift_instance_sid does not exist for the org sending the request.
 	UpdateShiftInstanceWithSegments(context.Context, *connect_go.Request[wfm.UpdateShiftInstanceWithSegmentsRequest]) (*connect_go.Response[wfm.UpdateShiftInstanceWithSegmentsResponse], error)
 	// Copies the given @shift_instance_sids to @destination_schedule for the org sending the request.
 	// If there are any overlap conflicts on @destination_schedule and @overlap_as_warning is set to false,
@@ -5925,6 +6189,7 @@ type WFMHandler interface {
 	//	then @shift_instance_sids will not be copied, and a list of diagnostics detailing the overlaps will be returned.
 	//
 	// If @overlap_as_warning is set to true, overlap conflicts will not prevent the shifts from being copied, and the overlap diagnostics will be returned after as warning messages instead.
+	// This endpoint can only copy shifts to a draft schedule. To copy shifts to the published schedule use the CopyShiftsToPublishedSchedule endpoint.
 	// Errors:
 	//   - grpc.Invalid: one or more fields in the request have invalid values.
 	//   - grpc.NotFound: the @shift_instance_sids or @destination_schedule does not exist for the org sending the request.
@@ -6193,6 +6458,7 @@ type WFMHandler interface {
 	// Replaces @wfm_agent_sid_to_remove with @wfm_agent_sid_to_add for the given parameters and the org sending the request.
 	// If @skip_overlapping_shifts, shifts with an overlap conflict will be skipped, otherwise overlap conflicts will cause a diagnostic to be returned.
 	// Does not enforce skill proficiencies. To check skill proficiencies for shift replacement use ListValidAgentsForReplacement.
+	// Only replaces the agent on the draft schedule. To replace the agent on a published schedule use the ReplaceAgentOnPublishedSchedule endpoint.
 	// Errors:
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when replacing the @wfm_agent_sid_to_remove.
@@ -6200,10 +6466,112 @@ type WFMHandler interface {
 	// Removes the @wfm_agent_sid from @schedule_selector over @datetime_range for the org sending the request.
 	// Creates a new unassigned agent with the same active agent group associations as @wfm_agent_sid for @schedule_scenario_sid.
 	// The unassigned agent will be assigned to shifts belonging to @wfm_agent_sid, returning newly created unassigned agent's SID and the updated shifts.
+	// Only removes agents from a draft schedule. To remove agents from the published schedule use the RemoveAgentFromPublishedSchedule endpoint.
 	// Errors:
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.Internal: error occurs when creating the unassigned agent or updating the shifts.
 	RemoveAgentFromSchedule(context.Context, *connect_go.Request[wfm.RemoveAgentFromScheduleRequest]) (*connect_go.Response[wfm.RemoveAgentFromScheduleResponse], error)
+	// Creates a published shift instance for the org sending the request with the provided parameters, with shift segments matching @shift_template_sid.
+	// If @wfm_agent_sids is empty, then the shift instance will be created for a newly created unassigned agent.
+	// A shift instance will be created for each wfm agent sid provided.
+	// Can only create shifts for the published schedule. Draft shifts require the CreateShiftInstanceV2 endpoint.
+	// Errors:
+	//   - grpc.Invalid: one or more fields in the request have invalid values.
+	//   - grpc.Internal: error occurs when creating the shift instance.
+	//   - grpc.NotFound: the @shift_template_sid, or @wfm_agent_sids do not exist for the org sending the request.
+	CreatePublishedShift(context.Context, *connect_go.Request[wfm.CreatePublishedShiftRequest]) (*connect_go.Response[wfm.CreatePublishedShiftResponse], error)
+	// Creates the @shift_instance with any member shift segments and shift segment call stats for the org sending the request.
+	// If @ignore_diagnostics_errors any diagnostics encountered will be returned as warnings, and the shift will still be created.
+	//
+	//	Otherwise, any diagnostics triggered by the given @shift_instance will be returned and the shift will not be created.
+	//
+	// Can only create shifts for the published schedule. Draft shifts with segments require the CreateShiftInstanceWithSegments endpoint.
+	// Errors:
+	//   - grpc.Invalid: one or more fields in the request have invalid values.
+	//   - grpc.NotFound: the fields referenced in @shift_instance or its member shift segments don't exist for the org.
+	//   - grpc.Internal: error occurs when creating the shift instance or its members.
+	CreatePublishedShiftWithSegments(context.Context, *connect_go.Request[wfm.CreatePublishedShiftWithSegmentsRequest]) (*connect_go.Response[wfm.CreatePublishedShiftWithSegmentsResponse], error)
+	// Updates a shift instance on the published schedule for the org sending the request with the provided parameters.
+	// Can only update a shift on the published schedule. To update a draft shift use the UpdateShiftInstanceV2 endpoint.
+	// If the width of the shift is changed, the lengths of the shift segments will be adjusted proportionally.
+	// Errors:
+	//   - grpc.Invalid: one or more fields in the request have invalid values.
+	//   - grpc.Internal: error occurs when updating the shift instance.
+	//   - grpc.NotFound: @shift_instance_sid does not exist for the org sending the request.
+	UpdatePublishedShift(context.Context, *connect_go.Request[wfm.UpdatePublishedShiftRequest]) (*connect_go.Response[wfm.UpdatePublishedShiftResponse], error)
+	// Runs diagnostics on the given published @shift_instance for the org sending the request.
+	// If @ignore_diagnostics_errors is True, the shift will be updated regardless of diagnostic errors and any diagnostics will be returned as warnings.
+	// Otherwise, the shift will only be updated if there are no diagnostic errors.
+	// Only the @start_datetime, @is_locked, @width_in_minutes and @wfm_agent_sid fields of the shift will be updated.
+	//
+	// Any existing shift segments belonging to @shift_instance will be deleted and replaced with the ones in the given @shift_instance.
+	// If no segments are provided, the existing segments will still be deleted and the instances will be left without any.
+	// Can only update a shift on the published schedule. To update a draft shift use the UpdateShiftInstanceWithSegments endpoint.
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when updating the @shift_instance or replacing their member shift segments.
+	//   - grpc.NotFound: @shift_instance_sid does not exist for the org sending the request.
+	UpdatePublishedShiftWithSegments(context.Context, *connect_go.Request[wfm.UpdatePublishedShiftWithSegmentsRequest]) (*connect_go.Response[wfm.UpdatePublishedShiftWithSegmentsResponse], error)
+	// Splits the published @shift_instance_sid into two, at the given @time_to_split, returning the updated and new @shift_instances.
+	// Any shift segments will be split between the two shift instances at @time_to_split.
+	// If the @time_to_split creates instances shorter then the minimum length specified by the shift template,
+	//
+	//	warning diagnostics will be returned and the instance will still be split.
+	//
+	// Can only split a shift on the published schedule. To split a draft shift use the SplitShiftInstance endpoint.
+	// Errors:
+	//
+	//	-grpc.Invalid: one or more fields in the request have invalid values, or @time_to_split is not at least 5 minutes from the start or end of @shift_instance_sid.
+	//	-grpc.NotFound: the @shift_instance_sid does't exist for the org sending the request.
+	//	-grpc.Internal: error occurs when creating or updating the shift instances.
+	SplitPublishedShift(context.Context, *connect_go.Request[wfm.SplitPublishedShiftRequest]) (*connect_go.Response[wfm.SplitPublishedShiftResponse], error)
+	// Swaps shift instances with the given @shift_instance_sids that belong to @wfm_agent_sid1 to belong to @wfm_agent_sid2 (and viceversa).
+	// Returns the swapped @shift_instances after they are succesfully updated.
+	// If there are other shifts for the given @wfm_agent_sids with an overlap conflict, diagnostics will be returned instead.
+	// All @shift_instance_sids must belong to the same schedule, and be from a draft schedule.
+	// Is capable of swapping shifts on the published schedule, but is not restricted from swapping shifts on the draft schedule as well.
+	// Users without permissions to swap published shifts can swap draft shifts with the SwapShiftInstances endpoint.
+	// If there is an overlap conflict with the swap, a diagnostic will be returned and the shifts will not be updated.
+	// Errors:
+	//   - grpc.Invalid: one or more fields in the request have invalid values, or one of the @shift_instance_sids does not belong to either @wfm_agent_sid_1 nor @wfm_agent_sid_2.
+	//   - grpc.NotFound: @wfm_agent_sid_1, @wfm_agent_sid_2, or @shift_instance_sids do not exist for the org sending the request.
+	//   - grpc.Internal: error occurs when swapping the shift instances.
+	SwapPublishedShifts(context.Context, *connect_go.Request[wfm.SwapPublishedShiftsRequest]) (*connect_go.Response[wfm.SwapPublishedShiftsResponse], error)
+	// Deletes the published shift instances with the corresponding @shift_instance_sids for the org sending the request.
+	// Only deletes published shifts. To delete draft shifts use the DeleteShiftInstances endpoint.
+	// Errors:
+	//
+	//	-grpc.Invalid: the @shift_instance_sids are invalid for the org making the request.
+	//	-grpc.NotFound: the shift instances with the given @shift_instance_sids don't exist.
+	//	-grpc.Internal: error occurs when removing the shift instances.
+	DeletePublishedShifts(context.Context, *connect_go.Request[wfm.DeletePublishedShiftsRequest]) (*connect_go.Response[wfm.DeletePublishedShiftsResponse], error)
+	// Replaces @wfm_agent_sid_to_remove with @wfm_agent_sid_to_add on the shifts for the given parameters on the published schedule for the org sending the request.
+	// If @skip_overlapping_shifts, shifts with an overlap conflict will be skipped, otherwise overlap conflicts will cause a diagnostic to be returned.
+	// Does not enforce skill proficiencies. To check skill proficiencies for shift replacement use ListValidAgentsForReplacement.
+	// Only replaces the agent on the published schedule. To replace the agent on a draft schedule use the ReplaceAgentOnScheduleV1 endpoint.
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when replacing the @wfm_agent_sid_to_remove.
+	ReplaceAgentOnPublishedSchedule(context.Context, *connect_go.Request[wfm.ReplaceAgentOnPublishedScheduleRequest]) (*connect_go.Response[wfm.ReplaceAgentOnPublishedScheduleResponse], error)
+	// Removes the @wfm_agent_sid from published schedule over @datetime_range for the org sending the request.
+	// Creates a new unassigned agent with the same active agent group associations as @wfm_agent_sid for @schedule_scenario_sid.
+	// The unassigned agent will be assigned to shifts belonging to @wfm_agent_sid, returning newly created unassigned agent's SID and the updated shifts.
+	// Only removes agents from the published schedule. To remove agents from a draft schedule use the RemoveAgentFromSchedule endpoint.
+	// Errors:
+	//   - grpc.Invalid: the request data is invalid.
+	//   - grpc.Internal: error occurs when creating the unassigned agent or updating the shifts.
+	RemoveAgentFromPublishedSchedule(context.Context, *connect_go.Request[wfm.RemoveAgentFromPublishedScheduleRequest]) (*connect_go.Response[wfm.RemoveAgentFromPublishedScheduleResponse], error)
+	// Copies the given @shift_instance_sids to published schedule for the org sending the request.
+	// If there are any overlap conflicts on published schedule and @overlap_as_warning is set to false,
+	//
+	//	then @shift_instance_sids will not be copied, and a list of diagnostics detailing the overlaps will be returned.
+	//
+	// This endpoint can only copy shifts to the published schedule. To copy shifts to a draft schedule use the CopyShiftInstancesToSchedule endpoint.
+	// Errors:
+	//   - grpc.Invalid: one or more fields in the request have invalid values.
+	//   - grpc.NotFound: the @shift_instance_sids do not exist for the org sending the request.
+	//   - grpc.Internal: error occurs when copying the shift instances.
+	CopyShiftsToPublishedSchedule(context.Context, *connect_go.Request[wfm.CopyShiftsToPublishedScheduleRequest]) (*connect_go.Response[wfm.CopyShiftsToPublishedScheduleResponse], error)
 	// Creates an agent leave petition to request time off for the @wfm_agent_sid over the @requested_datetime_ranges for the org sending the request.
 	// The @petition_comment must be set with a value.
 	// The @requested_datetime_ranges may not overlap each other.
@@ -7380,6 +7748,56 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.RemoveAgentFromSchedule,
 		opts...,
 	)
+	wFMCreatePublishedShiftHandler := connect_go.NewUnaryHandler(
+		WFMCreatePublishedShiftProcedure,
+		svc.CreatePublishedShift,
+		opts...,
+	)
+	wFMCreatePublishedShiftWithSegmentsHandler := connect_go.NewUnaryHandler(
+		WFMCreatePublishedShiftWithSegmentsProcedure,
+		svc.CreatePublishedShiftWithSegments,
+		opts...,
+	)
+	wFMUpdatePublishedShiftHandler := connect_go.NewUnaryHandler(
+		WFMUpdatePublishedShiftProcedure,
+		svc.UpdatePublishedShift,
+		opts...,
+	)
+	wFMUpdatePublishedShiftWithSegmentsHandler := connect_go.NewUnaryHandler(
+		WFMUpdatePublishedShiftWithSegmentsProcedure,
+		svc.UpdatePublishedShiftWithSegments,
+		opts...,
+	)
+	wFMSplitPublishedShiftHandler := connect_go.NewUnaryHandler(
+		WFMSplitPublishedShiftProcedure,
+		svc.SplitPublishedShift,
+		opts...,
+	)
+	wFMSwapPublishedShiftsHandler := connect_go.NewUnaryHandler(
+		WFMSwapPublishedShiftsProcedure,
+		svc.SwapPublishedShifts,
+		opts...,
+	)
+	wFMDeletePublishedShiftsHandler := connect_go.NewUnaryHandler(
+		WFMDeletePublishedShiftsProcedure,
+		svc.DeletePublishedShifts,
+		opts...,
+	)
+	wFMReplaceAgentOnPublishedScheduleHandler := connect_go.NewUnaryHandler(
+		WFMReplaceAgentOnPublishedScheduleProcedure,
+		svc.ReplaceAgentOnPublishedSchedule,
+		opts...,
+	)
+	wFMRemoveAgentFromPublishedScheduleHandler := connect_go.NewUnaryHandler(
+		WFMRemoveAgentFromPublishedScheduleProcedure,
+		svc.RemoveAgentFromPublishedSchedule,
+		opts...,
+	)
+	wFMCopyShiftsToPublishedScheduleHandler := connect_go.NewUnaryHandler(
+		WFMCopyShiftsToPublishedScheduleProcedure,
+		svc.CopyShiftsToPublishedSchedule,
+		opts...,
+	)
 	wFMCreateAgentLeavePetitionHandler := connect_go.NewUnaryHandler(
 		WFMCreateAgentLeavePetitionProcedure,
 		svc.CreateAgentLeavePetition,
@@ -7930,6 +8348,26 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMReplaceAgentOnScheduleV1Handler.ServeHTTP(w, r)
 		case WFMRemoveAgentFromScheduleProcedure:
 			wFMRemoveAgentFromScheduleHandler.ServeHTTP(w, r)
+		case WFMCreatePublishedShiftProcedure:
+			wFMCreatePublishedShiftHandler.ServeHTTP(w, r)
+		case WFMCreatePublishedShiftWithSegmentsProcedure:
+			wFMCreatePublishedShiftWithSegmentsHandler.ServeHTTP(w, r)
+		case WFMUpdatePublishedShiftProcedure:
+			wFMUpdatePublishedShiftHandler.ServeHTTP(w, r)
+		case WFMUpdatePublishedShiftWithSegmentsProcedure:
+			wFMUpdatePublishedShiftWithSegmentsHandler.ServeHTTP(w, r)
+		case WFMSplitPublishedShiftProcedure:
+			wFMSplitPublishedShiftHandler.ServeHTTP(w, r)
+		case WFMSwapPublishedShiftsProcedure:
+			wFMSwapPublishedShiftsHandler.ServeHTTP(w, r)
+		case WFMDeletePublishedShiftsProcedure:
+			wFMDeletePublishedShiftsHandler.ServeHTTP(w, r)
+		case WFMReplaceAgentOnPublishedScheduleProcedure:
+			wFMReplaceAgentOnPublishedScheduleHandler.ServeHTTP(w, r)
+		case WFMRemoveAgentFromPublishedScheduleProcedure:
+			wFMRemoveAgentFromPublishedScheduleHandler.ServeHTTP(w, r)
+		case WFMCopyShiftsToPublishedScheduleProcedure:
+			wFMCopyShiftsToPublishedScheduleHandler.ServeHTTP(w, r)
 		case WFMCreateAgentLeavePetitionProcedure:
 			wFMCreateAgentLeavePetitionHandler.ServeHTTP(w, r)
 		case WFMListAgentLeavePetitionsProcedure:
@@ -8729,6 +9167,46 @@ func (UnimplementedWFMHandler) ReplaceAgentOnScheduleV1(context.Context, *connec
 
 func (UnimplementedWFMHandler) RemoveAgentFromSchedule(context.Context, *connect_go.Request[wfm.RemoveAgentFromScheduleRequest]) (*connect_go.Response[wfm.RemoveAgentFromScheduleResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.RemoveAgentFromSchedule is not implemented"))
+}
+
+func (UnimplementedWFMHandler) CreatePublishedShift(context.Context, *connect_go.Request[wfm.CreatePublishedShiftRequest]) (*connect_go.Response[wfm.CreatePublishedShiftResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.CreatePublishedShift is not implemented"))
+}
+
+func (UnimplementedWFMHandler) CreatePublishedShiftWithSegments(context.Context, *connect_go.Request[wfm.CreatePublishedShiftWithSegmentsRequest]) (*connect_go.Response[wfm.CreatePublishedShiftWithSegmentsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.CreatePublishedShiftWithSegments is not implemented"))
+}
+
+func (UnimplementedWFMHandler) UpdatePublishedShift(context.Context, *connect_go.Request[wfm.UpdatePublishedShiftRequest]) (*connect_go.Response[wfm.UpdatePublishedShiftResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.UpdatePublishedShift is not implemented"))
+}
+
+func (UnimplementedWFMHandler) UpdatePublishedShiftWithSegments(context.Context, *connect_go.Request[wfm.UpdatePublishedShiftWithSegmentsRequest]) (*connect_go.Response[wfm.UpdatePublishedShiftWithSegmentsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.UpdatePublishedShiftWithSegments is not implemented"))
+}
+
+func (UnimplementedWFMHandler) SplitPublishedShift(context.Context, *connect_go.Request[wfm.SplitPublishedShiftRequest]) (*connect_go.Response[wfm.SplitPublishedShiftResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.SplitPublishedShift is not implemented"))
+}
+
+func (UnimplementedWFMHandler) SwapPublishedShifts(context.Context, *connect_go.Request[wfm.SwapPublishedShiftsRequest]) (*connect_go.Response[wfm.SwapPublishedShiftsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.SwapPublishedShifts is not implemented"))
+}
+
+func (UnimplementedWFMHandler) DeletePublishedShifts(context.Context, *connect_go.Request[wfm.DeletePublishedShiftsRequest]) (*connect_go.Response[wfm.DeletePublishedShiftsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.DeletePublishedShifts is not implemented"))
+}
+
+func (UnimplementedWFMHandler) ReplaceAgentOnPublishedSchedule(context.Context, *connect_go.Request[wfm.ReplaceAgentOnPublishedScheduleRequest]) (*connect_go.Response[wfm.ReplaceAgentOnPublishedScheduleResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ReplaceAgentOnPublishedSchedule is not implemented"))
+}
+
+func (UnimplementedWFMHandler) RemoveAgentFromPublishedSchedule(context.Context, *connect_go.Request[wfm.RemoveAgentFromPublishedScheduleRequest]) (*connect_go.Response[wfm.RemoveAgentFromPublishedScheduleResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.RemoveAgentFromPublishedSchedule is not implemented"))
+}
+
+func (UnimplementedWFMHandler) CopyShiftsToPublishedSchedule(context.Context, *connect_go.Request[wfm.CopyShiftsToPublishedScheduleRequest]) (*connect_go.Response[wfm.CopyShiftsToPublishedScheduleResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.CopyShiftsToPublishedSchedule is not implemented"))
 }
 
 func (UnimplementedWFMHandler) CreateAgentLeavePetition(context.Context, *connect_go.Request[wfm.CreateAgentLeavePetitionRequest]) (*connect_go.Response[wfm.CreateAgentLeavePetitionResponse], error) {

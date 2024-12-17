@@ -2441,6 +2441,98 @@ func (x *ListPublishedClientArticlesResponse) GetPublishedArticleDetails() []*Pu
 	return nil
 }
 
+// Request to get client article by id
+type GetClientArticleByIdRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// the unique news article identifier
+	NewArticleSid int64 `protobuf:"varint,1,opt,name=new_article_sid,json=newArticleSid,proto3" json:"new_article_sid,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetClientArticleByIdRequest) Reset() {
+	*x = GetClientArticleByIdRequest{}
+	mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[46]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetClientArticleByIdRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetClientArticleByIdRequest) ProtoMessage() {}
+
+func (x *GetClientArticleByIdRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[46]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetClientArticleByIdRequest.ProtoReflect.Descriptor instead.
+func (*GetClientArticleByIdRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_newsroom_entities_proto_rawDescGZIP(), []int{46}
+}
+
+func (x *GetClientArticleByIdRequest) GetNewArticleSid() int64 {
+	if x != nil {
+		return x.NewArticleSid
+	}
+	return 0
+}
+
+// Response to get client article
+type GetClientArticleByIdResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// client article details
+	ArticleDetails *NewsArticleDetails `protobuf:"bytes,1,opt,name=article_details,json=articleDetails,proto3" json:"article_details,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *GetClientArticleByIdResponse) Reset() {
+	*x = GetClientArticleByIdResponse{}
+	mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[47]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetClientArticleByIdResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetClientArticleByIdResponse) ProtoMessage() {}
+
+func (x *GetClientArticleByIdResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[47]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetClientArticleByIdResponse.ProtoReflect.Descriptor instead.
+func (*GetClientArticleByIdResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_newsroom_entities_proto_rawDescGZIP(), []int{47}
+}
+
+func (x *GetClientArticleByIdResponse) GetArticleDetails() *NewsArticleDetails {
+	if x != nil {
+		return x.ArticleDetails
+	}
+	return nil
+}
+
 // user activity details
 type UserActivity_UserActivityDetails struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -2452,7 +2544,7 @@ type UserActivity_UserActivityDetails struct {
 
 func (x *UserActivity_UserActivityDetails) Reset() {
 	*x = UserActivity_UserActivityDetails{}
-	mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[46]
+	mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[48]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2464,7 +2556,7 @@ func (x *UserActivity_UserActivityDetails) String() string {
 func (*UserActivity_UserActivityDetails) ProtoMessage() {}
 
 func (x *UserActivity_UserActivityDetails) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[46]
+	mi := &file_api_v1alpha1_newsroom_entities_proto_msgTypes[48]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2886,21 +2978,33 @@ var file_api_v1alpha1_newsroom_entities_proto_rawDesc = []byte{
 	0x72, 0x6f, 0x6f, 0x6d, 0x2e, 0x50, 0x75, 0x62, 0x6c, 0x69, 0x73, 0x68, 0x65, 0x64, 0x41, 0x72,
 	0x74, 0x69, 0x63, 0x6c, 0x65, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x52, 0x17, 0x70, 0x75,
 	0x62, 0x6c, 0x69, 0x73, 0x68, 0x65, 0x64, 0x41, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x44, 0x65,
-	0x74, 0x61, 0x69, 0x6c, 0x73, 0x42, 0xd2, 0x01, 0x0a, 0x19, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70,
-	0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x6e, 0x65, 0x77, 0x73, 0x72,
-	0x6f, 0x6f, 0x6d, 0x42, 0x0d, 0x45, 0x6e, 0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x50, 0x72, 0x6f,
-	0x74, 0x6f, 0x50, 0x01, 0x5a, 0x30, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d,
-	0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f,
-	0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x6e, 0x65,
-	0x77, 0x73, 0x72, 0x6f, 0x6f, 0x6d, 0xa2, 0x02, 0x03, 0x41, 0x56, 0x4e, 0xaa, 0x02, 0x15, 0x41,
-	0x70, 0x69, 0x2e, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x4e, 0x65, 0x77, 0x73,
-	0x72, 0x6f, 0x6f, 0x6d, 0xca, 0x02, 0x15, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70,
-	0x68, 0x61, 0x31, 0x5c, 0x4e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f, 0x6d, 0xe2, 0x02, 0x21, 0x41,
-	0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x4e, 0x65, 0x77, 0x73,
-	0x72, 0x6f, 0x6f, 0x6d, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
-	0xea, 0x02, 0x17, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31,
-	0x3a, 0x3a, 0x4e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f, 0x6d, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x33,
+	0x74, 0x61, 0x69, 0x6c, 0x73, 0x22, 0x49, 0x0a, 0x1b, 0x47, 0x65, 0x74, 0x43, 0x6c, 0x69, 0x65,
+	0x6e, 0x74, 0x41, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x42, 0x79, 0x49, 0x64, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x12, 0x2a, 0x0a, 0x0f, 0x6e, 0x65, 0x77, 0x5f, 0x61, 0x72, 0x74, 0x69,
+	0x63, 0x6c, 0x65, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x42, 0x02, 0x30,
+	0x01, 0x52, 0x0d, 0x6e, 0x65, 0x77, 0x41, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x53, 0x69, 0x64,
+	0x22, 0x72, 0x0a, 0x1c, 0x47, 0x65, 0x74, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x41, 0x72, 0x74,
+	0x69, 0x63, 0x6c, 0x65, 0x42, 0x79, 0x49, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x12, 0x52, 0x0a, 0x0f, 0x61, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x5f, 0x64, 0x65, 0x74, 0x61,
+	0x69, 0x6c, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x29, 0x2e, 0x61, 0x70, 0x69, 0x2e,
+	0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x6e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f,
+	0x6d, 0x2e, 0x4e, 0x65, 0x77, 0x73, 0x41, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x44, 0x65, 0x74,
+	0x61, 0x69, 0x6c, 0x73, 0x52, 0x0e, 0x61, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x44, 0x65, 0x74,
+	0x61, 0x69, 0x6c, 0x73, 0x42, 0xd2, 0x01, 0x0a, 0x19, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69,
+	0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x6e, 0x65, 0x77, 0x73, 0x72, 0x6f,
+	0x6f, 0x6d, 0x42, 0x0d, 0x45, 0x6e, 0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x50, 0x72, 0x6f, 0x74,
+	0x6f, 0x50, 0x01, 0x5a, 0x30, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f,
+	0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f,
+	0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x6e, 0x65, 0x77,
+	0x73, 0x72, 0x6f, 0x6f, 0x6d, 0xa2, 0x02, 0x03, 0x41, 0x56, 0x4e, 0xaa, 0x02, 0x15, 0x41, 0x70,
+	0x69, 0x2e, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x4e, 0x65, 0x77, 0x73, 0x72,
+	0x6f, 0x6f, 0x6d, 0xca, 0x02, 0x15, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68,
+	0x61, 0x31, 0x5c, 0x4e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f, 0x6d, 0xe2, 0x02, 0x21, 0x41, 0x70,
+	0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x4e, 0x65, 0x77, 0x73, 0x72,
+	0x6f, 0x6f, 0x6d, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea,
+	0x02, 0x17, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x3a,
+	0x3a, 0x4e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f, 0x6d, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
+	0x33,
 }
 
 var (
@@ -2915,7 +3019,7 @@ func file_api_v1alpha1_newsroom_entities_proto_rawDescGZIP() []byte {
 	return file_api_v1alpha1_newsroom_entities_proto_rawDescData
 }
 
-var file_api_v1alpha1_newsroom_entities_proto_msgTypes = make([]protoimpl.MessageInfo, 47)
+var file_api_v1alpha1_newsroom_entities_proto_msgTypes = make([]protoimpl.MessageInfo, 49)
 var file_api_v1alpha1_newsroom_entities_proto_goTypes = []any{
 	(*CreateNewsArticleRequest)(nil),              // 0: api.v1alpha1.newsroom.CreateNewsArticleRequest
 	(*CreateNewsArticleResponse)(nil),             // 1: api.v1alpha1.newsroom.CreateNewsArticleResponse
@@ -2963,45 +3067,47 @@ var file_api_v1alpha1_newsroom_entities_proto_goTypes = []any{
 	(*UploadClientArticleImageResponse)(nil),      // 43: api.v1alpha1.newsroom.UploadClientArticleImageResponse
 	(*ListPublishedClientArticlesRequest)(nil),    // 44: api.v1alpha1.newsroom.ListPublishedClientArticlesRequest
 	(*ListPublishedClientArticlesResponse)(nil),   // 45: api.v1alpha1.newsroom.ListPublishedClientArticlesResponse
-	(*UserActivity_UserActivityDetails)(nil),      // 46: api.v1alpha1.newsroom.UserActivity.UserActivityDetails
-	(commons.ArticleStatus)(0),                    // 47: api.commons.ArticleStatus
-	(*fieldmaskpb.FieldMask)(nil),                 // 48: google.protobuf.FieldMask
-	(*timestamppb.Timestamp)(nil),                 // 49: google.protobuf.Timestamp
-	(*wrapperspb.StringValue)(nil),                // 50: google.protobuf.StringValue
+	(*GetClientArticleByIdRequest)(nil),           // 46: api.v1alpha1.newsroom.GetClientArticleByIdRequest
+	(*GetClientArticleByIdResponse)(nil),          // 47: api.v1alpha1.newsroom.GetClientArticleByIdResponse
+	(*UserActivity_UserActivityDetails)(nil),      // 48: api.v1alpha1.newsroom.UserActivity.UserActivityDetails
+	(commons.ArticleStatus)(0),                    // 49: api.commons.ArticleStatus
+	(*fieldmaskpb.FieldMask)(nil),                 // 50: google.protobuf.FieldMask
+	(*timestamppb.Timestamp)(nil),                 // 51: google.protobuf.Timestamp
+	(*wrapperspb.StringValue)(nil),                // 52: google.protobuf.StringValue
 }
 var file_api_v1alpha1_newsroom_entities_proto_depIdxs = []int32{
 	8,  // 0: api.v1alpha1.newsroom.CreateNewsArticleResponse.article_details:type_name -> api.v1alpha1.newsroom.NewsArticleDetails
-	47, // 1: api.v1alpha1.newsroom.ListNewsArticlesRequest.statuses:type_name -> api.commons.ArticleStatus
-	48, // 2: api.v1alpha1.newsroom.ListNewsArticlesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	49, // 1: api.v1alpha1.newsroom.ListNewsArticlesRequest.statuses:type_name -> api.commons.ArticleStatus
+	50, // 2: api.v1alpha1.newsroom.ListNewsArticlesRequest.field_mask:type_name -> google.protobuf.FieldMask
 	8,  // 3: api.v1alpha1.newsroom.ListNewsArticlesResponse.article_details:type_name -> api.v1alpha1.newsroom.NewsArticleDetails
 	8,  // 4: api.v1alpha1.newsroom.GetNewsArticleByIdResponse.article_details:type_name -> api.v1alpha1.newsroom.NewsArticleDetails
 	8,  // 5: api.v1alpha1.newsroom.UpdateNewsArticleRequest.article_details:type_name -> api.v1alpha1.newsroom.NewsArticleDetails
-	48, // 6: api.v1alpha1.newsroom.UpdateNewsArticleRequest.field_mask:type_name -> google.protobuf.FieldMask
+	50, // 6: api.v1alpha1.newsroom.UpdateNewsArticleRequest.field_mask:type_name -> google.protobuf.FieldMask
 	8,  // 7: api.v1alpha1.newsroom.UpdateNewsArticleResponse.article_details:type_name -> api.v1alpha1.newsroom.NewsArticleDetails
-	47, // 8: api.v1alpha1.newsroom.NewsArticleDetails.status:type_name -> api.commons.ArticleStatus
-	49, // 9: api.v1alpha1.newsroom.NewsArticleDetails.date_created:type_name -> google.protobuf.Timestamp
-	49, // 10: api.v1alpha1.newsroom.NewsArticleDetails.last_edited:type_name -> google.protobuf.Timestamp
+	49, // 8: api.v1alpha1.newsroom.NewsArticleDetails.status:type_name -> api.commons.ArticleStatus
+	51, // 9: api.v1alpha1.newsroom.NewsArticleDetails.date_created:type_name -> google.protobuf.Timestamp
+	51, // 10: api.v1alpha1.newsroom.NewsArticleDetails.last_edited:type_name -> google.protobuf.Timestamp
 	8,  // 11: api.v1alpha1.newsroom.PublishedArticleDetails.news_article_details:type_name -> api.v1alpha1.newsroom.NewsArticleDetails
-	49, // 12: api.v1alpha1.newsroom.PublishedArticleDetails.date_published:type_name -> google.protobuf.Timestamp
-	49, // 13: api.v1alpha1.newsroom.UserActivity.date_created:type_name -> google.protobuf.Timestamp
-	46, // 14: api.v1alpha1.newsroom.UserActivity.user_activity_details:type_name -> api.v1alpha1.newsroom.UserActivity.UserActivityDetails
+	51, // 12: api.v1alpha1.newsroom.PublishedArticleDetails.date_published:type_name -> google.protobuf.Timestamp
+	51, // 13: api.v1alpha1.newsroom.UserActivity.date_created:type_name -> google.protobuf.Timestamp
+	48, // 14: api.v1alpha1.newsroom.UserActivity.user_activity_details:type_name -> api.v1alpha1.newsroom.UserActivity.UserActivityDetails
 	9,  // 15: api.v1alpha1.newsroom.CreatePublishedArticleResponse.published_article_details:type_name -> api.v1alpha1.newsroom.PublishedArticleDetails
 	9,  // 16: api.v1alpha1.newsroom.ListPublishedArticlesResponse.published_article_details:type_name -> api.v1alpha1.newsroom.PublishedArticleDetails
 	9,  // 17: api.v1alpha1.newsroom.GetPublishedArticleByIdResponse.published_article_details:type_name -> api.v1alpha1.newsroom.PublishedArticleDetails
 	10, // 18: api.v1alpha1.newsroom.UserActivityResponse.user_activity:type_name -> api.v1alpha1.newsroom.UserActivity
 	9,  // 19: api.v1alpha1.newsroom.GetNewsForUserResponse.published_article_details:type_name -> api.v1alpha1.newsroom.PublishedArticleDetails
 	22, // 20: api.v1alpha1.newsroom.StoreNewsArticleImageRequest.image:type_name -> api.v1alpha1.newsroom.NewsArticleImage
-	50, // 21: api.v1alpha1.newsroom.NewsArticleImage.temp_id:type_name -> google.protobuf.StringValue
+	52, // 21: api.v1alpha1.newsroom.NewsArticleImage.temp_id:type_name -> google.protobuf.StringValue
 	22, // 22: api.v1alpha1.newsroom.StoreNewsArticleImageResponse.image:type_name -> api.v1alpha1.newsroom.NewsArticleImage
 	22, // 23: api.v1alpha1.newsroom.ListImagesForNewsArticleResponse.news_article_images:type_name -> api.v1alpha1.newsroom.NewsArticleImage
 	22, // 24: api.v1alpha1.newsroom.UploadNewsArticleImageRequest.image:type_name -> api.v1alpha1.newsroom.NewsArticleImage
 	22, // 25: api.v1alpha1.newsroom.UploadNewsArticleImageResponse.image:type_name -> api.v1alpha1.newsroom.NewsArticleImage
 	8,  // 26: api.v1alpha1.newsroom.CreateClientArticleResponse.article_details:type_name -> api.v1alpha1.newsroom.NewsArticleDetails
 	8,  // 27: api.v1alpha1.newsroom.UpdateClientArticleRequest.article_details:type_name -> api.v1alpha1.newsroom.NewsArticleDetails
-	48, // 28: api.v1alpha1.newsroom.UpdateClientArticleRequest.field_mask:type_name -> google.protobuf.FieldMask
+	50, // 28: api.v1alpha1.newsroom.UpdateClientArticleRequest.field_mask:type_name -> google.protobuf.FieldMask
 	8,  // 29: api.v1alpha1.newsroom.UpdateClientArticleResponse.article_details:type_name -> api.v1alpha1.newsroom.NewsArticleDetails
-	47, // 30: api.v1alpha1.newsroom.ListClientArticlesRequest.statuses:type_name -> api.commons.ArticleStatus
-	48, // 31: api.v1alpha1.newsroom.ListClientArticlesRequest.field_mask:type_name -> google.protobuf.FieldMask
+	49, // 30: api.v1alpha1.newsroom.ListClientArticlesRequest.statuses:type_name -> api.commons.ArticleStatus
+	50, // 31: api.v1alpha1.newsroom.ListClientArticlesRequest.field_mask:type_name -> google.protobuf.FieldMask
 	8,  // 32: api.v1alpha1.newsroom.ListClientArticlesResponse.article_details:type_name -> api.v1alpha1.newsroom.NewsArticleDetails
 	9,  // 33: api.v1alpha1.newsroom.CreatePublishedClientArticleResponse.published_article_details:type_name -> api.v1alpha1.newsroom.PublishedArticleDetails
 	9,  // 34: api.v1alpha1.newsroom.GetPublishedClientArticleByIdResponse.published_article_details:type_name -> api.v1alpha1.newsroom.PublishedArticleDetails
@@ -3011,11 +3117,12 @@ var file_api_v1alpha1_newsroom_entities_proto_depIdxs = []int32{
 	22, // 38: api.v1alpha1.newsroom.UploadClientArticleImageRequest.image:type_name -> api.v1alpha1.newsroom.NewsArticleImage
 	22, // 39: api.v1alpha1.newsroom.UploadClientArticleImageResponse.image:type_name -> api.v1alpha1.newsroom.NewsArticleImage
 	9,  // 40: api.v1alpha1.newsroom.ListPublishedClientArticlesResponse.published_article_details:type_name -> api.v1alpha1.newsroom.PublishedArticleDetails
-	41, // [41:41] is the sub-list for method output_type
-	41, // [41:41] is the sub-list for method input_type
-	41, // [41:41] is the sub-list for extension type_name
-	41, // [41:41] is the sub-list for extension extendee
-	0,  // [0:41] is the sub-list for field type_name
+	8,  // 41: api.v1alpha1.newsroom.GetClientArticleByIdResponse.article_details:type_name -> api.v1alpha1.newsroom.NewsArticleDetails
+	42, // [42:42] is the sub-list for method output_type
+	42, // [42:42] is the sub-list for method input_type
+	42, // [42:42] is the sub-list for extension type_name
+	42, // [42:42] is the sub-list for extension extendee
+	0,  // [0:42] is the sub-list for field type_name
 }
 
 func init() { file_api_v1alpha1_newsroom_entities_proto_init() }
@@ -3029,7 +3136,7 @@ func file_api_v1alpha1_newsroom_entities_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_v1alpha1_newsroom_entities_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   47,
+			NumMessages:   49,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

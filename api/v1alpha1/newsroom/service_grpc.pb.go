@@ -40,6 +40,7 @@ const (
 	NewsroomAPI_ListImagesForClientArticle_FullMethodName    = "/api.v1alpha1.newsroom.NewsroomAPI/ListImagesForClientArticle"
 	NewsroomAPI_UploadClientArticleImage_FullMethodName      = "/api.v1alpha1.newsroom.NewsroomAPI/UploadClientArticleImage"
 	NewsroomAPI_ListPublishedClientArticles_FullMethodName   = "/api.v1alpha1.newsroom.NewsroomAPI/ListPublishedClientArticles"
+	NewsroomAPI_GetClientArticleById_FullMethodName          = "/api.v1alpha1.newsroom.NewsroomAPI/GetClientArticleById"
 )
 
 // NewsroomAPIClient is the client API for NewsroomAPI service.
@@ -92,6 +93,8 @@ type NewsroomAPIClient interface {
 	UploadClientArticleImage(ctx context.Context, in *UploadClientArticleImageRequest, opts ...grpc.CallOption) (*UploadClientArticleImageResponse, error)
 	// list published client articles
 	ListPublishedClientArticles(ctx context.Context, in *ListPublishedClientArticlesRequest, opts ...grpc.CallOption) (*ListPublishedClientArticlesResponse, error)
+	// get client article details by the id
+	GetClientArticleById(ctx context.Context, in *GetClientArticleByIdRequest, opts ...grpc.CallOption) (*GetClientArticleByIdResponse, error)
 }
 
 type newsroomAPIClient struct {
@@ -312,6 +315,16 @@ func (c *newsroomAPIClient) ListPublishedClientArticles(ctx context.Context, in 
 	return out, nil
 }
 
+func (c *newsroomAPIClient) GetClientArticleById(ctx context.Context, in *GetClientArticleByIdRequest, opts ...grpc.CallOption) (*GetClientArticleByIdResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetClientArticleByIdResponse)
+	err := c.cc.Invoke(ctx, NewsroomAPI_GetClientArticleById_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // NewsroomAPIServer is the server API for NewsroomAPI service.
 // All implementations must embed UnimplementedNewsroomAPIServer
 // for forward compatibility.
@@ -362,6 +375,8 @@ type NewsroomAPIServer interface {
 	UploadClientArticleImage(context.Context, *UploadClientArticleImageRequest) (*UploadClientArticleImageResponse, error)
 	// list published client articles
 	ListPublishedClientArticles(context.Context, *ListPublishedClientArticlesRequest) (*ListPublishedClientArticlesResponse, error)
+	// get client article details by the id
+	GetClientArticleById(context.Context, *GetClientArticleByIdRequest) (*GetClientArticleByIdResponse, error)
 	mustEmbedUnimplementedNewsroomAPIServer()
 }
 
@@ -434,6 +449,9 @@ func (UnimplementedNewsroomAPIServer) UploadClientArticleImage(context.Context, 
 }
 func (UnimplementedNewsroomAPIServer) ListPublishedClientArticles(context.Context, *ListPublishedClientArticlesRequest) (*ListPublishedClientArticlesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListPublishedClientArticles not implemented")
+}
+func (UnimplementedNewsroomAPIServer) GetClientArticleById(context.Context, *GetClientArticleByIdRequest) (*GetClientArticleByIdResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetClientArticleById not implemented")
 }
 func (UnimplementedNewsroomAPIServer) mustEmbedUnimplementedNewsroomAPIServer() {}
 func (UnimplementedNewsroomAPIServer) testEmbeddedByValue()                     {}
@@ -834,6 +852,24 @@ func _NewsroomAPI_ListPublishedClientArticles_Handler(srv interface{}, ctx conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _NewsroomAPI_GetClientArticleById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetClientArticleByIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NewsroomAPIServer).GetClientArticleById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NewsroomAPI_GetClientArticleById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NewsroomAPIServer).GetClientArticleById(ctx, req.(*GetClientArticleByIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // NewsroomAPI_ServiceDesc is the grpc.ServiceDesc for NewsroomAPI service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -924,6 +960,10 @@ var NewsroomAPI_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListPublishedClientArticles",
 			Handler:    _NewsroomAPI_ListPublishedClientArticles_Handler,
+		},
+		{
+			MethodName: "GetClientArticleById",
+			Handler:    _NewsroomAPI_GetClientArticleById_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
