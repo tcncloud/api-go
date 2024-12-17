@@ -33,7 +33,7 @@ var file_api_v1alpha1_newsroom_service_proto_rawDesc = []byte{
 	0x68, 0x61, 0x31, 0x2f, 0x6e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f, 0x6d, 0x2f, 0x65, 0x6e, 0x74,
 	0x69, 0x74, 0x69, 0x65, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1c, 0x67, 0x6f, 0x6f,
 	0x67, 0x6c, 0x65, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x61, 0x6e, 0x6e, 0x6f, 0x74, 0x61, 0x74, 0x69,
-	0x6f, 0x6e, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x32, 0xf1, 0x20, 0x0a, 0x0b, 0x4e, 0x65,
+	0x6f, 0x6e, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x32, 0xb5, 0x22, 0x0a, 0x0b, 0x4e, 0x65,
 	0x77, 0x73, 0x72, 0x6f, 0x6f, 0x6d, 0x41, 0x50, 0x49, 0x12, 0xb5, 0x01, 0x0a, 0x11, 0x43, 0x72,
 	0x65, 0x61, 0x74, 0x65, 0x4e, 0x65, 0x77, 0x73, 0x41, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x12,
 	0x2f, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x6e,
@@ -296,21 +296,33 @@ var file_api_v1alpha1_newsroom_service_proto_rawDesc = []byte{
 	0x82, 0xd3, 0xe4, 0x93, 0x02, 0x37, 0x3a, 0x01, 0x2a, 0x22, 0x32, 0x2f, 0x61, 0x70, 0x69, 0x2f,
 	0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x6e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f,
 	0x6d, 0x2f, 0x6c, 0x69, 0x73, 0x74, 0x70, 0x75, 0x62, 0x6c, 0x69, 0x73, 0x68, 0x65, 0x64, 0x63,
-	0x6c, 0x69, 0x65, 0x6e, 0x74, 0x61, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x73, 0x42, 0xd1, 0x01,
-	0x0a, 0x19, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68,
-	0x61, 0x31, 0x2e, 0x6e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f, 0x6d, 0x42, 0x0c, 0x53, 0x65, 0x72,
-	0x76, 0x69, 0x63, 0x65, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x30, 0x67, 0x69, 0x74,
-	0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64,
-	0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c,
-	0x70, 0x68, 0x61, 0x31, 0x2f, 0x6e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f, 0x6d, 0xa2, 0x02, 0x03,
-	0x41, 0x56, 0x4e, 0xaa, 0x02, 0x15, 0x41, 0x70, 0x69, 0x2e, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68,
-	0x61, 0x31, 0x2e, 0x4e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f, 0x6d, 0xca, 0x02, 0x15, 0x41, 0x70,
-	0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x4e, 0x65, 0x77, 0x73, 0x72,
-	0x6f, 0x6f, 0x6d, 0xe2, 0x02, 0x21, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68,
-	0x61, 0x31, 0x5c, 0x4e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f, 0x6d, 0x5c, 0x47, 0x50, 0x42, 0x4d,
-	0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x17, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x56,
-	0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x3a, 0x3a, 0x4e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f,
-	0x6d, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x6c, 0x69, 0x65, 0x6e, 0x74, 0x61, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x73, 0x12, 0xc1, 0x01,
+	0x0a, 0x14, 0x47, 0x65, 0x74, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x41, 0x72, 0x74, 0x69, 0x63,
+	0x6c, 0x65, 0x42, 0x79, 0x49, 0x64, 0x12, 0x32, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31, 0x61,
+	0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x6e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f, 0x6d, 0x2e, 0x47,
+	0x65, 0x74, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x41, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x42,
+	0x79, 0x49, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x33, 0x2e, 0x61, 0x70, 0x69,
+	0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x6e, 0x65, 0x77, 0x73, 0x72, 0x6f,
+	0x6f, 0x6d, 0x2e, 0x47, 0x65, 0x74, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x41, 0x72, 0x74, 0x69,
+	0x63, 0x6c, 0x65, 0x42, 0x79, 0x49, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22,
+	0x40, 0xba, 0xb8, 0x91, 0x02, 0x05, 0x0a, 0x03, 0x08, 0xe7, 0x20, 0x82, 0xd3, 0xe4, 0x93, 0x02,
+	0x30, 0x3a, 0x01, 0x2a, 0x22, 0x2b, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70,
+	0x68, 0x61, 0x31, 0x2f, 0x6e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f, 0x6d, 0x2f, 0x67, 0x65, 0x74,
+	0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x61, 0x72, 0x74, 0x69, 0x63, 0x6c, 0x65, 0x62, 0x79, 0x69,
+	0x64, 0x42, 0xd1, 0x01, 0x0a, 0x19, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x76, 0x31,
+	0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x6e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f, 0x6d, 0x42,
+	0x0c, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a,
+	0x30, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63,
+	0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f,
+	0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x6e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f,
+	0x6d, 0xa2, 0x02, 0x03, 0x41, 0x56, 0x4e, 0xaa, 0x02, 0x15, 0x41, 0x70, 0x69, 0x2e, 0x56, 0x31,
+	0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x4e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f, 0x6d, 0xca,
+	0x02, 0x15, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x4e,
+	0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f, 0x6d, 0xe2, 0x02, 0x21, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31,
+	0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x4e, 0x65, 0x77, 0x73, 0x72, 0x6f, 0x6f, 0x6d, 0x5c,
+	0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x17, 0x41, 0x70,
+	0x69, 0x3a, 0x3a, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x3a, 0x3a, 0x4e, 0x65, 0x77,
+	0x73, 0x72, 0x6f, 0x6f, 0x6d, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var file_api_v1alpha1_newsroom_service_proto_goTypes = []any{
@@ -335,27 +347,29 @@ var file_api_v1alpha1_newsroom_service_proto_goTypes = []any{
 	(*ListImagesForClientArticleRequest)(nil),     // 18: api.v1alpha1.newsroom.ListImagesForClientArticleRequest
 	(*UploadClientArticleImageRequest)(nil),       // 19: api.v1alpha1.newsroom.UploadClientArticleImageRequest
 	(*ListPublishedClientArticlesRequest)(nil),    // 20: api.v1alpha1.newsroom.ListPublishedClientArticlesRequest
-	(*CreateNewsArticleResponse)(nil),             // 21: api.v1alpha1.newsroom.CreateNewsArticleResponse
-	(*ListNewsArticlesResponse)(nil),              // 22: api.v1alpha1.newsroom.ListNewsArticlesResponse
-	(*GetNewsArticleByIdResponse)(nil),            // 23: api.v1alpha1.newsroom.GetNewsArticleByIdResponse
-	(*UpdateNewsArticleResponse)(nil),             // 24: api.v1alpha1.newsroom.UpdateNewsArticleResponse
-	(*CreatePublishedArticleResponse)(nil),        // 25: api.v1alpha1.newsroom.CreatePublishedArticleResponse
-	(*ListPublishedArticlesResponse)(nil),         // 26: api.v1alpha1.newsroom.ListPublishedArticlesResponse
-	(*GetPublishedArticleByIdResponse)(nil),       // 27: api.v1alpha1.newsroom.GetPublishedArticleByIdResponse
-	(*UserActivityResponse)(nil),                  // 28: api.v1alpha1.newsroom.UserActivityResponse
-	(*GetNewsForUserResponse)(nil),                // 29: api.v1alpha1.newsroom.GetNewsForUserResponse
-	(*StoreNewsArticleImageResponse)(nil),         // 30: api.v1alpha1.newsroom.StoreNewsArticleImageResponse
-	(*ListImagesForNewsArticleResponse)(nil),      // 31: api.v1alpha1.newsroom.ListImagesForNewsArticleResponse
-	(*UploadNewsArticleImageResponse)(nil),        // 32: api.v1alpha1.newsroom.UploadNewsArticleImageResponse
-	(*CreateClientArticleResponse)(nil),           // 33: api.v1alpha1.newsroom.CreateClientArticleResponse
-	(*UpdateClientArticleResponse)(nil),           // 34: api.v1alpha1.newsroom.UpdateClientArticleResponse
-	(*ListClientArticlesResponse)(nil),            // 35: api.v1alpha1.newsroom.ListClientArticlesResponse
-	(*CreatePublishedClientArticleResponse)(nil),  // 36: api.v1alpha1.newsroom.CreatePublishedClientArticleResponse
-	(*GetPublishedClientArticleByIdResponse)(nil), // 37: api.v1alpha1.newsroom.GetPublishedClientArticleByIdResponse
-	(*StoreClientArticleImageResponse)(nil),       // 38: api.v1alpha1.newsroom.StoreClientArticleImageResponse
-	(*ListImagesForClientArticleResponse)(nil),    // 39: api.v1alpha1.newsroom.ListImagesForClientArticleResponse
-	(*UploadClientArticleImageResponse)(nil),      // 40: api.v1alpha1.newsroom.UploadClientArticleImageResponse
-	(*ListPublishedClientArticlesResponse)(nil),   // 41: api.v1alpha1.newsroom.ListPublishedClientArticlesResponse
+	(*GetClientArticleByIdRequest)(nil),           // 21: api.v1alpha1.newsroom.GetClientArticleByIdRequest
+	(*CreateNewsArticleResponse)(nil),             // 22: api.v1alpha1.newsroom.CreateNewsArticleResponse
+	(*ListNewsArticlesResponse)(nil),              // 23: api.v1alpha1.newsroom.ListNewsArticlesResponse
+	(*GetNewsArticleByIdResponse)(nil),            // 24: api.v1alpha1.newsroom.GetNewsArticleByIdResponse
+	(*UpdateNewsArticleResponse)(nil),             // 25: api.v1alpha1.newsroom.UpdateNewsArticleResponse
+	(*CreatePublishedArticleResponse)(nil),        // 26: api.v1alpha1.newsroom.CreatePublishedArticleResponse
+	(*ListPublishedArticlesResponse)(nil),         // 27: api.v1alpha1.newsroom.ListPublishedArticlesResponse
+	(*GetPublishedArticleByIdResponse)(nil),       // 28: api.v1alpha1.newsroom.GetPublishedArticleByIdResponse
+	(*UserActivityResponse)(nil),                  // 29: api.v1alpha1.newsroom.UserActivityResponse
+	(*GetNewsForUserResponse)(nil),                // 30: api.v1alpha1.newsroom.GetNewsForUserResponse
+	(*StoreNewsArticleImageResponse)(nil),         // 31: api.v1alpha1.newsroom.StoreNewsArticleImageResponse
+	(*ListImagesForNewsArticleResponse)(nil),      // 32: api.v1alpha1.newsroom.ListImagesForNewsArticleResponse
+	(*UploadNewsArticleImageResponse)(nil),        // 33: api.v1alpha1.newsroom.UploadNewsArticleImageResponse
+	(*CreateClientArticleResponse)(nil),           // 34: api.v1alpha1.newsroom.CreateClientArticleResponse
+	(*UpdateClientArticleResponse)(nil),           // 35: api.v1alpha1.newsroom.UpdateClientArticleResponse
+	(*ListClientArticlesResponse)(nil),            // 36: api.v1alpha1.newsroom.ListClientArticlesResponse
+	(*CreatePublishedClientArticleResponse)(nil),  // 37: api.v1alpha1.newsroom.CreatePublishedClientArticleResponse
+	(*GetPublishedClientArticleByIdResponse)(nil), // 38: api.v1alpha1.newsroom.GetPublishedClientArticleByIdResponse
+	(*StoreClientArticleImageResponse)(nil),       // 39: api.v1alpha1.newsroom.StoreClientArticleImageResponse
+	(*ListImagesForClientArticleResponse)(nil),    // 40: api.v1alpha1.newsroom.ListImagesForClientArticleResponse
+	(*UploadClientArticleImageResponse)(nil),      // 41: api.v1alpha1.newsroom.UploadClientArticleImageResponse
+	(*ListPublishedClientArticlesResponse)(nil),   // 42: api.v1alpha1.newsroom.ListPublishedClientArticlesResponse
+	(*GetClientArticleByIdResponse)(nil),          // 43: api.v1alpha1.newsroom.GetClientArticleByIdResponse
 }
 var file_api_v1alpha1_newsroom_service_proto_depIdxs = []int32{
 	0,  // 0: api.v1alpha1.newsroom.NewsroomAPI.CreateNewsArticle:input_type -> api.v1alpha1.newsroom.CreateNewsArticleRequest
@@ -379,29 +393,31 @@ var file_api_v1alpha1_newsroom_service_proto_depIdxs = []int32{
 	18, // 18: api.v1alpha1.newsroom.NewsroomAPI.ListImagesForClientArticle:input_type -> api.v1alpha1.newsroom.ListImagesForClientArticleRequest
 	19, // 19: api.v1alpha1.newsroom.NewsroomAPI.UploadClientArticleImage:input_type -> api.v1alpha1.newsroom.UploadClientArticleImageRequest
 	20, // 20: api.v1alpha1.newsroom.NewsroomAPI.ListPublishedClientArticles:input_type -> api.v1alpha1.newsroom.ListPublishedClientArticlesRequest
-	21, // 21: api.v1alpha1.newsroom.NewsroomAPI.CreateNewsArticle:output_type -> api.v1alpha1.newsroom.CreateNewsArticleResponse
-	22, // 22: api.v1alpha1.newsroom.NewsroomAPI.ListNewsArticles:output_type -> api.v1alpha1.newsroom.ListNewsArticlesResponse
-	23, // 23: api.v1alpha1.newsroom.NewsroomAPI.GetNewsArticleById:output_type -> api.v1alpha1.newsroom.GetNewsArticleByIdResponse
-	24, // 24: api.v1alpha1.newsroom.NewsroomAPI.UpdateNewsArticle:output_type -> api.v1alpha1.newsroom.UpdateNewsArticleResponse
-	25, // 25: api.v1alpha1.newsroom.NewsroomAPI.CreatePublishedArticle:output_type -> api.v1alpha1.newsroom.CreatePublishedArticleResponse
-	26, // 26: api.v1alpha1.newsroom.NewsroomAPI.ListPublishedArticles:output_type -> api.v1alpha1.newsroom.ListPublishedArticlesResponse
-	27, // 27: api.v1alpha1.newsroom.NewsroomAPI.GetPublishedArticleById:output_type -> api.v1alpha1.newsroom.GetPublishedArticleByIdResponse
-	28, // 28: api.v1alpha1.newsroom.NewsroomAPI.UserActivity:output_type -> api.v1alpha1.newsroom.UserActivityResponse
-	29, // 29: api.v1alpha1.newsroom.NewsroomAPI.GetNewsForUser:output_type -> api.v1alpha1.newsroom.GetNewsForUserResponse
-	30, // 30: api.v1alpha1.newsroom.NewsroomAPI.StoreNewsArticleImage:output_type -> api.v1alpha1.newsroom.StoreNewsArticleImageResponse
-	31, // 31: api.v1alpha1.newsroom.NewsroomAPI.ListImagesForNewsArticle:output_type -> api.v1alpha1.newsroom.ListImagesForNewsArticleResponse
-	32, // 32: api.v1alpha1.newsroom.NewsroomAPI.UploadNewsArticleImage:output_type -> api.v1alpha1.newsroom.UploadNewsArticleImageResponse
-	33, // 33: api.v1alpha1.newsroom.NewsroomAPI.CreateClientArticle:output_type -> api.v1alpha1.newsroom.CreateClientArticleResponse
-	34, // 34: api.v1alpha1.newsroom.NewsroomAPI.UpdateClientArticle:output_type -> api.v1alpha1.newsroom.UpdateClientArticleResponse
-	35, // 35: api.v1alpha1.newsroom.NewsroomAPI.ListClientArticles:output_type -> api.v1alpha1.newsroom.ListClientArticlesResponse
-	36, // 36: api.v1alpha1.newsroom.NewsroomAPI.CreatePublishedClientArticle:output_type -> api.v1alpha1.newsroom.CreatePublishedClientArticleResponse
-	37, // 37: api.v1alpha1.newsroom.NewsroomAPI.GetPublishedClientArticleById:output_type -> api.v1alpha1.newsroom.GetPublishedClientArticleByIdResponse
-	38, // 38: api.v1alpha1.newsroom.NewsroomAPI.StoreClientArticleImage:output_type -> api.v1alpha1.newsroom.StoreClientArticleImageResponse
-	39, // 39: api.v1alpha1.newsroom.NewsroomAPI.ListImagesForClientArticle:output_type -> api.v1alpha1.newsroom.ListImagesForClientArticleResponse
-	40, // 40: api.v1alpha1.newsroom.NewsroomAPI.UploadClientArticleImage:output_type -> api.v1alpha1.newsroom.UploadClientArticleImageResponse
-	41, // 41: api.v1alpha1.newsroom.NewsroomAPI.ListPublishedClientArticles:output_type -> api.v1alpha1.newsroom.ListPublishedClientArticlesResponse
-	21, // [21:42] is the sub-list for method output_type
-	0,  // [0:21] is the sub-list for method input_type
+	21, // 21: api.v1alpha1.newsroom.NewsroomAPI.GetClientArticleById:input_type -> api.v1alpha1.newsroom.GetClientArticleByIdRequest
+	22, // 22: api.v1alpha1.newsroom.NewsroomAPI.CreateNewsArticle:output_type -> api.v1alpha1.newsroom.CreateNewsArticleResponse
+	23, // 23: api.v1alpha1.newsroom.NewsroomAPI.ListNewsArticles:output_type -> api.v1alpha1.newsroom.ListNewsArticlesResponse
+	24, // 24: api.v1alpha1.newsroom.NewsroomAPI.GetNewsArticleById:output_type -> api.v1alpha1.newsroom.GetNewsArticleByIdResponse
+	25, // 25: api.v1alpha1.newsroom.NewsroomAPI.UpdateNewsArticle:output_type -> api.v1alpha1.newsroom.UpdateNewsArticleResponse
+	26, // 26: api.v1alpha1.newsroom.NewsroomAPI.CreatePublishedArticle:output_type -> api.v1alpha1.newsroom.CreatePublishedArticleResponse
+	27, // 27: api.v1alpha1.newsroom.NewsroomAPI.ListPublishedArticles:output_type -> api.v1alpha1.newsroom.ListPublishedArticlesResponse
+	28, // 28: api.v1alpha1.newsroom.NewsroomAPI.GetPublishedArticleById:output_type -> api.v1alpha1.newsroom.GetPublishedArticleByIdResponse
+	29, // 29: api.v1alpha1.newsroom.NewsroomAPI.UserActivity:output_type -> api.v1alpha1.newsroom.UserActivityResponse
+	30, // 30: api.v1alpha1.newsroom.NewsroomAPI.GetNewsForUser:output_type -> api.v1alpha1.newsroom.GetNewsForUserResponse
+	31, // 31: api.v1alpha1.newsroom.NewsroomAPI.StoreNewsArticleImage:output_type -> api.v1alpha1.newsroom.StoreNewsArticleImageResponse
+	32, // 32: api.v1alpha1.newsroom.NewsroomAPI.ListImagesForNewsArticle:output_type -> api.v1alpha1.newsroom.ListImagesForNewsArticleResponse
+	33, // 33: api.v1alpha1.newsroom.NewsroomAPI.UploadNewsArticleImage:output_type -> api.v1alpha1.newsroom.UploadNewsArticleImageResponse
+	34, // 34: api.v1alpha1.newsroom.NewsroomAPI.CreateClientArticle:output_type -> api.v1alpha1.newsroom.CreateClientArticleResponse
+	35, // 35: api.v1alpha1.newsroom.NewsroomAPI.UpdateClientArticle:output_type -> api.v1alpha1.newsroom.UpdateClientArticleResponse
+	36, // 36: api.v1alpha1.newsroom.NewsroomAPI.ListClientArticles:output_type -> api.v1alpha1.newsroom.ListClientArticlesResponse
+	37, // 37: api.v1alpha1.newsroom.NewsroomAPI.CreatePublishedClientArticle:output_type -> api.v1alpha1.newsroom.CreatePublishedClientArticleResponse
+	38, // 38: api.v1alpha1.newsroom.NewsroomAPI.GetPublishedClientArticleById:output_type -> api.v1alpha1.newsroom.GetPublishedClientArticleByIdResponse
+	39, // 39: api.v1alpha1.newsroom.NewsroomAPI.StoreClientArticleImage:output_type -> api.v1alpha1.newsroom.StoreClientArticleImageResponse
+	40, // 40: api.v1alpha1.newsroom.NewsroomAPI.ListImagesForClientArticle:output_type -> api.v1alpha1.newsroom.ListImagesForClientArticleResponse
+	41, // 41: api.v1alpha1.newsroom.NewsroomAPI.UploadClientArticleImage:output_type -> api.v1alpha1.newsroom.UploadClientArticleImageResponse
+	42, // 42: api.v1alpha1.newsroom.NewsroomAPI.ListPublishedClientArticles:output_type -> api.v1alpha1.newsroom.ListPublishedClientArticlesResponse
+	43, // 43: api.v1alpha1.newsroom.NewsroomAPI.GetClientArticleById:output_type -> api.v1alpha1.newsroom.GetClientArticleByIdResponse
+	22, // [22:44] is the sub-list for method output_type
+	0,  // [0:22] is the sub-list for method input_type
 	0,  // [0:0] is the sub-list for extension type_name
 	0,  // [0:0] is the sub-list for extension extendee
 	0,  // [0:0] is the sub-list for field type_name
