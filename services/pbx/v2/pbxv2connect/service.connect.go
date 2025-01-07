@@ -76,6 +76,7 @@ const (
 
 // PBXServiceClient is a client for the services.pbx.v2.PBXService service.
 type PBXServiceClient interface {
+	// DEPRECATED: This method is deprecated and may be removed in future versions. (No longer need PBX Users)
 	// Returns details of all PBX Users associated with the authenticated callers ORG
 	// Required permissions:
 	//
@@ -85,7 +86,10 @@ type PBXServiceClient interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Internal: An internal error occurred.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	//
+	// Deprecated: do not use.
 	ListPBXUsers(context.Context, *connect_go.Request[v2.ListPBXUsersRequest]) (*connect_go.Response[v2.ListPBXUsersResponse], error)
+	// DEPRECATED: This method is deprecated and may be removed in future versions. (No longer need PBX Users)
 	// Returns details of the PBX User associated with the pbx_user_id
 	// Required permissions:
 	//
@@ -97,6 +101,8 @@ type PBXServiceClient interface {
 	//   - grpc.Internal: An internal error occurred.
 	//   - grpc.NotFound: The user does not exist or is not in the caller's ORG.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	//
+	// Deprecated: do not use.
 	GetPBXUser(context.Context, *connect_go.Request[v2.GetPBXUserRequest]) (*connect_go.Response[v2.GetPBXUserResponse], error)
 	// Returns details of all Ring Groups associated with the authenticated callers ORG
 	// Required permissions:
@@ -347,11 +353,15 @@ type pBXServiceClient struct {
 }
 
 // ListPBXUsers calls services.pbx.v2.PBXService.ListPBXUsers.
+//
+// Deprecated: do not use.
 func (c *pBXServiceClient) ListPBXUsers(ctx context.Context, req *connect_go.Request[v2.ListPBXUsersRequest]) (*connect_go.Response[v2.ListPBXUsersResponse], error) {
 	return c.listPBXUsers.CallUnary(ctx, req)
 }
 
 // GetPBXUser calls services.pbx.v2.PBXService.GetPBXUser.
+//
+// Deprecated: do not use.
 func (c *pBXServiceClient) GetPBXUser(ctx context.Context, req *connect_go.Request[v2.GetPBXUserRequest]) (*connect_go.Response[v2.GetPBXUserResponse], error) {
 	return c.getPBXUser.CallUnary(ctx, req)
 }
@@ -418,6 +428,7 @@ func (c *pBXServiceClient) AssignRandomExtension(ctx context.Context, req *conne
 
 // PBXServiceHandler is an implementation of the services.pbx.v2.PBXService service.
 type PBXServiceHandler interface {
+	// DEPRECATED: This method is deprecated and may be removed in future versions. (No longer need PBX Users)
 	// Returns details of all PBX Users associated with the authenticated callers ORG
 	// Required permissions:
 	//
@@ -427,7 +438,10 @@ type PBXServiceHandler interface {
 	//   - grpc.PermissionDenied: Caller doesn't have the required permissions.
 	//   - grpc.Internal: An internal error occurred.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	//
+	// Deprecated: do not use.
 	ListPBXUsers(context.Context, *connect_go.Request[v2.ListPBXUsersRequest]) (*connect_go.Response[v2.ListPBXUsersResponse], error)
+	// DEPRECATED: This method is deprecated and may be removed in future versions. (No longer need PBX Users)
 	// Returns details of the PBX User associated with the pbx_user_id
 	// Required permissions:
 	//
@@ -439,6 +453,8 @@ type PBXServiceHandler interface {
 	//   - grpc.Internal: An internal error occurred.
 	//   - grpc.NotFound: The user does not exist or is not in the caller's ORG.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
+	//
+	// Deprecated: do not use.
 	GetPBXUser(context.Context, *connect_go.Request[v2.GetPBXUserRequest]) (*connect_go.Response[v2.GetPBXUserResponse], error)
 	// Returns details of all Ring Groups associated with the authenticated callers ORG
 	// Required permissions:

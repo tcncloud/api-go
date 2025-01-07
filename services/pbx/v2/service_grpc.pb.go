@@ -39,6 +39,8 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PBXServiceClient interface {
+	// Deprecated: Do not use.
+	// DEPRECATED: This method is deprecated and may be removed in future versions. (No longer need PBX Users)
 	// Returns details of all PBX Users associated with the authenticated callers ORG
 	// Required permissions:
 	//
@@ -49,6 +51,8 @@ type PBXServiceClient interface {
 	//   - grpc.Internal: An internal error occurred.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	ListPBXUsers(ctx context.Context, in *ListPBXUsersRequest, opts ...grpc.CallOption) (*ListPBXUsersResponse, error)
+	// Deprecated: Do not use.
+	// DEPRECATED: This method is deprecated and may be removed in future versions. (No longer need PBX Users)
 	// Returns details of the PBX User associated with the pbx_user_id
 	// Required permissions:
 	//
@@ -216,6 +220,7 @@ func NewPBXServiceClient(cc grpc.ClientConnInterface) PBXServiceClient {
 	return &pBXServiceClient{cc}
 }
 
+// Deprecated: Do not use.
 func (c *pBXServiceClient) ListPBXUsers(ctx context.Context, in *ListPBXUsersRequest, opts ...grpc.CallOption) (*ListPBXUsersResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListPBXUsersResponse)
@@ -226,6 +231,7 @@ func (c *pBXServiceClient) ListPBXUsers(ctx context.Context, in *ListPBXUsersReq
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *pBXServiceClient) GetPBXUser(ctx context.Context, in *GetPBXUserRequest, opts ...grpc.CallOption) (*GetPBXUserResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetPBXUserResponse)
@@ -360,6 +366,8 @@ func (c *pBXServiceClient) AssignRandomExtension(ctx context.Context, in *Assign
 // All implementations must embed UnimplementedPBXServiceServer
 // for forward compatibility.
 type PBXServiceServer interface {
+	// Deprecated: Do not use.
+	// DEPRECATED: This method is deprecated and may be removed in future versions. (No longer need PBX Users)
 	// Returns details of all PBX Users associated with the authenticated callers ORG
 	// Required permissions:
 	//
@@ -370,6 +378,8 @@ type PBXServiceServer interface {
 	//   - grpc.Internal: An internal error occurred.
 	//   - grpc.Unavailable: The operation is currently unavailable. Likely a transient issue with a downstream service.
 	ListPBXUsers(context.Context, *ListPBXUsersRequest) (*ListPBXUsersResponse, error)
+	// Deprecated: Do not use.
+	// DEPRECATED: This method is deprecated and may be removed in future versions. (No longer need PBX Users)
 	// Returns details of the PBX User associated with the pbx_user_id
 	// Required permissions:
 	//
