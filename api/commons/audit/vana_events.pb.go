@@ -502,6 +502,194 @@ func (*VanaCreateTranscriptEvent_Call_) isVanaCreateTranscriptEvent_Metadata() {
 
 func (*VanaCreateTranscriptEvent_Sms_) isVanaCreateTranscriptEvent_Metadata() {}
 
+// VanaCreateSentimentEvent represents the sentiment created for a transcript.
+type VanaCreateSentimentEvent struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Required. Unique transcript id.
+	TranscriptSid int64 `protobuf:"varint,1,opt,name=transcript_sid,json=transcriptSid,proto3" json:"transcript_sid,omitempty"`
+	// Required. Metadata for the conversation that triggered the sentiment.
+	//
+	// Types that are valid to be assigned to Metadata:
+	//
+	//	*VanaCreateSentimentEvent_Call_
+	//	*VanaCreateSentimentEvent_Sms_
+	Metadata      isVanaCreateSentimentEvent_Metadata `protobuf_oneof:"metadata"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *VanaCreateSentimentEvent) Reset() {
+	*x = VanaCreateSentimentEvent{}
+	mi := &file_api_commons_audit_vana_events_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *VanaCreateSentimentEvent) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VanaCreateSentimentEvent) ProtoMessage() {}
+
+func (x *VanaCreateSentimentEvent) ProtoReflect() protoreflect.Message {
+	mi := &file_api_commons_audit_vana_events_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VanaCreateSentimentEvent.ProtoReflect.Descriptor instead.
+func (*VanaCreateSentimentEvent) Descriptor() ([]byte, []int) {
+	return file_api_commons_audit_vana_events_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *VanaCreateSentimentEvent) GetTranscriptSid() int64 {
+	if x != nil {
+		return x.TranscriptSid
+	}
+	return 0
+}
+
+func (x *VanaCreateSentimentEvent) GetMetadata() isVanaCreateSentimentEvent_Metadata {
+	if x != nil {
+		return x.Metadata
+	}
+	return nil
+}
+
+func (x *VanaCreateSentimentEvent) GetCall() *VanaCreateSentimentEvent_Call {
+	if x != nil {
+		if x, ok := x.Metadata.(*VanaCreateSentimentEvent_Call_); ok {
+			return x.Call
+		}
+	}
+	return nil
+}
+
+func (x *VanaCreateSentimentEvent) GetSms() *VanaCreateSentimentEvent_Sms {
+	if x != nil {
+		if x, ok := x.Metadata.(*VanaCreateSentimentEvent_Sms_); ok {
+			return x.Sms
+		}
+	}
+	return nil
+}
+
+type isVanaCreateSentimentEvent_Metadata interface {
+	isVanaCreateSentimentEvent_Metadata()
+}
+
+type VanaCreateSentimentEvent_Call_ struct {
+	Call *VanaCreateSentimentEvent_Call `protobuf:"bytes,2,opt,name=call,proto3,oneof"`
+}
+
+type VanaCreateSentimentEvent_Sms_ struct {
+	Sms *VanaCreateSentimentEvent_Sms `protobuf:"bytes,3,opt,name=sms,proto3,oneof"`
+}
+
+func (*VanaCreateSentimentEvent_Call_) isVanaCreateSentimentEvent_Metadata() {}
+
+func (*VanaCreateSentimentEvent_Sms_) isVanaCreateSentimentEvent_Metadata() {}
+
+// VanaCreateSummaryEvent represents the summary created for a transcript.
+type VanaCreateSummaryEvent struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Required. Unique transcript id.
+	TranscriptSid int64 `protobuf:"varint,1,opt,name=transcript_sid,json=transcriptSid,proto3" json:"transcript_sid,omitempty"`
+	// Required. Metadata for the conversation that triggered the summary.
+	//
+	// Types that are valid to be assigned to Metadata:
+	//
+	//	*VanaCreateSummaryEvent_Call_
+	//	*VanaCreateSummaryEvent_Sms_
+	Metadata      isVanaCreateSummaryEvent_Metadata `protobuf_oneof:"metadata"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *VanaCreateSummaryEvent) Reset() {
+	*x = VanaCreateSummaryEvent{}
+	mi := &file_api_commons_audit_vana_events_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *VanaCreateSummaryEvent) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VanaCreateSummaryEvent) ProtoMessage() {}
+
+func (x *VanaCreateSummaryEvent) ProtoReflect() protoreflect.Message {
+	mi := &file_api_commons_audit_vana_events_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VanaCreateSummaryEvent.ProtoReflect.Descriptor instead.
+func (*VanaCreateSummaryEvent) Descriptor() ([]byte, []int) {
+	return file_api_commons_audit_vana_events_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *VanaCreateSummaryEvent) GetTranscriptSid() int64 {
+	if x != nil {
+		return x.TranscriptSid
+	}
+	return 0
+}
+
+func (x *VanaCreateSummaryEvent) GetMetadata() isVanaCreateSummaryEvent_Metadata {
+	if x != nil {
+		return x.Metadata
+	}
+	return nil
+}
+
+func (x *VanaCreateSummaryEvent) GetCall() *VanaCreateSummaryEvent_Call {
+	if x != nil {
+		if x, ok := x.Metadata.(*VanaCreateSummaryEvent_Call_); ok {
+			return x.Call
+		}
+	}
+	return nil
+}
+
+func (x *VanaCreateSummaryEvent) GetSms() *VanaCreateSummaryEvent_Sms {
+	if x != nil {
+		if x, ok := x.Metadata.(*VanaCreateSummaryEvent_Sms_); ok {
+			return x.Sms
+		}
+	}
+	return nil
+}
+
+type isVanaCreateSummaryEvent_Metadata interface {
+	isVanaCreateSummaryEvent_Metadata()
+}
+
+type VanaCreateSummaryEvent_Call_ struct {
+	Call *VanaCreateSummaryEvent_Call `protobuf:"bytes,2,opt,name=call,proto3,oneof"`
+}
+
+type VanaCreateSummaryEvent_Sms_ struct {
+	Sms *VanaCreateSummaryEvent_Sms `protobuf:"bytes,3,opt,name=sms,proto3,oneof"`
+}
+
+func (*VanaCreateSummaryEvent_Call_) isVanaCreateSummaryEvent_Metadata() {}
+
+func (*VanaCreateSummaryEvent_Sms_) isVanaCreateSummaryEvent_Metadata() {}
+
 // FlagSummary is an overview of the flags in the transcript.
 type VanaFlagSummaryEvent_FlagSummary struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -513,7 +701,7 @@ type VanaFlagSummaryEvent_FlagSummary struct {
 
 func (x *VanaFlagSummaryEvent_FlagSummary) Reset() {
 	*x = VanaFlagSummaryEvent_FlagSummary{}
-	mi := &file_api_commons_audit_vana_events_proto_msgTypes[6]
+	mi := &file_api_commons_audit_vana_events_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -525,7 +713,7 @@ func (x *VanaFlagSummaryEvent_FlagSummary) String() string {
 func (*VanaFlagSummaryEvent_FlagSummary) ProtoMessage() {}
 
 func (x *VanaFlagSummaryEvent_FlagSummary) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_audit_vana_events_proto_msgTypes[6]
+	mi := &file_api_commons_audit_vana_events_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -567,7 +755,7 @@ type VanaCreateTranscriptEvent_Call struct {
 
 func (x *VanaCreateTranscriptEvent_Call) Reset() {
 	*x = VanaCreateTranscriptEvent_Call{}
-	mi := &file_api_commons_audit_vana_events_proto_msgTypes[7]
+	mi := &file_api_commons_audit_vana_events_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -579,7 +767,7 @@ func (x *VanaCreateTranscriptEvent_Call) String() string {
 func (*VanaCreateTranscriptEvent_Call) ProtoMessage() {}
 
 func (x *VanaCreateTranscriptEvent_Call) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_audit_vana_events_proto_msgTypes[7]
+	mi := &file_api_commons_audit_vana_events_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -632,7 +820,7 @@ type VanaCreateTranscriptEvent_Sms struct {
 
 func (x *VanaCreateTranscriptEvent_Sms) Reset() {
 	*x = VanaCreateTranscriptEvent_Sms{}
-	mi := &file_api_commons_audit_vana_events_proto_msgTypes[8]
+	mi := &file_api_commons_audit_vana_events_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -644,7 +832,7 @@ func (x *VanaCreateTranscriptEvent_Sms) String() string {
 func (*VanaCreateTranscriptEvent_Sms) ProtoMessage() {}
 
 func (x *VanaCreateTranscriptEvent_Sms) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_audit_vana_events_proto_msgTypes[8]
+	mi := &file_api_commons_audit_vana_events_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -661,6 +849,208 @@ func (*VanaCreateTranscriptEvent_Sms) Descriptor() ([]byte, []int) {
 }
 
 func (x *VanaCreateTranscriptEvent_Sms) GetConversationSid() int64 {
+	if x != nil {
+		return x.ConversationSid
+	}
+	return 0
+}
+
+// Call is call metadata.
+type VanaCreateSentimentEvent_Call struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Required. Unique when combined with call type.
+	CallSid int64 `protobuf:"varint,1,opt,name=call_sid,json=callSid,proto3" json:"call_sid,omitempty"`
+	// Required. Unique when combined with call sid.
+	CallType      commons.CallType_Enum `protobuf:"varint,2,opt,name=call_type,json=callType,proto3,enum=api.commons.CallType_Enum" json:"call_type,omitempty"` //
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *VanaCreateSentimentEvent_Call) Reset() {
+	*x = VanaCreateSentimentEvent_Call{}
+	mi := &file_api_commons_audit_vana_events_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *VanaCreateSentimentEvent_Call) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VanaCreateSentimentEvent_Call) ProtoMessage() {}
+
+func (x *VanaCreateSentimentEvent_Call) ProtoReflect() protoreflect.Message {
+	mi := &file_api_commons_audit_vana_events_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VanaCreateSentimentEvent_Call.ProtoReflect.Descriptor instead.
+func (*VanaCreateSentimentEvent_Call) Descriptor() ([]byte, []int) {
+	return file_api_commons_audit_vana_events_proto_rawDescGZIP(), []int{6, 0}
+}
+
+func (x *VanaCreateSentimentEvent_Call) GetCallSid() int64 {
+	if x != nil {
+		return x.CallSid
+	}
+	return 0
+}
+
+func (x *VanaCreateSentimentEvent_Call) GetCallType() commons.CallType_Enum {
+	if x != nil {
+		return x.CallType
+	}
+	return commons.CallType_Enum(0)
+}
+
+// SMS is the sms metadata.
+type VanaCreateSentimentEvent_Sms struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Required. Unique conversation identifier.
+	ConversationSid int64 `protobuf:"varint,1,opt,name=conversation_sid,json=conversationSid,proto3" json:"conversation_sid,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *VanaCreateSentimentEvent_Sms) Reset() {
+	*x = VanaCreateSentimentEvent_Sms{}
+	mi := &file_api_commons_audit_vana_events_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *VanaCreateSentimentEvent_Sms) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VanaCreateSentimentEvent_Sms) ProtoMessage() {}
+
+func (x *VanaCreateSentimentEvent_Sms) ProtoReflect() protoreflect.Message {
+	mi := &file_api_commons_audit_vana_events_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VanaCreateSentimentEvent_Sms.ProtoReflect.Descriptor instead.
+func (*VanaCreateSentimentEvent_Sms) Descriptor() ([]byte, []int) {
+	return file_api_commons_audit_vana_events_proto_rawDescGZIP(), []int{6, 1}
+}
+
+func (x *VanaCreateSentimentEvent_Sms) GetConversationSid() int64 {
+	if x != nil {
+		return x.ConversationSid
+	}
+	return 0
+}
+
+// Call is call metadata.
+type VanaCreateSummaryEvent_Call struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Required. Unique when combined with call type.
+	CallSid int64 `protobuf:"varint,1,opt,name=call_sid,json=callSid,proto3" json:"call_sid,omitempty"`
+	// Required. Unique when combined with call sid.
+	CallType      commons.CallType_Enum `protobuf:"varint,2,opt,name=call_type,json=callType,proto3,enum=api.commons.CallType_Enum" json:"call_type,omitempty"` //
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *VanaCreateSummaryEvent_Call) Reset() {
+	*x = VanaCreateSummaryEvent_Call{}
+	mi := &file_api_commons_audit_vana_events_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *VanaCreateSummaryEvent_Call) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VanaCreateSummaryEvent_Call) ProtoMessage() {}
+
+func (x *VanaCreateSummaryEvent_Call) ProtoReflect() protoreflect.Message {
+	mi := &file_api_commons_audit_vana_events_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VanaCreateSummaryEvent_Call.ProtoReflect.Descriptor instead.
+func (*VanaCreateSummaryEvent_Call) Descriptor() ([]byte, []int) {
+	return file_api_commons_audit_vana_events_proto_rawDescGZIP(), []int{7, 0}
+}
+
+func (x *VanaCreateSummaryEvent_Call) GetCallSid() int64 {
+	if x != nil {
+		return x.CallSid
+	}
+	return 0
+}
+
+func (x *VanaCreateSummaryEvent_Call) GetCallType() commons.CallType_Enum {
+	if x != nil {
+		return x.CallType
+	}
+	return commons.CallType_Enum(0)
+}
+
+// SMS is the sms metadata.
+type VanaCreateSummaryEvent_Sms struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Required. Unique conversation identifier.
+	ConversationSid int64 `protobuf:"varint,1,opt,name=conversation_sid,json=conversationSid,proto3" json:"conversation_sid,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *VanaCreateSummaryEvent_Sms) Reset() {
+	*x = VanaCreateSummaryEvent_Sms{}
+	mi := &file_api_commons_audit_vana_events_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *VanaCreateSummaryEvent_Sms) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VanaCreateSummaryEvent_Sms) ProtoMessage() {}
+
+func (x *VanaCreateSummaryEvent_Sms) ProtoReflect() protoreflect.Message {
+	mi := &file_api_commons_audit_vana_events_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VanaCreateSummaryEvent_Sms.ProtoReflect.Descriptor instead.
+func (*VanaCreateSummaryEvent_Sms) Descriptor() ([]byte, []int) {
+	return file_api_commons_audit_vana_events_proto_rawDescGZIP(), []int{7, 1}
+}
+
+func (x *VanaCreateSummaryEvent_Sms) GetConversationSid() int64 {
 	if x != nil {
 		return x.ConversationSid
 	}
@@ -775,6 +1165,51 @@ var file_api_commons_audit_vana_events_proto_rawDesc = []byte{
 	0x1a, 0x30, 0x0a, 0x03, 0x53, 0x6d, 0x73, 0x12, 0x29, 0x0a, 0x10, 0x63, 0x6f, 0x6e, 0x76, 0x65,
 	0x72, 0x73, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
 	0x03, 0x52, 0x0f, 0x63, 0x6f, 0x6e, 0x76, 0x65, 0x72, 0x73, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53,
+	0x69, 0x64, 0x42, 0x0a, 0x0a, 0x08, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x22, 0xe8,
+	0x02, 0x0a, 0x18, 0x56, 0x61, 0x6e, 0x61, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x53, 0x65, 0x6e,
+	0x74, 0x69, 0x6d, 0x65, 0x6e, 0x74, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x12, 0x25, 0x0a, 0x0e, 0x74,
+	0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x03, 0x52, 0x0d, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x53,
+	0x69, 0x64, 0x12, 0x46, 0x0a, 0x04, 0x63, 0x61, 0x6c, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x30, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x61,
+	0x75, 0x64, 0x69, 0x74, 0x2e, 0x56, 0x61, 0x6e, 0x61, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x53,
+	0x65, 0x6e, 0x74, 0x69, 0x6d, 0x65, 0x6e, 0x74, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x2e, 0x43, 0x61,
+	0x6c, 0x6c, 0x48, 0x00, 0x52, 0x04, 0x63, 0x61, 0x6c, 0x6c, 0x12, 0x43, 0x0a, 0x03, 0x73, 0x6d,
+	0x73, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2f, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f,
+	0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x61, 0x75, 0x64, 0x69, 0x74, 0x2e, 0x56, 0x61, 0x6e, 0x61,
+	0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x53, 0x65, 0x6e, 0x74, 0x69, 0x6d, 0x65, 0x6e, 0x74, 0x45,
+	0x76, 0x65, 0x6e, 0x74, 0x2e, 0x53, 0x6d, 0x73, 0x48, 0x00, 0x52, 0x03, 0x73, 0x6d, 0x73, 0x1a,
+	0x5a, 0x0a, 0x04, 0x43, 0x61, 0x6c, 0x6c, 0x12, 0x19, 0x0a, 0x08, 0x63, 0x61, 0x6c, 0x6c, 0x5f,
+	0x73, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x63, 0x61, 0x6c, 0x6c, 0x53,
+	0x69, 0x64, 0x12, 0x37, 0x0a, 0x09, 0x63, 0x61, 0x6c, 0x6c, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x1a, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d,
+	0x6f, 0x6e, 0x73, 0x2e, 0x43, 0x61, 0x6c, 0x6c, 0x54, 0x79, 0x70, 0x65, 0x2e, 0x45, 0x6e, 0x75,
+	0x6d, 0x52, 0x08, 0x63, 0x61, 0x6c, 0x6c, 0x54, 0x79, 0x70, 0x65, 0x1a, 0x30, 0x0a, 0x03, 0x53,
+	0x6d, 0x73, 0x12, 0x29, 0x0a, 0x10, 0x63, 0x6f, 0x6e, 0x76, 0x65, 0x72, 0x73, 0x61, 0x74, 0x69,
+	0x6f, 0x6e, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0f, 0x63, 0x6f,
+	0x6e, 0x76, 0x65, 0x72, 0x73, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x69, 0x64, 0x42, 0x0a, 0x0a,
+	0x08, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x22, 0xe2, 0x02, 0x0a, 0x16, 0x56, 0x61,
+	0x6e, 0x61, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x53, 0x75, 0x6d, 0x6d, 0x61, 0x72, 0x79, 0x45,
+	0x76, 0x65, 0x6e, 0x74, 0x12, 0x25, 0x0a, 0x0e, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69,
+	0x70, 0x74, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0d, 0x74, 0x72,
+	0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x53, 0x69, 0x64, 0x12, 0x44, 0x0a, 0x04, 0x63,
+	0x61, 0x6c, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2e, 0x2e, 0x61, 0x70, 0x69, 0x2e,
+	0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x61, 0x75, 0x64, 0x69, 0x74, 0x2e, 0x56, 0x61,
+	0x6e, 0x61, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x53, 0x75, 0x6d, 0x6d, 0x61, 0x72, 0x79, 0x45,
+	0x76, 0x65, 0x6e, 0x74, 0x2e, 0x43, 0x61, 0x6c, 0x6c, 0x48, 0x00, 0x52, 0x04, 0x63, 0x61, 0x6c,
+	0x6c, 0x12, 0x41, 0x0a, 0x03, 0x73, 0x6d, 0x73, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d,
+	0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x61, 0x75, 0x64,
+	0x69, 0x74, 0x2e, 0x56, 0x61, 0x6e, 0x61, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x53, 0x75, 0x6d,
+	0x6d, 0x61, 0x72, 0x79, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x2e, 0x53, 0x6d, 0x73, 0x48, 0x00, 0x52,
+	0x03, 0x73, 0x6d, 0x73, 0x1a, 0x5a, 0x0a, 0x04, 0x43, 0x61, 0x6c, 0x6c, 0x12, 0x19, 0x0a, 0x08,
+	0x63, 0x61, 0x6c, 0x6c, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07,
+	0x63, 0x61, 0x6c, 0x6c, 0x53, 0x69, 0x64, 0x12, 0x37, 0x0a, 0x09, 0x63, 0x61, 0x6c, 0x6c, 0x5f,
+	0x74, 0x79, 0x70, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x1a, 0x2e, 0x61, 0x70, 0x69,
+	0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x43, 0x61, 0x6c, 0x6c, 0x54, 0x79, 0x70,
+	0x65, 0x2e, 0x45, 0x6e, 0x75, 0x6d, 0x52, 0x08, 0x63, 0x61, 0x6c, 0x6c, 0x54, 0x79, 0x70, 0x65,
+	0x1a, 0x30, 0x0a, 0x03, 0x53, 0x6d, 0x73, 0x12, 0x29, 0x0a, 0x10, 0x63, 0x6f, 0x6e, 0x76, 0x65,
+	0x72, 0x73, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x03, 0x52, 0x0f, 0x63, 0x6f, 0x6e, 0x76, 0x65, 0x72, 0x73, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53,
 	0x69, 0x64, 0x42, 0x0a, 0x0a, 0x08, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x42, 0xbc,
 	0x01, 0x0a, 0x15, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f,
 	0x6e, 0x73, 0x2e, 0x61, 0x75, 0x64, 0x69, 0x74, 0x42, 0x0f, 0x56, 0x61, 0x6e, 0x61, 0x45, 0x76,
@@ -803,7 +1238,7 @@ func file_api_commons_audit_vana_events_proto_rawDescGZIP() []byte {
 	return file_api_commons_audit_vana_events_proto_rawDescData
 }
 
-var file_api_commons_audit_vana_events_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
+var file_api_commons_audit_vana_events_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
 var file_api_commons_audit_vana_events_proto_goTypes = []any{
 	(*VanaFlagEvent)(nil),                    // 0: api.commons.audit.VanaFlagEvent
 	(*VanaFlagReviewEvent)(nil),              // 1: api.commons.audit.VanaFlagReviewEvent
@@ -811,31 +1246,43 @@ var file_api_commons_audit_vana_events_proto_goTypes = []any{
 	(*VanaFlagSummaryEvent)(nil),             // 3: api.commons.audit.VanaFlagSummaryEvent
 	(*VanaPhraseCorrectionEvent)(nil),        // 4: api.commons.audit.VanaPhraseCorrectionEvent
 	(*VanaCreateTranscriptEvent)(nil),        // 5: api.commons.audit.VanaCreateTranscriptEvent
-	(*VanaFlagSummaryEvent_FlagSummary)(nil), // 6: api.commons.audit.VanaFlagSummaryEvent.FlagSummary
-	(*VanaCreateTranscriptEvent_Call)(nil),   // 7: api.commons.audit.VanaCreateTranscriptEvent.Call
-	(*VanaCreateTranscriptEvent_Sms)(nil),    // 8: api.commons.audit.VanaCreateTranscriptEvent.Sms
-	(*timestamppb.Timestamp)(nil),            // 9: google.protobuf.Timestamp
-	(*durationpb.Duration)(nil),              // 10: google.protobuf.Duration
-	(commons.CallType_Enum)(0),               // 11: api.commons.CallType.Enum
+	(*VanaCreateSentimentEvent)(nil),         // 6: api.commons.audit.VanaCreateSentimentEvent
+	(*VanaCreateSummaryEvent)(nil),           // 7: api.commons.audit.VanaCreateSummaryEvent
+	(*VanaFlagSummaryEvent_FlagSummary)(nil), // 8: api.commons.audit.VanaFlagSummaryEvent.FlagSummary
+	(*VanaCreateTranscriptEvent_Call)(nil),   // 9: api.commons.audit.VanaCreateTranscriptEvent.Call
+	(*VanaCreateTranscriptEvent_Sms)(nil),    // 10: api.commons.audit.VanaCreateTranscriptEvent.Sms
+	(*VanaCreateSentimentEvent_Call)(nil),    // 11: api.commons.audit.VanaCreateSentimentEvent.Call
+	(*VanaCreateSentimentEvent_Sms)(nil),     // 12: api.commons.audit.VanaCreateSentimentEvent.Sms
+	(*VanaCreateSummaryEvent_Call)(nil),      // 13: api.commons.audit.VanaCreateSummaryEvent.Call
+	(*VanaCreateSummaryEvent_Sms)(nil),       // 14: api.commons.audit.VanaCreateSummaryEvent.Sms
+	(*timestamppb.Timestamp)(nil),            // 15: google.protobuf.Timestamp
+	(*durationpb.Duration)(nil),              // 16: google.protobuf.Duration
+	(commons.CallType_Enum)(0),               // 17: api.commons.CallType.Enum
 }
 var file_api_commons_audit_vana_events_proto_depIdxs = []int32{
-	9,  // 0: api.commons.audit.VanaBillingReportEvent.start_time:type_name -> google.protobuf.Timestamp
-	9,  // 1: api.commons.audit.VanaBillingReportEvent.end_time:type_name -> google.protobuf.Timestamp
-	9,  // 2: api.commons.audit.VanaFlagSummaryEvent.start_time:type_name -> google.protobuf.Timestamp
-	9,  // 3: api.commons.audit.VanaFlagSummaryEvent.end_time:type_name -> google.protobuf.Timestamp
-	6,  // 4: api.commons.audit.VanaFlagSummaryEvent.flag_summaries:type_name -> api.commons.audit.VanaFlagSummaryEvent.FlagSummary
-	10, // 5: api.commons.audit.VanaPhraseCorrectionEvent.start_offset:type_name -> google.protobuf.Duration
-	10, // 6: api.commons.audit.VanaPhraseCorrectionEvent.end_offset:type_name -> google.protobuf.Duration
-	7,  // 7: api.commons.audit.VanaCreateTranscriptEvent.call:type_name -> api.commons.audit.VanaCreateTranscriptEvent.Call
-	8,  // 8: api.commons.audit.VanaCreateTranscriptEvent.sms:type_name -> api.commons.audit.VanaCreateTranscriptEvent.Sms
-	11, // 9: api.commons.audit.VanaCreateTranscriptEvent.Call.call_type:type_name -> api.commons.CallType.Enum
-	10, // 10: api.commons.audit.VanaCreateTranscriptEvent.Call.talk_time:type_name -> google.protobuf.Duration
-	10, // 11: api.commons.audit.VanaCreateTranscriptEvent.Call.audio_time:type_name -> google.protobuf.Duration
-	12, // [12:12] is the sub-list for method output_type
-	12, // [12:12] is the sub-list for method input_type
-	12, // [12:12] is the sub-list for extension type_name
-	12, // [12:12] is the sub-list for extension extendee
-	0,  // [0:12] is the sub-list for field type_name
+	15, // 0: api.commons.audit.VanaBillingReportEvent.start_time:type_name -> google.protobuf.Timestamp
+	15, // 1: api.commons.audit.VanaBillingReportEvent.end_time:type_name -> google.protobuf.Timestamp
+	15, // 2: api.commons.audit.VanaFlagSummaryEvent.start_time:type_name -> google.protobuf.Timestamp
+	15, // 3: api.commons.audit.VanaFlagSummaryEvent.end_time:type_name -> google.protobuf.Timestamp
+	8,  // 4: api.commons.audit.VanaFlagSummaryEvent.flag_summaries:type_name -> api.commons.audit.VanaFlagSummaryEvent.FlagSummary
+	16, // 5: api.commons.audit.VanaPhraseCorrectionEvent.start_offset:type_name -> google.protobuf.Duration
+	16, // 6: api.commons.audit.VanaPhraseCorrectionEvent.end_offset:type_name -> google.protobuf.Duration
+	9,  // 7: api.commons.audit.VanaCreateTranscriptEvent.call:type_name -> api.commons.audit.VanaCreateTranscriptEvent.Call
+	10, // 8: api.commons.audit.VanaCreateTranscriptEvent.sms:type_name -> api.commons.audit.VanaCreateTranscriptEvent.Sms
+	11, // 9: api.commons.audit.VanaCreateSentimentEvent.call:type_name -> api.commons.audit.VanaCreateSentimentEvent.Call
+	12, // 10: api.commons.audit.VanaCreateSentimentEvent.sms:type_name -> api.commons.audit.VanaCreateSentimentEvent.Sms
+	13, // 11: api.commons.audit.VanaCreateSummaryEvent.call:type_name -> api.commons.audit.VanaCreateSummaryEvent.Call
+	14, // 12: api.commons.audit.VanaCreateSummaryEvent.sms:type_name -> api.commons.audit.VanaCreateSummaryEvent.Sms
+	17, // 13: api.commons.audit.VanaCreateTranscriptEvent.Call.call_type:type_name -> api.commons.CallType.Enum
+	16, // 14: api.commons.audit.VanaCreateTranscriptEvent.Call.talk_time:type_name -> google.protobuf.Duration
+	16, // 15: api.commons.audit.VanaCreateTranscriptEvent.Call.audio_time:type_name -> google.protobuf.Duration
+	17, // 16: api.commons.audit.VanaCreateSentimentEvent.Call.call_type:type_name -> api.commons.CallType.Enum
+	17, // 17: api.commons.audit.VanaCreateSummaryEvent.Call.call_type:type_name -> api.commons.CallType.Enum
+	18, // [18:18] is the sub-list for method output_type
+	18, // [18:18] is the sub-list for method input_type
+	18, // [18:18] is the sub-list for extension type_name
+	18, // [18:18] is the sub-list for extension extendee
+	0,  // [0:18] is the sub-list for field type_name
 }
 
 func init() { file_api_commons_audit_vana_events_proto_init() }
@@ -847,13 +1294,21 @@ func file_api_commons_audit_vana_events_proto_init() {
 		(*VanaCreateTranscriptEvent_Call_)(nil),
 		(*VanaCreateTranscriptEvent_Sms_)(nil),
 	}
+	file_api_commons_audit_vana_events_proto_msgTypes[6].OneofWrappers = []any{
+		(*VanaCreateSentimentEvent_Call_)(nil),
+		(*VanaCreateSentimentEvent_Sms_)(nil),
+	}
+	file_api_commons_audit_vana_events_proto_msgTypes[7].OneofWrappers = []any{
+		(*VanaCreateSummaryEvent_Call_)(nil),
+		(*VanaCreateSummaryEvent_Sms_)(nil),
+	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_commons_audit_vana_events_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   9,
+			NumMessages:   15,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

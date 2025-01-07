@@ -10,6 +10,7 @@ import (
 	commons "github.com/tcncloud/api-go/api/commons"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	_ "google.golang.org/protobuf/types/known/durationpb"
 	fieldmaskpb "google.golang.org/protobuf/types/known/fieldmaskpb"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
@@ -2034,6 +2035,202 @@ func (x *ScorecardsCreateAutoEvaluationEvent) GetAutoEvaluation() *commons.AutoE
 	return nil
 }
 
+// ScorecardsCreateSmartEvaluationEvent represents the creation of an evaluation from a smart scorecard
+type ScorecardsCreateSmartEvaluationEvent struct {
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	SmartEvaluationId int64                  `protobuf:"varint,1,opt,name=smart_evaluation_id,json=smartEvaluationId,proto3" json:"smart_evaluation_id,omitempty"` // unique id of smart evaluation created
+	TranscriptSid     int64                  `protobuf:"varint,2,opt,name=transcript_sid,json=transcriptSid,proto3" json:"transcript_sid,omitempty"`               // unique id of conversation transcript evaluated
+	// Types that are valid to be assigned to Metadata:
+	//
+	//	*ScorecardsCreateSmartEvaluationEvent_Call_
+	//	*ScorecardsCreateSmartEvaluationEvent_Sms_
+	Metadata      isScorecardsCreateSmartEvaluationEvent_Metadata `protobuf_oneof:"metadata"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ScorecardsCreateSmartEvaluationEvent) Reset() {
+	*x = ScorecardsCreateSmartEvaluationEvent{}
+	mi := &file_api_commons_audit_scorecards_events_proto_msgTypes[23]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ScorecardsCreateSmartEvaluationEvent) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ScorecardsCreateSmartEvaluationEvent) ProtoMessage() {}
+
+func (x *ScorecardsCreateSmartEvaluationEvent) ProtoReflect() protoreflect.Message {
+	mi := &file_api_commons_audit_scorecards_events_proto_msgTypes[23]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ScorecardsCreateSmartEvaluationEvent.ProtoReflect.Descriptor instead.
+func (*ScorecardsCreateSmartEvaluationEvent) Descriptor() ([]byte, []int) {
+	return file_api_commons_audit_scorecards_events_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *ScorecardsCreateSmartEvaluationEvent) GetSmartEvaluationId() int64 {
+	if x != nil {
+		return x.SmartEvaluationId
+	}
+	return 0
+}
+
+func (x *ScorecardsCreateSmartEvaluationEvent) GetTranscriptSid() int64 {
+	if x != nil {
+		return x.TranscriptSid
+	}
+	return 0
+}
+
+func (x *ScorecardsCreateSmartEvaluationEvent) GetMetadata() isScorecardsCreateSmartEvaluationEvent_Metadata {
+	if x != nil {
+		return x.Metadata
+	}
+	return nil
+}
+
+func (x *ScorecardsCreateSmartEvaluationEvent) GetCall() *ScorecardsCreateSmartEvaluationEvent_Call {
+	if x != nil {
+		if x, ok := x.Metadata.(*ScorecardsCreateSmartEvaluationEvent_Call_); ok {
+			return x.Call
+		}
+	}
+	return nil
+}
+
+func (x *ScorecardsCreateSmartEvaluationEvent) GetSms() *ScorecardsCreateSmartEvaluationEvent_Sms {
+	if x != nil {
+		if x, ok := x.Metadata.(*ScorecardsCreateSmartEvaluationEvent_Sms_); ok {
+			return x.Sms
+		}
+	}
+	return nil
+}
+
+type isScorecardsCreateSmartEvaluationEvent_Metadata interface {
+	isScorecardsCreateSmartEvaluationEvent_Metadata()
+}
+
+type ScorecardsCreateSmartEvaluationEvent_Call_ struct {
+	Call *ScorecardsCreateSmartEvaluationEvent_Call `protobuf:"bytes,3,opt,name=call,proto3,oneof"` // metadata for call that triggered the scorecard
+}
+
+type ScorecardsCreateSmartEvaluationEvent_Sms_ struct {
+	Sms *ScorecardsCreateSmartEvaluationEvent_Sms `protobuf:"bytes,4,opt,name=sms,proto3,oneof"` // metadata for sms that triggered the scorecard
+}
+
+func (*ScorecardsCreateSmartEvaluationEvent_Call_) isScorecardsCreateSmartEvaluationEvent_Metadata() {
+}
+
+func (*ScorecardsCreateSmartEvaluationEvent_Sms_) isScorecardsCreateSmartEvaluationEvent_Metadata() {}
+
+type ScorecardsCreateSmartEvaluationEvent_Call struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	CallSid       int64                  `protobuf:"varint,1,opt,name=call_sid,json=callSid,proto3" json:"call_sid,omitempty"`                                   // unique when combined with call type
+	CallType      commons.CallType_Enum  `protobuf:"varint,2,opt,name=call_type,json=callType,proto3,enum=api.commons.CallType_Enum" json:"call_type,omitempty"` // unique when combined with call sid
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ScorecardsCreateSmartEvaluationEvent_Call) Reset() {
+	*x = ScorecardsCreateSmartEvaluationEvent_Call{}
+	mi := &file_api_commons_audit_scorecards_events_proto_msgTypes[24]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ScorecardsCreateSmartEvaluationEvent_Call) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ScorecardsCreateSmartEvaluationEvent_Call) ProtoMessage() {}
+
+func (x *ScorecardsCreateSmartEvaluationEvent_Call) ProtoReflect() protoreflect.Message {
+	mi := &file_api_commons_audit_scorecards_events_proto_msgTypes[24]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ScorecardsCreateSmartEvaluationEvent_Call.ProtoReflect.Descriptor instead.
+func (*ScorecardsCreateSmartEvaluationEvent_Call) Descriptor() ([]byte, []int) {
+	return file_api_commons_audit_scorecards_events_proto_rawDescGZIP(), []int{23, 0}
+}
+
+func (x *ScorecardsCreateSmartEvaluationEvent_Call) GetCallSid() int64 {
+	if x != nil {
+		return x.CallSid
+	}
+	return 0
+}
+
+func (x *ScorecardsCreateSmartEvaluationEvent_Call) GetCallType() commons.CallType_Enum {
+	if x != nil {
+		return x.CallType
+	}
+	return commons.CallType_Enum(0)
+}
+
+type ScorecardsCreateSmartEvaluationEvent_Sms struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	ConversationSid int64                  `protobuf:"varint,1,opt,name=conversation_sid,json=conversationSid,proto3" json:"conversation_sid,omitempty"` // unique conversation identifier
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *ScorecardsCreateSmartEvaluationEvent_Sms) Reset() {
+	*x = ScorecardsCreateSmartEvaluationEvent_Sms{}
+	mi := &file_api_commons_audit_scorecards_events_proto_msgTypes[25]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ScorecardsCreateSmartEvaluationEvent_Sms) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ScorecardsCreateSmartEvaluationEvent_Sms) ProtoMessage() {}
+
+func (x *ScorecardsCreateSmartEvaluationEvent_Sms) ProtoReflect() protoreflect.Message {
+	mi := &file_api_commons_audit_scorecards_events_proto_msgTypes[25]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ScorecardsCreateSmartEvaluationEvent_Sms.ProtoReflect.Descriptor instead.
+func (*ScorecardsCreateSmartEvaluationEvent_Sms) Descriptor() ([]byte, []int) {
+	return file_api_commons_audit_scorecards_events_proto_rawDescGZIP(), []int{23, 1}
+}
+
+func (x *ScorecardsCreateSmartEvaluationEvent_Sms) GetConversationSid() int64 {
+	if x != nil {
+		return x.ConversationSid
+	}
+	return 0
+}
+
 var File_api_commons_audit_scorecards_events_proto protoreflect.FileDescriptor
 
 var file_api_commons_audit_scorecards_events_proto_rawDesc = []byte{
@@ -2044,6 +2241,8 @@ var file_api_commons_audit_scorecards_events_proto_rawDesc = []byte{
 	0x61, 0x70, 0x69, 0x2f, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2f, 0x61, 0x63, 0x64, 0x2e,
 	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1c, 0x61, 0x70, 0x69, 0x2f, 0x63, 0x6f, 0x6d, 0x6d, 0x6f,
 	0x6e, 0x73, 0x2f, 0x73, 0x63, 0x6f, 0x72, 0x65, 0x63, 0x61, 0x72, 0x64, 0x73, 0x2e, 0x70, 0x72,
+	0x6f, 0x74, 0x6f, 0x1a, 0x1e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x62, 0x75, 0x66, 0x2f, 0x64, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x70, 0x72,
 	0x6f, 0x74, 0x6f, 0x1a, 0x20, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74,
 	0x6f, 0x62, 0x75, 0x66, 0x2f, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x5f, 0x6d, 0x61, 0x73, 0x6b, 0x2e,
 	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1f, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x70, 0x72,
@@ -2466,20 +2665,48 @@ var file_api_commons_audit_scorecards_events_proto_rawDesc = []byte{
 	0x6f, 0x5f, 0x65, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x08, 0x20, 0x01,
 	0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73,
 	0x2e, 0x41, 0x75, 0x74, 0x6f, 0x45, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52,
-	0x0e, 0x61, 0x75, 0x74, 0x6f, 0x45, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x42,
-	0xc2, 0x01, 0x0a, 0x15, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d,
-	0x6f, 0x6e, 0x73, 0x2e, 0x61, 0x75, 0x64, 0x69, 0x74, 0x42, 0x15, 0x53, 0x63, 0x6f, 0x72, 0x65,
-	0x63, 0x61, 0x72, 0x64, 0x73, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x73, 0x50, 0x72, 0x6f, 0x74, 0x6f,
-	0x50, 0x01, 0x5a, 0x2c, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74,
-	0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61,
-	0x70, 0x69, 0x2f, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2f, 0x61, 0x75, 0x64, 0x69, 0x74,
-	0xa2, 0x02, 0x03, 0x41, 0x43, 0x41, 0xaa, 0x02, 0x11, 0x41, 0x70, 0x69, 0x2e, 0x43, 0x6f, 0x6d,
-	0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x41, 0x75, 0x64, 0x69, 0x74, 0xca, 0x02, 0x11, 0x41, 0x70, 0x69,
-	0x5c, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x5c, 0x41, 0x75, 0x64, 0x69, 0x74, 0xe2, 0x02,
-	0x1d, 0x41, 0x70, 0x69, 0x5c, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x5c, 0x41, 0x75, 0x64,
-	0x69, 0x74, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02,
-	0x13, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x3a, 0x3a, 0x41,
-	0x75, 0x64, 0x69, 0x74, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x0e, 0x61, 0x75, 0x74, 0x6f, 0x45, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x22,
+	0xbc, 0x03, 0x0a, 0x24, 0x53, 0x63, 0x6f, 0x72, 0x65, 0x63, 0x61, 0x72, 0x64, 0x73, 0x43, 0x72,
+	0x65, 0x61, 0x74, 0x65, 0x53, 0x6d, 0x61, 0x72, 0x74, 0x45, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74,
+	0x69, 0x6f, 0x6e, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x12, 0x2e, 0x0a, 0x13, 0x73, 0x6d, 0x61, 0x72,
+	0x74, 0x5f, 0x65, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x69, 0x64, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x11, 0x73, 0x6d, 0x61, 0x72, 0x74, 0x45, 0x76, 0x61, 0x6c,
+	0x75, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x49, 0x64, 0x12, 0x25, 0x0a, 0x0e, 0x74, 0x72, 0x61, 0x6e,
+	0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03,
+	0x52, 0x0d, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x53, 0x69, 0x64, 0x12,
+	0x52, 0x0a, 0x04, 0x63, 0x61, 0x6c, 0x6c, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x3c, 0x2e,
+	0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x61, 0x75, 0x64, 0x69,
+	0x74, 0x2e, 0x53, 0x63, 0x6f, 0x72, 0x65, 0x63, 0x61, 0x72, 0x64, 0x73, 0x43, 0x72, 0x65, 0x61,
+	0x74, 0x65, 0x53, 0x6d, 0x61, 0x72, 0x74, 0x45, 0x76, 0x61, 0x6c, 0x75, 0x61, 0x74, 0x69, 0x6f,
+	0x6e, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x2e, 0x43, 0x61, 0x6c, 0x6c, 0x48, 0x00, 0x52, 0x04, 0x63,
+	0x61, 0x6c, 0x6c, 0x12, 0x4f, 0x0a, 0x03, 0x73, 0x6d, 0x73, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x3b, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x61,
+	0x75, 0x64, 0x69, 0x74, 0x2e, 0x53, 0x63, 0x6f, 0x72, 0x65, 0x63, 0x61, 0x72, 0x64, 0x73, 0x43,
+	0x72, 0x65, 0x61, 0x74, 0x65, 0x53, 0x6d, 0x61, 0x72, 0x74, 0x45, 0x76, 0x61, 0x6c, 0x75, 0x61,
+	0x74, 0x69, 0x6f, 0x6e, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x2e, 0x53, 0x6d, 0x73, 0x48, 0x00, 0x52,
+	0x03, 0x73, 0x6d, 0x73, 0x1a, 0x5a, 0x0a, 0x04, 0x43, 0x61, 0x6c, 0x6c, 0x12, 0x19, 0x0a, 0x08,
+	0x63, 0x61, 0x6c, 0x6c, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07,
+	0x63, 0x61, 0x6c, 0x6c, 0x53, 0x69, 0x64, 0x12, 0x37, 0x0a, 0x09, 0x63, 0x61, 0x6c, 0x6c, 0x5f,
+	0x74, 0x79, 0x70, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x1a, 0x2e, 0x61, 0x70, 0x69,
+	0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x43, 0x61, 0x6c, 0x6c, 0x54, 0x79, 0x70,
+	0x65, 0x2e, 0x45, 0x6e, 0x75, 0x6d, 0x52, 0x08, 0x63, 0x61, 0x6c, 0x6c, 0x54, 0x79, 0x70, 0x65,
+	0x1a, 0x30, 0x0a, 0x03, 0x53, 0x6d, 0x73, 0x12, 0x29, 0x0a, 0x10, 0x63, 0x6f, 0x6e, 0x76, 0x65,
+	0x72, 0x73, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x73, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x03, 0x52, 0x0f, 0x63, 0x6f, 0x6e, 0x76, 0x65, 0x72, 0x73, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53,
+	0x69, 0x64, 0x42, 0x0a, 0x0a, 0x08, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x42, 0xc2,
+	0x01, 0x0a, 0x15, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f,
+	0x6e, 0x73, 0x2e, 0x61, 0x75, 0x64, 0x69, 0x74, 0x42, 0x15, 0x53, 0x63, 0x6f, 0x72, 0x65, 0x63,
+	0x61, 0x72, 0x64, 0x73, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x73, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50,
+	0x01, 0x5a, 0x2c, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63,
+	0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70,
+	0x69, 0x2f, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2f, 0x61, 0x75, 0x64, 0x69, 0x74, 0xa2,
+	0x02, 0x03, 0x41, 0x43, 0x41, 0xaa, 0x02, 0x11, 0x41, 0x70, 0x69, 0x2e, 0x43, 0x6f, 0x6d, 0x6d,
+	0x6f, 0x6e, 0x73, 0x2e, 0x41, 0x75, 0x64, 0x69, 0x74, 0xca, 0x02, 0x11, 0x41, 0x70, 0x69, 0x5c,
+	0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x5c, 0x41, 0x75, 0x64, 0x69, 0x74, 0xe2, 0x02, 0x1d,
+	0x41, 0x70, 0x69, 0x5c, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x5c, 0x41, 0x75, 0x64, 0x69,
+	0x74, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x13,
+	0x41, 0x70, 0x69, 0x3a, 0x3a, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x3a, 0x3a, 0x41, 0x75,
+	0x64, 0x69, 0x74, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -2494,96 +2721,102 @@ func file_api_commons_audit_scorecards_events_proto_rawDescGZIP() []byte {
 	return file_api_commons_audit_scorecards_events_proto_rawDescData
 }
 
-var file_api_commons_audit_scorecards_events_proto_msgTypes = make([]protoimpl.MessageInfo, 23)
+var file_api_commons_audit_scorecards_events_proto_msgTypes = make([]protoimpl.MessageInfo, 26)
 var file_api_commons_audit_scorecards_events_proto_goTypes = []any{
-	(*ScorecardsCreateQuestionEvent)(nil),           // 0: api.commons.audit.ScorecardsCreateQuestionEvent
-	(*ScorecardsUpdateQuestionEvent)(nil),           // 1: api.commons.audit.ScorecardsUpdateQuestionEvent
-	(*ScorecardsDeleteQuestionEvent)(nil),           // 2: api.commons.audit.ScorecardsDeleteQuestionEvent
-	(*ScorecardsCreateScorecardEvent)(nil),          // 3: api.commons.audit.ScorecardsCreateScorecardEvent
-	(*ScorecardsUpdateScorecardEvent)(nil),          // 4: api.commons.audit.ScorecardsUpdateScorecardEvent
-	(*ScorecardsDeleteScorecardEvent)(nil),          // 5: api.commons.audit.ScorecardsDeleteScorecardEvent
-	(*ScorecardsCloneScorecardEvent)(nil),           // 6: api.commons.audit.ScorecardsCloneScorecardEvent
-	(*ScorecardsCreateEvaluationEvent)(nil),         // 7: api.commons.audit.ScorecardsCreateEvaluationEvent
-	(*ScorecardsUpdateEvaluationEvent)(nil),         // 8: api.commons.audit.ScorecardsUpdateEvaluationEvent
-	(*ScorecardsDeleteEvaluationEvent)(nil),         // 9: api.commons.audit.ScorecardsDeleteEvaluationEvent
-	(*ScorecardsCreateSectionEvent)(nil),            // 10: api.commons.audit.ScorecardsCreateSectionEvent
-	(*ScorecardsUpdateSectionEvent)(nil),            // 11: api.commons.audit.ScorecardsUpdateSectionEvent
-	(*ScorecardsDeleteSectionEvent)(nil),            // 12: api.commons.audit.ScorecardsDeleteSectionEvent
-	(*ScorecardsCreateCategoryEvent)(nil),           // 13: api.commons.audit.ScorecardsCreateCategoryEvent
-	(*ScorecardsUpdateCategoryEvent)(nil),           // 14: api.commons.audit.ScorecardsUpdateCategoryEvent
-	(*ScorecardsDeleteCategoryEvent)(nil),           // 15: api.commons.audit.ScorecardsDeleteCategoryEvent
-	(*ScorecardsCreateEvaluationQuestionEvent)(nil), // 16: api.commons.audit.ScorecardsCreateEvaluationQuestionEvent
-	(*ScorecardsUpdateEvaluationQuestionEvent)(nil), // 17: api.commons.audit.ScorecardsUpdateEvaluationQuestionEvent
-	(*ScorecardsDeleteEvaluationQuestionEvent)(nil), // 18: api.commons.audit.ScorecardsDeleteEvaluationQuestionEvent
-	(*ScorecardsCreateScorecardQuestionEvent)(nil),  // 19: api.commons.audit.ScorecardsCreateScorecardQuestionEvent
-	(*ScorecardsUpdateScorecardQuestionEvent)(nil),  // 20: api.commons.audit.ScorecardsUpdateScorecardQuestionEvent
-	(*ScorecardsDeleteScorecardQuestionEvent)(nil),  // 21: api.commons.audit.ScorecardsDeleteScorecardQuestionEvent
-	(*ScorecardsCreateAutoEvaluationEvent)(nil),     // 22: api.commons.audit.ScorecardsCreateAutoEvaluationEvent
-	(*commons.Question)(nil),                        // 23: api.commons.Question
-	(*fieldmaskpb.FieldMask)(nil),                   // 24: google.protobuf.FieldMask
-	(commons.ScoreType)(0),                          // 25: api.commons.ScoreType
-	(commons.EvaluationType)(0),                     // 26: api.commons.EvaluationType
-	(*commons.Scorecard)(nil),                       // 27: api.commons.Scorecard
-	(commons.ScorecardState)(0),                     // 28: api.commons.ScorecardState
-	(*commons.Evaluation)(nil),                      // 29: api.commons.Evaluation
-	(*commons.Section)(nil),                         // 30: api.commons.Section
-	(*timestamppb.Timestamp)(nil),                   // 31: google.protobuf.Timestamp
-	(*commons.Category)(nil),                        // 32: api.commons.Category
-	(*commons.EvaluationQuestion)(nil),              // 33: api.commons.EvaluationQuestion
-	(*commons.ScorecardQuestion)(nil),               // 34: api.commons.ScorecardQuestion
-	(commons.CallType_Enum)(0),                      // 35: api.commons.CallType.Enum
-	(commons.RiskLevel)(0),                          // 36: api.commons.RiskLevel
-	(*commons.AutoEvaluation)(nil),                  // 37: api.commons.AutoEvaluation
+	(*ScorecardsCreateQuestionEvent)(nil),             // 0: api.commons.audit.ScorecardsCreateQuestionEvent
+	(*ScorecardsUpdateQuestionEvent)(nil),             // 1: api.commons.audit.ScorecardsUpdateQuestionEvent
+	(*ScorecardsDeleteQuestionEvent)(nil),             // 2: api.commons.audit.ScorecardsDeleteQuestionEvent
+	(*ScorecardsCreateScorecardEvent)(nil),            // 3: api.commons.audit.ScorecardsCreateScorecardEvent
+	(*ScorecardsUpdateScorecardEvent)(nil),            // 4: api.commons.audit.ScorecardsUpdateScorecardEvent
+	(*ScorecardsDeleteScorecardEvent)(nil),            // 5: api.commons.audit.ScorecardsDeleteScorecardEvent
+	(*ScorecardsCloneScorecardEvent)(nil),             // 6: api.commons.audit.ScorecardsCloneScorecardEvent
+	(*ScorecardsCreateEvaluationEvent)(nil),           // 7: api.commons.audit.ScorecardsCreateEvaluationEvent
+	(*ScorecardsUpdateEvaluationEvent)(nil),           // 8: api.commons.audit.ScorecardsUpdateEvaluationEvent
+	(*ScorecardsDeleteEvaluationEvent)(nil),           // 9: api.commons.audit.ScorecardsDeleteEvaluationEvent
+	(*ScorecardsCreateSectionEvent)(nil),              // 10: api.commons.audit.ScorecardsCreateSectionEvent
+	(*ScorecardsUpdateSectionEvent)(nil),              // 11: api.commons.audit.ScorecardsUpdateSectionEvent
+	(*ScorecardsDeleteSectionEvent)(nil),              // 12: api.commons.audit.ScorecardsDeleteSectionEvent
+	(*ScorecardsCreateCategoryEvent)(nil),             // 13: api.commons.audit.ScorecardsCreateCategoryEvent
+	(*ScorecardsUpdateCategoryEvent)(nil),             // 14: api.commons.audit.ScorecardsUpdateCategoryEvent
+	(*ScorecardsDeleteCategoryEvent)(nil),             // 15: api.commons.audit.ScorecardsDeleteCategoryEvent
+	(*ScorecardsCreateEvaluationQuestionEvent)(nil),   // 16: api.commons.audit.ScorecardsCreateEvaluationQuestionEvent
+	(*ScorecardsUpdateEvaluationQuestionEvent)(nil),   // 17: api.commons.audit.ScorecardsUpdateEvaluationQuestionEvent
+	(*ScorecardsDeleteEvaluationQuestionEvent)(nil),   // 18: api.commons.audit.ScorecardsDeleteEvaluationQuestionEvent
+	(*ScorecardsCreateScorecardQuestionEvent)(nil),    // 19: api.commons.audit.ScorecardsCreateScorecardQuestionEvent
+	(*ScorecardsUpdateScorecardQuestionEvent)(nil),    // 20: api.commons.audit.ScorecardsUpdateScorecardQuestionEvent
+	(*ScorecardsDeleteScorecardQuestionEvent)(nil),    // 21: api.commons.audit.ScorecardsDeleteScorecardQuestionEvent
+	(*ScorecardsCreateAutoEvaluationEvent)(nil),       // 22: api.commons.audit.ScorecardsCreateAutoEvaluationEvent
+	(*ScorecardsCreateSmartEvaluationEvent)(nil),      // 23: api.commons.audit.ScorecardsCreateSmartEvaluationEvent
+	(*ScorecardsCreateSmartEvaluationEvent_Call)(nil), // 24: api.commons.audit.ScorecardsCreateSmartEvaluationEvent.Call
+	(*ScorecardsCreateSmartEvaluationEvent_Sms)(nil),  // 25: api.commons.audit.ScorecardsCreateSmartEvaluationEvent.Sms
+	(*commons.Question)(nil),                          // 26: api.commons.Question
+	(*fieldmaskpb.FieldMask)(nil),                     // 27: google.protobuf.FieldMask
+	(commons.ScoreType)(0),                            // 28: api.commons.ScoreType
+	(commons.EvaluationType)(0),                       // 29: api.commons.EvaluationType
+	(*commons.Scorecard)(nil),                         // 30: api.commons.Scorecard
+	(commons.ScorecardState)(0),                       // 31: api.commons.ScorecardState
+	(*commons.Evaluation)(nil),                        // 32: api.commons.Evaluation
+	(*commons.Section)(nil),                           // 33: api.commons.Section
+	(*timestamppb.Timestamp)(nil),                     // 34: google.protobuf.Timestamp
+	(*commons.Category)(nil),                          // 35: api.commons.Category
+	(*commons.EvaluationQuestion)(nil),                // 36: api.commons.EvaluationQuestion
+	(*commons.ScorecardQuestion)(nil),                 // 37: api.commons.ScorecardQuestion
+	(commons.CallType_Enum)(0),                        // 38: api.commons.CallType.Enum
+	(commons.RiskLevel)(0),                            // 39: api.commons.RiskLevel
+	(*commons.AutoEvaluation)(nil),                    // 40: api.commons.AutoEvaluation
 }
 var file_api_commons_audit_scorecards_events_proto_depIdxs = []int32{
-	23, // 0: api.commons.audit.ScorecardsCreateQuestionEvent.question:type_name -> api.commons.Question
-	24, // 1: api.commons.audit.ScorecardsUpdateQuestionEvent.update_mask:type_name -> google.protobuf.FieldMask
-	23, // 2: api.commons.audit.ScorecardsUpdateQuestionEvent.question:type_name -> api.commons.Question
-	23, // 3: api.commons.audit.ScorecardsDeleteQuestionEvent.question:type_name -> api.commons.Question
-	25, // 4: api.commons.audit.ScorecardsCreateScorecardEvent.score_type:type_name -> api.commons.ScoreType
-	26, // 5: api.commons.audit.ScorecardsCreateScorecardEvent.evaluation_type:type_name -> api.commons.EvaluationType
-	27, // 6: api.commons.audit.ScorecardsCreateScorecardEvent.scorecard:type_name -> api.commons.Scorecard
-	25, // 7: api.commons.audit.ScorecardsUpdateScorecardEvent.score_type:type_name -> api.commons.ScoreType
-	26, // 8: api.commons.audit.ScorecardsUpdateScorecardEvent.evaluation_type:type_name -> api.commons.EvaluationType
-	28, // 9: api.commons.audit.ScorecardsUpdateScorecardEvent.state:type_name -> api.commons.ScorecardState
-	24, // 10: api.commons.audit.ScorecardsUpdateScorecardEvent.update_mask:type_name -> google.protobuf.FieldMask
-	27, // 11: api.commons.audit.ScorecardsUpdateScorecardEvent.scorecard:type_name -> api.commons.Scorecard
-	25, // 12: api.commons.audit.ScorecardsDeleteScorecardEvent.score_type:type_name -> api.commons.ScoreType
-	26, // 13: api.commons.audit.ScorecardsDeleteScorecardEvent.evaluation_type:type_name -> api.commons.EvaluationType
-	28, // 14: api.commons.audit.ScorecardsDeleteScorecardEvent.state:type_name -> api.commons.ScorecardState
-	27, // 15: api.commons.audit.ScorecardsDeleteScorecardEvent.scorecard:type_name -> api.commons.Scorecard
-	25, // 16: api.commons.audit.ScorecardsCloneScorecardEvent.score_type:type_name -> api.commons.ScoreType
-	26, // 17: api.commons.audit.ScorecardsCloneScorecardEvent.evaluation_type:type_name -> api.commons.EvaluationType
-	27, // 18: api.commons.audit.ScorecardsCloneScorecardEvent.scorecard:type_name -> api.commons.Scorecard
-	29, // 19: api.commons.audit.ScorecardsCreateEvaluationEvent.evaluation:type_name -> api.commons.Evaluation
-	29, // 20: api.commons.audit.ScorecardsUpdateEvaluationEvent.evaluation:type_name -> api.commons.Evaluation
-	29, // 21: api.commons.audit.ScorecardsDeleteEvaluationEvent.evaluation:type_name -> api.commons.Evaluation
-	30, // 22: api.commons.audit.ScorecardsCreateSectionEvent.section:type_name -> api.commons.Section
-	24, // 23: api.commons.audit.ScorecardsUpdateSectionEvent.update_mask:type_name -> google.protobuf.FieldMask
-	30, // 24: api.commons.audit.ScorecardsUpdateSectionEvent.section:type_name -> api.commons.Section
-	30, // 25: api.commons.audit.ScorecardsDeleteSectionEvent.section:type_name -> api.commons.Section
-	31, // 26: api.commons.audit.ScorecardsCreateCategoryEvent.created_at:type_name -> google.protobuf.Timestamp
-	32, // 27: api.commons.audit.ScorecardsCreateCategoryEvent.category:type_name -> api.commons.Category
-	24, // 28: api.commons.audit.ScorecardsUpdateCategoryEvent.update_mask:type_name -> google.protobuf.FieldMask
-	32, // 29: api.commons.audit.ScorecardsUpdateCategoryEvent.category:type_name -> api.commons.Category
-	31, // 30: api.commons.audit.ScorecardsDeleteCategoryEvent.deleted_at:type_name -> google.protobuf.Timestamp
-	32, // 31: api.commons.audit.ScorecardsDeleteCategoryEvent.category:type_name -> api.commons.Category
-	33, // 32: api.commons.audit.ScorecardsCreateEvaluationQuestionEvent.evaluation_question:type_name -> api.commons.EvaluationQuestion
-	24, // 33: api.commons.audit.ScorecardsUpdateEvaluationQuestionEvent.update_mask:type_name -> google.protobuf.FieldMask
-	33, // 34: api.commons.audit.ScorecardsUpdateEvaluationQuestionEvent.evaluation_question:type_name -> api.commons.EvaluationQuestion
-	33, // 35: api.commons.audit.ScorecardsDeleteEvaluationQuestionEvent.evaluation_questions:type_name -> api.commons.EvaluationQuestion
-	34, // 36: api.commons.audit.ScorecardsCreateScorecardQuestionEvent.scorecard_question:type_name -> api.commons.ScorecardQuestion
-	24, // 37: api.commons.audit.ScorecardsUpdateScorecardQuestionEvent.update_mask:type_name -> google.protobuf.FieldMask
-	34, // 38: api.commons.audit.ScorecardsUpdateScorecardQuestionEvent.scorecard_question:type_name -> api.commons.ScorecardQuestion
-	34, // 39: api.commons.audit.ScorecardsDeleteScorecardQuestionEvent.scorecard_question:type_name -> api.commons.ScorecardQuestion
-	35, // 40: api.commons.audit.ScorecardsCreateAutoEvaluationEvent.call_type:type_name -> api.commons.CallType.Enum
-	36, // 41: api.commons.audit.ScorecardsCreateAutoEvaluationEvent.risk_level:type_name -> api.commons.RiskLevel
-	37, // 42: api.commons.audit.ScorecardsCreateAutoEvaluationEvent.auto_evaluation:type_name -> api.commons.AutoEvaluation
-	43, // [43:43] is the sub-list for method output_type
-	43, // [43:43] is the sub-list for method input_type
-	43, // [43:43] is the sub-list for extension type_name
-	43, // [43:43] is the sub-list for extension extendee
-	0,  // [0:43] is the sub-list for field type_name
+	26, // 0: api.commons.audit.ScorecardsCreateQuestionEvent.question:type_name -> api.commons.Question
+	27, // 1: api.commons.audit.ScorecardsUpdateQuestionEvent.update_mask:type_name -> google.protobuf.FieldMask
+	26, // 2: api.commons.audit.ScorecardsUpdateQuestionEvent.question:type_name -> api.commons.Question
+	26, // 3: api.commons.audit.ScorecardsDeleteQuestionEvent.question:type_name -> api.commons.Question
+	28, // 4: api.commons.audit.ScorecardsCreateScorecardEvent.score_type:type_name -> api.commons.ScoreType
+	29, // 5: api.commons.audit.ScorecardsCreateScorecardEvent.evaluation_type:type_name -> api.commons.EvaluationType
+	30, // 6: api.commons.audit.ScorecardsCreateScorecardEvent.scorecard:type_name -> api.commons.Scorecard
+	28, // 7: api.commons.audit.ScorecardsUpdateScorecardEvent.score_type:type_name -> api.commons.ScoreType
+	29, // 8: api.commons.audit.ScorecardsUpdateScorecardEvent.evaluation_type:type_name -> api.commons.EvaluationType
+	31, // 9: api.commons.audit.ScorecardsUpdateScorecardEvent.state:type_name -> api.commons.ScorecardState
+	27, // 10: api.commons.audit.ScorecardsUpdateScorecardEvent.update_mask:type_name -> google.protobuf.FieldMask
+	30, // 11: api.commons.audit.ScorecardsUpdateScorecardEvent.scorecard:type_name -> api.commons.Scorecard
+	28, // 12: api.commons.audit.ScorecardsDeleteScorecardEvent.score_type:type_name -> api.commons.ScoreType
+	29, // 13: api.commons.audit.ScorecardsDeleteScorecardEvent.evaluation_type:type_name -> api.commons.EvaluationType
+	31, // 14: api.commons.audit.ScorecardsDeleteScorecardEvent.state:type_name -> api.commons.ScorecardState
+	30, // 15: api.commons.audit.ScorecardsDeleteScorecardEvent.scorecard:type_name -> api.commons.Scorecard
+	28, // 16: api.commons.audit.ScorecardsCloneScorecardEvent.score_type:type_name -> api.commons.ScoreType
+	29, // 17: api.commons.audit.ScorecardsCloneScorecardEvent.evaluation_type:type_name -> api.commons.EvaluationType
+	30, // 18: api.commons.audit.ScorecardsCloneScorecardEvent.scorecard:type_name -> api.commons.Scorecard
+	32, // 19: api.commons.audit.ScorecardsCreateEvaluationEvent.evaluation:type_name -> api.commons.Evaluation
+	32, // 20: api.commons.audit.ScorecardsUpdateEvaluationEvent.evaluation:type_name -> api.commons.Evaluation
+	32, // 21: api.commons.audit.ScorecardsDeleteEvaluationEvent.evaluation:type_name -> api.commons.Evaluation
+	33, // 22: api.commons.audit.ScorecardsCreateSectionEvent.section:type_name -> api.commons.Section
+	27, // 23: api.commons.audit.ScorecardsUpdateSectionEvent.update_mask:type_name -> google.protobuf.FieldMask
+	33, // 24: api.commons.audit.ScorecardsUpdateSectionEvent.section:type_name -> api.commons.Section
+	33, // 25: api.commons.audit.ScorecardsDeleteSectionEvent.section:type_name -> api.commons.Section
+	34, // 26: api.commons.audit.ScorecardsCreateCategoryEvent.created_at:type_name -> google.protobuf.Timestamp
+	35, // 27: api.commons.audit.ScorecardsCreateCategoryEvent.category:type_name -> api.commons.Category
+	27, // 28: api.commons.audit.ScorecardsUpdateCategoryEvent.update_mask:type_name -> google.protobuf.FieldMask
+	35, // 29: api.commons.audit.ScorecardsUpdateCategoryEvent.category:type_name -> api.commons.Category
+	34, // 30: api.commons.audit.ScorecardsDeleteCategoryEvent.deleted_at:type_name -> google.protobuf.Timestamp
+	35, // 31: api.commons.audit.ScorecardsDeleteCategoryEvent.category:type_name -> api.commons.Category
+	36, // 32: api.commons.audit.ScorecardsCreateEvaluationQuestionEvent.evaluation_question:type_name -> api.commons.EvaluationQuestion
+	27, // 33: api.commons.audit.ScorecardsUpdateEvaluationQuestionEvent.update_mask:type_name -> google.protobuf.FieldMask
+	36, // 34: api.commons.audit.ScorecardsUpdateEvaluationQuestionEvent.evaluation_question:type_name -> api.commons.EvaluationQuestion
+	36, // 35: api.commons.audit.ScorecardsDeleteEvaluationQuestionEvent.evaluation_questions:type_name -> api.commons.EvaluationQuestion
+	37, // 36: api.commons.audit.ScorecardsCreateScorecardQuestionEvent.scorecard_question:type_name -> api.commons.ScorecardQuestion
+	27, // 37: api.commons.audit.ScorecardsUpdateScorecardQuestionEvent.update_mask:type_name -> google.protobuf.FieldMask
+	37, // 38: api.commons.audit.ScorecardsUpdateScorecardQuestionEvent.scorecard_question:type_name -> api.commons.ScorecardQuestion
+	37, // 39: api.commons.audit.ScorecardsDeleteScorecardQuestionEvent.scorecard_question:type_name -> api.commons.ScorecardQuestion
+	38, // 40: api.commons.audit.ScorecardsCreateAutoEvaluationEvent.call_type:type_name -> api.commons.CallType.Enum
+	39, // 41: api.commons.audit.ScorecardsCreateAutoEvaluationEvent.risk_level:type_name -> api.commons.RiskLevel
+	40, // 42: api.commons.audit.ScorecardsCreateAutoEvaluationEvent.auto_evaluation:type_name -> api.commons.AutoEvaluation
+	24, // 43: api.commons.audit.ScorecardsCreateSmartEvaluationEvent.call:type_name -> api.commons.audit.ScorecardsCreateSmartEvaluationEvent.Call
+	25, // 44: api.commons.audit.ScorecardsCreateSmartEvaluationEvent.sms:type_name -> api.commons.audit.ScorecardsCreateSmartEvaluationEvent.Sms
+	38, // 45: api.commons.audit.ScorecardsCreateSmartEvaluationEvent.Call.call_type:type_name -> api.commons.CallType.Enum
+	46, // [46:46] is the sub-list for method output_type
+	46, // [46:46] is the sub-list for method input_type
+	46, // [46:46] is the sub-list for extension type_name
+	46, // [46:46] is the sub-list for extension extendee
+	0,  // [0:46] is the sub-list for field type_name
 }
 
 func init() { file_api_commons_audit_scorecards_events_proto_init() }
@@ -2591,13 +2824,17 @@ func file_api_commons_audit_scorecards_events_proto_init() {
 	if File_api_commons_audit_scorecards_events_proto != nil {
 		return
 	}
+	file_api_commons_audit_scorecards_events_proto_msgTypes[23].OneofWrappers = []any{
+		(*ScorecardsCreateSmartEvaluationEvent_Call_)(nil),
+		(*ScorecardsCreateSmartEvaluationEvent_Sms_)(nil),
+	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_commons_audit_scorecards_events_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   23,
+			NumMessages:   26,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
