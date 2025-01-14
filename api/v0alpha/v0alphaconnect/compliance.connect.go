@@ -103,6 +103,9 @@ const (
 	// ComplianceProcessScrubListDeleteUploadProcedure is the fully-qualified name of the Compliance's
 	// ProcessScrubListDeleteUpload RPC.
 	ComplianceProcessScrubListDeleteUploadProcedure = "/api.v0alpha.Compliance/ProcessScrubListDeleteUpload"
+	// ComplianceScrubListDeleteProcedure is the fully-qualified name of the Compliance's
+	// ScrubListDelete RPC.
+	ComplianceScrubListDeleteProcedure = "/api.v0alpha.Compliance/ScrubListDelete"
 	// ComplianceExportScrubListProcedure is the fully-qualified name of the Compliance's
 	// ExportScrubList RPC.
 	ComplianceExportScrubListProcedure = "/api.v0alpha.Compliance/ExportScrubList"
@@ -278,6 +281,7 @@ type ComplianceClient interface {
 	//	PERMISSION_COMPLIANCE
 	ScrubListDownload(context.Context, *connect_go.Request[v0alpha.ScrubListDownloadRequest]) (*connect_go.Response[longrunningpb.Operation], error)
 	ProcessScrubListDeleteUpload(context.Context, *connect_go.Request[v0alpha.ProcessScrubListDeleteUploadReq]) (*connect_go.Response[longrunningpb.Operation], error)
+	ScrubListDelete(context.Context, *connect_go.Request[v0alpha.ScrubListDeleteRequest]) (*connect_go.Response[longrunningpb.Operation], error)
 	ExportScrubList(context.Context, *connect_go.Request[v0alpha.ExportScrubListReq]) (*connect_go.Response[v0alpha.ExportScrubListRes], error)
 	// Purge entries from a scrub list defined by PurgeScrubListReq message.
 	// Required permissions:
@@ -632,6 +636,11 @@ func NewComplianceClient(httpClient connect_go.HTTPClient, baseURL string, opts 
 			baseURL+ComplianceProcessScrubListDeleteUploadProcedure,
 			opts...,
 		),
+		scrubListDelete: connect_go.NewClient[v0alpha.ScrubListDeleteRequest, longrunningpb.Operation](
+			httpClient,
+			baseURL+ComplianceScrubListDeleteProcedure,
+			opts...,
+		),
 		exportScrubList: connect_go.NewClient[v0alpha.ExportScrubListReq, v0alpha.ExportScrubListRes](
 			httpClient,
 			baseURL+ComplianceExportScrubListProcedure,
@@ -876,6 +885,7 @@ type complianceClient struct {
 	processScrubListUpload         *connect_go.Client[v0alpha.ProcessScrubListUploadReq, longrunningpb.Operation]
 	scrubListDownload              *connect_go.Client[v0alpha.ScrubListDownloadRequest, longrunningpb.Operation]
 	processScrubListDeleteUpload   *connect_go.Client[v0alpha.ProcessScrubListDeleteUploadReq, longrunningpb.Operation]
+	scrubListDelete                *connect_go.Client[v0alpha.ScrubListDeleteRequest, longrunningpb.Operation]
 	exportScrubList                *connect_go.Client[v0alpha.ExportScrubListReq, v0alpha.ExportScrubListRes]
 	purgeScrubList                 *connect_go.Client[v0alpha.PurgeScrubListReq, v0alpha.PurgeScrubListRes]
 	createScenario                 *connect_go.Client[v0alpha.CreateScenarioReq, v0alpha.CreateScenarioRes]
@@ -1039,6 +1049,11 @@ func (c *complianceClient) ScrubListDownload(ctx context.Context, req *connect_g
 // ProcessScrubListDeleteUpload calls api.v0alpha.Compliance.ProcessScrubListDeleteUpload.
 func (c *complianceClient) ProcessScrubListDeleteUpload(ctx context.Context, req *connect_go.Request[v0alpha.ProcessScrubListDeleteUploadReq]) (*connect_go.Response[longrunningpb.Operation], error) {
 	return c.processScrubListDeleteUpload.CallUnary(ctx, req)
+}
+
+// ScrubListDelete calls api.v0alpha.Compliance.ScrubListDelete.
+func (c *complianceClient) ScrubListDelete(ctx context.Context, req *connect_go.Request[v0alpha.ScrubListDeleteRequest]) (*connect_go.Response[longrunningpb.Operation], error) {
+	return c.scrubListDelete.CallUnary(ctx, req)
 }
 
 // ExportScrubList calls api.v0alpha.Compliance.ExportScrubList.
@@ -1302,6 +1317,7 @@ type ComplianceHandler interface {
 	//	PERMISSION_COMPLIANCE
 	ScrubListDownload(context.Context, *connect_go.Request[v0alpha.ScrubListDownloadRequest]) (*connect_go.Response[longrunningpb.Operation], error)
 	ProcessScrubListDeleteUpload(context.Context, *connect_go.Request[v0alpha.ProcessScrubListDeleteUploadReq]) (*connect_go.Response[longrunningpb.Operation], error)
+	ScrubListDelete(context.Context, *connect_go.Request[v0alpha.ScrubListDeleteRequest]) (*connect_go.Response[longrunningpb.Operation], error)
 	ExportScrubList(context.Context, *connect_go.Request[v0alpha.ExportScrubListReq]) (*connect_go.Response[v0alpha.ExportScrubListRes], error)
 	// Purge entries from a scrub list defined by PurgeScrubListReq message.
 	// Required permissions:
@@ -1652,6 +1668,11 @@ func NewComplianceHandler(svc ComplianceHandler, opts ...connect_go.HandlerOptio
 		svc.ProcessScrubListDeleteUpload,
 		opts...,
 	)
+	complianceScrubListDeleteHandler := connect_go.NewUnaryHandler(
+		ComplianceScrubListDeleteProcedure,
+		svc.ScrubListDelete,
+		opts...,
+	)
 	complianceExportScrubListHandler := connect_go.NewUnaryHandler(
 		ComplianceExportScrubListProcedure,
 		svc.ExportScrubList,
@@ -1917,6 +1938,8 @@ func NewComplianceHandler(svc ComplianceHandler, opts ...connect_go.HandlerOptio
 			complianceScrubListDownloadHandler.ServeHTTP(w, r)
 		case ComplianceProcessScrubListDeleteUploadProcedure:
 			complianceProcessScrubListDeleteUploadHandler.ServeHTTP(w, r)
+		case ComplianceScrubListDeleteProcedure:
+			complianceScrubListDeleteHandler.ServeHTTP(w, r)
 		case ComplianceExportScrubListProcedure:
 			complianceExportScrubListHandler.ServeHTTP(w, r)
 		case CompliancePurgeScrubListProcedure:
@@ -2106,6 +2129,10 @@ func (UnimplementedComplianceHandler) ScrubListDownload(context.Context, *connec
 
 func (UnimplementedComplianceHandler) ProcessScrubListDeleteUpload(context.Context, *connect_go.Request[v0alpha.ProcessScrubListDeleteUploadReq]) (*connect_go.Response[longrunningpb.Operation], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Compliance.ProcessScrubListDeleteUpload is not implemented"))
+}
+
+func (UnimplementedComplianceHandler) ScrubListDelete(context.Context, *connect_go.Request[v0alpha.ScrubListDeleteRequest]) (*connect_go.Response[longrunningpb.Operation], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Compliance.ScrubListDelete is not implemented"))
 }
 
 func (UnimplementedComplianceHandler) ExportScrubList(context.Context, *connect_go.Request[v0alpha.ExportScrubListReq]) (*connect_go.Response[v0alpha.ExportScrubListRes], error) {
