@@ -90,6 +90,9 @@ const (
 	// PortalManagerApiDeletePluginInstanceProcedure is the fully-qualified name of the
 	// PortalManagerApi's DeletePluginInstance RPC.
 	PortalManagerApiDeletePluginInstanceProcedure = "/api.v1alpha1.integrations.PortalManagerApi/DeletePluginInstance"
+	// PortalManagerApiClonePluginInstanceProcedure is the fully-qualified name of the
+	// PortalManagerApi's ClonePluginInstance RPC.
+	PortalManagerApiClonePluginInstanceProcedure = "/api.v1alpha1.integrations.PortalManagerApi/ClonePluginInstance"
 	// PortalManagerApiListPluginInstanceProcedure is the fully-qualified name of the PortalManagerApi's
 	// ListPluginInstance RPC.
 	PortalManagerApiListPluginInstanceProcedure = "/api.v1alpha1.integrations.PortalManagerApi/ListPluginInstance"
@@ -140,6 +143,7 @@ type PortalManagerApiClient interface {
 	UpsertPluginInstance(context.Context, *connect_go.Request[integrations.UpsertPluginInstanceReq]) (*connect_go.Response[integrations.UpsertPluginInstanceRes], error)
 	GetPluginInstance(context.Context, *connect_go.Request[integrations.GetPluginInstanceReq]) (*connect_go.Response[integrations.GetPluginInstanceRes], error)
 	DeletePluginInstance(context.Context, *connect_go.Request[integrations.DeletePluginInstanceReq]) (*connect_go.Response[integrations.DeletePluginInstanceRes], error)
+	ClonePluginInstance(context.Context, *connect_go.Request[integrations.ClonePluginInstanceReq]) (*connect_go.Response[integrations.ClonePluginInstanceRes], error)
 	ListPluginInstance(context.Context, *connect_go.Request[integrations.ListPluginInstanceReq]) (*connect_go.Response[integrations.ListPluginInstanceRes], error)
 	ListFlowFieldNames(context.Context, *connect_go.Request[integrations.ListFlowFieldNamesReq]) (*connect_go.Response[integrations.ListFlowFieldNamesRes], error)
 	// returns the default form fields for verification flow
@@ -257,6 +261,11 @@ func NewPortalManagerApiClient(httpClient connect_go.HTTPClient, baseURL string,
 			baseURL+PortalManagerApiDeletePluginInstanceProcedure,
 			opts...,
 		),
+		clonePluginInstance: connect_go.NewClient[integrations.ClonePluginInstanceReq, integrations.ClonePluginInstanceRes](
+			httpClient,
+			baseURL+PortalManagerApiClonePluginInstanceProcedure,
+			opts...,
+		),
 		listPluginInstance: connect_go.NewClient[integrations.ListPluginInstanceReq, integrations.ListPluginInstanceRes](
 			httpClient,
 			baseURL+PortalManagerApiListPluginInstanceProcedure,
@@ -321,6 +330,7 @@ type portalManagerApiClient struct {
 	upsertPluginInstance            *connect_go.Client[integrations.UpsertPluginInstanceReq, integrations.UpsertPluginInstanceRes]
 	getPluginInstance               *connect_go.Client[integrations.GetPluginInstanceReq, integrations.GetPluginInstanceRes]
 	deletePluginInstance            *connect_go.Client[integrations.DeletePluginInstanceReq, integrations.DeletePluginInstanceRes]
+	clonePluginInstance             *connect_go.Client[integrations.ClonePluginInstanceReq, integrations.ClonePluginInstanceRes]
 	listPluginInstance              *connect_go.Client[integrations.ListPluginInstanceReq, integrations.ListPluginInstanceRes]
 	listFlowFieldNames              *connect_go.Client[integrations.ListFlowFieldNamesReq, integrations.ListFlowFieldNamesRes]
 	listAvailableVerificationFields *connect_go.Client[integrations.ListAvailableVerificationFieldsReq, integrations.ListAvailableVerificationFieldsRes]
@@ -426,6 +436,11 @@ func (c *portalManagerApiClient) DeletePluginInstance(ctx context.Context, req *
 	return c.deletePluginInstance.CallUnary(ctx, req)
 }
 
+// ClonePluginInstance calls api.v1alpha1.integrations.PortalManagerApi.ClonePluginInstance.
+func (c *portalManagerApiClient) ClonePluginInstance(ctx context.Context, req *connect_go.Request[integrations.ClonePluginInstanceReq]) (*connect_go.Response[integrations.ClonePluginInstanceRes], error) {
+	return c.clonePluginInstance.CallUnary(ctx, req)
+}
+
 // ListPluginInstance calls api.v1alpha1.integrations.PortalManagerApi.ListPluginInstance.
 func (c *portalManagerApiClient) ListPluginInstance(ctx context.Context, req *connect_go.Request[integrations.ListPluginInstanceReq]) (*connect_go.Response[integrations.ListPluginInstanceRes], error) {
 	return c.listPluginInstance.CallUnary(ctx, req)
@@ -494,6 +509,7 @@ type PortalManagerApiHandler interface {
 	UpsertPluginInstance(context.Context, *connect_go.Request[integrations.UpsertPluginInstanceReq]) (*connect_go.Response[integrations.UpsertPluginInstanceRes], error)
 	GetPluginInstance(context.Context, *connect_go.Request[integrations.GetPluginInstanceReq]) (*connect_go.Response[integrations.GetPluginInstanceRes], error)
 	DeletePluginInstance(context.Context, *connect_go.Request[integrations.DeletePluginInstanceReq]) (*connect_go.Response[integrations.DeletePluginInstanceRes], error)
+	ClonePluginInstance(context.Context, *connect_go.Request[integrations.ClonePluginInstanceReq]) (*connect_go.Response[integrations.ClonePluginInstanceRes], error)
 	ListPluginInstance(context.Context, *connect_go.Request[integrations.ListPluginInstanceReq]) (*connect_go.Response[integrations.ListPluginInstanceRes], error)
 	ListFlowFieldNames(context.Context, *connect_go.Request[integrations.ListFlowFieldNamesReq]) (*connect_go.Response[integrations.ListFlowFieldNamesRes], error)
 	// returns the default form fields for verification flow
@@ -607,6 +623,11 @@ func NewPortalManagerApiHandler(svc PortalManagerApiHandler, opts ...connect_go.
 		svc.DeletePluginInstance,
 		opts...,
 	)
+	portalManagerApiClonePluginInstanceHandler := connect_go.NewUnaryHandler(
+		PortalManagerApiClonePluginInstanceProcedure,
+		svc.ClonePluginInstance,
+		opts...,
+	)
 	portalManagerApiListPluginInstanceHandler := connect_go.NewUnaryHandler(
 		PortalManagerApiListPluginInstanceProcedure,
 		svc.ListPluginInstance,
@@ -687,6 +708,8 @@ func NewPortalManagerApiHandler(svc PortalManagerApiHandler, opts ...connect_go.
 			portalManagerApiGetPluginInstanceHandler.ServeHTTP(w, r)
 		case PortalManagerApiDeletePluginInstanceProcedure:
 			portalManagerApiDeletePluginInstanceHandler.ServeHTTP(w, r)
+		case PortalManagerApiClonePluginInstanceProcedure:
+			portalManagerApiClonePluginInstanceHandler.ServeHTTP(w, r)
 		case PortalManagerApiListPluginInstanceProcedure:
 			portalManagerApiListPluginInstanceHandler.ServeHTTP(w, r)
 		case PortalManagerApiListFlowFieldNamesProcedure:
@@ -786,6 +809,10 @@ func (UnimplementedPortalManagerApiHandler) GetPluginInstance(context.Context, *
 
 func (UnimplementedPortalManagerApiHandler) DeletePluginInstance(context.Context, *connect_go.Request[integrations.DeletePluginInstanceReq]) (*connect_go.Response[integrations.DeletePluginInstanceRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.integrations.PortalManagerApi.DeletePluginInstance is not implemented"))
+}
+
+func (UnimplementedPortalManagerApiHandler) ClonePluginInstance(context.Context, *connect_go.Request[integrations.ClonePluginInstanceReq]) (*connect_go.Response[integrations.ClonePluginInstanceRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.integrations.PortalManagerApi.ClonePluginInstance is not implemented"))
 }
 
 func (UnimplementedPortalManagerApiHandler) ListPluginInstance(context.Context, *connect_go.Request[integrations.ListPluginInstanceReq]) (*connect_go.Response[integrations.ListPluginInstanceRes], error) {

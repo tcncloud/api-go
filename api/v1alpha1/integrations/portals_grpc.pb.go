@@ -38,6 +38,7 @@ const (
 	PortalManagerApi_UpsertPluginInstance_FullMethodName            = "/api.v1alpha1.integrations.PortalManagerApi/UpsertPluginInstance"
 	PortalManagerApi_GetPluginInstance_FullMethodName               = "/api.v1alpha1.integrations.PortalManagerApi/GetPluginInstance"
 	PortalManagerApi_DeletePluginInstance_FullMethodName            = "/api.v1alpha1.integrations.PortalManagerApi/DeletePluginInstance"
+	PortalManagerApi_ClonePluginInstance_FullMethodName             = "/api.v1alpha1.integrations.PortalManagerApi/ClonePluginInstance"
 	PortalManagerApi_ListPluginInstance_FullMethodName              = "/api.v1alpha1.integrations.PortalManagerApi/ListPluginInstance"
 	PortalManagerApi_ListFlowFieldNames_FullMethodName              = "/api.v1alpha1.integrations.PortalManagerApi/ListFlowFieldNames"
 	PortalManagerApi_ListAvailableVerificationFields_FullMethodName = "/api.v1alpha1.integrations.PortalManagerApi/ListAvailableVerificationFields"
@@ -74,6 +75,7 @@ type PortalManagerApiClient interface {
 	UpsertPluginInstance(ctx context.Context, in *UpsertPluginInstanceReq, opts ...grpc.CallOption) (*UpsertPluginInstanceRes, error)
 	GetPluginInstance(ctx context.Context, in *GetPluginInstanceReq, opts ...grpc.CallOption) (*GetPluginInstanceRes, error)
 	DeletePluginInstance(ctx context.Context, in *DeletePluginInstanceReq, opts ...grpc.CallOption) (*DeletePluginInstanceRes, error)
+	ClonePluginInstance(ctx context.Context, in *ClonePluginInstanceReq, opts ...grpc.CallOption) (*ClonePluginInstanceRes, error)
 	ListPluginInstance(ctx context.Context, in *ListPluginInstanceReq, opts ...grpc.CallOption) (*ListPluginInstanceRes, error)
 	ListFlowFieldNames(ctx context.Context, in *ListFlowFieldNamesReq, opts ...grpc.CallOption) (*ListFlowFieldNamesRes, error)
 	// returns the default form fields for verification flow
@@ -284,6 +286,16 @@ func (c *portalManagerApiClient) DeletePluginInstance(ctx context.Context, in *D
 	return out, nil
 }
 
+func (c *portalManagerApiClient) ClonePluginInstance(ctx context.Context, in *ClonePluginInstanceReq, opts ...grpc.CallOption) (*ClonePluginInstanceRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ClonePluginInstanceRes)
+	err := c.cc.Invoke(ctx, PortalManagerApi_ClonePluginInstance_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *portalManagerApiClient) ListPluginInstance(ctx context.Context, in *ListPluginInstanceReq, opts ...grpc.CallOption) (*ListPluginInstanceRes, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListPluginInstanceRes)
@@ -390,6 +402,7 @@ type PortalManagerApiServer interface {
 	UpsertPluginInstance(context.Context, *UpsertPluginInstanceReq) (*UpsertPluginInstanceRes, error)
 	GetPluginInstance(context.Context, *GetPluginInstanceReq) (*GetPluginInstanceRes, error)
 	DeletePluginInstance(context.Context, *DeletePluginInstanceReq) (*DeletePluginInstanceRes, error)
+	ClonePluginInstance(context.Context, *ClonePluginInstanceReq) (*ClonePluginInstanceRes, error)
 	ListPluginInstance(context.Context, *ListPluginInstanceReq) (*ListPluginInstanceRes, error)
 	ListFlowFieldNames(context.Context, *ListFlowFieldNamesReq) (*ListFlowFieldNamesRes, error)
 	// returns the default form fields for verification flow
@@ -466,6 +479,9 @@ func (UnimplementedPortalManagerApiServer) GetPluginInstance(context.Context, *G
 }
 func (UnimplementedPortalManagerApiServer) DeletePluginInstance(context.Context, *DeletePluginInstanceReq) (*DeletePluginInstanceRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeletePluginInstance not implemented")
+}
+func (UnimplementedPortalManagerApiServer) ClonePluginInstance(context.Context, *ClonePluginInstanceReq) (*ClonePluginInstanceRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ClonePluginInstance not implemented")
 }
 func (UnimplementedPortalManagerApiServer) ListPluginInstance(context.Context, *ListPluginInstanceReq) (*ListPluginInstanceRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListPluginInstance not implemented")
@@ -854,6 +870,24 @@ func _PortalManagerApi_DeletePluginInstance_Handler(srv interface{}, ctx context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PortalManagerApi_ClonePluginInstance_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ClonePluginInstanceReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PortalManagerApiServer).ClonePluginInstance(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PortalManagerApi_ClonePluginInstance_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PortalManagerApiServer).ClonePluginInstance(ctx, req.(*ClonePluginInstanceReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _PortalManagerApi_ListPluginInstance_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListPluginInstanceReq)
 	if err := dec(in); err != nil {
@@ -1080,6 +1114,10 @@ var PortalManagerApi_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeletePluginInstance",
 			Handler:    _PortalManagerApi_DeletePluginInstance_Handler,
+		},
+		{
+			MethodName: "ClonePluginInstance",
+			Handler:    _PortalManagerApi_ClonePluginInstance_Handler,
 		},
 		{
 			MethodName: "ListPluginInstance",
