@@ -45,7 +45,6 @@ const (
 	Compliance_ProcessScrubListUpload_FullMethodName         = "/api.v0alpha.Compliance/ProcessScrubListUpload"
 	Compliance_ScrubListDownload_FullMethodName              = "/api.v0alpha.Compliance/ScrubListDownload"
 	Compliance_ProcessScrubListDeleteUpload_FullMethodName   = "/api.v0alpha.Compliance/ProcessScrubListDeleteUpload"
-	Compliance_ScrubListDelete_FullMethodName                = "/api.v0alpha.Compliance/ScrubListDelete"
 	Compliance_ExportScrubList_FullMethodName                = "/api.v0alpha.Compliance/ExportScrubList"
 	Compliance_PurgeScrubList_FullMethodName                 = "/api.v0alpha.Compliance/PurgeScrubList"
 	Compliance_CreateScenario_FullMethodName                 = "/api.v0alpha.Compliance/CreateScenario"
@@ -139,7 +138,6 @@ type ComplianceClient interface {
 	//	PERMISSION_COMPLIANCE
 	ScrubListDownload(ctx context.Context, in *ScrubListDownloadRequest, opts ...grpc.CallOption) (*longrunningpb.Operation, error)
 	ProcessScrubListDeleteUpload(ctx context.Context, in *ProcessScrubListDeleteUploadReq, opts ...grpc.CallOption) (*longrunningpb.Operation, error)
-	ScrubListDelete(ctx context.Context, in *ScrubListDeleteRequest, opts ...grpc.CallOption) (*longrunningpb.Operation, error)
 	ExportScrubList(ctx context.Context, in *ExportScrubListReq, opts ...grpc.CallOption) (*ExportScrubListRes, error)
 	// Purge entries from a scrub list defined by PurgeScrubListReq message.
 	// Required permissions:
@@ -635,16 +633,6 @@ func (c *complianceClient) ProcessScrubListDeleteUpload(ctx context.Context, in 
 	return out, nil
 }
 
-func (c *complianceClient) ScrubListDelete(ctx context.Context, in *ScrubListDeleteRequest, opts ...grpc.CallOption) (*longrunningpb.Operation, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(longrunningpb.Operation)
-	err := c.cc.Invoke(ctx, Compliance_ScrubListDelete_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *complianceClient) ExportScrubList(ctx context.Context, in *ExportScrubListReq, opts ...grpc.CallOption) (*ExportScrubListRes, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ExportScrubListRes)
@@ -1123,7 +1111,6 @@ type ComplianceServer interface {
 	//	PERMISSION_COMPLIANCE
 	ScrubListDownload(context.Context, *ScrubListDownloadRequest) (*longrunningpb.Operation, error)
 	ProcessScrubListDeleteUpload(context.Context, *ProcessScrubListDeleteUploadReq) (*longrunningpb.Operation, error)
-	ScrubListDelete(context.Context, *ScrubListDeleteRequest) (*longrunningpb.Operation, error)
 	ExportScrubList(context.Context, *ExportScrubListReq) (*ExportScrubListRes, error)
 	// Purge entries from a scrub list defined by PurgeScrubListReq message.
 	// Required permissions:
@@ -1427,9 +1414,6 @@ func (UnimplementedComplianceServer) ScrubListDownload(context.Context, *ScrubLi
 }
 func (UnimplementedComplianceServer) ProcessScrubListDeleteUpload(context.Context, *ProcessScrubListDeleteUploadReq) (*longrunningpb.Operation, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ProcessScrubListDeleteUpload not implemented")
-}
-func (UnimplementedComplianceServer) ScrubListDelete(context.Context, *ScrubListDeleteRequest) (*longrunningpb.Operation, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ScrubListDelete not implemented")
 }
 func (UnimplementedComplianceServer) ExportScrubList(context.Context, *ExportScrubListReq) (*ExportScrubListRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ExportScrubList not implemented")
@@ -2012,24 +1996,6 @@ func _Compliance_ProcessScrubListDeleteUpload_Handler(srv interface{}, ctx conte
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ComplianceServer).ProcessScrubListDeleteUpload(ctx, req.(*ProcessScrubListDeleteUploadReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Compliance_ScrubListDelete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ScrubListDeleteRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ComplianceServer).ScrubListDelete(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Compliance_ScrubListDelete_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ComplianceServer).ScrubListDelete(ctx, req.(*ScrubListDeleteRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -2906,10 +2872,6 @@ var Compliance_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ProcessScrubListDeleteUpload",
 			Handler:    _Compliance_ProcessScrubListDeleteUpload_Handler,
-		},
-		{
-			MethodName: "ScrubListDelete",
-			Handler:    _Compliance_ScrubListDelete_Handler,
 		},
 		{
 			MethodName: "ExportScrubList",
