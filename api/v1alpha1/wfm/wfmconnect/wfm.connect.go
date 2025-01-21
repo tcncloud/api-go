@@ -1155,6 +1155,7 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when updating the non skill activity.
 	UpdateNonSkillActivity(context.Context, *connect_go.Request[wfm.UpdateNonSkillActivityReq]) (*connect_go.Response[wfm.UpdateNonSkillActivityRes], error)
 	// Lists the non skill activities that belong to the org sending the request.
+	// if @include_inactive is true then inactive non skill activities will also be included, otherwise only active activities will be returned.
 	// Errors:.
 	//   - grpc.Internal: error occurs when listing the activites.
 	ListNonSkillActivities(context.Context, *connect_go.Request[wfm.ListNonSkillActivitiesReq]) (*connect_go.Response[wfm.ListNonSkillActivitiesRes], error)
@@ -1175,6 +1176,7 @@ type WFMClient interface {
 	ListCandidateSchedulingActivities(context.Context, *connect_go.Request[wfm.ListCandidateSchedulingActivitiesReq]) (*connect_go.Response[wfm.ListCandidateSchedulingActivitiesRes], error)
 	// Lists all the scheduling activities for the org making the request.
 	// Their member non skill activities and pause codes will always be included.
+	// Scheduling activities are not checked for an active or inactive state, and neither are their member activities.
 	// Errors:
 	//   - grpc.Internal: error occurs when getting the activities or its members.
 	ListSchedulingActivities(context.Context, *connect_go.Request[wfm.ListSchedulingActivitiesRequest]) (*connect_go.Response[wfm.ListSchedulingActivitiesResponse], error)
@@ -5514,6 +5516,7 @@ type WFMHandler interface {
 	//   - grpc.Internal: error occurs when updating the non skill activity.
 	UpdateNonSkillActivity(context.Context, *connect_go.Request[wfm.UpdateNonSkillActivityReq]) (*connect_go.Response[wfm.UpdateNonSkillActivityRes], error)
 	// Lists the non skill activities that belong to the org sending the request.
+	// if @include_inactive is true then inactive non skill activities will also be included, otherwise only active activities will be returned.
 	// Errors:.
 	//   - grpc.Internal: error occurs when listing the activites.
 	ListNonSkillActivities(context.Context, *connect_go.Request[wfm.ListNonSkillActivitiesReq]) (*connect_go.Response[wfm.ListNonSkillActivitiesRes], error)
@@ -5534,6 +5537,7 @@ type WFMHandler interface {
 	ListCandidateSchedulingActivities(context.Context, *connect_go.Request[wfm.ListCandidateSchedulingActivitiesReq]) (*connect_go.Response[wfm.ListCandidateSchedulingActivitiesRes], error)
 	// Lists all the scheduling activities for the org making the request.
 	// Their member non skill activities and pause codes will always be included.
+	// Scheduling activities are not checked for an active or inactive state, and neither are their member activities.
 	// Errors:
 	//   - grpc.Internal: error occurs when getting the activities or its members.
 	ListSchedulingActivities(context.Context, *connect_go.Request[wfm.ListSchedulingActivitiesRequest]) (*connect_go.Response[wfm.ListSchedulingActivitiesResponse], error)

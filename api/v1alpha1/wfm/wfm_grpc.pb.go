@@ -736,6 +736,7 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when updating the non skill activity.
 	UpdateNonSkillActivity(ctx context.Context, in *UpdateNonSkillActivityReq, opts ...grpc.CallOption) (*UpdateNonSkillActivityRes, error)
 	// Lists the non skill activities that belong to the org sending the request.
+	// if @include_inactive is true then inactive non skill activities will also be included, otherwise only active activities will be returned.
 	// Errors:.
 	//   - grpc.Internal: error occurs when listing the activites.
 	ListNonSkillActivities(ctx context.Context, in *ListNonSkillActivitiesReq, opts ...grpc.CallOption) (*ListNonSkillActivitiesRes, error)
@@ -756,6 +757,7 @@ type WFMClient interface {
 	ListCandidateSchedulingActivities(ctx context.Context, in *ListCandidateSchedulingActivitiesReq, opts ...grpc.CallOption) (*ListCandidateSchedulingActivitiesRes, error)
 	// Lists all the scheduling activities for the org making the request.
 	// Their member non skill activities and pause codes will always be included.
+	// Scheduling activities are not checked for an active or inactive state, and neither are their member activities.
 	// Errors:
 	//   - grpc.Internal: error occurs when getting the activities or its members.
 	ListSchedulingActivities(ctx context.Context, in *ListSchedulingActivitiesRequest, opts ...grpc.CallOption) (*ListSchedulingActivitiesResponse, error)
@@ -4964,6 +4966,7 @@ type WFMServer interface {
 	//   - grpc.Internal: error occurs when updating the non skill activity.
 	UpdateNonSkillActivity(context.Context, *UpdateNonSkillActivityReq) (*UpdateNonSkillActivityRes, error)
 	// Lists the non skill activities that belong to the org sending the request.
+	// if @include_inactive is true then inactive non skill activities will also be included, otherwise only active activities will be returned.
 	// Errors:.
 	//   - grpc.Internal: error occurs when listing the activites.
 	ListNonSkillActivities(context.Context, *ListNonSkillActivitiesReq) (*ListNonSkillActivitiesRes, error)
@@ -4984,6 +4987,7 @@ type WFMServer interface {
 	ListCandidateSchedulingActivities(context.Context, *ListCandidateSchedulingActivitiesReq) (*ListCandidateSchedulingActivitiesRes, error)
 	// Lists all the scheduling activities for the org making the request.
 	// Their member non skill activities and pause codes will always be included.
+	// Scheduling activities are not checked for an active or inactive state, and neither are their member activities.
 	// Errors:
 	//   - grpc.Internal: error occurs when getting the activities or its members.
 	ListSchedulingActivities(context.Context, *ListSchedulingActivitiesRequest) (*ListSchedulingActivitiesResponse, error)
