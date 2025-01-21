@@ -51,6 +51,9 @@ const (
 	// BIReportGeneratorServiceGenerateReportProcedure is the fully-qualified name of the
 	// BIReportGeneratorService's GenerateReport RPC.
 	BIReportGeneratorServiceGenerateReportProcedure = "/api.v1alpha1.bireportgenerator.BIReportGeneratorService/GenerateReport"
+	// BIReportGeneratorServiceListReportLogsStreamProcedure is the fully-qualified name of the
+	// BIReportGeneratorService's ListReportLogsStream RPC.
+	BIReportGeneratorServiceListReportLogsStreamProcedure = "/api.v1alpha1.bireportgenerator.BIReportGeneratorService/ListReportLogsStream"
 )
 
 // BIReportGeneratorServiceClient is a client for the
@@ -67,6 +70,8 @@ type BIReportGeneratorServiceClient interface {
 	// GetReportJob gets a report job.
 	GetReportJob(context.Context, *connect_go.Request[bireportgenerator.GetReportJobRequest]) (*connect_go.Response[bireportgenerator.GetReportJobResponse], error)
 	GenerateReport(context.Context, *connect_go.Request[bireportgenerator.GenerateReportRequest]) (*connect_go.Response[bireportgenerator.GenerateReportResponse], error)
+	// ListReportLogsStream lists report logs with streaming
+	ListReportLogsStream(context.Context, *connect_go.Request[bireportgenerator.ListReportLogsStreamRequest]) (*connect_go.ServerStreamForClient[bireportgenerator.ListReportLogsStreamResponse], error)
 }
 
 // NewBIReportGeneratorServiceClient constructs a client for the
@@ -110,17 +115,23 @@ func NewBIReportGeneratorServiceClient(httpClient connect_go.HTTPClient, baseURL
 			baseURL+BIReportGeneratorServiceGenerateReportProcedure,
 			opts...,
 		),
+		listReportLogsStream: connect_go.NewClient[bireportgenerator.ListReportLogsStreamRequest, bireportgenerator.ListReportLogsStreamResponse](
+			httpClient,
+			baseURL+BIReportGeneratorServiceListReportLogsStreamProcedure,
+			opts...,
+		),
 	}
 }
 
 // bIReportGeneratorServiceClient implements BIReportGeneratorServiceClient.
 type bIReportGeneratorServiceClient struct {
-	createReportJob *connect_go.Client[bireportgenerator.CreateReportJobRequest, bireportgenerator.CreateReportJobResponse]
-	listReportJobs  *connect_go.Client[bireportgenerator.ListReportJobsRequest, bireportgenerator.ListReportJobsResponse]
-	updateReportJob *connect_go.Client[bireportgenerator.UpdateReportJobRequest, bireportgenerator.UpdateReportJobResponse]
-	deleteReportJob *connect_go.Client[bireportgenerator.DeleteReportJobRequest, bireportgenerator.DeleteReportJobResponse]
-	getReportJob    *connect_go.Client[bireportgenerator.GetReportJobRequest, bireportgenerator.GetReportJobResponse]
-	generateReport  *connect_go.Client[bireportgenerator.GenerateReportRequest, bireportgenerator.GenerateReportResponse]
+	createReportJob      *connect_go.Client[bireportgenerator.CreateReportJobRequest, bireportgenerator.CreateReportJobResponse]
+	listReportJobs       *connect_go.Client[bireportgenerator.ListReportJobsRequest, bireportgenerator.ListReportJobsResponse]
+	updateReportJob      *connect_go.Client[bireportgenerator.UpdateReportJobRequest, bireportgenerator.UpdateReportJobResponse]
+	deleteReportJob      *connect_go.Client[bireportgenerator.DeleteReportJobRequest, bireportgenerator.DeleteReportJobResponse]
+	getReportJob         *connect_go.Client[bireportgenerator.GetReportJobRequest, bireportgenerator.GetReportJobResponse]
+	generateReport       *connect_go.Client[bireportgenerator.GenerateReportRequest, bireportgenerator.GenerateReportResponse]
+	listReportLogsStream *connect_go.Client[bireportgenerator.ListReportLogsStreamRequest, bireportgenerator.ListReportLogsStreamResponse]
 }
 
 // CreateReportJob calls api.v1alpha1.bireportgenerator.BIReportGeneratorService.CreateReportJob.
@@ -153,6 +164,12 @@ func (c *bIReportGeneratorServiceClient) GenerateReport(ctx context.Context, req
 	return c.generateReport.CallUnary(ctx, req)
 }
 
+// ListReportLogsStream calls
+// api.v1alpha1.bireportgenerator.BIReportGeneratorService.ListReportLogsStream.
+func (c *bIReportGeneratorServiceClient) ListReportLogsStream(ctx context.Context, req *connect_go.Request[bireportgenerator.ListReportLogsStreamRequest]) (*connect_go.ServerStreamForClient[bireportgenerator.ListReportLogsStreamResponse], error) {
+	return c.listReportLogsStream.CallServerStream(ctx, req)
+}
+
 // BIReportGeneratorServiceHandler is an implementation of the
 // api.v1alpha1.bireportgenerator.BIReportGeneratorService service.
 type BIReportGeneratorServiceHandler interface {
@@ -167,6 +184,8 @@ type BIReportGeneratorServiceHandler interface {
 	// GetReportJob gets a report job.
 	GetReportJob(context.Context, *connect_go.Request[bireportgenerator.GetReportJobRequest]) (*connect_go.Response[bireportgenerator.GetReportJobResponse], error)
 	GenerateReport(context.Context, *connect_go.Request[bireportgenerator.GenerateReportRequest]) (*connect_go.Response[bireportgenerator.GenerateReportResponse], error)
+	// ListReportLogsStream lists report logs with streaming
+	ListReportLogsStream(context.Context, *connect_go.Request[bireportgenerator.ListReportLogsStreamRequest], *connect_go.ServerStream[bireportgenerator.ListReportLogsStreamResponse]) error
 }
 
 // NewBIReportGeneratorServiceHandler builds an HTTP handler from the service implementation. It
@@ -205,6 +224,11 @@ func NewBIReportGeneratorServiceHandler(svc BIReportGeneratorServiceHandler, opt
 		svc.GenerateReport,
 		opts...,
 	)
+	bIReportGeneratorServiceListReportLogsStreamHandler := connect_go.NewServerStreamHandler(
+		BIReportGeneratorServiceListReportLogsStreamProcedure,
+		svc.ListReportLogsStream,
+		opts...,
+	)
 	return "/api.v1alpha1.bireportgenerator.BIReportGeneratorService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case BIReportGeneratorServiceCreateReportJobProcedure:
@@ -219,6 +243,8 @@ func NewBIReportGeneratorServiceHandler(svc BIReportGeneratorServiceHandler, opt
 			bIReportGeneratorServiceGetReportJobHandler.ServeHTTP(w, r)
 		case BIReportGeneratorServiceGenerateReportProcedure:
 			bIReportGeneratorServiceGenerateReportHandler.ServeHTTP(w, r)
+		case BIReportGeneratorServiceListReportLogsStreamProcedure:
+			bIReportGeneratorServiceListReportLogsStreamHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -250,4 +276,8 @@ func (UnimplementedBIReportGeneratorServiceHandler) GetReportJob(context.Context
 
 func (UnimplementedBIReportGeneratorServiceHandler) GenerateReport(context.Context, *connect_go.Request[bireportgenerator.GenerateReportRequest]) (*connect_go.Response[bireportgenerator.GenerateReportResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.bireportgenerator.BIReportGeneratorService.GenerateReport is not implemented"))
+}
+
+func (UnimplementedBIReportGeneratorServiceHandler) ListReportLogsStream(context.Context, *connect_go.Request[bireportgenerator.ListReportLogsStreamRequest], *connect_go.ServerStream[bireportgenerator.ListReportLogsStreamResponse]) error {
+	return connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.bireportgenerator.BIReportGeneratorService.ListReportLogsStream is not implemented"))
 }

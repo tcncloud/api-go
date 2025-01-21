@@ -19,12 +19,13 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	BIReportGeneratorService_CreateReportJob_FullMethodName = "/api.v1alpha1.bireportgenerator.BIReportGeneratorService/CreateReportJob"
-	BIReportGeneratorService_ListReportJobs_FullMethodName  = "/api.v1alpha1.bireportgenerator.BIReportGeneratorService/ListReportJobs"
-	BIReportGeneratorService_UpdateReportJob_FullMethodName = "/api.v1alpha1.bireportgenerator.BIReportGeneratorService/UpdateReportJob"
-	BIReportGeneratorService_DeleteReportJob_FullMethodName = "/api.v1alpha1.bireportgenerator.BIReportGeneratorService/DeleteReportJob"
-	BIReportGeneratorService_GetReportJob_FullMethodName    = "/api.v1alpha1.bireportgenerator.BIReportGeneratorService/GetReportJob"
-	BIReportGeneratorService_GenerateReport_FullMethodName  = "/api.v1alpha1.bireportgenerator.BIReportGeneratorService/GenerateReport"
+	BIReportGeneratorService_CreateReportJob_FullMethodName      = "/api.v1alpha1.bireportgenerator.BIReportGeneratorService/CreateReportJob"
+	BIReportGeneratorService_ListReportJobs_FullMethodName       = "/api.v1alpha1.bireportgenerator.BIReportGeneratorService/ListReportJobs"
+	BIReportGeneratorService_UpdateReportJob_FullMethodName      = "/api.v1alpha1.bireportgenerator.BIReportGeneratorService/UpdateReportJob"
+	BIReportGeneratorService_DeleteReportJob_FullMethodName      = "/api.v1alpha1.bireportgenerator.BIReportGeneratorService/DeleteReportJob"
+	BIReportGeneratorService_GetReportJob_FullMethodName         = "/api.v1alpha1.bireportgenerator.BIReportGeneratorService/GetReportJob"
+	BIReportGeneratorService_GenerateReport_FullMethodName       = "/api.v1alpha1.bireportgenerator.BIReportGeneratorService/GenerateReport"
+	BIReportGeneratorService_ListReportLogsStream_FullMethodName = "/api.v1alpha1.bireportgenerator.BIReportGeneratorService/ListReportLogsStream"
 )
 
 // BIReportGeneratorServiceClient is the client API for BIReportGeneratorService service.
@@ -44,6 +45,8 @@ type BIReportGeneratorServiceClient interface {
 	// GetReportJob gets a report job.
 	GetReportJob(ctx context.Context, in *GetReportJobRequest, opts ...grpc.CallOption) (*GetReportJobResponse, error)
 	GenerateReport(ctx context.Context, in *GenerateReportRequest, opts ...grpc.CallOption) (*GenerateReportResponse, error)
+	// ListReportLogsStream lists report logs with streaming
+	ListReportLogsStream(ctx context.Context, in *ListReportLogsStreamRequest, opts ...grpc.CallOption) (BIReportGeneratorService_ListReportLogsStreamClient, error)
 }
 
 type bIReportGeneratorServiceClient struct {
@@ -114,6 +117,39 @@ func (c *bIReportGeneratorServiceClient) GenerateReport(ctx context.Context, in 
 	return out, nil
 }
 
+func (c *bIReportGeneratorServiceClient) ListReportLogsStream(ctx context.Context, in *ListReportLogsStreamRequest, opts ...grpc.CallOption) (BIReportGeneratorService_ListReportLogsStreamClient, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &BIReportGeneratorService_ServiceDesc.Streams[0], BIReportGeneratorService_ListReportLogsStream_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &bIReportGeneratorServiceListReportLogsStreamClient{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type BIReportGeneratorService_ListReportLogsStreamClient interface {
+	Recv() (*ListReportLogsStreamResponse, error)
+	grpc.ClientStream
+}
+
+type bIReportGeneratorServiceListReportLogsStreamClient struct {
+	grpc.ClientStream
+}
+
+func (x *bIReportGeneratorServiceListReportLogsStreamClient) Recv() (*ListReportLogsStreamResponse, error) {
+	m := new(ListReportLogsStreamResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // BIReportGeneratorServiceServer is the server API for BIReportGeneratorService service.
 // All implementations must embed UnimplementedBIReportGeneratorServiceServer
 // for forward compatibility.
@@ -131,6 +167,8 @@ type BIReportGeneratorServiceServer interface {
 	// GetReportJob gets a report job.
 	GetReportJob(context.Context, *GetReportJobRequest) (*GetReportJobResponse, error)
 	GenerateReport(context.Context, *GenerateReportRequest) (*GenerateReportResponse, error)
+	// ListReportLogsStream lists report logs with streaming
+	ListReportLogsStream(*ListReportLogsStreamRequest, BIReportGeneratorService_ListReportLogsStreamServer) error
 	mustEmbedUnimplementedBIReportGeneratorServiceServer()
 }
 
@@ -158,6 +196,9 @@ func (UnimplementedBIReportGeneratorServiceServer) GetReportJob(context.Context,
 }
 func (UnimplementedBIReportGeneratorServiceServer) GenerateReport(context.Context, *GenerateReportRequest) (*GenerateReportResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GenerateReport not implemented")
+}
+func (UnimplementedBIReportGeneratorServiceServer) ListReportLogsStream(*ListReportLogsStreamRequest, BIReportGeneratorService_ListReportLogsStreamServer) error {
+	return status.Errorf(codes.Unimplemented, "method ListReportLogsStream not implemented")
 }
 func (UnimplementedBIReportGeneratorServiceServer) mustEmbedUnimplementedBIReportGeneratorServiceServer() {
 }
@@ -289,6 +330,27 @@ func _BIReportGeneratorService_GenerateReport_Handler(srv interface{}, ctx conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _BIReportGeneratorService_ListReportLogsStream_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(ListReportLogsStreamRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(BIReportGeneratorServiceServer).ListReportLogsStream(m, &bIReportGeneratorServiceListReportLogsStreamServer{ServerStream: stream})
+}
+
+type BIReportGeneratorService_ListReportLogsStreamServer interface {
+	Send(*ListReportLogsStreamResponse) error
+	grpc.ServerStream
+}
+
+type bIReportGeneratorServiceListReportLogsStreamServer struct {
+	grpc.ServerStream
+}
+
+func (x *bIReportGeneratorServiceListReportLogsStreamServer) Send(m *ListReportLogsStreamResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
 // BIReportGeneratorService_ServiceDesc is the grpc.ServiceDesc for BIReportGeneratorService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -321,6 +383,12 @@ var BIReportGeneratorService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _BIReportGeneratorService_GenerateReport_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "ListReportLogsStream",
+			Handler:       _BIReportGeneratorService_ListReportLogsStream_Handler,
+			ServerStreams: true,
+		},
+	},
 	Metadata: "api/v1alpha1/bireportgenerator/service.proto",
 }
