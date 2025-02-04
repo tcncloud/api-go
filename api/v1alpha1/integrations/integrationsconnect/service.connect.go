@@ -127,6 +127,9 @@ const (
 	// IntegrationsInsertPrivateFieldProcedure is the fully-qualified name of the Integrations's
 	// InsertPrivateField RPC.
 	IntegrationsInsertPrivateFieldProcedure = "/api.v1alpha1.integrations.Integrations/InsertPrivateField"
+	// IntegrationsCalculateFeesProcedure is the fully-qualified name of the Integrations's
+	// CalculateFees RPC.
+	IntegrationsCalculateFeesProcedure = "/api.v1alpha1.integrations.Integrations/CalculateFees"
 )
 
 // IntegrationsClient is a client for the api.v1alpha1.integrations.Integrations service.
@@ -192,6 +195,7 @@ type IntegrationsClient interface {
 	PopulateIntegrationLink(context.Context, *connect_go.Request[integrations.PopulateIntegrationLinkReq]) (*connect_go.Response[integrations.PopulateIntegrationLinkRes], error)
 	ProcessWorkflow(context.Context, *connect_go.Request[integrations.ProcessWorkflowReq]) (*connect_go.Response[integrations.ProcessWorkflowRes], error)
 	InsertPrivateField(context.Context, *connect_go.Request[integrations.InsertPrivateFieldReq]) (*connect_go.Response[integrations.InsertPrivateFieldRes], error)
+	CalculateFees(context.Context, *connect_go.Request[integrations.CalculateFeesReq]) (*connect_go.Response[integrations.CalculateFeesRes], error)
 }
 
 // NewIntegrationsClient constructs a client for the api.v1alpha1.integrations.Integrations service.
@@ -364,6 +368,11 @@ func NewIntegrationsClient(httpClient connect_go.HTTPClient, baseURL string, opt
 			baseURL+IntegrationsInsertPrivateFieldProcedure,
 			opts...,
 		),
+		calculateFees: connect_go.NewClient[integrations.CalculateFeesReq, integrations.CalculateFeesRes](
+			httpClient,
+			baseURL+IntegrationsCalculateFeesProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -401,6 +410,7 @@ type integrationsClient struct {
 	populateIntegrationLink             *connect_go.Client[integrations.PopulateIntegrationLinkReq, integrations.PopulateIntegrationLinkRes]
 	processWorkflow                     *connect_go.Client[integrations.ProcessWorkflowReq, integrations.ProcessWorkflowRes]
 	insertPrivateField                  *connect_go.Client[integrations.InsertPrivateFieldReq, integrations.InsertPrivateFieldRes]
+	calculateFees                       *connect_go.Client[integrations.CalculateFeesReq, integrations.CalculateFeesRes]
 }
 
 // Process calls api.v1alpha1.integrations.Integrations.Process.
@@ -567,6 +577,11 @@ func (c *integrationsClient) InsertPrivateField(ctx context.Context, req *connec
 	return c.insertPrivateField.CallUnary(ctx, req)
 }
 
+// CalculateFees calls api.v1alpha1.integrations.Integrations.CalculateFees.
+func (c *integrationsClient) CalculateFees(ctx context.Context, req *connect_go.Request[integrations.CalculateFeesReq]) (*connect_go.Response[integrations.CalculateFeesRes], error) {
+	return c.calculateFees.CallUnary(ctx, req)
+}
+
 // IntegrationsHandler is an implementation of the api.v1alpha1.integrations.Integrations service.
 type IntegrationsHandler interface {
 	// combine rquest parameters with the config parameters and run the integration method
@@ -630,6 +645,7 @@ type IntegrationsHandler interface {
 	PopulateIntegrationLink(context.Context, *connect_go.Request[integrations.PopulateIntegrationLinkReq]) (*connect_go.Response[integrations.PopulateIntegrationLinkRes], error)
 	ProcessWorkflow(context.Context, *connect_go.Request[integrations.ProcessWorkflowReq]) (*connect_go.Response[integrations.ProcessWorkflowRes], error)
 	InsertPrivateField(context.Context, *connect_go.Request[integrations.InsertPrivateFieldReq]) (*connect_go.Response[integrations.InsertPrivateFieldRes], error)
+	CalculateFees(context.Context, *connect_go.Request[integrations.CalculateFeesReq]) (*connect_go.Response[integrations.CalculateFeesRes], error)
 }
 
 // NewIntegrationsHandler builds an HTTP handler from the service implementation. It returns the
@@ -798,6 +814,11 @@ func NewIntegrationsHandler(svc IntegrationsHandler, opts ...connect_go.HandlerO
 		svc.InsertPrivateField,
 		opts...,
 	)
+	integrationsCalculateFeesHandler := connect_go.NewUnaryHandler(
+		IntegrationsCalculateFeesProcedure,
+		svc.CalculateFees,
+		opts...,
+	)
 	return "/api.v1alpha1.integrations.Integrations/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case IntegrationsProcessProcedure:
@@ -864,6 +885,8 @@ func NewIntegrationsHandler(svc IntegrationsHandler, opts ...connect_go.HandlerO
 			integrationsProcessWorkflowHandler.ServeHTTP(w, r)
 		case IntegrationsInsertPrivateFieldProcedure:
 			integrationsInsertPrivateFieldHandler.ServeHTTP(w, r)
+		case IntegrationsCalculateFeesProcedure:
+			integrationsCalculateFeesHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -999,4 +1022,8 @@ func (UnimplementedIntegrationsHandler) ProcessWorkflow(context.Context, *connec
 
 func (UnimplementedIntegrationsHandler) InsertPrivateField(context.Context, *connect_go.Request[integrations.InsertPrivateFieldReq]) (*connect_go.Response[integrations.InsertPrivateFieldRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.integrations.Integrations.InsertPrivateField is not implemented"))
+}
+
+func (UnimplementedIntegrationsHandler) CalculateFees(context.Context, *connect_go.Request[integrations.CalculateFeesReq]) (*connect_go.Response[integrations.CalculateFeesRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.integrations.Integrations.CalculateFees is not implemented"))
 }

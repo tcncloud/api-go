@@ -51,6 +51,7 @@ const (
 	Integrations_PopulateIntegrationLink_FullMethodName             = "/api.v1alpha1.integrations.Integrations/PopulateIntegrationLink"
 	Integrations_ProcessWorkflow_FullMethodName                     = "/api.v1alpha1.integrations.Integrations/ProcessWorkflow"
 	Integrations_InsertPrivateField_FullMethodName                  = "/api.v1alpha1.integrations.Integrations/InsertPrivateField"
+	Integrations_CalculateFees_FullMethodName                       = "/api.v1alpha1.integrations.Integrations/CalculateFees"
 )
 
 // IntegrationsClient is the client API for Integrations service.
@@ -118,6 +119,7 @@ type IntegrationsClient interface {
 	PopulateIntegrationLink(ctx context.Context, in *PopulateIntegrationLinkReq, opts ...grpc.CallOption) (*PopulateIntegrationLinkRes, error)
 	ProcessWorkflow(ctx context.Context, in *ProcessWorkflowReq, opts ...grpc.CallOption) (*ProcessWorkflowRes, error)
 	InsertPrivateField(ctx context.Context, in *InsertPrivateFieldReq, opts ...grpc.CallOption) (*InsertPrivateFieldRes, error)
+	CalculateFees(ctx context.Context, in *CalculateFeesReq, opts ...grpc.CallOption) (*CalculateFeesRes, error)
 }
 
 type integrationsClient struct {
@@ -448,6 +450,16 @@ func (c *integrationsClient) InsertPrivateField(ctx context.Context, in *InsertP
 	return out, nil
 }
 
+func (c *integrationsClient) CalculateFees(ctx context.Context, in *CalculateFeesReq, opts ...grpc.CallOption) (*CalculateFeesRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CalculateFeesRes)
+	err := c.cc.Invoke(ctx, Integrations_CalculateFees_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // IntegrationsServer is the server API for Integrations service.
 // All implementations must embed UnimplementedIntegrationsServer
 // for forward compatibility.
@@ -513,6 +525,7 @@ type IntegrationsServer interface {
 	PopulateIntegrationLink(context.Context, *PopulateIntegrationLinkReq) (*PopulateIntegrationLinkRes, error)
 	ProcessWorkflow(context.Context, *ProcessWorkflowReq) (*ProcessWorkflowRes, error)
 	InsertPrivateField(context.Context, *InsertPrivateFieldReq) (*InsertPrivateFieldRes, error)
+	CalculateFees(context.Context, *CalculateFeesReq) (*CalculateFeesRes, error)
 	mustEmbedUnimplementedIntegrationsServer()
 }
 
@@ -618,6 +631,9 @@ func (UnimplementedIntegrationsServer) ProcessWorkflow(context.Context, *Process
 }
 func (UnimplementedIntegrationsServer) InsertPrivateField(context.Context, *InsertPrivateFieldReq) (*InsertPrivateFieldRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InsertPrivateField not implemented")
+}
+func (UnimplementedIntegrationsServer) CalculateFees(context.Context, *CalculateFeesReq) (*CalculateFeesRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CalculateFees not implemented")
 }
 func (UnimplementedIntegrationsServer) mustEmbedUnimplementedIntegrationsServer() {}
 func (UnimplementedIntegrationsServer) testEmbeddedByValue()                      {}
@@ -1216,6 +1232,24 @@ func _Integrations_InsertPrivateField_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Integrations_CalculateFees_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CalculateFeesReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IntegrationsServer).CalculateFees(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Integrations_CalculateFees_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IntegrationsServer).CalculateFees(ctx, req.(*CalculateFeesReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Integrations_ServiceDesc is the grpc.ServiceDesc for Integrations service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1350,6 +1384,10 @@ var Integrations_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InsertPrivateField",
 			Handler:    _Integrations_InsertPrivateField_Handler,
+		},
+		{
+			MethodName: "CalculateFees",
+			Handler:    _Integrations_CalculateFees_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

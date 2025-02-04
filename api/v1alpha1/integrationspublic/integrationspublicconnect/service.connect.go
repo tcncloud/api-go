@@ -57,6 +57,9 @@ const (
 	// IntegrationsPublicGetLinkDetailsProcedure is the fully-qualified name of the IntegrationsPublic's
 	// GetLinkDetails RPC.
 	IntegrationsPublicGetLinkDetailsProcedure = "/api.v1alpha1.integrationspublic.IntegrationsPublic/GetLinkDetails"
+	// IntegrationsPublicCalculateFeesProcedure is the fully-qualified name of the IntegrationsPublic's
+	// CalculateFees RPC.
+	IntegrationsPublicCalculateFeesProcedure = "/api.v1alpha1.integrationspublic.IntegrationsPublic/CalculateFees"
 )
 
 // IntegrationsPublicClient is a client for the api.v1alpha1.integrationspublic.IntegrationsPublic
@@ -70,6 +73,7 @@ type IntegrationsPublicClient interface {
 	GetReceipt(context.Context, *connect_go.Request[integrationspublic.GetReceiptReq]) (*connect_go.Response[integrationspublic.GetReceiptRes], error)
 	ProcessWorkflow(context.Context, *connect_go.Request[integrationspublic.ProcessWorkflowReq]) (*connect_go.Response[integrationspublic.ProcessWorkflowRes], error)
 	GetLinkDetails(context.Context, *connect_go.Request[integrationspublic.GetLinkDetailsReq]) (*connect_go.Response[integrationspublic.GetLinkDetailsRes], error)
+	CalculateFees(context.Context, *connect_go.Request[integrationspublic.CalculateFeesReq]) (*connect_go.Response[integrationspublic.CalculateFeesRes], error)
 }
 
 // NewIntegrationsPublicClient constructs a client for the
@@ -123,6 +127,11 @@ func NewIntegrationsPublicClient(httpClient connect_go.HTTPClient, baseURL strin
 			baseURL+IntegrationsPublicGetLinkDetailsProcedure,
 			opts...,
 		),
+		calculateFees: connect_go.NewClient[integrationspublic.CalculateFeesReq, integrationspublic.CalculateFeesRes](
+			httpClient,
+			baseURL+IntegrationsPublicCalculateFeesProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -136,6 +145,7 @@ type integrationsPublicClient struct {
 	getReceipt         *connect_go.Client[integrationspublic.GetReceiptReq, integrationspublic.GetReceiptRes]
 	processWorkflow    *connect_go.Client[integrationspublic.ProcessWorkflowReq, integrationspublic.ProcessWorkflowRes]
 	getLinkDetails     *connect_go.Client[integrationspublic.GetLinkDetailsReq, integrationspublic.GetLinkDetailsRes]
+	calculateFees      *connect_go.Client[integrationspublic.CalculateFeesReq, integrationspublic.CalculateFeesRes]
 }
 
 // GetLinkData calls api.v1alpha1.integrationspublic.IntegrationsPublic.GetLinkData.
@@ -178,6 +188,11 @@ func (c *integrationsPublicClient) GetLinkDetails(ctx context.Context, req *conn
 	return c.getLinkDetails.CallUnary(ctx, req)
 }
 
+// CalculateFees calls api.v1alpha1.integrationspublic.IntegrationsPublic.CalculateFees.
+func (c *integrationsPublicClient) CalculateFees(ctx context.Context, req *connect_go.Request[integrationspublic.CalculateFeesReq]) (*connect_go.Response[integrationspublic.CalculateFeesRes], error) {
+	return c.calculateFees.CallUnary(ctx, req)
+}
+
 // IntegrationsPublicHandler is an implementation of the
 // api.v1alpha1.integrationspublic.IntegrationsPublic service.
 type IntegrationsPublicHandler interface {
@@ -189,6 +204,7 @@ type IntegrationsPublicHandler interface {
 	GetReceipt(context.Context, *connect_go.Request[integrationspublic.GetReceiptReq]) (*connect_go.Response[integrationspublic.GetReceiptRes], error)
 	ProcessWorkflow(context.Context, *connect_go.Request[integrationspublic.ProcessWorkflowReq]) (*connect_go.Response[integrationspublic.ProcessWorkflowRes], error)
 	GetLinkDetails(context.Context, *connect_go.Request[integrationspublic.GetLinkDetailsReq]) (*connect_go.Response[integrationspublic.GetLinkDetailsRes], error)
+	CalculateFees(context.Context, *connect_go.Request[integrationspublic.CalculateFeesReq]) (*connect_go.Response[integrationspublic.CalculateFeesRes], error)
 }
 
 // NewIntegrationsPublicHandler builds an HTTP handler from the service implementation. It returns
@@ -237,6 +253,11 @@ func NewIntegrationsPublicHandler(svc IntegrationsPublicHandler, opts ...connect
 		svc.GetLinkDetails,
 		opts...,
 	)
+	integrationsPublicCalculateFeesHandler := connect_go.NewUnaryHandler(
+		IntegrationsPublicCalculateFeesProcedure,
+		svc.CalculateFees,
+		opts...,
+	)
 	return "/api.v1alpha1.integrationspublic.IntegrationsPublic/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case IntegrationsPublicGetLinkDataProcedure:
@@ -255,6 +276,8 @@ func NewIntegrationsPublicHandler(svc IntegrationsPublicHandler, opts ...connect
 			integrationsPublicProcessWorkflowHandler.ServeHTTP(w, r)
 		case IntegrationsPublicGetLinkDetailsProcedure:
 			integrationsPublicGetLinkDetailsHandler.ServeHTTP(w, r)
+		case IntegrationsPublicCalculateFeesProcedure:
+			integrationsPublicCalculateFeesHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -294,4 +317,8 @@ func (UnimplementedIntegrationsPublicHandler) ProcessWorkflow(context.Context, *
 
 func (UnimplementedIntegrationsPublicHandler) GetLinkDetails(context.Context, *connect_go.Request[integrationspublic.GetLinkDetailsReq]) (*connect_go.Response[integrationspublic.GetLinkDetailsRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.integrationspublic.IntegrationsPublic.GetLinkDetails is not implemented"))
+}
+
+func (UnimplementedIntegrationsPublicHandler) CalculateFees(context.Context, *connect_go.Request[integrationspublic.CalculateFeesReq]) (*connect_go.Response[integrationspublic.CalculateFeesRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.integrationspublic.IntegrationsPublic.CalculateFees is not implemented"))
 }
