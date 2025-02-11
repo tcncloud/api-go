@@ -121,6 +121,14 @@ const (
 	// TicketsListEntityRefsByTicketProcedure is the fully-qualified name of the Tickets's
 	// ListEntityRefsByTicket RPC.
 	TicketsListEntityRefsByTicketProcedure = "/api.v1alpha1.tickets.Tickets/ListEntityRefsByTicket"
+	// TicketsCreateCustomFieldProcedure is the fully-qualified name of the Tickets's CreateCustomField
+	// RPC.
+	TicketsCreateCustomFieldProcedure = "/api.v1alpha1.tickets.Tickets/CreateCustomField"
+	// TicketsEditCustomFieldProcedure is the fully-qualified name of the Tickets's EditCustomField RPC.
+	TicketsEditCustomFieldProcedure = "/api.v1alpha1.tickets.Tickets/EditCustomField"
+	// TicketsListCustomFieldsProcedure is the fully-qualified name of the Tickets's ListCustomFields
+	// RPC.
+	TicketsListCustomFieldsProcedure = "/api.v1alpha1.tickets.Tickets/ListCustomFields"
 )
 
 // TicketsClient is a client for the api.v1alpha1.tickets.Tickets service.
@@ -210,6 +218,12 @@ type TicketsClient interface {
 	ListTicketsByEntityRef(context.Context, *connect_go.Request[tickets.ListTicketsByEntityRefRequest]) (*connect_go.Response[tickets.ListTicketsByEntityRefResponse], error)
 	// Public method to listEntityRefsByTicket
 	ListEntityRefsByTicket(context.Context, *connect_go.Request[tickets.ListEntityRefsByTicketRequest]) (*connect_go.Response[tickets.ListEntityRefsByTicketResponse], error)
+	// Public method to create a Custom Field
+	CreateCustomField(context.Context, *connect_go.Request[tickets.CreateCustomFieldRequest]) (*connect_go.Response[tickets.CreateCustomFieldResponse], error)
+	// Public method to Edit a Custom Field
+	EditCustomField(context.Context, *connect_go.Request[tickets.EditCustomFieldRequest]) (*connect_go.Response[tickets.EditCustomFieldResponse], error)
+	// Public method to all Custom Fileds
+	ListCustomFields(context.Context, *connect_go.Request[tickets.ListCustomFieldsRequest]) (*connect_go.Response[tickets.ListCustomFieldsResponse], error)
 }
 
 // NewTicketsClient constructs a client for the api.v1alpha1.tickets.Tickets service. By default, it
@@ -397,6 +411,21 @@ func NewTicketsClient(httpClient connect_go.HTTPClient, baseURL string, opts ...
 			baseURL+TicketsListEntityRefsByTicketProcedure,
 			opts...,
 		),
+		createCustomField: connect_go.NewClient[tickets.CreateCustomFieldRequest, tickets.CreateCustomFieldResponse](
+			httpClient,
+			baseURL+TicketsCreateCustomFieldProcedure,
+			opts...,
+		),
+		editCustomField: connect_go.NewClient[tickets.EditCustomFieldRequest, tickets.EditCustomFieldResponse](
+			httpClient,
+			baseURL+TicketsEditCustomFieldProcedure,
+			opts...,
+		),
+		listCustomFields: connect_go.NewClient[tickets.ListCustomFieldsRequest, tickets.ListCustomFieldsResponse](
+			httpClient,
+			baseURL+TicketsListCustomFieldsProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -437,6 +466,9 @@ type ticketsClient struct {
 	addEntityRef              *connect_go.Client[tickets.AddEntityRefRequest, tickets.AddEntityRefResponse]
 	listTicketsByEntityRef    *connect_go.Client[tickets.ListTicketsByEntityRefRequest, tickets.ListTicketsByEntityRefResponse]
 	listEntityRefsByTicket    *connect_go.Client[tickets.ListEntityRefsByTicketRequest, tickets.ListEntityRefsByTicketResponse]
+	createCustomField         *connect_go.Client[tickets.CreateCustomFieldRequest, tickets.CreateCustomFieldResponse]
+	editCustomField           *connect_go.Client[tickets.EditCustomFieldRequest, tickets.EditCustomFieldResponse]
+	listCustomFields          *connect_go.Client[tickets.ListCustomFieldsRequest, tickets.ListCustomFieldsResponse]
 }
 
 // CreateTicket calls api.v1alpha1.tickets.Tickets.CreateTicket.
@@ -628,6 +660,21 @@ func (c *ticketsClient) ListEntityRefsByTicket(ctx context.Context, req *connect
 	return c.listEntityRefsByTicket.CallUnary(ctx, req)
 }
 
+// CreateCustomField calls api.v1alpha1.tickets.Tickets.CreateCustomField.
+func (c *ticketsClient) CreateCustomField(ctx context.Context, req *connect_go.Request[tickets.CreateCustomFieldRequest]) (*connect_go.Response[tickets.CreateCustomFieldResponse], error) {
+	return c.createCustomField.CallUnary(ctx, req)
+}
+
+// EditCustomField calls api.v1alpha1.tickets.Tickets.EditCustomField.
+func (c *ticketsClient) EditCustomField(ctx context.Context, req *connect_go.Request[tickets.EditCustomFieldRequest]) (*connect_go.Response[tickets.EditCustomFieldResponse], error) {
+	return c.editCustomField.CallUnary(ctx, req)
+}
+
+// ListCustomFields calls api.v1alpha1.tickets.Tickets.ListCustomFields.
+func (c *ticketsClient) ListCustomFields(ctx context.Context, req *connect_go.Request[tickets.ListCustomFieldsRequest]) (*connect_go.Response[tickets.ListCustomFieldsResponse], error) {
+	return c.listCustomFields.CallUnary(ctx, req)
+}
+
 // TicketsHandler is an implementation of the api.v1alpha1.tickets.Tickets service.
 type TicketsHandler interface {
 	// Public Method to create a ticket.
@@ -715,6 +762,12 @@ type TicketsHandler interface {
 	ListTicketsByEntityRef(context.Context, *connect_go.Request[tickets.ListTicketsByEntityRefRequest]) (*connect_go.Response[tickets.ListTicketsByEntityRefResponse], error)
 	// Public method to listEntityRefsByTicket
 	ListEntityRefsByTicket(context.Context, *connect_go.Request[tickets.ListEntityRefsByTicketRequest]) (*connect_go.Response[tickets.ListEntityRefsByTicketResponse], error)
+	// Public method to create a Custom Field
+	CreateCustomField(context.Context, *connect_go.Request[tickets.CreateCustomFieldRequest]) (*connect_go.Response[tickets.CreateCustomFieldResponse], error)
+	// Public method to Edit a Custom Field
+	EditCustomField(context.Context, *connect_go.Request[tickets.EditCustomFieldRequest]) (*connect_go.Response[tickets.EditCustomFieldResponse], error)
+	// Public method to all Custom Fileds
+	ListCustomFields(context.Context, *connect_go.Request[tickets.ListCustomFieldsRequest]) (*connect_go.Response[tickets.ListCustomFieldsResponse], error)
 }
 
 // NewTicketsHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -898,6 +951,21 @@ func NewTicketsHandler(svc TicketsHandler, opts ...connect_go.HandlerOption) (st
 		svc.ListEntityRefsByTicket,
 		opts...,
 	)
+	ticketsCreateCustomFieldHandler := connect_go.NewUnaryHandler(
+		TicketsCreateCustomFieldProcedure,
+		svc.CreateCustomField,
+		opts...,
+	)
+	ticketsEditCustomFieldHandler := connect_go.NewUnaryHandler(
+		TicketsEditCustomFieldProcedure,
+		svc.EditCustomField,
+		opts...,
+	)
+	ticketsListCustomFieldsHandler := connect_go.NewUnaryHandler(
+		TicketsListCustomFieldsProcedure,
+		svc.ListCustomFields,
+		opts...,
+	)
 	return "/api.v1alpha1.tickets.Tickets/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case TicketsCreateTicketProcedure:
@@ -970,6 +1038,12 @@ func NewTicketsHandler(svc TicketsHandler, opts ...connect_go.HandlerOption) (st
 			ticketsListTicketsByEntityRefHandler.ServeHTTP(w, r)
 		case TicketsListEntityRefsByTicketProcedure:
 			ticketsListEntityRefsByTicketHandler.ServeHTTP(w, r)
+		case TicketsCreateCustomFieldProcedure:
+			ticketsCreateCustomFieldHandler.ServeHTTP(w, r)
+		case TicketsEditCustomFieldProcedure:
+			ticketsEditCustomFieldHandler.ServeHTTP(w, r)
+		case TicketsListCustomFieldsProcedure:
+			ticketsListCustomFieldsHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -1117,4 +1191,16 @@ func (UnimplementedTicketsHandler) ListTicketsByEntityRef(context.Context, *conn
 
 func (UnimplementedTicketsHandler) ListEntityRefsByTicket(context.Context, *connect_go.Request[tickets.ListEntityRefsByTicketRequest]) (*connect_go.Response[tickets.ListEntityRefsByTicketResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.tickets.Tickets.ListEntityRefsByTicket is not implemented"))
+}
+
+func (UnimplementedTicketsHandler) CreateCustomField(context.Context, *connect_go.Request[tickets.CreateCustomFieldRequest]) (*connect_go.Response[tickets.CreateCustomFieldResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.tickets.Tickets.CreateCustomField is not implemented"))
+}
+
+func (UnimplementedTicketsHandler) EditCustomField(context.Context, *connect_go.Request[tickets.EditCustomFieldRequest]) (*connect_go.Response[tickets.EditCustomFieldResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.tickets.Tickets.EditCustomField is not implemented"))
+}
+
+func (UnimplementedTicketsHandler) ListCustomFields(context.Context, *connect_go.Request[tickets.ListCustomFieldsRequest]) (*connect_go.Response[tickets.ListCustomFieldsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.tickets.Tickets.ListCustomFields is not implemented"))
 }

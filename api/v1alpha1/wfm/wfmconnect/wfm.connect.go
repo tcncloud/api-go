@@ -358,6 +358,15 @@ const (
 	WFMUpdateScheduleScenarioProcedure = "/api.v1alpha1.wfm.WFM/UpdateScheduleScenario"
 	// WFMListConfigEntitiesProcedure is the fully-qualified name of the WFM's ListConfigEntities RPC.
 	WFMListConfigEntitiesProcedure = "/api.v1alpha1.wfm.WFM/ListConfigEntities"
+	// WFMCreateReasonCodeProcedure is the fully-qualified name of the WFM's CreateReasonCode RPC.
+	WFMCreateReasonCodeProcedure = "/api.v1alpha1.wfm.WFM/CreateReasonCode"
+	// WFMUpdateReasonCodeProcedure is the fully-qualified name of the WFM's UpdateReasonCode RPC.
+	WFMUpdateReasonCodeProcedure = "/api.v1alpha1.wfm.WFM/UpdateReasonCode"
+	// WFMGetDefaultReasonCodeProcedure is the fully-qualified name of the WFM's GetDefaultReasonCode
+	// RPC.
+	WFMGetDefaultReasonCodeProcedure = "/api.v1alpha1.wfm.WFM/GetDefaultReasonCode"
+	// WFMListReasonCodesProcedure is the fully-qualified name of the WFM's ListReasonCodes RPC.
+	WFMListReasonCodesProcedure = "/api.v1alpha1.wfm.WFM/ListReasonCodes"
 	// WFMDeleteShiftInstancesProcedure is the fully-qualified name of the WFM's DeleteShiftInstances
 	// RPC.
 	WFMDeleteShiftInstancesProcedure = "/api.v1alpha1.wfm.WFM/DeleteShiftInstances"
@@ -1169,6 +1178,7 @@ type WFMClient interface {
 	// If the rule will belong to a wfm agent, the agent group must be supplied instead to get a relevant set of candidate scheduling activities.
 	// Member non skill activity of each scheduling activity will be included in the response.
 	// The on call scheduling activity will always be included.
+	// Reason codes will be included with the returned scheduling activities.
 	// Errors:
 	//   - grpc.Invalid: the @parent_of_rule is invalid.
 	//   - grpc.NotFound: @parent_of_rule doesn't exist
@@ -1177,10 +1187,12 @@ type WFMClient interface {
 	// Lists all the scheduling activities for the org making the request.
 	// Their member non skill activities and pause codes will always be included.
 	// Scheduling activities are not checked for an active or inactive state, and neither are their member activities.
+	// Reason codes will be included with the returned scheduling activities.
 	// Errors:
 	//   - grpc.Internal: error occurs when getting the activities or its members.
 	ListSchedulingActivities(context.Context, *connect_go.Request[wfm.ListSchedulingActivitiesRequest]) (*connect_go.Response[wfm.ListSchedulingActivitiesResponse], error)
 	// Gets the on call scheduling activity for the org sending the request.
+	// Reason codes will be included with the returned scheduling activity.
 	// Required permissions:
 	//
 	//	NONE
@@ -1581,6 +1593,45 @@ type WFMClient interface {
 	//   - grpc.Invalid: the @entity_type, or @belongs_to_entity have invalid values.
 	//   - grpc.Internal: error occurs when getting the config entities.
 	ListConfigEntities(context.Context, *connect_go.Request[wfm.ListConfigEntitiesReq]) (*connect_go.Response[wfm.ListConfigEntitiesRes], error)
+	// Creates the given reason code for the org sending the request.
+	// If @reason_code.is_default is true and there is already a default reason code for the @reason_code.scheduling_activity_sid, the existing default reason code must be set to is_default=false first.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.AlreadyExists: the @reason_code is set to default, but there is already a default reason code for the scheduling activity.
+	//   - grpc.Internal: error occours when creating the reason code.
+	CreateReasonCode(context.Context, *connect_go.Request[wfm.CreateReasonCodeRequest]) (*connect_go.Response[wfm.CreateReasonCodeResponse], error)
+	// Updates the given reason code for the org sending the request.
+	// If @reason_code.is_default is true and there is already a default reason code for the @reason_code.scheduling_activity_sid, the existing default reason code must be set to is_default=false first.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.AlreadyExists: the @reason_code is set to default, but there is already a default reason code for the scheduling activity.
+	//   - grpc.Internal: error occours when updating the reason code.
+	UpdateReasonCode(context.Context, *connect_go.Request[wfm.UpdateReasonCodeRequest]) (*connect_go.Response[wfm.UpdateReasonCodeResponse], error)
+	// Gets the default reason code for the given @scheduling_activity_sid and the org sending the request.
+	// If there is currently no default reason code for the scheduling activity, returns nil instead.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Internal: error occours when getting the default reason code.
+	GetDefaultReasonCode(context.Context, *connect_go.Request[wfm.GetDefaultReasonCodeRequest]) (*connect_go.Response[wfm.GetDefaultReasonCodeResponse], error)
+	// Lists the reason codes for @scheduling_activity_sids and the org sending the request.
+	// If include_inactive is set to true, inactivate reason codes will be included in the response.
+	// Otherwise, only active reason codes will be included.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Internal: error occours when listing the reason codes.
+	ListReasonCodes(context.Context, *connect_go.Request[wfm.ListReasonCodesRequest]) (*connect_go.Response[wfm.ListReasonCodesResponse], error)
 	// Deletes shift instances with the corresponding @shift_instance_sids for the org sending the request.
 	// Only deletes draft shifts. To delete published shifts use the DeletePublishedShifts endpoint.
 	// Errors:
@@ -3060,6 +3111,26 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMListConfigEntitiesProcedure,
 			opts...,
 		),
+		createReasonCode: connect_go.NewClient[wfm.CreateReasonCodeRequest, wfm.CreateReasonCodeResponse](
+			httpClient,
+			baseURL+WFMCreateReasonCodeProcedure,
+			opts...,
+		),
+		updateReasonCode: connect_go.NewClient[wfm.UpdateReasonCodeRequest, wfm.UpdateReasonCodeResponse](
+			httpClient,
+			baseURL+WFMUpdateReasonCodeProcedure,
+			opts...,
+		),
+		getDefaultReasonCode: connect_go.NewClient[wfm.GetDefaultReasonCodeRequest, wfm.GetDefaultReasonCodeResponse](
+			httpClient,
+			baseURL+WFMGetDefaultReasonCodeProcedure,
+			opts...,
+		),
+		listReasonCodes: connect_go.NewClient[wfm.ListReasonCodesRequest, wfm.ListReasonCodesResponse](
+			httpClient,
+			baseURL+WFMListReasonCodesProcedure,
+			opts...,
+		),
 		deleteShiftInstances: connect_go.NewClient[wfm.DeleteShiftInstancesReq, wfm.DeleteShiftInstancesRes](
 			httpClient,
 			baseURL+WFMDeleteShiftInstancesProcedure,
@@ -3752,6 +3823,10 @@ type wFMClient struct {
 	createScheduleScenarioWithNodes                  *connect_go.Client[wfm.CreateScheduleScenarioWithNodesReq, wfm.CreateScheduleScenarioWithNodesRes]
 	updateScheduleScenario                           *connect_go.Client[wfm.UpdateScheduleScenarioReq, wfm.UpdateScheduleScenarioRes]
 	listConfigEntities                               *connect_go.Client[wfm.ListConfigEntitiesReq, wfm.ListConfigEntitiesRes]
+	createReasonCode                                 *connect_go.Client[wfm.CreateReasonCodeRequest, wfm.CreateReasonCodeResponse]
+	updateReasonCode                                 *connect_go.Client[wfm.UpdateReasonCodeRequest, wfm.UpdateReasonCodeResponse]
+	getDefaultReasonCode                             *connect_go.Client[wfm.GetDefaultReasonCodeRequest, wfm.GetDefaultReasonCodeResponse]
+	listReasonCodes                                  *connect_go.Client[wfm.ListReasonCodesRequest, wfm.ListReasonCodesResponse]
 	deleteShiftInstances                             *connect_go.Client[wfm.DeleteShiftInstancesReq, wfm.DeleteShiftInstancesRes]
 	buildNodeDiagnostics                             *connect_go.Client[wfm.BuildNodeDiagnosticsReq, wfm.BuildNodeDiagnosticsRes]
 	buildGlobalDiagnostics                           *connect_go.Client[wfm.BuildGlobalDiagnosticsReq, wfm.BuildGlobalDiagnosticsRes]
@@ -4450,6 +4525,26 @@ func (c *wFMClient) UpdateScheduleScenario(ctx context.Context, req *connect_go.
 // ListConfigEntities calls api.v1alpha1.wfm.WFM.ListConfigEntities.
 func (c *wFMClient) ListConfigEntities(ctx context.Context, req *connect_go.Request[wfm.ListConfigEntitiesReq]) (*connect_go.Response[wfm.ListConfigEntitiesRes], error) {
 	return c.listConfigEntities.CallUnary(ctx, req)
+}
+
+// CreateReasonCode calls api.v1alpha1.wfm.WFM.CreateReasonCode.
+func (c *wFMClient) CreateReasonCode(ctx context.Context, req *connect_go.Request[wfm.CreateReasonCodeRequest]) (*connect_go.Response[wfm.CreateReasonCodeResponse], error) {
+	return c.createReasonCode.CallUnary(ctx, req)
+}
+
+// UpdateReasonCode calls api.v1alpha1.wfm.WFM.UpdateReasonCode.
+func (c *wFMClient) UpdateReasonCode(ctx context.Context, req *connect_go.Request[wfm.UpdateReasonCodeRequest]) (*connect_go.Response[wfm.UpdateReasonCodeResponse], error) {
+	return c.updateReasonCode.CallUnary(ctx, req)
+}
+
+// GetDefaultReasonCode calls api.v1alpha1.wfm.WFM.GetDefaultReasonCode.
+func (c *wFMClient) GetDefaultReasonCode(ctx context.Context, req *connect_go.Request[wfm.GetDefaultReasonCodeRequest]) (*connect_go.Response[wfm.GetDefaultReasonCodeResponse], error) {
+	return c.getDefaultReasonCode.CallUnary(ctx, req)
+}
+
+// ListReasonCodes calls api.v1alpha1.wfm.WFM.ListReasonCodes.
+func (c *wFMClient) ListReasonCodes(ctx context.Context, req *connect_go.Request[wfm.ListReasonCodesRequest]) (*connect_go.Response[wfm.ListReasonCodesResponse], error) {
+	return c.listReasonCodes.CallUnary(ctx, req)
 }
 
 // DeleteShiftInstances calls api.v1alpha1.wfm.WFM.DeleteShiftInstances.
@@ -5530,6 +5625,7 @@ type WFMHandler interface {
 	// If the rule will belong to a wfm agent, the agent group must be supplied instead to get a relevant set of candidate scheduling activities.
 	// Member non skill activity of each scheduling activity will be included in the response.
 	// The on call scheduling activity will always be included.
+	// Reason codes will be included with the returned scheduling activities.
 	// Errors:
 	//   - grpc.Invalid: the @parent_of_rule is invalid.
 	//   - grpc.NotFound: @parent_of_rule doesn't exist
@@ -5538,10 +5634,12 @@ type WFMHandler interface {
 	// Lists all the scheduling activities for the org making the request.
 	// Their member non skill activities and pause codes will always be included.
 	// Scheduling activities are not checked for an active or inactive state, and neither are their member activities.
+	// Reason codes will be included with the returned scheduling activities.
 	// Errors:
 	//   - grpc.Internal: error occurs when getting the activities or its members.
 	ListSchedulingActivities(context.Context, *connect_go.Request[wfm.ListSchedulingActivitiesRequest]) (*connect_go.Response[wfm.ListSchedulingActivitiesResponse], error)
 	// Gets the on call scheduling activity for the org sending the request.
+	// Reason codes will be included with the returned scheduling activity.
 	// Required permissions:
 	//
 	//	NONE
@@ -5942,6 +6040,45 @@ type WFMHandler interface {
 	//   - grpc.Invalid: the @entity_type, or @belongs_to_entity have invalid values.
 	//   - grpc.Internal: error occurs when getting the config entities.
 	ListConfigEntities(context.Context, *connect_go.Request[wfm.ListConfigEntitiesReq]) (*connect_go.Response[wfm.ListConfigEntitiesRes], error)
+	// Creates the given reason code for the org sending the request.
+	// If @reason_code.is_default is true and there is already a default reason code for the @reason_code.scheduling_activity_sid, the existing default reason code must be set to is_default=false first.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.AlreadyExists: the @reason_code is set to default, but there is already a default reason code for the scheduling activity.
+	//   - grpc.Internal: error occours when creating the reason code.
+	CreateReasonCode(context.Context, *connect_go.Request[wfm.CreateReasonCodeRequest]) (*connect_go.Response[wfm.CreateReasonCodeResponse], error)
+	// Updates the given reason code for the org sending the request.
+	// If @reason_code.is_default is true and there is already a default reason code for the @reason_code.scheduling_activity_sid, the existing default reason code must be set to is_default=false first.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.AlreadyExists: the @reason_code is set to default, but there is already a default reason code for the scheduling activity.
+	//   - grpc.Internal: error occours when updating the reason code.
+	UpdateReasonCode(context.Context, *connect_go.Request[wfm.UpdateReasonCodeRequest]) (*connect_go.Response[wfm.UpdateReasonCodeResponse], error)
+	// Gets the default reason code for the given @scheduling_activity_sid and the org sending the request.
+	// If there is currently no default reason code for the scheduling activity, returns nil instead.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Internal: error occours when getting the default reason code.
+	GetDefaultReasonCode(context.Context, *connect_go.Request[wfm.GetDefaultReasonCodeRequest]) (*connect_go.Response[wfm.GetDefaultReasonCodeResponse], error)
+	// Lists the reason codes for @scheduling_activity_sids and the org sending the request.
+	// If include_inactive is set to true, inactivate reason codes will be included in the response.
+	// Otherwise, only active reason codes will be included.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Internal: error occours when listing the reason codes.
+	ListReasonCodes(context.Context, *connect_go.Request[wfm.ListReasonCodesRequest]) (*connect_go.Response[wfm.ListReasonCodesResponse], error)
 	// Deletes shift instances with the corresponding @shift_instance_sids for the org sending the request.
 	// Only deletes draft shifts. To delete published shifts use the DeletePublishedShifts endpoint.
 	// Errors:
@@ -7417,6 +7554,26 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.ListConfigEntities,
 		opts...,
 	)
+	wFMCreateReasonCodeHandler := connect_go.NewUnaryHandler(
+		WFMCreateReasonCodeProcedure,
+		svc.CreateReasonCode,
+		opts...,
+	)
+	wFMUpdateReasonCodeHandler := connect_go.NewUnaryHandler(
+		WFMUpdateReasonCodeProcedure,
+		svc.UpdateReasonCode,
+		opts...,
+	)
+	wFMGetDefaultReasonCodeHandler := connect_go.NewUnaryHandler(
+		WFMGetDefaultReasonCodeProcedure,
+		svc.GetDefaultReasonCode,
+		opts...,
+	)
+	wFMListReasonCodesHandler := connect_go.NewUnaryHandler(
+		WFMListReasonCodesProcedure,
+		svc.ListReasonCodes,
+		opts...,
+	)
 	wFMDeleteShiftInstancesHandler := connect_go.NewUnaryHandler(
 		WFMDeleteShiftInstancesProcedure,
 		svc.DeleteShiftInstances,
@@ -8218,6 +8375,14 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMUpdateScheduleScenarioHandler.ServeHTTP(w, r)
 		case WFMListConfigEntitiesProcedure:
 			wFMListConfigEntitiesHandler.ServeHTTP(w, r)
+		case WFMCreateReasonCodeProcedure:
+			wFMCreateReasonCodeHandler.ServeHTTP(w, r)
+		case WFMUpdateReasonCodeProcedure:
+			wFMUpdateReasonCodeHandler.ServeHTTP(w, r)
+		case WFMGetDefaultReasonCodeProcedure:
+			wFMGetDefaultReasonCodeHandler.ServeHTTP(w, r)
+		case WFMListReasonCodesProcedure:
+			wFMListReasonCodesHandler.ServeHTTP(w, r)
 		case WFMDeleteShiftInstancesProcedure:
 			wFMDeleteShiftInstancesHandler.ServeHTTP(w, r)
 		case WFMBuildNodeDiagnosticsProcedure:
@@ -8903,6 +9068,22 @@ func (UnimplementedWFMHandler) UpdateScheduleScenario(context.Context, *connect_
 
 func (UnimplementedWFMHandler) ListConfigEntities(context.Context, *connect_go.Request[wfm.ListConfigEntitiesReq]) (*connect_go.Response[wfm.ListConfigEntitiesRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListConfigEntities is not implemented"))
+}
+
+func (UnimplementedWFMHandler) CreateReasonCode(context.Context, *connect_go.Request[wfm.CreateReasonCodeRequest]) (*connect_go.Response[wfm.CreateReasonCodeResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.CreateReasonCode is not implemented"))
+}
+
+func (UnimplementedWFMHandler) UpdateReasonCode(context.Context, *connect_go.Request[wfm.UpdateReasonCodeRequest]) (*connect_go.Response[wfm.UpdateReasonCodeResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.UpdateReasonCode is not implemented"))
+}
+
+func (UnimplementedWFMHandler) GetDefaultReasonCode(context.Context, *connect_go.Request[wfm.GetDefaultReasonCodeRequest]) (*connect_go.Response[wfm.GetDefaultReasonCodeResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.GetDefaultReasonCode is not implemented"))
+}
+
+func (UnimplementedWFMHandler) ListReasonCodes(context.Context, *connect_go.Request[wfm.ListReasonCodesRequest]) (*connect_go.Response[wfm.ListReasonCodesResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListReasonCodes is not implemented"))
 }
 
 func (UnimplementedWFMHandler) DeleteShiftInstances(context.Context, *connect_go.Request[wfm.DeleteShiftInstancesReq]) (*connect_go.Response[wfm.DeleteShiftInstancesRes], error) {

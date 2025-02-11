@@ -145,6 +145,10 @@ const (
 	WFM_CreateScheduleScenarioWithNodes_FullMethodName                  = "/api.v1alpha1.wfm.WFM/CreateScheduleScenarioWithNodes"
 	WFM_UpdateScheduleScenario_FullMethodName                           = "/api.v1alpha1.wfm.WFM/UpdateScheduleScenario"
 	WFM_ListConfigEntities_FullMethodName                               = "/api.v1alpha1.wfm.WFM/ListConfigEntities"
+	WFM_CreateReasonCode_FullMethodName                                 = "/api.v1alpha1.wfm.WFM/CreateReasonCode"
+	WFM_UpdateReasonCode_FullMethodName                                 = "/api.v1alpha1.wfm.WFM/UpdateReasonCode"
+	WFM_GetDefaultReasonCode_FullMethodName                             = "/api.v1alpha1.wfm.WFM/GetDefaultReasonCode"
+	WFM_ListReasonCodes_FullMethodName                                  = "/api.v1alpha1.wfm.WFM/ListReasonCodes"
 	WFM_DeleteShiftInstances_FullMethodName                             = "/api.v1alpha1.wfm.WFM/DeleteShiftInstances"
 	WFM_BuildNodeDiagnostics_FullMethodName                             = "/api.v1alpha1.wfm.WFM/BuildNodeDiagnostics"
 	WFM_BuildGlobalDiagnostics_FullMethodName                           = "/api.v1alpha1.wfm.WFM/BuildGlobalDiagnostics"
@@ -750,6 +754,7 @@ type WFMClient interface {
 	// If the rule will belong to a wfm agent, the agent group must be supplied instead to get a relevant set of candidate scheduling activities.
 	// Member non skill activity of each scheduling activity will be included in the response.
 	// The on call scheduling activity will always be included.
+	// Reason codes will be included with the returned scheduling activities.
 	// Errors:
 	//   - grpc.Invalid: the @parent_of_rule is invalid.
 	//   - grpc.NotFound: @parent_of_rule doesn't exist
@@ -758,10 +763,12 @@ type WFMClient interface {
 	// Lists all the scheduling activities for the org making the request.
 	// Their member non skill activities and pause codes will always be included.
 	// Scheduling activities are not checked for an active or inactive state, and neither are their member activities.
+	// Reason codes will be included with the returned scheduling activities.
 	// Errors:
 	//   - grpc.Internal: error occurs when getting the activities or its members.
 	ListSchedulingActivities(ctx context.Context, in *ListSchedulingActivitiesRequest, opts ...grpc.CallOption) (*ListSchedulingActivitiesResponse, error)
 	// Gets the on call scheduling activity for the org sending the request.
+	// Reason codes will be included with the returned scheduling activity.
 	// Required permissions:
 	//
 	//	NONE
@@ -1162,6 +1169,45 @@ type WFMClient interface {
 	//   - grpc.Invalid: the @entity_type, or @belongs_to_entity have invalid values.
 	//   - grpc.Internal: error occurs when getting the config entities.
 	ListConfigEntities(ctx context.Context, in *ListConfigEntitiesReq, opts ...grpc.CallOption) (*ListConfigEntitiesRes, error)
+	// Creates the given reason code for the org sending the request.
+	// If @reason_code.is_default is true and there is already a default reason code for the @reason_code.scheduling_activity_sid, the existing default reason code must be set to is_default=false first.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.AlreadyExists: the @reason_code is set to default, but there is already a default reason code for the scheduling activity.
+	//   - grpc.Internal: error occours when creating the reason code.
+	CreateReasonCode(ctx context.Context, in *CreateReasonCodeRequest, opts ...grpc.CallOption) (*CreateReasonCodeResponse, error)
+	// Updates the given reason code for the org sending the request.
+	// If @reason_code.is_default is true and there is already a default reason code for the @reason_code.scheduling_activity_sid, the existing default reason code must be set to is_default=false first.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.AlreadyExists: the @reason_code is set to default, but there is already a default reason code for the scheduling activity.
+	//   - grpc.Internal: error occours when updating the reason code.
+	UpdateReasonCode(ctx context.Context, in *UpdateReasonCodeRequest, opts ...grpc.CallOption) (*UpdateReasonCodeResponse, error)
+	// Gets the default reason code for the given @scheduling_activity_sid and the org sending the request.
+	// If there is currently no default reason code for the scheduling activity, returns nil instead.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Internal: error occours when getting the default reason code.
+	GetDefaultReasonCode(ctx context.Context, in *GetDefaultReasonCodeRequest, opts ...grpc.CallOption) (*GetDefaultReasonCodeResponse, error)
+	// Lists the reason codes for @scheduling_activity_sids and the org sending the request.
+	// If include_inactive is set to true, inactivate reason codes will be included in the response.
+	// Otherwise, only active reason codes will be included.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Internal: error occours when listing the reason codes.
+	ListReasonCodes(ctx context.Context, in *ListReasonCodesRequest, opts ...grpc.CallOption) (*ListReasonCodesResponse, error)
 	// Deletes shift instances with the corresponding @shift_instance_sids for the org sending the request.
 	// Only deletes draft shifts. To delete published shifts use the DeletePublishedShifts endpoint.
 	// Errors:
@@ -3340,6 +3386,46 @@ func (c *wFMClient) ListConfigEntities(ctx context.Context, in *ListConfigEntiti
 	return out, nil
 }
 
+func (c *wFMClient) CreateReasonCode(ctx context.Context, in *CreateReasonCodeRequest, opts ...grpc.CallOption) (*CreateReasonCodeResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateReasonCodeResponse)
+	err := c.cc.Invoke(ctx, WFM_CreateReasonCode_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) UpdateReasonCode(ctx context.Context, in *UpdateReasonCodeRequest, opts ...grpc.CallOption) (*UpdateReasonCodeResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateReasonCodeResponse)
+	err := c.cc.Invoke(ctx, WFM_UpdateReasonCode_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) GetDefaultReasonCode(ctx context.Context, in *GetDefaultReasonCodeRequest, opts ...grpc.CallOption) (*GetDefaultReasonCodeResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetDefaultReasonCodeResponse)
+	err := c.cc.Invoke(ctx, WFM_GetDefaultReasonCode_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) ListReasonCodes(ctx context.Context, in *ListReasonCodesRequest, opts ...grpc.CallOption) (*ListReasonCodesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListReasonCodesResponse)
+	err := c.cc.Invoke(ctx, WFM_ListReasonCodes_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) DeleteShiftInstances(ctx context.Context, in *DeleteShiftInstancesReq, opts ...grpc.CallOption) (*DeleteShiftInstancesRes, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(DeleteShiftInstancesRes)
@@ -4980,6 +5066,7 @@ type WFMServer interface {
 	// If the rule will belong to a wfm agent, the agent group must be supplied instead to get a relevant set of candidate scheduling activities.
 	// Member non skill activity of each scheduling activity will be included in the response.
 	// The on call scheduling activity will always be included.
+	// Reason codes will be included with the returned scheduling activities.
 	// Errors:
 	//   - grpc.Invalid: the @parent_of_rule is invalid.
 	//   - grpc.NotFound: @parent_of_rule doesn't exist
@@ -4988,10 +5075,12 @@ type WFMServer interface {
 	// Lists all the scheduling activities for the org making the request.
 	// Their member non skill activities and pause codes will always be included.
 	// Scheduling activities are not checked for an active or inactive state, and neither are their member activities.
+	// Reason codes will be included with the returned scheduling activities.
 	// Errors:
 	//   - grpc.Internal: error occurs when getting the activities or its members.
 	ListSchedulingActivities(context.Context, *ListSchedulingActivitiesRequest) (*ListSchedulingActivitiesResponse, error)
 	// Gets the on call scheduling activity for the org sending the request.
+	// Reason codes will be included with the returned scheduling activity.
 	// Required permissions:
 	//
 	//	NONE
@@ -5392,6 +5481,45 @@ type WFMServer interface {
 	//   - grpc.Invalid: the @entity_type, or @belongs_to_entity have invalid values.
 	//   - grpc.Internal: error occurs when getting the config entities.
 	ListConfigEntities(context.Context, *ListConfigEntitiesReq) (*ListConfigEntitiesRes, error)
+	// Creates the given reason code for the org sending the request.
+	// If @reason_code.is_default is true and there is already a default reason code for the @reason_code.scheduling_activity_sid, the existing default reason code must be set to is_default=false first.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.AlreadyExists: the @reason_code is set to default, but there is already a default reason code for the scheduling activity.
+	//   - grpc.Internal: error occours when creating the reason code.
+	CreateReasonCode(context.Context, *CreateReasonCodeRequest) (*CreateReasonCodeResponse, error)
+	// Updates the given reason code for the org sending the request.
+	// If @reason_code.is_default is true and there is already a default reason code for the @reason_code.scheduling_activity_sid, the existing default reason code must be set to is_default=false first.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.AlreadyExists: the @reason_code is set to default, but there is already a default reason code for the scheduling activity.
+	//   - grpc.Internal: error occours when updating the reason code.
+	UpdateReasonCode(context.Context, *UpdateReasonCodeRequest) (*UpdateReasonCodeResponse, error)
+	// Gets the default reason code for the given @scheduling_activity_sid and the org sending the request.
+	// If there is currently no default reason code for the scheduling activity, returns nil instead.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Internal: error occours when getting the default reason code.
+	GetDefaultReasonCode(context.Context, *GetDefaultReasonCodeRequest) (*GetDefaultReasonCodeResponse, error)
+	// Lists the reason codes for @scheduling_activity_sids and the org sending the request.
+	// If include_inactive is set to true, inactivate reason codes will be included in the response.
+	// Otherwise, only active reason codes will be included.
+	// Required permissions:
+	//
+	//	NONE
+	//
+	// Errors:
+	//   - grpc.Internal: error occours when listing the reason codes.
+	ListReasonCodes(context.Context, *ListReasonCodesRequest) (*ListReasonCodesResponse, error)
 	// Deletes shift instances with the corresponding @shift_instance_sids for the org sending the request.
 	// Only deletes draft shifts. To delete published shifts use the DeletePublishedShifts endpoint.
 	// Errors:
@@ -6642,6 +6770,18 @@ func (UnimplementedWFMServer) UpdateScheduleScenario(context.Context, *UpdateSch
 }
 func (UnimplementedWFMServer) ListConfigEntities(context.Context, *ListConfigEntitiesReq) (*ListConfigEntitiesRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListConfigEntities not implemented")
+}
+func (UnimplementedWFMServer) CreateReasonCode(context.Context, *CreateReasonCodeRequest) (*CreateReasonCodeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateReasonCode not implemented")
+}
+func (UnimplementedWFMServer) UpdateReasonCode(context.Context, *UpdateReasonCodeRequest) (*UpdateReasonCodeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateReasonCode not implemented")
+}
+func (UnimplementedWFMServer) GetDefaultReasonCode(context.Context, *GetDefaultReasonCodeRequest) (*GetDefaultReasonCodeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDefaultReasonCode not implemented")
+}
+func (UnimplementedWFMServer) ListReasonCodes(context.Context, *ListReasonCodesRequest) (*ListReasonCodesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListReasonCodes not implemented")
 }
 func (UnimplementedWFMServer) DeleteShiftInstances(context.Context, *DeleteShiftInstancesReq) (*DeleteShiftInstancesRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteShiftInstances not implemented")
@@ -9039,6 +9179,78 @@ func _WFM_ListConfigEntities_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WFMServer).ListConfigEntities(ctx, req.(*ListConfigEntitiesReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_CreateReasonCode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateReasonCodeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).CreateReasonCode(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_CreateReasonCode_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).CreateReasonCode(ctx, req.(*CreateReasonCodeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_UpdateReasonCode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateReasonCodeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).UpdateReasonCode(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_UpdateReasonCode_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).UpdateReasonCode(ctx, req.(*UpdateReasonCodeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_GetDefaultReasonCode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetDefaultReasonCodeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).GetDefaultReasonCode(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_GetDefaultReasonCode_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).GetDefaultReasonCode(ctx, req.(*GetDefaultReasonCodeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_ListReasonCodes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListReasonCodesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).ListReasonCodes(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_ListReasonCodes_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).ListReasonCodes(ctx, req.(*ListReasonCodesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -11543,6 +11755,22 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListConfigEntities",
 			Handler:    _WFM_ListConfigEntities_Handler,
+		},
+		{
+			MethodName: "CreateReasonCode",
+			Handler:    _WFM_CreateReasonCode_Handler,
+		},
+		{
+			MethodName: "UpdateReasonCode",
+			Handler:    _WFM_UpdateReasonCode_Handler,
+		},
+		{
+			MethodName: "GetDefaultReasonCode",
+			Handler:    _WFM_GetDefaultReasonCode_Handler,
+		},
+		{
+			MethodName: "ListReasonCodes",
+			Handler:    _WFM_ListReasonCodes_Handler,
 		},
 		{
 			MethodName: "DeleteShiftInstances",

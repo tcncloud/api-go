@@ -54,6 +54,9 @@ const (
 	Tickets_AddEntityRef_FullMethodName              = "/api.v1alpha1.tickets.Tickets/AddEntityRef"
 	Tickets_ListTicketsByEntityRef_FullMethodName    = "/api.v1alpha1.tickets.Tickets/ListTicketsByEntityRef"
 	Tickets_ListEntityRefsByTicket_FullMethodName    = "/api.v1alpha1.tickets.Tickets/ListEntityRefsByTicket"
+	Tickets_CreateCustomField_FullMethodName         = "/api.v1alpha1.tickets.Tickets/CreateCustomField"
+	Tickets_EditCustomField_FullMethodName           = "/api.v1alpha1.tickets.Tickets/EditCustomField"
+	Tickets_ListCustomFields_FullMethodName          = "/api.v1alpha1.tickets.Tickets/ListCustomFields"
 )
 
 // TicketsClient is the client API for Tickets service.
@@ -141,6 +144,12 @@ type TicketsClient interface {
 	ListTicketsByEntityRef(ctx context.Context, in *ListTicketsByEntityRefRequest, opts ...grpc.CallOption) (*ListTicketsByEntityRefResponse, error)
 	// Public method to listEntityRefsByTicket
 	ListEntityRefsByTicket(ctx context.Context, in *ListEntityRefsByTicketRequest, opts ...grpc.CallOption) (*ListEntityRefsByTicketResponse, error)
+	// Public method to create a Custom Field
+	CreateCustomField(ctx context.Context, in *CreateCustomFieldRequest, opts ...grpc.CallOption) (*CreateCustomFieldResponse, error)
+	// Public method to Edit a Custom Field
+	EditCustomField(ctx context.Context, in *EditCustomFieldRequest, opts ...grpc.CallOption) (*EditCustomFieldResponse, error)
+	// Public method to all Custom Fileds
+	ListCustomFields(ctx context.Context, in *ListCustomFieldsRequest, opts ...grpc.CallOption) (*ListCustomFieldsResponse, error)
 }
 
 type ticketsClient struct {
@@ -508,6 +517,36 @@ func (c *ticketsClient) ListEntityRefsByTicket(ctx context.Context, in *ListEnti
 	return out, nil
 }
 
+func (c *ticketsClient) CreateCustomField(ctx context.Context, in *CreateCustomFieldRequest, opts ...grpc.CallOption) (*CreateCustomFieldResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateCustomFieldResponse)
+	err := c.cc.Invoke(ctx, Tickets_CreateCustomField_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *ticketsClient) EditCustomField(ctx context.Context, in *EditCustomFieldRequest, opts ...grpc.CallOption) (*EditCustomFieldResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(EditCustomFieldResponse)
+	err := c.cc.Invoke(ctx, Tickets_EditCustomField_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *ticketsClient) ListCustomFields(ctx context.Context, in *ListCustomFieldsRequest, opts ...grpc.CallOption) (*ListCustomFieldsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListCustomFieldsResponse)
+	err := c.cc.Invoke(ctx, Tickets_ListCustomFields_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TicketsServer is the server API for Tickets service.
 // All implementations must embed UnimplementedTicketsServer
 // for forward compatibility.
@@ -593,6 +632,12 @@ type TicketsServer interface {
 	ListTicketsByEntityRef(context.Context, *ListTicketsByEntityRefRequest) (*ListTicketsByEntityRefResponse, error)
 	// Public method to listEntityRefsByTicket
 	ListEntityRefsByTicket(context.Context, *ListEntityRefsByTicketRequest) (*ListEntityRefsByTicketResponse, error)
+	// Public method to create a Custom Field
+	CreateCustomField(context.Context, *CreateCustomFieldRequest) (*CreateCustomFieldResponse, error)
+	// Public method to Edit a Custom Field
+	EditCustomField(context.Context, *EditCustomFieldRequest) (*EditCustomFieldResponse, error)
+	// Public method to all Custom Fileds
+	ListCustomFields(context.Context, *ListCustomFieldsRequest) (*ListCustomFieldsResponse, error)
 	mustEmbedUnimplementedTicketsServer()
 }
 
@@ -707,6 +752,15 @@ func (UnimplementedTicketsServer) ListTicketsByEntityRef(context.Context, *ListT
 }
 func (UnimplementedTicketsServer) ListEntityRefsByTicket(context.Context, *ListEntityRefsByTicketRequest) (*ListEntityRefsByTicketResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListEntityRefsByTicket not implemented")
+}
+func (UnimplementedTicketsServer) CreateCustomField(context.Context, *CreateCustomFieldRequest) (*CreateCustomFieldResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateCustomField not implemented")
+}
+func (UnimplementedTicketsServer) EditCustomField(context.Context, *EditCustomFieldRequest) (*EditCustomFieldResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EditCustomField not implemented")
+}
+func (UnimplementedTicketsServer) ListCustomFields(context.Context, *ListCustomFieldsRequest) (*ListCustomFieldsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListCustomFields not implemented")
 }
 func (UnimplementedTicketsServer) mustEmbedUnimplementedTicketsServer() {}
 func (UnimplementedTicketsServer) testEmbeddedByValue()                 {}
@@ -1359,6 +1413,60 @@ func _Tickets_ListEntityRefsByTicket_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Tickets_CreateCustomField_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateCustomFieldRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TicketsServer).CreateCustomField(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Tickets_CreateCustomField_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TicketsServer).CreateCustomField(ctx, req.(*CreateCustomFieldRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Tickets_EditCustomField_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EditCustomFieldRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TicketsServer).EditCustomField(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Tickets_EditCustomField_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TicketsServer).EditCustomField(ctx, req.(*EditCustomFieldRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Tickets_ListCustomFields_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListCustomFieldsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TicketsServer).ListCustomFields(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Tickets_ListCustomFields_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TicketsServer).ListCustomFields(ctx, req.(*ListCustomFieldsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Tickets_ServiceDesc is the grpc.ServiceDesc for Tickets service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1505,6 +1613,18 @@ var Tickets_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListEntityRefsByTicket",
 			Handler:    _Tickets_ListEntityRefsByTicket_Handler,
+		},
+		{
+			MethodName: "CreateCustomField",
+			Handler:    _Tickets_CreateCustomField_Handler,
+		},
+		{
+			MethodName: "EditCustomField",
+			Handler:    _Tickets_EditCustomField_Handler,
+		},
+		{
+			MethodName: "ListCustomFields",
+			Handler:    _Tickets_ListCustomFields_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

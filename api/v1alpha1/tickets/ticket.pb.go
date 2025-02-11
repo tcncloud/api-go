@@ -3722,6 +3722,381 @@ func (x *ListTicketsByEntityRefResponse) GetTickets() []*commons.Ticket {
 	return nil
 }
 
+// CreateCustomFieldRequest
+type CreateCustomFieldRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// ticket_code
+	TicketCode string `protobuf:"bytes,1,opt,name=ticket_code,json=ticketCode,proto3" json:"ticket_code,omitempty"`
+	// project_id
+	ProjectId int64 `protobuf:"varint,2,opt,name=project_id,json=projectId,proto3" json:"project_id,omitempty"`
+	// repeated custom fields
+	CustomField   []*commons.CustomField `protobuf:"bytes,3,rep,name=custom_field,json=customField,proto3" json:"custom_field,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateCustomFieldRequest) Reset() {
+	*x = CreateCustomFieldRequest{}
+	mi := &file_api_v1alpha1_tickets_ticket_proto_msgTypes[69]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateCustomFieldRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateCustomFieldRequest) ProtoMessage() {}
+
+func (x *CreateCustomFieldRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_tickets_ticket_proto_msgTypes[69]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateCustomFieldRequest.ProtoReflect.Descriptor instead.
+func (*CreateCustomFieldRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_tickets_ticket_proto_rawDescGZIP(), []int{69}
+}
+
+func (x *CreateCustomFieldRequest) GetTicketCode() string {
+	if x != nil {
+		return x.TicketCode
+	}
+	return ""
+}
+
+func (x *CreateCustomFieldRequest) GetProjectId() int64 {
+	if x != nil {
+		return x.ProjectId
+	}
+	return 0
+}
+
+func (x *CreateCustomFieldRequest) GetCustomField() []*commons.CustomField {
+	if x != nil {
+		return x.CustomField
+	}
+	return nil
+}
+
+// CreateCustomFieldResponse
+type CreateCustomFieldResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// ticket_code
+	TicketCode string `protobuf:"bytes,1,opt,name=ticket_code,json=ticketCode,proto3" json:"ticket_code,omitempty"`
+	// project_id
+	ProjectId int64 `protobuf:"varint,2,opt,name=project_id,json=projectId,proto3" json:"project_id,omitempty"`
+	// repeated custom fields
+	CustomField   []*commons.CustomField `protobuf:"bytes,3,rep,name=custom_field,json=customField,proto3" json:"custom_field,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateCustomFieldResponse) Reset() {
+	*x = CreateCustomFieldResponse{}
+	mi := &file_api_v1alpha1_tickets_ticket_proto_msgTypes[70]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateCustomFieldResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateCustomFieldResponse) ProtoMessage() {}
+
+func (x *CreateCustomFieldResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_tickets_ticket_proto_msgTypes[70]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateCustomFieldResponse.ProtoReflect.Descriptor instead.
+func (*CreateCustomFieldResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_tickets_ticket_proto_rawDescGZIP(), []int{70}
+}
+
+func (x *CreateCustomFieldResponse) GetTicketCode() string {
+	if x != nil {
+		return x.TicketCode
+	}
+	return ""
+}
+
+func (x *CreateCustomFieldResponse) GetProjectId() int64 {
+	if x != nil {
+		return x.ProjectId
+	}
+	return 0
+}
+
+func (x *CreateCustomFieldResponse) GetCustomField() []*commons.CustomField {
+	if x != nil {
+		return x.CustomField
+	}
+	return nil
+}
+
+// EditCustomFieldRequest -
+type EditCustomFieldRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// ticket_code
+	TicketCode string `protobuf:"bytes,1,opt,name=ticket_code,json=ticketCode,proto3" json:"ticket_code,omitempty"`
+	// project_id
+	ProjectId int64 `protobuf:"varint,2,opt,name=project_id,json=projectId,proto3" json:"project_id,omitempty"`
+	// repeated custom fields
+	EditValue     []*commons.CustomField `protobuf:"bytes,3,rep,name=edit_value,json=editValue,proto3" json:"edit_value,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *EditCustomFieldRequest) Reset() {
+	*x = EditCustomFieldRequest{}
+	mi := &file_api_v1alpha1_tickets_ticket_proto_msgTypes[71]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *EditCustomFieldRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EditCustomFieldRequest) ProtoMessage() {}
+
+func (x *EditCustomFieldRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_tickets_ticket_proto_msgTypes[71]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EditCustomFieldRequest.ProtoReflect.Descriptor instead.
+func (*EditCustomFieldRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_tickets_ticket_proto_rawDescGZIP(), []int{71}
+}
+
+func (x *EditCustomFieldRequest) GetTicketCode() string {
+	if x != nil {
+		return x.TicketCode
+	}
+	return ""
+}
+
+func (x *EditCustomFieldRequest) GetProjectId() int64 {
+	if x != nil {
+		return x.ProjectId
+	}
+	return 0
+}
+
+func (x *EditCustomFieldRequest) GetEditValue() []*commons.CustomField {
+	if x != nil {
+		return x.EditValue
+	}
+	return nil
+}
+
+// EditCustomFieldResponse -
+type EditCustomFieldResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// ticket_code
+	TicketCode string `protobuf:"bytes,1,opt,name=ticket_code,json=ticketCode,proto3" json:"ticket_code,omitempty"`
+	// project_id
+	ProjectId int64 `protobuf:"varint,2,opt,name=project_id,json=projectId,proto3" json:"project_id,omitempty"`
+	// repeated custom fields
+	EditedCustomField []*commons.CustomField `protobuf:"bytes,3,rep,name=edited_custom_field,json=editedCustomField,proto3" json:"edited_custom_field,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *EditCustomFieldResponse) Reset() {
+	*x = EditCustomFieldResponse{}
+	mi := &file_api_v1alpha1_tickets_ticket_proto_msgTypes[72]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *EditCustomFieldResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EditCustomFieldResponse) ProtoMessage() {}
+
+func (x *EditCustomFieldResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_tickets_ticket_proto_msgTypes[72]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EditCustomFieldResponse.ProtoReflect.Descriptor instead.
+func (*EditCustomFieldResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_tickets_ticket_proto_rawDescGZIP(), []int{72}
+}
+
+func (x *EditCustomFieldResponse) GetTicketCode() string {
+	if x != nil {
+		return x.TicketCode
+	}
+	return ""
+}
+
+func (x *EditCustomFieldResponse) GetProjectId() int64 {
+	if x != nil {
+		return x.ProjectId
+	}
+	return 0
+}
+
+func (x *EditCustomFieldResponse) GetEditedCustomField() []*commons.CustomField {
+	if x != nil {
+		return x.EditedCustomField
+	}
+	return nil
+}
+
+// ListCustomFieldsRequest
+type ListCustomFieldsRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// ticket_code
+	TicketCode string `protobuf:"bytes,1,opt,name=ticket_code,json=ticketCode,proto3" json:"ticket_code,omitempty"`
+	// project_id
+	ProjectId     int64 `protobuf:"varint,2,opt,name=project_id,json=projectId,proto3" json:"project_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListCustomFieldsRequest) Reset() {
+	*x = ListCustomFieldsRequest{}
+	mi := &file_api_v1alpha1_tickets_ticket_proto_msgTypes[73]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListCustomFieldsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListCustomFieldsRequest) ProtoMessage() {}
+
+func (x *ListCustomFieldsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_tickets_ticket_proto_msgTypes[73]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListCustomFieldsRequest.ProtoReflect.Descriptor instead.
+func (*ListCustomFieldsRequest) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_tickets_ticket_proto_rawDescGZIP(), []int{73}
+}
+
+func (x *ListCustomFieldsRequest) GetTicketCode() string {
+	if x != nil {
+		return x.TicketCode
+	}
+	return ""
+}
+
+func (x *ListCustomFieldsRequest) GetProjectId() int64 {
+	if x != nil {
+		return x.ProjectId
+	}
+	return 0
+}
+
+// ListCustomFieldsResponse -
+type ListCustomFieldsResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// ticket_code
+	TicketCode string `protobuf:"bytes,1,opt,name=ticket_code,json=ticketCode,proto3" json:"ticket_code,omitempty"`
+	// project_id
+	ProjectId int64 `protobuf:"varint,2,opt,name=project_id,json=projectId,proto3" json:"project_id,omitempty"`
+	// list of custom sfields
+	CustomFields  []*commons.CustomField `protobuf:"bytes,3,rep,name=custom_fields,json=customFields,proto3" json:"custom_fields,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListCustomFieldsResponse) Reset() {
+	*x = ListCustomFieldsResponse{}
+	mi := &file_api_v1alpha1_tickets_ticket_proto_msgTypes[74]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListCustomFieldsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListCustomFieldsResponse) ProtoMessage() {}
+
+func (x *ListCustomFieldsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_tickets_ticket_proto_msgTypes[74]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListCustomFieldsResponse.ProtoReflect.Descriptor instead.
+func (*ListCustomFieldsResponse) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_tickets_ticket_proto_rawDescGZIP(), []int{74}
+}
+
+func (x *ListCustomFieldsResponse) GetTicketCode() string {
+	if x != nil {
+		return x.TicketCode
+	}
+	return ""
+}
+
+func (x *ListCustomFieldsResponse) GetProjectId() int64 {
+	if x != nil {
+		return x.ProjectId
+	}
+	return 0
+}
+
+func (x *ListCustomFieldsResponse) GetCustomFields() []*commons.CustomField {
+	if x != nil {
+		return x.CustomFields
+	}
+	return nil
+}
+
 // should this be in a separate folder / file
 type EntityRef struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -3735,7 +4110,7 @@ type EntityRef struct {
 
 func (x *EntityRef) Reset() {
 	*x = EntityRef{}
-	mi := &file_api_v1alpha1_tickets_ticket_proto_msgTypes[69]
+	mi := &file_api_v1alpha1_tickets_ticket_proto_msgTypes[75]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3747,7 +4122,7 @@ func (x *EntityRef) String() string {
 func (*EntityRef) ProtoMessage() {}
 
 func (x *EntityRef) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_tickets_ticket_proto_msgTypes[69]
+	mi := &file_api_v1alpha1_tickets_ticket_proto_msgTypes[75]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3760,7 +4135,7 @@ func (x *EntityRef) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EntityRef.ProtoReflect.Descriptor instead.
 func (*EntityRef) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_tickets_ticket_proto_rawDescGZIP(), []int{69}
+	return file_api_v1alpha1_tickets_ticket_proto_rawDescGZIP(), []int{75}
 }
 
 func (x *EntityRef) GetOrgId() string {
@@ -4238,35 +4613,91 @@ var file_api_v1alpha1_tickets_ticket_proto_rawDesc = string([]byte{
 	0x79, 0x52, 0x65, 0x66, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x2d, 0x0a, 0x07,
 	0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x13, 0x2e,
 	0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x54, 0x69, 0x63, 0x6b,
-	0x65, 0x74, 0x52, 0x07, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x22, 0x72, 0x0a, 0x09, 0x45,
-	0x6e, 0x74, 0x69, 0x74, 0x79, 0x52, 0x65, 0x66, 0x12, 0x15, 0x0a, 0x06, 0x6f, 0x72, 0x67, 0x5f,
-	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x6f, 0x72, 0x67, 0x49, 0x64, 0x12,
-	0x1b, 0x0a, 0x09, 0x72, 0x65, 0x67, 0x69, 0x6f, 0x6e, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01,
-	0x28, 0x09, 0x52, 0x08, 0x72, 0x65, 0x67, 0x69, 0x6f, 0x6e, 0x49, 0x64, 0x12, 0x1f, 0x0a, 0x0b,
-	0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x5f, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x0a, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x43, 0x6f, 0x64, 0x65, 0x12, 0x10, 0x0a,
-	0x03, 0x75, 0x72, 0x69, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x75, 0x72, 0x69, 0x2a,
-	0x3f, 0x0a, 0x0b, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x73, 0x12, 0x06,
-	0x0a, 0x02, 0x4e, 0x41, 0x10, 0x00, 0x12, 0x0c, 0x0a, 0x08, 0x43, 0x61, 0x6c, 0x6c, 0x62, 0x61,
-	0x63, 0x6b, 0x10, 0x01, 0x12, 0x0d, 0x0a, 0x09, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x62, 0x61, 0x63,
-	0x6b, 0x10, 0x02, 0x12, 0x0b, 0x0a, 0x07, 0x53, 0x6d, 0x73, 0x62, 0x61, 0x63, 0x6b, 0x10, 0x03,
-	0x2a, 0x33, 0x0a, 0x0d, 0x53, 0x4c, 0x41, 0x43, 0x6f, 0x6e, 0x64, 0x69, 0x74, 0x69, 0x6f, 0x6e,
-	0x73, 0x12, 0x08, 0x0a, 0x04, 0x4e, 0x6f, 0x6e, 0x65, 0x10, 0x00, 0x12, 0x0b, 0x0a, 0x07, 0x52,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x64, 0x10, 0x01, 0x12, 0x0b, 0x0a, 0x07, 0x52, 0x65, 0x73, 0x6f,
-	0x6c, 0x76, 0x65, 0x10, 0x02, 0x42, 0xca, 0x01, 0x0a, 0x18, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70,
-	0x69, 0x2e, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65,
-	0x74, 0x73, 0x42, 0x0b, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50,
-	0x01, 0x5a, 0x2f, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63,
-	0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70,
-	0x69, 0x2f, 0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x74, 0x69, 0x63, 0x6b, 0x65,
-	0x74, 0x73, 0xa2, 0x02, 0x03, 0x41, 0x56, 0x54, 0xaa, 0x02, 0x14, 0x41, 0x70, 0x69, 0x2e, 0x56,
-	0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0xca,
-	0x02, 0x14, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x54,
-	0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0xe2, 0x02, 0x20, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61,
-	0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x5c, 0x47, 0x50,
-	0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x16, 0x41, 0x70, 0x69, 0x3a,
-	0x3a, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x3a, 0x3a, 0x54, 0x69, 0x63, 0x6b, 0x65,
-	0x74, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x65, 0x74, 0x52, 0x07, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x22, 0x9b, 0x01, 0x0a, 0x18,
+	0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x46, 0x69, 0x65, 0x6c,
+	0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1f, 0x0a, 0x0b, 0x74, 0x69, 0x63, 0x6b,
+	0x65, 0x74, 0x5f, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x74,
+	0x69, 0x63, 0x6b, 0x65, 0x74, 0x43, 0x6f, 0x64, 0x65, 0x12, 0x21, 0x0a, 0x0a, 0x70, 0x72, 0x6f,
+	0x6a, 0x65, 0x63, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x42, 0x02, 0x30,
+	0x01, 0x52, 0x09, 0x70, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x49, 0x64, 0x12, 0x3b, 0x0a, 0x0c,
+	0x63, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x5f, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x18, 0x03, 0x20, 0x03,
+	0x28, 0x0b, 0x32, 0x18, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73,
+	0x2e, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x52, 0x0b, 0x63, 0x75,
+	0x73, 0x74, 0x6f, 0x6d, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x22, 0x9c, 0x01, 0x0a, 0x19, 0x43, 0x72,
+	0x65, 0x61, 0x74, 0x65, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x1f, 0x0a, 0x0b, 0x74, 0x69, 0x63, 0x6b, 0x65,
+	0x74, 0x5f, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x74, 0x69,
+	0x63, 0x6b, 0x65, 0x74, 0x43, 0x6f, 0x64, 0x65, 0x12, 0x21, 0x0a, 0x0a, 0x70, 0x72, 0x6f, 0x6a,
+	0x65, 0x63, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x42, 0x02, 0x30, 0x01,
+	0x52, 0x09, 0x70, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x49, 0x64, 0x12, 0x3b, 0x0a, 0x0c, 0x63,
+	0x75, 0x73, 0x74, 0x6f, 0x6d, 0x5f, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x18, 0x03, 0x20, 0x03, 0x28,
+	0x0b, 0x32, 0x18, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e,
+	0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x52, 0x0b, 0x63, 0x75, 0x73,
+	0x74, 0x6f, 0x6d, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x22, 0x95, 0x01, 0x0a, 0x16, 0x45, 0x64, 0x69,
+	0x74, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x12, 0x1f, 0x0a, 0x0b, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x5f, 0x63, 0x6f,
+	0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74,
+	0x43, 0x6f, 0x64, 0x65, 0x12, 0x21, 0x0a, 0x0a, 0x70, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x5f,
+	0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x42, 0x02, 0x30, 0x01, 0x52, 0x09, 0x70, 0x72,
+	0x6f, 0x6a, 0x65, 0x63, 0x74, 0x49, 0x64, 0x12, 0x37, 0x0a, 0x0a, 0x65, 0x64, 0x69, 0x74, 0x5f,
+	0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x61, 0x70,
+	0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d,
+	0x46, 0x69, 0x65, 0x6c, 0x64, 0x52, 0x09, 0x65, 0x64, 0x69, 0x74, 0x56, 0x61, 0x6c, 0x75, 0x65,
+	0x22, 0xa7, 0x01, 0x0a, 0x17, 0x45, 0x64, 0x69, 0x74, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x46,
+	0x69, 0x65, 0x6c, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x1f, 0x0a, 0x0b,
+	0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x5f, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x0a, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x43, 0x6f, 0x64, 0x65, 0x12, 0x21, 0x0a,
+	0x0a, 0x70, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x03, 0x42, 0x02, 0x30, 0x01, 0x52, 0x09, 0x70, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x49, 0x64,
+	0x12, 0x48, 0x0a, 0x13, 0x65, 0x64, 0x69, 0x74, 0x65, 0x64, 0x5f, 0x63, 0x75, 0x73, 0x74, 0x6f,
+	0x6d, 0x5f, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x18, 0x2e,
+	0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x43, 0x75, 0x73, 0x74,
+	0x6f, 0x6d, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x52, 0x11, 0x65, 0x64, 0x69, 0x74, 0x65, 0x64, 0x43,
+	0x75, 0x73, 0x74, 0x6f, 0x6d, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x22, 0x5d, 0x0a, 0x17, 0x4c, 0x69,
+	0x73, 0x74, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x73, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1f, 0x0a, 0x0b, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x5f,
+	0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x74, 0x69, 0x63, 0x6b,
+	0x65, 0x74, 0x43, 0x6f, 0x64, 0x65, 0x12, 0x21, 0x0a, 0x0a, 0x70, 0x72, 0x6f, 0x6a, 0x65, 0x63,
+	0x74, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x42, 0x02, 0x30, 0x01, 0x52, 0x09,
+	0x70, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x49, 0x64, 0x22, 0x9d, 0x01, 0x0a, 0x18, 0x4c, 0x69,
+	0x73, 0x74, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x73, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x1f, 0x0a, 0x0b, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74,
+	0x5f, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x74, 0x69, 0x63,
+	0x6b, 0x65, 0x74, 0x43, 0x6f, 0x64, 0x65, 0x12, 0x21, 0x0a, 0x0a, 0x70, 0x72, 0x6f, 0x6a, 0x65,
+	0x63, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x42, 0x02, 0x30, 0x01, 0x52,
+	0x09, 0x70, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x49, 0x64, 0x12, 0x3d, 0x0a, 0x0d, 0x63, 0x75,
+	0x73, 0x74, 0x6f, 0x6d, 0x5f, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x73, 0x18, 0x03, 0x20, 0x03, 0x28,
+	0x0b, 0x32, 0x18, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e,
+	0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x52, 0x0c, 0x63, 0x75, 0x73,
+	0x74, 0x6f, 0x6d, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x73, 0x22, 0x72, 0x0a, 0x09, 0x45, 0x6e, 0x74,
+	0x69, 0x74, 0x79, 0x52, 0x65, 0x66, 0x12, 0x15, 0x0a, 0x06, 0x6f, 0x72, 0x67, 0x5f, 0x69, 0x64,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x6f, 0x72, 0x67, 0x49, 0x64, 0x12, 0x1b, 0x0a,
+	0x09, 0x72, 0x65, 0x67, 0x69, 0x6f, 0x6e, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x08, 0x72, 0x65, 0x67, 0x69, 0x6f, 0x6e, 0x49, 0x64, 0x12, 0x1f, 0x0a, 0x0b, 0x74, 0x69,
+	0x63, 0x6b, 0x65, 0x74, 0x5f, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x0a, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x43, 0x6f, 0x64, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x75,
+	0x72, 0x69, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x75, 0x72, 0x69, 0x2a, 0x3f, 0x0a,
+	0x0b, 0x41, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x73, 0x12, 0x06, 0x0a, 0x02,
+	0x4e, 0x41, 0x10, 0x00, 0x12, 0x0c, 0x0a, 0x08, 0x43, 0x61, 0x6c, 0x6c, 0x62, 0x61, 0x63, 0x6b,
+	0x10, 0x01, 0x12, 0x0d, 0x0a, 0x09, 0x45, 0x6d, 0x61, 0x69, 0x6c, 0x62, 0x61, 0x63, 0x6b, 0x10,
+	0x02, 0x12, 0x0b, 0x0a, 0x07, 0x53, 0x6d, 0x73, 0x62, 0x61, 0x63, 0x6b, 0x10, 0x03, 0x2a, 0x33,
+	0x0a, 0x0d, 0x53, 0x4c, 0x41, 0x43, 0x6f, 0x6e, 0x64, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x12,
+	0x08, 0x0a, 0x04, 0x4e, 0x6f, 0x6e, 0x65, 0x10, 0x00, 0x12, 0x0b, 0x0a, 0x07, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x64, 0x10, 0x01, 0x12, 0x0b, 0x0a, 0x07, 0x52, 0x65, 0x73, 0x6f, 0x6c, 0x76,
+	0x65, 0x10, 0x02, 0x42, 0xca, 0x01, 0x0a, 0x18, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e,
+	0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73,
+	0x42, 0x0b, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a,
+	0x2f, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63,
+	0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f,
+	0x76, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x2f, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73,
+	0xa2, 0x02, 0x03, 0x41, 0x56, 0x54, 0xaa, 0x02, 0x14, 0x41, 0x70, 0x69, 0x2e, 0x56, 0x31, 0x61,
+	0x6c, 0x70, 0x68, 0x61, 0x31, 0x2e, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0xca, 0x02, 0x14,
+	0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x5c, 0x54, 0x69, 0x63,
+	0x6b, 0x65, 0x74, 0x73, 0xe2, 0x02, 0x20, 0x41, 0x70, 0x69, 0x5c, 0x56, 0x31, 0x61, 0x6c, 0x70,
+	0x68, 0x61, 0x31, 0x5c, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d,
+	0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x16, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x56,
+	0x31, 0x61, 0x6c, 0x70, 0x68, 0x61, 0x31, 0x3a, 0x3a, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73,
+	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 })
 
 var (
@@ -4282,7 +4713,7 @@ func file_api_v1alpha1_tickets_ticket_proto_rawDescGZIP() []byte {
 }
 
 var file_api_v1alpha1_tickets_ticket_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_api_v1alpha1_tickets_ticket_proto_msgTypes = make([]protoimpl.MessageInfo, 70)
+var file_api_v1alpha1_tickets_ticket_proto_msgTypes = make([]protoimpl.MessageInfo, 76)
 var file_api_v1alpha1_tickets_ticket_proto_goTypes = []any{
 	(ActionTypes)(0),                          // 0: api.v1alpha1.tickets.ActionTypes
 	(SLAConditions)(0),                        // 1: api.v1alpha1.tickets.SLAConditions
@@ -4355,81 +4786,93 @@ var file_api_v1alpha1_tickets_ticket_proto_goTypes = []any{
 	(*ListEntityRefsByTicketResponse)(nil),    // 68: api.v1alpha1.tickets.ListEntityRefsByTicketResponse
 	(*ListTicketsByEntityRefRequest)(nil),     // 69: api.v1alpha1.tickets.ListTicketsByEntityRefRequest
 	(*ListTicketsByEntityRefResponse)(nil),    // 70: api.v1alpha1.tickets.ListTicketsByEntityRefResponse
-	(*EntityRef)(nil),                         // 71: api.v1alpha1.tickets.EntityRef
-	(*timestamppb.Timestamp)(nil),             // 72: google.protobuf.Timestamp
-	(*commons.Metadata)(nil),                  // 73: api.commons.Metadata
-	(*commons.Skills)(nil),                    // 74: api.commons.Skills
-	(*commons.Sla)(nil),                       // 75: api.commons.Sla
-	(*commons.TicketAction)(nil),              // 76: api.commons.TicketAction
-	(*commons.TicketTemplate)(nil),            // 77: api.commons.TicketTemplate
-	(*fieldmaskpb.FieldMask)(nil),             // 78: google.protobuf.FieldMask
-	(*commons.ListTemplate)(nil),              // 79: api.commons.ListTemplate
-	(*commons.TicketProjectTemplate)(nil),     // 80: api.commons.TicketProjectTemplate
-	(*commons.AssignProjectTemplate)(nil),     // 81: api.commons.AssignProjectTemplate
-	(*commons.TemplateDescription)(nil),       // 82: api.commons.TemplateDescription
-	(*commons.Ticket)(nil),                    // 83: api.commons.Ticket
-	(*commons.ActionType)(nil),                // 84: api.commons.ActionType
-	(commons.PhoneNumberType)(0),              // 85: api.commons.PhoneNumberType
-	(*commons.EditAttribute)(nil),             // 86: api.commons.EditAttribute
-	(*commons.Comment)(nil),                   // 87: api.commons.Comment
-	(*commons.ReplyComment)(nil),              // 88: api.commons.ReplyComment
-	(*commons.Duration)(nil),                  // 89: api.commons.Duration
-	(*commons.TicketSla)(nil),                 // 90: api.commons.TicketSla
-	(*commons.SlaConditions)(nil),             // 91: api.commons.SlaConditions
-	(*commons.ConfirmReplyComment)(nil),       // 92: api.commons.ConfirmReplyComment
-	(commons.TicketStatus)(0),                 // 93: api.commons.TicketStatus
+	(*CreateCustomFieldRequest)(nil),          // 71: api.v1alpha1.tickets.CreateCustomFieldRequest
+	(*CreateCustomFieldResponse)(nil),         // 72: api.v1alpha1.tickets.CreateCustomFieldResponse
+	(*EditCustomFieldRequest)(nil),            // 73: api.v1alpha1.tickets.EditCustomFieldRequest
+	(*EditCustomFieldResponse)(nil),           // 74: api.v1alpha1.tickets.EditCustomFieldResponse
+	(*ListCustomFieldsRequest)(nil),           // 75: api.v1alpha1.tickets.ListCustomFieldsRequest
+	(*ListCustomFieldsResponse)(nil),          // 76: api.v1alpha1.tickets.ListCustomFieldsResponse
+	(*EntityRef)(nil),                         // 77: api.v1alpha1.tickets.EntityRef
+	(*timestamppb.Timestamp)(nil),             // 78: google.protobuf.Timestamp
+	(*commons.Metadata)(nil),                  // 79: api.commons.Metadata
+	(*commons.Skills)(nil),                    // 80: api.commons.Skills
+	(*commons.Sla)(nil),                       // 81: api.commons.Sla
+	(*commons.TicketAction)(nil),              // 82: api.commons.TicketAction
+	(*commons.TicketTemplate)(nil),            // 83: api.commons.TicketTemplate
+	(*fieldmaskpb.FieldMask)(nil),             // 84: google.protobuf.FieldMask
+	(*commons.ListTemplate)(nil),              // 85: api.commons.ListTemplate
+	(*commons.TicketProjectTemplate)(nil),     // 86: api.commons.TicketProjectTemplate
+	(*commons.AssignProjectTemplate)(nil),     // 87: api.commons.AssignProjectTemplate
+	(*commons.TemplateDescription)(nil),       // 88: api.commons.TemplateDescription
+	(*commons.Ticket)(nil),                    // 89: api.commons.Ticket
+	(*commons.ActionType)(nil),                // 90: api.commons.ActionType
+	(commons.PhoneNumberType)(0),              // 91: api.commons.PhoneNumberType
+	(*commons.EditAttribute)(nil),             // 92: api.commons.EditAttribute
+	(*commons.Comment)(nil),                   // 93: api.commons.Comment
+	(*commons.ReplyComment)(nil),              // 94: api.commons.ReplyComment
+	(*commons.Duration)(nil),                  // 95: api.commons.Duration
+	(*commons.TicketSla)(nil),                 // 96: api.commons.TicketSla
+	(*commons.SlaConditions)(nil),             // 97: api.commons.SlaConditions
+	(*commons.ConfirmReplyComment)(nil),       // 98: api.commons.ConfirmReplyComment
+	(commons.TicketStatus)(0),                 // 99: api.commons.TicketStatus
+	(*commons.CustomField)(nil),               // 100: api.commons.CustomField
 }
 var file_api_v1alpha1_tickets_ticket_proto_depIdxs = []int32{
-	72, // 0: api.v1alpha1.tickets.CreateTicketReq.due_date:type_name -> google.protobuf.Timestamp
-	73, // 1: api.v1alpha1.tickets.CreateTicketReq.metadata:type_name -> api.commons.Metadata
-	74, // 2: api.v1alpha1.tickets.CreateTicketReq.ticket_skills:type_name -> api.commons.Skills
-	75, // 3: api.v1alpha1.tickets.CreateTicketReq.ticket_sla:type_name -> api.commons.Sla
-	76, // 4: api.v1alpha1.tickets.CreateTicketReq.ticket_action:type_name -> api.commons.TicketAction
-	77, // 5: api.v1alpha1.tickets.CreateTicketTemplateRequest.ticket_template:type_name -> api.commons.TicketTemplate
-	77, // 6: api.v1alpha1.tickets.CreateTicketTemplateResponse.ticket_template:type_name -> api.commons.TicketTemplate
-	77, // 7: api.v1alpha1.tickets.EditTicketTemplateRequest.edit_value:type_name -> api.commons.TicketTemplate
-	78, // 8: api.v1alpha1.tickets.EditTicketTemplateRequest.edited_fields_mask:type_name -> google.protobuf.FieldMask
-	78, // 9: api.v1alpha1.tickets.ListTicketTemplateRequest.request_mask:type_name -> google.protobuf.FieldMask
-	79, // 10: api.v1alpha1.tickets.ListTicketTemplateResponse.enabled_templates:type_name -> api.commons.ListTemplate
-	80, // 11: api.v1alpha1.tickets.ListTicketTemplateResponse.ticket_project_template:type_name -> api.commons.TicketProjectTemplate
-	81, // 12: api.v1alpha1.tickets.AssignProjectTemplateRequest.project_template:type_name -> api.commons.AssignProjectTemplate
-	82, // 13: api.v1alpha1.tickets.AssignProjectTemplateRequest.template_description:type_name -> api.commons.TemplateDescription
-	83, // 14: api.v1alpha1.tickets.CreateTicketRes.ticket:type_name -> api.commons.Ticket
-	84, // 15: api.v1alpha1.tickets.GetActionTypeResponse.action_type:type_name -> api.commons.ActionType
-	85, // 16: api.v1alpha1.tickets.GetPhoneNumberTypeResponse.phone_type:type_name -> api.commons.PhoneNumberType
-	86, // 17: api.v1alpha1.tickets.EditTicketReq.edit_value:type_name -> api.commons.EditAttribute
-	83, // 18: api.v1alpha1.tickets.EditMaskTicketReq.edit_value:type_name -> api.commons.Ticket
-	78, // 19: api.v1alpha1.tickets.EditMaskTicketReq.edited_fields_mask:type_name -> google.protobuf.FieldMask
-	83, // 20: api.v1alpha1.tickets.ListAgentTicketsResponse.ticket:type_name -> api.commons.Ticket
-	78, // 21: api.v1alpha1.tickets.ListAgentTicketsRequest.select_field_mask:type_name -> google.protobuf.FieldMask
-	78, // 22: api.v1alpha1.tickets.ListAgentTicketsRequest.filter_mask:type_name -> google.protobuf.FieldMask
-	83, // 23: api.v1alpha1.tickets.ListAvailableAgentTicketsResponse.ticket:type_name -> api.commons.Ticket
-	78, // 24: api.v1alpha1.tickets.ListAvailableAgentTicketsRequest.select_field_mask:type_name -> google.protobuf.FieldMask
-	27, // 25: api.v1alpha1.tickets.ListAvailableAgentTicketsRequest.available_filter:type_name -> api.v1alpha1.tickets.AvailableTicketsFilter
-	83, // 26: api.v1alpha1.tickets.ListTicketsRes.tickets:type_name -> api.commons.Ticket
-	83, // 27: api.v1alpha1.tickets.ViewTicketRes.ticket:type_name -> api.commons.Ticket
-	87, // 28: api.v1alpha1.tickets.ViewTicketRes.comments:type_name -> api.commons.Comment
-	88, // 29: api.v1alpha1.tickets.ViewTicketRes.reply_comment:type_name -> api.commons.ReplyComment
-	87, // 30: api.v1alpha1.tickets.CreateCommentRes.comment:type_name -> api.commons.Comment
-	89, // 31: api.v1alpha1.tickets.CreateSlaReq.duration:type_name -> api.commons.Duration
-	90, // 32: api.v1alpha1.tickets.CreateSlaRes.sla:type_name -> api.commons.TicketSla
-	90, // 33: api.v1alpha1.tickets.ListSlaRes.ticketsSla:type_name -> api.commons.TicketSla
-	90, // 34: api.v1alpha1.tickets.UpdateSlaRes.ticketsSla:type_name -> api.commons.TicketSla
-	91, // 35: api.v1alpha1.tickets.ListSlaConditionRes.slaCondition:type_name -> api.commons.SlaConditions
-	92, // 36: api.v1alpha1.tickets.ReplyCommentRes.is_created:type_name -> api.commons.ConfirmReplyComment
-	53, // 37: api.v1alpha1.tickets.ListSkillsResponse.skills:type_name -> api.v1alpha1.tickets.Skill
-	56, // 38: api.v1alpha1.tickets.ListUsersResponse.users:type_name -> api.v1alpha1.tickets.User
-	76, // 39: api.v1alpha1.tickets.CreateTicketActionRequest.ticket_action:type_name -> api.commons.TicketAction
-	76, // 40: api.v1alpha1.tickets.CreateTicketActionResponse.ticket_action:type_name -> api.commons.TicketAction
-	93, // 41: api.v1alpha1.tickets.ChangeTicketStatusRequest.ticket_status:type_name -> api.commons.TicketStatus
-	71, // 42: api.v1alpha1.tickets.AddEntityRefRequest.entity_ref:type_name -> api.v1alpha1.tickets.EntityRef
-	71, // 43: api.v1alpha1.tickets.ListEntityRefsByTicketResponse.entity_ref:type_name -> api.v1alpha1.tickets.EntityRef
-	83, // 44: api.v1alpha1.tickets.ListTicketsByEntityRefResponse.tickets:type_name -> api.commons.Ticket
-	45, // [45:45] is the sub-list for method output_type
-	45, // [45:45] is the sub-list for method input_type
-	45, // [45:45] is the sub-list for extension type_name
-	45, // [45:45] is the sub-list for extension extendee
-	0,  // [0:45] is the sub-list for field type_name
+	78,  // 0: api.v1alpha1.tickets.CreateTicketReq.due_date:type_name -> google.protobuf.Timestamp
+	79,  // 1: api.v1alpha1.tickets.CreateTicketReq.metadata:type_name -> api.commons.Metadata
+	80,  // 2: api.v1alpha1.tickets.CreateTicketReq.ticket_skills:type_name -> api.commons.Skills
+	81,  // 3: api.v1alpha1.tickets.CreateTicketReq.ticket_sla:type_name -> api.commons.Sla
+	82,  // 4: api.v1alpha1.tickets.CreateTicketReq.ticket_action:type_name -> api.commons.TicketAction
+	83,  // 5: api.v1alpha1.tickets.CreateTicketTemplateRequest.ticket_template:type_name -> api.commons.TicketTemplate
+	83,  // 6: api.v1alpha1.tickets.CreateTicketTemplateResponse.ticket_template:type_name -> api.commons.TicketTemplate
+	83,  // 7: api.v1alpha1.tickets.EditTicketTemplateRequest.edit_value:type_name -> api.commons.TicketTemplate
+	84,  // 8: api.v1alpha1.tickets.EditTicketTemplateRequest.edited_fields_mask:type_name -> google.protobuf.FieldMask
+	84,  // 9: api.v1alpha1.tickets.ListTicketTemplateRequest.request_mask:type_name -> google.protobuf.FieldMask
+	85,  // 10: api.v1alpha1.tickets.ListTicketTemplateResponse.enabled_templates:type_name -> api.commons.ListTemplate
+	86,  // 11: api.v1alpha1.tickets.ListTicketTemplateResponse.ticket_project_template:type_name -> api.commons.TicketProjectTemplate
+	87,  // 12: api.v1alpha1.tickets.AssignProjectTemplateRequest.project_template:type_name -> api.commons.AssignProjectTemplate
+	88,  // 13: api.v1alpha1.tickets.AssignProjectTemplateRequest.template_description:type_name -> api.commons.TemplateDescription
+	89,  // 14: api.v1alpha1.tickets.CreateTicketRes.ticket:type_name -> api.commons.Ticket
+	90,  // 15: api.v1alpha1.tickets.GetActionTypeResponse.action_type:type_name -> api.commons.ActionType
+	91,  // 16: api.v1alpha1.tickets.GetPhoneNumberTypeResponse.phone_type:type_name -> api.commons.PhoneNumberType
+	92,  // 17: api.v1alpha1.tickets.EditTicketReq.edit_value:type_name -> api.commons.EditAttribute
+	89,  // 18: api.v1alpha1.tickets.EditMaskTicketReq.edit_value:type_name -> api.commons.Ticket
+	84,  // 19: api.v1alpha1.tickets.EditMaskTicketReq.edited_fields_mask:type_name -> google.protobuf.FieldMask
+	89,  // 20: api.v1alpha1.tickets.ListAgentTicketsResponse.ticket:type_name -> api.commons.Ticket
+	84,  // 21: api.v1alpha1.tickets.ListAgentTicketsRequest.select_field_mask:type_name -> google.protobuf.FieldMask
+	84,  // 22: api.v1alpha1.tickets.ListAgentTicketsRequest.filter_mask:type_name -> google.protobuf.FieldMask
+	89,  // 23: api.v1alpha1.tickets.ListAvailableAgentTicketsResponse.ticket:type_name -> api.commons.Ticket
+	84,  // 24: api.v1alpha1.tickets.ListAvailableAgentTicketsRequest.select_field_mask:type_name -> google.protobuf.FieldMask
+	27,  // 25: api.v1alpha1.tickets.ListAvailableAgentTicketsRequest.available_filter:type_name -> api.v1alpha1.tickets.AvailableTicketsFilter
+	89,  // 26: api.v1alpha1.tickets.ListTicketsRes.tickets:type_name -> api.commons.Ticket
+	89,  // 27: api.v1alpha1.tickets.ViewTicketRes.ticket:type_name -> api.commons.Ticket
+	93,  // 28: api.v1alpha1.tickets.ViewTicketRes.comments:type_name -> api.commons.Comment
+	94,  // 29: api.v1alpha1.tickets.ViewTicketRes.reply_comment:type_name -> api.commons.ReplyComment
+	93,  // 30: api.v1alpha1.tickets.CreateCommentRes.comment:type_name -> api.commons.Comment
+	95,  // 31: api.v1alpha1.tickets.CreateSlaReq.duration:type_name -> api.commons.Duration
+	96,  // 32: api.v1alpha1.tickets.CreateSlaRes.sla:type_name -> api.commons.TicketSla
+	96,  // 33: api.v1alpha1.tickets.ListSlaRes.ticketsSla:type_name -> api.commons.TicketSla
+	96,  // 34: api.v1alpha1.tickets.UpdateSlaRes.ticketsSla:type_name -> api.commons.TicketSla
+	97,  // 35: api.v1alpha1.tickets.ListSlaConditionRes.slaCondition:type_name -> api.commons.SlaConditions
+	98,  // 36: api.v1alpha1.tickets.ReplyCommentRes.is_created:type_name -> api.commons.ConfirmReplyComment
+	53,  // 37: api.v1alpha1.tickets.ListSkillsResponse.skills:type_name -> api.v1alpha1.tickets.Skill
+	56,  // 38: api.v1alpha1.tickets.ListUsersResponse.users:type_name -> api.v1alpha1.tickets.User
+	82,  // 39: api.v1alpha1.tickets.CreateTicketActionRequest.ticket_action:type_name -> api.commons.TicketAction
+	82,  // 40: api.v1alpha1.tickets.CreateTicketActionResponse.ticket_action:type_name -> api.commons.TicketAction
+	99,  // 41: api.v1alpha1.tickets.ChangeTicketStatusRequest.ticket_status:type_name -> api.commons.TicketStatus
+	77,  // 42: api.v1alpha1.tickets.AddEntityRefRequest.entity_ref:type_name -> api.v1alpha1.tickets.EntityRef
+	77,  // 43: api.v1alpha1.tickets.ListEntityRefsByTicketResponse.entity_ref:type_name -> api.v1alpha1.tickets.EntityRef
+	89,  // 44: api.v1alpha1.tickets.ListTicketsByEntityRefResponse.tickets:type_name -> api.commons.Ticket
+	100, // 45: api.v1alpha1.tickets.CreateCustomFieldRequest.custom_field:type_name -> api.commons.CustomField
+	100, // 46: api.v1alpha1.tickets.CreateCustomFieldResponse.custom_field:type_name -> api.commons.CustomField
+	100, // 47: api.v1alpha1.tickets.EditCustomFieldRequest.edit_value:type_name -> api.commons.CustomField
+	100, // 48: api.v1alpha1.tickets.EditCustomFieldResponse.edited_custom_field:type_name -> api.commons.CustomField
+	100, // 49: api.v1alpha1.tickets.ListCustomFieldsResponse.custom_fields:type_name -> api.commons.CustomField
+	50,  // [50:50] is the sub-list for method output_type
+	50,  // [50:50] is the sub-list for method input_type
+	50,  // [50:50] is the sub-list for extension type_name
+	50,  // [50:50] is the sub-list for extension extendee
+	0,   // [0:50] is the sub-list for field type_name
 }
 
 func init() { file_api_v1alpha1_tickets_ticket_proto_init() }
@@ -4443,7 +4886,7 @@ func file_api_v1alpha1_tickets_ticket_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_v1alpha1_tickets_ticket_proto_rawDesc), len(file_api_v1alpha1_tickets_ticket_proto_rawDesc)),
 			NumEnums:      2,
-			NumMessages:   70,
+			NumMessages:   76,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
