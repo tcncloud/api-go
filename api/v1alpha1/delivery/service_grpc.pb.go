@@ -46,6 +46,7 @@ const (
 	DeliveryApi_ListEncryptions_FullMethodName                       = "/api.v1alpha1.delivery.DeliveryApi/ListEncryptions"
 	DeliveryApi_UpdateEncryption_FullMethodName                      = "/api.v1alpha1.delivery.DeliveryApi/UpdateEncryption"
 	DeliveryApi_ListSMSNumbers_FullMethodName                        = "/api.v1alpha1.delivery.DeliveryApi/ListSMSNumbers"
+	DeliveryApi_TriggerDemoOutboundDelivery_FullMethodName           = "/api.v1alpha1.delivery.DeliveryApi/TriggerDemoOutboundDelivery"
 )
 
 // DeliveryApiClient is the client API for DeliveryApi service.
@@ -79,6 +80,7 @@ type DeliveryApiClient interface {
 	ListEncryptions(ctx context.Context, in *ListEncryptionsReq, opts ...grpc.CallOption) (*ListEncryptionsRes, error)
 	UpdateEncryption(ctx context.Context, in *UpdateEncryptionReq, opts ...grpc.CallOption) (*UpdateEncryptionRes, error)
 	ListSMSNumbers(ctx context.Context, in *ListSMSNumbersReq, opts ...grpc.CallOption) (*ListSMSNumbersRes, error)
+	TriggerDemoOutboundDelivery(ctx context.Context, in *TriggerDemoOutboundDeliveryReq, opts ...grpc.CallOption) (*TriggerDemoOutboundDeliveryRes, error)
 }
 
 type deliveryApiClient struct {
@@ -359,6 +361,16 @@ func (c *deliveryApiClient) ListSMSNumbers(ctx context.Context, in *ListSMSNumbe
 	return out, nil
 }
 
+func (c *deliveryApiClient) TriggerDemoOutboundDelivery(ctx context.Context, in *TriggerDemoOutboundDeliveryReq, opts ...grpc.CallOption) (*TriggerDemoOutboundDeliveryRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(TriggerDemoOutboundDeliveryRes)
+	err := c.cc.Invoke(ctx, DeliveryApi_TriggerDemoOutboundDelivery_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DeliveryApiServer is the server API for DeliveryApi service.
 // All implementations must embed UnimplementedDeliveryApiServer
 // for forward compatibility.
@@ -390,6 +402,7 @@ type DeliveryApiServer interface {
 	ListEncryptions(context.Context, *ListEncryptionsReq) (*ListEncryptionsRes, error)
 	UpdateEncryption(context.Context, *UpdateEncryptionReq) (*UpdateEncryptionRes, error)
 	ListSMSNumbers(context.Context, *ListSMSNumbersReq) (*ListSMSNumbersRes, error)
+	TriggerDemoOutboundDelivery(context.Context, *TriggerDemoOutboundDeliveryReq) (*TriggerDemoOutboundDeliveryRes, error)
 	mustEmbedUnimplementedDeliveryApiServer()
 }
 
@@ -480,6 +493,9 @@ func (UnimplementedDeliveryApiServer) UpdateEncryption(context.Context, *UpdateE
 }
 func (UnimplementedDeliveryApiServer) ListSMSNumbers(context.Context, *ListSMSNumbersReq) (*ListSMSNumbersRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListSMSNumbers not implemented")
+}
+func (UnimplementedDeliveryApiServer) TriggerDemoOutboundDelivery(context.Context, *TriggerDemoOutboundDeliveryReq) (*TriggerDemoOutboundDeliveryRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TriggerDemoOutboundDelivery not implemented")
 }
 func (UnimplementedDeliveryApiServer) mustEmbedUnimplementedDeliveryApiServer() {}
 func (UnimplementedDeliveryApiServer) testEmbeddedByValue()                     {}
@@ -988,6 +1004,24 @@ func _DeliveryApi_ListSMSNumbers_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DeliveryApi_TriggerDemoOutboundDelivery_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TriggerDemoOutboundDeliveryReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeliveryApiServer).TriggerDemoOutboundDelivery(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DeliveryApi_TriggerDemoOutboundDelivery_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeliveryApiServer).TriggerDemoOutboundDelivery(ctx, req.(*TriggerDemoOutboundDeliveryReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // DeliveryApi_ServiceDesc is the grpc.ServiceDesc for DeliveryApi service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1102,6 +1136,10 @@ var DeliveryApi_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListSMSNumbers",
 			Handler:    _DeliveryApi_ListSMSNumbers_Handler,
+		},
+		{
+			MethodName: "TriggerDemoOutboundDelivery",
+			Handler:    _DeliveryApi_TriggerDemoOutboundDelivery_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -113,6 +113,9 @@ const (
 	// DeliveryApiListSMSNumbersProcedure is the fully-qualified name of the DeliveryApi's
 	// ListSMSNumbers RPC.
 	DeliveryApiListSMSNumbersProcedure = "/api.v1alpha1.delivery.DeliveryApi/ListSMSNumbers"
+	// DeliveryApiTriggerDemoOutboundDeliveryProcedure is the fully-qualified name of the DeliveryApi's
+	// TriggerDemoOutboundDelivery RPC.
+	DeliveryApiTriggerDemoOutboundDeliveryProcedure = "/api.v1alpha1.delivery.DeliveryApi/TriggerDemoOutboundDelivery"
 )
 
 // DeliveryApiClient is a client for the api.v1alpha1.delivery.DeliveryApi service.
@@ -144,6 +147,7 @@ type DeliveryApiClient interface {
 	ListEncryptions(context.Context, *connect_go.Request[delivery.ListEncryptionsReq]) (*connect_go.Response[delivery.ListEncryptionsRes], error)
 	UpdateEncryption(context.Context, *connect_go.Request[delivery.UpdateEncryptionReq]) (*connect_go.Response[delivery.UpdateEncryptionRes], error)
 	ListSMSNumbers(context.Context, *connect_go.Request[delivery.ListSMSNumbersReq]) (*connect_go.Response[delivery.ListSMSNumbersRes], error)
+	TriggerDemoOutboundDelivery(context.Context, *connect_go.Request[delivery.TriggerDemoOutboundDeliveryReq]) (*connect_go.Response[delivery.TriggerDemoOutboundDeliveryRes], error)
 }
 
 // NewDeliveryApiClient constructs a client for the api.v1alpha1.delivery.DeliveryApi service. By
@@ -291,6 +295,11 @@ func NewDeliveryApiClient(httpClient connect_go.HTTPClient, baseURL string, opts
 			baseURL+DeliveryApiListSMSNumbersProcedure,
 			opts...,
 		),
+		triggerDemoOutboundDelivery: connect_go.NewClient[delivery.TriggerDemoOutboundDeliveryReq, delivery.TriggerDemoOutboundDeliveryRes](
+			httpClient,
+			baseURL+DeliveryApiTriggerDemoOutboundDeliveryProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -323,6 +332,7 @@ type deliveryApiClient struct {
 	listEncryptions                       *connect_go.Client[delivery.ListEncryptionsReq, delivery.ListEncryptionsRes]
 	updateEncryption                      *connect_go.Client[delivery.UpdateEncryptionReq, delivery.UpdateEncryptionRes]
 	listSMSNumbers                        *connect_go.Client[delivery.ListSMSNumbersReq, delivery.ListSMSNumbersRes]
+	triggerDemoOutboundDelivery           *connect_go.Client[delivery.TriggerDemoOutboundDeliveryReq, delivery.TriggerDemoOutboundDeliveryRes]
 }
 
 // CreateTransferConfig calls api.v1alpha1.delivery.DeliveryApi.CreateTransferConfig.
@@ -462,6 +472,11 @@ func (c *deliveryApiClient) ListSMSNumbers(ctx context.Context, req *connect_go.
 	return c.listSMSNumbers.CallUnary(ctx, req)
 }
 
+// TriggerDemoOutboundDelivery calls api.v1alpha1.delivery.DeliveryApi.TriggerDemoOutboundDelivery.
+func (c *deliveryApiClient) TriggerDemoOutboundDelivery(ctx context.Context, req *connect_go.Request[delivery.TriggerDemoOutboundDeliveryReq]) (*connect_go.Response[delivery.TriggerDemoOutboundDeliveryRes], error) {
+	return c.triggerDemoOutboundDelivery.CallUnary(ctx, req)
+}
+
 // DeliveryApiHandler is an implementation of the api.v1alpha1.delivery.DeliveryApi service.
 type DeliveryApiHandler interface {
 	CreateTransferConfig(context.Context, *connect_go.Request[delivery.CreateTransferConfigReq]) (*connect_go.Response[delivery.CreateTransferConfigRes], error)
@@ -491,6 +506,7 @@ type DeliveryApiHandler interface {
 	ListEncryptions(context.Context, *connect_go.Request[delivery.ListEncryptionsReq]) (*connect_go.Response[delivery.ListEncryptionsRes], error)
 	UpdateEncryption(context.Context, *connect_go.Request[delivery.UpdateEncryptionReq]) (*connect_go.Response[delivery.UpdateEncryptionRes], error)
 	ListSMSNumbers(context.Context, *connect_go.Request[delivery.ListSMSNumbersReq]) (*connect_go.Response[delivery.ListSMSNumbersRes], error)
+	TriggerDemoOutboundDelivery(context.Context, *connect_go.Request[delivery.TriggerDemoOutboundDeliveryReq]) (*connect_go.Response[delivery.TriggerDemoOutboundDeliveryRes], error)
 }
 
 // NewDeliveryApiHandler builds an HTTP handler from the service implementation. It returns the path
@@ -634,6 +650,11 @@ func NewDeliveryApiHandler(svc DeliveryApiHandler, opts ...connect_go.HandlerOpt
 		svc.ListSMSNumbers,
 		opts...,
 	)
+	deliveryApiTriggerDemoOutboundDeliveryHandler := connect_go.NewUnaryHandler(
+		DeliveryApiTriggerDemoOutboundDeliveryProcedure,
+		svc.TriggerDemoOutboundDelivery,
+		opts...,
+	)
 	return "/api.v1alpha1.delivery.DeliveryApi/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case DeliveryApiCreateTransferConfigProcedure:
@@ -690,6 +711,8 @@ func NewDeliveryApiHandler(svc DeliveryApiHandler, opts ...connect_go.HandlerOpt
 			deliveryApiUpdateEncryptionHandler.ServeHTTP(w, r)
 		case DeliveryApiListSMSNumbersProcedure:
 			deliveryApiListSMSNumbersHandler.ServeHTTP(w, r)
+		case DeliveryApiTriggerDemoOutboundDeliveryProcedure:
+			deliveryApiTriggerDemoOutboundDeliveryHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -805,4 +828,8 @@ func (UnimplementedDeliveryApiHandler) UpdateEncryption(context.Context, *connec
 
 func (UnimplementedDeliveryApiHandler) ListSMSNumbers(context.Context, *connect_go.Request[delivery.ListSMSNumbersReq]) (*connect_go.Response[delivery.ListSMSNumbersRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.delivery.DeliveryApi.ListSMSNumbers is not implemented"))
+}
+
+func (UnimplementedDeliveryApiHandler) TriggerDemoOutboundDelivery(context.Context, *connect_go.Request[delivery.TriggerDemoOutboundDeliveryReq]) (*connect_go.Response[delivery.TriggerDemoOutboundDeliveryRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.delivery.DeliveryApi.TriggerDemoOutboundDelivery is not implemented"))
 }
