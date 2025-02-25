@@ -235,6 +235,8 @@ const (
 	WFM_ListAgentStatesForDay_FullMethodName                            = "/api.v1alpha1.wfm.WFM/ListAgentStatesForDay"
 	WFM_ListRealTimeManagementStates_FullMethodName                     = "/api.v1alpha1.wfm.WFM/ListRealTimeManagementStates"
 	WFM_ListAdherenceAgentStates_FullMethodName                         = "/api.v1alpha1.wfm.WFM/ListAdherenceAgentStates"
+	WFM_ListAdherenceAgentStateViolations_FullMethodName                = "/api.v1alpha1.wfm.WFM/ListAdherenceAgentStateViolations"
+	WFM_ResolveAdherenceAgentStateViolation_FullMethodName              = "/api.v1alpha1.wfm.WFM/ResolveAdherenceAgentStateViolation"
 	WFM_UpsertRealTimeManagementStateColor_FullMethodName               = "/api.v1alpha1.wfm.WFM/UpsertRealTimeManagementStateColor"
 	WFM_ListRealTimeManagementStateColors_FullMethodName                = "/api.v1alpha1.wfm.WFM/ListRealTimeManagementStateColors"
 	WFM_DeleteRealTimeManagementStateColor_FullMethodName               = "/api.v1alpha1.wfm.WFM/DeleteRealTimeManagementStateColor"
@@ -1928,6 +1930,25 @@ type WFMClient interface {
 	//   - grpc.Invalid: arguments in the request are invalid.
 	//   - grpc.Internal: error occurs when getting the states.
 	ListAdherenceAgentStates(ctx context.Context, in *ListAdherenceAgentStatesRequest, opts ...grpc.CallOption) (*ListAdherenceAgentStatesResponse, error)
+	// Lists the adherence agent states using the given parameters for the org sending the request.
+	// Accepts filtering by either @wfm_agent_sids, @datetime_range, or both. At least one of the two fields must be set.
+	// If @wfm_agent_sids is nil, violations will be returned for all agents after @start_datetime.
+	// If @wfm_agent_sids is set, violations will only be returned for those agents.
+	// If @datetime_range is nil, violations starting at any point in time for @wfm_agent_sids will be returned.
+	// If @datetime_range is set, any violations that start within @datetime_range will be included.
+	// If @include_resolved is true, resolved and unresolved violations will be returned. Otherwise only unresolved violations will be included in the response.
+	// Errors:
+	//   - grpc.Invalid: arguments in the request are invalid.
+	//   - grpc.Internal: error occurs when getting the violations.
+	ListAdherenceAgentStateViolations(ctx context.Context, in *ListAdherenceAgentStateViolationsRequest, opts ...grpc.CallOption) (*ListAdherenceAgentStateViolationsResponse, error)
+	// Resolves the given adherence agent state violation.
+	// If the violation is already resolved, then the original resolution will be overwritten.
+	// Only updates the @resolved_activity_sid, @resolved_reason_code_id, @resolution_comment, and @resolved_by_user_id fields.
+	// The @resolved_by_user_id field will be ignored and overwritten to match the user sending the request.
+	// Errors:
+	//   - grpc.Invalid: arguments in the request are invalid.
+	//   - grpc.Internal: error occurs when resolving the violation.
+	ResolveAdherenceAgentStateViolation(ctx context.Context, in *ResolveAdherenceAgentStateViolationRequest, opts ...grpc.CallOption) (*ResolveAdherenceAgentStateViolationResponse, error)
 	// Sets the given @state to be associated with the given @rgba_color_id for the org sending the request.
 	// Errors:
 	//   - grpc.Internal: error upserting the real time management state color or returning the newly created state color.
@@ -4288,6 +4309,26 @@ func (c *wFMClient) ListAdherenceAgentStates(ctx context.Context, in *ListAdhere
 	return out, nil
 }
 
+func (c *wFMClient) ListAdherenceAgentStateViolations(ctx context.Context, in *ListAdherenceAgentStateViolationsRequest, opts ...grpc.CallOption) (*ListAdherenceAgentStateViolationsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListAdherenceAgentStateViolationsResponse)
+	err := c.cc.Invoke(ctx, WFM_ListAdherenceAgentStateViolations_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) ResolveAdherenceAgentStateViolation(ctx context.Context, in *ResolveAdherenceAgentStateViolationRequest, opts ...grpc.CallOption) (*ResolveAdherenceAgentStateViolationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ResolveAdherenceAgentStateViolationResponse)
+	err := c.cc.Invoke(ctx, WFM_ResolveAdherenceAgentStateViolation_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *wFMClient) UpsertRealTimeManagementStateColor(ctx context.Context, in *UpsertRealTimeManagementStateColorRequest, opts ...grpc.CallOption) (*UpsertRealTimeManagementStateColorResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(UpsertRealTimeManagementStateColorResponse)
@@ -6240,6 +6281,25 @@ type WFMServer interface {
 	//   - grpc.Invalid: arguments in the request are invalid.
 	//   - grpc.Internal: error occurs when getting the states.
 	ListAdherenceAgentStates(context.Context, *ListAdherenceAgentStatesRequest) (*ListAdherenceAgentStatesResponse, error)
+	// Lists the adherence agent states using the given parameters for the org sending the request.
+	// Accepts filtering by either @wfm_agent_sids, @datetime_range, or both. At least one of the two fields must be set.
+	// If @wfm_agent_sids is nil, violations will be returned for all agents after @start_datetime.
+	// If @wfm_agent_sids is set, violations will only be returned for those agents.
+	// If @datetime_range is nil, violations starting at any point in time for @wfm_agent_sids will be returned.
+	// If @datetime_range is set, any violations that start within @datetime_range will be included.
+	// If @include_resolved is true, resolved and unresolved violations will be returned. Otherwise only unresolved violations will be included in the response.
+	// Errors:
+	//   - grpc.Invalid: arguments in the request are invalid.
+	//   - grpc.Internal: error occurs when getting the violations.
+	ListAdherenceAgentStateViolations(context.Context, *ListAdherenceAgentStateViolationsRequest) (*ListAdherenceAgentStateViolationsResponse, error)
+	// Resolves the given adherence agent state violation.
+	// If the violation is already resolved, then the original resolution will be overwritten.
+	// Only updates the @resolved_activity_sid, @resolved_reason_code_id, @resolution_comment, and @resolved_by_user_id fields.
+	// The @resolved_by_user_id field will be ignored and overwritten to match the user sending the request.
+	// Errors:
+	//   - grpc.Invalid: arguments in the request are invalid.
+	//   - grpc.Internal: error occurs when resolving the violation.
+	ResolveAdherenceAgentStateViolation(context.Context, *ResolveAdherenceAgentStateViolationRequest) (*ResolveAdherenceAgentStateViolationResponse, error)
 	// Sets the given @state to be associated with the given @rgba_color_id for the org sending the request.
 	// Errors:
 	//   - grpc.Internal: error upserting the real time management state color or returning the newly created state color.
@@ -7040,6 +7100,12 @@ func (UnimplementedWFMServer) ListRealTimeManagementStates(context.Context, *Lis
 }
 func (UnimplementedWFMServer) ListAdherenceAgentStates(context.Context, *ListAdherenceAgentStatesRequest) (*ListAdherenceAgentStatesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAdherenceAgentStates not implemented")
+}
+func (UnimplementedWFMServer) ListAdherenceAgentStateViolations(context.Context, *ListAdherenceAgentStateViolationsRequest) (*ListAdherenceAgentStateViolationsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListAdherenceAgentStateViolations not implemented")
+}
+func (UnimplementedWFMServer) ResolveAdherenceAgentStateViolation(context.Context, *ResolveAdherenceAgentStateViolationRequest) (*ResolveAdherenceAgentStateViolationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ResolveAdherenceAgentStateViolation not implemented")
 }
 func (UnimplementedWFMServer) UpsertRealTimeManagementStateColor(context.Context, *UpsertRealTimeManagementStateColorRequest) (*UpsertRealTimeManagementStateColorResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpsertRealTimeManagementStateColor not implemented")
@@ -10803,6 +10869,42 @@ func _WFM_ListAdherenceAgentStates_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_ListAdherenceAgentStateViolations_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListAdherenceAgentStateViolationsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).ListAdherenceAgentStateViolations(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_ListAdherenceAgentStateViolations_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).ListAdherenceAgentStateViolations(ctx, req.(*ListAdherenceAgentStateViolationsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_ResolveAdherenceAgentStateViolation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ResolveAdherenceAgentStateViolationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).ResolveAdherenceAgentStateViolation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_ResolveAdherenceAgentStateViolation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).ResolveAdherenceAgentStateViolation(ctx, req.(*ResolveAdherenceAgentStateViolationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WFM_UpsertRealTimeManagementStateColor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpsertRealTimeManagementStateColorRequest)
 	if err := dec(in); err != nil {
@@ -12115,6 +12217,14 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListAdherenceAgentStates",
 			Handler:    _WFM_ListAdherenceAgentStates_Handler,
+		},
+		{
+			MethodName: "ListAdherenceAgentStateViolations",
+			Handler:    _WFM_ListAdherenceAgentStateViolations_Handler,
+		},
+		{
+			MethodName: "ResolveAdherenceAgentStateViolation",
+			Handler:    _WFM_ResolveAdherenceAgentStateViolation_Handler,
 		},
 		{
 			MethodName: "UpsertRealTimeManagementStateColor",
