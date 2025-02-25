@@ -232,7 +232,6 @@ const (
 	WFM_ResolveAgentLeavePetition_FullMethodName                        = "/api.v1alpha1.wfm.WFM/ResolveAgentLeavePetition"
 	WFM_CancelAgentLeavePetition_FullMethodName                         = "/api.v1alpha1.wfm.WFM/CancelAgentLeavePetition"
 	WFM_HelloWorldWFMAdherence_FullMethodName                           = "/api.v1alpha1.wfm.WFM/HelloWorldWFMAdherence"
-	WFM_ListAdherenceDiagnostics_FullMethodName                         = "/api.v1alpha1.wfm.WFM/ListAdherenceDiagnostics"
 	WFM_ListAgentStatesForDay_FullMethodName                            = "/api.v1alpha1.wfm.WFM/ListAgentStatesForDay"
 	WFM_ListRealTimeManagementStates_FullMethodName                     = "/api.v1alpha1.wfm.WFM/ListRealTimeManagementStates"
 	WFM_ListAdherenceAgentStates_FullMethodName                         = "/api.v1alpha1.wfm.WFM/ListAdherenceAgentStates"
@@ -1909,12 +1908,6 @@ type WFMClient interface {
 	// A hello world endpoint to test the WFM Adherence App.
 	// Returns a string with a hello world message.
 	HelloWorldWFMAdherence(ctx context.Context, in *HelloWorldWFMAdherenceRequest, opts ...grpc.CallOption) (*HelloWorldWFMAdherenceResponse, error)
-	// Deprecated: Do not use.
-	// Lists any diagnostics found in the WFM Adherence App for the org sending the request.
-	// Provides details on any changes the user needs to make for the app to work properly, such as activities that need to have a default reason code assigned.
-	// Errors:
-	//   - grpc.Internal: error occurs when generating the diagnostics.
-	ListAdherenceDiagnostics(ctx context.Context, in *ListAdherenceDiagnosticsRequest, opts ...grpc.CallOption) (*ListAdherenceDiagnosticsResponse, error)
 	// Deprecated: Do not use.
 	// List the real time agent states for published schedule and the org sending the request, starting on the given @start_datetime.
 	// If the @end_datetime is set, all agent state sequences will be returned for the range between @start_datetime and @end_datetime.
@@ -4295,17 +4288,6 @@ func (c *wFMClient) HelloWorldWFMAdherence(ctx context.Context, in *HelloWorldWF
 }
 
 // Deprecated: Do not use.
-func (c *wFMClient) ListAdherenceDiagnostics(ctx context.Context, in *ListAdherenceDiagnosticsRequest, opts ...grpc.CallOption) (*ListAdherenceDiagnosticsResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ListAdherenceDiagnosticsResponse)
-	err := c.cc.Invoke(ctx, WFM_ListAdherenceDiagnostics_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// Deprecated: Do not use.
 func (c *wFMClient) ListAgentStatesForDay(ctx context.Context, in *ListAgentStatesForDayRequest, opts ...grpc.CallOption) (*ListAgentStatesForDayResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListAgentStatesForDayResponse)
@@ -6296,12 +6278,6 @@ type WFMServer interface {
 	// Returns a string with a hello world message.
 	HelloWorldWFMAdherence(context.Context, *HelloWorldWFMAdherenceRequest) (*HelloWorldWFMAdherenceResponse, error)
 	// Deprecated: Do not use.
-	// Lists any diagnostics found in the WFM Adherence App for the org sending the request.
-	// Provides details on any changes the user needs to make for the app to work properly, such as activities that need to have a default reason code assigned.
-	// Errors:
-	//   - grpc.Internal: error occurs when generating the diagnostics.
-	ListAdherenceDiagnostics(context.Context, *ListAdherenceDiagnosticsRequest) (*ListAdherenceDiagnosticsResponse, error)
-	// Deprecated: Do not use.
 	// List the real time agent states for published schedule and the org sending the request, starting on the given @start_datetime.
 	// If the @end_datetime is set, all agent state sequences will be returned for the range between @start_datetime and @end_datetime.
 	// If @end_datetime is not set, the agent state sequences will be returned over a 24 hour period or until the current time, whichever is shorter.
@@ -7142,9 +7118,6 @@ func (UnimplementedWFMServer) CancelAgentLeavePetition(context.Context, *CancelA
 }
 func (UnimplementedWFMServer) HelloWorldWFMAdherence(context.Context, *HelloWorldWFMAdherenceRequest) (*HelloWorldWFMAdherenceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HelloWorldWFMAdherence not implemented")
-}
-func (UnimplementedWFMServer) ListAdherenceDiagnostics(context.Context, *ListAdherenceDiagnosticsRequest) (*ListAdherenceDiagnosticsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListAdherenceDiagnostics not implemented")
 }
 func (UnimplementedWFMServer) ListAgentStatesForDay(context.Context, *ListAgentStatesForDayRequest) (*ListAgentStatesForDayResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAgentStatesForDay not implemented")
@@ -10872,24 +10845,6 @@ func _WFM_HelloWorldWFMAdherence_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
-func _WFM_ListAdherenceDiagnostics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListAdherenceDiagnosticsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(WFMServer).ListAdherenceDiagnostics(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: WFM_ListAdherenceDiagnostics_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WFMServer).ListAdherenceDiagnostics(ctx, req.(*ListAdherenceDiagnosticsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _WFM_ListAgentStatesForDay_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListAgentStatesForDayRequest)
 	if err := dec(in); err != nil {
@@ -12298,10 +12253,6 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "HelloWorldWFMAdherence",
 			Handler:    _WFM_HelloWorldWFMAdherence_Handler,
-		},
-		{
-			MethodName: "ListAdherenceDiagnostics",
-			Handler:    _WFM_ListAdherenceDiagnostics_Handler,
 		},
 		{
 			MethodName: "ListAgentStatesForDay",
