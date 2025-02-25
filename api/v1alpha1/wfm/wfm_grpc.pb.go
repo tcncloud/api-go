@@ -232,6 +232,7 @@ const (
 	WFM_ResolveAgentLeavePetition_FullMethodName                        = "/api.v1alpha1.wfm.WFM/ResolveAgentLeavePetition"
 	WFM_CancelAgentLeavePetition_FullMethodName                         = "/api.v1alpha1.wfm.WFM/CancelAgentLeavePetition"
 	WFM_HelloWorldWFMAdherence_FullMethodName                           = "/api.v1alpha1.wfm.WFM/HelloWorldWFMAdherence"
+	WFM_ListAdherenceDiagnostics_FullMethodName                         = "/api.v1alpha1.wfm.WFM/ListAdherenceDiagnostics"
 	WFM_ListAgentStatesForDay_FullMethodName                            = "/api.v1alpha1.wfm.WFM/ListAgentStatesForDay"
 	WFM_ListRealTimeManagementStates_FullMethodName                     = "/api.v1alpha1.wfm.WFM/ListRealTimeManagementStates"
 	WFM_ListAdherenceAgentStates_FullMethodName                         = "/api.v1alpha1.wfm.WFM/ListAdherenceAgentStates"
@@ -266,6 +267,7 @@ const (
 	WFM_AgentListLeavePetitions_FullMethodName                          = "/api.v1alpha1.wfm.WFM/AgentListLeavePetitions"
 	WFM_AgentCreateLeavePetition_FullMethodName                         = "/api.v1alpha1.wfm.WFM/AgentCreateLeavePetition"
 	WFM_AgentCancelLeavePetition_FullMethodName                         = "/api.v1alpha1.wfm.WFM/AgentCancelLeavePetition"
+	WFM_SetAgentStateSimulationLevelForOrg_FullMethodName               = "/api.v1alpha1.wfm.WFM/SetAgentStateSimulationLevelForOrg"
 )
 
 // WFMClient is the client API for WFM service.
@@ -1908,6 +1910,12 @@ type WFMClient interface {
 	// Returns a string with a hello world message.
 	HelloWorldWFMAdherence(ctx context.Context, in *HelloWorldWFMAdherenceRequest, opts ...grpc.CallOption) (*HelloWorldWFMAdherenceResponse, error)
 	// Deprecated: Do not use.
+	// Lists any diagnostics found in the WFM Adherence App for the org sending the request.
+	// Provides details on any changes the user needs to make for the app to work properly, such as activities that need to have a default reason code assigned.
+	// Errors:
+	//   - grpc.Internal: error occurs when generating the diagnostics.
+	ListAdherenceDiagnostics(ctx context.Context, in *ListAdherenceDiagnosticsRequest, opts ...grpc.CallOption) (*ListAdherenceDiagnosticsResponse, error)
+	// Deprecated: Do not use.
 	// List the real time agent states for published schedule and the org sending the request, starting on the given @start_datetime.
 	// If the @end_datetime is set, all agent state sequences will be returned for the range between @start_datetime and @end_datetime.
 	// If @end_datetime is not set, the agent state sequences will be returned over a 24 hour period or until the current time, whichever is shorter.
@@ -2134,6 +2142,14 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when canceling the agent leave petition, or removing time off shifts from the agent's schedule.
 	//   - grpc.NotFound: the @agent_leave_petition_id does not exist for the org sending the request.
 	AgentCancelLeavePetition(ctx context.Context, in *AgentCancelLeavePetitionRequest, opts ...grpc.CallOption) (*AgentCancelLeavePetitionResponse, error)
+	// Sets the adherence service to the @agent_state_simulation_level for the org sending the request.
+	// By setting the @agent_state_simulation_level to NO_SIMULATION, the adherence manager will function normally, using the live agent states.
+	// By setting the @agent_state_simulation_level to SIMULATED_AGENT_STATES, the adherence manager will instead simulate agent states and their violations.
+	// This allows demonstrations of the adherence functions of the app to be done before the client has any agents working.
+	// Errors:
+	//   - grpc.Invalid: the given @agent_state_simulation_level is invalid
+	//   - grpc.Internal: error occurs when updating the simulation level for the org sending the request.
+	SetAgentStateSimulationLevelForOrg(ctx context.Context, in *SetAgentStateSimulationLevelForOrgRequest, opts ...grpc.CallOption) (*SetAgentStateSimulationLevelForOrgResponse, error)
 }
 
 type wFMClient struct {
@@ -4279,6 +4295,17 @@ func (c *wFMClient) HelloWorldWFMAdherence(ctx context.Context, in *HelloWorldWF
 }
 
 // Deprecated: Do not use.
+func (c *wFMClient) ListAdherenceDiagnostics(ctx context.Context, in *ListAdherenceDiagnosticsRequest, opts ...grpc.CallOption) (*ListAdherenceDiagnosticsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListAdherenceDiagnosticsResponse)
+	err := c.cc.Invoke(ctx, WFM_ListAdherenceDiagnostics_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// Deprecated: Do not use.
 func (c *wFMClient) ListAgentStatesForDay(ctx context.Context, in *ListAgentStatesForDayRequest, opts ...grpc.CallOption) (*ListAgentStatesForDayResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListAgentStatesForDayResponse)
@@ -4613,6 +4640,16 @@ func (c *wFMClient) AgentCancelLeavePetition(ctx context.Context, in *AgentCance
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(AgentCancelLeavePetitionResponse)
 	err := c.cc.Invoke(ctx, WFM_AgentCancelLeavePetition_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *wFMClient) SetAgentStateSimulationLevelForOrg(ctx context.Context, in *SetAgentStateSimulationLevelForOrgRequest, opts ...grpc.CallOption) (*SetAgentStateSimulationLevelForOrgResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SetAgentStateSimulationLevelForOrgResponse)
+	err := c.cc.Invoke(ctx, WFM_SetAgentStateSimulationLevelForOrg_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -6259,6 +6296,12 @@ type WFMServer interface {
 	// Returns a string with a hello world message.
 	HelloWorldWFMAdherence(context.Context, *HelloWorldWFMAdherenceRequest) (*HelloWorldWFMAdherenceResponse, error)
 	// Deprecated: Do not use.
+	// Lists any diagnostics found in the WFM Adherence App for the org sending the request.
+	// Provides details on any changes the user needs to make for the app to work properly, such as activities that need to have a default reason code assigned.
+	// Errors:
+	//   - grpc.Internal: error occurs when generating the diagnostics.
+	ListAdherenceDiagnostics(context.Context, *ListAdherenceDiagnosticsRequest) (*ListAdherenceDiagnosticsResponse, error)
+	// Deprecated: Do not use.
 	// List the real time agent states for published schedule and the org sending the request, starting on the given @start_datetime.
 	// If the @end_datetime is set, all agent state sequences will be returned for the range between @start_datetime and @end_datetime.
 	// If @end_datetime is not set, the agent state sequences will be returned over a 24 hour period or until the current time, whichever is shorter.
@@ -6485,6 +6528,14 @@ type WFMServer interface {
 	//   - grpc.Internal: error occurs when canceling the agent leave petition, or removing time off shifts from the agent's schedule.
 	//   - grpc.NotFound: the @agent_leave_petition_id does not exist for the org sending the request.
 	AgentCancelLeavePetition(context.Context, *AgentCancelLeavePetitionRequest) (*AgentCancelLeavePetitionResponse, error)
+	// Sets the adherence service to the @agent_state_simulation_level for the org sending the request.
+	// By setting the @agent_state_simulation_level to NO_SIMULATION, the adherence manager will function normally, using the live agent states.
+	// By setting the @agent_state_simulation_level to SIMULATED_AGENT_STATES, the adherence manager will instead simulate agent states and their violations.
+	// This allows demonstrations of the adherence functions of the app to be done before the client has any agents working.
+	// Errors:
+	//   - grpc.Invalid: the given @agent_state_simulation_level is invalid
+	//   - grpc.Internal: error occurs when updating the simulation level for the org sending the request.
+	SetAgentStateSimulationLevelForOrg(context.Context, *SetAgentStateSimulationLevelForOrgRequest) (*SetAgentStateSimulationLevelForOrgResponse, error)
 	mustEmbedUnimplementedWFMServer()
 }
 
@@ -7092,6 +7143,9 @@ func (UnimplementedWFMServer) CancelAgentLeavePetition(context.Context, *CancelA
 func (UnimplementedWFMServer) HelloWorldWFMAdherence(context.Context, *HelloWorldWFMAdherenceRequest) (*HelloWorldWFMAdherenceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HelloWorldWFMAdherence not implemented")
 }
+func (UnimplementedWFMServer) ListAdherenceDiagnostics(context.Context, *ListAdherenceDiagnosticsRequest) (*ListAdherenceDiagnosticsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListAdherenceDiagnostics not implemented")
+}
 func (UnimplementedWFMServer) ListAgentStatesForDay(context.Context, *ListAgentStatesForDayRequest) (*ListAgentStatesForDayResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAgentStatesForDay not implemented")
 }
@@ -7193,6 +7247,9 @@ func (UnimplementedWFMServer) AgentCreateLeavePetition(context.Context, *AgentCr
 }
 func (UnimplementedWFMServer) AgentCancelLeavePetition(context.Context, *AgentCancelLeavePetitionRequest) (*AgentCancelLeavePetitionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AgentCancelLeavePetition not implemented")
+}
+func (UnimplementedWFMServer) SetAgentStateSimulationLevelForOrg(context.Context, *SetAgentStateSimulationLevelForOrgRequest) (*SetAgentStateSimulationLevelForOrgResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetAgentStateSimulationLevelForOrg not implemented")
 }
 func (UnimplementedWFMServer) mustEmbedUnimplementedWFMServer() {}
 func (UnimplementedWFMServer) testEmbeddedByValue()             {}
@@ -10815,6 +10872,24 @@ func _WFM_HelloWorldWFMAdherence_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WFM_ListAdherenceDiagnostics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListAdherenceDiagnosticsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).ListAdherenceDiagnostics(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_ListAdherenceDiagnostics_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).ListAdherenceDiagnostics(ctx, req.(*ListAdherenceDiagnosticsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WFM_ListAgentStatesForDay_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListAgentStatesForDayRequest)
 	if err := dec(in); err != nil {
@@ -11423,6 +11498,24 @@ func _WFM_AgentCancelLeavePetition_Handler(srv interface{}, ctx context.Context,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(WFMServer).AgentCancelLeavePetition(ctx, req.(*AgentCancelLeavePetitionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _WFM_SetAgentStateSimulationLevelForOrg_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetAgentStateSimulationLevelForOrgRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WFMServer).SetAgentStateSimulationLevelForOrg(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WFM_SetAgentStateSimulationLevelForOrg_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WFMServer).SetAgentStateSimulationLevelForOrg(ctx, req.(*SetAgentStateSimulationLevelForOrgRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -12207,6 +12300,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _WFM_HelloWorldWFMAdherence_Handler,
 		},
 		{
+			MethodName: "ListAdherenceDiagnostics",
+			Handler:    _WFM_ListAdherenceDiagnostics_Handler,
+		},
+		{
 			MethodName: "ListAgentStatesForDay",
 			Handler:    _WFM_ListAgentStatesForDay_Handler,
 		},
@@ -12341,6 +12438,10 @@ var WFM_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AgentCancelLeavePetition",
 			Handler:    _WFM_AgentCancelLeavePetition_Handler,
+		},
+		{
+			MethodName: "SetAgentStateSimulationLevelForOrg",
+			Handler:    _WFM_SetAgentStateSimulationLevelForOrg_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

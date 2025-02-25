@@ -67,8 +67,10 @@ type CreateUserRequest struct {
 	HuntGroupSid int64 `protobuf:"varint,18,opt,name=hunt_group_sid,json=huntGroupSid,proto3" json:"hunt_group_sid,omitempty"`
 	// Whether the user needs to set their password upon initial login
 	PasswordResetRequired bool `protobuf:"varint,19,opt,name=password_reset_required,json=passwordResetRequired,proto3" json:"password_reset_required,omitempty"`
-	unknownFields         protoimpl.UnknownFields
-	sizeCache             protoimpl.SizeCache
+	// The override for the users locale preferences
+	LocalePreferencesOverride *commons.LocalePreferences `protobuf:"bytes,20,opt,name=locale_preferences_override,json=localePreferencesOverride,proto3" json:"locale_preferences_override,omitempty"`
+	unknownFields             protoimpl.UnknownFields
+	sizeCache                 protoimpl.SizeCache
 }
 
 func (x *CreateUserRequest) Reset() {
@@ -225,6 +227,13 @@ func (x *CreateUserRequest) GetPasswordResetRequired() bool {
 		return x.PasswordResetRequired
 	}
 	return false
+}
+
+func (x *CreateUserRequest) GetLocalePreferencesOverride() *commons.LocalePreferences {
+	if x != nil {
+		return x.LocalePreferencesOverride
+	}
+	return nil
 }
 
 // Response message for the CreateUser rpc.
@@ -6750,7 +6759,7 @@ var file_api_v1alpha1_org_users_users_proto_rawDesc = string([]byte{
 	0x62, 0x75, 0x66, 0x2f, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x2e, 0x70, 0x72,
 	0x6f, 0x74, 0x6f, 0x1a, 0x1e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74,
 	0x6f, 0x62, 0x75, 0x66, 0x2f, 0x77, 0x72, 0x61, 0x70, 0x70, 0x65, 0x72, 0x73, 0x2e, 0x70, 0x72,
-	0x6f, 0x74, 0x6f, 0x22, 0xf6, 0x05, 0x0a, 0x11, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x55, 0x73,
+	0x6f, 0x74, 0x6f, 0x22, 0xd6, 0x06, 0x0a, 0x11, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x55, 0x73,
 	0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x15, 0x0a, 0x06, 0x6f, 0x72, 0x67,
 	0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x6f, 0x72, 0x67, 0x49, 0x64,
 	0x12, 0x1d, 0x0a, 0x0a, 0x66, 0x69, 0x72, 0x73, 0x74, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02,
@@ -6797,7 +6806,13 @@ var file_api_v1alpha1_org_users_users_proto_rawDesc = string([]byte{
 	0x70, 0x53, 0x69, 0x64, 0x12, 0x36, 0x0a, 0x17, 0x70, 0x61, 0x73, 0x73, 0x77, 0x6f, 0x72, 0x64,
 	0x5f, 0x72, 0x65, 0x73, 0x65, 0x74, 0x5f, 0x72, 0x65, 0x71, 0x75, 0x69, 0x72, 0x65, 0x64, 0x18,
 	0x13, 0x20, 0x01, 0x28, 0x08, 0x52, 0x15, 0x70, 0x61, 0x73, 0x73, 0x77, 0x6f, 0x72, 0x64, 0x52,
-	0x65, 0x73, 0x65, 0x74, 0x52, 0x65, 0x71, 0x75, 0x69, 0x72, 0x65, 0x64, 0x22, 0x2d, 0x0a, 0x12,
+	0x65, 0x73, 0x65, 0x74, 0x52, 0x65, 0x71, 0x75, 0x69, 0x72, 0x65, 0x64, 0x12, 0x5e, 0x0a, 0x1b,
+	0x6c, 0x6f, 0x63, 0x61, 0x6c, 0x65, 0x5f, 0x70, 0x72, 0x65, 0x66, 0x65, 0x72, 0x65, 0x6e, 0x63,
+	0x65, 0x73, 0x5f, 0x6f, 0x76, 0x65, 0x72, 0x72, 0x69, 0x64, 0x65, 0x18, 0x14, 0x20, 0x01, 0x28,
+	0x0b, 0x32, 0x1e, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e,
+	0x4c, 0x6f, 0x63, 0x61, 0x6c, 0x65, 0x50, 0x72, 0x65, 0x66, 0x65, 0x72, 0x65, 0x6e, 0x63, 0x65,
+	0x73, 0x52, 0x19, 0x6c, 0x6f, 0x63, 0x61, 0x6c, 0x65, 0x50, 0x72, 0x65, 0x66, 0x65, 0x72, 0x65,
+	0x6e, 0x63, 0x65, 0x73, 0x4f, 0x76, 0x65, 0x72, 0x72, 0x69, 0x64, 0x65, 0x22, 0x2d, 0x0a, 0x12,
 	0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x55, 0x73, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
 	0x73, 0x65, 0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20,
 	0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x22, 0x80, 0x02, 0x0a, 0x1a,
@@ -7898,104 +7913,105 @@ var file_api_v1alpha1_org_users_users_proto_goTypes = []any{
 	(*ListUsersAllowedIpsResponse_AllowedIps)(nil), // 105: api.v1alpha1.org.users.ListUsersAllowedIpsResponse.AllowedIps
 	(commons.OperatorApplications)(0),              // 106: api.commons.OperatorApplications
 	(*commons.TimeZoneWrapper)(nil),                // 107: api.commons.TimeZoneWrapper
-	(*org.Label)(nil),                              // 108: api.commons.org.Label
-	(*org.Skill)(nil),                              // 109: api.commons.org.Skill
-	(*org.PermissionGroup)(nil),                    // 110: api.commons.org.PermissionGroup
-	(*org.P3PermissionGroup)(nil),                  // 111: api.commons.org.P3PermissionGroup
-	(*org.Trust)(nil),                              // 112: api.commons.org.Trust
-	(*timestamppb.Timestamp)(nil),                  // 113: google.protobuf.Timestamp
-	(commons.UserArchivedStateFilter)(0),           // 114: api.commons.UserArchivedStateFilter
-	(commons.Permission)(0),                        // 115: api.commons.Permission
-	(*commons.LocalePreferences)(nil),              // 116: api.commons.LocalePreferences
+	(*commons.LocalePreferences)(nil),              // 108: api.commons.LocalePreferences
+	(*org.Label)(nil),                              // 109: api.commons.org.Label
+	(*org.Skill)(nil),                              // 110: api.commons.org.Skill
+	(*org.PermissionGroup)(nil),                    // 111: api.commons.org.PermissionGroup
+	(*org.P3PermissionGroup)(nil),                  // 112: api.commons.org.P3PermissionGroup
+	(*org.Trust)(nil),                              // 113: api.commons.org.Trust
+	(*timestamppb.Timestamp)(nil),                  // 114: google.protobuf.Timestamp
+	(commons.UserArchivedStateFilter)(0),           // 115: api.commons.UserArchivedStateFilter
+	(commons.Permission)(0),                        // 116: api.commons.Permission
 	(*org.MfaInfo)(nil),                            // 117: api.commons.org.MfaInfo
 	(*wrapperspb.StringValue)(nil),                 // 118: google.protobuf.StringValue
 }
 var file_api_v1alpha1_org_users_users_proto_depIdxs = []int32{
 	106, // 0: api.v1alpha1.org.users.CreateUserRequest.default_app:type_name -> api.commons.OperatorApplications
 	107, // 1: api.v1alpha1.org.users.CreateUserRequest.time_zone_override:type_name -> api.commons.TimeZoneWrapper
-	88,  // 2: api.v1alpha1.org.users.GetMyUserResponse.hunt_group:type_name -> api.v1alpha1.org.users.GetMyUserResponse.HuntGroup
-	108, // 3: api.v1alpha1.org.users.GetMyUserResponse.labels:type_name -> api.commons.org.Label
-	109, // 4: api.v1alpha1.org.users.GetMyUserResponse.skills:type_name -> api.commons.org.Skill
-	110, // 5: api.v1alpha1.org.users.GetMyUserResponse.permission_groups:type_name -> api.commons.org.PermissionGroup
-	111, // 6: api.v1alpha1.org.users.GetMyUserResponse.p3_permission_group:type_name -> api.commons.org.P3PermissionGroup
-	89,  // 7: api.v1alpha1.org.users.GetMyUserResponse.agent_profile_group:type_name -> api.v1alpha1.org.users.GetMyUserResponse.AgentProfileGroup
-	112, // 8: api.v1alpha1.org.users.GetMyUserResponse.trusts:type_name -> api.commons.org.Trust
-	107, // 9: api.v1alpha1.org.users.GetUserResponse.time_zone_override:type_name -> api.commons.TimeZoneWrapper
-	90,  // 10: api.v1alpha1.org.users.GetUserResponse.hunt_group:type_name -> api.v1alpha1.org.users.GetUserResponse.HuntGroup
-	108, // 11: api.v1alpha1.org.users.GetUserResponse.labels:type_name -> api.commons.org.Label
-	109, // 12: api.v1alpha1.org.users.GetUserResponse.skills:type_name -> api.commons.org.Skill
-	110, // 13: api.v1alpha1.org.users.GetUserResponse.permission_groups:type_name -> api.commons.org.PermissionGroup
-	111, // 14: api.v1alpha1.org.users.GetUserResponse.p3_permission_group:type_name -> api.commons.org.P3PermissionGroup
-	91,  // 15: api.v1alpha1.org.users.GetUserResponse.agent_profile_group:type_name -> api.v1alpha1.org.users.GetUserResponse.AgentProfileGroup
-	106, // 16: api.v1alpha1.org.users.GetUserResponse.default_app:type_name -> api.commons.OperatorApplications
-	112, // 17: api.v1alpha1.org.users.GetUserResponse.trusts:type_name -> api.commons.org.Trust
-	113, // 18: api.v1alpha1.org.users.GetUserResponse.created_at:type_name -> google.protobuf.Timestamp
-	113, // 19: api.v1alpha1.org.users.GetUserResponse.last_updated:type_name -> google.protobuf.Timestamp
-	92,  // 20: api.v1alpha1.org.users.GetUserByOrgIdResponse.hunt_group:type_name -> api.v1alpha1.org.users.GetUserByOrgIdResponse.HuntGroup
-	108, // 21: api.v1alpha1.org.users.GetUserByOrgIdResponse.labels:type_name -> api.commons.org.Label
-	109, // 22: api.v1alpha1.org.users.GetUserByOrgIdResponse.skills:type_name -> api.commons.org.Skill
-	110, // 23: api.v1alpha1.org.users.GetUserByOrgIdResponse.permission_groups:type_name -> api.commons.org.PermissionGroup
-	111, // 24: api.v1alpha1.org.users.GetUserByOrgIdResponse.p3_permission_group:type_name -> api.commons.org.P3PermissionGroup
-	93,  // 25: api.v1alpha1.org.users.GetUserByOrgIdResponse.agent_profile_group:type_name -> api.v1alpha1.org.users.GetUserByOrgIdResponse.AgentProfileGroup
-	112, // 26: api.v1alpha1.org.users.GetUserByOrgIdResponse.trusts:type_name -> api.commons.org.Trust
-	94,  // 27: api.v1alpha1.org.users.ListAgentsResponse.agents:type_name -> api.v1alpha1.org.users.ListAgentsResponse.AgentDetails
-	114, // 28: api.v1alpha1.org.users.ListPublicUsersRequest.archived_filter:type_name -> api.commons.UserArchivedStateFilter
-	97,  // 29: api.v1alpha1.org.users.ListPublicUsersResponse.users:type_name -> api.v1alpha1.org.users.ListPublicUsersResponse.User
-	98,  // 30: api.v1alpha1.org.users.ListUsersResponse.users:type_name -> api.v1alpha1.org.users.ListUsersResponse.UserDetails
-	114, // 31: api.v1alpha1.org.users.ListUsersByOrgIdRequest.archived_filter:type_name -> api.commons.UserArchivedStateFilter
-	99,  // 32: api.v1alpha1.org.users.ListUsersByOrgIdResponse.users:type_name -> api.v1alpha1.org.users.ListUsersByOrgIdResponse.UserDetails
-	114, // 33: api.v1alpha1.org.users.ListUsersByRegionRequest.archived_filter:type_name -> api.commons.UserArchivedStateFilter
-	100, // 34: api.v1alpha1.org.users.ListUsersByRegionResponse.users:type_name -> api.v1alpha1.org.users.ListUsersByRegionResponse.UserDetails
-	107, // 35: api.v1alpha1.org.users.UpdateMyUserRequest.time_zone_override:type_name -> api.commons.TimeZoneWrapper
-	106, // 36: api.v1alpha1.org.users.UpdateMyUserRequest.default_app:type_name -> api.commons.OperatorApplications
-	107, // 37: api.v1alpha1.org.users.UpdateUserRequest.time_zone_override:type_name -> api.commons.TimeZoneWrapper
-	106, // 38: api.v1alpha1.org.users.UpdateUserRequest.default_app:type_name -> api.commons.OperatorApplications
-	113, // 39: api.v1alpha1.org.users.GetUserLoginInfoResponse.last_login:type_name -> google.protobuf.Timestamp
-	113, // 40: api.v1alpha1.org.users.GetUserLoginInfoResponse.last_password_reset:type_name -> google.protobuf.Timestamp
-	113, // 41: api.v1alpha1.org.users.GetUserLoginInfoResponse.created_at:type_name -> google.protobuf.Timestamp
-	113, // 42: api.v1alpha1.org.users.GetUserLoginInfoResponse.updated_at:type_name -> google.protobuf.Timestamp
-	101, // 43: api.v1alpha1.org.users.GetUserSessionDataResponse.user:type_name -> api.v1alpha1.org.users.GetUserSessionDataResponse.User
-	115, // 44: api.v1alpha1.org.users.GetUserSessionDataResponse.p3_permissions:type_name -> api.commons.Permission
-	110, // 45: api.v1alpha1.org.users.GetUserSessionDataResponse.permission_groups:type_name -> api.commons.org.PermissionGroup
-	108, // 46: api.v1alpha1.org.users.GetUserSessionDataResponse.labels:type_name -> api.commons.org.Label
-	116, // 47: api.v1alpha1.org.users.GetUserSessionDataResponse.locale_preferences:type_name -> api.commons.LocalePreferences
-	113, // 48: api.v1alpha1.org.users.RefreshMfaLockoutResponse.timeout:type_name -> google.protobuf.Timestamp
-	113, // 49: api.v1alpha1.org.users.RefreshMfaLockoutByOrgIdResponse.timeout:type_name -> google.protobuf.Timestamp
-	117, // 50: api.v1alpha1.org.users.SetMfaTypeRequest.info:type_name -> api.commons.org.MfaInfo
-	117, // 51: api.v1alpha1.org.users.SetMyMfaTypeRequest.info:type_name -> api.commons.org.MfaInfo
-	117, // 52: api.v1alpha1.org.users.GetUserMfaInfoResponse.info:type_name -> api.commons.org.MfaInfo
-	117, // 53: api.v1alpha1.org.users.GetMyUserMfaInfoResponse.info:type_name -> api.commons.org.MfaInfo
-	104, // 54: api.v1alpha1.org.users.ListUsersAllowedIpsResponse.user_allowed_ips_map:type_name -> api.v1alpha1.org.users.ListUsersAllowedIpsResponse.UserAllowedIpsMapEntry
-	109, // 55: api.v1alpha1.org.users.ListAgentsResponse.AgentDetails.skills:type_name -> api.commons.org.Skill
-	95,  // 56: api.v1alpha1.org.users.ListAgentsResponse.AgentDetails.hunt_group:type_name -> api.v1alpha1.org.users.ListAgentsResponse.AgentDetails.HuntGroup
-	108, // 57: api.v1alpha1.org.users.ListAgentsResponse.AgentDetails.labels:type_name -> api.commons.org.Label
-	110, // 58: api.v1alpha1.org.users.ListAgentsResponse.AgentDetails.permission_groups:type_name -> api.commons.org.PermissionGroup
-	113, // 59: api.v1alpha1.org.users.ListAgentsResponse.AgentDetails.created:type_name -> google.protobuf.Timestamp
-	113, // 60: api.v1alpha1.org.users.ListAgentsResponse.AgentDetails.last_updated:type_name -> google.protobuf.Timestamp
-	96,  // 61: api.v1alpha1.org.users.ListAgentsResponse.AgentDetails.agent_profile_group:type_name -> api.v1alpha1.org.users.ListAgentsResponse.AgentDetails.AgentProfileGroup
-	107, // 62: api.v1alpha1.org.users.ListAgentsResponse.AgentDetails.time_zone_override:type_name -> api.commons.TimeZoneWrapper
-	117, // 63: api.v1alpha1.org.users.ListAgentsResponse.AgentDetails.mfa_info:type_name -> api.commons.org.MfaInfo
-	108, // 64: api.v1alpha1.org.users.ListUsersResponse.UserDetails.labels:type_name -> api.commons.org.Label
-	117, // 65: api.v1alpha1.org.users.ListUsersResponse.UserDetails.mfa_info:type_name -> api.commons.org.MfaInfo
-	108, // 66: api.v1alpha1.org.users.ListUsersByOrgIdResponse.UserDetails.labels:type_name -> api.commons.org.Label
-	117, // 67: api.v1alpha1.org.users.ListUsersByOrgIdResponse.UserDetails.mfa_info:type_name -> api.commons.org.MfaInfo
-	108, // 68: api.v1alpha1.org.users.ListUsersByRegionResponse.UserDetails.labels:type_name -> api.commons.org.Label
-	117, // 69: api.v1alpha1.org.users.ListUsersByRegionResponse.UserDetails.mfa_info:type_name -> api.commons.org.MfaInfo
-	103, // 70: api.v1alpha1.org.users.GetUserSessionDataResponse.User.region_sid_map:type_name -> api.v1alpha1.org.users.GetUserSessionDataResponse.User.RegionSidMapEntry
-	113, // 71: api.v1alpha1.org.users.GetUserSessionDataResponse.User.created:type_name -> google.protobuf.Timestamp
-	113, // 72: api.v1alpha1.org.users.GetUserSessionDataResponse.User.last_updated:type_name -> google.protobuf.Timestamp
-	118, // 73: api.v1alpha1.org.users.GetUserSessionDataResponse.User.connection_id:type_name -> google.protobuf.StringValue
-	107, // 74: api.v1alpha1.org.users.GetUserSessionDataResponse.User.time_zone_override:type_name -> api.commons.TimeZoneWrapper
-	106, // 75: api.v1alpha1.org.users.GetUserSessionDataResponse.User.default_application:type_name -> api.commons.OperatorApplications
-	113, // 76: api.v1alpha1.org.users.GetUserSessionDataResponse.User.mfa_timestamp:type_name -> google.protobuf.Timestamp
-	113, // 77: api.v1alpha1.org.users.GetUserSessionDataResponse.User.password_reset_date:type_name -> google.protobuf.Timestamp
-	102, // 78: api.v1alpha1.org.users.GetUserSessionDataResponse.User.RegionSidMapEntry.value:type_name -> api.v1alpha1.org.users.GetUserSessionDataResponse.User.RegionSids
-	105, // 79: api.v1alpha1.org.users.ListUsersAllowedIpsResponse.UserAllowedIpsMapEntry.value:type_name -> api.v1alpha1.org.users.ListUsersAllowedIpsResponse.AllowedIps
-	80,  // [80:80] is the sub-list for method output_type
-	80,  // [80:80] is the sub-list for method input_type
-	80,  // [80:80] is the sub-list for extension type_name
-	80,  // [80:80] is the sub-list for extension extendee
-	0,   // [0:80] is the sub-list for field type_name
+	108, // 2: api.v1alpha1.org.users.CreateUserRequest.locale_preferences_override:type_name -> api.commons.LocalePreferences
+	88,  // 3: api.v1alpha1.org.users.GetMyUserResponse.hunt_group:type_name -> api.v1alpha1.org.users.GetMyUserResponse.HuntGroup
+	109, // 4: api.v1alpha1.org.users.GetMyUserResponse.labels:type_name -> api.commons.org.Label
+	110, // 5: api.v1alpha1.org.users.GetMyUserResponse.skills:type_name -> api.commons.org.Skill
+	111, // 6: api.v1alpha1.org.users.GetMyUserResponse.permission_groups:type_name -> api.commons.org.PermissionGroup
+	112, // 7: api.v1alpha1.org.users.GetMyUserResponse.p3_permission_group:type_name -> api.commons.org.P3PermissionGroup
+	89,  // 8: api.v1alpha1.org.users.GetMyUserResponse.agent_profile_group:type_name -> api.v1alpha1.org.users.GetMyUserResponse.AgentProfileGroup
+	113, // 9: api.v1alpha1.org.users.GetMyUserResponse.trusts:type_name -> api.commons.org.Trust
+	107, // 10: api.v1alpha1.org.users.GetUserResponse.time_zone_override:type_name -> api.commons.TimeZoneWrapper
+	90,  // 11: api.v1alpha1.org.users.GetUserResponse.hunt_group:type_name -> api.v1alpha1.org.users.GetUserResponse.HuntGroup
+	109, // 12: api.v1alpha1.org.users.GetUserResponse.labels:type_name -> api.commons.org.Label
+	110, // 13: api.v1alpha1.org.users.GetUserResponse.skills:type_name -> api.commons.org.Skill
+	111, // 14: api.v1alpha1.org.users.GetUserResponse.permission_groups:type_name -> api.commons.org.PermissionGroup
+	112, // 15: api.v1alpha1.org.users.GetUserResponse.p3_permission_group:type_name -> api.commons.org.P3PermissionGroup
+	91,  // 16: api.v1alpha1.org.users.GetUserResponse.agent_profile_group:type_name -> api.v1alpha1.org.users.GetUserResponse.AgentProfileGroup
+	106, // 17: api.v1alpha1.org.users.GetUserResponse.default_app:type_name -> api.commons.OperatorApplications
+	113, // 18: api.v1alpha1.org.users.GetUserResponse.trusts:type_name -> api.commons.org.Trust
+	114, // 19: api.v1alpha1.org.users.GetUserResponse.created_at:type_name -> google.protobuf.Timestamp
+	114, // 20: api.v1alpha1.org.users.GetUserResponse.last_updated:type_name -> google.protobuf.Timestamp
+	92,  // 21: api.v1alpha1.org.users.GetUserByOrgIdResponse.hunt_group:type_name -> api.v1alpha1.org.users.GetUserByOrgIdResponse.HuntGroup
+	109, // 22: api.v1alpha1.org.users.GetUserByOrgIdResponse.labels:type_name -> api.commons.org.Label
+	110, // 23: api.v1alpha1.org.users.GetUserByOrgIdResponse.skills:type_name -> api.commons.org.Skill
+	111, // 24: api.v1alpha1.org.users.GetUserByOrgIdResponse.permission_groups:type_name -> api.commons.org.PermissionGroup
+	112, // 25: api.v1alpha1.org.users.GetUserByOrgIdResponse.p3_permission_group:type_name -> api.commons.org.P3PermissionGroup
+	93,  // 26: api.v1alpha1.org.users.GetUserByOrgIdResponse.agent_profile_group:type_name -> api.v1alpha1.org.users.GetUserByOrgIdResponse.AgentProfileGroup
+	113, // 27: api.v1alpha1.org.users.GetUserByOrgIdResponse.trusts:type_name -> api.commons.org.Trust
+	94,  // 28: api.v1alpha1.org.users.ListAgentsResponse.agents:type_name -> api.v1alpha1.org.users.ListAgentsResponse.AgentDetails
+	115, // 29: api.v1alpha1.org.users.ListPublicUsersRequest.archived_filter:type_name -> api.commons.UserArchivedStateFilter
+	97,  // 30: api.v1alpha1.org.users.ListPublicUsersResponse.users:type_name -> api.v1alpha1.org.users.ListPublicUsersResponse.User
+	98,  // 31: api.v1alpha1.org.users.ListUsersResponse.users:type_name -> api.v1alpha1.org.users.ListUsersResponse.UserDetails
+	115, // 32: api.v1alpha1.org.users.ListUsersByOrgIdRequest.archived_filter:type_name -> api.commons.UserArchivedStateFilter
+	99,  // 33: api.v1alpha1.org.users.ListUsersByOrgIdResponse.users:type_name -> api.v1alpha1.org.users.ListUsersByOrgIdResponse.UserDetails
+	115, // 34: api.v1alpha1.org.users.ListUsersByRegionRequest.archived_filter:type_name -> api.commons.UserArchivedStateFilter
+	100, // 35: api.v1alpha1.org.users.ListUsersByRegionResponse.users:type_name -> api.v1alpha1.org.users.ListUsersByRegionResponse.UserDetails
+	107, // 36: api.v1alpha1.org.users.UpdateMyUserRequest.time_zone_override:type_name -> api.commons.TimeZoneWrapper
+	106, // 37: api.v1alpha1.org.users.UpdateMyUserRequest.default_app:type_name -> api.commons.OperatorApplications
+	107, // 38: api.v1alpha1.org.users.UpdateUserRequest.time_zone_override:type_name -> api.commons.TimeZoneWrapper
+	106, // 39: api.v1alpha1.org.users.UpdateUserRequest.default_app:type_name -> api.commons.OperatorApplications
+	114, // 40: api.v1alpha1.org.users.GetUserLoginInfoResponse.last_login:type_name -> google.protobuf.Timestamp
+	114, // 41: api.v1alpha1.org.users.GetUserLoginInfoResponse.last_password_reset:type_name -> google.protobuf.Timestamp
+	114, // 42: api.v1alpha1.org.users.GetUserLoginInfoResponse.created_at:type_name -> google.protobuf.Timestamp
+	114, // 43: api.v1alpha1.org.users.GetUserLoginInfoResponse.updated_at:type_name -> google.protobuf.Timestamp
+	101, // 44: api.v1alpha1.org.users.GetUserSessionDataResponse.user:type_name -> api.v1alpha1.org.users.GetUserSessionDataResponse.User
+	116, // 45: api.v1alpha1.org.users.GetUserSessionDataResponse.p3_permissions:type_name -> api.commons.Permission
+	111, // 46: api.v1alpha1.org.users.GetUserSessionDataResponse.permission_groups:type_name -> api.commons.org.PermissionGroup
+	109, // 47: api.v1alpha1.org.users.GetUserSessionDataResponse.labels:type_name -> api.commons.org.Label
+	108, // 48: api.v1alpha1.org.users.GetUserSessionDataResponse.locale_preferences:type_name -> api.commons.LocalePreferences
+	114, // 49: api.v1alpha1.org.users.RefreshMfaLockoutResponse.timeout:type_name -> google.protobuf.Timestamp
+	114, // 50: api.v1alpha1.org.users.RefreshMfaLockoutByOrgIdResponse.timeout:type_name -> google.protobuf.Timestamp
+	117, // 51: api.v1alpha1.org.users.SetMfaTypeRequest.info:type_name -> api.commons.org.MfaInfo
+	117, // 52: api.v1alpha1.org.users.SetMyMfaTypeRequest.info:type_name -> api.commons.org.MfaInfo
+	117, // 53: api.v1alpha1.org.users.GetUserMfaInfoResponse.info:type_name -> api.commons.org.MfaInfo
+	117, // 54: api.v1alpha1.org.users.GetMyUserMfaInfoResponse.info:type_name -> api.commons.org.MfaInfo
+	104, // 55: api.v1alpha1.org.users.ListUsersAllowedIpsResponse.user_allowed_ips_map:type_name -> api.v1alpha1.org.users.ListUsersAllowedIpsResponse.UserAllowedIpsMapEntry
+	110, // 56: api.v1alpha1.org.users.ListAgentsResponse.AgentDetails.skills:type_name -> api.commons.org.Skill
+	95,  // 57: api.v1alpha1.org.users.ListAgentsResponse.AgentDetails.hunt_group:type_name -> api.v1alpha1.org.users.ListAgentsResponse.AgentDetails.HuntGroup
+	109, // 58: api.v1alpha1.org.users.ListAgentsResponse.AgentDetails.labels:type_name -> api.commons.org.Label
+	111, // 59: api.v1alpha1.org.users.ListAgentsResponse.AgentDetails.permission_groups:type_name -> api.commons.org.PermissionGroup
+	114, // 60: api.v1alpha1.org.users.ListAgentsResponse.AgentDetails.created:type_name -> google.protobuf.Timestamp
+	114, // 61: api.v1alpha1.org.users.ListAgentsResponse.AgentDetails.last_updated:type_name -> google.protobuf.Timestamp
+	96,  // 62: api.v1alpha1.org.users.ListAgentsResponse.AgentDetails.agent_profile_group:type_name -> api.v1alpha1.org.users.ListAgentsResponse.AgentDetails.AgentProfileGroup
+	107, // 63: api.v1alpha1.org.users.ListAgentsResponse.AgentDetails.time_zone_override:type_name -> api.commons.TimeZoneWrapper
+	117, // 64: api.v1alpha1.org.users.ListAgentsResponse.AgentDetails.mfa_info:type_name -> api.commons.org.MfaInfo
+	109, // 65: api.v1alpha1.org.users.ListUsersResponse.UserDetails.labels:type_name -> api.commons.org.Label
+	117, // 66: api.v1alpha1.org.users.ListUsersResponse.UserDetails.mfa_info:type_name -> api.commons.org.MfaInfo
+	109, // 67: api.v1alpha1.org.users.ListUsersByOrgIdResponse.UserDetails.labels:type_name -> api.commons.org.Label
+	117, // 68: api.v1alpha1.org.users.ListUsersByOrgIdResponse.UserDetails.mfa_info:type_name -> api.commons.org.MfaInfo
+	109, // 69: api.v1alpha1.org.users.ListUsersByRegionResponse.UserDetails.labels:type_name -> api.commons.org.Label
+	117, // 70: api.v1alpha1.org.users.ListUsersByRegionResponse.UserDetails.mfa_info:type_name -> api.commons.org.MfaInfo
+	103, // 71: api.v1alpha1.org.users.GetUserSessionDataResponse.User.region_sid_map:type_name -> api.v1alpha1.org.users.GetUserSessionDataResponse.User.RegionSidMapEntry
+	114, // 72: api.v1alpha1.org.users.GetUserSessionDataResponse.User.created:type_name -> google.protobuf.Timestamp
+	114, // 73: api.v1alpha1.org.users.GetUserSessionDataResponse.User.last_updated:type_name -> google.protobuf.Timestamp
+	118, // 74: api.v1alpha1.org.users.GetUserSessionDataResponse.User.connection_id:type_name -> google.protobuf.StringValue
+	107, // 75: api.v1alpha1.org.users.GetUserSessionDataResponse.User.time_zone_override:type_name -> api.commons.TimeZoneWrapper
+	106, // 76: api.v1alpha1.org.users.GetUserSessionDataResponse.User.default_application:type_name -> api.commons.OperatorApplications
+	114, // 77: api.v1alpha1.org.users.GetUserSessionDataResponse.User.mfa_timestamp:type_name -> google.protobuf.Timestamp
+	114, // 78: api.v1alpha1.org.users.GetUserSessionDataResponse.User.password_reset_date:type_name -> google.protobuf.Timestamp
+	102, // 79: api.v1alpha1.org.users.GetUserSessionDataResponse.User.RegionSidMapEntry.value:type_name -> api.v1alpha1.org.users.GetUserSessionDataResponse.User.RegionSids
+	105, // 80: api.v1alpha1.org.users.ListUsersAllowedIpsResponse.UserAllowedIpsMapEntry.value:type_name -> api.v1alpha1.org.users.ListUsersAllowedIpsResponse.AllowedIps
+	81,  // [81:81] is the sub-list for method output_type
+	81,  // [81:81] is the sub-list for method input_type
+	81,  // [81:81] is the sub-list for extension type_name
+	81,  // [81:81] is the sub-list for extension extendee
+	0,   // [0:81] is the sub-list for field type_name
 }
 
 func init() { file_api_v1alpha1_org_users_users_proto_init() }

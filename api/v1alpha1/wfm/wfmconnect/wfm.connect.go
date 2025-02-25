@@ -596,6 +596,9 @@ const (
 	// WFMHelloWorldWFMAdherenceProcedure is the fully-qualified name of the WFM's
 	// HelloWorldWFMAdherence RPC.
 	WFMHelloWorldWFMAdherenceProcedure = "/api.v1alpha1.wfm.WFM/HelloWorldWFMAdherence"
+	// WFMListAdherenceDiagnosticsProcedure is the fully-qualified name of the WFM's
+	// ListAdherenceDiagnostics RPC.
+	WFMListAdherenceDiagnosticsProcedure = "/api.v1alpha1.wfm.WFM/ListAdherenceDiagnostics"
 	// WFMListAgentStatesForDayProcedure is the fully-qualified name of the WFM's ListAgentStatesForDay
 	// RPC.
 	WFMListAgentStatesForDayProcedure = "/api.v1alpha1.wfm.WFM/ListAgentStatesForDay"
@@ -693,6 +696,9 @@ const (
 	// WFMAgentCancelLeavePetitionProcedure is the fully-qualified name of the WFM's
 	// AgentCancelLeavePetition RPC.
 	WFMAgentCancelLeavePetitionProcedure = "/api.v1alpha1.wfm.WFM/AgentCancelLeavePetition"
+	// WFMSetAgentStateSimulationLevelForOrgProcedure is the fully-qualified name of the WFM's
+	// SetAgentStateSimulationLevelForOrg RPC.
+	WFMSetAgentStateSimulationLevelForOrgProcedure = "/api.v1alpha1.wfm.WFM/SetAgentStateSimulationLevelForOrg"
 )
 
 // WFMClient is a client for the api.v1alpha1.wfm.WFM service.
@@ -2336,6 +2342,13 @@ type WFMClient interface {
 	// A hello world endpoint to test the WFM Adherence App.
 	// Returns a string with a hello world message.
 	HelloWorldWFMAdherence(context.Context, *connect_go.Request[wfm.HelloWorldWFMAdherenceRequest]) (*connect_go.Response[wfm.HelloWorldWFMAdherenceResponse], error)
+	// Lists any diagnostics found in the WFM Adherence App for the org sending the request.
+	// Provides details on any changes the user needs to make for the app to work properly, such as activities that need to have a default reason code assigned.
+	// Errors:
+	//   - grpc.Internal: error occurs when generating the diagnostics.
+	//
+	// Deprecated: do not use.
+	ListAdherenceDiagnostics(context.Context, *connect_go.Request[wfm.ListAdherenceDiagnosticsRequest]) (*connect_go.Response[wfm.ListAdherenceDiagnosticsResponse], error)
 	// List the real time agent states for published schedule and the org sending the request, starting on the given @start_datetime.
 	// If the @end_datetime is set, all agent state sequences will be returned for the range between @start_datetime and @end_datetime.
 	// If @end_datetime is not set, the agent state sequences will be returned over a 24 hour period or until the current time, whichever is shorter.
@@ -2564,6 +2577,14 @@ type WFMClient interface {
 	//   - grpc.Internal: error occurs when canceling the agent leave petition, or removing time off shifts from the agent's schedule.
 	//   - grpc.NotFound: the @agent_leave_petition_id does not exist for the org sending the request.
 	AgentCancelLeavePetition(context.Context, *connect_go.Request[wfm.AgentCancelLeavePetitionRequest]) (*connect_go.Response[wfm.AgentCancelLeavePetitionResponse], error)
+	// Sets the adherence service to the @agent_state_simulation_level for the org sending the request.
+	// By setting the @agent_state_simulation_level to NO_SIMULATION, the adherence manager will function normally, using the live agent states.
+	// By setting the @agent_state_simulation_level to SIMULATED_AGENT_STATES, the adherence manager will instead simulate agent states and their violations.
+	// This allows demonstrations of the adherence functions of the app to be done before the client has any agents working.
+	// Errors:
+	//   - grpc.Invalid: the given @agent_state_simulation_level is invalid
+	//   - grpc.Internal: error occurs when updating the simulation level for the org sending the request.
+	SetAgentStateSimulationLevelForOrg(context.Context, *connect_go.Request[wfm.SetAgentStateSimulationLevelForOrgRequest]) (*connect_go.Response[wfm.SetAgentStateSimulationLevelForOrgResponse], error)
 }
 
 // NewWFMClient constructs a client for the api.v1alpha1.wfm.WFM service. By default, it uses the
@@ -3571,6 +3592,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+WFMHelloWorldWFMAdherenceProcedure,
 			opts...,
 		),
+		listAdherenceDiagnostics: connect_go.NewClient[wfm.ListAdherenceDiagnosticsRequest, wfm.ListAdherenceDiagnosticsResponse](
+			httpClient,
+			baseURL+WFMListAdherenceDiagnosticsProcedure,
+			opts...,
+		),
 		listAgentStatesForDay: connect_go.NewClient[wfm.ListAgentStatesForDayRequest, wfm.ListAgentStatesForDayResponse](
 			httpClient,
 			baseURL+WFMListAgentStatesForDayProcedure,
@@ -3739,6 +3765,11 @@ func NewWFMClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 		agentCancelLeavePetition: connect_go.NewClient[wfm.AgentCancelLeavePetitionRequest, wfm.AgentCancelLeavePetitionResponse](
 			httpClient,
 			baseURL+WFMAgentCancelLeavePetitionProcedure,
+			opts...,
+		),
+		setAgentStateSimulationLevelForOrg: connect_go.NewClient[wfm.SetAgentStateSimulationLevelForOrgRequest, wfm.SetAgentStateSimulationLevelForOrgResponse](
+			httpClient,
+			baseURL+WFMSetAgentStateSimulationLevelForOrgProcedure,
 			opts...,
 		),
 	}
@@ -3945,6 +3976,7 @@ type wFMClient struct {
 	resolveAgentLeavePetition                        *connect_go.Client[wfm.ResolveAgentLeavePetitionRequest, wfm.ResolveAgentLeavePetitionResponse]
 	cancelAgentLeavePetition                         *connect_go.Client[wfm.CancelAgentLeavePetitionRequest, wfm.CancelAgentLeavePetitionResponse]
 	helloWorldWFMAdherence                           *connect_go.Client[wfm.HelloWorldWFMAdherenceRequest, wfm.HelloWorldWFMAdherenceResponse]
+	listAdherenceDiagnostics                         *connect_go.Client[wfm.ListAdherenceDiagnosticsRequest, wfm.ListAdherenceDiagnosticsResponse]
 	listAgentStatesForDay                            *connect_go.Client[wfm.ListAgentStatesForDayRequest, wfm.ListAgentStatesForDayResponse]
 	listRealTimeManagementStates                     *connect_go.Client[wfm.ListRealTimeManagementStatesRequest, wfm.ListRealTimeManagementStatesResponse]
 	listAdherenceAgentStates                         *connect_go.Client[wfm.ListAdherenceAgentStatesRequest, wfm.ListAdherenceAgentStatesResponse]
@@ -3979,6 +4011,7 @@ type wFMClient struct {
 	agentListLeavePetitions                          *connect_go.Client[wfm.AgentListLeavePetitionsRequest, wfm.AgentListLeavePetitionsResponse]
 	agentCreateLeavePetition                         *connect_go.Client[wfm.AgentCreateLeavePetitionRequest, wfm.AgentCreateLeavePetitionResponse]
 	agentCancelLeavePetition                         *connect_go.Client[wfm.AgentCancelLeavePetitionRequest, wfm.AgentCancelLeavePetitionResponse]
+	setAgentStateSimulationLevelForOrg               *connect_go.Client[wfm.SetAgentStateSimulationLevelForOrgRequest, wfm.SetAgentStateSimulationLevelForOrgResponse]
 }
 
 // PerformInitialClientSetup calls api.v1alpha1.wfm.WFM.PerformInitialClientSetup.
@@ -5002,6 +5035,13 @@ func (c *wFMClient) HelloWorldWFMAdherence(ctx context.Context, req *connect_go.
 	return c.helloWorldWFMAdherence.CallUnary(ctx, req)
 }
 
+// ListAdherenceDiagnostics calls api.v1alpha1.wfm.WFM.ListAdherenceDiagnostics.
+//
+// Deprecated: do not use.
+func (c *wFMClient) ListAdherenceDiagnostics(ctx context.Context, req *connect_go.Request[wfm.ListAdherenceDiagnosticsRequest]) (*connect_go.Response[wfm.ListAdherenceDiagnosticsResponse], error) {
+	return c.listAdherenceDiagnostics.CallUnary(ctx, req)
+}
+
 // ListAgentStatesForDay calls api.v1alpha1.wfm.WFM.ListAgentStatesForDay.
 //
 // Deprecated: do not use.
@@ -5182,6 +5222,11 @@ func (c *wFMClient) AgentCreateLeavePetition(ctx context.Context, req *connect_g
 // AgentCancelLeavePetition calls api.v1alpha1.wfm.WFM.AgentCancelLeavePetition.
 func (c *wFMClient) AgentCancelLeavePetition(ctx context.Context, req *connect_go.Request[wfm.AgentCancelLeavePetitionRequest]) (*connect_go.Response[wfm.AgentCancelLeavePetitionResponse], error) {
 	return c.agentCancelLeavePetition.CallUnary(ctx, req)
+}
+
+// SetAgentStateSimulationLevelForOrg calls api.v1alpha1.wfm.WFM.SetAgentStateSimulationLevelForOrg.
+func (c *wFMClient) SetAgentStateSimulationLevelForOrg(ctx context.Context, req *connect_go.Request[wfm.SetAgentStateSimulationLevelForOrgRequest]) (*connect_go.Response[wfm.SetAgentStateSimulationLevelForOrgResponse], error) {
+	return c.setAgentStateSimulationLevelForOrg.CallUnary(ctx, req)
 }
 
 // WFMHandler is an implementation of the api.v1alpha1.wfm.WFM service.
@@ -6825,6 +6870,13 @@ type WFMHandler interface {
 	// A hello world endpoint to test the WFM Adherence App.
 	// Returns a string with a hello world message.
 	HelloWorldWFMAdherence(context.Context, *connect_go.Request[wfm.HelloWorldWFMAdherenceRequest]) (*connect_go.Response[wfm.HelloWorldWFMAdherenceResponse], error)
+	// Lists any diagnostics found in the WFM Adherence App for the org sending the request.
+	// Provides details on any changes the user needs to make for the app to work properly, such as activities that need to have a default reason code assigned.
+	// Errors:
+	//   - grpc.Internal: error occurs when generating the diagnostics.
+	//
+	// Deprecated: do not use.
+	ListAdherenceDiagnostics(context.Context, *connect_go.Request[wfm.ListAdherenceDiagnosticsRequest]) (*connect_go.Response[wfm.ListAdherenceDiagnosticsResponse], error)
 	// List the real time agent states for published schedule and the org sending the request, starting on the given @start_datetime.
 	// If the @end_datetime is set, all agent state sequences will be returned for the range between @start_datetime and @end_datetime.
 	// If @end_datetime is not set, the agent state sequences will be returned over a 24 hour period or until the current time, whichever is shorter.
@@ -7053,6 +7105,14 @@ type WFMHandler interface {
 	//   - grpc.Internal: error occurs when canceling the agent leave petition, or removing time off shifts from the agent's schedule.
 	//   - grpc.NotFound: the @agent_leave_petition_id does not exist for the org sending the request.
 	AgentCancelLeavePetition(context.Context, *connect_go.Request[wfm.AgentCancelLeavePetitionRequest]) (*connect_go.Response[wfm.AgentCancelLeavePetitionResponse], error)
+	// Sets the adherence service to the @agent_state_simulation_level for the org sending the request.
+	// By setting the @agent_state_simulation_level to NO_SIMULATION, the adherence manager will function normally, using the live agent states.
+	// By setting the @agent_state_simulation_level to SIMULATED_AGENT_STATES, the adherence manager will instead simulate agent states and their violations.
+	// This allows demonstrations of the adherence functions of the app to be done before the client has any agents working.
+	// Errors:
+	//   - grpc.Invalid: the given @agent_state_simulation_level is invalid
+	//   - grpc.Internal: error occurs when updating the simulation level for the org sending the request.
+	SetAgentStateSimulationLevelForOrg(context.Context, *connect_go.Request[wfm.SetAgentStateSimulationLevelForOrgRequest]) (*connect_go.Response[wfm.SetAgentStateSimulationLevelForOrgResponse], error)
 }
 
 // NewWFMHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -8056,6 +8116,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.HelloWorldWFMAdherence,
 		opts...,
 	)
+	wFMListAdherenceDiagnosticsHandler := connect_go.NewUnaryHandler(
+		WFMListAdherenceDiagnosticsProcedure,
+		svc.ListAdherenceDiagnostics,
+		opts...,
+	)
 	wFMListAgentStatesForDayHandler := connect_go.NewUnaryHandler(
 		WFMListAgentStatesForDayProcedure,
 		svc.ListAgentStatesForDay,
@@ -8224,6 +8289,11 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 	wFMAgentCancelLeavePetitionHandler := connect_go.NewUnaryHandler(
 		WFMAgentCancelLeavePetitionProcedure,
 		svc.AgentCancelLeavePetition,
+		opts...,
+	)
+	wFMSetAgentStateSimulationLevelForOrgHandler := connect_go.NewUnaryHandler(
+		WFMSetAgentStateSimulationLevelForOrgProcedure,
+		svc.SetAgentStateSimulationLevelForOrg,
 		opts...,
 	)
 	return "/api.v1alpha1.wfm.WFM/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -8626,6 +8696,8 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMCancelAgentLeavePetitionHandler.ServeHTTP(w, r)
 		case WFMHelloWorldWFMAdherenceProcedure:
 			wFMHelloWorldWFMAdherenceHandler.ServeHTTP(w, r)
+		case WFMListAdherenceDiagnosticsProcedure:
+			wFMListAdherenceDiagnosticsHandler.ServeHTTP(w, r)
 		case WFMListAgentStatesForDayProcedure:
 			wFMListAgentStatesForDayHandler.ServeHTTP(w, r)
 		case WFMListRealTimeManagementStatesProcedure:
@@ -8694,6 +8766,8 @@ func NewWFMHandler(svc WFMHandler, opts ...connect_go.HandlerOption) (string, ht
 			wFMAgentCreateLeavePetitionHandler.ServeHTTP(w, r)
 		case WFMAgentCancelLeavePetitionProcedure:
 			wFMAgentCancelLeavePetitionHandler.ServeHTTP(w, r)
+		case WFMSetAgentStateSimulationLevelForOrgProcedure:
+			wFMSetAgentStateSimulationLevelForOrgHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -9499,6 +9573,10 @@ func (UnimplementedWFMHandler) HelloWorldWFMAdherence(context.Context, *connect_
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.HelloWorldWFMAdherence is not implemented"))
 }
 
+func (UnimplementedWFMHandler) ListAdherenceDiagnostics(context.Context, *connect_go.Request[wfm.ListAdherenceDiagnosticsRequest]) (*connect_go.Response[wfm.ListAdherenceDiagnosticsResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListAdherenceDiagnostics is not implemented"))
+}
+
 func (UnimplementedWFMHandler) ListAgentStatesForDay(context.Context, *connect_go.Request[wfm.ListAgentStatesForDayRequest]) (*connect_go.Response[wfm.ListAgentStatesForDayResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.ListAgentStatesForDay is not implemented"))
 }
@@ -9633,4 +9711,8 @@ func (UnimplementedWFMHandler) AgentCreateLeavePetition(context.Context, *connec
 
 func (UnimplementedWFMHandler) AgentCancelLeavePetition(context.Context, *connect_go.Request[wfm.AgentCancelLeavePetitionRequest]) (*connect_go.Response[wfm.AgentCancelLeavePetitionResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.AgentCancelLeavePetition is not implemented"))
+}
+
+func (UnimplementedWFMHandler) SetAgentStateSimulationLevelForOrg(context.Context, *connect_go.Request[wfm.SetAgentStateSimulationLevelForOrgRequest]) (*connect_go.Response[wfm.SetAgentStateSimulationLevelForOrgResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.wfm.WFM.SetAgentStateSimulationLevelForOrg is not implemented"))
 }
