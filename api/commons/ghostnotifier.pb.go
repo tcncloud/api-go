@@ -39,6 +39,8 @@ type GhostNotification struct {
 	//	*GhostNotification_DirectedCallHangup
 	//	*GhostNotification_AgentQueuedCallsNotification
 	//	*GhostNotification_AuthTokenExpirationNotification
+	//	*GhostNotification_OmniMessageReceived
+	//	*GhostNotification_OmniConversationAssigned
 	Payload       isGhostNotification_Payload `protobuf_oneof:"payload"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -160,6 +162,24 @@ func (x *GhostNotification) GetAuthTokenExpirationNotification() *AuthTokenExpir
 	return nil
 }
 
+func (x *GhostNotification) GetOmniMessageReceived() *OmniMessageReceieved {
+	if x != nil {
+		if x, ok := x.Payload.(*GhostNotification_OmniMessageReceived); ok {
+			return x.OmniMessageReceived
+		}
+	}
+	return nil
+}
+
+func (x *GhostNotification) GetOmniConversationAssigned() *OmniConversationAssigned {
+	if x != nil {
+		if x, ok := x.Payload.(*GhostNotification_OmniConversationAssigned); ok {
+			return x.OmniConversationAssigned
+		}
+	}
+	return nil
+}
+
 type isGhostNotification_Payload interface {
 	isGhostNotification_Payload()
 }
@@ -201,7 +221,17 @@ type GhostNotification_AgentQueuedCallsNotification struct {
 
 type GhostNotification_AuthTokenExpirationNotification struct {
 	// notification that an auth token will soon expire
-	AuthTokenExpirationNotification *AuthTokenExpiration `protobuf:"bytes,11,opt,name=auth_token_expiration_notification,json=authTokenExpirationNotification,proto3,oneof"` // ... undetermined other possible payloads
+	AuthTokenExpirationNotification *AuthTokenExpiration `protobuf:"bytes,11,opt,name=auth_token_expiration_notification,json=authTokenExpirationNotification,proto3,oneof"`
+}
+
+type GhostNotification_OmniMessageReceived struct {
+	// notification that a message has been received
+	OmniMessageReceived *OmniMessageReceieved `protobuf:"bytes,12,opt,name=omni_message_received,json=omniMessageReceived,proto3,oneof"`
+}
+
+type GhostNotification_OmniConversationAssigned struct {
+	// notification that a conversations has been assigned
+	OmniConversationAssigned *OmniConversationAssigned `protobuf:"bytes,13,opt,name=omni_conversation_assigned,json=omniConversationAssigned,proto3,oneof"` // ... undetermined other possible payloads
 }
 
 func (*GhostNotification_Any) isGhostNotification_Payload() {}
@@ -219,6 +249,10 @@ func (*GhostNotification_DirectedCallHangup) isGhostNotification_Payload() {}
 func (*GhostNotification_AgentQueuedCallsNotification) isGhostNotification_Payload() {}
 
 func (*GhostNotification_AuthTokenExpirationNotification) isGhostNotification_Payload() {}
+
+func (*GhostNotification_OmniMessageReceived) isGhostNotification_Payload() {}
+
+func (*GhostNotification_OmniConversationAssigned) isGhostNotification_Payload() {}
 
 // This is based on googles status proto message
 type Status struct {
@@ -394,6 +428,107 @@ func (x *AuthTokenExpiration) GetExpiration() *timestamppb.Timestamp {
 	return nil
 }
 
+// Alert that a conversations has been assigned to an agent
+type OmniConversationAssigned struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The conversation id
+	ConversationSid int64 `protobuf:"varint,1,opt,name=conversation_sid,json=conversationSid,proto3" json:"conversation_sid,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *OmniConversationAssigned) Reset() {
+	*x = OmniConversationAssigned{}
+	mi := &file_api_commons_ghostnotifier_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *OmniConversationAssigned) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OmniConversationAssigned) ProtoMessage() {}
+
+func (x *OmniConversationAssigned) ProtoReflect() protoreflect.Message {
+	mi := &file_api_commons_ghostnotifier_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OmniConversationAssigned.ProtoReflect.Descriptor instead.
+func (*OmniConversationAssigned) Descriptor() ([]byte, []int) {
+	return file_api_commons_ghostnotifier_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *OmniConversationAssigned) GetConversationSid() int64 {
+	if x != nil {
+		return x.ConversationSid
+	}
+	return 0
+}
+
+// Alert that a message has been received by an agent
+type OmniMessageReceieved struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// the sid for the conversation the message was sent in
+	ConversationSid int64 `protobuf:"varint,1,opt,name=conversation_sid,json=conversationSid,proto3" json:"conversation_sid,omitempty"`
+	// the message that was sent
+	Message       string `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *OmniMessageReceieved) Reset() {
+	*x = OmniMessageReceieved{}
+	mi := &file_api_commons_ghostnotifier_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *OmniMessageReceieved) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OmniMessageReceieved) ProtoMessage() {}
+
+func (x *OmniMessageReceieved) ProtoReflect() protoreflect.Message {
+	mi := &file_api_commons_ghostnotifier_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OmniMessageReceieved.ProtoReflect.Descriptor instead.
+func (*OmniMessageReceieved) Descriptor() ([]byte, []int) {
+	return file_api_commons_ghostnotifier_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *OmniMessageReceieved) GetConversationSid() int64 {
+	if x != nil {
+		return x.ConversationSid
+	}
+	return 0
+}
+
+func (x *OmniMessageReceieved) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
 type AgentQueuedCallsNotification_QueuedCallData struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// id of the found call.
@@ -420,7 +555,7 @@ type AgentQueuedCallsNotification_QueuedCallData struct {
 
 func (x *AgentQueuedCallsNotification_QueuedCallData) Reset() {
 	*x = AgentQueuedCallsNotification_QueuedCallData{}
-	mi := &file_api_commons_ghostnotifier_proto_msgTypes[4]
+	mi := &file_api_commons_ghostnotifier_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -432,7 +567,7 @@ func (x *AgentQueuedCallsNotification_QueuedCallData) String() string {
 func (*AgentQueuedCallsNotification_QueuedCallData) ProtoMessage() {}
 
 func (x *AgentQueuedCallsNotification_QueuedCallData) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_ghostnotifier_proto_msgTypes[4]
+	mi := &file_api_commons_ghostnotifier_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -524,7 +659,7 @@ var file_api_commons_ghostnotifier_proto_rawDesc = string([]byte{
 	0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x61, 0x6e, 0x79, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a,
 	0x1f, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66,
 	0x2f, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x22, 0x86, 0x06, 0x0a, 0x11, 0x47, 0x68, 0x6f, 0x73, 0x74, 0x4e, 0x6f, 0x74, 0x69, 0x66, 0x69,
+	0x22, 0xc6, 0x07, 0x0a, 0x11, 0x47, 0x68, 0x6f, 0x73, 0x74, 0x4e, 0x6f, 0x74, 0x69, 0x66, 0x69,
 	0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x21, 0x0a, 0x0c, 0x72, 0x65, 0x66, 0x65, 0x72, 0x65,
 	0x6e, 0x63, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x72, 0x65,
 	0x66, 0x65, 0x72, 0x65, 0x6e, 0x63, 0x65, 0x49, 0x64, 0x12, 0x28, 0x0a, 0x03, 0x61, 0x6e, 0x79,
@@ -570,7 +705,19 @@ var file_api_commons_ghostnotifier_proto_rawDesc = string([]byte{
 	0x6f, 0x6b, 0x65, 0x6e, 0x45, 0x78, 0x70, 0x69, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x48, 0x00,
 	0x52, 0x1f, 0x61, 0x75, 0x74, 0x68, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x45, 0x78, 0x70, 0x69, 0x72,
 	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x4e, 0x6f, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f,
-	0x6e, 0x42, 0x09, 0x0a, 0x07, 0x70, 0x61, 0x79, 0x6c, 0x6f, 0x61, 0x64, 0x4a, 0x04, 0x08, 0x0a,
+	0x6e, 0x12, 0x57, 0x0a, 0x15, 0x6f, 0x6d, 0x6e, 0x69, 0x5f, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67,
+	0x65, 0x5f, 0x72, 0x65, 0x63, 0x65, 0x69, 0x76, 0x65, 0x64, 0x18, 0x0c, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x21, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x4f,
+	0x6d, 0x6e, 0x69, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x52, 0x65, 0x63, 0x65, 0x69, 0x65,
+	0x76, 0x65, 0x64, 0x48, 0x00, 0x52, 0x13, 0x6f, 0x6d, 0x6e, 0x69, 0x4d, 0x65, 0x73, 0x73, 0x61,
+	0x67, 0x65, 0x52, 0x65, 0x63, 0x65, 0x69, 0x76, 0x65, 0x64, 0x12, 0x65, 0x0a, 0x1a, 0x6f, 0x6d,
+	0x6e, 0x69, 0x5f, 0x63, 0x6f, 0x6e, 0x76, 0x65, 0x72, 0x73, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f,
+	0x61, 0x73, 0x73, 0x69, 0x67, 0x6e, 0x65, 0x64, 0x18, 0x0d, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x25,
+	0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x2e, 0x4f, 0x6d, 0x6e,
+	0x69, 0x43, 0x6f, 0x6e, 0x76, 0x65, 0x72, 0x73, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x41, 0x73, 0x73,
+	0x69, 0x67, 0x6e, 0x65, 0x64, 0x48, 0x00, 0x52, 0x18, 0x6f, 0x6d, 0x6e, 0x69, 0x43, 0x6f, 0x6e,
+	0x76, 0x65, 0x72, 0x73, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x41, 0x73, 0x73, 0x69, 0x67, 0x6e, 0x65,
+	0x64, 0x42, 0x09, 0x0a, 0x07, 0x70, 0x61, 0x79, 0x6c, 0x6f, 0x61, 0x64, 0x4a, 0x04, 0x08, 0x0a,
 	0x10, 0x0b, 0x52, 0x15, 0x61, 0x75, 0x74, 0x68, 0x5f, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x5f, 0x65,
 	0x78, 0x70, 0x69, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0x36, 0x0a, 0x06, 0x53, 0x74, 0x61,
 	0x74, 0x75, 0x73, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
@@ -629,18 +776,28 @@ var file_api_commons_ghostnotifier_proto_rawDesc = string([]byte{
 	0x6b, 0x65, 0x6e, 0x12, 0x3a, 0x0a, 0x0a, 0x65, 0x78, 0x70, 0x69, 0x72, 0x61, 0x74, 0x69, 0x6f,
 	0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65,
 	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74,
-	0x61, 0x6d, 0x70, 0x52, 0x0a, 0x65, 0x78, 0x70, 0x69, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x42,
-	0x9a, 0x01, 0x0a, 0x0f, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6d, 0x6d,
-	0x6f, 0x6e, 0x73, 0x42, 0x12, 0x47, 0x68, 0x6f, 0x73, 0x74, 0x6e, 0x6f, 0x74, 0x69, 0x66, 0x69,
-	0x65, 0x72, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x26, 0x67, 0x69, 0x74, 0x68, 0x75,
-	0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f, 0x75, 0x64, 0x2f, 0x61,
-	0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e,
-	0x73, 0xa2, 0x02, 0x03, 0x41, 0x43, 0x58, 0xaa, 0x02, 0x0b, 0x41, 0x70, 0x69, 0x2e, 0x43, 0x6f,
-	0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0xca, 0x02, 0x0b, 0x41, 0x70, 0x69, 0x5c, 0x43, 0x6f, 0x6d, 0x6d,
-	0x6f, 0x6e, 0x73, 0xe2, 0x02, 0x17, 0x41, 0x70, 0x69, 0x5c, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e,
-	0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x0c,
-	0x41, 0x70, 0x69, 0x3a, 0x3a, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x62, 0x06, 0x70, 0x72,
-	0x6f, 0x74, 0x6f, 0x33,
+	0x61, 0x6d, 0x70, 0x52, 0x0a, 0x65, 0x78, 0x70, 0x69, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x22,
+	0x45, 0x0a, 0x18, 0x4f, 0x6d, 0x6e, 0x69, 0x43, 0x6f, 0x6e, 0x76, 0x65, 0x72, 0x73, 0x61, 0x74,
+	0x69, 0x6f, 0x6e, 0x41, 0x73, 0x73, 0x69, 0x67, 0x6e, 0x65, 0x64, 0x12, 0x29, 0x0a, 0x10, 0x63,
+	0x6f, 0x6e, 0x76, 0x65, 0x72, 0x73, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x73, 0x69, 0x64, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0f, 0x63, 0x6f, 0x6e, 0x76, 0x65, 0x72, 0x73, 0x61, 0x74,
+	0x69, 0x6f, 0x6e, 0x53, 0x69, 0x64, 0x22, 0x5b, 0x0a, 0x14, 0x4f, 0x6d, 0x6e, 0x69, 0x4d, 0x65,
+	0x73, 0x73, 0x61, 0x67, 0x65, 0x52, 0x65, 0x63, 0x65, 0x69, 0x65, 0x76, 0x65, 0x64, 0x12, 0x29,
+	0x0a, 0x10, 0x63, 0x6f, 0x6e, 0x76, 0x65, 0x72, 0x73, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x73,
+	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0f, 0x63, 0x6f, 0x6e, 0x76, 0x65, 0x72,
+	0x73, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x69, 0x64, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73,
+	0x73, 0x61, 0x67, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73,
+	0x61, 0x67, 0x65, 0x42, 0x9a, 0x01, 0x0a, 0x0f, 0x63, 0x6f, 0x6d, 0x2e, 0x61, 0x70, 0x69, 0x2e,
+	0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x42, 0x12, 0x47, 0x68, 0x6f, 0x73, 0x74, 0x6e, 0x6f,
+	0x74, 0x69, 0x66, 0x69, 0x65, 0x72, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x26, 0x67,
+	0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x74, 0x63, 0x6e, 0x63, 0x6c, 0x6f,
+	0x75, 0x64, 0x2f, 0x61, 0x70, 0x69, 0x2d, 0x67, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x63, 0x6f,
+	0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0xa2, 0x02, 0x03, 0x41, 0x43, 0x58, 0xaa, 0x02, 0x0b, 0x41, 0x70,
+	0x69, 0x2e, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0xca, 0x02, 0x0b, 0x41, 0x70, 0x69, 0x5c,
+	0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0xe2, 0x02, 0x17, 0x41, 0x70, 0x69, 0x5c, 0x43, 0x6f,
+	0x6d, 0x6d, 0x6f, 0x6e, 0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74,
+	0x61, 0xea, 0x02, 0x0c, 0x41, 0x70, 0x69, 0x3a, 0x3a, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x73,
+	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 })
 
 var (
@@ -655,44 +812,48 @@ func file_api_commons_ghostnotifier_proto_rawDescGZIP() []byte {
 	return file_api_commons_ghostnotifier_proto_rawDescData
 }
 
-var file_api_commons_ghostnotifier_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_api_commons_ghostnotifier_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_api_commons_ghostnotifier_proto_goTypes = []any{
 	(*GhostNotification)(nil),                           // 0: api.commons.GhostNotification
 	(*Status)(nil),                                      // 1: api.commons.Status
 	(*AgentQueuedCallsNotification)(nil),                // 2: api.commons.AgentQueuedCallsNotification
 	(*AuthTokenExpiration)(nil),                         // 3: api.commons.AuthTokenExpiration
-	(*AgentQueuedCallsNotification_QueuedCallData)(nil), // 4: api.commons.AgentQueuedCallsNotification.QueuedCallData
-	(*anypb.Any)(nil),                                   // 5: google.protobuf.Any
-	(*OmniConversation)(nil),                            // 6: api.commons.OmniConversation
-	(*AgentBackofficeMessageAlert)(nil),                 // 7: api.commons.AgentBackofficeMessageAlert
-	(*AgentDirectedCallRingingAlert)(nil),               // 8: api.commons.AgentDirectedCallRingingAlert
-	(*AgentDirectedCallHangupAlert)(nil),                // 9: api.commons.AgentDirectedCallHangupAlert
-	(*timestamppb.Timestamp)(nil),                       // 10: google.protobuf.Timestamp
-	(CallType_Enum)(0),                                  // 11: api.commons.CallType.Enum
-	(QueuedNotificationType)(0),                         // 12: api.commons.QueuedNotificationType
+	(*OmniConversationAssigned)(nil),                    // 4: api.commons.OmniConversationAssigned
+	(*OmniMessageReceieved)(nil),                        // 5: api.commons.OmniMessageReceieved
+	(*AgentQueuedCallsNotification_QueuedCallData)(nil), // 6: api.commons.AgentQueuedCallsNotification.QueuedCallData
+	(*anypb.Any)(nil),                                   // 7: google.protobuf.Any
+	(*OmniConversation)(nil),                            // 8: api.commons.OmniConversation
+	(*AgentBackofficeMessageAlert)(nil),                 // 9: api.commons.AgentBackofficeMessageAlert
+	(*AgentDirectedCallRingingAlert)(nil),               // 10: api.commons.AgentDirectedCallRingingAlert
+	(*AgentDirectedCallHangupAlert)(nil),                // 11: api.commons.AgentDirectedCallHangupAlert
+	(*timestamppb.Timestamp)(nil),                       // 12: google.protobuf.Timestamp
+	(CallType_Enum)(0),                                  // 13: api.commons.CallType.Enum
+	(QueuedNotificationType)(0),                         // 14: api.commons.QueuedNotificationType
 }
 var file_api_commons_ghostnotifier_proto_depIdxs = []int32{
-	5,  // 0: api.commons.GhostNotification.any:type_name -> google.protobuf.Any
+	7,  // 0: api.commons.GhostNotification.any:type_name -> google.protobuf.Any
 	1,  // 1: api.commons.GhostNotification.status:type_name -> api.commons.Status
-	6,  // 2: api.commons.GhostNotification.omni_conversation:type_name -> api.commons.OmniConversation
-	7,  // 3: api.commons.GhostNotification.backoffice_message:type_name -> api.commons.AgentBackofficeMessageAlert
-	8,  // 4: api.commons.GhostNotification.directed_call_ringing:type_name -> api.commons.AgentDirectedCallRingingAlert
-	9,  // 5: api.commons.GhostNotification.directed_call_hangup:type_name -> api.commons.AgentDirectedCallHangupAlert
+	8,  // 2: api.commons.GhostNotification.omni_conversation:type_name -> api.commons.OmniConversation
+	9,  // 3: api.commons.GhostNotification.backoffice_message:type_name -> api.commons.AgentBackofficeMessageAlert
+	10, // 4: api.commons.GhostNotification.directed_call_ringing:type_name -> api.commons.AgentDirectedCallRingingAlert
+	11, // 5: api.commons.GhostNotification.directed_call_hangup:type_name -> api.commons.AgentDirectedCallHangupAlert
 	2,  // 6: api.commons.GhostNotification.agent_queued_calls_notification:type_name -> api.commons.AgentQueuedCallsNotification
 	3,  // 7: api.commons.GhostNotification.auth_token_expiration_notification:type_name -> api.commons.AuthTokenExpiration
-	4,  // 8: api.commons.AgentQueuedCallsNotification.agent_queue_calls:type_name -> api.commons.AgentQueuedCallsNotification.QueuedCallData
-	4,  // 9: api.commons.AgentQueuedCallsNotification.on_hold_calls:type_name -> api.commons.AgentQueuedCallsNotification.QueuedCallData
-	4,  // 10: api.commons.AgentQueuedCallsNotification.hqm_calls:type_name -> api.commons.AgentQueuedCallsNotification.QueuedCallData
-	10, // 11: api.commons.AuthTokenExpiration.expiration:type_name -> google.protobuf.Timestamp
-	11, // 12: api.commons.AgentQueuedCallsNotification.QueuedCallData.call_type:type_name -> api.commons.CallType.Enum
-	10, // 13: api.commons.AgentQueuedCallsNotification.QueuedCallData.start_date:type_name -> google.protobuf.Timestamp
-	10, // 14: api.commons.AgentQueuedCallsNotification.QueuedCallData.hold_date:type_name -> google.protobuf.Timestamp
-	12, // 15: api.commons.AgentQueuedCallsNotification.QueuedCallData.queued_notification_type:type_name -> api.commons.QueuedNotificationType
-	16, // [16:16] is the sub-list for method output_type
-	16, // [16:16] is the sub-list for method input_type
-	16, // [16:16] is the sub-list for extension type_name
-	16, // [16:16] is the sub-list for extension extendee
-	0,  // [0:16] is the sub-list for field type_name
+	5,  // 8: api.commons.GhostNotification.omni_message_received:type_name -> api.commons.OmniMessageReceieved
+	4,  // 9: api.commons.GhostNotification.omni_conversation_assigned:type_name -> api.commons.OmniConversationAssigned
+	6,  // 10: api.commons.AgentQueuedCallsNotification.agent_queue_calls:type_name -> api.commons.AgentQueuedCallsNotification.QueuedCallData
+	6,  // 11: api.commons.AgentQueuedCallsNotification.on_hold_calls:type_name -> api.commons.AgentQueuedCallsNotification.QueuedCallData
+	6,  // 12: api.commons.AgentQueuedCallsNotification.hqm_calls:type_name -> api.commons.AgentQueuedCallsNotification.QueuedCallData
+	12, // 13: api.commons.AuthTokenExpiration.expiration:type_name -> google.protobuf.Timestamp
+	13, // 14: api.commons.AgentQueuedCallsNotification.QueuedCallData.call_type:type_name -> api.commons.CallType.Enum
+	12, // 15: api.commons.AgentQueuedCallsNotification.QueuedCallData.start_date:type_name -> google.protobuf.Timestamp
+	12, // 16: api.commons.AgentQueuedCallsNotification.QueuedCallData.hold_date:type_name -> google.protobuf.Timestamp
+	14, // 17: api.commons.AgentQueuedCallsNotification.QueuedCallData.queued_notification_type:type_name -> api.commons.QueuedNotificationType
+	18, // [18:18] is the sub-list for method output_type
+	18, // [18:18] is the sub-list for method input_type
+	18, // [18:18] is the sub-list for extension type_name
+	18, // [18:18] is the sub-list for extension extendee
+	0,  // [0:18] is the sub-list for field type_name
 }
 
 func init() { file_api_commons_ghostnotifier_proto_init() }
@@ -711,6 +872,8 @@ func file_api_commons_ghostnotifier_proto_init() {
 		(*GhostNotification_DirectedCallHangup)(nil),
 		(*GhostNotification_AgentQueuedCallsNotification)(nil),
 		(*GhostNotification_AuthTokenExpirationNotification)(nil),
+		(*GhostNotification_OmniMessageReceived)(nil),
+		(*GhostNotification_OmniConversationAssigned)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -718,7 +881,7 @@ func file_api_commons_ghostnotifier_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_commons_ghostnotifier_proto_rawDesc), len(file_api_commons_ghostnotifier_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   5,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
