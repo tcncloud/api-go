@@ -77,6 +77,9 @@ const (
 	// ComplianceDeleteScrubListEntriesProcedure is the fully-qualified name of the Compliance's
 	// DeleteScrubListEntries RPC.
 	ComplianceDeleteScrubListEntriesProcedure = "/api.v0alpha.Compliance/DeleteScrubListEntries"
+	// ComplianceDeleteAllListEntriesProcedure is the fully-qualified name of the Compliance's
+	// DeleteAllListEntries RPC.
+	ComplianceDeleteAllListEntriesProcedure = "/api.v0alpha.Compliance/DeleteAllListEntries"
 	// ComplianceGetScrubListProcedure is the fully-qualified name of the Compliance's GetScrubList RPC.
 	ComplianceGetScrubListProcedure = "/api.v0alpha.Compliance/GetScrubList"
 	// ComplianceDeleteScrubListProcedure is the fully-qualified name of the Compliance's
@@ -268,6 +271,7 @@ type ComplianceClient interface {
 	//	PERMISSION_COMPLIANCE
 	UpdateScrubEntry(context.Context, *connect_go.Request[v0alpha.UpdateScrubEntryReq]) (*connect_go.Response[v0alpha.UpdateScrubEntryRes], error)
 	DeleteScrubListEntries(context.Context, *connect_go.Request[v0alpha.DeleteScrubListEntriesReq]) (*connect_go.Response[v0alpha.ScrubListRes], error)
+	DeleteAllListEntries(context.Context, *connect_go.Request[v0alpha.DeleteAllListEntriesRequest]) (*connect_go.Response[v0alpha.DeleteAllListEntriesResponse], error)
 	GetScrubList(context.Context, *connect_go.Request[v0alpha.GetScrubListReq]) (*connect_go.Response[v0alpha.ScrubListRes], error)
 	DeleteScrubList(context.Context, *connect_go.Request[v0alpha.DeleteScrubListReq]) (*connect_go.Response[v0alpha.ScrubListRes], error)
 	GetDefaultRules(context.Context, *connect_go.Request[v0alpha.GetDefaultRulesReq]) (*connect_go.Response[v0alpha.GetDefaultRulesRes], error)
@@ -591,6 +595,11 @@ func NewComplianceClient(httpClient connect_go.HTTPClient, baseURL string, opts 
 			baseURL+ComplianceDeleteScrubListEntriesProcedure,
 			opts...,
 		),
+		deleteAllListEntries: connect_go.NewClient[v0alpha.DeleteAllListEntriesRequest, v0alpha.DeleteAllListEntriesResponse](
+			httpClient,
+			baseURL+ComplianceDeleteAllListEntriesProcedure,
+			opts...,
+		),
 		getScrubList: connect_go.NewClient[v0alpha.GetScrubListReq, v0alpha.ScrubListRes](
 			httpClient,
 			baseURL+ComplianceGetScrubListProcedure,
@@ -876,6 +885,7 @@ type complianceClient struct {
 	addScrubListEntries            *connect_go.Client[v0alpha.AddScrubListEntriesReq, v0alpha.ScrubListRes]
 	updateScrubEntry               *connect_go.Client[v0alpha.UpdateScrubEntryReq, v0alpha.UpdateScrubEntryRes]
 	deleteScrubListEntries         *connect_go.Client[v0alpha.DeleteScrubListEntriesReq, v0alpha.ScrubListRes]
+	deleteAllListEntries           *connect_go.Client[v0alpha.DeleteAllListEntriesRequest, v0alpha.DeleteAllListEntriesResponse]
 	getScrubList                   *connect_go.Client[v0alpha.GetScrubListReq, v0alpha.ScrubListRes]
 	deleteScrubList                *connect_go.Client[v0alpha.DeleteScrubListReq, v0alpha.ScrubListRes]
 	getDefaultRules                *connect_go.Client[v0alpha.GetDefaultRulesReq, v0alpha.GetDefaultRulesRes]
@@ -1004,6 +1014,11 @@ func (c *complianceClient) UpdateScrubEntry(ctx context.Context, req *connect_go
 // DeleteScrubListEntries calls api.v0alpha.Compliance.DeleteScrubListEntries.
 func (c *complianceClient) DeleteScrubListEntries(ctx context.Context, req *connect_go.Request[v0alpha.DeleteScrubListEntriesReq]) (*connect_go.Response[v0alpha.ScrubListRes], error) {
 	return c.deleteScrubListEntries.CallUnary(ctx, req)
+}
+
+// DeleteAllListEntries calls api.v0alpha.Compliance.DeleteAllListEntries.
+func (c *complianceClient) DeleteAllListEntries(ctx context.Context, req *connect_go.Request[v0alpha.DeleteAllListEntriesRequest]) (*connect_go.Response[v0alpha.DeleteAllListEntriesResponse], error) {
+	return c.deleteAllListEntries.CallUnary(ctx, req)
 }
 
 // GetScrubList calls api.v0alpha.Compliance.GetScrubList.
@@ -1304,6 +1319,7 @@ type ComplianceHandler interface {
 	//	PERMISSION_COMPLIANCE
 	UpdateScrubEntry(context.Context, *connect_go.Request[v0alpha.UpdateScrubEntryReq]) (*connect_go.Response[v0alpha.UpdateScrubEntryRes], error)
 	DeleteScrubListEntries(context.Context, *connect_go.Request[v0alpha.DeleteScrubListEntriesReq]) (*connect_go.Response[v0alpha.ScrubListRes], error)
+	DeleteAllListEntries(context.Context, *connect_go.Request[v0alpha.DeleteAllListEntriesRequest]) (*connect_go.Response[v0alpha.DeleteAllListEntriesResponse], error)
 	GetScrubList(context.Context, *connect_go.Request[v0alpha.GetScrubListReq]) (*connect_go.Response[v0alpha.ScrubListRes], error)
 	DeleteScrubList(context.Context, *connect_go.Request[v0alpha.DeleteScrubListReq]) (*connect_go.Response[v0alpha.ScrubListRes], error)
 	GetDefaultRules(context.Context, *connect_go.Request[v0alpha.GetDefaultRulesReq]) (*connect_go.Response[v0alpha.GetDefaultRulesRes], error)
@@ -1623,6 +1639,11 @@ func NewComplianceHandler(svc ComplianceHandler, opts ...connect_go.HandlerOptio
 		svc.DeleteScrubListEntries,
 		opts...,
 	)
+	complianceDeleteAllListEntriesHandler := connect_go.NewUnaryHandler(
+		ComplianceDeleteAllListEntriesProcedure,
+		svc.DeleteAllListEntries,
+		opts...,
+	)
 	complianceGetScrubListHandler := connect_go.NewUnaryHandler(
 		ComplianceGetScrubListProcedure,
 		svc.GetScrubList,
@@ -1920,6 +1941,8 @@ func NewComplianceHandler(svc ComplianceHandler, opts ...connect_go.HandlerOptio
 			complianceUpdateScrubEntryHandler.ServeHTTP(w, r)
 		case ComplianceDeleteScrubListEntriesProcedure:
 			complianceDeleteScrubListEntriesHandler.ServeHTTP(w, r)
+		case ComplianceDeleteAllListEntriesProcedure:
+			complianceDeleteAllListEntriesHandler.ServeHTTP(w, r)
 		case ComplianceGetScrubListProcedure:
 			complianceGetScrubListHandler.ServeHTTP(w, r)
 		case ComplianceDeleteScrubListProcedure:
@@ -2093,6 +2116,10 @@ func (UnimplementedComplianceHandler) UpdateScrubEntry(context.Context, *connect
 
 func (UnimplementedComplianceHandler) DeleteScrubListEntries(context.Context, *connect_go.Request[v0alpha.DeleteScrubListEntriesReq]) (*connect_go.Response[v0alpha.ScrubListRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Compliance.DeleteScrubListEntries is not implemented"))
+}
+
+func (UnimplementedComplianceHandler) DeleteAllListEntries(context.Context, *connect_go.Request[v0alpha.DeleteAllListEntriesRequest]) (*connect_go.Response[v0alpha.DeleteAllListEntriesResponse], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Compliance.DeleteAllListEntries is not implemented"))
 }
 
 func (UnimplementedComplianceHandler) GetScrubList(context.Context, *connect_go.Request[v0alpha.GetScrubListReq]) (*connect_go.Response[v0alpha.ScrubListRes], error) {

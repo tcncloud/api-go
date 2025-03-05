@@ -36,6 +36,7 @@ const (
 	Compliance_AddScrubListEntries_FullMethodName            = "/api.v0alpha.Compliance/AddScrubListEntries"
 	Compliance_UpdateScrubEntry_FullMethodName               = "/api.v0alpha.Compliance/UpdateScrubEntry"
 	Compliance_DeleteScrubListEntries_FullMethodName         = "/api.v0alpha.Compliance/DeleteScrubListEntries"
+	Compliance_DeleteAllListEntries_FullMethodName           = "/api.v0alpha.Compliance/DeleteAllListEntries"
 	Compliance_GetScrubList_FullMethodName                   = "/api.v0alpha.Compliance/GetScrubList"
 	Compliance_DeleteScrubList_FullMethodName                = "/api.v0alpha.Compliance/DeleteScrubList"
 	Compliance_GetDefaultRules_FullMethodName                = "/api.v0alpha.Compliance/GetDefaultRules"
@@ -126,6 +127,7 @@ type ComplianceClient interface {
 	//	PERMISSION_COMPLIANCE
 	UpdateScrubEntry(ctx context.Context, in *UpdateScrubEntryReq, opts ...grpc.CallOption) (*UpdateScrubEntryRes, error)
 	DeleteScrubListEntries(ctx context.Context, in *DeleteScrubListEntriesReq, opts ...grpc.CallOption) (*ScrubListRes, error)
+	DeleteAllListEntries(ctx context.Context, in *DeleteAllListEntriesRequest, opts ...grpc.CallOption) (*DeleteAllListEntriesResponse, error)
 	GetScrubList(ctx context.Context, in *GetScrubListReq, opts ...grpc.CallOption) (*ScrubListRes, error)
 	DeleteScrubList(ctx context.Context, in *DeleteScrubListReq, opts ...grpc.CallOption) (*ScrubListRes, error)
 	GetDefaultRules(ctx context.Context, in *GetDefaultRulesReq, opts ...grpc.CallOption) (*GetDefaultRulesRes, error)
@@ -539,6 +541,16 @@ func (c *complianceClient) DeleteScrubListEntries(ctx context.Context, in *Delet
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ScrubListRes)
 	err := c.cc.Invoke(ctx, Compliance_DeleteScrubListEntries_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *complianceClient) DeleteAllListEntries(ctx context.Context, in *DeleteAllListEntriesRequest, opts ...grpc.CallOption) (*DeleteAllListEntriesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteAllListEntriesResponse)
+	err := c.cc.Invoke(ctx, Compliance_DeleteAllListEntries_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1110,6 +1122,7 @@ type ComplianceServer interface {
 	//	PERMISSION_COMPLIANCE
 	UpdateScrubEntry(context.Context, *UpdateScrubEntryReq) (*UpdateScrubEntryRes, error)
 	DeleteScrubListEntries(context.Context, *DeleteScrubListEntriesReq) (*ScrubListRes, error)
+	DeleteAllListEntries(context.Context, *DeleteAllListEntriesRequest) (*DeleteAllListEntriesResponse, error)
 	GetScrubList(context.Context, *GetScrubListReq) (*ScrubListRes, error)
 	DeleteScrubList(context.Context, *DeleteScrubListReq) (*ScrubListRes, error)
 	GetDefaultRules(context.Context, *GetDefaultRulesReq) (*GetDefaultRulesRes, error)
@@ -1400,6 +1413,9 @@ func (UnimplementedComplianceServer) UpdateScrubEntry(context.Context, *UpdateSc
 }
 func (UnimplementedComplianceServer) DeleteScrubListEntries(context.Context, *DeleteScrubListEntriesReq) (*ScrubListRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteScrubListEntries not implemented")
+}
+func (UnimplementedComplianceServer) DeleteAllListEntries(context.Context, *DeleteAllListEntriesRequest) (*DeleteAllListEntriesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteAllListEntries not implemented")
 }
 func (UnimplementedComplianceServer) GetScrubList(context.Context, *GetScrubListReq) (*ScrubListRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetScrubList not implemented")
@@ -1850,6 +1866,24 @@ func _Compliance_DeleteScrubListEntries_Handler(srv interface{}, ctx context.Con
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ComplianceServer).DeleteScrubListEntries(ctx, req.(*DeleteScrubListEntriesReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Compliance_DeleteAllListEntries_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteAllListEntriesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ComplianceServer).DeleteAllListEntries(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Compliance_DeleteAllListEntries_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ComplianceServer).DeleteAllListEntries(ctx, req.(*DeleteAllListEntriesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -2870,6 +2904,10 @@ var Compliance_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteScrubListEntries",
 			Handler:    _Compliance_DeleteScrubListEntries_Handler,
+		},
+		{
+			MethodName: "DeleteAllListEntries",
+			Handler:    _Compliance_DeleteAllListEntries_Handler,
 		},
 		{
 			MethodName: "GetScrubList",
