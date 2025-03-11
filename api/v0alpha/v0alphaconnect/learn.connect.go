@@ -101,8 +101,6 @@ const (
 	LearnDeleteVersionProcedure = "/api.v0alpha.Learn/DeleteVersion"
 	// LearnUploadStaticImageProcedure is the fully-qualified name of the Learn's UploadStaticImage RPC.
 	LearnUploadStaticImageProcedure = "/api.v0alpha.Learn/UploadStaticImage"
-	// LearnGetUpdateUrlProcedure is the fully-qualified name of the Learn's GetUpdateUrl RPC.
-	LearnGetUpdateUrlProcedure = "/api.v0alpha.Learn/GetUpdateUrl"
 )
 
 // LearnClient is a client for the api.v0alpha.Learn service.
@@ -162,8 +160,6 @@ type LearnClient interface {
 	DeleteVersion(context.Context, *connect_go.Request[v0alpha.DeleteVersionReq]) (*connect_go.Response[v0alpha.DeleteVersionRes], error)
 	// upload image for learning articles
 	UploadStaticImage(context.Context, *connect_go.Request[v0alpha.UploadStaticImageReq]) (*connect_go.Response[v0alpha.UploadStaticImageRes], error)
-	// upload url for file updates
-	GetUpdateUrl(context.Context, *connect_go.Request[v0alpha.GetUpdateUrlReq]) (*connect_go.Response[v0alpha.GetUpdateUrlRes], error)
 }
 
 // NewLearnClient constructs a client for the api.v0alpha.Learn service. By default, it uses the
@@ -301,11 +297,6 @@ func NewLearnClient(httpClient connect_go.HTTPClient, baseURL string, opts ...co
 			baseURL+LearnUploadStaticImageProcedure,
 			opts...,
 		),
-		getUpdateUrl: connect_go.NewClient[v0alpha.GetUpdateUrlReq, v0alpha.GetUpdateUrlRes](
-			httpClient,
-			baseURL+LearnGetUpdateUrlProcedure,
-			opts...,
-		),
 	}
 }
 
@@ -336,7 +327,6 @@ type learnClient struct {
 	reviewVersionStream        *connect_go.Client[v0alpha.ReviewVersionReq, v0alpha.ReviewVersionRes]
 	deleteVersion              *connect_go.Client[v0alpha.DeleteVersionReq, v0alpha.DeleteVersionRes]
 	uploadStaticImage          *connect_go.Client[v0alpha.UploadStaticImageReq, v0alpha.UploadStaticImageRes]
-	getUpdateUrl               *connect_go.Client[v0alpha.GetUpdateUrlReq, v0alpha.GetUpdateUrlRes]
 }
 
 // Exist calls api.v0alpha.Learn.Exist.
@@ -464,11 +454,6 @@ func (c *learnClient) UploadStaticImage(ctx context.Context, req *connect_go.Req
 	return c.uploadStaticImage.CallUnary(ctx, req)
 }
 
-// GetUpdateUrl calls api.v0alpha.Learn.GetUpdateUrl.
-func (c *learnClient) GetUpdateUrl(ctx context.Context, req *connect_go.Request[v0alpha.GetUpdateUrlReq]) (*connect_go.Response[v0alpha.GetUpdateUrlRes], error) {
-	return c.getUpdateUrl.CallUnary(ctx, req)
-}
-
 // LearnHandler is an implementation of the api.v0alpha.Learn service.
 type LearnHandler interface {
 	// check if learning page already exists
@@ -526,8 +511,6 @@ type LearnHandler interface {
 	DeleteVersion(context.Context, *connect_go.Request[v0alpha.DeleteVersionReq]) (*connect_go.Response[v0alpha.DeleteVersionRes], error)
 	// upload image for learning articles
 	UploadStaticImage(context.Context, *connect_go.Request[v0alpha.UploadStaticImageReq]) (*connect_go.Response[v0alpha.UploadStaticImageRes], error)
-	// upload url for file updates
-	GetUpdateUrl(context.Context, *connect_go.Request[v0alpha.GetUpdateUrlReq]) (*connect_go.Response[v0alpha.GetUpdateUrlRes], error)
 }
 
 // NewLearnHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -661,11 +644,6 @@ func NewLearnHandler(svc LearnHandler, opts ...connect_go.HandlerOption) (string
 		svc.UploadStaticImage,
 		opts...,
 	)
-	learnGetUpdateUrlHandler := connect_go.NewUnaryHandler(
-		LearnGetUpdateUrlProcedure,
-		svc.GetUpdateUrl,
-		opts...,
-	)
 	return "/api.v0alpha.Learn/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case LearnExistProcedure:
@@ -718,8 +696,6 @@ func NewLearnHandler(svc LearnHandler, opts ...connect_go.HandlerOption) (string
 			learnDeleteVersionHandler.ServeHTTP(w, r)
 		case LearnUploadStaticImageProcedure:
 			learnUploadStaticImageHandler.ServeHTTP(w, r)
-		case LearnGetUpdateUrlProcedure:
-			learnGetUpdateUrlHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -827,8 +803,4 @@ func (UnimplementedLearnHandler) DeleteVersion(context.Context, *connect_go.Requ
 
 func (UnimplementedLearnHandler) UploadStaticImage(context.Context, *connect_go.Request[v0alpha.UploadStaticImageReq]) (*connect_go.Response[v0alpha.UploadStaticImageRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.UploadStaticImage is not implemented"))
-}
-
-func (UnimplementedLearnHandler) GetUpdateUrl(context.Context, *connect_go.Request[v0alpha.GetUpdateUrlReq]) (*connect_go.Response[v0alpha.GetUpdateUrlRes], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.GetUpdateUrl is not implemented"))
 }

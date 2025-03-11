@@ -58,7 +58,6 @@ const (
 	Learn_ReviewVersionStream_FullMethodName        = "/api.v0alpha.Learn/ReviewVersionStream"
 	Learn_DeleteVersion_FullMethodName              = "/api.v0alpha.Learn/DeleteVersion"
 	Learn_UploadStaticImage_FullMethodName          = "/api.v0alpha.Learn/UploadStaticImage"
-	Learn_GetUpdateUrl_FullMethodName               = "/api.v0alpha.Learn/GetUpdateUrl"
 )
 
 // LearnClient is the client API for Learn service.
@@ -122,8 +121,6 @@ type LearnClient interface {
 	DeleteVersion(ctx context.Context, in *DeleteVersionReq, opts ...grpc.CallOption) (*DeleteVersionRes, error)
 	// upload image for learning articles
 	UploadStaticImage(ctx context.Context, in *UploadStaticImageReq, opts ...grpc.CallOption) (*UploadStaticImageRes, error)
-	// upload url for file updates
-	GetUpdateUrl(ctx context.Context, in *GetUpdateUrlReq, opts ...grpc.CallOption) (*GetUpdateUrlRes, error)
 }
 
 type learnClient struct {
@@ -476,16 +473,6 @@ func (c *learnClient) UploadStaticImage(ctx context.Context, in *UploadStaticIma
 	return out, nil
 }
 
-func (c *learnClient) GetUpdateUrl(ctx context.Context, in *GetUpdateUrlReq, opts ...grpc.CallOption) (*GetUpdateUrlRes, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetUpdateUrlRes)
-	err := c.cc.Invoke(ctx, Learn_GetUpdateUrl_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // LearnServer is the server API for Learn service.
 // All implementations must embed UnimplementedLearnServer
 // for forward compatibility.
@@ -547,8 +534,6 @@ type LearnServer interface {
 	DeleteVersion(context.Context, *DeleteVersionReq) (*DeleteVersionRes, error)
 	// upload image for learning articles
 	UploadStaticImage(context.Context, *UploadStaticImageReq) (*UploadStaticImageRes, error)
-	// upload url for file updates
-	GetUpdateUrl(context.Context, *GetUpdateUrlReq) (*GetUpdateUrlRes, error)
 	mustEmbedUnimplementedLearnServer()
 }
 
@@ -633,9 +618,6 @@ func (UnimplementedLearnServer) DeleteVersion(context.Context, *DeleteVersionReq
 }
 func (UnimplementedLearnServer) UploadStaticImage(context.Context, *UploadStaticImageReq) (*UploadStaticImageRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UploadStaticImage not implemented")
-}
-func (UnimplementedLearnServer) GetUpdateUrl(context.Context, *GetUpdateUrlReq) (*GetUpdateUrlRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetUpdateUrl not implemented")
 }
 func (UnimplementedLearnServer) mustEmbedUnimplementedLearnServer() {}
 func (UnimplementedLearnServer) testEmbeddedByValue()               {}
@@ -1120,24 +1102,6 @@ func _Learn_UploadStaticImage_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Learn_GetUpdateUrl_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetUpdateUrlReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LearnServer).GetUpdateUrl(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Learn_GetUpdateUrl_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LearnServer).GetUpdateUrl(ctx, req.(*GetUpdateUrlReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // Learn_ServiceDesc is the grpc.ServiceDesc for Learn service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1228,10 +1192,6 @@ var Learn_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UploadStaticImage",
 			Handler:    _Learn_UploadStaticImage_Handler,
-		},
-		{
-			MethodName: "GetUpdateUrl",
-			Handler:    _Learn_GetUpdateUrl_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
