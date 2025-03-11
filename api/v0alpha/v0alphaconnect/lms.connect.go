@@ -175,6 +175,20 @@ const (
 	LMSGetQueuedEventsStatusByElementIdProcedure = "/api.v0alpha.LMS/GetQueuedEventsStatusByElementId"
 	// LMSListPoolsProcedure is the fully-qualified name of the LMS's ListPools RPC.
 	LMSListPoolsProcedure = "/api.v0alpha.LMS/ListPools"
+	// LMSCreatePipelineCanvasProcedure is the fully-qualified name of the LMS's CreatePipelineCanvas
+	// RPC.
+	LMSCreatePipelineCanvasProcedure = "/api.v0alpha.LMS/CreatePipelineCanvas"
+	// LMSListPipelineCanvasesProcedure is the fully-qualified name of the LMS's ListPipelineCanvases
+	// RPC.
+	LMSListPipelineCanvasesProcedure = "/api.v0alpha.LMS/ListPipelineCanvases"
+	// LMSUpdatePipelineCanvasProcedure is the fully-qualified name of the LMS's UpdatePipelineCanvas
+	// RPC.
+	LMSUpdatePipelineCanvasProcedure = "/api.v0alpha.LMS/UpdatePipelineCanvas"
+	// LMSDeletePipelineCanvasProcedure is the fully-qualified name of the LMS's DeletePipelineCanvas
+	// RPC.
+	LMSDeletePipelineCanvasProcedure = "/api.v0alpha.LMS/DeletePipelineCanvas"
+	// LMSGetPipelineCanvasProcedure is the fully-qualified name of the LMS's GetPipelineCanvas RPC.
+	LMSGetPipelineCanvasProcedure = "/api.v0alpha.LMS/GetPipelineCanvas"
 )
 
 // LMSClient is a client for the api.v0alpha.LMS service.
@@ -262,6 +276,11 @@ type LMSClient interface {
 	GetQueuedEventsStatusByElementId(context.Context, *connect_go.Request[v0alpha.ElementPK]) (*connect_go.Response[v0alpha.Events], error)
 	// List pools is a unary call to show finvi pools through exile
 	ListPools(context.Context, *connect_go.Request[v0alpha.ListPoolsRequest]) (*connect_go.Response[v0alpha.ListPoolsResponse], error)
+	CreatePipelineCanvas(context.Context, *connect_go.Request[v0alpha.CreatePipelineCanvasReq]) (*connect_go.Response[v0alpha.CreatePipelineCanvasRes], error)
+	ListPipelineCanvases(context.Context, *connect_go.Request[v0alpha.ListPipelineCanvasesReq]) (*connect_go.Response[v0alpha.ListPipelineCanvasesRes], error)
+	UpdatePipelineCanvas(context.Context, *connect_go.Request[v0alpha.UpdatePipelineCanvasReq]) (*connect_go.Response[v0alpha.UpdatePipelineCanvasRes], error)
+	DeletePipelineCanvas(context.Context, *connect_go.Request[v0alpha.DeletePipelineCanvasReq]) (*connect_go.Response[v0alpha.DeletePipelineCanvasRes], error)
+	GetPipelineCanvas(context.Context, *connect_go.Request[v0alpha.GetPipelineCanvasReq]) (*connect_go.Response[v0alpha.GetPipelineCanvasRes], error)
 }
 
 // NewLMSClient constructs a client for the api.v0alpha.LMS service. By default, it uses the Connect
@@ -574,6 +593,31 @@ func NewLMSClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+LMSListPoolsProcedure,
 			opts...,
 		),
+		createPipelineCanvas: connect_go.NewClient[v0alpha.CreatePipelineCanvasReq, v0alpha.CreatePipelineCanvasRes](
+			httpClient,
+			baseURL+LMSCreatePipelineCanvasProcedure,
+			opts...,
+		),
+		listPipelineCanvases: connect_go.NewClient[v0alpha.ListPipelineCanvasesReq, v0alpha.ListPipelineCanvasesRes](
+			httpClient,
+			baseURL+LMSListPipelineCanvasesProcedure,
+			opts...,
+		),
+		updatePipelineCanvas: connect_go.NewClient[v0alpha.UpdatePipelineCanvasReq, v0alpha.UpdatePipelineCanvasRes](
+			httpClient,
+			baseURL+LMSUpdatePipelineCanvasProcedure,
+			opts...,
+		),
+		deletePipelineCanvas: connect_go.NewClient[v0alpha.DeletePipelineCanvasReq, v0alpha.DeletePipelineCanvasRes](
+			httpClient,
+			baseURL+LMSDeletePipelineCanvasProcedure,
+			opts...,
+		),
+		getPipelineCanvas: connect_go.NewClient[v0alpha.GetPipelineCanvasReq, v0alpha.GetPipelineCanvasRes](
+			httpClient,
+			baseURL+LMSGetPipelineCanvasProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -639,6 +683,11 @@ type lMSClient struct {
 	getAvailableEHRFields            *connect_go.Client[v0alpha.EHREntityType, v0alpha.Fields]
 	getQueuedEventsStatusByElementId *connect_go.Client[v0alpha.ElementPK, v0alpha.Events]
 	listPools                        *connect_go.Client[v0alpha.ListPoolsRequest, v0alpha.ListPoolsResponse]
+	createPipelineCanvas             *connect_go.Client[v0alpha.CreatePipelineCanvasReq, v0alpha.CreatePipelineCanvasRes]
+	listPipelineCanvases             *connect_go.Client[v0alpha.ListPipelineCanvasesReq, v0alpha.ListPipelineCanvasesRes]
+	updatePipelineCanvas             *connect_go.Client[v0alpha.UpdatePipelineCanvasReq, v0alpha.UpdatePipelineCanvasRes]
+	deletePipelineCanvas             *connect_go.Client[v0alpha.DeletePipelineCanvasReq, v0alpha.DeletePipelineCanvasRes]
+	getPipelineCanvas                *connect_go.Client[v0alpha.GetPipelineCanvasReq, v0alpha.GetPipelineCanvasRes]
 }
 
 // GetPublicKey calls api.v0alpha.LMS.GetPublicKey.
@@ -941,6 +990,31 @@ func (c *lMSClient) ListPools(ctx context.Context, req *connect_go.Request[v0alp
 	return c.listPools.CallUnary(ctx, req)
 }
 
+// CreatePipelineCanvas calls api.v0alpha.LMS.CreatePipelineCanvas.
+func (c *lMSClient) CreatePipelineCanvas(ctx context.Context, req *connect_go.Request[v0alpha.CreatePipelineCanvasReq]) (*connect_go.Response[v0alpha.CreatePipelineCanvasRes], error) {
+	return c.createPipelineCanvas.CallUnary(ctx, req)
+}
+
+// ListPipelineCanvases calls api.v0alpha.LMS.ListPipelineCanvases.
+func (c *lMSClient) ListPipelineCanvases(ctx context.Context, req *connect_go.Request[v0alpha.ListPipelineCanvasesReq]) (*connect_go.Response[v0alpha.ListPipelineCanvasesRes], error) {
+	return c.listPipelineCanvases.CallUnary(ctx, req)
+}
+
+// UpdatePipelineCanvas calls api.v0alpha.LMS.UpdatePipelineCanvas.
+func (c *lMSClient) UpdatePipelineCanvas(ctx context.Context, req *connect_go.Request[v0alpha.UpdatePipelineCanvasReq]) (*connect_go.Response[v0alpha.UpdatePipelineCanvasRes], error) {
+	return c.updatePipelineCanvas.CallUnary(ctx, req)
+}
+
+// DeletePipelineCanvas calls api.v0alpha.LMS.DeletePipelineCanvas.
+func (c *lMSClient) DeletePipelineCanvas(ctx context.Context, req *connect_go.Request[v0alpha.DeletePipelineCanvasReq]) (*connect_go.Response[v0alpha.DeletePipelineCanvasRes], error) {
+	return c.deletePipelineCanvas.CallUnary(ctx, req)
+}
+
+// GetPipelineCanvas calls api.v0alpha.LMS.GetPipelineCanvas.
+func (c *lMSClient) GetPipelineCanvas(ctx context.Context, req *connect_go.Request[v0alpha.GetPipelineCanvasReq]) (*connect_go.Response[v0alpha.GetPipelineCanvasRes], error) {
+	return c.getPipelineCanvas.CallUnary(ctx, req)
+}
+
 // LMSHandler is an implementation of the api.v0alpha.LMS service.
 type LMSHandler interface {
 	GetPublicKey(context.Context, *connect_go.Request[v0alpha.GetPublicKeyReq]) (*connect_go.Response[v0alpha.PublicKey], error)
@@ -1026,6 +1100,11 @@ type LMSHandler interface {
 	GetQueuedEventsStatusByElementId(context.Context, *connect_go.Request[v0alpha.ElementPK]) (*connect_go.Response[v0alpha.Events], error)
 	// List pools is a unary call to show finvi pools through exile
 	ListPools(context.Context, *connect_go.Request[v0alpha.ListPoolsRequest]) (*connect_go.Response[v0alpha.ListPoolsResponse], error)
+	CreatePipelineCanvas(context.Context, *connect_go.Request[v0alpha.CreatePipelineCanvasReq]) (*connect_go.Response[v0alpha.CreatePipelineCanvasRes], error)
+	ListPipelineCanvases(context.Context, *connect_go.Request[v0alpha.ListPipelineCanvasesReq]) (*connect_go.Response[v0alpha.ListPipelineCanvasesRes], error)
+	UpdatePipelineCanvas(context.Context, *connect_go.Request[v0alpha.UpdatePipelineCanvasReq]) (*connect_go.Response[v0alpha.UpdatePipelineCanvasRes], error)
+	DeletePipelineCanvas(context.Context, *connect_go.Request[v0alpha.DeletePipelineCanvasReq]) (*connect_go.Response[v0alpha.DeletePipelineCanvasRes], error)
+	GetPipelineCanvas(context.Context, *connect_go.Request[v0alpha.GetPipelineCanvasReq]) (*connect_go.Response[v0alpha.GetPipelineCanvasRes], error)
 }
 
 // NewLMSHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -1334,6 +1413,31 @@ func NewLMSHandler(svc LMSHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.ListPools,
 		opts...,
 	)
+	lMSCreatePipelineCanvasHandler := connect_go.NewUnaryHandler(
+		LMSCreatePipelineCanvasProcedure,
+		svc.CreatePipelineCanvas,
+		opts...,
+	)
+	lMSListPipelineCanvasesHandler := connect_go.NewUnaryHandler(
+		LMSListPipelineCanvasesProcedure,
+		svc.ListPipelineCanvases,
+		opts...,
+	)
+	lMSUpdatePipelineCanvasHandler := connect_go.NewUnaryHandler(
+		LMSUpdatePipelineCanvasProcedure,
+		svc.UpdatePipelineCanvas,
+		opts...,
+	)
+	lMSDeletePipelineCanvasHandler := connect_go.NewUnaryHandler(
+		LMSDeletePipelineCanvasProcedure,
+		svc.DeletePipelineCanvas,
+		opts...,
+	)
+	lMSGetPipelineCanvasHandler := connect_go.NewUnaryHandler(
+		LMSGetPipelineCanvasProcedure,
+		svc.GetPipelineCanvas,
+		opts...,
+	)
 	return "/api.v0alpha.LMS/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case LMSGetPublicKeyProcedure:
@@ -1456,6 +1560,16 @@ func NewLMSHandler(svc LMSHandler, opts ...connect_go.HandlerOption) (string, ht
 			lMSGetQueuedEventsStatusByElementIdHandler.ServeHTTP(w, r)
 		case LMSListPoolsProcedure:
 			lMSListPoolsHandler.ServeHTTP(w, r)
+		case LMSCreatePipelineCanvasProcedure:
+			lMSCreatePipelineCanvasHandler.ServeHTTP(w, r)
+		case LMSListPipelineCanvasesProcedure:
+			lMSListPipelineCanvasesHandler.ServeHTTP(w, r)
+		case LMSUpdatePipelineCanvasProcedure:
+			lMSUpdatePipelineCanvasHandler.ServeHTTP(w, r)
+		case LMSDeletePipelineCanvasProcedure:
+			lMSDeletePipelineCanvasHandler.ServeHTTP(w, r)
+		case LMSGetPipelineCanvasProcedure:
+			lMSGetPipelineCanvasHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -1703,4 +1817,24 @@ func (UnimplementedLMSHandler) GetQueuedEventsStatusByElementId(context.Context,
 
 func (UnimplementedLMSHandler) ListPools(context.Context, *connect_go.Request[v0alpha.ListPoolsRequest]) (*connect_go.Response[v0alpha.ListPoolsResponse], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.LMS.ListPools is not implemented"))
+}
+
+func (UnimplementedLMSHandler) CreatePipelineCanvas(context.Context, *connect_go.Request[v0alpha.CreatePipelineCanvasReq]) (*connect_go.Response[v0alpha.CreatePipelineCanvasRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.LMS.CreatePipelineCanvas is not implemented"))
+}
+
+func (UnimplementedLMSHandler) ListPipelineCanvases(context.Context, *connect_go.Request[v0alpha.ListPipelineCanvasesReq]) (*connect_go.Response[v0alpha.ListPipelineCanvasesRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.LMS.ListPipelineCanvases is not implemented"))
+}
+
+func (UnimplementedLMSHandler) UpdatePipelineCanvas(context.Context, *connect_go.Request[v0alpha.UpdatePipelineCanvasReq]) (*connect_go.Response[v0alpha.UpdatePipelineCanvasRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.LMS.UpdatePipelineCanvas is not implemented"))
+}
+
+func (UnimplementedLMSHandler) DeletePipelineCanvas(context.Context, *connect_go.Request[v0alpha.DeletePipelineCanvasReq]) (*connect_go.Response[v0alpha.DeletePipelineCanvasRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.LMS.DeletePipelineCanvas is not implemented"))
+}
+
+func (UnimplementedLMSHandler) GetPipelineCanvas(context.Context, *connect_go.Request[v0alpha.GetPipelineCanvasReq]) (*connect_go.Response[v0alpha.GetPipelineCanvasRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.LMS.GetPipelineCanvas is not implemented"))
 }

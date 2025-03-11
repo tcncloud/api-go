@@ -80,6 +80,11 @@ const (
 	LMS_GetAvailableEHRFields_FullMethodName            = "/api.v0alpha.LMS/GetAvailableEHRFields"
 	LMS_GetQueuedEventsStatusByElementId_FullMethodName = "/api.v0alpha.LMS/GetQueuedEventsStatusByElementId"
 	LMS_ListPools_FullMethodName                        = "/api.v0alpha.LMS/ListPools"
+	LMS_CreatePipelineCanvas_FullMethodName             = "/api.v0alpha.LMS/CreatePipelineCanvas"
+	LMS_ListPipelineCanvases_FullMethodName             = "/api.v0alpha.LMS/ListPipelineCanvases"
+	LMS_UpdatePipelineCanvas_FullMethodName             = "/api.v0alpha.LMS/UpdatePipelineCanvas"
+	LMS_DeletePipelineCanvas_FullMethodName             = "/api.v0alpha.LMS/DeletePipelineCanvas"
+	LMS_GetPipelineCanvas_FullMethodName                = "/api.v0alpha.LMS/GetPipelineCanvas"
 )
 
 // LMSClient is the client API for LMS service.
@@ -169,6 +174,11 @@ type LMSClient interface {
 	GetQueuedEventsStatusByElementId(ctx context.Context, in *ElementPK, opts ...grpc.CallOption) (*Events, error)
 	// List pools is a unary call to show finvi pools through exile
 	ListPools(ctx context.Context, in *ListPoolsRequest, opts ...grpc.CallOption) (*ListPoolsResponse, error)
+	CreatePipelineCanvas(ctx context.Context, in *CreatePipelineCanvasReq, opts ...grpc.CallOption) (*CreatePipelineCanvasRes, error)
+	ListPipelineCanvases(ctx context.Context, in *ListPipelineCanvasesReq, opts ...grpc.CallOption) (*ListPipelineCanvasesRes, error)
+	UpdatePipelineCanvas(ctx context.Context, in *UpdatePipelineCanvasReq, opts ...grpc.CallOption) (*UpdatePipelineCanvasRes, error)
+	DeletePipelineCanvas(ctx context.Context, in *DeletePipelineCanvasReq, opts ...grpc.CallOption) (*DeletePipelineCanvasRes, error)
+	GetPipelineCanvas(ctx context.Context, in *GetPipelineCanvasReq, opts ...grpc.CallOption) (*GetPipelineCanvasRes, error)
 }
 
 type lMSClient struct {
@@ -919,6 +929,56 @@ func (c *lMSClient) ListPools(ctx context.Context, in *ListPoolsRequest, opts ..
 	return out, nil
 }
 
+func (c *lMSClient) CreatePipelineCanvas(ctx context.Context, in *CreatePipelineCanvasReq, opts ...grpc.CallOption) (*CreatePipelineCanvasRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreatePipelineCanvasRes)
+	err := c.cc.Invoke(ctx, LMS_CreatePipelineCanvas_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *lMSClient) ListPipelineCanvases(ctx context.Context, in *ListPipelineCanvasesReq, opts ...grpc.CallOption) (*ListPipelineCanvasesRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListPipelineCanvasesRes)
+	err := c.cc.Invoke(ctx, LMS_ListPipelineCanvases_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *lMSClient) UpdatePipelineCanvas(ctx context.Context, in *UpdatePipelineCanvasReq, opts ...grpc.CallOption) (*UpdatePipelineCanvasRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdatePipelineCanvasRes)
+	err := c.cc.Invoke(ctx, LMS_UpdatePipelineCanvas_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *lMSClient) DeletePipelineCanvas(ctx context.Context, in *DeletePipelineCanvasReq, opts ...grpc.CallOption) (*DeletePipelineCanvasRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeletePipelineCanvasRes)
+	err := c.cc.Invoke(ctx, LMS_DeletePipelineCanvas_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *lMSClient) GetPipelineCanvas(ctx context.Context, in *GetPipelineCanvasReq, opts ...grpc.CallOption) (*GetPipelineCanvasRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetPipelineCanvasRes)
+	err := c.cc.Invoke(ctx, LMS_GetPipelineCanvas_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LMSServer is the server API for LMS service.
 // All implementations must embed UnimplementedLMSServer
 // for forward compatibility.
@@ -1006,6 +1066,11 @@ type LMSServer interface {
 	GetQueuedEventsStatusByElementId(context.Context, *ElementPK) (*Events, error)
 	// List pools is a unary call to show finvi pools through exile
 	ListPools(context.Context, *ListPoolsRequest) (*ListPoolsResponse, error)
+	CreatePipelineCanvas(context.Context, *CreatePipelineCanvasReq) (*CreatePipelineCanvasRes, error)
+	ListPipelineCanvases(context.Context, *ListPipelineCanvasesReq) (*ListPipelineCanvasesRes, error)
+	UpdatePipelineCanvas(context.Context, *UpdatePipelineCanvasReq) (*UpdatePipelineCanvasRes, error)
+	DeletePipelineCanvas(context.Context, *DeletePipelineCanvasReq) (*DeletePipelineCanvasRes, error)
+	GetPipelineCanvas(context.Context, *GetPipelineCanvasReq) (*GetPipelineCanvasRes, error)
 	mustEmbedUnimplementedLMSServer()
 }
 
@@ -1195,6 +1260,21 @@ func (UnimplementedLMSServer) GetQueuedEventsStatusByElementId(context.Context, 
 }
 func (UnimplementedLMSServer) ListPools(context.Context, *ListPoolsRequest) (*ListPoolsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListPools not implemented")
+}
+func (UnimplementedLMSServer) CreatePipelineCanvas(context.Context, *CreatePipelineCanvasReq) (*CreatePipelineCanvasRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreatePipelineCanvas not implemented")
+}
+func (UnimplementedLMSServer) ListPipelineCanvases(context.Context, *ListPipelineCanvasesReq) (*ListPipelineCanvasesRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListPipelineCanvases not implemented")
+}
+func (UnimplementedLMSServer) UpdatePipelineCanvas(context.Context, *UpdatePipelineCanvasReq) (*UpdatePipelineCanvasRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdatePipelineCanvas not implemented")
+}
+func (UnimplementedLMSServer) DeletePipelineCanvas(context.Context, *DeletePipelineCanvasReq) (*DeletePipelineCanvasRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeletePipelineCanvas not implemented")
+}
+func (UnimplementedLMSServer) GetPipelineCanvas(context.Context, *GetPipelineCanvasReq) (*GetPipelineCanvasRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPipelineCanvas not implemented")
 }
 func (UnimplementedLMSServer) mustEmbedUnimplementedLMSServer() {}
 func (UnimplementedLMSServer) testEmbeddedByValue()             {}
@@ -2320,6 +2400,96 @@ func _LMS_ListPools_Handler(srv interface{}, ctx context.Context, dec func(inter
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LMS_CreatePipelineCanvas_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreatePipelineCanvasReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LMSServer).CreatePipelineCanvas(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LMS_CreatePipelineCanvas_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LMSServer).CreatePipelineCanvas(ctx, req.(*CreatePipelineCanvasReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LMS_ListPipelineCanvases_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListPipelineCanvasesReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LMSServer).ListPipelineCanvases(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LMS_ListPipelineCanvases_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LMSServer).ListPipelineCanvases(ctx, req.(*ListPipelineCanvasesReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LMS_UpdatePipelineCanvas_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdatePipelineCanvasReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LMSServer).UpdatePipelineCanvas(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LMS_UpdatePipelineCanvas_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LMSServer).UpdatePipelineCanvas(ctx, req.(*UpdatePipelineCanvasReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LMS_DeletePipelineCanvas_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeletePipelineCanvasReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LMSServer).DeletePipelineCanvas(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LMS_DeletePipelineCanvas_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LMSServer).DeletePipelineCanvas(ctx, req.(*DeletePipelineCanvasReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LMS_GetPipelineCanvas_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPipelineCanvasReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LMSServer).GetPipelineCanvas(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LMS_GetPipelineCanvas_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LMSServer).GetPipelineCanvas(ctx, req.(*GetPipelineCanvasReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // LMS_ServiceDesc is the grpc.ServiceDesc for LMS service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -2542,6 +2712,26 @@ var LMS_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListPools",
 			Handler:    _LMS_ListPools_Handler,
+		},
+		{
+			MethodName: "CreatePipelineCanvas",
+			Handler:    _LMS_CreatePipelineCanvas_Handler,
+		},
+		{
+			MethodName: "ListPipelineCanvases",
+			Handler:    _LMS_ListPipelineCanvases_Handler,
+		},
+		{
+			MethodName: "UpdatePipelineCanvas",
+			Handler:    _LMS_UpdatePipelineCanvas_Handler,
+		},
+		{
+			MethodName: "DeletePipelineCanvas",
+			Handler:    _LMS_DeletePipelineCanvas_Handler,
+		},
+		{
+			MethodName: "GetPipelineCanvas",
+			Handler:    _LMS_GetPipelineCanvas_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
