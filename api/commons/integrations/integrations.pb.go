@@ -2366,8 +2366,8 @@ func (*Fee_Lookup) isFee_Rate() {}
 // A percentage value broken down into an integer and fractional part.
 type Percentage struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
-	IntegerValue    int32                  `protobuf:"varint,1,opt,name=integer_value,json=integerValue,proto3" json:"integer_value,omitempty"`          // Whole number part of the percentage. Ex: 5 in 5.25%
-	FractionalValue int32                  `protobuf:"varint,2,opt,name=fractional_value,json=fractionalValue,proto3" json:"fractional_value,omitempty"` // Decimal portion (e.g., 25 in 5.25%), limited to 4 digits.
+	IntegerValue    int32                  `protobuf:"varint,1,opt,name=integer_value,json=integerValue,proto3" json:"integer_value,omitempty"`          // Whole number part of the percentage. Ex: 5 in 5.23%
+	FractionalValue int32                  `protobuf:"varint,2,opt,name=fractional_value,json=fractionalValue,proto3" json:"fractional_value,omitempty"` // Decimal portion (e.g., 2300 is .23 in 5.23%, 230 is .023 in 5.023%, 23 is .0023 in 5.0023%, 2 is .0002 in 5.0002%), limited to 4 digits.
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -2473,7 +2473,6 @@ func (x *FlatAndPercentage) GetPercentage() *Percentage {
 type Lookup struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// use the data from this plugin instance to the request for the the lookup.
-	// optional
 	PluginInstanceId string        `protobuf:"bytes,1,opt,name=plugin_instance_id,json=pluginInstanceId,proto3" json:"plugin_instance_id,omitempty"`
 	Method           RequestMethod `protobuf:"varint,2,opt,name=method,proto3,enum=api.commons.integrations.RequestMethod" json:"method,omitempty"` // this will be deprecated soon, when we move to request method naming convention. Regardless, let's use it for now.
 	// must be able to be interpreted as a number.
