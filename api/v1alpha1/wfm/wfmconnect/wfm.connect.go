@@ -1794,6 +1794,7 @@ type WFMClient interface {
 	// @include_shift_segments must be true to take effect.
 	// If @include_activity is set to true then the related non skill activity for the scheduling activity will be returned in the scheduling
 	// activities member non skill activity field. @include_scheduling_activity must be true to take effect.
+	// The given @shift_instance_sids must all belong to the given @schedule_type.
 	// Errors:
 	//   - grpc.Invalid: @shift_instance_sids in the request are invalid.
 	//   - grpc.Internal: error occurs when listing the shift instances or their shift segments.
@@ -1917,6 +1918,7 @@ type WFMClient interface {
 	// Lists shift segments for the specified shift instances for the org sending the request.
 	// If @include_scheduling_activity is set to true then the related scheduling activity for the shift segment will be returned in the scheduling activity field.
 	// If @include_activity is set to true then the related non skill activity for the scheduling activity will be returned in the scheduling activities member non skill activity field.
+	// The given @shift_instance_sids must all belong to the given @schedule_type.
 	// Errors:
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.NotFound: a shift instance doesn't exist.
@@ -6322,6 +6324,7 @@ type WFMHandler interface {
 	// @include_shift_segments must be true to take effect.
 	// If @include_activity is set to true then the related non skill activity for the scheduling activity will be returned in the scheduling
 	// activities member non skill activity field. @include_scheduling_activity must be true to take effect.
+	// The given @shift_instance_sids must all belong to the given @schedule_type.
 	// Errors:
 	//   - grpc.Invalid: @shift_instance_sids in the request are invalid.
 	//   - grpc.Internal: error occurs when listing the shift instances or their shift segments.
@@ -6445,6 +6448,7 @@ type WFMHandler interface {
 	// Lists shift segments for the specified shift instances for the org sending the request.
 	// If @include_scheduling_activity is set to true then the related scheduling activity for the shift segment will be returned in the scheduling activity field.
 	// If @include_activity is set to true then the related non skill activity for the scheduling activity will be returned in the scheduling activities member non skill activity field.
+	// The given @shift_instance_sids must all belong to the given @schedule_type.
 	// Errors:
 	//   - grpc.Invalid: the request data is invalid.
 	//   - grpc.NotFound: a shift instance doesn't exist.
