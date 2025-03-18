@@ -59,6 +59,7 @@ const (
 	Learn_DeleteVersion_FullMethodName              = "/api.v0alpha.Learn/DeleteVersion"
 	Learn_UploadStaticImage_FullMethodName          = "/api.v0alpha.Learn/UploadStaticImage"
 	Learn_GetUpdateUrl_FullMethodName               = "/api.v0alpha.Learn/GetUpdateUrl"
+	Learn_AdvancedSearch_FullMethodName             = "/api.v0alpha.Learn/AdvancedSearch"
 )
 
 // LearnClient is the client API for Learn service.
@@ -124,6 +125,9 @@ type LearnClient interface {
 	UploadStaticImage(ctx context.Context, in *UploadStaticImageReq, opts ...grpc.CallOption) (*UploadStaticImageRes, error)
 	// upload url for file updates
 	GetUpdateUrl(ctx context.Context, in *GetUpdateUrlReq, opts ...grpc.CallOption) (*GetUpdateUrlRes, error)
+	// integration with knowledge-retriever
+	// search the knowledge base
+	AdvancedSearch(ctx context.Context, in *AdvancedSearchReq, opts ...grpc.CallOption) (*AdvancedSearchRes, error)
 }
 
 type learnClient struct {
@@ -486,6 +490,16 @@ func (c *learnClient) GetUpdateUrl(ctx context.Context, in *GetUpdateUrlReq, opt
 	return out, nil
 }
 
+func (c *learnClient) AdvancedSearch(ctx context.Context, in *AdvancedSearchReq, opts ...grpc.CallOption) (*AdvancedSearchRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AdvancedSearchRes)
+	err := c.cc.Invoke(ctx, Learn_AdvancedSearch_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LearnServer is the server API for Learn service.
 // All implementations must embed UnimplementedLearnServer
 // for forward compatibility.
@@ -549,6 +563,9 @@ type LearnServer interface {
 	UploadStaticImage(context.Context, *UploadStaticImageReq) (*UploadStaticImageRes, error)
 	// upload url for file updates
 	GetUpdateUrl(context.Context, *GetUpdateUrlReq) (*GetUpdateUrlRes, error)
+	// integration with knowledge-retriever
+	// search the knowledge base
+	AdvancedSearch(context.Context, *AdvancedSearchReq) (*AdvancedSearchRes, error)
 	mustEmbedUnimplementedLearnServer()
 }
 
@@ -636,6 +653,9 @@ func (UnimplementedLearnServer) UploadStaticImage(context.Context, *UploadStatic
 }
 func (UnimplementedLearnServer) GetUpdateUrl(context.Context, *GetUpdateUrlReq) (*GetUpdateUrlRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUpdateUrl not implemented")
+}
+func (UnimplementedLearnServer) AdvancedSearch(context.Context, *AdvancedSearchReq) (*AdvancedSearchRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AdvancedSearch not implemented")
 }
 func (UnimplementedLearnServer) mustEmbedUnimplementedLearnServer() {}
 func (UnimplementedLearnServer) testEmbeddedByValue()               {}
@@ -1138,6 +1158,24 @@ func _Learn_GetUpdateUrl_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Learn_AdvancedSearch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdvancedSearchReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LearnServer).AdvancedSearch(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Learn_AdvancedSearch_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LearnServer).AdvancedSearch(ctx, req.(*AdvancedSearchReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Learn_ServiceDesc is the grpc.ServiceDesc for Learn service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1232,6 +1270,10 @@ var Learn_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetUpdateUrl",
 			Handler:    _Learn_GetUpdateUrl_Handler,
+		},
+		{
+			MethodName: "AdvancedSearch",
+			Handler:    _Learn_AdvancedSearch_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

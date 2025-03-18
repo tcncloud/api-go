@@ -103,6 +103,8 @@ const (
 	LearnUploadStaticImageProcedure = "/api.v0alpha.Learn/UploadStaticImage"
 	// LearnGetUpdateUrlProcedure is the fully-qualified name of the Learn's GetUpdateUrl RPC.
 	LearnGetUpdateUrlProcedure = "/api.v0alpha.Learn/GetUpdateUrl"
+	// LearnAdvancedSearchProcedure is the fully-qualified name of the Learn's AdvancedSearch RPC.
+	LearnAdvancedSearchProcedure = "/api.v0alpha.Learn/AdvancedSearch"
 )
 
 // LearnClient is a client for the api.v0alpha.Learn service.
@@ -164,6 +166,9 @@ type LearnClient interface {
 	UploadStaticImage(context.Context, *connect_go.Request[v0alpha.UploadStaticImageReq]) (*connect_go.Response[v0alpha.UploadStaticImageRes], error)
 	// upload url for file updates
 	GetUpdateUrl(context.Context, *connect_go.Request[v0alpha.GetUpdateUrlReq]) (*connect_go.Response[v0alpha.GetUpdateUrlRes], error)
+	// integration with knowledge-retriever
+	// search the knowledge base
+	AdvancedSearch(context.Context, *connect_go.Request[v0alpha.AdvancedSearchReq]) (*connect_go.Response[v0alpha.AdvancedSearchRes], error)
 }
 
 // NewLearnClient constructs a client for the api.v0alpha.Learn service. By default, it uses the
@@ -306,6 +311,11 @@ func NewLearnClient(httpClient connect_go.HTTPClient, baseURL string, opts ...co
 			baseURL+LearnGetUpdateUrlProcedure,
 			opts...,
 		),
+		advancedSearch: connect_go.NewClient[v0alpha.AdvancedSearchReq, v0alpha.AdvancedSearchRes](
+			httpClient,
+			baseURL+LearnAdvancedSearchProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -337,6 +347,7 @@ type learnClient struct {
 	deleteVersion              *connect_go.Client[v0alpha.DeleteVersionReq, v0alpha.DeleteVersionRes]
 	uploadStaticImage          *connect_go.Client[v0alpha.UploadStaticImageReq, v0alpha.UploadStaticImageRes]
 	getUpdateUrl               *connect_go.Client[v0alpha.GetUpdateUrlReq, v0alpha.GetUpdateUrlRes]
+	advancedSearch             *connect_go.Client[v0alpha.AdvancedSearchReq, v0alpha.AdvancedSearchRes]
 }
 
 // Exist calls api.v0alpha.Learn.Exist.
@@ -469,6 +480,11 @@ func (c *learnClient) GetUpdateUrl(ctx context.Context, req *connect_go.Request[
 	return c.getUpdateUrl.CallUnary(ctx, req)
 }
 
+// AdvancedSearch calls api.v0alpha.Learn.AdvancedSearch.
+func (c *learnClient) AdvancedSearch(ctx context.Context, req *connect_go.Request[v0alpha.AdvancedSearchReq]) (*connect_go.Response[v0alpha.AdvancedSearchRes], error) {
+	return c.advancedSearch.CallUnary(ctx, req)
+}
+
 // LearnHandler is an implementation of the api.v0alpha.Learn service.
 type LearnHandler interface {
 	// check if learning page already exists
@@ -528,6 +544,9 @@ type LearnHandler interface {
 	UploadStaticImage(context.Context, *connect_go.Request[v0alpha.UploadStaticImageReq]) (*connect_go.Response[v0alpha.UploadStaticImageRes], error)
 	// upload url for file updates
 	GetUpdateUrl(context.Context, *connect_go.Request[v0alpha.GetUpdateUrlReq]) (*connect_go.Response[v0alpha.GetUpdateUrlRes], error)
+	// integration with knowledge-retriever
+	// search the knowledge base
+	AdvancedSearch(context.Context, *connect_go.Request[v0alpha.AdvancedSearchReq]) (*connect_go.Response[v0alpha.AdvancedSearchRes], error)
 }
 
 // NewLearnHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -666,6 +685,11 @@ func NewLearnHandler(svc LearnHandler, opts ...connect_go.HandlerOption) (string
 		svc.GetUpdateUrl,
 		opts...,
 	)
+	learnAdvancedSearchHandler := connect_go.NewUnaryHandler(
+		LearnAdvancedSearchProcedure,
+		svc.AdvancedSearch,
+		opts...,
+	)
 	return "/api.v0alpha.Learn/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case LearnExistProcedure:
@@ -720,6 +744,8 @@ func NewLearnHandler(svc LearnHandler, opts ...connect_go.HandlerOption) (string
 			learnUploadStaticImageHandler.ServeHTTP(w, r)
 		case LearnGetUpdateUrlProcedure:
 			learnGetUpdateUrlHandler.ServeHTTP(w, r)
+		case LearnAdvancedSearchProcedure:
+			learnAdvancedSearchHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -831,4 +857,8 @@ func (UnimplementedLearnHandler) UploadStaticImage(context.Context, *connect_go.
 
 func (UnimplementedLearnHandler) GetUpdateUrl(context.Context, *connect_go.Request[v0alpha.GetUpdateUrlReq]) (*connect_go.Response[v0alpha.GetUpdateUrlRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.GetUpdateUrl is not implemented"))
+}
+
+func (UnimplementedLearnHandler) AdvancedSearch(context.Context, *connect_go.Request[v0alpha.AdvancedSearchReq]) (*connect_go.Response[v0alpha.AdvancedSearchRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.Learn.AdvancedSearch is not implemented"))
 }
