@@ -2197,6 +2197,8 @@ func (x *FormatQuery) GetTableColumnConfigs() []*TableColumnConfig {
 // Message for Table Column Configuration
 type TableColumnConfig struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
+	// Name of the column
+	ColumnName string `protobuf:"bytes,1,opt,name=column_name,json=columnName,proto3" json:"column_name,omitempty"`
 	// Operations to be performed on the column
 	Operations []*ColumnOperation `protobuf:"bytes,5,rep,name=operations,proto3" json:"operations,omitempty"`
 	// Summary for the column (AVG, SUM, MIN, MAX)
@@ -2233,6 +2235,13 @@ func (x *TableColumnConfig) ProtoReflect() protoreflect.Message {
 // Deprecated: Use TableColumnConfig.ProtoReflect.Descriptor instead.
 func (*TableColumnConfig) Descriptor() ([]byte, []int) {
 	return file_api_v1alpha1_explorer_pipeline_proto_rawDescGZIP(), []int{29}
+}
+
+func (x *TableColumnConfig) GetColumnName() string {
+	if x != nil {
+		return x.ColumnName
+	}
+	return ""
 }
 
 func (x *TableColumnConfig) GetOperations() []*ColumnOperation {
@@ -2753,8 +2762,10 @@ const file_api_v1alpha1_explorer_pipeline_proto_rawDesc = "" +
 	"\n" +
 	"value_type\x18\x04 \x01(\tR\tvalueType\"i\n" +
 	"\vFormatQuery\x12Z\n" +
-	"\x14table_column_configs\x18\x01 \x03(\v2(.api.v1alpha1.explorer.TableColumnConfigR\x12tableColumnConfigs\"\xac\x01\n" +
-	"\x11TableColumnConfig\x12F\n" +
+	"\x14table_column_configs\x18\x01 \x03(\v2(.api.v1alpha1.explorer.TableColumnConfigR\x12tableColumnConfigs\"\xcd\x01\n" +
+	"\x11TableColumnConfig\x12\x1f\n" +
+	"\vcolumn_name\x18\x01 \x01(\tR\n" +
+	"columnName\x12F\n" +
 	"\n" +
 	"operations\x18\x05 \x03(\v2&.api.v1alpha1.explorer.ColumnOperationR\n" +
 	"operations\x12O\n" +
