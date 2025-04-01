@@ -232,6 +232,55 @@ func (ContactManagerSink_DeDuplicationMergeStrategy) EnumDescriptor() ([]byte, [
 	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{132, 1}
 }
 
+type ContactManagementEnrichment_SearchFieldType int32
+
+const (
+	ContactManagementEnrichment_NONE          ContactManagementEnrichment_SearchFieldType = 0
+	ContactManagementEnrichment_PHONE_NUMBER  ContactManagementEnrichment_SearchFieldType = 1
+	ContactManagementEnrichment_EMAIL_ADDRESS ContactManagementEnrichment_SearchFieldType = 2
+)
+
+// Enum value maps for ContactManagementEnrichment_SearchFieldType.
+var (
+	ContactManagementEnrichment_SearchFieldType_name = map[int32]string{
+		0: "NONE",
+		1: "PHONE_NUMBER",
+		2: "EMAIL_ADDRESS",
+	}
+	ContactManagementEnrichment_SearchFieldType_value = map[string]int32{
+		"NONE":          0,
+		"PHONE_NUMBER":  1,
+		"EMAIL_ADDRESS": 2,
+	}
+)
+
+func (x ContactManagementEnrichment_SearchFieldType) Enum() *ContactManagementEnrichment_SearchFieldType {
+	p := new(ContactManagementEnrichment_SearchFieldType)
+	*p = x
+	return p
+}
+
+func (x ContactManagementEnrichment_SearchFieldType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (ContactManagementEnrichment_SearchFieldType) Descriptor() protoreflect.EnumDescriptor {
+	return file_api_v0alpha_lms_proto_enumTypes[4].Descriptor()
+}
+
+func (ContactManagementEnrichment_SearchFieldType) Type() protoreflect.EnumType {
+	return &file_api_v0alpha_lms_proto_enumTypes[4]
+}
+
+func (x ContactManagementEnrichment_SearchFieldType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use ContactManagementEnrichment_SearchFieldType.Descriptor instead.
+func (ContactManagementEnrichment_SearchFieldType) EnumDescriptor() ([]byte, []int) {
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{190, 0}
+}
+
 type PipelineCanvasMetadata struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
 	PipelineCanvasSid int64                  `protobuf:"varint,1,opt,name=pipeline_canvas_sid,json=pipelineCanvasSid,proto3" json:"pipeline_canvas_sid,omitempty"`
@@ -15295,9 +15344,13 @@ type ContactManagementEnrichment struct {
 	// if provided, we export only the fields listed here
 	Fields []string `protobuf:"bytes,3,rep,name=fields,proto3" json:"fields,omitempty"`
 	// same deduplication options from the contact manager sink
+	//
+	// Deprecated: Marked as deprecated in api/v0alpha/lms.proto.
 	DeDuplicationInfo *ContactManagerSink_DeDuplication `protobuf:"bytes,4,opt,name=de_duplication_info,json=deDuplicationInfo,proto3" json:"de_duplication_info,omitempty"`
 	// if true we will create the contact if it doesn't exist
 	InsertIfMissing bool `protobuf:"varint,5,opt,name=insert_if_missing,json=insertIfMissing,proto3" json:"insert_if_missing,omitempty"`
+	// search criteria enum
+	SearchFieldType ContactManagementEnrichment_SearchFieldType `protobuf:"varint,6,opt,name=search_field_type,json=searchFieldType,proto3,enum=api.v0alpha.ContactManagementEnrichment_SearchFieldType" json:"search_field_type,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -15353,6 +15406,7 @@ func (x *ContactManagementEnrichment) GetFields() []string {
 	return nil
 }
 
+// Deprecated: Marked as deprecated in api/v0alpha/lms.proto.
 func (x *ContactManagementEnrichment) GetDeDuplicationInfo() *ContactManagerSink_DeDuplication {
 	if x != nil {
 		return x.DeDuplicationInfo
@@ -15365,6 +15419,13 @@ func (x *ContactManagementEnrichment) GetInsertIfMissing() bool {
 		return x.InsertIfMissing
 	}
 	return false
+}
+
+func (x *ContactManagementEnrichment) GetSearchFieldType() ContactManagementEnrichment_SearchFieldType {
+	if x != nil {
+		return x.SearchFieldType
+	}
+	return ContactManagementEnrichment_NONE
 }
 
 // TicketExchangeSink
@@ -19005,14 +19066,19 @@ const file_api_v0alpha_lms_proto_rawDesc = "" +
 	"\rcron_interval\x18\x02 \x01(\tR\fcronInterval\x12\x1a\n" +
 	"\bdisabled\x18\x03 \x01(\bR\bdisabled\x12\x1a\n" +
 	"\btimezone\x18\x04 \x01(\tR\btimezone\x12)\n" +
-	"\x10filename_pattern\x18\x05 \x01(\tR\x0ffilenamePattern\"\x8b\x02\n" +
+	"\x10filename_pattern\x18\x05 \x01(\tR\x0ffilenamePattern\"\xb7\x03\n" +
 	"\x1bContactManagementEnrichment\x12\x1d\n" +
 	"\n" +
 	"project_id\x18\x01 \x01(\tR\tprojectId\x12*\n" +
 	"\x11contact_list_name\x18\x02 \x01(\tR\x0fcontactListName\x12\x16\n" +
-	"\x06fields\x18\x03 \x03(\tR\x06fields\x12]\n" +
-	"\x13de_duplication_info\x18\x04 \x01(\v2-.api.v0alpha.ContactManagerSink.DeDuplicationR\x11deDuplicationInfo\x12*\n" +
-	"\x11insert_if_missing\x18\x05 \x01(\bR\x0finsertIfMissing\"l\n" +
+	"\x06fields\x18\x03 \x03(\tR\x06fields\x12a\n" +
+	"\x13de_duplication_info\x18\x04 \x01(\v2-.api.v0alpha.ContactManagerSink.DeDuplicationB\x02\x18\x01R\x11deDuplicationInfo\x12*\n" +
+	"\x11insert_if_missing\x18\x05 \x01(\bR\x0finsertIfMissing\x12d\n" +
+	"\x11search_field_type\x18\x06 \x01(\x0e28.api.v0alpha.ContactManagementEnrichment.SearchFieldTypeR\x0fsearchFieldType\"@\n" +
+	"\x0fSearchFieldType\x12\b\n" +
+	"\x04NONE\x10\x00\x12\x10\n" +
+	"\fPHONE_NUMBER\x10\x01\x12\x11\n" +
+	"\rEMAIL_ADDRESS\x10\x02\"l\n" +
 	"\x12TicketExchangeSink\x12\x1d\n" +
 	"\n" +
 	"project_id\x18\x01 \x01(\tR\tprojectId\x12\x1f\n" +
@@ -19166,738 +19232,740 @@ func file_api_v0alpha_lms_proto_rawDescGZIP() []byte {
 	return file_api_v0alpha_lms_proto_rawDescData
 }
 
-var file_api_v0alpha_lms_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
+var file_api_v0alpha_lms_proto_enumTypes = make([]protoimpl.EnumInfo, 5)
 var file_api_v0alpha_lms_proto_msgTypes = make([]protoimpl.MessageInfo, 238)
 var file_api_v0alpha_lms_proto_goTypes = []any{
 	(TimeUnit)(0),       // 0: api.v0alpha.TimeUnit
 	(EpicEntityType)(0), // 1: api.v0alpha.EpicEntityType
 	(ContactManagerSink_DeDuplicationFieldType)(0),     // 2: api.v0alpha.ContactManagerSink.DeDuplicationFieldType
 	(ContactManagerSink_DeDuplicationMergeStrategy)(0), // 3: api.v0alpha.ContactManagerSink.DeDuplicationMergeStrategy
-	(*PipelineCanvasMetadata)(nil),                     // 4: api.v0alpha.PipelineCanvasMetadata
-	(*PipelineCanvas)(nil),                             // 5: api.v0alpha.PipelineCanvas
-	(*PipelineCanvasPreview)(nil),                      // 6: api.v0alpha.PipelineCanvasPreview
-	(*CreatePipelineCanvasReq)(nil),                    // 7: api.v0alpha.CreatePipelineCanvasReq
-	(*CreatePipelineCanvasRes)(nil),                    // 8: api.v0alpha.CreatePipelineCanvasRes
-	(*ListPipelineCanvasesReq)(nil),                    // 9: api.v0alpha.ListPipelineCanvasesReq
-	(*ListPipelineCanvasesRes)(nil),                    // 10: api.v0alpha.ListPipelineCanvasesRes
-	(*UpdatePipelineCanvasReq)(nil),                    // 11: api.v0alpha.UpdatePipelineCanvasReq
-	(*UpdatePipelineCanvasRes)(nil),                    // 12: api.v0alpha.UpdatePipelineCanvasRes
-	(*DeletePipelineCanvasReq)(nil),                    // 13: api.v0alpha.DeletePipelineCanvasReq
-	(*DeletePipelineCanvasRes)(nil),                    // 14: api.v0alpha.DeletePipelineCanvasRes
-	(*GetPipelineCanvasReq)(nil),                       // 15: api.v0alpha.GetPipelineCanvasReq
-	(*GetPipelineCanvasRes)(nil),                       // 16: api.v0alpha.GetPipelineCanvasRes
-	(*ListPoolsRequest)(nil),                           // 17: api.v0alpha.ListPoolsRequest
-	(*ListPoolsResponse)(nil),                          // 18: api.v0alpha.ListPoolsResponse
-	(*Pool)(nil),                                       // 19: api.v0alpha.Pool
-	(*GetPublicKeyReq)(nil),                            // 20: api.v0alpha.GetPublicKeyReq
-	(*PublicKey)(nil),                                  // 21: api.v0alpha.PublicKey
-	(*FindFieldUsagesReq)(nil),                         // 22: api.v0alpha.FindFieldUsagesReq
-	(*NameAndId)(nil),                                  // 23: api.v0alpha.NameAndId
-	(*FindFieldUsagesRes)(nil),                         // 24: api.v0alpha.FindFieldUsagesRes
-	(*ElementError)(nil),                               // 25: api.v0alpha.ElementError
-	(*ElementSummary)(nil),                             // 26: api.v0alpha.ElementSummary
-	(*FindInvalidElementsReq)(nil),                     // 27: api.v0alpha.FindInvalidElementsReq
-	(*FindInvalidElementsRes)(nil),                     // 28: api.v0alpha.FindInvalidElementsRes
-	(*GetComplianceScrubListsReq)(nil),                 // 29: api.v0alpha.GetComplianceScrubListsReq
-	(*GetComplianceScrubListsRes)(nil),                 // 30: api.v0alpha.GetComplianceScrubListsRes
-	(*ProcessElementReq)(nil),                          // 31: api.v0alpha.ProcessElementReq
-	(*ProcessListRequest)(nil),                         // 32: api.v0alpha.ProcessListRequest
-	(*ProcessListResponse)(nil),                        // 33: api.v0alpha.ProcessListResponse
-	(*StreamListRequest)(nil),                          // 34: api.v0alpha.StreamListRequest
-	(*StreamListResponse)(nil),                         // 35: api.v0alpha.StreamListResponse
-	(*ListAvailableFieldsByElementIdReq)(nil),          // 36: api.v0alpha.ListAvailableFieldsByElementIdReq
-	(*ListFieldsForElementReq)(nil),                    // 37: api.v0alpha.ListFieldsForElementReq
-	(*ListFieldsForElementRes)(nil),                    // 38: api.v0alpha.ListFieldsForElementRes
-	(*ListAutocompleteFieldsReq)(nil),                  // 39: api.v0alpha.ListAutocompleteFieldsReq
-	(*ListAutocompleteFieldsRes)(nil),                  // 40: api.v0alpha.ListAutocompleteFieldsRes
-	(*ElementPK)(nil),                                  // 41: api.v0alpha.ElementPK
-	(*Element)(nil),                                    // 42: api.v0alpha.Element
-	(*PeekListReq)(nil),                                // 43: api.v0alpha.PeekListReq
-	(*PeekListRes)(nil),                                // 44: api.v0alpha.PeekListRes
-	(*GetHistoryReq)(nil),                              // 45: api.v0alpha.GetHistoryReq
-	(*GetHistoryRes)(nil),                              // 46: api.v0alpha.GetHistoryRes
-	(*History)(nil),                                    // 47: api.v0alpha.History
-	(*HistoryAndCount)(nil),                            // 48: api.v0alpha.HistoryAndCount
-	(*RecordProto)(nil),                                // 49: api.v0alpha.RecordProto
-	(*RecordProtoPair)(nil),                            // 50: api.v0alpha.RecordProtoPair
-	(*ProcessFields)(nil),                              // 51: api.v0alpha.ProcessFields
-	(*FieldPK)(nil),                                    // 52: api.v0alpha.FieldPK
-	(*Field)(nil),                                      // 53: api.v0alpha.Field
-	(*UpdateFieldReq)(nil),                             // 54: api.v0alpha.UpdateFieldReq
-	(*FieldMetadata)(nil),                              // 55: api.v0alpha.FieldMetadata
-	(*Fields)(nil),                                     // 56: api.v0alpha.Fields
-	(*FieldIndex)(nil),                                 // 57: api.v0alpha.FieldIndex
-	(*ListFieldsReq)(nil),                              // 58: api.v0alpha.ListFieldsReq
-	(*RecordFieldProto)(nil),                           // 59: api.v0alpha.RecordFieldProto
-	(*RepeatedRecords)(nil),                            // 60: api.v0alpha.RepeatedRecords
-	(*ListElementsReq)(nil),                            // 61: api.v0alpha.ListElementsReq
-	(*GetFileTemplatesReq)(nil),                        // 62: api.v0alpha.GetFileTemplatesReq
-	(*FileTemplateField)(nil),                          // 63: api.v0alpha.FileTemplateField
-	(*FileTemplateFields)(nil),                         // 64: api.v0alpha.FileTemplateFields
-	(*FieldTypes)(nil),                                 // 65: api.v0alpha.FieldTypes
-	(*FileTemplate)(nil),                               // 66: api.v0alpha.FileTemplate
-	(*LMSUploadReq)(nil),                               // 67: api.v0alpha.LMSUploadReq
-	(*LMSUploadRes)(nil),                               // 68: api.v0alpha.LMSUploadRes
-	(*ReRunReq)(nil),                                   // 69: api.v0alpha.ReRunReq
-	(*ReRunRes)(nil),                                   // 70: api.v0alpha.ReRunRes
-	(*Process)(nil),                                    // 71: api.v0alpha.Process
-	(*ComplianceProcessor)(nil),                        // 72: api.v0alpha.ComplianceProcessor
-	(*ConsentEntrypointProcess)(nil),                   // 73: api.v0alpha.ConsentEntrypointProcess
-	(*ConsentEnrichmentProcess)(nil),                   // 74: api.v0alpha.ConsentEnrichmentProcess
-	(*ConsentExportProcess)(nil),                       // 75: api.v0alpha.ConsentExportProcess
-	(*PaymentLinkEnrichment)(nil),                      // 76: api.v0alpha.PaymentLinkEnrichment
-	(*PortalLinkEnrichment)(nil),                       // 77: api.v0alpha.PortalLinkEnrichment
-	(*Expiration)(nil),                                 // 78: api.v0alpha.Expiration
-	(*EntrypointProcess)(nil),                          // 79: api.v0alpha.EntrypointProcess
-	(*ApiEntrypoint)(nil),                              // 80: api.v0alpha.ApiEntrypoint
-	(*HttpReq)(nil),                                    // 81: api.v0alpha.HttpReq
-	(*WebEntrypointProcess)(nil),                       // 82: api.v0alpha.WebEntrypointProcess
-	(*BulkWebEntrypointProcess)(nil),                   // 83: api.v0alpha.BulkWebEntrypointProcess
-	(*OmniExchangeProcess)(nil),                        // 84: api.v0alpha.OmniExchangeProcess
-	(*WebExchangeProcess)(nil),                         // 85: api.v0alpha.WebExchangeProcess
-	(*PaginatedHttpRequest)(nil),                       // 86: api.v0alpha.PaginatedHttpRequest
-	(*SftpImport)(nil),                                 // 87: api.v0alpha.SftpImport
-	(*RndEnrichmentProcess)(nil),                       // 88: api.v0alpha.RndEnrichmentProcess
-	(*CjsImportProcess)(nil),                           // 89: api.v0alpha.CjsImportProcess
-	(*CjsExportProcess)(nil),                           // 90: api.v0alpha.CjsExportProcess
-	(*CjsEnrichmentProcess)(nil),                       // 91: api.v0alpha.CjsEnrichmentProcess
-	(*AppendProcess)(nil),                              // 92: api.v0alpha.AppendProcess
-	(*LookupProcess)(nil),                              // 93: api.v0alpha.LookupProcess
-	(*ComplProcess)(nil),                               // 94: api.v0alpha.ComplProcess
-	(*CFSExportConfig)(nil),                            // 95: api.v0alpha.CFSExportConfig
-	(*CFSExportReqHeader)(nil),                         // 96: api.v0alpha.CFSExportReqHeader
-	(*CFSExportProcess)(nil),                           // 97: api.v0alpha.CFSExportProcess
-	(*FilterProcess)(nil),                              // 98: api.v0alpha.FilterProcess
-	(*FilterOperation)(nil),                            // 99: api.v0alpha.FilterOperation
-	(*FilterCheck)(nil),                                // 100: api.v0alpha.FilterCheck
-	(*GSExportProcess)(nil),                            // 101: api.v0alpha.GSExportProcess
-	(*P3ExportProcess)(nil),                            // 102: api.v0alpha.P3ExportProcess
-	(*ComplianceExportProcess)(nil),                    // 103: api.v0alpha.ComplianceExportProcess
-	(*ScrubProcess)(nil),                               // 104: api.v0alpha.ScrubProcess
-	(*DeleteScrubEntriesProcess)(nil),                  // 105: api.v0alpha.DeleteScrubEntriesProcess
-	(*FrequencyProcess)(nil),                           // 106: api.v0alpha.FrequencyProcess
-	(*DispositionSet)(nil),                             // 107: api.v0alpha.DispositionSet
-	(*DispositionPair)(nil),                            // 108: api.v0alpha.DispositionPair
-	(*SftpExportProcess)(nil),                          // 109: api.v0alpha.SftpExportProcess
-	(*WfmMultiSkill)(nil),                              // 110: api.v0alpha.WfmMultiSkill
-	(*WfmExportProcess)(nil),                           // 111: api.v0alpha.WfmExportProcess
-	(*ExportHeader)(nil),                               // 112: api.v0alpha.ExportHeader
-	(*SortReq)(nil),                                    // 113: api.v0alpha.SortReq
-	(*CFSExportReq)(nil),                               // 114: api.v0alpha.CFSExportReq
-	(*DeDupCriteria)(nil),                              // 115: api.v0alpha.DeDupCriteria
-	(*SortCriteria)(nil),                               // 116: api.v0alpha.SortCriteria
-	(*Error)(nil),                                      // 117: api.v0alpha.Error
-	(*RecordFieldMap)(nil),                             // 118: api.v0alpha.RecordFieldMap
-	(*Currency)(nil),                                   // 119: api.v0alpha.Currency
-	(*Phone)(nil),                                      // 120: api.v0alpha.Phone
-	(*PostalCode)(nil),                                 // 121: api.v0alpha.PostalCode
-	(*Email)(nil),                                      // 122: api.v0alpha.Email
-	(*DateTimeModifier)(nil),                           // 123: api.v0alpha.DateTimeModifier
-	(*DateTime)(nil),                                   // 124: api.v0alpha.DateTime
-	(*EnrichedPhone)(nil),                              // 125: api.v0alpha.EnrichedPhone
-	(*EnrichedZip)(nil),                                // 126: api.v0alpha.EnrichedZip
-	(*Now)(nil),                                        // 127: api.v0alpha.Now
-	(*Timestamp)(nil),                                  // 128: api.v0alpha.Timestamp
-	(*Date)(nil),                                       // 129: api.v0alpha.Date
-	(*MonthAndDay)(nil),                                // 130: api.v0alpha.MonthAndDay
-	(*DayOfWeek)(nil),                                  // 131: api.v0alpha.DayOfWeek
-	(*TimeOfDay)(nil),                                  // 132: api.v0alpha.TimeOfDay
-	(*FileFormatParams)(nil),                           // 133: api.v0alpha.FileFormatParams
-	(*ReshapeProcess)(nil),                             // 134: api.v0alpha.ReshapeProcess
-	(*ReshapeAction)(nil),                              // 135: api.v0alpha.ReshapeAction
-	(*ContactManagerSink)(nil),                         // 136: api.v0alpha.ContactManagerSink
-	(*SumProcess)(nil),                                 // 137: api.v0alpha.SumProcess
-	(*GroupBy)(nil),                                    // 138: api.v0alpha.GroupBy
-	(*ListMetrics)(nil),                                // 139: api.v0alpha.ListMetrics
-	(*ParseReq)(nil),                                   // 140: api.v0alpha.ParseReq
-	(*ParseRes)(nil),                                   // 141: api.v0alpha.ParseRes
-	(*Event)(nil),                                      // 142: api.v0alpha.Event
-	(*Events)(nil),                                     // 143: api.v0alpha.Events
-	(*ViewQueueReq)(nil),                               // 144: api.v0alpha.ViewQueueReq
-	(*RetypeCollectionReq)(nil),                        // 145: api.v0alpha.RetypeCollectionReq
-	(*RetypeCollectionRes)(nil),                        // 146: api.v0alpha.RetypeCollectionRes
-	(*CollectionMetadata)(nil),                         // 147: api.v0alpha.CollectionMetadata
-	(*CollectionEntry)(nil),                            // 148: api.v0alpha.CollectionEntry
-	(*MatchReq)(nil),                                   // 149: api.v0alpha.MatchReq
-	(*MatchRes)(nil),                                   // 150: api.v0alpha.MatchRes
-	(*CollectionFieldMetadata)(nil),                    // 151: api.v0alpha.CollectionFieldMetadata
-	(*CollectionField)(nil),                            // 152: api.v0alpha.CollectionField
-	(*GetCollectionReq)(nil),                           // 153: api.v0alpha.GetCollectionReq
-	(*StreamCollectionReq)(nil),                        // 154: api.v0alpha.StreamCollectionReq
-	(*DeleteCollectionReq)(nil),                        // 155: api.v0alpha.DeleteCollectionReq
-	(*ResetCollectionReq)(nil),                         // 156: api.v0alpha.ResetCollectionReq
-	(*ListCollectionsReq)(nil),                         // 157: api.v0alpha.ListCollectionsReq
-	(*ListCollectionsRes)(nil),                         // 158: api.v0alpha.ListCollectionsRes
-	(*SearchCollectionsPaginatedReq)(nil),              // 159: api.v0alpha.SearchCollectionsPaginatedReq
-	(*Search)(nil),                                     // 160: api.v0alpha.Search
-	(*PaginatedSearchRes)(nil),                         // 161: api.v0alpha.PaginatedSearchRes
-	(*GetCollectionEntriesReq)(nil),                    // 162: api.v0alpha.GetCollectionEntriesReq
-	(*GetCollectionEntriesRes)(nil),                    // 163: api.v0alpha.GetCollectionEntriesRes
-	(*DeleteCollectionEntryReq)(nil),                   // 164: api.v0alpha.DeleteCollectionEntryReq
-	(*ListCampaignLinksRes)(nil),                       // 165: api.v0alpha.ListCampaignLinksRes
-	(*Link)(nil),                                       // 166: api.v0alpha.Link
-	(*CjsSearchField)(nil),                             // 167: api.v0alpha.CjsSearchField
-	(*CjsSearchDefinitionMetadata)(nil),                // 168: api.v0alpha.CjsSearchDefinitionMetadata
-	(*CjsSearchDefinition)(nil),                        // 169: api.v0alpha.CjsSearchDefinition
-	(*GetCjsSearchDefinitionReq)(nil),                  // 170: api.v0alpha.GetCjsSearchDefinitionReq
-	(*DeleteCjsSearchDefinitionReq)(nil),               // 171: api.v0alpha.DeleteCjsSearchDefinitionReq
-	(*ListCjsSearchDefinitionsReq)(nil),                // 172: api.v0alpha.ListCjsSearchDefinitionsReq
-	(*ListCjsSearchDefinitionsRes)(nil),                // 173: api.v0alpha.ListCjsSearchDefinitionsRes
-	(*ExecuteCjsSearchDefinitionReq)(nil),              // 174: api.v0alpha.ExecuteCjsSearchDefinitionReq
-	(*ExecuteCjsSearchDefinitionRes)(nil),              // 175: api.v0alpha.ExecuteCjsSearchDefinitionRes
-	(*CollectionEntries)(nil),                          // 176: api.v0alpha.CollectionEntries
-	(*CjsExecuteSearchField)(nil),                      // 177: api.v0alpha.CjsExecuteSearchField
-	(*CjsSecureSearchCriteriaMetadata)(nil),            // 178: api.v0alpha.CjsSecureSearchCriteriaMetadata
-	(*CjsSecureSearchCriteria)(nil),                    // 179: api.v0alpha.CjsSecureSearchCriteria
-	(*GetCjsSecureSearchCriteriaReq)(nil),              // 180: api.v0alpha.GetCjsSecureSearchCriteriaReq
-	(*CjsSecureSearchCriteriaField)(nil),               // 181: api.v0alpha.CjsSecureSearchCriteriaField
-	(*SplitCriteria)(nil),                              // 182: api.v0alpha.SplitCriteria
-	(*UniquePair)(nil),                                 // 183: api.v0alpha.UniquePair
-	(*SplitByNamedUnique)(nil),                         // 184: api.v0alpha.SplitByNamedUnique
-	(*SplitByUnique)(nil),                              // 185: api.v0alpha.SplitByUnique
-	(*SplitByMaxSize)(nil),                             // 186: api.v0alpha.SplitByMaxSize
-	(*SplitByEqualParts)(nil),                          // 187: api.v0alpha.SplitByEqualParts
-	(*EpicEntrypoint)(nil),                             // 188: api.v0alpha.EpicEntrypoint
-	(*RuntimeValues)(nil),                              // 189: api.v0alpha.RuntimeValues
-	(*EntityURL)(nil),                                  // 190: api.v0alpha.EntityURL
-	(*SampleRequest)(nil),                              // 191: api.v0alpha.SampleRequest
-	(*EHREntityType)(nil),                              // 192: api.v0alpha.EHREntityType
-	(*FinviEntrypoint)(nil),                            // 193: api.v0alpha.FinviEntrypoint
-	(*ContactManagementEnrichment)(nil),                // 194: api.v0alpha.ContactManagementEnrichment
-	(*TicketExchangeSink)(nil),                         // 195: api.v0alpha.TicketExchangeSink
-	(*ElementError_InvalidExpression)(nil),             // 196: api.v0alpha.ElementError.InvalidExpression
-	(*ElementError_MissingField)(nil),                  // 197: api.v0alpha.ElementError.MissingField
-	(*ElementError_BadFieldType)(nil),                  // 198: api.v0alpha.ElementError.BadFieldType
-	(*ProcessFields_NestedField)(nil),                  // 199: api.v0alpha.ProcessFields.NestedField
-	(*ProcessFields_Field)(nil),                        // 200: api.v0alpha.ProcessFields.Field
-	nil,                                                // 201: api.v0alpha.ComplianceProcessor.CallMetadataEntry
-	nil,                                                // 202: api.v0alpha.PaymentLinkEnrichment.KeyMapEntry
-	nil,                                                // 203: api.v0alpha.PortalLinkEnrichment.KeyMapEntry
-	nil,                                                // 204: api.v0alpha.HttpReq.HeadersEntry
-	nil,                                                // 205: api.v0alpha.HttpReq.NamedResponseValuesEntry
-	(*LookupProcess_ComplProcess)(nil),                 // 206: api.v0alpha.LookupProcess.ComplProcess
-	(*LookupProcess_ListLookup)(nil),                   // 207: api.v0alpha.LookupProcess.ListLookup
-	(*LookupProcess_UrlLookup)(nil),                    // 208: api.v0alpha.LookupProcess.UrlLookup
-	(*FilterCheck_Value)(nil),                          // 209: api.v0alpha.FilterCheck.Value
-	(*FilterCheck_ValueComparison)(nil),                // 210: api.v0alpha.FilterCheck.ValueComparison
-	(*FilterCheck_TypeComparison)(nil),                 // 211: api.v0alpha.FilterCheck.TypeComparison
-	(*FilterCheck_ListComparison)(nil),                 // 212: api.v0alpha.FilterCheck.ListComparison
-	(*FilterCheck_ListComparison_FieldOrVal)(nil),      // 213: api.v0alpha.FilterCheck.ListComparison.FieldOrVal
-	nil,                                        // 214: api.v0alpha.RecordFieldMap.FieldsEntry
-	(*ReshapeAction_Rename)(nil),               // 215: api.v0alpha.ReshapeAction.Rename
-	(*ReshapeAction_AddValue)(nil),             // 216: api.v0alpha.ReshapeAction.AddValue
-	(*ReshapeAction_AddDate)(nil),              // 217: api.v0alpha.ReshapeAction.AddDate
-	(*ReshapeAction_AddField)(nil),             // 218: api.v0alpha.ReshapeAction.AddField
-	(*ReshapeAction_SubtractValue)(nil),        // 219: api.v0alpha.ReshapeAction.SubtractValue
-	(*ReshapeAction_SubtractField)(nil),        // 220: api.v0alpha.ReshapeAction.SubtractField
-	(*ReshapeAction_Convert)(nil),              // 221: api.v0alpha.ReshapeAction.Convert
-	(*ReshapeAction_Divide)(nil),               // 222: api.v0alpha.ReshapeAction.Divide
-	(*ReshapeAction_Multiply)(nil),             // 223: api.v0alpha.ReshapeAction.Multiply
-	(*ReshapeAction_Modulo)(nil),               // 224: api.v0alpha.ReshapeAction.Modulo
-	(*ReshapeAction_RemoveField)(nil),          // 225: api.v0alpha.ReshapeAction.RemoveField
-	(*ReshapeAction_AddNewField)(nil),          // 226: api.v0alpha.ReshapeAction.AddNewField
-	(*ReshapeAction_AddNewFieldFromField)(nil), // 227: api.v0alpha.ReshapeAction.AddNewFieldFromField
-	(*ReshapeAction_ChangeCurrencyType)(nil),   // 228: api.v0alpha.ReshapeAction.ChangeCurrencyType
-	(*ReshapeAction_SetFieldValue)(nil),        // 229: api.v0alpha.ReshapeAction.SetFieldValue
-	(*ReshapeAction_SetFieldFromField)(nil),    // 230: api.v0alpha.ReshapeAction.SetFieldFromField
-	(*ReshapeAction_Merge)(nil),                // 231: api.v0alpha.ReshapeAction.Merge
-	(*ReshapeAction_Pad)(nil),                  // 232: api.v0alpha.ReshapeAction.Pad
-	(*ReshapeAction_Trim)(nil),                 // 233: api.v0alpha.ReshapeAction.Trim
-	(*ReshapeAction_Extract)(nil),              // 234: api.v0alpha.ReshapeAction.Extract
-	(*ReshapeAction_Merge_FieldOrVal)(nil),     // 235: api.v0alpha.ReshapeAction.Merge.FieldOrVal
-	(*ReshapeAction_Extract_Index)(nil),        // 236: api.v0alpha.ReshapeAction.Extract.Index
-	(*ReshapeAction_Extract_Slice)(nil),        // 237: api.v0alpha.ReshapeAction.Extract.Slice
-	(*ContactManagerSink_DeDuplication)(nil),   // 238: api.v0alpha.ContactManagerSink.DeDuplication
-	nil,                                        // 239: api.v0alpha.RetypeCollectionReq.FieldTypesEntry
-	nil,                                        // 240: api.v0alpha.RuntimeValues.FileIdsEntry
-	nil,                                        // 241: api.v0alpha.RuntimeValues.PreliminaryVarsEntry
-	(*timestamppb.Timestamp)(nil),              // 242: google.protobuf.Timestamp
-	(commons.PipelineElementStatusType)(0),     // 243: api.commons.PipelineElementStatusType
-	(*wrapperspb.StringValue)(nil),             // 244: google.protobuf.StringValue
-	(commons.FieldType)(0),                     // 245: api.commons.FieldType
-	(commons.DateTimePrecision)(0),             // 246: api.commons.DateTimePrecision
-	(commons.FileFormat)(0),                    // 247: api.commons.FileFormat
-	(*commons.CommType)(nil),                   // 248: api.commons.CommType
-	(commons.RunType)(0),                       // 249: api.commons.RunType
-	(commons.ConsentActionType)(0),             // 250: api.commons.ConsentActionType
-	(commons.ContentType)(0),                   // 251: api.commons.ContentType
-	(commons.Channel)(0),                       // 252: api.commons.Channel
-	(*durationpb.Duration)(nil),                // 253: google.protobuf.Duration
-	(commons.HttpVerb)(0),                      // 254: api.commons.HttpVerb
-	(*commons.PaginationTerminator)(nil),       // 255: api.commons.PaginationTerminator
-	(*commons.FilePattern)(nil),                // 256: api.commons.FilePattern
-	(commons.EnrichmentType)(0),                // 257: api.commons.EnrichmentType
-	(commons.PrimarySource)(0),                 // 258: api.commons.PrimarySource
-	(commons.DedupKeyPolicy)(0),                // 259: api.commons.DedupKeyPolicy
-	(commons.ExportType)(0),                    // 260: api.commons.ExportType
-	(commons.ChainOperator)(0),                 // 261: api.commons.ChainOperator
-	(commons.DuplicatePolicyType)(0),           // 262: api.commons.DuplicatePolicyType
-	(commons.AbsentPolicyType)(0),              // 263: api.commons.AbsentPolicyType
-	(*commons.ConstructedFilename)(nil),        // 264: api.commons.ConstructedFilename
-	(commons.DialOrderType)(0),                 // 265: api.commons.DialOrderType
-	(commons.ComplianceListType)(0),            // 266: api.commons.ComplianceListType
-	(commons.DeDupActions)(0),                  // 267: api.commons.DeDupActions
-	(commons.SortOrder)(0),                     // 268: api.commons.SortOrder
-	(commons.RecordType)(0),                    // 269: api.commons.RecordType
-	(*commons.StringArraySql)(nil),             // 270: api.commons.StringArraySql
-	(*wrapperspb.Int64Value)(nil),              // 271: google.protobuf.Int64Value
-	(commons.EventState)(0),                    // 272: api.commons.EventState
-	(commons.CompareOperator)(0),               // 273: api.commons.CompareOperator
-	(*emptypb.Empty)(nil),                      // 274: google.protobuf.Empty
+	(ContactManagementEnrichment_SearchFieldType)(0),   // 4: api.v0alpha.ContactManagementEnrichment.SearchFieldType
+	(*PipelineCanvasMetadata)(nil),                     // 5: api.v0alpha.PipelineCanvasMetadata
+	(*PipelineCanvas)(nil),                             // 6: api.v0alpha.PipelineCanvas
+	(*PipelineCanvasPreview)(nil),                      // 7: api.v0alpha.PipelineCanvasPreview
+	(*CreatePipelineCanvasReq)(nil),                    // 8: api.v0alpha.CreatePipelineCanvasReq
+	(*CreatePipelineCanvasRes)(nil),                    // 9: api.v0alpha.CreatePipelineCanvasRes
+	(*ListPipelineCanvasesReq)(nil),                    // 10: api.v0alpha.ListPipelineCanvasesReq
+	(*ListPipelineCanvasesRes)(nil),                    // 11: api.v0alpha.ListPipelineCanvasesRes
+	(*UpdatePipelineCanvasReq)(nil),                    // 12: api.v0alpha.UpdatePipelineCanvasReq
+	(*UpdatePipelineCanvasRes)(nil),                    // 13: api.v0alpha.UpdatePipelineCanvasRes
+	(*DeletePipelineCanvasReq)(nil),                    // 14: api.v0alpha.DeletePipelineCanvasReq
+	(*DeletePipelineCanvasRes)(nil),                    // 15: api.v0alpha.DeletePipelineCanvasRes
+	(*GetPipelineCanvasReq)(nil),                       // 16: api.v0alpha.GetPipelineCanvasReq
+	(*GetPipelineCanvasRes)(nil),                       // 17: api.v0alpha.GetPipelineCanvasRes
+	(*ListPoolsRequest)(nil),                           // 18: api.v0alpha.ListPoolsRequest
+	(*ListPoolsResponse)(nil),                          // 19: api.v0alpha.ListPoolsResponse
+	(*Pool)(nil),                                       // 20: api.v0alpha.Pool
+	(*GetPublicKeyReq)(nil),                            // 21: api.v0alpha.GetPublicKeyReq
+	(*PublicKey)(nil),                                  // 22: api.v0alpha.PublicKey
+	(*FindFieldUsagesReq)(nil),                         // 23: api.v0alpha.FindFieldUsagesReq
+	(*NameAndId)(nil),                                  // 24: api.v0alpha.NameAndId
+	(*FindFieldUsagesRes)(nil),                         // 25: api.v0alpha.FindFieldUsagesRes
+	(*ElementError)(nil),                               // 26: api.v0alpha.ElementError
+	(*ElementSummary)(nil),                             // 27: api.v0alpha.ElementSummary
+	(*FindInvalidElementsReq)(nil),                     // 28: api.v0alpha.FindInvalidElementsReq
+	(*FindInvalidElementsRes)(nil),                     // 29: api.v0alpha.FindInvalidElementsRes
+	(*GetComplianceScrubListsReq)(nil),                 // 30: api.v0alpha.GetComplianceScrubListsReq
+	(*GetComplianceScrubListsRes)(nil),                 // 31: api.v0alpha.GetComplianceScrubListsRes
+	(*ProcessElementReq)(nil),                          // 32: api.v0alpha.ProcessElementReq
+	(*ProcessListRequest)(nil),                         // 33: api.v0alpha.ProcessListRequest
+	(*ProcessListResponse)(nil),                        // 34: api.v0alpha.ProcessListResponse
+	(*StreamListRequest)(nil),                          // 35: api.v0alpha.StreamListRequest
+	(*StreamListResponse)(nil),                         // 36: api.v0alpha.StreamListResponse
+	(*ListAvailableFieldsByElementIdReq)(nil),          // 37: api.v0alpha.ListAvailableFieldsByElementIdReq
+	(*ListFieldsForElementReq)(nil),                    // 38: api.v0alpha.ListFieldsForElementReq
+	(*ListFieldsForElementRes)(nil),                    // 39: api.v0alpha.ListFieldsForElementRes
+	(*ListAutocompleteFieldsReq)(nil),                  // 40: api.v0alpha.ListAutocompleteFieldsReq
+	(*ListAutocompleteFieldsRes)(nil),                  // 41: api.v0alpha.ListAutocompleteFieldsRes
+	(*ElementPK)(nil),                                  // 42: api.v0alpha.ElementPK
+	(*Element)(nil),                                    // 43: api.v0alpha.Element
+	(*PeekListReq)(nil),                                // 44: api.v0alpha.PeekListReq
+	(*PeekListRes)(nil),                                // 45: api.v0alpha.PeekListRes
+	(*GetHistoryReq)(nil),                              // 46: api.v0alpha.GetHistoryReq
+	(*GetHistoryRes)(nil),                              // 47: api.v0alpha.GetHistoryRes
+	(*History)(nil),                                    // 48: api.v0alpha.History
+	(*HistoryAndCount)(nil),                            // 49: api.v0alpha.HistoryAndCount
+	(*RecordProto)(nil),                                // 50: api.v0alpha.RecordProto
+	(*RecordProtoPair)(nil),                            // 51: api.v0alpha.RecordProtoPair
+	(*ProcessFields)(nil),                              // 52: api.v0alpha.ProcessFields
+	(*FieldPK)(nil),                                    // 53: api.v0alpha.FieldPK
+	(*Field)(nil),                                      // 54: api.v0alpha.Field
+	(*UpdateFieldReq)(nil),                             // 55: api.v0alpha.UpdateFieldReq
+	(*FieldMetadata)(nil),                              // 56: api.v0alpha.FieldMetadata
+	(*Fields)(nil),                                     // 57: api.v0alpha.Fields
+	(*FieldIndex)(nil),                                 // 58: api.v0alpha.FieldIndex
+	(*ListFieldsReq)(nil),                              // 59: api.v0alpha.ListFieldsReq
+	(*RecordFieldProto)(nil),                           // 60: api.v0alpha.RecordFieldProto
+	(*RepeatedRecords)(nil),                            // 61: api.v0alpha.RepeatedRecords
+	(*ListElementsReq)(nil),                            // 62: api.v0alpha.ListElementsReq
+	(*GetFileTemplatesReq)(nil),                        // 63: api.v0alpha.GetFileTemplatesReq
+	(*FileTemplateField)(nil),                          // 64: api.v0alpha.FileTemplateField
+	(*FileTemplateFields)(nil),                         // 65: api.v0alpha.FileTemplateFields
+	(*FieldTypes)(nil),                                 // 66: api.v0alpha.FieldTypes
+	(*FileTemplate)(nil),                               // 67: api.v0alpha.FileTemplate
+	(*LMSUploadReq)(nil),                               // 68: api.v0alpha.LMSUploadReq
+	(*LMSUploadRes)(nil),                               // 69: api.v0alpha.LMSUploadRes
+	(*ReRunReq)(nil),                                   // 70: api.v0alpha.ReRunReq
+	(*ReRunRes)(nil),                                   // 71: api.v0alpha.ReRunRes
+	(*Process)(nil),                                    // 72: api.v0alpha.Process
+	(*ComplianceProcessor)(nil),                        // 73: api.v0alpha.ComplianceProcessor
+	(*ConsentEntrypointProcess)(nil),                   // 74: api.v0alpha.ConsentEntrypointProcess
+	(*ConsentEnrichmentProcess)(nil),                   // 75: api.v0alpha.ConsentEnrichmentProcess
+	(*ConsentExportProcess)(nil),                       // 76: api.v0alpha.ConsentExportProcess
+	(*PaymentLinkEnrichment)(nil),                      // 77: api.v0alpha.PaymentLinkEnrichment
+	(*PortalLinkEnrichment)(nil),                       // 78: api.v0alpha.PortalLinkEnrichment
+	(*Expiration)(nil),                                 // 79: api.v0alpha.Expiration
+	(*EntrypointProcess)(nil),                          // 80: api.v0alpha.EntrypointProcess
+	(*ApiEntrypoint)(nil),                              // 81: api.v0alpha.ApiEntrypoint
+	(*HttpReq)(nil),                                    // 82: api.v0alpha.HttpReq
+	(*WebEntrypointProcess)(nil),                       // 83: api.v0alpha.WebEntrypointProcess
+	(*BulkWebEntrypointProcess)(nil),                   // 84: api.v0alpha.BulkWebEntrypointProcess
+	(*OmniExchangeProcess)(nil),                        // 85: api.v0alpha.OmniExchangeProcess
+	(*WebExchangeProcess)(nil),                         // 86: api.v0alpha.WebExchangeProcess
+	(*PaginatedHttpRequest)(nil),                       // 87: api.v0alpha.PaginatedHttpRequest
+	(*SftpImport)(nil),                                 // 88: api.v0alpha.SftpImport
+	(*RndEnrichmentProcess)(nil),                       // 89: api.v0alpha.RndEnrichmentProcess
+	(*CjsImportProcess)(nil),                           // 90: api.v0alpha.CjsImportProcess
+	(*CjsExportProcess)(nil),                           // 91: api.v0alpha.CjsExportProcess
+	(*CjsEnrichmentProcess)(nil),                       // 92: api.v0alpha.CjsEnrichmentProcess
+	(*AppendProcess)(nil),                              // 93: api.v0alpha.AppendProcess
+	(*LookupProcess)(nil),                              // 94: api.v0alpha.LookupProcess
+	(*ComplProcess)(nil),                               // 95: api.v0alpha.ComplProcess
+	(*CFSExportConfig)(nil),                            // 96: api.v0alpha.CFSExportConfig
+	(*CFSExportReqHeader)(nil),                         // 97: api.v0alpha.CFSExportReqHeader
+	(*CFSExportProcess)(nil),                           // 98: api.v0alpha.CFSExportProcess
+	(*FilterProcess)(nil),                              // 99: api.v0alpha.FilterProcess
+	(*FilterOperation)(nil),                            // 100: api.v0alpha.FilterOperation
+	(*FilterCheck)(nil),                                // 101: api.v0alpha.FilterCheck
+	(*GSExportProcess)(nil),                            // 102: api.v0alpha.GSExportProcess
+	(*P3ExportProcess)(nil),                            // 103: api.v0alpha.P3ExportProcess
+	(*ComplianceExportProcess)(nil),                    // 104: api.v0alpha.ComplianceExportProcess
+	(*ScrubProcess)(nil),                               // 105: api.v0alpha.ScrubProcess
+	(*DeleteScrubEntriesProcess)(nil),                  // 106: api.v0alpha.DeleteScrubEntriesProcess
+	(*FrequencyProcess)(nil),                           // 107: api.v0alpha.FrequencyProcess
+	(*DispositionSet)(nil),                             // 108: api.v0alpha.DispositionSet
+	(*DispositionPair)(nil),                            // 109: api.v0alpha.DispositionPair
+	(*SftpExportProcess)(nil),                          // 110: api.v0alpha.SftpExportProcess
+	(*WfmMultiSkill)(nil),                              // 111: api.v0alpha.WfmMultiSkill
+	(*WfmExportProcess)(nil),                           // 112: api.v0alpha.WfmExportProcess
+	(*ExportHeader)(nil),                               // 113: api.v0alpha.ExportHeader
+	(*SortReq)(nil),                                    // 114: api.v0alpha.SortReq
+	(*CFSExportReq)(nil),                               // 115: api.v0alpha.CFSExportReq
+	(*DeDupCriteria)(nil),                              // 116: api.v0alpha.DeDupCriteria
+	(*SortCriteria)(nil),                               // 117: api.v0alpha.SortCriteria
+	(*Error)(nil),                                      // 118: api.v0alpha.Error
+	(*RecordFieldMap)(nil),                             // 119: api.v0alpha.RecordFieldMap
+	(*Currency)(nil),                                   // 120: api.v0alpha.Currency
+	(*Phone)(nil),                                      // 121: api.v0alpha.Phone
+	(*PostalCode)(nil),                                 // 122: api.v0alpha.PostalCode
+	(*Email)(nil),                                      // 123: api.v0alpha.Email
+	(*DateTimeModifier)(nil),                           // 124: api.v0alpha.DateTimeModifier
+	(*DateTime)(nil),                                   // 125: api.v0alpha.DateTime
+	(*EnrichedPhone)(nil),                              // 126: api.v0alpha.EnrichedPhone
+	(*EnrichedZip)(nil),                                // 127: api.v0alpha.EnrichedZip
+	(*Now)(nil),                                        // 128: api.v0alpha.Now
+	(*Timestamp)(nil),                                  // 129: api.v0alpha.Timestamp
+	(*Date)(nil),                                       // 130: api.v0alpha.Date
+	(*MonthAndDay)(nil),                                // 131: api.v0alpha.MonthAndDay
+	(*DayOfWeek)(nil),                                  // 132: api.v0alpha.DayOfWeek
+	(*TimeOfDay)(nil),                                  // 133: api.v0alpha.TimeOfDay
+	(*FileFormatParams)(nil),                           // 134: api.v0alpha.FileFormatParams
+	(*ReshapeProcess)(nil),                             // 135: api.v0alpha.ReshapeProcess
+	(*ReshapeAction)(nil),                              // 136: api.v0alpha.ReshapeAction
+	(*ContactManagerSink)(nil),                         // 137: api.v0alpha.ContactManagerSink
+	(*SumProcess)(nil),                                 // 138: api.v0alpha.SumProcess
+	(*GroupBy)(nil),                                    // 139: api.v0alpha.GroupBy
+	(*ListMetrics)(nil),                                // 140: api.v0alpha.ListMetrics
+	(*ParseReq)(nil),                                   // 141: api.v0alpha.ParseReq
+	(*ParseRes)(nil),                                   // 142: api.v0alpha.ParseRes
+	(*Event)(nil),                                      // 143: api.v0alpha.Event
+	(*Events)(nil),                                     // 144: api.v0alpha.Events
+	(*ViewQueueReq)(nil),                               // 145: api.v0alpha.ViewQueueReq
+	(*RetypeCollectionReq)(nil),                        // 146: api.v0alpha.RetypeCollectionReq
+	(*RetypeCollectionRes)(nil),                        // 147: api.v0alpha.RetypeCollectionRes
+	(*CollectionMetadata)(nil),                         // 148: api.v0alpha.CollectionMetadata
+	(*CollectionEntry)(nil),                            // 149: api.v0alpha.CollectionEntry
+	(*MatchReq)(nil),                                   // 150: api.v0alpha.MatchReq
+	(*MatchRes)(nil),                                   // 151: api.v0alpha.MatchRes
+	(*CollectionFieldMetadata)(nil),                    // 152: api.v0alpha.CollectionFieldMetadata
+	(*CollectionField)(nil),                            // 153: api.v0alpha.CollectionField
+	(*GetCollectionReq)(nil),                           // 154: api.v0alpha.GetCollectionReq
+	(*StreamCollectionReq)(nil),                        // 155: api.v0alpha.StreamCollectionReq
+	(*DeleteCollectionReq)(nil),                        // 156: api.v0alpha.DeleteCollectionReq
+	(*ResetCollectionReq)(nil),                         // 157: api.v0alpha.ResetCollectionReq
+	(*ListCollectionsReq)(nil),                         // 158: api.v0alpha.ListCollectionsReq
+	(*ListCollectionsRes)(nil),                         // 159: api.v0alpha.ListCollectionsRes
+	(*SearchCollectionsPaginatedReq)(nil),              // 160: api.v0alpha.SearchCollectionsPaginatedReq
+	(*Search)(nil),                                     // 161: api.v0alpha.Search
+	(*PaginatedSearchRes)(nil),                         // 162: api.v0alpha.PaginatedSearchRes
+	(*GetCollectionEntriesReq)(nil),                    // 163: api.v0alpha.GetCollectionEntriesReq
+	(*GetCollectionEntriesRes)(nil),                    // 164: api.v0alpha.GetCollectionEntriesRes
+	(*DeleteCollectionEntryReq)(nil),                   // 165: api.v0alpha.DeleteCollectionEntryReq
+	(*ListCampaignLinksRes)(nil),                       // 166: api.v0alpha.ListCampaignLinksRes
+	(*Link)(nil),                                       // 167: api.v0alpha.Link
+	(*CjsSearchField)(nil),                             // 168: api.v0alpha.CjsSearchField
+	(*CjsSearchDefinitionMetadata)(nil),                // 169: api.v0alpha.CjsSearchDefinitionMetadata
+	(*CjsSearchDefinition)(nil),                        // 170: api.v0alpha.CjsSearchDefinition
+	(*GetCjsSearchDefinitionReq)(nil),                  // 171: api.v0alpha.GetCjsSearchDefinitionReq
+	(*DeleteCjsSearchDefinitionReq)(nil),               // 172: api.v0alpha.DeleteCjsSearchDefinitionReq
+	(*ListCjsSearchDefinitionsReq)(nil),                // 173: api.v0alpha.ListCjsSearchDefinitionsReq
+	(*ListCjsSearchDefinitionsRes)(nil),                // 174: api.v0alpha.ListCjsSearchDefinitionsRes
+	(*ExecuteCjsSearchDefinitionReq)(nil),              // 175: api.v0alpha.ExecuteCjsSearchDefinitionReq
+	(*ExecuteCjsSearchDefinitionRes)(nil),              // 176: api.v0alpha.ExecuteCjsSearchDefinitionRes
+	(*CollectionEntries)(nil),                          // 177: api.v0alpha.CollectionEntries
+	(*CjsExecuteSearchField)(nil),                      // 178: api.v0alpha.CjsExecuteSearchField
+	(*CjsSecureSearchCriteriaMetadata)(nil),            // 179: api.v0alpha.CjsSecureSearchCriteriaMetadata
+	(*CjsSecureSearchCriteria)(nil),                    // 180: api.v0alpha.CjsSecureSearchCriteria
+	(*GetCjsSecureSearchCriteriaReq)(nil),              // 181: api.v0alpha.GetCjsSecureSearchCriteriaReq
+	(*CjsSecureSearchCriteriaField)(nil),               // 182: api.v0alpha.CjsSecureSearchCriteriaField
+	(*SplitCriteria)(nil),                              // 183: api.v0alpha.SplitCriteria
+	(*UniquePair)(nil),                                 // 184: api.v0alpha.UniquePair
+	(*SplitByNamedUnique)(nil),                         // 185: api.v0alpha.SplitByNamedUnique
+	(*SplitByUnique)(nil),                              // 186: api.v0alpha.SplitByUnique
+	(*SplitByMaxSize)(nil),                             // 187: api.v0alpha.SplitByMaxSize
+	(*SplitByEqualParts)(nil),                          // 188: api.v0alpha.SplitByEqualParts
+	(*EpicEntrypoint)(nil),                             // 189: api.v0alpha.EpicEntrypoint
+	(*RuntimeValues)(nil),                              // 190: api.v0alpha.RuntimeValues
+	(*EntityURL)(nil),                                  // 191: api.v0alpha.EntityURL
+	(*SampleRequest)(nil),                              // 192: api.v0alpha.SampleRequest
+	(*EHREntityType)(nil),                              // 193: api.v0alpha.EHREntityType
+	(*FinviEntrypoint)(nil),                            // 194: api.v0alpha.FinviEntrypoint
+	(*ContactManagementEnrichment)(nil),                // 195: api.v0alpha.ContactManagementEnrichment
+	(*TicketExchangeSink)(nil),                         // 196: api.v0alpha.TicketExchangeSink
+	(*ElementError_InvalidExpression)(nil),             // 197: api.v0alpha.ElementError.InvalidExpression
+	(*ElementError_MissingField)(nil),                  // 198: api.v0alpha.ElementError.MissingField
+	(*ElementError_BadFieldType)(nil),                  // 199: api.v0alpha.ElementError.BadFieldType
+	(*ProcessFields_NestedField)(nil),                  // 200: api.v0alpha.ProcessFields.NestedField
+	(*ProcessFields_Field)(nil),                        // 201: api.v0alpha.ProcessFields.Field
+	nil,                                                // 202: api.v0alpha.ComplianceProcessor.CallMetadataEntry
+	nil,                                                // 203: api.v0alpha.PaymentLinkEnrichment.KeyMapEntry
+	nil,                                                // 204: api.v0alpha.PortalLinkEnrichment.KeyMapEntry
+	nil,                                                // 205: api.v0alpha.HttpReq.HeadersEntry
+	nil,                                                // 206: api.v0alpha.HttpReq.NamedResponseValuesEntry
+	(*LookupProcess_ComplProcess)(nil),                 // 207: api.v0alpha.LookupProcess.ComplProcess
+	(*LookupProcess_ListLookup)(nil),                   // 208: api.v0alpha.LookupProcess.ListLookup
+	(*LookupProcess_UrlLookup)(nil),                    // 209: api.v0alpha.LookupProcess.UrlLookup
+	(*FilterCheck_Value)(nil),                          // 210: api.v0alpha.FilterCheck.Value
+	(*FilterCheck_ValueComparison)(nil),                // 211: api.v0alpha.FilterCheck.ValueComparison
+	(*FilterCheck_TypeComparison)(nil),                 // 212: api.v0alpha.FilterCheck.TypeComparison
+	(*FilterCheck_ListComparison)(nil),                 // 213: api.v0alpha.FilterCheck.ListComparison
+	(*FilterCheck_ListComparison_FieldOrVal)(nil),      // 214: api.v0alpha.FilterCheck.ListComparison.FieldOrVal
+	nil,                                        // 215: api.v0alpha.RecordFieldMap.FieldsEntry
+	(*ReshapeAction_Rename)(nil),               // 216: api.v0alpha.ReshapeAction.Rename
+	(*ReshapeAction_AddValue)(nil),             // 217: api.v0alpha.ReshapeAction.AddValue
+	(*ReshapeAction_AddDate)(nil),              // 218: api.v0alpha.ReshapeAction.AddDate
+	(*ReshapeAction_AddField)(nil),             // 219: api.v0alpha.ReshapeAction.AddField
+	(*ReshapeAction_SubtractValue)(nil),        // 220: api.v0alpha.ReshapeAction.SubtractValue
+	(*ReshapeAction_SubtractField)(nil),        // 221: api.v0alpha.ReshapeAction.SubtractField
+	(*ReshapeAction_Convert)(nil),              // 222: api.v0alpha.ReshapeAction.Convert
+	(*ReshapeAction_Divide)(nil),               // 223: api.v0alpha.ReshapeAction.Divide
+	(*ReshapeAction_Multiply)(nil),             // 224: api.v0alpha.ReshapeAction.Multiply
+	(*ReshapeAction_Modulo)(nil),               // 225: api.v0alpha.ReshapeAction.Modulo
+	(*ReshapeAction_RemoveField)(nil),          // 226: api.v0alpha.ReshapeAction.RemoveField
+	(*ReshapeAction_AddNewField)(nil),          // 227: api.v0alpha.ReshapeAction.AddNewField
+	(*ReshapeAction_AddNewFieldFromField)(nil), // 228: api.v0alpha.ReshapeAction.AddNewFieldFromField
+	(*ReshapeAction_ChangeCurrencyType)(nil),   // 229: api.v0alpha.ReshapeAction.ChangeCurrencyType
+	(*ReshapeAction_SetFieldValue)(nil),        // 230: api.v0alpha.ReshapeAction.SetFieldValue
+	(*ReshapeAction_SetFieldFromField)(nil),    // 231: api.v0alpha.ReshapeAction.SetFieldFromField
+	(*ReshapeAction_Merge)(nil),                // 232: api.v0alpha.ReshapeAction.Merge
+	(*ReshapeAction_Pad)(nil),                  // 233: api.v0alpha.ReshapeAction.Pad
+	(*ReshapeAction_Trim)(nil),                 // 234: api.v0alpha.ReshapeAction.Trim
+	(*ReshapeAction_Extract)(nil),              // 235: api.v0alpha.ReshapeAction.Extract
+	(*ReshapeAction_Merge_FieldOrVal)(nil),     // 236: api.v0alpha.ReshapeAction.Merge.FieldOrVal
+	(*ReshapeAction_Extract_Index)(nil),        // 237: api.v0alpha.ReshapeAction.Extract.Index
+	(*ReshapeAction_Extract_Slice)(nil),        // 238: api.v0alpha.ReshapeAction.Extract.Slice
+	(*ContactManagerSink_DeDuplication)(nil),   // 239: api.v0alpha.ContactManagerSink.DeDuplication
+	nil,                                        // 240: api.v0alpha.RetypeCollectionReq.FieldTypesEntry
+	nil,                                        // 241: api.v0alpha.RuntimeValues.FileIdsEntry
+	nil,                                        // 242: api.v0alpha.RuntimeValues.PreliminaryVarsEntry
+	(*timestamppb.Timestamp)(nil),              // 243: google.protobuf.Timestamp
+	(commons.PipelineElementStatusType)(0),     // 244: api.commons.PipelineElementStatusType
+	(*wrapperspb.StringValue)(nil),             // 245: google.protobuf.StringValue
+	(commons.FieldType)(0),                     // 246: api.commons.FieldType
+	(commons.DateTimePrecision)(0),             // 247: api.commons.DateTimePrecision
+	(commons.FileFormat)(0),                    // 248: api.commons.FileFormat
+	(*commons.CommType)(nil),                   // 249: api.commons.CommType
+	(commons.RunType)(0),                       // 250: api.commons.RunType
+	(commons.ConsentActionType)(0),             // 251: api.commons.ConsentActionType
+	(commons.ContentType)(0),                   // 252: api.commons.ContentType
+	(commons.Channel)(0),                       // 253: api.commons.Channel
+	(*durationpb.Duration)(nil),                // 254: google.protobuf.Duration
+	(commons.HttpVerb)(0),                      // 255: api.commons.HttpVerb
+	(*commons.PaginationTerminator)(nil),       // 256: api.commons.PaginationTerminator
+	(*commons.FilePattern)(nil),                // 257: api.commons.FilePattern
+	(commons.EnrichmentType)(0),                // 258: api.commons.EnrichmentType
+	(commons.PrimarySource)(0),                 // 259: api.commons.PrimarySource
+	(commons.DedupKeyPolicy)(0),                // 260: api.commons.DedupKeyPolicy
+	(commons.ExportType)(0),                    // 261: api.commons.ExportType
+	(commons.ChainOperator)(0),                 // 262: api.commons.ChainOperator
+	(commons.DuplicatePolicyType)(0),           // 263: api.commons.DuplicatePolicyType
+	(commons.AbsentPolicyType)(0),              // 264: api.commons.AbsentPolicyType
+	(*commons.ConstructedFilename)(nil),        // 265: api.commons.ConstructedFilename
+	(commons.DialOrderType)(0),                 // 266: api.commons.DialOrderType
+	(commons.ComplianceListType)(0),            // 267: api.commons.ComplianceListType
+	(commons.DeDupActions)(0),                  // 268: api.commons.DeDupActions
+	(commons.SortOrder)(0),                     // 269: api.commons.SortOrder
+	(commons.RecordType)(0),                    // 270: api.commons.RecordType
+	(*commons.StringArraySql)(nil),             // 271: api.commons.StringArraySql
+	(*wrapperspb.Int64Value)(nil),              // 272: google.protobuf.Int64Value
+	(commons.EventState)(0),                    // 273: api.commons.EventState
+	(commons.CompareOperator)(0),               // 274: api.commons.CompareOperator
+	(*emptypb.Empty)(nil),                      // 275: google.protobuf.Empty
 }
 var file_api_v0alpha_lms_proto_depIdxs = []int32{
-	242, // 0: api.v0alpha.PipelineCanvasMetadata.created_date:type_name -> google.protobuf.Timestamp
-	242, // 1: api.v0alpha.PipelineCanvasMetadata.last_edited:type_name -> google.protobuf.Timestamp
-	4,   // 2: api.v0alpha.PipelineCanvas.metadata:type_name -> api.v0alpha.PipelineCanvasMetadata
-	42,  // 3: api.v0alpha.PipelineCanvas.elements:type_name -> api.v0alpha.Element
-	4,   // 4: api.v0alpha.PipelineCanvasPreview.metadata:type_name -> api.v0alpha.PipelineCanvasMetadata
-	5,   // 5: api.v0alpha.CreatePipelineCanvasRes.pipeline_canvas:type_name -> api.v0alpha.PipelineCanvas
-	6,   // 6: api.v0alpha.ListPipelineCanvasesRes.pipeline_canvas_previews:type_name -> api.v0alpha.PipelineCanvasPreview
-	5,   // 7: api.v0alpha.UpdatePipelineCanvasRes.pipeline_canvas:type_name -> api.v0alpha.PipelineCanvas
-	5,   // 8: api.v0alpha.GetPipelineCanvasRes.pipeline_canvas:type_name -> api.v0alpha.PipelineCanvas
-	19,  // 9: api.v0alpha.ListPoolsResponse.pools:type_name -> api.v0alpha.Pool
-	23,  // 10: api.v0alpha.FindFieldUsagesRes.file_templates:type_name -> api.v0alpha.NameAndId
-	23,  // 11: api.v0alpha.FindFieldUsagesRes.elements:type_name -> api.v0alpha.NameAndId
-	196, // 12: api.v0alpha.ElementError.invalid_expression:type_name -> api.v0alpha.ElementError.InvalidExpression
-	197, // 13: api.v0alpha.ElementError.missing_field:type_name -> api.v0alpha.ElementError.MissingField
-	198, // 14: api.v0alpha.ElementError.bad_field_type:type_name -> api.v0alpha.ElementError.BadFieldType
-	25,  // 15: api.v0alpha.ElementSummary.error:type_name -> api.v0alpha.ElementError
-	26,  // 16: api.v0alpha.FindInvalidElementsRes.invalid_elements:type_name -> api.v0alpha.ElementSummary
-	53,  // 17: api.v0alpha.ListFieldsForElementRes.fields:type_name -> api.v0alpha.Field
-	53,  // 18: api.v0alpha.ListAutocompleteFieldsRes.fields:type_name -> api.v0alpha.Field
-	71,  // 19: api.v0alpha.Element.transform:type_name -> api.v0alpha.Process
-	243, // 20: api.v0alpha.Element.last_status:type_name -> api.commons.PipelineElementStatusType
-	242, // 21: api.v0alpha.Element.created_date:type_name -> google.protobuf.Timestamp
-	242, // 22: api.v0alpha.Element.last_edited:type_name -> google.protobuf.Timestamp
-	71,  // 23: api.v0alpha.PeekListReq.process:type_name -> api.v0alpha.Process
-	49,  // 24: api.v0alpha.PeekListRes.records:type_name -> api.v0alpha.RecordProto
-	139, // 25: api.v0alpha.PeekListRes.metrics:type_name -> api.v0alpha.ListMetrics
-	48,  // 26: api.v0alpha.GetHistoryRes.commits:type_name -> api.v0alpha.HistoryAndCount
-	71,  // 27: api.v0alpha.History.process:type_name -> api.v0alpha.Process
-	244, // 28: api.v0alpha.History.reason:type_name -> google.protobuf.StringValue
-	242, // 29: api.v0alpha.History.upload_ts:type_name -> google.protobuf.Timestamp
-	242, // 30: api.v0alpha.History.started_ts:type_name -> google.protobuf.Timestamp
-	242, // 31: api.v0alpha.History.finished_ts:type_name -> google.protobuf.Timestamp
-	139, // 32: api.v0alpha.History.metrics:type_name -> api.v0alpha.ListMetrics
-	139, // 33: api.v0alpha.History.discard_metrics:type_name -> api.v0alpha.ListMetrics
-	71,  // 34: api.v0alpha.HistoryAndCount.process:type_name -> api.v0alpha.Process
-	244, // 35: api.v0alpha.HistoryAndCount.reason:type_name -> google.protobuf.StringValue
-	242, // 36: api.v0alpha.HistoryAndCount.upload_ts:type_name -> google.protobuf.Timestamp
-	242, // 37: api.v0alpha.HistoryAndCount.started_ts:type_name -> google.protobuf.Timestamp
-	242, // 38: api.v0alpha.HistoryAndCount.finished_ts:type_name -> google.protobuf.Timestamp
-	139, // 39: api.v0alpha.HistoryAndCount.metrics:type_name -> api.v0alpha.ListMetrics
-	139, // 40: api.v0alpha.HistoryAndCount.discard_metrics:type_name -> api.v0alpha.ListMetrics
-	59,  // 41: api.v0alpha.RecordProto.fields:type_name -> api.v0alpha.RecordFieldProto
-	49,  // 42: api.v0alpha.RecordProtoPair.old:type_name -> api.v0alpha.RecordProto
-	49,  // 43: api.v0alpha.RecordProtoPair.new:type_name -> api.v0alpha.RecordProto
-	200, // 44: api.v0alpha.ProcessFields.fields:type_name -> api.v0alpha.ProcessFields.Field
-	245, // 45: api.v0alpha.Field.type:type_name -> api.commons.FieldType
-	242, // 46: api.v0alpha.Field.date_modified:type_name -> google.protobuf.Timestamp
-	55,  // 47: api.v0alpha.Field.metadata:type_name -> api.v0alpha.FieldMetadata
-	245, // 48: api.v0alpha.UpdateFieldReq.type:type_name -> api.commons.FieldType
-	242, // 49: api.v0alpha.UpdateFieldReq.date_modified:type_name -> google.protobuf.Timestamp
-	55,  // 50: api.v0alpha.UpdateFieldReq.metadata:type_name -> api.v0alpha.FieldMetadata
-	246, // 51: api.v0alpha.FieldMetadata.precision:type_name -> api.commons.DateTimePrecision
-	53,  // 52: api.v0alpha.Fields.fields:type_name -> api.v0alpha.Field
-	123, // 53: api.v0alpha.FieldIndex.datetime:type_name -> api.v0alpha.DateTimeModifier
-	120, // 54: api.v0alpha.RecordFieldProto.phone:type_name -> api.v0alpha.Phone
-	119, // 55: api.v0alpha.RecordFieldProto.currency:type_name -> api.v0alpha.Currency
-	121, // 56: api.v0alpha.RecordFieldProto.postal_code:type_name -> api.v0alpha.PostalCode
-	122, // 57: api.v0alpha.RecordFieldProto.email:type_name -> api.v0alpha.Email
-	124, // 58: api.v0alpha.RecordFieldProto.date_time:type_name -> api.v0alpha.DateTime
-	60,  // 59: api.v0alpha.RecordFieldProto.repeated_records:type_name -> api.v0alpha.RepeatedRecords
-	118, // 60: api.v0alpha.RecordFieldProto.record_field_map:type_name -> api.v0alpha.RecordFieldMap
-	117, // 61: api.v0alpha.RecordFieldProto.err:type_name -> api.v0alpha.Error
-	125, // 62: api.v0alpha.RecordFieldProto.enriched_phone:type_name -> api.v0alpha.EnrichedPhone
-	126, // 63: api.v0alpha.RecordFieldProto.enriched_zip:type_name -> api.v0alpha.EnrichedZip
-	49,  // 64: api.v0alpha.RepeatedRecords.records:type_name -> api.v0alpha.RecordProto
-	245, // 65: api.v0alpha.FileTemplateField.type:type_name -> api.commons.FieldType
-	63,  // 66: api.v0alpha.FileTemplateFields.fields:type_name -> api.v0alpha.FileTemplateField
-	245, // 67: api.v0alpha.FieldTypes.values:type_name -> api.commons.FieldType
-	133, // 68: api.v0alpha.FileTemplate.file_format_params:type_name -> api.v0alpha.FileFormatParams
-	247, // 69: api.v0alpha.FileTemplate.file_format:type_name -> api.commons.FileFormat
-	53,  // 70: api.v0alpha.FileTemplate.fields:type_name -> api.v0alpha.Field
-	92,  // 71: api.v0alpha.Process.append:type_name -> api.v0alpha.AppendProcess
-	116, // 72: api.v0alpha.Process.sort:type_name -> api.v0alpha.SortCriteria
-	98,  // 73: api.v0alpha.Process.filter:type_name -> api.v0alpha.FilterProcess
-	101, // 74: api.v0alpha.Process.gs_export:type_name -> api.v0alpha.GSExportProcess
-	102, // 75: api.v0alpha.Process.p3_export:type_name -> api.v0alpha.P3ExportProcess
-	94,  // 76: api.v0alpha.Process.compl:type_name -> api.v0alpha.ComplProcess
-	115, // 77: api.v0alpha.Process.dedup:type_name -> api.v0alpha.DeDupCriteria
-	97,  // 78: api.v0alpha.Process.cfs_export:type_name -> api.v0alpha.CFSExportProcess
-	109, // 79: api.v0alpha.Process.sftp_export:type_name -> api.v0alpha.SftpExportProcess
-	134, // 80: api.v0alpha.Process.reshape:type_name -> api.v0alpha.ReshapeProcess
-	93,  // 81: api.v0alpha.Process.lookup:type_name -> api.v0alpha.LookupProcess
-	79,  // 82: api.v0alpha.Process.entrypoint:type_name -> api.v0alpha.EntrypointProcess
-	103, // 83: api.v0alpha.Process.compliance_export:type_name -> api.v0alpha.ComplianceExportProcess
-	80,  // 84: api.v0alpha.Process.api_entrypoint:type_name -> api.v0alpha.ApiEntrypoint
-	87,  // 85: api.v0alpha.Process.sftp_import:type_name -> api.v0alpha.SftpImport
-	104, // 86: api.v0alpha.Process.scrub:type_name -> api.v0alpha.ScrubProcess
-	106, // 87: api.v0alpha.Process.frequency:type_name -> api.v0alpha.FrequencyProcess
-	89,  // 88: api.v0alpha.Process.cjs_import:type_name -> api.v0alpha.CjsImportProcess
-	90,  // 89: api.v0alpha.Process.cjs_export:type_name -> api.v0alpha.CjsExportProcess
-	91,  // 90: api.v0alpha.Process.cjs_enrich:type_name -> api.v0alpha.CjsEnrichmentProcess
-	82,  // 91: api.v0alpha.Process.web_entrypoint:type_name -> api.v0alpha.WebEntrypointProcess
-	105, // 92: api.v0alpha.Process.delete_scrub_entries:type_name -> api.v0alpha.DeleteScrubEntriesProcess
-	111, // 93: api.v0alpha.Process.wfm_export:type_name -> api.v0alpha.WfmExportProcess
-	76,  // 94: api.v0alpha.Process.link_enrich:type_name -> api.v0alpha.PaymentLinkEnrichment
-	88,  // 95: api.v0alpha.Process.rnd:type_name -> api.v0alpha.RndEnrichmentProcess
-	74,  // 96: api.v0alpha.Process.consent_enrich:type_name -> api.v0alpha.ConsentEnrichmentProcess
-	75,  // 97: api.v0alpha.Process.consent_export:type_name -> api.v0alpha.ConsentExportProcess
-	72,  // 98: api.v0alpha.Process.compliance_processor:type_name -> api.v0alpha.ComplianceProcessor
-	73,  // 99: api.v0alpha.Process.consent_entrypoint:type_name -> api.v0alpha.ConsentEntrypointProcess
-	77,  // 100: api.v0alpha.Process.portal_link_enrich:type_name -> api.v0alpha.PortalLinkEnrichment
-	83,  // 101: api.v0alpha.Process.bulk_web_entrypoint:type_name -> api.v0alpha.BulkWebEntrypointProcess
-	84,  // 102: api.v0alpha.Process.omni_exchange_process:type_name -> api.v0alpha.OmniExchangeProcess
-	85,  // 103: api.v0alpha.Process.web_exchange_process:type_name -> api.v0alpha.WebExchangeProcess
-	182, // 104: api.v0alpha.Process.split:type_name -> api.v0alpha.SplitCriteria
-	188, // 105: api.v0alpha.Process.epic_entry_point:type_name -> api.v0alpha.EpicEntrypoint
-	136, // 106: api.v0alpha.Process.contact_manager_sink:type_name -> api.v0alpha.ContactManagerSink
-	137, // 107: api.v0alpha.Process.sum:type_name -> api.v0alpha.SumProcess
-	193, // 108: api.v0alpha.Process.finvi_entrypoint:type_name -> api.v0alpha.FinviEntrypoint
-	194, // 109: api.v0alpha.Process.contact_management_enrichment:type_name -> api.v0alpha.ContactManagementEnrichment
-	195, // 110: api.v0alpha.Process.ticket_exchange_sink:type_name -> api.v0alpha.TicketExchangeSink
-	248, // 111: api.v0alpha.ComplianceProcessor.comm_type:type_name -> api.commons.CommType
-	201, // 112: api.v0alpha.ComplianceProcessor.call_metadata:type_name -> api.v0alpha.ComplianceProcessor.CallMetadataEntry
-	249, // 113: api.v0alpha.ConsentExportProcess.run_type:type_name -> api.commons.RunType
-	250, // 114: api.v0alpha.ConsentExportProcess.action:type_name -> api.commons.ConsentActionType
-	251, // 115: api.v0alpha.ConsentExportProcess.content_type_val:type_name -> api.commons.ContentType
-	252, // 116: api.v0alpha.ConsentExportProcess.channel_type_val:type_name -> api.commons.Channel
-	242, // 117: api.v0alpha.ConsentExportProcess.expiration_date:type_name -> google.protobuf.Timestamp
-	253, // 118: api.v0alpha.ConsentExportProcess.expiration_after_duration:type_name -> google.protobuf.Duration
-	202, // 119: api.v0alpha.PaymentLinkEnrichment.key_map:type_name -> api.v0alpha.PaymentLinkEnrichment.KeyMapEntry
-	203, // 120: api.v0alpha.PortalLinkEnrichment.key_map:type_name -> api.v0alpha.PortalLinkEnrichment.KeyMapEntry
-	78,  // 121: api.v0alpha.PortalLinkEnrichment.expiration:type_name -> api.v0alpha.Expiration
+	243, // 0: api.v0alpha.PipelineCanvasMetadata.created_date:type_name -> google.protobuf.Timestamp
+	243, // 1: api.v0alpha.PipelineCanvasMetadata.last_edited:type_name -> google.protobuf.Timestamp
+	5,   // 2: api.v0alpha.PipelineCanvas.metadata:type_name -> api.v0alpha.PipelineCanvasMetadata
+	43,  // 3: api.v0alpha.PipelineCanvas.elements:type_name -> api.v0alpha.Element
+	5,   // 4: api.v0alpha.PipelineCanvasPreview.metadata:type_name -> api.v0alpha.PipelineCanvasMetadata
+	6,   // 5: api.v0alpha.CreatePipelineCanvasRes.pipeline_canvas:type_name -> api.v0alpha.PipelineCanvas
+	7,   // 6: api.v0alpha.ListPipelineCanvasesRes.pipeline_canvas_previews:type_name -> api.v0alpha.PipelineCanvasPreview
+	6,   // 7: api.v0alpha.UpdatePipelineCanvasRes.pipeline_canvas:type_name -> api.v0alpha.PipelineCanvas
+	6,   // 8: api.v0alpha.GetPipelineCanvasRes.pipeline_canvas:type_name -> api.v0alpha.PipelineCanvas
+	20,  // 9: api.v0alpha.ListPoolsResponse.pools:type_name -> api.v0alpha.Pool
+	24,  // 10: api.v0alpha.FindFieldUsagesRes.file_templates:type_name -> api.v0alpha.NameAndId
+	24,  // 11: api.v0alpha.FindFieldUsagesRes.elements:type_name -> api.v0alpha.NameAndId
+	197, // 12: api.v0alpha.ElementError.invalid_expression:type_name -> api.v0alpha.ElementError.InvalidExpression
+	198, // 13: api.v0alpha.ElementError.missing_field:type_name -> api.v0alpha.ElementError.MissingField
+	199, // 14: api.v0alpha.ElementError.bad_field_type:type_name -> api.v0alpha.ElementError.BadFieldType
+	26,  // 15: api.v0alpha.ElementSummary.error:type_name -> api.v0alpha.ElementError
+	27,  // 16: api.v0alpha.FindInvalidElementsRes.invalid_elements:type_name -> api.v0alpha.ElementSummary
+	54,  // 17: api.v0alpha.ListFieldsForElementRes.fields:type_name -> api.v0alpha.Field
+	54,  // 18: api.v0alpha.ListAutocompleteFieldsRes.fields:type_name -> api.v0alpha.Field
+	72,  // 19: api.v0alpha.Element.transform:type_name -> api.v0alpha.Process
+	244, // 20: api.v0alpha.Element.last_status:type_name -> api.commons.PipelineElementStatusType
+	243, // 21: api.v0alpha.Element.created_date:type_name -> google.protobuf.Timestamp
+	243, // 22: api.v0alpha.Element.last_edited:type_name -> google.protobuf.Timestamp
+	72,  // 23: api.v0alpha.PeekListReq.process:type_name -> api.v0alpha.Process
+	50,  // 24: api.v0alpha.PeekListRes.records:type_name -> api.v0alpha.RecordProto
+	140, // 25: api.v0alpha.PeekListRes.metrics:type_name -> api.v0alpha.ListMetrics
+	49,  // 26: api.v0alpha.GetHistoryRes.commits:type_name -> api.v0alpha.HistoryAndCount
+	72,  // 27: api.v0alpha.History.process:type_name -> api.v0alpha.Process
+	245, // 28: api.v0alpha.History.reason:type_name -> google.protobuf.StringValue
+	243, // 29: api.v0alpha.History.upload_ts:type_name -> google.protobuf.Timestamp
+	243, // 30: api.v0alpha.History.started_ts:type_name -> google.protobuf.Timestamp
+	243, // 31: api.v0alpha.History.finished_ts:type_name -> google.protobuf.Timestamp
+	140, // 32: api.v0alpha.History.metrics:type_name -> api.v0alpha.ListMetrics
+	140, // 33: api.v0alpha.History.discard_metrics:type_name -> api.v0alpha.ListMetrics
+	72,  // 34: api.v0alpha.HistoryAndCount.process:type_name -> api.v0alpha.Process
+	245, // 35: api.v0alpha.HistoryAndCount.reason:type_name -> google.protobuf.StringValue
+	243, // 36: api.v0alpha.HistoryAndCount.upload_ts:type_name -> google.protobuf.Timestamp
+	243, // 37: api.v0alpha.HistoryAndCount.started_ts:type_name -> google.protobuf.Timestamp
+	243, // 38: api.v0alpha.HistoryAndCount.finished_ts:type_name -> google.protobuf.Timestamp
+	140, // 39: api.v0alpha.HistoryAndCount.metrics:type_name -> api.v0alpha.ListMetrics
+	140, // 40: api.v0alpha.HistoryAndCount.discard_metrics:type_name -> api.v0alpha.ListMetrics
+	60,  // 41: api.v0alpha.RecordProto.fields:type_name -> api.v0alpha.RecordFieldProto
+	50,  // 42: api.v0alpha.RecordProtoPair.old:type_name -> api.v0alpha.RecordProto
+	50,  // 43: api.v0alpha.RecordProtoPair.new:type_name -> api.v0alpha.RecordProto
+	201, // 44: api.v0alpha.ProcessFields.fields:type_name -> api.v0alpha.ProcessFields.Field
+	246, // 45: api.v0alpha.Field.type:type_name -> api.commons.FieldType
+	243, // 46: api.v0alpha.Field.date_modified:type_name -> google.protobuf.Timestamp
+	56,  // 47: api.v0alpha.Field.metadata:type_name -> api.v0alpha.FieldMetadata
+	246, // 48: api.v0alpha.UpdateFieldReq.type:type_name -> api.commons.FieldType
+	243, // 49: api.v0alpha.UpdateFieldReq.date_modified:type_name -> google.protobuf.Timestamp
+	56,  // 50: api.v0alpha.UpdateFieldReq.metadata:type_name -> api.v0alpha.FieldMetadata
+	247, // 51: api.v0alpha.FieldMetadata.precision:type_name -> api.commons.DateTimePrecision
+	54,  // 52: api.v0alpha.Fields.fields:type_name -> api.v0alpha.Field
+	124, // 53: api.v0alpha.FieldIndex.datetime:type_name -> api.v0alpha.DateTimeModifier
+	121, // 54: api.v0alpha.RecordFieldProto.phone:type_name -> api.v0alpha.Phone
+	120, // 55: api.v0alpha.RecordFieldProto.currency:type_name -> api.v0alpha.Currency
+	122, // 56: api.v0alpha.RecordFieldProto.postal_code:type_name -> api.v0alpha.PostalCode
+	123, // 57: api.v0alpha.RecordFieldProto.email:type_name -> api.v0alpha.Email
+	125, // 58: api.v0alpha.RecordFieldProto.date_time:type_name -> api.v0alpha.DateTime
+	61,  // 59: api.v0alpha.RecordFieldProto.repeated_records:type_name -> api.v0alpha.RepeatedRecords
+	119, // 60: api.v0alpha.RecordFieldProto.record_field_map:type_name -> api.v0alpha.RecordFieldMap
+	118, // 61: api.v0alpha.RecordFieldProto.err:type_name -> api.v0alpha.Error
+	126, // 62: api.v0alpha.RecordFieldProto.enriched_phone:type_name -> api.v0alpha.EnrichedPhone
+	127, // 63: api.v0alpha.RecordFieldProto.enriched_zip:type_name -> api.v0alpha.EnrichedZip
+	50,  // 64: api.v0alpha.RepeatedRecords.records:type_name -> api.v0alpha.RecordProto
+	246, // 65: api.v0alpha.FileTemplateField.type:type_name -> api.commons.FieldType
+	64,  // 66: api.v0alpha.FileTemplateFields.fields:type_name -> api.v0alpha.FileTemplateField
+	246, // 67: api.v0alpha.FieldTypes.values:type_name -> api.commons.FieldType
+	134, // 68: api.v0alpha.FileTemplate.file_format_params:type_name -> api.v0alpha.FileFormatParams
+	248, // 69: api.v0alpha.FileTemplate.file_format:type_name -> api.commons.FileFormat
+	54,  // 70: api.v0alpha.FileTemplate.fields:type_name -> api.v0alpha.Field
+	93,  // 71: api.v0alpha.Process.append:type_name -> api.v0alpha.AppendProcess
+	117, // 72: api.v0alpha.Process.sort:type_name -> api.v0alpha.SortCriteria
+	99,  // 73: api.v0alpha.Process.filter:type_name -> api.v0alpha.FilterProcess
+	102, // 74: api.v0alpha.Process.gs_export:type_name -> api.v0alpha.GSExportProcess
+	103, // 75: api.v0alpha.Process.p3_export:type_name -> api.v0alpha.P3ExportProcess
+	95,  // 76: api.v0alpha.Process.compl:type_name -> api.v0alpha.ComplProcess
+	116, // 77: api.v0alpha.Process.dedup:type_name -> api.v0alpha.DeDupCriteria
+	98,  // 78: api.v0alpha.Process.cfs_export:type_name -> api.v0alpha.CFSExportProcess
+	110, // 79: api.v0alpha.Process.sftp_export:type_name -> api.v0alpha.SftpExportProcess
+	135, // 80: api.v0alpha.Process.reshape:type_name -> api.v0alpha.ReshapeProcess
+	94,  // 81: api.v0alpha.Process.lookup:type_name -> api.v0alpha.LookupProcess
+	80,  // 82: api.v0alpha.Process.entrypoint:type_name -> api.v0alpha.EntrypointProcess
+	104, // 83: api.v0alpha.Process.compliance_export:type_name -> api.v0alpha.ComplianceExportProcess
+	81,  // 84: api.v0alpha.Process.api_entrypoint:type_name -> api.v0alpha.ApiEntrypoint
+	88,  // 85: api.v0alpha.Process.sftp_import:type_name -> api.v0alpha.SftpImport
+	105, // 86: api.v0alpha.Process.scrub:type_name -> api.v0alpha.ScrubProcess
+	107, // 87: api.v0alpha.Process.frequency:type_name -> api.v0alpha.FrequencyProcess
+	90,  // 88: api.v0alpha.Process.cjs_import:type_name -> api.v0alpha.CjsImportProcess
+	91,  // 89: api.v0alpha.Process.cjs_export:type_name -> api.v0alpha.CjsExportProcess
+	92,  // 90: api.v0alpha.Process.cjs_enrich:type_name -> api.v0alpha.CjsEnrichmentProcess
+	83,  // 91: api.v0alpha.Process.web_entrypoint:type_name -> api.v0alpha.WebEntrypointProcess
+	106, // 92: api.v0alpha.Process.delete_scrub_entries:type_name -> api.v0alpha.DeleteScrubEntriesProcess
+	112, // 93: api.v0alpha.Process.wfm_export:type_name -> api.v0alpha.WfmExportProcess
+	77,  // 94: api.v0alpha.Process.link_enrich:type_name -> api.v0alpha.PaymentLinkEnrichment
+	89,  // 95: api.v0alpha.Process.rnd:type_name -> api.v0alpha.RndEnrichmentProcess
+	75,  // 96: api.v0alpha.Process.consent_enrich:type_name -> api.v0alpha.ConsentEnrichmentProcess
+	76,  // 97: api.v0alpha.Process.consent_export:type_name -> api.v0alpha.ConsentExportProcess
+	73,  // 98: api.v0alpha.Process.compliance_processor:type_name -> api.v0alpha.ComplianceProcessor
+	74,  // 99: api.v0alpha.Process.consent_entrypoint:type_name -> api.v0alpha.ConsentEntrypointProcess
+	78,  // 100: api.v0alpha.Process.portal_link_enrich:type_name -> api.v0alpha.PortalLinkEnrichment
+	84,  // 101: api.v0alpha.Process.bulk_web_entrypoint:type_name -> api.v0alpha.BulkWebEntrypointProcess
+	85,  // 102: api.v0alpha.Process.omni_exchange_process:type_name -> api.v0alpha.OmniExchangeProcess
+	86,  // 103: api.v0alpha.Process.web_exchange_process:type_name -> api.v0alpha.WebExchangeProcess
+	183, // 104: api.v0alpha.Process.split:type_name -> api.v0alpha.SplitCriteria
+	189, // 105: api.v0alpha.Process.epic_entry_point:type_name -> api.v0alpha.EpicEntrypoint
+	137, // 106: api.v0alpha.Process.contact_manager_sink:type_name -> api.v0alpha.ContactManagerSink
+	138, // 107: api.v0alpha.Process.sum:type_name -> api.v0alpha.SumProcess
+	194, // 108: api.v0alpha.Process.finvi_entrypoint:type_name -> api.v0alpha.FinviEntrypoint
+	195, // 109: api.v0alpha.Process.contact_management_enrichment:type_name -> api.v0alpha.ContactManagementEnrichment
+	196, // 110: api.v0alpha.Process.ticket_exchange_sink:type_name -> api.v0alpha.TicketExchangeSink
+	249, // 111: api.v0alpha.ComplianceProcessor.comm_type:type_name -> api.commons.CommType
+	202, // 112: api.v0alpha.ComplianceProcessor.call_metadata:type_name -> api.v0alpha.ComplianceProcessor.CallMetadataEntry
+	250, // 113: api.v0alpha.ConsentExportProcess.run_type:type_name -> api.commons.RunType
+	251, // 114: api.v0alpha.ConsentExportProcess.action:type_name -> api.commons.ConsentActionType
+	252, // 115: api.v0alpha.ConsentExportProcess.content_type_val:type_name -> api.commons.ContentType
+	253, // 116: api.v0alpha.ConsentExportProcess.channel_type_val:type_name -> api.commons.Channel
+	243, // 117: api.v0alpha.ConsentExportProcess.expiration_date:type_name -> google.protobuf.Timestamp
+	254, // 118: api.v0alpha.ConsentExportProcess.expiration_after_duration:type_name -> google.protobuf.Duration
+	203, // 119: api.v0alpha.PaymentLinkEnrichment.key_map:type_name -> api.v0alpha.PaymentLinkEnrichment.KeyMapEntry
+	204, // 120: api.v0alpha.PortalLinkEnrichment.key_map:type_name -> api.v0alpha.PortalLinkEnrichment.KeyMapEntry
+	79,  // 121: api.v0alpha.PortalLinkEnrichment.expiration:type_name -> api.v0alpha.Expiration
 	0,   // 122: api.v0alpha.Expiration.units:type_name -> api.v0alpha.TimeUnit
-	204, // 123: api.v0alpha.HttpReq.headers:type_name -> api.v0alpha.HttpReq.HeadersEntry
-	254, // 124: api.v0alpha.HttpReq.method:type_name -> api.commons.HttpVerb
-	205, // 125: api.v0alpha.HttpReq.named_response_values:type_name -> api.v0alpha.HttpReq.NamedResponseValuesEntry
-	81,  // 126: api.v0alpha.WebEntrypointProcess.http_requests:type_name -> api.v0alpha.HttpReq
-	66,  // 127: api.v0alpha.WebEntrypointProcess.file_template:type_name -> api.v0alpha.FileTemplate
-	81,  // 128: api.v0alpha.BulkWebEntrypointProcess.preliminary_requests:type_name -> api.v0alpha.HttpReq
-	86,  // 129: api.v0alpha.BulkWebEntrypointProcess.paginated_request:type_name -> api.v0alpha.PaginatedHttpRequest
-	81,  // 130: api.v0alpha.WebExchangeProcess.http_requests:type_name -> api.v0alpha.HttpReq
-	81,  // 131: api.v0alpha.PaginatedHttpRequest.iteration_request:type_name -> api.v0alpha.HttpReq
-	255, // 132: api.v0alpha.PaginatedHttpRequest.end_for_any:type_name -> api.commons.PaginationTerminator
-	255, // 133: api.v0alpha.PaginatedHttpRequest.end_for_all:type_name -> api.commons.PaginationTerminator
-	255, // 134: api.v0alpha.PaginatedHttpRequest.request_not_ready:type_name -> api.commons.PaginationTerminator
-	256, // 135: api.v0alpha.SftpImport.file_pattern:type_name -> api.commons.FilePattern
-	112, // 136: api.v0alpha.CjsExportProcess.header:type_name -> api.v0alpha.ExportHeader
-	249, // 137: api.v0alpha.CjsExportProcess.run_type:type_name -> api.commons.RunType
-	257, // 138: api.v0alpha.CjsEnrichmentProcess.enrich_type:type_name -> api.commons.EnrichmentType
-	258, // 139: api.v0alpha.CjsEnrichmentProcess.primary_source:type_name -> api.commons.PrimarySource
-	259, // 140: api.v0alpha.CjsEnrichmentProcess.dedup_key_policy:type_name -> api.commons.DedupKeyPolicy
-	206, // 141: api.v0alpha.LookupProcess.compl:type_name -> api.v0alpha.LookupProcess.ComplProcess
-	207, // 142: api.v0alpha.LookupProcess.list:type_name -> api.v0alpha.LookupProcess.ListLookup
-	208, // 143: api.v0alpha.LookupProcess.url:type_name -> api.v0alpha.LookupProcess.UrlLookup
-	260, // 144: api.v0alpha.CFSExportConfig.type:type_name -> api.commons.ExportType
-	112, // 145: api.v0alpha.CFSExportReqHeader.export_header:type_name -> api.v0alpha.ExportHeader
-	95,  // 146: api.v0alpha.CFSExportReqHeader.configs:type_name -> api.v0alpha.CFSExportConfig
-	112, // 147: api.v0alpha.CFSExportProcess.export_header:type_name -> api.v0alpha.ExportHeader
-	95,  // 148: api.v0alpha.CFSExportProcess.configs:type_name -> api.v0alpha.CFSExportConfig
-	99,  // 149: api.v0alpha.FilterProcess.operations:type_name -> api.v0alpha.FilterOperation
-	100, // 150: api.v0alpha.FilterOperation.checks:type_name -> api.v0alpha.FilterCheck
-	261, // 151: api.v0alpha.FilterOperation.operator:type_name -> api.commons.ChainOperator
-	210, // 152: api.v0alpha.FilterCheck.val_comp:type_name -> api.v0alpha.FilterCheck.ValueComparison
-	211, // 153: api.v0alpha.FilterCheck.type_comp:type_name -> api.v0alpha.FilterCheck.TypeComparison
-	212, // 154: api.v0alpha.FilterCheck.list_comp:type_name -> api.v0alpha.FilterCheck.ListComparison
-	112, // 155: api.v0alpha.P3ExportProcess.header:type_name -> api.v0alpha.ExportHeader
-	262, // 156: api.v0alpha.P3ExportProcess.dupe_policy:type_name -> api.commons.DuplicatePolicyType
-	263, // 157: api.v0alpha.P3ExportProcess.absent_policy:type_name -> api.commons.AbsentPolicyType
-	249, // 158: api.v0alpha.P3ExportProcess.run_type:type_name -> api.commons.RunType
-	256, // 159: api.v0alpha.P3ExportProcess.file_pattern:type_name -> api.commons.FilePattern
-	264, // 160: api.v0alpha.P3ExportProcess.filename:type_name -> api.commons.ConstructedFilename
-	242, // 161: api.v0alpha.P3ExportProcess.start_time:type_name -> google.protobuf.Timestamp
-	242, // 162: api.v0alpha.P3ExportProcess.end_time:type_name -> google.protobuf.Timestamp
-	265, // 163: api.v0alpha.P3ExportProcess.dial_order:type_name -> api.commons.DialOrderType
-	247, // 164: api.v0alpha.P3ExportProcess.file_format:type_name -> api.commons.FileFormat
-	249, // 165: api.v0alpha.ComplianceExportProcess.run_type:type_name -> api.commons.RunType
-	266, // 166: api.v0alpha.ComplianceExportProcess.compliance_list_type:type_name -> api.commons.ComplianceListType
-	108, // 167: api.v0alpha.FrequencyProcess.dispositions:type_name -> api.v0alpha.DispositionPair
-	107, // 168: api.v0alpha.FrequencyProcess.disposition_sets:type_name -> api.v0alpha.DispositionSet
-	108, // 169: api.v0alpha.DispositionSet.dispositions:type_name -> api.v0alpha.DispositionPair
-	247, // 170: api.v0alpha.SftpExportProcess.fileformat:type_name -> api.commons.FileFormat
-	256, // 171: api.v0alpha.SftpExportProcess.file_pattern:type_name -> api.commons.FilePattern
-	249, // 172: api.v0alpha.SftpExportProcess.run_type:type_name -> api.commons.RunType
-	112, // 173: api.v0alpha.SftpExportProcess.header:type_name -> api.v0alpha.ExportHeader
-	264, // 174: api.v0alpha.SftpExportProcess.filename:type_name -> api.commons.ConstructedFilename
-	110, // 175: api.v0alpha.WfmExportProcess.multi:type_name -> api.v0alpha.WfmMultiSkill
-	116, // 176: api.v0alpha.SortReq.criteria:type_name -> api.v0alpha.SortCriteria
-	49,  // 177: api.v0alpha.SortReq.record:type_name -> api.v0alpha.RecordProto
-	96,  // 178: api.v0alpha.CFSExportReq.header:type_name -> api.v0alpha.CFSExportReqHeader
-	49,  // 179: api.v0alpha.CFSExportReq.record:type_name -> api.v0alpha.RecordProto
-	267, // 180: api.v0alpha.DeDupCriteria.action:type_name -> api.commons.DeDupActions
-	57,  // 181: api.v0alpha.DeDupCriteria.fields:type_name -> api.v0alpha.FieldIndex
-	100, // 182: api.v0alpha.DeDupCriteria.unless:type_name -> api.v0alpha.FilterCheck
-	268, // 183: api.v0alpha.SortCriteria.ordering:type_name -> api.commons.SortOrder
-	57,  // 184: api.v0alpha.SortCriteria.field_order:type_name -> api.v0alpha.FieldIndex
-	214, // 185: api.v0alpha.RecordFieldMap.fields:type_name -> api.v0alpha.RecordFieldMap.FieldsEntry
-	246, // 186: api.v0alpha.DateTime.precision:type_name -> api.commons.DateTimePrecision
-	123, // 187: api.v0alpha.DateTime.modifier:type_name -> api.v0alpha.DateTimeModifier
-	135, // 188: api.v0alpha.ReshapeProcess.actions:type_name -> api.v0alpha.ReshapeAction
-	269, // 189: api.v0alpha.ReshapeAction.matching_type:type_name -> api.commons.RecordType
-	100, // 190: api.v0alpha.ReshapeAction.predicate:type_name -> api.v0alpha.FilterCheck
-	99,  // 191: api.v0alpha.ReshapeAction.operations:type_name -> api.v0alpha.FilterOperation
-	215, // 192: api.v0alpha.ReshapeAction.rename:type_name -> api.v0alpha.ReshapeAction.Rename
-	216, // 193: api.v0alpha.ReshapeAction.add_value:type_name -> api.v0alpha.ReshapeAction.AddValue
-	218, // 194: api.v0alpha.ReshapeAction.add_field:type_name -> api.v0alpha.ReshapeAction.AddField
-	217, // 195: api.v0alpha.ReshapeAction.add_date:type_name -> api.v0alpha.ReshapeAction.AddDate
-	219, // 196: api.v0alpha.ReshapeAction.subtract_value:type_name -> api.v0alpha.ReshapeAction.SubtractValue
-	220, // 197: api.v0alpha.ReshapeAction.subtract_field:type_name -> api.v0alpha.ReshapeAction.SubtractField
-	221, // 198: api.v0alpha.ReshapeAction.convert:type_name -> api.v0alpha.ReshapeAction.Convert
-	225, // 199: api.v0alpha.ReshapeAction.remove_field:type_name -> api.v0alpha.ReshapeAction.RemoveField
-	226, // 200: api.v0alpha.ReshapeAction.add_new_field:type_name -> api.v0alpha.ReshapeAction.AddNewField
-	228, // 201: api.v0alpha.ReshapeAction.change_currency_type:type_name -> api.v0alpha.ReshapeAction.ChangeCurrencyType
-	222, // 202: api.v0alpha.ReshapeAction.divide:type_name -> api.v0alpha.ReshapeAction.Divide
-	223, // 203: api.v0alpha.ReshapeAction.multiply:type_name -> api.v0alpha.ReshapeAction.Multiply
-	224, // 204: api.v0alpha.ReshapeAction.modulo:type_name -> api.v0alpha.ReshapeAction.Modulo
-	231, // 205: api.v0alpha.ReshapeAction.merge:type_name -> api.v0alpha.ReshapeAction.Merge
-	229, // 206: api.v0alpha.ReshapeAction.set_field_value:type_name -> api.v0alpha.ReshapeAction.SetFieldValue
-	227, // 207: api.v0alpha.ReshapeAction.add_new_field_from_field:type_name -> api.v0alpha.ReshapeAction.AddNewFieldFromField
-	230, // 208: api.v0alpha.ReshapeAction.set_field_from_field:type_name -> api.v0alpha.ReshapeAction.SetFieldFromField
-	232, // 209: api.v0alpha.ReshapeAction.pad:type_name -> api.v0alpha.ReshapeAction.Pad
-	233, // 210: api.v0alpha.ReshapeAction.trim:type_name -> api.v0alpha.ReshapeAction.Trim
-	234, // 211: api.v0alpha.ReshapeAction.extract:type_name -> api.v0alpha.ReshapeAction.Extract
-	253, // 212: api.v0alpha.ContactManagerSink.lifetime:type_name -> google.protobuf.Duration
-	238, // 213: api.v0alpha.ContactManagerSink.de_duplication_info:type_name -> api.v0alpha.ContactManagerSink.DeDuplication
-	138, // 214: api.v0alpha.SumProcess.group_by:type_name -> api.v0alpha.GroupBy
-	99,  // 215: api.v0alpha.SumProcess.filter:type_name -> api.v0alpha.FilterOperation
-	269, // 216: api.v0alpha.ListMetrics.field_types:type_name -> api.commons.RecordType
-	245, // 217: api.v0alpha.ListMetrics.ftypes:type_name -> api.commons.FieldType
-	249, // 218: api.v0alpha.ListMetrics.run_type:type_name -> api.commons.RunType
-	71,  // 219: api.v0alpha.ParseRes.process:type_name -> api.v0alpha.Process
-	244, // 220: api.v0alpha.Event.parent_id:type_name -> google.protobuf.StringValue
-	270, // 221: api.v0alpha.Event.input_ids:type_name -> api.commons.StringArraySql
-	71,  // 222: api.v0alpha.Event.process:type_name -> api.v0alpha.Process
-	242, // 223: api.v0alpha.Event.upload_ts:type_name -> google.protobuf.Timestamp
-	242, // 224: api.v0alpha.Event.started_ts:type_name -> google.protobuf.Timestamp
-	242, // 225: api.v0alpha.Event.finished_ts:type_name -> google.protobuf.Timestamp
-	242, // 226: api.v0alpha.Event.backoff_till:type_name -> google.protobuf.Timestamp
-	271, // 227: api.v0alpha.Event.latest_history:type_name -> google.protobuf.Int64Value
-	142, // 228: api.v0alpha.Events.events:type_name -> api.v0alpha.Event
-	242, // 229: api.v0alpha.ViewQueueReq.newer_than:type_name -> google.protobuf.Timestamp
-	242, // 230: api.v0alpha.ViewQueueReq.no_newer_than:type_name -> google.protobuf.Timestamp
-	239, // 231: api.v0alpha.RetypeCollectionReq.field_types:type_name -> api.v0alpha.RetypeCollectionReq.FieldTypesEntry
-	151, // 232: api.v0alpha.CollectionMetadata.fields:type_name -> api.v0alpha.CollectionFieldMetadata
-	242, // 233: api.v0alpha.CollectionMetadata.created_on:type_name -> google.protobuf.Timestamp
-	242, // 234: api.v0alpha.CollectionMetadata.last_queried:type_name -> google.protobuf.Timestamp
-	242, // 235: api.v0alpha.CollectionMetadata.last_updated:type_name -> google.protobuf.Timestamp
-	242, // 236: api.v0alpha.CollectionMetadata.last_searched:type_name -> google.protobuf.Timestamp
-	152, // 237: api.v0alpha.CollectionEntry.fields:type_name -> api.v0alpha.CollectionField
-	242, // 238: api.v0alpha.CollectionEntry.last_updated:type_name -> google.protobuf.Timestamp
-	152, // 239: api.v0alpha.MatchReq.fields:type_name -> api.v0alpha.CollectionField
-	148, // 240: api.v0alpha.MatchRes.entries:type_name -> api.v0alpha.CollectionEntry
-	245, // 241: api.v0alpha.CollectionFieldMetadata.field_type:type_name -> api.commons.FieldType
-	147, // 242: api.v0alpha.ListCollectionsRes.collections:type_name -> api.v0alpha.CollectionMetadata
-	160, // 243: api.v0alpha.SearchCollectionsPaginatedReq.search:type_name -> api.v0alpha.Search
-	148, // 244: api.v0alpha.PaginatedSearchRes.entries:type_name -> api.v0alpha.CollectionEntry
-	147, // 245: api.v0alpha.GetCollectionEntriesRes.metadata:type_name -> api.v0alpha.CollectionMetadata
-	148, // 246: api.v0alpha.GetCollectionEntriesRes.entries:type_name -> api.v0alpha.CollectionEntry
-	166, // 247: api.v0alpha.ListCampaignLinksRes.Links:type_name -> api.v0alpha.Link
-	245, // 248: api.v0alpha.CjsSearchField.field_type:type_name -> api.commons.FieldType
-	242, // 249: api.v0alpha.CjsSearchDefinitionMetadata.created_date:type_name -> google.protobuf.Timestamp
-	242, // 250: api.v0alpha.CjsSearchDefinitionMetadata.last_edited:type_name -> google.protobuf.Timestamp
-	168, // 251: api.v0alpha.CjsSearchDefinition.metadata:type_name -> api.v0alpha.CjsSearchDefinitionMetadata
-	167, // 252: api.v0alpha.CjsSearchDefinition.search_fields:type_name -> api.v0alpha.CjsSearchField
-	167, // 253: api.v0alpha.CjsSearchDefinition.whitelisted_return_fields:type_name -> api.v0alpha.CjsSearchField
-	167, // 254: api.v0alpha.CjsSearchDefinition.blacklisted_return_fields:type_name -> api.v0alpha.CjsSearchField
-	167, // 255: api.v0alpha.CjsSearchDefinition.unique_identifiers:type_name -> api.v0alpha.CjsSearchField
-	168, // 256: api.v0alpha.ListCjsSearchDefinitionsRes.definitions:type_name -> api.v0alpha.CjsSearchDefinitionMetadata
-	177, // 257: api.v0alpha.ExecuteCjsSearchDefinitionReq.search_fields:type_name -> api.v0alpha.CjsExecuteSearchField
-	176, // 258: api.v0alpha.ExecuteCjsSearchDefinitionRes.collection_entries:type_name -> api.v0alpha.CollectionEntries
-	147, // 259: api.v0alpha.CollectionEntries.metadata:type_name -> api.v0alpha.CollectionMetadata
-	148, // 260: api.v0alpha.CollectionEntries.entries:type_name -> api.v0alpha.CollectionEntry
-	245, // 261: api.v0alpha.CjsExecuteSearchField.field_type:type_name -> api.commons.FieldType
-	242, // 262: api.v0alpha.CjsSecureSearchCriteriaMetadata.created_on:type_name -> google.protobuf.Timestamp
-	242, // 263: api.v0alpha.CjsSecureSearchCriteriaMetadata.last_updated:type_name -> google.protobuf.Timestamp
-	178, // 264: api.v0alpha.CjsSecureSearchCriteria.metadata:type_name -> api.v0alpha.CjsSecureSearchCriteriaMetadata
-	181, // 265: api.v0alpha.CjsSecureSearchCriteria.fields:type_name -> api.v0alpha.CjsSecureSearchCriteriaField
-	245, // 266: api.v0alpha.CjsSecureSearchCriteriaField.field_type:type_name -> api.commons.FieldType
-	185, // 267: api.v0alpha.SplitCriteria.unique:type_name -> api.v0alpha.SplitByUnique
-	186, // 268: api.v0alpha.SplitCriteria.max_size:type_name -> api.v0alpha.SplitByMaxSize
-	187, // 269: api.v0alpha.SplitCriteria.equal_parts:type_name -> api.v0alpha.SplitByEqualParts
-	57,  // 270: api.v0alpha.UniquePair.split_on_fields:type_name -> api.v0alpha.FieldIndex
-	183, // 271: api.v0alpha.SplitByNamedUnique.named_fields:type_name -> api.v0alpha.UniquePair
-	57,  // 272: api.v0alpha.SplitByUnique.split_on_fields:type_name -> api.v0alpha.FieldIndex
+	205, // 123: api.v0alpha.HttpReq.headers:type_name -> api.v0alpha.HttpReq.HeadersEntry
+	255, // 124: api.v0alpha.HttpReq.method:type_name -> api.commons.HttpVerb
+	206, // 125: api.v0alpha.HttpReq.named_response_values:type_name -> api.v0alpha.HttpReq.NamedResponseValuesEntry
+	82,  // 126: api.v0alpha.WebEntrypointProcess.http_requests:type_name -> api.v0alpha.HttpReq
+	67,  // 127: api.v0alpha.WebEntrypointProcess.file_template:type_name -> api.v0alpha.FileTemplate
+	82,  // 128: api.v0alpha.BulkWebEntrypointProcess.preliminary_requests:type_name -> api.v0alpha.HttpReq
+	87,  // 129: api.v0alpha.BulkWebEntrypointProcess.paginated_request:type_name -> api.v0alpha.PaginatedHttpRequest
+	82,  // 130: api.v0alpha.WebExchangeProcess.http_requests:type_name -> api.v0alpha.HttpReq
+	82,  // 131: api.v0alpha.PaginatedHttpRequest.iteration_request:type_name -> api.v0alpha.HttpReq
+	256, // 132: api.v0alpha.PaginatedHttpRequest.end_for_any:type_name -> api.commons.PaginationTerminator
+	256, // 133: api.v0alpha.PaginatedHttpRequest.end_for_all:type_name -> api.commons.PaginationTerminator
+	256, // 134: api.v0alpha.PaginatedHttpRequest.request_not_ready:type_name -> api.commons.PaginationTerminator
+	257, // 135: api.v0alpha.SftpImport.file_pattern:type_name -> api.commons.FilePattern
+	113, // 136: api.v0alpha.CjsExportProcess.header:type_name -> api.v0alpha.ExportHeader
+	250, // 137: api.v0alpha.CjsExportProcess.run_type:type_name -> api.commons.RunType
+	258, // 138: api.v0alpha.CjsEnrichmentProcess.enrich_type:type_name -> api.commons.EnrichmentType
+	259, // 139: api.v0alpha.CjsEnrichmentProcess.primary_source:type_name -> api.commons.PrimarySource
+	260, // 140: api.v0alpha.CjsEnrichmentProcess.dedup_key_policy:type_name -> api.commons.DedupKeyPolicy
+	207, // 141: api.v0alpha.LookupProcess.compl:type_name -> api.v0alpha.LookupProcess.ComplProcess
+	208, // 142: api.v0alpha.LookupProcess.list:type_name -> api.v0alpha.LookupProcess.ListLookup
+	209, // 143: api.v0alpha.LookupProcess.url:type_name -> api.v0alpha.LookupProcess.UrlLookup
+	261, // 144: api.v0alpha.CFSExportConfig.type:type_name -> api.commons.ExportType
+	113, // 145: api.v0alpha.CFSExportReqHeader.export_header:type_name -> api.v0alpha.ExportHeader
+	96,  // 146: api.v0alpha.CFSExportReqHeader.configs:type_name -> api.v0alpha.CFSExportConfig
+	113, // 147: api.v0alpha.CFSExportProcess.export_header:type_name -> api.v0alpha.ExportHeader
+	96,  // 148: api.v0alpha.CFSExportProcess.configs:type_name -> api.v0alpha.CFSExportConfig
+	100, // 149: api.v0alpha.FilterProcess.operations:type_name -> api.v0alpha.FilterOperation
+	101, // 150: api.v0alpha.FilterOperation.checks:type_name -> api.v0alpha.FilterCheck
+	262, // 151: api.v0alpha.FilterOperation.operator:type_name -> api.commons.ChainOperator
+	211, // 152: api.v0alpha.FilterCheck.val_comp:type_name -> api.v0alpha.FilterCheck.ValueComparison
+	212, // 153: api.v0alpha.FilterCheck.type_comp:type_name -> api.v0alpha.FilterCheck.TypeComparison
+	213, // 154: api.v0alpha.FilterCheck.list_comp:type_name -> api.v0alpha.FilterCheck.ListComparison
+	113, // 155: api.v0alpha.P3ExportProcess.header:type_name -> api.v0alpha.ExportHeader
+	263, // 156: api.v0alpha.P3ExportProcess.dupe_policy:type_name -> api.commons.DuplicatePolicyType
+	264, // 157: api.v0alpha.P3ExportProcess.absent_policy:type_name -> api.commons.AbsentPolicyType
+	250, // 158: api.v0alpha.P3ExportProcess.run_type:type_name -> api.commons.RunType
+	257, // 159: api.v0alpha.P3ExportProcess.file_pattern:type_name -> api.commons.FilePattern
+	265, // 160: api.v0alpha.P3ExportProcess.filename:type_name -> api.commons.ConstructedFilename
+	243, // 161: api.v0alpha.P3ExportProcess.start_time:type_name -> google.protobuf.Timestamp
+	243, // 162: api.v0alpha.P3ExportProcess.end_time:type_name -> google.protobuf.Timestamp
+	266, // 163: api.v0alpha.P3ExportProcess.dial_order:type_name -> api.commons.DialOrderType
+	248, // 164: api.v0alpha.P3ExportProcess.file_format:type_name -> api.commons.FileFormat
+	250, // 165: api.v0alpha.ComplianceExportProcess.run_type:type_name -> api.commons.RunType
+	267, // 166: api.v0alpha.ComplianceExportProcess.compliance_list_type:type_name -> api.commons.ComplianceListType
+	109, // 167: api.v0alpha.FrequencyProcess.dispositions:type_name -> api.v0alpha.DispositionPair
+	108, // 168: api.v0alpha.FrequencyProcess.disposition_sets:type_name -> api.v0alpha.DispositionSet
+	109, // 169: api.v0alpha.DispositionSet.dispositions:type_name -> api.v0alpha.DispositionPair
+	248, // 170: api.v0alpha.SftpExportProcess.fileformat:type_name -> api.commons.FileFormat
+	257, // 171: api.v0alpha.SftpExportProcess.file_pattern:type_name -> api.commons.FilePattern
+	250, // 172: api.v0alpha.SftpExportProcess.run_type:type_name -> api.commons.RunType
+	113, // 173: api.v0alpha.SftpExportProcess.header:type_name -> api.v0alpha.ExportHeader
+	265, // 174: api.v0alpha.SftpExportProcess.filename:type_name -> api.commons.ConstructedFilename
+	111, // 175: api.v0alpha.WfmExportProcess.multi:type_name -> api.v0alpha.WfmMultiSkill
+	117, // 176: api.v0alpha.SortReq.criteria:type_name -> api.v0alpha.SortCriteria
+	50,  // 177: api.v0alpha.SortReq.record:type_name -> api.v0alpha.RecordProto
+	97,  // 178: api.v0alpha.CFSExportReq.header:type_name -> api.v0alpha.CFSExportReqHeader
+	50,  // 179: api.v0alpha.CFSExportReq.record:type_name -> api.v0alpha.RecordProto
+	268, // 180: api.v0alpha.DeDupCriteria.action:type_name -> api.commons.DeDupActions
+	58,  // 181: api.v0alpha.DeDupCriteria.fields:type_name -> api.v0alpha.FieldIndex
+	101, // 182: api.v0alpha.DeDupCriteria.unless:type_name -> api.v0alpha.FilterCheck
+	269, // 183: api.v0alpha.SortCriteria.ordering:type_name -> api.commons.SortOrder
+	58,  // 184: api.v0alpha.SortCriteria.field_order:type_name -> api.v0alpha.FieldIndex
+	215, // 185: api.v0alpha.RecordFieldMap.fields:type_name -> api.v0alpha.RecordFieldMap.FieldsEntry
+	247, // 186: api.v0alpha.DateTime.precision:type_name -> api.commons.DateTimePrecision
+	124, // 187: api.v0alpha.DateTime.modifier:type_name -> api.v0alpha.DateTimeModifier
+	136, // 188: api.v0alpha.ReshapeProcess.actions:type_name -> api.v0alpha.ReshapeAction
+	270, // 189: api.v0alpha.ReshapeAction.matching_type:type_name -> api.commons.RecordType
+	101, // 190: api.v0alpha.ReshapeAction.predicate:type_name -> api.v0alpha.FilterCheck
+	100, // 191: api.v0alpha.ReshapeAction.operations:type_name -> api.v0alpha.FilterOperation
+	216, // 192: api.v0alpha.ReshapeAction.rename:type_name -> api.v0alpha.ReshapeAction.Rename
+	217, // 193: api.v0alpha.ReshapeAction.add_value:type_name -> api.v0alpha.ReshapeAction.AddValue
+	219, // 194: api.v0alpha.ReshapeAction.add_field:type_name -> api.v0alpha.ReshapeAction.AddField
+	218, // 195: api.v0alpha.ReshapeAction.add_date:type_name -> api.v0alpha.ReshapeAction.AddDate
+	220, // 196: api.v0alpha.ReshapeAction.subtract_value:type_name -> api.v0alpha.ReshapeAction.SubtractValue
+	221, // 197: api.v0alpha.ReshapeAction.subtract_field:type_name -> api.v0alpha.ReshapeAction.SubtractField
+	222, // 198: api.v0alpha.ReshapeAction.convert:type_name -> api.v0alpha.ReshapeAction.Convert
+	226, // 199: api.v0alpha.ReshapeAction.remove_field:type_name -> api.v0alpha.ReshapeAction.RemoveField
+	227, // 200: api.v0alpha.ReshapeAction.add_new_field:type_name -> api.v0alpha.ReshapeAction.AddNewField
+	229, // 201: api.v0alpha.ReshapeAction.change_currency_type:type_name -> api.v0alpha.ReshapeAction.ChangeCurrencyType
+	223, // 202: api.v0alpha.ReshapeAction.divide:type_name -> api.v0alpha.ReshapeAction.Divide
+	224, // 203: api.v0alpha.ReshapeAction.multiply:type_name -> api.v0alpha.ReshapeAction.Multiply
+	225, // 204: api.v0alpha.ReshapeAction.modulo:type_name -> api.v0alpha.ReshapeAction.Modulo
+	232, // 205: api.v0alpha.ReshapeAction.merge:type_name -> api.v0alpha.ReshapeAction.Merge
+	230, // 206: api.v0alpha.ReshapeAction.set_field_value:type_name -> api.v0alpha.ReshapeAction.SetFieldValue
+	228, // 207: api.v0alpha.ReshapeAction.add_new_field_from_field:type_name -> api.v0alpha.ReshapeAction.AddNewFieldFromField
+	231, // 208: api.v0alpha.ReshapeAction.set_field_from_field:type_name -> api.v0alpha.ReshapeAction.SetFieldFromField
+	233, // 209: api.v0alpha.ReshapeAction.pad:type_name -> api.v0alpha.ReshapeAction.Pad
+	234, // 210: api.v0alpha.ReshapeAction.trim:type_name -> api.v0alpha.ReshapeAction.Trim
+	235, // 211: api.v0alpha.ReshapeAction.extract:type_name -> api.v0alpha.ReshapeAction.Extract
+	254, // 212: api.v0alpha.ContactManagerSink.lifetime:type_name -> google.protobuf.Duration
+	239, // 213: api.v0alpha.ContactManagerSink.de_duplication_info:type_name -> api.v0alpha.ContactManagerSink.DeDuplication
+	139, // 214: api.v0alpha.SumProcess.group_by:type_name -> api.v0alpha.GroupBy
+	100, // 215: api.v0alpha.SumProcess.filter:type_name -> api.v0alpha.FilterOperation
+	270, // 216: api.v0alpha.ListMetrics.field_types:type_name -> api.commons.RecordType
+	246, // 217: api.v0alpha.ListMetrics.ftypes:type_name -> api.commons.FieldType
+	250, // 218: api.v0alpha.ListMetrics.run_type:type_name -> api.commons.RunType
+	72,  // 219: api.v0alpha.ParseRes.process:type_name -> api.v0alpha.Process
+	245, // 220: api.v0alpha.Event.parent_id:type_name -> google.protobuf.StringValue
+	271, // 221: api.v0alpha.Event.input_ids:type_name -> api.commons.StringArraySql
+	72,  // 222: api.v0alpha.Event.process:type_name -> api.v0alpha.Process
+	243, // 223: api.v0alpha.Event.upload_ts:type_name -> google.protobuf.Timestamp
+	243, // 224: api.v0alpha.Event.started_ts:type_name -> google.protobuf.Timestamp
+	243, // 225: api.v0alpha.Event.finished_ts:type_name -> google.protobuf.Timestamp
+	243, // 226: api.v0alpha.Event.backoff_till:type_name -> google.protobuf.Timestamp
+	272, // 227: api.v0alpha.Event.latest_history:type_name -> google.protobuf.Int64Value
+	143, // 228: api.v0alpha.Events.events:type_name -> api.v0alpha.Event
+	243, // 229: api.v0alpha.ViewQueueReq.newer_than:type_name -> google.protobuf.Timestamp
+	243, // 230: api.v0alpha.ViewQueueReq.no_newer_than:type_name -> google.protobuf.Timestamp
+	240, // 231: api.v0alpha.RetypeCollectionReq.field_types:type_name -> api.v0alpha.RetypeCollectionReq.FieldTypesEntry
+	152, // 232: api.v0alpha.CollectionMetadata.fields:type_name -> api.v0alpha.CollectionFieldMetadata
+	243, // 233: api.v0alpha.CollectionMetadata.created_on:type_name -> google.protobuf.Timestamp
+	243, // 234: api.v0alpha.CollectionMetadata.last_queried:type_name -> google.protobuf.Timestamp
+	243, // 235: api.v0alpha.CollectionMetadata.last_updated:type_name -> google.protobuf.Timestamp
+	243, // 236: api.v0alpha.CollectionMetadata.last_searched:type_name -> google.protobuf.Timestamp
+	153, // 237: api.v0alpha.CollectionEntry.fields:type_name -> api.v0alpha.CollectionField
+	243, // 238: api.v0alpha.CollectionEntry.last_updated:type_name -> google.protobuf.Timestamp
+	153, // 239: api.v0alpha.MatchReq.fields:type_name -> api.v0alpha.CollectionField
+	149, // 240: api.v0alpha.MatchRes.entries:type_name -> api.v0alpha.CollectionEntry
+	246, // 241: api.v0alpha.CollectionFieldMetadata.field_type:type_name -> api.commons.FieldType
+	148, // 242: api.v0alpha.ListCollectionsRes.collections:type_name -> api.v0alpha.CollectionMetadata
+	161, // 243: api.v0alpha.SearchCollectionsPaginatedReq.search:type_name -> api.v0alpha.Search
+	149, // 244: api.v0alpha.PaginatedSearchRes.entries:type_name -> api.v0alpha.CollectionEntry
+	148, // 245: api.v0alpha.GetCollectionEntriesRes.metadata:type_name -> api.v0alpha.CollectionMetadata
+	149, // 246: api.v0alpha.GetCollectionEntriesRes.entries:type_name -> api.v0alpha.CollectionEntry
+	167, // 247: api.v0alpha.ListCampaignLinksRes.Links:type_name -> api.v0alpha.Link
+	246, // 248: api.v0alpha.CjsSearchField.field_type:type_name -> api.commons.FieldType
+	243, // 249: api.v0alpha.CjsSearchDefinitionMetadata.created_date:type_name -> google.protobuf.Timestamp
+	243, // 250: api.v0alpha.CjsSearchDefinitionMetadata.last_edited:type_name -> google.protobuf.Timestamp
+	169, // 251: api.v0alpha.CjsSearchDefinition.metadata:type_name -> api.v0alpha.CjsSearchDefinitionMetadata
+	168, // 252: api.v0alpha.CjsSearchDefinition.search_fields:type_name -> api.v0alpha.CjsSearchField
+	168, // 253: api.v0alpha.CjsSearchDefinition.whitelisted_return_fields:type_name -> api.v0alpha.CjsSearchField
+	168, // 254: api.v0alpha.CjsSearchDefinition.blacklisted_return_fields:type_name -> api.v0alpha.CjsSearchField
+	168, // 255: api.v0alpha.CjsSearchDefinition.unique_identifiers:type_name -> api.v0alpha.CjsSearchField
+	169, // 256: api.v0alpha.ListCjsSearchDefinitionsRes.definitions:type_name -> api.v0alpha.CjsSearchDefinitionMetadata
+	178, // 257: api.v0alpha.ExecuteCjsSearchDefinitionReq.search_fields:type_name -> api.v0alpha.CjsExecuteSearchField
+	177, // 258: api.v0alpha.ExecuteCjsSearchDefinitionRes.collection_entries:type_name -> api.v0alpha.CollectionEntries
+	148, // 259: api.v0alpha.CollectionEntries.metadata:type_name -> api.v0alpha.CollectionMetadata
+	149, // 260: api.v0alpha.CollectionEntries.entries:type_name -> api.v0alpha.CollectionEntry
+	246, // 261: api.v0alpha.CjsExecuteSearchField.field_type:type_name -> api.commons.FieldType
+	243, // 262: api.v0alpha.CjsSecureSearchCriteriaMetadata.created_on:type_name -> google.protobuf.Timestamp
+	243, // 263: api.v0alpha.CjsSecureSearchCriteriaMetadata.last_updated:type_name -> google.protobuf.Timestamp
+	179, // 264: api.v0alpha.CjsSecureSearchCriteria.metadata:type_name -> api.v0alpha.CjsSecureSearchCriteriaMetadata
+	182, // 265: api.v0alpha.CjsSecureSearchCriteria.fields:type_name -> api.v0alpha.CjsSecureSearchCriteriaField
+	246, // 266: api.v0alpha.CjsSecureSearchCriteriaField.field_type:type_name -> api.commons.FieldType
+	186, // 267: api.v0alpha.SplitCriteria.unique:type_name -> api.v0alpha.SplitByUnique
+	187, // 268: api.v0alpha.SplitCriteria.max_size:type_name -> api.v0alpha.SplitByMaxSize
+	188, // 269: api.v0alpha.SplitCriteria.equal_parts:type_name -> api.v0alpha.SplitByEqualParts
+	58,  // 270: api.v0alpha.UniquePair.split_on_fields:type_name -> api.v0alpha.FieldIndex
+	184, // 271: api.v0alpha.SplitByNamedUnique.named_fields:type_name -> api.v0alpha.UniquePair
+	58,  // 272: api.v0alpha.SplitByUnique.split_on_fields:type_name -> api.v0alpha.FieldIndex
 	1,   // 273: api.v0alpha.EpicEntrypoint.entity_types:type_name -> api.v0alpha.EpicEntityType
-	189, // 274: api.v0alpha.EpicEntrypoint.runtime_values:type_name -> api.v0alpha.RuntimeValues
-	53,  // 275: api.v0alpha.EpicEntrypoint.fields:type_name -> api.v0alpha.Field
-	272, // 276: api.v0alpha.RuntimeValues.state:type_name -> api.commons.EventState
-	190, // 277: api.v0alpha.RuntimeValues.data_urls:type_name -> api.v0alpha.EntityURL
-	240, // 278: api.v0alpha.RuntimeValues.file_ids:type_name -> api.v0alpha.RuntimeValues.FileIdsEntry
-	241, // 279: api.v0alpha.RuntimeValues.preliminary_vars:type_name -> api.v0alpha.RuntimeValues.PreliminaryVarsEntry
+	190, // 274: api.v0alpha.EpicEntrypoint.runtime_values:type_name -> api.v0alpha.RuntimeValues
+	54,  // 275: api.v0alpha.EpicEntrypoint.fields:type_name -> api.v0alpha.Field
+	273, // 276: api.v0alpha.RuntimeValues.state:type_name -> api.commons.EventState
+	191, // 277: api.v0alpha.RuntimeValues.data_urls:type_name -> api.v0alpha.EntityURL
+	241, // 278: api.v0alpha.RuntimeValues.file_ids:type_name -> api.v0alpha.RuntimeValues.FileIdsEntry
+	242, // 279: api.v0alpha.RuntimeValues.preliminary_vars:type_name -> api.v0alpha.RuntimeValues.PreliminaryVarsEntry
 	1,   // 280: api.v0alpha.EntityURL.entity_type:type_name -> api.v0alpha.EpicEntityType
 	1,   // 281: api.v0alpha.EHREntityType.epic_entity:type_name -> api.v0alpha.EpicEntityType
-	238, // 282: api.v0alpha.ContactManagementEnrichment.de_duplication_info:type_name -> api.v0alpha.ContactManagerSink.DeDuplication
-	269, // 283: api.v0alpha.ProcessFields.NestedField.field_type:type_name -> api.commons.RecordType
-	269, // 284: api.v0alpha.ProcessFields.Field.field_type:type_name -> api.commons.RecordType
-	199, // 285: api.v0alpha.ProcessFields.Field.nested:type_name -> api.v0alpha.ProcessFields.NestedField
-	66,  // 286: api.v0alpha.LookupProcess.UrlLookup.file_template:type_name -> api.v0alpha.FileTemplate
-	57,  // 287: api.v0alpha.FilterCheck.Value.field_name:type_name -> api.v0alpha.FieldIndex
-	124, // 288: api.v0alpha.FilterCheck.Value.date_time:type_name -> api.v0alpha.DateTime
-	57,  // 289: api.v0alpha.FilterCheck.ValueComparison.field_name:type_name -> api.v0alpha.FieldIndex
-	273, // 290: api.v0alpha.FilterCheck.ValueComparison.op:type_name -> api.commons.CompareOperator
-	209, // 291: api.v0alpha.FilterCheck.ValueComparison.value:type_name -> api.v0alpha.FilterCheck.Value
-	57,  // 292: api.v0alpha.FilterCheck.TypeComparison.field_name:type_name -> api.v0alpha.FieldIndex
-	269, // 293: api.v0alpha.FilterCheck.TypeComparison.matches_field_type:type_name -> api.commons.RecordType
-	57,  // 294: api.v0alpha.FilterCheck.ListComparison.field_name:type_name -> api.v0alpha.FieldIndex
-	213, // 295: api.v0alpha.FilterCheck.ListComparison.data:type_name -> api.v0alpha.FilterCheck.ListComparison.FieldOrVal
-	57,  // 296: api.v0alpha.FilterCheck.ListComparison.FieldOrVal.field:type_name -> api.v0alpha.FieldIndex
-	209, // 297: api.v0alpha.FilterCheck.ListComparison.FieldOrVal.value:type_name -> api.v0alpha.FilterCheck.Value
-	59,  // 298: api.v0alpha.RecordFieldMap.FieldsEntry.value:type_name -> api.v0alpha.RecordFieldProto
-	123, // 299: api.v0alpha.ReshapeAction.AddDate.datetime:type_name -> api.v0alpha.DateTimeModifier
-	57,  // 300: api.v0alpha.ReshapeAction.AddField.other_field:type_name -> api.v0alpha.FieldIndex
-	57,  // 301: api.v0alpha.ReshapeAction.SubtractField.other_field:type_name -> api.v0alpha.FieldIndex
-	269, // 302: api.v0alpha.ReshapeAction.Convert.newType:type_name -> api.commons.RecordType
-	53,  // 303: api.v0alpha.ReshapeAction.Convert.new_field:type_name -> api.v0alpha.Field
-	59,  // 304: api.v0alpha.ReshapeAction.Convert.default_value:type_name -> api.v0alpha.RecordFieldProto
-	59,  // 305: api.v0alpha.ReshapeAction.AddNewField.starting_value:type_name -> api.v0alpha.RecordFieldProto
-	57,  // 306: api.v0alpha.ReshapeAction.AddNewFieldFromField.other_field:type_name -> api.v0alpha.FieldIndex
-	59,  // 307: api.v0alpha.ReshapeAction.SetFieldValue.value:type_name -> api.v0alpha.RecordFieldProto
-	57,  // 308: api.v0alpha.ReshapeAction.SetFieldFromField.other_field:type_name -> api.v0alpha.FieldIndex
-	235, // 309: api.v0alpha.ReshapeAction.Merge.data:type_name -> api.v0alpha.ReshapeAction.Merge.FieldOrVal
-	237, // 310: api.v0alpha.ReshapeAction.Extract.parts:type_name -> api.v0alpha.ReshapeAction.Extract.Slice
-	57,  // 311: api.v0alpha.ReshapeAction.Merge.FieldOrVal.field:type_name -> api.v0alpha.FieldIndex
-	236, // 312: api.v0alpha.ReshapeAction.Extract.Slice.start_index:type_name -> api.v0alpha.ReshapeAction.Extract.Index
-	236, // 313: api.v0alpha.ReshapeAction.Extract.Slice.end_index:type_name -> api.v0alpha.ReshapeAction.Extract.Index
-	2,   // 314: api.v0alpha.ContactManagerSink.DeDuplication.field_type:type_name -> api.v0alpha.ContactManagerSink.DeDuplicationFieldType
-	3,   // 315: api.v0alpha.ContactManagerSink.DeDuplication.merge_strategy:type_name -> api.v0alpha.ContactManagerSink.DeDuplicationMergeStrategy
-	245, // 316: api.v0alpha.RetypeCollectionReq.FieldTypesEntry.value:type_name -> api.commons.FieldType
-	20,  // 317: api.v0alpha.LMS.GetPublicKey:input_type -> api.v0alpha.GetPublicKeyReq
-	66,  // 318: api.v0alpha.LMS.CreateFileTemplate:input_type -> api.v0alpha.FileTemplate
-	62,  // 319: api.v0alpha.LMS.ListFileTemplates:input_type -> api.v0alpha.GetFileTemplatesReq
-	66,  // 320: api.v0alpha.LMS.UpdateFileTemplate:input_type -> api.v0alpha.FileTemplate
-	66,  // 321: api.v0alpha.LMS.DeleteFileTemplate:input_type -> api.v0alpha.FileTemplate
-	66,  // 322: api.v0alpha.LMS.GetFileTemplate:input_type -> api.v0alpha.FileTemplate
-	53,  // 323: api.v0alpha.LMS.CreateField:input_type -> api.v0alpha.Field
-	58,  // 324: api.v0alpha.LMS.ListFields:input_type -> api.v0alpha.ListFieldsReq
-	53,  // 325: api.v0alpha.LMS.GetField:input_type -> api.v0alpha.Field
-	54,  // 326: api.v0alpha.LMS.UpdateField:input_type -> api.v0alpha.UpdateFieldReq
-	53,  // 327: api.v0alpha.LMS.DeleteField:input_type -> api.v0alpha.Field
-	36,  // 328: api.v0alpha.LMS.ListAvailableFieldsByElementId:input_type -> api.v0alpha.ListAvailableFieldsByElementIdReq
-	37,  // 329: api.v0alpha.LMS.ListFieldsForElement:input_type -> api.v0alpha.ListFieldsForElementReq
-	39,  // 330: api.v0alpha.LMS.ListAutocompleteFields:input_type -> api.v0alpha.ListAutocompleteFieldsReq
-	274, // 331: api.v0alpha.LMS.ListCampaignLinks:input_type -> google.protobuf.Empty
-	43,  // 332: api.v0alpha.LMS.PeekList:input_type -> api.v0alpha.PeekListReq
-	45,  // 333: api.v0alpha.LMS.GetHistory:input_type -> api.v0alpha.GetHistoryReq
-	42,  // 334: api.v0alpha.LMS.CreateElement:input_type -> api.v0alpha.Element
-	61,  // 335: api.v0alpha.LMS.ListElements:input_type -> api.v0alpha.ListElementsReq
-	41,  // 336: api.v0alpha.LMS.GetElement:input_type -> api.v0alpha.ElementPK
-	42,  // 337: api.v0alpha.LMS.UpdateElement:input_type -> api.v0alpha.Element
-	42,  // 338: api.v0alpha.LMS.DeleteElement:input_type -> api.v0alpha.Element
-	42,  // 339: api.v0alpha.LMS.CopyPipelineUpstream:input_type -> api.v0alpha.Element
-	42,  // 340: api.v0alpha.LMS.CopyPipelineDownstream:input_type -> api.v0alpha.Element
-	31,  // 341: api.v0alpha.LMS.ProcessElement:input_type -> api.v0alpha.ProcessElementReq
-	32,  // 342: api.v0alpha.LMS.ProcessList:input_type -> api.v0alpha.ProcessListRequest
-	34,  // 343: api.v0alpha.LMS.StreamList:input_type -> api.v0alpha.StreamListRequest
-	274, // 344: api.v0alpha.LMS.GetAvailableFields:input_type -> google.protobuf.Empty
-	274, // 345: api.v0alpha.LMS.ListNewEvents:input_type -> google.protobuf.Empty
-	144, // 346: api.v0alpha.LMS.ViewQueue:input_type -> api.v0alpha.ViewQueueReq
-	140, // 347: api.v0alpha.LMS.Autocomplete:input_type -> api.v0alpha.ParseReq
-	29,  // 348: api.v0alpha.LMS.GetComplianceScrubLists:input_type -> api.v0alpha.GetComplianceScrubListsReq
-	22,  // 349: api.v0alpha.LMS.FindFieldUsages:input_type -> api.v0alpha.FindFieldUsagesReq
-	27,  // 350: api.v0alpha.LMS.FindInvalidElements:input_type -> api.v0alpha.FindInvalidElementsReq
-	147, // 351: api.v0alpha.LMS.CreateCollection:input_type -> api.v0alpha.CollectionMetadata
-	153, // 352: api.v0alpha.LMS.GetCollection:input_type -> api.v0alpha.GetCollectionReq
-	147, // 353: api.v0alpha.LMS.UpdateCollection:input_type -> api.v0alpha.CollectionMetadata
-	145, // 354: api.v0alpha.LMS.RetypeCollection:input_type -> api.v0alpha.RetypeCollectionReq
-	155, // 355: api.v0alpha.LMS.DeleteCollection:input_type -> api.v0alpha.DeleteCollectionReq
-	157, // 356: api.v0alpha.LMS.ListCollections:input_type -> api.v0alpha.ListCollectionsReq
-	156, // 357: api.v0alpha.LMS.ResetCollection:input_type -> api.v0alpha.ResetCollectionReq
-	148, // 358: api.v0alpha.LMS.AddCollectionEntry:input_type -> api.v0alpha.CollectionEntry
-	164, // 359: api.v0alpha.LMS.DeleteCollectionEntry:input_type -> api.v0alpha.DeleteCollectionEntryReq
-	148, // 360: api.v0alpha.LMS.UpdateCollectionEntry:input_type -> api.v0alpha.CollectionEntry
-	154, // 361: api.v0alpha.LMS.StreamCollection:input_type -> api.v0alpha.StreamCollectionReq
-	159, // 362: api.v0alpha.LMS.SearchCollectionsPaginated:input_type -> api.v0alpha.SearchCollectionsPaginatedReq
-	162, // 363: api.v0alpha.LMS.GetCollectionEntries:input_type -> api.v0alpha.GetCollectionEntriesReq
-	169, // 364: api.v0alpha.LMS.CreateCjsSearchDefinition:input_type -> api.v0alpha.CjsSearchDefinition
-	170, // 365: api.v0alpha.LMS.GetCjsSearchDefinition:input_type -> api.v0alpha.GetCjsSearchDefinitionReq
-	169, // 366: api.v0alpha.LMS.UpdateCjsSearchDefinition:input_type -> api.v0alpha.CjsSearchDefinition
-	171, // 367: api.v0alpha.LMS.DeleteCjsSearchDefinition:input_type -> api.v0alpha.DeleteCjsSearchDefinitionReq
-	172, // 368: api.v0alpha.LMS.ListCjsSearchDefinitions:input_type -> api.v0alpha.ListCjsSearchDefinitionsReq
-	174, // 369: api.v0alpha.LMS.ExecuteCjsSearchDefinition:input_type -> api.v0alpha.ExecuteCjsSearchDefinitionReq
-	180, // 370: api.v0alpha.LMS.GetCjsSecureSearchCriteria:input_type -> api.v0alpha.GetCjsSecureSearchCriteriaReq
-	179, // 371: api.v0alpha.LMS.CreateCjsSecureSearchCriteria:input_type -> api.v0alpha.CjsSecureSearchCriteria
-	179, // 372: api.v0alpha.LMS.UpdateCjsSecureSearchCriteria:input_type -> api.v0alpha.CjsSecureSearchCriteria
-	191, // 373: api.v0alpha.LMS.SampleEndpoint:input_type -> api.v0alpha.SampleRequest
-	192, // 374: api.v0alpha.LMS.GetAvailableEHRFields:input_type -> api.v0alpha.EHREntityType
-	41,  // 375: api.v0alpha.LMS.GetQueuedEventsStatusByElementId:input_type -> api.v0alpha.ElementPK
-	17,  // 376: api.v0alpha.LMS.ListPools:input_type -> api.v0alpha.ListPoolsRequest
-	7,   // 377: api.v0alpha.LMS.CreatePipelineCanvas:input_type -> api.v0alpha.CreatePipelineCanvasReq
-	9,   // 378: api.v0alpha.LMS.ListPipelineCanvases:input_type -> api.v0alpha.ListPipelineCanvasesReq
-	11,  // 379: api.v0alpha.LMS.UpdatePipelineCanvas:input_type -> api.v0alpha.UpdatePipelineCanvasReq
-	13,  // 380: api.v0alpha.LMS.DeletePipelineCanvas:input_type -> api.v0alpha.DeletePipelineCanvasReq
-	15,  // 381: api.v0alpha.LMS.GetPipelineCanvas:input_type -> api.v0alpha.GetPipelineCanvasReq
-	21,  // 382: api.v0alpha.LMS.GetPublicKey:output_type -> api.v0alpha.PublicKey
-	66,  // 383: api.v0alpha.LMS.CreateFileTemplate:output_type -> api.v0alpha.FileTemplate
-	66,  // 384: api.v0alpha.LMS.ListFileTemplates:output_type -> api.v0alpha.FileTemplate
-	66,  // 385: api.v0alpha.LMS.UpdateFileTemplate:output_type -> api.v0alpha.FileTemplate
-	66,  // 386: api.v0alpha.LMS.DeleteFileTemplate:output_type -> api.v0alpha.FileTemplate
-	66,  // 387: api.v0alpha.LMS.GetFileTemplate:output_type -> api.v0alpha.FileTemplate
-	53,  // 388: api.v0alpha.LMS.CreateField:output_type -> api.v0alpha.Field
-	56,  // 389: api.v0alpha.LMS.ListFields:output_type -> api.v0alpha.Fields
-	53,  // 390: api.v0alpha.LMS.GetField:output_type -> api.v0alpha.Field
-	53,  // 391: api.v0alpha.LMS.UpdateField:output_type -> api.v0alpha.Field
-	53,  // 392: api.v0alpha.LMS.DeleteField:output_type -> api.v0alpha.Field
-	51,  // 393: api.v0alpha.LMS.ListAvailableFieldsByElementId:output_type -> api.v0alpha.ProcessFields
-	38,  // 394: api.v0alpha.LMS.ListFieldsForElement:output_type -> api.v0alpha.ListFieldsForElementRes
-	40,  // 395: api.v0alpha.LMS.ListAutocompleteFields:output_type -> api.v0alpha.ListAutocompleteFieldsRes
-	165, // 396: api.v0alpha.LMS.ListCampaignLinks:output_type -> api.v0alpha.ListCampaignLinksRes
-	44,  // 397: api.v0alpha.LMS.PeekList:output_type -> api.v0alpha.PeekListRes
-	46,  // 398: api.v0alpha.LMS.GetHistory:output_type -> api.v0alpha.GetHistoryRes
-	42,  // 399: api.v0alpha.LMS.CreateElement:output_type -> api.v0alpha.Element
-	42,  // 400: api.v0alpha.LMS.ListElements:output_type -> api.v0alpha.Element
-	42,  // 401: api.v0alpha.LMS.GetElement:output_type -> api.v0alpha.Element
-	42,  // 402: api.v0alpha.LMS.UpdateElement:output_type -> api.v0alpha.Element
-	42,  // 403: api.v0alpha.LMS.DeleteElement:output_type -> api.v0alpha.Element
-	42,  // 404: api.v0alpha.LMS.CopyPipelineUpstream:output_type -> api.v0alpha.Element
-	42,  // 405: api.v0alpha.LMS.CopyPipelineDownstream:output_type -> api.v0alpha.Element
-	274, // 406: api.v0alpha.LMS.ProcessElement:output_type -> google.protobuf.Empty
-	33,  // 407: api.v0alpha.LMS.ProcessList:output_type -> api.v0alpha.ProcessListResponse
-	35,  // 408: api.v0alpha.LMS.StreamList:output_type -> api.v0alpha.StreamListResponse
-	51,  // 409: api.v0alpha.LMS.GetAvailableFields:output_type -> api.v0alpha.ProcessFields
-	143, // 410: api.v0alpha.LMS.ListNewEvents:output_type -> api.v0alpha.Events
-	143, // 411: api.v0alpha.LMS.ViewQueue:output_type -> api.v0alpha.Events
-	141, // 412: api.v0alpha.LMS.Autocomplete:output_type -> api.v0alpha.ParseRes
-	30,  // 413: api.v0alpha.LMS.GetComplianceScrubLists:output_type -> api.v0alpha.GetComplianceScrubListsRes
-	24,  // 414: api.v0alpha.LMS.FindFieldUsages:output_type -> api.v0alpha.FindFieldUsagesRes
-	28,  // 415: api.v0alpha.LMS.FindInvalidElements:output_type -> api.v0alpha.FindInvalidElementsRes
-	147, // 416: api.v0alpha.LMS.CreateCollection:output_type -> api.v0alpha.CollectionMetadata
-	147, // 417: api.v0alpha.LMS.GetCollection:output_type -> api.v0alpha.CollectionMetadata
-	274, // 418: api.v0alpha.LMS.UpdateCollection:output_type -> google.protobuf.Empty
-	146, // 419: api.v0alpha.LMS.RetypeCollection:output_type -> api.v0alpha.RetypeCollectionRes
-	274, // 420: api.v0alpha.LMS.DeleteCollection:output_type -> google.protobuf.Empty
-	158, // 421: api.v0alpha.LMS.ListCollections:output_type -> api.v0alpha.ListCollectionsRes
-	274, // 422: api.v0alpha.LMS.ResetCollection:output_type -> google.protobuf.Empty
-	148, // 423: api.v0alpha.LMS.AddCollectionEntry:output_type -> api.v0alpha.CollectionEntry
-	274, // 424: api.v0alpha.LMS.DeleteCollectionEntry:output_type -> google.protobuf.Empty
-	148, // 425: api.v0alpha.LMS.UpdateCollectionEntry:output_type -> api.v0alpha.CollectionEntry
-	148, // 426: api.v0alpha.LMS.StreamCollection:output_type -> api.v0alpha.CollectionEntry
-	161, // 427: api.v0alpha.LMS.SearchCollectionsPaginated:output_type -> api.v0alpha.PaginatedSearchRes
-	163, // 428: api.v0alpha.LMS.GetCollectionEntries:output_type -> api.v0alpha.GetCollectionEntriesRes
-	169, // 429: api.v0alpha.LMS.CreateCjsSearchDefinition:output_type -> api.v0alpha.CjsSearchDefinition
-	169, // 430: api.v0alpha.LMS.GetCjsSearchDefinition:output_type -> api.v0alpha.CjsSearchDefinition
-	274, // 431: api.v0alpha.LMS.UpdateCjsSearchDefinition:output_type -> google.protobuf.Empty
-	274, // 432: api.v0alpha.LMS.DeleteCjsSearchDefinition:output_type -> google.protobuf.Empty
-	173, // 433: api.v0alpha.LMS.ListCjsSearchDefinitions:output_type -> api.v0alpha.ListCjsSearchDefinitionsRes
-	175, // 434: api.v0alpha.LMS.ExecuteCjsSearchDefinition:output_type -> api.v0alpha.ExecuteCjsSearchDefinitionRes
-	179, // 435: api.v0alpha.LMS.GetCjsSecureSearchCriteria:output_type -> api.v0alpha.CjsSecureSearchCriteria
-	179, // 436: api.v0alpha.LMS.CreateCjsSecureSearchCriteria:output_type -> api.v0alpha.CjsSecureSearchCriteria
-	274, // 437: api.v0alpha.LMS.UpdateCjsSecureSearchCriteria:output_type -> google.protobuf.Empty
-	274, // 438: api.v0alpha.LMS.SampleEndpoint:output_type -> google.protobuf.Empty
-	56,  // 439: api.v0alpha.LMS.GetAvailableEHRFields:output_type -> api.v0alpha.Fields
-	143, // 440: api.v0alpha.LMS.GetQueuedEventsStatusByElementId:output_type -> api.v0alpha.Events
-	18,  // 441: api.v0alpha.LMS.ListPools:output_type -> api.v0alpha.ListPoolsResponse
-	8,   // 442: api.v0alpha.LMS.CreatePipelineCanvas:output_type -> api.v0alpha.CreatePipelineCanvasRes
-	10,  // 443: api.v0alpha.LMS.ListPipelineCanvases:output_type -> api.v0alpha.ListPipelineCanvasesRes
-	12,  // 444: api.v0alpha.LMS.UpdatePipelineCanvas:output_type -> api.v0alpha.UpdatePipelineCanvasRes
-	14,  // 445: api.v0alpha.LMS.DeletePipelineCanvas:output_type -> api.v0alpha.DeletePipelineCanvasRes
-	16,  // 446: api.v0alpha.LMS.GetPipelineCanvas:output_type -> api.v0alpha.GetPipelineCanvasRes
-	382, // [382:447] is the sub-list for method output_type
-	317, // [317:382] is the sub-list for method input_type
-	317, // [317:317] is the sub-list for extension type_name
-	317, // [317:317] is the sub-list for extension extendee
-	0,   // [0:317] is the sub-list for field type_name
+	239, // 282: api.v0alpha.ContactManagementEnrichment.de_duplication_info:type_name -> api.v0alpha.ContactManagerSink.DeDuplication
+	4,   // 283: api.v0alpha.ContactManagementEnrichment.search_field_type:type_name -> api.v0alpha.ContactManagementEnrichment.SearchFieldType
+	270, // 284: api.v0alpha.ProcessFields.NestedField.field_type:type_name -> api.commons.RecordType
+	270, // 285: api.v0alpha.ProcessFields.Field.field_type:type_name -> api.commons.RecordType
+	200, // 286: api.v0alpha.ProcessFields.Field.nested:type_name -> api.v0alpha.ProcessFields.NestedField
+	67,  // 287: api.v0alpha.LookupProcess.UrlLookup.file_template:type_name -> api.v0alpha.FileTemplate
+	58,  // 288: api.v0alpha.FilterCheck.Value.field_name:type_name -> api.v0alpha.FieldIndex
+	125, // 289: api.v0alpha.FilterCheck.Value.date_time:type_name -> api.v0alpha.DateTime
+	58,  // 290: api.v0alpha.FilterCheck.ValueComparison.field_name:type_name -> api.v0alpha.FieldIndex
+	274, // 291: api.v0alpha.FilterCheck.ValueComparison.op:type_name -> api.commons.CompareOperator
+	210, // 292: api.v0alpha.FilterCheck.ValueComparison.value:type_name -> api.v0alpha.FilterCheck.Value
+	58,  // 293: api.v0alpha.FilterCheck.TypeComparison.field_name:type_name -> api.v0alpha.FieldIndex
+	270, // 294: api.v0alpha.FilterCheck.TypeComparison.matches_field_type:type_name -> api.commons.RecordType
+	58,  // 295: api.v0alpha.FilterCheck.ListComparison.field_name:type_name -> api.v0alpha.FieldIndex
+	214, // 296: api.v0alpha.FilterCheck.ListComparison.data:type_name -> api.v0alpha.FilterCheck.ListComparison.FieldOrVal
+	58,  // 297: api.v0alpha.FilterCheck.ListComparison.FieldOrVal.field:type_name -> api.v0alpha.FieldIndex
+	210, // 298: api.v0alpha.FilterCheck.ListComparison.FieldOrVal.value:type_name -> api.v0alpha.FilterCheck.Value
+	60,  // 299: api.v0alpha.RecordFieldMap.FieldsEntry.value:type_name -> api.v0alpha.RecordFieldProto
+	124, // 300: api.v0alpha.ReshapeAction.AddDate.datetime:type_name -> api.v0alpha.DateTimeModifier
+	58,  // 301: api.v0alpha.ReshapeAction.AddField.other_field:type_name -> api.v0alpha.FieldIndex
+	58,  // 302: api.v0alpha.ReshapeAction.SubtractField.other_field:type_name -> api.v0alpha.FieldIndex
+	270, // 303: api.v0alpha.ReshapeAction.Convert.newType:type_name -> api.commons.RecordType
+	54,  // 304: api.v0alpha.ReshapeAction.Convert.new_field:type_name -> api.v0alpha.Field
+	60,  // 305: api.v0alpha.ReshapeAction.Convert.default_value:type_name -> api.v0alpha.RecordFieldProto
+	60,  // 306: api.v0alpha.ReshapeAction.AddNewField.starting_value:type_name -> api.v0alpha.RecordFieldProto
+	58,  // 307: api.v0alpha.ReshapeAction.AddNewFieldFromField.other_field:type_name -> api.v0alpha.FieldIndex
+	60,  // 308: api.v0alpha.ReshapeAction.SetFieldValue.value:type_name -> api.v0alpha.RecordFieldProto
+	58,  // 309: api.v0alpha.ReshapeAction.SetFieldFromField.other_field:type_name -> api.v0alpha.FieldIndex
+	236, // 310: api.v0alpha.ReshapeAction.Merge.data:type_name -> api.v0alpha.ReshapeAction.Merge.FieldOrVal
+	238, // 311: api.v0alpha.ReshapeAction.Extract.parts:type_name -> api.v0alpha.ReshapeAction.Extract.Slice
+	58,  // 312: api.v0alpha.ReshapeAction.Merge.FieldOrVal.field:type_name -> api.v0alpha.FieldIndex
+	237, // 313: api.v0alpha.ReshapeAction.Extract.Slice.start_index:type_name -> api.v0alpha.ReshapeAction.Extract.Index
+	237, // 314: api.v0alpha.ReshapeAction.Extract.Slice.end_index:type_name -> api.v0alpha.ReshapeAction.Extract.Index
+	2,   // 315: api.v0alpha.ContactManagerSink.DeDuplication.field_type:type_name -> api.v0alpha.ContactManagerSink.DeDuplicationFieldType
+	3,   // 316: api.v0alpha.ContactManagerSink.DeDuplication.merge_strategy:type_name -> api.v0alpha.ContactManagerSink.DeDuplicationMergeStrategy
+	246, // 317: api.v0alpha.RetypeCollectionReq.FieldTypesEntry.value:type_name -> api.commons.FieldType
+	21,  // 318: api.v0alpha.LMS.GetPublicKey:input_type -> api.v0alpha.GetPublicKeyReq
+	67,  // 319: api.v0alpha.LMS.CreateFileTemplate:input_type -> api.v0alpha.FileTemplate
+	63,  // 320: api.v0alpha.LMS.ListFileTemplates:input_type -> api.v0alpha.GetFileTemplatesReq
+	67,  // 321: api.v0alpha.LMS.UpdateFileTemplate:input_type -> api.v0alpha.FileTemplate
+	67,  // 322: api.v0alpha.LMS.DeleteFileTemplate:input_type -> api.v0alpha.FileTemplate
+	67,  // 323: api.v0alpha.LMS.GetFileTemplate:input_type -> api.v0alpha.FileTemplate
+	54,  // 324: api.v0alpha.LMS.CreateField:input_type -> api.v0alpha.Field
+	59,  // 325: api.v0alpha.LMS.ListFields:input_type -> api.v0alpha.ListFieldsReq
+	54,  // 326: api.v0alpha.LMS.GetField:input_type -> api.v0alpha.Field
+	55,  // 327: api.v0alpha.LMS.UpdateField:input_type -> api.v0alpha.UpdateFieldReq
+	54,  // 328: api.v0alpha.LMS.DeleteField:input_type -> api.v0alpha.Field
+	37,  // 329: api.v0alpha.LMS.ListAvailableFieldsByElementId:input_type -> api.v0alpha.ListAvailableFieldsByElementIdReq
+	38,  // 330: api.v0alpha.LMS.ListFieldsForElement:input_type -> api.v0alpha.ListFieldsForElementReq
+	40,  // 331: api.v0alpha.LMS.ListAutocompleteFields:input_type -> api.v0alpha.ListAutocompleteFieldsReq
+	275, // 332: api.v0alpha.LMS.ListCampaignLinks:input_type -> google.protobuf.Empty
+	44,  // 333: api.v0alpha.LMS.PeekList:input_type -> api.v0alpha.PeekListReq
+	46,  // 334: api.v0alpha.LMS.GetHistory:input_type -> api.v0alpha.GetHistoryReq
+	43,  // 335: api.v0alpha.LMS.CreateElement:input_type -> api.v0alpha.Element
+	62,  // 336: api.v0alpha.LMS.ListElements:input_type -> api.v0alpha.ListElementsReq
+	42,  // 337: api.v0alpha.LMS.GetElement:input_type -> api.v0alpha.ElementPK
+	43,  // 338: api.v0alpha.LMS.UpdateElement:input_type -> api.v0alpha.Element
+	43,  // 339: api.v0alpha.LMS.DeleteElement:input_type -> api.v0alpha.Element
+	43,  // 340: api.v0alpha.LMS.CopyPipelineUpstream:input_type -> api.v0alpha.Element
+	43,  // 341: api.v0alpha.LMS.CopyPipelineDownstream:input_type -> api.v0alpha.Element
+	32,  // 342: api.v0alpha.LMS.ProcessElement:input_type -> api.v0alpha.ProcessElementReq
+	33,  // 343: api.v0alpha.LMS.ProcessList:input_type -> api.v0alpha.ProcessListRequest
+	35,  // 344: api.v0alpha.LMS.StreamList:input_type -> api.v0alpha.StreamListRequest
+	275, // 345: api.v0alpha.LMS.GetAvailableFields:input_type -> google.protobuf.Empty
+	275, // 346: api.v0alpha.LMS.ListNewEvents:input_type -> google.protobuf.Empty
+	145, // 347: api.v0alpha.LMS.ViewQueue:input_type -> api.v0alpha.ViewQueueReq
+	141, // 348: api.v0alpha.LMS.Autocomplete:input_type -> api.v0alpha.ParseReq
+	30,  // 349: api.v0alpha.LMS.GetComplianceScrubLists:input_type -> api.v0alpha.GetComplianceScrubListsReq
+	23,  // 350: api.v0alpha.LMS.FindFieldUsages:input_type -> api.v0alpha.FindFieldUsagesReq
+	28,  // 351: api.v0alpha.LMS.FindInvalidElements:input_type -> api.v0alpha.FindInvalidElementsReq
+	148, // 352: api.v0alpha.LMS.CreateCollection:input_type -> api.v0alpha.CollectionMetadata
+	154, // 353: api.v0alpha.LMS.GetCollection:input_type -> api.v0alpha.GetCollectionReq
+	148, // 354: api.v0alpha.LMS.UpdateCollection:input_type -> api.v0alpha.CollectionMetadata
+	146, // 355: api.v0alpha.LMS.RetypeCollection:input_type -> api.v0alpha.RetypeCollectionReq
+	156, // 356: api.v0alpha.LMS.DeleteCollection:input_type -> api.v0alpha.DeleteCollectionReq
+	158, // 357: api.v0alpha.LMS.ListCollections:input_type -> api.v0alpha.ListCollectionsReq
+	157, // 358: api.v0alpha.LMS.ResetCollection:input_type -> api.v0alpha.ResetCollectionReq
+	149, // 359: api.v0alpha.LMS.AddCollectionEntry:input_type -> api.v0alpha.CollectionEntry
+	165, // 360: api.v0alpha.LMS.DeleteCollectionEntry:input_type -> api.v0alpha.DeleteCollectionEntryReq
+	149, // 361: api.v0alpha.LMS.UpdateCollectionEntry:input_type -> api.v0alpha.CollectionEntry
+	155, // 362: api.v0alpha.LMS.StreamCollection:input_type -> api.v0alpha.StreamCollectionReq
+	160, // 363: api.v0alpha.LMS.SearchCollectionsPaginated:input_type -> api.v0alpha.SearchCollectionsPaginatedReq
+	163, // 364: api.v0alpha.LMS.GetCollectionEntries:input_type -> api.v0alpha.GetCollectionEntriesReq
+	170, // 365: api.v0alpha.LMS.CreateCjsSearchDefinition:input_type -> api.v0alpha.CjsSearchDefinition
+	171, // 366: api.v0alpha.LMS.GetCjsSearchDefinition:input_type -> api.v0alpha.GetCjsSearchDefinitionReq
+	170, // 367: api.v0alpha.LMS.UpdateCjsSearchDefinition:input_type -> api.v0alpha.CjsSearchDefinition
+	172, // 368: api.v0alpha.LMS.DeleteCjsSearchDefinition:input_type -> api.v0alpha.DeleteCjsSearchDefinitionReq
+	173, // 369: api.v0alpha.LMS.ListCjsSearchDefinitions:input_type -> api.v0alpha.ListCjsSearchDefinitionsReq
+	175, // 370: api.v0alpha.LMS.ExecuteCjsSearchDefinition:input_type -> api.v0alpha.ExecuteCjsSearchDefinitionReq
+	181, // 371: api.v0alpha.LMS.GetCjsSecureSearchCriteria:input_type -> api.v0alpha.GetCjsSecureSearchCriteriaReq
+	180, // 372: api.v0alpha.LMS.CreateCjsSecureSearchCriteria:input_type -> api.v0alpha.CjsSecureSearchCriteria
+	180, // 373: api.v0alpha.LMS.UpdateCjsSecureSearchCriteria:input_type -> api.v0alpha.CjsSecureSearchCriteria
+	192, // 374: api.v0alpha.LMS.SampleEndpoint:input_type -> api.v0alpha.SampleRequest
+	193, // 375: api.v0alpha.LMS.GetAvailableEHRFields:input_type -> api.v0alpha.EHREntityType
+	42,  // 376: api.v0alpha.LMS.GetQueuedEventsStatusByElementId:input_type -> api.v0alpha.ElementPK
+	18,  // 377: api.v0alpha.LMS.ListPools:input_type -> api.v0alpha.ListPoolsRequest
+	8,   // 378: api.v0alpha.LMS.CreatePipelineCanvas:input_type -> api.v0alpha.CreatePipelineCanvasReq
+	10,  // 379: api.v0alpha.LMS.ListPipelineCanvases:input_type -> api.v0alpha.ListPipelineCanvasesReq
+	12,  // 380: api.v0alpha.LMS.UpdatePipelineCanvas:input_type -> api.v0alpha.UpdatePipelineCanvasReq
+	14,  // 381: api.v0alpha.LMS.DeletePipelineCanvas:input_type -> api.v0alpha.DeletePipelineCanvasReq
+	16,  // 382: api.v0alpha.LMS.GetPipelineCanvas:input_type -> api.v0alpha.GetPipelineCanvasReq
+	22,  // 383: api.v0alpha.LMS.GetPublicKey:output_type -> api.v0alpha.PublicKey
+	67,  // 384: api.v0alpha.LMS.CreateFileTemplate:output_type -> api.v0alpha.FileTemplate
+	67,  // 385: api.v0alpha.LMS.ListFileTemplates:output_type -> api.v0alpha.FileTemplate
+	67,  // 386: api.v0alpha.LMS.UpdateFileTemplate:output_type -> api.v0alpha.FileTemplate
+	67,  // 387: api.v0alpha.LMS.DeleteFileTemplate:output_type -> api.v0alpha.FileTemplate
+	67,  // 388: api.v0alpha.LMS.GetFileTemplate:output_type -> api.v0alpha.FileTemplate
+	54,  // 389: api.v0alpha.LMS.CreateField:output_type -> api.v0alpha.Field
+	57,  // 390: api.v0alpha.LMS.ListFields:output_type -> api.v0alpha.Fields
+	54,  // 391: api.v0alpha.LMS.GetField:output_type -> api.v0alpha.Field
+	54,  // 392: api.v0alpha.LMS.UpdateField:output_type -> api.v0alpha.Field
+	54,  // 393: api.v0alpha.LMS.DeleteField:output_type -> api.v0alpha.Field
+	52,  // 394: api.v0alpha.LMS.ListAvailableFieldsByElementId:output_type -> api.v0alpha.ProcessFields
+	39,  // 395: api.v0alpha.LMS.ListFieldsForElement:output_type -> api.v0alpha.ListFieldsForElementRes
+	41,  // 396: api.v0alpha.LMS.ListAutocompleteFields:output_type -> api.v0alpha.ListAutocompleteFieldsRes
+	166, // 397: api.v0alpha.LMS.ListCampaignLinks:output_type -> api.v0alpha.ListCampaignLinksRes
+	45,  // 398: api.v0alpha.LMS.PeekList:output_type -> api.v0alpha.PeekListRes
+	47,  // 399: api.v0alpha.LMS.GetHistory:output_type -> api.v0alpha.GetHistoryRes
+	43,  // 400: api.v0alpha.LMS.CreateElement:output_type -> api.v0alpha.Element
+	43,  // 401: api.v0alpha.LMS.ListElements:output_type -> api.v0alpha.Element
+	43,  // 402: api.v0alpha.LMS.GetElement:output_type -> api.v0alpha.Element
+	43,  // 403: api.v0alpha.LMS.UpdateElement:output_type -> api.v0alpha.Element
+	43,  // 404: api.v0alpha.LMS.DeleteElement:output_type -> api.v0alpha.Element
+	43,  // 405: api.v0alpha.LMS.CopyPipelineUpstream:output_type -> api.v0alpha.Element
+	43,  // 406: api.v0alpha.LMS.CopyPipelineDownstream:output_type -> api.v0alpha.Element
+	275, // 407: api.v0alpha.LMS.ProcessElement:output_type -> google.protobuf.Empty
+	34,  // 408: api.v0alpha.LMS.ProcessList:output_type -> api.v0alpha.ProcessListResponse
+	36,  // 409: api.v0alpha.LMS.StreamList:output_type -> api.v0alpha.StreamListResponse
+	52,  // 410: api.v0alpha.LMS.GetAvailableFields:output_type -> api.v0alpha.ProcessFields
+	144, // 411: api.v0alpha.LMS.ListNewEvents:output_type -> api.v0alpha.Events
+	144, // 412: api.v0alpha.LMS.ViewQueue:output_type -> api.v0alpha.Events
+	142, // 413: api.v0alpha.LMS.Autocomplete:output_type -> api.v0alpha.ParseRes
+	31,  // 414: api.v0alpha.LMS.GetComplianceScrubLists:output_type -> api.v0alpha.GetComplianceScrubListsRes
+	25,  // 415: api.v0alpha.LMS.FindFieldUsages:output_type -> api.v0alpha.FindFieldUsagesRes
+	29,  // 416: api.v0alpha.LMS.FindInvalidElements:output_type -> api.v0alpha.FindInvalidElementsRes
+	148, // 417: api.v0alpha.LMS.CreateCollection:output_type -> api.v0alpha.CollectionMetadata
+	148, // 418: api.v0alpha.LMS.GetCollection:output_type -> api.v0alpha.CollectionMetadata
+	275, // 419: api.v0alpha.LMS.UpdateCollection:output_type -> google.protobuf.Empty
+	147, // 420: api.v0alpha.LMS.RetypeCollection:output_type -> api.v0alpha.RetypeCollectionRes
+	275, // 421: api.v0alpha.LMS.DeleteCollection:output_type -> google.protobuf.Empty
+	159, // 422: api.v0alpha.LMS.ListCollections:output_type -> api.v0alpha.ListCollectionsRes
+	275, // 423: api.v0alpha.LMS.ResetCollection:output_type -> google.protobuf.Empty
+	149, // 424: api.v0alpha.LMS.AddCollectionEntry:output_type -> api.v0alpha.CollectionEntry
+	275, // 425: api.v0alpha.LMS.DeleteCollectionEntry:output_type -> google.protobuf.Empty
+	149, // 426: api.v0alpha.LMS.UpdateCollectionEntry:output_type -> api.v0alpha.CollectionEntry
+	149, // 427: api.v0alpha.LMS.StreamCollection:output_type -> api.v0alpha.CollectionEntry
+	162, // 428: api.v0alpha.LMS.SearchCollectionsPaginated:output_type -> api.v0alpha.PaginatedSearchRes
+	164, // 429: api.v0alpha.LMS.GetCollectionEntries:output_type -> api.v0alpha.GetCollectionEntriesRes
+	170, // 430: api.v0alpha.LMS.CreateCjsSearchDefinition:output_type -> api.v0alpha.CjsSearchDefinition
+	170, // 431: api.v0alpha.LMS.GetCjsSearchDefinition:output_type -> api.v0alpha.CjsSearchDefinition
+	275, // 432: api.v0alpha.LMS.UpdateCjsSearchDefinition:output_type -> google.protobuf.Empty
+	275, // 433: api.v0alpha.LMS.DeleteCjsSearchDefinition:output_type -> google.protobuf.Empty
+	174, // 434: api.v0alpha.LMS.ListCjsSearchDefinitions:output_type -> api.v0alpha.ListCjsSearchDefinitionsRes
+	176, // 435: api.v0alpha.LMS.ExecuteCjsSearchDefinition:output_type -> api.v0alpha.ExecuteCjsSearchDefinitionRes
+	180, // 436: api.v0alpha.LMS.GetCjsSecureSearchCriteria:output_type -> api.v0alpha.CjsSecureSearchCriteria
+	180, // 437: api.v0alpha.LMS.CreateCjsSecureSearchCriteria:output_type -> api.v0alpha.CjsSecureSearchCriteria
+	275, // 438: api.v0alpha.LMS.UpdateCjsSecureSearchCriteria:output_type -> google.protobuf.Empty
+	275, // 439: api.v0alpha.LMS.SampleEndpoint:output_type -> google.protobuf.Empty
+	57,  // 440: api.v0alpha.LMS.GetAvailableEHRFields:output_type -> api.v0alpha.Fields
+	144, // 441: api.v0alpha.LMS.GetQueuedEventsStatusByElementId:output_type -> api.v0alpha.Events
+	19,  // 442: api.v0alpha.LMS.ListPools:output_type -> api.v0alpha.ListPoolsResponse
+	9,   // 443: api.v0alpha.LMS.CreatePipelineCanvas:output_type -> api.v0alpha.CreatePipelineCanvasRes
+	11,  // 444: api.v0alpha.LMS.ListPipelineCanvases:output_type -> api.v0alpha.ListPipelineCanvasesRes
+	13,  // 445: api.v0alpha.LMS.UpdatePipelineCanvas:output_type -> api.v0alpha.UpdatePipelineCanvasRes
+	15,  // 446: api.v0alpha.LMS.DeletePipelineCanvas:output_type -> api.v0alpha.DeletePipelineCanvasRes
+	17,  // 447: api.v0alpha.LMS.GetPipelineCanvas:output_type -> api.v0alpha.GetPipelineCanvasRes
+	383, // [383:448] is the sub-list for method output_type
+	318, // [318:383] is the sub-list for method input_type
+	318, // [318:318] is the sub-list for extension type_name
+	318, // [318:318] is the sub-list for extension extendee
+	0,   // [0:318] is the sub-list for field type_name
 }
 
 func init() { file_api_v0alpha_lms_proto_init() }
@@ -20061,7 +20129,7 @@ func file_api_v0alpha_lms_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_v0alpha_lms_proto_rawDesc), len(file_api_v0alpha_lms_proto_rawDesc)),
-			NumEnums:      4,
+			NumEnums:      5,
 			NumMessages:   238,
 			NumExtensions: 0,
 			NumServices:   1,
