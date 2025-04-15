@@ -45,7 +45,6 @@ const (
 	ClassifierEntityType_CET_US_SSN            ClassifierEntityType = 17
 	ClassifierEntityType_CET_POSTAL_CODE       ClassifierEntityType = 18
 	ClassifierEntityType_CET_ACCOUNT_NUMBER    ClassifierEntityType = 19
-	ClassifierEntityType_CET_CURRENCY          ClassifierEntityType = 20
 )
 
 // Enum value maps for ClassifierEntityType.
@@ -71,7 +70,6 @@ var (
 		17: "CET_US_SSN",
 		18: "CET_POSTAL_CODE",
 		19: "CET_ACCOUNT_NUMBER",
-		20: "CET_CURRENCY",
 	}
 	ClassifierEntityType_value = map[string]int32{
 		"CET_UNKNOWN":           0,
@@ -94,7 +92,6 @@ var (
 		"CET_US_SSN":            17,
 		"CET_POSTAL_CODE":       18,
 		"CET_ACCOUNT_NUMBER":    19,
-		"CET_CURRENCY":          20,
 	}
 )
 
@@ -129,7 +126,7 @@ var File_api_commons_classifier_proto protoreflect.FileDescriptor
 
 const file_api_commons_classifier_proto_rawDesc = "" +
 	"\n" +
-	"\x1capi/commons/classifier.proto\x12\vapi.commons*\xb0\x03\n" +
+	"\x1capi/commons/classifier.proto\x12\vapi.commons*\x9e\x03\n" +
 	"\x14ClassifierEntityType\x12\x0f\n" +
 	"\vCET_UNKNOWN\x10\x00\x12\x13\n" +
 	"\x0fCET_CREDIT_CARD\x10\x01\x12\x0e\n" +
@@ -154,8 +151,7 @@ const file_api_commons_classifier_proto_rawDesc = "" +
 	"\n" +
 	"CET_US_SSN\x10\x11\x12\x13\n" +
 	"\x0fCET_POSTAL_CODE\x10\x12\x12\x16\n" +
-	"\x12CET_ACCOUNT_NUMBER\x10\x13\x12\x10\n" +
-	"\fCET_CURRENCY\x10\x14B\x97\x01\n" +
+	"\x12CET_ACCOUNT_NUMBER\x10\x13B\x97\x01\n" +
 	"\x0fcom.api.commonsB\x0fClassifierProtoP\x01Z&github.com/tcncloud/api-go/api/commons\xa2\x02\x03ACX\xaa\x02\vApi.Commons\xca\x02\vApi\\Commons\xe2\x02\x17Api\\Commons\\GPBMetadata\xea\x02\fApi::Commonsb\x06proto3"
 
 var (

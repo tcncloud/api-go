@@ -177,8 +177,6 @@ type AuditEvent struct {
 	//	*AuditEvent_ContactManagerEntityAssociationEvent
 	//	*AuditEvent_AccessTokensExpiringEvent
 	//	*AuditEvent_WfmPublishScheduleEvent
-	//	*AuditEvent_P3AmqpCallResultEvent
-	//	*AuditEvent_P3AmqpAgentResponseEvent
 	Event         isAuditEvent_Event `protobuf_oneof:"event"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -1472,24 +1470,6 @@ func (x *AuditEvent) GetWfmPublishScheduleEvent() *WFMPublishScheduleEvent {
 	return nil
 }
 
-func (x *AuditEvent) GetP3AmqpCallResultEvent() *P3AMQPCallResultEvent {
-	if x != nil {
-		if x, ok := x.Event.(*AuditEvent_P3AmqpCallResultEvent); ok {
-			return x.P3AmqpCallResultEvent
-		}
-	}
-	return nil
-}
-
-func (x *AuditEvent) GetP3AmqpAgentResponseEvent() *P3AMQPAgentResponseEvent {
-	if x != nil {
-		if x, ok := x.Event.(*AuditEvent_P3AmqpAgentResponseEvent); ok {
-			return x.P3AmqpAgentResponseEvent
-		}
-	}
-	return nil
-}
-
 type isAuditEvent_Event interface {
 	isAuditEvent_Event()
 }
@@ -2155,15 +2135,6 @@ type AuditEvent_WfmPublishScheduleEvent struct {
 	WfmPublishScheduleEvent *WFMPublishScheduleEvent `protobuf:"bytes,1400,opt,name=wfm_publish_schedule_event,json=wfmPublishScheduleEvent,proto3,oneof"`
 }
 
-type AuditEvent_P3AmqpCallResultEvent struct {
-	// P3 AMQP Events class 1500
-	P3AmqpCallResultEvent *P3AMQPCallResultEvent `protobuf:"bytes,1500,opt,name=p3_amqp_call_result_event,json=p3AmqpCallResultEvent,proto3,oneof"`
-}
-
-type AuditEvent_P3AmqpAgentResponseEvent struct {
-	P3AmqpAgentResponseEvent *P3AMQPAgentResponseEvent `protobuf:"bytes,1501,opt,name=p3_amqp_agent_response_event,json=p3AmqpAgentResponseEvent,proto3,oneof"`
-}
-
 func (*AuditEvent_XDummyEvent) isAuditEvent_Event() {}
 
 func (*AuditEvent_VanaFlagEvent) isAuditEvent_Event() {}
@@ -2426,15 +2397,11 @@ func (*AuditEvent_AccessTokensExpiringEvent) isAuditEvent_Event() {}
 
 func (*AuditEvent_WfmPublishScheduleEvent) isAuditEvent_Event() {}
 
-func (*AuditEvent_P3AmqpCallResultEvent) isAuditEvent_Event() {}
-
-func (*AuditEvent_P3AmqpAgentResponseEvent) isAuditEvent_Event() {}
-
 var File_api_commons_audit_audit_proto protoreflect.FileDescriptor
 
 const file_api_commons_audit_audit_proto_rawDesc = "" +
 	"\n" +
-	"\x1dapi/commons/audit/audit.proto\x12\x11api.commons.audit\x1a-api/commons/audit/agent_training_events.proto\x1a\"api/commons/audit/asm_events.proto\x1a&api/commons/audit/billing_events.proto\x1a)api/commons/audit/compliance_events.proto\x1a-api/commons/audit/contactmanager_events.proto\x1a'api/commons/audit/delivery_events.proto\x1a#api/commons/audit/event_types.proto\x1a\x1eapi/commons/audit/events.proto\x1a\"api/commons/audit/lms_events.proto\x1a*api/commons/audit/omnichannel_events.proto\x1a+api/commons/audit/organization_events.proto\x1a&api/commons/audit/p3_amqp_events.proto\x1a)api/commons/audit/scorecards_events.proto\x1a&api/commons/audit/tickets_events.proto\x1a#api/commons/audit/vana_events.proto\x1a\"api/commons/audit/wfm_events.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x8b\x87\x01\n" +
+	"\x1dapi/commons/audit/audit.proto\x12\x11api.commons.audit\x1a-api/commons/audit/agent_training_events.proto\x1a\"api/commons/audit/asm_events.proto\x1a&api/commons/audit/billing_events.proto\x1a)api/commons/audit/compliance_events.proto\x1a-api/commons/audit/contactmanager_events.proto\x1a'api/commons/audit/delivery_events.proto\x1a#api/commons/audit/event_types.proto\x1a\x1eapi/commons/audit/events.proto\x1a\"api/commons/audit/lms_events.proto\x1a*api/commons/audit/omnichannel_events.proto\x1a+api/commons/audit/organization_events.proto\x1a)api/commons/audit/scorecards_events.proto\x1a&api/commons/audit/tickets_events.proto\x1a#api/commons/audit/vana_events.proto\x1a\"api/commons/audit/wfm_events.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xb4\x85\x01\n" +
 	"\n" +
 	"AuditEvent\x12\x15\n" +
 	"\x06org_id\x18\x01 \x01(\tR\x05orgId\x12\x1b\n" +
@@ -2581,9 +2548,7 @@ const file_api_commons_audit_audit_proto_rawDesc = "" +
 	"\x1caccess_tokens_expiring_event\x18\x94\n" +
 	" \x01(\v2,.api.commons.audit.AccessTokensExpiringEventH\x00R\x19accessTokensExpiringEvent\x12j\n" +
 	"\x1awfm_publish_schedule_event\x18\xf8\n" +
-	" \x01(\v2*.api.commons.audit.WFMPublishScheduleEventH\x00R\x17wfmPublishScheduleEvent\x12e\n" +
-	"\x19p3_amqp_call_result_event\x18\xdc\v \x01(\v2(.api.commons.audit.P3AMQPCallResultEventH\x00R\x15p3AmqpCallResultEvent\x12n\n" +
-	"\x1cp3_amqp_agent_response_event\x18\xdd\v \x01(\v2+.api.commons.audit.P3AMQPAgentResponseEventH\x00R\x18p3AmqpAgentResponseEventB\a\n" +
+	" \x01(\v2*.api.commons.audit.WFMPublishScheduleEventH\x00R\x17wfmPublishScheduleEventB\a\n" +
 	"\x05eventB\xb7\x01\n" +
 	"\x15com.api.commons.auditB\n" +
 	"AuditProtoP\x01Z,github.com/tcncloud/api-go/api/commons/audit\xa2\x02\x03ACA\xaa\x02\x11Api.Commons.Audit\xca\x02\x11Api\\Commons\\Audit\xe2\x02\x1dApi\\Commons\\Audit\\GPBMetadata\xea\x02\x13Api::Commons::Auditb\x06proto3"
@@ -2732,8 +2697,6 @@ var file_api_commons_audit_audit_proto_goTypes = []any{
 	(*ContactManagerEntityAssociationEvent)(nil),         // 127: api.commons.audit.ContactManagerEntityAssociationEvent
 	(*AccessTokensExpiringEvent)(nil),                    // 128: api.commons.audit.AccessTokensExpiringEvent
 	(*WFMPublishScheduleEvent)(nil),                      // 129: api.commons.audit.WFMPublishScheduleEvent
-	(*P3AMQPCallResultEvent)(nil),                        // 130: api.commons.audit.P3AMQPCallResultEvent
-	(*P3AMQPAgentResponseEvent)(nil),                     // 131: api.commons.audit.P3AMQPAgentResponseEvent
 }
 var file_api_commons_audit_audit_proto_depIdxs = []int32{
 	1,   // 0: api.commons.audit.AuditEvent.event_time:type_name -> google.protobuf.Timestamp
@@ -2870,13 +2833,11 @@ var file_api_commons_audit_audit_proto_depIdxs = []int32{
 	127, // 131: api.commons.audit.AuditEvent.contact_manager_entity_association_event:type_name -> api.commons.audit.ContactManagerEntityAssociationEvent
 	128, // 132: api.commons.audit.AuditEvent.access_tokens_expiring_event:type_name -> api.commons.audit.AccessTokensExpiringEvent
 	129, // 133: api.commons.audit.AuditEvent.wfm_publish_schedule_event:type_name -> api.commons.audit.WFMPublishScheduleEvent
-	130, // 134: api.commons.audit.AuditEvent.p3_amqp_call_result_event:type_name -> api.commons.audit.P3AMQPCallResultEvent
-	131, // 135: api.commons.audit.AuditEvent.p3_amqp_agent_response_event:type_name -> api.commons.audit.P3AMQPAgentResponseEvent
-	136, // [136:136] is the sub-list for method output_type
-	136, // [136:136] is the sub-list for method input_type
-	136, // [136:136] is the sub-list for extension type_name
-	136, // [136:136] is the sub-list for extension extendee
-	0,   // [0:136] is the sub-list for field type_name
+	134, // [134:134] is the sub-list for method output_type
+	134, // [134:134] is the sub-list for method input_type
+	134, // [134:134] is the sub-list for extension type_name
+	134, // [134:134] is the sub-list for extension extendee
+	0,   // [0:134] is the sub-list for field type_name
 }
 
 func init() { file_api_commons_audit_audit_proto_init() }
@@ -2895,7 +2856,6 @@ func file_api_commons_audit_audit_proto_init() {
 	file_api_commons_audit_lms_events_proto_init()
 	file_api_commons_audit_omnichannel_events_proto_init()
 	file_api_commons_audit_organization_events_proto_init()
-	file_api_commons_audit_p3_amqp_events_proto_init()
 	file_api_commons_audit_scorecards_events_proto_init()
 	file_api_commons_audit_tickets_events_proto_init()
 	file_api_commons_audit_vana_events_proto_init()
@@ -3032,8 +2992,6 @@ func file_api_commons_audit_audit_proto_init() {
 		(*AuditEvent_ContactManagerEntityAssociationEvent)(nil),
 		(*AuditEvent_AccessTokensExpiringEvent)(nil),
 		(*AuditEvent_WfmPublishScheduleEvent)(nil),
-		(*AuditEvent_P3AmqpCallResultEvent)(nil),
-		(*AuditEvent_P3AmqpAgentResponseEvent)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
