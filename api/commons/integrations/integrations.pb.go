@@ -2148,10 +2148,14 @@ func (FlowType) EnumDescriptor() ([]byte, []int) {
 }
 
 type Receipt struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Fields        []*ReceiptField        `protobuf:"bytes,1,rep,name=fields,proto3" json:"fields,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state  protoimpl.MessageState `protogen:"open.v1"`
+	Fields []*ReceiptField        `protobuf:"bytes,1,rep,name=fields,proto3" json:"fields,omitempty"`
+	// campaign identifier
+	CampaignSid int64 `protobuf:"varint,2,opt,name=campaign_sid,json=campaignSid,proto3" json:"campaign_sid,omitempty"`
+	// campaign module identifier
+	CampaignModuleSid int64 `protobuf:"varint,3,opt,name=campaign_module_sid,json=campaignModuleSid,proto3" json:"campaign_module_sid,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *Receipt) Reset() {
@@ -2189,6 +2193,20 @@ func (x *Receipt) GetFields() []*ReceiptField {
 		return x.Fields
 	}
 	return nil
+}
+
+func (x *Receipt) GetCampaignSid() int64 {
+	if x != nil {
+		return x.CampaignSid
+	}
+	return 0
+}
+
+func (x *Receipt) GetCampaignModuleSid() int64 {
+	if x != nil {
+		return x.CampaignModuleSid
+	}
+	return 0
 }
 
 type Payment struct {
@@ -22605,9 +22623,11 @@ var File_api_commons_integrations_integrations_proto protoreflect.FileDescriptor
 
 const file_api_commons_integrations_integrations_proto_rawDesc = "" +
 	"\n" +
-	"+api/commons/integrations/integrations.proto\x12\x18api.commons.integrations\x1a\x17google/type/money.proto\"I\n" +
+	"+api/commons/integrations/integrations.proto\x12\x18api.commons.integrations\x1a\x17google/type/money.proto\"\x9c\x01\n" +
 	"\aReceipt\x12>\n" +
-	"\x06fields\x18\x01 \x03(\v2&.api.commons.integrations.ReceiptFieldR\x06fields\"<\n" +
+	"\x06fields\x18\x01 \x03(\v2&.api.commons.integrations.ReceiptFieldR\x06fields\x12!\n" +
+	"\fcampaign_sid\x18\x02 \x01(\x03R\vcampaignSid\x12.\n" +
+	"\x13campaign_module_sid\x18\x03 \x01(\x03R\x11campaignModuleSid\"<\n" +
 	"\aPayment\x121\n" +
 	"\x04fees\x18\x01 \x03(\v2\x1d.api.commons.integrations.FeeR\x04fees\"\xf5\x02\n" +
 	"\x03Fee\x12\x12\n" +

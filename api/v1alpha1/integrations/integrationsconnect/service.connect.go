@@ -136,6 +136,9 @@ const (
 	// IntegrationsUpsertIntegrationSettingsProcedure is the fully-qualified name of the Integrations's
 	// UpsertIntegrationSettings RPC.
 	IntegrationsUpsertIntegrationSettingsProcedure = "/api.v1alpha1.integrations.Integrations/UpsertIntegrationSettings"
+	// IntegrationsDeliverReceiptProcedure is the fully-qualified name of the Integrations's
+	// DeliverReceipt RPC.
+	IntegrationsDeliverReceiptProcedure = "/api.v1alpha1.integrations.Integrations/DeliverReceipt"
 )
 
 // IntegrationsClient is a client for the api.v1alpha1.integrations.Integrations service.
@@ -204,6 +207,7 @@ type IntegrationsClient interface {
 	CalculateFees(context.Context, *connect_go.Request[integrations.CalculateFeesReq]) (*connect_go.Response[integrations.CalculateFeesRes], error)
 	GetIntegrationSettings(context.Context, *connect_go.Request[integrations.GetIntegrationSettingsReq]) (*connect_go.Response[integrations.GetIntegrationSettingsRes], error)
 	UpsertIntegrationSettings(context.Context, *connect_go.Request[integrations.UpsertIntegrationSettingsReq]) (*connect_go.Response[integrations.UpsertIntegrationSettingsRes], error)
+	DeliverReceipt(context.Context, *connect_go.Request[integrations.DeliverReceiptReq]) (*connect_go.Response[integrations.DeliverReceiptRes], error)
 }
 
 // NewIntegrationsClient constructs a client for the api.v1alpha1.integrations.Integrations service.
@@ -391,6 +395,11 @@ func NewIntegrationsClient(httpClient connect_go.HTTPClient, baseURL string, opt
 			baseURL+IntegrationsUpsertIntegrationSettingsProcedure,
 			opts...,
 		),
+		deliverReceipt: connect_go.NewClient[integrations.DeliverReceiptReq, integrations.DeliverReceiptRes](
+			httpClient,
+			baseURL+IntegrationsDeliverReceiptProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -431,6 +440,7 @@ type integrationsClient struct {
 	calculateFees                       *connect_go.Client[integrations.CalculateFeesReq, integrations.CalculateFeesRes]
 	getIntegrationSettings              *connect_go.Client[integrations.GetIntegrationSettingsReq, integrations.GetIntegrationSettingsRes]
 	upsertIntegrationSettings           *connect_go.Client[integrations.UpsertIntegrationSettingsReq, integrations.UpsertIntegrationSettingsRes]
+	deliverReceipt                      *connect_go.Client[integrations.DeliverReceiptReq, integrations.DeliverReceiptRes]
 }
 
 // Process calls api.v1alpha1.integrations.Integrations.Process.
@@ -612,6 +622,11 @@ func (c *integrationsClient) UpsertIntegrationSettings(ctx context.Context, req 
 	return c.upsertIntegrationSettings.CallUnary(ctx, req)
 }
 
+// DeliverReceipt calls api.v1alpha1.integrations.Integrations.DeliverReceipt.
+func (c *integrationsClient) DeliverReceipt(ctx context.Context, req *connect_go.Request[integrations.DeliverReceiptReq]) (*connect_go.Response[integrations.DeliverReceiptRes], error) {
+	return c.deliverReceipt.CallUnary(ctx, req)
+}
+
 // IntegrationsHandler is an implementation of the api.v1alpha1.integrations.Integrations service.
 type IntegrationsHandler interface {
 	// combine rquest parameters with the config parameters and run the integration method
@@ -678,6 +693,7 @@ type IntegrationsHandler interface {
 	CalculateFees(context.Context, *connect_go.Request[integrations.CalculateFeesReq]) (*connect_go.Response[integrations.CalculateFeesRes], error)
 	GetIntegrationSettings(context.Context, *connect_go.Request[integrations.GetIntegrationSettingsReq]) (*connect_go.Response[integrations.GetIntegrationSettingsRes], error)
 	UpsertIntegrationSettings(context.Context, *connect_go.Request[integrations.UpsertIntegrationSettingsReq]) (*connect_go.Response[integrations.UpsertIntegrationSettingsRes], error)
+	DeliverReceipt(context.Context, *connect_go.Request[integrations.DeliverReceiptReq]) (*connect_go.Response[integrations.DeliverReceiptRes], error)
 }
 
 // NewIntegrationsHandler builds an HTTP handler from the service implementation. It returns the
@@ -861,6 +877,11 @@ func NewIntegrationsHandler(svc IntegrationsHandler, opts ...connect_go.HandlerO
 		svc.UpsertIntegrationSettings,
 		opts...,
 	)
+	integrationsDeliverReceiptHandler := connect_go.NewUnaryHandler(
+		IntegrationsDeliverReceiptProcedure,
+		svc.DeliverReceipt,
+		opts...,
+	)
 	return "/api.v1alpha1.integrations.Integrations/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case IntegrationsProcessProcedure:
@@ -933,6 +954,8 @@ func NewIntegrationsHandler(svc IntegrationsHandler, opts ...connect_go.HandlerO
 			integrationsGetIntegrationSettingsHandler.ServeHTTP(w, r)
 		case IntegrationsUpsertIntegrationSettingsProcedure:
 			integrationsUpsertIntegrationSettingsHandler.ServeHTTP(w, r)
+		case IntegrationsDeliverReceiptProcedure:
+			integrationsDeliverReceiptHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -1080,4 +1103,8 @@ func (UnimplementedIntegrationsHandler) GetIntegrationSettings(context.Context, 
 
 func (UnimplementedIntegrationsHandler) UpsertIntegrationSettings(context.Context, *connect_go.Request[integrations.UpsertIntegrationSettingsReq]) (*connect_go.Response[integrations.UpsertIntegrationSettingsRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.integrations.Integrations.UpsertIntegrationSettings is not implemented"))
+}
+
+func (UnimplementedIntegrationsHandler) DeliverReceipt(context.Context, *connect_go.Request[integrations.DeliverReceiptReq]) (*connect_go.Response[integrations.DeliverReceiptRes], error) {
+	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.integrations.Integrations.DeliverReceipt is not implemented"))
 }

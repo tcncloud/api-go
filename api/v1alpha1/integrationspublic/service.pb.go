@@ -1883,6 +1883,160 @@ func (x *CalculateFeesRes) GetTotalAmountDue() *money.Money {
 	return nil
 }
 
+type DeliverReceiptReq struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Types that are valid to be assigned to DeliveryMethod:
+	//
+	//	*DeliverReceiptReq_EmailReceipt
+	DeliveryMethod isDeliverReceiptReq_DeliveryMethod `protobuf_oneof:"delivery_method"`
+	ReceiptId      string                             `protobuf:"bytes,6,opt,name=receipt_id,json=receiptId,proto3" json:"receipt_id,omitempty"` // used to look up the populated receipt template in tmp storage
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *DeliverReceiptReq) Reset() {
+	*x = DeliverReceiptReq{}
+	mi := &file_api_v1alpha1_integrationspublic_service_proto_msgTypes[26]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeliverReceiptReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeliverReceiptReq) ProtoMessage() {}
+
+func (x *DeliverReceiptReq) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_integrationspublic_service_proto_msgTypes[26]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeliverReceiptReq.ProtoReflect.Descriptor instead.
+func (*DeliverReceiptReq) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_integrationspublic_service_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *DeliverReceiptReq) GetDeliveryMethod() isDeliverReceiptReq_DeliveryMethod {
+	if x != nil {
+		return x.DeliveryMethod
+	}
+	return nil
+}
+
+func (x *DeliverReceiptReq) GetEmailReceipt() *EmailReceipt {
+	if x != nil {
+		if x, ok := x.DeliveryMethod.(*DeliverReceiptReq_EmailReceipt); ok {
+			return x.EmailReceipt
+		}
+	}
+	return nil
+}
+
+func (x *DeliverReceiptReq) GetReceiptId() string {
+	if x != nil {
+		return x.ReceiptId
+	}
+	return ""
+}
+
+type isDeliverReceiptReq_DeliveryMethod interface {
+	isDeliverReceiptReq_DeliveryMethod()
+}
+
+type DeliverReceiptReq_EmailReceipt struct {
+	EmailReceipt *EmailReceipt `protobuf:"bytes,3,opt,name=email_receipt,json=emailReceipt,proto3,oneof"` // adding sms, and pdf download in the future if requested
+}
+
+func (*DeliverReceiptReq_EmailReceipt) isDeliverReceiptReq_DeliveryMethod() {}
+
+type EmailReceipt struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ToAddr        string                 `protobuf:"bytes,1,opt,name=to_addr,json=toAddr,proto3" json:"to_addr,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *EmailReceipt) Reset() {
+	*x = EmailReceipt{}
+	mi := &file_api_v1alpha1_integrationspublic_service_proto_msgTypes[27]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *EmailReceipt) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EmailReceipt) ProtoMessage() {}
+
+func (x *EmailReceipt) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_integrationspublic_service_proto_msgTypes[27]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EmailReceipt.ProtoReflect.Descriptor instead.
+func (*EmailReceipt) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_integrationspublic_service_proto_rawDescGZIP(), []int{27}
+}
+
+func (x *EmailReceipt) GetToAddr() string {
+	if x != nil {
+		return x.ToAddr
+	}
+	return ""
+}
+
+type DeliverReceiptRes struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeliverReceiptRes) Reset() {
+	*x = DeliverReceiptRes{}
+	mi := &file_api_v1alpha1_integrationspublic_service_proto_msgTypes[28]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeliverReceiptRes) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeliverReceiptRes) ProtoMessage() {}
+
+func (x *DeliverReceiptRes) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_integrationspublic_service_proto_msgTypes[28]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeliverReceiptRes.ProtoReflect.Descriptor instead.
+func (*DeliverReceiptRes) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_integrationspublic_service_proto_rawDescGZIP(), []int{28}
+}
+
 type GetLinkDataRes_FieldNames struct {
 	state         protoimpl.MessageState          `protogen:"open.v1"`
 	Flow          *integrations.Flow              `protobuf:"bytes,8,opt,name=flow,proto3" json:"flow,omitempty"`
@@ -1894,7 +2048,7 @@ type GetLinkDataRes_FieldNames struct {
 
 func (x *GetLinkDataRes_FieldNames) Reset() {
 	*x = GetLinkDataRes_FieldNames{}
-	mi := &file_api_v1alpha1_integrationspublic_service_proto_msgTypes[27]
+	mi := &file_api_v1alpha1_integrationspublic_service_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1906,7 +2060,7 @@ func (x *GetLinkDataRes_FieldNames) String() string {
 func (*GetLinkDataRes_FieldNames) ProtoMessage() {}
 
 func (x *GetLinkDataRes_FieldNames) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_integrationspublic_service_proto_msgTypes[27]
+	mi := &file_api_v1alpha1_integrationspublic_service_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2132,7 +2286,15 @@ const file_api_v1alpha1_integrationspublic_service_proto_rawDesc = "" +
 	"\x10total_amount_due\x18\x02 \x01(\v2\x12.google.type.MoneyR\x0etotalAmountDue\x1aU\n" +
 	"\x13CalculatedFeesEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12(\n" +
-	"\x05value\x18\x02 \x01(\v2\x12.google.type.MoneyR\x05value:\x028\x012\xeb\f\n" +
+	"\x05value\x18\x02 \x01(\v2\x12.google.type.MoneyR\x05value:\x028\x01\"\x9b\x01\n" +
+	"\x11DeliverReceiptReq\x12T\n" +
+	"\remail_receipt\x18\x03 \x01(\v2-.api.v1alpha1.integrationspublic.EmailReceiptH\x00R\femailReceipt\x12\x1d\n" +
+	"\n" +
+	"receipt_id\x18\x06 \x01(\tR\treceiptIdB\x11\n" +
+	"\x0fdelivery_method\"'\n" +
+	"\fEmailReceipt\x12\x17\n" +
+	"\ato_addr\x18\x01 \x01(\tR\x06toAddr\"\x13\n" +
+	"\x11DeliverReceiptRes2\xa2\x0e\n" +
 	"\x12IntegrationsPublic\x12\xa8\x01\n" +
 	"\vGetLinkData\x12/.api.v1alpha1.integrationspublic.GetLinkDataReq\x1a/.api.v1alpha1.integrationspublic.GetLinkDataRes\"7\x82\xd3\xe4\x93\x021:\x01*\",/api/v1alpha1/integrationspublic/getlinkdata\x12\xc4\x01\n" +
 	"\x12SubmitVerification\x126.api.v1alpha1.integrationspublic.SubmitVerificationReq\x1a6.api.v1alpha1.integrationspublic.SubmitVerificationRes\">\x82\xd3\xe4\x93\x028:\x01*\"3/api/v1alpha1/integrationspublic/submitverification\x12\xbc\x01\n" +
@@ -2144,7 +2306,8 @@ const file_api_v1alpha1_integrationspublic_service_proto_rawDesc = "" +
 	"GetReceipt\x12..api.v1alpha1.integrationspublic.GetReceiptReq\x1a..api.v1alpha1.integrationspublic.GetReceiptRes\"6\x82\xd3\xe4\x93\x020:\x01*\"+/api/v1alpha1/integrationspublic/getreceipt\x12\xb8\x01\n" +
 	"\x0fProcessWorkflow\x123.api.v1alpha1.integrationspublic.ProcessWorkflowReq\x1a3.api.v1alpha1.integrationspublic.ProcessWorkflowRes\";\x82\xd3\xe4\x93\x025:\x01*\"0/api/v1alpha1/integrationspublic/processworkflow\x12\xb4\x01\n" +
 	"\x0eGetLinkDetails\x122.api.v1alpha1.integrationspublic.GetLinkDetailsReq\x1a2.api.v1alpha1.integrationspublic.GetLinkDetailsRes\":\x82\xd3\xe4\x93\x024:\x01*\"//api/v1alpha1/integrationspublic/getlinkdetails\x12\xb0\x01\n" +
-	"\rCalculateFees\x121.api.v1alpha1.integrationspublic.CalculateFeesReq\x1a1.api.v1alpha1.integrationspublic.CalculateFeesRes\"9\x82\xd3\xe4\x93\x023:\x01*\"./api/v1alpha1/integrationspublic/calculatefeesB\x8d\x02\n" +
+	"\rCalculateFees\x121.api.v1alpha1.integrationspublic.CalculateFeesReq\x1a1.api.v1alpha1.integrationspublic.CalculateFeesRes\"9\x82\xd3\xe4\x93\x023:\x01*\"./api/v1alpha1/integrationspublic/calculatefees\x12\xb4\x01\n" +
+	"\x0eDeliverReceipt\x122.api.v1alpha1.integrationspublic.DeliverReceiptReq\x1a2.api.v1alpha1.integrationspublic.DeliverReceiptRes\":\x82\xd3\xe4\x93\x024:\x01*\"//api/v1alpha1/integrationspublic/deliverreceiptB\x8d\x02\n" +
 	"#com.api.v1alpha1.integrationspublicB\fServiceProtoP\x01Z:github.com/tcncloud/api-go/api/v1alpha1/integrationspublic\xa2\x02\x03AVI\xaa\x02\x1fApi.V1alpha1.Integrationspublic\xca\x02\x1fApi\\V1alpha1\\Integrationspublic\xe2\x02+Api\\V1alpha1\\Integrationspublic\\GPBMetadata\xea\x02!Api::V1alpha1::Integrationspublicb\x06proto3"
 
 var (
@@ -2159,7 +2322,7 @@ func file_api_v1alpha1_integrationspublic_service_proto_rawDescGZIP() []byte {
 	return file_api_v1alpha1_integrationspublic_service_proto_rawDescData
 }
 
-var file_api_v1alpha1_integrationspublic_service_proto_msgTypes = make([]protoimpl.MessageInfo, 38)
+var file_api_v1alpha1_integrationspublic_service_proto_msgTypes = make([]protoimpl.MessageInfo, 41)
 var file_api_v1alpha1_integrationspublic_service_proto_goTypes = []any{
 	(*Values)(nil),                         // 0: api.v1alpha1.integrationspublic.Values
 	(*Value)(nil),                          // 1: api.v1alpha1.integrationspublic.Value
@@ -2187,110 +2350,116 @@ var file_api_v1alpha1_integrationspublic_service_proto_goTypes = []any{
 	(*GetLinkDetailsRes)(nil),              // 23: api.v1alpha1.integrationspublic.GetLinkDetailsRes
 	(*CalculateFeesReq)(nil),               // 24: api.v1alpha1.integrationspublic.CalculateFeesReq
 	(*CalculateFeesRes)(nil),               // 25: api.v1alpha1.integrationspublic.CalculateFeesRes
-	nil,                                    // 26: api.v1alpha1.integrationspublic.Values.ValuesEntry
-	(*GetLinkDataRes_FieldNames)(nil),      // 27: api.v1alpha1.integrationspublic.GetLinkDataRes.FieldNames
-	nil,                                    // 28: api.v1alpha1.integrationspublic.SubmitVerificationReq.VerificationFieldsEntry
-	nil,                                    // 29: api.v1alpha1.integrationspublic.GetInvoiceRes.FieldsEntry
-	nil,                                    // 30: api.v1alpha1.integrationspublic.SubmitPaymentReq.PaymentFieldsEntry
-	nil,                                    // 31: api.v1alpha1.integrationspublic.SubmitPaymentRes.FieldsEntry
-	nil,                                    // 32: api.v1alpha1.integrationspublic.GetReceiptRes.RequestEntry
-	nil,                                    // 33: api.v1alpha1.integrationspublic.GetReceiptRes.ResponseEntry
-	nil,                                    // 34: api.v1alpha1.integrationspublic.ProcessWorkflowReq.ParamsEntry
-	nil,                                    // 35: api.v1alpha1.integrationspublic.ProcessWorkflowRes.DataEntry
-	nil,                                    // 36: api.v1alpha1.integrationspublic.CalculateFeesReq.ParamsEntry
-	nil,                                    // 37: api.v1alpha1.integrationspublic.CalculateFeesRes.CalculatedFeesEntry
-	(*timestamppb.Timestamp)(nil),          // 38: google.protobuf.Timestamp
-	(integrations.Validation)(0),           // 39: api.commons.integrations.Validation
-	(*integrations.VerificationFlow)(nil),  // 40: api.commons.integrations.VerificationFlow
-	(*integrations.InvoiceFlow)(nil),       // 41: api.commons.integrations.InvoiceFlow
-	(*integrations.PaymentFlow)(nil),       // 42: api.commons.integrations.PaymentFlow
-	(*integrations.Invoices)(nil),          // 43: api.commons.integrations.Invoices
-	(integrations.RequestOrigin)(0),        // 44: api.commons.integrations.RequestOrigin
-	(*integrations1.Portal)(nil),           // 45: api.v1alpha1.integrations.Portal
-	(*integrations1.PortalDefinition)(nil), // 46: api.v1alpha1.integrations.PortalDefinition
-	(*integrations.Fee)(nil),               // 47: api.commons.integrations.Fee
-	(commons.CallType_Enum)(0),             // 48: api.commons.CallType.Enum
-	(*money.Money)(nil),                    // 49: google.type.Money
-	(*integrations.Flow)(nil),              // 50: api.commons.integrations.Flow
-	(*integrations.FieldDefinition)(nil),   // 51: api.commons.integrations.FieldDefinition
+	(*DeliverReceiptReq)(nil),              // 26: api.v1alpha1.integrationspublic.DeliverReceiptReq
+	(*EmailReceipt)(nil),                   // 27: api.v1alpha1.integrationspublic.EmailReceipt
+	(*DeliverReceiptRes)(nil),              // 28: api.v1alpha1.integrationspublic.DeliverReceiptRes
+	nil,                                    // 29: api.v1alpha1.integrationspublic.Values.ValuesEntry
+	(*GetLinkDataRes_FieldNames)(nil),      // 30: api.v1alpha1.integrationspublic.GetLinkDataRes.FieldNames
+	nil,                                    // 31: api.v1alpha1.integrationspublic.SubmitVerificationReq.VerificationFieldsEntry
+	nil,                                    // 32: api.v1alpha1.integrationspublic.GetInvoiceRes.FieldsEntry
+	nil,                                    // 33: api.v1alpha1.integrationspublic.SubmitPaymentReq.PaymentFieldsEntry
+	nil,                                    // 34: api.v1alpha1.integrationspublic.SubmitPaymentRes.FieldsEntry
+	nil,                                    // 35: api.v1alpha1.integrationspublic.GetReceiptRes.RequestEntry
+	nil,                                    // 36: api.v1alpha1.integrationspublic.GetReceiptRes.ResponseEntry
+	nil,                                    // 37: api.v1alpha1.integrationspublic.ProcessWorkflowReq.ParamsEntry
+	nil,                                    // 38: api.v1alpha1.integrationspublic.ProcessWorkflowRes.DataEntry
+	nil,                                    // 39: api.v1alpha1.integrationspublic.CalculateFeesReq.ParamsEntry
+	nil,                                    // 40: api.v1alpha1.integrationspublic.CalculateFeesRes.CalculatedFeesEntry
+	(*timestamppb.Timestamp)(nil),          // 41: google.protobuf.Timestamp
+	(integrations.Validation)(0),           // 42: api.commons.integrations.Validation
+	(*integrations.VerificationFlow)(nil),  // 43: api.commons.integrations.VerificationFlow
+	(*integrations.InvoiceFlow)(nil),       // 44: api.commons.integrations.InvoiceFlow
+	(*integrations.PaymentFlow)(nil),       // 45: api.commons.integrations.PaymentFlow
+	(*integrations.Invoices)(nil),          // 46: api.commons.integrations.Invoices
+	(integrations.RequestOrigin)(0),        // 47: api.commons.integrations.RequestOrigin
+	(*integrations1.Portal)(nil),           // 48: api.v1alpha1.integrations.Portal
+	(*integrations1.PortalDefinition)(nil), // 49: api.v1alpha1.integrations.PortalDefinition
+	(*integrations.Fee)(nil),               // 50: api.commons.integrations.Fee
+	(commons.CallType_Enum)(0),             // 51: api.commons.CallType.Enum
+	(*money.Money)(nil),                    // 52: google.type.Money
+	(*integrations.Flow)(nil),              // 53: api.commons.integrations.Flow
+	(*integrations.FieldDefinition)(nil),   // 54: api.commons.integrations.FieldDefinition
 }
 var file_api_v1alpha1_integrationspublic_service_proto_depIdxs = []int32{
-	26, // 0: api.v1alpha1.integrationspublic.Values.values:type_name -> api.v1alpha1.integrationspublic.Values.ValuesEntry
-	38, // 1: api.v1alpha1.integrationspublic.Value.time_val:type_name -> google.protobuf.Timestamp
+	29, // 0: api.v1alpha1.integrationspublic.Values.values:type_name -> api.v1alpha1.integrationspublic.Values.ValuesEntry
+	41, // 1: api.v1alpha1.integrationspublic.Value.time_val:type_name -> google.protobuf.Timestamp
 	2,  // 2: api.v1alpha1.integrationspublic.Value.comp_val:type_name -> api.v1alpha1.integrationspublic.CompositeVal
-	39, // 3: api.v1alpha1.integrationspublic.Value.validation:type_name -> api.commons.integrations.Validation
+	42, // 3: api.v1alpha1.integrationspublic.Value.validation:type_name -> api.commons.integrations.Validation
 	3,  // 4: api.v1alpha1.integrationspublic.CompositeVal.parts:type_name -> api.v1alpha1.integrationspublic.FieldOrStr
 	6,  // 5: api.v1alpha1.integrationspublic.GetLinkDataReq.entity:type_name -> api.v1alpha1.integrationspublic.PortalLinkId
 	5,  // 6: api.v1alpha1.integrationspublic.GetLinkDataRes.portal_config:type_name -> api.v1alpha1.integrationspublic.PortalConfig
-	40, // 7: api.v1alpha1.integrationspublic.GetLinkDataRes.verification:type_name -> api.commons.integrations.VerificationFlow
-	41, // 8: api.v1alpha1.integrationspublic.GetLinkDataRes.invoice:type_name -> api.commons.integrations.InvoiceFlow
-	42, // 9: api.v1alpha1.integrationspublic.GetLinkDataRes.payments:type_name -> api.commons.integrations.PaymentFlow
-	27, // 10: api.v1alpha1.integrationspublic.GetLinkDataRes.flow_forms:type_name -> api.v1alpha1.integrationspublic.GetLinkDataRes.FieldNames
+	43, // 7: api.v1alpha1.integrationspublic.GetLinkDataRes.verification:type_name -> api.commons.integrations.VerificationFlow
+	44, // 8: api.v1alpha1.integrationspublic.GetLinkDataRes.invoice:type_name -> api.commons.integrations.InvoiceFlow
+	45, // 9: api.v1alpha1.integrationspublic.GetLinkDataRes.payments:type_name -> api.commons.integrations.PaymentFlow
+	30, // 10: api.v1alpha1.integrationspublic.GetLinkDataRes.flow_forms:type_name -> api.v1alpha1.integrationspublic.GetLinkDataRes.FieldNames
 	9,  // 11: api.v1alpha1.integrationspublic.GetLinkDataRes.portal_text:type_name -> api.v1alpha1.integrationspublic.PortalText
 	6,  // 12: api.v1alpha1.integrationspublic.SubmitVerificationReq.entity:type_name -> api.v1alpha1.integrationspublic.PortalLinkId
-	28, // 13: api.v1alpha1.integrationspublic.SubmitVerificationReq.verification_fields:type_name -> api.v1alpha1.integrationspublic.SubmitVerificationReq.VerificationFieldsEntry
+	31, // 13: api.v1alpha1.integrationspublic.SubmitVerificationReq.verification_fields:type_name -> api.v1alpha1.integrationspublic.SubmitVerificationReq.VerificationFieldsEntry
 	6,  // 14: api.v1alpha1.integrationspublic.SessionKeepAliveReq.entity:type_name -> api.v1alpha1.integrationspublic.PortalLinkId
 	6,  // 15: api.v1alpha1.integrationspublic.GetInvoiceReq.entity:type_name -> api.v1alpha1.integrationspublic.PortalLinkId
-	29, // 16: api.v1alpha1.integrationspublic.GetInvoiceRes.fields:type_name -> api.v1alpha1.integrationspublic.GetInvoiceRes.FieldsEntry
-	43, // 17: api.v1alpha1.integrationspublic.GetInvoiceRes.invoices:type_name -> api.commons.integrations.Invoices
+	32, // 16: api.v1alpha1.integrationspublic.GetInvoiceRes.fields:type_name -> api.v1alpha1.integrationspublic.GetInvoiceRes.FieldsEntry
+	46, // 17: api.v1alpha1.integrationspublic.GetInvoiceRes.invoices:type_name -> api.commons.integrations.Invoices
 	6,  // 18: api.v1alpha1.integrationspublic.SubmitPaymentReq.entity:type_name -> api.v1alpha1.integrationspublic.PortalLinkId
-	30, // 19: api.v1alpha1.integrationspublic.SubmitPaymentReq.payment_fields:type_name -> api.v1alpha1.integrationspublic.SubmitPaymentReq.PaymentFieldsEntry
-	42, // 20: api.v1alpha1.integrationspublic.SubmitPaymentReq.payment_flow:type_name -> api.commons.integrations.PaymentFlow
-	31, // 21: api.v1alpha1.integrationspublic.SubmitPaymentRes.fields:type_name -> api.v1alpha1.integrationspublic.SubmitPaymentRes.FieldsEntry
+	33, // 19: api.v1alpha1.integrationspublic.SubmitPaymentReq.payment_fields:type_name -> api.v1alpha1.integrationspublic.SubmitPaymentReq.PaymentFieldsEntry
+	45, // 20: api.v1alpha1.integrationspublic.SubmitPaymentReq.payment_flow:type_name -> api.commons.integrations.PaymentFlow
+	34, // 21: api.v1alpha1.integrationspublic.SubmitPaymentRes.fields:type_name -> api.v1alpha1.integrationspublic.SubmitPaymentRes.FieldsEntry
 	6,  // 22: api.v1alpha1.integrationspublic.GetReceiptReq.entity:type_name -> api.v1alpha1.integrationspublic.PortalLinkId
-	32, // 23: api.v1alpha1.integrationspublic.GetReceiptRes.request:type_name -> api.v1alpha1.integrationspublic.GetReceiptRes.RequestEntry
-	33, // 24: api.v1alpha1.integrationspublic.GetReceiptRes.response:type_name -> api.v1alpha1.integrationspublic.GetReceiptRes.ResponseEntry
-	42, // 25: api.v1alpha1.integrationspublic.GetReceiptRes.payment_flow:type_name -> api.commons.integrations.PaymentFlow
-	34, // 26: api.v1alpha1.integrationspublic.ProcessWorkflowReq.params:type_name -> api.v1alpha1.integrationspublic.ProcessWorkflowReq.ParamsEntry
-	44, // 27: api.v1alpha1.integrationspublic.ProcessWorkflowReq.request_origin:type_name -> api.commons.integrations.RequestOrigin
-	35, // 28: api.v1alpha1.integrationspublic.ProcessWorkflowRes.data:type_name -> api.v1alpha1.integrationspublic.ProcessWorkflowRes.DataEntry
+	35, // 23: api.v1alpha1.integrationspublic.GetReceiptRes.request:type_name -> api.v1alpha1.integrationspublic.GetReceiptRes.RequestEntry
+	36, // 24: api.v1alpha1.integrationspublic.GetReceiptRes.response:type_name -> api.v1alpha1.integrationspublic.GetReceiptRes.ResponseEntry
+	45, // 25: api.v1alpha1.integrationspublic.GetReceiptRes.payment_flow:type_name -> api.commons.integrations.PaymentFlow
+	37, // 26: api.v1alpha1.integrationspublic.ProcessWorkflowReq.params:type_name -> api.v1alpha1.integrationspublic.ProcessWorkflowReq.ParamsEntry
+	47, // 27: api.v1alpha1.integrationspublic.ProcessWorkflowReq.request_origin:type_name -> api.commons.integrations.RequestOrigin
+	38, // 28: api.v1alpha1.integrationspublic.ProcessWorkflowRes.data:type_name -> api.v1alpha1.integrationspublic.ProcessWorkflowRes.DataEntry
 	6,  // 29: api.v1alpha1.integrationspublic.GetLinkDetailsReq.entity:type_name -> api.v1alpha1.integrationspublic.PortalLinkId
-	45, // 30: api.v1alpha1.integrationspublic.GetLinkDetailsRes.portal:type_name -> api.v1alpha1.integrations.Portal
+	48, // 30: api.v1alpha1.integrationspublic.GetLinkDetailsRes.portal:type_name -> api.v1alpha1.integrations.Portal
 	5,  // 31: api.v1alpha1.integrationspublic.GetLinkDetailsRes.portal_config:type_name -> api.v1alpha1.integrationspublic.PortalConfig
-	46, // 32: api.v1alpha1.integrationspublic.GetLinkDetailsRes.portal_definition:type_name -> api.v1alpha1.integrations.PortalDefinition
+	49, // 32: api.v1alpha1.integrationspublic.GetLinkDetailsRes.portal_definition:type_name -> api.v1alpha1.integrations.PortalDefinition
 	6,  // 33: api.v1alpha1.integrationspublic.CalculateFeesReq.entity:type_name -> api.v1alpha1.integrationspublic.PortalLinkId
-	47, // 34: api.v1alpha1.integrationspublic.CalculateFeesReq.fees:type_name -> api.commons.integrations.Fee
-	36, // 35: api.v1alpha1.integrationspublic.CalculateFeesReq.params:type_name -> api.v1alpha1.integrationspublic.CalculateFeesReq.ParamsEntry
-	48, // 36: api.v1alpha1.integrationspublic.CalculateFeesReq.call_type:type_name -> api.commons.CallType.Enum
-	44, // 37: api.v1alpha1.integrationspublic.CalculateFeesReq.request_origin:type_name -> api.commons.integrations.RequestOrigin
-	37, // 38: api.v1alpha1.integrationspublic.CalculateFeesRes.calculated_fees:type_name -> api.v1alpha1.integrationspublic.CalculateFeesRes.CalculatedFeesEntry
-	49, // 39: api.v1alpha1.integrationspublic.CalculateFeesRes.total_amount_due:type_name -> google.type.Money
-	1,  // 40: api.v1alpha1.integrationspublic.Values.ValuesEntry.value:type_name -> api.v1alpha1.integrationspublic.Value
-	50, // 41: api.v1alpha1.integrationspublic.GetLinkDataRes.FieldNames.flow:type_name -> api.commons.integrations.Flow
-	51, // 42: api.v1alpha1.integrationspublic.GetLinkDataRes.FieldNames.fields:type_name -> api.commons.integrations.FieldDefinition
-	1,  // 43: api.v1alpha1.integrationspublic.SubmitVerificationReq.VerificationFieldsEntry.value:type_name -> api.v1alpha1.integrationspublic.Value
-	1,  // 44: api.v1alpha1.integrationspublic.GetInvoiceRes.FieldsEntry.value:type_name -> api.v1alpha1.integrationspublic.Value
-	1,  // 45: api.v1alpha1.integrationspublic.SubmitPaymentReq.PaymentFieldsEntry.value:type_name -> api.v1alpha1.integrationspublic.Value
-	1,  // 46: api.v1alpha1.integrationspublic.SubmitPaymentRes.FieldsEntry.value:type_name -> api.v1alpha1.integrationspublic.Value
-	1,  // 47: api.v1alpha1.integrationspublic.GetReceiptRes.RequestEntry.value:type_name -> api.v1alpha1.integrationspublic.Value
-	1,  // 48: api.v1alpha1.integrationspublic.GetReceiptRes.ResponseEntry.value:type_name -> api.v1alpha1.integrationspublic.Value
-	1,  // 49: api.v1alpha1.integrationspublic.ProcessWorkflowReq.ParamsEntry.value:type_name -> api.v1alpha1.integrationspublic.Value
-	1,  // 50: api.v1alpha1.integrationspublic.ProcessWorkflowRes.DataEntry.value:type_name -> api.v1alpha1.integrationspublic.Value
-	1,  // 51: api.v1alpha1.integrationspublic.CalculateFeesReq.ParamsEntry.value:type_name -> api.v1alpha1.integrationspublic.Value
-	49, // 52: api.v1alpha1.integrationspublic.CalculateFeesRes.CalculatedFeesEntry.value:type_name -> google.type.Money
-	7,  // 53: api.v1alpha1.integrationspublic.IntegrationsPublic.GetLinkData:input_type -> api.v1alpha1.integrationspublic.GetLinkDataReq
-	10, // 54: api.v1alpha1.integrationspublic.IntegrationsPublic.SubmitVerification:input_type -> api.v1alpha1.integrationspublic.SubmitVerificationReq
-	12, // 55: api.v1alpha1.integrationspublic.IntegrationsPublic.SessionKeepAlive:input_type -> api.v1alpha1.integrationspublic.SessionKeepAliveReq
-	14, // 56: api.v1alpha1.integrationspublic.IntegrationsPublic.GetInvoice:input_type -> api.v1alpha1.integrationspublic.GetInvoiceReq
-	16, // 57: api.v1alpha1.integrationspublic.IntegrationsPublic.SubmitPayment:input_type -> api.v1alpha1.integrationspublic.SubmitPaymentReq
-	18, // 58: api.v1alpha1.integrationspublic.IntegrationsPublic.GetReceipt:input_type -> api.v1alpha1.integrationspublic.GetReceiptReq
-	20, // 59: api.v1alpha1.integrationspublic.IntegrationsPublic.ProcessWorkflow:input_type -> api.v1alpha1.integrationspublic.ProcessWorkflowReq
-	22, // 60: api.v1alpha1.integrationspublic.IntegrationsPublic.GetLinkDetails:input_type -> api.v1alpha1.integrationspublic.GetLinkDetailsReq
-	24, // 61: api.v1alpha1.integrationspublic.IntegrationsPublic.CalculateFees:input_type -> api.v1alpha1.integrationspublic.CalculateFeesReq
-	8,  // 62: api.v1alpha1.integrationspublic.IntegrationsPublic.GetLinkData:output_type -> api.v1alpha1.integrationspublic.GetLinkDataRes
-	11, // 63: api.v1alpha1.integrationspublic.IntegrationsPublic.SubmitVerification:output_type -> api.v1alpha1.integrationspublic.SubmitVerificationRes
-	13, // 64: api.v1alpha1.integrationspublic.IntegrationsPublic.SessionKeepAlive:output_type -> api.v1alpha1.integrationspublic.SessionKeepAliveRes
-	15, // 65: api.v1alpha1.integrationspublic.IntegrationsPublic.GetInvoice:output_type -> api.v1alpha1.integrationspublic.GetInvoiceRes
-	17, // 66: api.v1alpha1.integrationspublic.IntegrationsPublic.SubmitPayment:output_type -> api.v1alpha1.integrationspublic.SubmitPaymentRes
-	19, // 67: api.v1alpha1.integrationspublic.IntegrationsPublic.GetReceipt:output_type -> api.v1alpha1.integrationspublic.GetReceiptRes
-	21, // 68: api.v1alpha1.integrationspublic.IntegrationsPublic.ProcessWorkflow:output_type -> api.v1alpha1.integrationspublic.ProcessWorkflowRes
-	23, // 69: api.v1alpha1.integrationspublic.IntegrationsPublic.GetLinkDetails:output_type -> api.v1alpha1.integrationspublic.GetLinkDetailsRes
-	25, // 70: api.v1alpha1.integrationspublic.IntegrationsPublic.CalculateFees:output_type -> api.v1alpha1.integrationspublic.CalculateFeesRes
-	62, // [62:71] is the sub-list for method output_type
-	53, // [53:62] is the sub-list for method input_type
-	53, // [53:53] is the sub-list for extension type_name
-	53, // [53:53] is the sub-list for extension extendee
-	0,  // [0:53] is the sub-list for field type_name
+	50, // 34: api.v1alpha1.integrationspublic.CalculateFeesReq.fees:type_name -> api.commons.integrations.Fee
+	39, // 35: api.v1alpha1.integrationspublic.CalculateFeesReq.params:type_name -> api.v1alpha1.integrationspublic.CalculateFeesReq.ParamsEntry
+	51, // 36: api.v1alpha1.integrationspublic.CalculateFeesReq.call_type:type_name -> api.commons.CallType.Enum
+	47, // 37: api.v1alpha1.integrationspublic.CalculateFeesReq.request_origin:type_name -> api.commons.integrations.RequestOrigin
+	40, // 38: api.v1alpha1.integrationspublic.CalculateFeesRes.calculated_fees:type_name -> api.v1alpha1.integrationspublic.CalculateFeesRes.CalculatedFeesEntry
+	52, // 39: api.v1alpha1.integrationspublic.CalculateFeesRes.total_amount_due:type_name -> google.type.Money
+	27, // 40: api.v1alpha1.integrationspublic.DeliverReceiptReq.email_receipt:type_name -> api.v1alpha1.integrationspublic.EmailReceipt
+	1,  // 41: api.v1alpha1.integrationspublic.Values.ValuesEntry.value:type_name -> api.v1alpha1.integrationspublic.Value
+	53, // 42: api.v1alpha1.integrationspublic.GetLinkDataRes.FieldNames.flow:type_name -> api.commons.integrations.Flow
+	54, // 43: api.v1alpha1.integrationspublic.GetLinkDataRes.FieldNames.fields:type_name -> api.commons.integrations.FieldDefinition
+	1,  // 44: api.v1alpha1.integrationspublic.SubmitVerificationReq.VerificationFieldsEntry.value:type_name -> api.v1alpha1.integrationspublic.Value
+	1,  // 45: api.v1alpha1.integrationspublic.GetInvoiceRes.FieldsEntry.value:type_name -> api.v1alpha1.integrationspublic.Value
+	1,  // 46: api.v1alpha1.integrationspublic.SubmitPaymentReq.PaymentFieldsEntry.value:type_name -> api.v1alpha1.integrationspublic.Value
+	1,  // 47: api.v1alpha1.integrationspublic.SubmitPaymentRes.FieldsEntry.value:type_name -> api.v1alpha1.integrationspublic.Value
+	1,  // 48: api.v1alpha1.integrationspublic.GetReceiptRes.RequestEntry.value:type_name -> api.v1alpha1.integrationspublic.Value
+	1,  // 49: api.v1alpha1.integrationspublic.GetReceiptRes.ResponseEntry.value:type_name -> api.v1alpha1.integrationspublic.Value
+	1,  // 50: api.v1alpha1.integrationspublic.ProcessWorkflowReq.ParamsEntry.value:type_name -> api.v1alpha1.integrationspublic.Value
+	1,  // 51: api.v1alpha1.integrationspublic.ProcessWorkflowRes.DataEntry.value:type_name -> api.v1alpha1.integrationspublic.Value
+	1,  // 52: api.v1alpha1.integrationspublic.CalculateFeesReq.ParamsEntry.value:type_name -> api.v1alpha1.integrationspublic.Value
+	52, // 53: api.v1alpha1.integrationspublic.CalculateFeesRes.CalculatedFeesEntry.value:type_name -> google.type.Money
+	7,  // 54: api.v1alpha1.integrationspublic.IntegrationsPublic.GetLinkData:input_type -> api.v1alpha1.integrationspublic.GetLinkDataReq
+	10, // 55: api.v1alpha1.integrationspublic.IntegrationsPublic.SubmitVerification:input_type -> api.v1alpha1.integrationspublic.SubmitVerificationReq
+	12, // 56: api.v1alpha1.integrationspublic.IntegrationsPublic.SessionKeepAlive:input_type -> api.v1alpha1.integrationspublic.SessionKeepAliveReq
+	14, // 57: api.v1alpha1.integrationspublic.IntegrationsPublic.GetInvoice:input_type -> api.v1alpha1.integrationspublic.GetInvoiceReq
+	16, // 58: api.v1alpha1.integrationspublic.IntegrationsPublic.SubmitPayment:input_type -> api.v1alpha1.integrationspublic.SubmitPaymentReq
+	18, // 59: api.v1alpha1.integrationspublic.IntegrationsPublic.GetReceipt:input_type -> api.v1alpha1.integrationspublic.GetReceiptReq
+	20, // 60: api.v1alpha1.integrationspublic.IntegrationsPublic.ProcessWorkflow:input_type -> api.v1alpha1.integrationspublic.ProcessWorkflowReq
+	22, // 61: api.v1alpha1.integrationspublic.IntegrationsPublic.GetLinkDetails:input_type -> api.v1alpha1.integrationspublic.GetLinkDetailsReq
+	24, // 62: api.v1alpha1.integrationspublic.IntegrationsPublic.CalculateFees:input_type -> api.v1alpha1.integrationspublic.CalculateFeesReq
+	26, // 63: api.v1alpha1.integrationspublic.IntegrationsPublic.DeliverReceipt:input_type -> api.v1alpha1.integrationspublic.DeliverReceiptReq
+	8,  // 64: api.v1alpha1.integrationspublic.IntegrationsPublic.GetLinkData:output_type -> api.v1alpha1.integrationspublic.GetLinkDataRes
+	11, // 65: api.v1alpha1.integrationspublic.IntegrationsPublic.SubmitVerification:output_type -> api.v1alpha1.integrationspublic.SubmitVerificationRes
+	13, // 66: api.v1alpha1.integrationspublic.IntegrationsPublic.SessionKeepAlive:output_type -> api.v1alpha1.integrationspublic.SessionKeepAliveRes
+	15, // 67: api.v1alpha1.integrationspublic.IntegrationsPublic.GetInvoice:output_type -> api.v1alpha1.integrationspublic.GetInvoiceRes
+	17, // 68: api.v1alpha1.integrationspublic.IntegrationsPublic.SubmitPayment:output_type -> api.v1alpha1.integrationspublic.SubmitPaymentRes
+	19, // 69: api.v1alpha1.integrationspublic.IntegrationsPublic.GetReceipt:output_type -> api.v1alpha1.integrationspublic.GetReceiptRes
+	21, // 70: api.v1alpha1.integrationspublic.IntegrationsPublic.ProcessWorkflow:output_type -> api.v1alpha1.integrationspublic.ProcessWorkflowRes
+	23, // 71: api.v1alpha1.integrationspublic.IntegrationsPublic.GetLinkDetails:output_type -> api.v1alpha1.integrationspublic.GetLinkDetailsRes
+	25, // 72: api.v1alpha1.integrationspublic.IntegrationsPublic.CalculateFees:output_type -> api.v1alpha1.integrationspublic.CalculateFeesRes
+	28, // 73: api.v1alpha1.integrationspublic.IntegrationsPublic.DeliverReceipt:output_type -> api.v1alpha1.integrationspublic.DeliverReceiptRes
+	64, // [64:74] is the sub-list for method output_type
+	54, // [54:64] is the sub-list for method input_type
+	54, // [54:54] is the sub-list for extension type_name
+	54, // [54:54] is the sub-list for extension extendee
+	0,  // [0:54] is the sub-list for field type_name
 }
 
 func init() { file_api_v1alpha1_integrationspublic_service_proto_init() }
@@ -2310,13 +2479,16 @@ func file_api_v1alpha1_integrationspublic_service_proto_init() {
 		(*FieldOrStr_Field)(nil),
 		(*FieldOrStr_StrVal)(nil),
 	}
+	file_api_v1alpha1_integrationspublic_service_proto_msgTypes[26].OneofWrappers = []any{
+		(*DeliverReceiptReq_EmailReceipt)(nil),
+	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_v1alpha1_integrationspublic_service_proto_rawDesc), len(file_api_v1alpha1_integrationspublic_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   38,
+			NumMessages:   41,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

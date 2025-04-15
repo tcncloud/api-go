@@ -28,6 +28,7 @@ const (
 	IntegrationsPublic_ProcessWorkflow_FullMethodName    = "/api.v1alpha1.integrationspublic.IntegrationsPublic/ProcessWorkflow"
 	IntegrationsPublic_GetLinkDetails_FullMethodName     = "/api.v1alpha1.integrationspublic.IntegrationsPublic/GetLinkDetails"
 	IntegrationsPublic_CalculateFees_FullMethodName      = "/api.v1alpha1.integrationspublic.IntegrationsPublic/CalculateFees"
+	IntegrationsPublic_DeliverReceipt_FullMethodName     = "/api.v1alpha1.integrationspublic.IntegrationsPublic/DeliverReceipt"
 )
 
 // IntegrationsPublicClient is the client API for IntegrationsPublic service.
@@ -43,6 +44,7 @@ type IntegrationsPublicClient interface {
 	ProcessWorkflow(ctx context.Context, in *ProcessWorkflowReq, opts ...grpc.CallOption) (*ProcessWorkflowRes, error)
 	GetLinkDetails(ctx context.Context, in *GetLinkDetailsReq, opts ...grpc.CallOption) (*GetLinkDetailsRes, error)
 	CalculateFees(ctx context.Context, in *CalculateFeesReq, opts ...grpc.CallOption) (*CalculateFeesRes, error)
+	DeliverReceipt(ctx context.Context, in *DeliverReceiptReq, opts ...grpc.CallOption) (*DeliverReceiptRes, error)
 }
 
 type integrationsPublicClient struct {
@@ -143,6 +145,16 @@ func (c *integrationsPublicClient) CalculateFees(ctx context.Context, in *Calcul
 	return out, nil
 }
 
+func (c *integrationsPublicClient) DeliverReceipt(ctx context.Context, in *DeliverReceiptReq, opts ...grpc.CallOption) (*DeliverReceiptRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeliverReceiptRes)
+	err := c.cc.Invoke(ctx, IntegrationsPublic_DeliverReceipt_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // IntegrationsPublicServer is the server API for IntegrationsPublic service.
 // All implementations must embed UnimplementedIntegrationsPublicServer
 // for forward compatibility.
@@ -156,6 +168,7 @@ type IntegrationsPublicServer interface {
 	ProcessWorkflow(context.Context, *ProcessWorkflowReq) (*ProcessWorkflowRes, error)
 	GetLinkDetails(context.Context, *GetLinkDetailsReq) (*GetLinkDetailsRes, error)
 	CalculateFees(context.Context, *CalculateFeesReq) (*CalculateFeesRes, error)
+	DeliverReceipt(context.Context, *DeliverReceiptReq) (*DeliverReceiptRes, error)
 	mustEmbedUnimplementedIntegrationsPublicServer()
 }
 
@@ -192,6 +205,9 @@ func (UnimplementedIntegrationsPublicServer) GetLinkDetails(context.Context, *Ge
 }
 func (UnimplementedIntegrationsPublicServer) CalculateFees(context.Context, *CalculateFeesReq) (*CalculateFeesRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CalculateFees not implemented")
+}
+func (UnimplementedIntegrationsPublicServer) DeliverReceipt(context.Context, *DeliverReceiptReq) (*DeliverReceiptRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeliverReceipt not implemented")
 }
 func (UnimplementedIntegrationsPublicServer) mustEmbedUnimplementedIntegrationsPublicServer() {}
 func (UnimplementedIntegrationsPublicServer) testEmbeddedByValue()                            {}
@@ -376,6 +392,24 @@ func _IntegrationsPublic_CalculateFees_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _IntegrationsPublic_DeliverReceipt_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeliverReceiptReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IntegrationsPublicServer).DeliverReceipt(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IntegrationsPublic_DeliverReceipt_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IntegrationsPublicServer).DeliverReceipt(ctx, req.(*DeliverReceiptReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // IntegrationsPublic_ServiceDesc is the grpc.ServiceDesc for IntegrationsPublic service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -418,6 +452,10 @@ var IntegrationsPublic_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CalculateFees",
 			Handler:    _IntegrationsPublic_CalculateFees_Handler,
+		},
+		{
+			MethodName: "DeliverReceipt",
+			Handler:    _IntegrationsPublic_DeliverReceipt_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
