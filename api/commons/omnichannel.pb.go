@@ -1712,8 +1712,10 @@ type OmniCampaignModule struct {
 	// campaign module operating time based on the tasks timezone-determined by the sms number,
 	// and zip code in the task's data fields, then reverts to campaign timezone if neither are present; nullable
 	HoursOfOperationTimezone *WeekdayTimeRange `protobuf:"bytes,13,opt,name=hours_of_operation_timezone,json=hoursOfOperationTimezone,proto3" json:"hours_of_operation_timezone,omitempty"`
-	unknownFields            protoimpl.UnknownFields
-	sizeCache                protoimpl.SizeCache
+	// indicates if the tasks associated with a campaign should be ordered based on the task.timezone_offset
+	GlobalTimezoneOrdering bool `protobuf:"varint,14,opt,name=global_timezone_ordering,json=globalTimezoneOrdering,proto3" json:"global_timezone_ordering,omitempty"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
 }
 
 func (x *OmniCampaignModule) Reset() {
@@ -1835,6 +1837,13 @@ func (x *OmniCampaignModule) GetHoursOfOperationTimezone() *WeekdayTimeRange {
 		return x.HoursOfOperationTimezone
 	}
 	return nil
+}
+
+func (x *OmniCampaignModule) GetGlobalTimezoneOrdering() bool {
+	if x != nil {
+		return x.GlobalTimezoneOrdering
+	}
+	return false
 }
 
 // OmniCampaignModuleConfig -
@@ -7216,7 +7225,7 @@ const file_api_commons_omnichannel_proto_rawDesc = "" +
 	"\ttime_zone\x18\f \x01(\v2\x1c.api.commons.TimeZoneWrapperR\btimeZone\x12\x1f\n" +
 	"\vshorten_url\x18\r \x01(\bR\n" +
 	"shortenUrl\x12N\n" +
-	"\x11compliance_config\x18\x0e \x01(\v2!.api.commons.OmniComplianceConfigR\x10complianceConfig\"\x9f\v\n" +
+	"\x11compliance_config\x18\x0e \x01(\v2!.api.commons.OmniComplianceConfigR\x10complianceConfig\"\xd9\v\n" +
 	"\x12OmniCampaignModule\x122\n" +
 	"\x13campaign_module_sid\x18\x01 \x01(\x03B\x020\x01R\x11campaignModuleSid\x12%\n" +
 	"\fcampaign_sid\x18\x02 \x01(\x03B\x020\x01R\vcampaignSid\x12D\n" +
@@ -7232,7 +7241,8 @@ const file_api_commons_omnichannel_proto_rawDesc = "" +
 	" \x01(\v2\x1d.api.commons.WeekdayTimeRangeR\x10hoursOfOperation\x12A\n" +
 	"\adetails\x18\v \x01(\v2'.api.commons.OmniCampaignModule.DetailsR\adetails\x12=\n" +
 	"\vattachments\x18\f \x03(\v2\x1b.api.commons.OmniAttachmentR\vattachments\x12\\\n" +
-	"\x1bhours_of_operation_timezone\x18\r \x01(\v2\x1d.api.commons.WeekdayTimeRangeR\x18hoursOfOperationTimezone\x1a\xaa\x04\n" +
+	"\x1bhours_of_operation_timezone\x18\r \x01(\v2\x1d.api.commons.WeekdayTimeRangeR\x18hoursOfOperationTimezone\x128\n" +
+	"\x18global_timezone_ordering\x18\x0e \x01(\bR\x16globalTimezoneOrdering\x1a\xaa\x04\n" +
 	"\aDetails\x12E\n" +
 	"\x10total_task_count\x18\x01 \x01(\v2\x1b.google.protobuf.Int64ValueR\x0etotalTaskCount\x12M\n" +
 	"\x14completed_task_count\x18\x02 \x01(\v2\x1b.google.protobuf.Int64ValueR\x12completedTaskCount\x12T\n" +
