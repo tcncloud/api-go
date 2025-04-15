@@ -2572,8 +2572,7 @@ func (*Scorecards) Descriptor() ([]byte, []int) {
 	return file_api_commons_org_preferences_proto_rawDescGZIP(), []int{26}
 }
 
-// Preferences for voice analytics. Primarily consumed and interpreted by
-// localmixer when mixing and transcribing call recordings.
+// Preferences for voice analytics.
 type VoiceAnalyticsPreferences struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Org ID.
@@ -4747,6 +4746,7 @@ type VoiceAnalytics_Redact struct {
 	// Types that are valid to be assigned to Where:
 	//
 	//	*VoiceAnalytics_Redact_Number
+	//	*VoiceAnalytics_Redact_RedactEntity
 	Where         isVoiceAnalytics_Redact_Where `protobuf_oneof:"where"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -4798,6 +4798,15 @@ func (x *VoiceAnalytics_Redact) GetNumber() *VoiceAnalytics_Number {
 	return nil
 }
 
+func (x *VoiceAnalytics_Redact) GetRedactEntity() commons.ClassifierEntityType {
+	if x != nil {
+		if x, ok := x.Where.(*VoiceAnalytics_Redact_RedactEntity); ok {
+			return x.RedactEntity
+		}
+	}
+	return commons.ClassifierEntityType(0)
+}
+
 type isVoiceAnalytics_Redact_Where interface {
 	isVoiceAnalytics_Redact_Where()
 }
@@ -4807,7 +4816,14 @@ type VoiceAnalytics_Redact_Number struct {
 	Number *VoiceAnalytics_Number `protobuf:"bytes,1,opt,name=number,proto3,oneof"`
 }
 
+type VoiceAnalytics_Redact_RedactEntity struct {
+	// Optional. Detected entity to redact.
+	RedactEntity commons.ClassifierEntityType `protobuf:"varint,2,opt,name=redact_entity,json=redactEntity,proto3,enum=api.commons.ClassifierEntityType,oneof"`
+}
+
 func (*VoiceAnalytics_Redact_Number) isVoiceAnalytics_Redact_Where() {}
+
+func (*VoiceAnalytics_Redact_RedactEntity) isVoiceAnalytics_Redact_Where() {}
 
 type VoiceAnalytics_Number struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -4939,7 +4955,7 @@ var File_api_commons_org_preferences_proto protoreflect.FileDescriptor
 
 const file_api_commons_org_preferences_proto_rawDesc = "" +
 	"\n" +
-	"!api/commons/org/preferences.proto\x12\x0fapi.commons.org\x1a\x15api/commons/ana.proto\x1a\x19api/commons/country.proto\x1a\x17api/commons/enums.proto\x1a\x15api/commons/lms.proto\x1a\x15api/commons/org.proto\x1a!api/commons/org_preferences.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xbb\x02\n" +
+	"!api/commons/org/preferences.proto\x12\x0fapi.commons.org\x1a\x15api/commons/ana.proto\x1a\x1capi/commons/classifier.proto\x1a\x19api/commons/country.proto\x1a\x17api/commons/enums.proto\x1a\x15api/commons/lms.proto\x1a\x15api/commons/org.proto\x1a!api/commons/org_preferences.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xbb\x02\n" +
 	"\x17OrganizationPreferences\x12\x15\n" +
 	"\x06org_id\x18\x01 \x01(\tR\x05orgId\x12=\n" +
 	"\x0fdefault_country\x18\n" +
@@ -5181,10 +5197,11 @@ const file_api_commons_org_preferences_proto_rawDesc = "" +
 	"\x11redact_all_digits\x18\n" +
 	" \x01(\bR\x0fredactAllDigits\x12+\n" +
 	"\x11silence_threshold\x18d \x01(\rR\x10silenceThreshold\x12/\n" +
-	"\x13talk_over_threshold\x18\xc8\x01 \x01(\rR\x11talkOverThreshold\"\xfc\x02\n" +
-	"\x0eVoiceAnalytics\x1aS\n" +
+	"\x13talk_over_threshold\x18\xc8\x01 \x01(\rR\x11talkOverThreshold\"\xc7\x03\n" +
+	"\x0eVoiceAnalytics\x1a\x9d\x01\n" +
 	"\x06Redact\x12@\n" +
-	"\x06number\x18\x01 \x01(\v2&.api.commons.org.VoiceAnalytics.NumberH\x00R\x06numberB\a\n" +
+	"\x06number\x18\x01 \x01(\v2&.api.commons.org.VoiceAnalytics.NumberH\x00R\x06number\x12H\n" +
+	"\rredact_entity\x18\x02 \x01(\x0e2!.api.commons.ClassifierEntityTypeH\x00R\fredactEntityB\a\n" +
 	"\x05where\x1a\xf6\x01\n" +
 	"\x06Number\x12?\n" +
 	"\x04kind\x18\x01 \x01(\x0e2+.api.commons.org.VoiceAnalytics.Number.KindR\x04kind\x12'\n" +
@@ -5428,6 +5445,7 @@ var file_api_commons_org_preferences_proto_goTypes = []any{
 	(*timestamppb.Timestamp)(nil),                      // 74: google.protobuf.Timestamp
 	(commons.Weekday_Enum)(0),                          // 75: api.commons.Weekday.Enum
 	(commons.Month)(0),                                 // 76: api.commons.Month
+	(commons.ClassifierEntityType)(0),                  // 77: api.commons.ClassifierEntityType
 }
 var file_api_commons_org_preferences_proto_depIdxs = []int32{
 	59, // 0: api.commons.org.OrganizationPreferences.default_country:type_name -> api.commons.Country
@@ -5503,12 +5521,13 @@ var file_api_commons_org_preferences_proto_depIdxs = []int32{
 	74, // 70: api.commons.org.CertificateInfo.expiration_date:type_name -> google.protobuf.Timestamp
 	74, // 71: api.commons.org.CertificateInfo.creation_date:type_name -> google.protobuf.Timestamp
 	57, // 72: api.commons.org.VoiceAnalytics.Redact.number:type_name -> api.commons.org.VoiceAnalytics.Number
-	1,  // 73: api.commons.org.VoiceAnalytics.Number.kind:type_name -> api.commons.org.VoiceAnalytics.Number.Kind
-	74, // [74:74] is the sub-list for method output_type
-	74, // [74:74] is the sub-list for method input_type
-	74, // [74:74] is the sub-list for extension type_name
-	74, // [74:74] is the sub-list for extension extendee
-	0,  // [0:74] is the sub-list for field type_name
+	77, // 73: api.commons.org.VoiceAnalytics.Redact.redact_entity:type_name -> api.commons.ClassifierEntityType
+	1,  // 74: api.commons.org.VoiceAnalytics.Number.kind:type_name -> api.commons.org.VoiceAnalytics.Number.Kind
+	75, // [75:75] is the sub-list for method output_type
+	75, // [75:75] is the sub-list for method input_type
+	75, // [75:75] is the sub-list for extension type_name
+	75, // [75:75] is the sub-list for extension extendee
+	0,  // [0:75] is the sub-list for field type_name
 }
 
 func init() { file_api_commons_org_preferences_proto_init() }
@@ -5542,6 +5561,7 @@ func file_api_commons_org_preferences_proto_init() {
 	}
 	file_api_commons_org_preferences_proto_msgTypes[54].OneofWrappers = []any{
 		(*VoiceAnalytics_Redact_Number)(nil),
+		(*VoiceAnalytics_Redact_RedactEntity)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
