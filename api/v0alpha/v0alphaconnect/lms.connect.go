@@ -189,9 +189,6 @@ const (
 	LMSDeletePipelineCanvasProcedure = "/api.v0alpha.LMS/DeletePipelineCanvas"
 	// LMSGetPipelineCanvasProcedure is the fully-qualified name of the LMS's GetPipelineCanvas RPC.
 	LMSGetPipelineCanvasProcedure = "/api.v0alpha.LMS/GetPipelineCanvas"
-	// LMSGetPipelineCanvasEventsProcedure is the fully-qualified name of the LMS's
-	// GetPipelineCanvasEvents RPC.
-	LMSGetPipelineCanvasEventsProcedure = "/api.v0alpha.LMS/GetPipelineCanvasEvents"
 )
 
 // LMSClient is a client for the api.v0alpha.LMS service.
@@ -284,7 +281,6 @@ type LMSClient interface {
 	UpdatePipelineCanvas(context.Context, *connect_go.Request[v0alpha.UpdatePipelineCanvasReq]) (*connect_go.Response[v0alpha.UpdatePipelineCanvasRes], error)
 	DeletePipelineCanvas(context.Context, *connect_go.Request[v0alpha.DeletePipelineCanvasReq]) (*connect_go.Response[v0alpha.DeletePipelineCanvasRes], error)
 	GetPipelineCanvas(context.Context, *connect_go.Request[v0alpha.GetPipelineCanvasReq]) (*connect_go.Response[v0alpha.GetPipelineCanvasRes], error)
-	GetPipelineCanvasEvents(context.Context, *connect_go.Request[v0alpha.GetPipelineCanvasEventsReq]) (*connect_go.Response[v0alpha.GetPipelineCanvasEventsRes], error)
 }
 
 // NewLMSClient constructs a client for the api.v0alpha.LMS service. By default, it uses the Connect
@@ -622,11 +618,6 @@ func NewLMSClient(httpClient connect_go.HTTPClient, baseURL string, opts ...conn
 			baseURL+LMSGetPipelineCanvasProcedure,
 			opts...,
 		),
-		getPipelineCanvasEvents: connect_go.NewClient[v0alpha.GetPipelineCanvasEventsReq, v0alpha.GetPipelineCanvasEventsRes](
-			httpClient,
-			baseURL+LMSGetPipelineCanvasEventsProcedure,
-			opts...,
-		),
 	}
 }
 
@@ -697,7 +688,6 @@ type lMSClient struct {
 	updatePipelineCanvas             *connect_go.Client[v0alpha.UpdatePipelineCanvasReq, v0alpha.UpdatePipelineCanvasRes]
 	deletePipelineCanvas             *connect_go.Client[v0alpha.DeletePipelineCanvasReq, v0alpha.DeletePipelineCanvasRes]
 	getPipelineCanvas                *connect_go.Client[v0alpha.GetPipelineCanvasReq, v0alpha.GetPipelineCanvasRes]
-	getPipelineCanvasEvents          *connect_go.Client[v0alpha.GetPipelineCanvasEventsReq, v0alpha.GetPipelineCanvasEventsRes]
 }
 
 // GetPublicKey calls api.v0alpha.LMS.GetPublicKey.
@@ -1025,11 +1015,6 @@ func (c *lMSClient) GetPipelineCanvas(ctx context.Context, req *connect_go.Reque
 	return c.getPipelineCanvas.CallUnary(ctx, req)
 }
 
-// GetPipelineCanvasEvents calls api.v0alpha.LMS.GetPipelineCanvasEvents.
-func (c *lMSClient) GetPipelineCanvasEvents(ctx context.Context, req *connect_go.Request[v0alpha.GetPipelineCanvasEventsReq]) (*connect_go.Response[v0alpha.GetPipelineCanvasEventsRes], error) {
-	return c.getPipelineCanvasEvents.CallUnary(ctx, req)
-}
-
 // LMSHandler is an implementation of the api.v0alpha.LMS service.
 type LMSHandler interface {
 	GetPublicKey(context.Context, *connect_go.Request[v0alpha.GetPublicKeyReq]) (*connect_go.Response[v0alpha.PublicKey], error)
@@ -1120,7 +1105,6 @@ type LMSHandler interface {
 	UpdatePipelineCanvas(context.Context, *connect_go.Request[v0alpha.UpdatePipelineCanvasReq]) (*connect_go.Response[v0alpha.UpdatePipelineCanvasRes], error)
 	DeletePipelineCanvas(context.Context, *connect_go.Request[v0alpha.DeletePipelineCanvasReq]) (*connect_go.Response[v0alpha.DeletePipelineCanvasRes], error)
 	GetPipelineCanvas(context.Context, *connect_go.Request[v0alpha.GetPipelineCanvasReq]) (*connect_go.Response[v0alpha.GetPipelineCanvasRes], error)
-	GetPipelineCanvasEvents(context.Context, *connect_go.Request[v0alpha.GetPipelineCanvasEventsReq]) (*connect_go.Response[v0alpha.GetPipelineCanvasEventsRes], error)
 }
 
 // NewLMSHandler builds an HTTP handler from the service implementation. It returns the path on
@@ -1454,11 +1438,6 @@ func NewLMSHandler(svc LMSHandler, opts ...connect_go.HandlerOption) (string, ht
 		svc.GetPipelineCanvas,
 		opts...,
 	)
-	lMSGetPipelineCanvasEventsHandler := connect_go.NewUnaryHandler(
-		LMSGetPipelineCanvasEventsProcedure,
-		svc.GetPipelineCanvasEvents,
-		opts...,
-	)
 	return "/api.v0alpha.LMS/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case LMSGetPublicKeyProcedure:
@@ -1591,8 +1570,6 @@ func NewLMSHandler(svc LMSHandler, opts ...connect_go.HandlerOption) (string, ht
 			lMSDeletePipelineCanvasHandler.ServeHTTP(w, r)
 		case LMSGetPipelineCanvasProcedure:
 			lMSGetPipelineCanvasHandler.ServeHTTP(w, r)
-		case LMSGetPipelineCanvasEventsProcedure:
-			lMSGetPipelineCanvasEventsHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -1860,8 +1837,4 @@ func (UnimplementedLMSHandler) DeletePipelineCanvas(context.Context, *connect_go
 
 func (UnimplementedLMSHandler) GetPipelineCanvas(context.Context, *connect_go.Request[v0alpha.GetPipelineCanvasReq]) (*connect_go.Response[v0alpha.GetPipelineCanvasRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.LMS.GetPipelineCanvas is not implemented"))
-}
-
-func (UnimplementedLMSHandler) GetPipelineCanvasEvents(context.Context, *connect_go.Request[v0alpha.GetPipelineCanvasEventsReq]) (*connect_go.Response[v0alpha.GetPipelineCanvasEventsRes], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v0alpha.LMS.GetPipelineCanvasEvents is not implemented"))
 }

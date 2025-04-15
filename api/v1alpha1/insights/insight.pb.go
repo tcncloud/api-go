@@ -429,11 +429,9 @@ type Insight struct {
 	//	*Insight_Pipeline
 	//	*Insight_InsightBody
 	InsightContent isInsight_InsightContent `protobuf_oneof:"insight_content"`
-	// Deprecated: Marked as deprecated in api/v1alpha1/insights/insight.proto.
-	ExportOptions     *ExportOptions          `protobuf:"bytes,18,opt,name=export_options,json=exportOptions,proto3" json:"export_options,omitempty"`               // use data_export_options instead
-	DataExportOptions *explorer.ExportOptions `protobuf:"bytes,19,opt,name=data_export_options,json=dataExportOptions,proto3" json:"data_export_options,omitempty"` // export options for the insight
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	ExportOptions  *ExportOptions           `protobuf:"bytes,18,opt,name=export_options,json=exportOptions,proto3" json:"export_options,omitempty"` // export options for the insight
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *Insight) Reset() {
@@ -583,17 +581,9 @@ func (x *Insight) GetInsightBody() *explorer.Pipeline {
 	return nil
 }
 
-// Deprecated: Marked as deprecated in api/v1alpha1/insights/insight.proto.
 func (x *Insight) GetExportOptions() *ExportOptions {
 	if x != nil {
 		return x.ExportOptions
-	}
-	return nil
-}
-
-func (x *Insight) GetDataExportOptions() *explorer.ExportOptions {
-	if x != nil {
-		return x.DataExportOptions
 	}
 	return nil
 }
@@ -1595,8 +1585,6 @@ func (x *ListVfsSchemasResponse) GetVfsSchemas() []*GetVfsSchemaResponse {
 }
 
 // Message for Export Options
-//
-// Deprecated: Marked as deprecated in api/v1alpha1/insights/insight.proto.
 type ExportOptions struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Delimiter for file exports
@@ -3568,7 +3556,7 @@ var File_api_v1alpha1_insights_insight_proto protoreflect.FileDescriptor
 
 const file_api_v1alpha1_insights_insight_proto_rawDesc = "" +
 	"\n" +
-	"#api/v1alpha1/insights/insight.proto\x12\x15api.v1alpha1.insights\x1a\x1aapi/commons/insights.proto\x1a$api/v1alpha1/explorer/entities.proto\x1a$api/v1alpha1/explorer/pipeline.proto\x1a+api/v1alpha1/insights/insight_content.proto\x1a google/protobuf/field_mask.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xba\a\n" +
+	"#api/v1alpha1/insights/insight.proto\x12\x15api.v1alpha1.insights\x1a\x1aapi/commons/insights.proto\x1a$api/v1alpha1/explorer/entities.proto\x1a$api/v1alpha1/explorer/pipeline.proto\x1a+api/v1alpha1/insights/insight_content.proto\x1a google/protobuf/field_mask.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xe0\x06\n" +
 	"\aInsight\x12!\n" +
 	"\n" +
 	"insight_id\x18\x02 \x01(\x03B\x020\x01R\tinsightId\x12\x12\n" +
@@ -3589,9 +3577,8 @@ const file_api_v1alpha1_insights_insight_proto_rawDesc = "" +
 	"\vupdate_time\x18\x0e \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"updateTime\x12A\n" +
 	"\bpipeline\x18\x10 \x01(\v2\x1f.api.v1alpha1.insights.PipelineB\x02\x18\x01H\x00R\bpipeline\x12D\n" +
-	"\finsight_body\x18\x11 \x01(\v2\x1f.api.v1alpha1.explorer.PipelineH\x00R\vinsightBody\x12O\n" +
-	"\x0eexport_options\x18\x12 \x01(\v2$.api.v1alpha1.insights.ExportOptionsB\x02\x18\x01R\rexportOptions\x12T\n" +
-	"\x13data_export_options\x18\x13 \x01(\v2$.api.v1alpha1.explorer.ExportOptionsR\x11dataExportOptionsB\x11\n" +
+	"\finsight_body\x18\x11 \x01(\v2\x1f.api.v1alpha1.explorer.PipelineH\x00R\vinsightBody\x12K\n" +
+	"\x0eexport_options\x18\x12 \x01(\v2$.api.v1alpha1.insights.ExportOptionsR\rexportOptionsB\x11\n" +
 	"\x0finsight_content\"p\n" +
 	"\x15PublishInsightRequest\x12\x1f\n" +
 	"\vresource_id\x18\x01 \x01(\tR\n" +
@@ -3653,11 +3640,11 @@ const file_api_v1alpha1_insights_insight_proto_rawDesc = "" +
 	"\x15ListVfsSchemasRequest\"f\n" +
 	"\x16ListVfsSchemasResponse\x12L\n" +
 	"\vvfs_schemas\x18\x01 \x03(\v2+.api.v1alpha1.insights.GetVfsSchemaResponseR\n" +
-	"vfsSchemas\"\x9e\x01\n" +
+	"vfsSchemas\"\x9a\x01\n" +
 	"\rExportOptions\x12\x1c\n" +
 	"\tdelimiter\x18\x01 \x01(\tR\tdelimiter\x12N\n" +
 	"\x0fquote_character\x18\x02 \x01(\x0e2%.api.v1alpha1.insights.QuoteCharacterR\x0equoteCharacter\x12\x1b\n" +
-	"\tno_header\x18\x03 \x01(\bR\bnoHeader:\x02\x18\x01\"\xeb\x02\n" +
+	"\tno_header\x18\x03 \x01(\bR\bnoHeader\"\xeb\x02\n" +
 	"\x12TableVisualization\x12Z\n" +
 	"\x14table_column_details\x18\x01 \x03(\v2(.api.v1alpha1.insights.TableColumnConfigR\x12tableColumnDetails\x12 \n" +
 	"\tdelimiter\x18\x02 \x01(\tB\x02\x18\x01R\tdelimiter\x12R\n" +
@@ -3919,11 +3906,10 @@ var file_api_v1alpha1_insights_insight_proto_goTypes = []any{
 	(*timestamppb.Timestamp)(nil),                 // 64: google.protobuf.Timestamp
 	(*Pipeline)(nil),                              // 65: api.v1alpha1.insights.Pipeline
 	(*explorer.Pipeline)(nil),                     // 66: api.v1alpha1.explorer.Pipeline
-	(*explorer.ExportOptions)(nil),                // 67: api.v1alpha1.explorer.ExportOptions
-	(*fieldmaskpb.FieldMask)(nil),                 // 68: google.protobuf.FieldMask
-	(*ExpressionNode)(nil),                        // 69: api.v1alpha1.insights.ExpressionNode
-	(*explorer.ExpressionNode)(nil),               // 70: api.v1alpha1.explorer.ExpressionNode
-	(commons.InsightVfsSchemaType)(0),             // 71: api.commons.InsightVfsSchemaType
+	(*fieldmaskpb.FieldMask)(nil),                 // 67: google.protobuf.FieldMask
+	(*ExpressionNode)(nil),                        // 68: api.v1alpha1.insights.ExpressionNode
+	(*explorer.ExpressionNode)(nil),               // 69: api.v1alpha1.explorer.ExpressionNode
+	(commons.InsightVfsSchemaType)(0),             // 70: api.commons.InsightVfsSchemaType
 }
 var file_api_v1alpha1_insights_insight_proto_depIdxs = []int32{
 	61, // 0: api.v1alpha1.insights.Insight.insight_type:type_name -> api.commons.InsightType
@@ -3934,65 +3920,64 @@ var file_api_v1alpha1_insights_insight_proto_depIdxs = []int32{
 	65, // 5: api.v1alpha1.insights.Insight.pipeline:type_name -> api.v1alpha1.insights.Pipeline
 	66, // 6: api.v1alpha1.insights.Insight.insight_body:type_name -> api.v1alpha1.explorer.Pipeline
 	28, // 7: api.v1alpha1.insights.Insight.export_options:type_name -> api.v1alpha1.insights.ExportOptions
-	67, // 8: api.v1alpha1.insights.Insight.data_export_options:type_name -> api.v1alpha1.explorer.ExportOptions
-	6,  // 9: api.v1alpha1.insights.PublishInsightResponse.insight:type_name -> api.v1alpha1.insights.Insight
-	6,  // 10: api.v1alpha1.insights.CreateInsightRequest.insight:type_name -> api.v1alpha1.insights.Insight
-	6,  // 11: api.v1alpha1.insights.CreateInsightResponse.insight:type_name -> api.v1alpha1.insights.Insight
-	62, // 12: api.v1alpha1.insights.ListInsightsRequest.insight_permission_types:type_name -> api.commons.InsightPermissionType
-	6,  // 13: api.v1alpha1.insights.ListInsightsStreamResponse.insights:type_name -> api.v1alpha1.insights.Insight
-	6,  // 14: api.v1alpha1.insights.ListInsightsResponse.insights:type_name -> api.v1alpha1.insights.Insight
-	6,  // 15: api.v1alpha1.insights.ListOrgInsightsResponse.insights:type_name -> api.v1alpha1.insights.Insight
-	6,  // 16: api.v1alpha1.insights.UpdateInsightRequest.insight:type_name -> api.v1alpha1.insights.Insight
-	68, // 17: api.v1alpha1.insights.UpdateInsightRequest.update_mask:type_name -> google.protobuf.FieldMask
-	6,  // 18: api.v1alpha1.insights.UpdateInsightResponse.insight:type_name -> api.v1alpha1.insights.Insight
-	6,  // 19: api.v1alpha1.insights.DeleteInsightResponse.insight:type_name -> api.v1alpha1.insights.Insight
-	6,  // 20: api.v1alpha1.insights.GetInsightResponse.insight:type_name -> api.v1alpha1.insights.Insight
-	57, // 21: api.v1alpha1.insights.GetVfsSchemaResponse.fields:type_name -> api.v1alpha1.insights.GetVfsSchemaResponse.Field
-	23, // 22: api.v1alpha1.insights.ListVfsSchemasResponse.vfs_schemas:type_name -> api.v1alpha1.insights.GetVfsSchemaResponse
-	5,  // 23: api.v1alpha1.insights.ExportOptions.quote_character:type_name -> api.v1alpha1.insights.QuoteCharacter
-	33, // 24: api.v1alpha1.insights.TableVisualization.table_column_details:type_name -> api.v1alpha1.insights.TableColumnConfig
-	5,  // 25: api.v1alpha1.insights.TableVisualization.quote_character:type_name -> api.v1alpha1.insights.QuoteCharacter
-	31, // 26: api.v1alpha1.insights.CardVisualization.text_values:type_name -> api.v1alpha1.insights.TextValue
-	32, // 27: api.v1alpha1.insights.TextValue.conditions:type_name -> api.v1alpha1.insights.TextValueCondition
-	69, // 28: api.v1alpha1.insights.TextValueCondition.expression:type_name -> api.v1alpha1.insights.ExpressionNode
-	36, // 29: api.v1alpha1.insights.TextValueCondition.operations:type_name -> api.v1alpha1.insights.ColumnOperation
-	58, // 30: api.v1alpha1.insights.TextValueCondition.icon_color:type_name -> api.v1alpha1.insights.TextValueCondition.Color
-	70, // 31: api.v1alpha1.insights.TextValueCondition.expression_node:type_name -> api.v1alpha1.explorer.ExpressionNode
-	70, // 32: api.v1alpha1.insights.TextValueCondition.condition_expression:type_name -> api.v1alpha1.explorer.ExpressionNode
-	70, // 33: api.v1alpha1.insights.TextValueCondition.result_expression:type_name -> api.v1alpha1.explorer.ExpressionNode
-	36, // 34: api.v1alpha1.insights.TableColumnConfig.operations:type_name -> api.v1alpha1.insights.ColumnOperation
-	3,  // 35: api.v1alpha1.insights.TableColumnConfig.column_summary:type_name -> api.v1alpha1.insights.OutputConfigurationColumnSummaryType
-	2,  // 36: api.v1alpha1.insights.TableColumnConfig.sort_direction:type_name -> api.v1alpha1.insights.ColumnSort
-	37, // 37: api.v1alpha1.insights.TableColumnConfig.insight_contextual_action:type_name -> api.v1alpha1.insights.InsightContextualAction
-	1,  // 38: api.v1alpha1.insights.ColumnOperation.operation_type:type_name -> api.v1alpha1.insights.OperationType
-	34, // 39: api.v1alpha1.insights.ColumnOperation.format_series:type_name -> api.v1alpha1.insights.FormatSeries
-	35, // 40: api.v1alpha1.insights.ColumnOperation.pad_operation:type_name -> api.v1alpha1.insights.PadOperation
-	4,  // 41: api.v1alpha1.insights.InsightContextualAction.type:type_name -> api.v1alpha1.insights.InsightContextualActionType
-	38, // 42: api.v1alpha1.insights.InsightContextualAction.link:type_name -> api.v1alpha1.insights.LinkAction
-	39, // 43: api.v1alpha1.insights.InsightContextualAction.component:type_name -> api.v1alpha1.insights.ComponentAction
-	40, // 44: api.v1alpha1.insights.InsightContextualAction.drill_through:type_name -> api.v1alpha1.insights.DrillThroughAction
-	59, // 45: api.v1alpha1.insights.LinkAction.component_value:type_name -> api.v1alpha1.insights.LinkAction.ComponentValueEntry
-	60, // 46: api.v1alpha1.insights.ComponentAction.component_value:type_name -> api.v1alpha1.insights.ComponentAction.ComponentValueEntry
-	41, // 47: api.v1alpha1.insights.DrillThroughAction.drill_through_parameters:type_name -> api.v1alpha1.insights.DrillThroughParameter
-	0,  // 48: api.v1alpha1.insights.OutputConfiguration.output_configuration_type:type_name -> api.v1alpha1.insights.OutputConfigurationType
-	29, // 49: api.v1alpha1.insights.OutputConfiguration.table_visualization:type_name -> api.v1alpha1.insights.TableVisualization
-	30, // 50: api.v1alpha1.insights.OutputConfiguration.card_visualization:type_name -> api.v1alpha1.insights.CardVisualization
-	64, // 51: api.v1alpha1.insights.OutputConfiguration.create_time:type_name -> google.protobuf.Timestamp
-	64, // 52: api.v1alpha1.insights.OutputConfiguration.update_time:type_name -> google.protobuf.Timestamp
-	42, // 53: api.v1alpha1.insights.CreateOutputConfigurationRequest.output_configuration:type_name -> api.v1alpha1.insights.OutputConfiguration
-	42, // 54: api.v1alpha1.insights.CreateOutputConfigurationResponse.output_configuration:type_name -> api.v1alpha1.insights.OutputConfiguration
-	42, // 55: api.v1alpha1.insights.ListOutputConfigurationsResponse.output_configurations:type_name -> api.v1alpha1.insights.OutputConfiguration
-	68, // 56: api.v1alpha1.insights.UpdateOutputConfigurationRequest.update_mask:type_name -> google.protobuf.FieldMask
-	42, // 57: api.v1alpha1.insights.UpdateOutputConfigurationRequest.output_configuration:type_name -> api.v1alpha1.insights.OutputConfiguration
-	42, // 58: api.v1alpha1.insights.UpdateOutputConfigurationResponse.output_configuration:type_name -> api.v1alpha1.insights.OutputConfiguration
-	42, // 59: api.v1alpha1.insights.GetOutputConfigurationResponse.output_configuration:type_name -> api.v1alpha1.insights.OutputConfiguration
-	42, // 60: api.v1alpha1.insights.GetDefaultOutputConfigurationResponse.output_configuration:type_name -> api.v1alpha1.insights.OutputConfiguration
-	71, // 61: api.v1alpha1.insights.GetVfsSchemaResponse.Field.column_type:type_name -> api.commons.InsightVfsSchemaType
-	62, // [62:62] is the sub-list for method output_type
-	62, // [62:62] is the sub-list for method input_type
-	62, // [62:62] is the sub-list for extension type_name
-	62, // [62:62] is the sub-list for extension extendee
-	0,  // [0:62] is the sub-list for field type_name
+	6,  // 8: api.v1alpha1.insights.PublishInsightResponse.insight:type_name -> api.v1alpha1.insights.Insight
+	6,  // 9: api.v1alpha1.insights.CreateInsightRequest.insight:type_name -> api.v1alpha1.insights.Insight
+	6,  // 10: api.v1alpha1.insights.CreateInsightResponse.insight:type_name -> api.v1alpha1.insights.Insight
+	62, // 11: api.v1alpha1.insights.ListInsightsRequest.insight_permission_types:type_name -> api.commons.InsightPermissionType
+	6,  // 12: api.v1alpha1.insights.ListInsightsStreamResponse.insights:type_name -> api.v1alpha1.insights.Insight
+	6,  // 13: api.v1alpha1.insights.ListInsightsResponse.insights:type_name -> api.v1alpha1.insights.Insight
+	6,  // 14: api.v1alpha1.insights.ListOrgInsightsResponse.insights:type_name -> api.v1alpha1.insights.Insight
+	6,  // 15: api.v1alpha1.insights.UpdateInsightRequest.insight:type_name -> api.v1alpha1.insights.Insight
+	67, // 16: api.v1alpha1.insights.UpdateInsightRequest.update_mask:type_name -> google.protobuf.FieldMask
+	6,  // 17: api.v1alpha1.insights.UpdateInsightResponse.insight:type_name -> api.v1alpha1.insights.Insight
+	6,  // 18: api.v1alpha1.insights.DeleteInsightResponse.insight:type_name -> api.v1alpha1.insights.Insight
+	6,  // 19: api.v1alpha1.insights.GetInsightResponse.insight:type_name -> api.v1alpha1.insights.Insight
+	57, // 20: api.v1alpha1.insights.GetVfsSchemaResponse.fields:type_name -> api.v1alpha1.insights.GetVfsSchemaResponse.Field
+	23, // 21: api.v1alpha1.insights.ListVfsSchemasResponse.vfs_schemas:type_name -> api.v1alpha1.insights.GetVfsSchemaResponse
+	5,  // 22: api.v1alpha1.insights.ExportOptions.quote_character:type_name -> api.v1alpha1.insights.QuoteCharacter
+	33, // 23: api.v1alpha1.insights.TableVisualization.table_column_details:type_name -> api.v1alpha1.insights.TableColumnConfig
+	5,  // 24: api.v1alpha1.insights.TableVisualization.quote_character:type_name -> api.v1alpha1.insights.QuoteCharacter
+	31, // 25: api.v1alpha1.insights.CardVisualization.text_values:type_name -> api.v1alpha1.insights.TextValue
+	32, // 26: api.v1alpha1.insights.TextValue.conditions:type_name -> api.v1alpha1.insights.TextValueCondition
+	68, // 27: api.v1alpha1.insights.TextValueCondition.expression:type_name -> api.v1alpha1.insights.ExpressionNode
+	36, // 28: api.v1alpha1.insights.TextValueCondition.operations:type_name -> api.v1alpha1.insights.ColumnOperation
+	58, // 29: api.v1alpha1.insights.TextValueCondition.icon_color:type_name -> api.v1alpha1.insights.TextValueCondition.Color
+	69, // 30: api.v1alpha1.insights.TextValueCondition.expression_node:type_name -> api.v1alpha1.explorer.ExpressionNode
+	69, // 31: api.v1alpha1.insights.TextValueCondition.condition_expression:type_name -> api.v1alpha1.explorer.ExpressionNode
+	69, // 32: api.v1alpha1.insights.TextValueCondition.result_expression:type_name -> api.v1alpha1.explorer.ExpressionNode
+	36, // 33: api.v1alpha1.insights.TableColumnConfig.operations:type_name -> api.v1alpha1.insights.ColumnOperation
+	3,  // 34: api.v1alpha1.insights.TableColumnConfig.column_summary:type_name -> api.v1alpha1.insights.OutputConfigurationColumnSummaryType
+	2,  // 35: api.v1alpha1.insights.TableColumnConfig.sort_direction:type_name -> api.v1alpha1.insights.ColumnSort
+	37, // 36: api.v1alpha1.insights.TableColumnConfig.insight_contextual_action:type_name -> api.v1alpha1.insights.InsightContextualAction
+	1,  // 37: api.v1alpha1.insights.ColumnOperation.operation_type:type_name -> api.v1alpha1.insights.OperationType
+	34, // 38: api.v1alpha1.insights.ColumnOperation.format_series:type_name -> api.v1alpha1.insights.FormatSeries
+	35, // 39: api.v1alpha1.insights.ColumnOperation.pad_operation:type_name -> api.v1alpha1.insights.PadOperation
+	4,  // 40: api.v1alpha1.insights.InsightContextualAction.type:type_name -> api.v1alpha1.insights.InsightContextualActionType
+	38, // 41: api.v1alpha1.insights.InsightContextualAction.link:type_name -> api.v1alpha1.insights.LinkAction
+	39, // 42: api.v1alpha1.insights.InsightContextualAction.component:type_name -> api.v1alpha1.insights.ComponentAction
+	40, // 43: api.v1alpha1.insights.InsightContextualAction.drill_through:type_name -> api.v1alpha1.insights.DrillThroughAction
+	59, // 44: api.v1alpha1.insights.LinkAction.component_value:type_name -> api.v1alpha1.insights.LinkAction.ComponentValueEntry
+	60, // 45: api.v1alpha1.insights.ComponentAction.component_value:type_name -> api.v1alpha1.insights.ComponentAction.ComponentValueEntry
+	41, // 46: api.v1alpha1.insights.DrillThroughAction.drill_through_parameters:type_name -> api.v1alpha1.insights.DrillThroughParameter
+	0,  // 47: api.v1alpha1.insights.OutputConfiguration.output_configuration_type:type_name -> api.v1alpha1.insights.OutputConfigurationType
+	29, // 48: api.v1alpha1.insights.OutputConfiguration.table_visualization:type_name -> api.v1alpha1.insights.TableVisualization
+	30, // 49: api.v1alpha1.insights.OutputConfiguration.card_visualization:type_name -> api.v1alpha1.insights.CardVisualization
+	64, // 50: api.v1alpha1.insights.OutputConfiguration.create_time:type_name -> google.protobuf.Timestamp
+	64, // 51: api.v1alpha1.insights.OutputConfiguration.update_time:type_name -> google.protobuf.Timestamp
+	42, // 52: api.v1alpha1.insights.CreateOutputConfigurationRequest.output_configuration:type_name -> api.v1alpha1.insights.OutputConfiguration
+	42, // 53: api.v1alpha1.insights.CreateOutputConfigurationResponse.output_configuration:type_name -> api.v1alpha1.insights.OutputConfiguration
+	42, // 54: api.v1alpha1.insights.ListOutputConfigurationsResponse.output_configurations:type_name -> api.v1alpha1.insights.OutputConfiguration
+	67, // 55: api.v1alpha1.insights.UpdateOutputConfigurationRequest.update_mask:type_name -> google.protobuf.FieldMask
+	42, // 56: api.v1alpha1.insights.UpdateOutputConfigurationRequest.output_configuration:type_name -> api.v1alpha1.insights.OutputConfiguration
+	42, // 57: api.v1alpha1.insights.UpdateOutputConfigurationResponse.output_configuration:type_name -> api.v1alpha1.insights.OutputConfiguration
+	42, // 58: api.v1alpha1.insights.GetOutputConfigurationResponse.output_configuration:type_name -> api.v1alpha1.insights.OutputConfiguration
+	42, // 59: api.v1alpha1.insights.GetDefaultOutputConfigurationResponse.output_configuration:type_name -> api.v1alpha1.insights.OutputConfiguration
+	70, // 60: api.v1alpha1.insights.GetVfsSchemaResponse.Field.column_type:type_name -> api.commons.InsightVfsSchemaType
+	61, // [61:61] is the sub-list for method output_type
+	61, // [61:61] is the sub-list for method input_type
+	61, // [61:61] is the sub-list for extension type_name
+	61, // [61:61] is the sub-list for extension extendee
+	0,  // [0:61] is the sub-list for field type_name
 }
 
 func init() { file_api_v1alpha1_insights_insight_proto_init() }

@@ -8113,210 +8113,6 @@ func (x *CalculateFeesRes) GetTotalAmountDue() *money.Money {
 	return nil
 }
 
-type IntegrationSettings struct {
-	state               protoimpl.MessageState         `protogen:"open.v1"`
-	AllowedIntegrations []integrations.IntegrationType `protobuf:"varint,1,rep,packed,name=allowed_integrations,json=allowedIntegrations,proto3,enum=api.commons.integrations.IntegrationType" json:"allowed_integrations,omitempty"` // there is probably potential for more org specific settings within integrations that we can store in the future.
-	unknownFields       protoimpl.UnknownFields
-	sizeCache           protoimpl.SizeCache
-}
-
-func (x *IntegrationSettings) Reset() {
-	*x = IntegrationSettings{}
-	mi := &file_api_v1alpha1_integrations_service_proto_msgTypes[117]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *IntegrationSettings) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*IntegrationSettings) ProtoMessage() {}
-
-func (x *IntegrationSettings) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_integrations_service_proto_msgTypes[117]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use IntegrationSettings.ProtoReflect.Descriptor instead.
-func (*IntegrationSettings) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_integrations_service_proto_rawDescGZIP(), []int{117}
-}
-
-func (x *IntegrationSettings) GetAllowedIntegrations() []integrations.IntegrationType {
-	if x != nil {
-		return x.AllowedIntegrations
-	}
-	return nil
-}
-
-type GetIntegrationSettingsReq struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *GetIntegrationSettingsReq) Reset() {
-	*x = GetIntegrationSettingsReq{}
-	mi := &file_api_v1alpha1_integrations_service_proto_msgTypes[118]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GetIntegrationSettingsReq) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetIntegrationSettingsReq) ProtoMessage() {}
-
-func (x *GetIntegrationSettingsReq) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_integrations_service_proto_msgTypes[118]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetIntegrationSettingsReq.ProtoReflect.Descriptor instead.
-func (*GetIntegrationSettingsReq) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_integrations_service_proto_rawDescGZIP(), []int{118}
-}
-
-type GetIntegrationSettingsRes struct {
-	state               protoimpl.MessageState         `protogen:"open.v1"`
-	AllowedIntegrations []integrations.IntegrationType `protobuf:"varint,1,rep,packed,name=allowed_integrations,json=allowedIntegrations,proto3,enum=api.commons.integrations.IntegrationType" json:"allowed_integrations,omitempty"`
-	unknownFields       protoimpl.UnknownFields
-	sizeCache           protoimpl.SizeCache
-}
-
-func (x *GetIntegrationSettingsRes) Reset() {
-	*x = GetIntegrationSettingsRes{}
-	mi := &file_api_v1alpha1_integrations_service_proto_msgTypes[119]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GetIntegrationSettingsRes) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetIntegrationSettingsRes) ProtoMessage() {}
-
-func (x *GetIntegrationSettingsRes) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_integrations_service_proto_msgTypes[119]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetIntegrationSettingsRes.ProtoReflect.Descriptor instead.
-func (*GetIntegrationSettingsRes) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_integrations_service_proto_rawDescGZIP(), []int{119}
-}
-
-func (x *GetIntegrationSettingsRes) GetAllowedIntegrations() []integrations.IntegrationType {
-	if x != nil {
-		return x.AllowedIntegrations
-	}
-	return nil
-}
-
-type UpsertIntegrationSettingsReq struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Entity        *IntegrationSettings   `protobuf:"bytes,1,opt,name=entity,proto3" json:"entity,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UpsertIntegrationSettingsReq) Reset() {
-	*x = UpsertIntegrationSettingsReq{}
-	mi := &file_api_v1alpha1_integrations_service_proto_msgTypes[120]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpsertIntegrationSettingsReq) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpsertIntegrationSettingsReq) ProtoMessage() {}
-
-func (x *UpsertIntegrationSettingsReq) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_integrations_service_proto_msgTypes[120]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpsertIntegrationSettingsReq.ProtoReflect.Descriptor instead.
-func (*UpsertIntegrationSettingsReq) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_integrations_service_proto_rawDescGZIP(), []int{120}
-}
-
-func (x *UpsertIntegrationSettingsReq) GetEntity() *IntegrationSettings {
-	if x != nil {
-		return x.Entity
-	}
-	return nil
-}
-
-type UpsertIntegrationSettingsRes struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UpsertIntegrationSettingsRes) Reset() {
-	*x = UpsertIntegrationSettingsRes{}
-	mi := &file_api_v1alpha1_integrations_service_proto_msgTypes[121]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpsertIntegrationSettingsRes) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpsertIntegrationSettingsRes) ProtoMessage() {}
-
-func (x *UpsertIntegrationSettingsRes) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_integrations_service_proto_msgTypes[121]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpsertIntegrationSettingsRes.ProtoReflect.Descriptor instead.
-func (*UpsertIntegrationSettingsRes) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_integrations_service_proto_rawDescGZIP(), []int{121}
-}
-
 var File_api_v1alpha1_integrations_service_proto protoreflect.FileDescriptor
 
 const file_api_v1alpha1_integrations_service_proto_rawDesc = "" +
@@ -9012,18 +8808,10 @@ const file_api_v1alpha1_integrations_service_proto_rawDesc = "" +
 	"\x10total_amount_due\x18\x02 \x01(\v2\x12.google.type.MoneyR\x0etotalAmountDue\x1aU\n" +
 	"\x13CalculatedFeesEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12(\n" +
-	"\x05value\x18\x02 \x01(\v2\x12.google.type.MoneyR\x05value:\x028\x01\"s\n" +
-	"\x13IntegrationSettings\x12\\\n" +
-	"\x14allowed_integrations\x18\x01 \x03(\x0e2).api.commons.integrations.IntegrationTypeR\x13allowedIntegrations\"\x1b\n" +
-	"\x19GetIntegrationSettingsReq\"y\n" +
-	"\x19GetIntegrationSettingsRes\x12\\\n" +
-	"\x14allowed_integrations\x18\x01 \x03(\x0e2).api.commons.integrations.IntegrationTypeR\x13allowedIntegrations\"f\n" +
-	"\x1cUpsertIntegrationSettingsReq\x12F\n" +
-	"\x06entity\x18\x01 \x01(\v2..api.v1alpha1.integrations.IntegrationSettingsR\x06entity\"\x1e\n" +
-	"\x1cUpsertIntegrationSettingsRes*0\n" +
+	"\x05value\x18\x02 \x01(\v2\x12.google.type.MoneyR\x05value:\x028\x01*0\n" +
 	"\x10PrivateFieldType\x12\v\n" +
 	"\aUNKNOWN\x10\x00\x12\x0f\n" +
-	"\vPRIVATE_KEY\x10\x012\x8f5\n" +
+	"\vPRIVATE_KEY\x10\x012\xe51\n" +
 	"\fIntegrations\x12\x95\x01\n" +
 	"\aProcess\x12%.api.v1alpha1.integrations.ProcessReq\x1a%.api.v1alpha1.integrations.ProcessRes\"<\xba\xb8\x91\x02\n" +
 	"\n" +
@@ -9130,13 +8918,7 @@ const file_api_v1alpha1_integrations_service_proto_rawDesc = "" +
 	"\x82\xd3\xe4\x93\x022:\x01*\"-/api/v1alpha1/integrations/insertprivatefield\x12\xa8\x01\n" +
 	"\rCalculateFees\x12+.api.v1alpha1.integrations.CalculateFeesReq\x1a+.api.v1alpha1.integrations.CalculateFeesRes\"=\xba\xb8\x91\x02\x05\n" +
 	"\x03\b\x94\n" +
-	"\x82\xd3\xe4\x93\x02-:\x01*\"(/api/v1alpha1/integrations/calculatefees\x12\xcc\x01\n" +
-	"\x16GetIntegrationSettings\x124.api.v1alpha1.integrations.GetIntegrationSettingsReq\x1a4.api.v1alpha1.integrations.GetIntegrationSettingsRes\"F\xba\xb8\x91\x02\x05\n" +
-	"\x03\b\x94\n" +
-	"\x82\xd3\xe4\x93\x026:\x01*\"1/api/v1alpha1/integrations/getintegrationsettings\x12\xd8\x01\n" +
-	"\x19UpsertIntegrationSettings\x127.api.v1alpha1.integrations.UpsertIntegrationSettingsReq\x1a7.api.v1alpha1.integrations.UpsertIntegrationSettingsRes\"I\xba\xb8\x91\x02\x05\n" +
-	"\x03\b\x94\n" +
-	"\x82\xd3\xe4\x93\x029:\x01*\"4/api/v1alpha1/integrations/upsertintegrationsettingsB\xe9\x01\n" +
+	"\x82\xd3\xe4\x93\x02-:\x01*\"(/api/v1alpha1/integrations/calculatefeesB\xe9\x01\n" +
 	"\x1dcom.api.v1alpha1.integrationsB\fServiceProtoP\x01Z4github.com/tcncloud/api-go/api/v1alpha1/integrations\xa2\x02\x03AVI\xaa\x02\x19Api.V1alpha1.Integrations\xca\x02\x19Api\\V1alpha1\\Integrations\xe2\x02%Api\\V1alpha1\\Integrations\\GPBMetadata\xea\x02\x1bApi::V1alpha1::Integrationsb\x06proto3"
 
 var (
@@ -9152,7 +8934,7 @@ func file_api_v1alpha1_integrations_service_proto_rawDescGZIP() []byte {
 }
 
 var file_api_v1alpha1_integrations_service_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_api_v1alpha1_integrations_service_proto_msgTypes = make([]protoimpl.MessageInfo, 154)
+var file_api_v1alpha1_integrations_service_proto_msgTypes = make([]protoimpl.MessageInfo, 149)
 var file_api_v1alpha1_integrations_service_proto_goTypes = []any{
 	(PrivateFieldType)(0),                          // 0: api.v1alpha1.integrations.PrivateFieldType
 	(*ListJourneyConfigsReq)(nil),                  // 1: api.v1alpha1.integrations.ListJourneyConfigsReq
@@ -9272,153 +9054,148 @@ var file_api_v1alpha1_integrations_service_proto_goTypes = []any{
 	(*InsertPrivateFieldRes)(nil),                  // 115: api.v1alpha1.integrations.InsertPrivateFieldRes
 	(*CalculateFeesReq)(nil),                       // 116: api.v1alpha1.integrations.CalculateFeesReq
 	(*CalculateFeesRes)(nil),                       // 117: api.v1alpha1.integrations.CalculateFeesRes
-	(*IntegrationSettings)(nil),                    // 118: api.v1alpha1.integrations.IntegrationSettings
-	(*GetIntegrationSettingsReq)(nil),              // 119: api.v1alpha1.integrations.GetIntegrationSettingsReq
-	(*GetIntegrationSettingsRes)(nil),              // 120: api.v1alpha1.integrations.GetIntegrationSettingsRes
-	(*UpsertIntegrationSettingsReq)(nil),           // 121: api.v1alpha1.integrations.UpsertIntegrationSettingsReq
-	(*UpsertIntegrationSettingsRes)(nil),           // 122: api.v1alpha1.integrations.UpsertIntegrationSettingsRes
-	nil,                                            // 123: api.v1alpha1.integrations.ProcessReq.ParamsEntry
-	nil,                                            // 124: api.v1alpha1.integrations.ProcessRes.DataEntry
-	nil,                                            // 125: api.v1alpha1.integrations.SearchPastTransactionsRequest.MatchFieldsEntry
-	nil,                                            // 126: api.v1alpha1.integrations.PastTxEntity.ReqEntry
-	nil,                                            // 127: api.v1alpha1.integrations.PastTxEntity.ResEntry
-	nil,                                            // 128: api.v1alpha1.integrations.IntegrationInfo.GroupParamsEntry
-	nil,                                            // 129: api.v1alpha1.integrations.MethodInfo.RuntimeParamsEntry
-	nil,                                            // 130: api.v1alpha1.integrations.IntegrationTransactionReportRow.GroupByValuesEntry
-	nil,                                            // 131: api.v1alpha1.integrations.IntegrationTransactionReportRow.RevenueSubtotalsEntry
-	nil,                                            // 132: api.v1alpha1.integrations.IntegrationTransactionReportRow.CountMetricsEntry
-	nil,                                            // 133: api.v1alpha1.integrations.GetIntegrationTransactionReportDataReq.GroupByEntry
-	nil,                                            // 134: api.v1alpha1.integrations.GetIntegrationTransactionReportDataRow.CountMetricsEntry
-	nil,                                            // 135: api.v1alpha1.integrations.GetIntegrationTransactionReportDataRow.LinkDataEntry
-	nil,                                            // 136: api.v1alpha1.integrations.PaymentLinkConfig.NameMappingEntry
-	nil,                                            // 137: api.v1alpha1.integrations.PaymentLinkConfig.BaseDataEntry
-	nil,                                            // 138: api.v1alpha1.integrations.Request.StaticDataEntry
-	nil,                                            // 139: api.v1alpha1.integrations.Request.RenameResponseKeysEntry
-	nil,                                            // 140: api.v1alpha1.integrations.Request.ReassignValidationsEntry
-	nil,                                            // 141: api.v1alpha1.integrations.Values.ValuesEntry
-	nil,                                            // 142: api.v1alpha1.integrations.MapString.ValuesEntry
-	nil,                                            // 143: api.v1alpha1.integrations.Task.ValuesEntry
-	nil,                                            // 144: api.v1alpha1.integrations.PortalLink.DataEntry
-	nil,                                            // 145: api.v1alpha1.integrations.PortalLink.MetadataEntry
-	nil,                                            // 146: api.v1alpha1.integrations.PortalLinkTransactionRow.LinkDataEntry
-	nil,                                            // 147: api.v1alpha1.integrations.PortalWorkflow.DemoResultsEntry
-	nil,                                            // 148: api.v1alpha1.integrations.Action.RestructureBeforeEntry
-	nil,                                            // 149: api.v1alpha1.integrations.Action.RestructureAfterEntry
-	nil,                                            // 150: api.v1alpha1.integrations.Action.OptsEntry
-	nil,                                            // 151: api.v1alpha1.integrations.ProcessWorkflowReq.ParamsEntry
-	nil,                                            // 152: api.v1alpha1.integrations.ProcessWorkflowRes.DataEntry
-	nil,                                            // 153: api.v1alpha1.integrations.CalculateFeesReq.ParamsEntry
-	nil,                                            // 154: api.v1alpha1.integrations.CalculateFeesRes.CalculatedFeesEntry
-	(integrations.IntegrationType)(0),              // 155: api.commons.integrations.IntegrationType
-	(integrations.RequestMethod)(0),                // 156: api.commons.integrations.RequestMethod
-	(commons.CallType_Enum)(0),                     // 157: api.commons.CallType.Enum
-	(integrations.RequestOrigin)(0),                // 158: api.commons.integrations.RequestOrigin
-	(*timestamppb.Timestamp)(nil),                  // 159: google.protobuf.Timestamp
-	(integrations.TransactionType)(0),              // 160: api.commons.integrations.TransactionType
-	(integrations.ValueType)(0),                    // 161: api.commons.integrations.ValueType
-	(integrations.Validation)(0),                   // 162: api.commons.integrations.Validation
-	(integrations.RequestSource)(0),                // 163: api.commons.integrations.RequestSource
-	(integrations.TransactionResult)(0),            // 164: api.commons.integrations.TransactionResult
-	(*fieldmaskpb.FieldMask)(nil),                  // 165: google.protobuf.FieldMask
-	(integrations.FieldSource)(0),                  // 166: api.commons.integrations.FieldSource
-	(integrations.CompareOperation)(0),             // 167: api.commons.integrations.CompareOperation
-	(*integrations.VerificationFlow)(nil),          // 168: api.commons.integrations.VerificationFlow
-	(*integrations.InvoiceFlow)(nil),               // 169: api.commons.integrations.InvoiceFlow
-	(*integrations.PaymentFlow)(nil),               // 170: api.commons.integrations.PaymentFlow
-	(*integrations.FieldDefinition)(nil),           // 171: api.commons.integrations.FieldDefinition
-	(*integrations.Invoices)(nil),                  // 172: api.commons.integrations.Invoices
-	(*integrations.Receipt)(nil),                   // 173: api.commons.integrations.Receipt
-	(*integrations.Payment)(nil),                   // 174: api.commons.integrations.Payment
-	(*org.IntegrationLink)(nil),                    // 175: api.commons.org.IntegrationLink
-	(*integrations.Fee)(nil),                       // 176: api.commons.integrations.Fee
-	(*money.Money)(nil),                            // 177: google.type.Money
+	nil,                                            // 118: api.v1alpha1.integrations.ProcessReq.ParamsEntry
+	nil,                                            // 119: api.v1alpha1.integrations.ProcessRes.DataEntry
+	nil,                                            // 120: api.v1alpha1.integrations.SearchPastTransactionsRequest.MatchFieldsEntry
+	nil,                                            // 121: api.v1alpha1.integrations.PastTxEntity.ReqEntry
+	nil,                                            // 122: api.v1alpha1.integrations.PastTxEntity.ResEntry
+	nil,                                            // 123: api.v1alpha1.integrations.IntegrationInfo.GroupParamsEntry
+	nil,                                            // 124: api.v1alpha1.integrations.MethodInfo.RuntimeParamsEntry
+	nil,                                            // 125: api.v1alpha1.integrations.IntegrationTransactionReportRow.GroupByValuesEntry
+	nil,                                            // 126: api.v1alpha1.integrations.IntegrationTransactionReportRow.RevenueSubtotalsEntry
+	nil,                                            // 127: api.v1alpha1.integrations.IntegrationTransactionReportRow.CountMetricsEntry
+	nil,                                            // 128: api.v1alpha1.integrations.GetIntegrationTransactionReportDataReq.GroupByEntry
+	nil,                                            // 129: api.v1alpha1.integrations.GetIntegrationTransactionReportDataRow.CountMetricsEntry
+	nil,                                            // 130: api.v1alpha1.integrations.GetIntegrationTransactionReportDataRow.LinkDataEntry
+	nil,                                            // 131: api.v1alpha1.integrations.PaymentLinkConfig.NameMappingEntry
+	nil,                                            // 132: api.v1alpha1.integrations.PaymentLinkConfig.BaseDataEntry
+	nil,                                            // 133: api.v1alpha1.integrations.Request.StaticDataEntry
+	nil,                                            // 134: api.v1alpha1.integrations.Request.RenameResponseKeysEntry
+	nil,                                            // 135: api.v1alpha1.integrations.Request.ReassignValidationsEntry
+	nil,                                            // 136: api.v1alpha1.integrations.Values.ValuesEntry
+	nil,                                            // 137: api.v1alpha1.integrations.MapString.ValuesEntry
+	nil,                                            // 138: api.v1alpha1.integrations.Task.ValuesEntry
+	nil,                                            // 139: api.v1alpha1.integrations.PortalLink.DataEntry
+	nil,                                            // 140: api.v1alpha1.integrations.PortalLink.MetadataEntry
+	nil,                                            // 141: api.v1alpha1.integrations.PortalLinkTransactionRow.LinkDataEntry
+	nil,                                            // 142: api.v1alpha1.integrations.PortalWorkflow.DemoResultsEntry
+	nil,                                            // 143: api.v1alpha1.integrations.Action.RestructureBeforeEntry
+	nil,                                            // 144: api.v1alpha1.integrations.Action.RestructureAfterEntry
+	nil,                                            // 145: api.v1alpha1.integrations.Action.OptsEntry
+	nil,                                            // 146: api.v1alpha1.integrations.ProcessWorkflowReq.ParamsEntry
+	nil,                                            // 147: api.v1alpha1.integrations.ProcessWorkflowRes.DataEntry
+	nil,                                            // 148: api.v1alpha1.integrations.CalculateFeesReq.ParamsEntry
+	nil,                                            // 149: api.v1alpha1.integrations.CalculateFeesRes.CalculatedFeesEntry
+	(integrations.IntegrationType)(0),              // 150: api.commons.integrations.IntegrationType
+	(integrations.RequestMethod)(0),                // 151: api.commons.integrations.RequestMethod
+	(commons.CallType_Enum)(0),                     // 152: api.commons.CallType.Enum
+	(integrations.RequestOrigin)(0),                // 153: api.commons.integrations.RequestOrigin
+	(*timestamppb.Timestamp)(nil),                  // 154: google.protobuf.Timestamp
+	(integrations.TransactionType)(0),              // 155: api.commons.integrations.TransactionType
+	(integrations.ValueType)(0),                    // 156: api.commons.integrations.ValueType
+	(integrations.Validation)(0),                   // 157: api.commons.integrations.Validation
+	(integrations.RequestSource)(0),                // 158: api.commons.integrations.RequestSource
+	(integrations.TransactionResult)(0),            // 159: api.commons.integrations.TransactionResult
+	(*fieldmaskpb.FieldMask)(nil),                  // 160: google.protobuf.FieldMask
+	(integrations.FieldSource)(0),                  // 161: api.commons.integrations.FieldSource
+	(integrations.CompareOperation)(0),             // 162: api.commons.integrations.CompareOperation
+	(*integrations.VerificationFlow)(nil),          // 163: api.commons.integrations.VerificationFlow
+	(*integrations.InvoiceFlow)(nil),               // 164: api.commons.integrations.InvoiceFlow
+	(*integrations.PaymentFlow)(nil),               // 165: api.commons.integrations.PaymentFlow
+	(*integrations.FieldDefinition)(nil),           // 166: api.commons.integrations.FieldDefinition
+	(*integrations.Invoices)(nil),                  // 167: api.commons.integrations.Invoices
+	(*integrations.Receipt)(nil),                   // 168: api.commons.integrations.Receipt
+	(*integrations.Payment)(nil),                   // 169: api.commons.integrations.Payment
+	(*org.IntegrationLink)(nil),                    // 170: api.commons.org.IntegrationLink
+	(*integrations.Fee)(nil),                       // 171: api.commons.integrations.Fee
+	(*money.Money)(nil),                            // 172: google.type.Money
 }
 var file_api_v1alpha1_integrations_service_proto_depIdxs = []int32{
 	80,  // 0: api.v1alpha1.integrations.IntegrationConfigs.values:type_name -> api.v1alpha1.integrations.IntegrationConfig
-	155, // 1: api.v1alpha1.integrations.GetIntegrationConfigReq.integration_id:type_name -> api.commons.integrations.IntegrationType
-	155, // 2: api.v1alpha1.integrations.UpdateIntegrationConfigReq.integration_id:type_name -> api.commons.integrations.IntegrationType
+	150, // 1: api.v1alpha1.integrations.GetIntegrationConfigReq.integration_id:type_name -> api.commons.integrations.IntegrationType
+	150, // 2: api.v1alpha1.integrations.UpdateIntegrationConfigReq.integration_id:type_name -> api.commons.integrations.IntegrationType
 	75,  // 3: api.v1alpha1.integrations.UpdateIntegrationConfigReq.params:type_name -> api.v1alpha1.integrations.Values
-	155, // 4: api.v1alpha1.integrations.DeleteIntegrationConfigReq.integration_id:type_name -> api.commons.integrations.IntegrationType
-	155, // 5: api.v1alpha1.integrations.ProcessReq.integration_id:type_name -> api.commons.integrations.IntegrationType
-	156, // 6: api.v1alpha1.integrations.ProcessReq.method_id:type_name -> api.commons.integrations.RequestMethod
-	123, // 7: api.v1alpha1.integrations.ProcessReq.params:type_name -> api.v1alpha1.integrations.ProcessReq.ParamsEntry
+	150, // 4: api.v1alpha1.integrations.DeleteIntegrationConfigReq.integration_id:type_name -> api.commons.integrations.IntegrationType
+	150, // 5: api.v1alpha1.integrations.ProcessReq.integration_id:type_name -> api.commons.integrations.IntegrationType
+	151, // 6: api.v1alpha1.integrations.ProcessReq.method_id:type_name -> api.commons.integrations.RequestMethod
+	118, // 7: api.v1alpha1.integrations.ProcessReq.params:type_name -> api.v1alpha1.integrations.ProcessReq.ParamsEntry
 	79,  // 8: api.v1alpha1.integrations.ProcessReq.conds:type_name -> api.v1alpha1.integrations.Condition
-	157, // 9: api.v1alpha1.integrations.ProcessReq.call_type:type_name -> api.commons.CallType.Enum
-	158, // 10: api.v1alpha1.integrations.ProcessReq.request_origin:type_name -> api.commons.integrations.RequestOrigin
-	124, // 11: api.v1alpha1.integrations.ProcessRes.data:type_name -> api.v1alpha1.integrations.ProcessRes.DataEntry
-	155, // 12: api.v1alpha1.integrations.SearchPastTransactionsRequest.int_id:type_name -> api.commons.integrations.IntegrationType
-	156, // 13: api.v1alpha1.integrations.SearchPastTransactionsRequest.method_id:type_name -> api.commons.integrations.RequestMethod
-	125, // 14: api.v1alpha1.integrations.SearchPastTransactionsRequest.match_fields:type_name -> api.v1alpha1.integrations.SearchPastTransactionsRequest.MatchFieldsEntry
-	159, // 15: api.v1alpha1.integrations.SearchPastTransactionsRequest.search_before:type_name -> google.protobuf.Timestamp
+	152, // 9: api.v1alpha1.integrations.ProcessReq.call_type:type_name -> api.commons.CallType.Enum
+	153, // 10: api.v1alpha1.integrations.ProcessReq.request_origin:type_name -> api.commons.integrations.RequestOrigin
+	119, // 11: api.v1alpha1.integrations.ProcessRes.data:type_name -> api.v1alpha1.integrations.ProcessRes.DataEntry
+	150, // 12: api.v1alpha1.integrations.SearchPastTransactionsRequest.int_id:type_name -> api.commons.integrations.IntegrationType
+	151, // 13: api.v1alpha1.integrations.SearchPastTransactionsRequest.method_id:type_name -> api.commons.integrations.RequestMethod
+	120, // 14: api.v1alpha1.integrations.SearchPastTransactionsRequest.match_fields:type_name -> api.v1alpha1.integrations.SearchPastTransactionsRequest.MatchFieldsEntry
+	154, // 15: api.v1alpha1.integrations.SearchPastTransactionsRequest.search_before:type_name -> google.protobuf.Timestamp
 	11,  // 16: api.v1alpha1.integrations.SearchPastTransactionsResponse.values:type_name -> api.v1alpha1.integrations.PastTxEntity
-	126, // 17: api.v1alpha1.integrations.PastTxEntity.req:type_name -> api.v1alpha1.integrations.PastTxEntity.ReqEntry
-	127, // 18: api.v1alpha1.integrations.PastTxEntity.res:type_name -> api.v1alpha1.integrations.PastTxEntity.ResEntry
-	159, // 19: api.v1alpha1.integrations.PastTxEntity.created_on:type_name -> google.protobuf.Timestamp
+	121, // 17: api.v1alpha1.integrations.PastTxEntity.req:type_name -> api.v1alpha1.integrations.PastTxEntity.ReqEntry
+	122, // 18: api.v1alpha1.integrations.PastTxEntity.res:type_name -> api.v1alpha1.integrations.PastTxEntity.ResEntry
+	154, // 19: api.v1alpha1.integrations.PastTxEntity.created_on:type_name -> google.protobuf.Timestamp
 	14,  // 20: api.v1alpha1.integrations.IntegrationInfos.values:type_name -> api.v1alpha1.integrations.IntegrationInfo
-	155, // 21: api.v1alpha1.integrations.IntegrationInfo.integration_id:type_name -> api.commons.integrations.IntegrationType
+	150, // 21: api.v1alpha1.integrations.IntegrationInfo.integration_id:type_name -> api.commons.integrations.IntegrationType
 	15,  // 22: api.v1alpha1.integrations.IntegrationInfo.methods:type_name -> api.v1alpha1.integrations.MethodInfo
-	128, // 23: api.v1alpha1.integrations.IntegrationInfo.group_params:type_name -> api.v1alpha1.integrations.IntegrationInfo.GroupParamsEntry
-	156, // 24: api.v1alpha1.integrations.MethodInfo.method_id:type_name -> api.commons.integrations.RequestMethod
-	160, // 25: api.v1alpha1.integrations.MethodInfo.tx_type:type_name -> api.commons.integrations.TransactionType
+	123, // 23: api.v1alpha1.integrations.IntegrationInfo.group_params:type_name -> api.v1alpha1.integrations.IntegrationInfo.GroupParamsEntry
+	151, // 24: api.v1alpha1.integrations.MethodInfo.method_id:type_name -> api.commons.integrations.RequestMethod
+	155, // 25: api.v1alpha1.integrations.MethodInfo.tx_type:type_name -> api.commons.integrations.TransactionType
 	16,  // 26: api.v1alpha1.integrations.MethodInfo.params:type_name -> api.v1alpha1.integrations.Parameter
 	16,  // 27: api.v1alpha1.integrations.MethodInfo.response:type_name -> api.v1alpha1.integrations.Parameter
-	129, // 28: api.v1alpha1.integrations.MethodInfo.runtime_params:type_name -> api.v1alpha1.integrations.MethodInfo.RuntimeParamsEntry
-	161, // 29: api.v1alpha1.integrations.Parameter.param_type:type_name -> api.commons.integrations.ValueType
+	124, // 28: api.v1alpha1.integrations.MethodInfo.runtime_params:type_name -> api.v1alpha1.integrations.MethodInfo.RuntimeParamsEntry
+	156, // 29: api.v1alpha1.integrations.Parameter.param_type:type_name -> api.commons.integrations.ValueType
 	76,  // 30: api.v1alpha1.integrations.Parameter.default_value:type_name -> api.v1alpha1.integrations.Value
-	162, // 31: api.v1alpha1.integrations.Parameter.validation:type_name -> api.commons.integrations.Validation
-	159, // 32: api.v1alpha1.integrations.GetAggregatedMetadataReq.start:type_name -> google.protobuf.Timestamp
-	159, // 33: api.v1alpha1.integrations.GetAggregatedMetadataReq.end:type_name -> google.protobuf.Timestamp
-	156, // 34: api.v1alpha1.integrations.GetAggregatedMetadataReq.method_id:type_name -> api.commons.integrations.RequestMethod
-	159, // 35: api.v1alpha1.integrations.GetIntegrationTransactionReportReq.start:type_name -> google.protobuf.Timestamp
-	159, // 36: api.v1alpha1.integrations.GetIntegrationTransactionReportReq.end:type_name -> google.protobuf.Timestamp
-	155, // 37: api.v1alpha1.integrations.IntegrationTransactionReportRow.integration_id:type_name -> api.commons.integrations.IntegrationType
-	156, // 38: api.v1alpha1.integrations.IntegrationTransactionReportRow.method_id:type_name -> api.commons.integrations.RequestMethod
-	160, // 39: api.v1alpha1.integrations.IntegrationTransactionReportRow.transaction_type:type_name -> api.commons.integrations.TransactionType
-	163, // 40: api.v1alpha1.integrations.IntegrationTransactionReportRow.request_source:type_name -> api.commons.integrations.RequestSource
-	130, // 41: api.v1alpha1.integrations.IntegrationTransactionReportRow.group_by_values:type_name -> api.v1alpha1.integrations.IntegrationTransactionReportRow.GroupByValuesEntry
-	131, // 42: api.v1alpha1.integrations.IntegrationTransactionReportRow.revenue_subtotals:type_name -> api.v1alpha1.integrations.IntegrationTransactionReportRow.RevenueSubtotalsEntry
-	132, // 43: api.v1alpha1.integrations.IntegrationTransactionReportRow.count_metrics:type_name -> api.v1alpha1.integrations.IntegrationTransactionReportRow.CountMetricsEntry
+	157, // 31: api.v1alpha1.integrations.Parameter.validation:type_name -> api.commons.integrations.Validation
+	154, // 32: api.v1alpha1.integrations.GetAggregatedMetadataReq.start:type_name -> google.protobuf.Timestamp
+	154, // 33: api.v1alpha1.integrations.GetAggregatedMetadataReq.end:type_name -> google.protobuf.Timestamp
+	151, // 34: api.v1alpha1.integrations.GetAggregatedMetadataReq.method_id:type_name -> api.commons.integrations.RequestMethod
+	154, // 35: api.v1alpha1.integrations.GetIntegrationTransactionReportReq.start:type_name -> google.protobuf.Timestamp
+	154, // 36: api.v1alpha1.integrations.GetIntegrationTransactionReportReq.end:type_name -> google.protobuf.Timestamp
+	150, // 37: api.v1alpha1.integrations.IntegrationTransactionReportRow.integration_id:type_name -> api.commons.integrations.IntegrationType
+	151, // 38: api.v1alpha1.integrations.IntegrationTransactionReportRow.method_id:type_name -> api.commons.integrations.RequestMethod
+	155, // 39: api.v1alpha1.integrations.IntegrationTransactionReportRow.transaction_type:type_name -> api.commons.integrations.TransactionType
+	158, // 40: api.v1alpha1.integrations.IntegrationTransactionReportRow.request_source:type_name -> api.commons.integrations.RequestSource
+	125, // 41: api.v1alpha1.integrations.IntegrationTransactionReportRow.group_by_values:type_name -> api.v1alpha1.integrations.IntegrationTransactionReportRow.GroupByValuesEntry
+	126, // 42: api.v1alpha1.integrations.IntegrationTransactionReportRow.revenue_subtotals:type_name -> api.v1alpha1.integrations.IntegrationTransactionReportRow.RevenueSubtotalsEntry
+	127, // 43: api.v1alpha1.integrations.IntegrationTransactionReportRow.count_metrics:type_name -> api.v1alpha1.integrations.IntegrationTransactionReportRow.CountMetricsEntry
 	22,  // 44: api.v1alpha1.integrations.GetIntegrationTransactionReportRes.values:type_name -> api.v1alpha1.integrations.IntegrationTransactionReportRow
-	159, // 45: api.v1alpha1.integrations.GetIntegrationTransactionReportDataReq.start:type_name -> google.protobuf.Timestamp
-	159, // 46: api.v1alpha1.integrations.GetIntegrationTransactionReportDataReq.end:type_name -> google.protobuf.Timestamp
-	133, // 47: api.v1alpha1.integrations.GetIntegrationTransactionReportDataReq.group_by:type_name -> api.v1alpha1.integrations.GetIntegrationTransactionReportDataReq.GroupByEntry
-	155, // 48: api.v1alpha1.integrations.GetIntegrationTransactionReportDataReq.integration_id:type_name -> api.commons.integrations.IntegrationType
-	134, // 49: api.v1alpha1.integrations.GetIntegrationTransactionReportDataRow.count_metrics:type_name -> api.v1alpha1.integrations.GetIntegrationTransactionReportDataRow.CountMetricsEntry
-	135, // 50: api.v1alpha1.integrations.GetIntegrationTransactionReportDataRow.link_data:type_name -> api.v1alpha1.integrations.GetIntegrationTransactionReportDataRow.LinkDataEntry
-	159, // 51: api.v1alpha1.integrations.GetIntegrationTransactionReportDataRow.date:type_name -> google.protobuf.Timestamp
+	154, // 45: api.v1alpha1.integrations.GetIntegrationTransactionReportDataReq.start:type_name -> google.protobuf.Timestamp
+	154, // 46: api.v1alpha1.integrations.GetIntegrationTransactionReportDataReq.end:type_name -> google.protobuf.Timestamp
+	128, // 47: api.v1alpha1.integrations.GetIntegrationTransactionReportDataReq.group_by:type_name -> api.v1alpha1.integrations.GetIntegrationTransactionReportDataReq.GroupByEntry
+	150, // 48: api.v1alpha1.integrations.GetIntegrationTransactionReportDataReq.integration_id:type_name -> api.commons.integrations.IntegrationType
+	129, // 49: api.v1alpha1.integrations.GetIntegrationTransactionReportDataRow.count_metrics:type_name -> api.v1alpha1.integrations.GetIntegrationTransactionReportDataRow.CountMetricsEntry
+	130, // 50: api.v1alpha1.integrations.GetIntegrationTransactionReportDataRow.link_data:type_name -> api.v1alpha1.integrations.GetIntegrationTransactionReportDataRow.LinkDataEntry
+	154, // 51: api.v1alpha1.integrations.GetIntegrationTransactionReportDataRow.date:type_name -> google.protobuf.Timestamp
 	25,  // 52: api.v1alpha1.integrations.GetIntegrationTransactionReportDataRes.entities:type_name -> api.v1alpha1.integrations.GetIntegrationTransactionReportDataRow
-	159, // 53: api.v1alpha1.integrations.SearchIntegrationTransactionsReq.start_date:type_name -> google.protobuf.Timestamp
-	159, // 54: api.v1alpha1.integrations.SearchIntegrationTransactionsReq.end_date:type_name -> google.protobuf.Timestamp
+	154, // 53: api.v1alpha1.integrations.SearchIntegrationTransactionsReq.start_date:type_name -> google.protobuf.Timestamp
+	154, // 54: api.v1alpha1.integrations.SearchIntegrationTransactionsReq.end_date:type_name -> google.protobuf.Timestamp
 	29,  // 55: api.v1alpha1.integrations.SearchIntegrationTransactionsReq.integration_type:type_name -> api.v1alpha1.integrations.IntegrationType
 	30,  // 56: api.v1alpha1.integrations.SearchIntegrationTransactionsReq.request_method:type_name -> api.v1alpha1.integrations.RequestMethod
 	31,  // 57: api.v1alpha1.integrations.SearchIntegrationTransactionsReq.transaction_type:type_name -> api.v1alpha1.integrations.TransactionType
 	32,  // 58: api.v1alpha1.integrations.SearchIntegrationTransactionsReq.request_source:type_name -> api.v1alpha1.integrations.RequestSource
 	33,  // 59: api.v1alpha1.integrations.SearchIntegrationTransactionsReq.result:type_name -> api.v1alpha1.integrations.TransactionResult
 	81,  // 60: api.v1alpha1.integrations.SearchIntegrationTransactionsRes.transactions:type_name -> api.v1alpha1.integrations.IntegrationTransaction
-	155, // 61: api.v1alpha1.integrations.IntegrationType.integration_id:type_name -> api.commons.integrations.IntegrationType
-	156, // 62: api.v1alpha1.integrations.RequestMethod.method_id:type_name -> api.commons.integrations.RequestMethod
-	160, // 63: api.v1alpha1.integrations.TransactionType.transaction_type:type_name -> api.commons.integrations.TransactionType
-	163, // 64: api.v1alpha1.integrations.RequestSource.request_source:type_name -> api.commons.integrations.RequestSource
-	164, // 65: api.v1alpha1.integrations.TransactionResult.result:type_name -> api.commons.integrations.TransactionResult
-	155, // 66: api.v1alpha1.integrations.ListIntegrationConfigNamesReq.integration_id:type_name -> api.commons.integrations.IntegrationType
-	155, // 67: api.v1alpha1.integrations.ListIntegrationConfigNamesRes.integration_id:type_name -> api.commons.integrations.IntegrationType
+	150, // 61: api.v1alpha1.integrations.IntegrationType.integration_id:type_name -> api.commons.integrations.IntegrationType
+	151, // 62: api.v1alpha1.integrations.RequestMethod.method_id:type_name -> api.commons.integrations.RequestMethod
+	155, // 63: api.v1alpha1.integrations.TransactionType.transaction_type:type_name -> api.commons.integrations.TransactionType
+	158, // 64: api.v1alpha1.integrations.RequestSource.request_source:type_name -> api.commons.integrations.RequestSource
+	159, // 65: api.v1alpha1.integrations.TransactionResult.result:type_name -> api.commons.integrations.TransactionResult
+	150, // 66: api.v1alpha1.integrations.ListIntegrationConfigNamesReq.integration_id:type_name -> api.commons.integrations.IntegrationType
+	150, // 67: api.v1alpha1.integrations.ListIntegrationConfigNamesRes.integration_id:type_name -> api.commons.integrations.IntegrationType
 	85,  // 68: api.v1alpha1.integrations.ListPortalConfigsReq.entity:type_name -> api.v1alpha1.integrations.PortalConfigId
-	165, // 69: api.v1alpha1.integrations.ListPortalConfigsReq.mask:type_name -> google.protobuf.FieldMask
+	160, // 69: api.v1alpha1.integrations.ListPortalConfigsReq.mask:type_name -> google.protobuf.FieldMask
 	85,  // 70: api.v1alpha1.integrations.GetPortalConfigReq.entity:type_name -> api.v1alpha1.integrations.PortalConfigId
-	165, // 71: api.v1alpha1.integrations.GetPortalConfigReq.mask:type_name -> google.protobuf.FieldMask
+	160, // 71: api.v1alpha1.integrations.GetPortalConfigReq.mask:type_name -> google.protobuf.FieldMask
 	85,  // 72: api.v1alpha1.integrations.DeletePortalConfigReq.entity:type_name -> api.v1alpha1.integrations.PortalConfigId
-	165, // 73: api.v1alpha1.integrations.DeletePortalConfigReq.mask:type_name -> google.protobuf.FieldMask
-	159, // 74: api.v1alpha1.integrations.RefreshLinkRes.new_expiry:type_name -> google.protobuf.Timestamp
-	155, // 75: api.v1alpha1.integrations.PaymentLinkConfig.integration_id:type_name -> api.commons.integrations.IntegrationType
-	156, // 76: api.v1alpha1.integrations.PaymentLinkConfig.verification_method_id:type_name -> api.commons.integrations.RequestMethod
-	156, // 77: api.v1alpha1.integrations.PaymentLinkConfig.invoice_method_id:type_name -> api.commons.integrations.RequestMethod
-	156, // 78: api.v1alpha1.integrations.PaymentLinkConfig.payment_method_id:type_name -> api.commons.integrations.RequestMethod
-	136, // 79: api.v1alpha1.integrations.PaymentLinkConfig.name_mapping:type_name -> api.v1alpha1.integrations.PaymentLinkConfig.NameMappingEntry
-	159, // 80: api.v1alpha1.integrations.PaymentLinkConfig.created_on:type_name -> google.protobuf.Timestamp
+	160, // 73: api.v1alpha1.integrations.DeletePortalConfigReq.mask:type_name -> google.protobuf.FieldMask
+	154, // 74: api.v1alpha1.integrations.RefreshLinkRes.new_expiry:type_name -> google.protobuf.Timestamp
+	150, // 75: api.v1alpha1.integrations.PaymentLinkConfig.integration_id:type_name -> api.commons.integrations.IntegrationType
+	151, // 76: api.v1alpha1.integrations.PaymentLinkConfig.verification_method_id:type_name -> api.commons.integrations.RequestMethod
+	151, // 77: api.v1alpha1.integrations.PaymentLinkConfig.invoice_method_id:type_name -> api.commons.integrations.RequestMethod
+	151, // 78: api.v1alpha1.integrations.PaymentLinkConfig.payment_method_id:type_name -> api.commons.integrations.RequestMethod
+	131, // 79: api.v1alpha1.integrations.PaymentLinkConfig.name_mapping:type_name -> api.v1alpha1.integrations.PaymentLinkConfig.NameMappingEntry
+	154, // 80: api.v1alpha1.integrations.PaymentLinkConfig.created_on:type_name -> google.protobuf.Timestamp
 	48,  // 81: api.v1alpha1.integrations.PaymentLinkConfig.verification_request:type_name -> api.v1alpha1.integrations.VerificationRequest
 	50,  // 82: api.v1alpha1.integrations.PaymentLinkConfig.invoice_request:type_name -> api.v1alpha1.integrations.InvoiceRequest
 	49,  // 83: api.v1alpha1.integrations.PaymentLinkConfig.payment_requests:type_name -> api.v1alpha1.integrations.PaymentRequest
-	137, // 84: api.v1alpha1.integrations.PaymentLinkConfig.base_data:type_name -> api.v1alpha1.integrations.PaymentLinkConfig.BaseDataEntry
+	132, // 84: api.v1alpha1.integrations.PaymentLinkConfig.base_data:type_name -> api.v1alpha1.integrations.PaymentLinkConfig.BaseDataEntry
 	47,  // 85: api.v1alpha1.integrations.PaymentLinkConfig.templates:type_name -> api.v1alpha1.integrations.PaymentLinkConfigTemplates
 	51,  // 86: api.v1alpha1.integrations.VerificationRequest.verification_requests:type_name -> api.v1alpha1.integrations.Request
 	16,  // 87: api.v1alpha1.integrations.VerificationRequest.verification_fields:type_name -> api.v1alpha1.integrations.Parameter
@@ -9428,200 +9205,193 @@ var file_api_v1alpha1_integrations_service_proto_depIdxs = []int32{
 	51,  // 91: api.v1alpha1.integrations.InvoiceRequest.invoice_request_payload:type_name -> api.v1alpha1.integrations.Request
 	51,  // 92: api.v1alpha1.integrations.InvoiceRequest.invoice_request:type_name -> api.v1alpha1.integrations.Request
 	53,  // 93: api.v1alpha1.integrations.Request.method_call:type_name -> api.v1alpha1.integrations.MethodCall
-	138, // 94: api.v1alpha1.integrations.Request.static_data:type_name -> api.v1alpha1.integrations.Request.StaticDataEntry
-	139, // 95: api.v1alpha1.integrations.Request.rename_response_keys:type_name -> api.v1alpha1.integrations.Request.RenameResponseKeysEntry
-	140, // 96: api.v1alpha1.integrations.Request.reassign_validations:type_name -> api.v1alpha1.integrations.Request.ReassignValidationsEntry
-	162, // 97: api.v1alpha1.integrations.Validation.enum:type_name -> api.commons.integrations.Validation
-	155, // 98: api.v1alpha1.integrations.MethodCall.integration_id:type_name -> api.commons.integrations.IntegrationType
-	156, // 99: api.v1alpha1.integrations.MethodCall.method_id:type_name -> api.commons.integrations.RequestMethod
+	133, // 94: api.v1alpha1.integrations.Request.static_data:type_name -> api.v1alpha1.integrations.Request.StaticDataEntry
+	134, // 95: api.v1alpha1.integrations.Request.rename_response_keys:type_name -> api.v1alpha1.integrations.Request.RenameResponseKeysEntry
+	135, // 96: api.v1alpha1.integrations.Request.reassign_validations:type_name -> api.v1alpha1.integrations.Request.ReassignValidationsEntry
+	157, // 97: api.v1alpha1.integrations.Validation.enum:type_name -> api.commons.integrations.Validation
+	150, // 98: api.v1alpha1.integrations.MethodCall.integration_id:type_name -> api.commons.integrations.IntegrationType
+	151, // 99: api.v1alpha1.integrations.MethodCall.method_id:type_name -> api.commons.integrations.RequestMethod
 	86,  // 100: api.v1alpha1.integrations.PortalConfigs.values:type_name -> api.v1alpha1.integrations.PortalConfig
 	46,  // 101: api.v1alpha1.integrations.PaymentLinkConfigs.values:type_name -> api.v1alpha1.integrations.PaymentLinkConfig
-	159, // 102: api.v1alpha1.integrations.CreatePaymentPortalLinksReq.expiry:type_name -> google.protobuf.Timestamp
+	154, // 102: api.v1alpha1.integrations.CreatePaymentPortalLinksReq.expiry:type_name -> google.protobuf.Timestamp
 	84,  // 103: api.v1alpha1.integrations.CreatePaymentPortalLinksReq.user_data:type_name -> api.v1alpha1.integrations.Task
 	62,  // 104: api.v1alpha1.integrations.SummaryRes.year_summary:type_name -> api.v1alpha1.integrations.CalendarSummary
 	62,  // 105: api.v1alpha1.integrations.SummaryRes.month_summaries:type_name -> api.v1alpha1.integrations.CalendarSummary
 	62,  // 106: api.v1alpha1.integrations.SummaryRes.week_summaries:type_name -> api.v1alpha1.integrations.CalendarSummary
 	64,  // 107: api.v1alpha1.integrations.CalendarSummary.summary:type_name -> api.v1alpha1.integrations.TransactionSummary
 	63,  // 108: api.v1alpha1.integrations.CalendarSummary.type_summaries:type_name -> api.v1alpha1.integrations.IntegrationTypeSummary
-	155, // 109: api.v1alpha1.integrations.IntegrationTypeSummary.integration_type:type_name -> api.commons.integrations.IntegrationType
+	150, // 109: api.v1alpha1.integrations.IntegrationTypeSummary.integration_type:type_name -> api.commons.integrations.IntegrationType
 	64,  // 110: api.v1alpha1.integrations.IntegrationTypeSummary.integration_summary:type_name -> api.v1alpha1.integrations.TransactionSummary
 	67,  // 111: api.v1alpha1.integrations.ListIntegrationTemplatesByConfigRes.integration_templates:type_name -> api.v1alpha1.integrations.IntegrationTemplateInfo
 	72,  // 112: api.v1alpha1.integrations.PaymentProfiles.values:type_name -> api.v1alpha1.integrations.PaymentProfile
-	166, // 113: api.v1alpha1.integrations.UnknownField.potential_sources:type_name -> api.commons.integrations.FieldSource
+	161, // 113: api.v1alpha1.integrations.UnknownField.potential_sources:type_name -> api.commons.integrations.FieldSource
 	74,  // 114: api.v1alpha1.integrations.UnknownField.suggested_fields:type_name -> api.v1alpha1.integrations.ProvidedField
-	166, // 115: api.v1alpha1.integrations.ProvidedField.provided_by:type_name -> api.commons.integrations.FieldSource
-	141, // 116: api.v1alpha1.integrations.Values.values:type_name -> api.v1alpha1.integrations.Values.ValuesEntry
-	159, // 117: api.v1alpha1.integrations.Value.time_val:type_name -> google.protobuf.Timestamp
+	161, // 115: api.v1alpha1.integrations.ProvidedField.provided_by:type_name -> api.commons.integrations.FieldSource
+	136, // 116: api.v1alpha1.integrations.Values.values:type_name -> api.v1alpha1.integrations.Values.ValuesEntry
+	154, // 117: api.v1alpha1.integrations.Value.time_val:type_name -> google.protobuf.Timestamp
 	78,  // 118: api.v1alpha1.integrations.Value.comp_val:type_name -> api.v1alpha1.integrations.CompositeVal
-	162, // 119: api.v1alpha1.integrations.Value.validation:type_name -> api.commons.integrations.Validation
+	157, // 119: api.v1alpha1.integrations.Value.validation:type_name -> api.commons.integrations.Validation
 	77,  // 120: api.v1alpha1.integrations.CompositeVal.parts:type_name -> api.v1alpha1.integrations.FieldOrStr
-	167, // 121: api.v1alpha1.integrations.Condition.op:type_name -> api.commons.integrations.CompareOperation
+	162, // 121: api.v1alpha1.integrations.Condition.op:type_name -> api.commons.integrations.CompareOperation
 	76,  // 122: api.v1alpha1.integrations.Condition.value:type_name -> api.v1alpha1.integrations.Value
-	155, // 123: api.v1alpha1.integrations.IntegrationConfig.integration_id:type_name -> api.commons.integrations.IntegrationType
+	150, // 123: api.v1alpha1.integrations.IntegrationConfig.integration_id:type_name -> api.commons.integrations.IntegrationType
 	75,  // 124: api.v1alpha1.integrations.IntegrationConfig.params:type_name -> api.v1alpha1.integrations.Values
-	159, // 125: api.v1alpha1.integrations.IntegrationConfig.created_on:type_name -> google.protobuf.Timestamp
+	154, // 125: api.v1alpha1.integrations.IntegrationConfig.created_on:type_name -> google.protobuf.Timestamp
 	82,  // 126: api.v1alpha1.integrations.IntegrationConfig.alias:type_name -> api.v1alpha1.integrations.MapString
 	83,  // 127: api.v1alpha1.integrations.IntegrationConfig.conds:type_name -> api.v1alpha1.integrations.Conditions
-	156, // 128: api.v1alpha1.integrations.IntegrationConfig.method_id:type_name -> api.commons.integrations.RequestMethod
-	155, // 129: api.v1alpha1.integrations.IntegrationTransaction.integration_id:type_name -> api.commons.integrations.IntegrationType
-	156, // 130: api.v1alpha1.integrations.IntegrationTransaction.method_id:type_name -> api.commons.integrations.RequestMethod
-	160, // 131: api.v1alpha1.integrations.IntegrationTransaction.transaction_type:type_name -> api.commons.integrations.TransactionType
-	163, // 132: api.v1alpha1.integrations.IntegrationTransaction.request_source:type_name -> api.commons.integrations.RequestSource
-	164, // 133: api.v1alpha1.integrations.IntegrationTransaction.result:type_name -> api.commons.integrations.TransactionResult
+	151, // 128: api.v1alpha1.integrations.IntegrationConfig.method_id:type_name -> api.commons.integrations.RequestMethod
+	150, // 129: api.v1alpha1.integrations.IntegrationTransaction.integration_id:type_name -> api.commons.integrations.IntegrationType
+	151, // 130: api.v1alpha1.integrations.IntegrationTransaction.method_id:type_name -> api.commons.integrations.RequestMethod
+	155, // 131: api.v1alpha1.integrations.IntegrationTransaction.transaction_type:type_name -> api.commons.integrations.TransactionType
+	158, // 132: api.v1alpha1.integrations.IntegrationTransaction.request_source:type_name -> api.commons.integrations.RequestSource
+	159, // 133: api.v1alpha1.integrations.IntegrationTransaction.result:type_name -> api.commons.integrations.TransactionResult
 	75,  // 134: api.v1alpha1.integrations.IntegrationTransaction.request_data:type_name -> api.v1alpha1.integrations.Values
 	75,  // 135: api.v1alpha1.integrations.IntegrationTransaction.response_data:type_name -> api.v1alpha1.integrations.Values
-	159, // 136: api.v1alpha1.integrations.IntegrationTransaction.created_on:type_name -> google.protobuf.Timestamp
+	154, // 136: api.v1alpha1.integrations.IntegrationTransaction.created_on:type_name -> google.protobuf.Timestamp
 	83,  // 137: api.v1alpha1.integrations.IntegrationTransaction.conds:type_name -> api.v1alpha1.integrations.Conditions
-	158, // 138: api.v1alpha1.integrations.IntegrationTransaction.request_origin:type_name -> api.commons.integrations.RequestOrigin
-	142, // 139: api.v1alpha1.integrations.MapString.values:type_name -> api.v1alpha1.integrations.MapString.ValuesEntry
+	153, // 138: api.v1alpha1.integrations.IntegrationTransaction.request_origin:type_name -> api.commons.integrations.RequestOrigin
+	137, // 139: api.v1alpha1.integrations.MapString.values:type_name -> api.v1alpha1.integrations.MapString.ValuesEntry
 	79,  // 140: api.v1alpha1.integrations.Conditions.values:type_name -> api.v1alpha1.integrations.Condition
-	143, // 141: api.v1alpha1.integrations.Task.values:type_name -> api.v1alpha1.integrations.Task.ValuesEntry
-	163, // 142: api.v1alpha1.integrations.Task.src:type_name -> api.commons.integrations.RequestSource
-	144, // 143: api.v1alpha1.integrations.PortalLink.data:type_name -> api.v1alpha1.integrations.PortalLink.DataEntry
-	145, // 144: api.v1alpha1.integrations.PortalLink.metadata:type_name -> api.v1alpha1.integrations.PortalLink.MetadataEntry
-	159, // 145: api.v1alpha1.integrations.PortalLink.last_edited:type_name -> google.protobuf.Timestamp
+	138, // 141: api.v1alpha1.integrations.Task.values:type_name -> api.v1alpha1.integrations.Task.ValuesEntry
+	158, // 142: api.v1alpha1.integrations.Task.src:type_name -> api.commons.integrations.RequestSource
+	139, // 143: api.v1alpha1.integrations.PortalLink.data:type_name -> api.v1alpha1.integrations.PortalLink.DataEntry
+	140, // 144: api.v1alpha1.integrations.PortalLink.metadata:type_name -> api.v1alpha1.integrations.PortalLink.MetadataEntry
+	154, // 145: api.v1alpha1.integrations.PortalLink.last_edited:type_name -> google.protobuf.Timestamp
 	93,  // 146: api.v1alpha1.integrations.Portal.ptype:type_name -> api.v1alpha1.integrations.PortalType
-	159, // 147: api.v1alpha1.integrations.Portal.last_edited:type_name -> google.protobuf.Timestamp
+	154, // 147: api.v1alpha1.integrations.Portal.last_edited:type_name -> google.protobuf.Timestamp
 	91,  // 148: api.v1alpha1.integrations.Portal.portal_segments:type_name -> api.v1alpha1.integrations.PortalSegments
 	106, // 149: api.v1alpha1.integrations.PortalSegments.portal_segments:type_name -> api.v1alpha1.integrations.PortalSegment
 	94,  // 150: api.v1alpha1.integrations.PortalType.payment_portal:type_name -> api.v1alpha1.integrations.PaymentPortal
 	95,  // 151: api.v1alpha1.integrations.PortalType.ivr_portal:type_name -> api.v1alpha1.integrations.IVRPortal
-	168, // 152: api.v1alpha1.integrations.PaymentPortal.verification:type_name -> api.commons.integrations.VerificationFlow
-	169, // 153: api.v1alpha1.integrations.PaymentPortal.invoice:type_name -> api.commons.integrations.InvoiceFlow
-	170, // 154: api.v1alpha1.integrations.PaymentPortal.payments:type_name -> api.commons.integrations.PaymentFlow
+	163, // 152: api.v1alpha1.integrations.PaymentPortal.verification:type_name -> api.commons.integrations.VerificationFlow
+	164, // 153: api.v1alpha1.integrations.PaymentPortal.invoice:type_name -> api.commons.integrations.InvoiceFlow
+	165, // 154: api.v1alpha1.integrations.PaymentPortal.payments:type_name -> api.commons.integrations.PaymentFlow
 	92,  // 155: api.v1alpha1.integrations.PaymentPortal.portal_text:type_name -> api.v1alpha1.integrations.PortalText
 	75,  // 156: api.v1alpha1.integrations.PluginInstance.data:type_name -> api.v1alpha1.integrations.Values
 	75,  // 157: api.v1alpha1.integrations.PluginInstance.metadata:type_name -> api.v1alpha1.integrations.Values
-	159, // 158: api.v1alpha1.integrations.PluginInstance.last_edited:type_name -> google.protobuf.Timestamp
-	156, // 159: api.v1alpha1.integrations.PluginInstance.method_id:type_name -> api.commons.integrations.RequestMethod
-	156, // 160: api.v1alpha1.integrations.PluginInstance.display_methods:type_name -> api.commons.integrations.RequestMethod
-	159, // 161: api.v1alpha1.integrations.PortalLinkTransactionRow.date:type_name -> google.protobuf.Timestamp
-	146, // 162: api.v1alpha1.integrations.PortalLinkTransactionRow.link_data:type_name -> api.v1alpha1.integrations.PortalLinkTransactionRow.LinkDataEntry
-	159, // 163: api.v1alpha1.integrations.GetPortalLinksByDateRangeReq.start:type_name -> google.protobuf.Timestamp
-	159, // 164: api.v1alpha1.integrations.GetPortalLinksByDateRangeReq.end:type_name -> google.protobuf.Timestamp
-	156, // 165: api.v1alpha1.integrations.GetPortalLinksByDateRangeReq.method_id:type_name -> api.commons.integrations.RequestMethod
+	154, // 158: api.v1alpha1.integrations.PluginInstance.last_edited:type_name -> google.protobuf.Timestamp
+	151, // 159: api.v1alpha1.integrations.PluginInstance.method_id:type_name -> api.commons.integrations.RequestMethod
+	151, // 160: api.v1alpha1.integrations.PluginInstance.display_methods:type_name -> api.commons.integrations.RequestMethod
+	154, // 161: api.v1alpha1.integrations.PortalLinkTransactionRow.date:type_name -> google.protobuf.Timestamp
+	141, // 162: api.v1alpha1.integrations.PortalLinkTransactionRow.link_data:type_name -> api.v1alpha1.integrations.PortalLinkTransactionRow.LinkDataEntry
+	154, // 163: api.v1alpha1.integrations.GetPortalLinksByDateRangeReq.start:type_name -> google.protobuf.Timestamp
+	154, // 164: api.v1alpha1.integrations.GetPortalLinksByDateRangeReq.end:type_name -> google.protobuf.Timestamp
+	151, // 165: api.v1alpha1.integrations.GetPortalLinksByDateRangeReq.method_id:type_name -> api.commons.integrations.RequestMethod
 	98,  // 166: api.v1alpha1.integrations.GetPortalLinksByDateRangeRes.rows:type_name -> api.v1alpha1.integrations.PortalLinkTransactionRow
 	107, // 167: api.v1alpha1.integrations.PortalSegment.workflow_choices:type_name -> api.v1alpha1.integrations.PortalWorkflow
 	108, // 168: api.v1alpha1.integrations.PortalWorkflow.actions:type_name -> api.v1alpha1.integrations.Action
 	109, // 169: api.v1alpha1.integrations.PortalWorkflow.template:type_name -> api.v1alpha1.integrations.Template
-	171, // 170: api.v1alpha1.integrations.PortalWorkflow.form_fields:type_name -> api.commons.integrations.FieldDefinition
+	166, // 170: api.v1alpha1.integrations.PortalWorkflow.form_fields:type_name -> api.commons.integrations.FieldDefinition
 	79,  // 171: api.v1alpha1.integrations.PortalWorkflow.demo_fail_conditions:type_name -> api.v1alpha1.integrations.Condition
 	79,  // 172: api.v1alpha1.integrations.PortalWorkflow.demo_pass_conditions:type_name -> api.v1alpha1.integrations.Condition
-	147, // 173: api.v1alpha1.integrations.PortalWorkflow.demo_results:type_name -> api.v1alpha1.integrations.PortalWorkflow.DemoResultsEntry
-	148, // 174: api.v1alpha1.integrations.Action.restructure_before:type_name -> api.v1alpha1.integrations.Action.RestructureBeforeEntry
-	149, // 175: api.v1alpha1.integrations.Action.restructure_after:type_name -> api.v1alpha1.integrations.Action.RestructureAfterEntry
-	150, // 176: api.v1alpha1.integrations.Action.opts:type_name -> api.v1alpha1.integrations.Action.OptsEntry
-	172, // 177: api.v1alpha1.integrations.Template.invoice_template:type_name -> api.commons.integrations.Invoices
-	173, // 178: api.v1alpha1.integrations.Template.receipt_template:type_name -> api.commons.integrations.Receipt
-	174, // 179: api.v1alpha1.integrations.Template.payment_template:type_name -> api.commons.integrations.Payment
-	157, // 180: api.v1alpha1.integrations.PopulateIntegrationLinkReq.call_type:type_name -> api.commons.CallType.Enum
-	175, // 181: api.v1alpha1.integrations.PopulateIntegrationLinkReq.integration_link:type_name -> api.commons.org.IntegrationLink
-	175, // 182: api.v1alpha1.integrations.PopulateIntegrationLinkRes.integration_link:type_name -> api.commons.org.IntegrationLink
-	151, // 183: api.v1alpha1.integrations.ProcessWorkflowReq.params:type_name -> api.v1alpha1.integrations.ProcessWorkflowReq.ParamsEntry
-	157, // 184: api.v1alpha1.integrations.ProcessWorkflowReq.call_type:type_name -> api.commons.CallType.Enum
-	158, // 185: api.v1alpha1.integrations.ProcessWorkflowReq.request_origin:type_name -> api.commons.integrations.RequestOrigin
-	152, // 186: api.v1alpha1.integrations.ProcessWorkflowRes.data:type_name -> api.v1alpha1.integrations.ProcessWorkflowRes.DataEntry
+	142, // 173: api.v1alpha1.integrations.PortalWorkflow.demo_results:type_name -> api.v1alpha1.integrations.PortalWorkflow.DemoResultsEntry
+	143, // 174: api.v1alpha1.integrations.Action.restructure_before:type_name -> api.v1alpha1.integrations.Action.RestructureBeforeEntry
+	144, // 175: api.v1alpha1.integrations.Action.restructure_after:type_name -> api.v1alpha1.integrations.Action.RestructureAfterEntry
+	145, // 176: api.v1alpha1.integrations.Action.opts:type_name -> api.v1alpha1.integrations.Action.OptsEntry
+	167, // 177: api.v1alpha1.integrations.Template.invoice_template:type_name -> api.commons.integrations.Invoices
+	168, // 178: api.v1alpha1.integrations.Template.receipt_template:type_name -> api.commons.integrations.Receipt
+	169, // 179: api.v1alpha1.integrations.Template.payment_template:type_name -> api.commons.integrations.Payment
+	152, // 180: api.v1alpha1.integrations.PopulateIntegrationLinkReq.call_type:type_name -> api.commons.CallType.Enum
+	170, // 181: api.v1alpha1.integrations.PopulateIntegrationLinkReq.integration_link:type_name -> api.commons.org.IntegrationLink
+	170, // 182: api.v1alpha1.integrations.PopulateIntegrationLinkRes.integration_link:type_name -> api.commons.org.IntegrationLink
+	146, // 183: api.v1alpha1.integrations.ProcessWorkflowReq.params:type_name -> api.v1alpha1.integrations.ProcessWorkflowReq.ParamsEntry
+	152, // 184: api.v1alpha1.integrations.ProcessWorkflowReq.call_type:type_name -> api.commons.CallType.Enum
+	153, // 185: api.v1alpha1.integrations.ProcessWorkflowReq.request_origin:type_name -> api.commons.integrations.RequestOrigin
+	147, // 186: api.v1alpha1.integrations.ProcessWorkflowRes.data:type_name -> api.v1alpha1.integrations.ProcessWorkflowRes.DataEntry
 	0,   // 187: api.v1alpha1.integrations.InsertPrivateFieldReq.private_field_type:type_name -> api.v1alpha1.integrations.PrivateFieldType
-	176, // 188: api.v1alpha1.integrations.CalculateFeesReq.fees:type_name -> api.commons.integrations.Fee
-	153, // 189: api.v1alpha1.integrations.CalculateFeesReq.params:type_name -> api.v1alpha1.integrations.CalculateFeesReq.ParamsEntry
-	157, // 190: api.v1alpha1.integrations.CalculateFeesReq.call_type:type_name -> api.commons.CallType.Enum
-	158, // 191: api.v1alpha1.integrations.CalculateFeesReq.request_origin:type_name -> api.commons.integrations.RequestOrigin
-	154, // 192: api.v1alpha1.integrations.CalculateFeesRes.calculated_fees:type_name -> api.v1alpha1.integrations.CalculateFeesRes.CalculatedFeesEntry
-	177, // 193: api.v1alpha1.integrations.CalculateFeesRes.total_amount_due:type_name -> google.type.Money
-	155, // 194: api.v1alpha1.integrations.IntegrationSettings.allowed_integrations:type_name -> api.commons.integrations.IntegrationType
-	155, // 195: api.v1alpha1.integrations.GetIntegrationSettingsRes.allowed_integrations:type_name -> api.commons.integrations.IntegrationType
-	118, // 196: api.v1alpha1.integrations.UpsertIntegrationSettingsReq.entity:type_name -> api.v1alpha1.integrations.IntegrationSettings
-	76,  // 197: api.v1alpha1.integrations.ProcessReq.ParamsEntry.value:type_name -> api.v1alpha1.integrations.Value
-	76,  // 198: api.v1alpha1.integrations.ProcessRes.DataEntry.value:type_name -> api.v1alpha1.integrations.Value
-	16,  // 199: api.v1alpha1.integrations.IntegrationInfo.GroupParamsEntry.value:type_name -> api.v1alpha1.integrations.Parameter
-	16,  // 200: api.v1alpha1.integrations.MethodInfo.RuntimeParamsEntry.value:type_name -> api.v1alpha1.integrations.Parameter
-	76,  // 201: api.v1alpha1.integrations.PaymentLinkConfig.BaseDataEntry.value:type_name -> api.v1alpha1.integrations.Value
-	76,  // 202: api.v1alpha1.integrations.Request.StaticDataEntry.value:type_name -> api.v1alpha1.integrations.Value
-	52,  // 203: api.v1alpha1.integrations.Request.ReassignValidationsEntry.value:type_name -> api.v1alpha1.integrations.Validation
-	76,  // 204: api.v1alpha1.integrations.Values.ValuesEntry.value:type_name -> api.v1alpha1.integrations.Value
-	76,  // 205: api.v1alpha1.integrations.Task.ValuesEntry.value:type_name -> api.v1alpha1.integrations.Value
-	76,  // 206: api.v1alpha1.integrations.PortalLink.DataEntry.value:type_name -> api.v1alpha1.integrations.Value
-	76,  // 207: api.v1alpha1.integrations.PortalLink.MetadataEntry.value:type_name -> api.v1alpha1.integrations.Value
-	76,  // 208: api.v1alpha1.integrations.PortalLinkTransactionRow.LinkDataEntry.value:type_name -> api.v1alpha1.integrations.Value
-	76,  // 209: api.v1alpha1.integrations.ProcessWorkflowReq.ParamsEntry.value:type_name -> api.v1alpha1.integrations.Value
-	76,  // 210: api.v1alpha1.integrations.ProcessWorkflowRes.DataEntry.value:type_name -> api.v1alpha1.integrations.Value
-	76,  // 211: api.v1alpha1.integrations.CalculateFeesReq.ParamsEntry.value:type_name -> api.v1alpha1.integrations.Value
-	177, // 212: api.v1alpha1.integrations.CalculateFeesRes.CalculatedFeesEntry.value:type_name -> google.type.Money
-	7,   // 213: api.v1alpha1.integrations.Integrations.Process:input_type -> api.v1alpha1.integrations.ProcessReq
-	18,  // 214: api.v1alpha1.integrations.Integrations.GetIntegrationTransaction:input_type -> api.v1alpha1.integrations.GetIntegrationTransactionReq
-	21,  // 215: api.v1alpha1.integrations.Integrations.GetIntegrationTransactionReport:input_type -> api.v1alpha1.integrations.GetIntegrationTransactionReportReq
-	24,  // 216: api.v1alpha1.integrations.Integrations.GetIntegrationTransactionReportData:input_type -> api.v1alpha1.integrations.GetIntegrationTransactionReportDataReq
-	9,   // 217: api.v1alpha1.integrations.Integrations.SearchPastTransactions:input_type -> api.v1alpha1.integrations.SearchPastTransactionsRequest
-	19,  // 218: api.v1alpha1.integrations.Integrations.GetAggregatedMetadata:input_type -> api.v1alpha1.integrations.GetAggregatedMetadataReq
-	99,  // 219: api.v1alpha1.integrations.Integrations.GetPortalLinksByDateRange:input_type -> api.v1alpha1.integrations.GetPortalLinksByDateRangeReq
-	80,  // 220: api.v1alpha1.integrations.Integrations.CreateIntegrationConfig:input_type -> api.v1alpha1.integrations.IntegrationConfig
-	4,   // 221: api.v1alpha1.integrations.Integrations.GetIntegrationConfig:input_type -> api.v1alpha1.integrations.GetIntegrationConfigReq
-	5,   // 222: api.v1alpha1.integrations.Integrations.UpdateIntegrationConfig:input_type -> api.v1alpha1.integrations.UpdateIntegrationConfigReq
-	6,   // 223: api.v1alpha1.integrations.Integrations.DeleteIntegrationConfig:input_type -> api.v1alpha1.integrations.DeleteIntegrationConfigReq
-	17,  // 224: api.v1alpha1.integrations.Integrations.ListIntegrations:input_type -> api.v1alpha1.integrations.Empty
-	12,  // 225: api.v1alpha1.integrations.Integrations.ListIntegrationsForOrg:input_type -> api.v1alpha1.integrations.ListIntegrationsForOrgReq
-	34,  // 226: api.v1alpha1.integrations.Integrations.ListIntegrationConfigNames:input_type -> api.v1alpha1.integrations.ListIntegrationConfigNamesReq
-	1,   // 227: api.v1alpha1.integrations.Integrations.ListJourneyConfigs:input_type -> api.v1alpha1.integrations.ListJourneyConfigsReq
-	2,   // 228: api.v1alpha1.integrations.Integrations.ListNonJourneyConfigs:input_type -> api.v1alpha1.integrations.ListNonJourneyConfigsReq
-	86,  // 229: api.v1alpha1.integrations.Integrations.CreatePortalConfig:input_type -> api.v1alpha1.integrations.PortalConfig
-	39,  // 230: api.v1alpha1.integrations.Integrations.ListPortalConfigs:input_type -> api.v1alpha1.integrations.ListPortalConfigsReq
-	86,  // 231: api.v1alpha1.integrations.Integrations.UpdatePortalConfig:input_type -> api.v1alpha1.integrations.PortalConfig
-	40,  // 232: api.v1alpha1.integrations.Integrations.GetPortalConfig:input_type -> api.v1alpha1.integrations.GetPortalConfigReq
-	41,  // 233: api.v1alpha1.integrations.Integrations.DeletePortalConfig:input_type -> api.v1alpha1.integrations.DeletePortalConfigReq
-	42,  // 234: api.v1alpha1.integrations.Integrations.UpdatePortalLogo:input_type -> api.v1alpha1.integrations.UpdatePortalLogoReq
-	43,  // 235: api.v1alpha1.integrations.Integrations.GetPortalLogo:input_type -> api.v1alpha1.integrations.GetPortalLogoReq
-	58,  // 236: api.v1alpha1.integrations.Integrations.CreatePaymentPortalLinks:input_type -> api.v1alpha1.integrations.CreatePaymentPortalLinksReq
-	60,  // 237: api.v1alpha1.integrations.Integrations.Summary:input_type -> api.v1alpha1.integrations.SummaryReq
-	65,  // 238: api.v1alpha1.integrations.Integrations.ListIntegrationTemplatesByConfig:input_type -> api.v1alpha1.integrations.ListIntegrationTemplatesByConfigReq
-	101, // 239: api.v1alpha1.integrations.Integrations.CallEpicPatient:input_type -> api.v1alpha1.integrations.CallEpicPatientReq
-	103, // 240: api.v1alpha1.integrations.Integrations.HangUpEpicPatientCall:input_type -> api.v1alpha1.integrations.HangUpEpicPatientCallReq
-	104, // 241: api.v1alpha1.integrations.Integrations.GenerateEpicKeyPairs:input_type -> api.v1alpha1.integrations.GenerateEpicKeyPairReq
-	110, // 242: api.v1alpha1.integrations.Integrations.PopulateIntegrationLink:input_type -> api.v1alpha1.integrations.PopulateIntegrationLinkReq
-	112, // 243: api.v1alpha1.integrations.Integrations.ProcessWorkflow:input_type -> api.v1alpha1.integrations.ProcessWorkflowReq
-	114, // 244: api.v1alpha1.integrations.Integrations.InsertPrivateField:input_type -> api.v1alpha1.integrations.InsertPrivateFieldReq
-	116, // 245: api.v1alpha1.integrations.Integrations.CalculateFees:input_type -> api.v1alpha1.integrations.CalculateFeesReq
-	119, // 246: api.v1alpha1.integrations.Integrations.GetIntegrationSettings:input_type -> api.v1alpha1.integrations.GetIntegrationSettingsReq
-	121, // 247: api.v1alpha1.integrations.Integrations.UpsertIntegrationSettings:input_type -> api.v1alpha1.integrations.UpsertIntegrationSettingsReq
-	8,   // 248: api.v1alpha1.integrations.Integrations.Process:output_type -> api.v1alpha1.integrations.ProcessRes
-	81,  // 249: api.v1alpha1.integrations.Integrations.GetIntegrationTransaction:output_type -> api.v1alpha1.integrations.IntegrationTransaction
-	23,  // 250: api.v1alpha1.integrations.Integrations.GetIntegrationTransactionReport:output_type -> api.v1alpha1.integrations.GetIntegrationTransactionReportRes
-	26,  // 251: api.v1alpha1.integrations.Integrations.GetIntegrationTransactionReportData:output_type -> api.v1alpha1.integrations.GetIntegrationTransactionReportDataRes
-	10,  // 252: api.v1alpha1.integrations.Integrations.SearchPastTransactions:output_type -> api.v1alpha1.integrations.SearchPastTransactionsResponse
-	20,  // 253: api.v1alpha1.integrations.Integrations.GetAggregatedMetadata:output_type -> api.v1alpha1.integrations.GetAggregatedMetadataRes
-	100, // 254: api.v1alpha1.integrations.Integrations.GetPortalLinksByDateRange:output_type -> api.v1alpha1.integrations.GetPortalLinksByDateRangeRes
-	17,  // 255: api.v1alpha1.integrations.Integrations.CreateIntegrationConfig:output_type -> api.v1alpha1.integrations.Empty
-	80,  // 256: api.v1alpha1.integrations.Integrations.GetIntegrationConfig:output_type -> api.v1alpha1.integrations.IntegrationConfig
-	17,  // 257: api.v1alpha1.integrations.Integrations.UpdateIntegrationConfig:output_type -> api.v1alpha1.integrations.Empty
-	17,  // 258: api.v1alpha1.integrations.Integrations.DeleteIntegrationConfig:output_type -> api.v1alpha1.integrations.Empty
-	13,  // 259: api.v1alpha1.integrations.Integrations.ListIntegrations:output_type -> api.v1alpha1.integrations.IntegrationInfos
-	13,  // 260: api.v1alpha1.integrations.Integrations.ListIntegrationsForOrg:output_type -> api.v1alpha1.integrations.IntegrationInfos
-	35,  // 261: api.v1alpha1.integrations.Integrations.ListIntegrationConfigNames:output_type -> api.v1alpha1.integrations.ListIntegrationConfigNamesRes
-	3,   // 262: api.v1alpha1.integrations.Integrations.ListJourneyConfigs:output_type -> api.v1alpha1.integrations.IntegrationConfigs
-	3,   // 263: api.v1alpha1.integrations.Integrations.ListNonJourneyConfigs:output_type -> api.v1alpha1.integrations.IntegrationConfigs
-	17,  // 264: api.v1alpha1.integrations.Integrations.CreatePortalConfig:output_type -> api.v1alpha1.integrations.Empty
-	54,  // 265: api.v1alpha1.integrations.Integrations.ListPortalConfigs:output_type -> api.v1alpha1.integrations.PortalConfigs
-	17,  // 266: api.v1alpha1.integrations.Integrations.UpdatePortalConfig:output_type -> api.v1alpha1.integrations.Empty
-	86,  // 267: api.v1alpha1.integrations.Integrations.GetPortalConfig:output_type -> api.v1alpha1.integrations.PortalConfig
-	17,  // 268: api.v1alpha1.integrations.Integrations.DeletePortalConfig:output_type -> api.v1alpha1.integrations.Empty
-	17,  // 269: api.v1alpha1.integrations.Integrations.UpdatePortalLogo:output_type -> api.v1alpha1.integrations.Empty
-	38,  // 270: api.v1alpha1.integrations.Integrations.GetPortalLogo:output_type -> api.v1alpha1.integrations.Logo
-	59,  // 271: api.v1alpha1.integrations.Integrations.CreatePaymentPortalLinks:output_type -> api.v1alpha1.integrations.CreatePaymentPortalLinksRes
-	61,  // 272: api.v1alpha1.integrations.Integrations.Summary:output_type -> api.v1alpha1.integrations.SummaryRes
-	66,  // 273: api.v1alpha1.integrations.Integrations.ListIntegrationTemplatesByConfig:output_type -> api.v1alpha1.integrations.ListIntegrationTemplatesByConfigRes
-	102, // 274: api.v1alpha1.integrations.Integrations.CallEpicPatient:output_type -> api.v1alpha1.integrations.CallEpicPatientRes
-	17,  // 275: api.v1alpha1.integrations.Integrations.HangUpEpicPatientCall:output_type -> api.v1alpha1.integrations.Empty
-	105, // 276: api.v1alpha1.integrations.Integrations.GenerateEpicKeyPairs:output_type -> api.v1alpha1.integrations.GenerateEpicKeyPairRes
-	111, // 277: api.v1alpha1.integrations.Integrations.PopulateIntegrationLink:output_type -> api.v1alpha1.integrations.PopulateIntegrationLinkRes
-	113, // 278: api.v1alpha1.integrations.Integrations.ProcessWorkflow:output_type -> api.v1alpha1.integrations.ProcessWorkflowRes
-	115, // 279: api.v1alpha1.integrations.Integrations.InsertPrivateField:output_type -> api.v1alpha1.integrations.InsertPrivateFieldRes
-	117, // 280: api.v1alpha1.integrations.Integrations.CalculateFees:output_type -> api.v1alpha1.integrations.CalculateFeesRes
-	120, // 281: api.v1alpha1.integrations.Integrations.GetIntegrationSettings:output_type -> api.v1alpha1.integrations.GetIntegrationSettingsRes
-	122, // 282: api.v1alpha1.integrations.Integrations.UpsertIntegrationSettings:output_type -> api.v1alpha1.integrations.UpsertIntegrationSettingsRes
-	248, // [248:283] is the sub-list for method output_type
-	213, // [213:248] is the sub-list for method input_type
-	213, // [213:213] is the sub-list for extension type_name
-	213, // [213:213] is the sub-list for extension extendee
-	0,   // [0:213] is the sub-list for field type_name
+	171, // 188: api.v1alpha1.integrations.CalculateFeesReq.fees:type_name -> api.commons.integrations.Fee
+	148, // 189: api.v1alpha1.integrations.CalculateFeesReq.params:type_name -> api.v1alpha1.integrations.CalculateFeesReq.ParamsEntry
+	152, // 190: api.v1alpha1.integrations.CalculateFeesReq.call_type:type_name -> api.commons.CallType.Enum
+	153, // 191: api.v1alpha1.integrations.CalculateFeesReq.request_origin:type_name -> api.commons.integrations.RequestOrigin
+	149, // 192: api.v1alpha1.integrations.CalculateFeesRes.calculated_fees:type_name -> api.v1alpha1.integrations.CalculateFeesRes.CalculatedFeesEntry
+	172, // 193: api.v1alpha1.integrations.CalculateFeesRes.total_amount_due:type_name -> google.type.Money
+	76,  // 194: api.v1alpha1.integrations.ProcessReq.ParamsEntry.value:type_name -> api.v1alpha1.integrations.Value
+	76,  // 195: api.v1alpha1.integrations.ProcessRes.DataEntry.value:type_name -> api.v1alpha1.integrations.Value
+	16,  // 196: api.v1alpha1.integrations.IntegrationInfo.GroupParamsEntry.value:type_name -> api.v1alpha1.integrations.Parameter
+	16,  // 197: api.v1alpha1.integrations.MethodInfo.RuntimeParamsEntry.value:type_name -> api.v1alpha1.integrations.Parameter
+	76,  // 198: api.v1alpha1.integrations.PaymentLinkConfig.BaseDataEntry.value:type_name -> api.v1alpha1.integrations.Value
+	76,  // 199: api.v1alpha1.integrations.Request.StaticDataEntry.value:type_name -> api.v1alpha1.integrations.Value
+	52,  // 200: api.v1alpha1.integrations.Request.ReassignValidationsEntry.value:type_name -> api.v1alpha1.integrations.Validation
+	76,  // 201: api.v1alpha1.integrations.Values.ValuesEntry.value:type_name -> api.v1alpha1.integrations.Value
+	76,  // 202: api.v1alpha1.integrations.Task.ValuesEntry.value:type_name -> api.v1alpha1.integrations.Value
+	76,  // 203: api.v1alpha1.integrations.PortalLink.DataEntry.value:type_name -> api.v1alpha1.integrations.Value
+	76,  // 204: api.v1alpha1.integrations.PortalLink.MetadataEntry.value:type_name -> api.v1alpha1.integrations.Value
+	76,  // 205: api.v1alpha1.integrations.PortalLinkTransactionRow.LinkDataEntry.value:type_name -> api.v1alpha1.integrations.Value
+	76,  // 206: api.v1alpha1.integrations.ProcessWorkflowReq.ParamsEntry.value:type_name -> api.v1alpha1.integrations.Value
+	76,  // 207: api.v1alpha1.integrations.ProcessWorkflowRes.DataEntry.value:type_name -> api.v1alpha1.integrations.Value
+	76,  // 208: api.v1alpha1.integrations.CalculateFeesReq.ParamsEntry.value:type_name -> api.v1alpha1.integrations.Value
+	172, // 209: api.v1alpha1.integrations.CalculateFeesRes.CalculatedFeesEntry.value:type_name -> google.type.Money
+	7,   // 210: api.v1alpha1.integrations.Integrations.Process:input_type -> api.v1alpha1.integrations.ProcessReq
+	18,  // 211: api.v1alpha1.integrations.Integrations.GetIntegrationTransaction:input_type -> api.v1alpha1.integrations.GetIntegrationTransactionReq
+	21,  // 212: api.v1alpha1.integrations.Integrations.GetIntegrationTransactionReport:input_type -> api.v1alpha1.integrations.GetIntegrationTransactionReportReq
+	24,  // 213: api.v1alpha1.integrations.Integrations.GetIntegrationTransactionReportData:input_type -> api.v1alpha1.integrations.GetIntegrationTransactionReportDataReq
+	9,   // 214: api.v1alpha1.integrations.Integrations.SearchPastTransactions:input_type -> api.v1alpha1.integrations.SearchPastTransactionsRequest
+	19,  // 215: api.v1alpha1.integrations.Integrations.GetAggregatedMetadata:input_type -> api.v1alpha1.integrations.GetAggregatedMetadataReq
+	99,  // 216: api.v1alpha1.integrations.Integrations.GetPortalLinksByDateRange:input_type -> api.v1alpha1.integrations.GetPortalLinksByDateRangeReq
+	80,  // 217: api.v1alpha1.integrations.Integrations.CreateIntegrationConfig:input_type -> api.v1alpha1.integrations.IntegrationConfig
+	4,   // 218: api.v1alpha1.integrations.Integrations.GetIntegrationConfig:input_type -> api.v1alpha1.integrations.GetIntegrationConfigReq
+	5,   // 219: api.v1alpha1.integrations.Integrations.UpdateIntegrationConfig:input_type -> api.v1alpha1.integrations.UpdateIntegrationConfigReq
+	6,   // 220: api.v1alpha1.integrations.Integrations.DeleteIntegrationConfig:input_type -> api.v1alpha1.integrations.DeleteIntegrationConfigReq
+	17,  // 221: api.v1alpha1.integrations.Integrations.ListIntegrations:input_type -> api.v1alpha1.integrations.Empty
+	12,  // 222: api.v1alpha1.integrations.Integrations.ListIntegrationsForOrg:input_type -> api.v1alpha1.integrations.ListIntegrationsForOrgReq
+	34,  // 223: api.v1alpha1.integrations.Integrations.ListIntegrationConfigNames:input_type -> api.v1alpha1.integrations.ListIntegrationConfigNamesReq
+	1,   // 224: api.v1alpha1.integrations.Integrations.ListJourneyConfigs:input_type -> api.v1alpha1.integrations.ListJourneyConfigsReq
+	2,   // 225: api.v1alpha1.integrations.Integrations.ListNonJourneyConfigs:input_type -> api.v1alpha1.integrations.ListNonJourneyConfigsReq
+	86,  // 226: api.v1alpha1.integrations.Integrations.CreatePortalConfig:input_type -> api.v1alpha1.integrations.PortalConfig
+	39,  // 227: api.v1alpha1.integrations.Integrations.ListPortalConfigs:input_type -> api.v1alpha1.integrations.ListPortalConfigsReq
+	86,  // 228: api.v1alpha1.integrations.Integrations.UpdatePortalConfig:input_type -> api.v1alpha1.integrations.PortalConfig
+	40,  // 229: api.v1alpha1.integrations.Integrations.GetPortalConfig:input_type -> api.v1alpha1.integrations.GetPortalConfigReq
+	41,  // 230: api.v1alpha1.integrations.Integrations.DeletePortalConfig:input_type -> api.v1alpha1.integrations.DeletePortalConfigReq
+	42,  // 231: api.v1alpha1.integrations.Integrations.UpdatePortalLogo:input_type -> api.v1alpha1.integrations.UpdatePortalLogoReq
+	43,  // 232: api.v1alpha1.integrations.Integrations.GetPortalLogo:input_type -> api.v1alpha1.integrations.GetPortalLogoReq
+	58,  // 233: api.v1alpha1.integrations.Integrations.CreatePaymentPortalLinks:input_type -> api.v1alpha1.integrations.CreatePaymentPortalLinksReq
+	60,  // 234: api.v1alpha1.integrations.Integrations.Summary:input_type -> api.v1alpha1.integrations.SummaryReq
+	65,  // 235: api.v1alpha1.integrations.Integrations.ListIntegrationTemplatesByConfig:input_type -> api.v1alpha1.integrations.ListIntegrationTemplatesByConfigReq
+	101, // 236: api.v1alpha1.integrations.Integrations.CallEpicPatient:input_type -> api.v1alpha1.integrations.CallEpicPatientReq
+	103, // 237: api.v1alpha1.integrations.Integrations.HangUpEpicPatientCall:input_type -> api.v1alpha1.integrations.HangUpEpicPatientCallReq
+	104, // 238: api.v1alpha1.integrations.Integrations.GenerateEpicKeyPairs:input_type -> api.v1alpha1.integrations.GenerateEpicKeyPairReq
+	110, // 239: api.v1alpha1.integrations.Integrations.PopulateIntegrationLink:input_type -> api.v1alpha1.integrations.PopulateIntegrationLinkReq
+	112, // 240: api.v1alpha1.integrations.Integrations.ProcessWorkflow:input_type -> api.v1alpha1.integrations.ProcessWorkflowReq
+	114, // 241: api.v1alpha1.integrations.Integrations.InsertPrivateField:input_type -> api.v1alpha1.integrations.InsertPrivateFieldReq
+	116, // 242: api.v1alpha1.integrations.Integrations.CalculateFees:input_type -> api.v1alpha1.integrations.CalculateFeesReq
+	8,   // 243: api.v1alpha1.integrations.Integrations.Process:output_type -> api.v1alpha1.integrations.ProcessRes
+	81,  // 244: api.v1alpha1.integrations.Integrations.GetIntegrationTransaction:output_type -> api.v1alpha1.integrations.IntegrationTransaction
+	23,  // 245: api.v1alpha1.integrations.Integrations.GetIntegrationTransactionReport:output_type -> api.v1alpha1.integrations.GetIntegrationTransactionReportRes
+	26,  // 246: api.v1alpha1.integrations.Integrations.GetIntegrationTransactionReportData:output_type -> api.v1alpha1.integrations.GetIntegrationTransactionReportDataRes
+	10,  // 247: api.v1alpha1.integrations.Integrations.SearchPastTransactions:output_type -> api.v1alpha1.integrations.SearchPastTransactionsResponse
+	20,  // 248: api.v1alpha1.integrations.Integrations.GetAggregatedMetadata:output_type -> api.v1alpha1.integrations.GetAggregatedMetadataRes
+	100, // 249: api.v1alpha1.integrations.Integrations.GetPortalLinksByDateRange:output_type -> api.v1alpha1.integrations.GetPortalLinksByDateRangeRes
+	17,  // 250: api.v1alpha1.integrations.Integrations.CreateIntegrationConfig:output_type -> api.v1alpha1.integrations.Empty
+	80,  // 251: api.v1alpha1.integrations.Integrations.GetIntegrationConfig:output_type -> api.v1alpha1.integrations.IntegrationConfig
+	17,  // 252: api.v1alpha1.integrations.Integrations.UpdateIntegrationConfig:output_type -> api.v1alpha1.integrations.Empty
+	17,  // 253: api.v1alpha1.integrations.Integrations.DeleteIntegrationConfig:output_type -> api.v1alpha1.integrations.Empty
+	13,  // 254: api.v1alpha1.integrations.Integrations.ListIntegrations:output_type -> api.v1alpha1.integrations.IntegrationInfos
+	13,  // 255: api.v1alpha1.integrations.Integrations.ListIntegrationsForOrg:output_type -> api.v1alpha1.integrations.IntegrationInfos
+	35,  // 256: api.v1alpha1.integrations.Integrations.ListIntegrationConfigNames:output_type -> api.v1alpha1.integrations.ListIntegrationConfigNamesRes
+	3,   // 257: api.v1alpha1.integrations.Integrations.ListJourneyConfigs:output_type -> api.v1alpha1.integrations.IntegrationConfigs
+	3,   // 258: api.v1alpha1.integrations.Integrations.ListNonJourneyConfigs:output_type -> api.v1alpha1.integrations.IntegrationConfigs
+	17,  // 259: api.v1alpha1.integrations.Integrations.CreatePortalConfig:output_type -> api.v1alpha1.integrations.Empty
+	54,  // 260: api.v1alpha1.integrations.Integrations.ListPortalConfigs:output_type -> api.v1alpha1.integrations.PortalConfigs
+	17,  // 261: api.v1alpha1.integrations.Integrations.UpdatePortalConfig:output_type -> api.v1alpha1.integrations.Empty
+	86,  // 262: api.v1alpha1.integrations.Integrations.GetPortalConfig:output_type -> api.v1alpha1.integrations.PortalConfig
+	17,  // 263: api.v1alpha1.integrations.Integrations.DeletePortalConfig:output_type -> api.v1alpha1.integrations.Empty
+	17,  // 264: api.v1alpha1.integrations.Integrations.UpdatePortalLogo:output_type -> api.v1alpha1.integrations.Empty
+	38,  // 265: api.v1alpha1.integrations.Integrations.GetPortalLogo:output_type -> api.v1alpha1.integrations.Logo
+	59,  // 266: api.v1alpha1.integrations.Integrations.CreatePaymentPortalLinks:output_type -> api.v1alpha1.integrations.CreatePaymentPortalLinksRes
+	61,  // 267: api.v1alpha1.integrations.Integrations.Summary:output_type -> api.v1alpha1.integrations.SummaryRes
+	66,  // 268: api.v1alpha1.integrations.Integrations.ListIntegrationTemplatesByConfig:output_type -> api.v1alpha1.integrations.ListIntegrationTemplatesByConfigRes
+	102, // 269: api.v1alpha1.integrations.Integrations.CallEpicPatient:output_type -> api.v1alpha1.integrations.CallEpicPatientRes
+	17,  // 270: api.v1alpha1.integrations.Integrations.HangUpEpicPatientCall:output_type -> api.v1alpha1.integrations.Empty
+	105, // 271: api.v1alpha1.integrations.Integrations.GenerateEpicKeyPairs:output_type -> api.v1alpha1.integrations.GenerateEpicKeyPairRes
+	111, // 272: api.v1alpha1.integrations.Integrations.PopulateIntegrationLink:output_type -> api.v1alpha1.integrations.PopulateIntegrationLinkRes
+	113, // 273: api.v1alpha1.integrations.Integrations.ProcessWorkflow:output_type -> api.v1alpha1.integrations.ProcessWorkflowRes
+	115, // 274: api.v1alpha1.integrations.Integrations.InsertPrivateField:output_type -> api.v1alpha1.integrations.InsertPrivateFieldRes
+	117, // 275: api.v1alpha1.integrations.Integrations.CalculateFees:output_type -> api.v1alpha1.integrations.CalculateFeesRes
+	243, // [243:276] is the sub-list for method output_type
+	210, // [210:243] is the sub-list for method input_type
+	210, // [210:210] is the sub-list for extension type_name
+	210, // [210:210] is the sub-list for extension extendee
+	0,   // [0:210] is the sub-list for field type_name
 }
 
 func init() { file_api_v1alpha1_integrations_service_proto_init() }
@@ -9661,7 +9431,7 @@ func file_api_v1alpha1_integrations_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_v1alpha1_integrations_service_proto_rawDesc), len(file_api_v1alpha1_integrations_service_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   154,
+			NumMessages:   149,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

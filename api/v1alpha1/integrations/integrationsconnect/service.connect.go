@@ -130,12 +130,6 @@ const (
 	// IntegrationsCalculateFeesProcedure is the fully-qualified name of the Integrations's
 	// CalculateFees RPC.
 	IntegrationsCalculateFeesProcedure = "/api.v1alpha1.integrations.Integrations/CalculateFees"
-	// IntegrationsGetIntegrationSettingsProcedure is the fully-qualified name of the Integrations's
-	// GetIntegrationSettings RPC.
-	IntegrationsGetIntegrationSettingsProcedure = "/api.v1alpha1.integrations.Integrations/GetIntegrationSettings"
-	// IntegrationsUpsertIntegrationSettingsProcedure is the fully-qualified name of the Integrations's
-	// UpsertIntegrationSettings RPC.
-	IntegrationsUpsertIntegrationSettingsProcedure = "/api.v1alpha1.integrations.Integrations/UpsertIntegrationSettings"
 )
 
 // IntegrationsClient is a client for the api.v1alpha1.integrations.Integrations service.
@@ -202,8 +196,6 @@ type IntegrationsClient interface {
 	ProcessWorkflow(context.Context, *connect_go.Request[integrations.ProcessWorkflowReq]) (*connect_go.Response[integrations.ProcessWorkflowRes], error)
 	InsertPrivateField(context.Context, *connect_go.Request[integrations.InsertPrivateFieldReq]) (*connect_go.Response[integrations.InsertPrivateFieldRes], error)
 	CalculateFees(context.Context, *connect_go.Request[integrations.CalculateFeesReq]) (*connect_go.Response[integrations.CalculateFeesRes], error)
-	GetIntegrationSettings(context.Context, *connect_go.Request[integrations.GetIntegrationSettingsReq]) (*connect_go.Response[integrations.GetIntegrationSettingsRes], error)
-	UpsertIntegrationSettings(context.Context, *connect_go.Request[integrations.UpsertIntegrationSettingsReq]) (*connect_go.Response[integrations.UpsertIntegrationSettingsRes], error)
 }
 
 // NewIntegrationsClient constructs a client for the api.v1alpha1.integrations.Integrations service.
@@ -381,16 +373,6 @@ func NewIntegrationsClient(httpClient connect_go.HTTPClient, baseURL string, opt
 			baseURL+IntegrationsCalculateFeesProcedure,
 			opts...,
 		),
-		getIntegrationSettings: connect_go.NewClient[integrations.GetIntegrationSettingsReq, integrations.GetIntegrationSettingsRes](
-			httpClient,
-			baseURL+IntegrationsGetIntegrationSettingsProcedure,
-			opts...,
-		),
-		upsertIntegrationSettings: connect_go.NewClient[integrations.UpsertIntegrationSettingsReq, integrations.UpsertIntegrationSettingsRes](
-			httpClient,
-			baseURL+IntegrationsUpsertIntegrationSettingsProcedure,
-			opts...,
-		),
 	}
 }
 
@@ -429,8 +411,6 @@ type integrationsClient struct {
 	processWorkflow                     *connect_go.Client[integrations.ProcessWorkflowReq, integrations.ProcessWorkflowRes]
 	insertPrivateField                  *connect_go.Client[integrations.InsertPrivateFieldReq, integrations.InsertPrivateFieldRes]
 	calculateFees                       *connect_go.Client[integrations.CalculateFeesReq, integrations.CalculateFeesRes]
-	getIntegrationSettings              *connect_go.Client[integrations.GetIntegrationSettingsReq, integrations.GetIntegrationSettingsRes]
-	upsertIntegrationSettings           *connect_go.Client[integrations.UpsertIntegrationSettingsReq, integrations.UpsertIntegrationSettingsRes]
 }
 
 // Process calls api.v1alpha1.integrations.Integrations.Process.
@@ -602,16 +582,6 @@ func (c *integrationsClient) CalculateFees(ctx context.Context, req *connect_go.
 	return c.calculateFees.CallUnary(ctx, req)
 }
 
-// GetIntegrationSettings calls api.v1alpha1.integrations.Integrations.GetIntegrationSettings.
-func (c *integrationsClient) GetIntegrationSettings(ctx context.Context, req *connect_go.Request[integrations.GetIntegrationSettingsReq]) (*connect_go.Response[integrations.GetIntegrationSettingsRes], error) {
-	return c.getIntegrationSettings.CallUnary(ctx, req)
-}
-
-// UpsertIntegrationSettings calls api.v1alpha1.integrations.Integrations.UpsertIntegrationSettings.
-func (c *integrationsClient) UpsertIntegrationSettings(ctx context.Context, req *connect_go.Request[integrations.UpsertIntegrationSettingsReq]) (*connect_go.Response[integrations.UpsertIntegrationSettingsRes], error) {
-	return c.upsertIntegrationSettings.CallUnary(ctx, req)
-}
-
 // IntegrationsHandler is an implementation of the api.v1alpha1.integrations.Integrations service.
 type IntegrationsHandler interface {
 	// combine rquest parameters with the config parameters and run the integration method
@@ -676,8 +646,6 @@ type IntegrationsHandler interface {
 	ProcessWorkflow(context.Context, *connect_go.Request[integrations.ProcessWorkflowReq]) (*connect_go.Response[integrations.ProcessWorkflowRes], error)
 	InsertPrivateField(context.Context, *connect_go.Request[integrations.InsertPrivateFieldReq]) (*connect_go.Response[integrations.InsertPrivateFieldRes], error)
 	CalculateFees(context.Context, *connect_go.Request[integrations.CalculateFeesReq]) (*connect_go.Response[integrations.CalculateFeesRes], error)
-	GetIntegrationSettings(context.Context, *connect_go.Request[integrations.GetIntegrationSettingsReq]) (*connect_go.Response[integrations.GetIntegrationSettingsRes], error)
-	UpsertIntegrationSettings(context.Context, *connect_go.Request[integrations.UpsertIntegrationSettingsReq]) (*connect_go.Response[integrations.UpsertIntegrationSettingsRes], error)
 }
 
 // NewIntegrationsHandler builds an HTTP handler from the service implementation. It returns the
@@ -851,16 +819,6 @@ func NewIntegrationsHandler(svc IntegrationsHandler, opts ...connect_go.HandlerO
 		svc.CalculateFees,
 		opts...,
 	)
-	integrationsGetIntegrationSettingsHandler := connect_go.NewUnaryHandler(
-		IntegrationsGetIntegrationSettingsProcedure,
-		svc.GetIntegrationSettings,
-		opts...,
-	)
-	integrationsUpsertIntegrationSettingsHandler := connect_go.NewUnaryHandler(
-		IntegrationsUpsertIntegrationSettingsProcedure,
-		svc.UpsertIntegrationSettings,
-		opts...,
-	)
 	return "/api.v1alpha1.integrations.Integrations/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case IntegrationsProcessProcedure:
@@ -929,10 +887,6 @@ func NewIntegrationsHandler(svc IntegrationsHandler, opts ...connect_go.HandlerO
 			integrationsInsertPrivateFieldHandler.ServeHTTP(w, r)
 		case IntegrationsCalculateFeesProcedure:
 			integrationsCalculateFeesHandler.ServeHTTP(w, r)
-		case IntegrationsGetIntegrationSettingsProcedure:
-			integrationsGetIntegrationSettingsHandler.ServeHTTP(w, r)
-		case IntegrationsUpsertIntegrationSettingsProcedure:
-			integrationsUpsertIntegrationSettingsHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -1072,12 +1026,4 @@ func (UnimplementedIntegrationsHandler) InsertPrivateField(context.Context, *con
 
 func (UnimplementedIntegrationsHandler) CalculateFees(context.Context, *connect_go.Request[integrations.CalculateFeesReq]) (*connect_go.Response[integrations.CalculateFeesRes], error) {
 	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.integrations.Integrations.CalculateFees is not implemented"))
-}
-
-func (UnimplementedIntegrationsHandler) GetIntegrationSettings(context.Context, *connect_go.Request[integrations.GetIntegrationSettingsReq]) (*connect_go.Response[integrations.GetIntegrationSettingsRes], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.integrations.Integrations.GetIntegrationSettings is not implemented"))
-}
-
-func (UnimplementedIntegrationsHandler) UpsertIntegrationSettings(context.Context, *connect_go.Request[integrations.UpsertIntegrationSettingsReq]) (*connect_go.Response[integrations.UpsertIntegrationSettingsRes], error) {
-	return nil, connect_go.NewError(connect_go.CodeUnimplemented, errors.New("api.v1alpha1.integrations.Integrations.UpsertIntegrationSettings is not implemented"))
 }

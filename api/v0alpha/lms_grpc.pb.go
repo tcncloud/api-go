@@ -85,7 +85,6 @@ const (
 	LMS_UpdatePipelineCanvas_FullMethodName             = "/api.v0alpha.LMS/UpdatePipelineCanvas"
 	LMS_DeletePipelineCanvas_FullMethodName             = "/api.v0alpha.LMS/DeletePipelineCanvas"
 	LMS_GetPipelineCanvas_FullMethodName                = "/api.v0alpha.LMS/GetPipelineCanvas"
-	LMS_GetPipelineCanvasEvents_FullMethodName          = "/api.v0alpha.LMS/GetPipelineCanvasEvents"
 )
 
 // LMSClient is the client API for LMS service.
@@ -180,7 +179,6 @@ type LMSClient interface {
 	UpdatePipelineCanvas(ctx context.Context, in *UpdatePipelineCanvasReq, opts ...grpc.CallOption) (*UpdatePipelineCanvasRes, error)
 	DeletePipelineCanvas(ctx context.Context, in *DeletePipelineCanvasReq, opts ...grpc.CallOption) (*DeletePipelineCanvasRes, error)
 	GetPipelineCanvas(ctx context.Context, in *GetPipelineCanvasReq, opts ...grpc.CallOption) (*GetPipelineCanvasRes, error)
-	GetPipelineCanvasEvents(ctx context.Context, in *GetPipelineCanvasEventsReq, opts ...grpc.CallOption) (*GetPipelineCanvasEventsRes, error)
 }
 
 type lMSClient struct {
@@ -981,16 +979,6 @@ func (c *lMSClient) GetPipelineCanvas(ctx context.Context, in *GetPipelineCanvas
 	return out, nil
 }
 
-func (c *lMSClient) GetPipelineCanvasEvents(ctx context.Context, in *GetPipelineCanvasEventsReq, opts ...grpc.CallOption) (*GetPipelineCanvasEventsRes, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetPipelineCanvasEventsRes)
-	err := c.cc.Invoke(ctx, LMS_GetPipelineCanvasEvents_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // LMSServer is the server API for LMS service.
 // All implementations must embed UnimplementedLMSServer
 // for forward compatibility.
@@ -1083,7 +1071,6 @@ type LMSServer interface {
 	UpdatePipelineCanvas(context.Context, *UpdatePipelineCanvasReq) (*UpdatePipelineCanvasRes, error)
 	DeletePipelineCanvas(context.Context, *DeletePipelineCanvasReq) (*DeletePipelineCanvasRes, error)
 	GetPipelineCanvas(context.Context, *GetPipelineCanvasReq) (*GetPipelineCanvasRes, error)
-	GetPipelineCanvasEvents(context.Context, *GetPipelineCanvasEventsReq) (*GetPipelineCanvasEventsRes, error)
 	mustEmbedUnimplementedLMSServer()
 }
 
@@ -1288,9 +1275,6 @@ func (UnimplementedLMSServer) DeletePipelineCanvas(context.Context, *DeletePipel
 }
 func (UnimplementedLMSServer) GetPipelineCanvas(context.Context, *GetPipelineCanvasReq) (*GetPipelineCanvasRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPipelineCanvas not implemented")
-}
-func (UnimplementedLMSServer) GetPipelineCanvasEvents(context.Context, *GetPipelineCanvasEventsReq) (*GetPipelineCanvasEventsRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPipelineCanvasEvents not implemented")
 }
 func (UnimplementedLMSServer) mustEmbedUnimplementedLMSServer() {}
 func (UnimplementedLMSServer) testEmbeddedByValue()             {}
@@ -2506,24 +2490,6 @@ func _LMS_GetPipelineCanvas_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
-func _LMS_GetPipelineCanvasEvents_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetPipelineCanvasEventsReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LMSServer).GetPipelineCanvasEvents(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: LMS_GetPipelineCanvasEvents_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LMSServer).GetPipelineCanvasEvents(ctx, req.(*GetPipelineCanvasEventsReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // LMS_ServiceDesc is the grpc.ServiceDesc for LMS service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -2766,10 +2732,6 @@ var LMS_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetPipelineCanvas",
 			Handler:    _LMS_GetPipelineCanvas_Handler,
-		},
-		{
-			MethodName: "GetPipelineCanvasEvents",
-			Handler:    _LMS_GetPipelineCanvasEvents_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
