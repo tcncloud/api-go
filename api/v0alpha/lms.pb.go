@@ -183,7 +183,7 @@ func (x ContactManagerSink_DeDuplicationFieldType) Number() protoreflect.EnumNum
 
 // Deprecated: Use ContactManagerSink_DeDuplicationFieldType.Descriptor instead.
 func (ContactManagerSink_DeDuplicationFieldType) EnumDescriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{132, 0}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{133, 0}
 }
 
 type ContactManagerSink_DeDuplicationMergeStrategy int32
@@ -229,7 +229,7 @@ func (x ContactManagerSink_DeDuplicationMergeStrategy) Number() protoreflect.Enu
 
 // Deprecated: Use ContactManagerSink_DeDuplicationMergeStrategy.Descriptor instead.
 func (ContactManagerSink_DeDuplicationMergeStrategy) EnumDescriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{132, 1}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{133, 1}
 }
 
 type ContactManagementEnrichment_SearchFieldType int32
@@ -278,7 +278,7 @@ func (x ContactManagementEnrichment_SearchFieldType) Number() protoreflect.EnumN
 
 // Deprecated: Use ContactManagementEnrichment_SearchFieldType.Descriptor instead.
 func (ContactManagementEnrichment_SearchFieldType) EnumDescriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{190, 0}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{191, 0}
 }
 
 type PipelineCanvasMetadata struct {
@@ -9685,13 +9685,16 @@ func (x *Email) GetInvalid() bool {
 
 // modifies a DateTime by specific amount
 type DateTimeModifier struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Years         int32                  `protobuf:"varint,1,opt,name=years,proto3" json:"years,omitempty"`
-	Weeks         int32                  `protobuf:"varint,3,opt,name=weeks,proto3" json:"weeks,omitempty"`
-	Days          int32                  `protobuf:"varint,4,opt,name=days,proto3" json:"days,omitempty"`
-	Hours         int32                  `protobuf:"varint,5,opt,name=hours,proto3" json:"hours,omitempty"`
-	Minutes       int32                  `protobuf:"varint,6,opt,name=minutes,proto3" json:"minutes,omitempty"`
-	Seconds       int32                  `protobuf:"varint,7,opt,name=seconds,proto3" json:"seconds,omitempty"`
+	state   protoimpl.MessageState `protogen:"open.v1"`
+	Years   int32                  `protobuf:"varint,1,opt,name=years,proto3" json:"years,omitempty"`
+	Weeks   int32                  `protobuf:"varint,3,opt,name=weeks,proto3" json:"weeks,omitempty"`
+	Days    int32                  `protobuf:"varint,4,opt,name=days,proto3" json:"days,omitempty"`
+	Hours   int32                  `protobuf:"varint,5,opt,name=hours,proto3" json:"hours,omitempty"`
+	Minutes int32                  `protobuf:"varint,6,opt,name=minutes,proto3" json:"minutes,omitempty"`
+	Seconds int32                  `protobuf:"varint,7,opt,name=seconds,proto3" json:"seconds,omitempty"`
+	// a string in the format: '10y9w8d7h6m5s'
+	// prefix any op with a '-' to subtract: '-10y9w8d-7h6m5s'
+	Duration      string `protobuf:"bytes,8,opt,name=duration,proto3" json:"duration,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -9768,6 +9771,115 @@ func (x *DateTimeModifier) GetSeconds() int32 {
 	return 0
 }
 
+func (x *DateTimeModifier) GetDuration() string {
+	if x != nil {
+		return x.Duration
+	}
+	return ""
+}
+
+type DateTimeFieldModifier struct {
+	state        protoimpl.MessageState `protogen:"open.v1"`
+	YearsField   string                 `protobuf:"bytes,1,opt,name=years_field,json=yearsField,proto3" json:"years_field,omitempty"`
+	WeeksField   string                 `protobuf:"bytes,3,opt,name=weeks_field,json=weeksField,proto3" json:"weeks_field,omitempty"`
+	DaysField    string                 `protobuf:"bytes,4,opt,name=days_field,json=daysField,proto3" json:"days_field,omitempty"`
+	HoursField   string                 `protobuf:"bytes,5,opt,name=hours_field,json=hoursField,proto3" json:"hours_field,omitempty"`
+	MinutesField string                 `protobuf:"bytes,6,opt,name=minutes_field,json=minutesField,proto3" json:"minutes_field,omitempty"`
+	SecondsField string                 `protobuf:"bytes,7,opt,name=seconds_field,json=secondsField,proto3" json:"seconds_field,omitempty"`
+	// a field name to a string that should be interpreted as
+	// a string in the format: '10y9w8d7h6m5s'
+	DurationField string `protobuf:"bytes,8,opt,name=duration_field,json=durationField,proto3" json:"duration_field,omitempty"`
+	Negate        bool   `protobuf:"varint,9,opt,name=negate,proto3" json:"negate,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DateTimeFieldModifier) Reset() {
+	*x = DateTimeFieldModifier{}
+	mi := &file_api_v0alpha_lms_proto_msgTypes[120]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DateTimeFieldModifier) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DateTimeFieldModifier) ProtoMessage() {}
+
+func (x *DateTimeFieldModifier) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v0alpha_lms_proto_msgTypes[120]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DateTimeFieldModifier.ProtoReflect.Descriptor instead.
+func (*DateTimeFieldModifier) Descriptor() ([]byte, []int) {
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{120}
+}
+
+func (x *DateTimeFieldModifier) GetYearsField() string {
+	if x != nil {
+		return x.YearsField
+	}
+	return ""
+}
+
+func (x *DateTimeFieldModifier) GetWeeksField() string {
+	if x != nil {
+		return x.WeeksField
+	}
+	return ""
+}
+
+func (x *DateTimeFieldModifier) GetDaysField() string {
+	if x != nil {
+		return x.DaysField
+	}
+	return ""
+}
+
+func (x *DateTimeFieldModifier) GetHoursField() string {
+	if x != nil {
+		return x.HoursField
+	}
+	return ""
+}
+
+func (x *DateTimeFieldModifier) GetMinutesField() string {
+	if x != nil {
+		return x.MinutesField
+	}
+	return ""
+}
+
+func (x *DateTimeFieldModifier) GetSecondsField() string {
+	if x != nil {
+		return x.SecondsField
+	}
+	return ""
+}
+
+func (x *DateTimeFieldModifier) GetDurationField() string {
+	if x != nil {
+		return x.DurationField
+	}
+	return ""
+}
+
+func (x *DateTimeFieldModifier) GetNegate() bool {
+	if x != nil {
+		return x.Negate
+	}
+	return false
+}
+
 type DateTime struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// the raw string given when parsing the datetime obj
@@ -9784,7 +9896,7 @@ type DateTime struct {
 
 func (x *DateTime) Reset() {
 	*x = DateTime{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[120]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[121]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -9796,7 +9908,7 @@ func (x *DateTime) String() string {
 func (*DateTime) ProtoMessage() {}
 
 func (x *DateTime) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[120]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[121]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9809,7 +9921,7 @@ func (x *DateTime) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DateTime.ProtoReflect.Descriptor instead.
 func (*DateTime) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{120}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{121}
 }
 
 func (x *DateTime) GetRawValue() string {
@@ -9877,7 +9989,7 @@ type EnrichedPhone struct {
 
 func (x *EnrichedPhone) Reset() {
 	*x = EnrichedPhone{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[121]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[122]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -9889,7 +10001,7 @@ func (x *EnrichedPhone) String() string {
 func (*EnrichedPhone) ProtoMessage() {}
 
 func (x *EnrichedPhone) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[121]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[122]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -9902,7 +10014,7 @@ func (x *EnrichedPhone) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EnrichedPhone.ProtoReflect.Descriptor instead.
 func (*EnrichedPhone) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{121}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{122}
 }
 
 func (x *EnrichedPhone) GetAreaCode() string {
@@ -10136,7 +10248,7 @@ type EnrichedZip struct {
 
 func (x *EnrichedZip) Reset() {
 	*x = EnrichedZip{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[122]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[123]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -10148,7 +10260,7 @@ func (x *EnrichedZip) String() string {
 func (*EnrichedZip) ProtoMessage() {}
 
 func (x *EnrichedZip) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[122]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[123]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10161,7 +10273,7 @@ func (x *EnrichedZip) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EnrichedZip.ProtoReflect.Descriptor instead.
 func (*EnrichedZip) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{122}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{123}
 }
 
 func (x *EnrichedZip) GetAccuracy() int32 {
@@ -10355,7 +10467,7 @@ type Now struct {
 
 func (x *Now) Reset() {
 	*x = Now{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[123]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[124]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -10367,7 +10479,7 @@ func (x *Now) String() string {
 func (*Now) ProtoMessage() {}
 
 func (x *Now) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[123]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[124]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10380,7 +10492,7 @@ func (x *Now) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Now.ProtoReflect.Descriptor instead.
 func (*Now) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{123}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{124}
 }
 
 // a specific point in time, down to second presision.
@@ -10409,7 +10521,7 @@ type Timestamp struct {
 
 func (x *Timestamp) Reset() {
 	*x = Timestamp{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[124]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[125]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -10421,7 +10533,7 @@ func (x *Timestamp) String() string {
 func (*Timestamp) ProtoMessage() {}
 
 func (x *Timestamp) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[124]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[125]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10434,7 +10546,7 @@ func (x *Timestamp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Timestamp.ProtoReflect.Descriptor instead.
 func (*Timestamp) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{124}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{125}
 }
 
 func (x *Timestamp) GetYear() int32 {
@@ -10515,7 +10627,7 @@ type Date struct {
 
 func (x *Date) Reset() {
 	*x = Date{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[125]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[126]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -10527,7 +10639,7 @@ func (x *Date) String() string {
 func (*Date) ProtoMessage() {}
 
 func (x *Date) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[125]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[126]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10540,7 +10652,7 @@ func (x *Date) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Date.ProtoReflect.Descriptor instead.
 func (*Date) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{125}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{126}
 }
 
 func (x *Date) GetYear() int32 {
@@ -10599,7 +10711,7 @@ type MonthAndDay struct {
 
 func (x *MonthAndDay) Reset() {
 	*x = MonthAndDay{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[126]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[127]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -10611,7 +10723,7 @@ func (x *MonthAndDay) String() string {
 func (*MonthAndDay) ProtoMessage() {}
 
 func (x *MonthAndDay) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[126]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[127]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10624,7 +10736,7 @@ func (x *MonthAndDay) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MonthAndDay.ProtoReflect.Descriptor instead.
 func (*MonthAndDay) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{126}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{127}
 }
 
 func (x *MonthAndDay) GetMonth() int32 {
@@ -10672,7 +10784,7 @@ type DayOfWeek struct {
 
 func (x *DayOfWeek) Reset() {
 	*x = DayOfWeek{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[127]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[128]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -10684,7 +10796,7 @@ func (x *DayOfWeek) String() string {
 func (*DayOfWeek) ProtoMessage() {}
 
 func (x *DayOfWeek) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[127]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[128]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10697,7 +10809,7 @@ func (x *DayOfWeek) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DayOfWeek.ProtoReflect.Descriptor instead.
 func (*DayOfWeek) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{127}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{128}
 }
 
 func (x *DayOfWeek) GetDayOfWeek() int32 {
@@ -10719,7 +10831,7 @@ type TimeOfDay struct {
 
 func (x *TimeOfDay) Reset() {
 	*x = TimeOfDay{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[128]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[129]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -10731,7 +10843,7 @@ func (x *TimeOfDay) String() string {
 func (*TimeOfDay) ProtoMessage() {}
 
 func (x *TimeOfDay) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[128]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[129]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10744,7 +10856,7 @@ func (x *TimeOfDay) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TimeOfDay.ProtoReflect.Descriptor instead.
 func (*TimeOfDay) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{128}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{129}
 }
 
 func (x *TimeOfDay) GetHour() int32 {
@@ -10793,7 +10905,7 @@ type FileFormatParams struct {
 
 func (x *FileFormatParams) Reset() {
 	*x = FileFormatParams{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[129]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[130]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -10805,7 +10917,7 @@ func (x *FileFormatParams) String() string {
 func (*FileFormatParams) ProtoMessage() {}
 
 func (x *FileFormatParams) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[129]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[130]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10818,7 +10930,7 @@ func (x *FileFormatParams) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FileFormatParams.ProtoReflect.Descriptor instead.
 func (*FileFormatParams) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{129}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{130}
 }
 
 // Deprecated: Marked as deprecated in api/v0alpha/lms.proto.
@@ -10874,7 +10986,7 @@ type ReshapeProcess struct {
 
 func (x *ReshapeProcess) Reset() {
 	*x = ReshapeProcess{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[130]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[131]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -10886,7 +10998,7 @@ func (x *ReshapeProcess) String() string {
 func (*ReshapeProcess) ProtoMessage() {}
 
 func (x *ReshapeProcess) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[130]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[131]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10899,7 +11011,7 @@ func (x *ReshapeProcess) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeProcess.ProtoReflect.Descriptor instead.
 func (*ReshapeProcess) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{130}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{131}
 }
 
 func (x *ReshapeProcess) GetActions() []*ReshapeAction {
@@ -10949,7 +11061,7 @@ type ReshapeAction struct {
 
 func (x *ReshapeAction) Reset() {
 	*x = ReshapeAction{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[131]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[132]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -10961,7 +11073,7 @@ func (x *ReshapeAction) String() string {
 func (*ReshapeAction) ProtoMessage() {}
 
 func (x *ReshapeAction) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[131]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[132]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -10974,7 +11086,7 @@ func (x *ReshapeAction) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction.ProtoReflect.Descriptor instead.
 func (*ReshapeAction) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{131}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{132}
 }
 
 func (x *ReshapeAction) GetField() string {
@@ -11344,7 +11456,7 @@ type ContactManagerSink struct {
 
 func (x *ContactManagerSink) Reset() {
 	*x = ContactManagerSink{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[132]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[133]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -11356,7 +11468,7 @@ func (x *ContactManagerSink) String() string {
 func (*ContactManagerSink) ProtoMessage() {}
 
 func (x *ContactManagerSink) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[132]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[133]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11369,7 +11481,7 @@ func (x *ContactManagerSink) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ContactManagerSink.ProtoReflect.Descriptor instead.
 func (*ContactManagerSink) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{132}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{133}
 }
 
 func (x *ContactManagerSink) GetProjectId() string {
@@ -11448,7 +11560,7 @@ type SumProcess struct {
 
 func (x *SumProcess) Reset() {
 	*x = SumProcess{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[133]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[134]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -11460,7 +11572,7 @@ func (x *SumProcess) String() string {
 func (*SumProcess) ProtoMessage() {}
 
 func (x *SumProcess) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[133]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[134]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11473,7 +11585,7 @@ func (x *SumProcess) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SumProcess.ProtoReflect.Descriptor instead.
 func (*SumProcess) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{133}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{134}
 }
 
 func (x *SumProcess) GetField() string {
@@ -11514,7 +11626,7 @@ type GroupBy struct {
 
 func (x *GroupBy) Reset() {
 	*x = GroupBy{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[134]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[135]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -11526,7 +11638,7 @@ func (x *GroupBy) String() string {
 func (*GroupBy) ProtoMessage() {}
 
 func (x *GroupBy) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[134]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[135]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11539,7 +11651,7 @@ func (x *GroupBy) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GroupBy.ProtoReflect.Descriptor instead.
 func (*GroupBy) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{134}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{135}
 }
 
 func (x *GroupBy) GetFields() []string {
@@ -11602,7 +11714,7 @@ type ListMetrics struct {
 
 func (x *ListMetrics) Reset() {
 	*x = ListMetrics{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[135]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[136]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -11614,7 +11726,7 @@ func (x *ListMetrics) String() string {
 func (*ListMetrics) ProtoMessage() {}
 
 func (x *ListMetrics) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[135]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[136]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11627,7 +11739,7 @@ func (x *ListMetrics) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListMetrics.ProtoReflect.Descriptor instead.
 func (*ListMetrics) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{135}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{136}
 }
 
 func (x *ListMetrics) GetInputRecordCount() int32 {
@@ -11765,7 +11877,7 @@ type ParseReq struct {
 
 func (x *ParseReq) Reset() {
 	*x = ParseReq{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[136]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[137]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -11777,7 +11889,7 @@ func (x *ParseReq) String() string {
 func (*ParseReq) ProtoMessage() {}
 
 func (x *ParseReq) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[136]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[137]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11790,7 +11902,7 @@ func (x *ParseReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ParseReq.ProtoReflect.Descriptor instead.
 func (*ParseReq) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{136}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{137}
 }
 
 func (x *ParseReq) GetElementId() string {
@@ -11835,7 +11947,7 @@ type ParseRes struct {
 
 func (x *ParseRes) Reset() {
 	*x = ParseRes{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[137]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[138]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -11847,7 +11959,7 @@ func (x *ParseRes) String() string {
 func (*ParseRes) ProtoMessage() {}
 
 func (x *ParseRes) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[137]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[138]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11860,7 +11972,7 @@ func (x *ParseRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ParseRes.ProtoReflect.Descriptor instead.
 func (*ParseRes) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{137}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{138}
 }
 
 func (x *ParseRes) GetSessionId() string {
@@ -11934,7 +12046,7 @@ type Event struct {
 
 func (x *Event) Reset() {
 	*x = Event{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[138]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[139]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -11946,7 +12058,7 @@ func (x *Event) String() string {
 func (*Event) ProtoMessage() {}
 
 func (x *Event) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[138]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[139]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -11959,7 +12071,7 @@ func (x *Event) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Event.ProtoReflect.Descriptor instead.
 func (*Event) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{138}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{139}
 }
 
 func (x *Event) GetEventId() int64 {
@@ -12048,7 +12160,7 @@ type Events struct {
 
 func (x *Events) Reset() {
 	*x = Events{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[139]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[140]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12060,7 +12172,7 @@ func (x *Events) String() string {
 func (*Events) ProtoMessage() {}
 
 func (x *Events) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[139]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[140]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12073,7 +12185,7 @@ func (x *Events) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Events.ProtoReflect.Descriptor instead.
 func (*Events) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{139}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{140}
 }
 
 func (x *Events) GetEvents() []*Event {
@@ -12099,7 +12211,7 @@ type ViewQueueReq struct {
 
 func (x *ViewQueueReq) Reset() {
 	*x = ViewQueueReq{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[140]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[141]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12111,7 +12223,7 @@ func (x *ViewQueueReq) String() string {
 func (*ViewQueueReq) ProtoMessage() {}
 
 func (x *ViewQueueReq) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[140]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[141]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12124,7 +12236,7 @@ func (x *ViewQueueReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ViewQueueReq.ProtoReflect.Descriptor instead.
 func (*ViewQueueReq) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{140}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{141}
 }
 
 func (x *ViewQueueReq) GetNewerThan() *timestamppb.Timestamp {
@@ -12177,7 +12289,7 @@ type RetypeCollectionReq struct {
 
 func (x *RetypeCollectionReq) Reset() {
 	*x = RetypeCollectionReq{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[141]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[142]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12189,7 +12301,7 @@ func (x *RetypeCollectionReq) String() string {
 func (*RetypeCollectionReq) ProtoMessage() {}
 
 func (x *RetypeCollectionReq) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[141]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[142]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12202,7 +12314,7 @@ func (x *RetypeCollectionReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RetypeCollectionReq.ProtoReflect.Descriptor instead.
 func (*RetypeCollectionReq) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{141}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{142}
 }
 
 func (x *RetypeCollectionReq) GetCollectionId() string {
@@ -12249,7 +12361,7 @@ type RetypeCollectionRes struct {
 
 func (x *RetypeCollectionRes) Reset() {
 	*x = RetypeCollectionRes{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[142]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[143]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12261,7 +12373,7 @@ func (x *RetypeCollectionRes) String() string {
 func (*RetypeCollectionRes) ProtoMessage() {}
 
 func (x *RetypeCollectionRes) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[142]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[143]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12274,7 +12386,7 @@ func (x *RetypeCollectionRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RetypeCollectionRes.ProtoReflect.Descriptor instead.
 func (*RetypeCollectionRes) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{142}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{143}
 }
 
 func (x *RetypeCollectionRes) GetCollectionId() string {
@@ -12342,7 +12454,7 @@ type CollectionMetadata struct {
 
 func (x *CollectionMetadata) Reset() {
 	*x = CollectionMetadata{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[143]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[144]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12354,7 +12466,7 @@ func (x *CollectionMetadata) String() string {
 func (*CollectionMetadata) ProtoMessage() {}
 
 func (x *CollectionMetadata) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[143]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[144]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12367,7 +12479,7 @@ func (x *CollectionMetadata) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CollectionMetadata.ProtoReflect.Descriptor instead.
 func (*CollectionMetadata) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{143}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{144}
 }
 
 func (x *CollectionMetadata) GetCollectionId() string {
@@ -12473,7 +12585,7 @@ type CollectionEntry struct {
 
 func (x *CollectionEntry) Reset() {
 	*x = CollectionEntry{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[144]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[145]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12485,7 +12597,7 @@ func (x *CollectionEntry) String() string {
 func (*CollectionEntry) ProtoMessage() {}
 
 func (x *CollectionEntry) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[144]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[145]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12498,7 +12610,7 @@ func (x *CollectionEntry) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CollectionEntry.ProtoReflect.Descriptor instead.
 func (*CollectionEntry) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{144}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{145}
 }
 
 func (x *CollectionEntry) GetCollectionId() string {
@@ -12540,7 +12652,7 @@ type MatchReq struct {
 
 func (x *MatchReq) Reset() {
 	*x = MatchReq{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[145]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[146]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12552,7 +12664,7 @@ func (x *MatchReq) String() string {
 func (*MatchReq) ProtoMessage() {}
 
 func (x *MatchReq) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[145]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[146]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12565,7 +12677,7 @@ func (x *MatchReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MatchReq.ProtoReflect.Descriptor instead.
 func (*MatchReq) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{145}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{146}
 }
 
 func (x *MatchReq) GetCollectionId() string {
@@ -12598,7 +12710,7 @@ type MatchRes struct {
 
 func (x *MatchRes) Reset() {
 	*x = MatchRes{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[146]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[147]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12610,7 +12722,7 @@ func (x *MatchRes) String() string {
 func (*MatchRes) ProtoMessage() {}
 
 func (x *MatchRes) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[146]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[147]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12623,7 +12735,7 @@ func (x *MatchRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MatchRes.ProtoReflect.Descriptor instead.
 func (*MatchRes) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{146}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{147}
 }
 
 func (x *MatchRes) GetEntries() []*CollectionEntry {
@@ -12649,7 +12761,7 @@ type CollectionFieldMetadata struct {
 
 func (x *CollectionFieldMetadata) Reset() {
 	*x = CollectionFieldMetadata{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[147]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[148]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12661,7 +12773,7 @@ func (x *CollectionFieldMetadata) String() string {
 func (*CollectionFieldMetadata) ProtoMessage() {}
 
 func (x *CollectionFieldMetadata) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[147]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[148]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12674,7 +12786,7 @@ func (x *CollectionFieldMetadata) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CollectionFieldMetadata.ProtoReflect.Descriptor instead.
 func (*CollectionFieldMetadata) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{147}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{148}
 }
 
 func (x *CollectionFieldMetadata) GetFieldName() string {
@@ -12708,7 +12820,7 @@ type CollectionField struct {
 
 func (x *CollectionField) Reset() {
 	*x = CollectionField{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[148]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[149]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12720,7 +12832,7 @@ func (x *CollectionField) String() string {
 func (*CollectionField) ProtoMessage() {}
 
 func (x *CollectionField) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[148]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[149]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12733,7 +12845,7 @@ func (x *CollectionField) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CollectionField.ProtoReflect.Descriptor instead.
 func (*CollectionField) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{148}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{149}
 }
 
 func (x *CollectionField) GetFieldName() string {
@@ -12759,7 +12871,7 @@ type GetCollectionReq struct {
 
 func (x *GetCollectionReq) Reset() {
 	*x = GetCollectionReq{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[149]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[150]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12771,7 +12883,7 @@ func (x *GetCollectionReq) String() string {
 func (*GetCollectionReq) ProtoMessage() {}
 
 func (x *GetCollectionReq) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[149]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[150]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12784,7 +12896,7 @@ func (x *GetCollectionReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetCollectionReq.ProtoReflect.Descriptor instead.
 func (*GetCollectionReq) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{149}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{150}
 }
 
 func (x *GetCollectionReq) GetCollectionId() string {
@@ -12803,7 +12915,7 @@ type StreamCollectionReq struct {
 
 func (x *StreamCollectionReq) Reset() {
 	*x = StreamCollectionReq{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[150]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[151]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12815,7 +12927,7 @@ func (x *StreamCollectionReq) String() string {
 func (*StreamCollectionReq) ProtoMessage() {}
 
 func (x *StreamCollectionReq) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[150]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[151]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12828,7 +12940,7 @@ func (x *StreamCollectionReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StreamCollectionReq.ProtoReflect.Descriptor instead.
 func (*StreamCollectionReq) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{150}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{151}
 }
 
 func (x *StreamCollectionReq) GetCollectionId() string {
@@ -12847,7 +12959,7 @@ type DeleteCollectionReq struct {
 
 func (x *DeleteCollectionReq) Reset() {
 	*x = DeleteCollectionReq{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[151]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[152]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12859,7 +12971,7 @@ func (x *DeleteCollectionReq) String() string {
 func (*DeleteCollectionReq) ProtoMessage() {}
 
 func (x *DeleteCollectionReq) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[151]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[152]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12872,7 +12984,7 @@ func (x *DeleteCollectionReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteCollectionReq.ProtoReflect.Descriptor instead.
 func (*DeleteCollectionReq) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{151}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{152}
 }
 
 func (x *DeleteCollectionReq) GetCollectionId() string {
@@ -12891,7 +13003,7 @@ type ResetCollectionReq struct {
 
 func (x *ResetCollectionReq) Reset() {
 	*x = ResetCollectionReq{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[152]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[153]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12903,7 +13015,7 @@ func (x *ResetCollectionReq) String() string {
 func (*ResetCollectionReq) ProtoMessage() {}
 
 func (x *ResetCollectionReq) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[152]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[153]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12916,7 +13028,7 @@ func (x *ResetCollectionReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ResetCollectionReq.ProtoReflect.Descriptor instead.
 func (*ResetCollectionReq) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{152}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{153}
 }
 
 func (x *ResetCollectionReq) GetCollectionId() string {
@@ -12934,7 +13046,7 @@ type ListCollectionsReq struct {
 
 func (x *ListCollectionsReq) Reset() {
 	*x = ListCollectionsReq{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[153]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[154]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12946,7 +13058,7 @@ func (x *ListCollectionsReq) String() string {
 func (*ListCollectionsReq) ProtoMessage() {}
 
 func (x *ListCollectionsReq) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[153]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[154]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12959,7 +13071,7 @@ func (x *ListCollectionsReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListCollectionsReq.ProtoReflect.Descriptor instead.
 func (*ListCollectionsReq) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{153}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{154}
 }
 
 type ListCollectionsRes struct {
@@ -12971,7 +13083,7 @@ type ListCollectionsRes struct {
 
 func (x *ListCollectionsRes) Reset() {
 	*x = ListCollectionsRes{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[154]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[155]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -12983,7 +13095,7 @@ func (x *ListCollectionsRes) String() string {
 func (*ListCollectionsRes) ProtoMessage() {}
 
 func (x *ListCollectionsRes) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[154]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[155]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -12996,7 +13108,7 @@ func (x *ListCollectionsRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListCollectionsRes.ProtoReflect.Descriptor instead.
 func (*ListCollectionsRes) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{154}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{155}
 }
 
 func (x *ListCollectionsRes) GetCollections() []*CollectionMetadata {
@@ -13025,7 +13137,7 @@ type SearchCollectionsPaginatedReq struct {
 
 func (x *SearchCollectionsPaginatedReq) Reset() {
 	*x = SearchCollectionsPaginatedReq{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[155]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[156]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13037,7 +13149,7 @@ func (x *SearchCollectionsPaginatedReq) String() string {
 func (*SearchCollectionsPaginatedReq) ProtoMessage() {}
 
 func (x *SearchCollectionsPaginatedReq) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[155]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[156]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13050,7 +13162,7 @@ func (x *SearchCollectionsPaginatedReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SearchCollectionsPaginatedReq.ProtoReflect.Descriptor instead.
 func (*SearchCollectionsPaginatedReq) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{155}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{156}
 }
 
 func (x *SearchCollectionsPaginatedReq) GetCollectionIds() []string {
@@ -13121,7 +13233,7 @@ type Search struct {
 
 func (x *Search) Reset() {
 	*x = Search{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[156]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[157]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13133,7 +13245,7 @@ func (x *Search) String() string {
 func (*Search) ProtoMessage() {}
 
 func (x *Search) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[156]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[157]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13146,7 +13258,7 @@ func (x *Search) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Search.ProtoReflect.Descriptor instead.
 func (*Search) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{156}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{157}
 }
 
 func (x *Search) GetTerm() string {
@@ -13209,7 +13321,7 @@ type PaginatedSearchRes struct {
 
 func (x *PaginatedSearchRes) Reset() {
 	*x = PaginatedSearchRes{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[157]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[158]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13221,7 +13333,7 @@ func (x *PaginatedSearchRes) String() string {
 func (*PaginatedSearchRes) ProtoMessage() {}
 
 func (x *PaginatedSearchRes) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[157]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[158]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13234,7 +13346,7 @@ func (x *PaginatedSearchRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PaginatedSearchRes.ProtoReflect.Descriptor instead.
 func (*PaginatedSearchRes) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{157}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{158}
 }
 
 func (x *PaginatedSearchRes) GetEntries() []*CollectionEntry {
@@ -13277,7 +13389,7 @@ type GetCollectionEntriesReq struct {
 
 func (x *GetCollectionEntriesReq) Reset() {
 	*x = GetCollectionEntriesReq{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[158]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[159]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13289,7 +13401,7 @@ func (x *GetCollectionEntriesReq) String() string {
 func (*GetCollectionEntriesReq) ProtoMessage() {}
 
 func (x *GetCollectionEntriesReq) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[158]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[159]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13302,7 +13414,7 @@ func (x *GetCollectionEntriesReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetCollectionEntriesReq.ProtoReflect.Descriptor instead.
 func (*GetCollectionEntriesReq) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{158}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{159}
 }
 
 func (x *GetCollectionEntriesReq) GetCollectionId() string {
@@ -13343,7 +13455,7 @@ type GetCollectionEntriesRes struct {
 
 func (x *GetCollectionEntriesRes) Reset() {
 	*x = GetCollectionEntriesRes{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[159]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[160]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13355,7 +13467,7 @@ func (x *GetCollectionEntriesRes) String() string {
 func (*GetCollectionEntriesRes) ProtoMessage() {}
 
 func (x *GetCollectionEntriesRes) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[159]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[160]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13368,7 +13480,7 @@ func (x *GetCollectionEntriesRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetCollectionEntriesRes.ProtoReflect.Descriptor instead.
 func (*GetCollectionEntriesRes) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{159}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{160}
 }
 
 func (x *GetCollectionEntriesRes) GetMetadata() *CollectionMetadata {
@@ -13395,7 +13507,7 @@ type DeleteCollectionEntryReq struct {
 
 func (x *DeleteCollectionEntryReq) Reset() {
 	*x = DeleteCollectionEntryReq{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[160]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[161]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13407,7 +13519,7 @@ func (x *DeleteCollectionEntryReq) String() string {
 func (*DeleteCollectionEntryReq) ProtoMessage() {}
 
 func (x *DeleteCollectionEntryReq) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[160]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[161]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13420,7 +13532,7 @@ func (x *DeleteCollectionEntryReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteCollectionEntryReq.ProtoReflect.Descriptor instead.
 func (*DeleteCollectionEntryReq) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{160}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{161}
 }
 
 func (x *DeleteCollectionEntryReq) GetCollectionId() string {
@@ -13446,7 +13558,7 @@ type ListCampaignLinksRes struct {
 
 func (x *ListCampaignLinksRes) Reset() {
 	*x = ListCampaignLinksRes{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[161]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[162]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13458,7 +13570,7 @@ func (x *ListCampaignLinksRes) String() string {
 func (*ListCampaignLinksRes) ProtoMessage() {}
 
 func (x *ListCampaignLinksRes) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[161]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[162]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13471,7 +13583,7 @@ func (x *ListCampaignLinksRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListCampaignLinksRes.ProtoReflect.Descriptor instead.
 func (*ListCampaignLinksRes) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{161}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{162}
 }
 
 func (x *ListCampaignLinksRes) GetLinks() []*Link {
@@ -13492,7 +13604,7 @@ type Link struct {
 
 func (x *Link) Reset() {
 	*x = Link{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[162]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[163]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13504,7 +13616,7 @@ func (x *Link) String() string {
 func (*Link) ProtoMessage() {}
 
 func (x *Link) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[162]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[163]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13517,7 +13629,7 @@ func (x *Link) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Link.ProtoReflect.Descriptor instead.
 func (*Link) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{162}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{163}
 }
 
 func (x *Link) GetXmlClientPropSid() int64 {
@@ -13554,7 +13666,7 @@ type CjsSearchField struct {
 
 func (x *CjsSearchField) Reset() {
 	*x = CjsSearchField{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[163]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[164]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13566,7 +13678,7 @@ func (x *CjsSearchField) String() string {
 func (*CjsSearchField) ProtoMessage() {}
 
 func (x *CjsSearchField) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[163]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[164]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13579,7 +13691,7 @@ func (x *CjsSearchField) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CjsSearchField.ProtoReflect.Descriptor instead.
 func (*CjsSearchField) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{163}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{164}
 }
 
 func (x *CjsSearchField) GetCjsSearchFieldId() string {
@@ -13634,7 +13746,7 @@ type CjsSearchDefinitionMetadata struct {
 
 func (x *CjsSearchDefinitionMetadata) Reset() {
 	*x = CjsSearchDefinitionMetadata{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[164]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[165]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13646,7 +13758,7 @@ func (x *CjsSearchDefinitionMetadata) String() string {
 func (*CjsSearchDefinitionMetadata) ProtoMessage() {}
 
 func (x *CjsSearchDefinitionMetadata) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[164]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[165]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13659,7 +13771,7 @@ func (x *CjsSearchDefinitionMetadata) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CjsSearchDefinitionMetadata.ProtoReflect.Descriptor instead.
 func (*CjsSearchDefinitionMetadata) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{164}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{165}
 }
 
 func (x *CjsSearchDefinitionMetadata) GetCjsSearchDefinitionId() string {
@@ -13739,7 +13851,7 @@ type CjsSearchDefinition struct {
 
 func (x *CjsSearchDefinition) Reset() {
 	*x = CjsSearchDefinition{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[165]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[166]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13751,7 +13863,7 @@ func (x *CjsSearchDefinition) String() string {
 func (*CjsSearchDefinition) ProtoMessage() {}
 
 func (x *CjsSearchDefinition) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[165]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[166]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13764,7 +13876,7 @@ func (x *CjsSearchDefinition) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CjsSearchDefinition.ProtoReflect.Descriptor instead.
 func (*CjsSearchDefinition) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{165}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{166}
 }
 
 func (x *CjsSearchDefinition) GetMetadata() *CjsSearchDefinitionMetadata {
@@ -13811,7 +13923,7 @@ type GetCjsSearchDefinitionReq struct {
 
 func (x *GetCjsSearchDefinitionReq) Reset() {
 	*x = GetCjsSearchDefinitionReq{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[166]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[167]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13823,7 +13935,7 @@ func (x *GetCjsSearchDefinitionReq) String() string {
 func (*GetCjsSearchDefinitionReq) ProtoMessage() {}
 
 func (x *GetCjsSearchDefinitionReq) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[166]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[167]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13836,7 +13948,7 @@ func (x *GetCjsSearchDefinitionReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetCjsSearchDefinitionReq.ProtoReflect.Descriptor instead.
 func (*GetCjsSearchDefinitionReq) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{166}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{167}
 }
 
 func (x *GetCjsSearchDefinitionReq) GetCjsSearchDefinitionId() string {
@@ -13855,7 +13967,7 @@ type DeleteCjsSearchDefinitionReq struct {
 
 func (x *DeleteCjsSearchDefinitionReq) Reset() {
 	*x = DeleteCjsSearchDefinitionReq{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[167]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[168]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13867,7 +13979,7 @@ func (x *DeleteCjsSearchDefinitionReq) String() string {
 func (*DeleteCjsSearchDefinitionReq) ProtoMessage() {}
 
 func (x *DeleteCjsSearchDefinitionReq) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[167]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[168]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13880,7 +13992,7 @@ func (x *DeleteCjsSearchDefinitionReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteCjsSearchDefinitionReq.ProtoReflect.Descriptor instead.
 func (*DeleteCjsSearchDefinitionReq) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{167}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{168}
 }
 
 func (x *DeleteCjsSearchDefinitionReq) GetCjsSearchDefinitionId() string {
@@ -13898,7 +14010,7 @@ type ListCjsSearchDefinitionsReq struct {
 
 func (x *ListCjsSearchDefinitionsReq) Reset() {
 	*x = ListCjsSearchDefinitionsReq{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[168]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[169]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13910,7 +14022,7 @@ func (x *ListCjsSearchDefinitionsReq) String() string {
 func (*ListCjsSearchDefinitionsReq) ProtoMessage() {}
 
 func (x *ListCjsSearchDefinitionsReq) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[168]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[169]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13923,7 +14035,7 @@ func (x *ListCjsSearchDefinitionsReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListCjsSearchDefinitionsReq.ProtoReflect.Descriptor instead.
 func (*ListCjsSearchDefinitionsReq) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{168}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{169}
 }
 
 type ListCjsSearchDefinitionsRes struct {
@@ -13935,7 +14047,7 @@ type ListCjsSearchDefinitionsRes struct {
 
 func (x *ListCjsSearchDefinitionsRes) Reset() {
 	*x = ListCjsSearchDefinitionsRes{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[169]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[170]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13947,7 +14059,7 @@ func (x *ListCjsSearchDefinitionsRes) String() string {
 func (*ListCjsSearchDefinitionsRes) ProtoMessage() {}
 
 func (x *ListCjsSearchDefinitionsRes) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[169]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[170]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -13960,7 +14072,7 @@ func (x *ListCjsSearchDefinitionsRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListCjsSearchDefinitionsRes.ProtoReflect.Descriptor instead.
 func (*ListCjsSearchDefinitionsRes) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{169}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{170}
 }
 
 func (x *ListCjsSearchDefinitionsRes) GetDefinitions() []*CjsSearchDefinitionMetadata {
@@ -13980,7 +14092,7 @@ type ExecuteCjsSearchDefinitionReq struct {
 
 func (x *ExecuteCjsSearchDefinitionReq) Reset() {
 	*x = ExecuteCjsSearchDefinitionReq{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[170]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[171]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -13992,7 +14104,7 @@ func (x *ExecuteCjsSearchDefinitionReq) String() string {
 func (*ExecuteCjsSearchDefinitionReq) ProtoMessage() {}
 
 func (x *ExecuteCjsSearchDefinitionReq) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[170]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[171]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14005,7 +14117,7 @@ func (x *ExecuteCjsSearchDefinitionReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ExecuteCjsSearchDefinitionReq.ProtoReflect.Descriptor instead.
 func (*ExecuteCjsSearchDefinitionReq) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{170}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{171}
 }
 
 func (x *ExecuteCjsSearchDefinitionReq) GetSearchDefinitionId() string {
@@ -14031,7 +14143,7 @@ type ExecuteCjsSearchDefinitionRes struct {
 
 func (x *ExecuteCjsSearchDefinitionRes) Reset() {
 	*x = ExecuteCjsSearchDefinitionRes{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[171]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[172]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14043,7 +14155,7 @@ func (x *ExecuteCjsSearchDefinitionRes) String() string {
 func (*ExecuteCjsSearchDefinitionRes) ProtoMessage() {}
 
 func (x *ExecuteCjsSearchDefinitionRes) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[171]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[172]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14056,7 +14168,7 @@ func (x *ExecuteCjsSearchDefinitionRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ExecuteCjsSearchDefinitionRes.ProtoReflect.Descriptor instead.
 func (*ExecuteCjsSearchDefinitionRes) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{171}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{172}
 }
 
 func (x *ExecuteCjsSearchDefinitionRes) GetCollectionEntries() []*CollectionEntries {
@@ -14076,7 +14188,7 @@ type CollectionEntries struct {
 
 func (x *CollectionEntries) Reset() {
 	*x = CollectionEntries{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[172]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[173]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14088,7 +14200,7 @@ func (x *CollectionEntries) String() string {
 func (*CollectionEntries) ProtoMessage() {}
 
 func (x *CollectionEntries) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[172]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[173]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14101,7 +14213,7 @@ func (x *CollectionEntries) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CollectionEntries.ProtoReflect.Descriptor instead.
 func (*CollectionEntries) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{172}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{173}
 }
 
 func (x *CollectionEntries) GetMetadata() *CollectionMetadata {
@@ -14132,7 +14244,7 @@ type CjsExecuteSearchField struct {
 
 func (x *CjsExecuteSearchField) Reset() {
 	*x = CjsExecuteSearchField{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[173]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[174]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14144,7 +14256,7 @@ func (x *CjsExecuteSearchField) String() string {
 func (*CjsExecuteSearchField) ProtoMessage() {}
 
 func (x *CjsExecuteSearchField) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[173]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[174]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14157,7 +14269,7 @@ func (x *CjsExecuteSearchField) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CjsExecuteSearchField.ProtoReflect.Descriptor instead.
 func (*CjsExecuteSearchField) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{173}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{174}
 }
 
 func (x *CjsExecuteSearchField) GetField() isCjsExecuteSearchField_Field {
@@ -14221,7 +14333,7 @@ type CjsSecureSearchCriteriaMetadata struct {
 
 func (x *CjsSecureSearchCriteriaMetadata) Reset() {
 	*x = CjsSecureSearchCriteriaMetadata{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[174]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[175]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14233,7 +14345,7 @@ func (x *CjsSecureSearchCriteriaMetadata) String() string {
 func (*CjsSecureSearchCriteriaMetadata) ProtoMessage() {}
 
 func (x *CjsSecureSearchCriteriaMetadata) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[174]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[175]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14246,7 +14358,7 @@ func (x *CjsSecureSearchCriteriaMetadata) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CjsSecureSearchCriteriaMetadata.ProtoReflect.Descriptor instead.
 func (*CjsSecureSearchCriteriaMetadata) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{174}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{175}
 }
 
 func (x *CjsSecureSearchCriteriaMetadata) GetCjsSecureSearchCriteriaId() string {
@@ -14287,7 +14399,7 @@ type CjsSecureSearchCriteria struct {
 
 func (x *CjsSecureSearchCriteria) Reset() {
 	*x = CjsSecureSearchCriteria{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[175]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[176]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14299,7 +14411,7 @@ func (x *CjsSecureSearchCriteria) String() string {
 func (*CjsSecureSearchCriteria) ProtoMessage() {}
 
 func (x *CjsSecureSearchCriteria) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[175]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[176]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14312,7 +14424,7 @@ func (x *CjsSecureSearchCriteria) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CjsSecureSearchCriteria.ProtoReflect.Descriptor instead.
 func (*CjsSecureSearchCriteria) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{175}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{176}
 }
 
 func (x *CjsSecureSearchCriteria) GetMetadata() *CjsSecureSearchCriteriaMetadata {
@@ -14337,7 +14449,7 @@ type GetCjsSecureSearchCriteriaReq struct {
 
 func (x *GetCjsSecureSearchCriteriaReq) Reset() {
 	*x = GetCjsSecureSearchCriteriaReq{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[176]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[177]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14349,7 +14461,7 @@ func (x *GetCjsSecureSearchCriteriaReq) String() string {
 func (*GetCjsSecureSearchCriteriaReq) ProtoMessage() {}
 
 func (x *GetCjsSecureSearchCriteriaReq) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[176]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[177]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14362,7 +14474,7 @@ func (x *GetCjsSecureSearchCriteriaReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetCjsSecureSearchCriteriaReq.ProtoReflect.Descriptor instead.
 func (*GetCjsSecureSearchCriteriaReq) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{176}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{177}
 }
 
 type CjsSecureSearchCriteriaField struct {
@@ -14376,7 +14488,7 @@ type CjsSecureSearchCriteriaField struct {
 
 func (x *CjsSecureSearchCriteriaField) Reset() {
 	*x = CjsSecureSearchCriteriaField{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[177]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[178]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14388,7 +14500,7 @@ func (x *CjsSecureSearchCriteriaField) String() string {
 func (*CjsSecureSearchCriteriaField) ProtoMessage() {}
 
 func (x *CjsSecureSearchCriteriaField) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[177]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[178]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14401,7 +14513,7 @@ func (x *CjsSecureSearchCriteriaField) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CjsSecureSearchCriteriaField.ProtoReflect.Descriptor instead.
 func (*CjsSecureSearchCriteriaField) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{177}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{178}
 }
 
 func (x *CjsSecureSearchCriteriaField) GetCjsSecureSearchCriteriaFieldId() string {
@@ -14439,7 +14551,7 @@ type SplitCriteria struct {
 
 func (x *SplitCriteria) Reset() {
 	*x = SplitCriteria{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[178]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[179]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14451,7 +14563,7 @@ func (x *SplitCriteria) String() string {
 func (*SplitCriteria) ProtoMessage() {}
 
 func (x *SplitCriteria) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[178]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[179]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14464,7 +14576,7 @@ func (x *SplitCriteria) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SplitCriteria.ProtoReflect.Descriptor instead.
 func (*SplitCriteria) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{178}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{179}
 }
 
 func (x *SplitCriteria) GetAction() isSplitCriteria_Action {
@@ -14533,7 +14645,7 @@ type UniquePair struct {
 
 func (x *UniquePair) Reset() {
 	*x = UniquePair{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[179]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[180]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14545,7 +14657,7 @@ func (x *UniquePair) String() string {
 func (*UniquePair) ProtoMessage() {}
 
 func (x *UniquePair) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[179]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[180]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14558,7 +14670,7 @@ func (x *UniquePair) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UniquePair.ProtoReflect.Descriptor instead.
 func (*UniquePair) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{179}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{180}
 }
 
 func (x *UniquePair) GetSplitOnFields() *FieldIndex {
@@ -14584,7 +14696,7 @@ type SplitByNamedUnique struct {
 
 func (x *SplitByNamedUnique) Reset() {
 	*x = SplitByNamedUnique{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[180]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[181]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14596,7 +14708,7 @@ func (x *SplitByNamedUnique) String() string {
 func (*SplitByNamedUnique) ProtoMessage() {}
 
 func (x *SplitByNamedUnique) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[180]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[181]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14609,7 +14721,7 @@ func (x *SplitByNamedUnique) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SplitByNamedUnique.ProtoReflect.Descriptor instead.
 func (*SplitByNamedUnique) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{180}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{181}
 }
 
 func (x *SplitByNamedUnique) GetNamedFields() []*UniquePair {
@@ -14628,7 +14740,7 @@ type SplitByUnique struct {
 
 func (x *SplitByUnique) Reset() {
 	*x = SplitByUnique{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[181]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[182]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14640,7 +14752,7 @@ func (x *SplitByUnique) String() string {
 func (*SplitByUnique) ProtoMessage() {}
 
 func (x *SplitByUnique) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[181]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[182]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14653,7 +14765,7 @@ func (x *SplitByUnique) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SplitByUnique.ProtoReflect.Descriptor instead.
 func (*SplitByUnique) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{181}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{182}
 }
 
 func (x *SplitByUnique) GetSplitOnFields() []*FieldIndex {
@@ -14672,7 +14784,7 @@ type SplitByMaxSize struct {
 
 func (x *SplitByMaxSize) Reset() {
 	*x = SplitByMaxSize{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[182]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[183]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14684,7 +14796,7 @@ func (x *SplitByMaxSize) String() string {
 func (*SplitByMaxSize) ProtoMessage() {}
 
 func (x *SplitByMaxSize) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[182]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[183]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14697,7 +14809,7 @@ func (x *SplitByMaxSize) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SplitByMaxSize.ProtoReflect.Descriptor instead.
 func (*SplitByMaxSize) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{182}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{183}
 }
 
 func (x *SplitByMaxSize) GetMaxSize() int32 {
@@ -14716,7 +14828,7 @@ type SplitByEqualParts struct {
 
 func (x *SplitByEqualParts) Reset() {
 	*x = SplitByEqualParts{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[183]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[184]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14728,7 +14840,7 @@ func (x *SplitByEqualParts) String() string {
 func (*SplitByEqualParts) ProtoMessage() {}
 
 func (x *SplitByEqualParts) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[183]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[184]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14741,7 +14853,7 @@ func (x *SplitByEqualParts) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SplitByEqualParts.ProtoReflect.Descriptor instead.
 func (*SplitByEqualParts) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{183}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{184}
 }
 
 func (x *SplitByEqualParts) GetPartSize() int32 {
@@ -14809,7 +14921,7 @@ type EpicEntrypoint struct {
 
 func (x *EpicEntrypoint) Reset() {
 	*x = EpicEntrypoint{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[184]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[185]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14821,7 +14933,7 @@ func (x *EpicEntrypoint) String() string {
 func (*EpicEntrypoint) ProtoMessage() {}
 
 func (x *EpicEntrypoint) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[184]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[185]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -14834,7 +14946,7 @@ func (x *EpicEntrypoint) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EpicEntrypoint.ProtoReflect.Descriptor instead.
 func (*EpicEntrypoint) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{184}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{185}
 }
 
 func (x *EpicEntrypoint) GetCron() string {
@@ -14984,7 +15096,7 @@ type RuntimeValues struct {
 
 func (x *RuntimeValues) Reset() {
 	*x = RuntimeValues{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[185]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[186]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -14996,7 +15108,7 @@ func (x *RuntimeValues) String() string {
 func (*RuntimeValues) ProtoMessage() {}
 
 func (x *RuntimeValues) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[185]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[186]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15009,7 +15121,7 @@ func (x *RuntimeValues) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RuntimeValues.ProtoReflect.Descriptor instead.
 func (*RuntimeValues) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{185}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{186}
 }
 
 func (x *RuntimeValues) GetState() commons.EventState {
@@ -15113,7 +15225,7 @@ type EntityURL struct {
 
 func (x *EntityURL) Reset() {
 	*x = EntityURL{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[186]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[187]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15125,7 +15237,7 @@ func (x *EntityURL) String() string {
 func (*EntityURL) ProtoMessage() {}
 
 func (x *EntityURL) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[186]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[187]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15138,7 +15250,7 @@ func (x *EntityURL) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EntityURL.ProtoReflect.Descriptor instead.
 func (*EntityURL) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{186}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{187}
 }
 
 func (x *EntityURL) GetEntityType() EpicEntityType {
@@ -15163,7 +15275,7 @@ type SampleRequest struct {
 
 func (x *SampleRequest) Reset() {
 	*x = SampleRequest{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[187]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[188]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15175,7 +15287,7 @@ func (x *SampleRequest) String() string {
 func (*SampleRequest) ProtoMessage() {}
 
 func (x *SampleRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[187]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[188]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15188,7 +15300,7 @@ func (x *SampleRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SampleRequest.ProtoReflect.Descriptor instead.
 func (*SampleRequest) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{187}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{188}
 }
 
 type EHREntityType struct {
@@ -15200,7 +15312,7 @@ type EHREntityType struct {
 
 func (x *EHREntityType) Reset() {
 	*x = EHREntityType{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[188]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[189]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15212,7 +15324,7 @@ func (x *EHREntityType) String() string {
 func (*EHREntityType) ProtoMessage() {}
 
 func (x *EHREntityType) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[188]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[189]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15225,7 +15337,7 @@ func (x *EHREntityType) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EHREntityType.ProtoReflect.Descriptor instead.
 func (*EHREntityType) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{188}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{189}
 }
 
 func (x *EHREntityType) GetEpicEntity() EpicEntityType {
@@ -15270,7 +15382,7 @@ type FinviEntrypoint struct {
 
 func (x *FinviEntrypoint) Reset() {
 	*x = FinviEntrypoint{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[189]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[190]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15282,7 +15394,7 @@ func (x *FinviEntrypoint) String() string {
 func (*FinviEntrypoint) ProtoMessage() {}
 
 func (x *FinviEntrypoint) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[189]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[190]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15295,7 +15407,7 @@ func (x *FinviEntrypoint) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FinviEntrypoint.ProtoReflect.Descriptor instead.
 func (*FinviEntrypoint) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{189}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{190}
 }
 
 func (x *FinviEntrypoint) GetPoolId() string {
@@ -15357,7 +15469,7 @@ type ContactManagementEnrichment struct {
 
 func (x *ContactManagementEnrichment) Reset() {
 	*x = ContactManagementEnrichment{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[190]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[191]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15369,7 +15481,7 @@ func (x *ContactManagementEnrichment) String() string {
 func (*ContactManagementEnrichment) ProtoMessage() {}
 
 func (x *ContactManagementEnrichment) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[190]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[191]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15382,7 +15494,7 @@ func (x *ContactManagementEnrichment) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ContactManagementEnrichment.ProtoReflect.Descriptor instead.
 func (*ContactManagementEnrichment) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{190}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{191}
 }
 
 func (x *ContactManagementEnrichment) GetProjectId() string {
@@ -15444,7 +15556,7 @@ type TicketExchangeSink struct {
 
 func (x *TicketExchangeSink) Reset() {
 	*x = TicketExchangeSink{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[191]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[192]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15456,7 +15568,7 @@ func (x *TicketExchangeSink) String() string {
 func (*TicketExchangeSink) ProtoMessage() {}
 
 func (x *TicketExchangeSink) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[191]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[192]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15469,7 +15581,7 @@ func (x *TicketExchangeSink) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TicketExchangeSink.ProtoReflect.Descriptor instead.
 func (*TicketExchangeSink) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{191}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{192}
 }
 
 func (x *TicketExchangeSink) GetProjectId() string {
@@ -15502,7 +15614,7 @@ type ElementError_InvalidExpression struct {
 
 func (x *ElementError_InvalidExpression) Reset() {
 	*x = ElementError_InvalidExpression{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[192]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[193]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15514,7 +15626,7 @@ func (x *ElementError_InvalidExpression) String() string {
 func (*ElementError_InvalidExpression) ProtoMessage() {}
 
 func (x *ElementError_InvalidExpression) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[192]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[193]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15546,7 +15658,7 @@ type ElementError_MissingField struct {
 
 func (x *ElementError_MissingField) Reset() {
 	*x = ElementError_MissingField{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[193]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[194]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15558,7 +15670,7 @@ func (x *ElementError_MissingField) String() string {
 func (*ElementError_MissingField) ProtoMessage() {}
 
 func (x *ElementError_MissingField) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[193]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[194]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15597,7 +15709,7 @@ type ElementError_BadFieldType struct {
 
 func (x *ElementError_BadFieldType) Reset() {
 	*x = ElementError_BadFieldType{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[194]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[195]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15609,7 +15721,7 @@ func (x *ElementError_BadFieldType) String() string {
 func (*ElementError_BadFieldType) ProtoMessage() {}
 
 func (x *ElementError_BadFieldType) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[194]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[195]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15642,7 +15754,7 @@ type ProcessFields_NestedField struct {
 
 func (x *ProcessFields_NestedField) Reset() {
 	*x = ProcessFields_NestedField{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[195]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[196]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15654,7 +15766,7 @@ func (x *ProcessFields_NestedField) String() string {
 func (*ProcessFields_NestedField) ProtoMessage() {}
 
 func (x *ProcessFields_NestedField) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[195]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[196]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15697,7 +15809,7 @@ type ProcessFields_Field struct {
 
 func (x *ProcessFields_Field) Reset() {
 	*x = ProcessFields_Field{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[196]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[197]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15709,7 +15821,7 @@ func (x *ProcessFields_Field) String() string {
 func (*ProcessFields_Field) ProtoMessage() {}
 
 func (x *ProcessFields_Field) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[196]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[197]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15762,7 +15874,7 @@ type LookupProcess_ComplProcess struct {
 
 func (x *LookupProcess_ComplProcess) Reset() {
 	*x = LookupProcess_ComplProcess{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[202]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[203]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15774,7 +15886,7 @@ func (x *LookupProcess_ComplProcess) String() string {
 func (*LookupProcess_ComplProcess) ProtoMessage() {}
 
 func (x *LookupProcess_ComplProcess) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[202]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[203]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15810,7 +15922,7 @@ type LookupProcess_ListLookup struct {
 
 func (x *LookupProcess_ListLookup) Reset() {
 	*x = LookupProcess_ListLookup{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[203]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[204]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15822,7 +15934,7 @@ func (x *LookupProcess_ListLookup) String() string {
 func (*LookupProcess_ListLookup) ProtoMessage() {}
 
 func (x *LookupProcess_ListLookup) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[203]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[204]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15878,7 +15990,7 @@ type LookupProcess_UrlLookup struct {
 
 func (x *LookupProcess_UrlLookup) Reset() {
 	*x = LookupProcess_UrlLookup{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[204]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[205]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15890,7 +16002,7 @@ func (x *LookupProcess_UrlLookup) String() string {
 func (*LookupProcess_UrlLookup) ProtoMessage() {}
 
 func (x *LookupProcess_UrlLookup) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[204]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[205]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -15937,7 +16049,7 @@ type FilterCheck_Value struct {
 
 func (x *FilterCheck_Value) Reset() {
 	*x = FilterCheck_Value{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[205]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[206]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -15949,7 +16061,7 @@ func (x *FilterCheck_Value) String() string {
 func (*FilterCheck_Value) ProtoMessage() {}
 
 func (x *FilterCheck_Value) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[205]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[206]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16074,7 +16186,7 @@ type FilterCheck_ValueComparison struct {
 
 func (x *FilterCheck_ValueComparison) Reset() {
 	*x = FilterCheck_ValueComparison{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[206]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[207]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16086,7 +16198,7 @@ func (x *FilterCheck_ValueComparison) String() string {
 func (*FilterCheck_ValueComparison) ProtoMessage() {}
 
 func (x *FilterCheck_ValueComparison) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[206]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[207]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16152,7 +16264,7 @@ type FilterCheck_TypeComparison struct {
 
 func (x *FilterCheck_TypeComparison) Reset() {
 	*x = FilterCheck_TypeComparison{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[207]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[208]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16164,7 +16276,7 @@ func (x *FilterCheck_TypeComparison) String() string {
 func (*FilterCheck_TypeComparison) ProtoMessage() {}
 
 func (x *FilterCheck_TypeComparison) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[207]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[208]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16215,7 +16327,7 @@ type FilterCheck_ListComparison struct {
 
 func (x *FilterCheck_ListComparison) Reset() {
 	*x = FilterCheck_ListComparison{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[208]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[209]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16227,7 +16339,7 @@ func (x *FilterCheck_ListComparison) String() string {
 func (*FilterCheck_ListComparison) ProtoMessage() {}
 
 func (x *FilterCheck_ListComparison) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[208]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[209]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16277,7 +16389,7 @@ type FilterCheck_ListComparison_FieldOrVal struct {
 
 func (x *FilterCheck_ListComparison_FieldOrVal) Reset() {
 	*x = FilterCheck_ListComparison_FieldOrVal{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[209]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[210]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16289,7 +16401,7 @@ func (x *FilterCheck_ListComparison_FieldOrVal) String() string {
 func (*FilterCheck_ListComparison_FieldOrVal) ProtoMessage() {}
 
 func (x *FilterCheck_ListComparison_FieldOrVal) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[209]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[210]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16356,7 +16468,7 @@ type ReshapeAction_Rename struct {
 
 func (x *ReshapeAction_Rename) Reset() {
 	*x = ReshapeAction_Rename{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[211]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[212]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16368,7 +16480,7 @@ func (x *ReshapeAction_Rename) String() string {
 func (*ReshapeAction_Rename) ProtoMessage() {}
 
 func (x *ReshapeAction_Rename) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[211]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[212]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16381,7 +16493,7 @@ func (x *ReshapeAction_Rename) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_Rename.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_Rename) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{131, 0}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{132, 0}
 }
 
 func (x *ReshapeAction_Rename) GetNewName() string {
@@ -16402,7 +16514,7 @@ type ReshapeAction_AddValue struct {
 
 func (x *ReshapeAction_AddValue) Reset() {
 	*x = ReshapeAction_AddValue{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[212]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[213]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16414,7 +16526,7 @@ func (x *ReshapeAction_AddValue) String() string {
 func (*ReshapeAction_AddValue) ProtoMessage() {}
 
 func (x *ReshapeAction_AddValue) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[212]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[213]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16427,7 +16539,7 @@ func (x *ReshapeAction_AddValue) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_AddValue.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_AddValue) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{131, 1}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{132, 1}
 }
 
 func (x *ReshapeAction_AddValue) GetValue() float64 {
@@ -16439,15 +16551,16 @@ func (x *ReshapeAction_AddValue) GetValue() float64 {
 
 // add or subtract a datetime modifier to the field
 type ReshapeAction_AddDate struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Datetime      *DateTimeModifier      `protobuf:"bytes,45,opt,name=datetime,proto3" json:"datetime,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                 protoimpl.MessageState `protogen:"open.v1"`
+	Datetime              *DateTimeModifier      `protobuf:"bytes,45,opt,name=datetime,proto3" json:"datetime,omitempty"`
+	DatetimeFieldModifier *DateTimeFieldModifier `protobuf:"bytes,46,opt,name=datetime_field_modifier,json=datetimeFieldModifier,proto3" json:"datetime_field_modifier,omitempty"`
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
 }
 
 func (x *ReshapeAction_AddDate) Reset() {
 	*x = ReshapeAction_AddDate{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[213]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[214]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16459,7 +16572,7 @@ func (x *ReshapeAction_AddDate) String() string {
 func (*ReshapeAction_AddDate) ProtoMessage() {}
 
 func (x *ReshapeAction_AddDate) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[213]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[214]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16472,12 +16585,19 @@ func (x *ReshapeAction_AddDate) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_AddDate.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_AddDate) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{131, 2}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{132, 2}
 }
 
 func (x *ReshapeAction_AddDate) GetDatetime() *DateTimeModifier {
 	if x != nil {
 		return x.Datetime
+	}
+	return nil
+}
+
+func (x *ReshapeAction_AddDate) GetDatetimeFieldModifier() *DateTimeFieldModifier {
+	if x != nil {
+		return x.DatetimeFieldModifier
 	}
 	return nil
 }
@@ -16493,7 +16613,7 @@ type ReshapeAction_AddField struct {
 
 func (x *ReshapeAction_AddField) Reset() {
 	*x = ReshapeAction_AddField{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[214]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[215]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16505,7 +16625,7 @@ func (x *ReshapeAction_AddField) String() string {
 func (*ReshapeAction_AddField) ProtoMessage() {}
 
 func (x *ReshapeAction_AddField) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[214]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[215]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16518,7 +16638,7 @@ func (x *ReshapeAction_AddField) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_AddField.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_AddField) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{131, 3}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{132, 3}
 }
 
 func (x *ReshapeAction_AddField) GetOtherField() *FieldIndex {
@@ -16539,7 +16659,7 @@ type ReshapeAction_SubtractValue struct {
 
 func (x *ReshapeAction_SubtractValue) Reset() {
 	*x = ReshapeAction_SubtractValue{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[215]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[216]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16551,7 +16671,7 @@ func (x *ReshapeAction_SubtractValue) String() string {
 func (*ReshapeAction_SubtractValue) ProtoMessage() {}
 
 func (x *ReshapeAction_SubtractValue) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[215]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[216]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16564,7 +16684,7 @@ func (x *ReshapeAction_SubtractValue) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_SubtractValue.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_SubtractValue) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{131, 4}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{132, 4}
 }
 
 func (x *ReshapeAction_SubtractValue) GetValue() float64 {
@@ -16585,7 +16705,7 @@ type ReshapeAction_SubtractField struct {
 
 func (x *ReshapeAction_SubtractField) Reset() {
 	*x = ReshapeAction_SubtractField{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[216]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[217]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16597,7 +16717,7 @@ func (x *ReshapeAction_SubtractField) String() string {
 func (*ReshapeAction_SubtractField) ProtoMessage() {}
 
 func (x *ReshapeAction_SubtractField) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[216]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[217]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16610,7 +16730,7 @@ func (x *ReshapeAction_SubtractField) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_SubtractField.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_SubtractField) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{131, 5}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{132, 5}
 }
 
 func (x *ReshapeAction_SubtractField) GetOtherField() *FieldIndex {
@@ -16634,7 +16754,7 @@ type ReshapeAction_Convert struct {
 
 func (x *ReshapeAction_Convert) Reset() {
 	*x = ReshapeAction_Convert{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[217]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[218]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16646,7 +16766,7 @@ func (x *ReshapeAction_Convert) String() string {
 func (*ReshapeAction_Convert) ProtoMessage() {}
 
 func (x *ReshapeAction_Convert) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[217]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[218]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16659,7 +16779,7 @@ func (x *ReshapeAction_Convert) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_Convert.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_Convert) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{131, 6}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{132, 6}
 }
 
 // Deprecated: Marked as deprecated in api/v0alpha/lms.proto.
@@ -16697,7 +16817,7 @@ type ReshapeAction_Divide struct {
 
 func (x *ReshapeAction_Divide) Reset() {
 	*x = ReshapeAction_Divide{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[218]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[219]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16709,7 +16829,7 @@ func (x *ReshapeAction_Divide) String() string {
 func (*ReshapeAction_Divide) ProtoMessage() {}
 
 func (x *ReshapeAction_Divide) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[218]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[219]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16722,7 +16842,7 @@ func (x *ReshapeAction_Divide) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_Divide.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_Divide) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{131, 7}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{132, 7}
 }
 
 func (x *ReshapeAction_Divide) GetDefaultValue() float64 {
@@ -16752,7 +16872,7 @@ type ReshapeAction_Multiply struct {
 
 func (x *ReshapeAction_Multiply) Reset() {
 	*x = ReshapeAction_Multiply{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[219]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[220]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16764,7 +16884,7 @@ func (x *ReshapeAction_Multiply) String() string {
 func (*ReshapeAction_Multiply) ProtoMessage() {}
 
 func (x *ReshapeAction_Multiply) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[219]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[220]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16777,7 +16897,7 @@ func (x *ReshapeAction_Multiply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_Multiply.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_Multiply) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{131, 8}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{132, 8}
 }
 
 func (x *ReshapeAction_Multiply) GetDefaultValue() float64 {
@@ -16807,7 +16927,7 @@ type ReshapeAction_Modulo struct {
 
 func (x *ReshapeAction_Modulo) Reset() {
 	*x = ReshapeAction_Modulo{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[220]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[221]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16819,7 +16939,7 @@ func (x *ReshapeAction_Modulo) String() string {
 func (*ReshapeAction_Modulo) ProtoMessage() {}
 
 func (x *ReshapeAction_Modulo) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[220]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[221]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16832,7 +16952,7 @@ func (x *ReshapeAction_Modulo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_Modulo.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_Modulo) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{131, 9}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{132, 9}
 }
 
 func (x *ReshapeAction_Modulo) GetDefaultValue() int32 {
@@ -16858,7 +16978,7 @@ type ReshapeAction_RemoveField struct {
 
 func (x *ReshapeAction_RemoveField) Reset() {
 	*x = ReshapeAction_RemoveField{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[221]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[222]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16870,7 +16990,7 @@ func (x *ReshapeAction_RemoveField) String() string {
 func (*ReshapeAction_RemoveField) ProtoMessage() {}
 
 func (x *ReshapeAction_RemoveField) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[221]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[222]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16883,7 +17003,7 @@ func (x *ReshapeAction_RemoveField) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_RemoveField.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_RemoveField) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{131, 10}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{132, 10}
 }
 
 // will add "field" to the record with default starting value
@@ -16897,7 +17017,7 @@ type ReshapeAction_AddNewField struct {
 
 func (x *ReshapeAction_AddNewField) Reset() {
 	*x = ReshapeAction_AddNewField{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[222]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[223]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16909,7 +17029,7 @@ func (x *ReshapeAction_AddNewField) String() string {
 func (*ReshapeAction_AddNewField) ProtoMessage() {}
 
 func (x *ReshapeAction_AddNewField) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[222]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[223]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16922,7 +17042,7 @@ func (x *ReshapeAction_AddNewField) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_AddNewField.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_AddNewField) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{131, 11}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{132, 11}
 }
 
 func (x *ReshapeAction_AddNewField) GetStartingValue() *RecordFieldProto {
@@ -16943,7 +17063,7 @@ type ReshapeAction_AddNewFieldFromField struct {
 
 func (x *ReshapeAction_AddNewFieldFromField) Reset() {
 	*x = ReshapeAction_AddNewFieldFromField{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[223]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[224]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16955,7 +17075,7 @@ func (x *ReshapeAction_AddNewFieldFromField) String() string {
 func (*ReshapeAction_AddNewFieldFromField) ProtoMessage() {}
 
 func (x *ReshapeAction_AddNewFieldFromField) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[223]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[224]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16968,7 +17088,7 @@ func (x *ReshapeAction_AddNewFieldFromField) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use ReshapeAction_AddNewFieldFromField.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_AddNewFieldFromField) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{131, 12}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{132, 12}
 }
 
 func (x *ReshapeAction_AddNewFieldFromField) GetName() string {
@@ -16994,7 +17114,7 @@ type ReshapeAction_ChangeCurrencyType struct {
 
 func (x *ReshapeAction_ChangeCurrencyType) Reset() {
 	*x = ReshapeAction_ChangeCurrencyType{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[224]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[225]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17006,7 +17126,7 @@ func (x *ReshapeAction_ChangeCurrencyType) String() string {
 func (*ReshapeAction_ChangeCurrencyType) ProtoMessage() {}
 
 func (x *ReshapeAction_ChangeCurrencyType) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[224]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[225]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17019,7 +17139,7 @@ func (x *ReshapeAction_ChangeCurrencyType) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_ChangeCurrencyType.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_ChangeCurrencyType) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{131, 13}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{132, 13}
 }
 
 // will set field with the value
@@ -17032,7 +17152,7 @@ type ReshapeAction_SetFieldValue struct {
 
 func (x *ReshapeAction_SetFieldValue) Reset() {
 	*x = ReshapeAction_SetFieldValue{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[225]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[226]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17044,7 +17164,7 @@ func (x *ReshapeAction_SetFieldValue) String() string {
 func (*ReshapeAction_SetFieldValue) ProtoMessage() {}
 
 func (x *ReshapeAction_SetFieldValue) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[225]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[226]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17057,7 +17177,7 @@ func (x *ReshapeAction_SetFieldValue) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_SetFieldValue.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_SetFieldValue) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{131, 14}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{132, 14}
 }
 
 func (x *ReshapeAction_SetFieldValue) GetValue() *RecordFieldProto {
@@ -17078,7 +17198,7 @@ type ReshapeAction_SetFieldFromField struct {
 
 func (x *ReshapeAction_SetFieldFromField) Reset() {
 	*x = ReshapeAction_SetFieldFromField{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[226]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[227]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17090,7 +17210,7 @@ func (x *ReshapeAction_SetFieldFromField) String() string {
 func (*ReshapeAction_SetFieldFromField) ProtoMessage() {}
 
 func (x *ReshapeAction_SetFieldFromField) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[226]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[227]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17103,7 +17223,7 @@ func (x *ReshapeAction_SetFieldFromField) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_SetFieldFromField.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_SetFieldFromField) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{131, 15}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{132, 15}
 }
 
 func (x *ReshapeAction_SetFieldFromField) GetName() string {
@@ -17131,7 +17251,7 @@ type ReshapeAction_Merge struct {
 
 func (x *ReshapeAction_Merge) Reset() {
 	*x = ReshapeAction_Merge{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[227]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[228]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17143,7 +17263,7 @@ func (x *ReshapeAction_Merge) String() string {
 func (*ReshapeAction_Merge) ProtoMessage() {}
 
 func (x *ReshapeAction_Merge) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[227]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[228]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17156,7 +17276,7 @@ func (x *ReshapeAction_Merge) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_Merge.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_Merge) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{131, 16}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{132, 16}
 }
 
 func (x *ReshapeAction_Merge) GetData() []*ReshapeAction_Merge_FieldOrVal {
@@ -17182,7 +17302,7 @@ type ReshapeAction_Pad struct {
 
 func (x *ReshapeAction_Pad) Reset() {
 	*x = ReshapeAction_Pad{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[228]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[229]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17194,7 +17314,7 @@ func (x *ReshapeAction_Pad) String() string {
 func (*ReshapeAction_Pad) ProtoMessage() {}
 
 func (x *ReshapeAction_Pad) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[228]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[229]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17207,7 +17327,7 @@ func (x *ReshapeAction_Pad) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_Pad.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_Pad) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{131, 17}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{132, 17}
 }
 
 func (x *ReshapeAction_Pad) GetChar() string {
@@ -17249,7 +17369,7 @@ type ReshapeAction_Trim struct {
 
 func (x *ReshapeAction_Trim) Reset() {
 	*x = ReshapeAction_Trim{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[229]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[230]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17261,7 +17381,7 @@ func (x *ReshapeAction_Trim) String() string {
 func (*ReshapeAction_Trim) ProtoMessage() {}
 
 func (x *ReshapeAction_Trim) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[229]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[230]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17274,7 +17394,7 @@ func (x *ReshapeAction_Trim) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_Trim.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_Trim) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{131, 18}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{132, 18}
 }
 
 func (x *ReshapeAction_Trim) GetOpt() isReshapeAction_Trim_Opt {
@@ -17363,7 +17483,7 @@ type ReshapeAction_Extract struct {
 
 func (x *ReshapeAction_Extract) Reset() {
 	*x = ReshapeAction_Extract{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[230]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[231]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17375,7 +17495,7 @@ func (x *ReshapeAction_Extract) String() string {
 func (*ReshapeAction_Extract) ProtoMessage() {}
 
 func (x *ReshapeAction_Extract) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[230]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[231]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17388,7 +17508,7 @@ func (x *ReshapeAction_Extract) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_Extract.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_Extract) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{131, 19}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{132, 19}
 }
 
 func (x *ReshapeAction_Extract) GetParts() []*ReshapeAction_Extract_Slice {
@@ -17411,7 +17531,7 @@ type ReshapeAction_Merge_FieldOrVal struct {
 
 func (x *ReshapeAction_Merge_FieldOrVal) Reset() {
 	*x = ReshapeAction_Merge_FieldOrVal{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[231]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[232]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17423,7 +17543,7 @@ func (x *ReshapeAction_Merge_FieldOrVal) String() string {
 func (*ReshapeAction_Merge_FieldOrVal) ProtoMessage() {}
 
 func (x *ReshapeAction_Merge_FieldOrVal) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[231]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[232]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17436,7 +17556,7 @@ func (x *ReshapeAction_Merge_FieldOrVal) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_Merge_FieldOrVal.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_Merge_FieldOrVal) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{131, 16, 0}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{132, 16, 0}
 }
 
 func (x *ReshapeAction_Merge_FieldOrVal) GetVal() isReshapeAction_Merge_FieldOrVal_Val {
@@ -17494,7 +17614,7 @@ type ReshapeAction_Extract_Index struct {
 
 func (x *ReshapeAction_Extract_Index) Reset() {
 	*x = ReshapeAction_Extract_Index{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[232]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[233]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17506,7 +17626,7 @@ func (x *ReshapeAction_Extract_Index) String() string {
 func (*ReshapeAction_Extract_Index) ProtoMessage() {}
 
 func (x *ReshapeAction_Extract_Index) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[232]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[233]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17519,7 +17639,7 @@ func (x *ReshapeAction_Extract_Index) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_Extract_Index.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_Extract_Index) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{131, 19, 0}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{132, 19, 0}
 }
 
 func (x *ReshapeAction_Extract_Index) GetVal() isReshapeAction_Extract_Index_Val {
@@ -17586,7 +17706,7 @@ type ReshapeAction_Extract_Slice struct {
 
 func (x *ReshapeAction_Extract_Slice) Reset() {
 	*x = ReshapeAction_Extract_Slice{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[233]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[234]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17598,7 +17718,7 @@ func (x *ReshapeAction_Extract_Slice) String() string {
 func (*ReshapeAction_Extract_Slice) ProtoMessage() {}
 
 func (x *ReshapeAction_Extract_Slice) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[233]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[234]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17611,7 +17731,7 @@ func (x *ReshapeAction_Extract_Slice) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_Extract_Slice.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_Extract_Slice) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{131, 19, 1}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{132, 19, 1}
 }
 
 func (x *ReshapeAction_Extract_Slice) GetStartIsExclusive() bool {
@@ -17653,7 +17773,7 @@ type ContactManagerSink_DeDuplication struct {
 
 func (x *ContactManagerSink_DeDuplication) Reset() {
 	*x = ContactManagerSink_DeDuplication{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[234]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[235]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17665,7 +17785,7 @@ func (x *ContactManagerSink_DeDuplication) String() string {
 func (*ContactManagerSink_DeDuplication) ProtoMessage() {}
 
 func (x *ContactManagerSink_DeDuplication) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[234]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[235]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17678,7 +17798,7 @@ func (x *ContactManagerSink_DeDuplication) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ContactManagerSink_DeDuplication.ProtoReflect.Descriptor instead.
 func (*ContactManagerSink_DeDuplication) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{132, 0}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{133, 0}
 }
 
 func (x *ContactManagerSink_DeDuplication) GetFieldType() ContactManagerSink_DeDuplicationFieldType {
@@ -18493,14 +18613,28 @@ const file_api_v0alpha_lms_proto_rawDesc = "" +
 	"local_part\x18\x01 \x01(\tR\tlocalPart\x12\x16\n" +
 	"\x06domain\x18\x02 \x01(\tR\x06domain\x12!\n" +
 	"\ffull_address\x18\x03 \x01(\tR\vfullAddress\x12\x18\n" +
-	"\ainvalid\x18\x04 \x01(\bR\ainvalid\"\x9c\x01\n" +
+	"\ainvalid\x18\x04 \x01(\bR\ainvalid\"\xb8\x01\n" +
 	"\x10DateTimeModifier\x12\x14\n" +
 	"\x05years\x18\x01 \x01(\x05R\x05years\x12\x14\n" +
 	"\x05weeks\x18\x03 \x01(\x05R\x05weeks\x12\x12\n" +
 	"\x04days\x18\x04 \x01(\x05R\x04days\x12\x14\n" +
 	"\x05hours\x18\x05 \x01(\x05R\x05hours\x12\x18\n" +
 	"\aminutes\x18\x06 \x01(\x05R\aminutes\x12\x18\n" +
-	"\aseconds\x18\a \x01(\x05R\aseconds\"\xb8\x01\n" +
+	"\aseconds\x18\a \x01(\x05R\aseconds\x12\x1a\n" +
+	"\bduration\x18\b \x01(\tR\bduration\"\xa2\x02\n" +
+	"\x15DateTimeFieldModifier\x12\x1f\n" +
+	"\vyears_field\x18\x01 \x01(\tR\n" +
+	"yearsField\x12\x1f\n" +
+	"\vweeks_field\x18\x03 \x01(\tR\n" +
+	"weeksField\x12\x1d\n" +
+	"\n" +
+	"days_field\x18\x04 \x01(\tR\tdaysField\x12\x1f\n" +
+	"\vhours_field\x18\x05 \x01(\tR\n" +
+	"hoursField\x12#\n" +
+	"\rminutes_field\x18\x06 \x01(\tR\fminutesField\x12#\n" +
+	"\rseconds_field\x18\a \x01(\tR\fsecondsField\x12%\n" +
+	"\x0eduration_field\x18\b \x01(\tR\rdurationField\x12\x16\n" +
+	"\x06negate\x18\t \x01(\bR\x06negate\"\xb8\x01\n" +
 	"\bDateTime\x12\x1b\n" +
 	"\traw_value\x18\x01 \x01(\tR\brawValue\x12\x16\n" +
 	"\x06format\x18\x02 \x01(\tR\x06format\x12<\n" +
@@ -18623,7 +18757,7 @@ const file_api_v0alpha_lms_proto_rawDesc = "" +
 	"\x0fskip_first_line\x18\x0e \x01(\bR\rskipFirstLine\x12\"\n" +
 	"\rjson_dot_path\x18\x0f \x01(\tR\vjsonDotPath\"F\n" +
 	"\x0eReshapeProcess\x124\n" +
-	"\aactions\x18\x01 \x03(\v2\x1a.api.v0alpha.ReshapeActionR\aactions\"\xeb\x1b\n" +
+	"\aactions\x18\x01 \x03(\v2\x1a.api.v0alpha.ReshapeActionR\aactions\"\xc8\x1c\n" +
 	"\rReshapeAction\x12\x14\n" +
 	"\x05field\x18\x13 \x01(\tR\x05field\x12@\n" +
 	"\rmatching_type\x18\x14 \x01(\x0e2\x17.api.commons.RecordTypeB\x02\x18\x01R\fmatchingType\x12:\n" +
@@ -18655,9 +18789,10 @@ const file_api_v0alpha_lms_proto_rawDesc = "" +
 	"\bnew_name\x18\n" +
 	" \x01(\tR\anewName\x1a \n" +
 	"\bAddValue\x12\x14\n" +
-	"\x05value\x18\v \x01(\x01R\x05value\x1aD\n" +
+	"\x05value\x18\v \x01(\x01R\x05value\x1a\xa0\x01\n" +
 	"\aAddDate\x129\n" +
-	"\bdatetime\x18- \x01(\v2\x1d.api.v0alpha.DateTimeModifierR\bdatetime\x1aD\n" +
+	"\bdatetime\x18- \x01(\v2\x1d.api.v0alpha.DateTimeModifierR\bdatetime\x12Z\n" +
+	"\x17datetime_field_modifier\x18. \x01(\v2\".api.v0alpha.DateTimeFieldModifierR\x15datetimeFieldModifier\x1aD\n" +
 	"\bAddField\x128\n" +
 	"\vother_field\x18\f \x01(\v2\x17.api.v0alpha.FieldIndexR\n" +
 	"otherField\x1a%\n" +
@@ -19233,7 +19368,7 @@ func file_api_v0alpha_lms_proto_rawDescGZIP() []byte {
 }
 
 var file_api_v0alpha_lms_proto_enumTypes = make([]protoimpl.EnumInfo, 5)
-var file_api_v0alpha_lms_proto_msgTypes = make([]protoimpl.MessageInfo, 238)
+var file_api_v0alpha_lms_proto_msgTypes = make([]protoimpl.MessageInfo, 239)
 var file_api_v0alpha_lms_proto_goTypes = []any{
 	(TimeUnit)(0),       // 0: api.v0alpha.TimeUnit
 	(EpicEntityType)(0), // 1: api.v0alpha.EpicEntityType
@@ -19360,161 +19495,162 @@ var file_api_v0alpha_lms_proto_goTypes = []any{
 	(*PostalCode)(nil),                                 // 122: api.v0alpha.PostalCode
 	(*Email)(nil),                                      // 123: api.v0alpha.Email
 	(*DateTimeModifier)(nil),                           // 124: api.v0alpha.DateTimeModifier
-	(*DateTime)(nil),                                   // 125: api.v0alpha.DateTime
-	(*EnrichedPhone)(nil),                              // 126: api.v0alpha.EnrichedPhone
-	(*EnrichedZip)(nil),                                // 127: api.v0alpha.EnrichedZip
-	(*Now)(nil),                                        // 128: api.v0alpha.Now
-	(*Timestamp)(nil),                                  // 129: api.v0alpha.Timestamp
-	(*Date)(nil),                                       // 130: api.v0alpha.Date
-	(*MonthAndDay)(nil),                                // 131: api.v0alpha.MonthAndDay
-	(*DayOfWeek)(nil),                                  // 132: api.v0alpha.DayOfWeek
-	(*TimeOfDay)(nil),                                  // 133: api.v0alpha.TimeOfDay
-	(*FileFormatParams)(nil),                           // 134: api.v0alpha.FileFormatParams
-	(*ReshapeProcess)(nil),                             // 135: api.v0alpha.ReshapeProcess
-	(*ReshapeAction)(nil),                              // 136: api.v0alpha.ReshapeAction
-	(*ContactManagerSink)(nil),                         // 137: api.v0alpha.ContactManagerSink
-	(*SumProcess)(nil),                                 // 138: api.v0alpha.SumProcess
-	(*GroupBy)(nil),                                    // 139: api.v0alpha.GroupBy
-	(*ListMetrics)(nil),                                // 140: api.v0alpha.ListMetrics
-	(*ParseReq)(nil),                                   // 141: api.v0alpha.ParseReq
-	(*ParseRes)(nil),                                   // 142: api.v0alpha.ParseRes
-	(*Event)(nil),                                      // 143: api.v0alpha.Event
-	(*Events)(nil),                                     // 144: api.v0alpha.Events
-	(*ViewQueueReq)(nil),                               // 145: api.v0alpha.ViewQueueReq
-	(*RetypeCollectionReq)(nil),                        // 146: api.v0alpha.RetypeCollectionReq
-	(*RetypeCollectionRes)(nil),                        // 147: api.v0alpha.RetypeCollectionRes
-	(*CollectionMetadata)(nil),                         // 148: api.v0alpha.CollectionMetadata
-	(*CollectionEntry)(nil),                            // 149: api.v0alpha.CollectionEntry
-	(*MatchReq)(nil),                                   // 150: api.v0alpha.MatchReq
-	(*MatchRes)(nil),                                   // 151: api.v0alpha.MatchRes
-	(*CollectionFieldMetadata)(nil),                    // 152: api.v0alpha.CollectionFieldMetadata
-	(*CollectionField)(nil),                            // 153: api.v0alpha.CollectionField
-	(*GetCollectionReq)(nil),                           // 154: api.v0alpha.GetCollectionReq
-	(*StreamCollectionReq)(nil),                        // 155: api.v0alpha.StreamCollectionReq
-	(*DeleteCollectionReq)(nil),                        // 156: api.v0alpha.DeleteCollectionReq
-	(*ResetCollectionReq)(nil),                         // 157: api.v0alpha.ResetCollectionReq
-	(*ListCollectionsReq)(nil),                         // 158: api.v0alpha.ListCollectionsReq
-	(*ListCollectionsRes)(nil),                         // 159: api.v0alpha.ListCollectionsRes
-	(*SearchCollectionsPaginatedReq)(nil),              // 160: api.v0alpha.SearchCollectionsPaginatedReq
-	(*Search)(nil),                                     // 161: api.v0alpha.Search
-	(*PaginatedSearchRes)(nil),                         // 162: api.v0alpha.PaginatedSearchRes
-	(*GetCollectionEntriesReq)(nil),                    // 163: api.v0alpha.GetCollectionEntriesReq
-	(*GetCollectionEntriesRes)(nil),                    // 164: api.v0alpha.GetCollectionEntriesRes
-	(*DeleteCollectionEntryReq)(nil),                   // 165: api.v0alpha.DeleteCollectionEntryReq
-	(*ListCampaignLinksRes)(nil),                       // 166: api.v0alpha.ListCampaignLinksRes
-	(*Link)(nil),                                       // 167: api.v0alpha.Link
-	(*CjsSearchField)(nil),                             // 168: api.v0alpha.CjsSearchField
-	(*CjsSearchDefinitionMetadata)(nil),                // 169: api.v0alpha.CjsSearchDefinitionMetadata
-	(*CjsSearchDefinition)(nil),                        // 170: api.v0alpha.CjsSearchDefinition
-	(*GetCjsSearchDefinitionReq)(nil),                  // 171: api.v0alpha.GetCjsSearchDefinitionReq
-	(*DeleteCjsSearchDefinitionReq)(nil),               // 172: api.v0alpha.DeleteCjsSearchDefinitionReq
-	(*ListCjsSearchDefinitionsReq)(nil),                // 173: api.v0alpha.ListCjsSearchDefinitionsReq
-	(*ListCjsSearchDefinitionsRes)(nil),                // 174: api.v0alpha.ListCjsSearchDefinitionsRes
-	(*ExecuteCjsSearchDefinitionReq)(nil),              // 175: api.v0alpha.ExecuteCjsSearchDefinitionReq
-	(*ExecuteCjsSearchDefinitionRes)(nil),              // 176: api.v0alpha.ExecuteCjsSearchDefinitionRes
-	(*CollectionEntries)(nil),                          // 177: api.v0alpha.CollectionEntries
-	(*CjsExecuteSearchField)(nil),                      // 178: api.v0alpha.CjsExecuteSearchField
-	(*CjsSecureSearchCriteriaMetadata)(nil),            // 179: api.v0alpha.CjsSecureSearchCriteriaMetadata
-	(*CjsSecureSearchCriteria)(nil),                    // 180: api.v0alpha.CjsSecureSearchCriteria
-	(*GetCjsSecureSearchCriteriaReq)(nil),              // 181: api.v0alpha.GetCjsSecureSearchCriteriaReq
-	(*CjsSecureSearchCriteriaField)(nil),               // 182: api.v0alpha.CjsSecureSearchCriteriaField
-	(*SplitCriteria)(nil),                              // 183: api.v0alpha.SplitCriteria
-	(*UniquePair)(nil),                                 // 184: api.v0alpha.UniquePair
-	(*SplitByNamedUnique)(nil),                         // 185: api.v0alpha.SplitByNamedUnique
-	(*SplitByUnique)(nil),                              // 186: api.v0alpha.SplitByUnique
-	(*SplitByMaxSize)(nil),                             // 187: api.v0alpha.SplitByMaxSize
-	(*SplitByEqualParts)(nil),                          // 188: api.v0alpha.SplitByEqualParts
-	(*EpicEntrypoint)(nil),                             // 189: api.v0alpha.EpicEntrypoint
-	(*RuntimeValues)(nil),                              // 190: api.v0alpha.RuntimeValues
-	(*EntityURL)(nil),                                  // 191: api.v0alpha.EntityURL
-	(*SampleRequest)(nil),                              // 192: api.v0alpha.SampleRequest
-	(*EHREntityType)(nil),                              // 193: api.v0alpha.EHREntityType
-	(*FinviEntrypoint)(nil),                            // 194: api.v0alpha.FinviEntrypoint
-	(*ContactManagementEnrichment)(nil),                // 195: api.v0alpha.ContactManagementEnrichment
-	(*TicketExchangeSink)(nil),                         // 196: api.v0alpha.TicketExchangeSink
-	(*ElementError_InvalidExpression)(nil),             // 197: api.v0alpha.ElementError.InvalidExpression
-	(*ElementError_MissingField)(nil),                  // 198: api.v0alpha.ElementError.MissingField
-	(*ElementError_BadFieldType)(nil),                  // 199: api.v0alpha.ElementError.BadFieldType
-	(*ProcessFields_NestedField)(nil),                  // 200: api.v0alpha.ProcessFields.NestedField
-	(*ProcessFields_Field)(nil),                        // 201: api.v0alpha.ProcessFields.Field
-	nil,                                                // 202: api.v0alpha.ComplianceProcessor.CallMetadataEntry
-	nil,                                                // 203: api.v0alpha.PaymentLinkEnrichment.KeyMapEntry
-	nil,                                                // 204: api.v0alpha.PortalLinkEnrichment.KeyMapEntry
-	nil,                                                // 205: api.v0alpha.HttpReq.HeadersEntry
-	nil,                                                // 206: api.v0alpha.HttpReq.NamedResponseValuesEntry
-	(*LookupProcess_ComplProcess)(nil),                 // 207: api.v0alpha.LookupProcess.ComplProcess
-	(*LookupProcess_ListLookup)(nil),                   // 208: api.v0alpha.LookupProcess.ListLookup
-	(*LookupProcess_UrlLookup)(nil),                    // 209: api.v0alpha.LookupProcess.UrlLookup
-	(*FilterCheck_Value)(nil),                          // 210: api.v0alpha.FilterCheck.Value
-	(*FilterCheck_ValueComparison)(nil),                // 211: api.v0alpha.FilterCheck.ValueComparison
-	(*FilterCheck_TypeComparison)(nil),                 // 212: api.v0alpha.FilterCheck.TypeComparison
-	(*FilterCheck_ListComparison)(nil),                 // 213: api.v0alpha.FilterCheck.ListComparison
-	(*FilterCheck_ListComparison_FieldOrVal)(nil),      // 214: api.v0alpha.FilterCheck.ListComparison.FieldOrVal
-	nil,                                        // 215: api.v0alpha.RecordFieldMap.FieldsEntry
-	(*ReshapeAction_Rename)(nil),               // 216: api.v0alpha.ReshapeAction.Rename
-	(*ReshapeAction_AddValue)(nil),             // 217: api.v0alpha.ReshapeAction.AddValue
-	(*ReshapeAction_AddDate)(nil),              // 218: api.v0alpha.ReshapeAction.AddDate
-	(*ReshapeAction_AddField)(nil),             // 219: api.v0alpha.ReshapeAction.AddField
-	(*ReshapeAction_SubtractValue)(nil),        // 220: api.v0alpha.ReshapeAction.SubtractValue
-	(*ReshapeAction_SubtractField)(nil),        // 221: api.v0alpha.ReshapeAction.SubtractField
-	(*ReshapeAction_Convert)(nil),              // 222: api.v0alpha.ReshapeAction.Convert
-	(*ReshapeAction_Divide)(nil),               // 223: api.v0alpha.ReshapeAction.Divide
-	(*ReshapeAction_Multiply)(nil),             // 224: api.v0alpha.ReshapeAction.Multiply
-	(*ReshapeAction_Modulo)(nil),               // 225: api.v0alpha.ReshapeAction.Modulo
-	(*ReshapeAction_RemoveField)(nil),          // 226: api.v0alpha.ReshapeAction.RemoveField
-	(*ReshapeAction_AddNewField)(nil),          // 227: api.v0alpha.ReshapeAction.AddNewField
-	(*ReshapeAction_AddNewFieldFromField)(nil), // 228: api.v0alpha.ReshapeAction.AddNewFieldFromField
-	(*ReshapeAction_ChangeCurrencyType)(nil),   // 229: api.v0alpha.ReshapeAction.ChangeCurrencyType
-	(*ReshapeAction_SetFieldValue)(nil),        // 230: api.v0alpha.ReshapeAction.SetFieldValue
-	(*ReshapeAction_SetFieldFromField)(nil),    // 231: api.v0alpha.ReshapeAction.SetFieldFromField
-	(*ReshapeAction_Merge)(nil),                // 232: api.v0alpha.ReshapeAction.Merge
-	(*ReshapeAction_Pad)(nil),                  // 233: api.v0alpha.ReshapeAction.Pad
-	(*ReshapeAction_Trim)(nil),                 // 234: api.v0alpha.ReshapeAction.Trim
-	(*ReshapeAction_Extract)(nil),              // 235: api.v0alpha.ReshapeAction.Extract
-	(*ReshapeAction_Merge_FieldOrVal)(nil),     // 236: api.v0alpha.ReshapeAction.Merge.FieldOrVal
-	(*ReshapeAction_Extract_Index)(nil),        // 237: api.v0alpha.ReshapeAction.Extract.Index
-	(*ReshapeAction_Extract_Slice)(nil),        // 238: api.v0alpha.ReshapeAction.Extract.Slice
-	(*ContactManagerSink_DeDuplication)(nil),   // 239: api.v0alpha.ContactManagerSink.DeDuplication
-	nil,                                        // 240: api.v0alpha.RetypeCollectionReq.FieldTypesEntry
-	nil,                                        // 241: api.v0alpha.RuntimeValues.FileIdsEntry
-	nil,                                        // 242: api.v0alpha.RuntimeValues.PreliminaryVarsEntry
-	(*timestamppb.Timestamp)(nil),              // 243: google.protobuf.Timestamp
-	(commons.PipelineElementStatusType)(0),     // 244: api.commons.PipelineElementStatusType
-	(*wrapperspb.StringValue)(nil),             // 245: google.protobuf.StringValue
-	(commons.FieldType)(0),                     // 246: api.commons.FieldType
-	(commons.DateTimePrecision)(0),             // 247: api.commons.DateTimePrecision
-	(commons.FileFormat)(0),                    // 248: api.commons.FileFormat
-	(*commons.CommType)(nil),                   // 249: api.commons.CommType
-	(commons.RunType)(0),                       // 250: api.commons.RunType
-	(commons.ConsentActionType)(0),             // 251: api.commons.ConsentActionType
-	(commons.ContentType)(0),                   // 252: api.commons.ContentType
-	(commons.Channel)(0),                       // 253: api.commons.Channel
-	(*durationpb.Duration)(nil),                // 254: google.protobuf.Duration
-	(commons.HttpVerb)(0),                      // 255: api.commons.HttpVerb
-	(*commons.PaginationTerminator)(nil),       // 256: api.commons.PaginationTerminator
-	(*commons.FilePattern)(nil),                // 257: api.commons.FilePattern
-	(commons.EnrichmentType)(0),                // 258: api.commons.EnrichmentType
-	(commons.PrimarySource)(0),                 // 259: api.commons.PrimarySource
-	(commons.DedupKeyPolicy)(0),                // 260: api.commons.DedupKeyPolicy
-	(commons.ExportType)(0),                    // 261: api.commons.ExportType
-	(commons.ChainOperator)(0),                 // 262: api.commons.ChainOperator
-	(commons.DuplicatePolicyType)(0),           // 263: api.commons.DuplicatePolicyType
-	(commons.AbsentPolicyType)(0),              // 264: api.commons.AbsentPolicyType
-	(*commons.ConstructedFilename)(nil),        // 265: api.commons.ConstructedFilename
-	(commons.DialOrderType)(0),                 // 266: api.commons.DialOrderType
-	(commons.ComplianceListType)(0),            // 267: api.commons.ComplianceListType
-	(commons.DeDupActions)(0),                  // 268: api.commons.DeDupActions
-	(commons.SortOrder)(0),                     // 269: api.commons.SortOrder
-	(commons.RecordType)(0),                    // 270: api.commons.RecordType
-	(*commons.StringArraySql)(nil),             // 271: api.commons.StringArraySql
-	(*wrapperspb.Int64Value)(nil),              // 272: google.protobuf.Int64Value
-	(commons.EventState)(0),                    // 273: api.commons.EventState
-	(commons.CompareOperator)(0),               // 274: api.commons.CompareOperator
-	(*emptypb.Empty)(nil),                      // 275: google.protobuf.Empty
+	(*DateTimeFieldModifier)(nil),                      // 125: api.v0alpha.DateTimeFieldModifier
+	(*DateTime)(nil),                                   // 126: api.v0alpha.DateTime
+	(*EnrichedPhone)(nil),                              // 127: api.v0alpha.EnrichedPhone
+	(*EnrichedZip)(nil),                                // 128: api.v0alpha.EnrichedZip
+	(*Now)(nil),                                        // 129: api.v0alpha.Now
+	(*Timestamp)(nil),                                  // 130: api.v0alpha.Timestamp
+	(*Date)(nil),                                       // 131: api.v0alpha.Date
+	(*MonthAndDay)(nil),                                // 132: api.v0alpha.MonthAndDay
+	(*DayOfWeek)(nil),                                  // 133: api.v0alpha.DayOfWeek
+	(*TimeOfDay)(nil),                                  // 134: api.v0alpha.TimeOfDay
+	(*FileFormatParams)(nil),                           // 135: api.v0alpha.FileFormatParams
+	(*ReshapeProcess)(nil),                             // 136: api.v0alpha.ReshapeProcess
+	(*ReshapeAction)(nil),                              // 137: api.v0alpha.ReshapeAction
+	(*ContactManagerSink)(nil),                         // 138: api.v0alpha.ContactManagerSink
+	(*SumProcess)(nil),                                 // 139: api.v0alpha.SumProcess
+	(*GroupBy)(nil),                                    // 140: api.v0alpha.GroupBy
+	(*ListMetrics)(nil),                                // 141: api.v0alpha.ListMetrics
+	(*ParseReq)(nil),                                   // 142: api.v0alpha.ParseReq
+	(*ParseRes)(nil),                                   // 143: api.v0alpha.ParseRes
+	(*Event)(nil),                                      // 144: api.v0alpha.Event
+	(*Events)(nil),                                     // 145: api.v0alpha.Events
+	(*ViewQueueReq)(nil),                               // 146: api.v0alpha.ViewQueueReq
+	(*RetypeCollectionReq)(nil),                        // 147: api.v0alpha.RetypeCollectionReq
+	(*RetypeCollectionRes)(nil),                        // 148: api.v0alpha.RetypeCollectionRes
+	(*CollectionMetadata)(nil),                         // 149: api.v0alpha.CollectionMetadata
+	(*CollectionEntry)(nil),                            // 150: api.v0alpha.CollectionEntry
+	(*MatchReq)(nil),                                   // 151: api.v0alpha.MatchReq
+	(*MatchRes)(nil),                                   // 152: api.v0alpha.MatchRes
+	(*CollectionFieldMetadata)(nil),                    // 153: api.v0alpha.CollectionFieldMetadata
+	(*CollectionField)(nil),                            // 154: api.v0alpha.CollectionField
+	(*GetCollectionReq)(nil),                           // 155: api.v0alpha.GetCollectionReq
+	(*StreamCollectionReq)(nil),                        // 156: api.v0alpha.StreamCollectionReq
+	(*DeleteCollectionReq)(nil),                        // 157: api.v0alpha.DeleteCollectionReq
+	(*ResetCollectionReq)(nil),                         // 158: api.v0alpha.ResetCollectionReq
+	(*ListCollectionsReq)(nil),                         // 159: api.v0alpha.ListCollectionsReq
+	(*ListCollectionsRes)(nil),                         // 160: api.v0alpha.ListCollectionsRes
+	(*SearchCollectionsPaginatedReq)(nil),              // 161: api.v0alpha.SearchCollectionsPaginatedReq
+	(*Search)(nil),                                     // 162: api.v0alpha.Search
+	(*PaginatedSearchRes)(nil),                         // 163: api.v0alpha.PaginatedSearchRes
+	(*GetCollectionEntriesReq)(nil),                    // 164: api.v0alpha.GetCollectionEntriesReq
+	(*GetCollectionEntriesRes)(nil),                    // 165: api.v0alpha.GetCollectionEntriesRes
+	(*DeleteCollectionEntryReq)(nil),                   // 166: api.v0alpha.DeleteCollectionEntryReq
+	(*ListCampaignLinksRes)(nil),                       // 167: api.v0alpha.ListCampaignLinksRes
+	(*Link)(nil),                                       // 168: api.v0alpha.Link
+	(*CjsSearchField)(nil),                             // 169: api.v0alpha.CjsSearchField
+	(*CjsSearchDefinitionMetadata)(nil),                // 170: api.v0alpha.CjsSearchDefinitionMetadata
+	(*CjsSearchDefinition)(nil),                        // 171: api.v0alpha.CjsSearchDefinition
+	(*GetCjsSearchDefinitionReq)(nil),                  // 172: api.v0alpha.GetCjsSearchDefinitionReq
+	(*DeleteCjsSearchDefinitionReq)(nil),               // 173: api.v0alpha.DeleteCjsSearchDefinitionReq
+	(*ListCjsSearchDefinitionsReq)(nil),                // 174: api.v0alpha.ListCjsSearchDefinitionsReq
+	(*ListCjsSearchDefinitionsRes)(nil),                // 175: api.v0alpha.ListCjsSearchDefinitionsRes
+	(*ExecuteCjsSearchDefinitionReq)(nil),              // 176: api.v0alpha.ExecuteCjsSearchDefinitionReq
+	(*ExecuteCjsSearchDefinitionRes)(nil),              // 177: api.v0alpha.ExecuteCjsSearchDefinitionRes
+	(*CollectionEntries)(nil),                          // 178: api.v0alpha.CollectionEntries
+	(*CjsExecuteSearchField)(nil),                      // 179: api.v0alpha.CjsExecuteSearchField
+	(*CjsSecureSearchCriteriaMetadata)(nil),            // 180: api.v0alpha.CjsSecureSearchCriteriaMetadata
+	(*CjsSecureSearchCriteria)(nil),                    // 181: api.v0alpha.CjsSecureSearchCriteria
+	(*GetCjsSecureSearchCriteriaReq)(nil),              // 182: api.v0alpha.GetCjsSecureSearchCriteriaReq
+	(*CjsSecureSearchCriteriaField)(nil),               // 183: api.v0alpha.CjsSecureSearchCriteriaField
+	(*SplitCriteria)(nil),                              // 184: api.v0alpha.SplitCriteria
+	(*UniquePair)(nil),                                 // 185: api.v0alpha.UniquePair
+	(*SplitByNamedUnique)(nil),                         // 186: api.v0alpha.SplitByNamedUnique
+	(*SplitByUnique)(nil),                              // 187: api.v0alpha.SplitByUnique
+	(*SplitByMaxSize)(nil),                             // 188: api.v0alpha.SplitByMaxSize
+	(*SplitByEqualParts)(nil),                          // 189: api.v0alpha.SplitByEqualParts
+	(*EpicEntrypoint)(nil),                             // 190: api.v0alpha.EpicEntrypoint
+	(*RuntimeValues)(nil),                              // 191: api.v0alpha.RuntimeValues
+	(*EntityURL)(nil),                                  // 192: api.v0alpha.EntityURL
+	(*SampleRequest)(nil),                              // 193: api.v0alpha.SampleRequest
+	(*EHREntityType)(nil),                              // 194: api.v0alpha.EHREntityType
+	(*FinviEntrypoint)(nil),                            // 195: api.v0alpha.FinviEntrypoint
+	(*ContactManagementEnrichment)(nil),                // 196: api.v0alpha.ContactManagementEnrichment
+	(*TicketExchangeSink)(nil),                         // 197: api.v0alpha.TicketExchangeSink
+	(*ElementError_InvalidExpression)(nil),             // 198: api.v0alpha.ElementError.InvalidExpression
+	(*ElementError_MissingField)(nil),                  // 199: api.v0alpha.ElementError.MissingField
+	(*ElementError_BadFieldType)(nil),                  // 200: api.v0alpha.ElementError.BadFieldType
+	(*ProcessFields_NestedField)(nil),                  // 201: api.v0alpha.ProcessFields.NestedField
+	(*ProcessFields_Field)(nil),                        // 202: api.v0alpha.ProcessFields.Field
+	nil,                                                // 203: api.v0alpha.ComplianceProcessor.CallMetadataEntry
+	nil,                                                // 204: api.v0alpha.PaymentLinkEnrichment.KeyMapEntry
+	nil,                                                // 205: api.v0alpha.PortalLinkEnrichment.KeyMapEntry
+	nil,                                                // 206: api.v0alpha.HttpReq.HeadersEntry
+	nil,                                                // 207: api.v0alpha.HttpReq.NamedResponseValuesEntry
+	(*LookupProcess_ComplProcess)(nil),                 // 208: api.v0alpha.LookupProcess.ComplProcess
+	(*LookupProcess_ListLookup)(nil),                   // 209: api.v0alpha.LookupProcess.ListLookup
+	(*LookupProcess_UrlLookup)(nil),                    // 210: api.v0alpha.LookupProcess.UrlLookup
+	(*FilterCheck_Value)(nil),                          // 211: api.v0alpha.FilterCheck.Value
+	(*FilterCheck_ValueComparison)(nil),                // 212: api.v0alpha.FilterCheck.ValueComparison
+	(*FilterCheck_TypeComparison)(nil),                 // 213: api.v0alpha.FilterCheck.TypeComparison
+	(*FilterCheck_ListComparison)(nil),                 // 214: api.v0alpha.FilterCheck.ListComparison
+	(*FilterCheck_ListComparison_FieldOrVal)(nil),      // 215: api.v0alpha.FilterCheck.ListComparison.FieldOrVal
+	nil,                                        // 216: api.v0alpha.RecordFieldMap.FieldsEntry
+	(*ReshapeAction_Rename)(nil),               // 217: api.v0alpha.ReshapeAction.Rename
+	(*ReshapeAction_AddValue)(nil),             // 218: api.v0alpha.ReshapeAction.AddValue
+	(*ReshapeAction_AddDate)(nil),              // 219: api.v0alpha.ReshapeAction.AddDate
+	(*ReshapeAction_AddField)(nil),             // 220: api.v0alpha.ReshapeAction.AddField
+	(*ReshapeAction_SubtractValue)(nil),        // 221: api.v0alpha.ReshapeAction.SubtractValue
+	(*ReshapeAction_SubtractField)(nil),        // 222: api.v0alpha.ReshapeAction.SubtractField
+	(*ReshapeAction_Convert)(nil),              // 223: api.v0alpha.ReshapeAction.Convert
+	(*ReshapeAction_Divide)(nil),               // 224: api.v0alpha.ReshapeAction.Divide
+	(*ReshapeAction_Multiply)(nil),             // 225: api.v0alpha.ReshapeAction.Multiply
+	(*ReshapeAction_Modulo)(nil),               // 226: api.v0alpha.ReshapeAction.Modulo
+	(*ReshapeAction_RemoveField)(nil),          // 227: api.v0alpha.ReshapeAction.RemoveField
+	(*ReshapeAction_AddNewField)(nil),          // 228: api.v0alpha.ReshapeAction.AddNewField
+	(*ReshapeAction_AddNewFieldFromField)(nil), // 229: api.v0alpha.ReshapeAction.AddNewFieldFromField
+	(*ReshapeAction_ChangeCurrencyType)(nil),   // 230: api.v0alpha.ReshapeAction.ChangeCurrencyType
+	(*ReshapeAction_SetFieldValue)(nil),        // 231: api.v0alpha.ReshapeAction.SetFieldValue
+	(*ReshapeAction_SetFieldFromField)(nil),    // 232: api.v0alpha.ReshapeAction.SetFieldFromField
+	(*ReshapeAction_Merge)(nil),                // 233: api.v0alpha.ReshapeAction.Merge
+	(*ReshapeAction_Pad)(nil),                  // 234: api.v0alpha.ReshapeAction.Pad
+	(*ReshapeAction_Trim)(nil),                 // 235: api.v0alpha.ReshapeAction.Trim
+	(*ReshapeAction_Extract)(nil),              // 236: api.v0alpha.ReshapeAction.Extract
+	(*ReshapeAction_Merge_FieldOrVal)(nil),     // 237: api.v0alpha.ReshapeAction.Merge.FieldOrVal
+	(*ReshapeAction_Extract_Index)(nil),        // 238: api.v0alpha.ReshapeAction.Extract.Index
+	(*ReshapeAction_Extract_Slice)(nil),        // 239: api.v0alpha.ReshapeAction.Extract.Slice
+	(*ContactManagerSink_DeDuplication)(nil),   // 240: api.v0alpha.ContactManagerSink.DeDuplication
+	nil,                                        // 241: api.v0alpha.RetypeCollectionReq.FieldTypesEntry
+	nil,                                        // 242: api.v0alpha.RuntimeValues.FileIdsEntry
+	nil,                                        // 243: api.v0alpha.RuntimeValues.PreliminaryVarsEntry
+	(*timestamppb.Timestamp)(nil),              // 244: google.protobuf.Timestamp
+	(commons.PipelineElementStatusType)(0),     // 245: api.commons.PipelineElementStatusType
+	(*wrapperspb.StringValue)(nil),             // 246: google.protobuf.StringValue
+	(commons.FieldType)(0),                     // 247: api.commons.FieldType
+	(commons.DateTimePrecision)(0),             // 248: api.commons.DateTimePrecision
+	(commons.FileFormat)(0),                    // 249: api.commons.FileFormat
+	(*commons.CommType)(nil),                   // 250: api.commons.CommType
+	(commons.RunType)(0),                       // 251: api.commons.RunType
+	(commons.ConsentActionType)(0),             // 252: api.commons.ConsentActionType
+	(commons.ContentType)(0),                   // 253: api.commons.ContentType
+	(commons.Channel)(0),                       // 254: api.commons.Channel
+	(*durationpb.Duration)(nil),                // 255: google.protobuf.Duration
+	(commons.HttpVerb)(0),                      // 256: api.commons.HttpVerb
+	(*commons.PaginationTerminator)(nil),       // 257: api.commons.PaginationTerminator
+	(*commons.FilePattern)(nil),                // 258: api.commons.FilePattern
+	(commons.EnrichmentType)(0),                // 259: api.commons.EnrichmentType
+	(commons.PrimarySource)(0),                 // 260: api.commons.PrimarySource
+	(commons.DedupKeyPolicy)(0),                // 261: api.commons.DedupKeyPolicy
+	(commons.ExportType)(0),                    // 262: api.commons.ExportType
+	(commons.ChainOperator)(0),                 // 263: api.commons.ChainOperator
+	(commons.DuplicatePolicyType)(0),           // 264: api.commons.DuplicatePolicyType
+	(commons.AbsentPolicyType)(0),              // 265: api.commons.AbsentPolicyType
+	(*commons.ConstructedFilename)(nil),        // 266: api.commons.ConstructedFilename
+	(commons.DialOrderType)(0),                 // 267: api.commons.DialOrderType
+	(commons.ComplianceListType)(0),            // 268: api.commons.ComplianceListType
+	(commons.DeDupActions)(0),                  // 269: api.commons.DeDupActions
+	(commons.SortOrder)(0),                     // 270: api.commons.SortOrder
+	(commons.RecordType)(0),                    // 271: api.commons.RecordType
+	(*commons.StringArraySql)(nil),             // 272: api.commons.StringArraySql
+	(*wrapperspb.Int64Value)(nil),              // 273: google.protobuf.Int64Value
+	(commons.EventState)(0),                    // 274: api.commons.EventState
+	(commons.CompareOperator)(0),               // 275: api.commons.CompareOperator
+	(*emptypb.Empty)(nil),                      // 276: google.protobuf.Empty
 }
 var file_api_v0alpha_lms_proto_depIdxs = []int32{
-	243, // 0: api.v0alpha.PipelineCanvasMetadata.created_date:type_name -> google.protobuf.Timestamp
-	243, // 1: api.v0alpha.PipelineCanvasMetadata.last_edited:type_name -> google.protobuf.Timestamp
+	244, // 0: api.v0alpha.PipelineCanvasMetadata.created_date:type_name -> google.protobuf.Timestamp
+	244, // 1: api.v0alpha.PipelineCanvasMetadata.last_edited:type_name -> google.protobuf.Timestamp
 	5,   // 2: api.v0alpha.PipelineCanvas.metadata:type_name -> api.v0alpha.PipelineCanvasMetadata
 	43,  // 3: api.v0alpha.PipelineCanvas.elements:type_name -> api.v0alpha.Element
 	5,   // 4: api.v0alpha.PipelineCanvasPreview.metadata:type_name -> api.v0alpha.PipelineCanvasMetadata
@@ -19525,64 +19661,64 @@ var file_api_v0alpha_lms_proto_depIdxs = []int32{
 	20,  // 9: api.v0alpha.ListPoolsResponse.pools:type_name -> api.v0alpha.Pool
 	24,  // 10: api.v0alpha.FindFieldUsagesRes.file_templates:type_name -> api.v0alpha.NameAndId
 	24,  // 11: api.v0alpha.FindFieldUsagesRes.elements:type_name -> api.v0alpha.NameAndId
-	197, // 12: api.v0alpha.ElementError.invalid_expression:type_name -> api.v0alpha.ElementError.InvalidExpression
-	198, // 13: api.v0alpha.ElementError.missing_field:type_name -> api.v0alpha.ElementError.MissingField
-	199, // 14: api.v0alpha.ElementError.bad_field_type:type_name -> api.v0alpha.ElementError.BadFieldType
+	198, // 12: api.v0alpha.ElementError.invalid_expression:type_name -> api.v0alpha.ElementError.InvalidExpression
+	199, // 13: api.v0alpha.ElementError.missing_field:type_name -> api.v0alpha.ElementError.MissingField
+	200, // 14: api.v0alpha.ElementError.bad_field_type:type_name -> api.v0alpha.ElementError.BadFieldType
 	26,  // 15: api.v0alpha.ElementSummary.error:type_name -> api.v0alpha.ElementError
 	27,  // 16: api.v0alpha.FindInvalidElementsRes.invalid_elements:type_name -> api.v0alpha.ElementSummary
 	54,  // 17: api.v0alpha.ListFieldsForElementRes.fields:type_name -> api.v0alpha.Field
 	54,  // 18: api.v0alpha.ListAutocompleteFieldsRes.fields:type_name -> api.v0alpha.Field
 	72,  // 19: api.v0alpha.Element.transform:type_name -> api.v0alpha.Process
-	244, // 20: api.v0alpha.Element.last_status:type_name -> api.commons.PipelineElementStatusType
-	243, // 21: api.v0alpha.Element.created_date:type_name -> google.protobuf.Timestamp
-	243, // 22: api.v0alpha.Element.last_edited:type_name -> google.protobuf.Timestamp
+	245, // 20: api.v0alpha.Element.last_status:type_name -> api.commons.PipelineElementStatusType
+	244, // 21: api.v0alpha.Element.created_date:type_name -> google.protobuf.Timestamp
+	244, // 22: api.v0alpha.Element.last_edited:type_name -> google.protobuf.Timestamp
 	72,  // 23: api.v0alpha.PeekListReq.process:type_name -> api.v0alpha.Process
 	50,  // 24: api.v0alpha.PeekListRes.records:type_name -> api.v0alpha.RecordProto
-	140, // 25: api.v0alpha.PeekListRes.metrics:type_name -> api.v0alpha.ListMetrics
+	141, // 25: api.v0alpha.PeekListRes.metrics:type_name -> api.v0alpha.ListMetrics
 	49,  // 26: api.v0alpha.GetHistoryRes.commits:type_name -> api.v0alpha.HistoryAndCount
 	72,  // 27: api.v0alpha.History.process:type_name -> api.v0alpha.Process
-	245, // 28: api.v0alpha.History.reason:type_name -> google.protobuf.StringValue
-	243, // 29: api.v0alpha.History.upload_ts:type_name -> google.protobuf.Timestamp
-	243, // 30: api.v0alpha.History.started_ts:type_name -> google.protobuf.Timestamp
-	243, // 31: api.v0alpha.History.finished_ts:type_name -> google.protobuf.Timestamp
-	140, // 32: api.v0alpha.History.metrics:type_name -> api.v0alpha.ListMetrics
-	140, // 33: api.v0alpha.History.discard_metrics:type_name -> api.v0alpha.ListMetrics
+	246, // 28: api.v0alpha.History.reason:type_name -> google.protobuf.StringValue
+	244, // 29: api.v0alpha.History.upload_ts:type_name -> google.protobuf.Timestamp
+	244, // 30: api.v0alpha.History.started_ts:type_name -> google.protobuf.Timestamp
+	244, // 31: api.v0alpha.History.finished_ts:type_name -> google.protobuf.Timestamp
+	141, // 32: api.v0alpha.History.metrics:type_name -> api.v0alpha.ListMetrics
+	141, // 33: api.v0alpha.History.discard_metrics:type_name -> api.v0alpha.ListMetrics
 	72,  // 34: api.v0alpha.HistoryAndCount.process:type_name -> api.v0alpha.Process
-	245, // 35: api.v0alpha.HistoryAndCount.reason:type_name -> google.protobuf.StringValue
-	243, // 36: api.v0alpha.HistoryAndCount.upload_ts:type_name -> google.protobuf.Timestamp
-	243, // 37: api.v0alpha.HistoryAndCount.started_ts:type_name -> google.protobuf.Timestamp
-	243, // 38: api.v0alpha.HistoryAndCount.finished_ts:type_name -> google.protobuf.Timestamp
-	140, // 39: api.v0alpha.HistoryAndCount.metrics:type_name -> api.v0alpha.ListMetrics
-	140, // 40: api.v0alpha.HistoryAndCount.discard_metrics:type_name -> api.v0alpha.ListMetrics
+	246, // 35: api.v0alpha.HistoryAndCount.reason:type_name -> google.protobuf.StringValue
+	244, // 36: api.v0alpha.HistoryAndCount.upload_ts:type_name -> google.protobuf.Timestamp
+	244, // 37: api.v0alpha.HistoryAndCount.started_ts:type_name -> google.protobuf.Timestamp
+	244, // 38: api.v0alpha.HistoryAndCount.finished_ts:type_name -> google.protobuf.Timestamp
+	141, // 39: api.v0alpha.HistoryAndCount.metrics:type_name -> api.v0alpha.ListMetrics
+	141, // 40: api.v0alpha.HistoryAndCount.discard_metrics:type_name -> api.v0alpha.ListMetrics
 	60,  // 41: api.v0alpha.RecordProto.fields:type_name -> api.v0alpha.RecordFieldProto
 	50,  // 42: api.v0alpha.RecordProtoPair.old:type_name -> api.v0alpha.RecordProto
 	50,  // 43: api.v0alpha.RecordProtoPair.new:type_name -> api.v0alpha.RecordProto
-	201, // 44: api.v0alpha.ProcessFields.fields:type_name -> api.v0alpha.ProcessFields.Field
-	246, // 45: api.v0alpha.Field.type:type_name -> api.commons.FieldType
-	243, // 46: api.v0alpha.Field.date_modified:type_name -> google.protobuf.Timestamp
+	202, // 44: api.v0alpha.ProcessFields.fields:type_name -> api.v0alpha.ProcessFields.Field
+	247, // 45: api.v0alpha.Field.type:type_name -> api.commons.FieldType
+	244, // 46: api.v0alpha.Field.date_modified:type_name -> google.protobuf.Timestamp
 	56,  // 47: api.v0alpha.Field.metadata:type_name -> api.v0alpha.FieldMetadata
-	246, // 48: api.v0alpha.UpdateFieldReq.type:type_name -> api.commons.FieldType
-	243, // 49: api.v0alpha.UpdateFieldReq.date_modified:type_name -> google.protobuf.Timestamp
+	247, // 48: api.v0alpha.UpdateFieldReq.type:type_name -> api.commons.FieldType
+	244, // 49: api.v0alpha.UpdateFieldReq.date_modified:type_name -> google.protobuf.Timestamp
 	56,  // 50: api.v0alpha.UpdateFieldReq.metadata:type_name -> api.v0alpha.FieldMetadata
-	247, // 51: api.v0alpha.FieldMetadata.precision:type_name -> api.commons.DateTimePrecision
+	248, // 51: api.v0alpha.FieldMetadata.precision:type_name -> api.commons.DateTimePrecision
 	54,  // 52: api.v0alpha.Fields.fields:type_name -> api.v0alpha.Field
 	124, // 53: api.v0alpha.FieldIndex.datetime:type_name -> api.v0alpha.DateTimeModifier
 	121, // 54: api.v0alpha.RecordFieldProto.phone:type_name -> api.v0alpha.Phone
 	120, // 55: api.v0alpha.RecordFieldProto.currency:type_name -> api.v0alpha.Currency
 	122, // 56: api.v0alpha.RecordFieldProto.postal_code:type_name -> api.v0alpha.PostalCode
 	123, // 57: api.v0alpha.RecordFieldProto.email:type_name -> api.v0alpha.Email
-	125, // 58: api.v0alpha.RecordFieldProto.date_time:type_name -> api.v0alpha.DateTime
+	126, // 58: api.v0alpha.RecordFieldProto.date_time:type_name -> api.v0alpha.DateTime
 	61,  // 59: api.v0alpha.RecordFieldProto.repeated_records:type_name -> api.v0alpha.RepeatedRecords
 	119, // 60: api.v0alpha.RecordFieldProto.record_field_map:type_name -> api.v0alpha.RecordFieldMap
 	118, // 61: api.v0alpha.RecordFieldProto.err:type_name -> api.v0alpha.Error
-	126, // 62: api.v0alpha.RecordFieldProto.enriched_phone:type_name -> api.v0alpha.EnrichedPhone
-	127, // 63: api.v0alpha.RecordFieldProto.enriched_zip:type_name -> api.v0alpha.EnrichedZip
+	127, // 62: api.v0alpha.RecordFieldProto.enriched_phone:type_name -> api.v0alpha.EnrichedPhone
+	128, // 63: api.v0alpha.RecordFieldProto.enriched_zip:type_name -> api.v0alpha.EnrichedZip
 	50,  // 64: api.v0alpha.RepeatedRecords.records:type_name -> api.v0alpha.RecordProto
-	246, // 65: api.v0alpha.FileTemplateField.type:type_name -> api.commons.FieldType
+	247, // 65: api.v0alpha.FileTemplateField.type:type_name -> api.commons.FieldType
 	64,  // 66: api.v0alpha.FileTemplateFields.fields:type_name -> api.v0alpha.FileTemplateField
-	246, // 67: api.v0alpha.FieldTypes.values:type_name -> api.commons.FieldType
-	134, // 68: api.v0alpha.FileTemplate.file_format_params:type_name -> api.v0alpha.FileFormatParams
-	248, // 69: api.v0alpha.FileTemplate.file_format:type_name -> api.commons.FileFormat
+	247, // 67: api.v0alpha.FieldTypes.values:type_name -> api.commons.FieldType
+	135, // 68: api.v0alpha.FileTemplate.file_format_params:type_name -> api.v0alpha.FileFormatParams
+	249, // 69: api.v0alpha.FileTemplate.file_format:type_name -> api.commons.FileFormat
 	54,  // 70: api.v0alpha.FileTemplate.fields:type_name -> api.v0alpha.Field
 	93,  // 71: api.v0alpha.Process.append:type_name -> api.v0alpha.AppendProcess
 	117, // 72: api.v0alpha.Process.sort:type_name -> api.v0alpha.SortCriteria
@@ -19593,7 +19729,7 @@ var file_api_v0alpha_lms_proto_depIdxs = []int32{
 	116, // 77: api.v0alpha.Process.dedup:type_name -> api.v0alpha.DeDupCriteria
 	98,  // 78: api.v0alpha.Process.cfs_export:type_name -> api.v0alpha.CFSExportProcess
 	110, // 79: api.v0alpha.Process.sftp_export:type_name -> api.v0alpha.SftpExportProcess
-	135, // 80: api.v0alpha.Process.reshape:type_name -> api.v0alpha.ReshapeProcess
+	136, // 80: api.v0alpha.Process.reshape:type_name -> api.v0alpha.ReshapeProcess
 	94,  // 81: api.v0alpha.Process.lookup:type_name -> api.v0alpha.LookupProcess
 	80,  // 82: api.v0alpha.Process.entrypoint:type_name -> api.v0alpha.EntrypointProcess
 	104, // 83: api.v0alpha.Process.compliance_export:type_name -> api.v0alpha.ComplianceExportProcess
@@ -19617,355 +19753,356 @@ var file_api_v0alpha_lms_proto_depIdxs = []int32{
 	84,  // 101: api.v0alpha.Process.bulk_web_entrypoint:type_name -> api.v0alpha.BulkWebEntrypointProcess
 	85,  // 102: api.v0alpha.Process.omni_exchange_process:type_name -> api.v0alpha.OmniExchangeProcess
 	86,  // 103: api.v0alpha.Process.web_exchange_process:type_name -> api.v0alpha.WebExchangeProcess
-	183, // 104: api.v0alpha.Process.split:type_name -> api.v0alpha.SplitCriteria
-	189, // 105: api.v0alpha.Process.epic_entry_point:type_name -> api.v0alpha.EpicEntrypoint
-	137, // 106: api.v0alpha.Process.contact_manager_sink:type_name -> api.v0alpha.ContactManagerSink
-	138, // 107: api.v0alpha.Process.sum:type_name -> api.v0alpha.SumProcess
-	194, // 108: api.v0alpha.Process.finvi_entrypoint:type_name -> api.v0alpha.FinviEntrypoint
-	195, // 109: api.v0alpha.Process.contact_management_enrichment:type_name -> api.v0alpha.ContactManagementEnrichment
-	196, // 110: api.v0alpha.Process.ticket_exchange_sink:type_name -> api.v0alpha.TicketExchangeSink
-	249, // 111: api.v0alpha.ComplianceProcessor.comm_type:type_name -> api.commons.CommType
-	202, // 112: api.v0alpha.ComplianceProcessor.call_metadata:type_name -> api.v0alpha.ComplianceProcessor.CallMetadataEntry
-	250, // 113: api.v0alpha.ConsentExportProcess.run_type:type_name -> api.commons.RunType
-	251, // 114: api.v0alpha.ConsentExportProcess.action:type_name -> api.commons.ConsentActionType
-	252, // 115: api.v0alpha.ConsentExportProcess.content_type_val:type_name -> api.commons.ContentType
-	253, // 116: api.v0alpha.ConsentExportProcess.channel_type_val:type_name -> api.commons.Channel
-	243, // 117: api.v0alpha.ConsentExportProcess.expiration_date:type_name -> google.protobuf.Timestamp
-	254, // 118: api.v0alpha.ConsentExportProcess.expiration_after_duration:type_name -> google.protobuf.Duration
-	203, // 119: api.v0alpha.PaymentLinkEnrichment.key_map:type_name -> api.v0alpha.PaymentLinkEnrichment.KeyMapEntry
-	204, // 120: api.v0alpha.PortalLinkEnrichment.key_map:type_name -> api.v0alpha.PortalLinkEnrichment.KeyMapEntry
+	184, // 104: api.v0alpha.Process.split:type_name -> api.v0alpha.SplitCriteria
+	190, // 105: api.v0alpha.Process.epic_entry_point:type_name -> api.v0alpha.EpicEntrypoint
+	138, // 106: api.v0alpha.Process.contact_manager_sink:type_name -> api.v0alpha.ContactManagerSink
+	139, // 107: api.v0alpha.Process.sum:type_name -> api.v0alpha.SumProcess
+	195, // 108: api.v0alpha.Process.finvi_entrypoint:type_name -> api.v0alpha.FinviEntrypoint
+	196, // 109: api.v0alpha.Process.contact_management_enrichment:type_name -> api.v0alpha.ContactManagementEnrichment
+	197, // 110: api.v0alpha.Process.ticket_exchange_sink:type_name -> api.v0alpha.TicketExchangeSink
+	250, // 111: api.v0alpha.ComplianceProcessor.comm_type:type_name -> api.commons.CommType
+	203, // 112: api.v0alpha.ComplianceProcessor.call_metadata:type_name -> api.v0alpha.ComplianceProcessor.CallMetadataEntry
+	251, // 113: api.v0alpha.ConsentExportProcess.run_type:type_name -> api.commons.RunType
+	252, // 114: api.v0alpha.ConsentExportProcess.action:type_name -> api.commons.ConsentActionType
+	253, // 115: api.v0alpha.ConsentExportProcess.content_type_val:type_name -> api.commons.ContentType
+	254, // 116: api.v0alpha.ConsentExportProcess.channel_type_val:type_name -> api.commons.Channel
+	244, // 117: api.v0alpha.ConsentExportProcess.expiration_date:type_name -> google.protobuf.Timestamp
+	255, // 118: api.v0alpha.ConsentExportProcess.expiration_after_duration:type_name -> google.protobuf.Duration
+	204, // 119: api.v0alpha.PaymentLinkEnrichment.key_map:type_name -> api.v0alpha.PaymentLinkEnrichment.KeyMapEntry
+	205, // 120: api.v0alpha.PortalLinkEnrichment.key_map:type_name -> api.v0alpha.PortalLinkEnrichment.KeyMapEntry
 	79,  // 121: api.v0alpha.PortalLinkEnrichment.expiration:type_name -> api.v0alpha.Expiration
 	0,   // 122: api.v0alpha.Expiration.units:type_name -> api.v0alpha.TimeUnit
-	205, // 123: api.v0alpha.HttpReq.headers:type_name -> api.v0alpha.HttpReq.HeadersEntry
-	255, // 124: api.v0alpha.HttpReq.method:type_name -> api.commons.HttpVerb
-	206, // 125: api.v0alpha.HttpReq.named_response_values:type_name -> api.v0alpha.HttpReq.NamedResponseValuesEntry
+	206, // 123: api.v0alpha.HttpReq.headers:type_name -> api.v0alpha.HttpReq.HeadersEntry
+	256, // 124: api.v0alpha.HttpReq.method:type_name -> api.commons.HttpVerb
+	207, // 125: api.v0alpha.HttpReq.named_response_values:type_name -> api.v0alpha.HttpReq.NamedResponseValuesEntry
 	82,  // 126: api.v0alpha.WebEntrypointProcess.http_requests:type_name -> api.v0alpha.HttpReq
 	67,  // 127: api.v0alpha.WebEntrypointProcess.file_template:type_name -> api.v0alpha.FileTemplate
 	82,  // 128: api.v0alpha.BulkWebEntrypointProcess.preliminary_requests:type_name -> api.v0alpha.HttpReq
 	87,  // 129: api.v0alpha.BulkWebEntrypointProcess.paginated_request:type_name -> api.v0alpha.PaginatedHttpRequest
 	82,  // 130: api.v0alpha.WebExchangeProcess.http_requests:type_name -> api.v0alpha.HttpReq
 	82,  // 131: api.v0alpha.PaginatedHttpRequest.iteration_request:type_name -> api.v0alpha.HttpReq
-	256, // 132: api.v0alpha.PaginatedHttpRequest.end_for_any:type_name -> api.commons.PaginationTerminator
-	256, // 133: api.v0alpha.PaginatedHttpRequest.end_for_all:type_name -> api.commons.PaginationTerminator
-	256, // 134: api.v0alpha.PaginatedHttpRequest.request_not_ready:type_name -> api.commons.PaginationTerminator
-	257, // 135: api.v0alpha.SftpImport.file_pattern:type_name -> api.commons.FilePattern
+	257, // 132: api.v0alpha.PaginatedHttpRequest.end_for_any:type_name -> api.commons.PaginationTerminator
+	257, // 133: api.v0alpha.PaginatedHttpRequest.end_for_all:type_name -> api.commons.PaginationTerminator
+	257, // 134: api.v0alpha.PaginatedHttpRequest.request_not_ready:type_name -> api.commons.PaginationTerminator
+	258, // 135: api.v0alpha.SftpImport.file_pattern:type_name -> api.commons.FilePattern
 	113, // 136: api.v0alpha.CjsExportProcess.header:type_name -> api.v0alpha.ExportHeader
-	250, // 137: api.v0alpha.CjsExportProcess.run_type:type_name -> api.commons.RunType
-	258, // 138: api.v0alpha.CjsEnrichmentProcess.enrich_type:type_name -> api.commons.EnrichmentType
-	259, // 139: api.v0alpha.CjsEnrichmentProcess.primary_source:type_name -> api.commons.PrimarySource
-	260, // 140: api.v0alpha.CjsEnrichmentProcess.dedup_key_policy:type_name -> api.commons.DedupKeyPolicy
-	207, // 141: api.v0alpha.LookupProcess.compl:type_name -> api.v0alpha.LookupProcess.ComplProcess
-	208, // 142: api.v0alpha.LookupProcess.list:type_name -> api.v0alpha.LookupProcess.ListLookup
-	209, // 143: api.v0alpha.LookupProcess.url:type_name -> api.v0alpha.LookupProcess.UrlLookup
-	261, // 144: api.v0alpha.CFSExportConfig.type:type_name -> api.commons.ExportType
+	251, // 137: api.v0alpha.CjsExportProcess.run_type:type_name -> api.commons.RunType
+	259, // 138: api.v0alpha.CjsEnrichmentProcess.enrich_type:type_name -> api.commons.EnrichmentType
+	260, // 139: api.v0alpha.CjsEnrichmentProcess.primary_source:type_name -> api.commons.PrimarySource
+	261, // 140: api.v0alpha.CjsEnrichmentProcess.dedup_key_policy:type_name -> api.commons.DedupKeyPolicy
+	208, // 141: api.v0alpha.LookupProcess.compl:type_name -> api.v0alpha.LookupProcess.ComplProcess
+	209, // 142: api.v0alpha.LookupProcess.list:type_name -> api.v0alpha.LookupProcess.ListLookup
+	210, // 143: api.v0alpha.LookupProcess.url:type_name -> api.v0alpha.LookupProcess.UrlLookup
+	262, // 144: api.v0alpha.CFSExportConfig.type:type_name -> api.commons.ExportType
 	113, // 145: api.v0alpha.CFSExportReqHeader.export_header:type_name -> api.v0alpha.ExportHeader
 	96,  // 146: api.v0alpha.CFSExportReqHeader.configs:type_name -> api.v0alpha.CFSExportConfig
 	113, // 147: api.v0alpha.CFSExportProcess.export_header:type_name -> api.v0alpha.ExportHeader
 	96,  // 148: api.v0alpha.CFSExportProcess.configs:type_name -> api.v0alpha.CFSExportConfig
 	100, // 149: api.v0alpha.FilterProcess.operations:type_name -> api.v0alpha.FilterOperation
 	101, // 150: api.v0alpha.FilterOperation.checks:type_name -> api.v0alpha.FilterCheck
-	262, // 151: api.v0alpha.FilterOperation.operator:type_name -> api.commons.ChainOperator
-	211, // 152: api.v0alpha.FilterCheck.val_comp:type_name -> api.v0alpha.FilterCheck.ValueComparison
-	212, // 153: api.v0alpha.FilterCheck.type_comp:type_name -> api.v0alpha.FilterCheck.TypeComparison
-	213, // 154: api.v0alpha.FilterCheck.list_comp:type_name -> api.v0alpha.FilterCheck.ListComparison
+	263, // 151: api.v0alpha.FilterOperation.operator:type_name -> api.commons.ChainOperator
+	212, // 152: api.v0alpha.FilterCheck.val_comp:type_name -> api.v0alpha.FilterCheck.ValueComparison
+	213, // 153: api.v0alpha.FilterCheck.type_comp:type_name -> api.v0alpha.FilterCheck.TypeComparison
+	214, // 154: api.v0alpha.FilterCheck.list_comp:type_name -> api.v0alpha.FilterCheck.ListComparison
 	113, // 155: api.v0alpha.P3ExportProcess.header:type_name -> api.v0alpha.ExportHeader
-	263, // 156: api.v0alpha.P3ExportProcess.dupe_policy:type_name -> api.commons.DuplicatePolicyType
-	264, // 157: api.v0alpha.P3ExportProcess.absent_policy:type_name -> api.commons.AbsentPolicyType
-	250, // 158: api.v0alpha.P3ExportProcess.run_type:type_name -> api.commons.RunType
-	257, // 159: api.v0alpha.P3ExportProcess.file_pattern:type_name -> api.commons.FilePattern
-	265, // 160: api.v0alpha.P3ExportProcess.filename:type_name -> api.commons.ConstructedFilename
-	243, // 161: api.v0alpha.P3ExportProcess.start_time:type_name -> google.protobuf.Timestamp
-	243, // 162: api.v0alpha.P3ExportProcess.end_time:type_name -> google.protobuf.Timestamp
-	266, // 163: api.v0alpha.P3ExportProcess.dial_order:type_name -> api.commons.DialOrderType
-	248, // 164: api.v0alpha.P3ExportProcess.file_format:type_name -> api.commons.FileFormat
-	250, // 165: api.v0alpha.ComplianceExportProcess.run_type:type_name -> api.commons.RunType
-	267, // 166: api.v0alpha.ComplianceExportProcess.compliance_list_type:type_name -> api.commons.ComplianceListType
+	264, // 156: api.v0alpha.P3ExportProcess.dupe_policy:type_name -> api.commons.DuplicatePolicyType
+	265, // 157: api.v0alpha.P3ExportProcess.absent_policy:type_name -> api.commons.AbsentPolicyType
+	251, // 158: api.v0alpha.P3ExportProcess.run_type:type_name -> api.commons.RunType
+	258, // 159: api.v0alpha.P3ExportProcess.file_pattern:type_name -> api.commons.FilePattern
+	266, // 160: api.v0alpha.P3ExportProcess.filename:type_name -> api.commons.ConstructedFilename
+	244, // 161: api.v0alpha.P3ExportProcess.start_time:type_name -> google.protobuf.Timestamp
+	244, // 162: api.v0alpha.P3ExportProcess.end_time:type_name -> google.protobuf.Timestamp
+	267, // 163: api.v0alpha.P3ExportProcess.dial_order:type_name -> api.commons.DialOrderType
+	249, // 164: api.v0alpha.P3ExportProcess.file_format:type_name -> api.commons.FileFormat
+	251, // 165: api.v0alpha.ComplianceExportProcess.run_type:type_name -> api.commons.RunType
+	268, // 166: api.v0alpha.ComplianceExportProcess.compliance_list_type:type_name -> api.commons.ComplianceListType
 	109, // 167: api.v0alpha.FrequencyProcess.dispositions:type_name -> api.v0alpha.DispositionPair
 	108, // 168: api.v0alpha.FrequencyProcess.disposition_sets:type_name -> api.v0alpha.DispositionSet
 	109, // 169: api.v0alpha.DispositionSet.dispositions:type_name -> api.v0alpha.DispositionPair
-	248, // 170: api.v0alpha.SftpExportProcess.fileformat:type_name -> api.commons.FileFormat
-	257, // 171: api.v0alpha.SftpExportProcess.file_pattern:type_name -> api.commons.FilePattern
-	250, // 172: api.v0alpha.SftpExportProcess.run_type:type_name -> api.commons.RunType
+	249, // 170: api.v0alpha.SftpExportProcess.fileformat:type_name -> api.commons.FileFormat
+	258, // 171: api.v0alpha.SftpExportProcess.file_pattern:type_name -> api.commons.FilePattern
+	251, // 172: api.v0alpha.SftpExportProcess.run_type:type_name -> api.commons.RunType
 	113, // 173: api.v0alpha.SftpExportProcess.header:type_name -> api.v0alpha.ExportHeader
-	265, // 174: api.v0alpha.SftpExportProcess.filename:type_name -> api.commons.ConstructedFilename
+	266, // 174: api.v0alpha.SftpExportProcess.filename:type_name -> api.commons.ConstructedFilename
 	111, // 175: api.v0alpha.WfmExportProcess.multi:type_name -> api.v0alpha.WfmMultiSkill
 	117, // 176: api.v0alpha.SortReq.criteria:type_name -> api.v0alpha.SortCriteria
 	50,  // 177: api.v0alpha.SortReq.record:type_name -> api.v0alpha.RecordProto
 	97,  // 178: api.v0alpha.CFSExportReq.header:type_name -> api.v0alpha.CFSExportReqHeader
 	50,  // 179: api.v0alpha.CFSExportReq.record:type_name -> api.v0alpha.RecordProto
-	268, // 180: api.v0alpha.DeDupCriteria.action:type_name -> api.commons.DeDupActions
+	269, // 180: api.v0alpha.DeDupCriteria.action:type_name -> api.commons.DeDupActions
 	58,  // 181: api.v0alpha.DeDupCriteria.fields:type_name -> api.v0alpha.FieldIndex
 	101, // 182: api.v0alpha.DeDupCriteria.unless:type_name -> api.v0alpha.FilterCheck
-	269, // 183: api.v0alpha.SortCriteria.ordering:type_name -> api.commons.SortOrder
+	270, // 183: api.v0alpha.SortCriteria.ordering:type_name -> api.commons.SortOrder
 	58,  // 184: api.v0alpha.SortCriteria.field_order:type_name -> api.v0alpha.FieldIndex
-	215, // 185: api.v0alpha.RecordFieldMap.fields:type_name -> api.v0alpha.RecordFieldMap.FieldsEntry
-	247, // 186: api.v0alpha.DateTime.precision:type_name -> api.commons.DateTimePrecision
+	216, // 185: api.v0alpha.RecordFieldMap.fields:type_name -> api.v0alpha.RecordFieldMap.FieldsEntry
+	248, // 186: api.v0alpha.DateTime.precision:type_name -> api.commons.DateTimePrecision
 	124, // 187: api.v0alpha.DateTime.modifier:type_name -> api.v0alpha.DateTimeModifier
-	136, // 188: api.v0alpha.ReshapeProcess.actions:type_name -> api.v0alpha.ReshapeAction
-	270, // 189: api.v0alpha.ReshapeAction.matching_type:type_name -> api.commons.RecordType
+	137, // 188: api.v0alpha.ReshapeProcess.actions:type_name -> api.v0alpha.ReshapeAction
+	271, // 189: api.v0alpha.ReshapeAction.matching_type:type_name -> api.commons.RecordType
 	101, // 190: api.v0alpha.ReshapeAction.predicate:type_name -> api.v0alpha.FilterCheck
 	100, // 191: api.v0alpha.ReshapeAction.operations:type_name -> api.v0alpha.FilterOperation
-	216, // 192: api.v0alpha.ReshapeAction.rename:type_name -> api.v0alpha.ReshapeAction.Rename
-	217, // 193: api.v0alpha.ReshapeAction.add_value:type_name -> api.v0alpha.ReshapeAction.AddValue
-	219, // 194: api.v0alpha.ReshapeAction.add_field:type_name -> api.v0alpha.ReshapeAction.AddField
-	218, // 195: api.v0alpha.ReshapeAction.add_date:type_name -> api.v0alpha.ReshapeAction.AddDate
-	220, // 196: api.v0alpha.ReshapeAction.subtract_value:type_name -> api.v0alpha.ReshapeAction.SubtractValue
-	221, // 197: api.v0alpha.ReshapeAction.subtract_field:type_name -> api.v0alpha.ReshapeAction.SubtractField
-	222, // 198: api.v0alpha.ReshapeAction.convert:type_name -> api.v0alpha.ReshapeAction.Convert
-	226, // 199: api.v0alpha.ReshapeAction.remove_field:type_name -> api.v0alpha.ReshapeAction.RemoveField
-	227, // 200: api.v0alpha.ReshapeAction.add_new_field:type_name -> api.v0alpha.ReshapeAction.AddNewField
-	229, // 201: api.v0alpha.ReshapeAction.change_currency_type:type_name -> api.v0alpha.ReshapeAction.ChangeCurrencyType
-	223, // 202: api.v0alpha.ReshapeAction.divide:type_name -> api.v0alpha.ReshapeAction.Divide
-	224, // 203: api.v0alpha.ReshapeAction.multiply:type_name -> api.v0alpha.ReshapeAction.Multiply
-	225, // 204: api.v0alpha.ReshapeAction.modulo:type_name -> api.v0alpha.ReshapeAction.Modulo
-	232, // 205: api.v0alpha.ReshapeAction.merge:type_name -> api.v0alpha.ReshapeAction.Merge
-	230, // 206: api.v0alpha.ReshapeAction.set_field_value:type_name -> api.v0alpha.ReshapeAction.SetFieldValue
-	228, // 207: api.v0alpha.ReshapeAction.add_new_field_from_field:type_name -> api.v0alpha.ReshapeAction.AddNewFieldFromField
-	231, // 208: api.v0alpha.ReshapeAction.set_field_from_field:type_name -> api.v0alpha.ReshapeAction.SetFieldFromField
-	233, // 209: api.v0alpha.ReshapeAction.pad:type_name -> api.v0alpha.ReshapeAction.Pad
-	234, // 210: api.v0alpha.ReshapeAction.trim:type_name -> api.v0alpha.ReshapeAction.Trim
-	235, // 211: api.v0alpha.ReshapeAction.extract:type_name -> api.v0alpha.ReshapeAction.Extract
-	254, // 212: api.v0alpha.ContactManagerSink.lifetime:type_name -> google.protobuf.Duration
-	239, // 213: api.v0alpha.ContactManagerSink.de_duplication_info:type_name -> api.v0alpha.ContactManagerSink.DeDuplication
-	139, // 214: api.v0alpha.SumProcess.group_by:type_name -> api.v0alpha.GroupBy
+	217, // 192: api.v0alpha.ReshapeAction.rename:type_name -> api.v0alpha.ReshapeAction.Rename
+	218, // 193: api.v0alpha.ReshapeAction.add_value:type_name -> api.v0alpha.ReshapeAction.AddValue
+	220, // 194: api.v0alpha.ReshapeAction.add_field:type_name -> api.v0alpha.ReshapeAction.AddField
+	219, // 195: api.v0alpha.ReshapeAction.add_date:type_name -> api.v0alpha.ReshapeAction.AddDate
+	221, // 196: api.v0alpha.ReshapeAction.subtract_value:type_name -> api.v0alpha.ReshapeAction.SubtractValue
+	222, // 197: api.v0alpha.ReshapeAction.subtract_field:type_name -> api.v0alpha.ReshapeAction.SubtractField
+	223, // 198: api.v0alpha.ReshapeAction.convert:type_name -> api.v0alpha.ReshapeAction.Convert
+	227, // 199: api.v0alpha.ReshapeAction.remove_field:type_name -> api.v0alpha.ReshapeAction.RemoveField
+	228, // 200: api.v0alpha.ReshapeAction.add_new_field:type_name -> api.v0alpha.ReshapeAction.AddNewField
+	230, // 201: api.v0alpha.ReshapeAction.change_currency_type:type_name -> api.v0alpha.ReshapeAction.ChangeCurrencyType
+	224, // 202: api.v0alpha.ReshapeAction.divide:type_name -> api.v0alpha.ReshapeAction.Divide
+	225, // 203: api.v0alpha.ReshapeAction.multiply:type_name -> api.v0alpha.ReshapeAction.Multiply
+	226, // 204: api.v0alpha.ReshapeAction.modulo:type_name -> api.v0alpha.ReshapeAction.Modulo
+	233, // 205: api.v0alpha.ReshapeAction.merge:type_name -> api.v0alpha.ReshapeAction.Merge
+	231, // 206: api.v0alpha.ReshapeAction.set_field_value:type_name -> api.v0alpha.ReshapeAction.SetFieldValue
+	229, // 207: api.v0alpha.ReshapeAction.add_new_field_from_field:type_name -> api.v0alpha.ReshapeAction.AddNewFieldFromField
+	232, // 208: api.v0alpha.ReshapeAction.set_field_from_field:type_name -> api.v0alpha.ReshapeAction.SetFieldFromField
+	234, // 209: api.v0alpha.ReshapeAction.pad:type_name -> api.v0alpha.ReshapeAction.Pad
+	235, // 210: api.v0alpha.ReshapeAction.trim:type_name -> api.v0alpha.ReshapeAction.Trim
+	236, // 211: api.v0alpha.ReshapeAction.extract:type_name -> api.v0alpha.ReshapeAction.Extract
+	255, // 212: api.v0alpha.ContactManagerSink.lifetime:type_name -> google.protobuf.Duration
+	240, // 213: api.v0alpha.ContactManagerSink.de_duplication_info:type_name -> api.v0alpha.ContactManagerSink.DeDuplication
+	140, // 214: api.v0alpha.SumProcess.group_by:type_name -> api.v0alpha.GroupBy
 	100, // 215: api.v0alpha.SumProcess.filter:type_name -> api.v0alpha.FilterOperation
-	270, // 216: api.v0alpha.ListMetrics.field_types:type_name -> api.commons.RecordType
-	246, // 217: api.v0alpha.ListMetrics.ftypes:type_name -> api.commons.FieldType
-	250, // 218: api.v0alpha.ListMetrics.run_type:type_name -> api.commons.RunType
+	271, // 216: api.v0alpha.ListMetrics.field_types:type_name -> api.commons.RecordType
+	247, // 217: api.v0alpha.ListMetrics.ftypes:type_name -> api.commons.FieldType
+	251, // 218: api.v0alpha.ListMetrics.run_type:type_name -> api.commons.RunType
 	72,  // 219: api.v0alpha.ParseRes.process:type_name -> api.v0alpha.Process
-	245, // 220: api.v0alpha.Event.parent_id:type_name -> google.protobuf.StringValue
-	271, // 221: api.v0alpha.Event.input_ids:type_name -> api.commons.StringArraySql
+	246, // 220: api.v0alpha.Event.parent_id:type_name -> google.protobuf.StringValue
+	272, // 221: api.v0alpha.Event.input_ids:type_name -> api.commons.StringArraySql
 	72,  // 222: api.v0alpha.Event.process:type_name -> api.v0alpha.Process
-	243, // 223: api.v0alpha.Event.upload_ts:type_name -> google.protobuf.Timestamp
-	243, // 224: api.v0alpha.Event.started_ts:type_name -> google.protobuf.Timestamp
-	243, // 225: api.v0alpha.Event.finished_ts:type_name -> google.protobuf.Timestamp
-	243, // 226: api.v0alpha.Event.backoff_till:type_name -> google.protobuf.Timestamp
-	272, // 227: api.v0alpha.Event.latest_history:type_name -> google.protobuf.Int64Value
-	143, // 228: api.v0alpha.Events.events:type_name -> api.v0alpha.Event
-	243, // 229: api.v0alpha.ViewQueueReq.newer_than:type_name -> google.protobuf.Timestamp
-	243, // 230: api.v0alpha.ViewQueueReq.no_newer_than:type_name -> google.protobuf.Timestamp
-	240, // 231: api.v0alpha.RetypeCollectionReq.field_types:type_name -> api.v0alpha.RetypeCollectionReq.FieldTypesEntry
-	152, // 232: api.v0alpha.CollectionMetadata.fields:type_name -> api.v0alpha.CollectionFieldMetadata
-	243, // 233: api.v0alpha.CollectionMetadata.created_on:type_name -> google.protobuf.Timestamp
-	243, // 234: api.v0alpha.CollectionMetadata.last_queried:type_name -> google.protobuf.Timestamp
-	243, // 235: api.v0alpha.CollectionMetadata.last_updated:type_name -> google.protobuf.Timestamp
-	243, // 236: api.v0alpha.CollectionMetadata.last_searched:type_name -> google.protobuf.Timestamp
-	153, // 237: api.v0alpha.CollectionEntry.fields:type_name -> api.v0alpha.CollectionField
-	243, // 238: api.v0alpha.CollectionEntry.last_updated:type_name -> google.protobuf.Timestamp
-	153, // 239: api.v0alpha.MatchReq.fields:type_name -> api.v0alpha.CollectionField
-	149, // 240: api.v0alpha.MatchRes.entries:type_name -> api.v0alpha.CollectionEntry
-	246, // 241: api.v0alpha.CollectionFieldMetadata.field_type:type_name -> api.commons.FieldType
-	148, // 242: api.v0alpha.ListCollectionsRes.collections:type_name -> api.v0alpha.CollectionMetadata
-	161, // 243: api.v0alpha.SearchCollectionsPaginatedReq.search:type_name -> api.v0alpha.Search
-	149, // 244: api.v0alpha.PaginatedSearchRes.entries:type_name -> api.v0alpha.CollectionEntry
-	148, // 245: api.v0alpha.GetCollectionEntriesRes.metadata:type_name -> api.v0alpha.CollectionMetadata
-	149, // 246: api.v0alpha.GetCollectionEntriesRes.entries:type_name -> api.v0alpha.CollectionEntry
-	167, // 247: api.v0alpha.ListCampaignLinksRes.Links:type_name -> api.v0alpha.Link
-	246, // 248: api.v0alpha.CjsSearchField.field_type:type_name -> api.commons.FieldType
-	243, // 249: api.v0alpha.CjsSearchDefinitionMetadata.created_date:type_name -> google.protobuf.Timestamp
-	243, // 250: api.v0alpha.CjsSearchDefinitionMetadata.last_edited:type_name -> google.protobuf.Timestamp
-	169, // 251: api.v0alpha.CjsSearchDefinition.metadata:type_name -> api.v0alpha.CjsSearchDefinitionMetadata
-	168, // 252: api.v0alpha.CjsSearchDefinition.search_fields:type_name -> api.v0alpha.CjsSearchField
-	168, // 253: api.v0alpha.CjsSearchDefinition.whitelisted_return_fields:type_name -> api.v0alpha.CjsSearchField
-	168, // 254: api.v0alpha.CjsSearchDefinition.blacklisted_return_fields:type_name -> api.v0alpha.CjsSearchField
-	168, // 255: api.v0alpha.CjsSearchDefinition.unique_identifiers:type_name -> api.v0alpha.CjsSearchField
-	169, // 256: api.v0alpha.ListCjsSearchDefinitionsRes.definitions:type_name -> api.v0alpha.CjsSearchDefinitionMetadata
-	178, // 257: api.v0alpha.ExecuteCjsSearchDefinitionReq.search_fields:type_name -> api.v0alpha.CjsExecuteSearchField
-	177, // 258: api.v0alpha.ExecuteCjsSearchDefinitionRes.collection_entries:type_name -> api.v0alpha.CollectionEntries
-	148, // 259: api.v0alpha.CollectionEntries.metadata:type_name -> api.v0alpha.CollectionMetadata
-	149, // 260: api.v0alpha.CollectionEntries.entries:type_name -> api.v0alpha.CollectionEntry
-	246, // 261: api.v0alpha.CjsExecuteSearchField.field_type:type_name -> api.commons.FieldType
-	243, // 262: api.v0alpha.CjsSecureSearchCriteriaMetadata.created_on:type_name -> google.protobuf.Timestamp
-	243, // 263: api.v0alpha.CjsSecureSearchCriteriaMetadata.last_updated:type_name -> google.protobuf.Timestamp
-	179, // 264: api.v0alpha.CjsSecureSearchCriteria.metadata:type_name -> api.v0alpha.CjsSecureSearchCriteriaMetadata
-	182, // 265: api.v0alpha.CjsSecureSearchCriteria.fields:type_name -> api.v0alpha.CjsSecureSearchCriteriaField
-	246, // 266: api.v0alpha.CjsSecureSearchCriteriaField.field_type:type_name -> api.commons.FieldType
-	186, // 267: api.v0alpha.SplitCriteria.unique:type_name -> api.v0alpha.SplitByUnique
-	187, // 268: api.v0alpha.SplitCriteria.max_size:type_name -> api.v0alpha.SplitByMaxSize
-	188, // 269: api.v0alpha.SplitCriteria.equal_parts:type_name -> api.v0alpha.SplitByEqualParts
+	244, // 223: api.v0alpha.Event.upload_ts:type_name -> google.protobuf.Timestamp
+	244, // 224: api.v0alpha.Event.started_ts:type_name -> google.protobuf.Timestamp
+	244, // 225: api.v0alpha.Event.finished_ts:type_name -> google.protobuf.Timestamp
+	244, // 226: api.v0alpha.Event.backoff_till:type_name -> google.protobuf.Timestamp
+	273, // 227: api.v0alpha.Event.latest_history:type_name -> google.protobuf.Int64Value
+	144, // 228: api.v0alpha.Events.events:type_name -> api.v0alpha.Event
+	244, // 229: api.v0alpha.ViewQueueReq.newer_than:type_name -> google.protobuf.Timestamp
+	244, // 230: api.v0alpha.ViewQueueReq.no_newer_than:type_name -> google.protobuf.Timestamp
+	241, // 231: api.v0alpha.RetypeCollectionReq.field_types:type_name -> api.v0alpha.RetypeCollectionReq.FieldTypesEntry
+	153, // 232: api.v0alpha.CollectionMetadata.fields:type_name -> api.v0alpha.CollectionFieldMetadata
+	244, // 233: api.v0alpha.CollectionMetadata.created_on:type_name -> google.protobuf.Timestamp
+	244, // 234: api.v0alpha.CollectionMetadata.last_queried:type_name -> google.protobuf.Timestamp
+	244, // 235: api.v0alpha.CollectionMetadata.last_updated:type_name -> google.protobuf.Timestamp
+	244, // 236: api.v0alpha.CollectionMetadata.last_searched:type_name -> google.protobuf.Timestamp
+	154, // 237: api.v0alpha.CollectionEntry.fields:type_name -> api.v0alpha.CollectionField
+	244, // 238: api.v0alpha.CollectionEntry.last_updated:type_name -> google.protobuf.Timestamp
+	154, // 239: api.v0alpha.MatchReq.fields:type_name -> api.v0alpha.CollectionField
+	150, // 240: api.v0alpha.MatchRes.entries:type_name -> api.v0alpha.CollectionEntry
+	247, // 241: api.v0alpha.CollectionFieldMetadata.field_type:type_name -> api.commons.FieldType
+	149, // 242: api.v0alpha.ListCollectionsRes.collections:type_name -> api.v0alpha.CollectionMetadata
+	162, // 243: api.v0alpha.SearchCollectionsPaginatedReq.search:type_name -> api.v0alpha.Search
+	150, // 244: api.v0alpha.PaginatedSearchRes.entries:type_name -> api.v0alpha.CollectionEntry
+	149, // 245: api.v0alpha.GetCollectionEntriesRes.metadata:type_name -> api.v0alpha.CollectionMetadata
+	150, // 246: api.v0alpha.GetCollectionEntriesRes.entries:type_name -> api.v0alpha.CollectionEntry
+	168, // 247: api.v0alpha.ListCampaignLinksRes.Links:type_name -> api.v0alpha.Link
+	247, // 248: api.v0alpha.CjsSearchField.field_type:type_name -> api.commons.FieldType
+	244, // 249: api.v0alpha.CjsSearchDefinitionMetadata.created_date:type_name -> google.protobuf.Timestamp
+	244, // 250: api.v0alpha.CjsSearchDefinitionMetadata.last_edited:type_name -> google.protobuf.Timestamp
+	170, // 251: api.v0alpha.CjsSearchDefinition.metadata:type_name -> api.v0alpha.CjsSearchDefinitionMetadata
+	169, // 252: api.v0alpha.CjsSearchDefinition.search_fields:type_name -> api.v0alpha.CjsSearchField
+	169, // 253: api.v0alpha.CjsSearchDefinition.whitelisted_return_fields:type_name -> api.v0alpha.CjsSearchField
+	169, // 254: api.v0alpha.CjsSearchDefinition.blacklisted_return_fields:type_name -> api.v0alpha.CjsSearchField
+	169, // 255: api.v0alpha.CjsSearchDefinition.unique_identifiers:type_name -> api.v0alpha.CjsSearchField
+	170, // 256: api.v0alpha.ListCjsSearchDefinitionsRes.definitions:type_name -> api.v0alpha.CjsSearchDefinitionMetadata
+	179, // 257: api.v0alpha.ExecuteCjsSearchDefinitionReq.search_fields:type_name -> api.v0alpha.CjsExecuteSearchField
+	178, // 258: api.v0alpha.ExecuteCjsSearchDefinitionRes.collection_entries:type_name -> api.v0alpha.CollectionEntries
+	149, // 259: api.v0alpha.CollectionEntries.metadata:type_name -> api.v0alpha.CollectionMetadata
+	150, // 260: api.v0alpha.CollectionEntries.entries:type_name -> api.v0alpha.CollectionEntry
+	247, // 261: api.v0alpha.CjsExecuteSearchField.field_type:type_name -> api.commons.FieldType
+	244, // 262: api.v0alpha.CjsSecureSearchCriteriaMetadata.created_on:type_name -> google.protobuf.Timestamp
+	244, // 263: api.v0alpha.CjsSecureSearchCriteriaMetadata.last_updated:type_name -> google.protobuf.Timestamp
+	180, // 264: api.v0alpha.CjsSecureSearchCriteria.metadata:type_name -> api.v0alpha.CjsSecureSearchCriteriaMetadata
+	183, // 265: api.v0alpha.CjsSecureSearchCriteria.fields:type_name -> api.v0alpha.CjsSecureSearchCriteriaField
+	247, // 266: api.v0alpha.CjsSecureSearchCriteriaField.field_type:type_name -> api.commons.FieldType
+	187, // 267: api.v0alpha.SplitCriteria.unique:type_name -> api.v0alpha.SplitByUnique
+	188, // 268: api.v0alpha.SplitCriteria.max_size:type_name -> api.v0alpha.SplitByMaxSize
+	189, // 269: api.v0alpha.SplitCriteria.equal_parts:type_name -> api.v0alpha.SplitByEqualParts
 	58,  // 270: api.v0alpha.UniquePair.split_on_fields:type_name -> api.v0alpha.FieldIndex
-	184, // 271: api.v0alpha.SplitByNamedUnique.named_fields:type_name -> api.v0alpha.UniquePair
+	185, // 271: api.v0alpha.SplitByNamedUnique.named_fields:type_name -> api.v0alpha.UniquePair
 	58,  // 272: api.v0alpha.SplitByUnique.split_on_fields:type_name -> api.v0alpha.FieldIndex
 	1,   // 273: api.v0alpha.EpicEntrypoint.entity_types:type_name -> api.v0alpha.EpicEntityType
-	190, // 274: api.v0alpha.EpicEntrypoint.runtime_values:type_name -> api.v0alpha.RuntimeValues
+	191, // 274: api.v0alpha.EpicEntrypoint.runtime_values:type_name -> api.v0alpha.RuntimeValues
 	54,  // 275: api.v0alpha.EpicEntrypoint.fields:type_name -> api.v0alpha.Field
-	273, // 276: api.v0alpha.RuntimeValues.state:type_name -> api.commons.EventState
-	191, // 277: api.v0alpha.RuntimeValues.data_urls:type_name -> api.v0alpha.EntityURL
-	241, // 278: api.v0alpha.RuntimeValues.file_ids:type_name -> api.v0alpha.RuntimeValues.FileIdsEntry
-	242, // 279: api.v0alpha.RuntimeValues.preliminary_vars:type_name -> api.v0alpha.RuntimeValues.PreliminaryVarsEntry
+	274, // 276: api.v0alpha.RuntimeValues.state:type_name -> api.commons.EventState
+	192, // 277: api.v0alpha.RuntimeValues.data_urls:type_name -> api.v0alpha.EntityURL
+	242, // 278: api.v0alpha.RuntimeValues.file_ids:type_name -> api.v0alpha.RuntimeValues.FileIdsEntry
+	243, // 279: api.v0alpha.RuntimeValues.preliminary_vars:type_name -> api.v0alpha.RuntimeValues.PreliminaryVarsEntry
 	1,   // 280: api.v0alpha.EntityURL.entity_type:type_name -> api.v0alpha.EpicEntityType
 	1,   // 281: api.v0alpha.EHREntityType.epic_entity:type_name -> api.v0alpha.EpicEntityType
-	239, // 282: api.v0alpha.ContactManagementEnrichment.de_duplication_info:type_name -> api.v0alpha.ContactManagerSink.DeDuplication
+	240, // 282: api.v0alpha.ContactManagementEnrichment.de_duplication_info:type_name -> api.v0alpha.ContactManagerSink.DeDuplication
 	4,   // 283: api.v0alpha.ContactManagementEnrichment.search_field_type:type_name -> api.v0alpha.ContactManagementEnrichment.SearchFieldType
-	270, // 284: api.v0alpha.ProcessFields.NestedField.field_type:type_name -> api.commons.RecordType
-	270, // 285: api.v0alpha.ProcessFields.Field.field_type:type_name -> api.commons.RecordType
-	200, // 286: api.v0alpha.ProcessFields.Field.nested:type_name -> api.v0alpha.ProcessFields.NestedField
+	271, // 284: api.v0alpha.ProcessFields.NestedField.field_type:type_name -> api.commons.RecordType
+	271, // 285: api.v0alpha.ProcessFields.Field.field_type:type_name -> api.commons.RecordType
+	201, // 286: api.v0alpha.ProcessFields.Field.nested:type_name -> api.v0alpha.ProcessFields.NestedField
 	67,  // 287: api.v0alpha.LookupProcess.UrlLookup.file_template:type_name -> api.v0alpha.FileTemplate
 	58,  // 288: api.v0alpha.FilterCheck.Value.field_name:type_name -> api.v0alpha.FieldIndex
-	125, // 289: api.v0alpha.FilterCheck.Value.date_time:type_name -> api.v0alpha.DateTime
+	126, // 289: api.v0alpha.FilterCheck.Value.date_time:type_name -> api.v0alpha.DateTime
 	58,  // 290: api.v0alpha.FilterCheck.ValueComparison.field_name:type_name -> api.v0alpha.FieldIndex
-	274, // 291: api.v0alpha.FilterCheck.ValueComparison.op:type_name -> api.commons.CompareOperator
-	210, // 292: api.v0alpha.FilterCheck.ValueComparison.value:type_name -> api.v0alpha.FilterCheck.Value
+	275, // 291: api.v0alpha.FilterCheck.ValueComparison.op:type_name -> api.commons.CompareOperator
+	211, // 292: api.v0alpha.FilterCheck.ValueComparison.value:type_name -> api.v0alpha.FilterCheck.Value
 	58,  // 293: api.v0alpha.FilterCheck.TypeComparison.field_name:type_name -> api.v0alpha.FieldIndex
-	270, // 294: api.v0alpha.FilterCheck.TypeComparison.matches_field_type:type_name -> api.commons.RecordType
+	271, // 294: api.v0alpha.FilterCheck.TypeComparison.matches_field_type:type_name -> api.commons.RecordType
 	58,  // 295: api.v0alpha.FilterCheck.ListComparison.field_name:type_name -> api.v0alpha.FieldIndex
-	214, // 296: api.v0alpha.FilterCheck.ListComparison.data:type_name -> api.v0alpha.FilterCheck.ListComparison.FieldOrVal
+	215, // 296: api.v0alpha.FilterCheck.ListComparison.data:type_name -> api.v0alpha.FilterCheck.ListComparison.FieldOrVal
 	58,  // 297: api.v0alpha.FilterCheck.ListComparison.FieldOrVal.field:type_name -> api.v0alpha.FieldIndex
-	210, // 298: api.v0alpha.FilterCheck.ListComparison.FieldOrVal.value:type_name -> api.v0alpha.FilterCheck.Value
+	211, // 298: api.v0alpha.FilterCheck.ListComparison.FieldOrVal.value:type_name -> api.v0alpha.FilterCheck.Value
 	60,  // 299: api.v0alpha.RecordFieldMap.FieldsEntry.value:type_name -> api.v0alpha.RecordFieldProto
 	124, // 300: api.v0alpha.ReshapeAction.AddDate.datetime:type_name -> api.v0alpha.DateTimeModifier
-	58,  // 301: api.v0alpha.ReshapeAction.AddField.other_field:type_name -> api.v0alpha.FieldIndex
-	58,  // 302: api.v0alpha.ReshapeAction.SubtractField.other_field:type_name -> api.v0alpha.FieldIndex
-	270, // 303: api.v0alpha.ReshapeAction.Convert.newType:type_name -> api.commons.RecordType
-	54,  // 304: api.v0alpha.ReshapeAction.Convert.new_field:type_name -> api.v0alpha.Field
-	60,  // 305: api.v0alpha.ReshapeAction.Convert.default_value:type_name -> api.v0alpha.RecordFieldProto
-	60,  // 306: api.v0alpha.ReshapeAction.AddNewField.starting_value:type_name -> api.v0alpha.RecordFieldProto
-	58,  // 307: api.v0alpha.ReshapeAction.AddNewFieldFromField.other_field:type_name -> api.v0alpha.FieldIndex
-	60,  // 308: api.v0alpha.ReshapeAction.SetFieldValue.value:type_name -> api.v0alpha.RecordFieldProto
-	58,  // 309: api.v0alpha.ReshapeAction.SetFieldFromField.other_field:type_name -> api.v0alpha.FieldIndex
-	236, // 310: api.v0alpha.ReshapeAction.Merge.data:type_name -> api.v0alpha.ReshapeAction.Merge.FieldOrVal
-	238, // 311: api.v0alpha.ReshapeAction.Extract.parts:type_name -> api.v0alpha.ReshapeAction.Extract.Slice
-	58,  // 312: api.v0alpha.ReshapeAction.Merge.FieldOrVal.field:type_name -> api.v0alpha.FieldIndex
-	237, // 313: api.v0alpha.ReshapeAction.Extract.Slice.start_index:type_name -> api.v0alpha.ReshapeAction.Extract.Index
-	237, // 314: api.v0alpha.ReshapeAction.Extract.Slice.end_index:type_name -> api.v0alpha.ReshapeAction.Extract.Index
-	2,   // 315: api.v0alpha.ContactManagerSink.DeDuplication.field_type:type_name -> api.v0alpha.ContactManagerSink.DeDuplicationFieldType
-	3,   // 316: api.v0alpha.ContactManagerSink.DeDuplication.merge_strategy:type_name -> api.v0alpha.ContactManagerSink.DeDuplicationMergeStrategy
-	246, // 317: api.v0alpha.RetypeCollectionReq.FieldTypesEntry.value:type_name -> api.commons.FieldType
-	21,  // 318: api.v0alpha.LMS.GetPublicKey:input_type -> api.v0alpha.GetPublicKeyReq
-	67,  // 319: api.v0alpha.LMS.CreateFileTemplate:input_type -> api.v0alpha.FileTemplate
-	63,  // 320: api.v0alpha.LMS.ListFileTemplates:input_type -> api.v0alpha.GetFileTemplatesReq
-	67,  // 321: api.v0alpha.LMS.UpdateFileTemplate:input_type -> api.v0alpha.FileTemplate
-	67,  // 322: api.v0alpha.LMS.DeleteFileTemplate:input_type -> api.v0alpha.FileTemplate
-	67,  // 323: api.v0alpha.LMS.GetFileTemplate:input_type -> api.v0alpha.FileTemplate
-	54,  // 324: api.v0alpha.LMS.CreateField:input_type -> api.v0alpha.Field
-	59,  // 325: api.v0alpha.LMS.ListFields:input_type -> api.v0alpha.ListFieldsReq
-	54,  // 326: api.v0alpha.LMS.GetField:input_type -> api.v0alpha.Field
-	55,  // 327: api.v0alpha.LMS.UpdateField:input_type -> api.v0alpha.UpdateFieldReq
-	54,  // 328: api.v0alpha.LMS.DeleteField:input_type -> api.v0alpha.Field
-	37,  // 329: api.v0alpha.LMS.ListAvailableFieldsByElementId:input_type -> api.v0alpha.ListAvailableFieldsByElementIdReq
-	38,  // 330: api.v0alpha.LMS.ListFieldsForElement:input_type -> api.v0alpha.ListFieldsForElementReq
-	40,  // 331: api.v0alpha.LMS.ListAutocompleteFields:input_type -> api.v0alpha.ListAutocompleteFieldsReq
-	275, // 332: api.v0alpha.LMS.ListCampaignLinks:input_type -> google.protobuf.Empty
-	44,  // 333: api.v0alpha.LMS.PeekList:input_type -> api.v0alpha.PeekListReq
-	46,  // 334: api.v0alpha.LMS.GetHistory:input_type -> api.v0alpha.GetHistoryReq
-	43,  // 335: api.v0alpha.LMS.CreateElement:input_type -> api.v0alpha.Element
-	62,  // 336: api.v0alpha.LMS.ListElements:input_type -> api.v0alpha.ListElementsReq
-	42,  // 337: api.v0alpha.LMS.GetElement:input_type -> api.v0alpha.ElementPK
-	43,  // 338: api.v0alpha.LMS.UpdateElement:input_type -> api.v0alpha.Element
-	43,  // 339: api.v0alpha.LMS.DeleteElement:input_type -> api.v0alpha.Element
-	43,  // 340: api.v0alpha.LMS.CopyPipelineUpstream:input_type -> api.v0alpha.Element
-	43,  // 341: api.v0alpha.LMS.CopyPipelineDownstream:input_type -> api.v0alpha.Element
-	32,  // 342: api.v0alpha.LMS.ProcessElement:input_type -> api.v0alpha.ProcessElementReq
-	33,  // 343: api.v0alpha.LMS.ProcessList:input_type -> api.v0alpha.ProcessListRequest
-	35,  // 344: api.v0alpha.LMS.StreamList:input_type -> api.v0alpha.StreamListRequest
-	275, // 345: api.v0alpha.LMS.GetAvailableFields:input_type -> google.protobuf.Empty
-	275, // 346: api.v0alpha.LMS.ListNewEvents:input_type -> google.protobuf.Empty
-	145, // 347: api.v0alpha.LMS.ViewQueue:input_type -> api.v0alpha.ViewQueueReq
-	141, // 348: api.v0alpha.LMS.Autocomplete:input_type -> api.v0alpha.ParseReq
-	30,  // 349: api.v0alpha.LMS.GetComplianceScrubLists:input_type -> api.v0alpha.GetComplianceScrubListsReq
-	23,  // 350: api.v0alpha.LMS.FindFieldUsages:input_type -> api.v0alpha.FindFieldUsagesReq
-	28,  // 351: api.v0alpha.LMS.FindInvalidElements:input_type -> api.v0alpha.FindInvalidElementsReq
-	148, // 352: api.v0alpha.LMS.CreateCollection:input_type -> api.v0alpha.CollectionMetadata
-	154, // 353: api.v0alpha.LMS.GetCollection:input_type -> api.v0alpha.GetCollectionReq
-	148, // 354: api.v0alpha.LMS.UpdateCollection:input_type -> api.v0alpha.CollectionMetadata
-	146, // 355: api.v0alpha.LMS.RetypeCollection:input_type -> api.v0alpha.RetypeCollectionReq
-	156, // 356: api.v0alpha.LMS.DeleteCollection:input_type -> api.v0alpha.DeleteCollectionReq
-	158, // 357: api.v0alpha.LMS.ListCollections:input_type -> api.v0alpha.ListCollectionsReq
-	157, // 358: api.v0alpha.LMS.ResetCollection:input_type -> api.v0alpha.ResetCollectionReq
-	149, // 359: api.v0alpha.LMS.AddCollectionEntry:input_type -> api.v0alpha.CollectionEntry
-	165, // 360: api.v0alpha.LMS.DeleteCollectionEntry:input_type -> api.v0alpha.DeleteCollectionEntryReq
-	149, // 361: api.v0alpha.LMS.UpdateCollectionEntry:input_type -> api.v0alpha.CollectionEntry
-	155, // 362: api.v0alpha.LMS.StreamCollection:input_type -> api.v0alpha.StreamCollectionReq
-	160, // 363: api.v0alpha.LMS.SearchCollectionsPaginated:input_type -> api.v0alpha.SearchCollectionsPaginatedReq
-	163, // 364: api.v0alpha.LMS.GetCollectionEntries:input_type -> api.v0alpha.GetCollectionEntriesReq
-	170, // 365: api.v0alpha.LMS.CreateCjsSearchDefinition:input_type -> api.v0alpha.CjsSearchDefinition
-	171, // 366: api.v0alpha.LMS.GetCjsSearchDefinition:input_type -> api.v0alpha.GetCjsSearchDefinitionReq
-	170, // 367: api.v0alpha.LMS.UpdateCjsSearchDefinition:input_type -> api.v0alpha.CjsSearchDefinition
-	172, // 368: api.v0alpha.LMS.DeleteCjsSearchDefinition:input_type -> api.v0alpha.DeleteCjsSearchDefinitionReq
-	173, // 369: api.v0alpha.LMS.ListCjsSearchDefinitions:input_type -> api.v0alpha.ListCjsSearchDefinitionsReq
-	175, // 370: api.v0alpha.LMS.ExecuteCjsSearchDefinition:input_type -> api.v0alpha.ExecuteCjsSearchDefinitionReq
-	181, // 371: api.v0alpha.LMS.GetCjsSecureSearchCriteria:input_type -> api.v0alpha.GetCjsSecureSearchCriteriaReq
-	180, // 372: api.v0alpha.LMS.CreateCjsSecureSearchCriteria:input_type -> api.v0alpha.CjsSecureSearchCriteria
-	180, // 373: api.v0alpha.LMS.UpdateCjsSecureSearchCriteria:input_type -> api.v0alpha.CjsSecureSearchCriteria
-	192, // 374: api.v0alpha.LMS.SampleEndpoint:input_type -> api.v0alpha.SampleRequest
-	193, // 375: api.v0alpha.LMS.GetAvailableEHRFields:input_type -> api.v0alpha.EHREntityType
-	42,  // 376: api.v0alpha.LMS.GetQueuedEventsStatusByElementId:input_type -> api.v0alpha.ElementPK
-	18,  // 377: api.v0alpha.LMS.ListPools:input_type -> api.v0alpha.ListPoolsRequest
-	8,   // 378: api.v0alpha.LMS.CreatePipelineCanvas:input_type -> api.v0alpha.CreatePipelineCanvasReq
-	10,  // 379: api.v0alpha.LMS.ListPipelineCanvases:input_type -> api.v0alpha.ListPipelineCanvasesReq
-	12,  // 380: api.v0alpha.LMS.UpdatePipelineCanvas:input_type -> api.v0alpha.UpdatePipelineCanvasReq
-	14,  // 381: api.v0alpha.LMS.DeletePipelineCanvas:input_type -> api.v0alpha.DeletePipelineCanvasReq
-	16,  // 382: api.v0alpha.LMS.GetPipelineCanvas:input_type -> api.v0alpha.GetPipelineCanvasReq
-	22,  // 383: api.v0alpha.LMS.GetPublicKey:output_type -> api.v0alpha.PublicKey
-	67,  // 384: api.v0alpha.LMS.CreateFileTemplate:output_type -> api.v0alpha.FileTemplate
-	67,  // 385: api.v0alpha.LMS.ListFileTemplates:output_type -> api.v0alpha.FileTemplate
-	67,  // 386: api.v0alpha.LMS.UpdateFileTemplate:output_type -> api.v0alpha.FileTemplate
-	67,  // 387: api.v0alpha.LMS.DeleteFileTemplate:output_type -> api.v0alpha.FileTemplate
-	67,  // 388: api.v0alpha.LMS.GetFileTemplate:output_type -> api.v0alpha.FileTemplate
-	54,  // 389: api.v0alpha.LMS.CreateField:output_type -> api.v0alpha.Field
-	57,  // 390: api.v0alpha.LMS.ListFields:output_type -> api.v0alpha.Fields
-	54,  // 391: api.v0alpha.LMS.GetField:output_type -> api.v0alpha.Field
-	54,  // 392: api.v0alpha.LMS.UpdateField:output_type -> api.v0alpha.Field
-	54,  // 393: api.v0alpha.LMS.DeleteField:output_type -> api.v0alpha.Field
-	52,  // 394: api.v0alpha.LMS.ListAvailableFieldsByElementId:output_type -> api.v0alpha.ProcessFields
-	39,  // 395: api.v0alpha.LMS.ListFieldsForElement:output_type -> api.v0alpha.ListFieldsForElementRes
-	41,  // 396: api.v0alpha.LMS.ListAutocompleteFields:output_type -> api.v0alpha.ListAutocompleteFieldsRes
-	166, // 397: api.v0alpha.LMS.ListCampaignLinks:output_type -> api.v0alpha.ListCampaignLinksRes
-	45,  // 398: api.v0alpha.LMS.PeekList:output_type -> api.v0alpha.PeekListRes
-	47,  // 399: api.v0alpha.LMS.GetHistory:output_type -> api.v0alpha.GetHistoryRes
-	43,  // 400: api.v0alpha.LMS.CreateElement:output_type -> api.v0alpha.Element
-	43,  // 401: api.v0alpha.LMS.ListElements:output_type -> api.v0alpha.Element
-	43,  // 402: api.v0alpha.LMS.GetElement:output_type -> api.v0alpha.Element
-	43,  // 403: api.v0alpha.LMS.UpdateElement:output_type -> api.v0alpha.Element
-	43,  // 404: api.v0alpha.LMS.DeleteElement:output_type -> api.v0alpha.Element
-	43,  // 405: api.v0alpha.LMS.CopyPipelineUpstream:output_type -> api.v0alpha.Element
-	43,  // 406: api.v0alpha.LMS.CopyPipelineDownstream:output_type -> api.v0alpha.Element
-	275, // 407: api.v0alpha.LMS.ProcessElement:output_type -> google.protobuf.Empty
-	34,  // 408: api.v0alpha.LMS.ProcessList:output_type -> api.v0alpha.ProcessListResponse
-	36,  // 409: api.v0alpha.LMS.StreamList:output_type -> api.v0alpha.StreamListResponse
-	52,  // 410: api.v0alpha.LMS.GetAvailableFields:output_type -> api.v0alpha.ProcessFields
-	144, // 411: api.v0alpha.LMS.ListNewEvents:output_type -> api.v0alpha.Events
-	144, // 412: api.v0alpha.LMS.ViewQueue:output_type -> api.v0alpha.Events
-	142, // 413: api.v0alpha.LMS.Autocomplete:output_type -> api.v0alpha.ParseRes
-	31,  // 414: api.v0alpha.LMS.GetComplianceScrubLists:output_type -> api.v0alpha.GetComplianceScrubListsRes
-	25,  // 415: api.v0alpha.LMS.FindFieldUsages:output_type -> api.v0alpha.FindFieldUsagesRes
-	29,  // 416: api.v0alpha.LMS.FindInvalidElements:output_type -> api.v0alpha.FindInvalidElementsRes
-	148, // 417: api.v0alpha.LMS.CreateCollection:output_type -> api.v0alpha.CollectionMetadata
-	148, // 418: api.v0alpha.LMS.GetCollection:output_type -> api.v0alpha.CollectionMetadata
-	275, // 419: api.v0alpha.LMS.UpdateCollection:output_type -> google.protobuf.Empty
-	147, // 420: api.v0alpha.LMS.RetypeCollection:output_type -> api.v0alpha.RetypeCollectionRes
-	275, // 421: api.v0alpha.LMS.DeleteCollection:output_type -> google.protobuf.Empty
-	159, // 422: api.v0alpha.LMS.ListCollections:output_type -> api.v0alpha.ListCollectionsRes
-	275, // 423: api.v0alpha.LMS.ResetCollection:output_type -> google.protobuf.Empty
-	149, // 424: api.v0alpha.LMS.AddCollectionEntry:output_type -> api.v0alpha.CollectionEntry
-	275, // 425: api.v0alpha.LMS.DeleteCollectionEntry:output_type -> google.protobuf.Empty
-	149, // 426: api.v0alpha.LMS.UpdateCollectionEntry:output_type -> api.v0alpha.CollectionEntry
-	149, // 427: api.v0alpha.LMS.StreamCollection:output_type -> api.v0alpha.CollectionEntry
-	162, // 428: api.v0alpha.LMS.SearchCollectionsPaginated:output_type -> api.v0alpha.PaginatedSearchRes
-	164, // 429: api.v0alpha.LMS.GetCollectionEntries:output_type -> api.v0alpha.GetCollectionEntriesRes
-	170, // 430: api.v0alpha.LMS.CreateCjsSearchDefinition:output_type -> api.v0alpha.CjsSearchDefinition
-	170, // 431: api.v0alpha.LMS.GetCjsSearchDefinition:output_type -> api.v0alpha.CjsSearchDefinition
-	275, // 432: api.v0alpha.LMS.UpdateCjsSearchDefinition:output_type -> google.protobuf.Empty
-	275, // 433: api.v0alpha.LMS.DeleteCjsSearchDefinition:output_type -> google.protobuf.Empty
-	174, // 434: api.v0alpha.LMS.ListCjsSearchDefinitions:output_type -> api.v0alpha.ListCjsSearchDefinitionsRes
-	176, // 435: api.v0alpha.LMS.ExecuteCjsSearchDefinition:output_type -> api.v0alpha.ExecuteCjsSearchDefinitionRes
-	180, // 436: api.v0alpha.LMS.GetCjsSecureSearchCriteria:output_type -> api.v0alpha.CjsSecureSearchCriteria
-	180, // 437: api.v0alpha.LMS.CreateCjsSecureSearchCriteria:output_type -> api.v0alpha.CjsSecureSearchCriteria
-	275, // 438: api.v0alpha.LMS.UpdateCjsSecureSearchCriteria:output_type -> google.protobuf.Empty
-	275, // 439: api.v0alpha.LMS.SampleEndpoint:output_type -> google.protobuf.Empty
-	57,  // 440: api.v0alpha.LMS.GetAvailableEHRFields:output_type -> api.v0alpha.Fields
-	144, // 441: api.v0alpha.LMS.GetQueuedEventsStatusByElementId:output_type -> api.v0alpha.Events
-	19,  // 442: api.v0alpha.LMS.ListPools:output_type -> api.v0alpha.ListPoolsResponse
-	9,   // 443: api.v0alpha.LMS.CreatePipelineCanvas:output_type -> api.v0alpha.CreatePipelineCanvasRes
-	11,  // 444: api.v0alpha.LMS.ListPipelineCanvases:output_type -> api.v0alpha.ListPipelineCanvasesRes
-	13,  // 445: api.v0alpha.LMS.UpdatePipelineCanvas:output_type -> api.v0alpha.UpdatePipelineCanvasRes
-	15,  // 446: api.v0alpha.LMS.DeletePipelineCanvas:output_type -> api.v0alpha.DeletePipelineCanvasRes
-	17,  // 447: api.v0alpha.LMS.GetPipelineCanvas:output_type -> api.v0alpha.GetPipelineCanvasRes
-	383, // [383:448] is the sub-list for method output_type
-	318, // [318:383] is the sub-list for method input_type
-	318, // [318:318] is the sub-list for extension type_name
-	318, // [318:318] is the sub-list for extension extendee
-	0,   // [0:318] is the sub-list for field type_name
+	125, // 301: api.v0alpha.ReshapeAction.AddDate.datetime_field_modifier:type_name -> api.v0alpha.DateTimeFieldModifier
+	58,  // 302: api.v0alpha.ReshapeAction.AddField.other_field:type_name -> api.v0alpha.FieldIndex
+	58,  // 303: api.v0alpha.ReshapeAction.SubtractField.other_field:type_name -> api.v0alpha.FieldIndex
+	271, // 304: api.v0alpha.ReshapeAction.Convert.newType:type_name -> api.commons.RecordType
+	54,  // 305: api.v0alpha.ReshapeAction.Convert.new_field:type_name -> api.v0alpha.Field
+	60,  // 306: api.v0alpha.ReshapeAction.Convert.default_value:type_name -> api.v0alpha.RecordFieldProto
+	60,  // 307: api.v0alpha.ReshapeAction.AddNewField.starting_value:type_name -> api.v0alpha.RecordFieldProto
+	58,  // 308: api.v0alpha.ReshapeAction.AddNewFieldFromField.other_field:type_name -> api.v0alpha.FieldIndex
+	60,  // 309: api.v0alpha.ReshapeAction.SetFieldValue.value:type_name -> api.v0alpha.RecordFieldProto
+	58,  // 310: api.v0alpha.ReshapeAction.SetFieldFromField.other_field:type_name -> api.v0alpha.FieldIndex
+	237, // 311: api.v0alpha.ReshapeAction.Merge.data:type_name -> api.v0alpha.ReshapeAction.Merge.FieldOrVal
+	239, // 312: api.v0alpha.ReshapeAction.Extract.parts:type_name -> api.v0alpha.ReshapeAction.Extract.Slice
+	58,  // 313: api.v0alpha.ReshapeAction.Merge.FieldOrVal.field:type_name -> api.v0alpha.FieldIndex
+	238, // 314: api.v0alpha.ReshapeAction.Extract.Slice.start_index:type_name -> api.v0alpha.ReshapeAction.Extract.Index
+	238, // 315: api.v0alpha.ReshapeAction.Extract.Slice.end_index:type_name -> api.v0alpha.ReshapeAction.Extract.Index
+	2,   // 316: api.v0alpha.ContactManagerSink.DeDuplication.field_type:type_name -> api.v0alpha.ContactManagerSink.DeDuplicationFieldType
+	3,   // 317: api.v0alpha.ContactManagerSink.DeDuplication.merge_strategy:type_name -> api.v0alpha.ContactManagerSink.DeDuplicationMergeStrategy
+	247, // 318: api.v0alpha.RetypeCollectionReq.FieldTypesEntry.value:type_name -> api.commons.FieldType
+	21,  // 319: api.v0alpha.LMS.GetPublicKey:input_type -> api.v0alpha.GetPublicKeyReq
+	67,  // 320: api.v0alpha.LMS.CreateFileTemplate:input_type -> api.v0alpha.FileTemplate
+	63,  // 321: api.v0alpha.LMS.ListFileTemplates:input_type -> api.v0alpha.GetFileTemplatesReq
+	67,  // 322: api.v0alpha.LMS.UpdateFileTemplate:input_type -> api.v0alpha.FileTemplate
+	67,  // 323: api.v0alpha.LMS.DeleteFileTemplate:input_type -> api.v0alpha.FileTemplate
+	67,  // 324: api.v0alpha.LMS.GetFileTemplate:input_type -> api.v0alpha.FileTemplate
+	54,  // 325: api.v0alpha.LMS.CreateField:input_type -> api.v0alpha.Field
+	59,  // 326: api.v0alpha.LMS.ListFields:input_type -> api.v0alpha.ListFieldsReq
+	54,  // 327: api.v0alpha.LMS.GetField:input_type -> api.v0alpha.Field
+	55,  // 328: api.v0alpha.LMS.UpdateField:input_type -> api.v0alpha.UpdateFieldReq
+	54,  // 329: api.v0alpha.LMS.DeleteField:input_type -> api.v0alpha.Field
+	37,  // 330: api.v0alpha.LMS.ListAvailableFieldsByElementId:input_type -> api.v0alpha.ListAvailableFieldsByElementIdReq
+	38,  // 331: api.v0alpha.LMS.ListFieldsForElement:input_type -> api.v0alpha.ListFieldsForElementReq
+	40,  // 332: api.v0alpha.LMS.ListAutocompleteFields:input_type -> api.v0alpha.ListAutocompleteFieldsReq
+	276, // 333: api.v0alpha.LMS.ListCampaignLinks:input_type -> google.protobuf.Empty
+	44,  // 334: api.v0alpha.LMS.PeekList:input_type -> api.v0alpha.PeekListReq
+	46,  // 335: api.v0alpha.LMS.GetHistory:input_type -> api.v0alpha.GetHistoryReq
+	43,  // 336: api.v0alpha.LMS.CreateElement:input_type -> api.v0alpha.Element
+	62,  // 337: api.v0alpha.LMS.ListElements:input_type -> api.v0alpha.ListElementsReq
+	42,  // 338: api.v0alpha.LMS.GetElement:input_type -> api.v0alpha.ElementPK
+	43,  // 339: api.v0alpha.LMS.UpdateElement:input_type -> api.v0alpha.Element
+	43,  // 340: api.v0alpha.LMS.DeleteElement:input_type -> api.v0alpha.Element
+	43,  // 341: api.v0alpha.LMS.CopyPipelineUpstream:input_type -> api.v0alpha.Element
+	43,  // 342: api.v0alpha.LMS.CopyPipelineDownstream:input_type -> api.v0alpha.Element
+	32,  // 343: api.v0alpha.LMS.ProcessElement:input_type -> api.v0alpha.ProcessElementReq
+	33,  // 344: api.v0alpha.LMS.ProcessList:input_type -> api.v0alpha.ProcessListRequest
+	35,  // 345: api.v0alpha.LMS.StreamList:input_type -> api.v0alpha.StreamListRequest
+	276, // 346: api.v0alpha.LMS.GetAvailableFields:input_type -> google.protobuf.Empty
+	276, // 347: api.v0alpha.LMS.ListNewEvents:input_type -> google.protobuf.Empty
+	146, // 348: api.v0alpha.LMS.ViewQueue:input_type -> api.v0alpha.ViewQueueReq
+	142, // 349: api.v0alpha.LMS.Autocomplete:input_type -> api.v0alpha.ParseReq
+	30,  // 350: api.v0alpha.LMS.GetComplianceScrubLists:input_type -> api.v0alpha.GetComplianceScrubListsReq
+	23,  // 351: api.v0alpha.LMS.FindFieldUsages:input_type -> api.v0alpha.FindFieldUsagesReq
+	28,  // 352: api.v0alpha.LMS.FindInvalidElements:input_type -> api.v0alpha.FindInvalidElementsReq
+	149, // 353: api.v0alpha.LMS.CreateCollection:input_type -> api.v0alpha.CollectionMetadata
+	155, // 354: api.v0alpha.LMS.GetCollection:input_type -> api.v0alpha.GetCollectionReq
+	149, // 355: api.v0alpha.LMS.UpdateCollection:input_type -> api.v0alpha.CollectionMetadata
+	147, // 356: api.v0alpha.LMS.RetypeCollection:input_type -> api.v0alpha.RetypeCollectionReq
+	157, // 357: api.v0alpha.LMS.DeleteCollection:input_type -> api.v0alpha.DeleteCollectionReq
+	159, // 358: api.v0alpha.LMS.ListCollections:input_type -> api.v0alpha.ListCollectionsReq
+	158, // 359: api.v0alpha.LMS.ResetCollection:input_type -> api.v0alpha.ResetCollectionReq
+	150, // 360: api.v0alpha.LMS.AddCollectionEntry:input_type -> api.v0alpha.CollectionEntry
+	166, // 361: api.v0alpha.LMS.DeleteCollectionEntry:input_type -> api.v0alpha.DeleteCollectionEntryReq
+	150, // 362: api.v0alpha.LMS.UpdateCollectionEntry:input_type -> api.v0alpha.CollectionEntry
+	156, // 363: api.v0alpha.LMS.StreamCollection:input_type -> api.v0alpha.StreamCollectionReq
+	161, // 364: api.v0alpha.LMS.SearchCollectionsPaginated:input_type -> api.v0alpha.SearchCollectionsPaginatedReq
+	164, // 365: api.v0alpha.LMS.GetCollectionEntries:input_type -> api.v0alpha.GetCollectionEntriesReq
+	171, // 366: api.v0alpha.LMS.CreateCjsSearchDefinition:input_type -> api.v0alpha.CjsSearchDefinition
+	172, // 367: api.v0alpha.LMS.GetCjsSearchDefinition:input_type -> api.v0alpha.GetCjsSearchDefinitionReq
+	171, // 368: api.v0alpha.LMS.UpdateCjsSearchDefinition:input_type -> api.v0alpha.CjsSearchDefinition
+	173, // 369: api.v0alpha.LMS.DeleteCjsSearchDefinition:input_type -> api.v0alpha.DeleteCjsSearchDefinitionReq
+	174, // 370: api.v0alpha.LMS.ListCjsSearchDefinitions:input_type -> api.v0alpha.ListCjsSearchDefinitionsReq
+	176, // 371: api.v0alpha.LMS.ExecuteCjsSearchDefinition:input_type -> api.v0alpha.ExecuteCjsSearchDefinitionReq
+	182, // 372: api.v0alpha.LMS.GetCjsSecureSearchCriteria:input_type -> api.v0alpha.GetCjsSecureSearchCriteriaReq
+	181, // 373: api.v0alpha.LMS.CreateCjsSecureSearchCriteria:input_type -> api.v0alpha.CjsSecureSearchCriteria
+	181, // 374: api.v0alpha.LMS.UpdateCjsSecureSearchCriteria:input_type -> api.v0alpha.CjsSecureSearchCriteria
+	193, // 375: api.v0alpha.LMS.SampleEndpoint:input_type -> api.v0alpha.SampleRequest
+	194, // 376: api.v0alpha.LMS.GetAvailableEHRFields:input_type -> api.v0alpha.EHREntityType
+	42,  // 377: api.v0alpha.LMS.GetQueuedEventsStatusByElementId:input_type -> api.v0alpha.ElementPK
+	18,  // 378: api.v0alpha.LMS.ListPools:input_type -> api.v0alpha.ListPoolsRequest
+	8,   // 379: api.v0alpha.LMS.CreatePipelineCanvas:input_type -> api.v0alpha.CreatePipelineCanvasReq
+	10,  // 380: api.v0alpha.LMS.ListPipelineCanvases:input_type -> api.v0alpha.ListPipelineCanvasesReq
+	12,  // 381: api.v0alpha.LMS.UpdatePipelineCanvas:input_type -> api.v0alpha.UpdatePipelineCanvasReq
+	14,  // 382: api.v0alpha.LMS.DeletePipelineCanvas:input_type -> api.v0alpha.DeletePipelineCanvasReq
+	16,  // 383: api.v0alpha.LMS.GetPipelineCanvas:input_type -> api.v0alpha.GetPipelineCanvasReq
+	22,  // 384: api.v0alpha.LMS.GetPublicKey:output_type -> api.v0alpha.PublicKey
+	67,  // 385: api.v0alpha.LMS.CreateFileTemplate:output_type -> api.v0alpha.FileTemplate
+	67,  // 386: api.v0alpha.LMS.ListFileTemplates:output_type -> api.v0alpha.FileTemplate
+	67,  // 387: api.v0alpha.LMS.UpdateFileTemplate:output_type -> api.v0alpha.FileTemplate
+	67,  // 388: api.v0alpha.LMS.DeleteFileTemplate:output_type -> api.v0alpha.FileTemplate
+	67,  // 389: api.v0alpha.LMS.GetFileTemplate:output_type -> api.v0alpha.FileTemplate
+	54,  // 390: api.v0alpha.LMS.CreateField:output_type -> api.v0alpha.Field
+	57,  // 391: api.v0alpha.LMS.ListFields:output_type -> api.v0alpha.Fields
+	54,  // 392: api.v0alpha.LMS.GetField:output_type -> api.v0alpha.Field
+	54,  // 393: api.v0alpha.LMS.UpdateField:output_type -> api.v0alpha.Field
+	54,  // 394: api.v0alpha.LMS.DeleteField:output_type -> api.v0alpha.Field
+	52,  // 395: api.v0alpha.LMS.ListAvailableFieldsByElementId:output_type -> api.v0alpha.ProcessFields
+	39,  // 396: api.v0alpha.LMS.ListFieldsForElement:output_type -> api.v0alpha.ListFieldsForElementRes
+	41,  // 397: api.v0alpha.LMS.ListAutocompleteFields:output_type -> api.v0alpha.ListAutocompleteFieldsRes
+	167, // 398: api.v0alpha.LMS.ListCampaignLinks:output_type -> api.v0alpha.ListCampaignLinksRes
+	45,  // 399: api.v0alpha.LMS.PeekList:output_type -> api.v0alpha.PeekListRes
+	47,  // 400: api.v0alpha.LMS.GetHistory:output_type -> api.v0alpha.GetHistoryRes
+	43,  // 401: api.v0alpha.LMS.CreateElement:output_type -> api.v0alpha.Element
+	43,  // 402: api.v0alpha.LMS.ListElements:output_type -> api.v0alpha.Element
+	43,  // 403: api.v0alpha.LMS.GetElement:output_type -> api.v0alpha.Element
+	43,  // 404: api.v0alpha.LMS.UpdateElement:output_type -> api.v0alpha.Element
+	43,  // 405: api.v0alpha.LMS.DeleteElement:output_type -> api.v0alpha.Element
+	43,  // 406: api.v0alpha.LMS.CopyPipelineUpstream:output_type -> api.v0alpha.Element
+	43,  // 407: api.v0alpha.LMS.CopyPipelineDownstream:output_type -> api.v0alpha.Element
+	276, // 408: api.v0alpha.LMS.ProcessElement:output_type -> google.protobuf.Empty
+	34,  // 409: api.v0alpha.LMS.ProcessList:output_type -> api.v0alpha.ProcessListResponse
+	36,  // 410: api.v0alpha.LMS.StreamList:output_type -> api.v0alpha.StreamListResponse
+	52,  // 411: api.v0alpha.LMS.GetAvailableFields:output_type -> api.v0alpha.ProcessFields
+	145, // 412: api.v0alpha.LMS.ListNewEvents:output_type -> api.v0alpha.Events
+	145, // 413: api.v0alpha.LMS.ViewQueue:output_type -> api.v0alpha.Events
+	143, // 414: api.v0alpha.LMS.Autocomplete:output_type -> api.v0alpha.ParseRes
+	31,  // 415: api.v0alpha.LMS.GetComplianceScrubLists:output_type -> api.v0alpha.GetComplianceScrubListsRes
+	25,  // 416: api.v0alpha.LMS.FindFieldUsages:output_type -> api.v0alpha.FindFieldUsagesRes
+	29,  // 417: api.v0alpha.LMS.FindInvalidElements:output_type -> api.v0alpha.FindInvalidElementsRes
+	149, // 418: api.v0alpha.LMS.CreateCollection:output_type -> api.v0alpha.CollectionMetadata
+	149, // 419: api.v0alpha.LMS.GetCollection:output_type -> api.v0alpha.CollectionMetadata
+	276, // 420: api.v0alpha.LMS.UpdateCollection:output_type -> google.protobuf.Empty
+	148, // 421: api.v0alpha.LMS.RetypeCollection:output_type -> api.v0alpha.RetypeCollectionRes
+	276, // 422: api.v0alpha.LMS.DeleteCollection:output_type -> google.protobuf.Empty
+	160, // 423: api.v0alpha.LMS.ListCollections:output_type -> api.v0alpha.ListCollectionsRes
+	276, // 424: api.v0alpha.LMS.ResetCollection:output_type -> google.protobuf.Empty
+	150, // 425: api.v0alpha.LMS.AddCollectionEntry:output_type -> api.v0alpha.CollectionEntry
+	276, // 426: api.v0alpha.LMS.DeleteCollectionEntry:output_type -> google.protobuf.Empty
+	150, // 427: api.v0alpha.LMS.UpdateCollectionEntry:output_type -> api.v0alpha.CollectionEntry
+	150, // 428: api.v0alpha.LMS.StreamCollection:output_type -> api.v0alpha.CollectionEntry
+	163, // 429: api.v0alpha.LMS.SearchCollectionsPaginated:output_type -> api.v0alpha.PaginatedSearchRes
+	165, // 430: api.v0alpha.LMS.GetCollectionEntries:output_type -> api.v0alpha.GetCollectionEntriesRes
+	171, // 431: api.v0alpha.LMS.CreateCjsSearchDefinition:output_type -> api.v0alpha.CjsSearchDefinition
+	171, // 432: api.v0alpha.LMS.GetCjsSearchDefinition:output_type -> api.v0alpha.CjsSearchDefinition
+	276, // 433: api.v0alpha.LMS.UpdateCjsSearchDefinition:output_type -> google.protobuf.Empty
+	276, // 434: api.v0alpha.LMS.DeleteCjsSearchDefinition:output_type -> google.protobuf.Empty
+	175, // 435: api.v0alpha.LMS.ListCjsSearchDefinitions:output_type -> api.v0alpha.ListCjsSearchDefinitionsRes
+	177, // 436: api.v0alpha.LMS.ExecuteCjsSearchDefinition:output_type -> api.v0alpha.ExecuteCjsSearchDefinitionRes
+	181, // 437: api.v0alpha.LMS.GetCjsSecureSearchCriteria:output_type -> api.v0alpha.CjsSecureSearchCriteria
+	181, // 438: api.v0alpha.LMS.CreateCjsSecureSearchCriteria:output_type -> api.v0alpha.CjsSecureSearchCriteria
+	276, // 439: api.v0alpha.LMS.UpdateCjsSecureSearchCriteria:output_type -> google.protobuf.Empty
+	276, // 440: api.v0alpha.LMS.SampleEndpoint:output_type -> google.protobuf.Empty
+	57,  // 441: api.v0alpha.LMS.GetAvailableEHRFields:output_type -> api.v0alpha.Fields
+	145, // 442: api.v0alpha.LMS.GetQueuedEventsStatusByElementId:output_type -> api.v0alpha.Events
+	19,  // 443: api.v0alpha.LMS.ListPools:output_type -> api.v0alpha.ListPoolsResponse
+	9,   // 444: api.v0alpha.LMS.CreatePipelineCanvas:output_type -> api.v0alpha.CreatePipelineCanvasRes
+	11,  // 445: api.v0alpha.LMS.ListPipelineCanvases:output_type -> api.v0alpha.ListPipelineCanvasesRes
+	13,  // 446: api.v0alpha.LMS.UpdatePipelineCanvas:output_type -> api.v0alpha.UpdatePipelineCanvasRes
+	15,  // 447: api.v0alpha.LMS.DeletePipelineCanvas:output_type -> api.v0alpha.DeletePipelineCanvasRes
+	17,  // 448: api.v0alpha.LMS.GetPipelineCanvas:output_type -> api.v0alpha.GetPipelineCanvasRes
+	384, // [384:449] is the sub-list for method output_type
+	319, // [319:384] is the sub-list for method input_type
+	319, // [319:319] is the sub-list for extension type_name
+	319, // [319:319] is the sub-list for extension extendee
+	0,   // [0:319] is the sub-list for field type_name
 }
 
 func init() { file_api_v0alpha_lms_proto_init() }
@@ -20069,7 +20206,7 @@ func file_api_v0alpha_lms_proto_init() {
 		(*CFSExportReq_Header)(nil),
 		(*CFSExportReq_Record)(nil),
 	}
-	file_api_v0alpha_lms_proto_msgTypes[131].OneofWrappers = []any{
+	file_api_v0alpha_lms_proto_msgTypes[132].OneofWrappers = []any{
 		(*ReshapeAction_Rename_)(nil),
 		(*ReshapeAction_AddValue_)(nil),
 		(*ReshapeAction_AddField_)(nil),
@@ -20091,36 +20228,36 @@ func file_api_v0alpha_lms_proto_init() {
 		(*ReshapeAction_Trim_)(nil),
 		(*ReshapeAction_Extract_)(nil),
 	}
-	file_api_v0alpha_lms_proto_msgTypes[173].OneofWrappers = []any{
+	file_api_v0alpha_lms_proto_msgTypes[174].OneofWrappers = []any{
 		(*CjsExecuteSearchField_FieldName)(nil),
 		(*CjsExecuteSearchField_FieldType)(nil),
 	}
-	file_api_v0alpha_lms_proto_msgTypes[178].OneofWrappers = []any{
+	file_api_v0alpha_lms_proto_msgTypes[179].OneofWrappers = []any{
 		(*SplitCriteria_Unique)(nil),
 		(*SplitCriteria_MaxSize)(nil),
 		(*SplitCriteria_EqualParts)(nil),
 	}
-	file_api_v0alpha_lms_proto_msgTypes[205].OneofWrappers = []any{
+	file_api_v0alpha_lms_proto_msgTypes[206].OneofWrappers = []any{
 		(*FilterCheck_Value_StringVal)(nil),
 		(*FilterCheck_Value_NumberVal)(nil),
 		(*FilterCheck_Value_BoolVal)(nil),
 		(*FilterCheck_Value_FieldName)(nil),
 		(*FilterCheck_Value_DateTime)(nil),
 	}
-	file_api_v0alpha_lms_proto_msgTypes[209].OneofWrappers = []any{
+	file_api_v0alpha_lms_proto_msgTypes[210].OneofWrappers = []any{
 		(*FilterCheck_ListComparison_FieldOrVal_Field)(nil),
 		(*FilterCheck_ListComparison_FieldOrVal_Value)(nil),
 	}
-	file_api_v0alpha_lms_proto_msgTypes[229].OneofWrappers = []any{
+	file_api_v0alpha_lms_proto_msgTypes[230].OneofWrappers = []any{
 		(*ReshapeAction_Trim_Amount)(nil),
 		(*ReshapeAction_Trim_Data)(nil),
 		(*ReshapeAction_Trim_Marker)(nil),
 	}
-	file_api_v0alpha_lms_proto_msgTypes[231].OneofWrappers = []any{
+	file_api_v0alpha_lms_proto_msgTypes[232].OneofWrappers = []any{
 		(*ReshapeAction_Merge_FieldOrVal_Field)(nil),
 		(*ReshapeAction_Merge_FieldOrVal_Value)(nil),
 	}
-	file_api_v0alpha_lms_proto_msgTypes[232].OneofWrappers = []any{
+	file_api_v0alpha_lms_proto_msgTypes[233].OneofWrappers = []any{
 		(*ReshapeAction_Extract_Index_Position)(nil),
 		(*ReshapeAction_Extract_Index_Match)(nil),
 	}
@@ -20130,7 +20267,7 @@ func file_api_v0alpha_lms_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_v0alpha_lms_proto_rawDesc), len(file_api_v0alpha_lms_proto_rawDesc)),
 			NumEnums:      5,
-			NumMessages:   238,
+			NumMessages:   239,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

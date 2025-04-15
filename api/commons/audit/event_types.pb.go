@@ -347,6 +347,11 @@ const (
 	// Workforce Management Events
 	// publish schedule event
 	EventType_EVENT_TYPE_WFM_PUBLISH_SCHEDULE_EVENT EventType = 1400
+	// P3AMQP Events
+	// Call result event
+	EventType_EVENT_TYPE_P3_AMQP_CALL_RESULT_EVENT EventType = 1500
+	// Agent response event
+	EventType_EVENT_TYPE_P3_AMQP_AGENT_RESPONSE_EVENT EventType = 1501
 )
 
 // Enum value maps for EventType.
@@ -502,6 +507,8 @@ var (
 		1209: "EVENT_TYPE_CONTACT_MANAGER_ENTITY_ASSOCIATED_EVENT",
 		1300: "EVENT_TYPE_ORGANIZATION_ACCESS_TOKENS_EXPIRING_EVENT",
 		1400: "EVENT_TYPE_WFM_PUBLISH_SCHEDULE_EVENT",
+		1500: "EVENT_TYPE_P3_AMQP_CALL_RESULT_EVENT",
+		1501: "EVENT_TYPE_P3_AMQP_AGENT_RESPONSE_EVENT",
 	}
 	EventType_value = map[string]int32{
 		"DUMMY_APPLICATION":                                    0,
@@ -654,6 +661,8 @@ var (
 		"EVENT_TYPE_CONTACT_MANAGER_ENTITY_ASSOCIATED_EVENT":   1209,
 		"EVENT_TYPE_ORGANIZATION_ACCESS_TOKENS_EXPIRING_EVENT": 1300,
 		"EVENT_TYPE_WFM_PUBLISH_SCHEDULE_EVENT":                1400,
+		"EVENT_TYPE_P3_AMQP_CALL_RESULT_EVENT":                 1500,
+		"EVENT_TYPE_P3_AMQP_AGENT_RESPONSE_EVENT":              1501,
 	}
 )
 
@@ -688,7 +697,7 @@ var File_api_commons_audit_event_types_proto protoreflect.FileDescriptor
 
 const file_api_commons_audit_event_types_proto_rawDesc = "" +
 	"\n" +
-	"#api/commons/audit/event_types.proto\x12\x11api.commons.audit*\x91-\n" +
+	"#api/commons/audit/event_types.proto\x12\x11api.commons.audit*\xea-\n" +
 	"\tEventType\x12\x15\n" +
 	"\x11DUMMY_APPLICATION\x10\x00\x12\x1d\n" +
 	"\x19DUMMY_APPLICATION_STORAGE\x10\x01\x12\x1d\n" +
@@ -841,7 +850,9 @@ const file_api_commons_audit_event_types_proto_rawDesc = "" +
 	"4EVENT_TYPE_ORGANIZATION_ACCESS_TOKENS_EXPIRING_EVENT\x10\x94\n" +
 	"\x12*\n" +
 	"%EVENT_TYPE_WFM_PUBLISH_SCHEDULE_EVENT\x10\xf8\n" +
-	"B\xbc\x01\n" +
+	"\x12)\n" +
+	"$EVENT_TYPE_P3_AMQP_CALL_RESULT_EVENT\x10\xdc\v\x12,\n" +
+	"'EVENT_TYPE_P3_AMQP_AGENT_RESPONSE_EVENT\x10\xdd\vB\xbc\x01\n" +
 	"\x15com.api.commons.auditB\x0fEventTypesProtoP\x01Z,github.com/tcncloud/api-go/api/commons/audit\xa2\x02\x03ACA\xaa\x02\x11Api.Commons.Audit\xca\x02\x11Api\\Commons\\Audit\xe2\x02\x1dApi\\Commons\\Audit\\GPBMetadata\xea\x02\x13Api::Commons::Auditb\x06proto3"
 
 var (
