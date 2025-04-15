@@ -28,6 +28,8 @@ const (
 	ExportFormat_REPORT_FORMAT_UNSPECIFIED ExportFormat = 0
 	ExportFormat_REPORT_FORMAT_CSV         ExportFormat = 1
 	ExportFormat_REPORT_FORMAT_PARQUET     ExportFormat = 2
+	ExportFormat_REPORT_FORMAT_TSV         ExportFormat = 3
+	ExportFormat_REPORT_FORMAT_TXT         ExportFormat = 4
 )
 
 // Enum value maps for ExportFormat.
@@ -36,11 +38,15 @@ var (
 		0: "REPORT_FORMAT_UNSPECIFIED",
 		1: "REPORT_FORMAT_CSV",
 		2: "REPORT_FORMAT_PARQUET",
+		3: "REPORT_FORMAT_TSV",
+		4: "REPORT_FORMAT_TXT",
 	}
 	ExportFormat_value = map[string]int32{
 		"REPORT_FORMAT_UNSPECIFIED": 0,
 		"REPORT_FORMAT_CSV":         1,
 		"REPORT_FORMAT_PARQUET":     2,
+		"REPORT_FORMAT_TSV":         3,
+		"REPORT_FORMAT_TXT":         4,
 	}
 )
 
@@ -196,6 +202,116 @@ func (x DatasourceType) Number() protoreflect.EnumNumber {
 // Deprecated: Use DatasourceType.Descriptor instead.
 func (DatasourceType) EnumDescriptor() ([]byte, []int) {
 	return file_api_v1alpha1_explorer_entities_proto_rawDescGZIP(), []int{2}
+}
+
+// Represents the type of result.
+type ResultType int32
+
+const (
+	// Unspecified is the raw result.
+	ResultType_RESULT_TYPE_UNSPECIFIED ResultType = 0
+	// Raw is the raw result from the pipeline with no formatting applied.
+	ResultType_RESULT_TYPE_FORMAT ResultType = 1
+	// Summary is the formatted summary result from the pipeline.
+	ResultType_RESULT_TYPE_SUMMARY ResultType = 2
+	// Report is the combined report of Format and Summary.
+	ResultType_RESULT_TYPE_REPORT ResultType = 3
+)
+
+// Enum value maps for ResultType.
+var (
+	ResultType_name = map[int32]string{
+		0: "RESULT_TYPE_UNSPECIFIED",
+		1: "RESULT_TYPE_FORMAT",
+		2: "RESULT_TYPE_SUMMARY",
+		3: "RESULT_TYPE_REPORT",
+	}
+	ResultType_value = map[string]int32{
+		"RESULT_TYPE_UNSPECIFIED": 0,
+		"RESULT_TYPE_FORMAT":      1,
+		"RESULT_TYPE_SUMMARY":     2,
+		"RESULT_TYPE_REPORT":      3,
+	}
+)
+
+func (x ResultType) Enum() *ResultType {
+	p := new(ResultType)
+	*p = x
+	return p
+}
+
+func (x ResultType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (ResultType) Descriptor() protoreflect.EnumDescriptor {
+	return file_api_v1alpha1_explorer_entities_proto_enumTypes[3].Descriptor()
+}
+
+func (ResultType) Type() protoreflect.EnumType {
+	return &file_api_v1alpha1_explorer_entities_proto_enumTypes[3]
+}
+
+func (x ResultType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use ResultType.Descriptor instead.
+func (ResultType) EnumDescriptor() ([]byte, []int) {
+	return file_api_v1alpha1_explorer_entities_proto_rawDescGZIP(), []int{3}
+}
+
+// QuoteCharacter specifies the quote character
+type QuoteCharacter int32
+
+const (
+	// Unspecified
+	QuoteCharacter_QUOTE_CHARACTER_UNSPECIFIED QuoteCharacter = 0
+	// Double Quote
+	QuoteCharacter_QUOTE_CHARACTER_DOUBLE_QUOTE QuoteCharacter = 1
+	// Single Quote
+	QuoteCharacter_QUOTE_CHARACTER_SINGLE_QUOTE QuoteCharacter = 2
+)
+
+// Enum value maps for QuoteCharacter.
+var (
+	QuoteCharacter_name = map[int32]string{
+		0: "QUOTE_CHARACTER_UNSPECIFIED",
+		1: "QUOTE_CHARACTER_DOUBLE_QUOTE",
+		2: "QUOTE_CHARACTER_SINGLE_QUOTE",
+	}
+	QuoteCharacter_value = map[string]int32{
+		"QUOTE_CHARACTER_UNSPECIFIED":  0,
+		"QUOTE_CHARACTER_DOUBLE_QUOTE": 1,
+		"QUOTE_CHARACTER_SINGLE_QUOTE": 2,
+	}
+)
+
+func (x QuoteCharacter) Enum() *QuoteCharacter {
+	p := new(QuoteCharacter)
+	*p = x
+	return p
+}
+
+func (x QuoteCharacter) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (QuoteCharacter) Descriptor() protoreflect.EnumDescriptor {
+	return file_api_v1alpha1_explorer_entities_proto_enumTypes[4].Descriptor()
+}
+
+func (QuoteCharacter) Type() protoreflect.EnumType {
+	return &file_api_v1alpha1_explorer_entities_proto_enumTypes[4]
+}
+
+func (x QuoteCharacter) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use QuoteCharacter.Descriptor instead.
+func (QuoteCharacter) EnumDescriptor() ([]byte, []int) {
+	return file_api_v1alpha1_explorer_entities_proto_rawDescGZIP(), []int{4}
 }
 
 // SchemaField is a field in a schema.
@@ -429,6 +545,132 @@ func (x *Parameters) GetParameters() map[string]*Parameters_Parameter {
 	return nil
 }
 
+// Represents a result file, including its URL and size in bytes.
+type ResultFile struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Url           string                 `protobuf:"bytes,1,opt,name=url,proto3" json:"url,omitempty"`
+	SizeBytes     int64                  `protobuf:"varint,2,opt,name=size_bytes,json=sizeBytes,proto3" json:"size_bytes,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ResultFile) Reset() {
+	*x = ResultFile{}
+	mi := &file_api_v1alpha1_explorer_entities_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ResultFile) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ResultFile) ProtoMessage() {}
+
+func (x *ResultFile) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_explorer_entities_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ResultFile.ProtoReflect.Descriptor instead.
+func (*ResultFile) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_explorer_entities_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *ResultFile) GetUrl() string {
+	if x != nil {
+		return x.Url
+	}
+	return ""
+}
+
+func (x *ResultFile) GetSizeBytes() int64 {
+	if x != nil {
+		return x.SizeBytes
+	}
+	return 0
+}
+
+// Message for Export Options
+type ExportOptions struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Delimiter for file exports
+	Delimiter string `protobuf:"bytes,1,opt,name=delimiter,proto3" json:"delimiter,omitempty"`
+	// Quote character for file exports
+	QuoteCharacter QuoteCharacter `protobuf:"varint,2,opt,name=quote_character,json=quoteCharacter,proto3,enum=api.v1alpha1.explorer.QuoteCharacter" json:"quote_character,omitempty"`
+	// Flag to include header in file exports
+	NoHeader bool `protobuf:"varint,3,opt,name=no_header,json=noHeader,proto3" json:"no_header,omitempty"`
+	// result format
+	ExportFormat  ExportFormat `protobuf:"varint,4,opt,name=export_format,json=exportFormat,proto3,enum=api.v1alpha1.explorer.ExportFormat" json:"export_format,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ExportOptions) Reset() {
+	*x = ExportOptions{}
+	mi := &file_api_v1alpha1_explorer_entities_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ExportOptions) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExportOptions) ProtoMessage() {}
+
+func (x *ExportOptions) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_explorer_entities_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExportOptions.ProtoReflect.Descriptor instead.
+func (*ExportOptions) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_explorer_entities_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *ExportOptions) GetDelimiter() string {
+	if x != nil {
+		return x.Delimiter
+	}
+	return ""
+}
+
+func (x *ExportOptions) GetQuoteCharacter() QuoteCharacter {
+	if x != nil {
+		return x.QuoteCharacter
+	}
+	return QuoteCharacter_QUOTE_CHARACTER_UNSPECIFIED
+}
+
+func (x *ExportOptions) GetNoHeader() bool {
+	if x != nil {
+		return x.NoHeader
+	}
+	return false
+}
+
+func (x *ExportOptions) GetExportFormat() ExportFormat {
+	if x != nil {
+		return x.ExportFormat
+	}
+	return ExportFormat_REPORT_FORMAT_UNSPECIFIED
+}
+
 type Parameters_Parameter struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Value         string                 `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
@@ -439,7 +681,7 @@ type Parameters_Parameter struct {
 
 func (x *Parameters_Parameter) Reset() {
 	*x = Parameters_Parameter{}
-	mi := &file_api_v1alpha1_explorer_entities_proto_msgTypes[3]
+	mi := &file_api_v1alpha1_explorer_entities_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -451,7 +693,7 @@ func (x *Parameters_Parameter) String() string {
 func (*Parameters_Parameter) ProtoMessage() {}
 
 func (x *Parameters_Parameter) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_explorer_entities_proto_msgTypes[3]
+	mi := &file_api_v1alpha1_explorer_entities_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -513,11 +755,23 @@ const file_api_v1alpha1_explorer_entities_proto_rawDesc = "" +
 	"\tdata_type\x18\x03 \x01(\tR\bdataType\x1aj\n" +
 	"\x0fParametersEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12A\n" +
-	"\x05value\x18\x02 \x01(\v2+.api.v1alpha1.explorer.Parameters.ParameterR\x05value:\x028\x01*_\n" +
+	"\x05value\x18\x02 \x01(\v2+.api.v1alpha1.explorer.Parameters.ParameterR\x05value:\x028\x01\"=\n" +
+	"\n" +
+	"ResultFile\x12\x10\n" +
+	"\x03url\x18\x01 \x01(\tR\x03url\x12\x1d\n" +
+	"\n" +
+	"size_bytes\x18\x02 \x01(\x03R\tsizeBytes\"\xe4\x01\n" +
+	"\rExportOptions\x12\x1c\n" +
+	"\tdelimiter\x18\x01 \x01(\tR\tdelimiter\x12N\n" +
+	"\x0fquote_character\x18\x02 \x01(\x0e2%.api.v1alpha1.explorer.QuoteCharacterR\x0equoteCharacter\x12\x1b\n" +
+	"\tno_header\x18\x03 \x01(\bR\bnoHeader\x12H\n" +
+	"\rexport_format\x18\x04 \x01(\x0e2#.api.v1alpha1.explorer.ExportFormatR\fexportFormat*\x8d\x01\n" +
 	"\fExportFormat\x12\x1d\n" +
 	"\x19REPORT_FORMAT_UNSPECIFIED\x10\x00\x12\x15\n" +
 	"\x11REPORT_FORMAT_CSV\x10\x01\x12\x19\n" +
-	"\x15REPORT_FORMAT_PARQUET\x10\x02*\xa5\x02\n" +
+	"\x15REPORT_FORMAT_PARQUET\x10\x02\x12\x15\n" +
+	"\x11REPORT_FORMAT_TSV\x10\x03\x12\x15\n" +
+	"\x11REPORT_FORMAT_TXT\x10\x04*\xa5\x02\n" +
 	"\n" +
 	"SchemaType\x12\x1b\n" +
 	"\x17SCHEMA_TYPE_UNSPECIFIED\x10\x00\x12\x13\n" +
@@ -536,7 +790,17 @@ const file_api_v1alpha1_explorer_entities_proto_rawDesc = "" +
 	"\x1bDATASOURCE_TYPE_UNSPECIFIED\x10\x00\x12\x17\n" +
 	"\x13DATASOURCE_TYPE_VFS\x10\x01\x12\x1e\n" +
 	"\x1aDATASOURCE_TYPE_CLICKHOUSE\x10\x02\x12 \n" +
-	"\x1cDATASOURCE_TYPE_INSTANT_DATA\x10\x03B\xd2\x01\n" +
+	"\x1cDATASOURCE_TYPE_INSTANT_DATA\x10\x03*r\n" +
+	"\n" +
+	"ResultType\x12\x1b\n" +
+	"\x17RESULT_TYPE_UNSPECIFIED\x10\x00\x12\x16\n" +
+	"\x12RESULT_TYPE_FORMAT\x10\x01\x12\x17\n" +
+	"\x13RESULT_TYPE_SUMMARY\x10\x02\x12\x16\n" +
+	"\x12RESULT_TYPE_REPORT\x10\x03*u\n" +
+	"\x0eQuoteCharacter\x12\x1f\n" +
+	"\x1bQUOTE_CHARACTER_UNSPECIFIED\x10\x00\x12 \n" +
+	"\x1cQUOTE_CHARACTER_DOUBLE_QUOTE\x10\x01\x12 \n" +
+	"\x1cQUOTE_CHARACTER_SINGLE_QUOTE\x10\x02B\xd2\x01\n" +
 	"\x19com.api.v1alpha1.explorerB\rEntitiesProtoP\x01Z0github.com/tcncloud/api-go/api/v1alpha1/explorer\xa2\x02\x03AVE\xaa\x02\x15Api.V1alpha1.Explorer\xca\x02\x15Api\\V1alpha1\\Explorer\xe2\x02!Api\\V1alpha1\\Explorer\\GPBMetadata\xea\x02\x17Api::V1alpha1::Explorerb\x06proto3"
 
 var (
@@ -551,29 +815,35 @@ func file_api_v1alpha1_explorer_entities_proto_rawDescGZIP() []byte {
 	return file_api_v1alpha1_explorer_entities_proto_rawDescData
 }
 
-var file_api_v1alpha1_explorer_entities_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
-var file_api_v1alpha1_explorer_entities_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_api_v1alpha1_explorer_entities_proto_enumTypes = make([]protoimpl.EnumInfo, 5)
+var file_api_v1alpha1_explorer_entities_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_api_v1alpha1_explorer_entities_proto_goTypes = []any{
 	(ExportFormat)(0),            // 0: api.v1alpha1.explorer.ExportFormat
 	(SchemaType)(0),              // 1: api.v1alpha1.explorer.SchemaType
 	(DatasourceType)(0),          // 2: api.v1alpha1.explorer.DatasourceType
-	(*SchemaField)(nil),          // 3: api.v1alpha1.explorer.SchemaField
-	(*Schema)(nil),               // 4: api.v1alpha1.explorer.Schema
-	(*Parameters)(nil),           // 5: api.v1alpha1.explorer.Parameters
-	(*Parameters_Parameter)(nil), // 6: api.v1alpha1.explorer.Parameters.Parameter
-	nil,                          // 7: api.v1alpha1.explorer.Parameters.ParametersEntry
+	(ResultType)(0),              // 3: api.v1alpha1.explorer.ResultType
+	(QuoteCharacter)(0),          // 4: api.v1alpha1.explorer.QuoteCharacter
+	(*SchemaField)(nil),          // 5: api.v1alpha1.explorer.SchemaField
+	(*Schema)(nil),               // 6: api.v1alpha1.explorer.Schema
+	(*Parameters)(nil),           // 7: api.v1alpha1.explorer.Parameters
+	(*ResultFile)(nil),           // 8: api.v1alpha1.explorer.ResultFile
+	(*ExportOptions)(nil),        // 9: api.v1alpha1.explorer.ExportOptions
+	(*Parameters_Parameter)(nil), // 10: api.v1alpha1.explorer.Parameters.Parameter
+	nil,                          // 11: api.v1alpha1.explorer.Parameters.ParametersEntry
 }
 var file_api_v1alpha1_explorer_entities_proto_depIdxs = []int32{
-	1, // 0: api.v1alpha1.explorer.SchemaField.column_type:type_name -> api.v1alpha1.explorer.SchemaType
-	2, // 1: api.v1alpha1.explorer.Schema.datasource_type:type_name -> api.v1alpha1.explorer.DatasourceType
-	3, // 2: api.v1alpha1.explorer.Schema.fields:type_name -> api.v1alpha1.explorer.SchemaField
-	7, // 3: api.v1alpha1.explorer.Parameters.parameters:type_name -> api.v1alpha1.explorer.Parameters.ParametersEntry
-	6, // 4: api.v1alpha1.explorer.Parameters.ParametersEntry.value:type_name -> api.v1alpha1.explorer.Parameters.Parameter
-	5, // [5:5] is the sub-list for method output_type
-	5, // [5:5] is the sub-list for method input_type
-	5, // [5:5] is the sub-list for extension type_name
-	5, // [5:5] is the sub-list for extension extendee
-	0, // [0:5] is the sub-list for field type_name
+	1,  // 0: api.v1alpha1.explorer.SchemaField.column_type:type_name -> api.v1alpha1.explorer.SchemaType
+	2,  // 1: api.v1alpha1.explorer.Schema.datasource_type:type_name -> api.v1alpha1.explorer.DatasourceType
+	5,  // 2: api.v1alpha1.explorer.Schema.fields:type_name -> api.v1alpha1.explorer.SchemaField
+	11, // 3: api.v1alpha1.explorer.Parameters.parameters:type_name -> api.v1alpha1.explorer.Parameters.ParametersEntry
+	4,  // 4: api.v1alpha1.explorer.ExportOptions.quote_character:type_name -> api.v1alpha1.explorer.QuoteCharacter
+	0,  // 5: api.v1alpha1.explorer.ExportOptions.export_format:type_name -> api.v1alpha1.explorer.ExportFormat
+	10, // 6: api.v1alpha1.explorer.Parameters.ParametersEntry.value:type_name -> api.v1alpha1.explorer.Parameters.Parameter
+	7,  // [7:7] is the sub-list for method output_type
+	7,  // [7:7] is the sub-list for method input_type
+	7,  // [7:7] is the sub-list for extension type_name
+	7,  // [7:7] is the sub-list for extension extendee
+	0,  // [0:7] is the sub-list for field type_name
 }
 
 func init() { file_api_v1alpha1_explorer_entities_proto_init() }
@@ -586,8 +856,8 @@ func file_api_v1alpha1_explorer_entities_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_v1alpha1_explorer_entities_proto_rawDesc), len(file_api_v1alpha1_explorer_entities_proto_rawDesc)),
-			NumEnums:      3,
-			NumMessages:   5,
+			NumEnums:      5,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
