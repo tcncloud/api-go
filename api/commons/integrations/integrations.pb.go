@@ -1801,6 +1801,9 @@ const (
 	Validation_VALIDATION_ROUTING        Validation = 501
 	Validation_VALIDATION_ACCOUNT        Validation = 502
 	Validation_VALIDATION_TRANSACTION_ID Validation = 601
+	// a select is for a predefined list of values,
+	// these values are given on the "formats" field of the field defintition proto.
+	Validation_VALIDATION_SELECT Validation = 701
 )
 
 // Enum value maps for Validation.
@@ -1824,6 +1827,7 @@ var (
 		501: "VALIDATION_ROUTING",
 		502: "VALIDATION_ACCOUNT",
 		601: "VALIDATION_TRANSACTION_ID",
+		701: "VALIDATION_SELECT",
 	}
 	Validation_value = map[string]int32{
 		"VALIDATION_NONE":               0,
@@ -1844,6 +1848,7 @@ var (
 		"VALIDATION_ROUTING":            501,
 		"VALIDATION_ACCOUNT":            502,
 		"VALIDATION_TRANSACTION_ID":     601,
+		"VALIDATION_SELECT":             701,
 	}
 )
 
@@ -23837,7 +23842,7 @@ const file_api_commons_integrations_integrations_proto_rawDesc = "" +
 	"\bFFL_LINK\x10\x01\x12\x13\n" +
 	"\x0fFFL_PLUGIN_INST\x10\x02\x12\x0e\n" +
 	"\n" +
-	"FFL_SUBMIT\x10\x03*\xd8\x03\n" +
+	"FFL_SUBMIT\x10\x03*\xf0\x03\n" +
 	"\n" +
 	"Validation\x12\x13\n" +
 	"\x0fVALIDATION_NONE\x10\x00\x12\x19\n" +
@@ -23857,7 +23862,8 @@ const file_api_commons_integrations_integrations_proto_rawDesc = "" +
 	"\x10VALIDATION_REGEX\x10\x92\x03\x12\x17\n" +
 	"\x12VALIDATION_ROUTING\x10\xf5\x03\x12\x17\n" +
 	"\x12VALIDATION_ACCOUNT\x10\xf6\x03\x12\x1e\n" +
-	"\x19VALIDATION_TRANSACTION_ID\x10\xd9\x04*\xcb\x04\n" +
+	"\x19VALIDATION_TRANSACTION_ID\x10\xd9\x04\x12\x16\n" +
+	"\x11VALIDATION_SELECT\x10\xbd\x05*\xcb\x04\n" +
 	"\x12InvoiceDisplayType\x12\x0f\n" +
 	"\vUNSPECIFIED\x10\x00\x12\x0e\n" +
 	"\n" +
