@@ -509,7 +509,9 @@ type ListEvaluationsRequest struct {
 	// Required. Number of evaluations included in response.
 	PageSize int32 `protobuf:"varint,16,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
 	// Optional. The next_page_token returned from a previous List request, if any.
-	PageToken     string `protobuf:"bytes,17,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
+	PageToken string `protobuf:"bytes,17,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
+	// Optional. Filter by status.
+	Statuses      []commons.EvaluationState `protobuf:"varint,18,rep,packed,name=statuses,proto3,enum=api.commons.EvaluationState" json:"statuses,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -619,6 +621,13 @@ func (x *ListEvaluationsRequest) GetPageToken() string {
 		return x.PageToken
 	}
 	return ""
+}
+
+func (x *ListEvaluationsRequest) GetStatuses() []commons.EvaluationState {
+	if x != nil {
+		return x.Statuses
+	}
+	return nil
 }
 
 // ListEvaluationsResponse returns a list of evaluations
@@ -1317,6 +1326,7 @@ type AgentConversation struct {
 	//
 	//	*AgentConversation_CallMetadata_
 	//	*AgentConversation_SmsMetadata_
+	//	*AgentConversation_ChatMetadata_
 	Metadata      isAgentConversation_Metadata `protobuf_oneof:"metadata"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -1405,6 +1415,15 @@ func (x *AgentConversation) GetSmsMetadata() *AgentConversation_SmsMetadata {
 	return nil
 }
 
+func (x *AgentConversation) GetChatMetadata() *AgentConversation_ChatMetadata {
+	if x != nil {
+		if x, ok := x.Metadata.(*AgentConversation_ChatMetadata_); ok {
+			return x.ChatMetadata
+		}
+	}
+	return nil
+}
+
 type isAgentConversation_Metadata interface {
 	isAgentConversation_Metadata()
 }
@@ -1417,9 +1436,15 @@ type AgentConversation_SmsMetadata_ struct {
 	SmsMetadata *AgentConversation_SmsMetadata `protobuf:"bytes,11,opt,name=sms_metadata,json=smsMetadata,proto3,oneof"` // Metadata for an sms conversation.
 }
 
+type AgentConversation_ChatMetadata_ struct {
+	ChatMetadata *AgentConversation_ChatMetadata `protobuf:"bytes,12,opt,name=chat_metadata,json=chatMetadata,proto3,oneof"` // Metdata for a chat conversation.
+}
+
 func (*AgentConversation_CallMetadata_) isAgentConversation_Metadata() {}
 
 func (*AgentConversation_SmsMetadata_) isAgentConversation_Metadata() {}
+
+func (*AgentConversation_ChatMetadata_) isAgentConversation_Metadata() {}
 
 type AgentConversation_CallMetadata struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
@@ -1549,6 +1574,58 @@ func (x *AgentConversation_SmsMetadata) GetCampaignSid() int64 {
 	return 0
 }
 
+type AgentConversation_ChatMetadata struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	ConversationSid int64                  `protobuf:"varint,1,opt,name=conversation_sid,json=conversationSid,proto3" json:"conversation_sid,omitempty"` // Id of the chat conversation.
+	CampaignSid     int64                  `protobuf:"varint,2,opt,name=campaign_sid,json=campaignSid,proto3" json:"campaign_sid,omitempty"`             // Id of the campaign.
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *AgentConversation_ChatMetadata) Reset() {
+	*x = AgentConversation_ChatMetadata{}
+	mi := &file_api_v1alpha1_scorecards_evaluation_proto_msgTypes[25]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AgentConversation_ChatMetadata) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AgentConversation_ChatMetadata) ProtoMessage() {}
+
+func (x *AgentConversation_ChatMetadata) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v1alpha1_scorecards_evaluation_proto_msgTypes[25]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AgentConversation_ChatMetadata.ProtoReflect.Descriptor instead.
+func (*AgentConversation_ChatMetadata) Descriptor() ([]byte, []int) {
+	return file_api_v1alpha1_scorecards_evaluation_proto_rawDescGZIP(), []int{22, 2}
+}
+
+func (x *AgentConversation_ChatMetadata) GetConversationSid() int64 {
+	if x != nil {
+		return x.ConversationSid
+	}
+	return 0
+}
+
+func (x *AgentConversation_ChatMetadata) GetCampaignSid() int64 {
+	if x != nil {
+		return x.CampaignSid
+	}
+	return 0
+}
+
 var File_api_v1alpha1_scorecards_evaluation_proto protoreflect.FileDescriptor
 
 const file_api_v1alpha1_scorecards_evaluation_proto_rawDesc = "" +
@@ -1589,7 +1666,7 @@ const file_api_v1alpha1_scorecards_evaluation_proto_rawDesc = "" +
 	"\x17ScoreEvaluationResponse\x127\n" +
 	"\n" +
 	"evaluation\x18\x01 \x01(\v2\x17.api.commons.EvaluationR\n" +
-	"evaluation\"\xd5\x03\n" +
+	"evaluation\"\x8f\x04\n" +
 	"\x16ListEvaluationsRequest\x12\x1b\n" +
 	"\tscorer_id\x18\x02 \x03(\tR\bscorerId\x12:\n" +
 	"\fcompleted_at\x18\x03 \x01(\v2\x17.api.commons.TimeFilterR\vcompletedAt\x12!\n" +
@@ -1604,7 +1681,8 @@ const file_api_v1alpha1_scorecards_evaluation_proto_rawDesc = "" +
 	"\border_by\x18\x0f \x01(\tR\aorderBy\x12\x1b\n" +
 	"\tpage_size\x18\x10 \x01(\x05R\bpageSize\x12\x1d\n" +
 	"\n" +
-	"page_token\x18\x11 \x01(\tR\tpageToken\"|\n" +
+	"page_token\x18\x11 \x01(\tR\tpageToken\x128\n" +
+	"\bstatuses\x18\x12 \x03(\x0e2\x1c.api.commons.EvaluationStateR\bstatuses\"|\n" +
 	"\x17ListEvaluationsResponse\x129\n" +
 	"\vevaluations\x18\x01 \x03(\v2\x17.api.commons.EvaluationR\vevaluations\x12&\n" +
 	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\x8e\x01\n" +
@@ -1657,7 +1735,7 @@ const file_api_v1alpha1_scorecards_evaluation_proto_rawDesc = "" +
 	"\n" +
 	"filter_sid\x18\t \x01(\x03R\tfilterSid\"\x7f\n" +
 	" SampleAgentConversationsResponse\x12[\n" +
-	"\x13agent_conversations\x18\x01 \x03(\v2*.api.v1alpha1.scorecards.AgentConversationR\x12agentConversations\"\xa2\x06\n" +
+	"\x13agent_conversations\x18\x01 \x03(\v2*.api.v1alpha1.scorecards.AgentConversationR\x12agentConversations\"\xe0\a\n" +
 	"\x11AgentConversation\x12%\n" +
 	"\x0etranscript_sid\x18\x01 \x01(\x03R\rtranscriptSid\x122\n" +
 	"\achannel\x18\x02 \x01(\x0e2\x18.api.commons.ChannelTypeR\achannel\x12\"\n" +
@@ -1666,7 +1744,8 @@ const file_api_v1alpha1_scorecards_evaluation_proto_rawDesc = "" +
 	"start_time\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tstartTime\x12^\n" +
 	"\rcall_metadata\x18\n" +
 	" \x01(\v27.api.v1alpha1.scorecards.AgentConversation.CallMetadataH\x00R\fcallMetadata\x12[\n" +
-	"\fsms_metadata\x18\v \x01(\v26.api.v1alpha1.scorecards.AgentConversation.SmsMetadataH\x00R\vsmsMetadata\x1a\xac\x02\n" +
+	"\fsms_metadata\x18\v \x01(\v26.api.v1alpha1.scorecards.AgentConversation.SmsMetadataH\x00R\vsmsMetadata\x12^\n" +
+	"\rchat_metadata\x18\f \x01(\v27.api.v1alpha1.scorecards.AgentConversation.ChatMetadataH\x00R\fchatMetadata\x1a\xac\x02\n" +
 	"\fCallMetadata\x12\x19\n" +
 	"\bcall_sid\x18\x01 \x01(\x03R\acallSid\x127\n" +
 	"\tcall_type\x18\x02 \x01(\x0e2\x1a.api.commons.CallType.EnumR\bcallType\x12>\n" +
@@ -1674,6 +1753,9 @@ const file_api_v1alpha1_scorecards_evaluation_proto_rawDesc = "" +
 	"\x0fspeech_duration\x18\x04 \x01(\v2\x19.google.protobuf.DurationR\x0espeechDuration\x12D\n" +
 	"\x10silence_duration\x18\x05 \x01(\v2\x19.google.protobuf.DurationR\x0fsilenceDuration\x1a[\n" +
 	"\vSmsMetadata\x12)\n" +
+	"\x10conversation_sid\x18\x01 \x01(\x03R\x0fconversationSid\x12!\n" +
+	"\fcampaign_sid\x18\x02 \x01(\x03R\vcampaignSid\x1a\\\n" +
+	"\fChatMetadata\x12)\n" +
 	"\x10conversation_sid\x18\x01 \x01(\x03R\x0fconversationSid\x12!\n" +
 	"\fcampaign_sid\x18\x02 \x01(\x03R\vcampaignSidB\n" +
 	"\n" +
@@ -1692,7 +1774,7 @@ func file_api_v1alpha1_scorecards_evaluation_proto_rawDescGZIP() []byte {
 	return file_api_v1alpha1_scorecards_evaluation_proto_rawDescData
 }
 
-var file_api_v1alpha1_scorecards_evaluation_proto_msgTypes = make([]protoimpl.MessageInfo, 25)
+var file_api_v1alpha1_scorecards_evaluation_proto_msgTypes = make([]protoimpl.MessageInfo, 26)
 var file_api_v1alpha1_scorecards_evaluation_proto_goTypes = []any{
 	(*CreateEvaluationRequest)(nil),          // 0: api.v1alpha1.scorecards.CreateEvaluationRequest
 	(*CreateEvaluationResponse)(nil),         // 1: api.v1alpha1.scorecards.CreateEvaluationResponse
@@ -1719,51 +1801,55 @@ var file_api_v1alpha1_scorecards_evaluation_proto_goTypes = []any{
 	(*AgentConversation)(nil),                // 22: api.v1alpha1.scorecards.AgentConversation
 	(*AgentConversation_CallMetadata)(nil),   // 23: api.v1alpha1.scorecards.AgentConversation.CallMetadata
 	(*AgentConversation_SmsMetadata)(nil),    // 24: api.v1alpha1.scorecards.AgentConversation.SmsMetadata
-	(*commons.Evaluation)(nil),               // 25: api.commons.Evaluation
-	(*fieldmaskpb.FieldMask)(nil),            // 26: google.protobuf.FieldMask
-	(*commons.TimeFilter)(nil),               // 27: api.commons.TimeFilter
-	(commons.ChannelType)(0),                 // 28: api.commons.ChannelType
-	(*commons.Scorecard)(nil),                // 29: api.commons.Scorecard
-	(*timestamppb.Timestamp)(nil),            // 30: google.protobuf.Timestamp
-	(commons.CallType_Enum)(0),               // 31: api.commons.CallType.Enum
-	(*durationpb.Duration)(nil),              // 32: google.protobuf.Duration
+	(*AgentConversation_ChatMetadata)(nil),   // 25: api.v1alpha1.scorecards.AgentConversation.ChatMetadata
+	(*commons.Evaluation)(nil),               // 26: api.commons.Evaluation
+	(*fieldmaskpb.FieldMask)(nil),            // 27: google.protobuf.FieldMask
+	(*commons.TimeFilter)(nil),               // 28: api.commons.TimeFilter
+	(commons.ChannelType)(0),                 // 29: api.commons.ChannelType
+	(commons.EvaluationState)(0),             // 30: api.commons.EvaluationState
+	(*commons.Scorecard)(nil),                // 31: api.commons.Scorecard
+	(*timestamppb.Timestamp)(nil),            // 32: google.protobuf.Timestamp
+	(commons.CallType_Enum)(0),               // 33: api.commons.CallType.Enum
+	(*durationpb.Duration)(nil),              // 34: google.protobuf.Duration
 }
 var file_api_v1alpha1_scorecards_evaluation_proto_depIdxs = []int32{
-	25, // 0: api.v1alpha1.scorecards.CreateEvaluationRequest.evaluation:type_name -> api.commons.Evaluation
-	25, // 1: api.v1alpha1.scorecards.CreateEvaluationResponse.evaluation:type_name -> api.commons.Evaluation
-	25, // 2: api.v1alpha1.scorecards.UpdateEvaluationRequest.evaluation:type_name -> api.commons.Evaluation
-	26, // 3: api.v1alpha1.scorecards.UpdateEvaluationRequest.update_mask:type_name -> google.protobuf.FieldMask
-	25, // 4: api.v1alpha1.scorecards.UpdateEvaluationResponse.evaluation:type_name -> api.commons.Evaluation
-	25, // 5: api.v1alpha1.scorecards.DeleteEvaluationResponse.evaluation:type_name -> api.commons.Evaluation
-	25, // 6: api.v1alpha1.scorecards.GetEvaluationResponse.evaluation:type_name -> api.commons.Evaluation
-	25, // 7: api.v1alpha1.scorecards.ScoreEvaluationResponse.evaluation:type_name -> api.commons.Evaluation
-	27, // 8: api.v1alpha1.scorecards.ListEvaluationsRequest.completed_at:type_name -> api.commons.TimeFilter
-	26, // 9: api.v1alpha1.scorecards.ListEvaluationsRequest.return_fields:type_name -> google.protobuf.FieldMask
-	28, // 10: api.v1alpha1.scorecards.ListEvaluationsRequest.channel_types:type_name -> api.commons.ChannelType
-	25, // 11: api.v1alpha1.scorecards.ListEvaluationsResponse.evaluations:type_name -> api.commons.Evaluation
-	25, // 12: api.v1alpha1.scorecards.PreviewEvaluationScoreRequest.evaluation:type_name -> api.commons.Evaluation
-	29, // 13: api.v1alpha1.scorecards.PreviewEvaluationScoreRequest.scorecard:type_name -> api.commons.Scorecard
-	25, // 14: api.v1alpha1.scorecards.PreviewEvaluationScoreResponse.evaluation:type_name -> api.commons.Evaluation
-	27, // 15: api.v1alpha1.scorecards.ListEvaluationsByOrgIdRequest.completed_at:type_name -> api.commons.TimeFilter
-	26, // 16: api.v1alpha1.scorecards.ListEvaluationsByOrgIdRequest.return_fields:type_name -> google.protobuf.FieldMask
-	27, // 17: api.v1alpha1.scorecards.BulkDeleteEvaluationsRequest.completed_at:type_name -> api.commons.TimeFilter
-	25, // 18: api.v1alpha1.scorecards.RestoreEvaluationResponse.evaluation:type_name -> api.commons.Evaluation
-	30, // 19: api.v1alpha1.scorecards.SampleAgentConversationsRequest.start_time:type_name -> google.protobuf.Timestamp
-	30, // 20: api.v1alpha1.scorecards.SampleAgentConversationsRequest.end_time:type_name -> google.protobuf.Timestamp
-	22, // 21: api.v1alpha1.scorecards.SampleAgentConversationsResponse.agent_conversations:type_name -> api.v1alpha1.scorecards.AgentConversation
-	28, // 22: api.v1alpha1.scorecards.AgentConversation.channel:type_name -> api.commons.ChannelType
-	30, // 23: api.v1alpha1.scorecards.AgentConversation.start_time:type_name -> google.protobuf.Timestamp
-	23, // 24: api.v1alpha1.scorecards.AgentConversation.call_metadata:type_name -> api.v1alpha1.scorecards.AgentConversation.CallMetadata
-	24, // 25: api.v1alpha1.scorecards.AgentConversation.sms_metadata:type_name -> api.v1alpha1.scorecards.AgentConversation.SmsMetadata
-	31, // 26: api.v1alpha1.scorecards.AgentConversation.CallMetadata.call_type:type_name -> api.commons.CallType.Enum
-	32, // 27: api.v1alpha1.scorecards.AgentConversation.CallMetadata.call_duration:type_name -> google.protobuf.Duration
-	32, // 28: api.v1alpha1.scorecards.AgentConversation.CallMetadata.speech_duration:type_name -> google.protobuf.Duration
-	32, // 29: api.v1alpha1.scorecards.AgentConversation.CallMetadata.silence_duration:type_name -> google.protobuf.Duration
-	30, // [30:30] is the sub-list for method output_type
-	30, // [30:30] is the sub-list for method input_type
-	30, // [30:30] is the sub-list for extension type_name
-	30, // [30:30] is the sub-list for extension extendee
-	0,  // [0:30] is the sub-list for field type_name
+	26, // 0: api.v1alpha1.scorecards.CreateEvaluationRequest.evaluation:type_name -> api.commons.Evaluation
+	26, // 1: api.v1alpha1.scorecards.CreateEvaluationResponse.evaluation:type_name -> api.commons.Evaluation
+	26, // 2: api.v1alpha1.scorecards.UpdateEvaluationRequest.evaluation:type_name -> api.commons.Evaluation
+	27, // 3: api.v1alpha1.scorecards.UpdateEvaluationRequest.update_mask:type_name -> google.protobuf.FieldMask
+	26, // 4: api.v1alpha1.scorecards.UpdateEvaluationResponse.evaluation:type_name -> api.commons.Evaluation
+	26, // 5: api.v1alpha1.scorecards.DeleteEvaluationResponse.evaluation:type_name -> api.commons.Evaluation
+	26, // 6: api.v1alpha1.scorecards.GetEvaluationResponse.evaluation:type_name -> api.commons.Evaluation
+	26, // 7: api.v1alpha1.scorecards.ScoreEvaluationResponse.evaluation:type_name -> api.commons.Evaluation
+	28, // 8: api.v1alpha1.scorecards.ListEvaluationsRequest.completed_at:type_name -> api.commons.TimeFilter
+	27, // 9: api.v1alpha1.scorecards.ListEvaluationsRequest.return_fields:type_name -> google.protobuf.FieldMask
+	29, // 10: api.v1alpha1.scorecards.ListEvaluationsRequest.channel_types:type_name -> api.commons.ChannelType
+	30, // 11: api.v1alpha1.scorecards.ListEvaluationsRequest.statuses:type_name -> api.commons.EvaluationState
+	26, // 12: api.v1alpha1.scorecards.ListEvaluationsResponse.evaluations:type_name -> api.commons.Evaluation
+	26, // 13: api.v1alpha1.scorecards.PreviewEvaluationScoreRequest.evaluation:type_name -> api.commons.Evaluation
+	31, // 14: api.v1alpha1.scorecards.PreviewEvaluationScoreRequest.scorecard:type_name -> api.commons.Scorecard
+	26, // 15: api.v1alpha1.scorecards.PreviewEvaluationScoreResponse.evaluation:type_name -> api.commons.Evaluation
+	28, // 16: api.v1alpha1.scorecards.ListEvaluationsByOrgIdRequest.completed_at:type_name -> api.commons.TimeFilter
+	27, // 17: api.v1alpha1.scorecards.ListEvaluationsByOrgIdRequest.return_fields:type_name -> google.protobuf.FieldMask
+	28, // 18: api.v1alpha1.scorecards.BulkDeleteEvaluationsRequest.completed_at:type_name -> api.commons.TimeFilter
+	26, // 19: api.v1alpha1.scorecards.RestoreEvaluationResponse.evaluation:type_name -> api.commons.Evaluation
+	32, // 20: api.v1alpha1.scorecards.SampleAgentConversationsRequest.start_time:type_name -> google.protobuf.Timestamp
+	32, // 21: api.v1alpha1.scorecards.SampleAgentConversationsRequest.end_time:type_name -> google.protobuf.Timestamp
+	22, // 22: api.v1alpha1.scorecards.SampleAgentConversationsResponse.agent_conversations:type_name -> api.v1alpha1.scorecards.AgentConversation
+	29, // 23: api.v1alpha1.scorecards.AgentConversation.channel:type_name -> api.commons.ChannelType
+	32, // 24: api.v1alpha1.scorecards.AgentConversation.start_time:type_name -> google.protobuf.Timestamp
+	23, // 25: api.v1alpha1.scorecards.AgentConversation.call_metadata:type_name -> api.v1alpha1.scorecards.AgentConversation.CallMetadata
+	24, // 26: api.v1alpha1.scorecards.AgentConversation.sms_metadata:type_name -> api.v1alpha1.scorecards.AgentConversation.SmsMetadata
+	25, // 27: api.v1alpha1.scorecards.AgentConversation.chat_metadata:type_name -> api.v1alpha1.scorecards.AgentConversation.ChatMetadata
+	33, // 28: api.v1alpha1.scorecards.AgentConversation.CallMetadata.call_type:type_name -> api.commons.CallType.Enum
+	34, // 29: api.v1alpha1.scorecards.AgentConversation.CallMetadata.call_duration:type_name -> google.protobuf.Duration
+	34, // 30: api.v1alpha1.scorecards.AgentConversation.CallMetadata.speech_duration:type_name -> google.protobuf.Duration
+	34, // 31: api.v1alpha1.scorecards.AgentConversation.CallMetadata.silence_duration:type_name -> google.protobuf.Duration
+	32, // [32:32] is the sub-list for method output_type
+	32, // [32:32] is the sub-list for method input_type
+	32, // [32:32] is the sub-list for extension type_name
+	32, // [32:32] is the sub-list for extension extendee
+	0,  // [0:32] is the sub-list for field type_name
 }
 
 func init() { file_api_v1alpha1_scorecards_evaluation_proto_init() }
@@ -1774,6 +1860,7 @@ func file_api_v1alpha1_scorecards_evaluation_proto_init() {
 	file_api_v1alpha1_scorecards_evaluation_proto_msgTypes[22].OneofWrappers = []any{
 		(*AgentConversation_CallMetadata_)(nil),
 		(*AgentConversation_SmsMetadata_)(nil),
+		(*AgentConversation_ChatMetadata_)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -1781,7 +1868,7 @@ func file_api_v1alpha1_scorecards_evaluation_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_v1alpha1_scorecards_evaluation_proto_rawDesc), len(file_api_v1alpha1_scorecards_evaluation_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   25,
+			NumMessages:   26,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

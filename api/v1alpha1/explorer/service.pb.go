@@ -264,7 +264,12 @@ type QueryRequest struct {
 	// if time period is used, cannot use start_time and end_time
 	TimePeriod commons.TimePeriod `protobuf:"varint,15,opt,name=time_period,json=timePeriod,proto3,enum=api.commons.TimePeriod" json:"time_period,omitempty"`
 	// report_date is to seed the time period for, if empty, the default value is now
-	ReportDate    *timestamppb.Timestamp `protobuf:"bytes,14,opt,name=report_date,json=reportDate,proto3" json:"report_date,omitempty"`
+	ReportDate *timestamppb.Timestamp `protobuf:"bytes,14,opt,name=report_date,json=reportDate,proto3" json:"report_date,omitempty"`
+	// export options for post processing operations
+	ExportOptions *ExportOptions `protobuf:"bytes,17,opt,name=export_options,json=exportOptions,proto3" json:"export_options,omitempty"`
+	// result types for the query
+	// raw result type always included
+	ResultTypes   []ResultType `protobuf:"varint,18,rep,packed,name=result_types,json=resultTypes,proto3,enum=api.v1alpha1.explorer.ResultType" json:"result_types,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -417,6 +422,20 @@ func (x *QueryRequest) GetReportDate() *timestamppb.Timestamp {
 	return nil
 }
 
+func (x *QueryRequest) GetExportOptions() *ExportOptions {
+	if x != nil {
+		return x.ExportOptions
+	}
+	return nil
+}
+
+func (x *QueryRequest) GetResultTypes() []ResultType {
+	if x != nil {
+		return x.ResultTypes
+	}
+	return nil
+}
+
 type isQueryRequest_Query interface {
 	isQueryRequest_Query()
 }
@@ -455,8 +474,12 @@ type QueryResponse struct {
 	PostProcessingTableQuery string `protobuf:"bytes,4,opt,name=post_processing_table_query,json=postProcessingTableQuery,proto3" json:"post_processing_table_query,omitempty"`
 	// post processing summary query
 	PostProcessingSummaryQuery string `protobuf:"bytes,5,opt,name=post_processing_summary_query,json=postProcessingSummaryQuery,proto3" json:"post_processing_summary_query,omitempty"`
-	unknownFields              protoimpl.UnknownFields
-	sizeCache                  protoimpl.SizeCache
+	// result urls per result type
+	// raw result type always included
+	// the key is the enum value of ResultType
+	ResultUrls    map[int32]*ResultFile `protobuf:"bytes,6,rep,name=result_urls,json=resultUrls,proto3" json:"result_urls,omitempty" protobuf_key:"varint,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *QueryResponse) Reset() {
@@ -522,6 +545,13 @@ func (x *QueryResponse) GetPostProcessingSummaryQuery() string {
 		return x.PostProcessingSummaryQuery
 	}
 	return ""
+}
+
+func (x *QueryResponse) GetResultUrls() map[int32]*ResultFile {
+	if x != nil {
+		return x.ResultUrls
+	}
+	return nil
 }
 
 // SupportQueryRequest is the request to query a datasource with support permissions.
@@ -598,8 +628,12 @@ type SupportQueryResponse struct {
 	PostProcessingTableQuery string `protobuf:"bytes,7,opt,name=post_processing_table_query,json=postProcessingTableQuery,proto3" json:"post_processing_table_query,omitempty"`
 	// post processing summary query
 	PostProcessingSummaryQuery string `protobuf:"bytes,8,opt,name=post_processing_summary_query,json=postProcessingSummaryQuery,proto3" json:"post_processing_summary_query,omitempty"`
-	unknownFields              protoimpl.UnknownFields
-	sizeCache                  protoimpl.SizeCache
+	// result urls per result type
+	// raw result type always included
+	// the key is the enum value of ResultType
+	ResultUrls    map[int32]*ResultFile `protobuf:"bytes,9,rep,name=result_urls,json=resultUrls,proto3" json:"result_urls,omitempty" protobuf_key:"varint,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *SupportQueryResponse) Reset() {
@@ -688,6 +722,13 @@ func (x *SupportQueryResponse) GetPostProcessingSummaryQuery() string {
 	return ""
 }
 
+func (x *SupportQueryResponse) GetResultUrls() map[int32]*ResultFile {
+	if x != nil {
+		return x.ResultUrls
+	}
+	return nil
+}
+
 // QueryExplainRequest is the request to retrieve debug data for a query.
 type QueryExplainRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -752,8 +793,12 @@ type QueryExplainResponse struct {
 	PostProcessingTableQuery string `protobuf:"bytes,7,opt,name=post_processing_table_query,json=postProcessingTableQuery,proto3" json:"post_processing_table_query,omitempty"`
 	// post processing summary query
 	PostProcessingSummaryQuery string `protobuf:"bytes,8,opt,name=post_processing_summary_query,json=postProcessingSummaryQuery,proto3" json:"post_processing_summary_query,omitempty"`
-	unknownFields              protoimpl.UnknownFields
-	sizeCache                  protoimpl.SizeCache
+	// result urls per result type
+	// raw result type always included
+	// the key is the enum value of ResultType
+	ResultUrls    map[int32]*ResultFile `protobuf:"bytes,9,rep,name=result_urls,json=resultUrls,proto3" json:"result_urls,omitempty" protobuf_key:"varint,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *QueryExplainResponse) Reset() {
@@ -842,6 +887,13 @@ func (x *QueryExplainResponse) GetPostProcessingSummaryQuery() string {
 	return ""
 }
 
+func (x *QueryExplainResponse) GetResultUrls() map[int32]*ResultFile {
+	if x != nil {
+		return x.ResultUrls
+	}
+	return nil
+}
+
 var File_api_v1alpha1_explorer_service_proto protoreflect.FileDescriptor
 
 const file_api_v1alpha1_explorer_service_proto_rawDesc = "" +
@@ -856,7 +908,7 @@ const file_api_v1alpha1_explorer_service_proto_rawDesc = "" +
 	"\x10datasource_names\x18\x01 \x03(\tR\x0fdatasourceNames\x12N\n" +
 	"\x0fdatasource_type\x18\x02 \x01(\x0e2%.api.v1alpha1.explorer.DatasourceTypeR\x0edatasourceType\"X\n" +
 	"\x1dListDatasourceSchemasResponse\x127\n" +
-	"\aschemas\x18\x01 \x03(\v2\x1d.api.v1alpha1.explorer.SchemaR\aschemas\"\x8b\x06\n" +
+	"\aschemas\x18\x01 \x03(\v2\x1d.api.v1alpha1.explorer.SchemaR\aschemas\"\x9e\a\n" +
 	"\fQueryRequest\x12'\n" +
 	"\x0fdatasource_name\x18\x01 \x01(\tR\x0edatasourceName\x12N\n" +
 	"\x0fdatasource_type\x18\x02 \x01(\x0e2%.api.v1alpha1.explorer.DatasourceTypeR\x0edatasourceType\x12\x1c\n" +
@@ -876,21 +928,28 @@ const file_api_v1alpha1_explorer_service_proto_rawDesc = "" +
 	"\vtime_period\x18\x0f \x01(\x0e2\x17.api.commons.TimePeriodR\n" +
 	"timePeriod\x12;\n" +
 	"\vreport_date\x18\x0e \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"reportDateB\a\n" +
-	"\x05queryJ\x04\b\r\x10\x0eR\finsight_body\"\xa7\x03\n" +
+	"reportDate\x12K\n" +
+	"\x0eexport_options\x18\x11 \x01(\v2$.api.v1alpha1.explorer.ExportOptionsR\rexportOptions\x12D\n" +
+	"\fresult_types\x18\x12 \x03(\x0e2!.api.v1alpha1.explorer.ResultTypeR\vresultTypesB\a\n" +
+	"\x05queryJ\x04\b\r\x10\x0eR\finsight_body\"\xe0\x04\n" +
 	"\rQueryResponse\x12\x1d\n" +
 	"\n" +
 	"result_url\x18\x01 \x01(\tR\tresultUrl\x12*\n" +
 	"\x11result_size_bytes\x18\x02 \x01(\x03R\x0fresultSizeBytes\x12}\n" +
 	"\x19time_filtered_datasources\x18\x03 \x03(\v2A.api.v1alpha1.explorer.QueryResponse.TimeFilteredDatasourcesEntryR\x17timeFilteredDatasources\x12=\n" +
 	"\x1bpost_processing_table_query\x18\x04 \x01(\tR\x18postProcessingTableQuery\x12A\n" +
-	"\x1dpost_processing_summary_query\x18\x05 \x01(\tR\x1apostProcessingSummaryQuery\x1aJ\n" +
+	"\x1dpost_processing_summary_query\x18\x05 \x01(\tR\x1apostProcessingSummaryQuery\x12U\n" +
+	"\vresult_urls\x18\x06 \x03(\v24.api.v1alpha1.explorer.QueryResponse.ResultUrlsEntryR\n" +
+	"resultUrls\x1aJ\n" +
 	"\x1cTimeFilteredDatasourcesEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\bR\x05value:\x028\x01\"u\n" +
+	"\x05value\x18\x02 \x01(\bR\x05value:\x028\x01\x1a`\n" +
+	"\x0fResultUrlsEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\x05R\x03key\x127\n" +
+	"\x05value\x18\x02 \x01(\v2!.api.v1alpha1.explorer.ResultFileR\x05value:\x028\x01\"u\n" +
 	"\x13SupportQueryRequest\x12H\n" +
 	"\rquery_request\x18\x01 \x01(\v2#.api.v1alpha1.explorer.QueryRequestR\fqueryRequest\x12\x14\n" +
-	"\x05debug\x18\x02 \x01(\bR\x05debug\"\xf6\x03\n" +
+	"\x05debug\x18\x02 \x01(\bR\x05debug\"\xb6\x05\n" +
 	"\x14SupportQueryResponse\x12\x1d\n" +
 	"\n" +
 	"result_url\x18\x01 \x01(\tR\tresultUrl\x12*\n" +
@@ -900,12 +959,17 @@ const file_api_v1alpha1_explorer_service_proto_rawDesc = "" +
 	"\aexplain\x18\x05 \x01(\tR\aexplain\x12\x84\x01\n" +
 	"\x19time_filtered_datasources\x18\x06 \x03(\v2H.api.v1alpha1.explorer.SupportQueryResponse.TimeFilteredDatasourcesEntryR\x17timeFilteredDatasources\x12=\n" +
 	"\x1bpost_processing_table_query\x18\a \x01(\tR\x18postProcessingTableQuery\x12A\n" +
-	"\x1dpost_processing_summary_query\x18\b \x01(\tR\x1apostProcessingSummaryQuery\x1aJ\n" +
+	"\x1dpost_processing_summary_query\x18\b \x01(\tR\x1apostProcessingSummaryQuery\x12\\\n" +
+	"\vresult_urls\x18\t \x03(\v2;.api.v1alpha1.explorer.SupportQueryResponse.ResultUrlsEntryR\n" +
+	"resultUrls\x1aJ\n" +
 	"\x1cTimeFilteredDatasourcesEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\bR\x05value:\x028\x01\"_\n" +
+	"\x05value\x18\x02 \x01(\bR\x05value:\x028\x01\x1a`\n" +
+	"\x0fResultUrlsEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\x05R\x03key\x127\n" +
+	"\x05value\x18\x02 \x01(\v2!.api.v1alpha1.explorer.ResultFileR\x05value:\x028\x01\"_\n" +
 	"\x13QueryExplainRequest\x12H\n" +
-	"\rquery_request\x18\x01 \x01(\v2#.api.v1alpha1.explorer.QueryRequestR\fqueryRequest\"\xf6\x03\n" +
+	"\rquery_request\x18\x01 \x01(\v2#.api.v1alpha1.explorer.QueryRequestR\fqueryRequest\"\xb6\x05\n" +
 	"\x14QueryExplainResponse\x12\x1d\n" +
 	"\n" +
 	"result_url\x18\x01 \x01(\tR\tresultUrl\x12*\n" +
@@ -915,10 +979,15 @@ const file_api_v1alpha1_explorer_service_proto_rawDesc = "" +
 	"\aexplain\x18\x05 \x01(\tR\aexplain\x12\x84\x01\n" +
 	"\x19time_filtered_datasources\x18\x06 \x03(\v2H.api.v1alpha1.explorer.QueryExplainResponse.TimeFilteredDatasourcesEntryR\x17timeFilteredDatasources\x12=\n" +
 	"\x1bpost_processing_table_query\x18\a \x01(\tR\x18postProcessingTableQuery\x12A\n" +
-	"\x1dpost_processing_summary_query\x18\b \x01(\tR\x1apostProcessingSummaryQuery\x1aJ\n" +
+	"\x1dpost_processing_summary_query\x18\b \x01(\tR\x1apostProcessingSummaryQuery\x12\\\n" +
+	"\vresult_urls\x18\t \x03(\v2;.api.v1alpha1.explorer.QueryExplainResponse.ResultUrlsEntryR\n" +
+	"resultUrls\x1aJ\n" +
 	"\x1cTimeFilteredDatasourcesEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\bR\x05value:\x028\x012\x85\a\n" +
+	"\x05value\x18\x02 \x01(\bR\x05value:\x028\x01\x1a`\n" +
+	"\x0fResultUrlsEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\x05R\x03key\x127\n" +
+	"\x05value\x18\x02 \x01(\v2!.api.v1alpha1.explorer.ResultFileR\x05value:\x028\x012\x85\a\n" +
 	"\x0fExplorerService\x12\xcb\x01\n" +
 	"\x15ListDatasourceSchemas\x123.api.v1alpha1.explorer.ListDatasourceSchemasRequest\x1a4.api.v1alpha1.explorer.ListDatasourceSchemasResponse\"G\xba\xb8\x91\x02\x02\x18\x01\x82\xd3\xe4\x93\x02::\x01*\"5/api/v1alpha1/explorer/explorer/listdatasourceschemas\x12\x8b\x01\n" +
 	"\x05Query\x12#.api.v1alpha1.explorer.QueryRequest\x1a$.api.v1alpha1.explorer.QueryResponse\"7\xba\xb8\x91\x02\x02\x18\x01\x82\xd3\xe4\x93\x02*:\x01*\"%/api/v1alpha1/explorer/explorer/query\x12\xb0\x01\n" +
@@ -941,7 +1010,7 @@ func file_api_v1alpha1_explorer_service_proto_rawDescGZIP() []byte {
 	return file_api_v1alpha1_explorer_service_proto_rawDescData
 }
 
-var file_api_v1alpha1_explorer_service_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
+var file_api_v1alpha1_explorer_service_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
 var file_api_v1alpha1_explorer_service_proto_goTypes = []any{
 	(*GetWeeksOfDataRequest)(nil),         // 0: api.v1alpha1.explorer.GetWeeksOfDataRequest
 	(*GetWeeksOfDataResponse)(nil),        // 1: api.v1alpha1.explorer.GetWeeksOfDataResponse
@@ -954,48 +1023,62 @@ var file_api_v1alpha1_explorer_service_proto_goTypes = []any{
 	(*QueryExplainRequest)(nil),           // 8: api.v1alpha1.explorer.QueryExplainRequest
 	(*QueryExplainResponse)(nil),          // 9: api.v1alpha1.explorer.QueryExplainResponse
 	nil,                                   // 10: api.v1alpha1.explorer.QueryResponse.TimeFilteredDatasourcesEntry
-	nil,                                   // 11: api.v1alpha1.explorer.SupportQueryResponse.TimeFilteredDatasourcesEntry
-	nil,                                   // 12: api.v1alpha1.explorer.QueryExplainResponse.TimeFilteredDatasourcesEntry
-	(*timestamppb.Timestamp)(nil),         // 13: google.protobuf.Timestamp
-	(DatasourceType)(0),                   // 14: api.v1alpha1.explorer.DatasourceType
-	(*Schema)(nil),                        // 15: api.v1alpha1.explorer.Schema
-	(*Pipeline)(nil),                      // 16: api.v1alpha1.explorer.Pipeline
-	(*Parameters)(nil),                    // 17: api.v1alpha1.explorer.Parameters
-	(ExportFormat)(0),                     // 18: api.v1alpha1.explorer.ExportFormat
-	(commons.TimePeriod)(0),               // 19: api.commons.TimePeriod
+	nil,                                   // 11: api.v1alpha1.explorer.QueryResponse.ResultUrlsEntry
+	nil,                                   // 12: api.v1alpha1.explorer.SupportQueryResponse.TimeFilteredDatasourcesEntry
+	nil,                                   // 13: api.v1alpha1.explorer.SupportQueryResponse.ResultUrlsEntry
+	nil,                                   // 14: api.v1alpha1.explorer.QueryExplainResponse.TimeFilteredDatasourcesEntry
+	nil,                                   // 15: api.v1alpha1.explorer.QueryExplainResponse.ResultUrlsEntry
+	(*timestamppb.Timestamp)(nil),         // 16: google.protobuf.Timestamp
+	(DatasourceType)(0),                   // 17: api.v1alpha1.explorer.DatasourceType
+	(*Schema)(nil),                        // 18: api.v1alpha1.explorer.Schema
+	(*Pipeline)(nil),                      // 19: api.v1alpha1.explorer.Pipeline
+	(*Parameters)(nil),                    // 20: api.v1alpha1.explorer.Parameters
+	(ExportFormat)(0),                     // 21: api.v1alpha1.explorer.ExportFormat
+	(commons.TimePeriod)(0),               // 22: api.commons.TimePeriod
+	(*ExportOptions)(nil),                 // 23: api.v1alpha1.explorer.ExportOptions
+	(ResultType)(0),                       // 24: api.v1alpha1.explorer.ResultType
+	(*ResultFile)(nil),                    // 25: api.v1alpha1.explorer.ResultFile
 }
 var file_api_v1alpha1_explorer_service_proto_depIdxs = []int32{
-	13, // 0: api.v1alpha1.explorer.GetWeeksOfDataResponse.access_start_date:type_name -> google.protobuf.Timestamp
-	14, // 1: api.v1alpha1.explorer.ListDatasourceSchemasRequest.datasource_type:type_name -> api.v1alpha1.explorer.DatasourceType
-	15, // 2: api.v1alpha1.explorer.ListDatasourceSchemasResponse.schemas:type_name -> api.v1alpha1.explorer.Schema
-	14, // 3: api.v1alpha1.explorer.QueryRequest.datasource_type:type_name -> api.v1alpha1.explorer.DatasourceType
-	16, // 4: api.v1alpha1.explorer.QueryRequest.query_pipeline:type_name -> api.v1alpha1.explorer.Pipeline
-	13, // 5: api.v1alpha1.explorer.QueryRequest.start_time:type_name -> google.protobuf.Timestamp
-	13, // 6: api.v1alpha1.explorer.QueryRequest.end_time:type_name -> google.protobuf.Timestamp
-	17, // 7: api.v1alpha1.explorer.QueryRequest.pipeline_parameters:type_name -> api.v1alpha1.explorer.Parameters
-	18, // 8: api.v1alpha1.explorer.QueryRequest.format:type_name -> api.v1alpha1.explorer.ExportFormat
-	19, // 9: api.v1alpha1.explorer.QueryRequest.time_period:type_name -> api.commons.TimePeriod
-	13, // 10: api.v1alpha1.explorer.QueryRequest.report_date:type_name -> google.protobuf.Timestamp
-	10, // 11: api.v1alpha1.explorer.QueryResponse.time_filtered_datasources:type_name -> api.v1alpha1.explorer.QueryResponse.TimeFilteredDatasourcesEntry
-	4,  // 12: api.v1alpha1.explorer.SupportQueryRequest.query_request:type_name -> api.v1alpha1.explorer.QueryRequest
-	11, // 13: api.v1alpha1.explorer.SupportQueryResponse.time_filtered_datasources:type_name -> api.v1alpha1.explorer.SupportQueryResponse.TimeFilteredDatasourcesEntry
-	4,  // 14: api.v1alpha1.explorer.QueryExplainRequest.query_request:type_name -> api.v1alpha1.explorer.QueryRequest
-	12, // 15: api.v1alpha1.explorer.QueryExplainResponse.time_filtered_datasources:type_name -> api.v1alpha1.explorer.QueryExplainResponse.TimeFilteredDatasourcesEntry
-	2,  // 16: api.v1alpha1.explorer.ExplorerService.ListDatasourceSchemas:input_type -> api.v1alpha1.explorer.ListDatasourceSchemasRequest
-	4,  // 17: api.v1alpha1.explorer.ExplorerService.Query:input_type -> api.v1alpha1.explorer.QueryRequest
-	6,  // 18: api.v1alpha1.explorer.ExplorerService.GetSupportQuery:input_type -> api.v1alpha1.explorer.SupportQueryRequest
-	8,  // 19: api.v1alpha1.explorer.ExplorerService.GetQueryExplain:input_type -> api.v1alpha1.explorer.QueryExplainRequest
-	0,  // 20: api.v1alpha1.explorer.ExplorerService.GetWeeksOfData:input_type -> api.v1alpha1.explorer.GetWeeksOfDataRequest
-	3,  // 21: api.v1alpha1.explorer.ExplorerService.ListDatasourceSchemas:output_type -> api.v1alpha1.explorer.ListDatasourceSchemasResponse
-	5,  // 22: api.v1alpha1.explorer.ExplorerService.Query:output_type -> api.v1alpha1.explorer.QueryResponse
-	7,  // 23: api.v1alpha1.explorer.ExplorerService.GetSupportQuery:output_type -> api.v1alpha1.explorer.SupportQueryResponse
-	9,  // 24: api.v1alpha1.explorer.ExplorerService.GetQueryExplain:output_type -> api.v1alpha1.explorer.QueryExplainResponse
-	1,  // 25: api.v1alpha1.explorer.ExplorerService.GetWeeksOfData:output_type -> api.v1alpha1.explorer.GetWeeksOfDataResponse
-	21, // [21:26] is the sub-list for method output_type
-	16, // [16:21] is the sub-list for method input_type
-	16, // [16:16] is the sub-list for extension type_name
-	16, // [16:16] is the sub-list for extension extendee
-	0,  // [0:16] is the sub-list for field type_name
+	16, // 0: api.v1alpha1.explorer.GetWeeksOfDataResponse.access_start_date:type_name -> google.protobuf.Timestamp
+	17, // 1: api.v1alpha1.explorer.ListDatasourceSchemasRequest.datasource_type:type_name -> api.v1alpha1.explorer.DatasourceType
+	18, // 2: api.v1alpha1.explorer.ListDatasourceSchemasResponse.schemas:type_name -> api.v1alpha1.explorer.Schema
+	17, // 3: api.v1alpha1.explorer.QueryRequest.datasource_type:type_name -> api.v1alpha1.explorer.DatasourceType
+	19, // 4: api.v1alpha1.explorer.QueryRequest.query_pipeline:type_name -> api.v1alpha1.explorer.Pipeline
+	16, // 5: api.v1alpha1.explorer.QueryRequest.start_time:type_name -> google.protobuf.Timestamp
+	16, // 6: api.v1alpha1.explorer.QueryRequest.end_time:type_name -> google.protobuf.Timestamp
+	20, // 7: api.v1alpha1.explorer.QueryRequest.pipeline_parameters:type_name -> api.v1alpha1.explorer.Parameters
+	21, // 8: api.v1alpha1.explorer.QueryRequest.format:type_name -> api.v1alpha1.explorer.ExportFormat
+	22, // 9: api.v1alpha1.explorer.QueryRequest.time_period:type_name -> api.commons.TimePeriod
+	16, // 10: api.v1alpha1.explorer.QueryRequest.report_date:type_name -> google.protobuf.Timestamp
+	23, // 11: api.v1alpha1.explorer.QueryRequest.export_options:type_name -> api.v1alpha1.explorer.ExportOptions
+	24, // 12: api.v1alpha1.explorer.QueryRequest.result_types:type_name -> api.v1alpha1.explorer.ResultType
+	10, // 13: api.v1alpha1.explorer.QueryResponse.time_filtered_datasources:type_name -> api.v1alpha1.explorer.QueryResponse.TimeFilteredDatasourcesEntry
+	11, // 14: api.v1alpha1.explorer.QueryResponse.result_urls:type_name -> api.v1alpha1.explorer.QueryResponse.ResultUrlsEntry
+	4,  // 15: api.v1alpha1.explorer.SupportQueryRequest.query_request:type_name -> api.v1alpha1.explorer.QueryRequest
+	12, // 16: api.v1alpha1.explorer.SupportQueryResponse.time_filtered_datasources:type_name -> api.v1alpha1.explorer.SupportQueryResponse.TimeFilteredDatasourcesEntry
+	13, // 17: api.v1alpha1.explorer.SupportQueryResponse.result_urls:type_name -> api.v1alpha1.explorer.SupportQueryResponse.ResultUrlsEntry
+	4,  // 18: api.v1alpha1.explorer.QueryExplainRequest.query_request:type_name -> api.v1alpha1.explorer.QueryRequest
+	14, // 19: api.v1alpha1.explorer.QueryExplainResponse.time_filtered_datasources:type_name -> api.v1alpha1.explorer.QueryExplainResponse.TimeFilteredDatasourcesEntry
+	15, // 20: api.v1alpha1.explorer.QueryExplainResponse.result_urls:type_name -> api.v1alpha1.explorer.QueryExplainResponse.ResultUrlsEntry
+	25, // 21: api.v1alpha1.explorer.QueryResponse.ResultUrlsEntry.value:type_name -> api.v1alpha1.explorer.ResultFile
+	25, // 22: api.v1alpha1.explorer.SupportQueryResponse.ResultUrlsEntry.value:type_name -> api.v1alpha1.explorer.ResultFile
+	25, // 23: api.v1alpha1.explorer.QueryExplainResponse.ResultUrlsEntry.value:type_name -> api.v1alpha1.explorer.ResultFile
+	2,  // 24: api.v1alpha1.explorer.ExplorerService.ListDatasourceSchemas:input_type -> api.v1alpha1.explorer.ListDatasourceSchemasRequest
+	4,  // 25: api.v1alpha1.explorer.ExplorerService.Query:input_type -> api.v1alpha1.explorer.QueryRequest
+	6,  // 26: api.v1alpha1.explorer.ExplorerService.GetSupportQuery:input_type -> api.v1alpha1.explorer.SupportQueryRequest
+	8,  // 27: api.v1alpha1.explorer.ExplorerService.GetQueryExplain:input_type -> api.v1alpha1.explorer.QueryExplainRequest
+	0,  // 28: api.v1alpha1.explorer.ExplorerService.GetWeeksOfData:input_type -> api.v1alpha1.explorer.GetWeeksOfDataRequest
+	3,  // 29: api.v1alpha1.explorer.ExplorerService.ListDatasourceSchemas:output_type -> api.v1alpha1.explorer.ListDatasourceSchemasResponse
+	5,  // 30: api.v1alpha1.explorer.ExplorerService.Query:output_type -> api.v1alpha1.explorer.QueryResponse
+	7,  // 31: api.v1alpha1.explorer.ExplorerService.GetSupportQuery:output_type -> api.v1alpha1.explorer.SupportQueryResponse
+	9,  // 32: api.v1alpha1.explorer.ExplorerService.GetQueryExplain:output_type -> api.v1alpha1.explorer.QueryExplainResponse
+	1,  // 33: api.v1alpha1.explorer.ExplorerService.GetWeeksOfData:output_type -> api.v1alpha1.explorer.GetWeeksOfDataResponse
+	29, // [29:34] is the sub-list for method output_type
+	24, // [24:29] is the sub-list for method input_type
+	24, // [24:24] is the sub-list for extension type_name
+	24, // [24:24] is the sub-list for extension extendee
+	0,  // [0:24] is the sub-list for field type_name
 }
 
 func init() { file_api_v1alpha1_explorer_service_proto_init() }
@@ -1016,7 +1099,7 @@ func file_api_v1alpha1_explorer_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_v1alpha1_explorer_service_proto_rawDesc), len(file_api_v1alpha1_explorer_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   13,
+			NumMessages:   16,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

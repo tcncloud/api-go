@@ -5432,9 +5432,13 @@ type OmniTask struct {
 	// scheduled time for task
 	ScheduledTime *timestamppb.Timestamp `protobuf:"bytes,13,opt,name=scheduled_time,json=scheduledTime,proto3" json:"scheduled_time,omitempty"`
 	// holds extra details about how a task should be processed
-	TaskConfig    *OmniTaskConfig `protobuf:"bytes,15,opt,name=task_config,json=taskConfig,proto3" json:"task_config,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	TaskConfig *OmniTaskConfig `protobuf:"bytes,15,opt,name=task_config,json=taskConfig,proto3" json:"task_config,omitempty"`
+	// tracks the timezone difference for tasks
+	// -13 represents absent offset
+	// can be used for prioritizing and ordering based on destination timezone
+	TimezoneOffset float32 `protobuf:"fixed32,16,opt,name=timezone_offset,json=timezoneOffset,proto3" json:"timezone_offset,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *OmniTask) Reset() {
@@ -5563,6 +5567,13 @@ func (x *OmniTask) GetTaskConfig() *OmniTaskConfig {
 		return x.TaskConfig
 	}
 	return nil
+}
+
+func (x *OmniTask) GetTimezoneOffset() float32 {
+	if x != nil {
+		return x.TimezoneOffset
+	}
+	return 0
 }
 
 // TaskConfig -
@@ -7548,7 +7559,7 @@ const file_api_commons_omnichannel_proto_rawDesc = "" +
 	"\vfield_names\x18\x05 \x03(\tR\n" +
 	"fieldNames\x12;\n" +
 	"\vdata_fields\x18\x06 \x03(\v2\x1a.api.commons.OmniDataFieldR\n" +
-	"dataFields\"\xd8\x06\n" +
+	"dataFields\"\x81\a\n" +
 	"\bOmniTask\x12\x1d\n" +
 	"\btask_sid\x18\x01 \x01(\x03B\x020\x01R\ataskSid\x123\n" +
 	"\x06status\x18\x02 \x01(\x0e2\x1b.api.commons.OmniTaskStatusR\x06status\x12=\n" +
@@ -7566,7 +7577,8 @@ const file_api_commons_omnichannel_proto_rawDesc = "" +
 	"\x0estatus_message\x18\f \x01(\v2\x1c.google.protobuf.StringValueR\rstatusMessage\x12A\n" +
 	"\x0escheduled_time\x18\r \x01(\v2\x1a.google.protobuf.TimestampR\rscheduledTime\x12<\n" +
 	"\vtask_config\x18\x0f \x01(\v2\x1b.api.commons.OmniTaskConfigR\n" +
-	"taskConfig\x1aS\n" +
+	"taskConfig\x12'\n" +
+	"\x0ftimezone_offset\x18\x10 \x01(\x02R\x0etimezoneOffset\x1aS\n" +
 	"\aDetails\x12H\n" +
 	"\x11contact_list_name\x18\x01 \x01(\v2\x1c.google.protobuf.StringValueR\x0fcontactListNameJ\x04\b\x0e\x10\x0f\"\xe3\x02\n" +
 	"\x0eOmniTaskConfig\x12;\n" +
