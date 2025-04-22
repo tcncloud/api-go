@@ -218,10 +218,16 @@ const (
 	// Enables access to the Agent Portal feature.
 	Permission_PERMISSION_AGENT_PORTAL Permission = 1501
 	// Enables access to the Adherence app as an Admin user.
+	//
+	// Deprecated: Marked as deprecated in api/commons/auth/perms.proto.
 	Permission_PERMISSION_WFM_ADHERENCE_ADMIN Permission = 1502
 	// Enables access to the Adherence app as a Manager user.
+	//
+	// Deprecated: Marked as deprecated in api/commons/auth/perms.proto.
 	Permission_PERMISSION_WFM_ADHERENCE_MANAGER Permission = 1503
 	// Enables access to the Adherence app as a Monitor user.
+	//
+	// Deprecated: Marked as deprecated in api/commons/auth/perms.proto.
 	Permission_PERMISSION_WFM_ADHERENCE_MONITOR Permission = 1504
 	// Enables access to Scorecards app.
 	Permission_PERMISSION_SCORECARDS Permission = 1600
@@ -531,7 +537,7 @@ var File_api_commons_auth_perms_proto protoreflect.FileDescriptor
 
 const file_api_commons_auth_perms_proto_rawDesc = "" +
 	"\n" +
-	"\x1capi/commons/auth/perms.proto\x12\x10api.commons.auth\x1a\x1bannotations/perms/tcn.proto*\xfb/\n" +
+	"\x1capi/commons/auth/perms.proto\x12\x10api.commons.auth\x1a\x1bannotations/perms/tcn.proto*\xce/\n" +
 	"\n" +
 	"Permission\x12\x1a\n" +
 	"\x16PERMISSION_UNSPECIFIED\x10\x00\x12\x12\n" +
@@ -633,10 +639,10 @@ const file_api_commons_auth_perms_proto_rawDesc = "" +
 	"\x1a\x14\x8a\xb5\x18\x10\x10\x05\"\fPrivate Keys\x12\xb0\x01\n" +
 	"\x0ePERMISSION_WFM\x10\xdc\v\x1a\x9a\x01\x8a\xb5\x18\x95\x01\x10\x0f\"\n" +
 	"Forecaster\"\x0eSkill Profiles\"\x16Forecasting Parameters\"\x13Profile Forecasting\"\x16Regression Forecasting\"\x13Current Forecasting\"\tScheduler\"\x10Agent Management\x122\n" +
-	"\x17PERMISSION_AGENT_PORTAL\x10\xdd\v\x1a\x14\x8a\xb5\x18\x10\x10\x0f\"\fAgent Portal\x126\n" +
-	"\x1ePERMISSION_WFM_ADHERENCE_ADMIN\x10\xde\v\x1a\x11\x8a\xb5\x18\r\x10\x0f\"\tAdherence\x128\n" +
-	" PERMISSION_WFM_ADHERENCE_MANAGER\x10\xdf\v\x1a\x11\x8a\xb5\x18\r\x10\x0f\"\tAdherence\x128\n" +
-	" PERMISSION_WFM_ADHERENCE_MONITOR\x10\xe0\v\x1a\x11\x8a\xb5\x18\r\x10\x0f\"\tAdherence\x12\"\n" +
+	"\x17PERMISSION_AGENT_PORTAL\x10\xdd\v\x1a\x14\x8a\xb5\x18\x10\x10\x0f\"\fAgent Portal\x12'\n" +
+	"\x1ePERMISSION_WFM_ADHERENCE_ADMIN\x10\xde\v\x1a\x02\b\x01\x12)\n" +
+	" PERMISSION_WFM_ADHERENCE_MANAGER\x10\xdf\v\x1a\x02\b\x01\x12)\n" +
+	" PERMISSION_WFM_ADHERENCE_MONITOR\x10\xe0\v\x1a\x02\b\x01\x12\"\n" +
 	"\x15PERMISSION_SCORECARDS\x10\xc0\f\x1a\x06\x8a\xb5\x18\x02\x10\v\x12)\n" +
 	"\x1cPERMISSION_SCORECARDS_MANAGE\x10\xc1\f\x1a\x06\x8a\xb5\x18\x02\x10\v\x12+\n" +
 	"\x1ePERMISSION_SCORECARDS_EVALUATE\x10\xc2\f\x1a\x06\x8a\xb5\x18\x02\x10\v\x12,\n" +
