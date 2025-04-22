@@ -90,7 +90,6 @@ const (
 	IntegrationType_INTEGRATION_TYPE_FORTIS                       IntegrationType = 6000
 	IntegrationType_INTEGRATION_TYPE_BLINKPAYMENT                 IntegrationType = 6100
 	IntegrationType_INTEGRATION_TYPE_WAYSTAR                      IntegrationType = 6200
-	IntegrationType_INTEGRATION_TYPE_ACIWORLDWIDE                 IntegrationType = 6300
 )
 
 // Enum value maps for IntegrationType.
@@ -159,7 +158,6 @@ var (
 		6000: "INTEGRATION_TYPE_FORTIS",
 		6100: "INTEGRATION_TYPE_BLINKPAYMENT",
 		6200: "INTEGRATION_TYPE_WAYSTAR",
-		6300: "INTEGRATION_TYPE_ACIWORLDWIDE",
 	}
 	IntegrationType_value = map[string]int32{
 		"INTEGRATION_TYPE_UNKNOWN":                      0,
@@ -225,7 +223,6 @@ var (
 		"INTEGRATION_TYPE_FORTIS":                       6000,
 		"INTEGRATION_TYPE_BLINKPAYMENT":                 6100,
 		"INTEGRATION_TYPE_WAYSTAR":                      6200,
-		"INTEGRATION_TYPE_ACIWORLDWIDE":                 6300,
 	}
 )
 
@@ -604,8 +601,6 @@ const (
 	RequestMethod_REQUEST_METHOD_BLINKPAYMENT_CHARGE_ACH              RequestMethod = 6102
 	RequestMethod_REQUEST_METHOD_WAYSTAR_CC_PAYMENT                   RequestMethod = 6201
 	RequestMethod_REQUEST_METHOD_WAYSTAR_ACH_PAYMENT                  RequestMethod = 6202
-	RequestMethod_REQUEST_METHOD_ACIWORLDWIDE_CHARGE_CC               RequestMethod = 6301
-	RequestMethod_REQUEST_METHOD_ACIWORLDWIDE_CHARGE_ACH              RequestMethod = 6302
 )
 
 // Enum value maps for RequestMethod.
@@ -941,8 +936,6 @@ var (
 		6102: "REQUEST_METHOD_BLINKPAYMENT_CHARGE_ACH",
 		6201: "REQUEST_METHOD_WAYSTAR_CC_PAYMENT",
 		6202: "REQUEST_METHOD_WAYSTAR_ACH_PAYMENT",
-		6301: "REQUEST_METHOD_ACIWORLDWIDE_CHARGE_CC",
-		6302: "REQUEST_METHOD_ACIWORLDWIDE_CHARGE_ACH",
 	}
 	RequestMethod_value = map[string]int32{
 		"REQUEST_METHOD_UNKNOWN":                                                  0,
@@ -1275,8 +1268,6 @@ var (
 		"REQUEST_METHOD_BLINKPAYMENT_CHARGE_ACH":                                  6102,
 		"REQUEST_METHOD_WAYSTAR_CC_PAYMENT":                                       6201,
 		"REQUEST_METHOD_WAYSTAR_ACH_PAYMENT":                                      6202,
-		"REQUEST_METHOD_ACIWORLDWIDE_CHARGE_CC":                                   6301,
-		"REQUEST_METHOD_ACIWORLDWIDE_CHARGE_ACH":                                  6302,
 	}
 )
 
@@ -4468,8 +4459,6 @@ type ExecuteFlow struct {
 	//	*ExecuteFlow_BlinkpaymentChargeAch
 	//	*ExecuteFlow_WaystarCcPayment
 	//	*ExecuteFlow_WaystarAchPayment
-	//	*ExecuteFlow_AciworldwideCcPayment
-	//	*ExecuteFlow_AciworldwideAchPayment
 	Value         isExecuteFlow_Value `protobuf_oneof:"value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -7469,24 +7458,6 @@ func (x *ExecuteFlow) GetWaystarAchPayment() *ExecuteWayStarAchPayment {
 	return nil
 }
 
-func (x *ExecuteFlow) GetAciworldwideCcPayment() *ExecuteACIWorldwideCcPayment {
-	if x != nil {
-		if x, ok := x.Value.(*ExecuteFlow_AciworldwideCcPayment); ok {
-			return x.AciworldwideCcPayment
-		}
-	}
-	return nil
-}
-
-func (x *ExecuteFlow) GetAciworldwideAchPayment() *ExecuteACIWorldwideAchPayment {
-	if x != nil {
-		if x, ok := x.Value.(*ExecuteFlow_AciworldwideAchPayment); ok {
-			return x.AciworldwideAchPayment
-		}
-	}
-	return nil
-}
-
 type isExecuteFlow_Value interface {
 	isExecuteFlow_Value()
 }
@@ -8806,14 +8777,6 @@ type ExecuteFlow_WaystarAchPayment struct {
 	WaystarAchPayment *ExecuteWayStarAchPayment `protobuf:"bytes,6202,opt,name=waystar_ach_payment,json=waystarAchPayment,proto3,oneof"`
 }
 
-type ExecuteFlow_AciworldwideCcPayment struct {
-	AciworldwideCcPayment *ExecuteACIWorldwideCcPayment `protobuf:"bytes,6301,opt,name=aciworldwide_cc_payment,json=aciworldwideCcPayment,proto3,oneof"`
-}
-
-type ExecuteFlow_AciworldwideAchPayment struct {
-	AciworldwideAchPayment *ExecuteACIWorldwideAchPayment `protobuf:"bytes,6302,opt,name=aciworldwide_ach_payment,json=aciworldwideAchPayment,proto3,oneof"`
-}
-
 func (*ExecuteFlow_BraintreeCreditSale) isExecuteFlow_Value() {}
 
 func (*ExecuteFlow_BraintreeBankSale) isExecuteFlow_Value() {}
@@ -9467,10 +9430,6 @@ func (*ExecuteFlow_BlinkpaymentChargeAch) isExecuteFlow_Value() {}
 func (*ExecuteFlow_WaystarCcPayment) isExecuteFlow_Value() {}
 
 func (*ExecuteFlow_WaystarAchPayment) isExecuteFlow_Value() {}
-
-func (*ExecuteFlow_AciworldwideCcPayment) isExecuteFlow_Value() {}
-
-func (*ExecuteFlow_AciworldwideAchPayment) isExecuteFlow_Value() {}
 
 // invoice flows
 type InvoiceExperianQueryBalance struct {
@@ -22660,78 +22619,6 @@ func (*ExecuteWayStarAchPayment) Descriptor() ([]byte, []int) {
 	return file_api_commons_integrations_integrations_proto_rawDescGZIP(), []int{384}
 }
 
-type ExecuteACIWorldwideCcPayment struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ExecuteACIWorldwideCcPayment) Reset() {
-	*x = ExecuteACIWorldwideCcPayment{}
-	mi := &file_api_commons_integrations_integrations_proto_msgTypes[385]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ExecuteACIWorldwideCcPayment) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ExecuteACIWorldwideCcPayment) ProtoMessage() {}
-
-func (x *ExecuteACIWorldwideCcPayment) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_integrations_integrations_proto_msgTypes[385]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ExecuteACIWorldwideCcPayment.ProtoReflect.Descriptor instead.
-func (*ExecuteACIWorldwideCcPayment) Descriptor() ([]byte, []int) {
-	return file_api_commons_integrations_integrations_proto_rawDescGZIP(), []int{385}
-}
-
-type ExecuteACIWorldwideAchPayment struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ExecuteACIWorldwideAchPayment) Reset() {
-	*x = ExecuteACIWorldwideAchPayment{}
-	mi := &file_api_commons_integrations_integrations_proto_msgTypes[386]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ExecuteACIWorldwideAchPayment) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ExecuteACIWorldwideAchPayment) ProtoMessage() {}
-
-func (x *ExecuteACIWorldwideAchPayment) ProtoReflect() protoreflect.Message {
-	mi := &file_api_commons_integrations_integrations_proto_msgTypes[386]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ExecuteACIWorldwideAchPayment.ProtoReflect.Descriptor instead.
-func (*ExecuteACIWorldwideAchPayment) Descriptor() ([]byte, []int) {
-	return file_api_commons_integrations_integrations_proto_rawDescGZIP(), []int{386}
-}
-
 var File_api_commons_integrations_integrations_proto protoreflect.FileDescriptor
 
 const file_api_commons_integrations_integrations_proto_rawDesc = "" +
@@ -22871,7 +22758,7 @@ const file_api_commons_integrations_integrations_proto_rawDesc = "" +
 	"\brequired\x18\t \x01(\bR\brequired\" \n" +
 	"\n" +
 	"HelperText\x12\x12\n" +
-	"\x04text\x18\x01 \x01(\tR\x04text\"\xe1\xc2\x02\n" +
+	"\x04text\x18\x01 \x01(\tR\x04text\"\xf8\xc0\x02\n" +
 	"\vExecuteFlow\x12,\n" +
 	"\x12plugin_instance_id\x18\x01 \x01(\tR\x10pluginInstanceId\x12j\n" +
 	"\x15braintree_credit_sale\x18e \x01(\v24.api.commons.integrations.ExecuteBraintreeCreditSaleH\x00R\x13braintreeCreditSale\x12d\n" +
@@ -23204,9 +23091,7 @@ const file_api_commons_integrations_integrations_proto_rawDesc = "" +
 	"\x16blinkpayment_charge_cc\x18\xd5/ \x01(\v25.api.commons.integrations.ExecuteBlinkPaymentChargeCcH\x00R\x14blinkpaymentChargeCc\x12q\n" +
 	"\x17blinkpayment_charge_ach\x18\xd6/ \x01(\v26.api.commons.integrations.ExecuteBlinkPaymentChargeAchH\x00R\x15blinkpaymentChargeAch\x12b\n" +
 	"\x12waystar_cc_payment\x18\xb90 \x01(\v21.api.commons.integrations.ExecuteWayStarCcPaymentH\x00R\x10waystarCcPayment\x12e\n" +
-	"\x13waystar_ach_payment\x18\xba0 \x01(\v22.api.commons.integrations.ExecuteWayStarAchPaymentH\x00R\x11waystarAchPayment\x12q\n" +
-	"\x17aciworldwide_cc_payment\x18\x9d1 \x01(\v26.api.commons.integrations.ExecuteACIWorldwideCcPaymentH\x00R\x15aciworldwideCcPayment\x12t\n" +
-	"\x18aciworldwide_ach_payment\x18\x9e1 \x01(\v27.api.commons.integrations.ExecuteACIWorldwideAchPaymentH\x00R\x16aciworldwideAchPaymentB\a\n" +
+	"\x13waystar_ach_payment\x18\xba0 \x01(\v22.api.commons.integrations.ExecuteWayStarAchPaymentH\x00R\x11waystarAchPaymentB\a\n" +
 	"\x05value\"\x1d\n" +
 	"\x1bInvoiceExperianQueryBalance\"2\n" +
 	"0InvoiceAuthorizeNetAuthorizedTransactionIdLookup\"\x1d\n" +
@@ -23584,9 +23469,7 @@ const file_api_commons_integrations_integrations_proto_rawDesc = "" +
 	"\x1bExecuteBlinkPaymentChargeCc\"\x1e\n" +
 	"\x1cExecuteBlinkPaymentChargeAch\"\x19\n" +
 	"\x17ExecuteWayStarCcPayment\"\x1a\n" +
-	"\x18ExecuteWayStarAchPayment\"\x1e\n" +
-	"\x1cExecuteACIWorldwideCcPayment\"\x1f\n" +
-	"\x1dExecuteACIWorldwideAchPayment*\xcc\x10\n" +
+	"\x18ExecuteWayStarAchPayment*\xa8\x10\n" +
 	"\x0fIntegrationType\x12\x1c\n" +
 	"\x18INTEGRATION_TYPE_UNKNOWN\x10\x00\x12\x1e\n" +
 	"\x1aINTEGRATION_TYPE_BRAINTREE\x10d\x12\x1f\n" +
@@ -23652,8 +23535,7 @@ const file_api_commons_integrations_integrations_proto_rawDesc = "" +
 	"\x17INTEGRATION_TYPE_TRATTA\x10\x8c.\x12\x1c\n" +
 	"\x17INTEGRATION_TYPE_FORTIS\x10\xf0.\x12\"\n" +
 	"\x1dINTEGRATION_TYPE_BLINKPAYMENT\x10\xd4/\x12\x1d\n" +
-	"\x18INTEGRATION_TYPE_WAYSTAR\x10\xb80\x12\"\n" +
-	"\x1dINTEGRATION_TYPE_ACIWORLDWIDE\x10\x9c1*\xaa}\n" +
+	"\x18INTEGRATION_TYPE_WAYSTAR\x10\xb80*\xd1|\n" +
 	"\rRequestMethod\x12\x1a\n" +
 	"\x16REQUEST_METHOD_UNKNOWN\x10\x00\x12'\n" +
 	"#REQUEST_METHOD_BRAINTREE_CREDITSALE\x10e\x12%\n" +
@@ -23987,9 +23869,7 @@ const file_api_commons_integrations_integrations_proto_rawDesc = "" +
 	"%REQUEST_METHOD_BLINKPAYMENT_CHARGE_CC\x10\xd5/\x12+\n" +
 	"&REQUEST_METHOD_BLINKPAYMENT_CHARGE_ACH\x10\xd6/\x12&\n" +
 	"!REQUEST_METHOD_WAYSTAR_CC_PAYMENT\x10\xb90\x12'\n" +
-	"\"REQUEST_METHOD_WAYSTAR_ACH_PAYMENT\x10\xba0\x12*\n" +
-	"%REQUEST_METHOD_ACIWORLDWIDE_CHARGE_CC\x10\x9d1\x12+\n" +
-	"&REQUEST_METHOD_ACIWORLDWIDE_CHARGE_ACH\x10\x9e1*w\n" +
+	"\"REQUEST_METHOD_WAYSTAR_ACH_PAYMENT\x10\xba0*w\n" +
 	"\x0fTransactionType\x12\x1c\n" +
 	"\x18TRANSACTION_TYPE_PAYMENT\x10\x00\x12!\n" +
 	"\x1dTRANSACTION_TYPE_DATA_INQUIRY\x10\x01\x12#\n" +
@@ -24121,7 +24001,7 @@ func file_api_commons_integrations_integrations_proto_rawDescGZIP() []byte {
 }
 
 var file_api_commons_integrations_integrations_proto_enumTypes = make([]protoimpl.EnumInfo, 14)
-var file_api_commons_integrations_integrations_proto_msgTypes = make([]protoimpl.MessageInfo, 388)
+var file_api_commons_integrations_integrations_proto_msgTypes = make([]protoimpl.MessageInfo, 386)
 var file_api_commons_integrations_integrations_proto_goTypes = []any{
 	(IntegrationType)(0),                // 0: api.commons.integrations.IntegrationType
 	(RequestMethod)(0),                  // 1: api.commons.integrations.RequestMethod
@@ -24522,19 +24402,17 @@ var file_api_commons_integrations_integrations_proto_goTypes = []any{
 	(*ExecuteBlinkPaymentChargeAch)(nil),                              // 396: api.commons.integrations.ExecuteBlinkPaymentChargeAch
 	(*ExecuteWayStarCcPayment)(nil),                                   // 397: api.commons.integrations.ExecuteWayStarCcPayment
 	(*ExecuteWayStarAchPayment)(nil),                                  // 398: api.commons.integrations.ExecuteWayStarAchPayment
-	(*ExecuteACIWorldwideCcPayment)(nil),                              // 399: api.commons.integrations.ExecuteACIWorldwideCcPayment
-	(*ExecuteACIWorldwideAchPayment)(nil),                             // 400: api.commons.integrations.ExecuteACIWorldwideAchPayment
-	nil,                                                               // 401: api.commons.integrations.InvoiceDynamicJourney.JourneyFieldsEntry
-	(*money.Money)(nil),                                               // 402: google.type.Money
+	nil,                                                               // 399: api.commons.integrations.InvoiceDynamicJourney.JourneyFieldsEntry
+	(*money.Money)(nil),                                               // 400: google.type.Money
 }
 var file_api_commons_integrations_integrations_proto_depIdxs = []int32{
 	20,  // 0: api.commons.integrations.Receipt.fields:type_name -> api.commons.integrations.ReceiptField
 	16,  // 1: api.commons.integrations.Payment.fees:type_name -> api.commons.integrations.Fee
-	402, // 2: api.commons.integrations.Fee.flat:type_name -> google.type.Money
+	400, // 2: api.commons.integrations.Fee.flat:type_name -> google.type.Money
 	17,  // 3: api.commons.integrations.Fee.percentage:type_name -> api.commons.integrations.Percentage
 	18,  // 4: api.commons.integrations.Fee.flat_and_percentage:type_name -> api.commons.integrations.FlatAndPercentage
 	19,  // 5: api.commons.integrations.Fee.lookup:type_name -> api.commons.integrations.Lookup
-	402, // 6: api.commons.integrations.FlatAndPercentage.flat:type_name -> google.type.Money
+	400, // 6: api.commons.integrations.FlatAndPercentage.flat:type_name -> google.type.Money
 	17,  // 7: api.commons.integrations.FlatAndPercentage.percentage:type_name -> api.commons.integrations.Percentage
 	1,   // 8: api.commons.integrations.Lookup.method:type_name -> api.commons.integrations.RequestMethod
 	10,  // 9: api.commons.integrations.ReceiptField.validation_type:type_name -> api.commons.integrations.Validation
@@ -24921,15 +24799,13 @@ var file_api_commons_integrations_integrations_proto_depIdxs = []int32{
 	396, // 390: api.commons.integrations.ExecuteFlow.blinkpayment_charge_ach:type_name -> api.commons.integrations.ExecuteBlinkPaymentChargeAch
 	397, // 391: api.commons.integrations.ExecuteFlow.waystar_cc_payment:type_name -> api.commons.integrations.ExecuteWayStarCcPayment
 	398, // 392: api.commons.integrations.ExecuteFlow.waystar_ach_payment:type_name -> api.commons.integrations.ExecuteWayStarAchPayment
-	399, // 393: api.commons.integrations.ExecuteFlow.aciworldwide_cc_payment:type_name -> api.commons.integrations.ExecuteACIWorldwideCcPayment
-	400, // 394: api.commons.integrations.ExecuteFlow.aciworldwide_ach_payment:type_name -> api.commons.integrations.ExecuteACIWorldwideAchPayment
-	401, // 395: api.commons.integrations.InvoiceDynamicJourney.journey_fields:type_name -> api.commons.integrations.InvoiceDynamicJourney.JourneyFieldsEntry
-	28,  // 396: api.commons.integrations.InvoiceDynamicJourney.JourneyFieldsEntry.value:type_name -> api.commons.integrations.ListOfStrings
-	397, // [397:397] is the sub-list for method output_type
-	397, // [397:397] is the sub-list for method input_type
-	397, // [397:397] is the sub-list for extension type_name
-	397, // [397:397] is the sub-list for extension extendee
-	0,   // [0:397] is the sub-list for field type_name
+	399, // 393: api.commons.integrations.InvoiceDynamicJourney.journey_fields:type_name -> api.commons.integrations.InvoiceDynamicJourney.JourneyFieldsEntry
+	28,  // 394: api.commons.integrations.InvoiceDynamicJourney.JourneyFieldsEntry.value:type_name -> api.commons.integrations.ListOfStrings
+	395, // [395:395] is the sub-list for method output_type
+	395, // [395:395] is the sub-list for method input_type
+	395, // [395:395] is the sub-list for extension type_name
+	395, // [395:395] is the sub-list for extension extendee
+	0,   // [0:395] is the sub-list for field type_name
 }
 
 func init() { file_api_commons_integrations_integrations_proto_init() }
@@ -25316,8 +25192,6 @@ func file_api_commons_integrations_integrations_proto_init() {
 		(*ExecuteFlow_BlinkpaymentChargeAch)(nil),
 		(*ExecuteFlow_WaystarCcPayment)(nil),
 		(*ExecuteFlow_WaystarAchPayment)(nil),
-		(*ExecuteFlow_AciworldwideCcPayment)(nil),
-		(*ExecuteFlow_AciworldwideAchPayment)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -25325,7 +25199,7 @@ func file_api_commons_integrations_integrations_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_commons_integrations_integrations_proto_rawDesc), len(file_api_commons_integrations_integrations_proto_rawDesc)),
 			NumEnums:      14,
-			NumMessages:   388,
+			NumMessages:   386,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
