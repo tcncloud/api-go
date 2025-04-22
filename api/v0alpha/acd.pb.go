@@ -5745,6 +5745,226 @@ func (x *ValidateFieldRes) GetReason() string {
 	return ""
 }
 
+type ListAgentsVoiceStatusesRequest struct {
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	Skills            []string               `protobuf:"bytes,1,rep,name=skills,proto3" json:"skills,omitempty"`
+	AllSkillsRequired bool                   `protobuf:"varint,2,opt,name=all_skills_required,json=allSkillsRequired,proto3" json:"all_skills_required,omitempty"`
+	PageToken         string                 `protobuf:"bytes,3,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *ListAgentsVoiceStatusesRequest) Reset() {
+	*x = ListAgentsVoiceStatusesRequest{}
+	mi := &file_api_v0alpha_acd_proto_msgTypes[120]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListAgentsVoiceStatusesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListAgentsVoiceStatusesRequest) ProtoMessage() {}
+
+func (x *ListAgentsVoiceStatusesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v0alpha_acd_proto_msgTypes[120]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListAgentsVoiceStatusesRequest.ProtoReflect.Descriptor instead.
+func (*ListAgentsVoiceStatusesRequest) Descriptor() ([]byte, []int) {
+	return file_api_v0alpha_acd_proto_rawDescGZIP(), []int{120}
+}
+
+func (x *ListAgentsVoiceStatusesRequest) GetSkills() []string {
+	if x != nil {
+		return x.Skills
+	}
+	return nil
+}
+
+func (x *ListAgentsVoiceStatusesRequest) GetAllSkillsRequired() bool {
+	if x != nil {
+		return x.AllSkillsRequired
+	}
+	return false
+}
+
+func (x *ListAgentsVoiceStatusesRequest) GetPageToken() string {
+	if x != nil {
+		return x.PageToken
+	}
+	return ""
+}
+
+type ListAgentsVoiceStatusesReply struct {
+	state         protoimpl.MessageState     `protogen:"open.v1"`
+	AgentDetails  []*AgentVoiceStatusDetails `protobuf:"bytes,1,rep,name=agent_details,json=agentDetails,proto3" json:"agent_details,omitempty"`
+	NextPageToken string                     `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListAgentsVoiceStatusesReply) Reset() {
+	*x = ListAgentsVoiceStatusesReply{}
+	mi := &file_api_v0alpha_acd_proto_msgTypes[121]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListAgentsVoiceStatusesReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListAgentsVoiceStatusesReply) ProtoMessage() {}
+
+func (x *ListAgentsVoiceStatusesReply) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v0alpha_acd_proto_msgTypes[121]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListAgentsVoiceStatusesReply.ProtoReflect.Descriptor instead.
+func (*ListAgentsVoiceStatusesReply) Descriptor() ([]byte, []int) {
+	return file_api_v0alpha_acd_proto_rawDescGZIP(), []int{121}
+}
+
+func (x *ListAgentsVoiceStatusesReply) GetAgentDetails() []*AgentVoiceStatusDetails {
+	if x != nil {
+		return x.AgentDetails
+	}
+	return nil
+}
+
+func (x *ListAgentsVoiceStatusesReply) GetNextPageToken() string {
+	if x != nil {
+		return x.NextPageToken
+	}
+	return ""
+}
+
+type AgentVoiceStatusDetails struct {
+	state             protoimpl.MessageState   `protogen:"open.v1"`
+	AgentSid          int64                    `protobuf:"varint,1,opt,name=agent_sid,json=agentSid,proto3" json:"agent_sid,omitempty"`
+	HuntGroupSid      int64                    `protobuf:"varint,2,opt,name=hunt_group_sid,json=huntGroupSid,proto3" json:"hunt_group_sid,omitempty"`
+	CurrentSessionSid int64                    `protobuf:"varint,3,opt,name=current_session_sid,json=currentSessionSid,proto3" json:"current_session_sid,omitempty"`
+	FirstName         string                   `protobuf:"bytes,4,opt,name=first_name,json=firstName,proto3" json:"first_name,omitempty"`
+	LastName          string                   `protobuf:"bytes,5,opt,name=last_name,json=lastName,proto3" json:"last_name,omitempty"`
+	Status            int64                    `protobuf:"varint,6,opt,name=status,proto3" json:"status,omitempty"`
+	StatusDesc        commons.AgentStatus_Enum `protobuf:"varint,7,opt,name=status_desc,json=statusDesc,proto3,enum=api.commons.AgentStatus_Enum" json:"status_desc,omitempty"`
+	Skills            []string                 `protobuf:"bytes,8,rep,name=skills,proto3" json:"skills,omitempty"`
+	PbxExtensions     []string                 `protobuf:"bytes,9,rep,name=pbx_extensions,json=pbxExtensions,proto3" json:"pbx_extensions,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *AgentVoiceStatusDetails) Reset() {
+	*x = AgentVoiceStatusDetails{}
+	mi := &file_api_v0alpha_acd_proto_msgTypes[122]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AgentVoiceStatusDetails) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AgentVoiceStatusDetails) ProtoMessage() {}
+
+func (x *AgentVoiceStatusDetails) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v0alpha_acd_proto_msgTypes[122]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AgentVoiceStatusDetails.ProtoReflect.Descriptor instead.
+func (*AgentVoiceStatusDetails) Descriptor() ([]byte, []int) {
+	return file_api_v0alpha_acd_proto_rawDescGZIP(), []int{122}
+}
+
+func (x *AgentVoiceStatusDetails) GetAgentSid() int64 {
+	if x != nil {
+		return x.AgentSid
+	}
+	return 0
+}
+
+func (x *AgentVoiceStatusDetails) GetHuntGroupSid() int64 {
+	if x != nil {
+		return x.HuntGroupSid
+	}
+	return 0
+}
+
+func (x *AgentVoiceStatusDetails) GetCurrentSessionSid() int64 {
+	if x != nil {
+		return x.CurrentSessionSid
+	}
+	return 0
+}
+
+func (x *AgentVoiceStatusDetails) GetFirstName() string {
+	if x != nil {
+		return x.FirstName
+	}
+	return ""
+}
+
+func (x *AgentVoiceStatusDetails) GetLastName() string {
+	if x != nil {
+		return x.LastName
+	}
+	return ""
+}
+
+func (x *AgentVoiceStatusDetails) GetStatus() int64 {
+	if x != nil {
+		return x.Status
+	}
+	return 0
+}
+
+func (x *AgentVoiceStatusDetails) GetStatusDesc() commons.AgentStatus_Enum {
+	if x != nil {
+		return x.StatusDesc
+	}
+	return commons.AgentStatus_Enum(0)
+}
+
+func (x *AgentVoiceStatusDetails) GetSkills() []string {
+	if x != nil {
+		return x.Skills
+	}
+	return nil
+}
+
+func (x *AgentVoiceStatusDetails) GetPbxExtensions() []string {
+	if x != nil {
+		return x.PbxExtensions
+	}
+	return nil
+}
+
 var File_api_v0alpha_acd_proto protoreflect.FileDescriptor
 
 const file_api_v0alpha_acd_proto_rawDesc = "" +
@@ -6125,7 +6345,27 @@ const file_api_v0alpha_acd_proto_rawDesc = "" +
 	"field_name\x18\x03 \x01(\tR\tfieldName\"@\n" +
 	"\x10ValidateFieldRes\x12\x14\n" +
 	"\x05valid\x18\x01 \x01(\bR\x05valid\x12\x16\n" +
-	"\x06reason\x18\x02 \x01(\tR\x06reason2\xb3L\n" +
+	"\x06reason\x18\x02 \x01(\tR\x06reason\"\x87\x01\n" +
+	"\x1eListAgentsVoiceStatusesRequest\x12\x16\n" +
+	"\x06skills\x18\x01 \x03(\tR\x06skills\x12.\n" +
+	"\x13all_skills_required\x18\x02 \x01(\bR\x11allSkillsRequired\x12\x1d\n" +
+	"\n" +
+	"page_token\x18\x03 \x01(\tR\tpageToken\"\x91\x01\n" +
+	"\x1cListAgentsVoiceStatusesReply\x12I\n" +
+	"\ragent_details\x18\x01 \x03(\v2$.api.v0alpha.AgentVoiceStatusDetailsR\fagentDetails\x12&\n" +
+	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xdf\x02\n" +
+	"\x17AgentVoiceStatusDetails\x12\x1b\n" +
+	"\tagent_sid\x18\x01 \x01(\x03R\bagentSid\x12$\n" +
+	"\x0ehunt_group_sid\x18\x02 \x01(\x03R\fhuntGroupSid\x12.\n" +
+	"\x13current_session_sid\x18\x03 \x01(\x03R\x11currentSessionSid\x12\x1d\n" +
+	"\n" +
+	"first_name\x18\x04 \x01(\tR\tfirstName\x12\x1b\n" +
+	"\tlast_name\x18\x05 \x01(\tR\blastName\x12\x16\n" +
+	"\x06status\x18\x06 \x01(\x03R\x06status\x12>\n" +
+	"\vstatus_desc\x18\a \x01(\x0e2\x1d.api.commons.AgentStatus.EnumR\n" +
+	"statusDesc\x12\x16\n" +
+	"\x06skills\x18\b \x03(\tR\x06skills\x12%\n" +
+	"\x0epbx_extensions\x18\t \x03(\tR\rpbxExtensions2\xe6M\n" +
 	"\x03Acd\x12\x97\x01\n" +
 	"\x14AgentGetStatusStream\x12\".api.v0alpha.AgentGetStatusRequest\x1a .api.v0alpha.AgentGetStatusReply\"7\xba\xb8\x91\x02\x02\x18\x01\x82\xd3\xe4\x93\x02*:\x01*\"%/api/v0alpha/acd/agentgetstatusstream0\x01\x12\x89\x01\n" +
 	"\x0eAgentGetStatus\x12\".api.v0alpha.AgentGetStatusRequest\x1a .api.v0alpha.AgentGetStatusReply\"1\xba\xb8\x91\x02\x02\x18\x01\x82\xd3\xe4\x93\x02$:\x01*\"\x1f/api/v0alpha/acd/agentgetstatus\x12\xac\x01\n" +
@@ -6214,7 +6454,9 @@ const file_api_v0alpha_acd_proto_rawDesc = "" +
 	"\x16PopulateWorkflowFields\x12&.api.v0alpha.PopulateWorkflowFieldsReq\x1a&.api.v0alpha.PopulateWorkflowFieldsRes\"<\xba\xb8\x91\x02\x05\n" +
 	"\x03\b\xac\x02\x82\xd3\xe4\x93\x02,:\x01*\"'/api/v0alpha/acd/populateworkflowfields\x12\x82\x01\n" +
 	"\rValidateField\x12\x1d.api.v0alpha.ValidateFieldReq\x1a\x1d.api.v0alpha.ValidateFieldRes\"3\xba\xb8\x91\x02\x05\n" +
-	"\x03\b\xac\x02\x82\xd3\xe4\x93\x02#:\x01*\"\x1e/api/v0alpha/acd/validatefieldB\x90\x01\n" +
+	"\x03\b\xac\x02\x82\xd3\xe4\x93\x02#:\x01*\"\x1e/api/v0alpha/acd/validatefield\x12\xb0\x01\n" +
+	"\x17ListAgentsVoiceStatuses\x12+.api.v0alpha.ListAgentsVoiceStatusesRequest\x1a).api.v0alpha.ListAgentsVoiceStatusesReply\"=\xba\xb8\x91\x02\x05\n" +
+	"\x03\b\xac\x02\x82\xd3\xe4\x93\x02-:\x01*\"(/api/v0alpha/acd/listagentsvoicestatusesB\x90\x01\n" +
 	"\x0fcom.api.v0alphaB\bAcdProtoP\x01Z&github.com/tcncloud/api-go/api/v0alpha\xa2\x02\x03AVX\xaa\x02\vApi.V0alpha\xca\x02\vApi\\V0alpha\xe2\x02\x17Api\\V0alpha\\GPBMetadata\xea\x02\fApi::V0alphab\x06proto3"
 
 var (
@@ -6229,7 +6471,7 @@ func file_api_v0alpha_acd_proto_rawDescGZIP() []byte {
 	return file_api_v0alpha_acd_proto_rawDescData
 }
 
-var file_api_v0alpha_acd_proto_msgTypes = make([]protoimpl.MessageInfo, 129)
+var file_api_v0alpha_acd_proto_msgTypes = make([]protoimpl.MessageInfo, 132)
 var file_api_v0alpha_acd_proto_goTypes = []any{
 	(*AgentGetStatusRequest)(nil),                        // 0: api.v0alpha.AgentGetStatusRequest
 	(*AgentGetStatusReply)(nil),                          // 1: api.v0alpha.AgentGetStatusReply
@@ -6351,184 +6593,191 @@ var file_api_v0alpha_acd_proto_goTypes = []any{
 	(*PopulateWorkflowFieldsRes)(nil),                    // 117: api.v0alpha.PopulateWorkflowFieldsRes
 	(*ValidateFieldReq)(nil),                             // 118: api.v0alpha.ValidateFieldReq
 	(*ValidateFieldRes)(nil),                             // 119: api.v0alpha.ValidateFieldRes
-	nil,                                                  // 120: api.v0alpha.CallerRequeueRequest.SkillsEntry
-	nil,                                                  // 121: api.v0alpha.TransferWarmToAgentStartRequest.SkillsEntry
-	nil,                                                  // 122: api.v0alpha.CallerEvent.SkillsEntry
-	nil,                                                  // 123: api.v0alpha.CallerEvent.AllSkillsEntry
-	nil,                                                  // 124: api.v0alpha.UpdateAgentSkillsRequest.SkillsEntry
-	nil,                                                  // 125: api.v0alpha.ProcessSecureFormReq.ValuesEntry
-	nil,                                                  // 126: api.v0alpha.ProcessSecureFormRes.DataEntry
-	nil,                                                  // 127: api.v0alpha.FinishSecureFormHandlingReq.DataEntry
-	nil,                                                  // 128: api.v0alpha.PopulateWorkflowFieldsRes.ValuesEntry
-	(commons.AgentStatus_Enum)(0),                        // 129: api.commons.AgentStatus.Enum
-	(*commons.TransferMember)(nil),                       // 130: api.commons.TransferMember
-	(commons.CallType_Enum)(0),                           // 131: api.commons.CallType.Enum
-	(commons.AgentSessionLogActionKey_Enum)(0),           // 132: api.commons.AgentSessionLogActionKey.Enum
-	(commons.ReplaceConfig_Enum)(0),                      // 133: api.commons.ReplaceConfig.Enum
-	(commons.HoldType)(0),                                // 134: api.commons.HoldType
-	(commons.DTMFDigit)(0),                               // 135: api.commons.DTMFDigit
-	(*integrations1.FieldDefinition)(nil),                // 136: api.commons.integrations.FieldDefinition
-	(integrations1.Validation)(0),                        // 137: api.commons.integrations.Validation
-	(*integrations.Value)(nil),                           // 138: api.v1alpha1.integrations.Value
+	(*ListAgentsVoiceStatusesRequest)(nil),               // 120: api.v0alpha.ListAgentsVoiceStatusesRequest
+	(*ListAgentsVoiceStatusesReply)(nil),                 // 121: api.v0alpha.ListAgentsVoiceStatusesReply
+	(*AgentVoiceStatusDetails)(nil),                      // 122: api.v0alpha.AgentVoiceStatusDetails
+	nil,                                                  // 123: api.v0alpha.CallerRequeueRequest.SkillsEntry
+	nil,                                                  // 124: api.v0alpha.TransferWarmToAgentStartRequest.SkillsEntry
+	nil,                                                  // 125: api.v0alpha.CallerEvent.SkillsEntry
+	nil,                                                  // 126: api.v0alpha.CallerEvent.AllSkillsEntry
+	nil,                                                  // 127: api.v0alpha.UpdateAgentSkillsRequest.SkillsEntry
+	nil,                                                  // 128: api.v0alpha.ProcessSecureFormReq.ValuesEntry
+	nil,                                                  // 129: api.v0alpha.ProcessSecureFormRes.DataEntry
+	nil,                                                  // 130: api.v0alpha.FinishSecureFormHandlingReq.DataEntry
+	nil,                                                  // 131: api.v0alpha.PopulateWorkflowFieldsRes.ValuesEntry
+	(commons.AgentStatus_Enum)(0),                        // 132: api.commons.AgentStatus.Enum
+	(*commons.TransferMember)(nil),                       // 133: api.commons.TransferMember
+	(commons.CallType_Enum)(0),                           // 134: api.commons.CallType.Enum
+	(commons.AgentSessionLogActionKey_Enum)(0),           // 135: api.commons.AgentSessionLogActionKey.Enum
+	(commons.ReplaceConfig_Enum)(0),                      // 136: api.commons.ReplaceConfig.Enum
+	(commons.HoldType)(0),                                // 137: api.commons.HoldType
+	(commons.DTMFDigit)(0),                               // 138: api.commons.DTMFDigit
+	(*integrations1.FieldDefinition)(nil),                // 139: api.commons.integrations.FieldDefinition
+	(integrations1.Validation)(0),                        // 140: api.commons.integrations.Validation
+	(*integrations.Value)(nil),                           // 141: api.v1alpha1.integrations.Value
 }
 var file_api_v0alpha_acd_proto_depIdxs = []int32{
-	129, // 0: api.v0alpha.AgentGetStatusReply.status_desc:type_name -> api.commons.AgentStatus.Enum
-	130, // 1: api.v0alpha.AgentGetStatusReply.transfer_members:type_name -> api.commons.TransferMember
-	131, // 2: api.v0alpha.AgentGetConnectedPartyReply.call_type:type_name -> api.commons.CallType.Enum
-	131, // 3: api.v0alpha.ManagerAgentGetConnectedPartyReply.call_type:type_name -> api.commons.CallType.Enum
-	132, // 4: api.v0alpha.AgentSessionEventReq.action_key:type_name -> api.commons.AgentSessionLogActionKey.Enum
-	120, // 5: api.v0alpha.CallerRequeueRequest.skills:type_name -> api.v0alpha.CallerRequeueRequest.SkillsEntry
-	133, // 6: api.v0alpha.CallerRequeueRequest.replace_config:type_name -> api.commons.ReplaceConfig.Enum
-	121, // 7: api.v0alpha.TransferWarmToAgentStartRequest.skills:type_name -> api.v0alpha.TransferWarmToAgentStartRequest.SkillsEntry
-	131, // 8: api.v0alpha.AgentGetSpecificCallFromHoldRequest.call_type:type_name -> api.commons.CallType.Enum
-	134, // 9: api.v0alpha.AgentPutCallOnHoldRequest.hold_type:type_name -> api.commons.HoldType
-	129, // 10: api.v0alpha.AgentStatusDetails.status_desc:type_name -> api.commons.AgentStatus.Enum
+	132, // 0: api.v0alpha.AgentGetStatusReply.status_desc:type_name -> api.commons.AgentStatus.Enum
+	133, // 1: api.v0alpha.AgentGetStatusReply.transfer_members:type_name -> api.commons.TransferMember
+	134, // 2: api.v0alpha.AgentGetConnectedPartyReply.call_type:type_name -> api.commons.CallType.Enum
+	134, // 3: api.v0alpha.ManagerAgentGetConnectedPartyReply.call_type:type_name -> api.commons.CallType.Enum
+	135, // 4: api.v0alpha.AgentSessionEventReq.action_key:type_name -> api.commons.AgentSessionLogActionKey.Enum
+	123, // 5: api.v0alpha.CallerRequeueRequest.skills:type_name -> api.v0alpha.CallerRequeueRequest.SkillsEntry
+	136, // 6: api.v0alpha.CallerRequeueRequest.replace_config:type_name -> api.commons.ReplaceConfig.Enum
+	124, // 7: api.v0alpha.TransferWarmToAgentStartRequest.skills:type_name -> api.v0alpha.TransferWarmToAgentStartRequest.SkillsEntry
+	134, // 8: api.v0alpha.AgentGetSpecificCallFromHoldRequest.call_type:type_name -> api.commons.CallType.Enum
+	137, // 9: api.v0alpha.AgentPutCallOnHoldRequest.hold_type:type_name -> api.commons.HoldType
+	132, // 10: api.v0alpha.AgentStatusDetails.status_desc:type_name -> api.commons.AgentStatus.Enum
 	65,  // 11: api.v0alpha.ACDGetAllAgentsStatusesReply.agent_status_details:type_name -> api.v0alpha.AgentStatusDetails
-	131, // 12: api.v0alpha.GetCallerLostPeerRequest.call_type:type_name -> api.commons.CallType.Enum
-	131, // 13: api.v0alpha.CallerGetRawEventRequest.call_type:type_name -> api.commons.CallType.Enum
+	134, // 12: api.v0alpha.GetCallerLostPeerRequest.call_type:type_name -> api.commons.CallType.Enum
+	134, // 13: api.v0alpha.CallerGetRawEventRequest.call_type:type_name -> api.commons.CallType.Enum
 	77,  // 14: api.v0alpha.CallerGetRawEventReply.event:type_name -> api.v0alpha.CallerEvent
-	122, // 15: api.v0alpha.CallerEvent.skills:type_name -> api.v0alpha.CallerEvent.SkillsEntry
-	123, // 16: api.v0alpha.CallerEvent.allSkills:type_name -> api.v0alpha.CallerEvent.AllSkillsEntry
-	131, // 17: api.v0alpha.PeerAgentWithCallerRequest.call_type:type_name -> api.commons.CallType.Enum
-	131, // 18: api.v0alpha.WarmCallerTransferStartReq.call_type:type_name -> api.commons.CallType.Enum
-	124, // 19: api.v0alpha.UpdateAgentSkillsRequest.skills:type_name -> api.v0alpha.UpdateAgentSkillsRequest.SkillsEntry
-	135, // 20: api.v0alpha.PlayDTMFRequest.dtmf_digits:type_name -> api.commons.DTMFDigit
-	125, // 21: api.v0alpha.ProcessSecureFormReq.values:type_name -> api.v0alpha.ProcessSecureFormReq.ValuesEntry
-	126, // 22: api.v0alpha.ProcessSecureFormRes.data:type_name -> api.v0alpha.ProcessSecureFormRes.DataEntry
-	127, // 23: api.v0alpha.FinishSecureFormHandlingReq.data:type_name -> api.v0alpha.FinishSecureFormHandlingReq.DataEntry
-	131, // 24: api.v0alpha.PopulateWorkflowFieldsReq.call_type:type_name -> api.commons.CallType.Enum
-	136, // 25: api.v0alpha.PopulateWorkflowFieldsReq.field_definitions:type_name -> api.commons.integrations.FieldDefinition
-	128, // 26: api.v0alpha.PopulateWorkflowFieldsRes.values:type_name -> api.v0alpha.PopulateWorkflowFieldsRes.ValuesEntry
-	137, // 27: api.v0alpha.ValidateFieldReq.validation_type:type_name -> api.commons.integrations.Validation
-	138, // 28: api.v0alpha.ProcessSecureFormReq.ValuesEntry.value:type_name -> api.v1alpha1.integrations.Value
-	138, // 29: api.v0alpha.ProcessSecureFormRes.DataEntry.value:type_name -> api.v1alpha1.integrations.Value
-	138, // 30: api.v0alpha.FinishSecureFormHandlingReq.DataEntry.value:type_name -> api.v1alpha1.integrations.Value
-	138, // 31: api.v0alpha.PopulateWorkflowFieldsRes.ValuesEntry.value:type_name -> api.v1alpha1.integrations.Value
-	0,   // 32: api.v0alpha.Acd.AgentGetStatusStream:input_type -> api.v0alpha.AgentGetStatusRequest
-	0,   // 33: api.v0alpha.Acd.AgentGetStatus:input_type -> api.v0alpha.AgentGetStatusRequest
-	2,   // 34: api.v0alpha.Acd.AgentGetConnectedParty:input_type -> api.v0alpha.AgentGetConnectedPartyRequest
-	4,   // 35: api.v0alpha.Acd.ManagerAgentGetConnectedParty:input_type -> api.v0alpha.ManagerAgentGetConnectedPartyRequest
-	6,   // 36: api.v0alpha.Acd.AgentIntercom:input_type -> api.v0alpha.AgentIntercomRequest
-	8,   // 37: api.v0alpha.Acd.AgentIntercomAccept:input_type -> api.v0alpha.AgentIntercomAcceptRequest
-	10,  // 38: api.v0alpha.Acd.AgentIntercomReject:input_type -> api.v0alpha.AgentIntercomRejectRequest
-	12,  // 39: api.v0alpha.Acd.AgentIntercomCancel:input_type -> api.v0alpha.AgentIntercomCancelRequest
-	14,  // 40: api.v0alpha.Acd.DialManualPrepare:input_type -> api.v0alpha.DialManualPrepareRequest
-	16,  // 41: api.v0alpha.Acd.DialManualCancel:input_type -> api.v0alpha.DialManualCancelRequest
-	18,  // 42: api.v0alpha.Acd.DialPreviewPrepare:input_type -> api.v0alpha.DialPreviewPrepareRequest
-	20,  // 43: api.v0alpha.Acd.AgentPause:input_type -> api.v0alpha.AgentPauseRequest
-	22,  // 44: api.v0alpha.Acd.AgentSetReady:input_type -> api.v0alpha.AgentSetReadyRequest
-	24,  // 45: api.v0alpha.Acd.AgentGUIBusy:input_type -> api.v0alpha.AgentGUIBusyRequest
-	28,  // 46: api.v0alpha.Acd.ReportAgentSessionEvent:input_type -> api.v0alpha.AgentSessionEventReq
-	30,  // 47: api.v0alpha.Acd.CallerRequeue:input_type -> api.v0alpha.CallerRequeueRequest
-	26,  // 48: api.v0alpha.Acd.AgentDisconnect:input_type -> api.v0alpha.AgentDisconnectRequest
-	34,  // 49: api.v0alpha.Acd.TransferWarmToOutboundCancel:input_type -> api.v0alpha.TransferWarmToOutboundCancelRequest
-	32,  // 50: api.v0alpha.Acd.TransferWarmToAgentCancel:input_type -> api.v0alpha.TransferWarmToAgentCancelRequest
-	38,  // 51: api.v0alpha.Acd.TransferWarmToOutboundApprove:input_type -> api.v0alpha.TransferWarmToOutboundApproveRequest
-	36,  // 52: api.v0alpha.Acd.TransferWarmToAgentApprove:input_type -> api.v0alpha.TransferWarmToAgentApproveRequest
-	40,  // 53: api.v0alpha.Acd.CallerSendToVoicemail:input_type -> api.v0alpha.CallerSendToVoicemailRequest
-	42,  // 54: api.v0alpha.Acd.AgentInviteTransferCallerToConference:input_type -> api.v0alpha.AgentInviteTransferCallerToConferenceRequest
-	44,  // 55: api.v0alpha.Acd.AgentMonitorCalls:input_type -> api.v0alpha.AgentMonitorCallsRequest
-	46,  // 56: api.v0alpha.Acd.TransferColdToOutbound:input_type -> api.v0alpha.TransferColdToOutboundRequest
-	48,  // 57: api.v0alpha.Acd.TransferColdToAgent:input_type -> api.v0alpha.TransferColdToAgentRequest
-	50,  // 58: api.v0alpha.Acd.TransferWarmToOutboundStart:input_type -> api.v0alpha.TransferWarmToOutboundStartRequest
-	52,  // 59: api.v0alpha.Acd.CreateWarmOutboundTransferMember:input_type -> api.v0alpha.CreateWarmOutboundTransferMemberRequest
-	54,  // 60: api.v0alpha.Acd.RemoveTransferMember:input_type -> api.v0alpha.RemoveTransferMemberRequest
-	56,  // 61: api.v0alpha.Acd.TransferWarmToAgentStart:input_type -> api.v0alpha.TransferWarmToAgentStartRequest
-	58,  // 62: api.v0alpha.Acd.AgentGetCallFromHold:input_type -> api.v0alpha.AgentGetCallFromHoldRequest
-	60,  // 63: api.v0alpha.Acd.AgentGetSpecificCallFromHold:input_type -> api.v0alpha.AgentGetSpecificCallFromHoldRequest
-	64,  // 64: api.v0alpha.Acd.ACDGetAllAgentsStatuses:input_type -> api.v0alpha.ACDGetAllAgentsStatusesRequest
-	62,  // 65: api.v0alpha.Acd.AgentPutCallOnHold:input_type -> api.v0alpha.AgentPutCallOnHoldRequest
-	67,  // 66: api.v0alpha.Acd.AgentReceiveMessage:input_type -> api.v0alpha.AgentReceiveMessageRequest
-	71,  // 67: api.v0alpha.Acd.AgentPBXApproveCall:input_type -> api.v0alpha.AgentPBXApproveCallRequest
-	69,  // 68: api.v0alpha.Acd.AgentPBXRejectCall:input_type -> api.v0alpha.AgentPBXRejectCallRequest
-	73,  // 69: api.v0alpha.Acd.GetCallerLostPeer:input_type -> api.v0alpha.GetCallerLostPeerRequest
-	75,  // 70: api.v0alpha.Acd.CallerGetRawEvent:input_type -> api.v0alpha.CallerGetRawEventRequest
-	78,  // 71: api.v0alpha.Acd.PeerAgentWithCaller:input_type -> api.v0alpha.PeerAgentWithCallerRequest
-	80,  // 72: api.v0alpha.Acd.HoldTransferMember:input_type -> api.v0alpha.HoldTransferMemberReq
-	82,  // 73: api.v0alpha.Acd.UnholdTransferMember:input_type -> api.v0alpha.UnholdTransferMemberReq
-	84,  // 74: api.v0alpha.Acd.GetAgentCallCounts:input_type -> api.v0alpha.GetAgentCallCountsReq
-	86,  // 75: api.v0alpha.Acd.WarmCallerTransferStart:input_type -> api.v0alpha.WarmCallerTransferStartReq
-	88,  // 76: api.v0alpha.Acd.WarmCallerTransferCancel:input_type -> api.v0alpha.WarmCallerTransferCancelReq
-	90,  // 77: api.v0alpha.Acd.WarmCallerTransferApprove:input_type -> api.v0alpha.WarmCallerTransferApproveReq
-	92,  // 78: api.v0alpha.Acd.PlaySoundboardEntity:input_type -> api.v0alpha.PlaySoundboardEntityReq
-	94,  // 79: api.v0alpha.Acd.StopSoundboardEntity:input_type -> api.v0alpha.StopSoundboardEntityReq
-	96,  // 80: api.v0alpha.Acd.UpdateAgentSkills:input_type -> api.v0alpha.UpdateAgentSkillsRequest
-	98,  // 81: api.v0alpha.Acd.PlayDTMF:input_type -> api.v0alpha.PlayDTMFRequest
-	100, // 82: api.v0alpha.Acd.AgentMute:input_type -> api.v0alpha.AgentMuteRequest
-	102, // 83: api.v0alpha.Acd.AgentUnmute:input_type -> api.v0alpha.AgentUnmuteRequest
-	104, // 84: api.v0alpha.Acd.StartSecureForm:input_type -> api.v0alpha.StartSecureFormReq
-	106, // 85: api.v0alpha.Acd.CollectSecureFormField:input_type -> api.v0alpha.CollectSecureFormFieldReq
-	108, // 86: api.v0alpha.Acd.ResetSecureFormField:input_type -> api.v0alpha.ResetSecureFormFieldReq
-	110, // 87: api.v0alpha.Acd.AcceptSecureFormField:input_type -> api.v0alpha.AcceptSecureFormFieldReq
-	112, // 88: api.v0alpha.Acd.ProcessSecureForm:input_type -> api.v0alpha.ProcessSecureFormReq
-	114, // 89: api.v0alpha.Acd.FinishSecureFormHandling:input_type -> api.v0alpha.FinishSecureFormHandlingReq
-	116, // 90: api.v0alpha.Acd.PopulateWorkflowFields:input_type -> api.v0alpha.PopulateWorkflowFieldsReq
-	118, // 91: api.v0alpha.Acd.ValidateField:input_type -> api.v0alpha.ValidateFieldReq
-	1,   // 92: api.v0alpha.Acd.AgentGetStatusStream:output_type -> api.v0alpha.AgentGetStatusReply
-	1,   // 93: api.v0alpha.Acd.AgentGetStatus:output_type -> api.v0alpha.AgentGetStatusReply
-	3,   // 94: api.v0alpha.Acd.AgentGetConnectedParty:output_type -> api.v0alpha.AgentGetConnectedPartyReply
-	5,   // 95: api.v0alpha.Acd.ManagerAgentGetConnectedParty:output_type -> api.v0alpha.ManagerAgentGetConnectedPartyReply
-	7,   // 96: api.v0alpha.Acd.AgentIntercom:output_type -> api.v0alpha.AgentIntercomReply
-	9,   // 97: api.v0alpha.Acd.AgentIntercomAccept:output_type -> api.v0alpha.AgentIntercomAcceptReply
-	11,  // 98: api.v0alpha.Acd.AgentIntercomReject:output_type -> api.v0alpha.AgentIntercomRejectReply
-	13,  // 99: api.v0alpha.Acd.AgentIntercomCancel:output_type -> api.v0alpha.AgentIntercomCancelReply
-	15,  // 100: api.v0alpha.Acd.DialManualPrepare:output_type -> api.v0alpha.DialManualPrepareReply
-	17,  // 101: api.v0alpha.Acd.DialManualCancel:output_type -> api.v0alpha.DialManualCancelReply
-	19,  // 102: api.v0alpha.Acd.DialPreviewPrepare:output_type -> api.v0alpha.DialPreviewPrepareReply
-	21,  // 103: api.v0alpha.Acd.AgentPause:output_type -> api.v0alpha.AgentPauseReply
-	23,  // 104: api.v0alpha.Acd.AgentSetReady:output_type -> api.v0alpha.AgentSetReadyReply
-	25,  // 105: api.v0alpha.Acd.AgentGUIBusy:output_type -> api.v0alpha.AgentGUIBusyReply
-	29,  // 106: api.v0alpha.Acd.ReportAgentSessionEvent:output_type -> api.v0alpha.AgentSessionEventRes
-	31,  // 107: api.v0alpha.Acd.CallerRequeue:output_type -> api.v0alpha.CallerRequeueReply
-	27,  // 108: api.v0alpha.Acd.AgentDisconnect:output_type -> api.v0alpha.AgentDisconnectReply
-	35,  // 109: api.v0alpha.Acd.TransferWarmToOutboundCancel:output_type -> api.v0alpha.TransferWarmToOutboundCancelReply
-	33,  // 110: api.v0alpha.Acd.TransferWarmToAgentCancel:output_type -> api.v0alpha.TransferWarmToAgentCancelReply
-	39,  // 111: api.v0alpha.Acd.TransferWarmToOutboundApprove:output_type -> api.v0alpha.TransferWarmToOutboundApproveReply
-	37,  // 112: api.v0alpha.Acd.TransferWarmToAgentApprove:output_type -> api.v0alpha.TransferWarmToAgentApproveReply
-	41,  // 113: api.v0alpha.Acd.CallerSendToVoicemail:output_type -> api.v0alpha.CallerSendToVoicemailReply
-	43,  // 114: api.v0alpha.Acd.AgentInviteTransferCallerToConference:output_type -> api.v0alpha.AgentInviteTransferCallerToConferenceReply
-	45,  // 115: api.v0alpha.Acd.AgentMonitorCalls:output_type -> api.v0alpha.AgentMonitorCallsReply
-	47,  // 116: api.v0alpha.Acd.TransferColdToOutbound:output_type -> api.v0alpha.TransferColdToOutboundReply
-	49,  // 117: api.v0alpha.Acd.TransferColdToAgent:output_type -> api.v0alpha.TransferColdToAgentReply
-	51,  // 118: api.v0alpha.Acd.TransferWarmToOutboundStart:output_type -> api.v0alpha.TransferWarmToOutboundStartReply
-	53,  // 119: api.v0alpha.Acd.CreateWarmOutboundTransferMember:output_type -> api.v0alpha.CreateWarmOutboundTransferMemberReply
-	55,  // 120: api.v0alpha.Acd.RemoveTransferMember:output_type -> api.v0alpha.RemoveTransferMemberReply
-	57,  // 121: api.v0alpha.Acd.TransferWarmToAgentStart:output_type -> api.v0alpha.TransferWarmToAgentStartReply
-	59,  // 122: api.v0alpha.Acd.AgentGetCallFromHold:output_type -> api.v0alpha.AgentGetCallFromHoldReply
-	61,  // 123: api.v0alpha.Acd.AgentGetSpecificCallFromHold:output_type -> api.v0alpha.AgentGetSpecificCallFromHoldReply
-	66,  // 124: api.v0alpha.Acd.ACDGetAllAgentsStatuses:output_type -> api.v0alpha.ACDGetAllAgentsStatusesReply
-	63,  // 125: api.v0alpha.Acd.AgentPutCallOnHold:output_type -> api.v0alpha.AgentPutCallOnHoldReply
-	68,  // 126: api.v0alpha.Acd.AgentReceiveMessage:output_type -> api.v0alpha.AgentReceiveMessageReply
-	72,  // 127: api.v0alpha.Acd.AgentPBXApproveCall:output_type -> api.v0alpha.AgentPBXApproveCallReply
-	70,  // 128: api.v0alpha.Acd.AgentPBXRejectCall:output_type -> api.v0alpha.AgentPBXRejectCallReply
-	74,  // 129: api.v0alpha.Acd.GetCallerLostPeer:output_type -> api.v0alpha.GetCallerLostPeerReply
-	76,  // 130: api.v0alpha.Acd.CallerGetRawEvent:output_type -> api.v0alpha.CallerGetRawEventReply
-	79,  // 131: api.v0alpha.Acd.PeerAgentWithCaller:output_type -> api.v0alpha.PeerAgentWithCallerReply
-	81,  // 132: api.v0alpha.Acd.HoldTransferMember:output_type -> api.v0alpha.HoldTransferMemberRes
-	83,  // 133: api.v0alpha.Acd.UnholdTransferMember:output_type -> api.v0alpha.UnholdTransferMemberRes
-	85,  // 134: api.v0alpha.Acd.GetAgentCallCounts:output_type -> api.v0alpha.GetAgentCallCountsRes
-	87,  // 135: api.v0alpha.Acd.WarmCallerTransferStart:output_type -> api.v0alpha.WarmCallerTransferStartRes
-	89,  // 136: api.v0alpha.Acd.WarmCallerTransferCancel:output_type -> api.v0alpha.WarmCallerTransferCancelRes
-	91,  // 137: api.v0alpha.Acd.WarmCallerTransferApprove:output_type -> api.v0alpha.WarmCallerTransferApproveRes
-	93,  // 138: api.v0alpha.Acd.PlaySoundboardEntity:output_type -> api.v0alpha.PlaySoundboardEntityRes
-	95,  // 139: api.v0alpha.Acd.StopSoundboardEntity:output_type -> api.v0alpha.StopSoundboardEntityRes
-	97,  // 140: api.v0alpha.Acd.UpdateAgentSkills:output_type -> api.v0alpha.UpdateAgentSkillsReply
-	99,  // 141: api.v0alpha.Acd.PlayDTMF:output_type -> api.v0alpha.PlayDTMFReply
-	101, // 142: api.v0alpha.Acd.AgentMute:output_type -> api.v0alpha.AgentMuteReply
-	103, // 143: api.v0alpha.Acd.AgentUnmute:output_type -> api.v0alpha.AgentUnmuteReply
-	105, // 144: api.v0alpha.Acd.StartSecureForm:output_type -> api.v0alpha.StartSecureFormRes
-	107, // 145: api.v0alpha.Acd.CollectSecureFormField:output_type -> api.v0alpha.CollectSecureFormFieldRes
-	109, // 146: api.v0alpha.Acd.ResetSecureFormField:output_type -> api.v0alpha.ResetSecureFormFieldRes
-	111, // 147: api.v0alpha.Acd.AcceptSecureFormField:output_type -> api.v0alpha.AcceptSecureFormFieldRes
-	113, // 148: api.v0alpha.Acd.ProcessSecureForm:output_type -> api.v0alpha.ProcessSecureFormRes
-	115, // 149: api.v0alpha.Acd.FinishSecureFormHandling:output_type -> api.v0alpha.FinishSecureFormHandlingRes
-	117, // 150: api.v0alpha.Acd.PopulateWorkflowFields:output_type -> api.v0alpha.PopulateWorkflowFieldsRes
-	119, // 151: api.v0alpha.Acd.ValidateField:output_type -> api.v0alpha.ValidateFieldRes
-	92,  // [92:152] is the sub-list for method output_type
-	32,  // [32:92] is the sub-list for method input_type
-	32,  // [32:32] is the sub-list for extension type_name
-	32,  // [32:32] is the sub-list for extension extendee
-	0,   // [0:32] is the sub-list for field type_name
+	125, // 15: api.v0alpha.CallerEvent.skills:type_name -> api.v0alpha.CallerEvent.SkillsEntry
+	126, // 16: api.v0alpha.CallerEvent.allSkills:type_name -> api.v0alpha.CallerEvent.AllSkillsEntry
+	134, // 17: api.v0alpha.PeerAgentWithCallerRequest.call_type:type_name -> api.commons.CallType.Enum
+	134, // 18: api.v0alpha.WarmCallerTransferStartReq.call_type:type_name -> api.commons.CallType.Enum
+	127, // 19: api.v0alpha.UpdateAgentSkillsRequest.skills:type_name -> api.v0alpha.UpdateAgentSkillsRequest.SkillsEntry
+	138, // 20: api.v0alpha.PlayDTMFRequest.dtmf_digits:type_name -> api.commons.DTMFDigit
+	128, // 21: api.v0alpha.ProcessSecureFormReq.values:type_name -> api.v0alpha.ProcessSecureFormReq.ValuesEntry
+	129, // 22: api.v0alpha.ProcessSecureFormRes.data:type_name -> api.v0alpha.ProcessSecureFormRes.DataEntry
+	130, // 23: api.v0alpha.FinishSecureFormHandlingReq.data:type_name -> api.v0alpha.FinishSecureFormHandlingReq.DataEntry
+	134, // 24: api.v0alpha.PopulateWorkflowFieldsReq.call_type:type_name -> api.commons.CallType.Enum
+	139, // 25: api.v0alpha.PopulateWorkflowFieldsReq.field_definitions:type_name -> api.commons.integrations.FieldDefinition
+	131, // 26: api.v0alpha.PopulateWorkflowFieldsRes.values:type_name -> api.v0alpha.PopulateWorkflowFieldsRes.ValuesEntry
+	140, // 27: api.v0alpha.ValidateFieldReq.validation_type:type_name -> api.commons.integrations.Validation
+	122, // 28: api.v0alpha.ListAgentsVoiceStatusesReply.agent_details:type_name -> api.v0alpha.AgentVoiceStatusDetails
+	132, // 29: api.v0alpha.AgentVoiceStatusDetails.status_desc:type_name -> api.commons.AgentStatus.Enum
+	141, // 30: api.v0alpha.ProcessSecureFormReq.ValuesEntry.value:type_name -> api.v1alpha1.integrations.Value
+	141, // 31: api.v0alpha.ProcessSecureFormRes.DataEntry.value:type_name -> api.v1alpha1.integrations.Value
+	141, // 32: api.v0alpha.FinishSecureFormHandlingReq.DataEntry.value:type_name -> api.v1alpha1.integrations.Value
+	141, // 33: api.v0alpha.PopulateWorkflowFieldsRes.ValuesEntry.value:type_name -> api.v1alpha1.integrations.Value
+	0,   // 34: api.v0alpha.Acd.AgentGetStatusStream:input_type -> api.v0alpha.AgentGetStatusRequest
+	0,   // 35: api.v0alpha.Acd.AgentGetStatus:input_type -> api.v0alpha.AgentGetStatusRequest
+	2,   // 36: api.v0alpha.Acd.AgentGetConnectedParty:input_type -> api.v0alpha.AgentGetConnectedPartyRequest
+	4,   // 37: api.v0alpha.Acd.ManagerAgentGetConnectedParty:input_type -> api.v0alpha.ManagerAgentGetConnectedPartyRequest
+	6,   // 38: api.v0alpha.Acd.AgentIntercom:input_type -> api.v0alpha.AgentIntercomRequest
+	8,   // 39: api.v0alpha.Acd.AgentIntercomAccept:input_type -> api.v0alpha.AgentIntercomAcceptRequest
+	10,  // 40: api.v0alpha.Acd.AgentIntercomReject:input_type -> api.v0alpha.AgentIntercomRejectRequest
+	12,  // 41: api.v0alpha.Acd.AgentIntercomCancel:input_type -> api.v0alpha.AgentIntercomCancelRequest
+	14,  // 42: api.v0alpha.Acd.DialManualPrepare:input_type -> api.v0alpha.DialManualPrepareRequest
+	16,  // 43: api.v0alpha.Acd.DialManualCancel:input_type -> api.v0alpha.DialManualCancelRequest
+	18,  // 44: api.v0alpha.Acd.DialPreviewPrepare:input_type -> api.v0alpha.DialPreviewPrepareRequest
+	20,  // 45: api.v0alpha.Acd.AgentPause:input_type -> api.v0alpha.AgentPauseRequest
+	22,  // 46: api.v0alpha.Acd.AgentSetReady:input_type -> api.v0alpha.AgentSetReadyRequest
+	24,  // 47: api.v0alpha.Acd.AgentGUIBusy:input_type -> api.v0alpha.AgentGUIBusyRequest
+	28,  // 48: api.v0alpha.Acd.ReportAgentSessionEvent:input_type -> api.v0alpha.AgentSessionEventReq
+	30,  // 49: api.v0alpha.Acd.CallerRequeue:input_type -> api.v0alpha.CallerRequeueRequest
+	26,  // 50: api.v0alpha.Acd.AgentDisconnect:input_type -> api.v0alpha.AgentDisconnectRequest
+	34,  // 51: api.v0alpha.Acd.TransferWarmToOutboundCancel:input_type -> api.v0alpha.TransferWarmToOutboundCancelRequest
+	32,  // 52: api.v0alpha.Acd.TransferWarmToAgentCancel:input_type -> api.v0alpha.TransferWarmToAgentCancelRequest
+	38,  // 53: api.v0alpha.Acd.TransferWarmToOutboundApprove:input_type -> api.v0alpha.TransferWarmToOutboundApproveRequest
+	36,  // 54: api.v0alpha.Acd.TransferWarmToAgentApprove:input_type -> api.v0alpha.TransferWarmToAgentApproveRequest
+	40,  // 55: api.v0alpha.Acd.CallerSendToVoicemail:input_type -> api.v0alpha.CallerSendToVoicemailRequest
+	42,  // 56: api.v0alpha.Acd.AgentInviteTransferCallerToConference:input_type -> api.v0alpha.AgentInviteTransferCallerToConferenceRequest
+	44,  // 57: api.v0alpha.Acd.AgentMonitorCalls:input_type -> api.v0alpha.AgentMonitorCallsRequest
+	46,  // 58: api.v0alpha.Acd.TransferColdToOutbound:input_type -> api.v0alpha.TransferColdToOutboundRequest
+	48,  // 59: api.v0alpha.Acd.TransferColdToAgent:input_type -> api.v0alpha.TransferColdToAgentRequest
+	50,  // 60: api.v0alpha.Acd.TransferWarmToOutboundStart:input_type -> api.v0alpha.TransferWarmToOutboundStartRequest
+	52,  // 61: api.v0alpha.Acd.CreateWarmOutboundTransferMember:input_type -> api.v0alpha.CreateWarmOutboundTransferMemberRequest
+	54,  // 62: api.v0alpha.Acd.RemoveTransferMember:input_type -> api.v0alpha.RemoveTransferMemberRequest
+	56,  // 63: api.v0alpha.Acd.TransferWarmToAgentStart:input_type -> api.v0alpha.TransferWarmToAgentStartRequest
+	58,  // 64: api.v0alpha.Acd.AgentGetCallFromHold:input_type -> api.v0alpha.AgentGetCallFromHoldRequest
+	60,  // 65: api.v0alpha.Acd.AgentGetSpecificCallFromHold:input_type -> api.v0alpha.AgentGetSpecificCallFromHoldRequest
+	64,  // 66: api.v0alpha.Acd.ACDGetAllAgentsStatuses:input_type -> api.v0alpha.ACDGetAllAgentsStatusesRequest
+	62,  // 67: api.v0alpha.Acd.AgentPutCallOnHold:input_type -> api.v0alpha.AgentPutCallOnHoldRequest
+	67,  // 68: api.v0alpha.Acd.AgentReceiveMessage:input_type -> api.v0alpha.AgentReceiveMessageRequest
+	71,  // 69: api.v0alpha.Acd.AgentPBXApproveCall:input_type -> api.v0alpha.AgentPBXApproveCallRequest
+	69,  // 70: api.v0alpha.Acd.AgentPBXRejectCall:input_type -> api.v0alpha.AgentPBXRejectCallRequest
+	73,  // 71: api.v0alpha.Acd.GetCallerLostPeer:input_type -> api.v0alpha.GetCallerLostPeerRequest
+	75,  // 72: api.v0alpha.Acd.CallerGetRawEvent:input_type -> api.v0alpha.CallerGetRawEventRequest
+	78,  // 73: api.v0alpha.Acd.PeerAgentWithCaller:input_type -> api.v0alpha.PeerAgentWithCallerRequest
+	80,  // 74: api.v0alpha.Acd.HoldTransferMember:input_type -> api.v0alpha.HoldTransferMemberReq
+	82,  // 75: api.v0alpha.Acd.UnholdTransferMember:input_type -> api.v0alpha.UnholdTransferMemberReq
+	84,  // 76: api.v0alpha.Acd.GetAgentCallCounts:input_type -> api.v0alpha.GetAgentCallCountsReq
+	86,  // 77: api.v0alpha.Acd.WarmCallerTransferStart:input_type -> api.v0alpha.WarmCallerTransferStartReq
+	88,  // 78: api.v0alpha.Acd.WarmCallerTransferCancel:input_type -> api.v0alpha.WarmCallerTransferCancelReq
+	90,  // 79: api.v0alpha.Acd.WarmCallerTransferApprove:input_type -> api.v0alpha.WarmCallerTransferApproveReq
+	92,  // 80: api.v0alpha.Acd.PlaySoundboardEntity:input_type -> api.v0alpha.PlaySoundboardEntityReq
+	94,  // 81: api.v0alpha.Acd.StopSoundboardEntity:input_type -> api.v0alpha.StopSoundboardEntityReq
+	96,  // 82: api.v0alpha.Acd.UpdateAgentSkills:input_type -> api.v0alpha.UpdateAgentSkillsRequest
+	98,  // 83: api.v0alpha.Acd.PlayDTMF:input_type -> api.v0alpha.PlayDTMFRequest
+	100, // 84: api.v0alpha.Acd.AgentMute:input_type -> api.v0alpha.AgentMuteRequest
+	102, // 85: api.v0alpha.Acd.AgentUnmute:input_type -> api.v0alpha.AgentUnmuteRequest
+	104, // 86: api.v0alpha.Acd.StartSecureForm:input_type -> api.v0alpha.StartSecureFormReq
+	106, // 87: api.v0alpha.Acd.CollectSecureFormField:input_type -> api.v0alpha.CollectSecureFormFieldReq
+	108, // 88: api.v0alpha.Acd.ResetSecureFormField:input_type -> api.v0alpha.ResetSecureFormFieldReq
+	110, // 89: api.v0alpha.Acd.AcceptSecureFormField:input_type -> api.v0alpha.AcceptSecureFormFieldReq
+	112, // 90: api.v0alpha.Acd.ProcessSecureForm:input_type -> api.v0alpha.ProcessSecureFormReq
+	114, // 91: api.v0alpha.Acd.FinishSecureFormHandling:input_type -> api.v0alpha.FinishSecureFormHandlingReq
+	116, // 92: api.v0alpha.Acd.PopulateWorkflowFields:input_type -> api.v0alpha.PopulateWorkflowFieldsReq
+	118, // 93: api.v0alpha.Acd.ValidateField:input_type -> api.v0alpha.ValidateFieldReq
+	120, // 94: api.v0alpha.Acd.ListAgentsVoiceStatuses:input_type -> api.v0alpha.ListAgentsVoiceStatusesRequest
+	1,   // 95: api.v0alpha.Acd.AgentGetStatusStream:output_type -> api.v0alpha.AgentGetStatusReply
+	1,   // 96: api.v0alpha.Acd.AgentGetStatus:output_type -> api.v0alpha.AgentGetStatusReply
+	3,   // 97: api.v0alpha.Acd.AgentGetConnectedParty:output_type -> api.v0alpha.AgentGetConnectedPartyReply
+	5,   // 98: api.v0alpha.Acd.ManagerAgentGetConnectedParty:output_type -> api.v0alpha.ManagerAgentGetConnectedPartyReply
+	7,   // 99: api.v0alpha.Acd.AgentIntercom:output_type -> api.v0alpha.AgentIntercomReply
+	9,   // 100: api.v0alpha.Acd.AgentIntercomAccept:output_type -> api.v0alpha.AgentIntercomAcceptReply
+	11,  // 101: api.v0alpha.Acd.AgentIntercomReject:output_type -> api.v0alpha.AgentIntercomRejectReply
+	13,  // 102: api.v0alpha.Acd.AgentIntercomCancel:output_type -> api.v0alpha.AgentIntercomCancelReply
+	15,  // 103: api.v0alpha.Acd.DialManualPrepare:output_type -> api.v0alpha.DialManualPrepareReply
+	17,  // 104: api.v0alpha.Acd.DialManualCancel:output_type -> api.v0alpha.DialManualCancelReply
+	19,  // 105: api.v0alpha.Acd.DialPreviewPrepare:output_type -> api.v0alpha.DialPreviewPrepareReply
+	21,  // 106: api.v0alpha.Acd.AgentPause:output_type -> api.v0alpha.AgentPauseReply
+	23,  // 107: api.v0alpha.Acd.AgentSetReady:output_type -> api.v0alpha.AgentSetReadyReply
+	25,  // 108: api.v0alpha.Acd.AgentGUIBusy:output_type -> api.v0alpha.AgentGUIBusyReply
+	29,  // 109: api.v0alpha.Acd.ReportAgentSessionEvent:output_type -> api.v0alpha.AgentSessionEventRes
+	31,  // 110: api.v0alpha.Acd.CallerRequeue:output_type -> api.v0alpha.CallerRequeueReply
+	27,  // 111: api.v0alpha.Acd.AgentDisconnect:output_type -> api.v0alpha.AgentDisconnectReply
+	35,  // 112: api.v0alpha.Acd.TransferWarmToOutboundCancel:output_type -> api.v0alpha.TransferWarmToOutboundCancelReply
+	33,  // 113: api.v0alpha.Acd.TransferWarmToAgentCancel:output_type -> api.v0alpha.TransferWarmToAgentCancelReply
+	39,  // 114: api.v0alpha.Acd.TransferWarmToOutboundApprove:output_type -> api.v0alpha.TransferWarmToOutboundApproveReply
+	37,  // 115: api.v0alpha.Acd.TransferWarmToAgentApprove:output_type -> api.v0alpha.TransferWarmToAgentApproveReply
+	41,  // 116: api.v0alpha.Acd.CallerSendToVoicemail:output_type -> api.v0alpha.CallerSendToVoicemailReply
+	43,  // 117: api.v0alpha.Acd.AgentInviteTransferCallerToConference:output_type -> api.v0alpha.AgentInviteTransferCallerToConferenceReply
+	45,  // 118: api.v0alpha.Acd.AgentMonitorCalls:output_type -> api.v0alpha.AgentMonitorCallsReply
+	47,  // 119: api.v0alpha.Acd.TransferColdToOutbound:output_type -> api.v0alpha.TransferColdToOutboundReply
+	49,  // 120: api.v0alpha.Acd.TransferColdToAgent:output_type -> api.v0alpha.TransferColdToAgentReply
+	51,  // 121: api.v0alpha.Acd.TransferWarmToOutboundStart:output_type -> api.v0alpha.TransferWarmToOutboundStartReply
+	53,  // 122: api.v0alpha.Acd.CreateWarmOutboundTransferMember:output_type -> api.v0alpha.CreateWarmOutboundTransferMemberReply
+	55,  // 123: api.v0alpha.Acd.RemoveTransferMember:output_type -> api.v0alpha.RemoveTransferMemberReply
+	57,  // 124: api.v0alpha.Acd.TransferWarmToAgentStart:output_type -> api.v0alpha.TransferWarmToAgentStartReply
+	59,  // 125: api.v0alpha.Acd.AgentGetCallFromHold:output_type -> api.v0alpha.AgentGetCallFromHoldReply
+	61,  // 126: api.v0alpha.Acd.AgentGetSpecificCallFromHold:output_type -> api.v0alpha.AgentGetSpecificCallFromHoldReply
+	66,  // 127: api.v0alpha.Acd.ACDGetAllAgentsStatuses:output_type -> api.v0alpha.ACDGetAllAgentsStatusesReply
+	63,  // 128: api.v0alpha.Acd.AgentPutCallOnHold:output_type -> api.v0alpha.AgentPutCallOnHoldReply
+	68,  // 129: api.v0alpha.Acd.AgentReceiveMessage:output_type -> api.v0alpha.AgentReceiveMessageReply
+	72,  // 130: api.v0alpha.Acd.AgentPBXApproveCall:output_type -> api.v0alpha.AgentPBXApproveCallReply
+	70,  // 131: api.v0alpha.Acd.AgentPBXRejectCall:output_type -> api.v0alpha.AgentPBXRejectCallReply
+	74,  // 132: api.v0alpha.Acd.GetCallerLostPeer:output_type -> api.v0alpha.GetCallerLostPeerReply
+	76,  // 133: api.v0alpha.Acd.CallerGetRawEvent:output_type -> api.v0alpha.CallerGetRawEventReply
+	79,  // 134: api.v0alpha.Acd.PeerAgentWithCaller:output_type -> api.v0alpha.PeerAgentWithCallerReply
+	81,  // 135: api.v0alpha.Acd.HoldTransferMember:output_type -> api.v0alpha.HoldTransferMemberRes
+	83,  // 136: api.v0alpha.Acd.UnholdTransferMember:output_type -> api.v0alpha.UnholdTransferMemberRes
+	85,  // 137: api.v0alpha.Acd.GetAgentCallCounts:output_type -> api.v0alpha.GetAgentCallCountsRes
+	87,  // 138: api.v0alpha.Acd.WarmCallerTransferStart:output_type -> api.v0alpha.WarmCallerTransferStartRes
+	89,  // 139: api.v0alpha.Acd.WarmCallerTransferCancel:output_type -> api.v0alpha.WarmCallerTransferCancelRes
+	91,  // 140: api.v0alpha.Acd.WarmCallerTransferApprove:output_type -> api.v0alpha.WarmCallerTransferApproveRes
+	93,  // 141: api.v0alpha.Acd.PlaySoundboardEntity:output_type -> api.v0alpha.PlaySoundboardEntityRes
+	95,  // 142: api.v0alpha.Acd.StopSoundboardEntity:output_type -> api.v0alpha.StopSoundboardEntityRes
+	97,  // 143: api.v0alpha.Acd.UpdateAgentSkills:output_type -> api.v0alpha.UpdateAgentSkillsReply
+	99,  // 144: api.v0alpha.Acd.PlayDTMF:output_type -> api.v0alpha.PlayDTMFReply
+	101, // 145: api.v0alpha.Acd.AgentMute:output_type -> api.v0alpha.AgentMuteReply
+	103, // 146: api.v0alpha.Acd.AgentUnmute:output_type -> api.v0alpha.AgentUnmuteReply
+	105, // 147: api.v0alpha.Acd.StartSecureForm:output_type -> api.v0alpha.StartSecureFormRes
+	107, // 148: api.v0alpha.Acd.CollectSecureFormField:output_type -> api.v0alpha.CollectSecureFormFieldRes
+	109, // 149: api.v0alpha.Acd.ResetSecureFormField:output_type -> api.v0alpha.ResetSecureFormFieldRes
+	111, // 150: api.v0alpha.Acd.AcceptSecureFormField:output_type -> api.v0alpha.AcceptSecureFormFieldRes
+	113, // 151: api.v0alpha.Acd.ProcessSecureForm:output_type -> api.v0alpha.ProcessSecureFormRes
+	115, // 152: api.v0alpha.Acd.FinishSecureFormHandling:output_type -> api.v0alpha.FinishSecureFormHandlingRes
+	117, // 153: api.v0alpha.Acd.PopulateWorkflowFields:output_type -> api.v0alpha.PopulateWorkflowFieldsRes
+	119, // 154: api.v0alpha.Acd.ValidateField:output_type -> api.v0alpha.ValidateFieldRes
+	121, // 155: api.v0alpha.Acd.ListAgentsVoiceStatuses:output_type -> api.v0alpha.ListAgentsVoiceStatusesReply
+	95,  // [95:156] is the sub-list for method output_type
+	34,  // [34:95] is the sub-list for method input_type
+	34,  // [34:34] is the sub-list for extension type_name
+	34,  // [34:34] is the sub-list for extension extendee
+	0,   // [0:34] is the sub-list for field type_name
 }
 
 func init() { file_api_v0alpha_acd_proto_init() }
@@ -6542,7 +6791,7 @@ func file_api_v0alpha_acd_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_v0alpha_acd_proto_rawDesc), len(file_api_v0alpha_acd_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   129,
+			NumMessages:   132,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

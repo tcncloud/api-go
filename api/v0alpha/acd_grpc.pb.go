@@ -93,6 +93,7 @@ const (
 	Acd_FinishSecureFormHandling_FullMethodName              = "/api.v0alpha.Acd/FinishSecureFormHandling"
 	Acd_PopulateWorkflowFields_FullMethodName                = "/api.v0alpha.Acd/PopulateWorkflowFields"
 	Acd_ValidateField_FullMethodName                         = "/api.v0alpha.Acd/ValidateField"
+	Acd_ListAgentsVoiceStatuses_FullMethodName               = "/api.v0alpha.Acd/ListAgentsVoiceStatuses"
 )
 
 // AcdClient is the client API for Acd service.
@@ -174,6 +175,7 @@ type AcdClient interface {
 	FinishSecureFormHandling(ctx context.Context, in *FinishSecureFormHandlingReq, opts ...grpc.CallOption) (*FinishSecureFormHandlingRes, error)
 	PopulateWorkflowFields(ctx context.Context, in *PopulateWorkflowFieldsReq, opts ...grpc.CallOption) (*PopulateWorkflowFieldsRes, error)
 	ValidateField(ctx context.Context, in *ValidateFieldReq, opts ...grpc.CallOption) (*ValidateFieldRes, error)
+	ListAgentsVoiceStatuses(ctx context.Context, in *ListAgentsVoiceStatusesRequest, opts ...grpc.CallOption) (*ListAgentsVoiceStatusesReply, error)
 }
 
 type acdClient struct {
@@ -830,6 +832,16 @@ func (c *acdClient) ValidateField(ctx context.Context, in *ValidateFieldReq, opt
 	return out, nil
 }
 
+func (c *acdClient) ListAgentsVoiceStatuses(ctx context.Context, in *ListAgentsVoiceStatusesRequest, opts ...grpc.CallOption) (*ListAgentsVoiceStatusesReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListAgentsVoiceStatusesReply)
+	err := c.cc.Invoke(ctx, Acd_ListAgentsVoiceStatuses_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AcdServer is the server API for Acd service.
 // All implementations must embed UnimplementedAcdServer
 // for forward compatibility.
@@ -909,6 +921,7 @@ type AcdServer interface {
 	FinishSecureFormHandling(context.Context, *FinishSecureFormHandlingReq) (*FinishSecureFormHandlingRes, error)
 	PopulateWorkflowFields(context.Context, *PopulateWorkflowFieldsReq) (*PopulateWorkflowFieldsRes, error)
 	ValidateField(context.Context, *ValidateFieldReq) (*ValidateFieldRes, error)
+	ListAgentsVoiceStatuses(context.Context, *ListAgentsVoiceStatusesRequest) (*ListAgentsVoiceStatusesReply, error)
 	mustEmbedUnimplementedAcdServer()
 }
 
@@ -1098,6 +1111,9 @@ func (UnimplementedAcdServer) PopulateWorkflowFields(context.Context, *PopulateW
 }
 func (UnimplementedAcdServer) ValidateField(context.Context, *ValidateFieldReq) (*ValidateFieldRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ValidateField not implemented")
+}
+func (UnimplementedAcdServer) ListAgentsVoiceStatuses(context.Context, *ListAgentsVoiceStatusesRequest) (*ListAgentsVoiceStatusesReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListAgentsVoiceStatuses not implemented")
 }
 func (UnimplementedAcdServer) mustEmbedUnimplementedAcdServer() {}
 func (UnimplementedAcdServer) testEmbeddedByValue()             {}
@@ -2206,6 +2222,24 @@ func _Acd_ValidateField_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Acd_ListAgentsVoiceStatuses_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListAgentsVoiceStatusesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AcdServer).ListAgentsVoiceStatuses(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Acd_ListAgentsVoiceStatuses_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AcdServer).ListAgentsVoiceStatuses(ctx, req.(*ListAgentsVoiceStatusesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Acd_ServiceDesc is the grpc.ServiceDesc for Acd service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -2444,6 +2478,10 @@ var Acd_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ValidateField",
 			Handler:    _Acd_ValidateField_Handler,
+		},
+		{
+			MethodName: "ListAgentsVoiceStatuses",
+			Handler:    _Acd_ListAgentsVoiceStatuses_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
