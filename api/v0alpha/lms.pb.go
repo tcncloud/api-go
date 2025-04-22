@@ -11645,8 +11645,10 @@ type ContactManagerSink struct {
 	// Deprecated: Marked as deprecated in api/v0alpha/lms.proto.
 	UserId            string                            `protobuf:"bytes,10,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	DeDuplicationInfo *ContactManagerSink_DeDuplication `protobuf:"bytes,11,opt,name=de_duplication_info,json=deDuplicationInfo,proto3" json:"de_duplication_info,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	// Country code for the Phone Number
+	CountryCode   string `protobuf:"bytes,12,opt,name=country_code,json=countryCode,proto3" json:"country_code,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ContactManagerSink) Reset() {
@@ -11735,6 +11737,13 @@ func (x *ContactManagerSink) GetDeDuplicationInfo() *ContactManagerSink_DeDuplic
 		return x.DeDuplicationInfo
 	}
 	return nil
+}
+
+func (x *ContactManagerSink) GetCountryCode() string {
+	if x != nil {
+		return x.CountryCode
+	}
+	return ""
 }
 
 type SumProcess struct {
@@ -15658,8 +15667,10 @@ type ContactManagementEnrichment struct {
 	InsertIfMissing bool `protobuf:"varint,5,opt,name=insert_if_missing,json=insertIfMissing,proto3" json:"insert_if_missing,omitempty"`
 	// search criteria enum
 	SearchFieldType ContactManagementEnrichment_SearchFieldType `protobuf:"varint,6,opt,name=search_field_type,json=searchFieldType,proto3,enum=api.v0alpha.ContactManagementEnrichment_SearchFieldType" json:"search_field_type,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	// Country code for the Phone Number
+	CountryCode   string `protobuf:"bytes,7,opt,name=country_code,json=countryCode,proto3" json:"country_code,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ContactManagementEnrichment) Reset() {
@@ -15733,6 +15744,13 @@ func (x *ContactManagementEnrichment) GetSearchFieldType() ContactManagementEnri
 		return x.SearchFieldType
 	}
 	return ContactManagementEnrichment_NONE
+}
+
+func (x *ContactManagementEnrichment) GetCountryCode() string {
+	if x != nil {
+		return x.CountryCode
+	}
+	return ""
 }
 
 // TicketExchangeSink
@@ -19391,7 +19409,7 @@ const file_api_v0alpha_lms_proto_rawDesc = "" +
 	"\vstart_index\x18# \x03(\v2(.api.v0alpha.ReshapeAction.Extract.IndexR\n" +
 	"startIndex\x12E\n" +
 	"\tend_index\x18$ \x03(\v2(.api.v0alpha.ReshapeAction.Extract.IndexR\bendIndexB\b\n" +
-	"\x06action\"\xd6\x05\n" +
+	"\x06action\"\xf9\x05\n" +
 	"\x12ContactManagerSink\x12\x1d\n" +
 	"\n" +
 	"project_id\x18\x02 \x01(\tR\tprojectId\x12*\n" +
@@ -19402,7 +19420,8 @@ const file_api_v0alpha_lms_proto_rawDesc = "" +
 	"\blifetime\x18\t \x01(\v2\x19.google.protobuf.DurationR\blifetime\x12\x1b\n" +
 	"\auser_id\x18\n" +
 	" \x01(\tB\x02\x18\x01R\x06userId\x12]\n" +
-	"\x13de_duplication_info\x18\v \x01(\v2-.api.v0alpha.ContactManagerSink.DeDuplicationR\x11deDuplicationInfo\x1a\xc9\x01\n" +
+	"\x13de_duplication_info\x18\v \x01(\v2-.api.v0alpha.ContactManagerSink.DeDuplicationR\x11deDuplicationInfo\x12!\n" +
+	"\fcountry_code\x18\f \x01(\tR\vcountryCode\x1a\xc9\x01\n" +
 	"\rDeDuplication\x12U\n" +
 	"\n" +
 	"field_type\x18\x01 \x01(\x0e26.api.v0alpha.ContactManagerSink.DeDuplicationFieldTypeR\tfieldType\x12a\n" +
@@ -19729,7 +19748,7 @@ const file_api_v0alpha_lms_proto_rawDesc = "" +
 	"\rcron_interval\x18\x02 \x01(\tR\fcronInterval\x12\x1a\n" +
 	"\bdisabled\x18\x03 \x01(\bR\bdisabled\x12\x1a\n" +
 	"\btimezone\x18\x04 \x01(\tR\btimezone\x12)\n" +
-	"\x10filename_pattern\x18\x05 \x01(\tR\x0ffilenamePattern\"\xb7\x03\n" +
+	"\x10filename_pattern\x18\x05 \x01(\tR\x0ffilenamePattern\"\xda\x03\n" +
 	"\x1bContactManagementEnrichment\x12\x1d\n" +
 	"\n" +
 	"project_id\x18\x01 \x01(\tR\tprojectId\x12*\n" +
@@ -19737,7 +19756,8 @@ const file_api_v0alpha_lms_proto_rawDesc = "" +
 	"\x06fields\x18\x03 \x03(\tR\x06fields\x12a\n" +
 	"\x13de_duplication_info\x18\x04 \x01(\v2-.api.v0alpha.ContactManagerSink.DeDuplicationB\x02\x18\x01R\x11deDuplicationInfo\x12*\n" +
 	"\x11insert_if_missing\x18\x05 \x01(\bR\x0finsertIfMissing\x12d\n" +
-	"\x11search_field_type\x18\x06 \x01(\x0e28.api.v0alpha.ContactManagementEnrichment.SearchFieldTypeR\x0fsearchFieldType\"@\n" +
+	"\x11search_field_type\x18\x06 \x01(\x0e28.api.v0alpha.ContactManagementEnrichment.SearchFieldTypeR\x0fsearchFieldType\x12!\n" +
+	"\fcountry_code\x18\a \x01(\tR\vcountryCode\"@\n" +
 	"\x0fSearchFieldType\x12\b\n" +
 	"\x04NONE\x10\x00\x12\x10\n" +
 	"\fPHONE_NUMBER\x10\x01\x12\x11\n" +
