@@ -885,9 +885,11 @@ type AddContactEntryRequest struct {
 	// List of entries of a given contact
 	//
 	// Deprecated: Marked as deprecated in api/v1alpha1/contactmanager/contactmanager.proto.
-	Entry         []*Entry        `protobuf:"bytes,2,rep,name=entry,proto3" json:"entry,omitempty"`
-	ProjectSid    int64           `protobuf:"varint,3,opt,name=project_sid,json=projectSid,proto3" json:"project_sid,omitempty"`
-	Field         []*ContactField `protobuf:"bytes,4,rep,name=field,proto3" json:"field,omitempty"`
+	Entry      []*Entry        `protobuf:"bytes,2,rep,name=entry,proto3" json:"entry,omitempty"`
+	ProjectSid int64           `protobuf:"varint,3,opt,name=project_sid,json=projectSid,proto3" json:"project_sid,omitempty"`
+	Field      []*ContactField `protobuf:"bytes,4,rep,name=field,proto3" json:"field,omitempty"`
+	// Country code for the Phone Number
+	CountryCode   string `protobuf:"bytes,5,opt,name=country_code,json=countryCode,proto3" json:"country_code,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -949,6 +951,13 @@ func (x *AddContactEntryRequest) GetField() []*ContactField {
 		return x.Field
 	}
 	return nil
+}
+
+func (x *AddContactEntryRequest) GetCountryCode() string {
+	if x != nil {
+		return x.CountryCode
+	}
+	return ""
 }
 
 // Deprecated: Marked as deprecated in api/v1alpha1/contactmanager/contactmanager.proto.
@@ -1760,13 +1769,14 @@ const file_api_v1alpha1_contactmanager_contactmanager_proto_rawDesc = "" +
 	"\x19contact_manager_list_name\x18\v \x01(\tR\x16contactManagerListName\"B\n" +
 	"\x16ContactManagerEntryVal\x12\x12\n" +
 	"\x04type\x18\x01 \x01(\tR\x04type\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value\"\x98\x02\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value\"\xbb\x02\n" +
 	"\x16AddContactEntryRequest\x12>\n" +
 	"\x17contact_manager_list_id\x18\x01 \x01(\x03B\x020\x01H\x00R\x14contactManagerListId\x88\x01\x01\x12<\n" +
 	"\x05entry\x18\x02 \x03(\v2\".api.v1alpha1.contactmanager.EntryB\x02\x18\x01R\x05entry\x12#\n" +
 	"\vproject_sid\x18\x03 \x01(\x03B\x020\x01R\n" +
 	"projectSid\x12?\n" +
-	"\x05field\x18\x04 \x03(\v2).api.v1alpha1.contactmanager.ContactFieldR\x05fieldB\x1a\n" +
+	"\x05field\x18\x04 \x03(\v2).api.v1alpha1.contactmanager.ContactFieldR\x05field\x12!\n" +
+	"\fcountry_code\x18\x05 \x01(\tR\vcountryCodeB\x1a\n" +
 	"\x18_contact_manager_list_id\"I\n" +
 	"\x05Entry\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x14\n" +
