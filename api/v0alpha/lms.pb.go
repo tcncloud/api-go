@@ -16904,11 +16904,17 @@ func (x *ReshapeAction_Convert) GetDefaultValue() *RecordFieldProto {
 }
 
 // Represents a message for division operation.
+//
+// Deprecated: Marked as deprecated in api/v0alpha/lms.proto.
 type ReshapeAction_Divide struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The default value to be used if no other value is provided.
+	// The default value to be used if no other value is provided. DEPRECATED.
+	//
+	// Deprecated: Marked as deprecated in api/v0alpha/lms.proto.
 	DefaultValue float64 `protobuf:"fixed64,1,opt,name=default_value,json=defaultValue,proto3" json:"default_value,omitempty"`
 	// The divisor to be used for the division operation.
+	//
+	// Deprecated: Marked as deprecated in api/v0alpha/lms.proto.
 	Divisor       float64 `protobuf:"fixed64,2,opt,name=divisor,proto3" json:"divisor,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -16944,6 +16950,7 @@ func (*ReshapeAction_Divide) Descriptor() ([]byte, []int) {
 	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{134, 7}
 }
 
+// Deprecated: Marked as deprecated in api/v0alpha/lms.proto.
 func (x *ReshapeAction_Divide) GetDefaultValue() float64 {
 	if x != nil {
 		return x.DefaultValue
@@ -16951,6 +16958,7 @@ func (x *ReshapeAction_Divide) GetDefaultValue() float64 {
 	return 0
 }
 
+// Deprecated: Marked as deprecated in api/v0alpha/lms.proto.
 func (x *ReshapeAction_Divide) GetDivisor() float64 {
 	if x != nil {
 		return x.Divisor
@@ -16958,12 +16966,108 @@ func (x *ReshapeAction_Divide) GetDivisor() float64 {
 	return 0
 }
 
+// divide a field value by a static value. Set field value to be the result.
+type ReshapeAction_DivideValue struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Value         float64                `protobuf:"fixed64,1,opt,name=value,proto3" json:"value,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ReshapeAction_DivideValue) Reset() {
+	*x = ReshapeAction_DivideValue{}
+	mi := &file_api_v0alpha_lms_proto_msgTypes[224]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ReshapeAction_DivideValue) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ReshapeAction_DivideValue) ProtoMessage() {}
+
+func (x *ReshapeAction_DivideValue) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v0alpha_lms_proto_msgTypes[224]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ReshapeAction_DivideValue.ProtoReflect.Descriptor instead.
+func (*ReshapeAction_DivideValue) Descriptor() ([]byte, []int) {
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{134, 8}
+}
+
+func (x *ReshapeAction_DivideValue) GetValue() float64 {
+	if x != nil {
+		return x.Value
+	}
+	return 0
+}
+
+// Divide two fields values. Set field value to be the result.
+type ReshapeAction_DivideField struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	OtherField    *FieldIndex            `protobuf:"bytes,12,opt,name=other_field,json=otherField,proto3" json:"other_field,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ReshapeAction_DivideField) Reset() {
+	*x = ReshapeAction_DivideField{}
+	mi := &file_api_v0alpha_lms_proto_msgTypes[225]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ReshapeAction_DivideField) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ReshapeAction_DivideField) ProtoMessage() {}
+
+func (x *ReshapeAction_DivideField) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v0alpha_lms_proto_msgTypes[225]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ReshapeAction_DivideField.ProtoReflect.Descriptor instead.
+func (*ReshapeAction_DivideField) Descriptor() ([]byte, []int) {
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{134, 9}
+}
+
+func (x *ReshapeAction_DivideField) GetOtherField() *FieldIndex {
+	if x != nil {
+		return x.OtherField
+	}
+	return nil
+}
+
 // Represents a message for multiplication operation.
+//
+// Deprecated: Marked as deprecated in api/v0alpha/lms.proto.
 type ReshapeAction_Multiply struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The default value to be used if no other value is provided.
+	// The default value to be used if no other value is provided. DEPRECATED.
+	//
+	// Deprecated: Marked as deprecated in api/v0alpha/lms.proto.
 	DefaultValue float64 `protobuf:"fixed64,1,opt,name=default_value,json=defaultValue,proto3" json:"default_value,omitempty"`
 	// The multiplier to be used for the multiplication operation.
+	//
+	// Deprecated: Marked as deprecated in api/v0alpha/lms.proto.
 	Multiplier    float64 `protobuf:"fixed64,2,opt,name=multiplier,proto3" json:"multiplier,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -16971,7 +17075,7 @@ type ReshapeAction_Multiply struct {
 
 func (x *ReshapeAction_Multiply) Reset() {
 	*x = ReshapeAction_Multiply{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[224]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[226]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -16983,7 +17087,7 @@ func (x *ReshapeAction_Multiply) String() string {
 func (*ReshapeAction_Multiply) ProtoMessage() {}
 
 func (x *ReshapeAction_Multiply) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[224]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[226]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -16996,9 +17100,10 @@ func (x *ReshapeAction_Multiply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_Multiply.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_Multiply) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{134, 8}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{134, 10}
 }
 
+// Deprecated: Marked as deprecated in api/v0alpha/lms.proto.
 func (x *ReshapeAction_Multiply) GetDefaultValue() float64 {
 	if x != nil {
 		return x.DefaultValue
@@ -17006,6 +17111,7 @@ func (x *ReshapeAction_Multiply) GetDefaultValue() float64 {
 	return 0
 }
 
+// Deprecated: Marked as deprecated in api/v0alpha/lms.proto.
 func (x *ReshapeAction_Multiply) GetMultiplier() float64 {
 	if x != nil {
 		return x.Multiplier
@@ -17013,12 +17119,108 @@ func (x *ReshapeAction_Multiply) GetMultiplier() float64 {
 	return 0
 }
 
+// Multiply a field value by a static value. Set field value to be the result.
+type ReshapeAction_MultiplyValue struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Value         float64                `protobuf:"fixed64,1,opt,name=value,proto3" json:"value,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ReshapeAction_MultiplyValue) Reset() {
+	*x = ReshapeAction_MultiplyValue{}
+	mi := &file_api_v0alpha_lms_proto_msgTypes[227]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ReshapeAction_MultiplyValue) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ReshapeAction_MultiplyValue) ProtoMessage() {}
+
+func (x *ReshapeAction_MultiplyValue) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v0alpha_lms_proto_msgTypes[227]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ReshapeAction_MultiplyValue.ProtoReflect.Descriptor instead.
+func (*ReshapeAction_MultiplyValue) Descriptor() ([]byte, []int) {
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{134, 11}
+}
+
+func (x *ReshapeAction_MultiplyValue) GetValue() float64 {
+	if x != nil {
+		return x.Value
+	}
+	return 0
+}
+
+// Multiply two fields values. Set field value to be the result.
+type ReshapeAction_MultiplyField struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	OtherField    *FieldIndex            `protobuf:"bytes,12,opt,name=other_field,json=otherField,proto3" json:"other_field,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ReshapeAction_MultiplyField) Reset() {
+	*x = ReshapeAction_MultiplyField{}
+	mi := &file_api_v0alpha_lms_proto_msgTypes[228]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ReshapeAction_MultiplyField) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ReshapeAction_MultiplyField) ProtoMessage() {}
+
+func (x *ReshapeAction_MultiplyField) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v0alpha_lms_proto_msgTypes[228]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ReshapeAction_MultiplyField.ProtoReflect.Descriptor instead.
+func (*ReshapeAction_MultiplyField) Descriptor() ([]byte, []int) {
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{134, 12}
+}
+
+func (x *ReshapeAction_MultiplyField) GetOtherField() *FieldIndex {
+	if x != nil {
+		return x.OtherField
+	}
+	return nil
+}
+
 // Represents a message for modulo operation.
+//
+// Deprecated: Marked as deprecated in api/v0alpha/lms.proto.
 type ReshapeAction_Modulo struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The default value to be used if no other value is provided.
+	// The default value to be used if no other value is provided. DEPRECATED.
+	//
+	// Deprecated: Marked as deprecated in api/v0alpha/lms.proto.
 	DefaultValue int32 `protobuf:"varint,1,opt,name=default_value,json=defaultValue,proto3" json:"default_value,omitempty"`
-	// The modulus to be used for the modulo operation.
+	// The modulus to be used for the modulo operation. DEPRECATED.
+	//
+	// Deprecated: Marked as deprecated in api/v0alpha/lms.proto.
 	Modulus       int32 `protobuf:"varint,2,opt,name=modulus,proto3" json:"modulus,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -17026,7 +17228,7 @@ type ReshapeAction_Modulo struct {
 
 func (x *ReshapeAction_Modulo) Reset() {
 	*x = ReshapeAction_Modulo{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[225]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[229]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17038,7 +17240,7 @@ func (x *ReshapeAction_Modulo) String() string {
 func (*ReshapeAction_Modulo) ProtoMessage() {}
 
 func (x *ReshapeAction_Modulo) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[225]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[229]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17051,9 +17253,10 @@ func (x *ReshapeAction_Modulo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_Modulo.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_Modulo) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{134, 9}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{134, 13}
 }
 
+// Deprecated: Marked as deprecated in api/v0alpha/lms.proto.
 func (x *ReshapeAction_Modulo) GetDefaultValue() int32 {
 	if x != nil {
 		return x.DefaultValue
@@ -17061,11 +17264,102 @@ func (x *ReshapeAction_Modulo) GetDefaultValue() int32 {
 	return 0
 }
 
+// Deprecated: Marked as deprecated in api/v0alpha/lms.proto.
 func (x *ReshapeAction_Modulo) GetModulus() int32 {
 	if x != nil {
 		return x.Modulus
 	}
 	return 0
+}
+
+// Modulo a field value by a static value. Set field value to be the result.
+type ReshapeAction_ModuloValue struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Value         float64                `protobuf:"fixed64,1,opt,name=value,proto3" json:"value,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ReshapeAction_ModuloValue) Reset() {
+	*x = ReshapeAction_ModuloValue{}
+	mi := &file_api_v0alpha_lms_proto_msgTypes[230]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ReshapeAction_ModuloValue) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ReshapeAction_ModuloValue) ProtoMessage() {}
+
+func (x *ReshapeAction_ModuloValue) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v0alpha_lms_proto_msgTypes[230]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ReshapeAction_ModuloValue.ProtoReflect.Descriptor instead.
+func (*ReshapeAction_ModuloValue) Descriptor() ([]byte, []int) {
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{134, 14}
+}
+
+func (x *ReshapeAction_ModuloValue) GetValue() float64 {
+	if x != nil {
+		return x.Value
+	}
+	return 0
+}
+
+// Modulo two fields values. Set field value to be the result.
+type ReshapeAction_ModuloField struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	OtherField    *FieldIndex            `protobuf:"bytes,12,opt,name=other_field,json=otherField,proto3" json:"other_field,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ReshapeAction_ModuloField) Reset() {
+	*x = ReshapeAction_ModuloField{}
+	mi := &file_api_v0alpha_lms_proto_msgTypes[231]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ReshapeAction_ModuloField) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ReshapeAction_ModuloField) ProtoMessage() {}
+
+func (x *ReshapeAction_ModuloField) ProtoReflect() protoreflect.Message {
+	mi := &file_api_v0alpha_lms_proto_msgTypes[231]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ReshapeAction_ModuloField.ProtoReflect.Descriptor instead.
+func (*ReshapeAction_ModuloField) Descriptor() ([]byte, []int) {
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{134, 15}
+}
+
+func (x *ReshapeAction_ModuloField) GetOtherField() *FieldIndex {
+	if x != nil {
+		return x.OtherField
+	}
+	return nil
 }
 
 // will remove "field" from the record
@@ -17077,7 +17371,7 @@ type ReshapeAction_RemoveField struct {
 
 func (x *ReshapeAction_RemoveField) Reset() {
 	*x = ReshapeAction_RemoveField{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[226]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[232]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17089,7 +17383,7 @@ func (x *ReshapeAction_RemoveField) String() string {
 func (*ReshapeAction_RemoveField) ProtoMessage() {}
 
 func (x *ReshapeAction_RemoveField) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[226]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[232]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17102,7 +17396,7 @@ func (x *ReshapeAction_RemoveField) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_RemoveField.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_RemoveField) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{134, 10}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{134, 16}
 }
 
 // will add "field" to the record with default starting value
@@ -17116,7 +17410,7 @@ type ReshapeAction_AddNewField struct {
 
 func (x *ReshapeAction_AddNewField) Reset() {
 	*x = ReshapeAction_AddNewField{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[227]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[233]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17128,7 +17422,7 @@ func (x *ReshapeAction_AddNewField) String() string {
 func (*ReshapeAction_AddNewField) ProtoMessage() {}
 
 func (x *ReshapeAction_AddNewField) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[227]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[233]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17141,7 +17435,7 @@ func (x *ReshapeAction_AddNewField) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_AddNewField.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_AddNewField) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{134, 11}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{134, 17}
 }
 
 func (x *ReshapeAction_AddNewField) GetStartingValue() *RecordFieldProto {
@@ -17162,7 +17456,7 @@ type ReshapeAction_AddNewFieldFromField struct {
 
 func (x *ReshapeAction_AddNewFieldFromField) Reset() {
 	*x = ReshapeAction_AddNewFieldFromField{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[228]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[234]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17174,7 +17468,7 @@ func (x *ReshapeAction_AddNewFieldFromField) String() string {
 func (*ReshapeAction_AddNewFieldFromField) ProtoMessage() {}
 
 func (x *ReshapeAction_AddNewFieldFromField) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[228]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[234]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17187,7 +17481,7 @@ func (x *ReshapeAction_AddNewFieldFromField) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use ReshapeAction_AddNewFieldFromField.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_AddNewFieldFromField) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{134, 12}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{134, 18}
 }
 
 func (x *ReshapeAction_AddNewFieldFromField) GetName() string {
@@ -17213,7 +17507,7 @@ type ReshapeAction_ChangeCurrencyType struct {
 
 func (x *ReshapeAction_ChangeCurrencyType) Reset() {
 	*x = ReshapeAction_ChangeCurrencyType{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[229]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[235]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17225,7 +17519,7 @@ func (x *ReshapeAction_ChangeCurrencyType) String() string {
 func (*ReshapeAction_ChangeCurrencyType) ProtoMessage() {}
 
 func (x *ReshapeAction_ChangeCurrencyType) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[229]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[235]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17238,7 +17532,7 @@ func (x *ReshapeAction_ChangeCurrencyType) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_ChangeCurrencyType.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_ChangeCurrencyType) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{134, 13}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{134, 19}
 }
 
 // will set field with the value
@@ -17251,7 +17545,7 @@ type ReshapeAction_SetFieldValue struct {
 
 func (x *ReshapeAction_SetFieldValue) Reset() {
 	*x = ReshapeAction_SetFieldValue{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[230]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[236]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17263,7 +17557,7 @@ func (x *ReshapeAction_SetFieldValue) String() string {
 func (*ReshapeAction_SetFieldValue) ProtoMessage() {}
 
 func (x *ReshapeAction_SetFieldValue) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[230]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[236]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17276,7 +17570,7 @@ func (x *ReshapeAction_SetFieldValue) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_SetFieldValue.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_SetFieldValue) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{134, 14}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{134, 20}
 }
 
 func (x *ReshapeAction_SetFieldValue) GetValue() *RecordFieldProto {
@@ -17297,7 +17591,7 @@ type ReshapeAction_SetFieldFromField struct {
 
 func (x *ReshapeAction_SetFieldFromField) Reset() {
 	*x = ReshapeAction_SetFieldFromField{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[231]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[237]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17309,7 +17603,7 @@ func (x *ReshapeAction_SetFieldFromField) String() string {
 func (*ReshapeAction_SetFieldFromField) ProtoMessage() {}
 
 func (x *ReshapeAction_SetFieldFromField) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[231]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[237]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17322,7 +17616,7 @@ func (x *ReshapeAction_SetFieldFromField) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_SetFieldFromField.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_SetFieldFromField) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{134, 15}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{134, 21}
 }
 
 func (x *ReshapeAction_SetFieldFromField) GetName() string {
@@ -17350,7 +17644,7 @@ type ReshapeAction_Merge struct {
 
 func (x *ReshapeAction_Merge) Reset() {
 	*x = ReshapeAction_Merge{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[232]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[238]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17362,7 +17656,7 @@ func (x *ReshapeAction_Merge) String() string {
 func (*ReshapeAction_Merge) ProtoMessage() {}
 
 func (x *ReshapeAction_Merge) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[232]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[238]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17375,7 +17669,7 @@ func (x *ReshapeAction_Merge) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_Merge.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_Merge) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{134, 16}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{134, 22}
 }
 
 func (x *ReshapeAction_Merge) GetData() []*ReshapeAction_Merge_FieldOrVal {
@@ -17401,7 +17695,7 @@ type ReshapeAction_Pad struct {
 
 func (x *ReshapeAction_Pad) Reset() {
 	*x = ReshapeAction_Pad{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[233]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[239]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17413,7 +17707,7 @@ func (x *ReshapeAction_Pad) String() string {
 func (*ReshapeAction_Pad) ProtoMessage() {}
 
 func (x *ReshapeAction_Pad) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[233]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[239]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17426,7 +17720,7 @@ func (x *ReshapeAction_Pad) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_Pad.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_Pad) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{134, 17}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{134, 23}
 }
 
 func (x *ReshapeAction_Pad) GetChar() string {
@@ -17468,7 +17762,7 @@ type ReshapeAction_Trim struct {
 
 func (x *ReshapeAction_Trim) Reset() {
 	*x = ReshapeAction_Trim{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[234]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[240]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17480,7 +17774,7 @@ func (x *ReshapeAction_Trim) String() string {
 func (*ReshapeAction_Trim) ProtoMessage() {}
 
 func (x *ReshapeAction_Trim) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[234]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[240]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17493,7 +17787,7 @@ func (x *ReshapeAction_Trim) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_Trim.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_Trim) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{134, 18}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{134, 24}
 }
 
 func (x *ReshapeAction_Trim) GetOpt() isReshapeAction_Trim_Opt {
@@ -17582,7 +17876,7 @@ type ReshapeAction_Extract struct {
 
 func (x *ReshapeAction_Extract) Reset() {
 	*x = ReshapeAction_Extract{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[235]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[241]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17594,7 +17888,7 @@ func (x *ReshapeAction_Extract) String() string {
 func (*ReshapeAction_Extract) ProtoMessage() {}
 
 func (x *ReshapeAction_Extract) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[235]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[241]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17607,7 +17901,7 @@ func (x *ReshapeAction_Extract) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_Extract.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_Extract) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{134, 19}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{134, 25}
 }
 
 func (x *ReshapeAction_Extract) GetParts() []*ReshapeAction_Extract_Slice {
@@ -17630,7 +17924,7 @@ type ReshapeAction_Merge_FieldOrVal struct {
 
 func (x *ReshapeAction_Merge_FieldOrVal) Reset() {
 	*x = ReshapeAction_Merge_FieldOrVal{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[236]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[242]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17642,7 +17936,7 @@ func (x *ReshapeAction_Merge_FieldOrVal) String() string {
 func (*ReshapeAction_Merge_FieldOrVal) ProtoMessage() {}
 
 func (x *ReshapeAction_Merge_FieldOrVal) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[236]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[242]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17655,7 +17949,7 @@ func (x *ReshapeAction_Merge_FieldOrVal) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_Merge_FieldOrVal.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_Merge_FieldOrVal) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{134, 16, 0}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{134, 22, 0}
 }
 
 func (x *ReshapeAction_Merge_FieldOrVal) GetVal() isReshapeAction_Merge_FieldOrVal_Val {
@@ -17713,7 +18007,7 @@ type ReshapeAction_Extract_Index struct {
 
 func (x *ReshapeAction_Extract_Index) Reset() {
 	*x = ReshapeAction_Extract_Index{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[237]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[243]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17725,7 +18019,7 @@ func (x *ReshapeAction_Extract_Index) String() string {
 func (*ReshapeAction_Extract_Index) ProtoMessage() {}
 
 func (x *ReshapeAction_Extract_Index) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[237]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[243]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17738,7 +18032,7 @@ func (x *ReshapeAction_Extract_Index) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_Extract_Index.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_Extract_Index) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{134, 19, 0}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{134, 25, 0}
 }
 
 func (x *ReshapeAction_Extract_Index) GetVal() isReshapeAction_Extract_Index_Val {
@@ -17805,7 +18099,7 @@ type ReshapeAction_Extract_Slice struct {
 
 func (x *ReshapeAction_Extract_Slice) Reset() {
 	*x = ReshapeAction_Extract_Slice{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[238]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[244]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17817,7 +18111,7 @@ func (x *ReshapeAction_Extract_Slice) String() string {
 func (*ReshapeAction_Extract_Slice) ProtoMessage() {}
 
 func (x *ReshapeAction_Extract_Slice) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[238]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[244]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -17830,7 +18124,7 @@ func (x *ReshapeAction_Extract_Slice) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReshapeAction_Extract_Slice.ProtoReflect.Descriptor instead.
 func (*ReshapeAction_Extract_Slice) Descriptor() ([]byte, []int) {
-	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{134, 19, 1}
+	return file_api_v0alpha_lms_proto_rawDescGZIP(), []int{134, 25, 1}
 }
 
 func (x *ReshapeAction_Extract_Slice) GetStartIsExclusive() bool {
@@ -17872,7 +18166,7 @@ type ContactManagerSink_DeDuplication struct {
 
 func (x *ContactManagerSink_DeDuplication) Reset() {
 	*x = ContactManagerSink_DeDuplication{}
-	mi := &file_api_v0alpha_lms_proto_msgTypes[239]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[245]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -17884,7 +18178,7 @@ func (x *ContactManagerSink_DeDuplication) String() string {
 func (*ContactManagerSink_DeDuplication) ProtoMessage() {}
 
 func (x *ContactManagerSink_DeDuplication) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v0alpha_lms_proto_msgTypes[239]
+	mi := &file_api_v0alpha_lms_proto_msgTypes[245]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -18867,7 +19161,7 @@ const file_api_v0alpha_lms_proto_rawDesc = "" +
 	"\x0fskip_first_line\x18\x0e \x01(\bR\rskipFirstLine\x12\"\n" +
 	"\rjson_dot_path\x18\x0f \x01(\tR\vjsonDotPath\"F\n" +
 	"\x0eReshapeProcess\x124\n" +
-	"\aactions\x18\x01 \x03(\v2\x1a.api.v0alpha.ReshapeActionR\aactions\"\xc8\x1c\n" +
+	"\aactions\x18\x01 \x03(\v2\x1a.api.v0alpha.ReshapeActionR\aactions\"\xba\x1f\n" +
 	"\rReshapeAction\x12\x14\n" +
 	"\x05field\x18\x13 \x01(\tR\x05field\x12@\n" +
 	"\rmatching_type\x18\x14 \x01(\x0e2\x17.api.commons.RecordTypeB\x02\x18\x01R\fmatchingType\x12:\n" +
@@ -18914,18 +19208,33 @@ const file_api_v0alpha_lms_proto_rawDesc = "" +
 	"\aConvert\x125\n" +
 	"\anewType\x18\x11 \x01(\x0e2\x17.api.commons.RecordTypeB\x02\x18\x01R\anewType\x12/\n" +
 	"\tnew_field\x18\x12 \x01(\v2\x12.api.v0alpha.FieldR\bnewField\x12B\n" +
-	"\rdefault_value\x18\x13 \x01(\v2\x1d.api.v0alpha.RecordFieldProtoR\fdefaultValue\x1aG\n" +
-	"\x06Divide\x12#\n" +
-	"\rdefault_value\x18\x01 \x01(\x01R\fdefaultValue\x12\x18\n" +
-	"\adivisor\x18\x02 \x01(\x01R\adivisor\x1aO\n" +
-	"\bMultiply\x12#\n" +
-	"\rdefault_value\x18\x01 \x01(\x01R\fdefaultValue\x12\x1e\n" +
+	"\rdefault_value\x18\x13 \x01(\v2\x1d.api.v0alpha.RecordFieldProtoR\fdefaultValue\x1aS\n" +
+	"\x06Divide\x12'\n" +
+	"\rdefault_value\x18\x01 \x01(\x01B\x02\x18\x01R\fdefaultValue\x12\x1c\n" +
+	"\adivisor\x18\x02 \x01(\x01B\x02\x18\x01R\adivisor:\x02\x18\x01\x1a#\n" +
+	"\vDivideValue\x12\x14\n" +
+	"\x05value\x18\x01 \x01(\x01R\x05value\x1aG\n" +
+	"\vDivideField\x128\n" +
+	"\vother_field\x18\f \x01(\v2\x17.api.v0alpha.FieldIndexR\n" +
+	"otherField\x1a[\n" +
+	"\bMultiply\x12'\n" +
+	"\rdefault_value\x18\x01 \x01(\x01B\x02\x18\x01R\fdefaultValue\x12\"\n" +
 	"\n" +
-	"multiplier\x18\x02 \x01(\x01R\n" +
-	"multiplier\x1aG\n" +
-	"\x06Modulo\x12#\n" +
-	"\rdefault_value\x18\x01 \x01(\x05R\fdefaultValue\x12\x18\n" +
-	"\amodulus\x18\x02 \x01(\x05R\amodulus\x1a\r\n" +
+	"multiplier\x18\x02 \x01(\x01B\x02\x18\x01R\n" +
+	"multiplier:\x02\x18\x01\x1a%\n" +
+	"\rMultiplyValue\x12\x14\n" +
+	"\x05value\x18\x01 \x01(\x01R\x05value\x1aI\n" +
+	"\rMultiplyField\x128\n" +
+	"\vother_field\x18\f \x01(\v2\x17.api.v0alpha.FieldIndexR\n" +
+	"otherField\x1aS\n" +
+	"\x06Modulo\x12'\n" +
+	"\rdefault_value\x18\x01 \x01(\x05B\x02\x18\x01R\fdefaultValue\x12\x1c\n" +
+	"\amodulus\x18\x02 \x01(\x05B\x02\x18\x01R\amodulus:\x02\x18\x01\x1a#\n" +
+	"\vModuloValue\x12\x14\n" +
+	"\x05value\x18\x01 \x01(\x01R\x05value\x1aG\n" +
+	"\vModuloField\x128\n" +
+	"\vother_field\x18\f \x01(\v2\x17.api.v0alpha.FieldIndexR\n" +
+	"otherField\x1a\r\n" +
 	"\vRemoveField\x1aS\n" +
 	"\vAddNewField\x12D\n" +
 	"\x0estarting_value\x18\x12 \x01(\v2\x1d.api.v0alpha.RecordFieldProtoR\rstartingValue\x1ad\n" +
@@ -19480,7 +19789,7 @@ func file_api_v0alpha_lms_proto_rawDescGZIP() []byte {
 }
 
 var file_api_v0alpha_lms_proto_enumTypes = make([]protoimpl.EnumInfo, 5)
-var file_api_v0alpha_lms_proto_msgTypes = make([]protoimpl.MessageInfo, 243)
+var file_api_v0alpha_lms_proto_msgTypes = make([]protoimpl.MessageInfo, 249)
 var file_api_v0alpha_lms_proto_goTypes = []any{
 	(TimeUnit)(0),       // 0: api.v0alpha.TimeUnit
 	(EpicEntityType)(0), // 1: api.v0alpha.EpicEntityType
@@ -19711,62 +20020,68 @@ var file_api_v0alpha_lms_proto_goTypes = []any{
 	(*ReshapeAction_SubtractField)(nil),        // 226: api.v0alpha.ReshapeAction.SubtractField
 	(*ReshapeAction_Convert)(nil),              // 227: api.v0alpha.ReshapeAction.Convert
 	(*ReshapeAction_Divide)(nil),               // 228: api.v0alpha.ReshapeAction.Divide
-	(*ReshapeAction_Multiply)(nil),             // 229: api.v0alpha.ReshapeAction.Multiply
-	(*ReshapeAction_Modulo)(nil),               // 230: api.v0alpha.ReshapeAction.Modulo
-	(*ReshapeAction_RemoveField)(nil),          // 231: api.v0alpha.ReshapeAction.RemoveField
-	(*ReshapeAction_AddNewField)(nil),          // 232: api.v0alpha.ReshapeAction.AddNewField
-	(*ReshapeAction_AddNewFieldFromField)(nil), // 233: api.v0alpha.ReshapeAction.AddNewFieldFromField
-	(*ReshapeAction_ChangeCurrencyType)(nil),   // 234: api.v0alpha.ReshapeAction.ChangeCurrencyType
-	(*ReshapeAction_SetFieldValue)(nil),        // 235: api.v0alpha.ReshapeAction.SetFieldValue
-	(*ReshapeAction_SetFieldFromField)(nil),    // 236: api.v0alpha.ReshapeAction.SetFieldFromField
-	(*ReshapeAction_Merge)(nil),                // 237: api.v0alpha.ReshapeAction.Merge
-	(*ReshapeAction_Pad)(nil),                  // 238: api.v0alpha.ReshapeAction.Pad
-	(*ReshapeAction_Trim)(nil),                 // 239: api.v0alpha.ReshapeAction.Trim
-	(*ReshapeAction_Extract)(nil),              // 240: api.v0alpha.ReshapeAction.Extract
-	(*ReshapeAction_Merge_FieldOrVal)(nil),     // 241: api.v0alpha.ReshapeAction.Merge.FieldOrVal
-	(*ReshapeAction_Extract_Index)(nil),        // 242: api.v0alpha.ReshapeAction.Extract.Index
-	(*ReshapeAction_Extract_Slice)(nil),        // 243: api.v0alpha.ReshapeAction.Extract.Slice
-	(*ContactManagerSink_DeDuplication)(nil),   // 244: api.v0alpha.ContactManagerSink.DeDuplication
-	nil,                                        // 245: api.v0alpha.RetypeCollectionReq.FieldTypesEntry
-	nil,                                        // 246: api.v0alpha.RuntimeValues.FileIdsEntry
-	nil,                                        // 247: api.v0alpha.RuntimeValues.PreliminaryVarsEntry
-	(*timestamppb.Timestamp)(nil),              // 248: google.protobuf.Timestamp
-	(commons.PipelineElementStatusType)(0),     // 249: api.commons.PipelineElementStatusType
-	(*wrapperspb.StringValue)(nil),             // 250: google.protobuf.StringValue
-	(commons.FieldType)(0),                     // 251: api.commons.FieldType
-	(commons.DateTimePrecision)(0),             // 252: api.commons.DateTimePrecision
-	(commons.FileFormat)(0),                    // 253: api.commons.FileFormat
-	(*commons.CommType)(nil),                   // 254: api.commons.CommType
-	(commons.RunType)(0),                       // 255: api.commons.RunType
-	(commons.ConsentActionType)(0),             // 256: api.commons.ConsentActionType
-	(commons.ContentType)(0),                   // 257: api.commons.ContentType
-	(commons.Channel)(0),                       // 258: api.commons.Channel
-	(*durationpb.Duration)(nil),                // 259: google.protobuf.Duration
-	(commons.HttpVerb)(0),                      // 260: api.commons.HttpVerb
-	(*commons.PaginationTerminator)(nil),       // 261: api.commons.PaginationTerminator
-	(*commons.FilePattern)(nil),                // 262: api.commons.FilePattern
-	(commons.EnrichmentType)(0),                // 263: api.commons.EnrichmentType
-	(commons.PrimarySource)(0),                 // 264: api.commons.PrimarySource
-	(commons.DedupKeyPolicy)(0),                // 265: api.commons.DedupKeyPolicy
-	(commons.ExportType)(0),                    // 266: api.commons.ExportType
-	(commons.ChainOperator)(0),                 // 267: api.commons.ChainOperator
-	(commons.DuplicatePolicyType)(0),           // 268: api.commons.DuplicatePolicyType
-	(commons.AbsentPolicyType)(0),              // 269: api.commons.AbsentPolicyType
-	(*commons.ConstructedFilename)(nil),        // 270: api.commons.ConstructedFilename
-	(commons.DialOrderType)(0),                 // 271: api.commons.DialOrderType
-	(commons.ComplianceListType)(0),            // 272: api.commons.ComplianceListType
-	(commons.DeDupActions)(0),                  // 273: api.commons.DeDupActions
-	(commons.SortOrder)(0),                     // 274: api.commons.SortOrder
-	(commons.RecordType)(0),                    // 275: api.commons.RecordType
-	(*commons.StringArraySql)(nil),             // 276: api.commons.StringArraySql
-	(*wrapperspb.Int64Value)(nil),              // 277: google.protobuf.Int64Value
-	(commons.EventState)(0),                    // 278: api.commons.EventState
-	(commons.CompareOperator)(0),               // 279: api.commons.CompareOperator
-	(*emptypb.Empty)(nil),                      // 280: google.protobuf.Empty
+	(*ReshapeAction_DivideValue)(nil),          // 229: api.v0alpha.ReshapeAction.DivideValue
+	(*ReshapeAction_DivideField)(nil),          // 230: api.v0alpha.ReshapeAction.DivideField
+	(*ReshapeAction_Multiply)(nil),             // 231: api.v0alpha.ReshapeAction.Multiply
+	(*ReshapeAction_MultiplyValue)(nil),        // 232: api.v0alpha.ReshapeAction.MultiplyValue
+	(*ReshapeAction_MultiplyField)(nil),        // 233: api.v0alpha.ReshapeAction.MultiplyField
+	(*ReshapeAction_Modulo)(nil),               // 234: api.v0alpha.ReshapeAction.Modulo
+	(*ReshapeAction_ModuloValue)(nil),          // 235: api.v0alpha.ReshapeAction.ModuloValue
+	(*ReshapeAction_ModuloField)(nil),          // 236: api.v0alpha.ReshapeAction.ModuloField
+	(*ReshapeAction_RemoveField)(nil),          // 237: api.v0alpha.ReshapeAction.RemoveField
+	(*ReshapeAction_AddNewField)(nil),          // 238: api.v0alpha.ReshapeAction.AddNewField
+	(*ReshapeAction_AddNewFieldFromField)(nil), // 239: api.v0alpha.ReshapeAction.AddNewFieldFromField
+	(*ReshapeAction_ChangeCurrencyType)(nil),   // 240: api.v0alpha.ReshapeAction.ChangeCurrencyType
+	(*ReshapeAction_SetFieldValue)(nil),        // 241: api.v0alpha.ReshapeAction.SetFieldValue
+	(*ReshapeAction_SetFieldFromField)(nil),    // 242: api.v0alpha.ReshapeAction.SetFieldFromField
+	(*ReshapeAction_Merge)(nil),                // 243: api.v0alpha.ReshapeAction.Merge
+	(*ReshapeAction_Pad)(nil),                  // 244: api.v0alpha.ReshapeAction.Pad
+	(*ReshapeAction_Trim)(nil),                 // 245: api.v0alpha.ReshapeAction.Trim
+	(*ReshapeAction_Extract)(nil),              // 246: api.v0alpha.ReshapeAction.Extract
+	(*ReshapeAction_Merge_FieldOrVal)(nil),     // 247: api.v0alpha.ReshapeAction.Merge.FieldOrVal
+	(*ReshapeAction_Extract_Index)(nil),        // 248: api.v0alpha.ReshapeAction.Extract.Index
+	(*ReshapeAction_Extract_Slice)(nil),        // 249: api.v0alpha.ReshapeAction.Extract.Slice
+	(*ContactManagerSink_DeDuplication)(nil),   // 250: api.v0alpha.ContactManagerSink.DeDuplication
+	nil,                                        // 251: api.v0alpha.RetypeCollectionReq.FieldTypesEntry
+	nil,                                        // 252: api.v0alpha.RuntimeValues.FileIdsEntry
+	nil,                                        // 253: api.v0alpha.RuntimeValues.PreliminaryVarsEntry
+	(*timestamppb.Timestamp)(nil),              // 254: google.protobuf.Timestamp
+	(commons.PipelineElementStatusType)(0),     // 255: api.commons.PipelineElementStatusType
+	(*wrapperspb.StringValue)(nil),             // 256: google.protobuf.StringValue
+	(commons.FieldType)(0),                     // 257: api.commons.FieldType
+	(commons.DateTimePrecision)(0),             // 258: api.commons.DateTimePrecision
+	(commons.FileFormat)(0),                    // 259: api.commons.FileFormat
+	(*commons.CommType)(nil),                   // 260: api.commons.CommType
+	(commons.RunType)(0),                       // 261: api.commons.RunType
+	(commons.ConsentActionType)(0),             // 262: api.commons.ConsentActionType
+	(commons.ContentType)(0),                   // 263: api.commons.ContentType
+	(commons.Channel)(0),                       // 264: api.commons.Channel
+	(*durationpb.Duration)(nil),                // 265: google.protobuf.Duration
+	(commons.HttpVerb)(0),                      // 266: api.commons.HttpVerb
+	(*commons.PaginationTerminator)(nil),       // 267: api.commons.PaginationTerminator
+	(*commons.FilePattern)(nil),                // 268: api.commons.FilePattern
+	(commons.EnrichmentType)(0),                // 269: api.commons.EnrichmentType
+	(commons.PrimarySource)(0),                 // 270: api.commons.PrimarySource
+	(commons.DedupKeyPolicy)(0),                // 271: api.commons.DedupKeyPolicy
+	(commons.ExportType)(0),                    // 272: api.commons.ExportType
+	(commons.ChainOperator)(0),                 // 273: api.commons.ChainOperator
+	(commons.DuplicatePolicyType)(0),           // 274: api.commons.DuplicatePolicyType
+	(commons.AbsentPolicyType)(0),              // 275: api.commons.AbsentPolicyType
+	(*commons.ConstructedFilename)(nil),        // 276: api.commons.ConstructedFilename
+	(commons.DialOrderType)(0),                 // 277: api.commons.DialOrderType
+	(commons.ComplianceListType)(0),            // 278: api.commons.ComplianceListType
+	(commons.DeDupActions)(0),                  // 279: api.commons.DeDupActions
+	(commons.SortOrder)(0),                     // 280: api.commons.SortOrder
+	(commons.RecordType)(0),                    // 281: api.commons.RecordType
+	(*commons.StringArraySql)(nil),             // 282: api.commons.StringArraySql
+	(*wrapperspb.Int64Value)(nil),              // 283: google.protobuf.Int64Value
+	(commons.EventState)(0),                    // 284: api.commons.EventState
+	(commons.CompareOperator)(0),               // 285: api.commons.CompareOperator
+	(*emptypb.Empty)(nil),                      // 286: google.protobuf.Empty
 }
 var file_api_v0alpha_lms_proto_depIdxs = []int32{
-	248, // 0: api.v0alpha.PipelineCanvasMetadata.created_date:type_name -> google.protobuf.Timestamp
-	248, // 1: api.v0alpha.PipelineCanvasMetadata.last_edited:type_name -> google.protobuf.Timestamp
+	254, // 0: api.v0alpha.PipelineCanvasMetadata.created_date:type_name -> google.protobuf.Timestamp
+	254, // 1: api.v0alpha.PipelineCanvasMetadata.last_edited:type_name -> google.protobuf.Timestamp
 	5,   // 2: api.v0alpha.PipelineCanvas.metadata:type_name -> api.v0alpha.PipelineCanvasMetadata
 	45,  // 3: api.v0alpha.PipelineCanvas.elements:type_name -> api.v0alpha.Element
 	5,   // 4: api.v0alpha.PipelineCanvasPreview.metadata:type_name -> api.v0alpha.PipelineCanvasMetadata
@@ -19787,38 +20102,38 @@ var file_api_v0alpha_lms_proto_depIdxs = []int32{
 	56,  // 19: api.v0alpha.ListFieldsForElementRes.fields:type_name -> api.v0alpha.Field
 	56,  // 20: api.v0alpha.ListAutocompleteFieldsRes.fields:type_name -> api.v0alpha.Field
 	74,  // 21: api.v0alpha.Element.transform:type_name -> api.v0alpha.Process
-	249, // 22: api.v0alpha.Element.last_status:type_name -> api.commons.PipelineElementStatusType
-	248, // 23: api.v0alpha.Element.created_date:type_name -> google.protobuf.Timestamp
-	248, // 24: api.v0alpha.Element.last_edited:type_name -> google.protobuf.Timestamp
+	255, // 22: api.v0alpha.Element.last_status:type_name -> api.commons.PipelineElementStatusType
+	254, // 23: api.v0alpha.Element.created_date:type_name -> google.protobuf.Timestamp
+	254, // 24: api.v0alpha.Element.last_edited:type_name -> google.protobuf.Timestamp
 	74,  // 25: api.v0alpha.PeekListReq.process:type_name -> api.v0alpha.Process
 	52,  // 26: api.v0alpha.PeekListRes.records:type_name -> api.v0alpha.RecordProto
 	143, // 27: api.v0alpha.PeekListRes.metrics:type_name -> api.v0alpha.ListMetrics
 	51,  // 28: api.v0alpha.GetHistoryRes.commits:type_name -> api.v0alpha.HistoryAndCount
 	74,  // 29: api.v0alpha.History.process:type_name -> api.v0alpha.Process
-	250, // 30: api.v0alpha.History.reason:type_name -> google.protobuf.StringValue
-	248, // 31: api.v0alpha.History.upload_ts:type_name -> google.protobuf.Timestamp
-	248, // 32: api.v0alpha.History.started_ts:type_name -> google.protobuf.Timestamp
-	248, // 33: api.v0alpha.History.finished_ts:type_name -> google.protobuf.Timestamp
+	256, // 30: api.v0alpha.History.reason:type_name -> google.protobuf.StringValue
+	254, // 31: api.v0alpha.History.upload_ts:type_name -> google.protobuf.Timestamp
+	254, // 32: api.v0alpha.History.started_ts:type_name -> google.protobuf.Timestamp
+	254, // 33: api.v0alpha.History.finished_ts:type_name -> google.protobuf.Timestamp
 	143, // 34: api.v0alpha.History.metrics:type_name -> api.v0alpha.ListMetrics
 	143, // 35: api.v0alpha.History.discard_metrics:type_name -> api.v0alpha.ListMetrics
 	74,  // 36: api.v0alpha.HistoryAndCount.process:type_name -> api.v0alpha.Process
-	250, // 37: api.v0alpha.HistoryAndCount.reason:type_name -> google.protobuf.StringValue
-	248, // 38: api.v0alpha.HistoryAndCount.upload_ts:type_name -> google.protobuf.Timestamp
-	248, // 39: api.v0alpha.HistoryAndCount.started_ts:type_name -> google.protobuf.Timestamp
-	248, // 40: api.v0alpha.HistoryAndCount.finished_ts:type_name -> google.protobuf.Timestamp
+	256, // 37: api.v0alpha.HistoryAndCount.reason:type_name -> google.protobuf.StringValue
+	254, // 38: api.v0alpha.HistoryAndCount.upload_ts:type_name -> google.protobuf.Timestamp
+	254, // 39: api.v0alpha.HistoryAndCount.started_ts:type_name -> google.protobuf.Timestamp
+	254, // 40: api.v0alpha.HistoryAndCount.finished_ts:type_name -> google.protobuf.Timestamp
 	143, // 41: api.v0alpha.HistoryAndCount.metrics:type_name -> api.v0alpha.ListMetrics
 	143, // 42: api.v0alpha.HistoryAndCount.discard_metrics:type_name -> api.v0alpha.ListMetrics
 	62,  // 43: api.v0alpha.RecordProto.fields:type_name -> api.v0alpha.RecordFieldProto
 	52,  // 44: api.v0alpha.RecordProtoPair.old:type_name -> api.v0alpha.RecordProto
 	52,  // 45: api.v0alpha.RecordProtoPair.new:type_name -> api.v0alpha.RecordProto
 	206, // 46: api.v0alpha.ProcessFields.fields:type_name -> api.v0alpha.ProcessFields.Field
-	251, // 47: api.v0alpha.Field.type:type_name -> api.commons.FieldType
-	248, // 48: api.v0alpha.Field.date_modified:type_name -> google.protobuf.Timestamp
+	257, // 47: api.v0alpha.Field.type:type_name -> api.commons.FieldType
+	254, // 48: api.v0alpha.Field.date_modified:type_name -> google.protobuf.Timestamp
 	58,  // 49: api.v0alpha.Field.metadata:type_name -> api.v0alpha.FieldMetadata
-	251, // 50: api.v0alpha.UpdateFieldReq.type:type_name -> api.commons.FieldType
-	248, // 51: api.v0alpha.UpdateFieldReq.date_modified:type_name -> google.protobuf.Timestamp
+	257, // 50: api.v0alpha.UpdateFieldReq.type:type_name -> api.commons.FieldType
+	254, // 51: api.v0alpha.UpdateFieldReq.date_modified:type_name -> google.protobuf.Timestamp
 	58,  // 52: api.v0alpha.UpdateFieldReq.metadata:type_name -> api.v0alpha.FieldMetadata
-	252, // 53: api.v0alpha.FieldMetadata.precision:type_name -> api.commons.DateTimePrecision
+	258, // 53: api.v0alpha.FieldMetadata.precision:type_name -> api.commons.DateTimePrecision
 	56,  // 54: api.v0alpha.Fields.fields:type_name -> api.v0alpha.Field
 	126, // 55: api.v0alpha.FieldIndex.datetime:type_name -> api.v0alpha.DateTimeModifier
 	123, // 56: api.v0alpha.RecordFieldProto.phone:type_name -> api.v0alpha.Phone
@@ -19832,11 +20147,11 @@ var file_api_v0alpha_lms_proto_depIdxs = []int32{
 	129, // 64: api.v0alpha.RecordFieldProto.enriched_phone:type_name -> api.v0alpha.EnrichedPhone
 	130, // 65: api.v0alpha.RecordFieldProto.enriched_zip:type_name -> api.v0alpha.EnrichedZip
 	52,  // 66: api.v0alpha.RepeatedRecords.records:type_name -> api.v0alpha.RecordProto
-	251, // 67: api.v0alpha.FileTemplateField.type:type_name -> api.commons.FieldType
+	257, // 67: api.v0alpha.FileTemplateField.type:type_name -> api.commons.FieldType
 	66,  // 68: api.v0alpha.FileTemplateFields.fields:type_name -> api.v0alpha.FileTemplateField
-	251, // 69: api.v0alpha.FieldTypes.values:type_name -> api.commons.FieldType
+	257, // 69: api.v0alpha.FieldTypes.values:type_name -> api.commons.FieldType
 	137, // 70: api.v0alpha.FileTemplate.file_format_params:type_name -> api.v0alpha.FileFormatParams
-	253, // 71: api.v0alpha.FileTemplate.file_format:type_name -> api.commons.FileFormat
+	259, // 71: api.v0alpha.FileTemplate.file_format:type_name -> api.commons.FileFormat
 	56,  // 72: api.v0alpha.FileTemplate.fields:type_name -> api.v0alpha.Field
 	95,  // 73: api.v0alpha.Process.append:type_name -> api.v0alpha.AppendProcess
 	119, // 74: api.v0alpha.Process.sort:type_name -> api.v0alpha.SortCriteria
@@ -19878,20 +20193,20 @@ var file_api_v0alpha_lms_proto_depIdxs = []int32{
 	197, // 110: api.v0alpha.Process.finvi_entrypoint:type_name -> api.v0alpha.FinviEntrypoint
 	198, // 111: api.v0alpha.Process.contact_management_enrichment:type_name -> api.v0alpha.ContactManagementEnrichment
 	199, // 112: api.v0alpha.Process.ticket_exchange_sink:type_name -> api.v0alpha.TicketExchangeSink
-	254, // 113: api.v0alpha.ComplianceProcessor.comm_type:type_name -> api.commons.CommType
+	260, // 113: api.v0alpha.ComplianceProcessor.comm_type:type_name -> api.commons.CommType
 	207, // 114: api.v0alpha.ComplianceProcessor.call_metadata:type_name -> api.v0alpha.ComplianceProcessor.CallMetadataEntry
-	255, // 115: api.v0alpha.ConsentExportProcess.run_type:type_name -> api.commons.RunType
-	256, // 116: api.v0alpha.ConsentExportProcess.action:type_name -> api.commons.ConsentActionType
-	257, // 117: api.v0alpha.ConsentExportProcess.content_type_val:type_name -> api.commons.ContentType
-	258, // 118: api.v0alpha.ConsentExportProcess.channel_type_val:type_name -> api.commons.Channel
-	248, // 119: api.v0alpha.ConsentExportProcess.expiration_date:type_name -> google.protobuf.Timestamp
-	259, // 120: api.v0alpha.ConsentExportProcess.expiration_after_duration:type_name -> google.protobuf.Duration
+	261, // 115: api.v0alpha.ConsentExportProcess.run_type:type_name -> api.commons.RunType
+	262, // 116: api.v0alpha.ConsentExportProcess.action:type_name -> api.commons.ConsentActionType
+	263, // 117: api.v0alpha.ConsentExportProcess.content_type_val:type_name -> api.commons.ContentType
+	264, // 118: api.v0alpha.ConsentExportProcess.channel_type_val:type_name -> api.commons.Channel
+	254, // 119: api.v0alpha.ConsentExportProcess.expiration_date:type_name -> google.protobuf.Timestamp
+	265, // 120: api.v0alpha.ConsentExportProcess.expiration_after_duration:type_name -> google.protobuf.Duration
 	208, // 121: api.v0alpha.PaymentLinkEnrichment.key_map:type_name -> api.v0alpha.PaymentLinkEnrichment.KeyMapEntry
 	209, // 122: api.v0alpha.PortalLinkEnrichment.key_map:type_name -> api.v0alpha.PortalLinkEnrichment.KeyMapEntry
 	81,  // 123: api.v0alpha.PortalLinkEnrichment.expiration:type_name -> api.v0alpha.Expiration
 	0,   // 124: api.v0alpha.Expiration.units:type_name -> api.v0alpha.TimeUnit
 	210, // 125: api.v0alpha.HttpReq.headers:type_name -> api.v0alpha.HttpReq.HeadersEntry
-	260, // 126: api.v0alpha.HttpReq.method:type_name -> api.commons.HttpVerb
+	266, // 126: api.v0alpha.HttpReq.method:type_name -> api.commons.HttpVerb
 	211, // 127: api.v0alpha.HttpReq.named_response_values:type_name -> api.v0alpha.HttpReq.NamedResponseValuesEntry
 	84,  // 128: api.v0alpha.WebEntrypointProcess.http_requests:type_name -> api.v0alpha.HttpReq
 	69,  // 129: api.v0alpha.WebEntrypointProcess.file_template:type_name -> api.v0alpha.FileTemplate
@@ -19899,64 +20214,64 @@ var file_api_v0alpha_lms_proto_depIdxs = []int32{
 	89,  // 131: api.v0alpha.BulkWebEntrypointProcess.paginated_request:type_name -> api.v0alpha.PaginatedHttpRequest
 	84,  // 132: api.v0alpha.WebExchangeProcess.http_requests:type_name -> api.v0alpha.HttpReq
 	84,  // 133: api.v0alpha.PaginatedHttpRequest.iteration_request:type_name -> api.v0alpha.HttpReq
-	261, // 134: api.v0alpha.PaginatedHttpRequest.end_for_any:type_name -> api.commons.PaginationTerminator
-	261, // 135: api.v0alpha.PaginatedHttpRequest.end_for_all:type_name -> api.commons.PaginationTerminator
-	261, // 136: api.v0alpha.PaginatedHttpRequest.request_not_ready:type_name -> api.commons.PaginationTerminator
-	262, // 137: api.v0alpha.SftpImport.file_pattern:type_name -> api.commons.FilePattern
+	267, // 134: api.v0alpha.PaginatedHttpRequest.end_for_any:type_name -> api.commons.PaginationTerminator
+	267, // 135: api.v0alpha.PaginatedHttpRequest.end_for_all:type_name -> api.commons.PaginationTerminator
+	267, // 136: api.v0alpha.PaginatedHttpRequest.request_not_ready:type_name -> api.commons.PaginationTerminator
+	268, // 137: api.v0alpha.SftpImport.file_pattern:type_name -> api.commons.FilePattern
 	115, // 138: api.v0alpha.CjsExportProcess.header:type_name -> api.v0alpha.ExportHeader
-	255, // 139: api.v0alpha.CjsExportProcess.run_type:type_name -> api.commons.RunType
-	263, // 140: api.v0alpha.CjsEnrichmentProcess.enrich_type:type_name -> api.commons.EnrichmentType
-	264, // 141: api.v0alpha.CjsEnrichmentProcess.primary_source:type_name -> api.commons.PrimarySource
-	265, // 142: api.v0alpha.CjsEnrichmentProcess.dedup_key_policy:type_name -> api.commons.DedupKeyPolicy
+	261, // 139: api.v0alpha.CjsExportProcess.run_type:type_name -> api.commons.RunType
+	269, // 140: api.v0alpha.CjsEnrichmentProcess.enrich_type:type_name -> api.commons.EnrichmentType
+	270, // 141: api.v0alpha.CjsEnrichmentProcess.primary_source:type_name -> api.commons.PrimarySource
+	271, // 142: api.v0alpha.CjsEnrichmentProcess.dedup_key_policy:type_name -> api.commons.DedupKeyPolicy
 	212, // 143: api.v0alpha.LookupProcess.compl:type_name -> api.v0alpha.LookupProcess.ComplProcess
 	213, // 144: api.v0alpha.LookupProcess.list:type_name -> api.v0alpha.LookupProcess.ListLookup
 	214, // 145: api.v0alpha.LookupProcess.url:type_name -> api.v0alpha.LookupProcess.UrlLookup
-	266, // 146: api.v0alpha.CFSExportConfig.type:type_name -> api.commons.ExportType
+	272, // 146: api.v0alpha.CFSExportConfig.type:type_name -> api.commons.ExportType
 	115, // 147: api.v0alpha.CFSExportReqHeader.export_header:type_name -> api.v0alpha.ExportHeader
 	98,  // 148: api.v0alpha.CFSExportReqHeader.configs:type_name -> api.v0alpha.CFSExportConfig
 	115, // 149: api.v0alpha.CFSExportProcess.export_header:type_name -> api.v0alpha.ExportHeader
 	98,  // 150: api.v0alpha.CFSExportProcess.configs:type_name -> api.v0alpha.CFSExportConfig
 	102, // 151: api.v0alpha.FilterProcess.operations:type_name -> api.v0alpha.FilterOperation
 	103, // 152: api.v0alpha.FilterOperation.checks:type_name -> api.v0alpha.FilterCheck
-	267, // 153: api.v0alpha.FilterOperation.operator:type_name -> api.commons.ChainOperator
+	273, // 153: api.v0alpha.FilterOperation.operator:type_name -> api.commons.ChainOperator
 	216, // 154: api.v0alpha.FilterCheck.val_comp:type_name -> api.v0alpha.FilterCheck.ValueComparison
 	217, // 155: api.v0alpha.FilterCheck.type_comp:type_name -> api.v0alpha.FilterCheck.TypeComparison
 	218, // 156: api.v0alpha.FilterCheck.list_comp:type_name -> api.v0alpha.FilterCheck.ListComparison
 	115, // 157: api.v0alpha.P3ExportProcess.header:type_name -> api.v0alpha.ExportHeader
-	268, // 158: api.v0alpha.P3ExportProcess.dupe_policy:type_name -> api.commons.DuplicatePolicyType
-	269, // 159: api.v0alpha.P3ExportProcess.absent_policy:type_name -> api.commons.AbsentPolicyType
-	255, // 160: api.v0alpha.P3ExportProcess.run_type:type_name -> api.commons.RunType
-	262, // 161: api.v0alpha.P3ExportProcess.file_pattern:type_name -> api.commons.FilePattern
-	270, // 162: api.v0alpha.P3ExportProcess.filename:type_name -> api.commons.ConstructedFilename
-	248, // 163: api.v0alpha.P3ExportProcess.start_time:type_name -> google.protobuf.Timestamp
-	248, // 164: api.v0alpha.P3ExportProcess.end_time:type_name -> google.protobuf.Timestamp
-	271, // 165: api.v0alpha.P3ExportProcess.dial_order:type_name -> api.commons.DialOrderType
-	253, // 166: api.v0alpha.P3ExportProcess.file_format:type_name -> api.commons.FileFormat
-	255, // 167: api.v0alpha.ComplianceExportProcess.run_type:type_name -> api.commons.RunType
-	272, // 168: api.v0alpha.ComplianceExportProcess.compliance_list_type:type_name -> api.commons.ComplianceListType
+	274, // 158: api.v0alpha.P3ExportProcess.dupe_policy:type_name -> api.commons.DuplicatePolicyType
+	275, // 159: api.v0alpha.P3ExportProcess.absent_policy:type_name -> api.commons.AbsentPolicyType
+	261, // 160: api.v0alpha.P3ExportProcess.run_type:type_name -> api.commons.RunType
+	268, // 161: api.v0alpha.P3ExportProcess.file_pattern:type_name -> api.commons.FilePattern
+	276, // 162: api.v0alpha.P3ExportProcess.filename:type_name -> api.commons.ConstructedFilename
+	254, // 163: api.v0alpha.P3ExportProcess.start_time:type_name -> google.protobuf.Timestamp
+	254, // 164: api.v0alpha.P3ExportProcess.end_time:type_name -> google.protobuf.Timestamp
+	277, // 165: api.v0alpha.P3ExportProcess.dial_order:type_name -> api.commons.DialOrderType
+	259, // 166: api.v0alpha.P3ExportProcess.file_format:type_name -> api.commons.FileFormat
+	261, // 167: api.v0alpha.ComplianceExportProcess.run_type:type_name -> api.commons.RunType
+	278, // 168: api.v0alpha.ComplianceExportProcess.compliance_list_type:type_name -> api.commons.ComplianceListType
 	111, // 169: api.v0alpha.FrequencyProcess.dispositions:type_name -> api.v0alpha.DispositionPair
 	110, // 170: api.v0alpha.FrequencyProcess.disposition_sets:type_name -> api.v0alpha.DispositionSet
 	111, // 171: api.v0alpha.DispositionSet.dispositions:type_name -> api.v0alpha.DispositionPair
-	253, // 172: api.v0alpha.SftpExportProcess.fileformat:type_name -> api.commons.FileFormat
-	262, // 173: api.v0alpha.SftpExportProcess.file_pattern:type_name -> api.commons.FilePattern
-	255, // 174: api.v0alpha.SftpExportProcess.run_type:type_name -> api.commons.RunType
+	259, // 172: api.v0alpha.SftpExportProcess.fileformat:type_name -> api.commons.FileFormat
+	268, // 173: api.v0alpha.SftpExportProcess.file_pattern:type_name -> api.commons.FilePattern
+	261, // 174: api.v0alpha.SftpExportProcess.run_type:type_name -> api.commons.RunType
 	115, // 175: api.v0alpha.SftpExportProcess.header:type_name -> api.v0alpha.ExportHeader
-	270, // 176: api.v0alpha.SftpExportProcess.filename:type_name -> api.commons.ConstructedFilename
+	276, // 176: api.v0alpha.SftpExportProcess.filename:type_name -> api.commons.ConstructedFilename
 	113, // 177: api.v0alpha.WfmExportProcess.multi:type_name -> api.v0alpha.WfmMultiSkill
 	119, // 178: api.v0alpha.SortReq.criteria:type_name -> api.v0alpha.SortCriteria
 	52,  // 179: api.v0alpha.SortReq.record:type_name -> api.v0alpha.RecordProto
 	99,  // 180: api.v0alpha.CFSExportReq.header:type_name -> api.v0alpha.CFSExportReqHeader
 	52,  // 181: api.v0alpha.CFSExportReq.record:type_name -> api.v0alpha.RecordProto
-	273, // 182: api.v0alpha.DeDupCriteria.action:type_name -> api.commons.DeDupActions
+	279, // 182: api.v0alpha.DeDupCriteria.action:type_name -> api.commons.DeDupActions
 	60,  // 183: api.v0alpha.DeDupCriteria.fields:type_name -> api.v0alpha.FieldIndex
 	103, // 184: api.v0alpha.DeDupCriteria.unless:type_name -> api.v0alpha.FilterCheck
-	274, // 185: api.v0alpha.SortCriteria.ordering:type_name -> api.commons.SortOrder
+	280, // 185: api.v0alpha.SortCriteria.ordering:type_name -> api.commons.SortOrder
 	60,  // 186: api.v0alpha.SortCriteria.field_order:type_name -> api.v0alpha.FieldIndex
 	220, // 187: api.v0alpha.RecordFieldMap.fields:type_name -> api.v0alpha.RecordFieldMap.FieldsEntry
-	252, // 188: api.v0alpha.DateTime.precision:type_name -> api.commons.DateTimePrecision
+	258, // 188: api.v0alpha.DateTime.precision:type_name -> api.commons.DateTimePrecision
 	126, // 189: api.v0alpha.DateTime.modifier:type_name -> api.v0alpha.DateTimeModifier
 	139, // 190: api.v0alpha.ReshapeProcess.actions:type_name -> api.v0alpha.ReshapeAction
-	275, // 191: api.v0alpha.ReshapeAction.matching_type:type_name -> api.commons.RecordType
+	281, // 191: api.v0alpha.ReshapeAction.matching_type:type_name -> api.commons.RecordType
 	103, // 192: api.v0alpha.ReshapeAction.predicate:type_name -> api.v0alpha.FilterCheck
 	102, // 193: api.v0alpha.ReshapeAction.operations:type_name -> api.v0alpha.FilterOperation
 	221, // 194: api.v0alpha.ReshapeAction.rename:type_name -> api.v0alpha.ReshapeAction.Rename
@@ -19966,58 +20281,58 @@ var file_api_v0alpha_lms_proto_depIdxs = []int32{
 	225, // 198: api.v0alpha.ReshapeAction.subtract_value:type_name -> api.v0alpha.ReshapeAction.SubtractValue
 	226, // 199: api.v0alpha.ReshapeAction.subtract_field:type_name -> api.v0alpha.ReshapeAction.SubtractField
 	227, // 200: api.v0alpha.ReshapeAction.convert:type_name -> api.v0alpha.ReshapeAction.Convert
-	231, // 201: api.v0alpha.ReshapeAction.remove_field:type_name -> api.v0alpha.ReshapeAction.RemoveField
-	232, // 202: api.v0alpha.ReshapeAction.add_new_field:type_name -> api.v0alpha.ReshapeAction.AddNewField
-	234, // 203: api.v0alpha.ReshapeAction.change_currency_type:type_name -> api.v0alpha.ReshapeAction.ChangeCurrencyType
+	237, // 201: api.v0alpha.ReshapeAction.remove_field:type_name -> api.v0alpha.ReshapeAction.RemoveField
+	238, // 202: api.v0alpha.ReshapeAction.add_new_field:type_name -> api.v0alpha.ReshapeAction.AddNewField
+	240, // 203: api.v0alpha.ReshapeAction.change_currency_type:type_name -> api.v0alpha.ReshapeAction.ChangeCurrencyType
 	228, // 204: api.v0alpha.ReshapeAction.divide:type_name -> api.v0alpha.ReshapeAction.Divide
-	229, // 205: api.v0alpha.ReshapeAction.multiply:type_name -> api.v0alpha.ReshapeAction.Multiply
-	230, // 206: api.v0alpha.ReshapeAction.modulo:type_name -> api.v0alpha.ReshapeAction.Modulo
-	237, // 207: api.v0alpha.ReshapeAction.merge:type_name -> api.v0alpha.ReshapeAction.Merge
-	235, // 208: api.v0alpha.ReshapeAction.set_field_value:type_name -> api.v0alpha.ReshapeAction.SetFieldValue
-	233, // 209: api.v0alpha.ReshapeAction.add_new_field_from_field:type_name -> api.v0alpha.ReshapeAction.AddNewFieldFromField
-	236, // 210: api.v0alpha.ReshapeAction.set_field_from_field:type_name -> api.v0alpha.ReshapeAction.SetFieldFromField
-	238, // 211: api.v0alpha.ReshapeAction.pad:type_name -> api.v0alpha.ReshapeAction.Pad
-	239, // 212: api.v0alpha.ReshapeAction.trim:type_name -> api.v0alpha.ReshapeAction.Trim
-	240, // 213: api.v0alpha.ReshapeAction.extract:type_name -> api.v0alpha.ReshapeAction.Extract
-	259, // 214: api.v0alpha.ContactManagerSink.lifetime:type_name -> google.protobuf.Duration
-	244, // 215: api.v0alpha.ContactManagerSink.de_duplication_info:type_name -> api.v0alpha.ContactManagerSink.DeDuplication
+	231, // 205: api.v0alpha.ReshapeAction.multiply:type_name -> api.v0alpha.ReshapeAction.Multiply
+	234, // 206: api.v0alpha.ReshapeAction.modulo:type_name -> api.v0alpha.ReshapeAction.Modulo
+	243, // 207: api.v0alpha.ReshapeAction.merge:type_name -> api.v0alpha.ReshapeAction.Merge
+	241, // 208: api.v0alpha.ReshapeAction.set_field_value:type_name -> api.v0alpha.ReshapeAction.SetFieldValue
+	239, // 209: api.v0alpha.ReshapeAction.add_new_field_from_field:type_name -> api.v0alpha.ReshapeAction.AddNewFieldFromField
+	242, // 210: api.v0alpha.ReshapeAction.set_field_from_field:type_name -> api.v0alpha.ReshapeAction.SetFieldFromField
+	244, // 211: api.v0alpha.ReshapeAction.pad:type_name -> api.v0alpha.ReshapeAction.Pad
+	245, // 212: api.v0alpha.ReshapeAction.trim:type_name -> api.v0alpha.ReshapeAction.Trim
+	246, // 213: api.v0alpha.ReshapeAction.extract:type_name -> api.v0alpha.ReshapeAction.Extract
+	265, // 214: api.v0alpha.ContactManagerSink.lifetime:type_name -> google.protobuf.Duration
+	250, // 215: api.v0alpha.ContactManagerSink.de_duplication_info:type_name -> api.v0alpha.ContactManagerSink.DeDuplication
 	142, // 216: api.v0alpha.SumProcess.group_by:type_name -> api.v0alpha.GroupBy
 	102, // 217: api.v0alpha.SumProcess.filter:type_name -> api.v0alpha.FilterOperation
-	275, // 218: api.v0alpha.ListMetrics.field_types:type_name -> api.commons.RecordType
-	251, // 219: api.v0alpha.ListMetrics.ftypes:type_name -> api.commons.FieldType
-	255, // 220: api.v0alpha.ListMetrics.run_type:type_name -> api.commons.RunType
+	281, // 218: api.v0alpha.ListMetrics.field_types:type_name -> api.commons.RecordType
+	257, // 219: api.v0alpha.ListMetrics.ftypes:type_name -> api.commons.FieldType
+	261, // 220: api.v0alpha.ListMetrics.run_type:type_name -> api.commons.RunType
 	74,  // 221: api.v0alpha.ParseRes.process:type_name -> api.v0alpha.Process
-	250, // 222: api.v0alpha.Event.parent_id:type_name -> google.protobuf.StringValue
-	276, // 223: api.v0alpha.Event.input_ids:type_name -> api.commons.StringArraySql
+	256, // 222: api.v0alpha.Event.parent_id:type_name -> google.protobuf.StringValue
+	282, // 223: api.v0alpha.Event.input_ids:type_name -> api.commons.StringArraySql
 	74,  // 224: api.v0alpha.Event.process:type_name -> api.v0alpha.Process
-	248, // 225: api.v0alpha.Event.upload_ts:type_name -> google.protobuf.Timestamp
-	248, // 226: api.v0alpha.Event.started_ts:type_name -> google.protobuf.Timestamp
-	248, // 227: api.v0alpha.Event.finished_ts:type_name -> google.protobuf.Timestamp
-	248, // 228: api.v0alpha.Event.backoff_till:type_name -> google.protobuf.Timestamp
-	277, // 229: api.v0alpha.Event.latest_history:type_name -> google.protobuf.Int64Value
+	254, // 225: api.v0alpha.Event.upload_ts:type_name -> google.protobuf.Timestamp
+	254, // 226: api.v0alpha.Event.started_ts:type_name -> google.protobuf.Timestamp
+	254, // 227: api.v0alpha.Event.finished_ts:type_name -> google.protobuf.Timestamp
+	254, // 228: api.v0alpha.Event.backoff_till:type_name -> google.protobuf.Timestamp
+	283, // 229: api.v0alpha.Event.latest_history:type_name -> google.protobuf.Int64Value
 	146, // 230: api.v0alpha.Events.events:type_name -> api.v0alpha.Event
-	248, // 231: api.v0alpha.ViewQueueReq.newer_than:type_name -> google.protobuf.Timestamp
-	248, // 232: api.v0alpha.ViewQueueReq.no_newer_than:type_name -> google.protobuf.Timestamp
-	245, // 233: api.v0alpha.RetypeCollectionReq.field_types:type_name -> api.v0alpha.RetypeCollectionReq.FieldTypesEntry
+	254, // 231: api.v0alpha.ViewQueueReq.newer_than:type_name -> google.protobuf.Timestamp
+	254, // 232: api.v0alpha.ViewQueueReq.no_newer_than:type_name -> google.protobuf.Timestamp
+	251, // 233: api.v0alpha.RetypeCollectionReq.field_types:type_name -> api.v0alpha.RetypeCollectionReq.FieldTypesEntry
 	155, // 234: api.v0alpha.CollectionMetadata.fields:type_name -> api.v0alpha.CollectionFieldMetadata
-	248, // 235: api.v0alpha.CollectionMetadata.created_on:type_name -> google.protobuf.Timestamp
-	248, // 236: api.v0alpha.CollectionMetadata.last_queried:type_name -> google.protobuf.Timestamp
-	248, // 237: api.v0alpha.CollectionMetadata.last_updated:type_name -> google.protobuf.Timestamp
-	248, // 238: api.v0alpha.CollectionMetadata.last_searched:type_name -> google.protobuf.Timestamp
+	254, // 235: api.v0alpha.CollectionMetadata.created_on:type_name -> google.protobuf.Timestamp
+	254, // 236: api.v0alpha.CollectionMetadata.last_queried:type_name -> google.protobuf.Timestamp
+	254, // 237: api.v0alpha.CollectionMetadata.last_updated:type_name -> google.protobuf.Timestamp
+	254, // 238: api.v0alpha.CollectionMetadata.last_searched:type_name -> google.protobuf.Timestamp
 	156, // 239: api.v0alpha.CollectionEntry.fields:type_name -> api.v0alpha.CollectionField
-	248, // 240: api.v0alpha.CollectionEntry.last_updated:type_name -> google.protobuf.Timestamp
+	254, // 240: api.v0alpha.CollectionEntry.last_updated:type_name -> google.protobuf.Timestamp
 	156, // 241: api.v0alpha.MatchReq.fields:type_name -> api.v0alpha.CollectionField
 	152, // 242: api.v0alpha.MatchRes.entries:type_name -> api.v0alpha.CollectionEntry
-	251, // 243: api.v0alpha.CollectionFieldMetadata.field_type:type_name -> api.commons.FieldType
+	257, // 243: api.v0alpha.CollectionFieldMetadata.field_type:type_name -> api.commons.FieldType
 	151, // 244: api.v0alpha.ListCollectionsRes.collections:type_name -> api.v0alpha.CollectionMetadata
 	164, // 245: api.v0alpha.SearchCollectionsPaginatedReq.search:type_name -> api.v0alpha.Search
 	152, // 246: api.v0alpha.PaginatedSearchRes.entries:type_name -> api.v0alpha.CollectionEntry
 	151, // 247: api.v0alpha.GetCollectionEntriesRes.metadata:type_name -> api.v0alpha.CollectionMetadata
 	152, // 248: api.v0alpha.GetCollectionEntriesRes.entries:type_name -> api.v0alpha.CollectionEntry
 	170, // 249: api.v0alpha.ListCampaignLinksRes.Links:type_name -> api.v0alpha.Link
-	251, // 250: api.v0alpha.CjsSearchField.field_type:type_name -> api.commons.FieldType
-	248, // 251: api.v0alpha.CjsSearchDefinitionMetadata.created_date:type_name -> google.protobuf.Timestamp
-	248, // 252: api.v0alpha.CjsSearchDefinitionMetadata.last_edited:type_name -> google.protobuf.Timestamp
+	257, // 250: api.v0alpha.CjsSearchField.field_type:type_name -> api.commons.FieldType
+	254, // 251: api.v0alpha.CjsSearchDefinitionMetadata.created_date:type_name -> google.protobuf.Timestamp
+	254, // 252: api.v0alpha.CjsSearchDefinitionMetadata.last_edited:type_name -> google.protobuf.Timestamp
 	172, // 253: api.v0alpha.CjsSearchDefinition.metadata:type_name -> api.v0alpha.CjsSearchDefinitionMetadata
 	171, // 254: api.v0alpha.CjsSearchDefinition.search_fields:type_name -> api.v0alpha.CjsSearchField
 	171, // 255: api.v0alpha.CjsSearchDefinition.whitelisted_return_fields:type_name -> api.v0alpha.CjsSearchField
@@ -20028,12 +20343,12 @@ var file_api_v0alpha_lms_proto_depIdxs = []int32{
 	180, // 260: api.v0alpha.ExecuteCjsSearchDefinitionRes.collection_entries:type_name -> api.v0alpha.CollectionEntries
 	151, // 261: api.v0alpha.CollectionEntries.metadata:type_name -> api.v0alpha.CollectionMetadata
 	152, // 262: api.v0alpha.CollectionEntries.entries:type_name -> api.v0alpha.CollectionEntry
-	251, // 263: api.v0alpha.CjsExecuteSearchField.field_type:type_name -> api.commons.FieldType
-	248, // 264: api.v0alpha.CjsSecureSearchCriteriaMetadata.created_on:type_name -> google.protobuf.Timestamp
-	248, // 265: api.v0alpha.CjsSecureSearchCriteriaMetadata.last_updated:type_name -> google.protobuf.Timestamp
+	257, // 263: api.v0alpha.CjsExecuteSearchField.field_type:type_name -> api.commons.FieldType
+	254, // 264: api.v0alpha.CjsSecureSearchCriteriaMetadata.created_on:type_name -> google.protobuf.Timestamp
+	254, // 265: api.v0alpha.CjsSecureSearchCriteriaMetadata.last_updated:type_name -> google.protobuf.Timestamp
 	182, // 266: api.v0alpha.CjsSecureSearchCriteria.metadata:type_name -> api.v0alpha.CjsSecureSearchCriteriaMetadata
 	185, // 267: api.v0alpha.CjsSecureSearchCriteria.fields:type_name -> api.v0alpha.CjsSecureSearchCriteriaField
-	251, // 268: api.v0alpha.CjsSecureSearchCriteriaField.field_type:type_name -> api.commons.FieldType
+	257, // 268: api.v0alpha.CjsSecureSearchCriteriaField.field_type:type_name -> api.commons.FieldType
 	189, // 269: api.v0alpha.SplitCriteria.unique:type_name -> api.v0alpha.SplitByUnique
 	190, // 270: api.v0alpha.SplitCriteria.max_size:type_name -> api.v0alpha.SplitByMaxSize
 	191, // 271: api.v0alpha.SplitCriteria.equal_parts:type_name -> api.v0alpha.SplitByEqualParts
@@ -20043,25 +20358,25 @@ var file_api_v0alpha_lms_proto_depIdxs = []int32{
 	1,   // 275: api.v0alpha.EpicEntrypoint.entity_types:type_name -> api.v0alpha.EpicEntityType
 	193, // 276: api.v0alpha.EpicEntrypoint.runtime_values:type_name -> api.v0alpha.RuntimeValues
 	56,  // 277: api.v0alpha.EpicEntrypoint.fields:type_name -> api.v0alpha.Field
-	278, // 278: api.v0alpha.RuntimeValues.state:type_name -> api.commons.EventState
+	284, // 278: api.v0alpha.RuntimeValues.state:type_name -> api.commons.EventState
 	194, // 279: api.v0alpha.RuntimeValues.data_urls:type_name -> api.v0alpha.EntityURL
-	246, // 280: api.v0alpha.RuntimeValues.file_ids:type_name -> api.v0alpha.RuntimeValues.FileIdsEntry
-	247, // 281: api.v0alpha.RuntimeValues.preliminary_vars:type_name -> api.v0alpha.RuntimeValues.PreliminaryVarsEntry
+	252, // 280: api.v0alpha.RuntimeValues.file_ids:type_name -> api.v0alpha.RuntimeValues.FileIdsEntry
+	253, // 281: api.v0alpha.RuntimeValues.preliminary_vars:type_name -> api.v0alpha.RuntimeValues.PreliminaryVarsEntry
 	1,   // 282: api.v0alpha.EntityURL.entity_type:type_name -> api.v0alpha.EpicEntityType
 	1,   // 283: api.v0alpha.EHREntityType.epic_entity:type_name -> api.v0alpha.EpicEntityType
-	244, // 284: api.v0alpha.ContactManagementEnrichment.de_duplication_info:type_name -> api.v0alpha.ContactManagerSink.DeDuplication
+	250, // 284: api.v0alpha.ContactManagementEnrichment.de_duplication_info:type_name -> api.v0alpha.ContactManagerSink.DeDuplication
 	4,   // 285: api.v0alpha.ContactManagementEnrichment.search_field_type:type_name -> api.v0alpha.ContactManagementEnrichment.SearchFieldType
-	275, // 286: api.v0alpha.ProcessFields.NestedField.field_type:type_name -> api.commons.RecordType
-	275, // 287: api.v0alpha.ProcessFields.Field.field_type:type_name -> api.commons.RecordType
+	281, // 286: api.v0alpha.ProcessFields.NestedField.field_type:type_name -> api.commons.RecordType
+	281, // 287: api.v0alpha.ProcessFields.Field.field_type:type_name -> api.commons.RecordType
 	205, // 288: api.v0alpha.ProcessFields.Field.nested:type_name -> api.v0alpha.ProcessFields.NestedField
 	69,  // 289: api.v0alpha.LookupProcess.UrlLookup.file_template:type_name -> api.v0alpha.FileTemplate
 	60,  // 290: api.v0alpha.FilterCheck.Value.field_name:type_name -> api.v0alpha.FieldIndex
 	128, // 291: api.v0alpha.FilterCheck.Value.date_time:type_name -> api.v0alpha.DateTime
 	60,  // 292: api.v0alpha.FilterCheck.ValueComparison.field_name:type_name -> api.v0alpha.FieldIndex
-	279, // 293: api.v0alpha.FilterCheck.ValueComparison.op:type_name -> api.commons.CompareOperator
+	285, // 293: api.v0alpha.FilterCheck.ValueComparison.op:type_name -> api.commons.CompareOperator
 	215, // 294: api.v0alpha.FilterCheck.ValueComparison.value:type_name -> api.v0alpha.FilterCheck.Value
 	60,  // 295: api.v0alpha.FilterCheck.TypeComparison.field_name:type_name -> api.v0alpha.FieldIndex
-	275, // 296: api.v0alpha.FilterCheck.TypeComparison.matches_field_type:type_name -> api.commons.RecordType
+	281, // 296: api.v0alpha.FilterCheck.TypeComparison.matches_field_type:type_name -> api.commons.RecordType
 	60,  // 297: api.v0alpha.FilterCheck.ListComparison.field_name:type_name -> api.v0alpha.FieldIndex
 	219, // 298: api.v0alpha.FilterCheck.ListComparison.data:type_name -> api.v0alpha.FilterCheck.ListComparison.FieldOrVal
 	60,  // 299: api.v0alpha.FilterCheck.ListComparison.FieldOrVal.field:type_name -> api.v0alpha.FieldIndex
@@ -20071,158 +20386,161 @@ var file_api_v0alpha_lms_proto_depIdxs = []int32{
 	127, // 303: api.v0alpha.ReshapeAction.AddDate.datetime_field_modifier:type_name -> api.v0alpha.DateTimeFieldModifier
 	60,  // 304: api.v0alpha.ReshapeAction.AddField.other_field:type_name -> api.v0alpha.FieldIndex
 	60,  // 305: api.v0alpha.ReshapeAction.SubtractField.other_field:type_name -> api.v0alpha.FieldIndex
-	275, // 306: api.v0alpha.ReshapeAction.Convert.newType:type_name -> api.commons.RecordType
+	281, // 306: api.v0alpha.ReshapeAction.Convert.newType:type_name -> api.commons.RecordType
 	56,  // 307: api.v0alpha.ReshapeAction.Convert.new_field:type_name -> api.v0alpha.Field
 	62,  // 308: api.v0alpha.ReshapeAction.Convert.default_value:type_name -> api.v0alpha.RecordFieldProto
-	62,  // 309: api.v0alpha.ReshapeAction.AddNewField.starting_value:type_name -> api.v0alpha.RecordFieldProto
-	60,  // 310: api.v0alpha.ReshapeAction.AddNewFieldFromField.other_field:type_name -> api.v0alpha.FieldIndex
-	62,  // 311: api.v0alpha.ReshapeAction.SetFieldValue.value:type_name -> api.v0alpha.RecordFieldProto
-	60,  // 312: api.v0alpha.ReshapeAction.SetFieldFromField.other_field:type_name -> api.v0alpha.FieldIndex
-	241, // 313: api.v0alpha.ReshapeAction.Merge.data:type_name -> api.v0alpha.ReshapeAction.Merge.FieldOrVal
-	243, // 314: api.v0alpha.ReshapeAction.Extract.parts:type_name -> api.v0alpha.ReshapeAction.Extract.Slice
-	60,  // 315: api.v0alpha.ReshapeAction.Merge.FieldOrVal.field:type_name -> api.v0alpha.FieldIndex
-	242, // 316: api.v0alpha.ReshapeAction.Extract.Slice.start_index:type_name -> api.v0alpha.ReshapeAction.Extract.Index
-	242, // 317: api.v0alpha.ReshapeAction.Extract.Slice.end_index:type_name -> api.v0alpha.ReshapeAction.Extract.Index
-	2,   // 318: api.v0alpha.ContactManagerSink.DeDuplication.field_type:type_name -> api.v0alpha.ContactManagerSink.DeDuplicationFieldType
-	3,   // 319: api.v0alpha.ContactManagerSink.DeDuplication.merge_strategy:type_name -> api.v0alpha.ContactManagerSink.DeDuplicationMergeStrategy
-	251, // 320: api.v0alpha.RetypeCollectionReq.FieldTypesEntry.value:type_name -> api.commons.FieldType
-	23,  // 321: api.v0alpha.LMS.GetPublicKey:input_type -> api.v0alpha.GetPublicKeyReq
-	69,  // 322: api.v0alpha.LMS.CreateFileTemplate:input_type -> api.v0alpha.FileTemplate
-	65,  // 323: api.v0alpha.LMS.ListFileTemplates:input_type -> api.v0alpha.GetFileTemplatesReq
-	69,  // 324: api.v0alpha.LMS.UpdateFileTemplate:input_type -> api.v0alpha.FileTemplate
-	69,  // 325: api.v0alpha.LMS.DeleteFileTemplate:input_type -> api.v0alpha.FileTemplate
-	69,  // 326: api.v0alpha.LMS.GetFileTemplate:input_type -> api.v0alpha.FileTemplate
-	56,  // 327: api.v0alpha.LMS.CreateField:input_type -> api.v0alpha.Field
-	61,  // 328: api.v0alpha.LMS.ListFields:input_type -> api.v0alpha.ListFieldsReq
-	56,  // 329: api.v0alpha.LMS.GetField:input_type -> api.v0alpha.Field
-	57,  // 330: api.v0alpha.LMS.UpdateField:input_type -> api.v0alpha.UpdateFieldReq
-	56,  // 331: api.v0alpha.LMS.DeleteField:input_type -> api.v0alpha.Field
-	39,  // 332: api.v0alpha.LMS.ListAvailableFieldsByElementId:input_type -> api.v0alpha.ListAvailableFieldsByElementIdReq
-	40,  // 333: api.v0alpha.LMS.ListFieldsForElement:input_type -> api.v0alpha.ListFieldsForElementReq
-	42,  // 334: api.v0alpha.LMS.ListAutocompleteFields:input_type -> api.v0alpha.ListAutocompleteFieldsReq
-	280, // 335: api.v0alpha.LMS.ListCampaignLinks:input_type -> google.protobuf.Empty
-	46,  // 336: api.v0alpha.LMS.PeekList:input_type -> api.v0alpha.PeekListReq
-	48,  // 337: api.v0alpha.LMS.GetHistory:input_type -> api.v0alpha.GetHistoryReq
-	45,  // 338: api.v0alpha.LMS.CreateElement:input_type -> api.v0alpha.Element
-	64,  // 339: api.v0alpha.LMS.ListElements:input_type -> api.v0alpha.ListElementsReq
-	44,  // 340: api.v0alpha.LMS.GetElement:input_type -> api.v0alpha.ElementPK
-	45,  // 341: api.v0alpha.LMS.UpdateElement:input_type -> api.v0alpha.Element
-	45,  // 342: api.v0alpha.LMS.DeleteElement:input_type -> api.v0alpha.Element
-	45,  // 343: api.v0alpha.LMS.CopyPipelineUpstream:input_type -> api.v0alpha.Element
-	45,  // 344: api.v0alpha.LMS.CopyPipelineDownstream:input_type -> api.v0alpha.Element
-	34,  // 345: api.v0alpha.LMS.ProcessElement:input_type -> api.v0alpha.ProcessElementReq
-	35,  // 346: api.v0alpha.LMS.ProcessList:input_type -> api.v0alpha.ProcessListRequest
-	37,  // 347: api.v0alpha.LMS.StreamList:input_type -> api.v0alpha.StreamListRequest
-	280, // 348: api.v0alpha.LMS.GetAvailableFields:input_type -> google.protobuf.Empty
-	280, // 349: api.v0alpha.LMS.ListNewEvents:input_type -> google.protobuf.Empty
-	148, // 350: api.v0alpha.LMS.ViewQueue:input_type -> api.v0alpha.ViewQueueReq
-	144, // 351: api.v0alpha.LMS.Autocomplete:input_type -> api.v0alpha.ParseReq
-	32,  // 352: api.v0alpha.LMS.GetComplianceScrubLists:input_type -> api.v0alpha.GetComplianceScrubListsReq
-	25,  // 353: api.v0alpha.LMS.FindFieldUsages:input_type -> api.v0alpha.FindFieldUsagesReq
-	30,  // 354: api.v0alpha.LMS.FindInvalidElements:input_type -> api.v0alpha.FindInvalidElementsReq
-	151, // 355: api.v0alpha.LMS.CreateCollection:input_type -> api.v0alpha.CollectionMetadata
-	157, // 356: api.v0alpha.LMS.GetCollection:input_type -> api.v0alpha.GetCollectionReq
-	151, // 357: api.v0alpha.LMS.UpdateCollection:input_type -> api.v0alpha.CollectionMetadata
-	149, // 358: api.v0alpha.LMS.RetypeCollection:input_type -> api.v0alpha.RetypeCollectionReq
-	159, // 359: api.v0alpha.LMS.DeleteCollection:input_type -> api.v0alpha.DeleteCollectionReq
-	161, // 360: api.v0alpha.LMS.ListCollections:input_type -> api.v0alpha.ListCollectionsReq
-	160, // 361: api.v0alpha.LMS.ResetCollection:input_type -> api.v0alpha.ResetCollectionReq
-	152, // 362: api.v0alpha.LMS.AddCollectionEntry:input_type -> api.v0alpha.CollectionEntry
-	168, // 363: api.v0alpha.LMS.DeleteCollectionEntry:input_type -> api.v0alpha.DeleteCollectionEntryReq
-	152, // 364: api.v0alpha.LMS.UpdateCollectionEntry:input_type -> api.v0alpha.CollectionEntry
-	158, // 365: api.v0alpha.LMS.StreamCollection:input_type -> api.v0alpha.StreamCollectionReq
-	163, // 366: api.v0alpha.LMS.SearchCollectionsPaginated:input_type -> api.v0alpha.SearchCollectionsPaginatedReq
-	166, // 367: api.v0alpha.LMS.GetCollectionEntries:input_type -> api.v0alpha.GetCollectionEntriesReq
-	173, // 368: api.v0alpha.LMS.CreateCjsSearchDefinition:input_type -> api.v0alpha.CjsSearchDefinition
-	174, // 369: api.v0alpha.LMS.GetCjsSearchDefinition:input_type -> api.v0alpha.GetCjsSearchDefinitionReq
-	173, // 370: api.v0alpha.LMS.UpdateCjsSearchDefinition:input_type -> api.v0alpha.CjsSearchDefinition
-	175, // 371: api.v0alpha.LMS.DeleteCjsSearchDefinition:input_type -> api.v0alpha.DeleteCjsSearchDefinitionReq
-	176, // 372: api.v0alpha.LMS.ListCjsSearchDefinitions:input_type -> api.v0alpha.ListCjsSearchDefinitionsReq
-	178, // 373: api.v0alpha.LMS.ExecuteCjsSearchDefinition:input_type -> api.v0alpha.ExecuteCjsSearchDefinitionReq
-	184, // 374: api.v0alpha.LMS.GetCjsSecureSearchCriteria:input_type -> api.v0alpha.GetCjsSecureSearchCriteriaReq
-	183, // 375: api.v0alpha.LMS.CreateCjsSecureSearchCriteria:input_type -> api.v0alpha.CjsSecureSearchCriteria
-	183, // 376: api.v0alpha.LMS.UpdateCjsSecureSearchCriteria:input_type -> api.v0alpha.CjsSecureSearchCriteria
-	195, // 377: api.v0alpha.LMS.SampleEndpoint:input_type -> api.v0alpha.SampleRequest
-	196, // 378: api.v0alpha.LMS.GetAvailableEHRFields:input_type -> api.v0alpha.EHREntityType
-	44,  // 379: api.v0alpha.LMS.GetQueuedEventsStatusByElementId:input_type -> api.v0alpha.ElementPK
-	20,  // 380: api.v0alpha.LMS.ListPools:input_type -> api.v0alpha.ListPoolsRequest
-	8,   // 381: api.v0alpha.LMS.CreatePipelineCanvas:input_type -> api.v0alpha.CreatePipelineCanvasReq
-	10,  // 382: api.v0alpha.LMS.ListPipelineCanvases:input_type -> api.v0alpha.ListPipelineCanvasesReq
-	12,  // 383: api.v0alpha.LMS.UpdatePipelineCanvas:input_type -> api.v0alpha.UpdatePipelineCanvasReq
-	14,  // 384: api.v0alpha.LMS.DeletePipelineCanvas:input_type -> api.v0alpha.DeletePipelineCanvasReq
-	16,  // 385: api.v0alpha.LMS.GetPipelineCanvas:input_type -> api.v0alpha.GetPipelineCanvasReq
-	18,  // 386: api.v0alpha.LMS.GetPipelineCanvasEvents:input_type -> api.v0alpha.GetPipelineCanvasEventsReq
-	24,  // 387: api.v0alpha.LMS.GetPublicKey:output_type -> api.v0alpha.PublicKey
-	69,  // 388: api.v0alpha.LMS.CreateFileTemplate:output_type -> api.v0alpha.FileTemplate
-	69,  // 389: api.v0alpha.LMS.ListFileTemplates:output_type -> api.v0alpha.FileTemplate
-	69,  // 390: api.v0alpha.LMS.UpdateFileTemplate:output_type -> api.v0alpha.FileTemplate
-	69,  // 391: api.v0alpha.LMS.DeleteFileTemplate:output_type -> api.v0alpha.FileTemplate
-	69,  // 392: api.v0alpha.LMS.GetFileTemplate:output_type -> api.v0alpha.FileTemplate
-	56,  // 393: api.v0alpha.LMS.CreateField:output_type -> api.v0alpha.Field
-	59,  // 394: api.v0alpha.LMS.ListFields:output_type -> api.v0alpha.Fields
-	56,  // 395: api.v0alpha.LMS.GetField:output_type -> api.v0alpha.Field
-	56,  // 396: api.v0alpha.LMS.UpdateField:output_type -> api.v0alpha.Field
-	56,  // 397: api.v0alpha.LMS.DeleteField:output_type -> api.v0alpha.Field
-	54,  // 398: api.v0alpha.LMS.ListAvailableFieldsByElementId:output_type -> api.v0alpha.ProcessFields
-	41,  // 399: api.v0alpha.LMS.ListFieldsForElement:output_type -> api.v0alpha.ListFieldsForElementRes
-	43,  // 400: api.v0alpha.LMS.ListAutocompleteFields:output_type -> api.v0alpha.ListAutocompleteFieldsRes
-	169, // 401: api.v0alpha.LMS.ListCampaignLinks:output_type -> api.v0alpha.ListCampaignLinksRes
-	47,  // 402: api.v0alpha.LMS.PeekList:output_type -> api.v0alpha.PeekListRes
-	49,  // 403: api.v0alpha.LMS.GetHistory:output_type -> api.v0alpha.GetHistoryRes
-	45,  // 404: api.v0alpha.LMS.CreateElement:output_type -> api.v0alpha.Element
-	45,  // 405: api.v0alpha.LMS.ListElements:output_type -> api.v0alpha.Element
-	45,  // 406: api.v0alpha.LMS.GetElement:output_type -> api.v0alpha.Element
-	45,  // 407: api.v0alpha.LMS.UpdateElement:output_type -> api.v0alpha.Element
-	45,  // 408: api.v0alpha.LMS.DeleteElement:output_type -> api.v0alpha.Element
-	45,  // 409: api.v0alpha.LMS.CopyPipelineUpstream:output_type -> api.v0alpha.Element
-	45,  // 410: api.v0alpha.LMS.CopyPipelineDownstream:output_type -> api.v0alpha.Element
-	280, // 411: api.v0alpha.LMS.ProcessElement:output_type -> google.protobuf.Empty
-	36,  // 412: api.v0alpha.LMS.ProcessList:output_type -> api.v0alpha.ProcessListResponse
-	38,  // 413: api.v0alpha.LMS.StreamList:output_type -> api.v0alpha.StreamListResponse
-	54,  // 414: api.v0alpha.LMS.GetAvailableFields:output_type -> api.v0alpha.ProcessFields
-	147, // 415: api.v0alpha.LMS.ListNewEvents:output_type -> api.v0alpha.Events
-	147, // 416: api.v0alpha.LMS.ViewQueue:output_type -> api.v0alpha.Events
-	145, // 417: api.v0alpha.LMS.Autocomplete:output_type -> api.v0alpha.ParseRes
-	33,  // 418: api.v0alpha.LMS.GetComplianceScrubLists:output_type -> api.v0alpha.GetComplianceScrubListsRes
-	27,  // 419: api.v0alpha.LMS.FindFieldUsages:output_type -> api.v0alpha.FindFieldUsagesRes
-	31,  // 420: api.v0alpha.LMS.FindInvalidElements:output_type -> api.v0alpha.FindInvalidElementsRes
-	151, // 421: api.v0alpha.LMS.CreateCollection:output_type -> api.v0alpha.CollectionMetadata
-	151, // 422: api.v0alpha.LMS.GetCollection:output_type -> api.v0alpha.CollectionMetadata
-	280, // 423: api.v0alpha.LMS.UpdateCollection:output_type -> google.protobuf.Empty
-	150, // 424: api.v0alpha.LMS.RetypeCollection:output_type -> api.v0alpha.RetypeCollectionRes
-	280, // 425: api.v0alpha.LMS.DeleteCollection:output_type -> google.protobuf.Empty
-	162, // 426: api.v0alpha.LMS.ListCollections:output_type -> api.v0alpha.ListCollectionsRes
-	280, // 427: api.v0alpha.LMS.ResetCollection:output_type -> google.protobuf.Empty
-	152, // 428: api.v0alpha.LMS.AddCollectionEntry:output_type -> api.v0alpha.CollectionEntry
-	280, // 429: api.v0alpha.LMS.DeleteCollectionEntry:output_type -> google.protobuf.Empty
-	152, // 430: api.v0alpha.LMS.UpdateCollectionEntry:output_type -> api.v0alpha.CollectionEntry
-	152, // 431: api.v0alpha.LMS.StreamCollection:output_type -> api.v0alpha.CollectionEntry
-	165, // 432: api.v0alpha.LMS.SearchCollectionsPaginated:output_type -> api.v0alpha.PaginatedSearchRes
-	167, // 433: api.v0alpha.LMS.GetCollectionEntries:output_type -> api.v0alpha.GetCollectionEntriesRes
-	173, // 434: api.v0alpha.LMS.CreateCjsSearchDefinition:output_type -> api.v0alpha.CjsSearchDefinition
-	173, // 435: api.v0alpha.LMS.GetCjsSearchDefinition:output_type -> api.v0alpha.CjsSearchDefinition
-	280, // 436: api.v0alpha.LMS.UpdateCjsSearchDefinition:output_type -> google.protobuf.Empty
-	280, // 437: api.v0alpha.LMS.DeleteCjsSearchDefinition:output_type -> google.protobuf.Empty
-	177, // 438: api.v0alpha.LMS.ListCjsSearchDefinitions:output_type -> api.v0alpha.ListCjsSearchDefinitionsRes
-	179, // 439: api.v0alpha.LMS.ExecuteCjsSearchDefinition:output_type -> api.v0alpha.ExecuteCjsSearchDefinitionRes
-	183, // 440: api.v0alpha.LMS.GetCjsSecureSearchCriteria:output_type -> api.v0alpha.CjsSecureSearchCriteria
-	183, // 441: api.v0alpha.LMS.CreateCjsSecureSearchCriteria:output_type -> api.v0alpha.CjsSecureSearchCriteria
-	280, // 442: api.v0alpha.LMS.UpdateCjsSecureSearchCriteria:output_type -> google.protobuf.Empty
-	280, // 443: api.v0alpha.LMS.SampleEndpoint:output_type -> google.protobuf.Empty
-	59,  // 444: api.v0alpha.LMS.GetAvailableEHRFields:output_type -> api.v0alpha.Fields
-	147, // 445: api.v0alpha.LMS.GetQueuedEventsStatusByElementId:output_type -> api.v0alpha.Events
-	21,  // 446: api.v0alpha.LMS.ListPools:output_type -> api.v0alpha.ListPoolsResponse
-	9,   // 447: api.v0alpha.LMS.CreatePipelineCanvas:output_type -> api.v0alpha.CreatePipelineCanvasRes
-	11,  // 448: api.v0alpha.LMS.ListPipelineCanvases:output_type -> api.v0alpha.ListPipelineCanvasesRes
-	13,  // 449: api.v0alpha.LMS.UpdatePipelineCanvas:output_type -> api.v0alpha.UpdatePipelineCanvasRes
-	15,  // 450: api.v0alpha.LMS.DeletePipelineCanvas:output_type -> api.v0alpha.DeletePipelineCanvasRes
-	17,  // 451: api.v0alpha.LMS.GetPipelineCanvas:output_type -> api.v0alpha.GetPipelineCanvasRes
-	19,  // 452: api.v0alpha.LMS.GetPipelineCanvasEvents:output_type -> api.v0alpha.GetPipelineCanvasEventsRes
-	387, // [387:453] is the sub-list for method output_type
-	321, // [321:387] is the sub-list for method input_type
-	321, // [321:321] is the sub-list for extension type_name
-	321, // [321:321] is the sub-list for extension extendee
-	0,   // [0:321] is the sub-list for field type_name
+	60,  // 309: api.v0alpha.ReshapeAction.DivideField.other_field:type_name -> api.v0alpha.FieldIndex
+	60,  // 310: api.v0alpha.ReshapeAction.MultiplyField.other_field:type_name -> api.v0alpha.FieldIndex
+	60,  // 311: api.v0alpha.ReshapeAction.ModuloField.other_field:type_name -> api.v0alpha.FieldIndex
+	62,  // 312: api.v0alpha.ReshapeAction.AddNewField.starting_value:type_name -> api.v0alpha.RecordFieldProto
+	60,  // 313: api.v0alpha.ReshapeAction.AddNewFieldFromField.other_field:type_name -> api.v0alpha.FieldIndex
+	62,  // 314: api.v0alpha.ReshapeAction.SetFieldValue.value:type_name -> api.v0alpha.RecordFieldProto
+	60,  // 315: api.v0alpha.ReshapeAction.SetFieldFromField.other_field:type_name -> api.v0alpha.FieldIndex
+	247, // 316: api.v0alpha.ReshapeAction.Merge.data:type_name -> api.v0alpha.ReshapeAction.Merge.FieldOrVal
+	249, // 317: api.v0alpha.ReshapeAction.Extract.parts:type_name -> api.v0alpha.ReshapeAction.Extract.Slice
+	60,  // 318: api.v0alpha.ReshapeAction.Merge.FieldOrVal.field:type_name -> api.v0alpha.FieldIndex
+	248, // 319: api.v0alpha.ReshapeAction.Extract.Slice.start_index:type_name -> api.v0alpha.ReshapeAction.Extract.Index
+	248, // 320: api.v0alpha.ReshapeAction.Extract.Slice.end_index:type_name -> api.v0alpha.ReshapeAction.Extract.Index
+	2,   // 321: api.v0alpha.ContactManagerSink.DeDuplication.field_type:type_name -> api.v0alpha.ContactManagerSink.DeDuplicationFieldType
+	3,   // 322: api.v0alpha.ContactManagerSink.DeDuplication.merge_strategy:type_name -> api.v0alpha.ContactManagerSink.DeDuplicationMergeStrategy
+	257, // 323: api.v0alpha.RetypeCollectionReq.FieldTypesEntry.value:type_name -> api.commons.FieldType
+	23,  // 324: api.v0alpha.LMS.GetPublicKey:input_type -> api.v0alpha.GetPublicKeyReq
+	69,  // 325: api.v0alpha.LMS.CreateFileTemplate:input_type -> api.v0alpha.FileTemplate
+	65,  // 326: api.v0alpha.LMS.ListFileTemplates:input_type -> api.v0alpha.GetFileTemplatesReq
+	69,  // 327: api.v0alpha.LMS.UpdateFileTemplate:input_type -> api.v0alpha.FileTemplate
+	69,  // 328: api.v0alpha.LMS.DeleteFileTemplate:input_type -> api.v0alpha.FileTemplate
+	69,  // 329: api.v0alpha.LMS.GetFileTemplate:input_type -> api.v0alpha.FileTemplate
+	56,  // 330: api.v0alpha.LMS.CreateField:input_type -> api.v0alpha.Field
+	61,  // 331: api.v0alpha.LMS.ListFields:input_type -> api.v0alpha.ListFieldsReq
+	56,  // 332: api.v0alpha.LMS.GetField:input_type -> api.v0alpha.Field
+	57,  // 333: api.v0alpha.LMS.UpdateField:input_type -> api.v0alpha.UpdateFieldReq
+	56,  // 334: api.v0alpha.LMS.DeleteField:input_type -> api.v0alpha.Field
+	39,  // 335: api.v0alpha.LMS.ListAvailableFieldsByElementId:input_type -> api.v0alpha.ListAvailableFieldsByElementIdReq
+	40,  // 336: api.v0alpha.LMS.ListFieldsForElement:input_type -> api.v0alpha.ListFieldsForElementReq
+	42,  // 337: api.v0alpha.LMS.ListAutocompleteFields:input_type -> api.v0alpha.ListAutocompleteFieldsReq
+	286, // 338: api.v0alpha.LMS.ListCampaignLinks:input_type -> google.protobuf.Empty
+	46,  // 339: api.v0alpha.LMS.PeekList:input_type -> api.v0alpha.PeekListReq
+	48,  // 340: api.v0alpha.LMS.GetHistory:input_type -> api.v0alpha.GetHistoryReq
+	45,  // 341: api.v0alpha.LMS.CreateElement:input_type -> api.v0alpha.Element
+	64,  // 342: api.v0alpha.LMS.ListElements:input_type -> api.v0alpha.ListElementsReq
+	44,  // 343: api.v0alpha.LMS.GetElement:input_type -> api.v0alpha.ElementPK
+	45,  // 344: api.v0alpha.LMS.UpdateElement:input_type -> api.v0alpha.Element
+	45,  // 345: api.v0alpha.LMS.DeleteElement:input_type -> api.v0alpha.Element
+	45,  // 346: api.v0alpha.LMS.CopyPipelineUpstream:input_type -> api.v0alpha.Element
+	45,  // 347: api.v0alpha.LMS.CopyPipelineDownstream:input_type -> api.v0alpha.Element
+	34,  // 348: api.v0alpha.LMS.ProcessElement:input_type -> api.v0alpha.ProcessElementReq
+	35,  // 349: api.v0alpha.LMS.ProcessList:input_type -> api.v0alpha.ProcessListRequest
+	37,  // 350: api.v0alpha.LMS.StreamList:input_type -> api.v0alpha.StreamListRequest
+	286, // 351: api.v0alpha.LMS.GetAvailableFields:input_type -> google.protobuf.Empty
+	286, // 352: api.v0alpha.LMS.ListNewEvents:input_type -> google.protobuf.Empty
+	148, // 353: api.v0alpha.LMS.ViewQueue:input_type -> api.v0alpha.ViewQueueReq
+	144, // 354: api.v0alpha.LMS.Autocomplete:input_type -> api.v0alpha.ParseReq
+	32,  // 355: api.v0alpha.LMS.GetComplianceScrubLists:input_type -> api.v0alpha.GetComplianceScrubListsReq
+	25,  // 356: api.v0alpha.LMS.FindFieldUsages:input_type -> api.v0alpha.FindFieldUsagesReq
+	30,  // 357: api.v0alpha.LMS.FindInvalidElements:input_type -> api.v0alpha.FindInvalidElementsReq
+	151, // 358: api.v0alpha.LMS.CreateCollection:input_type -> api.v0alpha.CollectionMetadata
+	157, // 359: api.v0alpha.LMS.GetCollection:input_type -> api.v0alpha.GetCollectionReq
+	151, // 360: api.v0alpha.LMS.UpdateCollection:input_type -> api.v0alpha.CollectionMetadata
+	149, // 361: api.v0alpha.LMS.RetypeCollection:input_type -> api.v0alpha.RetypeCollectionReq
+	159, // 362: api.v0alpha.LMS.DeleteCollection:input_type -> api.v0alpha.DeleteCollectionReq
+	161, // 363: api.v0alpha.LMS.ListCollections:input_type -> api.v0alpha.ListCollectionsReq
+	160, // 364: api.v0alpha.LMS.ResetCollection:input_type -> api.v0alpha.ResetCollectionReq
+	152, // 365: api.v0alpha.LMS.AddCollectionEntry:input_type -> api.v0alpha.CollectionEntry
+	168, // 366: api.v0alpha.LMS.DeleteCollectionEntry:input_type -> api.v0alpha.DeleteCollectionEntryReq
+	152, // 367: api.v0alpha.LMS.UpdateCollectionEntry:input_type -> api.v0alpha.CollectionEntry
+	158, // 368: api.v0alpha.LMS.StreamCollection:input_type -> api.v0alpha.StreamCollectionReq
+	163, // 369: api.v0alpha.LMS.SearchCollectionsPaginated:input_type -> api.v0alpha.SearchCollectionsPaginatedReq
+	166, // 370: api.v0alpha.LMS.GetCollectionEntries:input_type -> api.v0alpha.GetCollectionEntriesReq
+	173, // 371: api.v0alpha.LMS.CreateCjsSearchDefinition:input_type -> api.v0alpha.CjsSearchDefinition
+	174, // 372: api.v0alpha.LMS.GetCjsSearchDefinition:input_type -> api.v0alpha.GetCjsSearchDefinitionReq
+	173, // 373: api.v0alpha.LMS.UpdateCjsSearchDefinition:input_type -> api.v0alpha.CjsSearchDefinition
+	175, // 374: api.v0alpha.LMS.DeleteCjsSearchDefinition:input_type -> api.v0alpha.DeleteCjsSearchDefinitionReq
+	176, // 375: api.v0alpha.LMS.ListCjsSearchDefinitions:input_type -> api.v0alpha.ListCjsSearchDefinitionsReq
+	178, // 376: api.v0alpha.LMS.ExecuteCjsSearchDefinition:input_type -> api.v0alpha.ExecuteCjsSearchDefinitionReq
+	184, // 377: api.v0alpha.LMS.GetCjsSecureSearchCriteria:input_type -> api.v0alpha.GetCjsSecureSearchCriteriaReq
+	183, // 378: api.v0alpha.LMS.CreateCjsSecureSearchCriteria:input_type -> api.v0alpha.CjsSecureSearchCriteria
+	183, // 379: api.v0alpha.LMS.UpdateCjsSecureSearchCriteria:input_type -> api.v0alpha.CjsSecureSearchCriteria
+	195, // 380: api.v0alpha.LMS.SampleEndpoint:input_type -> api.v0alpha.SampleRequest
+	196, // 381: api.v0alpha.LMS.GetAvailableEHRFields:input_type -> api.v0alpha.EHREntityType
+	44,  // 382: api.v0alpha.LMS.GetQueuedEventsStatusByElementId:input_type -> api.v0alpha.ElementPK
+	20,  // 383: api.v0alpha.LMS.ListPools:input_type -> api.v0alpha.ListPoolsRequest
+	8,   // 384: api.v0alpha.LMS.CreatePipelineCanvas:input_type -> api.v0alpha.CreatePipelineCanvasReq
+	10,  // 385: api.v0alpha.LMS.ListPipelineCanvases:input_type -> api.v0alpha.ListPipelineCanvasesReq
+	12,  // 386: api.v0alpha.LMS.UpdatePipelineCanvas:input_type -> api.v0alpha.UpdatePipelineCanvasReq
+	14,  // 387: api.v0alpha.LMS.DeletePipelineCanvas:input_type -> api.v0alpha.DeletePipelineCanvasReq
+	16,  // 388: api.v0alpha.LMS.GetPipelineCanvas:input_type -> api.v0alpha.GetPipelineCanvasReq
+	18,  // 389: api.v0alpha.LMS.GetPipelineCanvasEvents:input_type -> api.v0alpha.GetPipelineCanvasEventsReq
+	24,  // 390: api.v0alpha.LMS.GetPublicKey:output_type -> api.v0alpha.PublicKey
+	69,  // 391: api.v0alpha.LMS.CreateFileTemplate:output_type -> api.v0alpha.FileTemplate
+	69,  // 392: api.v0alpha.LMS.ListFileTemplates:output_type -> api.v0alpha.FileTemplate
+	69,  // 393: api.v0alpha.LMS.UpdateFileTemplate:output_type -> api.v0alpha.FileTemplate
+	69,  // 394: api.v0alpha.LMS.DeleteFileTemplate:output_type -> api.v0alpha.FileTemplate
+	69,  // 395: api.v0alpha.LMS.GetFileTemplate:output_type -> api.v0alpha.FileTemplate
+	56,  // 396: api.v0alpha.LMS.CreateField:output_type -> api.v0alpha.Field
+	59,  // 397: api.v0alpha.LMS.ListFields:output_type -> api.v0alpha.Fields
+	56,  // 398: api.v0alpha.LMS.GetField:output_type -> api.v0alpha.Field
+	56,  // 399: api.v0alpha.LMS.UpdateField:output_type -> api.v0alpha.Field
+	56,  // 400: api.v0alpha.LMS.DeleteField:output_type -> api.v0alpha.Field
+	54,  // 401: api.v0alpha.LMS.ListAvailableFieldsByElementId:output_type -> api.v0alpha.ProcessFields
+	41,  // 402: api.v0alpha.LMS.ListFieldsForElement:output_type -> api.v0alpha.ListFieldsForElementRes
+	43,  // 403: api.v0alpha.LMS.ListAutocompleteFields:output_type -> api.v0alpha.ListAutocompleteFieldsRes
+	169, // 404: api.v0alpha.LMS.ListCampaignLinks:output_type -> api.v0alpha.ListCampaignLinksRes
+	47,  // 405: api.v0alpha.LMS.PeekList:output_type -> api.v0alpha.PeekListRes
+	49,  // 406: api.v0alpha.LMS.GetHistory:output_type -> api.v0alpha.GetHistoryRes
+	45,  // 407: api.v0alpha.LMS.CreateElement:output_type -> api.v0alpha.Element
+	45,  // 408: api.v0alpha.LMS.ListElements:output_type -> api.v0alpha.Element
+	45,  // 409: api.v0alpha.LMS.GetElement:output_type -> api.v0alpha.Element
+	45,  // 410: api.v0alpha.LMS.UpdateElement:output_type -> api.v0alpha.Element
+	45,  // 411: api.v0alpha.LMS.DeleteElement:output_type -> api.v0alpha.Element
+	45,  // 412: api.v0alpha.LMS.CopyPipelineUpstream:output_type -> api.v0alpha.Element
+	45,  // 413: api.v0alpha.LMS.CopyPipelineDownstream:output_type -> api.v0alpha.Element
+	286, // 414: api.v0alpha.LMS.ProcessElement:output_type -> google.protobuf.Empty
+	36,  // 415: api.v0alpha.LMS.ProcessList:output_type -> api.v0alpha.ProcessListResponse
+	38,  // 416: api.v0alpha.LMS.StreamList:output_type -> api.v0alpha.StreamListResponse
+	54,  // 417: api.v0alpha.LMS.GetAvailableFields:output_type -> api.v0alpha.ProcessFields
+	147, // 418: api.v0alpha.LMS.ListNewEvents:output_type -> api.v0alpha.Events
+	147, // 419: api.v0alpha.LMS.ViewQueue:output_type -> api.v0alpha.Events
+	145, // 420: api.v0alpha.LMS.Autocomplete:output_type -> api.v0alpha.ParseRes
+	33,  // 421: api.v0alpha.LMS.GetComplianceScrubLists:output_type -> api.v0alpha.GetComplianceScrubListsRes
+	27,  // 422: api.v0alpha.LMS.FindFieldUsages:output_type -> api.v0alpha.FindFieldUsagesRes
+	31,  // 423: api.v0alpha.LMS.FindInvalidElements:output_type -> api.v0alpha.FindInvalidElementsRes
+	151, // 424: api.v0alpha.LMS.CreateCollection:output_type -> api.v0alpha.CollectionMetadata
+	151, // 425: api.v0alpha.LMS.GetCollection:output_type -> api.v0alpha.CollectionMetadata
+	286, // 426: api.v0alpha.LMS.UpdateCollection:output_type -> google.protobuf.Empty
+	150, // 427: api.v0alpha.LMS.RetypeCollection:output_type -> api.v0alpha.RetypeCollectionRes
+	286, // 428: api.v0alpha.LMS.DeleteCollection:output_type -> google.protobuf.Empty
+	162, // 429: api.v0alpha.LMS.ListCollections:output_type -> api.v0alpha.ListCollectionsRes
+	286, // 430: api.v0alpha.LMS.ResetCollection:output_type -> google.protobuf.Empty
+	152, // 431: api.v0alpha.LMS.AddCollectionEntry:output_type -> api.v0alpha.CollectionEntry
+	286, // 432: api.v0alpha.LMS.DeleteCollectionEntry:output_type -> google.protobuf.Empty
+	152, // 433: api.v0alpha.LMS.UpdateCollectionEntry:output_type -> api.v0alpha.CollectionEntry
+	152, // 434: api.v0alpha.LMS.StreamCollection:output_type -> api.v0alpha.CollectionEntry
+	165, // 435: api.v0alpha.LMS.SearchCollectionsPaginated:output_type -> api.v0alpha.PaginatedSearchRes
+	167, // 436: api.v0alpha.LMS.GetCollectionEntries:output_type -> api.v0alpha.GetCollectionEntriesRes
+	173, // 437: api.v0alpha.LMS.CreateCjsSearchDefinition:output_type -> api.v0alpha.CjsSearchDefinition
+	173, // 438: api.v0alpha.LMS.GetCjsSearchDefinition:output_type -> api.v0alpha.CjsSearchDefinition
+	286, // 439: api.v0alpha.LMS.UpdateCjsSearchDefinition:output_type -> google.protobuf.Empty
+	286, // 440: api.v0alpha.LMS.DeleteCjsSearchDefinition:output_type -> google.protobuf.Empty
+	177, // 441: api.v0alpha.LMS.ListCjsSearchDefinitions:output_type -> api.v0alpha.ListCjsSearchDefinitionsRes
+	179, // 442: api.v0alpha.LMS.ExecuteCjsSearchDefinition:output_type -> api.v0alpha.ExecuteCjsSearchDefinitionRes
+	183, // 443: api.v0alpha.LMS.GetCjsSecureSearchCriteria:output_type -> api.v0alpha.CjsSecureSearchCriteria
+	183, // 444: api.v0alpha.LMS.CreateCjsSecureSearchCriteria:output_type -> api.v0alpha.CjsSecureSearchCriteria
+	286, // 445: api.v0alpha.LMS.UpdateCjsSecureSearchCriteria:output_type -> google.protobuf.Empty
+	286, // 446: api.v0alpha.LMS.SampleEndpoint:output_type -> google.protobuf.Empty
+	59,  // 447: api.v0alpha.LMS.GetAvailableEHRFields:output_type -> api.v0alpha.Fields
+	147, // 448: api.v0alpha.LMS.GetQueuedEventsStatusByElementId:output_type -> api.v0alpha.Events
+	21,  // 449: api.v0alpha.LMS.ListPools:output_type -> api.v0alpha.ListPoolsResponse
+	9,   // 450: api.v0alpha.LMS.CreatePipelineCanvas:output_type -> api.v0alpha.CreatePipelineCanvasRes
+	11,  // 451: api.v0alpha.LMS.ListPipelineCanvases:output_type -> api.v0alpha.ListPipelineCanvasesRes
+	13,  // 452: api.v0alpha.LMS.UpdatePipelineCanvas:output_type -> api.v0alpha.UpdatePipelineCanvasRes
+	15,  // 453: api.v0alpha.LMS.DeletePipelineCanvas:output_type -> api.v0alpha.DeletePipelineCanvasRes
+	17,  // 454: api.v0alpha.LMS.GetPipelineCanvas:output_type -> api.v0alpha.GetPipelineCanvasRes
+	19,  // 455: api.v0alpha.LMS.GetPipelineCanvasEvents:output_type -> api.v0alpha.GetPipelineCanvasEventsRes
+	390, // [390:456] is the sub-list for method output_type
+	324, // [324:390] is the sub-list for method input_type
+	324, // [324:324] is the sub-list for extension type_name
+	324, // [324:324] is the sub-list for extension extendee
+	0,   // [0:324] is the sub-list for field type_name
 }
 
 func init() { file_api_v0alpha_lms_proto_init() }
@@ -20368,16 +20686,16 @@ func file_api_v0alpha_lms_proto_init() {
 		(*FilterCheck_ListComparison_FieldOrVal_Field)(nil),
 		(*FilterCheck_ListComparison_FieldOrVal_Value)(nil),
 	}
-	file_api_v0alpha_lms_proto_msgTypes[234].OneofWrappers = []any{
+	file_api_v0alpha_lms_proto_msgTypes[240].OneofWrappers = []any{
 		(*ReshapeAction_Trim_Amount)(nil),
 		(*ReshapeAction_Trim_Data)(nil),
 		(*ReshapeAction_Trim_Marker)(nil),
 	}
-	file_api_v0alpha_lms_proto_msgTypes[236].OneofWrappers = []any{
+	file_api_v0alpha_lms_proto_msgTypes[242].OneofWrappers = []any{
 		(*ReshapeAction_Merge_FieldOrVal_Field)(nil),
 		(*ReshapeAction_Merge_FieldOrVal_Value)(nil),
 	}
-	file_api_v0alpha_lms_proto_msgTypes[237].OneofWrappers = []any{
+	file_api_v0alpha_lms_proto_msgTypes[243].OneofWrappers = []any{
 		(*ReshapeAction_Extract_Index_Position)(nil),
 		(*ReshapeAction_Extract_Index_Match)(nil),
 	}
@@ -20387,7 +20705,7 @@ func file_api_v0alpha_lms_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_v0alpha_lms_proto_rawDesc), len(file_api_v0alpha_lms_proto_rawDesc)),
 			NumEnums:      5,
-			NumMessages:   243,
+			NumMessages:   249,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
