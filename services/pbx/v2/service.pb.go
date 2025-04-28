@@ -1078,6 +1078,102 @@ func (x *GetPBXUserResponse) GetUser() *PBXUser {
 	return nil
 }
 
+type GetSIPCredentialsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetSIPCredentialsRequest) Reset() {
+	*x = GetSIPCredentialsRequest{}
+	mi := &file_services_pbx_v2_service_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetSIPCredentialsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSIPCredentialsRequest) ProtoMessage() {}
+
+func (x *GetSIPCredentialsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_services_pbx_v2_service_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSIPCredentialsRequest.ProtoReflect.Descriptor instead.
+func (*GetSIPCredentialsRequest) Descriptor() ([]byte, []int) {
+	return file_services_pbx_v2_service_proto_rawDescGZIP(), []int{19}
+}
+
+type GetSIPCredentialsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SipDomain     string                 `protobuf:"bytes,1,opt,name=sip_domain,json=sipDomain,proto3" json:"sip_domain,omitempty"`          // register URL to connect to kamailio for this cluster
+	UserUri       string                 `protobuf:"bytes,2,opt,name=user_uri,json=userUri,proto3" json:"user_uri,omitempty"`                // user register URI
+	SessionToken  string                 `protobuf:"bytes,3,opt,name=session_token,json=sessionToken,proto3" json:"session_token,omitempty"` // generated user session token for registering SIPAccount
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetSIPCredentialsResponse) Reset() {
+	*x = GetSIPCredentialsResponse{}
+	mi := &file_services_pbx_v2_service_proto_msgTypes[20]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetSIPCredentialsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSIPCredentialsResponse) ProtoMessage() {}
+
+func (x *GetSIPCredentialsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_services_pbx_v2_service_proto_msgTypes[20]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSIPCredentialsResponse.ProtoReflect.Descriptor instead.
+func (*GetSIPCredentialsResponse) Descriptor() ([]byte, []int) {
+	return file_services_pbx_v2_service_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *GetSIPCredentialsResponse) GetSipDomain() string {
+	if x != nil {
+		return x.SipDomain
+	}
+	return ""
+}
+
+func (x *GetSIPCredentialsResponse) GetUserUri() string {
+	if x != nil {
+		return x.UserUri
+	}
+	return ""
+}
+
+func (x *GetSIPCredentialsResponse) GetSessionToken() string {
+	if x != nil {
+		return x.SessionToken
+	}
+	return ""
+}
+
 type ListRingGroupsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
@@ -1086,7 +1182,7 @@ type ListRingGroupsRequest struct {
 
 func (x *ListRingGroupsRequest) Reset() {
 	*x = ListRingGroupsRequest{}
-	mi := &file_services_pbx_v2_service_proto_msgTypes[19]
+	mi := &file_services_pbx_v2_service_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1098,7 +1194,7 @@ func (x *ListRingGroupsRequest) String() string {
 func (*ListRingGroupsRequest) ProtoMessage() {}
 
 func (x *ListRingGroupsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_services_pbx_v2_service_proto_msgTypes[19]
+	mi := &file_services_pbx_v2_service_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1111,7 +1207,7 @@ func (x *ListRingGroupsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListRingGroupsRequest.ProtoReflect.Descriptor instead.
 func (*ListRingGroupsRequest) Descriptor() ([]byte, []int) {
-	return file_services_pbx_v2_service_proto_rawDescGZIP(), []int{19}
+	return file_services_pbx_v2_service_proto_rawDescGZIP(), []int{21}
 }
 
 type ListRingGroupsResponse struct {
@@ -1123,7 +1219,7 @@ type ListRingGroupsResponse struct {
 
 func (x *ListRingGroupsResponse) Reset() {
 	*x = ListRingGroupsResponse{}
-	mi := &file_services_pbx_v2_service_proto_msgTypes[20]
+	mi := &file_services_pbx_v2_service_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1135,7 +1231,7 @@ func (x *ListRingGroupsResponse) String() string {
 func (*ListRingGroupsResponse) ProtoMessage() {}
 
 func (x *ListRingGroupsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_services_pbx_v2_service_proto_msgTypes[20]
+	mi := &file_services_pbx_v2_service_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1148,7 +1244,7 @@ func (x *ListRingGroupsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListRingGroupsResponse.ProtoReflect.Descriptor instead.
 func (*ListRingGroupsResponse) Descriptor() ([]byte, []int) {
-	return file_services_pbx_v2_service_proto_rawDescGZIP(), []int{20}
+	return file_services_pbx_v2_service_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *ListRingGroupsResponse) GetGroups() []*RingGroup {
@@ -1167,7 +1263,7 @@ type ListRingGroupsBySipIdRequest struct {
 
 func (x *ListRingGroupsBySipIdRequest) Reset() {
 	*x = ListRingGroupsBySipIdRequest{}
-	mi := &file_services_pbx_v2_service_proto_msgTypes[21]
+	mi := &file_services_pbx_v2_service_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1179,7 +1275,7 @@ func (x *ListRingGroupsBySipIdRequest) String() string {
 func (*ListRingGroupsBySipIdRequest) ProtoMessage() {}
 
 func (x *ListRingGroupsBySipIdRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_services_pbx_v2_service_proto_msgTypes[21]
+	mi := &file_services_pbx_v2_service_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1192,7 +1288,7 @@ func (x *ListRingGroupsBySipIdRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListRingGroupsBySipIdRequest.ProtoReflect.Descriptor instead.
 func (*ListRingGroupsBySipIdRequest) Descriptor() ([]byte, []int) {
-	return file_services_pbx_v2_service_proto_rawDescGZIP(), []int{21}
+	return file_services_pbx_v2_service_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *ListRingGroupsBySipIdRequest) GetSipAccountId() string {
@@ -1211,7 +1307,7 @@ type ListRingGroupsBySipIdResponse struct {
 
 func (x *ListRingGroupsBySipIdResponse) Reset() {
 	*x = ListRingGroupsBySipIdResponse{}
-	mi := &file_services_pbx_v2_service_proto_msgTypes[22]
+	mi := &file_services_pbx_v2_service_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1223,7 +1319,7 @@ func (x *ListRingGroupsBySipIdResponse) String() string {
 func (*ListRingGroupsBySipIdResponse) ProtoMessage() {}
 
 func (x *ListRingGroupsBySipIdResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_services_pbx_v2_service_proto_msgTypes[22]
+	mi := &file_services_pbx_v2_service_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1236,7 +1332,7 @@ func (x *ListRingGroupsBySipIdResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListRingGroupsBySipIdResponse.ProtoReflect.Descriptor instead.
 func (*ListRingGroupsBySipIdResponse) Descriptor() ([]byte, []int) {
-	return file_services_pbx_v2_service_proto_rawDescGZIP(), []int{22}
+	return file_services_pbx_v2_service_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *ListRingGroupsBySipIdResponse) GetGroups() []*RingGroup {
@@ -1255,7 +1351,7 @@ type GetRingGroupRequest struct {
 
 func (x *GetRingGroupRequest) Reset() {
 	*x = GetRingGroupRequest{}
-	mi := &file_services_pbx_v2_service_proto_msgTypes[23]
+	mi := &file_services_pbx_v2_service_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1267,7 +1363,7 @@ func (x *GetRingGroupRequest) String() string {
 func (*GetRingGroupRequest) ProtoMessage() {}
 
 func (x *GetRingGroupRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_services_pbx_v2_service_proto_msgTypes[23]
+	mi := &file_services_pbx_v2_service_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1280,7 +1376,7 @@ func (x *GetRingGroupRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetRingGroupRequest.ProtoReflect.Descriptor instead.
 func (*GetRingGroupRequest) Descriptor() ([]byte, []int) {
-	return file_services_pbx_v2_service_proto_rawDescGZIP(), []int{23}
+	return file_services_pbx_v2_service_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *GetRingGroupRequest) GetRingGroupId() string {
@@ -1299,7 +1395,7 @@ type GetRingGroupResponse struct {
 
 func (x *GetRingGroupResponse) Reset() {
 	*x = GetRingGroupResponse{}
-	mi := &file_services_pbx_v2_service_proto_msgTypes[24]
+	mi := &file_services_pbx_v2_service_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1311,7 +1407,7 @@ func (x *GetRingGroupResponse) String() string {
 func (*GetRingGroupResponse) ProtoMessage() {}
 
 func (x *GetRingGroupResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_services_pbx_v2_service_proto_msgTypes[24]
+	mi := &file_services_pbx_v2_service_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1324,7 +1420,7 @@ func (x *GetRingGroupResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetRingGroupResponse.ProtoReflect.Descriptor instead.
 func (*GetRingGroupResponse) Descriptor() ([]byte, []int) {
-	return file_services_pbx_v2_service_proto_rawDescGZIP(), []int{24}
+	return file_services_pbx_v2_service_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *GetRingGroupResponse) GetGroup() *RingGroup {
@@ -1344,7 +1440,7 @@ type UpdateSIPAccountRequest struct {
 
 func (x *UpdateSIPAccountRequest) Reset() {
 	*x = UpdateSIPAccountRequest{}
-	mi := &file_services_pbx_v2_service_proto_msgTypes[25]
+	mi := &file_services_pbx_v2_service_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1356,7 +1452,7 @@ func (x *UpdateSIPAccountRequest) String() string {
 func (*UpdateSIPAccountRequest) ProtoMessage() {}
 
 func (x *UpdateSIPAccountRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_services_pbx_v2_service_proto_msgTypes[25]
+	mi := &file_services_pbx_v2_service_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1369,7 +1465,7 @@ func (x *UpdateSIPAccountRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateSIPAccountRequest.ProtoReflect.Descriptor instead.
 func (*UpdateSIPAccountRequest) Descriptor() ([]byte, []int) {
-	return file_services_pbx_v2_service_proto_rawDescGZIP(), []int{25}
+	return file_services_pbx_v2_service_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *UpdateSIPAccountRequest) GetSipAccount() *SIPAccount {
@@ -1395,7 +1491,7 @@ type UpdateSIPAccountResponse struct {
 
 func (x *UpdateSIPAccountResponse) Reset() {
 	*x = UpdateSIPAccountResponse{}
-	mi := &file_services_pbx_v2_service_proto_msgTypes[26]
+	mi := &file_services_pbx_v2_service_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1407,7 +1503,7 @@ func (x *UpdateSIPAccountResponse) String() string {
 func (*UpdateSIPAccountResponse) ProtoMessage() {}
 
 func (x *UpdateSIPAccountResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_services_pbx_v2_service_proto_msgTypes[26]
+	mi := &file_services_pbx_v2_service_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1420,7 +1516,7 @@ func (x *UpdateSIPAccountResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateSIPAccountResponse.ProtoReflect.Descriptor instead.
 func (*UpdateSIPAccountResponse) Descriptor() ([]byte, []int) {
-	return file_services_pbx_v2_service_proto_rawDescGZIP(), []int{26}
+	return file_services_pbx_v2_service_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *UpdateSIPAccountResponse) GetSipAccount() *SIPAccount {
@@ -1440,7 +1536,7 @@ type UpdateRingGroupRequest struct {
 
 func (x *UpdateRingGroupRequest) Reset() {
 	*x = UpdateRingGroupRequest{}
-	mi := &file_services_pbx_v2_service_proto_msgTypes[27]
+	mi := &file_services_pbx_v2_service_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1452,7 +1548,7 @@ func (x *UpdateRingGroupRequest) String() string {
 func (*UpdateRingGroupRequest) ProtoMessage() {}
 
 func (x *UpdateRingGroupRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_services_pbx_v2_service_proto_msgTypes[27]
+	mi := &file_services_pbx_v2_service_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1465,7 +1561,7 @@ func (x *UpdateRingGroupRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateRingGroupRequest.ProtoReflect.Descriptor instead.
 func (*UpdateRingGroupRequest) Descriptor() ([]byte, []int) {
-	return file_services_pbx_v2_service_proto_rawDescGZIP(), []int{27}
+	return file_services_pbx_v2_service_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *UpdateRingGroupRequest) GetGroup() *RingGroup {
@@ -1491,7 +1587,7 @@ type UpdateRingGroupResponse struct {
 
 func (x *UpdateRingGroupResponse) Reset() {
 	*x = UpdateRingGroupResponse{}
-	mi := &file_services_pbx_v2_service_proto_msgTypes[28]
+	mi := &file_services_pbx_v2_service_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1503,7 +1599,7 @@ func (x *UpdateRingGroupResponse) String() string {
 func (*UpdateRingGroupResponse) ProtoMessage() {}
 
 func (x *UpdateRingGroupResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_services_pbx_v2_service_proto_msgTypes[28]
+	mi := &file_services_pbx_v2_service_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1516,7 +1612,7 @@ func (x *UpdateRingGroupResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateRingGroupResponse.ProtoReflect.Descriptor instead.
 func (*UpdateRingGroupResponse) Descriptor() ([]byte, []int) {
-	return file_services_pbx_v2_service_proto_rawDescGZIP(), []int{28}
+	return file_services_pbx_v2_service_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *UpdateRingGroupResponse) GetGroup() *RingGroup {
@@ -1534,7 +1630,7 @@ type AssignRandomExtensionRequest struct {
 
 func (x *AssignRandomExtensionRequest) Reset() {
 	*x = AssignRandomExtensionRequest{}
-	mi := &file_services_pbx_v2_service_proto_msgTypes[29]
+	mi := &file_services_pbx_v2_service_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1546,7 +1642,7 @@ func (x *AssignRandomExtensionRequest) String() string {
 func (*AssignRandomExtensionRequest) ProtoMessage() {}
 
 func (x *AssignRandomExtensionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_services_pbx_v2_service_proto_msgTypes[29]
+	mi := &file_services_pbx_v2_service_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1559,7 +1655,7 @@ func (x *AssignRandomExtensionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AssignRandomExtensionRequest.ProtoReflect.Descriptor instead.
 func (*AssignRandomExtensionRequest) Descriptor() ([]byte, []int) {
-	return file_services_pbx_v2_service_proto_rawDescGZIP(), []int{29}
+	return file_services_pbx_v2_service_proto_rawDescGZIP(), []int{31}
 }
 
 type AssignRandomExtensionResponse struct {
@@ -1571,7 +1667,7 @@ type AssignRandomExtensionResponse struct {
 
 func (x *AssignRandomExtensionResponse) Reset() {
 	*x = AssignRandomExtensionResponse{}
-	mi := &file_services_pbx_v2_service_proto_msgTypes[30]
+	mi := &file_services_pbx_v2_service_proto_msgTypes[32]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1583,7 +1679,7 @@ func (x *AssignRandomExtensionResponse) String() string {
 func (*AssignRandomExtensionResponse) ProtoMessage() {}
 
 func (x *AssignRandomExtensionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_services_pbx_v2_service_proto_msgTypes[30]
+	mi := &file_services_pbx_v2_service_proto_msgTypes[32]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1596,7 +1692,7 @@ func (x *AssignRandomExtensionResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AssignRandomExtensionResponse.ProtoReflect.Descriptor instead.
 func (*AssignRandomExtensionResponse) Descriptor() ([]byte, []int) {
-	return file_services_pbx_v2_service_proto_rawDescGZIP(), []int{30}
+	return file_services_pbx_v2_service_proto_rawDescGZIP(), []int{32}
 }
 
 func (x *AssignRandomExtensionResponse) GetExtension() string {
@@ -1615,7 +1711,7 @@ type CreateRingGroupRequest struct {
 
 func (x *CreateRingGroupRequest) Reset() {
 	*x = CreateRingGroupRequest{}
-	mi := &file_services_pbx_v2_service_proto_msgTypes[31]
+	mi := &file_services_pbx_v2_service_proto_msgTypes[33]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1627,7 +1723,7 @@ func (x *CreateRingGroupRequest) String() string {
 func (*CreateRingGroupRequest) ProtoMessage() {}
 
 func (x *CreateRingGroupRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_services_pbx_v2_service_proto_msgTypes[31]
+	mi := &file_services_pbx_v2_service_proto_msgTypes[33]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1640,7 +1736,7 @@ func (x *CreateRingGroupRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateRingGroupRequest.ProtoReflect.Descriptor instead.
 func (*CreateRingGroupRequest) Descriptor() ([]byte, []int) {
-	return file_services_pbx_v2_service_proto_rawDescGZIP(), []int{31}
+	return file_services_pbx_v2_service_proto_rawDescGZIP(), []int{33}
 }
 
 func (x *CreateRingGroupRequest) GetGroup() *RingGroup {
@@ -1659,7 +1755,7 @@ type CreateRingGroupResponse struct {
 
 func (x *CreateRingGroupResponse) Reset() {
 	*x = CreateRingGroupResponse{}
-	mi := &file_services_pbx_v2_service_proto_msgTypes[32]
+	mi := &file_services_pbx_v2_service_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1671,7 +1767,7 @@ func (x *CreateRingGroupResponse) String() string {
 func (*CreateRingGroupResponse) ProtoMessage() {}
 
 func (x *CreateRingGroupResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_services_pbx_v2_service_proto_msgTypes[32]
+	mi := &file_services_pbx_v2_service_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1684,7 +1780,7 @@ func (x *CreateRingGroupResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateRingGroupResponse.ProtoReflect.Descriptor instead.
 func (*CreateRingGroupResponse) Descriptor() ([]byte, []int) {
-	return file_services_pbx_v2_service_proto_rawDescGZIP(), []int{32}
+	return file_services_pbx_v2_service_proto_rawDescGZIP(), []int{34}
 }
 
 func (x *CreateRingGroupResponse) GetGroup() *RingGroup {
@@ -1703,7 +1799,7 @@ type DeleteRingGroupRequest struct {
 
 func (x *DeleteRingGroupRequest) Reset() {
 	*x = DeleteRingGroupRequest{}
-	mi := &file_services_pbx_v2_service_proto_msgTypes[33]
+	mi := &file_services_pbx_v2_service_proto_msgTypes[35]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1715,7 +1811,7 @@ func (x *DeleteRingGroupRequest) String() string {
 func (*DeleteRingGroupRequest) ProtoMessage() {}
 
 func (x *DeleteRingGroupRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_services_pbx_v2_service_proto_msgTypes[33]
+	mi := &file_services_pbx_v2_service_proto_msgTypes[35]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1728,7 +1824,7 @@ func (x *DeleteRingGroupRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteRingGroupRequest.ProtoReflect.Descriptor instead.
 func (*DeleteRingGroupRequest) Descriptor() ([]byte, []int) {
-	return file_services_pbx_v2_service_proto_rawDescGZIP(), []int{33}
+	return file_services_pbx_v2_service_proto_rawDescGZIP(), []int{35}
 }
 
 func (x *DeleteRingGroupRequest) GetGroupId() string {
@@ -1746,7 +1842,7 @@ type DeleteRingGroupResponse struct {
 
 func (x *DeleteRingGroupResponse) Reset() {
 	*x = DeleteRingGroupResponse{}
-	mi := &file_services_pbx_v2_service_proto_msgTypes[34]
+	mi := &file_services_pbx_v2_service_proto_msgTypes[36]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1758,7 +1854,7 @@ func (x *DeleteRingGroupResponse) String() string {
 func (*DeleteRingGroupResponse) ProtoMessage() {}
 
 func (x *DeleteRingGroupResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_services_pbx_v2_service_proto_msgTypes[34]
+	mi := &file_services_pbx_v2_service_proto_msgTypes[36]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1771,7 +1867,7 @@ func (x *DeleteRingGroupResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteRingGroupResponse.ProtoReflect.Descriptor instead.
 func (*DeleteRingGroupResponse) Descriptor() ([]byte, []int) {
-	return file_services_pbx_v2_service_proto_rawDescGZIP(), []int{34}
+	return file_services_pbx_v2_service_proto_rawDescGZIP(), []int{36}
 }
 
 var File_services_pbx_v2_service_proto protoreflect.FileDescriptor
@@ -1842,7 +1938,13 @@ const file_services_pbx_v2_service_proto_rawDesc = "" +
 	"\x11GetPBXUserRequest\x12\x1e\n" +
 	"\vpbx_user_id\x18\x01 \x01(\tR\tpbxUserId\"B\n" +
 	"\x12GetPBXUserResponse\x12,\n" +
-	"\x04user\x18\x01 \x01(\v2\x18.services.pbx.v2.PBXUserR\x04user\"\x17\n" +
+	"\x04user\x18\x01 \x01(\v2\x18.services.pbx.v2.PBXUserR\x04user\"\x1a\n" +
+	"\x18GetSIPCredentialsRequest\"z\n" +
+	"\x19GetSIPCredentialsResponse\x12\x1d\n" +
+	"\n" +
+	"sip_domain\x18\x01 \x01(\tR\tsipDomain\x12\x19\n" +
+	"\buser_uri\x18\x02 \x01(\tR\auserUri\x12#\n" +
+	"\rsession_token\x18\x03 \x01(\tR\fsessionToken\"\x17\n" +
 	"\x15ListRingGroupsRequest\"L\n" +
 	"\x16ListRingGroupsResponse\x122\n" +
 	"\x06groups\x18\x01 \x03(\v2\x1a.services.pbx.v2.RingGroupR\x06groups\"D\n" +
@@ -1883,7 +1985,7 @@ const file_services_pbx_v2_service_proto_rawDesc = "" +
 	"\x16RING_STRATEGY_RING_ALL\x10\x01\x12\x1d\n" +
 	"\x19RING_STRATEGY_ROUND_ROBIN\x10\x02\x12\x18\n" +
 	"\x14RING_STRATEGY_RANDOM\x10\x03\x12\x19\n" +
-	"\x15RING_STRATEGY_ORDERED\x10\x042\x98\x13\n" +
+	"\x15RING_STRATEGY_ORDERED\x10\x042\xc9\x14\n" +
 	"\n" +
 	"PBXService\x12\x9d\x01\n" +
 	"\fListPBXUsers\x12$.services.pbx.v2.ListPBXUsersRequest\x1a%.services.pbx.v2.ListPBXUsersResponse\"@\xba\xb8\x91\x02\x05\n" +
@@ -1900,7 +2002,9 @@ const file_services_pbx_v2_service_proto_rawDesc = "" +
 	"\rGetSIPAccount\x12%.services.pbx.v2.GetSIPAccountRequest\x1a&.services.pbx.v2.GetSIPAccountResponse\">\xba\xb8\x91\x02\x05\n" +
 	"\x03\b\x84 \x82\xd3\xe4\x93\x02.:\x01*\")/services/pbx/v2/pbxservice/getsipaccount\x12\xbe\x01\n" +
 	"\x15GetSIPAccountByUserId\x12-.services.pbx.v2.GetSIPAccountByUserIdRequest\x1a..services.pbx.v2.GetSIPAccountByUserIdResponse\"F\xba\xb8\x91\x02\x05\n" +
-	"\x03\b\x84 \x82\xd3\xe4\x93\x026:\x01*\"1/services/pbx/v2/pbxservice/getsipaccountbyuserid\x12\xa6\x01\n" +
+	"\x03\b\x84 \x82\xd3\xe4\x93\x026:\x01*\"1/services/pbx/v2/pbxservice/getsipaccountbyuserid\x12\xae\x01\n" +
+	"\x11GetSIPCredentials\x12).services.pbx.v2.GetSIPCredentialsRequest\x1a*.services.pbx.v2.GetSIPCredentialsResponse\"B\xba\xb8\x91\x02\x05\n" +
+	"\x03\b\x84 \x82\xd3\xe4\x93\x022:\x01*\"-/services/pbx/v2/pbxservice/getsipcredentials\x12\xa6\x01\n" +
 	"\x0fListSIPAccounts\x12'.services.pbx.v2.ListSIPAccountsRequest\x1a(.services.pbx.v2.ListSIPAccountsResponse\"@\xba\xb8\x91\x02\x05\n" +
 	"\x03\b\x84 \x82\xd3\xe4\x93\x020:\x01*\"+/services/pbx/v2/pbxservice/listsipaccounts\x12\xda\x01\n" +
 	"\x1cListSIPAccountsByRingGroupId\x124.services.pbx.v2.ListSIPAccountsByRingGroupIdRequest\x1a5.services.pbx.v2.ListSIPAccountsByRingGroupIdResponse\"M\xba\xb8\x91\x02\x05\n" +
@@ -1930,7 +2034,7 @@ func file_services_pbx_v2_service_proto_rawDescGZIP() []byte {
 }
 
 var file_services_pbx_v2_service_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_services_pbx_v2_service_proto_msgTypes = make([]protoimpl.MessageInfo, 35)
+var file_services_pbx_v2_service_proto_msgTypes = make([]protoimpl.MessageInfo, 37)
 var file_services_pbx_v2_service_proto_goTypes = []any{
 	(RingStrategy)(0),                            // 0: services.pbx.v2.RingStrategy
 	(*PBXUser)(nil),                              // 1: services.pbx.v2.PBXUser
@@ -1952,23 +2056,25 @@ var file_services_pbx_v2_service_proto_goTypes = []any{
 	(*GetSIPAccountResponse)(nil),                // 17: services.pbx.v2.GetSIPAccountResponse
 	(*GetPBXUserRequest)(nil),                    // 18: services.pbx.v2.GetPBXUserRequest
 	(*GetPBXUserResponse)(nil),                   // 19: services.pbx.v2.GetPBXUserResponse
-	(*ListRingGroupsRequest)(nil),                // 20: services.pbx.v2.ListRingGroupsRequest
-	(*ListRingGroupsResponse)(nil),               // 21: services.pbx.v2.ListRingGroupsResponse
-	(*ListRingGroupsBySipIdRequest)(nil),         // 22: services.pbx.v2.ListRingGroupsBySipIdRequest
-	(*ListRingGroupsBySipIdResponse)(nil),        // 23: services.pbx.v2.ListRingGroupsBySipIdResponse
-	(*GetRingGroupRequest)(nil),                  // 24: services.pbx.v2.GetRingGroupRequest
-	(*GetRingGroupResponse)(nil),                 // 25: services.pbx.v2.GetRingGroupResponse
-	(*UpdateSIPAccountRequest)(nil),              // 26: services.pbx.v2.UpdateSIPAccountRequest
-	(*UpdateSIPAccountResponse)(nil),             // 27: services.pbx.v2.UpdateSIPAccountResponse
-	(*UpdateRingGroupRequest)(nil),               // 28: services.pbx.v2.UpdateRingGroupRequest
-	(*UpdateRingGroupResponse)(nil),              // 29: services.pbx.v2.UpdateRingGroupResponse
-	(*AssignRandomExtensionRequest)(nil),         // 30: services.pbx.v2.AssignRandomExtensionRequest
-	(*AssignRandomExtensionResponse)(nil),        // 31: services.pbx.v2.AssignRandomExtensionResponse
-	(*CreateRingGroupRequest)(nil),               // 32: services.pbx.v2.CreateRingGroupRequest
-	(*CreateRingGroupResponse)(nil),              // 33: services.pbx.v2.CreateRingGroupResponse
-	(*DeleteRingGroupRequest)(nil),               // 34: services.pbx.v2.DeleteRingGroupRequest
-	(*DeleteRingGroupResponse)(nil),              // 35: services.pbx.v2.DeleteRingGroupResponse
-	(*fieldmaskpb.FieldMask)(nil),                // 36: google.protobuf.FieldMask
+	(*GetSIPCredentialsRequest)(nil),             // 20: services.pbx.v2.GetSIPCredentialsRequest
+	(*GetSIPCredentialsResponse)(nil),            // 21: services.pbx.v2.GetSIPCredentialsResponse
+	(*ListRingGroupsRequest)(nil),                // 22: services.pbx.v2.ListRingGroupsRequest
+	(*ListRingGroupsResponse)(nil),               // 23: services.pbx.v2.ListRingGroupsResponse
+	(*ListRingGroupsBySipIdRequest)(nil),         // 24: services.pbx.v2.ListRingGroupsBySipIdRequest
+	(*ListRingGroupsBySipIdResponse)(nil),        // 25: services.pbx.v2.ListRingGroupsBySipIdResponse
+	(*GetRingGroupRequest)(nil),                  // 26: services.pbx.v2.GetRingGroupRequest
+	(*GetRingGroupResponse)(nil),                 // 27: services.pbx.v2.GetRingGroupResponse
+	(*UpdateSIPAccountRequest)(nil),              // 28: services.pbx.v2.UpdateSIPAccountRequest
+	(*UpdateSIPAccountResponse)(nil),             // 29: services.pbx.v2.UpdateSIPAccountResponse
+	(*UpdateRingGroupRequest)(nil),               // 30: services.pbx.v2.UpdateRingGroupRequest
+	(*UpdateRingGroupResponse)(nil),              // 31: services.pbx.v2.UpdateRingGroupResponse
+	(*AssignRandomExtensionRequest)(nil),         // 32: services.pbx.v2.AssignRandomExtensionRequest
+	(*AssignRandomExtensionResponse)(nil),        // 33: services.pbx.v2.AssignRandomExtensionResponse
+	(*CreateRingGroupRequest)(nil),               // 34: services.pbx.v2.CreateRingGroupRequest
+	(*CreateRingGroupResponse)(nil),              // 35: services.pbx.v2.CreateRingGroupResponse
+	(*DeleteRingGroupRequest)(nil),               // 36: services.pbx.v2.DeleteRingGroupRequest
+	(*DeleteRingGroupResponse)(nil),              // 37: services.pbx.v2.DeleteRingGroupResponse
+	(*fieldmaskpb.FieldMask)(nil),                // 38: google.protobuf.FieldMask
 }
 var file_services_pbx_v2_service_proto_depIdxs = []int32{
 	2,  // 0: services.pbx.v2.SIPAccount.ring_groups:type_name -> services.pbx.v2.SIPAccountRingGroup
@@ -1986,43 +2092,45 @@ var file_services_pbx_v2_service_proto_depIdxs = []int32{
 	7,  // 12: services.pbx.v2.ListRingGroupsBySipIdResponse.groups:type_name -> services.pbx.v2.RingGroup
 	7,  // 13: services.pbx.v2.GetRingGroupResponse.group:type_name -> services.pbx.v2.RingGroup
 	6,  // 14: services.pbx.v2.UpdateSIPAccountRequest.sip_account:type_name -> services.pbx.v2.SIPAccount
-	36, // 15: services.pbx.v2.UpdateSIPAccountRequest.update_mask:type_name -> google.protobuf.FieldMask
+	38, // 15: services.pbx.v2.UpdateSIPAccountRequest.update_mask:type_name -> google.protobuf.FieldMask
 	6,  // 16: services.pbx.v2.UpdateSIPAccountResponse.sip_account:type_name -> services.pbx.v2.SIPAccount
 	7,  // 17: services.pbx.v2.UpdateRingGroupRequest.group:type_name -> services.pbx.v2.RingGroup
-	36, // 18: services.pbx.v2.UpdateRingGroupRequest.update_mask:type_name -> google.protobuf.FieldMask
+	38, // 18: services.pbx.v2.UpdateRingGroupRequest.update_mask:type_name -> google.protobuf.FieldMask
 	7,  // 19: services.pbx.v2.UpdateRingGroupResponse.group:type_name -> services.pbx.v2.RingGroup
 	7,  // 20: services.pbx.v2.CreateRingGroupRequest.group:type_name -> services.pbx.v2.RingGroup
 	7,  // 21: services.pbx.v2.CreateRingGroupResponse.group:type_name -> services.pbx.v2.RingGroup
 	8,  // 22: services.pbx.v2.PBXService.ListPBXUsers:input_type -> services.pbx.v2.ListPBXUsersRequest
 	18, // 23: services.pbx.v2.PBXService.GetPBXUser:input_type -> services.pbx.v2.GetPBXUserRequest
-	20, // 24: services.pbx.v2.PBXService.ListRingGroups:input_type -> services.pbx.v2.ListRingGroupsRequest
-	22, // 25: services.pbx.v2.PBXService.ListRingGroupsBySipId:input_type -> services.pbx.v2.ListRingGroupsBySipIdRequest
-	24, // 26: services.pbx.v2.PBXService.GetRingGroup:input_type -> services.pbx.v2.GetRingGroupRequest
+	22, // 24: services.pbx.v2.PBXService.ListRingGroups:input_type -> services.pbx.v2.ListRingGroupsRequest
+	24, // 25: services.pbx.v2.PBXService.ListRingGroupsBySipId:input_type -> services.pbx.v2.ListRingGroupsBySipIdRequest
+	26, // 26: services.pbx.v2.PBXService.GetRingGroup:input_type -> services.pbx.v2.GetRingGroupRequest
 	16, // 27: services.pbx.v2.PBXService.GetSIPAccount:input_type -> services.pbx.v2.GetSIPAccountRequest
 	14, // 28: services.pbx.v2.PBXService.GetSIPAccountByUserId:input_type -> services.pbx.v2.GetSIPAccountByUserIdRequest
-	10, // 29: services.pbx.v2.PBXService.ListSIPAccounts:input_type -> services.pbx.v2.ListSIPAccountsRequest
-	12, // 30: services.pbx.v2.PBXService.ListSIPAccountsByRingGroupId:input_type -> services.pbx.v2.ListSIPAccountsByRingGroupIdRequest
-	26, // 31: services.pbx.v2.PBXService.UpdateSIPAccount:input_type -> services.pbx.v2.UpdateSIPAccountRequest
-	28, // 32: services.pbx.v2.PBXService.UpdateRingGroup:input_type -> services.pbx.v2.UpdateRingGroupRequest
-	32, // 33: services.pbx.v2.PBXService.CreateRingGroup:input_type -> services.pbx.v2.CreateRingGroupRequest
-	34, // 34: services.pbx.v2.PBXService.DeleteRingGroup:input_type -> services.pbx.v2.DeleteRingGroupRequest
-	30, // 35: services.pbx.v2.PBXService.AssignRandomExtension:input_type -> services.pbx.v2.AssignRandomExtensionRequest
-	9,  // 36: services.pbx.v2.PBXService.ListPBXUsers:output_type -> services.pbx.v2.ListPBXUsersResponse
-	19, // 37: services.pbx.v2.PBXService.GetPBXUser:output_type -> services.pbx.v2.GetPBXUserResponse
-	21, // 38: services.pbx.v2.PBXService.ListRingGroups:output_type -> services.pbx.v2.ListRingGroupsResponse
-	23, // 39: services.pbx.v2.PBXService.ListRingGroupsBySipId:output_type -> services.pbx.v2.ListRingGroupsBySipIdResponse
-	25, // 40: services.pbx.v2.PBXService.GetRingGroup:output_type -> services.pbx.v2.GetRingGroupResponse
-	17, // 41: services.pbx.v2.PBXService.GetSIPAccount:output_type -> services.pbx.v2.GetSIPAccountResponse
-	15, // 42: services.pbx.v2.PBXService.GetSIPAccountByUserId:output_type -> services.pbx.v2.GetSIPAccountByUserIdResponse
-	11, // 43: services.pbx.v2.PBXService.ListSIPAccounts:output_type -> services.pbx.v2.ListSIPAccountsResponse
-	13, // 44: services.pbx.v2.PBXService.ListSIPAccountsByRingGroupId:output_type -> services.pbx.v2.ListSIPAccountsByRingGroupIdResponse
-	27, // 45: services.pbx.v2.PBXService.UpdateSIPAccount:output_type -> services.pbx.v2.UpdateSIPAccountResponse
-	29, // 46: services.pbx.v2.PBXService.UpdateRingGroup:output_type -> services.pbx.v2.UpdateRingGroupResponse
-	33, // 47: services.pbx.v2.PBXService.CreateRingGroup:output_type -> services.pbx.v2.CreateRingGroupResponse
-	35, // 48: services.pbx.v2.PBXService.DeleteRingGroup:output_type -> services.pbx.v2.DeleteRingGroupResponse
-	31, // 49: services.pbx.v2.PBXService.AssignRandomExtension:output_type -> services.pbx.v2.AssignRandomExtensionResponse
-	36, // [36:50] is the sub-list for method output_type
-	22, // [22:36] is the sub-list for method input_type
+	20, // 29: services.pbx.v2.PBXService.GetSIPCredentials:input_type -> services.pbx.v2.GetSIPCredentialsRequest
+	10, // 30: services.pbx.v2.PBXService.ListSIPAccounts:input_type -> services.pbx.v2.ListSIPAccountsRequest
+	12, // 31: services.pbx.v2.PBXService.ListSIPAccountsByRingGroupId:input_type -> services.pbx.v2.ListSIPAccountsByRingGroupIdRequest
+	28, // 32: services.pbx.v2.PBXService.UpdateSIPAccount:input_type -> services.pbx.v2.UpdateSIPAccountRequest
+	30, // 33: services.pbx.v2.PBXService.UpdateRingGroup:input_type -> services.pbx.v2.UpdateRingGroupRequest
+	34, // 34: services.pbx.v2.PBXService.CreateRingGroup:input_type -> services.pbx.v2.CreateRingGroupRequest
+	36, // 35: services.pbx.v2.PBXService.DeleteRingGroup:input_type -> services.pbx.v2.DeleteRingGroupRequest
+	32, // 36: services.pbx.v2.PBXService.AssignRandomExtension:input_type -> services.pbx.v2.AssignRandomExtensionRequest
+	9,  // 37: services.pbx.v2.PBXService.ListPBXUsers:output_type -> services.pbx.v2.ListPBXUsersResponse
+	19, // 38: services.pbx.v2.PBXService.GetPBXUser:output_type -> services.pbx.v2.GetPBXUserResponse
+	23, // 39: services.pbx.v2.PBXService.ListRingGroups:output_type -> services.pbx.v2.ListRingGroupsResponse
+	25, // 40: services.pbx.v2.PBXService.ListRingGroupsBySipId:output_type -> services.pbx.v2.ListRingGroupsBySipIdResponse
+	27, // 41: services.pbx.v2.PBXService.GetRingGroup:output_type -> services.pbx.v2.GetRingGroupResponse
+	17, // 42: services.pbx.v2.PBXService.GetSIPAccount:output_type -> services.pbx.v2.GetSIPAccountResponse
+	15, // 43: services.pbx.v2.PBXService.GetSIPAccountByUserId:output_type -> services.pbx.v2.GetSIPAccountByUserIdResponse
+	21, // 44: services.pbx.v2.PBXService.GetSIPCredentials:output_type -> services.pbx.v2.GetSIPCredentialsResponse
+	11, // 45: services.pbx.v2.PBXService.ListSIPAccounts:output_type -> services.pbx.v2.ListSIPAccountsResponse
+	13, // 46: services.pbx.v2.PBXService.ListSIPAccountsByRingGroupId:output_type -> services.pbx.v2.ListSIPAccountsByRingGroupIdResponse
+	29, // 47: services.pbx.v2.PBXService.UpdateSIPAccount:output_type -> services.pbx.v2.UpdateSIPAccountResponse
+	31, // 48: services.pbx.v2.PBXService.UpdateRingGroup:output_type -> services.pbx.v2.UpdateRingGroupResponse
+	35, // 49: services.pbx.v2.PBXService.CreateRingGroup:output_type -> services.pbx.v2.CreateRingGroupResponse
+	37, // 50: services.pbx.v2.PBXService.DeleteRingGroup:output_type -> services.pbx.v2.DeleteRingGroupResponse
+	33, // 51: services.pbx.v2.PBXService.AssignRandomExtension:output_type -> services.pbx.v2.AssignRandomExtensionResponse
+	37, // [37:52] is the sub-list for method output_type
+	22, // [22:37] is the sub-list for method input_type
 	22, // [22:22] is the sub-list for extension type_name
 	22, // [22:22] is the sub-list for extension extendee
 	0,  // [0:22] is the sub-list for field type_name
@@ -2039,7 +2147,7 @@ func file_services_pbx_v2_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_services_pbx_v2_service_proto_rawDesc), len(file_services_pbx_v2_service_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   35,
+			NumMessages:   37,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
