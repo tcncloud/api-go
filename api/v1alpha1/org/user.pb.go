@@ -69,8 +69,10 @@ type CreateUserRequest struct {
 	LocalePreferencesOverride *commons.LocalePreferences `protobuf:"bytes,19,opt,name=locale_preferences_override,json=localePreferencesOverride,proto3" json:"locale_preferences_override,omitempty"`
 	// Whether the user needs to set their password upon initial login
 	PasswordResetRequired bool `protobuf:"varint,20,opt,name=password_reset_required,json=passwordResetRequired,proto3" json:"password_reset_required,omitempty"`
-	unknownFields         protoimpl.UnknownFields
-	sizeCache             protoimpl.SizeCache
+	// If the user wants notification sounds to play
+	PlayNotificationSounds bool `protobuf:"varint,21,opt,name=play_notification_sounds,json=playNotificationSounds,proto3" json:"play_notification_sounds,omitempty"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
 }
 
 func (x *CreateUserRequest) Reset() {
@@ -232,6 +234,13 @@ func (x *CreateUserRequest) GetLocalePreferencesOverride() *commons.LocalePrefer
 func (x *CreateUserRequest) GetPasswordResetRequired() bool {
 	if x != nil {
 		return x.PasswordResetRequired
+	}
+	return false
+}
+
+func (x *CreateUserRequest) GetPlayNotificationSounds() bool {
+	if x != nil {
+		return x.PlayNotificationSounds
 	}
 	return false
 }
@@ -754,8 +763,10 @@ type GetUserResponse struct {
 	LocalePreferencesOverride *commons.LocalePreferences `protobuf:"bytes,31,opt,name=locale_preferences_override,json=localePreferencesOverride,proto3" json:"locale_preferences_override,omitempty"`
 	// Password reset date is the timestamp of when a user must reset their password by.
 	PasswordResetDate *timestamppb.Timestamp `protobuf:"bytes,32,opt,name=password_reset_date,json=passwordResetDate,proto3" json:"password_reset_date,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	// If the user wants notification sounds to play
+	PlayNotificationSounds bool `protobuf:"varint,33,opt,name=play_notification_sounds,json=playNotificationSounds,proto3" json:"play_notification_sounds,omitempty"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
 }
 
 func (x *GetUserResponse) Reset() {
@@ -1012,6 +1023,13 @@ func (x *GetUserResponse) GetPasswordResetDate() *timestamppb.Timestamp {
 	return nil
 }
 
+func (x *GetUserResponse) GetPlayNotificationSounds() bool {
+	if x != nil {
+		return x.PlayNotificationSounds
+	}
+	return false
+}
+
 // Request message for GetUserByOrgId.
 type GetUserByOrgIdRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -1100,8 +1118,10 @@ type GetUserByOrgIdResponse struct {
 	EmailVerified bool `protobuf:"varint,23,opt,name=email_verified,json=emailVerified,proto3" json:"email_verified,omitempty"`
 	// The override for the users locale preferences
 	LocalePreferencesOverride *commons.LocalePreferences `protobuf:"bytes,24,opt,name=locale_preferences_override,json=localePreferencesOverride,proto3" json:"locale_preferences_override,omitempty"`
-	unknownFields             protoimpl.UnknownFields
-	sizeCache                 protoimpl.SizeCache
+	// If the user wants notification sounds to play
+	PlayNotificationSounds bool `protobuf:"varint,25,opt,name=play_notification_sounds,json=playNotificationSounds,proto3" json:"play_notification_sounds,omitempty"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
 }
 
 func (x *GetUserByOrgIdResponse) Reset() {
@@ -1237,6 +1257,13 @@ func (x *GetUserByOrgIdResponse) GetLocalePreferencesOverride() *commons.LocaleP
 		return x.LocalePreferencesOverride
 	}
 	return nil
+}
+
+func (x *GetUserByOrgIdResponse) GetPlayNotificationSounds() bool {
+	if x != nil {
+		return x.PlayNotificationSounds
+	}
+	return false
 }
 
 // Request message for listAgents rpc.
@@ -1934,6 +1961,8 @@ type UpdateUserRequest struct {
 	LabelIds []string `protobuf:"bytes,14,rep,name=label_ids,json=labelIds,proto3" json:"label_ids,omitempty"`
 	// The override for the users locale preferences
 	LocalePreferencesOverride *commons.LocalePreferences `protobuf:"bytes,15,opt,name=locale_preferences_override,json=localePreferencesOverride,proto3" json:"locale_preferences_override,omitempty"`
+	// If the user wants notification sounds to play
+	PlayNotificationSounds bool `protobuf:"varint,16,opt,name=play_notification_sounds,json=playNotificationSounds,proto3" json:"play_notification_sounds,omitempty"`
 	// Mask to filter fields on organization entities in response.
 	FieldMask     []string `protobuf:"bytes,20,rep,name=field_mask,json=fieldMask,proto3" json:"field_mask,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -2073,6 +2102,13 @@ func (x *UpdateUserRequest) GetLocalePreferencesOverride() *commons.LocalePrefer
 		return x.LocalePreferencesOverride
 	}
 	return nil
+}
+
+func (x *UpdateUserRequest) GetPlayNotificationSounds() bool {
+	if x != nil {
+		return x.PlayNotificationSounds
+	}
+	return false
 }
 
 func (x *UpdateUserRequest) GetFieldMask() []string {
@@ -7070,7 +7106,7 @@ var File_api_v1alpha1_org_user_proto protoreflect.FileDescriptor
 
 const file_api_v1alpha1_org_user_proto_rawDesc = "" +
 	"\n" +
-	"\x1bapi/v1alpha1/org/user.proto\x12\x10api.v1alpha1.org\x1a\x15api/commons/org.proto\x1a\x1capi/commons/org/labels.proto\x1a!api/commons/org/permissions.proto\x1a\x1capi/commons/org/trusts.proto\x1a\x1aapi/commons/org/user.proto\x1a!api/commons/org_preferences.proto\x1a\x17api/commons/perms.proto\x1a\x16api/commons/user.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/wrappers.proto\"\xd6\x06\n" +
+	"\x1bapi/v1alpha1/org/user.proto\x12\x10api.v1alpha1.org\x1a\x15api/commons/org.proto\x1a\x1capi/commons/org/labels.proto\x1a!api/commons/org/permissions.proto\x1a\x1capi/commons/org/trusts.proto\x1a\x1aapi/commons/org/user.proto\x1a!api/commons/org_preferences.proto\x1a\x17api/commons/perms.proto\x1a\x16api/commons/user.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/wrappers.proto\"\x90\a\n" +
 	"\x11CreateUserRequest\x12\x15\n" +
 	"\x06org_id\x18\x01 \x01(\tR\x05orgId\x12\x1d\n" +
 	"\n" +
@@ -7094,7 +7130,8 @@ const file_api_v1alpha1_org_user_proto_rawDesc = "" +
 	"\x12time_zone_override\x18\x11 \x01(\v2\x1c.api.commons.TimeZoneWrapperR\x10timeZoneOverride\x12$\n" +
 	"\x0ehunt_group_sid\x18\x12 \x01(\x03R\fhuntGroupSid\x12^\n" +
 	"\x1blocale_preferences_override\x18\x13 \x01(\v2\x1e.api.commons.LocalePreferencesR\x19localePreferencesOverride\x126\n" +
-	"\x17password_reset_required\x18\x14 \x01(\bR\x15passwordResetRequired\"-\n" +
+	"\x17password_reset_required\x18\x14 \x01(\bR\x15passwordResetRequired\x128\n" +
+	"\x18play_notification_sounds\x18\x15 \x01(\bR\x16playNotificationSounds\"-\n" +
 	"\x12CreateUserResponse\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\"\x80\x02\n" +
 	"\x1aCreateDelegatedUserRequest\x12 \n" +
@@ -7135,7 +7172,7 @@ const file_api_v1alpha1_org_user_proto_rawDesc = "" +
 	"\x16agent_profile_group_id\x18\x01 \x01(\tR\x13agentProfileGroupId\x127\n" +
 	"\x18agent_profile_group_name\x18\x02 \x01(\tR\x15agentProfileGroupName\")\n" +
 	"\x0eGetUserRequest\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\tR\x06userId\"\x87\x0e\n" +
+	"\auser_id\x18\x01 \x01(\tR\x06userId\"\xc1\x0e\n" +
 	"\x0fGetUserResponse\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x15\n" +
 	"\x06org_id\x18\x02 \x01(\tR\x05orgId\x12\x1c\n" +
@@ -7174,7 +7211,8 @@ const file_api_v1alpha1_org_user_proto_rawDesc = "" +
 	"\raccount_owner\x18\x1d \x01(\bR\faccountOwner\x12%\n" +
 	"\x0eemail_verified\x18\x1e \x01(\bR\remailVerified\x12^\n" +
 	"\x1blocale_preferences_override\x18\x1f \x01(\v2\x1e.api.commons.LocalePreferencesR\x19localePreferencesOverride\x12J\n" +
-	"\x13password_reset_date\x18  \x01(\v2\x1a.google.protobuf.TimestampR\x11passwordResetDate\x1aY\n" +
+	"\x13password_reset_date\x18  \x01(\v2\x1a.google.protobuf.TimestampR\x11passwordResetDate\x128\n" +
+	"\x18play_notification_sounds\x18! \x01(\bR\x16playNotificationSounds\x1aY\n" +
 	"\tHuntGroup\x12$\n" +
 	"\x0ehunt_group_sid\x18\x01 \x01(\x03R\fhuntGroupSid\x12&\n" +
 	"\x0fhunt_group_name\x18\x02 \x01(\tR\rhuntGroupName\x1a\x81\x01\n" +
@@ -7183,7 +7221,7 @@ const file_api_v1alpha1_org_user_proto_rawDesc = "" +
 	"\x18agent_profile_group_name\x18\x02 \x01(\tR\x15agentProfileGroupName\"G\n" +
 	"\x15GetUserByOrgIdRequest\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x15\n" +
-	"\x06org_id\x18\x02 \x01(\tR\x05orgId\"\x9a\b\n" +
+	"\x06org_id\x18\x02 \x01(\tR\x05orgId\"\xd4\b\n" +
 	"\x16GetUserByOrgIdResponse\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x15\n" +
 	"\x06org_id\x18\x02 \x01(\tR\x05orgId\x12\x1a\n" +
@@ -7201,7 +7239,8 @@ const file_api_v1alpha1_org_user_proto_rawDesc = "" +
 	"\x06trusts\x18\x15 \x03(\v2\x16.api.commons.org.TrustR\x06trusts\x12#\n" +
 	"\raccount_owner\x18\x16 \x01(\bR\faccountOwner\x12%\n" +
 	"\x0eemail_verified\x18\x17 \x01(\bR\remailVerified\x12^\n" +
-	"\x1blocale_preferences_override\x18\x18 \x01(\v2\x1e.api.commons.LocalePreferencesR\x19localePreferencesOverride\x1aY\n" +
+	"\x1blocale_preferences_override\x18\x18 \x01(\v2\x1e.api.commons.LocalePreferencesR\x19localePreferencesOverride\x128\n" +
+	"\x18play_notification_sounds\x18\x19 \x01(\bR\x16playNotificationSounds\x1aY\n" +
 	"\tHuntGroup\x12$\n" +
 	"\x0ehunt_group_sid\x18\x01 \x01(\x03R\fhuntGroupSid\x12&\n" +
 	"\x0fhunt_group_name\x18\x02 \x01(\tR\rhuntGroupName\x1a\x81\x01\n" +
@@ -7337,7 +7376,7 @@ const file_api_v1alpha1_org_user_proto_rawDesc = "" +
 	"\n" +
 	"field_mask\x18\n" +
 	" \x03(\tR\tfieldMask\"\x16\n" +
-	"\x14UpdateMyUserResponse\"\xcd\x05\n" +
+	"\x14UpdateMyUserResponse\"\x87\x06\n" +
 	"\x11UpdateUserRequest\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x1d\n" +
 	"\n" +
@@ -7357,7 +7396,8 @@ const file_api_v1alpha1_org_user_proto_rawDesc = "" +
 	"\x05email\x18\f \x01(\tR\x05email\x12$\n" +
 	"\x0euser_caller_id\x18\r \x01(\tR\fuserCallerId\x12\x1b\n" +
 	"\tlabel_ids\x18\x0e \x03(\tR\blabelIds\x12^\n" +
-	"\x1blocale_preferences_override\x18\x0f \x01(\v2\x1e.api.commons.LocalePreferencesR\x19localePreferencesOverride\x12\x1d\n" +
+	"\x1blocale_preferences_override\x18\x0f \x01(\v2\x1e.api.commons.LocalePreferencesR\x19localePreferencesOverride\x128\n" +
+	"\x18play_notification_sounds\x18\x10 \x01(\bR\x16playNotificationSounds\x12\x1d\n" +
 	"\n" +
 	"field_mask\x18\x14 \x03(\tR\tfieldMask\"\x14\n" +
 	"\x12UpdateUserResponse\"f\n" +
