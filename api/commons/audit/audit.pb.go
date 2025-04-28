@@ -107,7 +107,6 @@ type AuditEvent struct {
 	//	*AuditEvent_OmnichannelMessageSentEvent
 	//	*AuditEvent_OmnichannelProviderResponseEvent
 	//	*AuditEvent_OmnichannelProviderMessageFailedEvent
-	//	*AuditEvent_OmnichannelInboundProviderMessageEvent
 	//	*AuditEvent_AsmAgentLoginEvent
 	//	*AuditEvent_AsmOpenVoiceEvent
 	//	*AuditEvent_AsmOpenOmniAgentEvent
@@ -825,15 +824,6 @@ func (x *AuditEvent) GetOmnichannelProviderMessageFailedEvent() *OmnichannelProv
 	if x != nil {
 		if x, ok := x.Event.(*AuditEvent_OmnichannelProviderMessageFailedEvent); ok {
 			return x.OmnichannelProviderMessageFailedEvent
-		}
-	}
-	return nil
-}
-
-func (x *AuditEvent) GetOmnichannelInboundProviderMessageEvent() *OmnichannelInboundProviderMessageEvent {
-	if x != nil {
-		if x, ok := x.Event.(*AuditEvent_OmnichannelInboundProviderMessageEvent); ok {
-			return x.OmnichannelInboundProviderMessageEvent
 		}
 	}
 	return nil
@@ -1819,11 +1809,6 @@ type AuditEvent_OmnichannelProviderMessageFailedEvent struct {
 	OmnichannelProviderMessageFailedEvent *OmnichannelProviderMessageFailedEvent `protobuf:"bytes,365,opt,name=omnichannel_provider_message_failed_event,json=omnichannelProviderMessageFailedEvent,proto3,oneof"`
 }
 
-type AuditEvent_OmnichannelInboundProviderMessageEvent struct {
-	// inbound provider message event
-	OmnichannelInboundProviderMessageEvent *OmnichannelInboundProviderMessageEvent `protobuf:"bytes,366,opt,name=omnichannel_inbound_provider_message_event,json=omnichannelInboundProviderMessageEvent,proto3,oneof"`
-}
-
 type AuditEvent_AsmAgentLoginEvent struct {
 	// / Asm events 400
 	// agent logged into asm event
@@ -2301,8 +2286,6 @@ func (*AuditEvent_OmnichannelProviderResponseEvent) isAuditEvent_Event() {}
 
 func (*AuditEvent_OmnichannelProviderMessageFailedEvent) isAuditEvent_Event() {}
 
-func (*AuditEvent_OmnichannelInboundProviderMessageEvent) isAuditEvent_Event() {}
-
 func (*AuditEvent_AsmAgentLoginEvent) isAuditEvent_Event() {}
 
 func (*AuditEvent_AsmOpenVoiceEvent) isAuditEvent_Event() {}
@@ -2451,7 +2434,7 @@ var File_api_commons_audit_audit_proto protoreflect.FileDescriptor
 
 const file_api_commons_audit_audit_proto_rawDesc = "" +
 	"\n" +
-	"\x1dapi/commons/audit/audit.proto\x12\x11api.commons.audit\x1a-api/commons/audit/agent_training_events.proto\x1a\"api/commons/audit/asm_events.proto\x1a&api/commons/audit/billing_events.proto\x1a)api/commons/audit/compliance_events.proto\x1a-api/commons/audit/contactmanager_events.proto\x1a'api/commons/audit/delivery_events.proto\x1a#api/commons/audit/event_types.proto\x1a\x1eapi/commons/audit/events.proto\x1a\"api/commons/audit/lms_events.proto\x1a*api/commons/audit/omnichannel_events.proto\x1a+api/commons/audit/organization_events.proto\x1a&api/commons/audit/p3_amqp_events.proto\x1a)api/commons/audit/scorecards_events.proto\x1a&api/commons/audit/tickets_events.proto\x1a#api/commons/audit/vana_events.proto\x1a\"api/commons/audit/wfm_events.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xa6\x88\x01\n" +
+	"\x1dapi/commons/audit/audit.proto\x12\x11api.commons.audit\x1a-api/commons/audit/agent_training_events.proto\x1a\"api/commons/audit/asm_events.proto\x1a&api/commons/audit/billing_events.proto\x1a)api/commons/audit/compliance_events.proto\x1a-api/commons/audit/contactmanager_events.proto\x1a'api/commons/audit/delivery_events.proto\x1a#api/commons/audit/event_types.proto\x1a\x1eapi/commons/audit/events.proto\x1a\"api/commons/audit/lms_events.proto\x1a*api/commons/audit/omnichannel_events.proto\x1a+api/commons/audit/organization_events.proto\x1a&api/commons/audit/p3_amqp_events.proto\x1a)api/commons/audit/scorecards_events.proto\x1a&api/commons/audit/tickets_events.proto\x1a#api/commons/audit/vana_events.proto\x1a\"api/commons/audit/wfm_events.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x8b\x87\x01\n" +
 	"\n" +
 	"AuditEvent\x12\x15\n" +
 	"\x06org_id\x18\x01 \x01(\tR\x05orgId\x12\x1b\n" +
@@ -2526,8 +2509,7 @@ const file_api_commons_audit_audit_proto_rawDesc = "" +
 	"\"omnichannel_transcript_saved_event\x18\xea\x02 \x01(\v22.api.commons.audit.OmnichannelTranscriptSavedEventH\x00R\x1fomnichannelTranscriptSavedEvent\x12v\n" +
 	"\x1eomnichannel_message_sent_event\x18\xeb\x02 \x01(\v2..api.commons.audit.OmnichannelMessageSentEventH\x00R\x1bomnichannelMessageSentEvent\x12\x85\x01\n" +
 	"#omnichannel_provider_response_event\x18\xec\x02 \x01(\v23.api.commons.audit.OmnichannelProviderResponseEventH\x00R omnichannelProviderResponseEvent\x12\x95\x01\n" +
-	")omnichannel_provider_message_failed_event\x18\xed\x02 \x01(\v28.api.commons.audit.OmnichannelProviderMessageFailedEventH\x00R%omnichannelProviderMessageFailedEvent\x12\x98\x01\n" +
-	"*omnichannel_inbound_provider_message_event\x18\xee\x02 \x01(\v29.api.commons.audit.OmnichannelInboundProviderMessageEventH\x00R&omnichannelInboundProviderMessageEvent\x12[\n" +
+	")omnichannel_provider_message_failed_event\x18\xed\x02 \x01(\v28.api.commons.audit.OmnichannelProviderMessageFailedEventH\x00R%omnichannelProviderMessageFailedEvent\x12[\n" +
 	"\x15asm_agent_login_event\x18\x90\x03 \x01(\v2%.api.commons.audit.AsmAgentLoginEventH\x00R\x12asmAgentLoginEvent\x12X\n" +
 	"\x14asm_open_voice_event\x18\x91\x03 \x01(\v2$.api.commons.audit.AsmOpenVoiceEventH\x00R\x11asmOpenVoiceEvent\x12e\n" +
 	"\x19asm_open_omni_agent_event\x18\x92\x03 \x01(\v2(.api.commons.audit.AsmOpenOmniAgentEventH\x00R\x15asmOpenOmniAgentEvent\x12y\n" +
@@ -2684,75 +2666,74 @@ var file_api_commons_audit_audit_proto_goTypes = []any{
 	(*OmnichannelMessageSentEvent)(nil),                  // 61: api.commons.audit.OmnichannelMessageSentEvent
 	(*OmnichannelProviderResponseEvent)(nil),             // 62: api.commons.audit.OmnichannelProviderResponseEvent
 	(*OmnichannelProviderMessageFailedEvent)(nil),        // 63: api.commons.audit.OmnichannelProviderMessageFailedEvent
-	(*OmnichannelInboundProviderMessageEvent)(nil),       // 64: api.commons.audit.OmnichannelInboundProviderMessageEvent
-	(*AsmAgentLoginEvent)(nil),                           // 65: api.commons.audit.AsmAgentLoginEvent
-	(*AsmOpenVoiceEvent)(nil),                            // 66: api.commons.audit.AsmOpenVoiceEvent
-	(*AsmOpenOmniAgentEvent)(nil),                        // 67: api.commons.audit.AsmOpenOmniAgentEvent
-	(*AsmActivateConversationEvent)(nil),                 // 68: api.commons.audit.AsmActivateConversationEvent
-	(*AsmDeactivateConversationEvent)(nil),               // 69: api.commons.audit.AsmDeactivateConversationEvent
-	(*AsmAgentStateChangedEvent)(nil),                    // 70: api.commons.audit.AsmAgentStateChangedEvent
-	(*AsmAgentLogoutEvent)(nil),                          // 71: api.commons.audit.AsmAgentLogoutEvent
-	(*AsmPauseEvent)(nil),                                // 72: api.commons.audit.AsmPauseEvent
-	(*AsmResumeEvent)(nil),                               // 73: api.commons.audit.AsmResumeEvent
-	(*AsmConversationPulledEvent)(nil),                   // 74: api.commons.audit.AsmConversationPulledEvent
-	(*ScorecardsCreateQuestionEvent)(nil),                // 75: api.commons.audit.ScorecardsCreateQuestionEvent
-	(*ScorecardsUpdateQuestionEvent)(nil),                // 76: api.commons.audit.ScorecardsUpdateQuestionEvent
-	(*ScorecardsDeleteQuestionEvent)(nil),                // 77: api.commons.audit.ScorecardsDeleteQuestionEvent
-	(*ScorecardsCreateScorecardEvent)(nil),               // 78: api.commons.audit.ScorecardsCreateScorecardEvent
-	(*ScorecardsUpdateScorecardEvent)(nil),               // 79: api.commons.audit.ScorecardsUpdateScorecardEvent
-	(*ScorecardsDeleteScorecardEvent)(nil),               // 80: api.commons.audit.ScorecardsDeleteScorecardEvent
-	(*ScorecardsCloneScorecardEvent)(nil),                // 81: api.commons.audit.ScorecardsCloneScorecardEvent
-	(*ScorecardsCreateEvaluationEvent)(nil),              // 82: api.commons.audit.ScorecardsCreateEvaluationEvent
-	(*ScorecardsDeleteEvaluationEvent)(nil),              // 83: api.commons.audit.ScorecardsDeleteEvaluationEvent
-	(*ScorecardsCreateSectionEvent)(nil),                 // 84: api.commons.audit.ScorecardsCreateSectionEvent
-	(*ScorecardsUpdateSectionEvent)(nil),                 // 85: api.commons.audit.ScorecardsUpdateSectionEvent
-	(*ScorecardsDeleteSectionEvent)(nil),                 // 86: api.commons.audit.ScorecardsDeleteSectionEvent
-	(*ScorecardsCreateCategoryEvent)(nil),                // 87: api.commons.audit.ScorecardsCreateCategoryEvent
-	(*ScorecardsUpdateCategoryEvent)(nil),                // 88: api.commons.audit.ScorecardsUpdateCategoryEvent
-	(*ScorecardsDeleteCategoryEvent)(nil),                // 89: api.commons.audit.ScorecardsDeleteCategoryEvent
-	(*ScorecardsCreateEvaluationQuestionEvent)(nil),      // 90: api.commons.audit.ScorecardsCreateEvaluationQuestionEvent
-	(*ScorecardsUpdateEvaluationQuestionEvent)(nil),      // 91: api.commons.audit.ScorecardsUpdateEvaluationQuestionEvent
-	(*ScorecardsDeleteEvaluationQuestionEvent)(nil),      // 92: api.commons.audit.ScorecardsDeleteEvaluationQuestionEvent
-	(*ScorecardsCreateScorecardQuestionEvent)(nil),       // 93: api.commons.audit.ScorecardsCreateScorecardQuestionEvent
-	(*ScorecardsUpdateScorecardQuestionEvent)(nil),       // 94: api.commons.audit.ScorecardsUpdateScorecardQuestionEvent
-	(*ScorecardsDeleteScorecardQuestionEvent)(nil),       // 95: api.commons.audit.ScorecardsDeleteScorecardQuestionEvent
-	(*ScorecardsCreateAutoEvaluationEvent)(nil),          // 96: api.commons.audit.ScorecardsCreateAutoEvaluationEvent
-	(*ScorecardsUpdateEvaluationEvent)(nil),              // 97: api.commons.audit.ScorecardsUpdateEvaluationEvent
-	(*ScorecardsCreateSmartEvaluationEvent)(nil),         // 98: api.commons.audit.ScorecardsCreateSmartEvaluationEvent
-	(*TicketEvent)(nil),                                  // 99: api.commons.audit.TicketEvent
-	(*TicketCustomFieldCreateEvent)(nil),                 // 100: api.commons.audit.TicketCustomFieldCreateEvent
-	(*TicketCustomFieldEditEvent)(nil),                   // 101: api.commons.audit.TicketCustomFieldEditEvent
-	(*ComplianceRndQueryEvent)(nil),                      // 102: api.commons.audit.ComplianceRndQueryEvent
-	(*AgentTrainingCreateLearningOpportunityEvent)(nil),  // 103: api.commons.audit.AgentTrainingCreateLearningOpportunityEvent
-	(*LMSPipelineFailureEvent)(nil),                      // 104: api.commons.audit.LMSPipelineFailureEvent
-	(*LMSPipelineNoOutputEvent)(nil),                     // 105: api.commons.audit.LMSPipelineNoOutputEvent
-	(*LMSPipelineSuccessfulEvent)(nil),                   // 106: api.commons.audit.LMSPipelineSuccessfulEvent
-	(*BillingCommitBillingPlanEvent)(nil),                // 107: api.commons.audit.BillingCommitBillingPlanEvent
-	(*BillingCreateBillingPlanEvent)(nil),                // 108: api.commons.audit.BillingCreateBillingPlanEvent
-	(*BillingCreateInvoiceEvent)(nil),                    // 109: api.commons.audit.BillingCreateInvoiceEvent
-	(*BillingCreateRateDefinitionEvent)(nil),             // 110: api.commons.audit.BillingCreateRateDefinitionEvent
-	(*BillingDeleteBillingPlanEvent)(nil),                // 111: api.commons.audit.BillingDeleteBillingPlanEvent
-	(*BillingDeleteInvoiceEvent)(nil),                    // 112: api.commons.audit.BillingDeleteInvoiceEvent
-	(*BillingDeleteRateDefinitionEvent)(nil),             // 113: api.commons.audit.BillingDeleteRateDefinitionEvent
-	(*BillingExportInvoiceEvent)(nil),                    // 114: api.commons.audit.BillingExportInvoiceEvent
-	(*BillingUpdateBillingPlanEvent)(nil),                // 115: api.commons.audit.BillingUpdateBillingPlanEvent
-	(*BillingUpdateInvoiceEvent)(nil),                    // 116: api.commons.audit.BillingUpdateInvoiceEvent
-	(*BillingUpdateRateDefinitionEvent)(nil),             // 117: api.commons.audit.BillingUpdateRateDefinitionEvent
-	(*BillingRatedItemsGeneratedEvent)(nil),              // 118: api.commons.audit.BillingRatedItemsGeneratedEvent
-	(*BillingAccumulateItemsEvent)(nil),                  // 119: api.commons.audit.BillingAccumulateItemsEvent
-	(*DeliveryFailureEvent)(nil),                         // 120: api.commons.audit.DeliveryFailureEvent
-	(*DeliverySuccessEvent)(nil),                         // 121: api.commons.audit.DeliverySuccessEvent
-	(*ContactManagerEntryAddEvent)(nil),                  // 122: api.commons.audit.ContactManagerEntryAddEvent
-	(*ContactManagerEntryGetEncEvent)(nil),               // 123: api.commons.audit.ContactManagerEntryGetEncEvent
-	(*ContactManagerDeleteEvent)(nil),                    // 124: api.commons.audit.ContactManagerDeleteEvent
-	(*ContactManagerKycEvent)(nil),                       // 125: api.commons.audit.ContactManagerKycEvent
-	(*ContactManagerEntryEditEvent)(nil),                 // 126: api.commons.audit.ContactManagerEntryEditEvent
-	(*ContactManagerListUploadEvent)(nil),                // 127: api.commons.audit.ContactManagerListUploadEvent
-	(*ContactManagerEntityAssociationEvent)(nil),         // 128: api.commons.audit.ContactManagerEntityAssociationEvent
-	(*AccessTokensExpiringEvent)(nil),                    // 129: api.commons.audit.AccessTokensExpiringEvent
-	(*WFMPublishScheduleEvent)(nil),                      // 130: api.commons.audit.WFMPublishScheduleEvent
-	(*P3AMQPCallResultEvent)(nil),                        // 131: api.commons.audit.P3AMQPCallResultEvent
-	(*P3AMQPAgentResponseEvent)(nil),                     // 132: api.commons.audit.P3AMQPAgentResponseEvent
+	(*AsmAgentLoginEvent)(nil),                           // 64: api.commons.audit.AsmAgentLoginEvent
+	(*AsmOpenVoiceEvent)(nil),                            // 65: api.commons.audit.AsmOpenVoiceEvent
+	(*AsmOpenOmniAgentEvent)(nil),                        // 66: api.commons.audit.AsmOpenOmniAgentEvent
+	(*AsmActivateConversationEvent)(nil),                 // 67: api.commons.audit.AsmActivateConversationEvent
+	(*AsmDeactivateConversationEvent)(nil),               // 68: api.commons.audit.AsmDeactivateConversationEvent
+	(*AsmAgentStateChangedEvent)(nil),                    // 69: api.commons.audit.AsmAgentStateChangedEvent
+	(*AsmAgentLogoutEvent)(nil),                          // 70: api.commons.audit.AsmAgentLogoutEvent
+	(*AsmPauseEvent)(nil),                                // 71: api.commons.audit.AsmPauseEvent
+	(*AsmResumeEvent)(nil),                               // 72: api.commons.audit.AsmResumeEvent
+	(*AsmConversationPulledEvent)(nil),                   // 73: api.commons.audit.AsmConversationPulledEvent
+	(*ScorecardsCreateQuestionEvent)(nil),                // 74: api.commons.audit.ScorecardsCreateQuestionEvent
+	(*ScorecardsUpdateQuestionEvent)(nil),                // 75: api.commons.audit.ScorecardsUpdateQuestionEvent
+	(*ScorecardsDeleteQuestionEvent)(nil),                // 76: api.commons.audit.ScorecardsDeleteQuestionEvent
+	(*ScorecardsCreateScorecardEvent)(nil),               // 77: api.commons.audit.ScorecardsCreateScorecardEvent
+	(*ScorecardsUpdateScorecardEvent)(nil),               // 78: api.commons.audit.ScorecardsUpdateScorecardEvent
+	(*ScorecardsDeleteScorecardEvent)(nil),               // 79: api.commons.audit.ScorecardsDeleteScorecardEvent
+	(*ScorecardsCloneScorecardEvent)(nil),                // 80: api.commons.audit.ScorecardsCloneScorecardEvent
+	(*ScorecardsCreateEvaluationEvent)(nil),              // 81: api.commons.audit.ScorecardsCreateEvaluationEvent
+	(*ScorecardsDeleteEvaluationEvent)(nil),              // 82: api.commons.audit.ScorecardsDeleteEvaluationEvent
+	(*ScorecardsCreateSectionEvent)(nil),                 // 83: api.commons.audit.ScorecardsCreateSectionEvent
+	(*ScorecardsUpdateSectionEvent)(nil),                 // 84: api.commons.audit.ScorecardsUpdateSectionEvent
+	(*ScorecardsDeleteSectionEvent)(nil),                 // 85: api.commons.audit.ScorecardsDeleteSectionEvent
+	(*ScorecardsCreateCategoryEvent)(nil),                // 86: api.commons.audit.ScorecardsCreateCategoryEvent
+	(*ScorecardsUpdateCategoryEvent)(nil),                // 87: api.commons.audit.ScorecardsUpdateCategoryEvent
+	(*ScorecardsDeleteCategoryEvent)(nil),                // 88: api.commons.audit.ScorecardsDeleteCategoryEvent
+	(*ScorecardsCreateEvaluationQuestionEvent)(nil),      // 89: api.commons.audit.ScorecardsCreateEvaluationQuestionEvent
+	(*ScorecardsUpdateEvaluationQuestionEvent)(nil),      // 90: api.commons.audit.ScorecardsUpdateEvaluationQuestionEvent
+	(*ScorecardsDeleteEvaluationQuestionEvent)(nil),      // 91: api.commons.audit.ScorecardsDeleteEvaluationQuestionEvent
+	(*ScorecardsCreateScorecardQuestionEvent)(nil),       // 92: api.commons.audit.ScorecardsCreateScorecardQuestionEvent
+	(*ScorecardsUpdateScorecardQuestionEvent)(nil),       // 93: api.commons.audit.ScorecardsUpdateScorecardQuestionEvent
+	(*ScorecardsDeleteScorecardQuestionEvent)(nil),       // 94: api.commons.audit.ScorecardsDeleteScorecardQuestionEvent
+	(*ScorecardsCreateAutoEvaluationEvent)(nil),          // 95: api.commons.audit.ScorecardsCreateAutoEvaluationEvent
+	(*ScorecardsUpdateEvaluationEvent)(nil),              // 96: api.commons.audit.ScorecardsUpdateEvaluationEvent
+	(*ScorecardsCreateSmartEvaluationEvent)(nil),         // 97: api.commons.audit.ScorecardsCreateSmartEvaluationEvent
+	(*TicketEvent)(nil),                                  // 98: api.commons.audit.TicketEvent
+	(*TicketCustomFieldCreateEvent)(nil),                 // 99: api.commons.audit.TicketCustomFieldCreateEvent
+	(*TicketCustomFieldEditEvent)(nil),                   // 100: api.commons.audit.TicketCustomFieldEditEvent
+	(*ComplianceRndQueryEvent)(nil),                      // 101: api.commons.audit.ComplianceRndQueryEvent
+	(*AgentTrainingCreateLearningOpportunityEvent)(nil),  // 102: api.commons.audit.AgentTrainingCreateLearningOpportunityEvent
+	(*LMSPipelineFailureEvent)(nil),                      // 103: api.commons.audit.LMSPipelineFailureEvent
+	(*LMSPipelineNoOutputEvent)(nil),                     // 104: api.commons.audit.LMSPipelineNoOutputEvent
+	(*LMSPipelineSuccessfulEvent)(nil),                   // 105: api.commons.audit.LMSPipelineSuccessfulEvent
+	(*BillingCommitBillingPlanEvent)(nil),                // 106: api.commons.audit.BillingCommitBillingPlanEvent
+	(*BillingCreateBillingPlanEvent)(nil),                // 107: api.commons.audit.BillingCreateBillingPlanEvent
+	(*BillingCreateInvoiceEvent)(nil),                    // 108: api.commons.audit.BillingCreateInvoiceEvent
+	(*BillingCreateRateDefinitionEvent)(nil),             // 109: api.commons.audit.BillingCreateRateDefinitionEvent
+	(*BillingDeleteBillingPlanEvent)(nil),                // 110: api.commons.audit.BillingDeleteBillingPlanEvent
+	(*BillingDeleteInvoiceEvent)(nil),                    // 111: api.commons.audit.BillingDeleteInvoiceEvent
+	(*BillingDeleteRateDefinitionEvent)(nil),             // 112: api.commons.audit.BillingDeleteRateDefinitionEvent
+	(*BillingExportInvoiceEvent)(nil),                    // 113: api.commons.audit.BillingExportInvoiceEvent
+	(*BillingUpdateBillingPlanEvent)(nil),                // 114: api.commons.audit.BillingUpdateBillingPlanEvent
+	(*BillingUpdateInvoiceEvent)(nil),                    // 115: api.commons.audit.BillingUpdateInvoiceEvent
+	(*BillingUpdateRateDefinitionEvent)(nil),             // 116: api.commons.audit.BillingUpdateRateDefinitionEvent
+	(*BillingRatedItemsGeneratedEvent)(nil),              // 117: api.commons.audit.BillingRatedItemsGeneratedEvent
+	(*BillingAccumulateItemsEvent)(nil),                  // 118: api.commons.audit.BillingAccumulateItemsEvent
+	(*DeliveryFailureEvent)(nil),                         // 119: api.commons.audit.DeliveryFailureEvent
+	(*DeliverySuccessEvent)(nil),                         // 120: api.commons.audit.DeliverySuccessEvent
+	(*ContactManagerEntryAddEvent)(nil),                  // 121: api.commons.audit.ContactManagerEntryAddEvent
+	(*ContactManagerEntryGetEncEvent)(nil),               // 122: api.commons.audit.ContactManagerEntryGetEncEvent
+	(*ContactManagerDeleteEvent)(nil),                    // 123: api.commons.audit.ContactManagerDeleteEvent
+	(*ContactManagerKycEvent)(nil),                       // 124: api.commons.audit.ContactManagerKycEvent
+	(*ContactManagerEntryEditEvent)(nil),                 // 125: api.commons.audit.ContactManagerEntryEditEvent
+	(*ContactManagerListUploadEvent)(nil),                // 126: api.commons.audit.ContactManagerListUploadEvent
+	(*ContactManagerEntityAssociationEvent)(nil),         // 127: api.commons.audit.ContactManagerEntityAssociationEvent
+	(*AccessTokensExpiringEvent)(nil),                    // 128: api.commons.audit.AccessTokensExpiringEvent
+	(*WFMPublishScheduleEvent)(nil),                      // 129: api.commons.audit.WFMPublishScheduleEvent
+	(*P3AMQPCallResultEvent)(nil),                        // 130: api.commons.audit.P3AMQPCallResultEvent
+	(*P3AMQPAgentResponseEvent)(nil),                     // 131: api.commons.audit.P3AMQPAgentResponseEvent
 }
 var file_api_commons_audit_audit_proto_depIdxs = []int32{
 	1,   // 0: api.commons.audit.AuditEvent.event_time:type_name -> google.protobuf.Timestamp
@@ -2819,84 +2800,83 @@ var file_api_commons_audit_audit_proto_depIdxs = []int32{
 	61,  // 61: api.commons.audit.AuditEvent.omnichannel_message_sent_event:type_name -> api.commons.audit.OmnichannelMessageSentEvent
 	62,  // 62: api.commons.audit.AuditEvent.omnichannel_provider_response_event:type_name -> api.commons.audit.OmnichannelProviderResponseEvent
 	63,  // 63: api.commons.audit.AuditEvent.omnichannel_provider_message_failed_event:type_name -> api.commons.audit.OmnichannelProviderMessageFailedEvent
-	64,  // 64: api.commons.audit.AuditEvent.omnichannel_inbound_provider_message_event:type_name -> api.commons.audit.OmnichannelInboundProviderMessageEvent
-	65,  // 65: api.commons.audit.AuditEvent.asm_agent_login_event:type_name -> api.commons.audit.AsmAgentLoginEvent
-	66,  // 66: api.commons.audit.AuditEvent.asm_open_voice_event:type_name -> api.commons.audit.AsmOpenVoiceEvent
-	67,  // 67: api.commons.audit.AuditEvent.asm_open_omni_agent_event:type_name -> api.commons.audit.AsmOpenOmniAgentEvent
-	68,  // 68: api.commons.audit.AuditEvent.asm_activate_conversation_event:type_name -> api.commons.audit.AsmActivateConversationEvent
-	69,  // 69: api.commons.audit.AuditEvent.asm_deactivate_conversation_event:type_name -> api.commons.audit.AsmDeactivateConversationEvent
-	70,  // 70: api.commons.audit.AuditEvent.asm_agent_state_changed_event:type_name -> api.commons.audit.AsmAgentStateChangedEvent
-	71,  // 71: api.commons.audit.AuditEvent.asm_agent_logout_event:type_name -> api.commons.audit.AsmAgentLogoutEvent
-	72,  // 72: api.commons.audit.AuditEvent.asm_pause_event:type_name -> api.commons.audit.AsmPauseEvent
-	73,  // 73: api.commons.audit.AuditEvent.asm_resume_event:type_name -> api.commons.audit.AsmResumeEvent
-	74,  // 74: api.commons.audit.AuditEvent.asm_conversation_pulled_event:type_name -> api.commons.audit.AsmConversationPulledEvent
-	75,  // 75: api.commons.audit.AuditEvent.scorecards_create_question_event:type_name -> api.commons.audit.ScorecardsCreateQuestionEvent
-	76,  // 76: api.commons.audit.AuditEvent.scorecards_update_question_event:type_name -> api.commons.audit.ScorecardsUpdateQuestionEvent
-	77,  // 77: api.commons.audit.AuditEvent.scorecards_delete_question_event:type_name -> api.commons.audit.ScorecardsDeleteQuestionEvent
-	78,  // 78: api.commons.audit.AuditEvent.scorecards_create_scorecard_event:type_name -> api.commons.audit.ScorecardsCreateScorecardEvent
-	79,  // 79: api.commons.audit.AuditEvent.scorecards_update_scorecard_event:type_name -> api.commons.audit.ScorecardsUpdateScorecardEvent
-	80,  // 80: api.commons.audit.AuditEvent.scorecards_delete_scorecard_event:type_name -> api.commons.audit.ScorecardsDeleteScorecardEvent
-	81,  // 81: api.commons.audit.AuditEvent.scorecards_clone_scorecard_event:type_name -> api.commons.audit.ScorecardsCloneScorecardEvent
-	82,  // 82: api.commons.audit.AuditEvent.scorecards_create_evaluation_event:type_name -> api.commons.audit.ScorecardsCreateEvaluationEvent
-	83,  // 83: api.commons.audit.AuditEvent.scorecards_delete_evaluation_event:type_name -> api.commons.audit.ScorecardsDeleteEvaluationEvent
-	84,  // 84: api.commons.audit.AuditEvent.scorecards_create_section_event:type_name -> api.commons.audit.ScorecardsCreateSectionEvent
-	85,  // 85: api.commons.audit.AuditEvent.scorecards_update_section_event:type_name -> api.commons.audit.ScorecardsUpdateSectionEvent
-	86,  // 86: api.commons.audit.AuditEvent.scorecards_delete_section_event:type_name -> api.commons.audit.ScorecardsDeleteSectionEvent
-	87,  // 87: api.commons.audit.AuditEvent.scorecards_create_category_event:type_name -> api.commons.audit.ScorecardsCreateCategoryEvent
-	88,  // 88: api.commons.audit.AuditEvent.scorecards_update_category_event:type_name -> api.commons.audit.ScorecardsUpdateCategoryEvent
-	89,  // 89: api.commons.audit.AuditEvent.scorecards_delete_category_event:type_name -> api.commons.audit.ScorecardsDeleteCategoryEvent
-	90,  // 90: api.commons.audit.AuditEvent.scorecards_create_evaluation_question_event:type_name -> api.commons.audit.ScorecardsCreateEvaluationQuestionEvent
-	91,  // 91: api.commons.audit.AuditEvent.scorecards_update_evaluation_question_event:type_name -> api.commons.audit.ScorecardsUpdateEvaluationQuestionEvent
-	92,  // 92: api.commons.audit.AuditEvent.scorecards_delete_evaluation_question_event:type_name -> api.commons.audit.ScorecardsDeleteEvaluationQuestionEvent
-	93,  // 93: api.commons.audit.AuditEvent.scorecards_create_scorecard_question_event:type_name -> api.commons.audit.ScorecardsCreateScorecardQuestionEvent
-	94,  // 94: api.commons.audit.AuditEvent.scorecards_update_scorecard_question_event:type_name -> api.commons.audit.ScorecardsUpdateScorecardQuestionEvent
-	95,  // 95: api.commons.audit.AuditEvent.scorecards_delete_scorecard_question_event:type_name -> api.commons.audit.ScorecardsDeleteScorecardQuestionEvent
-	96,  // 96: api.commons.audit.AuditEvent.scorecards_create_auto_evaluation_event:type_name -> api.commons.audit.ScorecardsCreateAutoEvaluationEvent
-	97,  // 97: api.commons.audit.AuditEvent.scorecards_update_evaluation_event:type_name -> api.commons.audit.ScorecardsUpdateEvaluationEvent
-	98,  // 98: api.commons.audit.AuditEvent.scorecards_create_smart_evaluation_event:type_name -> api.commons.audit.ScorecardsCreateSmartEvaluationEvent
-	99,  // 99: api.commons.audit.AuditEvent.ticket_event:type_name -> api.commons.audit.TicketEvent
-	100, // 100: api.commons.audit.AuditEvent.ticket_custom_field_create_event:type_name -> api.commons.audit.TicketCustomFieldCreateEvent
-	101, // 101: api.commons.audit.AuditEvent.ticket_custom_field_edit_event:type_name -> api.commons.audit.TicketCustomFieldEditEvent
-	102, // 102: api.commons.audit.AuditEvent.compliance_rnd_query_event:type_name -> api.commons.audit.ComplianceRndQueryEvent
-	102, // 103: api.commons.audit.AuditEvent.compliance_rnd_query_cached_event:type_name -> api.commons.audit.ComplianceRndQueryEvent
-	103, // 104: api.commons.audit.AuditEvent.agent_training_create_learning_opportunity_event:type_name -> api.commons.audit.AgentTrainingCreateLearningOpportunityEvent
-	104, // 105: api.commons.audit.AuditEvent.lms_pipeline_failure_event:type_name -> api.commons.audit.LMSPipelineFailureEvent
-	105, // 106: api.commons.audit.AuditEvent.lms_pipeline_no_output_event:type_name -> api.commons.audit.LMSPipelineNoOutputEvent
-	106, // 107: api.commons.audit.AuditEvent.lms_pipeline_successful_event:type_name -> api.commons.audit.LMSPipelineSuccessfulEvent
-	107, // 108: api.commons.audit.AuditEvent.billing_commit_billing_plan_event:type_name -> api.commons.audit.BillingCommitBillingPlanEvent
-	108, // 109: api.commons.audit.AuditEvent.billing_create_billing_plan_event:type_name -> api.commons.audit.BillingCreateBillingPlanEvent
-	109, // 110: api.commons.audit.AuditEvent.billing_create_invoice_event:type_name -> api.commons.audit.BillingCreateInvoiceEvent
-	110, // 111: api.commons.audit.AuditEvent.billing_create_rate_definition_event:type_name -> api.commons.audit.BillingCreateRateDefinitionEvent
-	111, // 112: api.commons.audit.AuditEvent.billing_delete_billing_plan_event:type_name -> api.commons.audit.BillingDeleteBillingPlanEvent
-	112, // 113: api.commons.audit.AuditEvent.billing_delete_invoice_event:type_name -> api.commons.audit.BillingDeleteInvoiceEvent
-	113, // 114: api.commons.audit.AuditEvent.billing_delete_rate_definition_event:type_name -> api.commons.audit.BillingDeleteRateDefinitionEvent
-	114, // 115: api.commons.audit.AuditEvent.billing_export_invoice_event:type_name -> api.commons.audit.BillingExportInvoiceEvent
-	115, // 116: api.commons.audit.AuditEvent.billing_update_billing_plan_event:type_name -> api.commons.audit.BillingUpdateBillingPlanEvent
-	116, // 117: api.commons.audit.AuditEvent.billing_update_invoice_event:type_name -> api.commons.audit.BillingUpdateInvoiceEvent
-	117, // 118: api.commons.audit.AuditEvent.billing_update_rate_definition_event:type_name -> api.commons.audit.BillingUpdateRateDefinitionEvent
-	118, // 119: api.commons.audit.AuditEvent.billing_rated_items_generated_event:type_name -> api.commons.audit.BillingRatedItemsGeneratedEvent
-	119, // 120: api.commons.audit.AuditEvent.billing_accumulate_items_event:type_name -> api.commons.audit.BillingAccumulateItemsEvent
-	120, // 121: api.commons.audit.AuditEvent.delivery_failure_event:type_name -> api.commons.audit.DeliveryFailureEvent
-	121, // 122: api.commons.audit.AuditEvent.delivery_success_event:type_name -> api.commons.audit.DeliverySuccessEvent
-	122, // 123: api.commons.audit.AuditEvent.contact_manager_entry_add_event:type_name -> api.commons.audit.ContactManagerEntryAddEvent
-	123, // 124: api.commons.audit.AuditEvent.contact_manager_entry_get_enc_event:type_name -> api.commons.audit.ContactManagerEntryGetEncEvent
-	124, // 125: api.commons.audit.AuditEvent.contact_manager_delete_event:type_name -> api.commons.audit.ContactManagerDeleteEvent
-	125, // 126: api.commons.audit.AuditEvent.contact_manager_kyc_event:type_name -> api.commons.audit.ContactManagerKycEvent
-	126, // 127: api.commons.audit.AuditEvent.contact_manager_entry_edit_event:type_name -> api.commons.audit.ContactManagerEntryEditEvent
-	127, // 128: api.commons.audit.AuditEvent.contact_manager_list_upload_event:type_name -> api.commons.audit.ContactManagerListUploadEvent
-	125, // 129: api.commons.audit.AuditEvent.contact_manager_kyc_verification_event:type_name -> api.commons.audit.ContactManagerKycEvent
-	124, // 130: api.commons.audit.AuditEvent.contact_manager_entry_delete_event:type_name -> api.commons.audit.ContactManagerDeleteEvent
-	124, // 131: api.commons.audit.AuditEvent.contact_manager_entry_expunge_event:type_name -> api.commons.audit.ContactManagerDeleteEvent
-	128, // 132: api.commons.audit.AuditEvent.contact_manager_entity_association_event:type_name -> api.commons.audit.ContactManagerEntityAssociationEvent
-	129, // 133: api.commons.audit.AuditEvent.access_tokens_expiring_event:type_name -> api.commons.audit.AccessTokensExpiringEvent
-	130, // 134: api.commons.audit.AuditEvent.wfm_publish_schedule_event:type_name -> api.commons.audit.WFMPublishScheduleEvent
-	131, // 135: api.commons.audit.AuditEvent.p3_amqp_call_result_event:type_name -> api.commons.audit.P3AMQPCallResultEvent
-	132, // 136: api.commons.audit.AuditEvent.p3_amqp_agent_response_event:type_name -> api.commons.audit.P3AMQPAgentResponseEvent
-	137, // [137:137] is the sub-list for method output_type
-	137, // [137:137] is the sub-list for method input_type
-	137, // [137:137] is the sub-list for extension type_name
-	137, // [137:137] is the sub-list for extension extendee
-	0,   // [0:137] is the sub-list for field type_name
+	64,  // 64: api.commons.audit.AuditEvent.asm_agent_login_event:type_name -> api.commons.audit.AsmAgentLoginEvent
+	65,  // 65: api.commons.audit.AuditEvent.asm_open_voice_event:type_name -> api.commons.audit.AsmOpenVoiceEvent
+	66,  // 66: api.commons.audit.AuditEvent.asm_open_omni_agent_event:type_name -> api.commons.audit.AsmOpenOmniAgentEvent
+	67,  // 67: api.commons.audit.AuditEvent.asm_activate_conversation_event:type_name -> api.commons.audit.AsmActivateConversationEvent
+	68,  // 68: api.commons.audit.AuditEvent.asm_deactivate_conversation_event:type_name -> api.commons.audit.AsmDeactivateConversationEvent
+	69,  // 69: api.commons.audit.AuditEvent.asm_agent_state_changed_event:type_name -> api.commons.audit.AsmAgentStateChangedEvent
+	70,  // 70: api.commons.audit.AuditEvent.asm_agent_logout_event:type_name -> api.commons.audit.AsmAgentLogoutEvent
+	71,  // 71: api.commons.audit.AuditEvent.asm_pause_event:type_name -> api.commons.audit.AsmPauseEvent
+	72,  // 72: api.commons.audit.AuditEvent.asm_resume_event:type_name -> api.commons.audit.AsmResumeEvent
+	73,  // 73: api.commons.audit.AuditEvent.asm_conversation_pulled_event:type_name -> api.commons.audit.AsmConversationPulledEvent
+	74,  // 74: api.commons.audit.AuditEvent.scorecards_create_question_event:type_name -> api.commons.audit.ScorecardsCreateQuestionEvent
+	75,  // 75: api.commons.audit.AuditEvent.scorecards_update_question_event:type_name -> api.commons.audit.ScorecardsUpdateQuestionEvent
+	76,  // 76: api.commons.audit.AuditEvent.scorecards_delete_question_event:type_name -> api.commons.audit.ScorecardsDeleteQuestionEvent
+	77,  // 77: api.commons.audit.AuditEvent.scorecards_create_scorecard_event:type_name -> api.commons.audit.ScorecardsCreateScorecardEvent
+	78,  // 78: api.commons.audit.AuditEvent.scorecards_update_scorecard_event:type_name -> api.commons.audit.ScorecardsUpdateScorecardEvent
+	79,  // 79: api.commons.audit.AuditEvent.scorecards_delete_scorecard_event:type_name -> api.commons.audit.ScorecardsDeleteScorecardEvent
+	80,  // 80: api.commons.audit.AuditEvent.scorecards_clone_scorecard_event:type_name -> api.commons.audit.ScorecardsCloneScorecardEvent
+	81,  // 81: api.commons.audit.AuditEvent.scorecards_create_evaluation_event:type_name -> api.commons.audit.ScorecardsCreateEvaluationEvent
+	82,  // 82: api.commons.audit.AuditEvent.scorecards_delete_evaluation_event:type_name -> api.commons.audit.ScorecardsDeleteEvaluationEvent
+	83,  // 83: api.commons.audit.AuditEvent.scorecards_create_section_event:type_name -> api.commons.audit.ScorecardsCreateSectionEvent
+	84,  // 84: api.commons.audit.AuditEvent.scorecards_update_section_event:type_name -> api.commons.audit.ScorecardsUpdateSectionEvent
+	85,  // 85: api.commons.audit.AuditEvent.scorecards_delete_section_event:type_name -> api.commons.audit.ScorecardsDeleteSectionEvent
+	86,  // 86: api.commons.audit.AuditEvent.scorecards_create_category_event:type_name -> api.commons.audit.ScorecardsCreateCategoryEvent
+	87,  // 87: api.commons.audit.AuditEvent.scorecards_update_category_event:type_name -> api.commons.audit.ScorecardsUpdateCategoryEvent
+	88,  // 88: api.commons.audit.AuditEvent.scorecards_delete_category_event:type_name -> api.commons.audit.ScorecardsDeleteCategoryEvent
+	89,  // 89: api.commons.audit.AuditEvent.scorecards_create_evaluation_question_event:type_name -> api.commons.audit.ScorecardsCreateEvaluationQuestionEvent
+	90,  // 90: api.commons.audit.AuditEvent.scorecards_update_evaluation_question_event:type_name -> api.commons.audit.ScorecardsUpdateEvaluationQuestionEvent
+	91,  // 91: api.commons.audit.AuditEvent.scorecards_delete_evaluation_question_event:type_name -> api.commons.audit.ScorecardsDeleteEvaluationQuestionEvent
+	92,  // 92: api.commons.audit.AuditEvent.scorecards_create_scorecard_question_event:type_name -> api.commons.audit.ScorecardsCreateScorecardQuestionEvent
+	93,  // 93: api.commons.audit.AuditEvent.scorecards_update_scorecard_question_event:type_name -> api.commons.audit.ScorecardsUpdateScorecardQuestionEvent
+	94,  // 94: api.commons.audit.AuditEvent.scorecards_delete_scorecard_question_event:type_name -> api.commons.audit.ScorecardsDeleteScorecardQuestionEvent
+	95,  // 95: api.commons.audit.AuditEvent.scorecards_create_auto_evaluation_event:type_name -> api.commons.audit.ScorecardsCreateAutoEvaluationEvent
+	96,  // 96: api.commons.audit.AuditEvent.scorecards_update_evaluation_event:type_name -> api.commons.audit.ScorecardsUpdateEvaluationEvent
+	97,  // 97: api.commons.audit.AuditEvent.scorecards_create_smart_evaluation_event:type_name -> api.commons.audit.ScorecardsCreateSmartEvaluationEvent
+	98,  // 98: api.commons.audit.AuditEvent.ticket_event:type_name -> api.commons.audit.TicketEvent
+	99,  // 99: api.commons.audit.AuditEvent.ticket_custom_field_create_event:type_name -> api.commons.audit.TicketCustomFieldCreateEvent
+	100, // 100: api.commons.audit.AuditEvent.ticket_custom_field_edit_event:type_name -> api.commons.audit.TicketCustomFieldEditEvent
+	101, // 101: api.commons.audit.AuditEvent.compliance_rnd_query_event:type_name -> api.commons.audit.ComplianceRndQueryEvent
+	101, // 102: api.commons.audit.AuditEvent.compliance_rnd_query_cached_event:type_name -> api.commons.audit.ComplianceRndQueryEvent
+	102, // 103: api.commons.audit.AuditEvent.agent_training_create_learning_opportunity_event:type_name -> api.commons.audit.AgentTrainingCreateLearningOpportunityEvent
+	103, // 104: api.commons.audit.AuditEvent.lms_pipeline_failure_event:type_name -> api.commons.audit.LMSPipelineFailureEvent
+	104, // 105: api.commons.audit.AuditEvent.lms_pipeline_no_output_event:type_name -> api.commons.audit.LMSPipelineNoOutputEvent
+	105, // 106: api.commons.audit.AuditEvent.lms_pipeline_successful_event:type_name -> api.commons.audit.LMSPipelineSuccessfulEvent
+	106, // 107: api.commons.audit.AuditEvent.billing_commit_billing_plan_event:type_name -> api.commons.audit.BillingCommitBillingPlanEvent
+	107, // 108: api.commons.audit.AuditEvent.billing_create_billing_plan_event:type_name -> api.commons.audit.BillingCreateBillingPlanEvent
+	108, // 109: api.commons.audit.AuditEvent.billing_create_invoice_event:type_name -> api.commons.audit.BillingCreateInvoiceEvent
+	109, // 110: api.commons.audit.AuditEvent.billing_create_rate_definition_event:type_name -> api.commons.audit.BillingCreateRateDefinitionEvent
+	110, // 111: api.commons.audit.AuditEvent.billing_delete_billing_plan_event:type_name -> api.commons.audit.BillingDeleteBillingPlanEvent
+	111, // 112: api.commons.audit.AuditEvent.billing_delete_invoice_event:type_name -> api.commons.audit.BillingDeleteInvoiceEvent
+	112, // 113: api.commons.audit.AuditEvent.billing_delete_rate_definition_event:type_name -> api.commons.audit.BillingDeleteRateDefinitionEvent
+	113, // 114: api.commons.audit.AuditEvent.billing_export_invoice_event:type_name -> api.commons.audit.BillingExportInvoiceEvent
+	114, // 115: api.commons.audit.AuditEvent.billing_update_billing_plan_event:type_name -> api.commons.audit.BillingUpdateBillingPlanEvent
+	115, // 116: api.commons.audit.AuditEvent.billing_update_invoice_event:type_name -> api.commons.audit.BillingUpdateInvoiceEvent
+	116, // 117: api.commons.audit.AuditEvent.billing_update_rate_definition_event:type_name -> api.commons.audit.BillingUpdateRateDefinitionEvent
+	117, // 118: api.commons.audit.AuditEvent.billing_rated_items_generated_event:type_name -> api.commons.audit.BillingRatedItemsGeneratedEvent
+	118, // 119: api.commons.audit.AuditEvent.billing_accumulate_items_event:type_name -> api.commons.audit.BillingAccumulateItemsEvent
+	119, // 120: api.commons.audit.AuditEvent.delivery_failure_event:type_name -> api.commons.audit.DeliveryFailureEvent
+	120, // 121: api.commons.audit.AuditEvent.delivery_success_event:type_name -> api.commons.audit.DeliverySuccessEvent
+	121, // 122: api.commons.audit.AuditEvent.contact_manager_entry_add_event:type_name -> api.commons.audit.ContactManagerEntryAddEvent
+	122, // 123: api.commons.audit.AuditEvent.contact_manager_entry_get_enc_event:type_name -> api.commons.audit.ContactManagerEntryGetEncEvent
+	123, // 124: api.commons.audit.AuditEvent.contact_manager_delete_event:type_name -> api.commons.audit.ContactManagerDeleteEvent
+	124, // 125: api.commons.audit.AuditEvent.contact_manager_kyc_event:type_name -> api.commons.audit.ContactManagerKycEvent
+	125, // 126: api.commons.audit.AuditEvent.contact_manager_entry_edit_event:type_name -> api.commons.audit.ContactManagerEntryEditEvent
+	126, // 127: api.commons.audit.AuditEvent.contact_manager_list_upload_event:type_name -> api.commons.audit.ContactManagerListUploadEvent
+	124, // 128: api.commons.audit.AuditEvent.contact_manager_kyc_verification_event:type_name -> api.commons.audit.ContactManagerKycEvent
+	123, // 129: api.commons.audit.AuditEvent.contact_manager_entry_delete_event:type_name -> api.commons.audit.ContactManagerDeleteEvent
+	123, // 130: api.commons.audit.AuditEvent.contact_manager_entry_expunge_event:type_name -> api.commons.audit.ContactManagerDeleteEvent
+	127, // 131: api.commons.audit.AuditEvent.contact_manager_entity_association_event:type_name -> api.commons.audit.ContactManagerEntityAssociationEvent
+	128, // 132: api.commons.audit.AuditEvent.access_tokens_expiring_event:type_name -> api.commons.audit.AccessTokensExpiringEvent
+	129, // 133: api.commons.audit.AuditEvent.wfm_publish_schedule_event:type_name -> api.commons.audit.WFMPublishScheduleEvent
+	130, // 134: api.commons.audit.AuditEvent.p3_amqp_call_result_event:type_name -> api.commons.audit.P3AMQPCallResultEvent
+	131, // 135: api.commons.audit.AuditEvent.p3_amqp_agent_response_event:type_name -> api.commons.audit.P3AMQPAgentResponseEvent
+	136, // [136:136] is the sub-list for method output_type
+	136, // [136:136] is the sub-list for method input_type
+	136, // [136:136] is the sub-list for extension type_name
+	136, // [136:136] is the sub-list for extension extendee
+	0,   // [0:136] is the sub-list for field type_name
 }
 
 func init() { file_api_commons_audit_audit_proto_init() }
@@ -2982,7 +2962,6 @@ func file_api_commons_audit_audit_proto_init() {
 		(*AuditEvent_OmnichannelMessageSentEvent)(nil),
 		(*AuditEvent_OmnichannelProviderResponseEvent)(nil),
 		(*AuditEvent_OmnichannelProviderMessageFailedEvent)(nil),
-		(*AuditEvent_OmnichannelInboundProviderMessageEvent)(nil),
 		(*AuditEvent_AsmAgentLoginEvent)(nil),
 		(*AuditEvent_AsmOpenVoiceEvent)(nil),
 		(*AuditEvent_AsmOpenOmniAgentEvent)(nil),

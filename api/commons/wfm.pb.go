@@ -91,11 +91,11 @@ func (RegressionForecasterModelTypes) EnumDescriptor() ([]byte, []int) {
 type RegressionForecasterAvgsProcessingType int32
 
 const (
-	// a complete forecast is built for each skill profile for ACW/ASA/ATT/ATAB
+	// a complete forecast is built for each skill profile for ACW/ASA/AHT/ATAB
 	RegressionForecasterAvgsProcessingType_FORECAST RegressionForecasterAvgsProcessingType = 0
-	// an average from the training data is built for each skill profile for ACW/ASA/ATT/ATAB
+	// an average from the training data is built for each skill profile for ACW/ASA/AHT/ATAB
 	RegressionForecasterAvgsProcessingType_AVERAGES RegressionForecasterAvgsProcessingType = 1
-	// Fixed values are used for  ACW/ASA/ATT/ATAB
+	// Fixed values are used for  ACW/ASA/AHT/ATAB
 	RegressionForecasterAvgsProcessingType_FIXED_AVERAGES RegressionForecasterAvgsProcessingType = 2
 )
 
