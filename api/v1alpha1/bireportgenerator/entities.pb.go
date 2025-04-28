@@ -23,52 +23,6 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// ReportParameters are the parameters for the report.
-type ReportParameters struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// parameter key to value/data_type
-	Parameters    map[string]*ReportParameters_Parameter `protobuf:"bytes,1,rep,name=parameters,proto3" json:"parameters,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ReportParameters) Reset() {
-	*x = ReportParameters{}
-	mi := &file_api_v1alpha1_bireportgenerator_entities_proto_msgTypes[0]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ReportParameters) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ReportParameters) ProtoMessage() {}
-
-func (x *ReportParameters) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_bireportgenerator_entities_proto_msgTypes[0]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ReportParameters.ProtoReflect.Descriptor instead.
-func (*ReportParameters) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_bireportgenerator_entities_proto_rawDescGZIP(), []int{0}
-}
-
-func (x *ReportParameters) GetParameters() map[string]*ReportParameters_Parameter {
-	if x != nil {
-		return x.Parameters
-	}
-	return nil
-}
-
 // ReportJob that can be scheduled to report dashboard data.
 type ReportJob struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -126,17 +80,13 @@ type ReportJob struct {
 	CronExpression *commons.CronExpression `protobuf:"bytes,18,opt,name=cron_expression,json=cronExpression,proto3" json:"cron_expression,omitempty"`
 	// transfer_options are options used for the report delivery
 	TransferOptions *commons.TransferOptions `protobuf:"bytes,19,opt,name=transfer_options,json=transferOptions,proto3" json:"transfer_options,omitempty"`
-	// report_parameters are parameters for the query
-	ReportParameters *ReportParameters `protobuf:"bytes,20,opt,name=report_parameters,json=reportParameters,proto3" json:"report_parameters,omitempty"`
-	// whether to send a report only if there is no data in the entire report
-	SendOnlyWhenEmpty bool `protobuf:"varint,21,opt,name=send_only_when_empty,json=sendOnlyWhenEmpty,proto3" json:"send_only_when_empty,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *ReportJob) Reset() {
 	*x = ReportJob{}
-	mi := &file_api_v1alpha1_bireportgenerator_entities_proto_msgTypes[1]
+	mi := &file_api_v1alpha1_bireportgenerator_entities_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -148,7 +98,7 @@ func (x *ReportJob) String() string {
 func (*ReportJob) ProtoMessage() {}
 
 func (x *ReportJob) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_bireportgenerator_entities_proto_msgTypes[1]
+	mi := &file_api_v1alpha1_bireportgenerator_entities_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -161,7 +111,7 @@ func (x *ReportJob) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReportJob.ProtoReflect.Descriptor instead.
 func (*ReportJob) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_bireportgenerator_entities_proto_rawDescGZIP(), []int{1}
+	return file_api_v1alpha1_bireportgenerator_entities_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *ReportJob) GetReportJobId() string {
@@ -305,20 +255,6 @@ func (x *ReportJob) GetTransferOptions() *commons.TransferOptions {
 	return nil
 }
 
-func (x *ReportJob) GetReportParameters() *ReportParameters {
-	if x != nil {
-		return x.ReportParameters
-	}
-	return nil
-}
-
-func (x *ReportJob) GetSendOnlyWhenEmpty() bool {
-	if x != nil {
-		return x.SendOnlyWhenEmpty
-	}
-	return false
-}
-
 // ReportLog describes information on a report log
 type ReportLog struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -384,7 +320,7 @@ type ReportLog struct {
 
 func (x *ReportLog) Reset() {
 	*x = ReportLog{}
-	mi := &file_api_v1alpha1_bireportgenerator_entities_proto_msgTypes[2]
+	mi := &file_api_v1alpha1_bireportgenerator_entities_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -396,7 +332,7 @@ func (x *ReportLog) String() string {
 func (*ReportLog) ProtoMessage() {}
 
 func (x *ReportLog) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_bireportgenerator_entities_proto_msgTypes[2]
+	mi := &file_api_v1alpha1_bireportgenerator_entities_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -409,7 +345,7 @@ func (x *ReportLog) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReportLog.ProtoReflect.Descriptor instead.
 func (*ReportLog) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_bireportgenerator_entities_proto_rawDescGZIP(), []int{2}
+	return file_api_v1alpha1_bireportgenerator_entities_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *ReportLog) GetOrgId() string {
@@ -584,73 +520,11 @@ func (x *ReportLog) GetDeliveryDefinitionTitle() string {
 	return ""
 }
 
-type ReportParameters_Parameter struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Value         string                 `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
-	DataType      string                 `protobuf:"bytes,3,opt,name=data_type,json=dataType,proto3" json:"data_type,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ReportParameters_Parameter) Reset() {
-	*x = ReportParameters_Parameter{}
-	mi := &file_api_v1alpha1_bireportgenerator_entities_proto_msgTypes[3]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ReportParameters_Parameter) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ReportParameters_Parameter) ProtoMessage() {}
-
-func (x *ReportParameters_Parameter) ProtoReflect() protoreflect.Message {
-	mi := &file_api_v1alpha1_bireportgenerator_entities_proto_msgTypes[3]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ReportParameters_Parameter.ProtoReflect.Descriptor instead.
-func (*ReportParameters_Parameter) Descriptor() ([]byte, []int) {
-	return file_api_v1alpha1_bireportgenerator_entities_proto_rawDescGZIP(), []int{0, 0}
-}
-
-func (x *ReportParameters_Parameter) GetValue() string {
-	if x != nil {
-		return x.Value
-	}
-	return ""
-}
-
-func (x *ReportParameters_Parameter) GetDataType() string {
-	if x != nil {
-		return x.DataType
-	}
-	return ""
-}
-
 var File_api_v1alpha1_bireportgenerator_entities_proto protoreflect.FileDescriptor
 
 const file_api_v1alpha1_bireportgenerator_entities_proto_rawDesc = "" +
 	"\n" +
-	"-api/v1alpha1/bireportgenerator/entities.proto\x12\x1eapi.v1alpha1.bireportgenerator\x1a#api/commons/bireportgenerator.proto\x1a\x17api/commons/enums.proto\x1a\x15api/commons/org.proto\x1a\x17api/commons/types.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xaf\x02\n" +
-	"\x10ReportParameters\x12`\n" +
-	"\n" +
-	"parameters\x18\x01 \x03(\v2@.api.v1alpha1.bireportgenerator.ReportParameters.ParametersEntryR\n" +
-	"parameters\x1a>\n" +
-	"\tParameter\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value\x12\x1b\n" +
-	"\tdata_type\x18\x03 \x01(\tR\bdataType\x1ay\n" +
-	"\x0fParametersEntry\x12\x10\n" +
-	"\x03key\x18\x01 \x01(\tR\x03key\x12P\n" +
-	"\x05value\x18\x02 \x01(\v2:.api.v1alpha1.bireportgenerator.ReportParameters.ParameterR\x05value:\x028\x01\"\xef\b\n" +
+	"-api/v1alpha1/bireportgenerator/entities.proto\x12\x1eapi.v1alpha1.bireportgenerator\x1a#api/commons/bireportgenerator.proto\x1a\x17api/commons/enums.proto\x1a\x15api/commons/org.proto\x1a\x17api/commons/types.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xdf\a\n" +
 	"\tReportJob\x12\"\n" +
 	"\rreport_job_id\x18\x01 \x01(\tR\vreportJobId\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
@@ -673,9 +547,7 @@ const file_api_v1alpha1_bireportgenerator_entities_proto_rawDesc = "" +
 	"\x0fhide_csv_footer\x18\x10 \x01(\bR\rhideCsvFooter\x122\n" +
 	"\x13transfer_config_sid\x18\x11 \x01(\x03B\x02\x18\x01R\x11transferConfigSid\x12D\n" +
 	"\x0fcron_expression\x18\x12 \x01(\v2\x1b.api.commons.CronExpressionR\x0ecronExpression\x12G\n" +
-	"\x10transfer_options\x18\x13 \x01(\v2\x1c.api.commons.TransferOptionsR\x0ftransferOptions\x12]\n" +
-	"\x11report_parameters\x18\x14 \x01(\v20.api.v1alpha1.bireportgenerator.ReportParametersR\x10reportParameters\x12/\n" +
-	"\x14send_only_when_empty\x18\x15 \x01(\bR\x11sendOnlyWhenEmpty\"\xa2\t\n" +
+	"\x10transfer_options\x18\x13 \x01(\v2\x1c.api.commons.TransferOptionsR\x0ftransferOptions\"\xa2\t\n" +
 	"\tReportLog\x12\x15\n" +
 	"\x06org_id\x18\x01 \x01(\tR\x05orgId\x12\"\n" +
 	"\rreport_log_id\x18\x02 \x01(\x03R\vreportLogId\x12&\n" +
@@ -719,51 +591,45 @@ func file_api_v1alpha1_bireportgenerator_entities_proto_rawDescGZIP() []byte {
 	return file_api_v1alpha1_bireportgenerator_entities_proto_rawDescData
 }
 
-var file_api_v1alpha1_bireportgenerator_entities_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_api_v1alpha1_bireportgenerator_entities_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_api_v1alpha1_bireportgenerator_entities_proto_goTypes = []any{
-	(*ReportParameters)(nil),           // 0: api.v1alpha1.bireportgenerator.ReportParameters
-	(*ReportJob)(nil),                  // 1: api.v1alpha1.bireportgenerator.ReportJob
-	(*ReportLog)(nil),                  // 2: api.v1alpha1.bireportgenerator.ReportLog
-	(*ReportParameters_Parameter)(nil), // 3: api.v1alpha1.bireportgenerator.ReportParameters.Parameter
-	nil,                                // 4: api.v1alpha1.bireportgenerator.ReportParameters.ParametersEntry
-	(commons.TimePeriod)(0),            // 5: api.commons.TimePeriod
-	(*commons.DeliveryTimes)(nil),      // 6: api.commons.DeliveryTimes
-	(*commons.DayFilter)(nil),          // 7: api.commons.DayFilter
-	(commons.Month)(0),                 // 8: api.commons.Month
-	(*commons.FormatOptions)(nil),      // 9: api.commons.FormatOptions
-	(*commons.DeliveryOptions)(nil),    // 10: api.commons.DeliveryOptions
-	(*commons.TimeZoneWrapper)(nil),    // 11: api.commons.TimeZoneWrapper
-	(*commons.CronExpression)(nil),     // 12: api.commons.CronExpression
-	(*commons.TransferOptions)(nil),    // 13: api.commons.TransferOptions
-	(*timestamppb.Timestamp)(nil),      // 14: google.protobuf.Timestamp
+	(*ReportJob)(nil),               // 0: api.v1alpha1.bireportgenerator.ReportJob
+	(*ReportLog)(nil),               // 1: api.v1alpha1.bireportgenerator.ReportLog
+	(commons.TimePeriod)(0),         // 2: api.commons.TimePeriod
+	(*commons.DeliveryTimes)(nil),   // 3: api.commons.DeliveryTimes
+	(*commons.DayFilter)(nil),       // 4: api.commons.DayFilter
+	(commons.Month)(0),              // 5: api.commons.Month
+	(*commons.FormatOptions)(nil),   // 6: api.commons.FormatOptions
+	(*commons.DeliveryOptions)(nil), // 7: api.commons.DeliveryOptions
+	(*commons.TimeZoneWrapper)(nil), // 8: api.commons.TimeZoneWrapper
+	(*commons.CronExpression)(nil),  // 9: api.commons.CronExpression
+	(*commons.TransferOptions)(nil), // 10: api.commons.TransferOptions
+	(*timestamppb.Timestamp)(nil),   // 11: google.protobuf.Timestamp
 }
 var file_api_v1alpha1_bireportgenerator_entities_proto_depIdxs = []int32{
-	4,  // 0: api.v1alpha1.bireportgenerator.ReportParameters.parameters:type_name -> api.v1alpha1.bireportgenerator.ReportParameters.ParametersEntry
-	5,  // 1: api.v1alpha1.bireportgenerator.ReportJob.time_period:type_name -> api.commons.TimePeriod
-	6,  // 2: api.v1alpha1.bireportgenerator.ReportJob.delivery_times:type_name -> api.commons.DeliveryTimes
-	7,  // 3: api.v1alpha1.bireportgenerator.ReportJob.day_filter:type_name -> api.commons.DayFilter
-	8,  // 4: api.v1alpha1.bireportgenerator.ReportJob.months:type_name -> api.commons.Month
-	9,  // 5: api.v1alpha1.bireportgenerator.ReportJob.format_options:type_name -> api.commons.FormatOptions
-	10, // 6: api.v1alpha1.bireportgenerator.ReportJob.delivery_options:type_name -> api.commons.DeliveryOptions
-	11, // 7: api.v1alpha1.bireportgenerator.ReportJob.time_zone_wrapper:type_name -> api.commons.TimeZoneWrapper
-	12, // 8: api.v1alpha1.bireportgenerator.ReportJob.cron_expression:type_name -> api.commons.CronExpression
-	13, // 9: api.v1alpha1.bireportgenerator.ReportJob.transfer_options:type_name -> api.commons.TransferOptions
-	0,  // 10: api.v1alpha1.bireportgenerator.ReportJob.report_parameters:type_name -> api.v1alpha1.bireportgenerator.ReportParameters
-	14, // 11: api.v1alpha1.bireportgenerator.ReportLog.job_requested_time:type_name -> google.protobuf.Timestamp
-	14, // 12: api.v1alpha1.bireportgenerator.ReportLog.job_completed_time:type_name -> google.protobuf.Timestamp
-	14, // 13: api.v1alpha1.bireportgenerator.ReportLog.create_time:type_name -> google.protobuf.Timestamp
-	14, // 14: api.v1alpha1.bireportgenerator.ReportLog.update_time:type_name -> google.protobuf.Timestamp
-	14, // 15: api.v1alpha1.bireportgenerator.ReportLog.scheduled_time:type_name -> google.protobuf.Timestamp
-	14, // 16: api.v1alpha1.bireportgenerator.ReportLog.execution_start_time:type_name -> google.protobuf.Timestamp
-	14, // 17: api.v1alpha1.bireportgenerator.ReportLog.execution_end_time:type_name -> google.protobuf.Timestamp
-	14, // 18: api.v1alpha1.bireportgenerator.ReportLog.report_start_date:type_name -> google.protobuf.Timestamp
-	14, // 19: api.v1alpha1.bireportgenerator.ReportLog.report_end_date:type_name -> google.protobuf.Timestamp
-	3,  // 20: api.v1alpha1.bireportgenerator.ReportParameters.ParametersEntry.value:type_name -> api.v1alpha1.bireportgenerator.ReportParameters.Parameter
-	21, // [21:21] is the sub-list for method output_type
-	21, // [21:21] is the sub-list for method input_type
-	21, // [21:21] is the sub-list for extension type_name
-	21, // [21:21] is the sub-list for extension extendee
-	0,  // [0:21] is the sub-list for field type_name
+	2,  // 0: api.v1alpha1.bireportgenerator.ReportJob.time_period:type_name -> api.commons.TimePeriod
+	3,  // 1: api.v1alpha1.bireportgenerator.ReportJob.delivery_times:type_name -> api.commons.DeliveryTimes
+	4,  // 2: api.v1alpha1.bireportgenerator.ReportJob.day_filter:type_name -> api.commons.DayFilter
+	5,  // 3: api.v1alpha1.bireportgenerator.ReportJob.months:type_name -> api.commons.Month
+	6,  // 4: api.v1alpha1.bireportgenerator.ReportJob.format_options:type_name -> api.commons.FormatOptions
+	7,  // 5: api.v1alpha1.bireportgenerator.ReportJob.delivery_options:type_name -> api.commons.DeliveryOptions
+	8,  // 6: api.v1alpha1.bireportgenerator.ReportJob.time_zone_wrapper:type_name -> api.commons.TimeZoneWrapper
+	9,  // 7: api.v1alpha1.bireportgenerator.ReportJob.cron_expression:type_name -> api.commons.CronExpression
+	10, // 8: api.v1alpha1.bireportgenerator.ReportJob.transfer_options:type_name -> api.commons.TransferOptions
+	11, // 9: api.v1alpha1.bireportgenerator.ReportLog.job_requested_time:type_name -> google.protobuf.Timestamp
+	11, // 10: api.v1alpha1.bireportgenerator.ReportLog.job_completed_time:type_name -> google.protobuf.Timestamp
+	11, // 11: api.v1alpha1.bireportgenerator.ReportLog.create_time:type_name -> google.protobuf.Timestamp
+	11, // 12: api.v1alpha1.bireportgenerator.ReportLog.update_time:type_name -> google.protobuf.Timestamp
+	11, // 13: api.v1alpha1.bireportgenerator.ReportLog.scheduled_time:type_name -> google.protobuf.Timestamp
+	11, // 14: api.v1alpha1.bireportgenerator.ReportLog.execution_start_time:type_name -> google.protobuf.Timestamp
+	11, // 15: api.v1alpha1.bireportgenerator.ReportLog.execution_end_time:type_name -> google.protobuf.Timestamp
+	11, // 16: api.v1alpha1.bireportgenerator.ReportLog.report_start_date:type_name -> google.protobuf.Timestamp
+	11, // 17: api.v1alpha1.bireportgenerator.ReportLog.report_end_date:type_name -> google.protobuf.Timestamp
+	18, // [18:18] is the sub-list for method output_type
+	18, // [18:18] is the sub-list for method input_type
+	18, // [18:18] is the sub-list for extension type_name
+	18, // [18:18] is the sub-list for extension extendee
+	0,  // [0:18] is the sub-list for field type_name
 }
 
 func init() { file_api_v1alpha1_bireportgenerator_entities_proto_init() }
@@ -777,7 +643,7 @@ func file_api_v1alpha1_bireportgenerator_entities_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_v1alpha1_bireportgenerator_entities_proto_rawDesc), len(file_api_v1alpha1_bireportgenerator_entities_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   5,
+			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
